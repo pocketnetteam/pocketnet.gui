@@ -10,6 +10,44 @@
 
 <% } %>
 
+	
+
+	<% if(!app.curation()) { %>
+
+	<div class="item reputation">
+		<div class="itemtable table">
+			<div class="icon"><i class="far fa-star"></i></div>
+			<div class="label"><%=e('rstate')%> <b><%- (deep(author, 'state.reputation') || 0).toFixed(1) %></b></div>
+		</div>
+	</div>
+	<% } %>
+
+	<% if(deep(author, 'data.about')) {
+
+		var a = deep(author, 'data.about');
+	
+		var am = a; /*trimHtml(a, 1500);*/
+	
+	%>
+	
+		<div class="item about">
+			<div class="itemtable table">
+				<div class="icon"><i class="fas fa-pen"></i></div>
+				<div class="label">
+					<div class="aboutwrapper"> <%=filterXSS(clearScripts((findAndReplaceLink(am, true))))%></div>
+					<% if(am != a){ %> 
+						<div class="showmoreabout">
+							<%=e('e13021')%>
+						</div>
+					<% } %>
+				</div>
+			</div>
+		</div>
+	
+	<% } %>
+	
+	
+
 	<div class="item foraddress">
 		<div class="itemtable table">
 			<div class="icon"><i class="fas fa-map-marker-alt"></i></div>
@@ -19,15 +57,6 @@
 			</div>
 		</div>
 	</div>
-
-	<div class="item reputation">
-		<div class="itemtable table">
-			<div class="icon"><i class="far fa-star"></i></div>
-			<div class="label"><%=e('rstate')%> <b><%- (deep(author, 'state.reputation') || 0).toFixed(1) %></b></div>
-		</div>
-	</div>
-
-	
 	
 <% 
 
@@ -51,29 +80,6 @@ if(_d && _d > -1) {
 
 <% } %>
 
-<% if(deep(author, 'data.about')) {
-
-	var a = deep(author, 'data.about');
-
-	var am = trimHtml(a, 1500);
-
-%>
-
-	<div class="item about">
-		<div class="itemtable table">
-			<div class="icon"><i class="fas fa-pen"></i></div>
-			<div class="label">
-				<div class="aboutwrapper"> <%=filterXSS(clearScripts((findAndReplaceLink(am, true))))%></div>
-				<% if(am != a){ %> 
-					<div class="showmoreabout">
-						<%=e('e13021')%>
-					</div>
-				<% } %>
-			</div>
-		</div>
-	</div>
-
-<% } %>
 
 <% if(deep(author, 'data.postcnt')) {%>
 

@@ -8,7 +8,7 @@
         <meta http-equiv='expires' content='0'>
         
 
-        <!-- <title>POCKETNET</title> -->
+        <!-- <title>__VAR__.project</title> -->
         <meta name="description" content="">
         <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1, user-scalable=no">
         <meta name="fragment" content="!">
@@ -55,6 +55,9 @@
        
     </head>
     <body id="application" class="menu-hide">
+
+        <div id="windowsContainer">
+        </div>
 
         <div id="headerWrapper">
         </div>
@@ -110,7 +113,7 @@
             <div class="table">
                 <div>
                     <div class="text">
-                        <span>Please be Patient: Major Release of Pocketnet is Being Prepared</span>
+                        <span>Please be Patient: Major Release of __VAR__.project is Being Prepared</span>
                     </div>
 
                     <div class="icon">
@@ -213,7 +216,7 @@
         <script src="js/vendor/hc-sticky.js"></script>
         <script join src="js/vendor/axios.js"></script>
 
-        
+        <script>window.pocketnetdomain = "pocketnet.app";</script><script>window.pocketnetproject = "Pocketnet";</script>
 
         <script>window.design = true;</script>
         <script join src="js/functionsfirst.js?v=138441565214"></script>

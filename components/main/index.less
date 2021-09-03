@@ -11,9 +11,12 @@
 	}
 
 	.topvideosWrapper{
-		display: none;
+		display: block;
 		background: #fff;
 		margin-bottom : 10px;
+		min-height: 160px;
+		position: relative;
+		
 
 		&.hasshares{
 			display: block;
@@ -24,6 +27,7 @@
 			padding : 2*  @rhythm;
 			padding-bottom: @rhythm;
 			padding-top : 0;
+			
 		}
 
 		.horizontalLentacaption{
@@ -512,6 +516,10 @@
 
 }
 
+.addcategorydialog{
+	z-index: 1500;
+}
+
 html.stblack{
 	#main{
 		background: @color-black5;
@@ -799,25 +807,39 @@ html {
 		}
 
 		.leftpanelcell{
-			float: left;
+			float: none;
+			width: 100%;
+			position: fixed;
+			left : 100%;
+			top : 0;
+			bottom : 0;
+			right : -100%;
+			z-index: 201;
+			background: #fff;
+			color : #011621;
+			padding-top : 75px;
+			overflow-y: scroll;
+			padding-bottom: 90px;
+			.transition(0.3s);
+		}
+
+		&.leftshowed{
+			.leftpanelcell{
+				transform: translateX(-100%);
+			}
 		}
 
 		.lentacell{
 			margin-right: 0;
 		}
 
-		.leftpanelcell{
-			display: none;
-		}
-
-
+	
 		&.videomain {
 			.lentacell{
 				margin-left: 0;
 			}
 			
 		}
-		
 
 		.addbutton{
 			
@@ -831,6 +853,9 @@ html {
 
 		.topvideosWrapper{
 			margin-bottom : @rhythm;
+			height: 195px;
+			content-visibility: auto;
+			contain-intrinsic-size: 195px;
 	
 			&.hasshares{
 				display: block;
@@ -839,6 +864,11 @@ html {
 			.horizontalLentaWrapper{
 				padding : @rhythm 0;
 				padding-bottom: 0;
+				position: absolute;
+				left : 0;
+				top : 0;
+				right : 0;
+				bottom : 0;
 			}
 	
 			.horizontalLentacaption{
@@ -924,22 +954,36 @@ html {
 	
 }
 
+html.mobile{
+	#main{
+		padding-top : 55px;
+		
+	}
+}
+
 html.mobile,
 html.tablet{
 	#main{
-
 		.bgCaption{
 			display: none;
 		}
 	}
 }
 
-@media only screen and (max-width: 640px){
+@media only screen and (max-width: 768px){
+	html.tablet{
+		#main{
+			padding-top : 55px;
+		}
+	}
+}
+
+@media only screen and (max-width: 768px){
 
 	html.toppanelshowed{
 		#main{
 	
-			.maincntwrapper{
+			/*.maincntwrapper{
 	
 				
 				>div{
@@ -951,7 +995,7 @@ html.tablet{
 						}
 					}
 				}
-			}
+			}*/
 		}
 	}
 
@@ -963,38 +1007,7 @@ html.tablet{
 				}
 			}
 		}
-		&.fullvideoshowedanimblock{
-
-			#main{
-				#maincntwrapper{
-					-moz-transition: 0s;
-					-o-transition: 0s;
-					-webkit-transition: 0s;
-					transition: 0s;
-					>div{
-						&.work{
-							-moz-transition: 0s;
-							-o-transition: 0s;
-							-webkit-transition: 0s;
-							transition: 0s;
-						}
-					}
-				}
-			}
-
-		}
-		&.fullvideoshowed{
-			#main{
-				#maincntwrapper{
-					transform:none!important;
-					>div{
-						&.work{
-							transform:none!important;
-						}
-					}
-				}
-			}
-		}
+		
 	}
 
 	#main{
@@ -1012,7 +1025,10 @@ html.tablet{
 			width: 100%;
 		}
 
-		
+		.lentacell{
+			padding-top : 0;
+			padding-bottom : 90px;
+		}
 
 		.fxd{
 			padding-top : 0;
@@ -1021,7 +1037,7 @@ html.tablet{
 		.panel{
 			border-radius:3px;
 		}
-		
+		/*	
 		.maincntwrapper{
 			width : 300%;
 			transform: translateX(-33.3333333%);
@@ -1133,9 +1149,9 @@ html.tablet{
 				padding-top : 0;
 			}
 
-			/*.shares .authorgroup .share{
-				padding : 2 * @rhythm 0 ;
-			}*/
-		}
+		
+		}*/
 	}
+
+
 }

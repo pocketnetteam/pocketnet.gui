@@ -156,6 +156,8 @@ Localization = function(app){
 
 		self.key = prms.loc || localStorage['loc'] || (window.navigator.userLanguage || window.navigator.language || 'en').split("-")[0];
 		
+		if(!self.available[self.key]) self.key = 'en'
+
 		self.locSave();
 
 		lazyActions([
@@ -192,7 +194,7 @@ Localization = function(app){
 				return
 			}
 
-			var src = 'localization/' + (__k) + '.js?v=7'
+			var src = 'localization/' + (__k) + '.js?v=8'
 
 			self.loading[__k] = true
 
@@ -211,8 +213,12 @@ Localization = function(app){
 	}
 
 	self.e = function(id, args){
-		var v = deep(loclib, self.key + '.' + id) || deep(loclib, 'en.' + id) || "";
+		var v = ""
 
+		if(loclib[self.key] && loclib[self.key][id]) v = loclib[self.key][id]
+
+		if(!v) v = (loclib['en'] || {})[id] || ""
+		
 		if(typeof v == 'function') v = v(args);
 
 		return v || id;

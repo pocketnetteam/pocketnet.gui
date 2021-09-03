@@ -154,7 +154,7 @@ var usersettings = (function(){
 
 						dialog({
 							class : 'zindex',
-							html : "Do you really want to clear temporary application information? You balance can has changed on several minutes.",
+							html : "Do you really want to clear temporary application information?",
 							btn1text : self.app.localization.e('dyes'),
 							btn2text : self.app.localization.e('dno'),
 							success : function(){	

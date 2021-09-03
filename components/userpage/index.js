@@ -12,7 +12,6 @@ var userpage = (function(){
 
 		var currentExternalEssense = null;
 		var roller = null;
-		var caption = null;
 		var hcready = false;
 
 		var mestate = null, allbalance;
@@ -79,9 +78,9 @@ var userpage = (function(){
 				report : 'ustate',
 				mobile : true,
 
-				/*if : function(){
-					if(mestate) return true
-				},*/
+				if : function(){
+					if(!self.app.curation()) return true
+				},
 
 				add : function(){
 
@@ -92,14 +91,7 @@ var userpage = (function(){
 				}
 			})
 
-			/*reports.push({
-				name : "Messenger",
-				id : 'messenger',
-				report : 'messenger',
-				mobile : true
-			})*/
-
-			
+		
 
 			reports.push({
 				name : self.app.localization.e('rwallet'),
@@ -217,18 +209,30 @@ var userpage = (function(){
 				},
 			})
 
-		//	var address = app.user.address.value;
-				
-                
-		   
-		    /*if(_.indexOf(['PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd'], address) > -1) {
+			if(self.app.user.validate()) {
+
 				reports.push({
-					name : self.app.localization.e('rconnection'),
-					id : 'connection',
-					report : 'connection',
-					mobile : false
+					name : self.app.localization.e('videoCabinet'),
+					id : 'videoCabinet',
+					report : 'videoCabinet',
+					mobile : true,
+
+					if : function(){
+
+						if (typeof mestate != 'undefined' && mestate && (
+					
+							(mestate.reputation > 50 || !mestate.trial || mestate.balance > 500000000)
+
+						)){
+							return true
+						}
+					}
 				})
-			}*/
+
+			}
+
+
+
 				
 		}
 
@@ -531,6 +535,8 @@ var userpage = (function(){
 
 				if(isMobile()){
 
+					self.app.mobile.vibration.small()
+
 					renders.contents(null, id)
 
 				}
@@ -542,7 +548,6 @@ var userpage = (function(){
 		var renders = {
 			bgcaption : function(clbk){
 
-				var s = helpers.selector();
 
 				if(!el || !el.bgcaption) return
 
@@ -560,7 +565,7 @@ var userpage = (function(){
 	
 					}, function(_p){
 						console.log(_p.el)
-						_p.el.find('.copyaddress').on('click', function(){
+						_p.el.find('.copyaddress').on(clickAction(), function(){
 							copyText($(this))
 
 							sitemessage(self.app.localization.e('successcopied'))
@@ -595,12 +600,20 @@ var userpage = (function(){
 					}, function(_p){
 	
 						_p.el.find('.groupNamePanelWrapper').on('click', events.closeGroup);
-						//_p.el.find('.groupName').on('click', events.closeGroup);
+						//_p.el.find('.groupName').on(clickAction(), events.closeGroup);
 						_p.el.find('.openReport').on('click', events.openReport);
 	
 						ParametersLive([s], _p.el)
 
-						_scrollTop(0)
+						self.app.actions.scroll(0)
+
+						_p.el.find('.showprivatekey').on('click', function(){
+							self.app.platform.ui.showmykey({
+								text : self.app.localization.e('doyouwantseepk'),
+								successLabel : self.app.localization.e('dyes'),
+								faillabel : self.app.localization.e('dno')
+							})
+						})
 
 						if (hcready)
 							el.contents.hcSticky('refresh');
@@ -779,7 +792,7 @@ var userpage = (function(){
 				}
 
 				var _clbk = function(e, p){
-					_scrollTop(0)
+					self.app.actions.scroll(0)
 	
 					currentExternalEssense = p;
 
@@ -858,7 +871,10 @@ var userpage = (function(){
 		var initEvents = function(){
 			
 			el.c.on('click', '.signout', function(){
+
+				self.app.mobile.vibration.small()
 				actions.signout()
+
 			})
 
 		}
@@ -875,7 +891,13 @@ var userpage = (function(){
 					if(!id) {
 
 						if(self.app.user.validate()){
-							id = 'ustate'	
+
+							if(self.app.curation()){
+								id = 'wallet'	
+							}
+							else{
+								id = 'ustate'	
+							}
 						}
 						else{
 							id = 'test'
@@ -1011,12 +1033,7 @@ var userpage = (function(){
 
 				$('#menu').addClass('abs')
 
-				caption = new Caption({
-					container: el.c,
-					caption: el.c.find('.captionfwrapper'),
-					offset: [0, 0],
-					
-				}).init();	
+				
 
 				/*self.app.platform.sdk.keys.init().then(r => {
 					console.log("RESULT", r)

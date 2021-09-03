@@ -52,7 +52,7 @@ var help = (function(){
 			
 			{
 				d : 'August 2019',
-				n : 'Personal link '+self.app.options.url+'/username plus history of personal posts and ability to search users’ posts (decentralized free blog hosting on Pocketnet blockchain)',
+				n : 'Personal link '+self.app.options.url+'/username plus history of personal posts and ability to search users’ posts (decentralized free blog hosting on '+self.app.meta.fullname+' blockchain)',
 				r : true,
 			},
 
@@ -72,38 +72,34 @@ var help = (function(){
 				r : true,
 			},
 			{
-				d : 'May 2021',	
-				n : 'Integration of PeerTube into Pocketnet, upload of videos and live streams',
-				r : false,
+				d : 'March 2021',
+				n : 'PKOIN listed on Bilaxy, Digifinex, Bitforex',
+				r : true,
+			},
+			
+			{
+				d : 'June 2021',	
+				n : 'Integration of PeerTube into '+self.app.meta.fullname+', upload of videos and live streams',
+				r : true,
 			},
 			{
-				d : 'June 2021',
-				n : 'Rewrite of the backend to move to sqlite from Reindexer to make the node light on RAM use',
-				r : false,
-			},
-			{
-				d : 'June 2021',
+				d : 'July 2021',
 				n : 'Boost posts for Pocketcoin',
 				r : false,
 			},
 			{
-				d : 'June 2021',
+				d : 'August 2021',
 				n : 'Peer-to-peer encrypted chat, including group chat',
-				r : false,
+				r : true,
 			},
 			{
-				d : 'July 2021',
-				n : 'Livestream Pocketcoin dondations',
-				r : false,
+				d : 'August 2021',
+				n : 'Livestream Pocketcoin donations',
+				r : true,
 			},
 			{
-				d : 'July 2021',
-				n : 'Pocketnet NFT 3.0',
-				r : false,
-			},
-			{
-				d : 'October 2021',
-				n : 'Decentralized reputation platform and crypto store',
+				d : 'September 2021',
+				n : 'Rewrite of the backend to move to sqlite from Reindexer to make the node light on RAM use',
 				r : false,
 			},
 			{
@@ -112,8 +108,18 @@ var help = (function(){
 				r : false,
 			},
 			{
+				d : 'December 2021',
+				n : 'Decentralized reputation platform and crypto store',
+				r : false,
+			},
+			{
+				d : 'January 2022',
+				n : ''+self.app.meta.fullname+' NFT 3.0',
+				r : false,
+			},
+			{
 				d : '2022',
-				n : 'Ability to fork Pocketcoin to create a diverse set of Dapps for users using Pocketnet platform i.e. Pocketnet as an alternative Appstore',
+				n : 'Ability to fork Pocketcoin to create a diverse set of Dapps for users using '+self.app.meta.fullname+' platform i.e. '+self.app.meta.fullname+' as an alternative Appstore',
 				r : false,
 			}
 
@@ -304,7 +310,7 @@ var help = (function(){
 					c.pkoin.loading = true;
 
 					console.log('this.page', _el)
-					var explorerBase = 'https://explorer.'+self.app.options.url+'/rest/';
+					var explorerBase = 'https://explorer.pocketnet.app/rest/';
 
 
 					var endpoints = [c.pkoin.blockhash.api, c.pkoin.emission.api, c.pkoin.emission2.api, c.pkoin.topaddresses.api];

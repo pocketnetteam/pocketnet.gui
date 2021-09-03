@@ -20,10 +20,13 @@ var main = (function(){
 
 		var lastscroll = 0
 
+		var addbuttonShowed = false
 
 		var wordsRegExp = /[,.!?;:() \n\r]/g
 
-		var mobilemodes = [{
+		var lastStickyRefresh = 0
+
+		/*var mobilemodes = [{
 			mode : 'leftshow',
 			icon : 'fas fa-hashtag'
 		},{
@@ -34,152 +37,54 @@ var main = (function(){
 			icon : 'fas fa-arrow-right'
 		}]
 
-		var mobilemode = 'mainshow'
+		var mobilemode = 'mainshow'*/
 
 		var helpers = {
 			
 		}
 		
 		var actions = {
-			swipe : function(phase, direction, distance){
-
-
-				if(!direction || !distance) return
-
-				if (phase != 'move'){
-					fixeddirection = null
-				}
-
-				if (direction != 'left' && direction != 'right') {
-					//
-						el.slwork.css({'transform' : 'translateX(0%)'})
-					//}
-
-					if (phase == 'move'){
-						if (distance > 20){
-							fixeddirection = direction
-						}
-					}
-					
-
-					if(phase == 'end'){
-						if(direction == 'down'){
-
-							
-							console.log('lenta.hasplayingvideos()', lenta.hasplayingvideos())
-
-							if(lenta && lenta.hasplayingvideos()) return
-							
-							self.app.el.html.removeClass('scrollmodedown')
-						}
-
-						if(direction == 'up' && el.lentacell.scrollTop() > 200){
-
-
-
-							self.app.el.html.addClass('scrollmodedown')
-						}
-					}
-					
-					return
-				}
-
-				if(fixeddirection) return
-
-				var currentindex = _.findIndex(mobilemodes, function(m){
-					return m.mode == mobilemode
-				})
-
-				var tomode = null
-				var prs = 0
-				var c = 1
-
-				if (phase == 'move'){
-
-					if(direction == 'left' || direction == 'right'){
-						prs = 100 * (distance / el.w.width())
-
-						if(prs > 10) prs = 10
-
-						if(direction == 'left') c = -1
-
-						el.slwork.css({'transform' : 'translateX(' + (c * prs) + "%)"})
-
-						return
-					}
-					
-				}
-
-				el.slwork.css({'transform' : 'translateX(0%)'})
-
-				if(phase == 'end'){
-
-					if(direction == 'right'){
-
-						if (currentindex > 0){
-
-							tomode = mobilemodes[currentindex - 1].mode
-						}
-						else{
-							phase = 'cancel'
-						}
-
-					}
-
-					if(direction == 'left'){
-
-						if (currentindex < mobilemodes.length - 1){
-
-							tomode = mobilemodes[currentindex + 1].mode
-						}
-						else{
-							phase = 'cancel'
-						}
-
-					}
-
-					if(!tomode){
-						phase = 'cancel'
-					}
-					else{
-						renders.mobilemode(tomode)
-						return
-					}
-				}
-
-				if(phase == 'cancel'){
-					if(direction == 'left' || direction == 'right'){
-
-					}
-				}
+			
+			refreshSticky : function(alv){
 
 				
 
-				
-			},
-			refreshSticky : function(){
+				var ns = self.app.lastScrollTop
 
-				if (hsready){
+				if (hsready && (ns != lastStickyRefresh || alv)){
+
+					lastStickyRefresh = ns
+
 					el.panel.hcSticky('refresh');
 					el.leftpanel.hcSticky('refresh');
 
-					setTimeout(function(){
+					/*setTimeout(function(){
 						if(el.panel) el.panel.hcSticky('refresh');
 						if(el.leftpanel) el.leftpanel.hcSticky('refresh');
-					}, 1000)
+					}, 1000)*/
 				}
 					
 			},
+
 			addbutton : function(){
 
 				self.app.platform.ui.share()
 			},
+
 			addbuttonscroll  : function(){
-				if (el.w.scrollTop() > 400){
-					el.addbutton.addClass('scrollactive')
+
+				if (self.app.lastScrollTop > 400){
+					if(!addbuttonShowed)
+						el.addbutton.addClass('scrollactive')
+
+					addbuttonShowed = true
 				}
 				else{
-					el.addbutton.removeClass('scrollactive')
+
+					if (addbuttonShowed)
+						el.addbutton.removeClass('scrollactive')
+
+					addbuttonShowed = false
 				}
 			},
 
@@ -210,18 +115,20 @@ var main = (function(){
 
 				makeShare()
 
-				renders.smallpanel()
 			},
 
 			backtolenta : function(){
 				actions.backtolentaClear()
-				_scrollTop(lastscroll, null, 5)
+
+				console.log('backtolenta', lastscroll)
+
+				self.app.actions.scroll(lastscroll)
+				//_scrollTop(lastscroll, null, 5)
 				
 
 			},
 
 			backtolentaClear : function(){
-
 
 				self.nav.api.history.removeParameters(['v'])
 
@@ -253,7 +160,8 @@ var main = (function(){
 			},
 
 			up : function(){
-				_scrollTop(0, null, 5)
+				self.app.actions.scroll(0)
+				//lastscroll = 0
 			}
 
 		}
@@ -323,10 +231,7 @@ var main = (function(){
 				})
 			},
 
-			smallpanel : function(){
-				el.smallpanel.find('.item').removeClass('active')
-				el.smallpanel.find('.item[lenta="'+currentMode+'"]').addClass('active')
-			},
+			
 			share : function(){
 
 				if(!isMobile() && !videomain && !searchvalue && !searchtags){
@@ -362,12 +267,14 @@ var main = (function(){
 			},
 
 			topvideos: function (show) {
-
+				
 				var showmoreby = el.topvideos
 
-				showmoreby.removeClass('hasshares')
+				//showmoreby.removeClass('hasshares')
 
 				if (show){
+
+					showmoreby.removeClass('hidden')
 					self.app.platform.papi.horizontalLenta(showmoreby, function (e,p) {
 
 						external = p
@@ -394,8 +301,8 @@ var main = (function(){
 						},
 						hasshares : function(shares){
 
-							if (shares.length > 2){
-								showmoreby.addClass('hasshares')
+							if (shares.length <= 2){
+								showmoreby.addClass('hidden')
 							}
 							
 						},
@@ -428,13 +335,16 @@ var main = (function(){
 				}
 
 				else{
+
 					if(external){
 						external.destroy()
 						external = null
 					}
 
 					showmoreby.html('')
-					showmoreby.removeClass('hasshares')
+					//showmoreby.removeClass('hasshares')
+
+					showmoreby.addClass('hidden')
 				}
 
 				
@@ -457,6 +367,10 @@ var main = (function(){
 
 						changed : function(){
 							renders.lentawithsearch()
+						},
+
+						close : function(){
+							showCategories(false)
 						}
 					},
 					clbk : function(e, p){
@@ -496,6 +410,7 @@ var main = (function(){
 			},
 			lentawithsearch : function(clbk, p){
 
+				
 				if(searchvalue){
 
 					var value = searchvalue.replace('tag:', "#");
@@ -605,7 +520,7 @@ var main = (function(){
 						tags : searchtags,
 						video : videomain && !isMobile(),
 						videomobile : videomain && isMobile(),
-						window : isMobile() ? el.c.find('.lentacell') : el.w,
+						//window : isMobile() ? el.c.find('.lentacell') : el.w,
 						page : 0,
 						afterload : function(ed, s, e){
 
@@ -617,7 +532,9 @@ var main = (function(){
 						},
 						opensvi : function(id){
 
-							lastscroll = el.w.scrollTop()
+							console.log('self.app.lastScrollTop', self.app.lastScrollTop)
+
+							lastscroll = self.app.lastScrollTop
 
 							el.c.addClass('opensvishowed')
 
@@ -655,7 +572,10 @@ var main = (function(){
 							events.up()
 						},
 
-						renderclbk : function(){
+						renderClbk : function(){
+
+							
+							actions.refreshSticky()
 						},
 						loader : loader
 					},
@@ -678,6 +598,8 @@ var main = (function(){
 
 			upbutton : function(){
 				if(upbutton) upbutton.destroy()
+
+				if(isMobile()) return
 
 				upbutton = self.app.platform.api.upbutton(el.up, {
 					top : function(){
@@ -726,7 +648,7 @@ var main = (function(){
 
 							renders.post(id)
 
-							_scrollTop(0)
+							self.app.actions.scroll(0)
 						}
 					})
 				}
@@ -734,13 +656,13 @@ var main = (function(){
 				
 			},
 
-			mobilemode : function(mode){
+			/*mobilemode : function(mode){
 
 				if (mode){
 
 					if (mobilemode == 'mainshow'){
-						lastscroll = el.w.scrollTop()
-						_scrollTop(0, null, 0)
+						lastscroll = self.app.lastScrollTop
+						self.app.actions.scroll(0)
 					}
 
 					mobilemode = mode
@@ -748,7 +670,6 @@ var main = (function(){
 
 				el.c.attr('mobilemode', mobilemode)
 
-				renders.columnnavigation()
 
 				setTimeout(function(){
 					self.app.el.html.removeClass('scrollmodedown')
@@ -758,32 +679,9 @@ var main = (function(){
 				if (mobilemode == 'mainshow' && lastscroll){
 					_scrollTop(lastscroll, null, 0)
 				}
-			},
+			},*/
 
-			columnnavigation : function(){
-
-				return
-
-
-				self.shell({
-					name :  'columnnavigation',
-					el : el.columnnavigationWrapper,
-					data : {
-						mobilemode : mobilemode,
-						mobilemodes : mobilemodes
-					},
-
-				}, function(_p){
-
-					_p.el.find('.columnnavigation').on('click', function(){
-						var mode = $(this).attr('mode')
-
-						renders.mobilemode(mode)
-						
-					})
-
-				})
-			}
+			
 		}
 
 		var state = {
@@ -796,10 +694,16 @@ var main = (function(){
 		}
 
 		var initEvents = function(){
-			
-			el.w.on('scroll', actions.addbuttonscroll)
 
-			el.smallpanel.find('.item').on('click', events.currentMode)
+
+			self.app.events.scroll.main = actions.addbuttonscroll
+
+			self.app.events.resize.mainpage = function(){
+				setTimeout(function(){
+					actions.refreshSticky(true)
+				}, 500)
+			}
+
 
 			el.c.find('.backtolenta').on('click', actions.backtolenta)
 
@@ -853,14 +757,14 @@ var main = (function(){
 		}
 
 		var makePanel = function(){
-			self.app.user.isState(function(state){
-				//if(state){
 
-					renders.panel();
-					renders.leftpanel();
-					renders.addpanel();
-				//}
-			})
+			if(!isMobile()){
+				renders.panel();
+			}
+				
+			renders.leftpanel();
+
+			renders.addpanel();
 		}
 
 		var makeShare = function(){
@@ -873,13 +777,11 @@ var main = (function(){
 						if (currentMode == 'common')
 						{
 							renders.share()
-
 							el.c.find('.bgCaption').removeClass('hidden')
 						}
 						else
 						{
 							el.share.html('')
-
 							el.c.find('.bgCaption').addClass('hidden')
 						}
 
@@ -905,29 +807,38 @@ var main = (function(){
 
 			makePanel()
 
-			renders.smallpanel()
 
 			if (currentMode == 'common' && !videomain && !searchvalue && !searchtags)
 				renders.topvideos(true)
+			else{
+				renders.topvideos(false)
+			}
 
 			
 				
 		}
 
+		var showCategories = function(t){
+			if (el.c && isMobile()){
 
+				self.app.mobile.vibration.small()
+
+				if (t){
+					el.c.addClass('leftshowed')
+					self.app.actions.offScroll()
+				}
+				else{
+					el.c.removeClass('leftshowed')
+					self.app.actions.onScroll()
+				}
+				
+			}
+		}
 		
 		return {
 			primary : primary,
 
-			scrolltopall : function(){
-
-				if(el.lentacell && isMobile()){
-
-					_scrollTop(0, el.lentacell, 200)
-
-					renders.mobilemode('mainshow')
-				}
-			},
+		
 
 			parametersHandler : function(clbk){
 
@@ -1077,14 +988,20 @@ var main = (function(){
 
 			destroy : function(){
 
-				if (el && el.w)
-					el.w.off('scroll', actions.addbuttonscroll)
+				if(el.c) el.c.html('')
+
+				showCategories(false)
+
+				delete self.app.events.scroll.main
+				delete self.app.events.resize.mainpage
 					
-					self.app.el.html.removeClass('scrollmodedown')
+				self.app.el.html.removeClass('scrollmodedown')
 
 				renders.post(null)
 
 				hsready = false
+
+
 
 				//searchvalue = '', searchtags = null
 
@@ -1127,7 +1044,7 @@ var main = (function(){
 				}
 
 				lastscroll = 0
-				mobilemode = 'mainshow'
+				//mobilemode = 'mainshow'
 				leftpanel = null
 				panel = null
 				roller = null
@@ -1135,10 +1052,10 @@ var main = (function(){
 				share = null
 				videomain = false
 				fixeddirection = null
+				addbuttonShowed = false
+
 				self.app.el.footer.removeClass('workstation')
 
-				self.app.el.html.removeClass('nooverflow');
-				self.app.el.html.removeClass('showmain');
 				el = {}
 				
 				if (self.app.scrolling){
@@ -1149,6 +1066,11 @@ var main = (function(){
 	
 				}
 			},
+
+			showCategories : function(show){
+
+				showCategories(show)
+			},
 			
 			init : function(p){
 				
@@ -1156,6 +1078,7 @@ var main = (function(){
 				roller = null
 				lenta = null
 				fixeddirection = null
+				lastStickyRefresh = 0
 
 				state.load();
 
@@ -1164,29 +1087,18 @@ var main = (function(){
 				el.share = el.c.find('.share');
 				el.lenta = el.c.find('.lentaWrapper');
 				el.lentacell =  el.c.find('.lentacell')
-				el.panel = el.c.find('.panel'); //00
+				el.panel = el.c.find('.panel');
 				el.leftpanel = el.c.find('.leftpanel');
 				el.up = el.c.find('.upbuttonwrapper')
 				el.upbackbutton = el.c.find('.upbackbuttonwrapper')
-				el.smallpanel = el.c.find('.smallpanell')
 				el.addbutton = el.c.find('.addbutton')
-				el.columnnavigationWrapper = el.c.find('.columnnavigationWrapper')
 				el.slwork = el.c.find('.maincntwrapper >div.work')
 				el.topvideos = el.c.find('.topvideosWrapper')
-				el.w = $(window)
+
 
 				self.app.el.footer.addClass('workstation')
 
-				// Add a specific class to hide overflow on mobile
-				// (for iOS mobile devices)
-				if (isMobile())
-					self.app.el.html.addClass('nooverflow');
-
-					self.app.el.html.addClass('showmain');
-
 				initEvents();
-
-				
 
 				if(!p.goback){
 					searchvalue = parameters().ss || ''
@@ -1209,44 +1121,22 @@ var main = (function(){
 					el.c.addClass('videomain')
 				}
 
-				renders.mobilemode()
-
 				make(function(){
 					p.clbk(null, p);
 				}, p)
 
-				if(isMobile()){
-
-					el.c.find('.maincntwrapper').swipe({
-						allowPageScroll: "auto", 
-						swipeStatus : function(e, phase, direction, distance){
-
-							if(self.app.el.html.hasClass('fullvideoshowedanimblock')) return
-
-							if(el.topvideos.has(e.target).length > 0){
-								return true
-							}
-
-							actions.swipe(phase, direction, distance)
-
-							return true
-						},
-					})
-	
-				}
 				
 				
 			}
 		}
 	};
 
-	self.scrolltopall = function(){
+	self.showCategories = function(sh){
 		_.each(essenses, function(essense){
 
-			essense.scrolltopall();
+			essense.showCategories(sh);
 
 		})
-
 	}
 
 	self.run = function(p){

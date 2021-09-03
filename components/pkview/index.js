@@ -8,10 +8,34 @@ var pkview = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, current = {};
+		var el, current = {}, ed = {}
 
 		var actions = {
+			saveqr : function(base64, clbk){
 
+				var name = 'pkey_'+self.app.platform.currentTime()
+
+				if (window.cordova){
+
+
+					var image = b64toBlob(base64.split(',')[1], 'image/png');	
+
+					console.log("image", image)
+
+					p_saveAsWithCordova(image, name + '.png', function(){
+						if (clbk)
+							clbk()
+					})
+
+				}
+				else{
+					p_saveAs({
+						file : base64,
+						format : 'png',
+						name : name
+					})
+				}
+			}
 		}
 
 		var events = {
@@ -20,6 +44,7 @@ var pkview = (function(){
 
 		var renders = {
 			qrcode : function(el, m){
+				
 
 				var qrcode = new QRCode(el[0], {
 					text: m,
@@ -103,13 +128,25 @@ var pkview = (function(){
 				}, function(p){
 
 					var m = p.el.find('.mnemonicKey')
-
+					var name = 'pkey_'+self.app.platform.currentTime()
 
 					renders.mnemonicEffect(m, false, function(){
 					
 					});
 
-					var qr = renders.qrcode(p.el.find('.qrcode'), current.mk)
+					var container = p.el.find('.qrcode');
+
+					var qr = renders.qrcode(container, current.mk)
+
+					var base64 = qr._oDrawing._elCanvas.toDataURL("image/png")
+
+
+					container.attr('save', name + '.png')
+					container.attr('src', base64)
+
+					self.app.mobile.saveImages.init(container)
+
+						
 
 					p.el.find('.copy').on('click', function(){
 						copyText(p.el.find('.hiddenMnemonicKey'))
@@ -119,46 +156,32 @@ var pkview = (function(){
 
 					p.el.find('.save').on('click', function(){
 
-						var text = p.el.find('.qrcode img').attr('src')
+						actions.saveqr(base64, function(){
+							successCheck()
+						})
+
+						/*var text = p.el.find('.qrcode img').attr('src')
 
 						p_saveAs({
 							file : text,
 							format : 'png',
 							name : 'pocketnetkey'
-						})
+						})*/
+
+						/*if(window.cordova){
+							p_saveAsWithCordova(b64toBlob(text, 'image/png'), 'pocketnet_' + rand(1000, 9999) + '.png')
+						}
+						else{
+							p_saveAs({
+								file : text,
+								format : 'png',
+								name : 'pocketnetkey'
+							})
+						}*/
 
 					})
 
-					if(window.cordova){
-
-						p.el.find('.qrcode').on('click', function(){
-
-							menuDialog({
-								items : [
-	
-									{
-										text : self.app.localization.e('e13145'),
-										class : 'itemmain',
-										action : function(clbk){
-
-
-											var image = b64toBlob(qr._oDrawing._elImage.currentSrc.split(',')[1], 'image/png', 512);		
-											
-
-											p_saveAsWithCordova(image, 'pkey'+self.app.platform.currentTime()+'.png', function(){
-												clbk()
-											})
-
-											
-										}
-									}
-	
-								]
-							})
-	
-						})
-
-					}
+					
 
 					if (clbk)
 						clbk(p);
@@ -237,7 +260,10 @@ var pkview = (function(){
 						renders.key()
 
 						setTimeout(function(){
-							renders.dontshowagain()
+
+							if (ed.showsavelabel)
+								renders.dontshowagain()
+
 						}, 2000)
 					}
 					else
@@ -263,6 +289,10 @@ var pkview = (function(){
 			getdata : function(clbk, p){
 
 				var data = {};
+
+				ed = p.settings.essenseData || {}
+
+				data.ed = ed
 
 				clbk(data);
 

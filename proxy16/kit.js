@@ -38,6 +38,13 @@ var testnodes = [
 		ws : 6067,
 		name : 'test.2.pocketnet.app',
 		stable : true
+	},
+	{
+		host : '188.187.45.218',
+		port : 39091,
+		ws : 6067,
+		name : 'spb.office.1',
+		stable : true
 	}
 ]
 
@@ -101,6 +108,7 @@ var defaultSettings = {
 	server : {
 		enabled : false,
 
+        dontCache: false,
 		captcha : true,
 		host : '',
 		iplimiter : {

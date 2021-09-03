@@ -503,8 +503,6 @@
 
 	wnd = function(p){
 
-		console.log('p1!!', p);
-
 		if(!p) p = {};
 
 		var self = this,
@@ -512,10 +510,10 @@
 			content = p.content || null,
 
 			id = 'w' + makeid().split('-')[0],
-			nooverflow = p.nooverflow || $('html').hasClass('nooverflow'),
-			el = p.el || $('body');
+			nooverflow = p.nooverflow || app.scrollRemoved,
+			el = p.el || $('#windowsContainer');
 
-		var _w = $(window);
+		//var _w = $(window);
 
 		var wnd;
 
@@ -550,9 +548,7 @@
 		}
 
 		var wndfixed = function(){
-
-			wnd.css('top', _w.scrollTop())
-
+			/*wnd.css('top', app.lastScrollTop)*/
 		}
 
 		var render = function(tpl){
@@ -581,13 +577,13 @@
 					h+=	 '</div>';
 				}
 
-			wnd = $("<div>",{
-			   "class" 	: "wnd",
-			   "html"	: h
-			   });
-			   
-			   wnd.css('top', _w.scrollTop())
-			   wnd.css('height', _w.height())
+				wnd = $("<div>",{
+					"class" 	: "wnd",
+					"html"	: h
+				});
+
+				/*wnd.css('top', app.lastScrollTop)
+			   	wnd.css('height', app.height)*/
 
 		   	if(!p.header) wnd.addClass('noheader')
 
@@ -610,24 +606,20 @@
 
 			})
 
-			
-
 			if(p.class) wnd.addClass(p.class);
 
 		    if(!nooverflow){
-
-				nooverflow = !app.actions.offScroll(p.offScroll);
-				
-				
+				nooverflow = !app.actions.offScroll();
 			}
-			
 
 			wnd.css("display", "block");
+
+			app.actions.playingvideo(null);
 		}
 
 		var resize = function(){
-			wnd.css('top', _w.scrollTop())
-			wnd.css('height', _w.height())
+			/*wnd.css('top', app.lastScrollTop)
+			wnd.css('height', app.height)*/
 		}
 
 		var initevents = function(){
@@ -637,85 +629,17 @@
 					actions.close(true)
 				});
 
-			if(p.swipeClose && isMobile()){
-
-				var dir = p.swipeCloseDir || 'up';
-
-				var directions = {}
-
-				var c = wnd.find('.wndcontent')
-
-				var tr = 1;
-
-					directions[dir] = {
-						trueshold : p.trueshold || tr,
-
-						mintrueshold : p.swipeMintrueshold || 1,
-
-						positionclbk : function(px){
-							
-							
-
-						},
-
-						constraints : function(){
-							if(c.scrollTop() == 0) return true
-						},
-
-						clbk : function(){
-
-							wnd.fadeOut(tr)
-
-							setTimeout(function(){
-								actions.close(true)	
-							}, 400)
-							
-						}
-
-					};
-
-					//if(dir == 'left' || dir == 'right') directions[dir].reverse = true
-					
-				var parallax = new SwipeParallaxNew({
-
-					allowPageScroll : 'vertical',
-
-					el : c,
-
-					directions : directions
-
-				}).init()
-
-
-				/*wnd.find('.wndinner').swipe({
-					allowPageScroll: "auto", 
-					swipeDown : function(e, phase, direction, distance){
-						actions.close(true)	
-					},
-				})*/
-
-				/*wnd.swipe( {
-					
-					swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
-
-						if(direction == 'up' && distance > 70){
-							actions.close(true)	
-						}
-					},
-
-					threshold:0
-				});*/
-			}
-
 			if (p.allowHide) {
 				wnd.find('.hideButton').on('click', actions.hide);
 				wnd.find('.closeButton').on('click', actions.close);
 				wnd.find('.expandButton').on('click', actions.show);
 			}
 
-			_w.on('resize', resize)
 
-			_w[0].addEventListener('scroll', wndfixed);
+			app.events.resize[id] = resize
+			app.events.scroll[id] = wndfixed
+
+			
 		}
 
 		var actions = {
@@ -732,17 +656,10 @@
 					self.essenseDestroy(key)
 				
 				wnd.remove();
-				_w.off('resize', resize)
 
-				_w[0].removeEventListener('scroll', wndfixed);
+				delete app.events.resize[id]
+				delete app.events.scroll[id]
 
-				if(!p.noblur)
-				{
-					/*if(app.el.content) app.el.content.removeClass("blur");
-					if(app.el.menu) app.el.menu.removeClass("blur");*/
-				}
-
-				
 			},
 
 			hide : function(cl, key) {
@@ -750,8 +667,8 @@
 
 				wnd.find('.buttons').addClass('hidden');
 				wnd.addClass('hiddenState');
-				wnd.find('.wndcontent > div').addClass('rolledUp');
 
+				wnd.find('.wndcontent > div').addClass('rolledUp');
 				wnd.find('.expandButton').removeClass('hidden');
 				wnd.find('.closeButton').addClass('hidden');
 				wnd.find('.hideButton').addClass('hidden');
@@ -830,11 +747,6 @@
 				} 
 			}
 
-			if(!p.noblur)
-			{
-				/*if(app.el.content) app.el.content.addClass("blur");
-				if(app.el.menu) app.el.menu.addClass("blur");*/
-			}
 
 			if(content) success();
 			
@@ -851,6 +763,32 @@
 		return self;
 	}
 
+	tooltipMobileDialog = function(p){
+		if(!p) p = {};
+
+		p.wrap = true;
+
+		p.class = 'tooltipMobileDialog';
+
+		p.html = '<div class="mobiledialogcontent">'+(p.html || '')+'</div><div class="closeButton"><button class="button ghost"><i class="far fa-times-circle"></i> Close</button></div>'
+
+
+		var c = p.clbk || function(){}
+
+		p.clbk = function(el){
+			
+			el.on('click', function(){
+				self.destroy()
+			})
+
+			c(el)
+		}
+
+		var self = new dialog(p);
+
+		return self;
+	}
+
 	menuDialog = function(p){
 		if(!p) p = {};
 
@@ -860,7 +798,7 @@
 
 		p.items.push({
 			class : 'itemclose',
-			text : 'Close'
+			text : '<i class="fas fa-times-circle"></i>'
 		})
 		
 		var ehtml = function(){
@@ -868,9 +806,7 @@
 
 			_.each(p.items, function(item, i){
 				h += '<div class="item ' + item.class + '" item="'+i+'">'
-
 					h += item.text
-
 				h += '</div>'
 			})
 
@@ -1395,6 +1331,7 @@
 
 			}
 
+			console.log('p', p)
 
 			if(p.clbk) p.clbk($el, self);
 
@@ -1605,10 +1542,13 @@
 
 		if(!p) p = {};
 
-		el.find('[image]').each(function(){
+		var els = el.find('[image]')
+
+		els.each(function(){
 
 			var _el = $(this);
 			var image = _el.attr('image')
+			//var save = _el.attr('save')
 
 			if (image)
 			{
@@ -1620,6 +1560,14 @@
 				});
 
 				_el.attr('image', '')
+
+				/*if(save){
+					_el.swipe({
+						longTap : function(){
+
+						}
+					})
+				}*/
 			}
 
 			if(p.clbk)
@@ -1634,7 +1582,6 @@
 			}
 		})
 
-		
 			
 	}
 
@@ -1643,8 +1590,22 @@
 		return name.substr(0, 2) + "/" + name.substr(2, 2) + "/" + name.substr(4) + ".jpg";
 	}
 
+	nameFromScr = function(src){
+		var srcs = src.split('/')
+
+		return srcs[srcs.length - 1]
+	}
+
 	srcToData = function(url, callback) {
+
+		if(url.indexOf('data:') > -1){
+			callback(url);
+
+			return
+		}
+
 	  var xhr = new XMLHttpRequest();
+
 	  xhr.onload = function() {
 	    var reader = new FileReader();
 	    reader.onloadend = function() {
@@ -3142,7 +3103,7 @@
 				if(parameter.type == 'valuesmultitree'){
 
 					var inieve = function(__el){
-						_el.on('click', '.vmt_panel_wrapper', function(){
+						_el.on(clickAction(), '.vmt_panel_wrapper', function(){
 
 							var id = $(this).closest('[groupid]').attr('groupid')
 							
@@ -3334,12 +3295,12 @@
 
 					
 
-					_el.find('.vmt_showMore').on('click', function(){
+					_el.find('.vmt_showMore').on(clickAction(), function(){
 
 						_el.addClass('showedMore')
 					})
 
-					_el.find('.vmt_hideMore').on('click', function(){
+					_el.find('.vmt_hideMore').on(clickAction(), function(){
 
 						_el.removeClass('showedMore')
 					})
@@ -3439,12 +3400,12 @@
 						_el.removeClass('error')
 					})
 
-					_el.find('.vm_showMore').on('click', function(){
+					_el.find('.vm_showMore').on(clickAction(), function(){
 
 						_el.addClass('showedMore')
 					})
 
-					_el.find('.vm_hideMore').on('click', function(){
+					_el.find('.vm_hideMore').on(clickAction(), function(){
 
 						_el.removeClass('showedMore')
 					})
@@ -3476,7 +3437,7 @@
 
 
 						if(take().hasClass('opened')){
-							$('html').on('click', closeclick)
+							$('html').on(clickAction(), closeclick)
 
 							window.addEventListener('scroll', close);
 
@@ -3496,7 +3457,7 @@
 
 						take().removeClass('opened');
 
-						$('html').off('click', closeclick)
+						$('html').off(clickAction(), closeclick)
 						
 						window.removeEventListener('scroll', close);
 					}
@@ -3516,7 +3477,7 @@
 
 						if(parameter.type == 'valuescustom' || parameter.autoSearch)
 						{
-							_el.find('.vc_iconWrapper').on('click', function(){
+							_el.find('.vc_iconWrapper').on(clickAction(), function(){
 								open()
 
 								if (parameter.autoSearch){
@@ -3540,13 +3501,13 @@
 
 						if(parameter.type == 'values' && !parameter.autoSearch)
 						{
-							_el.find('.vc_textInput').on('click', function(){
+							_el.find('.vc_textInput').on(clickAction(), function(){
 								open()
 							})
 						}
 
 
-						_el.find('.vc_value').on('click', function(){
+						_el.find('.vc_value').on(clickAction(), function(){
 							bkp = null;
 
 							var value = $(this).attr('value');
@@ -3558,7 +3519,7 @@
 							take().removeClass('error')
 						})
 
-						_el.find('.vc_selected_value_icon').on('click', function(){
+						_el.find('.vc_selected_value_icon').on(clickAction(), function(){
 							var value = $(this).closest('.vc_selected_value').attr('value');
 
 							parameter.set(value);
@@ -3969,7 +3930,7 @@
 				if (parameter.type == 'category'){
 
 
-					_el.on('click', function(){
+					_el.on(clickAction(), function(){
 
 
 						parameter.app.nav.api.load({
@@ -4082,8 +4043,14 @@
 					if(parameter.type == 'boolean') 
 						value = $(this).is(":checked") ? 1 : 0;
 
-					if(parameter.type == 'email'){
+					if (parameter.type == 'email'){
 						if(value == '_@_._') value = ''
+					}
+
+					if (parameter.type == 'nickname'){
+						value = pstranslit(value)
+
+						$(this).val(value); 	
 					}
 
 					if (parameter.isValid(value))
@@ -4113,12 +4080,43 @@
 			$.each(el.find('input'), function(){
 				var i = $(this);
 
-				if(!i.attr('notmasked')){
+				if (i.attr('data-inputmask') && !i.attr('notmasked')){
 					i.inputmask({});
 				}
 			})
 
 		}
+	}
+
+	var pstranslit = function(word){
+		var answer = '';
+		var converter = {
+			'а': 'a',    'б': 'b',    'в': 'v',    'г': 'g',    'д': 'd',
+			'е': 'e',    'ё': 'e',    'ж': 'zh',   'з': 'z',    'и': 'i',
+			'й': 'y',    'к': 'k',    'л': 'l',    'м': 'm',    'н': 'n',
+			'о': 'o',    'п': 'p',    'р': 'r',    'с': 's',    'т': 't',
+			'у': 'u',    'ф': 'f',    'х': 'h',    'ц': 'c',    'ч': 'ch',
+			'ш': 'sh',   'щ': 'sch',  'ь': '',     'ы': 'y',    'ъ': '',
+			'э': 'e',    'ю': 'yu',   'я': 'ya',
+	 
+			'А': 'A',    'Б': 'B',    'В': 'V',    'Г': 'G',    'Д': 'D',
+			'Е': 'E',    'Ё': 'E',    'Ж': 'Zh',   'З': 'Z',    'И': 'I',
+			'Й': 'Y',    'К': 'K',    'Л': 'L',    'М': 'M',    'Н': 'N',
+			'О': 'O',    'П': 'P',    'Р': 'R',    'С': 'S',    'Т': 'T',
+			'У': 'U',    'Ф': 'F',    'Х': 'H',    'Ц': 'C',    'Ч': 'Ch',
+			'Ш': 'Sh',   'Щ': 'Sch',  'Ь': '',     'Ы': 'Y',    'Ъ': '',
+			'Э': 'E',    'Ю': 'Yu',   'Я': 'Ya'
+		};
+	 
+		for (var i = 0; i < word.length; ++i ) {
+			if (converter[word[i]] == undefined){
+				answer += word[i];
+			} else {
+				answer += converter[word[i]];
+			}
+		}
+	 
+		return answer;
 	}
 
 
@@ -4478,7 +4476,7 @@
 				if (self.require) limits[0] = 1;
 				if (self.format.Length) limits[1] = self.format.Length;
 
-				mask.regex = "[a-zA-Z0-9_]{"+limits.join(',')+"}";
+				mask.regex = "[а-яА-Яa-zA-Z0-9_]{"+limits.join(',')+"}";
 
 				masked = true;
 				
@@ -5665,7 +5663,7 @@
 
 	isMobile = function(){
 
-		if(typeof ___mobile != 'undefined'){
+		if (typeof ___mobile != 'undefined'){
 			return ___mobile
 		}
 
@@ -5676,7 +5674,7 @@
 
 	isTablet = function(){
 
-		if(typeof ___tablet != 'undefined'){
+		if (typeof ___tablet != 'undefined'){
 			return ___tablet
 		}
 
@@ -5684,6 +5682,13 @@
 
 		return ___tablet
 
+	}
+	
+	clickAction = function(){
+
+		if(isTablet()) return 'touchend'
+
+		return 'click'
 	}
 
 	convertToBase64 = function(dataURI) {
@@ -5944,7 +5949,16 @@
 	p_saveAsWithCordova = function(file, name, clbk){
 
 
-		var storageLocation = 'file:///storage/emulated/0/';
+		var storageLocation = "";
+
+		switch (device.platform) {
+			case "Android":
+				storageLocation = 'file:///storage/emulated/0/';
+				break;
+			case "iOS":
+				storageLocation = cordova.file.cacheDirectory;
+				break;
+		}
 	
 
 
@@ -6038,56 +6052,7 @@
 
 /* NAVIGATION */
 
-	initUp = function(el, p){
-
-		if(!p) p = {};
-
-		var self = this;
-		var w = $(window);
-
-		var actions = {
-			up : function(){
-				if (p.scrollTop){
-					p.scrollTop()
-				}
-				else
-				{
-					_scrollTop(0);
-				}
-			}
-		}
-
-		var events = {
-			up : actions.up,
-
-			view : function(){
-				if(w.scrollTop() > 200){
-					el.fadeIn(100);
-				}
-				else
-				{
-					el.fadeOut(100);
-				}
-			}
-		}
-
-			self.destroy = function(){
-				el.off('click', events.up)
-
-				window.removeEventListener('scroll', events.view);
-			}
-
-			self.init = function(){
-				el.on('click', events.up)
-
-				window.addEventListener('scroll', events.view);
-
-				return self;
-			}
-
-		return self;
-
-	}
+	
 
 	_scrollTop = function(scrollTop, el, time){
 
@@ -6173,29 +6138,42 @@
 
 	}
 
-	offScroll = function(){
-		if(typeof window == 'undefined') return;
 
-		var winScrollTop = $(window).scrollTop();
 
-		$(window).bind('scroll', function(){
+	inViewClear = function(){
 
-			$(window).scrollTop(winScrollTop);
-
-		});
-	}
-
-	onScroll = function(){
-	
-		if(typeof window == 'undefined') return;
-		$(window).unbind('scroll');
 	}
 
 	inView = function(els, p){
 
+		console.log('inView', els.length)
+
+		var st = 0,
+			sh = 0;
+
 		if(!p) p = {};
 
-		if(!p.inel) p.inel = window;
+		if(!p.inel) {
+			p.inel = $(window);
+			st = p.app.lastScrollTop;
+			sh = app.height;
+		}
+
+		else{
+
+			inel = p.inel
+
+			try{
+				p.elOffset = p.inel[p.f]().top
+			}
+			catch (e){
+				p.elOffset = 0;
+			}
+
+			st = inel.scrollTop()
+			sh = inel.height()
+		}
+		
 		if(!p.offset) {
 			p.offset = 0;
 		}
@@ -6204,19 +6182,9 @@
 
 		p.elOffset = 0;
 
-		try{
-			p.elOffset = p.inel[p.f]().top
-		}
-		catch (e){
-			p.elOffset = 0;
-		}
-
 		if(!p.mode) p.mode = "part";
 
-		var inel = $(p.inel);
-
-		var st = inel.scrollTop()
-		var sh = inel.height()
+		var inel = p.inel // $(p.inel);
 
 		var range = {
 			top : st - p.offset,
@@ -6232,9 +6200,12 @@
 
 			var el = $(this);
 
-			var offsetTop = el[p.f]().top,
-				height = el.height(),
+			var offsetTop = p.cache && el.data('c_' + p.f) ? el.data('c_' + p.f) : el[p.f]().top,
+				height = p.cache && el.data('c_height') ? el.data('c_height') : el.height(),
 				bottom = offsetTop + height;
+
+			el.data('c_' + p.f, offsetTop)
+			el.data('c_height', height)
 
 			var _part = offsetTop >= range.top && offsetTop < range.bottom || 
 				bottom <= range.bottom && bottom > range.top;
@@ -6242,12 +6213,8 @@
 			var _all = offsetTop >= range.top && 
 				bottom <= range.bottom 
 
-				
-
 			if (p.mode == 'line'){
-
 				var line = offsetTop - st < rangeLine.top && offsetTop + height > rangeLine.bottom
-
 				return line
 			}
 
@@ -6266,7 +6233,6 @@
 
 			if(p.mode == "part")
 			{
-
 				if (_part)
 
 					return true;
@@ -6689,7 +6655,6 @@
 			var mainDirection = null;
 
 			var mintruesholdGone = false;
-			console.log("p", p)
 			p.el.swipe({
 
 				allowPageScroll : p.allowPageScroll,
@@ -6707,7 +6672,6 @@
 					if (self.ended) return false	
 
 
-					console.log('phase', phase)
 
 					if (phase == 'start'){
 
@@ -6882,6 +6846,7 @@
 			})
 
 		var self = this;
+		var needclear = false
 		
 		var directiontoprop = function(direction, value){
 
@@ -6909,31 +6874,42 @@
 
 		var applyDirection = function(direction, v){
 			if (direction.positionclbk){
+				console.log("positionclbk", v)
+				needclear = true
 				direction.positionclbk(v)
 			}
 		}
 
 		self.clear = function(){
-			p.el.css({transform: ""});
-			p.el.css({transition: ""});
+
+			if (needclear){
+
+				console.log("CLEARED")
+
+				p.el.css({transform: ""});
+				p.el.css({transition: ""});
+				
+				_.each(p.directions, function(d){
+					applyDirection(d, 0)
+				})
+			}
 			
-			_.each(p.directions, function(d){
-				applyDirection(d, 0)
-			})
+
+			needclear = false
 		}
 
-		self.backfast = function(){
+		/*self.backfast = function(){
 
 			_.each(p.directions, function(d){
 				if (d.positionclbk)
 					d.positionclbk(0)
 			})
-		}
+		}*/
 
 		self.init = function(){
 
 			var mainDirection = null;
-
+			
 			p.el.swipe({
 				allowPageScroll : p.allowPageScroll,
 				swipeStatus : function(e, phase, direction, distance){
@@ -6950,10 +6926,12 @@
 							if(phase == 'end' && mainDirection.clbk && direction == mainDirection.i){
 								mainDirection.clbk()
 							}
-							
 						}
 
-						self.clear()	
+						self.clear()
+							
+
+						return
 
 					}
 
@@ -6995,6 +6973,10 @@
 			})
 
 			return self
+		}
+
+		self.destroy = function(){
+			p.el.swipe('destroy')
 		}
 
 		return self;
@@ -7179,7 +7161,7 @@
 
 	Caption = function (p) {
 
-		
+		console.log("CaptionCaptionCaptionCaptionCaptionCaptionCaptionCaption")
 		
 		var container = p.container,
 			caption = p.caption,
@@ -8500,13 +8482,13 @@
 				if(!searchEl.hasClass('fastSearchShow')){
 					searchEl.addClass('fastSearchShow');
 
-					$('html').on('click', helpers.closeclickResults)
+					$('html').on(clickAction(), helpers.closeclickResults)
 				}
 
 				
 			},
 			closeResults : function(){
-				$('html').off('click', helpers.closeclickResults);
+				$('html').off(clickAction(), helpers.closeclickResults);
 				searchEl.removeClass('fastSearchShow');
 			},
 			closeclickResults : function(e){
@@ -8729,7 +8711,7 @@
 
 	        	})
 
-	        searchEl.find('.searchPanelItem').on('click', function(){
+	        searchEl.find('.searchPanelItem').on(clickAction(), function(){
 
 	        	var panelItem = $(this)
 
@@ -8769,7 +8751,7 @@
 				'1'  : '0',
 				'0'  : '-1'
 			}
-			_el.on('click', function(){
+			_el.on(clickAction(), function(){
 				var value = $(this).attr('value');
 
 				$(this).attr('value', map[value]);
@@ -9329,7 +9311,7 @@
 			dropZone[0].ondrop = upload;
 			input.on('change', upload);
 
-			input.on('click', function(){
+			input.on(clickAction(), function(){
 				if (p.onStart)
 					p.onStart();
 			});

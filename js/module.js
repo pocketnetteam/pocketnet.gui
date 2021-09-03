@@ -100,13 +100,10 @@ nModule = function(){
 			if(p.el)
 			{
 
-				if(!fromModule){
-
-					self.nav.api.links(null, p.el, p.additionalActions || null);
-					
-				}
+				self.nav.api.links(null, p.el, p.additionalActions || null);
 
 				window.requestAnimationFrame(function(){
+
 					bgImages(p.el, p.bgImages)
 				})
 				
@@ -174,8 +171,6 @@ nModule = function(){
 							
 
 						};
-
-						console.log('insert', p, options);
 
 						var type = p.essenseData && p.essenseData.type
 
@@ -291,6 +286,7 @@ nModule = function(){
 
 		p.inner || (p.inner = html);	
 
+		delete p.animation
 
 		if(p.animation )
 		{
@@ -300,8 +296,6 @@ nModule = function(){
 
 			if(p.animation == 'fadeIn')
 			{
-				console.log("P", p)
-				
 				p.el.fadeOut(100);
 
 				setTimeout(function(){
@@ -539,9 +533,7 @@ nModule = function(){
 			return
 		}
 
-		
-		
-		if(self.storage.templates[p.name] || p.clear)
+		if (self.storage.templates[p.name] || p.clear)
 		{			
 			if (clbk)
 				clbk(self.storage.templates[p.name]);
@@ -583,7 +575,7 @@ nModule = function(){
 				url = appPath + (self.componentsPath || "") + (p.turi || self.map.uri)
 			}
 
-				url += '/templates/' + p.name + '.html?v=122';
+				url += '/templates/' + p.name + '.html?v=126';
 			
 			self.ajax.run({
 				url : url,
@@ -597,6 +589,13 @@ nModule = function(){
 						clbk(self.storage.templates[p.name]);
 
 					loading.templates[p.name] = false;
+
+				},
+				fail : function(){
+
+					if (p.fail){
+						p.fail()
+					}
 
 				}
 			});
@@ -625,6 +624,45 @@ nModule = function(){
 		return p.history && p.el
 	}
 
+	var beforegetdata = function(settings, clbk){
+
+		if (self.map.preshell && settings.el && isMobile()){
+
+			self.shell({
+
+				name :  'preshell',
+				el :   settings.el,
+				data : {},
+
+				animation: settings.animation,
+				fast : settings.fast
+
+			},
+
+			function(p){
+
+				if (primary(settings) && !settings.inWnd && !settings.noscroll && !settings.goback) {
+					self.app.actions.scrollToTop()
+				}
+
+				delete settings.animation
+
+				settings.fast = true
+
+				if (clbk)
+					clbk()
+
+			}, true)
+
+		}
+		else{
+
+			if (clbk)
+				clbk()
+
+		}
+	}
+
 	self.add = function(_settings, p){
 
 		topPreloader(10);
@@ -643,46 +681,47 @@ nModule = function(){
 		settings = _.extend(settings, add);
 		settings = _.extend(settings, p);	
 
+		beforegetdata(settings, function(){
+			self.user.isState(function(state){	
+				
+				
+				settings.getdata(function(data){
+					
 
-		self.user.isState(function(state){	
-			
-			settings.getdata(function(data){
+					topPreloader(45);
 
-				topPreloader(45);
+					settings.data = data || {};
 
-				settings.data = data || {};
+					if(p.preshell) p.preshell();
 
-				if(p.preshell) p.preshell();
+					self.shell(settings, function(p){
 
-				self.shell(settings, function(p){
+						topPreloader(100);	
 
-					topPreloader(100);	
+						p.clbk = addToFunction(p.clbk, function(){
 
-					p.clbk = addToFunction(p.clbk, function(){
+							if (primary(p) && !p.inWnd && !p.noscroll && !p.goback) {
+								self.app.actions.scrollToTop()
+							}
 
-						if (primary(p) && !p.inWnd && !p.noscroll && !p.goback) {
+							if (settings.auto){
+								settings.auto(p)
+							}
 
-
-							_scrollTop(0, null, 50);
-						}
-
-						if (settings.auto){
-							settings.auto(p)
-						}
-
-					})				
+						})				
 
 
-					if (settings.init)
-						settings.init(p)
+						if (settings.init)
+							settings.init(p)
 
-				}, frommodule)
+					}, frommodule)
 
-			}, {
-				state : state,
-				settings : settings
-			});	
+				}, {
+					state : state,
+					settings : settings
+				});	
 
+			})
 		})
 	}
 
@@ -730,12 +769,16 @@ nModule = function(){
 
 	self.restart = function(p){
 
-		if(!p) p = {};
+		if (self.user){
+			if(!p) p = {};
 
-		p.restartModule = true
+			p.restartModule = true
 
-		self.stop(p);
-		self.run(p);
+			self.stop(p);
+			self.run(p);
+		}	
+
+		
 	}
 
 	self.addEssense = function(essenses, Essense, p){

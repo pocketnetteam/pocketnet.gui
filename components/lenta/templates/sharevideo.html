@@ -137,7 +137,7 @@ var metadisplay = function(){ %>
 			<div class="paddingWrapper">
 				<div class="sharecaption canmark opensviurl">
 					<div>
-						<%=joypixels.toImage(nl2br(trimrn(c)))%>
+						<%=app.actions.emoji(nl2br(trimrn(c)))%>
 					</div>
 				</div>
 			</div>
@@ -167,7 +167,7 @@ var metadisplay = function(){ %>
 			<div class="paddingWrapper hideOnFullVideo">
 				<div class="message canmark">
 
-					<%=joypixels.toImage((clearScripts(((nm)))))%>
+					<%=app.actions.emoji((clearScripts(((nm)))))%>
 
 				</div>
 			</div>
@@ -364,7 +364,7 @@ var metadisplay = function(){ %>
 										<div class="itemwr table tempPreloader">
 											
 											<div class="iconwr">
-												<div class="preloader5"><span></span><span></span><span></span></div>
+												<div class="preloader5"><img src="./img/three-dots.svg"/></div>
 											</div>
 											
 											<div class="count">

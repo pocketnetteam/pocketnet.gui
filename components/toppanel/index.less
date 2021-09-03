@@ -17,9 +17,13 @@
 
 	.panelitems{
 		height: 100%;
-		display: flex !important;
-		justify-content: space-between;
-		align-items: center;
+		
+
+		.panelItemsWrapper{
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
 
 		.panelitem{
 			width: 120px;
@@ -29,6 +33,11 @@
 			float: left;
 			// margin-right : 2 * @rhythm;
 			color : #6A6A6A;
+
+			&.icon{
+				width: 44px;
+				text-align: center;
+			}
 
 			&.right{
 				margin-right : 0;
@@ -175,6 +184,8 @@ html.stblack{
 	
 		.panelitems{
 
+			
+
 			.panelitemCenter{
 				margin-left: 0;
 				margin-right: 0;
@@ -195,11 +206,32 @@ html.mobile{
 
 		.panelitems{
 			height: 100%;
+			display: block;
+
+			.panelItemsWrapper{
+				display: block;
+			}
+
+			.panelitemCenter{
+				margin-left: 0;
+				margin-right: 0;
+			}
 
 			.panelitem{
 				width: 100%;
 				margin-right: 0;
 				line-height: 55px;
+
+				&.icon{
+					width: 60px;
+					float: right;
+				}
+
+				&.nfl{
+					margin-right: 60px;
+					float: none;
+					width: auto;
+				}
 
 				&.right{
 					margin-left : 0;
@@ -208,6 +240,10 @@ html.mobile{
 
 				&.blexpl{
 					padding-left: 3 * @rhythm;
+				}
+
+				&.active{
+					color : @color-orange;
 				}
 			} 
 		}
@@ -226,7 +262,7 @@ html.mobile{
 	
 			.vc_iconWrapper{
 				width : 48px;
-				padding-right: 2 * @rhythm;
+				padding-right: 0;
 			}
 
 
@@ -278,7 +314,7 @@ html.mobile{
 
 				.vc_selectInput{
 					position: fixed;
-					top : 120px;
+					top : 55px;
 				}
 			}
 

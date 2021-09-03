@@ -50,6 +50,15 @@ var ustate = (function(){
 				}
 			},
 
+			video : {
+				key : 'video',
+				vis : 'scale',
+				name : self.app.localization.e('spv'),
+				bad : function(v){
+					if(v <= 2) return true
+				}
+			},
+
 			score : {
 				key : 'score',
 				vis : 'scale',

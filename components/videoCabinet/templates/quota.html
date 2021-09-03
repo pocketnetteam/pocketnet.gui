@@ -1,0 +1,27 @@
+<div class="blockswrapper">
+
+  <div class="metricablockwrapper">
+    <div class="metricablock">
+      <div class="blockWrapper">
+        <div class="blockContentWrapper">
+          <div class="metricsContainer">
+            <div class="metricsContainerHeader">
+              <span><%=e('uploadQuota')%></span>
+            </div>
+            <main class="metricsMain">
+              <section class="metricSection">
+                <!-- <div class="progressBar videoViewsBar"></div> -->
+                <span class="quotaValue">
+                  <%- userQuota.videoQuotaDaily ? formatBytes(userQuota.videoQuotaRemainingDaily) : '-' %> / <%-
+                  userQuota.videoQuotaDaily ? formatBytes(userQuota.videoQuotaDaily) : '-' %>
+                </span>
+              </section>
+            </main>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+</div>

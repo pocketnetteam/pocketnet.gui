@@ -1,0 +1,1189 @@
+@import "../../css/__cssvar";
+
+#videoCabinet {
+    min-height: 600px;
+    background: transparent;
+    padding-bottom: 8 * @rhythm;
+
+
+    .videosWrapper {
+        display: flex;
+        flex-direction: column;
+    }
+    .videoErrorBody{
+        margin-top: 2*@rhythm;
+    }
+    .singleVideoSection {
+        display: flex;
+        justify-content: space-between;
+        align-items: top;
+        padding: @rhythm * 2 0;
+        border-bottom: 1px solid @color-gray-border;
+        font-size: 1.1em;
+
+        >div {
+            padding: 0 2 * @rhythm;
+
+            &:nth-last-child(1) {
+                padding-right: 0;
+            }
+
+            &:nth-child(1) {
+                padding-left: 0;
+            }
+        }
+    }
+
+    .videoName {
+        flex-grow: 1;
+        position: relative;
+        padding-left: @rhythm;
+    }
+
+    .videoTextContainer {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        max-width: 250px;
+        white-space: nowrap;
+
+        margin: 0;
+    }
+
+    .videoDescriptionText {
+        white-space: normal;
+        max-height: 60px;
+        font-size: 0.9em;
+        position: relative;
+        line-height: 20px;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -moz-box-orient: vertical;
+        -ms-box-orient: vertical;
+        box-orient: vertical;
+        -webkit-line-clamp: 3;
+        -moz-line-clamp: 3;
+        -ms-line-clamp: 3;
+        line-clamp: 3;
+        overflow: hidden;
+        overflow-y: auto;
+    }
+
+    .transcodingPreloader {
+        color: rgba(0, 0, 0, 0.5);
+    }
+
+    .emptyDescription {
+        border-radius: 5px;
+
+        color: rgba(14, 28, 43, 0.4);
+
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    .videoNameDate {
+        color: rgba(14, 28, 43, 0.4);
+        font-size: 0.8em;
+        font-weight: bold;
+
+        i {
+            width: 20px;
+        }
+    }
+
+    .menuActivator {
+        cursor: pointer;
+
+        color: rgba(0, 0, 0, 0.5);
+
+        &:hover {
+            color: black;
+        }
+    }
+
+    .videoNameText {
+        font-weight: bold;
+
+        margin-bottom: @rhythm;
+    }
+
+    .postingStatusWrapper {
+        min-width: 100px;
+        width: 15%;
+        font-size: 0.8em;
+
+        button {
+            padding: 0;
+        }
+    }
+
+    .videoStatsContainer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        >div {
+            white-space: nowrap;
+        }
+    }
+
+    .videoStatsWrapper {
+        p {
+            margin: 0;
+        }
+
+        i {
+            width: 20px;
+        }
+
+        .singleStat {
+            color: rgba(14, 28, 43, 0.4);
+            margin-right: @rhythm;
+            cursor: pointer;
+        }
+
+        .starIcon {
+            color: #FFAE00;
+        }
+
+
+
+        font-size: 0.8em;
+        min-width: 60px;
+        width: 17%;
+    }
+
+    .videoPostLinkinWindow,
+    .videoPostLink {
+        i {
+            width: 20px;
+        }
+
+        cursor: pointer;
+
+        &:hover {
+            color: @color-good;
+            text-decoration: underline;
+        }
+    }
+
+    .videoAvatar {
+        width: 150px;
+        height: 90px;
+
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+
+        position: relative;
+
+        border-radius: 5px;
+
+        .videoDuration {
+            position: absolute;
+            font-size: 0.7em;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-bottom-left-radius: 5px;
+            bottom: 0;
+            padding: @rhythm;
+        }
+    }
+
+    .moduleHeader {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .statsdiv {
+        padding-bottom: 2 * @rhythm;
+    }
+
+    .cabinetName {
+        max-width: 700px;
+        padding-top: 2 * @rhythm;
+        padding-bottom: 2 * @rhythm;
+        font-size: 2em;
+        font-weight: 100;
+    }
+
+    .ghostButton {
+        background-color: transparent;
+        color: rgba(14, 28, 43, 0.4);
+        border: none;
+
+        &:hover {
+            color: rgba(0, 0, 0, 1);
+        }
+    }
+
+    .removeVideo {
+        color: @color-bad;
+    }
+
+    .reputation {
+        overflow: hidden;
+
+        >div {
+            float: left;
+            width: 33.33333333333%;
+
+            &.connectionFailed {
+                width: 100%;
+            }
+
+            &.reputationblock {
+                .metricablock {}
+            }
+
+            &:nth-last-child(1) {
+                .metricablockwrapper {
+                    padding-right: 0;
+                }
+            }
+
+            &.levelsblock {
+                width: 75%;
+            }
+        }
+
+        .longReputationBlock {
+            width: 50%;
+        }
+    }
+
+    .blockswrapper {
+
+        overflow: hidden;
+
+        .wait {
+            padding-bottom: @rhythm;
+
+            .waitCnt {
+                background: fade(@color-gray-light, 15);
+                color: @color-gray;
+                height: 250px;
+
+                .table {
+                    height: 100%;
+
+                    >div {
+                        vertical-align: middle;
+                        text-align: center;
+                        font-size: 1.2em;
+                        font-weight: 100;
+                    }
+                }
+
+                .label {
+                    margin-bottom: 2 * @rhythm;
+                }
+
+                button {
+                    font-weight: 100;
+                    padding: 2 * @rhythm 4 * @rhythm;
+                    width: 270px;
+                }
+            }
+        }
+
+        .metricablockwrapper {
+            padding-bottom: @rhythm;
+            padding-right: @rhythm;
+        }
+
+        .metricablock {
+            color: @color-gray;
+            cursor: pointer;
+
+            .blockContentWrapper {
+                padding: 0.5em;
+                background: fade(@color-gray-light, 15);
+                .transition(0.3s);
+
+                &.forchart {
+                    background: transparent;
+                }
+            }
+
+
+            .blockContent {
+                position: relative;
+
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+
+            .vidgetIconWrapper {
+                flex-grow: 1;
+                position: relative;
+
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+
+                font-size: 1.5em;
+                font-weight: 200;
+            }
+
+            .vidgetNameWrapper {
+                span {
+                    font-size: 0.8em;
+                }
+            }
+
+            .vidgetNameWrapperTable {
+                >div {
+                    vertical-align: middle;
+
+                    &.cellright {
+                        text-align: right;
+                    }
+                }
+            }
+
+            .vidgetcaption {
+                font-size: 0.6em;
+                font-weight: 700;
+            }
+
+            .preloaderGift {
+                display: none;
+
+                .preloader5 span {
+                    vertical-align: bottom;
+                }
+            }
+
+
+
+            &.bad {
+                .vidgetIconWrapper {
+                    .vidgetIcon {
+                        color: fade(@color-bad, 95);
+                    }
+                }
+            }
+
+            .vidgetAboutWrapper {
+                position: absolute;
+                left: 215px;
+                height: 210px;
+                top: 0;
+                color: fade(@color-gray, 95);
+                padding: 1em;
+                width: 2000px;
+                z-index: 10;
+                color: #000;
+                display: none;
+                z-index: 100;
+            }
+
+            &:hover {
+                .vidgetIconWrapper {
+                    .vidgetIcon {
+                        .shadowSmall();
+                    }
+                }
+            }
+        }
+
+    }
+
+    .ustatecontent {
+        .metricablockwrapper {
+            width: 25%;
+        }
+    }
+
+    .ustatecontentrep {
+
+        .reputation {
+            overflow: hidden;
+
+            >div {
+                float: left;
+                width: 25%;
+
+                &.connectionFailed {
+                    width: 100%;
+                }
+
+                &.reputationblock {
+                    .metricablock {
+
+                        /*.blockContentWrapper {
+							background: @color-black2;
+							color : #fff;
+						}
+
+						.vidgetIconWrapper{
+				
+							.vidgetIcon{
+								color : #fff;
+							}
+						}
+			
+				
+						.vidgetAboutWrapper{
+							color : #fff;
+						}*/
+
+                    }
+                }
+
+
+
+                &.levelsblock {
+                    width: 75%;
+                }
+            }
+        }
+
+
+        .levelsblock {
+            .metricablockwrapper {
+                float: right;
+                width: 33.33333%;
+            }
+        }
+
+        .level {
+
+            .chart {
+                position: absolute;
+                left: @rhythm;
+                right: @rhythm;
+                bottom: 2 * @rhythm;
+            }
+
+
+            .repchart {
+                .repchartTable {
+                    height: auto;
+
+                    >div {
+                        vertical-align: middle;
+
+                        &.pointCell {
+                            width: 10px;
+
+
+                        }
+
+                        &.lineCell {}
+                    }
+                }
+
+                .point {
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 50%;
+                    border: 3px solid @color-gray-light;
+                }
+
+                .lineBg {
+                    position: relative;
+                    background: @color-gray-light;
+                    height: 1px;
+
+                    .line {
+                        background: @color-main;
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        bottom: 0;
+                        width: 0%;
+                    }
+                }
+            }
+
+            &[state="next"] {
+                opacity: 0.6;
+            }
+
+            &[state="current"] {
+                .repchart {
+                    .point {
+                        &.start {
+                            border-color: @color-main;
+                        }
+                    }
+                }
+            }
+
+            &[state="completed"] {
+
+                .repchart {
+                    .point {
+                        border-color: @color-main;
+                    }
+
+                    .lineBg {
+
+                        .line {
+                            width: 100%;
+                            background: @color-main;
+                        }
+                    }
+                }
+
+                .metricablock {
+
+                    .blockContentWrapper {
+                        background: @color-bright;
+                        color: #fff;
+                    }
+
+                    .vidgetIconWrapper {
+                        .vidgetIcon {
+                            color: fade(#fff, 70);
+                        }
+                    }
+
+                    .reputationCount {
+                        color: #fff;
+                    }
+
+
+                    .vidgetAboutWrapper {
+                        color: #fff;
+                    }
+
+                }
+
+            }
+
+            .valued {
+                display: none;
+            }
+
+
+
+            &.waitgift {
+                .metricablock {
+
+                    .reputationCount {
+                        display: none;
+                    }
+
+                    .valued {
+                        display: block;
+                    }
+
+
+
+                    .preloaderGift {
+                        display: block;
+                    }
+
+                    .valuewrappe {
+                        display: none;
+                    }
+
+
+                    .vidgetIconWrapper {
+                        .vidgetIcon {
+                            .value {
+                                opacity: 0.5;
+                            }
+                        }
+                    }
+
+
+
+                }
+            }
+        }
+
+    }
+
+    /*.statsSection {
+        padding: 0 8 * @rhythm 4 * @rhythm;
+    }
+
+    .videoContainer {
+        padding: 0 8 * @rhythm;
+    }*/
+
+    .videoErrorContainer {
+        .videoErrorHeading {
+            font-size: 1.5em;
+            font-weight: 200;
+            color: @color-bad;
+        }
+
+        .videoErrorBody {
+            font-weight: 200;
+        }
+    }
+
+    .circular {
+        height: 100px;
+        width: 100px;
+
+        position: absolute;
+        transform: scale(1.5);
+
+        .inner {
+            position: absolute;
+            z-index: 6;
+            top: 50%;
+            left: 50%;
+            height: 96px;
+            width: 96px;
+            margin: -48px 0 0 -48px;
+            background: rgb(238, 236, 236);
+            border-radius: 100%;
+
+        }
+
+        .number {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+
+            font-weight: 200;
+            font-size: 0.8em;
+
+            // display: flex;
+            // flex-direction: column;
+            // align-items: center;
+            // justify-content: space-between;
+        }
+
+        .bar {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            background: rgb(238, 236, 236);
+            -webkit-border-radius: 100%;
+            clip: rect(0px, 100px, 100px, 50px);
+        }
+
+    }
+
+    .circle {
+        .bar {
+            .progress {
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                -webkit-border-radius: 100%;
+                clip: rect(0px, 50px, 100px, 0px);
+                background: @color-good;
+            }
+        }
+
+
+        .left {
+            .progress {
+                z-index: 1;
+                transform: rotate(180deg);
+            }
+        }
+
+        .right {
+            transform: rotate(180deg);
+            z-index: 3;
+
+            .progress {
+                transform: rotate(90deg);
+            }
+        }
+    }
+
+    .videoControls {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 4 * @rhythm;
+
+    }
+
+    .uploadVideo {
+        font-size: 1em;
+        margin-top: 4 * @rhythm;
+        padding-right: 0;
+        font-weight: normal;
+
+        .fas {
+            margin-right: @rhythm / 2;
+        }
+    }
+
+    .videoSearchWrapper {
+        position: relative;
+        max-width: 550px;
+        min-width: 270px;
+    }
+
+    .videoSearchInput {
+        border-radius: 35px;
+        width: 100%;
+        background-color: #fafafa;
+        border-color: rgba(14, 28, 43, 0.05);
+        color: rgba(14, 28, 43, 0.4);
+        padding-left: 2 * @rhythm;
+    }
+
+    .videoSearchButton {
+        position: absolute;
+        right: 10px;
+        top: 2px;
+
+        color: rgba(14, 28, 43, 0.4);
+    }
+
+    .metricsContainer {
+        .metricsContainerHeader {
+            font-size: 0.8em;
+        }
+
+        .metricsMain {
+
+            .metricSection {
+
+                font-size: 1.5em;
+                font-weight: 200;
+
+                i{
+                    font-size: 0.5em;
+
+                    color : @color-gray-mlight;
+
+                    &.fa-star{
+                        color :#FFAE00;
+                    }
+                }
+
+                
+            }
+        }
+
+        .progressBar {
+            margin: @rhythm * 4 0;
+
+            height: 1px;
+
+            background-color: @color-gray-light;
+
+
+        }
+    }
+
+    .sortSelectWrapper {
+        position: relative;
+
+        margin-left: @rhythm * 2;
+
+        &:hover {
+
+            .selectBorderCaption,
+            .selectIcon {
+                color: black;
+            }
+        }
+    }
+
+    .videoSortWrapper {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+
+        .videoSelect {
+            background-color: transparent;
+
+            padding: @rhythm * 2.5 0 @rhythm @rhythm * 2;
+
+            border: none;
+            border-bottom: 1px solid @color-gray-border;
+
+            font-weight: bold;
+            font-size: 0.8em;
+
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+
+            background: none;
+
+            cursor: pointer;
+
+            position: relative;
+
+            color: rgba(0, 0, 0, 0.5);
+
+            &:hover {
+                color: black;
+                border-bottom: 1px solid black;
+            }
+        }
+    }
+
+    .selectBorderCaption {
+        position: absolute;
+
+        font-size: 0.55em;
+        font-weight: bold;
+        color: rgba(0, 0, 0, 0.5);
+    }
+
+    .selectIcon {
+        position: absolute;
+
+        font-size: 0.55em;
+        font-weight: bold;
+        color: rgba(0, 0, 0, 0.5);
+
+        top: 1.84em;
+    }
+}
+
+html.stblack {
+    #videoCabinet {
+        background-color: #112035;
+
+        .vidgetNameWrapper,
+        .vidgetIconWrapper,
+        .metricsContainerHeader,
+        .metricSection,
+        .cabinetName {
+            color: whitesmoke;
+        }
+
+        .videoSearchInput::placeholder,
+        .videoSelect,
+        .selectIcon,
+        .selectBorderCaption {
+            color: @color-bright;
+        }
+
+        .ghostButton {
+            color: @color-bright;
+
+            &:hover {
+                color: whitesmoke;
+            }
+        }
+
+        .videoSelect {
+            border-bottom-color: @color-bright;
+
+            &:hover {
+                color: whitesmoke;
+                border-bottom-color: whitesmoke;
+            }
+        }
+
+        .sortSelectWrapper {
+            &:hover {
+
+                .selectBorderCaption,
+                .selectIcon {
+                    color: whitesmoke;
+                }
+            }
+        }
+
+        .singleVideoSection {
+            color: whitesmoke;
+        }
+
+        .videoPostLink {
+            color: @color-bright;
+
+            &:hover {
+                color: whitesmoke;
+                text-decoration: underline;
+            }
+        }
+
+        .videoStatsWrapper {
+            .singleStat {
+                color: whitesmoke;
+
+                &:hover {
+                    text-decoration: underline;
+                    color: whitesmoke;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}
+
+
+//tooltip elements
+
+.handleVideoMenu {
+    .menuitem {
+        display: flex;
+    }
+}
+
+.editPreview {
+    position: relative;
+
+    .inputMenuWrapper {
+        position: absolute;
+
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.editVideoDialog {
+    .dialogheader{
+        padding : 2 * @rhythm 0;
+        padding-top : 0;
+        span{
+            font-weight: 700;
+        }
+    }
+    .videoNameInput, 
+    .videoDescriptionInput {
+        border-radius: 3px;
+        width: 80%;
+        box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.4);
+        border: none;
+    }
+
+    .videoDescriptionInput{
+        padding-top : @rhythm;
+        padding-bottom : @rhythm;
+        padding : @rhythm;
+        min-height: 110px;
+    }
+
+    .videoNameWrapper, .videoDescriptionWrapper {
+        margin-bottom: @rhythm * 2;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    #videoCabinet {
+        background: #fff;
+
+        .caption {
+
+            span {
+                color: #010E30;
+                font-weight: 100;
+            }
+        }
+
+        .ustatecontent {
+            .metricablockwrapper {
+                width: 50%;
+            }
+        }
+
+        .videoAvatar {
+            height: 150px;
+        }
+
+        .videosWrapper {
+            >div {
+                &.work {
+                    &:nth-last-child(1) {
+                        .singleVideoSection {
+                            border-bottom: 0;
+                        }
+
+                    }
+                }
+            }
+        }
+
+        .singleVideoSection {
+
+            flex-wrap: wrap;
+
+            >div {
+                width: 100%;
+                padding: @rhythm 0;
+
+                &.videoName {
+                    order: -1;
+                }
+
+                &.postingStatusWrapper {
+                    width: 75%;
+                    font-size: 1em;
+                }
+
+                &.removeButtonWrapper {
+                    width: 25%;
+                    text-align: right;
+                }
+            }
+
+            .videoTextContainer {
+                max-width: none;
+            }
+
+
+        }
+
+        .statsdiv {
+
+            .reputation {
+
+                width: 100%;
+
+                >div {
+                    width: 100%;
+                    margin-bottom: @rhythm;
+
+
+                    .metricablockwrapper {
+                        padding: 0;
+                    }
+                }
+            }
+
+            .metricablock {
+                .blockContentWrapper {
+                    padding: @rhythm 2 * @rhythm;
+                }
+            }
+
+
+
+            .levelsblock {
+                .metricablockwrapper {
+                    float: right;
+                    width: 100%;
+                }
+            }
+        }
+
+        .caption {
+            font-size: 1.4em;
+        }
+
+        .mwork {
+            padding: 0;
+            padding-bottom: 4 * @rhythm;
+        }
+
+        .metrica {
+
+            >div {
+                &.label {
+                    padding-left: 0;
+                }
+            }
+
+        }
+
+        .videoControls {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .uploadVideo {
+            margin-left: 0;
+            margin-top: @rhythm;
+        }
+
+        .videoControlItem {
+            margin-top: @rhythm * 2;
+            width: 100%;
+
+            font-size: 1.2em;
+        }
+
+        .videoSortWrapper {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .sortSelectWrapper {
+            margin-left: 0;
+            width: 100%;
+
+            margin-top: @rhythm * 2;
+        }
+
+        .videoSelect {
+            width: 100%;
+        }
+
+        .videoContainer {
+            padding: 0;
+
+            .work {
+                padding-left: @rhythm;
+                padding-right: @rhythm;
+            }
+        }
+
+        .statsSection {
+            padding: 0 2 * @rhythm @rhythm;
+        }
+
+        .moduleHeader {
+            padding: 0 2 * @rhythm;
+        }
+
+        .postingStatusWrapper {
+            min-width: 10px;
+        }
+
+        .videoStatsWrapper {
+            min-width: 20px;
+
+            .singleStat {
+                margin-right: 0;
+            }
+        }
+
+        .videoTextContainer {
+            white-space: normal;
+        }
+    }
+
+    
+    
+
+    .editVideoDialog {
+       
+        .videoNameInput, 
+        .videoDescriptionInput {
+            width: 100%;
+           
+        }
+
+        
+    }
+
+    html.stblack {
+        #videoCabinet {
+
+            background: @color-black;
+
+            .caption {
+
+                span {
+                    color: @color-contrast;
+                    font-weight: 100;
+                }
+            }
+
+            .mwork {
+
+                &.wh {
+                    background: @color-black;
+                }
+            }
+
+        }
+    }
+}

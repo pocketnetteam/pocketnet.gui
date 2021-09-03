@@ -10,7 +10,7 @@
                             <img class="footer_logo" src="img/logo20.svg">
                         </div>
                         <div class="label">
-                            <a href="index"><b>POCKETNET</b></a>
+                            <a href="index"><b><%-app.meta.fullname%></b></a>
                         </div>
                     </div>
                     
@@ -71,8 +71,10 @@
 
             </div>
 
+            <% var year = new Date().getFullYear() %>
+
             <div class="ye">
-                Pocketnet, 2019&mdash;2021
+                <%-app.meta.fullname%>, 2019&mdash;<%-year%>
             </div>
         </div>
 

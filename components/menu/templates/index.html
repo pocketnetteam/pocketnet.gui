@@ -1,26 +1,6 @@
 <div id="<%-module.map.id%>" >
-	<!--
-	<div class="titleBar">
-		
-		<div class="titleBarButtons">
-			<div class="closeApp"><i class="fas fa-times"></i></div>
-
-			<div class="toggleMinMax">
-				<div class="maximizeApp"><i class="far fa-window-restore"></i></div>
-				<div class="restoreApp"><i class="far fa-window-maximize"></i></div>
-			</div>
-
-			<div class="miniizeApp">
-				<i class="far fa-window-minimize"></i>
-			</div>
-		</div>
-		<div class="titleBarDrag" style="-webkit-app-region: drag; -webkit-user-select: none;"></div>
-	</div>
-	-->
 
 	<div class="menuWrapper">
-		
-		
 
 		<div class="sections">
 			<div class="section right">
@@ -75,44 +55,9 @@
 
 					<% if(state) { %>
 
-						<!--<div class="items saveCrossWrapper">
-							<div class="item table right onlyicon saveCrossObj" events="savecross">
-
-								<div class="icon">
-									<div class="icn">
-											<i class="fas fa-share-alt"></i>
-									</div>
-									<div class="amount">
-										<%- deep(app, 'platform.sdk.user.storage.me.rc') || 0 %>
-									</div>
-								</div>
-
-								
-
-							</div>
-						</div>-->
-
 						
-						<!--
-						<div class="items messengerWrapper">
-							<div class="item table right onlyicon messenger" events="messenger">
 
-								<div class="icon">
-									<div class="icn">
-										<i class="far fa-comments"></i>
-									</div>
-
-									<div class="amount">
-									</div>
-
-								</div>
-
-							</div>
-						</div>-->
-						
-						<% if(typeof key!= 'undefined' && key) {%>
-
-							<div class="items keyexportWrapper">
+							<div class="items keyexportWrapper <% if(typeof key== 'undefined' || !key) {%> hidden <% } %>">
 								<div class="item table right onlyicon keyexport" events="keyexport">
 
 									<div class="icon">
@@ -128,7 +73,6 @@
 								</div>
 							</div>
 
-						<% } %>
 
 						<div class="items notificationsWrapper">
 							<div class="item table right onlyicon notifications" events="notifications">
@@ -278,7 +222,7 @@
 								<img class="header_logo" src="img/logo20.svg">
 							</div>
 							<div class="label">
-								<div events="sitename"><% if(app.test){%>TESTNET<%} else {%>POCKETNET<% }%></div>
+								<div class="sitenamelabel"><% if(app.test){%>TESTNET<%} else {%><%-app.meta.fullname%><% }%></div>
 								<div class="lang localization">
 									
 									<% if(isMobile()) {%>
@@ -356,39 +300,7 @@
 			
 		</div>
 
-		
-
-		<div class="mobilemenu">
-
-			<div class="items">
-
-				
-
-				<% if(state) { %>
-
-					<div class="itemGroup">
-						
-					</div>
-
-					<div class="item">
-						<div class="label signout" events="signout">
-							<%=e('signout')%>
-						</div>
-					</div>
-
-				<% } %>
-
-
-
-			</div>
-
-			<div class="close" events="hambclose">
-				<i class="fa fa-times" aria-hidden="true"></i>
-			</div>
-
-		</div>
 	</div>
-	
 
 </div>
 

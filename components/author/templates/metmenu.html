@@ -14,7 +14,20 @@ var all = {
 		icon : '<i class="fas fa-user-check"></i>',
 		text : e('unblockuser'),
 		class : 'unblock'
-	}
+	},
+
+	startchat : {
+		icon : '<i class="far fa-comment"></i>',
+		text : e('startchat'),
+		class : 'startchat'
+	},
+
+	unsubscribe : {
+		icon : '<i class="fas fa-user-times"></i>',
+		text : e('unsubscribe'),
+		class : 'unsubscribe'
+	},
+	
 
 }
 
@@ -25,6 +38,18 @@ if(author){
 		var me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
 
 		if (me){
+
+			if (!me.relation(author.address, 'subscribes')){
+			}
+			else
+			{
+				m.push('unsubscribe')
+			}
+
+			if(app.platform.matrixchat.core){
+				m.push('startchat')
+			}
+
 			if(me.relation(author.address, 'blocking')){
 				m.push('unblock')
 			}
@@ -33,6 +58,8 @@ if(author){
 				m.push('block')
 			}
 		}
+
+		
         
 
 	}

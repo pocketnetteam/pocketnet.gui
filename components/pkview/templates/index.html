@@ -1,12 +1,24 @@
 <div id="<%-module.map.id%>">
-	<div class="abswndwrapper">
-		<div class="tablewrapper table">
-			<div class="tablecell">
-				<div class="keywrapper">
+	<div class="work">
+		<div class="abswndwrapper">
+			<div class="tablewrapper table">
+				<div class="tablecell">
+					<div class="keywrapper">
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+
+	<% if(ed.afterregistration) {%>
+		<div class="next">
+			<a href="index">
+				<button class="button orange">
+					<%=e('next')%>
+				</button>
+			</a>
+		</div>
+	<% } %>
 
 	<div class="dontshowagain">
 		<div class="text"><i class="far fa-circle"></i> <%=e('e13142')%></div>

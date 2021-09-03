@@ -37,7 +37,6 @@ var comments = (function(){
 		var clbks = {
 			upvote : function(err, comment, value, address, temp){
 
-				console.log("CLBK")
 				if(!comment) return
 
 				if (comment.txid != txid) return
@@ -194,6 +193,7 @@ var comments = (function(){
 					}
 				})	
 			},
+			
 
 			stateAction : function(clbk){
 
@@ -512,8 +512,6 @@ var comments = (function(){
 			},
 			
 			removeForm : function(id){
-
-				console.log("ID", id)
 
 				delete areas[id]
 
@@ -1068,7 +1066,11 @@ var comments = (function(){
 				if (el && el.length > 0 && el[0].scrollIntoView && isMobile() && $(window).width() <= 768) {
 					el[0].scrollIntoView(true);
 					// Scroll until the comment section is at 120 px from the top
-					var container = ($('html').hasClass('showmain')) ? $('.lentacell') : $('html');
+
+
+					var container =  $('html');
+					
+					
 					var offset = 120 - el[0].getBoundingClientRect().top;
 					if (offset > 0)
 						container.animate({scrollTop: '-=' + offset + 'px'}, 0);
@@ -1106,7 +1108,6 @@ var comments = (function(){
 				if (listpreview && ed.lastComment){
 					comment = self.app.platform.sdk.comments.ini([ed.lastComment])[0]
 
-					console.log('ed.lastComment', ed.lastComment)
 				}
 
 
@@ -1203,17 +1204,19 @@ var comments = (function(){
 
 					}, function(__el){
 
+						console.log(__el)
+
 						__el.find('.edit').on('click', function(){
 
 							renders.edit(localParent, comment)
 
-							_el.tooltipster('hide')	
+							if (_el.tooltipster)
+								_el.tooltipster('hide')	
 						})
 
 						__el.find('.block').on('click', function(){
 
 							self.app.platform.api.actions.blocking(d.caddress, function (tx, error) {
-								console.log(tx, error)
                                 if (!tx) {
                                     self.app.platform.errorHandler(error, true)
                                 }
@@ -1222,7 +1225,8 @@ var comments = (function(){
 									parent.remove()
 								}
 
-								_el.tooltipster('hide')	
+								if (_el.tooltipster)
+									_el.tooltipster('hide')	
                             })
 
 							
@@ -1263,7 +1267,8 @@ var comments = (function(){
 
 							actions.sharesocial(comment)
 
-							_el.tooltipster('hide')	
+							if (_el.tooltipster)
+								_el.tooltipster('hide')	
 
 						})
 
@@ -1474,7 +1479,6 @@ var comments = (function(){
 
 				var id = actions.getid(_p.el.find('.postbody'))
 
-				console.log('p.el', _p.el)
 				topPreloader(100)
 
 				resize(data.dataURL, 1920, 1080, function(resized){
@@ -1700,6 +1704,8 @@ var comments = (function(){
 
 						renders.cpreview()
 
+						return
+
 						caption = new Caption({
 							container: el.c,
 							caption: el.c.find('.captionfwrapper'),
@@ -1795,7 +1801,7 @@ var comments = (function(){
 						edit : p.edit || '',
 						preview : _preview,
 						mestate : mestate,
-						sender : self.app.platform.sdk.address.pnet().address,
+						sender : self.app.platform.sdk.address.pnet() ? self.app.platform.sdk.address.pnet().address : null,
 						receiver: receiver
 					},
 
@@ -2090,17 +2096,15 @@ var comments = (function(){
 
 				}, function(_p){
 
+					if(ed.renderClbk) ed.renderClbk()
+
+					if (clbk)
+						clbk();
+
 					if (el.list){
-						el.list.find('.reply').off('click').on('click', events.replyandreplies);
-						el.list.find('.replies').off('click').on('click', events.replies);
-						el.list.find('.panel').off('click').on('click', events.metmenu);
-						el.list.find('.tocomment').off('click').on('click', events.tocomment)
-
-
-						el.list.find('.imageCommentOpen').off('click').on('click', events.openGallery)
 					
 						setTimeout(function(){
-							if(el.list)
+							if (el.list)
 								el.list.find('.newcomments').removeClass('newcomments')
 						}, 600)
 						
@@ -2116,10 +2120,7 @@ var comments = (function(){
 					}
 					
 
-					if(ed.renderClbk) ed.renderClbk()
-
-					if (clbk)
-						clbk();
+					
 					
 				})
 			}
@@ -2342,6 +2343,8 @@ var comments = (function(){
 
 				renders.list(p, function(){
 
+					if(!el.c) return
+
 					el.c.find('.loaderWrapper').addClass('hidden')
 
 					renders.post(function(area){
@@ -2521,7 +2524,6 @@ var comments = (function(){
 			
 			init : function(p){
 
-				console.log('p!!', p);
 				//state.load();
 
 				receiver = p.essenseData.receiver;
@@ -2535,6 +2537,13 @@ var comments = (function(){
 				el.showall = el.c.find('.showall')
 
 				_in = el.c.closest('.wndcontent');
+
+
+				el.list.on('click', '.reply', events.replyandreplies);
+				el.list.on('click', '.replies', events.replies);
+				el.list.on('click', '.panel', events.metmenu);
+				el.list.on('click', '.tocomment', events.tocomment)
+				el.list.on('click', '.imageCommentOpen', events.openGallery)
 
 				if(!_in.length) {
 					_in = null

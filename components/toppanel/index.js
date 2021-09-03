@@ -76,21 +76,29 @@ var toppanel = (function(){
 		}
 
 		var renders = {
+			categoriesChanged : function(){
+
+				if(self.app.platform.sdk.categories.gettags().length){
+					el.menu.find('.showcategories').addClass('active')
+				}
+				else{
+					el.menu.find('.showcategories').removeClass('active')
+				}
+
+				
+			},
 			menu : function(pathname){
 
 				var selector = actions.selector()
 
 				self.app.user.isState(function(state){
 
-					if(state && isMobile() && pathname != 'index'){
+					if(isMobile() && pathname != 'index'){
 						el.c.addClass('hidden')
-						$('html').removeClass('toppanelshowed')
-						
 					}
 					else{
-
 						el.c.removeClass('hidden')
-						$('html').addClass('toppanelshowed')
+
 						self.shell({
 
 							name :  'menu',
@@ -99,7 +107,7 @@ var toppanel = (function(){
 								pathname : pathname,
 								state : state,
 								mobile : isMobile(),
-	
+								tagsSelected : self.app.platform.sdk.categories.gettags().length,
 								selector : selector
 							},
 	
@@ -108,6 +116,15 @@ var toppanel = (function(){
 							updateNew()
 	
 							ParametersLive([selector], _p.el)
+
+							el.menu.find('.showcategories').on(clickAction(), function(){
+
+								var mainmoduleAction = deep(self.app, 'modules.main.module.showCategories')
+				
+								console.log(self.app.modules)
+				
+								if (mainmoduleAction) mainmoduleAction(true)
+							})
 	
 						})
 					}
@@ -152,6 +169,14 @@ var toppanel = (function(){
 
 			self.app.nav.clbks.history.toppanel = function(href){
 				renders.menu(app.nav.current.href)
+			}
+
+
+			self.app.platform.sdk.categories.clbks.tags.toppanel =
+			self.app.platform.sdk.categories.clbks.selected.toppanel = function(data){
+
+				renders.categoriesChanged()
+				
 			}
 
 			if (self.app.platform.sdk.newmaterials.clbks)

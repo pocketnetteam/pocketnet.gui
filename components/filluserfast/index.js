@@ -199,7 +199,14 @@ var filluserfast = (function(){
 
 				after : function(el){
 
+					var c = false
+
 					var clbk = function(){
+
+						if(c) return
+
+						c = true
+
 						if (deep(essenseData, 'successHref') == '_this'){
 							var close = deep(initialParameters, 'container.close')
 							if (close)
@@ -220,15 +227,14 @@ var filluserfast = (function(){
 						}
 
 
-						if(isMobile()){
-							self.app.platform.ui.showmykey()
+						if (isMobile()){
+							self.app.platform.ui.showmykey({
+								afterregistration : true
+							})
 						}
 						else{
 							self.app.platform.ui.showmykeyfast()
 						}
-
-						
-						
 						
 					}
 

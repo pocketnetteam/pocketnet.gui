@@ -113,7 +113,9 @@ var send = (function(){
 
 				var p = parameters();
 
-				data = {};
+				data = {
+					message : ''
+				};
 
 				if(p.address && bitcoin.address.fromBase58Check(p.address)){
 					data.address = p.address
@@ -127,11 +129,11 @@ var send = (function(){
 					data.label = clearScripts(donottrustLink(findAndReplaceLink(p.label, true)))
 				}
 
-				if(p.message){
+				if (p.message){
 					data.message = clearScripts(donottrustLink(findAndReplaceLink(hexDecode(p.message, true))))
 				}
 
-				if(data.amount && data.address && data.message){
+				if(data.amount && data.address){
 					clbk(data);
 				}
 

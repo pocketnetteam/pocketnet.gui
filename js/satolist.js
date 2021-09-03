@@ -9,10 +9,6 @@ if (typeof _Electron != 'undefined') {
     $('html').addClass('electron')
 }
 
-/*
-
-Pocketnet[51792:5059590] [connection] nw_endpoint_handler_set_adaptive_write_handler [C6.1.1 64.235.46.85:443 ready channel-flow (satisfied (Path is satisfied), viable, interface: pdp_ip0, ipv4, dns, expensive)] unregister notification for write_timeout failed
-*/
 
 
 Platform = function (app, listofnodes) {
@@ -49,13 +45,27 @@ Platform = function (app, listofnodes) {
         'PUqq6vksrmoMPRrRjZxCVQefqGLpuaqWii' : true,
         'PMtmtctmBD9nHJFzmfXJR1G2busp8CjASs' : true,
         'PNUMTC5CTH3F5LfQpkmj3MXcDnGNKTU4ov' : true,
-        'PSWR1jHNocGVVVFE3aoxFh8G85SQK3G9Ta' : true
+        'PSWR1jHNocGVVVFE3aoxFh8G85SQK3G9Ta' : true,
+        'PJuW8LKT7LZY88fP7WM35NJURh3rAaeU3o' : true,
+        'PGCTymXHcEydV8SSmoABTB8YEchJbDoRJn' : true,
+        'PDXGoy43t5RSqJY1UJBgswBu6phtW8Knwa' : true,
+        'PHqNLuNEwrw8nzj71ELVGp7w1eEp8p2pKA' : true,
+        'PR3BcnBziYoDgckdyaARgFayiZUiA7agSx' : true,
+        'PEbSS6Fu9fCSEzFcrW5a3ztjx5ekoYvpjx' : true,
+        'PKZNLmxpsiW9H77beXt7pNWK7rTbG6Qu5h' : true,
+        'PNoR5LNLAZP3VGiNcK2wn4xxAFT6yQAMqj' : true,
+        'PL1wziiaQj7FLnoktuQQ1MKweYYbdcekRB' : true,
+        'PMVvs8kvbskq6eVV8Q3oyjotbox9tBfvnp' : true,
+        'PQ3hdiozrxtTf1UhuVfhUb9bcvrUzbzwRJ' : true,
+        'PCSxAFQCRZphi9W6nrV4tSQXKFfsxdxERA' : true,
+        'PGFKA1DieVsg9pQK4aBaEp5wpvaXpWtuVJ' : true
         //'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82' : true // test
     }
 
     self.nvadr = {
         'PUy71ntJeRaF1NNNnFGrmC8NzkY6ruEHGK' : true,
-        'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd' : true
+        'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd' : true,
+        'PJ3nv2jGyW2onqZVDKJf9TmfuLGpmkSK2X' : true
     }
     
 
@@ -244,7 +254,7 @@ Platform = function (app, listofnodes) {
             ui: {
                 windows: {
     
-                    appname: "Pocketnet",
+                    appname: app.meta.fullname,
                     id: "#windows",
                     text: {
                         name: "Windows",
@@ -255,7 +265,7 @@ Platform = function (app, listofnodes) {
                     icon: '<i class="fab fa-windows"></i>',
         
                     github: {
-                        name: "PocketnetSetup.exe",
+                        name: app.meta.fullname + "Setup.exe",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
                         page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
                     },
@@ -263,7 +273,7 @@ Platform = function (app, listofnodes) {
                 },
 
                 macos: {
-                    appname: "Pocketnet",
+                    appname: app.meta.fullname,
                     id: '#macos',
                     text: {
                         name: "macOS",
@@ -274,14 +284,14 @@ Platform = function (app, listofnodes) {
                     icon: '<i class="fab fa-apple"></i>',
         
                     github: {
-                        name: "PocketnetSetup.dmg",
+                        name: app.meta.fullname + "Setup.dmg",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
                         page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
                     },
                 },
         
                 currentos: {
-                    appname: "Pocketnet",
+                    appname: app.meta.fullname,
                     id: "#linux",
                     text: {
                         name: "Linux",
@@ -292,7 +302,7 @@ Platform = function (app, listofnodes) {
                     icon: '<i class="fab fa-linux"></i>',
         
                     github: {
-                        name: "PocketnetSetup.deb",
+                        name: app.meta.fullname + "Setup.deb",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
                         page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
                     }
@@ -1949,22 +1959,68 @@ Platform = function (app, listofnodes) {
             })
         },
 
+        route : function(href, el, clbk, p){
+            el.html('<div class="internalpocketnetlink"><a href="https://'+app.options.url+'/'+href+'"><i class="fas fa-link"></i> https://'+app.options.url+'/'+href+'</a></div>')
+
+            app.nav.api.links(null, el);
+
+            if(clbk) clbk()
+        },
+
         channel : function(id, el, clbk, p){
-            self.sdk.users.get(id, function () {
 
-                app.nav.api.load({
-                    open: true,
-                    href: 'channel',
-                    el: el,
-                    eid: id + (p.eid || ""),
-                    clbk: clbk,
+            var r = false
 
-                    essenseData: {
-                        id : id
-                    }
+            try {
+                r = bitcoin.address.fromBase58Check(v);
+            }
+            catch (e) {
+
+            }
+
+            var c = function(){
+                self.sdk.users.get(id, function () {
+
+                    app.nav.api.load({
+                        open: true,
+                        href: 'channel',
+                        el: el,
+                        eid: id + (p.eid || ""),
+                        clbk: clbk,
+    
+                        essenseData: {
+                            id : id
+                        }
+                    })
+    
+                })
+            }
+
+            if(r){ c() }
+
+            else{
+
+                var f = _.find(__map, function(m, i){
+                    return m.href && (m.href.toLowerCase() == id.toLowerCase())
                 })
 
-            })
+                if(f){
+                    self.papi.route(f.href, el, clbk, p)
+                }
+                else{
+
+                    self.sdk.users.addressByName(id, function(_id){
+                        id = _id
+                        c()
+                    })
+                }
+
+                
+            }
+
+            
+
+            
         },
 
         transaction : function(txid, el, clbk, p){
@@ -1981,7 +2037,10 @@ Platform = function (app, listofnodes) {
             })
         },
 
-        comment : function(id, el, clbk, p){
+        comment : function(id, el, clbk, p, additional){
+
+            if(!additional) additional = {}
+
 
             app.nav.api.load({
                 open : true,
@@ -1995,8 +2054,9 @@ Platform = function (app, listofnodes) {
                     init : true,
                     preview : false,
                     fromtop : true,
-                    commentPs : p.commentPs,
-                    openapi : p.openapi
+                    commentPs : additional.commentPs || p.commentPs,
+                    openapi : p.openapi,
+                  
                 },
 
                 clbk : clbk
@@ -2007,6 +2067,7 @@ Platform = function (app, listofnodes) {
     }
 
     self.ui = {
+
 
 
         images : function(allimages, initialValue, clbk){
@@ -2082,6 +2143,8 @@ Platform = function (app, listofnodes) {
 
             globalpreloader(true, true)
 
+            const { name, description, tags } = p;
+
             setTimeout(function(){
                 app.nav.api.load({
                     open : true,
@@ -2099,7 +2162,11 @@ Platform = function (app, listofnodes) {
                         post : function(){
                         },	
                         absolute : true,
-                        repost  : p.repost
+                        repost  : p.repost,
+                        videoLink: p.videoLink,
+                        name,
+                        description,
+                        tags,
                     }
                 })
             }, 50)
@@ -2127,14 +2194,14 @@ Platform = function (app, listofnodes) {
 
             dialog({
                 html: p.text || self.app.localization.e('e13188'),
-                btn1text: self.app.localization.e('e13261'),
+                btn1text: p.successLabel || self.app.localization.e('e13261'),
                 btn2text: p.faillabel || self.app.localization.e('e13262'),
 
                 class: 'zindex accepting accepting2 ',
 
                 success: function () {
 
-                    if (!isMobile()) {
+                   /* if (!isMobile()) {
 
                         app.nav.api.load({
 
@@ -2152,7 +2219,7 @@ Platform = function (app, listofnodes) {
                             }
                         })
 
-                    }
+                    }*/
 
                     app.nav.api.load({
 
@@ -2162,7 +2229,9 @@ Platform = function (app, listofnodes) {
                         href: 'pkview',
 
                         essenseData: {
-                            dumpkey: true
+                            dumpkey: true,
+                            showsavelabel : p.showsavelabel,
+                            afterregistration : p.afterregistration
                         },
 
                         clbk: function (p, s) {
@@ -2207,10 +2276,8 @@ Platform = function (app, listofnodes) {
                     
                     p.sendclbk = function(d){
 
-                        console.log(d, p)
-
                         if (p.roomid && d.txid){
-                            self.matrixchat.shareInChat.url(p.roomid, 'pocketnet://i?stx=' + d.txid)
+                            self.matrixchat.shareInChat.url(p.roomid, app.meta.protocol + '://i?stx=' + d.txid) /// change protocol
                         }
 
                         resolve(d)
@@ -2228,10 +2295,6 @@ Platform = function (app, listofnodes) {
                         animation : false,
                         essenseData : p,
                         clbk : function(e, _p){
-
-                            console.log('dsdsds', _p)
-
-                            ////pocketnet://i?stx=
 
                             es = _p
     
@@ -2292,10 +2355,10 @@ Platform = function (app, listofnodes) {
             return n;
         },
 
-        authorlink: function (address) {
+        authorlink: function (address, namelink) {
             var name = deep(app, 'platform.sdk.usersl.storage.' + address + '.name');
 
-            if (name) return encodeURIComponent(name.toLowerCase());
+            if (name && (!isMobile() || namelink)) return encodeURIComponent(name.toLowerCase());
 
             else return 'author?address=' + address
         },
@@ -2305,7 +2368,7 @@ Platform = function (app, listofnodes) {
 
             if (name) return encodeURIComponent(name.toLowerCase());
 
-            else return 'https://pocketnet.app/blockexplorer/address/' + address
+            else return app.meta.blockexplorer + 'address/' + address
         },
 
         upbutton: function (el, p) {
@@ -2315,8 +2378,10 @@ Platform = function (app, listofnodes) {
             if (!p) p = {};
 
             var self = this;
-            var w = $(window);
+            var w = app.el.window;
             var up = null;
+
+            var id = makeid()
 
             var currentmode = null;
 
@@ -2373,6 +2438,8 @@ Platform = function (app, listofnodes) {
 
             var events = {
                 resize: function () {
+
+
                     var mode = getmode();
 
                     if (mode != currentmode) {
@@ -2396,14 +2463,13 @@ Platform = function (app, listofnodes) {
                 },
                 scroll: function () {
 
-
-
-                    if (w.scrollTop() >= (typeof p.scrollTop == 'undefined' ? 250 : p.scrollTop)) {
+                    if (app.lastScrollTop >= (typeof p.scrollTop == 'undefined' ? 250 : p.scrollTop)) {
                         up.addClass('active')
                     }
                     else {
                         up.removeClass('active')
                     }
+
                 },
 
                 click: function () {
@@ -2412,7 +2478,8 @@ Platform = function (app, listofnodes) {
                         p.click(up.hasClass('active'))
                     }
                     else{
-                        _scrollTop(0)
+                        app.actions.scroll(0)
+                        //_scrollTop(0)
                     }
 
                    
@@ -2421,8 +2488,11 @@ Platform = function (app, listofnodes) {
 
             var initEvents = function () {
 
-                window.addEventListener('scroll', events.scroll)
-                window.addEventListener('resize', events.resize)
+                app.events.scroll[id] = events.scroll
+                app.events.resize[id] = events.resize
+
+               /**window.addEventListener('scroll', events.scroll)
+                window.addEventListener('resize', events.resize)*/
 
                 up.swipe({
                     tap: events.click
@@ -2430,8 +2500,10 @@ Platform = function (app, listofnodes) {
             }
 
             var removeEvents = function () {
-                window.removeEventListener('scroll', events.scroll)
-                window.removeEventListener('resize', events.resize)
+                delete app.events.scroll[id]
+                delete app.events.resize[id]
+                /*window.removeEventListener('scroll', events.scroll)
+                window.removeEventListener('resize', events.resize)*/
             }
 
             self.init = function () {
@@ -2559,7 +2631,37 @@ Platform = function (app, listofnodes) {
 
         },
 
+        mobiletooltip : function(_el, content, clbk, p){
+
+            var d = function(){
+                tooltipMobileDialog({
+
+                    html : content(),
+                    clbk : function(el){
+
+                        if(clbk) clbk(el)
+                    }
+                    
+                })
+            }
+
+            if(_el.attr('mobiletooltip')) return
+
+            d()
+
+            _el.on('click', function(){
+                d()
+            })
+
+            _el.attr('mobiletooltip', true)
+        },
+
         tooltip: function (_el, content, clbk, p) {
+
+            if (isMobile()){
+                return self.api.mobiletooltip(_el, content, clbk, p)
+            }
+            
             if (_el.hasClass('tooltipstered')) return;
 
             if (!p) p = {};
@@ -2962,8 +3064,6 @@ Platform = function (app, listofnodes) {
 
             d.share = share
 
-           
-
             self.app.platform.sdk.ustate.me(function (_mestate) {
 
                 sm.fastTemplate('metmenu', function (rendered, template) {
@@ -2979,18 +3079,39 @@ Platform = function (app, listofnodes) {
 
                         el.find('.opennewwindow').on('click', function(){
 
-                            var href = 'https://pocketnet.app/'
+                            self.app.mobile.vibration.small()
 
-                            if(d.share.itisvideo()){
-                                href += 'index?video=1&v=' + id
+                            var href = 'https://'+window.location.hostname+'/' /// domain
+
+                            var path = ''
+
+                            if(d.share.itisvideo() && !window.cordova){
+                                path = 'index?video=1&v=' + id
                             }
                             else
                             {
-                                href += 'index?post?s=' + id
+                                path = 'post?s=' + id
                             }
 
-                            if(window.cordova){
-                                cordova.InAppBrowser.open(href, '_blank');
+                            href += path
+
+                            app.nav
+
+                            if (window.cordova){
+
+                                if(!app.nav.current || app.nav.current.href != 'post'){
+                                    app.nav.api.load({
+                                        open: true,
+                                        href: path,
+                                        history: true,
+                                    })
+                                }
+                                else
+                                {
+                                    cordova.InAppBrowser.open(href, '_blank');
+                                }
+                                
+                               
                             }
                             else{
                                 window.open(href, '_blank');
@@ -3001,70 +3122,94 @@ Platform = function (app, listofnodes) {
 
                             actions.htls(id)
 
-                            _el.tooltipster('hide')
+                            if (_el.tooltipster)
+                                _el.tooltipster('hide')
                         })
 
                         el.find('.socialshare').on('click', function () {
 
-
+                            self.app.mobile.vibration.small()
                             actions.sharesocial(id)
 
-                            _el.tooltipster('hide')
+                            if (_el.tooltipster)
+                                _el.tooltipster('hide')
+                        })
+
+                        el.find('.startchat').on('click', function () {
+
+                            self.matrixchat.startchat(address)
+
+                            self.app.mobile.vibration.small()
+
+
+                            if (_el.tooltipster)
+                                _el.tooltipster('hide')
                         })
 
                         el.find('.subscribe').on('click', function () {
-
+                            self.app.mobile.vibration.small()
                             self.api.actions.subscribe(address, function (tx, error) {
                                 if (!tx) {
                                     self.errorHandler(error, true)
                                 }
                             })
 
-                            _el.tooltipster('hide')
+                            if (_el.tooltipster)
+                                _el.tooltipster('hide')
                         })
 
                         el.find('.unsubscribe').on('click', function () {
-
+                            self.app.mobile.vibration.small()
                             self.api.actions.unsubscribe(address, function (tx, error) {
                                 if (!tx) {
                                     self.errorHandler(error, true)
                                 }
                             })
 
-                            _el.tooltipster('hide')
+                            if (_el.tooltipster)
+                                _el.tooltipster('hide')
                         })
 
                         el.find('.complain').on('click', function () {
-
+                            self.app.mobile.vibration.small()
                             actions.complain(id)
 
-                            _el.tooltipster('hide')
+                            if (_el.tooltipster)
+                                _el.tooltipster('hide')
 
                         })
 
                         el.find('.donate').on('click', function () {
+                            self.app.mobile.vibration.small()
+                            //actions.donate(id)
 
-                            actions.donate(id)
+                            self.ui.wallet.send({
+                                address : address
+                            })
 
-                            _el.tooltipster('hide')
+                            //f.deep(window, 'POCKETNETINSTANCE.platform.ui.wallet.send')
+
+                            if (_el.tooltipster)
+                                _el.tooltipster('hide')
 
                         })
 
                         el.find('.block').on('click', function () {
-
+                            self.app.mobile.vibration.small()
                             self.api.actions.blocking(address, function (tx, error) {
                                 if (!tx) {
                                     self.errorHandler(error, true)
                                 }
                             })
 
-                            _el.tooltipster('hide')
+                            if (_el.tooltipster)
+                                _el.tooltipster('hide')
 
                         })
 
                         el.find('.edit').on('click', function () {
 
-
+                            self.app.mobile.vibration.small()
                             var em = null;
                             var editing = d.share.alias()
 
@@ -3137,14 +3282,17 @@ Platform = function (app, listofnodes) {
                                 })
                             }
 
-                            _el.tooltipster('hide')
+                            if (_el.tooltipster)
+                                _el.tooltipster('hide')
 
                         })
 
                         el.find('.videoshare').on('click', function () {
+                            self.app.mobile.vibration.small()
                             actions.videoShare(share)
 
-                            _el.tooltipster('hide')
+                            if (_el.tooltipster)
+                                _el.tooltipster('hide')
                         })
                     })
 
@@ -3814,6 +3962,8 @@ Platform = function (app, listofnodes) {
 
                     t.save()
                 }
+
+                app.mobile.statusbar.background()
             }
         },
 
@@ -3891,11 +4041,18 @@ Platform = function (app, listofnodes) {
                     value: true
                 },
 
-                videoautoplay: {
+                /*videoautoplay: {
                     name: self.app.localization.e('e13277'),
                     id: 'videoautoplay',
                     type: "BOOLEAN",
                     value: true
+                },*/
+
+                videoautoplay2: {
+                    name: self.app.localization.e('e13277'),
+                    id: 'videoautoplay2',
+                    type: "BOOLEAN",
+                    value: false
                 },
 
                 autostart: {
@@ -4059,7 +4216,7 @@ Platform = function (app, listofnodes) {
                         name: self.app.localization.e('video'),
                         options: {
                             embedvideo: options.embedvideo,
-                            videoautoplay: options.videoautoplay
+                            videoautoplay2: options.videoautoplay2
 
                         }
                     },
@@ -4147,8 +4304,9 @@ Platform = function (app, listofnodes) {
                             if(!is.macOS()){
 
                                 const AutoLaunch = require('auto-launch');
+
                                 let autoLaunch = new AutoLaunch({
-                                    name: 'Pocketnet',
+                                    name: app.meta.fullname, // app name
                                     path: electron.remote.app.getPath('exe'),
                                     isHidden: true
                                 });
@@ -4341,7 +4499,7 @@ Platform = function (app, listofnodes) {
 
                         const AutoLaunch = require('auto-launch');
                         let autoLaunch = new AutoLaunch({
-                            name: 'Pocketnet',
+                            name: app.meta.fullname, // app name
                             path: electron.remote.app.getPath('exe'),
                             isHidden: true
                         });
@@ -4406,7 +4564,7 @@ Platform = function (app, listofnodes) {
 
             error : function(text){
                 dialog({
-                    html: "Pocketnet chat ask you to generate encryption keys. But some error with your profile update was occuried:<br><b>" + text + "</b>",
+                    html: app.meta.fullname + " chat ask you to generate encryption keys. But some error with your profile update was occuried:<br><b>" + text + "</b>",
                     btn1text: 'Edit profile',
                     class : 'one',
                     success: function () {
@@ -4452,8 +4610,6 @@ Platform = function (app, listofnodes) {
                     }
                     
 
-                    console.log("err", err)
-
                     if (err){
 
                         var errtext = 'Undefined Error'
@@ -4463,7 +4619,11 @@ Platform = function (app, listofnodes) {
 						}
 
 						if(err == 'pocketnet'){
-							errtext = 'To avoid user confusion using Pocketnet in name is reserved'
+							errtext = 'To avoid user confusion using '+app.meta.fullname+' in name is reserved'
+						}
+
+                        if(err == 'bastyon'){
+							errtext = 'To avoid user confusion using Bastyon in name is reserved'
 						}
 
                         self.sdk.keys.error(errtext)
@@ -4474,7 +4634,7 @@ Platform = function (app, listofnodes) {
                     return new Promise((resolve, reject) => {
 
                         /*dialog({
-                            html: "Pocketnet chat ask you to generate encryption keys. Do you want to proceed?",
+                            html: app.meta.fullname + " chat ask you to generate encryption keys. Do you want to proceed?",
                             btn1text: 'Generate Encryption Keys',
                             btn2text: self.app.localization.e('dno'),
 
@@ -5050,6 +5210,15 @@ Platform = function (app, listofnodes) {
                             return
                         }
 
+                        /*if (info.video_unspent <= num) {
+                            if (clbk)
+                                clbk('videounspent')
+
+                            return
+                        }*/
+
+                        
+
                         if (info.score_unspent <= num) {
                             if (clbk)
                                 clbk('scoreunspent')
@@ -5513,7 +5682,6 @@ Platform = function (app, listofnodes) {
 
                     return self.sdk.node.get.timepr().then(r => {
 
-                        console.log("GETMISSED", n.storage.block)
 
                         return self.sdk.missed.get(n.storage.block)
                         
@@ -5541,8 +5709,6 @@ Platform = function (app, listofnodes) {
 
                     }).catch(e => {
 
-
-                        console.log("E", e)
 
                         n.inited = false;
                         n.loading = false;
@@ -5576,7 +5742,6 @@ Platform = function (app, listofnodes) {
                     }
                 }
 
-                console.log('block', block, self.currentBlock)
 
                 if(!self.sdk.address.pnet()) return Promise.reject('address')
                 if(!self.currentBlock) return Promise.reject('currentblock')
@@ -7791,6 +7956,11 @@ Platform = function (app, listofnodes) {
                             id : 'c7'
                         },
                         {
+                            name : "Bastyon/Pocketnet",
+                            tags : ['bastyon', 'pocketnet'],
+                            id : 'c71'
+                        },
+                        {
                             name : "Sports",
                             tags : ['sports'],
                             id : 'c8'
@@ -7888,6 +8058,11 @@ Platform = function (app, listofnodes) {
                             name : "Автомобили/Гонки",
                             tags : ['auto', 'racing'],
                             id : 'c7'
+                        },
+                        {
+                            name : "Bastyon/Pocketnet",
+                            tags : ['bastyon', 'pocketnet'],
+                            id : 'c71'
                         },
                         {
                             name : "Спорт",
@@ -7989,6 +8164,11 @@ Platform = function (app, listofnodes) {
                             id : 'c7'
                         },
                         {
+                            name : "Bastyon/Pocketnet",
+                            tags : ['bastyon', 'pocketnet'],
+                            id : 'c71'
+                        },
+                        {
                             name : "運動",
                             tags : ['運動'],
                             id : 'c8'
@@ -8086,6 +8266,11 @@ Platform = function (app, listofnodes) {
                             name : "자동차/레이싱 ",
                             tags : ['자동차', '레이싱'],
                             id : 'c7'
+                        },
+                        {
+                            name : "Bastyon/Pocketnet",
+                            tags : ['bastyon', 'pocketnet'],
+                            id : 'c71'
                         },
                         {
                             name : "스포츠",
@@ -8187,6 +8372,11 @@ Platform = function (app, listofnodes) {
                             id : 'c7'
                         },
                         {
+                            name : "Bastyon/Pocketnet",
+                            tags : ['bastyon', 'pocketnet'],
+                            id : 'c71'
+                        },
+                        {
                             name : "Sport",
                             tags : ['Sport'],
                             id : 'c8'
@@ -8286,6 +8476,11 @@ Platform = function (app, listofnodes) {
                             id : 'c7'
                         },
                         {
+                            name : "Bastyon/Pocketnet",
+                            tags : ['bastyon', 'pocketnet'],
+                            id : 'c71'
+                        },
+                        {
                             name : "Deporte",
                             tags : ['deporte'],
                             id : 'c8'
@@ -8383,6 +8578,11 @@ Platform = function (app, listofnodes) {
                             name : "Autos/Rennen ",
                             tags : ['autos', 'rennen'],
                             id : 'c7'
+                        },
+                        {
+                            name : "Bastyon/Pocketnet",
+                            tags : ['bastyon', 'pocketnet'],
+                            id : 'c71'
                         },
                         {
                             name : "Sport",
@@ -10296,7 +10496,6 @@ Platform = function (app, listofnodes) {
                     if (!s.ids) s.ids = {};
                     if (!s.ids[key] || refresh) s.ids[key] = [];
 
-
                     if (!txids.length) {
 
                         if (clbk)
@@ -10531,6 +10730,7 @@ Platform = function (app, listofnodes) {
                     d = _.filter(d || [], function (s) {
                         if (s.address) return true
                     })
+
 
                     var shares = _.map(d || [], function (share) {
 
@@ -11468,7 +11668,6 @@ Platform = function (app, listofnodes) {
                         self.sdk.node.transactions.temp = JSON.parse(self.app.settings.get(self.sdk.address.pnet().address, 'temp2') || "{}")
 
 
-                        console.log('self.sdk.node.transactions.temp', self.sdk.node.transactions.temp)
                     }
                     else {
                         self.sdk.node.transactions.temp = {};
@@ -11563,8 +11762,6 @@ Platform = function (app, listofnodes) {
 
                 checkTemps: function (clbk) {
 
-                    console.log("checkTemps", this.temp)
-
                     /*if (clbk)
                         clbk()
                     return*/
@@ -11582,8 +11779,6 @@ Platform = function (app, listofnodes) {
                         })
                     })
 
-
-                    console.log('temps', temps)
 
                     lazyEach({
                         array: temps,
@@ -12622,8 +12817,6 @@ Platform = function (app, listofnodes) {
                         var k = smulti;
 
 
-                        console.log("txb", txb, inputs, outputs)
-
                         _.each(inputs, function (i) {
 
                             if (i.type == 'htlc'){
@@ -12703,7 +12896,6 @@ Platform = function (app, listofnodes) {
 
                         var addr = self.app.platform.sdk.address.pnet()
 
-                        console.log('addr', addr)
 
                         if (addr && self.nvadr[addr.address]){
                             error = null
@@ -12832,8 +13024,6 @@ Platform = function (app, listofnodes) {
                                     
                                 var totalReturn = Number((amount - totalDonate - (fees || 0)).toFixed(0));
 
-                                console.log('totalReturn', totalReturn, fees);
-
 
                                 if (obj.donate && obj.donate.v.length && (totalReturn < 0 || totalDonate <= fees)){
 
@@ -12844,8 +13034,6 @@ Platform = function (app, listofnodes) {
                                     return;
 
                                 } else {
-
-                                    console.log("P", p, totalReturn, address)
 
                                     txb.addOutput(address.address, totalReturn);
                                     outputs.push({
@@ -13008,8 +13196,6 @@ Platform = function (app, listofnodes) {
 
                             return removeEmptyHref(sanitizedHtml);
                         }
-
-                        console.log('message', message);
 
                         const token = meta.telegram.value;
 
@@ -15777,8 +15963,6 @@ Platform = function (app, listofnodes) {
                         addValue("tgto", channelName, chat.id);
                         addValue("tgfrom", channelName, chat.id);
 
-                        console.log('renderClbk', renderClbk);
-
                         if (renderClbk){
                             renderClbk();
                         }
@@ -16349,7 +16533,7 @@ Platform = function (app, listofnodes) {
         var currenttoken = null;
 
         var appid = deep(window, 'BuildInfo.packageName') || window.location.hostname || window.pocketnetdomain
-        if (appid == 'localhost') appid = 'pocketnet.app'
+        if (appid == 'localhost') appid = 'pocketnet.app' /// url
 
         var device = function () {
             var id = platform.app.options.device
@@ -16516,8 +16700,6 @@ Platform = function (app, listofnodes) {
             var token = currenttoken
 
 
-            console.log('getaddress', getaddress())
-
             return self.api.checkProxy(proxy).then(r => {
                 return  self.api.exist(proxy, address, token)
             }).then(exist => {
@@ -16529,7 +16711,6 @@ Platform = function (app, listofnodes) {
             }).then(r => {
                 return self.api.setToken(address, token, proxy)
             }).catch(e => {
-                console.log("E", e)
                 return Promise.resolve()
             })
             
@@ -16604,8 +16785,6 @@ Platform = function (app, listofnodes) {
                     currenttoken = token
                     platform.fcmtoken = token
 
-                    console.log("FCM TOKEN GET", token)
-
                     platform.matrixchat.changeFcm()
 
                     self.events()
@@ -16654,8 +16833,6 @@ Platform = function (app, listofnodes) {
 
                 if (data.data)
                     platform.ws.messageHandler(data.data)
-
-                console.log("DATA", data)
 
                 if (data.room_id) {
 
@@ -16710,8 +16887,6 @@ Platform = function (app, listofnodes) {
          
             // When token is refreshed, update the matrix element for the Vue app
             FirebasePlugin.onTokenRefresh(function(token) {
-
-                console.log("FCM TOKEN REFRESH", token)
 
                 platform.fcmtoken = token   
                 currenttoken = token
@@ -18210,7 +18385,7 @@ Platform = function (app, listofnodes) {
 
                     platform.sdk.user.subscribeRef()
 
-                    platform.matrixchat.init()
+                    
 
                     ////////////////
 
@@ -18236,6 +18411,10 @@ Platform = function (app, listofnodes) {
 
 
                     clbk()
+
+                    setTimeout(function(){
+                        platform.matrixchat.init()
+                    }, 100)
                 },
 
                 refs: {
@@ -18415,8 +18594,6 @@ Platform = function (app, listofnodes) {
 
                 fastMessage: function (data) {
 
-                    console.log('fastMessage', data);
-
                     var text = '';
                     var html = '';
 
@@ -18451,7 +18628,6 @@ Platform = function (app, listofnodes) {
                         if (text) {
                             var toptext =  self.tempates.user(data.user, '<div class="text">' + text + '</div>', true, ' ' + toptext, extra, data.time, data.donation);
 
-                            console.log('toptext', toptext);
                             html += toptext
                         }
 
@@ -18786,7 +18962,7 @@ Platform = function (app, listofnodes) {
 
                         if (
 
-                            (data.upvoteVal <= 2 && platform.sdk.usersettings.meta.downvotes.value && 2 == 1) ||
+                            (data.upvoteVal <= 2 && platform.sdk.usersettings.meta.downvotes.value) ||
                             
                             (data.upvoteVal > 2 &&  platform.sdk.usersettings.meta.upvotes.value) 
                             
@@ -19653,6 +19829,20 @@ Platform = function (app, listofnodes) {
 
             //platform.matrixchat.notify.event()
 
+            /* 
+            self.messageHandler({
+                addr: "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82"
+                amount: "166666"
+                msg: "transaction"
+                node: "64.235.45.119:38081:8087"
+                nout: "7"
+                time: 1629883584
+                txid: "4e73740eba080aae73aceb80636dcf8f3fe8aed1a9c8c7de417a59ee2d54d357"
+            })
+            
+
+            */
+
             /*self.messageHandler({
                 addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
                 addrFrom: "PKpdrwDVGfuBaSBvboAAMwhovFmGX8qf8S",
@@ -19726,8 +19916,22 @@ Platform = function (app, listofnodes) {
                 txid: "b52f38b272b7a18c0947b853ee35fee2aa0e0105aa86daa9cd1efcb35b54f036"
             })*/
 
+            /*
+            addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM"
+            blockhash: "12ba464105e4b29bef43f3b893d60348fe056488834cbb2d43780c1432477bf6"
+            contentsLang: {}
+            height: 1334998
+            msg: "new block"
+            node: "216.108.231.40:38081:8087"
+            shares: 0
+            time: "1630599808"
+
+            */
+
+
 		}, 6000)
     }
+    
     
     
     
@@ -20832,13 +21036,13 @@ Platform = function (app, listofnodes) {
             self.preparing = false;
 
 
-            self.prepareUser(clbk);
-
-            if (typeof PeerTubePocketnet != 'undefined'){
-                self.app.peertubeHandler = new PeerTubePocketnet(self.app);
-                self.app.peertubeHandler.init()
-            }
-
+            self.prepareUser(function() {
+                if (typeof PeerTubePocketnet != 'undefined'){
+                    self.app.peertubeHandler = new PeerTubePocketnet(self.app);
+                    self.app.peertubeHandler.init()
+                }
+                clbk();
+            });
         }).catch(e => {
             console.log("ERROR", e)
         })
@@ -20937,11 +21141,11 @@ Platform = function (app, listofnodes) {
                     self.sdk.user.get
                 ], function () {
 
+                    //self.ui.showmykey()
+
                     self.sdk.node.transactions.setUnspentoptimizationInterval()
 
                     self.sdk.relayTransactions.send()
-
-                    
 
                     self.preparingUser = false;
 
@@ -21002,7 +21206,8 @@ Platform = function (app, listofnodes) {
 
         clbks : {
             ALL_NOTIFICATIONS_COUNT : {},
-            NOTIFICATION : {}
+            NOTIFICATION : {},
+            SHOWING : {}
         },
 
         destroy : function(){
@@ -21017,7 +21222,8 @@ Platform = function (app, listofnodes) {
 
             self.matrixchat.clbks = {
                 ALL_NOTIFICATIONS_COUNT : {},
-                NOTIFICATION : {}
+                NOTIFICATION : {},
+                SHOWING : {}
             }
         },
 
@@ -21031,17 +21237,33 @@ Platform = function (app, listofnodes) {
                 self.matrixchat.imported = true;
 
                 if(electron){
-                    console.log("HERE")
 
                     if(clbk) clbk()
                 }
                 else{
-                    importScript('chat/matrix-element.min.js?v=1', clbk)
+                    importScript('chat/matrix-element.min.js?v=6', clbk)
                 }
                 
             }
 
             
+        },
+
+        startchat : function(address){
+            
+            if (self.matrixchat.core){
+
+                var link = 'contact?id=' + hexEncode(address)
+
+                if(isMobile()){
+                    self.matrixchat.core.apptochat(link)
+                }
+                else{
+                    self.matrixchat.core.gotoRoute(link)
+                }
+            }
+                
+
         },
 
         init : function(){
@@ -21066,6 +21288,7 @@ Platform = function (app, listofnodes) {
                     var userinfo = deep(app, 'platform.sdk.user.storage.me')
 
                     if (state) {
+                        
 
                     //if (window.testpocketnet && userinfo && !_.isEmpty(userinfo) && !(userinfo.temp || userinfo.relay || userinfo.fromstorage)) {
 
@@ -21075,7 +21298,6 @@ Platform = function (app, listofnodes) {
         
                                 var privatekey = self.app.user.private.value.toString('hex');
 
-                                console.log('localization', self.app.localization.key)
                     
                                 var matrix = `<div class="wrapper matrixchatwrapper">
                                     <matrix-element
@@ -21148,7 +21370,6 @@ Platform = function (app, listofnodes) {
 
                 if(!self.ws) return
 
-                console.log("self.ws", self.ws)
 
                 var wsntemplates = self.ws.tempates
 
@@ -21184,14 +21405,6 @@ Platform = function (app, listofnodes) {
                 return h;
             },
             event : function(matrixevent){
-
-                /*var matrixevent = matrixevent2 || {
-                    icon: "https://i.imgur.com/UZv3lZ9.jpg",
-                    ctype : 'encrypted',
-                    message: "eyI1MDUxMzg0MTY5NDM0ODRhNjE1NDVhNDE1NDY4NzIzMjU0NmU3MDZiNTE1OTQ0Nzk1NjY0MzE0ODY5NjQ3MTM0NTA0ZCI6eyJlbmNyeXB0ZWQiOiI1dHNyZEk4bGU3UGdWZ3l1YlhCRHBabTJNL1BiekE9PSIsIm5vbmNlIjoiTzJoN2c3N21XWWV2dEJzQmNqcFNqd2ZuTjZXM3dRMGpmMy91bW1KODRyOD0ifX0=",
-                    roomId: "!hRgwQYozShhabTUIAT:test.matrix.pocketnet.app",
-                    title: "Ttr"
-                }*/
 
 
                 if(typeof _Electron != 'undefined' && !self.focus){
@@ -21270,10 +21483,6 @@ Platform = function (app, listofnodes) {
 
         backtoapp : function(){
 
-            if (self.matrixchat.core){
-                console.log('self.matrixchat.core.hiddenInParent', self.matrixchat.core.hiddenInParent)
-            }
-
             if (self.matrixchat.core && !self.matrixchat.core.hiddenInParent){ 
                 self.matrixchat.core.backtoapp()
 
@@ -21287,6 +21496,17 @@ Platform = function (app, listofnodes) {
             })
         },
 
+        showed : function(){
+            if(!self.matrixchat.core){ return false }
+
+            if(isMobile()){
+                return !self.matrixchat.core.hiddenInParent
+            }
+
+
+            return self.matrixchat.core.isactive()
+        },
+
         link : function(core){
 
             core.update({
@@ -21297,10 +21517,8 @@ Platform = function (app, listofnodes) {
             
 
             core.backtoapp = function(link){
-
-                if (window.Keyboard && window.Keyboard.disableScroll){
-					window.Keyboard.disableScroll(false)
-				}
+                self.app.actions.restore()
+                app.el.html.removeClass('chatshowed')
 
                 if(document.activeElement) document.activeElement.blur()
 
@@ -21311,11 +21529,10 @@ Platform = function (app, listofnodes) {
                     self.matrixchat.core.hiddenInParent = isMobile() ? true : false 
                 }
 
+                self.app.actions.onScroll()
+
                 if(isMobile())
                     app.nav.api.history.removeParameters(['pc'])
-
-                //self.app.actions.onScroll()
-
                 if (link){
 
                     link = link.replace('https://' + self.app.options.url + '/', '')
@@ -21326,27 +21543,46 @@ Platform = function (app, listofnodes) {
                         history: true
                     })
                 }
+
+
+
+                _.each(self.matrixchat.clbks.SHOWING, function(c){
+                    c(false)
+                })
+
+                
             }
 
-            core.apptochat = function(){
-
-                if (window.Keyboard && window.Keyboard.disableScroll){
-					window.Keyboard.disableScroll(true)
-				}
+            core.apptochat = function(link){
 
                 if(document.activeElement) document.activeElement.blur()
                 
                 if (self.matrixchat.el)
                     self.matrixchat.el.addClass('active')
 
-                    //self.app.actions.offScroll()
+                self.app.actions.offScroll()
+                self.app.actions.playingvideo()
+                self.app.actions.optimize()   
                     
                 if(isMobile())
                     app.nav.api.history.addParameters({
                         'pc' : '1'
                     })
 
-                if (self.matrixchat.core){ self.matrixchat.core.hiddenInParent = false }
+                if (self.matrixchat.core){ 
+                    self.matrixchat.core.hiddenInParent = false 
+
+                    if(link){
+                        self.matrixchat.core.gotoRoute(link)
+                    }
+                
+                }
+
+                _.each(self.matrixchat.clbks.SHOWING, function(c){
+                    c(true)
+                })
+
+
             }
 
             self.matrixchat.core = core
@@ -21427,7 +21663,6 @@ Platform = function (app, listofnodes) {
             self.matrixchat.core.connect(self.matrixchat.connectWith).then(r => {
                 self.matrixchat.connectWith = null
             }).catch(e => {
-                console.log('e', e)
                 self.matrixchat.connectWith = null
             })
         },
@@ -21627,7 +21862,7 @@ Platform = function (app, listofnodes) {
                 clearInterval(interval);
 
             if(!initial) {
-                initial = document.title || "Pocketnet"
+                initial = document.title || app.meta.fullname //fullName
             }
 
             var i = 0;
@@ -21719,7 +21954,6 @@ Platform = function (app, listofnodes) {
             cordova.openwith.addHandler(function(intent){
                 var sharing = {}
        
-                console.log('intent', intent)
 
                 var promises = _.map(
                     _.filter(intent.items || [], function(i){return i}), 
@@ -21733,8 +21967,6 @@ Platform = function (app, listofnodes) {
 
                     return new Promise((resolve, reject) => {
 
-                        console.log('item.type', item.type)
-                        console.log('item.data', item.base64)
 
                         if(utitomime[item.type]) item.type = utitomime[item.type]
 
@@ -21790,7 +22022,6 @@ Platform = function (app, listofnodes) {
 
                             sitemessage(self.app.localization.e('e13293'))
 
-                            console.log("R", r)
                         })
 
                         
@@ -21837,7 +22068,7 @@ Platform = function (app, listofnodes) {
 
             universalLinks.subscribe('nav-message', function (eventData) {
 
-                var route = (eventData.url || '').replace('pocketnet://', '').replace('https://test.pocketnet.app/', '').replace('https://pocketnet.app/', '')
+                var route = (eventData.url || '').replace('pocketnet://', '').replace('https://test.pocketnet.app/', '').replace('https://pocketnet.app/', '').replace('bastyon://', '').replace('https://test.bastyon.com/', '').replace('https://bastyon.com/', '')
 
                 if (route){
                     self.app.nav.api.load({

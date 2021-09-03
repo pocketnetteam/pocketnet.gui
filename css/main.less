@@ -25,13 +25,13 @@ html {
     &.nooverflow{
         overflow-y: hidden;
     }
-    &.mobile.nooverflow{
+    /*&.mobile.nooverflow{
         height: 100%;
 
         body{
             height: 100%;
         }
-    }
+    }*/
 
     scrollbar-width: none;
     &::-webkit-scrollbar{
@@ -65,6 +65,12 @@ body{
     /*overflow-anchor: none;*/
 }
 
+
+.disable-hover,
+.disable-hover * {
+  pointer-events: none !important;
+}
+
 h1{
     font-size: 1em;
 }
@@ -73,6 +79,47 @@ h2{
 }
 h3{
     font-size: 1em;
+}
+
+.preshell{
+    .blur{
+        -webkit-filter: blur(5px);
+        -moz-filter: blur(5px);
+        filter: blur(5px);
+    }
+
+    .spacertable{
+        background: fade(@color-black2, 2);
+        height: 22 * @rhythm;
+        margin-bottom : 4 * @rhythm;
+    }
+
+    .textline{
+        background: fade(@color-black2, 4);
+        height: 21px;
+        margin-bottom : @rhythm;
+        border-radius: 3px;
+
+        &.light{
+            background: fade(@color-black2, 2);
+        }
+
+        &.slight{
+            background: fade(@color-gray-slight, 6);
+        }
+
+        &.colored{
+            background: fade(@color-main, 7);
+        }
+
+        &.contrast{
+            background: fade(@color-contrast, 7);
+        }
+
+        &.yellow{
+            background: fade(#FFAE00, 7);
+        }
+    }
 }
 
 mark {
@@ -297,6 +344,18 @@ html.stblack{
     }
 }
 
+html{
+    &.mobile{
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+        
+}
+
 .unselectable{
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -306,6 +365,7 @@ html.stblack{
     user-select: none;
     -webkit-tap-highlight-color: transparent;
 }
+
 
 div{
     -webkit-tap-highlight-color: transparent;
@@ -2111,13 +2171,20 @@ input[type=radio].radio:checked + label {
 }
 
 .wnd{
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
+    bottom : 0;
+    right : 0;
     width : 100%;
     display: none;
     z-index: 1005;
 
+    &.embeding{
+        z-index: 2005; 
+    }
+
+    
     .wndback{
         width: 100%;
         height: 100%;
@@ -2526,7 +2593,7 @@ input[type=radio].radio:checked + label {
 
             >div{
                 &.buttons{
-                    display: none;
+                    display: none!important;
                 }
             }
         }
@@ -2759,6 +2826,8 @@ input[type=radio].radio:checked + label {
                 }
             }
         }
+
+        
     }
 }
 
@@ -2909,49 +2978,70 @@ input[type=radio].radio:checked + label {
     }
 }
 .preloader5 {
-   display:inline-block;
-   font-size:0px;
-   padding:0px;
+   display: block;
+   margin : 0 auto;
+   /*position: relative;
+   width: 30px;
+   height: 12px;
+   content-visibility : auto;
 
    &.maincolor{
     span{
         background: @color-main;
     }
-    
    }
 
    &.goldcolor{
     span{
         background: #FFAE00;
     }
-    
+   }*/
+}
+
+.vjs-play-progress{
+    content-visibility : auto;
+    backface-visibility: hidden;
+}
+
+.preloader6{
+   img{
+       width: 30px;
    }
+}
+.preloader5{
+    img{
+        width: 30px;
+        will-change: transform;
+    }
 }
 .preloader5 span {
    vertical-align:middle;
    border-radius:50%;
    background: @color-gray-light;
-   display:inline-block;
+   display:block;
    width:6px;
    height:6px;
-   margin:3px 2px;
-   -webkit-animation:preloader5 0.8s linear infinite alternate;
-   animation:preloader5 0.8s linear infinite alternate;
-
-
+   position: absolute;
+   /*-webkit-animation:preloader5 0.8s linear infinite alternate;
+   animation:preloader5 0.8s linear infinite alternate;*/
+   top : 3px;
    
+   content-visibility : auto;
 }
 .preloader5 span:nth-child(1) {
    -webkit-animation-delay:-0.8;
    animation-delay:-0.8s;
+   left : 3px;
 }
 .preloader5 span:nth-child(2) {
    -webkit-animation-delay:-0.53333s;
    animation-delay:-0.53333s;
+   left : 12px;
 }
 .preloader5 span:nth-child(3) {
    -webkit-animation-delay:-0.26666s;
    animation-delay:-0.26666s;
+   left : 21px;
 }
 @keyframes preloader5 {
    from {transform: scale(0, 0);}
@@ -3136,7 +3226,7 @@ input[type=radio].radio:checked + label {
         .body{
             .text{
                 text-align: center;
-                font-size: 2.2em;
+                font-size: 1.2em;
                 color : @color-white;
             }
         }
@@ -3389,6 +3479,10 @@ input[type=radio].radio:checked + label {
     .thwrapper{
         padding : 0;
         max-width: 450px;
+        background: transparent;
+        width: 93%;
+        margin : 0 auto;
+        border : 0;
     }
 
     .buttons{
@@ -3403,11 +3497,19 @@ input[type=radio].radio:checked + label {
         .item{
             padding : 4 * @rhythm 2 * @rhythm;
             text-align: center;
-            border-bottom : 1px solid @color-gray-slight;
+            background: #fff;
             cursor: pointer;
+            border-radius: 3px;
+            margin-top : 0.5 * @rhythm;
 
             &.itemmain{
                 color : @color-main;
+            }
+
+            &.itemclose{
+                margin-top : 2 * @rhythm;
+                background: fade(@color-gray-mlight, 10);
+                backdrop-filter: blur(4px);
             }
 
             &:nth-last-child(1){
@@ -3426,6 +3528,32 @@ input[type=radio].radio:checked + label {
     }
 
     z-index: 10000;
+}
+
+.tooltipMobileDialog{
+    z-index: 25000;
+    font-size: 1.1em;
+
+    .buttons{
+        display: none;
+    }
+
+    .menuitem{
+        margin-top : 1.5 * @rhythm;
+    }
+
+    .mobiledialogcontent{
+        max-height: 300px;
+        overflow-y: auto;
+    }
+
+    .closeButton{
+        margin-top : 3 * @rhythm;
+
+        button{
+            width: 100%;
+        }
+    }
 }
 
 .refadd{
@@ -4388,10 +4516,11 @@ input[type=radio].radio:checked + label {
     .showmorebywrapper{
         overflow: hidden;
         overflow-x: scroll;
-    
+            
         scrollbar-width: none;
-        
-        
+
+        >div{
+        }
     
         &::-webkit-scrollbar{
             height: 4px;
@@ -4481,13 +4610,71 @@ html.tablet{
         z-index: 300;
         .shadowSmall();
         -webkit-overflow-scrolling: touch;
+
         &.active{
-            left : 0;
-            right: 0;
+            -webkit-transform: translateX(100%);
+            transform: translateX(100%);
             opacity: 1;
+
         }
     }
     
+}
+html.tablet.fullscreen,
+html.mobile.fullscreen{
+
+    /*background: #000;*/
+
+    .matrixchatwrapper{
+        display: none!important;
+    }
+
+    #menuWrapper{
+        display: none!important;
+    }
+
+    #navigationWrapper{
+        display: none!important;
+    }
+}
+/*
+html.cordova{
+
+    .cordovatop{
+        position : fixed;
+        left : 0;
+        right : 0;
+        top : 0;
+        height: 31px;
+        z-index: 5;
+        background: #fff;
+    }
+
+    #menu .menuWrapper{
+        top : 30px;
+    }
+
+    #panelWrapper{
+        top : 95px;
+    }
+
+    .contentWrapper{
+        padding-top : 95px;
+    }
+
+    .matrixchatwrapper{
+        top : 30px;
+    }
+
+    &.stblack{
+        .cordovatop{
+            background: @color-black5;
+        }
+    }
+}
+*/
+.windowsContainer{
+    position: relative;
 }
 
 /*t*/ @media only screen and (max-width: 768px){
@@ -4755,25 +4942,19 @@ html.tablet{
         position : absolute;
         bottom : -4%;
         right : -4%;
-        .transition(0.3s);
         .shadowText();
-       
         line-height: 0.25em;
         font-size: 0.25em;
-        
         opacity: 1;
 
         .fa-certificate{
             color : fade(@color-main, 100);
-            animation: realperson-color-change-bg 3s infinite;
         }
 
         .fa-check{
             color : #fff;
             box-shadow: none;
         }
-
-       
     }
 
     &:hover{
@@ -4785,12 +4966,6 @@ html.tablet{
 }
 
 
-@keyframes realperson-color-change-bg {
-    0% { color: fade(@color-bright, 80);  }
-    50% { color: fade(@color-main, 100); }
-    100% { color: fade(@color-bright, 80);}
-}
-
 .userpic{
     width: 40px;
     height: 40px;
@@ -4799,26 +4974,12 @@ html.tablet{
     text-align: center;
     background: transparent;
     font-weight: 200;
-                /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#6e6e6e+0,6e6e6e+41,035075+100 */
-    background: #6e6e6e; /* Old browsers */
-    background: -moz-linear-gradient(-45deg, #6e6e6e 0%, #6e6e6e 41%, #035075 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(-45deg, #6e6e6e 0%,#6e6e6e 41%,#035075 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(135deg, #6e6e6e 0%,#6e6e6e 41%,#035075 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6e6e6e', endColorstr='#035075',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    background: #a0a0a0; /* Old browsers */
     color: #fff;
     cursor: pointer;
-    .transition(0.3s);
     .shadowSmall();
 
-    &:hover{
-        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#046da1+0,046da1+42,035075+100 */
-        background: #046da1; /* Old browsers */
-        background: -moz-linear-gradient(-45deg, #046da1 0%, #046da1 42%, #035075 100%); /* FF3.6-15 */
-        background: -webkit-linear-gradient(-45deg, #046da1 0%,#046da1 42%,#035075 100%); /* Chrome10-25,Safari5.1-6 */
-        background: linear-gradient(135deg, #046da1 0%,#046da1 42%,#035075 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#046da1', endColorstr='#035075',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */    
-    }
-    }
+}
 
 
 
@@ -5682,17 +5843,36 @@ html.tablet{
     }*/
 }
 
+
+html.stblack{
+    #splashScreen{
+        background-color: #011621;
+    }
+}
+
+
 /*t*/ @media only screen and (max-width: 768px){
+
+   
 
     html{
 
+        /*#splashScreen {
+            background-color: #FFF;
+        }
+
+        &.stblack{
+            background-color: #011621;
+        }*/
+
         #panelWrapper{
-            position: absolute;
+            position: fixed;
             top : 65px;
             left: 0;
             right: 0;
             padding-top : 0;
-            z-index: 1;
+            z-index: 3;
+            
         }
 
         .contentWrapper{
@@ -5705,24 +5885,42 @@ html.tablet{
             }
         }
 
+        #menu .menuWrapper{
+            will-change: transform;
+            .transition(0.3s, transform);
+            -webkit-backface-visibility: hidden;
+        }
+
+        #panelWrapper{
+            will-change: transform;
+            .transition(0.3s, transform);
+            -webkit-backface-visibility: hidden;
+        }
+
+        #navigation{
+            will-change: transform;
+            -webkit-backface-visibility: hidden;
+        }
+
         &.scrollmodedown{
 
             #menu .menuWrapper{
-                top : -65px;
+                transform:  translateY(-65px);
             }
     
             #panelWrapper{
-                padding-top: 0;
-                display: none!important;
+                transform:  translateY(-165px);
                 
             }
     
             #navigation{
-                bottom : -90px;
+                .nmenu{
+                    transform: translateY(90px);
+                }
 
                 .fakem{
                     display: block;
-                    position: fixed;
+                    position: absolute;
                     left : 0;
                     bottom : 0;
                     right: 0;
@@ -5743,6 +5941,20 @@ html.tablet{
     #splashScreen{
         display: flex;
     }
+
+    html.mobile,
+    html.tablet{
+        #content{
+        
+
+            &.optimized{
+                >div{
+                    display: none!important;
+                }
+            }
+        }
+    }
+    
 
     
 }
@@ -6130,6 +6342,8 @@ html.tablet{
 } 
 }
 /*t*/ @media only screen and (max-width: 768px){
+
+
 
     button{
         &.medium{

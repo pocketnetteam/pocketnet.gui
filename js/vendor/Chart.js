@@ -5638,6 +5638,9 @@ module.exports = function() {
 		var mouseX, mouseY;
 		var e = evt.originalEvent || evt;
 		var canvas = evt.target || evt.srcElement;
+
+		console.log("HERE")
+
 		var boundingRect = canvas.getBoundingClientRect();
 
 		var touches = e.touches;

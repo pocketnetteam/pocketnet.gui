@@ -1018,6 +1018,10 @@ Share = function(lang){
 			return ''
 		}
 
+		if(self.itisvideo()){
+			return 'video'
+		}
+
 		return 'post'
 	} 
 
@@ -1723,7 +1727,7 @@ UserInfo = function(){
 
 
 		if (hash.indexOf('pocketnet') > -1) return 'pocketnet'
-		if (hash.indexOf('bastion') > -1) return 'bastion'
+		if (hash.indexOf('bastyon') > -1) return 'bastyon'
 		
 		return false
 

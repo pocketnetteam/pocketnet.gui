@@ -14,7 +14,8 @@ var args = {
 	prodaction : true,
 	vendor : 89,
     path : '/',
-    makewebnode: false
+    makewebnode: false,
+	project : "Pocketnet"
 }
 
 var uglify = true
@@ -45,21 +46,38 @@ var mapJsPath = './js/_map.js';
 console.log("run")
 console.log(args)
 
-var tpls = ['embedVideo.php', 'index_el.html', 'index.html', 'index.php', 'indexcordova.html', 'openapi.html', /*'.htaccess',*/ 'service-worker.js', 'manifest.json']
+var tpls = ['embedVideo.php', 'index_el.html', 'index.html', 'index.php', 'indexcordova.html', 'config.xml', 'openapi.html', /*'.htaccess',*/ 'service-worker.js', 'manifest.json', 'main.js']
+
+var tplspath = {
+
+}
 	
+var _meta = {
+	Pocketnet : {
+		url : "pocketnet.app",
+		turl : "test.pocketnet.app"
+	},
+
+	Bastyon : {
+		url : "bastyon.com",
+		turl : "test.pocketnet.app"
+	}
+}
 
 var vars = {
 	test : {
 		proxypath : '"https://test.pocketnet.app:8899/"',
-		domain : 'test.pocketnet.app',
+		domain : _meta[args.project].turl,
 		test : '<script>window.testpocketnet = true;</script>',
-		path : args.path
+		path : args.path,
+		project : args.project
 	},
 	prod : {
 		proxypath : '"https://pocketnet.app:8899/"',
-		domain : 'pocketnet.app',
+		domain : _meta[args.project].url,
 		test : '',
-		path : args.path
+		path : args.path,
+		project : args.project
 	}
 }
 
@@ -115,6 +133,11 @@ fs.exists(mapJsPath, function (exists) {
 		var cordova = {
 			path : './cordova/www',
 			copy : ['chat', 'components', 'css', 'images', 'img', 'js', 'localization', 'peertube', 'res', 'sounds', 'browserconfig.xml', 'crossdomain.xml', 'favicon.svg', 'indexcordova.html']
+		}
+
+		var cordovaconfig = {
+			path : './cordova',
+			copy : ['config.xml']
 		}
 
 		var cordovaiosfast = {
@@ -647,10 +670,12 @@ fs.exists(mapJsPath, function (exists) {
 								JSENV += '<script>window.pocketnetpublicpath = "'+args.path+'";</script>';
 							}
 
-							console.log("___ _args.domain", VARS.domain)
-
 							if(VARS.domain){
 								JSENV += '<script>window.pocketnetdomain = "' + VARS.domain + '";</script>';
+							}
+
+							if(VARS.project){
+								JSENV += '<script>window.pocketnetproject = "' + VARS.project + '";</script>';
 							}
 	
 							if(args.prodaction)
@@ -702,6 +727,8 @@ fs.exists(mapJsPath, function (exists) {
 							index = index.replace("__CSS__" , CSS);
 							index = index.replace("__CACHED-FILES__", CACHED_FILES);
 							index = index.replace("__PACKAGE-VERSION__", package.version);
+							index = index.replace("__PACKAGE-CORDOVAVERSIONCODE__", package.cordovaversioncode);
+							index = index.replace("__PACKAGE-CORDOVAVERSION__", package.cordovaversion);
 
 							_.each(VARS, function(v, i){
 								index = index.replaceAll("__VAR__." + i, v);
@@ -743,8 +770,10 @@ fs.exists(mapJsPath, function (exists) {
 		makePocketnet(function(){
 
 			copycontent(cordova, function(){
-				copycordovaios(cordovaiosfast)
 			})
+
+			copycontent(cordovaconfig, function(){
+			}, true)
             
             if(args.makewebnode)
             {
@@ -802,8 +831,9 @@ var helpers = {
 	}
 }
 
-var copycontent = function(options, clbk) {
-	helpers.clearfolder(options.path, function() {
+var copycontent = function(options, clbk, nac) {
+
+	var ac = function(){
 		lazyEach({
 			sync : true,
 			array : options.copy,
@@ -823,7 +853,15 @@ var copycontent = function(options, clbk) {
 				}
 			}
 		})
-	})
+	}
+		
+	if(!nac)
+		helpers.clearfolder(options.path, function() {
+			ac()
+		})
+	else{
+		ac()
+	}
 }
 
 var copycordovaios = function(options, clbk){

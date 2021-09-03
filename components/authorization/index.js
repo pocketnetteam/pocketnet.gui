@@ -401,16 +401,7 @@ var authorization = (function(){
 				initEvents(p);
 
 				make();
-
-				/*dialog({
-					html : "<p>Pocketnet.app is still under development.</p><p>You may experience outages due to development work. <b>Beta test starts on Jan 23, 2019</b>.</p>",
-					id : 'betasign',
-
-					class : 'betasign',
-
-					btn2text : "Okay"
-				})*/
-
+		
 				p.clbk(null, p);
 
 			},

@@ -409,12 +409,7 @@ var s = (function(){
 
 				make()
 
-				/*if(isMobile){
-					setTimeout(function(){
-						_scrollTop(45)
-					}, 200)
-					
-				}*/
+		
 
 				p.clbk(null, p);
 			}

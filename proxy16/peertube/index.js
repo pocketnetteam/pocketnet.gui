@@ -25,15 +25,15 @@ var Peertube = function (settings) {
     var roy = null;
 
     if (host) {
-      roy =
-        roys[host] ||
+      roy = roys[host] ||
         _.find(roys, function (roy) {
           return roy.find(host);
         });
     }
 
     if (!roy && host) {
-      roy = self.addroy([host], host);
+
+      roy = self.addroy([host], host, true);
       roy.useall = true;
       roy.auto = true;
     }
@@ -63,12 +63,12 @@ var Peertube = function (settings) {
     return 600000;
   };
 
-  self.request = function (method, data, host) {
+  self.request = function (method, data, host, parameters = {}) {
     var roy = getroy(host);
 
     if (!roy) return Promise.reject('roy');
 
-    return roy.request(method, data);
+    return roy.request(method, data, parameters);
   };
 
   self.inner = {
@@ -101,7 +101,7 @@ var Peertube = function (settings) {
       return keys[f.rand(0, keys.length - 1)];
     },
 
-    best: function ({ roy, type }) {
+    best: function ({ roy, type, address }) {
       if (!roy) roy = self.api.randroykey();
 
       roy = getroy(roy);
@@ -115,23 +115,33 @@ var Peertube = function (settings) {
       return Promise.resolve(best.export());
     },
 
-    video: function ({ url }, cache) {
+    video: function ({ url, fast }, cache) {
       var parsed = parselink(url);
 
       if (!parsed.id) return Promise.reject('No id info received');
 
       var cachekey = 'peertubevideo';
+      var cachehash = parsed.id;
       var cacheparameters = _.clone(parsed);
 
+      console.log("url get", url)
+
       return new Promise((resolve, reject) => {
-        cache.wait(cachekey, cacheparameters, function (waitstatus) {
-          resolve(waitstatus);
-        });
+        cache.wait(
+          cachekey,
+          cacheparameters,
+          function (waitstatus) {
+            resolve(waitstatus);
+          },
+          cachehash,
+        );
       })
         .then((waitstatus) => {
-          var cached = cache.get(cachekey, cacheparameters);
+          var cached = cache.get(cachekey, cacheparameters, cachehash);
+
 
           if (cached) {
+
             if (cached.error) {
               return Promise.reject({ error: true });
             }
@@ -154,33 +164,45 @@ var Peertube = function (settings) {
                 fr.aspectRatio = 1.78;
             }
 
-            cache.set(cachekey, cacheparameters, r, null, ontime);
+            //console.log('cachehash', cachehash, ontime)
+
+            cache.set(cachekey, cacheparameters, r, null, ontime, cachehash);
 
             return Promise.resolve(r);
           });
         })
         .catch((e) => {
-          cache.set(cachekey, cacheparameters, {
-            error: true,
-          });
+
+          if (e && !e.data) {
+            console.log('E video', e, url);
+          }
+
+          if (e && e.status == '404') {
+
+            cache.set(cachekey, cacheparameters, {
+              error: true,
+            }, null, 120, cachehash);
+          }
 
           return Promise.reject(e);
         });
     },
 
-    videos: function ({ urls }, cache) {
+    videos: function ({ urls, fast }, cache) {
       var result = {};
 
       return Promise.all(
         _.map(urls, function (url) {
           return self.api
-            .video({ url }, cache)
+            .video({ url, fast }, cache)
             .then((r) => {
               result[url] = r.data;
 
               return Promise.resolve();
             })
             .catch((e) => {
+              result.errors ? result.errors.push(url) : (result.errors = [url]);
+
               return Promise.resolve();
             });
         }),
@@ -188,38 +210,27 @@ var Peertube = function (settings) {
         .then(() => {
           return Promise.resolve(result);
         })
-        .catch((e = {}) =>
-          Promise.reject({
+        .catch((e = {}) => {
+          return Promise.reject({
             error: e,
             code: e.code || 500,
-          }),
-        );
+          });
+        });
     },
 
     stats() {
       const servers = Object.values(roys).map((roy) => roy.performance());
 
+      return Promise.all(servers)
+        .then((data) => {
+          var d = {};
+          _.each(data, function (dd) {
+            _.each(dd, function (currVal) {
+              d[currVal.host] = currVal.data;
+            });
+          });
 
-        return Promise.all(servers).then((data) => {
-          var d = {}
-          _.each(data, function(dd){
-            _.each(dd, function(currVal){
-              d[currVal.host] = currVal.data
-            })
-          })
-          
-
-          return d
-
-          return data.flat().reduce(
-            (accumulator, currVal) => ({
-              ...accumulator,
-              [currVal.host]: currVal.data,
-            }),
-            {},
-          );
-
-
+          return d;
         })
         .catch((e = {}) =>
           Promise.reject({
@@ -228,9 +239,57 @@ var Peertube = function (settings) {
           }),
         );
     },
+
+    roys: () => {
+      const output = {};
+
+      var _roys = _.filter(roys, function(r){
+        return !r.auto
+      })
+
+      Object.keys(_roys).map((roy) => {
+        _roys[roy].best() ? (output[roy] = _roys[roy].best().host) : null;
+      });
+
+      return Promise.resolve(output);
+    },
+
+    accountVideos({ account, servers = [], start, count }, cahce) {
+      const requestServers = servers.length
+        ? [...servers]
+        : Object.values(roys)
+            .map((roy) => roy.hosts().map((host) => host.host))
+            .flat();
+
+      return Promise.allSettled(
+        requestServers.map((server) =>
+          self.request('channelVideos', { account, start, count }, server, {
+            host: server,
+          }),
+        ),
+      )
+        .then((data) => {
+          const outputInfo = data
+            .map((serverData) => serverData.data)
+            .reduce(
+              (accum, currServer) => ({
+                total: accum.total + currServer.total,
+                data: accum.data.concat(currServer.data || []),
+              }),
+              { total: 0, data: [] },
+            );
+
+          console.log(outputInfo);
+          return outputInfo;
+        })
+        .catch(() => ({ total: 0, data: [] }));
+    },
   };
 
   self.addroy = function (urls, key) {
+
+    if(!urls.length) return
+
     var roy = new Roy(self);
 
     roy.init(urls);
@@ -251,10 +310,13 @@ var Peertube = function (settings) {
   };
 
   self.init = function ({ urls, roys }) {
+
     if (roys) {
+
       _.each(roys, function (urls, i) {
         self.addroy(urls, i);
       });
+
     }
 
     if (urls) self.addroy(urls, 'default');
@@ -276,9 +338,6 @@ var Peertube = function (settings) {
               });
             })
             .catch((e) => {
-
-              console.log("PEERTUBE ERROR", e)
-
               if (!e) e = {};
 
               return Promise.reject({

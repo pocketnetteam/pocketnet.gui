@@ -14,8 +14,9 @@ var navigation = (function(){
 
 		}
 
+
 		var events = {
-			scrollman : function(scroll){
+			/*scrollman : function(scroll){
 
 				if (scroll >= 250){
 					el.c.addClass('scrolled')
@@ -23,26 +24,27 @@ var navigation = (function(){
 				else{
 					el.c.removeClass('scrolled')
 				}
-			},
+			},*/
+
 			scroll : function(){
 
-				if (w.scrollTop() >= 250){
 
-					el.c.addClass('scrolled')
+				if (self.app.lastScrollTop >= 250){
+
+					if(!el.c.hasClass('scrolled'))
+						el.c.addClass('scrolled')
+
 				}
 				else{
-					el.c.removeClass('scrolled')
+					if (el.c.hasClass('scrolled'))
+						el.c.removeClass('scrolled')
+
 				}
 			},	
 
 			toup : function(){
-
-				var up = deep(self, 'app.modules.main.module.scrolltopall')
-
-				if(up) up()
-
-
-				_scrollTop(0, null, 0)
+				self.app.mobile.vibration.small()
+				self.app.actions.scroll(0)
 			}
 		}
 
@@ -131,11 +133,12 @@ var navigation = (function(){
 			}
 
 			el.c.find('.fakem').on('click', function(){
+
 				$('html').removeClass('scrollmodedown')
 			})
 
-			
-			window.addEventListener('scroll', events.scroll)
+			self.app.events.scroll.navigation = events.scroll
+
 			events.scroll()
 
 			if(window.cordova){
@@ -146,9 +149,9 @@ var navigation = (function(){
 
 			}
 
-			if (self.app.scrolling){
+			/*if (self.app.scrolling){
 				self.app.scrolling.clbks.navigation = events.scrollman
-			}
+			}*/
 		}
 
 		var make = function(){
@@ -178,11 +181,11 @@ var navigation = (function(){
 
 			destroy : function(){
 				
-				if (self.app.scrolling){
+				/*if (self.app.scrolling){
 					delete self.app.scrolling.clbks.navigation
-				}
+				}*/
 
-				window.removeEventListener('scroll', events.scroll)
+				delete self.app.events.scroll.navigation
 
 				if(window.cordova){
 					window.removeEventListener('keyboardWillShow', renders.hide);

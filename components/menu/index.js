@@ -11,6 +11,7 @@ var menu = (function(){
 			sitenameToNav = null,
 			plissing = null,
 			authorForSearch = null,
+			searchBackAction = null,
 			menusearch = null;
 
 		var loc = new Parameter({
@@ -64,35 +65,9 @@ var menu = (function(){
 
 			elswidth : function(){
 
-
-				el.c.find('.autowidth.active').each(function(){
-					actions.setWidth($(this))
-				})
-
 			},
 
-			setWidth : function(_el){
-
-				return
-
-				
-
-				if(_el.offset()){
-					
-					var left = _el.offset().left;
-
-					var w = _el.width()
-
-					var right = el.c.width() - left - w;
-
-					var d = left - right;	
-
-					_el.width(w + d)
-
-				}
-
-				
-			},
+		
 			ahnotifyclear : function(){
 				notifications = {}
 
@@ -140,20 +115,19 @@ var menu = (function(){
 
 				if(!events.navinit.el) return
 
-				sitenameToNav = slowMade(function(){
+				if (menusearch && menusearch.active || parameters().ss) return
 
+				var pn = self.app.nav.current.href
+				
+				if ((pn == 'index' || pn == 'author') && self.app.lastScrollTop > 45){
 
-					if (menusearch && menusearch.active || parameters().ss) return
-
-					var pn = self.app.nav.current.href
-					
-					if ((pn == 'index' || pn == 'author') && $(window).scrollTop() > 45){
-
+					if(!el.nav.hasClass('active')){
 						el.nav.addClass('active')
-						el.c.addClass('menupanelactive')
+						el.c.addClass('menupanelactive') //// ??????
 
 						el.nav.find('.pcenterLabel').removeClass('active')
 
+			
 						el.postssearch.find('input').blur()
 
 						if (menusearch)
@@ -168,17 +142,23 @@ var menu = (function(){
 						if (pn == 'index'){
 							el.nav.find('.pcenterLabel[r="'+r+'"]').addClass('active')
 						}
-							
 					}
-					else
-					{
+
+					
+						
+				}
+				else
+				{	
+
+					if (el.nav.hasClass('active')){
 						el.c.removeClass('menupanelactive')
 						el.nav.removeClass('active')
 					}
+					
+				}
 
-					actions.elswidth()
+				actions.elswidth()
 
-				}, sitenameToNav, 10)
 				
 			}
 		}
@@ -189,7 +169,10 @@ var menu = (function(){
 				init : function(el){
 
 					if(!isTablet()){
-						$(window).on('scroll', actions.sitenameToNav)
+
+						self.app.events.scroll.menu = actions.sitenameToNav
+
+						//$(window).on('scroll', actions.sitenameToNav)
 
 						self.app.nav.clbks.history.menu = function(href){
 
@@ -202,9 +185,10 @@ var menu = (function(){
 				},
 
 				destroy : function(){
-					$(window).off('scroll', actions.sitenameToNav)
 
+					delete self.app.events.scroll.menu
 					delete self.app.nav.clbks.history.menu
+
 				}
 			},
 
@@ -213,7 +197,10 @@ var menu = (function(){
 
 					var show = deep(self, 'app.platform.matrixchat.core.apptochat')
 
-					if (show) show()
+					if (show) {
+						self.app.mobile.vibration.small()
+						show()
+					}
 
 				},
 
@@ -222,7 +209,9 @@ var menu = (function(){
 					self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu = function(count){
 						actions.ahnotify(el, count, 'chat')
 					}
-				}
+				},
+
+				fast : true
 			},
 
 			sitename : {
@@ -296,8 +285,10 @@ var menu = (function(){
 
 			keyexport : {
 				click : function(){
-
-					self.app.platform.ui.showmykey()
+					self.app.mobile.vibration.small()
+					self.app.platform.ui.showmykey({
+						showsavelabel : true
+					})
 
 				},
 
@@ -305,19 +296,16 @@ var menu = (function(){
 
 					self.app.platform.sdk.registrations.clbks.menu = function(){
 
-						if (self.sdk.address.pnet()){
-							var addr = self.sdk.address.pnet().address
+						if (!self.app.platform.sdk.registrations.showprivate()){
+							
+							el.closest('.keyexportWrapper').addClass('hidden')
 
-							var regs = self.app.platform.sdk.registrations.storage[addr];
-
-							if (regs && regs <= 4){
-								return
-							}
+						}
+						else
+						{
+							el.closest('.keyexportWrapper').removeClass('hidden')
 						}
 
-						el.closest('.keyexportWrapper').remove()
-
-						delete self.app.platform.sdk.registrations.clbks.menu
 						
 					}
 
@@ -374,7 +362,7 @@ var menu = (function(){
 				},
 
 				click : function(el){
-
+					self.app.mobile.vibration.small()
 					if(isTablet())
 						self.nav.api.go({
 							href : 'userpage?id=notifications&report=notifications',
@@ -469,7 +457,9 @@ var menu = (function(){
 			},
 
 			search : {
+				fast : true,
 				click : function(){
+					self.app.mobile.vibration.small()
 					el.c.addClass('searchactive')
 
 					//if (el.c.hasClass('searchactive')){
@@ -580,6 +570,8 @@ var menu = (function(){
 						clbk : function(_el){
 
 							_el.find('input').on('blur', function(){
+
+								console.log('blur')
 
 								searchBlurTimer = slowMade(function(){
 
@@ -760,6 +752,7 @@ var menu = (function(){
 			newaccount: {
 				
 				click : function(){
+					self.app.mobile.vibration.small()
 					self.nav.api.go({
 						href : 'registration',
 						history : true,
@@ -788,11 +781,12 @@ var menu = (function(){
 						action()
 					}
 
-					el.tooltipster({
-						theme: 'tooltipster-light',
-						maxWidth : 300,
-						zIndex : 200,
-					});
+					if(!isMobile())
+						el.tooltipster({
+							theme: 'tooltipster-light',
+							maxWidth : 300,
+							zIndex : 200,
+						});
 				}
 			},
 
@@ -1005,6 +999,7 @@ var menu = (function(){
 
 				},
 				click : function(){
+					self.app.mobile.vibration.small()
 					self.nav.api.go({
 						href : 'authorization',
 						history : true,
@@ -1018,6 +1013,7 @@ var menu = (function(){
 
 				},
 				click : function(){
+					self.app.mobile.vibration.small()
 					self.nav.api.go({
 						href : 'registration',
 						history : true,
@@ -1026,32 +1022,7 @@ var menu = (function(){
 				}
 			},
 
-			/*hamb : {
-				click : function(){
-					var _cl = el.c.hasClass('active');
-
-					if (_cl)
-					{
-						el.c.removeClass('active');
-						self.app.actions.onScroll();
-
-					}
-					else
-					{
-						el.c.addClass('active');
-						self.app.actions.offScroll();
-						
-					}
-				}
-			},
-			hambclose : {
-				click : function(){
-
-					el.c.removeClass('active');
-
-					self.app.actions.onScroll();
-				}
-			}*/
+		
 		}
 
 		var initEvents = function(){
@@ -1061,7 +1032,7 @@ var menu = (function(){
 			}
 
 			el.c.find('.localization').on('click', function(){
-
+				self.app.mobile.vibration.small()
 				var items = []
 
 				_.each(self.app.localization.available, function(a){
@@ -1073,7 +1044,7 @@ var menu = (function(){
 
 
 							if (na && na.key != self.app.localization.key){
-
+								self.app.mobile.vibration.small()
 								self.app.localization.set(na.key);
 							}
 
@@ -1105,15 +1076,24 @@ var menu = (function(){
 
 					_.each(events[ekey], function(action, event){
 
-						if(event == 'init')
-						{
-							action(element)
-						}
-						else
-						{
-							element.on(event, action)
-						}
+						if(typeof action == 'function'){
+							if (event == 'init')
+							{
+								action(element)
+							}
+							else
+							{
 
+								if(event == 'click' && events[ekey].fast){
+									element.on(clickAction(), action)
+								}
+								else{
+									element.on(event, action)
+								}
+
+								
+							}
+						}
 
 					})
 
@@ -1121,7 +1101,8 @@ var menu = (function(){
 
 			})
 
-			$(window).on('resize', actions.elswidth)
+			self.app.events.resize.menu = actions.elswidth
+
 
 			ParametersLive([loc], el.c);
 
@@ -1192,7 +1173,6 @@ var menu = (function(){
 		var make = function(){
 
 			self.app.user.isState(function(state){
-
 
 				if((parameters().ss || parameters().sst) && (isMobile() || self.app.nav.get.pathname() == 's')){
 
@@ -1280,7 +1260,8 @@ var menu = (function(){
 				actions.ahnotifyclear()
 				menusearch = null
 
-				$(window).off('resize', actions.elswidth)
+
+				delete self.app.events.resize.menu
 
 				delete self.app.platform.sdk.newmaterials.clbks.update.menu
 
@@ -1355,7 +1336,6 @@ var menu = (function(){
 			},
 			
 			init : function(p){
-
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id);

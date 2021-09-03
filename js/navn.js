@@ -22,6 +22,8 @@ Nav = function(app)
 		links : true,
 	}
 
+	var blockclick = false
+
 	var defaultpathname = 'index'
 
 	if (_OpenApi){
@@ -65,11 +67,14 @@ Nav = function(app)
 		},
 		run : function(p){
 
-			p.clbk = addToFunction(p.clbk, function(){
+			/*p.clbk = addToFunction(p.clbk, function(){
 
-				core.links(null, p.el);
+				console.log(p, p.el)
 
-			})
+				if (p.el)
+					core.links(null, p.el);
+
+			})*/
 
 			p.module.nav = self;
 			p.module.app = app;
@@ -465,8 +470,6 @@ Nav = function(app)
  
 			var p = parameters(href, true)
 
-			console.log('backtoapp', p['pc'])
-
 			if(!p['pc']){
 				return app.platform.matrixchat.backtoapp()
 			}
@@ -508,8 +511,6 @@ Nav = function(app)
 
 			var run = true;
 
-		
-
 			if((p.history || p.loadDefault) && options.history)
 			{
 
@@ -524,7 +525,7 @@ Nav = function(app)
 						current.completeHref = p.completeHref;
 
 						if(!p.goback){
-							_scrollTop(0, null, 50);
+							app.actions.scrollToTop()
 						}
 							
 
@@ -547,9 +548,6 @@ Nav = function(app)
 					}
 				}
 
-				
-				
-
 				if(p.completeHref == current.completeHref && !p.loadDefault)
 				{
 					run = false;
@@ -558,12 +556,19 @@ Nav = function(app)
 				{
 
 
-					p.lastScroll = $(window).scrollTop();
+					p.lastScroll = app.lastScrollTop // $(window).scrollTop();
 
 					
 
-					if(!p.reload)
+					if(!p.reload){
+
 						historyManager.add(p.completeHref, p);
+
+						p.fail = function(){
+							sitemessage('<i class="fas fa-wifi"></i>')
+						}
+					}
+						
 
 					
 
@@ -608,9 +613,8 @@ Nav = function(app)
 							core.removeChat(p.completeHref)
 
 							if (p.goback){
-								_scrollTop(p.goback.scroll);
+								app.actions.scroll(p.goback.scroll)
 							}
-							
 
 							c(a, b, d)
 						}
@@ -628,6 +632,9 @@ Nav = function(app)
 						
 					})
 				}
+
+
+				
 			}
 
 
@@ -1000,7 +1007,7 @@ Nav = function(app)
 				|| href == "#")
 				
 				
-				&& (href.indexOf(host) == -1)
+				&& (href.indexOf(host) == -1) && (href.indexOf('pocketnet://') == -1) && (href.indexOf('bastyon://') == -1)
 			)
 
 			if (!e && ex) e = true; 
@@ -1038,6 +1045,20 @@ Nav = function(app)
 				link.off('click').on('click', function(){
 	
 					var ref = cordova.InAppBrowser.open(href, link.attr('cordovalink') || '_blank');
+
+					/*var scrollremoved = app.scrollRemoved
+
+					 '_blank', 'location=yes'
+
+					if (scrollremoved){
+						app.onScroll()
+					}
+
+					ref.addEventListener('exit', function(){
+						if (scrollremoved){
+							app.offScroll()
+						}
+					});*/
 
 					return false
 					
@@ -1091,27 +1112,28 @@ Nav = function(app)
 				{
 					if(link.attr('donottrust'))
 					{
+						
 
-						link.off('click')
-							.on('click', function(){
-								var href = $(this).attr('href');	
+						link.off('click').on('click', function(){
+							var href = $(this).attr('href');	
 
-								
+							app.mobile.vibration.small()
 
-								if (href.indexOf('http') == -1) href = 'http://' + href						
+							if (href.indexOf('http') == -1) href = 'https://' + href						
 
-								self.api.load({
-									open : true,
-									id : 'anothersite',
-									inWnd : true,
+							self.api.load({
+								open : true,
+								id : 'anothersite',
+								inWnd : true,
 
-									essenseData : {
-										link : href
-									}
-								})
-
-								return false;
+								essenseData : {
+									link : href
+								}
 							})
+
+							return false;
+						})
+
 					}
 					else
 					{
@@ -1121,9 +1143,7 @@ Nav = function(app)
 				}
 				else
 				{
-
-
-					if (_SEO){
+					/*if (_SEO){
 
 						var _href = link.attr('href');
 							_href = decodeSeoLinks(_href).replace("#!", "");
@@ -1139,9 +1159,14 @@ Nav = function(app)
 							_href = "#!" + _href;
 
 							link.attr('href', encodeSeoLinks(_href));
-					}
+					}*/
 
 					var eve = function(e){
+
+						if(blockclick) return false
+
+						console.log("CLICK")
+
 						var href = core.thisSiteLink($(this).attr('href'));
 
 						var handler = $(this).attr('handler') || null
@@ -1149,6 +1174,8 @@ Nav = function(app)
 						if (additionalActions){
 							additionalActions(e);
 						}	
+
+						app.mobile.vibration.small()
 
 						core.go({
 							action : action,
@@ -1158,26 +1185,17 @@ Nav = function(app)
 							handler : handler
 						})
 
-						
+						blockclick = true
+
+						setTimeout(function(){
+							blockclick = false
+						}, 800)
 
 						return false
 					}
-
-					if (link.attr('fast')){
-						link.swipe({
-							tap : eve
-						})
-
-						link.off('click')
-							.on('click', function(){
-
-								return false;
-							})
-					}
-
-					else{
-						link.off('click').on('click', eve)
-					}
+					
+						
+					link.off('click').on('click', eve)
 					
 				}
 
@@ -1396,9 +1414,6 @@ Nav = function(app)
 			return decodeSeoLinks(pathnameSearch).replace("#!", "");
 		},
 		hostname : function(){
-
-			//return 'pocketnet.app/'
-
 			return window.location.hostname + '/'
 		}
 	}

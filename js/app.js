@@ -62,11 +62,34 @@ Application = function(p)
 	var self = this;
 	var realtimeInterval = null;
 
-	var url = 'pocketnet.app'
+
+	self._meta = {
+		Pocketnet : {
+			url : "pocketnet.app",
+			turl : "test.pocketnet.app",
+			fullname : "Pocketnet",
+			protocol : 'pocketnet',
+			blockexplorer : 'https://pocketnet.app/blockexplorer/'
+		},
+
+		Bastyon : {
+			fullname : "Bastyon",
+			url : "bastyon.com",
+			turl : "test.pocketnet.app",
+			protocol : 'bastyon',
+			blockexplorer : 'https://pocketnet.app/blockexplorer/'
+		}
+	}
+
+	self.meta = self._meta.Pocketnet
+
+	if (window.pocketnetproject && self._meta[window.pocketnetproject]){
+		self.meta = self._meta[window.pocketnetproject]
+	}
+
+	var url = window.pocketnetdomain
 
 	if (window.testpocketnet){
-		url = 'test.pocketnet.app'
-
 		self.test = true
 	}
 
@@ -81,13 +104,9 @@ Application = function(p)
 		},
 
 		name : 'PCRB',
-		fullName : "pocketnet",
-		localStoragePrefix : 'pocketnet',
+		fullName : self.meta.protocol,
+		localStoragePrefix : self.meta.protocol,
 
-		//////////////
-
-		//apiproxy : p.apiproxy || 'https://pocketnet.app:8888',
-		//apimproxy : p.apimproxy || 'https://pocketnet.app:8888',
 		
 		server : p.server || 'https://'+url+'/Shop/AJAXMain.aspx', //donations will be removed
 
@@ -102,10 +121,8 @@ Application = function(p)
 
 		imageServerup1 : p.imageServerup1 || 'https://'+url+':8092/up', // will be part of proxy
 
-		////////////// Will remove with Matrix
-		//ws : p.ws || "wss://pocketnet.app:8088",
 		rtc : p.rtc || 'https://'+url+':9001/',
-		rtcws : p.rtcws || 'wss://'+url+':9090',
+		rtcws : p.rtcws || 'wss://pocketnet.app:9090',
 		rtchttp : p.rtchttp || 'https://'+url+':9091',
 		
 		listofnodes : p.listofnodes || null,
@@ -415,15 +432,9 @@ Application = function(p)
 
 	self.el = {}
 
-	
-
-	
-
 	self.id = makeid();
 	self.map = __map;
 	self.modules = {};
-
-	
 
 	self.curation = function(){
 		if(typeof isios != 'undefined' && isios() && window.cordova) return true
@@ -450,7 +461,7 @@ Application = function(p)
 		},
 		userpage : {
 			href : 'userpage',
-			childrens : ['userpage', 'share', 'author', 'post', 'authorization', 'registration']
+			childrens : ['userpage', 'share', 'author', 'post', 'authorization', 'registration', 'pkview']
 		}
 
 	}
@@ -634,9 +645,11 @@ Application = function(p)
 
 		self.options.fingerPrint = hexEncode('fakefingerprint');
 
+		
+		
 		self.localization.init(function(){
-			newObjects(p);
 
+			newObjects(p);
 
 			lazyActions([
 				self.platform.prepare
@@ -665,7 +678,6 @@ Application = function(p)
 		
 
 	}
-
 
 	self.reload = function(p){
 		if(!p) p = {};
@@ -747,8 +759,6 @@ Application = function(p)
 
 	self.deviceReadyInit = function(p){
 
-		
-
 		self.el = {
 			content : 		$('#content'),
 			app : 			$('#application'),
@@ -763,34 +773,17 @@ Application = function(p)
 		};
 	
 		if (self.test){
-			$('html').addClass('testpocketnet')
+			$('html').addClass('testpocketnet') /// bstn
 		}
 
-		/*if(isMobile()){
-			self.el.app.swipe({
-				longTap : function(e, phase, direction, distance){
-					$('html').toggleClass('scrollmodedown')
-					e.preventDefault()
-				},
-			})
-		}*/
-		
-		
+		initevents()
+
 
 		if(typeof window.cordova != 'undefined')
 		{
 			document.addEventListener('deviceready', function(){
 
-				window.screen.orientation.lock('portrait')
-
-				/*if(isTablet()){
-					window.screen.orientation.lock('landscape')
-				}
-				else{
-					window.screen.orientation.lock('portrait')
-				}*/
-
-				
+				self.mobile.screen.lock()
 
 				p || (p = {});
 
@@ -851,40 +844,136 @@ Application = function(p)
 	self.logger = function(Function, Message){}
 
 	self.scrollRemoved = false;
-	var winScrollTop = 0;
-	self.actions = {
-		up : function(scrollTop, el, time){
-			_scrollTop(scrollTop, el, time)
-		},
-		wscroll : function(){
+	self.scrollTop = 0
+	self.lastScrollTop = 0
 
-			$(window).scrollTop(winScrollTop);
+	self.height = 0
+	self.width = 0
+	self.fullscreenmode = false
+	self.playingvideo = null
+
+	var blockScroll = false
+	var optimizeTimeout = null
+
+	self.actions = {
+
+		emoji : function(text){
+			if(isMobile()) return text
+
+			return joypixels.toImage(text)
+		},
+
+		restore : function(){
+
+			if (optimizeTimeout) clearTimeout(optimizeTimeout)
+
+				optimizeTimeout = null
+			
+			window.requestAnimationFrame(function(){
+				self.el.content.css('width', 'auto')
+				self.el.content.css('height', 'auto')
+				self.el.content.removeClass('optimized')
+			})
+		},
+
+		optimize : function(){
+
+			if (optimizeTimeout) clearTimeout(optimizeTimeout)
+
+				optimizeTimeout = setTimeout(function(){
+					var w = self.el.content.width()
+					var h = self.el.content.height()
+
+					window.requestAnimationFrame(function(){
+						self.el.content.width(w + 'px')
+						self.el.content.height(h + 'px')
+						self.el.content.addClass('optimized')
+					})
+				}, 300)
+
 			
 		},
 
-		offScroll : function(js){
+		playingvideo : function(v){
 
+			if (self.playingvideo && self.playingvideo.playing){
+
+				try{
+					self.playingvideo.pause()
+				}
+				catch(e){
+
+				}
+				
+			}
+
+			self.playingvideo = v
+
+		},
+
+		up : function(scrollTop, el, time){
+			_scrollTop(scrollTop, el, time)
+		},
+
+		wscroll : function(){
+			self.actions.scroll(self.scrollTop)
+		},
+
+		scrollToTop: function(){
+			self.actions.scroll(0)
+		},
+
+		backupscroll : function(){
+			self.actions.scroll(self.lastScrollTop)
+		},
+
+		scroll : function(to){
+
+			blockScroll = true
+
+			self.el.window.scrollTop(to)
+			self.scrollTop = to
+
+			setTimeout(function(){
+				blockScroll = false
+			}, 100)
+			
+		},
+
+		getScroll : function(){
+
+			var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+			var s = scrollTop //self.el.window.scrollTop()
+
+			if(!self.fullscreenmode){
+				self.lastScrollTop = s
+			}
+
+			return s
+		},
+
+		offScroll : function(){
 
 			if (self.scrollRemoved){
 				return false
 			}
 
-			self.scrollRemoved = true
+			blockScroll = true
 
-			$('html').addClass('nooverflow')
+			///
+			//self.scrollTop = self.el.window.scrollTop();
+			///
 
-			/*
+			self.el.html.addClass('nooverflow')
 
-			if(!js){
-
-				$('html').addClass('nooverflow')
+			if (window.Keyboard && window.Keyboard.disableScroll){
+				window.Keyboard.disableScroll(true)
 			}
-			else
-			{
-				winScrollTop = $(window).scrollTop();
 
-				$(window).bind('scroll', self.actions.wscroll);
-			}*/
+			setTimeout(function(){
+				blockScroll = false
+			}, 100)
 
 			return true
 			
@@ -892,27 +981,165 @@ Application = function(p)
 
 		onScroll : function(){
 
-			$('html').removeClass('nooverflow')
-			//$(window).unbind('scroll', self.actions.wscroll);
+			///
+			self.el.html.removeClass('nooverflow')
+			///
 
+			if (window.Keyboard && window.Keyboard.disableScroll){
+				window.Keyboard.disableScroll(false)
+			}
 
 			self.scrollRemoved = false;
 		},
 
-		scrollBMenu : function(){
+	}
 
-			if(isMobile()){
-				var h = $('#toppanel').height()
+	var initevents = function(){
+
+		var delayscroll = null,
+			delayscrollopt = null,
+			delayresize = null
+
+		var body = document.body
+		var mobile = isMobile()
+
+		self.height = self.el.window.height()
+		self.width = self.el.window.width()
+
+		var showPanel = '1' // 2 // 3
+
+		/*window.removeEventListener('scroll')
+		window.removeEventListener('resize')*/
 
 
-				if (h > 0){
-					$(window).scrollTop(h);
+		//self.el.content.css('width', self.width + 'px')
 
-					return true
+		var scrolling = _.throttle(function(){
+			window.requestAnimationFrame(function(){
+
+				if(!self.el.window) return
+				if (self.fullscreenmode) return
+
+				var lastScrollTop = self.lastScrollTop
+
+				var scrollTop = self.actions.getScroll()
+
+				_.each(self.events.scroll, function(s){
+					s(scrollTop, blockScroll)
+				})
+
+				if(mobile){
+
+					var cs = (lastScrollTop + 40 < scrollTop || lastScrollTop - 40 < scrollTop)
+
+					if (scrollTop < 900){
+
+						showPanel = '1'
+
+						if (self.el.html.hasClass('scrollmodedown'))
+							self.el.html.removeClass('scrollmodedown')
+
+						return
+					}
+
+					if (scrollTop > 900 && cs){
+						if(lastScrollTop + 40 < scrollTop){
+							showPanel = '2'
+						}
+					}
+					else{
+						showPanel = '3'
+					}
+
 				}
-			}
 
-		}
+			})
+		}, 100)
+
+		var t = false
+
+		window.addEventListener('touchstart', function(e){
+			t = true
+		})
+
+		window.addEventListener('touchend', function(e){
+			t = false
+		})
+
+		window.addEventListener('touchcancel', function(e){
+			t = false
+		})
+
+		window.addEventListener('scroll', function(){
+
+			scrolling()
+
+			delayscroll = slowMade(function(){
+				window.requestAnimationFrame(function(){
+
+					if(!self.el.window) return
+					if (self.fullscreenmode) return
+					
+					_.each(self.events.delayedscroll, function(s){
+						s(self.lastScrollTop, blockScroll)
+					})
+
+					if(!t){
+
+						if (showPanel == '2' && !self.el.html.hasClass('scrollmodedown')){
+							self.el.html.addClass('scrollmodedown')
+						}
+			
+						if (showPanel == '3' && self.el.html.hasClass('scrollmodedown'))
+							self.el.html.removeClass('scrollmodedown')
+							
+						showPanel = '1'
+					}
+
+					
+		
+					
+				})
+
+			}, delayscroll, 100)
+
+		})
+
+        window.addEventListener('resize', function(){
+
+
+			delayresize = slowMade(function(){
+				window.requestAnimationFrame(function(){
+
+					if(!self.el.window) return
+					if (self.fullscreenmode) return
+
+					var scrollTop = self.actions.getScroll(),
+						height = self.el.window.height(),
+						width = self.el.window.width();
+
+						self.height = height
+						self.width = width
+
+					_.each(self.events.resize, function(s){
+						s({
+							scrollTop : scrollTop,
+							height : height,
+							width : width
+						})
+					})
+
+				})
+
+			}, delayresize, 30)
+
+		})
+	}
+
+	self.events = {
+		scroll : {},
+		resize : {},
+		delayedscroll : {}
 	}
 
 	self.loadModules = function(p){
@@ -941,10 +1168,6 @@ Application = function(p)
 			}
 		})
 
-	}
-
-	self.scrolling = {
-		clbks : {}
 	}
 
 	self.name = self.options.name;
@@ -1019,7 +1242,7 @@ Application = function(p)
 		},
 	
 		getStorageDirectory: function() {
-			return "Pocketnet";
+			return 'Pocketnet';
 		},
 	
 		saveFile: function(url, blob) {
@@ -1175,6 +1398,249 @@ Application = function(p)
 			});
 		}
 	
+	}
+
+	self.mobile = {
+		saveImages : {
+			save : function(base64, nms){
+				var nm = nms.split('.')
+
+				var name = nm[0],
+					format = nm[1]
+
+				var mt = {
+					png : 'image/png',
+					jpg : 'image/jpeg'
+				}
+
+				var ms = mt[format] || 'image/' + format
+
+				if (window.cordova){
+
+					console.log('base64', base64)
+
+					var image = b64toBlob(base64.split(',')[1], 'image/' + ms);	
+
+					p_saveAsWithCordova(image, name + '.' + format, function(){
+						clbk()
+					})
+
+				}
+
+				else{
+					p_saveAs({
+						file : base64,
+						format : format,
+						name : name
+					})
+				}
+			},
+			dialog : function(name, src){
+				
+
+				var items = [
+					{
+						text : app.localization.e('saveimage'),
+						class : 'itemmain',
+						action : function(clbk){
+
+							globalpreloader(true, true)
+
+							srcToData(src, function(base64){
+
+								self.mobile.saveImages.save(base64, name)
+
+								successCheck()
+
+								globalpreloader(false)
+
+							})
+						}
+					}
+				]
+
+					/*if(!removesharing){
+						if (window.cordova && window.plugins && window.plugins.socialsharing){
+
+							items.push({
+								text : app.localization.e('share'),
+								class : 'itemmain',
+								action : function(clbk){
+	
+									var options = {
+										files : [base64]
+									}
+	
+									window.plugins.socialsharing.shareWithOptions(options);
+		
+								}
+							})
+	
+						}
+					}*/
+					
+
+					
+
+					menuDialog({
+						items : items
+					})
+				
+			},
+			init : function(_el){
+
+				if(isMobile()){
+					_el.swipe({
+						longTap : function(){
+
+							console.log("longtap")
+
+							self.mobile.vibration.small()
+
+							var name = this.attr('save')
+							var src = this.attr('src') || this.attr('i')
+
+							console.log("src", src)
+
+							setTimeout(function(){
+								self.mobile.saveImages.dialog(name, src)
+							}, 200)
+
+							return false
+							
+						}
+					})
+				}
+
+				
+			}
+		},
+		vibration : {
+            small : function(time){
+
+				if(!window.cordova) return
+
+                if(isios()){
+
+                    if(typeof TapticEngine != 'undefined')
+                        TapticEngine.impact({
+                            style: "medium"
+                        });
+
+                    return
+                }
+
+                
+
+                if (navigator.vibrate){
+                    navigator.vibrate(time || 50)
+                }
+            }
+        },
+		statusbar : {
+			background : function(){
+
+				var colors = {
+					white : "#FFF",
+					black : "#030F1B"
+				}
+
+				if (window.StatusBar) {
+					self.platform.sdk.theme.current == 'white' ? window.StatusBar.styleDefault() : window.StatusBar.styleLightContent()
+					window.StatusBar.backgroundColorByHexString(colors[self.platform.sdk.theme.current] || "#FFF");
+				}
+
+				if (window.NavigationBar)
+					window.NavigationBar.backgroundColorByHexString(colors[self.platform.sdk.theme.current] || "#FFF", self.platform.sdk.theme.current == 'black');
+			},
+			hide : function(){
+				if (window.StatusBar) {
+					window.StatusBar.hide()
+					window.StatusBar.overlaysWebView(true);
+				}
+
+				if (window.NavigationBar){
+					window.NavigationBar.hide()
+				}
+			},
+			show : function(){
+				if (window.StatusBar) {
+					window.StatusBar.show()
+					window.StatusBar.overlaysWebView(false);
+				}
+
+				if (window.NavigationBar){
+					window.NavigationBar.show()
+				}
+
+				self.mobile.statusbar.background()
+			},	
+		},
+
+		unsleep : function(t){
+
+			if (window.plugins && window.plugins.insomnia){
+
+				if(t) window.plugins.insomnia.keepAwake()
+				else window.plugins.insomnia.allowSleepAgain()
+			}
+				
+		},
+
+		fullscreenmode : function(v){
+			v ? self.mobile.screen.unlock() : self.mobile.screen.lock()
+			v ? self.mobile.statusbar.hide() : self.mobile.statusbar.show()
+
+			self.mobile.unsleep(v)
+
+			//v ? self.el.html.addClass('fullscreen') : self.el.html.removeClass('fullscreen')
+
+			
+
+			if(!v){
+				setTimeout(function(){
+					self.fullscreenmode = v
+					self.actions.scroll(self.lastScrollTop)
+				}, 10)
+			}
+			else{
+				self.fullscreenmode = v
+			}
+		},
+
+		screen : {
+
+			lock : function(){
+
+				if (window.cordova)
+					window.screen.orientation.lock('portrait')
+			},
+			unlock : function(){
+				if (window.cordova)
+					window.screen.orientation.unlock()
+			},
+
+			destroy : function(){
+				if (window.cordova)
+					window.screen.orientation.removeEventListener('change')
+				self.mobile.screen.clbks = {}
+			},
+
+			init : function(){
+				self.mobile.screen.clbks = {}
+
+				if (window.cordova)
+					window.screen.orientation.addEventListener('change', function(){
+
+						_.each(self.mobile.screen.clbks, function(c){
+							c(screen.orientation.type)
+						})
+
+					});
+			},
+
+			clbks : {}
+		}
 	}
 
 	self.ref = null;

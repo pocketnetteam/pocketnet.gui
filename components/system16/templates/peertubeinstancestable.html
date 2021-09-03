@@ -48,22 +48,22 @@ _.each(info.peertube, function(instance){
     if (instancePerformance) { %>
 
         <div class="instancePerformance hidden">
-            <section class="emptyHolder">
+            <!--<section class="emptyHolder">
                 &nbsp;
-            </section>
+            </section>-->
 
             <section class="performancesWrapper">
                 <div class="performanceSection transcodingSection">
-                    <header class="statsHeader"><i class="fas fa-microchip"></i> Transcoding:</header>
+                    <header class="statsHeader"><i class="fas fa-microchip"></i> Transcoding</header>
                     <main class="statsMain">
                         <div class="statContainer transcodingStatContainer">
-                            <p class="iconStat waitingStat tooltip" title="Waiting jobs"><i class="fas fa-exclamation-triangle"></i><strong><%- instancePerformance.performance.waitTranscodingJobs %></strong></p>
-                            <p class="iconStat failedStat tooltip" title="Failed jobs"><i class="fas fa-times"></i><strong><%- instancePerformance.performance.failTranscodingJobs %></strong></p>
+                            <p class="iconStat waitingStat tooltip" title="Waiting jobs">Warnings <i class="fas fa-exclamation-triangle"></i> <%- instancePerformance.performance.waitTranscodingJobs %></p>
+                            <p class="iconStat failedStat tooltip" title="Failed jobs">Errors <i class="fas fa-times"></i> <%- instancePerformance.performance.failTranscodingJobs %></p>
                         </div>
     
                         <div class="statContainer transcodingStatContainer extendedContainer">
                             <header>
-                                <p class="iconStat tooltip" title="Transcoding speed"><i class="fas fa-tachometer-alt"></i></p>
+                                <p class="iconStat tooltip" title="Transcoding speed"><i class="fas fa-tachometer-alt"></i> Transcoding Speed</p>
                             </header>
                             <section class="extendedStats">
                                 <% instancePerformance.performance.speedByResolution ? Object.entries(instancePerformance.performance.speedByResolution).map(([resolution, speed]) => { %>
@@ -75,26 +75,26 @@ _.each(info.peertube, function(instance){
                 </div>
     
                 <div class="performanceSection livestreamSection">
-                    <header class="statsHeader"><i class="fas fa-satellite-dish"></i> Live:</header>
+                    <header class="statsHeader"><i class="fas fa-satellite-dish"></i> Live Streams</header>
                     <main class="statsMain">
                         <div class="statContainer livestreamStatsContainer">
-                            <p class="iconStat activeStat tooltip" title="Active Streams"><i class="fas fa-broadcast-tower"></i><strong><%- instancePerformance.performance.activeLivestreams %></strong></p>
+                            <p class="iconStat activeStat tooltip" title="Active Streams"><i class="fas fa-broadcast-tower"></i> Active Livestreams <%- instancePerformance.performance.activeLivestreams %></p>
                         </div>
                     </main>
                 </div>
     
                 <div class="performanceSection importsSection">
-                    <header class="statsHeader"><i class="fab fa-youtube"></i> Import:</header>
+                    <header class="statsHeader"><i class="fab fa-youtube"></i> Import</header>
                     <main class="statsMain">
                         <div class="statContainer importStatsContainer">
-                            <p class="iconStat waitingStat tooltip" title="Waiting imports"><i class="fas fa-exclamation-triangle"></i><strong><%- instancePerformance.performance.waitImportsCount %></strong></p>
-                            <p class="iconStat failedStat tooltip" title="Failed imports"><i class="fas fa-times"></i><strong><%- instancePerformance.performance.failImportsCount %></strong></p>
+                            <p class="iconStat waitingStat tooltip" title="Waiting imports">Warnings <i class="fas fa-exclamation-triangle"></i> <%- instancePerformance.performance.waitImportsCount %></p>
+                            <p class="iconStat failedStat tooltip" title="Failed imports">Errors <i class="fas fa-times"></i> <%- instancePerformance.performance.failImportsCount %></p>
                         </div>
                     </main>
                 </div>
 
                 <div class="performanceSection discSpaceSection">
-                    <header class="statsHeader"><i class="fas fa-server"></i> Instance:</header>
+                    <header class="statsHeader"><i class="fas fa-server"></i> Instance Videos</header>
                     <main class="statsMain">
                         <div class="statContainer discSpaceStatsContainer">
                             <p>Local Videos: <strong><%- instancePerformance.totalLocalVideos %></strong></p>
@@ -106,7 +106,7 @@ _.each(info.peertube, function(instance){
                 </div>
 
                 <div class="performanceSection activitySection">
-                    <header class="statsHeader"><i class="fas fa-users"></i> Activity:</header>
+                    <header class="statsHeader"><i class="fas fa-users"></i> Activity</header>
                     <main class="statsMain">
                         <div class="statContainer activityStatsContainer">
                             <p>Followers: <strong><%- instancePerformance.totalInstanceFollowers %></strong></p>
@@ -116,7 +116,7 @@ _.each(info.peertube, function(instance){
 
                         <div class="statContainer activityStatsContainer extendedContainer">
                             <header>
-                                <p class="iconStat tooltip" title="Active users"><i class="fas fa-user-clock"></i></p>
+                                <p class="iconStat tooltip" title="Active users"><i class="fas fa-user-clock"></i> Activity by period</p>
                             </header>
                             <section class="extendedStats">
                                 <% 

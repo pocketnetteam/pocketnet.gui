@@ -38609,8 +38609,6 @@ exports.TransactionBuilder = transaction_builder_1.TransactionBuilder;
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
 
-  console.log('window.testpocketnet', window.testpocketnet)
-
 // @ts-ignore
 exports.bitcoin =
   (typeof process !== 'undefined' && process.argv && process.argv.includes('--test')) ||

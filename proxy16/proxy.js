@@ -11,7 +11,7 @@ var svgCaptcha = require('svg-captcha');
 var WSS = require('./wss.js');
 const Firebase = require('../proxy/firebase');
 */
-
+var os = require('os');
 var Server = require('./server/https.js');
 var WSS = require('./server/wss.js');
 var Firebase = require('./server/firebase.js');
@@ -232,9 +232,11 @@ var Proxy = function (settings, manage, test) {
 
 	self.users = function () {
 
-		var i = self.kit.info()
+		var i = {
+			wss: self.wss.info(true)
+		}
 
-		var count = Math.max(f.deep(i, 'wss.users.length') || 1, f.deep(i, 'server.middle.requestsIp') || 1)
+		var count = Math.max(f.deep(i, 'wss.users.length') || 1)
 
 		if (count < 1) count = 1
 
@@ -249,10 +251,14 @@ var Proxy = function (settings, manage, test) {
 			if (settings.server.enabled) {
 
 				return server.init({
+
 					ssl: ini.ssl(),
 					port: f.deep(settings, 'server.ports.https')
+
 				}).catch(e => {
-					console.log("E", e)
+
+					console.log(e)
+				
 					return server.init({
 						ssl: ini.ssl('default'),
 						port: f.deep(settings, 'server.ports.https')
@@ -570,10 +576,10 @@ var Proxy = function (settings, manage, test) {
 	self.peertube = {
 		init: function () {
 
-			var ins = {1 : ['pocketnetpeertube1.nohost.me'], 5 : ['pocketnetpeertube5.nohost.me'], 6 : ['pocketnetpeertube4.nohost.me', 'pocketnetpeertube6.nohost.me']}
+			var ins = {1 : ['pocketnetpeertube1.nohost.me', 'pocketnetpeertube2.nohost.me'], 5 : ['pocketnetpeertube5.nohost.me', 'pocketnetpeertube7.nohost.me'], 6 : ['pocketnetpeertube4.nohost.me', 'pocketnetpeertube6.nohost.me']}
 
 			if (test){
-				ins = {3 : ['pocketnetpeertube3.nohost.me']}
+				ins = {0 : ['pocketnetpeertube3.nohost.me']}
 			}
 
 			return peertube.init({
@@ -627,6 +633,9 @@ var Proxy = function (settings, manage, test) {
 
 			var mem = process.memoryUsage()
 
+			
+			var loads = os.loadavg();
+
 			_.each(mem, function (v, i) {
 				mem[i] = v / (1024 * 1024)
 			})
@@ -648,7 +657,12 @@ var Proxy = function (settings, manage, test) {
 					all: _.toArray(captchas).length
 				},
 
-				memory: mem
+				memory: mem,
+				loadavg : {
+					'1' : loads[0],
+					'5' : loads[1],
+					'15' : loads[2]
+				}
 			}
 		},
 
@@ -849,10 +863,13 @@ var Proxy = function (settings, manage, test) {
 				})
 
 				var videosPr = videosapi({
-					urls : videos
+					urls : videos,
+					fast : true
 				}).then(videos => {
 					result.data.videos = videos.data
 
+					return Promise.resolve()
+				}).catch(e => {
 					return Promise.resolve()
 				})
 
@@ -940,6 +957,7 @@ var Proxy = function (settings, manage, test) {
 							node = nodeManager.nodesmap[options.node];
 						}
 
+
 						if (!node || options.auto)
 							node = nodeManager.selectProbability(); //nodeManager.selectbest()
 
@@ -969,13 +987,13 @@ var Proxy = function (settings, manage, test) {
 						if (log) {
 							console.log('load', method, parameters)
 						}
-
 						return node
 							.checkParameters()
 							.then((r) => {
 								return node.rpcs(method, _.clone(parameters));
 							})
 							.then((data) => {
+
 								server.cache.set(method, _.clone(parameters), data, node.height());
 
 								return Promise.resolve({
@@ -1105,8 +1123,6 @@ var Proxy = function (settings, manage, test) {
 					if (!_node) {
 						return Promise.reject('cantselect');
 					}
-
-					console.log('_node.test(scenario)', scenario)
 
 					return _node.test(scenario).then(r => {
 						return Promise.resolve({

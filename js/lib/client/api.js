@@ -46,7 +46,7 @@ var ProxyRequest = function(app = {}, proxy){
                 resolve(value)
 
             }).catch(reason => {
-
+                
 
                 clearTimeout(timer)
 
@@ -121,6 +121,8 @@ var ProxyRequest = function(app = {}, proxy){
             return Promise.resolve(result.data || {})
 
         }).catch(e => {
+
+            console.error("E", e, e.code)
 
             if (e.code == 20){
                 return Promise.reject({
@@ -395,6 +397,10 @@ var Proxy16 = function(meta, app, api){
             options.node = self.current.key
         }
 
+        if (options.fnode){
+            options.node = options.fnode
+        }
+
         var promise = null
 
         if (self.direct){
@@ -408,7 +414,7 @@ var Proxy16 = function(meta, app, api){
             return Promise.resolve(r)
         }).catch(e => {
 
-            if (e.code == 408 && options.node && trying < 3){
+            if (e.code == 408 && options.node && trying < 3 && !options.fnode){
 
                 return self.api.nodes.canchange(options.node).then(r => {
 
@@ -673,8 +679,6 @@ var Api = function(app){
 
                         var oldc = localStorage['currentproxy']
 
-                        console.log('oldc', oldc)
-
                         if (oldc){
                             return self.set.current(oldc)
                         }
@@ -777,8 +781,6 @@ var Api = function(app){
             return Promise.resolve(r)
 
         }).catch(e => {
-
-            console.log("ER", e)
 
             if(e == 'TypeError: Failed to fetch' || e == 'proxy' || (e.code == 408 || e.code == -28)){
 

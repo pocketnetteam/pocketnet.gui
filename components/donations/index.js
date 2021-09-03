@@ -242,7 +242,7 @@ var donations = (function(){
 
 		var renders = {
 			thankyou : function(curobj, second, info){
-				_scrollTop(0);
+				self.app.actions.scroll(0)
 				
 				thankparameters.amount.value = deep(info, 'Amount') || 0
 
@@ -327,7 +327,7 @@ var donations = (function(){
 			},
 			xmraddress : function(curobj, clbk){
 
-				_scrollTop(0);
+				self.app.actions.scroll(0)
 
 
 				self.shell({
@@ -442,7 +442,7 @@ var donations = (function(){
 			},	
 			ways : function(clbk){
 
-				_scrollTop(0);
+				self.app.actions.scroll(0)
 
 				self.shell({
 					name :  'ways',

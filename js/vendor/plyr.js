@@ -312,7 +312,7 @@ typeof navigator === "object" && (function (global, factory) {
         var max = parseFloat(input.getAttribute('max')) || 100;
         var step = parseFloat(input.getAttribute('step')) || 1;
         var delta = max - min; // Calculate percentage
-
+        console.log("HERE")
         var percent;
         var clientRect = input.getBoundingClientRect();
         var thumbWidth = 100 / clientRect.width * (this.config.thumbWidth / 2) / 100; // Determine left percentage
@@ -2279,7 +2279,7 @@ typeof navigator === "object" && (function (global, factory) {
         return;
       } // Calculate percentage
 
-
+      console.log("HERE")
       var percent = 0;
       var clientRect = this.elements.progress.getBoundingClientRect();
       var visible = "".concat(this.config.classNames.tooltip, "--visible");
@@ -4055,6 +4055,7 @@ typeof navigator === "object" && (function (global, factory) {
 
     var toggle = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
 
+
     // Store or restore scroll position
     if (toggle) {
       this.scrollPosition = {
@@ -4845,7 +4846,7 @@ typeof navigator === "object" && (function (global, factory) {
           if (!measure) {
             return setAspectRatio.call(player);
           }
-
+          console.log("HERE")
           var rect = elements.container.getBoundingClientRect();
           var width = rect.width,
               height = rect.height;
@@ -5125,7 +5126,7 @@ typeof navigator === "object" && (function (global, factory) {
             controls.toggleMenu.call(player, event);
           }
         }); // Set range input alternative "value", which matches the tooltip time (#954)
-
+        console.log("HERE")
         this.bind(elements.inputs.seek, 'mousedown mousemove', function (event) {
           var rect = elements.progress.getBoundingClientRect();
           var percent = 100 / rect.width * (event.pageX - rect.left);
@@ -7231,6 +7232,7 @@ typeof navigator === "object" && (function (global, factory) {
           this.seekTime = this.player.media.duration * (this.player.elements.inputs.seek.value / 100);
         } else {
           // Calculate seek hover position as approx video seconds
+          console.log("HERE")
           var clientRect = this.player.elements.progress.getBoundingClientRect();
           var percentage = 100 / clientRect.width * (event.pageX - clientRect.left);
           this.seekTime = this.player.media.duration * (percentage / 100);
@@ -7611,6 +7613,7 @@ typeof navigator === "object" && (function (global, factory) {
     }, {
       key: "setThumbContainerPos",
       value: function setThumbContainerPos() {
+        console.log("HERE")
         var seekbarRect = this.player.elements.progress.getBoundingClientRect();
         var plyrRect = this.player.elements.container.getBoundingClientRect();
         var container = this.elements.thumb.container; // Find the lowest and highest desired left-position, so we don't slide out the side of the video container
@@ -9162,7 +9165,6 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
     var video_id = target.getAttribute('data-plyr-embed-id');
     var clear_peertube_id = target.getAttribute('data-plyr-video-id');
 
-
     if (provider == 'peertube') {
 
 
@@ -9173,17 +9175,19 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
         return typeof PeerTubeEmbeding != 'undefined'
       }, function(){
 
-        
-
         PeerTubeEmbeding.main(target, clear_peertube_id, {
           host : host,
-          wautoplay : options.wautoplay
+          wautoplay : options.wautoplay,
+          logoType : options.logoType
         },{
   
           playbackStatusChange : function(status){
             
           },
-          volumeChange : options.volumeChange
+          volumeChange : options.volumeChange,
+          fullscreenchange : options.fullscreenchange,
+          play : options.play,
+          pause : options.pause
   
         }).then(embed => {
 
@@ -9202,13 +9206,10 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
 
       })
 
-      
-
-
       return self
     }
 
-    if (provider == 'youtube') {
+    /*if (provider == 'youtube') {
 
       
 
@@ -9219,8 +9220,10 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
 
         playbackStatusChange : function(status){
         },
-        volumechange : function(volume){
-        },
+        volumechange : options.volumeChange,
+        fullscreenchange : options.fullscreenchange,
+        play : options.play,
+        pause : options.pause
 
       }).then(embed => {
 
@@ -9232,7 +9235,7 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
       })
 
       return
-    }
+    }*/
 
     /*if (provider == 'vimeo') {
 
@@ -9274,10 +9277,14 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
 
     // Return a new instance of Plyr
     var newPlyr = function(target, video_options) {
+
+
+
       var newPlayer = new Plyr(target, video_options);
       // Set the mandatory/missing functions
       newPlayer.mute = () => newPlayer.muted = true;
       newPlayer.unmute = () => newPlayer.muted = false;
+
       return newPlayer;
     }
 
@@ -9312,6 +9319,12 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
 
                     plyrPlayer.on('ready', readyCallback)
 
+                    plyrPlayer.on('volumechange', function(v){
+
+                      if(video_options.volumeChange)
+                        video_options.volumeChange(plyrPlayer.muted ? 0 : plyrPlayer.volume)
+                    })
+
                     if (clbk) clbk(plyrPlayer);
                 } else {
                     _error();
@@ -9324,6 +9337,8 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
       var plyrPlayer = newPlyr(target, video_options);
 
       plyrPlayer.on('ready', readyCallback)
+      plyrPlayer.on('play', video_options.play)
+      plyrPlayer.on('pause', video_options.pause)
 
       if (clbk) clbk(plyrPlayer);
 

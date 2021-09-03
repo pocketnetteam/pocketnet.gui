@@ -96,24 +96,30 @@ var share = (function(){
 					server: metaInfo.host_name,
 				}*/
 
+				var urlMeta = self.app.peertubeHandler.parselink(shareUrl);
+
+				var host = urlMeta.host || null;
+
 				return self.app.platform.sdk.videos.info([shareUrl])
 
 				  .then(() => (self.app.platform.sdk.videos.storage[shareUrl] || {}).data)
 				  .then((res = {}) => {
+					  if (res.aspectRatio) {
+						settingsObject.aspectRatio = res.aspectRatio;
 
-					settingsObject.aspectRatio = res.aspectRatio;
-
-					return toDataURL(image)					
-
-				}).then((fileBase64) => {
+						return;
+					  } 
+					
+					  return self.app.peertubeHandler.api.videos.getDirectVideoInfo({ id: urlMeta.id }, { host }).then(res => {
+						  settingsObject.aspectRatio = res.aspectRatio;
+					  });
+				})
+				.then(() => toDataURL(image))
+				.then((fileBase64) => {
 
 					return actions.resizeImage(fileBase64, settingsObject)
 
 				}).then(img => {
-
-					var urlMeta = self.app.peertubeHandler.parselink(shareUrl);
-
-					var host = urlMeta.host || null;
 
 					parameters.image = {
 						data : img
@@ -843,7 +849,7 @@ var share = (function(){
 											})
 										}
 										else{
-											_scrollTop(0);
+											self.app.actions.scroll(0)
 										}
 	
 										
@@ -874,7 +880,7 @@ var share = (function(){
 
 					const options = {};
 
-					if (currentShare.message.v) options.description = `Watch more exciting videos at https://pocketnet.app/! \n ${currentShare.message.v}`;
+					if (currentShare.message.v) options.description = `Watch more exciting videos at https://`+self.app.options.url+`/! \n ${currentShare.message.v}`;
 					if (currentShare.caption.v) options.name = currentShare.caption.v;
 
 					var urlMeta = self.app.peertubeHandler.parselink(currentShare.url.v);
@@ -1623,7 +1629,10 @@ var share = (function(){
 
                             Plyr.setup('#' + self.map.id + ' .js-player', function(player) {
 
-								player.muted = false
+								try{
+									player.muted = false
+								}catch(e){}
+								
 							}, {
 								denyPeertubeAutoPlay: true,
 							});
@@ -2355,6 +2364,27 @@ var share = (function(){
 				el.body = el.c.find('.bodywrapper')
 
 				initEvents();
+
+				if (essenseData.videoLink) {
+					currentShare.url.set(essenseData.videoLink);
+
+					currentShare.settings.a = ['i', 'u', 'cm', 'p'];
+					currentShare.caption.set('');
+					currentShare.images.set();
+					currentShare.repost.set();
+				}
+
+				if (essenseData.name) {
+					currentShare.caption.set(essenseData.name);
+				}
+
+				if (essenseData.description) {
+					currentShare.message.set(essenseData.description);
+				}
+
+				if (essenseData.tags) {
+					essenseData.tags.map(tag => currentShare.tags.set(tag));
+				}
 
 				make();
 

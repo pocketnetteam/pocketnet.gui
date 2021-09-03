@@ -186,11 +186,9 @@ var post = (function () {
 			},
 			next: function () {
 
-				el.wnd.off('scroll')
-
 				var nextel = el.c.find('.nextpost');
 
-				nextel.html('<div class="loader"><div class="preloader5"><span></span><span></span><span></span></div></div>')
+				nextel.html('<div class="loader"><div class="preloader5"><img src="./img/three-dots.svg"/></div></div>')
 
 				ed.next(share.txid, function (txid) {
 
@@ -286,8 +284,7 @@ var post = (function () {
 					addresses: []
 				}
 
-				var link = 'send?address=' + share.address + '&amount=1&message='
-					+ hexEncode(self.app.localization.e('postlabel') + ' &mdash; ' + (share.caption || share.message).substr(0, 20) + "...")
+				var link = 'send?address=' + share.address + '&amount=1'
 					+ '&label=' + (userinfo.name || userinfo.address) + '&setammount=true'
 
 
@@ -359,15 +356,17 @@ var post = (function () {
 
 				var pels = el.c.find('.js-player, [data-plyr-provider][data-plyr-embed-id]');
 
-				var wa = (share.itisvideo() && isMobile() || (ed.autoplay && pels.length <= 1)) ? true : false
+				var wa =  !share.repost && !ed.repost && ((share.itisvideo() && isMobile() || (ed.autoplay && pels.length <= 1))) ? true : false
 
 				if (pels.length) {
+					
 
 					var options = {
 						//autoplay : pels.length <= 1,
 						resetOnEnd: true,
 						muted: false,
 						wautoplay: wa,
+						logoType : self.app.meta.fullname,
 
 						volumeChange : function(v){
 							videosVolume = v
@@ -377,10 +376,24 @@ var post = (function () {
 							self.sdk.videos.volume = videosVolume 
 
 							self.sdk.videos.save()
+						},
+
+						fullscreenchange : function(v){
+							self.app.mobile.fullscreenmode(v)
+						},
+
+						play : function(){
+							self.app.actions.playingvideo(player)
+						},
+
+						pause : function(){
+							self.app.actions.playingvideo(null)
 						}
 					};
 
 					$.each(pels, function (key, el) {
+
+
 						PlyrEx(el, options, (_player) => {
 
 							player = _player
@@ -388,8 +401,6 @@ var post = (function () {
 						}, () => {
 
 							if (wa) {
-
-								
 
 								player.play()
 								player.muted = false
@@ -1248,7 +1259,19 @@ var post = (function () {
 
 		var initEvents = function () {
 
+			self.app.platform.matrixchat.clbks.SHOWING.post = function(v){
+				if(v && player){
 
+					if (player.error) return
+					if (player.playing){
+						player.stop()
+					}
+
+				}
+				else{
+					
+				}
+			}
 
 			self.app.platform.ws.messages.transaction.clbks.temppost = function (data) {
 
@@ -1441,6 +1464,8 @@ var post = (function () {
 
 				}
 
+				self.app.actions.playingvideo(null)
+
 				self.app.el.menu.find('#menu').removeClass('static')
 
 				if (ed.close) ed.close()
@@ -1454,6 +1479,7 @@ var post = (function () {
 				delete self.app.platform.clbks.api.actions.subscribePrivate.post
 				delete self.app.platform.clbks.api.actions.unsubscribe.post
 				delete self.app.platform.clbks.api.actions.subscribe.post
+				delete self.app.platform.matrixchat.clbks.SHOWING.post
 
 				authblock = false;
 

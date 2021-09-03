@@ -118,7 +118,9 @@ __map =  {
 		{ c : 'lenta', n : 'groupshares' },
 		{ c : 'lenta', n : 'commentspreview' },
 		{ c : 'comments', n : 'index' },
-		{ c : 'lastcomments', n : 'lastcommentslist'}
+		{ c : 'lastcomments', n : 'lastcommentslist'},
+		{ c : 'author', n : 'preshell'},
+		{ c : 'post', n : 'preshell'}
 		/*,
 		{ c : '', n : '' },
 		{ c : '', n : '' },
@@ -935,6 +937,7 @@ __map =  {
 		userpage : {
 			uri : "userpage",
 			href : "userpage",
+			preshell : true,
 			add : {
 				el : 'content'
 			},
@@ -1648,6 +1651,7 @@ __map =  {
 			el : 'content'
 		},
 		anonimus : true,
+		preshell : true
 		
 	},
 
@@ -1664,6 +1668,7 @@ __map =  {
 	post : {
 		uri : "post",
 		href : "post",
+		preshell : true,
 		add : function(settings, p){
 
 			if(p.inWnd)
@@ -1745,6 +1750,26 @@ __map =  {
 
 		
 	},
+	videoCabinet : {
+		uri : "videoCabinet",
+		href : "videoCabinet",
+		add : function(settings, p){
+
+			if(p.inTooltip)
+
+				return {
+					insert : 'tooltip'
+				}
+
+			else
+			{
+				return {
+					el : 'content'
+				}
+			}
+
+		},
+	},
 
 	dust : {
 		uri : "dust",
@@ -1811,6 +1836,11 @@ __map =  {
 	},
 
 };
+
+
+console.log(JSON.stringify(_.map(__map, function(o,i){
+	return i
+})))
 
 
 if(typeof module != "undefined") module.exports = __map;

@@ -5,7 +5,6 @@ if (setupEvents.handleSquirrelEvent()) {
   return;
 }*/
 
-
 const {protocol} = require('electron');
 //const ProxyInterface = require('./proxy/mainserver.js')
 
@@ -83,6 +82,8 @@ if (is.macOS()) {
     badgeTrayIcon = require('path').join(__dirname, 'assets/icons/mac/traybadgeTemplate.png')
 }
 
+var protocols = ['pocketnet', 'bastyon']
+
 function showHideWindow(show) {
 
     if (win === null) {
@@ -137,10 +138,10 @@ function createTray() {
     tray = new Tray(defaultImage)
 
     tray.setImage(defaultImage)
-    tray.setToolTip('Pocketnet');
+    tray.setToolTip('__VAR__.project'); ///
 
     var contextMenu = Menu.buildFromTemplate([{
-        label: 'Open Pocketnet',
+        label: 'Open',
         click: function() {
             showHideWindow(true)
         }
@@ -347,7 +348,7 @@ function createWindow() {
         width: mainScreen.size.width,
         height: mainScreen.size.height,
 
-        title: "Pocketnet",
+        title: "__VAR__.project", ///
         webSecurity: false,
 
         icon: defaultIcon,
@@ -415,7 +416,7 @@ function createWindow() {
                 { role: 'unhide' },
                 { type: 'separator' },
                 {
-                    label: 'Quit Pocketnet',
+                    label: 'Quit',
                     accelerator: 'Cmd+Q',
                     click: async () => {
                       quit()
@@ -545,14 +546,7 @@ function createWindow() {
     });
 
 
-    // console.log('process.argv', process.argv);
-    
-    // var href = process.argv[process.argv.length - 1].replace(/.+pocketnet\//, '');
-
-    // win.webContents.send('nav-message', { msg: href, type: 'action'})
-
-
-    //
+   
 
     ipcMain.on('electron-notification', function(e, p) {
 
@@ -603,9 +597,22 @@ function createWindow() {
 
 var openlink = function(argv, ini){
 
-    if (argv && argv.length && argv[argv.length - 1] && argv[argv.length - 1].indexOf('pocketnet://') > -1){
+    var l = null
 
-        var href = argv[argv.length - 1].replace('pocketnet://electron/', '');
+    if (argv && argv.length && argv[argv.length - 1] && argv[argv.length - 1]){
+        l = argv && argv.length && argv[argv.length - 1] && argv[argv.length - 1]
+    }
+
+
+    if(_.find(protocols, function(p){
+        if(l.indexOf(p + "://") > -1) return true
+    })){
+        var h = l
+
+        _.each(protocols, function(p){
+            h = h.replace(p + "://electron/",'').replace(p + "://",'')
+            if(l.indexOf(p + "://") > -1) return true
+        })
 
         if (href && href[href.length - 1] == '/') href = href.substr(0, href.length - 1)
 
@@ -616,8 +623,8 @@ var openlink = function(argv, ini){
             win.webContents.send('nav-message', { msg: href, type: 'action'})
 
         }, ini ? 3000 : 5)
-
     }
+    
 }
 
 var r = app.requestSingleInstanceLock()
@@ -643,14 +650,11 @@ if(!r) {
 
     // If we are running a non-packaged version of the app && on windows
 
+    _.each(protocols, function(protocol){
+        app.setAsDefaultProtocolClient(protocol, process.execPath, [path.resolve(process.argv[1] || '.') ]); 
+    })
 
-    app.setAsDefaultProtocolClient('pocketnet', process.execPath, [path.resolve(process.argv[1] || '.') ]);  
-    
 
-
-    // Этот метод будет вызываться, когда Electron закончит 
-    // инициализацию и готов к созданию окон браузера.
-    // Некоторые интерфейсы API могут использоваться только после возникновения этого события.
     app.on('ready', initApp)
 
     // Выйти, когда все окна будут закрыты.

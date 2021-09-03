@@ -169,7 +169,7 @@ var post = function(nModule){
 
 				var nextel = el.c.find('.nextpost');
 
-					nextel.html('<div class="loader"><div class="preloader5"><span></span><span></span><span></span></div></div>')
+					nextel.html('<div class="loader"><div class="preloader5"><img src="./img/three-dots.svg"/></div></div>')
 
 				ed.next(share.txid, function(txid){
 
