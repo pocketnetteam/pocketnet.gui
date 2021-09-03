@@ -1,6 +1,6 @@
 <%
 
-var m = ['editPreview', 'editText', 'remove'];
+var m = ['editPreview', 'editText'];
 
 var all = {
 	remove : {
@@ -21,6 +21,10 @@ var all = {
 		text : e('editVideoDescription'),
 		class : 'editText',
 	},
+}
+
+if (!isVideoPosted) {
+	m.push('remove');
 }
 
 %>

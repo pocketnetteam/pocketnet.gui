@@ -1417,7 +1417,9 @@ Application = function(p)
 
 				if (window.cordova){
 
-					var image = b64toBlob(base64.split(',')[1], 'image/' + ms, 512);	
+					console.log('base64', base64)
+
+					var image = b64toBlob(base64.split(',')[1], 'image/' + ms);	
 
 					p_saveAsWithCordova(image, name + '.' + format, function(){
 						clbk()
@@ -1434,43 +1436,56 @@ Application = function(p)
 				}
 			},
 			dialog : function(name, src){
-				srcToData(src, function(base64){
+				
 
-					var items = [
-						{
-							text : app.localization.e('saveimage'),
-							class : 'itemmain',
-							action : function(clbk){
+				var items = [
+					{
+						text : app.localization.e('saveimage'),
+						class : 'itemmain',
+						action : function(clbk){
+
+							globalpreloader(true, true)
+
+							srcToData(src, function(base64){
 
 								self.mobile.saveImages.save(base64, name)
-							}
+
+								successCheck()
+
+								globalpreloader(false)
+
+							})
 						}
-					]
-
-					if (window.cordova && window.plugins && window.plugins.socialsharing){
-
-						items.push({
-							text : app.localization.e('share'),
-							class : 'itemmain',
-							action : function(clbk){
-
-								var options = {
-									files : [base64]
-								}
-
-								window.plugins.socialsharing.shareWithOptions(options);
-	
-							}
-						})
-
 					}
+				]
+
+					/*if(!removesharing){
+						if (window.cordova && window.plugins && window.plugins.socialsharing){
+
+							items.push({
+								text : app.localization.e('share'),
+								class : 'itemmain',
+								action : function(clbk){
+	
+									var options = {
+										files : [base64]
+									}
+	
+									window.plugins.socialsharing.shareWithOptions(options);
+		
+								}
+							})
+	
+						}
+					}*/
+					
 
 					
 
 					menuDialog({
 						items : items
 					})
-				})
+				
 			},
 			init : function(_el){
 
@@ -1478,12 +1493,18 @@ Application = function(p)
 					_el.swipe({
 						longTap : function(){
 
+							console.log("longtap")
+
 							self.mobile.vibration.small()
 
 							var name = this.attr('save')
 							var src = this.attr('src') || this.attr('i')
-	
-							self.mobile.saveImages.dialog(name, src)
+
+							console.log("src", src)
+
+							setTimeout(function(){
+								self.mobile.saveImages.dialog(name, src)
+							}, 200)
 
 							return false
 							

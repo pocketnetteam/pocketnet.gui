@@ -344,6 +344,18 @@ html.stblack{
     }
 }
 
+html{
+    &.mobile{
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+        
+}
+
 .unselectable{
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -353,6 +365,7 @@ html.stblack{
     user-select: none;
     -webkit-tap-highlight-color: transparent;
 }
+
 
 div{
     -webkit-tap-highlight-color: transparent;
@@ -3491,6 +3504,7 @@ input[type=radio].radio:checked + label {
             background: #fff;
             cursor: pointer;
             border-radius: 3px;
+            margin-top : 0.5 * @rhythm;
 
             &.itemmain{
                 color : @color-main;

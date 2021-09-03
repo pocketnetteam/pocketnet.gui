@@ -124,9 +124,13 @@
 							<i class="fas fa-camera"></i> <span><%- e('editWallpaper') %></span>
 						</div>
 
-						<div class="item removepeertube">
-							<i class="far fa-times-circle"></i> <span><%- e('removeVideo') %></span>
-						</div>
+						<% if(!share.aliasid) {%>
+
+							<div class="item removepeertube">
+								<i class="far fa-times-circle"></i> <span><%- e('removeVideo') %></span>
+							</div>
+
+						<% } %>
 
 					</div>
 

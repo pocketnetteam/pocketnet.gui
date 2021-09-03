@@ -11,20 +11,26 @@ var pkview = (function(){
 		var el, current = {}, ed = {}
 
 		var actions = {
-			saveqr : function(qr, clbk){
+			saveqr : function(base64, clbk){
 
 				var name = 'pkey_'+self.app.platform.currentTime()
 
 				if (window.cordova){
-					var image = b64toBlob(qr._oDrawing._elImage.currentSrc.split(',')[1], 'image/png', 512);		
+
+
+					var image = b64toBlob(base64.split(',')[1], 'image/png');	
+
+					console.log("image", image)
+
 					p_saveAsWithCordova(image, name + '.png', function(){
-						clbk()
+						if (clbk)
+							clbk()
 					})
 
 				}
 				else{
 					p_saveAs({
-						file : qr._oDrawing._elImage.currentSrc,
+						file : base64,
 						format : 'png',
 						name : name
 					})
@@ -128,11 +134,19 @@ var pkview = (function(){
 					
 					});
 
-					var qr = renders.qrcode(p.el.find('.qrcode'), current.mk)
+					var container = p.el.find('.qrcode');
 
-					p.el.find('.qrcode img').attr('save', name + '.png')
+					var qr = renders.qrcode(container, current.mk)
 
-					self.app.mobile.saveImages.init(p.el.find('.qrcode img'))
+					var base64 = qr._oDrawing._elCanvas.toDataURL("image/png")
+
+
+					container.attr('save', name + '.png')
+					container.attr('src', base64)
+
+					self.app.mobile.saveImages.init(container)
+
+						
 
 					p.el.find('.copy').on('click', function(){
 						copyText(p.el.find('.hiddenMnemonicKey'))
@@ -142,7 +156,9 @@ var pkview = (function(){
 
 					p.el.find('.save').on('click', function(){
 
-						actions.saveqr(clbk)
+						actions.saveqr(base64, function(){
+							successCheck()
+						})
 
 						/*var text = p.el.find('.qrcode img').attr('src')
 
@@ -165,36 +181,7 @@ var pkview = (function(){
 
 					})
 
-					if(window.cordova){
-
-						p.el.find('.qrcode').on('click', function(){
-
-							menuDialog({
-								items : [
-	
-									{
-										text : self.app.localization.e('e13145'),
-										class : 'itemmain',
-										action : function(clbk){
-
-											actions.saveqr(qr, clbk)
-
-											/*var image = b64toBlob(qr._oDrawing._elImage.currentSrc.split(',')[1], 'image/png', 512);		
-
-											p_saveAsWithCordova(image, 'pkey_'+self.app.platform.currentTime()+'.png', function(){
-												clbk()
-											})*/
-
-											
-										}
-									}
-	
-								]
-							})
-	
-						})
-
-					}
+					
 
 					if (clbk)
 						clbk(p);
