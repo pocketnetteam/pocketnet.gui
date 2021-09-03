@@ -10,9 +10,11 @@
         display: flex;
         flex-direction: column;
     }
-    .videoErrorBody{
+
+    .videoErrorBody {
         margin-top: 2*@rhythm;
     }
+
     .singleVideoSection {
         display: flex;
         justify-content: space-between;
@@ -51,23 +53,18 @@
 
     .videoDescriptionText {
         white-space: normal;
-        max-height: 60px;
         font-size: 0.9em;
         position: relative;
         line-height: 20px;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -moz-box-orient: vertical;
-        -ms-box-orient: vertical;
-        box-orient: vertical;
-        -webkit-line-clamp: 3;
-        -moz-line-clamp: 3;
-        -ms-line-clamp: 3;
-        line-clamp: 3;
+        height: 100px;
         overflow: hidden;
-        overflow-y: hidden;
 
-        cursor: pointer;
+        max-width: 250px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-between;
     }
 
     .videoDescriptionTextFull {
@@ -75,7 +72,7 @@
         line-height: 20px;
         white-space: normal;
         position: relative;
-    } 
+    }
 
     .transcodingPreloader {
         color: rgba(0, 0, 0, 0.5);
@@ -87,7 +84,7 @@
         color: rgba(14, 28, 43, 0.4);
 
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         justify-content: flex-start;
     }
 
@@ -630,83 +627,6 @@
         }
     }
 
-    .circular {
-        height: 100px;
-        width: 100px;
-
-        position: absolute;
-        transform: scale(1.5);
-
-        .inner {
-            position: absolute;
-            z-index: 6;
-            top: 50%;
-            left: 50%;
-            height: 96px;
-            width: 96px;
-            margin: -48px 0 0 -48px;
-            background: rgb(238, 236, 236);
-            border-radius: 100%;
-
-        }
-
-        .number {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 10;
-
-            font-weight: 200;
-            font-size: 0.8em;
-
-            // display: flex;
-            // flex-direction: column;
-            // align-items: center;
-            // justify-content: space-between;
-        }
-
-        .bar {
-            position: absolute;
-            height: 100%;
-            width: 100%;
-            background: rgb(238, 236, 236);
-            -webkit-border-radius: 100%;
-            clip: rect(0px, 100px, 100px, 50px);
-        }
-
-    }
-
-    .circle {
-        .bar {
-            .progress {
-                position: absolute;
-                height: 100%;
-                width: 100%;
-                -webkit-border-radius: 100%;
-                clip: rect(0px, 50px, 100px, 0px);
-                background: @color-good;
-            }
-        }
-
-
-        .left {
-            .progress {
-                z-index: 1;
-                transform: rotate(180deg);
-            }
-        }
-
-        .right {
-            transform: rotate(180deg);
-            z-index: 3;
-
-            .progress {
-                transform: rotate(90deg);
-            }
-        }
-    }
-
     .videoControls {
         display: flex;
         align-items: center;
@@ -761,17 +681,17 @@
                 font-size: 1.5em;
                 font-weight: 200;
 
-                i{
+                i {
                     font-size: 0.5em;
 
-                    color : @color-gray-mlight;
+                    color: @color-gray-mlight;
 
-                    &.fa-star{
-                        color :#FFAE00;
+                    &.fa-star {
+                        color: #FFAE00;
                     }
                 }
 
-                
+
             }
         }
 
@@ -851,6 +771,10 @@
         color: rgba(0, 0, 0, 0.5);
 
         top: 1.84em;
+    }
+
+    .showAllDescriptionButton {
+        padding: 0;
     }
 }
 
@@ -948,14 +872,16 @@ html.stblack {
 }
 
 .editVideoDialog {
-    .dialogheader{
-        padding : 2 * @rhythm 0;
-        padding-top : 0;
-        span{
+    .dialogheader {
+        padding: 2 * @rhythm 0;
+        padding-top: 0;
+
+        span {
             font-weight: 700;
         }
     }
-    .videoNameInput, 
+
+    .videoNameInput,
     .videoDescriptionInput {
         border-radius: 3px;
         width: 80%;
@@ -963,14 +889,15 @@ html.stblack {
         border: none;
     }
 
-    .videoDescriptionInput{
-        padding-top : @rhythm;
-        padding-bottom : @rhythm;
-        padding : @rhythm;
+    .videoDescriptionInput {
+        padding-top: @rhythm;
+        padding-bottom: @rhythm;
+        padding: @rhythm;
         min-height: 110px;
     }
 
-    .videoNameWrapper, .videoDescriptionWrapper {
+    .videoNameWrapper,
+    .videoDescriptionWrapper {
         margin-bottom: @rhythm * 2;
     }
 }
@@ -1159,18 +1086,18 @@ html.stblack {
         }
     }
 
-    
-    
+
+
 
     .editVideoDialog {
-       
-        .videoNameInput, 
+
+        .videoNameInput,
         .videoDescriptionInput {
             width: 100%;
-           
+
         }
 
-        
+
     }
 
     html.stblack {

@@ -545,6 +545,23 @@ var videoCabinet = (function () {
                 TRANSCODING_CHECK_INTERVAL,
               );
             });
+
+            //hide / show full video description
+            p.el.find('.videoDescriptionText').each(function () {
+              const element = $(this);
+
+              const uuid = element.attr('uuid');
+              const fullDescription = videos.find(
+                (video) => video.uuid === uuid,
+              ).description;
+
+              debugger;
+
+              const content = element.find('.descriptionContent');
+              const hideShowButton = element.find('.showAllDescriptionButton');
+
+              hideShowButton.on('click', () => {});
+            });
           },
         );
       },
