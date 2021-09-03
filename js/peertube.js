@@ -303,6 +303,13 @@ PeerTubePocketnet = function (app) {
       authorization: true,
       axios: true,
     },
+
+    getFullDescription: {
+      path: ({ id }) => `api/v1/videos/${id}/description`,
+      method: 'GET',
+      authorization: false,
+      axios: true,
+    },
   };
 
   var getmeta = function (method, data) {
@@ -424,7 +431,6 @@ PeerTubePocketnet = function (app) {
             });
         }
 
-
         return proxyRequest.fetch(
           'https://' + options.host,
           meta.path,
@@ -475,7 +481,7 @@ PeerTubePocketnet = function (app) {
             const roysAmount = Object.keys(data).length;
             const royId =
               self.helpers.base58.decode(app.user.address.value) % roysAmount;
-            return  data[royId];
+            return data[royId];
           })
           .catch(() => 0)
           .then((roy) => app.api.fetch('peertube/best', { roy, type }))
@@ -523,10 +529,9 @@ PeerTubePocketnet = function (app) {
         return request('removeVideo', data, options)
           .then((r) => Promise.resolve())
           .catch((e) => {
+            return Promise.reject(error('removeerror'));
 
-            return Promise.reject(error('removeerror'))
-
-            return Promise.resolve()
+            return Promise.resolve();
 
             //Promise.reject(error('removeerror'))
           });
@@ -775,6 +780,11 @@ PeerTubePocketnet = function (app) {
         request('totalViews', parameters, options)
           .then((r) => Promise.resolve(r))
           .catch(() => Promise.reject()),
+
+      getFullDescription: (parameters = {}, options = {}) =>
+        request('getFullDescription', parameters, options)
+          .then((res = {}) => Promise.resolve(res.description))
+          .catch(() => Promise.resolve('')),
     },
 
     user: {
@@ -802,7 +812,6 @@ PeerTubePocketnet = function (app) {
 
       auth: function (host, renew) {
         var data = {};
-
 
         if (host && sessions[host]) {
           if (renew) {
