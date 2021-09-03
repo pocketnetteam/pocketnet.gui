@@ -989,3 +989,5 @@ ____loclib.period182day = "半年";
 
 ____loclib.downloaded = "已下载";
 ____loclib.downloadedEmpty = "下载的帖子将显示在这里";
+____loclib.downloadVideo = "下载视频";
+____loclib.selectQuality = "选择质量:";

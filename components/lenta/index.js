@@ -1843,7 +1843,7 @@ var lenta = (function(){
 				var streamingPlaylist = embed.details.streamingPlaylists[0];
 				if (!streamingPlaylist || !streamingPlaylist.files || streamingPlaylist.files.length <= 0) return;
 				// Generate the HTML menu
-				var menuContent = '<div class="sharepostmenu downloadMenu">';
+				var menuContent = '<div class="sharepostmenu downloadMenu"><h2>' + self.app.localization.e('downloadVideo') + '</h2><h4>' + self.app.localization.e('selectQuality') + '</h4>';
 				_.each(streamingPlaylist.files, function(file) {
 					if (!file || !file.resolution || !file.resolution.label || !file.fileDownloadUrl) return;
 					menuContent += `<div class="menuitem table"><div class="label download${file.resolution.id}"><span>${file.resolution.label}</span>`;
