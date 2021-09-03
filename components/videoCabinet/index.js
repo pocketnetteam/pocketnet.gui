@@ -346,6 +346,15 @@ var videoCabinet = (function () {
           });
         });
       },
+
+      replaceNetLinks: (str) =>
+        str
+          .replace(
+            `Watch more exciting videos at https://test.pocketnet.app/!`,
+            '',
+          )
+          .replace(`Watch more exciting videos at https://pocketnet.app/!`, '')
+          .replace(`Watch more exciting videos at https://bastyon.com/!`, ''),
     };
 
     var events = {
@@ -443,19 +452,7 @@ var videoCabinet = (function () {
 
         videos.forEach((video) => {
           if (video.description) {
-            video.description = video.description
-              .replace(
-                `Watch more exciting videos at https://test.pocketnet.app/!`,
-                '',
-              )
-              .replace(
-                `Watch more exciting videos at https://pocketnet.app/!`,
-                '',
-              )
-              .replace(
-                `Watch more exciting videos at https://bastyon.com/!`,
-                '',
-              );
+            video.description = actions.replaceNetLinks(video.description);
           }
         });
 
@@ -551,16 +548,26 @@ var videoCabinet = (function () {
               const element = $(this);
 
               const uuid = element.attr('uuid');
-              const fullDescription = videos.find(
-                (video) => video.uuid === uuid,
-              ).description;
-
-              debugger;
+              const host = element.attr('host');
 
               const content = element.find('.descriptionContent');
+              const originalDescription = content.text();
               const hideShowButton = element.find('.showAllDescriptionButton');
 
-              hideShowButton.on('click', () => {});
+              hideShowButton.on('click', () => {
+                if (hideShowButton.hasClass('descriptionExpanded')) {
+                  content.text(originalDescription);
+                  hideShowButton.removeClass('descriptionExpanded');
+                } else {
+                  self.app.peertubeHandler.api.videos
+                    .getFullDescription({ id: uuid }, { host })
+                    .then((description) => {
+                      content.text(actions.replaceNetLinks(description));
+                      element.css('height', 'auto');
+                      hideShowButton.addClass('descriptionExpanded');
+                    });
+                }
+              });
             });
           },
         );
