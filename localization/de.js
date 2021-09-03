@@ -818,3 +818,6 @@ ____loclib.e13348 = "Nein, später"
 ____loclib.e13349 = "Es sind Updates für "+appname+" verfügbar. Website aufrufen, um die neue Version zu downloaden?"
 ____loclib.e13350 = "Treten Sie "+appname+" bei und verdienen Sie Pocketmünzen"
 ____loclib.e133512 = "Bitte schreiben Sie einige Worte über Sich selbst, damit die Leute entscheiden können, ob sie Ihnen folgen möchten."
+
+____loclib.downloaded = "Heruntergeladen";
+____loclib.downloadedEmpty = "Heruntergeladene Beiträge werden hier angezeigt";

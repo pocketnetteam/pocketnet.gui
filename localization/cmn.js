@@ -986,3 +986,6 @@ ____loclib.period3day = "3天";
 ____loclib.period7day = "1周";
 ____loclib.period31day = "1个月";
 ____loclib.period182day = "半年";
+
+____loclib.downloaded = "已下载";
+____loclib.downloadedEmpty = "下载的帖子将显示在这里";

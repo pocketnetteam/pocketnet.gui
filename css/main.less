@@ -4594,6 +4594,20 @@ input[type=radio].radio:checked + label {
 
 
 	}
+    &.downloadMenu{
+
+        .menuitem {
+            .label {
+                display: flex;
+                justify-content: space-between;
+
+                span.lightColor {
+                    color : @color-gray-mlight;
+                }
+            }
+        }
+
+    }
 }
 
 .matrixchatwrapper{
@@ -5879,8 +5893,8 @@ html.stblack{
             left: 0;
             right: 0;
             padding-top : 0;
-            z-index: 3;
-            
+            z-index: 10;
+
         }
 
         .contentWrapper{
