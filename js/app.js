@@ -1417,7 +1417,9 @@ Application = function(p)
 
 				if (window.cordova){
 
-					var image = b64toBlob(base64.split(',')[1], 'image/' + ms, 512);	
+					console.log('base64', base64)
+
+					var image = b64toBlob(base64.split(',')[1], 'image/' + ms);	
 
 					p_saveAsWithCordova(image, name + '.' + format, function(){
 						clbk()
@@ -1433,7 +1435,7 @@ Application = function(p)
 					})
 				}
 			},
-			dialog : function(name, src, dar){
+			dialog : function(name, src){
 				
 
 				var items = [
@@ -1497,8 +1499,12 @@ Application = function(p)
 
 							var name = this.attr('save')
 							var src = this.attr('src') || this.attr('i')
-	
-							self.mobile.saveImages.dialog(name, src)
+
+							console.log("src", src)
+
+							setTimeout(function(){
+								self.mobile.saveImages.dialog(name, src)
+							}, 200)
 
 							return false
 							

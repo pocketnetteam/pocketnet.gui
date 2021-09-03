@@ -1597,7 +1597,15 @@
 	}
 
 	srcToData = function(url, callback) {
+
+		if(url.indexOf('data:') > -1){
+			callback(url);
+
+			return
+		}
+
 	  var xhr = new XMLHttpRequest();
+
 	  xhr.onload = function() {
 	    var reader = new FileReader();
 	    reader.onloadend = function() {
