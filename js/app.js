@@ -123,7 +123,7 @@ Application = function(p)
 
 		rtc : p.rtc || 'https://'+url+':9001/',
 		rtcws : p.rtcws || 'wss://pocketnet.app:9090',
-		rtchttp : p.rtchttp || 'https://'+url+':9091',
+		rtchttp : p.rtchttp || 'https://pocketnet.app:9091',
 		
 		listofnodes : p.listofnodes || null,
 		listofproxies : p.listofproxies || null,

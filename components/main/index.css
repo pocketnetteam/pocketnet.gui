@@ -8,7 +8,7 @@
 #main .topvideosWrapper {
   display: block;
   background: #fff;
-  margin-bottom: 10px;
+  margin-bottom: 0.5em;
   min-height: 160px;
   position: relative;
 }
@@ -115,7 +115,7 @@
 #main .leftpanelcell {
   width: 242px;
   float: left;
-  padding-right: 10px;
+  padding-right: 0.5em;
 }
 #main .mainpanelsvicell,
 #main .mainpanelcell {
@@ -125,17 +125,17 @@
 #main .lentacell {
   margin-right: 256px;
   margin-left: 242px;
-  padding-top: 10px;
+  padding-top: 0.5em;
   min-height: 3000px;
   padding-bottom: 1000px;
 }
 #main .lentacell .cf_spacer,
 #main .lentacell .bgCaption {
-  margin-bottom: 10px;
+  margin-bottom: 0.5em;
 }
 #main .lentacellsvi {
   margin-right: 0;
-  padding-top: 10px;
+  padding-top: 0.5em;
 }
 #main.videomain .mainpanelcell {
   display: none;
@@ -242,7 +242,7 @@
   margin-right: 0;
 }
 #main .fxd {
-  padding-top: 10px;
+  padding-top: 0.5em;
 }
 #main .fxdsmall {
   top: 75px;

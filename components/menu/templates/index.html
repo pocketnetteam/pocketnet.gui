@@ -217,12 +217,15 @@
 
 					<div class="items sitenames">
 
+						<% if(typeof theme != 'undefined') {%>
+
 						<div class="item table sitename" >
 							<div class="icon" events="sitename">
-								<img class="header_logo" src="img/logo20.svg">
+								<img class="header_logo mobiledevice" src="img/logo20.svg">
+								<img class="header_logo workstation" src="img/logotypes/<%-app.meta.fullname.toLowerCase()%>_logo_<%-theme%>.svg">
 							</div>
 							<div class="label">
-								<div class="sitenamelabel"><% if(app.test){%>TESTNET<%} else {%><%-app.meta.fullname%><% }%></div>
+								<!--<div class="sitenamelabel"><% if(app.test){%>TESTNET<%} else {%><%-app.meta.fullname%><% }%></div>-->
 								<div class="lang localization">
 									
 									<% if(isMobile()) {%>
@@ -236,6 +239,30 @@
 							</div>						
 
 						</div>
+
+						<% } else { %> 
+						
+							<div class="item table sitename" >
+								<div class="icon" events="sitename">
+									<img class="header_logo" src="img/logo20.svg">
+								</div>
+								<div class="label">
+									<div class="sitenamelabel"><% if(app.test){%>TESTNET<%} else {%><%-app.meta.fullname%><% }%></div>
+									<div class="lang localization">
+										
+										<% if(isMobile()) {%>
+											<%-(lkey.key || '').toLowerCase()%> 
+										<% } else { %>
+											<%-(lkey.name || '').toLowerCase()%> 
+										<% } %>
+										
+										<i class="fas fa-caret-down"></i>
+									</div>
+								</div>						
+	
+							</div>
+							
+						<% } %>
 					</div>
 
 				<% } %>

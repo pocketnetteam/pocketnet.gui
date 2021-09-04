@@ -3991,6 +3991,9 @@ Platform = function (app, listofnodes) {
                     self.matrixchat.changeTheme()
 
                     t.save()
+
+                    var cm = deep(app, 'modules.menu.module.restart')
+                     if (cm) cm()
                 }
 
                 app.mobile.statusbar.background()
