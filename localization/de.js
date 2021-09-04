@@ -821,3 +821,5 @@ ____loclib.e133512 = "Bitte schreiben Sie einige Worte über Sich selbst, damit 
 
 ____loclib.downloaded = "Heruntergeladen";
 ____loclib.downloadedEmpty = "Heruntergeladene Beiträge werden hier angezeigt";
+____loclib.downloadVideo = "Video herunterladen";
+____loclib.selectQuality = "Qualität auswählen:";

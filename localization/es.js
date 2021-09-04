@@ -792,3 +792,5 @@ ____loclib.e13352 = "No tienes permiso para chatear"
 
 ____loclib.downloaded = "Descargado";
 ____loclib.downloadedEmpty = "Los mensajes descargados se mostrarán aquí";
+____loclib.downloadVideo = "Descargar vídeo";
+____loclib.selectQuality = "Seleccione la calidad:";

@@ -820,3 +820,5 @@ ____loclib.e133512 = "사람들이 당신을 따르기를 원하는지 결정할
 
 ____loclib.downloaded = "다운로드됨";
 ____loclib.downloadedEmpty = "다운로드한 게시물이 여기에 표시됩니다.";
+____loclib.downloadVideo = "비디오 다운로드";
+____loclib.selectQuality = "품질 선택:";

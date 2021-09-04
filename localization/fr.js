@@ -815,3 +815,5 @@ ____loclib.e133512 = 'Please write a few words about yourself to help people dec
 
 ____loclib.downloaded = "Téléchargés";
 ____loclib.downloadedEmpty = "Les posts téléchargés s'afficheront ici";
+____loclib.downloadVideo = "Télécharger vidéo";
+____loclib.selectQuality = "Sélectionnez la qualité:";
