@@ -262,6 +262,8 @@ var test = (function(){
 					el.upanel.addClass('loading')
 
 					self.app.platform.sdk.users.nameExist(userInfo.name.v, function(exist){
+
+						//exist = false
 						
 
 						if(!exist || (self.app.platform.sdk.address.pnet() && exist == self.app.platform.sdk.address.pnet().address)){
@@ -551,7 +553,6 @@ var test = (function(){
 
 							var hash = tempInfo[parameter.id].toLowerCase().replace(/[^a-z]/g,'')
 
-							namereg
 
 							if (hash.indexOf('pocketnet') > -1) {
 

@@ -342,7 +342,7 @@ ____loclib.upvoteCommentMessage = " liked your comment"
 // Errors
 
 ____loclib.error = "Error";
-____loclib.checkScoreError = "You must fill in required profile info before using "+appname+". Do you want to do it now?";
+____loclib.checkScoreError = "Your account was not found on the blockchain. You must fill in required profile info before using "+appname+". Do you want to do it now?";
 ____loclib.checkScoreErrorLight = "Account is not activated";
 ____loclib.timestamperror = "Time in application and in node do not match";
 

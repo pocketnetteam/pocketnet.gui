@@ -787,28 +787,55 @@ Platform = function (app, listofnodes) {
             },
             action: function () {
 
+
                 self.app.platform.sdk.user.waitActions(function (r) {
 
                     if (!r) {
-                        dialog({
-                            html: self.app.localization.e('checkScoreError'),
-                            btn1text: self.app.localization.e('dyes'),
-                            btn2text: self.app.localization.e('dno'),
 
-                            success: function () {
+                        self.app.platform.sdk.relayTransactions.send(function(action){
 
-                                self.app.nav.api.load({
-                                    open: true,
-                                    href: 'filluser',
-                                    history: true
-                                })
+                            if(!action){
 
-                            },
+                                var a = self.app.platform.sdk.address.pnet().address
 
-                            fail: function () {
+                                self.sdk.users.getone(a, function(){
+
+                                    var exist = self.sdk.users.storage[a]
+
+                                    if(!exist){
+                                        dialog({
+                                            html: self.app.localization.e('checkScoreError'),
+                                            btn1text: self.app.localization.e('dyes'),
+                                            btn2text: self.app.localization.e('dno'),
+                
+                                            success: function () {
+                                                self.app.nav.api.load({
+                                                    open: true,
+                                                    href: 'test',
+                                                    inWnd: true
+                                                })
+                                            },
+                                            fail: function () {
+                
+                                            }
+                                        })
+                                    }
+                                    else{
 
 
+                                        dialog({
+                                            html: self.app.localization.e('waitConf'),
+                                            btn1text: self.app.localization.e('daccept'),
+                
+                                            class: 'one'
+                                        })
+
+                                    }
+
+                                }, false, true)
+                                
                             }
+
                         })
 
                     }
@@ -3385,6 +3412,8 @@ Platform = function (app, listofnodes) {
 
             send: function (clbk) {
 
+                var needaction = false
+
                 self.app.user.isState(function (state) {
 
                     if (state) {
@@ -3449,6 +3478,8 @@ Platform = function (app, listofnodes) {
 
                                                         function (_alias, error) {
 
+                                                            console.log('error')
+
                                                             var eh = self.errors[error] || {}
 
                                                             delete object.sending;
@@ -3457,6 +3488,8 @@ Platform = function (app, listofnodes) {
                                                                 if (key == 'userInfo') {
 
                                                                     var _nsh = bitcoin.crypto.hash256(JSON.stringify(object))
+
+                                                                    needaction = true
 
                                                                     if (error == '18' && _nsh != nshowed) {
 
@@ -3472,15 +3505,12 @@ Platform = function (app, listofnodes) {
                                                                                 failedrelay : trobj
                                                                             }
                                                                         })
-
                                                                     }
 
                                                                     if (clbk)
-                                                                        clbk()
+                                                                        clbk(needaction)
 
                                                                     return
-
-
                                                                 }
                                                             }
 
@@ -3526,7 +3556,7 @@ Platform = function (app, listofnodes) {
                                     all: {
                                         success: function () {
                                             if (clbk)
-                                                clbk()
+                                                clbk(needaction)
                                         }
                                     }
                                 })
@@ -4886,8 +4916,6 @@ Platform = function (app, listofnodes) {
 
                     _.each(utxo, function (tx) {
                         var _w = self.sdk.node.transactions.waitSpend(tx)
-
-
                         if (wait == 'inf' || wait > _w) {
                             wait = _w;
                         }
