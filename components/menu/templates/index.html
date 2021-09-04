@@ -229,7 +229,7 @@
 								<div class="lang localization">
 									
 									<% if(isMobile()) {%>
-										<%-(lkey.key || '').toLowerCase()%> 
+										<%-(lkey.key || '').toUpperCase()%> 
 									<% } else { %>
 										<%-(lkey.name || '').toLowerCase()%> 
 									<% } %>
