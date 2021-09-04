@@ -1835,6 +1835,8 @@ Platform = function (app, listofnodes) {
 
             el.html(tpl)
 
+            p.hcnt = el.find('.horizontalLentaWrapper')
+
             p.window = el.find('.showmorebywrapper')
 
             var _el = el.find('.showmoreby')
@@ -1883,7 +1885,21 @@ Platform = function (app, listofnodes) {
                     horizontal : p.horizontal,
                     second : true,
                     loaderkey : p.loaderkey,
-                    hasshares : p.hasshares,
+                    hasshares : function(shares){
+
+                        if (p.hcnt){
+                            setTimeout(function(){
+                                p.hcnt.addClass('hasitems')
+                            }, 300)
+                            
+                        }
+
+                        if (shares.length <= 2){
+                            showmoreby.addClass('hidden')
+                        }
+
+                        if(p.hasshares) p.hasshares(shares)
+                    },
                     opensvi : p.opensvi,
                     from : p.from,
                     compact : p.compact,

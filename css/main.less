@@ -4488,6 +4488,7 @@ input[type=radio].radio:checked + label {
     position: relative;
 
     .controlhor{
+        display: none;
         position: absolute;
         top : 45%;
         border-radius: 50%;
@@ -4512,6 +4513,12 @@ input[type=radio].radio:checked + label {
 
         &:hover{
             color : @color-main;
+        }
+    }
+
+    &.hasitems{
+        .controlhor{
+            display: block;
         }
     }
 
