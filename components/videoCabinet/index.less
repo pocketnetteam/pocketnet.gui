@@ -782,15 +782,22 @@ html.stblack {
     #videoCabinet {
         background-color: #112035;
 
+        .videoSearchInput::placeholder,
         .vidgetNameWrapper,
         .vidgetIconWrapper,
         .metricsContainerHeader,
         .metricSection,
-        .cabinetName {
-            color: whitesmoke;
+        .cabinetName,
+        .menuActivator,
+        .descriptionContent,
+        .videoDuration {
+            color: @color-gray-border;
         }
 
-        .videoSearchInput::placeholder,
+        .videoSearchInput {
+            background-color: rgba(208, 201, 202, 0.15);
+        }
+
         .videoSelect,
         .selectIcon,
         .selectBorderCaption {
@@ -801,7 +808,7 @@ html.stblack {
             color: @color-bright;
 
             &:hover {
-                color: whitesmoke;
+                color: @color-gray-border;
             }
         }
 
@@ -809,8 +816,8 @@ html.stblack {
             border-bottom-color: @color-bright;
 
             &:hover {
-                color: whitesmoke;
-                border-bottom-color: whitesmoke;
+                color: @color-gray-border;
+                border-bottom-color: @color-gray-border;
             }
         }
 
@@ -819,31 +826,31 @@ html.stblack {
 
                 .selectBorderCaption,
                 .selectIcon {
-                    color: whitesmoke;
+                    color: @color-gray-border;
                 }
             }
         }
 
         .singleVideoSection {
-            color: whitesmoke;
+            color: @color-gray-border;
         }
 
         .videoPostLink {
             color: @color-bright;
 
             &:hover {
-                color: whitesmoke;
+                color: @color-gray-border;
                 text-decoration: underline;
             }
         }
 
         .videoStatsWrapper {
             .singleStat {
-                color: whitesmoke;
+                color: @color-gray-border;
 
                 &:hover {
                     text-decoration: underline;
-                    color: whitesmoke;
+                    color: @color-gray-border;
                     cursor: pointer;
                 }
             }
