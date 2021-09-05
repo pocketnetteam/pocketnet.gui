@@ -222,7 +222,7 @@ var metadisplay = function(){ %>
 } %>
 
 
-	<div class="work">
+	<div class="work unselectablemobile">
 
 		<% 
 
@@ -410,27 +410,27 @@ var metadisplay = function(){ %>
 		</div>
 	</div>
 
-	<div class="exitFull roundclosebutton">
+	<div class="exitFull roundclosebutton unselectablemobile">
 		<i class="fa fa-times" aria-hidden="true"></i>
 	</div>
 
 
-		<% if(!emptywithrepost) {%>
+<% if(!emptywithrepost) {%>
 
-			<% if(typeof repost == 'undefined' || !repost || fromempty) {%>
+	<% if(typeof repost == 'undefined' || !repost || fromempty) {%>
 
-				<div class="showmorelenta"></div>
-	
-				<div class="commentsWrapperHb">
-					
-					<div class="commentsWrapper">
-					</div>
-	
-				</div>
-	
-			<% } %>
-	
-		<% } %>
+		<div class="showmorelenta"></div>
+
+		<div class="commentsWrapperHb">
+			
+			<div class="commentsWrapper">
+			</div>
+
+		</div>
+
+	<% } %>
+
+<% } %>
 
 
 <% } %>

@@ -36,7 +36,7 @@ var value = Number(share.score)
 
 var metadisplay = function(){ %>
 
-<div class="meta">
+<div class="meta unselectablemobile">
 	<div class="metatable table">
 		<div class="metadata">
 
@@ -272,7 +272,7 @@ var metadisplay = function(){ %>
 
 <div class="sharecnt">
 
-	<div class="work">
+	<div class="work unselectablemobile">
 
 		<div class="shareTable <%-subscribed%> <%-view%> <% if(emptywithrepost) { %> emptywithrepost <% } else { %> truerepost <% } %>" address="<%-share.address%>" stxid="<%-share.txid%>">
 
@@ -347,7 +347,7 @@ var metadisplay = function(){ %>
 							
 							%>
 
-							<div class="tags canmark hideOnFullVideo">
+							<div class="tags canmark hideOnFullVideo unselectablemobile">
 								<% _.each(bycategories.categories, function(category){ %>
 
 									<div class="category">
@@ -375,7 +375,7 @@ var metadisplay = function(){ %>
 
 						
 						<% if((typeof repost == 'undefined' || !repost || fromempty)) {%>
-							<div class="sys hideOnFullVideo">
+							<div class="sys hideOnFullVideo unselectablemobile">
 								<% if(share.time) {%>
 									<span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span>
 								<% } else { %> 
@@ -389,7 +389,7 @@ var metadisplay = function(){ %>
 						<% } %>
 
 						<% if(!share.temp &&  (typeof repost == 'undefined' || !repost || fromempty)) {%>
-							<div class="panel">
+							<div class="panel unselectablemobile">
 								<div class="item forstars">
 									
 								</div>
@@ -435,7 +435,7 @@ var metadisplay = function(){ %>
 
 						<% if(share.temp) {%>
 
-							<div class="panel">
+							<div class="panel unselectablemobile">
 								<div class="item right">
 
 									<div class="itemwr table tempPreloader">
@@ -502,7 +502,7 @@ var metadisplay = function(){ %>
 		
 	</div>
 
-	<div class="exitFull roundclosebutton">
+	<div class="exitFull roundclosebutton unselectablemobile">
 		<i class="fa fa-times" aria-hidden="true"></i>
 	</div>
 
