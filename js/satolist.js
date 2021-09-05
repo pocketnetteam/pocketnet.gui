@@ -1939,10 +1939,6 @@ Platform = function (app, listofnodes) {
                             
                         }
 
-                        if (shares.length <= 2){
-                            showmoreby.addClass('hidden')
-                        }
-
                         if(p.hasshares) p.hasshares(shares)
                     },
                     opensvi : p.opensvi,

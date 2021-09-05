@@ -301,6 +301,8 @@ var main = (function(){
 						},
 						hasshares : function(shares){
 
+							console.log("hasshares", shares)
+
 							if (shares.length <= 2){
 								showmoreby.addClass('hidden')
 							}
