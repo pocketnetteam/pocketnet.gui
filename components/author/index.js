@@ -1039,9 +1039,11 @@ var author = (function(){
 
 
 			var src = deep(author, 'data.image')
-			console.log('src', src);
 
-			if (!src){
+			var me = self.app.platform.sdk.address.pnet() ? self.app.platform.sdk.address.pnet().address : null;
+			console.log('me', me);
+
+			if (!src && me === author.address){
 
 
 				el.usericon.addClass('active')
