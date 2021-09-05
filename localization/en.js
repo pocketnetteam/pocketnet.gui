@@ -310,6 +310,8 @@ ____loclib.dsa = "Do not Show Anymore";
 
 // Messages
 
+____loclib.transactionCome = "Incoming transaction";
+
 ____loclib.coinbaseSuccess = function(v){
 return "Congratulations, you have won " + v + " PKOIN for your latest activity!"
 }

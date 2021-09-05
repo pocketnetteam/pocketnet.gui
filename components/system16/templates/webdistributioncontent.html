@@ -20,12 +20,67 @@
         </div>
         
     </div>
-    <% if(admin) {%>
-    <div class="stats">
-        <div class="walletschart">
+
+    <div class="process">
+
+        <div class="work">
+
+            <div class="subcaptioninfo">
+                <span>
+                    Info
+                </span>
+            </div>
+
+            <div class="info">
+                <div class="row">
+                    <div class="label">Process Date:</div>
+                    <div class="value">
+                        
+                        <% if(wallets.lastprocess) {%>
+                            <%- new Date(wallets.lastprocess) %>
+                        <% } else { %> 
+                            &mdash;
+                        <% } %>
+                        
+                    
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="label">Process Enabled:</div>
+                    <div class="value">
+
+                        <% if(wallets.processInterval) {%> 
+                            <i class="far fa-check-circle"></i> 
+                        <% } else { %> 
+                            <i class="far fa-circle"></i>
+                        <% } %>
+                    </div>
+                        
+                </div>
+
+                <div class="row">
+                    <div class="label">Last Process Errors:</div>
+                    <div class="value">
+                        <% if(wallets.lastprocesserror) {%>
+                            <%- wallets.lastprocesserror %>
+                        <% } else { %> 
+                            &mdash;
+                        <% } %>
+                    </div>
+                </div>
+            </div>
 
         </div>
+
     </div>
+
+    <% if(admin) {%>
+        <div class="stats">
+            <div class="walletschart">
+
+            </div>
+        </div>
     <% } %>
 
 </div>

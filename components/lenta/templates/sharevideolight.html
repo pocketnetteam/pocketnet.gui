@@ -6,10 +6,14 @@ var bigmessage = false
 
 if(typeof ed == 'undefined') ed = {}
 
+var reputation = 0
+
 if(share.address){
 
 	var my = (user.address.value && share.address == user.address.value.toString('hex'))
 	var subscribed = '';
+
+	reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0
 
 	if(!my && user.address.value){
 
@@ -23,6 +27,7 @@ var view = 'post';
 var name = app.platform.api.name(share.address)
 var emptywithrepost = share.isEmpty() && share.repost
 var value = Number(share.score)
+
 
 var metadisplay = function(){ %>
 
@@ -65,27 +70,15 @@ var metadisplay = function(){ %>
             
 
 						<div class="authorCell">
-
-							<a href="<%-app.platform.api.authorlink(share.address)%>">
-							<% var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0; %>
-								<span class="adr"><%-name || share.address %></span><% if(reputation > 1 || reputation < -1) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
-							</a>
 							
 						</div>			
-                        
-                       
 						
 					</div>
 				</div>
 
 			<% } else { %> 
 			
-				<div class="repostCaption">
-					<i class="fas fa-share"></i> 
-					<a href="<%-app.platform.api.authorlink(share.address)%>">
-						<span class="adr"><%-name || share.address %></span>
-					</a>
-				</div>
+				
 				
 			<% } %>
 		
@@ -109,7 +102,7 @@ var metadisplay = function(){ %>
 			<div class="paddingWrapper">
 				<div class="sharecaption canmark opensviurl" title="<%-nl2br(trimrn(c))%>">
 					<div>
-						<%=app.actions.emoji(nl2br(trimrn(c)))%>
+						<span class="adr"><%-name || share.address %>:</span> <%=app.actions.emoji(nl2br(trimrn(c)))%>
 					</div>
 				</div>
 			</div>
@@ -156,7 +149,7 @@ var metadisplay = function(){ %>
 
 		%>
 
-		<div class="shareTable  <%-subscribed%> <%-view%> <% if(emptywithrepost) { %> emptywithrepost <% } else { %> truerepost <% } %>" address="<%-share.address%>" stxid="<%-share.txid%>">
+		<div class="shareTable lighted <%-subscribed%> <%-view%> <% if(emptywithrepost) { %> emptywithrepost <% } else { %> truerepost <% } %>" address="<%-share.address%>" stxid="<%-share.txid%>">
 
 			<div class="cntswrk forurl <%- (aspectRatio > 0.9) && (aspectRatio < 1.25) ? 'squareVideo' : ''%> <%- (aspectRatio < 0.9) && (aspectRatio > 0) ? 'verticalVideo' : ''%>">
 

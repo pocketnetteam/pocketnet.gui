@@ -19,6 +19,8 @@ var Wallet = function(p){
     var TXFEE = 1
     var smulti = 100000000
 
+    self.lastprocess = null
+    self.lastprocesserror = null
 
     self.patterns = {
         ip : function(queueobj, all){
@@ -38,8 +40,6 @@ var Wallet = function(p){
 
         uniqAddress : function(queueobj, all){
             //if(!queueobj.address) return Promise.reject('address')
-
-            console.log("queueobj.address", queueobj.address, self.patterns.validAddress(queueobj.address))
 
             if(!self.patterns.validAddress(queueobj.address)) return Promise.reject('address')
 
@@ -94,7 +94,13 @@ var Wallet = function(p){
 
         var mk = function(){
             _.each(addresses, function(a, k){
-                self.kit.makequeueE(k).catch(e => {})
+                self.kit.makequeueE(k).catch(e => {
+
+                    console.log("ERROR", e)
+
+                    self.lastprocesserror = e
+
+                })
             })
         }
 
@@ -104,10 +110,16 @@ var Wallet = function(p){
             })
         }
 
+        //mk();
+
+        us()
+
         if(!processInterval)
             processInterval = setInterval(function(){
 
                 mk();
+
+                self.lastprocess = new Date()
 
             }, 10000)
 
@@ -140,16 +152,11 @@ var Wallet = function(p){
 
     self.init = function(){
 
-        console.log("INIT")
-     
         _.each(p.addresses, function(options, key){
 
             addresses[key] = self.kit.addressobj(options, key)
 
-            console.log('addresses[key]', addresses[key])
-
             if(!addresses[key].keys){
-                console.log("ERROR")
                 _.each(self.clbks.error.ini, function(c){
                     c('privatekey', {
                         key : key
@@ -158,11 +165,9 @@ var Wallet = function(p){
             }
             else{
 
-                console.log("GETADDR", key)
-
-                self.unspents.getc(addresses[key]).catch(e => {
+                /*self.unspents.getc(addresses[key]).catch(e => {
                     console.log("catch", e)
-                })
+                })*/
             }
 
         })
@@ -319,7 +324,6 @@ var Wallet = function(p){
         addressobj : function(options, key){
             var kp = null
 
-            console.log("options.privatekey", options.privatekey)
             
             try{
                 kp = self.pocketnet.kit.keyPair(options.privatekey)
@@ -413,7 +417,6 @@ var Wallet = function(p){
 
                 meta = _meta
 
-
                 _.each(meta.inputs, function(input){
                     input.cantspend = true
                 })
@@ -421,8 +424,6 @@ var Wallet = function(p){
                 return self.transactions.send(meta.tx)
                 
             }).catch(e => {
-
-                console.log("E", e, meta.inputs, outputs)
 
                 if (meta){
                     self.unspents.release(meta.inputs)
@@ -449,10 +450,6 @@ var Wallet = function(p){
 
             if(_.find(queue, function(object){ return object.address == to && !object.executing})) return Promise.resolve()
 
-            
-            
-
-
             var object = {
                 address : to,
                 key : key,
@@ -462,8 +459,6 @@ var Wallet = function(p){
                 date : f.now(),
                 amount : amount || undefined
             } 
-
-
 
             return self.checking(object).then(r => {
                 return new Promise((resolve, reject) => {
@@ -498,12 +493,15 @@ var Wallet = function(p){
         },
 
         makequeueE : function(key){
+
             return self.kit.makequeue(key).catch(e => {
                 return Promise.reject(e)
             })
         },
 
         makequeue : function(key){
+
+
             if(!addresses[key]) return Promise.reject('key')
 
             var queue = _.filter(addresses[key].queue, function(object, l){
@@ -514,7 +512,7 @@ var Wallet = function(p){
 
                 if(!self.patterns.validAddress(object.address)) return false
 
-                return !object.executing & l < 50
+                return !object.executing && l < 50
             })
 
             if(!queue.length) return Promise.resolve()
@@ -534,8 +532,6 @@ var Wallet = function(p){
                     amount : object.amount
                 }
             })
-
-
 
             return self.kit.send(key, tos).then(r => {
 
@@ -567,7 +563,7 @@ var Wallet = function(p){
                
             }).catch(e => {
 
-
+                console.log("E", e)
                 var catchederror = false
 
                 _.each(addresses[key].queue, function(object){
@@ -919,8 +915,6 @@ var Wallet = function(p){
 
                 }).catch(e => {
 
-                    console.log("E", e)
-
                     _.each(inputs, function (i) {
                         var u = _.find(address.unspents, function(u){
                             return u.vout == i.vout && u.txid == i.txId
@@ -988,10 +982,34 @@ var Wallet = function(p){
         
     }
 
+    var returnerror = function(){
+        if(!self.lastprocesserror) return null
+
+        try{
+            if(self.lastprocesserror.toString) return self.lastprocesserror.toString()
+
+            if(_.isObject(self.lastprocesserror)) return JSON.stringify(self.lastprocesserror)
+        }
+
+        catch(e){
+            return null
+        }
+
+        
+
+        return null
+
+    }
+
     self.info = function(){
+
+
 
         var info = {
             inited : inited,
+            lastprocess : self.lastprocess,
+            lastprocesserror : returnerror(),
+            processInterval : processInterval ? true : false,
             addresses : {}
         }
 
@@ -1002,7 +1020,8 @@ var Wallet = function(p){
                 balance : self.unspents.total(r.unspents),
                 queue : r.queue.length,
                 ready : r.keys ? true : false,
-                address : r.address || null
+                address : r.address || null,
+                check : r.check
             }
         })
 

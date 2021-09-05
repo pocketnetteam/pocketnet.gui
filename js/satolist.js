@@ -18012,7 +18012,7 @@ Platform = function (app, listofnodes) {
                         text = self.tempates.share(data.share, null, true)
 
                         if (text) {
-                            html += self.tempates.user(data.user, text, true, null, null, data.time)
+                            html += self.tempates.user(data.user, text, true, " " + self.app.localization.e('e13332'), null, data.time)
                         }
                     }
 
@@ -18288,7 +18288,7 @@ Platform = function (app, listofnodes) {
                                     ),
 
                                     false,
-                                    null,
+                                    platform.app.localization.e('transactionCome'),
                                     null,
 
                                     data.time
@@ -19921,19 +19921,19 @@ Platform = function (app, listofnodes) {
 
             //platform.matrixchat.notify.event()
 
-            /* 
-            self.messageHandler({
-                addr: "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82"
-                amount: "166666"
-                msg: "transaction"
-                node: "64.235.45.119:38081:8087"
-                nout: "7"
-                time: 1629883584
+            
+            /*self.messageHandler({
+                addr: "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82",
+                amount: "166666",
+                msg: "transaction",
+                node: "64.235.45.119:38081:8087",
+                nout: "7",
+                time: 1629883584,
                 txid: "4e73740eba080aae73aceb80636dcf8f3fe8aed1a9c8c7de417a59ee2d54d357"
-            })
+            })*/
             
 
-            */
+           
 
             /*self.messageHandler({
                 addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
@@ -19998,7 +19998,7 @@ Platform = function (app, listofnodes) {
                 txid: "6119caaadaef37be8f3716be8280e88206adf043f38fc1665d7e42bdcf90128a"
             })*/
 
-			/*self.messageHandler({
+			/**self.messageHandler({
                 addr: "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82",
                 addrFrom: "PTcArXMkhsKMUrzQKn2SXmaVZv4Q7sEpBt",
                 mesType: "postfromprivate",
@@ -20008,23 +20008,11 @@ Platform = function (app, listofnodes) {
                 txid: "b52f38b272b7a18c0947b853ee35fee2aa0e0105aa86daa9cd1efcb35b54f036"
             })*/
 
-            /*
-            addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM"
-            blockhash: "12ba464105e4b29bef43f3b893d60348fe056488834cbb2d43780c1432477bf6"
-            contentsLang: {}
-            height: 1334998
-            msg: "new block"
-            node: "216.108.231.40:38081:8087"
-            shares: 0
-            time: "1630599808"
-
-            */
+            
 
 
 		}, 6000)
     }
-    
-    
     
     
     self.convertUTCSS = function (str) {

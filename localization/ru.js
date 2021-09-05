@@ -303,6 +303,8 @@ ____loclib.dsa = "Не показывать больше";
 
 // Messages
 
+____loclib.transactionCome = "Входящая транзакция";
+
 ____loclib.coinbaseSuccess = function(v){
 	return "<b>Поздравляем!</b> " + " Вы выиграли <b>" + v + " PKOIN</b>"
 }
