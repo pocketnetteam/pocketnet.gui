@@ -71,6 +71,9 @@ var metadisplay = function(){ %>
 
 						<div class="authorCell">
 							
+							<% if(!ed.horizontal) {%>
+							<span class="adr"><%-name || share.address %></span><% if(reputation > 1 || reputation < -1) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
+							<% } %>
 						</div>			
 						
 					</div>
@@ -102,7 +105,8 @@ var metadisplay = function(){ %>
 			<div class="paddingWrapper">
 				<div class="sharecaption canmark opensviurl" title="<%-nl2br(trimrn(c))%>">
 					<div>
-						<span class="adr"><%-name || share.address %>:</span> <%=app.actions.emoji(nl2br(trimrn(c)))%>
+						<% if(ed.horizontal) {%><span class="adr"><%-name || share.address %>:</span><% } %>
+						<%=app.actions.emoji(nl2br(trimrn(c)))%>
 					</div>
 				</div>
 			</div>
