@@ -978,7 +978,9 @@ var main = (function(){
 					return
 				}
 				
-				var data = {};
+				var data = {
+					
+				};
 			
 		
 				clbk(data);

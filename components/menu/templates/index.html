@@ -1,11 +1,6 @@
-<% 
 
-var name = app.platform.api.clearname(deep(app, 'platform.sdk.user.storage.me.name') || (user.address.value && user.address.value.toString('hex')) )
-var letter = name ? name[0] : ''
 
-%>
-
-<div id="<%-module.map.id%>" >
+<div id="<%-module.map.id%>" class="unselectablemobile">
 
 	<div class="menuWrapper">
 
@@ -132,7 +127,14 @@ var letter = name ? name[0] : ''
 						<div class="items">
 							<div class="item table right user" events="userpage unselectable">
 
-								<% var src = deep(app, 'platform.sdk.user.storage.me.image')  %>
+								<% 
+								
+								var src = deep(app, 'platform.sdk.user.storage.me.image')  
+
+								var name = app.platform.api.clearname(deep(app, 'platform.sdk.user.storage.me.name') || (user.address.value && user.address.value.toString('hex')) )
+								var letter = name ? name[0] : ''
+
+								%>
 								
 								<div class="icon">
 									<a href="<%-app.platform.api.authorlink(user.address.value.toString('hex'))%>">	
@@ -230,16 +232,18 @@ var letter = name ? name[0] : ''
 
 					<div class="items sitenames">
 
+						<% if(typeof theme != 'undefined') {%>
+
 						<div class="item table sitename" >
 							<div class="icon" events="sitename">
-								<img class="header_logo" src="img/logo20.svg">
+								<img class="header_logo all" src="img/logotypes/<%-app.meta.fullname.toLowerCase()%>_logo_<%-theme%>.svg">
 							</div>
 							<div class="label">
-								<div class="sitenamelabel"><% if(app.test){%>TESTNET<%} else {%><%-app.meta.fullname%><% }%></div>
+								<!--<div class="sitenamelabel"><% if(app.test){%>TESTNET<%} else {%><%-app.meta.fullname%><% }%></div>-->
 								<div class="lang localization">
 									
 									<% if(isMobile()) {%>
-										<%-(lkey.key || '').toLowerCase()%> 
+										<%-(lkey.key || '').toUpperCase()%> 
 									<% } else { %>
 										<%-(lkey.name || '').toLowerCase()%> 
 									<% } %>
@@ -249,6 +253,30 @@ var letter = name ? name[0] : ''
 							</div>						
 
 						</div>
+
+						<% } else { %> 
+						
+							<div class="item table sitename" >
+								<div class="icon" events="sitename">
+									<img class="header_logo" src="img/logo20.svg">
+								</div>
+								<div class="label">
+									<div class="sitenamelabel"><% if(app.test){%>TESTNET<%} else {%><%-app.meta.fullname%><% }%></div>
+									<div class="lang localization">
+										
+										<% if(isMobile()) {%>
+											<%-(lkey.key || '').toLowerCase()%> 
+										<% } else { %>
+											<%-(lkey.name || '').toLowerCase()%> 
+										<% } %>
+										
+										<i class="fas fa-caret-down"></i>
+									</div>
+								</div>						
+	
+							</div>
+							
+						<% } %>
 					</div>
 
 				<% } %>

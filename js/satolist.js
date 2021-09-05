@@ -69,7 +69,52 @@ Platform = function (app, listofnodes) {
     }
     
 
-    self.testaddresses = ['TQEGz5cQQtRad8wo2c1KapvFek9rnuprkD', 'PGiQ8j6fdtAJSH2sA7rZMB17GzqBTUVLCm', 'PF1umexG4Kvm8bkow1JiRF3s1vcBkYvKeg', 'PJJbtb1AEcRopQuuBiRbQbiec7WHNtAEsF', 'PSmGDYWzcPrrhvqFnGVxnhPbpsTK6LCZYd', 'PDQaeB3fGY3en5qMaq8AKZvev34Hgyx5UE', 'PAdUsDtP9onjpwHHxhbxxRcjtxD9fsW9Su', 'PRaYPD2NAVMcEXcUu2GsEQwqsG8md8H2dr', 'PHr8g7b4gJdSkiJFmQeoND2X8tRUKvB2An', 'PEwL86dE6MuKKaGPxooGyFCKocUP8B6jw8', 'PFV4UT9fhHsqkmCGsWsSCr55Pr1SMX6NL2', 'PRTugzBefzB1AA2Rw8VTBKf3BBPDjQND8y', 'P92gc46iqLhCswPsbLxH7wjTfh9rhhNSux', 'PSWxzYS4Y37tmnZ9oxKfm9ffVqLRBbFbjH', 'PHvQEGtYYpDpmHYuUwA4gF4ey1YitF2NRW', 'PA6biduJbWcQ97n5jz2jUqWHtenLpWTH7s', 'PKpdrwDVGfuBaSBvboAAMwhovFmGX8qf8S', 'PKerxto9tFT8dZJrNWFsimA3sBdBAkXsrE', 'PQsvaeBWB5WX3BsdWcNFmP1wy61P3gpRKf', 'PKerxto9tFT8dZJrNWFsimA3sBdBAkXsrE', 'PHNKYionoaBRVudUhqWzNrJyqxVxaDYqT7', 'PVCUYATJxi4yNM2sqThPxd3P6jJDrvuWJs', 'PLJvEixJkj85C4jHM3mt5u1ATwZE9zgFaA', 'PShAyCoM32HEEHqrdEYvQ1wRjeqZsmWqDa', 'PKLWLXN6kwmdkbYG981gyPj5jb7bgzhstj', 'PHdW4pwWbFdoofVhSEfPSHgradmrvZdbE5', 'P9jDYvkXHw4FtRZof661ddzmMyFRqGUjwN', 'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m', 'PFnN8SExxLsUjMKzs2avdvBdcA3ZKXPPkF', 'PSRFH9Ctq4wV1THes39izo3J4dHybLyT32', 'PVgqi72Qba4aQETKNURS8Ro7gHUdJvju78', 'P9tRnx73Sw1Ms9XteoxYyYjvqR88Qdb8MK', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz', 'PEHrffuK9Qiqs5ksqeFKHgkk9kwQN2NeuS', 'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz','PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PK6Kydq5prNj13nm5uLqNXNLFuePFGVvzf', 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s', 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc', 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8', 'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd']
+    self.testaddresses = [
+      'TQEGz5cQQtRad8wo2c1KapvFek9rnuprkD',
+      'PGiQ8j6fdtAJSH2sA7rZMB17GzqBTUVLCm',
+      'PF1umexG4Kvm8bkow1JiRF3s1vcBkYvKeg',
+      'PJJbtb1AEcRopQuuBiRbQbiec7WHNtAEsF',
+      'PSmGDYWzcPrrhvqFnGVxnhPbpsTK6LCZYd',
+      'PDQaeB3fGY3en5qMaq8AKZvev34Hgyx5UE',
+      'PAdUsDtP9onjpwHHxhbxxRcjtxD9fsW9Su',
+      'PRaYPD2NAVMcEXcUu2GsEQwqsG8md8H2dr',
+      'PHr8g7b4gJdSkiJFmQeoND2X8tRUKvB2An',
+      'PEwL86dE6MuKKaGPxooGyFCKocUP8B6jw8',
+      'PFV4UT9fhHsqkmCGsWsSCr55Pr1SMX6NL2',
+      'PRTugzBefzB1AA2Rw8VTBKf3BBPDjQND8y',
+      'P92gc46iqLhCswPsbLxH7wjTfh9rhhNSux',
+      'PSWxzYS4Y37tmnZ9oxKfm9ffVqLRBbFbjH',
+      'PHvQEGtYYpDpmHYuUwA4gF4ey1YitF2NRW',
+      'PA6biduJbWcQ97n5jz2jUqWHtenLpWTH7s',
+      'PKpdrwDVGfuBaSBvboAAMwhovFmGX8qf8S',
+      'PKerxto9tFT8dZJrNWFsimA3sBdBAkXsrE',
+      'PQsvaeBWB5WX3BsdWcNFmP1wy61P3gpRKf',
+      'PKerxto9tFT8dZJrNWFsimA3sBdBAkXsrE',
+      'PHNKYionoaBRVudUhqWzNrJyqxVxaDYqT7',
+      'PVCUYATJxi4yNM2sqThPxd3P6jJDrvuWJs',
+      'PLJvEixJkj85C4jHM3mt5u1ATwZE9zgFaA',
+      'PShAyCoM32HEEHqrdEYvQ1wRjeqZsmWqDa',
+      'PKLWLXN6kwmdkbYG981gyPj5jb7bgzhstj',
+      'PHdW4pwWbFdoofVhSEfPSHgradmrvZdbE5',
+      'P9jDYvkXHw4FtRZof661ddzmMyFRqGUjwN',
+      'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m',
+      'PFnN8SExxLsUjMKzs2avdvBdcA3ZKXPPkF',
+      'PSRFH9Ctq4wV1THes39izo3J4dHybLyT32',
+      'PVgqi72Qba4aQETKNURS8Ro7gHUdJvju78',
+      'P9tRnx73Sw1Ms9XteoxYyYjvqR88Qdb8MK',
+      'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz',
+      'PEHrffuK9Qiqs5ksqeFKHgkk9kwQN2NeuS',
+      'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq',
+      'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz',
+      'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM',
+      'PK6Kydq5prNj13nm5uLqNXNLFuePFGVvzf',
+      'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82',
+      'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s',
+      'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc',
+      'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8',
+      'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7',
+      'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd',
+    ];
 
 
     /*self.testchataddresses = ['PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PQvcVW7ZV4YPKC1QhxXdT8ppUakCejWYTA']*/
@@ -787,28 +832,55 @@ Platform = function (app, listofnodes) {
             },
             action: function () {
 
+
                 self.app.platform.sdk.user.waitActions(function (r) {
 
                     if (!r) {
-                        dialog({
-                            html: self.app.localization.e('checkScoreError'),
-                            btn1text: self.app.localization.e('dyes'),
-                            btn2text: self.app.localization.e('dno'),
 
-                            success: function () {
+                        self.app.platform.sdk.relayTransactions.send(function(action){
 
-                                self.app.nav.api.load({
-                                    open: true,
-                                    href: 'filluser',
-                                    history: true
-                                })
+                            if(!action){
 
-                            },
+                                var a = self.app.platform.sdk.address.pnet().address
 
-                            fail: function () {
+                                self.sdk.users.getone(a, function(){
+
+                                    var exist = self.sdk.users.storage[a]
+
+                                    if(!exist){
+                                        dialog({
+                                            html: self.app.localization.e('checkScoreError'),
+                                            btn1text: self.app.localization.e('dyes'),
+                                            btn2text: self.app.localization.e('dno'),
+                
+                                            success: function () {
+                                                self.app.nav.api.load({
+                                                    open: true,
+                                                    href: 'test',
+                                                    inWnd: true
+                                                })
+                                            },
+                                            fail: function () {
+                
+                                            }
+                                        })
+                                    }
+                                    else{
 
 
+                                        dialog({
+                                            html: self.app.localization.e('waitConf'),
+                                            btn1text: self.app.localization.e('daccept'),
+                
+                                            class: 'one'
+                                        })
+
+                                    }
+
+                                }, false, true)
+                                
                             }
+
                         })
 
                     }
@@ -1808,6 +1880,8 @@ Platform = function (app, listofnodes) {
 
             el.html(tpl)
 
+            p.hcnt = el.find('.horizontalLentaWrapper')
+
             p.window = el.find('.showmorebywrapper')
 
             var _el = el.find('.showmoreby')
@@ -1856,7 +1930,21 @@ Platform = function (app, listofnodes) {
                     horizontal : p.horizontal,
                     second : true,
                     loaderkey : p.loaderkey,
-                    hasshares : p.hasshares,
+                    hasshares : function(shares){
+
+                        if (p.hcnt){
+                            setTimeout(function(){
+                                p.hcnt.addClass('hasitems')
+                            }, 300)
+                            
+                        }
+
+                        if (shares.length <= 2){
+                            showmoreby.addClass('hidden')
+                        }
+
+                        if(p.hasshares) p.hasshares(shares)
+                    },
                     opensvi : p.opensvi,
                     from : p.from,
                     compact : p.compact,
@@ -3550,6 +3638,8 @@ Platform = function (app, listofnodes) {
 
             send: function (clbk) {
 
+                var needaction = false
+
                 self.app.user.isState(function (state) {
 
                     if (state) {
@@ -3614,6 +3704,8 @@ Platform = function (app, listofnodes) {
 
                                                         function (_alias, error) {
 
+                                                            console.log('error')
+
                                                             var eh = self.errors[error] || {}
 
                                                             delete object.sending;
@@ -3622,6 +3714,8 @@ Platform = function (app, listofnodes) {
                                                                 if (key == 'userInfo') {
 
                                                                     var _nsh = bitcoin.crypto.hash256(JSON.stringify(object))
+
+                                                                    needaction = true
 
                                                                     if (error == '18' && _nsh != nshowed) {
 
@@ -3637,15 +3731,12 @@ Platform = function (app, listofnodes) {
                                                                                 failedrelay : trobj
                                                                             }
                                                                         })
-
                                                                     }
 
                                                                     if (clbk)
-                                                                        clbk()
+                                                                        clbk(needaction)
 
                                                                     return
-
-
                                                                 }
                                                             }
 
@@ -3691,7 +3782,7 @@ Platform = function (app, listofnodes) {
                                     all: {
                                         success: function () {
                                             if (clbk)
-                                                clbk()
+                                                clbk(needaction)
                                         }
                                     }
                                 })
@@ -4126,6 +4217,9 @@ Platform = function (app, listofnodes) {
                     self.matrixchat.changeTheme()
 
                     t.save()
+
+                    var cm = deep(app, 'modules.menu.module.restart')
+                     if (cm) cm()
                 }
 
                 app.mobile.statusbar.background()
@@ -5051,8 +5145,6 @@ Platform = function (app, listofnodes) {
 
                     _.each(utxo, function (tx) {
                         var _w = self.sdk.node.transactions.waitSpend(tx)
-
-
                         if (wait == 'inf' || wait > _w) {
                             wait = _w;
                         }
@@ -6790,7 +6882,7 @@ Platform = function (app, listofnodes) {
 
             replacePattern: function (str, h, p) {
 
-                var sreg = /@([^,]+),/g
+                var sreg = /(?:^|\s)@([a-zA-Z0-9_]+)/g
 
                 var name = str.match(sreg);
 
@@ -18141,7 +18233,7 @@ Platform = function (app, listofnodes) {
                         text = self.tempates.share(data.share, null, true)
 
                         if (text) {
-                            html += self.tempates.user(data.user, text, true, null, null, data.time)
+                            html += self.tempates.user(data.user, text, true, " " + self.app.localization.e('e13332'), null, data.time)
                         }
                     }
 
@@ -18417,7 +18509,7 @@ Platform = function (app, listofnodes) {
                                     ),
 
                                     false,
-                                    null,
+                                    platform.app.localization.e('transactionCome'),
                                     null,
 
                                     data.time
@@ -20074,6 +20166,19 @@ Platform = function (app, listofnodes) {
             //     reason: "system",
             //     time: "1619697839",
             // })
+            
+            /*self.messageHandler({
+                addr: "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82",
+                amount: "166666",
+                msg: "transaction",
+                node: "64.235.45.119:38081:8087",
+                nout: "7",
+                time: 1629883584,
+                txid: "4e73740eba080aae73aceb80636dcf8f3fe8aed1a9c8c7de417a59ee2d54d357"
+            })*/
+            
+
+           
 
 
             /*self.messageHandler({
@@ -20127,7 +20232,7 @@ Platform = function (app, listofnodes) {
                 txid: "6119caaadaef37be8f3716be8280e88206adf043f38fc1665d7e42bdcf90128a"
             })*/
 
-			/*self.messageHandler({
+			/**self.messageHandler({
                 addr: "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82",
                 addrFrom: "PTcArXMkhsKMUrzQKn2SXmaVZv4Q7sEpBt",
                 mesType: "postfromprivate",
@@ -20137,23 +20242,11 @@ Platform = function (app, listofnodes) {
                 txid: "b52f38b272b7a18c0947b853ee35fee2aa0e0105aa86daa9cd1efcb35b54f036"
             })*/
 
-            /*
-            addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM"
-            blockhash: "12ba464105e4b29bef43f3b893d60348fe056488834cbb2d43780c1432477bf6"
-            contentsLang: {}
-            height: 1334998
-            msg: "new block"
-            node: "216.108.231.40:38081:8087"
-            shares: 0
-            time: "1630599808"
-
-            */
+            
 
 
 		}, 6000)
     }
-    
-    
     
     
     self.convertUTCSS = function (str) {

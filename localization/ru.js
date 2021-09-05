@@ -303,6 +303,8 @@ ____loclib.dsa = "Не показывать больше";
 
 // Messages
 
+____loclib.transactionCome = "Входящая транзакция";
+
 ____loclib.coinbaseSuccess = function(v){
 	return "<b>Поздравляем!</b> " + " Вы выиграли <b>" + v + " PKOIN</b>"
 }
@@ -951,3 +953,6 @@ ____loclib.doyouwantseepk = "Вы действительно хотите уви
 ____loclib.copycode = "Скопировать приватный ключ";
 ____loclib.privatekeyqr = "Приватный ключ в формате QR кода";
 ____loclib.saveimage = "Сохранить изображение";
+
+____loclib.showAllButton = "Подробнее";
+____loclib.hideAllButton = "Скрыть";

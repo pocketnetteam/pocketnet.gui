@@ -1,5 +1,5 @@
 <sectiion class="videosWrapper">
-  <% videos.map((video) => { console.log("C", video) %>
+  <% videos.map((video) => { %>
   <div class="work">
     <div class="singleVideoSection" uuid="<%- video.uuid %>">
       <div
@@ -14,7 +14,6 @@
         <div class="videoTextContainer videoNameText"><%- video.name %></div>
         <div
           class="
-            videoTextContainer
             videoDescriptionText
             <%-
             video.description
@@ -24,9 +23,32 @@
             'emptyDescription'
             %>
           "
+          uuid="<%- video.uuid %>"
+          host="<%- video.server %>"
         >
-          <%= video.description ? video.description :
-          `<span>${e('emptyDescription')}</span>` %>
+          <span class="descriptionContent"
+            ><%- video.description ? (video.description.length >= 80 ?
+            `${video.description.slice(0, 80)}...` : video.description) :
+            e('emptyDescription') %></span
+          >
+          <button
+            class="
+              showAllDescriptionButton
+              ghostButton
+              <%-
+              (video.description
+              ||
+              '').length
+              >=
+              80
+              ?
+              ''
+              :
+              'hidden'%>
+            "
+          >
+            <%- e('showAllButton') %>
+          </button>
         </div>
         <!-- <p class="videoTextContainer"><%- video.server %></p> -->
       </div>
@@ -47,7 +69,7 @@
       </div>
       <div
         class="videoItemPart postingStatusWrapper"
-        video="<%- `peertube://${video.server}/${video.uuid}` %>"
+        video="<%- `peertube://${deep(video, 'account.host')}/${video.uuid}` %>"
         videoTranscoding="<%- (video.state.id !== 1) ? 'true' : '' %>"
       >
         <div class="preloaderwr transcodingPreloader">
@@ -56,7 +78,7 @@
         <button
           class="attachVideoToPost tooltip hidden ghostButton"
           title="<%- e('attachVideoToPost') %>"
-          videoLink="<%- `peertube://${video.server}/${video.uuid}` %>"
+          videoLink="<%- `peertube://${deep(video, 'account.host') || video.server}/${video.uuid}` %>"
         >
           <i class="fas fa-signature"></i> <%- e('attachVideoToPostShort') %>
         </button>

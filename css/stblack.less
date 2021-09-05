@@ -305,6 +305,36 @@ html.stblack{
     
     }
     
+    .menudialog{
+        .thwrapper{
+            background: transparent;
+            border : 0;
+        }
+
+        .text{
+            .item{
+                background: @color-black4;
+                color : @color-gray-slight;
+    
+                &.itemmain{
+                    color : @color-main;
+                }
+    
+                &.itemclose{
+                    background: fade(@color-gray-mlight, 10);
+                    backdrop-filter: blur(4px);
+                }
+    
+            }
+        }
+    
+    
+        .itemclose{
+            color : @color-add;
+        }
+    
+    }
+    
     .refadd{
     
         background: fade(@color-black, 95);

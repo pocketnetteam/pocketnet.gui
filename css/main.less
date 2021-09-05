@@ -343,7 +343,7 @@ html.stblack{
         }
     }
 }
-
+/*
 html{
     &.mobile{
         -webkit-touch-callout: none;
@@ -353,8 +353,7 @@ html{
         -ms-user-select: none;
         user-select: none;
     }
-        
-}
+}*/
 
 .unselectable{
     -webkit-touch-callout: none;
@@ -364,6 +363,20 @@ html{
     -ms-user-select: none;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
+}
+
+html{
+    &.mobile{
+        .unselectablemobile{
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+    }
 }
 
 
@@ -3534,6 +3547,8 @@ input[type=radio].radio:checked + label {
     z-index: 10000;
 }
 
+
+
 .tooltipMobileDialog{
     z-index: 25000;
     font-size: 1.1em;
@@ -4490,6 +4505,7 @@ input[type=radio].radio:checked + label {
     position: relative;
 
     .controlhor{
+        display: none;
         position: absolute;
         top : 45%;
         border-radius: 50%;
@@ -4503,6 +4519,7 @@ input[type=radio].radio:checked + label {
         color : @color-gray-light;
         font-size: 0.8em;
         .transition(0.3s);
+        
 
         &.controlleft{
             left: @rhythm;
@@ -4514,6 +4531,12 @@ input[type=radio].radio:checked + label {
 
         &:hover{
             color : @color-main;
+        }
+    }
+
+    &.hasitems{
+        .controlhor{
+            display: block;
         }
     }
 
@@ -4650,6 +4673,13 @@ html.tablet{
 html.tablet.fullscreen,
 html.mobile.fullscreen{
 
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
     /*background: #000;*/
 
     .matrixchatwrapper{
@@ -4709,6 +4739,12 @@ html.cordova{
 
         .controlhor{
             display: none;
+        }
+
+        &.hasitems{
+            .controlhor{
+                display: none;
+            }
         }
     
         .showmorebywrapper{

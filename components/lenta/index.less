@@ -13,7 +13,7 @@
 	/***/
 
 	.webadminscontent{
-		padding :3 * @rhythm 2 * @rhythm;
+		padding: 3 * @rhythm 2 * @rhythm;
 
 
         .admin{
@@ -2294,17 +2294,23 @@
 						.paddingWrapper{
 							margin-left: 0;
 							padding-right: 0;
+							padding-left: @rhythm / 2;
 						}
 
 						.sharecaption{
-							max-height: 30px;
+							max-height: 36px;
 							text-overflow: ellipsis;
 							white-space: nowrap;
 							overflow: hidden;
 							flex-grow: 1;
 							max-width: 200px;
-							padding-right: 2 * @rhythm;
-							font-size: 0.9em!important;
+							padding-top : @rhythm / 2;
+							padding-right: @rhythm;
+							font-size: 0.85em!important;
+
+							.adr{
+								font-weight: 700;
+							}
 						}
 					}
 				}
@@ -2886,7 +2892,21 @@ html.stblack{
 				}
 			}
 
-	
+		}
+
+		.shares{
+			.share{
+				border-radius: 3px;
+			}
+		}
+
+		&.horizontal{
+			.shares{
+				.share{
+					background: transparent;
+					border-radius: 0;
+				}
+			}
 		}
 	
 	}

@@ -684,7 +684,9 @@ var comments = (function(){
 
 						var name = (deep(self.app, 'platform.sdk.usersl.storage.'+address+'.name') || address)
 
-						var str = '@' + name + ', '
+						console.log("NAME", name)
+
+						var str = '@' + name + '  '
 
 						if(address == self.app.platform.sdk.address.pnet().address || !name) str = ''
 
