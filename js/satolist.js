@@ -1,8 +1,12 @@
-var electron = null
+var electron = null, fs, url, path, https;
 if (typeof _OpenApi == 'undefined') _OpenApi = false;
 
 if (typeof _Electron != 'undefined') {
     electron = require('electron');
+    fs = require('fs');
+    url = require('url');
+    https = require('https');
+    path = require('path');
 
     var storage = electron.OSBrowser; //?
 
@@ -3473,7 +3477,6 @@ Platform = function (app, listofnodes) {
                         });
                     }
                     else if (typeof _Electron != 'undefined' && window.electron) {
-                        const fs = require('fs'), url = require('url'), path = require('path');
                         const userDataPath = (window.electron.app || window.electron.remote.app).getPath('userData');
                         // List all the posts
                         fs.readdir(userDataPath + '/posts', (err, sharesDir) => {
@@ -3614,7 +3617,6 @@ Platform = function (app, listofnodes) {
                 // Download a video using Node file functions
                 saveVideoElectron: function(shareId, id, video, videoDetails) {
                     return new Promise((resolve, reject) => {
-                        const fs = require('fs'), url = require('url'), https = require('https');
                         const userDataPath = (window.electron.app || window.electron.remote.app).getPath('userData');
                         const shareDir = userDataPath + '/posts/' + shareId;
                         var share = self.app.platform.sdk.node.shares.storage.trx[shareId];
@@ -3637,7 +3639,7 @@ Platform = function (app, listofnodes) {
 
                         // Start downloading the video
                         const videoFile = fs.createWriteStream(videoDir + '/' + video.resolution.id);
-                        const request = https.get(video.fileDownloadUrl, function(response) {
+                        https.get(video.fileDownloadUrl, function(response) {
                             if (response.statusCode >= 200 && response.statusCode <= 299) {
                                 // Success
                                 response.on('end', () => {
@@ -3735,7 +3737,6 @@ Platform = function (app, listofnodes) {
                             if (clbk) clbk();
                         });
                     } else if (typeof _Electron != 'undefined' && window.electron) {
-                        const fs = require('fs');
                         const userDataPath = (window.electron.app || window.electron.remote.app).getPath('userData');
                         fs.rmdir(userDataPath + '/posts/' + shareId, { recursive: true }, (err) => {
                             if (!err)

@@ -3391,6 +3391,10 @@ var lenta = (function(){
 									_beginmaterial = essenseData.beginmaterial
 								}
 
+								else if(recommended == 'saved'){
+									
+								}
+
 								else
 								{
 									loader = 'common'
