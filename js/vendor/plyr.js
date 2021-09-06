@@ -9196,7 +9196,7 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
             {
               src: localVideo.video.internalURL,
               type: 'video/mp4',
-              size: parseInt(localVideo.video.name.split('.').slice(0, -1).join('.'))
+              size: parseInt(localVideo.video.name)
             }
           ]
         };

@@ -1860,6 +1860,8 @@ var lenta = (function(){
 						if (!file || !file.resolution || !file.resolution.id) return;
 						tooltip.find('.label.download' + file.resolution.id).on('click', function() {
 							events.downloadVideoFromUrl(embed.details.uuid, file, embed.details, id);
+							if (tooltip && tooltip.remove)
+								tooltip.remove();
 						});
 					});
 				});
@@ -1867,86 +1869,56 @@ var lenta = (function(){
 
 			downloadVideoFromUrl: function(id, video, videoDetails, shareId) {
 				if (!video || !video.fileDownloadUrl) return;
-				var share = self.app.platform.sdk.node.shares.storage.trx[shareId];
-				var user = deep(self.app, 'platform.sdk.usersl.storage.' + share.address);
 				// Mobile
 				if (isMobile() && window.cordova && window.cordova.file) {
-					// Check if external storage is available, if not, use the internal
-					var storage = (window.cordova.file.externalDataDirectory) ? window.cordova.file.externalDataDirectory : window.cordova.file.dataDirectory;
-					// open target file for download
-					window.resolveLocalFileSystemURL(storage, function(dirEntry) {
-						// Create a posts folder
-						dirEntry.getDirectory('posts', { create: true }, function (dirEntry11) {
-							dirEntry11.getDirectory(shareId, { create: true }, function (dirEntry2) {
-								// Create share.json file
-								var shareInfos = {
-									share: share.export(),
-									user: user.export()
-								}
-								// Create JSON file for share informations
-								dirEntry2.getFile('share.json', { create: true }, function (shareFile) {
-									// Write into file
-									shareFile.createWriter(function (fileWriter) {
-										fileWriter.write(shareInfos);
-									});
-								});
-
-
-								dirEntry2.getDirectory('videos', { create: true }, function (dirEntry3) {
-									// Get/create a folder for this video
-									dirEntry3.getDirectory(id, { create: true }, function (dirEntry4) {
-										var infos = {
-											thumbnail: 'https://' + videoDetails.from + videoDetails.thumbnailPath
-										}
-										// Create JSON file for video informations
-										dirEntry4.getFile('info.json', { create: true }, function (infoFile) {
-											// Write into file
-											infoFile.createWriter(function (fileWriter) {
-												fileWriter.write(infos);
-											});
-										});
-										// Download the video
-										dirEntry4.getFile(video.resolution.id + '', { create: true }, function (targetFile) {
-											var downloader = new BackgroundTransfer.BackgroundDownloader();
-											// Create a new download operation.
-											var download = downloader.createDownload(video.fileDownloadUrl, targetFile, "Bastyon: Downloading video");
-											renders.setShareDownload(shareId, 'downloading');
-											// Start the download and persist the promise to be able to cancel the download.
-											app.downloadPromise = download.startAsync().then(function(e) {
-												// Success
-												console.log("success");
-												// Resolve internal URL
-												window.resolveLocalFileSystemURL(targetFile.nativeURL, function(entry) {
-													targetFile.internalURL = entry.toInternalURL();
-													shareInfos.videos = {};
-													shareInfos.videos[id] = { video: targetFile,  infos: infos };
-													self.sdk.local.shares.add(shareId, shareInfos);
-													actions.openPost(shareId, function() {
-														setTimeout(() => {
-															delete el[shareId];
-															renders.setShareDownload(shareId, 'downloaded');
-															events.sharesPreInitVideo();
-															events.videosInview();
-															events.sharesInview();
-															events.resize();
-														}, 200);
-													});
-												});
-											}, function(e) {
-												// Error
-												console.log("error");
-												console.log(e);
-												renders.setShareDownload(shareId, 'canDownload');
-											}, function(e) {
-												// Progress
-												// console.log("progress");
-												// console.log(e);
-											});
-										});
-									});
-								});
-							});
+					renders.setShareDownload(shareId, 'downloading');
+					self.sdk.local.shares.saveVideoCordova(shareId, id, video, videoDetails).then(() => {
+						// Success
+						// Update share video player
+						actions.openPost(shareId, function() {
+							setTimeout(() => {
+								delete el[shareId];
+								renders.setShareDownload(shareId, 'downloaded');
+								events.sharesPreInitVideo();
+								events.videosInview();
+								events.sharesInview();
+								events.resize();
+							}, 200);
 						});
+					}, (err) => {
+						// Error
+						console.log(err);
+						renders.setShareDownload(shareId, 'canDownload');
+					});
+				}
+				// Electron
+				else if (typeof _Electron != 'undefined' && window.electron) {
+					renders.setShareDownload(shareId, 'downloading');
+					self.sdk.local.shares.saveVideoElectron(shareId, id, video, videoDetails).then(() => {
+						// Success
+						// Update share video player
+						delete initedcommentes[shareId];
+						if (players[shareId]) {
+							if (players[shareId].p)
+								players[shareId].p.destroy();
+							delete players[shareId];
+						}
+						var share = self.app.platform.sdk.node.shares.storage.trx[shareId];
+						renders.share(share, function() {
+							setTimeout(() => {
+								delete el[shareId];
+								renders.setShareDownload(shareId, 'downloaded');
+								events.sharesPreInitVideo();
+								events.videosInview();
+								events.sharesInview();
+								events.resize();
+							}, 200);
+						}, true);
+
+					}, (err) => {
+						// Error
+						console.log(err);
+						renders.setShareDownload(shareId, 'canDownload');
 					});
 				}
 				// Desktop
@@ -1963,16 +1935,36 @@ var lenta = (function(){
 				if (!players[id] || !players[id].p || !players[id].p.localVideoId) return;
 				players[id].p.destroy();
 				self.sdk.local.shares.delete(id, function() {
-					actions.openPost(id, function() {
-						setTimeout(() => {
-							delete el[id];
-							renders.setShareDownload(id, 'canDownload');
-							events.sharesPreInitVideo();
-							events.videosInview();
-							events.sharesInview();
-							events.resize();
-						}, 200);
-					});
+					if (isMobile()) {
+						actions.openPost(id, function() {
+							setTimeout(() => {
+								delete el[id];
+								renders.setShareDownload(id, 'canDownload');
+								events.sharesPreInitVideo();
+								events.videosInview();
+								events.sharesInview();
+								events.resize();
+							}, 200);
+						});
+					}
+					else if (typeof _Electron != 'undefined' && window.electron) {
+						var share = self.app.platform.sdk.node.shares.storage.trx[id];
+						// Update share video player
+						delete initedcommentes[id];
+						if (players[id])
+							delete players[id];
+						// Update share video player
+						renders.share(share, function() {
+							setTimeout(() => {
+								delete el[id];
+								renders.setShareDownload(id, 'canDownload');
+								events.sharesPreInitVideo();
+								events.videosInview();
+								events.sharesInview();
+								events.resize();
+							}, 200);
+						}, true);
+					}
 				});
 			},
 

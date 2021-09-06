@@ -3472,7 +3472,194 @@ Platform = function (app, listofnodes) {
                             });
                         });
                     }
+                    else if (typeof _Electron != 'undefined' && window.electron) {
+                        const fs = require('fs'), url = require('url'), path = require('path');
+                        const userDataPath = (window.electron.app || window.electron.remote.app).getPath('userData');
+                        // List all the posts
+                        fs.readdir(userDataPath + '/posts', (err, sharesDir) => {
+                            if (!err) {
+                                _.each(sharesDir, function(shareId) {
+                                        v[shareId] = {};
 
+                                        // List all the videos
+                                        fs.readdir(userDataPath + '/posts/' + shareId + '/videos', (err2, videosDir) => {
+                                            if (!err2) {
+                                                v[shareId].videos = {};
+                                                _.each(videosDir, function(videoId) {
+                                                    v[shareId].videos[videoId] = {};
+                                                    v[shareId].videos[videoId].infos = {};
+                                                    fs.readdir(userDataPath + '/posts/' + shareId + '/videos/' + videoId, (err4, files) => {
+                                                        if (!err4) {
+                                                            _.each(files, (file) => {
+                                                                if (!path.extname(file)) {
+                                                                    v[shareId].videos[videoId].video = {
+                                                                        name: file,
+                                                                        internalURL: url.pathToFileURL(userDataPath + '/posts/' + shareId + '/videos/' + videoId + '/' + file).href
+                                                                    };
+                                                                }
+                                                            });
+                                                        }
+                                                    });
+                                                });
+                                            }
+                                        });
+
+                                        // Read the share.json file
+                                        fs.readFile(userDataPath + '/posts/' + shareId + '/share.json', 'utf8', (err3, shareInfoStr) => {
+                                            if (!err3) {
+                                                try {
+                                                    v[shareId].share = JSON.parse(shareInfoStr);
+                                                } catch(err) {}
+                                            }
+                                        });
+
+                                });
+
+                            }
+                        });
+                    }
+
+                },
+
+                // Download a video using Cordova file functions
+                saveVideoCordova: function(shareId, id, video, videoDetails) {
+                    return new Promise((resolve, reject) => {
+                        if (!window.cordova || !window.cordova.file || !window.resolveLocalFileSystemURL)
+                            return reject('Missing cordova file plugin');
+                        var share = self.app.platform.sdk.node.shares.storage.trx[shareId];
+                        var user = deep(self.app, 'platform.sdk.usersl.storage.' + share.address);
+                        // Create share.json file data
+                        var shareInfos = {
+                            share: share.export(),
+                            user: user.export()
+                        };
+                        // Check if external storage is available, if not, use the internal
+                        var storage = (window.cordova.file.externalDataDirectory) ? window.cordova.file.externalDataDirectory : window.cordova.file.dataDirectory;
+                        // open target file for download
+                        window.resolveLocalFileSystemURL(storage, function(dirEntry) {
+                            // Create a posts folder
+                            dirEntry.getDirectory('posts', { create: true }, function (dirEntry11) {
+                                dirEntry11.getDirectory(shareId, { create: true }, function (dirEntry2) {
+
+                                    // Create JSON file for share informations
+                                    dirEntry2.getFile('share.json', { create: true }, function (shareFile) {
+                                        // Write into file
+                                        shareFile.createWriter(function (fileWriter) {
+                                            fileWriter.write(shareInfos);
+                                        });
+                                    });
+
+                                    dirEntry2.getDirectory('videos', { create: true }, function (dirEntry3) {
+                                        // Get/create a folder for this video
+                                        dirEntry3.getDirectory(id, { create: true }, function (dirEntry4) {
+                                            var infos = {
+                                                thumbnail: 'https://' + videoDetails.from + videoDetails.thumbnailPath
+                                            }
+                                            // Create JSON file for video informations
+                                            dirEntry4.getFile('info.json', { create: true }, function (infoFile) {
+                                                // Write into file
+                                                infoFile.createWriter(function (fileWriter) {
+                                                    fileWriter.write(infos);
+                                                });
+                                            });
+                                            // Download the video
+                                            dirEntry4.getFile(video.resolution.id + '', { create: true }, function (targetFile) {
+                                                var downloader = new BackgroundTransfer.BackgroundDownloader();
+                                                // Create a new download operation.
+                                                var download = downloader.createDownload(video.fileDownloadUrl, targetFile, "Bastyon: Downloading video");
+                                                
+                                                // Start the download
+                                                download.startAsync().then(function(e) {
+                                                    // Success
+                                                    // Resolve internal URL
+                                                    window.resolveLocalFileSystemURL(targetFile.nativeURL, function(entry) {
+                                                        targetFile.internalURL = entry.toInternalURL();
+                                                        shareInfos.videos = {};
+                                                        shareInfos.videos[id] = { video: targetFile,  infos: infos };
+                                                        self.sdk.local.shares.add(shareId, shareInfos);
+                                                        return resolve(targetFile);
+                                                    }, function(err) {
+                                                        return reject(err);
+                                                    });
+
+                                                }, function(err) {
+                                                    // Error
+                                                    return reject(err);
+                                                }, function(e) {
+                                                    // Progress
+                                                    // console.log("progress");
+                                                    // console.log(e);
+                                                });
+                                            }, function(err) {
+                                                return reject(err);
+                                            });
+                                        }, function(err) {
+                                            return reject(err);
+                                        });
+                                    }, function(err) {
+                                        return reject(err);
+                                    });
+                                }, function(err) {
+                                    return reject(err);
+                                });
+                            }, function(err) {
+                                return reject(err);
+                            });
+                        }, function(err) {
+                            return reject(err);
+                        });
+                    });
+                },
+
+                // Download a video using Node file functions
+                saveVideoElectron: function(shareId, id, video, videoDetails) {
+                    return new Promise((resolve, reject) => {
+                        const fs = require('fs'), url = require('url'), https = require('https');
+                        const userDataPath = (window.electron.app || window.electron.remote.app).getPath('userData');
+                        const shareDir = userDataPath + '/posts/' + shareId;
+                        var share = self.app.platform.sdk.node.shares.storage.trx[shareId];
+                        var user = deep(self.app, 'platform.sdk.usersl.storage.' + share.address);
+                        // Create share.json file data
+                        var shareInfos = {
+                            share: share.export(),
+                            user: user.export()
+                        };
+                        // Create share directory
+                        if (!fs.existsSync(shareDir))
+                            fs.mkdirSync(shareDir, { recursive: true });
+                        // Create JSON file for share informations
+                        fs.writeFileSync(shareDir + '/share.json', JSON.stringify(shareInfos));
+
+                        // Create the video directory
+                        const videoDir = shareDir + '/videos/' + id;
+                        if (!fs.existsSync(videoDir))
+                            fs.mkdirSync(videoDir, { recursive: true });
+
+                        // Start downloading the video
+                        const videoFile = fs.createWriteStream(videoDir + '/' + video.resolution.id);
+                        const request = https.get(video.fileDownloadUrl, function(response) {
+                            if (response.statusCode >= 200 && response.statusCode <= 299) {
+                                // Success
+                                response.on('end', () => {
+                                    // Downloading done
+                                    shareInfos.videos = {};
+                                    shareInfos.videos[id] = {
+                                        video: { name: video.resolution.id, internalURL: url.pathToFileURL(videoFile.path).href },
+                                        infos: {}
+                                    };
+                                    self.sdk.local.shares.add(shareId, shareInfos);
+                                    return resolve();
+                                });
+                                response.pipe(videoFile);
+                            } else {
+                                // Error
+                                return reject("Download error: " + response.statusCode);
+                            }
+                        }).on('error', (e) => {
+                            // Error
+                            return reject(e);
+                        });
+                    });
                 },
 
                 // Returns an array of all the shares ID
@@ -3545,6 +3732,14 @@ Platform = function (app, listofnodes) {
                                 if (clbk) clbk();
                             });
                         }, function(err) {
+                            if (clbk) clbk();
+                        });
+                    } else if (typeof _Electron != 'undefined' && window.electron) {
+                        const fs = require('fs');
+                        const userDataPath = (window.electron.app || window.electron.remote.app).getPath('userData');
+                        fs.rmdir(userDataPath + '/posts/' + shareId, { recursive: true }, (err) => {
+                            if (!err)
+                                delete v[shareId];
                             if (clbk) clbk();
                         });
                     }
@@ -22347,6 +22542,8 @@ Platform = function (app, listofnodes) {
 
         if(window.cordova){
             setupOpenwith()
+            self.sdk.local.shares.init();
+        } else if (typeof _Electron != 'undefined' && window.electron) {
             self.sdk.local.shares.init();
         }
 
