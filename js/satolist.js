@@ -70,6 +70,7 @@ Platform = function (app, listofnodes) {
     
 
     self.testaddresses = [
+        'TUA5BtMDoZ1SBMgV3m7wjmsJ6yGQV3vErZ',
       'TQEGz5cQQtRad8wo2c1KapvFek9rnuprkD',
       'PGiQ8j6fdtAJSH2sA7rZMB17GzqBTUVLCm',
       'PF1umexG4Kvm8bkow1JiRF3s1vcBkYvKeg',
