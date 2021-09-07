@@ -845,7 +845,7 @@ Application = function(p)
 	self.renewModules = function(map){}
 	self.logger = function(Function, Message){}
 
-	self.scrollRemoved = false;
+	self.scrollRemoved = 0;
 	self.scrollTop = 0
 	self.lastScrollTop = 0
 
@@ -957,15 +957,15 @@ Application = function(p)
 
 		offScroll : function(){
 
-			if (self.scrollRemoved){
+			if(self.scrollRemoved < 0) self.scrollRemoved = 0
+
+			self.scrollRemoved++
+
+			if (self.scrollRemoved > 1){
 				return false
 			}
 
 			blockScroll = true
-
-			///
-			//self.scrollTop = self.el.window.scrollTop();
-			///
 
 			self.el.html.addClass('nooverflow')
 
@@ -983,15 +983,22 @@ Application = function(p)
 
 		onScroll : function(){
 
-			///
-			self.el.html.removeClass('nooverflow')
-			///
+			if(self.scrollRemoved < 1) self.scrollRemoved = 1
 
-			if (window.Keyboard && window.Keyboard.disableScroll){
-				window.Keyboard.disableScroll(false)
+			if (self.scrollRemoved){
+				self.scrollRemoved--
 			}
 
-			self.scrollRemoved = false;
+			if(!self.scrollRemoved){
+				///
+				self.el.html.removeClass('nooverflow')
+				///
+
+				if (window.Keyboard && window.Keyboard.disableScroll){
+					window.Keyboard.disableScroll(false)
+				}
+			}
+
 		},
 
 	}

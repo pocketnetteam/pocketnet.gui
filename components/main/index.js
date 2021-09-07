@@ -55,8 +55,8 @@ var main = (function(){
 
 					lastStickyRefresh = ns
 
-					el.panel.hcSticky('refresh');
-					el.leftpanel.hcSticky('refresh');
+					//el.panel.hcSticky('refresh');
+					//el.leftpanel.hcSticky('refresh');
 
 					/*setTimeout(function(){
 						if(el.panel) el.panel.hcSticky('refresh');
@@ -275,6 +275,7 @@ var main = (function(){
 				if (show){
 
 					showmoreby.removeClass('hidden')
+					
 					self.app.platform.papi.horizontalLenta(showmoreby, function (e,p) {
 
 						external = p

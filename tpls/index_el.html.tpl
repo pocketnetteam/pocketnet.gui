@@ -54,7 +54,7 @@
         
        
     </head>
-    <body id="application" class="menu-hide">
+    <body id="application" class="menu-hide customscroll">
 
         <div id="windowsContainer">
         </div>

@@ -1507,10 +1507,12 @@
 				right: 0;
 				bottom: 0;
 				top: 0;
-				background: fade(@color-black2, 95);
+				background: fade(@color-black2, 90);
 				overflow-y: scroll;
 				padding-top: 0;
 				scrollbar-width: none;
+				backdrop-filter: blur(14px);
+				-webkit-backdrop-filter: blur(14px);  
 				
 				&::-webkit-scrollbar{
 					width: 0!important
@@ -1548,12 +1550,12 @@
 						}
 					}	
 
-					.list{
+					/*.list{
 						.comment{
 							content-visibility: auto;
 							contain-intrinsic-size: 200px;
 						}
-					}
+					}*/
 				}
 
 				.exitFull{
@@ -2180,7 +2182,7 @@
 				margin : 0;
 				margin-right: @rhythm;
 				margin-bottom : @rhythm;
-				content-visibility:visible;
+				//content-visibility:visible;
 				
 				&:nth-last-child(1){
 					margin-right: 0;
@@ -2768,6 +2770,7 @@ html.stblack{
 	
 				&.fullScreenVideo{
 					background: fade(@color-black4, 80);
+					
 					.work{
 						background: @color-black;
 	

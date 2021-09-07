@@ -79,12 +79,12 @@
 			padding : 0;
 		}
 
-		.list{
+		/*.list{
 			.comment{
 				content-visibility: auto;
         		contain-intrinsic-size: 200px;
 			}
-		}
+		}*/
 	}
 
 	.postWrapper{
@@ -1256,13 +1256,11 @@ html.mobile.fullscreen{
 .wnd.postwindow{
 	z-index: 1000;
 
-	.wndback{
-		background: transparent;
-	}
+	
 
 	.wndcontent{
 		top : 0;
-		background: fade(@color-black, 90);
+		background: transparent;
 		height: 100%;
 		width : 100%;
 		padding-top : 0;
@@ -1279,12 +1277,15 @@ html.mobile.fullscreen{
 
 	._close{
 		color : #fff;
-		right: 4 * @rhythm;
 		.shadowSmall();
 	}
 
 	#post{
 		background: transparent;
+
+		.postWrapper{
+			border-radius: 3px;
+		}
 
 		.nextpost{
 			display: block;
@@ -1650,12 +1651,10 @@ html.stblack{
 
 	.wnd.postwindow{
 		
-		.wndback{
-			background: transparent;
-		}
+	
 	
 		.wndcontent{
-			background: fade(@color-black4, 96);
+			background: transparent;
 		}
 	
 	

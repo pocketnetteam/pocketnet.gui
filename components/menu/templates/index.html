@@ -122,6 +122,14 @@
 
 					<% if(state) { %>
 
+						<div class="items workstation">
+							<div class="item table right changeaccount" events="changeaccount">
+								<div class="icon">
+									<i class="fas fa-sort-down"></i>
+								</div>
+							</div>
+						</div>
+
 						<div class="items">
 							<div class="item table right user" events="userpage unselectable">
 
@@ -150,13 +158,18 @@
 										</div>
 									</a>
 
+					
+
 									<!--<div class="localizationicon">
 										<img src="img/localization/small/<%-lkey.key || ''%>.png">
 									</div>-->
 								</div>
 
 							</div>
+							
 						</div>
+
+						
 
 					<% } %>
 
@@ -169,7 +182,6 @@
 								<div class="label">
 									<b><%=e('signinmenu')%></b>
 								</div>
-
 							</div>
 
 						</div>

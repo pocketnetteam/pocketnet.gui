@@ -933,8 +933,6 @@ var post = (function () {
 					aspectRatio = deep(info, 'data.aspectRatio') || 0
 				}
 
-				console.log('aspectRatio', aspectRatio)
-
 				if (aspectRatio < 0.9 && aspectRatio != 0) {
 					verticalVideo = true
 				}

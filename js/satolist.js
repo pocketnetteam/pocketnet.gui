@@ -58,7 +58,9 @@ Platform = function (app, listofnodes) {
         'PMVvs8kvbskq6eVV8Q3oyjotbox9tBfvnp' : true,
         'PQ3hdiozrxtTf1UhuVfhUb9bcvrUzbzwRJ' : true,
         'PCSxAFQCRZphi9W6nrV4tSQXKFfsxdxERA' : true,
-        'PGFKA1DieVsg9pQK4aBaEp5wpvaXpWtuVJ' : true
+        'PGFKA1DieVsg9pQK4aBaEp5wpvaXpWtuVJ' : true,
+        'PFbq1BkrrVsmEAevMqQ2PV6aFf7QWQP9sB' : true,
+        'PKHoxhpnG5CGHDVnxXJwARwPxVre6Qshvn' : true
         //'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82' : true // test
     }
 
@@ -3179,7 +3181,6 @@ Platform = function (app, listofnodes) {
 
                             href += path
 
-                            app.nav
 
                             if (window.cordova){
 
@@ -21210,6 +21211,7 @@ Platform = function (app, listofnodes) {
                     self.firebase.init,
                     
                     //self.sdk.exchanges.load,
+                    self.sdk.articles.init,
                     self.sdk.categories.load,
                     self.sdk.activity.load,
                     self.sdk.node.shares.parameters.load,
@@ -21235,7 +21237,7 @@ Platform = function (app, listofnodes) {
                         lazyActions([
                             self.cryptography.prepare,
                             self.sdk.pool.init,
-                            self.sdk.articles.init,
+                            
                             self.sdk.tempmessenger.init,
                             self.sdk.chats.load,
                             self.sdk.user.subscribeRef
@@ -21593,7 +21595,10 @@ Platform = function (app, listofnodes) {
             
 
             core.backtoapp = function(link){
-                self.app.actions.restore()
+
+                if (isTablet())
+                    self.app.actions.restore()
+
                 app.el.html.removeClass('chatshowed')
 
                 if(document.activeElement) document.activeElement.blur()
@@ -21605,7 +21610,8 @@ Platform = function (app, listofnodes) {
                     self.matrixchat.core.hiddenInParent = isMobile() ? true : false 
                 }
 
-                self.app.actions.onScroll()
+                if (isTablet())
+                    self.app.actions.onScroll()
 
                 if(isMobile())
                     app.nav.api.history.removeParameters(['pc'])
@@ -21636,11 +21642,17 @@ Platform = function (app, listofnodes) {
                 if (self.matrixchat.el)
                     self.matrixchat.el.addClass('active')
 
-                self.app.actions.offScroll()
+                
                 self.app.actions.playingvideo()
-                self.app.actions.optimize()   
+
+
+                if (isTablet()){
+                    self.app.actions.offScroll()
+                    self.app.actions.optimize()   
+                }
                     
-                if(isMobile())
+                    
+                if (isMobile())
                     app.nav.api.history.addParameters({
                         'pc' : '1'
                     })

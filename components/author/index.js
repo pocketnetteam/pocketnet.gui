@@ -1043,6 +1043,18 @@ var author = (function(){
 			el.subscribe.find('.unsubscribe').on('click', events.unsubscribe)
 			el.c.find('.notificationturn').on('click', events.subscribePrivate)
 
+			el.c.find('.changeaccount').on('click', function(){
+				self.nav.api.go({
+					open : true,
+					href : 'accounts',
+					inWnd : true,
+
+					essenseData : {
+						toaccpage : true
+					}
+				})
+			})
+
 			el.caption.find('.startchat').on('click', events.startchat)
 
 			el.caption.find('.unblocking').on('click', function(){

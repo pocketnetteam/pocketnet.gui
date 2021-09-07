@@ -615,7 +615,7 @@ var lenta = (function(){
 
 			openPost : function(id, clbk){
 
-				if(!isMobile()){
+				if(!isMobile() && !isTablet()){
 
 					self.app.user.isState(function(state){
 
