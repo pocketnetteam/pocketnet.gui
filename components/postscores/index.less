@@ -8,37 +8,36 @@
     }
 
     .caption{
-        text-align: center;
+        text-align: left;
         color : @color-gray2;
-        padding : 2 * @rhythm;
+        margin-bottom: @rhythm;
         span{
-            font-size: 2em;
+            font-size: 1.3em;
             font-weight: 100;
         }
         
     }
 
     .subcaption{
-        text-align: center;
-        color : @color-main;
         padding : 2 * @rhythm;
+        border-bottom : 1px solid @color-gray-slight;
         span{
             font-size: 0.9em;
-            font-weight: 700;
+            color : @color-gray-mlight;
         }
         
     }
 
     .youstars{
         background: #f1f1f1;
-        padding-bottom : 2 * @rhythm;
-        
+        padding : 2 * @rhythm;
+        padding-bottom: 2 * @rhythm;
 
         .youstarsTable{
+            height: auto;
             >div{
                 vertical-align: middle;
                 width : 40%;
-                overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
 
@@ -104,6 +103,9 @@
             border-bottom : 1px solid @color-gray-mlight;
         }
         .bystars{
+            i{
+                color : #FFAE00;
+            }
             .ratingrow{
                 >div{
                     vertical-align: middle;
@@ -139,14 +141,28 @@
 
     #userslist{
         padding : 0;
-        padding-top : 2 * @rhythm;
+        padding-top : @rhythm;
         background: #fafafa;
 
+        .users .user{
+            margin-bottom: 0;
+
+            .addressTable>div.extra{
+                width: 70px;
+            }
+        }
+
         .caption{
-            padding : 0;
-            font-size: 0.9em;
-            font-weight: 900;
-            color : @color-main;
+            padding : @rhythm 2 * @rhythm;
+            padding-bottom: 2 * @rhythm;
+            font-size: 1em;
+            border-bottom : 1px solid @color-gray-slight;
+            margin-bottom: 0;
+
+            span{
+                font-size: 0.9em;
+                color : @color-gray-mlight;
+            }
         }
 
         .wrk{
@@ -166,7 +182,8 @@
 
 .postscoreswnd.wnd{
     .wndinner{
-        max-width: 420px;
+        max-width: 370px;
+        max-height: 610px;
     }
 
     .wndcontent{
@@ -187,7 +204,7 @@
             right : 0;
             bottom: 0;
             overflow-y: scroll;
-            top: 130px;
+            top: 110px;
         }
 
         .youstars{
@@ -195,8 +212,7 @@
             left : 0;
             right : 0;
             top: 0;
-            overflow: hidden;
-            height: 130px;
+            height: 110px;
         }
     }
     

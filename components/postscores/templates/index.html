@@ -1,69 +1,65 @@
 <div id="<%-module.map.id%>">
 
 	<div class="youstars">
-
 		<div class="caption">
 			<span><%=e('e13150')%></span>
 		</div>
+		<div class="youstarsTable table">
 
-		<div class="work">
-			<div class="youstarsTable table">
-
-				<% 
+			<% 
+			
+			var address = share.address;
+			
+			if (state) { 
 				
-				var address = share.address;
+				address = user.address.value
 				
-				if (state) { 
-					
-					address = user.address.value
-					
-					var name = app.platform.api.name(address)
-					
-					%>
-					<div class="you">
+				var name = app.platform.api.name(address)
+				
+				%>
+				<div class="you">
 
-							<div class="author">
+						<div class="author">
 
-								<div class="authorTable table">
-									<div class="iconWrapper">
-										<% var src = deep(app, 'platform.sdk.usersl.storage.' + address + '.image')  %>
+							<div class="authorTable table">
+								<div class="iconWrapper">
+									<% var src = deep(app, 'platform.sdk.usersl.storage.' + address + '.image')  %>
 
-										<div class="icon">
-											<div class="usericon usericonsbsa another" image="<%-src || ''%>">
-												<% if(!src) {%>
-													<svg width="30" height="30" data-jdenticon-value="<%-address%>"></svg>
-												<% } %>
-											</div>
+									<div class="icon">
+										<div class="usericon usericonsbsa another" image="<%-src || ''%>">
+											<% if(!src) {%>
+												<svg width="30" height="30" data-jdenticon-value="<%-address%>"></svg>
+											<% } %>
 										</div>
-
 									</div>
 
-
-									<div class="authorCell">
-									
-										<b><span><%-name || address %></span></b>	
-										
-										
-									</div>				
-									
 								</div>
+
+
+								<div class="authorCell">
+								
+									<b><span><%-name || address %></span></b>	
+									
+									
+								</div>				
+								
 							</div>
+						</div>
 
 
-					</div>
-				<% } %>
-
-				<div class="forstarsWrapper">
-					<div class="forstars">
-
-					</div>
 				</div>
-				
+			<% } %>
+
+			<div class="forstarsWrapper">
+				<div class="forstars">
+
+				</div>
 			</div>
+			
 		</div>
 	</div>
 
-	<div class="fordetailsusers">
+	<div class="fordetailsusers customscroll">
 
 		<div class="details">
 

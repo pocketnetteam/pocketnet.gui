@@ -156,11 +156,15 @@ var post = (function () {
 			},
 			repost: function (shareid) {
 
-
+				
 
 				actions.stateAction(function () {
 
-					var href = 'index';
+					self.app.platform.ui.share({
+						repost : shareid
+					})
+
+					/*var href = 'index';
 
 					if (isMobile()) href = 'share'
 
@@ -178,7 +182,7 @@ var post = (function () {
 						clbk: function (p) {
 
 						}
-					})
+					})*/
 				}, shareid)
 
 
