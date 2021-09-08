@@ -209,7 +209,7 @@
         <script src="js/vendor/paste.js"></script> 
         <script src="js/vendor/jquery.md5.js?v=136"></script>
         <script src="js/vendor/joypixels.min.js"></script>
-        
+        <script  join src="js/vendor/hammer.min.js?v=89"></script>
         <script src="js/vendor/plyr.js?v=1"></script>
         <script src="js/vendor/reconnectingwebsocket.js?v=136"></script>
         <script src="js/vendor/mark.js"></script>
