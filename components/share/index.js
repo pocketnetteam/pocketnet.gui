@@ -1861,6 +1861,7 @@ var share = (function(){
 
 			repost : function(clbk){
 				var repost = currentShare.repost.v;
+				
 
 				self.app.platform.sdk.node.shares.getbyid([repost], function(){
 

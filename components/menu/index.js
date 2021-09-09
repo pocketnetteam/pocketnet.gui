@@ -875,6 +875,20 @@ var menu = (function(){
 					
 				}
 			},*/
+			changeaccount : {
+				click : function(){
+					self.nav.api.go({
+						open : true,
+						href : 'accounts',
+						inWnd : true,
+
+						essenseData : {
+							href : deep(self, 'app.nav.current.href') || 'index'
+						}
+					})
+					
+				}
+			},
 			wallets : {
 				click : function(){
 

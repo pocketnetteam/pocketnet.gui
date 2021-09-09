@@ -156,11 +156,15 @@ var post = (function () {
 			},
 			repost: function (shareid) {
 
-
+				
 
 				actions.stateAction(function () {
 
-					var href = 'index';
+					self.app.platform.ui.share({
+						repost : shareid
+					})
+
+					/*var href = 'index';
 
 					if (isMobile()) href = 'share'
 
@@ -178,7 +182,7 @@ var post = (function () {
 						clbk: function (p) {
 
 						}
-					})
+					})*/
 				}, shareid)
 
 
@@ -932,8 +936,6 @@ var post = (function () {
 					info = self.app.platform.sdk.videos.storage[share.url || "undefined"] || {}
 					aspectRatio = deep(info, 'data.aspectRatio') || 0
 				}
-
-				console.log('aspectRatio', aspectRatio)
 
 				if (aspectRatio < 0.9 && aspectRatio != 0) {
 					verticalVideo = true

@@ -15,6 +15,8 @@ var accounts = (function(){
 		var actions = {
 
 			signin : function(address){
+
+				console.log('address', address)
 				
 				
 				self.app.platform.sdk.pool.expand(pack, function(expandedPack){
@@ -22,8 +24,11 @@ var accounts = (function(){
 
 					if (index > -1){
 						var private = expandedPack.private[index];
+						
 
 						var stay = self.app.user.stay;
+
+						globalpreloader(true)
 
 						//bitcoin.ECPair.fromPrivateKey(Buffer.from(private, 'hex'))
 
@@ -36,8 +41,15 @@ var accounts = (function(){
 
 								self.app.reloadLight(function(){
 
-									var h = 'userpage?id=accounts&s=' + makeid()
+									var h = ed.href || 'userpage?id=accounts&s=' + makeid()
 									var history = false;
+
+									if(ed.toaccpage) {
+										h = 'author?address=' + address
+										history = true
+									}
+
+									console.log(h, ed)
 
 									if(!self.app.user.validate()){
 										h = 'filluser'
@@ -49,6 +61,10 @@ var accounts = (function(){
 										href : h,
 										history : history
 									})
+
+									globalpreloader(false)
+
+									self.closeContainer()
 								});
 
 								
@@ -378,6 +394,9 @@ var accounts = (function(){
 				make()
 
 				p.clbk(null, p);
+			},
+			wnd : {			
+				class : 'accountswnd',
 			}
 		}
 	};

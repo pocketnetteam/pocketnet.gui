@@ -622,7 +622,7 @@ var lenta = (function(){
 
 			openPost : function(id, clbk){
 
-				if(!isMobile()){
+				if(!isMobile() && !isTablet()){
 
 					self.app.user.isState(function(state){
 
@@ -1065,8 +1065,6 @@ var lenta = (function(){
 			},
 
 			like : function(obj, value, clbk){
-
-				
 
 				var upvoteShare = obj.upvote(value);
 
@@ -1830,6 +1828,8 @@ var lenta = (function(){
 
 			postscores : function(){
 				var id = $(this).closest('.share').attr('id');
+
+				console.log('id', id)
 
 				actions.postscores(id)
 			},
@@ -3543,7 +3543,7 @@ var lenta = (function(){
 
 		var initEvents = function(){	
 			
-			el.c.on('click', '.wholikesTable', events.postscores)
+			el.c.on('click', '.forstars .count', events.postscores)
 			el.c.on('click', '.stars i', events.like)
 			el.c.on('click', '.complain', events.complain)
 			el.c.on('click', '.imageOpen', events.openGallery)

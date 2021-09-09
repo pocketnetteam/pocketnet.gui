@@ -1,26 +1,343 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[2],{
 
-/***/ "./src/assets/player/webtorrent/peertube-chunk-store.ts":
-/*!**************************************************************!*\
-  !*** ./src/assets/player/webtorrent/peertube-chunk-store.ts ***!
-  \**************************************************************/
-/*! exports provided: PeertubeChunkStore */
+/***/ 264:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 265:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 278:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 279:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 280:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 283:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 284:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 289:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 338:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 340:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 348:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 350:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 357:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 360:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 362:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 370:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 372:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 377:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 380:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 381:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 383:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 384:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 386:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 388:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 410:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 415:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 417:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 424:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 434:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 435:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 438:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 439:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 442:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 445:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 446:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 448:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 450:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 459:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 461:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 470:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 472:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 486:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 488:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 497:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 499:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 505:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 507:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(process, Buffer) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PeertubeChunkStore", function() { return PeertubeChunkStore; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var events__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! events */ "./node_modules/events/events.js");
+/* WEBPACK VAR INJECTION */(function(process, Buffer) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PeertubeChunkStore; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var events__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(159);
 /* harmony import */ var events__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(events__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var dexie__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! dexie */ "./node_modules/dexie/dist/dexie.mjs");
+/* harmony import */ var dexie__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(508);
 // From https://github.com/MinEduTDF/idb-chunk-store
 // We use temporary IndexDB (all data are removed on destroy) to avoid RAM issues
 // Thanks @santiagogil and @Feross
 
 
 
-class ChunkDatabase extends dexie__WEBPACK_IMPORTED_MODULE_2__["default"] {
+class ChunkDatabase extends dexie__WEBPACK_IMPORTED_MODULE_2__[/* default */ "a"] {
     constructor(dbname) {
         super(dbname);
         this.version(1).stores({
@@ -28,7 +345,7 @@ class ChunkDatabase extends dexie__WEBPACK_IMPORTED_MODULE_2__["default"] {
         });
     }
 }
-class ExpirationDatabase extends dexie__WEBPACK_IMPORTED_MODULE_2__["default"] {
+class ExpirationDatabase extends dexie__WEBPACK_IMPORTED_MODULE_2__[/* default */ "a"] {
     constructor() {
         super('webtorrent-expiration');
         this.version(1).stores({
@@ -79,7 +396,7 @@ class PeertubeChunkStore extends events__WEBPACK_IMPORTED_MODULE_1__["EventEmitt
         if (this.putBulkTimeout)
             return;
         // Plan a future bulk insert
-        this.putBulkTimeout = setTimeout(() => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+        this.putBulkTimeout = setTimeout(() => Object(tslib__WEBPACK_IMPORTED_MODULE_0__[/* __awaiter */ "a"])(this, void 0, void 0, function* () {
             const processing = this.pendingPut;
             this.pendingPut = [];
             this.putBulkTimeout = undefined;
@@ -111,7 +428,7 @@ class PeertubeChunkStore extends events__WEBPACK_IMPORTED_MODULE_1__["EventEmitt
         if (memoryChunk !== true)
             return cb(null, memoryChunk);
         // Chunk in store
-        this.db.transaction('r', this.db.chunks, () => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+        this.db.transaction('r', this.db.chunks, () => Object(tslib__WEBPACK_IMPORTED_MODULE_0__[/* __awaiter */ "a"])(this, void 0, void 0, function* () {
             const result = yield this.db.chunks.get({ id: index });
             if (result === undefined)
                 return cb(null, Buffer.alloc(0));
@@ -131,7 +448,7 @@ class PeertubeChunkStore extends events__WEBPACK_IMPORTED_MODULE_1__["EventEmitt
         return this.destroy(cb);
     }
     destroy(cb) {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__[/* __awaiter */ "a"])(this, void 0, void 0, function* () {
             try {
                 if (this.pendingPut) {
                     clearTimeout(this.putBulkTimeout);
@@ -159,15 +476,15 @@ class PeertubeChunkStore extends events__WEBPACK_IMPORTED_MODULE_1__["EventEmitt
     }
     runCleaner() {
         this.checkExpiration();
-        this.cleanerInterval = setInterval(() => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+        this.cleanerInterval = setInterval(() => Object(tslib__WEBPACK_IMPORTED_MODULE_0__[/* __awaiter */ "a"])(this, void 0, void 0, function* () {
             this.checkExpiration();
         }), PeertubeChunkStore.CLEANER_INTERVAL_MS);
     }
     checkExpiration() {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__[/* __awaiter */ "a"])(this, void 0, void 0, function* () {
             let databasesToDeleteInfo = [];
             try {
-                yield this.expirationDB.transaction('rw', this.expirationDB.databases, () => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+                yield this.expirationDB.transaction('rw', this.expirationDB.databases, () => Object(tslib__WEBPACK_IMPORTED_MODULE_0__[/* __awaiter */ "a"])(this, void 0, void 0, function* () {
                     // Update our database expiration since we are alive
                     yield this.expirationDB.databases.put({
                         name: this.databaseName,
@@ -186,7 +503,7 @@ class PeertubeChunkStore extends events__WEBPACK_IMPORTED_MODULE_1__["EventEmitt
         });
     }
     dropDatabase(databaseName) {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__[/* __awaiter */ "a"])(this, void 0, void 0, function* () {
             const dbToDelete = new ChunkDatabase(databaseName);
             console.log('Destroying IndexDB database %s.', databaseName);
             try {
@@ -208,27 +525,36 @@ PeertubeChunkStore.BUFFERING_PUT_MS = 1000;
 PeertubeChunkStore.CLEANER_INTERVAL_MS = 1000 * 60; // 1 minute
 PeertubeChunkStore.CLEANER_EXPIRATION_MS = 1000 * 60 * 5; // 5 minutes
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../node_modules/process/browser.js */ "./node_modules/process/browser.js"), __webpack_require__(/*! ./../../../../node_modules/node-libs-browser/node_modules/buffer/index.js */ "./node_modules/node-libs-browser/node_modules/buffer/index.js").Buffer))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(74), __webpack_require__(73).Buffer))
 
 /***/ }),
 
-/***/ "./src/assets/player/webtorrent/video-renderer.ts":
-/*!********************************************************!*\
-  !*** ./src/assets/player/webtorrent/video-renderer.ts ***!
-  \********************************************************/
-/*! exports provided: renderVideo */
+/***/ 519:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+// ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "renderVideo", function() { return renderVideo; });
-/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! path */ "./node_modules/node-libs-browser/node_modules/path-browserify/index.js");
-/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_0__);
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, "WebTorrentPlugin", function() { return /* binding */ webtorrent_plugin_WebTorrentPlugin; });
+
+// EXTERNAL MODULE: ./node_modules/video.js/core.js
+var core = __webpack_require__(0);
+var core_default = /*#__PURE__*/__webpack_require__.n(core);
+
+// EXTERNAL MODULE: ./node_modules/webtorrent/index.js
+var webtorrent = __webpack_require__(333);
+
+// EXTERNAL MODULE: ./node_modules/node-libs-browser/node_modules/path-browserify/index.js
+var path_browserify = __webpack_require__(22);
+
+// CONCATENATED MODULE: ./src/assets/player/webtorrent/video-renderer.ts
 // Thanks: https://github.com/feross/render-media
 // TODO: use render-media once https://github.com/feross/render-media/issues/32 is fixed
-const MediaElementWrapper = __webpack_require__(/*! mediasource */ "./node_modules/mediasource/index.js");
+const MediaElementWrapper = __webpack_require__(213);
 
-const videostream = __webpack_require__(/*! videostream */ "./node_modules/videostream/videostream.js");
+const videostream = __webpack_require__(307);
 const VIDEOSTREAM_EXTS = [
     '.m4a',
     '.m4v',
@@ -239,7 +565,7 @@ function renderVideo(file, elem, opts, callback) {
     return renderMedia(file, elem, opts, callback);
 }
 function renderMedia(file, elem, opts, callback) {
-    const extension = Object(path__WEBPACK_IMPORTED_MODULE_0__["extname"])(file.name).toLowerCase();
+    const extension = Object(path_browserify["extname"])(file.name).toLowerCase();
     let preparedElem;
     let currentTime = 0;
     let renderer;
@@ -315,7 +641,7 @@ function validateFile(file) {
     }
 }
 function getCodec(name, useVP9 = false) {
-    const ext = Object(path__WEBPACK_IMPORTED_MODULE_0__["extname"])(name).toLowerCase();
+    const ext = Object(path_browserify["extname"])(name).toLowerCase();
     if (ext === '.mp4') {
         return 'video/mp4; codecs="avc1.640029, mp4a.40.5"';
     }
@@ -328,36 +654,25 @@ function getCodec(name, useVP9 = false) {
 }
 
 
+// EXTERNAL MODULE: ./src/assets/player/utils.ts + 3 modules
+var utils = __webpack_require__(4);
 
-/***/ }),
+// EXTERNAL MODULE: ./src/assets/player/webtorrent/peertube-chunk-store.ts
+var peertube_chunk_store = __webpack_require__(507);
 
-/***/ "./src/assets/player/webtorrent/webtorrent-plugin.ts":
-/*!***********************************************************!*\
-  !*** ./src/assets/player/webtorrent/webtorrent-plugin.ts ***!
-  \***********************************************************/
-/*! exports provided: WebTorrentPlugin */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+// EXTERNAL MODULE: ./src/assets/player/peertube-player-local-storage.ts
+var peertube_player_local_storage = __webpack_require__(10);
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WebTorrentPlugin", function() { return WebTorrentPlugin; });
-/* harmony import */ var video_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! video.js */ "./node_modules/video.js/core.js");
-/* harmony import */ var video_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(video_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var webtorrent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! webtorrent */ "./node_modules/webtorrent/index.js");
-/* harmony import */ var webtorrent__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(webtorrent__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _video_renderer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./video-renderer */ "./src/assets/player/webtorrent/video-renderer.ts");
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils */ "./src/assets/player/utils.ts");
-/* harmony import */ var _peertube_chunk_store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./peertube-chunk-store */ "./src/assets/player/webtorrent/peertube-chunk-store.ts");
-/* harmony import */ var _peertube_player_local_storage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../peertube-player-local-storage */ "./src/assets/player/peertube-player-local-storage.ts");
+// CONCATENATED MODULE: ./src/assets/player/webtorrent/webtorrent-plugin.ts
 
 
 
 
 
 
-const CacheChunkStore = __webpack_require__(/*! cache-chunk-store */ "./node_modules/cache-chunk-store/index.js");
-const Plugin = video_js__WEBPACK_IMPORTED_MODULE_0___default.a.getPlugin('plugin');
-class WebTorrentPlugin extends Plugin {
+const CacheChunkStore = __webpack_require__(509);
+const Plugin = core_default.a.getPlugin('plugin');
+class webtorrent_plugin_WebTorrentPlugin extends Plugin {
     constructor(player, options) {
         super(player);
         this.autoplay = false;
@@ -370,9 +685,9 @@ class WebTorrentPlugin extends Plugin {
             AUTO_QUALITY_HIGHER_RESOLUTION_DELAY: 5000,
             BANDWIDTH_AVERAGE_NUMBER_OF_VALUES: 5 // Last 5 seconds to build average bandwidth
         };
-        this.webtorrent = new webtorrent__WEBPACK_IMPORTED_MODULE_1__({
+        this.webtorrent = new webtorrent({
             tracker: {
-                rtcConfig: Object(_utils__WEBPACK_IMPORTED_MODULE_3__["getRtcConfig"])()
+                rtcConfig: Object(utils["c" /* getRtcConfig */])()
             },
             dht: false
         });
@@ -382,10 +697,10 @@ class WebTorrentPlugin extends Plugin {
         this.isAutoResolutionObservation = false;
         this.playerRefusedP2P = false;
         this.downloadSpeeds = [];
-        this.startTime = Object(_utils__WEBPACK_IMPORTED_MODULE_3__["timeToInt"])(options.startTime);
+        this.startTime = Object(utils["i" /* timeToInt */])(options.startTime);
         // Disable auto play on iOS
         this.autoplay = options.autoplay;
-        this.playerRefusedP2P = !Object(_peertube_player_local_storage__WEBPACK_IMPORTED_MODULE_5__["getStoredP2PEnabled"])();
+        this.playerRefusedP2P = !Object(peertube_player_local_storage["c" /* getStoredP2PEnabled */])();
         this.videoFiles = options.videoFiles;
         this.videoDuration = options.videoDuration;
         this.savePlayerSrcFunction = this.player.src;
@@ -422,7 +737,7 @@ class WebTorrentPlugin extends Plugin {
     updateVideoFile(videoFile, options = {}, done = () => { }) {
         // Automatically choose the adapted video file
         if (!videoFile) {
-            const savedAverageBandwidth = Object(_peertube_player_local_storage__WEBPACK_IMPORTED_MODULE_5__["getAverageBandwidthInStore"])();
+            const savedAverageBandwidth = Object(peertube_player_local_storage["a" /* getAverageBandwidthInStore */])();
             videoFile = savedAverageBandwidth
                 ? this.getAppropriateFile(savedAverageBandwidth)
                 : this.pickAverageVideoFile();
@@ -458,7 +773,7 @@ class WebTorrentPlugin extends Plugin {
         this.currentVideoFile = videoFile;
         // Don't try on iOS that does not support MediaSource
         // Or don't use P2P if webtorrent is disabled
-        if (Object(_utils__WEBPACK_IMPORTED_MODULE_3__["isIOS"])() || this.playerRefusedP2P) {
+        if (Object(utils["e" /* isIOS */])() || this.playerRefusedP2P) {
             return this.fallbackToHttp(options, () => {
                 this.player.playbackRate(oldPlaybackRate);
                 return done();
@@ -532,7 +847,7 @@ class WebTorrentPlugin extends Plugin {
         const torrentOptions = {
             // Don't use arrow function: it breaks webtorrent (that uses `new` keyword)
             store: function (chunkLength, storeOpts) {
-                return new CacheChunkStore(new _peertube_chunk_store__WEBPACK_IMPORTED_MODULE_4__["PeertubeChunkStore"](chunkLength, storeOpts), {
+                return new CacheChunkStore(new peertube_chunk_store["a" /* PeertubeChunkStore */](chunkLength, storeOpts), {
                     max: 100
                 });
             }
@@ -555,7 +870,7 @@ class WebTorrentPlugin extends Plugin {
                 if (options.seek)
                     this.player.currentTime(options.seek);
                 const renderVideoOptions = { autoplay: false, controls: true };
-                Object(_video_renderer__WEBPACK_IMPORTED_MODULE_2__["renderVideo"])(torrent.files[0], this.playerElement, renderVideoOptions, (err, renderer) => {
+                renderVideo(torrent.files[0], this.playerElement, renderVideoOptions, (err, renderer) => {
                     this.renderer = renderer;
                     if (err)
                         return this.fallbackToHttp(options, done);
@@ -662,8 +977,8 @@ class WebTorrentPlugin extends Plugin {
         });
         // If the download speed is too bad, return the lowest resolution we have
         if (filteredFiles.length === 0)
-            return Object(_utils__WEBPACK_IMPORTED_MODULE_3__["videoFileMinByResolution"])(files);
-        return Object(_utils__WEBPACK_IMPORTED_MODULE_3__["videoFileMaxByResolution"])(filteredFiles);
+            return Object(utils["l" /* videoFileMinByResolution */])(files);
+        return Object(utils["k" /* videoFileMaxByResolution */])(filteredFiles);
     }
     getAndSaveActualDownloadSpeed() {
         const start = Math.max(this.downloadSpeeds.length - this.CONSTANTS.BANDWIDTH_AVERAGE_NUMBER_OF_VALUES, 0);
@@ -673,7 +988,7 @@ class WebTorrentPlugin extends Plugin {
         const sum = lastDownloadSpeeds.reduce((a, b) => a + b);
         const averageBandwidth = Math.round(sum / lastDownloadSpeeds.length);
         // Save the average bandwidth for future use
-        Object(_peertube_player_local_storage__WEBPACK_IMPORTED_MODULE_5__["saveAverageBandwidth"])(averageBandwidth);
+        Object(peertube_player_local_storage["e" /* saveAverageBandwidth */])(averageBandwidth);
         return averageBandwidth;
     }
     initializePlayer() {
@@ -798,7 +1113,7 @@ class WebTorrentPlugin extends Plugin {
     renderFileInFakeElement(file, delay) {
         this.destroyingFakeRenderer = false;
         const fakeVideoElem = document.createElement('video');
-        Object(_video_renderer__WEBPACK_IMPORTED_MODULE_2__["renderVideo"])(file, fakeVideoElem, { autoplay: false, controls: false }, (err, renderer) => {
+        renderVideo(file, fakeVideoElem, { autoplay: false, controls: false }, (err, renderer) => {
             this.fakeRenderer = renderer;
             // The renderer returns an error when we destroy it, so skip them
             if (this.destroyingFakeRenderer === false && err) {
@@ -876,515 +1191,9 @@ class WebTorrentPlugin extends Plugin {
         }
     }
 }
-video_js__WEBPACK_IMPORTED_MODULE_0___default.a.registerPlugin('webtorrent', WebTorrentPlugin);
+core_default.a.registerPlugin('webtorrent', webtorrent_plugin_WebTorrentPlugin);
 
 
-
-/***/ }),
-
-/***/ 10:
-/*!**********************!*\
-  !*** util (ignored) ***!
-  \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 11:
-/*!*****************************!*\
-  !*** ./get-files (ignored) ***!
-  \*****************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 12:
-/*!***************************************!*\
-  !*** bittorrent-dht/client (ignored) ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 13:
-/*!*****************************!*\
-  !*** load-ip-set (ignored) ***!
-  \*****************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 14:
-/*!********************!*\
-  !*** fs (ignored) ***!
-  \********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 15:
-/*!*************************************!*\
-  !*** decompress-response (ignored) ***!
-  \*************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 16:
-/*!**********************!*\
-  !*** util (ignored) ***!
-  \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 17:
-/*!**********************!*\
-  !*** util (ignored) ***!
-  \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 18:
-/*!**********************!*\
-  !*** util (ignored) ***!
-  \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 19:
-/*!**********************!*\
-  !*** util (ignored) ***!
-  \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 2:
-/*!**********************!*\
-  !*** util (ignored) ***!
-  \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 20:
-/*!*********************************!*\
-  !*** ./lib/conn-pool (ignored) ***!
-  \*********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 21:
-/*!**********************!*\
-  !*** util (ignored) ***!
-  \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 22:
-/*!**********************!*\
-  !*** util (ignored) ***!
-  \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 23:
-/*!***************************************!*\
-  !*** bittorrent-dht/client (ignored) ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 24:
-/*!*******************************!*\
-  !*** ./common-node (ignored) ***!
-  \*******************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 25:
-/*!*******************************************!*\
-  !*** ./lib/client/http-tracker (ignored) ***!
-  \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 26:
-/*!******************************************!*\
-  !*** ./lib/client/udp-tracker (ignored) ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 27:
-/*!**********************!*\
-  !*** util (ignored) ***!
-  \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 28:
-/*!**********************!*\
-  !*** util (ignored) ***!
-  \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 29:
-/*!********************!*\
-  !*** ws (ignored) ***!
-  \********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 3:
-/*!**********************!*\
-  !*** util (ignored) ***!
-  \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 30:
-/*!********************************!*\
-  !*** bittorrent-lsd (ignored) ***!
-  \********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 31:
-/*!********************!*\
-  !*** fs (ignored) ***!
-  \********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 32:
-/*!*********************!*\
-  !*** net (ignored) ***!
-  \*********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 33:
-/*!********************!*\
-  !*** os (ignored) ***!
-  \********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 34:
-/*!********************!*\
-  !*** fs (ignored) ***!
-  \********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 35:
-/*!****************************!*\
-  !*** utp-native (ignored) ***!
-  \****************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 36:
-/*!************************!*\
-  !*** ut_pex (ignored) ***!
-  \************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 37:
-/*!**********************!*\
-  !*** util (ignored) ***!
-  \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 38:
-/*!**********************!*\
-  !*** util (ignored) ***!
-  \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 39:
-/*!**********************!*\
-  !*** util (ignored) ***!
-  \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 4:
-/*!**********************!*\
-  !*** util (ignored) ***!
-  \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 40:
-/*!**********************!*\
-  !*** util (ignored) ***!
-  \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 41:
-/*!**********************!*\
-  !*** util (ignored) ***!
-  \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 42:
-/*!**********************!*\
-  !*** util (ignored) ***!
-  \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 43:
-/*!**********************!*\
-  !*** util (ignored) ***!
-  \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 44:
-/*!**********************!*\
-  !*** util (ignored) ***!
-  \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 45:
-/*!**********************!*\
-  !*** util (ignored) ***!
-  \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 46:
-/*!**********************!*\
-  !*** util (ignored) ***!
-  \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 47:
-/*!**************************!*\
-  !*** ./server (ignored) ***!
-  \**************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 5:
-/*!**********************!*\
-  !*** util (ignored) ***!
-  \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 6:
-/*!*************************!*\
-  !*** is-file (ignored) ***!
-  \*************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 7:
-/*!**********************!*\
-  !*** util (ignored) ***!
-  \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 8:
-/*!**********************!*\
-  !*** util (ignored) ***!
-  \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 9:
-/*!**********************!*\
-  !*** util (ignored) ***!
-  \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
 
 /***/ })
 

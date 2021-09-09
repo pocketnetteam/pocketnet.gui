@@ -1,6 +1,7 @@
 @import "../../css/__cssvar";
 
 #articles{
+	color : #fff;
 	.articles{
 		position: absolute;
 		left: 2 * @rhythm;
@@ -8,6 +9,10 @@
 		top : 100px;
 		bottom: 6 * @rhythm;
 		overflow-y: auto;
+		scrollbar-width: none;
+		&::-webkit-scrollbar{
+			width: 0!important
+		}
 
 		.artwrapper{
 			overflow-y: hidden;
@@ -19,7 +24,7 @@
 			float: left;
 			height: 430px;
 			width: 290px;
-			padding : 2 * @rhythm;
+			padding : @rhythm;
 			position: relative;
 
 			.apanel{
@@ -84,7 +89,7 @@
 					right: 0;
 					top: 0;
 					height: 37%;
-					background: @color-contrast;
+					background: @color-add;
 					color : #fff;
 					z-index: 1;
 
@@ -102,9 +107,6 @@
 					}
 
 					.shadowSmall();
-
-					
-
 					.caption{
 						text-align: center;
 						font-size: 1.7em;
@@ -200,18 +202,19 @@
 		bottom: 0;
 		right: 100px;
 		left: 0;
+		right: 0;
 		height: 150px;
-		background: fade(#fff,90);
 		padding: 2 * @rhythm;
 		z-index: 2;
+
 		.topwidthWrapper{
 			//padding-left: 55px;
 		}
 
 		.iWrapper{
 			width: auto;
-			border-bottom: 2px solid @color-gray2;
-			color : @color-gray2;
+			border-bottom: 2px solid @color-gray-slight;
+			color : @color-gray-slight;
 			cursor: pointer;
 			.transition(0.3s);
 
@@ -246,6 +249,8 @@
 
 
 }
+
+
 
 html.stblack{
 	#articles{
@@ -327,6 +332,14 @@ html.stblack{
 		}
 	
 	}	
+}
+
+.wnd.articles{
+	&.allscreen{
+		.wndinner>div.buttons{
+			display: none;
+		}
+	}
 }
 
 /*t*/ @media only screen and (max-width: 768px){
