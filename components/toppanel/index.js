@@ -28,7 +28,7 @@ var toppanel = (function(){
 					links.video = "index?video=1"
 				}
 
-				if (isMobile() && window.cordova) {
+				if ((isMobile() && window.cordova) || (typeof _Electron != 'undefined' && window.electron)) {
 					links.saved = "index?r=saved"
 				}
 
@@ -45,7 +45,7 @@ var toppanel = (function(){
 					labels.push(self.app.localization.e('video'))
 				}
 
-				if (isMobile() && window.cordova) {
+				if ((isMobile() && window.cordova) || (typeof _Electron != 'undefined' && window.electron)) {
 					labels.push(self.app.localization.e('downloaded'));
 				}
 

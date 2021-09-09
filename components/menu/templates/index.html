@@ -38,6 +38,13 @@
 											</div>
 										<% } %>
 
+										<% if(typeof _Electron != 'undefined' && window.electron) {%>
+											<div class="pcenterCell">
+												<div class="pcenterLabel toppost " r="saved">
+													<a href="index?r=saved"  handler="true"><%=e('downloaded')%></a>
+												</div>
+											</div>
+										<% } %>
 										
 										<div class="pcenterCell">
 											<div class="pcenterLabel toppost " r="recommended">
