@@ -706,6 +706,8 @@ Application = function(p)
 
 			if(typeof p.nav.href == 'function') p.nav.href = p.nav.href()
 
+			console.log('p.nav', p.nav)
+
 			self.nav.init(p.nav);
 			
 		})

@@ -56,7 +56,7 @@ var accounts = (function(){
 
 								self.app.reload({
 									href : h,
-									history : history
+									history : history,
 								})
 
 								/*self.app.reloadLight(function(){
