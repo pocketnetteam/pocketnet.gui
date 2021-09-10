@@ -120,7 +120,6 @@ var main = (function(){
 			backtolenta : function(){
 				actions.backtolentaClear()
 
-				console.log('backtolenta', lastscroll)
 
 				self.app.actions.scroll(lastscroll)
 				//_scrollTop(lastscroll, null, 5)
@@ -302,7 +301,6 @@ var main = (function(){
 						},
 						hasshares : function(shares){
 
-							console.log("hasshares", shares)
 
 							if (shares.length <= 2){
 								showmoreby.addClass('hidden')
@@ -535,7 +533,6 @@ var main = (function(){
 						},
 						opensvi : function(id){
 
-							console.log('self.app.lastScrollTop', self.app.lastScrollTop)
 
 							lastscroll = self.app.lastScrollTop
 
@@ -992,6 +989,8 @@ var main = (function(){
 			},
 
 			destroy : function(){
+
+				console.log("DEST")
 
 				if(el.c) el.c.html('')
 

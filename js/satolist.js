@@ -2258,9 +2258,6 @@ Platform = function (app, listofnodes) {
             }, 50)
         },
 
-
-       
-
         showmykeyfast: function () {
             app.nav.api.load({
 
@@ -21747,15 +21744,31 @@ Platform = function (app, listofnodes) {
         },
 
         connect : function(){
-            if(!self.matrixchat.connectWith) return
+            if(!self.matrixchat.connectWith && !self.matrixchat.joinRoom) return
             if(!self.matrixchat.core) return
 
             self.matrixchat.core.apptochat()
-            self.matrixchat.core.connect(self.matrixchat.connectWith).then(r => {
-                self.matrixchat.connectWith = null
-            }).catch(e => {
-                self.matrixchat.connectWith = null
-            })
+
+
+            if (self.matrixchat.connectWith){
+                return self.matrixchat.core.connect(self.matrixchat.connectWith).then(r => {
+                    self.matrixchat.connectWith = null
+                }).catch(e => {
+                    self.matrixchat.connectWith = null
+                })
+
+                
+            }
+                
+            if (self.matrixchat.joinRoom){
+                return self.matrixchat.core.joinRoom(self.matrixchat.joinRoom).then(r => {
+                    self.matrixchat.joinRoom = null
+                }).catch(e => {
+                    self.matrixchat.joinRoom = null
+                })
+
+                
+            }
         },
 
     }
@@ -22172,6 +22185,7 @@ Platform = function (app, listofnodes) {
                 /////////////
 
                 var w = parameters(eventData.url, true).connect
+   
 
                 self.matrixchat.connectWith = w || null
 
@@ -22196,6 +22210,7 @@ Platform = function (app, listofnodes) {
     self.cordovaSetup()
 
     self.matrixchat.connectWith = parameters().connect
+    self.matrixchat.joinRoom = parameters().publicroom
 
     return self;
 

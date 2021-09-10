@@ -122,8 +122,6 @@ var lenta = (function(){
 
 				self.app.platform.sdk.node.shares.getbyid(allids, function(shares){
 
-					
-
 					_.each(shares, function(share){
 						delete share.myVal
 					})
@@ -1602,7 +1600,6 @@ var lenta = (function(){
 							var offsetTop = 0
 
 							offsetTop = isMobile() ? (_el.data('offsetTop') || _el.offset().top) : _el.offset().top
-							console.log(share.txid, offsetTop, _el.data('offsetTop'))
 							_el.data('offsetTop', offsetTop)
 
 							if(st + 3500 > offsetTop){ /// optimize ?
@@ -1621,7 +1618,6 @@ var lenta = (function(){
 				
 				actions.sharesInview(sharesInview, function(invshares, els, clbk){
 
-
 					if(invshares.length && isMobile()){
 						actions.sharesOptimization(invshares[0])
 					}
@@ -1629,9 +1625,8 @@ var lenta = (function(){
 					_.each(invshares, function(s){
 						el.share[s.txid].addClass('vstars')
 					})
-
 					
-					if(clbk)
+					if (clbk)
 						clbk();
 
 				}, function(nvshares){
@@ -1823,7 +1818,6 @@ var lenta = (function(){
 			postscores : function(){
 				var id = $(this).closest('.share').attr('id');
 
-				console.log('id', id)
 
 				actions.postscores(id)
 			},
@@ -2632,21 +2626,25 @@ var lenta = (function(){
 						if(s.settings.v != "a"){
 
 							var imageswidth = images.width()
-							var el = images.find('.imagesWrapper')
+							/*var el = images.find('.imagesWrapper')
 
 							var imagesWrapperWidth = el.width(),
-								imagesWrapperHeight = el.height();
-
-								console.log(el.height(), el, image.images)
+								imagesWrapperHeight = el.height();*/
 
 							_.each(image.images, function(img, n){
 
+								
+
 								var _img = img.img;
+								var el = $(image.elements[n]).closest('.imagesWrapper');
 
 								var ac = '';
 
-								var _w = imagesWrapperWidth;
-								var _h = imagesWrapperHeight
+								/*var _w = imagesWrapperWidth;
+								var _h = imagesWrapperHeight*/
+
+								var _w = el.width();
+								var _h = el.height()
 
 								if(_img.width > _img.height && (!isMobile() && self.app.width > 768)){
 									ac = 'w2'
@@ -2659,20 +2657,15 @@ var lenta = (function(){
 										h = w * ( _img.height / _img.width) 
 
 										el.height(h);
-										imagesWrapperHeight = h
 									}
 
 									el.width(w);
-									imagesWrapperWidth = w
 								}
 
 								if(_img.height > _img.width || (isMobile() || self.app.width <= 768)){
 									ac = 'h2'
 
-									console.log("_w * (_img.height / _img.width)", _w * (_img.height / _img.width))
-
 									el.height(_w * (_img.height / _img.width))
-									imagesWrapperHeight = _w * (_img.height / _img.width)
 								}
 
 								if(ac){
@@ -4029,6 +4022,8 @@ var lenta = (function(){
 			},
 
 			destroy : function(){
+
+				console.log("DESTROY")
 
 				/*if (essenseData.window){
 					essenseData.window.off('scroll')

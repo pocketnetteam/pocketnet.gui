@@ -37,24 +37,31 @@ var accounts = (function(){
 
 							self.user.signin(private, function(state){
 
-								
+								var h = ed.href || 'userpage?id=accounts&s=' + makeid()
+								var history = false;
 
-								self.app.reloadLight(function(){
+								if (ed.toaccpage) {
+									h = 'author?address=' + address
+									history = true
+								}
 
-									var h = ed.href || 'userpage?id=accounts&s=' + makeid()
-									var history = false;
+								if(!self.app.user.validate()){
+									h = 'filluser'
+									history = true
+								}
 
-									if(ed.toaccpage) {
-										h = 'author?address=' + address
-										history = true
-									}
+								globalpreloader(false)
 
-									console.log(h, ed)
+								self.closeContainer()
 
-									if(!self.app.user.validate()){
-										h = 'filluser'
-										history = true
-									}
+								self.app.reload({
+									href : h,
+									history : history
+								})
+
+								/*self.app.reloadLight(function(){
+
+									
 
 									self.app.nav.api.load({
 										open : true,
@@ -62,12 +69,8 @@ var accounts = (function(){
 										history : history
 									})
 
-									globalpreloader(false)
-
-									self.closeContainer()
-								});
-
-								
+									
+								});*/
 
 							})
 						});

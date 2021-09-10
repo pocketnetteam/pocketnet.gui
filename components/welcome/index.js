@@ -58,14 +58,10 @@ var welcome = (function(){
 
 		var make = function(){
 
-			console.log('self.app.platform.matrixchat.connectWith', self.app.platform.matrixchat)
-
 			if (self.app.platform.matrixchat.connectWith){
 				self.app.platform.sdk.users.get([self.app.platform.matrixchat.connectWith], function () {
 					renders.invitation(self.app.platform.matrixchat.connectWith)
 				})
-
-				
 			}
 		}
 
