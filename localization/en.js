@@ -1138,10 +1138,14 @@ ____loclib.sortByViews = "Views";
 ____loclib.unableToAuthorize = "Unable to authorize";
 ____loclib.unableToAuthorizeBody = "Unfortunately, the application cannot authenticate this account on the video server. You need at least 5 PKOIN or 100 reputation to upload videos. If you do, please try again later";
 
+____loclib.downloaded = "Downloaded";
+____loclib.downloadedEmpty = "Downloaded posts will be shown here";
 ____loclib.emptyDescription = "Description is empty";
 ____loclib.transcodingShort = "Processing";
 ____loclib.editVideoDescription = "Edit video name/description";
 ____loclib.errorChangingDescription = "Unable to change video name/description";
+____loclib.downloadVideo = "Download video";
+____loclib.selectQuality = "Select quality:";
 
 ____loclib.enterVideoName = "Enter video name";
 ____loclib.enterVideoDescription = "Enter video description";
@@ -1154,3 +1158,6 @@ ____loclib.saveimage = "Save image";
 
 ____loclib.showAllButton = "Show all";
 ____loclib.hideAllButton = "Hide";
+
+____loclib.UniqueUsers = "Unique Raters";
+____loclib.ErrorLoadingRates = "Loading Error";
