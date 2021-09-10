@@ -202,18 +202,25 @@ var videoCabinet = (function () {
         actions
           .getTotalRatings()
           .then((result) => {
-            var rendering = '&mdash;';
+            const rendering =
+              result.scoreCnt && result.scoreSum
+                ? `${(result.scoreSum / result.scoreCnt).toFixed(1)} (${
+                    result.scoreCnt
+                  }) <i class="fas fa-star"></i> ${
+                    result.countLikers
+                  }  <i class="fas fa-users"></i>`
+                : `&mdash;`;
 
-            if (result.scoreCnt && result.scoreSum) {
-              rendering =
-                (result.scoreSum / result.scoreCnt).toFixed(1) +
-                ' (' +
-                result.scoreCnt +
-                ') ' +
-                '<i class="fas fa-star"></i> ' +
-                result.countLikers +
-                ' <i class="fas fa-users"></i>';
-            }
+            // if (result.scoreCnt && result.scoreSum) {
+            //   rendering =
+            //     (result.scoreSum / result.scoreCnt).toFixed(1) +
+            //     ' (' +
+            //     result.scoreCnt +
+            //     ') ' +
+            //     '<i class="fas fa-star"></i> ' +
+            //     result.countLikers +
+            //     ' <i class="fas fa-users"></i>';
+            // }
 
             renders.bonusProgram(
               {
