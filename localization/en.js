@@ -1158,3 +1158,6 @@ ____loclib.saveimage = "Save image";
 
 ____loclib.showAllButton = "Show all";
 ____loclib.hideAllButton = "Hide";
+
+____loclib.UniqueUsers = "Unique Raters";
+____loclib.ErrorLoadingRates = "Loading Error";

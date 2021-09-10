@@ -86,7 +86,7 @@
       <div class="videoItemPart removeButtonWrapper">
         <i
           class="fas fa-ellipsis-h menuActivator"
-          videoLink="<%- `peertube://${video.server}/${video.uuid}` %>"
+          videoLink="<%- `peertube://${deep(video, 'account.host') || video.server}/${video.uuid}` %>"
         ></i>
       </div>
     </div>

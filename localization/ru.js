@@ -956,3 +956,6 @@ ____loclib.saveimage = "Сохранить изображение";
 
 ____loclib.showAllButton = "Подробнее";
 ____loclib.hideAllButton = "Скрыть";
+
+____loclib.UniqueUsers = "Уникальные Пользователи";
+____loclib.ErrorLoadingRates = "Ошибка Загрузки";
