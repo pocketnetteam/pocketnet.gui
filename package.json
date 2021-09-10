@@ -117,6 +117,9 @@
             "!cordova${/*}",
             "!external${/*}"
         ],
+        "appImage": {
+            "systemIntegration": "doNotAsk"
+        },
         "extraFiles": [
             {
                 "from": "proxy16/cert",
@@ -159,7 +162,7 @@
             "artifactName": "${productName}_${platform}_${arch}.${ext}",
             "category": "Network",
             "executableName": "Pocketnet",
-            "description": "${productName} Desktop Browser"
+            "description": "Pocketnet Desktop Browser"
         },
         "win": {
             "target": "nsis",
