@@ -23,7 +23,7 @@ var Nodemanager = function(p){
 
     var findInterval = null
     var peernodesCheckTime = 5000000
-    var usersfornode = 100
+    var usersfornode = 15
 
     var db = new Datastore(f.path(p.dbpath));
    
@@ -120,21 +120,29 @@ var Nodemanager = function(p){
 
         var workingNodes = _.filter(self.nodes, function(n){
             var s = n.statistic.get()
+
+            console.log(s)
             
-            if (s.success > 0 && s.time < 1000){
+            if (s.success > 0 && s.success > s.failed && s.time < 1000){
                 return true
             }
         })
+
+
+        //console.log('workingNodes', workingNodes.length, _.toArray(self.nodes).length)
+
 
         if(!usersfornode){
             self.add(node)
             return
         }
 
+       // console.log(self.proxy.users(), usersfornode, workingNodes.length)
 
         //self.add(node)
 
         if (self.proxy.users() / usersfornode >= workingNodes.length){
+
             self.add(node)
         }
         else{
@@ -498,9 +506,6 @@ var Nodemanager = function(p){
             //return Promise.resolve()
   
             return node.peers().then(nodes => {
-
-
-                
 
                 nodes = _.filter(nodes, function(n){
                     return !self.nodesmap[n.key]
