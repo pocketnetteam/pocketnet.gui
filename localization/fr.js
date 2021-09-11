@@ -817,3 +817,6 @@ ____loclib.downloaded = "Téléchargés";
 ____loclib.downloadedEmpty = "Les posts téléchargés s'afficheront ici";
 ____loclib.downloadVideo = "Télécharger vidéo";
 ____loclib.selectQuality = "Sélectionnez la qualité:";
+____loclib.downloadedVideos = "Vidéos téléchargées";
+____loclib.deleteAllDownloadedVideos = "Supprimer les vidéos téléchargées";
+____loclib.videosDeleted = "Vidéos supprimées!";

@@ -1146,6 +1146,9 @@ ____loclib.editVideoDescription = "Edit video name/description";
 ____loclib.errorChangingDescription = "Unable to change video name/description";
 ____loclib.downloadVideo = "Download video";
 ____loclib.selectQuality = "Select quality:";
+____loclib.downloadedVideos = "Downloaded videos";
+____loclib.deleteAllDownloadedVideos = "Delete all downloaded videos";
+____loclib.videosDeleted = "Videos deleted!";
 
 ____loclib.enterVideoName = "Enter video name";
 ____loclib.enterVideoDescription = "Enter video description";
