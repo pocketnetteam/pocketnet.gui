@@ -1,6 +1,6 @@
 {
     "name": "pocketnet",
-    "version": "0.4.28",
+    "version": "0.4.29",
     "cordovaversion": "1.1.95",
     "cordovaversioncode": "10095",
     "description": "Pocketnet desktop application",
@@ -117,9 +117,6 @@
             "!cordova${/*}",
             "!external${/*}"
         ],
-        "appImage": {
-            "systemIntegration": "doNotAsk"
-        },
         "extraFiles": [
             {
                 "from": "proxy16/cert",
