@@ -3434,6 +3434,8 @@ Platform = function (app, listofnodes) {
                                                                         file.file(function(fileDetails) {
                                                                             if (!videoFile && fileDetails.type == null) {
                                                                                 videoFile = file;
+                                                                                if (fileDetails.size)
+                                                                                    v[shareFolder.name].videos[videoFolder.name].size = fileDetails.size;
                                                                                 // Resolve internal URL
                                                                                 window.resolveLocalFileSystemURL(videoFile.nativeURL, function(entry) {
                                                                                     videoFile.internalURL = entry.toInternalURL();
@@ -3503,6 +3505,9 @@ Platform = function (app, listofnodes) {
                                                                         name: file,
                                                                         internalURL: url.pathToFileURL(userDataPath + '/posts/' + shareId + '/videos/' + videoId + '/' + file).href
                                                                     };
+                                                                    var stats = fs.statSync(userDataPath + '/posts/' + shareId + '/videos/' + videoId + '/' + file);
+                                                                    if (stats && stats.size)
+                                                                        v[shareId].videos[videoId].size = stats.size;
                                                                 }
                                                             });
                                                         }
@@ -3578,17 +3583,24 @@ Platform = function (app, listofnodes) {
                                                 // Start the download
                                                 download.startAsync().then(function(e) {
                                                     // Success
-                                                    // Resolve internal URL
-                                                    window.resolveLocalFileSystemURL(targetFile.nativeURL, function(entry) {
-                                                        targetFile.internalURL = entry.toInternalURL();
-                                                        shareInfos.videos = {};
-                                                        shareInfos.videos[id] = { video: targetFile,  infos: infos };
-                                                        self.sdk.local.shares.add(shareId, shareInfos);
-                                                        return resolve(targetFile);
+                                                    // Get file size
+                                                    targetFile.file(function(fileDetails) {
+                                                        // Resolve internal URL
+                                                        window.resolveLocalFileSystemURL(targetFile.nativeURL, function(entry) {
+                                                            targetFile.internalURL = entry.toInternalURL();
+                                                            shareInfos.videos = {};
+                                                            shareInfos.videos[id] = { video: targetFile,  infos: infos };
+                                                            if (fileDetails.size)
+                                                                shareInfos.videos[id].size = fileDetails.size;
+                                                            self.sdk.local.shares.add(shareId, shareInfos);
+                                                            return resolve(targetFile);
+                                                        }, function(err) {
+                                                            return reject(err);
+                                                        });
                                                     }, function(err) {
+                                                        // Error
                                                         return reject(err);
                                                     });
-
                                                 }, function(err) {
                                                     // Error
                                                     return reject(err);
@@ -3653,6 +3665,11 @@ Platform = function (app, listofnodes) {
                                         video: { name: video.resolution.id, internalURL: url.pathToFileURL(videoFile.path).href },
                                         infos: {}
                                     };
+                                    // Get file size
+                                    var stats = fs.statSync(videoFile.path);
+                                    if (stats && stats.size)
+                                        shareInfos.videos[id].size = stats.size;
+                                    // Add the share
                                     self.sdk.local.shares.add(shareId, shareInfos);
                                     return resolve();
                                 });
@@ -3705,6 +3722,19 @@ Platform = function (app, listofnodes) {
                         }
                     } catch(err) {}
                     return video;
+                },
+
+                getTotalSize : function() {
+                    var v = self.sdk.local.shares.allShares, totalSize = 0;
+                    _.each(v, function(share) {
+                        if (share.videos) {
+                            for (const videoId in share.videos) {
+                                if (share.videos[videoId].size)
+                                    totalSize += share.videos[videoId].size;
+                            }
+                        }
+                    });
+                    return totalSize;
                 },
 
                 add : function(shareId, share){
