@@ -823,3 +823,6 @@ ____loclib.downloaded = "Heruntergeladen";
 ____loclib.downloadedEmpty = "Heruntergeladene Beiträge werden hier angezeigt";
 ____loclib.downloadVideo = "Video herunterladen";
 ____loclib.selectQuality = "Qualität auswählen:";
+____loclib.downloadedVideos = "Heruntergeladene Videos";
+____loclib.deleteAllDownloadedVideos = "Alle heruntergeladenen Videos löschen";
+____loclib.videosDeleted = "Videos gelöscht!";

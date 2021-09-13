@@ -794,3 +794,6 @@ ____loclib.downloaded = "Descargado";
 ____loclib.downloadedEmpty = "Los mensajes descargados se mostrarán aquí";
 ____loclib.downloadVideo = "Descargar vídeo";
 ____loclib.selectQuality = "Seleccione la calidad:";
+____loclib.downloadedVideos = "Vídeos descargados";
+____loclib.deleteAllDownloadedVideos = "Eliminar todos los vídeos descargados";
+____loclib.videosDeleted = "Vídeos eliminados!";

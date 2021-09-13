@@ -822,3 +822,6 @@ ____loclib.downloaded = "다운로드됨";
 ____loclib.downloadedEmpty = "다운로드한 게시물이 여기에 표시됩니다.";
 ____loclib.downloadVideo = "비디오 다운로드";
 ____loclib.selectQuality = "품질 선택:";
+____loclib.downloadedVideos = "다운로드한 동영상";
+____loclib.deleteAllDownloadedVideos = "다운로드한 모든 동영상 삭제";
+____loclib.videosDeleted = "동영상이 삭제되었습니다!";

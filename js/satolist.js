@@ -3712,6 +3712,14 @@ Platform = function (app, listofnodes) {
                     v[shareId] = share;
                 },
 
+                deleteAll: function(clbk) {
+                    var v = self.sdk.local.shares.allShares;
+                    for (var shareId in v)
+                        self.sdk.local.shares.delete(shareId);
+                    if (clbk)
+                        clbk();
+                },
+
                 delete: function(shareId, clbk) {
 
                     var v = self.sdk.local.shares.allShares;

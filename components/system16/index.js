@@ -2145,6 +2145,8 @@ var system16 = (function(){
 	
 						renders.servercontent(p.el)
 						renders.nodescontent(p.el)
+						if (isMobile() && typeof cordova != 'undefined')
+							renders.downloadedvideoscontent(el.c);
 						renders.peertubecontent(el.c)
 						renders.nodecontent(p.el)
 						renders.bots(p.el)
@@ -2791,6 +2793,37 @@ var system16 = (function(){
 						clbk()
 				})
 				
+			},
+
+			downloadedvideoscontent : function(elc, clbk){
+
+				if(!info){
+					if(clbk) clbk()
+
+					return
+				}
+
+				self.shell({
+					inner : html,
+					name : 'downloadedvideoscontent',
+
+					el : elc.find('.downloadedvideoscontentWrapper')
+
+				},
+				function(){
+
+					var deleteButton = elc.find('#deleteAllDownloadedVideos')
+					deleteButton.on('click', function() {
+						self.app.platform.sdk.local.shares.deleteAll(function() {
+							// All videos deleted
+							deleteButton.html(self.app.localization.e('videosDeleted'));
+							deleteButton.prop('disabled', true);
+						});
+					});
+
+					if (clbk)
+						clbk()
+				})
 			},
 
 
