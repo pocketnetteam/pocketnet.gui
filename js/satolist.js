@@ -10,7 +10,6 @@ if (typeof _Electron != 'undefined') {
 }
 
 
-
 Platform = function (app, listofnodes) {
 
     var self = this;
