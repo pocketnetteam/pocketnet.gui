@@ -301,7 +301,6 @@ var main = (function(){
 						},
 						hasshares : function(shares){
 
-
 							if (shares.length <= 2){
 								showmoreby.addClass('hidden')
 							}
@@ -711,19 +710,23 @@ var main = (function(){
 
 			if(!isMobile()){
 
-				el.leftpanel.hcSticky({
-					stickTo: '#main',
-					top : 64,
-					bottom : 122
-				});
+				setTimeout(function(){
+					el.leftpanel.hcSticky({
+						stickTo: '#main',
+						top : 64,
+						bottom : 122
+					});
+	
+					el.panel.hcSticky({
+						stickTo: '#main',
+						top : 76,
+						bottom : 122
+					});
+	
+					hsready = true
+				}, 500)
 
-				el.panel.hcSticky({
-					stickTo: '#main',
-					top : 76,
-					bottom : 122
-				});
-
-				hsready = true
+				
 
 			}
 			else{
@@ -806,7 +809,6 @@ var main = (function(){
 			makeShare()
 
 			makePanel()
-
 
 			if (currentMode == 'common' && !videomain && !searchvalue && !searchtags)
 				renders.topvideos(true)

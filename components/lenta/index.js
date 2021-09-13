@@ -3147,6 +3147,12 @@ var lenta = (function(){
 
 						}
 
+						else{
+							if (essenseData.hasshares){
+								essenseData.hasshares([])
+							}
+						}
+
 						if (essenseData.afterload){
 							essenseData.afterload(essenseData, shares, error || error2)
 						}
@@ -3516,6 +3522,14 @@ var lenta = (function(){
 				}	
 				
 			}
+
+			self.app.errors.clbks[mid] = function(){
+				if(el.c.hasClass('networkError')){
+					actions.loadprev()
+				}
+			}
+
+			
 
 			if(!essenseData.openapi && !essenseData.second){
 
@@ -4032,6 +4046,7 @@ var lenta = (function(){
 				delete self.app.events.delayedscroll['videos' + mid]
 				delete self.app.events.delayedscroll['videosinit' + mid]
 				delete self.app.events.scroll['loadmore' + mid]
+				delete self.app.errors.clbks[mid]
 
 				if (el.shares && isotopeinited){
 					el.shares.isotope('destroy')

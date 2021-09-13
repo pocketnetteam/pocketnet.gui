@@ -4,8 +4,6 @@ var Datastore = require('nedb');
 var _ = require('lodash');
 var f = require('../functions');
 
-var isDevelopment = process.argv.find(function(el) { return el == '--development'; })
-
 var Nodemanager = function(p){
     if(!p) p = {};
 
@@ -14,16 +12,19 @@ var Nodemanager = function(p){
     var inited = false;
     var cachedchain = null
 
+    self.askedpeers = {};
+    self.peers = {}
 
-    self.tempnodes = {};
+    //// using
     self.nodes = [];
     self.nodesmap = {};
-
-    self.askedpeers = {}
+  
 
     var findInterval = null
     var peernodesCheckTime = 5000000
-    var usersfornode = 15
+    var usersfornode = 30
+
+    var commonnotinitedInterval = null
 
     var db = new Datastore(f.path(p.dbpath));
    
@@ -116,56 +117,91 @@ var Nodemanager = function(p){
         
     }
 
-    self.addIfNeed =  function(node){
+    self.getNotinitedInfo = function(){
+        var notinitednodes = _.filter(self.nodes, function(node){
+            return !node.inited
+        })
+
+        _.each(notinitednodes, function(node){
+            node.info().catch(e => {})
+        })
+    }
+
+    self.find = function(){
+
+        var notinitednodes = _.filter(self.nodes, function(node){
+            return !node.inited
+        })
+
+        _.each(_.shuffle(notinitednodes), function(node){
+            self.initIfNeed(node)
+        })
+
+        _.each(_.shuffle(self.nodes), function(node, i){
+
+            if(i < 5){
+                self.api.peernodesTime(node).then(r => {}).catch(e => {})
+            }
+
+            
+        })
+
+    }
+
+    var saveNodes = function(nodes){
+
+        _.map(nodes, function(node){
+
+            var exp = node.export()
+
+            if (exp.bchain)
+                db.find({key : node.key}).exec(function (err, docs) {
+
+                    if(!err){
+                        if (docs.length){
+                            
+                        }
+                        else{
+                            db.insert(exp, function(err, docs) {})
+                        }
+                    }
+
+                })
+           
+        })
+
+       
+    }
+
+    self.initIfNeed =  function(node){
+
+        if(!node.eventsCount) return
 
         var workingNodes = _.filter(self.nodes, function(n){
-            var s = n.statistic.get()
 
-            console.log(s)
-            
-            if (s.success > 0 && s.success > s.failed && s.time < 1000){
+            if(!n.inited) return false
+
+            var s = n.statistic.get()
+            var r = n.statistic.rating()
+
+            if (s.success > 0 && s.success > s.failed && s.time < 400 && r){
                 return true
             }
         })
 
-
-        //console.log('workingNodes', workingNodes.length, _.toArray(self.nodes).length)
-
-
-        if(!usersfornode){
-            self.add(node)
-            return
-        }
-
-       // console.log(self.proxy.users(), usersfornode, workingNodes.length)
-
-        //self.add(node)
-
-        if (self.proxy.users() / usersfornode >= workingNodes.length){
-
-            self.add(node)
-        }
-        else{
-            self.tempnodes[node.key] = node
+        if (!usersfornode || self.proxy.users() / usersfornode >= workingNodes.length){
+            node.init()
         }
         
     }
-
+    /// add to main
     self.add = function(node){
+
         if(!self.nodesmap[node.key]){
             self.nodes.push(node);
-
             self.remap()
-
-            node.init()
-
-            if(self.tempnodes[node.key]){
-                delete self.tempnodes[node.key]
-            }
         }
     }
-
-    ///self.add
     
     self.create = function(p){
 
@@ -193,7 +229,6 @@ var Nodemanager = function(p){
     }
 
     self.currentChainCommon = function(){
-        
 
         if(!self.nodes.length) return null
 
@@ -257,11 +292,12 @@ var Nodemanager = function(p){
 
     }
 
-    self.getnodes = function(nds){
+    self.getnodes = function(filter){
 
         var nodes = {}
 
-        _.each(nds || self.nodes, function(node){
+        _.each(_.filter(self.nodes, filter || function(){return true}), function(node){
+
             nodes[node.key] = {
                 node : node.exportsafe(),
                 statistic : node.statistic.get(),
@@ -283,18 +319,24 @@ var Nodemanager = function(p){
             inited : inited,
 
             countuse : _.filter(self.nodes, function(node){
-                return node.export().canuse
+                return node.inited && node.export().canuse
             }).length,
 
-            nodes : self.getnodes(),
+            nodes : self.getnodes(function(n){
+                return n.inited
+            }),
 
             chain : self.currentChainCommon(),
             peers : self.askedpeers,
-            tmp : self.getnodes(self.tempnodes)
+            tmp : self.getnodes(function(n){
+                return !n.inited
+            })
         }
 
         return stats
     }
+
+    
 
     self.init = function(){
 
@@ -305,7 +347,11 @@ var Nodemanager = function(p){
 
                 db.ensureIndex({ fieldName: 'key', unique: true });
 
-                db.find({}).exec(function (err, docs) {
+                var bchain = 'main'
+
+                if (self.proxy.text) bchain = 'test'
+
+                db.find({bchain}).exec(function (err, docs) {
 
                     self.nodes = []
 
@@ -321,19 +367,39 @@ var Nodemanager = function(p){
                         local : true
                     }]
 
-                    _.each(c.concat(p.stable, docs || []) , function(options){
+                    docs = _.filter(_.shuffle(docs), function(d, i){
+                        if(i < 5) return true
+                    })
+
+                   // docs = []
+
+                    var nodes = _.map(c.concat(p.stable, docs || []) , function(options){
 
                         var node = new Node(options, self)
 
                         self.add(node)
+
+                        return node
+                        
+                        //self.add(node)
                     })
 
-                    self.find()
+                    self.api.connected(nodes, function(nodes){
+                        saveNodes(nodes)
+                    })
+
+                    setTimeout(function(){
+                        self.find()
+                    }, 2000)
+                    
 
                     findInterval = setInterval(function(){
                         self.find()
-                    }, 1000)
+                    }, 10000)
 
+                    commonnotinitedInterval = setInterval(function(){
+                        self.getNotinitedInfo()
+                    }, 1000 * 60 * 60 * 2) 
 
                     inited = true
 
@@ -345,22 +411,7 @@ var Nodemanager = function(p){
         
     }
 
-    self.find = function(){
-
-
-        _.each(self.tempnodes, function(node){
-            self.addIfNeed(node)
-        })
-
-        _.each(self.nodes, function(node){
-            self.api.peernodesTime(node).then(r => {
-            }).catch(e => {
-                //console.log("E", e, node.host)
-
-            })
-        })
-
-    }
+    
 
     self.waitbest = function(timeout){
         return f.pretry(function(){
@@ -384,6 +435,12 @@ var Nodemanager = function(p){
 
             findInterval = null
         }
+
+        if(commonnotinitedInterval){
+            clearInterval(commonnotinitedInterval)
+            commonnotinitedInterval = null
+        }
+        
     }
 
     self.selectProbability = function(){
@@ -423,7 +480,10 @@ var Nodemanager = function(p){
 
     self.reservice = function(){
         _.each(self.nodes, function(node){
-            node.reservice()
+
+            if (node.inited)
+                node.reservice()
+
         })
 
         return Promise.resolve()
@@ -467,8 +527,11 @@ var Nodemanager = function(p){
             var connected = []
 
             var promises = _.map(nodes, function(node){
+
                 return node.info().then(r => {
+
                     connected.push(node)
+
                 }).catch(e => {
                     return Promise.reject({
                         e : e,
@@ -478,7 +541,7 @@ var Nodemanager = function(p){
             })
 
             return Promise.all(promises).catch(en => {
-                return Promise.resolve()
+                return Promise.resolve(connected)
             }).then(r => {
                 return Promise.resolve(connected)
             })
@@ -508,23 +571,29 @@ var Nodemanager = function(p){
             return node.peers().then(nodes => {
 
                 nodes = _.filter(nodes, function(n){
-                    return !self.nodesmap[n.key]
+                    return !self.nodesmap[n.key] && !self.peers[n.key]
+                })
+
+                _.each(nodes, function(n){
+                    if(!self.peers[n.key])
+                        self.peers[n.key] = n
                 })
 
                 return self.api.connected(nodes)
                 
             }).then(connected => {
+
                 _.each(connected, function(node){
-                    self.addIfNeed(node)
+                    self.add(node)
                 })
+
+                saveNodes(connected)
 
                 self.remap()
 
                 return Promise.resolve(connected)
             })
         },
-
-      
     
     }
 

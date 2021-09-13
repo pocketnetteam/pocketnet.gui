@@ -45,7 +45,15 @@ _.each(keys, function(key){ %>
                             <span class="testing">Testing</span>
                         <% } else { %> 
                             <span><%- node.name %></span>
+                        <% } %> 
+                        
+                        <% if(key != 'tmp') {%>
+                        <br><span class="smalllabel">
+                            <%- (100 * nodeinfo.probability).toFixed(0) %> %
+                        </span>
                         <% } %>
+
+
                         
                     </div>
 
@@ -55,24 +63,26 @@ _.each(keys, function(key){ %>
                     
                         <% if(nodeinfo.statistic && nodeinfo.statistic.time && nodeinfo.statistic.percent) {%>
 
-                            <span><%- nodeinfo.statistic.time.toFixed(0) %>ms, <%- nodeinfo.statistic.percent.toFixed(0) %> %</span>
+                            <span><%- nodeinfo.statistic.time.toFixed(0) %>ms, <%- nodeinfo.statistic.percent.toFixed(0) %> %</span> 
+                            
+                            
 
                         <% } else { %> 
                             
                             <span>&mdash;</span>
 
                         <% } %>
+
+                        <% if(nodeinfo.statistic.date) {%><br><span class="smalllabel"><%- app.reltime(new Date(nodeinfo.statistic.date)) %> (<%- nodeinfo.statistic.allcount %>)</span><% } %>
                         
                     </div>
 
                     <div class="block">
-                        <% if(key == 'nodes') {%>
-                            <% if(nodeinfo.status.difference) {%>
+                            <% if(nodeinfo.status.difference && nodeinfo.status.difference < 0) {%>
 
                                 <span><%- nodeinfo.status.difference %></span>
 
                             <% } %> 
-                        <% } %> 
                         
                     </div>
 

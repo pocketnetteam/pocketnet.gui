@@ -6266,7 +6266,7 @@ Platform = function (app, listofnodes) {
 
             /////////////// REGISTRATION
 
-            requestFreeMoney: function (clbk) {
+            requestFreeMoney: function (clbk, proxyoptions) {
 
                 var a = self.sdk.address.pnet();
 
@@ -6286,7 +6286,7 @@ Platform = function (app, listofnodes) {
                                 captcha: self.sdk.captcha.done
                             }
 
-                            self.app.api.fetchauth('free/registration', prms).then(d => {
+                            self.app.api.fetchauth('free/registration', prms, proxyoptions).then(d => {
                                 if (clbk)
                                         clbk(true)
 
@@ -6787,12 +6787,12 @@ Platform = function (app, listofnodes) {
                 }
 
             },
-            get: function (clbk, refresh) {
+            get: function (clbk, refresh, proxyoptions) {
                 if (refresh) this.current = null;
 
                 self.app.api.fetch('captcha', {
                     captcha: this.done || this.current || null
-                }).then(d => {
+                }, proxyoptions).then(d => {
 
 
                     self.sdk.captcha.current = d.id
@@ -6816,9 +6816,9 @@ Platform = function (app, listofnodes) {
                             }
                             else {
                                 if (clbk)
-                                    lbk(null, err)
+                                clbk(null, err)
                             }
-                        })
+                        }, proxyoptions)
                     }
                     else {
                         if (clbk)
@@ -6833,12 +6833,12 @@ Platform = function (app, listofnodes) {
                
             },
 
-            make: function (text, clbk) {
+            make: function (text, clbk, proxyoptions) {
 
                 self.app.api.fetchauth('makecaptcha', {
                     captcha: this.current || null,
                     text: text
-                }).then(d => {
+                }, proxyoptions).then(d => {
                     self.sdk.captcha.done = d.id
 
                     self.sdk.captcha.save()
@@ -19190,9 +19190,10 @@ Platform = function (app, listofnodes) {
 
                 socket = wss.dummy || (new ReconnectingWebSocket(wss.url));
 
+
                 socket.onmessage = function (message) {
 
-                    message = message.data;
+                    message = message.data ? message.data : message;
 
                     var jm = message;
 
@@ -19207,7 +19208,18 @@ Platform = function (app, listofnodes) {
 
                         if (jm.type == 'changenode'){
 
-                            //wss.proxy.changeNode(jm.data.node)
+                            var temp = platform.sdk.node.transactions.temp
+
+                            var t = [];
+
+                            _.each(temp, function(trx, s){
+                                _.each(trx, function(tr){
+                                    t.push(tr)
+                                })
+                            })
+
+                            /*if(!temp.length)
+                                wss.proxy.changeNode(jm.data.node)*/
 
                             return
 
@@ -19856,6 +19868,8 @@ Platform = function (app, listofnodes) {
                         clbk(false)
                 }
             })
+
+            console.log("SEND", message)
 
             self.send(JSON.stringify(message))
         }
@@ -21075,8 +21089,8 @@ Platform = function (app, listofnodes) {
                 setTimeout(function(){
                     self.app.api.changeProxyIfNeed().then(l => {
 
-
                         if(!l){
+
                             var d = self.app.api.get.direct() 
 
                             if (d){

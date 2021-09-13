@@ -216,7 +216,6 @@ Application = function(p)
 					error = 'proxy'
 
 				if (p.apim)
-								
 					error = 'proxymain'
 
 			}
@@ -229,9 +228,7 @@ Application = function(p)
 
 
 			if((error == 'proxy' || error == 'proxymain') && self.platform && !self.platform.online){
-
 				error = 'offline'
-
 			}
 
 			self.app.api.changeProxyIfNeed()
@@ -239,8 +236,6 @@ Application = function(p)
 			if(error && !self.errors.state[error]){
 
 				self.errors.state[error] = true;
-
-				
 
 				_.each(self.errors.clbks, function(c){
 					c(self.errors.state)
@@ -399,7 +394,6 @@ Application = function(p)
 
 		error : function(p){
 			var error = null
-
 
 			if (p.rpc){
 				error = 'node'

@@ -53,7 +53,6 @@ var WSS = function(admins, manage){
                 {
                     node = self.nodeManager.nodesmap[p]
                 }
-
                 
                 auto = false
             }
@@ -317,7 +316,6 @@ var WSS = function(admins, manage){
             var device = message.device;
             var block = message.block || 0;
 
-
             if(!address || !device) return
 
             var user = null
@@ -358,7 +356,20 @@ var WSS = function(admins, manage){
     
                 connectNode(user, user.nodes[node.key]);
                
-            }).catch(e => {})
+            }).catch(e => {
+
+                sendMessage({
+                    msg : 'registererror',
+                    addr : user.addr,
+                    node : message.node
+                }, ws).catch(e => {
+                })
+
+                setTimeout(function(){
+                    ws.close()
+                }, 2000)
+
+            })
 
         }
     }
@@ -502,8 +513,6 @@ var WSS = function(admins, manage){
 
             removeUser : function(p){
 
-
-                console.log("REMOVEING USER", p)
 
                 if(!p.address || !p.device) return
 

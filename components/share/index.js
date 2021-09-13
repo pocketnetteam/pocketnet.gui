@@ -18,6 +18,8 @@ var share = (function(){
 
 		var videoUploadData = {};
 
+		var loadedimages = {}
+		var loadingimages = {}
 
 		var intro = false;
 
@@ -267,7 +269,6 @@ var share = (function(){
 			checkUrlForImage : function(url){
 
 				var ex = ['jpg', 'gif', 'png', 'jpeg',  'webp', 'jfif']
-
 
 				url = url.split("?")[0].toLowerCase();
 
@@ -656,6 +657,42 @@ var share = (function(){
 				currentShare.caption.set(caption);
 			},
 
+			loadimage : function(url, callback){
+				var xhr = new XMLHttpRequest();
+				xhr.onload = function() {
+					var reader = new FileReader();
+					reader.onloadend = function() {
+						callback(reader.result);
+					}
+					reader.readAsDataURL(xhr.response);
+				};
+				xhr.open('GET', url);
+				xhr.responseType = 'blob';
+				xhr.send();
+				
+			},
+
+			loadimagefromlink : function(url, clbk){
+
+				if (loadingimages[url]){
+					return
+				}
+
+				if (loadedimages[url]){
+					if(clbk) clbk(loadedimages[url])
+				}
+
+				else{
+					loadingimages[url] = true
+					actions.loadimage(url, function(b){
+						loadedimages[url] = b
+						loadingimages[url] = false
+
+						if(clbk) clbk(loadedimages[url])
+					})
+				}
+			},
+
 			linksFromText : function(text){
 
 
@@ -671,16 +708,19 @@ var share = (function(){
 						_.each(matches, function(url){
 							if(actions.checkUrlForImage(url)){
 
-								if (currentShare.images.v.indexOf(url) == -1){
+								/*if (currentShare.images.v.indexOf(url) == -1){
 									currentShare.images.set(url)
 
 									renders['images']()
-								}
+								}*/
+
+
 
 							}
 							else
 							{
 								if(currentShare.url.v) return;
+
 								currentShare.url.set(url)
 
 								renders['url']()
@@ -2349,7 +2389,8 @@ var share = (function(){
 			
 			init : function(p){
 
-				
+				loadedimages = {}
+				loadingimages = {}
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
