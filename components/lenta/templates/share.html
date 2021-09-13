@@ -137,7 +137,7 @@ var metadisplay = function(){ %>
 
 		<% if(c) {
 
-			c = filterXSS(clearScripts((findAndReplaceLink(c, true))))
+			c = filterXSS(clearScripts((findAndReplaceLink(c))))
 		%>
 			<div class="paddingWrapper hideOnFullVideo">
 				<div class="sharecaption canmark">
