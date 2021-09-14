@@ -12,11 +12,12 @@ var staking = (function(){
 
 		var currency = 'USD',
 			// exchange = 'mercatox'
-			exchange = 'bilaxy'
+			exchange = 'digifinex'
 
 		var market_keys = {
 			'mercatox' : 'last_price',
-			'bilaxy' : 'close'
+			'bilaxy' : 'close',
+			'digifinex' : 'last'
 		}
 
 		var charts = {}

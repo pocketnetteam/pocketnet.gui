@@ -1,0 +1,49 @@
+<div class="slideWrapper buypkoin">
+
+	<div class="subcaptionWrapperTableCnt">
+		<div class="subcaptionWrapperTable table">
+
+			<div class="_stepback"></div>
+
+			<div class="subcaption">
+				<span>Buy Pocketcoin (PKOIN)</span>
+			</div>
+
+			<div class="_subcaptionlevel">
+				<span></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="action">
+
+		<div class="row flx">
+			<% _.each(coins, function(coin){ %>
+                
+                <div class="coin">
+                    <div class="clogo">
+                        <img src="./img/coins/<%-coin.image%>">
+                    </div>
+                    <div class="label">
+                        <%- coin.code %>
+                    </div>
+                </div>
+                
+            <% }) %>
+		</div>
+
+		<div class="row table">
+		
+
+			<div class="reciever">
+                <a href="https://pkoin.net/?address=<%-a.address || ''%>">
+                    <button class="button"><i class="fas fa-chevron-circle-right"></i> Buy</button>
+                </a>
+			</div>
+		</div>
+
+	
+		
+	</div>
+
+</div>

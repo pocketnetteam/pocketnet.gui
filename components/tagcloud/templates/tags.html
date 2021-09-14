@@ -1,7 +1,7 @@
 <div class="ta">
     <% _.each(tags, function(tag, i){ %>
 
-        <div tag="<%- tag.tag %>" class="tg <% if(tagsmap[tag.tag]) {%> selected <% if(tagsmap[tag.tag].fixed) {%> fixed <% } %> <% } %> <% if(i > 9) {%> hdn <% } %>">
+        <div tag="<%- decodeURIComponent(tag.tag) %>" class="tg <% if(tagsmap[tag.tag]) {%> selected <% if(tagsmap[tag.tag].fixed) {%> fixed <% } %> <% } %> <% if(i > 9) {%> hdn <% } %>">
 
             
                 <div class="tag">
@@ -13,7 +13,7 @@
                         </div>
 
                         <div class="tagvalue tagcheckgl">
-                            <span><%- tag.tag %><% if(tag.count) {%>, <%- compressedNumber(tag.count) %><%}%></span>
+                            <span><%- decodeURIComponent(tag.tag) %><% if(tag.count) {%>,&nbsp;<%- compressedNumber(tag.count) %><%}%></span>
                         </div>
 
                         <div class="tagcheck tagcheckgl">

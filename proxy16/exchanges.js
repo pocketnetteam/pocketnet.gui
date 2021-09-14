@@ -43,7 +43,8 @@ var Exchanges = function(){
     var apis = {
         'mercatoxPrices' : 'https://mercatox.com/api/public/v1/ticker',
         'bilaxy' : 'https://newapi.bilaxy.com/v1/ticker/24hr',
-        'bitforex' : 'https://www.bitforex.com/server/market.act?cmd=searchTickers&type=all'
+        'bitforex' : 'https://www.bitforex.com/server/market.act?cmd=searchTickers&type=all',
+        'digifinex' : 'https://openapi.digifinex.vip/v3/ticker'
     }
 
     var followInterval = null
@@ -70,6 +71,26 @@ var Exchanges = function(){
                 
                 }).catch(e => {
 
+
+                    return Promise.reject('notfound')
+                })
+            },
+
+            digifinex : function(){
+                return axios.get(apis.digifinex).then(function(response) {
+
+                    var converted = {}
+                    
+                    _.each(f.deep(response, 'data.ticker') || [], function(c){
+                        if (c.symbol && c.symbol.toUpperCase)
+                            converted[c.symbol.toUpperCase()] = c
+                    })
+
+                    return f.getPkoinPrice(converted, 'last')
+
+                }).catch(e => {
+
+                    //console.log('bilaxy error', e)
 
                     return Promise.reject('notfound')
                 })
