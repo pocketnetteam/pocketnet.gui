@@ -1037,18 +1037,20 @@ var author = (function(){
 
 		var initEvents = function(){
 
+			var user = self.app.user
+
+			var my = (user.address.value && author.address == user.address.value)
 
 			var src = deep(author, 'data.image')
-			console.log('src', src);
 
-			if (!src){
+			if (!src && my){
 
 
-				el.usericon.addClass('active')
+				/*el.usericon.addClass('active')
 
 				self.app.platform.api.plissing({
 					el : el.usericon,
-				})
+				})*/
 	
 				el.usericon.on('click', function(){
 					self.app.nav.api.load({

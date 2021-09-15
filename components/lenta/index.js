@@ -3701,7 +3701,7 @@ var lenta = (function(){
 
 				}
 
-				if(!essenseData.notscrollloading){
+				if(!essenseData.notscrollloading && recommended != 'saved'){
 
 					//el.w.on('scroll', events.sharesInview);
 

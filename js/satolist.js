@@ -13328,7 +13328,7 @@ Platform = function (app, listofnodes) {
                                     self.sdk.registrations.add(addr, 5)
                                     
 
-                                    platform.matrixchat.update()
+                                    app.platform.matrixchat.update()
 
                                     var cm = deep(app, 'modules.menu.module.restart')
                                     if (cm) cm()
@@ -18940,12 +18940,11 @@ Platform = function (app, listofnodes) {
 
                         if (regs == 5) {
 
-                            self.sdk.registrations.add(addr, 6)
+                            app.platform.sdk.registrations.add(addr, 6)
 
                             platform.matrixchat.update()
                         }
                     }
-                    
 
                     ////////
 
