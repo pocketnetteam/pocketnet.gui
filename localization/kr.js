@@ -824,4 +824,6 @@ ____loclib.downloadVideo = "비디오 다운로드";
 ____loclib.selectQuality = "품질 선택:";
 ____loclib.downloadedVideos = "다운로드한 동영상";
 ____loclib.deleteAllDownloadedVideos = "다운로드한 모든 동영상 삭제";
+____loclib.deleteVideoDialog = "이 동영상을 삭제하시겠습니까?";
+____loclib.deleteAllVideoDialog = "모든 동영상을 삭제하시겠습니까?";
 ____loclib.videosDeleted = "동영상이 삭제되었습니다!";

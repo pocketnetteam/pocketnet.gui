@@ -947,6 +947,8 @@ ____loclib.downloadVideo = "Скачать видео";
 ____loclib.selectQuality = "Выберите качество:";
 ____loclib.downloadedVideos = "Загруженные видео";
 ____loclib.deleteAllDownloadedVideos = "Удалить все загруженные видео";
+____loclib.deleteVideoDialog = "Вы уверены, что хотите удалить это видео?";
+____loclib.deleteAllVideoDialog = "Вы уверены, что хотите удалить все видео?";
 ____loclib.videosDeleted = "Видео удалено!";
 
 ____loclib.enterVideoName = "Введите название видео";

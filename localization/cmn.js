@@ -993,4 +993,6 @@ ____loclib.downloadVideo = "下载视频";
 ____loclib.selectQuality = "选择质量:";
 ____loclib.downloadedVideos = "下载的视频";
 ____loclib.deleteAllDownloadedVideos = "删除所有下载的视频";
+____loclib.deleteVideoDialog = "你确定要删除这个视频吗？";
+____loclib.deleteAllVideoDialog = "你确定你要删除所有的视频吗？";
 ____loclib.videosDeleted = "视频被删除!";

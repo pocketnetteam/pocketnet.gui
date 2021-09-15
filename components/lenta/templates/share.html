@@ -95,7 +95,7 @@ var metadisplay = function(){ %>
 			
 			
 
-			<div class="metapanel <%-share.txid%> invisible">
+			<div class="metapanel <%-share.txid%>">
 				<% if(typeof openapi == 'undefined' || !openapi) {%>
 				<div class="metapanelitem metmenu">
 					<i class="fas fa-ellipsis-h"></i>
@@ -106,28 +106,30 @@ var metadisplay = function(){ %>
 					</div>
 				<% } %>
 
-				<% if(share.itisvideo()) { %>
-					<div class="metapanelitem canDownloadBtn">
-						<div class="downloadBtn <%-share.txid%>">
-							<i class="fas fa-download"></i>
+				<div class="downloadMetapanel invisible">
+					<% if(share.itisvideo()) { %>
+						<div class="metapanelitem canDownloadBtn">
+							<div class="downloadBtn <%-share.txid%>">
+								<i class="fas fa-download"></i>
+							</div>
 						</div>
-					</div>
 
-					<div class="metapanelitem downloadingBtn">
-						<div class="downloadLoader">Downloading...</div>
-					</div>
+						<div class="metapanelitem downloadingBtn">
+							<div class="downloadLoader">Downloading...</div>
+						</div>
 
-					<div class="metapanelitem downloadedBtn">
-						<div class="downloadDone">
-							<i class="fas fa-check-circle"></i>
+						<div class="metapanelitem downloadedBtn">
+							<div class="downloadDone">
+								<i class="fas fa-check-circle"></i>
+							</div>
 						</div>
-					</div>
-					<div class="metapanelitem downloadedBtn">
-						<div class="deleteBtn <%-share.txid%>">
-							<i class="fas fa-trash"></i>
+						<div class="metapanelitem downloadedBtn">
+							<div class="deleteBtn <%-share.txid%>">
+								<i class="fas fa-trash"></i>
+							</div>
 						</div>
-					</div>
-				<% } %>
+					<% } %>
+				</div>
 
 
 			</div>
