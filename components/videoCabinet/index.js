@@ -130,7 +130,7 @@ var videoCabinet = (function () {
               rpc: {
                 fnode: window.testpocketnet
                   ? '157.90.235.121:39091'
-                  : '216.108.231.40:38081',
+                  : '64.235.45.119:38081',
               },
             })
             .then((r) => {

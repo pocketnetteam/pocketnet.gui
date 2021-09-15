@@ -14,7 +14,6 @@ if (typeof _Electron != 'undefined') {
 }
 
 
-
 Platform = function (app, listofnodes) {
 
     var self = this;
@@ -353,7 +352,7 @@ Platform = function (app, listofnodes) {
                     icon: '<i class="fab fa-linux"></i>',
         
                     github: {
-                        name: app.meta.fullname + "Setup.deb",
+                        name: self.app.meta.fullname + "Setup.deb",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
                         page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
                     }
@@ -2261,9 +2260,6 @@ Platform = function (app, listofnodes) {
                 })
             }, 50)
         },
-
-
-       
 
         showmykeyfast: function () {
             app.nav.api.load({
@@ -5034,7 +5030,6 @@ Platform = function (app, listofnodes) {
             }
         },
 
-
         keys : {
             clbks : {
 
@@ -6676,7 +6671,7 @@ Platform = function (app, listofnodes) {
 
             /////////////// REGISTRATION
 
-            requestFreeMoney: function (clbk) {
+            requestFreeMoney: function (clbk, proxyoptions) {
 
                 var a = self.sdk.address.pnet();
 
@@ -6696,7 +6691,7 @@ Platform = function (app, listofnodes) {
                                 captcha: self.sdk.captcha.done
                             }
 
-                            self.app.api.fetchauth('free/registration', prms).then(d => {
+                            self.app.api.fetchauth('free/registration', prms, proxyoptions).then(d => {
                                 if (clbk)
                                         clbk(true)
 
@@ -7197,12 +7192,12 @@ Platform = function (app, listofnodes) {
                 }
 
             },
-            get: function (clbk, refresh) {
+            get: function (clbk, refresh, proxyoptions) {
                 if (refresh) this.current = null;
 
                 self.app.api.fetch('captcha', {
                     captcha: this.done || this.current || null
-                }).then(d => {
+                }, proxyoptions).then(d => {
 
 
                     self.sdk.captcha.current = d.id
@@ -7226,9 +7221,9 @@ Platform = function (app, listofnodes) {
                             }
                             else {
                                 if (clbk)
-                                    lbk(null, err)
+                                clbk(null, err)
                             }
-                        })
+                        }, proxyoptions)
                     }
                     else {
                         if (clbk)
@@ -7243,12 +7238,12 @@ Platform = function (app, listofnodes) {
                
             },
 
-            make: function (text, clbk) {
+            make: function (text, clbk, proxyoptions) {
 
                 self.app.api.fetchauth('makecaptcha', {
                     captcha: this.current || null,
                     text: text
-                }).then(d => {
+                }, proxyoptions).then(d => {
                     self.sdk.captcha.done = d.id
 
                     self.sdk.captcha.save()
@@ -19664,9 +19659,10 @@ Platform = function (app, listofnodes) {
 
                 socket = wss.dummy || (new ReconnectingWebSocket(wss.url));
 
+
                 socket.onmessage = function (message) {
 
-                    message = message.data;
+                    message = message.data ? message.data : message;
 
                     var jm = message;
 
@@ -19681,7 +19677,18 @@ Platform = function (app, listofnodes) {
 
                         if (jm.type == 'changenode'){
 
-                            //wss.proxy.changeNode(jm.data.node)
+                            var temp = platform.sdk.node.transactions.temp
+
+                            var t = [];
+
+                            _.each(temp, function(trx, s){
+                                _.each(trx, function(tr){
+                                    t.push(tr)
+                                })
+                            })
+
+                            /*if(!temp.length)
+                                wss.proxy.changeNode(jm.data.node)*/
 
                             return
 
@@ -20329,6 +20336,8 @@ Platform = function (app, listofnodes) {
                         clbk(false)
                 }
             })
+
+            console.log("SEND", message)
 
             self.send(JSON.stringify(message))
         }
@@ -21546,8 +21555,8 @@ Platform = function (app, listofnodes) {
                 setTimeout(function(){
                     self.app.api.changeProxyIfNeed().then(l => {
 
-
                         if(!l){
+
                             var d = self.app.api.get.direct() 
 
                             if (d){
@@ -22215,15 +22224,31 @@ Platform = function (app, listofnodes) {
         },
 
         connect : function(){
-            if(!self.matrixchat.connectWith) return
+            if(!self.matrixchat.connectWith && !self.matrixchat.joinRoom) return
             if(!self.matrixchat.core) return
 
             self.matrixchat.core.apptochat()
-            self.matrixchat.core.connect(self.matrixchat.connectWith).then(r => {
-                self.matrixchat.connectWith = null
-            }).catch(e => {
-                self.matrixchat.connectWith = null
-            })
+
+
+            if (self.matrixchat.connectWith){
+                return self.matrixchat.core.connect(self.matrixchat.connectWith).then(r => {
+                    self.matrixchat.connectWith = null
+                }).catch(e => {
+                    self.matrixchat.connectWith = null
+                })
+
+                
+            }
+                
+            if (self.matrixchat.joinRoom){
+                return self.matrixchat.core.joinRoom(self.matrixchat.joinRoom).then(r => {
+                    self.matrixchat.joinRoom = null
+                }).catch(e => {
+                    self.matrixchat.joinRoom = null
+                })
+
+                
+            }
         },
 
     }
@@ -22643,6 +22668,7 @@ Platform = function (app, listofnodes) {
                 /////////////
 
                 var w = parameters(eventData.url, true).connect
+   
 
                 self.matrixchat.connectWith = w || null
 
@@ -22667,6 +22693,7 @@ Platform = function (app, listofnodes) {
     self.cordovaSetup()
 
     self.matrixchat.connectWith = parameters().connect
+    self.matrixchat.joinRoom = parameters().publicroom
 
     return self;
 

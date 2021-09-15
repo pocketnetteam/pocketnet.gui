@@ -12,6 +12,17 @@ var filluserfast = (function(){
 
 		
 		var current = null;
+		var regproxy = null
+
+		var getproxyoptions = function(){
+			if(regproxy){
+				return {
+					proxy : regproxy.id
+				}
+			}
+
+			return {}
+		}
 
 		var steps = {
 			settings : {
@@ -66,9 +77,6 @@ var filluserfast = (function(){
 						{
 							self.sdk.captcha.get(function(captcha, error){
 
-								console.log("errorerrorerror", error)
-
-
 								if (error){
 
 									actions.to('network')
@@ -95,7 +103,7 @@ var filluserfast = (function(){
 									clbk()
 								}
 
-							}, true)
+							}, true, getproxyoptions())
 						}
 
 					}, true)
@@ -169,7 +177,7 @@ var filluserfast = (function(){
 									})
 								}
 						
-							}, true)
+							}, getproxyoptions())
 
 						}
 					})
@@ -434,7 +442,7 @@ var filluserfast = (function(){
 							clbk(true)
 					}
 					
-				})	
+				}, getproxyoptions())	
 			},
 
 			check : function(clbk, update){
@@ -1018,7 +1026,22 @@ var filluserfast = (function(){
 					inauth : deep(p, 'settings.essenseData.inauth') || false
 				};
 
-				clbk(data);
+				if (localStorage['regproxy']){
+					regproxy = self.app.api.get.byid(localStorage['regproxy'])
+				}
+
+				self.app.api.get.proxywithwallet().then(r => {
+
+					if(r && !regproxy) regproxy = r
+
+					if (regproxy){
+						localStorage['regproxy'] = regproxy.id
+					}
+
+					console.log('regproxy', regproxy)
+
+					clbk(data);
+				})
 
 			},
 

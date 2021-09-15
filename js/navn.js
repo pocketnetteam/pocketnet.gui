@@ -1044,7 +1044,7 @@ Nav = function(app)
 
 				link.off('click').on('click', function(){
 	
-					var ref = cordova.InAppBrowser.open(href, link.attr('cordovalink') || '_blank');
+					var ref = cordova.InAppBrowser.open(href, link.attr('cordovalink') || '_system');
 
 					/*var scrollremoved = app.scrollRemoved
 

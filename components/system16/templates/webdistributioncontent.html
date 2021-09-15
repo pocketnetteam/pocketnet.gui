@@ -37,7 +37,7 @@
                     <div class="value">
                         
                         <% if(wallets.lastprocess) {%>
-                            <%- new Date(wallets.lastprocess) %>
+                            <%- app.reltime(new Date(wallets.lastprocess)) %>
                         <% } else { %> 
                             &mdash;
                         <% } %>
@@ -60,8 +60,15 @@
                 </div>
 
                 <div class="row">
-                    <div class="label">Last Process Errors:</div>
+                    <div class="label">Last Process Error:</div>
                     <div class="value">
+
+                        <% if(wallets.lastprocesserrorDate) {%>
+                            <%- app.reltime(new Date(wallets.lastprocesserrorDate)) %>
+                        <% } else { %> 
+                            &mdash;
+                        <% } %>
+
                         <% if(wallets.lastprocesserror) {%>
                             <%- wallets.lastprocesserror %>
                         <% } else { %> 

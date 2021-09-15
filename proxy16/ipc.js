@@ -78,7 +78,7 @@ var IPC = function(ipc, wc){
 
 	var handleMessage = function(e, message) {
 		
-		if(!message.action && !message.path) return
+		if(!message.action && !message.path && !message.wss) return
 		if(!message.id) message.id = f.makeid()
 
 		var promise = null
@@ -89,8 +89,12 @@ var IPC = function(ipc, wc){
 		if (message.path)
 			promise = kit.gateway(message)
 
-		if (message.wss)
+		
+
+		if (message.wss){
+			console.log('message', message)
 			promise = wssdummy.recieve(message.data)
+		}
 		
 		if(!promise) return
 		

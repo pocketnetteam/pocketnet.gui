@@ -394,7 +394,6 @@
 			height: 37px;
 			line-height: 35px;
 			padding : 0;
-			margin-top: 10px;
 		}
 
 		.labelWrapper{
@@ -787,6 +786,44 @@
 			
 		}
 	}
+
+	.buypkoin{
+		background: #fff;
+		padding : 3 * @rhythm 0;
+		border-radius: 3px;
+		border-top : 1px solid fade(@color-gray-slight, 30);
+		border-right : 1px solid fade(@color-gray-slight, 30);
+		.shadowSmaller();
+
+		.row{
+			display : flex;
+			flex-wrap : wrap;
+			padding : 0 2 * @rhythm;
+
+			.button{
+				min-width: 160px;
+			}
+
+			>div{
+				padding : @rhythm 2 * @rhythm;
+				text-align: center;
+
+				img{
+					width: 18px;
+					height: 18px;
+				}
+
+				.label{
+					padding : @rhythm 0;
+					font-size: 0.8em;
+					font-weight: 500;
+				}
+
+			}
+		}
+
+	}
+
 	.deposit{
 		border : 0;
 		background: #F8F6F9;
@@ -950,6 +987,8 @@
 				}
 			}
 		}
+
+		
 
 		.deposit{
 			border-radius: 3px;
@@ -2037,6 +2076,27 @@ html.stblack{
 
 		
 
+
+	}
+
+	.buypkoin{
+		padding : @rhythm;
+		
+		.row{
+			padding : 0;
+
+			.button{
+				min-width: 310px;
+			}
+
+			>div{
+				width: 12.5%;
+				padding : @rhythm @rhythm;
+				text-align: center;
+
+
+			}
+		}
 
 	}
 

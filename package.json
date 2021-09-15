@@ -1,8 +1,8 @@
 {
     "name": "pocketnet",
-    "version": "0.4.27",
-    "cordovaversion": "1.1.94",
-    "cordovaversioncode": "10094",
+    "version": "0.4.32",
+    "cordovaversion": "1.1.98",
+    "cordovaversioncode": "10098",
     "description": "Pocketnet desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
     "company": "Pocketnet Community",
@@ -159,7 +159,7 @@
             "artifactName": "${productName}_${platform}_${arch}.${ext}",
             "category": "Network",
             "executableName": "Pocketnet",
-            "description": "${productName} Desktop Browser"
+            "description": "Pocketnet Desktop Browser"
         },
         "win": {
             "target": "nsis",

@@ -21,6 +21,7 @@ var Wallet = function(p){
 
     self.lastprocess = null
     self.lastprocesserror = null
+    self.lastprocesserrorDate = null
 
     self.patterns = {
         ip : function(queueobj, all){
@@ -99,6 +100,7 @@ var Wallet = function(p){
                     console.log("ERROR", e)
 
                     self.lastprocesserror = e
+                    self.lastprocesserrorDate = new Date()
 
                 })
             })
@@ -986,7 +988,13 @@ var Wallet = function(p){
         if(!self.lastprocesserror) return null
 
         try{
-            if(self.lastprocesserror.toString) return self.lastprocesserror.toString()
+            if(self.lastprocesserror.toString) {
+
+                var s = self.lastprocesserror.toString()
+
+                if (s != '[object Object]')
+                    return s
+            }
 
             if(_.isObject(self.lastprocesserror)) return JSON.stringify(self.lastprocesserror)
         }
@@ -1009,6 +1017,7 @@ var Wallet = function(p){
             inited : inited,
             lastprocess : self.lastprocess,
             lastprocesserror : returnerror(),
+            lastprocesserrorDate : self.lastprocesserrorDate,
             processInterval : processInterval ? true : false,
             addresses : {}
         }

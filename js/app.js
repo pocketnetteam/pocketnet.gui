@@ -119,8 +119,8 @@ Application = function(p)
 		imageServer : p.imageServer || 'https://api.imgur.com/3/',
 		imageStorage : 'https://api.imgur.com/3/images/',
 
-		imageServerup1 : p.imageServerup1 || 'https://'+url+':8092/up', // will be part of proxy
-
+		//imageServerup1 : p.imageServerup1 || 'https://'+url+':8092/up', // will be part of proxy
+		imageServerup1 : p.imageServerup1 || 'https://pocketnet.app:8092/up',
 		rtc : p.rtc || 'https://'+url+':9001/',
 		rtcws : p.rtcws || 'wss://pocketnet.app:9090',
 		rtchttp : p.rtchttp || 'https://pocketnet.app:9091',
@@ -216,7 +216,6 @@ Application = function(p)
 					error = 'proxy'
 
 				if (p.apim)
-								
 					error = 'proxymain'
 
 			}
@@ -229,9 +228,7 @@ Application = function(p)
 
 
 			if((error == 'proxy' || error == 'proxymain') && self.platform && !self.platform.online){
-
 				error = 'offline'
-
 			}
 
 			self.app.api.changeProxyIfNeed()
@@ -239,8 +236,6 @@ Application = function(p)
 			if(error && !self.errors.state[error]){
 
 				self.errors.state[error] = true;
-
-				
 
 				_.each(self.errors.clbks, function(c){
 					c(self.errors.state)
@@ -399,7 +394,6 @@ Application = function(p)
 
 		error : function(p){
 			var error = null
-
 
 			if (p.rpc){
 				error = 'node'
@@ -706,6 +700,8 @@ Application = function(p)
 
 			if(typeof p.nav.href == 'function') p.nav.href = p.nav.href()
 
+			console.log('p.nav', p.nav)
+
 			self.nav.init(p.nav);
 			
 		})
@@ -724,15 +720,12 @@ Application = function(p)
 					m.module.authclbk()
 				}
 
-				if (m && m.module.inited && m.module.restart && mobj.reload) {
-
+				if (m && m.module.inited && m.module.restart && (mobj.reload && !mobj.now) ) {
 					m.module.restart();
 				}
 
-
 				if (m && mobj.now) {
-
-					m.module.restart();
+					//m.module.restart();
 
 					return true;
 				}
@@ -749,12 +742,9 @@ Application = function(p)
 
 	self.reloadLight = function(clbk){
 
-		self.user.isState(function(state){	
-
-			self.reloadModules(function(){
-				if (clbk)
-					clbk();
-			})
+		self.reloadModules(function(){
+			if (clbk)
+				clbk();
 		})
 
 	}
@@ -811,9 +801,7 @@ Application = function(p)
 	self.destroyModules = function(){
 		_.each(self.modules, function(module){
 			if (module.module.inited) {
-
 				if (module.module.destroy)
-
 					module.module.destroy();
 			}
 				
@@ -823,9 +811,7 @@ Application = function(p)
 	self.stopModules = function(){
 		_.each(self.modules, function(module){
 
-
 			if (module.module.inited) {
-
 				module.module.stop();
 			}
 				

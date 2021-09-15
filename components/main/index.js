@@ -120,7 +120,6 @@ var main = (function(){
 			backtolenta : function(){
 				actions.backtolentaClear()
 
-				console.log('backtolenta', lastscroll)
 
 				self.app.actions.scroll(lastscroll)
 				//_scrollTop(lastscroll, null, 5)
@@ -301,8 +300,6 @@ var main = (function(){
 
 						},
 						hasshares : function(shares){
-
-							console.log("hasshares", shares)
 
 							if (shares.length <= 2){
 								showmoreby.addClass('hidden')
@@ -535,7 +532,6 @@ var main = (function(){
 						},
 						opensvi : function(id){
 
-							console.log('self.app.lastScrollTop', self.app.lastScrollTop)
 
 							lastscroll = self.app.lastScrollTop
 
@@ -714,19 +710,23 @@ var main = (function(){
 
 			if(!isMobile()){
 
-				el.leftpanel.hcSticky({
-					stickTo: '#main',
-					top : 64,
-					bottom : 122
-				});
+				setTimeout(function(){
+					el.leftpanel.hcSticky({
+						stickTo: '#main',
+						top : 64,
+						bottom : 122
+					});
+	
+					el.panel.hcSticky({
+						stickTo: '#main',
+						top : 76,
+						bottom : 122
+					});
+	
+					hsready = true
+				}, 500)
 
-				el.panel.hcSticky({
-					stickTo: '#main',
-					top : 76,
-					bottom : 122
-				});
-
-				hsready = true
+				
 
 			}
 			else{
@@ -809,7 +809,6 @@ var main = (function(){
 			makeShare()
 
 			makePanel()
-
 
 			if (currentMode == 'common' && !videomain && !searchvalue && !searchtags)
 				renders.topvideos(true)
@@ -992,6 +991,8 @@ var main = (function(){
 			},
 
 			destroy : function(){
+
+				console.log("DEST")
 
 				if(el.c) el.c.html('')
 

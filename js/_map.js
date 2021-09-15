@@ -1249,7 +1249,7 @@ __map =  {
 		reload : true
 	},
 
-	support : {
+	/*support : {
 		uri : "support",
 		href : "support",
 		add : {
@@ -1262,7 +1262,7 @@ __map =  {
 		],
 		anonimus : true,
 		reload : true
-	},
+	},*/
 
 	
 
@@ -1661,8 +1661,7 @@ __map =  {
 		add : {
 			el : 'content'
 		},
-		anonimus : true,
-		
+		anonimus : true
 	},
 
 	author : {

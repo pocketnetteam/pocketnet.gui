@@ -3,6 +3,7 @@
 #tagcloud{
 
     color : @color-gray-mlight;
+    overflow: hidden;
     
     .tcaptionwrapper{
        
@@ -82,6 +83,9 @@
                 padding-left: 0;
 
                 &.tagvalue{
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    max-width: 120px;
                     padding-right: 0;
                     span{
                         font-size: 0.8em;

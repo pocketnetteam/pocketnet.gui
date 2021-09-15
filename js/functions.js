@@ -10202,17 +10202,24 @@
 
 	}
 
-	findAndReplaceLink = function (inputText) {
+	findAndReplaceLink = function (inputText, nottrust) {
 
-
+		console.log('inputText, nottrust', inputText, nottrust)
 
 		if(typeof linkifyHtml != 'undefined'){
 
 			try{
+
+				var s = {
+					cordovalink : '_system'
+				}
+
+				if (nottrust) {
+					s.donottrust = 'true'
+				}
+
 				var l = linkifyHtml(inputText, {
-					attributes : {
-						cordovalink : '_system'
-					}
+					attributes : s
 				})
 		
 				return l
