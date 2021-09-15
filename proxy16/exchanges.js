@@ -238,7 +238,14 @@ var Exchanges = function(){
 
             },
             history : function(){
-                return Promise.resolve(history)
+
+                return f.pretry(function(){
+                    return history.length
+                }, 50, 10000).then(r => {
+                    return Promise.resolve(history)
+                })
+
+                
             }
         }
     }
