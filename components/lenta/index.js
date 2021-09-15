@@ -536,12 +536,24 @@ var lenta = (function(){
 							players[share.txid].id = vel.attr('pid')
 							players[share.txid].shadow = false
 
-							var videoId = (player.embed && player.embed.details && player.embed.details.uuid) ? player.embed.details.uuid : player.localVideoId;
-							if (videoId && self.sdk.local.shares.getVideo(videoId, share.txid) != undefined) {
-								renders.setShareDownload(share.txid, 'downloaded');
-							} else {
-								renders.setShareDownload(share.txid, 'canDownload');
-							}
+							//if((window.cordova || window.electron)){
+								var videoId = (player.embed && player.embed.details && player.embed.details.uuid) ? player.embed.details.uuid : player.localVideoId;
+
+								if (videoId && self.sdk.local.shares.getVideo(videoId, share.txid) != undefined) {
+									renders.setShareDownload(share.txid, 'downloaded');
+								} else {
+									renders.setShareDownload(share.txid, 'canDownload');
+								}
+							//}
+
+							//else{
+								//renders.setShareDownload(share.txid, 'invisible');
+							//}
+
+
+							
+
+							
 
 							actions.setVolume(players[share.txid])
 
@@ -1858,6 +1870,8 @@ var lenta = (function(){
 								tooltip.remove();
 						});
 					});
+				}, {
+					dlg : true
 				});
 			},
 

@@ -2747,7 +2747,9 @@ Platform = function (app, listofnodes) {
 
         tooltip: function (_el, content, clbk, p) {
 
-            if (isMobile()){
+            if(!p) p = {}
+
+            if (isMobile() || p.dlg){
                 return self.api.mobiletooltip(_el, content, clbk, p)
             }
             

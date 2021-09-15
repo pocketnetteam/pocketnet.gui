@@ -70,10 +70,11 @@
         
 
 		.subcaption{
-            font-size: 1.5em;
+            font-size: 1em;
             color : @color-gray;
             text-align: center;
-            font-weight: 100;
+            font-weight: 400;
+            padding-top : 4 * @rhythm;
 
             .bad{
                 font-weight: 700;
@@ -154,7 +155,7 @@
         opacity: 0;
         .transition(0.3s);
         cursor: pointer;
-
+        font-size : 0.9em;
         &.active{
             bottom : 2%;
             display: block;
@@ -180,7 +181,7 @@
     }
 
     .wndcontent{
-        overflow-y: scroll;
+        overflow-y: auto;
     }
     #pkview{
         .abswndwrapper{
@@ -196,6 +197,7 @@
             padding : 4 * @rhythm;
             background: #FAFAFA;
             color : #000;
+            border-radius: 10px;
         }
 
         .work{
