@@ -2814,10 +2814,20 @@ var system16 = (function(){
 
 					var deleteButton = elc.find('#deleteAllDownloadedVideos')
 					deleteButton.on('click', function() {
-						self.app.platform.sdk.local.shares.deleteAll(function() {
-							// All videos deleted
-							deleteButton.html(self.app.localization.e('videosDeleted'));
-							deleteButton.prop('disabled', true);
+						// Ask user for confirmation
+						dialog({
+							html:  self.app.localization.e('deleteAllVideoDialog'),
+							btn1text: self.app.localization.e('dyes'),
+							btn2text: self.app.localization.e('dno'),
+							success: function () {
+								// User wants to delete all videos
+								self.app.platform.sdk.local.shares.deleteAll(function() {
+									// All videos deleted
+									deleteButton.html(self.app.localization.e('videosDeleted'));
+									deleteButton.prop('disabled', true);
+								});
+							},
+							class : 'deleteAllDownloadVideoDialog'
 						});
 					});
 

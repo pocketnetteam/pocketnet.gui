@@ -917,30 +917,33 @@
 							}
 						}
 
-						&.canDownload {
-							.downloadingBtn, .downloadedBtn {
-								display: none;
+						.downloadMetapanel {
+
+							&.canDownload {
+								.downloadingBtn, .downloadedBtn {
+									display: none;
+								}
 							}
-						}
-						&.downloading {
-							.canDownloadBtn, .downloadedBtn {
-								display: none;
+							&.downloading {
+								.canDownloadBtn, .downloadedBtn {
+									display: none;
+								}
 							}
-						}
-						&.downloaded {
-							.canDownloadBtn, .downloadingBtn {
-								display: none;
+							&.downloaded {
+								.canDownloadBtn, .downloadingBtn {
+									display: none;
+								}
+								.deleteBtn {
+									color:  #ff6d6d;
+								}
+								.downloadDone {
+									color: green;
+								}
 							}
-							.deleteBtn {
-								color:  #ff6d6d;
-							}
-							.downloadDone {
-								color: green;
-							}
-						}
-						&.invisible {
-							.canDownloadBtn, .downloadingBtn, .downloadedBtn {
-								display: none;
+							&.invisible {
+								.canDownloadBtn, .downloadingBtn, .downloadedBtn {
+									display: none;
+								}
 							}
 						}
 					}
@@ -3724,5 +3727,15 @@ html.mobile.fullscreen{
 			}
 			
 		}
+	}
+}
+
+.dialog.deleteDownloadVideoDialog .buttons .btn1 {
+	background-color: @color-bad;
+	border-color: @color-bad;
+
+	&:hover {
+		background-color: initial;
+		color: @color-bad;
 	}
 }
