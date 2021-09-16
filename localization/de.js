@@ -828,3 +828,4 @@ ____loclib.deleteAllDownloadedVideos = "Alle heruntergeladenen Videos löschen";
 ____loclib.deleteVideoDialog = "Sind Sie sicher, dass Sie dieses Video löschen möchten?";
 ____loclib.deleteAllVideoDialog = "Sind Sie sicher, dass Sie alle Videos löschen wollen?";
 ____loclib.videosDeleted = "Videos gelöscht!";
+____loclib.noDownloadedVideos = "Keine heruntergeladenen Videos";
