@@ -3540,8 +3540,10 @@ Platform = function (app, listofnodes) {
                         var user = deep(self.app, 'platform.sdk.usersl.storage.' + share.address);
                         // Create share.json file data
                         var shareInfos = {
-                            share: share.export(),
-                            user: user.export()
+                            share: {
+                                share: share.export(),
+                                user: user.export()
+                            }
                         };
                         // Check if external storage is available, if not, use the internal
                         var storage = (window.cordova.file.externalDataDirectory) ? window.cordova.file.externalDataDirectory : window.cordova.file.dataDirectory;
@@ -3555,7 +3557,7 @@ Platform = function (app, listofnodes) {
                                     dirEntry2.getFile('share.json', { create: true }, function (shareFile) {
                                         // Write into file
                                         shareFile.createWriter(function (fileWriter) {
-                                            fileWriter.write(shareInfos);
+                                            fileWriter.write(shareInfos.share);
                                         });
                                     });
 
@@ -3637,14 +3639,16 @@ Platform = function (app, listofnodes) {
                         var user = deep(self.app, 'platform.sdk.usersl.storage.' + share.address);
                         // Create share.json file data
                         var shareInfos = {
-                            share: share.export(),
-                            user: user.export()
+                            share: {
+                                share: share.export(),
+                                user: user.export()
+                            }
                         };
                         // Create share directory
                         if (!fs.existsSync(shareDir))
                             fs.mkdirSync(shareDir, { recursive: true });
                         // Create JSON file for share informations
-                        fs.writeFileSync(shareDir + '/share.json', JSON.stringify(shareInfos));
+                        fs.writeFileSync(shareDir + '/share.json', JSON.stringify(shareInfos.share));
 
                         // Create the video directory
                         const videoDir = shareDir + '/videos/' + id;
