@@ -964,3 +964,4 @@ ____loclib.hideAllButton = "Скрыть";
 
 ____loclib.UniqueUsers = "Уникальные Пользователи";
 ____loclib.ErrorLoadingRates = "Ошибка Загрузки";
+____loclib.noDownloadedVideos = "Нет загруженных видео";

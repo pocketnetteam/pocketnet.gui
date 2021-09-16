@@ -2813,23 +2813,25 @@ var system16 = (function(){
 				function(){
 
 					var deleteButton = elc.find('#deleteAllDownloadedVideos')
-					deleteButton.on('click', function() {
-						// Ask user for confirmation
-						dialog({
-							html:  self.app.localization.e('deleteAllVideoDialog'),
-							btn1text: self.app.localization.e('dyes'),
-							btn2text: self.app.localization.e('dno'),
-							success: function () {
-								// User wants to delete all videos
-								self.app.platform.sdk.local.shares.deleteAll(function() {
-									// All videos deleted
-									deleteButton.html(self.app.localization.e('videosDeleted'));
-									deleteButton.prop('disabled', true);
-								});
-							},
-							class : 'deleteAllDownloadVideoDialog'
+
+					if (deleteButton && deleteButton.on) {
+						deleteButton.on('click', function() {
+							// Ask user for confirmation
+							dialog({
+								html:  self.app.localization.e('deleteAllVideoDialog'),
+								btn1text: self.app.localization.e('dyes'),
+								btn2text: self.app.localization.e('dno'),
+								success: function () {
+									// User wants to delete all videos
+									self.app.platform.sdk.local.shares.deleteAll(function() {
+										// All videos deleted
+										deleteButton.replaceWith('<span>' + self.app.localization.e('noDownloadedVideos') + '</span>');
+									});
+								},
+								class : 'deleteAllDownloadVideoDialog'
+							});
 						});
-					});
+					}
 
 					if (clbk)
 						clbk()

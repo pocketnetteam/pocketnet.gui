@@ -827,3 +827,4 @@ ____loclib.deleteAllDownloadedVideos = "다운로드한 모든 동영상 삭제"
 ____loclib.deleteVideoDialog = "이 동영상을 삭제하시겠습니까?";
 ____loclib.deleteAllVideoDialog = "모든 동영상을 삭제하시겠습니까?";
 ____loclib.videosDeleted = "동영상이 삭제되었습니다!";
+____loclib.noDownloadedVideos = "다운로드한 동영상이 없습니다.";

@@ -1148,6 +1148,7 @@ ____loclib.downloadVideo = "Download video";
 ____loclib.selectQuality = "Select quality:";
 ____loclib.downloadedVideos = "Downloaded videos";
 ____loclib.deleteAllDownloadedVideos = "Delete all downloaded videos";
+____loclib.noDownloadedVideos = "No downloaded videos";
 ____loclib.deleteVideoDialog = "Are you sure you want to delete this video?";
 ____loclib.deleteAllVideoDialog = "Are you sure you want to delete all the videos?";
 ____loclib.videosDeleted = "Videos deleted!";
