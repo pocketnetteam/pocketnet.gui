@@ -287,6 +287,11 @@ function closeNotification() {
 }
 
 function notification(nhtml, p) {
+
+    if (is.macOS()) {
+        return
+    }
+
     const screen = require('electron').screen;
     const mainScreen = screen.getPrimaryDisplay();
 
