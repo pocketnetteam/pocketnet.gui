@@ -21554,6 +21554,7 @@ Platform = function (app, listofnodes) {
 
         initOnlineListener() // /remove for test
 
+
         self.app.api.wait.ready('use', 3000).then(r => {
 
             return new Promise((resolve, reject) => {
@@ -21608,6 +21609,7 @@ Platform = function (app, listofnodes) {
         }).catch(e => {
             console.log("ERROR", e)
         })
+
 
     }
 

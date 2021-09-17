@@ -931,8 +931,10 @@ var Proxy = function (settings, manage, test) {
 							}
 							resolve(waitstatus);
 						}, cachehash);
+					}).then(() => {
+						return nodeManager.waitready()
 					})
-					.then((waitstatus) => {
+					.then(() => {
 						var cached = server.cache.get(method, _.clone(parameters), cachehash);
 
 						if (log) {
@@ -1079,11 +1081,14 @@ var Proxy = function (settings, manage, test) {
 				path: '/nodes/select',
 				action: function ({ fixed }) {
 					return nodeManager
-						.waitbest(3000)
+						.waitbest(10000)
 						.then((r) => {
+
+							console.log("JJJO")
+
 							var node = null;
 
-							if (fixed) {
+							if (fixed && fixed != 'null') {
 								node = nodeManager.select(fixed);
 							}
 
@@ -1104,6 +1109,7 @@ var Proxy = function (settings, manage, test) {
 							});
 						})
 						.catch((e) => {
+							console.log("e", e)
 							return Promise.reject(e);
 						});
 				},

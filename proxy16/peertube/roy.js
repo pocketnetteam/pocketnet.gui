@@ -58,8 +58,6 @@ var Roy = function (parent) {
 
       if (host.split('.').length != 3) return
 
-      console.log("HOST", host)
-
       self.addInstance(host);
     });
   };

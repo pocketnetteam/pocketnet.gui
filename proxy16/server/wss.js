@@ -269,7 +269,6 @@ var WSS = function(admins, manage){
                 str = JSON.stringify(message)
             }
             catch(e){
-                console.log("stringify error", message)
 
                 return
             }
@@ -366,7 +365,8 @@ var WSS = function(admins, manage){
                 })
 
                 setTimeout(function(){
-                    ws.close()
+                    if (ws.close)
+                        ws.close()
                 }, 2000)
 
             })

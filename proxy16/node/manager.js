@@ -415,7 +415,9 @@ var Nodemanager = function(p){
 
     self.waitbest = function(timeout){
         return f.pretry(function(){
+
             return self.selectbest()
+
         }, 50, timeout)
     }
 
@@ -443,9 +445,15 @@ var Nodemanager = function(p){
         
     }
 
+    self.initednodes = function(){
+        return _.filter(self.nodes, function(n){
+            return n.inited
+        })
+    }
+
     self.selectProbability = function(){
 
-        var np = _.map(self.nodes, function(node){
+        var np = _.map(self.initednodes(), function(node){
             return {
                 node : node,
                 probability : node.statistic.probability()
@@ -463,15 +471,15 @@ var Nodemanager = function(p){
 
     self.selectbest = function(){
 
-        var canuse = _.filter(self.nodes, function(node) { return node.export().canuse })
+        var canuse = _.filter(self.initednodes(), function(node) { return node.export().canuse })
 
         var best = _.max(canuse, function(node){
             return node.statistic.rating()
         })
         
         if(!best || !best.statistic.rating()){
-            best = _.find(self.nodes, function(node){
-                return node.stable
+            best = _.find(self.initednodes(), function(node){
+                return true //node.inited /*&& node.stable*/
             })
         }
 
@@ -491,14 +499,13 @@ var Nodemanager = function(p){
     //// ??
     self.select = function(n){
 
-        if(!self.nodes.length){
+        if(!self.initednodes().length){
             return null
         }
 
-        var i = f.rand(1, self.nodes.length) - 1
+        var i = f.rand(1, self.initednodes().length) - 1
 
         if(!n || n == 'auto'){
-
             
             return self.nodes[i]
         }
@@ -507,11 +514,17 @@ var Nodemanager = function(p){
 
     }
 
+    self.waitready = function(){
+        return f.pretry(()=>{
+            return inited && self.initednodes().length
+        })
+    }
+
     self.request = function(method, parameters){
 
-        return f.pretry(()=>{
-            return inited
-        }).then(() => {
+        return self.waitready().then(() => {
+
+            console.log('self.initednodes().length', self.initednodes().length)
    
             var node = self.selectbest()
     

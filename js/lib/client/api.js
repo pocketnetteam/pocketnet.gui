@@ -511,6 +511,8 @@ var Proxy16 = function(meta, app, api){
 
         }
 
+        //return Promise.resolve()
+
         return self.refreshNodes()
     }
 
