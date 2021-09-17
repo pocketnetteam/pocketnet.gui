@@ -28,7 +28,7 @@ var toppanel = (function(){
 					links.video = "index?video=1"
 				}
 
-				if ((isMobile() && window.cordova) || (typeof _Electron != 'undefined' && window.electron)) {
+				if ((isMobile() && window.cordova)/* || (typeof _Electron != 'undefined' && window.electron)*/) {
 					links.saved = "index?r=saved"
 				}
 

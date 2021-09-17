@@ -538,7 +538,7 @@ var lenta = (function(){
 
 							self.app.user.isState(function(state){
 
-								if(state && (window.cordova || window.electron)){
+								if(state && (window.cordova/* || window.electron*/)){
 									var videoId = (player.embed && player.embed.details && player.embed.details.uuid) ? player.embed.details.uuid : player.localVideoId;
 
 									if (videoId && self.sdk.local.shares.getVideo(videoId, share.txid) != undefined) {
