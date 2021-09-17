@@ -844,6 +844,8 @@ var main = (function(){
 
 			parametersHandler : function(clbk){
 
+				console.log('parametersHandler')
+
 				var ncurrentMode = currentMode
 
 				localStorage['lentakey'] = parameters().r || 'index'
@@ -889,13 +891,13 @@ var main = (function(){
 
 					if(!parameters().v){
 						actions.backtolenta()
-						makePanel()
+						//makePanel()
 					}
 				}
 				else{
 					el.c.removeClass('videomain')
 					actions.backtolentaClear()
-					makePanel()
+					//makePanel()
 				}
 				
 				if (lenta) {
@@ -906,7 +908,6 @@ var main = (function(){
 				renders.lentawithsearch()
 
 				renders.leftpanel()
-
 
 				makeShare()
 

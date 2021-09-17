@@ -1331,8 +1331,6 @@
 
 			}
 
-			console.log('p', p)
-
 			if(p.clbk) p.clbk($el, self);
 
 			if(removescroll)
@@ -3651,10 +3649,6 @@
 						{
 							__el.val(label)
 						}
-
-						console.log('value', value, label)
-
-						
 
 						if (parameter.type == 'valuesmultibig'){							
 
@@ -6146,8 +6140,6 @@
 
 	inView = function(els, p){
 
-		console.log('inView', els.length)
-
 		var st = 0,
 			sh = 0;
 
@@ -6799,8 +6791,6 @@
 						
 						if (mainDirection){
 
-							console.log('_direction == mainDirection', _direction, mainDirection)
-							
 
 							if(phase == 'end' && mainDirection.clbk && _direction == mainDirection.i){
 
@@ -6874,7 +6864,6 @@
 
 		var applyDirection = function(direction, v){
 			if (direction.positionclbk){
-				console.log("positionclbk", v)
 				needclear = true
 				direction.positionclbk(v)
 			}
@@ -6883,8 +6872,6 @@
 		self.clear = function(){
 
 			if (needclear){
-
-				console.log("CLEARED")
 
 				p.el.css({transform: ""});
 				p.el.css({transition: ""});
@@ -7161,7 +7148,6 @@
 
 	Caption = function (p) {
 
-		console.log("CaptionCaptionCaptionCaptionCaptionCaptionCaptionCaption")
 		
 		var container = p.container,
 			caption = p.caption,
@@ -8147,7 +8133,6 @@
 		el.after(h);
 	}
 	html = function(el, h){
-		//console.log("E", el)
 		el.html(h);
 	}
 	append = function(el, h){
@@ -10203,8 +10188,6 @@
 	}
 
 	findAndReplaceLink = function (inputText, nottrust) {
-
-		console.log('inputText, nottrust', inputText, nottrust)
 
 		if(typeof linkifyHtml != 'undefined'){
 

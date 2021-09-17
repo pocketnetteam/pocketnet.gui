@@ -6,6 +6,8 @@ var f = require('./functions');
 var Exchanges = function(){
     var self = this
 
+    var hasdata = false
+
     var history = {
         prices : {}
     }
@@ -191,6 +193,8 @@ var Exchanges = function(){
 
                     history.prices[i] = f.lastelements(history.prices[i], 500)
 
+                    hasdata = true
+
                     return Promise.resolve()
 
                 }).catch(e => {
@@ -240,7 +244,7 @@ var Exchanges = function(){
             history : function(){
 
                 return f.pretry(function(){
-                    return history.length
+                    return hasdata
                 }, 50, 10000).then(r => {
                     return Promise.resolve(history)
                 })
