@@ -932,7 +932,7 @@ var Proxy = function (settings, manage, test) {
 							resolve(waitstatus);
 						}, cachehash);
 					}).then(() => {
-						return nodeManager.waitready()
+						return nodeManager.waitready() || (options.locally && options.meta)
 					})
 					.then(() => {
 						var cached = server.cache.get(method, _.clone(parameters), cachehash);
@@ -958,7 +958,6 @@ var Proxy = function (settings, manage, test) {
 						if (options.node) {
 							node = nodeManager.nodesmap[options.node];
 						}
-
 
 						if (!node || options.auto)
 							node = nodeManager.selectProbability(); //nodeManager.selectbest()
