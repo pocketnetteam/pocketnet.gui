@@ -8,6 +8,8 @@ var Peertube = function (settings) {
   const PEERTUBE_ID = 'peertube://';
   const SLASH = '/';
 
+  const FREE_SPACE_PERC = 0.05;
+
   var roys = {};
 
   var cache = {};
@@ -25,14 +27,14 @@ var Peertube = function (settings) {
     var roy = null;
 
     if (host) {
-      roy = roys[host] ||
+      roy =
+        roys[host] ||
         _.find(roys, function (roy) {
           return roy.find(host);
         });
     }
 
     if (!roy && host) {
-
       roy = self.addroy([host], host, true);
       roy.useall = true;
       roy.auto = true;
@@ -138,9 +140,7 @@ var Peertube = function (settings) {
         .then((waitstatus) => {
           var cached = cache.get(cachekey, cacheparameters, cachehash);
 
-
           if (cached) {
-
             if (cached.error) {
               return Promise.reject({ error: true });
             }
@@ -170,16 +170,21 @@ var Peertube = function (settings) {
           });
         })
         .catch((e) => {
-
           if (e && !e.data) {
             //console.log('E video', e, url);
           }
 
           if (e && e.status == '404') {
-
-            cache.set(cachekey, cacheparameters, {
-              error: true,
-            }, null, 120, cachehash);
+            cache.set(
+              cachekey,
+              cacheparameters,
+              {
+                error: true,
+              },
+              null,
+              120,
+              cachehash,
+            );
           }
 
           return Promise.reject(e);
@@ -241,9 +246,9 @@ var Peertube = function (settings) {
     roys: () => {
       const output = {};
 
-      var _roys = _.filter(roys, function(r){
-        return !r.auto
-      })
+      var _roys = _.filter(roys, function (r) {
+        return !r.auto;
+      });
 
       Object.keys(_roys).map((roy) => {
         _roys[roy].best() ? (output[roy] = _roys[roy].best().host) : null;
@@ -284,8 +289,7 @@ var Peertube = function (settings) {
   };
 
   self.addroy = function (urls, key) {
-
-    if(!urls.length) return
+    if (!urls.length) return;
 
     var roy = new Roy(self);
 
@@ -295,6 +299,8 @@ var Peertube = function (settings) {
 
     return roy;
   };
+
+  self.removeRoy = (key) => delete roys[key];
 
   self.info = function (compact) {
     var info = {};
@@ -306,17 +312,40 @@ var Peertube = function (settings) {
     return info;
   };
 
+  self.updateRoySpace = () => {
+    Promise.all(
+      Object.keys(roys).map((roy) => {
+        return roys[roy].diskSpace().then((royInfo) => {
+          royInfo.map((instaceInfo = {}) => {
+            if (!instaceInfo.data) return;
+
+            const { free, size } = instaceInfo.data.data || {};
+
+            const occupiedPerc = (size - free) / size;
+
+            if (occupiedPerc < FREE_SPACE_PERC) self.removeRoy(roy);
+
+            console.log(Object.keys(roys));
+          });
+        });
+      }),
+    )
+      .then(() => {
+        return f.delay(2000);
+      })
+      .then(() => self.updateRoySpace());
+  };
+
   self.init = function ({ urls, roys }) {
-
     if (roys) {
-
       _.each(roys, function (urls, i) {
         self.addroy(urls, i);
       });
-
     }
 
     if (urls) self.addroy(urls, 'default');
+
+    self.updateRoySpace();
 
     return Promise.resolve();
   };

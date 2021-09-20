@@ -13,6 +13,7 @@ var instance = function (host, Roy) {
   var k = 1000;
 
   var performanceBenchmarks = [];
+  var spaceBenchmarks = [];
 
   var videosinfo = {};
 
@@ -22,6 +23,7 @@ var instance = function (host, Roy) {
       return '/api/v1/videos/' + id;
     },
     performance: '/api/v1/server/stats',
+    diskSpace: '/api/v1/server/space',
     channelVideos: ({ account }) => `/api/v1/accounts/${account}/videos`,
   };
 
@@ -74,6 +76,25 @@ var instance = function (host, Roy) {
       .catch(() => Promise.resolve());
   };
 
+  var spaceRequest = () => {
+    if (spaceBenchmarks.length > 300) {
+      logs.splice(0, 300);
+    }
+
+    if (!inited) {
+      return Promise.resolve();
+    }
+
+    return self
+      .request('diskSpace')
+      .then((data) => spaceBenchmarks.push(data))
+      .then(() => f.delay(Roy.parent.statsInterval()))
+      .then(() => {
+        return spaceRequest();
+      })
+      .catch(() => Promise.resolve());
+  };
+
   self.inited = function () {
     return inited;
   };
@@ -106,7 +127,6 @@ var instance = function (host, Roy) {
         });
       })
       .catch((error) => {
-
         logs.push({
           url,
           status: ((error || {}).response || {}).status || 500,
@@ -168,7 +188,8 @@ var instance = function (host, Roy) {
   self.init = function () {
     inited = true;
 
-    statsRequest().catch((e) => {});
+    statsRequest().catch(() => {});
+    spaceRequest().catch(() => {});
   };
 
   self.export = function () {
@@ -182,7 +203,16 @@ var instance = function (host, Roy) {
   };
 
   self.performance = () => ({
-    data: performanceBenchmarks.length ? performanceBenchmarks[performanceBenchmarks.length - 1] : null,
+    data: performanceBenchmarks.length
+      ? performanceBenchmarks[performanceBenchmarks.length - 1]
+      : null,
+    host: self.host,
+  });
+
+  self.diskSpace = () => ({
+    data: spaceBenchmarks.length
+      ? spaceBenchmarks[spaceBenchmarks.length - 1]
+      : null,
     host: self.host,
   });
 
