@@ -324,8 +324,6 @@ var Peertube = function (settings) {
             const occupiedPerc = (size - free) / size;
 
             if (occupiedPerc < FREE_SPACE_PERC) self.removeRoy(roy);
-
-            console.log(Object.keys(roys));
           });
         });
       }),
