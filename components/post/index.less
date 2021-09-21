@@ -585,6 +585,36 @@
 						}
 
 					}
+
+					.downloadMetapanel {
+
+						&.canDownload {
+							.downloadingBtn, .downloadedBtn {
+								display: none;
+							}
+						}
+						&.downloading {
+							.canDownloadBtn, .downloadedBtn {
+								display: none;
+							}
+						}
+						&.downloaded {
+							.canDownloadBtn, .downloadingBtn {
+								display: none;
+							}
+							.deleteBtn {
+								color:  #ff6d6d;
+							}
+							.downloadDone {
+								color: green;
+							}
+						}
+						&.invisible {
+							.canDownloadBtn, .downloadingBtn, .downloadedBtn {
+								display: none;
+							}
+						}
+					}
 				}
 			}
 		}

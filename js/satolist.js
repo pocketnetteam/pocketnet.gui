@@ -3542,7 +3542,8 @@ Platform = function (app, listofnodes) {
                         var shareInfos = {
                             share: {
                                 share: share.export(),
-                                user: user.export()
+                                user: user.export(),
+                                timestamp: new Date()
                             }
                         };
                         // Check if external storage is available, if not, use the internal
@@ -3641,7 +3642,8 @@ Platform = function (app, listofnodes) {
                         var shareInfos = {
                             share: {
                                 share: share.export(),
-                                user: user.export()
+                                user: user.export(),
+                                timestamp: new Date()
                             }
                         };
                         // Create share directory
@@ -11006,6 +11008,7 @@ Platform = function (app, listofnodes) {
                             newShare._import(curShare.share.share);
                             newShare.txid = txid;
                             newShare.address = newUser.address;
+                            newShare.downloadedDate = new Date(curShare.share.timestamp);
 
                             loadedShares.push(newShare);
 
@@ -11015,6 +11018,11 @@ Platform = function (app, listofnodes) {
                             self.sdk.node.shares.storage.trx[txid] = newShare;
 
                         }
+                    });
+
+                    // Sort by download date
+                    loadedShares = loadedShares.sort((s1, s2) => {
+                        return s2.downloadedDate.getTime() - s1.downloadedDate.getTime();
                     });
 
                     if (clbk) {
