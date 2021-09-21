@@ -45,7 +45,15 @@ var testnodes = [
 		ws : 6067,
 		name : 'spb.office.1',
 		stable : true
+	},
+	{
+		host : '137.135.25.73',
+		port : 39091,
+		ws : 6067,
+		name : 'tawmaz',
+		stable : true
 	}
+    
 ]
 
 var activenodes = [
