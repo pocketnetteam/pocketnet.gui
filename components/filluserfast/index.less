@@ -2,8 +2,8 @@
 
 #filluserfast{
 	.caption{
-		margin-top: @rhythm;
-		font-size: 3.1em;
+		margin-top: 3 * @rhythm;
+		font-size: 2.1em;
 		font-weight: 100;
 		text-align: center;
 	}
@@ -118,6 +118,7 @@
 				border-radius: 2px;
 
 				&.save{
+					border-radius: 30px;
 					cursor: default;
 					background: #FF3B00;
 					.transition(0.3s);
@@ -160,16 +161,83 @@
 
 		#test{
 			background: #fff;
-			width: 550px;
+			width: 450px;
 			margin : 0 auto;
+			min-height: auto;
+
+			.reqsnoska{
+				display: none;
+			}
 
 			.testPanel{
 				display: none;
 			}
 
+			.userPanel .parameter .pName{
+				/*display: none;*/
+			}
+
+			.pgroupIconWrapper{
+				margin-bottom: 0;
+			}
+			.elContent{
+				display: flex;
+				flex-direction: column-reverse;
+
+				>div{
+					width: 100%;
+					text-align: center;
+					padding : @rhythm!important;
+
+					.note{
+						font-weight: 700;
+					}
+				}
+
+			}
+			.parameter{
+				display: flex;
+				flex-direction: column-reverse;
+
+				>div{
+					width: 100%;
+					text-align: center;
+					padding : @rhythm!important;
+
+					.note{
+						font-weight: 700;
+					}
+				}
+
+				.require{
+					display: none;
+				}
+
+				&.nickname{
+					.pName{
+						display: none;
+					}
+				}
+			}
+
 			.caption{
 				font-size : 1em;
+				display: none;
 			}
+
+			.pgroup{
+				.subcaption{
+					font-size: 1em;
+				}
+
+				&.withoptions{
+					.subcaption{
+						display: none;
+					}
+				}
+			}
+
+		
 
 			.subcaption{
 				text-align: center;
@@ -194,12 +262,42 @@
 				}
 			}
 
+			.parameterMaketWrapper{
+				&[parameter="about"],
+				&[parameter="site"],
+				&[parameter="language"]{
+					display: none;
+				}
+			}
+
+			.userPanel .parameter input, .userPanel .parameter select, .userPanel .parameter textarea{
+				border-radius: 30px;
+				padding-left: 2 * @rhythm;
+			}
+
 			.userPanel{
+				padding-bottom: 0;
+				padding-top : @rhythm;
 
 				.upanelloader{
 					background: fade(#FFF, 90);
 
 					
+
+				}
+
+				.pgroup{
+					margin-bottom: @rhythm;
+				}
+
+				.uploadPhoto{
+					height: 130px;
+				}
+
+				.uploadTable>div.iconWrapper .usericon{
+					width: 130px;
+					height: 130px;
+					line-height: 130px;
 				}
 			}
 			.parameterMaketWrapper[parameter="addresses"]{
@@ -505,10 +603,12 @@ html.stblack{
 				
 	
 				.btn{
+				
 					color : #fff;
 					background: #FF3B00;
 	
 					&.save{
+						
 						background: #FF3B00;
 					}
 	

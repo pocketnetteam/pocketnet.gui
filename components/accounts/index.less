@@ -209,6 +209,41 @@
 	}
 }
 
+.wnd.accountswnd{
+    .wndinner{
+        width : 100%;
+        height: 100%;
+        max-width: 400px;
+		max-height: 650px;
+    }
+
+    .wndcontent{
+        overflow-y: scroll;
+		bottom: 0;
+		top : 0;
+    }
+	
+	#accounts{
+		.addressAddTable,
+		.addressTable{
+			>div{
+
+				&.panel{
+					display: none;
+				}
+			}
+
+
+			
+		}
+
+		.wrk{
+			padding-left: 2 * @rhythm;
+			padding-right: 2 * @rhythm;
+		}
+	}
+}
+
 html.stblack{
 	#accounts{
 		background: @color-block;
@@ -313,6 +348,8 @@ html.stblack{
 	}	
 }
 
+
+
 /*t*/ @media only screen and (max-width: 768px){
 	#accounts{
 		background: #fff;
@@ -389,5 +426,37 @@ html.stblack{
 		}
 
 		
+	}
+
+	.wnd.accountswnd{
+		.wndinner{
+			width : 100%;
+			height: 100%;
+			max-width: 400px;
+			max-height: 650px;
+		}
+
+		.wndinner>div.buttons .button{
+			font-size: 1em;
+			width: 100%;
+		}
+	
+		.wndcontent{
+			padding-top : 4 * @rhythm;
+			
+		}
+		
+		#accounts{
+			padding-top : 0;
+
+			.subcaption{
+				font-weight: 700;
+			}
+			
+			.wrk{
+				padding-left: 2 * @rhythm;
+				padding-right: 2 * @rhythm;
+			}
+		}
 	}
 }

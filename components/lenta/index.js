@@ -122,8 +122,6 @@ var lenta = (function(){
 
 				self.app.platform.sdk.node.shares.getbyid(allids, function(shares){
 
-					
-
 					_.each(shares, function(share){
 						delete share.myVal
 					})
@@ -283,7 +281,6 @@ var lenta = (function(){
 				fullscreenvideoShowed = null
 
 				loading = false
-				ended = false
 				players = {}
 				sharesInview = []
 				scrolling = false
@@ -538,12 +535,22 @@ var lenta = (function(){
 							players[share.txid].id = vel.attr('pid')
 							players[share.txid].shadow = false
 
-							var videoId = (player.embed && player.embed.details && player.embed.details.uuid) ? player.embed.details.uuid : player.localVideoId;
-							if (videoId && self.sdk.local.shares.getVideo(videoId, share.txid) != undefined) {
-								renders.setShareDownload(share.txid, 'downloaded');
-							} else {
-								renders.setShareDownload(share.txid, 'canDownload');
-							}
+							self.app.user.isState(function(state){
+
+								if(state && (window.cordova/* || window.electron*/)){
+									var videoId = (player.embed && player.embed.details && player.embed.details.uuid) ? player.embed.details.uuid : player.localVideoId;
+
+									if (videoId && self.sdk.local.shares.getVideo(videoId, share.txid) != undefined) {
+										renders.setShareDownload(share.txid, 'downloaded');
+									} else {
+										renders.setShareDownload(share.txid, 'canDownload');
+									}
+								}
+
+								else{
+									renders.setShareDownload(share.txid, 'invisible');
+								}
+							})
 
 							actions.setVolume(players[share.txid])
 
@@ -622,7 +629,7 @@ var lenta = (function(){
 
 			openPost : function(id, clbk){
 
-				if(!isMobile()){
+				if(!isMobile() && !isTablet()){
 
 					self.app.user.isState(function(state){
 
@@ -1065,8 +1072,6 @@ var lenta = (function(){
 			},
 
 			like : function(obj, value, clbk){
-
-				
 
 				var upvoteShare = obj.upvote(value);
 
@@ -1610,7 +1615,6 @@ var lenta = (function(){
 							var offsetTop = 0
 
 							offsetTop = isMobile() ? (_el.data('offsetTop') || _el.offset().top) : _el.offset().top
-							console.log(share.txid, offsetTop, _el.data('offsetTop'))
 							_el.data('offsetTop', offsetTop)
 
 							if(st + 3500 > offsetTop){ /// optimize ?
@@ -1629,7 +1633,6 @@ var lenta = (function(){
 				
 				actions.sharesInview(sharesInview, function(invshares, els, clbk){
 
-
 					if(invshares.length && isMobile()){
 						actions.sharesOptimization(invshares[0])
 					}
@@ -1637,9 +1640,8 @@ var lenta = (function(){
 					_.each(invshares, function(s){
 						el.share[s.txid].addClass('vstars')
 					})
-
 					
-					if(clbk)
+					if (clbk)
 						clbk();
 
 				}, function(nvshares){
@@ -1831,6 +1833,7 @@ var lenta = (function(){
 			postscores : function(){
 				var id = $(this).closest('.share').attr('id');
 
+
 				actions.postscores(id)
 			},
 
@@ -1860,93 +1863,67 @@ var lenta = (function(){
 						if (!file || !file.resolution || !file.resolution.id) return;
 						tooltip.find('.label.download' + file.resolution.id).on('click', function() {
 							events.downloadVideoFromUrl(embed.details.uuid, file, embed.details, id);
+							if (tooltip && tooltip.remove)
+								tooltip.remove();
 						});
 					});
+				}, {
+					dlg : true
 				});
 			},
 
 			downloadVideoFromUrl: function(id, video, videoDetails, shareId) {
 				if (!video || !video.fileDownloadUrl) return;
-				var share = self.app.platform.sdk.node.shares.storage.trx[shareId];
-				var user = deep(self.app, 'platform.sdk.usersl.storage.' + share.address);
 				// Mobile
 				if (isMobile() && window.cordova && window.cordova.file) {
-					// Check if external storage is available, if not, use the internal
-					var storage = (window.cordova.file.externalDataDirectory) ? window.cordova.file.externalDataDirectory : window.cordova.file.dataDirectory;
-					// open target file for download
-					window.resolveLocalFileSystemURL(storage, function(dirEntry) {
-						// Create a posts folder
-						dirEntry.getDirectory('posts', { create: true }, function (dirEntry11) {
-							dirEntry11.getDirectory(shareId, { create: true }, function (dirEntry2) {
-								// Create share.json file
-								var shareInfos = {
-									share: share.export(),
-									user: user.export()
-								}
-								// Create JSON file for share informations
-								dirEntry2.getFile('share.json', { create: true }, function (shareFile) {
-									// Write into file
-									shareFile.createWriter(function (fileWriter) {
-										fileWriter.write(shareInfos);
-									});
-								});
-
-
-								dirEntry2.getDirectory('videos', { create: true }, function (dirEntry3) {
-									// Get/create a folder for this video
-									dirEntry3.getDirectory(id, { create: true }, function (dirEntry4) {
-										var infos = {
-											thumbnail: 'https://' + videoDetails.from + videoDetails.thumbnailPath
-										}
-										// Create JSON file for video informations
-										dirEntry4.getFile('info.json', { create: true }, function (infoFile) {
-											// Write into file
-											infoFile.createWriter(function (fileWriter) {
-												fileWriter.write(infos);
-											});
-										});
-										// Download the video
-										dirEntry4.getFile(video.resolution.id + '', { create: true }, function (targetFile) {
-											var downloader = new BackgroundTransfer.BackgroundDownloader();
-											// Create a new download operation.
-											var download = downloader.createDownload(video.fileDownloadUrl, targetFile, "Bastyon: Downloading video");
-											renders.setShareDownload(shareId, 'downloading');
-											// Start the download and persist the promise to be able to cancel the download.
-											app.downloadPromise = download.startAsync().then(function(e) {
-												// Success
-												console.log("success");
-												// Resolve internal URL
-												window.resolveLocalFileSystemURL(targetFile.nativeURL, function(entry) {
-													targetFile.internalURL = entry.toInternalURL();
-													shareInfos.videos = {};
-													shareInfos.videos[id] = { video: targetFile,  infos: infos };
-													self.sdk.local.shares.add(shareId, shareInfos);
-													actions.openPost(shareId, function() {
-														setTimeout(() => {
-															delete el[shareId];
-															renders.setShareDownload(shareId, 'downloaded');
-															events.sharesPreInitVideo();
-															events.videosInview();
-															events.sharesInview();
-															events.resize();
-														}, 200);
-													});
-												});
-											}, function(e) {
-												// Error
-												console.log("error");
-												console.log(e);
-												renders.setShareDownload(shareId, 'canDownload');
-											}, function(e) {
-												// Progress
-												// console.log("progress");
-												// console.log(e);
-											});
-										});
-									});
-								});
-							});
+					renders.setShareDownload(shareId, 'downloading');
+					self.sdk.local.shares.saveVideoCordova(shareId, id, video, videoDetails).then(() => {
+						// Success
+						// Update share video player
+						actions.openPost(shareId, function() {
+							setTimeout(() => {
+								delete el[shareId];
+								renders.setShareDownload(shareId, 'downloaded');
+								events.sharesPreInitVideo();
+								events.videosInview();
+								events.sharesInview();
+								events.resize();
+							}, 200);
 						});
+					}, (err) => {
+						// Error
+						console.log(err);
+						renders.setShareDownload(shareId, 'canDownload');
+					});
+				}
+				// Electron
+				else if (typeof _Electron != 'undefined' && window.electron) {
+					renders.setShareDownload(shareId, 'downloading');
+					self.sdk.local.shares.saveVideoElectron(shareId, id, video, videoDetails).then(() => {
+						// Success
+						// Update share video player
+						delete initedcommentes[shareId];
+						if (players[shareId]) {
+							if (players[shareId].p)
+								players[shareId].p.destroy();
+							delete players[shareId];
+						}
+						var share = self.app.platform.sdk.node.shares.storage.trx[shareId];
+						renders.share(share, function() {
+							setTimeout(() => {
+								delete el[shareId];
+								renders.setShareDownload(shareId, 'downloaded');
+								events.sharesPreInitVideo();
+								events.videosInview();
+								events.sharesInview();
+								events.resize();
+							}, 200);
+						}, true);
+
+					}, (err) => {
+						// Error
+						console.log(err);
+						renders.setShareDownload(shareId, 'canDownload');
 					});
 				}
 				// Desktop
@@ -1959,20 +1936,57 @@ var lenta = (function(){
 			},
 
 			deleteVideo : function(){
-				var id = $(this).closest('.share').attr('id');
-				if (!players[id] || !players[id].p || !players[id].p.localVideoId) return;
-				players[id].p.destroy();
-				self.sdk.local.shares.delete(id, function() {
-					actions.openPost(id, function() {
-						setTimeout(() => {
-							delete el[id];
-							renders.setShareDownload(id, 'canDownload');
-							events.sharesPreInitVideo();
-							events.videosInview();
-							events.sharesInview();
-							events.resize();
-						}, 200);
-					});
+				var shareEl = $(this).closest('.share');
+				var id = shareEl.attr('id');
+				if (!players[id] || !players[id].p || !players[id].p.localVideoId)
+					return;
+				// Ask user for confirmation
+				dialog({
+					html:  self.app.localization.e('deleteVideoDialog'),
+					btn1text: self.app.localization.e('dyes'),
+					btn2text: self.app.localization.e('dno'),
+					success: function () {
+						// User wants to delete the video
+						players[id].p.destroy();
+						self.sdk.local.shares.delete(id, function() {
+							// If we are in the Downloaded feed, simply remove the share
+							if (recommended == 'saved') {
+								shareEl.remove();
+								return;
+							}
+							if (isMobile()) {
+								actions.openPost(id, function() {
+									setTimeout(() => {
+										delete el[id];
+										renders.setShareDownload(id, 'canDownload');
+										events.sharesPreInitVideo();
+										events.videosInview();
+										events.sharesInview();
+										events.resize();
+									}, 200);
+								});
+							}
+							else if (typeof _Electron != 'undefined' && window.electron) {
+								var share = self.app.platform.sdk.node.shares.storage.trx[id];
+								// Update share video player
+								delete initedcommentes[id];
+								if (players[id])
+									delete players[id];
+								// Update share video player
+								renders.share(share, function() {
+									setTimeout(() => {
+										delete el[id];
+										renders.setShareDownload(id, 'canDownload');
+										events.sharesPreInitVideo();
+										events.videosInview();
+										events.sharesInview();
+										events.resize();
+									}, 200);
+								}, true);
+							}
+						});
+					},
+					class : 'deleteDownloadVideoDialog'
 				});
 			},
 
@@ -2780,21 +2794,25 @@ var lenta = (function(){
 						if(s.settings.v != "a"){
 
 							var imageswidth = images.width()
-							var el = images.find('.imagesWrapper')
+							/*var el = images.find('.imagesWrapper')
 
 							var imagesWrapperWidth = el.width(),
-								imagesWrapperHeight = el.height();
-
-								console.log(el.height(), el, image.images)
+								imagesWrapperHeight = el.height();*/
 
 							_.each(image.images, function(img, n){
 
+								
+
 								var _img = img.img;
+								var el = $(image.elements[n]).closest('.imagesWrapper');
 
 								var ac = '';
 
-								var _w = imagesWrapperWidth;
-								var _h = imagesWrapperHeight
+								/*var _w = imagesWrapperWidth;
+								var _h = imagesWrapperHeight*/
+
+								var _w = el.width();
+								var _h = el.height()
 
 								if(_img.width > _img.height && (!isMobile() && self.app.width > 768)){
 									ac = 'w2'
@@ -2807,20 +2825,15 @@ var lenta = (function(){
 										h = w * ( _img.height / _img.width) 
 
 										el.height(h);
-										imagesWrapperHeight = h
 									}
 
 									el.width(w);
-									imagesWrapperWidth = w
 								}
 
 								if(_img.height > _img.width || (isMobile() || self.app.width <= 768)){
 									ac = 'h2'
 
-									console.log("_w * (_img.height / _img.width)", _w * (_img.height / _img.width))
-
 									el.height(_w * (_img.height / _img.width))
-									imagesWrapperHeight = _w * (_img.height / _img.width)
 								}
 
 								if(ac){
@@ -3137,7 +3150,7 @@ var lenta = (function(){
 			setShareDownload : function(shareId, action){
 				// Check if we have the HTML elements for this share
 				if (!el[shareId])
-					el[shareId] = el.c.find('.metapanel.' + shareId);
+					el[shareId] = el.c.find('.metapanel.' + shareId + ' .downloadMetapanel');
 				switch (action) {
 					case 'canDownload':
 						console.log('canDownload');
@@ -3333,6 +3346,12 @@ var lenta = (function(){
 
 						}
 
+						else{
+							if (essenseData.hasshares){
+								essenseData.hasshares([])
+							}
+						}
+
 						if (essenseData.afterload){
 							essenseData.afterload(essenseData, shares, error || error2)
 						}
@@ -3397,6 +3416,10 @@ var lenta = (function(){
 								else if(recommended == 'b'){
 									loader = 'getbyidsp'
 									_beginmaterial = essenseData.beginmaterial
+								}
+
+								else if(recommended == 'saved'){
+									
 								}
 
 								else
@@ -3547,7 +3570,7 @@ var lenta = (function(){
 
 		var initEvents = function(){	
 			
-			el.c.on('click', '.wholikesTable', events.postscores)
+			el.c.on('click', '.forstars .count', events.postscores)
 			el.c.on('click', '.stars i', events.like)
 			el.c.on('click', '.complain', events.complain)
 			el.c.on('click', '.imageOpen', events.openGallery)
@@ -3692,7 +3715,7 @@ var lenta = (function(){
 
 				}
 
-				if(!essenseData.notscrollloading){
+				if(!essenseData.notscrollloading && recommended != 'saved'){
 
 					//el.w.on('scroll', events.sharesInview);
 
@@ -3707,6 +3730,14 @@ var lenta = (function(){
 				}	
 				
 			}
+
+			self.app.errors.clbks[mid] = function(){
+				if(el.c.hasClass('networkError')){
+					actions.loadprev()
+				}
+			}
+
+			
 
 			if(!essenseData.openapi && !essenseData.second){
 
@@ -4218,6 +4249,8 @@ var lenta = (function(){
 
 			destroy : function(){
 
+				console.log("DESTROY")
+
 				/*if (essenseData.window){
 					essenseData.window.off('scroll')
 				}*/
@@ -4225,6 +4258,7 @@ var lenta = (function(){
 				delete self.app.events.delayedscroll['videos' + mid]
 				delete self.app.events.delayedscroll['videosinit' + mid]
 				delete self.app.events.scroll['loadmore' + mid]
+				delete self.app.errors.clbks[mid]
 
 				if (el.shares && isotopeinited){
 					el.shares.isotope('destroy')

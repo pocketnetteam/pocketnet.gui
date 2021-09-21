@@ -416,7 +416,7 @@ var system16 = (function(){
 
 			ticksettings : function(settings, s, changed){
 
-
+				console.log("THST12, changed")
 				if (changed){
 					system = settings
 				}
@@ -446,8 +446,9 @@ var system16 = (function(){
 
 			tick : function(state){
 
-				info = state
+				console.log("THST1")
 
+				info = state
 
 				var laststate = stats[stats.length - 1]
 
@@ -765,6 +766,8 @@ var system16 = (function(){
 
 			node : {
 				test : function(node){
+
+					return
 
 					var scenarios = [{
 						name : "Pageload",
@@ -2145,6 +2148,8 @@ var system16 = (function(){
 	
 						renders.servercontent(p.el)
 						renders.nodescontent(p.el)
+						if ((isMobile() && typeof cordova != 'undefined') || (typeof _Electron != 'undefined' && window.electron))
+							renders.downloadedvideoscontent(el.c);
 						renders.peertubecontent(el.c)
 						renders.nodecontent(p.el)
 						renders.bots(p.el)
@@ -2793,6 +2798,49 @@ var system16 = (function(){
 				
 			},
 
+			downloadedvideoscontent : function(elc, clbk){
+
+				if(!info){
+					if(clbk) clbk()
+
+					return
+				}
+
+				self.shell({
+					inner : html,
+					name : 'downloadedvideoscontent',
+
+					el : elc.find('.downloadedvideoscontentWrapper')
+
+				},
+				function(){
+
+					var deleteButton = elc.find('#deleteAllDownloadedVideos')
+
+					if (deleteButton && deleteButton.on) {
+						deleteButton.on('click', function() {
+							// Ask user for confirmation
+							dialog({
+								html:  self.app.localization.e('deleteAllVideoDialog'),
+								btn1text: self.app.localization.e('dyes'),
+								btn2text: self.app.localization.e('dno'),
+								success: function () {
+									// User wants to delete all videos
+									self.app.platform.sdk.local.shares.deleteAll(function() {
+										// All videos deleted
+										deleteButton.replaceWith('<span>' + self.app.localization.e('noDownloadedVideos') + '</span>');
+									});
+								},
+								class : 'deleteAllDownloadVideoDialog'
+							});
+						});
+					}
+
+					if (clbk)
+						clbk()
+				})
+			},
+
 
 			peertubecontent : function(elc, clbk){
 
@@ -3010,7 +3058,7 @@ var system16 = (function(){
 
 					p.el.find('.name').on('click', function(){
 
-						return
+						
 
 						var key = $(this).closest('.node').attr('node')
 

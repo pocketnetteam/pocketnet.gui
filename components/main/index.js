@@ -8,7 +8,7 @@ var main = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el;
+		var el = {};
 
 		var roller = null, lenta = null, share = null, panel,leftpanel, uptimer = null;
 
@@ -55,8 +55,8 @@ var main = (function(){
 
 					lastStickyRefresh = ns
 
-					el.panel.hcSticky('refresh');
-					el.leftpanel.hcSticky('refresh');
+					//el.panel.hcSticky('refresh');
+					//el.leftpanel.hcSticky('refresh');
 
 					/*setTimeout(function(){
 						if(el.panel) el.panel.hcSticky('refresh');
@@ -120,7 +120,6 @@ var main = (function(){
 			backtolenta : function(){
 				actions.backtolentaClear()
 
-				console.log('backtolenta', lastscroll)
 
 				self.app.actions.scroll(lastscroll)
 				//_scrollTop(lastscroll, null, 5)
@@ -275,6 +274,7 @@ var main = (function(){
 				if (show){
 
 					showmoreby.removeClass('hidden')
+					
 					self.app.platform.papi.horizontalLenta(showmoreby, function (e,p) {
 
 						external = p
@@ -300,8 +300,6 @@ var main = (function(){
 
 						},
 						hasshares : function(shares){
-
-							console.log("hasshares", shares)
 
 							if (shares.length <= 2){
 								showmoreby.addClass('hidden')
@@ -534,7 +532,6 @@ var main = (function(){
 						},
 						opensvi : function(id){
 
-							console.log('self.app.lastScrollTop', self.app.lastScrollTop)
 
 							lastscroll = self.app.lastScrollTop
 
@@ -713,19 +710,23 @@ var main = (function(){
 
 			if(!isMobile()){
 
-				el.leftpanel.hcSticky({
-					stickTo: '#main',
-					top : 64,
-					bottom : 122
-				});
+				setTimeout(function(){
+					el.leftpanel.hcSticky({
+						stickTo: '#main',
+						top : 64,
+						bottom : 122
+					});
+	
+					el.panel.hcSticky({
+						stickTo: '#main',
+						top : 76,
+						bottom : 122
+					});
+	
+					hsready = true
+				}, 500)
 
-				el.panel.hcSticky({
-					stickTo: '#main',
-					top : 76,
-					bottom : 122
-				});
-
-				hsready = true
+				
 
 			}
 			else{
@@ -809,7 +810,6 @@ var main = (function(){
 
 			makePanel()
 
-
 			if (currentMode == 'common' && !videomain && !searchvalue && !searchtags)
 				renders.topvideos(true)
 			else{
@@ -843,6 +843,8 @@ var main = (function(){
 		
 
 			parametersHandler : function(clbk){
+
+				console.log('parametersHandler')
 
 				var ncurrentMode = currentMode
 
@@ -889,13 +891,13 @@ var main = (function(){
 
 					if(!parameters().v){
 						actions.backtolenta()
-						makePanel()
+						//makePanel()
 					}
 				}
 				else{
 					el.c.removeClass('videomain')
 					actions.backtolentaClear()
-					makePanel()
+					//makePanel()
 				}
 				
 				if (lenta) {
@@ -906,7 +908,6 @@ var main = (function(){
 				renders.lentawithsearch()
 
 				renders.leftpanel()
-
 
 				makeShare()
 
@@ -991,6 +992,8 @@ var main = (function(){
 			},
 
 			destroy : function(){
+
+				console.log("DEST")
 
 				if(el.c) el.c.html('')
 

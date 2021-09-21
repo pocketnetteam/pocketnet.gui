@@ -13,98 +13,114 @@ var Cache = function(p){
     if (!p.dontCache)
     {
         ckeys = {
+
+            // node +
             getlastcomments : {
                 time : 960,
                 block : 0
             },
 
+            // node +
             getcomments : {
                 time : 360,
                 block : 0
             },
 
+            // node + , add block
             getuseraddress : {
                 time : 82000
             },
 
+            // node +
             search: {
                 time : 6000
             },
-        
+            
+            // node +
             gettags : {
                 time : 82000
             },
 
+            // node -
             getnodeinfo : {
                 time : 160,
                 block : 0
             },
 
+            // node +
             getrawtransactionwithmessagebyid: {
                 time : 460,
                 block : 0
             },
-        
+            
+            // node +
             getrawtransactionwithmessage: {
                 time : 460,
                 block : 0
             },
 
+            // ?
             getrawtransaction: {
                 time : 460,
                 block : 0
             },
+
+            // node +
             getusercontents: {
                 time : 760,
             },
+
+            // node +
             gethierarchicalstrip: {
                 time : 460,
                 block : 0
-            },
+            },  
 
+            // node +
             gethotposts: {
                 time : 460,
                 block : 0
             },
-            
+
+            // node +
             getuserprofile: {
                 time : 560,
                 block : 0,
-
-                /*smart : {
-                    idin : '0',
-                    idout : 'address',
-                    type : 'collect'
-                }*/
             },
 
             getuserstate : {
                 time : 560,
                 block : 0
             },
-            
+
+            // node +
             getpagescores: {
                 time : 460,
                 block : 0
             },
             
+            // node +
             getcontents: {
                 time : 82000,
             },
 
+            // node +
             getmissedinfo: {
                 time : 160,
                 block : 0,
             },
 
+            // node -
             peertubevideo: {
                 time : 300,
             },
 
+            // node ?
             estimatesmartfee: {
-                time : 1600
+                time : 1600 //
             },
 
+            // node +
             getcontentsstatistic: {
                 time : 3600
             },
@@ -198,6 +214,9 @@ var Cache = function(p){
 
         }
     }
+
+
+    /// fail
 
     self.getsmart = function(key, params){
 

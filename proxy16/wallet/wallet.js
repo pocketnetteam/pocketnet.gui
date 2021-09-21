@@ -21,6 +21,7 @@ var Wallet = function(p){
 
     self.lastprocess = null
     self.lastprocesserror = null
+    self.lastprocesserrorDate = null
 
     self.patterns = {
         ip : function(queueobj, all){
@@ -99,6 +100,7 @@ var Wallet = function(p){
                     console.log("ERROR", e)
 
                     self.lastprocesserror = e
+                    self.lastprocesserrorDate = new Date()
 
                 })
             })
@@ -504,6 +506,8 @@ var Wallet = function(p){
 
             if(!addresses[key]) return Promise.reject('key')
 
+            var added = 0
+
             var queue = _.filter(addresses[key].queue, function(object, l){
 
                 if(!self.pocketnet.kit.address.validation(object.address)) {
@@ -512,7 +516,12 @@ var Wallet = function(p){
 
                 if(!self.patterns.validAddress(object.address)) return false
 
-                return !object.executing && l < 50
+                if(!object.executing && added < 50){
+                    added++
+
+                    return true
+                }
+
             })
 
             if(!queue.length) return Promise.resolve()
@@ -986,7 +995,13 @@ var Wallet = function(p){
         if(!self.lastprocesserror) return null
 
         try{
-            if(self.lastprocesserror.toString) return self.lastprocesserror.toString()
+            if(self.lastprocesserror.toString) {
+
+                var s = self.lastprocesserror.toString()
+
+                if (s != '[object Object]')
+                    return s
+            }
 
             if(_.isObject(self.lastprocesserror)) return JSON.stringify(self.lastprocesserror)
         }
@@ -1009,6 +1024,7 @@ var Wallet = function(p){
             inited : inited,
             lastprocess : self.lastprocess,
             lastprocesserror : returnerror(),
+            lastprocesserrorDate : self.lastprocesserrorDate,
             processInterval : processInterval ? true : false,
             addresses : {}
         }
@@ -1019,6 +1035,9 @@ var Wallet = function(p){
                 unspents : r.unspents ? r.unspents.length : 0,
                 balance : self.unspents.total(r.unspents),
                 queue : r.queue.length,
+                queueDetails : _.map(r.queue, function(q){
+                    return {address : q.address, executing : q.executing}
+                }),
                 ready : r.keys ? true : false,
                 address : r.address || null,
                 check : r.check

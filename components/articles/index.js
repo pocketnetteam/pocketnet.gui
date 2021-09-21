@@ -242,7 +242,7 @@ var articles = (function(){
 			},
 
 			wnd : {
-				class : "allscreen a100 article "
+				class : "allscreen a100 articles"
 			}
 		}
 	};

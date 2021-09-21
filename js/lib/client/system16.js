@@ -74,7 +74,7 @@ var System16 = function(app, proxy, direct){
 
     var tick = function(e, d){
 
-        var message = d.data
+        var message = d.data || d
 
         if(!message) return
         
@@ -250,9 +250,11 @@ var System16 = function(app, proxy, direct){
     self.wsssend = function(data){
 
         var pack = {
-            wssdummy : true,
+            wss : true,
             data : data
         }
+
+        console.log("SEND PACK", pack)
 
         return request(pack)
     }

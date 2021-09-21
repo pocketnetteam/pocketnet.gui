@@ -44,57 +44,60 @@ var WSS = function(admins, manage){
             var node = null
             var auto = true
 
-            if (p){
+            return self.nodeManager.waitready().then(r => {
+                if (p){
 
-                if(_.isObject(p)){
-                    node = self.nodeManager.temp(p)
-                }
-                else
-                {
-                    node = self.nodeManager.nodesmap[p]
-                }
-
-                
-                auto = false
-            }
-            else{
-                 // || self.nodeManager.select(0)
-            }
-
-            if(!node){
-
-                return f.pretry(function(){
-                    node = self.nodeManager.selectProbability()
-
-                    if (node)
-                        auto = true
-
-                    return Promise.resolve(node)
-                }, 100, 5000).then(r => {
-
-                    if(node){
-                        return Promise.resolve({
-                            instance : node,
-                            ini : {},
-                            auto : auto,
-                            key : node.wskey
-                        })
+                    if(_.isObject(p)){
+                        node = self.nodeManager.temp(p)
                     }
                     else
                     {
-                        return Promise.reject('empty')
+                        node = self.nodeManager.nodesmap[p]
                     }
-
+                    
+                    auto = false
+                }
+                else{
+                     // || self.nodeManager.select(0)
+                }
+    
+                if(!node){
+    
+                    return f.pretry(function(){
+                        node = self.nodeManager.selectProbability()
+    
+                        if (node)
+                            auto = true
+    
+                        return Promise.resolve(node)
+                    }, 100, 10000).then(r => {
+    
+                        if(node){
+                            return Promise.resolve({
+                                instance : node,
+                                ini : {},
+                                auto : auto,
+                                key : node.wskey
+                            })
+                        }
+                        else
+                        {
+                            return Promise.reject('empty')
+                        }
+    
+                    })
+                    
+                }
+    
+                return Promise.resolve({
+                    instance : node,
+                    ini : {},
+                    auto : auto,
+                    key : node.wskey
                 })
-                
-            }
-
-            return Promise.resolve({
-                instance : node,
-                ini : {},
-                auto : auto,
-                key : node.wskey
             })
+
+            
 
         }
     }
@@ -270,7 +273,6 @@ var WSS = function(admins, manage){
                 str = JSON.stringify(message)
             }
             catch(e){
-                console.log("stringify error", message)
 
                 return
             }
@@ -317,7 +319,6 @@ var WSS = function(admins, manage){
             var device = message.device;
             var block = message.block || 0;
 
-
             if(!address || !device) return
 
             var user = null
@@ -358,7 +359,21 @@ var WSS = function(admins, manage){
     
                 connectNode(user, user.nodes[node.key]);
                
-            }).catch(e => {})
+            }).catch(e => {
+
+                sendMessage({
+                    msg : 'registererror',
+                    addr : user.addr,
+                    node : message.node
+                }, ws).catch(e => {
+                })
+
+                setTimeout(function(){
+                    if (ws.close)
+                        ws.close()
+                }, 2000)
+
+            })
 
         }
     }
@@ -502,8 +517,6 @@ var WSS = function(admins, manage){
 
             removeUser : function(p){
 
-
-                console.log("REMOVEING USER", p)
 
                 if(!p.address || !p.device) return
 

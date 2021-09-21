@@ -124,7 +124,6 @@ var Peertube = function (settings) {
       var cachehash = parsed.id;
       var cacheparameters = _.clone(parsed);
 
-      console.log("url get", url)
 
       return new Promise((resolve, reject) => {
         cache.wait(
@@ -164,7 +163,6 @@ var Peertube = function (settings) {
                 fr.aspectRatio = 1.78;
             }
 
-            //console.log('cachehash', cachehash, ontime)
 
             cache.set(cachekey, cacheparameters, r, null, ontime, cachehash);
 
@@ -174,7 +172,7 @@ var Peertube = function (settings) {
         .catch((e) => {
 
           if (e && !e.data) {
-            console.log('E video', e, url);
+            //console.log('E video', e, url);
           }
 
           if (e && e.status == '404') {
@@ -279,7 +277,6 @@ var Peertube = function (settings) {
               { total: 0, data: [] },
             );
 
-          console.log(outputInfo);
           return outputInfo;
         })
         .catch(() => ({ total: 0, data: [] }));

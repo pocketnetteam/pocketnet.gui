@@ -16,6 +16,27 @@ var wallet = (function(){
 		var craddress = 'PFF7PevK753eYTwWBScdEAbWQrgu36AdUA';
 		var first = true;
 
+		var coins = [
+			{name: 'Bitcoin (BTC)', code: 'BTC', image : "bitcoin-btc-logo.svg"},
+			{name: 'Ethereum (ETH)', code: 'ETH', image : "ethereum-eth-logo.svg"},
+			{name: 'Tether (USDT) ERC-20', code: 'USDT', image : "tether-usdt-logo.svg"},
+			{name: 'Binance Coin (BNB) ERC-20', code: 'BNB', image : "binance-coin-bnb-logo.svg"},
+			{name: 'Dogecoin (DOGE)', code: 'DOGE', image : "dogecoin-doge-logo.svg"},
+			{name: 'XPR (XRP)', code: 'XRP', image : "xrp-xrp-logo.svg"},
+			{name: 'Uniswap (UNI) ERC-20', code: 'UNI', image : "uniswap-uni-logo.svg"},
+			{name: 'Bitcoin Cash (BCH)', code: 'BCH', image : "bitcoin-cash-bch-logo.svg"},
+			{name: 'Litecoin (LTC)', code: 'LTC', image : "litecoin-ltc-logo.svg"},
+			{name: 'Stellar (XLM)', code: 'XLM', image : "stellar-xlm-logo.svg"},
+			{name: 'TRON (TRX)', code: 'TRX', image : "tron-trx-logo.svg"},
+			{name: 'DAI (DAI) ERC-20', code: 'DAI', image : "multi-collateral-dai-dai-logo.svg"},
+			{name: 'NEO (NEO)', code: 'NEO', image : "neo-neo-logo.svg"},
+			{name: 'Bitcoin SV (BSV)', code: 'BSV', image : "bitcoin-sv-bsv-logo.svg"},
+			{name: 'Dash (DASH)', code: 'DASH', image : "dash-dash-logo.svg"},
+			{name: 'Zcash (ZEC)', code: 'ZEC', image : "zcash-zec-logo.svg"},
+			{name: 'Basic Attention Token (BAT) ERC-20', code: 'BAT', image : "basic-attention-token-bat-logo.svg"},
+			{name: 'New Economy Movement (XEM)', code: 'XEM', image : "nem-xem-logo.svg"},
+		]
+
 		var addressesGroup = {
 
 			pnetwallet : {
@@ -1020,6 +1041,8 @@ var wallet = (function(){
 					el.total = el.c.find('.total .tttl');
 					el.totaler = el.c.find('.total .tttlforerror');
 					el.addresses = el.c.find('.addresses');
+					el.buy = el.c.find('.buy');
+					
 					el.send = el.c.find('.send');
 					el.deposit = el.c.find('.deposit');
 					el.crowdfunding = el.c.find('.crowdfunding');
@@ -2196,6 +2219,29 @@ var wallet = (function(){
 				},
 
 			////
+
+			buy : function(clbk){
+
+				var a = self.app.platform.sdk.address.pnet() || {}
+
+				self.shell({
+
+					name :  'buy',
+					el :   el.buy,
+					data : {
+						coins : coins,
+						a : a
+					},
+
+				}, function(_p){
+
+					
+					if (clbk)
+						clbk()
+
+				})
+				
+			},
 			
 			addresses : function(clbk){
 				var a = addressesGroup.total.addresses();
@@ -2628,7 +2674,7 @@ var wallet = (function(){
 
 				/*renders.crowdfunding,*/ 
 
-				var actions = [renders.send, renders.deposit, renders.addresses/*, renders.htls*/]
+				var actions = [renders.send, renders.buy, renders.deposit, renders.addresses/*, renders.htls*/]
 
 				lazyActions(actions, clbk)
 

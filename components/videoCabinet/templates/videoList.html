@@ -54,7 +54,7 @@
       </div>
       <div
         class="videoItemPart videoStatsWrapper"
-        video="<%- `peertube://${video.server}/${video.uuid}` %>"
+        video="<%- `peertube://${deep(video, 'account.host') || video.server}/${video.uuid}` %>"
         host="<%- video.server %>"
         uuid="<%- video.uuid %>"
       >
@@ -86,7 +86,7 @@
       <div class="videoItemPart removeButtonWrapper">
         <i
           class="fas fa-ellipsis-h menuActivator"
-          videoLink="<%- `peertube://${video.server}/${video.uuid}` %>"
+          videoLink="<%- `peertube://${deep(video, 'account.host') || video.server}/${video.uuid}` %>"
         ></i>
       </div>
     </div>

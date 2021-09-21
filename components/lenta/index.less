@@ -917,30 +917,33 @@
 							}
 						}
 
-						&.canDownload {
-							.downloadingBtn, .downloadedBtn {
-								display: none;
+						.downloadMetapanel {
+
+							&.canDownload {
+								.downloadingBtn, .downloadedBtn {
+									display: none;
+								}
 							}
-						}
-						&.downloading {
-							.canDownloadBtn, .downloadedBtn {
-								display: none;
+							&.downloading {
+								.canDownloadBtn, .downloadedBtn {
+									display: none;
+								}
 							}
-						}
-						&.downloaded {
-							.canDownloadBtn, .downloadingBtn {
-								display: none;
+							&.downloaded {
+								.canDownloadBtn, .downloadingBtn {
+									display: none;
+								}
+								.deleteBtn {
+									color:  #ff6d6d;
+								}
+								.downloadDone {
+									color: green;
+								}
 							}
-							.deleteBtn {
-								color:  #ff6d6d;
-							}
-							.downloadDone {
-								color: green;
-							}
-						}
-						&.invisible {
-							.canDownloadBtn, .downloadingBtn, .downloadedBtn {
-								display: none;
+							&.invisible {
+								.canDownloadBtn, .downloadingBtn, .downloadedBtn {
+									display: none;
+								}
 							}
 						}
 					}
@@ -1065,6 +1068,7 @@
 							}
 						}
 					}
+					
 
 					&.articleImages{
 						.imagesWrapper{
@@ -1118,7 +1122,6 @@
 			.message{
 				margin-bottom: 2 * @rhythm;
 				max-width: 700px;
-				
 
 				a{
 					text-decoration: underline;
@@ -1131,6 +1134,7 @@
 					text-overflow: ellipsis;
 					overflow: hidden;
 					display: inline-block;
+					vertical-align : bottom;
 				}
 			}
 
@@ -1535,10 +1539,12 @@
 				right: 0;
 				bottom: 0;
 				top: 0;
-				background: fade(@color-black2, 95);
+				background: fade(@color-black2, 90);
 				overflow-y: scroll;
 				padding-top: 0;
 				scrollbar-width: none;
+				backdrop-filter: blur(14px);
+				-webkit-backdrop-filter: blur(14px);  
 				
 				&::-webkit-scrollbar{
 					width: 0!important
@@ -1576,12 +1582,12 @@
 						}
 					}	
 
-					.list{
+					/*.list{
 						.comment{
 							content-visibility: auto;
 							contain-intrinsic-size: 200px;
 						}
-					}
+					}*/
 				}
 
 				.exitFull{
@@ -2206,7 +2212,7 @@
 				margin : 0;
 				margin-right: @rhythm;
 				margin-bottom : @rhythm;
-				content-visibility:visible;
+				//content-visibility:visible;
 				
 				&:nth-last-child(1){
 					margin-right: 0;
@@ -2794,6 +2800,7 @@ html.stblack{
 	
 				&.fullScreenVideo{
 					background: fade(@color-black4, 80);
+					
 					.work{
 						background: @color-black;
 	
@@ -3378,11 +3385,11 @@ html.stblack{
 				.meta{
 					.metatable{
 						>div{
-							width: 70%;
+							width: 67%;
 							margin-right: 0;
 						
 							&.metapanel{
-								width: 30%;
+								width: 33%;
 								padding-right: @rhythm;
 		
 								.metapanelitem{
@@ -3720,5 +3727,15 @@ html.mobile.fullscreen{
 			}
 			
 		}
+	}
+}
+
+.dialog.deleteDownloadVideoDialog .buttons .btn1 {
+	background-color: @color-bad;
+	border-color: @color-bad;
+
+	&:hover {
+		background-color: initial;
+		color: @color-bad;
 	}
 }

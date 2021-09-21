@@ -236,7 +236,7 @@ var Proxy = function (settings, manage, test) {
 			wss: self.wss.info(true)
 		}
 
-		var count = Math.max(f.deep(i, 'wss.users.length') || 1)
+		var count = Math.max(f.deep(i, 'wss.users') || 1)
 
 		if (count < 1) count = 1
 
@@ -931,8 +931,10 @@ var Proxy = function (settings, manage, test) {
 							}
 							resolve(waitstatus);
 						}, cachehash);
+					}).then(() => {
+						return nodeManager.waitready() || (options.locally && options.meta)
 					})
-					.then((waitstatus) => {
+					.then(() => {
 						var cached = server.cache.get(method, _.clone(parameters), cachehash);
 
 						if (log) {
@@ -956,7 +958,6 @@ var Proxy = function (settings, manage, test) {
 						if (options.node) {
 							node = nodeManager.nodesmap[options.node];
 						}
-
 
 						if (!node || options.auto)
 							node = nodeManager.selectProbability(); //nodeManager.selectbest()
@@ -1079,11 +1080,14 @@ var Proxy = function (settings, manage, test) {
 				path: '/nodes/select',
 				action: function ({ fixed }) {
 					return nodeManager
-						.waitbest(3000)
+						.waitbest(10000)
 						.then((r) => {
+
+							console.log("JJJO")
+
 							var node = null;
 
-							if (fixed) {
+							if (fixed && fixed != 'null') {
 								node = nodeManager.select(fixed);
 							}
 
@@ -1104,6 +1108,7 @@ var Proxy = function (settings, manage, test) {
 							});
 						})
 						.catch((e) => {
+							console.log("e", e)
 							return Promise.reject(e);
 						});
 				},
@@ -1114,7 +1119,7 @@ var Proxy = function (settings, manage, test) {
 				authorization: 'signature',
 				action: function ({ node, scenario, A }) {
 
-					if (!test) return Promise.reject('err');
+					//if (!test) return Promise.reject('err');
 
 					if (!A) return Promise.reject('admin');
 
@@ -1135,6 +1140,27 @@ var Proxy = function (settings, manage, test) {
 						return Promise.reject('err')
 					})
 
+				},
+			},
+
+			extendedstats: {
+				path: '/nodes/extendedstats',
+				action: function () {
+
+					console.log('extendedStats')
+
+					var data = nodeManager.extendedStats()
+
+					console.log('extendedStats2')
+
+					return Promise.resolve({
+						data: data,
+					}).catch(e => {
+
+						console.error(e)
+
+						return Promise.reject(e)
+					});
 				},
 			},
 

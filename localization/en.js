@@ -207,7 +207,7 @@ ____loclib.stp = "Trial period";
 ____loclib.srep = "Reputation";
 
 //accounts
-____loclib.aaddedacc = "Added Accounts";
+____loclib.aaddedacc = "Change Account";
 ____loclib.acure = "Current";
 ____loclib.aaddacc = "Add Account";
 ____loclib.ascheduler = "Scheduler";
@@ -722,7 +722,7 @@ ____loclib.e13235 = "You cannot rate comment twice"
 ____loclib.e13236 = "This comment was removed"
 ____loclib.e13237 = "You cannot rate yourself"
 ____loclib.e13238 = "Comment sending error. Please wait and try again/ 37"
-____loclib.e13239 = "Comment sending error/ 35"
+____loclib.e13239 = "Comment sending error. You are replying to a comment that was deleted"
 ____loclib.e13240 = "The comment you are replying to has been deleted by the user"
 ____loclib.e13241 = "This comment is too long, please break it up"
 ____loclib.e13242 = "You have been blocked by this person, you will be unable to comment on their posts"
@@ -1146,6 +1146,12 @@ ____loclib.editVideoDescription = "Edit video name/description";
 ____loclib.errorChangingDescription = "Unable to change video name/description";
 ____loclib.downloadVideo = "Download video";
 ____loclib.selectQuality = "Select quality:";
+____loclib.downloadedVideos = "Downloaded videos";
+____loclib.deleteAllDownloadedVideos = "Delete all downloaded videos";
+____loclib.noDownloadedVideos = "No downloaded videos";
+____loclib.deleteVideoDialog = "Are you sure you want to delete this video?";
+____loclib.deleteAllVideoDialog = "Are you sure you want to delete all the videos?";
+____loclib.videosDeleted = "Videos deleted!";
 
 ____loclib.enterVideoName = "Enter video name";
 ____loclib.enterVideoDescription = "Enter video description";
@@ -1158,3 +1164,6 @@ ____loclib.saveimage = "Save image";
 
 ____loclib.showAllButton = "Show all";
 ____loclib.hideAllButton = "Hide";
+
+____loclib.UniqueUsers = "Unique Raters";
+____loclib.ErrorLoadingRates = "Loading Error";

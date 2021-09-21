@@ -553,7 +553,7 @@
 
 		var render = function(tpl){
 
-			var h = p.allowHide ? '<div class="wndback" id='+id+'></div><div class="wndinner">' : '<div class="wndback" id='+id+'><div class="_close roundclosebutton '+closedbtnclass+'"><i class="fa fa-times" aria-hidden="true"></i></div></div><div class="wndinner ' + p.type + '">\
+			var h = p.allowHide ? '<div class="wndback" id='+id+'></div><div class="wndinner">' : '<div class="wndback" id='+id+'></div><div class="_close roundclosebutton '+closedbtnclass+'"><i class="fa fa-times" aria-hidden="true"></i></div><div class="wndinner ' + p.type + '">\
 			';
 
 			var closedbtnclass = ''
@@ -561,7 +561,7 @@
 				if(p.leftbg) 
 					h+='<div class="leftbg"><div>'+p.leftbg+'</div></div>';
 
-				h+=	 p.allowHide ? '<div class="wndcontent content">' + content + '<div class="changeStateButtons"><div class="hideButton changeButton"><i class="fas fa-minus"></i></div><div class="closeButton changeButton"><i class="fas fa-times"></i></div><div class="changeButton expandButton hidden"><i class="fas fa-expand-arrows-alt"></i></div></div></div>' : '<div class="wndcontent content">'+content+'</div>';
+				h+=	 p.allowHide ? '<div class="wndcontent content customscroll">' + content + '<div class="changeStateButtons"><div class="hideButton changeButton"><i class="fas fa-minus"></i></div><div class="closeButton changeButton"><i class="fas fa-times"></i></div><div class="changeButton expandButton hidden"><i class="fas fa-expand-arrows-alt"></i></div></div></div>' : '<div class="wndcontent customscroll content">'+content+'</div>';
 
 				if(p.header) 
 				{
@@ -721,7 +721,7 @@
 
 				p.buttons.close = {
 					action : close,
-					html : 'Close',
+					html : app ? app.localization.e('close') : 'Close',
 					class : "close"
 				};
 
@@ -1330,8 +1330,6 @@
 				})
 
 			}
-
-			console.log('p', p)
 
 			if(p.clbk) p.clbk($el, self);
 
@@ -3651,10 +3649,6 @@
 						{
 							__el.val(label)
 						}
-
-						console.log('value', value, label)
-
-						
 
 						if (parameter.type == 'valuesmultibig'){							
 
@@ -6146,8 +6140,6 @@
 
 	inView = function(els, p){
 
-		console.log('inView', els.length)
-
 		var st = 0,
 			sh = 0;
 
@@ -6799,8 +6791,6 @@
 						
 						if (mainDirection){
 
-							console.log('_direction == mainDirection', _direction, mainDirection)
-							
 
 							if(phase == 'end' && mainDirection.clbk && _direction == mainDirection.i){
 
@@ -6874,7 +6864,6 @@
 
 		var applyDirection = function(direction, v){
 			if (direction.positionclbk){
-				console.log("positionclbk", v)
 				needclear = true
 				direction.positionclbk(v)
 			}
@@ -6883,8 +6872,6 @@
 		self.clear = function(){
 
 			if (needclear){
-
-				console.log("CLEARED")
 
 				p.el.css({transform: ""});
 				p.el.css({transition: ""});
@@ -7161,7 +7148,6 @@
 
 	Caption = function (p) {
 
-		console.log("CaptionCaptionCaptionCaptionCaptionCaptionCaptionCaption")
 		
 		var container = p.container,
 			caption = p.caption,
@@ -8147,7 +8133,6 @@
 		el.after(h);
 	}
 	html = function(el, h){
-		//console.log("E", el)
 		el.html(h);
 	}
 	append = function(el, h){
@@ -10202,17 +10187,22 @@
 
 	}
 
-	findAndReplaceLink = function (inputText) {
-
-
+	findAndReplaceLink = function (inputText, nottrust) {
 
 		if(typeof linkifyHtml != 'undefined'){
 
 			try{
+
+				var s = {
+					cordovalink : '_system'
+				}
+
+				if (nottrust) {
+					s.donottrust = 'true'
+				}
+
 				var l = linkifyHtml(inputText, {
-					attributes : {
-						cordovalink : '_system'
-					}
+					attributes : s
 				})
 		
 				return l

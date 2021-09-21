@@ -1,14 +1,17 @@
-var electron = null
+var electron = null, fs, url, path, https;
 if (typeof _OpenApi == 'undefined') _OpenApi = false;
 
 if (typeof _Electron != 'undefined') {
     electron = require('electron');
+    fs = require('fs');
+    url = require('url');
+    https = require('https');
+    path = require('path');
 
     var storage = electron.OSBrowser; //?
 
     $('html').addClass('electron')
 }
-
 
 
 Platform = function (app, listofnodes) {
@@ -58,7 +61,9 @@ Platform = function (app, listofnodes) {
         'PMVvs8kvbskq6eVV8Q3oyjotbox9tBfvnp' : true,
         'PQ3hdiozrxtTf1UhuVfhUb9bcvrUzbzwRJ' : true,
         'PCSxAFQCRZphi9W6nrV4tSQXKFfsxdxERA' : true,
-        'PGFKA1DieVsg9pQK4aBaEp5wpvaXpWtuVJ' : true
+        'PGFKA1DieVsg9pQK4aBaEp5wpvaXpWtuVJ' : true,
+        'PFbq1BkrrVsmEAevMqQ2PV6aFf7QWQP9sB' : true,
+        'PKHoxhpnG5CGHDVnxXJwARwPxVre6Qshvn' : true
         //'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82' : true // test
     }
 
@@ -348,7 +353,7 @@ Platform = function (app, listofnodes) {
                     icon: '<i class="fab fa-linux"></i>',
         
                     github: {
-                        name: app.meta.fullname + "Setup.deb",
+                        name: self.app.meta.fullname + "Setup.deb",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
                         page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
                     }
@@ -2743,7 +2748,9 @@ Platform = function (app, listofnodes) {
 
         tooltip: function (_el, content, clbk, p) {
 
-            if (isMobile()){
+            if(!p) p = {}
+
+            if (isMobile() || p.dlg){
                 return self.api.mobiletooltip(_el, content, clbk, p)
             }
             
@@ -3180,7 +3187,6 @@ Platform = function (app, listofnodes) {
 
                             href += path
 
-                            app.nav
 
                             if (window.cordova){
 
@@ -3427,6 +3433,8 @@ Platform = function (app, listofnodes) {
                                                                         file.file(function(fileDetails) {
                                                                             if (!videoFile && fileDetails.type == null) {
                                                                                 videoFile = file;
+                                                                                if (fileDetails.size)
+                                                                                    v[shareFolder.name].videos[videoFolder.name].size = fileDetails.size;
                                                                                 // Resolve internal URL
                                                                                 window.resolveLocalFileSystemURL(videoFile.nativeURL, function(entry) {
                                                                                     videoFile.internalURL = entry.toInternalURL();
@@ -3473,7 +3481,213 @@ Platform = function (app, listofnodes) {
                             });
                         });
                     }
+                    else if (typeof _Electron != 'undefined' && window.electron) {
+                        const userDataPath = (window.electron.app || window.electron.remote.app).getPath('userData');
+                        // List all the posts
+                        fs.readdir(userDataPath + '/posts', (err, sharesDir) => {
+                            if (!err) {
+                                _.each(sharesDir, function(shareId) {
+                                        v[shareId] = {};
 
+                                        // List all the videos
+                                        fs.readdir(userDataPath + '/posts/' + shareId + '/videos', (err2, videosDir) => {
+                                            if (!err2) {
+                                                v[shareId].videos = {};
+                                                _.each(videosDir, function(videoId) {
+                                                    v[shareId].videos[videoId] = {};
+                                                    v[shareId].videos[videoId].infos = {};
+                                                    fs.readdir(userDataPath + '/posts/' + shareId + '/videos/' + videoId, (err4, files) => {
+                                                        if (!err4) {
+                                                            _.each(files, (file) => {
+                                                                if (!path.extname(file)) {
+                                                                    v[shareId].videos[videoId].video = {
+                                                                        name: file,
+                                                                        internalURL: url.pathToFileURL(userDataPath + '/posts/' + shareId + '/videos/' + videoId + '/' + file).href
+                                                                    };
+                                                                    var stats = fs.statSync(userDataPath + '/posts/' + shareId + '/videos/' + videoId + '/' + file);
+                                                                    if (stats && stats.size)
+                                                                        v[shareId].videos[videoId].size = stats.size;
+                                                                }
+                                                            });
+                                                        }
+                                                    });
+                                                });
+                                            }
+                                        });
+
+                                        // Read the share.json file
+                                        fs.readFile(userDataPath + '/posts/' + shareId + '/share.json', 'utf8', (err3, shareInfoStr) => {
+                                            if (!err3) {
+                                                try {
+                                                    v[shareId].share = JSON.parse(shareInfoStr);
+                                                } catch(err) {}
+                                            }
+                                        });
+
+                                });
+
+                            }
+                        });
+                    }
+
+                },
+
+                // Download a video using Cordova file functions
+                saveVideoCordova: function(shareId, id, video, videoDetails) {
+                    return new Promise((resolve, reject) => {
+                        if (!window.cordova || !window.cordova.file || !window.resolveLocalFileSystemURL)
+                            return reject('Missing cordova file plugin');
+                        var share = self.app.platform.sdk.node.shares.storage.trx[shareId];
+                        var user = deep(self.app, 'platform.sdk.usersl.storage.' + share.address);
+                        // Create share.json file data
+                        var shareInfos = {
+                            share: {
+                                share: share.export(),
+                                user: user.export(),
+                                timestamp: new Date()
+                            }
+                        };
+                        // Check if external storage is available, if not, use the internal
+                        var storage = (window.cordova.file.externalDataDirectory) ? window.cordova.file.externalDataDirectory : window.cordova.file.dataDirectory;
+                        // open target file for download
+                        window.resolveLocalFileSystemURL(storage, function(dirEntry) {
+                            // Create a posts folder
+                            dirEntry.getDirectory('posts', { create: true }, function (dirEntry11) {
+                                dirEntry11.getDirectory(shareId, { create: true }, function (dirEntry2) {
+
+                                    // Create JSON file for share informations
+                                    dirEntry2.getFile('share.json', { create: true }, function (shareFile) {
+                                        // Write into file
+                                        shareFile.createWriter(function (fileWriter) {
+                                            fileWriter.write(shareInfos.share);
+                                        });
+                                    });
+
+                                    dirEntry2.getDirectory('videos', { create: true }, function (dirEntry3) {
+                                        // Get/create a folder for this video
+                                        dirEntry3.getDirectory(id, { create: true }, function (dirEntry4) {
+                                            var infos = {
+                                                thumbnail: 'https://' + videoDetails.from + videoDetails.thumbnailPath
+                                            }
+                                            // Create JSON file for video informations
+                                            dirEntry4.getFile('info.json', { create: true }, function (infoFile) {
+                                                // Write into file
+                                                infoFile.createWriter(function (fileWriter) {
+                                                    fileWriter.write(infos);
+                                                });
+                                            });
+                                            // Download the video
+                                            dirEntry4.getFile(video.resolution.id + '', { create: true }, function (targetFile) {
+                                                var downloader = new BackgroundTransfer.BackgroundDownloader();
+                                                // Create a new download operation.
+                                                var download = downloader.createDownload(video.fileDownloadUrl, targetFile, "Bastyon: Downloading video");
+                                                
+                                                // Start the download
+                                                download.startAsync().then(function(e) {
+                                                    // Success
+                                                    // Get file size
+                                                    targetFile.file(function(fileDetails) {
+                                                        // Resolve internal URL
+                                                        window.resolveLocalFileSystemURL(targetFile.nativeURL, function(entry) {
+                                                            targetFile.internalURL = entry.toInternalURL();
+                                                            shareInfos.videos = {};
+                                                            shareInfos.videos[id] = { video: targetFile,  infos: infos };
+                                                            if (fileDetails.size)
+                                                                shareInfos.videos[id].size = fileDetails.size;
+                                                            self.sdk.local.shares.add(shareId, shareInfos);
+                                                            return resolve(targetFile);
+                                                        }, function(err) {
+                                                            return reject(err);
+                                                        });
+                                                    }, function(err) {
+                                                        // Error
+                                                        return reject(err);
+                                                    });
+                                                }, function(err) {
+                                                    // Error
+                                                    return reject(err);
+                                                }, function(e) {
+                                                    // Progress
+                                                    // console.log("progress");
+                                                    // console.log(e);
+                                                });
+                                            }, function(err) {
+                                                return reject(err);
+                                            });
+                                        }, function(err) {
+                                            return reject(err);
+                                        });
+                                    }, function(err) {
+                                        return reject(err);
+                                    });
+                                }, function(err) {
+                                    return reject(err);
+                                });
+                            }, function(err) {
+                                return reject(err);
+                            });
+                        }, function(err) {
+                            return reject(err);
+                        });
+                    });
+                },
+
+                // Download a video using Node file functions
+                saveVideoElectron: function(shareId, id, video, videoDetails) {
+                    return new Promise((resolve, reject) => {
+                        const userDataPath = (window.electron.app || window.electron.remote.app).getPath('userData');
+                        const shareDir = userDataPath + '/posts/' + shareId;
+                        var share = self.app.platform.sdk.node.shares.storage.trx[shareId];
+                        var user = deep(self.app, 'platform.sdk.usersl.storage.' + share.address);
+                        // Create share.json file data
+                        var shareInfos = {
+                            share: {
+                                share: share.export(),
+                                user: user.export(),
+                                timestamp: new Date()
+                            }
+                        };
+                        // Create share directory
+                        if (!fs.existsSync(shareDir))
+                            fs.mkdirSync(shareDir, { recursive: true });
+                        // Create JSON file for share informations
+                        fs.writeFileSync(shareDir + '/share.json', JSON.stringify(shareInfos.share));
+
+                        // Create the video directory
+                        const videoDir = shareDir + '/videos/' + id;
+                        if (!fs.existsSync(videoDir))
+                            fs.mkdirSync(videoDir, { recursive: true });
+
+                        // Start downloading the video
+                        const videoFile = fs.createWriteStream(videoDir + '/' + video.resolution.id);
+                        https.get(video.fileDownloadUrl, function(response) {
+                            if (response.statusCode >= 200 && response.statusCode <= 299) {
+                                // Success
+                                response.on('end', () => {
+                                    // Downloading done
+                                    shareInfos.videos = {};
+                                    shareInfos.videos[id] = {
+                                        video: { name: video.resolution.id, internalURL: url.pathToFileURL(videoFile.path).href },
+                                        infos: {}
+                                    };
+                                    // Get file size
+                                    var stats = fs.statSync(videoFile.path);
+                                    if (stats && stats.size)
+                                        shareInfos.videos[id].size = stats.size;
+                                    // Add the share
+                                    self.sdk.local.shares.add(shareId, shareInfos);
+                                    return resolve();
+                                });
+                                response.pipe(videoFile);
+                            } else {
+                                // Error
+                                return reject("Download error: " + response.statusCode);
+                            }
+                        }).on('error', (e) => {
+                            // Error
+                            return reject(e);
+                        });
+                    });
                 },
 
                 // Returns an array of all the shares ID
@@ -3515,9 +3729,30 @@ Platform = function (app, listofnodes) {
                     return video;
                 },
 
+                getTotalSize : function() {
+                    var v = self.sdk.local.shares.allShares, totalSize = 0;
+                    _.each(v, function(share) {
+                        if (share.videos) {
+                            for (const videoId in share.videos) {
+                                if (share.videos[videoId].size)
+                                    totalSize += share.videos[videoId].size;
+                            }
+                        }
+                    });
+                    return totalSize;
+                },
+
                 add : function(shareId, share){
                     var v = self.sdk.local.shares.allShares;
                     v[shareId] = share;
+                },
+
+                deleteAll: function(clbk) {
+                    var v = self.sdk.local.shares.allShares;
+                    for (var shareId in v)
+                        self.sdk.local.shares.delete(shareId);
+                    if (clbk)
+                        clbk();
                 },
 
                 delete: function(shareId, clbk) {
@@ -3546,6 +3781,13 @@ Platform = function (app, listofnodes) {
                                 if (clbk) clbk();
                             });
                         }, function(err) {
+                            if (clbk) clbk();
+                        });
+                    } else if (typeof _Electron != 'undefined' && window.electron) {
+                        const userDataPath = (window.electron.app || window.electron.remote.app).getPath('userData');
+                        fs.rmdir(userDataPath + '/posts/' + shareId, { recursive: true }, (err) => {
+                            if (!err)
+                                delete v[shareId];
                             if (clbk) clbk();
                         });
                     }
@@ -4796,7 +5038,6 @@ Platform = function (app, listofnodes) {
                 }
             }
         },
-
 
         keys : {
             clbks : {
@@ -6439,7 +6680,7 @@ Platform = function (app, listofnodes) {
 
             /////////////// REGISTRATION
 
-            requestFreeMoney: function (clbk) {
+            requestFreeMoney: function (clbk, proxyoptions) {
 
                 var a = self.sdk.address.pnet();
 
@@ -6459,7 +6700,7 @@ Platform = function (app, listofnodes) {
                                 captcha: self.sdk.captcha.done
                             }
 
-                            self.app.api.fetchauth('free/registration', prms).then(d => {
+                            self.app.api.fetchauth('free/registration', prms, proxyoptions).then(d => {
                                 if (clbk)
                                         clbk(true)
 
@@ -6960,12 +7201,12 @@ Platform = function (app, listofnodes) {
                 }
 
             },
-            get: function (clbk, refresh) {
+            get: function (clbk, refresh, proxyoptions) {
                 if (refresh) this.current = null;
 
                 self.app.api.fetch('captcha', {
                     captcha: this.done || this.current || null
-                }).then(d => {
+                }, proxyoptions).then(d => {
 
 
                     self.sdk.captcha.current = d.id
@@ -6989,9 +7230,9 @@ Platform = function (app, listofnodes) {
                             }
                             else {
                                 if (clbk)
-                                    lbk(null, err)
+                                clbk(null, err)
                             }
-                        })
+                        }, proxyoptions)
                     }
                     else {
                         if (clbk)
@@ -7006,12 +7247,12 @@ Platform = function (app, listofnodes) {
                
             },
 
-            make: function (text, clbk) {
+            make: function (text, clbk, proxyoptions) {
 
                 self.app.api.fetchauth('makecaptcha', {
                     captcha: this.current || null,
                     text: text
-                }).then(d => {
+                }, proxyoptions).then(d => {
                     self.sdk.captcha.done = d.id
 
                     self.sdk.captcha.save()
@@ -10768,6 +11009,7 @@ Platform = function (app, listofnodes) {
                             newShare._import(curShare.share.share);
                             newShare.txid = txid;
                             newShare.address = newUser.address;
+                            newShare.downloadedDate = new Date(curShare.share.timestamp);
 
                             loadedShares.push(newShare);
 
@@ -10777,6 +11019,11 @@ Platform = function (app, listofnodes) {
                             self.sdk.node.shares.storage.trx[txid] = newShare;
 
                         }
+                    });
+
+                    // Sort by download date
+                    loadedShares = loadedShares.sort((s1, s2) => {
+                        return s2.downloadedDate.getTime() - s1.downloadedDate.getTime();
                     });
 
                     if (clbk) {
@@ -13094,7 +13341,7 @@ Platform = function (app, listofnodes) {
                                     self.sdk.registrations.add(addr, 5)
                                     
 
-                                    platform.matrixchat.update()
+                                    app.platform.matrixchat.update()
 
                                     var cm = deep(app, 'modules.menu.module.restart')
                                     if (cm) cm()
@@ -18706,12 +18953,11 @@ Platform = function (app, listofnodes) {
 
                         if (regs == 5) {
 
-                            self.sdk.registrations.add(addr, 6)
+                            app.platform.sdk.registrations.add(addr, 6)
 
                             platform.matrixchat.update()
                         }
                     }
-                    
 
                     ////////
 
@@ -19427,15 +19673,22 @@ Platform = function (app, listofnodes) {
 
                 socket = wss.dummy || (new ReconnectingWebSocket(wss.url));
 
+
                 socket.onmessage = function (message) {
 
-                    message = message.data;
+                    message = message.data ? message.data : message;
 
                     var jm = message;
 
-                    try { jm = JSON.parse(message || "{}"); } catch (e) {}
+                    try { jm = JSON.parse(message || "{}"); } catch (e) {
+                        console.log("E", e)
+                    }
+
+                    console.log("MESSAGE", jm)
                     
                     if (jm){
+
+                        console.log('jm.type', jm.type)
 
                         if (jm.type == 'proxy-message-tick'){
 
@@ -19444,7 +19697,18 @@ Platform = function (app, listofnodes) {
 
                         if (jm.type == 'changenode'){
 
-                            //wss.proxy.changeNode(jm.data.node)
+                            var temp = platform.sdk.node.transactions.temp
+
+                            var t = [];
+
+                            _.each(temp, function(trx, s){
+                                _.each(trx, function(tr){
+                                    t.push(tr)
+                                })
+                            })
+
+                            /*if(!temp.length)
+                                wss.proxy.changeNode(jm.data.node)*/
 
                             return
 
@@ -20092,6 +20356,8 @@ Platform = function (app, listofnodes) {
                         clbk(false)
                 }
             })
+
+            console.log("SEND", message)
 
             self.send(JSON.stringify(message))
         }
@@ -21303,14 +21569,15 @@ Platform = function (app, listofnodes) {
 
         initOnlineListener() // /remove for test
 
+
         self.app.api.wait.ready('use', 3000).then(r => {
 
             return new Promise((resolve, reject) => {
                 setTimeout(function(){
                     self.app.api.changeProxyIfNeed().then(l => {
 
-
                         if(!l){
+
                             var d = self.app.api.get.direct() 
 
                             if (d){
@@ -21357,6 +21624,7 @@ Platform = function (app, listofnodes) {
         }).catch(e => {
             console.log("ERROR", e)
         })
+
 
     }
 
@@ -21445,6 +21713,7 @@ Platform = function (app, listofnodes) {
                     self.firebase.init,
                     
                     //self.sdk.exchanges.load,
+                    self.sdk.articles.init,
                     self.sdk.categories.load,
                     self.sdk.activity.load,
                     self.sdk.node.shares.parameters.load,
@@ -21470,7 +21739,7 @@ Platform = function (app, listofnodes) {
                         lazyActions([
                             self.cryptography.prepare,
                             self.sdk.pool.init,
-                            self.sdk.articles.init,
+                            
                             self.sdk.tempmessenger.init,
                             self.sdk.chats.load,
                             self.sdk.user.subscribeRef
@@ -21566,7 +21835,7 @@ Platform = function (app, listofnodes) {
 
                 var link = 'contact?id=' + hexEncode(address)
 
-                if(isMobile()){
+                if(isMobile() || window.cordova){
                     self.matrixchat.core.apptochat(link)
                 }
                 else{
@@ -21614,8 +21883,8 @@ Platform = function (app, listofnodes) {
                                     <matrix-element
                                         address="${a}"
                                         privatekey="${privatekey}"
-                                        pocketnet="`+( (isMobile() || isTablet()) ? '' : 'true')+`"
-                                        mobile="`+( (isMobile() || isTablet()) ? 'true' : '')+`" 
+                                        pocketnet="`+( (isMobile() || isTablet() || window.cordova) ? '' : 'true')+`"
+                                        mobile="`+( (isMobile() || isTablet() || window.cordova) ? 'true' : '')+`" 
                                         ctheme="`+self.sdk.theme.current+`"
                                         localization="`+self.app.localization.key+`"
                                         fcmtoken="`+(self.fcmtoken || "")+`"
@@ -21658,7 +21927,7 @@ Platform = function (app, listofnodes) {
         initevents : function(){
             if (self.matrixchat.el){
 
-                if(isTablet()){
+                if(isMobile() || window.cordova){
 
 					self.matrixchat.el.swipe({
 						allowPageScroll: "vertical", 
@@ -21810,7 +22079,7 @@ Platform = function (app, listofnodes) {
         showed : function(){
             if(!self.matrixchat.core){ return false }
 
-            if(isMobile()){
+            if(isMobile()|| window.cordova){
                 return !self.matrixchat.core.hiddenInParent
             }
 
@@ -21828,7 +22097,10 @@ Platform = function (app, listofnodes) {
             
 
             core.backtoapp = function(link){
-                self.app.actions.restore()
+
+                if (isMobile()|| window.cordova)
+                    self.app.actions.restore()
+
                 app.el.html.removeClass('chatshowed')
 
                 if(document.activeElement) document.activeElement.blur()
@@ -21837,12 +22109,13 @@ Platform = function (app, listofnodes) {
                     self.matrixchat.el.removeClass('active')
 
                 if (self.matrixchat.core){ 
-                    self.matrixchat.core.hiddenInParent = isMobile() ? true : false 
+                    self.matrixchat.core.hiddenInParent = isMobile()|| window.cordova ? true : false 
                 }
 
-                self.app.actions.onScroll()
+                if (isMobile() || window.cordova)
+                    self.app.actions.onScroll()
 
-                if(isMobile())
+                if(isMobile() || window.cordova)
                     app.nav.api.history.removeParameters(['pc'])
                 if (link){
 
@@ -21871,11 +22144,17 @@ Platform = function (app, listofnodes) {
                 if (self.matrixchat.el)
                     self.matrixchat.el.addClass('active')
 
-                self.app.actions.offScroll()
+                
                 self.app.actions.playingvideo()
-                self.app.actions.optimize()   
+
+
+                if (isMobile() || window.cordova){
+                    self.app.actions.offScroll()
+                    self.app.actions.optimize()   
+                }
                     
-                if(isMobile())
+                    
+                if (isMobile() || window.cordova)
                     app.nav.api.history.addParameters({
                         'pc' : '1'
                     })
@@ -21897,7 +22176,7 @@ Platform = function (app, listofnodes) {
             }
 
             self.matrixchat.core = core
-            self.matrixchat.core.hiddenInParent = isMobile() ? true : false 
+            self.matrixchat.core.hiddenInParent = isMobile()|| window.cordova ? true : false 
 
             core.externalLink(self.matrixchat)
 
@@ -21967,15 +22246,31 @@ Platform = function (app, listofnodes) {
         },
 
         connect : function(){
-            if(!self.matrixchat.connectWith) return
+            if(!self.matrixchat.connectWith && !self.matrixchat.joinRoom) return
             if(!self.matrixchat.core) return
 
             self.matrixchat.core.apptochat()
-            self.matrixchat.core.connect(self.matrixchat.connectWith).then(r => {
-                self.matrixchat.connectWith = null
-            }).catch(e => {
-                self.matrixchat.connectWith = null
-            })
+
+
+            if (self.matrixchat.connectWith){
+                return self.matrixchat.core.connect(self.matrixchat.connectWith).then(r => {
+                    self.matrixchat.connectWith = null
+                }).catch(e => {
+                    self.matrixchat.connectWith = null
+                })
+
+                
+            }
+                
+            if (self.matrixchat.joinRoom){
+                return self.matrixchat.core.joinRoom(self.matrixchat.joinRoom).then(r => {
+                    self.matrixchat.joinRoom = null
+                }).catch(e => {
+                    self.matrixchat.joinRoom = null
+                })
+
+                
+            }
         },
 
     }
@@ -22349,6 +22644,8 @@ Platform = function (app, listofnodes) {
         if(window.cordova){
             setupOpenwith()
             self.sdk.local.shares.init();
+        } else if (typeof _Electron != 'undefined' && window.electron) {
+            self.sdk.local.shares.init();
         }
 
         
@@ -22393,6 +22690,7 @@ Platform = function (app, listofnodes) {
                 /////////////
 
                 var w = parameters(eventData.url, true).connect
+   
 
                 self.matrixchat.connectWith = w || null
 
@@ -22417,6 +22715,7 @@ Platform = function (app, listofnodes) {
     self.cordovaSetup()
 
     self.matrixchat.connectWith = parameters().connect
+    self.matrixchat.joinRoom = parameters().publicroom
 
     return self;
 

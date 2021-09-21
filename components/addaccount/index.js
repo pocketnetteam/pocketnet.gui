@@ -173,7 +173,7 @@ var addaccount = (function(){
 			},
 
 			wnd : {
-				class : 'withoutButtons allscreen'
+				class : 'addaccountwnd'
 			}
 		}
 	};

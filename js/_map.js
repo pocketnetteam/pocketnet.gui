@@ -495,9 +495,30 @@ __map =  {
 		accounts : {
 			uri : "accounts",
 			href : "accounts",
-			add : {
-				el : 'content'
+			add : function(settings, p){
+
+				if(p.inWnd)
+				{
+					return {
+						insert : 'wnd'
+					}
+				}
+				else
+				if(p.inTooltip)
+				{
+					return {
+						insert : 'tooltip'
+					}
+				}
+				else
+				{
+					return {
+						el : 'content'
+					}
+				}
+
 			},
+
 			redirect : {
 				auth : 'authorization',
 				//validate : 'filluser'
@@ -1228,7 +1249,7 @@ __map =  {
 		reload : true
 	},
 
-	support : {
+	/*support : {
 		uri : "support",
 		href : "support",
 		add : {
@@ -1241,7 +1262,7 @@ __map =  {
 		],
 		anonimus : true,
 		reload : true
-	},
+	},*/
 
 	
 
@@ -1640,8 +1661,7 @@ __map =  {
 		add : {
 			el : 'content'
 		},
-		anonimus : true,
-		
+		anonimus : true
 	},
 
 	author : {

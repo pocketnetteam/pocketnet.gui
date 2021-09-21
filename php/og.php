@@ -20,7 +20,7 @@ class OG {
 
     
 
-    private $maphrefs = array("pkview","about","applications","terms","page404","welcome","registration","anothersite","token","filluserfast","filluser","usersettings","test","accounts","uploadpeertube","streampeertube","tagcloud","taginput","categories","staking","lastcomments","articles","article","video","system16","connection","proxylogs","help","donations","faq","embeding","userpage","oldchat","wallet","share","comments","tube","lenta","transactionview","s","send","imageGalleryEdit","imagegallery","aboutus","menu","toppanel","navigation","footer","support","notifications","panel","leftpanel","discussions","authorization","addaccount","complain","postscores","scheduler","surveyiframe","socialshare","socialshare2","main","author","channel","post","userslist","ustate","dust","testApi");
+    private $maphrefs = array("pkview","about","applications","terms","page404","welcome","registration","anothersite","token","filluserfast","filluser","usersettings","test","accounts","uploadpeertube","streampeertube","tagcloud","taginput","categories","staking","lastcomments","articles","article","video","system16","connection","proxylogs","help","donations","faq","embeding","userpage","oldchat","wallet","share","comments","tube","lenta","transactionview","s","send","imageGalleryEdit","imagegallery","aboutus","menu","toppanel","navigation","footer","support","notifications","panel","leftpanel","discussions","authorization","addaccount","complain","postscores","scheduler","surveyiframe","socialshare","socialshare2","main","author","channel","post","userslist","ustate","dust","testApi", "index");
 
     private $defaultOg = NULL;
 
