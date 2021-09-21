@@ -360,6 +360,11 @@ var post = (function () {
 
 				var pels = el.c.find('.js-player, [data-plyr-provider][data-plyr-embed-id]');
 
+				var shareId = share.txid;
+				if (!el[shareId])
+					el[shareId] = el.c.find('.metapanel.' + shareId + ' .downloadMetapanel');
+				var downloadPanel = el[shareId];
+
 				var wa =  !share.repost && !ed.repost && ((share.itisvideo() && isMobile() || (ed.autoplay && pels.length <= 1))) ? true : false
 
 				if (pels.length) {
@@ -403,6 +408,10 @@ var post = (function () {
 							player = _player
 
 						}, () => {
+
+							console.log(downloadPanel);
+							if (downloadPanel && downloadPanel.removeClass)
+								downloadPanel.removeClass('downloading downloaded invisible').addClass('canDownload');
 
 							if (wa) {
 
@@ -797,6 +806,49 @@ var post = (function () {
 				actions.donate()
 			},
 
+			downloadVideo : function() {
+				var id = share.txid;
+				var dwnloadBtn = el.c.find('.downloadBtn.' + id);
+				if (!player && !player.embed) return;
+				var embed = player.embed;
+				if (!embed.details || !embed.details.uuid || !embed.details.streamingPlaylists || embed.details.streamingPlaylists.length <= 0) return;
+				var streamingPlaylist = embed.details.streamingPlaylists[0];
+				if (!streamingPlaylist || !streamingPlaylist.files || streamingPlaylist.files.length <= 0) return;
+				// Generate the HTML menu
+				var menuContent = '<div class="sharepostmenu downloadMenu"><h2>' + self.app.localization.e('downloadVideo') + '</h2><h4>' + self.app.localization.e('selectQuality') + '</h4>';
+				_.each(streamingPlaylist.files, function(file) {
+					if (!file || !file.resolution || !file.resolution.label || !file.fileDownloadUrl) return;
+					menuContent += `<div class="menuitem table"><div class="label download${file.resolution.id}"><span>${file.resolution.label}</span>`;
+					if (file.size)
+						menuContent += `<span class="lightColor">${formatBytes(file.size)}</span>`;
+					menuContent += `</div></div>`;
+				});
+				menuContent += "</div>";
+				// Open the menu
+				self.app.platform.api.tooltip(dwnloadBtn, function() {
+					return menuContent;
+				}, function(tooltip)  {
+					_.each(streamingPlaylist.files, function(file) {
+						if (!file || !file.resolution || !file.resolution.id) return;
+						tooltip.find('.label.download' + file.resolution.id).on('click', function() {
+							events.downloadVideoFromUrl(embed.details.uuid, file, embed.details, id);
+							if (tooltip && tooltip.remove)
+								tooltip.remove();
+						});
+					});
+				}, {
+					dlg : true
+				});
+			},
+
+			downloadVideoFromUrl: function(id, video, videoDetails, shareId) {
+				if (!video || !video.fileDownloadUrl) return;
+				var a = document.createElement("a");
+				a.href = video.fileDownloadUrl;
+				a.setAttribute("download", video.resolution.id + '.mp4');
+				a.click();
+			},
+
 		}
 
 		var renders = {
@@ -987,6 +1039,7 @@ var post = (function () {
 									actions.position();
 
 									actions.initVideo();
+									el.c.on('click', '.downloadBtn', events.downloadVideo)
 
 									renders.images(function () {
 										if (!ed.repost) {
