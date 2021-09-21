@@ -759,10 +759,13 @@ Application = function(p)
 			toppanel : 		$('#panelWrapper'),
 			navigation : 	$('#navigationWrapper'),
 			footer : 		$('#footerWrapper'),
+			bastyonhelper : $('#bastyonhelper'),
 			chats : 		$('.chats'),
 			html : 			$('html'),
 			window : 		$(window)
 		};
+
+		console.log('el!!!', self.el);
 	
 		if (self.test){
 			$('html').addClass('testpocketnet') /// bstn

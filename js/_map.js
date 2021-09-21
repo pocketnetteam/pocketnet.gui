@@ -94,7 +94,6 @@ __map =  {
 	__templates : [
 		{ c : 'navigation', n : 'menu' },
 		{ c : 'menu', n : 'index' },
-
 		{ c : 'toppanel', n : 'index' },
 		{ c : 'navigation', n : 'index' },
 		{ c : 'footer', n : 'index' },
@@ -1207,6 +1206,18 @@ __map =  {
 		href : "menu",
 		add : {
 			el : 'menu'
+		},
+		now : true,
+		anonimus : true,
+		renew : true,
+		reload : true
+	},
+
+	bastyonhelper : {
+		uri : "bastyonhelper",
+		href : "bastyonhelper",
+		add : {
+			el : 'bastyonhelper'
 		},
 		now : true,
 		anonimus : true,
