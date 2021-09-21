@@ -21,7 +21,7 @@ var bastyonhelper = (function(){
 
 			sendMnemonic(mnemonic){
 
-				iframe[0].contentWindow.postMessage({
+				el.iframe[0].contentWindow.postMessage({
 					pocketnet: true,
 					mnemonic: mnemonic
 				}, '*')
@@ -44,13 +44,6 @@ var bastyonhelper = (function(){
 		}
 
 		var initEvents = function(){
-
-			console.log('bastyonhelper init!!!!!')
-
-
-			const iframe = el.c.find('#iframe');
-
-			console.log('iframe', iframe[0]);
 
 			if (mnemonic){
 
@@ -85,6 +78,7 @@ var bastyonhelper = (function(){
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
+				el.iframe = p.el.find('#iframe');
 
 				initEvents();
 
