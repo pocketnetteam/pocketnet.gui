@@ -932,7 +932,7 @@ var post = (function () {
 							renders.share(function() {
 								setTimeout(() => {
 									delete el[shareId];
-									renders.setShareDownload(shareId, 'downloaded');
+									renders.setShareDownload(shareId, 'canDownload');
 								}, 200);
 							}, true);
 
