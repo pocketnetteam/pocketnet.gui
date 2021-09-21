@@ -3,6 +3,33 @@
 <% if(typeof lentakey == 'undefined') lentakey = 'index' %>
 <% if(typeof indexkey == 'undefined') indexkey = 'index' %>
 
+<% if(app.curation()) {%>
+
+	<div class="items table">
+		<div class="item">
+
+			<div class="linkButtonWrapper">
+
+					<a href="userpage" fast="fast" handler="true">
+						<div class="iconWrapper">
+							<i class="fas fa-chevron-left"></i>
+						</div>
+					</a>
+			</div>
+	
+			<div class="upbuttonWrapper">
+				<div class="iconWrapper toup">
+					<i class="fas fa-chevron-up"></i>
+				</div>
+			</div>
+	
+			
+		</div>
+	</div>
+
+<% } else { %>
+
+
 
 <div class="items table">
 
@@ -12,11 +39,7 @@
 
 			<% if(back) {  
 				
-				var ur = addtouri(back.href, 'back', 'true')
-
-				
-				
-				%>
+				var ur = addtouri(back.href, 'back', 'true') %>
 				
 					<a href="<%- ur %>" fast="fast" handler="true">
 						<div class="iconWrapper">
@@ -194,3 +217,5 @@
 
 
 </div>
+
+<% } %>

@@ -281,7 +281,6 @@ var lenta = (function(){
 				fullscreenvideoShowed = null
 
 				loading = false
-				ended = false
 				players = {}
 				sharesInview = []
 				scrolling = false

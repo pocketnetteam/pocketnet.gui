@@ -75,9 +75,6 @@ var Middle = function(){
 
         })
 
-        
-
-
         var data = {
             requestsIp : requestsIp,
             responses : byCodes,

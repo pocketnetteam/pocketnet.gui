@@ -164,6 +164,7 @@ var navigation = (function(){
 
 			getdata : function(clbk, p){
 
+
 				var data = {};
 
 				w = $(window)

@@ -19671,9 +19671,15 @@ Platform = function (app, listofnodes) {
 
                     var jm = message;
 
-                    try { jm = JSON.parse(message || "{}"); } catch (e) {}
+                    try { jm = JSON.parse(message || "{}"); } catch (e) {
+                        console.log("E", e)
+                    }
+
+                    console.log("MESSAGE", jm)
                     
                     if (jm){
+
+                        console.log('jm.type', jm.type)
 
                         if (jm.type == 'proxy-message-tick'){
 
@@ -21820,7 +21826,7 @@ Platform = function (app, listofnodes) {
 
                 var link = 'contact?id=' + hexEncode(address)
 
-                if(isMobile()){
+                if(isMobile() || window.cordova){
                     self.matrixchat.core.apptochat(link)
                 }
                 else{
@@ -21868,8 +21874,8 @@ Platform = function (app, listofnodes) {
                                     <matrix-element
                                         address="${a}"
                                         privatekey="${privatekey}"
-                                        pocketnet="`+( (isMobile() || isTablet()) ? '' : 'true')+`"
-                                        mobile="`+( (isMobile() || isTablet()) ? 'true' : '')+`" 
+                                        pocketnet="`+( (isMobile() || isTablet() || window.cordova) ? '' : 'true')+`"
+                                        mobile="`+( (isMobile() || isTablet() || window.cordova) ? 'true' : '')+`" 
                                         ctheme="`+self.sdk.theme.current+`"
                                         localization="`+self.app.localization.key+`"
                                         fcmtoken="`+(self.fcmtoken || "")+`"
@@ -21912,7 +21918,7 @@ Platform = function (app, listofnodes) {
         initevents : function(){
             if (self.matrixchat.el){
 
-                if(isTablet()){
+                if(isMobile() || window.cordova){
 
 					self.matrixchat.el.swipe({
 						allowPageScroll: "vertical", 
@@ -22064,7 +22070,7 @@ Platform = function (app, listofnodes) {
         showed : function(){
             if(!self.matrixchat.core){ return false }
 
-            if(isMobile()){
+            if(isMobile()|| window.cordova){
                 return !self.matrixchat.core.hiddenInParent
             }
 
@@ -22083,7 +22089,7 @@ Platform = function (app, listofnodes) {
 
             core.backtoapp = function(link){
 
-                if (isTablet())
+                if (isMobile()|| window.cordova)
                     self.app.actions.restore()
 
                 app.el.html.removeClass('chatshowed')
@@ -22094,13 +22100,13 @@ Platform = function (app, listofnodes) {
                     self.matrixchat.el.removeClass('active')
 
                 if (self.matrixchat.core){ 
-                    self.matrixchat.core.hiddenInParent = isMobile() ? true : false 
+                    self.matrixchat.core.hiddenInParent = isMobile()|| window.cordova ? true : false 
                 }
 
-                if (isTablet())
+                if (isMobile() || window.cordova)
                     self.app.actions.onScroll()
 
-                if(isMobile())
+                if(isMobile() || window.cordova)
                     app.nav.api.history.removeParameters(['pc'])
                 if (link){
 
@@ -22133,13 +22139,13 @@ Platform = function (app, listofnodes) {
                 self.app.actions.playingvideo()
 
 
-                if (isTablet()){
+                if (isMobile() || window.cordova){
                     self.app.actions.offScroll()
                     self.app.actions.optimize()   
                 }
                     
                     
-                if (isMobile())
+                if (isMobile() || window.cordova)
                     app.nav.api.history.addParameters({
                         'pc' : '1'
                     })
@@ -22161,7 +22167,7 @@ Platform = function (app, listofnodes) {
             }
 
             self.matrixchat.core = core
-            self.matrixchat.core.hiddenInParent = isMobile() ? true : false 
+            self.matrixchat.core.hiddenInParent = isMobile()|| window.cordova ? true : false 
 
             core.externalLink(self.matrixchat)
 

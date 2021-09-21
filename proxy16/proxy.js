@@ -1119,7 +1119,7 @@ var Proxy = function (settings, manage, test) {
 				authorization: 'signature',
 				action: function ({ node, scenario, A }) {
 
-					if (!test) return Promise.reject('err');
+					//if (!test) return Promise.reject('err');
 
 					if (!A) return Promise.reject('admin');
 
@@ -1140,6 +1140,27 @@ var Proxy = function (settings, manage, test) {
 						return Promise.reject('err')
 					})
 
+				},
+			},
+
+			extendedstats: {
+				path: '/nodes/extendedstats',
+				action: function () {
+
+					console.log('extendedStats')
+
+					var data = nodeManager.extendedStats()
+
+					console.log('extendedStats2')
+
+					return Promise.resolve({
+						data: data,
+					}).catch(e => {
+
+						console.error(e)
+
+						return Promise.reject(e)
+					});
 				},
 			},
 

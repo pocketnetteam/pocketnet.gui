@@ -506,6 +506,8 @@ var Wallet = function(p){
 
             if(!addresses[key]) return Promise.reject('key')
 
+            var added = 0
+
             var queue = _.filter(addresses[key].queue, function(object, l){
 
                 if(!self.pocketnet.kit.address.validation(object.address)) {
@@ -514,7 +516,12 @@ var Wallet = function(p){
 
                 if(!self.patterns.validAddress(object.address)) return false
 
-                return !object.executing && l < 50
+                if(!object.executing && added < 50){
+                    added++
+
+                    return true
+                }
+
             })
 
             if(!queue.length) return Promise.resolve()
@@ -1028,6 +1035,9 @@ var Wallet = function(p){
                 unspents : r.unspents ? r.unspents.length : 0,
                 balance : self.unspents.total(r.unspents),
                 queue : r.queue.length,
+                queueDetails : _.map(r.queue, function(q){
+                    return {address : q.address, executing : q.executing}
+                }),
                 ready : r.keys ? true : false,
                 address : r.address || null,
                 check : r.check

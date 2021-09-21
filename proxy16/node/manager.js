@@ -142,7 +142,6 @@ var Nodemanager = function(p){
             if(i < 5){
                 self.api.peernodesTime(node).then(r => {}).catch(e => {})
             }
-
             
         })
 
@@ -181,10 +180,10 @@ var Nodemanager = function(p){
 
             if(!n.inited) return false
 
-            var s = n.statistic.get()
+            var s = n.statistic.getst()
             var r = n.statistic.rating()
 
-            if (s.success > 0 && s.success > s.failed && s.time < 400 && r){
+            if (s.success > 0 && s.success > s.failed && s.time < 1200 && r){
                 return true
             }
         })
@@ -300,7 +299,7 @@ var Nodemanager = function(p){
 
             nodes[node.key] = {
                 node : node.exportsafe(),
-                statistic : node.statistic.get(),
+                statistic : node.statistic.getst(),
                 status : node.chainStatus(),
                 rating : node.statistic.rating(),
                 probability : node.statistic.probability(),
@@ -313,7 +312,23 @@ var Nodemanager = function(p){
 
     }
 
+    self.extendedStats = function(){
+
+        var r = {}
+        var commonStats = {}
+
+        _.each(self.nodes, function(node){
+            console.log('node getGroupedByMethods')
+            r[node.key] = node.statistic.getGroupedByMethods()
+        })
+
+        return {
+            nodes : r
+        }
+    }
+
     self.info = function(){
+
         var stats = {
             count : self.nodes.length,
             inited : inited,
@@ -330,7 +345,8 @@ var Nodemanager = function(p){
             peers : self.askedpeers,
             tmp : self.getnodes(function(n){
                 return !n.inited
-            })
+            }),
+
         }
 
         return stats
@@ -349,7 +365,7 @@ var Nodemanager = function(p){
 
                 var bchain = 'main'
 
-                if (self.proxy.text) bchain = 'test'
+                if (self.proxy.test) bchain = 'test'
 
                 db.find({bchain}).exec(function (err, docs) {
 
@@ -371,8 +387,6 @@ var Nodemanager = function(p){
                         if(i < 5) return true
                     })
 
-                   // docs = []
-
                     var nodes = _.map(c.concat(p.stable, docs || []) , function(options){
 
                         var node = new Node(options, self)
@@ -381,7 +395,6 @@ var Nodemanager = function(p){
 
                         return node
                         
-                        //self.add(node)
                     })
 
                     self.api.connected(nodes, function(nodes){
@@ -524,8 +537,6 @@ var Nodemanager = function(p){
 
         return self.waitready().then(() => {
 
-            console.log('self.initednodes().length', self.initednodes().length)
-   
             var node = self.selectbest()
     
             if(!node) return Promise.reject('node')

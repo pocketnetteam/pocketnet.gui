@@ -385,9 +385,11 @@ var Testnode = function(node, manager){
                 promises.push(
                     f.processArrayWithDelay(methodkeys, waittime, function(m){
 
-                        return request(m).then(r => {
+                        request(m)
+
+                        //return request(m).then(r => {
                             return Promise.resolve()
-                        })
+                       // })
 
                     }).catch(e => {
 
@@ -408,6 +410,8 @@ var Testnode = function(node, manager){
 
             if(!time) time = 0
 
+            console.log('time', time)
+
             if (time <= 0) {
                 return Promise.resolve()
             }
@@ -416,7 +420,6 @@ var Testnode = function(node, manager){
 
 
             return self.scenariosmeta.parallellMethods(count, methodkeys).catch(e => {
-
 
                 return Promise.resolve()
 
@@ -634,6 +637,7 @@ var Testnode = function(node, manager){
                     if(i == 'getcomments') return false
                     if(i == 'gethotposts') return false
                     if(i == 'gethierarchicalstrip') return false*/
+                    /*if(i == 'gettags') return false*/
                     if(i == 'getrawtransaction') return false
                     
                     
@@ -642,7 +646,12 @@ var Testnode = function(node, manager){
             
                 console.log("testing", methodkeys)
 
-            return self.scenariosmeta.parallellMethodsLong(count, methodkeys, 600000)
+            return self.scenariosmeta.parallellMethodsLong(count, methodkeys, 6000000).catch(e => {
+
+                console.log("E testing", e)
+
+                return Promise.reject(e)
+            })
         },
 
         limits : function(){

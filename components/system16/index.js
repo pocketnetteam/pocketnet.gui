@@ -416,7 +416,7 @@ var system16 = (function(){
 
 			ticksettings : function(settings, s, changed){
 
-
+				console.log("THST12, changed")
 				if (changed){
 					system = settings
 				}
@@ -446,8 +446,9 @@ var system16 = (function(){
 
 			tick : function(state){
 
-				info = state
+				console.log("THST1")
 
+				info = state
 
 				var laststate = stats[stats.length - 1]
 
@@ -765,6 +766,8 @@ var system16 = (function(){
 
 			node : {
 				test : function(node){
+
+					return
 
 					var scenarios = [{
 						name : "Pageload",
@@ -3055,7 +3058,7 @@ var system16 = (function(){
 
 					p.el.find('.name').on('click', function(){
 
-						return
+						
 
 						var key = $(this).closest('.node').attr('node')
 

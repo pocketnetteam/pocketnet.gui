@@ -8,7 +8,7 @@ var main = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el;
+		var el = {};
 
 		var roller = null, lenta = null, share = null, panel,leftpanel, uptimer = null;
 

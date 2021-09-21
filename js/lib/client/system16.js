@@ -74,7 +74,7 @@ var System16 = function(app, proxy, direct){
 
     var tick = function(e, d){
 
-        var message = d.data
+        var message = d.data || d
 
         if(!message) return
         
