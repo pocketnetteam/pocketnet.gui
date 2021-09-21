@@ -363,7 +363,6 @@ var post = (function () {
 				var shareId = share.txid;
 				if (!el[shareId])
 					el[shareId] = el.c.find('.metapanel.' + shareId + ' .downloadMetapanel');
-				var downloadPanel = el[shareId];
 
 				var wa =  !share.repost && !ed.repost && ((share.itisvideo() && isMobile() || (ed.autoplay && pels.length <= 1))) ? true : false
 
@@ -400,24 +399,34 @@ var post = (function () {
 						}
 					};
 
-					$.each(pels, function (key, el) {
+					$.each(pels, function (key, el2) {
 
+						var videoId = el2.getAttribute('data-plyr-video-id');
 
-						PlyrEx(el, options, (_player) => {
+						PlyrEx(el2, options, (_player) => {
 
 							player = _player
 
-						}, () => {
+							if (videoId && self.sdk.local.shares.getVideo(videoId, shareId) != undefined) {
+								renders.setShareDownload(shareId, 'downloaded');
+								setTimeout(() => {
+									el.c.on('click', '.metapanel.' + shareId + ' .downloadMetapanel .deleteBtn', events.deleteVideo);
+								}, 100);
+							} else {
+								renders.setShareDownload(shareId, 'canDownload');
+								setTimeout(() => {
+									el.c.on('click', '.metapanel.' + shareId + ' .downloadMetapanel .downloadBtn', events.downloadVideo);
+								}, 100);
+							}
 
-							console.log(downloadPanel);
-							if (downloadPanel && downloadPanel.removeClass)
-								downloadPanel.removeClass('downloading downloaded invisible').addClass('canDownload');
+						}, () => {
 
 							if (wa) {
 
 								player.play()
 								player.muted = false
-								player.setVolume(self.sdk.videos.volume)
+								if (player.setVolume)
+									player.setVolume(self.sdk.videos.volume)
 								//
 							}
 
@@ -843,10 +852,94 @@ var post = (function () {
 
 			downloadVideoFromUrl: function(id, video, videoDetails, shareId) {
 				if (!video || !video.fileDownloadUrl) return;
-				var a = document.createElement("a");
-				a.href = video.fileDownloadUrl;
-				a.setAttribute("download", video.resolution.id + '.mp4');
-				a.click();
+				// Mobile
+				if (isMobile() && window.cordova && window.cordova.file) {
+					renders.setShareDownload(shareId, 'downloading');
+					self.sdk.local.shares.saveVideoCordova(shareId, id, video, videoDetails).then(() => {
+						// Success
+
+						// Update share video player
+						if (player) {
+							if (player.destroy)
+								player.destroy();
+							player = null;
+						}
+						renders.share(function() {
+							setTimeout(() => {
+								delete el[shareId];
+								renders.setShareDownload(shareId, 'downloaded');
+							}, 200);
+						}, true);
+
+					}, (err) => {
+						// Error
+						console.log(err);
+						renders.setShareDownload(shareId, 'canDownload');
+					});
+				}
+				// Electron
+				else if (typeof _Electron != 'undefined' && window.electron) {
+					renders.setShareDownload(shareId, 'downloading');
+					self.sdk.local.shares.saveVideoElectron(shareId, id, video, videoDetails).then(() => {
+						// Success
+
+						// Update share video player
+						if (player) {
+							if (player.destroy)
+								player.destroy();
+							player = null;
+						}
+						renders.share(function() {
+							setTimeout(() => {
+								delete el[shareId];
+								renders.setShareDownload(shareId, 'downloaded');
+							}, 200);
+						}, true);
+
+					}, (err) => {
+						// Error
+						console.log(err);
+						renders.setShareDownload(shareId, 'canDownload');
+					});
+				}
+				// Desktop
+				else {
+					var a = document.createElement("a");
+					a.href = video.fileDownloadUrl;
+					a.setAttribute("download", video.resolution.id + '.mp4');
+					a.click();
+				}
+			},
+
+			deleteVideo : function(){
+				var shareId = share.txid;
+				if (!shareId) return;
+				// Ask user for confirmation
+				dialog({
+					html:  self.app.localization.e('deleteVideoDialog'),
+					btn1text: self.app.localization.e('dyes'),
+					btn2text: self.app.localization.e('dno'),
+					success: function () {
+						// User wants to delete the video
+						self.sdk.local.shares.delete(shareId, function() {
+							
+							// Update share video player
+							if (player) {
+								if (player.destroy)
+									player.destroy();
+								player = null;
+							}
+							renders.share(function() {
+								setTimeout(() => {
+									delete el[shareId];
+									renders.setShareDownload(shareId, 'downloaded');
+								}, 200);
+							}, true);
+
+						});
+					},
+					class : 'deleteDownloadVideoDialog'
+				});
 			},
 
 		}
@@ -1039,7 +1132,6 @@ var post = (function () {
 									actions.position();
 
 									actions.initVideo();
-									el.c.on('click', '.downloadBtn', events.downloadVideo)
 
 									renders.images(function () {
 										if (!ed.repost) {
@@ -1301,6 +1393,37 @@ var post = (function () {
 					if (clbk) clbk();
 				}
 			},
+
+			// Update the download button for this share
+			// {shareId}: The tx ID of the share
+			// {action}:
+			//		canDownload: Show the download button
+			//		downloading: Show the spinner
+			//		downloaded: Show the green check and delete button
+			//		invisible: Hide everything
+			setShareDownload : function(shareId, action){
+				// Check if we have the HTML elements for this share
+				if (!el[shareId])
+					el[shareId] = el.c.find('.metapanel.' + shareId + ' .downloadMetapanel');
+				switch (action) {
+					case 'canDownload':
+						console.log('canDownload');
+						el[shareId].removeClass('downloading downloaded invisible').addClass('canDownload');
+						break;
+					case 'downloading':
+						console.log('downloading');
+						el[shareId].removeClass('canDownload downloaded invisible').addClass('downloading');
+						break;
+					case 'downloaded':
+						console.log('downloaded');
+						el[shareId].removeClass('downloading canDownload invisible').addClass('downloaded');
+						break;
+					case 'invisible':
+						console.log('invisible');
+						el[shareId].removeClass('downloading downloaded canDownload').addClass('invisible');
+						break;
+				}
+			}
 		};
 
 		var state = {
