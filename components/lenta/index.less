@@ -2364,9 +2364,11 @@
 			right: 0;
 			background: transparent!important;
 			.transition(0.3s);
+			will-change: transform;
+            -webkit-backface-visibility: hidden;
 
 			button{
-				width: 220px;
+				width: 260px;
 			}
 		}
 	}
@@ -2374,7 +2376,7 @@
 	html.scrollmodedown{
 		#lenta{
 			.loadprev{
-				top : -110px;
+				transform:  translateY(-220px);
 			}
 		}
 	}
