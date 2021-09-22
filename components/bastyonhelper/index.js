@@ -45,13 +45,20 @@ var bastyonhelper = (function(){
 
 		var initEvents = function(){
 
-			if (mnemonic){
 
-				setTimeout(function(){
+			if (mnemonic && el.iframe[0]){
 
-					events.sendMnemonic(mnemonic)
-					
-				}, 1000);
+				window.addEventListener('message', function(event){
+
+					if (event.data.bastyonhelper && event.data.ready){
+
+						events.sendMnemonic(mnemonic)
+
+					}
+
+				})
+
+				
 
 			}
 
