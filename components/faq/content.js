@@ -1,6 +1,27 @@
 var faqcontent = [
 
-
+/*{
+		
+				name : 'Technical',
+				id : 'technical',
+			
+				group : [
+			
+					{
+						id : 'downloadclient',
+						q : 'Where do I download the client?',
+						a : '<div><a href="https://github.com/pocketnetteam/pocketnet.gui/releases/latest">https://github.com/pocketnetteam/pocketnet.gui/releases/latest</a></div><div>Click on '+self.app.meta.fullname+'Setup.exe</div>',
+					},
+					
+					{
+						id : 'downloadclient',
+						q : 'Where do I download the node?',
+						a : '<div><a href="https://github.com/pocketnetteam/pocketnet.core/releases/latest">https://github.com/pocketnetteam/pocketnet.core/releases/latest</a></div><div>With any questions email core@pocketnet.app</div>',
+					}
+			
+				]
+			
+			},*/
 	{
 
 		name : self.app.localisation.e('e14003'),

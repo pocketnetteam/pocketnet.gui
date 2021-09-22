@@ -63,7 +63,7 @@ var activenodes = [
 		ws : 8087,
 		name : 'CryptoserverTEST',
 		stable : true
-	}*/
+	},*/
 	{
 		host : '64.235.45.119',
 		port : 38081,

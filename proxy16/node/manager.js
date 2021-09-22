@@ -387,6 +387,8 @@ var Nodemanager = function(p){
                         if(i < 5) return true
                     })
 
+                    //docs = []
+
                     var nodes = _.map(c.concat(p.stable, docs || []) , function(options){
 
                         var node = new Node(options, self)

@@ -55,8 +55,13 @@ var main = (function(){
 
 					lastStickyRefresh = ns
 
-					//el.panel.hcSticky('refresh');
-					//el.leftpanel.hcSticky('refresh');
+					if(alv){
+						el.panel.hcSticky('refresh');
+						el.leftpanel.hcSticky('refresh');
+					}
+
+					//
+					//
 
 					/*setTimeout(function(){
 						if(el.panel) el.panel.hcSticky('refresh');
@@ -963,7 +968,7 @@ var main = (function(){
 					
 					self.nav.api.load({
 						open : true,
-						href : 'userpage',
+						href : 'userpage?pc=1',
 						history : true
 					})
 

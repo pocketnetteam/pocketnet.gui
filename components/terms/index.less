@@ -8,11 +8,32 @@
 		color : @color-gray;
 	}
 
+	.captionWrapper,
+	.acceptWrapper,
+	.textWrapper{
+		padding : 2 * @rhythm;
+	}
+
+	.acceptWrapper{
+		button{
+			width: 100%;
+			border-radius: 30px;
+		}
+	}
+
+	.captionWrapper{
+		span{
+			font-size: 2.5em;
+			font-weight: 700;
+		}
+	}
+
 	.text{
 		color : @color-black2;
 		max-width: 700px;
 		margin-top: 4 * @rhythm;
 		margin-bottom: 8 * @rhythm;
+		
 
 		p{
 			margin-top : 4 * @rhythm;
@@ -49,6 +70,7 @@
 }
 .wnd{
 	#terms{
+		padding-top : 8 * @rhythm;
 		.text{
 			color : @color-gray-slight;
 		}

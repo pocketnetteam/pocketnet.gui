@@ -145,21 +145,23 @@ html.stblack{
 
 /*t*/ @media only screen and (max-width: 768px){
     #applications{
-
+        padding : 2 * @rhythm;
+        padding-bottom: 8 * @rhythm;
     
-        .os{
-            padding : 4 * @rhythm 2 * @rhythm;
-    
-           
-    
-            .downloadOs{
-                min-width: auto;
-                padding-left: 2 * @rhythm;
-                padding-right: 2 * @rhythm;
+        .flbx{
+            display: flex;
+            max-width: none;
+            flex-direction: column;
+            >div{
+                flex-grow: 1;
+                margin-right: 0;
+                margin-top: 2 * @rhythm;
             }
     
+            .panel{
+                margin-top: 2*@rhythm;
+            }
         }
-    
         
       
     }

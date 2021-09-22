@@ -13,28 +13,7 @@ var faq = (function(){
 		self.app.meta.fullname
 
 		var faqcontent = [
-			/*{
-		
-				name : 'Technical',
-				id : 'technical',
 			
-				group : [
-			
-					{
-						id : 'downloadclient',
-						q : 'Where do I download the client?',
-						a : '<div><a href="https://github.com/pocketnetteam/pocketnet.gui/releases/latest">https://github.com/pocketnetteam/pocketnet.gui/releases/latest</a></div><div>Click on '+self.app.meta.fullname+'Setup.exe</div>',
-					},
-					
-					{
-						id : 'downloadclient',
-						q : 'Where do I download the node?',
-						a : '<div><a href="https://github.com/pocketnetteam/pocketnet.core/releases/latest">https://github.com/pocketnetteam/pocketnet.core/releases/latest</a></div><div>With any questions email core@pocketnet.app</div>',
-					}
-			
-				]
-			
-			},*/
 			
 			{
 			
@@ -50,12 +29,18 @@ var faq = (function(){
 					},
 			
 					{
+						if : function(){
+							return !self.app.curation()
+						},
 						id : 'linktoprofile',
 						q : 'Can I link to my profile? or my "page"? So that i can post it into my community to bring members over.',
 						a : '<div>In the browser, go to your profile by clicking on avatar in the upper right and just copy the browser address, everyone who will sign up from that link will follow you automatically and you will actually get rewards.</div>\
 							<div>On the desktop,  from a desktop application go to your profile,  once there, there will be three icons to the right of your avatar first there will be a wallet with number of coins, then a bell with notifications and a third is a green cross icon click on that green cross  and click copy,  send that link around everyone who subscribes will follow you and you will get rewards.</div>',
 					},
 					{
+						if : function(){
+							return !self.app.curation()
+						},
 						id : 'starsystem',
 						q : 'The star system. Is there a limit on how many stars a person has to give people?',
 						a : '<div>There are some limits. But as your reputation grows you can upvote more and more. This is done, so bots don&rsquo;t break down our blockchain. Initially you get 100 ratings every 24 hours. As your reputation grows (that happens by posting and getting rated), then you do 200 ratings a day.</div>',
@@ -75,19 +60,21 @@ var faq = (function(){
 					},
 			
 			
-					/*{
-						id : 'mobileapp',
-						q : 'Is there a mobile app?',
-						a : '<div>There is an Android app, you can download it here: https://play.google.com/store/apps/details?id=pocketnet.app  iPhone app is not available, because Apple required us to remove any content on 24 hour notice. We refused, so you can use the mobile web app.</div>',
-					},*/
+				
 			
 					{
+						if : function(){
+							return !self.app.curation()
+						},
 						id : 'postinglimit',
 						q : 'Can you tell me what is the limit for posting each day or hour?',
 						a : '<div>We do have some limitations, but after testing it we have increased our limits. At the outset you can make 15 posts and issue 100 ratings every 24 hours. Once your reputation grows above 50, you will be able to make up to 30 posts and 200 ratings every 24 hours.</div>',
 					},
 			
 					{
+						if : function(){
+							return !self.app.curation()
+						},
 						id : 'reputation',
 						q : 'What is reputation and how is it calculated?',
 						a : "<div>Your reputation is the sum of your ratings calculated in the following way. Note, that users with reputation below 50 do not affect anyone's reputation or coin winnings. They can rate the content, but it does not affect reputation.</div>\
@@ -95,17 +82,26 @@ var faq = (function(){
 					},
 			
 					{
+						if : function(){
+							return !self.app.curation()
+						},
 						id : 'deletepostoruser',
 						q : 'Is there a way to delete or edit a post?',
 						a : '<div>Not at this point, as it is baked into blockchain. However, we are working on a feature to create an overwrite transaction as well &#10075;hide&#10076; transaction, which would effectively translate to edit or delete.</div>',
 					},
 			
 					{
+						if : function(){
+							return !self.app.curation()
+						},
 						id : 'usersearch',
 						q : 'Is there a way to search for a user?',
 						a : '<div>Click the search magnifying glass on the top and search by username or by keywords.</div>',
 					},
 					{
+						if : function(){
+							return !self.app.curation()
+						},
 						id : 'follow',
 						q : 'How do you follow someone?',
 						a : '<div>Next to post author (on top of post) there is a Follow link, you can find his posts in Top posts (red flame on top of the page). You will also soon see Subscriptions feed, which is going to be different from the main feed. The main feed will be everything that anyone posts chronologically, but Subscriptions feed will only contain posts from people you follow. So, you will go into general feed in search of good content, though you may not like everything. Then select those you want to keep. Kind of like fishing :)</div>',
@@ -113,18 +109,27 @@ var faq = (function(){
 			
 			
 					{
+						if : function(){
+							return !self.app.curation()
+						},
 						id : 'otherbrowsers',
 						q : 'Can it be used on Brave or Duck Duck go browsers?',
 						a : '<div>'+self.app.meta.fullname+' should work on those browsers. It is fully functional on Chrome and Firefox. But we strongly encourage everyone to download the desktop app (grab '+self.app.meta.fullname+'Setup.exe here: https://github.com/pocketnetteam/pocketnet.gui/releases/tag/v0.0.33-beta). It cannot be blocked ever (even if <%- app.meta.url %> is down or blocked for some reason). This is a serious consideration in totalitarian and quasi-totalitarian countries which, if you think about it, is beginning to include more and more of the globe.</div>',
 					},
 			
 					{
+						if : function(){
+							return !self.app.curation()
+						},
 						id : 'replypost',
 						q : 'Can we reply to our own/and other&rsquo;s posts?',
 						a : '<div>Yes, commenting is live below each post..</div>',
 					},
 			
 					{
+						if : function(){
+							return !self.app.curation()
+						},
 						id : 'addtags',
 						q : 'How to add a tag to a post?',
 						a : '<div>Just type in the field tag and press enter. No need to specify #, it will be added automatically.</div>',
@@ -136,30 +141,36 @@ var faq = (function(){
 						a : '<div>Your public address is what '+self.app.meta.fullname+' uses to verify your identity. Essentially, your private key is a really large number (that can be represented with a 12 word sequence or a QR code). This number gets multiplied by another that everyone knows (called a base point) and we get a public key. When you enter your private key, we can multiply it by the base point to get your public key and we can match it against public address. If they match, we know it is you. It is impossible to go back i.e. to divide public key by the base point to get your private key. The way multiplication in cryptography works is it is only one way and cannot be reversed, so your key is safe. '+self.app.meta.fullname+' uses the same exact cryptography as Bitcoin.</div>',
 					},
 					{
+						if : function(){
+							return !self.app.curation()
+						},
 						id : 'desktopmac',
 						q : 'Will there be a downloadable executable for Mac?',
 						a : '<div>Yes - we are working of Mac platform. Target is for mid-April.</div>',
 					},
 					{
+						
 						id : 'dark-mode',
 						q : 'How do I change the theme to Dark Mode?',
 						a : "<div>If you're on browser click your profile picture > Manage > Settings. If you're on mobile click the three lines on the bottom right > Settings </div>",
 					},
 					{
+						if : function(){
+							return !self.app.curation()
+						},
 						id : 'banning',
 						q : 'Can people be banned?',
 						a : '<div>If a someone is posting unorthodox content then people will rate their content low causing their reputation to fall, if their reputation is less than -50 then they will be shadow banned. This means they can still post but no one can see their content unless directly on their page.</div>',
 					},
 					{
+						if : function(){
+							return !self.app.curation()
+						},
 						id : 'app-store',
 						q : 'What can be expected to purchase with PKOIN?',
 						a : '<div>Soon there will be a way to boost posts in the feed and to Top Posts. Also, there will be special emojis and color of page, and badges.</div>',
 					},
-					{
-						id : 'Apple App',
-						q : 'When will PocketNet be added to Apple?',
-						a : '<div>2-3 months</div>',
-					},
+				
 					{
 						id : 'Missing PKCOIN',
 						q : 'Help! I am missing my PKOIN!',
@@ -171,6 +182,35 @@ var faq = (function(){
 			
 			},
 			
+			{
+			
+				name : 'Messenger',
+				id : 'messenger',
+			
+				group : [
+			
+					{
+						id : 'messengerd',
+						q : 'How does '+self.app.meta.fullname+' Messenger differ from other encrypted messengers?',
+						a : '<div>'+self.app.meta.fullname+' private messenger differentiates from existing messengers in the following ways:<ul><li>Completely decentralized, non-corporate open source code with no central servers</li><li>Not connected to your phone number (all major messengers are connected to your mobile number now)</li><li>Every one-on-one chat is end-to-end encrypted by default</li><li>All images sent and received are stored encrypted ‘at rest’ meaning that new Apple scanning algorithms will not see them</li><li>Ability to send crypto to contacts with one click</li><li>Choose to send PKOIN or 19 other cryptos that can be exchanged directly into Pocketcoin (PKOIN)</li></div>',
+					},
+			
+			
+					{
+						id : 'messengerh',
+						q : 'Where is '+self.app.meta.fullname+' Messenger hosted?',
+						a : '<div>'+self.app.meta.fullname+' messenger is hosted on decentralized servers, any user can run a server for themselves or for the network to earn extra PKOIN. This is dramatically different from all major existing messengers. They are either not end-to-end encrypted by default or require a phone number connection, which violates the users’ privacy.</div><div>'+self.app.meta.fullname+' messenger also augments the newest video capability of the network. Videos shared on the Bastyon network can be viewed and rated directly in the chat. This will increase the reach for '+self.app.meta.fullname+' video creators.</div>',
+					},
+			
+
+					{
+						id : 'pocketcoinbuy',
+						q : 'How is blockchain used in the '+self.app.meta.fullname+' messenger?',
+						a : '<div>Blockchain is used for registration of the accounts and for creation of private/public private key pairs that are then used for encryption.</div>',
+					},
+			
+				]
+			},
 			
 			{
 			
@@ -260,6 +300,9 @@ var faq = (function(){
 						a : '<div>This is a very important question and we will be releasing many videos and articles about it, as well as looking for your input. To begin with, not all types of content are allowed. However, and this is crucial, the enforcement is transparent and up to the community in the way we will explain below. Enforcement is done by the community and is in the open with no hidden shadow bans or selective banning practiced by the Silicon Valley.</div>',
 					},
 					{
+						if : function(){
+							return !self.app.curation()
+						},
 						id : 'specific',
 						q : 'Specifics of curation on '+self.app.meta.fullname+'.',
 						a : '<div>When your reputation gets to 100 and you press on dots in the upper right of any post, you will see an option to Complain. If enough Complaints come in, the post will not be shown anymore. When someone has more than 2 posts that are voted off the platform in 24 hours, they cannot post for another 48 hours after the second post. Complain is completed when number of complaints is at least ⅓ of the number of 4 and 5 star ratings, subject to a minimum of 10 complaints (which will be adjusted over time in consultation with the community).</div><div>We are extremely and passionately pro-speech. However, we do not want to turn '+self.app.meta.fullname+' into a marginal forum where lunatics reign. What would cause you to Complain?</div><div>Do NOT complain about stuff that you simply don’t like or that offends you. That is not a high enough bar. Do not follow people who offend you, soon we will have a feature for not seeing their posts, but do not complain about them. Complain only about things that threaten long term viability of '+self.app.meta.fullname+' as a mass communication platform that intends to reach to all levels of society in many countries.</div><div>We strongly recommend that you complain about porn of any kind. There are plenty of porn sites on the web, we do not want to mix our free speech endeavor with that. We strongly encourage the community to vote off porn. Secondly, any type of a direct threat should be voted off and clear examples of racism should too. If we allow MSM to tie us to racism or violence directly, '+self.app.meta.fullname+' will cease to exist before we can even get it out there. Just because MSM media cries wolf about fake racism, doesn’t mean we should prove them right by tolerating it in our platform. It will detract from what we are trying to achieve, which is to challenge new totalitarianism created by the unholy alliance of media, finance and corrupt government officials.</div> ',
@@ -279,10 +322,15 @@ var faq = (function(){
 			
 				name : 'Specifics of curation on '+self.app.meta.fullname+'.',
 				id : 'specificscuration',
+
+				if : function(){
+					return !self.app.curation()
+				},
 			
 				group : [
 			
 					{
+						
 						id : 'trolls',
 						q : 'Is any content allowed on '+self.app.meta.fullname+'? If some content is not allowed, can the platform still be called free speech?',
 						a : '<div>Sometimes we can have a user who comes in with a specific purpose to attack '+self.app.meta.fullname+' by posting a series of vile images. To protect against that we have a following mechanism. If someone’s reputation reaches -50 (negative 50), their account is automatically blocked. Getting a reputation of -50 is equivalent to having 25 one star ratings and no four or five star ratings. This is nearly impossible to achieve without having lots of bad posts.</div>',
@@ -301,6 +349,10 @@ var faq = (function(){
 			
 				name : 'How is '+self.app.meta.fullname+' different from...',
 				id : 'differents',
+
+				if : function(){
+					return !self.app.curation()
+				},
 			
 				group : [
 			
@@ -347,16 +399,25 @@ var faq = (function(){
 						a : '<div>Pocketcoin is a network token. It is used exclusively to buy advertising from '+self.app.meta.fullname+' contributors and to pay transaction fees for such payments. Pocketcoin emission depends on the number of users of '+self.app.meta.fullname+' and has inherent algorithmic factors tying its long term value to Annual Revenue Per User (ARPU). ARPU is a term in digital advertising which signifies the total amount of revenue platform receives for one active user per year. In Pocketent all of the revenue is split between content creators and nodes.</div>',
 					},
 					{
+						if : function(){
+							return !self.app.curation()
+						},
 						id : 'ecosystem3',
 						q : 'How are content creators and node operators rewarded?',
 						a : '<div>'+self.app.meta.fullname+' features unique Direct Marketplace where content creators can sell advertising to ad buyers. Content creators set their price and can accept mass-produced ads or can offer highly valued custom placements (creators pitching the product in their own way). Direct Marketplace is essentially an exchange for advertising that allows ad buyers target specific audiences without any intermediaries. All ad buys and ads themselves are linked on the blockchain, therefore ad buying is completely trustless.</div>',
 					},
 					{
+						if : function(){
+							return !self.app.curation()
+						},
 						id : 'ecosystem4',
 						q : 'What if users post illegal content, pornography and SPAM?',
 						a : '<div>'+self.app.meta.fullname+' is not a darknet platform or some sort of pornhub. While it is decentralized and censorship resistant, it is policed by the users. Any illegal content is flagged and removed from the platform using the Wikipedia model. This means that users with highest reputation can police the platform. However, there are safeguards in place (within the open source code) from same or very similar group(s) of people repeatedly voting content off the platform. Also, users are explicitly encouraged to flag illegal content OR content that threatens mass adoption of '+self.app.meta.fullname+', not simply the content they find offensive. To make sure that '+self.app.meta.fullname+' is a free speech platform, we encourage you to start participate, grow your reputation and police the platform properly without the censorship currently prevalent in centralized social media.</div>',
 					},
 					{
+						if : function(){
+							return !self.app.curation()
+						},
 						id : 'ecosystem5',
 						q : 'Who runs the '+self.app.meta.fullname+'?',
 						a : '<div>There is no corporate entity or single individual who owns or controls the '+self.app.meta.fullname+'.</div></div>',
@@ -369,14 +430,6 @@ var faq = (function(){
 			
 		]
 
-		/*if (!window.cordova){
-
-			faqcontent[0].group.splice(1, 0, {
-				id : 'downloadandroid',
-				q : self.app.localization.e('e14109'),
-				a : `<div><a href="https://play.google.com/store/apps/details?id=pocketnet.app">https://play.google.com/store/apps/details?id=pocketnet.app</a></div><div>${self.app.localization.e('e14110')}</div>`,
-			})*
-		}*/
 
 		var mp = {};
 

@@ -431,6 +431,7 @@ Application = function(p)
 	self.modules = {};
 
 	self.curation = function(){
+
 		if(typeof isios != 'undefined' && isios() && window.cordova) return true
 		return false
 	}
@@ -438,6 +439,7 @@ Application = function(p)
 	self.relations = {};
 
 	self.backmap = {
+
 
 		index : {
 			href : 'index',
@@ -453,6 +455,7 @@ Application = function(p)
 			href : 'author',
 			childrens : ['author', 's', 'chat', 'share', 'userpage']
 		},
+
 		userpage : {
 			href : 'userpage',
 			childrens : ['userpage', 'share', 'author', 'post', 'authorization', 'registration', 'pkview']
@@ -1008,6 +1011,8 @@ Application = function(p)
 
 		var showPanel = '1' // 2 // 3
 
+		var cr = self.curation()
+
 		/*window.removeEventListener('scroll')
 		window.removeEventListener('resize')*/
 
@@ -1028,7 +1033,7 @@ Application = function(p)
 					s(scrollTop, blockScroll)
 				})
 
-				if(mobile){
+				if(mobile && !cr){
 
 					var cs = (lastScrollTop + 40 < scrollTop || lastScrollTop - 40 < scrollTop)
 

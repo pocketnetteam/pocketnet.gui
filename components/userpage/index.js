@@ -69,7 +69,10 @@ var userpage = (function(){
 				name : self.app.localization.e('notifications'),
 				id : 'notifications',
 				report : 'notifications',
-				mobile : true
+				mobile : true,
+				if : function(){
+					return true
+				}
 			})
 
 			reports.push({
@@ -101,7 +104,7 @@ var userpage = (function(){
 
 				add : function(){
 
-					if (isMobile() && allbalance){
+					if (isMobile() && allbalance && !self.app.curation()){
 						return  self.app.platform.mp.coin(allbalance)
 					}
 
@@ -116,7 +119,7 @@ var userpage = (function(){
 				mobile : true,
 
 				if : function(){
-					return isMobile()
+					return isMobile() && !self.app.curation()
 				},
 
 				add : function(){
@@ -144,7 +147,7 @@ var userpage = (function(){
 				mobile : true,
 
 				if : function(){
-					return isMobile()
+					return isMobile() && !self.app.curation()
 				},
 
 				add : function(){
@@ -218,6 +221,8 @@ var userpage = (function(){
 					mobile : true,
 
 					if : function(){
+
+						if (self.app.curation()) return false
 
 						if (typeof mestate != 'undefined' && mestate && (
 					

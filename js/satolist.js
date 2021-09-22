@@ -21757,6 +21757,16 @@ Platform = function (app, listofnodes) {
                             console.log("RFAIL", r)
                         })*/
                         
+                        if (app.curation()){
+                            if(app.user.validate()){
+
+                                if(app.nav.get.href() == 'userpage?pc=1'){
+                                    self.matrixchat.core.apptochat()
+                                }
+
+                                
+                            }
+                        }
                     
 
                         if (self.loadingWithErrors)
@@ -21891,6 +21901,9 @@ Platform = function (app, listofnodes) {
                             self.matrixchat.el = $('.matrixchatwrapper')
                             self.matrixchat.initevents()
                             self.matrixchat.connect()
+
+
+                           
                             
                         }, null, app);
 
@@ -21907,7 +21920,7 @@ Platform = function (app, listofnodes) {
         },
         
         changeTheme : function(){
-            if(self.matrixchat.el){
+            if (self.matrixchat.el){
                 self.matrixchat.el.find('matrix-element').attr('ctheme', self.sdk.theme.current)
             }
         },
@@ -22092,6 +22105,17 @@ Platform = function (app, listofnodes) {
 
             core.backtoapp = function(link){
 
+                if (self.matrixchat.el){
+
+                    if(!self.matrixchat.el.hasClass('active')) return
+
+                    self.matrixchat.el.removeClass('active')
+                }
+                else{
+                    return
+                }
+                    
+
                 if (isMobile() || window.cordova)
                     self.app.actions.restore()
 
@@ -22099,8 +22123,7 @@ Platform = function (app, listofnodes) {
 
                 if(document.activeElement) document.activeElement.blur()
 
-                if (self.matrixchat.el)
-                    self.matrixchat.el.removeClass('active')
+                
 
                 if (self.matrixchat.core){ 
                     self.matrixchat.core.hideInParent(isMobile() || window.cordova ? true : false )
@@ -22135,10 +22158,19 @@ Platform = function (app, listofnodes) {
 
             core.apptochat = function(link){
 
-                if(document.activeElement) document.activeElement.blur()
+                if (document.activeElement) document.activeElement.blur()
                 
-                if (self.matrixchat.el)
+                if (self.matrixchat.el){
+
+                    if(self.matrixchat.el.hasClass('active')) return
+
                     self.matrixchat.el.addClass('active')
+
+                }
+                else{
+                    return
+                }
+                    
 
                 
                 self.app.actions.playingvideo()

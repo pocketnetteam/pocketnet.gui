@@ -12,7 +12,9 @@ var filluserfast = (function(){
 
 		
 		var current = null;
-		var regproxy = null
+		var regproxy = null;
+
+		var termsaccepted = false
 
 		var getproxyoptions = function(){
 			if(regproxy){
@@ -877,6 +879,8 @@ var filluserfast = (function(){
 				})
 			},
 
+			
+
 			settings : function(_el, clbk, pel){
 
 				self.nav.api.load({
@@ -888,34 +892,38 @@ var filluserfast = (function(){
 					essenseData : {
 						wizard : true,
 						panel : el.panel,
+						prepresave : function(){
 
+						},
 						presave : function(clbk){
 
+							
 
-							actions.waitgeneration(function(){
-
-
-								self.app.user.isState(function(state){
-
-									self.sdk.registrations.add(k.mainAddress, 1)
+								actions.waitgeneration(function(){
 
 
-									if(!state){
-
-										actions.signin(function(){
-											if(clbk) clbk()
-										})	
-
-									}
-									else{
+									self.app.user.isState(function(state){
+	
 										self.sdk.registrations.add(k.mainAddress, 1)
-
-										if(clbk) clbk()
-									}
+	
+	
+										if(!state){
+	
+											actions.signin(function(){
+												if(clbk) clbk()
+											})	
+	
+										}
+										else{
+											self.sdk.registrations.add(k.mainAddress, 1)
+	
+											if(clbk) clbk()
+										}
+									})
+									
 								})
-
 								
-							})
+							
 
 
 						},
@@ -1085,6 +1093,8 @@ var filluserfast = (function(){
 				make()
 
 				p.clbk(null, p);
+
+			
 			}
 		}
 	};

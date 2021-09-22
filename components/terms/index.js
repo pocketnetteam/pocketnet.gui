@@ -8,7 +8,7 @@ var terms = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el;
+		var el, ed;
 
 		var actions = {
 
@@ -22,8 +22,8 @@ var terms = (function(){
 			terms : function(){
 
 				self.shell({
-					name :  self.app.localization.key,
-					el :   el.c,
+					name :  'en',
+					el :   el.c.find('.textWrapper'),
 					data : {
 						
 					},
@@ -47,7 +47,11 @@ var terms = (function(){
 
 		var initEvents = function(){
 			
+			el.c.find('.accept').on('click', function(){
+				if(ed.success) ed.success()
 
+				self.closeContainer()
+			})
 		}
 
 		var make = function(){
@@ -57,9 +61,15 @@ var terms = (function(){
 		return {
 			primary : primary,
 
-			getdata : function(clbk){
+			getdata : function(clbk, p){
 
-				var data = {};
+				ed = p.settings.essenseData || {}
+
+				var data = {
+					ed : ed
+				};
+
+				
 
 				clbk(data);
 

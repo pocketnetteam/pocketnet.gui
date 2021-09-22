@@ -287,7 +287,7 @@ Nav = function(app)
 
 			delete currentParameters.back;
 
-			var href = current.href + collectParameters(currentParameters);
+			var href = (current.href || self.get.pathname()) + collectParameters(currentParameters);
 
 
 			if(typeof _p.removefromback == 'undefined') _p.removefromback = true

@@ -152,7 +152,7 @@
 								%>
 								
 								<div class="icon">
-									<a href="<%-app.curation() ? 'userpage' : app.platform.api.authorlink(user.address.value.toString('hex'))%>">	
+									<a href="<%-app.platform.api.authorlink(user.address.value.toString('hex'))%>">	
 										<div class="usericon" image="<%-src || ''%>">
 
 											<% if(!src && letter) {%>
