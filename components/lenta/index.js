@@ -3875,8 +3875,8 @@ var lenta = (function(){
 					if ((window.cordova || isInStandaloneMode()) && !fullscreenvideoShowed && !essenseData.txids && !making && time > 1200 && !essenseData.second){
 
 						if(!self.app.errors.connection()){
-							actions.loadprev()
-							self.app.actions.scroll(0)
+							/*actions.loadprev()
+							self.app.actions.scroll(0)*/
 						}
 						
 					}
