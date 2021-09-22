@@ -425,9 +425,33 @@ var faq = (function(){
 					
 				]
 			
-			}
+			},
 			
+			{
 			
+				name : 'Video Platform',
+				id : 'videoplatform',
+			
+				group : [
+			
+					{
+						id : 'videoshostplace',
+						q : 'Where are videos hosted?',
+						a : '<div>Our videos are being hosted on lots of smaller servers practically anyone can host. The main thing you need to do so is stable bandwidth (100 Mb/s minimal, 1 Gb/s recommended), 8 Gb of RAM (mostly for video processing purposes) and 2-threaded CPU with Linux (or a Virtual Machine running it). Overall load is spread between video servers by various technologies, including mirroring for data replication and preserving. More to that, every user who watches our videos is acting like video-host helping the network. This is so-called peer-to-peer technology.</div>',
+					},
+					{
+						id : 'videouploadlimits',
+						q : 'What are the limits to upload videos?',
+						a : '<div>Unfortunately, due to decentralized structure of our servers and absence of any commercials there are upload limits on our servers. They are being adjusted from time to time, so keep up with the updates. Current limits are:<ul><li>Verified users: 25 Gb/day</li><li>50+ PKOIN holders: 5 Gb/day</li><li>Older out-of-trial-period user accounts: 2 Gb/day</li><li>5+ PKOIN holders or 100+ reputation users: 500 Mb/day</li></ul></div>',
+					},
+					{
+						id : 'videotechnologies',
+						q : 'What technology is used?',
+						a : '<div>There are a few technologies making decentralized video platform possible:<ul><li>HLS: this library splits one video file to a bunch of smaller ones and serves it to the clients by additional files called “streaming playlists”, which contain information about video fragments order of playing</li><li>FFMPEG: NodeJS version of ffmpeg is converting user’s video file to unified format, compressing it to a certain degree and creating several video resolutions. These tasks are CPU-dependent, so one need rather fast multi-threaded processor. During converting process video file is getting uploaded to server’s RAM, so at least 8 Gb is needed to avoid any errors and failures. Compressed and transcoded video can be comfortably played on different devices with various network speeds</li><li>Peer-to-peer: this is a WebSocket-based library, that is allowing users, that are watching video, serve it’s parts to others reducing server load. The whole process is happening on the background and does not require any adjustments from viewers themselves</li></ul></div>',
+					},
+				]
+			
+			},
 		]
 
 
