@@ -919,7 +919,7 @@ var system16 = (function(){
 					series : [
 						{
 							name : "Count of requestes",
-							path : "statistic.allcount",
+							path : "statistic.count",
 							type : 'spline',
 							id : 'cr'
 						},
