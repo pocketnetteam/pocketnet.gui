@@ -93,7 +93,7 @@ var Peertube = function (settings) {
       var _roys = {};
 
       _.each(roys, function (r, c) {
-        if (!r.auto) _roys[c] = r;
+        if (!r.auto && r.activeForUploading) _roys[c] = r;
       });
 
       var keys = _.map(_roys, function (i, c) {
@@ -125,7 +125,6 @@ var Peertube = function (settings) {
       var cachekey = 'peertubevideo';
       var cachehash = parsed.id;
       var cacheparameters = _.clone(parsed);
-
 
       return new Promise((resolve, reject) => {
         cache.wait(
@@ -162,7 +161,6 @@ var Peertube = function (settings) {
               if (fr && fr.isLive && (!fr.aspectRatio || fr.aspectRatio == '0'))
                 fr.aspectRatio = 1.78;
             }
-
 
             cache.set(cachekey, cacheparameters, r, null, ontime, cachehash);
 
@@ -247,7 +245,7 @@ var Peertube = function (settings) {
       const output = {};
 
       var _roys = _.filter(roys, function (r) {
-        return !r.auto;
+        return !r.auto && r.activeForUploading;
       });
 
       Object.keys(_roys).map((roy) => {
@@ -300,7 +298,7 @@ var Peertube = function (settings) {
     return roy;
   };
 
-  self.removeRoy = (key) => delete roys[key];
+  self.turnOffRoy = (key) => (roys[key].activeForUploading = false);
 
   self.info = function (compact) {
     var info = {};
@@ -323,7 +321,8 @@ var Peertube = function (settings) {
 
             const occupiedPerc = (size - free) / size;
 
-            if (occupiedPerc < FREE_SPACE_PERC) self.removeRoy(roy);
+            if (occupiedPerc < FREE_SPACE_PERC) self.turnOffRoy(roy);
+            console.log(self.api.roys());
           });
         });
       }),

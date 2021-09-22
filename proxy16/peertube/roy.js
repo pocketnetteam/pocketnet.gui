@@ -28,6 +28,8 @@ var Roy = function (parent) {
 
   self.useall = false;
 
+  self.activeForUploading = true;
+
   self.addInstance = function (url) {
     if (!url) return;
 
