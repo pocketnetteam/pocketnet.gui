@@ -470,12 +470,12 @@ var lenta = (function(){
 				renders.urlContent(share)
 			},
 
-			initVideo : function(el, share, clbk, shadow){
+			initVideo : function(el2, share, clbk, shadow){
 
 				if(!share || !share.txid) return
 
-				var pels = el.find('.js-player');
-				var vel = el.find('.videoWrapper')
+				var pels = el2.find('.js-player');
+				var vel = el2.find('.videoWrapper')
 
 				if(!vel.length) return
 
@@ -619,6 +619,7 @@ var lenta = (function(){
 
 					s.logoType = self.app.meta.fullname
 
+					delete el[share.txid];
 					renders.setShareDownload(share.txid, 'invisible');
 
 					PlyrEx(pels[0], s, callback, readyCallback)
@@ -1881,6 +1882,23 @@ var lenta = (function(){
 					renders.setShareDownload(shareId, 'downloading');
 					self.sdk.local.shares.saveVideoCordova(shareId, id, video, videoDetails).then(() => {
 						// Success
+						// Show message
+						sitemessage(self.app.localization.e('videoHasBeenDownloaded'), undefined, function(messageDiv) {
+							// On click
+							// Close the message box
+							if (messageDiv && messageDiv.animate) {
+								messageDiv.animate({opacity: 0}, 500);
+								setTimeout(() => {
+									messageDiv.detach();
+								}, 500);
+							}
+							// Redirect to downloaded page
+							self.nav.api.load({
+								open : true,
+								href : "index?r=saved",
+								history : true,
+							});
+						});
 						// Update share video player
 						actions.openPost(shareId, function() {
 							setTimeout(() => {
@@ -1903,6 +1921,23 @@ var lenta = (function(){
 					renders.setShareDownload(shareId, 'downloading');
 					self.sdk.local.shares.saveVideoElectron(shareId, id, video, videoDetails).then(() => {
 						// Success
+						// Show message
+						sitemessage(self.app.localization.e('videoHasBeenDownloaded'), undefined, function(messageDiv) {
+							// On click
+							// Close the message box
+							if (messageDiv && messageDiv.animate) {
+								messageDiv.animate({opacity: 0}, 500);
+								setTimeout(() => {
+									messageDiv.detach();
+								}, 500);
+							}
+							// Redirect to downloaded page
+							self.nav.api.load({
+								open : true,
+								href : "index?r=saved",
+								history : true,
+							});
+						});
 						// Update share video player
 						delete initedcommentes[shareId];
 						if (players[shareId]) {

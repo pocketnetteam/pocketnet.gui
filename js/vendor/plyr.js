@@ -9183,7 +9183,7 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
       // Check if we have downloaded the video already
       var localVideo = self.app.platform.sdk.local.shares.getVideo(clear_peertube_id);
 
-      if (localVideo != undefined) {
+      if (localVideo != undefined && localVideo.video) {
 
         var new_target = document.createElement('video');
         target.parentNode.replaceChild(new_target, target);
