@@ -252,8 +252,8 @@ var main = (function(){
 
 						},
 						essenseData : {
+							minimized : true,
 							post : function(){
-
 								if (plissing)
 									plissing.destroy()
 							}

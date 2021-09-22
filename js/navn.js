@@ -558,8 +558,6 @@ Nav = function(app)
 
 					p.lastScroll = app.lastScrollTop // $(window).scrollTop();
 
-					
-
 					if(!p.reload){
 
 						historyManager.add(p.completeHref, p);
@@ -568,8 +566,6 @@ Nav = function(app)
 							sitemessage('<i class="fas fa-wifi"></i>')
 						}
 					}
-						
-
 					
 
 					if (current.module && !p.inWnd){
@@ -1419,6 +1415,7 @@ Nav = function(app)
 	}
 
 	self.init = function(p){
+
 
 		if(!p) p = {};
 

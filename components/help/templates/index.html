@@ -13,7 +13,11 @@
 						</div>
 						<div class="tips">
 							
-							<div class="tipitem"><a href="https://<%-app.options.url%>/blockexplorer/" external="external"><%=e('e14101')%> <i class="fas fa-external-link-square-alt"></i></a></div>
+							
+							
+							<% if(os() && self.app.platform.applications.ui[os()] && typeof _Electron == 'undefined' && !window.cordova) {%>
+								<div class="tipitem bright" page="applications">Download Applications</div>
+							<% } %>
 
 							<div class="tipitem" page="faq"><%=e('e14102')%></div>
 							<!--<div class="tipitem" page="curation">Specifics of curation on <%-app.meta.fullname%></div>
@@ -26,11 +30,12 @@
 							<div class="tipitem" page="node"><%=e('e14104')%></div>
 							<div class="tipitem" page="videos"><%=e('e14105')%></div>
 
-							<% if(os() && self.app.platform.applications.ui[os()] && typeof _Electron == 'undefined' && !window.cordova) {%>
-								<div class="tipitem" page="applications"><%=e('e14106')%></div>
-							<% } %>
 							
-							<div class="tipitem" page="pkoin">PKOIN</div>
+							
+							<div class="tipitem" page="pkoin">Pocketcoin (PKOIN)</div>
+
+							<div class="tipitem"><a href="https://<%-app.options.url%>/blockexplorer/" external="external"><%=e('e14101')%> <i class="fas fa-external-link-square-alt"></i></a></div>
+
 						</div>
 					</div>
 

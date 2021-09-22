@@ -14,6 +14,7 @@
 
 
 .customscroll{
+    overflow-y: overlay;
     scrollbar-width: 4px;
     scrollbar-color: rgba(0, 0, 0, .15) rgba(0, 0, 0, .05);
 }
@@ -53,22 +54,26 @@ html {
     min-height: 100%;
     position: relative;
     overflow-x: hidden;
+    overflow-y: overlay;
+    
     /*overflow-x: hidden;*/
     // background: #f6f6f6;
     /*overflow-anchor: none;*/
 
-    body{
-        overflow-x: hidden;
-        overflow-y: scroll;
+    &.tablet,
+    &.mobile{
+        scroll-behavior: smooth;
     }
 
     &.nooverflow{
-        body{
+
+        overflow:hidden;
+
+        /*body{
             overflow:hidden;
             width: 100%;
-            height: 100vh;
             padding-right: 4px;
-        }
+        }*/
     }
     /*&.mobile.nooverflow{
         height: 100%;

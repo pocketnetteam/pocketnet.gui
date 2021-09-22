@@ -238,6 +238,8 @@ var lenta = (function(){
 				
 				essenserenderclbk()
 
+				self.app.actions.scroll(0)
+
 				make(clbk);
 			},
 
@@ -584,11 +586,8 @@ var lenta = (function(){
 
 
 						volumeChange : function(v){
-
 							videosVolume = v
-
 							self.sdk.videos.volume = videosVolume 
-
 							self.sdk.videos.save()
 						},
 
@@ -1015,6 +1014,8 @@ var lenta = (function(){
 				var player = players[id]
 
 				//player.p.muted = true;
+
+				console.log('videosVolume', videosVolume)
 
 				actions.setVolume(players[id], videosVolume)
 
@@ -1475,8 +1476,9 @@ var lenta = (function(){
 
 				var cvv = videosVolume
 
-				if(!player.p) return
+				console.log('videosVolume', videosVolume, v)
 
+				if(!player.p) return
 
 				if(player.p.setVolume){
 					if (v){
@@ -1489,12 +1491,12 @@ var lenta = (function(){
 				else{
 					player.p.volume = v
 
-					setTimeout(function(){
-						videosVolume = cvv
-					})
+					
 				}
 
-				
+				setTimeout(function(){
+					videosVolume = cvv
+				})
 			},
 
 			shareOptimization : function(share){
@@ -3864,6 +3866,12 @@ var lenta = (function(){
 
 				self.app.platform.clbks._focus.lenta = function(time){
 
+					if(isMobile() && !fullscreenvideoShowed){
+						videosVolume = 0
+						self.sdk.videos.volume = videosVolume 
+						self.sdk.videos.save()
+					}
+
 					if ((window.cordova || isInStandaloneMode()) && !fullscreenvideoShowed && !essenseData.txids && !making && time > 1200 && !essenseData.second){
 
 						if(!self.app.errors.connection()){
@@ -4162,6 +4170,8 @@ var lenta = (function(){
 				var _s = parameters();
 
 				videosVolume = self.sdk.videos.volume
+
+				console.log('videosVolume111', videosVolume)
 
 
 				beginmaterial = _s.s || _s.i || _s.v || _s.p || null;

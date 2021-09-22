@@ -3,32 +3,37 @@
 #applications{
 
     .caption{
-        font-size: 1.5em;
-        font-weight: 00;
-        width: 95%;
-        max-width: 1280px;
+        font-size: 2.5em;
+        font-weight: 700;
         margin: 0 auto;
-        padding: 0 1em;
         margin-top: 2em;
-        
     }
 
-    
+    &.minimize{
+        .caption{
+            display: none;
+        }
+
+        .panel{
+        }
+    }
 
     .subcaption{
         font-weight: 700;
     }
 
+    .ghost{
+        text-decoration: none;
+    }
+
     .os{
-        background: fade(@color-gray-slight, 50);
-        padding : 4 * @rhythm 0;
+        border-radius: 5px;
 
 		.tip{
 			max-width: 650px;
 		}
 
 		.downloadOs{
-			min-width: 310px;
 		}
 
 		.downloadstart{
@@ -38,7 +43,6 @@
         }
         
         .panel{
-            margin-top : 4 * @rhythm;
 
             .skipositem{
                 display : none;
@@ -57,33 +61,42 @@
         }
     }
 
-    
+    .flbx{
+        display: flex;
+        max-width: 750px;
+        >div{
+            flex-grow: 1;
+            margin-right: 3 * @rhythm;
+            margin-top: 3 * @rhythm;
+        }
+
+        .panel{
+            margin-top: 2*@rhythm;
+        }
+    }
     
     .stepTable{
+        margin : 0 auto;
+        border-radius: 5px;
+        background: fade(@color-gray-mlight, 20);
+        padding : 3 * @rhythm;
+        
+        
 		>div{
-			vertical-align: top;
 			padding : 0;
-
-			&.numberWr{
-				width: 80px;
-
-				
-			}
+            text-align: center;
+		
 		}
 	}
 
-    .number{
+    .icon{
 		border-radius: 50%;
-		width: 50px;
-		height: 50px;
-		border: 1px solid @color-gray;
-		line-height: 48px;
 		text-align: center;
+        font-size: 2em;
     }
     
     .currentos{
         display: none;
-        padding : 4 * @rhythm 0;
         &.active{
             display: block;
             
@@ -92,7 +105,6 @@
 
     .extraos{
         display: none;
-        padding : 4 * @rhythm 0;
         &.active{
             display: block;
             

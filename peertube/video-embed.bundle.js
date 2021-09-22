@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=8151"
+/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=1939"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -42503,8 +42503,6 @@ class peertube_player_manager_PeertubePlayerManager {
                 message: "Total Error",
                 code: 500,
             };
-            console.log("videojsOptions", videojsOptions);
-            console.log("HERE1");
             core_default()(newVideoElement, videojsOptions, function () {
                 const player = this;
                 player.tech(true).one("error", (e) => {
@@ -42614,7 +42612,6 @@ class peertube_player_manager_PeertubePlayerManager {
             catch (e) {
             }
         }
-        console.log('getStoredP2PEnabled', Object(peertube_player_local_storage["c" /* getStoredP2PEnabled */])());
         const p2pMediaLoaderConfig = {
             loader: {
                 trackerAnnounce,
@@ -43619,6 +43616,7 @@ class embed_PeerTubeEmbed {
                 });
                 this.insertAfter(vjs_big_play_button, el);
                 this.player.bigPlayButton.disable();
+                console.log('this.player.bigPlayButton', this.player.bigPlayButton);
                 ///let flag = false
                 this.player.el_.addEventListener('touchend', (e) => {
                     //

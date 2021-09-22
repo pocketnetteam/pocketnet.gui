@@ -133,7 +133,6 @@ class http_media_manager_HttpMediaManager extends stringly_typed_event_emitter_S
         this.failedSegments = new Map();
         this.debug = browser_default()("p2pml:http-media-manager");
         this.download = (segment, downloadedPieces) => {
-            console.log('segment', segment);
             if (this.isDownloading(segment)) {
                 return;
             }
@@ -603,7 +602,6 @@ class p2p_media_manager_P2PMediaManager extends stringly_typed_event_emitter_STE
             return node_modules_buffer["Buffer"].from(this.peerId).toString("hex");
         };
         this.setStreamSwarmId = (streamSwarmId, masterSwarmId) => {
-            console.log('setStreamSwarmId', streamSwarmId);
             if (this.streamSwarmId === streamSwarmId) {
                 return;
             }
@@ -630,7 +628,6 @@ class p2p_media_manager_P2PMediaManager extends stringly_typed_event_emitter_STE
             }
         };
         this.createClient = (infoHash) => {
-            console.log("createClient", infoHash);
             if (!this.settings.useP2P) {
                 return;
             }
@@ -1097,7 +1094,6 @@ class hybrid_loader_HybridLoader extends events["EventEmitter"] {
             return new p2p_media_manager_P2PMediaManager(this.segmentsStorage, this.settings);
         };
         this.load = (segments, streamSwarmId) => Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
-            console.log('load');
             if (this.httpRandomDownloadInterval === undefined) {
                 // Do once on first call
                 this.httpRandomDownloadInterval = setInterval(this.downloadRandomSegmentOverHttp, this.settings.httpDownloadProbabilityInterval);
@@ -1112,7 +1108,6 @@ class hybrid_loader_HybridLoader extends events["EventEmitter"] {
             if (segments.length > 0) {
                 this.masterSwarmId = segments[0].masterSwarmId;
             }
-            console.log('this.masterSwarmId', this.masterSwarmId);
             if (this.masterSwarmId !== undefined) {
                 this.p2pManager.setStreamSwarmId(streamSwarmId, this.masterSwarmId);
             }
@@ -1439,7 +1434,6 @@ class hybrid_loader_HybridLoader extends events["EventEmitter"] {
         this.p2pManager.on("peer-connected", this.onPeerConnect);
         this.p2pManager.on("peer-closed", this.onPeerClose);
         this.p2pManager.on("tracker-update", this.onTrackerUpdate);
-        console.log('this.p2pManager', this.p2pManager);
     }
 }
 hybrid_loader_HybridLoader.isSupported = () => {
@@ -1625,7 +1619,6 @@ class segment_manager_SegmentManager {
         const parser = new m3u8_parser_es["a" /* Parser */]();
         parser.push(content);
         parser.end();
-        console.log('parser.manifest', content);
         const playlist = new Playlist(requestUrl, responseUrl, parser.manifest);
         if (playlist.manifest.playlists) {
             this.masterPlaylist = playlist;
@@ -1653,7 +1646,6 @@ class segment_manager_SegmentManager {
     }
     loadPlaylist(url) {
         return Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
-            console.log('loadPlaylist');
             const assetsStorage = this.settings.assetsStorage;
             let xhr;
             if (assetsStorage !== undefined) {
@@ -1693,7 +1685,6 @@ class segment_manager_SegmentManager {
         return Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
             const segmentLocation = this.getSegmentLocation(url, byteRange);
             const byteRangeString = byteRangeToString(byteRange);
-            console.log('loadSegment', segmentLocation);
             if (!segmentLocation) {
                 let content;
                 // Not a segment from variants; usually can be: init, audio or subtitles segment, encription key etc.
@@ -1832,7 +1823,6 @@ class segment_manager_SegmentManager {
             let loadSegmentId = null;
             let priority = Math.max(0, this.playQueue.length - 1);
             const masterSwarmId = this.getMasterSwarmId();
-            console.log('loadSegments', masterSwarmId);
             for (let i = segmentIndex; i < playlistSegments.length && segments.length < this.settings.forwardSegmentCount; ++i) {
                 const segment = playlist.manifest.segments[i];
                 const url = playlist.getSegmentAbsoluteUrl(segment.uri);
@@ -1924,7 +1914,6 @@ class Playlist {
         this.streamSwarmId = "";
     }
     getSegmentIndex(url, byteRange) {
-        console.log('this.manifest', this.manifest, byteRange);
         for (let i = 0; i < this.manifest.segments.length; ++i) {
             const segment = this.manifest.segments[i];
             const segmentUrl = this.getSegmentAbsoluteUrl(segment.uri);

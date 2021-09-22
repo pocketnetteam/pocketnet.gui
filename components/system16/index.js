@@ -998,6 +998,18 @@ var system16 = (function(){
 					]
 				},
 
+				rate : {
+					caption : "Rate",
+
+					series : [
+						{
+							name : "Requestes per seconds",
+							path : "server.middle.rate",
+							id : 'rate'
+						}
+					]
+				},
+
 				memory : {
 					caption : "Memory",
 

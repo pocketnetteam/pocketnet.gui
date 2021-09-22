@@ -11,7 +11,7 @@ var postline = function(){ %>
 
 %>
 
-<div id="<%-module.map.id%>" class="unfocus">
+<div id="<%-module.map.id%>" class="unfocus <% if(essenseData.minimized && typeof checkEntity !='undefined' && !checkEntity) {%> minimized <% } %>">
 	<div class="mobilecaption">
 		<% if(!share.aliasid) {%>
 
@@ -99,7 +99,7 @@ var postline = function(){ %>
 
 					<!-- ------------------------->
 
-					<div class="cntwrk">
+					<div class="cntwrk linewrapper">
 						<div class="sortablepaddingspacer">
 
 							<div class="tgsWrapperMain">

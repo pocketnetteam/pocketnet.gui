@@ -13,7 +13,7 @@ var faq = (function(){
 		self.app.meta.fullname
 
 		var faqcontent = [
-			{
+			/*{
 		
 				name : 'Technical',
 				id : 'technical',
@@ -34,7 +34,7 @@ var faq = (function(){
 			
 				]
 			
-			},
+			},*/
 			
 			{
 			
@@ -75,11 +75,11 @@ var faq = (function(){
 					},
 			
 			
-					{
+					/*{
 						id : 'mobileapp',
 						q : 'Is there a mobile app?',
 						a : '<div>There is an Android app, you can download it here: https://play.google.com/store/apps/details?id=pocketnet.app  iPhone app is not available, because Apple required us to remove any content on 24 hour notice. We refused, so you can use the mobile web app.</div>',
-					},
+					},*/
 			
 					{
 						id : 'postinglimit',
@@ -369,14 +369,14 @@ var faq = (function(){
 			
 		]
 
-		if (!window.cordova){
+		/*if (!window.cordova){
 
 			faqcontent[0].group.splice(1, 0, {
 				id : 'downloadandroid',
 				q : self.app.localization.e('e14109'),
 				a : `<div><a href="https://play.google.com/store/apps/details?id=pocketnet.app">https://play.google.com/store/apps/details?id=pocketnet.app</a></div><div>${self.app.localization.e('e14110')}</div>`,
-			})
-		}
+			})*
+		}*/
 
 		var mp = {};
 
@@ -449,6 +449,7 @@ var faq = (function(){
 						offsetTop : h,
 						offsetBottom : h,
 						mode : 'line',
+						app : self.app
 					})
 
 					var id = null;

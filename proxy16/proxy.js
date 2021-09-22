@@ -1083,8 +1083,6 @@ var Proxy = function (settings, manage, test) {
 						.waitbest(10000)
 						.then((r) => {
 
-							console.log("JJJO")
-
 							var node = null;
 
 							if (fixed && fixed != 'null') {

@@ -857,11 +857,11 @@ Application = function(p)
 
 				optimizeTimeout = null
 			
-			window.requestAnimationFrame(function(){
+			//window.requestAnimationFrame(function(){
 				self.el.content.css('width', 'auto')
 				self.el.content.css('height', 'auto')
 				self.el.content.removeClass('optimized')
-			})
+			//})
 		},
 
 		optimize : function(){
@@ -912,6 +912,9 @@ Application = function(p)
 		},
 
 		backupscroll : function(){
+
+
+
 			self.actions.scroll(self.lastScrollTop)
 		},
 
@@ -936,6 +939,8 @@ Application = function(p)
 
 			if(!self.fullscreenmode){
 				self.lastScrollTop = s
+
+				console.log("S", s)
 			}
 
 			return s
@@ -969,7 +974,7 @@ Application = function(p)
 
 		onScroll : function(){
 
-			if(self.scrollRemoved < 1) self.scrollRemoved = 1
+			if (self.scrollRemoved < 1) self.scrollRemoved = 1
 
 			if (self.scrollRemoved){
 				self.scrollRemoved--
@@ -1040,6 +1045,11 @@ Application = function(p)
 					if (scrollTop > 900 && cs){
 						if(lastScrollTop + 40 < scrollTop){
 							showPanel = '2'
+
+							if(!self.el.html.hasClass('scrollmodedown'))
+								self.el.html.addClass('scrollmodedown')
+
+							
 						}
 					}
 					else{

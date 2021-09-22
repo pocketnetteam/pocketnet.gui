@@ -5,12 +5,17 @@
 #main.wshar .bgCaption {
   display: none;
 }
+#main #lenta .shares .showmorebyauthor,
+#main #lenta .shares .share {
+  border-radius: 3px;
+}
 #main .topvideosWrapper {
   display: block;
   background: #fff;
   margin-bottom: 0.5em;
   min-height: 160px;
   position: relative;
+  border-radius: 3px;
 }
 #main .topvideosWrapper.hasshares {
   display: block;
@@ -269,7 +274,8 @@
 }
 #main .bgCaption {
   height: auto;
-  padding: 1em 0;
+  padding-bottom: 0;
+  border-radius: 3px;
 }
 #main .bgCaption.sec {
   color: #0a0c17;

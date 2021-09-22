@@ -409,14 +409,14 @@ var post = (function () {
 
 						}, () => {
 
-							console.log(downloadPanel);
-							if (downloadPanel && downloadPanel.removeClass)
+							
+							if (downloadPanel && downloadPanel.removeClass && window.cordova)
 								downloadPanel.removeClass('downloading downloaded invisible').addClass('canDownload');
 
 							if (wa) {
 
 								player.play()
-								player.muted = false
+								//player.muted = false
 								player.setVolume(self.sdk.videos.volume)
 								//
 							}

@@ -309,7 +309,7 @@ var Node = function(options, manager){
             var c = 0
 
             if(l){
-                while (l/* && self.events[l - 1].time > s*/){
+                while (l && self.events[l - 1].time > s){
 
                     if(!method || self.events[l - 1].method == method){
                         c++
@@ -444,7 +444,7 @@ var Node = function(options, manager){
             if (usersl > 1000) userski = 1000
 
             var result = (s.percent  * (lastblock.height || 1) ) / 
-            ( userski * rate * (time) * (difference + 1) )
+            (userski * rate * (time) * (difference + 1) )
     
             cachedrating = {
                 result : result,

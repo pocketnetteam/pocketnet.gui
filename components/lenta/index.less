@@ -317,6 +317,7 @@
 			background: #fff;
 			margin-bottom: @rhythm;
 			padding-bottom : 0;
+			
 			/*content-visibility: auto;
 			contain-intrinsic-size: 800px;*/
 
@@ -974,6 +975,8 @@
 				}
 
 				.authorCell{
+
+					white-space: nowrap;
 
 					a{
 						font-weight: 700;
@@ -1783,7 +1786,7 @@
 			cursor: pointer;
 			font-size: 0.8em;
 			color : #fff;
-			margin-bottom :  @rhythm;
+			margin-bottom :  1.2 * @rhythm;
 
 			&:hover{
 				background: fade(@color-main, 100)
@@ -2350,6 +2353,28 @@
 						margin-left: 0.5 * @rhythm;
 					}
 				}
+			}
+		}
+
+		.loadprev{
+			position: fixed;
+			left : 0;
+			top : 110px;
+			z-index: 10;
+			right: 0;
+			background: transparent!important;
+			.transition(0.3s);
+
+			button{
+				width: 220px;
+			}
+		}
+	}
+
+	html.scrollmodedown{
+		#lenta{
+			.loadprev{
+				top : -110px;
 			}
 		}
 	}
@@ -3625,11 +3650,6 @@ html.stblack{
 			
 		}
 
-		.loadprev{
-			button{
-				width: 90%;
-			}
-		}
 
 		&.mainvideo{
 

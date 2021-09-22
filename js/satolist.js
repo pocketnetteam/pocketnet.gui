@@ -315,7 +315,7 @@ Platform = function (app, listofnodes) {
                     icon: '<i class="fab fa-windows"></i>',
         
                     github: {
-                        name: app.meta.fullname + "Setup.exe",
+                        name: 'Pocketnet' + "Setup.exe",// app.meta.fullname + "Setup.exe",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
                         page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
                     },
@@ -334,7 +334,7 @@ Platform = function (app, listofnodes) {
                     icon: '<i class="fab fa-apple"></i>',
         
                     github: {
-                        name: app.meta.fullname + "Setup.dmg",
+                        name: 'Pocketnet'+ "Setup.dmg", //app.meta.fullname + "Setup.dmg",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
                         page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
                     },
@@ -352,7 +352,7 @@ Platform = function (app, listofnodes) {
                     icon: '<i class="fab fa-linux"></i>',
         
                     github: {
-                        name: self.app.meta.fullname + "Setup.deb",
+                        name: 'Pocketnet' + "Setup.deb",//  self.app.meta.fullname + "Setup.deb",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
                         page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
                     }
@@ -17035,19 +17035,22 @@ Platform = function (app, listofnodes) {
                 }
             },
 
-            volume : 0.5,
+            volume : 0,
             save : function(){
-                localStorage['videovolume'] = self.sdk.videos.volume || 0.5
+                localStorage['pn_videovolume'] = self.sdk.videos.volume || 0.5
             },
             load : function(){
 
-                var _v = localStorage['videovolume']
+                var _v = localStorage['pn_videovolume']
 
-                if(typeof _v == 'undefined') _v = '0.5'
+                if(typeof _v == 'undefined' || window.cordova || isMobile()) _v = '0'
 
+                console.log('_v_v_v', _v)
 
                 self.sdk.videos.volume = Number(_v)
+
             },
+
             init : function(clbk){
                 self.sdk.videos.load()
 
@@ -21794,7 +21797,7 @@ Platform = function (app, listofnodes) {
                 window.matrixchat.destroy()
             }
     
-            $('#matrix').empty();
+            $('#matrix').html('');
 
             self.matrixchat.el = null
             self.matrixchat.inited = false
@@ -21815,8 +21818,7 @@ Platform = function (app, listofnodes) {
             else{
                 self.matrixchat.imported = true;
 
-                if(electron){
-
+                if (electron){
                     if(clbk) clbk()
                 }
                 else{
@@ -21862,42 +21864,35 @@ Platform = function (app, listofnodes) {
 
                     var a = pnet.address;
 
-                    var addresses = self.testchataddresses || [];
-
-                    var userinfo = deep(app, 'platform.sdk.user.storage.me')
-
                     if (state) {
                         
+                        self.matrixchat.import(function(){
 
-                    //if (window.testpocketnet && userinfo && !_.isEmpty(userinfo) && !(userinfo.temp || userinfo.relay || userinfo.fromstorage)) {
+                            self.matrixchat.inited = true
+    
+                            var privatekey = self.app.user.private.value.toString('hex');
 
-                            self.matrixchat.import(function(){
-
-                                self.matrixchat.inited = true
+                
+                            var matrix = `<div class="wrapper matrixchatwrapper">
+                                <matrix-element
+                                    address="${a}"
+                                    privatekey="${privatekey}"
+                                    pocketnet="`+( (isMobile() || isTablet() || window.cordova) ? '' : 'true')+`"
+                                    mobile="`+( (isMobile() || isTablet() || window.cordova) ? 'true' : '')+`" 
+                                    ctheme="`+self.sdk.theme.current+`"
+                                    localization="`+self.app.localization.key+`"
+                                    fcmtoken="`+(self.fcmtoken || "")+`"
+                                >
+                                </matrix-element>
+                            </div>`
         
-                                var privatekey = self.app.user.private.value.toString('hex');
+                            $('#matrix').html(matrix);   
 
-                    
-                                var matrix = `<div class="wrapper matrixchatwrapper">
-                                    <matrix-element
-                                        address="${a}"
-                                        privatekey="${privatekey}"
-                                        pocketnet="`+( (isMobile() || isTablet() || window.cordova) ? '' : 'true')+`"
-                                        mobile="`+( (isMobile() || isTablet() || window.cordova) ? 'true' : '')+`" 
-                                        ctheme="`+self.sdk.theme.current+`"
-                                        localization="`+self.app.localization.key+`"
-                                        fcmtoken="`+(self.fcmtoken || "")+`"
-                                    >
-                                    </matrix-element>
-                                </div>`
-            
-                                $('#matrix').append(matrix);   
-
-                                self.matrixchat.el = $('.matrixchatwrapper')
-                                self.matrixchat.initevents()
-                                self.matrixchat.connect()
-                                
-                            }, null, app);
+                            self.matrixchat.el = $('.matrixchatwrapper')
+                            self.matrixchat.initevents()
+                            self.matrixchat.connect()
+                            
+                        }, null, app);
 
         
                     }
@@ -22078,7 +22073,7 @@ Platform = function (app, listofnodes) {
         showed : function(){
             if(!self.matrixchat.core){ return false }
 
-            if(isMobile()|| window.cordova){
+            if(isMobile() || window.cordova){
                 return !self.matrixchat.core.hiddenInParent
             }
 
@@ -22097,7 +22092,7 @@ Platform = function (app, listofnodes) {
 
             core.backtoapp = function(link){
 
-                if (isMobile()|| window.cordova)
+                if (isMobile() || window.cordova)
                     self.app.actions.restore()
 
                 app.el.html.removeClass('chatshowed')
@@ -22108,14 +22103,16 @@ Platform = function (app, listofnodes) {
                     self.matrixchat.el.removeClass('active')
 
                 if (self.matrixchat.core){ 
-                    self.matrixchat.core.hiddenInParent = isMobile()|| window.cordova ? true : false 
+                    self.matrixchat.core.hideInParent(isMobile() || window.cordova ? true : false )
+                }
+
+                if (isMobile() || window.cordova){
+                    self.app.actions.onScroll()
                 }
 
                 if (isMobile() || window.cordova)
-                    self.app.actions.onScroll()
-
-                if(isMobile() || window.cordova)
                     app.nav.api.history.removeParameters(['pc'])
+
                 if (link){
 
                     link = link.replace('https://' + self.app.options.url + '/', '')
@@ -22159,7 +22156,7 @@ Platform = function (app, listofnodes) {
                     })
 
                 if (self.matrixchat.core){ 
-                    self.matrixchat.core.hiddenInParent = false 
+                    self.matrixchat.core.hideInParent(false) 
 
                     if(link){
                         self.matrixchat.core.gotoRoute(link)
@@ -22175,7 +22172,7 @@ Platform = function (app, listofnodes) {
             }
 
             self.matrixchat.core = core
-            self.matrixchat.core.hiddenInParent = isMobile()|| window.cordova ? true : false 
+            self.matrixchat.core.hideInParent(isMobile()|| window.cordova ? true : false)
 
             core.externalLink(self.matrixchat)
 
@@ -22204,9 +22201,8 @@ Platform = function (app, listofnodes) {
         unlink : function(){    
 
             if (self.matrixchat.core){ 
-                self.matrixchat.core.hiddenInParent = false
+                //self.matrixchat.core.hideInParent(false)
                 self.matrixchat.core.destroyExternalLink()
-            
             }
 
 

@@ -309,6 +309,37 @@ var share = (function(){
 					}
 				})
 			},
+
+			addimage : function(value){
+
+				var result = true;
+				var type = 'images'
+
+				if(!_.isArray(value)) value = [value]
+
+				_.each(value, function(v, i){
+
+					result = currentShare[type].set(v)
+
+					if(!essenseData.share){
+						state.save()
+					}
+				})
+
+				if(!result && errors[type]){
+					sitemessage(errors[type])
+				}		
+				
+				if(type == 'url'){
+					renders.all()
+				}
+				else{
+					if (renders[type])
+						renders[type]();
+				}
+				
+			},
+
 			embeding : function(type, value){
 				var storage = currentShare.export(true)
 
@@ -343,8 +374,6 @@ var share = (function(){
 					return
 				}
 
-				
-
 				if(type == 'times'){
 
 					dialog({
@@ -370,8 +399,6 @@ var share = (function(){
 						fail : function(){
 						}
 					})
-
-					
 
 					return
 
@@ -1238,11 +1265,10 @@ var share = (function(){
 			embeding : function(){
 				var type = $(this).attr('embeding')
 
+				if(!type) return
 
 				if (type == 'language'){
-
 					actions.language()
-
 					return
 				}
 
@@ -1381,6 +1407,44 @@ var share = (function(){
 
 		}
 
+		var imagesHelper = {
+			slowUploadGif : function(file, storage, clbk){
+			
+						
+				file.id = makeid();
+				file.slow = true;
+				file.base64 = file.base64;
+
+				storage.push(file)
+
+
+				if (clbk)
+					clbk()
+			
+			},
+			slowUpload : function(file, storage , clbk){
+				resize(file.base64, 1080, 1080, function(resized){
+
+					var r = resized.split(',');
+
+					if (r[1]){
+
+						
+						file.id = makeid();
+						file.slow = true;
+						file.base64 = resized;
+
+						storage.push(file)
+
+
+					}
+
+					if (clbk)
+						clbk()
+				})
+			},
+		}
+
 		var renders = {
 
 			postline : function(clbk){
@@ -1415,6 +1479,56 @@ var share = (function(){
 						el.peertube = el.c.find('.peertube');
 						el.peertubeLiveStream = el.c.find('.peertubeLiveStream');
 
+						
+						var tstorage = []
+
+						initUpload({
+							el : p.el.find('.images'),
+				
+							ext : ['png', 'jpeg', 'jpg', 'gif', 'jfif'],
+		
+							dropZone : el.c,
+		
+							multiple : true,
+		
+							action : function(file, clbk){
+		
+								if (file.ext == 'gif'){
+									imagesHelper.slowUploadGif(file, tstorage, clbk)
+								}
+								else
+								{
+									imagesHelper.slowUpload(file, tstorage, clbk)
+								}
+								
+							},
+
+							onError : function(er){
+
+								var et = {
+									filesize : "Your photo has size greater than 30MB.",
+									fileext : "Invalid format of picture."
+								}
+								if(et[er])
+								sitemessage(et[er])
+							},
+		
+							onSuccess : function(){
+
+								var images = [];
+		
+								_.each(tstorage, function(v){
+									if(v.base64)
+										images.push(v.base64)
+								})
+
+
+								actions.addimage(images)
+
+								tstorage = []
+							
+							}
+						})
 
 
 						p.el.find('.cancelediting').on('click', function(){
@@ -2347,10 +2461,13 @@ var share = (function(){
 					if (essenseData.repost || parameters().repost) 
 						currentShare.repost.set(essenseData.repost || parameters().repost)
 
+					var checkEntity = currentShare.message.v || currentShare.caption.v || currentShare.repost.v || currentShare.url.v || currentShare.images.v.length || currentShare.tags.v.length;
+
 					var data = {
 						essenseData : essenseData,
 						share : currentShare,
 						postcnt : u.postcnt,
+						checkEntity : checkEntity,
 					};
 
 					clbk(data);
@@ -2435,6 +2552,10 @@ var share = (function(){
 				p.clbk(null, p);
 
 				actions.waitActions();
+
+				el.c.on('click', function(){
+					el.c.removeClass('minimized')
+				})
 
 			},
 

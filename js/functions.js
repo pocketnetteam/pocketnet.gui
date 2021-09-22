@@ -8851,7 +8851,7 @@
 
 		var el = p.el,
 			multiple = p.multiple || false,
-			maxFileSize = (p.maxFileSize || 10) * 1024 * 1024,
+			maxFileSize = (p.maxFileSize || 30) * 1024 * 1024,
 			dropZone,
 			input,
 			mode = p.mode || "FS";
