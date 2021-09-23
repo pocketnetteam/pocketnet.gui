@@ -420,7 +420,7 @@ var post = (function () {
 							}
 
 							
-							if (downloadPanel && downloadPanel.removeClass && window.cordova)
+							if (window.cordova && typeof downloadPanel != 'undefined' && downloadPanel.removeClass)
 								downloadPanel.removeClass('downloading downloaded invisible').addClass('canDownload');
 
 							if (wa) {
@@ -863,20 +863,37 @@ var post = (function () {
 					renders.setShareDownload(shareId, 'downloading');
 					self.sdk.local.shares.saveVideoCordova(shareId, id, video, videoDetails).then(() => {
 						// Success
-
+						// Show message
+						sitemessage(self.app.localization.e('videoHasBeenDownloaded'), undefined, function(messageDiv) {
+							// On click
+							// Close the message box
+							if (messageDiv && messageDiv.animate) {
+								messageDiv.animate({opacity: 0}, 500);
+								setTimeout(() => {
+									messageDiv.detach();
+								}, 500);
+							}
+							// Redirect to downloaded page
+							self.nav.api.load({
+								open : true,
+								href : "index?r=saved",
+								history : true,
+							});
+						});
 						// Update share video player
 						if (player) {
 							if (player.destroy)
 								player.destroy();
 							player = null;
 						}
-						renders.share(function() {
-							setTimeout(() => {
-								delete el[shareId];
-								renders.setShareDownload(shareId, 'downloaded');
-							}, 200);
-						}, true);
-
+						if (el && el.share) {
+							renders.share(function() {
+								setTimeout(() => {
+									delete el[shareId];
+									renders.setShareDownload(shareId, 'downloaded');
+								}, 200);
+							}, true);
+						}
 					}, (err) => {
 						// Error
 						console.log(err);
@@ -888,20 +905,37 @@ var post = (function () {
 					renders.setShareDownload(shareId, 'downloading');
 					self.sdk.local.shares.saveVideoElectron(shareId, id, video, videoDetails).then(() => {
 						// Success
-
+						// Show message
+						sitemessage(self.app.localization.e('videoHasBeenDownloaded'), undefined, function(messageDiv) {
+							// On click
+							// Close the message box
+							if (messageDiv && messageDiv.animate) {
+								messageDiv.animate({opacity: 0}, 500);
+								setTimeout(() => {
+									messageDiv.detach();
+								}, 500);
+							}
+							// Redirect to downloaded page
+							self.nav.api.load({
+								open : true,
+								href : "index?r=saved",
+								history : true,
+							});
+						});
 						// Update share video player
 						if (player) {
 							if (player.destroy)
 								player.destroy();
 							player = null;
 						}
-						renders.share(function() {
-							setTimeout(() => {
-								delete el[shareId];
-								renders.setShareDownload(shareId, 'downloaded');
-							}, 200);
-						}, true);
-
+						if (el && el.share) {
+							renders.share(function() {
+								setTimeout(() => {
+									delete el[shareId];
+									renders.setShareDownload(shareId, 'downloaded');
+								}, 200);
+							}, true);
+						}
 					}, (err) => {
 						// Error
 						console.log(err);

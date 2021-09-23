@@ -997,3 +997,4 @@ ____loclib.deleteVideoDialog = "你确定要删除这个视频吗？";
 ____loclib.deleteAllVideoDialog = "你确定你要删除所有的视频吗？";
 ____loclib.videosDeleted = "视频被删除!";
 ____loclib.noDownloadedVideos = "没有下载的视频";
+____loclib.videoHasBeenDownloaded = "视频下载成功";

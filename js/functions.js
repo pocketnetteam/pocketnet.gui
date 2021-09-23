@@ -1508,14 +1508,19 @@
 		return self;
 	}
 
-	sitemessage = function (message, func) {
+	sitemessage = function (message, func, onClick) {
 		$("<div/>", {
 			"class": "sitemessage remove_now",
 			"style": "opacity:0",
 			text: message
 
 		}).appendTo("body")
-			.animate({opacity: 1}, 200);
+			.animate({opacity: 1}, 200)
+			.on('click', function() {
+				// When user clicks on message
+				if (typeof onClick === 'function')
+					onClick($('.remove_now'));
+			});
 
 		setTimeout(function () {
 

@@ -1152,6 +1152,7 @@ ____loclib.noDownloadedVideos = "No downloaded videos";
 ____loclib.deleteVideoDialog = "Are you sure you want to delete this video?";
 ____loclib.deleteAllVideoDialog = "Are you sure you want to delete all the videos?";
 ____loclib.videosDeleted = "Videos deleted!";
+____loclib.videoHasBeenDownloaded = "Video downloaded successfully";
 
 ____loclib.enterVideoName = "Enter video name";
 ____loclib.enterVideoDescription = "Enter video description";
