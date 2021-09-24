@@ -10,6 +10,8 @@ var main = (function(){
 
 		var el = {};
 
+		var bastyonhelperOpened = false;
+		
 		var mnemonic = localStorage.getItem('mnemonic');
 
 		var roller = null, lenta = null, share = null, panel,leftpanel, uptimer = null;
@@ -770,38 +772,45 @@ var main = (function(){
 			}
 
 
-			self.shell({
-				name : 'bastyonhelper',
-				el : el.bastyonhelper,
-				animation : false,
-				data : {
+			if (!electron && !window.cordova && !bastyonhelperOpened){
 
-				}					
+				bastyonhelperOpened = true;
 
-			}, function(p){
-
-
-				var iframe = p.el.find('#iframe');
-
-				var bastyonlink = p.el.find('#bastyonlink');
-				var _close = p.el.find('._close');
-				
-
-				if (mnemonic && iframe[0]){
-
-					bastyonlink.on('click', function(){
-						events.sendMnemonic(iframe[0], mnemonic)
-					})
-
-					_close.on('click', function(){
-
-						el.bastyonhelper.remove()
-					})
+				self.shell({
+					name : 'bastyonhelper',
+					el : el.bastyonhelper,
+					animation : false,
+					data : {
+	
+					}					
+	
+				}, function(p){
 	
 	
-				}
-				
-			})
+					var iframe = p.el.find('#iframe');
+	
+					var bastyonlink = p.el.find('#bastyonlink');
+					var _close = p.el.find('._close');
+					
+	
+					if (mnemonic && iframe[0]){
+	
+						bastyonlink.on('click', function(){
+							events.sendMnemonic(iframe[0], mnemonic)
+						})
+	
+						_close.on('click', function(){
+	
+							el.bastyonhelper.remove()
+						})
+		
+		
+					}
+					
+				})
+	
+			}
+
 
 
 		}
