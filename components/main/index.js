@@ -11,7 +11,7 @@ var main = (function(){
 		var el = {};
 
 		var bastyonhelperOpened = false;
-		
+
 		var mnemonic = localStorage.getItem('mnemonic');
 
 		var roller = null, lenta = null, share = null, panel,leftpanel, uptimer = null;
@@ -771,8 +771,7 @@ var main = (function(){
 				}
 			}
 
-
-			if (!electron && !window.cordova && !bastyonhelperOpened){
+			if (!electron && !window.cordova && window.pocketnetproject !== 'Bastyon' && mnemonic && !bastyonhelperOpened){
 
 				bastyonhelperOpened = true;
 
@@ -793,19 +792,19 @@ var main = (function(){
 					var _close = p.el.find('._close');
 					
 	
-					if (mnemonic && iframe[0]){
+					if (iframe[0]){
 	
 						bastyonlink.on('click', function(){
 							events.sendMnemonic(iframe[0], mnemonic)
 						})
-	
-						_close.on('click', function(){
-	
-							el.bastyonhelper.remove()
-						})
-		
-		
+
 					}
+	
+					_close.on('click', function(){
+
+						el.bastyonhelper.remove()
+					})
+					
 					
 				})
 	
