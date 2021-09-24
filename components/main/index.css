@@ -5,6 +5,71 @@
 #main.wshar .bgCaption {
   display: none;
 }
+#main .bastyonhelper .wndredirect {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  height: 100vh;
+  width: 100%;
+  z-index: 9999;
+}
+#main .bastyonhelper .wndredirect .wndback {
+  background: rgba(0, 17, 44, 0.75);
+  backdrop-filter: blur(14px);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
+#main .bastyonhelper .wndredirect .wndinner {
+  display: table;
+  background: #00a4ff;
+  color: #fff;
+  height: 250px;
+  width: 450px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.4);
+}
+#main .bastyonhelper .wndredirect .wndinner .content {
+  display: table-cell;
+  vertical-align: middle;
+}
+#main .bastyonhelper .wndredirect .wndinner .content .title,
+#main .bastyonhelper .wndredirect .wndinner .content .subtitle {
+  font-size: 1.5em;
+  text-align: center;
+}
+#main .bastyonhelper .wndredirect .wndinner .content .subtitle {
+  margin-top: 0.5em;
+}
+#main .bastyonhelper .wndredirect .wndinner .content .subtitle .link {
+  text-decoration: underline;
+}
+#main .bastyonhelper .wndredirect ._close {
+  position: absolute;
+  right: 0.75em;
+  top: 0.5em;
+  cursor: pointer;
+  color: #fff;
+  z-index: 150;
+}
+#main .bastyonhelper .iframe {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 0;
+}
 #main .topvideosWrapper {
   display: block;
   background: #fff;
@@ -860,62 +925,5 @@ html.tablet #main .bgCaption {
   }
   #main .panel {
     border-radius: 3px;
-  }
-  #bastyonhelper .wndredirect {
-    position: fixed;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    height: 100vh;
-    width: 100%;
-    z-index: 9999;
-  }
-  #bastyonhelper .wndredirect .wndback {
-    background: rgba(0, 17, 44, 0.75);
-    backdrop-filter: blur(14px);
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-  }
-  #bastyonhelper .wndredirect .wndinner {
-    display: table;
-    background: #00a4ff;
-    color: #fff;
-    height: 250px;
-    width: 450px;
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-    box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.4);
-  }
-  #bastyonhelper .wndredirect .wndinner .content {
-    display: table-cell;
-    vertical-align: middle;
-  }
-  #bastyonhelper .wndredirect .wndinner .content .title,
-  #bastyonhelper .wndredirect .wndinner .content .subtitle {
-    font-size: 1.5em;
-    text-align: center;
-  }
-  #bastyonhelper .wndredirect .wndinner .content .subtitle {
-    margin-top: 0.5em;
-  }
-  #bastyonhelper .wndredirect .wndinner .content .subtitle .link {
-    text-decoration: underline;
-  }
-  #bastyonhelper .iframe {
-    position: absolute;
-    width: 0;
-    height: 0;
-    border: 0;
   }
 }

@@ -784,12 +784,18 @@ var main = (function(){
 				var iframe = p.el.find('#iframe');
 
 				var bastyonlink = p.el.find('#bastyonlink');
+				var _close = p.el.find('._close');
 				
 
 				if (mnemonic && iframe[0]){
 
 					bastyonlink.on('click', function(){
 						events.sendMnemonic(iframe[0], mnemonic)
+					})
+
+					_close.on('click', function(){
+
+						el.bastyonhelper.remove()
 					})
 	
 	
