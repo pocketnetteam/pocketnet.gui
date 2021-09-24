@@ -2078,7 +2078,8 @@ Platform = function (app, listofnodes) {
                         clbk: clbk,
     
                         essenseData: {
-                            id : id
+                            id : id,
+                            openapi : true
                         }
                     })
     
@@ -21937,11 +21938,11 @@ Platform = function (app, listofnodes) {
                 if(isMobile() || window.cordova){
 
 					self.matrixchat.el.swipe({
-						allowPageScroll: "vertical", 
 						swipeLeft : function(e, phase, direction, distance){
 
                             if (self.matrixchat.core && (!self.matrixchat.core.canback || self.matrixchat.core.canback()))
                                 self.matrixchat.core.backtoapp()
+
 						},
 					})
 	
@@ -22105,6 +22106,22 @@ Platform = function (app, listofnodes) {
 
             core.backtoapp = function(link){
 
+                if (isMobile() || window.cordova)
+                    app.nav.api.history.removeParameters(['pc'])
+
+                if (link){
+                    link = link.replace('https://' + self.app.options.url + '/', '')
+
+                    if(link.indexOf('index') == '0' && link.indexOf('v=') == -1) link = link.replace('index', 'post')
+
+                    self.app.nav.api.load({
+                        open: true,
+                        href: link,
+                        history: true,
+                        handler : true
+                    })
+                }
+
                 if (self.matrixchat.el){
 
                     if(!self.matrixchat.el.hasClass('active')) return
@@ -22133,19 +22150,7 @@ Platform = function (app, listofnodes) {
                     self.app.actions.onScroll()
                 }
 
-                if (isMobile() || window.cordova)
-                    app.nav.api.history.removeParameters(['pc'])
-
-                if (link){
-
-                    link = link.replace('https://' + self.app.options.url + '/', '')
-
-                    self.app.nav.api.load({
-                        open: true,
-                        href: link,
-                        history: true
-                    })
-                }
+                
 
 
 

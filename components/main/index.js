@@ -943,6 +943,7 @@ var main = (function(){
 				hsready = false;
 
 				var _s = parameters()
+
 				if (_s.r){
 					currentMode = _s.r
 				}
@@ -963,6 +964,19 @@ var main = (function(){
 
 					return
 				}
+
+
+				/*if(beginmaterial && !_s.v && isMobile()){
+
+					self.nav.api.load({
+						open : true,
+						href : 'post' + collectParameters(_s),
+						history : true
+					})
+
+					return 
+				}*/
+
 
 				if(self.app.curation()){
 					

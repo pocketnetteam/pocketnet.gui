@@ -224,6 +224,8 @@ var userpage = (function(){
 
 						if (self.app.curation()) return false
 
+						if (window.testpocketnet) return true
+
 						if (typeof mestate != 'undefined' && mestate && (
 					
 							(mestate.reputation > 50 || !mestate.trial || mestate.balance > 500000000)

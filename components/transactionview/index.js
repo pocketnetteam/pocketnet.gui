@@ -189,7 +189,6 @@ var transactionview = (function(){
 
 				txid = (p.settings.essenseData || {}).txid || parameters().txid
 
-				console.log('txid, parameters().txid', txid, parameters().txid)
 
 				if(!txid){
 
@@ -208,7 +207,6 @@ var transactionview = (function(){
 
 					tx = _tx
 
-					console.log("tx", tx)
 
 					data.tx = tx
 

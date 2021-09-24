@@ -106,7 +106,7 @@ ____loclib.signout = "Выйти";
 ____loclib.postlabel = "Пожертвование связанное с публикацией";	
 ____loclib.donationlabel = "Пожертвование";	
 ____loclib.donationwel = "Если вы хотите отблагодарить автора публикации вы можете воспользоваться транзакцией "+appname+"";
-____loclib.donationwela = "Отправить с помощью "+appname+"";	
+____loclib.donationwela = "Отправлено с помощью "+appname+"";	
 ____loclib.donationwelan = "Также можно использовать другие криптовалютные системы";	
 ____loclib.successfullycopiedaddress = "Адрес был успешно скопирован";	
 

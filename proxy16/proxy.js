@@ -1117,7 +1117,7 @@ var Proxy = function (settings, manage, test) {
 				authorization: 'signature',
 				action: function ({ node, scenario, A }) {
 
-					//if (!test) return Promise.reject('err');
+					if (!test) return Promise.reject('err');
 
 					if (!A) return Promise.reject('admin');
 

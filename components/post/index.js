@@ -361,8 +361,11 @@ var post = (function () {
 				var pels = el.c.find('.js-player, [data-plyr-provider][data-plyr-embed-id]');
 
 				var shareId = share.txid;
+
 				if (!el[shareId])
 					el[shareId] = el.c.find('.metapanel.' + shareId + ' .downloadMetapanel');
+
+				var downloadPanel = el[shareId];
 
 				var wa =  !share.repost && !ed.repost && ((share.itisvideo() && isMobile() || (ed.autoplay && pels.length <= 1))) ? true : false
 
@@ -1587,6 +1590,7 @@ var post = (function () {
 
 				level = (ed.level || -1) + 1
 
+				
 				self.app.platform.sdk.node.shares.getbyid([id], function () {
 
 					share = self.app.platform.sdk.node.shares.storage.trx[id]

@@ -1,10 +1,15 @@
-<% 
-var name = app.platform.api.name(author.address) 
-var letter = name ? name[0] : '';
-%>
+
 
 <div id="<%-module.map.id%>">
 	<div class="channel">
+
+		<% if(author) { %>
+
+		<% 
+			var name = app.platform.api.name(author.address) 
+			var letter = name ? name[0] : '';
+		%>
+
 		<div class="work">
 			<div class="userinfo">
 				<div class="icon">
@@ -62,23 +67,32 @@ var letter = name ? name[0] : '';
 					
 				<% }) %>
 			</div>
+			<% if(typeof ed == 'undefined' || !ed.openapi) {%>
+				<div class="action">
+					<% if(!connect) {%>
+						<a href="https://<%-domain%>/<%-name%>">
+							<button class="button medium">
+								Follow <%-name || author.address%> on <%-app.meta.fullname%>
+							</button>
+						</a>
 
-			<div class="action">
-				<% if(!connect) {%>
-					<a href="https://<%-domain%>/<%-name%>">
-						<button class="button medium">
-							Follow <%-name || author.address%> on <%-app.meta.fullname%>
-						</button>
-					</a>
-
-				<% } else { %> 
-					<a href="https://<%-domain%>/welcome?connect=<%-author.address%>">
-						<button class="button medium">
-							Connect with <%-name || author.address%>
-						</button>
-					</a>
-				<% } %>
-			</div>
+					<% } else { %> 
+						<a href="https://<%-domain%>/welcome?connect=<%-author.address%>">
+							<button class="button medium">
+								Connect with <%-name || author.address%>
+							</button>
+						</a>
+					<% } %>
+				</div>
+			<% } %>
 		</div>
+
+		<% } else { %> 
+		
+			<div class="emptychannel">
+				<%= e('zeron') %>
+			</div>
+			
+		<% } %>
 	</div>
 </div>

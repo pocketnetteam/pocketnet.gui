@@ -767,7 +767,6 @@ var system16 = (function(){
 			node : {
 				test : function(node){
 
-					return
 					var scenarios = [{
 						name : "Pageload",
 						key : 'pageload'

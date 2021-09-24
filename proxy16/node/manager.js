@@ -556,6 +556,14 @@ var Nodemanager = function(p){
 
                 return node.info().then(r => {
 
+                    var bchain = 'main'
+
+                    if (self.proxy.test) bchain = 'test'
+
+                    if(node.bchain != bchain){
+                        return Promise.reject('bchain')
+                    }
+
                     connected.push(node)
 
                 }).catch(e => {

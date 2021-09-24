@@ -18,7 +18,7 @@ var lenta = (function(){
 		var w, essenseData, recomended = [], recommended, mestate, initedcommentes = {}, canloadprev = false,
 		video = false, isotopeinited = false, videosVolume = 0;
 
-
+		var openedPost = null
 		var shareInitedMap = {},
 			shareInitingMap = {},
 			fullScreenVideoParallax = null,
@@ -642,11 +642,14 @@ var lenta = (function(){
 							next : actions.next,
 
 							close : function(){
+								openedPost = null
 								essenserenderclbk()
 							}
 						}
 
-						var c = function(){		
+						var c = function(e, es){		
+
+							openedPost = es
 								
 							essenserenderclbk()
 	
@@ -691,7 +694,9 @@ var lenta = (function(){
 					}
 
 
-					renders.share(share, clbk, true)
+					renders.share(share, function(){
+						if(clbk) clbk()
+					}, true)
 
 				}
 				
@@ -1014,8 +1019,6 @@ var lenta = (function(){
 				var player = players[id]
 
 				//player.p.muted = true;
-
-				console.log('videosVolume', videosVolume)
 
 				actions.setVolume(players[id], videosVolume)
 
@@ -1475,8 +1478,6 @@ var lenta = (function(){
 				if(typeof v == 'undefined') v = videosVolume
 
 				var cvv = videosVolume
-
-				console.log('videosVolume', videosVolume, v)
 
 				if(!player.p) return
 
@@ -3155,19 +3156,15 @@ var lenta = (function(){
 					el[shareId] = el.c.find('.metapanel.' + shareId + ' .downloadMetapanel');
 				switch (action) {
 					case 'canDownload':
-						console.log('canDownload');
 						el[shareId].removeClass('downloading downloaded invisible').addClass('canDownload');
 						break;
 					case 'downloading':
-						console.log('downloading');
 						el[shareId].removeClass('canDownload downloaded invisible').addClass('downloading');
 						break;
 					case 'downloaded':
-						console.log('downloaded');
 						el[shareId].removeClass('downloading canDownload invisible').addClass('downloaded');
 						break;
 					case 'invisible':
-						console.log('invisible');
 						el[shareId].removeClass('downloading downloaded canDownload').addClass('invisible');
 						break;
 				}
@@ -4171,9 +4168,6 @@ var lenta = (function(){
 
 				videosVolume = self.sdk.videos.volume
 
-				console.log('videosVolume111', videosVolume)
-
-
 				beginmaterial = _s.s || _s.i || _s.v || _s.p || null;
 
 				if(_s.r) 	recommended = _s.r;
@@ -4259,8 +4253,6 @@ var lenta = (function(){
 
 			destroy : function(){
 
-				console.log("DESTROY")
-
 				/*if (essenseData.window){
 					essenseData.window.off('scroll')
 				}*/
@@ -4295,6 +4287,14 @@ var lenta = (function(){
 				if (fullScreenVideoParallax) {
 					fullScreenVideoParallax.destroy()
 					fullScreenVideoParallax = null
+				}
+
+				if(openedPost){
+					if (openedPost.container)
+						openedPost.container.close()
+					else openedPost.destroy()
+
+					openedPost = null
 				}
 
 				players = {}
