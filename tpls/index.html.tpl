@@ -57,9 +57,6 @@
 
         <div id="headerWrapper">
         </div>
-
-        <div id="bastyonhelper">
-        </div> 
         
         <div id="menuWrapper">
         </div> 

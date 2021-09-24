@@ -759,7 +759,6 @@ Application = function(p)
 			toppanel : 		$('#panelWrapper'),
 			navigation : 	$('#navigationWrapper'),
 			footer : 		$('#footerWrapper'),
-			bastyonhelper : $('#bastyonhelper'),
 			chats : 		$('.chats'),
 			html : 			$('html'),
 			window : 		$(window)

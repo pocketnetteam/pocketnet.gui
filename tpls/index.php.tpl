@@ -58,9 +58,6 @@
         <div id="headerWrapper">
         </div>
 
-        <div id="bastyonhelper">
-        </div> 
-
         <div class="cordovatop">
         </div>
 

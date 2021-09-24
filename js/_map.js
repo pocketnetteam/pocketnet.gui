@@ -1213,18 +1213,6 @@ __map =  {
 		reload : true
 	},
 
-	bastyonhelper : {
-		uri : "bastyonhelper",
-		href : "bastyonhelper",
-		add : {
-			el : 'bastyonhelper'
-		},
-		now : true,
-		anonimus : true,
-		renew : true,
-		reload : true
-	},
-
 	toppanel : {
 		uri : "toppanel",
 		href : "toppanel",
