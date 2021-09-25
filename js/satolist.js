@@ -22131,7 +22131,8 @@ Platform = function (app, listofnodes) {
                 else{
                     return
                 }
-                    
+
+                self.app.actions.playingvideo()
 
                 if (isMobile() || window.cordova)
                     self.app.actions.restore()
@@ -22139,8 +22140,6 @@ Platform = function (app, listofnodes) {
                 app.el.html.removeClass('chatshowed')
 
                 if(document.activeElement) document.activeElement.blur()
-
-                
 
                 if (self.matrixchat.core){ 
                     self.matrixchat.core.hideInParent(isMobile() || window.cordova ? true : false )
@@ -22150,20 +22149,21 @@ Platform = function (app, listofnodes) {
                     self.app.actions.onScroll()
                 }
 
-                
-
-
-
                 _.each(self.matrixchat.clbks.SHOWING, function(c){
                     c(false)
                 })
-
                 
             }
 
             core.apptochat = function(link){
 
                 if (document.activeElement) document.activeElement.blur()
+
+                if (self.matrixchat.core){ 
+                    if(link){
+                        self.matrixchat.core.gotoRoute(link)
+                    }
+                }
                 
                 if (self.matrixchat.el){
 
@@ -22176,16 +22176,12 @@ Platform = function (app, listofnodes) {
                     return
                 }
                     
-
-                
                 self.app.actions.playingvideo()
-
 
                 if (isMobile() || window.cordova){
                     self.app.actions.offScroll()
                     self.app.actions.optimize()   
                 }
-                    
                     
                 if (isMobile() || window.cordova)
                     app.nav.api.history.addParameters({
@@ -22195,11 +22191,10 @@ Platform = function (app, listofnodes) {
                 if (self.matrixchat.core){ 
                     self.matrixchat.core.hideInParent(false) 
 
-                    if(link){
-                        self.matrixchat.core.gotoRoute(link)
-                    }
+                    
                 
                 }
+                
 
                 _.each(self.matrixchat.clbks.SHOWING, function(c){
                     c(true)

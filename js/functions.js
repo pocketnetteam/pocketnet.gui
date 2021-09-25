@@ -1550,6 +1550,9 @@
 
 			if (image)
 			{
+				image = image.replace('bastyon.com:8092', 'pocketnet.app:8092')
+				
+
 				_el.css({
 					'background-image': 'url('+image+')',
 					'background-size': p.size || 'cover',

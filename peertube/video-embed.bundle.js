@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=1939"
+/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=8150"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -43261,6 +43261,7 @@ class embed_PeerTubeEmbed {
             if (!videoResponseJson) {
                 return Promise.reject("failfetch");
             }
+            console.log('videoResponseJson', videoResponseJson);
             if (videoResponseJson.from) {
                 this.host = 'https://' + videoResponseJson.from;
             }
@@ -43449,6 +43450,7 @@ class embed_PeerTubeEmbed {
             catch (e) {
                 console.log('isTranscodingStatusMessage', e);
             }
+            console.log('this.host', this.host);
             const options = {
                 common: {
                     // Autoplay in playlist mode
