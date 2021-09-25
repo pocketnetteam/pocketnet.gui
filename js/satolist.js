@@ -17387,6 +17387,8 @@ Platform = function (app, listofnodes) {
                 if (data.data)
                     platform.ws.messageHandler(data.data)
 
+                console.log('data', data)
+
                 if (data.room_id) {
 
                     if(data.tap){
@@ -17395,13 +17397,27 @@ Platform = function (app, listofnodes) {
 
                             return platform && platform.matrixchat && platform.matrixchat.core;
 
-                        }, function(){
+                        }, function(){  
 
-                            platform.matrixchat.core.goto(data.room_id);
-                            platform.matrixchat.core.mtrx.fastsync()
+                            setTimeout(function(){
+
+                                platform.matrixchat.core.goto(data.room_id);
+                                
+                                if (platform.matrixchat.core.apptochat)
+                                    platform.matrixchat.core.apptochat();
+
+                            }, 50)
+
+                            setTimeout(function(){
+                                try{
+                                    platform.matrixchat.core.mtrx.fastsync()
+                                }
+                                catch(e){
+                                    
+                                }
+                                
+                            }, 500)
                             
-                            if (platform.matrixchat.core.apptochat)
-                                platform.matrixchat.core.apptochat();
                         });
                     }
 
