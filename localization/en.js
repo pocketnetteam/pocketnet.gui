@@ -1167,3 +1167,6 @@ ____loclib.hideAllButton = "Hide";
 
 ____loclib.UniqueUsers = "Unique Raters";
 ____loclib.ErrorLoadingRates = "Loading Error";
+
+____loclib.userGuides = "Guides";
+____loclib.liveSreamingGuide = "Live Streaming";

@@ -1,22 +1,24 @@
 @import "../../css/__cssvar";
 
-#help{
-	padding-bottom : 8 * @rhythm;
+#help {
+	padding-bottom: 8 * @rhythm;
 	font-size: 0.9em;
-	.tips{
-		padding-top : 2 * @rhythm;
+
+	.tips {
+		padding-top: 2 * @rhythm;
 		overflow: hidden;
-		.tipitem{
+
+		.tipitem {
 			float: left;
 			margin-right: 6 * @rhythm;
 			margin-left: 2px;
 			cursor: pointer;
 			font-size: 1em;
-			padding : @rhythm;
+			padding: @rhythm;
 			border-bottom: 1px solid transparent;
-			
 
-			&.bright{
+
+			&.bright {
 				background: @color-orange;
 				border-radius: 33px;
 				padding-left: 2 * @rhythm;
@@ -24,10 +26,10 @@
 			}
 
 			&:hover,
-			&.active{
+			&.active {
 				border-bottom: 1px solid #fff;
 
-				&.bright{
+				&.bright {
 					border-bottom: 1px solid @color-orange;
 				}
 			}
@@ -35,67 +37,70 @@
 	}
 
 
-	.bgCaption{
+	.bgCaption {
 		background: fade(@color-black2, 100);
-		.cell{
-			padding-top : 5 * @rhythm;
+
+		.cell {
+			padding-top: 5 * @rhythm;
 			vertical-align: top;
 
-			&.version{
+			&.version {
 				width: 230px;
-				.infoversion{
-					padding-top : 4 * @rhythm;
+
+				.infoversion {
+					padding-top: 4 * @rhythm;
 					font-size: 0.8em;
 					text-align: right;
 				}
 
-				.checkversion{
+				.checkversion {
 					cursor: pointer;
 
-					&:hover{
-						color : @color-gray-light;
+					&:hover {
+						color: @color-gray-light;
 					}
 				}
-				
-				.checking{
+
+				.checking {
 					display: inline-block;
-					width : 30px;
+					width: 30px;
 					text-align: center;
 					opacity: 0;
 
-					&.active{
+					&.active {
 						opacity: 1;
 					}
 				}
-				
+
 			}
 		}
 	}
 
-	.section{
+	.section {
 		padding-bottom: 6 * @rhythm;
 		margin-top: 6 * @rhythm;
 		overflow: hidden;
 		border-bottom: 1px solid @color-gray-slight;
 
-		&:nth-last-child(1){
-			border-bottom : 0;
+		&:nth-last-child(1) {
+			border-bottom: 0;
 		}
 
-		>div{
-			&.sectionname{
+		>div {
+			&.sectionname {
 				width: 420px;
 				float: left;
 
-				span{
+				span {
 					font-size: 2em;
 				}
 			}
-			&.sectioncnt{
-				
+
+			&.sectioncnt {
+
 				margin-left: 420px;
 
-				.p{
+				.p {
 					max-width: 600px;
 					margin-top: @rhythm;
 					font-size: 1.1em;
@@ -106,186 +111,225 @@
 
 	}
 
-	.page{
-		.caption{
+	.page {
+		.caption {
 			margin-top: 4 * @rhythm;
 			font-size: 1.5em;
 			font-weight: 700;
 		}
 
-		.roadmap{
+		.roadmap {
 			margin-top: 4 * @rhythm;
 			max-width: 640px;
-			.road{
-				>div{
-					padding : 2 * @rhythm;
 
-					&.time{
+			.road {
+				>div {
+					padding: 2 * @rhythm;
+
+					&.time {
 						width: 140px;
 					}
 
-					&.released{
-						color : @color-good;
+					&.released {
+						color: @color-good;
 						font-weight: 500;
 						width: 50px;
 						text-align: center;
 					}
 
-					&:nth-child(1){
+					&:nth-child(1) {
 						padding-left: 0;
 					}
-				}	
+				}
 
 
 			}
 		}
 
-		.readmore{
+		.readmore {
 			margin-top: 5em;
 			font-size: 1em;
 
-			a{
+			a {
 				color: @color-main;
 				text-decoration: underline;
 			}
 		}
 
-		
 
-		.lentasection{
-			>div{
-				&.sectionname{
+
+		.lentasection {
+			position: relative;
+
+			min-height: 500px;
+
+			.guidesSection {
+				position: absolute;
+
+				top: @rhythm * 2;
+
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: space-between;
+			}
+
+			.postGuideButton {
+				width: 100%;
+
+				// margin-bottom: @rhythm * 2;
+
+				color: @color-black2;
+				background-color: transparent;
+				border: none;
+				text-align: start;
+
+				&:hover {
+					text-decoration: underline;
+				}
+			}
+
+			.share {
+				background-color: #fafafa;
+			}
+
+			>div {
+				&.sectionname {
 					width: 160px;
-					padding-top : 2 * @rhythm;
+					padding-top: 2 * @rhythm;
 				}
 
-				&.sectioncnt{
+				&.sectioncnt {
 					max-width: 800px;
 					margin-left: 160px;
 
 				}
 			}
 
-			.lenta{
-				#lenta{
-					.shares{
-					 	.share{
-					 		padding : 0;
-							padding : 3 * @rhythm;
+			.lenta {
+				#lenta {
+					.shares {
+						.share {
+							padding: 0;
+							padding: 3 * @rhythm;
 							// border : 1px solid @color-gray-slight;
 							border-radius: @rhythm;
-					 	}
+						}
 					}
 				}
 			}
 		}
 	}
-	.page{
-		#comments{
-			.caption{
+
+	.page {
+		#comments {
+			.caption {
 				font-size: 1em;
-				margin-top : 0;
+				margin-top: 0;
 			}
 		}
 	}
-	
+
 }
 
-.pkoinWrapper{
+.pkoinWrapper {
 
-	.loader{
+	.loader {
 		margin-top: 2em;
 	}
 
-	.caption{
+	.caption {
 		margin-bottom: 1em
 	}
 
-	.field{
+	.field {
 		display: flex;
 		flex-wrap: wrap;
 
-		.name{
+		.name {
 			max-width: 500px;
 			width: 100%;
 			padding-top: .5em;
 			padding-bottom: .5em;
 		}
 
-		.value{
+		.value {
 			padding: @rhythm;
 			color: @color-main;
 			font-weight: 700;
 			word-break: break-all;
 		}
 	}
-	table{
+
+	table {
 
 		margin-top: 1.5em;
-	
 
-		tbody{
+
+		tbody {
 			margin-top: 1em;
 		}
-		
-		th{
+
+		th {
 			text-align: start;
 		}
 
-		th, .name{
+		th,
+		.name {
 			width: 500px;
 			padding: 1.5em .5em;
 		}
 
-		.copyaddress{
+		.copyaddress {
 			cursor: pointer;
 		}
 
-		.balance{
+		.balance {
 			font-weight: 100;
 		}
 
-		.toblockexplorer{
+		.toblockexplorer {
 			font-size: 0.8em;
-			color : @color-gray-slight;
+			color: @color-gray-slight;
 			.transition(0.3s);
 			cursor: pointer;
 			width: 30px;
 			text-align: center;
-	
-			&:hover{
-				color : @color-main;
+
+			&:hover {
+				color: @color-main;
 			}
 		}
 
-		.addressesGroup{
+		.addressesGroup {
 			border-bottom: 1px solid #D9D9D9;
 
-			&.hdr{
+			&.hdr {
 				border-bottom: 1px solid @color-main;
-				
-				th{
-					padding-top : 4 * @rhythm;
-					padding-bottom : 4 * @rhythm;
+
+				th {
+					padding-top: 4 * @rhythm;
+					padding-bottom: 4 * @rhythm;
 				}
 			}
 
-			&.dt{
-				&:nth-last-child(1){
-					border-bottom : 0;
+			&.dt {
+				&:nth-last-child(1) {
+					border-bottom: 0;
 				}
 			}
 
 			.th-balance,
-			.balance{
+			.balance {
 				padding: @rhythm;
 				padding-left: 0;
-				span{
+
+				span {
 					font-size: 2.5em;
 				}
 			}
 
-			td{
+			td {
 				vertical-align: middle;
 			}
 		}
@@ -294,118 +338,152 @@
 
 }
 
-/*t*/ @media only screen and (max-width: 768px){
-#help{
-	.roadmapWrapper{
-		padding-left: 2 * @rhythm;
-		padding-right: 2 * @rhythm;
-	}
-	.pkoinWrapper{
-		.balance, .th-balance{
-			display: none;
-		}
-		.value{
-			padding-left: 0;
-		}
+html.stblack {
+	#help {
+		.page {
 
-		.content{
+			.lentasection {
+
+				.postGuideButton {
+					color: @color-gray-mlight;
+				}
+
+				.share {
+					background-color: rgb(0, 9, 27);
+				}
+			}
+		}
+	}
+}
+
+/*t*/
+@media only screen and (max-width: 768px) {
+	#help {
+		.roadmapWrapper {
 			padding-left: 2 * @rhythm;
 			padding-right: 2 * @rhythm;
 		}
-	}
 
-	.bgCaption{
-		height: auto;
-		padding : 2 * @rhythm;
-		padding-bottom: 4 * @rhythm;
-		.infomain{
-			.caption{
-				font-size: 1em;
-				padding : @rhythm;
-				text-align: left;
+		.pkoinWrapper {
 
-				b{
-					font-size: 1.9em;
-				}
+			.balance,
+			.th-balance {
+				display: none;
 			}
-		}
-		
-	}
 
-	.tips{
-		overflow: hidden;
-		.tipitem{
-			width: 100%;
-			float: none;
-			margin-right: 0;
-			margin-left: 0;
-			padding : @rhythm;
-			text-align: left;
-
-			
-		}
-	}
-
-	
-
-	.section{
-		padding-bottom: 2 * @rhythm;
-		margin-top: 2 * @rhythm;
-		overflow: hidden;
-		border-bottom: 1px solid @color-gray-slight;
-
-		&:nth-last-child(1){
-			border-bottom : 0;
-		}
-
-		>div{
-			&.sectionname{
-				width: 100%;
-				float: none;
-
+			.value {
+				padding-left: 0;
 			}
-			&.sectioncnt{
-				margin-left: 0;
+
+			.content {
+				padding-left: 2 * @rhythm;
+				padding-right: 2 * @rhythm;
 			}
 		}
 
+		.bgCaption {
+			height: auto;
+			padding: 2 * @rhythm;
+			padding-bottom: 4 * @rhythm;
 
-	}
+			.infomain {
+				.caption {
+					font-size: 1em;
+					padding: @rhythm;
+					text-align: left;
 
-	
-	.page{
-		padding : 2 * @rhythm 0;
-		.caption{
-			margin-top: 4 * @rhythm;
-			font-size: 1.5em;
-			font-weight: 700;
-		}
-
-		.roadmap{
-			margin-top: 4 * @rhythm;
-			.road{
-				>div{
-
-					&.time{
-						width: 110px;
+					b {
+						font-size: 1.9em;
 					}
 				}
 			}
+
+		}
+
+		.tips {
+			overflow: hidden;
+
+			.tipitem {
+				width: 100%;
+				float: none;
+				margin-right: 0;
+				margin-left: 0;
+				padding: @rhythm;
+				text-align: left;
+
+
+			}
 		}
 
 
-		.lentasection{
-			>div{
-				
-	
-				&.sectioncnt{
+
+		.section {
+			padding-bottom: 2 * @rhythm;
+			margin-top: 2 * @rhythm;
+			overflow: hidden;
+			border-bottom: 1px solid @color-gray-slight;
+
+			&:nth-last-child(1) {
+				border-bottom: 0;
+			}
+
+			>div {
+				&.sectionname {
+					width: 100%;
+					float: none;
+
+				}
+
+				&.sectioncnt {
 					margin-left: 0;
-	
 				}
 			}
-	
+
+
 		}
-	
+
+
+		.page {
+			padding: 2 * @rhythm 0;
+
+			.caption {
+				margin-top: 4 * @rhythm;
+				font-size: 1.5em;
+				font-weight: 700;
+			}
+
+			.roadmap {
+				margin-top: 4 * @rhythm;
+
+				.road {
+					>div {
+
+						&.time {
+							width: 110px;
+						}
+					}
+				}
+			}
+
+
+			.lentasection {
+				.guidesSection {
+					position: relative;
+
+					margin-bottom: @rhythm * 2;
+				}
+
+				>div {
+
+
+					&.sectioncnt {
+						margin-left: 0;
+
+					}
+				}
+
+			}
+
+		}
 	}
-}	
 }
