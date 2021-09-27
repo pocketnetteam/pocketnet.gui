@@ -203,7 +203,7 @@ var videoCabinet = (function () {
                   }) <i class="fas fa-star"></i>`
                 : `&mdash;`;
 
-            const renderingUsers = `${result.countLikers}  <i class="fas fa-users"></i>`;
+            const renderingUsers = `${result.countLikers || 0}  <i class="fas fa-users"></i>`;
 
             renders.bonusProgram(
               {

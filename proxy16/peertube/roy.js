@@ -28,9 +28,10 @@ var Roy = function (parent) {
 
   self.useall = false;
 
-  self.addInstance = function (url) {
+  self.activeForUploading = true;
 
-    if(!url) return
+  self.addInstance = function (url) {
+    if (!url) return;
 
     var instance = new Instance(url, self);
 
@@ -53,8 +54,9 @@ var Roy = function (parent) {
 
   self.init = function (urls) {
     _.each(urls, function (host) {
+      if (!host || !host.split) return;
 
-      if(!host || !host.split) return
+      if (host.split('.').length != 3) return;
 
       if (host.split('.').length != 3) return
 
@@ -84,7 +86,8 @@ var Roy = function (parent) {
     });
   };
 
-  self.findInstanceByName = (name) => instances.find((server) => server.host === name);
+  self.findInstanceByName = (name) =>
+    instances.find((server) => server.host === name);
 
   self.best = function (type = 'responseSpeed') {
     var bestlist = self.bestlist(type);
@@ -121,7 +124,7 @@ var Roy = function (parent) {
     } else {
       if (!list) list = self.bestlist();
       if (!index) index = 0;
-  
+
       var instance = list[index];
     }
 
@@ -171,6 +174,12 @@ var Roy = function (parent) {
     const promises = instances.map((inst) => inst.performance());
 
     return Promise.all(promises).catch(() => Promise.resolve());
+  };
+
+  self.diskSpace = () => {
+    const diskSpaces = instances.map((inst) => inst.diskSpace());
+
+    return Promise.resolve(diskSpaces);
   };
 
   return self;

@@ -1043,7 +1043,7 @@ ____loclib.uploadVideoProgress = "Progress:"
 
 ____loclib.pbp_1 = ""+appname+" Bonus Program"
 ____loclib.pbp_2 = "Criteria for Receiving Bonus:"
-____loclib.pbp_3 = "Every 10K views + 500 ratings"
+____loclib.pbp_3 = "Every 10K views + 750 ratings"
 ____loclib.pbp_4 = "PKOIN Equivalent:"
 ____loclib.pbp_5 = "1,000 USDT"
 ____loclib.pbp_6 = "How You Can Increase Your Views?"
@@ -1167,3 +1167,6 @@ ____loclib.hideAllButton = "Hide";
 
 ____loclib.UniqueUsers = "Unique Raters";
 ____loclib.ErrorLoadingRates = "Loading Error";
+
+____loclib.userGuides = "Guides";
+____loclib.liveSreamingGuide = "Live Streaming";
