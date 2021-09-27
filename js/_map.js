@@ -37,6 +37,7 @@ __map =  {
 
 		/*"js/vendor/DateTimePicker.min.js",*/
 		"js/vendor/moment.min.js", //?
+		"js/vendor/moment.locale.js", //?
 		"js/vendor/jquery.inputmask.bundle.js",
 		"js/vendor/axios.js", //
 		"js/vendor/isotope.pkgd.js", //

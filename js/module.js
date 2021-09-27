@@ -583,12 +583,20 @@ nModule = function(){
 				dataType : 'html',
 				success : function(tpl){
 
-					self.storage.templates[p.name] = _.template(tpl);
+					try{
+						self.storage.templates[p.name] = _.template(tpl);
 
-					if (clbk)
-						clbk(self.storage.templates[p.name]);
+						if (clbk)
+							clbk(self.storage.templates[p.name]);
 
-					loading.templates[p.name] = false;
+						loading.templates[p.name] = false;
+					}
+					catch(e){
+						console.log('p.name', p.name, url)
+						console.error(e)
+					}
+
+					
 
 				},
 				fail : function(){

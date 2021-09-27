@@ -4093,7 +4093,7 @@ var lenta = (function(){
 	
 								if (p.p){
 									actions.postscores(p.p, function(){
-										actions.scrollToPost(p.p)
+										/*actions.scrollToPost(p.p)*/
 									})
 								}
 							}

@@ -1183,6 +1183,13 @@ Application = function(p)
 	self.name = self.options.name;
 
 	self.reltime = function(time){
+
+		moment.locale(self.localization.key)
+
+		return moment(moment.utc(time).toDate()).local().fromNow();
+
+		console.log('time', time)
+
 		var tt = convertDateRel(time)
 
 		if (tt[0]) {

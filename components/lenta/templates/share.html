@@ -77,15 +77,7 @@ var metadisplay = function(){ %>
 						
 						<% if((typeof repost == 'undefined' || !repost || fromempty)) {%>
 							<div class="sys hideOnFullVideo unselectablemobile">
-								<% if(share.time) {%>
-									<span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span>
-								<% } else { %> 
-									<span><%=e('e13019')%></span>
-								<% } %>
-
-								<% if(share.edit == 'true') {%>	
-									<span class="editedLabel"><i class="fas fa-pencil-alt"></i> <%=e('e13130')%></span>
-								<% } %>
+								<% if(share.time) {%><span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span><% } else { %><span><%=e('e13019')%></span><% } %><% if(share.edit == 'true') {%><span class="editedLabel">, <%=e('e13130').toLowerCase()%></span><% } %>
 							</div>
 						<% } %>
 						
@@ -437,7 +429,7 @@ var metadisplay = function(){ %>
 								</div>
 
 								
-								<% if(app.platform.repost && !my) {%>
+								<% if(app.platform.repost && !my && !app.curation()) {%>
 									<div class="item <% if(!my){ %> forrepost <% } else { %> nact <% } %>">
 
 										<div class="itemwr table">

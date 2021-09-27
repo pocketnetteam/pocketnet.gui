@@ -14314,9 +14314,7 @@ Platform = function (app, listofnodes) {
                 var s = self.sdk.pool;
                 var pool = s.get();
 
-
                 var keyPair = self.app.user.keysPairFromPrivate(mnemonic)
-
 
                 if(!keyPair){
 
@@ -14335,7 +14333,7 @@ Platform = function (app, listofnodes) {
                     var id = pool.map[address];
                     var _pack = pool.packs[id];
 
-                    if (_pack.addresses.length > 1) {
+                    if (_pack.addresses.length > 1/* || _pack.addresses[0] == address*/) {
                         if (clbk)
                             clbk(null, 'hasinanotherpack')
 
