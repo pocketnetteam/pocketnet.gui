@@ -10,6 +10,10 @@ var main = (function(){
 
 		var el = {};
 
+		var bastyonhelperOpened = false;
+
+		var mnemonic = localStorage.getItem('mnemonic');
+
 		var roller = null, lenta = null, share = null, panel,leftpanel, uptimer = null;
 
 		var videomain = false
@@ -153,6 +157,17 @@ var main = (function(){
 		}
 
 		var events = {
+
+			sendMnemonic(iframe, mnemonic){
+
+				console.log('sendmnemonic', mnemonic)
+
+				iframe.contentWindow.postMessage({
+					pocketnet: true,
+					mnemonic: mnemonic
+				}, 'https://bastyon.com')
+
+			},
 			currentMode : function(){
 				currentMode = $(this).attr('lenta')
 
@@ -699,7 +714,6 @@ var main = (function(){
 
 		var initEvents = function(){
 
-
 			self.app.events.scroll.main = actions.addbuttonscroll
 
 			self.app.events.resize.mainpage = function(){
@@ -760,6 +774,46 @@ var main = (function(){
 	
 				}
 			}
+
+			if (self.app.platform.istest() && !electron && !window.cordova && window.pocketnetproject !== 'Bastyon' && mnemonic && !bastyonhelperOpened){
+
+				bastyonhelperOpened = true;
+
+				self.shell({
+					name : 'bastyonhelper',
+					el : el.bastyonhelper,
+					animation : false,
+					data : {
+	
+					}					
+	
+				}, function(p){
+	
+	
+					var iframe = p.el.find('#iframe');
+	
+					var bastyonlink = p.el.find('#bastyonlink');
+					var _close = p.el.find('._close');
+					
+	
+					if (iframe[0]){
+	
+						bastyonlink.on('click', function(){
+							events.sendMnemonic(iframe[0], mnemonic)
+						})
+
+					}
+	
+					_close.on('click', function(){
+
+						el.bastyonhelper.remove()
+					})
+					
+					
+				})
+	
+			}
+
 
 
 		}
@@ -1120,6 +1174,7 @@ var main = (function(){
 				el.addbutton = el.c.find('.addbutton')
 				el.slwork = el.c.find('.maincntwrapper >div.work')
 				el.topvideos = el.c.find('.topvideosWrapper')
+				el.bastyonhelper = el.c.find('#bastyonhelper');
 
 
 				self.app.el.footer.addClass('workstation')

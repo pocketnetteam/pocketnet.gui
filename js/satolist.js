@@ -75,6 +75,7 @@ Platform = function (app, listofnodes) {
     
 
     self.testaddresses = [
+        'TUA5BtMDoZ1SBMgV3m7wjmsJ6yGQV3vErZ',
       'TQEGz5cQQtRad8wo2c1KapvFek9rnuprkD',
       'PGiQ8j6fdtAJSH2sA7rZMB17GzqBTUVLCm',
       'PF1umexG4Kvm8bkow1JiRF3s1vcBkYvKeg',
@@ -119,6 +120,9 @@ Platform = function (app, listofnodes) {
       'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8',
       'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7',
       'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd',
+      'TSisNge5kisi7cwGRwmUBuZQWZFD8cRoG8',
+      'PU7D6X5bNUdEiuUGWGLp8C6TjSsB2hzHxL',
+      'PP6bNhVaXy7YK19UbLHXbQPKa7oV4yx1rr'
     ];
 
 
