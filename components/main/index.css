@@ -5,6 +5,10 @@
 #main.wshar .bgCaption {
   display: none;
 }
+#main #lenta .shares .showmorebyauthor,
+#main #lenta .shares .share {
+  border-radius: 3px;
+}
 #main .bastyonhelper .layout {
   display: flex;
   height: 100%;
