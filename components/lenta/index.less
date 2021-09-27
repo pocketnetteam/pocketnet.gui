@@ -256,6 +256,8 @@
 		.videoWrapper{
 			max-width: 600px;
 			position : relative;
+			border-radius: 3px;
+			overflow: hidden;
 
 			.videoTips{
 				position : absolute;
@@ -646,6 +648,8 @@
 					}
 
 					span{
+
+						color : @color-gray-mlight;
 						cursor: pointer;
 						i{
 							color : @color-good;
@@ -967,7 +971,7 @@
 
 
 			.meta{
-				padding-top: 2.7 * @rhythm;
+				padding-top: 1.5 * @rhythm;
 				margin-bottom: @rhythm;
 
 				>div{
@@ -1300,8 +1304,7 @@
 
 					span{
 						font-size: 0.8em;
-						color : @color-main;
-						text-decoration: underline;
+						color : @color-gray-mlight;
 					}
 				}
 			}
@@ -1311,8 +1314,8 @@
 				
 				span{
 					cursor: pointer;
-					font-size: 0.8em;
-					color : @color-good;
+					font-size: 0.9em;
+					color : @color-gray-mlight;
 				}
 
 				.editedLabel{
@@ -1876,6 +1879,7 @@
 
 	.loadprev{
 		display : none;
+		margin-bottom: @rhythm;
 	}
 
 	&.showprev{
@@ -2357,26 +2361,32 @@
 		}
 
 		.loadprev{
-			position: fixed;
-			left : 0;
-			top : 110px;
-			z-index: 10;
-			right: 0;
-			background: transparent!important;
-			.transition(0.3s);
-			will-change: transform;
-            -webkit-backface-visibility: hidden;
+			&.fxdp{
+				position: fixed;
+				left : 0;
+				top : 110px;
+				z-index: 10;
+				right: 0;
+				background: transparent!important;
+				.transition(0.3s);
+				will-change: transform;
+				-webkit-backface-visibility: hidden;
 
-			button{
-				width: 260px;
+				button{
+					width: 260px;
+				}
 			}
+			
 		}
 	}
 
 	html.scrollmodedown{
 		#lenta{
 			.loadprev{
-				transform:  translateY(-220px);
+				&.fxdp{
+					transform:  translateY(-220px);
+				}
+				
 			}
 		}
 	}
@@ -2733,7 +2743,7 @@ html.stblack{
 					>div{
 	
 						span{
-							color : @color-add;
+							color : @color-gray-mlight;
 						}
 					}
 				}
@@ -3070,7 +3080,6 @@ html.stblack{
 
 				&.formeta{
 					margin-left: 8 * @rhythm;
-					padding-bottom: 2 * @rhythm;
 				}
 			}
 

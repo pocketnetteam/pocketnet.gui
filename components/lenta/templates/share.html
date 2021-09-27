@@ -44,7 +44,7 @@ var metadisplay = function(){ %>
 
 				<div class="author">
 
-					<div class="authorTable table">
+					<div class="authorTable">
 						<div class="authorCell">
 
 							<a href="<%-app.platform.api.authorlink(share.address)%>">
@@ -73,7 +73,21 @@ var metadisplay = function(){ %>
 							<% } %>
 
 							
-						</div>				
+						</div>	
+						
+						<% if((typeof repost == 'undefined' || !repost || fromempty)) {%>
+							<div class="sys hideOnFullVideo unselectablemobile">
+								<% if(share.time) {%>
+									<span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span>
+								<% } else { %> 
+									<span><%=e('e13019')%></span>
+								<% } %>
+
+								<% if(share.edit == 'true') {%>	
+									<span class="editedLabel"><i class="fas fa-pencil-alt"></i> <%=e('e13130')%></span>
+								<% } %>
+							</div>
+						<% } %>
 						
 					</div>
 				</div>
@@ -414,19 +428,7 @@ var metadisplay = function(){ %>
 						<% } %>
 
 						
-						<% if((typeof repost == 'undefined' || !repost || fromempty)) {%>
-							<div class="sys hideOnFullVideo unselectablemobile">
-								<% if(share.time) {%>
-									<span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span>
-								<% } else { %> 
-									<span><%=e('e13019')%></span>
-								<% } %>
-
-								<% if(share.edit == 'true') {%>	
-									<span class="editedLabel"><i class="fas fa-pencil-alt"></i> <%=e('e13130')%></span>
-								<% } %>
-							</div>
-						<% } %>
+						
 
 						<% if(!share.temp &&  (typeof repost == 'undefined' || !repost || fromempty)) {%>
 							<div class="panel unselectablemobile">
@@ -498,34 +500,37 @@ var metadisplay = function(){ %>
 						<% } %>
 
 
-						<% 
 						
-						
-						
-						
-						if(typeof verticalVideo != 'undefined' && verticalVideo) {%>
-
-							<% if(!emptywithrepost) {%>
-
-								<% if(typeof repost == 'undefined' || !repost || fromempty) {%>
-						
-									<div class="commentsWrapperHb">
-										
-										<div class="commentsWrapper">
-										</div>
-						
-									</div>
-						
-								<% } %>
-						
-							<% } %>
-
-						<% } %>
 
 					</div>
 
 					
 				</div>
+
+				<% if(typeof verticalVideo != 'undefined' && verticalVideo) {%>
+
+					<% if(!emptywithrepost) {%>
+
+						<% if(typeof repost == 'undefined' || !repost || fromempty) {%>
+							<div class="cntswrk forcomments">
+								<div class="paddingWrapper">
+									<div class="commentsWrapperHb">
+									
+										<div class="commentsWrapper">
+										</div>
+					
+									</div>
+								</div>
+							</div>
+						<% } %>
+				
+					<% } %>
+
+				<% } %>
+
+				
+
+					
 
 			<% } %>
 

@@ -201,6 +201,13 @@
 		margin-left: 13 * @rhythm;
 		padding-left : 2 * @rhythm;
 		padding-right : 10 * @rhythm;
+
+		&.forcomments{
+			padding-left: 0;
+			padding-right: 0;
+			margin-left: 0;
+			margin-right: 0;
+		}
 	}
 
 	.repostsecond{
@@ -384,6 +391,7 @@
 			padding : 4 * @rhythm 0;
 			padding-right: 0;
 			margin : 0;
+			padding-bottom: 0;
 		}
 
 		.commentsWrapper{			
@@ -620,7 +628,7 @@
 		}
 
 		.meta{
-			padding-top: 2.7 * @rhythm;
+			padding-top: 1.5 * @rhythm;
 
 			margin-bottom: @rhythm;
 
@@ -854,8 +862,7 @@
 
 				span{
 					font-size: 0.8em;
-					color : @color-main;
-					text-decoration: underline;
+					color : @color-gray-mlight;
 				}
 			}
 		}
@@ -865,7 +872,7 @@
 			span{
 				cursor: pointer;
 				font-size: 0.8em;
-				color : @color-good;
+				color : @color-gray-mlight;
 			}
 
 			.editedLabel{
@@ -1567,14 +1574,14 @@ html.stblack{
 			.tags{
 				>div{
 					span{
-						color : @color-bright;
+						color : @color-gray-mlight;
 					}
 				}
 			}
 	
 			.sys{
 				span{
-					color : @color-good;
+					color : @color-gray-mlight;
 				}
 	
 			}
@@ -1916,6 +1923,8 @@ html.stblack{
 					margin-left: 6 * @rhythm;
 					padding-left : 0.5 * @rhythm;
 				}
+
+				
 			}
 	
 			.meta{

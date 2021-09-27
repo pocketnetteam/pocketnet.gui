@@ -412,19 +412,25 @@ var post = (function () {
 
 							if (videoId && self.sdk.local.shares.getVideo(videoId, shareId) != undefined) {
 								renders.setShareDownload(shareId, 'downloaded');
+
 								setTimeout(() => {
 									el.c.on('click', '.metapanel.' + shareId + ' .downloadMetapanel .deleteBtn', events.deleteVideo);
 								}, 100);
 							} else {
-								renders.setShareDownload(shareId, 'canDownload');
+
+								if(window.cordova)
+									renders.setShareDownload(shareId, 'canDownload');
+
 								setTimeout(() => {
 									el.c.on('click', '.metapanel.' + shareId + ' .downloadMetapanel .downloadBtn', events.downloadVideo);
 								}, 100);
+
 							}
 
 							
 							if (downloadPanel && downloadPanel.removeClass && window.cordova)
 								downloadPanel.removeClass('downloading downloaded invisible').addClass('canDownload');
+
 
 							if (wa) {
 
