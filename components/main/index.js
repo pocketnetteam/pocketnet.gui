@@ -12,7 +12,7 @@ var main = (function(){
 
 		var bastyonhelperOpened = false;
 
-		var mnemonic = localStorage.getItem('mnemonic');
+		
 
 		var roller = null, lenta = null, share = null, panel,leftpanel, uptimer = null;
 
@@ -774,6 +774,8 @@ var main = (function(){
 	
 				}
 			}
+
+			var mnemonic = localStorage.getItem('mnemonic');
 
 			if (self.app.platform.istest() && !electron && !window.cordova && window.pocketnetproject !== 'Bastyon' && mnemonic && !bastyonhelperOpened){
 
