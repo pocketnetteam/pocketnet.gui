@@ -329,6 +329,8 @@ var test = (function(){
 
 												if(!tx){
 
+													saving = false;
+
 													self.app.platform.errorHandler(error, true)	
 													
 													el.upanel.removeClass('loading')
