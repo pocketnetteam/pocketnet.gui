@@ -10,6 +10,8 @@ var channel = (function(){
 
 		var el, ed, author = {};
 
+		var eid = p.eid;
+
 		var actions = {
 
 		}
@@ -144,7 +146,7 @@ var channel = (function(){
 
 		return {
 			primary : primary,
-
+			id : eid,
 			getdata : function(clbk, p){
 
 				ed = p.settings.essenseData || {}

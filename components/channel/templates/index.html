@@ -38,6 +38,7 @@
 				</div>
 			</div>
 
+			<% if(typeof reports != 'undefined') {%>
 			<div class="panel">
 				<% _.each(reports, function(report){ %> 
 				
@@ -67,6 +68,7 @@
 					
 				<% }) %>
 			</div>
+			<% } %>
 			<% if(typeof ed == 'undefined' || !ed.openapi) {%>
 				<div class="action">
 					<% if(!connect) {%>

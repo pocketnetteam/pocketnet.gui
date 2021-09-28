@@ -2067,6 +2067,8 @@ Platform = function (app, listofnodes) {
 
             }
 
+            console.log("R", r)
+
             var c = function(){
                 self.sdk.users.get(id, function () {
 
@@ -22126,7 +22128,9 @@ Platform = function (app, listofnodes) {
                 if (link){
                     link = link.replace('https://' + self.app.options.url + '/', '')
 
-                    if(link.indexOf('index') == '0' && link.indexOf('v=') == -1) link = link.replace('index', 'post')
+                    if(link.indexOf('index') == '0' && link.indexOf('v=') == -1 && 
+                        (link.indexOf('s=') > -1 || link.indexOf('i=') > -1 || link.indexOf('p=') > -1)) 
+                        link = link.replace('index', 'post')
 
                     self.app.nav.api.load({
                         open: true,
