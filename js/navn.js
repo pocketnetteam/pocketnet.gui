@@ -1161,8 +1161,6 @@ Nav = function(app)
 
 						if(blockclick) return false
 
-						console.log("CLICK")
-
 						var href = core.thisSiteLink($(this).attr('href'));
 
 						var handler = $(this).attr('handler') || null

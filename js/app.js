@@ -703,7 +703,6 @@ Application = function(p)
 
 			if(typeof p.nav.href == 'function') p.nav.href = p.nav.href()
 
-			console.log('p.nav', p.nav)
 
 			self.nav.init(p.nav);
 			
@@ -943,7 +942,6 @@ Application = function(p)
 			if(!self.fullscreenmode){
 				self.lastScrollTop = s
 
-				console.log("S", s)
 			}
 
 			return s
@@ -1319,13 +1317,9 @@ Application = function(p)
 					function (directory) {
 						directory.getFile(name, { create: false }, function (entry) {
 
-							console.log(entry)
-
 							entry.file(function(file) {
 
 								var reader = new FileReader();
-
-								console.log(file)
 
 								reader.onloadend = function() {
 						
@@ -1434,7 +1428,6 @@ Application = function(p)
 
 				if (window.cordova){
 
-					console.log('base64', base64)
 
 					var image = b64toBlob(base64.split(',')[1], 'image/' + ms);	
 
@@ -1510,14 +1503,12 @@ Application = function(p)
 					_el.swipe({
 						longTap : function(){
 
-							console.log("longtap")
 
 							self.mobile.vibration.small()
 
 							var name = this.attr('save')
 							var src = this.attr('src') || this.attr('i')
 
-							console.log("src", src)
 
 							setTimeout(function(){
 								self.mobile.saveImages.dialog(name, src)

@@ -1365,7 +1365,7 @@ var comments = (function(){
 							return false;
 						}
 						// Scroll comment section to top of the screen
-						actions.scrollToComment(_p.el);
+						//actions.scrollToComment(_p.el);
 					},
 					keyup : function(editor, e){
 						var char = String.fromCharCode(e.keyCode || e.which);
