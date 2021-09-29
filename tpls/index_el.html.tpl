@@ -186,6 +186,8 @@
         <script src="js/vendor/underscore-min.js?v=136"></script> 
         <script src="js/vendor/tooltipster.core.js"></script>
         <script src="js/vendor/tooltipster.bundle.js"></script>
+        <script  join src="js/vendor/moment.min.js?v=89"></script>
+        <script  join src="js/vendor/moment.locale.js?v=89"></script>
         
         <!--<script src="js/vendor/imagesloaded.pkgd.min.js"></script> -->
         <script src="js/vendor/timer.js"></script>

@@ -2160,11 +2160,12 @@ var system16 = (function(){
 	
 						renders.servercontent(p.el)
 						renders.nodescontent(p.el)
-						if ((isMobile() && typeof cordova != 'undefined') || (typeof _Electron != 'undefined' && window.electron))
-							renders.downloadedvideoscontent(el.c);
 						renders.peertubecontent(el.c)
 						renders.nodecontent(p.el)
 						renders.bots(p.el)
+
+						if ((isMobile() && typeof cordova != 'undefined')/* || (typeof _Electron != 'undefined' && window.electron)*/)
+							renders.downloadedvideoscontent(el.c);
 	
 						if (clbk)
 							clbk()
