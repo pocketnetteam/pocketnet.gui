@@ -128,8 +128,6 @@ var Roy = function (parent) {
       var instance = list[index];
     }
 
-    console.log('p.host', p.host)
-
     if (!instance) return Promise.reject('failed');
 
     return instance

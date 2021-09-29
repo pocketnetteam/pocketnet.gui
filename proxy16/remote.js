@@ -14,6 +14,9 @@ var iconv = require('iconv-lite');
 //const fetch = require('node-fetch'); 
 const autoenc = require('node-autodetect-utf8-cp1251-cp866');
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
+var nremotelink = 'https://1.pocketnet.app/opengraph/parse' //url=https://pocketnet.app&validate=false'
+
 var Remote = function(app){
 
 	var self = this;
@@ -254,19 +257,29 @@ var Remote = function(app){
 			else{
 				ogloading[uri] = true
 
-				load.ogf(uri, function(og){
-					ogcache = _.last(ogcache, 3000)
-
-					delete ogloading[uri]
-
-					ogcache.push({
-						url : uri,
-						og : og
-					})
-
-					if (clbk)
-						clbk(og)	
+				load.ogs(uri, function(og){
+					if(_.isEmpty(og)){
+						load.ogf(uri, function(og){
+							ogcache = _.last(ogcache, 3000)
+		
+							delete ogloading[uri]
+		
+							ogcache.push({
+								url : uri,
+								og : og
+							})
+		
+							if (clbk)
+								clbk(og)	
+						})
+					}
+					else{
+						if (clbk)
+							clbk(og)
+					}
 				})
+
+				
 			}
 		},
 
@@ -366,6 +379,50 @@ var Remote = function(app){
 				
 			})
 			
+		},
+
+		ogs : function(uri, clbk){
+			console.log("nremotelink + '?url=' + uri + '&validate=false'", nremotelink + '?url=' + uri + '&validate=false')
+			request({
+				uri : nremotelink + '?url=' + uri + '&validate=false',
+				timeout : 30000,
+				type : "POST"
+			}, function(error, response, body){
+
+				if (error){
+					errors[uri] = 'nc'
+
+					if (clbk){
+						clbk({})
+					}
+
+					return
+				}
+
+				var d = {}
+				var dn = {}
+
+				try{
+					d = JSON.parse(body || "{}")
+
+					_.each(d, function(v, k){
+						if(k.split(':').length)
+							dn[k.split(':')[1]] = v
+					})
+					//d = d.data || {}
+				}
+				catch(e){
+					console.log("R", e)
+				}
+
+
+				console.log("R2", dn)
+
+
+				if (clbk){
+					clbk(dn || {})
+				}
+			})
 		},
 
 		ogf : function(uri, clbk){
