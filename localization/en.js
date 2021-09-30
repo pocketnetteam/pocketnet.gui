@@ -1170,3 +1170,8 @@ ____loclib.ErrorLoadingRates = "Loading Error";
 
 ____loclib.userGuides = "Guides";
 ____loclib.liveSreamingGuide = "Live Streaming";
+
+
+____loclib.bastyonhelperTitle = "Bastyon of Free Speech";
+____loclib.bastyonhelperSubtitle1 = "Pocketnet is now";
+____loclib.bastyonhelperSubtitle2 = "Please, follow the link bellow";
