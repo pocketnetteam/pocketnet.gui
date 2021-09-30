@@ -160,8 +160,6 @@ var main = (function(){
 
 			sendMnemonic(iframe, mnemonic){
 
-				console.log('sendmnemonic', mnemonic)
-
 				iframe.contentWindow.postMessage({
 					pocketnet: true,
 					mnemonic: mnemonic
@@ -778,8 +776,6 @@ var main = (function(){
 			
 			var mnemonic = localStorage.getItem('mnemonic');
 
-			console.log('mnemonic', mnemonic)
-
 			if (self.app.platform.istest() && !electron && !window.cordova && window.pocketnetproject !== 'Bastyon' && mnemonic && !bastyonhelperOpened){
 
 				bastyonhelperOpened = true;
@@ -907,8 +903,6 @@ var main = (function(){
 		
 
 			parametersHandler : function(clbk){
-
-				console.log('parametersHandler')
 
 				var ncurrentMode = currentMode
 
@@ -1070,8 +1064,6 @@ var main = (function(){
 			},
 
 			destroy : function(){
-
-				console.log("DEST")
 
 				if(el.c) el.c.html('')
 

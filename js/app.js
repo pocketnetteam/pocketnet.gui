@@ -436,6 +436,121 @@ Application = function(p)
 		return false
 	}
 
+	self.complainletters = {
+
+		user : function({
+			address1,
+			address2,
+			reason
+		}, clbk){
+
+			if(!address1 || !address2 || !reason){
+				clbk(false)
+
+				return
+			}
+
+			var _p = {
+				address1 : address1,
+				address2 : address2
+			}
+
+			_p.Action || (_p.Action = 'ADDTOMAILLIST');
+			_p.TemplateID = '2000'
+
+			var body = ''
+				body += '<p><a href="https://'+self.options.url+'/author?address='+address1+'">User('+address1+')</a> complaint another <a href="https://'+self.options.url+'/author?address='+address2+'">user('+address2+')</a></p>'
+				body += '<p>Reason: '+reason+'</p>'
+
+			_p.body = encodeURIComponent(body)
+
+			$.ajax({
+				type: 'POST',
+				url: 'https://pocketnet.app/Shop/AJAXMain.aspx',
+				data: _p,
+				dataType: 'json',
+				success : function(){
+
+
+					if (clbk)
+						clbk(true);
+
+				}
+			});
+
+		},
+		common : function({address1, reason},  clbk){
+			if(!address1 || !reason){
+				clbk(false)
+
+				return
+			}
+
+			var _p = {
+				address1 : address1
+			}
+
+			_p.Action || (_p.Action = 'ADDTOMAILLIST');
+			_p.TemplateID = '2000'
+
+			var body = ''
+				body += '<p>Common complaint</p>'
+
+				body += '<p>Reason: '+reason+'</p>'
+
+			_p.body = encodeURIComponent(body)
+
+			$.ajax({
+				type: 'POST',
+				url: 'https://pocketnet.app/Shop/AJAXMain.aspx',
+				data: _p,
+				dataType: 'json',
+				success : function(){
+
+					if (clbk)
+						clbk(true);
+
+				}
+			});
+		},
+		room : function({address1, roomid, reason}, clbk){
+			if(!address1 || !roomid || !reason){
+				clbk(false)
+
+				return
+			}
+
+			var _p = {
+				address1 : address1,
+				roomid : roomid
+			}
+
+			_p.Action || (_p.Action = 'ADDTOMAILLIST');
+			_p.TemplateID = '2000'
+
+			var body = ''
+				body += '<p><a href="https://'+self.options.url+'/author?address='+address1+'">User('+address1+')</a> complaint room ('+roomid+')</a></p>'
+
+				body += '<p>Reason: '+reason+'</p>'
+
+			_p.body = encodeURIComponent(body)
+
+			$.ajax({
+				type: 'POST',
+				url: 'https://pocketnet.app/Shop/AJAXMain.aspx',
+				data: _p,
+				dataType: 'json',
+				success : function(){
+
+					if (clbk)
+						clbk(true);
+
+				}
+			});
+		}
+
+	} 
+
 	self.relations = {};
 
 	self.backmap = {
