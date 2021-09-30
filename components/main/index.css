@@ -109,12 +109,12 @@
   right: 0;
   bottom: 0;
   margin: auto;
-  box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 5px 7px -5px rgba(0, 0, 0, 0.4);
 }
 #main .bastyonhelper .wndredirect ._close {
   position: absolute;
-  right: 0.75em;
-  top: 0.5em;
+  right: .75em;
+  top: .5em;
   cursor: pointer;
   color: #fff;
   z-index: 150;
@@ -174,7 +174,7 @@
   position: fixed;
   bottom: 20%;
   padding: 0.5em;
-  background: #fff;
+  background: #ffffff;
   box-shadow: 0 5px 7px -5px rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(60, 65, 70, 0.3);
   color: #3c4146;
@@ -227,7 +227,7 @@
   opacity: 1;
 }
 #main .addbutton:hover {
-  background: #00A3F7;
+  background: #00a3f7;
 }
 #main #share {
   min-height: 130px;
@@ -527,6 +527,16 @@
 html.stblack #main {
   background: #041726;
 }
+html.stblack #main .bastyonhelper .wndredirect .wndback {
+  background: rgba(0, 17, 44, 0.75);
+}
+html.stblack #main .bastyonhelper .wndredirect .wndinner {
+  background: #041726;
+  color: #c5c5c5;
+}
+html.stblack #main .bastyonhelper .wndredirect ._close {
+  color: #fff;
+}
 html.stblack #main .topvideosWrapper {
   background: #112035;
 }
@@ -712,6 +722,34 @@ html.testpocketnet #main.testpocketnetbg {
 }
 /*t*/
 @media only screen and (max-width: 768px) {
+  #main .bastyonhelper .layout {
+    flex-wrap: wrap;
+  }
+  #main .bastyonhelper .layout .imagepart {
+    width: 100%;
+    height: auto;
+  }
+  #main .bastyonhelper .layout .imagepart .img {
+    height: 242px;
+  }
+  #main .bastyonhelper .layout .contentpart {
+    padding: 1em;
+    padding-left: 1em;
+  }
+  #main .bastyonhelper .layout .contentpart .caption {
+    font-size: 1.5em;
+  }
+  #main .bastyonhelper .layout .contentpart .wrp {
+    max-width: 100%;
+  }
+  #main .bastyonhelper .layout .contentpart .signinpart {
+    padding: 1em 0;
+    padding-top: 1.5em;
+  }
+  #main .bastyonhelper .layout .contentpart .signinpart .sin {
+    width: 100%;
+    border-radius: 30px;
+  }
   #main .mainpanelcell {
     display: block;
   }

@@ -75,9 +75,10 @@ Platform = function (app, listofnodes) {
     
 
     self.testaddresses = [
-      'PUy71ntJeRaF1NNNnFGrmC8NzkY6ruEHGK',
-      'PU7D6X5bNUdEiuUGWGLp8C6TjSsB2hzHxL',
-      'PP6bNhVaXy7YK19UbLHXbQPKa7oV4yx1rr'
+        'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82',
+        'PUy71ntJeRaF1NNNnFGrmC8NzkY6ruEHGK',
+        'PU7D6X5bNUdEiuUGWGLp8C6TjSsB2hzHxL',
+        'PP6bNhVaXy7YK19UbLHXbQPKa7oV4yx1rr'
     ];
 
 
@@ -22210,6 +22211,7 @@ Platform = function (app, listofnodes) {
 
 
             self.matrixchat.connectWith = null
+            self.matrixchat.joinRoom = null
 
             delete self.app.platform.ws.messages["new block"].clbks.matrixchat
             delete self.matrixchat.core
@@ -22688,9 +22690,11 @@ Platform = function (app, listofnodes) {
                 /////////////
 
                 var w = parameters(eventData.url, true).connect
-   
+                var cr = parameters(eventData.url, true).publicroom    
 
                 self.matrixchat.connectWith = w || null
+                self.matrixchat.joinRoom = cr || null
+                
 
                 self.matrixchat.connect()
 
@@ -22713,7 +22717,9 @@ Platform = function (app, listofnodes) {
     self.cordovaSetup()
 
     self.matrixchat.connectWith = parameters().connect
-    self.matrixchat.joinRoom = parameters().publicroom
+
+    if(!self.matrixchat.connectWith)
+        self.matrixchat.joinRoom = parameters().publicroom
 
     return self;
 

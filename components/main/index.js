@@ -775,8 +775,10 @@ var main = (function(){
 				}
 			}
 			
-			/*
+			
 			var mnemonic = localStorage.getItem('mnemonic');
+
+			console.log('mnemonic', mnemonic)
 
 			if (self.app.platform.istest() && !electron && !window.cordova && window.pocketnetproject !== 'Bastyon' && mnemonic && !bastyonhelperOpened){
 
@@ -815,7 +817,7 @@ var main = (function(){
 					
 				})
 	
-			}	*/
+			}
 
 
 
