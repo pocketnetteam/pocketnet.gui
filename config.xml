@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="10103" id="pocketnet.app" version="1.1.103" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Pocketnet</name>
+<widget android-versionCode="10104" id="pocketnet.app" version="1.1.104" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Bastyon</name>
     <description>
-        Pocketnet Application
+        Bastyon Application
     </description>
-    <author email="maxgrishkov@gmail.com" href="https://pocketnet.app">
+    <author email="maxgrishkov@gmail.com" href="https://bastyon.com">
         Pocketnet Team
     </author>
     <content src="indexcordova.html" />

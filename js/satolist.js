@@ -14026,7 +14026,7 @@ Platform = function (app, listofnodes) {
 
                     if (!f) {
                         if (clbk)
-                            clbk(self.app.localization.e('e13293'))
+                            clbk(self.app.localization.e('e13293')+' /ul100')
 
                         return
                     }
@@ -22076,6 +22076,8 @@ Platform = function (app, listofnodes) {
 
             core.backtoapp = function(link){
 
+                console.log('backtoapp')
+
                 if (isMobile() || window.cordova)
                     app.nav.api.history.removeParameters(['pc'])
 
@@ -22128,6 +22130,8 @@ Platform = function (app, listofnodes) {
             }
 
             core.apptochat = function(link){
+
+                console.log('apptochat')
 
                 if (document.activeElement) document.activeElement.blur()
 
@@ -22559,7 +22563,12 @@ Platform = function (app, listofnodes) {
             cordova.openwith.init();
             cordova.openwith.addHandler(function(intent){
                 var sharing = {}
-       
+
+                console.log("intent", intent)
+
+                if(intent.action == 'VIEW') return
+                
+                
 
                 var promises = _.map(
                     _.filter(intent.items || [], function(i){return i}), 
@@ -22618,7 +22627,7 @@ Platform = function (app, listofnodes) {
                     if (intent.exit) { cordova.openwith.exit(); }
 
                     if(_.isEmpty(sharing)){
-                        sitemessage(self.app.localization.e('e13293'))
+                        sitemessage(self.app.localization.e('e13293')+' /ul101')
                     }
                     else{
 
@@ -22626,7 +22635,7 @@ Platform = function (app, listofnodes) {
                             return self.matrixchat.share.object(sharing)
                         }).catch(r => {
 
-                            sitemessage(self.app.localization.e('e13293'))
+                            sitemessage(self.app.localization.e('e13293')+' /ul102')
 
                         })
 
@@ -22655,17 +22664,48 @@ Platform = function (app, listofnodes) {
 
     self.navManager = function(){
 
+        var routing = function(route){
+
+            app.user.isState(function (state) {
+
+                var url = route
+
+                route = (route || '').replace('pocketnet://', '').replace('https://test.pocketnet.app/', '').replace('https://pocketnet.app/', '').replace('bastyon://', '').replace('https://test.bastyon.com/', '').replace('https://bastyon.com/', '')
+
+                    if (route){
+
+                        if(!state || route.indexOf('welcome?') == -1){
+                            self.app.nav.api.load({
+                                open: true,
+                                href: route,
+                                history: true
+                            })
+                        }
+                    }
+
+                    /////////////
+
+                    var w = parameters(url, true).connect
+                    var cr = parameters(url, true).publicroom    
+
+                    self.matrixchat.connectWith = w || null
+                    self.matrixchat.joinRoom = cr || null
+                    
+
+                    setTimeout(function(){
+                        self.matrixchat.wait().then(r => {
+                            self.matrixchat.connect()
+                        })
+                    }, 500)
+
+            })
+        }
+
         if(electron && _Electron){
 
             electron.ipcRenderer.on('nav-message', function (event, data) {
                 if (data.type == 'action') {
-                    var route = data.msg
-
-                    self.app.nav.api.load({
-                        open: true,
-                        href: route,
-                        history: true
-                    })
+                    routing(data.msg)
                 }
     
             
@@ -22677,27 +22717,9 @@ Platform = function (app, listofnodes) {
 
             universalLinks.subscribe('nav-message', function (eventData) {
 
-                var route = (eventData.url || '').replace('pocketnet://', '').replace('https://test.pocketnet.app/', '').replace('https://pocketnet.app/', '').replace('bastyon://', '').replace('https://test.bastyon.com/', '').replace('https://bastyon.com/', '')
+                console.log('eventData', eventData)
 
-                if (route){
-                    self.app.nav.api.load({
-                        open: true,
-                        href: route,
-                        history: true
-                    })
-                }
-
-                /////////////
-
-                var w = parameters(eventData.url, true).connect
-                var cr = parameters(eventData.url, true).publicroom    
-
-                self.matrixchat.connectWith = w || null
-                self.matrixchat.joinRoom = cr || null
-                
-
-                self.matrixchat.connect()
-
+                routing(eventData.url)
                 
             });
 

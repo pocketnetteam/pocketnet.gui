@@ -480,12 +480,6 @@ var objectSpread2 = __webpack_require__("5530");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.number.constructor.js
 var es_number_constructor = __webpack_require__("a9e3");
 
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.regexp.exec.js
-var es_regexp_exec = __webpack_require__("ac1f");
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.replace.js
-var es_string_replace = __webpack_require__("5319");
-
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.find.js
 var es_array_find = __webpack_require__("7db0");
 
@@ -497,6 +491,12 @@ var es_array_filter = __webpack_require__("4de4");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.function.name.js
 var es_function_name = __webpack_require__("b0c0");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.regexp.exec.js
+var es_regexp_exec = __webpack_require__("ac1f");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.replace.js
+var es_string_replace = __webpack_require__("5319");
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js
 var asyncToGenerator = __webpack_require__("1da1");
@@ -1627,11 +1627,11 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
       return !this.tetatet && this.me.powerLevel > 0;
     },
     shareRoomLink: function shareRoomLink() {
-      if (this.chat.info.title === '@New Room') {
-        return "https://bastyon.com/welcome?publicroom=".concat(this.chat.roomId);
+      return "https://bastyon.com/welcome?publicroom=".concat(this.chat.roomId);
+      /*if(this.chat.info.title === '@New Room'){
+        return `https://bastyon.com/welcome?publicroom=${this.chat.roomId}`
       }
-
-      return "https://bastyon.com/welcome?publicroom=".concat(this.chat.info.title.replace(/ /g, '_'));
+      return `https://bastyon.com/welcome?publicroom=${this.chat.info.title.replace(/ /g, '_')}`*/
     },
     me: function me() {
       var _this2 = this;
