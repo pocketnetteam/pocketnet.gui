@@ -61,6 +61,9 @@ f.path = function(_path){
         return path.resolve('./proxy16/', _path)
     }
     else{
+    	if(process.platform == 'linux'){
+    		return path.join(process.env.HOME, _path)
+    	}
         return path.join(path.dirname(process.execPath), _path)
     }
 
