@@ -431,7 +431,6 @@ Application = function(p)
 	self.modules = {};
 
 	self.curation = function(){
-		return true
 		if(typeof isios != 'undefined' && isios() && window.cordova) return true
 		return false
 	}
@@ -887,10 +886,9 @@ Application = function(p)
 
 		if(window.cordova) {
 			self.el.html.addClass('cordova')
-			self.el.html.addClass('mobile')
 
 			if(self.curation()){
-				self.el.html.removeClass('tablet')
+				//self.el.html.removeClass('tablet')
 			}
 		}
 

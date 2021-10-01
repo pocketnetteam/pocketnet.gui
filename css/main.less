@@ -5993,14 +5993,6 @@ html.stblack{
 
     html{
 
-        /*#splashScreen {
-            background-color: #FFF;
-        }
-
-        &.stblack{
-            background-color: #011621;
-        }*/
-
         #panelWrapper{
             position: fixed;
             top : 65px;
@@ -6073,6 +6065,88 @@ html.stblack{
     }
 
 }
+
+
+html{
+
+    &.mobile,
+    &.tablet,
+    &.cordova{
+        #panelWrapper{
+            position: fixed;
+            top : 65px;
+            left: 0;
+            right: 0;
+            padding-top : 0;
+            z-index: 10;
+    
+        }
+    
+        .contentWrapper{
+            padding-top : 65px;
+        }
+    
+        &.toppanelshowed{
+            .contentWrapper{
+                padding-top : 120px;
+            }
+        }
+    
+        #menu .menuWrapper{
+            will-change: transform;
+            .transition(0.3s, transform);
+            -webkit-backface-visibility: hidden;
+        }
+    
+        #panelWrapper{
+            will-change: transform;
+            .transition(0.3s, transform);
+            -webkit-backface-visibility: hidden;
+        }
+    
+        #navigation{
+            will-change: transform;
+            -webkit-backface-visibility: hidden;
+        }
+    
+        &.scrollmodedown{
+    
+            #menu .menuWrapper{
+                transform:  translateY(-65px);
+            }
+    
+            #panelWrapper{
+                transform:  translateY(-165px);
+                
+            }
+    
+            #navigation{
+                .nmenu{
+                    transform: translateY(90px);
+                }
+    
+                .fakem{
+                    display: block;
+                    position: absolute;
+                    left : 0;
+                    bottom : 0;
+                    right: 0;
+                    height: 90px;
+                }
+            }
+        }
+    
+        #navigation{
+            .fakem{
+                display: none;
+            }
+        }
+    }
+
+    
+}
+
+
 /*t*/ @media only screen and (max-width: 768px){
     #splashScreen{
         display: flex;

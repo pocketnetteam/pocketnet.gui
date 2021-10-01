@@ -1007,6 +1007,8 @@ html.stblack{
 	}
 }
 
+html.mobile,
+html.cordova,
 html.tablet{
 	#author{
 
@@ -1083,8 +1085,12 @@ html.tablet{
 
 			.usermenu{
 				width: 100%;
+				display: flex!important;
+				flex-wrap: nowrap;
 				.usermenuitem{
-					width: 20%;
+					flex-grow: 1;
+					width: auto;
+					float: none;
 					margin-right : 0;
 					padding-left: 0;
 					padding-right : 0;
