@@ -59,8 +59,8 @@
       "cordova-plugin-camera": {
         "PHOTO_LIBRARY_ADD_USAGE_DESCRIPTION": "This app requires photo library access to function properly.",
         "PHOTO_LIBRARY_USAGE_DESCRIPTION": "This app requires photo library access to function properly.",
-        "CAMERA_USAGE_DESCRIPTION": " ",
-        "PHOTOLIBRARY_USAGE_DESCRIPTION": " "
+        "CAMERA_USAGE_DESCRIPTION": "This Application can allow your camera to make avatar or post photo, if you want.",
+        "PHOTOLIBRARY_USAGE_DESCRIPTION": "This app requires photo library access to function properly."
       },
       "cordova-plugin-device": {},
       "cordova-plugin-device-orientation": {},

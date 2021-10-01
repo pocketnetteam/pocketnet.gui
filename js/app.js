@@ -885,7 +885,14 @@ Application = function(p)
 			$('html').addClass('testpocketnet') /// bstn
 		}
 
-		if(window.cordova) self.el.html.addClass('cordova')
+		if(window.cordova) {
+			self.el.html.addClass('cordova')
+			self.el.html.addClass('mobile')
+
+			if(self.curation()){
+				self.el.html.removeClass('tablet')
+			}
+		}
 
 		initevents()
 
