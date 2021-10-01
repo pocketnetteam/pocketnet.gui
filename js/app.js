@@ -888,7 +888,11 @@ Application = function(p)
 			self.el.html.addClass('cordova')
 
 			if(self.curation()){
-				//self.el.html.removeClass('tablet')
+				
+			}
+
+			if (window.cordova && !isMobile()){
+				self.el.html.addClass('tablet')
 			}
 		}
 
