@@ -174,16 +174,17 @@ var icon = __webpack_require__("3094");
     }
   }),
   mounted: function mounted() {
-    this.getPublicRoom();
-
     if (this.m_chat.getJoinRule() === 'public') {
+      this.getPublicRoom();
       this.topic = true;
     }
   },
   methods: {
     saveEdited: function saveEdited() {
       this.core.mtrx.client.setRoomName(this.m_chat.roomId, '@' + this.m_chat.name.replace(/[@]*/g, ""));
-      this.core.mtrx.client.setRoomTopic(this.chat.roomId, this.topicTxt.replace(/ /g, '_')).then(function (r) {});
+      this.core.mtrx.client.setRoomTopic(this.chat.roomId, this.topicTxt.replace(/ /g, '_')).then(function (r) {
+        return r;
+      });
     },
     getPublicRoom: function getPublicRoom() {
       var _this = this;
@@ -192,7 +193,10 @@ var icon = __webpack_require__("3094");
         _this.pubChat = r.chunk.filter(function (room) {
           return room.room_id === _this.chat.roomId;
         })[0];
-        _this.topicTxt = _this.pubChat['topic'].replace(/_/g, ' ');
+
+        if (_this.pubChat['topic']) {
+          _this.topicTxt = _this.pubChat['topic'].replace(/_/g, ' ');
+        }
       });
     }
   }

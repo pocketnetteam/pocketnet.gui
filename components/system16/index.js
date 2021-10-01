@@ -3080,6 +3080,8 @@ var system16 = (function(){
 							return
 						}
 
+						if(!actions.admin()) return
+
 						var node = find(key)
 
 						var items = [
@@ -3099,37 +3101,41 @@ var system16 = (function(){
 
 					})
 
-					p.el.find('.nodeWrapper[key="tmp"] .node').on('click', function(){
+					if(actions.admin()){
 
-						var node = $(this).attr('node')
+						p.el.find('.nodeWrapper[key="tmp"] .node').on('click', function(){
 
-						console.log('node', node)
+							var node = $(this).attr('node')
 
-						dialog({
-							class : 'zindex',
-							html : "do you really want to make it possible to use this node?",
-							btn1text : self.app.localization.e('dyes'),
-							btn2text : self.app.localization.e('dno'),
-							success : function(){
+							console.log('node', node)
 
-								proxy.fetchauth('nodes/addfromtemp', {
-									keynode : node
-								}).then(r => {
+							
+							dialog({
+								class : 'zindex',
+								html : "do you really want to make it possible to use this node?",
+								btn1text : self.app.localization.e('dyes'),
+								btn2text : self.app.localization.e('dno'),
+								success : function(){
+
+									proxy.fetchauth('nodes/addfromtemp', {
+										keynode : node
+									}).then(r => {
+										
+										make(api.get.current());
+
+										successCheck()
+										
+									}).catch(e => {
+
+										sitemessage(e)
+
+									})
 									
-									make(api.get.current());
+								}
+							})
 
-									successCheck()
-									
-								}).catch(e => {
-
-									sitemessage(e)
-
-								})
-								
-							}
 						})
-
-					})
+					}
 
 					if (clbk)
 						clbk()
