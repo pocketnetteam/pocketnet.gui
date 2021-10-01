@@ -4430,6 +4430,13 @@ Platform = function (app, listofnodes) {
         usersettings: {
 
             meta: {
+                
+                preview: {
+                    name: self.app.localization.e('disablePreview'),
+                    id: 'preview',
+                    type: "BOOLEAN",
+                    value: false
+                },
 
                 win: {
                     name: self.app.localization.e('e13268'),
@@ -4643,6 +4650,15 @@ Platform = function (app, listofnodes) {
 
                 var c = {
 
+                    posts: {
+                        class : 'posts',
+                        name: self.app.localization.e('posts'),
+                        options: {
+
+                            preview: options.preview
+
+                        }
+                    },
 
 
                     notifications: {
