@@ -8,7 +8,7 @@
 	<div class="items table">
 		<div class="item">
 
-			<% if((state && thref != 'userpage' && thref != 'userpage?pc=1') || (!state && href=='welcome')) { %>
+			<% if((state && thref != 'userpage' && thref != 'userpage?pc=1') || (!state && href != 'welcome')) { %>
 
 				<div class="linkButtonWrapper">
 					<a href="<% if(state) {%>userpage<% } else { %>welcome<% } %>" fast="fast" handler="true">
