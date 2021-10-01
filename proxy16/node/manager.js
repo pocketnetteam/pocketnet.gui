@@ -172,6 +172,25 @@ var Nodemanager = function(p){
        
     }
 
+    self.addfromtemp = function(nodekey){
+
+        var notinitednodes = _.filter(self.nodes, function(node){
+            return !node.inited
+        })
+
+        var node = _.find(notinitednodes, function(node){
+            return node.key == nodekey
+        })
+
+        if(!node){
+            return Promise.reject('nodenotfound')
+        }
+
+        node.init()
+
+        return Promise.resolve(node)
+    }
+
     self.initIfNeed =  function(node){
 
         if(!node.eventsCount) return

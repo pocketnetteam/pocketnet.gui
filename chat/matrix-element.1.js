@@ -956,6 +956,7 @@ var many = __webpack_require__("ecec");
   name: 'userspic',
   props: {
     users: Array,
+    single: {},
     unseen: Number,
     slidesPerView: Number,
     status: {

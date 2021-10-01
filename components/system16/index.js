@@ -3069,12 +3069,9 @@ var system16 = (function(){
 
 					})
 
-					p.el.find('.name').on('click', function(){
-
-						
+					p.el.find('.nodeWrapper[key="nodes"] .name').on('click', function(){
 
 						var key = $(this).closest('.node').attr('node')
-
 
 						if(!key || !find(key)){
 
@@ -3098,6 +3095,38 @@ var system16 = (function(){
 
 						menuDialog({
 							items: items
+						})
+
+					})
+
+					p.el.find('.nodeWrapper[key="tmp"] .node').on('click', function(){
+
+						var node = $(this).attr('node')
+
+						console.log('node', node)
+
+						dialog({
+							class : 'zindex',
+							html : "do you really want to make it possible to use this node?",
+							btn1text : self.app.localization.e('dyes'),
+							btn2text : self.app.localization.e('dno'),
+							success : function(){
+
+								proxy.fetchauth('nodes/addfromtemp', {
+									keynode : node
+								}).then(r => {
+									
+									make(api.get.current());
+
+									successCheck()
+									
+								}).catch(e => {
+
+									sitemessage(e)
+
+								})
+								
+							}
 						})
 
 					})

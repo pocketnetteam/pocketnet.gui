@@ -1076,6 +1076,30 @@ var Proxy = function (settings, manage, test) {
 				},
 			},
 
+			addfromtemp: {
+				path: '/nodes/addfromtemp',
+				authorization: 'signature',
+				action: function ({ keynode , A }) {
+
+					if (!A) return Promise.reject('admin');
+
+					return nodeManager.addfromtemp(keynode)
+
+						.then((node) => {
+
+							return Promise.resolve({
+								data: {
+									node: node.exportsafe(),
+								},
+							});
+						})
+						.catch((e) => {
+							console.log("e", e)
+							return Promise.reject(e);
+						});
+				},
+			},
+
 			select: {
 				path: '/nodes/select',
 				action: function ({ fixed }) {
