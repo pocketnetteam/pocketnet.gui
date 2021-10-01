@@ -160,7 +160,7 @@
             <path url="*" event="nav-message" />
         </host>
 
-        <host name="bastyon.com" scheme="https">
+        <host name="test.bastyon.com" scheme="https">
             <path url="*" event="nav-message" />
         </host>
 
