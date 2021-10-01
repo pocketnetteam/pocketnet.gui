@@ -2712,7 +2712,7 @@ Platform = function (app, listofnodes) {
 
             if(!p) p = {}
 
-            if (isMobile() || p.dlg){
+            if (isTablet() || isMobile() || window.cordova || p.dlg){
                 return self.api.mobiletooltip(_el, content, clbk, p)
             }
             
@@ -21905,7 +21905,7 @@ Platform = function (app, listofnodes) {
         initevents : function(){
             if (self.matrixchat.el){
 
-                if(isMobile() || window.cordova){
+                if(isTablet() || isMobile() || window.cordova){
 
 					self.matrixchat.el.swipe({
 						swipeLeft : function(e, phase, direction, distance){
@@ -22057,7 +22057,7 @@ Platform = function (app, listofnodes) {
         showed : function(){
             if(!self.matrixchat.core){ return false }
 
-            if(isMobile() || window.cordova){
+            if(isTablet() || isMobile() || window.cordova){
                 return !self.matrixchat.core.hiddenInParent
             }
 
@@ -22078,7 +22078,7 @@ Platform = function (app, listofnodes) {
 
                 console.log('backtoapp')
 
-                if (isMobile() || window.cordova)
+                if (isTablet() ||isMobile() || window.cordova)
                     app.nav.api.history.removeParameters(['pc'])
 
                 if (link){
@@ -22108,7 +22108,7 @@ Platform = function (app, listofnodes) {
 
                 self.app.actions.playingvideo()
 
-                if (isMobile() || window.cordova)
+                if (isTablet() ||isMobile() || window.cordova)
                     self.app.actions.restore()
 
                 app.el.html.removeClass('chatshowed')
@@ -22116,10 +22116,10 @@ Platform = function (app, listofnodes) {
                 if(document.activeElement) document.activeElement.blur()
 
                 if (self.matrixchat.core){ 
-                    self.matrixchat.core.hideInParent(isMobile() || window.cordova ? true : false )
+                    self.matrixchat.core.hideInParent(isTablet() ||isMobile() || window.cordova ? true : false )
                 }
 
-                if (isMobile() || window.cordova){
+                if (isTablet() ||isMobile() || window.cordova){
                     self.app.actions.onScroll()
                 }
 
@@ -22154,12 +22154,12 @@ Platform = function (app, listofnodes) {
                     
                 self.app.actions.playingvideo()
 
-                if (isMobile() || window.cordova){
+                if (isTablet() ||isMobile() || window.cordova){
                     self.app.actions.offScroll()
                     self.app.actions.optimize()   
                 }
                     
-                if (isMobile() || window.cordova)
+                if (isTablet() ||isMobile() || window.cordova)
                     app.nav.api.history.addParameters({
                         'pc' : '1'
                     })
@@ -22180,7 +22180,7 @@ Platform = function (app, listofnodes) {
             }
 
             self.matrixchat.core = core
-            self.matrixchat.core.hideInParent(isMobile()|| window.cordova ? true : false)
+            self.matrixchat.core.hideInParent(isTablet() ||isMobile()|| window.cordova ? true : false)
 
             core.externalLink(self.matrixchat)
 

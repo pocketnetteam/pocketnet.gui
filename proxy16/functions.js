@@ -71,6 +71,8 @@ f.path = function(_path){
 }
 
 f.saveFile = function(filepath, buffer){
+
+    ///// TODO ADD FOLDER CREATION FOR LINUX AND REMOVE DEFAULT CERT
         
     return new Promise((resolve, reject) => {
 
