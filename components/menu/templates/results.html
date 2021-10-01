@@ -29,13 +29,13 @@
 
 										<div class="usericon" image="<%-src || ''%>">
 
-											<% if(!src) {%>
+											<% if(!src && !letter) {%>
 
 												<svg width="30" height="30" data-jdenticon-value="<%-user.address%>"></svg>
 
 											<% } %>
 
-											<% if(deep(app, 'platform.real.'+user.address)) {%>
+											<% if(deep(app, 'platform.real.'+user.address) && !letter) {%>
 												<div class="realperson">
 			
 													<span class="fa-stack fa-2x">

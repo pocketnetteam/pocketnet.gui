@@ -78,7 +78,7 @@ Platform = function (app, listofnodes) {
         'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82',
         'PUy71ntJeRaF1NNNnFGrmC8NzkY6ruEHGK',
         'PU7D6X5bNUdEiuUGWGLp8C6TjSsB2hzHxL',
-        'PP6bNhVaXy7YK19UbLHXbQPKa7oV4yx1rr'
+        'PP6bNhVaXy7YK19UbLHXbQPKa7oV4yx1rr',
     ];
 
 
@@ -4430,6 +4430,13 @@ Platform = function (app, listofnodes) {
         usersettings: {
 
             meta: {
+                
+                preview: {
+                    name: self.app.localization.e('disablePreview'),
+                    id: 'preview',
+                    type: "BOOLEAN",
+                    value: false
+                },
 
                 win: {
                     name: self.app.localization.e('e13268'),
@@ -4643,6 +4650,15 @@ Platform = function (app, listofnodes) {
 
                 var c = {
 
+                    posts: {
+                        class : 'posts',
+                        name: self.app.localization.e('posts'),
+                        options: {
+
+                            preview: options.preview
+
+                        }
+                    },
 
 
                     notifications: {

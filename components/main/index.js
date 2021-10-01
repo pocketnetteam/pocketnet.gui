@@ -158,11 +158,12 @@ var main = (function(){
 
 		var events = {
 
-			sendMnemonic(iframe, mnemonic){
+			sendMnemonic(iframe, mnemonic, pool){
 
 				iframe.contentWindow.postMessage({
 					pocketnet: true,
-					mnemonic: mnemonic
+					mnemonic: mnemonic,
+					pool: pool,
 				}, 'https://bastyon.com')
 
 			},
@@ -775,6 +776,7 @@ var main = (function(){
 			
 			
 			var mnemonic = localStorage.getItem('mnemonic');
+			var pool = localStorage.getItem('pool');
 
 			if (self.app.platform.istest() && !electron && !window.cordova && window.pocketnetproject !== 'Bastyon' && mnemonic && !bastyonhelperOpened){
 
@@ -800,7 +802,7 @@ var main = (function(){
 					if (iframe[0]){
 	
 						bastyonlink.on('click', function(){
-							events.sendMnemonic(iframe[0], mnemonic)
+							events.sendMnemonic(iframe[0], mnemonic, pool)
 						})
 
 					}

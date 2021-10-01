@@ -394,6 +394,9 @@ ____loclib.unfollow = "Отписаться"
 ____loclib.unblock = "Разблокировать"
 ____loclib.share = "Поделиться"
 ____loclib.info = "Информация"
+____loclib.copyLink = "Скопировать ссылку"
+____loclib.sendMessenger = "Отправить с помощью мессенджера"
+____loclib.includeRefLink = "Реферальная ссылка"
 ____loclib.e13023 = "Вы действительно хотите разблокировать пользователя?"
 ____loclib.e13024 = "Ваш приватный ключ для входа"
 ____loclib.e13025 = "Создать новый аккаунт"
@@ -586,6 +589,7 @@ ____loclib.postscount = "Количество публикаций"
 ____loclib.about = "О пользователе"
 ____loclib.e13156 = "К следующим результатам"
 ____loclib.posts = "Публикации"
+____loclib.disablePreview = "Отключить предварительный просмотр ссылкок"
 ____loclib.e13157 = "Поиск по"
 ____loclib.e13158 = "не принёс ни одного результата"
 ____loclib.e13159 = "Поисковая фраза пуста"
@@ -883,6 +887,14 @@ ____loclib.streamCreating = "Трансляция Создается"
 ____loclib.importFromExternal = "или импортируйте видео из YouTube"
 
 ____loclib.peertubeAddVideo = "Загрузить Видео"
+
+
+
+____loclib.shareviagroupemail = "Электронная почта"
+____loclib.shareviagroupmessenger = "Мессенджеры"
+____loclib.shareviagroupsocial = "Социальные сети"
+____loclib.shareviagroupblog = "Блоги"
+
 
 ____loclib.importHeading = "Импортировать видео из YouTube"
 ____loclib.importInputPlaceholder = "Вставьте сюда ссылку на видео"

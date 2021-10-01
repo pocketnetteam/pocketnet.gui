@@ -658,7 +658,7 @@ var socialshare2 = (function(){
 		var prepareParameters = function(){
 
 			eparameters.reflink = new Parameter({
-				name: "Include Referal Link",
+				name: self.app.localization.e('includeRefLink'),
 				id: 'reflink',
 				type: "BOOLEAN",
 				value: !notincludedRef,
