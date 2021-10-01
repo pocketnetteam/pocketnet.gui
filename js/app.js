@@ -994,6 +994,8 @@ Application = function(p)
 
 		optimize : function(){
 
+			if(isios()) return
+
 			if (optimizeTimeout) clearTimeout(optimizeTimeout)
 
 				optimizeTimeout = setTimeout(function(){
