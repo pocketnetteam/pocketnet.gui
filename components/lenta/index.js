@@ -3067,18 +3067,30 @@ var lenta = (function(){
 						}
 						else
 						{
-							self.app.platform.sdk.remote.get(url, function(og){
 
-								if(og){
-									renders.url(_el, url, share, clbk)
-								}
-								else
-								{
-									if (clbk)
-										clbk()
+							if (self.app.platform.sdk.usersettings.meta.preview &&
+								self.app.platform.sdk.usersettings.meta.preview.value){
+
+								if (clbk){
+									clbk()
 								}
 
-							})
+							} else {
+
+								self.app.platform.sdk.remote.get(url, function(og){
+
+									if(og){
+										renders.url(_el, url, share, clbk)
+									}
+									else
+									{
+										if (clbk)
+											clbk()
+									}
+	
+								})
+							}
+
 						}
 					}
 
