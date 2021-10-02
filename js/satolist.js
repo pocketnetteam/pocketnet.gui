@@ -79,6 +79,7 @@ Platform = function (app, listofnodes) {
         'PUy71ntJeRaF1NNNnFGrmC8NzkY6ruEHGK',
         'PU7D6X5bNUdEiuUGWGLp8C6TjSsB2hzHxL',
         'PP6bNhVaXy7YK19UbLHXbQPKa7oV4yx1rr',
+        'TSisNge5kisi7cwGRwmUBuZQWZFD8cRoG8'
     ];
 
 
