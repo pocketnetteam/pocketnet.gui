@@ -978,7 +978,7 @@ ____loclib.UniqueUsers = "Уникальные Пользователи";
 ____loclib.ErrorLoadingRates = "Ошибка Загрузки";
 ____loclib.noDownloadedVideos = "Нет загруженных видео";
 
-
-____loclib.bastyonhelperTitle = "Бастион Свободы Слова";
+____loclib.bastyonhelperTitle1 = "Покетнет переехал",
+____loclib.bastyonhelperTitle2 = "Бастион Свободы Слова";
 ____loclib.bastyonhelperSubtitle1 = "Теперь Pocketnet - это";
 ____loclib.bastyonhelperSubtitle2 = "Пожалуйста, перейдите по ссылке ниже";
