@@ -929,6 +929,8 @@ var lenta = (function(){
 
 			fullScreenVideo : function(id, clbk){
 
+				if (essenseData.openapi){return}
+
 				var _el = el.c.find("#" + id)
 				var share = self.app.platform.sdk.node.shares.storage.trx[id];
 
