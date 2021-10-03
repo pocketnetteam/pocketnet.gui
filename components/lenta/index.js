@@ -929,6 +929,8 @@ var lenta = (function(){
 
 			fullScreenVideo : function(id, clbk){
 
+				if (fullscreenvideoShowed) {return}
+
 				if (essenseData.openapi){return}
 
 				var _el = el.c.find("#" + id)
@@ -958,7 +960,6 @@ var lenta = (function(){
 					if(!players[id]) return;
 
 					_el.addClass('fullScreenVideo')
-
 				
 					actions.videoPosition(id)
 
@@ -983,6 +984,8 @@ var lenta = (function(){
 
 					lastscroll = self.app.lastScrollTop// el.w.scrollTop()
 					//ovf = !self.app.actions.offScroll()
+
+					self.app.actions.offScroll()
 
 					if(!essenseData.comments){
 
@@ -1042,7 +1045,7 @@ var lenta = (function(){
 
 				self.app.nav.api.history.removeParameters(['v'])
 
-				//self.app.actions.onScroll()
+				self.app.actions.onScroll()
 				el.w.scrollTop(lastscroll || 0)
 
 				fullscreenvideoShowed = null;
@@ -4295,6 +4298,10 @@ var lenta = (function(){
 					
 				}
 
+				if (fullscreenvideoShowed){
+					actions.exitFullScreenVideo(fullscreenvideoShowed)
+				}
+
 				actions.cleardelay()
 
 				actions.scrollmode(false)
@@ -4329,8 +4336,6 @@ var lenta = (function(){
 
 				app.actions.playingvideo(null);
 
-				if (ovf)
-					self.app.actions.onScroll()
 
 				_.each(initedcommentes, function(c){
 					c.destroy()
