@@ -606,7 +606,7 @@ var lenta = (function(){
 
 							self.app.actions.playingvideo(players[share.txid].p)
 
-							if(isMobile()){
+							if(isMobile() && !self.app.platform.sdk.usersettings.meta.videoautoplay2.value){
 								actions.fullScreenVideo(share.txid)
 							}
 						},

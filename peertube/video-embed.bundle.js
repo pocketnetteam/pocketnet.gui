@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=572"
+/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=3503"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -39780,6 +39780,7 @@ class PeerTubeEmbedApi {
         var player = this.embed.player;
         var hls = player.p2pMediaLoader().getHLSJS();
         this.embed.player.on('play', function (ev) {
+            console.log("EV", ev);
             var hls = player.p2pMediaLoader().getHLSJS();
             if (hls) {
                 hls.resumeCapping();
