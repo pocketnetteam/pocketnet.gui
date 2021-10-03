@@ -508,10 +508,13 @@ var lenta = (function(){
 						return
 					}
 				
-				if(players[share.txid].fulliniting) return
+				if(players[share.txid]){
+					if (players[share.txid].fulliniting) return
 
 					players[share.txid].fulliniting = true
 
+				}
+				
 				if (pels.length && pels[0].getAttribute)
 				{
 
