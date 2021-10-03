@@ -610,18 +610,21 @@ var openlink = function(argv, ini){
 
 
     if(_.find(protocols, function(p){
-        if(l.indexOf(p + "://") > -1) return true
+        if(l && l.indexOf(p + "://") > -1) return true
     })){
-        var h = l
+        var href = l
 
         _.each(protocols, function(p){
-            h = h.replace(p + "://electron/",'').replace(p + "://",'')
+            href = href.replace(p + "://electron/",'').replace(p + "://",'')
+
             if(l.indexOf(p + "://") > -1) return true
         })
 
         if (href && href[href.length - 1] == '/') href = href.substr(0, href.length - 1)
 
         if(!href) href = 'index'
+
+        console.log("href", href)
 
         setTimeout(function(){
 

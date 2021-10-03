@@ -22,6 +22,8 @@ Nav = function(app)
 		links : true,
 	}
 
+
+	var electronopen = false
 	var blockclick = false
 
 	var defaultpathname = 'index'
@@ -1446,26 +1448,35 @@ Nav = function(app)
 
 				self.api.loadDefault(p);
 
-				return
+				//////
 
-				var currentHref = self.get.href();
+				if (!electron && !window.cordova && !electronopen && !app.platform.sdk.usersettings.meta.openlinksinelectron.value){
 
-				var electronHrefs = JSON.parse(localStorage['electron_hrefs'] || "[]");
-			   
-				if (electronHrefs.indexOf(currentHref) == -1 && !electron){
+					var currentHref = self.get.href();
 
-					electronHrefs.push(currentHref)
+					var electronHrefs = JSON.parse(localStorage['electron_hrefs'] || "[]");
+				
+					if (electronHrefs.indexOf(currentHref) == -1 ){
 
-					localStorage['electron_hrefs'] = JSON.stringify(electronHrefs.slice(electronHrefs.length - 100))
+						electronHrefs.push(currentHref)
 
-					try{
-						window.location = 'pocketnet://electron/' + currentHref;
-					}
-					catch(e){
-						console.log("electron not installed")
-					}
-				   
-				}   
+						try{
+
+							window.location = app.meta.protocol + '://electron/' + currentHref;
+							localStorage['electron_hrefs'] = JSON.stringify(electronHrefs.slice(electronHrefs.length - 100))
+							
+						}
+						catch(e){
+							console.log("electron not installed")
+
+							localStorage['electron_hrefs'] = '[]'
+						}
+					
+					} 
+
+				}
+
+				electronopen = true
 
 			});
 

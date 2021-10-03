@@ -61,6 +61,7 @@ Application = function(p)
 
 	var self = this;
 	var realtimeInterval = null;
+	var baseorientation = 'portrait'
 
 
 	self._meta = {
@@ -903,6 +904,9 @@ Application = function(p)
 		{
 			document.addEventListener('deviceready', function(){
 
+				
+				if(isTablet() && !isMobile()) baseorientation = null
+
 				self.mobile.screen.lock()
 
 				p || (p = {});
@@ -1042,9 +1046,6 @@ Application = function(p)
 		},
 
 		backupscroll : function(){
-
-
-
 			self.actions.scroll(self.lastScrollTop)
 		},
 
@@ -1689,6 +1690,20 @@ Application = function(p)
 				if (window.NavigationBar)
 					window.NavigationBar.backgroundColorByHexString(colors[self.platform.sdk.theme.current] || "#FFF", self.platform.sdk.theme.current == 'black');
 			},
+
+			gallerybackground : function(){
+
+
+				if (window.StatusBar) {
+					window.StatusBar.styleLightContent()
+					window.StatusBar.backgroundColorByHexString("#030F1B");
+				}
+
+				if (window.NavigationBar)
+					window.NavigationBar.backgroundColorByHexString("#030F1B", true);
+					
+			},
+
 			hide : function(){
 				if (window.StatusBar) {
 					window.StatusBar.hide()
@@ -1723,15 +1738,28 @@ Application = function(p)
 				
 		},
 
+		backgroundMode : function(t){
+
+			if (window.cordova){
+				if (window.cordova.plugins && window.cordova.plugins.backgroundMode){
+
+					if(t) cordova.plugins.backgroundMode.enable()
+					else cordova.plugins.backgroundMode.disable()
+				}
+			}
+			
+				
+		},
+
+
 		fullscreenmode : function(v){
 			v ? self.mobile.screen.unlock() : self.mobile.screen.lock()
 			v ? self.mobile.statusbar.hide() : self.mobile.statusbar.show()
 
 			self.mobile.unsleep(v)
-
+			
 			//v ? self.el.html.addClass('fullscreen') : self.el.html.removeClass('fullscreen')
 
-			
 
 			if(!v){
 				setTimeout(function(){
@@ -1741,15 +1769,26 @@ Application = function(p)
 			}
 			else{
 				self.fullscreenmode = v
+
+				/*console.log('AndroidFullScreen', AndroidFullScreen)
+
+				if(typeof AndroidFullScreen != 'undefined'){
+					AndroidFullScreen.isSupported(function(){
+						console.log('immersiveMode')
+						AndroidFullScreen.immersiveMode()
+					}, function(){
+						console.log("SU")
+					});
+				}*/
+				
 			}
 		},
 
 		screen : {
 
 			lock : function(){
-
-				if (window.cordova)
-					window.screen.orientation.lock('portrait')
+				if (window.cordova && baseorientation)
+					window.screen.orientation.lock(baseorientation)
 			},
 			unlock : function(){
 				if (window.cordova)

@@ -14,9 +14,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "registerConfigPlugin", function() { return registerConfigPlugin; });
 /* harmony import */ var hls_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! hls.js */ "./node_modules/hls.js/dist/hls.js");
 /* harmony import */ var hls_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(hls_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _peertube_cap_level_controller__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../peertube-cap-level-controller */ "./src/assets/player/peertube-cap-level-controller.ts");
 // Thanks https://github.com/streamroot/videojs-hlsjs-plugin
 // We duplicated this plugin to choose the hls.js version we want, because streamroot only provide a bundled file
 //import * as HlsjsLigt from 'hls.js/dist/hls.light.js'
+
 
 const registerSourceHandler = function (vjs) {
     if (!hls_js__WEBPACK_IMPORTED_MODULE_0___default.a.isSupported()) {
@@ -492,6 +494,9 @@ class Html5Hlsjs {
         //this.hlsjsConfig.maxMaxBufferLength = 55
         //this.hlsjsConfig.backBufferLength = 90
         ///// liveSyncPosition
+        /* @ts-ignore */
+        this.hlsjsConfig.capLevelController = _peertube_cap_level_controller__WEBPACK_IMPORTED_MODULE_1__["default"];
+        console.log("INITHLS");
         this.hls = new hls_js__WEBPACK_IMPORTED_MODULE_0___default.a(this.hlsjsConfig);
         this._executeHooksFor('beforeinitialize');
         this.hls.on(hls_js__WEBPACK_IMPORTED_MODULE_0__["Events"].ERROR, (event, data) => this._onError(event, data));
@@ -634,6 +639,7 @@ class P2pMediaLoaderPlugin extends Plugin {
         const options = this.player.tech(true).options_;
         this.p2pEngine = options.hlsjsConfig.loader.getEngine();
         this.hlsjs.on(hls_js__WEBPACK_IMPORTED_MODULE_5__["Events"].LEVEL_SWITCHING, (_, data) => {
+            console.log("resolutionChange data", data);
             this.trigger('resolutionChange', { auto: this.hlsjs.autoLevelEnabled, resolutionId: data.height });
         });
         this.p2pEngine.on(_core_p2p_media_loader_master_p2p_media_loader_core_lib__WEBPACK_IMPORTED_MODULE_2__["Events"].SegmentError, (segment, err) => {
@@ -689,6 +695,228 @@ class P2pMediaLoaderPlugin extends Plugin {
 }
 video_js__WEBPACK_IMPORTED_MODULE_0___default.a.registerPlugin('p2pMediaLoader', P2pMediaLoaderPlugin);
 
+
+
+/***/ }),
+
+/***/ "./src/assets/player/peertube-cap-level-controller.ts":
+/*!************************************************************!*\
+  !*** ./src/assets/player/peertube-cap-level-controller.ts ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var hls_js_src_events__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! hls.js/src/events */ "./node_modules/hls.js/src/events.ts");
+//@ts-nocheck
+
+class CapLevelController {
+    constructor(hls) {
+        this.hls = hls;
+        this.autoLevelCapping = Number.POSITIVE_INFINITY;
+        this.firstLevel = -1;
+        this.media = null;
+        this.restrictedLevels = [];
+        this.timer = undefined;
+        this.clientRect = null;
+        this.paused = true;
+        this.hls.pauseCapping = () => {
+            this.paused = true;
+        };
+        this.hls.resumeCapping = () => {
+            this.paused = false;
+        };
+        this.registerListeners();
+    }
+    setStreamController(streamController) {
+        this.streamController = streamController;
+    }
+    destroy() {
+        this.unregisterListener();
+        if (this.hls.config.capLevelToPlayerSize) {
+            this.stopCapping();
+        }
+        this.media = null;
+        this.clientRect = null;
+        // @ts-ignore
+        this.hls = this.streamController = null;
+    }
+    registerListeners() {
+        const { hls } = this;
+        hls.on(hls_js_src_events__WEBPACK_IMPORTED_MODULE_0__["Events"].FPS_DROP_LEVEL_CAPPING, this.onFpsDropLevelCapping, this);
+        hls.on(hls_js_src_events__WEBPACK_IMPORTED_MODULE_0__["Events"].MEDIA_ATTACHING, this.onMediaAttaching, this);
+        hls.on(hls_js_src_events__WEBPACK_IMPORTED_MODULE_0__["Events"].MANIFEST_PARSED, this.onManifestParsed, this);
+        hls.on(hls_js_src_events__WEBPACK_IMPORTED_MODULE_0__["Events"].BUFFER_CODECS, this.onBufferCodecs, this);
+        hls.on(hls_js_src_events__WEBPACK_IMPORTED_MODULE_0__["Events"].MEDIA_DETACHING, this.onMediaDetaching, this);
+    }
+    unregisterListener() {
+        const { hls } = this;
+        hls.off(hls_js_src_events__WEBPACK_IMPORTED_MODULE_0__["Events"].FPS_DROP_LEVEL_CAPPING, this.onFpsDropLevelCapping, this);
+        hls.off(hls_js_src_events__WEBPACK_IMPORTED_MODULE_0__["Events"].MEDIA_ATTACHING, this.onMediaAttaching, this);
+        hls.off(hls_js_src_events__WEBPACK_IMPORTED_MODULE_0__["Events"].MANIFEST_PARSED, this.onManifestParsed, this);
+        hls.off(hls_js_src_events__WEBPACK_IMPORTED_MODULE_0__["Events"].BUFFER_CODECS, this.onBufferCodecs, this);
+        hls.off(hls_js_src_events__WEBPACK_IMPORTED_MODULE_0__["Events"].MEDIA_DETACHING, this.onMediaDetaching, this);
+    }
+    onFpsDropLevelCapping(event, data) {
+        // Don't add a restricted level more than once
+        if (CapLevelController.isLevelAllowed(data.droppedLevel, this.restrictedLevels)) {
+            this.restrictedLevels.push(data.droppedLevel);
+        }
+    }
+    onMediaAttaching(event, data) {
+        this.media = data.media instanceof HTMLVideoElement ? data.media : null;
+    }
+    onManifestParsed(event, data) {
+        const hls = this.hls;
+        this.restrictedLevels = [];
+        this.firstLevel = data.firstLevel;
+        if (hls.config.capLevelToPlayerSize && data.video) {
+            // Start capping immediately if the manifest has signaled video codecs
+            this.startCapping();
+        }
+    }
+    // Only activate capping when playing a video stream; otherwise, multi-bitrate audio-only streams will be restricted
+    // to the first level
+    onBufferCodecs(event, data) {
+        const hls = this.hls;
+        if (hls.config.capLevelToPlayerSize && data.video) {
+            // If the manifest did not signal a video codec capping has been deferred until we're certain video is present
+            this.startCapping();
+        }
+    }
+    onMediaDetaching() {
+        this.stopCapping();
+    }
+    detectPlayerSize() {
+        if (this.media && this.mediaHeight > 0 && this.mediaWidth > 0) {
+            const levels = this.hls.levels;
+            if (levels.length) {
+                const hls = this.hls;
+                hls.autoLevelCapping = this.getMaxLevel(levels.length - 1);
+                if (hls.autoLevelCapping > this.autoLevelCapping &&
+                    this.streamController) {
+                    // if auto level capping has a higher value for the previous one, flush the buffer using nextLevelSwitch
+                    // usually happen when the user go to the fullscreen mode.
+                    this.streamController.nextLevelSwitch();
+                }
+                this.autoLevelCapping = hls.autoLevelCapping;
+            }
+        }
+    }
+    /*
+     * returns level should be the one with the dimensions equal or greater than the media (player) dimensions (so the video will be downscaled)
+     */
+    getMaxLevel(capLevelIndex) {
+        const levels = this.hls.levels;
+        if (!levels.length) {
+            return -1;
+        }
+        const validLevels = levels.filter((level, index) => CapLevelController.isLevelAllowed(index, this.restrictedLevels) &&
+            index <= capLevelIndex);
+        this.clientRect = null;
+        return CapLevelController.getMaxLevelByMediaSize(validLevels, this.mediaWidth, this.mediaHeight);
+    }
+    capp() {
+        this.autoLevelCapping = Number.POSITIVE_INFINITY;
+        this.hls.firstLevel = this.getMaxLevel(this.firstLevel);
+        this.detectPlayerSize();
+    }
+    startCapping() {
+        if (this.timer) {
+            // Don't reset capping if started twice; this can happen if the manifest signals a video codec
+            return;
+        }
+        this.autoLevelCapping = Number.POSITIVE_INFINITY;
+        this.hls.firstLevel = this.getMaxLevel(this.firstLevel);
+        self.clearInterval(this.timer);
+        this.timer = self.setInterval(this.detectPlayerSize.bind(this), 1000);
+        this.detectPlayerSize();
+    }
+    stopCapping() {
+        this.restrictedLevels = [];
+        this.firstLevel = -1;
+        //this.autoLevelCapping = Number.POSITIVE_INFINITY;
+        if (this.timer) {
+            self.clearInterval(this.timer);
+            this.timer = undefined;
+        }
+    }
+    getDimensions() {
+        if (this.paused && this.clientRectLast) {
+            return this.clientRectLast;
+        }
+        if (this.clientRect) {
+            return this.clientRect;
+        }
+        const media = this.media;
+        const boundsRect = {
+            width: 0,
+            height: 0,
+        };
+        if (media) {
+            const clientRect = media.getBoundingClientRect();
+            boundsRect.width = clientRect.width;
+            boundsRect.height = clientRect.height;
+            if (!boundsRect.width && !boundsRect.height) {
+                // When the media element has no width or height (equivalent to not being in the DOM),
+                // then use its width and height attributes (media.width, media.height)
+                boundsRect.width =
+                    clientRect.right - clientRect.left || media.width || 0;
+                boundsRect.height =
+                    clientRect.bottom - clientRect.top || media.height || 0;
+            }
+        }
+        this.clientRectLast = this.clientRect = boundsRect;
+        return boundsRect;
+    }
+    get mediaWidth() {
+        return this.getDimensions().width * CapLevelController.contentScaleFactor;
+    }
+    get mediaHeight() {
+        return this.getDimensions().height * CapLevelController.contentScaleFactor;
+    }
+    static get contentScaleFactor() {
+        let pixelRatio = 1;
+        try {
+            pixelRatio = self.devicePixelRatio;
+        }
+        catch (e) {
+            /* no-op */
+        }
+        return pixelRatio;
+    }
+    static isLevelAllowed(level, restrictedLevels = []) {
+        return restrictedLevels.indexOf(level) === -1;
+    }
+    static getMaxLevelByMediaSize(levels, width, height) {
+        if (!levels || !levels.length) {
+            return -1;
+        }
+        // Levels can have the same dimensions but differing bandwidths - since levels are ordered, we can look to the next
+        // to determine whether we've chosen the greatest bandwidth for the media's dimensions
+        const atGreatestBandiwdth = (curLevel, nextLevel) => {
+            if (!nextLevel) {
+                return true;
+            }
+            return (curLevel.width !== nextLevel.width ||
+                curLevel.height !== nextLevel.height);
+        };
+        // If we run through the loop without breaking, the media's dimensions are greater than every level, so default to
+        // the max level
+        let maxLevelIndex = levels.length - 1;
+        for (let i = 0; i < levels.length; i += 1) {
+            const level = levels[i];
+            if ((level.width >= width || level.height >= height) &&
+                atGreatestBandiwdth(level, levels[i + 1])) {
+                maxLevelIndex = i;
+                break;
+            }
+        }
+        return maxLevelIndex;
+    }
+}
+/* harmony default export */ __webpack_exports__["default"] = (CapLevelController);
 
 
 /***/ })

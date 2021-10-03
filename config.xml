@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="10099" id="pocketnet.app" version="1.1.99" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Pocketnet</name>
+<widget android-versionCode="10104" id="pocketnet.app" version="1.1.104" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Bastyon</name>
     <description>
-        Pocketnet Application
+        Bastyon Application
     </description>
-    <author email="maxgrishkov@gmail.com" href="https://test.pocketnet.app">
+    <author email="maxgrishkov@gmail.com" href="https://bastyon.com">
         Pocketnet Team
     </author>
     <content src="indexcordova.html" />
@@ -22,7 +22,7 @@
     <preference name="StatusBarStyle" value="lightcontent" />
     <preference name="AndroidLaunchMode" value="singleTask" />
     <preference name="Fullscreen" value="false" />
-  
+    <preference name="AllowInlineMediaPlayback" value="true"/>
 
     <platform name="android">
         <icon density="ldpi" src="www/res/icon/android/drawable-ldpi-icon.png" />
@@ -109,6 +109,7 @@
     <plugin name="cordova-plugin-network-information" spec="~1.2.0" />
     <plugin name="cordova-plugin-vibration" spec="~2.1.0" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
+    <plugin name="cordova-plugin-fullscreen" spec="^1.3.0" />
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />

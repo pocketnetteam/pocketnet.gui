@@ -1659,7 +1659,7 @@ var post = (function () {
 				}
 
 				self.app.actions.playingvideo(null)
-
+				
 				self.app.el.menu.find('#menu').removeClass('static')
 
 				if (ed.close) ed.close()
@@ -1709,7 +1709,7 @@ var post = (function () {
 
 				p.clbk(null, p);
 
-				if (ed.video)
+				if (ed.video && !window.cordova && !isTablet() && !isMobile())
 					self.app.el.menu.find('#menu').addClass('static')
 
 				initEvents();

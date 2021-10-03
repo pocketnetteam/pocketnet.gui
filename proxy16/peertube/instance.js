@@ -107,6 +107,10 @@ var instance = function (host, Roy) {
 
     if (typeof url == 'function') url = url(data);
 
+
+    //  console.log('host', p.royrequest, host)
+    //if(p.royrequest && host.indexOf('pocketnetpeertube5') > -1 ) return Promise.reject("undeifd")
+
     return axios[p.type || 'get'](`http://${host}${url}`, {
       timeout: p.timeout || Roy.parent.timeout() || 10000,
     })

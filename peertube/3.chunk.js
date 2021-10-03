@@ -1520,7 +1520,7 @@ const version = "0.6.2";
 
 /***/ }),
 
-/***/ 516:
+/***/ 517:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1549,7 +1549,7 @@ var events = __webpack_require__(159);
 var lib = __webpack_require__(220);
 
 // EXTERNAL MODULE: ./node_modules/m3u8-parser/dist/m3u8-parser.es.js + 1 modules
-var m3u8_parser_es = __webpack_require__(517);
+var m3u8_parser_es = __webpack_require__(518);
 
 // CONCATENATED MODULE: ./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-hlsjs/lib/segment-manager.ts
 /**
@@ -2069,7 +2069,6 @@ class engine_Engine extends events["EventEmitter"] {
         super();
         this.loader = new lib["b" /* HybridLoader */](settings.loader);
         this.segmentManager = new segment_manager_SegmentManager(this.loader, settings.segments);
-        console.log('this.loader', this.loader);
         Object.keys(lib["a" /* Events */])
             .map((eventKey) => lib["a" /* Events */][eventKey])
             .forEach((event) => this.loader.on(event, (...args) => this.emit(event, ...args)));
@@ -2208,7 +2207,6 @@ function initVideoJsHlsJsPlugin() {
 }
 function initMediaElementJsPlayer(mediaElement) {
     mediaElement.addEventListener("hlsFragChanged", (event) => {
-        console.log('hlsFragChanged');
         const hls = mediaElement.hlsPlayer;
         if (hls && hls.config && hls.config.loader && typeof hls.config.loader.getEngine === "function") {
             const engine = hls.config.loader.getEngine();
@@ -2222,7 +2220,6 @@ function initMediaElementJsPlayer(mediaElement) {
         }
     });
     mediaElement.addEventListener("hlsDestroying", () => Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
-        console.log('hlsDestroying');
         const hls = mediaElement.hlsPlayer;
         if (hls && hls.config && hls.config.loader && typeof hls.config.loader.getEngine === "function") {
             const engine = hls.config.loader.getEngine();

@@ -119,6 +119,7 @@ var Roy = function (parent) {
   };
 
   self.request = function (method, data = {}, p = {}, list, index) {
+
     if (p.host) {
       var instance = self.findInstanceByName(p.host);
     } else {
@@ -130,20 +131,26 @@ var Roy = function (parent) {
 
     if (!instance) return Promise.reject('failed');
 
-    return instance
-      .request(method, data, p)
-      .catch((e) => {
-        if (e == 'failed')
-          return self.request(method, data, p, list, index + 1);
+    p.royrequest = true
+
+    console.log("REQUEST")
+
+    return instance.request(method, data, p).catch((e) => {
+
+      console.log("E", e, instance.host)
+
+        //if (e == 'failed')
+        return self.request(method, data, p, list, index + 1);
 
         return Promise.reject(e);
-      })
-      .then((r) => {
+
+      }).then((r) => {
+
         if (r.data) r.data.from = instance.host;
 
         return Promise.resolve(r);
-      })
-      .catch((e) => Promise.reject(e));
+
+      }).catch((e) => Promise.reject(e));
   };
 
   self.find = function (host) {

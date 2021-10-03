@@ -382,7 +382,6 @@ var Remote = function(app){
 		},
 
 		ogs : function(uri, clbk){
-			console.log("nremotelink + '?url=' + uri + '&validate=false'", nremotelink + '?url=' + uri + '&validate=false')
 			request({
 				uri : nremotelink + '?url=' + uri + '&validate=false',
 				timeout : 30000,
@@ -412,11 +411,9 @@ var Remote = function(app){
 					//d = d.data || {}
 				}
 				catch(e){
-					console.log("R", e)
 				}
 
 
-				console.log("R2", dn)
 
 
 				if (clbk){

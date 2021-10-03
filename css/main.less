@@ -4606,8 +4606,12 @@ input[type=radio].radio:checked + label {
     .showmorebywrapper{
         overflow: hidden;
         overflow-x: scroll;
-            
+        
+        scroll-behavior: smooth;
         scrollbar-width: none;
+        scroll-snap-type: y mandatory;
+
+      
 
         >div{
         }
@@ -5999,7 +6003,7 @@ html.stblack{
             left: 0;
             right: 0;
             padding-top : 0;
-            z-index: 10;
+            z-index: 11;
 
         }
 
@@ -6078,7 +6082,7 @@ html{
             left: 0;
             right: 0;
             padding-top : 0;
-            z-index: 10;
+            z-index: 11;
     
         }
     

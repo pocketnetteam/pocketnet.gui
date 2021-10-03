@@ -1722,13 +1722,26 @@ html.stblack{
 
 		&.formeta{
 			margin-left: 8 * @rhythm;
-			padding-left : @rhythm;
-			padding-bottom: 2 * @rhythm;
+			padding-left : 0;
 		}
 
 		.paddingWrapper{
 			padding-left:  @rhythm;
 			padding-right: @rhythm;
+		}
+	}
+
+	.share{
+		.meta{
+			padding-right: @rhythm;
+		}
+		.metatable{
+			>div{
+				vertical-align: top;
+				&.metapanel{
+					width: 90px;
+				}
+			}
 		}
 	}
 

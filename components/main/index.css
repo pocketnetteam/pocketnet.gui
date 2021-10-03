@@ -859,10 +859,8 @@ html.mobile #main .bgCaption,
 html.tablet #main .bgCaption {
   display: none;
 }
-@media only screen and (max-width: 768px) {
-  html.tablet #main {
-    padding-top: 55px;
-  }
+html.tablet #main {
+  padding-top: 55px;
 }
 @media only screen and (max-width: 768px) {
   html.toppanelshowed #main {

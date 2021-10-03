@@ -508,8 +508,9 @@ var lenta = (function(){
 						return
 					}
 				
-			
+				if(players[share.txid].fulliniting) return
 
+					players[share.txid].fulliniting = true
 
 				if (pels.length && pels[0].getAttribute)
 				{
@@ -536,6 +537,8 @@ var lenta = (function(){
 							players[share.txid].el = vel
 							players[share.txid].id = vel.attr('pid')
 							players[share.txid].shadow = false
+
+							delete players[share.txid].fulliniting
 
 							self.app.user.isState(function(state){
 
@@ -599,6 +602,10 @@ var lenta = (function(){
 							videopaused = false
 
 							self.app.actions.playingvideo(players[share.txid].p)
+
+							if(isMobile()){
+								actions.fullScreenVideo(share.txid)
+							}
 						},
 
 						pause : function(){
@@ -818,15 +825,15 @@ var lenta = (function(){
 				}
 			},
 
-			videoPosition : function(el){
+			videoPosition : function(id){
 
 				if (essenseData.openapi){return}
 
-				var work = el.find('.work');
+				var _el = el.c.find("#" + id)
+				var work = _el.find('.work');
 
-				if(!el.hasClass('fullScreenVideo')){
+				if(!_el.hasClass('fullScreenVideo')){
 					work.css('margin-top', '0px')
-
 					return
 				}
 
@@ -836,7 +843,7 @@ var lenta = (function(){
 
 				if(!isMobile()) add = 100
 
-				var wh = el.find('.videoWrapper').height() + add;
+				var wh = _el.find('.videoWrapper').height() + add;
 
 				var d = (h - wh) / 2
 
@@ -948,9 +955,11 @@ var lenta = (function(){
 					_el.addClass('fullScreenVideo')
 
 				
-					actions.videoPosition(_el)
+					actions.videoPosition(id)
 
 					actions.fullScreenVideoParallax(_el, id)
+
+					self.app.mobile.statusbar.gallerybackground()
 
 					self.app.nav.api.history.addParameters({
 						v : id
@@ -968,7 +977,7 @@ var lenta = (function(){
 					
 
 					lastscroll = self.app.lastScrollTop// el.w.scrollTop()
-					ovf = !self.app.actions.offScroll()
+					//ovf = !self.app.actions.offScroll()
 
 					if(!essenseData.comments){
 
@@ -993,7 +1002,7 @@ var lenta = (function(){
 						
 					}
 
-					fullscreenvideoShowed = _el;
+					fullscreenvideoShowed = id;
 
 					if (clbk)
 						clbk()
@@ -1012,7 +1021,7 @@ var lenta = (function(){
 					_el.scrollTop(0)
 					_el.removeClass('fullScreenVideo')	
 					
-					actions.videoPosition(_el)
+					actions.videoPosition(id)
 					
 				}
 
@@ -1022,11 +1031,13 @@ var lenta = (function(){
 
 				actions.setVolume(players[id], videosVolume)
 
+				self.app.mobile.statusbar.background()
+
 				actions.fullScreenVideoParallax(null)
 
 				self.app.nav.api.history.removeParameters(['v'])
 
-				self.app.actions.onScroll()
+				//self.app.actions.onScroll()
 				el.w.scrollTop(lastscroll || 0)
 
 				fullscreenvideoShowed = null;
@@ -4419,6 +4430,12 @@ var lenta = (function(){
 				if(!essenseData.goback)
 					p.clbk(null, p);
 				
+			},
+
+			hideshowedvideo : function(){
+				if (fullscreenvideoShowed){
+					actions.exitFullScreenVideo(fullscreenvideoShowed)
+				}
 			}
 		}
 	};

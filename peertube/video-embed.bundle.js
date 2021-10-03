@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=8150"
+/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=5769"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -39638,6 +39638,9 @@ class PeerTubeEmbedApi {
         var pr = this.embed.player.play();
         if (pr && pr.catch)
             pr.catch((e) => {
+                /* @ts-ignore */
+                if (typeof window.isMobile != 'undefined' && window.isMobile() || window.cordova)
+                    return;
                 if (e && e.toString) {
                     e = e.toString();
                     if (e && e.indexOf('request was interrupted') > -1) {
@@ -39774,17 +39777,31 @@ class PeerTubeEmbedApi {
             });
         }, 500);
         var slf = this;
+        var player = this.embed.player;
+        var hls = player.p2pMediaLoader().getHLSJS();
         this.embed.player.on('play', function (ev) {
+            var hls = player.p2pMediaLoader().getHLSJS();
+            if (hls) {
+                hls.resumeCapping();
+            }
             currentState = 'playing';
             slf.answer({ method: 'playbackStatusChange', params: 'playing' });
             slf.answer({ method: 'play', params: true });
         });
         this.embed.player.on('pause', function (ev) {
+            var hls = player.p2pMediaLoader().getHLSJS();
+            if (hls) {
+                hls.pauseCapping();
+            }
             currentState = 'paused';
             slf.answer({ method: 'playbackStatusChange', params: 'paused' });
             slf.answer({ method: 'pause', params: true });
         });
         this.embed.player.on('ended', function (ev) {
+            var hls = player.p2pMediaLoader().getHLSJS();
+            if (hls) {
+                hls.pauseCapping();
+            }
             currentState = 'ended';
             slf.answer({ method: 'playbackStatusChange', params: 'ended' });
             slf.answer({ method: 'pause', params: true });
@@ -41405,7 +41422,6 @@ class peertube_plugin_PeerTubePlugin extends peertube_plugin_Plugin {
                 const self = this;
                 this.player.on('timeupdate', function onTimeUpdate() {
                     if (self.player.currentTime() > stopTime) {
-                        console.log("PAUSE");
                         self.player.pause();
                         self.player.trigger('stopped');
                         self.player.off('timeupdate', onTimeUpdate);
@@ -41511,6 +41527,7 @@ class peertube_plugin_PeerTubePlugin extends peertube_plugin_Plugin {
     }
     handleResolutionChange(data) {
         this.lastResolutionChange = data;
+        console.log("DATA", data);
         const qualityLevels = this.player.qualityLevels();
         for (let i = 0; i < qualityLevels.length; i++) {
             if (qualityLevels[i].height === data.resolutionId) {
@@ -42409,10 +42426,10 @@ class peertube_player_manager_PeertubePlayerManager {
             this.onPlayerChange = onPlayerChange;
             this.playerElementClassName = options.common.playerElement.className;
             if (mode === "webtorrent")
-                yield Promise.all(/* import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, 519));
+                yield Promise.all(/* import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, 521));
             if (mode === "p2p-media-loader") {
                 [p2pMediaLoader] = yield Promise.all([
-                    Promise.all(/* import() */[__webpack_require__.e(0), __webpack_require__.e(4), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, 516)),
+                    Promise.all(/* import() */[__webpack_require__.e(0), __webpack_require__.e(4), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, 517)),
                     Promise.all(/* import() */[__webpack_require__.e(0), __webpack_require__.e(4), __webpack_require__.e(9), __webpack_require__.e(3), __webpack_require__.e(10)]).then(__webpack_require__.bind(null, 520)),
                 ]);
             }
@@ -42495,7 +42512,7 @@ class peertube_player_manager_PeertubePlayerManager {
             options.common.playerElement = newVideoElement;
             options.common.onPlayerElementChange(newVideoElement);
             player.dispose();
-            yield Promise.all(/* import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, 519));
+            yield Promise.all(/* import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, 521));
             const mode = "webtorrent";
             const videojsOptions = this.getVideojsOptions(mode, options);
             const self = this;
@@ -42626,9 +42643,6 @@ class peertube_player_manager_PeertubePlayerManager {
                 swarmId: p2pMediaLoaderOptions.playlistUrl,
             },
         };
-        var capLevelToPlayerSize = false;
-        /* @ts-ignore */
-        //if(typeof window.isMobile != 'undefined' && window.isMobile()) capLevelToPlayerSize = false
         const hlsjs = {
             levelLabelHandler: (level) => {
                 const resolution = Math.min(level.height || 0, level.width || 0);
@@ -42648,7 +42662,7 @@ class peertube_player_manager_PeertubePlayerManager {
                     highBufferWatchdogPeriod: 1,
                     lowLatencyMode: true,
                     enableWorker: true,
-                    capLevelToPlayerSize: capLevelToPlayerSize,
+                    capLevelToPlayerSize: true,
                     autoStartLoad: false,
                     //liveSyncDurationCount: 4,
                     maxBufferLength: 30,
@@ -43261,7 +43275,6 @@ class embed_PeerTubeEmbed {
             if (!videoResponseJson) {
                 return Promise.reject("failfetch");
             }
-            console.log('videoResponseJson', videoResponseJson);
             if (videoResponseJson.from) {
                 this.host = 'https://' + videoResponseJson.from;
             }
@@ -43437,7 +43450,8 @@ class embed_PeerTubeEmbed {
             }
             this.playerElement = document.createElement("video");
             this.playerElement.className = "video-js";
-            this.playerElement.setAttribute("playsinline", "true");
+            /*this.playerElement.setAttribute("playsinline", "true");
+            this.playerElement.setAttribute("webkit-playsinline", "true");*/
             this.wrapperElement.setAttribute('error', '');
             this.setAcpectRatio(videoInfo);
             this.wrapperElement.innerHTML = "";
@@ -43450,7 +43464,6 @@ class embed_PeerTubeEmbed {
             catch (e) {
                 console.log('isTranscodingStatusMessage', e);
             }
-            console.log('this.host', this.host);
             const options = {
                 common: {
                     // Autoplay in playlist mode
@@ -43618,7 +43631,6 @@ class embed_PeerTubeEmbed {
                 });
                 this.insertAfter(vjs_big_play_button, el);
                 this.player.bigPlayButton.disable();
-                console.log('this.player.bigPlayButton', this.player.bigPlayButton);
                 ///let flag = false
                 this.player.el_.addEventListener('touchend', (e) => {
                     //
@@ -43640,7 +43652,7 @@ class embed_PeerTubeEmbed {
     buildVideoPlayerContributos(videoId) {
         return Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
             /* @ts-ignore */
-            yield __webpack_require__.e(/* import() */ 11).then(__webpack_require__.t.bind(null, 518, 7));
+            yield __webpack_require__.e(/* import() */ 11).then(__webpack_require__.t.bind(null, 519, 7));
             if (this.player) {
                 try {
                     this.player.dispose();
@@ -43650,7 +43662,8 @@ class embed_PeerTubeEmbed {
             }
             this.playerElement = document.createElement("video");
             this.playerElement.className = "video-js video-js-contributor";
-            this.playerElement.setAttribute("playsinline", "true");
+            /*this.playerElement.setAttribute("playsinline", "true");
+            this.playerElement.setAttribute("webkit-playsinline", "true");*/
             if (this.contributor == 'youtube') {
                 var setupYoutube = {
                     techOrder: ["youtube"],

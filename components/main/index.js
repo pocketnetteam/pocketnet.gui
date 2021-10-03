@@ -62,15 +62,14 @@ var main = (function(){
 					if(alv){
 						el.panel.hcSticky('refresh');
 						el.leftpanel.hcSticky('refresh');
+
+						setTimeout(function(){
+							if(el.panel) el.panel.hcSticky('refresh');
+							if(el.leftpanel) el.leftpanel.hcSticky('refresh');
+						}, 300)
 					}
 
-					//
-					//
-
-					/*setTimeout(function(){
-						if(el.panel) el.panel.hcSticky('refresh');
-						if(el.leftpanel) el.leftpanel.hcSticky('refresh');
-					}, 1000)*/
+					
 				}
 					
 			},
@@ -563,6 +562,9 @@ var main = (function(){
 							setTimeout(function(){
 								upbackbutton = self.app.platform.api.upbutton(el.upbackbutton, {
 									top : function(){
+										/*if(isMobile() || isTablet() || window.cordova){
+											return '135px'
+										}*/
 										return '65px'
 									},
 									rightEl : el.c.find('.lentacellsvi'),
@@ -726,18 +728,23 @@ var main = (function(){
 
 			el.addbutton.on('click', actions.addbutton)
 
-			if(!isMobile()){
+			if(!isMobile() && !isTablet()){
+
+				var t1 = 64
+				var t2 = 76
+
+		
 
 				setTimeout(function(){
 					el.leftpanel.hcSticky({
 						stickTo: '#main',
-						top : 64,
+						top : t1,
 						bottom : 122
 					});
 	
 					el.panel.hcSticky({
 						stickTo: '#main',
-						top : 76,
+						top : t2,
 						bottom : 122
 					});
 	
@@ -902,9 +909,91 @@ var main = (function(){
 		return {
 			primary : primary,
 
-		
-
 			parametersHandler : function(clbk){
+
+				var tgsi = decodeURI(parameters().sst || '')
+
+				var words = _.uniq(_.filter(tgsi.split(wordsRegExp), function(r){
+					return r
+				}));
+
+				var nsearchtags = words.length ? words : null
+				var nsearchvalue = parameters().ss || ''
+				var ncurrentMode = parameters().r || 'common';
+				var nlentakey = parameters().video ? 'video' : (parameters().r || 'index')
+				var nvideomain = nlentakey == 'video'
+				
+				var changes = false
+
+				localStorage['lentakey'] = nlentakey
+
+				if (currentMode != ncurrentMode){
+					currentMode = ncurrentMode; changes = true
+				}
+
+				if (videomain != nvideomain){
+					videomain = nvideomain; changes = true
+				}
+
+				if (searchvalue != nsearchvalue){
+					searchvalue = nsearchvalue; changes = true
+				}
+
+				if (searchtags != nsearchtags){
+					searchtags = nsearchtags; changes = true
+				}
+
+				if (videomain){
+
+					el.c.addClass('videomain')
+
+					if(!parameters().v){
+						actions.backtolenta()
+					}
+				}
+				else{
+					el.c.removeClass('videomain')
+					actions.backtolentaClear()
+				}
+
+				if (changes){
+					renders.topvideos(currentMode == 'common' && !videomain && !searchvalue && !searchtags)
+
+					
+
+					if (lenta) {
+						lenta.destroy()
+						lenta = null
+					}
+	
+					renders.lentawithsearch()
+					makePanel()
+					makeShare()
+
+					actions.refreshSticky()
+
+					if (clbk)
+						clbk()
+				}
+
+				
+				if (lenta) {
+					lenta.hideshowedvideo()
+				}
+				
+				
+				
+
+				//renders.leftpanel() ?
+
+				
+
+				
+
+			},
+
+			parametersHandlerOld : function(clbk){
+
 
 				var ncurrentMode = currentMode
 
@@ -951,13 +1040,11 @@ var main = (function(){
 
 					if(!parameters().v){
 						actions.backtolenta()
-						//makePanel()
 					}
 				}
 				else{
 					el.c.removeClass('videomain')
 					actions.backtolentaClear()
-					//makePanel()
 				}
 				
 				if (lenta) {

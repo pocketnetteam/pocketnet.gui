@@ -4617,6 +4617,13 @@ Platform = function (app, listofnodes) {
 					type : "BOOLEAN",
 					value : false,
 				},
+
+                openlinksinelectron : {
+					name: 'Do not open links in the desktop application',
+					id : 'openlinksinelectron',
+					type : "BOOLEAN",
+					value : false,
+				},
             },
 
             create: function (id) {
@@ -4679,15 +4686,7 @@ Platform = function (app, listofnodes) {
                         }
                     },
 
-                   /* postfeed : {
-                        name: 'Post Feed',
-                        options: {
-
-                            historicalShares: options.historicalShares
-
-                        }
-                    },*/
-
+                 
                     video: {
                         name: self.app.localization.e('video'),
                         options: {
@@ -4697,17 +4696,7 @@ Platform = function (app, listofnodes) {
                         }
                     },
 
-                    /* vidgets: {
-                        name: self.app.localization.e('e13288'),
-                        options: {
-
-                            vidgetchat: options.vidgetchat,
-                           // vidgettags: options.vidgettags,
-                            vidgetlastcomments: options.vidgetlastcomments,
-                            vidgetstaking : options.vidgetstaking
-
-                        }
-                    },*/
+                    
 
                 }
 
@@ -4744,6 +4733,19 @@ Platform = function (app, listofnodes) {
                             autostart: options.autostart
                         }
                     }
+                }
+                else{
+                    if(!window.cordova){
+
+                        c.system = {
+                            name: self.app.localization.e('system'),
+                            options: {
+                                openlinksinelectron: options.openlinksinelectron
+                            }
+                        }
+
+                    }
+          
                 }
 
                 _.each(options, function (o, i) {
@@ -22702,10 +22704,16 @@ Platform = function (app, listofnodes) {
                     /////////////
 
                     var w = parameters(url, true).connect
-                    var cr = parameters(url, true).publicroom    
+                    var cr = parameters(url, true).publicroom   
+                    var ps =  parameters(url, true).ps
 
                     self.matrixchat.connectWith = w || null
                     self.matrixchat.joinRoom = cr || null
+
+
+                    if(!ps && !cr && !w && !app.curation()){
+                        self.matrixchat.backtoapp()
+                    }
                     
 
                     setTimeout(function(){
