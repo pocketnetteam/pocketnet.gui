@@ -22,7 +22,7 @@
     <preference name="StatusBarStyle" value="lightcontent" />
     <preference name="AndroidLaunchMode" value="singleTask" />
     <preference name="Fullscreen" value="false" />
-    <preference name="AllowInlineMediaPlayback" value="false"/>
+    <preference name="AllowInlineMediaPlayback" value="true"/>
 
     <platform name="android">
         <icon density="ldpi" src="www/res/icon/android/drawable-ldpi-icon.png" />
