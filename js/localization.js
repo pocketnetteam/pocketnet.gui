@@ -194,7 +194,7 @@ Localization = function(app){
 				return
 			}
 
-			var src = 'localization/' + (__k) + '.js?v=8'
+			var src = 'localization/' + (__k) + '.js?v=9'
 
 			self.loading[__k] = true
 
