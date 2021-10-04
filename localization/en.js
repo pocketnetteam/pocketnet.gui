@@ -780,6 +780,7 @@ ____loclib.video = "Video"
 ____loclib.e13288 = "Main Widgets Page"
 ____loclib.e13289 = "Integration with Telegram"
 
+____loclib.sound = "Sound"
 ____loclib.system = "System"
 ____loclib.e13290 = "Would do you like to follow"
 ____loclib.e13291 = "Do you really want send message to Telegram?"
