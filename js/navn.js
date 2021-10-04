@@ -1450,7 +1450,7 @@ Nav = function(app)
 
 				//////
 
-				if (!electron && !window.cordova && !electronopen && !app.platform.sdk.usersettings.meta.openlinksinelectron.value){
+				if (!electron && !window.cordova && !electronopen && !app.platform.sdk.usersettings.meta.openlinksinelectron.value && !isMobile() && !isTablet()){
 
 					var currentHref = self.get.href();
 
