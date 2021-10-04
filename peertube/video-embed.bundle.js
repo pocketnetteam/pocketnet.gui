@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=3503"
+/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=4211"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -43451,8 +43451,8 @@ class embed_PeerTubeEmbed {
             }
             this.playerElement = document.createElement("video");
             this.playerElement.className = "video-js";
-            /*this.playerElement.setAttribute("playsinline", "true");
-            this.playerElement.setAttribute("webkit-playsinline", "true");*/
+            this.playerElement.setAttribute("playsinline", "true");
+            this.playerElement.setAttribute("webkit-playsinline", "true");
             this.wrapperElement.setAttribute('error', '');
             this.setAcpectRatio(videoInfo);
             this.wrapperElement.innerHTML = "";
@@ -43663,8 +43663,8 @@ class embed_PeerTubeEmbed {
             }
             this.playerElement = document.createElement("video");
             this.playerElement.className = "video-js video-js-contributor";
-            /*this.playerElement.setAttribute("playsinline", "true");
-            this.playerElement.setAttribute("webkit-playsinline", "true");*/
+            this.playerElement.setAttribute("playsinline", "true");
+            this.playerElement.setAttribute("webkit-playsinline", "true");
             if (this.contributor == 'youtube') {
                 var setupYoutube = {
                     techOrder: ["youtube"],
