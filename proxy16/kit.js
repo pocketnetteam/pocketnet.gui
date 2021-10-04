@@ -57,36 +57,36 @@ var testnodes = [
 ]
 
 var activenodes = [
-	/*{
-		host : '192.168.0.15',
-		port : 38081,
-		ws : 8087,
-		name : 'CryptoserverTEST',
-		stable : true
-	},*/
 	{
-		host : '64.235.45.119',
-		port : 38081,
-		ws : 8087,
-		name : 'CryptoserverSP',
+		host : 'bee40b7e7c68.sn.mynetname.net',
+		port : 38082,
+		ws : 8088,
+		name : 'office.spb.prod.debug',
 		stable : true
 	},
+	// {
+	// 	host : '64.235.45.119',
+	// 	port : 38081,
+	// 	ws : 8087,
+	// 	name : 'CryptoserverSP',
+	// 	stable : true
+	// },
 
-	{
-		host : '216.108.231.40',
-		port : 38081,
-		ws : 8087,
-		name : 'CryptoserverSP5',
-		stable : true
-	},
+	// {
+	// 	host : '216.108.231.40',
+	// 	port : 38081,
+	// 	ws : 8087,
+	// 	name : 'CryptoserverSP5',
+	// 	stable : true
+	// },
 
-	{
-		host : '135.181.196.243',
-		port : 38081,
-		ws : 8087,
-		name : 'Cryptoserver243',
-		stable : true
-	}
+	// {
+	// 	host : '135.181.196.243',
+	// 	port : 38081,
+	// 	ws : 8087,
+	// 	name : 'Cryptoserver243',
+	// 	stable : true
+	// }
 
 
 	/*{

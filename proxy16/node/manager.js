@@ -137,13 +137,13 @@ var Nodemanager = function(p){
             self.initIfNeed(node)
         })
 
-        _.each(_.shuffle(self.nodes), function(node, i){
+        /*_.each(_.shuffle(self.nodes), function(node, i){
 
             if(i < 5){
                 self.api.peernodesTime(node).then(r => {}).catch(e => {})
             }
             
-        })
+        })*/
 
     }
 
@@ -406,7 +406,7 @@ var Nodemanager = function(p){
                         if(i < 5) return true
                     })
 
-                    //docs = []
+                    docs = []
 
                     var nodes = _.map(c.concat(p.stable, docs || []) , function(options){
 

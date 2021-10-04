@@ -10,7 +10,7 @@ var Cache = function(p){
 
     var ckeys = {}
     
-    if (!p.dontCache)
+    if (false && !p.dontCache)
     {
         ckeys = {
 
