@@ -274,6 +274,17 @@ var Remote = function(app){
 						})
 					}
 					else{
+
+						ogcache = _.last(ogcache, 3000)
+		
+						delete ogloading[uri]
+	
+						ogcache.push({
+							url : uri,
+							og : og
+						})
+
+						
 						if (clbk)
 							clbk(og)
 					}

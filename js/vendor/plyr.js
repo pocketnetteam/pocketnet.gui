@@ -9183,7 +9183,7 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
       // Check if we have downloaded the video already
       var localVideo = self.app.platform.sdk.local.shares.getVideo(clear_peertube_id);
 
-      if (localVideo != undefined) {
+      if (localVideo != undefined && !localVideo.infos.videoDetails) {
 
         var new_target = document.createElement('video');
         target.parentNode.replaceChild(new_target, target);
@@ -9221,7 +9221,8 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
           PeerTubeEmbeding.main(target, clear_peertube_id, {
             host : host,
             wautoplay : options.wautoplay,
-            logoType : options.logoType
+            logoType : options.logoType,
+            localVideo : localVideo
           },{
     
             playbackStatusChange : function(status){

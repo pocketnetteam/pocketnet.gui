@@ -388,13 +388,27 @@ Nav = function(app)
 					href = self.addParameters(href)
 				}
 
-				history.pushState({
+				if(p.replaceState){
+					
+					history.replaceState({
 
-					href : href,
+						href : href,
+	
+						lfox : true
+	
+					}, null, href);
+				}
+				else{
+					history.pushState({
 
-					lfox : true
+						href : href,
+	
+						lfox : true
+	
+					}, null, href);
+				}
 
-				}, null, href);
+				
 
 				
 				

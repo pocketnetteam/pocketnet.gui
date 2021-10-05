@@ -1133,7 +1133,8 @@ var post = (function () {
 						el.wr.addClass('active');
 
 						
-
+						if (share.itisvideo())
+							renders.showmoreby()
 
 						renders.stars(function () {
 							renders.mystars(function () { });
@@ -1182,8 +1183,7 @@ var post = (function () {
 										if (clbk) clbk();
 									});
 
-									if (ed.video)
-										renders.showmoreby()
+									
 								});
 							});
 						});
@@ -1192,8 +1192,6 @@ var post = (function () {
 			},
 
 			showmoreby: function () {
-
-				
 
 				var showmoreby = el.c.find('.showmorelenta')
 
@@ -1579,6 +1577,8 @@ var post = (function () {
 		return {
 			primary: primary,
 
+			
+
 
 			getdata: function (clbk, p) {
 
@@ -1586,15 +1586,14 @@ var post = (function () {
 
 				eid = p.settings.eid || ''
 
-
-
 				var id = deep(p, 'settings.essenseData.share') || parameters().s;
 
-				ed = deep(p, 'settings.essenseData') || {};
+					ed = deep(p, 'settings.essenseData') || {};
 
 				share = null;
 
 				level = (ed.level || -1) + 1
+
 
 				
 				self.app.platform.sdk.node.shares.getbyid([id], function () {

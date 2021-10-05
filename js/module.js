@@ -767,6 +767,7 @@ nModule = function(){
 			_p.href = href;
 			_p.history = true;
 			_p.open = true;
+			_p.replaceState = true
 			_p.preshell = p.preshell;
 			_p.clbk = p.clbk;
 

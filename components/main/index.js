@@ -992,78 +992,7 @@ var main = (function(){
 
 			},
 
-			parametersHandlerOld : function(clbk){
-
-
-				var ncurrentMode = currentMode
-
-				localStorage['lentakey'] = parameters().r || 'index'
-
-				if (parameters().video){
-					localStorage['lentakey'] = 'video'
-				}
-
-				if (parameters().r){
-					ncurrentMode = parameters().r
-				}
-				else{
-					ncurrentMode = 'common'
-				}
-				
-				if (currentMode != ncurrentMode){
-
-					currentMode = ncurrentMode
-				}
-
-				var _vm = parameters().video ? true : false
-
-
-				if(_vm != videomain){
-					videomain = _vm
-				}
-
-				searchvalue = parameters().ss || ''
-
-				var tgsi = decodeURI(parameters().sst || '')
-
-				var words = _.uniq(_.filter(tgsi.split(wordsRegExp), function(r){
-					return r
-				}));
-
-				searchtags = words.length ? words : null
-
-				renders.topvideos(currentMode == 'common' && !videomain && !searchvalue && !searchtags)
-
-				if (videomain){
-
-					el.c.addClass('videomain')
-
-					if(!parameters().v){
-						actions.backtolenta()
-					}
-				}
-				else{
-					el.c.removeClass('videomain')
-					actions.backtolentaClear()
-				}
-				
-				if (lenta) {
-					lenta.destroy()
-					lenta = null
-				}
-
-				renders.lentawithsearch()
-
-				renders.leftpanel()
-
-				makeShare()
-
-				actions.refreshSticky()
-
-				if (clbk)
-					clbk()
-
-			},
+			
 
 			authclbk : function(){
 
@@ -1101,34 +1030,35 @@ var main = (function(){
 					self.nav.api.load({
 						open : true,
 						href : 'welcome',
-						history : true
+						history : true,
+						replaceState : true
 					})
 
 					return
 				}
-
-
-				/*if(beginmaterial && !_s.v && isMobile()){
-
-					self.nav.api.load({
-						open : true,
-						href : 'post' + collectParameters(_s),
-						history : true
-					})
-
-					return 
-				}*/
-
 
 				if(self.app.curation()){
 					
 					self.nav.api.load({
 						open : true,
 						href : 'userpage?pc=1',
-						history : true
+						history : true,
+						replaceState : true
 					})
 
 					return
+				}
+
+				if(_s.v && isMobile() || window.cordova){
+
+					self.nav.api.load({
+						open : true,
+						href : 'post?s=' + _s.v,
+						history : true,
+						replaceState : true
+					})
+
+					return 
 				}
 
 				if(p.state && primary && !self.app.user.validate()){
@@ -1136,7 +1066,8 @@ var main = (function(){
 					self.nav.api.load({
 						open : true,
 						href : 'userpage?id=test',
-						history : true
+						history : true,
+						replaceState : true
 					})
 
 					return
