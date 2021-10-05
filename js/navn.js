@@ -388,13 +388,27 @@ Nav = function(app)
 					href = self.addParameters(href)
 				}
 
-				history.pushState({
+				if(p.replaceState){
+					
+					history.replaceState({
 
-					href : href,
+						href : href,
+	
+						lfox : true
+	
+					}, null, href);
+				}
+				else{
+					history.pushState({
 
-					lfox : true
+						href : href,
+	
+						lfox : true
+	
+					}, null, href);
+				}
 
-				}, null, href);
+				
 
 				
 				
@@ -1450,7 +1464,7 @@ Nav = function(app)
 
 				//////
 
-				if (!electron && !window.cordova && !electronopen && !app.platform.sdk.usersettings.meta.openlinksinelectron.value && !isMobile() && !isTablet()){
+				if (1 == 2 && !electron && !window.cordova && !electronopen && !app.platform.sdk.usersettings.meta.openlinksinelectron.value && !isMobile() && !isTablet()){
 
 					var currentHref = self.get.href();
 

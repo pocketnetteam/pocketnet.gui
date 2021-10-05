@@ -140,8 +140,11 @@
     </platform>
     <platform name="android">
         <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application">
-            <application android:usesCleartextTraffic="true" />
             <application android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true"/>
+        </edit-config>
+
+        <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application/activity">
+            <activity android:supportsPictureInPicture="true" android:resizeableActivity="true" />
         </edit-config>
 
     </platform>
