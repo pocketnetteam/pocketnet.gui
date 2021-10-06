@@ -136,14 +136,13 @@ var Nodemanager = function(p){
         _.each(_.shuffle(notinitednodes), function(node){
             self.initIfNeed(node)
         })
-        //// remove
-        /*_.each(_.shuffle(self.nodes), function(node, i){
+        _.each(_.shuffle(self.nodes), function(node, i){
 
             if(i < 5){
                 self.api.peernodesTime(node).then(r => {}).catch(e => {})
             }
             
-        })*/
+        })
 
     }
 
@@ -605,7 +604,6 @@ var Nodemanager = function(p){
         peernodesTime : function(node){
 
 
-            return Promise.resolve() //// remove
 
             var last = self.askedpeers[node.key]
 

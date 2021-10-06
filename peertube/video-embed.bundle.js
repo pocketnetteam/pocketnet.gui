@@ -43202,6 +43202,7 @@ class PeertubePlayerManager {
             let p2pMediaLoader;
             this.onPlayerChange = onPlayerChange;
             this.playerElementClassName = options.common.playerElement.className;
+            console.log('initialize player', mode);
             if (mode === "webtorrent")
                 yield Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ./webtorrent/webtorrent-plugin */ "./src/assets/player/webtorrent/webtorrent-plugin.ts"));
             if (mode === "p2p-media-loader") {
@@ -43217,18 +43218,21 @@ class PeertubePlayerManager {
                 video_js__WEBPACK_IMPORTED_MODULE_22___default()(options.common.playerElement, videojsOptions, function () {
                     const player = this;
                     let alreadyFallback = false;
-                    if (!options.common.isLive) {
-                        player.tech(true).one("error", () => {
-                            if (!alreadyFallback)
-                                self.maybeFallbackToWebTorrent(mode, player, options);
-                            alreadyFallback = true;
-                        });
-                        player.one("error", () => {
-                            if (!alreadyFallback)
-                                self.maybeFallbackToWebTorrent(mode, player, options);
-                            alreadyFallback = true;
-                        });
-                    }
+                    /*if (!options.common.isLive) {
+                      player.tech(true).one("error", (e) => {
+                        console.log("E", e)
+                        if (!alreadyFallback)
+                          self.maybeFallbackToWebTorrent(mode, player, options);
+                        alreadyFallback = true;
+                      });
+          
+                      player.one("error", (e) => {
+                        console.log("E", e)
+                        if (!alreadyFallback)
+                          self.maybeFallbackToWebTorrent(mode, player, options);
+                        alreadyFallback = true;
+                      });
+                    }*/
                     player.one("play", () => {
                         PeertubePlayerManager.alreadyPlayed = true;
                     });
@@ -43335,16 +43339,14 @@ class PeertubePlayerManager {
         if (commonOptions.enableHotkeys === true) {
             PeertubePlayerManager.addHotkeysOptions(plugins);
         }
-        if (!commonOptions.sources) {
-            if (isHLS && options.p2pMediaLoader) {
-                const { hlsjs } = PeertubePlayerManager.addP2PMediaLoaderOptions(plugins, options, p2pMediaLoaderModule);
-                Object.assign(html5, hlsjs.html5);
-            }
-            if (mode === "webtorrent") {
-                PeertubePlayerManager.addWebTorrentOptions(plugins, options);
-                // WebTorrent plugin handles autoplay, because we do some hackish stuff in there
-                autoplay = false;
-            }
+        if (isHLS && options.p2pMediaLoader) {
+            const { hlsjs } = PeertubePlayerManager.addP2PMediaLoaderOptions(plugins, options, p2pMediaLoaderModule);
+            Object.assign(html5, hlsjs.html5);
+        }
+        if (mode === "webtorrent") {
+            PeertubePlayerManager.addWebTorrentOptions(plugins, options);
+            // WebTorrent plugin handles autoplay, because we do some hackish stuff in there
+            autoplay = false;
         }
         const videojsOptions = {
             html5,
@@ -46889,15 +46891,21 @@ class PeerTubeEmbed {
             if (this.modeParam) {
                 if (this.modeParam === "p2p-media-loader")
                     this.mode = "p2p-media-loader";
-                else
+                if (this.modeParam === "webtorrent")
                     this.mode = "webtorrent";
+                if (this.modeParam === "localvideo")
+                    this.mode = "localvideo";
             }
             else {
-                if ((Array.isArray(video.streamingPlaylists) &&
-                    video.streamingPlaylists.length !== 0) || video.isLive)
-                    this.mode = "p2p-media-loader";
-                else
-                    this.mode = "webtorrent";
+                if (this.localVideo) {
+                    this.mode = 'localvideo';
+                }
+                else {
+                    if ((Array.isArray(video.streamingPlaylists) && video.streamingPlaylists.length !== 0) || video.isLive)
+                        this.mode = "p2p-media-loader";
+                    else
+                        this.mode = "webtorrent";
+                }
             }
         }
         catch (err) {
@@ -47186,6 +47194,8 @@ class PeerTubeEmbed {
                     this.handleError(e);
                 }
             };
+            console.log('this.mode', this.mode);
+            this.mode = 'localvideo';
             this.player = yield _assets_player_peertube_player_manager__WEBPACK_IMPORTED_MODULE_10__["PeertubePlayerManager"].initialize(this.mode, options, (player) => {
                 this.player = player;
             });

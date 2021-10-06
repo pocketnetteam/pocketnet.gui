@@ -2417,6 +2417,20 @@ Platform = function (app, listofnodes) {
                         }   
                     })
 
+                    if(info && info.original && info.original.isLive){
+
+                        dialog({
+                            html: "Please wait, you will be able to download the video when the broadcast recording appears",
+                            btn1text: self.app.localization.e('daccept'),
+                            class : 'one',
+                            success: function () {
+        
+                            }
+                        })
+
+                        return
+                    }
+
                     if(!items.length){
 
                         dialog({
@@ -2424,8 +2438,6 @@ Platform = function (app, listofnodes) {
                             btn1text: self.app.localization.e('daccept'),
                             class : 'one',
                             success: function () {
-        
-                                
         
                             }
                         })

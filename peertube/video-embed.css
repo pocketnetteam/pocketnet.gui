@@ -2995,9 +2995,18 @@ video[src], .vjs-fullscreen {
   background: transparent;
   font-family: "Segoe UI", SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
+.video-js .vjs-bezel,
 .video-js .vjs-control-bar {
-  background: rgba(1, 18, 37, 0.2);
+  background: transparent;
   text-shadow: -1px -1px 1px rgba(255, 255, 255, 0.1), 1px 1px 1px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.video-js .vjs-bezel {
+  z-index: 1;
+}
+.video-js .vjs-loading-spinner {
+  z-index: 1;
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
 }
@@ -3480,12 +3489,9 @@ video[src], .vjs-fullscreen {
   }
   .js-player .video-js .vjs-control-bar {
     backface-visibility: hidden;
-    height: 6em !important;
+    height: 5em !important;
     font-size: 1.25em;
-    background: rgba(1, 18, 37, 0.2);
     text-shadow: -1px -1px 1px rgba(255, 255, 255, 0.1), 1px 1px 1px rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
     /*.vjs-mute-control{
       display: none;
     }*/
