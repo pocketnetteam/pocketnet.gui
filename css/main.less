@@ -3023,6 +3023,13 @@ input[type=radio].radio:checked + label {
     width: 100%;
     z-index: 10000000;
 
+    span{
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.8em;
+    }
+
     >div{
         width: 0;
         float: left;
@@ -3077,10 +3084,7 @@ input[type=radio].radio:checked + label {
    }*/
 }
 
-.vjs-play-progress{
-    content-visibility : auto;
-    backface-visibility: hidden;
-}
+
 
 .preloader6{
    img{
@@ -3627,6 +3631,8 @@ input[type=radio].radio:checked + label {
     .mobiledialogcontent{
         max-height: 360px;
         overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
     }
 
     .closeButton{
