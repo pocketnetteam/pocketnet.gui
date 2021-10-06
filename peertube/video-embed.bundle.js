@@ -13061,7 +13061,7 @@ function getPointerPosition(el, event) {
     offsetX = event.changedTouches[0].pageX - box.left;
     offsetY = event.changedTouches[0].pageY + box.top;
 
-    if (IS_IOS|| window.cordova) {
+    if (IS_IOS || window.cordova) {
       offsetX -= translated.x;
       offsetY -= translated.y;
     }
@@ -24063,8 +24063,9 @@ var Slider = /*#__PURE__*/function (_Component) {
     _this = _Component.call(this, player, options) || this; // Set property names to bar to match with the child Slider class is looking for
 
     _this.bar = _this.getChild(_this.options_.barName); // Set a horizontal or vertical class on the slider depending on the slider type
-
+    
     _this.vertical(!!_this.options_.vertical);
+
 
     _this.enable();
 
@@ -24297,9 +24298,10 @@ var Slider = /*#__PURE__*/function (_Component) {
     this.progress_ = progress;
     this.requestNamedAnimationFrame('Slider#update', function () {
       // Set the new bar width or height
-      var sizeKey = _this2.vertical() ? 'height' : 'width'; // Convert to a percentage for css value
 
+      var sizeKey = _this2.vertical() ? 'height' : 'width'; // Convert to a percentage for css value
       _this2.bar.el().style[sizeKey] = (progress * 100).toFixed(2) + '%';
+      
     });
     return progress;
   }
@@ -25127,6 +25129,7 @@ var SeekBar = /*#__PURE__*/function (_Slider) {
     var distance = this.calculateDistance(event);
     var liveTracker = this.player_.liveTracker;
 
+
     if (!liveTracker || !liveTracker.isLive()) {
       newTime = distance * this.player_.duration(); // Don't let video end while scrubbing.
 
@@ -25201,6 +25204,7 @@ var SeekBar = /*#__PURE__*/function (_Slider) {
   _proto.handleMouseUp = function handleMouseUp(event) {
     _Slider.prototype.handleMouseUp.call(this, event); // Stop event propagation to prevent double fire in progress-control.js
 
+    console.log('this.videoWasPlaying', this.videoWasPlaying)
 
     if (event) {
       event.stopPropagation();
@@ -43198,6 +43202,7 @@ class PeertubePlayerManager {
             let p2pMediaLoader;
             this.onPlayerChange = onPlayerChange;
             this.playerElementClassName = options.common.playerElement.className;
+            console.log('initialize player', mode);
             if (mode === "webtorrent")
                 yield Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ./webtorrent/webtorrent-plugin */ "./src/assets/player/webtorrent/webtorrent-plugin.ts"));
             if (mode === "p2p-media-loader") {
@@ -43206,12 +43211,6 @@ class PeertubePlayerManager {
                     Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(4), __webpack_require__.e(7), __webpack_require__.e(3), __webpack_require__.e(6)]).then(__webpack_require__.bind(null, /*! ./p2p-media-loader/p2p-media-loader-plugin */ "./src/assets/player/p2p-media-loader/p2p-media-loader-plugin.ts")),
                 ]);
             }
-            /*console.log('initvideo')
-        
-            try{
-              this.db = await initIndexedDb();
-            }
-            catch(e) {}*/
             const videojsOptions = this.getVideojsOptions(mode, options, p2pMediaLoader);
             // await TranslationsManager.loadLocaleInVideoJS(options.common.serverUrl, options.common.language, videojs)
             const self = this;
@@ -43219,18 +43218,21 @@ class PeertubePlayerManager {
                 video_js__WEBPACK_IMPORTED_MODULE_22___default()(options.common.playerElement, videojsOptions, function () {
                     const player = this;
                     let alreadyFallback = false;
-                    if (!options.common.isLive) {
-                        player.tech(true).one("error", () => {
-                            if (!alreadyFallback)
-                                self.maybeFallbackToWebTorrent(mode, player, options);
-                            alreadyFallback = true;
-                        });
-                        player.one("error", () => {
-                            if (!alreadyFallback)
-                                self.maybeFallbackToWebTorrent(mode, player, options);
-                            alreadyFallback = true;
-                        });
-                    }
+                    /*if (!options.common.isLive) {
+                      player.tech(true).one("error", (e) => {
+                        console.log("E", e)
+                        if (!alreadyFallback)
+                          self.maybeFallbackToWebTorrent(mode, player, options);
+                        alreadyFallback = true;
+                      });
+          
+                      player.one("error", (e) => {
+                        console.log("E", e)
+                        if (!alreadyFallback)
+                          self.maybeFallbackToWebTorrent(mode, player, options);
+                        alreadyFallback = true;
+                      });
+                    }*/
                     player.one("play", () => {
                         PeertubePlayerManager.alreadyPlayed = true;
                     });
@@ -43273,6 +43275,8 @@ class PeertubePlayerManager {
     static maybeFallbackToWebTorrent(currentMode, player, options) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             if (currentMode === "webtorrent")
+                return;
+            if (currentMode === "localvideo")
                 return;
             const newVideoElement = document.createElement("video");
             newVideoElement.className = this.playerElementClassName;
@@ -43335,16 +43339,14 @@ class PeertubePlayerManager {
         if (commonOptions.enableHotkeys === true) {
             PeertubePlayerManager.addHotkeysOptions(plugins);
         }
-        if (!commonOptions.sources) {
-            if (isHLS && options.p2pMediaLoader) {
-                const { hlsjs } = PeertubePlayerManager.addP2PMediaLoaderOptions(plugins, options, p2pMediaLoaderModule);
-                Object.assign(html5, hlsjs.html5);
-            }
-            if (mode === "webtorrent") {
-                PeertubePlayerManager.addWebTorrentOptions(plugins, options);
-                // WebTorrent plugin handles autoplay, because we do some hackish stuff in there
-                autoplay = false;
-            }
+        if (isHLS && options.p2pMediaLoader) {
+            const { hlsjs } = PeertubePlayerManager.addP2PMediaLoaderOptions(plugins, options, p2pMediaLoaderModule);
+            Object.assign(html5, hlsjs.html5);
+        }
+        if (mode === "webtorrent") {
+            PeertubePlayerManager.addWebTorrentOptions(plugins, options);
+            // WebTorrent plugin handles autoplay, because we do some hackish stuff in there
+            autoplay = false;
         }
         const videojsOptions = {
             html5,
@@ -43369,12 +43371,14 @@ class PeertubePlayerManager {
                     hasNextVideo: commonOptions.hasNextVideo,
                     previousVideo: commonOptions.previousVideo,
                     hasPreviousVideo: commonOptions.hasPreviousVideo,
+                    resolutionMenuButton: commonOptions.sources ? false : true
                 }),
             },
         };
         if (commonOptions.language && !Object(_shared_core_utils_i18n__WEBPACK_IMPORTED_MODULE_23__["isDefaultLocale"])(commonOptions.language)) {
             Object.assign(videojsOptions, { language: commonOptions.language });
         }
+        console.log('videojsOptions', videojsOptions);
         return videojsOptions;
     }
     static addP2PMediaLoaderOptions(plugins, options, p2pMediaLoaderModule) {
@@ -43471,7 +43475,8 @@ class PeertubePlayerManager {
         settingEntries.push("playbackRateMenuButton");
         if (options.captions === true)
             settingEntries.push("captionsButton");
-        settingEntries.push("resolutionMenuButton");
+        if (options.resolutionMenuButton)
+            settingEntries.push("resolutionMenuButton");
         const children = {};
         if (options.previousVideo) {
             const buttonOptions = {
@@ -43696,6 +43701,41 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const Plugin = video_js__WEBPACK_IMPORTED_MODULE_0___default.a.getPlugin('plugin');
+function isSingleLeftClick(event) {
+    // Note: if you create something draggable, be sure to
+    // call it on both `mousedown` and `mousemove` event,
+    // otherwise `mousedown` should be enough for a button
+    if (event.button === undefined && event.buttons === undefined) {
+        // Why do we need `buttons` ?
+        // Because, middle mouse sometimes have this:
+        // e.button === 0 and e.buttons === 4
+        // Furthermore, we want to prevent combination click, something like
+        // HOLD middlemouse then left click, that would be
+        // e.button === 0, e.buttons === 5
+        // just `button` is not gonna work
+        // Alright, then what this block does ?
+        // this is for chrome `simulate mobile devices`
+        // I want to support this as well
+        return true;
+    }
+    if (event.button === 0 && event.buttons === undefined) {
+        // Touch screen, sometimes on some specific device, `buttons`
+        // doesn't have anything (safari on ios, blackberry...)
+        return true;
+    } // `mouseup` event on a single left click has
+    // `button` and `buttons` equal to 0
+    if (event.type === 'mouseup' && event.button === 0 && event.buttons === 0) {
+        return true;
+    }
+    if (event.button !== 0 || event.buttons !== 1) {
+        // This is the reason we have those if else block above
+        // if any special case we can catch and let it slide
+        // we do it above, when get to here, this definitely
+        // is-not-left-click
+        return false;
+    }
+    return true;
+}
 class PeerTubePlugin extends Plugin {
     constructor(player, options) {
         super(player);
@@ -43853,7 +43893,6 @@ class PeerTubePlugin extends Plugin {
     }
     handleResolutionChange(data) {
         this.lastResolutionChange = data;
-        console.log("DATA", data);
         const qualityLevels = this.player.qualityLevels();
         for (let i = 0; i < qualityLevels.length; i++) {
             if (qualityLevels[i].height === data.resolutionId) {
@@ -43902,16 +43941,57 @@ class PeerTubePlugin extends Plugin {
     }
     // Thanks: https://github.com/videojs/video.js/issues/4460#issuecomment-312861657
     initSmoothProgressBar() {
+        const Slider = video_js__WEBPACK_IMPORTED_MODULE_0___default.a.getComponent('Slider');
         const SeekBar = video_js__WEBPACK_IMPORTED_MODULE_0___default.a.getComponent('SeekBar');
+        Slider.prototype.update = function () {
+            // In VolumeBar init we have a setTimeout for update that pops and update
+            // to the end of the execution stack. The player is destroyed before then
+            // update will cause an error
+            // If there's no bar...
+            if (!this.el_ || !this.bar) {
+                return;
+            }
+            // clamp progress between 0 and 1
+            // and only round to four decimal places, as we round to two below
+            const progress = this.getProgress();
+            if (progress === this.progress_) {
+                return progress;
+            }
+            this.progress_ = progress;
+            this.requestNamedAnimationFrame('Slider#update', () => {
+                // Set the new bar width or height
+                var el = this.bar.el();
+                if (!this.vertical()) {
+                    el.style['transform-origin'] = 'left';
+                    el.style['transform'] = 'scaleX(' + (progress).toFixed(2) + ')';
+                }
+                else {
+                    el.style['transform-origin'] = 'bottom';
+                    el.style['transform'] = 'scaleY(' + (progress).toFixed(2) + ')';
+                }
+            });
+            return progress;
+        };
         SeekBar.prototype.getPercent = function getPercent() {
-            // Allows for smooth scrubbing, when player can't keep up.
-            // const time = (this.player_.scrubbing()) ?
-            //   this.player_.getCache().currentTime :
-            //   this.player_.currentTime()
             const time = this.player_.currentTime();
             const percent = time / this.player_.duration();
             return percent >= 1 ? 1 : percent;
         };
+        /*SeekBar.prototype.handleMouseDown = function handleMouseDown (event: any) {
+    
+          if (!isSingleLeftClick(event)) {
+            return;
+          }
+      
+          // Stop event propagation to prevent double fire in progress-control.js
+          event.stopPropagation();
+          this.player_.scrubbing(true);
+      
+          this.videoWasPlaying = !this.player_.paused();
+          this.player_.pause();
+      
+          this.super.handleMouseDown(event);
+        }*/
         SeekBar.prototype.handleMouseMove = function handleMouseMove(event) {
             let newTime = this.calculateDistance(event) * this.player_.duration();
             if (newTime === this.player_.duration()) {
@@ -44822,7 +44902,7 @@ class PeerTubeLoadProgressBar extends Component {
     }
     createEl() {
         return super.createEl('div', {
-            className: 'vjs-load-progress',
+            className: 'vjs-load-progress vjs-slider-bar',
             innerHTML: `<span class="vjs-control-text"><span>${this.localize('Loaded')}</span>: 0%</span>`
         });
     }
@@ -44834,7 +44914,17 @@ class PeerTubeLoadProgressBar extends Component {
         if (!torrent)
             return;
         // FIXME: typings
-        this.el().style.width = (torrent.progress * 100) + '%';
+        //(this.el() as HTMLElement).style.width = (torrent.progress * 100) + '%'
+        /* @ts-ignore */
+        this.el().style['transform-origin'] = 'left'(this.el()).style['transform'] = 'scaleX(' + (torrent.progress).toFixed(2) + ')';
+        /*if(!_this2.vertical()){
+          el.style['transform-origin'] = 'left'
+          el.style['transform'] = 'scaleX('+(progress * 100).toFixed(2)+')'
+        }
+        else{
+          el.style['transform-origin'] = 'bottom'
+          el.style['transform'] = 'scaleY('+(progress * 100).toFixed(2)+')'
+        }*/
     }
 }
 Component.registerComponent('PeerTubeLoadProgressBar', PeerTubeLoadProgressBar);
@@ -46240,6 +46330,8 @@ class PeerTubeEmbedApi {
                 /* @ts-ignore */
                 if (typeof window.isMobile != 'undefined' && window.isMobile() || window.cordova)
                     return;
+                if (e)
+                    console.log('e', e);
                 if (e && e.toString) {
                     e = e.toString();
                     if (e && e.indexOf('request was interrupted') > -1) {
@@ -46377,10 +46469,11 @@ class PeerTubeEmbedApi {
         }, 500);
         var slf = this;
         var player = this.embed.player;
-        var hls = player.p2pMediaLoader().getHLSJS();
+        var hls = null;
+        if (typeof player.p2pMediaLoader == 'function')
+            hls = player.p2pMediaLoader().getHLSJS();
         this.embed.player.on('play', function (ev) {
             console.log("EV", ev);
-            var hls = player.p2pMediaLoader().getHLSJS();
             if (hls) {
                 hls.resumeCapping();
             }
@@ -46389,7 +46482,6 @@ class PeerTubeEmbedApi {
             slf.answer({ method: 'play', params: true });
         });
         this.embed.player.on('pause', function (ev) {
-            var hls = player.p2pMediaLoader().getHLSJS();
             if (hls) {
                 hls.pauseCapping();
             }
@@ -46398,7 +46490,6 @@ class PeerTubeEmbedApi {
             slf.answer({ method: 'pause', params: true });
         });
         this.embed.player.on('ended', function (ev) {
-            var hls = player.p2pMediaLoader().getHLSJS();
             if (hls) {
                 hls.pauseCapping();
             }
@@ -46800,15 +46891,21 @@ class PeerTubeEmbed {
             if (this.modeParam) {
                 if (this.modeParam === "p2p-media-loader")
                     this.mode = "p2p-media-loader";
-                else
+                if (this.modeParam === "webtorrent")
                     this.mode = "webtorrent";
+                if (this.modeParam === "localvideo")
+                    this.mode = "localvideo";
             }
             else {
-                if ((Array.isArray(video.streamingPlaylists) &&
-                    video.streamingPlaylists.length !== 0) || video.isLive)
-                    this.mode = "p2p-media-loader";
-                else
-                    this.mode = "webtorrent";
+                if (this.localVideo) {
+                    this.mode = 'localvideo';
+                }
+                else {
+                    if ((Array.isArray(video.streamingPlaylists) && video.streamingPlaylists.length !== 0) || video.isLive)
+                        this.mode = "p2p-media-loader";
+                    else
+                        this.mode = "webtorrent";
+                }
             }
         }
         catch (err) {
@@ -46855,6 +46952,7 @@ class PeerTubeEmbed {
                 videoResponseJson.aspectRatio = 1.78;
             }
             this.details = videoResponseJson;
+            this.mode = 'localvideo';
             this.initWaiting();
             var e = this.getelement();
             if (e && e.currentTime) {
@@ -47061,12 +47159,8 @@ class PeerTubeEmbed {
                     loop: this.loop,
                     captions: false,
                     subtitle: this.subtitle,
-                    startTime: this.playlist
-                        ? this.currentPlaylistElement.startTimestamp
-                        : this.startTime,
-                    stopTime: this.playlist
-                        ? this.currentPlaylistElement.stopTimestamp
-                        : this.stopTime,
+                    startTime: this.startTime || 0,
+                    stopTime: this.stopTime,
                     videoCaptions: [],
                     inactivityTimeout: 2500,
                     videoViewUrl: null,
@@ -47081,7 +47175,7 @@ class PeerTubeEmbed {
                     enableHotkeys: false,
                     pocketnetLink: this.pocketnetLink,
                     logoType: this.logoType || 'Pocketnet',
-                    poster: this.wautoplay ? null : this.localVideo.infos.thubnail,
+                    poster: this.localVideo.infos.thumbnail,
                     theaterButton: false,
                     serverUrl: null,
                     language: this.language,
@@ -47100,6 +47194,8 @@ class PeerTubeEmbed {
                     this.handleError(e);
                 }
             };
+            console.log('this.mode', this.mode);
+            this.mode = 'localvideo';
             this.player = yield _assets_player_peertube_player_manager__WEBPACK_IMPORTED_MODULE_10__["PeertubePlayerManager"].initialize(this.mode, options, (player) => {
                 this.player = player;
             });
@@ -47111,7 +47207,7 @@ class PeerTubeEmbed {
             catch (e) { }
             pel.removeAttribute('style');
             if (Object(_assets_player_utils__WEBPACK_IMPORTED_MODULE_11__["isAndroid"])())
-                pel.setAttribute('poster', this.composePath(videoInfo.previewPath));
+                pel.setAttribute('poster', this.localVideo.infos.thumbnail);
             this.player.on("customError", (event, data) => this.handleError(data.err /*, serverTranslations*/));
             const overlayString = this.logoType === 'Pocketnet'
                 ? '<span class="icon icon-full-logo-transparent"></span>'
@@ -47306,12 +47402,13 @@ class PeerTubeEmbed {
             let forwading_time = duration < 45 ? 5 : 15;
             if (this.mobileDetectMob()) {
                 let forward_button = `
-									<span aria-hidden="true" class="vjs-icon-placeholder"><i class="vjs-forward-custom fas fa-redo" aria-hidden="true"></i></span>
+									<i class="vjs-forward-custom fas fa-redo" aria-hidden="true"></i>
 								`;
                 let rewind_button = `
-									<span aria-hidden="true" class="vjs-icon-placeholder"><i class="vjs-rewind-custom fa fa-undo" aria-hidden="true"></i></span>
+									<i class="vjs-rewind-custom fa fa-undo" aria-hidden="true"></i>
 								`;
                 let vjs_big_play_button = this.player.el_.querySelector('.vjs-big-play-button');
+                vjs_big_play_button.setAttribute('mobilebutton', true);
                 var el = document.createElement("div");
                 el.innerHTML = rewind_button;
                 el.id = 'vjs-rewind-button';

@@ -64,6 +64,13 @@ var activenodes = [
 		name : 'CryptoserverTEST',
 		stable : true
 	},*/
+
+	
+
+
+
+
+
 	{
 		host : '64.235.45.119',
 		port : 38081,
@@ -85,6 +92,20 @@ var activenodes = [
 		port : 38081,
 		ws : 8087,
 		name : 'Cryptoserver243',
+		stable : true
+	},
+	{
+		host : '65.21.56.203',
+		port : 38081,
+		ws : 8087,
+		name : 'Cryptoserver0610',
+		stable : true
+	},
+	{
+		host : '65.21.57.14',
+		port : 38081,
+		ws : 8087,
+		name : 'Cryptoserver0610_2',
 		stable : true
 	}
 

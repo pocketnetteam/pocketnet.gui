@@ -1667,11 +1667,9 @@ Application = function(p)
                     return
                 }
 
-                
-
-                if (navigator.vibrate){
+                /*if (navigator.vibrate){
                     navigator.vibrate(time || 50)
-                }
+                }*/
             }
         },
 		statusbar : {

@@ -77,7 +77,9 @@ var metadisplay = function(){ %>
 						
 						<% if((typeof repost == 'undefined' || !repost || fromempty)) {%>
 							<div class="sys hideOnFullVideo unselectablemobile">
+								<% if(share.downloadedDate) {%> <span class="fas fa-bookmark"></span> <span class="realtime editedLabel" time="<%-share.downloadedDate%>"><%- app.reltime(share.downloadedDate) %></span><% } else { %> 
 								<% if(share.time) {%><span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span><% } else { %><span><%=e('e13019')%></span><% } %><% if(share.edit == 'true') {%><span class="editedLabel">, <%=e('e13130').toLowerCase()%></span><% } %>
+								<% } %>
 							</div>
 						<% } %>
 						
@@ -112,7 +114,7 @@ var metadisplay = function(){ %>
 					</div>
 				<% } %>
 
-				<div class="downloadMetapanel invisible">
+				<!--<div class="downloadMetapanel invisible">
 					<% if(share.itisvideo()) { %>
 						<div class="metapanelitem canDownloadBtn">
 							<div class="downloadBtn <%-share.txid%>">
@@ -135,7 +137,7 @@ var metadisplay = function(){ %>
 							</div>
 						</div>
 					<% } %>
-				</div>
+				</div>-->
 
 
 			</div>

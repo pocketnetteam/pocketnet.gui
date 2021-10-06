@@ -22,6 +22,18 @@ var all = {
 		class : 'edit'
 	},
 
+	downloadVideo : {
+		icon : '<i class="far fa-bookmark"></i>',
+		text : e('downloadVideo'),
+		class : 'downloadVideo'
+	},
+
+	deleteSavedVideo : {
+		icon : '<i class="fas fa-bookmark"></i>',
+		text : e('deleteSavedVideo'),
+		class : 'deleteSavedVideo'
+	},
+
 	share : {
 		icon : '<i class="fas fa-share-alt"></i>',
 		text : e('share'),
@@ -83,8 +95,18 @@ m.push('share')
 
 if(share){
 
-	if (share.itisvideo()) {
+	if (share.itisvideo() && window.cordova) {
+
 		m.push('shareBareVideoLink');
+
+		if(app.platform.sdk.localshares.getShare(share.txid)){
+			m.unshift('deleteSavedVideo');
+		}
+		else{
+			m.unshift('downloadVideo');
+		}
+
+		
 	}
 
 	m.push('opennewwindow');

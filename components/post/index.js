@@ -365,7 +365,7 @@ var post = (function () {
 				if (!el[shareId])
 					el[shareId] = el.c.find('.metapanel.' + shareId + ' .downloadMetapanel');
 
-				var downloadPanel = el[shareId];
+				//var downloadPanel = el[shareId];
 
 				var wa =  !share.repost && !ed.repost && ((share.itisvideo() && isMobile() || (ed.autoplay && pels.length <= 1))) ? true : false
 
@@ -410,7 +410,7 @@ var post = (function () {
 
 							player = _player
 
-							if (videoId && self.sdk.local.shares.getVideo(videoId, shareId) != undefined) {
+							/*if (videoId && self.sdk.local.shares.getVideo(videoId, shareId) != undefined) {
 								renders.setShareDownload(shareId, 'downloaded');
 
 								setTimeout(() => {
@@ -429,7 +429,7 @@ var post = (function () {
 
 							
 							if (downloadPanel && downloadPanel.removeClass && window.cordova)
-								downloadPanel.removeClass('downloading downloaded invisible').addClass('canDownload');
+								downloadPanel.removeClass('downloading downloaded invisible').addClass('canDownload');*/
 
 
 							if (wa) {
