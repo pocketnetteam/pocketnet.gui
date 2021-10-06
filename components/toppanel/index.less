@@ -5,6 +5,7 @@
 	width: 100%;
 	height: 45px;
 	background: #F1F1F1;
+	white-space: nowrap;
 
 	.work{
 		width: 95%;
@@ -349,6 +350,37 @@ html.mobile{
 		}	
 	}
 	
+}
+
+@media only screen and (max-width: 648px){
+	#toppanel{
+
+		.work{
+			width: 100%;
+			padding-right: 3 * @rhythm;
+		}
+	
+		.panelitems{
+
+			.panelItemsWrapper{
+				height: 100%;
+			}
+
+			.panelitem.right{
+				display: none;
+			}
+			.panelitem.dnt,
+			.panelitem.right,
+			.panelitem.blexpl{
+				display: none;
+			}
+
+			.panelitemCenter{
+				margin : auto;
+			}
+
+		}
+	}
 }
 
 @media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape){

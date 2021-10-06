@@ -133,11 +133,11 @@ var Roy = function (parent) {
 
     p.royrequest = true
 
-    console.log("REQUEST")
+    //console.log("REQUEST")
 
     return instance.request(method, data, p).catch((e) => {
 
-      console.log("E", e, instance.host)
+      //console.log("E", e, instance.host)
 
         //if (e == 'failed')
         return self.request(method, data, p, list, index + 1);

@@ -1770,16 +1770,12 @@ Application = function(p)
 			else{
 				self.fullscreenmode = v
 
-				/*console.log('AndroidFullScreen', AndroidFullScreen)
+				/*window.PictureInPicture.enter(400, 200, function(){
+					console.log("success")
+				}, function(e){
+					console.log("RERE", e)
+				})*/
 
-				if(typeof AndroidFullScreen != 'undefined'){
-					AndroidFullScreen.isSupported(function(){
-						console.log('immersiveMode')
-						AndroidFullScreen.immersiveMode()
-					}, function(){
-						console.log("SU")
-					});
-				}*/
 				
 			}
 		},

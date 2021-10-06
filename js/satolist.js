@@ -3531,7 +3531,8 @@ Platform = function (app, listofnodes) {
                                         // Get/create a folder for this video
                                         dirEntry3.getDirectory(id, { create: true }, function (dirEntry4) {
                                             var infos = {
-                                                thumbnail: 'https://' + videoDetails.from + videoDetails.thumbnailPath
+                                                thumbnail: 'https://' + videoDetails.from + videoDetails.thumbnailPath,
+                                                videoDetails : videoDetails
                                             }
                                             // Create JSON file for video informations
                                             dirEntry4.getFile('info.json', { create: true }, function (infoFile) {
