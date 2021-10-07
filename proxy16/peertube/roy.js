@@ -53,12 +53,13 @@ var Roy = function (parent) {
   };
 
   self.init = function (urls) {
+
     _.each(urls, function (host) {
       if (!host || !host.split) return;
 
-      if (host.split('.').length != 3) return;
+      const splittedUrl = host.split('.');
 
-      if (host.split('.').length != 3) return
+      if (splittedUrl.length != 3 && splittedUrl[0] !== 'test') return;
 
       self.addInstance(host);
     });
