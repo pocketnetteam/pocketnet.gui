@@ -30,13 +30,33 @@
 
 					<% } %>
 
-
 					
 					<% if(typeof eparameters != 'undefined' && state && !notincludedRef) {%>
 						<div class="includeRefWrapper">
 							<%= eparameters.reflink.input({init : true}) %>  <span><%= eparameters.reflink.name %></span>
 						</div>
 					<% } %>
+
+
+					<% if(postId) {%>
+
+						<div class="item forrepost">
+
+							<div class="itemwr table">
+								<div class="iconwr">											
+									<div class="icon">
+										Repost
+										<i class="fas fa-share"></i>
+									</div>
+								</div>
+							
+							</div>
+
+						</div>
+
+					<% } %>
+
+
 				</div>
 			</div>
 

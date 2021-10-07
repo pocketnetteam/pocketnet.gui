@@ -5221,6 +5221,13 @@ Platform = function (app, listofnodes) {
                     value: false
                 },
 
+                sound: {
+                    name: self.app.localization.e('sound'),
+                    id: 'sound',
+                    type: "BOOLEAN",
+                    value: true
+                },
+
                 win: {
                     name: self.app.localization.e('e13268'),
                     id: 'win',
@@ -5456,6 +5463,7 @@ Platform = function (app, listofnodes) {
                         name: self.app.localization.e('notifications'),
                         options: {
 
+                            sound: options.sound,
                             win: options.win,
                             transactions: options.transactions,
                             upvotes: options.upvotes,
@@ -20899,7 +20907,7 @@ Platform = function (app, listofnodes) {
                     })
 
                     if (!_Node) {
-                        if (audio && !window.cordova) {
+                        if (audio && !window.cordova && platform.sdk.usersettings.meta.sound.value) {
 
                             if (!audio.if || audio.if(data, loadedData)) {
 
@@ -21244,17 +21252,22 @@ Platform = function (app, listofnodes) {
                 txid: "e7a7c9f84794ccac6dead944e4d6fffc06628030b1d5428010d585c8bf7e659c"
             })*/
 
-            /*self.messageHandler({
-                addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
-                addrFrom: "PJorG1HMRegp3SiLAFVp8R5Ef6d3nSrNxA",
-                mesType: "upvoteShare",
-                msg: "event",
-                nblock: 1253143,
-                posttxid: "ea9ea91e8baf69f752470f55d146f4638bab0960ef55753a3c44df02c645798c",
-                time: "1625662971",
-                txid: "d2533c04f0ef7ca9ff95cb6746567cdac5e8eaf285a57ed0831e0afdd624ca92",
-                upvoteVal: 5
-            })*/
+            // setTimeout(() => {
+            //     self.messageHandler({
+            //         addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
+            //         addrFrom: "PJorG1HMRegp3SiLAFVp8R5Ef6d3nSrNxA",
+            //         mesType: "upvoteShare",
+            //         msg: "event",
+            //         nblock: 1253143,
+            //         posttxid: "ea9ea91e8baf69f752470f55d146f4638bab0960ef55753a3c44df02c645798c",
+            //         time: "1625662971",
+            //         txid: "d2533c04f0ef7ca9ff95cb6746567cdac5e8eaf285a57ed0831e0afdd624ca92",
+            //         upvoteVal: 5
+            //     })
+
+            // }, 10000)
+
+
 
            /*self.messageHandler({
                 addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
