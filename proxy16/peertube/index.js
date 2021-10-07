@@ -297,6 +297,7 @@ var Peertube = function (settings) {
   self.turnOffRoy = (key) => (roys[key].activeForUploading = false);
 
   self.info = function (compact) {
+
     var info = {};
 
     _.each(roys, function (roy) {
