@@ -3644,6 +3644,25 @@ input[type=radio].radio:checked + label {
     }
 }
 
+.menudialog{
+    .mobiledialogcontent{
+        max-height: 60vh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
+        border-radius: 5px;
+        scrollbar-width: 0px;
+
+        &::-webkit-scrollbar{
+            width: 0;
+        }
+
+        &::-webkit-scrollbar{
+            display: none!important;
+        }
+    }
+}
+
 .refadd{
 
     background: fade(#151722, 95);

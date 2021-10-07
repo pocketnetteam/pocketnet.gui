@@ -416,7 +416,6 @@ var system16 = (function(){
 
 			ticksettings : function(settings, s, changed){
 
-				console.log("THST12, changed")
 				if (changed){
 					system = settings
 				}
@@ -446,7 +445,6 @@ var system16 = (function(){
 
 			tick : function(state){
 
-				console.log("THST1")
 
 				info = state
 
@@ -838,6 +836,50 @@ var system16 = (function(){
 
 		var cpsub = {
 			nodes : {
+
+				penalty : {
+					caption : "Nodes Penalty",
+
+					series : [
+						{
+							name : "Penalty",
+							path : "penalty.k",
+							id : 'penalty'
+						}
+					]
+				}, 
+
+				responsetime5 : {
+					caption : "Nodes Response Time, last 5 minutes",
+
+					series : [
+						{
+							name : "Median Response Time",
+							path : "slice.time",
+							id : 'ct'
+						}
+					]
+				},
+
+				allcount5 : {
+					caption : "Count of requests, last 5 minutes",
+
+					series : [
+						{
+							name : "Count of requests",
+							path : "slice.count",
+							type : 'spline',
+							id : 'cr'
+						},
+						{
+							name : "Success Count",
+							path : "slice.success",
+							type: 'areaspline',
+							id : 'cp'
+						}
+					]
+				},
+
 				responsetime : {
 					caption : "Nodes Response Time",
 
@@ -850,12 +892,31 @@ var system16 = (function(){
 					]
 				},
 
+				allcount : {
+					caption : "Count of requests",
+
+					series : [
+						{
+							name : "Count of requests",
+							path : "statistic.count",
+							type : 'spline',
+							id : 'cr'
+						},
+						{
+							name : "Success Count",
+							path : "statistic.success",
+							type: 'areaspline',
+							id : 'cp'
+						}
+					]
+				},
+
 				rate : {
 					caption : "Rate",
 
 					series : [
 						{
-							name : "Requestes per seconds",
+							name : "Requests per seconds",
 							path : "statistic.rate",
 							id : 'cr'
 						}
@@ -911,26 +972,9 @@ var system16 = (function(){
 							id : 'wsc'
 						}
 					]
-				},
-
-				allcount : {
-					caption : "Count of requestes",
-
-					series : [
-						{
-							name : "Count of requestes",
-							path : "statistic.count",
-							type : 'spline',
-							id : 'cr'
-						},
-						{
-							name : "Success Count",
-							path : "statistic.success",
-							type: 'areaspline',
-							id : 'cp'
-						}
-					]
 				}
+
+				
 			},
 
 			peertube : {
@@ -947,11 +991,11 @@ var system16 = (function(){
 				},
 				
 				allcount : {
-					caption : "Count of requestes",
+					caption : "Count of requests",
 
 					series : [
 						{
-							name : "Count of requestes",
+							name : "Count of requests",
 							path : "stats.count",
 							type : 'spline',
 							id : 'sc'
@@ -1003,7 +1047,7 @@ var system16 = (function(){
 
 					series : [
 						{
-							name : "Requestes per seconds",
+							name : "Requests per seconds",
 							path : "server.middle.rate",
 							id : 'rate'
 						}
@@ -1188,6 +1232,7 @@ var system16 = (function(){
 					series : series
 				}
 			},
+			
 
 			nodes : function(data){
 
@@ -1205,8 +1250,26 @@ var system16 = (function(){
 				var series = {}
 				var i = 0
 
+				
+
+
 				if (info.nodeManager){
-					_.each(info.nodeManager.nodes, function(node, key){
+
+					//// get 5 of most using nodes
+
+					var nodes = _.filter(_.sortBy(info.nodeManager.nodes, function(node){
+						return -node.users
+					}), function(n, i){
+						return i < 5
+					})
+
+					var kn = {}
+
+					_.each(nodes, function(n){
+						kn[n.node.key] = n
+					})
+
+					_.each(kn, function(node, key){
 
 						_.each(meta.series, function(smeta){
 							series[smeta.id + key] = {
@@ -1268,8 +1331,6 @@ var system16 = (function(){
 					})
 				}
 
-				console.log('series', series)
-				
 
 				return {
 					meta : lmeta,
@@ -1456,7 +1517,6 @@ var system16 = (function(){
 					series = graphs[type].rarefied(series, 50)
 
 					if(self.app.platform.focus){
-						console.log("focus")
 						graphs[type].chart.update({
 							series: series
 						});
@@ -1869,7 +1929,6 @@ var system16 = (function(){
 				
 			},
 			addbotlist: function(){
-				console.log("addbots")
 				var d = inputDialogNew({
 					caption : "Add Address to Proxy Bot List",
 					class : 'addressdialog',
@@ -1897,7 +1956,6 @@ var system16 = (function(){
 								valid = false;
 							}
 
-							console.log('address', address, valid)
 
 							return valid
 						})
@@ -1928,7 +1986,6 @@ var system16 = (function(){
 	        				topPreloader(100);
 
 						}).catch(e => {
-							console.log("E", e)
 							sitemessage(self.app.localization.e('e13293'))
 
 							topPreloader(100);
@@ -1940,7 +1997,6 @@ var system16 = (function(){
 	        	})
 			},
 			addbot : function(){
-				console.log("addbots")
 				var d = inputDialogNew({
 					caption : "Add Address to Proxy Bot List",
 					class : 'addressdialog',
@@ -1994,7 +2050,6 @@ var system16 = (function(){
 	        				topPreloader(100);
 
 						}).catch(e => {
-							console.log("E", e)
 							sitemessage(self.app.localization.e('e13293'))
 
 							topPreloader(100);
@@ -2628,8 +2683,6 @@ var system16 = (function(){
 						var key = $(this).closest('.wallet').attr('key')
 
 
-						console.log("key", key, info.wallet)
-
 						if (key){
 							var address = deep(info.wallet, 'addresses.' + key + '.address')
 
@@ -3107,8 +3160,6 @@ var system16 = (function(){
 
 							var node = $(this).attr('node')
 
-							console.log('node', node)
-
 							
 							dialog({
 								class : 'zindex',
@@ -3243,7 +3294,6 @@ var system16 = (function(){
 							p.el.find('.nodecontentmanage').addClass('lock')
 						}
 
-						console.log('info.nodeControl.state', info.nodeControl.state, info.nodeControl)
 
 						
 						makers.stacking()

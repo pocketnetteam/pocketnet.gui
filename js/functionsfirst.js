@@ -41,6 +41,9 @@ deep = function(obj, key){
     }
 }
 
+
+
+
 topPreloader2 = function(percent, text){
     if(!window.jQuery) return
 

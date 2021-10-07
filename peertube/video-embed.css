@@ -3031,6 +3031,13 @@ video[src], .vjs-fullscreen {
   display: none;
 }
 
+.vjs-volume-level {
+  pointer-events: none;
+}
+.vjs-volume-level:before {
+  display: none;
+}
+
 .vjs-play-progress {
   pointer-events: none;
 }

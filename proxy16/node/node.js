@@ -7,9 +7,16 @@ var Wss  = require('./wss.js');
 
 var Node = function(options, manager){
 
+    const notactualevents = 360000 //mult
+    const getinfointervaltime = 120000 
+    const maxevents = 10000
+    const maxeventsHistory = 30 /// 5min
+    const eventschecktime = 10000
+
     var self = this
     var lastinfo = null
     var cachedrating = null
+    var chain = [];
 
     self.updating = ['rpcuser', 'rpcpass', 'ws', 'name']
 
@@ -28,14 +35,7 @@ var Node = function(options, manager){
 
     var statisticInterval = null
     var changeNodeUsersInterval = null
-    var notactualevents = 360000 //mult
-    //var checkEventsLength = 100 
-    var getinfointervaltime = 120000 
     var lastinfoTime = null
-    //var lastSuccessInfoTime = null
-    var maxevents = 10000
-
-    var eventschecktime = 10000
     var eventscheckInterval = null
 
     var test = new Test(self, manager)
@@ -46,7 +46,66 @@ var Node = function(options, manager){
         changing : {}
     }
 
-    var chain = [];
+    var penalty = {
+        k : 0,
+
+        reason : null,
+        timer : null,
+        time : null,
+        started : null,
+
+        set : function(_k, time, reason){
+
+            if(_k < 0 || _k > 1) return
+            if(penalty.k || !time || !reason || !_k) return
+
+            penalty.reason = reason
+            penalty.started = new Date()
+            penalty.time = time
+            penalty.k = _k
+
+            penalty.timer = setTimeout(function(){
+                penalty.clear()
+            }, time)
+        },
+
+        clear : function(){
+            
+            penalty.clearTimer()
+
+            penalty.k = 0;
+            penalty.time = null;
+            penalty.started = null;
+            penalty.reason = null;
+
+        },
+
+        clearTimer : function(){
+
+            if (penalty.timer){
+
+                clearTimeout(penalty.timer)
+                penalty.timer = null
+
+            }
+        },
+
+        getk : function(){
+            return 1 - penalty.k
+        },
+
+        get : function(){
+
+            return {
+                k : penalty.k,
+                reason : penalty.reason,
+                time : penalty.time,
+                started : penalty.started,
+            }
+
+        }
+    }
+
 
     var serviceConnection = function(){
         if(!wss.service && manager){
@@ -78,6 +137,10 @@ var Node = function(options, manager){
             self.timeDifference = self.time - Math.floor((d.getTime()) / 1000)
             self.timeDifferenceTimeZone = self.time - Math.floor((d.getTime() + (d.getTimezoneOffset() * 60000)) / 1000);
         }
+    }
+    
+    self.penalty = function(){
+        return penalty.get()
     }
 
     self.height = function(){
@@ -111,7 +174,7 @@ var Node = function(options, manager){
 
             }
 
-            chain = f.lastelements(chain, 100, 10)
+            chain = f.lastelements(chain, 300, 10)
 
         }
     }
@@ -184,19 +247,18 @@ var Node = function(options, manager){
                     if(!err.code || err.code == -28){
                         code = 521
                     }
+
+                    if(err.code == 521) penalty.set(0.8, 60000, '521')
+                    if(err.code == 408) penalty.set(0.9, 30000, '408')
+                    if(err.code == 429) penalty.set(0.5, 10000, '429')
     
                 }	
 
-                //if (method == 'getnodeinfo'){
-
-                    self.statistic.add({
-                        code : code,
-                        difference : difference,
-                        //r : method == 'getnodeinfo',
-                        method : method
-                    })
-    
-               // }
+                self.statistic.add({
+                    code : code,
+                    difference : difference,
+                    method : method
+                })
                    
                 if(!err){
                     return Promise.resolve(data.result)
@@ -216,7 +278,9 @@ var Node = function(options, manager){
 
     var statistic = {
         events : null,
-        bymethods : null
+        bymethods : null,
+        history : [],
+        historyslice : null
     }
 
     self.statistic = {
@@ -227,7 +291,9 @@ var Node = function(options, manager){
 
             statistic = {
                 events : null,
-                bymethods : null
+                bymethods : null,
+                history : [],
+                historyslice : null
             }
         },
 
@@ -250,6 +316,45 @@ var Node = function(options, manager){
 
             self.eventsCount ++
 
+        },
+
+        mixeventsArray : function(objs){
+
+            var common = {
+                success : 0,
+                failed : 0,
+                count : 0,
+                time : 0,
+                rate : 0,
+                percent : 0
+            }
+
+            _.each(objs, function(obj){
+                common.success += obj.success || 0
+                common.failed += obj.failed || 0
+                common.count += obj.count || 0
+            })
+
+            if (common.count){
+
+                _.each(objs, function(obj){
+                    common.time += (obj.time || 0) * (obj.count || 0)
+                    common.rate += (obj.failed || 0) * (obj.count || 0)
+                    common.percent += (obj.percent || 0) * (obj.count || 0)
+                })    
+
+                common.time = common.time / common.count
+                common.rate = common.rate / common.count
+                common.percent = common.percent / common.count
+
+            }
+            else{
+                common.time = 0; common.rate = 0; common.percent = 0;
+            }
+
+            common.date = new Date()
+
+            return common
 
         },
 
@@ -281,6 +386,23 @@ var Node = function(options, manager){
 
         },
 
+        gethistory : function(){
+            return statistic.history
+        },
+
+        fixhistory : function(e){
+            statistic.history.push(e)
+
+            var d = statistic.history.length - maxeventsHistory
+
+            if (d > maxeventsHistory / 10){
+                statistic.history = statistic.history.splice(0, d)
+            }
+
+            statistic.historyslice = self.statistic.mixeventsArray(statistic.history)
+
+        },
+
         eventsfix : function(){
 
             var groupedByMethods = self.statistic.getGroupedByMethods()
@@ -299,6 +421,8 @@ var Node = function(options, manager){
             _.each(emap, function(i){
                 statistic.bymethods[i] = self.statistic.mixevents(statistic.bymethods[i], groupedByMethods[i])
             })
+
+            self.statistic.fixhistory(events)
 
             self.events = []
         },
@@ -343,6 +467,12 @@ var Node = function(options, manager){
             return statistic.events
         },
 
+        get5min : function(){
+            if(!statistic.events) self.statistic.eventsfix()
+
+            return statistic.historyslice
+        },
+
         get : function(method){
 
             var evt = _.filter(self.events, function(l){
@@ -385,39 +515,12 @@ var Node = function(options, manager){
             return self.events
         },
 
-        rating : function(){
+        calcAvailability : function(s){
 
-            if(cachedrating){
-
-                if(f.date.addseconds(cachedrating.time, 3) > new Date()){
-                    return cachedrating.result
-                }
-            }
-
-            var s = self.statistic.getst()
-
-            var lastblock = self.lastblock() || {}
-
-            var status = self.chainStatus()
-            ///
-
-            var difference = status.difference || 0
-            if (difference > 0) difference = 0
-                difference = -difference
-
-            ///
-
-            if (status.fork && difference > 5 || difference > 100) return 0
-            if(!s.success || !lastblock.height) return 0
-            if (self.testing) return 0
-
-            if(!self.inited) return 0
-            ///
+            if(!s.count) return 0.01
 
             var time = s.time;
-            var rate = (self.statistic.rate() || 0) + 1
-            var usersl = _.toArray(wss.users).length + 1
-            var userski = 1
+            var rate = (s.rate || 0) + 1
 
             if (time && time > 0 && time <= 200) time = 200
             if (time && time > 200 && time <= 400) time = 300
@@ -437,14 +540,60 @@ var Node = function(options, manager){
             if (rate > 30 && rate <= 50) rate = 40
             if (rate > 50 && rate <= 100) rate = 75
 
+            return (s.percent / (rate * time))
+
+        },
+
+        rating : function(){
+
+            if(cachedrating){
+
+                if(f.date.addseconds(cachedrating.time, 10) > new Date()){
+                    return cachedrating.result
+                }
+            }
+
+            var s = self.statistic.getst()
+            var slice = statistic.historyslice
+
+            var lastblock = self.lastblock() || {}
+
+            var status = self.chainStatus()
+            ///
+
+            var difference = status.difference || 0
+            if (difference > 0) difference = 0
+                difference = -difference
+
+            ///
+
+            if (status.fork && difference > 5 || difference > 50) return 0
+            if(!lastblock.height) return 0
+            if (self.testing) return 0
+            if(!self.inited) return 0
+
+
+            var availabilityAllTime = self.statistic.calcAvailability(s)
+            var availability5Minutes = self.statistic.calcAvailability(slice)
+            ///
+
+
+            var usersl = _.toArray(wss.users).length + 1
+            var userski = 1
+
             if (usersl > 0 && usersl <= 10) userski = 1
             if (usersl > 10 && usersl <= 100) userski = 10
             if (usersl > 100 && usersl <= 500) userski = 100
             if (usersl > 500 && usersl <= 1000) userski = 500
             if (usersl > 1000) userski = 1000
 
-            var result = (s.percent  * (lastblock.height || 1) ) / 
-            (userski * rate * (time) * (difference + 1) )
+
+            var result = penalty.getk() * (Math.sqrt(availabilityAllTime * availability5Minutes) * ((lastblock.height || 1) / (userski) * (difference + 1)))
+            
+           
+
+            /*var result = (s.percent  * (lastblock.height || 1) ) / 
+            (userski * rate * (time) * (difference + 1) )*/
     
             cachedrating = {
                 result : result,
@@ -805,6 +954,10 @@ var Node = function(options, manager){
         serviceConnection()
     }
 
+    self.forget = function(){
+        self.destroy()
+    }
+
     self.init = function(){
 
         self.statistic.interval()
@@ -815,6 +968,7 @@ var Node = function(options, manager){
             changeNodeUsersInterval = setInterval(changeNodeUsers, 10000)
 
         self.inited = true
+        self.initedTime = new Date()
 
         if(!eventscheckInterval)
             eventscheckInterval = setInterval(self.statistic.eventsfix, eventschecktime)
@@ -838,6 +992,7 @@ var Node = function(options, manager){
         closeService()
 
         self.inited = false
+        self.initedTime = null
     }
 
     self.wss = {

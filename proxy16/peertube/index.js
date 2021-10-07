@@ -50,11 +50,7 @@ var Peertube = function (settings) {
   };
 
   self.timeout = function () {
-    if (self.proxy.users() > 10) {
-      return 1500;
-    }
-
-    return 30000;
+    return 3500;
   };
 
   self.statsInterval = function () {

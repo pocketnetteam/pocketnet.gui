@@ -933,9 +933,11 @@ var lenta = (function(){
 					return
 				}
 
+				var __el = _el.find('>div.sharecnt')
+
 				fullScreenVideoParallax = new SwipeParallaxNew({
 
-					el : _el.find('>div.sharecnt'),
+					el : __el,
 
 					allowPageScroll : 'vertical',
 
@@ -950,7 +952,7 @@ var lenta = (function(){
 							},
 
 							constraints : function(){
-								if (_el.scrollTop() == 0 && !self.app.fullscreenmode){
+								if (__el.scrollTop() == 0 && !self.app.fullscreenmode){
 									return true;
 								}
 							},

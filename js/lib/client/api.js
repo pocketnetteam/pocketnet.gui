@@ -11,6 +11,14 @@ var rand = function(min, max){
     return Math.floor( Math.random() * (max - min + 1) ) + min;
 }
 
+var isonline = function(){
+    if(typeof window.navigator){
+        return window.navigator.onLine
+    }
+
+    return true
+}
+
 
 var ProxyRequest = function(app = {}, proxy){
     var self = this
@@ -72,6 +80,8 @@ var ProxyRequest = function(app = {}, proxy){
             if (window.cordova || isInStandaloneMode()){
                 time = 25000
             }
+
+            if(!isonline()) time = 3000
     
     
             return timeout(time, directclear(url, data, controller.signal, p), controller)
@@ -431,14 +441,18 @@ var Proxy16 = function(meta, app, api){
 
             if ((e.code == 408 || e.code == -28 || self.direct) && options.node && trying < 3 && !options.fnode){
 
-                return self.api.nodes.canchange(options.node).then(r => {
+                if(isonline()){
+                    return self.api.nodes.canchange(options.node).then(r => {
 
-                    if (r){
-                        return self.rpc(method, parameters, options, trying + 1)
-                    }
+                        if (r){
+                            return self.rpc(method, parameters, options, trying + 1)
+                        }
+    
+                        return Promise.reject(e)
+                    })
+                }
 
-                    return Promise.reject(e)
-                })
+                
             }
 
             if (e.code == 20){
@@ -826,11 +840,14 @@ var Api = function(app){
             if(!e) e = 'TypeError: Failed to fetch'
 
             if((!e.code || e.code == 20) && trying < 2){
-                return self.changeProxyIfNeedWithDirect().then(r => {
-                    trying++
 
-                    return self.rpc(method, parameters, options, trying)
-                })
+                if(isonline()){
+                    return self.changeProxyIfNeedWithDirect().then(r => {
+                        trying++
+
+                        return self.rpc(method, parameters, options, trying)
+                    })
+                }
             }
 
             if (e.code != 700){

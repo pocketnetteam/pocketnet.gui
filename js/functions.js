@@ -795,19 +795,31 @@
 
 		p.class = 'menudialog';
 
-		p.items.push({
+		/*p.items.push({
 			class : 'itemclose',
 			text : '<i class="fas fa-times-circle"></i>'
-		})
+		})*/
 		
 		var ehtml = function(){
 			var h = ''
 
+			h += '<div class="mobiledialogcontent customscroll">'
+
 			_.each(p.items, function(item, i){
-				h += '<div class="item ' + item.class + '" item="'+i+'">'
+				h += '<div class="item ' + (item.class || "") + '" item="'+i+'">'
 					h += item.text
 				h += '</div>'
 			})
+
+			h += '</div>'
+
+			h += '<div class="closeButton">'
+				h += '<div class="item itemclose">'
+					h += '<i class="fas fa-times-circle"></i>'
+				h += '</div>'
+			h += '</div>'
+
+			
 
 			return h;
 		}
@@ -819,16 +831,14 @@
 
 				var i = $(this).attr('item')
 
-				if(!p.items[i].action){
+				if(!i || !p.items[i].action){
 					self.destroy()
 				}
 				else
 				{
-
 					p.items[i].action(function(){
 						self.destroy()
 					})
-
 				}
 
 				
