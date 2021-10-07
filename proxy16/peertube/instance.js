@@ -8,6 +8,7 @@ var instance = function (host, Roy) {
   self.host = host;
 
   var inited = false;
+  var instanceIsActive = true;
   var logs = [];
   var lastStat = null;
   var k = 1000;
@@ -56,9 +57,12 @@ var instance = function (host, Roy) {
         videosinfo = data;
         videosinfo.difference = difference;
 
+        instanceIsActive = true;
+
         return Promise.resolve();
       })
       .catch((e) => {
+        instanceIsActive = false;
         return Promise.resolve();
       })
       .then(() => self.request('performance'))
@@ -68,12 +72,15 @@ var instance = function (host, Roy) {
       .then(() => {
         lastStat = null;
 
-        return f.delay(Roy.parent.statsInterval());
+        return f.delay(2000);
       })
       .then(() => {
         return statsRequest();
       })
-      .catch(() => Promise.resolve());
+      .catch(() => {
+        lastStat = null;
+        return statsRequest();
+      });
   };
 
   var spaceRequest = () => {
@@ -108,13 +115,13 @@ var instance = function (host, Roy) {
     if (typeof url == 'function') url = url(data);
 
 
-    //  console.log('host', p.royrequest, host)
     //if(p.royrequest && host.indexOf('pocketnetpeertube5') > -1 ) return Promise.reject("undeifd")
-
     return axios[p.type || 'get'](`http://${host}${url}`, {
       timeout: p.timeout || Roy.parent.timeout() || 10000,
     })
       .then((result) => {
+
+
         var meta = {
           url,
           status: 200,
@@ -184,9 +191,14 @@ var instance = function (host, Roy) {
   };
 
   self.canuse = function () {
-    var s = self.stats();
+    //previous method
+    // const s = self.stats();
 
-    return inited && s.averageTime && s.k;
+    // const canUseInstance = inited && s.averageTime && s.k;
+
+    const canUseInstance = inited && instanceIsActive;
+
+    return canUseInstance;
   };
 
   self.init = function () {

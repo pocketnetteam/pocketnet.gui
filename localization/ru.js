@@ -973,6 +973,7 @@ ____loclib.transcodingShort = "Обработка";
 ____loclib.editVideoDescription = "Изменить название/описание видео";
 ____loclib.errorChangingDescription = "Ошибка изменения видео";
 ____loclib.downloadVideo = "Скачать видео";
+____loclib.deleteSavedVideo = "Удалить сохраненное видео";
 ____loclib.selectQuality = "Выберите качество:";
 ____loclib.downloadedVideos = "Загруженные видео";
 ____loclib.deleteAllDownloadedVideos = "Удалить все загруженные видео";

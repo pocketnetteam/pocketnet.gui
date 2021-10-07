@@ -122,6 +122,7 @@
 		overflow: hidden; 
 		display: flex;
 		flex-direction: column;
+		.transition(0.1s, transform);
 
 		.authorgroup{
 			display: flex;
@@ -897,15 +898,19 @@
 			.metatable{
 				>div{
 					vertical-align: middle;
+
+					&.metadata{
+						overflow: hidden;
+					}
 					
 
 					&.metapanel{
-						display: initial;
-						width: 80px;
+						vertical-align: top;
+						width: 30px;
 						.metapanelitem{
 							opacity: 0.6;
 							cursor: pointer;
-							float: right;
+							margin-left: auto;
 							font-size: 0.8em;
 							color : #fff;
 							width: 22px;
@@ -1546,14 +1551,28 @@
 				bottom: 0;
 				top: 0;
 				background: fade(@color-black2, 90);
-				overflow-y: scroll;
 				padding-top: 0;
-				scrollbar-width: none;
-				overscroll-behavior: none;
 				
-				&::-webkit-scrollbar{
-					width: 0!important
+				
+
+				.sharecnt{
+					position: absolute;
+					overflow-y: scroll;
+					left: 0;
+					right: 0;
+					top : 0;
+					bottom : 0;
+					scrollbar-width: none;
+					overscroll-behavior: none;
+					transform: translate3d(0, 0, 0);
+					.transition(0.1s, transform);
+
+					&::-webkit-scrollbar{
+						width: 0!important
+					}
 				}
+				
+				
 
 				.videoviews{
 					padding-left: 2 * @rhythm;
@@ -2174,6 +2193,7 @@
 
 				.metatable{
 					>div{
+						
 						&.metapanel{
 							width: 20px;
 							color : @color-gray-mlight;
@@ -3151,11 +3171,12 @@ html.stblack{
 			}
 			
 			.share{
-				padding : 2 * @rhythm 0;
+				padding : @rhythm 0;
 				background: #fff;
 				margin-bottom: @rhythm;
 				cursor: default;
 				padding-bottom : 0;
+				border-radius: 0;
 
 				#comments{			
 					
@@ -3425,11 +3446,11 @@ html.stblack{
 				.meta{
 					.metatable{
 						>div{
-							width: 67%;
+							
 							margin-right: 0;
 						
 							&.metapanel{
-								width: 33%;
+								width: 30px;
 								padding-right: @rhythm;
 		
 								.metapanelitem{

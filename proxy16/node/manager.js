@@ -136,7 +136,6 @@ var Nodemanager = function(p){
         _.each(_.shuffle(notinitednodes), function(node){
             self.initIfNeed(node)
         })
-
         _.each(_.shuffle(self.nodes), function(node, i){
 
             if(i < 5){
@@ -144,6 +143,9 @@ var Nodemanager = function(p){
             }
             
         })
+
+
+        forgetIfNotUsing()
 
     }
 
@@ -191,27 +193,76 @@ var Nodemanager = function(p){
         return Promise.resolve(node)
     }
 
+    var getWorkingNodes = function(){
+
+        return _.filter(self.nodes, function(n){
+
+            if(!n.inited) return false
+
+            var s = n.statistic.get5min()
+            var r = n.statistic.rating()
+
+            var time = 1200
+
+            if (n.wss.count() < 5) time = 3000
+
+            if (s.success > 0 && s.success > s.failed && s.time < time && r && n.penalty().k < 0.8){
+                return true
+            }
+        })
+    }
+
     self.initIfNeed =  function(node){
 
         if(!node.eventsCount) return
 
-        var workingNodes = _.filter(self.nodes, function(n){
+        var workingNodes = getWorkingNodes()
 
-            if(!n.inited) return false
-
-            var s = n.statistic.getst()
-            var r = n.statistic.rating()
-
-            if (s.success > 0 && s.success > s.failed && s.time < 1200 && r){
-                return true
-            }
-        })
-
-        if (!usersfornode || self.proxy.users() / usersfornode >= workingNodes.length){
+        //if (!usersfornode || self.proxy.users() / usersfornode >= workingNodes.length){
             node.init()
-        }
+        //}
         
     }
+
+    var forgetIfNotUsing = function(){
+
+        return
+
+        var workingNodes = getWorkingNodes()
+
+        console.log('forgeting', workingNodes.length)
+
+        if (!usersfornode || self.proxy.users() / usersfornode >= workingNodes.length || workingNodes.length <= 1){
+
+            console.log("NO")
+        }else{
+
+            _.each(self.nodes, function(n){
+
+                if(n.inited){
+
+                    if(!n.wss.count()){
+
+                        if(f.date.addseconds(n.initedTime, 300) > new Date()){
+                            console.log('waitnodeforget', n.host)
+                        }
+                        else{
+                            console.log('forgetnode', n.host)
+                            n.forget()
+                        }
+                        
+
+                    }
+                    else{
+                        console.log("USERS ON NODE", n.host, n.wss.count())
+                    }
+                }
+
+            })
+           
+        }
+    }
+
     /// add to main
     self.add = function(node){
 
@@ -319,6 +370,9 @@ var Nodemanager = function(p){
             nodes[node.key] = {
                 node : node.exportsafe(),
                 statistic : node.statistic.getst(),
+                slice : node.statistic.get5min(),
+                history : node.statistic.gethistory(),
+                penalty : node.penalty(),
                 status : node.chainStatus(),
                 rating : node.statistic.rating(),
                 probability : node.statistic.probability(),
@@ -337,7 +391,6 @@ var Nodemanager = function(p){
         var commonStats = {}
 
         _.each(self.nodes, function(node){
-            console.log('node getGroupedByMethods')
             r[node.key] = node.statistic.getGroupedByMethods()
         })
 
@@ -406,6 +459,7 @@ var Nodemanager = function(p){
                         if(i < 5) return true
                     })
 
+                    //// remove
                     //docs = []
 
                     var nodes = _.map(c.concat(p.stable, docs || []) , function(options){
@@ -602,6 +656,8 @@ var Nodemanager = function(p){
         },  
         
         peernodesTime : function(node){
+
+
 
             var last = self.askedpeers[node.key]
 

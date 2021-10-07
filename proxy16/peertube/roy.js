@@ -53,12 +53,13 @@ var Roy = function (parent) {
   };
 
   self.init = function (urls) {
+
     _.each(urls, function (host) {
       if (!host || !host.split) return;
 
-      if (host.split('.').length != 3) return;
+      const splittedUrl = host.split('.');
 
-      if (host.split('.').length != 3) return
+      if (splittedUrl.length != 3 && splittedUrl[0] !== 'test') return;
 
       self.addInstance(host);
     });
@@ -120,11 +121,15 @@ var Roy = function (parent) {
 
   self.request = function (method, data = {}, p = {}, list, index) {
 
+    if (!index) index = 0;
+
     if (p.host) {
+
       var instance = self.findInstanceByName(p.host);
+
     } else {
+
       if (!list) list = self.bestlist();
-      if (!index) index = 0;
 
       var instance = list[index];
     }
@@ -133,20 +138,25 @@ var Roy = function (parent) {
 
     p.royrequest = true
 
-    //console.log("REQUEST")
+    console.log("REQUEST")
+
+    var end = false
 
     return instance.request(method, data, p).catch((e) => {
 
-      //console.log("E", e, instance.host)
+      if(e)
+        console.log("E", instance.host)
 
-        //if (e == 'failed')
+        if (e == 'failed') return Promise.reject(e)
+
         return self.request(method, data, p, list, index + 1);
-
-        return Promise.reject(e);
 
       }).then((r) => {
 
-        if (r.data) r.data.from = instance.host;
+
+        console.log('instance.host', instance.host)
+
+        if (r.data && !r.data.from) r.data.from = instance.host;
 
         return Promise.resolve(r);
 

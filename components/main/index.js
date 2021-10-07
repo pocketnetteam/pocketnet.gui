@@ -1049,7 +1049,7 @@ var main = (function(){
 					return
 				}
 
-				if(_s.v && isMobile() || window.cordova){
+				if(_s.v && (isMobile() || window.cordova)){
 
 					self.nav.api.load({
 						open : true,

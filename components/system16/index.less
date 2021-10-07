@@ -832,12 +832,29 @@
                 color : @color-gray-slight;
             }
 
+            .statistic{
+
+                i{
+                    font-size: 0.5em;
+                }
+
+                .alltime{
+                    color : @color-gray-slight;
+
+                    
+                }
+            }
+
             >div{
                 vertical-align: top;
                 padding :3 * @rhythm 2 * @rhythm;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
+
+                &.name{
+                    width: 120px;
+                }
 
                 &.use{
                     cursor: pointer;
@@ -847,14 +864,14 @@
                     }
                 }
 
-                &.fork{
+                /*&.fork{
                     width: 40px;
                     text-align: center;
                     padding-left: 0;
                     padding-right: 0;
-                }
+                }*/
 
-                &.block{
+                &.blockfork{
                     width: 90px;
                 }
 
@@ -886,8 +903,8 @@
                 }
 
                 &.panelWrapper{
-                    width : 140px;
-                    padding : 2 * @rhythm;
+                    width : 50px;
+                    padding : 2 * @rhythm 0;
                     padding-left: 0;
 
                     .item{

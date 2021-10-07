@@ -161,7 +161,6 @@ function rpc(request, callback, obj) {
 
             if (res.statusCode === 401) {
 
-
                 var exceededError = new Error(errorMessage + 'Connection Rejected: 401 Unnauthorized');
                     exceededError.code = 401;
 
@@ -178,17 +177,17 @@ function rpc(request, callback, obj) {
             }
             if (res.statusCode === 500 && buf.toString('utf8') === 'Work queue depth exceeded') {
 
-               
-
                 var exceededError = new Error('Bitcoin JSON-RPC: ' + buf.toString('utf8'));
 
                 exceededError.code = 429;
 
                 callback(exceededError);
+
                 return;
             }
 
             var parsedBuf;
+
             try {
                 parsedBuf = JSON.parse(buf);
             } catch (e) {

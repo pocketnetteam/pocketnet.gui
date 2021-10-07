@@ -2995,8 +2995,54 @@ video[src], .vjs-fullscreen {
   background: transparent;
   font-family: "Segoe UI", SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
+.video-js .vjs-bezel,
 .video-js .vjs-control-bar {
-  background: rgba(1, 18, 37, 0.75);
+  background: transparent;
+  text-shadow: -1px -1px 1px rgba(255, 255, 255, 0.1), 1px 1px 1px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.video-js .vjs-bezel {
+  z-index: 1;
+}
+.video-js .vjs-loading-spinner {
+  z-index: 1;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.vjs-slider-horizontal .vjs-slider-bar {
+  width: 100% !important;
+  transition: transform 0.2s;
+}
+.vjs-slider-horizontal .vjs-slider-bar:before {
+  display: none;
+}
+
+.video-js .vjs-progress-control:hover .vjs-progress-holder {
+  font-size: 1em;
+}
+
+.vjs-slider-vertical .vjs-slider-bar {
+  height: 100% !important;
+  transition: transform 0.2s;
+}
+.vjs-slider-vertical .vjs-slider-bar:before {
+  display: none;
+}
+
+.vjs-volume-level {
+  pointer-events: none;
+}
+.vjs-volume-level:before {
+  display: none;
+}
+
+.vjs-play-progress {
+  pointer-events: none;
+}
+.vjs-play-progress .vjs-time-tooltip {
+  display: none !important;
 }
 
 .video-js .vjs-tech {
@@ -3293,13 +3339,24 @@ video[src], .vjs-fullscreen {
   text-shadow: -1px -1px 1px rgba(255, 255, 255, 0.1), 1px 1px 1px rgba(0, 0, 0, 0.5);
   background: transparent;
 }
+.js-player .video-js #vjs-forward-button i,
+.js-player .video-js #vjs-rewind-button i,
+.js-player .video-js .vjs-big-play-button i,
+.video-js-wrapper .video-js #vjs-forward-button i,
+.video-js-wrapper .video-js #vjs-rewind-button i,
+.video-js-wrapper .video-js .vjs-big-play-button i {
+  vertical-align: middle;
+  font-size: 0.5em;
+}
 .js-player .video-js #vjs-rewind-button,
 .video-js-wrapper .video-js #vjs-rewind-button {
   margin-left: -4.5em;
+  line-height: 2.85em;
 }
 .js-player .video-js #vjs-forward-button,
 .video-js-wrapper .video-js #vjs-forward-button {
   margin-left: 1.5em;
+  line-height: 2.85em;
 }
 .js-player .video-js:hover .vjs-big-play-button,
 .js-player .video-js .vjs-big-play-button:focus,
@@ -3374,6 +3431,17 @@ video[src], .vjs-fullscreen {
   display: none;
 }
 
+.vjs-playing .vjs-big-play-button[mobilebutton=true] .vjs-icon-placeholder:before {
+  content: "" !important;
+}
+
+.vjs-big-play-button[mobilebutton=true] {
+  display: block !important;
+  visibility: visible;
+  opacity: 1;
+  transition: all 0.3s ease-in;
+}
+
 @media screen and (max-width: 300px) {
   #error-block {
     font-size: 36px;
@@ -3383,17 +3451,6 @@ video[src], .vjs-fullscreen {
   }
 }
 @media screen and (max-width: 1025px) {
-  .vjs-playing .vjs-big-play-button .vjs-icon-placeholder:before {
-    content: "" !important;
-  }
-
-  .vjs-big-play-button {
-    display: block !important;
-    visibility: visible;
-    opacity: 1;
-    transition: all 0.3s ease-in;
-  }
-
   #vjs-forward-button, #vjs-rewind-button {
     visibility: hidden;
     opacity: 0;
@@ -3438,10 +3495,10 @@ video[src], .vjs-fullscreen {
     bottom: 4.2em;
   }
   .js-player .video-js .vjs-control-bar {
-    height: 6em !important;
-    background: transparent;
+    backface-visibility: hidden;
+    height: 5em !important;
     font-size: 1.25em;
-    text-shadow: 1px 1px 2px black;
+    text-shadow: -1px -1px 1px rgba(255, 255, 255, 0.1), 1px 1px 1px rgba(0, 0, 0, 0.5);
     /*.vjs-mute-control{
       display: none;
     }*/

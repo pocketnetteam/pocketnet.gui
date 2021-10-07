@@ -1164,7 +1164,13 @@ ____loclib.emptyDescription = "Description is empty";
 ____loclib.transcodingShort = "Processing";
 ____loclib.editVideoDescription = "Edit video name/description";
 ____loclib.errorChangingDescription = "Unable to change video name/description";
-____loclib.downloadVideo = "Download video";
+____loclib.downloadVideo = "Save video";
+____loclib.downloadingVideo = "Saving video";
+____loclib.deleteSavedVideo = "Delete saved video";
+
+____loclib.downloadShare = "Save Share";
+____loclib.deleteSavedShare = "Delete Share";
+
 ____loclib.selectQuality = "Select quality:";
 ____loclib.downloadedVideos = "Downloaded videos";
 ____loclib.deleteAllDownloadedVideos = "Delete all downloaded videos";

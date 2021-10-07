@@ -73,6 +73,8 @@ var test = (function(){
 	
 					if (r) {
 						body += '<p><a href="'+r+'">From: '+r+'</a></p>'
+
+						_p.from = r
 					}
 	
 					_p.body = encodeURIComponent(body)

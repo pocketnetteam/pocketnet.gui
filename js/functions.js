@@ -772,7 +772,6 @@
 
 		p.html = '<div class="mobiledialogcontent">'+(p.html || '')+'</div><div class="closeButton"><button class="button ghost"><i class="far fa-times-circle"></i> Close</button></div>'
 
-
 		var c = p.clbk || function(){}
 
 		p.clbk = function(el){
@@ -796,19 +795,31 @@
 
 		p.class = 'menudialog';
 
-		p.items.push({
+		/*p.items.push({
 			class : 'itemclose',
 			text : '<i class="fas fa-times-circle"></i>'
-		})
+		})*/
 		
 		var ehtml = function(){
 			var h = ''
 
+			h += '<div class="mobiledialogcontent customscroll">'
+
 			_.each(p.items, function(item, i){
-				h += '<div class="item ' + item.class + '" item="'+i+'">'
+				h += '<div class="item ' + (item.class || "") + '" item="'+i+'">'
 					h += item.text
 				h += '</div>'
 			})
+
+			h += '</div>'
+
+			h += '<div class="closeButton">'
+				h += '<div class="item itemclose">'
+					h += '<i class="fas fa-times-circle"></i>'
+				h += '</div>'
+			h += '</div>'
+
+			
 
 			return h;
 		}
@@ -820,16 +831,14 @@
 
 				var i = $(this).attr('item')
 
-				if(!p.items[i].action){
+				if(!i || !p.items[i].action){
 					self.destroy()
 				}
 				else
 				{
-
 					p.items[i].action(function(){
 						self.destroy()
 					})
-
 				}
 
 				
@@ -6857,13 +6866,16 @@
 			if(direction == 'up' || direction == 'left') value = -value
 
 			if (prop == 'x'){
-				p.el.css("transform","translate3d("+(value || 0)+"px, 0, 0)");
+				p.el[0].style["transform"] = "scale(0.9) translate3d("+(value || 0)+"px, 0, 0)"
+				p.el[0].style['transform-origin'] = 'left center'
 			}
 
 			if (prop == 'y'){
-				p.el.css("transform","translate3d(0, "+(value || 0)+"px, 0)");
+				p.el[0].style["transform"] = "scale(0.9) translate3d(0, "+(value || 0)+"px, 0)"
+				p.el[0].style['transform-origin'] = 'center top'
 			}
 		}
+
 
 		var applyDirection = function(direction, v){
 			if (direction.positionclbk){
