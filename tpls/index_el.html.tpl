@@ -15,6 +15,7 @@
         <meta name="keywords" content="" />
 
         <meta http-equiv="Content-Security-Policy" content="
+        upgrade-insecure-requests;
         default-src https: 'self' file:; 
         connect-src https: wss: file: data: blob:;
         img-src 'self' data: https: file:;

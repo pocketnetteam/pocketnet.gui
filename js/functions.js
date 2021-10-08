@@ -9861,10 +9861,17 @@
 	    var type = null
 		var id = null
 		var host_name = null
-		
-	    // if(test && url.indexOf('channel') == -1 && url.indexOf("user") == -1){}
 
-	    	if(test && test[2] || (_url && _url.indexOf('peertube://') > -1)){
+		if(_url && _url.indexOf('peertube://') > -1){
+			var ch = _url.replace('peertube://', '').split('/');
+
+			id = ch[1]
+			type = 'peertube'
+			host_name = ch[0]
+			
+		}
+		else{
+			if(test && test[2]){
 
 				if (test.indexOf('youtube.com') > -1 || test.indexOf('youtu.be') > -1) {
 					type = 'youtube'
@@ -9879,15 +9886,13 @@
 					type = 'bitchute'
 					id = test[9]	
 			    }
-				if (test.indexOf('peertube://') > -1) {
-					var params = _url.split('?')[1] || '';
-
-					type = 'peertube'
-			        id = `${test[9]}` //?${params}
-					host_name = test[4]
-
-			    }
+				
 			}
+		}
+		
+	    // if(test && url.indexOf('channel') == -1 && url.indexOf("user") == -1){}
+
+	    	
 			
 	    return {
 	        type: type,

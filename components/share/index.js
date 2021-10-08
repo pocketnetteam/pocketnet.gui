@@ -785,7 +785,7 @@ var share = (function(){
                     }).then(r => {
 						var result = r[currentShare.url.v]
 
-						if(!result || !result.state || result.duration < 45){
+						if(!result || !result.state){
 							clbk(true)
 						}
 						else{

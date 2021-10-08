@@ -2343,11 +2343,13 @@ var lenta = (function(){
 			},
 
 			
-			share : function(share, clbk, all){
+			share : function(share, clbk, all, p){
+
+				if(!p) p = {}
 
 				if(!share) return
 
-				var _el = el.share[share.txid] 
+				var _el = p.el || el.share[share.txid] 
 
 				shareInitingMap[share.txid] = true;
 
@@ -2851,32 +2853,48 @@ var lenta = (function(){
 
 			repost : function(el, repostid, txid, empty, clbk){
 				if(repostid){
-					self.shell({
-						animation : false,
-						name :  'repost',
-						el : el.find('.repostWrapper'),
-						data : {
-							repost : repostid,
-							share : deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid),
-							level : 1
-						},
-	
-					}, function(_p){
 
-						if(_p.el && _p.el.length){
-							self.app.platform.papi.post(repostid, _p.el.find('.repostShare'), function(p){
+					//self.app.platform.sdk.node.shares.getbyid([repostid], function(){
 
-								_reposts[txid] = p;
-	
-							}, {
-								repost : true,
-								eid : txid + 'lenta',
-								level : 1,
-								fromempty : empty
-							})
-						}	
+						//var share = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + repostid)
 
-					})
+						self.shell({
+							animation : false,
+							name :  'repost',
+							el : el.find('.repostWrapper'),
+							data : {
+								repost : repostid,
+								share : deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid),
+								level : 1
+							},
+		
+						}, function(_p){
+
+							if(_p.el && _p.el.length){
+
+								/*console.log('share', share)
+
+								renders.share(share, function(){
+
+								}, false, {
+									el : _p.el.find('.repostShare')
+								})*/
+								
+								self.app.platform.papi.post(repostid, _p.el.find('.repostShare'), function(p){
+
+									_reposts[txid] = p;
+		
+								}, {
+									repost : true,
+									eid : txid + 'lenta',
+									level : 1,
+									fromempty : empty
+								})
+							}	
+
+						})
+
+					//})
 				}
 			},
 
