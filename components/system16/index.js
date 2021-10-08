@@ -2402,8 +2402,7 @@ var system16 = (function(){
 						renders.nodecontent(p.el)
 						renders.bots(p.el)
 
-						if ((isMobile() && typeof cordova != 'undefined')/* || (typeof _Electron != 'undefined' && window.electron)*/)
-							renders.downloadedvideoscontent(el.c);
+					
 	
 						if (clbk)
 							clbk()
@@ -3041,54 +3040,31 @@ var system16 = (function(){
 
 					renders.webdistributionwallets(p.el)
 
+					p.el.find('.refreshwallet').on('click', function(){
+						dialog({
+							class : 'zindex',
+							html : "Do you really want to refresh wallet?",
+							btn1text : self.app.localization.e('dyes'),
+							btn2text : self.app.localization.e('dno'),
+							success : function(){
+
+								proxy.fetchauth('wallet/clearexecuting', {}).then(r => {
+									successCheck()
+								}).catch(e => {
+									sitemessage(e)
+								})
+								
+							}
+						})
+					})
+
 					if (clbk)
 						clbk()
 				})
 				
 			},
 
-			downloadedvideoscontent : function(elc, clbk){
-
-				if(!info){
-					if(clbk) clbk()
-
-					return
-				}
-
-				self.shell({
-					inner : html,
-					name : 'downloadedvideoscontent',
-
-					el : elc.find('.downloadedvideoscontentWrapper')
-
-				},
-				function(){
-
-					var deleteButton = elc.find('#deleteAllDownloadedVideos')
-
-					if (deleteButton && deleteButton.on) {
-						deleteButton.on('click', function() {
-							// Ask user for confirmation
-							dialog({
-								html:  self.app.localization.e('deleteAllVideoDialog'),
-								btn1text: self.app.localization.e('dyes'),
-								btn2text: self.app.localization.e('dno'),
-								success: function () {
-									// User wants to delete all videos
-									self.app.platform.sdk.local.shares.deleteAll(function() {
-										// All videos deleted
-										deleteButton.replaceWith('<span>' + self.app.localization.e('noDownloadedVideos') + '</span>');
-									});
-								},
-								class : 'deleteAllDownloadVideoDialog'
-							});
-						});
-					}
-
-					if (clbk)
-						clbk()
-				})
-			},
+			
 
 
 			peertubecontent : function(elc, clbk){

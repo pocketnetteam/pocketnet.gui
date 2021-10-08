@@ -78,16 +78,22 @@ var lenta = (function(){
 
 
 		var actions = {
-			changeSavingStatus : function(shareId){
+			changeSavingStatusLight : function(share){
+
+				if (el.share[share.txid]){
+					el.share[share.txid].find('.shareSave').attr('status', self.app.platform.sdk.localshares.status(share.txid))
+				}
+
+			},
+			changeSavingStatus : function(shareId, deleted){
+
+				if(self.app.playingvideo && !deleted) return
 		
 				delete initedcommentes[shareId];
 				var share = self.app.platform.sdk.node.shares.storage.trx[shareId];
 
 				if (share)
 					actions.destroyVideo(share, true)
-
-				console.log('recommended', recommended)
-
 
 				if (recommended == 'saved'){
 
@@ -97,7 +103,6 @@ var lenta = (function(){
 					}
 
 					return
-				
 				}
 
 				renders.share(share, function() {
@@ -1653,6 +1658,20 @@ var lenta = (function(){
 		}
 
 		var events = {
+
+			shareSave : function(){
+				var shareId = $(this).closest('.share').attr('id');
+
+				var share = self.app.platform.sdk.node.shares.storage.trx[shareId];
+
+				self.app.platform.ui.saveShare(share, function(id, deleted){
+					if (actions.changeSavingStatus)
+						actions.changeSavingStatus(share.txid, deleted)
+				}, {
+					before : actions.changeSavingStatusLight,
+					after : actions.changeSavingStatusLight
+				})
+			},
 
 			sharesPreInitVideo : function(e, block){
 
@@ -3536,6 +3555,7 @@ var lenta = (function(){
 			el.c.on('click', '.metmenu', events.metmenu)
 			el.c.on('click', '.showmorebyauthor', events.showmorebyauthor)
 			el.c.on('click', '.commentsAction', events.toComments)
+			el.c.on('click', '.shareSave', events.shareSave)
 			//el.c.on('click', '.downloadBtn', events.downloadVideo)
 			//el.c.on('click', '.deleteBtn', events.deleteVideo)
 

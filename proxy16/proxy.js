@@ -357,6 +357,11 @@ var Proxy = function (settings, manage, test) {
 		setPrivateKey: function (key, private) {
 			return wallet.kit.setPrivateKey(key, private)
 		},
+
+		clearexecuting: function () {
+			return wallet.kit.clearexecuting()
+		},
+
 		apply: function (key) {
 			return wallet.kit.apply(key)
 		},
@@ -1608,6 +1613,29 @@ var Proxy = function (settings, manage, test) {
 						});
 				},
 			},
+
+			clearexecuting: {
+				path: '/wallet/clearexecuting',
+				authorization: 'signature',
+
+				action: function ({ A }) {
+
+					if (!A) return Promise.reject('admin');
+
+					return self.wallet.clearexecuting()
+						.then((r) => {
+							return Promise.resolve({
+								data: 'done',
+							});
+						})
+						.catch((e) => {
+							return Promise.reject(e);
+						});
+				},
+			},
+
+			
+
 			freeregistrationfake: {
 				path: '/free/registrationfake',
 				action: function ({ }) {

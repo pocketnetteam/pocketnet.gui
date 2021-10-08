@@ -802,8 +802,13 @@ var socialshare2 = (function(){
 
 				ed.url = self.app.nav.api.history.removeParametersFromHref(ed.url, ['mpost', 'msocialshare2'])
 
-				postId = ed.embedding && ed.embedding.id;
-
+				if(ed.embedding && ed.embedding.type == 'post'){
+					postId = ed.embedding && ed.embedding.id;
+				}
+				else{
+					postId = ''
+				}
+				
 
 				changeRef()
 			

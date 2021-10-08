@@ -1204,3 +1204,4 @@ ____loclib.bastyonhelperSubtitle2 = "Please, follow the link bellow";
 
 
 ____loclib.videotranscodingwait = "The video is being processed. After it is transcoded, you can post it on Bastyon.";
+____loclib.views = "Views";

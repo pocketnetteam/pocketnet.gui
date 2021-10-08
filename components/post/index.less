@@ -21,6 +21,14 @@
 		opacity: 0;
 	}
 
+	.statswrapperExtended{
+		display: flex;
+		padding : @rhythm 0;
+		span{
+			font-weight: 500;
+		}
+	}
+
 	.showmorelenta{
 		display: none;
 		background: #fff;
@@ -46,6 +54,28 @@
 		.statswrapper{
 			top : 0;
 			bottom : auto!important;
+		}
+	}
+
+	.shareSave{
+		i{
+			display: none;
+		}
+
+		&[status="cansave"]{
+			.cansave{
+				display: inline-block;
+			}
+		}
+		&[status="saving"]{
+			.saving{
+				display: inline-block;
+			}
+		}
+		&[status="saved"]{
+			.saved{
+				display: inline-block;
+			}
 		}
 	}
 	
@@ -1704,6 +1734,9 @@ html.stblack{
 #post{
 	border-top: 1px solid fade(@color-gray-slight,0.3);
 
+	.statswrapperExtended{
+		padding : @rhythm;
+	}
 
 	.showmorelenta{
 

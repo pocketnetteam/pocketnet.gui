@@ -21,6 +21,21 @@ var post = (function () {
 		var authblock = false;
 
 		var actions = {
+
+			changeSavingStatus : function(shareId, deleted){
+
+				if(self.app.playingvideo && !deleted) return
+		
+				renders.share()
+			},	
+
+			changeSavingStatusLight : function(share){
+
+				if (el.c){
+					el.c.find('.shareSave').attr('status', self.app.platform.sdk.localshares.status(share.txid))
+				}
+
+			},
 			authclbk: function () {
 				authblock = true;
 
@@ -370,7 +385,6 @@ var post = (function () {
 				var wa =  !share.repost && !ed.repost && ((share.itisvideo() && isMobile() || (ed.autoplay && pels.length <= 1))) ? true : false
 
 				if (pels.length) {
-					
 
 					var options = {
 						//autoplay : pels.length <= 1,
@@ -396,7 +410,10 @@ var post = (function () {
 						play : function(){
 							self.app.actions.playingvideo(player)
 
-							if(isMobile()){
+							console.log('share', ed)
+
+							if(isMobile() && !ed.repost){
+								
 								self.app.actions.scroll(125)
 							}
 						},
@@ -413,28 +430,7 @@ var post = (function () {
 						PlyrEx(el2, options, (_player) => {
 
 							player = _player
-
-							/*if (videoId && self.sdk.local.shares.getVideo(videoId, shareId) != undefined) {
-								renders.setShareDownload(shareId, 'downloaded');
-
-								setTimeout(() => {
-									el.c.on('click', '.metapanel.' + shareId + ' .downloadMetapanel .deleteBtn', events.deleteVideo);
-								}, 100);
-							} else {
-
-								if(window.cordova)
-									renders.setShareDownload(shareId, 'canDownload');
-
-								setTimeout(() => {
-									el.c.on('click', '.metapanel.' + shareId + ' .downloadMetapanel .downloadBtn', events.downloadVideo);
-								}, 100);
-
-							}
-
-							
-							if (downloadPanel && downloadPanel.removeClass && window.cordova)
-								downloadPanel.removeClass('downloading downloaded invisible').addClass('canDownload');*/
-
+						
 
 							if (wa) {
 
@@ -665,6 +661,18 @@ var post = (function () {
 		}
 
 		var events = {
+			shareSave : function(){
+
+				self.app.platform.ui.saveShare(share, function(id, deleted){
+
+					if (actions.changeSavingStatus)
+						actions.changeSavingStatus(share.txid, deleted)
+				}, {
+					before : actions.changeSavingStatusLight,
+					after : actions.changeSavingStatusLight
+				})
+			},
+
 			postscores: function () {
 				actions.postscores()
 			},
@@ -832,133 +840,6 @@ var post = (function () {
 
 
 				actions.donate()
-			},
-
-			downloadVideo : function() {
-				var id = share.txid;
-				var dwnloadBtn = el.c.find('.downloadBtn.' + id);
-				if (!player && !player.embed) return;
-				var embed = player.embed;
-				if (!embed.details || !embed.details.uuid || !embed.details.streamingPlaylists || embed.details.streamingPlaylists.length <= 0) return;
-				var streamingPlaylist = embed.details.streamingPlaylists[0];
-				if (!streamingPlaylist || !streamingPlaylist.files || streamingPlaylist.files.length <= 0) return;
-				// Generate the HTML menu
-				var menuContent = '<div class="sharepostmenu downloadMenu"><h2>' + self.app.localization.e('downloadVideo') + '</h2><h4>' + self.app.localization.e('selectQuality') + '</h4>';
-				_.each(streamingPlaylist.files, function(file) {
-					if (!file || !file.resolution || !file.resolution.label || !file.fileDownloadUrl) return;
-					menuContent += `<div class="menuitem table"><div class="label download${file.resolution.id}"><span>${file.resolution.label}</span>`;
-					if (file.size)
-						menuContent += `<span class="lightColor">${formatBytes(file.size)}</span>`;
-					menuContent += `</div></div>`;
-				});
-				menuContent += "</div>";
-				// Open the menu
-				self.app.platform.api.tooltip(dwnloadBtn, function() {
-					return menuContent;
-				}, function(tooltip)  {
-					_.each(streamingPlaylist.files, function(file) {
-						if (!file || !file.resolution || !file.resolution.id) return;
-						tooltip.find('.label.download' + file.resolution.id).on('click', function() {
-							events.downloadVideoFromUrl(embed.details.uuid, file, embed.details, id);
-							if (tooltip && tooltip.remove)
-								tooltip.remove();
-						});
-					});
-				}, {
-					dlg : true
-				});
-			},
-
-			downloadVideoFromUrl: function(id, video, videoDetails, shareId) {
-				if (!video || !video.fileDownloadUrl) return;
-				// Mobile
-				if (isMobile() && window.cordova && window.cordova.file) {
-					renders.setShareDownload(shareId, 'downloading');
-					self.sdk.local.shares.saveVideoCordova(shareId, id, video, videoDetails).then(() => {
-						// Success
-
-						// Update share video player
-						if (player) {
-							if (player.destroy)
-								player.destroy();
-							player = null;
-						}
-						renders.share(function() {
-							setTimeout(() => {
-								delete el[shareId];
-								renders.setShareDownload(shareId, 'downloaded');
-							}, 200);
-						}, true);
-
-					}, (err) => {
-						// Error
-						console.log(err);
-						renders.setShareDownload(shareId, 'canDownload');
-					});
-				}
-				// Electron
-				else if (typeof _Electron != 'undefined' && window.electron) {
-					renders.setShareDownload(shareId, 'downloading');
-					self.sdk.local.shares.saveVideoElectron(shareId, id, video, videoDetails).then(() => {
-						// Success
-
-						// Update share video player
-						if (player) {
-							if (player.destroy)
-								player.destroy();
-							player = null;
-						}
-						renders.share(function() {
-							setTimeout(() => {
-								delete el[shareId];
-								renders.setShareDownload(shareId, 'downloaded');
-							}, 200);
-						}, true);
-
-					}, (err) => {
-						// Error
-						console.log(err);
-						renders.setShareDownload(shareId, 'canDownload');
-					});
-				}
-				// Desktop
-				else {
-					var a = document.createElement("a");
-					a.href = video.fileDownloadUrl;
-					a.setAttribute("download", video.resolution.id + '.mp4');
-					a.click();
-				}
-			},
-
-			deleteVideo : function(){
-				var shareId = share.txid;
-				if (!shareId) return;
-				// Ask user for confirmation
-				dialog({
-					html:  self.app.localization.e('deleteVideoDialog'),
-					btn1text: self.app.localization.e('dyes'),
-					btn2text: self.app.localization.e('dno'),
-					success: function () {
-						// User wants to delete the video
-						self.sdk.local.shares.delete(shareId, function() {
-							
-							// Update share video player
-							if (player) {
-								if (player.destroy)
-									player.destroy();
-								player = null;
-							}
-							renders.share(function() {
-								setTimeout(() => {
-									delete el[shareId];
-									renders.setShareDownload(shareId, 'canDownload');
-								}, 200);
-							}, true);
-
-						});
-					},
-					class : 'deleteDownloadVideoDialog'
-				});
 			},
 
 		}
@@ -1137,7 +1018,7 @@ var post = (function () {
 						el.wr.addClass('active');
 
 						
-						if (share.itisvideo())
+						if (share.itisvideo() && !ed.repost && !_OpenApi)
 							renders.showmoreby()
 
 						renders.stars(function () {
@@ -1165,6 +1046,8 @@ var post = (function () {
 												events.openGallery,
 											);
 											el.share.on('click', '.forrepost', events.repost);
+
+											el.share.find('.shareSave').on('click', events.shareSave);
 
 											el.share.find('.txid').on('click', events.getTransaction);
 											el.share.find('.donate').on('click', events.donate);
@@ -1411,36 +1294,7 @@ var post = (function () {
 				}
 			},
 
-			// Update the download button for this share
-			// {shareId}: The tx ID of the share
-			// {action}:
-			//		canDownload: Show the download button
-			//		downloading: Show the spinner
-			//		downloaded: Show the green check and delete button
-			//		invisible: Hide everything
-			setShareDownload : function(shareId, action){
-				// Check if we have the HTML elements for this share
-				if (!el[shareId])
-					el[shareId] = el.c.find('.metapanel.' + shareId + ' .downloadMetapanel');
-				switch (action) {
-					case 'canDownload':
-						console.log('canDownload');
-						el[shareId].removeClass('downloading downloaded invisible').addClass('canDownload');
-						break;
-					case 'downloading':
-						console.log('downloading');
-						el[shareId].removeClass('canDownload downloaded invisible').addClass('downloading');
-						break;
-					case 'downloaded':
-						console.log('downloaded');
-						el[shareId].removeClass('downloading canDownload invisible').addClass('downloaded');
-						break;
-					case 'invisible':
-						console.log('invisible');
-						el[shareId].removeClass('downloading downloaded canDownload').addClass('invisible');
-						break;
-				}
-			}
+			
 		};
 
 		var state = {

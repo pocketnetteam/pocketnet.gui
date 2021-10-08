@@ -1,0 +1,25 @@
+<div class="downloadedvideos">
+
+    <div class="mwork">
+
+        <div class="caption">
+            <span><%=e('downloadedVideos')%></span>
+        </div>
+
+    </div>
+
+
+    <div class="cntpart">
+
+        <div class="mwork">
+            
+            <% if(app.platform.sdk.localshares.getTotalSize() <= 0) { %>
+                <span><%=e('noDownloadedVideos')%></span>
+            <% } else { %>
+                <button id="deleteAllDownloadedVideos"><%=e('deleteAllDownloadedVideos')%> (<%-formatBytes(app.platform.sdk.localshares.getTotalSize())%>)</button>
+            <% } %>
+
+        </div>
+
+    </div>
+</div>

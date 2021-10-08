@@ -319,6 +319,18 @@ var Wallet = function(p){
 
     self.kit = {
 
+        clearexecuting : function(){
+
+            _.each(addresses, function(r){
+                _.each(r.queue, function(q){
+                    delete q.executing
+                })
+            })
+
+            return Promise.resolve()
+
+        },
+
         apply : function(k){
             return self.kit.makequeueE(k)
         },

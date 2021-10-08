@@ -132,6 +132,16 @@
 			}
 		}
 
+		.statswrapperExtended{
+			display: flex;
+			padding : @rhythm 0;
+
+			span{
+				font-weight: 500;
+				font-size: 0.9em;
+			}
+		}
+
 		.debuginfo{
 	
 			padding : @rhythm 3* @rhythm;
@@ -574,6 +584,27 @@
 				}	
 			}
 
+			.shareSave{
+				i{
+					display: none;
+				}
+
+				&[status="cansave"]{
+					.cansave{
+						display: inline-block;
+					}
+				}
+				&[status="saving"]{
+					.saving{
+						display: inline-block;
+					}
+				}
+				&[status="saved"]{
+					.saved{
+						display: inline-block;
+					}
+				}
+			}
 
 			.shareSpacer{
 				height: 400px;
@@ -906,25 +937,24 @@
 
 					&.metapanel{
 						vertical-align: top;
-						width: 30px;
+						width: 40px;
 						.metapanelitem{
 							opacity: 0.6;
 							cursor: pointer;
 							margin-left: auto;
 							font-size: 0.8em;
 							color : #fff;
-							width: 22px;
+							width: 40px;
 							height: 22px;
 							line-height: 22px;
-							margin-right: @rhythm;
+							margin-right: auto;
 							text-align: center;
 							border-radius: 50%;
 							color : @color-gray2;
 							/*.transition(0.3s);*/
 
 							&:hover{
-								color : #fff;
-								background: @color-gray2;
+								opacity: 0.8;
 							}
 						}
 
@@ -1389,7 +1419,7 @@
 						height: 40px;
 						line-height: 40px;
 						text-align: center;
-						font-size: 0.9em;
+						font-size: 1em;
 						color : @color-bright;
 						cursor: pointer;
 						/*.transition(0.3s);*/
@@ -1445,10 +1475,7 @@
 
 					&:hover{
 						.icon{
-							border-radius : 50%;
-							.shadowSmall();
-							color : #fff;
-							background: @color-bright;
+							opacity: 0.7;
 						}
 					}
 
@@ -1663,6 +1690,10 @@
 
 				.repostWrapper{
 					display: none;
+				}
+
+				.statswrapperExtended{
+					background: #fff;
 				}
 
 				.work{
@@ -2199,7 +2230,7 @@
 					>div{
 						
 						&.metapanel{
-							width: 20px;
+							width: 40px;
 							color : @color-gray-mlight;
 
 							.metapanelitem{
@@ -2675,7 +2706,6 @@ html.stblack{
 	
 								&:hover{
 									color :@color-black;
-									background: @color-main;
 								}
 	
 							}
@@ -2868,8 +2898,10 @@ html.stblack{
 					
 					.work{
 						background: @color-black;
-	
-					
+					}
+
+					.statswrapperExtended{
+						background: @color-black;
 					}
 				}
 			}
@@ -3091,7 +3123,9 @@ html.stblack{
 				}
 			}
 
-
+			.statswrapperExtended{
+				padding : @rhythm;
+			}
 			
 			
 
@@ -3454,7 +3488,7 @@ html.stblack{
 							margin-right: 0;
 						
 							&.metapanel{
-								width: 30px;
+								width: 47px;
 								padding-right: @rhythm;
 		
 								.metapanelitem{

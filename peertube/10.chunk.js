@@ -152,7 +152,7 @@ class peertube_cap_level_controller_CapLevelController {
         this.autoLevelCapping = Number.POSITIVE_INFINITY;
         this.hls.firstLevel = this.getMaxLevel(this.firstLevel);
         self.clearInterval(this.timer);
-        this.timer = self.setInterval(this.detectPlayerSize.bind(this), 1000);
+        this.timer = self.setInterval(this.detectPlayerSize.bind(this), 10000);
         this.detectPlayerSize();
     }
     stopCapping() {

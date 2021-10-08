@@ -145,7 +145,7 @@ var metadisplay = function(){ %>
 
 		<% } %>
 
-		<% if(typeof repost != 'undefined' && repost && !fromempty) { %> 
+		<% if(typeof repost != 'undefined' && !fromempty) { %> 
 
 			
 
@@ -430,20 +430,49 @@ var metadisplay = function(){ %>
 									
 								</div>
 
-								
-								<% if(app.platform.repost && !my && !app.curation()) {%>
-									<div class="item <% if(!my){ %> forrepost <% } else { %> nact <% } %>">
+								<% if(window.cordova) {
+									
+									
+									var status = app.platform.sdk.localshares.status(share.txid)
+									
+									%>
+
+									<div class="item shareSave" status="<%-status%>">
 
 										<div class="itemwr table">
+
 											<div class="iconwr">											
 												<div class="icon">
-													<i class="fas fa-share"></i>
+													<i class="far fa-bookmark cansave"></i>
+													<i class="fas fa-spinner fa-spin saving"></i>
+													<i class="fas fa-bookmark saved"></i>
 												</div>
 											</div>
 										
 										</div>
 
 									</div>
+
+								<% } else { %> 
+									
+									
+									
+								
+									<% if(app.platform.repost && !my && !app.curation()) {%>
+										<div class="item <% if(!my){ %> forrepost <% } else { %> nact <% } %>">
+
+											<div class="itemwr table">
+												<div class="iconwr">											
+													<div class="icon">
+														<i class="fas fa-share"></i>
+													</div>
+												</div>
+											
+											</div>
+
+										</div>
+									<% } %>
+
 								<% } %>
 
 								

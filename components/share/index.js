@@ -785,17 +785,14 @@ var share = (function(){
                     }).then(r => {
 						var result = r[currentShare.url.v]
 
-						if(!result || !result.state){
+						if(!result || !result.state || result.duration < 45){
 							clbk(true)
 						}
 						else{
 							clbk(result.state.id != 2)
 
 						}
-
 						
-						console.log("result", result)
-						console.log("r", r)
 					})
 
 				}
@@ -823,6 +820,8 @@ var share = (function(){
 					currentShare.language.set(self.app.localization.key)
 
 					actions.checktranscoding(function(result){
+
+						return
 
 						if(!result){
 

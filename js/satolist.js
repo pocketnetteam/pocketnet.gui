@@ -2363,7 +2363,9 @@ Platform = function (app, listofnodes) {
             }
         },
 
-        saveShare : function(share, clbk){
+        saveShare : function(share, clbk, _p){
+
+            if(!_p) _p = {}
 
             var error = function(e){
                 console.log(e)
@@ -2379,11 +2381,10 @@ Platform = function (app, listofnodes) {
                 if(!p) p = {}
 
                 p.progress = function(key, percent){
-
                     topPreloader2(percent, self.app.localization.e('downloadingVideo'))
-
                 }   
 
+                p = _.extend(p, _p)
 
                 self.sdk.localshares.saveShare(share, p).then(r => {
                     
@@ -2396,13 +2397,39 @@ Platform = function (app, listofnodes) {
                 }).catch(error)
             }
 
+
+            if(self.sdk.localshares.saving[share.txid]) return
+
+            if(self.sdk.localshares.storage[share.txid]){
+
+                dialog({
+                    html:  self.app.localization.e('deleteVideoDialog'),
+                    btn1text: self.app.localization.e('dyes'),
+                    btn2text: self.app.localization.e('dno'),
+                    success: function () {
+                        
+    
+                        self.app.mobile.vibration.small()
+                        self.sdk.localshares.deleteShare(share.txid).then(r => {
+
+                            if(clbk) clbk(share.txid, true)
+    
+                        }).catch(error)  
+    
+                    }
+                })
+
+
+                return
+            }
+
+            
+
             if (share.itisvideo()){
 
                 var info = share.url ? (app.platform.sdk.videos.storage[share.url] || {}).data || null : null
 
                 if (info){
-
-                    console.log("INFO", info)
 
                     var items = _.map(deep(info, 'original.streamingPlaylists.0.files') || [], function(file){
                         return {
@@ -3443,9 +3470,12 @@ Platform = function (app, listofnodes) {
 
                             self.app.mobile.vibration.small()
 
-                            self.ui.saveShare(share, function(){
+                            self.ui.saveShare(share, function(id, deleted){
                                 if (actions.changeSavingStatus)
-                                    actions.changeSavingStatus(share.txid)
+                                    actions.changeSavingStatus(share.txid, deleted)
+                            }, {
+                                before : actions.changeSavingStatusLight,
+                                after : actions.changeSavingStatusLight
                             })
 
                             if (!mme && _el.tooltipster)
@@ -3455,24 +3485,9 @@ Platform = function (app, listofnodes) {
 
                         el.find('.deleteSavedVideo').on('click', function(){
 
-                            dialog({
-                                html:  self.app.localization.e('deleteVideoDialog'),
-                                btn1text: self.app.localization.e('dyes'),
-                                btn2text: self.app.localization.e('dno'),
-                                success: function () {
-
-                                    self.app.mobile.vibration.small()
-                                    self.sdk.localshares.deleteShare(share.txid).then(r => {
-
-                                        if (actions.changeSavingStatus)
-                                            actions.changeSavingStatus(share.txid)
-
-                                    }).catch(e => {
-                                        console.error(e)
-                                        sitemessage(e)
-                                    })  
-
-                                }
+                            self.ui.saveShare(share, function(id, deleted){
+                                if (actions.changeSavingStatus)
+                                    actions.changeSavingStatus(id, deleted)
                             })
 
                             if (!mme && _el.tooltipster)
@@ -3502,6 +3517,13 @@ Platform = function (app, listofnodes) {
             storage : {},
             saving : {},
             key : '',
+
+            status : function(id){
+                if(self.sdk.localshares.storage[id]) return 'saved'
+                if(self.sdk.localshares.saving[id]) return 'saving'
+
+                return 'cansave'
+            },
 
             clearfromstorage : function(shareId){
                 delete self.sdk.localshares.storage[shareId]
@@ -3559,7 +3581,9 @@ Platform = function (app, listofnodes) {
 
                 if(!p) p = {}
 
-                if(saving[share.txid]) return Promise.reject('saving')
+                if(self.sdk.localshares.saving[share.txid]) return Promise.reject('saving')
+
+                if(self.sdk.localshares.storage[share.txid]) return Promise.reject('Saved')
                 
                 if(!share) return Promise.reject('share')
 
@@ -3576,7 +3600,9 @@ Platform = function (app, listofnodes) {
                     },
                 };
 
-                saving[share.txid] = true
+                self.sdk.localshares.saving[share.txid] = true
+
+                if (p.before) p.before(share)
 
                 if (share.itisvideo())
                     shareInfo.video = share.url ? (app.platform.sdk.videos.storage[share.url] || {}).data || null : null
@@ -3593,15 +3619,21 @@ Platform = function (app, listofnodes) {
                 }).then(r => {
                     self.sdk.localshares.storage = {}
 
-                    saving[share.txid] = false
+                    self.sdk.localshares.saving[share.txid] = false
 
                     return self.sdk.localshares.init()
 
                     //self.sdk.localshares.addtostorage(shareInfo.share)
 
                     //return Promise.resolve()
+                }).then(r => {
+
+                    if (p.after) p.after(share)
+
                 }).catch(e => {
-                    saving[share.txid] = false
+                    self.sdk.localshares.saving[share.txid] = false
+
+                    if (p.after) p.after(share)
 
                     return Promise.reject(e)
                 })
