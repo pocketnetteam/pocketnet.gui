@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=5379"
+/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=9026"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -1598,7 +1598,7 @@ function getPointerPosition(el, event) {
   if (IS_IOS) {
     var item = el;
 
-    while (item && item.nodeName.toLowerCase() !== 'html') {
+    while (item && item.nodeName.toLowerCase() !== 'html' && item.nodeName != '#document-fragment') {
       var transform = computedStyle(item, 'transform');
 
       if (/^matrix/.test(transform)) {

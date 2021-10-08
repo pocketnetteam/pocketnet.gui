@@ -10361,8 +10361,19 @@ Platform = function (app, listofnodes) {
 
                 self.app.api.rpc('gettags', parameters).then(d => {
 
+                    console.log("DStags", d)
+
+                    var _d = _.map(d, function(_d){
+                        return {
+                            count : _d.count,
+                            tag : trim(decodeURIComponent(decodeURIComponent(_d.tag)))
+                        }
+                    })
+
+                    console.log("DStags2", _d)
+
                     if (clbk) {
-                        clbk(d)
+                        clbk(_d)
                     }
         
                 }).catch(e => {
