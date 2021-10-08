@@ -21,7 +21,7 @@ var Nodemanager = function(p){
   
 
     var findInterval = null
-    var peernodesCheckTime = 5000000
+    var peernodesCheckTime = 1000000
     var usersfornode = 30
 
     var commonnotinitedInterval = null
@@ -585,7 +585,7 @@ var Nodemanager = function(p){
                     })
 
                     //// remove
-                    docs = []
+                    //docs = []
 
                     var nodes = _.map(c.concat(p.stable, docs || []) , function(options){
 
@@ -781,8 +781,6 @@ var Nodemanager = function(p){
         },  
         
         peernodesTime : function(node){
-
-
 
             var last = self.askedpeers[node.key]
 

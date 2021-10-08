@@ -2388,7 +2388,7 @@ Platform = function (app, listofnodes) {
 
                 self.sdk.localshares.saveShare(share, p).then(r => {
                     
-                    sitemessage(self.app.localization.e('downloaded'))
+                    sitemessage(self.app.localization.e('successdownloaded'))
 
                     topPreloader2(100)
 
@@ -2397,95 +2397,104 @@ Platform = function (app, listofnodes) {
                 }).catch(error)
             }
 
-
             if(self.sdk.localshares.saving[share.txid]) return
 
             if(self.sdk.localshares.storage[share.txid]){
 
-                dialog({
-                    html:  self.app.localization.e('deleteVideoDialog'),
-                    btn1text: self.app.localization.e('dyes'),
-                    btn2text: self.app.localization.e('dno'),
-                    success: function () {
-                        
-    
-                        self.app.mobile.vibration.small()
-                        self.sdk.localshares.deleteShare(share.txid).then(r => {
+                menuDialog({
+                    items: [{
+                        text: self.app.localization.e('deleteVideoDialog'),
+                        action: function (_clbk) {
 
-                            if(clbk) clbk(share.txid, true)
-    
-                        }).catch(error)  
-    
-                    }
+                            self.sdk.localshares.deleteShare(share.txid).then(r => {
+
+                                if(clbk) clbk(share.txid, true)
+        
+                            }).catch(error) 
+
+                            _clbk()
+
+                        }
+                    }]
                 })
-
 
                 return
             }
 
+            menuDialog({
+                items: [{
+                    text: self.app.localization.e('saveshare'),
+                    action: function (_clbk) {
+
+                        if (share.itisvideo()){
+
+                            var info = share.url ? (app.platform.sdk.videos.storage[share.url] || {}).data || null : null
             
-
-            if (share.itisvideo()){
-
-                var info = share.url ? (app.platform.sdk.videos.storage[share.url] || {}).data || null : null
-
-                if (info){
-
-                    var items = _.map(deep(info, 'original.streamingPlaylists.0.files') || [], function(file){
-                        return {
-                            text: file.resolution.label,
-                            action: function (clbk) {
-
-                                save({resolutionId : file.resolution.id})
-
-                                clbk()
-
+                            if (info){
+            
+                                var items = _.map(deep(info, 'original.streamingPlaylists.0.files') || [], function(file){
+                                    return {
+                                        text: file.resolution.label,
+                                        action: function (clbk) {
+            
+                                            save({resolutionId : file.resolution.id})
+            
+                                            clbk()
+            
+                                        }
+                                    }   
+                                })
+            
+                                if(info && info.original && info.original.isLive){
+            
+                                    dialog({
+                                        html: "Please wait, you will be able to download the video when the broadcast recording appears",
+                                        btn1text: self.app.localization.e('daccept'),
+                                        class : 'one',
+                                        success: function () {
+                    
+                                        }
+                                    })
+            
+                                    return
+                                }
+            
+                                if(!items.length){
+            
+                                    dialog({
+                                        html: "Please wait, the video hasn't been transcoded yet",
+                                        btn1text: self.app.localization.e('daccept'),
+                                        class : 'one',
+                                        success: function () {
+                    
+                                        }
+                                    })
+            
+                                    return
+            
+                                }
+            
+                                menuDialog({
+                                    header : self.app.localization.e('selectQuality'),
+                                    items: items
+                                })
+            
                             }
-                        }   
-                    })
-
-                    if(info && info.original && info.original.isLive){
-
-                        dialog({
-                            html: "Please wait, you will be able to download the video when the broadcast recording appears",
-                            btn1text: self.app.localization.e('daccept'),
-                            class : 'one',
-                            success: function () {
-        
+                            else{
+                                error('noinfo')
                             }
-                        })
+                        }
+                        else{
+                            error('todo')
+                        }
 
-                        return
+                        _clbk()
+
                     }
+                }]
+            })
 
-                    if(!items.length){
-
-                        dialog({
-                            html: "Please wait, the video hasn't been transcoded yet",
-                            btn1text: self.app.localization.e('daccept'),
-                            class : 'one',
-                            success: function () {
-        
-                            }
-                        })
-
-                        return
-
-                    }
-
-                    menuDialog({
-                        caption : self.app.localization.e('selectQuality'),
-                        items: items
-                    })
-
-                }
-                else{
-                    error('noinfo')
-                }
-            }
-            else{
-                error('todo')
-            }
+            
 
         }
     }

@@ -430,7 +430,7 @@ var metadisplay = function(){ %>
 									
 								</div>
 
-								<% if(window.cordova) {
+								<% if(window.cordova && share.itisvideo()) {
 									
 									
 									var status = app.platform.sdk.localshares.status(share.txid)

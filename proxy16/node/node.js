@@ -263,8 +263,8 @@ var Node = function(options, manager){
                     }
 
                     if(err.code == 521) penalty.set(0.8, 120000, '521')
-                    if(err.code == 408) penalty.set(0.9, 30000, '408')
-                    if(err.code == 429) penalty.set(0.5, 10000, '429')
+                    if(err.code == 408) penalty.set(0.5, 30000, '408')
+                    if(err.code == 429) penalty.set(0.3, 10000, '429')
     
                 }	
 
