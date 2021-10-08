@@ -919,6 +919,11 @@ Application = function(p)
 					window.Keyboard.disableScroll(false)
 				}
 
+				if (cordova.plugins && cordova.plugins.backgroundMode)
+					cordova.plugins.backgroundMode.on('activate', function() {
+						cordova.plugins.backgroundMode.disableWebViewOptimizations(); 
+					});
+
 				self.init(p)
 
 			}, false);
@@ -1030,6 +1035,37 @@ Application = function(p)
 			}
 
 			self.playingvideo = v
+
+			console.log('self.playingvideo', self.playingvideo)
+			
+
+			if(self.playingvideo){
+
+				setTimeout(function(){
+
+					var scrollTop = self.actions.getScroll()
+	
+					if (self.playingvideo && self.playingvideo.playing){
+
+						if (scrollTop >= 65)
+							self.el.html.addClass('scrollmodedown')
+						
+					}
+	
+				}, 1000)
+			}
+			
+			setTimeout(function(){
+
+				var duration = deep(self.playingvideo, 'embed.details.duration') || 0
+
+				//console.log('self.playingvideo.volume', self.platform.sdk.videos.volume)
+
+				self.mobile.backgroundMode(self.playingvideo && self.playingvideo.playing && (!duration || duration > 60)/* && self.platform.sdk.videos.volume*/)
+
+			}, 1000)
+
+			
 
 		},
 
@@ -1164,17 +1200,21 @@ Application = function(p)
 
 					var cs = (lastScrollTop + 40 < scrollTop || lastScrollTop - 40 < scrollTop)
 
-					if (scrollTop < 900){
+					var scrollTopH = 900
+
+					if(self.playingvideo) scrollTopH = 65
+ 
+					if (scrollTop < scrollTopH){
 
 						showPanel = '1'
 
-						if (self.el.html.hasClass('scrollmodedown'))
+						if (self.el.html.hasClass('scrollmodedown') )
 							self.el.html.removeClass('scrollmodedown')
 
 						return
 					}
 
-					if (scrollTop > 900 && cs){
+					if (scrollTop > scrollTopH && cs){
 						if(lastScrollTop + 40 < scrollTop){
 							showPanel = '2'
 
@@ -1741,8 +1781,14 @@ Application = function(p)
 			if (window.cordova){
 				if (window.cordova.plugins && window.cordova.plugins.backgroundMode){
 
-					if(t) cordova.plugins.backgroundMode.enable()
-					else cordova.plugins.backgroundMode.disable()
+					console.log("BACKGROUNDMODE ENABLED", t ? true : false)
+
+					if(t) {
+						cordova.plugins.backgroundMode.enable()
+					}
+					else {
+						cordova.plugins.backgroundMode.disable()
+					}
 				}
 			}
 			

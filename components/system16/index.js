@@ -9,7 +9,7 @@ var system16 = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, api = null, proxy = null, info = null, stats = [], system = null, bots = [], peertubePerformance = {};
+		var el, api = null, proxy = null, chain = null, info = null, stats = [], system = null, bots = [], peertubePerformance = {};
 
 		var graphs = {}
 
@@ -23,6 +23,9 @@ var system16 = (function(){
 
 		var settings = {
 			charts : {
+				chain : {
+					type : 'blockchain'
+				},
 				nodes : {
 					type : 'rating'
 				},
@@ -835,6 +838,18 @@ var system16 = (function(){
 		}
 
 		var cpsub = {
+			chain : {
+				blockchain : {
+					caption : "Fork",
+
+					/*series : [
+						{
+							name : "Blocks/Hashes",
+							id : 'ct'
+						}
+					]*/
+				}
+			},
 			nodes : {
 
 				penalty : {
@@ -1180,6 +1195,164 @@ var system16 = (function(){
 		}
 
 		var cp = {
+			chain : function(data){
+
+				var subtype = settings.charts.chain.type
+
+				var meta = cpsub.chain[subtype]
+
+				console.log('chainCHART', chain, subtype)
+
+				if (subtype == 'blockchain'){
+
+					if(!chain) return {}
+
+					var lmeta = {
+						type : 'spline',
+						caption : meta.caption,
+						removeLegend : true,
+
+						disableYLabels : true,
+						height : 150,
+
+						prepareOptions : function(options){
+
+							options.plotOptions.spline.marker.enabled = false
+							options.plotOptions.spline.dataLabels || (options.plotOptions.spline.dataLabels = {})
+
+							options.tooltip.formatter = function(p, s) {
+
+								var point = this.points[0].point
+				
+								return point.x
+							} 
+	
+							options.plotOptions.spline.dataLabels.style = {
+								textOutline: false,
+								color : 'rgb(255, 60, 0)'
+							}
+	
+							options.plotOptions.spline.dataLabels.formatter = function() {
+								var _x = this.x;
+	
+								if (this.point.datalabelvalue) _x = this.point.datalabelvalue;
+	
+								return _x;
+							}
+
+							console.log('plotLines', plotLines, options.yAxis)
+
+							options.yAxis[0].plotLines = plotLines
+							
+						}
+					}
+
+					var series = []
+
+					var chainmap = {}
+
+					var cnt = 100
+
+					var plotLines = []
+
+					_.each(chain.chains, function(nodechain){
+
+
+						var fnodechain = _.filter(nodechain, function(cl){
+							return cl.height + cnt > chain.commonHeight
+						})
+
+						if(!fnodechain.length) return
+
+						var serie = []
+
+						_.each(fnodechain, function(chainlink){
+							if(!chainmap[chainlink.height]) chainmap[chainlink.height] = []
+
+							var index = _.indexOf(chainmap[chainlink.height], chainlink.blockhash)
+
+							if (index == -1){ 
+								index = chainmap[chainlink.height].push(chainlink.blockhash) - 1
+							}
+
+							serie.push({
+								y : index + 1,
+								x : chainlink.height
+							})
+						})
+
+						/*_.each(serie, function(point, i){
+							if(i > 0 && i < serie.length - 1){
+								var prev = serie[i - 1]
+								var next = serie[i - 1]
+
+								if (prev.y == next.y) point.y = prev.y
+							}
+						})*/
+
+						series.push({
+							name : "Node Chain",
+							data : serie,
+							color : 'rgba(0, 144, 255, 0.1)',
+						})
+
+						plotLines.push({
+							color: 'rgba(0, 144, 255, 0.2)',
+							dashStyle: 'solid',
+							width: 1,
+							value: Number(fnodechain[fnodechain.length - 1].height),
+							zIndex: 1
+						})
+
+					})
+
+
+					var chainmapserie = {
+						color : '#ff3600',
+						name : "Common",
+						data : []
+					}
+
+					_.each(chain.commonchain, function(chainlink){
+
+						var height = Number(chainlink.height)
+
+						if (height + cnt > chain.commonHeight){
+
+							if(!chainmap[height]) chainmap[height] = []
+
+							var index = _.indexOf(chainmap[height], chainlink.blockhash)
+
+							if (index == -1){ 
+								index = chainmap[height].push(chainlink.blockhash) - 1
+							}
+
+
+							chainmapserie.data.push({
+								x : height,
+								y : index + 1
+							})
+
+						}
+					})
+
+
+					if (chainmapserie.data.length)
+
+						series.push(chainmapserie)
+
+
+					return {
+						meta : lmeta,
+						preparedseries : series
+					}
+
+
+				}
+
+				return {}
+
+			},
 			server : function(data){
 
 				var subtype = settings.charts.server.type
@@ -1232,7 +1405,6 @@ var system16 = (function(){
 					series : series
 				}
 			},
-			
 
 			nodes : function(data){
 
@@ -1399,6 +1571,9 @@ var system16 = (function(){
 				return _.clone(type.meta);
 			},
 			series :  function(type, data){
+
+				if(type.preparedseries) return type.preparedseries
+
 				var s = [];
 
 				var _cp = type.series
@@ -1431,7 +1606,11 @@ var system16 = (function(){
 		var chart = {
 			prepare : function(type, data, el){
 
+				
+
 				var t = helpers.type(type, data)
+
+				console.log("CHARTPREPARE", type, t)
 
 				var chart = helpers.chart(t)
 				var series = helpers.series(t, data);
@@ -1454,9 +1633,12 @@ var system16 = (function(){
 
 				var t = helpers.type(type, data)
 
+				console.log('t.prepareOptions', t.meta)
+
 				graph.render({
 					height : 250,
-					maxPointsCount : 50
+					maxPointsCount : 50,
+					prepareOptions : t.meta ? t.meta.prepareOptions : null
 				}, function(){
 
 					if (settings.charts[type].showed){
@@ -2215,6 +2397,7 @@ var system16 = (function(){
 	
 						renders.servercontent(p.el)
 						renders.nodescontent(p.el)
+						renders.chaincontent(p.el)
 						renders.peertubecontent(el.c)
 						renders.nodecontent(p.el)
 						renders.bots(p.el)
@@ -2998,6 +3181,43 @@ var system16 = (function(){
 				})
 			},
 
+			chaincontent: function(elc, clbk){
+
+				if(!info){
+					if(clbk) clbk()
+
+					return
+				}
+
+				self.shell({
+					inner : html,
+					name : 'chaincontent',
+					data : {
+						info : info,
+						manager : info.nodeManager,
+						proxy : proxy,
+						admin : actions.admin(),
+					},
+
+					el : elc.find('.chainWrapper')
+
+				},
+				function(){
+					pretry(() => {
+						return chain
+					}).then(r => {
+
+						if(el.c){
+							chart.make('chain', {}, null, false)
+						}
+
+					}, 50, 5000)
+					
+
+					if (clbk)
+						clbk()
+				})
+			},
 
 			nodescontent : function(elc, clbk){
 
@@ -3616,8 +3836,9 @@ var system16 = (function(){
 					chart.make('nodes', stats, null, update)
 					chart.make('wallets', stats, null,  update)
 					chart.make('peertube', stats, null, update)
-					
 				}
+
+				
 
 			},
 
@@ -3643,7 +3864,7 @@ var system16 = (function(){
 				settings.charts.nodes.showed = true
 			}
 
-		
+			settings.charts.chain.showed = true
 		}
 
 		var destroy = function(){
@@ -3661,7 +3882,7 @@ var system16 = (function(){
 
 			proxy = prx//api.get.current()
 
-
+			chain = null
 			info = null
 			stats = []
 			bots = []
@@ -3690,6 +3911,8 @@ var system16 = (function(){
 
 					info = r.info
 
+					console.log('info', info)
+
 					initsettings()
 					
 					stats = [{
@@ -3702,6 +3925,8 @@ var system16 = (function(){
 					return proxy.get.stats()
 
 				}).then(data => {
+
+					console.log("DAS")
 
 					stats = data.stats
 
@@ -3716,8 +3941,15 @@ var system16 = (function(){
 						renders.webserveradmin(el.c)
 					},500)	
 
+					proxy.fetch('nodes/chain', {}).then(r => {
+						chain = r.chain
+
+					})
+
 					if (actions.admin()) {
+
 					  return proxy
+
 						.fetchauth('peertube/stats')
 						.then((data) => (peertubePerformance = { ...data }))
 						.then(() => proxy.system.request('get.settings'))
@@ -3732,17 +3964,25 @@ var system16 = (function(){
 						  return proxy.system.request('bots.get');
 						})
 						.then((r) => {
+							
 						  bots = r.bots || [];
 						  renders.bots(el.c);
 		  
 						  el.c.find('.collapsepart').each(function (i) {
 							if (expanded[i]) $(this).addClass('expanded');
 						  });
+						  
 						});
+
 					}
+
+					console.log("HERE111")
+
+					
 					
 						
 				}).catch(e => {
+					console.log("E" , e)
 					makers.proxycurrent()
 				})
 			}

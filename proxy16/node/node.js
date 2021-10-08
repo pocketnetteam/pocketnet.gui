@@ -155,6 +155,10 @@ var Node = function(options, manager){
         return null
     }
 
+    self.getchain = function(){
+        return chain
+    }
+
     self.addblock = function(block){
 
 
@@ -174,7 +178,7 @@ var Node = function(options, manager){
 
             }
 
-            chain = f.lastelements(chain, 300, 10)
+            chain = f.lastelements(chain, 150, 10)
 
         }
     }
@@ -186,20 +190,30 @@ var Node = function(options, manager){
     self.chainStatus = function(){
         if(!manager || !chain.length) return {}
 
-        var cs = manager.currentChainCommon()
+        var cs = manager.currentChainCommon2()
         var lastblock = self.lastblock()
 
         if(!cs || !lastblock) return {}
 
         var d = lastblock.height - cs.commonHeight
 
-        var hascommonblock = _.find(chain, function(c){
-            return c.blockhash == cs.commonBlockHash
+        var counter = 0
+        var dcounter = 0
+
+        _.each(cs.lasttrustblocks, function(tblock){
+            var bc = _.find(chain, function(c){
+                return c.height == cs.tblock
+            })
+
+            if (bc){
+                counter++
+
+                if(bc.blockhash != tblock.blockhash) dcounter++
+            }   
         })
 
-
         return {
-            fork : !d && !hascommonblock,
+            fork : dcounter / counter < 0.5,
             difference : d
         }
         
@@ -248,7 +262,7 @@ var Node = function(options, manager){
                         code = 521
                     }
 
-                    if(err.code == 521) penalty.set(0.8, 60000, '521')
+                    if(err.code == 521) penalty.set(0.8, 120000, '521')
                     if(err.code == 408) penalty.set(0.9, 30000, '408')
                     if(err.code == 429) penalty.set(0.5, 10000, '429')
     

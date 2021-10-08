@@ -395,6 +395,10 @@ var post = (function () {
 
 						play : function(){
 							self.app.actions.playingvideo(player)
+
+							if(isMobile()){
+								self.app.actions.scroll(125)
+							}
 						},
 
 						pause : function(){

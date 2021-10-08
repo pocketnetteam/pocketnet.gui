@@ -1186,3 +1186,6 @@ ____loclib.bastyonhelperTitle1 = "Pocketnet has moved",
 ____loclib.bastyonhelperTitle2 = "Bastyon of Free Speech";
 ____loclib.bastyonhelperSubtitle1 = "Pocketnet is now";
 ____loclib.bastyonhelperSubtitle2 = "Please, follow the link bellow";
+
+
+____loclib.videotranscodingwait = "The video is being processed. After it is transcoded, you can post it on Bastyon.";

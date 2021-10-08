@@ -984,3 +984,5 @@ ____loclib.bastyonhelperTitle1 = "Покетнет переехал",
 ____loclib.bastyonhelperTitle2 = "Бастион Свободы Слова";
 ____loclib.bastyonhelperSubtitle1 = "Теперь Pocketnet - это";
 ____loclib.bastyonhelperSubtitle2 = "Пожалуйста, перейдите по ссылке ниже";
+
+____loclib.videotranscodingwait = "В данный момент видео еще обрабатывается. Как только процесс завершится вы сможете сделать публикацию.";

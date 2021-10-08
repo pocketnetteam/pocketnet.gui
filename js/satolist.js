@@ -17764,22 +17764,15 @@ Platform = function (app, listofnodes) {
                     return self.sdk.videos.types.youtube(links)
                 },
 
-                
-
                 peertube : async function(links){
-
 
                     return self.app.api.fetch('peertube/videos', {
                         urls: links.map(link => link.link),
                     }).then(linksInfo => {
-
                         self.sdk.videos.catchPeertubeLinks(linksInfo, links)
-
                         return Promise.resolve(links);
                     })
 
-
-                  
                 },
 
                 bitchute : function(links){

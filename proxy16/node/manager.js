@@ -218,15 +218,15 @@ var Nodemanager = function(p){
 
         var workingNodes = getWorkingNodes()
 
-        //if (!usersfornode || self.proxy.users() / usersfornode >= workingNodes.length){
+        if (!usersfornode || self.proxy.users() / usersfornode >= workingNodes.length){
             node.init()
-        //}
+        }
         
     }
 
     var forgetIfNotUsing = function(){
 
-        return
+        
 
         var workingNodes = getWorkingNodes()
 
@@ -361,6 +361,128 @@ var Nodemanager = function(p){
 
     }
 
+    self.currentChainCommon2 = function(){
+
+        if(!self.nodes.length) return null
+
+        if(cachedchain){
+            if(f.date.addseconds(cachedchain.time, 30) > new Date()){
+                return cachedchain.result
+            }
+        }
+
+        var chains = _.map(self.nodes, function(node){
+            return node.getchain()
+        })
+
+        var heightmap = {}
+        var chainmap = {}
+        var commonchain = {};
+        var commonchainArray = []
+        var heightpoint = 1
+        var hashpoint = 1
+        var hashmap = {}
+
+        _.each(chains, function(chain){
+
+            _.each(chain, function(chainlink, i){
+                if(!heightmap[chainlink.height]) 
+                    heightmap[chainlink.height] = 0; 
+                    heightmap[chainlink.height] ++
+
+                if(!chainmap[chainlink.height]) 
+                    chainmap[chainlink.height] = {}
+
+                if(!chainmap[chainlink.height][chainlink.blockhash]) 
+                    chainmap[chainlink.height][chainlink.blockhash] = 0; 
+                    chainmap[chainlink.height][chainlink.blockhash] ++;
+
+                //if(!hashmap[chainlink.blockhash]) hashmap[chainlink.blockhash] = {}
+
+                if(i){
+                    hashmap[chainlink.blockhash] = chain[i - 1].blockhash
+                }
+            })
+            
+        })
+
+        heightpoint = _.max(_.toArray(heightmap), function(r) {return r})
+
+        _.each(chainmap, function(blockhashes, height){
+
+            var maxhash = null
+
+            _.each(blockhashes, function(count, blockhash){
+                if(!maxhash || count > blockhashes[maxhash]) maxhash = blockhash
+            })
+
+            if(hashpoint < maxhash) hashpoint = maxhash
+
+            commonchain[height] = {
+                blockhash : maxhash,
+                actual : blockhashes[maxhash] / hashpoint >= 0.5
+            }
+            
+        })
+        
+        commonchainArray = _.map(commonchain, function({blockhash, actual}, height){
+
+            return {
+                blockhash, 
+                height,
+                actual_h : heightmap[height] / heightpoint >= 0.5,
+                actual_b : actual
+            }
+
+        })
+
+        commonchainArray = _.sortBy(commonchainArray, function(v){
+            return v.height
+        })
+
+        if(!commonchainArray.length){
+            return {}
+        }
+
+        var lastchain = commonchainArray[commonchainArray.length - 1]
+
+        var maxHeight = lastchain.height
+
+        var commonBlockHash = null
+        var commonHeight = 0
+        var lasttrustblocks = []
+
+        for(var i = commonchainArray.length - 1; i >= 0; i--){
+            var chainlink = commonchainArray[i]
+
+            if(!commonBlockHash && chainlink.actual_b) commonBlockHash = chainlink.blockhash
+            if(!commonHeight && chainlink.actual_h) commonHeight = chainlink.height
+
+            if (commonBlockHash && lasttrustblocks.length < 6){
+                lasttrustblocks.push(chainlink)
+            }
+        }
+
+        var result = {
+            commonHeight,
+            maxHeight,
+            commonBlockHash,
+            lasttrustblocks,
+            commonchain : commonchainArray,
+            chainmap,
+            hashmap,
+            chains
+        }
+
+        cachedchain = {
+            result : result,
+            time : new Date(),
+        }
+
+        return result
+
+    }
+
     self.getnodes = function(filter){
 
         var nodes = {}
@@ -399,7 +521,16 @@ var Nodemanager = function(p){
         }
     }
 
-    self.info = function(){
+    self.info = function(compact){
+
+        var chaininfo = self.currentChainCommon2()
+
+        var _ch = {
+            commonHeight : chaininfo.commonHeight,
+            maxHeight : chaininfo.maxHeight,
+            commonBlockHash : chaininfo.commonBlockHash,
+            lasttrustblocks : chaininfo.lasttrustblocks,
+        }
 
         var stats = {
             count : self.nodes.length,
@@ -413,7 +544,7 @@ var Nodemanager = function(p){
                 return n.inited
             }),
 
-            chain : self.currentChainCommon(),
+            chain : _ch,
             peers : self.askedpeers,
             tmp : self.getnodes(function(n){
                 return !n.inited
@@ -424,7 +555,6 @@ var Nodemanager = function(p){
         return stats
     }
 
-    
 
     self.init = function(){
 
@@ -460,7 +590,7 @@ var Nodemanager = function(p){
                     })
 
                     //// remove
-                    //docs = []
+                    docs = []
 
                     var nodes = _.map(c.concat(p.stable, docs || []) , function(options){
 

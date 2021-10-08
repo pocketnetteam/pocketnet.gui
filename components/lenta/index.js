@@ -1078,6 +1078,12 @@ var lenta = (function(){
 
 				var player = players[id]
 
+				console.log('player', player, isMobile())
+
+				if ((isMobile() || window.cordova() || isTablet()) && player && player.p.playing){
+					player.p.pause()
+				}
+
 				//player.p.muted = true;
 
 				actions.setVolume(players[id], videosVolume)

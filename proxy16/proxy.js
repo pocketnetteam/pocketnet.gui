@@ -524,6 +524,10 @@ var Proxy = function (settings, manage, test) {
 		},
 		info: function (compact) {
 			return nodeManager.info(compact)
+		},
+
+		chain : function(){
+			return nodeManager.currentChainCommon2()
 		}
 	}
 
@@ -1197,6 +1201,17 @@ var Proxy = function (settings, manage, test) {
 					return Promise.resolve({
 						data: {
 							nodes: nodeManager.getnodes(),
+						},
+					});
+				},
+			},
+
+			chain : {
+				path: '/nodes/chain',
+				action: function () {
+					return Promise.resolve({
+						data: {
+							chain: self.nodeManager.chain(),
 						},
 					});
 				},
