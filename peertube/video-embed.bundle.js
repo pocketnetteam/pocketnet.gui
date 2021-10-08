@@ -47371,7 +47371,7 @@ class PeerTubeEmbed {
               video: videoInfo,
             });*/
             if (this.details.state.id == 2) {
-                this.displayWarning('Video is being processed');
+                this.displayWarning('Video is being processed <i class="fas fa-spinner fa-spin"></i>');
             }
             this.initTouchedEvents();
         });
