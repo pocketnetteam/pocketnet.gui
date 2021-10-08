@@ -10,7 +10,18 @@ _.each(keys, function(key){ %>
         </div>
     <% } %>
 
-<% _.each(manager[key], function(nodeinfo){ 
+<% 
+
+var sorted = _.sortBy(manager[key] || [], function(nodeinfo){
+
+
+    return -(nodeinfo.rating || deep(nodeinfo,'status.difference') || 0)
+
+})
+
+
+
+_.each(sorted, function(nodeinfo){ 
                 
     var node = nodeinfo.node
     
