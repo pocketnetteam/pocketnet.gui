@@ -15,7 +15,7 @@
 				<div class="flexWrapper">	
 
 					<div class="url">
-						<button class="button bright medium">
+						<button class="button ghost medium">
 							<%- e('copyLink') %>
 						</button>
 					</div>
@@ -30,31 +30,25 @@
 
 					<% } %>
 
-					
+
+					<% if(postId) {%>
+
+						<div class="item forrepost">
+
+							<button class="button ghost medium">
+								<%- e('repost') %>
+							</button>
+
+						</div>
+
+					<% } %>
+
 					<% if(typeof eparameters != 'undefined' && state && !notincludedRef) {%>
 						<div class="includeRefWrapper">
 							<%= eparameters.reflink.input({init : true}) %>  <span><%= eparameters.reflink.name %></span>
 						</div>
 					<% } %>
 
-
-					<% if(postId) {%>
-
-						<div class="item forrepost">
-
-							<div class="itemwr table">
-								<div class="iconwr">											
-									<div class="icon">
-										Repost
-										<i class="fas fa-share"></i>
-									</div>
-								</div>
-							
-							</div>
-
-						</div>
-
-					<% } %>
 
 
 				</div>
@@ -66,7 +60,7 @@
 		<div class="sharewrapper">
 			<div class="wrk">
 				<div class="subcaption">
-					<span>Share via</span>
+					<span><%- e('shareVia') %></span>
 				</div>
 			</div>
 			<div class="sharebuttons">

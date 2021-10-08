@@ -106,7 +106,7 @@ var socialshare2 = (function(){
 		var embeddingSettings = {
 
 			black : new Parameter({
-				name: "Black Theme",
+				name: self.app.localization.e('blackTheme'),
 				id: 'black',
 				type: "BOOLEAN",
 				value: localStorage.getItem('usertheme') === 'black' ? true : false
@@ -114,33 +114,33 @@ var socialshare2 = (function(){
 
 
 			autoplayvideo : new Parameter({
-				name: "Autoplay Video",
+				name: self.app.localization.e('autoplayVideo'),
 				id: 'black',
 				type: "BOOLEAN",
 				value: false
 			}),
 
 			fullscreenvideo : new Parameter({
-				name: "Remove Description",
+				name: self.app.localization.e('removeDescription'),
 				id: 'fullscreenvideo',
 				type: "BOOLEAN",
 				value: false
 			}),
 
 			onlyvideo : new Parameter({
-				name: "Only video",
+				name: self.app.localization.e('onlyVideo'),
 				id: 'onlyvideo',
 				type: "BOOLEAN",
 				value: false
 			}),
 
 			comments : new Parameter({
-				name: "Include comments",
+				name: self.app.localization.e('includeComments'),
 				id: 'comments',
 				type: "VALUES",
 				defaultValue: 'last',
 				possibleValues: ['last', 'all', 'no'],
-				possibleValuesLabels: ['Show Only last comment', 'Show All comments', "Don't show comments"],
+				possibleValuesLabels: [self.app.localization.e('showOnlyLast'), self.app.localization.e('showAll'), self.app.localization.e('dontShow')],
 				value: "",
 			}),
 

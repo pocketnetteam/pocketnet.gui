@@ -2,20 +2,17 @@
   padding: 1em 0;
 }
 #socialshare2 .flexWrapper {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
   overflow: hidden;
 }
 #socialshare2 .flexWrapper button {
+  text-align: left;
   font-size: 0.8em;
   padding-left: 0;
   padding-right: 0;
   width: 100%;
 }
 #socialshare2 .flexWrapper > div {
-  float: left;
-  width: 50%;
+  margin-top: 0.5em;
 }
 #socialshare2 .flexWrapper > div.includeRefWrapper {
   padding-left: 0 0.5em;
@@ -24,9 +21,6 @@
 #socialshare2 .flexWrapper > div.includeRefWrapper span {
   margin-right: 1em;
   font-size: 0.8em;
-}
-#socialshare2 .flexWrapper .forrepost {
-  margin-top: 1em;
 }
 #socialshare2 .flexWrapper .forrepost .icon {
   padding-left: 0.5em;
@@ -363,7 +357,6 @@
     padding-right: 0;
   }
   #socialshare2 .flexWrapper > div {
-    float: left;
     width: 50%;
   }
   #socialshare2 .flexWrapper > div.includeRefWrapper {
