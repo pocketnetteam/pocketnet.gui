@@ -6,12 +6,10 @@
 
 
 	.flexWrapper{
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;	
 		overflow: hidden;
 
 		button{
+			text-align: left;
 			font-size: 0.8em;
 			padding-left: 0;
 			padding-right: 0;
@@ -19,9 +17,8 @@
 		}
 
 		>div{
-
-			float: left;
-			width: 50%;
+			margin-top: @rhythm;
+			
 
 			&.includeRefWrapper{
 				padding-left: 0 @rhythm;
@@ -33,9 +30,7 @@
 			}
 		}
 
-		.forrepost{
-			margin-top: 1em;
-			
+		.forrepost{			
 			.icon{
 				padding-left: @rhythm;
 				height: 40px;
@@ -486,7 +481,6 @@
 		}
 
 		>div{
-			float: left;
 			width: 50%;
 
 			&.includeRefWrapper{
