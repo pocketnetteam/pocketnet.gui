@@ -1085,7 +1085,7 @@ var lenta = (function(){
 
 				console.log('player', player, isMobile())
 
-				if ((isMobile() || window.cordova() || isTablet()) && player && player.p.playing){
+				if ((isMobile() || window.cordova || isTablet()) && player && player.p.playing){
 					player.p.pause()
 				}
 
