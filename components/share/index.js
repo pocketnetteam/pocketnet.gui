@@ -821,8 +821,6 @@ var share = (function(){
 
 					actions.checktranscoding(function(result){
 
-						return
-
 						if(!result){
 
 							el.c.removeClass('loading')
