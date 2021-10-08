@@ -2771,7 +2771,7 @@ var lenta = (function(){
 								var _w = el.width();
 								var _h = el.height()
 
-								if(_img.width > _img.height && (!isMobile() && self.app.width > 768)){
+								if(_img.width > _img.height && (!isMobile() && self.app.width > 768 && !essenseData.openapi)){
 									ac = 'w2'
 
 									var w = _w * (_img.width / _img.height);
@@ -2787,7 +2787,7 @@ var lenta = (function(){
 									el.width(w);
 								}
 
-								if(_img.height > _img.width || (isMobile() || self.app.width <= 768)){
+								if(_img.height > _img.width || (isMobile() || self.app.width <= 768 || essenseData.openapi)){
 									ac = 'h2'
 
 									el.height(_w * (_img.height / _img.width))
@@ -2818,7 +2818,7 @@ var lenta = (function(){
 
 							var gutter = 5;
 
-							if (isMobile()) gutter = 0
+							if (isMobile() || essenseData.openapi) gutter = 0
 
 							images.isotope({
 
