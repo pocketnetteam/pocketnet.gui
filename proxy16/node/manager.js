@@ -230,11 +230,9 @@ var Nodemanager = function(p){
 
         var workingNodes = getWorkingNodes()
 
-        console.log('forgeting', workingNodes.length)
 
         if (!usersfornode || self.proxy.users() / usersfornode >= workingNodes.length || workingNodes.length <= 1){
 
-            console.log("NO")
         }else{
 
             _.each(self.nodes, function(n){
@@ -244,17 +242,14 @@ var Nodemanager = function(p){
                     if(!n.wss.count()){
 
                         if(f.date.addseconds(n.initedTime, 300) > new Date()){
-                            console.log('waitnodeforget', n.host)
                         }
                         else{
-                            console.log('forgetnode', n.host)
                             n.forget()
                         }
                         
 
                     }
                     else{
-                        console.log("USERS ON NODE", n.host, n.wss.count())
                     }
                 }
 
