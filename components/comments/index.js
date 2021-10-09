@@ -830,6 +830,9 @@ var comments = (function(){
 				}
 			},
 			tocomment : function(id){
+				
+				if(ed.openapi) return
+
 				_scrollTo(el.c.find("#" + id), _in)
 			},
 			closeEdit : function(id){
@@ -1061,6 +1064,9 @@ var comments = (function(){
 				
 			},
 			scrollToComment : function(el) {
+
+				if(ed.openapi) return
+
 				if (el && el.length > 0 && el[0].scrollIntoView && isMobile() && $(window).width() <= 768) {
 					el[0].scrollIntoView(true);
 					// Scroll until the comment section is at 120 px from the top
@@ -1359,7 +1365,7 @@ var comments = (function(){
 							return false;
 						}
 						// Scroll comment section to top of the screen
-						actions.scrollToComment(_p.el);
+						//actions.scrollToComment(_p.el);
 					},
 					keyup : function(editor, e){
 						var char = String.fromCharCode(e.keyCode || e.which);

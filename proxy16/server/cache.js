@@ -329,6 +329,10 @@ var Cache = function(p){
             meta : meta,
         }
     }
+    
+    self.clear = function(){
+        storage = {}
+    }
 
     return self;
 }

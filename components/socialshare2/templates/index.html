@@ -15,8 +15,8 @@
 				<div class="flexWrapper">	
 
 					<div class="url">
-						<button class="button bright medium">
-							Copy direct Link
+						<button class="button ghost medium">
+							<%- e('copyLink') %> <i class="fas fa-link"></i>
 						</button>
 					</div>
 
@@ -24,19 +24,33 @@
 
 					<div class="chat">
 						<button class="button ghost medium">
-							Send via messenger
+							<%- e('sendMessenger') %> <i class="fas fa-envelope"></i>
 						</button>
 					</div>
 
 					<% } %>
 
 
-					
+					<% if(postId) {%>
+
+						<div class="item forrepost">
+
+							<button class="button ghost medium">
+								<%- e('repost') %> <i class="fas fa-reply"></i>
+							</button>
+
+						</div>
+
+					<% } %>
+
 					<% if(typeof eparameters != 'undefined' && state && !notincludedRef) {%>
 						<div class="includeRefWrapper">
 							<%= eparameters.reflink.input({init : true}) %>  <span><%= eparameters.reflink.name %></span>
 						</div>
 					<% } %>
+
+
+
 				</div>
 			</div>
 
@@ -46,7 +60,7 @@
 		<div class="sharewrapper">
 			<div class="wrk">
 				<div class="subcaption">
-					<span>Share via</span>
+					<span><%- e('shareVia') %></span>
 				</div>
 			</div>
 			<div class="sharebuttons">

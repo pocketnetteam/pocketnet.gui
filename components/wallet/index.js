@@ -2448,6 +2448,13 @@ var wallet = (function(){
 				
 			})
 
+			self.app.events.resize['wallet'] = function(){
+				el.total.html('')
+			 	drawCircles(null)
+				
+				
+			}
+
 			if(isMobile()){
 
 				var cc = el.c.find('.circularprogress');
@@ -2589,12 +2596,8 @@ var wallet = (function(){
 
 							
 							if(total){
-
 								if(group.id == 'pnetwallet' || group.id == 'total'){
-
-									
 									total = temp + total;
-
 								}
 
 								samount = 100 * spend / total
@@ -2616,9 +2619,7 @@ var wallet = (function(){
 							}
 
 							if(group.id == 'pnetwallet'|| group.id == 'total'){
-								
 								amount = temp + amount;
-
 							}
 
 							renders.total({
@@ -2715,6 +2716,8 @@ var wallet = (function(){
 
 				delete self.app.platform.sdk.node.transactions.clbks.circles
 				delete self.app.platform.sdk.node.transactions.clbks.walletaddresses 
+
+				delete self.app.events.resize['wallet']
 
 				delete self.iclbks.main
 

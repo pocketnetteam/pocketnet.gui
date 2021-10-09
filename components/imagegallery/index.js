@@ -605,13 +605,13 @@ var imagegallery = (function(){
 
 				el = {};
 
-				self.app.mobile.fullscreenmode(false)
+				self.app.mobile.statusbar.background()
 
 			},
 			clearparameters : ['i', 'num', 's', 'com'],
 			init : function(p){
 				
-				self.app.mobile.fullscreenmode(true)
+				self.app.mobile.statusbar.gallerybackground()
 
 				currentImage = null;
 				making = false;

@@ -278,7 +278,7 @@ ____loclib.emptymessage = "Message is empty";
 ____loclib.emptytags = "Please add Tags";
 ____loclib.emptyutxo = "no money";
 ____loclib.networkerror = "network error";
-____loclib.maximages = "You are alowed a maximum or 6 Images";
+____loclib.maximages = "You are alowed a maximum or 10 Images";
 ____loclib.sharenow = "Do you want to share this content now?";
 ____loclib.pastdate = "Past Date";
 ____loclib.timenotselected = "Time Not Selected";
@@ -425,6 +425,23 @@ ____loclib.unfollow = "Unfollow"
 ____loclib.unblock = "Unblock"
 ____loclib.share = "Share"
 ____loclib.info = "Info"
+____loclib.copyLink = "Copy direct Link"
+____loclib.includeRefLink = "Include Referal Link"
+____loclib.shareVia = "Share via"
+____loclib.embedding = "Embedding"
+____loclib.copyEmbeddingCode = "Copy Embedding Code"
+____loclib.showCode = "Show Code"
+____loclib.embeddingSettings = "Embedding Settings"
+____loclib.blackTheme = "Black Theme"
+____loclib.includeComments = "Include comments"
+____loclib.showOnlyLast = "Show Only last comment"
+____loclib.showAll = "Show all comments"
+____loclib.dontShow = "Don't show comments"
+____loclib.removeDescription = "Remove description"
+____loclib.preview = "Preview"
+____loclib.autoplayVideo = "Autoplay Video"
+____loclib.onlyVideo = "Only video"
+
 ____loclib.e13023 = "Do you really want to unblock user?"
 ____loclib.e13024 = "Your Private Login Key"
 ____loclib.e13025 = "Create a new account"
@@ -619,6 +636,7 @@ ____loclib.postscount = "Posts count"
 ____loclib.about = "About"
 ____loclib.e13156 = "Next Results"
 ____loclib.posts = "Posts"
+____loclib.disablePreview = "Disable link preview"
 ____loclib.e13157 = "Search by"
 ____loclib.e13158 = "hasn't any results"
 ____loclib.e13159 = "The search phrase is empty"
@@ -685,6 +703,7 @@ ____loclib.amount = "Amount"
 ____loclib.label = "Label"
 ____loclib.message = "Message"
 ____loclib.copylink = "Copy Link"
+____loclib.sendMessenger = "Send via messenger"
 ____loclib.e13211 = "Please fill this fields"
 ____loclib.e13212 = "Create Qr Code"
 ____loclib.e13213 = "Recieve Address"
@@ -776,6 +795,7 @@ ____loclib.video = "Video"
 ____loclib.e13288 = "Main Widgets Page"
 ____loclib.e13289 = "Integration with Telegram"
 
+____loclib.sound = "Sound"
 ____loclib.system = "System"
 ____loclib.e13290 = "Would do you like to follow"
 ____loclib.e13291 = "Do you really want send message to Telegram?"
@@ -1043,7 +1063,7 @@ ____loclib.uploadVideoProgress = "Progress:"
 
 ____loclib.pbp_1 = ""+appname+" Bonus Program"
 ____loclib.pbp_2 = "Criteria for Receiving Bonus:"
-____loclib.pbp_3 = "Every 10K views + 500 ratings"
+____loclib.pbp_3 = "Every 10k views + 750 five star ratings from unique users"
 ____loclib.pbp_4 = "PKOIN Equivalent:"
 ____loclib.pbp_5 = "1,000 USDT"
 ____loclib.pbp_6 = "How You Can Increase Your Views?"
@@ -1144,7 +1164,13 @@ ____loclib.emptyDescription = "Description is empty";
 ____loclib.transcodingShort = "Processing";
 ____loclib.editVideoDescription = "Edit video name/description";
 ____loclib.errorChangingDescription = "Unable to change video name/description";
-____loclib.downloadVideo = "Download video";
+____loclib.downloadVideo = "Save video";
+____loclib.downloadingVideo = "Saving video";
+____loclib.deleteSavedVideo = "Delete saved video";
+
+____loclib.downloadShare = "Save Share";
+____loclib.deleteSavedShare = "Delete Share";
+
 ____loclib.selectQuality = "Select quality:";
 ____loclib.downloadedVideos = "Downloaded videos";
 ____loclib.deleteAllDownloadedVideos = "Delete all downloaded videos";
@@ -1167,3 +1193,15 @@ ____loclib.hideAllButton = "Hide";
 
 ____loclib.UniqueUsers = "Unique Raters";
 ____loclib.ErrorLoadingRates = "Loading Error";
+
+____loclib.userGuides = "Guides";
+____loclib.liveSreamingGuide = "Live Streaming";
+
+____loclib.bastyonhelperTitle1 = "Pocketnet has moved",
+____loclib.bastyonhelperTitle2 = "Bastyon of Free Speech";
+____loclib.bastyonhelperSubtitle1 = "Pocketnet is now";
+____loclib.bastyonhelperSubtitle2 = "Please, follow the link bellow";
+
+
+____loclib.videotranscodingwait = "The video is being processed. After it is transcoded, you can post it on Bastyon.";
+____loclib.views = "Views";

@@ -2,6 +2,8 @@
 
 #share{
 	position: relative;
+	padding : 2 * @rhythm 0;
+	.transition(0.3s);
 
 	.mobilecaption{
 		display: none;
@@ -51,6 +53,95 @@
 			display: block;
 		}
 	}
+
+	&.minimized{
+		padding : 0;
+		min-height: 0!important;
+		.attachements{
+			display: none;
+
+		}
+
+		.tgsWrapperMain{
+			display: none!important;
+		}
+
+		.draggablemarkerwrapper{
+			display: none;
+		}
+		
+		.iconWrapper{
+			padding : @rhythm;
+			padding-right: 0;
+		}
+
+		.cntwrk{
+			padding-left: 0;
+		}
+
+		.txt{
+			margin-bottom: 0;
+
+			.emojionearea-button{
+				display: none;
+			}
+
+			.emojionearea-editor{
+				min-height: 60px;
+				padding-left: 0;
+				font-size: 1.15em;
+			}
+
+			.emojionearea-editor,
+			.emojionearea,
+			.emojionearea.form-control{
+				box-shadow: none;
+				background: transparent;
+			}
+		}
+
+		#sortableBody{
+			padding-top: 0;
+		}
+
+		.postpanel{
+			>div{
+				&.postWrapper{
+					display: none;
+				}
+			}
+		}
+
+		.error{
+			display: none!important;
+		}
+
+		.postlineWrapper{
+			margin-top: 0;
+		}
+
+		.linewrapper{
+			margin-left: 0;
+			position: absolute;
+			right: 2 * @rhythm;
+			top : 0;
+			bottom : 0;
+			opacity: 0.5;
+			padding-top: 2 * @rhythm;
+			left: 50%;
+		}
+
+		.sortablepaddingspacer{
+			padding-right: 0;
+		}
+
+		.panel>div{
+			float: right;
+			span{
+				display: none;
+			}
+		}
+	}
 	
 	/*.txtwrapper{
 		>div{
@@ -67,6 +158,10 @@
 		}
 		
 	}*/
+
+	.absolutetxwrapper{
+		//overflow-x: hidden;
+	}
 
 	.iconWrapper{
 		width: 8 * @rhythm;
@@ -400,9 +495,13 @@
 	}
 
 	.imagesWrapper{
-		>div{
+		/*>div{
 			margin-top: 2 * @rhythm;
 			margin-bottom : 2 * @rhythm;
+		}*/
+
+		.imageWrapper{
+			padding-bottom: @rhythm;
 		}
 	}
 	.urlWrapper{
@@ -553,7 +652,7 @@
 					height: 30px;
 					line-height: 30px;
 					text-align: center;
-					color : fade(@color-gray-slight, 90);
+					color : fade(@color-gray-slight, 70);
 					cursor: pointer;
 					.transition(0.3s);
 
@@ -823,7 +922,7 @@
 				padding :  @rhythm 1.5 * @rhythm;
 				padding-right: 2 * @rhythm;
 				margin-right: @rhythm / 2;
-				background: fade(#000, 80);
+				background: fade(#000, 70);
 				.shadowSmaller();
 				color : #fff;
 				border-radius: 30px;
@@ -1130,6 +1229,7 @@
 				padding-bottom : 2 * @rhythm;
 				bottom : 65px;
 				overflow-y: auto;
+				
 
 				.txtwrapper{
 					height: 100%;
@@ -1723,8 +1823,6 @@ html.stblack{
 
 			}
 
-			width: 280px;
-			
 			.sLoader{
 				left : 2 * @rhythm;
 				top : 2 * @rhythm;
@@ -2304,6 +2402,14 @@ html.stblack{
 				width: 100%;
 
 				.panel{
+					.fileUploader ,
+					.elContent{
+						position: relative;
+					}
+
+					.elContent{
+						padding : 2 * @rhythm;
+					}
 					.item {
 						margin-top : @rhythm;
 						font-size: 1em;
@@ -2319,6 +2425,11 @@ html.stblack{
 						padding-left: @rhythm;
 						padding-right : @rhythm;
 						padding : 2 * @rhythm;
+
+						&.images{
+							padding : 0;
+						}
+
 						.mobiledevice{
 							margin-left : @rhythm;
 							display: inline!important;

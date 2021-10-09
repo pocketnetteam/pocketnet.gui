@@ -126,13 +126,7 @@ var videoCabinet = (function () {
         if (self.app.platform.sdk.address.pnet()) {
           var address = self.app.platform.sdk.address.pnet().address;
           return self.app.api
-            .rpc('getcontentsstatistic', [[address], 'video'], {
-              rpc: {
-                fnode: window.testpocketnet
-                  ? '157.90.235.121:39091'
-                  : '64.235.45.119:38081',
-              },
-            })
+            .rpc('getcontentsstatistic', [[address], 'video'], {})
             .then((r) => {
               console.log('RE', r);
 
@@ -203,7 +197,7 @@ var videoCabinet = (function () {
                   }) <i class="fas fa-star"></i>`
                 : `&mdash;`;
 
-            const renderingUsers = `${result.countLikers}  <i class="fas fa-users"></i>`;
+            const renderingUsers = `${result.countLikers || 0}  <i class="fas fa-users"></i>`;
 
             renders.bonusProgram(
               {

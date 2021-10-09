@@ -42,21 +42,12 @@
 														<%-letter.toUpperCase()%>
 													</span>
 								
-												<% } else if (!src) { %>
+												<% } else { %>
 								
-													<svg width="30" height="30" data-jdenticon-value="<%-address%>"></svg>
 								
 												<% } %>
 											</div>
 										</div>
-
-									<div class="icon">
-										<div class="usericon usericonsbsa another" image="<%-src || ''%>">
-											<% if(!src) {%>
-												<svg width="30" height="30" data-jdenticon-value="<%-address%>"></svg>
-											<% } %>
-										</div>
-									</div>
 
 								</div>
 
@@ -64,7 +55,6 @@
 								<div class="authorCell">
 								
 									<b><span><%-name || address %></span></b>	
-									
 									
 								</div>				
 								
@@ -80,6 +70,8 @@
 
 				</div>
 			</div>
+
+			<% } %>
 			
 		</div>
 	</div>

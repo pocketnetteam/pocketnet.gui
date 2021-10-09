@@ -6,20 +6,24 @@
 
 
 	.flexWrapper{
-		display: block;	
 		overflow: hidden;
 
 		button{
-			font-size: 0.8em;
+			text-align: left;
 			padding-left: 0;
 			padding-right: 0;
 			width: 100%;
+			text-decoration: none;
+
+			i{
+				width: 30px;
+				text-align: center;
+			}
 		}
 
 		>div{
-
-			float: left;
-			width: 50%;
+			margin-top: @rhythm;
+			
 
 			&.includeRefWrapper{
 				padding-left: 0 @rhythm;
@@ -30,6 +34,22 @@
 				}
 			}
 		}
+
+		.forrepost{			
+			.icon{
+				padding-left: @rhythm;
+				height: 40px;
+				line-height: 40px;
+				text-align: center;
+				font-size: 0.9em;
+				color : @color-bright;
+				cursor: pointer;
+				/*.transition(0.3s);*/
+				border-radius : 40%;
+			}
+
+		}
+
 	}
 
 	iframe{
@@ -466,13 +486,13 @@
 		}
 
 		>div{
-			float: left;
-			width: 50%;
 
 			&.includeRefWrapper{
 				padding : 2 * @rhythm 0;
 			}
 		}
+
+
 	}
 
 	.button.medium{

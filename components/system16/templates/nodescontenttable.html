@@ -49,7 +49,12 @@ _.each(keys, function(key){ %>
                         
                         <% if(key != 'tmp') {%>
                         <br><span class="smalllabel">
-                            <%- (100 * nodeinfo.probability).toFixed(0) %> %
+                            <%- (100 * nodeinfo.probability).toFixed(0) %> % 
+
+
+                            <% if(node.penalty && node.penalty.reason) {%> 
+                                <i class="fas fa-exclamation-triangle"></i> <%- node.penalty.k %> <%- node.penalty.reason %>
+                            <% } %>
                         </span>
                         <% } %>
 
@@ -61,40 +66,52 @@ _.each(keys, function(key){ %>
 
                     <div class="statistic">
                     
-                        <% if(nodeinfo.statistic && nodeinfo.statistic.time && nodeinfo.statistic.percent) {%>
+                        
 
-                            <span><%- nodeinfo.statistic.time.toFixed(0) %>ms, <%- nodeinfo.statistic.percent.toFixed(0) %> %</span> 
-                            
-                            
+                        <% if(nodeinfo.slice && nodeinfo.slice.time && nodeinfo.slice.percent) {%>
 
+                            <span title="In the last 5 minutes"><%- nodeinfo.slice.time.toFixed(0) %>ms, <%- nodeinfo.slice.percent.toFixed(0) %> % <i class="fas fa-clock"></i></span> 
+                    
                         <% } else { %> 
                             
-                            <span>&mdash;</span>
+                            <span>&mdash; <i class="fas fa-clock"></i> </span>
 
                         <% } %>
 
-                        <% if(nodeinfo.statistic.date) {%><br><span class="smalllabel"><%- app.reltime(new Date(nodeinfo.statistic.date)) %> (<%- nodeinfo.statistic.allcount %>)</span><% } %>
+                        <% if(nodeinfo.statistic && nodeinfo.statistic.time && nodeinfo.statistic.percent) {%>
+
+                            <span class="alltime" title="In the entire history of observations"> / <%- nodeinfo.statistic.time.toFixed(0) %>ms, <%- nodeinfo.statistic.percent.toFixed(0) %> %</span> 
+                    
+                        <% } else { %> 
+                            
+                            <span class="alltime">&mdash;</span>
+
+                        <% } %>
+
+
+                        
+
+                        <% if(nodeinfo.statistic.date) {%><br><span class="smalllabel"><%- app.reltime(new Date(nodeinfo.statistic.date)) %> (<%- nodeinfo.statistic.count %>)</span><% } %>
                         
                     </div>
 
-                    <div class="block">
+                    <div class="blockfork">
+
                             <% if(nodeinfo.status.difference && nodeinfo.status.difference < 0) {%>
 
                                 <span><%- nodeinfo.status.difference %></span>
 
                             <% } %> 
+
+                            <% if(nodeinfo.status.fork) {%>
+
+                                <i class="fas fa-code-branch"></i>
+    
+                            <% } %> 
                         
                     </div>
 
-                    <div class="fork">
                     
-                        <% if(nodeinfo.status.fork) {%>
-
-                            <i class="fas fa-code-branch"></i>
-
-                        <% } %> 
-                        
-                    </div>
 
 
                     <div class="panelWrapper">

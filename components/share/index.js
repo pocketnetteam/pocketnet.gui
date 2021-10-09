@@ -200,25 +200,7 @@ var share = (function(){
 			},
 
 			tooltip : function(){
-
 				return
-
-				if(!intro) return;
-
-				if(!currentShare.message.v){
-
-					return
-				}
-
-				if(!currentShare.tags.length){
-
-					pliss = self.app.platform.api.plissing({
-						el : el.tagSearch,
-						text : self.app.localization.e('e13161')
-					})
-
-					return true
-				}
 			},
 
 			unfocus : function(){
@@ -309,6 +291,37 @@ var share = (function(){
 					}
 				})
 			},
+
+			addimage : function(value){
+
+				var result = true;
+				var type = 'images'
+
+				if(!_.isArray(value)) value = [value]
+
+				_.each(value, function(v, i){
+
+					result = currentShare[type].set(v)
+
+					if(!essenseData.share){
+						state.save()
+					}
+				})
+
+				if(!result && errors[type]){
+					sitemessage(errors[type])
+				}		
+				
+				if(type == 'url'){
+					renders.all()
+				}
+				else{
+					if (renders[type])
+						renders[type]();
+				}
+				
+			},
+
 			embeding : function(type, value){
 				var storage = currentShare.export(true)
 
@@ -343,8 +356,6 @@ var share = (function(){
 					return
 				}
 
-				
-
 				if(type == 'times'){
 
 					dialog({
@@ -370,8 +381,6 @@ var share = (function(){
 						fail : function(){
 						}
 					})
-
-					
 
 					return
 
@@ -768,6 +777,30 @@ var share = (function(){
 				
 			},
 
+			checktranscoding : function(clbk){
+				if(currentShare.itisvideo() && !currentShare.aliasid){
+
+					self.app.api.fetch('peertube/videos', {
+                        urls: [currentShare.url.v],
+                    }).then(r => {
+						var result = r[currentShare.url.v]
+
+						if(!result || !result.state){
+							clbk(true)
+						}
+						else{
+							clbk(result.state.id != 2)
+
+						}
+						
+					})
+
+				}
+				else{
+					clbk(true)
+				}
+			},
+
 			post : function(clbk, p){
 
 				el.postWrapper.removeClass('showError');
@@ -786,133 +819,160 @@ var share = (function(){
 
 					currentShare.language.set(self.app.localization.key)
 
+					actions.checktranscoding(function(result){
 
+						if(!result){
 
-					currentShare.uploadImages(self.app, function(){
-	
-						if (currentShare.checkloaded()){
-							
-	
-							var t = self.app.platform.errorHandler('imageerror', true);
-	
-							topPreloader(100)
-	
 							el.c.removeClass('loading')
-	
-							if (t){
-								sitemessage(t)
-							}
-	
-							
-							return
-						}
-	
-						self.sdk.node.transactions.create.commonFromUnspent(
-	
-							currentShare,
-	
-							function(_alias, error){
-	
-								topPreloader(100)
-	
-								el.c.removeClass('loading')
-	
-								if(!_alias){
+
+							topPreloader(100)
+
+							dialog({
+								html : self.app.localization.e('videotranscodingwait'),
+								btn1text : self.app.localization.e('daccept'),
+								btn2text : self.app.localization.e('dno'),
+								class : "zindex one",
+								success : function(){
 									
-	
-									if (clbk){
-										clbk(false, errors[error])
-									}
-									else{
-										el.postWrapper.addClass('showError');
-	
-										var t = self.app.platform.errorHandler(error, true);
-	
-										if (t)
-	
-											el.error.html(t)
-									}
+								},
+		
+								fail : function(){
 								}
-								else
-								{
-									//sitemessage("Success")
+							})
+
+							return
+
+						}
+
+						currentShare.uploadImages(self.app, function(){
 	
-									try{
-	
-										var alias = new pShare();
-											alias._import(_alias, true)
-											alias.temp = true;
-											alias.address = _alias.address
-	
-										if(currentShare.aliasid) alias.edit = "true"	
-										if(currentShare.time) alias.time = currentShare.time
-	
-										self.app.platform.sdk.node.shares.add(alias)
-	
-										if(!essenseData.notClear){
-											currentShare.clear();
-											self.app.nav.api.history.removeParameters(['repost'])
-	
-											self.closeContainer()
-	
-											if(!essenseData.share){
-												state.save()
-											}
-	
-											make();	
-										}
-	
-																		
-	
-									}
-	
-									catch (e){
-										console.log(e)
-									}
-	
-									self.app.platform.sdk.user.get(function(u){
-										u.postcnt++
-									})
-	
-									intro = false
-	
-									if (essenseData.post){
-										essenseData.post()
-									}
-									else{
-	
-										if(isMobile()){
-											self.app.nav.api.load({
-												open : true,
-												href : 'index',
-												history : true
-											})
+							if (currentShare.checkloaded()){
+								
+		
+								var t = self.app.platform.errorHandler('imageerror', true);
+		
+								topPreloader(100)
+		
+								el.c.removeClass('loading')
+		
+								if (t){
+									sitemessage(t)
+								}
+		
+								
+								return
+							}
+		
+							self.sdk.node.transactions.create.commonFromUnspent(
+		
+								currentShare,
+		
+								function(_alias, error){
+		
+									topPreloader(100)
+		
+									el.c.removeClass('loading')
+		
+									if(!_alias){
+										
+		
+										if (clbk){
+											clbk(false, errors[error])
 										}
 										else{
-											self.app.actions.scroll(0)
+											el.postWrapper.addClass('showError');
+		
+											var t = self.app.platform.errorHandler(error, true);
+		
+											if (t)
+		
+												el.error.html(t)
 										}
-	
-										
-	
 									}
-	
-									if (clbk)
-										clbk(true)
-	
-	
-									actions.unfocus();
-									
-									successCheck()
-									
-									
-								}
-	
-							},
-	
-							p
-						)
-	
+									else
+									{
+										//sitemessage("Success")
+		
+										try{
+		
+											var alias = new pShare();
+												alias._import(_alias, true)
+												alias.temp = true;
+												alias.address = _alias.address
+		
+											if(currentShare.aliasid) alias.edit = "true"	
+											if(currentShare.time) alias.time = currentShare.time
+		
+											self.app.platform.sdk.node.shares.add(alias)
+		
+											if(!essenseData.notClear){
+												currentShare.clear();
+												self.app.nav.api.history.removeParameters(['repost'])
+		
+												self.closeContainer()
+		
+												if(!essenseData.share){
+													state.save()
+												}
+		
+												make();	
+											}
+		
+																			
+		
+										}
+		
+										catch (e){
+											console.log(e)
+										}
+		
+										self.app.platform.sdk.user.get(function(u){
+											u.postcnt++
+										})
+		
+										intro = false
+		
+										if (essenseData.post){
+											essenseData.post()
+										}
+										else{
+		
+											if(isMobile()){
+												self.app.nav.api.load({
+													open : true,
+													href : 'index',
+													history : true
+												})
+											}
+											else{
+												self.app.actions.scroll(0)
+											}
+		
+											
+		
+										}
+		
+										if (clbk)
+											clbk(true)
+		
+		
+										actions.unfocus();
+										
+										successCheck()
+										
+										
+									}
+		
+								},
+		
+								p
+							)
+		
+						})
 					})
+
+
+					
 				}
 
 
@@ -1238,11 +1298,10 @@ var share = (function(){
 			embeding : function(){
 				var type = $(this).attr('embeding')
 
+				if(!type) return
 
 				if (type == 'language'){
-
 					actions.language()
-
 					return
 				}
 
@@ -1381,6 +1440,44 @@ var share = (function(){
 
 		}
 
+		var imagesHelper = {
+			slowUploadGif : function(file, storage, clbk){
+			
+						
+				file.id = makeid();
+				file.slow = true;
+				file.base64 = file.base64;
+
+				storage.push(file)
+
+
+				if (clbk)
+					clbk()
+			
+			},
+			slowUpload : function(file, storage , clbk){
+				resize(file.base64, 1080, 1080, function(resized){
+
+					var r = resized.split(',');
+
+					if (r[1]){
+
+						
+						file.id = makeid();
+						file.slow = true;
+						file.base64 = resized;
+
+						storage.push(file)
+
+
+					}
+
+					if (clbk)
+						clbk()
+				})
+			},
+		}
+
 		var renders = {
 
 			postline : function(clbk){
@@ -1415,6 +1512,56 @@ var share = (function(){
 						el.peertube = el.c.find('.peertube');
 						el.peertubeLiveStream = el.c.find('.peertubeLiveStream');
 
+						
+						var tstorage = []
+
+						initUpload({
+							el : p.el.find('.images'),
+				
+							ext : ['png', 'jpeg', 'jpg', 'gif', 'jfif'],
+		
+							dropZone : el.c,
+		
+							multiple : true,
+		
+							action : function(file, clbk){
+		
+								if (file.ext == 'gif'){
+									imagesHelper.slowUploadGif(file, tstorage, clbk)
+								}
+								else
+								{
+									imagesHelper.slowUpload(file, tstorage, clbk)
+								}
+								
+							},
+
+							onError : function(er){
+
+								var et = {
+									filesize : "Your photo has size greater than 30MB.",
+									fileext : "Invalid format of picture."
+								}
+								if(et[er])
+								sitemessage(et[er])
+							},
+		
+							onSuccess : function(){
+
+								var images = [];
+		
+								_.each(tstorage, function(v){
+									if(v.base64)
+										images.push(v.base64)
+								})
+
+
+								actions.addimage(images)
+
+								tstorage = []
+							
+							}
+						})
 
 
 						p.el.find('.cancelediting').on('click', function(){
@@ -2323,6 +2470,8 @@ var share = (function(){
 
 			getdata : function(clbk, p){
 
+				console.log("!")
+
 				intro = false;
 				external = null
 				currentShare = deep(p, 'settings.essenseData.share') || new Share(self.app.localization.key);
@@ -2347,10 +2496,13 @@ var share = (function(){
 					if (essenseData.repost || parameters().repost) 
 						currentShare.repost.set(essenseData.repost || parameters().repost)
 
+					var checkEntity = currentShare.message.v || currentShare.caption.v || currentShare.repost.v || currentShare.url.v || currentShare.images.v.length || currentShare.tags.v.length;
+
 					var data = {
 						essenseData : essenseData,
 						share : currentShare,
 						postcnt : u.postcnt,
+						checkEntity : checkEntity,
 					};
 
 					clbk(data);
@@ -2435,6 +2587,10 @@ var share = (function(){
 				p.clbk(null, p);
 
 				actions.waitActions();
+
+				el.c.on('click', function(){
+					el.c.removeClass('minimized')
+				})
 
 			},
 

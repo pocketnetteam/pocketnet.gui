@@ -10,12 +10,165 @@
 		}
 	}
 
+	#lenta{
+		.shares{
+			.showmorebyauthor,
+			.share{
+				border-radius: 3px;
+			}
+		}
+
+	}
+
+	.bastyonhelper{
+
+		
+		.layout{
+			display: flex;
+			height: 100%;
+			width: 100%;
+			align-items: center;
+	
+			.imagepart{
+				width: 50%;
+				height: 100%;
+	
+				.img{
+					height: 442px;
+					width: 100%;
+				}
+			}
+	
+		   
+	
+			.contentpart{
+				flex-grow: 1;
+				padding : 4 * @rhythm;
+				padding-left: 7 * @rhythm;
+				position: relative;
+	
+				.invitationcontent{
+					padding : 2 * @rhythm 0;
+	
+					.cancelinvite{
+						opacity: 0.4;
+						cursor: pointer;
+	
+						&:hover{
+							opacity: 0.7;
+						}
+					}
+				}
+	
+				.logowrapper{
+					padding : 3 * @rhythm 0;
+					padding-top: 4 * @rhythm;
+					img{
+						width: 30px;
+						height: 30px;
+					}
+				}
+	
+				.features{
+					margin-top: 1em;
+					.feature{
+						font-size: 1.2em;
+					}
+				}
+	
+				.caption{
+					font-size: 2em;
+					font-weight: 700;
+					line-height: 1em;
+					padding-bottom: @rhythm;
+				}
+	
+	
+				.signinpart{
+					padding : 3 * @rhythm 0;
+					padding-top : 5 * @rhythm;
+					.sin{
+						width: 250px;
+						border-radius: 30px;
+					}
+				}
+	
+				.existing{
+					color : @color-main;
+					text-decoration: underline;
+					cursor: pointer;
+					font-size: 0.9em;
+				}
+			}
+		}
+
+		.wndredirect{
+	
+			position: fixed;
+			left: 0;
+			top: 0;
+			bottom: 0;
+			right: 0;
+			height: 100vh;
+			width: 100%;
+			z-index: 9999;
+		
+			.wndback{
+				background: rgba(0,17,44,.75);
+				backdrop-filter: blur(14px);
+		
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				left: 0;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				margin: auto;
+			}
+		
+			.wndinner{
+				display: table;
+				background: #fff;
+				// color: #00a4ff;
+				height: 250px;
+				max-width: 900px;
+				width: 100%;
+				position: absolute;
+				left: 0;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				margin: auto;
+				.shadowSmaller();
+			}
+
+			._close{
+				position: absolute;
+				right: .75em;
+				top: .5em;
+				cursor: pointer;
+				color: #fff;
+				z-index: 150;
+			}
+		
+		}
+		
+		.iframe{
+			position: absolute;
+			width:0;
+			height:0;
+			border:0;
+		}
+	}
+
 	.topvideosWrapper{
 		display: block;
 		background: #fff;
 		margin-bottom : @rhythm;
 		min-height: 160px;
 		position: relative;
+		border-radius: 3px;
 		
 
 		&.hasshares{
@@ -350,8 +503,8 @@
 
 	.bgCaption{
 		height: auto;
-		padding : 2 * @rhythm 0;
-
+		padding-bottom: 0;
+		border-radius: 3px;
 		&.sec{
 			color : @color-black;
 			background: #FAFAFA;
@@ -528,6 +681,28 @@
 html.stblack{
 	#main{
 		background: @color-black5;
+
+		.bastyonhelper{
+
+		
+	
+			.wndredirect{
+			
+				.wndback{
+					background: rgba(0,17,44,.75);
+				}
+			
+				.wndinner{
+					background: @color-black5;
+					color: #c5c5c5;
+				}
+	
+				._close{
+					color: #fff;
+				}
+			
+			}
+		}
 
 		.topvideosWrapper{
 			background: @color-black3;
@@ -807,6 +982,51 @@ html {
 	
 	#main{
 
+		.bastyonhelper{
+
+		
+			.layout{
+				flex-wrap: wrap;
+		
+				.imagepart{
+					width: 100%;
+					height: auto;
+		
+					.img{
+						height: 242px;
+					}
+				}
+		
+			   
+		
+				.contentpart{
+					padding : 2 * @rhythm;
+					padding-left: 2 * @rhythm;
+		
+		
+					.caption{
+						font-size: 1.5em;
+					}
+		
+					.wrp{
+						max-width: 100%;
+					}
+		
+					.signinpart{
+						padding : 2 * @rhythm 0;
+						padding-top : 3 * @rhythm;
+						.sin{
+							width: 100%;
+							border-radius: 30px;
+						}
+					}
+		
+				
+				}
+			}
+	
+		}
+
 		.mainpanelcell{
 			display: block;
 		}
@@ -975,11 +1195,10 @@ html.tablet{
 	}
 }
 
-@media only screen and (max-width: 768px){
-	html.tablet{
-		#main{
-			padding-top : 55px;
-		}
+
+html.tablet{
+	#main{
+		padding-top : 55px;
 	}
 }
 
@@ -1160,3 +1379,5 @@ html.tablet{
 
 
 }
+
+

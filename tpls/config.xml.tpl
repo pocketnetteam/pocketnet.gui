@@ -22,7 +22,7 @@
     <preference name="StatusBarStyle" value="lightcontent" />
     <preference name="AndroidLaunchMode" value="singleTask" />
     <preference name="Fullscreen" value="false" />
-  
+    <preference name="AllowInlineMediaPlayback" value="true"/>
 
     <platform name="android">
         <icon density="ldpi" src="www/res/icon/android/drawable-ldpi-icon.png" />
@@ -109,6 +109,7 @@
     <plugin name="cordova-plugin-network-information" spec="~1.2.0" />
     <plugin name="cordova-plugin-vibration" spec="~2.1.0" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
+    <plugin name="cordova-plugin-fullscreen" spec="^1.3.0" />
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
@@ -139,8 +140,11 @@
     </platform>
     <platform name="android">
         <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application">
-            <application android:usesCleartextTraffic="true" />
             <application android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true"/>
+        </edit-config>
+
+        <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application/activity">
+            <activity android:supportsPictureInPicture="true" android:resizeableActivity="true" />
         </edit-config>
 
     </platform>
@@ -160,7 +164,7 @@
             <path url="*" event="nav-message" />
         </host>
 
-        <host name="bastyon.com" scheme="https">
+        <host name="test.bastyon.com" scheme="https">
             <path url="*" event="nav-message" />
         </host>
 

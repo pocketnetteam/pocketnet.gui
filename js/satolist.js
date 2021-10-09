@@ -63,7 +63,9 @@ Platform = function (app, listofnodes) {
         'PCSxAFQCRZphi9W6nrV4tSQXKFfsxdxERA' : true,
         'PGFKA1DieVsg9pQK4aBaEp5wpvaXpWtuVJ' : true,
         'PFbq1BkrrVsmEAevMqQ2PV6aFf7QWQP9sB' : true,
-        'PKHoxhpnG5CGHDVnxXJwARwPxVre6Qshvn' : true
+        'PKHoxhpnG5CGHDVnxXJwARwPxVre6Qshvn' : true,
+        'PXgYFdVs5W831WpksVLA5hNtXa7XSqUzLB' : true,
+        'PSBePd5Tx5KG9vxwAzbaDTfjzDbq1GUTYw' : true
         //'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82' : true // test
     }
 
@@ -75,51 +77,11 @@ Platform = function (app, listofnodes) {
     
 
     self.testaddresses = [
-        'TUA5BtMDoZ1SBMgV3m7wjmsJ6yGQV3vErZ',
-      'TQEGz5cQQtRad8wo2c1KapvFek9rnuprkD',
-      'PGiQ8j6fdtAJSH2sA7rZMB17GzqBTUVLCm',
-      'PF1umexG4Kvm8bkow1JiRF3s1vcBkYvKeg',
-      'PJJbtb1AEcRopQuuBiRbQbiec7WHNtAEsF',
-      'PSmGDYWzcPrrhvqFnGVxnhPbpsTK6LCZYd',
-      'PDQaeB3fGY3en5qMaq8AKZvev34Hgyx5UE',
-      'PAdUsDtP9onjpwHHxhbxxRcjtxD9fsW9Su',
-      'PRaYPD2NAVMcEXcUu2GsEQwqsG8md8H2dr',
-      'PHr8g7b4gJdSkiJFmQeoND2X8tRUKvB2An',
-      'PEwL86dE6MuKKaGPxooGyFCKocUP8B6jw8',
-      'PFV4UT9fhHsqkmCGsWsSCr55Pr1SMX6NL2',
-      'PRTugzBefzB1AA2Rw8VTBKf3BBPDjQND8y',
-      'P92gc46iqLhCswPsbLxH7wjTfh9rhhNSux',
-      'PSWxzYS4Y37tmnZ9oxKfm9ffVqLRBbFbjH',
-      'PHvQEGtYYpDpmHYuUwA4gF4ey1YitF2NRW',
-      'PA6biduJbWcQ97n5jz2jUqWHtenLpWTH7s',
-      'PKpdrwDVGfuBaSBvboAAMwhovFmGX8qf8S',
-      'PKerxto9tFT8dZJrNWFsimA3sBdBAkXsrE',
-      'PQsvaeBWB5WX3BsdWcNFmP1wy61P3gpRKf',
-      'PKerxto9tFT8dZJrNWFsimA3sBdBAkXsrE',
-      'PHNKYionoaBRVudUhqWzNrJyqxVxaDYqT7',
-      'PVCUYATJxi4yNM2sqThPxd3P6jJDrvuWJs',
-      'PLJvEixJkj85C4jHM3mt5u1ATwZE9zgFaA',
-      'PShAyCoM32HEEHqrdEYvQ1wRjeqZsmWqDa',
-      'PKLWLXN6kwmdkbYG981gyPj5jb7bgzhstj',
-      'PHdW4pwWbFdoofVhSEfPSHgradmrvZdbE5',
-      'P9jDYvkXHw4FtRZof661ddzmMyFRqGUjwN',
-      'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m',
-      'PFnN8SExxLsUjMKzs2avdvBdcA3ZKXPPkF',
-      'PSRFH9Ctq4wV1THes39izo3J4dHybLyT32',
-      'PVgqi72Qba4aQETKNURS8Ro7gHUdJvju78',
-      'P9tRnx73Sw1Ms9XteoxYyYjvqR88Qdb8MK',
-      'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz',
-      'PEHrffuK9Qiqs5ksqeFKHgkk9kwQN2NeuS',
-      'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq',
-      'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz',
-      'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM',
-      'PK6Kydq5prNj13nm5uLqNXNLFuePFGVvzf',
-      'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82',
-      'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s',
-      'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc',
-      'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8',
-      'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7',
-      'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd',
+        'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82',
+        'PUy71ntJeRaF1NNNnFGrmC8NzkY6ruEHGK',
+        'PU7D6X5bNUdEiuUGWGLp8C6TjSsB2hzHxL',
+        'PP6bNhVaXy7YK19UbLHXbQPKa7oV4yx1rr',
+        'TSisNge5kisi7cwGRwmUBuZQWZFD8cRoG8'
     ];
 
 
@@ -316,7 +278,7 @@ Platform = function (app, listofnodes) {
                     icon: '<i class="fab fa-windows"></i>',
         
                     github: {
-                        name: app.meta.fullname + "Setup.exe",
+                        name: 'Pocketnet' + "Setup.exe",// app.meta.fullname + "Setup.exe",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
                         page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
                     },
@@ -335,7 +297,7 @@ Platform = function (app, listofnodes) {
                     icon: '<i class="fab fa-apple"></i>',
         
                     github: {
-                        name: app.meta.fullname + "Setup.dmg",
+                        name: 'Pocketnet'+ "Setup.dmg", //app.meta.fullname + "Setup.dmg",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
                         page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
                     },
@@ -353,7 +315,7 @@ Platform = function (app, listofnodes) {
                     icon: '<i class="fab fa-linux"></i>',
         
                     github: {
-                        name: self.app.meta.fullname + "Setup.deb",
+                        name: 'Pocketnet' + "Setup.deb",//  self.app.meta.fullname + "Setup.deb",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
                         page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
                     }
@@ -2068,6 +2030,8 @@ Platform = function (app, listofnodes) {
 
             }
 
+            console.log("R", r)
+
             var c = function(){
                 self.sdk.users.get(id, function () {
 
@@ -2079,7 +2043,8 @@ Platform = function (app, listofnodes) {
                         clbk: clbk,
     
                         essenseData: {
-                            id : id
+                            id : id,
+                            openapi : true
                         }
                     })
     
@@ -2158,8 +2123,6 @@ Platform = function (app, listofnodes) {
 
     self.ui = {
 
-
-
         images : function(allimages, initialValue, clbk){
 
             if(!_.isArray(allimages)) allimages = [allimages]
@@ -2192,7 +2155,6 @@ Platform = function (app, listofnodes) {
                     initialValue : initialValue,
                     idName : 'src',
                     images : images,
-
                     gid : gid
                 },
 
@@ -2399,6 +2361,132 @@ Platform = function (app, listofnodes) {
                 
                 
             }
+        },
+
+        saveShare : function(share, clbk, _p){
+
+            if(!_p) _p = {}
+
+            var error = function(e){
+                console.log(e)
+                sitemessage(e)
+
+                topPreloader2(100)
+
+                clbk()
+            }
+
+            var save = function(p){
+
+                if(!p) p = {}
+
+                p.progress = function(key, percent){
+                    topPreloader2(percent, self.app.localization.e('downloadingVideo'))
+                }   
+
+                p = _.extend(p, _p)
+
+                self.sdk.localshares.saveShare(share, p).then(r => {
+                    
+                    sitemessage(self.app.localization.e('downloaded'))
+
+                    topPreloader2(100)
+
+                    if(clbk) clbk()
+
+                }).catch(error)
+            }
+
+
+            if(self.sdk.localshares.saving[share.txid]) return
+
+            if(self.sdk.localshares.storage[share.txid]){
+
+                dialog({
+                    html:  self.app.localization.e('deleteVideoDialog'),
+                    btn1text: self.app.localization.e('dyes'),
+                    btn2text: self.app.localization.e('dno'),
+                    success: function () {
+                        
+    
+                        self.app.mobile.vibration.small()
+                        self.sdk.localshares.deleteShare(share.txid).then(r => {
+
+                            if(clbk) clbk(share.txid, true)
+    
+                        }).catch(error)  
+    
+                    }
+                })
+
+
+                return
+            }
+
+            
+
+            if (share.itisvideo()){
+
+                var info = share.url ? (app.platform.sdk.videos.storage[share.url] || {}).data || null : null
+
+                if (info){
+
+                    var items = _.map(deep(info, 'original.streamingPlaylists.0.files') || [], function(file){
+                        return {
+                            text: file.resolution.label,
+                            action: function (clbk) {
+
+                                save({resolutionId : file.resolution.id})
+
+                                clbk()
+
+                            }
+                        }   
+                    })
+
+                    if(info && info.original && info.original.isLive){
+
+                        dialog({
+                            html: "Please wait, you will be able to download the video when the broadcast recording appears",
+                            btn1text: self.app.localization.e('daccept'),
+                            class : 'one',
+                            success: function () {
+        
+                            }
+                        })
+
+                        return
+                    }
+
+                    if(!items.length){
+
+                        dialog({
+                            html: "Please wait, the video hasn't been transcoded yet",
+                            btn1text: self.app.localization.e('daccept'),
+                            class : 'one',
+                            success: function () {
+        
+                            }
+                        })
+
+                        return
+
+                    }
+
+                    menuDialog({
+                        caption : self.app.localization.e('selectQuality'),
+                        items: items
+                    })
+
+                }
+                else{
+                    error('noinfo')
+                }
+            }
+            else{
+                error('todo')
+            }
+
         }
     }
 
@@ -2729,7 +2817,7 @@ Platform = function (app, listofnodes) {
                     html : content(),
                     clbk : function(el){
 
-                        if(clbk) clbk(el)
+                        if(clbk) clbk(el, null, 'mobiletooltip')
                     }
                     
                 })
@@ -2750,7 +2838,7 @@ Platform = function (app, listofnodes) {
 
             if(!p) p = {}
 
-            if (isMobile() || p.dlg){
+            if (isTablet() || isMobile() || window.cordova || p.dlg){
                 return self.api.mobiletooltip(_el, content, clbk, p)
             }
             
@@ -3167,7 +3255,7 @@ Platform = function (app, listofnodes) {
 
                         return template(d);
 
-                    }, function (el) {
+                    }, function (el, f, mme) {
 
                         el.find('.opennewwindow').on('click', function(){
 
@@ -3213,7 +3301,7 @@ Platform = function (app, listofnodes) {
 
                             actions.htls(id)
 
-                            if (_el.tooltipster)
+                            if (!mme && _el.tooltipster)
                                 _el.tooltipster('hide')
                         })
 
@@ -3222,7 +3310,7 @@ Platform = function (app, listofnodes) {
                             self.app.mobile.vibration.small()
                             actions.sharesocial(id)
 
-                            if (_el.tooltipster)
+                            if (!mme && _el.tooltipster)
                                 _el.tooltipster('hide')
                         })
 
@@ -3233,7 +3321,7 @@ Platform = function (app, listofnodes) {
                             self.app.mobile.vibration.small()
 
 
-                            if (_el.tooltipster)
+                            if (!mme && _el.tooltipster)
                                 _el.tooltipster('hide')
                         })
 
@@ -3245,7 +3333,7 @@ Platform = function (app, listofnodes) {
                                 }
                             })
 
-                            if (_el.tooltipster)
+                            if (!mme && _el.tooltipster)
                                 _el.tooltipster('hide')
                         })
 
@@ -3257,7 +3345,7 @@ Platform = function (app, listofnodes) {
                                 }
                             })
 
-                            if (_el.tooltipster)
+                            if (!mme && _el.tooltipster)
                                 _el.tooltipster('hide')
                         })
 
@@ -3265,7 +3353,7 @@ Platform = function (app, listofnodes) {
                             self.app.mobile.vibration.small()
                             actions.complain(id)
 
-                            if (_el.tooltipster)
+                            if (!mme && _el.tooltipster)
                                 _el.tooltipster('hide')
 
                         })
@@ -3278,9 +3366,9 @@ Platform = function (app, listofnodes) {
                                 address : address
                             })
 
-                            //f.deep(window, 'POCKETNETINSTANCE.platform.ui.wallet.send')
+                            //deep(window, 'POCKETNETINSTANCE.platform.ui.wallet.send')
 
-                            if (_el.tooltipster)
+                            if (!mme && _el.tooltipster)
                                 _el.tooltipster('hide')
 
                         })
@@ -3293,7 +3381,7 @@ Platform = function (app, listofnodes) {
                                 }
                             })
 
-                            if (_el.tooltipster)
+                            if (!mme && _el.tooltipster)
                                 _el.tooltipster('hide')
 
                         })
@@ -3373,16 +3461,46 @@ Platform = function (app, listofnodes) {
                                 })
                             }
 
-                            if (_el.tooltipster)
+                            if (!mme && _el.tooltipster)
                                 _el.tooltipster('hide')
 
                         })
+
+                        el.find('.downloadVideo').on('click', function(){
+
+                            self.app.mobile.vibration.small()
+
+                            self.ui.saveShare(share, function(id, deleted){
+                                if (actions.changeSavingStatus)
+                                    actions.changeSavingStatus(share.txid, deleted)
+                            }, {
+                                before : actions.changeSavingStatusLight,
+                                after : actions.changeSavingStatusLight
+                            })
+
+                            if (!mme && _el.tooltipster)
+                                _el.tooltipster('hide')
+
+                        })
+
+                        el.find('.deleteSavedVideo').on('click', function(){
+
+                            self.ui.saveShare(share, function(id, deleted){
+                                if (actions.changeSavingStatus)
+                                    actions.changeSavingStatus(id, deleted)
+                            })
+
+                            if (!mme && _el.tooltipster)
+                                _el.tooltipster('hide')
+
+                        })
+                        
 
                         el.find('.videoshare').on('click', function () {
                             self.app.mobile.vibration.small()
                             actions.videoShare(share)
 
-                            if (_el.tooltipster)
+                            if (!mme && _el.tooltipster)
                                 _el.tooltipster('hide')
                         })
                     })
@@ -3394,6 +3512,664 @@ Platform = function (app, listofnodes) {
 
 
     self.sdk = {
+
+        localshares : {
+            storage : {},
+            saving : {},
+            key : '',
+
+            status : function(id){
+                if(self.sdk.localshares.storage[id]) return 'saved'
+                if(self.sdk.localshares.saving[id]) return 'saving'
+
+                return 'cansave'
+            },
+
+            clearfromstorage : function(shareId){
+                delete self.sdk.localshares.storage[shareId]
+            },
+            addtostorage : function(share){
+                self.sdk.localshares.storage[share.id || share.share.txid] = share
+            },
+
+            initclbk : function(clbk){
+                self.sdk.localshares.init().then(r => {
+                    if(clbk) clbk()
+                }).catch(e => {
+                    console.error(e)
+                    if(clbk) clbk()
+                })
+            },
+
+            init : function(){
+
+                var k = 'localstorage'
+
+                if (window.cordova) k = 'cordova' 
+                if (typeof _Electron != 'undefined' && window.electron) k = 'electron'
+
+                self.sdk.localshares.key = k
+
+                if(!window.peertubeglobalcache) window.peertubeglobalcache = {}
+
+                return self.sdk.localshares.getall[self.sdk.localshares.key]().then(r => {
+
+                 
+                    _.each(r, function(share){
+                        self.sdk.localshares.addtostorage(share)
+
+                        _.each(share.videos, function(v){
+                            if(v.infos &&  v.infos.videoDetails) window.peertubeglobalcache[v.infos.videoDetails.uuid] = v.infos.videoDetails
+                        })
+                    })  
+
+                }).catch(error => {
+                    console.error(error)
+                })
+            },
+
+            ////////////////////
+
+            getShareIds: function() {
+                return _.map(self.sdk.localshares.storage, function(v, i){
+                    return i
+                })
+            },
+
+            saveShare : function(share, p){
+               // var share = self.app.platform.sdk.node.shares.storage.trx[shareid];
+
+                if(!p) p = {}
+
+                if(self.sdk.localshares.saving[share.txid]) return Promise.reject('saving')
+
+                if(self.sdk.localshares.storage[share.txid]) return Promise.reject('Saved')
+                
+                if(!share) return Promise.reject('share')
+
+                var user = deep(self.app, 'platform.sdk.usersl.storage.' + share.address);
+
+                if(!user) return Promise.reject('user')
+
+                var shareInfo = {
+                    share: {
+                        id : share.txid,
+                        share: share.export(),
+                        user: user.export(),
+                        timestamp: new Date()
+                    },
+                };
+
+                self.sdk.localshares.saving[share.txid] = true
+
+                if (p.before) p.before(share)
+
+                if (share.itisvideo())
+                    shareInfo.video = share.url ? (app.platform.sdk.videos.storage[share.url] || {}).data || null : null
+
+                return self.sdk.localshares.write.share[self.sdk.localshares.key](shareInfo.share).then(folder => {
+                    return self.sdk.localshares.write.video[self.sdk.localshares.key](folder, shareInfo, p).then(r => {
+
+                        shareInfo.share.videos || (shareInfo.share.videos = {})
+                        shareInfo.share.videos[r.id] = r
+
+                        return Promise.resolve()
+
+                    })
+                }).then(r => {
+                    self.sdk.localshares.storage = {}
+
+                    self.sdk.localshares.saving[share.txid] = false
+
+                    return self.sdk.localshares.init()
+
+                    //self.sdk.localshares.addtostorage(shareInfo.share)
+
+                    //return Promise.resolve()
+                }).then(r => {
+
+                    if (p.after) p.after(share)
+
+                }).catch(e => {
+                    self.sdk.localshares.saving[share.txid] = false
+
+                    if (p.after) p.after(share)
+
+                    return Promise.reject(e)
+                })
+
+            },
+
+            getVideo: function(videoId) {
+                var video, shares = self.sdk.localshares.storage;
+
+                try {
+                    for (const share in shares) {
+                        if (video) break;
+
+                        for (const vidId in shares[share].videos) {
+                            if (vidId == videoId) {
+                                video = shares[share].videos[vidId];
+                                break;
+                            }
+                        }
+                    }
+
+                } catch(err) {
+
+                }
+
+                return video;
+            },
+
+            getShare: function(id) {
+                return self.sdk.localshares.storage[id]
+            },
+
+            deleteShare : function(id){
+                return self.sdk.localshares.delete[self.sdk.localshares.key](id)
+            },
+
+            deleteAll: function() {
+                return Promise.all(_.map(self.sdk.localshares.storage, function(v, id){
+                    return self.sdk.localshares.deleteShare(id)
+                }))
+            },
+
+            getTotalSize : function(){
+                var totalSize = 0;
+
+                _.each(self.sdk.localshares.storage, function(share) {
+
+                    if (share.videos) {
+
+                        for (const videoId in share.videos) {
+                            if (share.videos[videoId].size)
+                                totalSize += share.videos[videoId].size;
+                        }
+
+                    }
+                });
+
+                return totalSize;
+            },
+
+            write : {
+                video : {
+                    cordova : function(folder, shareInfo, p){
+
+                        if(!shareInfo.video) return Promise.resolve()
+
+                        if(!shareInfo.video || !shareInfo.video.original) return Promise.reject('originalinfo')
+
+                        var id = shareInfo.video.original.uuid
+                        var videoDetails = shareInfo.video.original
+
+                        if(!p) p = {} //resolutionid, fileDownloadUrl
+
+
+                        var fileDownloadUrl = _.find(
+                            deep(videoDetails, 'streamingPlaylists.0.files') || [], function(file){
+                            return file.resolution.id == p.resolutionId
+                        }) 
+
+                        console.log('videoDetails', videoDetails, p)
+
+                        if(!fileDownloadUrl) return Promise.reject('fileDownloadUrl')
+
+                        return new Promise((resolve, reject) => {
+                            folder.getDirectory('videos', { create: true }, function (dirEntry3) {
+
+                                dirEntry3.getDirectory(id, { create: true }, function (dirEntry4) {
+
+                                    var infos = {
+                                        thumbnail: 'https://' + videoDetails.from + videoDetails.thumbnailPath,
+                                        videoDetails : videoDetails
+                                    }
+
+                                    dirEntry4.getFile('info.json', { create: true }, function (infoFile) {
+                                        // Write into file
+                                        infoFile.createWriter(function (fileWriter) {
+
+                                            fileWriter.write(infos);
+
+                                            dirEntry4.getFile(p.resolutionId + '', { create: true }, function (targetFile) {
+
+                                                var downloader = new BackgroundTransfer.BackgroundDownloader();
+                                                // Create a new download operation.
+                                                var download = downloader.createDownload(fileDownloadUrl.fileDownloadUrl, targetFile, "Bastyon: Downloading video");
+                                                
+                                                // Start the download
+                                                download.startAsync().then(function(e) {
+                                                    // Success
+                                                    // Get file size
+                                                    targetFile.file(function(fileDetails) {
+                                                        // Resolve internal URL
+                                                        window.resolveLocalFileSystemURL(targetFile.nativeURL, function(entry) {
+
+                                                            targetFile.internalURL = entry.toInternalURL();
+
+                                                            var result = {
+                                                                video: targetFile,  
+                                                                infos: infos,
+                                                                size : fileDetails.size || null,
+                                                                id : id
+                                                            }
+                                                          
+                                                            //self.sdk.local.shares.add(shareId, shareInfos);
+
+                                                            return resolve(result);
+
+                                                        }, reject);
+
+                                                    }, reject);
+
+                                                }, reject, function(pr) {
+
+                                                    console.log("PRO", pr)
+
+                                                    if(p.progress) p.progress('video', 100* pr.bytesReceived / pr.totalBytesToReceive)
+                                                });
+                                                
+                                            }, reject);
+
+                                        }, reject);
+
+                                    }, reject);
+
+                                }, reject)
+
+                            }, reject)
+                        })
+
+                    },
+
+                    electron : function(){
+                        return Promise.reject('todo')
+                    },
+
+                    localstorage : function(){
+                        return Promise.reject('todo')
+                    }
+                },
+                share : {
+                    cordova : function(share){
+
+                        console.log('share', share)
+                        
+                        var storage = self.sdk.localshares.helpers.cordovaStorage()
+
+                        if(!storage) return Promise.reject('storage')
+
+                        return new Promise((resolve, reject)=>{
+
+                            // open target file for download
+                        window.resolveLocalFileSystemURL(storage, function(dirEntry) {
+                            // Create a posts folder
+                            dirEntry.getDirectory('posts', { create: true }, function (dirEntry11) {
+                                dirEntry11.getDirectory(share.id, { create: true }, function (dirEntry2) {
+
+                                    // Create JSON file for share informations
+                                    dirEntry2.getFile('share.json', { create: true }, function (shareFile) {
+                                        // Write into file
+                                        shareFile.createWriter(function (fileWriter) {
+                                            fileWriter.write(share);
+
+                                            resolve(dirEntry2)
+                                        });
+                                    });
+
+                                    
+                                }, function(err) {
+                                    return reject(err);
+                                });
+                            }, function(err) {
+                                return reject(err);
+                            });
+                        }, function(err) {
+                            return reject(err);
+                        });
+
+                        })
+                        
+                    },
+
+                    electron : function(){
+                        return Promise.reject('todo')
+                    },
+
+                    localstorage : function(){
+                        return Promise.reject('todo')
+                    }
+                }
+            },
+
+            read : {
+                share : {
+                    electron : function(to, from){
+                        return Promise.reject('todo')
+                    },
+
+                    cordova : function(to, from){
+
+
+                        return new Promise((resolve, reject) => {
+
+                            from.getFile('share.json', { create: false }, function(shareFile) {
+                                shareFile.file(function(shareFileDetails) {
+                                    // Read info file
+                                    var reader = new FileReader();
+    
+                                    reader.onloadend = function() {
+    
+                                        try {
+
+                                            to.share = JSON.parse(this.result);
+                                            resolve()
+
+                                        } catch(err){ 
+                                            reject(err)
+                                        }
+                                        
+                                    };
+    
+                                    reader.readAsText(shareFileDetails);
+                                });
+                            });
+
+                        })
+                        
+                    },
+
+                    localstorage : function(){
+                        return Promise.reject('todo')
+                    }
+                },
+
+                video : {
+                    cordova : function(to, from){
+
+                        return new Promise((resolve, reject) => {
+
+                            from.getDirectory('videos', { create: true }, function (videosFolder) {
+
+                                to.videos = {};
+
+                                var videosReader = videosFolder.createReader();
+
+                                videosReader.readEntries(function(videoFolders) {
+
+                                    lazyEach({
+                                        array: videoFolders,
+                                        action: function (p) {
+                                            var videoFolder = p.item;
+                            
+                                            if (videoFolder.isDirectory) {
+                                                to.videos[videoFolder.name] = {};
+                                                to.videos[videoFolder.name].id = videoFolder.name
+                                                
+                                                videoFolder.createReader().readEntries(function(files) {
+                                                    var videoFile, infoFile;
+    
+                                                    lazyEach({
+                                                        array: files,
+                                                        action: function (_p) {
+                                                            var file = _p.item;
+
+                                                            if (file.isFile && file.file) {
+        
+                                                                file.file(function(fileDetails) {
+                                                                    
+        
+                                                                    if (!videoFile && fileDetails.type == null) {
+        
+                                                                        videoFile = file;
+        
+                                                                        if (fileDetails.size)
+                                                                            to.videos[videoFolder.name].size = fileDetails.size;
+                                                                        // Resolve internal URL
+        
+                                                                        window.resolveLocalFileSystemURL(videoFile.nativeURL, function(entry) {
+        
+                                                                            videoFile.internalURL = entry.toInternalURL();
+                                                                            to.videos[videoFolder.name].video = videoFile;
+                                                                            
+                                                                            _p.success()
+                                                                        });
+
+                                                                        return
+                                                                    }
+        
+                                                                    if (!infoFile && file.name == 'info.json') {
+        
+                                                                        infoFile = file;
+                                            
+                                                                        var reader = new FileReader();
+        
+                                                                        reader.onloadend = function() {
+        
+                                                                            try {
+        
+                                                                                to.videos[videoFolder.name].infos = JSON.parse(this.result);
+        
+                                                                            } catch(err){ 
+
+                                                                                console.error('e', err)
+                                                                                
+                                                                            }
+
+                                                                            _p.success()
+                                                                        };
+        
+                                                                        reader.readAsText(fileDetails);
+
+                                                                        return
+                                                                    }
+
+
+                                                                    _p.success()
+                                                                });
+                                                            }
+                                                            else{
+                                                                _p.success()
+                                                            }
+                                                        },
+
+                                                        all: {
+                                                            success: function () {
+                                                                p.success()
+                                                            }
+                                                        }
+                                                    })
+                                                        
+                                                });
+
+                                            }
+                                            else{
+                                                p.success()
+                                            }
+                                        },
+                            
+                                        all: {
+                                            success: function () {
+                                                resolve()
+                                            }
+                                        }
+                                    })
+                                   
+                                });
+                            });
+                        })
+                    },
+
+                    electron : function(to, from){
+                        return Promise.reject('todo')
+                    },
+
+                    localstorage : function(to, from){
+                        return Promise.reject('todo')
+                    }
+                }
+            },
+
+            get : {
+                electron : function(){
+                    return Promise.reject('todo')
+                },
+
+                cordova : function(shareFolder){
+
+                    return new Promise((resolve, reject) => {
+
+                        if (shareFolder.isDirectory) {
+                            var share = {
+                                id : shareFolder.name
+                            }
+    
+                            self.sdk.localshares.read.share.cordova(share, shareFolder).then(r => {
+    
+                                return self.sdk.localshares.read.video.cordova(share, shareFolder)
+    
+                            }).then(r => {
+
+                                resolve(share)
+
+                            }).catch(er => {
+                                reject(er)
+                            })
+    
+                        }
+                        else{
+                            reject('isDirectory')
+                        }
+
+                    })  
+
+                    
+                },
+
+                localstorage : function(){
+                    return Promise.reject('todo')
+                }
+            },
+            
+            getall : {
+                electron : function(){
+                    return Promise.reject('todo')
+                },
+
+                cordova : function(){
+
+                    var v = {};
+
+                    var storage = self.sdk.localshares.helpers.cordovaStorage()
+
+                    if(!storage) return Promise.reject('storage')
+
+                    return new Promise((resolve, reject) => {
+                        // open target file for download
+                        window.resolveLocalFileSystemURL(storage, function(dirEntry) {
+                            // Create a downloads folder
+                            dirEntry.getDirectory('posts', { create: true }, function (dirEntry2) {
+
+                                var shareReader = dirEntry2.createReader();
+
+                                shareReader.readEntries(function(shares) {
+
+                                    console.log('shares', shares)
+
+                                    Promise.all(_.map(shares, function(shareFolder){
+
+                                        return self.sdk.localshares.get.cordova(shareFolder).then(r => {
+
+                                            v[shareFolder.name] = r
+
+                                            return Promise.resolve()
+
+                                        })
+
+                                    })).then(r => {
+
+                                        resolve(v)
+
+                                    }).catch(err => {
+                                        reject(err)
+                                    })
+                                
+                                });
+                            });
+                        });
+                    })
+
+                    
+                },
+
+                localstorage : function(){
+                    return Promise.reject('todo')
+                }
+            },
+
+            helpers : {
+                cordovaStorage : function(){
+
+                    if(!window.cordova.file) return null
+
+                    return (window.cordova.file.externalDataDirectory) ? window.cordova.file.externalDataDirectory : window.cordova.file.dataDirectory;
+                }
+            },
+
+            delete : {
+                localstorage : function(shareId){
+                    self.sdk.localshares.clearfromstorage(shareId)
+
+                    return Promise.reject('todo')
+                },
+                cordova : function(shareId){
+                    var storage = self.sdk.localshares.helpers.cordovaStorage()
+
+                    if(!storage) return Promise.reject('storage')
+
+                    return new Promise((resolve, reject) => {
+                        window.resolveLocalFileSystemURL(storage, function(dirEntry) {
+                            // Create a downloads folder
+                            dirEntry.getDirectory('posts', { create: true }, function (dirEntry2) {
+                                dirEntry2.getDirectory(shareId, { create: false}, function(dirToDelete) {
+                                    dirToDelete.removeRecursively(function() {
+                                        // Success
+
+                                        self.sdk.localshares.clearfromstorage(shareId)
+
+                                        resolve()
+                                        
+                                    }, reject);
+                                }, reject);
+                            }, reject);
+                        }, reject);
+                    })
+
+                },
+                electron : function(shareId){
+                    
+                    return new Promise((resolve, reject) => {
+
+                        const userDataPath = (window.electron.app || window.electron.remote.app).getPath('userData');
+                        fs.rmdir(userDataPath + '/posts/' + shareId, { recursive: true }, (err) => {
+                            
+                            if (!err){
+                                self.sdk.localshares.clearfromstorage(shareId)
+                                return resolve()
+                            }
+
+                            return reject(err)
+                                
+                        });
+                    })
+                    
+                }
+            }
+
+           
+        },
 
         local: {
 
@@ -3567,7 +4343,8 @@ Platform = function (app, listofnodes) {
                                         // Get/create a folder for this video
                                         dirEntry3.getDirectory(id, { create: true }, function (dirEntry4) {
                                             var infos = {
-                                                thumbnail: 'https://' + videoDetails.from + videoDetails.thumbnailPath
+                                                thumbnail: 'https://' + videoDetails.from + videoDetails.thumbnailPath,
+                                                videoDetails : videoDetails
                                             }
                                             // Create JSON file for video informations
                                             dirEntry4.getFile('info.json', { create: true }, function (infoFile) {
@@ -4468,6 +5245,20 @@ Platform = function (app, listofnodes) {
         usersettings: {
 
             meta: {
+                
+                preview: {
+                    name: self.app.localization.e('disablePreview'),
+                    id: 'preview',
+                    type: "BOOLEAN",
+                    value: false
+                },
+
+                sound: {
+                    name: self.app.localization.e('sound'),
+                    id: 'sound',
+                    type: "BOOLEAN",
+                    value: true
+                },
 
                 win: {
                     name: self.app.localization.e('e13268'),
@@ -4648,6 +5439,13 @@ Platform = function (app, listofnodes) {
 					type : "BOOLEAN",
 					value : false,
 				},
+
+                openlinksinelectron : {
+					name: 'Do not open links in the desktop application',
+					id : 'openlinksinelectron',
+					type : "BOOLEAN",
+					value : false,
+				},
             },
 
             create: function (id) {
@@ -4681,6 +5479,15 @@ Platform = function (app, listofnodes) {
 
                 var c = {
 
+                    posts: {
+                        class : 'posts',
+                        name: self.app.localization.e('posts'),
+                        options: {
+
+                            preview: options.preview
+
+                        }
+                    },
 
 
                     notifications: {
@@ -4688,6 +5495,7 @@ Platform = function (app, listofnodes) {
                         name: self.app.localization.e('notifications'),
                         options: {
 
+                            sound: options.sound,
                             win: options.win,
                             transactions: options.transactions,
                             upvotes: options.upvotes,
@@ -4701,15 +5509,7 @@ Platform = function (app, listofnodes) {
                         }
                     },
 
-                   /* postfeed : {
-                        name: 'Post Feed',
-                        options: {
-
-                            historicalShares: options.historicalShares
-
-                        }
-                    },*/
-
+                 
                     video: {
                         name: self.app.localization.e('video'),
                         options: {
@@ -4719,17 +5519,7 @@ Platform = function (app, listofnodes) {
                         }
                     },
 
-                    /* vidgets: {
-                        name: self.app.localization.e('e13288'),
-                        options: {
-
-                            vidgetchat: options.vidgetchat,
-                           // vidgettags: options.vidgettags,
-                            vidgetlastcomments: options.vidgetlastcomments,
-                            vidgetstaking : options.vidgetstaking
-
-                        }
-                    },*/
+                    
 
                 }
 
@@ -4766,6 +5556,19 @@ Platform = function (app, listofnodes) {
                             autostart: options.autostart
                         }
                     }
+                }
+                else{
+                    if(!window.cordova){
+
+                        c.system = {
+                            name: self.app.localization.e('system'),
+                            options: {
+                                openlinksinelectron: options.openlinksinelectron
+                            }
+                        }
+
+                    }
+          
                 }
 
                 _.each(options, function (o, i) {
@@ -7051,12 +7854,12 @@ Platform = function (app, listofnodes) {
                 else {
 
                     var lf = _.find(self.sdk.usersl.storage, function (s) {
-                        if (s.name.toLowerCase() == name.toLowerCase()) return true
+                        if (s && s.name && s.name.toLowerCase() == name.toLowerCase()) return true
                     })
 
                     if(!lf){
                         lf = _.find(self.sdk.users.storage, function (s) {
-                            if (s.name.toLowerCase() == name.toLowerCase()) return true
+                            if (s && s.name && s.name.toLowerCase() == name.toLowerCase()) return true
                         })
                     }
 
@@ -10994,7 +11797,9 @@ Platform = function (app, listofnodes) {
                     }
                     var loadedShares = [];
                     _.each(p.txids, function (txid) {
-                        var curShare = self.sdk.local.shares.get(txid);
+
+                        var curShare = self.sdk.localshares.getShare(txid);
+
                         if (curShare) {
 
                             if (!curShare || !curShare.share || !curShare.share.user || !curShare.share.user.adr || !curShare.share.share)
@@ -11009,22 +11814,36 @@ Platform = function (app, listofnodes) {
                             newShare._import(curShare.share.share);
                             newShare.txid = txid;
                             newShare.address = newUser.address;
-                            newShare.downloadedDate = new Date(curShare.share.timestamp);
+
+                            if (curShare.share.timestamp)
+                                newShare.downloadedDate = new Date(curShare.share.timestamp);
+
+
+                            newShare.time = new Date();
+                            newShare.time.setTime(curShare.share.share.time * 1000);
 
                             loadedShares.push(newShare);
 
-                            if (!self.sdk.node.shares.storage.trx)
+                            if(!self.sdk.node.shares.storage.trx)
                                 self.sdk.node.shares.storage.trx = {};
 
-                            self.sdk.node.shares.storage.trx[txid] = newShare;
+                            if(!self.sdk.node.shares.storage.trx[txid])
+                                self.sdk.node.shares.storage.trx[txid] = newShare;
 
                         }
                     });
 
                     // Sort by download date
-                    loadedShares = loadedShares.sort((s1, s2) => {
-                        return s2.downloadedDate.getTime() - s1.downloadedDate.getTime();
-                    });
+
+                    loadedShares = _.sortBy(loadedShares, function(s1){
+
+                        if(!s1.downloadedDate){
+                            return 1
+                        }
+
+                        return -s1.downloadedDate.getTime()
+                    })
+                    
 
                     if (clbk) {
                         clbk(loadedShares, null, {
@@ -11211,10 +12030,11 @@ Platform = function (app, listofnodes) {
                                     s.txid = share.txid;
 
                                     s.time = new Date();
+                                    s.time.setTime(share.time * 1000);
 
                                     s.address = share.address
 
-                                    s.time.setTime(share.time * 1000);
+                                    
 
                                     s.score = share.scoreSum;
                                     s.scnt = share.scoreCnt;
@@ -14064,7 +14884,7 @@ Platform = function (app, listofnodes) {
 
                     if (!f) {
                         if (clbk)
-                            clbk(self.app.localization.e('e13293'))
+                            clbk(self.app.localization.e('e13293')+' /ul100')
 
                         return
                     }
@@ -14314,9 +15134,7 @@ Platform = function (app, listofnodes) {
                 var s = self.sdk.pool;
                 var pool = s.get();
 
-
                 var keyPair = self.app.user.keysPairFromPrivate(mnemonic)
-
 
                 if(!keyPair){
 
@@ -14335,7 +15153,7 @@ Platform = function (app, listofnodes) {
                     var id = pool.map[address];
                     var _pack = pool.packs[id];
 
-                    if (_pack.addresses.length > 1) {
+                    if (_pack.addresses.length > 1/* || _pack.addresses[0] == address*/) {
                         if (clbk)
                             clbk(null, 'hasinanotherpack')
 
@@ -16947,6 +17765,8 @@ Platform = function (app, listofnodes) {
                             duration : linkInfo.duration,
                             aspectRatio : linkInfo.aspectRatio || 1,
                             isLive : linkInfo.isLive,
+
+                            original : linkInfo
                         } : '';
 
                         window.peertubeglobalcache[link.meta.id] = linkInfo
@@ -16976,22 +17796,15 @@ Platform = function (app, listofnodes) {
                     return self.sdk.videos.types.youtube(links)
                 },
 
-                
-
                 peertube : async function(links){
-
 
                     return self.app.api.fetch('peertube/videos', {
                         urls: links.map(link => link.link),
                     }).then(linksInfo => {
-
                         self.sdk.videos.catchPeertubeLinks(linksInfo, links)
-
                         return Promise.resolve(links);
                     })
 
-
-                  
                 },
 
                 bitchute : function(links){
@@ -17036,19 +17849,21 @@ Platform = function (app, listofnodes) {
                 }
             },
 
-            volume : 0.5,
+            volume : 0,
             save : function(){
-                localStorage['videovolume'] = self.sdk.videos.volume || 0.5
+                localStorage['pn_videovolume'] = self.sdk.videos.volume || 0.5
             },
             load : function(){
 
-                var _v = localStorage['videovolume']
+                var _v = localStorage['pn_videovolume']
 
-                if(typeof _v == 'undefined') _v = '0.5'
+                if(typeof _v == 'undefined' || window.cordova || isMobile()) _v = '0'
 
 
                 self.sdk.videos.volume = Number(_v)
+
             },
+
             init : function(clbk){
                 self.sdk.videos.load()
 
@@ -17384,6 +18199,7 @@ Platform = function (app, listofnodes) {
                 if (data.data)
                     platform.ws.messageHandler(data.data)
 
+
                 if (data.room_id) {
 
                     if(data.tap){
@@ -17392,13 +18208,27 @@ Platform = function (app, listofnodes) {
 
                             return platform && platform.matrixchat && platform.matrixchat.core;
 
-                        }, function(){
+                        }, function(){  
 
-                            platform.matrixchat.core.goto(data.room_id);
-                            platform.matrixchat.core.mtrx.fastsync()
+                            setTimeout(function(){
+
+                                platform.matrixchat.core.goto(data.room_id);
+                                
+                                if (platform.matrixchat.core.apptochat)
+                                    platform.matrixchat.core.apptochat();
+
+                            }, 50)
+
+                            setTimeout(function(){
+                                try{
+                                    platform.matrixchat.core.mtrx.fastsync()
+                                }
+                                catch(e){
+                                    
+                                }
+                                
+                            }, 500)
                             
-                            if (platform.matrixchat.core.apptochat)
-                                platform.matrixchat.core.apptochat();
                         });
                     }
 
@@ -19215,7 +20045,6 @@ Platform = function (app, listofnodes) {
                         //     html += self.tempates.user(data.user, '<div class="text">' + text + '</div>', true, ' ' + toptext, extra, data.time)
                         // }
 
-                        console.log('data!!', data, data.text);
                         html += `<div><b>System notification</b></div><div class="text">${data.text}</div>`;
                     }
 
@@ -19684,11 +20513,9 @@ Platform = function (app, listofnodes) {
                         console.log("E", e)
                     }
 
-                    console.log("MESSAGE", jm)
                     
                     if (jm){
 
-                        console.log('jm.type', jm.type)
 
                         if (jm.type == 'proxy-message-tick'){
 
@@ -20105,7 +20932,7 @@ Platform = function (app, listofnodes) {
                     })
 
                     if (!_Node) {
-                        if (audio && !window.cordova) {
+                        if (audio && !window.cordova && platform.sdk.usersettings.meta.sound.value) {
 
                             if (!audio.if || audio.if(data, loadedData)) {
 
@@ -20357,7 +21184,6 @@ Platform = function (app, listofnodes) {
                 }
             })
 
-            console.log("SEND", message)
 
             self.send(JSON.stringify(message))
         }
@@ -20451,17 +21277,22 @@ Platform = function (app, listofnodes) {
                 txid: "e7a7c9f84794ccac6dead944e4d6fffc06628030b1d5428010d585c8bf7e659c"
             })*/
 
-            /*self.messageHandler({
-                addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
-                addrFrom: "PJorG1HMRegp3SiLAFVp8R5Ef6d3nSrNxA",
-                mesType: "upvoteShare",
-                msg: "event",
-                nblock: 1253143,
-                posttxid: "ea9ea91e8baf69f752470f55d146f4638bab0960ef55753a3c44df02c645798c",
-                time: "1625662971",
-                txid: "d2533c04f0ef7ca9ff95cb6746567cdac5e8eaf285a57ed0831e0afdd624ca92",
-                upvoteVal: 5
-            })*/
+            // setTimeout(() => {
+            //     self.messageHandler({
+            //         addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
+            //         addrFrom: "PJorG1HMRegp3SiLAFVp8R5Ef6d3nSrNxA",
+            //         mesType: "upvoteShare",
+            //         msg: "event",
+            //         nblock: 1253143,
+            //         posttxid: "ea9ea91e8baf69f752470f55d146f4638bab0960ef55753a3c44df02c645798c",
+            //         time: "1625662971",
+            //         txid: "d2533c04f0ef7ca9ff95cb6746567cdac5e8eaf285a57ed0831e0afdd624ca92",
+            //         upvoteVal: 5
+            //     })
+
+            // }, 10000)
+
+
 
            /*self.messageHandler({
                 addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
@@ -21755,6 +22586,16 @@ Platform = function (app, listofnodes) {
                             console.log("RFAIL", r)
                         })*/
                         
+                        if (app.curation()){
+                            if(app.user.validate()){
+
+                                if(app.nav.get.href() == 'userpage?pc=1'){
+                                    self.matrixchat.core.apptochat()
+                                }
+
+                                
+                            }
+                        }
                     
 
                         if (self.loadingWithErrors)
@@ -21795,7 +22636,7 @@ Platform = function (app, listofnodes) {
                 window.matrixchat.destroy()
             }
     
-            $('#matrix').empty();
+            $('#matrix').html('');
 
             self.matrixchat.el = null
             self.matrixchat.inited = false
@@ -21816,12 +22657,11 @@ Platform = function (app, listofnodes) {
             else{
                 self.matrixchat.imported = true;
 
-                if(electron){
-
+                if (electron){
                     if(clbk) clbk()
                 }
                 else{
-                    importScript('chat/matrix-element.min.js?v=6', clbk)
+                    importScript('chat/matrix-element.min.js?v=7', clbk)
                 }
                 
             }
@@ -21863,42 +22703,38 @@ Platform = function (app, listofnodes) {
 
                     var a = pnet.address;
 
-                    var addresses = self.testchataddresses || [];
-
-                    var userinfo = deep(app, 'platform.sdk.user.storage.me')
-
                     if (state) {
                         
+                        self.matrixchat.import(function(){
 
-                    //if (window.testpocketnet && userinfo && !_.isEmpty(userinfo) && !(userinfo.temp || userinfo.relay || userinfo.fromstorage)) {
+                            self.matrixchat.inited = true
+    
+                            var privatekey = self.app.user.private.value.toString('hex');
 
-                            self.matrixchat.import(function(){
-
-                                self.matrixchat.inited = true
+                
+                            var matrix = `<div class="wrapper matrixchatwrapper">
+                                <matrix-element
+                                    address="${a}"
+                                    privatekey="${privatekey}"
+                                    pocketnet="`+( (isMobile() || isTablet() || window.cordova) ? '' : 'true')+`"
+                                    mobile="`+( (isMobile() || isTablet() || window.cordova) ? 'true' : '')+`" 
+                                    ctheme="`+self.sdk.theme.current+`"
+                                    localization="`+self.app.localization.key+`"
+                                    fcmtoken="`+(self.fcmtoken || "")+`"
+                                >
+                                </matrix-element>
+                            </div>`
         
-                                var privatekey = self.app.user.private.value.toString('hex');
+                            $('#matrix').html(matrix);   
 
-                    
-                                var matrix = `<div class="wrapper matrixchatwrapper">
-                                    <matrix-element
-                                        address="${a}"
-                                        privatekey="${privatekey}"
-                                        pocketnet="`+( (isMobile() || isTablet() || window.cordova) ? '' : 'true')+`"
-                                        mobile="`+( (isMobile() || isTablet() || window.cordova) ? 'true' : '')+`" 
-                                        ctheme="`+self.sdk.theme.current+`"
-                                        localization="`+self.app.localization.key+`"
-                                        fcmtoken="`+(self.fcmtoken || "")+`"
-                                    >
-                                    </matrix-element>
-                                </div>`
-            
-                                $('#matrix').append(matrix);   
+                            self.matrixchat.el = $('.matrixchatwrapper')
+                            self.matrixchat.initevents()
+                            self.matrixchat.connect()
 
-                                self.matrixchat.el = $('.matrixchatwrapper')
-                                self.matrixchat.initevents()
-                                self.matrixchat.connect()
-                                
-                            }, null, app);
+
+                           
+                            
+                        }, null, app);
 
         
                     }
@@ -21913,7 +22749,7 @@ Platform = function (app, listofnodes) {
         },
         
         changeTheme : function(){
-            if(self.matrixchat.el){
+            if (self.matrixchat.el){
                 self.matrixchat.el.find('matrix-element').attr('ctheme', self.sdk.theme.current)
             }
         },
@@ -21927,14 +22763,14 @@ Platform = function (app, listofnodes) {
         initevents : function(){
             if (self.matrixchat.el){
 
-                if(isMobile() || window.cordova){
+                if(isTablet() || isMobile() || window.cordova){
 
 					self.matrixchat.el.swipe({
-						allowPageScroll: "vertical", 
 						swipeLeft : function(e, phase, direction, distance){
 
                             if (self.matrixchat.core && (!self.matrixchat.core.canback || self.matrixchat.core.canback()))
                                 self.matrixchat.core.backtoapp()
+
 						},
 					})
 	
@@ -22079,7 +22915,7 @@ Platform = function (app, listofnodes) {
         showed : function(){
             if(!self.matrixchat.core){ return false }
 
-            if(isMobile()|| window.cordova){
+            if(isTablet() || isMobile() || window.cordova){
                 return !self.matrixchat.core.hiddenInParent
             }
 
@@ -22098,75 +22934,101 @@ Platform = function (app, listofnodes) {
 
             core.backtoapp = function(link){
 
-                if (isMobile()|| window.cordova)
+                console.log('backtoapp')
+
+                if (isTablet() ||isMobile() || window.cordova)
+                    app.nav.api.history.removeParameters(['pc'])
+
+                if (link){
+                    link = link.replace('https://' + self.app.options.url + '/', '')
+
+                    if(link.indexOf('index') == '0' && link.indexOf('v=') == -1 && 
+                        (link.indexOf('s=') > -1 || link.indexOf('i=') > -1 || link.indexOf('p=') > -1)) 
+                        link = link.replace('index', 'post')
+
+                    self.app.nav.api.load({
+                        open: true,
+                        href: link,
+                        history: true,
+                        handler : true
+                    })
+                }
+
+                if (self.matrixchat.el){
+
+                    if(!self.matrixchat.el.hasClass('active')) return
+
+                    self.matrixchat.el.removeClass('active')
+                }
+                else{
+                    return
+                }
+
+                self.app.actions.playingvideo()
+
+                if (isTablet() ||isMobile() || window.cordova)
                     self.app.actions.restore()
 
                 app.el.html.removeClass('chatshowed')
 
                 if(document.activeElement) document.activeElement.blur()
 
-                if (self.matrixchat.el)
-                    self.matrixchat.el.removeClass('active')
-
                 if (self.matrixchat.core){ 
-                    self.matrixchat.core.hiddenInParent = isMobile()|| window.cordova ? true : false 
+                    self.matrixchat.core.hideInParent(isTablet() ||isMobile() || window.cordova ? true : false )
                 }
 
-                if (isMobile() || window.cordova)
+                if (isTablet() ||isMobile() || window.cordova){
                     self.app.actions.onScroll()
-
-                if(isMobile() || window.cordova)
-                    app.nav.api.history.removeParameters(['pc'])
-                if (link){
-
-                    link = link.replace('https://' + self.app.options.url + '/', '')
-
-                    self.app.nav.api.load({
-                        open: true,
-                        href: link,
-                        history: true
-                    })
                 }
-
-
 
                 _.each(self.matrixchat.clbks.SHOWING, function(c){
                     c(false)
                 })
-
                 
             }
 
             core.apptochat = function(link){
 
-                if(document.activeElement) document.activeElement.blur()
+                console.log('apptochat')
+
+                if (document.activeElement) document.activeElement.blur()
+
+                if (self.matrixchat.core){ 
+                    if(link){
+                        self.matrixchat.core.gotoRoute(link)
+                    }
+                }
                 
-                if (self.matrixchat.el)
+                if (self.matrixchat.el){
+
+                    if(self.matrixchat.el.hasClass('active')) return
+
                     self.matrixchat.el.addClass('active')
 
-                
+                }
+                else{
+                    return
+                }
+                    
                 self.app.actions.playingvideo()
 
-
-                if (isMobile() || window.cordova){
+                if (isTablet() ||isMobile() || window.cordova){
                     self.app.actions.offScroll()
                     self.app.actions.optimize()   
                 }
                     
-                    
-                if (isMobile() || window.cordova)
+                if (isTablet() ||isMobile() || window.cordova)
                     app.nav.api.history.addParameters({
                         'pc' : '1'
                     })
 
                 if (self.matrixchat.core){ 
-                    self.matrixchat.core.hiddenInParent = false 
+                    self.matrixchat.core.hideInParent(false) 
 
-                    if(link){
-                        self.matrixchat.core.gotoRoute(link)
-                    }
+                    
                 
                 }
+                
 
                 _.each(self.matrixchat.clbks.SHOWING, function(c){
                     c(true)
@@ -22176,7 +23038,7 @@ Platform = function (app, listofnodes) {
             }
 
             self.matrixchat.core = core
-            self.matrixchat.core.hiddenInParent = isMobile()|| window.cordova ? true : false 
+            self.matrixchat.core.hideInParent(isTablet() ||isMobile()|| window.cordova ? true : false)
 
             core.externalLink(self.matrixchat)
 
@@ -22205,13 +23067,13 @@ Platform = function (app, listofnodes) {
         unlink : function(){    
 
             if (self.matrixchat.core){ 
-                self.matrixchat.core.hiddenInParent = false
+                //self.matrixchat.core.hideInParent(false)
                 self.matrixchat.core.destroyExternalLink()
-            
             }
 
 
             self.matrixchat.connectWith = null
+            self.matrixchat.joinRoom = null
 
             delete self.app.platform.ws.messages["new block"].clbks.matrixchat
             delete self.matrixchat.core
@@ -22559,7 +23421,12 @@ Platform = function (app, listofnodes) {
             cordova.openwith.init();
             cordova.openwith.addHandler(function(intent){
                 var sharing = {}
-       
+
+                console.log("intent", intent)
+
+                if(intent.action == 'VIEW') return
+                
+                
 
                 var promises = _.map(
                     _.filter(intent.items || [], function(i){return i}), 
@@ -22618,7 +23485,7 @@ Platform = function (app, listofnodes) {
                     if (intent.exit) { cordova.openwith.exit(); }
 
                     if(_.isEmpty(sharing)){
-                        sitemessage(self.app.localization.e('e13293'))
+                        sitemessage(self.app.localization.e('e13293')+' /ul101')
                     }
                     else{
 
@@ -22626,7 +23493,7 @@ Platform = function (app, listofnodes) {
                             return self.matrixchat.share.object(sharing)
                         }).catch(r => {
 
-                            sitemessage(self.app.localization.e('e13293'))
+                            sitemessage(self.app.localization.e('e13293')+' /ul102')
 
                         })
 
@@ -22640,13 +23507,18 @@ Platform = function (app, listofnodes) {
 
         ///////////
 
+        self.sdk.localshares.initclbk()
 
-        if(window.cordova){
+
+        /*if(window.cordova){
             setupOpenwith()
-            self.sdk.local.shares.init();
+            self.sdk.local.shares.initclbk()
+            
+            //self.sdk.local.shares.init();
         } else if (typeof _Electron != 'undefined' && window.electron) {
-            self.sdk.local.shares.init();
-        }
+            self.sdk.local.shares.initclbk()
+            // self.sdk.local.shares.init();
+        }*/
 
         
 
@@ -22655,17 +23527,54 @@ Platform = function (app, listofnodes) {
 
     self.navManager = function(){
 
+        var routing = function(route){
+
+            app.user.isState(function (state) {
+
+                var url = route
+
+                route = (route || '').replace('pocketnet://', '').replace('https://test.pocketnet.app/', '').replace('https://pocketnet.app/', '').replace('bastyon://', '').replace('https://test.bastyon.com/', '').replace('https://bastyon.com/', '')
+
+                    if (route){
+
+                        if(!state || route.indexOf('welcome?') == -1){
+                            self.app.nav.api.load({
+                                open: true,
+                                href: route,
+                                history: true
+                            })
+                        }
+                    }
+
+                    /////////////
+
+                    var w = parameters(url, true).connect
+                    var cr = parameters(url, true).publicroom   
+                    var ps =  parameters(url, true).ps
+
+                    self.matrixchat.connectWith = w || null
+                    self.matrixchat.joinRoom = cr || null
+
+
+                    if(!ps && !cr && !w && !app.curation()){
+                        self.matrixchat.backtoapp()
+                    }
+                    
+
+                    setTimeout(function(){
+                        self.matrixchat.wait().then(r => {
+                            self.matrixchat.connect()
+                        })
+                    }, 500)
+
+            })
+        }
+
         if(electron && _Electron){
 
             electron.ipcRenderer.on('nav-message', function (event, data) {
                 if (data.type == 'action') {
-                    var route = data.msg
-
-                    self.app.nav.api.load({
-                        open: true,
-                        href: route,
-                        history: true
-                    })
+                    routing(data.msg)
                 }
     
             
@@ -22677,25 +23586,9 @@ Platform = function (app, listofnodes) {
 
             universalLinks.subscribe('nav-message', function (eventData) {
 
-                var route = (eventData.url || '').replace('pocketnet://', '').replace('https://test.pocketnet.app/', '').replace('https://pocketnet.app/', '').replace('bastyon://', '').replace('https://test.bastyon.com/', '').replace('https://bastyon.com/', '')
+                console.log('eventData', eventData)
 
-                if (route){
-                    self.app.nav.api.load({
-                        open: true,
-                        href: route,
-                        history: true
-                    })
-                }
-
-                /////////////
-
-                var w = parameters(eventData.url, true).connect
-   
-
-                self.matrixchat.connectWith = w || null
-
-                self.matrixchat.connect()
-
+                routing(eventData.url)
                 
             });
 
@@ -22715,7 +23608,9 @@ Platform = function (app, listofnodes) {
     self.cordovaSetup()
 
     self.matrixchat.connectWith = parameters().connect
-    self.matrixchat.joinRoom = parameters().publicroom
+
+    if(!self.matrixchat.connectWith)
+        self.matrixchat.joinRoom = parameters().publicroom
 
     return self;
 

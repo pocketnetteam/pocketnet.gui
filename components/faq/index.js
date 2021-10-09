@@ -15,24 +15,44 @@ var faq = (function(){
 		var faqcontent = [
 			{
 		
-				name : 'Technical',
-				id : 'technical',
-			
+				name : 'How does '+self.app.meta.fullname+' work?',
+				id : 'how-it-works',
+		
 				group : [
-			
+    
 					{
-						id : 'downloadclient',
-						q : 'Where do I download the client?',
-						a : '<div><a href="https://github.com/pocketnetteam/pocketnet.gui/releases/latest">https://github.com/pocketnetteam/pocketnet.gui/releases/latest</a></div><div>Click on '+self.app.meta.fullname+'Setup.exe</div>',
+						id : 'what-is',
+						q : 'What is ' +self.app.meta.fullname+'?',
+						a : '<div><p>' +self.app.meta.fullname+' is an innovative social network and video sharing platform. Unlike the mainstream social networks, it is not ruled by a company. It is an open source project run by a team of developers and experts, and its scope is to provide a censorship-free platform where the freedom of speech is seriously respected.&nbsp;</p><p>The project was created by&nbsp;Daniel Satchkov and is a decentralized social media platform without any central authority. The platform does not run on a single server but on a network of <em>nodes</em> that are located all throughout the world.&nbsp;</p><p>This means, in practical terms, that users are always able to connect to it, see the content and post as long as they have an internet connection.</p><p>This overcomes the limitations that some governments put in place to block or limit the use of social medias. While for example in China some social networks can be used only behind a VPN, there is no need for that with '+self.app.meta.fullname+'.&nbsp;</p><p>In addition,&nbsp;'+self.app.meta.fullname+' grants complete anonymity: users register without any email or phone number and no personal data like the IP or MAC address are stored in any way.&nbsp;</p><p>By doing so,&nbsp;'+self.app.meta.fullname+' removes the chance for governments to track specific users and to associate an identity to users. Today, anonymity is a requirement for security and privacy and&nbsp;'+self.app.meta.fullname+' is able to guarantee it.&nbsp;</p><p>Furthermore, in order to deliver completely private and anonymous communication,&nbsp;'+self.app.meta.fullname+' provides an encrypted chat system, not associated to any phone number or personal data, protected with 1 to 1 encryption model. No one except the two persons involved in the chat session can access the messages and governments have no way to look into the database since the communication is encrypted and there are no backdoors and no "master keys" that can be used for decryption. Moreover, all the chat messages are automatically deleted after 7 day.</p><p>'+self.app.meta.fullname+' wants to deliver a completly free, safe and anonymous social platform where people can chat, communicate and share contents without the risk of being controlled, limited or censored by governments or corporations.</p></div>',
 					},
 					
 					{
-						id : 'downloadclient',
-						q : 'Where do I download the node?',
-						a : '<div><a href="https://github.com/pocketnetteam/pocketnet.core/releases/latest">https://github.com/pocketnetteam/pocketnet.core/releases/latest</a></div><div>With any questions email core@pocketnet.app</div>',
+						id : 'how-it-words',
+						q : 'How does it work?',
+						a : '<div><p>'+self.app.meta.fullname+' is pretty simple to use: you just have to create an account and you can immediately start posting contents, follow other users and chat.</p><p>During the registration you just need to create a username (it must be unique!) and upload a picture or a photo (not necessarily your own photo!). No email, no phone number, no verifications. Not even a password: the system will generate a passphrase that you have to use to login.&nbsp;</p></div>',
+					},
+						
+					{
+						id : 'signback',
+						q : 'How do I register and log in?',
+						a : '<div><p>The first time you use '+self.app.meta.fullname+' you need to create an account, composed only of your unique username.</p><p><strong>There is no password. </strong></p><p>Instead, you will be given a unique 12-words key (passphrase) and a QR code. <strong>Keep this data safe and NEVER reveal it to anyone.</strong></p><p>Then, when you need to log in, you just need to input your passphrase (or scan the QR from the app).&nbsp;</p><p><strong>Remember</strong>: if you lose your passphrase, your account is locked forever. There is no way to restore the password, there is no way for '+self.app.meta.fullname+' to let you log in again. Your passphrase and QR code are the only ways to access your account.&nbsp;</p></div>',
+					},
+					
+					
+					{
+						id : 'behind-scenes',
+						q : 'How does it work behind the scenes? Where are the servers?',
+						a : '<div><p>'+self.app.meta.fullname+' is modelled on the style of cryptocurrency (like Bitcoin and Ethereum), because it has no central authority and uses the blockchain to make transactions and ensure security.&nbsp;</p><p>There is no central server: instead, the platform relies on a network of nodes, located all over the world. Every person in the world with a computer can actually run a node (and be rewarded to do so).&nbsp;</p><p>Each post, each comment, each interaction (except chat messages!) is stored on the <a href="https://en.wikipedia.org/wiki/Blockchain">blockchain</a>. This means that there is no way to remove a post or to censor it. Every post is and will always be available on the blockchain and no authority, government or corporation can remove it.</p><p>'+self.app.meta.fullname+' usesa dedicated blockchain, derived directly from the Bitcoin chain.&nbsp;</p></div>',
+					},
+						
+					{
+						id : 'blocks',
+						q : 'What would happen if my government blocks access to Bastyon.com?',
+						a : '<div><p>Nothing.</p><p>You would still be able to use Bastyon as if nothing happened.</p><p>This is the power of censorship resistance. <br />You can verify this yourself by simulating a disappearance of the domain name bastyon.com. <br /><br /><strong>On Windows:</strong><br />just open this file:<br />Windows/System32/hosts<br /><br /><strong>On Linux/Ubuntu:</strong><br />Open this file<br />/etc/hosts<br /><br />Then add this row: <br />127.0.0.1 bastyon.com</p><p>This would ensure that bastyon.com is pointing to your local machine, which means that it is not pointing to any outside IP address.<br /><br />Then launch the desktop app and you will be able to continue using Bastyon has if nothing happened. <br />Cool huh?</p></div>',
 					}
 			
 				]
+		
 			
 			},
 			

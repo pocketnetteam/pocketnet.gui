@@ -10,6 +10,10 @@ var main = (function(){
 
 		var el = {};
 
+		var bastyonhelperOpened = false;
+
+		
+
 		var roller = null, lenta = null, share = null, panel,leftpanel, uptimer = null;
 
 		var videomain = false
@@ -55,13 +59,17 @@ var main = (function(){
 
 					lastStickyRefresh = ns
 
-					//el.panel.hcSticky('refresh');
-					//el.leftpanel.hcSticky('refresh');
+					if(alv){
+						el.panel.hcSticky('refresh');
+						el.leftpanel.hcSticky('refresh');
 
-					/*setTimeout(function(){
-						if(el.panel) el.panel.hcSticky('refresh');
-						if(el.leftpanel) el.leftpanel.hcSticky('refresh');
-					}, 1000)*/
+						setTimeout(function(){
+							if(el.panel) el.panel.hcSticky('refresh');
+							if(el.leftpanel) el.leftpanel.hcSticky('refresh');
+						}, 300)
+					}
+
+					
 				}
 					
 			},
@@ -148,6 +156,16 @@ var main = (function(){
 		}
 
 		var events = {
+
+			sendMnemonic(iframe, mnemonic, pool){
+
+				iframe.contentWindow.postMessage({
+					pocketnet: true,
+					mnemonic: mnemonic,
+					pool: pool,
+				}, 'https://bastyon.com')
+
+			},
 			currentMode : function(){
 				currentMode = $(this).attr('lenta')
 
@@ -252,8 +270,8 @@ var main = (function(){
 
 						},
 						essenseData : {
+							minimized : true,
 							post : function(){
-
 								if (plissing)
 									plissing.destroy()
 							}
@@ -544,6 +562,9 @@ var main = (function(){
 							setTimeout(function(){
 								upbackbutton = self.app.platform.api.upbutton(el.upbackbutton, {
 									top : function(){
+										/*if(isMobile() || isTablet() || window.cordova){
+											return '135px'
+										}*/
 										return '65px'
 									},
 									rightEl : el.c.find('.lentacellsvi'),
@@ -694,7 +715,6 @@ var main = (function(){
 
 		var initEvents = function(){
 
-
 			self.app.events.scroll.main = actions.addbuttonscroll
 
 			self.app.events.resize.mainpage = function(){
@@ -708,18 +728,23 @@ var main = (function(){
 
 			el.addbutton.on('click', actions.addbutton)
 
-			if(!isMobile()){
+			if(!isMobile() && !isTablet()){
+
+				var t1 = 64
+				var t2 = 76
+
+		
 
 				setTimeout(function(){
 					el.leftpanel.hcSticky({
 						stickTo: '#main',
-						top : 64,
+						top : t1,
 						bottom : 122
 					});
 	
 					el.panel.hcSticky({
 						stickTo: '#main',
-						top : 76,
+						top : t2,
 						bottom : 122
 					});
 	
@@ -755,6 +780,50 @@ var main = (function(){
 	
 				}
 			}
+			
+			
+			var mnemonic = localStorage.getItem('mnemonic');
+			var pool = localStorage.getItem('pool');
+
+			if (!electron && !window.cordova && window.pocketnetproject !== 'Bastyon' && mnemonic && !bastyonhelperOpened){
+
+				bastyonhelperOpened = true;
+
+				self.shell({
+					name : 'bastyonhelper',
+					el : el.bastyonhelper,
+					animation : false,
+					data : {
+						href: history.state && history.state.href || ''
+					}					
+	
+				}, function(p){
+	
+	
+					var iframe = p.el.find('#iframe');
+	
+					var bastyonlink = p.el.find('#bastyonlink');
+					var _close = p.el.find('._close');
+					
+	
+					if (iframe[0]){
+	
+						bastyonlink.on('click', function(){
+							events.sendMnemonic(iframe[0], mnemonic, pool)
+						})
+
+					}
+	
+					_close.on('click', function(){
+
+						el.bastyonhelper.remove()
+					})
+					
+					
+				})
+	
+			}	
+
 
 
 		}
@@ -840,40 +909,7 @@ var main = (function(){
 		return {
 			primary : primary,
 
-		
-
 			parametersHandler : function(clbk){
-
-				console.log('parametersHandler')
-
-				var ncurrentMode = currentMode
-
-				localStorage['lentakey'] = parameters().r || 'index'
-
-				if (parameters().video){
-					localStorage['lentakey'] = 'video'
-				}
-
-				if (parameters().r){
-					ncurrentMode = parameters().r
-				}
-				else{
-					ncurrentMode = 'common'
-				}
-				
-				if (currentMode != ncurrentMode){
-
-					currentMode = ncurrentMode
-				}
-
-				var _vm = parameters().video ? true : false
-
-
-				if(_vm != videomain){
-					videomain = _vm
-				}
-
-				searchvalue = parameters().ss || ''
 
 				var tgsi = decodeURI(parameters().sst || '')
 
@@ -881,9 +917,31 @@ var main = (function(){
 					return r
 				}));
 
-				searchtags = words.length ? words : null
+				var nsearchtags = words.length ? words : null
+				var nsearchvalue = parameters().ss || ''
+				var ncurrentMode = parameters().r || 'common';
+				var nlentakey = parameters().video ? 'video' : (parameters().r || 'index')
+				var nvideomain = nlentakey == 'video'
+				
+				var changes = false
 
-				renders.topvideos(currentMode == 'common' && !videomain && !searchvalue && !searchtags)
+				localStorage['lentakey'] = nlentakey
+
+				if (currentMode != ncurrentMode){
+					currentMode = ncurrentMode; changes = true
+				}
+
+				if (videomain != nvideomain){
+					videomain = nvideomain; changes = true
+				}
+
+				if (searchvalue != nsearchvalue){
+					searchvalue = nsearchvalue; changes = true
+				}
+
+				if (searchtags != nsearchtags){
+					searchtags = nsearchtags; changes = true
+				}
 
 				if (videomain){
 
@@ -891,32 +949,50 @@ var main = (function(){
 
 					if(!parameters().v){
 						actions.backtolenta()
-						//makePanel()
 					}
 				}
 				else{
 					el.c.removeClass('videomain')
 					actions.backtolentaClear()
-					//makePanel()
 				}
+
+				if (changes){
+					renders.topvideos(currentMode == 'common' && !videomain && !searchvalue && !searchtags)
+
+					
+
+					if (lenta) {
+						lenta.destroy()
+						lenta = null
+					}
+	
+					renders.lentawithsearch()
+					makePanel()
+					makeShare()
+
+					actions.refreshSticky()
+
+					if (clbk)
+						clbk()
+				}
+
 				
 				if (lenta) {
-					lenta.destroy()
-					lenta = null
+					lenta.hideshowedvideo()
 				}
+				
+				
+				
 
-				renders.lentawithsearch()
+				//renders.leftpanel() ?
 
-				renders.leftpanel()
+				
 
-				makeShare()
-
-				actions.refreshSticky()
-
-				if (clbk)
-					clbk()
+				
 
 			},
+
+			
 
 			authclbk : function(){
 
@@ -938,6 +1014,7 @@ var main = (function(){
 				hsready = false;
 
 				var _s = parameters()
+
 				if (_s.r){
 					currentMode = _s.r
 				}
@@ -953,7 +1030,8 @@ var main = (function(){
 					self.nav.api.load({
 						open : true,
 						href : 'welcome',
-						history : true
+						history : true,
+						replaceState : true
 					})
 
 					return
@@ -963,11 +1041,24 @@ var main = (function(){
 					
 					self.nav.api.load({
 						open : true,
-						href : 'userpage',
-						history : true
+						href : 'userpage?pc=1',
+						history : true,
+						replaceState : true
 					})
 
 					return
+				}
+
+				if(_s.v && (isMobile() || window.cordova)){
+
+					self.nav.api.load({
+						open : true,
+						href : 'post?s=' + _s.v,
+						history : true,
+						replaceState : true
+					})
+
+					return 
 				}
 
 				if(p.state && primary && !self.app.user.validate()){
@@ -975,7 +1066,8 @@ var main = (function(){
 					self.nav.api.load({
 						open : true,
 						href : 'userpage?id=test',
-						history : true
+						history : true,
+						replaceState : true
 					})
 
 					return
@@ -992,8 +1084,6 @@ var main = (function(){
 			},
 
 			destroy : function(){
-
-				console.log("DEST")
 
 				if(el.c) el.c.html('')
 
@@ -1101,6 +1191,7 @@ var main = (function(){
 				el.addbutton = el.c.find('.addbutton')
 				el.slwork = el.c.find('.maincntwrapper >div.work')
 				el.topvideos = el.c.find('.topvideosWrapper')
+				el.bastyonhelper = el.c.find('#bastyonhelper');
 
 
 				self.app.el.footer.addClass('workstation')

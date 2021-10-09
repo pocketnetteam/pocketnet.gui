@@ -14,6 +14,8 @@
 
 
 .customscroll{
+    overflow-y: overlay;
+    overflow-x: hidden;
     scrollbar-width: 4px;
     scrollbar-color: rgba(0, 0, 0, .15) rgba(0, 0, 0, .05);
 }
@@ -53,22 +55,26 @@ html {
     min-height: 100%;
     position: relative;
     overflow-x: hidden;
+    overflow-y: overlay;
+    
     /*overflow-x: hidden;*/
     // background: #f6f6f6;
     /*overflow-anchor: none;*/
 
-    body{
-        overflow-x: hidden;
-        overflow-y: scroll;
+    &.tablet,
+    &.mobile{
+        scroll-behavior: smooth;
     }
 
     &.nooverflow{
-        body{
+
+        overflow:hidden;
+
+        /*body{
             overflow:hidden;
             width: 100%;
-            height: 100vh;
             padding-right: 4px;
-        }
+        }*/
     }
     /*&.mobile.nooverflow{
         height: 100%;
@@ -940,6 +946,15 @@ pie {
         
     }
 }
+.forstars{
+    .count{
+        i{
+            opacity: 0.5;
+            font-size: 0.3em;
+            vertical-align: middle;
+        }
+    }
+}
 .stars{
     white-space: nowrap;
     position: relative;
@@ -987,6 +1002,8 @@ pie {
     .disabled(){
         color : @color-gray-slight;
     }
+
+   
 
     &[tempValue="5"]{
 
@@ -3006,6 +3023,13 @@ input[type=radio].radio:checked + label {
     width: 100%;
     z-index: 10000000;
 
+    span{
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.8em;
+    }
+
     >div{
         width: 0;
         float: left;
@@ -3060,10 +3084,7 @@ input[type=radio].radio:checked + label {
    }*/
 }
 
-.vjs-play-progress{
-    content-visibility : auto;
-    backface-visibility: hidden;
-}
+
 
 .preloader6{
    img{
@@ -3610,6 +3631,8 @@ input[type=radio].radio:checked + label {
     .mobiledialogcontent{
         max-height: 360px;
         overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
     }
 
     .closeButton{
@@ -3617,6 +3640,25 @@ input[type=radio].radio:checked + label {
 
         button{
             width: 100%;
+        }
+    }
+}
+
+.menudialog{
+    .mobiledialogcontent{
+        max-height: 60vh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
+        border-radius: 5px;
+        scrollbar-width: 0px;
+
+        &::-webkit-scrollbar{
+            width: 0;
+        }
+
+        &::-webkit-scrollbar{
+            display: none!important;
         }
     }
 }
@@ -4589,8 +4631,12 @@ input[type=radio].radio:checked + label {
     .showmorebywrapper{
         overflow: hidden;
         overflow-x: scroll;
-            
+        
+        scroll-behavior: smooth;
         scrollbar-width: none;
+        scroll-snap-type: y mandatory;
+
+      
 
         >div{
         }
@@ -4694,6 +4740,7 @@ input[type=radio].radio:checked + label {
     font-size: 16px;
 }
 
+html.cordova,
 html.mobile,
 html.tablet{
     
@@ -4718,6 +4765,9 @@ html.tablet{
     }
     
 }
+
+
+html.cordova.fullscreen,
 html.tablet.fullscreen,
 html.mobile.fullscreen{
 
@@ -5972,21 +6022,13 @@ html.stblack{
 
     html{
 
-        /*#splashScreen {
-            background-color: #FFF;
-        }
-
-        &.stblack{
-            background-color: #011621;
-        }*/
-
         #panelWrapper{
             position: fixed;
             top : 65px;
             left: 0;
             right: 0;
             padding-top : 0;
-            z-index: 10;
+            z-index: 11;
 
         }
 
@@ -6052,6 +6094,88 @@ html.stblack{
     }
 
 }
+
+
+html{
+
+    &.mobile,
+    &.tablet,
+    &.cordova{
+        #panelWrapper{
+            position: fixed;
+            top : 65px;
+            left: 0;
+            right: 0;
+            padding-top : 0;
+            z-index: 11;
+    
+        }
+    
+        .contentWrapper{
+            padding-top : 65px;
+        }
+    
+        &.toppanelshowed{
+            .contentWrapper{
+                padding-top : 120px;
+            }
+        }
+    
+        #menu .menuWrapper{
+            will-change: transform;
+            .transition(0.3s, transform);
+            -webkit-backface-visibility: hidden;
+        }
+    
+        #panelWrapper{
+            will-change: transform;
+            .transition(0.3s, transform);
+            -webkit-backface-visibility: hidden;
+        }
+    
+        #navigation{
+            will-change: transform;
+            -webkit-backface-visibility: hidden;
+        }
+    
+        &.scrollmodedown{
+    
+            #menu .menuWrapper{
+                transform:  translateY(-65px);
+            }
+    
+            #panelWrapper{
+                transform:  translateY(-165px);
+                
+            }
+    
+            #navigation{
+                .nmenu{
+                    transform: translateY(90px);
+                }
+    
+                .fakem{
+                    display: block;
+                    position: absolute;
+                    left : 0;
+                    bottom : 0;
+                    right: 0;
+                    height: 90px;
+                }
+            }
+        }
+    
+        #navigation{
+            .fakem{
+                display: none;
+            }
+        }
+    }
+
+    
+}
+
+
 /*t*/ @media only screen and (max-width: 768px){
     #splashScreen{
         display: flex;
@@ -6328,7 +6452,7 @@ html.stblack{
 
 }
 
-.ipad {
+.tablet{
 	#content{
 		padding-bottom : 4 * @rhythm;
 	}

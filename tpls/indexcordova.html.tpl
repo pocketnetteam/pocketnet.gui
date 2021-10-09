@@ -15,6 +15,7 @@
         <meta name="keywords" content="Blockchain, Decentralized, Delete Facebook, Alternative Social Media, Social Network, Social Platform, No Censorship, Online Social Network, Facebook Alternative, Reddit Alternative, Twitter Alternative, Social Sharing Platform, Decentralized Social Network, Blockchain Social Network " />
 
         <meta http-equiv="Content-Security-Policy" content="
+        upgrade-insecure-requests;
         default-src https: 'self' file:; 
         connect-src https: 'self' wss: file: data:;
         img-src 'self' data: https: file: android-webview-video-poster:;

@@ -91,11 +91,13 @@
     .rcptwrp{
         background: #fff;
         position : relative;
+        border-radius: 3px;
     }   
 
     
     .earnlabel{
         padding : 1.5 * @rhythm 2 * @rhythm;
+        padding-top : 0;
         font-weight: 700;
         color : @color-brick;
         cursor: pointer;
@@ -119,6 +121,12 @@
    
     .buycoin{
         padding : 0 2 * @rhythm;
+        a{
+            display: inline-block;
+            opacity: 0.8;
+            font-size: 0.8em;
+            margin-right : 2 * @rhythm;
+        }
         button{
             border-radius: 20px;
             background: @color-raspberry;
@@ -152,7 +160,7 @@
     .tcaption{
         flex-grow: 2;
         font-weight: 100;
-        padding : 2 * @rhythm;
+        padding  : @rhythm 2 * @rhythm;
         
 
         span{
@@ -171,7 +179,7 @@
         text-align: center;
         padding : @rhythm 2 * @rhythm;
         color : @color-black2;
-        min-height: 140px;
+        min-height: 120px;
         .chart{
             width: 70px;
         }

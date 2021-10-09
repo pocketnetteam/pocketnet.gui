@@ -1,0 +1,25 @@
+<% if(!last) {%>
+    <div class="os downloadOs">
+        <div class="stepTable">
+            <div class="numberWr">
+                <div class="icon">
+                    <%= os.icon %>
+                </div>
+            </div>
+
+            <div class="stepContent">
+                
+                <div class="subcaption">
+                    <%- os.text.name %>
+                </div>
+
+
+                <div class="panel">
+                    <div class="item">
+                        <button class=" ghost"><%- os.text.label %> </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% } %>

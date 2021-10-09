@@ -39,7 +39,10 @@ Localization = function(app){
 			name : "Español",
 			key : 'es'
 		},
-
+		it : {
+			name : "Italiano",
+			key : 'it'
+		},
 		ru : {
 			name : "Русский",
 			key : 'ru'
@@ -194,10 +197,11 @@ Localization = function(app){
 				return
 			}
 
-			var src = 'localization/' + (__k) + '.js?v=8'
+			var src = 'localization/' + (__k) + '.js?v=9'
 
 			self.loading[__k] = true
 
+			
 			importScript(src, function(){
 
 				self.loaded[__k] = true;
@@ -216,6 +220,7 @@ Localization = function(app){
 		var v = ""
 
 		if(loclib[self.key] && loclib[self.key][id]) v = loclib[self.key][id]
+
 
 		if(!v) v = (loclib['en'] || {})[id] || ""
 		

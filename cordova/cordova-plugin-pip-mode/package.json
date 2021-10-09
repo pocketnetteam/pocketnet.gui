@@ -1,0 +1,25 @@
+{
+  "name": "tv.megacubo.pip",
+  "version": "0.0.3",
+  "description": "",
+  "cordova": {
+    "id": "tv.megacubo.pip",
+    "platforms": [
+      "android"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/efoxbr/cordova-plugin-pip-mode.git"
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/efoxbr/cordova-plugin-pip-mode/issues"
+  },
+  "homepage": "https://github.com/efoxbr/cordova-plugin-pip-mode#readme"
+}

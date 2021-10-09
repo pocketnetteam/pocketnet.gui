@@ -10,6 +10,8 @@ var channel = (function(){
 
 		var el, ed, author = {};
 
+		var eid = p.eid;
+
 		var actions = {
 
 		}
@@ -144,12 +146,18 @@ var channel = (function(){
 
 		return {
 			primary : primary,
-
+			id : eid,
 			getdata : function(clbk, p){
 
 				ed = p.settings.essenseData || {}
 
-				ed.id || (ed.id = 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd')
+				if(!ed.id){
+					clbk({
+						ed : ed
+					})
+
+					return
+				}
 
 				self.sdk.users.get(ed.id, function(){
 					self.sdk.ustate.get(ed.id, function(){
@@ -158,13 +166,14 @@ var channel = (function(){
 						author.state = self.sdk.ustate.storage[ed.id]
 						author.address = ed.id
 
-						console.log(author)
+						console.log("ED", ed)
 
 						var data = {
 							author : author,
 							reports : reports,
 							connect : ed.connect,
-							domain : window.location.hostname || window.pocketnetdomain
+							domain : window.location.hostname || window.pocketnetdomain,
+							ed : ed
 						};
 
 						clbk(data);

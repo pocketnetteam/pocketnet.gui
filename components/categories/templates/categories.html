@@ -5,7 +5,7 @@
         
         %>
 
-        <div category="<%-cat.id%>" class="tg <% if(cat.added) {%> added <% } %> <% if(cat.selected) {%> selected <% } %> <% if(i > 9) {%> hdn <% } %>">
+        <div category="<%-cat.id%>" class="tg <% if(cat.added) {%> added <% } %> <% if(cat.selected) {%> selected <% } %> <% if(i > 7) {%> hdn <% } %>">
 
             
                 <div class="cat">
@@ -38,7 +38,7 @@
 
     <% }) %>
 
-    <% if(cats.length > 9) {%>
+    <% if(cats.length > 7) {%>
 
         <div class="showallcats showhideallcats">
             <span><%=e('e13021')%></span>

@@ -8,11 +8,13 @@ var instance = function (host, Roy) {
   self.host = host;
 
   var inited = false;
+  var instanceIsActive = true;
   var logs = [];
   var lastStat = null;
   var k = 1000;
 
   var performanceBenchmarks = [];
+  var spaceBenchmarks = [];
 
   var videosinfo = {};
 
@@ -22,6 +24,7 @@ var instance = function (host, Roy) {
       return '/api/v1/videos/' + id;
     },
     performance: '/api/v1/server/stats',
+    diskSpace: '/api/v1/server/space',
     channelVideos: ({ account }) => `/api/v1/accounts/${account}/videos`,
   };
 
@@ -54,9 +57,12 @@ var instance = function (host, Roy) {
         videosinfo = data;
         videosinfo.difference = difference;
 
+        instanceIsActive = true;
+
         return Promise.resolve();
       })
       .catch((e) => {
+        instanceIsActive = false;
         return Promise.resolve();
       })
       .then(() => self.request('performance'))
@@ -66,10 +72,32 @@ var instance = function (host, Roy) {
       .then(() => {
         lastStat = null;
 
-        return f.delay(Roy.parent.statsInterval());
+        return f.delay(2000);
       })
       .then(() => {
         return statsRequest();
+      })
+      .catch(() => {
+        lastStat = null;
+        return statsRequest();
+      });
+  };
+
+  var spaceRequest = () => {
+    if (spaceBenchmarks.length > 300) {
+      logs.splice(0, 300);
+    }
+
+    if (!inited) {
+      return Promise.resolve();
+    }
+
+    return self
+      .request('diskSpace')
+      .then((data) => spaceBenchmarks.push(data))
+      .then(() => f.delay(Roy.parent.statsInterval()))
+      .then(() => {
+        return spaceRequest();
       })
       .catch(() => Promise.resolve());
   };
@@ -86,10 +114,14 @@ var instance = function (host, Roy) {
 
     if (typeof url == 'function') url = url(data);
 
+
+    //if(p.royrequest && host.indexOf('pocketnetpeertube5') > -1 ) return Promise.reject("undeifd")
     return axios[p.type || 'get'](`http://${host}${url}`, {
       timeout: p.timeout || Roy.parent.timeout() || 10000,
     })
       .then((result) => {
+
+
         var meta = {
           url,
           status: 200,
@@ -106,7 +138,6 @@ var instance = function (host, Roy) {
         });
       })
       .catch((error) => {
-
         logs.push({
           url,
           status: ((error || {}).response || {}).status || 500,
@@ -160,15 +191,21 @@ var instance = function (host, Roy) {
   };
 
   self.canuse = function () {
-    var s = self.stats();
+    //previous method
+    // const s = self.stats();
 
-    return inited && s.averageTime && s.k;
+    // const canUseInstance = inited && s.averageTime && s.k;
+
+    const canUseInstance = inited && instanceIsActive;
+
+    return canUseInstance;
   };
 
   self.init = function () {
     inited = true;
 
-    statsRequest().catch((e) => {});
+    statsRequest().catch(() => {});
+    spaceRequest().catch(() => {});
   };
 
   self.export = function () {
@@ -182,7 +219,16 @@ var instance = function (host, Roy) {
   };
 
   self.performance = () => ({
-    data: performanceBenchmarks.length ? performanceBenchmarks[performanceBenchmarks.length - 1] : null,
+    data: performanceBenchmarks.length
+      ? performanceBenchmarks[performanceBenchmarks.length - 1]
+      : null,
+    host: self.host,
+  });
+
+  self.diskSpace = () => ({
+    data: spaceBenchmarks.length
+      ? spaceBenchmarks[spaceBenchmarks.length - 1]
+      : null,
     host: self.host,
   });
 

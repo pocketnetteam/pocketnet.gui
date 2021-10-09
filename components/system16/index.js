@@ -9,7 +9,7 @@ var system16 = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, api = null, proxy = null, info = null, stats = [], system = null, bots = [], peertubePerformance = {};
+		var el, api = null, proxy = null, chain = null, info = null, stats = [], system = null, bots = [], peertubePerformance = {};
 
 		var graphs = {}
 
@@ -23,6 +23,9 @@ var system16 = (function(){
 
 		var settings = {
 			charts : {
+				chain : {
+					type : 'blockchain'
+				},
 				nodes : {
 					type : 'rating'
 				},
@@ -416,7 +419,6 @@ var system16 = (function(){
 
 			ticksettings : function(settings, s, changed){
 
-				console.log("THST12, changed")
 				if (changed){
 					system = settings
 				}
@@ -446,7 +448,6 @@ var system16 = (function(){
 
 			tick : function(state){
 
-				console.log("THST1")
 
 				info = state
 
@@ -837,7 +838,63 @@ var system16 = (function(){
 		}
 
 		var cpsub = {
+			chain : {
+				blockchain : {
+					caption : "Fork",
+
+					/*series : [
+						{
+							name : "Blocks/Hashes",
+							id : 'ct'
+						}
+					]*/
+				}
+			},
 			nodes : {
+
+				penalty : {
+					caption : "Nodes Penalty",
+
+					series : [
+						{
+							name : "Penalty",
+							path : "penalty.k",
+							id : 'penalty'
+						}
+					]
+				}, 
+
+				responsetime5 : {
+					caption : "Nodes Response Time, last 5 minutes",
+
+					series : [
+						{
+							name : "Median Response Time",
+							path : "slice.time",
+							id : 'ct'
+						}
+					]
+				},
+
+				allcount5 : {
+					caption : "Count of requests, last 5 minutes",
+
+					series : [
+						{
+							name : "Count of requests",
+							path : "slice.count",
+							type : 'spline',
+							id : 'cr'
+						},
+						{
+							name : "Success Count",
+							path : "slice.success",
+							type: 'areaspline',
+							id : 'cp'
+						}
+					]
+				},
+
 				responsetime : {
 					caption : "Nodes Response Time",
 
@@ -850,12 +907,31 @@ var system16 = (function(){
 					]
 				},
 
+				allcount : {
+					caption : "Count of requests",
+
+					series : [
+						{
+							name : "Count of requests",
+							path : "statistic.count",
+							type : 'spline',
+							id : 'cr'
+						},
+						{
+							name : "Success Count",
+							path : "statistic.success",
+							type: 'areaspline',
+							id : 'cp'
+						}
+					]
+				},
+
 				rate : {
 					caption : "Rate",
 
 					series : [
 						{
-							name : "Requestes per seconds",
+							name : "Requests per seconds",
 							path : "statistic.rate",
 							id : 'cr'
 						}
@@ -911,26 +987,9 @@ var system16 = (function(){
 							id : 'wsc'
 						}
 					]
-				},
-
-				allcount : {
-					caption : "Count of requestes",
-
-					series : [
-						{
-							name : "Count of requestes",
-							path : "statistic.allcount",
-							type : 'spline',
-							id : 'cr'
-						},
-						{
-							name : "Success Count",
-							path : "statistic.success",
-							type: 'areaspline',
-							id : 'cp'
-						}
-					]
 				}
+
+				
 			},
 
 			peertube : {
@@ -947,11 +1006,11 @@ var system16 = (function(){
 				},
 				
 				allcount : {
-					caption : "Count of requestes",
+					caption : "Count of requests",
 
 					series : [
 						{
-							name : "Count of requestes",
+							name : "Count of requests",
 							path : "stats.count",
 							type : 'spline',
 							id : 'sc'
@@ -994,6 +1053,18 @@ var system16 = (function(){
 							path : 'server.middle.requestsIp',
 							name : "Https requests IP",
 							id : 'requests'
+						}
+					]
+				},
+
+				rate : {
+					caption : "Rate",
+
+					series : [
+						{
+							name : "Requests per seconds",
+							path : "server.middle.rate",
+							id : 'rate'
 						}
 					]
 				},
@@ -1124,6 +1195,164 @@ var system16 = (function(){
 		}
 
 		var cp = {
+			chain : function(data){
+
+				var subtype = settings.charts.chain.type
+
+				var meta = cpsub.chain[subtype]
+
+				console.log('chainCHART', chain, subtype)
+
+				if (subtype == 'blockchain'){
+
+					if(!chain) return {}
+
+					var lmeta = {
+						type : 'spline',
+						caption : meta.caption,
+						removeLegend : true,
+
+						disableYLabels : true,
+						height : 150,
+
+						prepareOptions : function(options){
+
+							options.plotOptions.spline.marker.enabled = false
+							options.plotOptions.spline.dataLabels || (options.plotOptions.spline.dataLabels = {})
+
+							options.tooltip.formatter = function(p, s) {
+
+								var point = this.points[0].point
+				
+								return point.x
+							} 
+	
+							options.plotOptions.spline.dataLabels.style = {
+								textOutline: false,
+								color : 'rgb(255, 60, 0)'
+							}
+	
+							options.plotOptions.spline.dataLabels.formatter = function() {
+								var _x = this.x;
+	
+								if (this.point.datalabelvalue) _x = this.point.datalabelvalue;
+	
+								return _x;
+							}
+
+							console.log('plotLines', plotLines, options.yAxis)
+
+							options.yAxis[0].plotLines = plotLines
+							
+						}
+					}
+
+					var series = []
+
+					var chainmap = {}
+
+					var cnt = 100
+
+					var plotLines = []
+
+					_.each(chain.chains, function(nodechain){
+
+
+						var fnodechain = _.filter(nodechain, function(cl){
+							return cl.height + cnt > chain.commonHeight
+						})
+
+						if(!fnodechain.length) return
+
+						var serie = []
+
+						_.each(fnodechain, function(chainlink){
+							if(!chainmap[chainlink.height]) chainmap[chainlink.height] = []
+
+							var index = _.indexOf(chainmap[chainlink.height], chainlink.blockhash)
+
+							if (index == -1){ 
+								index = chainmap[chainlink.height].push(chainlink.blockhash) - 1
+							}
+
+							serie.push({
+								y : index + 1,
+								x : chainlink.height
+							})
+						})
+
+						/*_.each(serie, function(point, i){
+							if(i > 0 && i < serie.length - 1){
+								var prev = serie[i - 1]
+								var next = serie[i - 1]
+
+								if (prev.y == next.y) point.y = prev.y
+							}
+						})*/
+
+						series.push({
+							name : "Node Chain",
+							data : serie,
+							color : 'rgba(0, 144, 255, 0.1)',
+						})
+
+						plotLines.push({
+							color: 'rgba(0, 144, 255, 0.2)',
+							dashStyle: 'solid',
+							width: 1,
+							value: Number(fnodechain[fnodechain.length - 1].height),
+							zIndex: 1
+						})
+
+					})
+
+
+					var chainmapserie = {
+						color : '#ff3600',
+						name : "Common",
+						data : []
+					}
+
+					_.each(chain.commonchain, function(chainlink){
+
+						var height = Number(chainlink.height)
+
+						if (height + cnt > chain.commonHeight){
+
+							if(!chainmap[height]) chainmap[height] = []
+
+							var index = _.indexOf(chainmap[height], chainlink.blockhash)
+
+							if (index == -1){ 
+								index = chainmap[height].push(chainlink.blockhash) - 1
+							}
+
+
+							chainmapserie.data.push({
+								x : height,
+								y : index + 1
+							})
+
+						}
+					})
+
+
+					if (chainmapserie.data.length)
+
+						series.push(chainmapserie)
+
+
+					return {
+						meta : lmeta,
+						preparedseries : series
+					}
+
+
+				}
+
+				return {}
+
+			},
 			server : function(data){
 
 				var subtype = settings.charts.server.type
@@ -1193,8 +1422,26 @@ var system16 = (function(){
 				var series = {}
 				var i = 0
 
+				
+
+
 				if (info.nodeManager){
-					_.each(info.nodeManager.nodes, function(node, key){
+
+					//// get 5 of most using nodes
+
+					var nodes = _.filter(_.sortBy(info.nodeManager.nodes, function(node){
+						return -node.users
+					}), function(n, i){
+						return i < 5
+					})
+
+					var kn = {}
+
+					_.each(nodes, function(n){
+						kn[n.node.key] = n
+					})
+
+					_.each(kn, function(node, key){
 
 						_.each(meta.series, function(smeta){
 							series[smeta.id + key] = {
@@ -1256,8 +1503,6 @@ var system16 = (function(){
 					})
 				}
 
-				console.log('series', series)
-				
 
 				return {
 					meta : lmeta,
@@ -1326,6 +1571,9 @@ var system16 = (function(){
 				return _.clone(type.meta);
 			},
 			series :  function(type, data){
+
+				if(type.preparedseries) return type.preparedseries
+
 				var s = [];
 
 				var _cp = type.series
@@ -1358,7 +1606,11 @@ var system16 = (function(){
 		var chart = {
 			prepare : function(type, data, el){
 
+				
+
 				var t = helpers.type(type, data)
+
+				console.log("CHARTPREPARE", type, t)
 
 				var chart = helpers.chart(t)
 				var series = helpers.series(t, data);
@@ -1381,9 +1633,12 @@ var system16 = (function(){
 
 				var t = helpers.type(type, data)
 
+				console.log('t.prepareOptions', t.meta)
+
 				graph.render({
 					height : 250,
-					maxPointsCount : 50
+					maxPointsCount : 50,
+					prepareOptions : t.meta ? t.meta.prepareOptions : null
 				}, function(){
 
 					if (settings.charts[type].showed){
@@ -1444,7 +1699,6 @@ var system16 = (function(){
 					series = graphs[type].rarefied(series, 50)
 
 					if(self.app.platform.focus){
-						console.log("focus")
 						graphs[type].chart.update({
 							series: series
 						});
@@ -1857,7 +2111,6 @@ var system16 = (function(){
 				
 			},
 			addbotlist: function(){
-				console.log("addbots")
 				var d = inputDialogNew({
 					caption : "Add Address to Proxy Bot List",
 					class : 'addressdialog',
@@ -1885,7 +2138,6 @@ var system16 = (function(){
 								valid = false;
 							}
 
-							console.log('address', address, valid)
 
 							return valid
 						})
@@ -1916,7 +2168,6 @@ var system16 = (function(){
 	        				topPreloader(100);
 
 						}).catch(e => {
-							console.log("E", e)
 							sitemessage(self.app.localization.e('e13293'))
 
 							topPreloader(100);
@@ -1928,7 +2179,6 @@ var system16 = (function(){
 	        	})
 			},
 			addbot : function(){
-				console.log("addbots")
 				var d = inputDialogNew({
 					caption : "Add Address to Proxy Bot List",
 					class : 'addressdialog',
@@ -1982,7 +2232,6 @@ var system16 = (function(){
 	        				topPreloader(100);
 
 						}).catch(e => {
-							console.log("E", e)
 							sitemessage(self.app.localization.e('e13293'))
 
 							topPreloader(100);
@@ -2148,11 +2397,12 @@ var system16 = (function(){
 	
 						renders.servercontent(p.el)
 						renders.nodescontent(p.el)
-						if ((isMobile() && typeof cordova != 'undefined') || (typeof _Electron != 'undefined' && window.electron))
-							renders.downloadedvideoscontent(el.c);
+						renders.chaincontent(p.el)
 						renders.peertubecontent(el.c)
 						renders.nodecontent(p.el)
 						renders.bots(p.el)
+
+					
 	
 						if (clbk)
 							clbk()
@@ -2615,8 +2865,6 @@ var system16 = (function(){
 						var key = $(this).closest('.wallet').attr('key')
 
 
-						console.log("key", key, info.wallet)
-
 						if (key){
 							var address = deep(info.wallet, 'addresses.' + key + '.address')
 
@@ -2792,54 +3040,31 @@ var system16 = (function(){
 
 					renders.webdistributionwallets(p.el)
 
+					p.el.find('.refreshwallet').on('click', function(){
+						dialog({
+							class : 'zindex',
+							html : "Do you really want to refresh wallet?",
+							btn1text : self.app.localization.e('dyes'),
+							btn2text : self.app.localization.e('dno'),
+							success : function(){
+
+								proxy.fetchauth('wallet/clearexecuting', {}).then(r => {
+									successCheck()
+								}).catch(e => {
+									sitemessage(e)
+								})
+								
+							}
+						})
+					})
+
 					if (clbk)
 						clbk()
 				})
 				
 			},
 
-			downloadedvideoscontent : function(elc, clbk){
-
-				if(!info){
-					if(clbk) clbk()
-
-					return
-				}
-
-				self.shell({
-					inner : html,
-					name : 'downloadedvideoscontent',
-
-					el : elc.find('.downloadedvideoscontentWrapper')
-
-				},
-				function(){
-
-					var deleteButton = elc.find('#deleteAllDownloadedVideos')
-
-					if (deleteButton && deleteButton.on) {
-						deleteButton.on('click', function() {
-							// Ask user for confirmation
-							dialog({
-								html:  self.app.localization.e('deleteAllVideoDialog'),
-								btn1text: self.app.localization.e('dyes'),
-								btn2text: self.app.localization.e('dno'),
-								success: function () {
-									// User wants to delete all videos
-									self.app.platform.sdk.local.shares.deleteAll(function() {
-										// All videos deleted
-										deleteButton.replaceWith('<span>' + self.app.localization.e('noDownloadedVideos') + '</span>');
-									});
-								},
-								class : 'deleteAllDownloadVideoDialog'
-							});
-						});
-					}
-
-					if (clbk)
-						clbk()
-				})
-			},
+			
 
 
 			peertubecontent : function(elc, clbk){
@@ -2932,6 +3157,43 @@ var system16 = (function(){
 				})
 			},
 
+			chaincontent: function(elc, clbk){
+
+				if(!info){
+					if(clbk) clbk()
+
+					return
+				}
+
+				self.shell({
+					inner : html,
+					name : 'chaincontent',
+					data : {
+						info : info,
+						manager : info.nodeManager,
+						proxy : proxy,
+						admin : actions.admin(),
+					},
+
+					el : elc.find('.chainWrapper')
+
+				},
+				function(){
+					pretry(() => {
+						return chain
+					}).then(r => {
+
+						if(el.c){
+							chart.make('chain', {}, null, false)
+						}
+
+					}, 50, 5000)
+					
+
+					if (clbk)
+						clbk()
+				})
+			},
 
 			nodescontent : function(elc, clbk){
 
@@ -3056,12 +3318,9 @@ var system16 = (function(){
 
 					})
 
-					p.el.find('.name').on('click', function(){
-
-						
+					p.el.find('.nodeWrapper[key="nodes"] .name').on('click', function(){
 
 						var key = $(this).closest('.node').attr('node')
-
 
 						if(!key || !find(key)){
 
@@ -3069,6 +3328,8 @@ var system16 = (function(){
 
 							return
 						}
+
+						if(!actions.admin()) return
 
 						var node = find(key)
 
@@ -3088,6 +3349,40 @@ var system16 = (function(){
 						})
 
 					})
+
+					if(actions.admin()){
+
+						p.el.find('.nodeWrapper[key="tmp"] .node').on('click', function(){
+
+							var node = $(this).attr('node')
+
+							
+							dialog({
+								class : 'zindex',
+								html : "do you really want to make it possible to use this node?",
+								btn1text : self.app.localization.e('dyes'),
+								btn2text : self.app.localization.e('dno'),
+								success : function(){
+
+									proxy.fetchauth('nodes/addfromtemp', {
+										keynode : node
+									}).then(r => {
+										
+										make(api.get.current());
+
+										successCheck()
+										
+									}).catch(e => {
+
+										sitemessage(e)
+
+									})
+									
+								}
+							})
+
+						})
+					}
 
 					if (clbk)
 						clbk()
@@ -3195,7 +3490,6 @@ var system16 = (function(){
 							p.el.find('.nodecontentmanage').addClass('lock')
 						}
 
-						console.log('info.nodeControl.state', info.nodeControl.state, info.nodeControl)
 
 						
 						makers.stacking()
@@ -3518,8 +3812,9 @@ var system16 = (function(){
 					chart.make('nodes', stats, null, update)
 					chart.make('wallets', stats, null,  update)
 					chart.make('peertube', stats, null, update)
-					
 				}
+
+				
 
 			},
 
@@ -3545,7 +3840,7 @@ var system16 = (function(){
 				settings.charts.nodes.showed = true
 			}
 
-		
+			settings.charts.chain.showed = true
 		}
 
 		var destroy = function(){
@@ -3563,7 +3858,7 @@ var system16 = (function(){
 
 			proxy = prx//api.get.current()
 
-
+			chain = null
 			info = null
 			stats = []
 			bots = []
@@ -3592,6 +3887,8 @@ var system16 = (function(){
 
 					info = r.info
 
+					console.log('info', info)
+
 					initsettings()
 					
 					stats = [{
@@ -3604,6 +3901,8 @@ var system16 = (function(){
 					return proxy.get.stats()
 
 				}).then(data => {
+
+					console.log("DAS")
 
 					stats = data.stats
 
@@ -3618,8 +3917,15 @@ var system16 = (function(){
 						renders.webserveradmin(el.c)
 					},500)	
 
+					proxy.fetch('nodes/chain', {}).then(r => {
+						chain = r.chain
+
+					})
+
 					if (actions.admin()) {
+
 					  return proxy
+
 						.fetchauth('peertube/stats')
 						.then((data) => (peertubePerformance = { ...data }))
 						.then(() => proxy.system.request('get.settings'))
@@ -3634,17 +3940,25 @@ var system16 = (function(){
 						  return proxy.system.request('bots.get');
 						})
 						.then((r) => {
+							
 						  bots = r.bots || [];
 						  renders.bots(el.c);
 		  
 						  el.c.find('.collapsepart').each(function (i) {
 							if (expanded[i]) $(this).addClass('expanded');
 						  });
+						  
 						});
+
 					}
+
+					console.log("HERE111")
+
+					
 					
 						
 				}).catch(e => {
+					console.log("E" , e)
 					makers.proxycurrent()
 				})
 			}

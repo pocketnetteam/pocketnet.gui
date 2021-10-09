@@ -222,12 +222,6 @@ var topheadervue_type_template_id_7cd6d492_scoped_true_staticRenderFns = []
   created: function created() {},
   watch: {//$route: 'getdata'
   },
-  beforeRouteEnter: function beforeRouteEnter(to, from, next) {
-    next();
-  },
-  beforeRouteUpdate: function beforeRouteUpdate(to, from, next) {
-    next();
-  },
   computed: Object(vuex_esm["c" /* mapState */])({
     auth: function auth(state) {
       return state.auth;
@@ -358,7 +352,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "#matrix-root[theme=white] .infoPart .table .labelCell[data-v-42347721],#matrix-root[theme=white] .inputWrapper .label[data-v-42347721]{color:#213850}#matrix-root[theme=white] .inputWrapper input[data-v-42347721],#matrix-root[theme=white] .inputWrapper select[data-v-42347721]{background:#ececec}#matrix-root[theme=white] .inputWrapper select[data-v-42347721]{border:0;border-right:1.5em solid #ececec}", ""]);
+exports.push([module.i, "#matrix-root[theme=white] .infoPart .table .labelCell[data-v-42347721],#matrix-root[theme=white] .inputWrapper .label[data-v-42347721]{color:#00548b}#matrix-root[theme=white] .inputWrapper input[data-v-42347721],#matrix-root[theme=white] .inputWrapper select[data-v-42347721]{background:#ececec}#matrix-root[theme=white] .inputWrapper select[data-v-42347721]{border:0;border-right:1.5em solid #ececec}", ""]);
 // Exports
 module.exports = exports;
 

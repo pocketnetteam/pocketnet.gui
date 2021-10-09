@@ -82,7 +82,8 @@ var navigation = (function(){
 						lentakey : k,
 						indexkey : indexkey,
 						shw : shw,
-						haschat : self.app.platform.matrixchat.core
+						haschat : self.app.platform.matrixchat.core,
+						thref : self.app.nav.get.href()
 					}
 					
 

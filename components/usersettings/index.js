@@ -23,6 +23,52 @@ var usersettings = (function(){
 		}
 
 		var renders = {
+
+			downloadedvideoscontent : function(clbk){
+
+				if(!window.cordova){
+					if(clbk) clbk()
+
+					return
+				}
+
+				self.shell({
+					inner : html,
+					name : 'downloadedvideoscontent',
+
+					el : el.c.find('.downloadedvideoscontentWrapper')
+
+				},
+				function(p){
+
+					var deleteButton = p.el.find('#deleteAllDownloadedVideos')
+
+					deleteButton.on('click', function() {
+						// Ask user for confirmation
+						dialog({
+							html:  self.app.localization.e('deleteAllVideoDialog'),
+							btn1text: self.app.localization.e('dyes'),
+							btn2text: self.app.localization.e('dno'),
+							success: function () {
+								// User wants to delete all videos
+								self.app.platform.sdk.localshares.deleteAll().then(r => {
+									renders.downloadedvideoscontent()
+									successCheck()
+								}).catch(e => {
+									sitemessage(self.app.localization.e('errorreload'))
+								})
+
+								
+							},
+							class : 'deleteAllDownloadVideoDialog'
+						});
+					});
+
+					if (clbk)
+						clbk()
+				})
+			},
+
 			options : function(){
 
 				self.shell({
@@ -205,8 +251,10 @@ var usersettings = (function(){
 
 			renders.options()
 			renders.cache()
+			renders.downloadedvideoscontent()
 
 			self.app.platform.sdk.node.transactions.clbks.settings = renders.cache;
+			
 			
 		}
 

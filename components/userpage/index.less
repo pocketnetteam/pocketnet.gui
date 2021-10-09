@@ -632,7 +632,7 @@ html.stblack{
 }
 /*t*/ @media only screen and (max-width: 768px){
 #userpage{
-	min-height: 0;
+	
 		
 	.bgCaption{
 		display: none;
@@ -643,160 +643,168 @@ html.stblack{
 			padding : 0;
 		}
 	}
+	
 	.maketsWrapper{
 		overflow: inherit;
-		.contents{
-			padding-top : 0;
-
-			.contentsInner{
-				padding-bottom : 6 * @rhythm;
-			}
-
-			.contentmenu{
-				padding-top : 4 * @rhythm;
-				
-				
-			}
-
-			.reportCaption {
-				padding-bottom :  @rhythm;
-
-				&[rid="followers"]{
-					margin-top : @rhythm;
-					padding-top : 2 * @rhythm;
-					border-top : 1px solid @color-gray-light;
-				}
-
-				&[rid="following"]{
-					margin-bottom : @rhythm;
-					padding-bottom : 2 * @rhythm;
-					border-bottom : 1px solid @color-gray-light;
-				}
-
-				/*&[rid="staking"]{
-					margin-top : @rhythm;
-					color : @color-orange;
-				}*/
-
-				&[rid="registration"]{
-					margin-top : @rhythm;
-					color : @color-orange;
-				}
-
-				&[rid="authorization"]{
-					margin-bottom : 4 * @rhythm;
-				}
-			}
 		
-		}
+
 		.maket{
 			&.left{
 				width: 100%;
 				float: none;
 				padding : 0 2 * @rhythm;
 
-				.vc_valuecustom{
-					width: 100%;
-
-					.vc_textInput {
-						.vc_inputWrapper{
-							border: 0;
-
-							input{
-								opacity: 1!important;
-								.transition(0.3s);
-								color : #fff;
-								border-top-left-radius: 0px;
-								border-bottom-left-radius: 0px;
-								padding-left : 30px;
-								height: 38px;
-								text-align: center;
-
-								&[disabled="disabled"]{
-									opacity: 1;
-								}
-							}
-						}
-
-						.vc_iconWrapper{
-							color : #fff;
-							.transition(0.3s);
-							border-top-right-radius: 0px;
-							border-bottom-right-radius: 0px;
-							border : 0;
-						}
-					}
-
-					&.opened{
-						.vc_textInput {
-							.vc_inputWrapper{
-								border: 0;
-
-								input{
-									border-bottom-left-radius: 0;
-								}
-							}
-
-							.vc_iconWrapper{
-								
-								border-bottom-right-radius: 0;
-								
-							}
-						}
-					}
-
-					.vc_selectInput {
-						max-height: 400px;
-						.shadowSmall();
-						.vc_value{
-							padding : 2 * @rhythm;
-							text-align: center;
-						}
-					}
-				}
-			}
-			
-			&.right{
-				padding-left: 0;
-				margin-left: 0;
-				border : 0;
-
-				
 			}
 
-			
+			.contents{
+				padding-top : 0;
+			}
 		}	
 
 		.report{
-			.work{
-		    	width : 100%;
-		    }
-
-		    #test{
+			/*min-height: 100vh;*/
+		
+			#test{
 				padding-top : 2 * @rhythm;
 				padding-bottom : 6 * @rhythm;
 
-		    	.userPanel{
-		    		padding: 0;
-		    	}
+				.work{
+					padding : 0
+				}
 
-		    	.caption{
-		    		padding-left: 0;
-		    		padding-bottom : 2 * @rhythm;
-		    	}
-		    }
+				.userPanel{
+					padding: 0;
+				}
 
+				.caption{
+					padding-left: 0;
+					padding-bottom : 2 * @rhythm;
+				}
+			}
 
+			#accounts{
+				padding-top : 2 * @rhythm;
 
-		    #notifications{
-		    	padding : 2 * @rhythm 0;
-		    	background: #F7F7F7;
-		    }
+				.subcaption{
+					font-size: 2em;
+				}
+			}
+
+			#notifications{
+				padding-top : 1 * @rhythm;
+			}
+
+			#wallet{
+				.mobiledevice{
+					.caption{
+						display: none!important;
+					}
+				}
+			}
+		}
+
+	}
+
+}
+}
+
+@media only screen and (max-width: 640px){
+	#userpage{
+		min-height: 0;
+		
+		.maketsWrapper{
+			overflow: inherit;
+			.contents{
+				padding-top : 0;
+	
+				.contentsInner{
+					padding-bottom : 6 * @rhythm;
+				}
+	
+				.contentmenu{
+					padding-top : 4 * @rhythm;
+				}
+	
+				.reportCaption {
+					padding-bottom :  @rhythm;
+	
+					&[rid="followers"]{
+						margin-top : @rhythm;
+						padding-top : 2 * @rhythm;
+						border-top : 1px solid @color-gray-light;
+					}
+	
+					&[rid="following"]{
+						margin-bottom : @rhythm;
+						padding-bottom : 2 * @rhythm;
+						border-bottom : 1px solid @color-gray-light;
+					}
+	
+					&[rid="registration"]{
+						margin-top : @rhythm;
+						color : @color-orange;
+					}
+	
+					&[rid="authorization"]{
+						margin-bottom : 4 * @rhythm;
+					}
+				}
+			
+			}
+	
+			.maket{
+				
+				
+				&.right{
+					padding-left: 0;
+					margin-left: 0;
+					border : 0;
+				}
+	
+				
+			}	
+	
+			.report{
+				
+				#test{
+				
+					.work{
+						padding : 0 @rhythm;
+					}
+	
+				}
+
+				#wallet{
+					.mobiledevice{
+						.caption{
+							display: inherit!important;
+						}
+					}
+				}
+
+				#notifications{
+					padding : 2 * @rhythm 0;
+					background: #F7F7F7;
+				}
+			}
 		}
 	}
 
+	html:not(.tablet){
+		#userpage{
+			&.reportshowed{
+				.contents{
+					display: none!important;
+				}
+			}
+		}
+	}
 
-}
+	html.tablet{
+		#userpage{
+			padding-top : 55px;
+		}
+	}
 }
 
 html.tablet{

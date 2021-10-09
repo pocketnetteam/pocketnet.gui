@@ -6,7 +6,11 @@
 
 			<div class="groupnames">
 
-				<% _.each(groups, function(gr){ %>
+				<% _.each(groups, function(gr){ 
+					
+					if(gr.if && !gr.if()) return
+					
+					%>
 
 					<div class="item" group="<%-gr.id%>">
 						<%- gr.name %>
@@ -23,7 +27,10 @@
 
 		<div class="cnt">
 			<div class="faqcntContent">
-				<% _.each(groups, function(gr){ %>
+				<% _.each(groups, function(gr){ 
+					
+					if(gr.if && !gr.if()) return
+					%>
 
 					<div class="group" group="<%-gr.id%>">
 						<div class="groupCaption">
@@ -33,7 +40,11 @@
 
 						<div class="groupCnt">
 
-							<% _.each(gr.group, function(fq){ %>
+							<% _.each(gr.group, function(fq){ 
+								
+								if(fq.if && !fq.if()) return
+								
+								%>
 
 								<div class="question" question="<%- fq.id %>">
 									<div class="questionName">

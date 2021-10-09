@@ -21,6 +21,14 @@
 		opacity: 0;
 	}
 
+	.statswrapperExtended{
+		display: flex;
+		padding : @rhythm 0;
+		span{
+			font-weight: 500;
+		}
+	}
+
 	.showmorelenta{
 		display: none;
 		background: #fff;
@@ -46,6 +54,28 @@
 		.statswrapper{
 			top : 0;
 			bottom : auto!important;
+		}
+	}
+
+	.shareSave{
+		i{
+			display: none;
+		}
+
+		&[status="cansave"]{
+			.cansave{
+				display: inline-block;
+			}
+		}
+		&[status="saving"]{
+			.saving{
+				display: inline-block;
+			}
+		}
+		&[status="saved"]{
+			.saved{
+				display: inline-block;
+			}
 		}
 	}
 	
@@ -93,6 +123,8 @@
 		background: #fff;
 		opacity: 0;
 		.transition(0.3s, opacity);
+
+		
 
 		&.active{
 			opacity: 1;
@@ -201,6 +233,13 @@
 		margin-left: 13 * @rhythm;
 		padding-left : 2 * @rhythm;
 		padding-right : 10 * @rhythm;
+
+		&.forcomments{
+			padding-left: 0;
+			padding-right: 0;
+			margin-left: 0;
+			margin-right: 0;
+		}
 	}
 
 	.repostsecond{
@@ -384,6 +423,7 @@
 			padding : 4 * @rhythm 0;
 			padding-right: 0;
 			margin : 0;
+			padding-bottom: 0;
 		}
 
 		.commentsWrapper{			
@@ -620,7 +660,7 @@
 		}
 
 		.meta{
-			padding-top: 2.7 * @rhythm;
+			padding-top: 1.5 * @rhythm;
 
 			margin-bottom: @rhythm;
 
@@ -854,8 +894,7 @@
 
 				span{
 					font-size: 0.8em;
-					color : @color-main;
-					text-decoration: underline;
+					color : @color-gray-mlight;
 				}
 			}
 		}
@@ -865,11 +904,10 @@
 			span{
 				cursor: pointer;
 				font-size: 0.8em;
-				color : @color-good;
+				color : @color-gray-mlight;
 			}
 
 			.editedLabel{
-				margin-left: 2 * @rhythm;
 			}
 		}
 
@@ -1086,6 +1124,10 @@
 			}
 
 			background: transparent;
+
+			.statswrapperExtended{
+				display: none;
+			}
 
 			.anothercntswrk{
 				background: #fff;
@@ -1567,14 +1609,14 @@ html.stblack{
 			.tags{
 				>div{
 					span{
-						color : @color-bright;
+						color : @color-gray-mlight;
 					}
 				}
 			}
 	
 			.sys{
 				span{
-					color : @color-good;
+					color : @color-gray-mlight;
 				}
 	
 			}
@@ -1698,6 +1740,24 @@ html.stblack{
 #post{
 	border-top: 1px solid fade(@color-gray-slight,0.3);
 
+	.statswrapperExtended{
+		padding : @rhythm;
+	}
+
+	.showmorelenta{
+
+		.horizontalLentaWrapper{
+			padding : @rhythm 0;
+		}
+
+		.horizontalLentacaption{
+			padding : @rhythm;
+
+		}
+
+		
+	}
+
 	.nextpost{
 		display: none;
 	}
@@ -1716,13 +1776,26 @@ html.stblack{
 
 		&.formeta{
 			margin-left: 8 * @rhythm;
-			padding-left : @rhythm;
-			padding-bottom: 2 * @rhythm;
+			padding-left : 0;
 		}
 
 		.paddingWrapper{
 			padding-left:  @rhythm;
 			padding-right: @rhythm;
+		}
+	}
+
+	.share{
+		.meta{
+			padding-right: @rhythm;
+		}
+		.metatable{
+			>div{
+				vertical-align: top;
+				&.metapanel{
+					width: 90px;
+				}
+			}
 		}
 	}
 
@@ -1916,6 +1989,8 @@ html.stblack{
 					margin-left: 6 * @rhythm;
 					padding-left : 0.5 * @rhythm;
 				}
+
+				
 			}
 	
 			.meta{

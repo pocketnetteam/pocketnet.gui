@@ -63,7 +63,14 @@ var activenodes = [
 		ws : 8087,
 		name : 'CryptoserverTEST',
 		stable : true
-	}*/
+	},*/
+
+	
+
+
+
+
+
 	{
 		host : '64.235.45.119',
 		port : 38081,
@@ -85,6 +92,20 @@ var activenodes = [
 		port : 38081,
 		ws : 8087,
 		name : 'Cryptoserver243',
+		stable : true
+	},
+	{
+		host : '65.21.56.203',
+		port : 38081,
+		ws : 8087,
+		name : 'Cryptoserver0610',
+		stable : true
+	},
+	{
+		host : '65.21.57.14',
+		port : 38081,
+		ws : 8087,
+		name : 'Cryptoserver0610_2',
 		stable : true
 	}
 
@@ -317,6 +338,26 @@ var state = {
 		return state.rewrite().then(r => {
 			return kit.proxy()
 		})
+	},
+	prepare : function(){
+	
+		console.log('prepare', f.path('data'))
+		try{
+		if(!fs.existsSync(f.path('data'))){
+			console.log('create')
+			fs.mkdirSync(f.path('data'))
+			console.log('created')
+		}
+		else{
+			console.log('exist')
+		}
+		}
+		catch(e){
+		console.log('creation data er', e)
+		}
+		
+		
+			
 	}
 }
 
@@ -1005,6 +1046,8 @@ var kit = {
 	},
 
 	init : function(environmentDefaultSettings, hck){
+	
+	state.prepare()
 
 		var settings = defaultSettings;
 

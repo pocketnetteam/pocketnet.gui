@@ -16,7 +16,7 @@ var Middle = function(){
 			ip : ip,
 			s : status,
 			pn : pathname,
-			date : f.now(),
+			date : new Date(),
             start : start
 		})
 
@@ -29,6 +29,24 @@ var Middle = function(){
 
     self.clear = function(){
         logs = []
+    }
+
+    var rate = function(){
+
+        var eventschecktime = 10000
+
+        var s = f.date.addseconds(new Date(), - eventschecktime / 1000)
+        var l = logs.length
+        var c = 0
+
+        if(l){
+            while (l && logs[l - 1].date > s){
+                c++
+                l--
+            }
+        }
+
+        return c / (eventschecktime / 1000)
     }
     
     self.info = function(compact){
@@ -78,7 +96,8 @@ var Middle = function(){
         var data = {
             requestsIp : requestsIp,
             responses : byCodes,
-            signatures : signatures
+            signatures : signatures,
+            rate : rate()
         }
 
         if(!compact) data.logs = logs
@@ -117,8 +136,6 @@ var Middle = function(){
         }
     
         result._fail = function(error, code){
-
-            
 
             if(!code) code = 500
 

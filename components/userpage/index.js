@@ -11,7 +11,7 @@ var userpage = (function(){
 		var el, ed;
 
 		var currentExternalEssense = null;
-		var roller = null;
+
 		var hcready = false;
 
 		var mestate = null, allbalance;
@@ -69,7 +69,10 @@ var userpage = (function(){
 				name : self.app.localization.e('notifications'),
 				id : 'notifications',
 				report : 'notifications',
-				mobile : true
+				mobile : true,
+				if : function(){
+					return true
+				}
 			})
 
 			reports.push({
@@ -101,7 +104,7 @@ var userpage = (function(){
 
 				add : function(){
 
-					if (isMobile() && allbalance){
+					if (isMobile() && allbalance && !self.app.curation()){
 						return  self.app.platform.mp.coin(allbalance)
 					}
 
@@ -116,7 +119,7 @@ var userpage = (function(){
 				mobile : true,
 
 				if : function(){
-					return isMobile()
+					return isMobile() && !self.app.curation()
 				},
 
 				add : function(){
@@ -144,7 +147,7 @@ var userpage = (function(){
 				mobile : true,
 
 				if : function(){
-					return isMobile()
+					return isMobile() && !self.app.curation()
 				},
 
 				add : function(){
@@ -218,6 +221,10 @@ var userpage = (function(){
 					mobile : true,
 
 					if : function(){
+
+						if (self.app.curation()) return false
+
+						if (window.testpocketnet) return true
 
 						if (typeof mestate != 'undefined' && mestate && (
 					
@@ -453,6 +460,7 @@ var userpage = (function(){
 
 			closeReport : function(){
 				el.report.html('')
+				el.c.removeClass('reportshowed')
 			},
 
 			openReport : function(id, addToHistory){
@@ -462,6 +470,8 @@ var userpage = (function(){
 				el.c.find('[rid="'+id+'"]').addClass('active')
 
 				actions.openTree(id);
+
+				el.c.addClass('reportshowed')
 
 				renders.report(id);
 
@@ -623,41 +633,32 @@ var userpage = (function(){
 					})
 				}
 
-				if (id && isMobile()){
+				
 
-					el.contents.html('')
+				self.app.user.isState(function (state) { 
 
-					if (clbk)
-						clbk();
+					if(isMobile() && state){
+						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
+							var temp = self.app.platform.sdk.node.transactions.tempBalance()
 
-				}
-				else{
-
-					self.app.user.isState(function (state) { 
-
-						if(isMobile() && state){
-							self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
-								var temp = self.app.platform.sdk.node.transactions.tempBalance()
-	
-								allbalance = amount + temp
-								
-	
-								r()
+							allbalance = amount + temp
 							
-							})
-						}
-						else{
+
 							r()
-						}
+						
+						})
+					}
+					else{
+						r()
+					}
 
-					})
+				})
 					
 
 					
 
 					
 
-				}
 
 				
 		
@@ -796,8 +797,7 @@ var userpage = (function(){
 	
 					currentExternalEssense = p;
 
-					if (roller)
-						roller.apply();
+					
 
 					if (clbk)
 						clbk();
@@ -1010,10 +1010,6 @@ var userpage = (function(){
 
 				currentExternalEssense = null;
 
-				if (roller)
-					roller.destroy();
-
-				roller = null;
 
 				$('#menu').removeClass('abs')
 

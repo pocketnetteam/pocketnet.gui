@@ -263,7 +263,7 @@ var author = (function(){
 						mobile : '<i class="fas fa-share-alt"></i>',
 						id : 'share',
 						if : function(){
-							return true
+							return self.user.isItMe(author.address) || !self.app.curation()
 						},
 						events : {
 							click : function(){

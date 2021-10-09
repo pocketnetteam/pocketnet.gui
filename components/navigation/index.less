@@ -11,8 +11,6 @@
 	padding-bottom : 30px;
 	height: 90px;
 	z-index: 200;
-	
-	
 
 
 	.fakem{
@@ -152,13 +150,63 @@ html.stblack{
 	}
 }
 
+#navigation{
+	&.curationmode{
+		right: auto;
+		width: 80px;
+
+		.nmenu{
+			background: transparent;
+			width: 70px;
+			left : @rhythm;
+
+			.items{
+				width: 60px;
+			}
+
+			.item{
+				overflow: visible;
+				>div{
+					width: 60px;
+					border-radius: 50%;
+					background: fade(#fff, 95);
+					border : 1px solid #fff;
+					.shadowSmaller();
+				}
+				
+			}
+		}
+	}
+}
+
+html.stblack{
+	#navigation{
+		&.curationmode{
+	
+			.nmenu{
+				background: transparent;
+
+	
+				.item{
+					>div{
+						background: fade(@color-black5, 95);
+						border : 1px solid @color-black5;
+					}
+					
+				}
+			}
+		}
+	}
+}
+
 /*t*/ @media only screen and (max-width: 768px){
 	#navigation{
 		display: block;
 	}
 }
 
-.ipad {
+html.tablet,
+html.mobile{
 	#navigation{
 		display: block;
 	}

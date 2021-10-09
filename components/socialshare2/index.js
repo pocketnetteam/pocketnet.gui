@@ -15,7 +15,7 @@ var socialshare2 = (function(){
 			defmedtext = self.app.localization.e('e13172') + '\r\n';
 
 		var ed = {};
-		var showcode = false, notincludedRef = false
+		var showcode = false, notincludedRef = false, postId = ''
 
 		var eparameters = {}
 
@@ -28,13 +28,85 @@ var socialshare2 = (function(){
 				if (calltoActionUserText) return calltoActionUserText*/
 				
 				return defmedtext
-			}
+			},
+
+			repost : function(shareid){
+
+				actions.stateAction('_this', function(){
+
+					self.app.platform.ui.share({
+						repost : shareid
+					})
+
+					self.closeContainer()
+					
+				}, shareid)
+
+			},
+
+			
+			stateAction : function(link, clbk, txid){
+
+				self.app.user.isState(function(state){
+
+					if(state){
+						clbk()
+					}
+
+					else
+					{
+
+
+						if (_OpenApi){
+
+							var phref = 'https://'+self.app.options.url+'/post?openapi=true&s=' + txid
+		
+							if (self.app.ref){
+								phref += '&ref=' + self.app.ref
+							}
+		
+							window.open(phref, '_blank');
+		
+							return
+						}
+
+
+						self.nav.api.load({
+							open : true,
+							id : 'authorization',
+							inWnd : true,
+
+							essenseData : {
+
+								fast : true,
+								loginText : self.app.localization.e('llogin'),
+								successHref : link,
+								signInClbk : function(){
+
+									retry(function(){
+
+										return !authblock
+
+									}, function(){
+										if (clbk)
+											clbk()
+									})
+
+									
+								}
+							}
+						})
+					}
+
+				})
+			},
+
 		}
 
 		var embeddingSettings = {
 
 			black : new Parameter({
-				name: "Black Theme",
+				name: self.app.localization.e('blackTheme'),
 				id: 'black',
 				type: "BOOLEAN",
 				value: localStorage.getItem('usertheme') === 'black' ? true : false
@@ -42,39 +114,47 @@ var socialshare2 = (function(){
 
 
 			autoplayvideo : new Parameter({
-				name: "Autoplay Video",
+				name: self.app.localization.e('autoplayVideo'),
 				id: 'black',
 				type: "BOOLEAN",
 				value: false
 			}),
 
 			fullscreenvideo : new Parameter({
-				name: "Remove Description",
+				name: self.app.localization.e('removeDescription'),
 				id: 'fullscreenvideo',
 				type: "BOOLEAN",
 				value: false
 			}),
 
 			onlyvideo : new Parameter({
-				name: "Only video",
+				name: self.app.localization.e('onlyVideo'),
 				id: 'onlyvideo',
 				type: "BOOLEAN",
 				value: false
 			}),
 
 			comments : new Parameter({
-				name: "Include comments",
+				name: self.app.localization.e('includeComments'),
 				id: 'comments',
 				type: "VALUES",
 				defaultValue: 'last',
 				possibleValues: ['last', 'all', 'no'],
-				possibleValuesLabels: ['Show Only last comment', 'Show All comments', "Don't show comments"],
+				possibleValuesLabels: [self.app.localization.e('showOnlyLast'), self.app.localization.e('showAll'), self.app.localization.e('dontShow')],
 				value: "",
 			}),
 
 		}
 
 		var events = {
+
+			repost : function(){
+
+				self.app.mobile.vibration.small()
+
+				actions.repost(postId);
+			},
+
 			
 		}
 
@@ -181,7 +261,7 @@ var socialshare2 = (function(){
 						settings[i] = embeddingSettings[i]
 					})
 
-					console.log('settings', settings)
+					console.log('settings', settings,ed.embedding.id)
 
 					/*if(settings.onlyvideo && settings.onlyvideo.value){
 						_.each(settings, function(s){
@@ -625,6 +705,8 @@ var socialshare2 = (function(){
 				if(self.closeContainer) self.closeContainer()
 			})
 
+			el.c.find('.forrepost').on('click', events.repost)
+
 		}
 
 		var changeRef = function(){
@@ -658,7 +740,7 @@ var socialshare2 = (function(){
 		var prepareParameters = function(){
 
 			eparameters.reflink = new Parameter({
-				name: "Include Referal Link",
+				name: self.app.localization.e('includeRefLink'),
 				id: 'reflink',
 				type: "BOOLEAN",
 				value: !notincludedRef,
@@ -720,13 +802,22 @@ var socialshare2 = (function(){
 
 				ed.url = self.app.nav.api.history.removeParametersFromHref(ed.url, ['mpost', 'msocialshare2'])
 
+				if(ed.embedding && ed.embedding.type == 'post'){
+					postId = ed.embedding && ed.embedding.id;
+				}
+				else{
+					postId = ''
+				}
+				
+
 				changeRef()
 			
 				var data = {
 					caption : ed.caption,
 					style : ed.style || "",
 					eparameters : eparameters,
-					notincludedRef : ed.notincludedRef
+					notincludedRef : ed.notincludedRef, 
+					postId: postId
 				};
 
 				clbk(data);
@@ -739,7 +830,6 @@ var socialshare2 = (function(){
 			
 			init : function(p){
 
-				
 
 				state.load();
 

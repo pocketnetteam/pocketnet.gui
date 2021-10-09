@@ -1,7 +1,7 @@
 <div class="embeddingWrapper">
     <div class="wrk">
         <div class="subcaption">
-            <span>Embedding</span>
+            <span><%- e('embedding') %></span>
         </div>
     </div>
 
@@ -10,11 +10,11 @@
     <div class="wrk">
         <div class="buttons">
             <button class="button bright medium copycode">
-                Copy Embedding Code
+                <%- e('copyEmbeddingCode') %>
             </button>
 
             <button class="button ghost medium showcode">
-                Show Code
+                <%- e('showCode') %>
             </button>
         </div>
     </div>
@@ -26,7 +26,9 @@
     
         <div class="wrk">
             <div class="subcaption">
-                <span>Embedding Settings</span>
+                <span>                
+                    <%- e('embeddingSettings') %>                
+                </span>
             </div>
         </div>
 
@@ -73,7 +75,7 @@
 <div class="preview">
     <div class="wrk">
         <div class="subcaption">
-            <span>Preview</span>
+            <span><%- e('preview') %></span>
         </div>
     </div>
 

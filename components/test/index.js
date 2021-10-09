@@ -13,6 +13,7 @@ var test = (function(){
 		var el, lastTransaction, ed, ref, plissing; 
 
 		var firstTime = false;
+		var termsaccepted = false;
 
 		var checkusernameTimer = null
 
@@ -72,6 +73,8 @@ var test = (function(){
 	
 					if (r) {
 						body += '<p><a href="'+r+'">From: '+r+'</a></p>'
+
+						_p.from = r
 					}
 	
 					_p.body = encodeURIComponent(body)
@@ -141,11 +144,12 @@ var test = (function(){
 					saving = true
 
 				var allclbk = function(){
-					el.upanel.removeClass('loading')
 
+					el.upanel.removeClass('loading')
 					el.c.find('.userPanel').removeClass('loading')
 
 					topPreloader(100)
+
 					saving = false
 
 					if (primary){
@@ -173,7 +177,7 @@ var test = (function(){
 
 				self.sdk.users.checkFreeRef(self.app.platform.sdk.address.pnet() ? self.app.platform.sdk.address.pnet().address : "", function(resref, err){				
 
-					if(el.c.find('.userPanel').hasClass('loading')){
+					if (el.c.find('.userPanel').hasClass('loading')){
 						saving = false
 						return
 					}
@@ -254,164 +258,170 @@ var test = (function(){
 							saving = false
 						return false;
 					}
+					saving = false
 
-					topPreloader(30)
+					renders.termsconditions(function(){
+						saving = true
 
-					el.c.find('.userPanel').addClass('loading')
+						topPreloader(30)
 
-					el.upanel.addClass('loading')
+						el.c.find('.userPanel').addClass('loading')
 
-					self.app.platform.sdk.users.nameExist(userInfo.name.v, function(exist){
+						el.upanel.addClass('loading')
 
-						//exist = false
-						
+						self.app.platform.sdk.users.nameExist(userInfo.name.v, function(exist){
 
-						if(!exist || (self.app.platform.sdk.address.pnet() && exist == self.app.platform.sdk.address.pnet().address)){
-
-							topPreloader(50)
-
-							ed.presave(function(){
-
-								userInfo.keys.set(_.map(self.app.user.cryptoKeys(), function(k){
-									return k.public
-								}))
+							//exist = false
 							
-								el.c.find('.errorname').fadeOut();
 
-								topPreloader(70)
-								userInfo.uploadImage(self.app, function(err){
+							if(!exist || (self.app.platform.sdk.address.pnet() && exist == self.app.platform.sdk.address.pnet().address)){
 
-									if (err){
-										topPreloader(100)
-										el.upanel.removeClass('loading')
+								topPreloader(50)
 
-										el.c.find('.userPanel').removeClass('loading')
+								ed.presave(function(){
 
-										sitemessage("An error occurred while loading images")
-										saving = false
-										return 
-									}
+									userInfo.keys.set(_.map(self.app.user.cryptoKeys(), function(k){
+										return k.public
+									}))
+								
+									el.c.find('.errorname').fadeOut();
 
-									if (ed.makeuser){
+									topPreloader(70)
+									userInfo.uploadImage(self.app, function(err){
 
-										topPreloader(100)
+										if (err){
+											topPreloader(100)
+											el.upanel.removeClass('loading')
 
-										el.upanel.removeClass('loading')
+											el.c.find('.userPanel').removeClass('loading')
 
-										el.c.find('.userPanel').removeClass('loading')
-
-										ed.makeuser(userInfo)
-										saving = false
-										return
-
-									}
-
-									var email = tempInfo.email;
-
-									if (email){
-										actions.saveemail(email);
-									}
-
-
-									self.sdk.node.transactions.create.commonFromUnspent(
-
-										userInfo,
-
-										function(tx, error){
-
-											console.log('error', error, tx)
-
-											if(!tx){
-
-												self.app.platform.errorHandler(error, true)	
-												
-												el.upanel.removeClass('loading')
-
-												el.c.find('.userPanel').removeClass('loading')
-
-												topPreloader(100)
-
-											}
-											else
-											{
-
-												successCheck()
-
-												delete self.sdk.usersl.storage[self.app.platform.sdk.address.pnet().address];
-												delete self.sdk.users.storage[self.app.platform.sdk.address.pnet().address];
-
-
-												self.app.platform.sdk.user.storage.me = tx
-												
-												tempInfo = _.clone(self.app.platform.sdk.user.storage.me)
-												
-												actions.upanel()
-
-												actions.ref(resref)
-
-
-												self.closeContainer()
-												
-
-												self.app.platform.sdk.users.getone(self.app.platform.sdk.address.pnet().address, function(){
-
-													self.app.reloadModules(function(){
-
-														if (ed.presuccess){
-															ed.presuccess(allclbk)
-														}
-														else{
-															allclbk()
-														}
-
-														
-				
-													})
-												})
-
-												
-
-												
-											}
-
-										},
-
-										{
-											relay : ed.relay? ed.relay() : false
+											sitemessage("An error occurred while loading images")
+											saving = false
+											return 
 										}
-									
-									)
+
+										if (ed.makeuser){
+
+											topPreloader(100)
+
+											el.upanel.removeClass('loading')
+
+											el.c.find('.userPanel').removeClass('loading')
+
+											ed.makeuser(userInfo)
+											saving = false
+											return
+
+										}
+
+										var email = tempInfo.email;
+
+										if (email){
+											actions.saveemail(email);
+										}
+
+
+										self.sdk.node.transactions.create.commonFromUnspent(
+
+											userInfo,
+
+											function(tx, error){
+
+												console.log('error', error, tx)
+
+												if(!tx){
+
+													saving = false;
+
+													self.app.platform.errorHandler(error, true)	
+													
+													el.upanel.removeClass('loading')
+
+													el.c.find('.userPanel').removeClass('loading')
+
+													topPreloader(100)
+
+												}
+												else
+												{
+
+													successCheck()
+
+													delete self.sdk.usersl.storage[self.app.platform.sdk.address.pnet().address];
+													delete self.sdk.users.storage[self.app.platform.sdk.address.pnet().address];
+
+
+													self.app.platform.sdk.user.storage.me = tx
+													
+													tempInfo = _.clone(self.app.platform.sdk.user.storage.me)
+													
+													actions.upanel()
+
+													actions.ref(resref)
+
+
+													self.closeContainer()
+													
+
+													self.app.platform.sdk.users.getone(self.app.platform.sdk.address.pnet().address, function(){
+
+														self.app.reloadModules(function(){
+
+															if (ed.presuccess){
+																ed.presuccess(allclbk)
+															}
+															else{
+																allclbk()
+															}
+
+															
+					
+														})
+													})
+
+													
+
+													
+												}
+
+											},
+
+											{
+												relay : ed.relay? ed.relay() : false
+											}
+										
+										)
+									})
+
 								})
 
-							})
+							}
+							else
+							{
+								saving = false
+								el.upanel.removeClass('loading')
 
-						}
-						else
-						{
-							saving = false
-							el.upanel.removeClass('loading')
+								el.c.find('.userPanel').removeClass('loading')
 
-							el.c.find('.userPanel').removeClass('loading')
+								topPreloader(100)
 
-							topPreloader(100)
+								var txt = 'This username is taken in ' + self.app.meta.fullname
 
-							var txt = 'This username is taken in ' + self.app.meta.fullname
+								el.c.find('.errorname').fadeIn();
+								el.c.find('.errorname span').html(txt);
 
-							el.c.find('.errorname').fadeIn();
-							el.c.find('.errorname span').html(txt);
+								var pn = el.c.find('[parameter="name"] input')
 
-							var pn = el.c.find('[parameter="name"] input')
+									pn.focus()
 
-								pn.focus()
+									_scrollTo(pn)
+								
+								sitemessage(txt)
+							}
+						})
 
-								_scrollTo(pn)
-							
-							sitemessage(txt)
-						}
+						
 					})
-
-					
-
 				})
 				
 		
@@ -861,7 +871,7 @@ var test = (function(){
 			save : function(){
 
 			
-					actions.save()
+				actions.save()
 				
 				
 			},
@@ -888,6 +898,30 @@ var test = (function(){
 		var setAddressType = null;
 
 		var renders = {
+			termsconditions : function(clbk){
+				if(self.app.curation() && !termsaccepted && ed.wizard){
+
+					self.nav.api.load({
+						open : true,
+						id : 'terms',
+						inWnd : true,
+						essenseData : {
+							success : function(){
+								termsaccepted = true
+								clbk()
+							}
+						},
+	
+						clbk : function(){
+							
+						}
+					})
+
+				}
+				else{
+					clbk()
+				}
+			},
 			options : function(clbk){
 
 				self.shell({

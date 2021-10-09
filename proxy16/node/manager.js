@@ -136,7 +136,6 @@ var Nodemanager = function(p){
         _.each(_.shuffle(notinitednodes), function(node){
             self.initIfNeed(node)
         })
-
         _.each(_.shuffle(self.nodes), function(node, i){
 
             if(i < 5){
@@ -144,6 +143,9 @@ var Nodemanager = function(p){
             }
             
         })
+
+
+        forgetIfNotUsing()
 
     }
 
@@ -172,27 +174,95 @@ var Nodemanager = function(p){
        
     }
 
+    self.addfromtemp = function(nodekey){
+
+        var notinitednodes = _.filter(self.nodes, function(node){
+            return !node.inited
+        })
+
+        var node = _.find(notinitednodes, function(node){
+            return node.key == nodekey
+        })
+
+        if(!node){
+            return Promise.reject('nodenotfound')
+        }
+
+        node.init()
+
+        return Promise.resolve(node)
+    }
+
+    var getWorkingNodes = function(){
+
+        return _.filter(self.nodes, function(n){
+
+            if(!n.inited) return false
+
+            var s = n.statistic.get5min()
+            var r = n.statistic.rating()
+
+            var time = 1200
+
+            if (n.wss.count() < 5) time = 3000
+
+            if (s.success > 0 && s.success > s.failed && s.time < time && r && n.penalty().k < 0.8){
+                return true
+            }
+        })
+    }
+
     self.initIfNeed =  function(node){
 
         if(!node.eventsCount) return
 
-        var workingNodes = _.filter(self.nodes, function(n){
-
-            if(!n.inited) return false
-
-            var s = n.statistic.getst()
-            var r = n.statistic.rating()
-
-            if (s.success > 0 && s.success > s.failed && s.time < 1200 && r){
-                return true
-            }
-        })
+        var workingNodes = getWorkingNodes()
 
         if (!usersfornode || self.proxy.users() / usersfornode >= workingNodes.length){
             node.init()
         }
         
     }
+
+    var forgetIfNotUsing = function(){
+
+        
+
+        var workingNodes = getWorkingNodes()
+
+        console.log('forgeting', workingNodes.length)
+
+        if (!usersfornode || self.proxy.users() / usersfornode >= workingNodes.length || workingNodes.length <= 1){
+
+            console.log("NO")
+        }else{
+
+            _.each(self.nodes, function(n){
+
+                if(n.inited){
+
+                    if(!n.wss.count()){
+
+                        if(f.date.addseconds(n.initedTime, 300) > new Date()){
+                            console.log('waitnodeforget', n.host)
+                        }
+                        else{
+                            console.log('forgetnode', n.host)
+                            n.forget()
+                        }
+                        
+
+                    }
+                    else{
+                        console.log("USERS ON NODE", n.host, n.wss.count())
+                    }
+                }
+
+            })
+           
+        }
+    }
+
     /// add to main
     self.add = function(node){
 
@@ -291,6 +361,128 @@ var Nodemanager = function(p){
 
     }
 
+    self.currentChainCommon2 = function(){
+
+        if(!self.nodes.length) return null
+
+        if(cachedchain){
+            if(f.date.addseconds(cachedchain.time, 30) > new Date()){
+                return cachedchain.result
+            }
+        }
+
+        var chains = _.map(self.nodes, function(node){
+            return node.getchain()
+        })
+
+        var heightmap = {}
+        var chainmap = {}
+        var commonchain = {};
+        var commonchainArray = []
+        var heightpoint = 1
+        var hashpoint = 1
+        var hashmap = {}
+
+        _.each(chains, function(chain){
+
+            _.each(chain, function(chainlink, i){
+                if(!heightmap[chainlink.height]) 
+                    heightmap[chainlink.height] = 0; 
+                    heightmap[chainlink.height] ++
+
+                if(!chainmap[chainlink.height]) 
+                    chainmap[chainlink.height] = {}
+
+                if(!chainmap[chainlink.height][chainlink.blockhash]) 
+                    chainmap[chainlink.height][chainlink.blockhash] = 0; 
+                    chainmap[chainlink.height][chainlink.blockhash] ++;
+
+                //if(!hashmap[chainlink.blockhash]) hashmap[chainlink.blockhash] = {}
+
+                if(i){
+                    hashmap[chainlink.blockhash] = chain[i - 1].blockhash
+                }
+            })
+            
+        })
+
+        heightpoint = _.max(_.toArray(heightmap), function(r) {return r})
+
+        _.each(chainmap, function(blockhashes, height){
+
+            var maxhash = null
+
+            _.each(blockhashes, function(count, blockhash){
+                if(!maxhash || count > blockhashes[maxhash]) maxhash = blockhash
+            })
+
+            if(hashpoint < maxhash) hashpoint = maxhash
+
+            commonchain[height] = {
+                blockhash : maxhash,
+                actual : blockhashes[maxhash] / hashpoint >= 0.5
+            }
+            
+        })
+        
+        commonchainArray = _.map(commonchain, function({blockhash, actual}, height){
+
+            return {
+                blockhash, 
+                height,
+                actual_h : heightmap[height] / heightpoint >= 0.5,
+                actual_b : actual
+            }
+
+        })
+
+        commonchainArray = _.sortBy(commonchainArray, function(v){
+            return v.height
+        })
+
+        if(!commonchainArray.length){
+            return {}
+        }
+
+        var lastchain = commonchainArray[commonchainArray.length - 1]
+
+        var maxHeight = lastchain.height
+
+        var commonBlockHash = null
+        var commonHeight = 0
+        var lasttrustblocks = []
+
+        for(var i = commonchainArray.length - 1; i >= 0; i--){
+            var chainlink = commonchainArray[i]
+
+            if(!commonBlockHash && chainlink.actual_b) commonBlockHash = chainlink.blockhash
+            if(!commonHeight && chainlink.actual_h) commonHeight = chainlink.height
+
+            if (commonBlockHash && lasttrustblocks.length < 6){
+                lasttrustblocks.push(chainlink)
+            }
+        }
+
+        var result = {
+            commonHeight,
+            maxHeight,
+            commonBlockHash,
+            lasttrustblocks,
+            commonchain : commonchainArray,
+            chainmap,
+            hashmap,
+            chains
+        }
+
+        cachedchain = {
+            result : result,
+            time : new Date(),
+        }
+
+        return result
+
+    }
+
     self.getnodes = function(filter){
 
         var nodes = {}
@@ -300,6 +492,9 @@ var Nodemanager = function(p){
             nodes[node.key] = {
                 node : node.exportsafe(),
                 statistic : node.statistic.getst(),
+                slice : node.statistic.get5min(),
+                history : node.statistic.gethistory(),
+                penalty : node.penalty(),
                 status : node.chainStatus(),
                 rating : node.statistic.rating(),
                 probability : node.statistic.probability(),
@@ -318,7 +513,6 @@ var Nodemanager = function(p){
         var commonStats = {}
 
         _.each(self.nodes, function(node){
-            console.log('node getGroupedByMethods')
             r[node.key] = node.statistic.getGroupedByMethods()
         })
 
@@ -327,7 +521,16 @@ var Nodemanager = function(p){
         }
     }
 
-    self.info = function(){
+    self.info = function(compact){
+
+        var chaininfo = self.currentChainCommon2()
+
+        var _ch = {
+            commonHeight : chaininfo.commonHeight,
+            maxHeight : chaininfo.maxHeight,
+            commonBlockHash : chaininfo.commonBlockHash,
+            lasttrustblocks : chaininfo.lasttrustblocks,
+        }
 
         var stats = {
             count : self.nodes.length,
@@ -341,7 +544,7 @@ var Nodemanager = function(p){
                 return n.inited
             }),
 
-            chain : self.currentChainCommon(),
+            chain : _ch,
             peers : self.askedpeers,
             tmp : self.getnodes(function(n){
                 return !n.inited
@@ -352,7 +555,6 @@ var Nodemanager = function(p){
         return stats
     }
 
-    
 
     self.init = function(){
 
@@ -386,6 +588,9 @@ var Nodemanager = function(p){
                     docs = _.filter(_.shuffle(docs), function(d, i){
                         if(i < 5) return true
                     })
+
+                    //// remove
+                    docs = []
 
                     var nodes = _.map(c.concat(p.stable, docs || []) , function(options){
 
@@ -554,6 +759,14 @@ var Nodemanager = function(p){
 
                 return node.info().then(r => {
 
+                    var bchain = 'main'
+
+                    if (self.proxy.test) bchain = 'test'
+
+                    if(node.bchain != bchain){
+                        return Promise.reject('bchain')
+                    }
+
                     connected.push(node)
 
                 }).catch(e => {
@@ -573,6 +786,8 @@ var Nodemanager = function(p){
         },  
         
         peernodesTime : function(node){
+
+
 
             var last = self.askedpeers[node.key]
 

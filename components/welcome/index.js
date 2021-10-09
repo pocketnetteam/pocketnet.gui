@@ -33,6 +33,7 @@ var welcome = (function(){
 					_p.el.find('.cancelinvite').on('click', function(){
 
 						self.app.platform.matrixchat.connectWith = null
+						
 
 						_p.el.html('')
 

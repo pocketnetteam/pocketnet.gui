@@ -18,8 +18,9 @@
   "license": "Apache-2.0",
   "dependencies": {
     "cordova-plugin-badge": "0.8.8",
-    "cordova-plugin-inappbrowser": "4.0.0",
+    "cordova-plugin-fullscreen": "^1.3.0",
     "cordova-plugin-gallery-refresh": "^1.0.61",
+    "cordova-plugin-inappbrowser": "4.0.0",
     "cordova-plugin-screen-orientation": "^3.0.1",
     "cordova-support-android-plugin": "1.0.1",
     "es6-promise-plugin": "^4.2.2"
@@ -33,6 +34,7 @@
     "cordova-plugin-androidx": "^3.0.0",
     "cordova-plugin-androidx-adapter": "^1.1.3",
     "cordova-plugin-background-download": "0.0.2",
+    "cordova-plugin-background-mode": "^0.7.3",
     "cordova-plugin-buildinfo": "^4.0.0",
     "cordova-plugin-camera": "^2.1.1",
     "cordova-plugin-compat": "^1.2.0",
@@ -52,15 +54,16 @@
     "cordova-plugin-vibration": "^2.1.6",
     "cordova-plugin-whitelist": "^1.3.3",
     "cordova-plugin-x-socialsharing": "^6.0.3",
-    "cordova-universal-links-plugin": "file:cordova-universal-links-plugin"
+    "cordova-universal-links-plugin": "file:cordova-universal-links-plugin",
+    "tv.megacubo.pip": "file:cordova-plugin-pip-mode"
   },
   "cordova": {
     "plugins": {
       "cordova-plugin-camera": {
         "PHOTO_LIBRARY_ADD_USAGE_DESCRIPTION": "This app requires photo library access to function properly.",
         "PHOTO_LIBRARY_USAGE_DESCRIPTION": "This app requires photo library access to function properly.",
-        "CAMERA_USAGE_DESCRIPTION": " ",
-        "PHOTOLIBRARY_USAGE_DESCRIPTION": " "
+        "CAMERA_USAGE_DESCRIPTION": "This Application can allow your camera to make avatar or post photo, if you want.",
+        "PHOTOLIBRARY_USAGE_DESCRIPTION": "This app requires photo library access to function properly."
       },
       "cordova-plugin-device": {},
       "cordova-plugin-device-orientation": {},
@@ -125,7 +128,10 @@
       "cordova-plugin-navigationbar-color": {},
       "cordova-plugin-insomnia": {},
       "cordova-plugin-taptic-engine": {},
-      "cordova-plugin-background-download": {}
+      "cordova-plugin-background-download": {},
+      "cordova-plugin-fullscreen": {},
+      "tv.megacubo.pip": {},
+      "cordova-plugin-background-mode": {}
     },
     "platforms": [
       "ios",

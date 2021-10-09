@@ -61,6 +61,7 @@ Application = function(p)
 
 	var self = this;
 	var realtimeInterval = null;
+	var baseorientation = 'portrait'
 
 
 	self._meta = {
@@ -435,9 +436,125 @@ Application = function(p)
 		return false
 	}
 
+	self.complainletters = {
+
+		user : function({
+			address1,
+			address2,
+			reason
+		}, clbk){
+
+			if(!address1 || !address2 || !reason){
+				clbk(false)
+
+				return
+			}
+
+			var _p = {
+				address1 : address1,
+				address2 : address2
+			}
+
+			_p.Action || (_p.Action = 'ADDTOMAILLIST');
+			_p.TemplateID = '2000'
+
+			var body = ''
+				body += '<p><a href="https://'+self.options.url+'/author?address='+address1+'">User('+address1+')</a> complaint another <a href="https://'+self.options.url+'/author?address='+address2+'">user('+address2+')</a></p>'
+				body += '<p>Reason: '+reason+'</p>'
+
+			_p.body = encodeURIComponent(body)
+
+			$.ajax({
+				type: 'POST',
+				url: 'https://pocketnet.app/Shop/AJAXMain.aspx',
+				data: _p,
+				dataType: 'json',
+				success : function(){
+
+
+					if (clbk)
+						clbk(true);
+
+				}
+			});
+
+		},
+		common : function({address1, reason},  clbk){
+			if(!address1 || !reason){
+				clbk(false)
+
+				return
+			}
+
+			var _p = {
+				address1 : address1
+			}
+
+			_p.Action || (_p.Action = 'ADDTOMAILLIST');
+			_p.TemplateID = '2000'
+
+			var body = ''
+				body += '<p>Common complaint</p>'
+
+				body += '<p>Reason: '+reason+'</p>'
+
+			_p.body = encodeURIComponent(body)
+
+			$.ajax({
+				type: 'POST',
+				url: 'https://pocketnet.app/Shop/AJAXMain.aspx',
+				data: _p,
+				dataType: 'json',
+				success : function(){
+
+					if (clbk)
+						clbk(true);
+
+				}
+			});
+		},
+		room : function({address1, roomid, reason}, clbk){
+			if(!address1 || !roomid || !reason){
+				clbk(false)
+
+				return
+			}
+
+			var _p = {
+				address1 : address1,
+				roomid : roomid
+			}
+
+			_p.Action || (_p.Action = 'ADDTOMAILLIST');
+			_p.TemplateID = '2000'
+
+			var body = ''
+				body += '<p><a href="https://'+self.options.url+'/author?address='+address1+'">User('+address1+')</a> complaint room ('+roomid+')</a></p>'
+
+				body += '<p>Reason: '+reason+'</p>'
+
+			_p.body = encodeURIComponent(body)
+
+			$.ajax({
+				type: 'POST',
+				url: 'https://pocketnet.app/Shop/AJAXMain.aspx',
+				data: _p,
+				dataType: 'json',
+				success : function(){
+
+					if (clbk)
+						clbk(true);
+
+				}
+			});
+		}
+
+	} 
+
 	self.relations = {};
 
 	self.backmap = {
+
 
 		index : {
 			href : 'index',
@@ -453,6 +570,7 @@ Application = function(p)
 			href : 'author',
 			childrens : ['author', 's', 'chat', 'share', 'userpage']
 		},
+
 		userpage : {
 			href : 'userpage',
 			childrens : ['userpage', 'share', 'author', 'post', 'authorization', 'registration', 'pkview']
@@ -700,7 +818,6 @@ Application = function(p)
 
 			if(typeof p.nav.href == 'function') p.nav.href = p.nav.href()
 
-			console.log('p.nav', p.nav)
 
 			self.nav.init(p.nav);
 			
@@ -768,12 +885,27 @@ Application = function(p)
 			$('html').addClass('testpocketnet') /// bstn
 		}
 
+		if(window.cordova) {
+			self.el.html.addClass('cordova')
+
+			if(self.curation()){
+				
+			}
+
+			if (window.cordova && !isMobile()){
+				self.el.html.addClass('tablet')
+			}
+		}
+
 		initevents()
 
 
 		if(typeof window.cordova != 'undefined')
 		{
 			document.addEventListener('deviceready', function(){
+
+				
+				if(isTablet() && !isMobile()) baseorientation = null
 
 				self.mobile.screen.lock()
 
@@ -786,6 +918,11 @@ Application = function(p)
 				if (window.Keyboard && window.Keyboard.disableScroll){
 					window.Keyboard.disableScroll(false)
 				}
+
+				if (cordova.plugins && cordova.plugins.backgroundMode)
+					cordova.plugins.backgroundMode.on('activate', function() {
+						cordova.plugins.backgroundMode.disableWebViewOptimizations(); 
+					});
 
 				self.init(p)
 
@@ -857,14 +994,16 @@ Application = function(p)
 
 				optimizeTimeout = null
 			
-			window.requestAnimationFrame(function(){
+			//window.requestAnimationFrame(function(){
 				self.el.content.css('width', 'auto')
 				self.el.content.css('height', 'auto')
 				self.el.content.removeClass('optimized')
-			})
+			//})
 		},
 
 		optimize : function(){
+
+			if(isios()) return
 
 			if (optimizeTimeout) clearTimeout(optimizeTimeout)
 
@@ -896,6 +1035,37 @@ Application = function(p)
 			}
 
 			self.playingvideo = v
+
+			console.log('self.playingvideo', self.playingvideo)
+			
+
+			if(self.playingvideo){
+
+				setTimeout(function(){
+
+					var scrollTop = self.actions.getScroll()
+	
+					if (self.playingvideo && self.playingvideo.playing){
+
+						if (scrollTop >= 65)
+							self.el.html.addClass('scrollmodedown')
+						
+					}
+	
+				}, 1000)
+			}
+			
+			setTimeout(function(){
+
+				var duration = deep(self.playingvideo, 'embed.details.duration') || 0
+
+				//console.log('self.playingvideo.volume', self.platform.sdk.videos.volume)
+
+				self.mobile.backgroundMode(self.playingvideo && self.playingvideo.playing && (!duration || duration > 60)/* && self.platform.sdk.videos.volume*/)
+
+			}, 1000)
+
+			
 
 		},
 
@@ -936,6 +1106,7 @@ Application = function(p)
 
 			if(!self.fullscreenmode){
 				self.lastScrollTop = s
+
 			}
 
 			return s
@@ -969,7 +1140,7 @@ Application = function(p)
 
 		onScroll : function(){
 
-			if(self.scrollRemoved < 1) self.scrollRemoved = 1
+			if (self.scrollRemoved < 1) self.scrollRemoved = 1
 
 			if (self.scrollRemoved){
 				self.scrollRemoved--
@@ -1003,6 +1174,8 @@ Application = function(p)
 
 		var showPanel = '1' // 2 // 3
 
+		var cr = self.curation()
+
 		/*window.removeEventListener('scroll')
 		window.removeEventListener('resize')*/
 
@@ -1023,23 +1196,32 @@ Application = function(p)
 					s(scrollTop, blockScroll)
 				})
 
-				if(mobile){
+				if(mobile && !cr){
 
 					var cs = (lastScrollTop + 40 < scrollTop || lastScrollTop - 40 < scrollTop)
 
-					if (scrollTop < 900){
+					var scrollTopH = 900
+
+					if(self.playingvideo) scrollTopH = 65
+ 
+					if (scrollTop < scrollTopH){
 
 						showPanel = '1'
 
-						if (self.el.html.hasClass('scrollmodedown'))
+						if (self.el.html.hasClass('scrollmodedown') )
 							self.el.html.removeClass('scrollmodedown')
 
 						return
 					}
 
-					if (scrollTop > 900 && cs){
+					if (scrollTop > scrollTopH && cs){
 						if(lastScrollTop + 40 < scrollTop){
 							showPanel = '2'
+
+							if(!self.el.html.hasClass('scrollmodedown'))
+								self.el.html.addClass('scrollmodedown')
+
+							
 						}
 					}
 					else{
@@ -1168,6 +1350,13 @@ Application = function(p)
 	self.name = self.options.name;
 
 	self.reltime = function(time){
+
+		moment.locale(self.localization.key)
+
+		return moment(moment.utc(time).toDate()).local().fromNow();
+
+		console.log('time', time)
+
 		var tt = convertDateRel(time)
 
 		if (tt[0]) {
@@ -1297,13 +1486,9 @@ Application = function(p)
 					function (directory) {
 						directory.getFile(name, { create: false }, function (entry) {
 
-							console.log(entry)
-
 							entry.file(function(file) {
 
 								var reader = new FileReader();
-
-								console.log(file)
 
 								reader.onloadend = function() {
 						
@@ -1412,7 +1597,6 @@ Application = function(p)
 
 				if (window.cordova){
 
-					console.log('base64', base64)
 
 					var image = b64toBlob(base64.split(',')[1], 'image/' + ms);	
 
@@ -1488,14 +1672,12 @@ Application = function(p)
 					_el.swipe({
 						longTap : function(){
 
-							console.log("longtap")
 
 							self.mobile.vibration.small()
 
 							var name = this.attr('save')
 							var src = this.attr('src') || this.attr('i')
 
-							console.log("src", src)
 
 							setTimeout(function(){
 								self.mobile.saveImages.dialog(name, src)
@@ -1525,11 +1707,9 @@ Application = function(p)
                     return
                 }
 
-                
-
-                if (navigator.vibrate){
+                /*if (navigator.vibrate){
                     navigator.vibrate(time || 50)
-                }
+                }*/
             }
         },
 		statusbar : {
@@ -1548,6 +1728,20 @@ Application = function(p)
 				if (window.NavigationBar)
 					window.NavigationBar.backgroundColorByHexString(colors[self.platform.sdk.theme.current] || "#FFF", self.platform.sdk.theme.current == 'black');
 			},
+
+			gallerybackground : function(){
+
+
+				if (window.StatusBar) {
+					window.StatusBar.styleLightContent()
+					window.StatusBar.backgroundColorByHexString("#030F1B");
+				}
+
+				if (window.NavigationBar)
+					window.NavigationBar.backgroundColorByHexString("#030F1B", true);
+					
+			},
+
 			hide : function(){
 				if (window.StatusBar) {
 					window.StatusBar.hide()
@@ -1582,15 +1776,34 @@ Application = function(p)
 				
 		},
 
+		backgroundMode : function(t){
+
+			if (window.cordova){
+				if (window.cordova.plugins && window.cordova.plugins.backgroundMode){
+
+					console.log("BACKGROUNDMODE ENABLED", t ? true : false)
+
+					if(t) {
+						cordova.plugins.backgroundMode.enable()
+					}
+					else {
+						cordova.plugins.backgroundMode.disable()
+					}
+				}
+			}
+			
+				
+		},
+
+
 		fullscreenmode : function(v){
 			v ? self.mobile.screen.unlock() : self.mobile.screen.lock()
 			v ? self.mobile.statusbar.hide() : self.mobile.statusbar.show()
 
 			self.mobile.unsleep(v)
-
+			
 			//v ? self.el.html.addClass('fullscreen') : self.el.html.removeClass('fullscreen')
 
-			
 
 			if(!v){
 				setTimeout(function(){
@@ -1600,15 +1813,22 @@ Application = function(p)
 			}
 			else{
 				self.fullscreenmode = v
+
+				/*window.PictureInPicture.enter(400, 200, function(){
+					console.log("success")
+				}, function(e){
+					console.log("RERE", e)
+				})*/
+
+				
 			}
 		},
 
 		screen : {
 
 			lock : function(){
-
-				if (window.cordova)
-					window.screen.orientation.lock('portrait')
+				if (window.cordova && baseorientation)
+					window.screen.orientation.lock(baseorientation)
 			},
 			unlock : function(){
 				if (window.cordova)

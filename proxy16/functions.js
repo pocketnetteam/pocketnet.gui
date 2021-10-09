@@ -61,6 +61,9 @@ f.path = function(_path){
         return path.resolve('./proxy16/', _path)
     }
     else{
+    	if(process.platform == 'linux'){
+    		return path.join(process.env.HOME, _path)
+    	}
         return path.join(path.dirname(process.execPath), _path)
     }
 
@@ -68,6 +71,8 @@ f.path = function(_path){
 }
 
 f.saveFile = function(filepath, buffer){
+
+    ///// TODO ADD FOLDER CREATION FOR LINUX AND REMOVE DEFAULT CERT
         
     return new Promise((resolve, reject) => {
 

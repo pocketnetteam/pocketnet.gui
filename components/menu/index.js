@@ -211,7 +211,6 @@ var menu = (function(){
 					}
 				},
 
-				fast : true
 			},
 
 			sitename : {

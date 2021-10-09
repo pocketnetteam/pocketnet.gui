@@ -93,11 +93,25 @@
 					<% } %>
 
 				
-				</div>
+				</div>	
 
-				<!--<% if(typeof views != 'undefined' && views) {%>
-					<div class="videoviews"><span class="label">Views:</span> <span class="number"><%-views%></span></div>
-				<% } %>-->
+				<% 
+				
+				console.log('info', info) 
+				
+				if((typeof preview == 'undefined' || !preview) && info.data) {%>
+
+					<% if(info.data.views) {%>
+
+					<div class="statswrapperExtended">
+
+						<div><span class="label"><%=e('views')%>:</span> <span class="number"><%-info.data.views || 0%></span></div>
+
+					</div>
+
+					<% } %>
+
+				<% } %>
 
 				<% if(typeof video == 'undefined' || !video) { %> 
 					<div class="videoTips">
@@ -107,10 +121,7 @@
 					</div>
 				<% } %>
 
-				<% if(typeof remove != 'undefined' && share && share.itisvideo()) {
-					
-					
-					%>
+				<% if(typeof remove != 'undefined' && share && share.itisvideo()) { %>
 
 					<div class="peertubepanel">
 

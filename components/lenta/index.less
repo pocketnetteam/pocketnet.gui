@@ -122,12 +122,23 @@
 		overflow: hidden; 
 		display: flex;
 		flex-direction: column;
+		.transition(0.1s, transform);
 
 		.authorgroup{
 			display: flex;
 			flex-direction: column;
 			&.blocking{
 				display: none;
+			}
+		}
+
+		.statswrapperExtended{
+			display: flex;
+			padding : @rhythm 0;
+
+			span{
+				font-weight: 500;
+				font-size: 0.9em;
 			}
 		}
 
@@ -256,6 +267,8 @@
 		.videoWrapper{
 			max-width: 600px;
 			position : relative;
+			border-radius: 3px;
+			overflow: hidden;
 
 			.videoTips{
 				position : absolute;
@@ -302,6 +315,8 @@
 
 		.commentsWrapper{			
 			background: #FAFAFA;
+			border-bottom-left-radius: 3px;
+			border-bottom-right-radius: 3px;
 		}
 
 		.ss{
@@ -317,6 +332,7 @@
 			background: #fff;
 			margin-bottom: @rhythm;
 			padding-bottom : 0;
+			
 			/*content-visibility: auto;
 			contain-intrinsic-size: 800px;*/
 
@@ -568,6 +584,27 @@
 				}	
 			}
 
+			.shareSave{
+				i{
+					display: none;
+				}
+
+				&[status="cansave"]{
+					.cansave{
+						display: inline-block;
+					}
+				}
+				&[status="saving"]{
+					.saving{
+						display: inline-block;
+					}
+				}
+				&[status="saved"]{
+					.saved{
+						display: inline-block;
+					}
+				}
+			}
 
 			.shareSpacer{
 				height: 400px;
@@ -645,6 +682,7 @@
 					}
 
 					span{
+
 						cursor: pointer;
 						i{
 							color : @color-good;
@@ -891,29 +929,32 @@
 			.metatable{
 				>div{
 					vertical-align: middle;
+
+					&.metadata{
+						overflow: hidden;
+					}
 					
 
 					&.metapanel{
-						display: initial;
-						width: 80px;
+						vertical-align: top;
+						width: 40px;
 						.metapanelitem{
 							opacity: 0.6;
 							cursor: pointer;
-							float: right;
+							margin-left: auto;
 							font-size: 0.8em;
 							color : #fff;
-							width: 22px;
+							width: 40px;
 							height: 22px;
 							line-height: 22px;
-							margin-right: @rhythm;
+							margin-right: auto;
 							text-align: center;
 							border-radius: 50%;
 							color : @color-gray2;
 							/*.transition(0.3s);*/
 
 							&:hover{
-								color : #fff;
-								background: @color-gray2;
+								opacity: 0.8;
 							}
 						}
 
@@ -966,7 +1007,7 @@
 
 
 			.meta{
-				padding-top: 2.7 * @rhythm;
+				padding-top: 1.5 * @rhythm;
 				margin-bottom: @rhythm;
 
 				>div{
@@ -974,6 +1015,8 @@
 				}
 
 				.authorCell{
+
+					white-space: nowrap;
 
 					a{
 						font-weight: 700;
@@ -1297,8 +1340,7 @@
 
 					span{
 						font-size: 0.8em;
-						color : @color-main;
-						text-decoration: underline;
+						color : @color-gray-mlight;
 					}
 				}
 			}
@@ -1308,12 +1350,11 @@
 				
 				span{
 					cursor: pointer;
-					font-size: 0.8em;
-					color : @color-good;
+					font-size: 0.9em;
+					color : @color-gray-mlight;
 				}
 
 				.editedLabel{
-					margin-left: 2 * @rhythm;
 				}
 			}
 
@@ -1378,7 +1419,7 @@
 						height: 40px;
 						line-height: 40px;
 						text-align: center;
-						font-size: 0.9em;
+						font-size: 1em;
 						color : @color-bright;
 						cursor: pointer;
 						/*.transition(0.3s);*/
@@ -1434,10 +1475,7 @@
 
 					&:hover{
 						.icon{
-							border-radius : 50%;
-							.shadowSmall();
-							color : #fff;
-							background: @color-bright;
+							opacity: 0.7;
 						}
 					}
 
@@ -1540,15 +1578,32 @@
 				bottom: 0;
 				top: 0;
 				background: fade(@color-black2, 90);
-				overflow-y: scroll;
 				padding-top: 0;
-				scrollbar-width: none;
-				backdrop-filter: blur(14px);
-				-webkit-backdrop-filter: blur(14px);  
 				
-				&::-webkit-scrollbar{
-					width: 0!important
+				
+
+				.sharecnt{
+					position: absolute;
+					overflow-y: scroll;
+					left: 0;
+					right: 0;
+					top : 0;
+					bottom : 0;
+					scrollbar-width: none;
+					overscroll-behavior: none;
+					transform: translate3d(0, 0, 0);
+					.transition(0.1s, transform);
+
+					.videoWrapper{
+						border-radius: 0;
+					}
+
+					&::-webkit-scrollbar{
+						width: 0!important
+					}
 				}
+				
+				
 
 				.videoviews{
 					padding-left: 2 * @rhythm;
@@ -1635,6 +1690,10 @@
 
 				.repostWrapper{
 					display: none;
+				}
+
+				.statswrapperExtended{
+					background: #fff;
 				}
 
 				.work{
@@ -1783,7 +1842,7 @@
 			cursor: pointer;
 			font-size: 0.8em;
 			color : #fff;
-			margin-bottom :  @rhythm;
+			margin-bottom :  1.2 * @rhythm;
 
 			&:hover{
 				background: fade(@color-main, 100)
@@ -1873,6 +1932,7 @@
 
 	.loadprev{
 		display : none;
+		margin-bottom: @rhythm;
 	}
 
 	&.showprev{
@@ -2168,8 +2228,9 @@
 
 				.metatable{
 					>div{
+						
 						&.metapanel{
-							width: 20px;
+							width: 40px;
 							color : @color-gray-mlight;
 
 							.metapanelitem{
@@ -2229,6 +2290,11 @@
 		&.mainvideo{
 			.shares .share .forurl.verticalVideo{
 				height: 200px;
+				
+			}
+
+			.shares .cntswrk.formeta{
+				padding-top : 0;
 			}
 		}
 
@@ -2350,6 +2416,36 @@
 						margin-left: 0.5 * @rhythm;
 					}
 				}
+			}
+		}
+
+		.loadprev{
+			&.fxdp{
+				position: fixed;
+				left : 0;
+				top : 110px;
+				z-index: 10;
+				right: 0;
+				background: transparent!important;
+				.transition(0.3s);
+				will-change: transform;
+				-webkit-backface-visibility: hidden;
+
+				button{
+					width: 260px;
+				}
+			}
+			
+		}
+	}
+
+	html.scrollmodedown{
+		#lenta{
+			.loadprev{
+				&.fxdp{
+					transform:  translateY(-220px);
+				}
+				
 			}
 		}
 	}
@@ -2610,7 +2706,6 @@ html.stblack{
 	
 								&:hover{
 									color :@color-black;
-									background: @color-main;
 								}
 	
 							}
@@ -2706,7 +2801,7 @@ html.stblack{
 					>div{
 	
 						span{
-							color : @color-add;
+							color : @color-gray-mlight;
 						}
 					}
 				}
@@ -2803,8 +2898,10 @@ html.stblack{
 					
 					.work{
 						background: @color-black;
-	
-					
+					}
+
+					.statswrapperExtended{
+						background: @color-black;
 					}
 				}
 			}
@@ -3026,7 +3123,9 @@ html.stblack{
 				}
 			}
 
-
+			.statswrapperExtended{
+				padding : @rhythm;
+			}
 			
 			
 
@@ -3043,7 +3142,6 @@ html.stblack{
 
 				&.formeta{
 					margin-left: 8 * @rhythm;
-					padding-bottom: 2 * @rhythm;
 				}
 			}
 
@@ -3111,11 +3209,12 @@ html.stblack{
 			}
 			
 			.share{
-				padding : 2 * @rhythm 0;
+				padding : @rhythm 0;
 				background: #fff;
 				margin-bottom: @rhythm;
 				cursor: default;
 				padding-bottom : 0;
+				border-radius: 0;
 
 				#comments{			
 					
@@ -3385,11 +3484,11 @@ html.stblack{
 				.meta{
 					.metatable{
 						>div{
-							width: 67%;
+							
 							margin-right: 0;
 						
 							&.metapanel{
-								width: 33%;
+								width: 47px;
 								padding-right: @rhythm;
 		
 								.metapanelitem{
@@ -3625,11 +3724,6 @@ html.stblack{
 			
 		}
 
-		.loadprev{
-			button{
-				width: 90%;
-			}
-		}
 
 		&.mainvideo{
 

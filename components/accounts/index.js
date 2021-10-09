@@ -54,9 +54,15 @@ var accounts = (function(){
 
 								self.closeContainer()
 
+								console.log("H", h, history)
+
 								self.app.reload({
 									href : h,
 									history : history,
+									nav : {
+										reload : !history
+									}
+									
 								})
 
 								/*self.app.reloadLight(function(){

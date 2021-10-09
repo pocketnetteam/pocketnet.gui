@@ -11,6 +11,14 @@ var rand = function(min, max){
     return Math.floor( Math.random() * (max - min + 1) ) + min;
 }
 
+var isonline = function(){
+    if(typeof window.navigator){
+        return window.navigator.onLine
+    }
+
+    return true
+}
+
 
 var ProxyRequest = function(app = {}, proxy){
     var self = this
@@ -35,11 +43,10 @@ var ProxyRequest = function(app = {}, proxy){
 
         var cancelled = false
 
-
         return new Promise((resolve, reject) => {
             const timer = setTimeout(() => {
 
-                if(controller.signal.dontabortable){
+                if (controller.signal.dontabortable){
                     return
                 }
 
@@ -54,7 +61,6 @@ var ProxyRequest = function(app = {}, proxy){
                 resolve(value)
 
             }).catch(reason => {
-                
 
                 clearTimeout(timer)
 
@@ -65,16 +71,26 @@ var ProxyRequest = function(app = {}, proxy){
     }
 
     var direct = function(url, data, p){
-        var controller = (new AbortController())
 
-        var time = 30000
+        if(typeof AbortController != 'undefined'){
+            var controller = (new AbortController())
 
-        if (window.cordova || isInStandaloneMode()){
-            time = 55000
+            var time = 20000
+    
+            if (window.cordova || isInStandaloneMode()){
+                time = 25000
+            }
+
+            if(!isonline()) time = 3000
+    
+    
+            return timeout(time, directclear(url, data, controller.signal, p), controller)
+        }   
+        else{
+            return directclear(url, data, null, p)
         }
 
-
-        return timeout(time, directclear(url, data, controller.signal, p), controller)
+       
     }
 
     var directclear = function(url, data, signal, p){
@@ -112,7 +128,8 @@ var ProxyRequest = function(app = {}, proxy){
 
         }).then(r => {
 
-            signal.dontabortable = true
+            if (signal)
+                signal.dontabortable = true
 
             if(!r.ok){
                 er = true
@@ -134,9 +151,8 @@ var ProxyRequest = function(app = {}, proxy){
 
             if (e.code == 20){
                 return Promise.reject({
-                    code : 408
+                    code : 20
                 })
-                
             }
 
             return Promise.reject(e)
@@ -145,6 +161,7 @@ var ProxyRequest = function(app = {}, proxy){
 
     self.rpc = function(url, method, parameters, options){
 
+     
 
         if(!method) return Promise.reject('method')
 
@@ -159,7 +176,6 @@ var ProxyRequest = function(app = {}, proxy){
             catch(e){
                 
             }
-            
 
             if (options)
                 data.options = options
@@ -315,7 +331,6 @@ var Proxy16 = function(meta, app, api){
                 self.ping = new Date()
                 self.session = r.session
 
-
                 return Promise.resolve(r)
             }).catch(e => {
                 return Promise.reject(e)
@@ -326,7 +341,7 @@ var Proxy16 = function(meta, app, api){
 
             var promise = null
 
-            if(!self.ping || self.ping.addSeconds(50) < new Date){
+            if(!self.ping || self.ping.addSeconds(20) < new Date()){
                 promise = self.api.ping()
             }
             else{
@@ -424,16 +439,24 @@ var Proxy16 = function(meta, app, api){
 
             if (options.fnode && e) e.code = 700
 
-            if (e.code == 408 && options.node && trying < 3 && !options.fnode){
+            if ((e.code == 408 || e.code == -28 || self.direct) && options.node && trying < 3 && !options.fnode){
 
-                return self.api.nodes.canchange(options.node).then(r => {
+                if(isonline()){
+                    return self.api.nodes.canchange(options.node).then(r => {
 
-                    if (r){
-                        return self.rpc(method, parameters, options, trying + 1)
-                    }
+                        if (r){
+                            return self.rpc(method, parameters, options, trying + 1)
+                        }
+    
+                        return Promise.reject(e)
+                    })
+                }
 
-                    return Promise.reject(e)
-                })
+                
+            }
+
+            if (e.code == 20){
+                return Promise.reject(e)
             }
 
             return Promise.reject(e)
@@ -792,19 +815,16 @@ var Api = function(app){
         }
     }
 
-    self.rpc = function(method, parameters, options){
+    self.rpc = function(method, parameters, options, trying){
+
+        if(!trying) trying = 0
 
         if(!method) return Promise.reject('method')
 
         if(!options) 
             options = {}
 
-        var wprx = null
-
         return getproxy(options.proxy).then(proxy => {
-
-            wprx = proxy
-
             return proxy.rpc(method, parameters, options.rpc)
 
         }).then(r => {
@@ -819,8 +839,15 @@ var Api = function(app){
 
             if(!e) e = 'TypeError: Failed to fetch'
 
-            if(!e.code){
-                self.changeProxyIfNeedWithDirect()
+            if((!e.code || e.code == 20) && trying < 2){
+
+                if(isonline()){
+                    return self.changeProxyIfNeedWithDirect().then(r => {
+                        trying++
+
+                        return self.rpc(method, parameters, options, trying)
+                    })
+                }
             }
 
             if (e.code != 700){
@@ -844,13 +871,18 @@ var Api = function(app){
         return self.changeProxyIfNeed().then(l => {
 
             if(!l){
+
                 var proxy = self.get.direct() 
+
                 if (proxy){
                     return self.set.current(proxy.id)
                 }
             }
+
             return Promise.resolve()
+
         }).catch(() => {
+
             return Promise.resolve()
         })
     }
@@ -1121,6 +1153,7 @@ var Api = function(app){
             }
             else{
                 return self.get.working().then(wproxies => {
+
                     if (wproxies.length){ 
                         self.set.current(wproxies[0].id, true)
                     }

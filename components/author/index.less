@@ -2,6 +2,11 @@
 
 #author{
 
+	.curationWrapper{
+		padding : 12 * @rhythm;
+		text-align: center;
+	}
+
 	#lenta{
 		.shares{
 			.share{					
@@ -234,7 +239,7 @@
 	.lentacell{
 		margin-right: 150px;
 		margin-left: 240px;
-		min-height: 400px;
+		min-height: 800px;
 
 		.zero{
 		}
@@ -1002,6 +1007,8 @@ html.stblack{
 	}
 }
 
+html.mobile,
+html.cordova,
 html.tablet{
 	#author{
 
@@ -1078,8 +1085,12 @@ html.tablet{
 
 			.usermenu{
 				width: 100%;
+				display: flex!important;
+				flex-wrap: nowrap;
 				.usermenuitem{
-					width: 20%;
+					flex-grow: 1;
+					width: auto;
+					float: none;
 					margin-right : 0;
 					padding-left: 0;
 					padding-right : 0;
@@ -1350,8 +1361,12 @@ html.tablet{
 
 				.usermenu{
 					width: 100%;
+					display: flex!important;
+					flex-wrap: nowrap;
 					.usermenuitem{
-						width: 20%;
+						width: auto;
+						float: none;
+						flex-grow: 1;
 						margin-right : 0;
 						padding-left: 0;
 						padding-right : 0;

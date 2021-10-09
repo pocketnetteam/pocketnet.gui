@@ -119,7 +119,11 @@ var authorization = (function(){
 						_p.href = function(){
 
 							if(self.app.user.validate()){
-								return 'index';
+								
+								if (app.curation()){
+									return 'index';
+								}
+							
 							}
 							else
 							{

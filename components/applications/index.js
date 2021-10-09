@@ -25,8 +25,9 @@ var applications = (function(){
 								return a.name == os.github.name
 							})
 
-							if (l){
+							console.log('assets', assets, l, os.github.name)
 
+							if (l){
 
 								var link = document.createElement('a');
 							        link.setAttribute('href', l.browser_download_url);
@@ -89,7 +90,6 @@ var applications = (function(){
 				var attr = extra ? os.id : '.currentos';
 
 				self.shell({
-					turi : 'registration',
 					name :  'os',
 					el : el.c.find(attr),
 					data : {
@@ -99,9 +99,12 @@ var applications = (function(){
 
 				}, function(_p){
 					_p.el.find('.downloadOs').on('click', function(){
+						console.log('downloadOsdownloadOsdownloadOs', os)
 						actions.download(os, function(link){
-							el.c.find(attr + ' .os').addClass('rundownloading');
 
+							console.log('link', link)
+
+							el.c.find(attr + ' .os').addClass('rundownloading');
 							el.c.find(attr + ' .skipositem').html('<div><a href="'+link+'"><b>'+self.app.localization.e('e13012')+'</b></a></div>')
 					
 						})
@@ -137,7 +140,9 @@ var applications = (function(){
 
 				ed.key ||(ed.key = 'ui')
 
-				var data = {};
+				var data = {
+					ed : ed
+				};
 
 				clbk(data);
 

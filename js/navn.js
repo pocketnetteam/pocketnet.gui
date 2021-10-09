@@ -22,6 +22,8 @@ Nav = function(app)
 		links : true,
 	}
 
+
+	var electronopen = false
 	var blockclick = false
 
 	var defaultpathname = 'index'
@@ -287,7 +289,7 @@ Nav = function(app)
 
 			delete currentParameters.back;
 
-			var href = current.href + collectParameters(currentParameters);
+			var href = (current.href || self.get.pathname()) + collectParameters(currentParameters);
 
 
 			if(typeof _p.removefromback == 'undefined') _p.removefromback = true
@@ -386,13 +388,27 @@ Nav = function(app)
 					href = self.addParameters(href)
 				}
 
-				history.pushState({
+				if(p.replaceState){
+					
+					history.replaceState({
 
-					href : href,
+						href : href,
+	
+						lfox : true
+	
+					}, null, href);
+				}
+				else{
+					history.pushState({
 
-					lfox : true
+						href : href,
+	
+						lfox : true
+	
+					}, null, href);
+				}
 
-				}, null, href);
+				
 
 				
 				
@@ -558,8 +574,6 @@ Nav = function(app)
 
 					p.lastScroll = app.lastScrollTop // $(window).scrollTop();
 
-					
-
 					if(!p.reload){
 
 						historyManager.add(p.completeHref, p);
@@ -568,8 +582,6 @@ Nav = function(app)
 							sitemessage('<i class="fas fa-wifi"></i>')
 						}
 					}
-						
-
 					
 
 					if (current.module && !p.inWnd){
@@ -1165,8 +1177,6 @@ Nav = function(app)
 
 						if(blockclick) return false
 
-						console.log("CLICK")
-
 						var href = core.thisSiteLink($(this).attr('href'));
 
 						var handler = $(this).attr('handler') || null
@@ -1420,6 +1430,7 @@ Nav = function(app)
 
 	self.init = function(p){
 
+
 		if(!p) p = {};
 
 		if(typeof window != 'undefined'){
@@ -1451,26 +1462,35 @@ Nav = function(app)
 
 				self.api.loadDefault(p);
 
-				return
+				//////
 
-				var currentHref = self.get.href();
+				if (1 == 2 && !electron && !window.cordova && !electronopen && !app.platform.sdk.usersettings.meta.openlinksinelectron.value && !isMobile() && !isTablet()){
 
-				var electronHrefs = JSON.parse(localStorage['electron_hrefs'] || "[]");
-			   
-				if (electronHrefs.indexOf(currentHref) == -1 && !electron){
+					var currentHref = self.get.href();
 
-					electronHrefs.push(currentHref)
+					var electronHrefs = JSON.parse(localStorage['electron_hrefs'] || "[]");
+				
+					if (electronHrefs.indexOf(currentHref) == -1 ){
 
-					localStorage['electron_hrefs'] = JSON.stringify(electronHrefs.slice(electronHrefs.length - 100))
+						electronHrefs.push(currentHref)
 
-					try{
-						window.location = 'pocketnet://electron/' + currentHref;
-					}
-					catch(e){
-						console.log("electron not installed")
-					}
-				   
-				}   
+						try{
+
+							window.location = app.meta.protocol + '://electron/' + currentHref;
+							localStorage['electron_hrefs'] = JSON.stringify(electronHrefs.slice(electronHrefs.length - 100))
+							
+						}
+						catch(e){
+							console.log("electron not installed")
+
+							localStorage['electron_hrefs'] = '[]'
+						}
+					
+					} 
+
+				}
+
+				electronopen = true
 
 			});
 

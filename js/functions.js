@@ -772,7 +772,6 @@
 
 		p.html = '<div class="mobiledialogcontent">'+(p.html || '')+'</div><div class="closeButton"><button class="button ghost"><i class="far fa-times-circle"></i> Close</button></div>'
 
-
 		var c = p.clbk || function(){}
 
 		p.clbk = function(el){
@@ -796,19 +795,31 @@
 
 		p.class = 'menudialog';
 
-		p.items.push({
+		/*p.items.push({
 			class : 'itemclose',
 			text : '<i class="fas fa-times-circle"></i>'
-		})
+		})*/
 		
 		var ehtml = function(){
 			var h = ''
 
+			h += '<div class="mobiledialogcontent customscroll">'
+
 			_.each(p.items, function(item, i){
-				h += '<div class="item ' + item.class + '" item="'+i+'">'
+				h += '<div class="item ' + (item.class || "") + '" item="'+i+'">'
 					h += item.text
 				h += '</div>'
 			})
+
+			h += '</div>'
+
+			h += '<div class="closeButton">'
+				h += '<div class="item itemclose">'
+					h += '<i class="fas fa-times-circle"></i>'
+				h += '</div>'
+			h += '</div>'
+
+			
 
 			return h;
 		}
@@ -820,16 +831,14 @@
 
 				var i = $(this).attr('item')
 
-				if(!p.items[i].action){
+				if(!i || !p.items[i].action){
 					self.destroy()
 				}
 				else
 				{
-
 					p.items[i].action(function(){
 						self.destroy()
 					})
-
 				}
 
 				
@@ -1550,6 +1559,9 @@
 
 			if (image)
 			{
+				image = image.replace('bastyon.com:8092', 'pocketnet.app:8092')
+				
+
 				_el.css({
 					'background-image': 'url('+image+')',
 					'background-size': p.size || 'cover',
@@ -6854,13 +6866,16 @@
 			if(direction == 'up' || direction == 'left') value = -value
 
 			if (prop == 'x'){
-				p.el.css("transform","translate3d("+(value || 0)+"px, 0, 0)");
+				p.el[0].style["transform"] = "scale(0.9) translate3d("+(value || 0)+"px, 0, 0)"
+				p.el[0].style['transform-origin'] = 'left center'
 			}
 
 			if (prop == 'y'){
-				p.el.css("transform","translate3d(0, "+(value || 0)+"px, 0)");
+				p.el[0].style["transform"] = "scale(0.9) translate3d(0, "+(value || 0)+"px, 0)"
+				p.el[0].style['transform-origin'] = 'center top'
 			}
 		}
+
 
 		var applyDirection = function(direction, v){
 			if (direction.positionclbk){
@@ -8851,7 +8866,7 @@
 
 		var el = p.el,
 			multiple = p.multiple || false,
-			maxFileSize = (p.maxFileSize || 10) * 1024 * 1024,
+			maxFileSize = (p.maxFileSize || 30) * 1024 * 1024,
 			dropZone,
 			input,
 			mode = p.mode || "FS";
@@ -9846,10 +9861,17 @@
 	    var type = null
 		var id = null
 		var host_name = null
-		
-	    // if(test && url.indexOf('channel') == -1 && url.indexOf("user") == -1){}
 
-	    	if(test && test[2] || (_url && _url.indexOf('peertube://') > -1)){
+		if(_url && _url.indexOf('peertube://') > -1){
+			var ch = _url.replace('peertube://', '').split('/');
+
+			id = ch[1]
+			type = 'peertube'
+			host_name = ch[0]
+			
+		}
+		else{
+			if(test && test[2]){
 
 				if (test.indexOf('youtube.com') > -1 || test.indexOf('youtu.be') > -1) {
 					type = 'youtube'
@@ -9864,15 +9886,13 @@
 					type = 'bitchute'
 					id = test[9]	
 			    }
-				if (test.indexOf('peertube://') > -1) {
-					var params = _url.split('?')[1] || '';
-
-					type = 'peertube'
-			        id = `${test[9]}` //?${params}
-					host_name = test[4]
-
-			    }
+				
 			}
+		}
+		
+	    // if(test && url.indexOf('channel') == -1 && url.indexOf("user") == -1){}
+
+	    	
 			
 	    return {
 	        type: type,

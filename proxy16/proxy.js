@@ -357,6 +357,11 @@ var Proxy = function (settings, manage, test) {
 		setPrivateKey: function (key, private) {
 			return wallet.kit.setPrivateKey(key, private)
 		},
+
+		clearexecuting: function () {
+			return wallet.kit.clearexecuting()
+		},
+
 		apply: function (key) {
 			return wallet.kit.apply(key)
 		},
@@ -524,6 +529,10 @@ var Proxy = function (settings, manage, test) {
 		},
 		info: function (compact) {
 			return nodeManager.info(compact)
+		},
+
+		chain : function(){
+			return nodeManager.currentChainCommon2()
 		}
 	}
 
@@ -575,11 +584,16 @@ var Proxy = function (settings, manage, test) {
 
 	self.peertube = {
 		init: function () {
-
-			var ins = {1 : ['pocketnetpeertube1.nohost.me', 'pocketnetpeertube2.nohost.me'], 5 : ['pocketnetpeertube5.nohost.me', 'pocketnetpeertube7.nohost.me'], 6 : ['pocketnetpeertube4.nohost.me', 'pocketnetpeertube6.nohost.me']}
+			var ins = {
+        		1: ['pocketnetpeertube1.nohost.me', 'pocketnetpeertube2.nohost.me'],
+        		5: ['pocketnetpeertube5.nohost.me', 'pocketnetpeertube7.nohost.me'],
+        		6: ['pocketnetpeertube4.nohost.me', 'pocketnetpeertube6.nohost.me'],
+        		8: ['pocketnetpeertube8.nohost.me', 'pocketnetpeertube9.nohost.me'],
+				10: ['pocketnetpeertube10.nohost.me', 'pocketnetpeertube11.nohost.me'],
+      		};
 
 			if (test){
-				ins = {0 : ['pocketnetpeertube3.nohost.me']}
+				ins = {0 : ['test.peertube.pocketnet.app']}
 			}
 
 			return peertube.init({
@@ -1076,14 +1090,36 @@ var Proxy = function (settings, manage, test) {
 				},
 			},
 
+			addfromtemp: {
+				path: '/nodes/addfromtemp',
+				authorization: 'signature',
+				action: function ({ keynode , A }) {
+
+					if (!A) return Promise.reject('admin');
+
+					return nodeManager.addfromtemp(keynode)
+
+						.then((node) => {
+
+							return Promise.resolve({
+								data: {
+									node: node.exportsafe(),
+								},
+							});
+						})
+						.catch((e) => {
+							console.log("e", e)
+							return Promise.reject(e);
+						});
+				},
+			},
+
 			select: {
 				path: '/nodes/select',
 				action: function ({ fixed }) {
 					return nodeManager
 						.waitbest(10000)
 						.then((r) => {
-
-							console.log("JJJO")
 
 							var node = null;
 
@@ -1119,7 +1155,7 @@ var Proxy = function (settings, manage, test) {
 				authorization: 'signature',
 				action: function ({ node, scenario, A }) {
 
-					//if (!test) return Promise.reject('err');
+					if (!test) return Promise.reject('err');
 
 					if (!A) return Promise.reject('admin');
 
@@ -1170,6 +1206,17 @@ var Proxy = function (settings, manage, test) {
 					return Promise.resolve({
 						data: {
 							nodes: nodeManager.getnodes(),
+						},
+					});
+				},
+			},
+
+			chain : {
+				path: '/nodes/chain',
+				action: function () {
+					return Promise.resolve({
+						data: {
+							chain: self.nodeManager.chain(),
 						},
 					});
 				},
@@ -1566,6 +1613,29 @@ var Proxy = function (settings, manage, test) {
 						});
 				},
 			},
+
+			clearexecuting: {
+				path: '/wallet/clearexecuting',
+				authorization: 'signature',
+
+				action: function ({ A }) {
+
+					if (!A) return Promise.reject('admin');
+
+					return self.wallet.clearexecuting()
+						.then((r) => {
+							return Promise.resolve({
+								data: 'done',
+							});
+						})
+						.catch((e) => {
+							return Promise.reject(e);
+						});
+				},
+			},
+
+			
+
 			freeregistrationfake: {
 				path: '/free/registrationfake',
 				action: function ({ }) {

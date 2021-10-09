@@ -15,6 +15,7 @@
         <meta name="keywords" content="" />
 
         <meta http-equiv="Content-Security-Policy" content="
+        upgrade-insecure-requests;
         default-src https: 'self' file:; 
         connect-src https: wss: file: data: blob:;
         img-src 'self' data: https: file:;
@@ -186,6 +187,8 @@
         <script src="js/vendor/underscore-min.js?v=136"></script> 
         <script src="js/vendor/tooltipster.core.js"></script>
         <script src="js/vendor/tooltipster.bundle.js"></script>
+        <script  join src="js/vendor/moment.min.js?v=89"></script>
+        <script  join src="js/vendor/moment.locale.js?v=89"></script>
         
         <!--<script src="js/vendor/imagesloaded.pkgd.min.js"></script> -->
         <script src="js/vendor/timer.js"></script>
