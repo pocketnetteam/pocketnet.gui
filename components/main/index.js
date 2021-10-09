@@ -12,8 +12,6 @@ var main = (function(){
 
 		var bastyonhelperOpened = false;
 
-		
-
 		var roller = null, lenta = null, share = null, panel,leftpanel, uptimer = null;
 
 		var videomain = false
@@ -54,6 +52,8 @@ var main = (function(){
 				
 
 				var ns = self.app.lastScrollTop
+
+				if(!hsready) initstick()
 
 				if (hsready && (ns != lastStickyRefresh || alv)){
 
@@ -261,6 +261,8 @@ var main = (function(){
 						id : 'share',
 						el : el.share,
 						animation : false,
+
+						mid : 'sharemain',
 						
 						clbk : function(e, p){
 
@@ -713,6 +715,30 @@ var main = (function(){
 			}
 		}
 
+		var initstick = function(){
+			if(!isMobile() && !isTablet() && !hsready){
+
+				var t1 = 64
+				var t2 = 76
+
+				console.log("INITSTICKER!!!")
+
+				el.leftpanel.hcSticky({
+					stickTo: '#main',
+					top : t1,
+					bottom : 122
+				});
+
+				el.panel.hcSticky({
+					stickTo: '#main',
+					top : t2,
+					bottom : 122
+				});
+
+				hsready = true
+			}
+		}
+
 		var initEvents = function(){
 
 			self.app.events.scroll.main = actions.addbuttonscroll
@@ -730,28 +756,8 @@ var main = (function(){
 
 			if(!isMobile() && !isTablet()){
 
-				var t1 = 64
-				var t2 = 76
-
-		
-
-				setTimeout(function(){
-					el.leftpanel.hcSticky({
-						stickTo: '#main',
-						top : t1,
-						bottom : 122
-					});
-	
-					el.panel.hcSticky({
-						stickTo: '#main',
-						top : t2,
-						bottom : 122
-					});
-	
-					hsready = true
-				}, 500)
-
-				
+				if(!videomain)
+					initstick()
 
 			}
 			else{

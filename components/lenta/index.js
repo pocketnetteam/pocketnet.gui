@@ -2984,6 +2984,7 @@ var lenta = (function(){
 						turi : 'share',
 						name :  'url',
 						el : el,
+						mid : 'sharelenta',
 						data : {
 							url : url,
 							og : og,

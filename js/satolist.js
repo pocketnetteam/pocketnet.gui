@@ -12053,7 +12053,7 @@ Platform = function (app, listofnodes) {
                                     s.time.setTime(share.time * 1000);
 
                                     s.address = share.address
-
+                                    s.edit = share.edit
                                     
 
                                     s.score = share.scoreSum;
@@ -12485,10 +12485,13 @@ Platform = function (app, listofnodes) {
                                                 s.address = ps.address
 
                                                 if (ps.txidEdit) {
-
                                                     replaceEqual(shares, {
                                                         txid: ps.txidEdit
                                                     }, s)
+
+                                                    /// new
+                                                    s.txidEdit = s.txid
+                                                    s.txid = ps.txidEdit
                                                 }
 
                                                 else {

@@ -6,6 +6,8 @@ var share = (function(){
 
 	var Essense = function(p){
 
+		console.log("P", p)
+
 		var wordsRegExp = /[,.!?;:() \n\r]/g
 
 		var displayTimes = false
@@ -1589,13 +1591,12 @@ var share = (function(){
 			tgs : function(clbk){
 
 				if(!currentShare.repost.value) {
-
-
+					
 					self.nav.api.load({
 						open : true,
 						id : 'taginput',
 						el : el.tgsWrapperMain,
-						eid : 'sharetags',
+						eid : 'sharetags' + p.mid,
 						animation : false,
 						essenseData : {
 							tags : function(){
@@ -2605,7 +2606,9 @@ var share = (function(){
 				class : "smallWnd withoutButtons wndsharepost"
 			},
 
-			id : p._id
+			id : p._id,
+
+			eid : p.mid
 		}
 	};
 

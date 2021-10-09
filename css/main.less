@@ -4600,19 +4600,21 @@ input[type=radio].radio:checked + label {
 
     position: relative;
 
+    
     .controlhor{
         display: none;
         position: absolute;
         top : 45%;
         border-radius: 50%;
-        background: #fff;
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);  
         .shadowSmaller();
         cursor: pointer;
         height: 44px;
         width: 44px;
         text-align: center;
         line-height: 44px;
-        color : @color-gray-light;
+        color : #fff;
         font-size: 0.8em;
         .transition(0.3s);
         
@@ -4626,7 +4628,8 @@ input[type=radio].radio:checked + label {
         }
 
         &:hover{
-            color : @color-main;
+            backdrop-filter: blur(1px);
+            -webkit-backdrop-filter: blur(1px); 
         }
     }
 
