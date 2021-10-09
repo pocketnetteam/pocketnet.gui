@@ -852,6 +852,10 @@ html.testpocketnet #main.testpocketnetbg {
   #main .smallpanell:hover .itemName {
     display: none;
   }
+  html.stblack #main .leftpanelcell {
+    background: #0e1c2b;
+    color: #e4ddde;
+  }
 }
 html.mobile #main {
   padding-top: 55px;

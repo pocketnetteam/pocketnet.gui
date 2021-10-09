@@ -341,7 +341,7 @@ var postscores = (function(){
 			},
 
 			wnd : {
-				class : 'postscoreswnd'
+				class : 'postscoreswnd normalizedmobile'
 			}
 		}
 	};

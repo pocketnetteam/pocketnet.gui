@@ -9235,7 +9235,8 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
             host : host,
             wautoplay : options.wautoplay,
             logoType : options.logoType,
-            localVideo : localVideo
+            localVideo : localVideo,
+            start : options.startTime || 0
           },{
     
             playbackStatusChange : function(status){
@@ -9243,6 +9244,7 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
             },
             volumeChange : options.volumeChange,
             fullscreenchange : options.fullscreenchange,
+            playbackStatusUpdate : options.playbackStatusUpdate,
             play : options.play,
             pause : options.pause
     
@@ -9298,7 +9300,6 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
 
     /*if (provider == 'vimeo') {
 
-      console.log('video_id', video_id)
 
       PeerTubeEmbeding.main(target, clear_peertube_id, {
         contributor : 'vimeo',

@@ -2603,7 +2603,7 @@ var share = (function(){
 						essenseData.close()
 					}
 				},
-				class : "smallWnd withoutButtons wndsharepost"
+				class : "smallWnd withoutButtons wndsharepost normalizedmobile"
 			},
 
 			id : p._id,

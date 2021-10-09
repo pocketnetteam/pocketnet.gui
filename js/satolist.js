@@ -2030,8 +2030,6 @@ Platform = function (app, listofnodes) {
 
             }
 
-            console.log("R", r)
-
             var c = function(){
                 self.sdk.users.get(id, function () {
 
@@ -3722,7 +3720,6 @@ Platform = function (app, listofnodes) {
                             return file.resolution.id == p.resolutionId
                         }) 
 
-                        console.log('videoDetails', videoDetails, p)
 
                         if(!fileDownloadUrl) return Promise.reject('fileDownloadUrl')
 
@@ -3775,8 +3772,6 @@ Platform = function (app, listofnodes) {
 
                                                 }, reject, function(pr) {
 
-                                                    console.log("PRO", pr)
-
                                                     if(p.progress) p.progress('video', 100* pr.bytesReceived / pr.totalBytesToReceive)
                                                 });
                                                 
@@ -3804,8 +3799,6 @@ Platform = function (app, listofnodes) {
                 share : {
                     cordova : function(share){
 
-                        console.log('share', share)
-                        
                         var storage = self.sdk.localshares.helpers.cordovaStorage()
 
                         if(!storage) return Promise.reject('storage')
@@ -4729,7 +4722,6 @@ Platform = function (app, listofnodes) {
 
                                                         function (_alias, error) {
 
-                                                            console.log('error')
 
                                                             var eh = self.errors[error] || {}
 
@@ -10361,7 +10353,6 @@ Platform = function (app, listofnodes) {
 
                 self.app.api.rpc('gettags', parameters).then(d => {
 
-                    console.log("DStags", d)
 
                     var _d = _.map(d, function(_d){
                         return {
@@ -10370,7 +10361,6 @@ Platform = function (app, listofnodes) {
                         }
                     })
 
-                    console.log("DStags2", _d)
 
                     if (clbk) {
                         clbk(_d)
@@ -17662,6 +17652,45 @@ Platform = function (app, listofnodes) {
 
         videos : {
             storage : {},
+            historykey : 'videohistory_v1_',
+            historyget : function(txid){
+
+                var h = {
+                    time : 0,
+                    date : null,
+                    percent : 0
+                }
+
+                try{
+                    var jsn = JSON.parse(localStorage[self.sdk.videos.historykey + txid] || "{}")
+
+                    if(jsn.time) h.time = jsn.time
+                    if(jsn.date) h.date = jsn.date
+                    if(jsn.percent) h.percent = Number(jsn.percent)
+
+                }
+                catch(e){}
+
+                return h
+            },
+            historyset : function(txid, data){
+
+                if(!data) data = {}
+
+                data.time || (data.time = 0)
+
+                var lasthistory = self.sdk.videos.historyget(txid)
+
+
+                lasthistory.time = data.time
+                lasthistory.date = new Date()
+                lasthistory.percent = data.percent
+                
+                try{
+                    localStorage[self.sdk.videos.historykey + txid] = JSON.stringify(lasthistory)
+                }catch(e){}
+            },
+
             infoshares : function(shares){
 
 
@@ -22957,8 +22986,6 @@ Platform = function (app, listofnodes) {
 
             core.backtoapp = function(link){
 
-                console.log('backtoapp')
-
                 if (isTablet() ||isMobile() || window.cordova)
                     app.nav.api.history.removeParameters(['pc'])
 
@@ -23011,8 +23038,6 @@ Platform = function (app, listofnodes) {
             }
 
             core.apptochat = function(link){
-
-                console.log('apptochat')
 
                 if (document.activeElement) document.activeElement.blur()
 
@@ -23608,8 +23633,6 @@ Platform = function (app, listofnodes) {
         if (window.cordova && typeof universalLinks != 'undefined'){
 
             universalLinks.subscribe('nav-message', function (eventData) {
-
-                console.log('eventData', eventData)
 
                 routing(eventData.url)
                 

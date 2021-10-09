@@ -12,6 +12,11 @@ var rand = function(min, max){
 }
 
 var isonline = function(){
+
+    if (window.cordova){
+        if(navigator.connection.type === 'none') return false
+    }
+
     if(typeof window.navigator){
         return window.navigator.onLine
     }

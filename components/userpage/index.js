@@ -508,27 +508,73 @@ var userpage = (function(){
 					self.app.nav.api.history.add('authorization')
 				}
 
+				var so2 = function(){
+					if (self.app.platform.sdk.address.pnet()){
 
-				if (self.app.platform.sdk.address.pnet()){
-
-					
-
-					if (self.app.platform.sdk.registrations.showprivate()){
-						
-						self.app.platform.ui.showmykey({
-							text : self.app.localization.e('e13188'),
-							faillabel : self.app.localization.e('e13189'),
-							fail : function(){
-								so()
-							}
-						})
-
-						return
+						if (self.app.platform.sdk.registrations.showprivate()){
+							
+							self.app.platform.ui.showmykey({
+								text : self.app.localization.e('e13188'),
+								faillabel : self.app.localization.e('e13189'),
+								fail : function(){
+									so()
+								}
+							})
+	
+							return
+						}
+	
 					}
-
+	
+					so()
 				}
 
-				so()
+
+				if(window.cordova){
+					menuDialog({
+
+						items: [
+	
+							{
+								text: self.app.localization.e('logoutaccount'),
+								class: 'itemmain',
+								action: function (clbk) {
+	
+									so2()
+
+									clbk()
+	
+								}
+							},
+	
+							{
+								text:  self.app.localization.e('closeapplication'),
+								action: function (clbk) {
+	
+									clbk()
+
+									setTimeout(function(){
+
+										if (navigator.app) {
+											navigator.app.exitApp();
+										} else if (navigator.device) {
+											navigator.device.exitApp();
+										} else {
+											window.close();
+										}
+
+									}, 100)
+	
+								}
+							}
+	
+	
+						]
+					})
+				}
+				else{
+					so2()
+				}
 
 				
 			}

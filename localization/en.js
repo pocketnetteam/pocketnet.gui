@@ -1209,3 +1209,7 @@ ____loclib.views = "Views";
 
 ____loclib.saveshare = "Add videos to saved";
 ____loclib.successdownloaded = "Video saved";
+
+
+____loclib.logoutaccount = "Sign out of your account";
+____loclib.closeapplication = "Exit the application";

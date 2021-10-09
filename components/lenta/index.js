@@ -629,9 +629,21 @@ var lenta = (function(){
 						
 					};
 
+					var startTime = 0;
+
+					if (self.app.platform.sdk.videos.historyget && share.itisvideo()){
+
+						var pr = self.app.platform.sdk.videos.historyget(share.txid)
+						if (pr.percent < 95)
+							startTime = pr.time
+					}
+
+					
+
 					var s = {
 						muted : true,
 						resetOnEnd : true,
+						startTime : startTime,
 						controls : ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen'],
 						speed : {
 							selected : 1,
@@ -663,6 +675,20 @@ var lenta = (function(){
 							videopaused = true
 
 							self.app.actions.playingvideo(null)
+						},
+
+						playbackStatusUpdate : function({
+							position,
+							playbackState,
+							duration
+						}){
+							if(playbackState == 'playing' && ((position > 15 && duration > 240) || startTime)){
+								self.app.platform.sdk.videos.historyset(share.txid, {
+									time : position,
+									percent : ((position/duration)* 100).toFixed(0)
+								})
+
+							}
 						}
 					}
 
@@ -1921,7 +1947,6 @@ var lenta = (function(){
 
 			postscores : function(){
 				var id = $(this).closest('.share').attr('id');
-
 
 				actions.postscores(id)
 			},

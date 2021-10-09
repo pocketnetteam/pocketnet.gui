@@ -806,7 +806,7 @@ var imageGalleryEdit = (function(){
 					if (essenseData.close)
 						essenseData.close()
 				},
-				class : 'allscreen black withoutButtons imageGalleryEdit',
+				class : 'allscreen black withoutButtons imageGalleryEdit nobfilter',
 			}
 		}
 	};

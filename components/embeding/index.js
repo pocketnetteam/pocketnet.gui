@@ -422,7 +422,7 @@ var embeding = (function(){
 				},
 				offScroll : true,
 				noInnerScroll : true,
-				class : 'embeding',
+				class : 'embeding normalizedmobile',
 
 
 				swipeClose : true,
