@@ -3887,8 +3887,6 @@ var system16 = (function(){
 
 					info = r.info
 
-					console.log('info', info)
-
 					initsettings()
 					
 					stats = [{
@@ -3902,9 +3900,10 @@ var system16 = (function(){
 
 				}).then(data => {
 
-					console.log("DAS")
 
 					stats = data.stats
+
+					console.log(stats)
 
 					stats = lastelements(stats, 1000)
 

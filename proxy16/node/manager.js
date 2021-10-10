@@ -491,7 +491,7 @@ var Nodemanager = function(p){
                 node : node.exportsafe(),
                 statistic : node.statistic.getst(),
                 slice : node.statistic.get5min(),
-                history : node.statistic.gethistory(),
+                /*history : node.statistic.gethistory(),*/
                 penalty : node.penalty(),
                 status : node.chainStatus(),
                 rating : node.statistic.rating(),
