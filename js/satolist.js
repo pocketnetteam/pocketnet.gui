@@ -3268,7 +3268,7 @@ Platform = function (app, listofnodes) {
 
                             self.app.mobile.vibration.small()
 
-                            var href = 'https://'+window.location.hostname+'/' /// domain
+                            var href = 'https://bastyon.com/' /// domain
 
                             var path = ''
 
@@ -3294,7 +3294,7 @@ Platform = function (app, listofnodes) {
                                 }
                                 else
                                 {
-                                    cordova.InAppBrowser.open(href, '_blank');
+                                    cordova.InAppBrowser.open(href, '_system');
                                 }
                                 
                                
@@ -23556,6 +23556,10 @@ Platform = function (app, listofnodes) {
         ///////////
 
         self.sdk.localshares.initclbk()
+
+        if(window.cordova){
+            setupOpenwith()
+        }
 
 
         /*if(window.cordova){
