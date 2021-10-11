@@ -1167,7 +1167,6 @@ Application = function(p)
 			delayresize = null
 
 		var body = document.body
-		var mobile = isMobile()
 
 		self.height = self.el.window.height()
 		self.width = self.el.window.width()
@@ -1196,7 +1195,7 @@ Application = function(p)
 					s(scrollTop, blockScroll)
 				})
 
-				if(mobile && !cr){
+				if(isMobile() && !cr){
 
 					var cs = (lastScrollTop + 40 < scrollTop || lastScrollTop - 40 < scrollTop)
 
