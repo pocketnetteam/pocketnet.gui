@@ -757,37 +757,38 @@ Application = function(p)
 
 		prepareMap();
 
-		self.options.fingerPrint = hexEncode('fakefingerprint');
-
 		
-		
-		self.localization.init(function(){
 
-			newObjects(p);
+			self.options.fingerPrint = hexEncode('fakefingerprint');
+			
+			self.localization.init(function(){
 
-			lazyActions([
-				self.platform.prepare
-			], function(){
+				newObjects(p);
 
-				self.realtime();
+				lazyActions([
+					self.platform.prepare
+				], function(){
 
-				if (typeof hideSplashScreen != 'undefined'){
-					hideSplashScreen();
-				}	
-				else{
-					$('#splashScreen').remove()
-				}
-				
-				self.nav.init(p.nav);
+					self.realtime();
 
-				if (p.clbk) 
-					p.clbk();
+					if (typeof hideSplashScreen != 'undefined'){
+						hideSplashScreen();
+					}	
+					else{
+						$('#splashScreen').remove()
+					}
+					
+					self.nav.init(p.nav);
 
-				if(!_OpenApi)
-					self.showuikeysfirstloading()
+					if (p.clbk) 
+						p.clbk();
 
+					if(!_OpenApi)
+						self.showuikeysfirstloading()
+
+				})
 			})
-		})
+		
 
 		
 
@@ -880,58 +881,62 @@ Application = function(p)
 			html : 			$('html'),
 			window : 		$(window)
 		};
+
+		retry(function(){
+			console.log('typeof window.hexEncode', typeof window.hexEncode)
+			return typeof window.hexEncode != 'undefined'
+		}, function(){
 	
-		if (self.test){
-			$('html').addClass('testpocketnet') /// bstn
-		}
-
-		if(window.cordova) {
-			self.el.html.addClass('cordova')
-
-			if(self.curation()){
-				
+			if (self.test){
+				$('html').addClass('testpocketnet') /// bstn
 			}
 
-			if (window.cordova && !isMobile()){
-				self.el.html.addClass('tablet')
+			initevents()
+
+			if(typeof window.cordova != 'undefined')
+			{
+				document.addEventListener('deviceready', function(){
+
+					self.el.html.addClass('cordova')
+
+					if(self.curation()){
+						
+					}
+
+					if (window.cordova && !isMobile()){
+						self.el.html.addClass('tablet')
+					}
+
+					
+					if(isTablet() && !isMobile()) baseorientation = null
+
+					self.mobile.screen.lock()
+
+					p || (p = {});
+
+					p.clbk = function(){
+						navigator.splashscreen.hide();
+					}
+
+					if (window.Keyboard && window.Keyboard.disableScroll){
+						window.Keyboard.disableScroll(false)
+					}
+
+					if (cordova.plugins && cordova.plugins.backgroundMode)
+						cordova.plugins.backgroundMode.on('activate', function() {
+							cordova.plugins.backgroundMode.disableWebViewOptimizations(); 
+						});
+
+					self.init(p)
+
+				}, false);
 			}
-		}
+			else
+			{
+				self.init(p);
+			}
 
-		initevents()
-
-
-		if(typeof window.cordova != 'undefined')
-		{
-			document.addEventListener('deviceready', function(){
-
-				
-				if(isTablet() && !isMobile()) baseorientation = null
-
-				self.mobile.screen.lock()
-
-				p || (p = {});
-
-				p.clbk = function(){
-					navigator.splashscreen.hide();
-				}
-
-				if (window.Keyboard && window.Keyboard.disableScroll){
-					window.Keyboard.disableScroll(false)
-				}
-
-				if (cordova.plugins && cordova.plugins.backgroundMode)
-					cordova.plugins.backgroundMode.on('activate', function() {
-						cordova.plugins.backgroundMode.disableWebViewOptimizations(); 
-					});
-
-				self.init(p)
-
-			}, false);
-		}
-		else
-		{
-			self.init(p);
-		}
+		}, 30)
 
 	}
 
