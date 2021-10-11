@@ -882,61 +882,57 @@ Application = function(p)
 			window : 		$(window)
 		};
 
-		retry(function(){
-			console.log('typeof window.hexEncode', typeof window.hexEncode)
-			return typeof window.hexEncode != 'undefined'
-		}, function(){
-	
-			if (self.test){
-				$('html').addClass('testpocketnet') /// bstn
-			}
 
-			initevents()
 
-			if(typeof window.cordova != 'undefined')
-			{
-				document.addEventListener('deviceready', function(){
+		if (self.test){
+			$('html').addClass('testpocketnet') /// bstn
+		}
 
-					self.el.html.addClass('cordova')
+		initevents()
 
-					if(self.curation()){
-						
-					}
+		if(typeof window.cordova != 'undefined')
+		{
+			document.addEventListener('deviceready', function(){
 
-					if (window.cordova && !isMobile()){
-						self.el.html.addClass('tablet')
-					}
+				self.el.html.addClass('cordova')
 
+				if(self.curation()){
 					
-					if(isTablet() && !isMobile()) baseorientation = null
+				}
 
-					self.mobile.screen.lock()
+				if (window.cordova && !isMobile()){
+					self.el.html.addClass('tablet')
+				}
 
-					p || (p = {});
+				
+				if(isTablet() && !isMobile()) baseorientation = null
 
-					p.clbk = function(){
-						navigator.splashscreen.hide();
-					}
+				self.mobile.screen.lock()
 
-					if (window.Keyboard && window.Keyboard.disableScroll){
-						window.Keyboard.disableScroll(false)
-					}
+				p || (p = {});
 
-					if (cordova.plugins && cordova.plugins.backgroundMode)
-						cordova.plugins.backgroundMode.on('activate', function() {
-							cordova.plugins.backgroundMode.disableWebViewOptimizations(); 
-						});
+				p.clbk = function(){
+					navigator.splashscreen.hide();
+				}
 
-					self.init(p)
+				if (window.Keyboard && window.Keyboard.disableScroll){
+					window.Keyboard.disableScroll(false)
+				}
 
-				}, false);
-			}
-			else
-			{
-				self.init(p);
-			}
+				if (cordova.plugins && cordova.plugins.backgroundMode)
+					cordova.plugins.backgroundMode.on('activate', function() {
+						cordova.plugins.backgroundMode.disableWebViewOptimizations(); 
+					});
 
-		}, 30)
+				self.init(p)
+
+			}, false);
+		}
+		else
+		{
+			self.init(p);
+		}
+
 
 	}
 
