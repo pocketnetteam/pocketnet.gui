@@ -759,35 +759,35 @@ Application = function(p)
 
 		
 
-			self.options.fingerPrint = hexEncode('fakefingerprint');
-			
-			self.localization.init(function(){
+		self.options.fingerPrint = hexEncode('fakefingerprint');
+		
+		self.localization.init(function(){
 
-				newObjects(p);
+			newObjects(p);
 
-				lazyActions([
-					self.platform.prepare
-				], function(){
+			lazyActions([
+				self.platform.prepare
+			], function(){
 
-					self.realtime();
+				self.realtime();
 
-					if (typeof hideSplashScreen != 'undefined'){
-						hideSplashScreen();
-					}	
-					else{
-						$('#splashScreen').remove()
-					}
-					
-					self.nav.init(p.nav);
+				if (typeof hideSplashScreen != 'undefined'){
+					hideSplashScreen();
+				}	
+				else{
+					$('#splashScreen').remove()
+				}
+				
+				self.nav.init(p.nav);
 
-					if (p.clbk) 
-						p.clbk();
+				if (p.clbk) 
+					p.clbk();
 
-					if(!_OpenApi)
-						self.showuikeysfirstloading()
+				if(!_OpenApi)
+					self.showuikeysfirstloading()
 
-				})
 			})
+		})
 		
 
 		
