@@ -3373,6 +3373,12 @@ Platform = function (app, listofnodes) {
 
                         })
 
+                        el.find('.remove').on('click', function () {
+                            console.log('remove!!!', d.share.txid);
+
+
+                        })
+
                         el.find('.block').on('click', function () {
                             self.app.mobile.vibration.small()
                             self.api.actions.blocking(address, function (tx, error) {
