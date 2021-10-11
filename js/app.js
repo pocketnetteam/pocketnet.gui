@@ -441,6 +441,7 @@ Application = function(p)
 		user : function({
 			address1,
 			address2,
+			email,
 			reason
 		}, clbk){
 
@@ -452,7 +453,8 @@ Application = function(p)
 
 			var _p = {
 				address1 : address1,
-				address2 : address2
+				address2 : address2,
+				email : email
 			}
 
 			_p.Action || (_p.Action = 'ADDTOMAILLIST');
@@ -479,7 +481,7 @@ Application = function(p)
 			});
 
 		},
-		common : function({address1, reason},  clbk){
+		common : function({address1, reason, email},  clbk){
 			if(!address1 || !reason){
 				clbk(false)
 
@@ -487,7 +489,8 @@ Application = function(p)
 			}
 
 			var _p = {
-				address1 : address1
+				address1 : address1,
+				email : email
 			}
 
 			_p.Action || (_p.Action = 'ADDTOMAILLIST');
