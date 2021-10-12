@@ -57,14 +57,41 @@ var instance = function (host, Roy) {
 
 		return self.request('performance', {}, {timeout : 12000}).then((data) => {
 
-			result.stats = data.data || {}
-			result.performance = result.stats.performance || {}
+			var stats = data.data || {}
+			var performance = stats.performance || {}
+			var re = f.deep(stats, 'videosRedundancy.0') || {}
+
+			result.stats = {
+				totalLocalVideos : stats.totalLocalVideos || 0,
+				totalLocalVideoViews : stats.totalLocalVideoViews || 0,
+				totalDailyActiveUsers : stats.totalDailyActiveUsers || 0
+			}
+
+			result.performance = {
+				activeLivestreams: performance.activeLivestreams || 0,
+				failImportsCount: performance.failImportsCount || 0,
+				failTranscodingJobs: performance.failTranscodingJobs || 0,
+				waitImportsCount: performance.waitImportsCount || 0,
+				waitTranscodingJobs: performance.waitTranscodingJobs || 0,
+
+				redundancy : {
+					totalSize: re.totalSize || 0,
+					totalUsed: re.totalUsed || 0,
+					totalVideoFiles: re.totalVideoFiles || 0,
+					totalVideos: re.totalVideos || 0
+				}
+			}
 
 			return self.request('diskSpace',{}, {timeout : 12000})
 
 		}).then((data) => {
 
-			result.space = data.data || {}
+			var space = data.data || {}
+
+			result.space = {
+				free: space.free,
+				size : space.size
+			}
 
 			info.push(result)
 

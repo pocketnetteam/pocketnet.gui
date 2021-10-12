@@ -1035,13 +1035,13 @@ var system16 = (function(){
 					series : [
 						{
 							name : "Total Size",
-							path : "stats.info.last.stats.videosRedundancy.0.totalSize",
+							path : "stats.info.last.performance.redundancy.totalSize",
 							id : 'sac'
 						},
 
 						{
 							name : "Total Used",
-							path : "stats.info.last.stats.videosRedundancy.0.totalUsed",
+							path : "stats.info.last.performance.redundancy.totalUsed",
 							id : 'sat'
 						}
 					]
@@ -1053,13 +1053,13 @@ var system16 = (function(){
 					series : [
 						{
 							name : "Total Video Files",
-							path : "stats.info.last.stats.videosRedundancy.0.totalVideoFiles",
+							path : "stats.info.last.performance.redundancy.totalVideoFiles",
 							id : 'sac'
 						},
 
 						{
 							name : "Total Videos",
-							path : "stats.info.last.stats.videosRedundancy.0.totalVideos",
+							path : "stats.info.last.performance.redundancy.totalVideos",
 							id : 'sat'
 						}
 					]

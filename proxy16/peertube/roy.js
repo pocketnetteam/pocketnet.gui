@@ -221,7 +221,7 @@ var Roy = function (parent) {
 			info[instance.host] = {
 				host: instance.host,
 				stats: stats,
-				canuse : instance.canuse
+				canuse : instance.canuse()
 			};
 
 		});
