@@ -185,7 +185,6 @@ var Peertube = function (settings) {
 			.catch((e) => {
 
 				if (e && !e.data) {
-					//console.log('E video', e, url);
 				}
 
 				if (e && e.status == '404') {

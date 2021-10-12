@@ -161,7 +161,6 @@ var instance = function (host, Roy) {
 
 		}).catch((error) => {
 
-			/*if(method == 'video') console.log(error)*/
 
 			var meta = {
 				code : ((error || {}).response || {}).status || 500,

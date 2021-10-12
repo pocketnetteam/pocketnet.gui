@@ -353,7 +353,7 @@ var Node = function(options, manager){
 
                 _.each(objs, function(obj){
                     common.time += (obj.time || 0) * (obj.count || 0)
-                    common.rate += (obj.failed || 0) * (obj.count || 0)
+                    common.rate += (obj.rate || 0) * (obj.count || 0)
                     common.percent += (obj.percent || 0) * (obj.count || 0)
                 })    
 

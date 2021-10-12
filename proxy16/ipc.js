@@ -111,8 +111,6 @@ var IPC = function(ipc, wc){
     var tick = function() {
 		kit.manage.get.state(true).then(state => {
 
-			console.log('state', state.peertube.instances)
-
 			kit.manage.get.settings().then(settings => {
 				send('tick', null, {settings, state}, 'proxy-message-tick')
 			})
