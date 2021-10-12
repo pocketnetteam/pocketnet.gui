@@ -1339,11 +1339,6 @@ Share = function(lang){
 	}
 
 	self.serialize = function(){
-
-		if (self.delete){
-
-			return encodeURIComponent(self.txid)
-		}
 		
 		return encodeURIComponent(self.url.v) 
 		
@@ -1375,13 +1370,6 @@ Share = function(lang){
 	}
 
 	self.export = function(extend){
-
-		if (self.delete){
-
-			return {
-				txidEdit: self.txid || "",
-			}
-		}
 
 		if(extend){
 			return {
@@ -1458,8 +1446,6 @@ Share = function(lang){
 
 	self.optstype = function(platform){
 
-		if (self.delete) return 'contentDelete'
-
 		if(self.itisvideo()) return 'video'
 
 		return self.type	
@@ -1468,14 +1454,6 @@ Share = function(lang){
 
 
 	self.typeop = function(platform){
-
-		console.log('self', self)
-
-
-		if (self.delete){
-
-			return 'contentDelete'
-		}
 
 		if (self.itisvideo()) return 'video'
 
@@ -2163,20 +2141,6 @@ pShare = function(){
 		if(!s.image) s.image = self.images[0]
 
 		return s
-	}
-
-	self.delete = function(){
-		var c = new Share();
-
-		c.id = self.id
-		c.parentid = self.parentid
-		c.answerid = self.answerid
-
-		c.delete = true
-		
-
-		return c
-
 	}
 
 	self.renders = {
