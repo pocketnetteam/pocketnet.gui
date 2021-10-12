@@ -72,7 +72,7 @@ var instance = function (host, Roy) {
       .then(() => {
         lastStat = null;
 
-        return f.delay(2000);
+        return f.delay(Roy.parent.statsInterval());
       })
       .then(() => {
         return statsRequest();

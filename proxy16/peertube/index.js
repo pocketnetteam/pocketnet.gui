@@ -324,7 +324,7 @@ var Peertube = function (settings) {
       }),
     )
       .then(() => {
-        return f.delay(2000);
+        return f.delay(Roy.parent.statsInterval());
       })
       .then(() => self.updateRoySpace());
   };
