@@ -246,7 +246,7 @@ var Peertube = function (settings) {
 				return !r.auto;
 			});
 
-			if (type && type == 'upload') _roys = _.filter(roys, function (r) {
+			if (type && type == 'upload') _roys = _.filter(_roys, function (r) {
 
 				return r.canupload();
 			});
