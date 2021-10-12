@@ -572,8 +572,6 @@ var Node = function(options, manager){
             var lastblock = self.lastblock() || {}
             var result = 0;
 
-            console.log('lastblock', lastblock)
-
             if(
                 (!lastblock.height) || (self.testing)
                 || (!self.inited)
@@ -585,8 +583,6 @@ var Node = function(options, manager){
                 var status = self.chainStatus()
 
                 var difference = status.difference || 0
-
-                console.log('difference', difference, status)
 
                 if (difference > 0) difference = 0
                     difference = -difference
@@ -620,8 +616,6 @@ var Node = function(options, manager){
             }
 
             ///
-
-            console.log('result', result)
     
             cachedrating = {
                 result : result,

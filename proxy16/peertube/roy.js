@@ -138,14 +138,12 @@ var Roy = function (parent) {
 
     p.royrequest = true
 
-    console.log("REQUEST")
-
     var end = false
 
     return instance.request(method, data, p).catch((e) => {
 
       if(e)
-        console.log("E", instance.host)
+        console.log("E", instance.host, e)
 
         if (e == 'failed') return Promise.reject(e)
 

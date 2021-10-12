@@ -50,7 +50,7 @@ var Peertube = function (settings) {
   };
 
   self.timeout = function () {
-    return 3500;
+    return 5500;
   };
 
   self.statsInterval = function () {
@@ -123,15 +123,15 @@ var Peertube = function (settings) {
       var cacheparameters = _.clone(parsed);
 
       return new Promise((resolve, reject) => {
-        cache.wait(
-          cachekey,
-          cacheparameters,
-          function (waitstatus) {
-            resolve(waitstatus);
-          },
-          cachehash,
-        );
-      })
+          cache.wait(
+            cachekey,
+            cacheparameters,
+            function (waitstatus) {
+              resolve(waitstatus);
+            },
+            cachehash,
+          );
+        })
         .then((waitstatus) => {
           var cached = cache.get(cachekey, cacheparameters, cachehash);
 

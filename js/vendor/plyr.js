@@ -9376,6 +9376,10 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
                 } else {
                     _error();
                 }
+            },
+
+            error : function(){
+              _error();
             }
         });
 

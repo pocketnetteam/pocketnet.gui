@@ -60,6 +60,13 @@ var video = (function(){
 						if (clbk)
 							clbk();
 
+					},
+
+					error : function(){
+						topPreloader(100)
+	
+						if (clbk)
+							clbk();
 					}
 				});
 

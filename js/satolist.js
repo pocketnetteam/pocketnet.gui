@@ -12532,6 +12532,7 @@ Platform = function (app, listofnodes) {
                     self.sdk.videos.infoshares(shares).then(r => {
                         if(clbk) clbk()
                     }).catch(e => {
+                        console.error(e)
                         if(clbk) clbk()
                     })
                 },
@@ -17865,13 +17866,14 @@ Platform = function (app, listofnodes) {
                         return new Promise((resolve, reject) => {
 
                             var link = l.link.replace('/embed/', '/video/');
-
+                            
                             $.ajax({
                                 url : 'https://pocketnet.app:8888/bitchute',
                                 data : {
                                     url : hexEncode(link)
                                 },
                                 type : 'POST',
+                                timeout : 5000,
                                 success : function(response){
 
                                     if (response.data.video && response.data.video.as) {
@@ -17882,6 +17884,10 @@ Platform = function (app, listofnodes) {
                                         reject()
                                     }
 
+                                },
+                                error : function(){
+                                    console.log("FAILED")
+                                    reject()
                                 }
                             });
 

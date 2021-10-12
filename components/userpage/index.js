@@ -530,7 +530,7 @@ var userpage = (function(){
 				}
 
 
-				if(window.cordova){
+				if(window.cordova && !isios()){
 					menuDialog({
 
 						items: [

@@ -477,6 +477,13 @@ Application = function(p)
 					if (clbk)
 						clbk(true);
 
+				},
+
+				error : function(){
+					topPreloader(100)
+
+					if (clbk)
+						clbk(true);
 				}
 			});
 
@@ -513,6 +520,13 @@ Application = function(p)
 					if (clbk)
 						clbk(true);
 
+				},
+
+				error : function(){
+					topPreloader(100)
+
+					if (clbk)
+						clbk(true);
 				}
 			});
 		},
@@ -548,6 +562,13 @@ Application = function(p)
 					if (clbk)
 						clbk(true);
 
+				},
+
+				error : function(){
+					topPreloader(100)
+
+					if (clbk)
+						clbk(true);
 				}
 			});
 		}
