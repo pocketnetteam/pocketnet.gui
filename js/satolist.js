@@ -3217,11 +3217,14 @@ Platform = function (app, listofnodes) {
                 self.app.platform.ui.wallet.send({id : id}, function(){
 					
 				})
-            }
+            },
+
         },
 
         metmenu: function (_el, id, actions) {
-            var share = self.sdk.node.shares.storage.trx[id]
+            var share = self.sdk.node.shares.storage.trx[id];
+
+            var authorgroup = _el.closest('.authorgroup')
 
             if (!share) {
                 var temp = _.find(self.sdk.node.transactions.temp.share, function (s) {
@@ -3374,7 +3377,58 @@ Platform = function (app, listofnodes) {
                         })
 
                         el.find('.remove').on('click', function () {
-                            console.log('remove!!!', d.share.txid);
+                            self.app.mobile.vibration.small();
+                            
+                            if (!mme && _el.tooltipster)
+                                _el.tooltipster('hide')
+
+                            console.log('id!!', d.share.txid)
+
+
+
+                            dialog({
+                                class : 'zindex',
+                                html : self.app.localization.e('removePostDialog'),
+                                btn1text : self.app.localization.e('dyes'),
+                                btn2text : self.app.localization.e('dno'),
+                                success : function(){	
+
+                                   var deletePost = function (share, clbk){
+                                        var ct = share.delete()
+                        
+                                        self.app.platform.sdk.node.shares.delete(d.share.txid, ct, function(err, alias){
+                        
+                                            if(!err){
+                                                if (clbk)
+                                                    clbk(null, alias)
+                                            }
+                        
+                                            else
+                                            {
+                                                self.app.platform.errorHandler(err, true)
+                        
+                                                if (clbk)
+                                                    clbk(err, null)
+                                            }
+                        
+                                        })
+
+                                    }
+
+                                    deletePost(d.share, function(err){
+
+										if(!err)
+										{
+
+                                            authorgroup.addClass('removed')
+
+                                        }
+
+										
+                                    })
+
+                                }
+                            })
 
 
                         })
@@ -11696,6 +11750,47 @@ Platform = function (app, listofnodes) {
 
                 },
 
+
+                delete: function (txid, share, clbk) {
+
+                    var s = self.sdk.node.shares.storage;
+    
+                    share.txid = txid
+    
+                    self.sdk.node.transactions.create.commonFromUnspent(
+    
+                        share,
+    
+                        function (_alias, error) {
+    
+    
+                            if (!_alias) {
+    
+                                if (clbk) {
+                                    clbk(error, null)
+                                }
+    
+                            }
+    
+                            else {
+    
+                                s[txid] || (s[txid] = {})
+    
+                                var c = _.find(s[txid][share.parentid || '0'] || [], function (c) {
+                                    return c.id == share.id
+                                })
+    
+                                if (c) c.deleted = true
+    
+                                if (clbk)
+                                    clbk(null, _alias)
+                            }
+    
+                        }
+                    )
+    
+                },
+
                 tempLikes: function (shares) {
 
                     _.each(self.sdk.relayTransactions.withtemp('upvoteShare'), function (tempShare) {
@@ -14453,6 +14548,7 @@ Platform = function (app, listofnodes) {
                                             })
 
                                             self.app.platform.sdk.node.transactions.blockUnspents(bids)
+
 
                                             self.app.api.rpc('sendrawtransactionwithmessage', [hex, obj.export(), optstype]).then(d => {
 

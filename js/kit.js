@@ -1302,6 +1302,10 @@ Share = function(lang){
 
 	self.validation = function(){
 
+		if (self.delete){
+			return false;
+		}
+
 		if(!self.message.v && !self.caption.v && !self.repost.v){
 			return 'message'
 		}
@@ -1335,6 +1339,12 @@ Share = function(lang){
 	}
 
 	self.serialize = function(){
+
+		if (self.delete){
+
+			return encodeURIComponent(self.txid)
+		}
+		
 		return encodeURIComponent(self.url.v) 
 		
 		+ encodeURIComponent(self.caption.v) 
@@ -1365,6 +1375,13 @@ Share = function(lang){
 	}
 
 	self.export = function(extend){
+
+		if (self.delete){
+
+			return {
+				txidEdit: self.txid || "",
+			}
+		}
 
 		if(extend){
 			return {
@@ -1441,6 +1458,8 @@ Share = function(lang){
 
 	self.optstype = function(platform){
 
+		if (self.delete) return 'contentDelete'
+
 		if(self.itisvideo()) return 'video'
 
 		return self.type	
@@ -1449,6 +1468,14 @@ Share = function(lang){
 
 
 	self.typeop = function(platform){
+
+		console.log('self', self)
+
+
+		if (self.delete){
+
+			return 'contentDelete'
+		}
 
 		if (self.itisvideo()) return 'video'
 
@@ -1734,6 +1761,7 @@ UserInfo = function(){
 	}
 
 	self.serialize = function(){
+
 		return encodeURIComponent(self.name.v)
 		 + encodeURIComponent(self.site.v)
 		 + self.language.v
@@ -1964,6 +1992,8 @@ pShare = function(){
 	self.lastComment = null;
 	self.reposted = 0;
 
+	self.deleted = false;
+
 	self.on = {}
 	self.off = function(e){
 		delete self.on[e]
@@ -2035,6 +2065,8 @@ pShare = function(){
 		self.images = v.i || v.images || [];
 		self.repost = v.r || v.repost || v.txidRepost || ''
 
+		if (v.deleted) self.deleted = true
+
 
 		if (v.txid)
 			self.txid = v.txid;
@@ -2088,6 +2120,7 @@ pShare = function(){
 		v.s = _.clone(self.settings)
 		v.l = self.language
 		v.p = self.poll
+		v.deleted = self.deleted
 
 		return v
 	}
@@ -2130,6 +2163,20 @@ pShare = function(){
 		if(!s.image) s.image = self.images[0]
 
 		return s
+	}
+
+	self.delete = function(){
+		var c = new Share();
+
+		c.id = self.id
+		c.parentid = self.parentid
+		c.answerid = self.answerid
+
+		c.delete = true
+		
+
+		return c
+
 	}
 
 	self.renders = {

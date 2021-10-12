@@ -584,6 +584,7 @@ ____loclib.e13128 = "Posts from people you follow will be shown here"
 ____loclib.registration = "Registration"
 ____loclib.editpost = "Edit Post"
 ____loclib.removepost = "Remove Post"
+____loclib.removePostDialog = "Do you really want to remove post?"
 ____loclib.opennewwindow = "Open Post in New Window"
 
 
