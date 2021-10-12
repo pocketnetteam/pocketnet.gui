@@ -1,7 +1,8 @@
 module.exports = {
-  responseSpeed: { calculator: (instance) => -instance.stats().k },
+  view: { calculator: (instance) => instance.availability() },
   uploadVideo: {
     ratings: [
+
       (serverData) => ({
         value: (serverData.performance || {}).waitTranscodingJobs || 0,
         name: 'Waiting Jobs',
@@ -12,6 +13,7 @@ module.exports = {
           return weight / (1 + Math.pow(value, 0.25));
         },
       }),
+
       (serverData) => ({
         value: (serverData.performance || {}).speedByResolution || {},
         name: 'Transcoding Speed',
@@ -27,7 +29,7 @@ module.exports = {
         },
       }),
       (serverData) => ({
-        value: serverData.totalLocalVideoFilesSize || 0,
+        value: (serverData.space || {}).totalLocalVideoFilesSize || 0,
         name: 'Occupied Space',
         weight: 0.2,
         calculate() {
@@ -41,7 +43,7 @@ module.exports = {
         },
       }),
       (serverData) => ({
-        value: serverData.totalDailyActiveUsers,
+        value: (serverData.stats || {}).totalDailyActiveUsers,
         name: 'Active Users',
         weight: 0.1,
         calculate() {
@@ -89,7 +91,7 @@ module.exports = {
         },
       }),
       (serverData) => ({
-        value: serverData.totalDailyActiveUsers,
+        value: (serverData.space || {}).totalDailyActiveUsers,
         name: 'Active Users',
         weight: 0.1,
         calculate() {

@@ -674,9 +674,6 @@ var Node = function(options, manager){
 
         },
 
-        
-        
-
         interval : function(){
             if(!statisticInterval){
 
@@ -685,11 +682,7 @@ var Node = function(options, manager){
 
                 statisticInterval = setInterval(function(){
 
-                    //self.statistic.clearOld()
-
                     if (
-                        
-                        /*self.events.length < 1 + checkEventsLength ||*/
                         
                         !lastinfoTime || f.date.addseconds(lastinfoTime, notactualevents / 1000) < new Date()){
 
@@ -706,19 +699,6 @@ var Node = function(options, manager){
                 clearInterval(statisticInterval)
                 statisticInterval = null
             }
-        },
-
-        clearOld : function(){
-
-            var timecheck = f.date.addseconds(new Date(), -notactualevents / 1000)
-
-            self.events = _.filter(self.events, function(e){
-
-                if(e.time < timecheck) return false
-
-                return true
-            })
-
         }
     }
 

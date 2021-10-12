@@ -2,238 +2,206 @@ const { performance } = require('perf_hooks');
 const axios = require('axios');
 var _ = require('underscore');
 var f = require('../functions');
+var Statistic = require('../lib/statistic');
+
 var instance = function (host, Roy) {
-  var self = this;
+	var self = this;
 
-  self.host = host;
+	self.host = host;
+	self.cantuploading = false
 
-  var inited = false;
-  var instanceIsActive = true;
-  var logs = [];
-  var lastStat = null;
-  var k = 1000;
+	var inited = false;
+	var statistic = new Statistic()
 
-  var performanceBenchmarks = [];
-  var spaceBenchmarks = [];
+	const FREE_SPACE_PERC = 0.05;
 
-  var videosinfo = {};
+	var lastStat = null;
+	
+	var k = 1000;
 
-  var methods = {
-    stats: '/api/v1/videos',
-    video: function ({ id }) {
-      return '/api/v1/videos/' + id;
-    },
-    performance: '/api/v1/server/stats',
-    diskSpace: '/api/v1/server/space',
-    channelVideos: ({ account }) => `/api/v1/accounts/${account}/videos`,
-  };
+	var info = []
+	var infointerval = null
+	var infotime = 240000
+	var maxinfoevents = 20
 
-  var statsRequest = function () {
-    lastStat = null;
+	var methods = {
+		stats: '/api/v1/videos',
+		video: function ({ id }) {
+			return '/api/v1/videos/' + id;
+		},
+		performance: '/api/v1/server/stats',
+		diskSpace: '/api/v1/server/space',
+		channelVideos: ({ account }) => `/api/v1/accounts/${account}/videos`,
+	};
 
-    if (logs.length > 300) {
-      logs.splice(0, 300);
-    }
+	var setinfointerval = function(){
+		if(!infointerval){
+			infointerval = setInterval(getinfo, infotime)
+		}
+	}
 
-    if (performanceBenchmarks.length > 300) {
-      performanceBenchmarks.splice(0, 300);
-    }
+	
+	var clearinfointerval = function(){
+		if (infointerval){
+			clearInterval(infointerval)
+		}
 
-    if (!inited) {
-      return Promise.resolve();
-    }
+		infointerval = null
+	}
 
-    return self
-      .request('stats')
-      .then((data) => {
-        data = data.data || {};
+	var getinfo = function () {
 
-        var difference = 0;
+		var result = {
+			date : new Date()
+		}
 
-        if (videosinfo.total) {
-          difference = data.total - videosinfo.total;
-        }
+		return self.request('performance', {}, {timeout : 12000}).then((data) => {
 
-        videosinfo = data;
-        videosinfo.difference = difference;
+			result.stats = data.data || {}
+			result.performance = result.stats.performance || {}
 
-        instanceIsActive = true;
+			return self.request('diskSpace',{}, {timeout : 12000})
 
-        return Promise.resolve();
-      })
-      .catch((e) => {
-        instanceIsActive = false;
-        return Promise.resolve();
-      })
-      .then(() => self.request('performance'))
-      .then((performance) =>
-        performance.data ? performanceBenchmarks.push(performance.data) : null,
-      )
-      .then(() => {
-        lastStat = null;
+		}).then((data) => {
 
-        return f.delay(Roy.parent.statsInterval());
-      })
-      .then(() => {
-        return statsRequest();
-      })
-      .catch(() => {
-        lastStat = null;
-        return statsRequest();
-      });
-  };
+			result.space = data.data || {}
 
-  var spaceRequest = () => {
-    if (spaceBenchmarks.length > 300) {
-      logs.splice(0, 300);
-    }
+			info.push(result)
 
-    if (!inited) {
-      return Promise.resolve();
-    }
+			info = f.lastelements(info, maxinfoevents, maxinfoevents / 10)
 
-    return self
-      .request('diskSpace')
-      .then((data) => spaceBenchmarks.push(data))
-      .then(() => f.delay(Roy.parent.statsInterval()))
-      .then(() => {
-        return spaceRequest();
-      })
-      .catch(() => Promise.resolve());
-  };
+			return Promise.resolve()
 
-  self.inited = function () {
-    return inited;
-  };
-
-  self.request = function (method, data, p = {}) {
-    var responseTime = performance.now();
-    var url = methods[method];
-
-    if (!url) return Promise.reject('url');
-
-    if (typeof url == 'function') url = url(data);
-
-    console.log('url', host, url)
-
-    //if(p.royrequest && host.indexOf('pocketnetpeertube5') > -1 ) return Promise.reject("undeifd")
-    return axios[p.type || 'get'](`http://${host}${url}`, {
-      timeout: p.timeout || Roy.parent.timeout() || 10000,
-    })
-      .then((result) => {
+		}).catch(e => {
 
 
-        var meta = {
-          url,
-          status: 200,
-          time: performance.now() - responseTime,
-          success: true,
-        };
+			return Promise.resolve()
 
-        logs.push(meta);
+		})
+	}
 
-        return Promise.resolve({
-          data: result.data || {},
-          meta,
-          host,
-        });
-      })
-      .catch((error) => {
-        logs.push({
-          url,
-          status: ((error || {}).response || {}).status || 500,
-          time: performance.now() - responseTime,
-          success: false,
-        });
+	self.info = function(){
 
-        return Promise.reject((error || {}).response || {});
-      });
-  };
+		var canuploading = false;
+		var v = null
 
-  self.stats = function () {
-    if (lastStat) return lastStat;
+		if (info.length) {
+			v = info[info.length - 1]
+			////
+			
+			var { free, size } = v.space;
+            var occupiedPerc = (size - free) / size;
 
-    var alltime = 0;
-    var c = 0;
+            if (occupiedPerc < FREE_SPACE_PERC) canuploading = false
 
-    var groupped = f.group(logs, function (l) {
-      if (l.success) {
-        alltime += l.time;
-        c++;
-      }
+		}
 
-      return l.success ? 's' : 'f';
-    });
+		return {
+			last : v,
+			canuploading : !self.cantuploading
+		}
+	}
 
-    var info = {
-      inited,
+	self.inited = function () {
+		return inited;
+	};
 
-      success: f.deep(groupped, 's.length') || 0,
-      failed: f.deep(groupped, 'f.length') || 0,
+	self.request = function (method, data, p = {}) {
+		var responseTime = performance.now();
+		var url = methods[method];
 
-      count: logs.length,
+		if (!url) return Promise.reject('url');
 
-      averageTime: c ? alltime / c : 0,
+		if (typeof url == 'function') url = url(data);
 
-      k: 0,
-      p: 0,
+		var timeout = p.timeout || Roy.parent.timeout() || 10000
 
-      total: videosinfo.total || 0,
-    };
+		return axios[p.type || 'get'](`http://${host}${url}`, { timeout }).then((result) => {
 
-    lastStat = info;
+			var meta = {
+				code : 200,
+				difference : performance.now() - responseTime,
+				method : method
+			}
+		
+			statistic.add(meta);
 
-    if (logs.length) {
-      info.k = (k * info.averageTime) / ((c / logs.length) * (info.total + 1));
-      info.p = (100 * c) / logs.length;
-    }
+			return Promise.resolve({
+				data: result.data || {},
+				meta,
+				host,
+			});
 
-    return info;
-  };
+		}).catch((error) => {
 
-  self.canuse = function () {
-    //previous method
-    // const s = self.stats();
+			/*if(method == 'video') console.log(error)*/
 
-    // const canUseInstance = inited && s.averageTime && s.k;
+			var meta = {
+				code : ((error || {}).response || {}).status || 500,
+				difference : performance.now() - responseTime,
+				method : method
+			}
 
-    const canUseInstance = inited && instanceIsActive;
+			if (meta.code == 500) statistic.penalty.set(0.9, 30000, 500)
+		
+			statistic.add(meta);
 
-    return canUseInstance;
-  };
+			return Promise.reject((error || {}).response || {});
 
-  self.init = function () {
-    inited = true;
+		});
+	};
 
-    statsRequest().catch(() => {});
-    spaceRequest().catch(() => {});
-  };
+	self.availability = function(){
+		return statistic.get.availability()
+	}
 
-  self.export = function () {
-    return {
-      host,
-    };
-  };
+	self.stats = function () {
 
-  self.destroy = function () {
-    inited = false;
-  };
+		return {
+			events : statistic.get.events(),
+			slice : statistic.get.slice(),
+			penalty : statistic.penalty.get(),
+			info : self.info(),
+			availability : statistic.get.availability()
+		} 
 
-  self.performance = () => ({
-    data: performanceBenchmarks.length
-      ? performanceBenchmarks[performanceBenchmarks.length - 1]
-      : null,
-    host: self.host,
-  });
+		
+	};
 
-  self.diskSpace = () => ({
-    data: spaceBenchmarks.length
-      ? spaceBenchmarks[spaceBenchmarks.length - 1]
-      : null,
-    host: self.host,
-  });
+	self.canuse = function () {
+		return inited
+	};
 
-  return self;
+	self.init = function () {
+
+		inited = true;
+
+		getinfo()
+
+		setinfointerval()
+
+		statistic.init()
+
+	};
+
+	self.export = function () {
+		return {
+			host,
+		};
+	};
+
+	self.destroy = function () {
+		inited = false;
+
+		clearinfointerval()
+
+		info = []
+
+		statistic.destroy()
+	};
+
+
+	return self;
 };
 
 module.exports = instance;

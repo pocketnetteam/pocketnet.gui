@@ -3,19 +3,17 @@ class PerformanceMetric {
 
   calculate(instance) {
     const { _ratings } = this;
-    const performance = instance.performance();
 
-    if (!performance) return -10;
+    const stats = ((instance.stats()).info || {}).last || {};
 
-    const serverData = performance.data;
-
-    if (!serverData.performance) return -10;
-
-    const calculatedRatings = _ratings.map((rating) => rating(serverData));
+    const calculatedRatings = _ratings.map((rating) => rating(stats));
 
     return calculatedRatings.reduce((accumulator, metric) => {
+
       const currentRating = metric.calculate() || 0;
+
       return accumulator + currentRating;
+
     }, 0);
   }
 

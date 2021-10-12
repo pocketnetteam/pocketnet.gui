@@ -9,7 +9,7 @@ var system16 = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, api = null, proxy = null, chain = null, info = null, stats = [], system = null, bots = [], peertubePerformance = {};
+		var el, api = null, proxy = null, chain = null, info = null, stats = [], system = null, bots = [];
 
 		var graphs = {}
 
@@ -999,8 +999,148 @@ var system16 = (function(){
 					series : [
 						{
 							name : "Median Response Time",
-							path : "stats.averageTime",
+							path : "stats.events.time",
 							id : 'sa'
+						},
+
+						{
+							name : "Median Response Time / Short",
+							path : "stats.slice.time",
+							id : 'sa'
+						}
+					]
+				},
+
+				performance : {
+					caption : "Performance",
+
+					series : [
+						{
+							name : "Active Streams",
+							path : "stats.info.last.performance.activeLivestreams",
+							id : 'sa'
+						},
+
+						{
+							name : "Importing",
+							path : "stats.info.last.performance.failImportsCount",
+							id : 'sa'
+						}
+					]
+				},
+
+				redundancysu: {
+					caption : "Redundancy/Size/Used",
+
+					series : [
+						{
+							name : "Total Size",
+							path : "stats.info.last.stats.videosRedundancy.0.totalSize",
+							id : 'sac'
+						},
+
+						{
+							name : "Total Used",
+							path : "stats.info.last.stats.videosRedundancy.0.totalUsed",
+							id : 'sat'
+						}
+					]
+				},
+
+				redundancy: {
+					caption : "Redundancy/Counts",
+
+					series : [
+						{
+							name : "Total Video Files",
+							path : "stats.info.last.stats.videosRedundancy.0.totalVideoFiles",
+							id : 'sac'
+						},
+
+						{
+							name : "Total Videos",
+							path : "stats.info.last.stats.videosRedundancy.0.totalVideos",
+							id : 'sat'
+						}
+					]
+				},
+
+
+				transcoding : {
+					caption : "Transcoding",
+
+					series : [
+						{
+							name : "Fail Imports Count",
+							path : "stats.info.last.performance.failImportsCount",
+							id : 'sac'
+						},
+
+						{
+							name : "Wait Transcoding Jobs",
+							path : "stats.info.last.performance.waitTranscodingJobs",
+							id : 'sat'
+						},
+
+						{
+							name : "Failed Transcoding Jobs",
+							path : "stats.info.last.performance.failTranscodingJobs",
+							id : 'saf'
+						},
+						{
+							name : "Wait Imports Count",
+							path : "stats.info.last.performance.waitImportsCount",
+							id : 'saw'
+						}
+					]
+				},
+
+				space : {
+					caption : "Space",
+
+					series : [
+						{
+							type: 'areaspline',
+							name : "Free",
+							path : "stats.info.last.space.free",
+							id : 'saf'
+						},
+
+						{
+							name : "Size",
+							path : "stats.info.last.space.size",
+							id : 'sas'
+						}
+					]
+				},
+
+				rating : {
+					caption : "Rating",
+
+					series : [
+						{
+							name : "Rating",
+							path : "stats.availability",
+							id : 'sa'
+						}
+					]
+				},
+
+				rate : {
+					caption : "Rate",
+
+					series : [
+						{
+							name : "Rate 1",
+							path : "stats.events.rate",
+							type : 'spline',
+							id : 'sc'
+						},
+						{
+							name : "Rate 2",
+							path : "stats.slice.rate",
+							type: 'areaspline',
+							id : 'ss'
 						}
 					]
 				},
@@ -1011,20 +1151,39 @@ var system16 = (function(){
 					series : [
 						{
 							name : "Count of requests",
-							path : "stats.count",
+							path : "stats.events.count",
 							type : 'spline',
 							id : 'sc'
 						},
 						{
 							name : "Success Count",
-							path : "stats.success",
+							path : "stats.events.success",
 							type: 'areaspline',
 							id : 'ss'
 						}
 					]
 				},
 
-				total : {
+				allcountShort : {
+					caption : "Count of requests/ Short",
+
+					series : [
+						{
+							name : "Count of requests",
+							path : "stats.slice.count",
+							type : 'spline',
+							id : 'sc'
+						},
+						{
+							name : "Success Count",
+							path : "stats.slice.success",
+							type: 'areaspline',
+							id : 'ss'
+						}
+					]
+				},
+
+				/*total : {
 					caption : "Total count of videos",
 
 					series : [
@@ -1035,7 +1194,7 @@ var system16 = (function(){
 							id : 'sc'
 						}
 					]
-				},
+				},*/
 			},
 
 			server : {
@@ -1484,13 +1643,13 @@ var system16 = (function(){
 				var i = 0
 
 				if (info.peertube){
-					_.each(info.peertube, function(instance, key){
+					_.each(info.peertube.instances, function(instance, key){
 
 						_.each(meta.series, function(smeta){
 							series[smeta.id + key] = {
 	
 								name : smeta.name + ": " + key,
-								path : "peertube.'" + key + "'." + smeta.path,
+								path : "peertube.instances.'" + key + "'." + smeta.path,
 								color : colors[ i % colors.length ],
 								type : smeta.type
 		
@@ -3108,7 +3267,7 @@ var system16 = (function(){
 						admin : actions.admin(),
 						fixedinstance : null,
 						currentinstance : null,
-						peertubePerformance,
+						//peertubePerformance,
 					},
 
 					el : elc.find('.peertubeWrapper .instances')
@@ -3887,6 +4046,8 @@ var system16 = (function(){
 
 					info = r.info
 
+					console.log("info", info)
+
 					initsettings()
 					
 					stats = [{
@@ -3923,11 +4084,11 @@ var system16 = (function(){
 
 					if (actions.admin()) {
 
-					  return proxy
+					  return proxy.system.request('get.settings')
 
-						.fetchauth('peertube/stats')
+						/*.fetchauth('peertube/stats')
 						.then((data) => (peertubePerformance = { ...data }))
-						.then(() => proxy.system.request('get.settings'))
+						.then(() => proxy.system.request('get.settings'))*/
 						.then((r) => {
 						  system = r;
 		  

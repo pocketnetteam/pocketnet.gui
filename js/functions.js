@@ -2671,6 +2671,7 @@
 	}
 
 	lastelements = function(arr, length, eq){
+		
 		if(!length) length = 100
 		if(!eq) eq = 0
 	
