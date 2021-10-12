@@ -3224,7 +3224,7 @@ Platform = function (app, listofnodes) {
         metmenu: function (_el, id, actions) {
             var share = self.sdk.node.shares.storage.trx[id];
 
-            var authorgroup = _el.closest('.authorgroup')
+            var authorgroup = _el.closest('.sharecnt')
 
             if (!share) {
                 var temp = _.find(self.sdk.node.transactions.temp.share, function (s) {
@@ -3382,9 +3382,6 @@ Platform = function (app, listofnodes) {
                             if (!mme && _el.tooltipster)
                                 _el.tooltipster('hide')
 
-                            console.log('id!!', d.share.txid)
-
-
 
                             dialog({
                                 class : 'zindex',
@@ -3393,8 +3390,13 @@ Platform = function (app, listofnodes) {
                                 btn2text : self.app.localization.e('dno'),
                                 success : function(){	
 
-                                   var deletePost = function (share, clbk){
-                                        var ct = share.delete()
+                                   var removePost = function (share, clbk){
+
+                                        console.log('share', share);
+                                        share.deleted = true;
+                                        var ct = new Remove();
+                                        ct.txidEdit = d.share.txid;
+
                         
                                         self.app.platform.sdk.node.shares.delete(d.share.txid, ct, function(err, alias){
                         
@@ -3415,7 +3417,7 @@ Platform = function (app, listofnodes) {
 
                                     }
 
-                                    deletePost(d.share, function(err){
+                                    removePost(d.share, function(err, result){
 
 										if(!err)
 										{
@@ -3423,6 +3425,8 @@ Platform = function (app, listofnodes) {
                                             authorgroup.addClass('removed')
 
                                         }
+
+                                        console.log('result!!!!', result)
 
 										
                                     })
@@ -11791,6 +11795,34 @@ Platform = function (app, listofnodes) {
     
                 },
 
+                tempContentDelete: function (shares) {
+
+
+                    _.each(self.sdk.relayTransactions.withtemp('contentDelete'), function (tempShare) {
+
+                        var txid = tempShare.txidEdit;
+
+                        console.log('tempShare', tempShare)
+
+                        _.find(shares, function (share) {
+
+                            if (share.txid == txid) {
+
+                                share.deleted = true;
+
+                                return true
+                            }
+
+
+                        })
+
+                    })
+
+
+
+
+                },
+
                 tempLikes: function (shares) {
 
                     _.each(self.sdk.relayTransactions.withtemp('upvoteShare'), function (tempShare) {
@@ -12258,6 +12290,8 @@ Platform = function (app, listofnodes) {
                         return s
 
                     })
+
+                    self.sdk.node.shares.tempContentDelete(shares)
 
                     self.sdk.node.shares.tempLikes(shares)
 
@@ -13120,6 +13154,7 @@ Platform = function (app, listofnodes) {
                 },
 
                 saveTemp: function (clbk) {
+
                     var a = self.sdk.address.pnet();
 
                     if (a) {
@@ -14795,6 +14830,10 @@ Platform = function (app, listofnodes) {
 
                     userInfo: function (inputs, userInfo, clbk, p) {
                         this.common(inputs, userInfo, TXFEE, clbk, p)
+                    },
+
+                    contentDelete: function (inputs, remove, clbk, p) {
+                        this.common(inputs, remove, TXFEE, clbk, p)
                     },
 
                     upvoteShare: function (inputs, upvoteShare, clbk, p) {

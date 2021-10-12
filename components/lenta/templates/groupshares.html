@@ -13,6 +13,8 @@ shares = _.filter(shares, function(s){
 	}
 })
 
+console.log('shares', shares)
+
 var groupshares = group(shares, function(s){
 	return s.address
 })

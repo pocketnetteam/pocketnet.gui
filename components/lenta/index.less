@@ -130,6 +130,26 @@
 			&.blocking{
 				display: none;
 			}
+
+			.sharecnt{
+
+				.removeDescription{
+					display: none;
+					padding-bottom: @rhythm * 3;
+					color: #b2abac;
+				}
+					
+				&.removed{
+					.cntscontent, .commentsWrapperHb, .metapanel{
+						display: none;
+					}
+
+					.removeDescription{
+						display: block;
+					}
+				}
+
+			}
 		}
 
 		.statswrapperExtended{
@@ -1601,6 +1621,7 @@
 					&::-webkit-scrollbar{
 						width: 0!important
 					}
+
 				}
 				
 				
