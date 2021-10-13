@@ -192,7 +192,7 @@ var Cache = function(p){
                 storage[key][k].ontime = ontime
             }
 
-            if (typeof ckeys[key].block != undefined){
+            if (block && typeof ckeys[key].block != undefined){
                 ckeys[key].block = block
             }
             
