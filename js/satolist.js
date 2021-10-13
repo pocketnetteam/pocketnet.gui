@@ -6150,8 +6150,6 @@ Platform = function (app, listofnodes) {
 
                         var u = new pUserInfo();
 
-                        debugger;
-
                         u._import(_.toArray(ui)[0])
 
                         storage.me = u
