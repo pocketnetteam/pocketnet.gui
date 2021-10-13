@@ -14,6 +14,10 @@ var videoCabinet = (function () {
     var primary = deep(p, 'history');
 
     var el;
+
+    var wnd;
+    var wndObj;
+
     var transcodingIntervals = {};
     var ed = {};
     let tagElement;
@@ -197,7 +201,9 @@ var videoCabinet = (function () {
                   }) <i class="fas fa-star"></i>`
                 : `&mdash;`;
 
-            const renderingUsers = `${result.countLikers || 0}  <i class="fas fa-users"></i>`;
+            const renderingUsers = `${
+              result.countLikers || 0
+            }  <i class="fas fa-users"></i>`;
 
             renders.bonusProgram(
               {
@@ -1053,7 +1059,9 @@ var videoCabinet = (function () {
     return {
       primary: primary,
 
-      getdata: function (clbk) {
+      getdata: function (clbk, p) {
+        ed = p.settings.essenseData;
+
         //check if user has access to videos
         self.app.peertubeHandler.api.user
           .me()
@@ -1065,9 +1073,11 @@ var videoCabinet = (function () {
               selectedDirection:
                 localStorage.getItem('videoCabinetSortDirection') || '-',
               hasAccess: true,
+              inLentaWindow: ed.inLentaWindow,
             };
 
             ed = {
+              ...ed,
               ...data,
               sort: `${data.selectedDirection}${data.selectedType}`,
               hasAccess: true,
@@ -1076,8 +1086,14 @@ var videoCabinet = (function () {
             clbk(data);
           })
           .catch((err) => {
-            ed = { hasAccess: false };
-            clbk({ hasAccess: false });
+            ed = {
+              ...ed,
+              hasAccess: false,
+            };
+            clbk({
+              hasAccess: false,
+              inLentaWindow: ed.inLentaWindow,
+            });
           });
       },
 
@@ -1160,6 +1176,33 @@ var videoCabinet = (function () {
           .catch(() => renders.quota());
 
         p.clbk(null, p);
+      },
+
+      wnd: {
+        header: '',
+        close: function () {
+          if (ed.closeClbk) {
+            ed.closeClbk();
+          }
+        },
+        postRender: function (_wnd, _wndObj, clbk) {
+          wndObj = _wndObj;
+          wnd = _wnd;
+
+          if (clbk) {
+            clbk();
+          }
+        },
+        offScroll: true,
+        noInnerScroll: true,
+        class: 'uploadpeertube normalizedmobile',
+        allowHide: true,
+        noCloseButton: true,
+        noButtons: true,
+
+        swipeClose: true,
+        swipeCloseDir: 'right',
+        swipeMintrueshold: 30,
       },
     };
   };

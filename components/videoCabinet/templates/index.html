@@ -11,6 +11,8 @@
     </div>
   </div>
   <% if (hasAccess) { %>
+
+  <% if (!inLentaWindow) { %>
   <div class="work">
     <div class="statsdiv">
       <div class="reputation">
@@ -37,6 +39,7 @@
       </div>
     </div>
   </div>
+  <% } %>
   <div class="videoContainer">
     <div class="work">
       <div class="videoControls">

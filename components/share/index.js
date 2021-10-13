@@ -1690,7 +1690,7 @@ var share = (function(){
 			streamPage(p = {}) {
 
 				var typeDictionary = {
-					addVideo: 'uploadpeertube',
+					addVideo: 'videoCabinet',
 					addStream: 'streampeertube',
 				};
 
@@ -1721,6 +1721,7 @@ var share = (function(){
 						storage : p.storage,
 						value : p.value,
 						currentLink : currentShare.url ? currentShare.url.v : '',
+						inLentaWindow : true,
 						actions : {
 							added : function(link, name){
 								var type = 'url';
@@ -1767,8 +1768,6 @@ var share = (function(){
 						external = element;
 
 						videoUploadData = element.essenseData;
-
-						console.log('external', element)
 					}
 				});
 
