@@ -130,26 +130,26 @@
 			&.blocking{
 				display: none;
 			}
+		}
 
-			.sharecnt{
+		.sharecnt{
+
+			.removeDescription{
+				display: none;
+				padding-bottom: @rhythm * 3;
+				color: #b2abac;
+			}
+				
+			&.removed{
+				.cntscontent, .commentsWrapperHb, .metapanel{
+					display: none;
+				}
 
 				.removeDescription{
-					display: none;
-					padding-bottom: @rhythm * 3;
-					color: #b2abac;
+					display: block;
 				}
-					
-				&.removed{
-					.cntscontent, .commentsWrapperHb, .metapanel{
-						display: none;
-					}
-
-					.removeDescription{
-						display: block;
-					}
-				}
-
 			}
+
 		}
 
 		.statswrapperExtended{

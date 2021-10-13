@@ -108,17 +108,17 @@
 #lenta .shares .authorgroup.blocking {
   display: none;
 }
-#lenta .shares .authorgroup .sharecnt .removeDescription {
+#lenta .shares .sharecnt .removeDescription {
   display: none;
   padding-bottom: 1.5em;
   color: #b2abac;
 }
-#lenta .shares .authorgroup .sharecnt.removed .cntscontent,
-#lenta .shares .authorgroup .sharecnt.removed .commentsWrapperHb,
-#lenta .shares .authorgroup .sharecnt.removed .metapanel {
+#lenta .shares .sharecnt.removed .cntscontent,
+#lenta .shares .sharecnt.removed .commentsWrapperHb,
+#lenta .shares .sharecnt.removed .metapanel {
   display: none;
 }
-#lenta .shares .authorgroup .sharecnt.removed .removeDescription {
+#lenta .shares .sharecnt.removed .removeDescription {
   display: block;
 }
 #lenta .shares .statswrapperExtended {
