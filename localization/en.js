@@ -1217,5 +1217,5 @@ ____loclib.logoutaccount = "Sign out of your account";
 ____loclib.closeapplication = "Exit the application";
 
 
-____loclib.attachVideoLenta = "Attach";
-____loclib.attachVideoLentaShort = "Attach video to post";
+____loclib.attachVideoLenta = "Attach video to post";
+____loclib.attachVideoLentaShort = "Attach";
