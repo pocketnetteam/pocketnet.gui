@@ -176,7 +176,7 @@ var Roy = function (parent) {
 			var instance = list[index];
 		}
 
-		if (!instance) return Promise.reject('failed');
+		if (!instance) return Promise.reject(lasterror || 'failed');
 
 		p.royrequest = true
 
@@ -184,7 +184,7 @@ var Roy = function (parent) {
 
 		return instance.request(method, data, p).catch((e) => {
 			if (e)
-				if (e == 'failed') return Promise.reject(lasterror || e)
+				if (e == 'failed') return Promise.reject(e)
 
 			return self.request(method, data, p, list, index + 1, e);
 

@@ -161,6 +161,9 @@ var instance = function (host, Roy) {
 
 		}).catch((error) => {
 
+			/*if((((error || {}).response || {}).status || 500) == 500)
+				console.log("E", ((error || {}).response || {}).status || 500, `http://${host}${url}`)*/
+
 
 			var meta = {
 				code : ((error || {}).response || {}).status || 500,

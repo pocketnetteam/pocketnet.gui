@@ -113,7 +113,6 @@ var Nodemanager = function(p){
 
             self.remap()
         }
-
         
     }
 
@@ -143,7 +142,6 @@ var Nodemanager = function(p){
             }
             
         })
-
 
         forgetIfNotUsing()
 
@@ -519,12 +517,15 @@ var Nodemanager = function(p){
     self.info = function(compact){
 
         var chaininfo = self.currentChainCommon2()
+        var _ch = null
 
-        var _ch = {
-            commonHeight : chaininfo.commonHeight,
-            maxHeight : chaininfo.maxHeight,
-            commonBlockHash : chaininfo.commonBlockHash,
-            lasttrustblocks : chaininfo.lasttrustblocks,
+        if(chaininfo){
+            var _ch = {
+                commonHeight : chaininfo.commonHeight,
+                maxHeight : chaininfo.maxHeight,
+                commonBlockHash : chaininfo.commonBlockHash,
+                lasttrustblocks : chaininfo.lasttrustblocks,
+            }
         }
 
         var stats = {
@@ -564,7 +565,9 @@ var Nodemanager = function(p){
 
                 if (self.proxy.test) bchain = 'test'
 
+
                 db.find({bchain}).exec(function (err, docs) {
+
 
                     self.nodes = []
 
@@ -583,6 +586,7 @@ var Nodemanager = function(p){
                     docs = _.filter(_.shuffle(docs), function(d, i){
                         if(i < 5) return true
                     })
+
 
                     //// remove
                     //docs = []
@@ -765,6 +769,7 @@ var Nodemanager = function(p){
                     connected.push(node)
 
                 }).catch(e => {
+
                     return Promise.reject({
                         e : e,
                         node : node
