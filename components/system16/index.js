@@ -1013,7 +1013,7 @@ var system16 = (function(){
 
 				performance : {
 					caption : "Performance",
-					byserver : true,
+					many : true,
 					series : [
 						{
 							name : "Active Streams",
@@ -1031,7 +1031,7 @@ var system16 = (function(){
 
 				redundancysu: {
 					caption : "Redundancy/Size/Used",
-					byserver : true,
+					many : true,
 					series : [
 						{
 							name : "Total Size",
@@ -1049,7 +1049,7 @@ var system16 = (function(){
 
 				redundancy: {
 					caption : "Redundancy/Counts",
-					byserver : true,
+					many : true,
 					series : [
 						{
 							name : "Total Video Files",
@@ -1068,7 +1068,7 @@ var system16 = (function(){
 
 				transcoding : {
 					caption : "Transcoding",
-					byserver : true,
+					many : true,
 					series : [
 						{
 							name : "Fail Imports Count",
@@ -1097,7 +1097,7 @@ var system16 = (function(){
 
 				space : {
 					caption : "Space",
-					byserver : true,
+					many : true,
 					series : [
 						{
 							type: 'areaspline',
@@ -1147,7 +1147,7 @@ var system16 = (function(){
 				
 				allcount : {
 					caption : "Count of requests",
-					byserver : true,
+					many : true,
 					series : [
 						{
 							name : "Count of requests",
@@ -1638,24 +1638,26 @@ var system16 = (function(){
 			peertube : function(data){
 
 				var subtype = settings.charts.peertube.type
-				var selectedinstance = settings.charts.peertube.instance
+				var selectedinstance = settings.charts.peertube.selected
 
 				var meta = cpsub.peertube[subtype]
 
 				var lmeta = {
 					type : 'spline',
 					xtype : 'datetime',
-					caption : meta.caption
+					caption : meta.caption,
 				}
-
 
 				var series = {}
 				var i = 0
+				var canselect = []
 
 				if (info.peertube){
 					_.each(info.peertube.instances, function(instance, key){
 
-						if (meta.byserver && selectedinstance && selectedinstance != key){
+						canselect.push(key)
+
+						if (meta.many && selectedinstance && selectedinstance != key){
 							return
 						}
 
@@ -1679,7 +1681,10 @@ var system16 = (function(){
 
 				return {
 					meta : lmeta,
-					series : series
+					series : series,
+					selected : selectedinstance,
+					many : meta.many,
+					canselect : canselect
 				}
 			},
 			
@@ -1779,11 +1784,7 @@ var system16 = (function(){
 		var chart = {
 			prepare : function(type, data, el){
 
-				
-
 				var t = helpers.type(type, data)
-
-				console.log("CHARTPREPARE", type, t)
 
 				var chart = helpers.chart(t)
 				var series = helpers.series(t, data);
@@ -1806,12 +1807,11 @@ var system16 = (function(){
 
 				var t = helpers.type(type, data)
 
-				console.log('t.prepareOptions', t.meta)
-
 				graph.render({
 					height : 250,
 					maxPointsCount : 50,
-					prepareOptions : t.meta ? t.meta.prepareOptions : null
+					prepareOptions : t.meta ? t.meta.prepareOptions : null,
+					meta : t
 				}, function(){
 
 					if (settings.charts[type].showed){
@@ -1838,6 +1838,31 @@ var system16 = (function(){
 								action : function (clbk) {
 
 									settings.charts[type].type = key
+
+									chart.make(type, stats)
+
+									clbk()
+	
+								}
+							})
+						})
+
+						menuDialog({
+							items: items
+						})
+
+					})
+
+					_el.find('.subcaptiongraphselect').on('click', function(){
+
+						var items = []
+
+						_.each(t.meta.canselect, function(v){
+							items.push({
+								text : v,
+								action : function (clbk) {
+
+									settings.charts[type].selected = v
 
 									chart.make(type, stats)
 

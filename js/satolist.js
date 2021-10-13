@@ -1754,7 +1754,8 @@ Platform = function (app, listofnodes) {
                             data: {
                                 me: graph,
                                 id: graph.id,
-                                options: graph.options
+                                options: graph.options,
+                                ini : p
                             }
                         }, function (_p) {
 
