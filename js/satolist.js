@@ -18807,7 +18807,6 @@ Platform = function (app, listofnodes) {
                 var src = deep(author, 'image');
                 var name = deep(author, 'name');
                 var letter = name ? name[0] : '';
-                var dev = deep(author, 'dev');
 
                 var link = '<a href="' + encodeURI(clearStringXss(author.name.toLowerCase())) + '">'
                 var clink = "</a>"
