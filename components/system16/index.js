@@ -997,11 +997,11 @@ var system16 = (function(){
 					caption : "Instance Median Response Time",
 
 					series : [
-						{
+						/*{
 							name : "Median Response Time",
 							path : "stats.events.time",
 							id : 'sa'
-						},
+						},*/
 
 						{
 							name : "Median Response Time / Short",
@@ -1013,7 +1013,7 @@ var system16 = (function(){
 
 				performance : {
 					caption : "Performance",
-
+					byserver : true,
 					series : [
 						{
 							name : "Active Streams",
@@ -1031,7 +1031,7 @@ var system16 = (function(){
 
 				redundancysu: {
 					caption : "Redundancy/Size/Used",
-
+					byserver : true,
 					series : [
 						{
 							name : "Total Size",
@@ -1049,7 +1049,7 @@ var system16 = (function(){
 
 				redundancy: {
 					caption : "Redundancy/Counts",
-
+					byserver : true,
 					series : [
 						{
 							name : "Total Video Files",
@@ -1068,7 +1068,7 @@ var system16 = (function(){
 
 				transcoding : {
 					caption : "Transcoding",
-
+					byserver : true,
 					series : [
 						{
 							name : "Fail Imports Count",
@@ -1097,7 +1097,7 @@ var system16 = (function(){
 
 				space : {
 					caption : "Space",
-
+					byserver : true,
 					series : [
 						{
 							type: 'areaspline',
@@ -1128,26 +1128,26 @@ var system16 = (function(){
 
 				rate : {
 					caption : "Rate",
-
+					
 					series : [
 						{
-							name : "Rate 1",
+							name : "Rate",
 							path : "stats.events.rate",
 							type : 'spline',
 							id : 'sc'
-						},
-						{
-							name : "Rate 2",
+						}
+						/*{
+							name : "Rate",
 							path : "stats.slice.rate",
 							type: 'areaspline',
 							id : 'ss'
-						}
+						}*/
 					]
 				},
 				
 				allcount : {
 					caption : "Count of requests",
-
+					byserver : true,
 					series : [
 						{
 							name : "Count of requests",
@@ -1158,6 +1158,12 @@ var system16 = (function(){
 						{
 							name : "Success Count",
 							path : "stats.events.success",
+							type: 'areaspline',
+							id : 'ss'
+						},
+						{
+							name : "Failed Count",
+							path : "stats.events.failed",
 							type: 'areaspline',
 							id : 'ss'
 						}
@@ -1177,6 +1183,12 @@ var system16 = (function(){
 						{
 							name : "Success Count",
 							path : "stats.slice.success",
+							type: 'areaspline',
+							id : 'ss'
+						},
+						{
+							name : "Failed Count",
+							path : "stats.slice.failed",
 							type: 'areaspline',
 							id : 'ss'
 						}
@@ -1581,9 +1593,6 @@ var system16 = (function(){
 				var series = {}
 				var i = 0
 
-				
-
-
 				if (info.nodeManager){
 
 					//// get 5 of most using nodes
@@ -1629,6 +1638,7 @@ var system16 = (function(){
 			peertube : function(data){
 
 				var subtype = settings.charts.peertube.type
+				var selectedinstance = settings.charts.peertube.instance
 
 				var meta = cpsub.peertube[subtype]
 
@@ -1644,6 +1654,10 @@ var system16 = (function(){
 
 				if (info.peertube){
 					_.each(info.peertube.instances, function(instance, key){
+
+						if (meta.byserver && selectedinstance && selectedinstance != key){
+							return
+						}
 
 						_.each(meta.series, function(smeta){
 							series[smeta.id + key] = {

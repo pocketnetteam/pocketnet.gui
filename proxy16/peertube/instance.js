@@ -143,6 +143,8 @@ var instance = function (host, Roy) {
 
 		var timeout = p.timeout || Roy.parent.timeout() || 10000
 
+		//console.log('request', `http://${host}${url}`)
+
 		return axios[p.type || 'get'](`http://${host}${url}`, { timeout }).then((result) => {
 
 			var meta = {
