@@ -140,20 +140,20 @@ var Statistic = function(settings){
             
         })
 
-        if (common.count){ 
+        if (common.count && objs.length){ 
             
             _.each(objs, function(obj){
                 
                 if(obj){
                     common.time += (obj.time || 0) * (obj.count || 0)
-                    common.rate += (obj.rate || 0) * (obj.count || 0)
-                    common.percent += (obj.percent || 0) * (obj.count || 0)
+                    common.rate += (obj.rate || 0)
+                    common.percent += (obj.percent || 0)* (obj.count || 0)
                 }
             })    
            
 
             common.time = common.time / common.count
-            common.rate = common.rate / common.count
+            common.rate = common.rate / objs.length
             common.percent = common.percent / common.count
 
         }

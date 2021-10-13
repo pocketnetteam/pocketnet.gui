@@ -161,7 +161,7 @@ var Roy = function (parent) {
 	};
 
 
-	self.request = function (method, data = {}, p = {}, list, index, lasterror) {
+	/*self.request = function (method, data = {}, p = {}, list, index, lasterror) {
 
 		if (!index) index = 0;
 
@@ -181,6 +181,103 @@ var Roy = function (parent) {
 		p.royrequest = true
 
 		var end = false
+
+		return instance.request(method, data, p).catch((e) => {
+			if (e)
+				if (e == 'failed') return Promise.reject(e)
+
+			return self.request(method, data, p, list, index + 1, e);
+
+		}).then((r) => {
+
+			if (r.data && !r.data.from) {
+				r.data.from = instance.host;
+			}
+
+			return Promise.resolve(r);
+
+		}).catch((e) => {
+
+			return Promise.reject(e)
+		});
+	};*/
+
+	self.request = function (method, data = {}, p = {}, list) {
+
+		p.royrequest = true
+
+		if (!index) index = 0;
+
+		if(!list){
+
+			var list = []
+
+			if (p.host) {
+
+				var instance = self.findInstanceByName(p.host);
+
+				if (instance) list = [instance]
+
+			}
+			else{
+				list = self.bestlist();
+			}
+		}
+
+		if(!list.length) return Promise.reject('failed');
+
+
+		var index = 0
+		var error = null
+
+		var request = function(instance){
+
+			return instance.request(method, data, p).then((r) => {
+				if (r.data) {
+					r.data.from = instance.host;
+				}
+				return Promise.resolve(r);
+			}).catch(e => {
+
+				//console.log('e.code', e.status)
+
+				if(e && e.status){
+					if(e.status != 500){
+						error = e
+					}
+				}
+
+				return Promise.reject(e)
+			})
+		}
+
+		var recrequest = function(){
+
+			//console.log('index', index)
+
+			var instance = list[index]
+
+			if(!instance) {
+
+				//console.log("ER", (error || {}).status || 'failed')
+
+
+				return Promise.reject(error || 'failed');
+			}
+
+			//console.log('instance', instance.host)
+
+			return request(instance).catch(e => {
+
+				
+
+				index++
+				return recrequest()
+
+			})
+		}
+		
+		return recrequest()
 
 		return instance.request(method, data, p).catch((e) => {
 			if (e)

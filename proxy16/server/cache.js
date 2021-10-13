@@ -7,6 +7,9 @@ var Cache = function(p){
     var waiting = {}
     var smart = {}
 
+    var softclearInterval = null
+    var softclearTime = 10000
+
 
     var ckeys = {}
     
@@ -371,6 +374,53 @@ var Cache = function(p){
     
     self.clear = function(){
         storage = {}
+    }
+
+    var softclear = function(){
+
+        var date = new Date()
+
+        _.each(storage, function(s, key){
+
+            var c = ckeys[key]
+
+            if(!c.time){
+                return
+            }
+
+            var removekeys = []
+
+            _.each(s, function(sd, lkey){
+
+                if(sd.time){
+
+                    var t = f.date.addseconds(sd.time, 2 * (sd.ontime || c.time))
+
+                    if (t < date){
+                        console.log(lkey)
+                        removekeys.push(lkey)
+                    }
+                    
+                }
+                
+            })
+
+            _.each(removekeys, function(key){
+                delete s[key]
+            })
+        })
+    }
+
+    self.init = function(){
+        if(!softclearInterval)
+            softclearInterval = setInterval(softclear, softclearTime)
+    }
+
+    self.destroy = function(){
+        if(softclearInterval){
+            clearInterval(softclearInterval)
+            softclearInterval = null
+        }
     }
 
     return self;

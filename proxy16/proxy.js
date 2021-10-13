@@ -838,7 +838,7 @@ var Proxy = function (settings, manage, test) {
 			var rpc = self.api.node.rpc.action
 			var videosapi = self.api.peertube.videos.action
 
-			console.log('gethierarchicalstrip')
+			//console.log('gethierarchicalstrip')
 
 			var users = []
 			var videos = []
@@ -847,7 +847,7 @@ var Proxy = function (settings, manage, test) {
 
 			return rpc({ method, parameters, options, U }).then(r => {
 
-				console.log('gethierarchicalstrip done')
+				//console.log('gethierarchicalstrip done')
 
 				var posts = r.data.contents || []
 
@@ -881,7 +881,7 @@ var Proxy = function (settings, manage, test) {
 					options, U
 				}).then(users => {
 
-					console.log("USERS LOADED")
+					//console.log("USERS LOADED")
 
 					result.data.users = users.data
 
@@ -893,7 +893,7 @@ var Proxy = function (settings, manage, test) {
 					fast : true
 				}).then(videos => {
 
-					console.log("VIDEOS LOADED")
+					//console.log("VIDEOS LOADED")
 
 					result.data.videos = videos.data
 
@@ -1173,7 +1173,7 @@ var Proxy = function (settings, manage, test) {
 							});
 						})
 						.catch((e) => {
-							console.log("e", e)
+							//console.log("e", e)
 							return Promise.reject(e);
 						});
 				},
@@ -1209,7 +1209,7 @@ var Proxy = function (settings, manage, test) {
 							});
 						})
 						.catch((e) => {
-							console.log("e", e)
+							//console.log("e", e)
 							return Promise.reject(e);
 						});
 				},
@@ -1773,7 +1773,7 @@ var Proxy = function (settings, manage, test) {
 		f.hash(ids[i])
 	}
 	var difference = performance.now() - time;*/
-
+	
 		
 	return self
 
