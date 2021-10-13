@@ -32,6 +32,9 @@ var videoCabinet = (function () {
 
     const descriptionCache = {};
 
+    //actions object for functions received from external object (for example, when loading from 'lenta')
+    var externalActions = {};
+
     var actions = {
       async getHosts() {
         const serverStructureHosts = await self.app.peertubeHandler.api.proxy
@@ -466,12 +469,18 @@ var videoCabinet = (function () {
           }
         });
 
+        //check if video cabinet is loaded directly by url or opened in window from 'lenta' element
+        const buttonCaption = ed.inLentaWindow
+          ? 'attachVideoLenta'
+          : 'attachVideoToPost';
+
         self.shell(
           {
             name: 'videoList',
             el: videoPortionElement,
             data: {
               videos,
+              buttonCaption,
             },
           },
           (p) => {
@@ -484,7 +493,7 @@ var videoCabinet = (function () {
             // const removeVideo = p.el.find('.removeVideo');
             const menuActivator = p.el.find('.menuActivator');
 
-            //button for creating post with video
+            //button for creating post with video (active only when cabinet is opened directly)
             attachVideoToPost.on('click', function () {
               const videoLink = $(this).attr('videoLink');
 
@@ -496,6 +505,19 @@ var videoCabinet = (function () {
                   const { name, description, tags } = info;
                   renders.addButton({ videoLink, name, description, tags });
                 });
+            });
+
+            //button for attaching existing video to post (active when element loaded from 'lenta')
+            const attachVideoLenta = p.el.find('.attachVideoLenta');
+
+            attachVideoLenta.on('click', function () {
+              const attachVideoLentaElement = $(this);
+
+              const videoName = attachVideoLentaElement.attr('videoName');
+              const videoLink = attachVideoLentaElement.attr('videoLink');
+
+              externalActions.added(videoLink, videoName);
+              wndObj.close();
             });
 
             menuActivator.on('click', function () {
@@ -525,7 +547,7 @@ var videoCabinet = (function () {
 
                 if (!isTranscoding) {
                   currentElement
-                    .find('.attachVideoToPost')
+                    .find(`.${buttonCaption}`)
                     .removeClass('hidden');
                   currentElement.find('.preloaderwr').addClass('hidden');
                 }
@@ -1061,6 +1083,8 @@ var videoCabinet = (function () {
 
       getdata: function (clbk, p) {
         ed = p.settings.essenseData;
+
+        externalActions = ed.actions || {};
 
         //check if user has access to videos
         self.app.peertubeHandler.api.user

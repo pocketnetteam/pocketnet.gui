@@ -1009,3 +1009,6 @@ ____loclib.successdownloaded = "Видео сохранено";
 
 ____loclib.logoutaccount = "Выйти из своей учетной записи";
 ____loclib.closeapplication = "Выйти из приложения";
+
+____loclib.attachVideoLenta = "Прикрепить";
+____loclib.attachVideoLentaShort = "Прикрепить видео к посту";

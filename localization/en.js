@@ -1215,3 +1215,7 @@ ____loclib.successdownloaded = "Video saved";
 
 ____loclib.logoutaccount = "Sign out of your account";
 ____loclib.closeapplication = "Exit the application";
+
+
+____loclib.attachVideoLenta = "Attach";
+____loclib.attachVideoLentaShort = "Attach video to post";
