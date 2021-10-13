@@ -149,6 +149,9 @@
 								var name = app.platform.api.clearname(deep(app, 'platform.sdk.user.storage.me.name') || (user.address.value && user.address.value.toString('hex')) )
 								var letter = name ? name[0] : ''
 
+								var dev = deep(app, 'platform.sdk.user.storage.me.dev')  
+
+
 								%>
 								
 								<div class="icon">
@@ -167,14 +170,10 @@
 
 											<% } %>
 
-											<% if(deep(app, 'platform.real.'+user.address.value.toString('hex'))) {%>
-												<div class="realperson">
+											<% if(app.platform.ui.markUser) {%>
+
+												<%= app.platform.ui.markUser(user.address.value && user.address.value.toString('hex'))%>
 			
-													<span class="fa-stack fa-2x">
-														<i class="fas fa-certificate fa-stack-2x"></i>
-														<i class="fas fa-check fa-stack-1x"></i>
-													  </span>
-												</div>
 											<% } %>
 										
 										</div>

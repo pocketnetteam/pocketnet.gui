@@ -106,7 +106,7 @@ var commentpanel = function(comment, _class){  %>
 							var src = deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.image');
 							var name = deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.name');
 							var letter = name ? name[0] : '';  
-  	
+							var dev = deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.dev');
 						%>
 
 						<div class="icon">
@@ -125,15 +125,12 @@ var commentpanel = function(comment, _class){  %>
 				
 								<% } %>
 
-								<% if(deep(app, 'platform.real.'+comment.address)) {%>
-									<div class="realperson">
+								<% if(app.platform.ui.markUser) {%>
 
-										<span class="fa-stack fa-2x">
-											<i class="fas fa-certificate fa-stack-2x"></i>
-											<i class="fas fa-check fa-stack-1x"></i>
-										  </span>
-									</div>
+									<%= app.platform.ui.markUser(comment.address)%>
+
 								<% } %>
+
 							</div>
 
 							<!--<% if(comment.donation === 'true' && comment.amount) {%>

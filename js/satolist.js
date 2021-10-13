@@ -65,7 +65,8 @@ Platform = function (app, listofnodes) {
         'PFbq1BkrrVsmEAevMqQ2PV6aFf7QWQP9sB' : true,
         'PKHoxhpnG5CGHDVnxXJwARwPxVre6Qshvn' : true,
         'PXgYFdVs5W831WpksVLA5hNtXa7XSqUzLB' : true,
-        'PSBePd5Tx5KG9vxwAzbaDTfjzDbq1GUTYw' : true
+        'PSBePd5Tx5KG9vxwAzbaDTfjzDbq1GUTYw' : true,
+        'TQEGz5cQQtRad8wo2c1KapvFek9rnuprkD' : true
         //'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82' : true // test
     }
 
@@ -2120,6 +2121,45 @@ Platform = function (app, listofnodes) {
     }
 
     self.ui = {
+
+        markUser : function(address){
+
+            var dev = deep(app, 'platform.sdk.user.storage.'+address+'.dev') || deep(app, 'platform.sdk.usersl.storage.'+address+'.dev');
+
+            if (dev){
+                
+                return this.markDev();
+
+            } else if (deep(app, 'platform.real.'+address)){
+
+                return this.markReal();
+
+            }
+
+            return ''
+
+        },
+
+        markReal : function(){
+
+            return `<div class="realperson">
+                <span class="fa-stack fa-2x">
+                    <i class="fas fa-certificate fa-stack-2x"></i>
+                    <i class="fas fa-check fa-stack-1x"></i>
+                </span>
+            </div>`
+        },
+
+        markDev : function(){
+
+            return `<div class="realperson">
+                    <span class="fa-stack fa-2x">
+                        <i class="fas fa-code fa-stack-2x"></i>
+                    </span>
+                </div>`
+
+        },
+
 
         images : function(allimages, initialValue, clbk){
 
@@ -6108,6 +6148,8 @@ Platform = function (app, listofnodes) {
                         temp = true;
 
                         var u = new pUserInfo();
+
+                        debugger;
 
                         u._import(_.toArray(ui)[0])
 
@@ -18764,7 +18806,7 @@ Platform = function (app, listofnodes) {
                 var src = deep(author, 'image');
                 var name = deep(author, 'name');
                 var letter = name ? name[0] : '';
-
+                var dev = deep(author, 'dev');
 
                 var link = '<a href="' + encodeURI(clearStringXss(author.name.toLowerCase())) + '">'
                 var clink = "</a>"
@@ -18790,14 +18832,10 @@ Platform = function (app, listofnodes) {
                 }
 
 
-                if(deep(platform, 'real.'+author.address)) {
-                    h += '<div class="realperson">'
+                if(self.app.platform.ui.markUser){
 
-                    h += '<span class="fa-stack fa-2x">'
-                    h += '<i class="fas fa-certificate fa-stack-2x"></i>'
-                    h += '<i class="fas fa-check fa-stack-1x"></i>'
-                    h += '</span>'
-                    h += '</div>'
+                    h += self.app.platform.ui.markUser(share.address);
+
                 }
 
 
