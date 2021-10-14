@@ -3396,11 +3396,11 @@ Platform = function (app, listofnodes) {
                                 btn2text : self.app.localization.e('dno'),
                                 success : function(){	
 
-                                    var shares = _el.closest('.shares');
-                                    var shareslist = shares.find('#'+ id);
-                                    var authorgroup = shareslist.find('.sharecnt');
-                        
+                                    var shares = _el.closest('.cnt');
+                                    var shareslist = shares.find(`[stxid='${id}']`);
+                                    var authorgroup = shareslist.closest('.sharecnt');
 
+                                                    
                                     var removePost = function (share, clbk){
 
                                         share.deleted = true;
