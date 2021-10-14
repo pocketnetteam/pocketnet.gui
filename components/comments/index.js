@@ -1044,7 +1044,9 @@ var comments = (function(){
 
 					if(!comment) return
 
-					if (comment.address == self.app.platform.sdk.address.pnet().address){
+					var dev = deep(app, 'platform.sdk.user.storage.'+comment.address+'.dev') || deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.dev');
+
+					if (comment.address == self.app.platform.sdk.address.pnet().address || dev){
 						return
 					}
 
