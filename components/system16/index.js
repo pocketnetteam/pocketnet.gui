@@ -1172,7 +1172,7 @@ var system16 = (function(){
 
 				allcountShort : {
 					caption : "Count of requests/ Short",
-
+					many : true,
 					series : [
 						{
 							name : "Count of requests",
@@ -1853,11 +1853,12 @@ var system16 = (function(){
 
 					})
 
+
 					_el.find('.subcaptiongraphselect').on('click', function(){
 
 						var items = []
 
-						_.each(t.meta.canselect, function(v){
+						_.each(t.canselect, function(v){
 							items.push({
 								text : v,
 								action : function (clbk) {
@@ -1870,6 +1871,19 @@ var system16 = (function(){
 	
 								}
 							})
+						})
+
+						items.unshift({
+							text : "Show All",
+							action : function (clbk) {
+
+								settings.charts[type].selected = null
+
+								chart.make(type, stats)
+
+								clbk()
+
+							}
 						})
 
 						menuDialog({

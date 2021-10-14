@@ -3080,6 +3080,8 @@ Platform = function (app, listofnodes) {
 
                     function (tx, error) {
 
+                        console.log('tx, error', tx, error)
+
                         if (tx) {
                             var me = deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value.toString('hex'))
 
@@ -18278,15 +18280,7 @@ Platform = function (app, listofnodes) {
 
                             }, 50)
 
-                            setTimeout(function(){
-                                try{
-                                    platform.matrixchat.core.mtrx.fastsync()
-                                }
-                                catch(e){
-                                    
-                                }
-                                
-                            }, 500)
+                            
                             
                         });
                     }
@@ -23234,6 +23228,18 @@ Platform = function (app, listofnodes) {
 
                 self.sdk.node.transactions.get.allBalance(null, true)
                 self.sdk.notifications.getNotifications().catch(e => {})
+            }
+
+            if(time > 120 && window.cordova){
+
+                retry(function(){
+                    return platform && platform.matrixchat && platform.matrixchat.core;
+                }, function(){ 
+
+                    setTimeout(function(){
+                        platform.matrixchat.core.mtrx.fastsync()
+                    }, 500)
+                })
             }
 
             self.clbks.focus(time);
