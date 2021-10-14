@@ -108,17 +108,17 @@
 #lenta .shares .authorgroup.blocking {
   display: none;
 }
-#lenta .shares .sharecnt .removeDescription {
+#lenta .shares .shareTable .removeDescription {
   display: none;
   padding-bottom: 1.5em;
   color: #b2abac;
 }
-#lenta .shares .sharecnt.removed .cntscontent,
-#lenta .shares .sharecnt.removed .commentsWrapperHb,
-#lenta .shares .sharecnt.removed .metapanel {
+#lenta .shares .shareTable.removed .cntscontent,
+#lenta .shares .shareTable.removed .commentsWrapperHb,
+#lenta .shares .shareTable.removed .metapanel {
   display: none;
 }
-#lenta .shares .sharecnt.removed .removeDescription {
+#lenta .shares .shareTable.removed .removeDescription {
   display: block;
 }
 #lenta .shares .statswrapperExtended {
@@ -1532,6 +1532,14 @@
   font-weight: 500;
   text-transform: capitalize;
 }
+#lenta.mainvideo .shares .share .durationWrapper {
+  border-radius: 0;
+  border-top-left-radius: 6px;
+}
+#lenta.mainvideo .shares .share .statswrapper {
+  border-radius: 0;
+  border-top-right-radius: 6px;
+}
 #lenta.mainvideo .shares .share .meta {
   padding-top: 0.5em;
   margin-bottom: 0;
@@ -1560,6 +1568,7 @@
 #lenta.mainvideo .shares .share .iconWrapper .icon .usericon {
   width: 32px!important;
   height: 32px!important;
+  line-height: 32px!important;
   font-size: 1.5em;
 }
 #lenta.mainvideo .shares .share .forurl {
@@ -1682,6 +1691,14 @@
 }
 #lenta.horizontal .shares .share:nth-last-child(1) {
   margin-right: 0;
+}
+#lenta.horizontal .shares .share .durationWrapper {
+  border-radius: 0;
+  border-bottom-left-radius: 6px;
+}
+#lenta.horizontal .shares .share .statswrapper {
+  border-radius: 0;
+  border-bottom-right-radius: 6px;
 }
 #lenta.horizontal .loader,
 #lenta.horizontal .ended {
@@ -1978,9 +1995,6 @@ html.stblack #lenta .shares .share .tags > div span {
 html.stblack #lenta .shares .share .sys span {
   color: #076C34;
 }
-html.stblack #lenta .shares .share .panel {
-  margin-bottom: 1em;
-}
 html.stblack #lenta .shares .share .panel .itemwr > div.count span {
   color: #e4ddde;
 }
@@ -2017,9 +2031,6 @@ html.stblack #lenta .shares .share .panel > div.sharesocial:hover .icon {
 }
 html.stblack #lenta .shares .share .panel > div.nact:hover .icon {
   color: #030f1b;
-}
-html.stblack #lenta .shares .share.fullScreenVideo {
-  background: rgba(3, 15, 27, 0.8);
 }
 html.stblack #lenta .shares .share.fullScreenVideo .work {
   background: #0a0c17;

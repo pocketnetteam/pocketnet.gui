@@ -212,17 +212,17 @@
 #share #post .cntswrk {
   margin-left: 4em;
 }
-#share #post .sharecnt .removeDescription {
+#share #post .shareTable .removeDescription {
   display: none;
   padding-bottom: 1.5em;
   color: #b2abac;
 }
-#share #post .sharecnt.removed .cntscontent,
-#share #post .sharecnt.removed .commentsWrapperHb,
-#share #post .sharecnt.removed .metapanel {
+#share #post .shareTable.removed .cntscontent,
+#share #post .shareTable.removed .commentsWrapperHb,
+#share #post .shareTable.removed .metapanel {
   display: none;
 }
-#share #post .sharecnt.removed .removeDescription {
+#share #post .shareTable.removed .removeDescription {
   display: block;
 }
 #share #post .images {
@@ -1035,6 +1035,11 @@ html.stblack #share .sLoader {
 }
 html.stblack #share .mobilecaption {
   color: #00A3F7;
+}
+html.stblack #share.minimized .txt .emojionearea-editor,
+html.stblack #share.minimized .txt .emojionearea,
+html.stblack #share.minimized .txt .emojionearea.form-control {
+  background: transparent;
 }
 html.stblack #share #post .share {
   /*background: fade(@color-black3, 50);*/

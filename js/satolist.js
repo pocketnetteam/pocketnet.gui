@@ -3232,7 +3232,8 @@ Platform = function (app, listofnodes) {
         metmenu: function (_el, id, actions) {
             var share = self.sdk.node.shares.storage.trx[id];
 
-            var authorgroup = _el.closest('.sharecnt')
+            var shares = _el.closest('.shares');
+            var authorgroup = shares.find(`[stxid='${id}']`);
 
             if (!share) {
                 var temp = _.find(self.sdk.node.transactions.temp.share, function (s) {
@@ -3403,18 +3404,32 @@ Platform = function (app, listofnodes) {
                                         console.log('share', share);
                                         share.deleted = true;
                                         var ct = new Remove();
-                                        ct.txidEdit = d.share.txid;
+                                        ct.txidEdit = share.txid;
 
                         
-                                        self.app.platform.sdk.node.shares.delete(d.share.txid, ct, function(err, alias){
+                                        self.app.platform.sdk.node.shares.delete(share.txid, ct, function(err, alias){
                         
                                             if(!err){
-                                                if (clbk)
+                                                if (clbk){
+               
+                                                    var l = share.url;
+
+
+                                                    if (self.app.peertubeHandler.checklink(l)) {
+                                                        debugger;
+                                                        share.settings.a = share.default.a
+
+                                                        self.app.peertubeHandler.api.videos.remove(l).then(r => {
+                                                            self.app.platform.sdk.videos.clearstorage(l)
+                                                        })
+
+
+                                                    }
+
                                                     clbk(null, alias)
-                                            }
-                        
-                                            else
-                                            {
+                                                }
+    
+                                            } else {
                                                 self.app.platform.errorHandler(err, true)
                         
                                                 if (clbk)
@@ -3430,11 +3445,10 @@ Platform = function (app, listofnodes) {
 										if(!err)
 										{
 
-                                            authorgroup.addClass('removed')
+                                            authorgroup.addClass('removed');
+
 
                                         }
-
-                                        console.log('result!!!!', result)
 
 										
                                     })
