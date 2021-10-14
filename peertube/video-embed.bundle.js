@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=5963"
+/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=4378"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -42706,18 +42706,23 @@ class peertube_player_manager_PeertubePlayerManager {
             catch (e) {
             }
         }
-        var useP2P = false;
-        try {
-            useP2P = (options.common.videoUUID == '6c3c986d-f166-45aa-a7a7-348623acdc43' ||
-                options.common.videoUUID == '0e93af86-5ce7-4f05-8ad3-41009edf33d6' ||
-                options.common.videoUUID == '742515bd-f66f-4c5f-ac15-84daee3e3457' ||
-                options.common.videoUUID == 'ed3afc73-bf0e-43a6-8c0e-28787985f921' ||
-                options.common.videoUUID == 'fdca2575-8ec8-4167-a60c-f1d9c1c23d92');
-        }
-        catch (e) {
-            useP2P = false;
-        }
-        console.log('useP2P', useP2P);
+        var useP2P = true;
+        /*try{
+    
+          useP2P = (
+    
+            options.common.videoUUID == '6c3c986d-f166-45aa-a7a7-348623acdc43' ||
+            options.common.videoUUID == '0e93af86-5ce7-4f05-8ad3-41009edf33d6' ||
+            options.common.videoUUID == '742515bd-f66f-4c5f-ac15-84daee3e3457' ||
+            options.common.videoUUID == 'ed3afc73-bf0e-43a6-8c0e-28787985f921' ||
+            options.common.videoUUID == 'fdca2575-8ec8-4167-a60c-f1d9c1c23d92'
+    
+          )
+          
+        }catch(e){
+          useP2P = false
+        }*/
+        //console.log('useP2P', useP2P)
         const p2pMediaLoaderConfig = {
             loader: {
                 trackerAnnounce,
