@@ -21,7 +21,7 @@ var Server = function(settings, admins, manage){
     var middle = new Middle()
     var iplimiter = new Iplimiter(settings.iplimiter)
 
-    
+    var startedDate = null
 
     self.cache = new Cache({ dontCache: settings.contCache})
     self.listening = false;
@@ -69,6 +69,10 @@ var Server = function(settings, admins, manage){
         app.use(express.json({limit: '5mb'})) 
         app.use(express.urlencoded({ extended: true, limit: '5mb' }))
         app.use(compression({ filter: shouldCompress }))
+
+        startedDate = new Date()
+
+        self.cache.init()
 
         app.use(async (request, result, next) => {
 
@@ -187,8 +191,11 @@ var Server = function(settings, admins, manage){
         }
 
         app = null
+        startedDate = null
 
         middle.clear()
+
+        self.cache.destroy()
 
         self.listening = false
 
@@ -219,7 +226,8 @@ var Server = function(settings, admins, manage){
             middle : middle.info(compact),
             cache : self.cache.info(),
             listening : self.listening,
-            httplistening : self.httplistening
+            httplistening : self.httplistening,
+            startedDate
         }
     }
 

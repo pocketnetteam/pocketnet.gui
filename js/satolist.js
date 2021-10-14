@@ -1754,7 +1754,8 @@ Platform = function (app, listofnodes) {
                             data: {
                                 me: graph,
                                 id: graph.id,
-                                options: graph.options
+                                options: graph.options,
+                                ini : p
                             }
                         }, function (_p) {
 
@@ -2029,8 +2030,6 @@ Platform = function (app, listofnodes) {
             catch (e) {
 
             }
-
-            console.log("R", r)
 
             var c = function(){
                 self.sdk.users.get(id, function () {
@@ -2388,7 +2387,7 @@ Platform = function (app, listofnodes) {
 
                 self.sdk.localshares.saveShare(share, p).then(r => {
                     
-                    sitemessage(self.app.localization.e('downloaded'))
+                    sitemessage(self.app.localization.e('successdownloaded'))
 
                     topPreloader2(100)
 
@@ -2397,95 +2396,104 @@ Platform = function (app, listofnodes) {
                 }).catch(error)
             }
 
-
             if(self.sdk.localshares.saving[share.txid]) return
 
             if(self.sdk.localshares.storage[share.txid]){
 
-                dialog({
-                    html:  self.app.localization.e('deleteVideoDialog'),
-                    btn1text: self.app.localization.e('dyes'),
-                    btn2text: self.app.localization.e('dno'),
-                    success: function () {
-                        
-    
-                        self.app.mobile.vibration.small()
-                        self.sdk.localshares.deleteShare(share.txid).then(r => {
+                menuDialog({
+                    items: [{
+                        text: self.app.localization.e('deleteVideoDialog'),
+                        action: function (_clbk) {
 
-                            if(clbk) clbk(share.txid, true)
-    
-                        }).catch(error)  
-    
-                    }
+                            self.sdk.localshares.deleteShare(share.txid).then(r => {
+
+                                if(clbk) clbk(share.txid, true)
+        
+                            }).catch(error) 
+
+                            _clbk()
+
+                        }
+                    }]
                 })
-
 
                 return
             }
 
+            menuDialog({
+                items: [{
+                    text: self.app.localization.e('saveshare'),
+                    action: function (_clbk) {
+
+                        if (share.itisvideo()){
+
+                            var info = share.url ? (app.platform.sdk.videos.storage[share.url] || {}).data || null : null
             
-
-            if (share.itisvideo()){
-
-                var info = share.url ? (app.platform.sdk.videos.storage[share.url] || {}).data || null : null
-
-                if (info){
-
-                    var items = _.map(deep(info, 'original.streamingPlaylists.0.files') || [], function(file){
-                        return {
-                            text: file.resolution.label,
-                            action: function (clbk) {
-
-                                save({resolutionId : file.resolution.id})
-
-                                clbk()
-
+                            if (info){
+            
+                                var items = _.map(deep(info, 'original.streamingPlaylists.0.files') || [], function(file){
+                                    return {
+                                        text: file.resolution.label,
+                                        action: function (clbk) {
+            
+                                            save({resolutionId : file.resolution.id})
+            
+                                            clbk()
+            
+                                        }
+                                    }   
+                                })
+            
+                                if(info && info.original && info.original.isLive){
+            
+                                    dialog({
+                                        html: "Please wait, you will be able to download the video when the broadcast recording appears",
+                                        btn1text: self.app.localization.e('daccept'),
+                                        class : 'one',
+                                        success: function () {
+                    
+                                        }
+                                    })
+            
+                                    return
+                                }
+            
+                                if(!items.length){
+            
+                                    dialog({
+                                        html: "Please wait, the video hasn't been transcoded yet",
+                                        btn1text: self.app.localization.e('daccept'),
+                                        class : 'one',
+                                        success: function () {
+                    
+                                        }
+                                    })
+            
+                                    return
+            
+                                }
+            
+                                menuDialog({
+                                    header : self.app.localization.e('selectQuality'),
+                                    items: items
+                                })
+            
                             }
-                        }   
-                    })
-
-                    if(info && info.original && info.original.isLive){
-
-                        dialog({
-                            html: "Please wait, you will be able to download the video when the broadcast recording appears",
-                            btn1text: self.app.localization.e('daccept'),
-                            class : 'one',
-                            success: function () {
-        
+                            else{
+                                error('noinfo')
                             }
-                        })
+                        }
+                        else{
+                            error('todo')
+                        }
 
-                        return
+                        _clbk()
+
                     }
+                }]
+            })
 
-                    if(!items.length){
-
-                        dialog({
-                            html: "Please wait, the video hasn't been transcoded yet",
-                            btn1text: self.app.localization.e('daccept'),
-                            class : 'one',
-                            success: function () {
-        
-                            }
-                        })
-
-                        return
-
-                    }
-
-                    menuDialog({
-                        caption : self.app.localization.e('selectQuality'),
-                        items: items
-                    })
-
-                }
-                else{
-                    error('noinfo')
-                }
-            }
-            else{
-                error('todo')
-            }
+            
 
         }
     }
@@ -3264,7 +3272,7 @@ Platform = function (app, listofnodes) {
 
                             self.app.mobile.vibration.small()
 
-                            var href = 'https://'+window.location.hostname+'/' /// domain
+                            var href = 'https://bastyon.com/' /// domain
 
                             var path = ''
 
@@ -3290,7 +3298,7 @@ Platform = function (app, listofnodes) {
                                 }
                                 else
                                 {
-                                    cordova.InAppBrowser.open(href, '_blank');
+                                    cordova.InAppBrowser.open(href, '_system');
                                 }
                                 
                                
@@ -3777,7 +3785,6 @@ Platform = function (app, listofnodes) {
                             return file.resolution.id == p.resolutionId
                         }) 
 
-                        console.log('videoDetails', videoDetails, p)
 
                         if(!fileDownloadUrl) return Promise.reject('fileDownloadUrl')
 
@@ -3830,8 +3837,6 @@ Platform = function (app, listofnodes) {
 
                                                 }, reject, function(pr) {
 
-                                                    console.log("PRO", pr)
-
                                                     if(p.progress) p.progress('video', 100* pr.bytesReceived / pr.totalBytesToReceive)
                                                 });
                                                 
@@ -3859,8 +3864,6 @@ Platform = function (app, listofnodes) {
                 share : {
                     cordova : function(share){
 
-                        console.log('share', share)
-                        
                         var storage = self.sdk.localshares.helpers.cordovaStorage()
 
                         if(!storage) return Promise.reject('storage')
@@ -4784,7 +4787,6 @@ Platform = function (app, listofnodes) {
 
                                                         function (_alias, error) {
 
-                                                            console.log('error')
 
                                                             var eh = self.errors[error] || {}
 
@@ -10416,8 +10418,17 @@ Platform = function (app, listofnodes) {
 
                 self.app.api.rpc('gettags', parameters).then(d => {
 
+
+                    var _d = _.map(d, function(_d){
+                        return {
+                            count : _d.count,
+                            tag : trim(decodeURIComponent(decodeURIComponent(_d.tag)))
+                        }
+                    })
+
+
                     if (clbk) {
-                        clbk(d)
+                        clbk(_d)
                     }
         
                 }).catch(e => {
@@ -12166,7 +12177,7 @@ Platform = function (app, listofnodes) {
                                     s.time.setTime(share.time * 1000);
 
                                     s.address = share.address
-
+                                    s.edit = share.edit
                                     
 
                                     s.score = share.scoreSum;
@@ -12600,10 +12611,13 @@ Platform = function (app, listofnodes) {
                                                 s.address = ps.address
 
                                                 if (ps.txidEdit) {
-
                                                     replaceEqual(shares, {
                                                         txid: ps.txidEdit
                                                     }, s)
+
+                                                    /// new
+                                                    s.txidEdit = s.txid
+                                                    s.txid = ps.txidEdit
                                                 }
 
                                                 else {
@@ -12654,6 +12668,7 @@ Platform = function (app, listofnodes) {
                     self.sdk.videos.infoshares(shares).then(r => {
                         if(clbk) clbk()
                     }).catch(e => {
+                        console.error(e)
                         if(clbk) clbk()
                     })
                 },
@@ -17780,6 +17795,45 @@ Platform = function (app, listofnodes) {
 
         videos : {
             storage : {},
+            historykey : 'videohistory_v1_',
+            historyget : function(txid){
+
+                var h = {
+                    time : 0,
+                    date : null,
+                    percent : 0
+                }
+
+                try{
+                    var jsn = JSON.parse(localStorage[self.sdk.videos.historykey + txid] || "{}")
+
+                    if(jsn.time) h.time = jsn.time
+                    if(jsn.date) h.date = jsn.date
+                    if(jsn.percent) h.percent = Number(jsn.percent)
+
+                }
+                catch(e){}
+
+                return h
+            },
+            historyset : function(txid, data){
+
+                if(!data) data = {}
+
+                data.time || (data.time = 0)
+
+                var lasthistory = self.sdk.videos.historyget(txid)
+
+
+                lasthistory.time = data.time
+                lasthistory.date = new Date()
+                lasthistory.percent = data.percent
+                
+                try{
+                    localStorage[self.sdk.videos.historykey + txid] = JSON.stringify(lasthistory)
+                }catch(e){}
+            },
+
             infoshares : function(shares){
 
 
@@ -17954,13 +18008,14 @@ Platform = function (app, listofnodes) {
                         return new Promise((resolve, reject) => {
 
                             var link = l.link.replace('/embed/', '/video/');
-
+                            
                             $.ajax({
                                 url : 'https://pocketnet.app:8888/bitchute',
                                 data : {
                                     url : hexEncode(link)
                                 },
                                 type : 'POST',
+                                timeout : 5000,
                                 success : function(response){
 
                                     if (response.data.video && response.data.video.as) {
@@ -17971,6 +18026,10 @@ Platform = function (app, listofnodes) {
                                         reject()
                                     }
 
+                                },
+                                error : function(){
+                                    console.log("FAILED")
+                                    reject()
                                 }
                             });
 
@@ -22802,7 +22861,7 @@ Platform = function (app, listofnodes) {
                     if(clbk) clbk()
                 }
                 else{
-                    importScript('chat/matrix-element.min.js?v=7', clbk)
+                    importScript('chat/matrix-element.min.js?v=8', clbk)
                 }
                 
             }
@@ -23075,8 +23134,6 @@ Platform = function (app, listofnodes) {
 
             core.backtoapp = function(link){
 
-                console.log('backtoapp')
-
                 if (isTablet() ||isMobile() || window.cordova)
                     app.nav.api.history.removeParameters(['pc'])
 
@@ -23129,8 +23186,6 @@ Platform = function (app, listofnodes) {
             }
 
             core.apptochat = function(link){
-
-                console.log('apptochat')
 
                 if (document.activeElement) document.activeElement.blur()
 
@@ -23650,6 +23705,10 @@ Platform = function (app, listofnodes) {
 
         self.sdk.localshares.initclbk()
 
+        if(window.cordova){
+            setupOpenwith()
+        }
+
 
         /*if(window.cordova){
             setupOpenwith()
@@ -23726,8 +23785,6 @@ Platform = function (app, listofnodes) {
         if (window.cordova && typeof universalLinks != 'undefined'){
 
             universalLinks.subscribe('nav-message', function (eventData) {
-
-                console.log('eventData', eventData)
 
                 routing(eventData.url)
                 

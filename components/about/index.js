@@ -95,7 +95,14 @@ var about = (function(){
 						if (clbk)
 							clbk();
 
-					}
+					},
+
+					error : function(){
+
+						if (clbk)
+							clbk();
+
+					},
 				});
 
 			},

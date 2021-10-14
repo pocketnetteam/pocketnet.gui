@@ -46,6 +46,7 @@ var taginput = (function(){
 	
 							self.app.platform.sdk.tags.search(value, function(data){
 
+
 								var tagsmap = _.map(data, function(t){
 									return {
 										tag : t,
@@ -128,7 +129,7 @@ var taginput = (function(){
 							var tags = _.map(self.app.platform.sdk.categories.getaddedtags(actions.language()), function(t){
 								return {
 									tag : t,
-									name : '#' + t
+									name : '#' + decodeURIComponent(t)
 								}
 							})
 

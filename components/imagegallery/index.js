@@ -639,7 +639,7 @@ var imagegallery = (function(){
 			},
 
 			wnd : {			
-				class : 'allscreen black withoutButtons imageGallery fullscreenActive',
+				class : 'allscreen black withoutButtons imageGallery fullscreenActive nobfilter',
 			}
 		}
 	};

@@ -57,10 +57,8 @@ if(!_Node)
 	//app.notifications = new Notifications(app);
 
 	retry(function(){
-		return (window.pocketnetVendorLoaded && window.pocketnetJoinLoaded ) || window.design
+		return (window.pocketnetVendorLoaded && window.pocketnetJoinLoaded ) || (window.design && typeof window.Platform != 'undefined')
 	}, function(){
-
-		
 
 		app.deviceReadyInit({
 			clbk : function(){

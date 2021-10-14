@@ -21,7 +21,7 @@ var Nodemanager = function(p){
   
 
     var findInterval = null
-    var peernodesCheckTime = 5000000
+    var peernodesCheckTime = 1000000
     var usersfornode = 30
 
     var commonnotinitedInterval = null
@@ -113,7 +113,6 @@ var Nodemanager = function(p){
 
             self.remap()
         }
-
         
     }
 
@@ -143,7 +142,6 @@ var Nodemanager = function(p){
             }
             
         })
-
 
         forgetIfNotUsing()
 
@@ -230,11 +228,9 @@ var Nodemanager = function(p){
 
         var workingNodes = getWorkingNodes()
 
-        console.log('forgeting', workingNodes.length)
 
         if (!usersfornode || self.proxy.users() / usersfornode >= workingNodes.length || workingNodes.length <= 1){
 
-            console.log("NO")
         }else{
 
             _.each(self.nodes, function(n){
@@ -244,17 +240,14 @@ var Nodemanager = function(p){
                     if(!n.wss.count()){
 
                         if(f.date.addseconds(n.initedTime, 300) > new Date()){
-                            console.log('waitnodeforget', n.host)
                         }
                         else{
-                            console.log('forgetnode', n.host)
                             n.forget()
                         }
                         
 
                     }
                     else{
-                        console.log("USERS ON NODE", n.host, n.wss.count())
                     }
                 }
 
@@ -493,7 +486,7 @@ var Nodemanager = function(p){
                 node : node.exportsafe(),
                 statistic : node.statistic.getst(),
                 slice : node.statistic.get5min(),
-                history : node.statistic.gethistory(),
+                /*history : node.statistic.gethistory(),*/
                 penalty : node.penalty(),
                 status : node.chainStatus(),
                 rating : node.statistic.rating(),
@@ -524,12 +517,15 @@ var Nodemanager = function(p){
     self.info = function(compact){
 
         var chaininfo = self.currentChainCommon2()
+        var _ch = null
 
-        var _ch = {
-            commonHeight : chaininfo.commonHeight,
-            maxHeight : chaininfo.maxHeight,
-            commonBlockHash : chaininfo.commonBlockHash,
-            lasttrustblocks : chaininfo.lasttrustblocks,
+        if(chaininfo){
+            var _ch = {
+                commonHeight : chaininfo.commonHeight,
+                maxHeight : chaininfo.maxHeight,
+                commonBlockHash : chaininfo.commonBlockHash,
+                lasttrustblocks : chaininfo.lasttrustblocks,
+            }
         }
 
         var stats = {
@@ -569,7 +565,9 @@ var Nodemanager = function(p){
 
                 if (self.proxy.test) bchain = 'test'
 
+
                 db.find({bchain}).exec(function (err, docs) {
+
 
                     self.nodes = []
 
@@ -589,8 +587,9 @@ var Nodemanager = function(p){
                         if(i < 5) return true
                     })
 
+
                     //// remove
-                    docs = []
+                    //docs = []
 
                     var nodes = _.map(c.concat(p.stable, docs || []) , function(options){
 
@@ -770,6 +769,7 @@ var Nodemanager = function(p){
                     connected.push(node)
 
                 }).catch(e => {
+
                     return Promise.reject({
                         e : e,
                         node : node
@@ -786,8 +786,6 @@ var Nodemanager = function(p){
         },  
         
         peernodesTime : function(node){
-
-
 
             var last = self.askedpeers[node.key]
 

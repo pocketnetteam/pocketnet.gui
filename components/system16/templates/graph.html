@@ -17,7 +17,23 @@
                     </div>
                 </div>	
             </div>
-        </div>
+        </div>  
+
+        <% console.log('ini', ini) %>
+
+        <% if(ini && ini.meta && ini.meta.many) {%>
+
+            <div class="subcaptionHeader">
+                <div class="work">
+                    <div class="subcaptionTableHeader">
+                        <div class="subcaptiongraphselect">
+                            <%- ini.meta.selected || "Select" %> <i class="fas fa-caret-down"></i>
+                        </div>
+                    </div>	
+                </div>
+            </div>
+
+        <% } %>
 
         <div class="chartWrapper">
 

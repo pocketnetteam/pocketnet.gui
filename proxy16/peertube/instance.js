@@ -2,237 +2,237 @@ const { performance } = require('perf_hooks');
 const axios = require('axios');
 var _ = require('underscore');
 var f = require('../functions');
+var Statistic = require('../lib/statistic');
+
 var instance = function (host, Roy) {
-  var self = this;
+	var self = this;
 
-  self.host = host;
+	self.host = host;
+	self.cantuploading = false
 
-  var inited = false;
-  var instanceIsActive = true;
-  var logs = [];
-  var lastStat = null;
-  var k = 1000;
+	var inited = false;
+	var statistic = new Statistic()
 
-  var performanceBenchmarks = [];
-  var spaceBenchmarks = [];
+	const FREE_SPACE_PERC = 0.05;
 
-  var videosinfo = {};
+	var lastStat = null;
+	
+	var k = 1000;
 
-  var methods = {
-    stats: '/api/v1/videos',
-    video: function ({ id }) {
-      return '/api/v1/videos/' + id;
-    },
-    performance: '/api/v1/server/stats',
-    diskSpace: '/api/v1/server/space',
-    channelVideos: ({ account }) => `/api/v1/accounts/${account}/videos`,
-  };
+	var info = []
+	var infointerval = null
+	var infotime = 240000
+	var maxinfoevents = 20
 
-  var statsRequest = function () {
-    lastStat = null;
+	var methods = {
+		stats: '/api/v1/videos',
+		video: function ({ id }) {
+			return '/api/v1/videos/' + id;
+		},
+		performance: '/api/v1/server/stats',
+		diskSpace: '/api/v1/server/space',
+		channelVideos: ({ account }) => `/api/v1/accounts/${account}/videos`,
+	};
 
-    if (logs.length > 300) {
-      logs.splice(0, 300);
-    }
+	var setinfointerval = function(){
+		if(!infointerval){
+			infointerval = setInterval(getinfo, infotime)
+		}
+	}
 
-    if (performanceBenchmarks.length > 300) {
-      performanceBenchmarks.splice(0, 300);
-    }
+	
+	var clearinfointerval = function(){
+		if (infointerval){
+			clearInterval(infointerval)
+		}
 
-    if (!inited) {
-      return Promise.resolve();
-    }
+		infointerval = null
+	}
 
-    return self
-      .request('stats')
-      .then((data) => {
-        data = data.data || {};
+	var getinfo = function () {
 
-        var difference = 0;
+		var result = {
+			date : new Date()
+		}
 
-        if (videosinfo.total) {
-          difference = data.total - videosinfo.total;
-        }
+		return self.request('performance', {}, {timeout : 12000}).then((data) => {
 
-        videosinfo = data;
-        videosinfo.difference = difference;
+			var stats = data.data || {}
+			var performance = stats.performance || {}
+			var re = f.deep(stats, 'videosRedundancy.0') || {}
 
-        instanceIsActive = true;
+			result.stats = {
+				totalLocalVideos : stats.totalLocalVideos || 0,
+				totalLocalVideoViews : stats.totalLocalVideoViews || 0,
+				totalDailyActiveUsers : stats.totalDailyActiveUsers || 0
+			}
 
-        return Promise.resolve();
-      })
-      .catch((e) => {
-        instanceIsActive = false;
-        return Promise.resolve();
-      })
-      .then(() => self.request('performance'))
-      .then((performance) =>
-        performance.data ? performanceBenchmarks.push(performance.data) : null,
-      )
-      .then(() => {
-        lastStat = null;
+			result.performance = {
+				activeLivestreams: performance.activeLivestreams || 0,
+				failImportsCount: performance.failImportsCount || 0,
+				failTranscodingJobs: performance.failTranscodingJobs || 0,
+				waitImportsCount: performance.waitImportsCount || 0,
+				waitTranscodingJobs: performance.waitTranscodingJobs || 0,
 
-        return f.delay(2000);
-      })
-      .then(() => {
-        return statsRequest();
-      })
-      .catch(() => {
-        lastStat = null;
-        return statsRequest();
-      });
-  };
+				redundancy : {
+					totalSize: re.totalSize || 0,
+					totalUsed: re.totalUsed || 0,
+					totalVideoFiles: re.totalVideoFiles || 0,
+					totalVideos: re.totalVideos || 0
+				}
+			}
 
-  var spaceRequest = () => {
-    if (spaceBenchmarks.length > 300) {
-      logs.splice(0, 300);
-    }
+			return self.request('diskSpace',{}, {timeout : 12000})
 
-    if (!inited) {
-      return Promise.resolve();
-    }
+		}).then((data) => {
 
-    return self
-      .request('diskSpace')
-      .then((data) => spaceBenchmarks.push(data))
-      .then(() => f.delay(Roy.parent.statsInterval()))
-      .then(() => {
-        return spaceRequest();
-      })
-      .catch(() => Promise.resolve());
-  };
+			var space = data.data || {}
 
-  self.inited = function () {
-    return inited;
-  };
+			result.space = {
+				free: space.free,
+				size : space.size
+			}
 
-  self.request = function (method, data, p = {}) {
-    var responseTime = performance.now();
-    var url = methods[method];
+			info.push(result)
 
-    if (!url) return Promise.reject('url');
+			info = f.lastelements(info, maxinfoevents, maxinfoevents / 10)
 
-    if (typeof url == 'function') url = url(data);
+			return Promise.resolve()
+
+		}).catch(e => {
 
 
-    //if(p.royrequest && host.indexOf('pocketnetpeertube5') > -1 ) return Promise.reject("undeifd")
-    return axios[p.type || 'get'](`http://${host}${url}`, {
-      timeout: p.timeout || Roy.parent.timeout() || 10000,
-    })
-      .then((result) => {
+			return Promise.resolve()
+
+		})
+	}
+
+	self.info = function(){
+
+		var canuploading = false;
+		var v = null
+
+		if (info.length) {
+			v = info[info.length - 1]
+			////
+			
+			var { free, size } = v.space;
+            var occupiedPerc = (size - free) / size;
+
+            if (occupiedPerc < FREE_SPACE_PERC) canuploading = false
+
+		}
+
+		return {
+			last : v,
+			canuploading : !self.cantuploading
+		}
+	}
+
+	self.inited = function () {
+		return inited;
+	};
+
+	self.request = function (method, data, p = {}) {
+		var responseTime = performance.now();
+		var url = methods[method];
+
+		if (!url) return Promise.reject('url');
+
+		if (typeof url == 'function') url = url(data);
+
+		var timeout = p.timeout || Roy.parent.timeout() || 10000
+
+		//console.log('request', `http://${host}${url}`)
+
+		return axios[p.type || 'get'](`http://${host}${url}`, { timeout }).then((result) => {
+
+			var meta = {
+				code : 200,
+				difference : performance.now() - responseTime,
+				method : method
+			}
+		
+			statistic.add(meta);
+
+			return Promise.resolve({
+				data: result.data || {},
+				meta,
+				host,
+			});
+
+		}).catch((error) => {
+
+			/*if((((error || {}).response || {}).status || 500) == 500)
+				console.log("E", ((error || {}).response || {}).status || 500, `http://${host}${url}`)*/
 
 
-        var meta = {
-          url,
-          status: 200,
-          time: performance.now() - responseTime,
-          success: true,
-        };
+			var meta = {
+				code : ((error || {}).response || {}).status || 500,
+				difference : performance.now() - responseTime,
+				method : method
+			}
 
-        logs.push(meta);
+			if (meta.code == 500) statistic.penalty.set(0.9, 30000, 500)
+		
+			statistic.add(meta);
 
-        return Promise.resolve({
-          data: result.data || {},
-          meta,
-          host,
-        });
-      })
-      .catch((error) => {
-        logs.push({
-          url,
-          status: ((error || {}).response || {}).status || 500,
-          time: performance.now() - responseTime,
-          success: false,
-        });
+			return Promise.reject((error || {}).response || {});
 
-        return Promise.reject((error || {}).response || {});
-      });
-  };
+		});
+	};
 
-  self.stats = function () {
-    if (lastStat) return lastStat;
+	self.availability = function(){
+		return statistic.get.availability()
+	}
 
-    var alltime = 0;
-    var c = 0;
+	self.stats = function () {
 
-    var groupped = f.group(logs, function (l) {
-      if (l.success) {
-        alltime += l.time;
-        c++;
-      }
+		return {
+			events : statistic.get.events(),
+			slice : statistic.get.slice(),
+			penalty : statistic.penalty.get(),
+			info : self.info(),
+			availability : statistic.get.availability()
+		} 
 
-      return l.success ? 's' : 'f';
-    });
+		
+	};
 
-    var info = {
-      inited,
+	self.canuse = function () {
+		return inited
+	};
 
-      success: f.deep(groupped, 's.length') || 0,
-      failed: f.deep(groupped, 'f.length') || 0,
+	self.init = function () {
 
-      count: logs.length,
+		inited = true;
 
-      averageTime: c ? alltime / c : 0,
+		getinfo()
 
-      k: 0,
-      p: 0,
+		setinfointerval()
 
-      total: videosinfo.total || 0,
-    };
+		statistic.init()
 
-    lastStat = info;
+	};
 
-    if (logs.length) {
-      info.k = (k * info.averageTime) / ((c / logs.length) * (info.total + 1));
-      info.p = (100 * c) / logs.length;
-    }
+	self.export = function () {
+		return {
+			host,
+		};
+	};
 
-    return info;
-  };
+	self.destroy = function () {
+		inited = false;
 
-  self.canuse = function () {
-    //previous method
-    // const s = self.stats();
+		clearinfointerval()
 
-    // const canUseInstance = inited && s.averageTime && s.k;
+		info = []
 
-    const canUseInstance = inited && instanceIsActive;
+		statistic.destroy()
+	};
 
-    return canUseInstance;
-  };
 
-  self.init = function () {
-    inited = true;
-
-    statsRequest().catch(() => {});
-    spaceRequest().catch(() => {});
-  };
-
-  self.export = function () {
-    return {
-      host,
-    };
-  };
-
-  self.destroy = function () {
-    inited = false;
-  };
-
-  self.performance = () => ({
-    data: performanceBenchmarks.length
-      ? performanceBenchmarks[performanceBenchmarks.length - 1]
-      : null,
-    host: self.host,
-  });
-
-  self.diskSpace = () => ({
-    data: spaceBenchmarks.length
-      ? spaceBenchmarks[spaceBenchmarks.length - 1]
-      : null,
-    host: self.host,
-  });
-
-  return self;
+	return self;
 };
 
 module.exports = instance;

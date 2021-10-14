@@ -7,6 +7,9 @@ var Cache = function(p){
     var waiting = {}
     var smart = {}
 
+    var softclearInterval = null
+    var softclearTime = 10000
+
 
     var ckeys = {}
     
@@ -112,7 +115,7 @@ var Cache = function(p){
 
             // node -
             peertubevideo: {
-                time : 300,
+                time : 600,
             },
 
             // node ?
@@ -124,6 +127,42 @@ var Cache = function(p){
             getcontentsstatistic: {
                 time : 3600
             },
+        }
+    }
+
+    self.remove = function(key, params, cachehash){
+        if (ckeys[key]){
+
+            var ks = null
+
+            if(!cachehash){
+
+                try{
+                    ks = JSON.stringify(params)    
+                }catch(e){
+                    return
+                }
+            }
+
+            var k = cachehash || f.hash(ks)
+
+            if(!storage[key])
+                storage[key] = {}
+
+            delete storage[key][k] 
+
+            if(!waiting[key])
+                waiting[key] = {}
+
+            if (waiting[key][k]){
+
+                _.each(waiting[key][k].clbks, function(c){
+                    c('waitedmake')
+                })
+
+                delete waiting[key][k]
+            }
+
         }
     }
 
@@ -149,14 +188,14 @@ var Cache = function(p){
 
             storage[key][k] = {
                 data : data,
-                time : f.now()
+                time : new Date()
             }
 
-            if(ontime){
+            if (ontime){
                 storage[key][k].ontime = ontime
             }
 
-            if (typeof ckeys[key].block != undefined){
+            if (block && typeof ckeys[key].block != undefined){
                 ckeys[key].block = block
             }
             
@@ -207,8 +246,11 @@ var Cache = function(p){
             if (sd){
                 var t = f.date.addseconds(sd.time, sd.ontime || ckeys[key].time)
 
-                if (t > f.now()){
+                if (t > new Date()){
                     return sd.data
+                }
+                else{
+                    console.log('key', key, cachehash)
                 }
             }
 
@@ -278,7 +320,7 @@ var Cache = function(p){
 
         setTimeout(function(){
 
-            if(waiting[key] && waiting[key][k] && waiting[key][k].clbks[waitid]){
+            if (waiting[key] && waiting[key][k] && waiting[key][k].clbks[waitid]){
 
                 waiting[key][k].clbks[waitid]('waitedtimeout')
 
@@ -332,6 +374,53 @@ var Cache = function(p){
     
     self.clear = function(){
         storage = {}
+    }
+
+    var softclear = function(){
+
+        var date = new Date()
+
+        _.each(storage, function(s, key){
+
+            var c = ckeys[key]
+
+            if(!c.time){
+                return
+            }
+
+            var removekeys = []
+
+            _.each(s, function(sd, lkey){
+
+                if(sd.time){
+
+                    var t = f.date.addseconds(sd.time, 2 * (sd.ontime || c.time))
+
+                    if (t < date){
+                        console.log(lkey)
+                        removekeys.push(lkey)
+                    }
+                    
+                }
+                
+            })
+
+            _.each(removekeys, function(key){
+                delete s[key]
+            })
+        })
+    }
+
+    self.init = function(){
+        if(!softclearInterval)
+            softclearInterval = setInterval(softclear, softclearTime)
+    }
+
+    self.destroy = function(){
+        if(softclearInterval){
+            clearInterval(softclearInterval)
+            softclearInterval = null
+        }
     }
 
     return self;

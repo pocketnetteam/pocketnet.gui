@@ -87,9 +87,10 @@ var lenta = (function(){
 			},
 			changeSavingStatus : function(shareId, deleted){
 
-				if(self.app.playingvideo && !deleted) return
-		
+				if((self.app.playingvideo || fullscreenvideoShowed) && !deleted ) return
+
 				delete initedcommentes[shareId];
+				
 				var share = self.app.platform.sdk.node.shares.storage.trx[shareId];
 
 				if (share)
@@ -628,9 +629,21 @@ var lenta = (function(){
 						
 					};
 
+					var startTime = 0;
+
+					if (self.app.platform.sdk.videos.historyget && share.itisvideo()){
+
+						var pr = self.app.platform.sdk.videos.historyget(share.txid)
+						if (pr.percent < 95)
+							startTime = pr.time
+					}
+
+					
+
 					var s = {
 						muted : true,
 						resetOnEnd : true,
+						startTime : startTime,
 						controls : ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen'],
 						speed : {
 							selected : 1,
@@ -662,6 +675,20 @@ var lenta = (function(){
 							videopaused = true
 
 							self.app.actions.playingvideo(null)
+						},
+
+						playbackStatusUpdate : function({
+							position,
+							playbackState,
+							duration
+						}){
+							if(playbackState == 'playing' && ((position > 15 && duration > 240) || startTime)){
+								self.app.platform.sdk.videos.historyset(share.txid, {
+									time : position,
+									percent : ((position/duration)* 100).toFixed(0)
+								})
+
+							}
 						}
 					}
 
@@ -1921,7 +1948,6 @@ var lenta = (function(){
 			postscores : function(){
 				var id = $(this).closest('.share').attr('id');
 
-
 				actions.postscores(id)
 			},
 
@@ -2770,7 +2796,7 @@ var lenta = (function(){
 								var _w = el.width();
 								var _h = el.height()
 
-								if(_img.width > _img.height && (!isMobile() && self.app.width > 768)){
+								if(_img.width > _img.height && (!isMobile() && self.app.width > 768 && !essenseData.openapi)){
 									ac = 'w2'
 
 									var w = _w * (_img.width / _img.height);
@@ -2786,7 +2812,7 @@ var lenta = (function(){
 									el.width(w);
 								}
 
-								if(_img.height > _img.width || (isMobile() || self.app.width <= 768)){
+								if(_img.height > _img.width || (isMobile() || self.app.width <= 768 || essenseData.openapi)){
 									ac = 'h2'
 
 									el.height(_w * (_img.height / _img.width))
@@ -2817,7 +2843,7 @@ var lenta = (function(){
 
 							var gutter = 5;
 
-							if (isMobile()) gutter = 0
+							if (isMobile() || essenseData.openapi) gutter = 0
 
 							images.isotope({
 
@@ -2983,6 +3009,7 @@ var lenta = (function(){
 						turi : 'share',
 						name :  'url',
 						el : el,
+						mid : 'sharelenta',
 						data : {
 							url : url,
 							og : og,

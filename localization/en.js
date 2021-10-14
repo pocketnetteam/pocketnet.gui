@@ -375,7 +375,7 @@ ____loclib.networkerror = "There are some problems with node";
 ____loclib.canSpendError = "You have to wait for your previous transaction to clear in the blockchain. Please wait";
 ____loclib.noMoneyError  = "You can't doing actions with zero account balance";
 
-
+____loclib.scoreLimitLight = "You have reached your rating limit";
 
 ____loclib.waitConf = "You have to wait for your previous transaction to clear in the blockchain";
 ____loclib.postWaitConf = "Post is waiting for a blockchain confirmation";
@@ -1173,11 +1173,11 @@ ____loclib.deleteSavedVideo = "Delete saved video";
 ____loclib.downloadShare = "Save Share";
 ____loclib.deleteSavedShare = "Delete Share";
 
-____loclib.selectQuality = "Select quality:";
+____loclib.selectQuality = "Select the quality of the uploaded video";
 ____loclib.downloadedVideos = "Downloaded videos";
 ____loclib.deleteAllDownloadedVideos = "Delete all downloaded videos";
 ____loclib.noDownloadedVideos = "No downloaded videos";
-____loclib.deleteVideoDialog = "Are you sure you want to delete this video?";
+____loclib.deleteVideoDialog = "Delete saved video";
 ____loclib.deleteAllVideoDialog = "Are you sure you want to delete all the videos?";
 ____loclib.videosDeleted = "Videos deleted!";
 
@@ -1207,3 +1207,11 @@ ____loclib.bastyonhelperSubtitle2 = "Please, follow the link bellow";
 
 ____loclib.videotranscodingwait = "The video is being processed. After it is transcoded, you can post it on Bastyon.";
 ____loclib.views = "Views";
+
+
+____loclib.saveshare = "Add videos to saved";
+____loclib.successdownloaded = "Video saved";
+
+
+____loclib.logoutaccount = "Sign out of your account";
+____loclib.closeapplication = "Exit the application";

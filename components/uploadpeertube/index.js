@@ -368,7 +368,7 @@ var uploadpeertube = (function () {
         },
         offScroll: true,
         noInnerScroll: true,
-        class: 'uploadpeertube',
+        class: 'uploadpeertube normalizedmobile',
         allowHide: true,
         noCloseButton: true,
         noButtons: true,

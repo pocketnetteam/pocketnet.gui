@@ -770,7 +770,7 @@
 
 		p.class = 'tooltipMobileDialog';
 
-		p.html = '<div class="mobiledialogcontent">'+(p.html || '')+'</div><div class="closeButton"><button class="button ghost"><i class="far fa-times-circle"></i> Close</button></div>'
+		p.html = '<div class="mobiledialogcontent">'+(p.html || '')+'</div><div class="closeButton"><button class="button ghost"><i class="far fa-times-circle"></i></button></div>'
 
 		var c = p.clbk || function(){}
 
@@ -2671,6 +2671,7 @@
 	}
 
 	lastelements = function(arr, length, eq){
+		
 		if(!length) length = 100
 		if(!eq) eq = 0
 	

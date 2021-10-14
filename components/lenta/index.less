@@ -2084,6 +2084,14 @@
 						
 					}
 				}
+				.durationWrapper{
+					border-radius: 0;
+					border-top-left-radius: 6px;
+				}
+				.statswrapper{
+					border-radius: 0;
+					border-top-right-radius: 6px;
+				}
 
 
 				.meta{
@@ -2118,6 +2126,7 @@
 						.usericon{
 							width: 32px!important;
 							height: 32px!important;
+							line-height: 32px!important;
 							font-size: 1.5em;
 						}
 					}
@@ -2298,6 +2307,15 @@
 				
 				&:nth-last-child(1){
 					margin-right: 0;
+				}
+
+				.durationWrapper{
+					border-radius: 0;
+					border-bottom-left-radius: 6px;
+				}
+				.statswrapper{
+					border-radius: 0;
+					border-bottom-right-radius: 6px;
 				}
 			}
 		}
@@ -2834,7 +2852,6 @@ html.stblack{
 				}
 	
 				.panel{
-					margin-bottom : 2 * @rhythm;
 					
 					.itemwr{
 	
@@ -2915,7 +2932,6 @@ html.stblack{
 				}
 	
 				&.fullScreenVideo{
-					background: fade(@color-black4, 80);
 					
 					.work{
 						background: @color-black;

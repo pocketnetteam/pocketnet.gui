@@ -441,6 +441,7 @@ Application = function(p)
 		user : function({
 			address1,
 			address2,
+			email,
 			reason
 		}, clbk){
 
@@ -452,7 +453,8 @@ Application = function(p)
 
 			var _p = {
 				address1 : address1,
-				address2 : address2
+				address2 : address2,
+				email : email
 			}
 
 			_p.Action || (_p.Action = 'ADDTOMAILLIST');
@@ -475,11 +477,18 @@ Application = function(p)
 					if (clbk)
 						clbk(true);
 
+				},
+
+				error : function(){
+					topPreloader(100)
+
+					if (clbk)
+						clbk(true);
 				}
 			});
 
 		},
-		common : function({address1, reason},  clbk){
+		common : function({address1, reason, email},  clbk){
 			if(!address1 || !reason){
 				clbk(false)
 
@@ -487,7 +496,8 @@ Application = function(p)
 			}
 
 			var _p = {
-				address1 : address1
+				address1 : address1,
+				email : email
 			}
 
 			_p.Action || (_p.Action = 'ADDTOMAILLIST');
@@ -510,6 +520,13 @@ Application = function(p)
 					if (clbk)
 						clbk(true);
 
+				},
+
+				error : function(){
+					topPreloader(100)
+
+					if (clbk)
+						clbk(true);
 				}
 			});
 		},
@@ -545,6 +562,13 @@ Application = function(p)
 					if (clbk)
 						clbk(true);
 
+				},
+
+				error : function(){
+					topPreloader(100)
+
+					if (clbk)
+						clbk(true);
 				}
 			});
 		}
@@ -757,9 +781,9 @@ Application = function(p)
 
 		prepareMap();
 
-		self.options.fingerPrint = hexEncode('fakefingerprint');
-
 		
+
+		self.options.fingerPrint = hexEncode('fakefingerprint');
 		
 		self.localization.init(function(){
 
@@ -788,6 +812,7 @@ Application = function(p)
 
 			})
 		})
+		
 
 		
 
@@ -880,29 +905,28 @@ Application = function(p)
 			html : 			$('html'),
 			window : 		$(window)
 		};
-	
+
+
+
 		if (self.test){
 			$('html').addClass('testpocketnet') /// bstn
 		}
 
-		if(window.cordova) {
-			self.el.html.addClass('cordova')
-
-			if(self.curation()){
-				
-			}
-
-			if (window.cordova && !isMobile()){
-				self.el.html.addClass('tablet')
-			}
-		}
-
 		initevents()
-
 
 		if(typeof window.cordova != 'undefined')
 		{
 			document.addEventListener('deviceready', function(){
+
+				self.el.html.addClass('cordova')
+
+				if(self.curation()){
+					
+				}
+
+				if (window.cordova && !isMobile()){
+					self.el.html.addClass('tablet')
+				}
 
 				
 				if(isTablet() && !isMobile()) baseorientation = null
@@ -932,6 +956,7 @@ Application = function(p)
 		{
 			self.init(p);
 		}
+
 
 	}
 
@@ -1167,7 +1192,6 @@ Application = function(p)
 			delayresize = null
 
 		var body = document.body
-		var mobile = isMobile()
 
 		self.height = self.el.window.height()
 		self.width = self.el.window.width()
@@ -1196,7 +1220,7 @@ Application = function(p)
 					s(scrollTop, blockScroll)
 				})
 
-				if(mobile && !cr){
+				if(isMobile() && !cr){
 
 					var cs = (lastScrollTop + 40 < scrollTop || lastScrollTop - 40 < scrollTop)
 

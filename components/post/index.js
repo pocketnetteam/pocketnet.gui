@@ -386,17 +386,26 @@ var post = (function () {
 
 				if (pels.length) {
 
+					var startTime = 0;
+
+					if (self.app.platform.sdk.videos.historyget && share.itisvideo()){
+
+						var pr = self.app.platform.sdk.videos.historyget(share.txid)
+						if (pr.percent < 95)
+							startTime = pr.time
+					}
+
+					console.log('startTime', startTime)
+
 					var options = {
 						//autoplay : pels.length <= 1,
 						resetOnEnd: true,
 						muted: false,
 						wautoplay: wa,
 						logoType : self.app.meta.fullname,
-
+						startTime : startTime,
 						volumeChange : function(v){
 							videosVolume = v
-
-							console.log('v', v)
 
 							self.sdk.videos.volume = videosVolume 
 
@@ -410,8 +419,6 @@ var post = (function () {
 						play : function(){
 							self.app.actions.playingvideo(player)
 
-							console.log('share', ed)
-
 							if(isMobile() && !ed.repost){
 								
 								self.app.actions.scroll(125)
@@ -420,6 +427,21 @@ var post = (function () {
 
 						pause : function(){
 							self.app.actions.playingvideo(null)
+						},
+
+						playbackStatusUpdate : function({
+							position,
+							playbackState,
+							duration
+						}){
+							if(playbackState == 'playing' && ((position > 15 && duration > 240) || startTime)){
+
+								self.app.platform.sdk.videos.historyset(share.txid, {
+									time : position,
+									percent : ((position/duration)* 100).toFixed(0)
+								})
+
+							}
 						}
 					};
 
@@ -674,6 +696,7 @@ var post = (function () {
 			},
 
 			postscores: function () {
+				console.log('postscorespostscorespostscores')
 				actions.postscores()
 			},
 			repost: function () {
@@ -1011,6 +1034,8 @@ var post = (function () {
 						},
 					},
 					function (_p) {
+						if(!el.share) return
+
 						el.stars = el.share.find('.forstars');
 
 						actions.position();
@@ -1139,7 +1164,7 @@ var post = (function () {
 						bgImages: {},
 					},
 					function (p) {
-						p.el.find('.wholikesTable').on('click', events.postscores);
+						p.el.find('.forstars .count').on('click', events.postscores);
 
 						if (clbk) clbk();
 					},
@@ -1172,6 +1197,8 @@ var post = (function () {
 						fastars(p.el.find('.stars'));
 
 						el.share.find('.stars i').on('click', events.like);
+
+						p.el.find('.count').on('click', events.postscores);
 
 						if (clbk) clbk();
 					},

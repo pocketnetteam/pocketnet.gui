@@ -405,7 +405,7 @@ var accounts = (function(){
 				p.clbk(null, p);
 			},
 			wnd : {			
-				class : 'accountswnd',
+				class : 'accountswnd normalizedmobile',
 			}
 		}
 	};

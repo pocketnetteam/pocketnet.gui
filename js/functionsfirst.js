@@ -79,7 +79,6 @@ topPreloader2 = function(percent, text){
 
     if(percent <= 0 || percent >= 100){
 
-
         el.addClass('complete');
         el.attr('percent', 0); 
 
@@ -105,51 +104,6 @@ topPreloader = function(percent){
 
     return
 
-    if(!window.jQuery) return
-
-    if(_Node) return
-
-    var el = $('#_topPreloader');
-
-    var div = el.find('div');
-
-    if (div.length == 0) {
-
-        div = $("<div>");
-        el.append(div);
-
-    }
-
-    el.removeClass('complete');
-
-    var inip = el.attr('percent') || 0;
-
-    el.attr('percent', percent); 
-
-    div.width((percent - inip) + "%")
-
-    if(percent <= 0 || percent >= 100){
-
-
-        el.addClass('complete');
-        el.attr('percent', 0); 
-
-        setTimeout(function(){
-
-            el.fadeOut(300);
-
-            setTimeout(function(){
-
-                el.html('');
-
-            },300)
-
-        },500)
-        
-    }
-    else{
-        el.fadeIn(1);
-    }
     
 }
 
