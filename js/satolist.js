@@ -3446,7 +3446,7 @@ Platform = function (app, listofnodes) {
 										{
 
                                             console.log('result removed post', result)
-                                            authorgroup.addClass('removed');
+                                            authorgroup.addClass('deleted');
 
 
                                         }

@@ -113,13 +113,13 @@
   padding-bottom: 1.5em;
   color: #b2abac;
 }
-#lenta .shares .share .sharecnt.removed .cntscontent,
-#lenta .shares .share .sharecnt.removed .repostWrapper,
-#lenta .shares .share .sharecnt.removed .commentsWrapperHb,
-#lenta .shares .share .sharecnt.removed .metapanel {
+#lenta .shares .share .sharecnt.deleted .cntscontent,
+#lenta .shares .share .sharecnt.deleted .repostWrapper,
+#lenta .shares .share .sharecnt.deleted .commentsWrapperHb,
+#lenta .shares .share .sharecnt.deleted .metapanel {
   display: none!important;
 }
-#lenta .shares .share .sharecnt.removed .removeDescription {
+#lenta .shares .share .sharecnt.deleted .removeDescription {
   display: block;
 }
 #lenta .shares .statswrapperExtended {

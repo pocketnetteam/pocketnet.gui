@@ -203,13 +203,13 @@
   padding-bottom: 1.5em;
   color: #b2abac;
 }
-#share #post .share .sharecnt.removed .cntscontent,
-#share #post .share .sharecnt.removed .repostWrapper,
-#share #post .share .sharecnt.removed .commentsWrapperHb,
-#share #post .share .sharecnt.removed .metapanel {
+#share #post .share .sharecnt.deleted .cntscontent,
+#share #post .share .sharecnt.deleted .repostWrapper,
+#share #post .share .sharecnt.deleted .commentsWrapperHb,
+#share #post .share .sharecnt.deleted .metapanel {
   display: none!important;
 }
-#share #post .share .sharecnt.removed .removeDescription {
+#share #post .share .sharecnt.deleted .removeDescription {
   display: block;
 }
 #share #post .metapanel {
