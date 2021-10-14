@@ -191,12 +191,26 @@
 #share .repostShareWrapper .repostCaption .table > div.icon {
   padding-left: 0;
 }
-#share #post .share {
+#share #post .share .sharecnt {
   /*background: fade(#fff, 50);*/
 }
-#share #post .share .work {
+#share #post .share .sharecnt .work {
   padding: 0;
   padding-right: 30px;
+}
+#share #post .share .sharecnt .removeDescription {
+  display: none;
+  padding-bottom: 1.5em;
+  color: #b2abac;
+}
+#share #post .share .sharecnt.removed .cntscontent,
+#share #post .share .sharecnt.removed .repostWrapper,
+#share #post .share .sharecnt.removed .commentsWrapperHb,
+#share #post .share .sharecnt.removed .metapanel {
+  display: none!important;
+}
+#share #post .share .sharecnt.removed .removeDescription {
+  display: block;
 }
 #share #post .metapanel {
   display: none!important;
@@ -211,19 +225,6 @@
 }
 #share #post .cntswrk {
   margin-left: 4em;
-}
-#share #post .shareTable .removeDescription {
-  display: none;
-  padding-bottom: 1.5em;
-  color: #b2abac;
-}
-#share #post .shareTable.removed .cntscontent,
-#share #post .shareTable.removed .commentsWrapperHb,
-#share #post .shareTable.removed .metapanel {
-  display: none;
-}
-#share #post .shareTable.removed .removeDescription {
-  display: block;
 }
 #share #post .images {
   max-width: 700px;

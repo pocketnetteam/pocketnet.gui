@@ -3232,9 +3232,6 @@ Platform = function (app, listofnodes) {
         metmenu: function (_el, id, actions) {
             var share = self.sdk.node.shares.storage.trx[id];
 
-            var shares = _el.closest('.shares');
-            var authorgroup = shares.find(`[stxid='${id}']`);
-
             if (!share) {
                 var temp = _.find(self.sdk.node.transactions.temp.share, function (s) {
                     return s.txid == id
@@ -3399,9 +3396,13 @@ Platform = function (app, listofnodes) {
                                 btn2text : self.app.localization.e('dno'),
                                 success : function(){	
 
-                                   var removePost = function (share, clbk){
+                                    var shares = _el.closest('.shares');
+                                    var shareslist = shares.find('#'+ id);
+                                    var authorgroup = shareslist.find('.sharecnt');
+                        
 
-                                        console.log('share', share);
+                                    var removePost = function (share, clbk){
+
                                         share.deleted = true;
                                         var ct = new Remove();
                                         ct.txidEdit = share.txid;
@@ -3416,7 +3417,6 @@ Platform = function (app, listofnodes) {
 
 
                                                     if (self.app.peertubeHandler.checklink(l)) {
-                                                        debugger;
                                                         share.settings.a = share.default.a
 
                                                         self.app.peertubeHandler.api.videos.remove(l).then(r => {
@@ -3445,6 +3445,7 @@ Platform = function (app, listofnodes) {
 										if(!err)
 										{
 
+                                            console.log('result removed post', result)
                                             authorgroup.addClass('removed');
 
 

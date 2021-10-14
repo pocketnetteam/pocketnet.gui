@@ -230,14 +230,27 @@
 	}	
 
 	#post{
-		.share{
+		.share .sharecnt{
 			/*background: fade(#fff, 50);*/
 			.work{
 				padding : 0;
 				padding-right: 30px;
 			}
 
-			.iconWrapper{
+			.removeDescription{
+				display: none;
+				padding-bottom: @rhythm * 3;
+				color: #b2abac;
+			}
+				
+			&.removed{
+				.cntscontent, .repostWrapper, .commentsWrapperHb, .metapanel{
+					display: none!important;
+				}
+	
+				.removeDescription{
+					display: block;
+				}
 			}
 
 		}
@@ -259,27 +272,6 @@
 			margin-left: 8 * @rhythm;
 		}
 		
-
-		.shareTable {
-
-			.removeDescription{
-				display: none;
-				padding-bottom: @rhythm * 3;
-				color: #b2abac;
-			}
-				
-			&.removed{
-				.cntscontent, .commentsWrapperHb, .metapanel{
-					display: none;
-				}
-	
-				.removeDescription{
-					display: block;
-				}
-			}
-	
-		}
-
 		.images{
 			max-width: 700px;
 			padding : 2 * @rhythm 0;

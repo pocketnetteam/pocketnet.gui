@@ -305,11 +305,11 @@ var metadisplay = function(){ %>
 
 } %>
 
-<div class="sharecnt">
+<div class="sharecnt <% if(share.deleted) { %> removed <% } %>">
 
 	<div class="work unselectablemobile">
 
-		<div class="shareTable <% if(share.deleted) { %> removed <% } %> <%-subscribed%> <%-view%> <% if(emptywithrepost) { %> emptywithrepost <% } else { %> truerepost <% } %>" address="<%-share.address%>" stxid="<%-share.txid%>">
+		<div class="shareTable <%-subscribed%> <%-view%> <% if(emptywithrepost) { %> emptywithrepost <% } else { %> truerepost <% } %>" address="<%-share.address%>" stxid="<%-share.txid%>">
 
 			<% if(!emptywithrepost) { %>
 
@@ -382,13 +382,14 @@ var metadisplay = function(){ %>
 
 			</div>
 
+			
+			<div class="cntswrk removeDescription">
+				<%=e('postRemoved')%>
+			</div>
+
 			<div class="repostWrapper cntscontent"></div>
 
 			<% if(!emptywithrepost) {%>
-
-				<div class="cntswrk removeDescription">
-					<%=e('postRemoved')%>
-				</div>
 
 				<div class="cntswrk cntscontent">
 					<div class="paddingWrapper">
