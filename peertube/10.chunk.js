@@ -432,6 +432,7 @@ class hls_plugin_Html5Hlsjs {
         this.tech.trigger('error');
     }
     _onError(_event, data) {
+        console.error('_event', _event, data);
         const error = {
             message: `HLS.js error: ${data.type} - fatal: ${data.fatal} - ${data.details}`
         };
