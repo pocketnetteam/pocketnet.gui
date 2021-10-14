@@ -1331,9 +1331,11 @@ class P2PMediaManager extends _stringly_typed_event_emitter__WEBPACK_IMPORTED_MO
             return overallSegmentsMap;
         };
         this.onPieceBytesDownloaded = (peer, bytes) => {
+            console.log('bytes, peer.id', bytes, peer.id);
             this.emit("bytes-downloaded", bytes, peer.id);
         };
         this.onPieceBytesUploaded = (peer, bytes) => {
+            console.log('bytes, peer.id', bytes, peer.id);
             this.emit("bytes-uploaded", bytes, peer.id);
         };
         this.onPeerConnect = (peer) => {
