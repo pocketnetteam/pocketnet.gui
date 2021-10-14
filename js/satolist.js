@@ -3413,18 +3413,18 @@ Platform = function (app, listofnodes) {
                                             if(!err){
                                                 if (clbk){
                
-                                                    var l = share.url;
+                                                    // var l = share.url;
 
 
-                                                    if (self.app.peertubeHandler.checklink(l)) {
-                                                        share.settings.a = share.default.a
+                                                    // if (self.app.peertubeHandler.checklink(l)) {
+                                                    //     share.settings.a = share.default.a
 
-                                                        self.app.peertubeHandler.api.videos.remove(l).then(r => {
-                                                            self.app.platform.sdk.videos.clearstorage(l)
-                                                        })
+                                                    //     self.app.peertubeHandler.api.videos.remove(l).then(r => {
+                                                    //         self.app.platform.sdk.videos.clearstorage(l)
+                                                    //     })
 
 
-                                                    }
+                                                    // }
 
                                                     clbk(null, alias)
                                                 }
