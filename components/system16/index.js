@@ -1250,7 +1250,24 @@ var system16 = (function(){
 							path : 'memory.rss',
 							name : "RSS",
 							id : 'rss'
+						},
+						{
+							path : 'memory.external',
+							name : "External",
+							id : 'external'
+						},
+						{
+							path : 'memory.heapTotal',
+							name : "Heap Total",
+							id : 'heapTotal'
+						},
+						{
+							path : 'memory.heapUsed',
+							name : "Heap Used",
+							id : 'heapUsed'
 						}
+
+
 					]
 				},
 

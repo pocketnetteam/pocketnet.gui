@@ -62,7 +62,7 @@ var Proxy = function (settings, manage, test) {
 
 
 	var stats = [];
-	var statcount = 5000;
+	var statcount = 1000;
 	var statInterval = null;
 
 	var captchas = {};
@@ -728,7 +728,7 @@ var Proxy = function (settings, manage, test) {
 				status = 2
 
 				if (!statInterval)
-					statInterval = setInterval(addStats, 10000)
+					statInterval = setInterval(addStats, 30000)
 
 				return Promise.resolve()
 			})

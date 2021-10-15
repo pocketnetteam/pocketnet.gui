@@ -199,21 +199,33 @@ var Node = function(options, manager){
 
         var counter = 0
         var dcounter = 0
+        var chainlength = chain.length
 
         _.each(cs.lasttrustblocks, function(tblock){
-            var bc = _.find(chain, function(c){
-                return c.height == cs.tblock
-            })
 
+            var i = chainlength - 1
+            var c = null
+            var bc = null
+        
+            while(i >= 0 && !bc){
+                c = chain[i]
+        
+                if (c.height == tblock.height){
+                    bc = c
+                }
+        
+                i--
+            }
+        
             if (bc){
                 counter++
-
+        
                 if(bc.blockhash != tblock.blockhash) dcounter++
             }   
         })
 
         return {
-            fork : dcounter / counter < 0.5,
+            fork : counter ? dcounter / counter >= 0.5 : false,
             difference : d
         }
         
@@ -554,7 +566,7 @@ var Node = function(options, manager){
             if (rate > 30 && rate <= 50) rate = 40
             if (rate > 50 && rate <= 100) rate = 75
 
-            return (s.percent / (rate * time))
+            return (s.percent / (/*rate * */time))
 
         },
 
