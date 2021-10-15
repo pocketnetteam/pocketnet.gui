@@ -3321,27 +3321,14 @@ Platform = function (app, listofnodes) {
 
                                     var pinPost = function (share, clbk){
 
-                                        var ct = new Pin();
-                                        ct.txidEdit = share.txid;
+                                        var ct = new Settings();
+                                        ct.pin = share.txid;
 
                         
-                                        self.app.platform.sdk.node.shares.pin(share.txid, ct, function(err, alias){
+                                        self.app.platform.sdk.node.account.accSet(ct, function(err, alias){
                         
                                             if(!err){
                                                 if (clbk){
-               
-                                                    // var l = share.url;
-
-
-                                                    // if (self.app.peertubeHandler.checklink(l)) {
-                                                    //     share.settings.a = share.default.a
-
-                                                    //     self.app.peertubeHandler.api.videos.remove(l).then(r => {
-                                                    //         self.app.platform.sdk.videos.clearstorage(l)
-                                                    //     })
-
-
-                                                    // }
 
                                                     clbk(null, alias)
                                                 }
@@ -11620,7 +11607,35 @@ Platform = function (app, listofnodes) {
                             self.sdk.node.account.import(email, address, clbk)
                         }
                     })
-                }
+                },
+
+                accSet: function (settings, clbk) {
+    
+                    self.sdk.node.transactions.create.commonFromUnspent(
+    
+                        settings,
+    
+                        function (_alias, error) {
+    
+    
+                            if (!_alias) {
+    
+                                if (clbk) {
+                                    clbk(error, null)
+                                }
+    
+                            }
+    
+                            else {
+    
+                                if (clbk)
+                                    clbk(null, _alias)
+                            }
+    
+                        }
+                    )
+    
+                },
             },
 
             shares: {
