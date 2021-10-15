@@ -261,8 +261,6 @@ var socialshare2 = (function(){
 						settings[i] = embeddingSettings[i]
 					})
 
-					console.log('settings', settings,ed.embedding.id)
-
 					/*if(settings.onlyvideo && settings.onlyvideo.value){
 						_.each(settings, function(s){
 							if (s.id != 'onlyvideo')
@@ -330,7 +328,7 @@ var socialshare2 = (function(){
 
 			embeddingcode : function(action, actionid, settings){
 
-		
+				return ''
 				var p = {};
 
 				_.each(settings, function(s, i){
@@ -855,7 +853,7 @@ var socialshare2 = (function(){
 				trueshold : 1,
 				swipeCloseDir : 'down',
 				header : self.app.localization.e('e13174'),
-				class : 'sharingwindow2'
+				class : 'sharingwindow2 normalizedmobile'
 			}
 		}
 	};

@@ -263,8 +263,8 @@ var Node = function(options, manager){
                     }
 
                     if(err.code == 521) penalty.set(0.8, 120000, '521')
-                    if(err.code == 408) penalty.set(0.9, 30000, '408')
-                    if(err.code == 429) penalty.set(0.5, 10000, '429')
+                    if(err.code == 408) penalty.set(0.5, 30000, '408')
+                    if(err.code == 429) penalty.set(0.3, 10000, '429')
     
                 }	
 
@@ -353,7 +353,7 @@ var Node = function(options, manager){
 
                 _.each(objs, function(obj){
                     common.time += (obj.time || 0) * (obj.count || 0)
-                    common.rate += (obj.failed || 0) * (obj.count || 0)
+                    common.rate += (obj.rate || 0) * (obj.count || 0)
                     common.percent += (obj.percent || 0) * (obj.count || 0)
                 })    
 
@@ -561,53 +561,61 @@ var Node = function(options, manager){
         rating : function(){
 
             if(cachedrating){
-
+            
                 if(f.date.addseconds(cachedrating.time, 10) > new Date()){
                     return cachedrating.result
                 }
             }
 
-            var s = self.statistic.getst()
-            var slice = statistic.historyslice
+            
 
             var lastblock = self.lastblock() || {}
+            var result = 0;
 
-            var status = self.chainStatus()
+            if(
+                (!lastblock.height) || (self.testing)
+                || (!self.inited)
+            ){
+
+            }
+            else{
+
+                var status = self.chainStatus()
+
+                var difference = status.difference || 0
+
+                if (difference > 0) difference = 0
+                    difference = -difference
+                if (
+                    (status.fork && difference > 5 || difference > 50)
+                ){
+
+                }
+                else{
+
+                    var s = self.statistic.getst()
+                    var slice = statistic.historyslice
+
+
+                    var availabilityAllTime = self.statistic.calcAvailability(s)
+                    var availability5Minutes = self.statistic.calcAvailability(slice)
+                    ///
+        
+        
+                    var usersl = _.toArray(wss.users).length + 1
+                    var userski = 1
+        
+                    if (usersl > 0 && usersl <= 10) userski = 1
+                    if (usersl > 10 && usersl <= 100) userski = 10
+                    if (usersl > 100 && usersl <= 500) userski = 100
+                    if (usersl > 500 && usersl <= 1000) userski = 500
+                    if (usersl > 1000) userski = 1000
+        
+                    result = penalty.getk() * (Math.sqrt(availabilityAllTime * availability5Minutes) * ((lastblock.height || 1) / (userski) * (difference + 1)))
+                }
+            }
+
             ///
-
-            var difference = status.difference || 0
-            if (difference > 0) difference = 0
-                difference = -difference
-
-            ///
-
-            if (status.fork && difference > 5 || difference > 50) return 0
-            if(!lastblock.height) return 0
-            if (self.testing) return 0
-            if(!self.inited) return 0
-
-
-            var availabilityAllTime = self.statistic.calcAvailability(s)
-            var availability5Minutes = self.statistic.calcAvailability(slice)
-            ///
-
-
-            var usersl = _.toArray(wss.users).length + 1
-            var userski = 1
-
-            if (usersl > 0 && usersl <= 10) userski = 1
-            if (usersl > 10 && usersl <= 100) userski = 10
-            if (usersl > 100 && usersl <= 500) userski = 100
-            if (usersl > 500 && usersl <= 1000) userski = 500
-            if (usersl > 1000) userski = 1000
-
-
-            var result = penalty.getk() * (Math.sqrt(availabilityAllTime * availability5Minutes) * ((lastblock.height || 1) / (userski) * (difference + 1)))
-            
-           
-
-            /*var result = (s.percent  * (lastblock.height || 1) ) / 
-            (userski * rate * (time) * (difference + 1) )*/
     
             cachedrating = {
                 result : result,
@@ -661,12 +669,10 @@ var Node = function(options, manager){
 
             if(!manager) return 1
 
+
             return this.probabilityNodes(manager.nodes)
 
         },
-
-        
-        
 
         interval : function(){
             if(!statisticInterval){
@@ -676,11 +682,7 @@ var Node = function(options, manager){
 
                 statisticInterval = setInterval(function(){
 
-                    //self.statistic.clearOld()
-
                     if (
-                        
-                        /*self.events.length < 1 + checkEventsLength ||*/
                         
                         !lastinfoTime || f.date.addseconds(lastinfoTime, notactualevents / 1000) < new Date()){
 
@@ -697,19 +699,6 @@ var Node = function(options, manager){
                 clearInterval(statisticInterval)
                 statisticInterval = null
             }
-        },
-
-        clearOld : function(){
-
-            var timecheck = f.date.addseconds(new Date(), -notactualevents / 1000)
-
-            self.events = _.filter(self.events, function(e){
-
-                if(e.time < timecheck) return false
-
-                return true
-            })
-
         }
     }
 

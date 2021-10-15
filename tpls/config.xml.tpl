@@ -142,15 +142,10 @@
         <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application">
             <application android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true"/>
         </edit-config>
-
-        <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application/activity">
-            <activity android:supportsPictureInPicture="true" android:resizeableActivity="true" />
-        </edit-config>
-
     </platform>
 
     <universal-links>
-        <ios-team-id value="Y5JW9JU787" />
+        <ios-team-id value="Y5JW9JU787"/>
 
         <host name="pocketnet.app" scheme="https">
             <path url="*" event="nav-message" />

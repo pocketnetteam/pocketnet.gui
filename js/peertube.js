@@ -476,7 +476,8 @@ PeerTubePocketnet = function (app) {
       },
 
       best: function (type) {
-        return this.roys()
+
+        return this.roys({type : type})
           .then((data = {}) => {
             const roysAmount = Object.keys(data).length;
             const royId =
@@ -499,9 +500,9 @@ PeerTubePocketnet = function (app) {
           });
       },
 
-      bestChange: function () {
+      bestChange: function ({type}) {
         return self.api.proxy
-          .best()
+          .best(type)
           .then((host) => {
             // setactive(host);
             return Promise.resolve();
@@ -511,7 +512,7 @@ PeerTubePocketnet = function (app) {
           });
       },
 
-      roys: () => app.api.fetch('peertube/roys'),
+      roys: ({type}) => app.api.fetch('peertube/roys', {type}),
     },
 
     videos: {
@@ -899,7 +900,7 @@ PeerTubePocketnet = function (app) {
   };
 
   self.init = function () {
-    return self.api.proxy.bestChange();
+    return self.api.proxy.bestChange({type : 'upload'});
   };
 
   self.helpers = {

@@ -894,7 +894,7 @@ html.stblack{
 			background: #20232A;			
 		}
 		.bgCaption{
-			background: fade(@color-bright, 15);
+			background: fade(@color-bright, 6);
 			color : fade(@color-gray-slight, 70);
 	
 			&.blocking{
@@ -1351,9 +1351,33 @@ html.tablet{
 					white-space: nowrap;
 					margin-top : 0;	
 					margin-bottom: 2 * @rhythm;
-
+					display: flex;
+					flex-wrap: wrap;
+					align-items: center;
 					.adr{
-						font-size: 1em;
+						font-size: 2em;
+						
+					}
+
+					.subscribebuttonstop{
+						flex-grow: 1;
+						min-width: 100%;
+					}
+
+					.middotwrapper{
+						display: none;
+					}
+
+					.subscribe{
+						
+						font-size: 1.4em;
+						border-bottom : 1px solid @color-orange;
+						opacity: 1;
+					}
+
+					.blockingWrapper{
+						flex-grow: 1;
+						min-width: 100%;
 					}
 
 				}
@@ -1450,9 +1474,13 @@ html.tablet{
 		#content{
 
 			#author{
+
+				.bgCaption{
+					background: #00192a;
+				}
 	
 				.mworkwrapper{
-					background: fade(@color-bright,40);
+					background: fade(@color-bright,1);
 				}
 	
 			}

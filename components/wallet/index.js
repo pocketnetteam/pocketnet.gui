@@ -2827,7 +2827,7 @@ var wallet = (function(){
 			},
 
 			wnd : {
-				class : 'withoutButtons walletwindow'
+				class : 'withoutButtons walletwindow normalizedmobile'
 			}
 		}
 	};

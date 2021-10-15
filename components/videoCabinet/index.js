@@ -31,7 +31,7 @@ var videoCabinet = (function () {
     var actions = {
       async getHosts() {
         const serverStructureHosts = await self.app.peertubeHandler.api.proxy
-          .roys()
+          .roys({type : 'view'})
           .catch(() => ({}));
 
         Object.entries(serverStructureHosts).forEach(

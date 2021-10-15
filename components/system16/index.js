@@ -9,7 +9,7 @@ var system16 = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, api = null, proxy = null, chain = null, info = null, stats = [], system = null, bots = [], peertubePerformance = {};
+		var el, api = null, proxy = null, chain = null, info = null, stats = [], system = null, bots = [];
 
 		var graphs = {}
 
@@ -997,34 +997,205 @@ var system16 = (function(){
 					caption : "Instance Median Response Time",
 
 					series : [
-						{
+						/*{
 							name : "Median Response Time",
-							path : "stats.averageTime",
+							path : "stats.events.time",
+							id : 'sa'
+						},*/
+
+						{
+							name : "Median Response Time / Short",
+							path : "stats.slice.time",
 							id : 'sa'
 						}
+					]
+				},
+
+				performance : {
+					caption : "Performance",
+					many : true,
+					series : [
+						{
+							name : "Active Streams",
+							path : "stats.info.last.performance.activeLivestreams",
+							id : 'sa'
+						},
+
+						{
+							name : "Importing",
+							path : "stats.info.last.performance.failImportsCount",
+							id : 'sa'
+						}
+					]
+				},
+
+				redundancysu: {
+					caption : "Redundancy/Size/Used",
+					many : true,
+					series : [
+						{
+							name : "Total Size",
+							path : "stats.info.last.performance.redundancy.totalSize",
+							id : 'sac'
+						},
+
+						{
+							name : "Total Used",
+							path : "stats.info.last.performance.redundancy.totalUsed",
+							id : 'sat'
+						}
+					]
+				},
+
+				redundancy: {
+					caption : "Redundancy/Counts",
+					many : true,
+					series : [
+						{
+							name : "Total Video Files",
+							path : "stats.info.last.performance.redundancy.totalVideoFiles",
+							id : 'sac'
+						},
+
+						{
+							name : "Total Videos",
+							path : "stats.info.last.performance.redundancy.totalVideos",
+							id : 'sat'
+						}
+					]
+				},
+
+
+				transcoding : {
+					caption : "Transcoding",
+					many : true,
+					series : [
+						{
+							name : "Fail Imports Count",
+							path : "stats.info.last.performance.failImportsCount",
+							id : 'sac'
+						},
+
+						{
+							name : "Wait Transcoding Jobs",
+							path : "stats.info.last.performance.waitTranscodingJobs",
+							id : 'sat'
+						},
+
+						{
+							name : "Failed Transcoding Jobs",
+							path : "stats.info.last.performance.failTranscodingJobs",
+							id : 'saf'
+						},
+						{
+							name : "Wait Imports Count",
+							path : "stats.info.last.performance.waitImportsCount",
+							id : 'saw'
+						}
+					]
+				},
+
+				space : {
+					caption : "Space",
+					many : true,
+					series : [
+						{
+							type: 'areaspline',
+							name : "Free",
+							path : "stats.info.last.space.free",
+							id : 'saf'
+						},
+
+						{
+							name : "Size",
+							path : "stats.info.last.space.size",
+							id : 'sas'
+						}
+					]
+				},
+
+				rating : {
+					caption : "Rating",
+
+					series : [
+						{
+							name : "Rating",
+							path : "stats.availability",
+							id : 'sa'
+						}
+					]
+				},
+
+				rate : {
+					caption : "Rate",
+					
+					series : [
+						{
+							name : "Rate",
+							path : "stats.events.rate",
+							type : 'spline',
+							id : 'sc'
+						}
+						/*{
+							name : "Rate",
+							path : "stats.slice.rate",
+							type: 'areaspline',
+							id : 'ss'
+						}*/
 					]
 				},
 				
 				allcount : {
 					caption : "Count of requests",
-
+					many : true,
 					series : [
 						{
 							name : "Count of requests",
-							path : "stats.count",
+							path : "stats.events.count",
 							type : 'spline',
 							id : 'sc'
 						},
 						{
 							name : "Success Count",
-							path : "stats.success",
+							path : "stats.events.success",
+							type: 'areaspline',
+							id : 'ss'
+						},
+						{
+							name : "Failed Count",
+							path : "stats.events.failed",
 							type: 'areaspline',
 							id : 'ss'
 						}
 					]
 				},
 
-				total : {
+				allcountShort : {
+					caption : "Count of requests/ Short",
+
+					series : [
+						{
+							name : "Count of requests",
+							path : "stats.slice.count",
+							type : 'spline',
+							id : 'sc'
+						},
+						{
+							name : "Success Count",
+							path : "stats.slice.success",
+							type: 'areaspline',
+							id : 'ss'
+						},
+						{
+							name : "Failed Count",
+							path : "stats.slice.failed",
+							type: 'areaspline',
+							id : 'ss'
+						}
+					]
+				},
+
+				/*total : {
 					caption : "Total count of videos",
 
 					series : [
@@ -1035,7 +1206,7 @@ var system16 = (function(){
 							id : 'sc'
 						}
 					]
-				},
+				},*/
 			},
 
 			server : {
@@ -1422,9 +1593,6 @@ var system16 = (function(){
 				var series = {}
 				var i = 0
 
-				
-
-
 				if (info.nodeManager){
 
 					//// get 5 of most using nodes
@@ -1470,27 +1638,34 @@ var system16 = (function(){
 			peertube : function(data){
 
 				var subtype = settings.charts.peertube.type
+				var selectedinstance = settings.charts.peertube.selected
 
 				var meta = cpsub.peertube[subtype]
 
 				var lmeta = {
 					type : 'spline',
 					xtype : 'datetime',
-					caption : meta.caption
+					caption : meta.caption,
 				}
-
 
 				var series = {}
 				var i = 0
+				var canselect = []
 
 				if (info.peertube){
-					_.each(info.peertube, function(instance, key){
+					_.each(info.peertube.instances, function(instance, key){
+
+						canselect.push(key)
+
+						if (meta.many && selectedinstance && selectedinstance != key){
+							return
+						}
 
 						_.each(meta.series, function(smeta){
 							series[smeta.id + key] = {
 	
 								name : smeta.name + ": " + key,
-								path : "peertube.'" + key + "'." + smeta.path,
+								path : "peertube.instances.'" + key + "'." + smeta.path,
 								color : colors[ i % colors.length ],
 								type : smeta.type
 		
@@ -1506,7 +1681,10 @@ var system16 = (function(){
 
 				return {
 					meta : lmeta,
-					series : series
+					series : series,
+					selected : selectedinstance,
+					many : meta.many,
+					canselect : canselect
 				}
 			},
 			
@@ -1606,11 +1784,7 @@ var system16 = (function(){
 		var chart = {
 			prepare : function(type, data, el){
 
-				
-
 				var t = helpers.type(type, data)
-
-				console.log("CHARTPREPARE", type, t)
 
 				var chart = helpers.chart(t)
 				var series = helpers.series(t, data);
@@ -1633,12 +1807,11 @@ var system16 = (function(){
 
 				var t = helpers.type(type, data)
 
-				console.log('t.prepareOptions', t.meta)
-
 				graph.render({
 					height : 250,
 					maxPointsCount : 50,
-					prepareOptions : t.meta ? t.meta.prepareOptions : null
+					prepareOptions : t.meta ? t.meta.prepareOptions : null,
+					meta : t
 				}, function(){
 
 					if (settings.charts[type].showed){
@@ -1665,6 +1838,31 @@ var system16 = (function(){
 								action : function (clbk) {
 
 									settings.charts[type].type = key
+
+									chart.make(type, stats)
+
+									clbk()
+	
+								}
+							})
+						})
+
+						menuDialog({
+							items: items
+						})
+
+					})
+
+					_el.find('.subcaptiongraphselect').on('click', function(){
+
+						var items = []
+
+						_.each(t.meta.canselect, function(v){
+							items.push({
+								text : v,
+								action : function (clbk) {
+
+									settings.charts[type].selected = v
 
 									chart.make(type, stats)
 
@@ -3108,7 +3306,7 @@ var system16 = (function(){
 						admin : actions.admin(),
 						fixedinstance : null,
 						currentinstance : null,
-						peertubePerformance,
+						//peertubePerformance,
 					},
 
 					el : elc.find('.peertubeWrapper .instances')
@@ -3887,7 +4085,7 @@ var system16 = (function(){
 
 					info = r.info
 
-					console.log('info', info)
+					console.log("info", info)
 
 					initsettings()
 					
@@ -3902,9 +4100,10 @@ var system16 = (function(){
 
 				}).then(data => {
 
-					console.log("DAS")
 
 					stats = data.stats
+
+					console.log(stats)
 
 					stats = lastelements(stats, 1000)
 
@@ -3924,11 +4123,11 @@ var system16 = (function(){
 
 					if (actions.admin()) {
 
-					  return proxy
+					  return proxy.system.request('get.settings')
 
-						.fetchauth('peertube/stats')
+						/*.fetchauth('peertube/stats')
 						.then((data) => (peertubePerformance = { ...data }))
-						.then(() => proxy.system.request('get.settings'))
+						.then(() => proxy.system.request('get.settings'))*/
 						.then((r) => {
 						  system = r;
 		  

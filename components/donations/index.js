@@ -288,7 +288,16 @@ var donations = (function(){
 										class : 'one'
 									})
 
-								}
+								},
+								error : function(){
+
+									p.el.html('')
+
+									setTimeout(function(){
+										actions.showpage()
+									}, 100)
+			
+								},
 							});
 
 							

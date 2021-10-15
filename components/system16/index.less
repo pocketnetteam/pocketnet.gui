@@ -849,7 +849,6 @@
                 .alltime{
                     color : @color-gray-slight;
 
-                    
                 }
             }
 
@@ -954,6 +953,18 @@
             color : @color-good;
         }
         .instance{
+
+            .statistic{
+
+                i{
+                    font-size: 0.5em;
+                }
+
+                .alltime{
+                    color : @color-gray-slight;
+
+                }
+            }
 			   
             &.active{
                 color : @color-good;
@@ -989,12 +1000,26 @@
                 }
             }
 
+            .statistic{
+
+                i{
+                    font-size: 0.5em;
+                }
+
+                .alltime{
+                    color : @color-gray-slight;
+
+                }
+            }
+
             >div{
                 vertical-align: middle;
                 padding :3 * @rhythm 2 * @rhythm;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
+
+                
 
                 &.use{
                     cursor: pointer;
@@ -1457,6 +1482,11 @@ html.stblack{
         
         .preloaderabs{
             background: fade(@color-black,80);
+        }
+
+        .settingTable .value[fss], 
+        .settingTable .value[sys]{
+            color : @color-gray-mlight;
         }
     
         .subcaption{

@@ -586,7 +586,10 @@ var Proxy = function (settings, manage, test) {
 		init: function () {
 			var ins = {
         		1: ['pocketnetpeertube1.nohost.me', 'pocketnetpeertube2.nohost.me'],
-        		5: ['pocketnetpeertube5.nohost.me', 'pocketnetpeertube7.nohost.me'],
+        		5: [
+					{host : 'pocketnetpeertube5.nohost.me', cantuploading : true}, 
+					{host : 'pocketnetpeertube7.nohost.me', cantuploading : true}, 
+				],
         		6: ['pocketnetpeertube4.nohost.me', 'pocketnetpeertube6.nohost.me'],
         		8: ['pocketnetpeertube8.nohost.me', 'pocketnetpeertube9.nohost.me'],
 				10: ['pocketnetpeertube10.nohost.me', 'pocketnetpeertube11.nohost.me'],
@@ -835,12 +838,16 @@ var Proxy = function (settings, manage, test) {
 			var rpc = self.api.node.rpc.action
 			var videosapi = self.api.peertube.videos.action
 
+			//console.log('gethierarchicalstrip')
+
 			var users = []
 			var videos = []
 
 			var result = null
 
 			return rpc({ method, parameters, options, U }).then(r => {
+
+				//console.log('gethierarchicalstrip done')
 
 				var posts = r.data.contents || []
 
@@ -866,11 +873,16 @@ var Proxy = function (settings, manage, test) {
 
 			}).then(() => {
 
+
+
 				var userPr = rpc({
 					method : 'getuserprofile',
 					parameters : [users, '1'],
 					options, U
 				}).then(users => {
+
+					//console.log("USERS LOADED")
+
 					result.data.users = users.data
 
 					return Promise.resolve()
@@ -880,6 +892,9 @@ var Proxy = function (settings, manage, test) {
 					urls : videos,
 					fast : true
 				}).then(videos => {
+
+					//console.log("VIDEOS LOADED")
+
 					result.data.videos = videos.data
 
 					return Promise.resolve()
@@ -935,34 +950,21 @@ var Proxy = function (settings, manage, test) {
 					if (!parameters) parameters = [];
 
 					var node = null;
+					var noderating = 0
 
-					var log = false
+					var log = false;
+					var _waitstatus = 'un'
 
 					return new Promise((resolve, reject) => {
-						server.cache.wait(method, _.clone(parameters), function (waitstatus) {
-							if (log) {
-								console.log('waitstatus', waitstatus)
-							}
-							resolve(waitstatus);
-						}, cachehash);
+
+						if((options.locally && options.meta)){
+							resolve()
+						}
+
+						return nodeManager.waitready().then(resolve).catch(reject)
+
+						
 					}).then(() => {
-						return nodeManager.waitready() || (options.locally && options.meta)
-					})
-					.then(() => {
-						var cached = server.cache.get(method, _.clone(parameters), cachehash);
-
-						if (log) {
-							console.log('cached', cached ? true : false)
-						}
-
-						if (cached) {
-							return Promise.resolve({
-								data: cached,
-								code: 208,
-							});
-						}
-
-						//var cachwaitng = server.cache.waitng(method, parameters)
 
 						/// ????
 						if (options.locally && options.meta) {
@@ -983,6 +985,55 @@ var Proxy = function (settings, manage, test) {
 							});
 						}
 
+						noderating = node.statistic.rating()
+
+						return new Promise((resolve, reject) => {
+
+							if(!noderating) {
+								
+								resolve('nocaching')
+
+								return
+							}
+
+							server.cache.wait(method, _.clone(parameters), function (waitstatus) {
+
+								if (log) {
+									console.log('waitstatus', waitstatus)
+								}
+
+								resolve(waitstatus);
+
+							}, cachehash);
+
+						})
+
+					})
+					.then((waitstatus) => {
+
+						_waitstatus = waitstatus
+
+						if (log) {
+							console.log('_waitstatus', _waitstatus, method, parameters)
+						}
+
+						var cached = server.cache.get(method, _.clone(parameters), cachehash);
+
+						if (log) {
+							console.log('cached', cached ? true : false)
+						}
+
+						if (cached && noderating) {
+							return Promise.resolve({
+								data: cached,
+								code: 208,
+							});
+						}
+
+						//var cachwaitng = server.cache.waitng(method, parameters)
+
+						
+
 						if (method == 'sendrawtransactionwithmessage') {
 							if (!bots.check(U)) {
 								return new Promise((resolve, reject) => {
@@ -1002,14 +1053,17 @@ var Proxy = function (settings, manage, test) {
 						if (log) {
 							console.log('load', method, parameters)
 						}
+
 						return node
+
 							.checkParameters()
 							.then((r) => {
 								return node.rpcs(method, _.clone(parameters));
 							})
 							.then((data) => {
 
-								server.cache.set(method, _.clone(parameters), data, node.height());
+								if (noderating)
+									server.cache.set(method, _.clone(parameters), data, node.height());
 
 								return Promise.resolve({
 									data: data,
@@ -1019,6 +1073,17 @@ var Proxy = function (settings, manage, test) {
 							});
 					})
 					.catch((e) => {
+
+						if (_waitstatus == 'execute'){
+
+							if (log) {
+								console.log('clear cahce', method, parameters)
+							}
+
+							server.cache.remove(method, _.clone(parameters));
+						}
+							
+
 						return Promise.reject({
 							error: e,
 							code: e.code,
@@ -1108,7 +1173,7 @@ var Proxy = function (settings, manage, test) {
 							});
 						})
 						.catch((e) => {
-							console.log("e", e)
+							//console.log("e", e)
 							return Promise.reject(e);
 						});
 				},
@@ -1144,7 +1209,7 @@ var Proxy = function (settings, manage, test) {
 							});
 						})
 						.catch((e) => {
-							console.log("e", e)
+							//console.log("e", e)
 							return Promise.reject(e);
 						});
 				},
@@ -1183,11 +1248,7 @@ var Proxy = function (settings, manage, test) {
 				path: '/nodes/extendedstats',
 				action: function () {
 
-					console.log('extendedStats')
-
 					var data = nodeManager.extendedStats()
-
-					console.log('extendedStats2')
 
 					return Promise.resolve({
 						data: data,
@@ -1712,7 +1773,7 @@ var Proxy = function (settings, manage, test) {
 		f.hash(ids[i])
 	}
 	var difference = performance.now() - time;*/
-
+	
 		
 	return self
 

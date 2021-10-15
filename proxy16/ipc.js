@@ -92,7 +92,6 @@ var IPC = function(ipc, wc){
 		
 
 		if (message.wss){
-			console.log('message', message)
 			promise = wssdummy.recieve(message.data)
 		}
 		
