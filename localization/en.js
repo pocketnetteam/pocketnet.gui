@@ -585,6 +585,7 @@ ____loclib.registration = "Registration"
 ____loclib.editpost = "Edit Post"
 ____loclib.removepost = "Remove Post"
 ____loclib.opennewwindow = "Open Post in New Window"
+____loclib.pin = "Pin Post"
 
 
 ____loclib.unsubscribe = "Unsubscribe"

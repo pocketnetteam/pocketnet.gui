@@ -3305,6 +3305,14 @@ Platform = function (app, listofnodes) {
                             }
                         })
 
+                        el.find('.pin').on('click', function () {
+
+                            if (!mme && _el.tooltipster)
+                                _el.tooltipster('hide')
+
+                            console.log('pin!!!');
+                        })
+
                         el.find('.htls').on('click', function () {
 
                             actions.htls(id)

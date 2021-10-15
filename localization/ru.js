@@ -555,6 +555,7 @@ ____loclib.registration = "Регистрация"
 ____loclib.editpost = "Редактировать публикацию"
 ____loclib.removepost = "Удалить публикацию"
 ____loclib.opennewwindow = "Открыть пост в новом окне"
+____loclib.pin = "Закрепить пост"
 
 ____loclib.unsubscribe = "Отписаться"
 ____loclib.startchat = "Начать чат"
