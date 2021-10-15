@@ -204,7 +204,6 @@ class Html5Hlsjs {
         this.tech.trigger('error');
     }
     _onError(_event, data) {
-        console.error('_event', _event, data);
         const error = {
             message: `HLS.js error: ${data.type} - fatal: ${data.fatal} - ${data.details}`
         };
@@ -640,11 +639,9 @@ class P2pMediaLoaderPlugin extends Plugin {
         const options = this.player.tech(true).options_;
         this.p2pEngine = options.hlsjsConfig.loader.getEngine();
         this.hlsjs.on(hls_js__WEBPACK_IMPORTED_MODULE_5__["Events"].LEVEL_SWITCHING, (_, data) => {
-            console.log("resolutionChange data", data);
             this.trigger('resolutionChange', { auto: this.hlsjs.autoLevelEnabled, resolutionId: data.height });
         });
         this.p2pEngine.on(_core_p2p_media_loader_master_p2p_media_loader_core_lib__WEBPACK_IMPORTED_MODULE_2__["Events"].SegmentError, (segment, err) => {
-            console.error('Segment error.', segment, err);
             this.options.redundancyUrlManager.removeBySegmentUrl(segment.requestUrl);
         });
         this.statsP2PBytes.numPeers = 1 + this.options.redundancyUrlManager.countBaseUrls();
