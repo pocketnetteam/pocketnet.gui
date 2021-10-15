@@ -3310,7 +3310,17 @@ Platform = function (app, listofnodes) {
                             if (!mme && _el.tooltipster)
                                 _el.tooltipster('hide')
 
-                            console.log('pin!!!');
+                            dialog({
+                                class : 'zindex',
+                                html : self.app.localization.e('pinPostDialog'),
+                                btn1text : self.app.localization.e('dyes'),
+                                btn2text : self.app.localization.e('dno'),
+                                success : function(){	
+
+                                    console.log('success!!!')
+
+                                }
+                            })
                         })
 
                         el.find('.htls').on('click', function () {
