@@ -3319,6 +3319,58 @@ Platform = function (app, listofnodes) {
 
                                     console.log('success!!!')
 
+                                    var pinPost = function (share, clbk){
+
+                                        var ct = new Pin();
+                                        ct.txidEdit = share.txid;
+
+                        
+                                        self.app.platform.sdk.node.shares.pin(share.txid, ct, function(err, alias){
+                        
+                                            if(!err){
+                                                if (clbk){
+               
+                                                    // var l = share.url;
+
+
+                                                    // if (self.app.peertubeHandler.checklink(l)) {
+                                                    //     share.settings.a = share.default.a
+
+                                                    //     self.app.peertubeHandler.api.videos.remove(l).then(r => {
+                                                    //         self.app.platform.sdk.videos.clearstorage(l)
+                                                    //     })
+
+
+                                                    // }
+
+                                                    clbk(null, alias)
+                                                }
+    
+                                            } else {
+                                                self.app.platform.errorHandler(err, true)
+                        
+                                                if (clbk)
+                                                    clbk(err, null)
+                                            }
+                        
+                                        })
+
+                                    }
+
+                                    pinPost(d.share, function(err, result){
+
+										if(!err)
+										{
+
+                                            console.log('result pin post', result)
+                                            authorgroup.addClass('deleted');
+
+
+                                        }
+
+										
+                                    })
+
                                 }
                             })
                         })
