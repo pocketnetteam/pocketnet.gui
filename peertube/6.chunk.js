@@ -507,6 +507,7 @@ class Html5Hlsjs {
         ///// liveSyncPosition
         /* @ts-ignore */
         this.hlsjsConfig.capLevelController = _peertube_cap_level_controller__WEBPACK_IMPORTED_MODULE_1__["default"];
+        this.hlsjsConfig.nudgeMaxRetry = 100;
         console.log("INITHLS");
         this.hls = new hls_js__WEBPACK_IMPORTED_MODULE_0___default.a(this.hlsjsConfig);
         this._executeHooksFor('beforeinitialize');
