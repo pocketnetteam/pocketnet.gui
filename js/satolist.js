@@ -3317,12 +3317,10 @@ Platform = function (app, listofnodes) {
                                 btn2text : self.app.localization.e('dno'),
                                 success : function(){	
 
-                                    console.log('success!!!')
-
                                     var pinPost = function (share, clbk){
 
                                         var ct = new Settings();
-                                        ct.pin = share.txid;
+                                        ct.pin.set(share.txid);
 
                         
                                         self.app.platform.sdk.node.account.accSet(ct, function(err, alias){
@@ -3350,8 +3348,6 @@ Platform = function (app, listofnodes) {
 										{
 
                                             console.log('result pin post', result)
-                                            authorgroup.addClass('deleted');
-
 
                                         }
 
@@ -14789,6 +14785,11 @@ Platform = function (app, listofnodes) {
                         }
 
                         this.common(inputs, share, TXFEE, clbk, p)
+                    },
+
+                    
+                    accSet: function (inputs, settings, clbk, p) {
+                        this.common(inputs, settings, TXFEE, clbk, p)
                     },
 
                     userInfo: function (inputs, userInfo, clbk, p) {

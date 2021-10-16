@@ -16,7 +16,7 @@ var lenta = (function(){
 		var mid = p.mid;
 		var making = false, ovf = false;
 		var w, essenseData, recomended = [], recommended, mestate, initedcommentes = {}, canloadprev = false,
-		video = false, isotopeinited = false, videosVolume = 0;
+		video = false, isotopeinited = false, videosVolume = 0, first = true;
 
 		var openedPost = null
 		var shareInitedMap = {},
@@ -3362,11 +3362,83 @@ var lenta = (function(){
 						if (essenseData.afterload){
 							essenseData.afterload(essenseData, shares, error || error2)
 						}
+						
+						if (essenseData.byauthor && author && first){
 
-						el.loader.fadeOut()
+							first = false;
 
-						if (clbk)
-							clbk(shares, error || error2)
+							self.app.api.rpc('getaccountsetting', [author]).then(d => {
+
+								console.log('d!!', d);
+
+								var settings = JSON.parse((typeof d === 'string' && d) ? d : '{}');
+
+								if (settings && settings.pin){
+
+									var pinnedId = shares.findIndex(function(share){
+										return share.txid === settings.pin;
+									});
+
+									if (pinnedId > -1){
+
+										var pinnedShare = shares.splice(pinnedId, 1);
+										console.log('pinneds', pinnedShare);
+										
+										pinnedShare[0].pin = true;
+										shares.unshift(pinnedShare[0]);		
+										
+										console.log('shares!!!', shares);
+
+
+										if (clbk)
+											clbk(shares, error || error2)
+
+										el.loader.fadeOut();
+										return;
+
+									} else {
+
+										self.app.platform.sdk.node.shares.getbyid([settings.pin], function(t){
+
+											var pinnedShare = new pShare();
+
+											if (t){
+
+												pinnedShare._import(t[0]);
+												pinnedShare.pin = true;
+												shares.unshift(pinnedShare);
+
+												if (clbk)
+													clbk(shares, error || error2)
+
+												el.loader.fadeOut();
+												return;									
+											}
+
+										})
+									
+									}
+
+
+								}
+
+								if(clbk)
+									clbk(shares, error || error2);
+
+								el.loader.fadeOut();
+								return;
+
+
+							})
+
+						} else if (clbk){
+
+							el.loader.fadeOut();
+							first = false;
+							clbk(shares, error || error2);
+						}
+						
+
 
 					})	
 

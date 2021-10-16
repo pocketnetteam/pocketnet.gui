@@ -2553,3 +2553,107 @@ kits = {
 		comment : pComment,
 	}
 }
+
+
+Settings = function(){
+
+	var self = this;
+
+	self.pin = {
+		set : function(_v){
+
+			if(!_v){
+				this.v = ''
+			}
+			else
+			{
+				this.v = _v
+			}
+			
+			_.each(self.on.change || {}, function(f){
+				f('pin', this.v)
+			})
+
+		},
+		get : function(){
+			return this.v
+		},
+		v : ''
+	};
+
+	self.clear = function(){
+		
+		self.pin.set()
+
+	}
+
+	self.ustate = function(){
+
+		return self.type;
+	} 
+
+	self.on = {
+		change : {}
+	}
+	self.off = function(e){
+		delete self.on[e]
+	}
+
+
+	self.checkloaded = function(){
+		return false
+	}
+
+
+	self.validation = function(){
+		return false
+	}
+
+	self.serialize = function(){
+
+        return JSON.stringify({
+			pin: self.pin.v
+		})
+
+	}
+
+	self.shash = function(){
+		return bitcoin.crypto.sha256(self.serialize()).toString('hex')
+	}
+	
+
+	self.export = function(){
+
+		return {
+			d: JSON.stringify({
+				pin: self.pin.v || "",
+			})
+		} 
+
+	}
+
+	self.import = function(v){
+
+		self.pin.set(v.pin || ""); 
+
+		
+	}
+
+
+	self.optstype = function(){
+
+		return self.type	
+	}
+
+
+
+	self.typeop = function(){
+
+        return self.type;
+
+	}
+
+	self.type = 'accSet'
+
+	return self;
+}
