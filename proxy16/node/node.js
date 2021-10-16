@@ -48,7 +48,7 @@ var Node = function(options, manager){
 
     var penalty = {
         k : 0,
-
+        counter : 0,
         reason : null,
         timer : null,
         time : null,
@@ -63,6 +63,14 @@ var Node = function(options, manager){
             penalty.started = new Date()
             penalty.time = time
             penalty.k = _k
+
+            penalty.counter ++
+
+            if (penalty.counter > 10){
+                penalty.counter = 0
+
+                self.statistic.clearAlltime()
+            }
 
             penalty.timer = setTimeout(function(){
                 penalty.clear()
@@ -321,6 +329,10 @@ var Node = function(options, manager){
                 history : [],
                 historyslice : null
             }
+        },
+
+        clearAlltime : function(){
+            statistic.events = _.clone(statistic.historyslice)
         },
 
         add : function(p){
@@ -624,7 +636,11 @@ var Node = function(options, manager){
 
                     userski = 1
         
-                    result = penalty.getk() * (Math.sqrt(availabilityAllTime * availability5Minutes) * ((lastblock.height || 1) / (userski) * (difference + 1)))
+                    result = (
+                        penalty.getk() * 
+                        Math.sqrt(Math.sqrt(Math.sqrt(availabilityAllTime) * availability5Minutes * availability5Minutes)) *
+                        (lastblock.height || 1) / (1000 * userski * (difference + 1))
+                        )
                 }
             }
 

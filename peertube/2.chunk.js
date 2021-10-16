@@ -655,7 +655,7 @@ function getCodec(name, useVP9 = false) {
 
 
 // EXTERNAL MODULE: ./src/assets/player/utils.ts + 3 modules
-var utils = __webpack_require__(4);
+var utils = __webpack_require__(3);
 
 // EXTERNAL MODULE: ./src/assets/player/webtorrent/peertube-chunk-store.ts
 var peertube_chunk_store = __webpack_require__(507);
@@ -687,7 +687,7 @@ class webtorrent_plugin_WebTorrentPlugin extends Plugin {
         };
         this.webtorrent = new webtorrent({
             tracker: {
-                rtcConfig: Object(utils["c" /* getRtcConfig */])()
+                rtcConfig: Object(utils["d" /* getRtcConfig */])()
             },
             dht: false
         });
@@ -697,7 +697,7 @@ class webtorrent_plugin_WebTorrentPlugin extends Plugin {
         this.isAutoResolutionObservation = false;
         this.playerRefusedP2P = false;
         this.downloadSpeeds = [];
-        this.startTime = Object(utils["i" /* timeToInt */])(options.startTime);
+        this.startTime = Object(utils["j" /* timeToInt */])(options.startTime);
         // Disable auto play on iOS
         this.autoplay = options.autoplay;
         this.playerRefusedP2P = !Object(peertube_player_local_storage["c" /* getStoredP2PEnabled */])();
@@ -773,7 +773,7 @@ class webtorrent_plugin_WebTorrentPlugin extends Plugin {
         this.currentVideoFile = videoFile;
         // Don't try on iOS that does not support MediaSource
         // Or don't use P2P if webtorrent is disabled
-        if (Object(utils["e" /* isIOS */])() || this.playerRefusedP2P) {
+        if (Object(utils["f" /* isIOS */])() || this.playerRefusedP2P) {
             return this.fallbackToHttp(options, () => {
                 this.player.playbackRate(oldPlaybackRate);
                 return done();
@@ -977,8 +977,8 @@ class webtorrent_plugin_WebTorrentPlugin extends Plugin {
         });
         // If the download speed is too bad, return the lowest resolution we have
         if (filteredFiles.length === 0)
-            return Object(utils["l" /* videoFileMinByResolution */])(files);
-        return Object(utils["k" /* videoFileMaxByResolution */])(filteredFiles);
+            return Object(utils["m" /* videoFileMinByResolution */])(files);
+        return Object(utils["l" /* videoFileMaxByResolution */])(filteredFiles);
     }
     getAndSaveActualDownloadSpeed() {
         const start = Math.max(this.downloadSpeeds.length - this.CONSTANTS.BANDWIDTH_AVERAGE_NUMBER_OF_VALUES, 0);

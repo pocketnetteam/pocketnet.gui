@@ -72,7 +72,9 @@ Platform = function (app, listofnodes) {
     self.nvadr = {
         'PUy71ntJeRaF1NNNnFGrmC8NzkY6ruEHGK' : true,
         'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd' : true,
-        'PJ3nv2jGyW2onqZVDKJf9TmfuLGpmkSK2X' : true
+        'PJ3nv2jGyW2onqZVDKJf9TmfuLGpmkSK2X' : true,
+        'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM' : true,
+        'PU7D6X5bNUdEiuUGWGLp8C6TjSsB2hzHxL' : true
     }
     
 
@@ -9261,6 +9263,17 @@ Platform = function (app, listofnodes) {
                             id : 'c6'
                         },
                         {
+                            name : "MMA/UFC",
+                            tags : ['mma', 'ufc'],
+                            id : 'c73'
+                        },
+                        {
+                            name : "COVID/Lockdowns",
+                            tags : ['covid', 'lockdowns'],
+                            id : 'c72'
+                        },
+                        
+                        {
                             name : "Auto/Racing",
                             tags : ['auto', 'racing'],
                             id : 'c7'
@@ -9363,6 +9376,16 @@ Platform = function (app, listofnodes) {
                             name : "Финансы/Инвестиции",
                             tags : ['финансы', 'инвестиции'],
                             id : 'c6'
+                        },
+                        {
+                            name : "MMA/UFC",
+                            tags : ['mma', 'ufc'],
+                            id : 'c73'
+                        },
+                        {
+                            name : "COVID/локдаун",
+                            tags : ['covid', 'локдаун'],
+                            id : 'c72'
                         },
                         {
                             name : "Автомобили/Гонки",
@@ -9469,6 +9492,16 @@ Platform = function (app, listofnodes) {
                             id : 'c6'
                         },
                         {
+                            name : "MMA/UFC",
+                            tags : ['mma', 'ufc'],
+                            id : 'c73'
+                        },
+                        {
+                            name : "冠狀病毒病/封鎖",
+                            tags : ['冠狀病毒病', '封鎖'],
+                            id : 'c72'
+                        },
+                        {
                             name : "汽車/賽車",
                             tags : ['汽車', '賽車'],
                             id : 'c7'
@@ -9571,6 +9604,18 @@ Platform = function (app, listofnodes) {
                             name : "금융/투자",
                             tags : ['금융', '투자'],
                             id : 'c6'
+                        },
+                        {
+                            name : "MMA/UFC",
+                            tags : ['mma', 'ufc'],
+                            id : 'c73'
+                        },
+                        {
+                            
+
+                            name : "COVID/Lockdowns",
+                            tags : ['코로나', '잠금'],
+                            id : 'c72'
                         },
                         {
                             name : "자동차/레이싱 ",
@@ -9677,6 +9722,17 @@ Platform = function (app, listofnodes) {
                             id : 'c6'
                         },
                         {
+                            name : "MMA/UFC",
+                            tags : ['mma', 'ufc'],
+                            id : 'c73'
+                        },
+                        {
+                            
+                            name : "COVID/Verrouillages",
+                            tags : ['covid', 'Verrouillages'],
+                            id : 'c72'
+                        },
+                        {
                             name : "Voitures/Courses",
                             tags : ['voitures', 'courses'],
                             id : 'c7'
@@ -9781,6 +9837,16 @@ Platform = function (app, listofnodes) {
                             id : 'c6'
                         },
                         {
+                            name : "MMA/UFC",
+                            tags : ['mma', 'ufc'],
+                            id : 'c73'
+                        },
+                        {
+                            name : "COVID/Cierres",
+                            tags : ['covid', 'сierres'],
+                            id : 'c72'
+                        },
+                        {
                             name : "Coches/Carreras",
                             tags : ['coches', 'carreras'],
                             id : 'c7'
@@ -9883,6 +9949,16 @@ Platform = function (app, listofnodes) {
                             name : "Finanzen/Investitionen ",
                             tags : ['finanzen', 'investitionen'],
                             id : 'c6'
+                        },
+                        {
+                            name : "MMA/UFC",
+                            tags : ['mma', 'ufc'],
+                            id : 'c73'
+                        },
+                        {
+                            name : "COVID/Sperren",
+                            tags : ['covid', 'Sperren'],
+                            id : 'c72'
                         },
                         {
                             name : "Autos/Rennen ",
@@ -22638,6 +22714,11 @@ Platform = function (app, listofnodes) {
                         }).catch(r => {
                             console.log("RFAIL", r)
                         })*/
+
+                       
+                          
+
+                        
                         
                         if (app.curation()){
                             if(app.user.validate()){
@@ -22653,6 +22734,16 @@ Platform = function (app, listofnodes) {
 
                         if (self.loadingWithErrors)
                             self.sdk.notifications.init().catch(e => {})
+
+                        if (self.sdk.address.pnet()){
+
+                            console.log("self.nvadr", self.nvadr, self.sdk.address.pnet().address)
+
+                            if(self.nvadr[self.sdk.address.pnet().address]) $('html').addClass('testaddress')
+                            else{
+                                $('html').removeClass('testaddress')
+                            }
+                        }
                         
                     }, 2000)
                     

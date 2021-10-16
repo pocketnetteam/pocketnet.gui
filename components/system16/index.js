@@ -3454,6 +3454,22 @@ var system16 = (function(){
 						actions.addnode()
 					})
 
+					el.c.find('.clearnodesstats').on('click', function(){
+						dialog({
+							class : 'zindex',
+							html : "Do you really want to clear nodes history statistic?",
+							btn1text : self.app.localization.e('dyes'),
+							btn2text : self.app.localization.e('dno'),
+							success : function(){	
+
+								proxy.fetchauth('nodes/clearnodesstats', {}).catch(e => {
+									sitemessage(e)
+								})
+
+							}
+						})
+					})
+
 					renders.nodescontenttable(elc)
 
 					if (clbk)

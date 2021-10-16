@@ -786,6 +786,12 @@ var Nodemanager = function(p){
             })
 
         },  
+
+        clearAlltimeNodesStats : function(){
+            _.each(self.nodes, function(n){
+                n.statistic.clearAlltime()
+            })
+        },
         
         peernodesTime : function(node){
 

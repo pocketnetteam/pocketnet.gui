@@ -1095,6 +1095,20 @@ var Proxy = function (settings, manage, test) {
 		},
 
 		nodeManager: {
+			clearnodesstats : {
+				path: '/nodes/clearnodesstats',
+				authorization: 'signature',
+				action: function ({ A }) {
+
+					if(!A) return Promise.reject('none')
+
+					nodeManager.api.clearAlltimeNodesStats()
+
+					return Promise.resolve({ data: 'success' });
+
+				},
+			},
+		
 			revoke: {
 				path: '/nodes/revoke',
 				authorization: 'signature',
