@@ -1810,6 +1810,13 @@ class segment_manager_SegmentManager {
             yield this.loader.destroy();
         });
     }
+    abortSegmentRequest() {
+        console.log("abortWhenLevelSwitching3", this.segmentRequest);
+        if (this.segmentRequest) {
+            this.segmentRequest.onError("Loading aborted: object destroyed");
+            this.segmentRequest = null;
+        }
+    }
     updateSegments() {
         if (!this.segmentRequest) {
             return;
@@ -2168,6 +2175,10 @@ class engine_Engine extends events["EventEmitter"] {
     setPlayingSegment(url, byteRange, start, duration) {
         this.segmentManager.setPlayingSegment(url, byteRange, start, duration);
     }
+    abortWhenLevelSwitching() {
+        console.log("abortWhenLevelSwitching2");
+        this.segmentManager.abortSegmentRequest();
+    }
     setPlayingSegmentByCurrentTime(playheadPosition) {
         this.segmentManager.setPlayingSegmentByCurrentTime(playheadPosition);
     }
@@ -2255,13 +2266,13 @@ function initMediaElementJsPlayer(mediaElement) {
         }
     }));
     mediaElement.addEventListener("hlsError", (event) => {
-        /*const hls = mediaElement.hlsPlayer;
+        const hls = mediaElement.hlsPlayer;
         if (hls && hls.config && hls.config.loader && typeof hls.config.loader.getEngine === "function") {
             if (event.data !== undefined && event.data.details === "bufferStalledError") {
-                const engine: Engine = hls.config.loader.getEngine();
+                const engine = hls.config.loader.getEngine();
                 engine.setPlayingSegmentByCurrentTime(hls.media.currentTime);
             }
-        }*/
+        }
     });
 }
 function initJwPlayer(player, hlsjsConfig) {

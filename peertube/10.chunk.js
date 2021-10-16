@@ -859,7 +859,9 @@ class p2p_media_loader_plugin_P2pMediaLoaderPlugin extends Plugin {
         const options = this.player.tech(true).options_;
         this.p2pEngine = options.hlsjsConfig.loader.getEngine();
         this.hlsjs.on(dist_hls["Events"].LEVEL_SWITCHING, (_, data) => {
+            console.log("LEVEL_SWITCHING");
             this.trigger('resolutionChange', { auto: this.hlsjs.autoLevelEnabled, resolutionId: data.height });
+            this.p2pEngine.abortWhenLevelSwitching();
         });
         this.p2pEngine.on(p2p_media_loader_core_lib["a" /* Events */].SegmentError, (segment, err) => {
             this.options.redundancyUrlManager.removeBySegmentUrl(segment.requestUrl);
