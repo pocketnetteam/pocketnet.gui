@@ -1215,11 +1215,11 @@ class hybrid_loader_HybridLoader extends events["EventEmitter"] {
                     this.httpDownloadInitialTimeoutTimestamp = -Infinity;
                 }
             }
-            console.log('this.segmentsQueue.length', this.segmentsQueue.length);
+            //console.log('this.segmentsQueue.length', this.segmentsQueue.length)
             for (let index = 0; index < this.segmentsQueue.length; index++) {
                 const segment = this.segmentsQueue[index];
                 if (storageSegments.has(segment.id) || this.httpManager.isDownloading(segment)) {
-                    console.log('storageSegments.has(segment.id)', segment.id, storageSegments.has(segment.id), this.httpManager.isDownloading(segment));
+                    //console.log('storageSegments.has(segment.id)', segment.id, storageSegments.has(segment.id), this.httpManager.isDownloading(segment))
                     continue;
                 }
                 if (segment.priority <= this.settings.requiredSegmentsPriority &&
@@ -1247,14 +1247,14 @@ class hybrid_loader_HybridLoader extends events["EventEmitter"] {
                     }
                 }
                 if (this.p2pManager.isDownloading(segment)) {
-                    console.log('this.p2pManager', segment);
+                    // console.log('this.p2pManager', segment)
                     continue;
                 }
                 if (segment.priority <= this.settings.requiredSegmentsPriority) {
                     // Download required segments over P2P
                     segmentsMap = segmentsMap ? segmentsMap : this.p2pManager.getOverallSegmentsMap();
                     if (segmentsMap.get(segment.id) !== MediaPeerSegmentStatus.Loaded) {
-                        console.log('segmentsMap.get', segment);
+                        //console.log('segmentsMap.get', segment)
                         continue;
                     }
                     if (this.p2pManager.getActiveDownloadsCount() >= this.settings.simultaneousP2PDownloads) {
