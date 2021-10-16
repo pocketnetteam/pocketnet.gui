@@ -585,7 +585,10 @@ var Proxy = function (settings, manage, test) {
 	self.peertube = {
 		init: function () {
 			var ins = {
-        		1: ['pocketnetpeertube1.nohost.me', 'pocketnetpeertube2.nohost.me'],
+        		1: [
+					{host : 'pocketnetpeertube1.nohost.me', cantuploading : true}, 
+					{host : 'pocketnetpeertube2.nohost.me' , cantuploading : true}
+				],
         		5: [
 					{host : 'pocketnetpeertube5.nohost.me', cantuploading : true}, 
 					{host : 'pocketnetpeertube7.nohost.me', cantuploading : true}, 

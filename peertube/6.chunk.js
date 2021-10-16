@@ -144,6 +144,12 @@ class Html5Hlsjs {
         this.uiTextTrackHandled = false;
         this.hls.destroy();
     }
+    rebuild() {
+        this.dispose();
+        this.hlsjsConfig.autoStartLoad === true;
+        this.initialize();
+        //this.hls.startLoad()
+    }
     static addHook(type, callback) {
         Html5Hlsjs.hooks[type] = this.hooks[type] || [];
         Html5Hlsjs.hooks[type].push(callback);
@@ -167,7 +173,6 @@ class Html5Hlsjs {
         }
     }
     _handleMediaError(error) {
-        console.log('this.errorCounts', this.errorCounts);
         if (this.errorCounts[hls_js__WEBPACK_IMPORTED_MODULE_0__["ErrorTypes"].MEDIA_ERROR] === 1) {
             console.info('trying to recover media error');
             this.hls.recoverMediaError();
@@ -181,10 +186,13 @@ class Html5Hlsjs {
         }
         if (this.errorCounts[hls_js__WEBPACK_IMPORTED_MODULE_0__["ErrorTypes"].MEDIA_ERROR] > 2) {
             console.info('bubbling media error up to VIDEOJS');
-            this.hls.recoverMediaError();
-            //this.hls.destroy()
-            //this.tech.error = () => error
-            //this.tech.trigger('error')
+            this.rebuild();
+            /*this.hls.recoverMediaError()
+      
+            this.hls.destroy()
+      
+            this.tech.error = () => error
+            this.tech.trigger('error')*/
             return;
         }
     }
@@ -201,7 +209,7 @@ class Html5Hlsjs {
             return;
         }
         console.info('bubbling network error up to VIDEOJS');
-        // this.hls.destroy()
+        this.hls.destroy();
         this.tech.error = () => error;
         this.tech.trigger('error');
     }
@@ -209,14 +217,14 @@ class Html5Hlsjs {
         const error = {
             message: `HLS.js error: ${data.type} - fatal: ${data.fatal} - ${data.details}`
         };
+        if (!data.fatal)
+            return;
         console.error(error);
         // increment/set error count
         if (this.errorCounts[data.type])
             this.errorCounts[data.type] += 1;
         else
             this.errorCounts[data.type] = 1;
-        if (!data.fatal)
-            return;
         if (data.type === hls_js__WEBPACK_IMPORTED_MODULE_0__["ErrorTypes"].NETWORK_ERROR) {
             error.code = 2;
             this._handleNetworkError(error);
@@ -226,7 +234,7 @@ class Html5Hlsjs {
             this._handleMediaError(error);
         }
         else {
-            // this.hls.destroy()
+            this.hls.destroy();
             this.tech.error = () => error;
             this.tech.trigger('error');
         }
@@ -492,7 +500,7 @@ class Html5Hlsjs {
         // _notifyVideoQualities sometimes runs before the quality picker event handler is registered -> no video switcher
         this.handlers.playing = this._notifyVideoQualities.bind(this);
         this.videoElement.addEventListener('playing', this.handlers.playing);
-        //  this.hlsjsConfig.debug = true
+        this.hlsjsConfig.debug = true;
         //this.hlsjsConfig.liveSyncDurationCount = 4
         //this.hlsjsConfig.maxMaxBufferLength = 55
         //this.hlsjsConfig.backBufferLength = 90
