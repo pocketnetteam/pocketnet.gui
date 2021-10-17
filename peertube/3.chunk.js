@@ -2115,6 +2115,7 @@ class engine_Engine extends events["EventEmitter"] {
         return _a = class {
                 constructor() {
                     this.load = (context, config, callbacks) => Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
+                        console.log('load start', config, this.stats);
                         /*if (this.stats.loading.start) {
                             throw new Error('Loader can only be used once.');
                         }*/
@@ -2297,12 +2298,13 @@ function initHlsJsEvents(player, engine) {
     }));
     player.on("hlsError", (_event, errorData) => {
         if (errorData.details === "bufferStalledError") {
-            /*const htmlMediaElement = (player.media === undefined
+            console.log("IM HERE");
+            const htmlMediaElement = (player.media === undefined
                 ? player.el_ // videojs-contrib-hlsjs
-                : player.media) as HTMLMediaElement | undefined; // all others
+                : player.media); // all others
             if (htmlMediaElement) {
                 engine.setPlayingSegmentByCurrentTime(htmlMediaElement.currentTime);
-            }*/
+            }
         }
     });
 }
