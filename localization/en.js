@@ -587,6 +587,8 @@ ____loclib.removepost = "Remove Post"
 ____loclib.opennewwindow = "Open Post in New Window"
 ____loclib.pin = "Pin Post"
 ____loclib.pinPostDialog = "Do you realy want to pin this post?"
+____loclib.unpin = "Unpin Post"
+____loclib.unpinPostDialog = "Do you realy want to unpin this post?"
 
 
 ____loclib.unsubscribe = "Unsubscribe"
@@ -750,8 +752,11 @@ ____loclib.e13242 = "You have been blocked by this person, you will be unable to
 ____loclib.e13243 = "You have reached your limit of upvote comments in a 24 hour period"
 ____loclib.e13244 = "You have reached your limit of editing comments in a 24 hour period"
 ____loclib.e13245 = "You have reached your limit of sending comments in a 24 hour period"
+
 ____loclib.e13246 = "You are trying to edit someone else's post"
 ____loclib.e13247 = "You have reached your limit of editing 5 posts in a 24 hour period"
+____loclib.saveSettingsLimit = "You have reached your limit of saving settings in a 24 hour period"
+
 ____loclib.e13248 = "You can only edit once per blockchain block. Please wait a minute, then try again"
 ____loclib.e13249 = "You cannot block yourself"
 ____loclib.e13250 = "You have already blocked this user"

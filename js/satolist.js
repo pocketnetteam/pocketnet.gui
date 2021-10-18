@@ -565,6 +565,12 @@ Platform = function (app, listofnodes) {
             }
         },
 
+        "49": {
+            message: function(){
+                return self.app.localization.e('saveSettingsLimit')
+            }
+        },
+
         "41": {
             message: function () {
                 return self.app.localization.e('e13234')
@@ -3311,6 +3317,31 @@ Platform = function (app, listofnodes) {
                             }
                         })
 
+                        var pinPost = function (share, clbk, unpin){
+
+                            var ct = new Settings();
+                            ct.pin.set(unpin ? '' : share.txid);
+
+            
+                            self.app.platform.sdk.node.account.accSet(ct, function(err, alias){
+            
+                                if(!err){
+                                    if (clbk){
+
+                                        clbk(null, alias)
+                                    }
+
+                                } else {
+                                    self.app.platform.errorHandler(err, true)
+            
+                                    if (clbk)
+                                        clbk(err, null)
+                                }
+            
+                            })
+
+                        }
+
                         el.find('.pin').on('click', function () {
 
                             if (!mme && _el.tooltipster)
@@ -3323,42 +3354,40 @@ Platform = function (app, listofnodes) {
                                 btn2text : self.app.localization.e('dno'),
                                 success : function(){	
 
-                                    var pinPost = function (share, clbk){
+                                    pinPost(d.share, function(err, result){
 
-                                        var ct = new Settings();
-                                        ct.pin.set(share.txid);
+										if(!err)
+										{
+                                            console.log('result pin post', result)
+                                        }
 
-                        
-                                        self.app.platform.sdk.node.account.accSet(ct, function(err, alias){
-                        
-                                            if(!err){
-                                                if (clbk){
+                                    }, false)
 
-                                                    clbk(null, alias)
-                                                }
-    
-                                            } else {
-                                                self.app.platform.errorHandler(err, true)
-                        
-                                                if (clbk)
-                                                    clbk(err, null)
-                                            }
-                        
-                                        })
+                                }
+                            })
+                        })
 
-                                    }
+                        el.find('.unpin').on('click', function () {
+
+                            if (!mme && _el.tooltipster)
+                                _el.tooltipster('hide')
+
+                            dialog({
+                                class : 'zindex',
+                                html : self.app.localization.e('unpinPostDialog'),
+                                btn1text : self.app.localization.e('dyes'),
+                                btn2text : self.app.localization.e('dno'),
+                                success : function(){	
 
                                     pinPost(d.share, function(err, result){
 
 										if(!err)
 										{
-
                                             console.log('result pin post', result)
-
                                         }
 
 										
-                                    })
+                                    }, true)
 
                                 }
                             })
