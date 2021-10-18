@@ -962,6 +962,8 @@ var Proxy = function (settings, manage, test) {
 
 						if((options.locally && options.meta)){
 							resolve()
+
+							return
 						}
 
 						return nodeManager.waitready().then(resolve).catch(reject)

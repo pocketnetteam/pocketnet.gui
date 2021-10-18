@@ -80,10 +80,10 @@ var ProxyRequest = function(app = {}, proxy){
         if(typeof AbortController != 'undefined'){
             var controller = (new AbortController())
 
-            var time = 20000
+            var time = 40000
     
             if (window.cordova || isInStandaloneMode()){
-                time = 25000
+                time = 55000
             }
 
             if(!isonline()) time = 3000
@@ -444,7 +444,7 @@ var Proxy16 = function(meta, app, api){
 
             if (options.fnode && e) e.code = 700
 
-            if ((e.code == 408 || e.code == -28 || self.direct) && options.node && trying < 3 && !options.fnode){
+            if ((e.code == 408 || e.code == -28 || self.direct) && options.node && trying < 2 && !options.fnode){
 
                 if(isonline()){
                     return self.api.nodes.canchange(options.node).then(r => {

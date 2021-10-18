@@ -517,6 +517,16 @@ f.hash = function(str){
     return md5(str)
 }
 
+f.phash = function (pattern, Q) {
+    const b = 13;
+    const m = pattern.length; let hash = 0;
+    for (let i = 0; i < m; i++) {
+        hash = (hash * b + pattern.charCodeAt(i)) % Q;
+    }
+    
+    return hash;
+}
+
 f.date = {
     addseconds : function(now, seconds){
         if(!now) now = new Date
