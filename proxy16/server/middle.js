@@ -119,6 +119,32 @@ var Middle = function(){
             next(null)
     }
 
+    self.extendlight = function(request, result, next){
+        
+        result._success = function(data, code){
+            if(!code) code = 200
+            result.status(code).jsonp({
+                result : 'success',
+                data : data
+            })
+        }
+    
+        result._fail = function(error, code){
+
+            if(!code) code = 500
+            if(code < 100) code = 500
+
+            result.status(code).jsonp({
+                error : error,
+                code : code
+            })
+        }
+    
+        if (next)
+            next(null)
+    
+    }
+
     self.extend = function(request, result, next){
         var start = f.now()
         
@@ -156,19 +182,7 @@ var Middle = function(){
     }
     
     self.data = function(request, result, next){
-
-        /*var body = request.body
-
-
-        try{
-                body = JSON.parse(body)
-        }catch(e){
-
-            console.log("E", e)
-
-        }
-*/
-
+     
         request.data = _.merge(request.query, request.body)
         
         _.each(request.data, function(v, key){
@@ -229,9 +243,27 @@ var Middle = function(){
         if (next) 
             next(null)
     }
+
+    self.lightnext = function(request, result, next){
+
+        var n = false
+        if(request){
+            n = request.originalUrl ==  '/ping'
+        }
+
+        if(n) {
+
+            self.extendlight(request, result)
+            self.headers(request, result)
+            next(null)
+        }
+
+        return n
+    }
     
     self.prepare = function(request, result, next){
 
+        if(self.lightnext(request, result, next)) return
 
         self.headers(request, result)
         self.uainfo(request, result)

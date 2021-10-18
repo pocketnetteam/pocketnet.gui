@@ -48,6 +48,8 @@ var Proxy = function (settings, manage, test) {
 	var bots = new Bots(settings.bots)
 	var systemnotify = new SystemNotify(settings.systemnotify)
 
+	var dump = {}
+
 	self.userDataPath = null
 	self.session = 'pocketnetproxy' //f.makeid()
 
@@ -876,8 +878,6 @@ var Proxy = function (settings, manage, test) {
 
 			}).then(() => {
 
-
-
 				var userPr = rpc({
 					method : 'getuserprofile',
 					parameters : [users, '1'],
@@ -904,6 +904,9 @@ var Proxy = function (settings, manage, test) {
 				}).catch(e => {
 					return Promise.resolve()
 				})
+
+				users = null
+				videos = null
 
 				return Promise.all([userPr, videosPr])
 
@@ -1059,23 +1062,20 @@ var Proxy = function (settings, manage, test) {
 							console.log('load', method, parameters)
 						}
 
-						return node
+						return node.checkParameters().then((r) => {
+							return node.rpcs(method, _.clone(parameters));
+						})
+						.then((data) => {
 
-							.checkParameters()
-							.then((r) => {
-								return node.rpcs(method, _.clone(parameters));
-							})
-							.then((data) => {
+							if (noderating)
+								server.cache.set(method, _.clone(parameters), data, node.height());
 
-								if (noderating)
-									server.cache.set(method, _.clone(parameters), data, node.height());
-
-								return Promise.resolve({
-									data: data,
-									code: 200,
-									node: node.exportsafe(),
-								});
+							return Promise.resolve({
+								data: data,
+								code: 200,
+								node: node.exportsafe(),
 							});
+						});
 					})
 					.catch((e) => {
 
@@ -1087,7 +1087,6 @@ var Proxy = function (settings, manage, test) {
 
 							server.cache.remove(method, _.clone(parameters));
 						}
-							
 
 						return Promise.reject({
 							error: e,
@@ -1157,7 +1156,9 @@ var Proxy = function (settings, manage, test) {
 							return Promise.resolve({
 								node: nnode.exportsafe(),
 							});
-						else return Promise.reject('none');
+
+						else 
+							return Promise.reject('none');
 					}
 
 					var nnode = _node.changeNodeUser(null, _node.needToChange());
@@ -1411,6 +1412,73 @@ var Proxy = function (settings, manage, test) {
 					};
 
 					return Promise.resolve({ data });
+				},
+			},
+			heapdump: {
+				path: '/heapdump',
+				authorization: 'signature',
+				action: function (message) {
+
+					if (!message.A)
+						return Promise.reject({ error: 'Unauthorized', code: 401 });
+						
+
+					if (dump.stared){
+						return Promise.resolve({
+							message : "started yet",
+							data : dump
+						})
+					}
+
+					if (dump.error){
+
+						dump = {}
+
+						return Promise.resolve({
+							status : "dump error / refresh for start new dump",
+							data : dump
+						})
+					}
+
+					if (dump.success){
+
+						dump = {}
+
+						return Promise.resolve({
+							status : "dump success / refresh for start new dump",
+							data : dump
+						})
+					}
+
+					var heapdump = require('heapdump');
+
+					var filename = f.path('heapdump' + Date.now() + '.heapsnapshot')
+
+					dump.filename = filename
+					dump.stared = Date.now()
+
+					heapdump.writeSnapshot(filename, function(err, filename) {
+
+						dump._started = dump.stared
+						dump.end = Date.now()
+
+						delete dump.stared
+
+						if (err){
+
+							dump.error = err.toString ? err.toString() : err
+
+							console.log('err')
+						}
+						else{
+							console.log('dump written to', filename);
+
+							dump.success = true
+						}
+						
+					});
+
+					return Promise.resolve('started');
 				},
 			},
 			stats: {

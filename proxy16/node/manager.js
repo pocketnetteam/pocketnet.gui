@@ -364,8 +364,6 @@ var Nodemanager = function(p){
             }
         }
 
-        console.log("MAP CALCULATION")
-
         var chains = _.map(self.nodes, function(node){
             return node.getchain()
         })
