@@ -28,6 +28,7 @@ var SystemNotify = require('./systemnotify.js');
 //////////////
 
 
+
 var Proxy = function (settings, manage, test) {
 
 	var self = this;
@@ -1419,6 +1420,8 @@ var Proxy = function (settings, manage, test) {
 				authorization: 'signature',
 				action: function (message) {
 
+					return Promise.reject({ error: 'todo'});
+
 					if (!message.A)
 						return Promise.reject({ error: 'Unauthorized', code: 401 });
 						
@@ -1450,35 +1453,47 @@ var Proxy = function (settings, manage, test) {
 						})
 					}
 
-					var heapdump = require('heapdump');
+					console.log('heapdump start')
 
 					var filename = f.path('heapdump' + Date.now() + '.heapsnapshot')
+					var heapdump = require('heapdump');
 
 					dump.filename = filename
 					dump.stared = Date.now()
 
-					heapdump.writeSnapshot(filename, function(err, filename) {
+					try{
+						heapdump.writeSnapshot(filename, function(err, filename) {
 
-						dump._started = dump.stared
-						dump.end = Date.now()
+							dump._started = dump.stared
+							dump.end = Date.now()
+	
+							delete dump.stared
+	
+							if (err){
+	
+								dump.error = err.toString ? err.toString() : err
+	
+								console.log('err')
+							}
+							else{
+								console.log('dump written to', filename);
+	
+								dump.success = true
+							}
+							
+						});
 
-						delete dump.stared
+						return Promise.resolve('started');
+					}
+					catch(err){	
+						return Promise.resolve({
+							result : 'error',
+							error :  err.toString ? err.toString() : err
+						});
+					}
+					
 
-						if (err){
-
-							dump.error = err.toString ? err.toString() : err
-
-							console.log('err')
-						}
-						else{
-							console.log('dump written to', filename);
-
-							dump.success = true
-						}
-						
-					});
-
-					return Promise.resolve('started');
+					
 				},
 			},
 			stats: {
