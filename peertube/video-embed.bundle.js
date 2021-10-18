@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=8263"
+/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=3882"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -42511,11 +42511,11 @@ class peertube_player_manager_PeertubePlayerManager {
             this.playerElementClassName = options.common.playerElement.className;
             console.log('initialize player', mode);
             if (mode === "webtorrent")
-                yield Promise.all(/* import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, 521));
+                yield Promise.all(/* import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, 520));
             if (mode === "p2p-media-loader") {
                 [p2pMediaLoader] = yield Promise.all([
-                    Promise.all(/* import() */[__webpack_require__.e(0), __webpack_require__.e(4), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, 517)),
-                    Promise.all(/* import() */[__webpack_require__.e(0), __webpack_require__.e(4), __webpack_require__.e(9), __webpack_require__.e(3), __webpack_require__.e(10)]).then(__webpack_require__.bind(null, 520)),
+                    Promise.all(/* import() */[__webpack_require__.e(0), __webpack_require__.e(4), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, 516)),
+                    Promise.all(/* import() */[__webpack_require__.e(0), __webpack_require__.e(4), __webpack_require__.e(9), __webpack_require__.e(3), __webpack_require__.e(10)]).then(__webpack_require__.bind(null, 519)),
                 ]);
             }
             const videojsOptions = this.getVideojsOptions(mode, options, p2pMediaLoader);
@@ -42580,7 +42580,7 @@ class peertube_player_manager_PeertubePlayerManager {
             options.common.playerElement = newVideoElement;
             options.common.onPlayerElementChange(newVideoElement);
             player.dispose();
-            yield Promise.all(/* import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, 521));
+            yield Promise.all(/* import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, 520));
             const mode = "webtorrent";
             const videojsOptions = this.getVideojsOptions(mode, options);
             const self = this;
@@ -43874,7 +43874,7 @@ class embed_PeerTubeEmbed {
     buildVideoPlayerContributos(videoId) {
         return Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
             /* @ts-ignore */
-            yield __webpack_require__.e(/* import() */ 11).then(__webpack_require__.t.bind(null, 519, 7));
+            yield __webpack_require__.e(/* import() */ 11).then(__webpack_require__.t.bind(null, 518, 7));
             if (this.player) {
                 try {
                     this.player.dispose();

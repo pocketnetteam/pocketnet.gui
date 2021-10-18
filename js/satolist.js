@@ -74,7 +74,8 @@ Platform = function (app, listofnodes) {
         'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd' : true,
         'PJ3nv2jGyW2onqZVDKJf9TmfuLGpmkSK2X' : true,
         'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM' : true,
-        'PU7D6X5bNUdEiuUGWGLp8C6TjSsB2hzHxL' : true
+        'PU7D6X5bNUdEiuUGWGLp8C6TjSsB2hzHxL' : true,
+        'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz' : true
     }
     
 

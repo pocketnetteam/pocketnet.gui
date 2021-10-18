@@ -144,12 +144,6 @@ class Html5Hlsjs {
         this.uiTextTrackHandled = false;
         this.hls.destroy();
     }
-    rebuild() {
-        this.dispose();
-        this.hlsjsConfig.autoStartLoad === true;
-        this.initialize();
-        //this.hls.startLoad()
-    }
     static addHook(type, callback) {
         Html5Hlsjs.hooks[type] = this.hooks[type] || [];
         Html5Hlsjs.hooks[type].push(callback);
@@ -173,6 +167,7 @@ class Html5Hlsjs {
         }
     }
     _handleMediaError(error) {
+        console.log('this.errorCounts', this.errorCounts);
         if (this.errorCounts[hls_js__WEBPACK_IMPORTED_MODULE_0__["ErrorTypes"].MEDIA_ERROR] === 1) {
             console.info('trying to recover media error');
             this.hls.recoverMediaError();
@@ -186,13 +181,10 @@ class Html5Hlsjs {
         }
         if (this.errorCounts[hls_js__WEBPACK_IMPORTED_MODULE_0__["ErrorTypes"].MEDIA_ERROR] > 2) {
             console.info('bubbling media error up to VIDEOJS');
-            this.rebuild();
-            /*this.hls.recoverMediaError()
-      
-            this.hls.destroy()
-      
-            this.tech.error = () => error
-            this.tech.trigger('error')*/
+            this.hls.recoverMediaError();
+            //this.hls.destroy()
+            //this.tech.error = () => error
+            //this.tech.trigger('error')
             return;
         }
     }
@@ -209,7 +201,7 @@ class Html5Hlsjs {
             return;
         }
         console.info('bubbling network error up to VIDEOJS');
-        this.hls.destroy();
+        // this.hls.destroy()
         this.tech.error = () => error;
         this.tech.trigger('error');
     }
@@ -217,9 +209,9 @@ class Html5Hlsjs {
         const error = {
             message: `HLS.js error: ${data.type} - fatal: ${data.fatal} - ${data.details}`
         };
+        console.error(error);
         if (!data.fatal)
             return;
-        console.error(error);
         // increment/set error count
         if (this.errorCounts[data.type])
             this.errorCounts[data.type] += 1;
@@ -234,7 +226,7 @@ class Html5Hlsjs {
             this._handleMediaError(error);
         }
         else {
-            this.hls.destroy();
+            // this.hls.destroy()
             this.tech.error = () => error;
             this.tech.trigger('error');
         }
@@ -500,14 +492,13 @@ class Html5Hlsjs {
         // _notifyVideoQualities sometimes runs before the quality picker event handler is registered -> no video switcher
         this.handlers.playing = this._notifyVideoQualities.bind(this);
         this.videoElement.addEventListener('playing', this.handlers.playing);
-        this.hlsjsConfig.debug = true;
+        //  this.hlsjsConfig.debug = true
         //this.hlsjsConfig.liveSyncDurationCount = 4
         //this.hlsjsConfig.maxMaxBufferLength = 55
         //this.hlsjsConfig.backBufferLength = 90
         ///// liveSyncPosition
         /* @ts-ignore */
         this.hlsjsConfig.capLevelController = _peertube_cap_level_controller__WEBPACK_IMPORTED_MODULE_1__["default"];
-        this.hlsjsConfig.nudgeMaxRetry = 100;
         console.log("INITHLS");
         this.hls = new hls_js__WEBPACK_IMPORTED_MODULE_0___default.a(this.hlsjsConfig);
         this._executeHooksFor('beforeinitialize');
@@ -653,7 +644,6 @@ class P2pMediaLoaderPlugin extends Plugin {
         this.hlsjs.on(hls_js__WEBPACK_IMPORTED_MODULE_5__["Events"].LEVEL_SWITCHING, (_, data) => {
             console.log("LEVEL_SWITCHING");
             this.trigger('resolutionChange', { auto: this.hlsjs.autoLevelEnabled, resolutionId: data.height });
-            this.p2pEngine.abortWhenLevelSwitching();
         });
         this.p2pEngine.on(_core_p2p_media_loader_master_p2p_media_loader_core_lib__WEBPACK_IMPORTED_MODULE_2__["Events"].SegmentError, (segment, err) => {
             this.options.redundancyUrlManager.removeBySegmentUrl(segment.requestUrl);
@@ -662,12 +652,12 @@ class P2pMediaLoaderPlugin extends Plugin {
         this.runStats();
     }
     runStats() {
-        this.p2pEngine.on(_core_p2p_media_loader_master_p2p_media_loader_core_lib__WEBPACK_IMPORTED_MODULE_2__["Events"].PieceBytesDownloaded, (method, size) => {
+        this.p2pEngine.on(_core_p2p_media_loader_master_p2p_media_loader_core_lib__WEBPACK_IMPORTED_MODULE_2__["Events"].PieceBytesDownloaded, (method, segment, size) => {
             const elem = method === 'p2p' ? this.statsP2PBytes : this.statsHTTPBytes;
             elem.pendingDownload.push(size);
             elem.totalDownload += size;
         });
-        this.p2pEngine.on(_core_p2p_media_loader_master_p2p_media_loader_core_lib__WEBPACK_IMPORTED_MODULE_2__["Events"].PieceBytesUploaded, (method, size) => {
+        this.p2pEngine.on(_core_p2p_media_loader_master_p2p_media_loader_core_lib__WEBPACK_IMPORTED_MODULE_2__["Events"].PieceBytesUploaded, (method, segment, size) => {
             const elem = method === 'p2p' ? this.statsP2PBytes : this.statsHTTPBytes;
             elem.pendingUpload.push(size);
             elem.totalUpload += size;
