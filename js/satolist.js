@@ -559,6 +559,12 @@ Platform = function (app, listofnodes) {
             }
         },
 
+        "48": {
+            message: function(){
+                return self.app.localization.e('canSpendError')
+            }
+        },
+
         "41": {
             message: function () {
                 return self.app.localization.e('e13234')

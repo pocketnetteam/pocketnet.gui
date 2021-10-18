@@ -3362,79 +3362,98 @@ var lenta = (function(){
 						if (essenseData.afterload){
 							essenseData.afterload(essenseData, shares, error || error2)
 						}
+
+						
+						var temp = self.sdk.node.transactions.temp;
+
+
+						var getAccountSettings = function(d){
+
+							console.log('d!!', d);
+
+							var settings = JSON.parse((typeof d === 'string' && d) ? d : '{}');
+
+							if (settings && settings.pin){
+
+								var pinnedId = shares.findIndex(function(share){
+									return share.txid === settings.pin;
+								});
+
+								if (pinnedId > -1){
+
+									var pinnedShare = shares.splice(pinnedId, 1);
+									console.log('pinneds', pinnedShare);
+									
+									pinnedShare[0].pin = true;
+									shares.unshift(pinnedShare[0]);		
+									
+									console.log('shares!!!', shares);
+
+
+									if (clbk)
+										clbk(shares, error || error2)
+
+									el.loader.fadeOut();
+									return;
+
+								} else {
+
+									self.app.platform.sdk.node.shares.getbyid([settings.pin], function(t){
+
+										var pinnedShare = new pShare();
+
+										if (t){
+
+											pinnedShare._import(t[0]);
+											pinnedShare.pin = true;
+											shares.unshift(pinnedShare);
+
+											if (clbk)
+												clbk(shares, error || error2)
+
+											el.loader.fadeOut();
+											return;									
+										}
+
+									})
+								
+								}
+
+
+							} else if(clbk){
+
+								clbk(shares, error || error2);
+								el.loader.fadeOut();
+
+							}
+
+
+
+						}
 						
 						if (essenseData.byauthor && author && first){
 
 							first = false;
 
-							self.app.api.rpc('getaccountsetting', [author]).then(d => {
+							var acc = temp.accSet && Object.values(temp.accSet)[0];
 
-								console.log('d!!', d);
-
-								var settings = JSON.parse((typeof d === 'string' && d) ? d : '{}');
-
-								if (settings && settings.pin){
-
-									var pinnedId = shares.findIndex(function(share){
-										return share.txid === settings.pin;
-									});
-
-									if (pinnedId > -1){
-
-										var pinnedShare = shares.splice(pinnedId, 1);
-										console.log('pinneds', pinnedShare);
-										
-										pinnedShare[0].pin = true;
-										shares.unshift(pinnedShare[0]);		
-										
-										console.log('shares!!!', shares);
+							if (acc && acc.address === author){
+								
+								getAccountSettings(acc.d);
 
 
-										if (clbk)
-											clbk(shares, error || error2)
+							} else {
 
-										el.loader.fadeOut();
-										return;
+								self.app.api.rpc('getaccountsetting', [author]).then(getAccountSettings)
 
-									} else {
+							}
 
-										self.app.platform.sdk.node.shares.getbyid([settings.pin], function(t){
-
-											var pinnedShare = new pShare();
-
-											if (t){
-
-												pinnedShare._import(t[0]);
-												pinnedShare.pin = true;
-												shares.unshift(pinnedShare);
-
-												if (clbk)
-													clbk(shares, error || error2)
-
-												el.loader.fadeOut();
-												return;									
-											}
-
-										})
-									
-									}
-
-
-								}
-
-								if(clbk)
-									clbk(shares, error || error2);
-
-								el.loader.fadeOut();
-								return;
-
-
-							})
 
 						} else if (clbk){
+							
+							first = false;
 
 							el.loader.fadeOut();
-							first = false;
 							clbk(shares, error || error2);
 						}
 						
