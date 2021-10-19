@@ -15,6 +15,7 @@ var Nodemanager = function(p){
     self.askedpeers = {};
     self.peers = {}
     self.bestnode = ''
+    self.bestnodes = []
 
     //// using
     self.nodes = [];
@@ -621,8 +622,18 @@ var Nodemanager = function(p){
 
 
                     statscalculationInterval = setInterval(function(){
+
                         self.selectbest()
+                        self.bestnodesapply()
+
                     }, statscalculationTime) 
+
+                    setTimeout(function(){
+
+                        self.selectbest()
+                        self.bestnodesapply()
+
+                    }, 2000)
 
                     inited = true
 
@@ -677,6 +688,26 @@ var Nodemanager = function(p){
         return _.filter(self.nodes, function(n){
             return n.inited
         })
+    }
+
+    self.bestlist = function(){
+        var nodes = _.sortBy(self.initednodes(), function(node){
+            return - node.statistic.probability()
+        })
+
+        var ns = _.filter(nodes, function(n, i){
+            return i < 3
+        })
+
+        return ns
+    }
+
+    self.bestnodesapply = function(){
+
+        self.bestnodes = _.map(self.bestlist(), function(n){
+            return n.key
+        })
+
     }
 
     self.selectProbability = function(){
