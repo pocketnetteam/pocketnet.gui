@@ -2,7 +2,7 @@ var kit = require('./kit.js');
 var f = require('./functions');
 var readline = require('readline'); 
 
-
+process.env.NODE_ENV = 'production'
 
 var destroy = function(repeat){
 

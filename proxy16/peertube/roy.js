@@ -197,7 +197,6 @@ var Roy = function (parent) {
 				return Promise.resolve(r);
 			}).catch(e => {
 
-				//console.log('e.code', e.status)
 
 				if(e && e.status){
 					if(e.status != 500){
@@ -210,18 +209,15 @@ var Roy = function (parent) {
 		}
 
 		var recrequest = function(){
-			//console.log('index', index)
 
 			var instance = list[index]
 
 			if(!instance) {
 
-				//console.log("ER", (error || {}).status || 'failed')
 
 				return Promise.reject(error || 'failed');
 			}
 
-			//console.log('instance', instance.host)
 			return request(instance).catch(e => {
 				index++
 				return recrequest()

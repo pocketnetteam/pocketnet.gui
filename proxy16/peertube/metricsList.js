@@ -10,8 +10,6 @@ module.exports = {
         calculate() {
           const { weight, value } = this;
 
-          console.log(instance.host, value)
-
           return weight / (1 + Math.pow(value, 0.25));
         },
       }),

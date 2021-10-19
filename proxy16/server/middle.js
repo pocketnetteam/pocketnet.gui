@@ -73,7 +73,7 @@ var Middle = function(){
     }
 
     self.printstats = function(){
-        
+
         console.log("")
         console.log("_____________________________________")
         console.log("Total Requests count:", requestcountTotal)
@@ -148,7 +148,8 @@ var Middle = function(){
         result.setHeader('Access-Control-Allow-Origin', '*');
         result.setHeader("Access-Control-Allow-Methods", "GET, POST");
         result.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-
+        result.set('Cache-control', 'public, max-age=10')
+        
         if (next) 
             next(null)
     }
