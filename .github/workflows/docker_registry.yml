@@ -52,7 +52,7 @@ jobs:
           push: true
           tags: |
             ${{ secrets.DOCKER_HUB_USERNAME }}/proxy:latest
-            ${{ secrets.DOCKER_HUB_USERNAME }}/proxy:$CI_COMMIT_TAG
+            ${{ secrets.DOCKER_HUB_USERNAME }}/proxy:${{ CI_COMMIT_TAG }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
           
