@@ -36,6 +36,24 @@ var Middle = function(){
         logs = []
     }
 
+    var countLast5Seconds = function(){
+
+        var eventschecktime = 5000
+
+        var s = f.date.addseconds(new Date(), - eventschecktime / 1000)
+        var l = logs.length
+        var c = 0
+
+        if(l){
+            while (l && logs[l - 1].date > s){
+                c++
+                l--
+            }
+        }
+
+        return c
+    }
+
     var rate = function(){
 
         var eventschecktime = 10000
@@ -55,10 +73,13 @@ var Middle = function(){
     }
 
     self.printstats = function(){
+        
         console.log("")
         console.log("_____________________________________")
         console.log("Total Requests count:", requestcountTotal)
         console.log("Finished Requests count:", requestcountFinished)
+        console.log("5 Sec. Finished Requests count:", countLast5Seconds())
+        
         console.log(rate() + ' RPS')
     }
     
