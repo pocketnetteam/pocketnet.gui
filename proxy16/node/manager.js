@@ -14,16 +14,17 @@ var Nodemanager = function(p){
 
     self.askedpeers = {};
     self.peers = {}
+    self.bestnode = ''
 
     //// using
     self.nodes = [];
     self.nodesmap = {};
   
-
+    var statscalculationInterval = null
+    var statscalculationTime = 10000
     var findInterval = null
     var peernodesCheckTime = 1000000
     var usersfornode = 30
-
     var commonnotinitedInterval = null
 
     var db = new Datastore(f.path(p.dbpath));
@@ -618,6 +619,11 @@ var Nodemanager = function(p){
                         self.getNotinitedInfo()
                     }, 1000 * 60 * 60 * 2) 
 
+
+                    statscalculationInterval = setInterval(function(){
+                        self.selectbest()
+                    }, statscalculationTime) 
+
                     inited = true
 
                     resolve()
@@ -659,6 +665,11 @@ var Nodemanager = function(p){
             clearInterval(commonnotinitedInterval)
             commonnotinitedInterval = null
         }
+
+        if(statscalculationInterval){
+            clearInterval(statscalculationInterval)
+            statscalculationInterval = null
+        }
         
     }
 
@@ -699,6 +710,8 @@ var Nodemanager = function(p){
                 return true //node.inited /*&& node.stable*/
             })
         }
+
+        if(best) self.bestnode = best.key
 
         return best
     }

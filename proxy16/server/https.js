@@ -22,6 +22,7 @@ var Server = function(settings, admins, manage){
     var iplimiter = new Iplimiter(settings.iplimiter)
 
     var startedDate = null
+    var printstatsInterval = null
 
     self.cache = new Cache({ dontCache: settings.contCache})
     self.listening = false;
@@ -76,8 +77,12 @@ var Server = function(settings, admins, manage){
 
         app.use(async (request, result, next) => {
 
-            middle.prepare(request, result, function(){
+            if(request && request.method && request.method == "OPTIONS"){
+                next()
+                return
+            }
 
+            middle.prepare(request, result, function(){
 
                 if (settings.iplimiter){
 
@@ -95,9 +100,18 @@ var Server = function(settings, admins, manage){
             
         });
 
-        app.options("/*", function(req, res, next){
-            res.sendStatus(200)
+        app.options("*", function(req, res, next){
+            
+            middle.headers(req, res, function(){
+                res.sendStatus(200)
+            })
+            
         });
+
+        if(!printstatsInterval)
+            printstatsInterval = setInterval(function(){
+                middle.printstats()
+            }, 5000)
 
         self.link()
 
@@ -139,8 +153,6 @@ var Server = function(settings, admins, manage){
             try{
                 
 
-                
-
                 if (_.isEmpty(settings.ssl)){
                     reject('sslerror')
 
@@ -161,8 +173,6 @@ var Server = function(settings, admins, manage){
                 });
 
                 server.on('error',function(e){
-
-
                     reject(e) 
                 });
 
@@ -190,6 +200,11 @@ var Server = function(settings, admins, manage){
             httpserver = null
         }
 
+        if(!printstatsInterval){
+            clearInterval(printstatsInterval)
+            printstatsInterval = null
+        }
+        
         app = null
         startedDate = null
 
@@ -246,9 +261,8 @@ var Server = function(settings, admins, manage){
                         }
 
                         meta.action(request.data).then(d => {
-                            result._success(d.data, d.code)
+                            result._success(d.data, d.code, d)
                         }).catch(e => {
-
                             result._fail(e, e.code)
                         })
                     

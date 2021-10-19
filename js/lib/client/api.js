@@ -4,11 +4,27 @@ if (typeof _Electron != 'undefined') {
     electron = require('electron');
 }
 
-
 var rand = function(min, max){
     min = parseInt(min);
     max = parseInt(max);
     return Math.floor( Math.random() * (max - min + 1) ) + min;
+}
+
+var sequence = function(tasks, fn, result) {
+
+    if(!tasks) tasks = []
+    if(!result) result = []
+
+    if(!tasks.length) return Promise.resolve(result)
+
+    var task = tasks[0]
+
+    return fn(task).then(r => {
+        result.push(r)
+        tasks.shift()
+        return sequence(tasks, fn, result)
+    })
+
 }
 
 var isonline = function(){
@@ -17,7 +33,7 @@ var isonline = function(){
         if(navigator.connection.type === 'none') return false
     }
 
-    if(typeof window.navigator){
+    if(typeof window.navigator && window.navigator.onLine === false){
         return window.navigator.onLine
     }
 
@@ -77,17 +93,18 @@ var ProxyRequest = function(app = {}, proxy){
 
     var direct = function(url, data, p){
 
+        if(!p) p = {}
+
         if(typeof AbortController != 'undefined'){
             var controller = (new AbortController())
 
-            var time = 40000
+            var time = p.timeout || 30000
     
             if (window.cordova || isInStandaloneMode()){
-                time = 55000
+                time = time * 2
             }
 
             if(!isonline()) time = 3000
-    
     
             return timeout(time, directclear(url, data, controller.signal, p), controller)
         }   
@@ -152,8 +169,6 @@ var ProxyRequest = function(app = {}, proxy){
 
         }).catch(e => {
 
-            console.error("E", e, e.code)
-
             if (e.code == 20){
                 return Promise.reject({
                     code : 20
@@ -165,8 +180,6 @@ var ProxyRequest = function(app = {}, proxy){
     }
 
     self.rpc = function(url, method, parameters, options){
-
-     
 
         if(!method) return Promise.reject('method')
 
@@ -187,9 +200,11 @@ var ProxyRequest = function(app = {}, proxy){
 
         var route = 'rpc'
 
+        var requestoptions = {}
+
         if (options.ex) route = 'rpc-ex'
 
-        return direct(url + '/'+route+'/' + method, data)
+        return direct(url + '/'+route+'/' + method, data, requestoptions)
 
     }
 
@@ -331,10 +346,16 @@ var Proxy16 = function(meta, app, api){
 
     self.api = {
         ping : () => {
-            return self.fetch('ping').then(r => {
+            return self.fetch('ping', {}, {timeout : 4000}).then(r => {
 
                 self.ping = new Date()
                 self.session = r.session
+
+                if(!self.current && r.node && !api.get.fixednode()){
+                    self.current = {
+                        key : r.node
+                    }
+                }
 
                 return Promise.resolve(r)
             }).catch(e => {
@@ -346,7 +367,7 @@ var Proxy16 = function(meta, app, api){
 
             var promise = null
 
-            if(!self.ping || self.ping.addSeconds(20) < new Date()){
+            if(!self.ping || self.ping.addSeconds(60) < new Date()){
                 promise = self.api.ping()
             }
             else{
@@ -361,7 +382,7 @@ var Proxy16 = function(meta, app, api){
         nodes : {
 
             canchange : function(node){
-                return self.fetch('nodes/canchange',{node}, 'wait').then(r => {
+                return self.fetch('nodes/canchange', {node}, 'wait').then(r => {
                     return Promise.resolve(self.changeNode(r.node))
                 }).catch(e => {
                     return Promise.resolve(false)
@@ -374,13 +395,13 @@ var Proxy16 = function(meta, app, api){
 
                 if(api && api.get.fixednode()) fixednode = api.get.fixednode()
 
-
                 return self.fetch('nodes/select', {fixed : fixednode}).then(r => {
 
                     self.current = r.node
 
                     return Promise.resolve(r)
                 })
+                
             },
             get : () => {
                 return self.fetch('nodes/get').then(r => {
@@ -539,9 +560,9 @@ var Proxy16 = function(meta, app, api){
 
         }
 
-        //return Promise.resolve()
+        return Promise.resolve()
 
-        return self.refreshNodes()
+        // return self.refreshNodes()
     }
 
     self.refreshNodes = function(){
@@ -550,11 +571,6 @@ var Proxy16 = function(meta, app, api){
             return Promise.resolve()
         })
 
-        return self.api.nodes.get().then(r => {
-            return self.api.nodes.select()
-        }).catch(e => {
-            return Promise.resolve()
-        })
     }
 
     self.destroy = function(){
@@ -605,6 +621,8 @@ var Api = function(app){
 
         return proxy ? Promise.resolve(proxy) : Promise.reject('proxy')
     }
+
+    
 
     self.addproxy = function(meta){
         var lsproxies = JSON.parse(localStorage['listofproxies'] || "[]")
@@ -693,13 +711,20 @@ var Api = function(app){
                 savelist : function(lsproxies){
                     localStorage['listofproxies'] = JSON.stringify(lsproxies || [])
                 },  
+                initialMarker : function(initialProxies){
+
+                    _.each(initialProxies, function(meta){
+                        var proxy = internal.proxy.manage.find(meta.id)
+            
+                        if (proxy) proxy.initial = true
+                    })
+                    
+                },
                 init : function(){
 
                     var initialProxies = deep(app, 'options.listofproxies') || []
 
                     return this.addlocalelectronproxy().then(r => {
-
-
 
                         this.addlist(initialProxies)
 
@@ -721,9 +746,9 @@ var Api = function(app){
 
                     }).then(r => {
 
-                        var oldc = localStorage['currentproxy']
+                        internal.proxy.manage.initialMarker(initialProxies)
 
-                        console.log('oldc', oldc)
+                        var oldc = localStorage['currentproxy']
 
                         if (oldc){
                             return self.set.current(oldc)
@@ -737,21 +762,12 @@ var Api = function(app){
 
                     }).then(() => {
 
-                        console.log("CUR", current)
-
                         if(!current && initialProxies.length){
-
                             var rps = initialProxies[rand(0, initialProxies.length - 1)]
-
-                            if(rps){
+                            if (rps){
                                 var randproxy = rps.host + ":" + rps.port + ":" + rps.wss
-
-                                console.log('randproxy', randproxy)
-
-                                current = randproxy //proxies[0].id ??
+                                current = randproxy
                             }
-
-                            
                         }
 
                         inited = true
@@ -816,6 +832,45 @@ var Api = function(app){
         
                     return Promise.all(promises)
                 },
+
+                softping : async function (proxies){
+
+                    var result = false
+
+                    return sequence(proxies, proxy => {
+
+                        if(result) return Promise.resolve()
+
+                        return proxy.api.actualping().then(r => {
+                            result = true
+                        })
+
+                    })
+
+                },
+                
+                mixedping : function(proxies){
+                    var current = self.get.current()
+
+                    return current.api.actualping().catch(e => {return Promise.resolve()}).then(() => {
+
+
+                        console.log('self.ready.use()', self.ready.use())
+
+                        if(self.ready.use()) return Promise.resolve()
+
+                        proxies = _.filter(proxies, function(p){
+                            return p.id != current.id
+                        })
+
+                        return internal.proxy.api.softping(proxies).then(r => {
+                            console.log("ADD DONE")
+
+                            return Promise.resolve()
+                        })
+
+                    })
+                }
             }
         }
     }
@@ -1005,15 +1060,10 @@ var Api = function(app){
 
             return Promise.resolve()
 
-            if(r.refresh){
-                return proxy.refreshNodes()
-            }
-            else
-                return Promise.resolve()
         },
         fixednode : function(id){
             fixednode = id
-
+            
             localStorage['fixednode'] = fixednode
         }   
     }
@@ -1153,7 +1203,6 @@ var Api = function(app){
 
         return promise.then(r => {
             if(r){
-                console.log("HERE")
                 return Promise.resolve(1)
             }
             else{
@@ -1173,11 +1222,11 @@ var Api = function(app){
 
         var f = localStorage['fixednode']
 
-        if(f) fixednode = f
+        if(f && f != 'null') fixednode = f
 
-        return internal.proxy.manage.init().then(r => {
-
-            internal.proxy.api.ping(proxies).catch(e => {
+        return internal.proxy.manage.init().then(r => { 
+            //softping
+            internal.proxy.api.mixedping(proxies).catch(e => {
                 console.log("ERROR", e)
             })
 

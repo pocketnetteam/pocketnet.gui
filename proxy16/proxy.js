@@ -1421,7 +1421,6 @@ var Proxy = function (settings, manage, test) {
 				path: '/heapdump',
 				//authorization: 'signature',
 				action: function (message) {
-					return Promise.reject({ error: 'todo', code: 401 });
 
 					/*if (!message.A)
 						return Promise.reject({ error: 'Unauthorized', code: 401 });*/
@@ -1457,7 +1456,7 @@ var Proxy = function (settings, manage, test) {
 
 					console.log('heapdump start')
 
-					var filename = f.path('/heapdump/' + Date.now() + '.heapsnapshot')
+					var filename = f.path('heapdump/' + Date.now() + '.heapsnapshot')
 					var heapdump = require('heapdump');
 
 					dump.filename = filename
@@ -1522,7 +1521,8 @@ var Proxy = function (settings, manage, test) {
 						data: {
 							time: f.now(),
 							session : self.session,
-							v : '0807'
+							v : '0807',
+							node : nodeManager.bestnode || ''
 						},
 					});
 				},

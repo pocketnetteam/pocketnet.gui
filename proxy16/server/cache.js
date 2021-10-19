@@ -232,8 +232,6 @@ var Cache = function(p){
                 }
                 catch(e){
 
-                    console.log('stringify error', params)
-
                     return
                 }
             }
@@ -250,7 +248,7 @@ var Cache = function(p){
                     return sd.data
                 }
                 else{
-                    console.log('key', key, cachehash)
+                  
                 }
             }
 
@@ -397,7 +395,6 @@ var Cache = function(p){
                     var t = f.date.addseconds(sd.time, 2 * (sd.ontime || c.time))
 
                     if (t < date){
-                        console.log(lkey)
                         removekeys.push(lkey)
                     }
                     

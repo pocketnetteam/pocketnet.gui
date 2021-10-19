@@ -1859,9 +1859,5 @@ __map =  {
 };
 
 
-console.log(JSON.stringify(_.map(__map, function(o,i){
-	return i
-})))
-
 
 if(typeof module != "undefined") module.exports = __map;

@@ -22530,8 +22530,7 @@ Platform = function (app, listofnodes) {
 
         initOnlineListener() // /remove for test
 
-
-        self.app.api.wait.ready('use', 3000).then(r => {
+        self.app.api.wait.ready('use', 10000).then(r => {
 
             return new Promise((resolve, reject) => {
                 setTimeout(function(){
@@ -22557,6 +22556,8 @@ Platform = function (app, listofnodes) {
 
         }).then(r => {
 
+
+            console.log("WEBSOCKET INIT")
 
             self.ws = new self.WSn(self);
 
@@ -22738,7 +22739,6 @@ Platform = function (app, listofnodes) {
 
                         if (self.sdk.address.pnet()){
 
-                            console.log("self.nvadr", self.nvadr, self.sdk.address.pnet().address)
 
                             if(self.nvadr[self.sdk.address.pnet().address]) $('html').addClass('testaddress')
                             else{

@@ -9,6 +9,9 @@ var Middle = function(){
     var countlogs = 10000
     var logs = []
 
+    var requestcountFinished = 0
+    var requestcountTotal = 0
+
     var addLogs = function(parameters, ip, status, pathname, start){
 		
 		logs.push({
@@ -19,6 +22,8 @@ var Middle = function(){
 			date : new Date(),
             start : start
 		})
+
+        requestcountFinished++
 
 		var d = logs.length - countlogs
 
@@ -47,6 +52,14 @@ var Middle = function(){
         }
 
         return c / (eventschecktime / 1000)
+    }
+
+    self.printstats = function(){
+        console.log("")
+        console.log("_____________________________________")
+        console.log("Total Requests count:", requestcountTotal)
+        console.log("Finished Requests count:", requestcountFinished)
+        console.log(rate() + ' RPS')
     }
     
     self.info = function(compact){
@@ -146,16 +159,27 @@ var Middle = function(){
     }
 
     self.extend = function(request, result, next){
-        var start = f.now()
-        
-        result._success = function(data, code){
+        var start = new Date()
+
+        result._success = function(data, code, s){
 
             if(!code) code = 200
 
-            result.status(code).jsonp({
-                result : 'success',
-                data : data
-            })
+            try{
+                var jsonp = {
+                    result : 'success',
+                    data : data
+                }
+    
+                if (s && s.node){
+                    jsonp.node = s.node.key
+                }
+            }
+            catch(e){
+                console.error(e)
+            }
+
+            result.status(code).jsonp(jsonp)
 
             addLogs(request.data, request.clientIP, code, request.baseUrl + request.path, start)
     
@@ -262,6 +286,8 @@ var Middle = function(){
     }
     
     self.prepare = function(request, result, next){
+
+        requestcountTotal++
 
         if(self.lightnext(request, result, next)) return
 
