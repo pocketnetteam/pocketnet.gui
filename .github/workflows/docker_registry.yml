@@ -42,6 +42,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-
             
+      - name: What
+        run: echo "VERSION=${CI_COMMIT_TAG}" >> $GITHUB_ENV
+            
       - name: Build and push
         id: docker_build
         uses: docker/build-push-action@v2
@@ -52,7 +55,7 @@ jobs:
           push: true
           tags: |
             ${{ secrets.DOCKER_HUB_USERNAME }}/proxy:latest
-            ${{ secrets.DOCKER_HUB_USERNAME }}/proxy:$CI_COMMIT_TAG
+            ${{ secrets.DOCKER_HUB_USERNAME }}/proxy:${{ env.VERSION }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
           
