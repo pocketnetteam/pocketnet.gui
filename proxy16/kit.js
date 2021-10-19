@@ -341,19 +341,12 @@ var state = {
 	},
 	prepare : function(){
 	
-		console.log('prepare', f.path('data'))
 		try{
-		if(!fs.existsSync(f.path('data'))){
-			console.log('create')
-			fs.mkdirSync(f.path('data'))
-			console.log('created')
-		}
-		else{
-			console.log('exist')
-		}
+			if(!fs.existsSync(f.path('data'))){
+				fs.mkdirSync(f.path('data'))
+			}
 		}
 		catch(e){
-		console.log('creation data er', e)
 		}
 		
 		
@@ -1047,7 +1040,7 @@ var kit = {
 
 	init : function(environmentDefaultSettings, hck){
 	
-	state.prepare()
+		state.prepare()
 
 		var settings = defaultSettings;
 
@@ -1073,12 +1066,9 @@ var kit = {
 						proxy.wss.wssdummy(hck.wssdummy)
 					}
 
-					
-
 					resolve()
 
 				}).catch(e => {
-                    console.log(e)
 					reject(e)
 				})
 			}

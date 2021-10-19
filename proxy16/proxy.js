@@ -1232,7 +1232,6 @@ var Proxy = function (settings, manage, test) {
 							});
 						})
 						.catch((e) => {
-							//console.log("e", e)
 							return Promise.reject(e);
 						});
 				},
@@ -1276,8 +1275,6 @@ var Proxy = function (settings, manage, test) {
 					return Promise.resolve({
 						data: data,
 					}).catch(e => {
-
-						console.error(e)
 
 						return Promise.reject(e)
 					});
