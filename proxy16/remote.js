@@ -31,6 +31,9 @@ var Remote = function(app){
 	{
 	    var ch = 0;
 	    var result = "";
+
+		if(!text || !text.length) return ""
+
 	    for (var i = 0; i < text.length; i++)
 	    {
 	        ch = text.charCodeAt(i);
@@ -393,6 +396,17 @@ var Remote = function(app){
 		},
 
 		ogs : function(uri, clbk){
+
+			if(!uri){
+				
+				if (clbk){
+					clbk({})
+				}
+
+				return
+			}
+
+
 			request({
 				uri : nremotelink + '?url=' + uri + '&validate=false',
 				timeout : 30000,
@@ -434,6 +448,16 @@ var Remote = function(app){
 		},
 
 		ogf : function(uri, clbk){
+
+			if(!uri){
+
+				if (clbk){
+					clbk({})
+				}
+
+				return
+			}
+
 			request({
 				uri : 'https://pocketnet.app:8888/urlPreview?url=' + hexEncode(uri),
 				timeout : 30000,

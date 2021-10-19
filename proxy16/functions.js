@@ -70,7 +70,21 @@ f.path = function(_path){
     
 }
 
+f.createfolder = function(filepath){
+    //var spath = filepath.split('\\')
+
+    console.log(filepath)
+
+    var dirname = path.dirname(filepath)
+
+    console.log('dirname', dirname)
+
+    if (!fs.existsSync(dirname)) { fs.mkdirSync(dirname, {recursive : true}) }
+}
+
 f.saveFile = function(filepath, buffer){
+
+    f.createfolder(filepath)
 
     ///// TODO ADD FOLDER CREATION FOR LINUX AND REMOVE DEFAULT CERT
         

@@ -26,8 +26,10 @@ var Peertube = require('./peertube/index.js');
 var Bots = require('./bots.js');
 var SystemNotify = require('./systemnotify.js');
 //////////////
+/*
+if (process.platform === 'win32') expectedExitCodes = [3221225477];
 
-
+console.log('expectedExitCodes' , expectedExitCodes)*/
 
 var Proxy = function (settings, manage, test) {
 
@@ -1417,14 +1419,14 @@ var Proxy = function (settings, manage, test) {
 			},
 			heapdump: {
 				path: '/heapdump',
-				authorization: 'signature',
+				//authorization: 'signature',
 				action: function (message) {
+					return Promise.reject({ error: 'todo', code: 401 });
 
-					return Promise.reject({ error: 'todo'});
-
-					if (!message.A)
-						return Promise.reject({ error: 'Unauthorized', code: 401 });
+					/*if (!message.A)
+						return Promise.reject({ error: 'Unauthorized', code: 401 });*/
 						
+					var dumpdata = _.clone(dump)
 
 					if (dump.stared){
 						return Promise.resolve({
@@ -1439,7 +1441,7 @@ var Proxy = function (settings, manage, test) {
 
 						return Promise.resolve({
 							status : "dump error / refresh for start new dump",
-							data : dump
+							data : dumpdata
 						})
 					}
 
@@ -1449,23 +1451,27 @@ var Proxy = function (settings, manage, test) {
 
 						return Promise.resolve({
 							status : "dump success / refresh for start new dump",
-							data : dump
+							data : dumpdata
 						})
 					}
 
 					console.log('heapdump start')
 
-					var filename = f.path('heapdump' + Date.now() + '.heapsnapshot')
+					var filename = f.path('/heapdump/' + Date.now() + '.heapsnapshot')
 					var heapdump = require('heapdump');
 
 					dump.filename = filename
 					dump.stared = Date.now()
 
 					try{
+
+						f.createfolder(filename)
+
 						heapdump.writeSnapshot(filename, function(err, filename) {
 
 							dump._started = dump.stared
 							dump.end = Date.now()
+							dump.name = filename
 	
 							delete dump.stared
 	
@@ -1473,7 +1479,7 @@ var Proxy = function (settings, manage, test) {
 	
 								dump.error = err.toString ? err.toString() : err
 	
-								console.log('err')
+								console.log(dump.error)
 							}
 							else{
 								console.log('dump written to', filename);
@@ -1486,7 +1492,10 @@ var Proxy = function (settings, manage, test) {
 						return Promise.resolve('started');
 					}
 					catch(err){	
-						return Promise.resolve({
+
+						console.log('err', err)
+
+						return Promise.reject({
 							result : 'error',
 							error :  err.toString ? err.toString() : err
 						});
