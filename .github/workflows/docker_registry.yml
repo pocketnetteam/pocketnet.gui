@@ -23,6 +23,17 @@ jobs:
     
       - name: Check Out Repo 
         uses: actions/checkout@v2
+        
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: ${{ secrets.DOCKER_HUB_USERNAME }}/proxy
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
 
       - name: Login to Docker Hub
         uses: docker/login-action@v1
@@ -41,14 +52,7 @@ jobs:
           key: ${{ runner.os }}-buildx-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-buildx-
-            
-      - name: What
-        run: |
-          echo "VERSION=v1.1.1" >> $GITHUB_ENV
-          echo $CI_COMMIT_TAG
-          echo $VERSION
-          echo ${{ env.VERSION }}
-            
+                    
       - name: Build and push
         id: docker_build
         uses: docker/build-push-action@v2
@@ -58,8 +62,8 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           push: true
           tags: |
-            ${{ secrets.DOCKER_HUB_USERNAME }}/proxy:latest
-            ${{ secrets.DOCKER_HUB_USERNAME }}/proxy:${{ env.VERSION }}
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
           
