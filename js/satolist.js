@@ -3371,17 +3371,18 @@ Platform = function (app, listofnodes) {
                                             })
 
                                             if (alreadyPinned && alreadyPinned.txid){
+                                                
+                                                alreadyPinned.pin = false;
                                                 var shareslist = $(`[stxid='${alreadyPinned.txid}']`);
                                                 var pinned = shareslist.find('.pinned');
                                                 pinned.children().remove();
-                                                alreadyPinned = false;
                                 
                                             }
 
+                                            d.share.pin = true;
                                             var metatable = _el.closest('.metatable');
                                             var pineedWrapper = metatable.find('.pinned');
                                             pineedWrapper.html('<i class="fa fa-link"></i>')
-                                            d.share.pin = true;
                                         }
 
                                     }, false)

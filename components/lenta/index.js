@@ -3369,8 +3369,6 @@ var lenta = (function(){
 
 						var getAccountSettings = function(d){
 
-							console.log('d!!', d);
-
 							var settings = JSON.parse((typeof d === 'string' && d) ? d : '{}');
 
 							if (settings && settings.pin){
@@ -3382,13 +3380,10 @@ var lenta = (function(){
 								if (pinnedId > -1){
 
 									var pinnedShare = shares.splice(pinnedId, 1);
-									console.log('pinneds', pinnedShare);
 									
 									pinnedShare[0].pin = true;
 									shares.unshift(pinnedShare[0]);		
 									
-									console.log('shares!!!', shares);
-
 
 									if (clbk)
 										clbk(shares, error || error2)
