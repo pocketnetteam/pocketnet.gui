@@ -43,7 +43,11 @@ jobs:
             ${{ runner.os }}-buildx-
             
       - name: What
-        run: echo "VERSION=${CI_COMMIT_TAG}" >> $GITHUB_ENV
+        run: |
+          echo "VERSION=v1.1.1" >> $GITHUB_ENV
+          echo $CI_COMMIT_TAG
+          echo $VERSION
+          echo ${{ env.VERSION }}
             
       - name: Build and push
         id: docker_build
