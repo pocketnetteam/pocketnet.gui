@@ -560,6 +560,12 @@ var Proxy16 = function(meta, app, api){
 
         }
 
+        if(api && api.get.fixednode()) {
+            self.current = {
+                key : api.get.fixednode()
+            }
+        }
+
         return Promise.resolve()
 
         // return self.refreshNodes()
@@ -1065,6 +1071,18 @@ var Api = function(app){
             fixednode = id
             
             localStorage['fixednode'] = fixednode
+
+
+            if (fixednode){
+                _.find(proxies, function(p){
+
+                    p.current = {
+                        key : fixednode
+                    }
+    
+                })
+            }
+            
         }   
     }
 

@@ -101,7 +101,7 @@ var Server = function(settings, admins, manage){
         });
 
         app.options("*", function(req, res, next){
-            
+
             middle.headers(req, res, function(){
                 res.sendStatus(200)
             })
@@ -111,7 +111,7 @@ var Server = function(settings, admins, manage){
         if(!printstatsInterval)
             printstatsInterval = setInterval(function(){
                 middle.printstats()
-            }, 5000)
+            }, 60000)
 
         self.link()
 

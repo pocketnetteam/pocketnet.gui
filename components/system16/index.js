@@ -3504,6 +3504,11 @@ var system16 = (function(){
 						})
 					}
 
+					p.el.find('.unlocknode').on('click', function(){
+						api.set.fixednode(null)
+						renders.nodescontenttable(elc)	
+					})
+
 					p.el.find('.use').on('click', function(){
 						var key = $(this).closest('.node').attr('node')
 						var node = find($(this).closest('.node').attr('node'))

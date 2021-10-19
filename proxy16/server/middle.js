@@ -311,6 +311,11 @@ var Middle = function(){
 
         requestcountTotal++
 
+        if (requestcountTotal >= 500000) {
+            requestcountTotal = 0
+            requestcountFinished = 0
+        }
+
         if(self.lightnext(request, result, next)) return
 
         self.headers(request, result)
