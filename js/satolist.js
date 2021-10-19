@@ -3277,6 +3277,8 @@ Platform = function (app, listofnodes) {
 
                     }, function (el, f, mme) {
 
+
+
                         el.find('.opennewwindow').on('click', function(){
 
                             self.app.mobile.vibration.small()
@@ -3342,11 +3344,7 @@ Platform = function (app, listofnodes) {
 
                         }
 
-                        el.find('.pin').on('click', function (f) {
-
-                            console.log('pin!!!', f)
-
-                            debugger;
+                        el.find('.pin').on('click', function () {
 
                             if (!mme && _el.tooltipster)
                                 _el.tooltipster('hide')
@@ -3362,6 +3360,15 @@ Platform = function (app, listofnodes) {
 
 										if(!err)
 										{
+
+                                            var shares = self.sdk.node.shares.storage.trx;
+                                            var alreadyPinned = Object.values(shares).find(function(share){
+                                                return share.pin
+                                            })
+                                            var metatble = _el.closest('.metatable')
+                                            alreadyPinned = false;
+                                            d.share.pin = true;
+
                                             console.log('result pin post', result)
                                         }
 
@@ -3387,6 +3394,11 @@ Platform = function (app, listofnodes) {
 
 										if(!err)
 										{
+
+                                            d.share.pin = false;
+                                            var metatable = _el.closest('.metatable');
+                                            var pinned = metatable.find('.pinned');                    
+                                            pinned.remove();
                                             console.log('result pin post', result)
                                         }
 

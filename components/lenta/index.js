@@ -16,7 +16,7 @@ var lenta = (function(){
 		var mid = p.mid;
 		var making = false, ovf = false;
 		var w, essenseData, recomended = [], recommended, mestate, initedcommentes = {}, canloadprev = false,
-		video = false, isotopeinited = false, videosVolume = 0, first = true;
+		video = false, isotopeinited = false, videosVolume = 0;
 
 		var openedPost = null
 		var shareInitedMap = {},
@@ -3181,7 +3181,7 @@ var lenta = (function(){
 
 		var load = {
 			recomended : function(clbk, firstshares){
-
+				
 				el.loader.fadeIn()
 
 				el.c.addClass('loading');
@@ -3429,9 +3429,7 @@ var lenta = (function(){
 
 						}
 						
-						if (essenseData.byauthor && author && first){
-
-							first = false;
+						if (essenseData.byauthor && author && !sharesInview.length){
 
 							var acc = temp.accSet && Object.values(temp.accSet)[0];
 
@@ -3449,8 +3447,6 @@ var lenta = (function(){
 
 						} else if (clbk){
 							
-							first = false;
-
 							el.loader.fadeOut();
 							clbk(shares, error || error2);
 						}
