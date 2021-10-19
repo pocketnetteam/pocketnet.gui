@@ -60,10 +60,8 @@ jobs:
           context: ./proxy16/
           file: ./proxy16/dockerfile
           builder: ${{ steps.buildx.outputs.name }}
-          push: true
-          tags: |
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
           
