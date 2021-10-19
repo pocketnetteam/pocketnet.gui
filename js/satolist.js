@@ -3365,11 +3365,19 @@ Platform = function (app, listofnodes) {
                                             var alreadyPinned = Object.values(shares).find(function(share){
                                                 return share.pin
                                             })
-                                            var metatble = _el.closest('.metatable')
-                                            alreadyPinned = false;
-                                            d.share.pin = true;
 
-                                            console.log('result pin post', result)
+                                            if (alreadyPinned && alreadyPinned.txid){
+                                                var shareslist = $(`[stxid='${alreadyPinned.txid}']`);
+                                                var pinned = shareslist.find('.pinned');
+                                                pinned.children().remove();
+                                                alreadyPinned = false;
+                                
+                                            }
+
+                                            var metatable = _el.closest('.metatable');
+                                            var pineedWrapper = metatable.find('.pinned');
+                                            pineedWrapper.html('<i class="fa fa-link"></i>')
+                                            d.share.pin = true;
                                         }
 
                                     }, false)
@@ -3398,8 +3406,7 @@ Platform = function (app, listofnodes) {
                                             d.share.pin = false;
                                             var metatable = _el.closest('.metatable');
                                             var pinned = metatable.find('.pinned');                    
-                                            pinned.remove();
-                                            console.log('result pin post', result)
+                                            pinned.children().remove();
                                         }
 
 										

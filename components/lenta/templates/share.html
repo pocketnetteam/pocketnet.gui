@@ -53,11 +53,11 @@ var metadisplay = function(){ %>
 								<b><span class="adr"><%-name || share.address %></span></b><% if(reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
 							</a>
 
-							<% if(share.pin) { %>
-								<span class="pinned">
+							<span class="pinned">
+								<% if(share.pin) { %>
 									<i class="fa fa-link"></i>
-								</span>
-							<% } %>
+								<% } %>
+							</span>
 
 							<% if((!state || !my) && (typeof repost == 'undefined' || !repost)) { %> 
 
