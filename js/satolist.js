@@ -3342,7 +3342,11 @@ Platform = function (app, listofnodes) {
 
                         }
 
-                        el.find('.pin').on('click', function () {
+                        el.find('.pin').on('click', function (f) {
+
+                            console.log('pin!!!', f)
+
+                            debugger;
 
                             if (!mme && _el.tooltipster)
                                 _el.tooltipster('hide')

@@ -3400,11 +3400,9 @@ var lenta = (function(){
 
 									self.app.platform.sdk.node.shares.getbyid([settings.pin], function(t){
 
-										var pinnedShare = new pShare();
-
 										if (t){
 
-											pinnedShare._import(t[0]);
+											var pinnedShare = t[0];
 											pinnedShare.pin = true;
 											shares.unshift(pinnedShare);
 
