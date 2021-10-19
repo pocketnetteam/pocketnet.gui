@@ -1,6 +1,6 @@
 module.exports = {
   view: { calculator: (instance) => instance.availability() },
-  uploadVideo: {
+  upload: {
     ratings: [
 
       (serverData) => ({

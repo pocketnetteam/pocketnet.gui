@@ -328,7 +328,6 @@ var socialshare2 = (function(){
 
 			embeddingcode : function(action, actionid, settings){
 
-				return ''
 				var p = {};
 
 				_.each(settings, function(s, i){

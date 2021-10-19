@@ -62,7 +62,7 @@ var Proxy = function (settings, manage, test) {
 
 
 	var stats = [];
-	var statcount = 5000;
+	var statcount = 1000;
 	var statInterval = null;
 
 	var captchas = {};
@@ -728,7 +728,7 @@ var Proxy = function (settings, manage, test) {
 				status = 2
 
 				if (!statInterval)
-					statInterval = setInterval(addStats, 10000)
+					statInterval = setInterval(addStats, 30000)
 
 				return Promise.resolve()
 			})
@@ -1095,6 +1095,20 @@ var Proxy = function (settings, manage, test) {
 		},
 
 		nodeManager: {
+			clearnodesstats : {
+				path: '/nodes/clearnodesstats',
+				authorization: 'signature',
+				action: function ({ A }) {
+
+					if(!A) return Promise.reject('none')
+
+					nodeManager.api.clearAlltimeNodesStats()
+
+					return Promise.resolve({ data: 'success' });
+
+				},
+			},
+		
 			revoke: {
 				path: '/nodes/revoke',
 				authorization: 'signature',

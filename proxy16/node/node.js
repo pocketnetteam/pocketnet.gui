@@ -48,7 +48,7 @@ var Node = function(options, manager){
 
     var penalty = {
         k : 0,
-
+        counter : 0,
         reason : null,
         timer : null,
         time : null,
@@ -63,6 +63,14 @@ var Node = function(options, manager){
             penalty.started = new Date()
             penalty.time = time
             penalty.k = _k
+
+            penalty.counter ++
+
+            if (penalty.counter > 10){
+                penalty.counter = 0
+
+                self.statistic.clearAlltime()
+            }
 
             penalty.timer = setTimeout(function(){
                 penalty.clear()
@@ -199,21 +207,33 @@ var Node = function(options, manager){
 
         var counter = 0
         var dcounter = 0
+        var chainlength = chain.length
 
         _.each(cs.lasttrustblocks, function(tblock){
-            var bc = _.find(chain, function(c){
-                return c.height == cs.tblock
-            })
 
+            var i = chainlength - 1
+            var c = null
+            var bc = null
+        
+            while(i >= 0 && !bc){
+                c = chain[i]
+        
+                if (c.height == tblock.height){
+                    bc = c
+                }
+        
+                i--
+            }
+        
             if (bc){
                 counter++
-
+        
                 if(bc.blockhash != tblock.blockhash) dcounter++
             }   
         })
 
         return {
-            fork : dcounter / counter < 0.5,
+            fork : counter ? dcounter / counter >= 0.5 : false,
             difference : d
         }
         
@@ -309,6 +329,10 @@ var Node = function(options, manager){
                 history : [],
                 historyslice : null
             }
+        },
+
+        clearAlltime : function(){
+            statistic.events = _.clone(statistic.historyslice)
         },
 
         add : function(p){
@@ -543,18 +567,17 @@ var Node = function(options, manager){
             if (time && time > 1300 && time <= 2300) time = 1700
             if (time && time > 2300 && time <= 4000) time = 3100
             if (time && time > 4000 && time <= 7000) time = 5300
-            if (time && time > 7000 && time <= 15000) time = 10000
-            if (time && time > 15000) time = 30000
+            if (time && time > 7000 && time <= 15000) time = 100000
+            if (time && time > 15000) time = 300000
 
-            if (rate <= 2) rate = 1.5
-            if (rate > 2 && rate <= 4) rate = 3
-            if (rate > 4 && rate <= 8) rate = 6
-            if (rate > 8 && rate <= 16) rate = 12
-            if (rate > 16 && rate <= 30) rate = 23
-            if (rate > 30 && rate <= 50) rate = 40
-            if (rate > 50 && rate <= 100) rate = 75
+            if (rate <= 2) rate = 2
+            if (rate > 2 && rate <= 10) rate =5
+            if (rate > 10 && rate <= 30) rate = 15
+            if (rate > 30 && rate <= 100) rate = 65
+            if (rate > 100 && rate <= 200) rate = 150
+            if (rate > 200) rate = 500
 
-            return (s.percent / (rate * time))
+            return ((s.percent * s.percent) / (rate * time))
 
         },
 
@@ -610,8 +633,14 @@ var Node = function(options, manager){
                     if (usersl > 100 && usersl <= 500) userski = 100
                     if (usersl > 500 && usersl <= 1000) userski = 500
                     if (usersl > 1000) userski = 1000
+
+                    userski = 1
         
-                    result = penalty.getk() * (Math.sqrt(availabilityAllTime * availability5Minutes) * ((lastblock.height || 1) / (userski) * (difference + 1)))
+                    result = (
+                        penalty.getk() * 
+                        Math.sqrt(Math.sqrt(Math.sqrt(availabilityAllTime) * availability5Minutes * availability5Minutes)) *
+                        (lastblock.height || 1) / (1000 * userski * (difference + 1))
+                        )
                 }
             }
 

@@ -364,6 +364,8 @@ var Nodemanager = function(p){
             }
         }
 
+        console.log("MAP CALCULATION")
+
         var chains = _.map(self.nodes, function(node){
             return node.getchain()
         })
@@ -784,6 +786,12 @@ var Nodemanager = function(p){
             })
 
         },  
+
+        clearAlltimeNodesStats : function(){
+            _.each(self.nodes, function(n){
+                n.statistic.clearAlltime()
+            })
+        },
         
         peernodesTime : function(node){
 

@@ -21,7 +21,7 @@ var lib = __webpack_require__(517);
 var p2p_media_loader_core_lib = __webpack_require__(220);
 
 // EXTERNAL MODULE: ./src/assets/player/utils.ts + 3 modules
-var utils = __webpack_require__(4);
+var utils = __webpack_require__(3);
 
 // EXTERNAL MODULE: ./node_modules/hls.js/dist/hls.js
 var dist_hls = __webpack_require__(330);
@@ -395,6 +395,7 @@ class hls_plugin_Html5Hlsjs {
         }
     }
     _handleMediaError(error) {
+        console.log('this.errorCounts', this.errorCounts);
         if (this.errorCounts[dist_hls["ErrorTypes"].MEDIA_ERROR] === 1) {
             console.info('trying to recover media error');
             this.hls.recoverMediaError();
@@ -408,9 +409,10 @@ class hls_plugin_Html5Hlsjs {
         }
         if (this.errorCounts[dist_hls["ErrorTypes"].MEDIA_ERROR] > 2) {
             console.info('bubbling media error up to VIDEOJS');
-            this.hls.destroy();
-            this.tech.error = () => error;
-            this.tech.trigger('error');
+            this.hls.recoverMediaError();
+            //this.hls.destroy()
+            //this.tech.error = () => error
+            //this.tech.trigger('error')
             return;
         }
     }
@@ -435,6 +437,7 @@ class hls_plugin_Html5Hlsjs {
         const error = {
             message: `HLS.js error: ${data.type} - fatal: ${data.fatal} - ${data.details}`
         };
+        console.error(error);
         // increment/set error count
         if (this.errorCounts[data.type])
             this.errorCounts[data.type] += 1;
@@ -807,7 +810,7 @@ class p2p_media_loader_plugin_P2pMediaLoaderPlugin extends Plugin {
             Object(lib["initVideoJsContribHlsJsPlayer"])(player);
         }
         if (options) {
-            this.startTime = Object(utils["i" /* timeToInt */])(options.startTime);
+            this.startTime = Object(utils["j" /* timeToInt */])(options.startTime);
             player.src({
                 type: options.type,
                 src: options.src
@@ -847,11 +850,9 @@ class p2p_media_loader_plugin_P2pMediaLoaderPlugin extends Plugin {
         const options = this.player.tech(true).options_;
         this.p2pEngine = options.hlsjsConfig.loader.getEngine();
         this.hlsjs.on(dist_hls["Events"].LEVEL_SWITCHING, (_, data) => {
-            console.log("resolutionChange data", data);
             this.trigger('resolutionChange', { auto: this.hlsjs.autoLevelEnabled, resolutionId: data.height });
         });
         this.p2pEngine.on(p2p_media_loader_core_lib["a" /* Events */].SegmentError, (segment, err) => {
-            console.error('Segment error.', segment, err);
             this.options.redundancyUrlManager.removeBySegmentUrl(segment.requestUrl);
         });
         this.statsP2PBytes.numPeers = 1 + this.options.redundancyUrlManager.countBaseUrls();

@@ -79,6 +79,7 @@ var publics = {
     sendcomment: true,
     getnodeinfo: true,
     getaddressscores: true,
+    getaccountsetting : true,
     getpostscores:true,
     getpagescores:true,
 
@@ -329,6 +330,7 @@ RpcClient.callspec = {
     sendcomment: 'str str str str str',
     getnodeinfo: '',
     getaddressscores: 'str',
+    getaccountsetting : 'str',
     getpostscores: 'str',
     getpagescores: 'obj str',
     gethierarchicalstrip : 'int str int str obj str',

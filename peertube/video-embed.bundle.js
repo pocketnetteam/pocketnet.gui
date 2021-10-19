@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=9053"
+/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=2695"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -27880,85 +27880,26 @@ module.exports = function (it) {
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var global = __webpack_require__(5);
-var getOwnPropertyDescriptor = __webpack_require__(20).f;
-var createNonEnumerableProperty = __webpack_require__(21);
-var redefine = __webpack_require__(26);
-var setGlobal = __webpack_require__(37);
-var copyConstructorProperties = __webpack_require__(81);
-var isForced = __webpack_require__(64);
-
-/*
-  options.target      - name of the target object
-  options.global      - target is the global object
-  options.stat        - export as static methods of target
-  options.proto       - export as prototype methods of target
-  options.real        - real prototype method for the `pure` version
-  options.forced      - export even if the native feature is available
-  options.bind        - bind methods to the target, required for the `pure` version
-  options.wrap        - wrap constructors to preventing global pollution, required for the `pure` version
-  options.unsafe      - use the simple assignment of property instead of delete + defineProperty
-  options.sham        - add a flag to not completely full polyfills
-  options.enumerable  - export as enumerable property
-  options.noTargetGet - prevent calling a getter on target
-*/
-module.exports = function (options, source) {
-  var TARGET = options.target;
-  var GLOBAL = options.global;
-  var STATIC = options.stat;
-  var FORCED, target, key, targetProperty, sourceProperty, descriptor;
-  if (GLOBAL) {
-    target = global;
-  } else if (STATIC) {
-    target = global[TARGET] || setGlobal(TARGET, {});
-  } else {
-    target = (global[TARGET] || {}).prototype;
-  }
-  if (target) for (key in source) {
-    sourceProperty = source[key];
-    if (options.noTargetGet) {
-      descriptor = getOwnPropertyDescriptor(target, key);
-      targetProperty = descriptor && descriptor.value;
-    } else targetProperty = target[key];
-    FORCED = isForced(GLOBAL ? key : TARGET + (STATIC ? '.' : '#') + key, options.forced);
-    // contained in target
-    if (!FORCED && targetProperty !== undefined) {
-      if (typeof sourceProperty === typeof targetProperty) continue;
-      copyConstructorProperties(sourceProperty, targetProperty);
-    }
-    // add a flag to not completely full polyfills
-    if (options.sham || (targetProperty && targetProperty.sham)) {
-      createNonEnumerableProperty(sourceProperty, 'sham', true);
-    }
-    // extend global
-    redefine(target, key, sourceProperty, options);
-  }
-};
-
-
-/***/ }),
-/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 
 // EXPORTS
-__webpack_require__.d(__webpack_exports__, "c", function() { return /* binding */ getRtcConfig; });
-__webpack_require__.d(__webpack_exports__, "j", function() { return /* binding */ toTitleCase; });
-__webpack_require__.d(__webpack_exports__, "i", function() { return /* binding */ timeToInt; });
-__webpack_require__.d(__webpack_exports__, "h", function() { return /* binding */ secondsToTime; });
+__webpack_require__.d(__webpack_exports__, "d", function() { return /* binding */ getRtcConfig; });
+__webpack_require__.d(__webpack_exports__, "k", function() { return /* binding */ toTitleCase; });
+__webpack_require__.d(__webpack_exports__, "j", function() { return /* binding */ timeToInt; });
+__webpack_require__.d(__webpack_exports__, "i", function() { return /* binding */ secondsToTime; });
 __webpack_require__.d(__webpack_exports__, "a", function() { return /* binding */ buildVideoLink; });
 __webpack_require__.d(__webpack_exports__, "b", function() { return /* binding */ buildVideoOrPlaylistEmbed; });
-__webpack_require__.d(__webpack_exports__, "k", function() { return /* binding */ videoFileMaxByResolution; });
-__webpack_require__.d(__webpack_exports__, "l", function() { return /* binding */ videoFileMinByResolution; });
-__webpack_require__.d(__webpack_exports__, "f", function() { return /* binding */ isMobile; });
-__webpack_require__.d(__webpack_exports__, "e", function() { return /* binding */ isIOS; });
-__webpack_require__.d(__webpack_exports__, "g", function() { return /* binding */ isSafari; });
-__webpack_require__.d(__webpack_exports__, "d", function() { return /* binding */ isAndroid; });
+__webpack_require__.d(__webpack_exports__, "l", function() { return /* binding */ videoFileMaxByResolution; });
+__webpack_require__.d(__webpack_exports__, "m", function() { return /* binding */ videoFileMinByResolution; });
+__webpack_require__.d(__webpack_exports__, "g", function() { return /* binding */ isMobile; });
+__webpack_require__.d(__webpack_exports__, "c", function() { return /* binding */ bytes; });
+__webpack_require__.d(__webpack_exports__, "f", function() { return /* binding */ isIOS; });
+__webpack_require__.d(__webpack_exports__, "h", function() { return /* binding */ isSafari; });
+__webpack_require__.d(__webpack_exports__, "e", function() { return /* binding */ isAndroid; });
 
-// UNUSED EXPORTS: isWebRTCDisabled, buildPlaylistLink, bytes
+// UNUSED EXPORTS: isWebRTCDisabled, buildPlaylistLink
 
 // CONCATENATED MODULE: ../shared/core-utils/renderer/markdown.ts
 const TEXT_RULES = [
@@ -28207,6 +28148,66 @@ function getRtcConfig() {
 
 
 /***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var global = __webpack_require__(5);
+var getOwnPropertyDescriptor = __webpack_require__(20).f;
+var createNonEnumerableProperty = __webpack_require__(21);
+var redefine = __webpack_require__(26);
+var setGlobal = __webpack_require__(37);
+var copyConstructorProperties = __webpack_require__(81);
+var isForced = __webpack_require__(64);
+
+/*
+  options.target      - name of the target object
+  options.global      - target is the global object
+  options.stat        - export as static methods of target
+  options.proto       - export as prototype methods of target
+  options.real        - real prototype method for the `pure` version
+  options.forced      - export even if the native feature is available
+  options.bind        - bind methods to the target, required for the `pure` version
+  options.wrap        - wrap constructors to preventing global pollution, required for the `pure` version
+  options.unsafe      - use the simple assignment of property instead of delete + defineProperty
+  options.sham        - add a flag to not completely full polyfills
+  options.enumerable  - export as enumerable property
+  options.noTargetGet - prevent calling a getter on target
+*/
+module.exports = function (options, source) {
+  var TARGET = options.target;
+  var GLOBAL = options.global;
+  var STATIC = options.stat;
+  var FORCED, target, key, targetProperty, sourceProperty, descriptor;
+  if (GLOBAL) {
+    target = global;
+  } else if (STATIC) {
+    target = global[TARGET] || setGlobal(TARGET, {});
+  } else {
+    target = (global[TARGET] || {}).prototype;
+  }
+  if (target) for (key in source) {
+    sourceProperty = source[key];
+    if (options.noTargetGet) {
+      descriptor = getOwnPropertyDescriptor(target, key);
+      targetProperty = descriptor && descriptor.value;
+    } else targetProperty = target[key];
+    FORCED = isForced(GLOBAL ? key : TARGET + (STATIC ? '.' : '#') + key, options.forced);
+    // contained in target
+    if (!FORCED && targetProperty !== undefined) {
+      if (typeof sourceProperty === typeof targetProperty) continue;
+      copyConstructorProperties(sourceProperty, targetProperty);
+    }
+    // add a flag to not completely full polyfills
+    if (options.sham || (targetProperty && targetProperty.sham)) {
+      createNonEnumerableProperty(sourceProperty, 'sham', true);
+    }
+    // extend global
+    redefine(target, key, sourceProperty, options);
+  }
+};
+
+
+/***/ }),
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -28286,6 +28287,121 @@ module.exports = doccy;
 
 /***/ }),
 /* 10 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, "a", function() { return /* binding */ copyToClipboard; });
+__webpack_require__.d(__webpack_exports__, "b", function() { return /* binding */ importModule; });
+__webpack_require__.d(__webpack_exports__, "c", function() { return /* binding */ objectToUrlEncoded; });
+__webpack_require__.d(__webpack_exports__, "d", function() { return /* binding */ wait; });
+
+// EXTERNAL MODULE: ./node_modules/core-js/features/reflect/index.js
+var reflect = __webpack_require__(77);
+
+// CONCATENATED MODULE: ./src/environments/environment.ts
+// The build system defaults to the dev environment which uses `environment.ts`, but if you do
+// `ng build --env=prod` then `environment.prod.ts` will be used instead.
+// The list of which env maps to which file can be found in `.angular-cli.json`.
+// Reflect.metadata polyfill is only needed in the JIT/dev mode.
+//
+// In order to load these polyfills early enough (before app code), polyfill.ts imports this file to
+// to change the order in the final bundle.
+
+const environment = {
+    production: true,
+    hmr: false,
+    apiUrl: '',
+    originServerUrl: ''
+};
+
+// CONCATENATED MODULE: ./src/root-helpers/utils.ts
+
+function objectToUrlEncoded(obj) {
+    const str = [];
+    for (const key of Object.keys(obj)) {
+        str.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]));
+    }
+    return str.join('&');
+}
+function copyToClipboard(text) {
+    const el = document.createElement('textarea');
+    el.value = text;
+    el.setAttribute('readonly', '');
+    el.style.position = 'absolute';
+    el.style.left = '-9999px';
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+}
+// Thanks: https://github.com/uupaa/dynamic-import-polyfill
+function importModule(path) {
+    return new Promise((resolve, reject) => {
+        const vector = '$importModule$' + Math.random().toString(32).slice(2);
+        const script = document.createElement('script');
+        const destructor = () => {
+            delete window[vector];
+            script.onerror = null;
+            script.onload = null;
+            script.remove();
+            URL.revokeObjectURL(script.src);
+            script.src = '';
+        };
+        script.defer = true;
+        script.type = 'module';
+        script.onerror = () => {
+            reject(new Error(`Failed to import: ${path}`));
+            destructor();
+        };
+        script.onload = () => {
+            resolve(window[vector]);
+            destructor();
+        };
+        const absURL = (environment.apiUrl || window.location.origin) + path;
+        const loader = `import * as m from "${absURL}"; window.${vector} = m;`; // export Module
+        const blob = new Blob([loader], { type: 'text/javascript' });
+        script.src = URL.createObjectURL(blob);
+        document.head.appendChild(script);
+    });
+}
+function wait(ms) {
+    return new Promise(res => {
+        setTimeout(() => res(), ms);
+    });
+}
+
+
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var global = __webpack_require__(5);
+var shared = __webpack_require__(40);
+var has = __webpack_require__(8);
+var uid = __webpack_require__(42);
+var NATIVE_SYMBOL = __webpack_require__(69);
+var USE_SYMBOL_AS_UID = __webpack_require__(106);
+
+var WellKnownSymbolsStore = shared('wks');
+var Symbol = global.Symbol;
+var createWellKnownSymbol = USE_SYMBOL_AS_UID ? Symbol : Symbol && Symbol.withoutSetter || uid;
+
+module.exports = function (name) {
+  if (!has(WellKnownSymbolsStore, name) || !(NATIVE_SYMBOL || typeof WellKnownSymbolsStore[name] == 'string')) {
+    if (NATIVE_SYMBOL && has(Symbol, name)) {
+      WellKnownSymbolsStore[name] = Symbol[name];
+    } else {
+      WellKnownSymbolsStore[name] = createWellKnownSymbol('Symbol.' + name);
+    }
+  } return WellKnownSymbolsStore[name];
+};
+
+
+/***/ }),
+/* 12 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -28411,121 +28527,6 @@ function setLocalStorage(key, value) {
     catch ( /* empty */_a) { /* empty */
     }
 }
-
-
-/***/ }),
-/* 11 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, "a", function() { return /* binding */ copyToClipboard; });
-__webpack_require__.d(__webpack_exports__, "b", function() { return /* binding */ importModule; });
-__webpack_require__.d(__webpack_exports__, "c", function() { return /* binding */ objectToUrlEncoded; });
-__webpack_require__.d(__webpack_exports__, "d", function() { return /* binding */ wait; });
-
-// EXTERNAL MODULE: ./node_modules/core-js/features/reflect/index.js
-var reflect = __webpack_require__(77);
-
-// CONCATENATED MODULE: ./src/environments/environment.ts
-// The build system defaults to the dev environment which uses `environment.ts`, but if you do
-// `ng build --env=prod` then `environment.prod.ts` will be used instead.
-// The list of which env maps to which file can be found in `.angular-cli.json`.
-// Reflect.metadata polyfill is only needed in the JIT/dev mode.
-//
-// In order to load these polyfills early enough (before app code), polyfill.ts imports this file to
-// to change the order in the final bundle.
-
-const environment = {
-    production: true,
-    hmr: false,
-    apiUrl: '',
-    originServerUrl: ''
-};
-
-// CONCATENATED MODULE: ./src/root-helpers/utils.ts
-
-function objectToUrlEncoded(obj) {
-    const str = [];
-    for (const key of Object.keys(obj)) {
-        str.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]));
-    }
-    return str.join('&');
-}
-function copyToClipboard(text) {
-    const el = document.createElement('textarea');
-    el.value = text;
-    el.setAttribute('readonly', '');
-    el.style.position = 'absolute';
-    el.style.left = '-9999px';
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand('copy');
-    document.body.removeChild(el);
-}
-// Thanks: https://github.com/uupaa/dynamic-import-polyfill
-function importModule(path) {
-    return new Promise((resolve, reject) => {
-        const vector = '$importModule$' + Math.random().toString(32).slice(2);
-        const script = document.createElement('script');
-        const destructor = () => {
-            delete window[vector];
-            script.onerror = null;
-            script.onload = null;
-            script.remove();
-            URL.revokeObjectURL(script.src);
-            script.src = '';
-        };
-        script.defer = true;
-        script.type = 'module';
-        script.onerror = () => {
-            reject(new Error(`Failed to import: ${path}`));
-            destructor();
-        };
-        script.onload = () => {
-            resolve(window[vector]);
-            destructor();
-        };
-        const absURL = (environment.apiUrl || window.location.origin) + path;
-        const loader = `import * as m from "${absURL}"; window.${vector} = m;`; // export Module
-        const blob = new Blob([loader], { type: 'text/javascript' });
-        script.src = URL.createObjectURL(blob);
-        document.head.appendChild(script);
-    });
-}
-function wait(ms) {
-    return new Promise(res => {
-        setTimeout(() => res(), ms);
-    });
-}
-
-
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var global = __webpack_require__(5);
-var shared = __webpack_require__(40);
-var has = __webpack_require__(8);
-var uid = __webpack_require__(42);
-var NATIVE_SYMBOL = __webpack_require__(69);
-var USE_SYMBOL_AS_UID = __webpack_require__(106);
-
-var WellKnownSymbolsStore = shared('wks');
-var Symbol = global.Symbol;
-var createWellKnownSymbol = USE_SYMBOL_AS_UID ? Symbol : Symbol && Symbol.withoutSetter || uid;
-
-module.exports = function (name) {
-  if (!has(WellKnownSymbolsStore, name) || !(NATIVE_SYMBOL || typeof WellKnownSymbolsStore[name] == 'string')) {
-    if (NATIVE_SYMBOL && has(Symbol, name)) {
-      WellKnownSymbolsStore[name] = Symbol[name];
-    } else {
-      WellKnownSymbolsStore[name] = createWellKnownSymbol('Symbol.' + name);
-    }
-  } return WellKnownSymbolsStore[name];
-};
 
 
 /***/ }),
@@ -29234,7 +29235,7 @@ module.exports = function (it) {
 
 var defineProperty = __webpack_require__(14).f;
 var has = __webpack_require__(8);
-var wellKnownSymbol = __webpack_require__(12);
+var wellKnownSymbol = __webpack_require__(11);
 
 var TO_STRING_TAG = wellKnownSymbol('toStringTag');
 
@@ -29649,7 +29650,7 @@ module.exports = Object.setPrototypeOf || ('__proto__' in {} ? function () {
 
 "use strict";
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var global = __webpack_require__(5);
 var isForced = __webpack_require__(64);
 var redefine = __webpack_require__(26);
@@ -30321,7 +30322,7 @@ var fails = __webpack_require__(7);
 var getPrototypeOf = __webpack_require__(17);
 var createNonEnumerableProperty = __webpack_require__(21);
 var has = __webpack_require__(8);
-var wellKnownSymbol = __webpack_require__(12);
+var wellKnownSymbol = __webpack_require__(11);
 var IS_PURE = __webpack_require__(41);
 
 var ITERATOR = wellKnownSymbol('iterator');
@@ -30370,7 +30371,7 @@ module.exports = {
 "use strict";
 /* WEBPACK VAR INJECTION */(function(Buffer) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return segmentValidatorFactory; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
-/* harmony import */ var _root_helpers_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(11);
+/* harmony import */ var _root_helpers_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(10);
 /* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(22);
 /* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_2__);
 
@@ -30423,7 +30424,10 @@ function segmentValidatorFactory(segmentsSha256Url, isLive) {
 // ---------------------------------------------------------------------------
 function fetchSha256Segments(url) {
     return fetch(url)
-        .then(res => res.json())
+        .then(res => res.json()).then(r => {
+        console.log('fetchSha256Segments', r);
+        return Promise.resolve(r);
+    })
         .catch(err => {
         console.error('Cannot get sha256 segments', err);
         return {};
@@ -32513,7 +32517,7 @@ module.exports = path.Reflect;
 /* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var getBuiltIn = __webpack_require__(18);
 var aFunction = __webpack_require__(29);
 var anObject = __webpack_require__(2);
@@ -32666,7 +32670,7 @@ exports.f = Object.getOwnPropertySymbols;
 /* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var getBuiltIn = __webpack_require__(18);
 var aFunction = __webpack_require__(29);
 var anObject = __webpack_require__(2);
@@ -32804,7 +32808,7 @@ module.exports = Function.bind || function bind(that /* , ...args */) {
 /* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var DESCRIPTORS = __webpack_require__(13);
 var anObject = __webpack_require__(2);
 var toPrimitive = __webpack_require__(36);
@@ -32838,7 +32842,7 @@ $({ target: 'Reflect', stat: true, forced: ERROR_INSTEAD_OF_FALSE, sham: !DESCRI
 /* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var anObject = __webpack_require__(2);
 var getOwnPropertyDescriptor = __webpack_require__(20).f;
 
@@ -32856,7 +32860,7 @@ $({ target: 'Reflect', stat: true }, {
 /* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var isObject = __webpack_require__(6);
 var anObject = __webpack_require__(2);
 var has = __webpack_require__(8);
@@ -32886,7 +32890,7 @@ $({ target: 'Reflect', stat: true }, {
 /* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var DESCRIPTORS = __webpack_require__(13);
 var anObject = __webpack_require__(2);
 var getOwnPropertyDescriptorModule = __webpack_require__(20);
@@ -32904,7 +32908,7 @@ $({ target: 'Reflect', stat: true, sham: !DESCRIPTORS }, {
 /* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var anObject = __webpack_require__(2);
 var objectGetPrototypeOf = __webpack_require__(17);
 var CORRECT_PROTOTYPE_GETTER = __webpack_require__(66);
@@ -32922,7 +32926,7 @@ $({ target: 'Reflect', stat: true, sham: !CORRECT_PROTOTYPE_GETTER }, {
 /* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 
 // `Reflect.has` method
 // https://tc39.es/ecma262/#sec-reflect.has
@@ -32937,7 +32941,7 @@ $({ target: 'Reflect', stat: true }, {
 /* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var anObject = __webpack_require__(2);
 
 // eslint-disable-next-line es/no-object-isextensible -- safe
@@ -32957,7 +32961,7 @@ $({ target: 'Reflect', stat: true }, {
 /* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var ownKeys = __webpack_require__(60);
 
 // `Reflect.ownKeys` method
@@ -32971,7 +32975,7 @@ $({ target: 'Reflect', stat: true }, {
 /* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var getBuiltIn = __webpack_require__(18);
 var anObject = __webpack_require__(2);
 var FREEZING = __webpack_require__(67);
@@ -32996,7 +33000,7 @@ $({ target: 'Reflect', stat: true, sham: !FREEZING }, {
 /* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var anObject = __webpack_require__(2);
 var isObject = __webpack_require__(6);
 var has = __webpack_require__(8);
@@ -33048,7 +33052,7 @@ $({ target: 'Reflect', stat: true, forced: MS_EDGE_BUG }, {
 /* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var anObject = __webpack_require__(2);
 var aPossiblePrototype = __webpack_require__(68);
 var objectSetPrototypeOf = __webpack_require__(46);
@@ -33073,7 +33077,7 @@ if (objectSetPrototypeOf) $({ target: 'Reflect', stat: true }, {
 /* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var global = __webpack_require__(5);
 var setToStringTag = __webpack_require__(30);
 
@@ -33145,7 +33149,7 @@ module.exports = NATIVE_SYMBOL
 /* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var ReflectMetadataModule = __webpack_require__(15);
 var anObject = __webpack_require__(2);
 
@@ -33182,7 +33186,7 @@ module.exports = collection('Map', function (init) {
 /* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var wellKnownSymbol = __webpack_require__(12);
+var wellKnownSymbol = __webpack_require__(11);
 var Iterators = __webpack_require__(33);
 
 var ITERATOR = wellKnownSymbol('iterator');
@@ -33200,7 +33204,7 @@ module.exports = function (it) {
 
 var classof = __webpack_require__(111);
 var Iterators = __webpack_require__(33);
-var wellKnownSymbol = __webpack_require__(12);
+var wellKnownSymbol = __webpack_require__(11);
 
 var ITERATOR = wellKnownSymbol('iterator');
 
@@ -33217,7 +33221,7 @@ module.exports = function (it) {
 
 var TO_STRING_TAG_SUPPORT = __webpack_require__(112);
 var classofRaw = __webpack_require__(25);
-var wellKnownSymbol = __webpack_require__(12);
+var wellKnownSymbol = __webpack_require__(11);
 
 var TO_STRING_TAG = wellKnownSymbol('toStringTag');
 // ES3 wrong here
@@ -33247,7 +33251,7 @@ module.exports = TO_STRING_TAG_SUPPORT ? classofRaw : function (it) {
 /* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var wellKnownSymbol = __webpack_require__(12);
+var wellKnownSymbol = __webpack_require__(11);
 
 var TO_STRING_TAG = wellKnownSymbol('toStringTag');
 var test = {};
@@ -33275,7 +33279,7 @@ module.exports = function (iterator) {
 /* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var wellKnownSymbol = __webpack_require__(12);
+var wellKnownSymbol = __webpack_require__(11);
 
 var ITERATOR = wellKnownSymbol('iterator');
 var SAFE_CLOSING = false;
@@ -33344,14 +33348,14 @@ module.exports = function ($this, dummy, Wrapper) {
 
 "use strict";
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var createIteratorConstructor = __webpack_require__(117);
 var getPrototypeOf = __webpack_require__(17);
 var setPrototypeOf = __webpack_require__(46);
 var setToStringTag = __webpack_require__(30);
 var createNonEnumerableProperty = __webpack_require__(21);
 var redefine = __webpack_require__(26);
-var wellKnownSymbol = __webpack_require__(12);
+var wellKnownSymbol = __webpack_require__(11);
 var IS_PURE = __webpack_require__(41);
 var Iterators = __webpack_require__(33);
 var IteratorsCore = __webpack_require__(71);
@@ -33466,7 +33470,7 @@ module.exports = function (IteratorConstructor, NAME, next) {
 
 var getBuiltIn = __webpack_require__(18);
 var definePropertyModule = __webpack_require__(14);
-var wellKnownSymbol = __webpack_require__(12);
+var wellKnownSymbol = __webpack_require__(11);
 var DESCRIPTORS = __webpack_require__(13);
 
 var SPECIES = wellKnownSymbol('species');
@@ -33771,7 +33775,7 @@ module.exports = {
 
 var isObject = __webpack_require__(6);
 var isArray = __webpack_require__(123);
-var wellKnownSymbol = __webpack_require__(12);
+var wellKnownSymbol = __webpack_require__(11);
 
 var SPECIES = wellKnownSymbol('species');
 
@@ -33809,7 +33813,7 @@ module.exports = Array.isArray || function isArray(arg) {
 /* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var ReflectMetadataModule = __webpack_require__(15);
 var anObject = __webpack_require__(2);
 
@@ -33836,7 +33840,7 @@ $({ target: 'Reflect', stat: true }, {
 /* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var ReflectMetadataModule = __webpack_require__(15);
 var anObject = __webpack_require__(2);
 var getPrototypeOf = __webpack_require__(17);
@@ -33866,7 +33870,7 @@ $({ target: 'Reflect', stat: true }, {
 /* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 // TODO: in core-js@4, move /modules/ dependencies to public entries for better optimization by tools like `preset-env`
 var Set = __webpack_require__(127);
 var ReflectMetadataModule = __webpack_require__(15);
@@ -33921,7 +33925,7 @@ module.exports = collection('Set', function (init) {
 /* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var ReflectMetadataModule = __webpack_require__(15);
 var anObject = __webpack_require__(2);
 
@@ -33942,7 +33946,7 @@ $({ target: 'Reflect', stat: true }, {
 /* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var ReflectMetadataModule = __webpack_require__(15);
 var anObject = __webpack_require__(2);
 
@@ -33963,7 +33967,7 @@ $({ target: 'Reflect', stat: true }, {
 /* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var ReflectMetadataModule = __webpack_require__(15);
 var anObject = __webpack_require__(2);
 var getPrototypeOf = __webpack_require__(17);
@@ -33992,7 +33996,7 @@ $({ target: 'Reflect', stat: true }, {
 /* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var ReflectMetadataModule = __webpack_require__(15);
 var anObject = __webpack_require__(2);
 
@@ -34013,7 +34017,7 @@ $({ target: 'Reflect', stat: true }, {
 /* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var ReflectMetadataModule = __webpack_require__(15);
 var anObject = __webpack_require__(2);
 
@@ -39339,7 +39343,7 @@ function internalRunHook(handler, hookType, result, params, onError) {
 
 
 // EXTERNAL MODULE: ./src/root-helpers/utils.ts + 1 modules
-var utils = __webpack_require__(11);
+var utils = __webpack_require__(10);
 
 // CONCATENATED MODULE: ./src/root-helpers/plugins.ts
 
@@ -40895,7 +40899,7 @@ core_default.a.registerPlugin('bezels', BezelsPlugin);
 
 
 // EXTERNAL MODULE: ./src/assets/player/utils.ts + 3 modules
-var player_utils = __webpack_require__(4);
+var player_utils = __webpack_require__(3);
 
 // CONCATENATED MODULE: ./src/assets/player/videojs-components/settings-menu-item.ts
 // Thanks to Yanko Shterev: https://github.com/yshterev/videojs-settings-menu
@@ -40915,7 +40919,7 @@ class settings_menu_item_SettingsMenuItem extends settings_menu_item_MenuItem {
         this.size = null;
         // keep state of what menu type is loading next
         this.menuToLoad = 'mainmenu';
-        const subMenuName = Object(player_utils["j" /* toTitleCase */])(options.entry);
+        const subMenuName = Object(player_utils["k" /* toTitleCase */])(options.entry);
         const SubMenuComponent = core_default.a.getComponent(subMenuName);
         if (!SubMenuComponent) {
             throw new Error(`Component ${subMenuName} does not exist`);
@@ -41337,7 +41341,7 @@ class settings_menu_button_SettingsButton extends Button {
                 core_default.a.dom.addClass(this.el_, 'open');
             }
         };
-        options.name = Object(player_utils["j" /* toTitleCase */])(entry);
+        options.name = Object(player_utils["k" /* toTitleCase */])(entry);
         const newOptions = Object.assign({}, options, { entry, menuButton: this });
         const settingsMenuItem = new settings_menu_item_SettingsMenuItem(this.player(), newOptions);
         this.menu.addChild(settingsMenuItem);
@@ -41365,7 +41369,7 @@ settings_menu_button_Component.registerComponent('SettingsButton', settings_menu
 
 
 // EXTERNAL MODULE: ./src/assets/player/peertube-player-local-storage.ts
-var peertube_player_local_storage = __webpack_require__(10);
+var peertube_player_local_storage = __webpack_require__(12);
 
 // CONCATENATED MODULE: ./src/assets/player/peertube-plugin.ts
 
@@ -41456,7 +41460,7 @@ class peertube_plugin_PeerTubePlugin extends peertube_plugin_Plugin {
                 Object(peertube_player_local_storage["g" /* saveMuteInStore */])(this.player.muted());
             });
             if (options.stopTime) {
-                const stopTime = Object(player_utils["i" /* timeToInt */])(options.stopTime);
+                const stopTime = Object(player_utils["j" /* timeToInt */])(options.stopTime);
                 const self = this;
                 this.player.on('timeupdate', function onTimeUpdate() {
                     if (self.player.currentTime() > stopTime) {
@@ -41498,7 +41502,7 @@ class peertube_plugin_PeerTubePlugin extends peertube_plugin_Plugin {
         this.alterInactivity();
     }
     initializePlayer() {
-        if (Object(player_utils["f" /* isMobile */])())
+        if (Object(player_utils["g" /* isMobile */])())
             this.player.addClass('vjs-is-mobile');
         this.initSmoothProgressBar();
         this.initCaptions();
@@ -41719,6 +41723,7 @@ core_default.a.registerComponent('PreviousVideoButton', next_previous_video_butt
 
 // CONCATENATED MODULE: ./src/assets/player/videojs-components/p2p-info-button.ts
 
+
 const p2p_info_button_Button = core_default.a.getComponent('Button');
 class p2p_info_button_P2pInfoButton extends p2p_info_button_Button {
     createEl() {
@@ -41774,48 +41779,38 @@ class p2p_info_button_P2pInfoButton extends p2p_info_button_Button {
         });
         subDivHttp.appendChild(subDivHttpText);
         div.appendChild(subDivHttp);
-        /*this.player_.on('p2pInfo', (event: any, data: PlayerNetworkInfo) => {
-          // We are in HTTP fallback
-          if (!data) {
-            subDivHttp.className = 'vjs-peertube-displayed'
-            subDivWebtorrent.className = 'vjs-peertube-hidden'
-    
-            return
-          }
-    
-          const p2pStats = data.p2p
-          const httpStats = data.http
-    
-          const downloadSpeed = bytes(p2pStats.downloadSpeed + httpStats.downloadSpeed)
-          const uploadSpeed = bytes(p2pStats.uploadSpeed + httpStats.uploadSpeed)
-          const totalDownloaded = bytes(p2pStats.downloaded + httpStats.downloaded)
-          const totalUploaded = bytes(p2pStats.uploaded + httpStats.uploaded)
-          const numPeers = p2pStats.numPeers
-    
-          subDivWebtorrent.title = this.player().localize('Total downloaded: ') + totalDownloaded.join(' ') + '\n'
-    
-          if (data.source === 'p2p-media-loader') {
-            const downloadedFromServer = bytes(httpStats.downloaded).join(' ')
-            const downloadedFromPeers = bytes(p2pStats.downloaded).join(' ')
-    
-            subDivWebtorrent.title +=
-              ' * ' + this.player().localize('From servers: ') + downloadedFromServer + '\n' +
-              ' * ' + this.player().localize('From peers: ') + downloadedFromPeers + '\n'
-          }
-          subDivWebtorrent.title += this.player().localize('Total uploaded: ') + totalUploaded.join(' ')
-    
-          downloadSpeedNumber.textContent = downloadSpeed[ 0 ]
-          downloadSpeedUnit.textContent = ' ' + downloadSpeed[ 1 ]
-    
-          uploadSpeedNumber.textContent = uploadSpeed[ 0 ]
-          uploadSpeedUnit.textContent = ' ' + uploadSpeed[ 1 ]
-    
-          peersNumber.textContent = numPeers.toString()
-          peersText.textContent = ' ' + (numPeers > 1 ? this.player().localize('peers') : this.player_.localize('peer'))
-    
-          subDivHttp.className = 'vjs-peertube-hidden'
-          subDivWebtorrent.className = 'vjs-peertube-displayed'
-        })*/
+        this.player_.on('p2pInfo', (event, data) => {
+            // We are in HTTP fallback
+            if (!data) {
+                subDivHttp.className = 'vjs-peertube-displayed';
+                subDivWebtorrent.className = 'vjs-peertube-hidden';
+                return;
+            }
+            const p2pStats = data.p2p;
+            const httpStats = data.http;
+            const downloadSpeed = Object(player_utils["c" /* bytes */])(p2pStats.downloadSpeed + httpStats.downloadSpeed);
+            const uploadSpeed = Object(player_utils["c" /* bytes */])(p2pStats.uploadSpeed + httpStats.uploadSpeed);
+            const totalDownloaded = Object(player_utils["c" /* bytes */])(p2pStats.downloaded + httpStats.downloaded);
+            const totalUploaded = Object(player_utils["c" /* bytes */])(p2pStats.uploaded + httpStats.uploaded);
+            const numPeers = p2pStats.numPeers;
+            subDivWebtorrent.title = this.player().localize('Total downloaded: ') + totalDownloaded.join(' ') + '\n';
+            if (data.source === 'p2p-media-loader') {
+                const downloadedFromServer = Object(player_utils["c" /* bytes */])(httpStats.downloaded).join(' ');
+                const downloadedFromPeers = Object(player_utils["c" /* bytes */])(p2pStats.downloaded).join(' ');
+                subDivWebtorrent.title +=
+                    ' * ' + this.player().localize('From servers: ') + downloadedFromServer + '\n' +
+                        ' * ' + this.player().localize('From peers: ') + downloadedFromPeers + '\n';
+            }
+            subDivWebtorrent.title += this.player().localize('Total uploaded: ') + totalUploaded.join(' ');
+            downloadSpeedNumber.textContent = downloadSpeed[0];
+            downloadSpeedUnit.textContent = ' ' + downloadSpeed[1];
+            uploadSpeedNumber.textContent = uploadSpeed[0];
+            uploadSpeedUnit.textContent = ' ' + uploadSpeed[1];
+            peersNumber.textContent = numPeers.toString();
+            peersText.textContent = ' ' + (numPeers > 1 ? this.player().localize('peers') : this.player_.localize('peer'));
+            subDivHttp.className = 'vjs-peertube-hidden';
+            subDivWebtorrent.className = 'vjs-peertube-displayed';
+        });
         return div;
     }
 }
@@ -42265,9 +42260,9 @@ class playlist_menu_item_PlaylistMenuItem extends playlist_menu_item_Component {
         if (videoElement.startTimestamp || videoElement.stopTimestamp) {
             let html = '';
             if (videoElement.startTimestamp)
-                html += Object(player_utils["h" /* secondsToTime */])(videoElement.startTimestamp);
+                html += Object(player_utils["i" /* secondsToTime */])(videoElement.startTimestamp);
             if (videoElement.stopTimestamp)
-                html += ' - ' + Object(player_utils["h" /* secondsToTime */])(videoElement.stopTimestamp);
+                html += ' - ' + Object(player_utils["i" /* secondsToTime */])(videoElement.stopTimestamp);
             const timestamps = super.createEl('div', {
                 innerHTML: html,
                 className: 'timestamps'
@@ -42454,8 +42449,10 @@ class redundancy_url_manager_RedundancyUrlManager {
 
 
 // CONCATENATED MODULE: ./src/assets/player/p2p-media-loader/segment-url-builder.ts
-function segmentUrlBuilderFactory(redundancyUrlManager) {
+function segmentUrlBuilderFactory(redundancyUrlManager, requiredSegmentsPriority) {
     return function segmentBuilder(segment) {
+        if (segment.priority <= requiredSegmentsPriority)
+            return segment.url;
         return redundancyUrlManager.buildUrl(segment.url);
     };
 }
@@ -42466,7 +42463,6 @@ function segmentUrlBuilderFactory(redundancyUrlManager) {
 var segment_validator = __webpack_require__(72);
 
 // CONCATENATED MODULE: ./src/assets/player/peertube-player-manager.ts
-
 
 
 
@@ -42528,22 +42524,6 @@ class peertube_player_manager_PeertubePlayerManager {
             return new Promise((res) => {
                 core_default()(options.common.playerElement, videojsOptions, function () {
                     const player = this;
-                    let alreadyFallback = false;
-                    /*if (!options.common.isLive) {
-                      player.tech(true).one("error", (e) => {
-                        console.log("E", e)
-                        if (!alreadyFallback)
-                          self.maybeFallbackToWebTorrent(mode, player, options);
-                        alreadyFallback = true;
-                      });
-          
-                      player.one("error", (e) => {
-                        console.log("E", e)
-                        if (!alreadyFallback)
-                          self.maybeFallbackToWebTorrent(mode, player, options);
-                        alreadyFallback = true;
-                      });
-                    }*/
                     player.one("play", () => {
                         peertube_player_manager_PeertubePlayerManager.alreadyPlayed = true;
                     });
@@ -42720,20 +42700,38 @@ class peertube_player_manager_PeertubePlayerManager {
             catch (e) {
             }
         }
+        var useP2P = true;
+        /*try{
+    
+          useP2P = (
+    
+            options.common.videoUUID == '6c3c986d-f166-45aa-a7a7-348623acdc43' ||
+            options.common.videoUUID == '0e93af86-5ce7-4f05-8ad3-41009edf33d6' ||
+            options.common.videoUUID == '742515bd-f66f-4c5f-ac15-84daee3e3457' ||
+            options.common.videoUUID == 'ed3afc73-bf0e-43a6-8c0e-28787985f921' ||
+            options.common.videoUUID == 'fdca2575-8ec8-4167-a60c-f1d9c1c23d92'
+    
+          )
+          
+        }catch(e){
+          useP2P = false
+        }*/
+        //console.log('useP2P', useP2P)
         const p2pMediaLoaderConfig = {
             loader: {
                 trackerAnnounce,
                 segmentValidator: Object(segment_validator["a" /* segmentValidatorFactory */])(options.p2pMediaLoader.segmentsSha256Url, options.common.isLive),
-                rtcConfig: Object(player_utils["c" /* getRtcConfig */])(),
+                rtcConfig: Object(player_utils["d" /* getRtcConfig */])(),
                 requiredSegmentsPriority: 1,
-                segmentUrlBuilder: segmentUrlBuilderFactory(redundancyUrlManager),
-                useP2P: Object(peertube_player_local_storage["c" /* getStoredP2PEnabled */])(),
+                segmentUrlBuilder: segmentUrlBuilderFactory(redundancyUrlManager, 1),
+                useP2P: useP2P,
                 consumeOnly,
             },
             segments: {
                 swarmId: p2pMediaLoaderOptions.playlistUrl,
             },
         };
+        console.log('p2pMediaLoaderConfig', p2pMediaLoaderConfig);
         const hlsjs = {
             levelLabelHandler: (level) => {
                 const resolution = Math.min(level.height || 0, level.width || 0);
@@ -42979,7 +42977,7 @@ class peertube_player_manager_PeertubePlayerManager {
             return autoplay;
         // On first play, disable autoplay to avoid issues
         // But if the player already played videos, we can safely autoplay next ones
-        if (Object(player_utils["e" /* isIOS */])() || Object(player_utils["g" /* isSafari */])()) {
+        if (Object(player_utils["f" /* isIOS */])() || Object(player_utils["h" /* isSafari */])()) {
             return peertube_player_manager_PeertubePlayerManager.alreadyPlayed ? "play" : false;
         }
         return "play";
@@ -43637,7 +43635,7 @@ class embed_PeerTubeEmbed {
             }
             catch (e) { }
             pel.removeAttribute('style');
-            if (Object(player_utils["d" /* isAndroid */])())
+            if (Object(player_utils["e" /* isAndroid */])())
                 pel.setAttribute('poster', this.localVideo.infos.thumbnail);
             this.player.on("customError", (event, data) => this.handleError(data.err /*, serverTranslations*/));
             const overlayString = this.logoType === 'Pocketnet'
@@ -43774,7 +43772,7 @@ class embed_PeerTubeEmbed {
             }
             catch (e) { }
             pel.removeAttribute('style');
-            if (Object(player_utils["d" /* isAndroid */])())
+            if (Object(player_utils["e" /* isAndroid */])())
                 pel.setAttribute('poster', this.composePath(videoInfo.previewPath));
             this.player.on("customError", (event, data) => this.handleError(data.err /*, serverTranslations*/));
             const overlayString = this.logoType === 'Pocketnet'

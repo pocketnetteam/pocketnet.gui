@@ -86,7 +86,10 @@ var metadisplay = function(){ %>
 						
 						<% if((typeof repost == 'undefined' || !repost || fromempty)) {%>
 							<div class="sys hideOnFullVideo unselectablemobile">
-								<% if(share.downloadedDate) {%> <span class="fas fa-bookmark"></span> <span class="realtime editedLabel" time="<%-share.downloadedDate%>"><%- app.reltime(share.downloadedDate) %></span><% } else { %> 
+
+								
+
+								<% if(share.downloadedDate) {%> <span class="fas fa-cloud-download-alt"></span> <span class="realtime editedLabel" time="<%-share.downloadedDate%>"><%- app.reltime(share.downloadedDate) %></span><% } else { %> 
 								<% if(share.time) {%><span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span><% } else { %><span><%=e('e13019')%></span><% } %><% if(share.edit == 'true') {%><span class="editedLabel">, <%=e('e13130').toLowerCase()%></span><% } %>
 								<% } %>
 							</div>
@@ -452,9 +455,9 @@ var metadisplay = function(){ %>
 
 											<div class="iconwr">											
 												<div class="icon">
-													<i class="far fa-bookmark cansave"></i>
+													<i class="fas fa-cloud-download-alt cansave"></i>
 													<i class="fas fa-spinner fa-spin saving"></i>
-													<i class="fas fa-bookmark saved"></i>
+													<i class="fas fa-trash saved"></i>
 												</div>
 											</div>
 										
