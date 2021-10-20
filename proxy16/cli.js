@@ -4,6 +4,8 @@ var readline = require('readline');
 
 process.env.NODE_ENV = 'production'
 
+global.MIN_NODES_COUNT = 10
+
 var destroy = function(repeat){
 
     return kit.destroy().catch(e => {
@@ -23,8 +25,6 @@ var destroy = function(repeat){
     })
 
 }
-
-
 
 
 var cli = {

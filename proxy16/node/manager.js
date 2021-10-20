@@ -57,6 +57,8 @@ var Nodemanager = function(p){
     var queue = []
     var queueInterval = null
 
+    var minnodescount = global.MIN_NODES_COUNT || 1
+
     var db = new Datastore(f.path(p.dbpath));
    
     self.remap = function(){
@@ -329,7 +331,7 @@ var Nodemanager = function(p){
 
         var workingNodes = getWorkingNodes()
 
-        if (!usersfornode || self.proxy.users() / usersfornode >= workingNodes.length){
+        if (workingNodes.length < minnodescount || !usersfornode || self.proxy.users() / usersfornode >= workingNodes.length){
             node.init()
         }
         
@@ -342,7 +344,7 @@ var Nodemanager = function(p){
         var workingNodes = getWorkingNodes()
 
 
-        if (!usersfornode || self.proxy.users() / usersfornode >= workingNodes.length || workingNodes.length <= 1){
+        if (workingNodes.length < minnodescount || !usersfornode || self.proxy.users() / usersfornode >= workingNodes.length || workingNodes.length <= 1){
 
         }else{
 
@@ -847,6 +849,13 @@ var Nodemanager = function(p){
         })
     }
 
+    self.initednodeswithrating = function(){
+        return _.filter(self.nodes, function(n){
+            return n.inited && n.statistic.rating() > 0
+        })
+    }
+
+
     self.bestlist = function(){
         var nodes = _.sortBy(self.initednodes(), function(node){
             return - node.statistic.probability()
@@ -932,10 +941,16 @@ var Nodemanager = function(p){
 
     }
 
+    self.waitreadywithrating = function(){
+        return f.pretry(()=>{
+            return inited && self.initednodeswithrating().length
+        }, 30, 10000)
+    }
+
     self.waitready = function(){
         return f.pretry(()=>{
             return inited && self.initednodes().length
-        })
+        }, 30, 10000)
     }
 
     /*self.waitreadywithrating = function(){
