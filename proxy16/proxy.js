@@ -968,6 +968,8 @@ var Proxy = function (settings, manage, test) {
 					var cparameters = _.clone(parameters)
 
 
+
+
 					return new Promise((resolve, reject) => {
 
 						if((options.locally && options.meta)){
@@ -1004,16 +1006,21 @@ var Proxy = function (settings, manage, test) {
 							});
 						}
 
+						if(method == 'getnodeinfo') {
+							cparameters.push(node.key)
+							cachehash = null
+						}
+
 						noderating = node.statistic.rating()
 
 						return new Promise((resolve, reject) => {
 
-							/*if(!noderating) {
+							if(!noderating) {
 								
 								resolve('nocaching')
 
 								return
-							}*/
+							}
 
 							server.cache.wait(method, cparameters, function (waitstatus) {
 
@@ -1042,7 +1049,7 @@ var Proxy = function (settings, manage, test) {
 							console.log('cached', cached ? true : false)
 						}
 
-						if (cached && noderating) {
+						if (cached) {
 							return Promise.resolve({
 								data: cached,
 								code: 208,
@@ -1072,13 +1079,15 @@ var Proxy = function (settings, manage, test) {
 							}
 						}
 
-						/*return f.delay(2000)
+						/*return f.delay(100)
 
 					}).then(() => {*/
 
 						if (log) {
-							console.log('load', method, parameters)
+							console.log('load', method, cparameters)
 						}
+
+						
 
 						return new Promise((resolve, reject) => {
 							nodeManager.queue(node, method, parameters, direct, {resolve, reject})
@@ -1090,7 +1099,20 @@ var Proxy = function (settings, manage, test) {
 
 						.then((data) => {
 
+							/*if(!f.rand(0,1)) {
+								return Promise.reject('rand')
+							}*/
+
+							if (log) {
+								console.log('noderating', noderating, method, cparameters)
+							}
+
 							if (noderating){
+
+								if (log) {
+									console.log("SET CACHE")
+								}
+
 								server.cache.set(method, cparameters, data, node.height());
 							}
 
@@ -1103,12 +1125,16 @@ var Proxy = function (settings, manage, test) {
 					})
 					.catch((e) => {
 
-						console.log("E",method, e)
+						if (log) {
+							console.log("E", e)
+							console.log('clear cahce?', _waitstatus)
+						}
+
 
 						if (_waitstatus == 'execute'){
 
 							if (log) {
-								console.log('clear cahce', method, parameters)
+								console.log('clear cahce', method, cparameters)
 							}
 
 							server.cache.remove(method, cparameters);
@@ -1128,7 +1154,7 @@ var Proxy = function (settings, manage, test) {
 			pendingstatus: {
 				path: '/nodes/pendingstatus',
 				action: function () {
-					
+
 					var data = nodeManager.pendingstatus()
 
 					return Promise.resolve({ data });

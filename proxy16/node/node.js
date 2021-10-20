@@ -15,6 +15,7 @@ var Node = function(options, manager){
 
     var self = this
     var lastinfo = null
+    var lastnodeblock = null
     var cachedrating = null
     var chain = [];
 
@@ -174,6 +175,8 @@ var Node = function(options, manager){
 
         if ((block.hash || block.blockhash) && block.time && block.height){
 
+            
+
             var lastblock = self.lastblock()
 
             if(!lastblock || lastblock.height < block.height){
@@ -189,6 +192,8 @@ var Node = function(options, manager){
             }
 
             chain = f.lastelements(chain, 150, 10)
+
+            lastnodeblock = block
 
         }
     }
@@ -892,6 +897,50 @@ var Node = function(options, manager){
         
     }
 
+    self.exepmethod = {
+
+        getnodeinfo : function(){
+
+            var result = null
+
+            return f.pretry(function(){
+
+                if (lastinfo && lastinfoTime){
+    
+                    var dif = Math.floor(((new Date()).getTime()) / 1000) - Math.floor(((lastinfoTime).getTime()) / 1000)
+                    //console.log('dif', dif)
+
+                    if (dif < 55){
+        
+                        result = _.clone(lastinfo)
+        
+                        result.time += dif
+        
+                        if (lastnodeblock){
+                            result.lastblock = lastnodeblock
+                        }
+        
+                        return true
+                    }
+                }
+
+            }, 40, 3000).then(r => {
+
+                //console.log("HAS RESULT", result ? true : false)
+
+                if (result){
+                    return Promise.resolve(result)
+                }
+
+                return self.info()
+
+            })
+
+            
+        }
+
+    }
+
     self.info = function(){
 
         if (self.testing){
@@ -899,6 +948,7 @@ var Node = function(options, manager){
         }
 
         lastinfoTime = new Date()
+
 
         return self.rpcs('getnodeinfo').then(info => {
 

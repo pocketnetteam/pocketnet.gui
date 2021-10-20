@@ -4208,7 +4208,6 @@ var system16 = (function(){
 					}
 
 				}).catch(e => {
-					console.log("E" , e)
 					makers.proxycurrent()
 				})
 			}

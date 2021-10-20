@@ -25,17 +25,21 @@ var Cache = function(p){
         })
     }
 
-    var executingWatcher = function(k, key){
+    var executingWatcher = function(k, key, ignoredate){
+
+        
 
         var itemswithattemp = []
         var now = new Date()
 
         _.each(k.clbks, function(c, waitid){
 
-            if (c.date < now){
+            if (ignoredate || c.date < now){
                 itemswithattemp.push([c,waitid])
             }
         })
+
+       
         
         if (itemswithattemp.length){
 
@@ -108,7 +112,7 @@ var Cache = function(p){
 
             // node -
             getnodeinfo : {
-                time : 260,
+                time : 360,
                 block : 0
             },
 
@@ -216,9 +220,9 @@ var Cache = function(p){
             if(!waiting[key])
                 waiting[key] = {}
 
-            if (waiting[key][k]){
-
-                executingWatcher(waiting[key][k], k)
+            if (waiting[key][k]){   
+                if(key == 'getnodeinfo')
+                executingWatcher(waiting[key][k], key, true)
 
                 /*_.each(waiting[key][k].clbks, function(c){
                     c.action('waitedmake')
@@ -267,9 +271,12 @@ var Cache = function(p){
             if(!waiting[key])
                 waiting[key] = {}
 
+
             if (waiting[key][k]){
 
                 _.each(waiting[key][k].clbks, function(c){
+
+                   
                     c.action('waitedmake')
                 })
 
@@ -371,6 +378,7 @@ var Cache = function(p){
                 attemp : 0
             }
 
+
         if(!waiting[key][k].executor){
             waiting[key][k].executor = waitid
 
@@ -399,6 +407,7 @@ var Cache = function(p){
     }
 
     self.block = function(block){
+
 
         _.each(ckeys, function(k, key){
             if (typeof k.block != undefined){

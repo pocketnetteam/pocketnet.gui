@@ -27,6 +27,10 @@ var queuemethods = {
     getcontentsstatistic : true
 }
 
+var exepmethods = {
+    getnodeinfo : true
+}
+
 var Nodemanager = function(p){
     if(!p) p = {};
 
@@ -184,8 +188,29 @@ var Nodemanager = function(p){
 
     }
 
+    self.exepmethod = function(node, method, parameters, clbks){
+
+        node.checkParameters().then((r) => {
+
+            if(!node.exepmethod[method]){
+                return Promise.reject('exepmethod')
+            }
+
+            return node.exepmethod[method](method, parameters);
+
+        }).then(clbks.resolve).catch(clbks.reject)
+
+    }
+
     self.queue = function(node, method, parameters, direct, clbks){
         if(!clbks) clbks = {}
+
+        if (exepmethods[method]){
+
+            self.exepmethod(node, method, parameters, clbks)
+
+            return
+        }
 
         if (direct || !queuemethods[method]){
 
@@ -217,6 +242,10 @@ var Nodemanager = function(p){
         }
 
         queue = []
+    }
+
+    var getnodeinfo = function(){
+        
     }
 
     var saveNodes = function(nodes){
@@ -272,9 +301,9 @@ var Nodemanager = function(p){
             var s = n.statistic.get5min()
             var r = n.statistic.rating()
 
-            var time = 1200
+            var time = 2400
 
-            if (n.wss.count() < 5) time = 3000
+            if (n.wss.count() < 5) time = 7000
 
             if (s.success > 0 && s.success > s.failed && s.time < time && r && n.penalty().k < 0.8){
                 return true
