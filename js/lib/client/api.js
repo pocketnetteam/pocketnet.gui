@@ -477,7 +477,7 @@ var Proxy16 = function(meta, app, api){
 
             console.log('e.code', e.code)
 
-            /*if ((e.code == 408 || e.code == -28) && options.node && trying < 2 && !options.fnode){
+            if ((e.code == 408 || e.code == -28) && options.node && trying < 2 && !options.fnode){
 
                 if(isonline()){
                     return self.api.nodes.canchange(options.node).then(r => {
@@ -492,7 +492,7 @@ var Proxy16 = function(meta, app, api){
                 }
 
                 
-            }*/
+            }
 
             if (e.code == 20){
                 return Promise.reject(e)

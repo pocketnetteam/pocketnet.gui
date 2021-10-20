@@ -323,8 +323,6 @@ f.randmap = function(ar){
 
     var total = _.reduce(ar, function(sum, r){ return sum + r.probability }, 0)
 
-    //console.log('total', total)
-
     if (total <= 0) return ar[0]
 
     var seed = random.float(0, total)

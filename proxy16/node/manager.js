@@ -880,12 +880,6 @@ var Nodemanager = function(p){
     self.bestapply = function(){
         var node = self.selectProbability()
 
-        console.log('bestapply')
-
-        if(node)
-            console.log("APPLY", node.key)
-        else console.log("asd")
-
         if (node) {
             self.bestnode = node.key
         }
@@ -910,13 +904,11 @@ var Nodemanager = function(p){
         npdb = _.sortBy(npdb, (r) => {return -r.probability})
 
 
-        //console.log('npdb', npdb)
 
         var r = f.randmap(np)
         
 
         if (r && r.node){
-            console.log(r.node.key)
             return r.node
         }
 
