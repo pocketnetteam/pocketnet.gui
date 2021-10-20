@@ -347,7 +347,6 @@ var Node = function(options, manager){
 
         add : function(p){
 
-
             var push = _.clone(p)
 
                 push.time = new Date()
@@ -538,23 +537,25 @@ var Node = function(options, manager){
                 date : lastinfoTime || null
             }
 
+            var timecounter = 0
+
             _.each(evt, function(l){
 
                 if (l.code == 200){
                     r.success++
+                    r.time += l.difference
+                    timecounter++
                 }
                 else
                 {
                     r.failed++
                 }
 
-                r.time += l.difference
-
             })
 
             r.percent = (r.success / (r.count || 1)) * 100
 
-            r.time = r.time / (r.count || 1)
+            r.time = r.time / (r.timecounter || 1)
 
             return r
         },
