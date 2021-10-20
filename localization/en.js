@@ -86,7 +86,7 @@ ____loclib.next = "Next";
 ____loclib.welcometopocketnet = "Welcome to "+appname+"";	
 ____loclib.continue = "continue";	
 
-___loclib.chooseThemes = "Choose interesting themes";
+____loclib.chooseThemes = "Choose interesting themes";
 //user page
 
 ____loclib.rstate = "Reputation";	
