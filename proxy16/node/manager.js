@@ -212,6 +212,10 @@ var Nodemanager = function(p){
             return
         }
 
+        self.rpcs(node, method, parameters, clbks)
+
+        return 
+
         if (direct || !queuemethods[method]){
 
             self.rpcs(node, method, parameters, clbks)
