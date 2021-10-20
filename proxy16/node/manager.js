@@ -882,11 +882,6 @@ var Nodemanager = function(p){
 
         if (node) {
             self.bestnode = node.key
-
-            console.log(' node.key',  node.key)
-        }
-        else{
-            console.log("HUI")
         }
     }
 
@@ -899,11 +894,23 @@ var Nodemanager = function(p){
             }
         })
 
+        var npdb = _.map(self.initednodes(), function(node){
+            return {
+                node : node.key,
+                probability : node.statistic.probability() + Math.random() / 10000
+            }
+        })
+
+        npdb = _.sortBy(npdb, (r) => {return -r.probability})
+
+
+        //console.log('npdb', npdb)
+
         var r = f.randmap(np)
         
 
         if (r && r.node){
-            console.log(r.node.key)
+            //console.log(r.node.key)
             return r.node
         }
 
