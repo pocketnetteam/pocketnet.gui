@@ -895,14 +895,15 @@ var Nodemanager = function(p){
         var np = _.map(self.initednodes(), function(node){
             return {
                 node : node,
-                probability : node.statistic.probability()
+                probability : node.statistic.probability() + Math.random() / 10000
             }
         })
 
-        var r = f.randomizer(np)
-
+        var r = f.randmap(np)
+        
 
         if (r && r.node){
+            console.log(r.node.key)
             return r.node
         }
 
