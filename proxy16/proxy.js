@@ -947,16 +947,17 @@ var Proxy = function (settings, manage, test) {
 			rpc: {
 				path: '/rpc/*',
 				authorization: 'signaturelight',
-				action: function ({ method, parameters, options, U, cachehash, clientIP }) {
+				action: function ({ method, parameters, options, U, cachehash, clientIP }, request) {
 					if (!method) {
 						return Promise.reject({
 							error: 'method',
 							code: 400,
 						});
 					}
-
 					if (!options) options = {};
 					if (!parameters) parameters = [];
+
+					
 
 					var node = null;
 					var noderating = 0
@@ -1125,7 +1126,10 @@ var Proxy = function (settings, manage, test) {
 					})
 					.catch((e) => {
 
-						console.log("E", e, clientIP)
+						console.log("E", e)
+
+						if (request)
+							console.log('ERROR IP', request.clientIP)
 
 						if (log) {
 							
