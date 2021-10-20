@@ -8,7 +8,7 @@ if(!_Node)
 	var _listofproxies =  [
 		
 			
-		{
+		/*{
 			host : 'pocketnet.app',
 			port : 8899,
 			wss : 8099
@@ -49,7 +49,7 @@ if(!_Node)
 			host : '5.pocketnet.app',
 			port : 8899,
 			wss : 8099
-		}
+		}*/
 
 	]
 

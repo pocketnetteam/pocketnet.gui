@@ -251,6 +251,19 @@ Application = function(p)
 		
 	};
 
+	var isonline = function(){
+
+		if (window.cordova){
+			if(navigator.connection.type === 'none') return false
+		}
+	
+		if(typeof window.navigator && window.navigator.onLine === false){
+			return window.navigator.onLine
+		}
+	
+		return true
+	}
+
 	///////////////
 	self.errors = {
 		clear : function(){
@@ -311,11 +324,11 @@ Application = function(p)
 
 				self.errors._autocheck || (self.errors._autocheck = setInterval(function(){
 
-					if (self.platform.focus){
-						self.errors.check()
+					if (self.platform.focus && isonline()){
+						///self.errors.check()
 					}
 
-				}, 5000))
+				}, 10000))
 
 			}
 			else{
@@ -332,17 +345,10 @@ Application = function(p)
 
 		check : function(clbk){
 			if (self.errors.state.node || self.errors.state.proxy)
-
-				self.platform.sdk.node.get.time(function(t, error){
-						
-				})
+				self.platform.sdk.node.get.time(function(t, error){})
 
 			if (self.errors.state.proxymain){
-
-				self.platform.sdk.proxy.info(function(t, error){
-						
-				}, true)
-
+				self.platform.sdk.proxy.info(function(t, error){}, true)
 			}
 		},
 

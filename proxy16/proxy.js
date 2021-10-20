@@ -963,6 +963,10 @@ var Proxy = function (settings, manage, test) {
 
 					var log = false;
 					var _waitstatus = 'un'
+					var direct = true
+
+					var cparameters = _.clone(parameters)
+
 
 					return new Promise((resolve, reject) => {
 
@@ -984,10 +988,14 @@ var Proxy = function (settings, manage, test) {
 
 						if (options.node) {
 							node = nodeManager.nodesmap[options.node];
+
+							if(node) direct = false
 						}
 
-						if (!node || options.auto)
-							node = nodeManager.selectProbability(); //nodeManager.selectbest()
+						if (!node || options.auto){
+							node = nodeManager.selectProbability();
+							direct = false
+						}
 
 						if (!node) {
 							return Promise.reject({
@@ -1000,14 +1008,14 @@ var Proxy = function (settings, manage, test) {
 
 						return new Promise((resolve, reject) => {
 
-							if(!noderating) {
+							/*if(!noderating) {
 								
 								resolve('nocaching')
 
 								return
-							}
+							}*/
 
-							server.cache.wait(method, _.clone(parameters), function (waitstatus) {
+							server.cache.wait(method, cparameters, function (waitstatus) {
 
 								if (log) {
 									console.log('waitstatus', waitstatus)
@@ -1025,10 +1033,10 @@ var Proxy = function (settings, manage, test) {
 						_waitstatus = waitstatus
 
 						if (log) {
-							console.log('_waitstatus', _waitstatus, method, parameters)
+							console.log('_waitstatus', _waitstatus, method)
 						}
 
-						var cached = server.cache.get(method, _.clone(parameters), cachehash);
+						var cached = server.cache.get(method, cparameters, cachehash);
 
 						if (log) {
 							console.log('cached', cached ? true : false)
@@ -1041,9 +1049,13 @@ var Proxy = function (settings, manage, test) {
 							});
 						}
 
-						//var cachwaitng = server.cache.waitng(method, parameters)
+						if(waitstatus == 'attemps'){
+							return Promise.reject({
+								code: 408,
+							});
+						}
 
-						
+						//var cachwaitng = server.cache.waitng(method, parameters)
 
 						if (method == 'sendrawtransactionwithmessage') {
 							if (!bots.check(U)) {
@@ -1060,18 +1072,28 @@ var Proxy = function (settings, manage, test) {
 							}
 						}
 
+						/*return f.delay(2000)
+
+					}).then(() => {*/
 
 						if (log) {
 							console.log('load', method, parameters)
 						}
 
-						return node.checkParameters().then((r) => {
-							return node.rpcs(method, _.clone(parameters));
+						return new Promise((resolve, reject) => {
+							nodeManager.queue(node, method, parameters, direct, {resolve, reject})
 						})
+
+						/*return node.checkParameters().then((r) => {
+							return node.rpcs(method, _.clone(parameters));
+						})*/
+
 						.then((data) => {
 
-							if (noderating)
-								server.cache.set(method, _.clone(parameters), data, node.height());
+							if (noderating){
+								console.log('setcache')
+								server.cache.set(method, cparameters, data, node.height());
+							}
 
 							return Promise.resolve({
 								data: data,
@@ -1082,13 +1104,15 @@ var Proxy = function (settings, manage, test) {
 					})
 					.catch((e) => {
 
+						console.log("E", e)
+
 						if (_waitstatus == 'execute'){
 
 							if (log) {
 								console.log('clear cahce', method, parameters)
 							}
 
-							server.cache.remove(method, _.clone(parameters));
+							server.cache.remove(method, cparameters);
 						}
 
 						return Promise.reject({

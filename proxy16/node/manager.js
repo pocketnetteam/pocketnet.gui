@@ -4,6 +4,29 @@ var Datastore = require('nedb');
 var _ = require('lodash');
 var f = require('../functions');
 
+var queuemethods = {
+    getcontents: true,
+    getlastcomments: true,
+    gettags: true,
+    getrawtransactionwithmessage: true,
+    getuserprofile: true,
+    getuserstate: true,
+    getaddressregistration: true,
+    getrecommendedposts: true,
+    gethotposts: true,
+    getuseraddress: true,
+    search: true,
+    searchlinks: true,
+    getcomments: true,
+    getaddressscores: true,
+    getaccountsetting : true,
+    getpostscores: true,
+    getpagescores: true,
+    gethierarchicalstrip : true,
+    getusercontents : true,
+    getcontentsstatistic : true
+}
+
 var Nodemanager = function(p){
     if(!p) p = {};
 
@@ -27,6 +50,8 @@ var Nodemanager = function(p){
     var peernodesCheckTime = 1000000
     var usersfornode = 30
     var commonnotinitedInterval = null
+    var queue = []
+    var queueInterval = null
 
     var db = new Datastore(f.path(p.dbpath));
    
@@ -147,6 +172,51 @@ var Nodemanager = function(p){
 
         forgetIfNotUsing()
 
+    }
+
+    self.rpcs = function(node, method, parameters, clbks){
+
+        node.checkParameters().then((r) => {
+
+            return node.rpcs(method, _.clone(parameters));
+
+        }).then(clbks.resolve).catch(clbks.reject)
+
+    }
+
+    self.queue = function(node, method, parameters, direct, clbks){
+        if(!clbks) clbks = {}
+
+        if (direct || !queuemethods[method]){
+
+            self.rpcs(node, method, parameters, clbks)
+
+        }
+
+        else{
+            addqueue({
+                node, method, parameters, clbks
+            })
+        }
+    }
+
+    var addqueue = function(p){
+
+        if (p)
+            queue.push(p)
+
+    }
+
+    var worker = function(){
+
+        for (var i = 0; i < queue.length; i++){
+
+            var rpcs = queue[i]
+
+            self.rpcs(rpcs.node, rpcs.method, rpcs.parameters, rpcs.clbks)
+        }
+
+        queue = []
     }
 
     var saveNodes = function(nodes){
@@ -292,7 +362,7 @@ var Nodemanager = function(p){
         
     }
 
-    self.currentChainCommon = function(){
+    /*self.currentChainCommon = function(){
 
         if(!self.nodes.length) return null
 
@@ -354,7 +424,7 @@ var Nodemanager = function(p){
 
         return result
 
-    }
+    }*/
 
     self.currentChainCommon2 = function(){
 
@@ -533,6 +603,7 @@ var Nodemanager = function(p){
         var stats = {
             count : self.nodes.length,
             inited : inited,
+            queuelength : queue.length,
 
             countuse : _.filter(self.nodes, function(node){
                 return node.inited && node.export().canuse
@@ -566,7 +637,6 @@ var Nodemanager = function(p){
                 var bchain = 'main'
 
                 if (self.proxy.test) bchain = 'test'
-
 
                 db.find({bchain}).exec(function (err, docs) {
 
@@ -611,31 +681,29 @@ var Nodemanager = function(p){
                         self.find()
                     }, 2000)
                     
+                    if(!findInterval)
+                        findInterval = setInterval(self.find, 10000)
 
-                    findInterval = setInterval(function(){
-                        self.find()
-                    }, 10000)
+                    if(!commonnotinitedInterval)
+                        commonnotinitedInterval = setInterval(self.getNotinitedInfo, 1000 * 60 * 60 * 2) 
 
-                    commonnotinitedInterval = setInterval(function(){
-                        self.getNotinitedInfo()
-                    }, 1000 * 60 * 60 * 2) 
+                    if(!queueInterval)
+                        queueInterval =  setInterval(worker, 10) 
 
-
-                    statscalculationInterval = setInterval(function(){
-
-                        self.selectbest()
-                        self.bestnodesapply()
-
-                    }, statscalculationTime) 
+                    if(!statscalculationInterval)
+                        statscalculationInterval = setInterval(function(){
+                            self.selectbest()
+                            self.bestnodesapply()
+                        }, statscalculationTime) 
 
                     setTimeout(function(){
-
                         self.selectbest()
                         self.bestnodesapply()
-
                     }, 2000)
 
                     inited = true
+
+                    
 
                     resolve()
 
@@ -670,6 +738,11 @@ var Nodemanager = function(p){
             clearInterval(findInterval)
 
             findInterval = null
+        }
+
+        if(!queueInterval){
+            clearInterval(queueInterval)
+            queueInterval = null
         }
 
         if(commonnotinitedInterval){
@@ -780,6 +853,14 @@ var Nodemanager = function(p){
             return inited && self.initednodes().length
         })
     }
+
+    /*self.waitreadywithrating = function(){
+        return f.pretry(()=>{
+            if(inited && self.initednodes().length){
+                
+            }
+        })
+    }*/
 
     self.request = function(method, parameters){
 

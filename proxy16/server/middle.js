@@ -198,7 +198,7 @@ var Middle = function(){
                 }
             }
             catch(e){
-                console.error(e)
+               // console.error(e)
             }
 
             result.status(code).jsonp(jsonp)
@@ -293,6 +293,7 @@ var Middle = function(){
     self.lightnext = function(request, result, next){
 
         var n = false
+        
         if(request){
             n = request.originalUrl ==  '/ping'
         }

@@ -10,8 +10,70 @@ var Cache = function(p){
     var softclearInterval = null
     var softclearTime = 10000
 
+    var workerInterval = null
+    var workerTime = 200
+    var waittime = 6500
 
     var ckeys = {}
+
+    var worker = function(){
+
+        _.each(waiting, function(w){
+            _.each(w, function(k, key){
+                executingWatcher(k, key)
+            })
+        })
+    }
+
+    var executingWatcher = function(k, key){
+
+        var itemswithattemp = []
+        var now = new Date()
+
+        _.each(k.clbks, function(c, waitid){
+
+            if (c.date < now){
+                itemswithattemp.push([c,waitid])
+            }
+        })
+        
+        if (itemswithattemp.length){
+
+            k.attemp++
+
+            if (k.attemp >= 3){
+
+                _.each(itemswithattemp, function(ce){
+                    ce[0].action('attemps')
+                    delete k.clbks[ce[1]]
+                })
+
+                if(_.isEmpty(k.clbks)){
+                    delete k[key]
+                }
+
+                k.attemp = 0
+
+            }
+            else{
+
+                var newexecutor = itemswithattemp[f.rand(0, itemswithattemp.length - 1)]
+
+                _.each (itemswithattemp, function(ce){
+                    ce[0].date = f.date.addseconds(ce[0].date, waittime / 1000)
+                })
+                
+                k.executor = newexecutor[1]
+                newexecutor[0].action('execute')
+
+                delete k.clbks[k.executor]
+
+
+            }
+
+        }
+
+    }
     
     if (!p.dontCache)
     {
@@ -46,7 +108,7 @@ var Cache = function(p){
 
             // node -
             getnodeinfo : {
-                time : 160,
+                time : 260,
                 block : 0
             },
 
@@ -109,7 +171,7 @@ var Cache = function(p){
 
             // node +
             getmissedinfo: {
-                time : 160,
+                time : 560,
                 block : 0,
             },
 
@@ -156,11 +218,13 @@ var Cache = function(p){
 
             if (waiting[key][k]){
 
-                _.each(waiting[key][k].clbks, function(c){
-                    c('waitedmake')
+                executingWatcher(waiting[key][k], k)
+
+                /*_.each(waiting[key][k].clbks, function(c){
+                    c.action('waitedmake')
                 })
 
-                delete waiting[key][k]
+                delete waiting[key][k]*/
             }
 
         }
@@ -206,7 +270,7 @@ var Cache = function(p){
             if (waiting[key][k]){
 
                 _.each(waiting[key][k].clbks, function(c){
-                    c('waitedmake')
+                    c.action('waitedmake')
                 })
 
                 delete waiting[key][k]
@@ -220,9 +284,9 @@ var Cache = function(p){
         if (ckeys[key]){
 
 
-            if (ckeys[key].smart){
+            /*if (ckeys[key].smart){
                 return self.getsmart(key, params)
-            }
+            }*/
 
             if(!cachehash){
                 var ks = null
@@ -276,7 +340,7 @@ var Cache = function(p){
             return
         }
 
-        if(self.get(key, params, cachehash)){
+        if (self.get(key, params, cachehash)){
             clbk('hascache')
             return
         }
@@ -303,7 +367,8 @@ var Cache = function(p){
         if(!waiting[key][k])
             waiting[key][k] = {
                 clbks : {},
-                executor : null
+                executor : null,
+                attemp : 0
             }
 
         if(!waiting[key][k].executor){
@@ -314,23 +379,30 @@ var Cache = function(p){
             return 
         }
 
-        waiting[key][k].clbks[waitid] = clbk
+        console.log('setwait', k)
 
-        setTimeout(function(){
+        waiting[key][k].clbks[waitid] = {
+            action : clbk,
+            date : f.date.addseconds(new Date(), waittime / 1000)
+        }
+
+        /*setTimeout(function(){
 
             if (waiting[key] && waiting[key][k] && waiting[key][k].clbks[waitid]){
 
-                waiting[key][k].clbks[waitid]('waitedtimeout')
+                waiting[key][k].clbks[waitid].action('waitedtimeout')
 
                 delete waiting[key][k].clbks[waitid]
             }
 
-        }, 6500)
+        }, 6500)*/
 
         
     }
 
     self.block = function(block){
+
+        console.log("BLOCK")
 
         _.each(ckeys, function(k, key){
             if (typeof k.block != undefined){
@@ -411,12 +483,20 @@ var Cache = function(p){
     self.init = function(){
         if(!softclearInterval)
             softclearInterval = setInterval(softclear, softclearTime)
+
+        if(!workerInterval)
+            workerInterval = setInterval(worker, workerTime)
     }
 
     self.destroy = function(){
         if(softclearInterval){
             clearInterval(softclearInterval)
             softclearInterval = null
+        }
+
+        if(workerInterval){
+            clearInterval(workerInterval)
+            workerInterval = null
         }
     }
 

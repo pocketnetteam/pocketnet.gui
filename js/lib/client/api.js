@@ -344,6 +344,11 @@ var Proxy16 = function(meta, app, api){
         return reconnectws
     }
 
+    var freshping = function(){
+        if(!self.ping || self.ping.addSeconds(60) < new Date()){return false}
+        return true
+    }
+
     self.api = {
         ping : () => {
             return self.fetch('ping', {}, {timeout : 4000}).then(r => {
@@ -367,7 +372,7 @@ var Proxy16 = function(meta, app, api){
 
             var promise = null
 
-            if(!self.ping || self.ping.addSeconds(60) < new Date()){
+            if(!freshping()){
                 promise = self.api.ping()
             }
             else{
@@ -383,6 +388,9 @@ var Proxy16 = function(meta, app, api){
 
             canchange : function(node){
                 return self.fetch('nodes/canchange', {node}, 'wait').then(r => {
+
+                    //console.log(node, r.node)
+
                     return Promise.resolve(self.changeNode(r.node))
                 }).catch(e => {
                     return Promise.resolve(false)
@@ -465,12 +473,15 @@ var Proxy16 = function(meta, app, api){
 
             if (options.fnode && e) e.code = 700
 
-            if ((e.code == 408 || e.code == -28 || self.direct) && options.node && trying < 2 && !options.fnode){
+            console.log('e.code', e.code)
+
+            /*if ((e.code == 408 || e.code == -28) && options.node && trying < 2 && !options.fnode){
 
                 if(isonline()){
                     return self.api.nodes.canchange(options.node).then(r => {
 
                         if (r){
+
                             return self.rpc(method, parameters, options, trying + 1)
                         }
     
@@ -479,7 +490,7 @@ var Proxy16 = function(meta, app, api){
                 }
 
                 
-            }
+            }*/
 
             if (e.code == 20){
                 return Promise.reject(e)
@@ -858,6 +869,8 @@ var Api = function(app){
                 mixedping : function(proxies){
                     var current = self.get.current()
 
+                    if(!current) return Promise.resolve()
+
                     return current.api.actualping().catch(e => {return Promise.resolve()}).then(() => {
 
 
@@ -909,6 +922,7 @@ var Api = function(app){
 
                 if(isonline()){
                     return self.changeProxyIfNeedWithDirect().then(r => {
+
                         trying++
 
                         return self.rpc(method, parameters, options, trying)
