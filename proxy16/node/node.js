@@ -782,7 +782,7 @@ var Node = function(options, manager){
     self.changeNodeUser = function(address, np){
         //if(address && wss.changing[address]) return null
 
-        var r = f.randmap(np)
+        var r = f.randomizer(np)
 
         if(!r) return null
 

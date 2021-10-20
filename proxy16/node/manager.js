@@ -882,6 +882,11 @@ var Nodemanager = function(p){
 
         if (node) {
             self.bestnode = node.key
+
+            console.log(' node.key',  node.key)
+        }
+        else{
+            console.log("HUI")
         }
     }
 
@@ -894,11 +899,15 @@ var Nodemanager = function(p){
             }
         })
 
-        var r = f.randmap(np)
+        var r = f.randomizer(np)
+
 
         if (r){
+            console.log('r', r.node.key)
             return r.node
         }
+
+        console.log("hiui")
 
         return null
     }
