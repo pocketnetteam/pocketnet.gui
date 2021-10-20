@@ -697,8 +697,12 @@ var Node = function(options, manager){
 
             _.each(nodes, function(node){
 
-                total += node.statistic.rating()
+                var rating = node.statistic.rating();
+
+                if (rating)
+                    total += rating
             })
+            
 
             if(!total) {
 
@@ -715,7 +719,7 @@ var Node = function(options, manager){
             if(!manager) return 1
 
 
-            return this.probabilityNodes(manager.nodes)
+            return this.probabilityNodes(manager.initednodes())
 
         },
 
