@@ -947,7 +947,7 @@ var Proxy = function (settings, manage, test) {
 			rpc: {
 				path: '/rpc/*',
 				authorization: 'signaturelight',
-				action: function ({ method, parameters, options, U, cachehash }) {
+				action: function ({ method, parameters, options, U, cachehash, clientIP }) {
 					if (!method) {
 						return Promise.reject({
 							error: 'method',
@@ -1125,8 +1125,10 @@ var Proxy = function (settings, manage, test) {
 					})
 					.catch((e) => {
 
+						console.log("E", e, clientIP)
+
 						if (log) {
-							console.log("E", e)
+							
 							console.log('clear cahce?', _waitstatus)
 						}
 
