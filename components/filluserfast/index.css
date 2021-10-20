@@ -459,6 +459,9 @@
   margin-top: 50px;
   font-size: 43px;
 }
+#filluserfast .mWrapper .categories .welcome_text .name {
+  color: #00a4ff;
+}
 #filluserfast .mWrapper .categories .cats {
   display: flex;
   flex-wrap: wrap;

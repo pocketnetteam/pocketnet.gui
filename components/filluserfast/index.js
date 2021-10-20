@@ -1067,7 +1067,8 @@ var filluserfast = (function(){
 					turi : 'filluser',
 					el :   el,
 					data : {
-						categories: categories
+						categories: categories,
+						username : 'Username'
 					},
 
 				}, function(_p){

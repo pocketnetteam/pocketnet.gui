@@ -83,6 +83,7 @@ ____loclib.funetworkproblems = "There are some problems with the connection. Ple
 
 ____loclib.pleasewait = "Please Wait";	
 ____loclib.next = "Next";	
+____loclib.welcome = "Welcome";	
 ____loclib.welcometopocketnet = "Welcome to "+appname+"";	
 ____loclib.continue = "continue";	
 
