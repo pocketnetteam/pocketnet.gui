@@ -560,7 +560,7 @@ var Node = function(options, manager){
 
             r.percent = (r.success / (r.count || 1)) * 100
 
-            r.time = r.time / (r.timecounter || 1)
+            r.time = r.time / (timecounter || 1)
 
             return r
         },
