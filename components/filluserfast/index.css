@@ -474,16 +474,18 @@
   cursor: pointer;
   font-size: 18px;
   padding: 8px 16px 8px 16px;
-  margin: 4px;
+  margin: 4px 8px;
   border-radius: 100px;
   color: #000000;
   font-weight: 600;
+  border: 1px solid #E3E4EB;
 }
 #filluserfast .mWrapper .categories .cats .cat .icon {
   color: #575570;
 }
 #filluserfast .mWrapper .categories .cats .cat.active {
   background: #00a4ff;
+  border: 1px solid #00a4ff;
   color: #fff;
 }
 #filluserfast .mWrapper .categories .cats .cat.active .icon {
