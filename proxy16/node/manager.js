@@ -778,12 +778,12 @@ var Nodemanager = function(p){
 
                     if(!statscalculationInterval)
                         statscalculationInterval = setInterval(function(){
-                            self.selectbest()
+                            self.bestapply()
                             self.bestnodesapply()
                         }, statscalculationTime) 
 
                     setTimeout(function(){
-                        self.selectbest()
+                        self.bestapply()
                         self.bestnodesapply()
                     }, 2000)
 
@@ -858,7 +858,7 @@ var Nodemanager = function(p){
 
     self.bestlist = function(){
         var nodes = _.sortBy(self.initednodes(), function(node){
-            return node.statistic.probability()
+            return -node.statistic.probability()
         })
 
         var ns = _.filter(nodes, function(n, i){
@@ -871,9 +871,18 @@ var Nodemanager = function(p){
     self.bestnodesapply = function(){
 
         self.bestnodes = _.map(self.bestlist(), function(n){
+
             return n.key
         })
 
+    }
+
+    self.bestapply = function(){
+        var node = self.selectProbability()
+
+        if (node) {
+            self.bestnode = node.key
+        }
     }
 
     self.selectProbability = function(){

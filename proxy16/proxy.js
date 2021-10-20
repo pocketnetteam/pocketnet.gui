@@ -1519,9 +1519,9 @@ var Proxy = function (settings, manage, test) {
 
 					var node = nodeManager.bestnode
 
-					if (nodeManager.bestnodes.length){
+					/*if (nodeManager.bestnodes.length){
 						node = nodeManager.bestnodes[f.rand(0, nodeManager.bestnodes.length - 1)]
-					}
+					}*/
 	
 					return Promise.resolve({
 						data: {
