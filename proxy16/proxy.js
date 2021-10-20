@@ -957,12 +957,9 @@ var Proxy = function (settings, manage, test) {
 					if (!options) options = {};
 					if (!parameters) parameters = [];
 
-					
-
 					var node = null;
 					var noderating = 0
 
-					var log = false;
 					var _waitstatus = 'un'
 					var direct = true
 
@@ -1021,11 +1018,6 @@ var Proxy = function (settings, manage, test) {
 							}
 
 							server.cache.wait(method, cparameters, function (waitstatus) {
-
-								if (log) {
-									console.log('waitstatus', waitstatus)
-								}
-
 								resolve(waitstatus);
 
 							}, cachehash);
@@ -1037,15 +1029,7 @@ var Proxy = function (settings, manage, test) {
 
 						_waitstatus = waitstatus
 
-						if (log) {
-							console.log('_waitstatus', _waitstatus, method)
-						}
-
 						var cached = server.cache.get(method, cparameters, cachehash);
-
-						if (log) {
-							console.log('cached', cached ? true : false)
-						}
 
 						if (cached) {
 							return Promise.resolve({
@@ -1059,8 +1043,6 @@ var Proxy = function (settings, manage, test) {
 								code: 408,
 							});
 						}
-
-						//var cachwaitng = server.cache.waitng(method, parameters)
 
 						if (method == 'sendrawtransactionwithmessage') {
 							if (!bots.check(U)) {
@@ -1077,40 +1059,13 @@ var Proxy = function (settings, manage, test) {
 							}
 						}
 
-						/*return f.delay(100)
-
-					}).then(() => {*/
-
-						if (log) {
-							console.log('load', method, cparameters)
-						}
-
-						
-
 						return new Promise((resolve, reject) => {
 							nodeManager.queue(node, method, parameters, direct, {resolve, reject})
 						})
 
-						/*return node.checkParameters().then((r) => {
-							return node.rpcs(method, _.clone(parameters));
-						})*/
-
 						.then((data) => {
 
-							/*if(!f.rand(0,1)) {
-								return Promise.reject('rand')
-							}*/
-
-							if (log) {
-								console.log('noderating', noderating, method, cparameters)
-							}
-
 							if (noderating){
-
-								if (log) {
-									console.log("SET CACHE")
-								}
-
 								server.cache.set(method, cparameters, data, node.height());
 							}
 
@@ -1123,22 +1078,7 @@ var Proxy = function (settings, manage, test) {
 					})
 					.catch((e) => {
 
-						console.log("E", e)
-
-						if (request)
-							console.log('ERROR IP', request.clientIP)
-
-						if (log) {
-							
-							console.log('clear cahce?', _waitstatus)
-						}
-
 						if (_waitstatus == 'execute'){
-
-							if (log) {
-								console.log('clear cahce', method, cparameters)
-							}
-
 							server.cache.remove(method, cparameters);
 						}
 
