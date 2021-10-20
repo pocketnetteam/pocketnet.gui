@@ -545,7 +545,9 @@
   font-size: 1.1em;
 }
 #filluserfast[step="welcome"] .caption,
-#filluserfast[step="categories"] .caption {
+#filluserfast[step="categories"] .caption,
+#filluserfast[step="welcome"] .hasaccount,
+#filluserfast[step="categories"] .hasaccount {
   display: none;
 }
 html.stblack #filluserfast .upanelloader {
