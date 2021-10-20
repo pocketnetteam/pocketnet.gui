@@ -44,7 +44,7 @@ var Peertube = function (settings) {
 	};
 
 	self.timeout = function () {
-		return 8500;
+		return 3500;
 	};
 
 	self.statsInterval = function () {

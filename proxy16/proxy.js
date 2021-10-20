@@ -1134,7 +1134,6 @@ var Proxy = function (settings, manage, test) {
 							console.log('clear cahce?', _waitstatus)
 						}
 
-
 						if (_waitstatus == 'execute'){
 
 							if (log) {
