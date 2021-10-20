@@ -29,7 +29,7 @@ var filluserfast = (function(){
 		var steps = {
 			settings : {
 				id : 'settings',
-				nextindex : 'captcha',
+				nextindex : 'categories',
 
 				prev : function(clbk){
 
@@ -250,11 +250,87 @@ var filluserfast = (function(){
 						
 					}
 
-					setTimeout(function(){
+					// setTimeout(function(){
+
+					// 	clbk()
+
+					// }, 1500)
+
+					el.find('.welcome').on('click', function(){
 
 						clbk()
+						
+					})
+				}
 
-					}, 1500)
+
+			},
+
+			
+			categories : {
+
+				id : 'categories',
+
+				prev : function(clbk){
+
+					//self.app.platform.sdk.theme.set('black')
+
+					if (essenseData.welcomepart)
+						essenseData.welcomepart()
+
+					clbk()
+				},
+
+				render : 'categories',
+
+				after : function(el){
+
+					var c = false
+
+					var clbk = function(){
+
+						if(c) return
+
+						c = true
+
+						if (deep(essenseData, 'successHref') == '_this'){
+							var close = deep(initialParameters, 'container.close')
+							if (close)
+								close();
+							if (essenseData.signInClbk)
+								essenseData.signInClbk();
+						}
+						else
+						{
+
+
+							self.nav.api.go({
+								href : 'index?r=recommended',
+								history : true,
+								open : true
+							})	
+
+						}
+
+
+						if (isMobile()){
+							self.app.platform.ui.showmykey({
+								afterregistration : true
+							})
+						}
+						else{
+							self.app.platform.ui.showmykeyfast({
+								showsavelabel : true
+							})
+						}
+						
+					}
+
+					// setTimeout(function(){
+
+					// 	clbk()
+
+					// }, 1500)
 
 					el.find('.welcome').on('click', function(){
 
@@ -823,6 +899,24 @@ var filluserfast = (function(){
 				})
 			},
 
+			categories : function(el, clbk){
+				self.shell({
+
+					name :  'categories',
+					turi : 'filluser',
+					el :   el,
+					data : {
+						
+					},
+
+				}, function(_p){
+
+					if (clbk)
+						clbk(_p.el);
+
+				})
+			},
+
 			moneyfail : function(el, clbk){
 				self.shell({
 
@@ -882,6 +976,13 @@ var filluserfast = (function(){
 			
 
 			settings : function(_el, clbk, pel){
+
+				// dev!!!
+				setTimeout(() => {
+
+					actions.next()
+
+				}, 1000);
 
 				self.nav.api.load({
 
