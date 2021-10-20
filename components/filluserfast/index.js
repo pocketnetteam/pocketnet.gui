@@ -9,6 +9,89 @@ var filluserfast = (function(){
 		var primary = deep(p, 'history');
 
 		var el, k = {}, needcaptcha = false, gliperror = false, essenseData, initialParameters, ext = null;
+		
+		var categoryIcons = [
+			{
+				"id": "c2",
+				"icon": "smile"
+			},
+			{
+				"id": "c3",
+				"icon": "landmark"
+			},
+			{
+				"id": "c4",
+				"icon": "bitcoin"
+			},
+			{
+				"id": "c5",
+				"icon": "microscope"
+			},
+			{
+				"id": "c55",
+				"icon": "book"
+			},
+			{
+				"id": "c6",
+				"icon": "sack-dollar"
+			},
+			{
+				"id": "c73",
+				"icon": "fist-raised"
+			},
+			{
+				"id": "c72",
+				"icon": "viruses"
+			},
+			{
+				"id": "c7",
+				"icon": "flag-checkered"
+			},
+			{
+				"id": "c8",
+				"icon": "running"
+			},
+			{
+				"id": "c9",
+				"icon": "user-headset"
+			},
+			{
+				"id": "c10",
+				"icon": "solar-system"
+			},
+			{
+				"id": "c11",
+				"icon": "music"
+			},
+			{
+				"id": "c12",
+				"icon": "newspaper"
+			},
+			{
+				"id": "c13",
+				"icon": "history"
+			},
+			{
+				"id": "c14",
+				"icon": "bookmark"
+			},
+			{
+				"id": "c15",
+				"icon": "film"
+			},
+			{
+				"id": "c16",
+				"icon": "paw"
+			},
+			{
+				"id": "c17",
+				"icon": "route"
+			},
+			{
+				"id": "c18",
+				"icon": "pencil-ruler"
+			}
+		]
 
 		
 		var current = null;
@@ -900,13 +983,35 @@ var filluserfast = (function(){
 			},
 
 			categories : function(el, clbk){
+
+				var k =  self.app.localization.key;
+
+				if(!self.sdk.categories.data.all[k]) k = 'en';
+
+				var categories = self.sdk.categories.data.all[k].filter(function(k){
+					return k.id !== 'c73'
+				})
+
+				categories = _.map(categories, function(k){
+					var withIcon = categoryIcons.find(function(ki){
+						return ki.id === k.id;
+					})
+
+					if (withIcon){
+						k.icon = withIcon.icon;
+					}
+
+					return k;
+				})
+
+
 				self.shell({
 
 					name :  'categories',
 					turi : 'filluser',
 					el :   el,
 					data : {
-						
+						categories: categories
 					},
 
 				}, function(_p){

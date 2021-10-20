@@ -1150,8 +1150,6 @@ var filluser = (function(){
 			init : function(p){
 
 
-				
-
 				state.load();
 
 				el = {};

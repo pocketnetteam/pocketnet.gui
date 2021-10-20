@@ -8,6 +8,9 @@
 	<div class="choosethemes_text">
 		<%=e('chooseThemes')%>
 	</div>
+	<div class="categories">
+		<%-_.map(categories, function(k){return k.name})%>
+	</div>
 	<div class="subc">
 		<button class="continue ghost"><%=e('skip')%></button>
 	</div>
