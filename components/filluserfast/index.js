@@ -13,7 +13,7 @@ var filluserfast = (function(){
 		var categoryIcons = [
 			{
 				"id": "c2",
-				"icon": "fas fa-smile"
+				"icon": "far fa-smile"
 			},
 			{
 				"id": "c3",
@@ -112,7 +112,7 @@ var filluserfast = (function(){
 		var steps = {
 			settings : {
 				id : 'settings',
-				nextindex : 'categories',
+				nextindex : 'captcha',
 
 				prev : function(clbk){
 
@@ -133,7 +133,7 @@ var filluserfast = (function(){
 			captcha : {
 				id : 'captcha',
 				render : 'captcha',
-				nextindex : 'welcome',
+				nextindex : 'categories',
 
 				prev : function(clbk){
 
@@ -333,11 +333,11 @@ var filluserfast = (function(){
 						
 					}
 
-					// setTimeout(function(){
+					setTimeout(function(){
 
-					// 	clbk()
+						clbk()
 
-					// }, 1500)
+					}, 1500)
 
 					el.find('.welcome').on('click', function(){
 
@@ -353,6 +353,7 @@ var filluserfast = (function(){
 			categories : {
 
 				id : 'categories',
+				nextindex : 'welcome',
 
 				prev : function(clbk){
 
@@ -372,6 +373,8 @@ var filluserfast = (function(){
 					var next = el.find('.next');
 					var skip = el.find('.skip');
 
+					self.app.platform.sdk.categories.clear()
+					
 					var activeCategories = [];
 
 					elCategories.on('click', function(){
@@ -407,8 +410,6 @@ var filluserfast = (function(){
 							next.removeClass('active')
 						}
 
-						console.log('activesCoun', activeCategories.length);
-
 					})
 
 					var c = false
@@ -419,46 +420,14 @@ var filluserfast = (function(){
 
 						c = true
 
-						console.log('actives', activeCategories)
-
-						if (deep(essenseData, 'successHref') == '_this'){
-							var close = deep(initialParameters, 'container.close')
-							if (close)
-								close();
-							if (essenseData.signInClbk)
-								essenseData.signInClbk();
-						}
-						else
-						{
-
-
-							self.nav.api.go({
-								href : 'index?r=recommended',
-								history : true,
-								open : true
-							})	
+						for (var catId of activeCategories){
+							self.app.platform.sdk.categories.select(catId);
 
 						}
 
-
-						if (isMobile()){
-							self.app.platform.ui.showmykey({
-								afterregistration : true
-							})
-						}
-						else{
-							self.app.platform.ui.showmykeyfast({
-								showsavelabel : true
-							})
-						}
+						actions.next()
 						
 					}
-
-					// setTimeout(function(){
-
-					// 	clbk()
-
-					// }, 1500)
 
 					next.on('click', function(){
 
@@ -518,6 +487,9 @@ var filluserfast = (function(){
 				},
 	
 				render : 'moneyfail',
+
+				nextindex : 'welcome',
+
 	
 				after : function(el){
 
@@ -1058,8 +1030,7 @@ var filluserfast = (function(){
 					return k;
 				})
 
-				console.log('categories', categories)
-
+				var username = deep(app, 'platform.sdk.user.storage.me.name');
 
 				self.shell({
 
@@ -1068,7 +1039,7 @@ var filluserfast = (function(){
 					el :   el,
 					data : {
 						categories: categories,
-						username : 'Username'
+						username : username
 					},
 
 				}, function(_p){
@@ -1139,12 +1110,6 @@ var filluserfast = (function(){
 
 			settings : function(_el, clbk, pel){
 
-				// dev!!!
-				setTimeout(() => {
-
-					actions.next()
-
-				}, 1000);
 
 				self.nav.api.load({
 

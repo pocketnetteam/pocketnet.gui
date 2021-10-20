@@ -451,6 +451,7 @@
   text-align: center;
 }
 #filluserfast .mWrapper .categories .icon {
+  margin-top: 3em;
   width: 246px;
   margin-left: auto;
   margin-right: auto;
@@ -512,6 +513,7 @@
   font-size: 18px;
 }
 #filluserfast .mWrapper .categories .choosethemes_text {
+  margin-top: 0.5em;
   font-size: 30px;
   color: #555770;
 }
@@ -542,7 +544,8 @@
   text-align: center;
   font-size: 1.1em;
 }
-#filluserfast[step="welcome"] .caption {
+#filluserfast[step="welcome"] .caption,
+#filluserfast[step="categories"] .caption {
   display: none;
 }
 html.stblack #filluserfast .upanelloader {
