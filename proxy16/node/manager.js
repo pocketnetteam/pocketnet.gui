@@ -3,7 +3,7 @@ var Node = require('./node');
 var Datastore = require('nedb');
 var _ = require('lodash');
 var f = require('../functions');
-
+const { performance } = require('perf_hooks');
 var queuemethods = {
     getcontents: true,
     getlastcomments: true,
@@ -234,12 +234,20 @@ var Nodemanager = function(p){
 
     var worker = function(){
 
+        if(queue.length) console.log('queue', queue.length)
+
+        var now = performance.now()
+
         for (var i = 0; i < queue.length; i++){
 
             var rpcs = queue[i]
 
             self.rpcs(rpcs.node, rpcs.method, rpcs.parameters, rpcs.clbks)
         }
+
+        var dif = performance.now() - now
+
+        if(queue.length) console.log('queuedif', dif)
 
         queue = []
     }
