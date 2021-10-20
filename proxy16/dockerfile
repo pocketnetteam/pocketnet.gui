@@ -3,6 +3,7 @@ FROM node:current-alpine
 RUN apk update && apk add --no-cache g++ make python3
 
 ENV NODE_ENV production
+
 EXPOSE 8899 8099
 
 WORKDIR /usr/src/app
