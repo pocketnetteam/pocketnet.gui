@@ -12,7 +12,7 @@ var Cache = function(p){
 
     var workerInterval = null
     var workerTime = 200
-    var waittime = 6500
+    var waittime = 8500
 
     var ckeys = {}
 

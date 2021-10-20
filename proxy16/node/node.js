@@ -357,7 +357,7 @@ var Node = function(options, manager){
                 var d = self.events.length - maxevents
 
                 if (d > 100){
-                    self.events = self.events.splice(0, d)
+                    self.events = self.events.splice(d)
                 }
             }
 
@@ -443,7 +443,7 @@ var Node = function(options, manager){
             var d = statistic.history.length - maxeventsHistory
 
             if (d > maxeventsHistory / 10){
-                statistic.history = statistic.history.splice(0, d)
+                statistic.history = statistic.history.splice(d)
             }
 
             statistic.historyslice = self.statistic.mixeventsArray(statistic.history)
