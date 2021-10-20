@@ -106,6 +106,7 @@ __map =  {
 		{ c : 'panel', n : 'discussiondummy' },
 		{ c : 'lastcomments', n : 'index' },
 		{ c : 'tagcloud', n : 'index' },
+		{ c : 'userpage', n : 'index' },
 		{ c : 'categories', n : 'index' },
 		{ c : 'categories', n : 'categories' },
 		{ c : 'lenta', n : 'share' },

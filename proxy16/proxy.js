@@ -974,7 +974,7 @@ var Proxy = function (settings, manage, test) {
 							return
 						}
 
-						return nodeManager.waitreadywithrating().then(resolve).catch(reject)
+						return nodeManager.waitready().then(resolve).catch(reject)
 						
 					}).then(() => {
 
