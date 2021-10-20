@@ -969,8 +969,6 @@ var Proxy = function (settings, manage, test) {
 					var cparameters = _.clone(parameters)
 
 
-
-
 					return new Promise((resolve, reject) => {
 
 						if((options.locally && options.meta)){

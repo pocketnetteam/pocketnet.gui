@@ -160,12 +160,15 @@ var Peertube = function (settings) {
 
 				if (cached) {
 
-
 					if (cached.error) {
 						return Promise.reject({ error: true, cached : true });
 					}
 
 					return Promise.resolve(cached);
+				}
+
+				if(waitstatus == 'attemps'){
+					return Promise.reject({ error: true, cached : true });
 				}
 
 
@@ -199,9 +202,7 @@ var Peertube = function (settings) {
 
 				
 				if (e && e.status == '404') {
-
 					ontime = 120
-
 				}
 
 				if(!e.cached){
