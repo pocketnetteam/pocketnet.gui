@@ -558,6 +558,99 @@
 			}
 		}
 
+		
+		.categories{
+			margin : 0 auto;
+			max-width: 820px;
+			text-align: center;
+
+			.icon{
+				width: 246px;
+				margin-left: auto;
+				margin-right: auto;
+			}
+
+			.welcome_text{
+				margin-top: 50px;
+				font-size: 43px
+			}
+
+			.cats{
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+				margin-top: 30px;
+				padding-bottom: 1em;
+
+				.cat{
+					cursor: pointer;
+					font-size: 18px;
+					padding: 8px 16px 8px 16px;
+					margin: 4px;
+					border-radius: 100px;
+					color: #000000;
+					font-weight: 600;
+
+					.icon{
+						color: #575570;
+					}
+
+					&.active{
+						background: @color-main;
+						color: @color-white;
+
+						.icon{
+							color: @color-white;
+						}
+					}
+				}
+			}
+
+			.next{
+				width: 241px;
+				padding: 12px, 24px, 12px, 24px;
+				border-radius: 12px;
+				font-size: 18px;
+				background: @color-gray-light;
+				color: @color-white;
+				border: none;
+				cursor: default;
+
+				&.active{
+					background: #011621;
+					cursor: pointer;
+				}
+
+				&:hover{
+					color: @color-white 
+				}
+			}
+
+			.skip{
+				background: transparent;
+				border: none;
+				color: @color-gray-light;
+				font-size: 18px;
+			}
+
+			.choosethemes_text{
+				font-size: 30px;
+				color: #555770;
+			}
+
+			.subcaption{
+				font-weight: 100;
+				padding-top: 3em;
+				font-size : 4em;
+
+			}
+
+			.subc{
+				margin-top : 4 * @rhythm;
+				text-align: center;
+			}
+		}
+
 		.network{
 			cursor: pointer;
 			margin : 0 auto;

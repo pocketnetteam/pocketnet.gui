@@ -368,13 +368,58 @@ var filluserfast = (function(){
 
 				after : function(el){
 
+					var elCategories = el.find('.cat');
+					var next = el.find('.next');
+					var skip = el.find('.skip');
+
+					var activeCategories = [];
+
+					elCategories.on('click', function(){
+
+						var cat = $(this);
+						var id = cat.attr('cat');
+
+						var activeIdx = activeCategories.findIndex(function(c){
+							return c === id;
+						})
+
+						if (cat.hasClass('active')){
+
+							cat.removeClass('active')
+							if (activeIdx > -1){
+								activeCategories.splice(activeIdx, 1);
+							}
+
+						} else {
+
+							cat.addClass('active')
+							if (activeIdx === -1){
+								activeCategories.push(id);
+							}
+						}
+
+						if (activeCategories.length){
+
+							next.addClass('active')
+
+						} else {
+
+							next.removeClass('active')
+						}
+
+						console.log('activesCoun', activeCategories.length);
+
+					})
+
 					var c = false
 
-					var clbk = function(){
+					var clbk = function(activeCategories){
 
 						if(c) return
 
 						c = true
+
+						console.log('actives', activeCategories)
 
 						if (deep(essenseData, 'successHref') == '_this'){
 							var close = deep(initialParameters, 'container.close')
@@ -415,9 +460,18 @@ var filluserfast = (function(){
 
 					// }, 1500)
 
-					el.find('.welcome').on('click', function(){
+					next.on('click', function(){
 
-						clbk()
+						if (activeCategories.length){
+							clbk(activeCategories)
+						}	
+						
+					})
+
+					
+					skip.on('click', function(){
+
+						clbk([])
 						
 					})
 				}
