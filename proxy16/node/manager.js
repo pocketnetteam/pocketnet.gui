@@ -858,7 +858,7 @@ var Nodemanager = function(p){
 
     self.bestlist = function(){
         var nodes = _.sortBy(self.initednodes(), function(node){
-            return - node.statistic.probability()
+            return node.statistic.probability()
         })
 
         var ns = _.filter(nodes, function(n, i){
