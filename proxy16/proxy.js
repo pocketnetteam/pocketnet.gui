@@ -1091,7 +1091,6 @@ var Proxy = function (settings, manage, test) {
 						.then((data) => {
 
 							if (noderating){
-								console.log('setcache')
 								server.cache.set(method, cparameters, data, node.height());
 							}
 
@@ -1104,7 +1103,7 @@ var Proxy = function (settings, manage, test) {
 					})
 					.catch((e) => {
 
-						console.log("E", e)
+						console.log("E",method, e)
 
 						if (_waitstatus == 'execute'){
 
@@ -1126,6 +1125,17 @@ var Proxy = function (settings, manage, test) {
 		},
 
 		nodeManager: {
+			pendingstatus: {
+				path: '/nodes/pendingstatus',
+				action: function () {
+					
+					var data = nodeManager.pendingstatus()
+
+					return Promise.resolve({ data });
+
+				},
+			},
+
 			clearnodesstats : {
 				path: '/nodes/clearnodesstats',
 				authorization: 'signature',

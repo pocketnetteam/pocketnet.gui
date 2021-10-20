@@ -551,8 +551,14 @@ var Nodemanager = function(p){
     self.getnodes = function(filter){
 
         var nodes = {}
+        var totalpending = self.totalpending()
 
         _.each(_.filter(self.nodes, filter || function(){return true}), function(node){
+
+            var pending = node.statistic.pending()
+            var probability = node.statistic.probability()
+            var pendingpercent = totalpending ? pending / totalpending : 0
+            var pendingpercentdifference = totalpending ? (pendingpercent - probability) : 0
 
             nodes[node.key] = {
                 node : node.exportsafe(),
@@ -562,14 +568,51 @@ var Nodemanager = function(p){
                 penalty : node.penalty(),
                 status : node.chainStatus(),
                 rating : node.statistic.rating(),
-                probability : node.statistic.probability(),
-                users : node.wss.count()
+                
+                users : node.wss.count(),
+
+                probability : probability,
+                pending : pending,
+                pendingpercent : pendingpercent,
+                pendingpercentdifference : pendingpercentdifference
             }
             
         })
 
         return nodes
 
+    }
+
+    self.totalpending = function(){
+        return _.reduce(self.initednodes(), function(r, node){
+            return r + node.statistic.pending()
+        }, 0)
+    }
+
+    self.pendingstatus = function(){
+        var totalpending = self.totalpending()
+
+        var nodes = _.map(self.initednodes(), function(node){
+
+            var pending = node.statistic.pending()
+            var probability = node.statistic.probability()
+            var pendingpercent = totalpending ? pending / totalpending : 0
+            var pendingpercentdifference = totalpending ? (pendingpercent - probability) : 0
+
+            return {
+                probability : probability,
+                pending : pending,
+                pendingpercent : pendingpercent,
+                pendingpercentdifference : pendingpercentdifference
+            }
+
+
+        })
+
+        return {
+            totalpending : totalpending,
+            nodes : nodes
+        }
     }
 
     self.extendedStats = function(){

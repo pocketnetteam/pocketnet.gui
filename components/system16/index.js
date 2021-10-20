@@ -852,6 +852,18 @@ var system16 = (function(){
 			},
 			nodes : {
 
+				pendingpercentdifference : {
+					caption : "Pending request/Probability Difference",
+
+					series : [
+						{
+							name : "PPD",
+							path : "pendingpercentdifference",
+							id : 'ppd'
+						}
+					]
+				}, 
+
 				penalty : {
 					caption : "Nodes Penalty",
 

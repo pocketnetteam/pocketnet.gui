@@ -379,8 +379,6 @@ var Cache = function(p){
             return 
         }
 
-        console.log('setwait', k)
-
         waiting[key][k].clbks[waitid] = {
             action : clbk,
             date : f.date.addseconds(new Date(), waittime / 1000)
@@ -401,8 +399,6 @@ var Cache = function(p){
     }
 
     self.block = function(block){
-
-        console.log("BLOCK")
 
         _.each(ckeys, function(k, key){
             if (typeof k.block != undefined){

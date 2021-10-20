@@ -18,6 +18,8 @@ var Node = function(options, manager){
     var cachedrating = null
     var chain = [];
 
+    var pending = 0
+
     self.updating = ['rpcuser', 'rpcpass', 'ws', 'name']
 
     self.host = options.host
@@ -233,7 +235,7 @@ var Node = function(options, manager){
         })
 
         return {
-            fork : counter ? dcounter / counter >= 0.5 : false,
+            fork : cs.lasttrustblocks.length > 4 && (counter ? dcounter / counter >= 0.5 : false),
             difference : d
         }
         
@@ -263,6 +265,8 @@ var Node = function(options, manager){
 
         return self.checkParameters().then(r => {
 
+            pending++
+
             return self.rpc[method](parsed).catch(e => {
 
                 err = e
@@ -270,6 +274,8 @@ var Node = function(options, manager){
                 return Promise.resolve(null)
     
             }).then(data => {
+
+                pending--
     
                 var difference = performance.now() - time;
                 var code = 200;
@@ -318,6 +324,10 @@ var Node = function(options, manager){
     }
 
     self.statistic = {
+
+        pending : function(){
+            return pending
+        },
 
         clear : function(){
             self.events = []
@@ -944,7 +954,8 @@ var Node = function(options, manager){
             local : self.local || false,
             peer : self.peer,
             wssusers : _.toArray(wss.users).length,
-            bchain : self.bchain
+            bchain : self.bchain,
+            
         }
     }
 
