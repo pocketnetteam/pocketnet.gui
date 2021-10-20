@@ -487,9 +487,6 @@ var filluserfast = (function(){
 				},
 	
 				render : 'moneyfail',
-
-				nextindex : 'welcome',
-
 	
 				after : function(el){
 
