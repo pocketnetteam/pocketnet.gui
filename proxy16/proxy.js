@@ -947,7 +947,7 @@ var Proxy = function (settings, manage, test) {
 			rpc: {
 				path: '/rpc/*',
 				authorization: 'signaturelight',
-				action: function ({ method, parameters, options, U, cachehash, clientIP }, request) {
+				action: function ({ method, parameters, options, U, cachehash, internal }, request) {
 					if (!method) {
 						return Promise.reject({
 							error: 'method',
@@ -978,6 +978,8 @@ var Proxy = function (settings, manage, test) {
 						
 					}).then(() => {
 
+
+					
 						/// ????
 						if (options.locally && options.meta) {
 							node = nodeManager.temp(options.meta);
@@ -986,13 +988,27 @@ var Proxy = function (settings, manage, test) {
 						if (options.node) {
 							node = nodeManager.nodesmap[options.node];
 
-							if(node) direct = false
+							if (node) 
+								direct = false
 						}
 
 						if (!node || options.auto){
+
 							node = nodeManager.selectProbability();
+
+							if(!node && nodeManager) 
+								node = nodeManager.nodesmap[nodeManager.bestnode]
+
 							direct = false
 						}
+
+						if (internal){
+							if(!node){
+								console.log("FAIL")
+							}
+							
+						}
+						
 
 						if (!node) {
 							return Promise.reject({
@@ -1845,7 +1861,7 @@ var Proxy = function (settings, manage, test) {
 					var kaction = f.deep(manage, message.action);
 
 					if (!kaction) {
-						return Promise.reject({ error: 'unknownAction', code: 502 });
+						return Promise.reject({ error: 'unknownAction', code: 404 });
 					}
 
 					return kaction(message.data)
