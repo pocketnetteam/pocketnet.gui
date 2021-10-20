@@ -318,6 +318,7 @@ f.randmap = function(ar){
 
     //ar = _.shuffle(ar)
     
+    
     ar = _.sortBy(ar, (r) => {return -r.probability})
 
     var total = _.reduce(ar, function(sum, r){ return sum + r.probability }, 0)

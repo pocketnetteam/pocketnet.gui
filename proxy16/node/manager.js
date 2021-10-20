@@ -49,7 +49,7 @@ var Nodemanager = function(p){
     self.nodesmap = {};
   
     var statscalculationInterval = null
-    var statscalculationTime = 10000
+    var statscalculationTime = 5000
     var findInterval = null
     var peernodesCheckTime = 1000000
     var usersfornode = 30
@@ -880,6 +880,12 @@ var Nodemanager = function(p){
     self.bestapply = function(){
         var node = self.selectProbability()
 
+        console.log('bestapply')
+
+        if(node)
+            console.log("APPLY", node.key)
+        else console.log("asd")
+
         if (node) {
             self.bestnode = node.key
         }
@@ -910,7 +916,7 @@ var Nodemanager = function(p){
         
 
         if (r && r.node){
-            //console.log(r.node.key)
+            console.log(r.node.key)
             return r.node
         }
 
@@ -932,7 +938,6 @@ var Nodemanager = function(p){
             })
         }
 
-        if(best) self.bestnode = best.key
 
         return best
     }
