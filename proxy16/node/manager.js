@@ -902,12 +902,10 @@ var Nodemanager = function(p){
         var r = f.randomizer(np)
 
 
-        if (r){
-            console.log('r', r.node.key)
+        if (r && r.node){
             return r.node
         }
 
-        console.log("hiui")
 
         return null
     }
