@@ -9,7 +9,20 @@
 		<%=e('chooseThemes')%>
 	</div>
 	<div class="categories">
-		<%-_.map(categories, function(k){return k.name})%>
+		<% _.each(categories, function(cat){ %> 
+
+			<div class="cat">
+				<div class="cattable">
+					<span class="icon">
+						<i class="<%-cat.icon%>"></i>
+					</span>
+					<span>
+						<%=cat.name%>
+					</span>
+				</div>
+			</div>
+
+		<%	})	%> 
 	</div>
 	<div class="subc">
 		<button class="continue ghost"><%=e('skip')%></button>

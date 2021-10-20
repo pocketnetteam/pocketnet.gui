@@ -13,83 +13,83 @@ var filluserfast = (function(){
 		var categoryIcons = [
 			{
 				"id": "c2",
-				"icon": "smile"
+				"icon": "fas fa-smile"
 			},
 			{
 				"id": "c3",
-				"icon": "landmark"
+				"icon": "fas fa-landmark"
 			},
 			{
 				"id": "c4",
-				"icon": "bitcoin"
+				"icon": "fab fa-bitcoin"
 			},
 			{
 				"id": "c5",
-				"icon": "microscope"
+				"icon": "fas fa-microscope"
 			},
 			{
 				"id": "c55",
-				"icon": "book"
+				"icon": "fas fa-book"
 			},
 			{
 				"id": "c6",
-				"icon": "sack-dollar"
+				"icon": "fas fa-dollar-sign"
 			},
 			{
 				"id": "c73",
-				"icon": "fist-raised"
+				"icon": "fas fa-fist-raised"
 			},
 			{
 				"id": "c72",
-				"icon": "viruses"
+				"icon": "fas fa-thermometer"
 			},
 			{
 				"id": "c7",
-				"icon": "flag-checkered"
+				"icon": "fas fa-flag-checkered"
 			},
 			{
 				"id": "c8",
-				"icon": "running"
+				"icon": "fas fa-running"
 			},
 			{
 				"id": "c9",
-				"icon": "user-headset"
+				"icon": "fas fa-gamepad"
 			},
 			{
 				"id": "c10",
-				"icon": "solar-system"
+				"icon": "fas fa-space-shuttle"
 			},
 			{
 				"id": "c11",
-				"icon": "music"
+				"icon": "fas fa-music"
 			},
 			{
 				"id": "c12",
-				"icon": "newspaper"
+				"icon": "fas fa-newspaper"
 			},
 			{
 				"id": "c13",
-				"icon": "history"
+				"icon": "fas fa-history"
 			},
 			{
 				"id": "c14",
-				"icon": "bookmark"
+				"icon": "fas fa-bookmark"
 			},
 			{
 				"id": "c15",
-				"icon": "film"
+				"icon": "fas fa-film"
 			},
 			{
 				"id": "c16",
-				"icon": "paw"
+				"icon": "fas fa-paw"
 			},
 			{
 				"id": "c17",
-				"icon": "route"
+				"icon": "fas fa-route"
 			},
 			{
 				"id": "c18",
-				"icon": "pencil-ruler"
+				"icon": "fas fa-pencil-ruler"
 			}
 		]
 
@@ -989,7 +989,7 @@ var filluserfast = (function(){
 				if(!self.sdk.categories.data.all[k]) k = 'en';
 
 				var categories = self.sdk.categories.data.all[k].filter(function(k){
-					return k.id !== 'c73'
+					return k.id !== 'c71'
 				})
 
 				categories = _.map(categories, function(k){
@@ -1003,6 +1003,8 @@ var filluserfast = (function(){
 
 					return k;
 				})
+
+				console.log('categories', categories)
 
 
 				self.shell({
