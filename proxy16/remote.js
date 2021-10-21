@@ -524,6 +524,7 @@ var Remote = function(app){
 
 		catch (e){
 
+			self.logger.w('remote', 'error', 'JSDOM', e)
 
 			if (clbk)
 				clbk(null)

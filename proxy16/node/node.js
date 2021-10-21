@@ -699,7 +699,7 @@ var Node = function(options, manager){
 
                 var rating = node.statistic.rating();
 
-                if (rating)
+                if (rating && rating > 0)
                     total += rating
             })
             

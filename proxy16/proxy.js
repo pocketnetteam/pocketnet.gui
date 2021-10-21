@@ -31,7 +31,7 @@ if (process.platform === 'win32') expectedExitCodes = [3221225477];
 
 console.log('expectedExitCodes' , expectedExitCodes)*/
 
-var Proxy = function (settings, manage, test) {
+var Proxy = function (settings, manage, test, logger) {
 
 	var self = this;
 
@@ -56,12 +56,14 @@ var Proxy = function (settings, manage, test) {
 	self.userDataPath = null
 	self.session = 'pocketnetproxy' //f.makeid()
 
+	logger.setapp(self)
+
 	f.mix({
 		wss, server, pocketnet, nodeControl,
 		remote, firebase, nodeManager, wallet,
 		proxies, exchanges, peertube, bots,
 		systemnotify,
-
+		logger,
 		proxy: self
 	})
 
@@ -262,7 +264,8 @@ var Proxy = function (settings, manage, test) {
 
 				}).catch(e => {
 
-					console.log(e)
+					logger.w('system', 'warn', 'SSL Settings Error', e)
+
 				
 					return server.init({
 						ssl: ini.ssl('default'),
@@ -452,6 +455,10 @@ var Proxy = function (settings, manage, test) {
 
 		wssdummy: function (wssdummy) {
 			wss.wssdummy(wssdummy)
+		},
+
+		sendlogs: function(d){
+			wss.sendlogs(d)
 		}
 	}
 
@@ -770,6 +777,9 @@ var Proxy = function (settings, manage, test) {
 
 			var catchError = function (key) {
 				return (e) => {
+
+					logger.w('system', 'error', 'Proxy '+key+' Error', e)
+
 					return Promise.resolve()
 				}
 			}
@@ -846,7 +856,6 @@ var Proxy = function (settings, manage, test) {
 			var rpc = self.api.node.rpc.action
 			var videosapi = self.api.peertube.videos.action
 
-			//console.log('gethierarchicalstrip')
 
 			var users = []
 			var videos = []
@@ -855,7 +864,6 @@ var Proxy = function (settings, manage, test) {
 
 			return rpc({ method, parameters, options, U }).then(r => {
 
-				//console.log('gethierarchicalstrip done')
 
 				var posts = r.data.contents || []
 
@@ -887,7 +895,6 @@ var Proxy = function (settings, manage, test) {
 					options, U
 				}).then(users => {
 
-					//console.log("USERS LOADED")
 
 					result.data.users = users.data
 
@@ -899,7 +906,6 @@ var Proxy = function (settings, manage, test) {
 					fast : true
 				}).then(videos => {
 
-					//console.log("VIDEOS LOADED")
 
 					result.data.videos = videos.data
 
@@ -965,6 +971,7 @@ var Proxy = function (settings, manage, test) {
 
 					var cparameters = _.clone(parameters)
 
+					//self.logger.w('rpc', 'warn', 'RPC REQUEST')
 
 					return new Promise((resolve, reject) => {
 
@@ -1001,15 +1008,7 @@ var Proxy = function (settings, manage, test) {
 
 							direct = false
 						}
-
-						if (internal){
-							if(!node){
-								console.log("FAIL")
-							}
-							
-						}
 						
-
 						if (!node) {
 							return Promise.reject({
 								error: 'node',
@@ -1469,7 +1468,7 @@ var Proxy = function (settings, manage, test) {
 						})
 					}
 
-					console.log('heapdump start')
+					logger.w('system', 'info', 'Heapdump start')
 
 					var filename = f.path('heapdump/' + Date.now() + '.heapsnapshot')
 					var heapdump = require('heapdump');
@@ -1493,11 +1492,12 @@ var Proxy = function (settings, manage, test) {
 	
 								dump.error = err.toString ? err.toString() : err
 	
-								console.log(dump.error)
+								logger.w('system', 'error', 'Dump Error', dump.error)
 							}
 							else{
-								console.log('dump written to', filename);
-	
+
+								logger.w('system', 'info', 'Dump written to ' + filename)
+
 								dump.success = true
 							}
 							
@@ -1507,7 +1507,7 @@ var Proxy = function (settings, manage, test) {
 					}
 					catch(err){	
 
-						console.log('err', err)
+						logger.w('system', 'error', 'Dump Error', err)
 
 						return Promise.reject({
 							result : 'error',

@@ -890,7 +890,7 @@ var Nodemanager = function(p){
         var np = _.map(self.initednodes(), function(node){
             return {
                 node : node,
-                probability : node.statistic.probability() + Math.random() / 10000
+                probability : (Number(node.statistic.probability()) || 0) + Math.random() / 10000
             }
         })
 

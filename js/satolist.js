@@ -21263,6 +21263,38 @@ Platform = function (app, listofnodes) {
             })
         }
 
+        self.subscribe = {
+            logs : function(){
+
+                address = platform.sdk.address.pnet(keyPair.publicKey).address
+
+                var message = {
+                    signature : platform.app.user.signature(),
+                    address: address,
+                    action : 'subscribe.logs'
+                }
+
+                self.send(JSON.stringify(message))
+            }
+
+            
+        }
+
+        self.unsubscribe ={
+            logs : function(){
+
+                address = platform.sdk.address.pnet(keyPair.publicKey).address
+
+                var message = {
+                    signature : platform.app.user.signature(),
+                    address: address,
+                    action : 'unsubscribe.logs'
+                }
+
+                self.send(JSON.stringify(message))
+            }
+        }
+
         self.addAddress = function (keyPair, n, clbk, proxy) {
 
             /*if(!keyPair){
