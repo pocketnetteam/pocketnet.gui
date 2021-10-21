@@ -12,11 +12,11 @@ var exports = module.exports = function SHA (algorithm) {
   return new Algorithm()
 }
 
-exports.sha = __webpack_require__(514)
-exports.sha1 = __webpack_require__(219)
-exports.sha224 = __webpack_require__(515)
+exports.sha = __webpack_require__(513)
+exports.sha1 = __webpack_require__(220)
+exports.sha224 = __webpack_require__(514)
 exports.sha256 = __webpack_require__(331)
-exports.sha384 = __webpack_require__(516)
+exports.sha384 = __webpack_require__(515)
 exports.sha512 = __webpack_require__(332)
 
 
@@ -216,7 +216,7 @@ module.exports = Hash
 
 /***/ }),
 
-/***/ 219:
+/***/ 220:
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -731,7 +731,7 @@ module.exports = Sha512
 
 /***/ }),
 
-/***/ 514:
+/***/ 513:
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -832,7 +832,7 @@ module.exports = Sha
 
 /***/ }),
 
-/***/ 515:
+/***/ 514:
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -892,7 +892,7 @@ module.exports = Sha224
 
 /***/ }),
 
-/***/ 516:
+/***/ 515:
 /***/ (function(module, exports, __webpack_require__) {
 
 var inherits = __webpack_require__(158)

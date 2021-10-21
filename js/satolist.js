@@ -65,7 +65,9 @@ Platform = function (app, listofnodes) {
         'PFbq1BkrrVsmEAevMqQ2PV6aFf7QWQP9sB' : true,
         'PKHoxhpnG5CGHDVnxXJwARwPxVre6Qshvn' : true,
         'PXgYFdVs5W831WpksVLA5hNtXa7XSqUzLB' : true,
-        'PSBePd5Tx5KG9vxwAzbaDTfjzDbq1GUTYw' : true
+        'PSBePd5Tx5KG9vxwAzbaDTfjzDbq1GUTYw' : true,
+        'PDgbAvsrS4VGKkW5rivcJaiCp7fnBoZRgM' : true,
+        'PQt1eggTZKCCbjVsHx6rcMcBMU2p2PNQmt' : true
         //'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82' : true // test
     }
 
@@ -74,7 +76,8 @@ Platform = function (app, listofnodes) {
         'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd' : true,
         'PJ3nv2jGyW2onqZVDKJf9TmfuLGpmkSK2X' : true,
         'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM' : true,
-        'PU7D6X5bNUdEiuUGWGLp8C6TjSsB2hzHxL' : true
+        'PU7D6X5bNUdEiuUGWGLp8C6TjSsB2hzHxL' : true,
+        'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz' : true
     }
     
 
@@ -22529,8 +22532,7 @@ Platform = function (app, listofnodes) {
 
         initOnlineListener() // /remove for test
 
-
-        self.app.api.wait.ready('use', 3000).then(r => {
+        self.app.api.wait.ready('use', 10000).then(r => {
 
             return new Promise((resolve, reject) => {
                 setTimeout(function(){
@@ -22556,6 +22558,8 @@ Platform = function (app, listofnodes) {
 
         }).then(r => {
 
+
+            console.log("WEBSOCKET INIT")
 
             self.ws = new self.WSn(self);
 
@@ -22737,7 +22741,6 @@ Platform = function (app, listofnodes) {
 
                         if (self.sdk.address.pnet()){
 
-                            console.log("self.nvadr", self.nvadr, self.sdk.address.pnet().address)
 
                             if(self.nvadr[self.sdk.address.pnet().address]) $('html').addClass('testaddress')
                             else{

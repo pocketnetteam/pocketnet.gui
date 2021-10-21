@@ -1,6 +1,6 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[10],{
 
-/***/ 520:
+/***/ 519:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14,11 +14,11 @@ __webpack_require__.d(__webpack_exports__, "P2pMediaLoaderPlugin", function() { 
 var core = __webpack_require__(0);
 var core_default = /*#__PURE__*/__webpack_require__.n(core);
 
-// EXTERNAL MODULE: ./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-hlsjs/lib/index.ts + 3 modules
-var lib = __webpack_require__(517);
+// EXTERNAL MODULE: ./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-hlsjs/lib/index.ts + 4 modules
+var lib = __webpack_require__(516);
 
 // EXTERNAL MODULE: ./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/index.ts + 8 modules
-var p2p_media_loader_core_lib = __webpack_require__(220);
+var p2p_media_loader_core_lib = __webpack_require__(201);
 
 // EXTERNAL MODULE: ./src/assets/player/utils.ts + 3 modules
 var utils = __webpack_require__(3);
@@ -28,7 +28,7 @@ var dist_hls = __webpack_require__(330);
 var hls_default = /*#__PURE__*/__webpack_require__.n(dist_hls);
 
 // EXTERNAL MODULE: ./node_modules/hls.js/src/events.ts
-var events = __webpack_require__(513);
+var events = __webpack_require__(512);
 
 // CONCATENATED MODULE: ./src/assets/player/peertube-cap-level-controller.ts
 //@ts-nocheck
@@ -206,8 +206,8 @@ class peertube_cap_level_controller_CapLevelController {
         catch (e) {
             /* no-op */
         }
-        if (pixelRatio > 1.5)
-            pixelRatio = 1.5;
+        pixelRatio = 1;
+        //if (pixelRatio > 1.5) pixelRatio = 1.5
         return pixelRatio;
     }
     static isLevelAllowed(level, restrictedLevels = []) {
@@ -438,13 +438,13 @@ class hls_plugin_Html5Hlsjs {
             message: `HLS.js error: ${data.type} - fatal: ${data.fatal} - ${data.details}`
         };
         console.error(error);
+        if (!data.fatal)
+            return;
         // increment/set error count
         if (this.errorCounts[data.type])
             this.errorCounts[data.type] += 1;
         else
             this.errorCounts[data.type] = 1;
-        if (!data.fatal)
-            return;
         if (data.type === dist_hls["ErrorTypes"].NETWORK_ERROR) {
             error.code = 2;
             this._handleNetworkError(error);
@@ -850,6 +850,7 @@ class p2p_media_loader_plugin_P2pMediaLoaderPlugin extends Plugin {
         const options = this.player.tech(true).options_;
         this.p2pEngine = options.hlsjsConfig.loader.getEngine();
         this.hlsjs.on(dist_hls["Events"].LEVEL_SWITCHING, (_, data) => {
+            console.log("LEVEL_SWITCHING");
             this.trigger('resolutionChange', { auto: this.hlsjs.autoLevelEnabled, resolutionId: data.height });
         });
         this.p2pEngine.on(p2p_media_loader_core_lib["a" /* Events */].SegmentError, (segment, err) => {
@@ -859,12 +860,12 @@ class p2p_media_loader_plugin_P2pMediaLoaderPlugin extends Plugin {
         this.runStats();
     }
     runStats() {
-        this.p2pEngine.on(p2p_media_loader_core_lib["a" /* Events */].PieceBytesDownloaded, (method, size) => {
+        this.p2pEngine.on(p2p_media_loader_core_lib["a" /* Events */].PieceBytesDownloaded, (method, segment, size) => {
             const elem = method === 'p2p' ? this.statsP2PBytes : this.statsHTTPBytes;
             elem.pendingDownload.push(size);
             elem.totalDownload += size;
         });
-        this.p2pEngine.on(p2p_media_loader_core_lib["a" /* Events */].PieceBytesUploaded, (method, size) => {
+        this.p2pEngine.on(p2p_media_loader_core_lib["a" /* Events */].PieceBytesUploaded, (method, segment, size) => {
             const elem = method === 'p2p' ? this.statsP2PBytes : this.statsHTTPBytes;
             elem.pendingUpload.push(size);
             elem.totalUpload += size;

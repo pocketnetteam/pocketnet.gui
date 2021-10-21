@@ -852,6 +852,18 @@ var system16 = (function(){
 			},
 			nodes : {
 
+				pendingpercentdifference : {
+					caption : "Pending request/Probability Difference",
+
+					series : [
+						{
+							name : "PPD",
+							path : "pendingpercentdifference",
+							id : 'ppd'
+						}
+					]
+				}, 
+
 				penalty : {
 					caption : "Nodes Penalty",
 
@@ -1389,8 +1401,6 @@ var system16 = (function(){
 
 				var meta = cpsub.chain[subtype]
 
-				console.log('chainCHART', chain, subtype)
-
 				if (subtype == 'blockchain'){
 
 					if(!chain) return {}
@@ -1427,8 +1437,6 @@ var system16 = (function(){
 	
 								return _x;
 							}
-
-							console.log('plotLines', plotLines, options.yAxis)
 
 							options.yAxis[0].plotLines = plotLines
 							
@@ -3508,6 +3516,11 @@ var system16 = (function(){
 						})
 					}
 
+					p.el.find('.unlocknode').on('click', function(){
+						api.set.fixednode(null)
+						renders.nodescontenttable(elc)	
+					})
+
 					p.el.find('.use').on('click', function(){
 						var key = $(this).closest('.node').attr('node')
 						var node = find($(this).closest('.node').attr('node'))
@@ -4132,8 +4145,6 @@ var system16 = (function(){
 
 					info = r.info
 
-					console.log("info", info)
-
 					initsettings()
 					
 					stats = [{
@@ -4149,8 +4160,6 @@ var system16 = (function(){
 
 
 					stats = data.stats
-
-					console.log(stats)
 
 					stats = lastelements(stats, 1000)
 
@@ -4198,13 +4207,7 @@ var system16 = (function(){
 
 					}
 
-					console.log("HERE111")
-
-					
-					
-						
 				}).catch(e => {
-					console.log("E" , e)
 					makers.proxycurrent()
 				})
 			}

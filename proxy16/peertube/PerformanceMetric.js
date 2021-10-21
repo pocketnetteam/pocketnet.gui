@@ -6,11 +6,11 @@ class PerformanceMetric {
 
     const stats = ((instance.stats()).info || {}).last || {};
 
-    const calculatedRatings = _ratings.map((rating) => rating(stats));
+    const calculatedRatings = _ratings.map((rating) => rating(stats, instance));
 
     return calculatedRatings.reduce((accumulator, metric) => {
 
-      const currentRating = metric.calculate() || 0;
+      const currentRating = metric.calculate(instance) || 0;
 
       return accumulator + currentRating;
 
