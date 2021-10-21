@@ -71,6 +71,7 @@ jobs:
     steps:
       - name: Adding Known Hosts
         run: |
+          mkdir ~/.ssh
           ssh-keyscan -H ${{ secrets.PROXY_SERVER_1 }} >> ~/.ssh/known_hosts
           ssh-keyscan -H ${{ secrets.PROXY_SERVER_2 }} >> ~/.ssh/known_hosts
           ssh-keyscan -H ${{ secrets.PROXY_SERVER_3 }} >> ~/.ssh/known_hosts
