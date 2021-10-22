@@ -12,7 +12,7 @@ var Cache = function(p){
 
     var workerInterval = null
     var workerTime = 200
-    var waittime = 5500
+    var waittime = 8500
 
     var ckeys = {}
 
@@ -41,10 +41,6 @@ var Cache = function(p){
 
                 if (k.executor == waitid){
                     delete k.executor
-
-
-                    console.log("INV ECE")
-
                 }
             }
         })
