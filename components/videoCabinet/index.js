@@ -1219,8 +1219,8 @@ var videoCabinet = (function () {
         },
         offScroll: true,
         noInnerScroll: true,
-        class: 'uploadpeertube normalizedmobile',
-        allowHide: true,
+        class: 'videoCabinet normalizedmobile',
+        allowHide: false,
         noCloseButton: true,
         noButtons: true,
 
