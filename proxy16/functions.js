@@ -342,7 +342,10 @@ f.randmap = function(ar){
         counter = counter + a.probability
     })
 
+
+
 }
+
 
 f.makeid = function(){
 

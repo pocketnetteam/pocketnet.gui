@@ -479,18 +479,33 @@ PeerTubePocketnet = function (app) {
 
         return this.roys({type : type})
           .then((data = {}) => {
+
+            //console.log("FDATA", data)
+            
             const roysAmount = Object.keys(data).length;
-            const royId =
-              self.helpers.base58.decode(app.user.address.value) % roysAmount;
+            var royId
+
+            if(app.user.address.value){
+                royId = self.helpers.base58.decode(app.user.address.value) % roysAmount;
+            }
+
+            if(!royId) royId = rand(0, roysAmount - 1)
+
             return data[royId];
           })
+          
           .catch(() => 0)
           .then((roy) => app.api.fetch('peertube/best', { roy, type }))
           .then((data) => {
+
             if (!data.host) return Promise.reject(error('host'));
+
+
+
             activehost = data.host;
             return Promise.resolve(data.host);
           })
+          
           .catch((e) => {
             if (e.data == 'best') {
               e.text = 'Unable to connect to video server';

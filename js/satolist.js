@@ -22609,14 +22609,15 @@ Platform = function (app, listofnodes) {
 
             self.preparing = false;
 
+            if (typeof PeerTubePocketnet != 'undefined'){
+                self.app.peertubeHandler = new PeerTubePocketnet(self.app);
+            }
 
             self.prepareUser(function() {
-                if (typeof PeerTubePocketnet != 'undefined'){
-                    self.app.peertubeHandler = new PeerTubePocketnet(self.app);
-                    self.app.peertubeHandler.init()
-                }
+                
                 clbk();
             });
+            
         }).catch(e => {
             console.log("ERROR", e)
         })
@@ -22726,6 +22727,10 @@ Platform = function (app, listofnodes) {
                     self.preparingUser = false;
 
                     self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
+
+                    
+
+                    self.app.peertubeHandler.init()
 
                     if (clbk)
                         clbk()

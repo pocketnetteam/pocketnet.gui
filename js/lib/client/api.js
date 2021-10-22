@@ -204,8 +204,6 @@ var ProxyRequest = function(app = {}, proxy){
 
         if (options.ex) route = 'rpc-ex'
 
-        
-
         return direct(url + '/'+route+'/' + method, data, requestoptions)
 
     }

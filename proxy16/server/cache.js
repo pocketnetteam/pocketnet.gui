@@ -12,7 +12,7 @@ var Cache = function(p){
 
     var workerInterval = null
     var workerTime = 200
-    var waittime = 8500
+    var waittime = 5500
 
     var ckeys = {}
 
@@ -35,7 +35,17 @@ var Cache = function(p){
         _.each(k.clbks, function(c, waitid){
 
             if (ignoredate || c.date < now){
-                itemswithattemp.push([c,waitid])
+
+                if (c.action)
+                    itemswithattemp.push([c,waitid])
+
+                if (k.executor == waitid){
+                    delete k.executor
+
+
+                    console.log("INV ECE")
+
+                }
             }
         })
 
@@ -221,14 +231,7 @@ var Cache = function(p){
                 waiting[key] = {}
 
             if (waiting[key][k]){   
-                if(key == 'getnodeinfo')
                 executingWatcher(waiting[key][k], key, true)
-
-                /*_.each(waiting[key][k].clbks, function(c){
-                    c.action('waitedmake')
-                })
-
-                delete waiting[key][k]*/
             }
 
         }
@@ -275,9 +278,8 @@ var Cache = function(p){
             if (waiting[key][k]){
 
                 _.each(waiting[key][k].clbks, function(c){
-
-                   
-                    c.action('waitedmake')
+                    if (c.action)
+                        c.action('waitedmake')
                 })
 
                 delete waiting[key][k]
@@ -382,6 +384,10 @@ var Cache = function(p){
         if(!waiting[key][k].executor){
             waiting[key][k].executor = waitid
 
+            waiting[key][k].clbks[waitid] = {
+                date : f.date.addseconds(new Date(), waittime / 1000)
+            }
+
             clbk('execute')
 
             return 
@@ -391,17 +397,6 @@ var Cache = function(p){
             action : clbk,
             date : f.date.addseconds(new Date(), waittime / 1000)
         }
-
-        /*setTimeout(function(){
-
-            if (waiting[key] && waiting[key][k] && waiting[key][k].clbks[waitid]){
-
-                waiting[key][k].clbks[waitid].action('waitedtimeout')
-
-                delete waiting[key][k].clbks[waitid]
-            }
-
-        }, 6500)*/
 
         
     }

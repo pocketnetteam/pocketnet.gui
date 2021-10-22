@@ -985,8 +985,6 @@ var Proxy = function (settings, manage, test, logger) {
 						
 					}).then(() => {
 
-
-					
 						/// ????
 						if (options.locally && options.meta) {
 							node = nodeManager.temp(options.meta);
@@ -1074,8 +1072,23 @@ var Proxy = function (settings, manage, test, logger) {
 							}
 						}
 
+						
+
 						return new Promise((resolve, reject) => {
+
+							/*if(!f.rand(0,1)) {
+
+								self.logger.w('rpc', 'debug', 'DELAY 10000')
+
+								f.delay(10000).then(r => {
+									nodeManager.queue(node, method, parameters, direct, {resolve, reject})
+								})
+							}
+								
+							else*/
+							
 							nodeManager.queue(node, method, parameters, direct, {resolve, reject})
+								
 						})
 
 						.then((data) => {
