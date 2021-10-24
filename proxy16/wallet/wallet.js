@@ -107,6 +107,7 @@ var Wallet = function(p){
         }
 
         var us = function(){
+            console.log("GET UNSPENTS")
             _.each(addresses, function(a, k){
                 self.unspents.getc(a, true).catch(e => {})
             })
@@ -651,6 +652,18 @@ var Wallet = function(p){
         }
     }
 
+    var getnode = function(){
+
+        if(!self.nodeManager) return
+
+        var node = self.nodeManager.selectProbability();
+
+        if(!node && self.nodeManager.bestnode) 
+            node = self.nodeManager.nodesmap[self.nodeManager.bestnode]
+
+        return node
+    }
+
     self.transactions = {
         txbase : function(unspents, outputs, fee, feeMode){
 
@@ -752,7 +765,7 @@ var Wallet = function(p){
 
             //var amount = 0;
             var k = smulti;
-            var node = self.nodeManager.selectbest();
+            var node = getnode();
 
             if(!node) return Promise.reject('timeDifference')
             
@@ -836,7 +849,7 @@ var Wallet = function(p){
 
                 if (!p) p = {};
 
-                var node = self.nodeManager.selectbest();
+                var node = getnode();
 
                 if(!node) return Promise.reject('timeDifference')
 

@@ -894,19 +894,7 @@ var Nodemanager = function(p){
             }
         })
 
-        /*var npdb = _.map(self.initednodes(), function(node){
-            return {
-                node : node.key,
-                probability : node.statistic.probability() + Math.random() / 10000
-            }
-        })
-
-        npdb = _.sortBy(npdb, (r) => {return -r.probability})*/
-
-
-
         var r = f.randmap(np)
-        
 
         if (r && r.node){
             return r.node
