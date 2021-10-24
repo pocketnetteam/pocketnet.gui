@@ -981,6 +981,20 @@ var Nodemanager = function(p){
             return node.rpcs(method, parameters)
         })
     }
+
+    self.requestprobnew = function(method, parameters){
+
+        return self.waitready().then(() => {
+
+            var node = self.selectProbability();
+    
+            if(!node && self.bestnode) 
+                node = self.nodesmap[self.nodeManager.bestnode]
+    
+            return node
+
+        })
+    }
     
     self.api = {
         ///

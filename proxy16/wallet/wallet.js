@@ -264,7 +264,7 @@ var Wallet = function(p){
         },
 
         get : function(address){
-            return self.nodeManager.request('txunspent', [[address], 1, 9999999])
+            return self.nodeManager.requestprobnew('txunspent', [[address], 1, 9999999])
         },
 
         getc : function(addressobj, upd){
@@ -807,7 +807,7 @@ var Wallet = function(p){
             return tx;
         },
         send : function(tx){
-            return self.nodeManager.request('sendrawtransaction', [tx.toHex()])
+            return self.nodeManager.requestprobnew('sendrawtransaction', [tx.toHex()])
         },
 
         common : function (address, obj, p) {
@@ -924,7 +924,7 @@ var Wallet = function(p){
                     if(u) u.cantspend = true
                 })
 
-                return self.nodeManager.request('sendrawtransactionwithmessage', [hex, obj.export(), optstype]).then(data => {
+                return self.nodeManager.requestprobnew('sendrawtransactionwithmessage', [hex, obj.export(), optstype]).then(data => {
 
                     var alias = obj.export(true);
                         alias.txid = data;
