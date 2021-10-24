@@ -322,6 +322,10 @@ var Wallet = function(p){
 
         clearexecuting : function(){
 
+            _.each(addresses, function(a, k){
+                self.unspents.getc(a, true).catch(e => {})
+            })
+
             _.each(addresses, function(r){
                 _.each(r.queue, function(q){
                     delete q.executing
