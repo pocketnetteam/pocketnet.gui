@@ -1385,7 +1385,7 @@ Application = function(p)
 
 		moment.locale(self.localization.key)
 
-		return moment(moment.utc(time).toDate()).local().fromNow();
+		return moment(moment.utc((time || new Date())).toDate()).local().fromNow();
 
 		console.log('time', time)
 
