@@ -41,7 +41,7 @@ if(survey.value && s > 0) {%>
 		<% _.each(survey.answers, function(answer){ %>
 
 			<div class="answer">
-				<button class="sendanswer ghost" answer="<%-answer.v%>"><%-answer.t%></button>
+				<button elementsid="answer" class="sendanswer ghost" answer="<%-answer.v%>"><%-answer.t%></button>
 			</div>
 
 		<% }) %>
