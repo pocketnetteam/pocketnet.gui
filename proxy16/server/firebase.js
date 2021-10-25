@@ -88,7 +88,7 @@ var Firebase = function(p){
                     self.wss.clbks.firebase.addUser(user)
                 }
                 catch(e){
-                    console.error(e)
+                    self.logger.w('firebase', 'warn', 'Firebase. Add User', e)
                 }
                 
             }, f.rand(500, 5000))
@@ -460,7 +460,9 @@ var Firebase = function(p){
             try{
                 serviceAccount = require(f.path(p.key));
             } catch (e){ 
-                console.log("E", e)
+
+                self.logger.w('firebase', 'error', 'Firebase. Init Service Account', e)
+
             }
         }
 

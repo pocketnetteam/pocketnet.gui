@@ -44,7 +44,7 @@ var Peertube = function (settings) {
 	};
 
 	self.timeout = function () {
-		return 3500;
+		return 5500;
 	};
 
 	self.statsInterval = function () {
@@ -102,11 +102,16 @@ var Peertube = function (settings) {
 	};
 
 	self.api = {
-		randroykey: function () {
+		randroykey: function (type) {
 			var _roys = {};
 
 			_.each(roys, function (r, c) {
-				if (!r.auto) _roys[c] = r;
+				if (!r.auto) {
+
+					if (type && type == 'upload' && !r.canupload()) return
+
+					_roys[c] = r;
+				}
 			});
 
 			var keys = _.map(_roys, function (i, c) {
@@ -117,7 +122,7 @@ var Peertube = function (settings) {
 		},
 
 		best: function ({ roy, type }) {
-			if (!roy) roy = self.api.randroykey();
+			if (!roy) roy = self.api.randroykey(type);
 
 			roy = getroy(roy);
 
@@ -278,7 +283,6 @@ var Peertube = function (settings) {
 			});
 
 			if (type && type == 'upload') _roys = _.filter(_roys, function (r) {
-
 				return r.canupload();
 			});
 

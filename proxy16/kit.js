@@ -8,6 +8,7 @@ _ = 	require("underscore");
 var fs = require('fs');
 
 var Pocketnet = require('./pocketnet.js');
+var Logger = require('./logger.js');
 const { base64encode, base64decode } = require('nodejs-base64');
 ////
 var f = require('./functions');
@@ -23,6 +24,7 @@ var settings = {};
 var pocketnet = new Pocketnet()
 var test = _.indexOf(process.argv, '--test') > -1
 
+var logger = new Logger(['general', 'rpc', 'system', 'remote', 'firebase', 'nodecontrol']).init()
 
 var testnodes = [
 	{
@@ -64,12 +66,6 @@ var activenodes = [
 		name : 'CryptoserverTEST',
 		stable : true
 	},*/
-
-	
-
-
-
-
 
 	{
 		host : '64.235.45.119',
@@ -198,7 +194,7 @@ var defaultSettings = {
 		token : '',
 		chatid : '',
 		parameters : {}
-	}
+	},
 
 	/*rsa : {
 		private : '',
@@ -1019,7 +1015,7 @@ var kit = {
 
 		if(!proxy){
             
-			proxy = new Proxy(settings, kit.manage, test)
+			proxy = new Proxy(settings, kit.manage, test, logger)
 
 			if (hck.userDataPath){
 				proxy.userDataPath = hck.userDataPath
@@ -1027,6 +1023,9 @@ var kit = {
 			
 			return proxy.kit.init()
 		}
+
+
+		logger.w('system', 'warn', 'Double Proxy Start')
 
 		return Promise.reject('inited')
 
@@ -1058,6 +1057,8 @@ var kit = {
 
 				kit.startproxy(hck).then(r => {
 
+					logger.w('system', 'info', 'Proxy Started')
+
 					return kit.proxy()
 					
 				}).then(proxy => {
@@ -1069,6 +1070,9 @@ var kit = {
 					resolve()
 
 				}).catch(e => {
+
+					logger.w('system', 'error', 'Proxy Init Error', e)
+
 					reject(e)
 				})
 			}

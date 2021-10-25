@@ -817,7 +817,7 @@ var system16 = (function(){
 
 					windows.proxieslist(use, "Select Proxy that using Interface", function(selected){
 
-						api.set.current(selected.id, true).then(r => {
+						api.set.currentwithnode(selected.id, true).then(r => {
 							make(api.get.current())
 						})
 

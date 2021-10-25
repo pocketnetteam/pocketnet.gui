@@ -264,6 +264,8 @@ Application = function(p)
 		return true
 	}
 
+	self.isonline = isonline
+
 	///////////////
 	self.errors = {
 		clear : function(){
@@ -325,7 +327,7 @@ Application = function(p)
 				self.errors._autocheck || (self.errors._autocheck = setInterval(function(){
 
 					if (self.platform.focus && isonline()){
-						///self.errors.check()
+						self.errors.check()
 					}
 
 				}, 10000))
@@ -1383,7 +1385,7 @@ Application = function(p)
 
 		moment.locale(self.localization.key)
 
-		return moment(moment.utc(time).toDate()).local().fromNow();
+		return moment(moment.utc((time || new Date())).toDate()).local().fromNow();
 
 		console.log('time', time)
 

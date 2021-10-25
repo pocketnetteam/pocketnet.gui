@@ -65,7 +65,9 @@ Platform = function (app, listofnodes) {
         'PFbq1BkrrVsmEAevMqQ2PV6aFf7QWQP9sB' : true,
         'PKHoxhpnG5CGHDVnxXJwARwPxVre6Qshvn' : true,
         'PXgYFdVs5W831WpksVLA5hNtXa7XSqUzLB' : true,
-        'PSBePd5Tx5KG9vxwAzbaDTfjzDbq1GUTYw' : true
+        'PSBePd5Tx5KG9vxwAzbaDTfjzDbq1GUTYw' : true,
+        'PDgbAvsrS4VGKkW5rivcJaiCp7fnBoZRgM' : true,
+        'PQt1eggTZKCCbjVsHx6rcMcBMU2p2PNQmt' : true
         //'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82' : true // test
     }
 
@@ -21376,6 +21378,38 @@ Platform = function (app, listofnodes) {
             })
         }
 
+        self.subscribe = {
+            logs : function(){
+
+                address = platform.sdk.address.pnet(keyPair.publicKey).address
+
+                var message = {
+                    signature : platform.app.user.signature(),
+                    address: address,
+                    action : 'subscribe.logs'
+                }
+
+                self.send(JSON.stringify(message))
+            }
+
+            
+        }
+
+        self.unsubscribe ={
+            logs : function(){
+
+                address = platform.sdk.address.pnet(keyPair.publicKey).address
+
+                var message = {
+                    signature : platform.app.user.signature(),
+                    address: address,
+                    action : 'unsubscribe.logs'
+                }
+
+                self.send(JSON.stringify(message))
+            }
+        }
+
         self.addAddress = function (keyPair, n, clbk, proxy) {
 
             /*if(!keyPair){
@@ -22690,14 +22724,15 @@ Platform = function (app, listofnodes) {
 
             self.preparing = false;
 
+            if (typeof PeerTubePocketnet != 'undefined'){
+                self.app.peertubeHandler = new PeerTubePocketnet(self.app);
+            }
 
             self.prepareUser(function() {
-                if (typeof PeerTubePocketnet != 'undefined'){
-                    self.app.peertubeHandler = new PeerTubePocketnet(self.app);
-                    self.app.peertubeHandler.init()
-                }
+                
                 clbk();
             });
+            
         }).catch(e => {
             console.log("ERROR", e)
         })
@@ -22807,6 +22842,10 @@ Platform = function (app, listofnodes) {
                     self.preparingUser = false;
 
                     self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
+
+                    
+
+                    self.app.peertubeHandler.init()
 
                     if (clbk)
                         clbk()

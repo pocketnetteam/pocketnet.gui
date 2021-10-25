@@ -189,14 +189,13 @@ var Roy = function (parent) {
 		var error = null
 
 		var request = function(instance){
-
 			return instance.request(method, data, p).then((r) => {
 				if (r.data) {
+					
 					r.data.from = instance.host;
 				}
 				return Promise.resolve(r);
 			}).catch(e => {
-
 
 				if(e && e.status){
 					if(e.status != 500){

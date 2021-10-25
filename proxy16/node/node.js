@@ -102,7 +102,7 @@ var Node = function(options, manager){
         },
 
         getk : function(){
-            return 1 - penalty.k
+            return 1 - (penalty.k || 0)
         },
 
         get : function(){
@@ -602,7 +602,7 @@ var Node = function(options, manager){
             if(cachedrating){
             
                 if(f.date.addseconds(cachedrating.time, 10) > new Date()){
-                    return cachedrating.result
+                    return cachedrating.result || 0
                 }
             }
 
@@ -636,8 +636,8 @@ var Node = function(options, manager){
                     var slice = statistic.historyslice
 
 
-                    var availabilityAllTime = self.statistic.calcAvailability(s)
-                    var availability5Minutes = self.statistic.calcAvailability(slice)
+                    var availabilityAllTime = self.statistic.calcAvailability(s) || 0
+                    var availability5Minutes = self.statistic.calcAvailability(slice) || 0
                     ///
         
         
@@ -656,7 +656,7 @@ var Node = function(options, manager){
                         penalty.getk() * 
                         Math.sqrt(Math.sqrt(Math.sqrt(availabilityAllTime) * availability5Minutes * availability5Minutes)) *
                         (lastblock.height || 1) / (1000 * userski * (difference + 1))
-                        )
+                        ) || 0
                 }
             }
 
@@ -697,8 +697,12 @@ var Node = function(options, manager){
 
             _.each(nodes, function(node){
 
-                total += node.statistic.rating()
+                var rating = node.statistic.rating();
+
+                if (rating && rating > 0)
+                    total += rating
             })
+            
 
             if(!total) {
 
@@ -715,7 +719,7 @@ var Node = function(options, manager){
             if(!manager) return 1
 
 
-            return this.probabilityNodes(manager.nodes)
+            return this.probabilityNodes(manager.initednodes())
 
         },
 
@@ -786,7 +790,7 @@ var Node = function(options, manager){
 
         if(!r) return null
 
-        if(r.node.key == self.key) return null
+        if (r.node.key == self.key) return null
 
         return r.node
     }
