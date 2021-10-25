@@ -1219,3 +1219,5 @@ ____loclib.closeapplication = "Exit the application";
 
 ____loclib.attachVideoLenta = "Attach video to post";
 ____loclib.attachVideoLentaShort = "Attach";
+
+____loclib.linkToPostLenta = "Already posted"

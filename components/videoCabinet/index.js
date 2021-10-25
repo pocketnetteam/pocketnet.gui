@@ -38,7 +38,7 @@ var videoCabinet = (function () {
     var actions = {
       async getHosts() {
         const serverStructureHosts = await self.app.peertubeHandler.api.proxy
-          .roys({type : 'view'})
+          .roys({ type: 'view' })
           .catch(() => ({}));
 
         Object.entries(serverStructureHosts).forEach(
@@ -535,16 +535,32 @@ var videoCabinet = (function () {
             );
             //get information about videos being published to blockchain
             actions.getBlockchainPostByVideos(blockchainStrings).then(() => {
-              p.el.find('.postingStatusWrapper').each(function () {
-                const currentElement = $(this);
+              p.el.find('.singleVideoSection').each(function () {
+                const singleVideoSection = $(this);
+
+                const currentElement = singleVideoSection.find(
+                  '.postingStatusWrapper',
+                );
 
                 const isTranscoding = currentElement.attr('isTranscoding');
 
                 const link = currentElement.attr('video');
 
-                if (blockChainInfo[link])
-                  return renders.postLink(currentElement, link);
+                if (blockChainInfo[link]) {
+                  if (ed.inLentaWindow)
+                    singleVideoSection.addClass('alreadyPostedVideo');
 
+                  //check if component is rendered natively or from externat component (as ex lenta)
+                  const alreadyPostedCaption = ed.inLentaWindow
+                    ? 'linkToPostLenta'
+                    : 'linkToPost';
+
+                  return renders.postLink(
+                    currentElement,
+                    link,
+                    alreadyPostedCaption,
+                  );
+                }
                 if (!isTranscoding) {
                   currentElement
                     .find(`.${buttonCaption}`)
@@ -713,7 +729,7 @@ var videoCabinet = (function () {
         self.app.platform.ui.share(parameters);
       },
       //get link to existing video post
-      postLink(element, link) {
+      postLink(element, link, buttonCaption) {
         const linkInfo = blockChainInfo[link];
 
         if (isMobile()) {
@@ -721,7 +737,7 @@ var videoCabinet = (function () {
             `<a class="videoPostLink" href="index?video=1&v=${
               linkInfo.txid
             }"><i class="far fa-check-circle"></i>${self.app.localization.e(
-              'linkToPost',
+              buttonCaption,
             )}</a>`,
           );
 
@@ -729,23 +745,26 @@ var videoCabinet = (function () {
         } else {
           element.html(
             `<span class="videoPostLinkinWindow"><i class="far fa-check-circle"></i>${self.app.localization.e(
-              'linkToPost',
+              buttonCaption,
             )}</span>`,
           );
 
-          element.find('.videoPostLinkinWindow').on('click', function () {
-            var ed = {
-              share: linkInfo.txid,
-              close: function () {},
-            };
-            self.nav.api.load({
-              open: true,
-              href: 'post?s=' + linkInfo.txid,
-              inWnd: true,
-              history: true,
-              essenseData: ed,
+          //Can go to post only if loaded natively (not from external component)
+          if (!ed.inLentaWindow) {
+            element.find('.videoPostLinkinWindow').on('click', function () {
+              var ed = {
+                share: linkInfo.txid,
+                close: function () {},
+              };
+              self.nav.api.load({
+                open: true,
+                href: 'post?s=' + linkInfo.txid,
+                inWnd: true,
+                history: true,
+                essenseData: ed,
+              });
             });
-          });
+          }
         }
       },
       //render single video stats column in video table

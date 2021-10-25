@@ -1012,3 +1012,5 @@ ____loclib.closeapplication = "Выйти из приложения";
 
 ____loclib.attachVideoLenta = "Прикрепить";
 ____loclib.attachVideoLentaShort = "Прикрепить видео к посту";
+
+____loclib.linkToPostLenta = "Уже опубликовано"
