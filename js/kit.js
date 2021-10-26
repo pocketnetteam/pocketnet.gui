@@ -1745,6 +1745,7 @@ UserInfo = function(){
 
 	self.alias = function(txid){
 		var userInfo = new pUserInfo();
+		
 
 			userInfo._import(self.export())
 
@@ -1869,6 +1870,9 @@ pUserInfo = function(){
 			self.address = v.adr || v.address
 
 		self.temp = v.temp || null;
+
+		self.dev = v.dev;
+
 
 	}
 

@@ -66,9 +66,9 @@ Platform = function (app, listofnodes) {
         'PKHoxhpnG5CGHDVnxXJwARwPxVre6Qshvn' : true,
         'PXgYFdVs5W831WpksVLA5hNtXa7XSqUzLB' : true,
         'PSBePd5Tx5KG9vxwAzbaDTfjzDbq1GUTYw' : true,
+
         'PDgbAvsrS4VGKkW5rivcJaiCp7fnBoZRgM' : true,
         'PQt1eggTZKCCbjVsHx6rcMcBMU2p2PNQmt' : true
-        //'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82' : true // test
     }
 
     self.nvadr = {
@@ -2126,6 +2126,45 @@ Platform = function (app, listofnodes) {
     }
 
     self.ui = {
+
+        markUser : function(address){
+
+            var dev = deep(app, 'platform.sdk.user.storage.'+address+'.dev') || deep(app, 'platform.sdk.usersl.storage.'+address+'.dev');
+
+            if (dev){
+                
+                return this.markDev();
+
+            } else if (deep(app, 'platform.real.'+address)){
+
+                return this.markReal();
+
+            }
+
+            return ''
+
+        },
+
+        markReal : function(){
+
+            return `<div class="realperson">
+                <span class="fa-stack fa-2x">
+                    <i class="fas fa-certificate fa-stack-2x"></i>
+                    <i class="fas fa-check fa-stack-1x"></i>
+                </span>
+            </div>`
+        },
+
+        markDev : function(){
+
+            return `<div class="realperson">
+                    <span class="fa-stack fa-2x">
+                        <i class="fas fa-code fa-stack-2x"></i>
+                    </span>
+                </div>`
+
+        },
+
 
         images : function(allimages, initialValue, clbk){
 
@@ -18839,7 +18878,6 @@ Platform = function (app, listofnodes) {
                 var name = deep(author, 'name');
                 var letter = name ? name[0] : '';
 
-
                 var link = '<a href="' + encodeURI(clearStringXss(author.name.toLowerCase())) + '">'
                 var clink = "</a>"
 
@@ -18864,14 +18902,10 @@ Platform = function (app, listofnodes) {
                 }
 
 
-                if(deep(platform, 'real.'+author.address)) {
-                    h += '<div class="realperson">'
+                if(self.app.platform.ui.markUser){
 
-                    h += '<span class="fa-stack fa-2x">'
-                    h += '<i class="fas fa-certificate fa-stack-2x"></i>'
-                    h += '<i class="fas fa-check fa-stack-1x"></i>'
-                    h += '</span>'
-                    h += '</div>'
+                    h += self.app.platform.ui.markUser(share.address);
+
                 }
 
 

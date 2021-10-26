@@ -82,7 +82,9 @@ var telements = function(){ %>
 					<div class="cell cellforimage">
 						<div class="icon">
 
-							<% var src = deep(author, 'data.image')  %>
+							<% 
+								var src = deep(author, 'data.image');
+							%>
 
 							<div class="usericon" image="<%-src || ''%>">
 
@@ -98,15 +100,12 @@ var telements = function(){ %>
 
 								<% } %>
 
-								<% if(deep(app, 'platform.real.'+author.address)) {%>
-									<div class="realperson">
+								<% if(app.platform.ui.markUser) {%>
 
-										<span class="fa-stack fa-2x">
-											<i class="fas fa-certificate fa-stack-2x"></i>
-											<i class="fas fa-check fa-stack-1x"></i>
-										  </span>
-									</div>
+									<%= app.platform.ui.markUser(author.address)%>
+
 								<% } %>
+
 							</div>
 						</div>
 					</div>

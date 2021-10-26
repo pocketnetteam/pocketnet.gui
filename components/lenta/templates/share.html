@@ -325,7 +325,8 @@ var metadisplay = function(){ %>
 						<% 
 							var src = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image');
 							var name = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.name');
-							var letter = name ? name[0] : ''; 	
+							var letter = name ? name[0] : ''; 
+							
 						%>
 
 						<div class="icon">
@@ -343,14 +344,12 @@ var metadisplay = function(){ %>
 				
 								<% } %>
 
-								<% if(deep(app, 'platform.real.'+share.address)) {%>
-									<div class="realperson">
-										<span class="fa-stack fa-2x">
-											<i class="fas fa-certificate fa-stack-2x"></i>
-											<i class="fas fa-check fa-stack-1x"></i>
-										</span>
-									</div>
+								<% if(app.platform.ui.markUser) {%>
+
+									<%= app.platform.ui.markUser(share.address)%>
+
 								<% } %>
+								
 							</div>
 						</div>
 
