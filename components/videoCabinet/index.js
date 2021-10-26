@@ -7,6 +7,7 @@ var videoCabinet = (function () {
   const HALF_CIRCLE_ROTATE_PERCENTAGE = 50;
   const HUDRED_PERC = 100;
   const LAZYLOAD_PERCENTAGE = 0.9;
+  const LAZYLOAD_PERCENTAGE_EXTERNAL = 0.7;
   const POSITIVE_STATUS = 'fulfilled';
   const TRANSCODING_CHECK_INTERVAL = 20000;
 
@@ -374,12 +375,18 @@ var videoCabinet = (function () {
       onPageScroll() {
         const scrollProgress = el.windowElement.scrollTop() / el.c.height();
 
-        if (scrollProgress >= LAZYLOAD_PERCENTAGE && !newVideosAreUploading) {
+        console.log('Scroll ', scrollProgress);
+
+        const loadPercent = ed.inLentaWindow ? LAZYLOAD_PERCENTAGE_EXTERNAL : LAZYLOAD_PERCENTAGE;
+
+        if (scrollProgress >= loadPercent && !newVideosAreUploading) {
+
           const activeServers = Object.keys(peertubeServers).filter(
             (server) => !(peertubeServers[server] || {}).isFull,
           );
 
           if (!activeServers.length) return;
+          debugger;
 
           events.getAdditionalVideos(activeServers);
           newVideosAreUploading = true;
@@ -700,6 +707,8 @@ var videoCabinet = (function () {
             currentLink: '',
             actions: {
               added: function (resultLink) {
+                debugger;
+
                 const { host } = self.app.peertubeHandler.parselink(resultLink);
 
                 const videoPortionElement = actions.resetHosts();
@@ -749,7 +758,7 @@ var videoCabinet = (function () {
             )}</span>`,
           );
 
-          //Can go to post only if loaded natively (not from external component)
+          //Can go to post only if loaded natively (not from external component) 
           if (!ed.inLentaWindow) {
             element.find('.videoPostLinkinWindow').on('click', function () {
               var ed = {
@@ -1117,6 +1126,7 @@ var videoCabinet = (function () {
                 localStorage.getItem('videoCabinetSortDirection') || '-',
               hasAccess: true,
               inLentaWindow: ed.inLentaWindow,
+              scrollElementName: ed.scrollElementName || '',
             };
 
             ed = {
@@ -1136,6 +1146,7 @@ var videoCabinet = (function () {
             clbk({
               hasAccess: false,
               inLentaWindow: ed.inLentaWindow,
+              scrollElementName: ed.scrollElementName || '',
             });
           });
       },
@@ -1157,7 +1168,7 @@ var videoCabinet = (function () {
 
         el = {};
         el.c = p.el.find('#' + self.map.id);
-        el.windowElement = $(window);
+        el.windowElement = ed.scrollElementName ? $(ed.scrollElementName) : $(window);
 
         //do nothing if user has no access to videos
         if (!ed.hasAccess) return p.clbk(null, p);

@@ -1722,6 +1722,7 @@ var share = (function(){
 						value : p.value,
 						currentLink : currentShare.url ? currentShare.url.v : '',
 						inLentaWindow : true,
+						scrollElementName: '.wnd.videoCabinet .wndcontent',
 						actions : {
 							added : function(link, name){
 								var type = 'url';
