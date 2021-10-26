@@ -64,6 +64,7 @@ var publics = {
     getrawtransaction: true,
     getuserprofile:true,
     getuserstate: true,
+    getaccountsetting: true,
     getaddressregistration: true,
     
     signrawtransactionwithkey: true,
@@ -315,6 +316,7 @@ RpcClient.callspec = {
     getrawtransactionwithmessage: 'str',
     getuserprofile: 'obj',
     getuserstate: 'str',
+    getaccountsetting: 'str',
     getaddressregistration: 'obj',
     signrawtransactionwithkey: 'str obj',
     getrecommendedposts: 'str',

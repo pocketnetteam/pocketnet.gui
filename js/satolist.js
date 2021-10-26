@@ -564,6 +564,18 @@ Platform = function (app, listofnodes) {
             }
         },
 
+        "48": {
+            message: function(){
+                return self.app.localization.e('canSpendError')
+            }
+        },
+
+        "49": {
+            message: function(){
+                return self.app.localization.e('saveSettingsLimit')
+            }
+        },
+
         "41": {
             message: function () {
                 return self.app.localization.e('e13234')
@@ -3312,6 +3324,8 @@ Platform = function (app, listofnodes) {
 
                     }, function (el, f, mme) {
 
+
+
                         el.find('.opennewwindow').on('click', function(){
 
                             self.app.mobile.vibration.small()
@@ -3350,6 +3364,104 @@ Platform = function (app, listofnodes) {
                             else{
                                 window.open(href, '_blank');
                             }
+                        })
+
+                        var pinPost = function (share, clbk, unpin){
+
+                            var ct = new Settings();
+                            ct.pin.set(unpin ? '' : share.txid);
+
+            
+                            self.app.platform.sdk.node.account.accSet(ct, function(err, alias){
+            
+                                if(!err){
+                                    if (clbk){
+
+                                        clbk(null, alias)
+                                    }
+
+                                } else {
+                                    self.app.platform.errorHandler(err, true)
+            
+                                    if (clbk)
+                                        clbk(err, null)
+                                }
+            
+                            })
+
+                        }
+
+                        el.find('.pin').on('click', function () {
+
+                            if (!mme && _el.tooltipster)
+                                _el.tooltipster('hide')
+
+                            dialog({
+                                class : 'zindex',
+                                html : self.app.localization.e('pinPostDialog'),
+                                btn1text : self.app.localization.e('dyes'),
+                                btn2text : self.app.localization.e('dno'),
+                                success : function(){	
+
+                                    pinPost(d.share, function(err, result){
+
+										if(!err)
+										{
+
+                                            var shares = self.sdk.node.shares.storage.trx;
+                                            var alreadyPinned = Object.values(shares).find(function(share){
+                                                return share.pin
+                                            })
+
+                                            if (alreadyPinned && alreadyPinned.txid){
+                                                
+                                                alreadyPinned.pin = false;
+                                                var shareslist = $(`[stxid='${alreadyPinned.txid}']`);
+                                                var pinned = shareslist.find('.pinned');
+                                                pinned.children().remove();
+                                
+                                            }
+
+                                            d.share.pin = true;
+                                            var metatable = _el.closest('.metatable');
+                                            var pineedWrapper = metatable.find('.pinned');
+                                            pineedWrapper.html('<i class="fa fa-link"></i>')
+                                        }
+
+                                    }, false)
+
+                                }
+                            })
+                        })
+
+                        el.find('.unpin').on('click', function () {
+
+                            if (!mme && _el.tooltipster)
+                                _el.tooltipster('hide')
+
+                            dialog({
+                                class : 'zindex',
+                                html : self.app.localization.e('unpinPostDialog'),
+                                btn1text : self.app.localization.e('dyes'),
+                                btn2text : self.app.localization.e('dno'),
+                                success : function(){	
+
+                                    pinPost(d.share, function(err, result){
+
+										if(!err)
+										{
+
+                                            d.share.pin = false;
+                                            var metatable = _el.closest('.metatable');
+                                            var pinned = metatable.find('.pinned');                    
+                                            pinned.children().remove();
+                                        }
+
+										
+                                    }, true)
+
+                                }
+                            })
                         })
 
                         el.find('.htls').on('click', function () {
@@ -11747,7 +11859,35 @@ Platform = function (app, listofnodes) {
                             self.sdk.node.account.import(email, address, clbk)
                         }
                     })
-                }
+                },
+
+                accSet: function (settings, clbk) {
+    
+                    self.sdk.node.transactions.create.commonFromUnspent(
+    
+                        settings,
+    
+                        function (_alias, error) {
+    
+    
+                            if (!_alias) {
+    
+                                if (clbk) {
+                                    clbk(error, null)
+                                }
+    
+                            }
+    
+                            else {
+    
+                                if (clbk)
+                                    clbk(null, _alias)
+                            }
+    
+                        }
+                    )
+    
+                },
             },
 
             shares: {
@@ -14974,6 +15114,11 @@ Platform = function (app, listofnodes) {
                         }
 
                         this.common(inputs, share, TXFEE, clbk, p)
+                    },
+
+                    
+                    accSet: function (inputs, settings, clbk, p) {
+                        this.common(inputs, settings, TXFEE, clbk, p)
                     },
 
                     userInfo: function (inputs, userInfo, clbk, p) {

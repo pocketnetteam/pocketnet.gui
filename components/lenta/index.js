@@ -3181,7 +3181,7 @@ var lenta = (function(){
 
 		var load = {
 			recomended : function(clbk, firstshares){
-
+				
 				el.loader.fadeIn()
 
 				el.c.addClass('loading');
@@ -3363,10 +3363,90 @@ var lenta = (function(){
 							essenseData.afterload(essenseData, shares, error || error2)
 						}
 
-						el.loader.fadeOut()
+						
+						var temp = self.sdk.node.transactions.temp;
 
-						if (clbk)
-							clbk(shares, error || error2)
+
+						var getAccountSettings = function(d){
+
+							var settings = JSON.parse((typeof d === 'string' && d) ? d : '{}');
+
+							if (settings && settings.pin){
+
+								var pinnedId = shares.findIndex(function(share){
+									return share.txid === settings.pin;
+								});
+
+								if (pinnedId > -1){
+
+									var pinnedShare = shares.splice(pinnedId, 1);
+									
+									pinnedShare[0].pin = true;
+									shares.unshift(pinnedShare[0]);		
+									
+
+									if (clbk)
+										clbk(shares, error || error2)
+
+									el.loader.fadeOut();
+									return;
+
+								} else {
+
+									self.app.platform.sdk.node.shares.getbyid([settings.pin], function(t){
+
+										if (t){
+
+											var pinnedShare = t[0];
+											pinnedShare.pin = true;
+											shares.unshift(pinnedShare);
+
+											if (clbk)
+												clbk(shares, error || error2)
+
+											el.loader.fadeOut();
+											return;									
+										}
+
+									})
+								
+								}
+
+
+							} else if(clbk){
+
+								clbk(shares, error || error2);
+								el.loader.fadeOut();
+
+							}
+
+
+
+						}
+						
+						if (essenseData.byauthor && author && !sharesInview.length){
+
+							var acc = temp.accSet && Object.values(temp.accSet)[0];
+
+							if (acc && acc.address === author){
+								
+								getAccountSettings(acc.d);
+
+
+							} else {
+
+								self.app.api.rpc('getaccountsetting', [author]).then(getAccountSettings)
+
+							}
+
+
+						} else if (clbk){
+							
+							el.loader.fadeOut();
+							clbk(shares, error || error2);
+						}
+						
+
 
 					})	
 

@@ -33,7 +33,6 @@ var emptywithrepost = share.isEmpty() && share.repost
 
 var value = Number(share.score)
 
-
 var metadisplay = function(){ %>
 
 <div class="meta unselectablemobile">
@@ -53,10 +52,18 @@ var metadisplay = function(){ %>
 								<b><span class="adr"><%-name || share.address %></span></b><% if(reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
 							</a>
 
+							<span class="pinned">
+								<% if(share.pin) { %>
+									<i class="fa fa-link"></i>
+								<% } %>
+							</span>
+
 							<% if((!state || !my) && (typeof repost == 'undefined' || !repost)) { %> 
 
 								<span class="sbtnxs">
-									&middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><i class="far fa-check-circle"></i>  <%=e('following')%></span> 
+									&middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><i class="far fa-check-circle"></i>  <%=e('following')%></span>
+						
+									
 									<% if(state && !my && user.address.value) {
 										
 										var r = me.relation(share.address, 'subscribes') 
@@ -66,6 +73,7 @@ var metadisplay = function(){ %>
 
 										<span class="notificationturn <% if(r && (r.private == 'true' || r.private === true)) {%> turnon <% } %>">&middot; <i class="far fa-bell-slash"></i></span>
 									<% } %>
+				
 
 									
 								</span>
