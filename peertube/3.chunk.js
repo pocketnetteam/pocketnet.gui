@@ -1,6 +1,6 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[3],{
 
-/***/ 220:
+/***/ 201:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -40,10 +40,20 @@ var Events;
      */
     Events["SegmentError"] = "segment_error";
     /**
+     * Emitter when we the segment size is known
+     * Args: segment, size
+     */
+    Events["SegmentSize"] = "segment_size";
+    /**
      * Emitted for each segment that does not hit into a new segments queue when the load() method is called.
      * Args: segment
      */
     Events["SegmentAbort"] = "segment_abort";
+    /**
+     * Emitted when the loader started to load a segment
+     * Args: method, segment
+     */
+    Events["SegmentStartLoad"] = "segment_start_load";
     /**
      * Emitted when a peer is connected.
      * Args: peer
@@ -125,7 +135,9 @@ class stringly_typed_event_emitter_STEEmitter extends events["EventEmitter"] {
 
 
 
-class http_media_manager_HttpMediaManager extends stringly_typed_event_emitter_STEEmitter {
+class http_media_manager_FilteredEmitter extends stringly_typed_event_emitter_STEEmitter {
+}
+class http_media_manager_HttpMediaManager extends http_media_manager_FilteredEmitter {
     constructor(settings) {
         super();
         this.settings = settings;
@@ -137,7 +149,8 @@ class http_media_manager_HttpMediaManager extends stringly_typed_event_emitter_S
                 return;
             }
             this.cleanTimedOutFailedSegments();
-            const segmentUrl = this.settings.segmentUrlBuilder ? this.settings.segmentUrlBuilder(segment) : segment.url;
+            this.emit("segment-start-load", segment);
+            const segmentUrl = this.buildSegmentUrl(segment);
             this.debug("http segment download", segmentUrl);
             segment.requestUrl = segmentUrl;
             const xhr = new XMLHttpRequest();
@@ -162,8 +175,23 @@ class http_media_manager_HttpMediaManager extends stringly_typed_event_emitter_S
             if (this.settings.xhrSetup) {
                 this.settings.xhrSetup(xhr, segmentUrl);
             }
-            this.xhrRequests.set(segment.id, { xhr, segment });
+            this.xhrRequests.set(segment.id, { xhr, segment, initialPriority: segment.priority, segmentUrl });
             xhr.send();
+        };
+        this.updatePriority = (segment) => {
+            const request = this.xhrRequests.get(segment.id);
+            if (!request) {
+                throw new Error("Cannot update priority of not downloaded segment " + segment.id);
+            }
+            // Segment is now in high priority
+            // If the segment URL changed, retry the request with the new URL
+            if (segment.priority <= this.settings.requiredSegmentsPriority &&
+                request.initialPriority > this.settings.requiredSegmentsPriority &&
+                request.segmentUrl !== this.buildSegmentUrl(segment)) {
+                this.debug("aborting http segment abort because the segment is now in a high priority", segment.id);
+                this.abort(segment);
+                this.download(segment);
+            }
         };
         this.abort = (segment) => {
             const request = this.xhrRequests.get(segment.id);
@@ -194,8 +222,11 @@ class http_media_manager_HttpMediaManager extends stringly_typed_event_emitter_S
             let prevBytesLoaded = 0;
             xhr.addEventListener("progress", (event) => {
                 const bytesLoaded = event.loaded - prevBytesLoaded;
-                this.emit("bytes-downloaded", bytesLoaded);
+                this.emit("bytes-downloaded", segment, bytesLoaded);
                 prevBytesLoaded = event.loaded;
+                if (event.lengthComputable) {
+                    this.emit("segment-size", segment, event.total);
+                }
             });
             xhr.addEventListener("load", (event) => Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
                 if (xhr.status < 200 || xhr.status >= 300) {
@@ -259,6 +290,12 @@ class http_media_manager_HttpMediaManager extends stringly_typed_event_emitter_S
         };
         this.now = () => performance.now();
     }
+    buildSegmentUrl(segment) {
+        if (this.settings.segmentUrlBuilder) {
+            return this.settings.segmentUrlBuilder(segment);
+        }
+        return segment.url;
+    }
 }
 
 // EXTERNAL MODULE: ./node_modules/bittorrent-tracker/client.js
@@ -269,7 +306,7 @@ var client_default = /*#__PURE__*/__webpack_require__.n(client);
 var node_modules_buffer = __webpack_require__(73);
 
 // EXTERNAL MODULE: ./node_modules/sha.js/sha1.js
-var sha1 = __webpack_require__(219);
+var sha1 = __webpack_require__(220);
 var sha1_default = /*#__PURE__*/__webpack_require__.n(sha1);
 
 // CONCATENATED MODULE: ./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/media-peer.ts
@@ -349,8 +386,8 @@ class media_peer_MediaPeer extends stringly_typed_event_emitter_STEEmitter {
             }
             this.downloadingSegment.bytesDownloaded += data.byteLength;
             this.downloadingSegment.pieces.push(data);
-            this.emit("bytes-downloaded", this, data.byteLength);
             const segmentId = this.downloadingSegment.id;
+            this.emit("bytes-downloaded", this, segmentId, data.byteLength);
             if (this.downloadingSegment.bytesDownloaded === this.downloadingSegment.size) {
                 const segmentData = new Uint8Array(this.downloadingSegment.size);
                 let offset = 0;
@@ -409,6 +446,8 @@ class media_peer_MediaPeer extends stringly_typed_event_emitter_STEEmitter {
                         typeof command.s === "number" &&
                         command.s >= 0) {
                         this.downloadingSegment = new DownloadingSegment(command.i, command.s);
+                        this.emit("segment-start-load", this.downloadingSegment.id);
+                        this.emit("segment-size", this.downloadingSegment.id, this.downloadingSegment.size);
                         this.cancelResponseTimeoutTimer();
                     }
                     break;
@@ -485,7 +524,7 @@ class media_peer_MediaPeer extends stringly_typed_event_emitter_STEEmitter {
                 this.peer.write(buffer);
                 bytesLeft -= bytesToSend;
             }
-            this.emit("bytes-uploaded", this, data.byteLength);
+            this.emit("bytes-uploaded", this, segmentId, data.byteLength);
         };
         this.sendSegmentAbsent = (segmentId) => {
             this.sendCommand({ c: MediaPeerCommands.SegmentAbsent, i: segmentId });
@@ -679,6 +718,8 @@ class p2p_media_manager_P2PMediaManager extends stringly_typed_event_emitter_STE
             peer.on("segment-loaded", this.onSegmentLoaded);
             peer.on("segment-absent", this.onSegmentAbsent);
             peer.on("segment-error", this.onSegmentError);
+            peer.on("segment-size", this.onSegmentSize);
+            peer.on("segment-start-load", this.onSegmentStartLoad);
             peer.on("segment-timeout", this.onSegmentTimeout);
             peer.on("bytes-downloaded", this.onPieceBytesDownloaded);
             peer.on("bytes-uploaded", this.onPieceBytesUploaded);
@@ -779,11 +820,15 @@ class p2p_media_manager_P2PMediaManager extends stringly_typed_event_emitter_STE
             }
             return overallSegmentsMap;
         };
-        this.onPieceBytesDownloaded = (peer, bytes) => {
-            this.emit("bytes-downloaded", bytes, peer.id);
+        this.onPieceBytesDownloaded = (peer, segmentId, bytes) => {
+            const peerSegmentRequest = this.peerSegmentRequests.get(segmentId);
+            if (peerSegmentRequest) {
+                this.emit("bytes-downloaded", peerSegmentRequest.segment, bytes, peer.id);
+            }
         };
-        this.onPieceBytesUploaded = (peer, bytes) => {
-            this.emit("bytes-uploaded", bytes, peer.id);
+        this.onPieceBytesUploaded = (peer, segmentId, bytes) => {
+            const peerSegmentRequest = this.peerSegmentRequests.get(segmentId);
+            this.emit("bytes-uploaded", peerSegmentRequest ? peerSegmentRequest.segment : null, bytes, peer.id);
         };
         this.onPeerConnect = (peer) => {
             const connectedPeer = this.peers.get(peer.id);
@@ -878,6 +923,18 @@ class p2p_media_manager_P2PMediaManager extends stringly_typed_event_emitter_STE
                 this.emit("segment-error", peerSegmentRequest.segment, description, peer.id);
             }
         };
+        this.onSegmentSize = (segmentId, size) => {
+            const peerSegmentRequest = this.peerSegmentRequests.get(segmentId);
+            if (peerSegmentRequest) {
+                this.emit("segment-size", peerSegmentRequest.segment, size);
+            }
+        };
+        this.onSegmentStartLoad = (segmentId, size) => {
+            const peerSegmentRequest = this.peerSegmentRequests.get(segmentId);
+            if (peerSegmentRequest) {
+                this.emit("segment-start-load", peerSegmentRequest.segment, size);
+            }
+        };
         this.onSegmentTimeout = (peer, segmentId) => {
             const peerSegmentRequest = this.peerSegmentRequests.get(segmentId);
             if (peerSegmentRequest) {
@@ -911,8 +968,10 @@ class p2p_media_manager_P2PMediaManager extends stringly_typed_event_emitter_STE
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-const SMOOTH_INTERVAL = 15 * 1000;
-const MEASURE_INTERVAL = 60 * 1000;
+
+const debug = browser_default()("p2pml:bandwidth-approximator");
+const SMOOTH_INTERVAL = 2 * 1000;
+const MEASURE_INTERVAL = 40 * 1000;
 class NumberWithTime {
     constructor(value, timeStamp) {
         this.value = value;
@@ -925,6 +984,7 @@ class BandwidthApproximator {
         this.currentBytesSum = 0;
         this.lastBandwidth = [];
         this.addBytes = (bytes, timeStamp) => {
+            debug("Add %d bytes.", bytes);
             this.lastBytes.push(new NumberWithTime(bytes, timeStamp));
             this.currentBytesSum += bytes;
             while (timeStamp - this.lastBytes[0].timeStamp > SMOOTH_INTERVAL) {
@@ -945,6 +1005,7 @@ class BandwidthApproximator {
                     maxBandwidth = bandwidth.value;
                 }
             }
+            debug("Max bandwidth: %d.", maxBandwidth);
             return maxBandwidth;
         };
         this.getSmoothInterval = () => {
@@ -1057,22 +1118,22 @@ class segments_memory_storage_SegmentsMemoryStorage {
 
 
 const defaultSettings = {
-    cachedSegmentExpiration: 5 * 60 * 1000,
-    cachedSegmentsCount: 30,
+    cachedSegmentExpiration: 10 * 60 * 1000,
+    cachedSegmentsCount: 1000,
     useP2P: true,
     consumeOnly: false,
-    requiredSegmentsPriority: 1,
+    requiredSegmentsPriority: 3,
     simultaneousHttpDownloads: 2,
-    httpDownloadProbability: 0.1,
+    httpDownloadProbability: 0.06,
     httpDownloadProbabilityInterval: 1000,
-    httpDownloadProbabilitySkipIfNoPeers: false,
-    httpFailedSegmentTimeout: 10000,
+    httpDownloadProbabilitySkipIfNoPeers: true,
+    httpFailedSegmentTimeout: 1500,
     httpDownloadMaxPriority: 20,
     httpDownloadInitialTimeout: 0,
     httpDownloadInitialTimeoutPerSegment: 4000,
-    httpUseRanges: false,
-    simultaneousP2PDownloads: 3,
-    p2pDownloadMaxPriority: 20,
+    httpUseRanges: true,
+    simultaneousP2PDownloads: 20,
+    p2pDownloadMaxPriority: 50,
     p2pSegmentDownloadTimeout: 60000,
     webRtcMaxMessageSize: 64 * 1024 - 1,
     trackerAnnounce: ["wss://tracker.novage.com.ua", "wss://tracker.openwebtorrent.com"],
@@ -1159,6 +1220,9 @@ class hybrid_loader_HybridLoader extends events["EventEmitter"] {
                 peerId: this.p2pManager.getPeerId(),
             };
         };
+        this.getBandwidthEstimate = () => {
+            return this.bandwidthApproximator.getBandwidth(this.now());
+        };
         this.destroy = () => Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
             if (this.httpRandomDownloadInterval !== undefined) {
                 clearInterval(this.httpRandomDownloadInterval);
@@ -1215,7 +1279,12 @@ class hybrid_loader_HybridLoader extends events["EventEmitter"] {
             }
             for (let index = 0; index < this.segmentsQueue.length; index++) {
                 const segment = this.segmentsQueue[index];
-                if (storageSegments.has(segment.id) || this.httpManager.isDownloading(segment)) {
+                if (storageSegments.has(segment.id)) {
+                    continue;
+                }
+                // Segment priority changed, notify http manager
+                if (this.httpManager.isDownloading(segment)) {
+                    this.httpManager.updatePriority(segment);
                     continue;
                 }
                 if (segment.priority <= this.settings.requiredSegmentsPriority &&
@@ -1307,12 +1376,15 @@ class hybrid_loader_HybridLoader extends events["EventEmitter"] {
             this.httpManager.download(segment);
             this.p2pManager.sendSegmentsMapToAll(this.createSegmentsMap(storageSegments));
         });
-        this.onPieceBytesDownloaded = (method, bytes, peerId) => {
-            this.bandwidthApproximator.addBytes(bytes, this.now());
-            this.emit(Events.PieceBytesDownloaded, method, bytes, peerId);
+        this.onSegmentStartLoad = (method, segment) => {
+            this.emit(Events.SegmentStartLoad, method, segment);
         };
-        this.onPieceBytesUploaded = (method, bytes, peerId) => {
-            this.emit(Events.PieceBytesUploaded, method, bytes, peerId);
+        this.onPieceBytesDownloaded = (method, segment, bytes, peerId) => {
+            this.bandwidthApproximator.addBytes(bytes, this.now());
+            this.emit(Events.PieceBytesDownloaded, method, segment, bytes, peerId);
+        };
+        this.onPieceBytesUploaded = (method, segment, bytes, peerId) => {
+            this.emit(Events.PieceBytesUploaded, method, segment, bytes, peerId);
         };
         this.onSegmentLoaded = (segment, data, peerId) => Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
             this.debugSegments("segment loaded", segment.id, segment.url);
@@ -1338,6 +1410,10 @@ class hybrid_loader_HybridLoader extends events["EventEmitter"] {
                     this.p2pManager.sendSegmentsMapToAll(this.createSegmentsMap(storageSegments));
                 }
             }
+        });
+        this.onSegmentSize = (segment, size) => Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
+            this.debugSegments("segment size", segment.id, size);
+            this.emit(Events.SegmentSize, segment, size);
         });
         this.getStreamSwarmId = (segment) => {
             return segment.streamId === undefined ? segment.masterSwarmId : `${segment.masterSwarmId}+${segment.streamId}`;
@@ -1406,20 +1482,24 @@ class hybrid_loader_HybridLoader extends events["EventEmitter"] {
                 this.settings.p2pDownloadMaxPriority = bufferedSegmentsCount;
             }
         }
-        this.debug.enabled = true;
-        this.debugSegments.enabled = true;
         this.segmentsStorage =
             this.settings.segmentsStorage === undefined
                 ? new segments_memory_storage_SegmentsMemoryStorage(this.settings)
                 : this.settings.segmentsStorage;
         this.debug("loader settings", this.settings);
         this.httpManager = this.createHttpManager();
+        this.httpManager.on("segment-start-load", (segment) => this.onSegmentStartLoad("http", segment));
         this.httpManager.on("segment-loaded", this.onSegmentLoaded);
         this.httpManager.on("segment-error", this.onSegmentError);
-        this.httpManager.on("bytes-downloaded", (bytes) => this.onPieceBytesDownloaded("http", bytes));
+        this.httpManager.on("segment-size", this.onSegmentSize);
+        this.httpManager.on("bytes-downloaded", (segment, bytes) => {
+            this.onPieceBytesDownloaded("http", segment, bytes);
+        });
         this.p2pManager = this.createP2PManager();
+        this.p2pManager.on("segment-start-load", (segment) => this.onSegmentStartLoad("p2p", segment));
         this.p2pManager.on("segment-loaded", this.onSegmentLoaded);
         this.p2pManager.on("segment-error", this.onSegmentError);
+        this.p2pManager.on("segment-size", this.onSegmentSize);
         this.p2pManager.on("peer-data-updated", () => Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
             if (this.masterSwarmId === undefined) {
                 return;
@@ -1429,8 +1509,8 @@ class hybrid_loader_HybridLoader extends events["EventEmitter"] {
                 this.p2pManager.sendSegmentsMapToAll(this.createSegmentsMap(storageSegments));
             }
         }));
-        this.p2pManager.on("bytes-downloaded", (bytes, peerId) => this.onPieceBytesDownloaded("p2p", bytes, peerId));
-        this.p2pManager.on("bytes-uploaded", (bytes, peerId) => this.onPieceBytesUploaded("p2p", bytes, peerId));
+        this.p2pManager.on("bytes-downloaded", (segment, bytes, peerId) => this.onPieceBytesDownloaded("p2p", segment, bytes, peerId));
+        this.p2pManager.on("bytes-uploaded", (segment, bytes, peerId) => this.onPieceBytesUploaded("p2p", segment, bytes, peerId));
         this.p2pManager.on("peer-connected", this.onPeerConnect);
         this.p2pManager.on("peer-closed", this.onPeerClose);
         this.p2pManager.on("tracker-update", this.onTrackerUpdate);
@@ -1520,7 +1600,7 @@ const version = "0.6.2";
 
 /***/ }),
 
-/***/ 517:
+/***/ 516:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1546,10 +1626,27 @@ var tslib_es6 = __webpack_require__(1);
 var events = __webpack_require__(159);
 
 // EXTERNAL MODULE: ./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/index.ts + 8 modules
-var lib = __webpack_require__(220);
+var lib = __webpack_require__(201);
 
 // EXTERNAL MODULE: ./node_modules/m3u8-parser/dist/m3u8-parser.es.js + 1 modules
-var m3u8_parser_es = __webpack_require__(518);
+var m3u8_parser_es = __webpack_require__(517);
+
+// CONCATENATED MODULE: ./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-hlsjs/lib/byte-range.ts
+function getByteRange(context) {
+    return context.rangeEnd && context.rangeStart !== undefined
+        ? { offset: context.rangeStart, length: context.rangeEnd - context.rangeStart }
+        : undefined;
+}
+function compareByteRanges(b1, b2) {
+    return b1 === undefined ? b2 === undefined : b2 !== undefined && b1.length === b2.length && b1.offset === b2.offset;
+}
+function byteRangeToString(byteRange) {
+    if (byteRange === undefined) {
+        return undefined;
+    }
+    const end = byteRange.offset + byteRange.length - 1;
+    return `bytes=${byteRange.offset}-${end}`;
+}
 
 // CONCATENATED MODULE: ./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-hlsjs/lib/segment-manager.ts
 /**
@@ -1567,6 +1664,7 @@ var m3u8_parser_es = __webpack_require__(518);
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 
 
 
@@ -1619,7 +1717,7 @@ class segment_manager_SegmentManager {
         const parser = new m3u8_parser_es["a" /* Parser */]();
         parser.push(content);
         parser.end();
-        const playlist = new Playlist(requestUrl, responseUrl, parser.manifest);
+        const playlist = new segment_manager_Playlist(requestUrl, responseUrl, parser.manifest);
         if (playlist.manifest.playlists) {
             this.masterPlaylist = playlist;
             for (const [key, variantPlaylist] of this.variantPlaylists) {
@@ -1659,7 +1757,6 @@ class segment_manager_SegmentManager {
                     xhr = {
                         responseURL: asset.responseUri,
                         response: asset.data,
-                        getResponseHeader: null
                     };
                 }
                 else {
@@ -1687,7 +1784,7 @@ class segment_manager_SegmentManager {
             const byteRangeString = byteRangeToString(byteRange);
             if (!segmentLocation) {
                 let content;
-                // Not a segment from variants; usually can be: init, audio or subtitles segment, encription key etc.
+                // Not a segment from variants; usually can be: init, audio or subtitles segment, encryption key etc.
                 const assetsStorage = this.settings.assetsStorage;
                 if (assetsStorage !== undefined) {
                     let masterManifestUri = (_a = this.masterPlaylist) === null || _a === void 0 ? void 0 : _a.requestUrl;
@@ -1826,7 +1923,7 @@ class segment_manager_SegmentManager {
             for (let i = segmentIndex; i < playlistSegments.length && segments.length < this.settings.forwardSegmentCount; ++i) {
                 const segment = playlist.manifest.segments[i];
                 const url = playlist.getSegmentAbsoluteUrl(segment.uri);
-                const byteRange = segment.byteRange;
+                const byteRange = segment.byterange;
                 const id = this.getSegmentId(playlist, initialSequence + i);
                 segments.push({
                     id: id,
@@ -1884,7 +1981,7 @@ class segment_manager_SegmentManager {
                 const xhr = new XMLHttpRequest();
                 xhr.open("GET", url, true);
                 xhr.responseType = responseType;
-                if (range && range != 'bytes=0--1') {
+                if (range) {
                     xhr.setRequestHeader("Range", range);
                 }
                 xhr.addEventListener("readystatechange", () => {
@@ -1906,7 +2003,7 @@ class segment_manager_SegmentManager {
         });
     }
 }
-class Playlist {
+class segment_manager_Playlist {
     constructor(requestUrl, responseUrl, manifest) {
         this.requestUrl = requestUrl;
         this.responseUrl = responseUrl;
@@ -1917,7 +2014,7 @@ class Playlist {
         for (let i = 0; i < this.manifest.segments.length; ++i) {
             const segment = this.manifest.segments[i];
             const segmentUrl = this.getSegmentAbsoluteUrl(segment.uri);
-            if (url === segmentUrl && compareByteRanges(segment.byteRange, byteRange)) { //////////////////// segment.byterange
+            if (url === segmentUrl && compareByteRanges(segment.byterange, byteRange)) {
                 return i;
             }
         }
@@ -1937,16 +2034,6 @@ class SegmentRequest {
         this.onError = onError;
     }
 }
-function compareByteRanges(b1, b2) {
-    return b1 === undefined ? b2 === undefined : b2 !== undefined && b1.length === b2.length && b1.offset === b2.offset;
-}
-function byteRangeToString(byteRange) {
-    if (byteRange === undefined) {
-        return undefined;
-    }
-    const end = byteRange.offset + byteRange.length - 1;
-    return `bytes=${byteRange.offset}-${end}`;
-}
 
 // CONCATENATED MODULE: ./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-hlsjs/lib/hlsjs-loader.ts
 /**
@@ -1965,82 +2052,143 @@ function byteRangeToString(byteRange) {
  * limitations under the License.
  */
 
-const DEFAULT_DOWNLOAD_LATENCY = 1;
-const DEFAULT_DOWNLOAD_BANDWIDTH = 12500; // bytes per millisecond
+
+
 class hlsjs_loader_HlsJsLoader {
     constructor(segmentManager) {
+        this.isLoaded = false;
+        this.stats = {
+            loaded: 0,
+            total: 0,
+            aborted: false,
+            retry: 0,
+            chunkCount: 0,
+            bwEstimate: 0,
+            loading: {
+                start: 0,
+                end: 0,
+                first: 0,
+            },
+            parsing: {
+                start: 0,
+                end: 0,
+            },
+            buffering: {
+                start: 0,
+                end: 0,
+                first: 0,
+            },
+        };
         this.segmentManager = segmentManager;
     }
-    load(context, _config, callbacks, stats) {
+    load(context, _config, callbacks) {
         return Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
+            hlsjs_loader_HlsJsLoader.updateStatsToStartLoading(this.stats);
             if (context.type) {
                 try {
                     const result = yield this.segmentManager.loadPlaylist(context.url);
-                    this.successPlaylist(result, context, callbacks, stats);
+                    this.isLoaded = true;
+                    this.successPlaylist(result, context, callbacks);
                 }
                 catch (e) {
                     this.error(e, context, callbacks);
                 }
             }
             else if (context.frag) {
+                const { loader } = this.segmentManager;
+                const byteRange = getByteRange(context);
+                const isSegment = (segment) => {
+                    return segment.url === context.url && segment.range === byteRangeToString(byteRange);
+                };
+                // We may be downloading the segment by P2P, so we don't care about the stats sent to HLS ABR
+                let updateStart = setInterval(() => {
+                    hlsjs_loader_HlsJsLoader.updateStatsToStartLoading(this.stats);
+                }, 200);
+                const onUpdateSegmentSize = (segment, size) => {
+                    if (!isSegment(segment))
+                        return;
+                    this.stats.total = size;
+                };
+                loader.on(lib["a" /* Events */].SegmentSize, onUpdateSegmentSize);
+                const onUpdateLoaded = (_type, segment, bytes) => {
+                    if (!isSegment(segment))
+                        return;
+                    this.stats.loaded += bytes;
+                };
+                const onSegmentStartLoad = (method, segment) => {
+                    if (!updateStart || method !== "http" || !isSegment(segment))
+                        return;
+                    clearInterval(updateStart);
+                    updateStart = undefined;
+                    hlsjs_loader_HlsJsLoader.updateStatsToStartLoading(this.stats);
+                    loader.on(lib["a" /* Events */].PieceBytesDownloaded, onUpdateLoaded);
+                };
+                loader.on(lib["a" /* Events */].SegmentStartLoad, onSegmentStartLoad);
                 try {
-                    const result = yield this.segmentManager.loadSegment(context.url, context.rangeStart === undefined || context.rangeEnd === undefined
-                        ? undefined
-                        : { offset: context.rangeStart, length: context.rangeEnd - context.rangeStart });
+                    const result = yield this.segmentManager.loadSegment(context.url, byteRange);
                     const { content } = result;
-                    if (content !== undefined) {
-                        this.successSegment(content, result.downloadBandwidth, context, callbacks, stats);
-                        /*
-                        setTimeout(() => this.successSegment(content, result.downloadBandwidth, context, callbacks, stats), 0);*/
+                    if (content) {
+                        this.isLoaded = true;
+                        setTimeout(() => this.successSegment(content, context, callbacks), 0);
                     }
                 }
                 catch (e) {
-                    this.error(e, context, callbacks);
-                    //setTimeout(() => this.error(e, context, callbacks), 0);
+                    setTimeout(() => this.error(e, context, callbacks), 0);
+                }
+                finally {
+                    clearInterval(updateStart);
+                    loader.off(lib["a" /* Events */].SegmentStartLoad, onSegmentStartLoad);
+                    loader.off(lib["a" /* Events */].SegmentSize, onUpdateSegmentSize);
+                    loader.off(lib["a" /* Events */].PieceBytesDownloaded, onUpdateLoaded);
                 }
             }
             else {
+                console.warn("Unknown load request", context);
             }
         });
     }
-    abort(context) {
-        this.segmentManager.abortSegment(context.url, context.rangeStart === undefined || context.rangeEnd === undefined
-            ? undefined
-            : { offset: context.rangeStart, length: context.rangeEnd - context.rangeStart });
+    abort(context, callbacks) {
+        if (this.isLoaded)
+            return;
+        this.segmentManager.abortSegment(context.url, getByteRange(context));
+        this.stats.aborted = true;
+        const onAbort = callbacks === null || callbacks === void 0 ? void 0 : callbacks.onAbort;
+        if (onAbort) {
+            onAbort(this.stats, context, undefined);
+        }
     }
-    successPlaylist(xhr, context, callbacks, stats) {
-        stats.total = xhr.response.length;
-        stats.loaded = xhr.response.length; //stats.loaded += xhr.response.length;
-        /*const stats = {
-            trequest: now - 300,
-            tfirst: now - 200,
-            tload: now - 1,
-            tparsed: now,
-            loaded: xhr.response.length,
-            total: xhr.response.length,
-        };*/
+    successPlaylist(xhr, context, callbacks) {
+        const now = performance.now();
+        this.stats.loading.end = now;
+        this.stats.loaded = xhr.response.length;
+        this.stats.total = xhr.response.length;
         callbacks.onSuccess({
             url: xhr.responseURL,
             data: xhr.response,
-        }, stats, context, undefined);
+        }, this.stats, context, undefined);
     }
-    successSegment(content, downloadBandwidth, context, callbacks, stats) {
-        stats.loaded = content.byteLength;
-        stats.bwEstimate = downloadBandwidth || DEFAULT_DOWNLOAD_BANDWIDTH;
-        if (callbacks === null || callbacks === void 0 ? void 0 : callbacks.onProgress)
-            callbacks.onProgress(stats, context, content, undefined);
+    successSegment(content, context, callbacks) {
+        const now = performance.now();
+        this.stats.loading.end = now;
+        this.stats.loaded = content.byteLength;
+        this.stats.total = content.byteLength;
+        if (callbacks.onProgress) {
+            callbacks.onProgress(this.stats, context, content, undefined);
+        }
         callbacks.onSuccess({
             url: context.url,
             data: content,
-        }, stats, context, undefined);
+        }, this.stats, context, undefined);
     }
     error(error, context, callbacks) {
         callbacks.onError(error, context, undefined);
     }
+    static updateStatsToStartLoading(stats) {
+        const start = performance.now();
+        stats.loading.start = start;
+        stats.loading.first = start;
+    }
 }
-
-// EXTERNAL MODULE: ./node_modules/hls.js/src/loader/load-stats.ts
-var load_stats = __webpack_require__(512);
 
 // CONCATENATED MODULE: ./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-hlsjs/lib/engine.ts
 /**
@@ -2058,7 +2206,6 @@ var load_stats = __webpack_require__(512);
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 
 
 
@@ -2082,38 +2229,23 @@ class engine_Engine extends events["EventEmitter"] {
         return _a = class {
                 constructor() {
                     this.load = (context, config, callbacks) => Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
-                        if (this.stats.loading.start) {
-                            throw new Error('Loader can only be used once.');
-                        }
                         this.context = context;
-                        this.stats.bwEstimate = 12500;
-                        this.stats.loading.start = this.stats.loading.end = this.stats.loading.first = performance.now();
-                        yield this.impl.load(context, config, callbacks, this.stats);
-                        this.stats.loading.first = performance.now();
-                        this.stats.loading.end = performance.now();
-                        this.stats.chunkCount++;
-                        //? this.stats.bwEstimate = this.loader.bandwidthApproximator.getBandwidth(this.now());
+                        this.callbacks = callbacks;
+                        yield this.impl.load(context, config, callbacks);
                     });
-                    this.abort = (callbacks) => {
-                        this.abortInternal(callbacks);
+                    this.abort = () => {
+                        if (this.context) {
+                            this.impl.abort(this.context, this.callbacks);
+                        }
                     };
-                    this.destroy = (callbacks) => {
-                        this.abortInternal(callbacks);
+                    this.destroy = () => {
+                        if (this.context) {
+                            this.impl.abort(this.context);
+                        }
                     };
-                    this.getCacheAge = function () {
-                        return 100000;
-                    };
-                    this.context = null;
+                    this.getResponseHeader = () => undefined;
                     this.impl = new hlsjs_loader_HlsJsLoader(engine.segmentManager);
-                    this.stats = new load_stats["a" /* LoadStats */]();
-                }
-                abortInternal(callbacks) {
-                    if (this.context) {
-                        this.impl.abort(this.context);
-                    }
-                    if (callbacks === null || callbacks === void 0 ? void 0 : callbacks.onAbort) {
-                        callbacks.onAbort(this.stats, this.context, undefined);
-                    }
+                    this.stats = this.impl.stats;
                 }
             },
             _a.getEngine = () => {
@@ -2247,27 +2379,24 @@ function initJwPlayer(player, hlsjsConfig) {
 }
 function initHlsJsEvents(player, engine) {
     player.on("hlsFragChanged", (_event, data) => {
-        /** */
-        /*const frag = data.frag;
-        const byteRange =
-            frag.byteRange.length !== 2
-                ? undefined
-                : { offset: frag.byteRange[0], length: frag.byteRange[1] - frag.byteRange[0] };
-        engine.setPlayingSegment(frag.url, byteRange, frag.start, frag.duration);*/
+        const frag = data.frag;
+        const byteRange = frag.byteRange.length !== 2
+            ? undefined
+            : { offset: frag.byteRange[0], length: frag.byteRange[1] - frag.byteRange[0] };
+        engine.setPlayingSegment(frag.url, byteRange, frag.start, frag.duration);
     });
     player.on("hlsDestroying", () => Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
         yield engine.destroy();
     }));
     player.on("hlsError", (_event, errorData) => {
-        /*if (errorData.details === "bufferStalledError") {
-
+        if (errorData.details === "bufferStalledError") {
             const htmlMediaElement = (player.media === undefined
                 ? player.el_ // videojs-contrib-hlsjs
-                : player.media) as HTMLMediaElement | undefined; // all others
+                : player.media); // all others
             if (htmlMediaElement) {
                 engine.setPlayingSegmentByCurrentTime(htmlMediaElement.currentTime);
             }
-        }*/
+        }
     });
 }
 

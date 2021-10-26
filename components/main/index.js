@@ -791,7 +791,7 @@ var main = (function(){
 			var mnemonic = localStorage.getItem('mnemonic');
 			var pool = localStorage.getItem('pool');
 
-			if (!electron && !window.cordova && window.pocketnetproject !== 'Bastyon' && mnemonic && !bastyonhelperOpened){
+			if (!electron && !window.cordova && window.pocketnetproject !== 'Bastyon' && mnemonic && !bastyonhelperOpened && !window.testpocketnet){
 
 				bastyonhelperOpened = true;
 

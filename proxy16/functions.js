@@ -70,7 +70,17 @@ f.path = function(_path){
     
 }
 
+f.createfolder = function(filepath){
+    //var spath = filepath.split('\\')
+
+    var dirname = path.dirname(filepath)
+
+    if (!fs.existsSync(dirname)) { fs.mkdirSync(dirname, {recursive : true}) }
+}
+
 f.saveFile = function(filepath, buffer){
+
+    f.createfolder(filepath)
 
     ///// TODO ADD FOLDER CREATION FOR LINUX AND REMOVE DEFAULT CERT
         
@@ -271,16 +281,49 @@ f.rand = function(min, max){
     return Math.floor( Math.random() * (max - min + 1) ) + min;
 }
 
+f.randomizer = function(values){
+
+    values = _.shuffle(values)
+
+    let i, pickedValue,
+            randomNr = Math.random(),
+            threshold = 0;
+
+
+    for (i = 0; i < values.length; i++) {
+        if (values[i].probability === '*') {
+            continue;
+        }
+
+
+        threshold += values[i].probability;
+        if (threshold > randomNr) {
+            pickedValue = values[i];
+            break;
+        }
+
+
+        if (!pickedValue) {
+            //nothing found based on probability value, so pick element marked with wildcard
+            pickedValue = values.filter((value) => value.probability === '*');
+        }
+    }
+
+    return pickedValue;
+}
+
 f.randmap = function(ar){
 
     if(!ar) return null
+
+    //ar = _.shuffle(ar)
     
-    ar = _.sortBy(ar, (r) => {return r.probability})
+    
+    ar = _.sortBy(ar, (r) => {return -r.probability})
 
     var total = _.reduce(ar, function(sum, r){ return sum + r.probability }, 0)
 
-
-    if(total <= 0) return ar[0]
+    if (total <= 0) return ar[0]
 
     var seed = random.float(0, total)
 
@@ -376,7 +419,7 @@ f.processArrayWithDelay = function(array, t, fn) {
             });
         });
     }, Promise.resolve());
- }
+}
 
 f.roughSizeOfObject = function(object){
 
@@ -515,6 +558,16 @@ f.rot13 = function(str){
 f.hash = function(str){
 
     return md5(str)
+}
+
+f.phash = function (pattern, Q) {
+    const b = 13;
+    const m = pattern.length; let hash = 0;
+    for (let i = 0; i < m; i++) {
+        hash = (hash * b + pattern.charCodeAt(i)) % Q;
+    }
+    
+    return hash;
 }
 
 f.date = {

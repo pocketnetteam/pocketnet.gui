@@ -192,8 +192,6 @@
 
         if (audio) return
 
-        console.log("SOUND prepare")
-
         var AudioContext = window.AudioContext || window.webkitAudioContext
 
         if (AudioContext) {

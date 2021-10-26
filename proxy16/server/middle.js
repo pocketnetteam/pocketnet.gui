@@ -9,6 +9,9 @@ var Middle = function(){
     var countlogs = 10000
     var logs = []
 
+    var requestcountFinished = 0
+    var requestcountTotal = 0
+
     var addLogs = function(parameters, ip, status, pathname, start){
 		
 		logs.push({
@@ -20,6 +23,8 @@ var Middle = function(){
             start : start
 		})
 
+        requestcountFinished++
+
 		var d = logs.length - countlogs
 
 		if (d > countlogs / 1000){
@@ -29,6 +34,24 @@ var Middle = function(){
 
     self.clear = function(){
         logs = []
+    }
+
+    var countLast5Seconds = function(){
+
+        var eventschecktime = 5000
+
+        var s = f.date.addseconds(new Date(), - eventschecktime / 1000)
+        var l = logs.length
+        var c = 0
+
+        if(l){
+            while (l && logs[l - 1].date > s){
+                c++
+                l--
+            }
+        }
+
+        return c
     }
 
     var rate = function(){
@@ -47,6 +70,17 @@ var Middle = function(){
         }
 
         return c / (eventschecktime / 1000)
+    }
+
+    self.printstats = function(){
+
+        console.log("")
+        console.log("_____________________________________")
+        console.log("Total Requests count:", requestcountTotal)
+        console.log("Finished Requests count:", requestcountFinished)
+        console.log("5 Sec. Finished Requests count:", countLast5Seconds())
+        
+        console.log(rate() + ' RPS')
     }
     
     self.info = function(compact){
@@ -114,22 +148,60 @@ var Middle = function(){
         result.setHeader('Access-Control-Allow-Origin', '*');
         result.setHeader("Access-Control-Allow-Methods", "GET, POST");
         result.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-
+        result.set('Cache-control', 'public, max-age=10')
+        
         if (next) 
             next(null)
     }
 
-    self.extend = function(request, result, next){
-        var start = f.now()
+    self.extendlight = function(request, result, next){
         
         result._success = function(data, code){
-
             if(!code) code = 200
-
             result.status(code).jsonp({
                 result : 'success',
                 data : data
             })
+        }
+    
+        result._fail = function(error, code){
+
+            if(!code) code = 500
+            if(code < 100) code = 500
+
+            result.status(code).jsonp({
+                error : error,
+                code : code
+            })
+        }
+    
+        if (next)
+            next(null)
+    
+    }
+
+    self.extend = function(request, result, next){
+        var start = new Date()
+
+        result._success = function(data, code, s){
+
+            if(!code) code = 200
+
+            try{
+                var jsonp = {
+                    result : 'success',
+                    data : data
+                }
+    
+                if (s && s.node){
+                    jsonp.node = s.node.key
+                }
+            }
+            catch(e){
+               // console.error(e)
+            }
+
+            result.status(code).jsonp(jsonp)
 
             addLogs(request.data, request.clientIP, code, request.baseUrl + request.path, start)
     
@@ -156,19 +228,7 @@ var Middle = function(){
     }
     
     self.data = function(request, result, next){
-
-        /*var body = request.body
-
-
-        try{
-                body = JSON.parse(body)
-        }catch(e){
-
-            console.log("E", e)
-
-        }
-*/
-
+     
         request.data = _.merge(request.query, request.body)
         
         _.each(request.data, function(v, key){
@@ -229,9 +289,35 @@ var Middle = function(){
         if (next) 
             next(null)
     }
+
+    self.lightnext = function(request, result, next){
+
+        var n = false
+        
+        if(request){
+            n = request.originalUrl ==  '/ping'
+        }
+
+        if(n) {
+
+            self.extendlight(request, result)
+            self.headers(request, result)
+            next(null)
+        }
+
+        return n
+    }
     
     self.prepare = function(request, result, next){
 
+        requestcountTotal++
+
+        if (requestcountTotal >= 500000) {
+            requestcountTotal = 0
+            requestcountFinished = 0
+        }
+
+        if(self.lightnext(request, result, next)) return
 
         self.headers(request, result)
         self.uainfo(request, result)

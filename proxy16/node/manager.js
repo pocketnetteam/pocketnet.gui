@@ -3,6 +3,33 @@ var Node = require('./node');
 var Datastore = require('nedb');
 var _ = require('lodash');
 var f = require('../functions');
+const { performance } = require('perf_hooks');
+var queuemethods = {
+    getcontents: true,
+    getlastcomments: true,
+    gettags: true,
+    getrawtransactionwithmessage: true,
+    getuserprofile: true,
+    getuserstate: true,
+    getaddressregistration: true,
+    getrecommendedposts: true,
+    gethotposts: true,
+    getuseraddress: true,
+    search: true,
+    searchlinks: true,
+    getcomments: true,
+    getaddressscores: true,
+    getaccountsetting : true,
+    getpostscores: true,
+    getpagescores: true,
+    gethierarchicalstrip : true,
+    getusercontents : true,
+    getcontentsstatistic : true
+}
+
+var exepmethods = {
+    getnodeinfo : true
+}
 
 var Nodemanager = function(p){
     if(!p) p = {};
@@ -14,17 +41,23 @@ var Nodemanager = function(p){
 
     self.askedpeers = {};
     self.peers = {}
+    self.bestnode = ''
+    self.bestnodes = []
 
     //// using
     self.nodes = [];
     self.nodesmap = {};
   
-
+    var statscalculationInterval = null
+    var statscalculationTime = 5000
     var findInterval = null
     var peernodesCheckTime = 1000000
     var usersfornode = 30
-
     var commonnotinitedInterval = null
+    var queue = []
+    var queueInterval = null
+
+    var minnodescount = global.MIN_NODES_COUNT || 1
 
     var db = new Datastore(f.path(p.dbpath));
    
@@ -147,6 +180,88 @@ var Nodemanager = function(p){
 
     }
 
+    self.rpcs = function(node, method, parameters, clbks){
+
+        node.checkParameters().then((r) => {
+
+            return node.rpcs(method, _.clone(parameters));
+
+        }).then(clbks.resolve).catch(clbks.reject)
+
+    }
+
+    self.exepmethod = function(node, method, parameters, clbks){
+
+        node.checkParameters().then((r) => {
+
+            if(!node.exepmethod[method]){
+                return Promise.reject('exepmethod')
+            }
+
+            return node.exepmethod[method](method, parameters);
+
+        }).then(clbks.resolve).catch(clbks.reject)
+
+    }
+
+    self.queue = function(node, method, parameters, direct, clbks){
+        if(!clbks) clbks = {}
+
+        if (exepmethods[method]){
+
+            self.exepmethod(node, method, parameters, clbks)
+
+            return
+        }
+
+        self.rpcs(node, method, parameters, clbks)
+
+        return 
+
+        if (direct || !queuemethods[method]){
+
+            self.rpcs(node, method, parameters, clbks)
+
+        }
+
+        else{
+            addqueue({
+                node, method, parameters, clbks
+            })
+        }
+    }
+
+    var addqueue = function(p){
+
+        if (p)
+            queue.push(p)
+
+    }
+
+    var worker = function(){
+
+        if(queue.length) console.log('queue', queue.length)
+
+        var now = performance.now()
+
+        for (var i = 0; i < queue.length; i++){
+
+            var rpcs = queue[i]
+
+            self.rpcs(rpcs.node, rpcs.method, rpcs.parameters, rpcs.clbks)
+        }
+
+        var dif = performance.now() - now
+
+        if(queue.length) console.log('queuedif', dif)
+
+        queue = []
+    }
+
+    var getnodeinfo = function(){
+        
+    }
+
     var saveNodes = function(nodes){
 
         _.map(nodes, function(node){
@@ -200,9 +315,9 @@ var Nodemanager = function(p){
             var s = n.statistic.get5min()
             var r = n.statistic.rating()
 
-            var time = 1200
+            var time = 2400
 
-            if (n.wss.count() < 5) time = 3000
+            if (n.wss.count() < 5) time = 7000
 
             if (s.success > 0 && s.success > s.failed && s.time < time && r && n.penalty().k < 0.8){
                 return true
@@ -216,7 +331,7 @@ var Nodemanager = function(p){
 
         var workingNodes = getWorkingNodes()
 
-        if (!usersfornode || self.proxy.users() / usersfornode >= workingNodes.length){
+        if (workingNodes.length < minnodescount || !usersfornode || self.proxy.users() / usersfornode >= workingNodes.length){
             node.init()
         }
         
@@ -229,7 +344,7 @@ var Nodemanager = function(p){
         var workingNodes = getWorkingNodes()
 
 
-        if (!usersfornode || self.proxy.users() / usersfornode >= workingNodes.length || workingNodes.length <= 1){
+        if (workingNodes.length < minnodescount || !usersfornode || self.proxy.users() / usersfornode >= workingNodes.length || workingNodes.length <= 1){
 
         }else{
 
@@ -290,7 +405,7 @@ var Nodemanager = function(p){
         
     }
 
-    self.currentChainCommon = function(){
+    /*self.currentChainCommon = function(){
 
         if(!self.nodes.length) return null
 
@@ -352,7 +467,7 @@ var Nodemanager = function(p){
 
         return result
 
-    }
+    }*/
 
     self.currentChainCommon2 = function(){
 
@@ -479,8 +594,14 @@ var Nodemanager = function(p){
     self.getnodes = function(filter){
 
         var nodes = {}
+        var totalpending = self.totalpending()
 
         _.each(_.filter(self.nodes, filter || function(){return true}), function(node){
+
+            var pending = node.statistic.pending()
+            var probability = node.statistic.probability()
+            var pendingpercent = totalpending ? pending / totalpending : 0
+            var pendingpercentdifference = totalpending ? (pendingpercent - probability) : 0
 
             nodes[node.key] = {
                 node : node.exportsafe(),
@@ -490,14 +611,51 @@ var Nodemanager = function(p){
                 penalty : node.penalty(),
                 status : node.chainStatus(),
                 rating : node.statistic.rating(),
-                probability : node.statistic.probability(),
-                users : node.wss.count()
+                
+                users : node.wss.count(),
+
+                probability : probability,
+                pending : pending,
+                pendingpercent : pendingpercent,
+                pendingpercentdifference : pendingpercentdifference
             }
             
         })
 
         return nodes
 
+    }
+
+    self.totalpending = function(){
+        return _.reduce(self.initednodes(), function(r, node){
+            return r + node.statistic.pending()
+        }, 0)
+    }
+
+    self.pendingstatus = function(){
+        var totalpending = self.totalpending()
+
+        var nodes = _.map(self.initednodes(), function(node){
+
+            var pending = node.statistic.pending()
+            var probability = node.statistic.probability()
+            var pendingpercent = totalpending ? pending / totalpending : 0
+            var pendingpercentdifference = totalpending ? (pendingpercent - probability) : 0
+
+            return {
+                probability : probability,
+                pending : pending,
+                pendingpercent : pendingpercent,
+                pendingpercentdifference : pendingpercentdifference
+            }
+
+
+        })
+
+        return {
+            totalpending : totalpending,
+            nodes : nodes
+        }
     }
 
     self.extendedStats = function(){
@@ -531,6 +689,7 @@ var Nodemanager = function(p){
         var stats = {
             count : self.nodes.length,
             inited : inited,
+            queuelength : queue.length,
 
             countuse : _.filter(self.nodes, function(node){
                 return node.inited && node.export().canuse
@@ -564,7 +723,6 @@ var Nodemanager = function(p){
                 var bchain = 'main'
 
                 if (self.proxy.test) bchain = 'test'
-
 
                 db.find({bchain}).exec(function (err, docs) {
 
@@ -609,16 +767,29 @@ var Nodemanager = function(p){
                         self.find()
                     }, 2000)
                     
+                    if(!findInterval)
+                        findInterval = setInterval(self.find, 10000)
 
-                    findInterval = setInterval(function(){
-                        self.find()
-                    }, 10000)
+                    if(!commonnotinitedInterval)
+                        commonnotinitedInterval = setInterval(self.getNotinitedInfo, 1000 * 60 * 60 * 2) 
 
-                    commonnotinitedInterval = setInterval(function(){
-                        self.getNotinitedInfo()
-                    }, 1000 * 60 * 60 * 2) 
+                    if(!queueInterval)
+                        queueInterval =  setInterval(worker, 10) 
+
+                    if(!statscalculationInterval)
+                        statscalculationInterval = setInterval(function(){
+                            self.bestapply()
+                            self.bestnodesapply()
+                        }, statscalculationTime) 
+
+                    setTimeout(function(){
+                        self.bestapply()
+                        self.bestnodesapply()
+                    }, 2000)
 
                     inited = true
+
+                    
 
                     resolve()
 
@@ -655,9 +826,19 @@ var Nodemanager = function(p){
             findInterval = null
         }
 
+        if(!queueInterval){
+            clearInterval(queueInterval)
+            queueInterval = null
+        }
+
         if(commonnotinitedInterval){
             clearInterval(commonnotinitedInterval)
             commonnotinitedInterval = null
+        }
+
+        if(statscalculationInterval){
+            clearInterval(statscalculationInterval)
+            statscalculationInterval = null
         }
         
     }
@@ -668,20 +849,69 @@ var Nodemanager = function(p){
         })
     }
 
+    self.initednodeswithrating = function(){
+        return _.filter(self.nodes, function(n){
+            return n.inited && n.statistic.rating() > 0
+        })
+    }
+
+
+    self.bestlist = function(){
+        var nodes = _.sortBy(self.initednodes(), function(node){
+            return -node.statistic.probability()
+        })
+
+        var ns = _.filter(nodes, function(n, i){
+            return i < 3
+        })
+
+        return ns
+    }
+
+    self.bestnodesapply = function(){
+
+        self.bestnodes = _.map(self.bestlist(), function(n){
+
+            return n.key
+        })
+
+    }
+
+    self.bestapply = function(){
+        var node = self.selectProbability()
+
+        if (node) {
+            self.bestnode = node.key
+        }
+    }
+
     self.selectProbability = function(){
 
         var np = _.map(self.initednodes(), function(node){
             return {
                 node : node,
-                probability : node.statistic.probability()
+                probability : node.statistic.probability() + Math.random() / 10000
             }
         })
 
-        var r = f.randmap(np)
+        /*var npdb = _.map(self.initednodes(), function(node){
+            return {
+                node : node.key,
+                probability : node.statistic.probability() + Math.random() / 10000
+            }
+        })
 
-        if (r){
+        npdb = _.sortBy(npdb, (r) => {return -r.probability})*/
+
+
+
+        var r = f.randmap(np)
+        
+
+        if (r && r.node){
             return r.node
         }
+
 
         return null
     }
@@ -699,6 +929,7 @@ var Nodemanager = function(p){
                 return true //node.inited /*&& node.stable*/
             })
         }
+
 
         return best
     }
@@ -731,11 +962,25 @@ var Nodemanager = function(p){
 
     }
 
+    self.waitreadywithrating = function(){
+        return f.pretry(()=>{
+            return inited && self.initednodeswithrating().length
+        }, 30, 10000)
+    }
+
     self.waitready = function(){
         return f.pretry(()=>{
             return inited && self.initednodes().length
-        })
+        }, 30, 10000)
     }
+
+    /*self.waitreadywithrating = function(){
+        return f.pretry(()=>{
+            if(inited && self.initednodes().length){
+                
+            }
+        })
+    }*/
 
     self.request = function(method, parameters){
 
@@ -784,6 +1029,12 @@ var Nodemanager = function(p){
             })
 
         },  
+
+        clearAlltimeNodesStats : function(){
+            _.each(self.nodes, function(n){
+                n.statistic.clearAlltime()
+            })
+        },
         
         peernodesTime : function(node){
 

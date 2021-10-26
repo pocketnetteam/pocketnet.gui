@@ -2,7 +2,9 @@ var kit = require('./kit.js');
 var f = require('./functions');
 var readline = require('readline'); 
 
+process.env.NODE_ENV = 'production'
 
+global.MIN_NODES_COUNT = 10
 
 var destroy = function(repeat){
 
@@ -23,8 +25,6 @@ var destroy = function(repeat){
     })
 
 }
-
-
 
 
 var cli = {

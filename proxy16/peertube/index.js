@@ -44,7 +44,7 @@ var Peertube = function (settings) {
 	};
 
 	self.timeout = function () {
-		return 8500;
+		return 3500;
 	};
 
 	self.statsInterval = function () {
@@ -140,7 +140,6 @@ var Peertube = function (settings) {
 			var cacheparameters = _.clone(parsed);
 			var _waitstatus = ''
 
-			//console.log('prepareloadvideo', cachehash)
 
 			return new Promise((resolve, reject) => {
 				
@@ -161,17 +160,17 @@ var Peertube = function (settings) {
 
 				if (cached) {
 
-					//console.log('hascached', cachehash)
-
 					if (cached.error) {
-						//console.log('hascached err', cachehash)
 						return Promise.reject({ error: true, cached : true });
 					}
 
 					return Promise.resolve(cached);
 				}
 
-				//console.log('loadvideo', cachehash)
+				if(waitstatus == 'attemps'){
+					return Promise.reject({ error: true, cached : true });
+				}
+
 
 				return self.inner.video(parsed).then((r) => {
 					var ontime = null;
@@ -188,7 +187,6 @@ var Peertube = function (settings) {
 							fr.aspectRatio = 1.78;
 					}
 
-					//console.log('loaded', cachehash, ontime)
 
 					cache.set(cachekey, cacheparameters, r, null, ontime, cachehash);
 
@@ -204,9 +202,7 @@ var Peertube = function (settings) {
 
 				
 				if (e && e.status == '404') {
-
 					ontime = 120
-
 				}
 
 				if(!e.cached){
@@ -225,7 +221,6 @@ var Peertube = function (settings) {
 
 				/*if(!e.cached && _waitstatus == 'execute'){
 					if(!cachedone){
-						console.log("CLEAR CACHE")
 						cache.remove(
 							cachekey,
 							cacheparameters,

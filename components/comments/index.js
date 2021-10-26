@@ -1208,7 +1208,7 @@ var comments = (function(){
 						
 						return template(d);
 
-					}, function(__el){
+					}, function(__el, f, mme){
 
 						console.log(__el)
 
@@ -1216,7 +1216,7 @@ var comments = (function(){
 
 							renders.edit(localParent, comment)
 
-							if (_el.tooltipster)
+							if (!mme && _el.tooltipster)
 								_el.tooltipster('hide')	
 						})
 
@@ -1231,7 +1231,7 @@ var comments = (function(){
 									parent.remove()
 								}
 
-								if (_el.tooltipster)
+								if (!mme && _el.tooltipster)
 									_el.tooltipster('hide')	
                             })
 
@@ -1266,15 +1266,16 @@ var comments = (function(){
 								btn2text : self.app.localization.e('e13035')
 							})
 
-							_el.tooltipster('hide')	
+							if (!mme && _el.tooltipster)
+								_el.tooltipster('hide')		
 						})
 
 						__el.find('.socialshare').on('click', function(){
 
 							actions.sharesocial(comment)
 
-							if (_el.tooltipster)
-								_el.tooltipster('hide')	
+							if (!mme && _el.tooltipster)
+								_el.tooltipster('hide')		
 
 						})
 

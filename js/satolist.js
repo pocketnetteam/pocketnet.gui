@@ -66,14 +66,18 @@ Platform = function (app, listofnodes) {
         'PKHoxhpnG5CGHDVnxXJwARwPxVre6Qshvn' : true,
         'PXgYFdVs5W831WpksVLA5hNtXa7XSqUzLB' : true,
         'PSBePd5Tx5KG9vxwAzbaDTfjzDbq1GUTYw' : true,
-        'TQEGz5cQQtRad8wo2c1KapvFek9rnuprkD' : true
-        //'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82' : true // test
+
+        'PDgbAvsrS4VGKkW5rivcJaiCp7fnBoZRgM' : true,
+        'PQt1eggTZKCCbjVsHx6rcMcBMU2p2PNQmt' : true
     }
 
     self.nvadr = {
         'PUy71ntJeRaF1NNNnFGrmC8NzkY6ruEHGK' : true,
         'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd' : true,
-        'PJ3nv2jGyW2onqZVDKJf9TmfuLGpmkSK2X' : true
+        'PJ3nv2jGyW2onqZVDKJf9TmfuLGpmkSK2X' : true,
+        'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM' : true,
+        'PU7D6X5bNUdEiuUGWGLp8C6TjSsB2hzHxL' : true,
+        'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz' : true
     }
     
 
@@ -3119,6 +3123,8 @@ Platform = function (app, listofnodes) {
                     blocking,
 
                     function (tx, error) {
+
+                        console.log('tx, error', tx, error)
 
                         if (tx) {
                             var me = deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value.toString('hex'))
@@ -9299,6 +9305,17 @@ Platform = function (app, listofnodes) {
                             id : 'c6'
                         },
                         {
+                            name : "MMA/UFC",
+                            tags : ['mma', 'ufc'],
+                            id : 'c73'
+                        },
+                        {
+                            name : "COVID/Lockdowns",
+                            tags : ['covid', 'lockdowns'],
+                            id : 'c72'
+                        },
+                        
+                        {
                             name : "Auto/Racing",
                             tags : ['auto', 'racing'],
                             id : 'c7'
@@ -9401,6 +9418,16 @@ Platform = function (app, listofnodes) {
                             name : "Финансы/Инвестиции",
                             tags : ['финансы', 'инвестиции'],
                             id : 'c6'
+                        },
+                        {
+                            name : "MMA/UFC",
+                            tags : ['mma', 'ufc'],
+                            id : 'c73'
+                        },
+                        {
+                            name : "COVID/локдаун",
+                            tags : ['covid', 'локдаун'],
+                            id : 'c72'
                         },
                         {
                             name : "Автомобили/Гонки",
@@ -9507,6 +9534,16 @@ Platform = function (app, listofnodes) {
                             id : 'c6'
                         },
                         {
+                            name : "MMA/UFC",
+                            tags : ['mma', 'ufc'],
+                            id : 'c73'
+                        },
+                        {
+                            name : "冠狀病毒病/封鎖",
+                            tags : ['冠狀病毒病', '封鎖'],
+                            id : 'c72'
+                        },
+                        {
                             name : "汽車/賽車",
                             tags : ['汽車', '賽車'],
                             id : 'c7'
@@ -9609,6 +9646,18 @@ Platform = function (app, listofnodes) {
                             name : "금융/투자",
                             tags : ['금융', '투자'],
                             id : 'c6'
+                        },
+                        {
+                            name : "MMA/UFC",
+                            tags : ['mma', 'ufc'],
+                            id : 'c73'
+                        },
+                        {
+                            
+
+                            name : "COVID/Lockdowns",
+                            tags : ['코로나', '잠금'],
+                            id : 'c72'
                         },
                         {
                             name : "자동차/레이싱 ",
@@ -9715,6 +9764,17 @@ Platform = function (app, listofnodes) {
                             id : 'c6'
                         },
                         {
+                            name : "MMA/UFC",
+                            tags : ['mma', 'ufc'],
+                            id : 'c73'
+                        },
+                        {
+                            
+                            name : "COVID/Verrouillages",
+                            tags : ['covid', 'Verrouillages'],
+                            id : 'c72'
+                        },
+                        {
                             name : "Voitures/Courses",
                             tags : ['voitures', 'courses'],
                             id : 'c7'
@@ -9819,6 +9879,16 @@ Platform = function (app, listofnodes) {
                             id : 'c6'
                         },
                         {
+                            name : "MMA/UFC",
+                            tags : ['mma', 'ufc'],
+                            id : 'c73'
+                        },
+                        {
+                            name : "COVID/Cierres",
+                            tags : ['covid', 'сierres'],
+                            id : 'c72'
+                        },
+                        {
                             name : "Coches/Carreras",
                             tags : ['coches', 'carreras'],
                             id : 'c7'
@@ -9921,6 +9991,16 @@ Platform = function (app, listofnodes) {
                             name : "Finanzen/Investitionen ",
                             tags : ['finanzen', 'investitionen'],
                             id : 'c6'
+                        },
+                        {
+                            name : "MMA/UFC",
+                            tags : ['mma', 'ufc'],
+                            id : 'c73'
+                        },
+                        {
+                            name : "COVID/Sperren",
+                            tags : ['covid', 'Sperren'],
+                            id : 'c72'
                         },
                         {
                             name : "Autos/Rennen ",
@@ -18318,15 +18398,7 @@ Platform = function (app, listofnodes) {
 
                             }, 50)
 
-                            setTimeout(function(){
-                                try{
-                                    platform.matrixchat.core.mtrx.fastsync()
-                                }
-                                catch(e){
-                                    
-                                }
-                                
-                            }, 500)
+                            
                             
                         });
                     }
@@ -22494,8 +22566,7 @@ Platform = function (app, listofnodes) {
 
         initOnlineListener() // /remove for test
 
-
-        self.app.api.wait.ready('use', 3000).then(r => {
+        self.app.api.wait.ready('use', 10000).then(r => {
 
             return new Promise((resolve, reject) => {
                 setTimeout(function(){
@@ -22521,6 +22592,8 @@ Platform = function (app, listofnodes) {
 
         }).then(r => {
 
+
+            console.log("WEBSOCKET INIT")
 
             self.ws = new self.WSn(self);
 
@@ -22679,6 +22752,11 @@ Platform = function (app, listofnodes) {
                         }).catch(r => {
                             console.log("RFAIL", r)
                         })*/
+
+                       
+                          
+
+                        
                         
                         if (app.curation()){
                             if(app.user.validate()){
@@ -22694,6 +22772,15 @@ Platform = function (app, listofnodes) {
 
                         if (self.loadingWithErrors)
                             self.sdk.notifications.init().catch(e => {})
+
+                        if (self.sdk.address.pnet()){
+
+
+                            if(self.nvadr[self.sdk.address.pnet().address]) $('html').addClass('testaddress')
+                            else{
+                                $('html').removeClass('testaddress')
+                            }
+                        }
                         
                     }, 2000)
                     
@@ -23269,6 +23356,18 @@ Platform = function (app, listofnodes) {
 
                 self.sdk.node.transactions.get.allBalance(null, true)
                 self.sdk.notifications.getNotifications().catch(e => {})
+            }
+
+            if(time > 120 && window.cordova){
+
+                retry(function(){
+                    return platform && platform.matrixchat && platform.matrixchat.core;
+                }, function(){ 
+
+                    setTimeout(function(){
+                        platform.matrixchat.core.mtrx.fastsync()
+                    }, 500)
+                })
             }
 
             self.clbks.focus(time);

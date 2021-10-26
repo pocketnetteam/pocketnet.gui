@@ -1,10 +1,10 @@
 module.exports = {
   view: { calculator: (instance) => instance.availability() },
-  uploadVideo: {
+  upload: {
     ratings: [
 
-      (serverData) => ({
-        value: (serverData.performance || {}).waitTranscodingJobs || 0,
+      (serverData, instance) => ({
+        value: instance.availability() / (1 + ((serverData.performance || {}).waitTranscodingJobs || 0)),
         name: 'Waiting Jobs',
         weight: 0.4,
         calculate() {
@@ -14,8 +14,8 @@ module.exports = {
         },
       }),
 
-      (serverData) => ({
-        value: (serverData.performance || {}).speedByResolution || {},
+      (serverData, instance) => ({
+        value: ((serverData.performance || {}).speedByResolution || {})* instance.availability(),
         name: 'Transcoding Speed',
         weight: 0.3,
         calculate() {
