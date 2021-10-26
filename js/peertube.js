@@ -480,7 +480,7 @@ PeerTubePocketnet = function (app) {
         return this.roys({type : type})
           .then((data = {}) => {
 
-            //console.log("FDATA", data)
+            console.log("ROYSDATA", data)
             
             const roysAmount = Object.keys(data).length;
             var royId
