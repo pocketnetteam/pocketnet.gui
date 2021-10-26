@@ -7,7 +7,7 @@ var videoCabinet = (function () {
   const HALF_CIRCLE_ROTATE_PERCENTAGE = 50;
   const HUDRED_PERC = 100;
   const LAZYLOAD_PERCENTAGE = 0.9;
-  const LAZYLOAD_PERCENTAGE_EXTERNAL = 0.7;
+  const LAZYLOAD_PERCENTAGE_EXTERNAL = 0.5;
   const POSITIVE_STATUS = 'fulfilled';
   const TRANSCODING_CHECK_INTERVAL = 20000;
 
