@@ -21,9 +21,11 @@ var videoCabinet = (function () {
 
     var transcodingIntervals = {};
     var ed = {};
+
     let tagElement;
     let tagArray = [];
     let newVideosAreUploading = false;
+
     var videoServers = {};
     var peertubeServers = {};
     var userQuota = {};
@@ -375,19 +377,19 @@ var videoCabinet = (function () {
       onPageScroll() {
         const scrollProgress = el.windowElement.scrollTop() / el.c.height();
 
-        console.log('Scroll ', scrollProgress);
+        const loadPercent = ed.inLentaWindow
+          ? LAZYLOAD_PERCENTAGE_EXTERNAL
+          : LAZYLOAD_PERCENTAGE;
 
-        const loadPercent = ed.inLentaWindow ? LAZYLOAD_PERCENTAGE_EXTERNAL : LAZYLOAD_PERCENTAGE;
+        console.log(el.windowElement.scrollTop(), el.c.height());
 
         if (scrollProgress >= loadPercent && !newVideosAreUploading) {
-
           const activeServers = Object.keys(peertubeServers).filter(
             (server) => !(peertubeServers[server] || {}).isFull,
           );
 
           if (!activeServers.length) return;
           debugger;
-
           events.getAdditionalVideos(activeServers);
           newVideosAreUploading = true;
         }
@@ -758,7 +760,7 @@ var videoCabinet = (function () {
             )}</span>`,
           );
 
-          //Can go to post only if loaded natively (not from external component) 
+          //Can go to post only if loaded natively (not from external component)
           if (!ed.inLentaWindow) {
             element.find('.videoPostLinkinWindow').on('click', function () {
               var ed = {
@@ -1168,7 +1170,9 @@ var videoCabinet = (function () {
 
         el = {};
         el.c = p.el.find('#' + self.map.id);
-        el.windowElement = ed.scrollElementName ? $(ed.scrollElementName) : $(window);
+        el.windowElement = ed.scrollElementName
+          ? $(ed.scrollElementName)
+          : $(window);
 
         //do nothing if user has no access to videos
         if (!ed.hasAccess) return p.clbk(null, p);
