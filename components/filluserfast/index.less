@@ -558,6 +558,107 @@
 			}
 		}
 
+		
+		.categories{
+			margin : 0 auto;
+			max-width: 820px;
+			text-align: center;
+
+			.icon{
+				margin-top: 3em;
+				width: 246px;
+				margin-left: auto;
+				margin-right: auto;
+			}
+
+			.welcome_text{
+				margin-top: 50px;
+				font-size: 43px;
+
+				.name{
+					color: @color-main;
+				}
+			}
+
+			.cats{
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+				margin-top: 30px;
+				padding-bottom: 1em;
+
+				.cat{
+					cursor: pointer;
+					font-size: 18px;
+					padding: 8px 16px 8px 16px;
+					margin: 4px 8px;
+					border-radius: 100px;
+					color: #000000;
+					font-weight: 600;
+					border: 1px solid #E3E4EB;
+
+					.icon{
+						color: #575570;
+					}
+
+					&.active{
+						background: @color-main;
+						border: 1px solid @color-main;
+						color: @color-white;
+
+						.icon{
+							color: @color-white;
+						}
+					}
+				}
+			}
+
+			.next{
+				width: 241px;
+				padding: 12px, 24px, 12px, 24px;
+				border-radius: 12px;
+				font-size: 18px;
+				background: @color-gray-light;
+				color: @color-white;
+				border: none;
+				cursor: default;
+
+				&.active{
+					background: #011621;
+					cursor: pointer;
+				}
+
+				&:hover{
+					color: @color-white 
+				}
+			}
+
+			.skip{
+				background: transparent;
+				border: none;
+				color: @color-gray-light;
+				font-size: 18px;
+			}
+
+			.choosethemes_text{
+				margin-top: 0.5em;
+				font-size: 30px;
+				color: #555770;
+			}
+
+			.subcaption{
+				font-weight: 100;
+				padding-top: 3em;
+				font-size : 4em;
+
+			}
+
+			.subc{
+				margin-top : 4 * @rhythm;
+				text-align: center;
+			}
+		}
+
 		.network{
 			cursor: pointer;
 			margin : 0 auto;
@@ -581,8 +682,8 @@
 		}
 	}
 
-	&[step="welcome"]{
-		.caption{
+	&[step="welcome"], &[step="categories"]{
+		.caption, .hasaccount{
 			display: none;
 		}
     }

@@ -81,9 +81,11 @@ ____loclib.funetworkproblems = "Возникли некоторые пробле
 
 ____loclib.pleasewait = "Пожалуйста подождите";	
 ____loclib.next = "Далее";	
+____loclib.welcome = "Добро пожаловать";	
 ____loclib.welcometopocketnet = "Приветствуем вас в "+appname+"";	
 ____loclib.continue = "Продолжить";	
 
+____loclib.chooseThemes = "Выберите темы, которые Вам интересны";
 //user page
 
 ____loclib.rstate = "Репутация";	

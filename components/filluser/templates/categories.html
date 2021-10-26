@@ -1,0 +1,40 @@
+<div class="categories">
+	<div class="icon" events="sitename">
+		<img class="header_logo all" src="img/logotypes/bastyon_logo_white.svg">
+	</div>
+	<div class="welcome_text">
+		<span>
+			<%=e('welcome')%>,
+		</span>
+		<span class="name">
+			<%=username%>
+		</span>
+	</div>
+	<div class="choosethemes_text">
+		<%=e('chooseThemes')%>
+	</div>
+	<div class="cats">
+		<% _.each(categories, function(cat){ %> 
+
+			<div class="cat" cat="<%-cat.id%>">
+				<div class="cattable">
+					<span class="icon">
+						<i class="<%-cat.icon%>"></i>
+					</span>
+					<span>
+						<%=cat.name%>
+					</span>
+				</div>
+			</div>
+
+		<%	})	%> 
+	</div>
+	<div class="subc">
+		<button class="next">
+			<%=e('next')%>
+		</button>
+	</div>
+	<div class="subc">
+		<button class="skip"><%=e('skip')%></button>
+	</div>
+</div>
