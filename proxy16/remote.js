@@ -1,21 +1,16 @@
 process.setMaxListeners(0);
 require('events').EventEmitter.defaultMaxListeners = 0
+
 var f = require('./functions');
 var request = require('request');
 var jsdom  	= require('jsdom');
 var _ = require('underscore')
-
-var path = require("path");
-var jquery = {}// path.resolve(__dirname, "lib/jquery-1.11.3.min.js")
+var jquery = {}
 var ogParser = require("./lib/og-parser-edited.js");
-
-//const phantom = require('phantom');
 var iconv = require('iconv-lite');
-//const fetch = require('node-fetch'); 
 const autoenc = require('node-autodetect-utf8-cp1251-cp866');
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-
-var nremotelink = 'https://1.pocketnet.app/opengraph/parse' //url=https://pocketnet.app&validate=false'
+var nremotelink = 'https://1.pocketnet.app/opengraph/parse'
 
 var Remote = function(app){
 
@@ -31,6 +26,9 @@ var Remote = function(app){
 	{
 	    var ch = 0;
 	    var result = "";
+
+		if(!text || !text.length) return ""
+
 	    for (var i = 0; i < text.length; i++)
 	    {
 	        ch = text.charCodeAt(i);
@@ -260,7 +258,12 @@ var Remote = function(app){
 				load.ogs(uri, function(og){
 					if(_.isEmpty(og)){
 						load.ogf(uri, function(og){
-							ogcache = _.last(ogcache, 3000)
+
+							if (ogcache.length > 3500){
+								ogcache = _.last(ogcache, 3000)
+							}
+
+							
 		
 							delete ogloading[uri]
 		
@@ -275,7 +278,9 @@ var Remote = function(app){
 					}
 					else{
 
-						ogcache = _.last(ogcache, 3000)
+						if (ogcache.length > 3500){
+							ogcache = _.last(ogcache, 3000)
+						}
 		
 						delete ogloading[uri]
 	
@@ -393,6 +398,17 @@ var Remote = function(app){
 		},
 
 		ogs : function(uri, clbk){
+
+			if(!uri){
+				
+				if (clbk){
+					clbk({})
+				}
+
+				return
+			}
+
+
 			request({
 				uri : nremotelink + '?url=' + uri + '&validate=false',
 				timeout : 30000,
@@ -434,6 +450,16 @@ var Remote = function(app){
 		},
 
 		ogf : function(uri, clbk){
+
+			if(!uri){
+
+				if (clbk){
+					clbk({})
+				}
+
+				return
+			}
+
 			request({
 				uri : 'https://pocketnet.app:8888/urlPreview?url=' + hexEncode(uri),
 				timeout : 30000,
@@ -512,7 +538,10 @@ var Remote = function(app){
 			if(html){
 
 				if(!fromcache){
-					cache = _.last(cache, 3000)
+
+					if (cache.length > 3500){
+						cache = _.last(cache, 3000)
+					}
 
 					cache.push({
 						url : url,
@@ -618,7 +647,6 @@ var Remote = function(app){
 	self.make = function(url, clbk){
 
 		self.get(url, function(window, html){
-
 		
 			if(html && window.$){
 				if(window.$){

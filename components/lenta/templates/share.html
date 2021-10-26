@@ -316,7 +316,7 @@ var metadisplay = function(){ %>
 
 } %>
 
-<div class="sharecnt">
+<div class="sharecnt <% if(share.deleted) { %> deleted <% } %>">
 
 	<div class="work unselectablemobile">
 
@@ -333,7 +333,8 @@ var metadisplay = function(){ %>
 						<% 
 							var src = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image');
 							var name = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.name');
-							var letter = name ? name[0] : ''; 	
+							var letter = name ? name[0] : ''; 
+							
 						%>
 
 						<div class="icon">
@@ -351,14 +352,12 @@ var metadisplay = function(){ %>
 				
 								<% } %>
 
-								<% if(deep(app, 'platform.real.'+share.address)) {%>
-									<div class="realperson">
-										<span class="fa-stack fa-2x">
-											<i class="fas fa-certificate fa-stack-2x"></i>
-											<i class="fas fa-check fa-stack-1x"></i>
-										</span>
-									</div>
+								<% if(app.platform.ui.markUser) {%>
+
+									<%= app.platform.ui.markUser(share.address)%>
+
 								<% } %>
+								
 							</div>
 						</div>
 
@@ -375,8 +374,9 @@ var metadisplay = function(){ %>
 				</div> 
 
 			</div>
+			
 
-			<div class="cntswrk">
+			<div class="cntswrk cntscontent">
 
 
 				<% var a = share.settings.a || share.default.a %>
@@ -392,11 +392,16 @@ var metadisplay = function(){ %>
 
 			</div>
 
-			<div class="repostWrapper"></div>
+			
+			<div class="cntswrk removeDescription">
+				<%=e('postRemoved')%>
+			</div>
+
+			<div class="repostWrapper cntscontent"></div>
 
 			<% if(!emptywithrepost) {%>
 
-				<div class="cntswrk">
+				<div class="cntswrk cntscontent">
 					<div class="paddingWrapper">
 						
 						<% if(share.tags && share.tags.length > 0) {

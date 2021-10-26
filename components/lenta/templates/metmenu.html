@@ -32,7 +32,7 @@ var all = {
 	remove : {
 		icon : '<i class="far fa-times-circle"></i>',
 		text : e('removepost'),
-		class : 'edit'
+		class : 'remove'
 	},
 
 	downloadVideo : {
@@ -143,6 +143,11 @@ if(share){
 			}
 		}
 
+		if (my){
+			m.push('remove')
+		}
+
+		
 		if (my && (!share.time || share.time > (new Date()).addHours(-24) )){
 			m.push('edit')
 		}

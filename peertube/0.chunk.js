@@ -3069,7 +3069,7 @@ module.exports = Peer
 
 /***/ }),
 
-/***/ 208:
+/***/ 209:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3180,7 +3180,7 @@ module.exports = eos;
 
 /***/ }),
 
-/***/ 211:
+/***/ 212:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8531,7 +8531,7 @@ exports.Writable = __webpack_require__(268);
 exports.Duplex = __webpack_require__(177);
 exports.Transform = __webpack_require__(269);
 exports.PassThrough = __webpack_require__(407);
-exports.finished = __webpack_require__(208);
+exports.finished = __webpack_require__(209);
 exports.pipeline = __webpack_require__(408);
 
 
@@ -8764,7 +8764,7 @@ var _Object$setPrototypeO;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var finished = __webpack_require__(208);
+var finished = __webpack_require__(209);
 
 var kLastResolve = Symbol('lastResolve');
 var kLastReject = Symbol('lastReject');
@@ -9063,7 +9063,7 @@ function destroyer(stream, reading, writing, callback) {
   stream.on('close', function () {
     closed = true;
   });
-  if (eos === undefined) eos = __webpack_require__(208);
+  if (eos === undefined) eos = __webpack_require__(209);
   eos(stream, {
     readable: reading,
     writable: writing
@@ -9902,7 +9902,7 @@ exports.Writable = __webpack_require__(287);
 exports.Duplex = __webpack_require__(181);
 exports.Transform = __webpack_require__(288);
 exports.PassThrough = __webpack_require__(431);
-exports.finished = __webpack_require__(211);
+exports.finished = __webpack_require__(212);
 exports.pipeline = __webpack_require__(432);
 
 
@@ -10135,7 +10135,7 @@ var _Object$setPrototypeO;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var finished = __webpack_require__(211);
+var finished = __webpack_require__(212);
 
 var kLastResolve = Symbol('lastResolve');
 var kLastReject = Symbol('lastReject');
@@ -10434,7 +10434,7 @@ function destroyer(stream, reading, writing, callback) {
   stream.on('close', function () {
     closed = true;
   });
-  if (eos === undefined) eos = __webpack_require__(211);
+  if (eos === undefined) eos = __webpack_require__(212);
   eos(stream, {
     readable: reading,
     writable: writing

@@ -26,7 +26,10 @@ var Peertube = require('./peertube/index.js');
 var Bots = require('./bots.js');
 var SystemNotify = require('./systemnotify.js');
 //////////////
+/*
+if (process.platform === 'win32') expectedExitCodes = [3221225477];
 
+console.log('expectedExitCodes' , expectedExitCodes)*/
 
 var Proxy = function (settings, manage, test) {
 
@@ -47,6 +50,8 @@ var Proxy = function (settings, manage, test) {
 	var peertube = new Peertube()
 	var bots = new Bots(settings.bots)
 	var systemnotify = new SystemNotify(settings.systemnotify)
+
+	var dump = {}
 
 	self.userDataPath = null
 	self.session = 'pocketnetproxy' //f.makeid()
@@ -585,7 +590,10 @@ var Proxy = function (settings, manage, test) {
 	self.peertube = {
 		init: function () {
 			var ins = {
-        		1: ['pocketnetpeertube1.nohost.me', 'pocketnetpeertube2.nohost.me'],
+        		1: [
+					{host : 'pocketnetpeertube1.nohost.me', cantuploading : true}, 
+					{host : 'pocketnetpeertube2.nohost.me' , cantuploading : true}
+				],
         		5: [
 					{host : 'pocketnetpeertube5.nohost.me', cantuploading : true}, 
 					{host : 'pocketnetpeertube7.nohost.me', cantuploading : true}, 
@@ -873,8 +881,6 @@ var Proxy = function (settings, manage, test) {
 
 			}).then(() => {
 
-
-
 				var userPr = rpc({
 					method : 'getuserprofile',
 					parameters : [users, '1'],
@@ -901,6 +907,9 @@ var Proxy = function (settings, manage, test) {
 				}).catch(e => {
 					return Promise.resolve()
 				})
+
+				users = null
+				videos = null
 
 				return Promise.all([userPr, videosPr])
 
@@ -938,34 +947,39 @@ var Proxy = function (settings, manage, test) {
 			rpc: {
 				path: '/rpc/*',
 				authorization: 'signaturelight',
-				action: function ({ method, parameters, options, U, cachehash }) {
+				action: function ({ method, parameters, options, U, cachehash, internal }, request) {
 					if (!method) {
 						return Promise.reject({
 							error: 'method',
 							code: 400,
 						});
 					}
-
 					if (!options) options = {};
 					if (!parameters) parameters = [];
 
 					var node = null;
 					var noderating = 0
 
-					var log = false;
 					var _waitstatus = 'un'
+					var direct = true
+
+					var cparameters = _.clone(parameters)
+
 
 					return new Promise((resolve, reject) => {
 
 						if((options.locally && options.meta)){
 							resolve()
+
+							return
 						}
 
-						return nodeManager.waitready().then(resolve).catch(reject)
-
+						return nodeManager.waitreadywithrating().then(resolve).catch(reject)
 						
 					}).then(() => {
 
+
+					
 						/// ????
 						if (options.locally && options.meta) {
 							node = nodeManager.temp(options.meta);
@@ -973,16 +987,39 @@ var Proxy = function (settings, manage, test) {
 
 						if (options.node) {
 							node = nodeManager.nodesmap[options.node];
+
+							if (node) 
+								direct = false
 						}
 
-						if (!node || options.auto)
-							node = nodeManager.selectProbability(); //nodeManager.selectbest()
+						if (!node || options.auto){
+
+							node = nodeManager.selectProbability();
+
+							if(!node && nodeManager) 
+								node = nodeManager.nodesmap[nodeManager.bestnode]
+
+							direct = false
+						}
+
+						if (internal){
+							if(!node){
+								console.log("FAIL")
+							}
+							
+						}
+						
 
 						if (!node) {
 							return Promise.reject({
 								error: 'node',
 								code: 502,
 							});
+						}
+
+						if(method == 'getnodeinfo') {
+							cparameters.push(node.key)
+							cachehash = null
 						}
 
 						noderating = node.statistic.rating()
@@ -996,12 +1033,7 @@ var Proxy = function (settings, manage, test) {
 								return
 							}
 
-							server.cache.wait(method, _.clone(parameters), function (waitstatus) {
-
-								if (log) {
-									console.log('waitstatus', waitstatus)
-								}
-
+							server.cache.wait(method, cparameters, function (waitstatus) {
 								resolve(waitstatus);
 
 							}, cachehash);
@@ -1013,26 +1045,20 @@ var Proxy = function (settings, manage, test) {
 
 						_waitstatus = waitstatus
 
-						if (log) {
-							console.log('_waitstatus', _waitstatus, method, parameters)
-						}
+						var cached = server.cache.get(method, cparameters, cachehash);
 
-						var cached = server.cache.get(method, _.clone(parameters), cachehash);
-
-						if (log) {
-							console.log('cached', cached ? true : false)
-						}
-
-						if (cached && noderating) {
+						if (cached) {
 							return Promise.resolve({
 								data: cached,
 								code: 208,
 							});
 						}
 
-						//var cachwaitng = server.cache.waitng(method, parameters)
-
-						
+						if(waitstatus == 'attemps'){
+							return Promise.reject({
+								code: 408,
+							});
+						}
 
 						if (method == 'sendrawtransactionwithmessage') {
 							if (!bots.check(U)) {
@@ -1049,40 +1075,28 @@ var Proxy = function (settings, manage, test) {
 							}
 						}
 
+						return new Promise((resolve, reject) => {
+							nodeManager.queue(node, method, parameters, direct, {resolve, reject})
+						})
 
-						if (log) {
-							console.log('load', method, parameters)
-						}
+						.then((data) => {
 
-						return node
+							if (noderating){
+								server.cache.set(method, cparameters, data, node.height());
+							}
 
-							.checkParameters()
-							.then((r) => {
-								return node.rpcs(method, _.clone(parameters));
-							})
-							.then((data) => {
-
-								if (noderating)
-									server.cache.set(method, _.clone(parameters), data, node.height());
-
-								return Promise.resolve({
-									data: data,
-									code: 200,
-									node: node.exportsafe(),
-								});
+							return Promise.resolve({
+								data: data,
+								code: 200,
+								node: node.exportsafe(),
 							});
+						});
 					})
 					.catch((e) => {
 
 						if (_waitstatus == 'execute'){
-
-							if (log) {
-								console.log('clear cahce', method, parameters)
-							}
-
-							server.cache.remove(method, _.clone(parameters));
+							server.cache.remove(method, cparameters);
 						}
-							
 
 						return Promise.reject({
 							error: e,
@@ -1095,6 +1109,17 @@ var Proxy = function (settings, manage, test) {
 		},
 
 		nodeManager: {
+			pendingstatus: {
+				path: '/nodes/pendingstatus',
+				action: function () {
+
+					var data = nodeManager.pendingstatus()
+
+					return Promise.resolve({ data });
+
+				},
+			},
+
 			clearnodesstats : {
 				path: '/nodes/clearnodesstats',
 				authorization: 'signature',
@@ -1152,7 +1177,9 @@ var Proxy = function (settings, manage, test) {
 							return Promise.resolve({
 								node: nnode.exportsafe(),
 							});
-						else return Promise.reject('none');
+
+						else 
+							return Promise.reject('none');
 					}
 
 					var nnode = _node.changeNodeUser(null, _node.needToChange());
@@ -1223,7 +1250,6 @@ var Proxy = function (settings, manage, test) {
 							});
 						})
 						.catch((e) => {
-							//console.log("e", e)
 							return Promise.reject(e);
 						});
 				},
@@ -1267,8 +1293,6 @@ var Proxy = function (settings, manage, test) {
 					return Promise.resolve({
 						data: data,
 					}).catch(e => {
-
-						console.error(e)
 
 						return Promise.reject(e)
 					});
@@ -1408,6 +1432,93 @@ var Proxy = function (settings, manage, test) {
 					return Promise.resolve({ data });
 				},
 			},
+			heapdump: {
+				path: '/heapdump',
+				//authorization: 'signature',
+				action: function (message) {
+
+					/*if (!message.A)
+						return Promise.reject({ error: 'Unauthorized', code: 401 });*/
+						
+					var dumpdata = _.clone(dump)
+
+					if (dump.stared){
+						return Promise.resolve({
+							message : "started yet",
+							data : dump
+						})
+					}
+
+					if (dump.error){
+
+						dump = {}
+
+						return Promise.resolve({
+							status : "dump error / refresh for start new dump",
+							data : dumpdata
+						})
+					}
+
+					if (dump.success){
+
+						dump = {}
+
+						return Promise.resolve({
+							status : "dump success / refresh for start new dump",
+							data : dumpdata
+						})
+					}
+
+					console.log('heapdump start')
+
+					var filename = f.path('heapdump/' + Date.now() + '.heapsnapshot')
+					var heapdump = require('heapdump');
+
+					dump.filename = filename
+					dump.stared = Date.now()
+
+					try{
+
+						f.createfolder(filename)
+
+						heapdump.writeSnapshot(filename, function(err, filename) {
+
+							dump._started = dump.stared
+							dump.end = Date.now()
+							dump.name = filename
+	
+							delete dump.stared
+	
+							if (err){
+	
+								dump.error = err.toString ? err.toString() : err
+	
+								console.log(dump.error)
+							}
+							else{
+								console.log('dump written to', filename);
+	
+								dump.success = true
+							}
+							
+						});
+
+						return Promise.resolve('started');
+					}
+					catch(err){	
+
+						console.log('err', err)
+
+						return Promise.reject({
+							result : 'error',
+							error :  err.toString ? err.toString() : err
+						});
+					}
+					
+
+					
+				},
+			},
 			stats: {
 				path: '/stats',
 				action: function () {
@@ -1421,11 +1532,19 @@ var Proxy = function (settings, manage, test) {
 			ping: {
 				path: '/ping',
 				action: function () {
+
+					var node = nodeManager.bestnode
+
+					/*if (nodeManager.bestnodes.length){
+						node = nodeManager.bestnodes[f.rand(0, nodeManager.bestnodes.length - 1)]
+					}*/
+	
 					return Promise.resolve({
 						data: {
 							time: f.now(),
 							session : self.session,
-							v : '0807'
+							v : '0807',
+							node : node || ''
 						},
 					});
 				},
@@ -1742,7 +1861,7 @@ var Proxy = function (settings, manage, test) {
 					var kaction = f.deep(manage, message.action);
 
 					if (!kaction) {
-						return Promise.reject({ error: 'unknownAction', code: 502 });
+						return Promise.reject({ error: 'unknownAction', code: 404 });
 					}
 
 					return kaction(message.data)

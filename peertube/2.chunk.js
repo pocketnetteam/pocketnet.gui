@@ -529,7 +529,7 @@ PeertubeChunkStore.CLEANER_EXPIRATION_MS = 1000 * 60 * 5; // 5 minutes
 
 /***/ }),
 
-/***/ 521:
+/***/ 520:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -552,7 +552,7 @@ var path_browserify = __webpack_require__(22);
 // CONCATENATED MODULE: ./src/assets/player/webtorrent/video-renderer.ts
 // Thanks: https://github.com/feross/render-media
 // TODO: use render-media once https://github.com/feross/render-media/issues/32 is fixed
-const MediaElementWrapper = __webpack_require__(213);
+const MediaElementWrapper = __webpack_require__(214);
 
 const videostream = __webpack_require__(307);
 const VIDEOSTREAM_EXTS = [

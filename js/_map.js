@@ -106,6 +106,7 @@ __map =  {
 		{ c : 'panel', n : 'discussiondummy' },
 		{ c : 'lastcomments', n : 'index' },
 		{ c : 'tagcloud', n : 'index' },
+		{ c : 'userpage', n : 'index' },
 		{ c : 'categories', n : 'index' },
 		{ c : 'categories', n : 'categories' },
 		{ c : 'lenta', n : 'share' },
@@ -1858,10 +1859,6 @@ __map =  {
 
 };
 
-
-console.log(JSON.stringify(_.map(__map, function(o,i){
-	return i
-})))
 
 
 if(typeof module != "undefined") module.exports = __map;

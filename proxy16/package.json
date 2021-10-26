@@ -4,6 +4,7 @@
     "description": "Pocketnet Proxy Server 16",
     "main": "index.js",
     "scripts": {
+        "start": "node cli.js --cli",
         "serve": "node cli.js --cli",
         "serveinspect": "node --inspect cli.js --cli",
         "serve:test": "node cli.js --cli --test",
@@ -23,7 +24,9 @@
         "express-useragent": "^1.0.15",
         "express-ws": "^4.0.0",
         "firebase-admin": "^9.3.0",
+        "heapdump": "^0.3.15",
         "htmlparser2": "^6.1.0",
+        "iconv-lite": "",
         "jsdom": "^7.2.2",
         "lambda-rate-limiter": "",
         "lodash": "^4.17.15",
@@ -39,7 +42,6 @@
         "svg-captcha": "^1.4.0",
         "swagger-ui-express": "^4.1.4",
         "tcp-port-used": "^1.0.1",
-        "underscore": "^1.12.1",
-        "iconv-lite": ""
+        "underscore": "^1.12.1"
     }
 }

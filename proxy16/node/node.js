@@ -15,8 +15,11 @@ var Node = function(options, manager){
 
     var self = this
     var lastinfo = null
+    var lastnodeblock = null
     var cachedrating = null
     var chain = [];
+
+    var pending = 0
 
     self.updating = ['rpcuser', 'rpcpass', 'ws', 'name']
 
@@ -172,6 +175,8 @@ var Node = function(options, manager){
 
         if ((block.hash || block.blockhash) && block.time && block.height){
 
+            
+
             var lastblock = self.lastblock()
 
             if(!lastblock || lastblock.height < block.height){
@@ -187,6 +192,8 @@ var Node = function(options, manager){
             }
 
             chain = f.lastelements(chain, 150, 10)
+
+            lastnodeblock = block
 
         }
     }
@@ -233,7 +240,7 @@ var Node = function(options, manager){
         })
 
         return {
-            fork : counter ? dcounter / counter >= 0.5 : false,
+            fork : cs.lasttrustblocks.length > 4 && (counter ? dcounter / counter >= 0.5 : false),
             difference : d
         }
         
@@ -263,6 +270,8 @@ var Node = function(options, manager){
 
         return self.checkParameters().then(r => {
 
+            pending++
+
             return self.rpc[method](parsed).catch(e => {
 
                 err = e
@@ -270,6 +279,8 @@ var Node = function(options, manager){
                 return Promise.resolve(null)
     
             }).then(data => {
+
+                pending--
     
                 var difference = performance.now() - time;
                 var code = 200;
@@ -282,9 +293,9 @@ var Node = function(options, manager){
                         code = 521
                     }
 
-                    if(err.code == 521) penalty.set(0.8, 120000, '521')
-                    if(err.code == 408) penalty.set(0.5, 30000, '408')
-                    if(err.code == 429) penalty.set(0.3, 10000, '429')
+                    if(err.code == 521) penalty.set(0.8, 220000, '521')
+                    if(err.code == 408) penalty.set(0.5, 60000, '408')
+                    if(err.code == 429) penalty.set(0.3, 60000, '429')
     
                 }	
 
@@ -319,6 +330,10 @@ var Node = function(options, manager){
 
     self.statistic = {
 
+        pending : function(){
+            return pending
+        },
+
         clear : function(){
             self.events = []
             self.eventsCount = 0
@@ -337,7 +352,6 @@ var Node = function(options, manager){
 
         add : function(p){
 
-
             var push = _.clone(p)
 
                 push.time = new Date()
@@ -348,7 +362,7 @@ var Node = function(options, manager){
                 var d = self.events.length - maxevents
 
                 if (d > 100){
-                    self.events = self.events.splice(0, d)
+                    self.events = self.events.splice(d)
                 }
             }
 
@@ -434,7 +448,7 @@ var Node = function(options, manager){
             var d = statistic.history.length - maxeventsHistory
 
             if (d > maxeventsHistory / 10){
-                statistic.history = statistic.history.splice(0, d)
+                statistic.history = statistic.history.splice(d)
             }
 
             statistic.historyslice = self.statistic.mixeventsArray(statistic.history)
@@ -528,23 +542,25 @@ var Node = function(options, manager){
                 date : lastinfoTime || null
             }
 
+            var timecounter = 0
+
             _.each(evt, function(l){
 
                 if (l.code == 200){
                     r.success++
+                    r.time += l.difference
+                    timecounter++
                 }
                 else
                 {
                     r.failed++
                 }
 
-                r.time += l.difference
-
             })
 
             r.percent = (r.success / (r.count || 1)) * 100
 
-            r.time = r.time / (r.count || 1)
+            r.time = r.time / (timecounter || 1)
 
             return r
         },
@@ -681,8 +697,12 @@ var Node = function(options, manager){
 
             _.each(nodes, function(node){
 
-                total += node.statistic.rating()
+                var rating = node.statistic.rating();
+
+                if (rating)
+                    total += rating
             })
+            
 
             if(!total) {
 
@@ -699,7 +719,7 @@ var Node = function(options, manager){
             if(!manager) return 1
 
 
-            return this.probabilityNodes(manager.nodes)
+            return this.probabilityNodes(manager.initednodes())
 
         },
 
@@ -881,6 +901,50 @@ var Node = function(options, manager){
         
     }
 
+    self.exepmethod = {
+
+        getnodeinfo : function(){
+
+            var result = null
+
+            return f.pretry(function(){
+
+                if (lastinfo && lastinfoTime){
+    
+                    var dif = Math.floor(((new Date()).getTime()) / 1000) - Math.floor(((lastinfoTime).getTime()) / 1000)
+                    //console.log('dif', dif)
+
+                    if (dif < 55){
+        
+                        result = _.clone(lastinfo)
+        
+                        result.time += dif
+        
+                        if (lastnodeblock){
+                            result.lastblock = lastnodeblock
+                        }
+        
+                        return true
+                    }
+                }
+
+            }, 40, 3000).then(r => {
+
+                //console.log("HAS RESULT", result ? true : false)
+
+                if (result){
+                    return Promise.resolve(result)
+                }
+
+                return self.info()
+
+            })
+
+            
+        }
+
+    }
+
     self.info = function(){
 
         if (self.testing){
@@ -888,6 +952,7 @@ var Node = function(options, manager){
         }
 
         lastinfoTime = new Date()
+
 
         return self.rpcs('getnodeinfo').then(info => {
 
@@ -944,7 +1009,8 @@ var Node = function(options, manager){
             local : self.local || false,
             peer : self.peer,
             wssusers : _.toArray(wss.users).length,
-            bchain : self.bchain
+            bchain : self.bchain,
+            
         }
     }
 

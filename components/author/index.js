@@ -1046,6 +1046,7 @@ var author = (function(){
 			if (!src && me === author.address){
 
 
+
 				el.usericon.addClass('active')
 
 				self.app.platform.api.plissing({
