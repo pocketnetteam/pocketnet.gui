@@ -308,7 +308,7 @@ var metadisplay = function(){ %>
 
 } %>
 
-<div class="sharecnt">
+<div class="sharecnt <% if(share.deleted) { %> deleted <% } %>">
 
 	<div class="work unselectablemobile">
 
@@ -366,8 +366,9 @@ var metadisplay = function(){ %>
 				</div> 
 
 			</div>
+			
 
-			<div class="cntswrk">
+			<div class="cntswrk cntscontent">
 
 
 				<% var a = share.settings.a || share.default.a %>
@@ -383,11 +384,16 @@ var metadisplay = function(){ %>
 
 			</div>
 
-			<div class="repostWrapper"></div>
+			
+			<div class="cntswrk removeDescription">
+				<%=e('postRemoved')%>
+			</div>
+
+			<div class="repostWrapper cntscontent"></div>
 
 			<% if(!emptywithrepost) {%>
 
-				<div class="cntswrk">
+				<div class="cntswrk cntscontent">
 					<div class="paddingWrapper">
 						
 						<% if(share.tags && share.tags.length > 0) {

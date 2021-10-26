@@ -1047,7 +1047,6 @@ var author = (function(){
 
 
 				/*el.usericon.addClass('active')
-
 				self.app.platform.api.plissing({
 					el : el.usericon,
 				})*/
