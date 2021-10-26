@@ -529,7 +529,7 @@ PeertubeChunkStore.CLEANER_EXPIRATION_MS = 1000 * 60 * 5; // 5 minutes
 
 /***/ }),
 
-/***/ 521:
+/***/ 520:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -552,7 +552,7 @@ var path_browserify = __webpack_require__(22);
 // CONCATENATED MODULE: ./src/assets/player/webtorrent/video-renderer.ts
 // Thanks: https://github.com/feross/render-media
 // TODO: use render-media once https://github.com/feross/render-media/issues/32 is fixed
-const MediaElementWrapper = __webpack_require__(213);
+const MediaElementWrapper = __webpack_require__(214);
 
 const videostream = __webpack_require__(307);
 const VIDEOSTREAM_EXTS = [
@@ -655,13 +655,13 @@ function getCodec(name, useVP9 = false) {
 
 
 // EXTERNAL MODULE: ./src/assets/player/utils.ts + 3 modules
-var utils = __webpack_require__(4);
+var utils = __webpack_require__(3);
 
 // EXTERNAL MODULE: ./src/assets/player/webtorrent/peertube-chunk-store.ts
 var peertube_chunk_store = __webpack_require__(507);
 
 // EXTERNAL MODULE: ./src/assets/player/peertube-player-local-storage.ts
-var peertube_player_local_storage = __webpack_require__(10);
+var peertube_player_local_storage = __webpack_require__(12);
 
 // CONCATENATED MODULE: ./src/assets/player/webtorrent/webtorrent-plugin.ts
 
@@ -687,7 +687,7 @@ class webtorrent_plugin_WebTorrentPlugin extends Plugin {
         };
         this.webtorrent = new webtorrent({
             tracker: {
-                rtcConfig: Object(utils["c" /* getRtcConfig */])()
+                rtcConfig: Object(utils["d" /* getRtcConfig */])()
             },
             dht: false
         });
@@ -697,7 +697,7 @@ class webtorrent_plugin_WebTorrentPlugin extends Plugin {
         this.isAutoResolutionObservation = false;
         this.playerRefusedP2P = false;
         this.downloadSpeeds = [];
-        this.startTime = Object(utils["i" /* timeToInt */])(options.startTime);
+        this.startTime = Object(utils["j" /* timeToInt */])(options.startTime);
         // Disable auto play on iOS
         this.autoplay = options.autoplay;
         this.playerRefusedP2P = !Object(peertube_player_local_storage["c" /* getStoredP2PEnabled */])();
@@ -773,7 +773,7 @@ class webtorrent_plugin_WebTorrentPlugin extends Plugin {
         this.currentVideoFile = videoFile;
         // Don't try on iOS that does not support MediaSource
         // Or don't use P2P if webtorrent is disabled
-        if (Object(utils["e" /* isIOS */])() || this.playerRefusedP2P) {
+        if (Object(utils["f" /* isIOS */])() || this.playerRefusedP2P) {
             return this.fallbackToHttp(options, () => {
                 this.player.playbackRate(oldPlaybackRate);
                 return done();
@@ -977,8 +977,8 @@ class webtorrent_plugin_WebTorrentPlugin extends Plugin {
         });
         // If the download speed is too bad, return the lowest resolution we have
         if (filteredFiles.length === 0)
-            return Object(utils["l" /* videoFileMinByResolution */])(files);
-        return Object(utils["k" /* videoFileMaxByResolution */])(filteredFiles);
+            return Object(utils["m" /* videoFileMinByResolution */])(files);
+        return Object(utils["l" /* videoFileMaxByResolution */])(filteredFiles);
     }
     getAndSaveActualDownloadSpeed() {
         const start = Math.max(this.downloadSpeeds.length - this.CONSTANTS.BANDWIDTH_AVERAGE_NUMBER_OF_VALUES, 0);

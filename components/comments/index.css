@@ -192,11 +192,13 @@
   position: relative;
 }
 #comments .list .comment.mycomment > div.commentPaddingWrapper > div.commentWrapper > div.commentBody > div.cbodyWrapper .commentpanel .upvoteComment,
+
 #comments .list .comment.rated > div.commentPaddingWrapper > div.commentWrapper > div.commentBody > div.cbodyWrapper .commentpanel .upvoteComment {
   cursor: default;
   color: #b2abac;
 }
 #comments .list .comment.mycomment > div.commentPaddingWrapper > div.commentWrapper > div.commentBody > div.cbodyWrapper .commentpanel .upvoteComment.ratedScore,
+
 #comments .list .comment.rated > div.commentPaddingWrapper > div.commentWrapper > div.commentBody > div.cbodyWrapper .commentpanel .upvoteComment.ratedScore {
   color: #00A3F7;
 }
@@ -1212,11 +1214,13 @@ html.stblack #comments.fromtop .list {
 html.stblack #comments .list .comment {
   border-bottom: 1px solid #0e1c2b;
 }
-html.stblack #comments .list .comment.mycomment > div.commentPaddingWrapper > div.commentWrapper > div.commentBody > div.cbodyWrapper .commentpanel .upvoteComment,
+
+html.stblack #comments .list .comment.dev > div.commentPaddingWrapper > div.commentWrapper > div.commentBody > div.cbodyWrapper .commentpanel .upvoteComment,
 html.stblack #comments .list .comment.rated > div.commentPaddingWrapper > div.commentWrapper > div.commentBody > div.cbodyWrapper .commentpanel .upvoteComment {
   color: #b2abac;
 }
-html.stblack #comments .list .comment.mycomment > div.commentPaddingWrapper > div.commentWrapper > div.commentBody > div.cbodyWrapper .commentpanel .upvoteComment.ratedScore,
+
+html.stblack #comments .list .comment.dev > div.commentPaddingWrapper > div.commentWrapper > div.commentBody > div.cbodyWrapper .commentpanel .upvoteComment.ratedScore,
 html.stblack #comments .list .comment.rated > div.commentPaddingWrapper > div.commentWrapper > div.commentBody > div.cbodyWrapper .commentpanel .upvoteComment.ratedScore {
   color: #00A3F7;
 }
@@ -1241,17 +1245,7 @@ html.stblack #comments .list .commentWrapper > div .edited i,
 html.stblack #comments .list .commentWrapper > div .edited span {
   color: #b2abac;
 }
-html.stblack #comments .list .metatable {
-  height: auto;
-}
-html.stblack #comments .list .metatable > div {
-  vertical-align: middle;
-  padding: 1em 0;
-  padding-bottom: 0;
-}
-html.stblack #comments .list .metatable > div span {
-  font-size: 0.9em;
-}
+
 html.stblack #comments .list .metatable > div.author {
   color: #00a4ff;
 }
@@ -1261,9 +1255,7 @@ html.stblack #comments .list .metatable > div .date {
 html.stblack #comments .list .metatable > div .edited {
   color: #b2abac;
 }
-html.stblack #comments .list .metatable > div.panelWrapper .panel {
-  color: #1e2328;
-}
+
 html.stblack #comments .list .metatable > div.panelWrapper .panel:hover {
   color: #0a0c17;
   background: #00a4ff;
@@ -1350,11 +1342,7 @@ html.stblack #comments .answer .posttable > div .limits,
 html.stblack #comments .post .posttable > div .limits {
   color: #e4ddde;
 }
-html.stblack #comments .edit .txt,
-html.stblack #comments .answer .txt,
-html.stblack #comments .post .txt {
-  position: relative;
-}
+
 html.stblack #comments .edit .txt textarea,
 html.stblack #comments .answer .txt textarea,
 html.stblack #comments .post .txt textarea {
@@ -1486,7 +1474,7 @@ html.mobile #comments .list .metatable > div.panelWrapper .panel {
     float: left;
     padding-left: 0;
     padding-right: 0;
-    margin-right: 2em;
+
   }
   #comments .list .commentpanel .items > div.upvoteCommentWrapper {
     margin-right: 0.5em;

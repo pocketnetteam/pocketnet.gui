@@ -167,6 +167,7 @@ class Html5Hlsjs {
         }
     }
     _handleMediaError(error) {
+        console.log('this.errorCounts', this.errorCounts);
         if (this.errorCounts[hls_js__WEBPACK_IMPORTED_MODULE_0__["ErrorTypes"].MEDIA_ERROR] === 1) {
             console.info('trying to recover media error');
             this.hls.recoverMediaError();
@@ -180,9 +181,10 @@ class Html5Hlsjs {
         }
         if (this.errorCounts[hls_js__WEBPACK_IMPORTED_MODULE_0__["ErrorTypes"].MEDIA_ERROR] > 2) {
             console.info('bubbling media error up to VIDEOJS');
-            this.hls.destroy();
-            this.tech.error = () => error;
-            this.tech.trigger('error');
+            this.hls.recoverMediaError();
+            //this.hls.destroy()
+            //this.tech.error = () => error
+            //this.tech.trigger('error')
             return;
         }
     }
@@ -207,13 +209,14 @@ class Html5Hlsjs {
         const error = {
             message: `HLS.js error: ${data.type} - fatal: ${data.fatal} - ${data.details}`
         };
+        console.error(error);
+        if (!data.fatal)
+            return;
         // increment/set error count
         if (this.errorCounts[data.type])
             this.errorCounts[data.type] += 1;
         else
             this.errorCounts[data.type] = 1;
-        if (!data.fatal)
-            return;
         if (data.type === hls_js__WEBPACK_IMPORTED_MODULE_0__["ErrorTypes"].NETWORK_ERROR) {
             error.code = 2;
             this._handleNetworkError(error);
@@ -639,23 +642,22 @@ class P2pMediaLoaderPlugin extends Plugin {
         const options = this.player.tech(true).options_;
         this.p2pEngine = options.hlsjsConfig.loader.getEngine();
         this.hlsjs.on(hls_js__WEBPACK_IMPORTED_MODULE_5__["Events"].LEVEL_SWITCHING, (_, data) => {
-            console.log("resolutionChange data", data);
+            console.log("LEVEL_SWITCHING");
             this.trigger('resolutionChange', { auto: this.hlsjs.autoLevelEnabled, resolutionId: data.height });
         });
         this.p2pEngine.on(_core_p2p_media_loader_master_p2p_media_loader_core_lib__WEBPACK_IMPORTED_MODULE_2__["Events"].SegmentError, (segment, err) => {
-            console.error('Segment error.', segment, err);
             this.options.redundancyUrlManager.removeBySegmentUrl(segment.requestUrl);
         });
         this.statsP2PBytes.numPeers = 1 + this.options.redundancyUrlManager.countBaseUrls();
         this.runStats();
     }
     runStats() {
-        this.p2pEngine.on(_core_p2p_media_loader_master_p2p_media_loader_core_lib__WEBPACK_IMPORTED_MODULE_2__["Events"].PieceBytesDownloaded, (method, size) => {
+        this.p2pEngine.on(_core_p2p_media_loader_master_p2p_media_loader_core_lib__WEBPACK_IMPORTED_MODULE_2__["Events"].PieceBytesDownloaded, (method, segment, size) => {
             const elem = method === 'p2p' ? this.statsP2PBytes : this.statsHTTPBytes;
             elem.pendingDownload.push(size);
             elem.totalDownload += size;
         });
-        this.p2pEngine.on(_core_p2p_media_loader_master_p2p_media_loader_core_lib__WEBPACK_IMPORTED_MODULE_2__["Events"].PieceBytesUploaded, (method, size) => {
+        this.p2pEngine.on(_core_p2p_media_loader_master_p2p_media_loader_core_lib__WEBPACK_IMPORTED_MODULE_2__["Events"].PieceBytesUploaded, (method, segment, size) => {
             const elem = method === 'p2p' ? this.statsP2PBytes : this.statsHTTPBytes;
             elem.pendingUpload.push(size);
             elem.totalUpload += size;
@@ -884,8 +886,8 @@ class CapLevelController {
         catch (e) {
             /* no-op */
         }
-        if (pixelRatio > 1.5)
-            pixelRatio = 1.5;
+        pixelRatio = 1;
+        //if (pixelRatio > 1.5) pixelRatio = 1.5
         return pixelRatio;
     }
     static isLevelAllowed(level, restrictedLevels = []) {

@@ -1065,7 +1065,7 @@ ____loclib.uploadVideoProgress = "Progress:"
 
 ____loclib.pbp_1 = ""+appname+" Bonus Program"
 ____loclib.pbp_2 = "Criteria for Receiving Bonus:"
-____loclib.pbp_3 = "Every 10k views + 750 five star ratings from unique users"
+____loclib.pbp_3 = "Every 15k views + 1250 five star ratings from unique users"
 ____loclib.pbp_4 = "PKOIN Equivalent:"
 ____loclib.pbp_5 = "1,000 USDT"
 ____loclib.pbp_6 = "How You Can Increase Your Views?"

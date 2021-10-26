@@ -88,7 +88,7 @@ module.exports = Hash
 
 /***/ }),
 
-/***/ 219:
+/***/ 220:
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -221,29 +221,7 @@ function decodeB64ToUint8Array(b64Text) {
 
 /***/ }),
 
-/***/ 512:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoadStats; });
-class LoadStats {
-    constructor() {
-        this.aborted = false;
-        this.loaded = 0;
-        this.retry = 0;
-        this.total = 0;
-        this.chunkCount = 0;
-        this.bwEstimate = 0;
-        this.loading = { start: 0, first: 0, end: 0 };
-        this.parsing = { start: 0, end: 0 };
-        this.buffering = { start: 0, first: 0, end: 0 };
-    }
-}
-
-
-/***/ }),
-
-/***/ 518:
+/***/ 517:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

@@ -15,8 +15,11 @@ var Node = function(options, manager){
 
     var self = this
     var lastinfo = null
+    var lastnodeblock = null
     var cachedrating = null
     var chain = [];
+
+    var pending = 0
 
     self.updating = ['rpcuser', 'rpcpass', 'ws', 'name']
 
@@ -48,7 +51,7 @@ var Node = function(options, manager){
 
     var penalty = {
         k : 0,
-
+        counter : 0,
         reason : null,
         timer : null,
         time : null,
@@ -63,6 +66,14 @@ var Node = function(options, manager){
             penalty.started = new Date()
             penalty.time = time
             penalty.k = _k
+
+            penalty.counter ++
+
+            if (penalty.counter > 10){
+                penalty.counter = 0
+
+                self.statistic.clearAlltime()
+            }
 
             penalty.timer = setTimeout(function(){
                 penalty.clear()
@@ -164,6 +175,8 @@ var Node = function(options, manager){
 
         if ((block.hash || block.blockhash) && block.time && block.height){
 
+            
+
             var lastblock = self.lastblock()
 
             if(!lastblock || lastblock.height < block.height){
@@ -179,6 +192,8 @@ var Node = function(options, manager){
             }
 
             chain = f.lastelements(chain, 150, 10)
+
+            lastnodeblock = block
 
         }
     }
@@ -199,21 +214,33 @@ var Node = function(options, manager){
 
         var counter = 0
         var dcounter = 0
+        var chainlength = chain.length
 
         _.each(cs.lasttrustblocks, function(tblock){
-            var bc = _.find(chain, function(c){
-                return c.height == cs.tblock
-            })
 
+            var i = chainlength - 1
+            var c = null
+            var bc = null
+        
+            while(i >= 0 && !bc){
+                c = chain[i]
+        
+                if (c.height == tblock.height){
+                    bc = c
+                }
+        
+                i--
+            }
+        
             if (bc){
                 counter++
-
+        
                 if(bc.blockhash != tblock.blockhash) dcounter++
             }   
         })
 
         return {
-            fork : dcounter / counter < 0.5,
+            fork : cs.lasttrustblocks.length > 4 && (counter ? dcounter / counter >= 0.5 : false),
             difference : d
         }
         
@@ -243,6 +270,8 @@ var Node = function(options, manager){
 
         return self.checkParameters().then(r => {
 
+            pending++
+
             return self.rpc[method](parsed).catch(e => {
 
                 err = e
@@ -250,6 +279,8 @@ var Node = function(options, manager){
                 return Promise.resolve(null)
     
             }).then(data => {
+
+                pending--
     
                 var difference = performance.now() - time;
                 var code = 200;
@@ -262,9 +293,9 @@ var Node = function(options, manager){
                         code = 521
                     }
 
-                    if(err.code == 521) penalty.set(0.8, 120000, '521')
-                    if(err.code == 408) penalty.set(0.5, 30000, '408')
-                    if(err.code == 429) penalty.set(0.3, 10000, '429')
+                    if(err.code == 521) penalty.set(0.8, 220000, '521')
+                    if(err.code == 408) penalty.set(0.5, 60000, '408')
+                    if(err.code == 429) penalty.set(0.3, 60000, '429')
     
                 }	
 
@@ -299,6 +330,10 @@ var Node = function(options, manager){
 
     self.statistic = {
 
+        pending : function(){
+            return pending
+        },
+
         clear : function(){
             self.events = []
             self.eventsCount = 0
@@ -311,8 +346,11 @@ var Node = function(options, manager){
             }
         },
 
-        add : function(p){
+        clearAlltime : function(){
+            statistic.events = _.clone(statistic.historyslice)
+        },
 
+        add : function(p){
 
             var push = _.clone(p)
 
@@ -324,7 +362,7 @@ var Node = function(options, manager){
                 var d = self.events.length - maxevents
 
                 if (d > 100){
-                    self.events = self.events.splice(0, d)
+                    self.events = self.events.splice(d)
                 }
             }
 
@@ -410,7 +448,7 @@ var Node = function(options, manager){
             var d = statistic.history.length - maxeventsHistory
 
             if (d > maxeventsHistory / 10){
-                statistic.history = statistic.history.splice(0, d)
+                statistic.history = statistic.history.splice(d)
             }
 
             statistic.historyslice = self.statistic.mixeventsArray(statistic.history)
@@ -504,23 +542,25 @@ var Node = function(options, manager){
                 date : lastinfoTime || null
             }
 
+            var timecounter = 0
+
             _.each(evt, function(l){
 
                 if (l.code == 200){
                     r.success++
+                    r.time += l.difference
+                    timecounter++
                 }
                 else
                 {
                     r.failed++
                 }
 
-                r.time += l.difference
-
             })
 
             r.percent = (r.success / (r.count || 1)) * 100
 
-            r.time = r.time / (r.count || 1)
+            r.time = r.time / (timecounter || 1)
 
             return r
         },
@@ -543,18 +583,17 @@ var Node = function(options, manager){
             if (time && time > 1300 && time <= 2300) time = 1700
             if (time && time > 2300 && time <= 4000) time = 3100
             if (time && time > 4000 && time <= 7000) time = 5300
-            if (time && time > 7000 && time <= 15000) time = 10000
-            if (time && time > 15000) time = 30000
+            if (time && time > 7000 && time <= 15000) time = 100000
+            if (time && time > 15000) time = 300000
 
-            if (rate <= 2) rate = 1.5
-            if (rate > 2 && rate <= 4) rate = 3
-            if (rate > 4 && rate <= 8) rate = 6
-            if (rate > 8 && rate <= 16) rate = 12
-            if (rate > 16 && rate <= 30) rate = 23
-            if (rate > 30 && rate <= 50) rate = 40
-            if (rate > 50 && rate <= 100) rate = 75
+            if (rate <= 2) rate = 2
+            if (rate > 2 && rate <= 10) rate =5
+            if (rate > 10 && rate <= 30) rate = 15
+            if (rate > 30 && rate <= 100) rate = 65
+            if (rate > 100 && rate <= 200) rate = 150
+            if (rate > 200) rate = 500
 
-            return (s.percent / (rate * time))
+            return ((s.percent * s.percent) / (rate * time))
 
         },
 
@@ -610,8 +649,14 @@ var Node = function(options, manager){
                     if (usersl > 100 && usersl <= 500) userski = 100
                     if (usersl > 500 && usersl <= 1000) userski = 500
                     if (usersl > 1000) userski = 1000
+
+                    userski = 1
         
-                    result = penalty.getk() * (Math.sqrt(availabilityAllTime * availability5Minutes) * ((lastblock.height || 1) / (userski) * (difference + 1)))
+                    result = (
+                        penalty.getk() * 
+                        Math.sqrt(Math.sqrt(Math.sqrt(availabilityAllTime) * availability5Minutes * availability5Minutes)) *
+                        (lastblock.height || 1) / (1000 * userski * (difference + 1))
+                        )
                 }
             }
 
@@ -652,8 +697,12 @@ var Node = function(options, manager){
 
             _.each(nodes, function(node){
 
-                total += node.statistic.rating()
+                var rating = node.statistic.rating();
+
+                if (rating)
+                    total += rating
             })
+            
 
             if(!total) {
 
@@ -670,7 +719,7 @@ var Node = function(options, manager){
             if(!manager) return 1
 
 
-            return this.probabilityNodes(manager.nodes)
+            return this.probabilityNodes(manager.initednodes())
 
         },
 
@@ -852,6 +901,50 @@ var Node = function(options, manager){
         
     }
 
+    self.exepmethod = {
+
+        getnodeinfo : function(){
+
+            var result = null
+
+            return f.pretry(function(){
+
+                if (lastinfo && lastinfoTime){
+    
+                    var dif = Math.floor(((new Date()).getTime()) / 1000) - Math.floor(((lastinfoTime).getTime()) / 1000)
+                    //console.log('dif', dif)
+
+                    if (dif < 55){
+        
+                        result = _.clone(lastinfo)
+        
+                        result.time += dif
+        
+                        if (lastnodeblock){
+                            result.lastblock = lastnodeblock
+                        }
+        
+                        return true
+                    }
+                }
+
+            }, 40, 3000).then(r => {
+
+                //console.log("HAS RESULT", result ? true : false)
+
+                if (result){
+                    return Promise.resolve(result)
+                }
+
+                return self.info()
+
+            })
+
+            
+        }
+
+    }
+
     self.info = function(){
 
         if (self.testing){
@@ -859,6 +952,7 @@ var Node = function(options, manager){
         }
 
         lastinfoTime = new Date()
+
 
         return self.rpcs('getnodeinfo').then(info => {
 
@@ -915,7 +1009,8 @@ var Node = function(options, manager){
             local : self.local || false,
             peer : self.peer,
             wssusers : _.toArray(wss.users).length,
-            bchain : self.bchain
+            bchain : self.bchain,
+            
         }
     }
 

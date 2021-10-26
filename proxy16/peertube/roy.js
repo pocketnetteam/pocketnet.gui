@@ -160,48 +160,6 @@ var Roy = function (parent) {
 		return instance.request(method, data, p);
 	};
 
-
-	/*self.request = function (method, data = {}, p = {}, list, index, lasterror) {
-
-		if (!index) index = 0;
-
-		if (p.host) {
-
-			var instance = self.findInstanceByName(p.host);
-
-		} else {
-
-			if (!list) list = self.bestlist();
-
-			var instance = list[index];
-		}
-
-		if (!instance) return Promise.reject(lasterror || 'failed');
-
-		p.royrequest = true
-
-		var end = false
-
-		return instance.request(method, data, p).catch((e) => {
-			if (e)
-				if (e == 'failed') return Promise.reject(e)
-
-			return self.request(method, data, p, list, index + 1, e);
-
-		}).then((r) => {
-
-			if (r.data && !r.data.from) {
-				r.data.from = instance.host;
-			}
-
-			return Promise.resolve(r);
-
-		}).catch((e) => {
-
-			return Promise.reject(e)
-		});
-	};*/
-
 	self.request = function (method, data = {}, p = {}, list) {
 
 		p.royrequest = true
@@ -239,7 +197,6 @@ var Roy = function (parent) {
 				return Promise.resolve(r);
 			}).catch(e => {
 
-				//console.log('e.code', e.status)
 
 				if(e && e.status){
 					if(e.status != 500){
@@ -253,50 +210,23 @@ var Roy = function (parent) {
 
 		var recrequest = function(){
 
-			//console.log('index', index)
-
 			var instance = list[index]
 
 			if(!instance) {
-
-				//console.log("ER", (error || {}).status || 'failed')
 
 
 				return Promise.reject(error || 'failed');
 			}
 
-			//console.log('instance', instance.host)
-
 			return request(instance).catch(e => {
-
-				
-
 				index++
 				return recrequest()
-
 			})
 		}
 		
 		return recrequest()
 
-		return instance.request(method, data, p).catch((e) => {
-			if (e)
-				if (e == 'failed') return Promise.reject(e)
-
-			return self.request(method, data, p, list, index + 1, e);
-
-		}).then((r) => {
-
-			if (r.data && !r.data.from) {
-				r.data.from = instance.host;
-			}
-
-			return Promise.resolve(r);
-
-		}).catch((e) => {
-
-			return Promise.reject(e)
-		});
+	
 	};
 
 	self.find = function (host) {

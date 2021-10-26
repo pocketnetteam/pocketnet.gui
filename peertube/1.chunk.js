@@ -3529,7 +3529,8 @@ Box.encodingLength = function (obj) {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(73).Buffer))
 
 /***/ }),
-/* 201 */
+/* 201 */,
+/* 202 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3639,7 +3640,7 @@ function eos(stream, opts, callback) {
 module.exports = eos;
 
 /***/ }),
-/* 202 */
+/* 203 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3749,7 +3750,7 @@ function eos(stream, opts, callback) {
 module.exports = eos;
 
 /***/ }),
-/* 203 */
+/* 204 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3859,7 +3860,7 @@ function eos(stream, opts, callback) {
 module.exports = eos;
 
 /***/ }),
-/* 204 */
+/* 205 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3969,7 +3970,7 @@ function eos(stream, opts, callback) {
 module.exports = eos;
 
 /***/ }),
-/* 205 */
+/* 206 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(Buffer) {/*! simple-get. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
@@ -3981,7 +3982,7 @@ const http = __webpack_require__(250)
 const https = __webpack_require__(397)
 const once = __webpack_require__(166)
 const querystring = __webpack_require__(261)
-const url = __webpack_require__(207)
+const url = __webpack_require__(208)
 
 const isStream = o => o !== null && typeof o === 'object' && typeof o.pipe === 'function'
 
@@ -4076,7 +4077,7 @@ simpleGet.concat = (opts, cb) => {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(73).Buffer))
 
 /***/ }),
-/* 206 */
+/* 207 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* eslint-disable node/no-deprecated-api */
@@ -4144,7 +4145,7 @@ SafeBuffer.allocUnsafeSlow = function (size) {
 
 
 /***/ }),
-/* 207 */
+/* 208 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4883,8 +4884,8 @@ Url.prototype.parseHost = function() {
 
 
 /***/ }),
-/* 208 */,
-/* 209 */
+/* 209 */,
+/* 210 */
 /***/ (function(module, exports) {
 
 var tick = 1
@@ -4929,7 +4930,7 @@ module.exports = function (seconds) {
 
 
 /***/ }),
-/* 210 */
+/* 211 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5039,8 +5040,8 @@ function eos(stream, opts, callback) {
 module.exports = eos;
 
 /***/ }),
-/* 211 */,
-/* 212 */
+/* 212 */,
+/* 213 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5150,7 +5151,7 @@ function eos(stream, opts, callback) {
 module.exports = eos;
 
 /***/ }),
-/* 213 */
+/* 214 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*! mediasource. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
@@ -5446,7 +5447,7 @@ function downloadBuffers (bufs, name) {
 
 
 /***/ }),
-/* 214 */
+/* 215 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5556,7 +5557,7 @@ function eos(stream, opts, callback) {
 module.exports = eos;
 
 /***/ }),
-/* 215 */
+/* 216 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5666,7 +5667,7 @@ function eos(stream, opts, callback) {
 module.exports = eos;
 
 /***/ }),
-/* 216 */
+/* 217 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5776,7 +5777,7 @@ function eos(stream, opts, callback) {
 module.exports = eos;
 
 /***/ }),
-/* 217 */
+/* 218 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5886,13 +5887,12 @@ function eos(stream, opts, callback) {
 module.exports = eos;
 
 /***/ }),
-/* 218 */
+/* 219 */
 /***/ (function(module) {
 
 module.exports = JSON.parse("{\"name\":\"webtorrent\",\"description\":\"Streaming torrent client\",\"version\":\"0.116.1\",\"author\":{\"name\":\"WebTorrent LLC\",\"email\":\"feross@webtorrent.io\",\"url\":\"https://webtorrent.io\"},\"browser\":{\"./lib/server.js\":false,\"./lib/conn-pool.js\":false,\"bittorrent-dht/client\":false,\"fs\":false,\"fs-chunk-store\":\"memory-chunk-store\",\"load-ip-set\":false,\"net\":false,\"os\":false,\"ut_pex\":false,\"utp-native\":false},\"browserify\":{\"transform\":[\"package-json-versionify\"]},\"bugs\":{\"url\":\"https://github.com/webtorrent/webtorrent/issues\"},\"chromeapp\":{\"fs-chunk-store\":\"memory-chunk-store\",\"http\":\"http-node\",\"load-ip-set\":false,\"net\":\"chrome-net\",\"os\":false,\"utp-native\":false},\"dependencies\":{\"addr-to-ip-port\":\"^1.5.1\",\"bitfield\":\"^4.0.0\",\"bittorrent-dht\":\"^10.0.0\",\"bittorrent-protocol\":\"^3.2.0\",\"chrome-net\":\"^3.3.4\",\"chunk-store-stream\":\"^4.2.0\",\"cpus\":\"^1.0.3\",\"create-torrent\":\"^4.4.4\",\"debug\":\"^4.3.1\",\"end-of-stream\":\"^1.4.4\",\"escape-html\":\"^1.0.3\",\"fs-chunk-store\":\"^2.0.2\",\"http-node\":\"github:feross/http-node#webtorrent\",\"immediate-chunk-store\":\"^2.1.1\",\"load-ip-set\":\"^2.1.2\",\"memory-chunk-store\":\"^1.3.1\",\"mime\":\"^2.5.0\",\"multistream\":\"^4.1.0\",\"package-json-versionify\":\"^1.0.4\",\"parse-torrent\":\"^9.1.1\",\"pump\":\"^3.0.0\",\"queue-microtask\":\"^1.2.2\",\"random-iterate\":\"^1.0.1\",\"randombytes\":\"^2.1.0\",\"range-parser\":\"^1.2.1\",\"readable-stream\":\"^3.6.0\",\"render-media\":\"^4.1.0\",\"run-parallel\":\"^1.1.10\",\"run-parallel-limit\":\"^1.0.6\",\"simple-concat\":\"^1.0.1\",\"simple-get\":\"^4.0.0\",\"simple-peer\":\"^9.9.3\",\"simple-sha1\":\"^3.0.1\",\"speedometer\":\"^1.1.0\",\"stream-to-blob\":\"^2.0.1\",\"stream-to-blob-url\":\"^3.0.2\",\"stream-with-known-length-to-buffer\":\"^1.0.4\",\"torrent-discovery\":\"^9.4.0\",\"torrent-piece\":\"^2.0.0\",\"unordered-array-remove\":\"^1.0.2\",\"ut_metadata\":\"^3.5.2\",\"ut_pex\":\"^2.0.1\",\"utp-native\":\"^2.3.0\"},\"devDependencies\":{\"airtap\":\"^3.0.0\",\"babel-minify\":\"^0.5.1\",\"bittorrent-tracker\":\"^9.16.0\",\"browserify\":\"^17.0.0\",\"disc\":\"^1.3.3\",\"finalhandler\":\"^1.1.2\",\"network-address\":\"^1.1.2\",\"run-series\":\"^1.1.9\",\"serve-static\":\"^1.14.1\",\"standard\":\"*\",\"tape\":\"^5.1.1\",\"webtorrent-fixtures\":\"^1.7.3\"},\"engines\":{\"node\":\">=10\"},\"funding\":[{\"type\":\"github\",\"url\":\"https://github.com/sponsors/feross\"},{\"type\":\"patreon\",\"url\":\"https://www.patreon.com/feross\"},{\"type\":\"consulting\",\"url\":\"https://feross.org/support\"}],\"homepage\":\"https://webtorrent.io\",\"keywords\":[\"bittorrent\",\"bittorrent client\",\"download\",\"mad science\",\"p2p\",\"peer-to-peer\",\"peers\",\"streaming\",\"swarm\",\"torrent\",\"web torrent\",\"webrtc\",\"webrtc data\",\"webtorrent\"],\"license\":\"MIT\",\"main\":\"index.js\",\"repository\":{\"type\":\"git\",\"url\":\"git://github.com/webtorrent/webtorrent.git\"},\"scripts\":{\"build\":\"npm run build-js && npm run build-chromeapp\",\"build-chromeapp\":\"browserify --browser-field=chromeapp --standalone WebTorrent . | minify --mangle=false > webtorrent.chromeapp.js\",\"build-chromeapp-debug\":\"browserify --browser-field=chromeapp --standalone WebTorrent . > webtorrent.chromeapp.js\",\"build-js\":\"browserify --standalone WebTorrent . | minify --mangle=false > webtorrent.min.js\",\"build-js-debug\":\"browserify --standalone WebTorrent . > webtorrent.debug.js\",\"size\":\"npm run size-js && npm run size-disc\",\"size-disc\":\"browserify --full-paths . | discify --open\",\"size-js\":\"npm run build && cat webtorrent.min.js | gzip | wc -c\",\"test\":\"standard && npm run test-node && npm run test-browser\",\"test-browser\":\"airtap -- test/*.js test/browser/*.js\",\"test-browser-local\":\"airtap --local -- test/*.js test/browser/*.js\",\"test-node\":\"tape test/*.js test/node/*.js\",\"update-authors\":\"./scripts/update-authors.sh\"},\"standard\":{\"ignore\":[\"webtorrent.min.js\",\"webtorrent.chromeapp.js\"]}}");
 
 /***/ }),
-/* 219 */,
 /* 220 */,
 /* 221 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -15877,7 +15877,7 @@ function done(stream, er, data) {
 const bencode = __webpack_require__(196)
 const blobToBuffer = __webpack_require__(382)
 const fs = __webpack_require__(383) // browser exclude
-const get = __webpack_require__(205)
+const get = __webpack_require__(206)
 const magnet = __webpack_require__(398)
 const path = __webpack_require__(22)
 const sha1 = __webpack_require__(193)
@@ -16151,7 +16151,7 @@ function ensure (bool, fieldName) {
 var response = __webpack_require__(253)
 var extend = __webpack_require__(390)
 var statusCodes = __webpack_require__(391)
-var url = __webpack_require__(207)
+var url = __webpack_require__(208)
 
 var http = exports
 
@@ -16650,7 +16650,7 @@ var Stream = __webpack_require__(256);
 
 /*<replacement>*/
 
-var Buffer = __webpack_require__(206).Buffer;
+var Buffer = __webpack_require__(207).Buffer;
 var OurUint8Array = global.Uint8Array || function () {};
 function _uint8ArrayToBuffer(chunk) {
   return Buffer.from(chunk);
@@ -17791,7 +17791,7 @@ var Stream = __webpack_require__(256);
 
 /*<replacement>*/
 
-var Buffer = __webpack_require__(206).Buffer;
+var Buffer = __webpack_require__(207).Buffer;
 var OurUint8Array = global.Uint8Array || function () {};
 function _uint8ArrayToBuffer(chunk) {
   return Buffer.from(chunk);
@@ -21079,7 +21079,7 @@ exports.Writable = __webpack_require__(297);
 exports.Duplex = __webpack_require__(183);
 exports.Transform = __webpack_require__(298);
 exports.PassThrough = __webpack_require__(453);
-exports.finished = __webpack_require__(212);
+exports.finished = __webpack_require__(213);
 exports.pipeline = __webpack_require__(454);
 
 
@@ -25519,7 +25519,7 @@ function streamToBlob (stream, mimeType) {
 /* 307 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const MediaElementWrapper = __webpack_require__(213)
+const MediaElementWrapper = __webpack_require__(214)
 const pump = __webpack_require__(290)
 
 const MP4Remuxer = __webpack_require__(466)
@@ -25658,7 +25658,7 @@ exports.Writable = __webpack_require__(313);
 exports.Duplex = __webpack_require__(187);
 exports.Transform = __webpack_require__(314);
 exports.PassThrough = __webpack_require__(475);
-exports.finished = __webpack_require__(215);
+exports.finished = __webpack_require__(216);
 exports.pipeline = __webpack_require__(476);
 
 
@@ -30115,7 +30115,7 @@ const bencode = __webpack_require__(196)
 const BitField = __webpack_require__(199).default
 const debug = __webpack_require__(161)('bittorrent-protocol')
 const randombytes = __webpack_require__(195)
-const speedometer = __webpack_require__(209)
+const speedometer = __webpack_require__(210)
 const stream = __webpack_require__(496)
 
 const BITFIELD_GROW = 400000
@@ -33087,12 +33087,12 @@ const parseTorrent = __webpack_require__(249)
 const path = __webpack_require__(22)
 const Peer = __webpack_require__(198)
 const randombytes = __webpack_require__(195)
-const speedometer = __webpack_require__(209)
+const speedometer = __webpack_require__(210)
 const queueMicrotask = __webpack_require__(164)
 
 const ConnPool = __webpack_require__(410) // browser exclude
 const Torrent = __webpack_require__(411)
-const VERSION = __webpack_require__(218).version
+const VERSION = __webpack_require__(219).version
 
 /**
  * Version number in Azureus-style. Generated from major and minor semver version.
@@ -34308,7 +34308,7 @@ exports.Writable = __webpack_require__(227);
 exports.Duplex = __webpack_require__(168);
 exports.Transform = __webpack_require__(228);
 exports.PassThrough = __webpack_require__(343);
-exports.finished = __webpack_require__(201);
+exports.finished = __webpack_require__(202);
 exports.pipeline = __webpack_require__(344);
 
 
@@ -34541,7 +34541,7 @@ var _Object$setPrototypeO;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var finished = __webpack_require__(201);
+var finished = __webpack_require__(202);
 
 var kLastResolve = Symbol('lastResolve');
 var kLastReject = Symbol('lastReject');
@@ -34837,7 +34837,7 @@ function destroyer(stream, reading, writing, callback) {
   stream.on('close', function () {
     closed = true;
   });
-  if (eos === undefined) eos = __webpack_require__(201);
+  if (eos === undefined) eos = __webpack_require__(202);
   eos(stream, {
     readable: reading,
     writable: writing
@@ -35013,7 +35013,7 @@ exports.Writable = __webpack_require__(233);
 exports.Duplex = __webpack_require__(170);
 exports.Transform = __webpack_require__(234);
 exports.PassThrough = __webpack_require__(353);
-exports.finished = __webpack_require__(202);
+exports.finished = __webpack_require__(203);
 exports.pipeline = __webpack_require__(354);
 
 
@@ -35246,7 +35246,7 @@ var _Object$setPrototypeO;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var finished = __webpack_require__(202);
+var finished = __webpack_require__(203);
 
 var kLastResolve = Symbol('lastResolve');
 var kLastReject = Symbol('lastReject');
@@ -35542,7 +35542,7 @@ function destroyer(stream, reading, writing, callback) {
   stream.on('close', function () {
     closed = true;
   });
-  if (eos === undefined) eos = __webpack_require__(202);
+  if (eos === undefined) eos = __webpack_require__(203);
   eos(stream, {
     readable: reading,
     writable: writing
@@ -35743,7 +35743,7 @@ exports.Writable = __webpack_require__(240);
 exports.Duplex = __webpack_require__(172);
 exports.Transform = __webpack_require__(241);
 exports.PassThrough = __webpack_require__(365);
-exports.finished = __webpack_require__(203);
+exports.finished = __webpack_require__(204);
 exports.pipeline = __webpack_require__(366);
 
 
@@ -35976,7 +35976,7 @@ var _Object$setPrototypeO;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var finished = __webpack_require__(203);
+var finished = __webpack_require__(204);
 
 var kLastResolve = Symbol('lastResolve');
 var kLastReject = Symbol('lastReject');
@@ -36272,7 +36272,7 @@ function destroyer(stream, reading, writing, callback) {
   stream.on('close', function () {
     closed = true;
   });
-  if (eos === undefined) eos = __webpack_require__(203);
+  if (eos === undefined) eos = __webpack_require__(204);
   eos(stream, {
     readable: reading,
     writable: writing
@@ -36387,7 +36387,7 @@ exports.Writable = __webpack_require__(247);
 exports.Duplex = __webpack_require__(174);
 exports.Transform = __webpack_require__(248);
 exports.PassThrough = __webpack_require__(375);
-exports.finished = __webpack_require__(204);
+exports.finished = __webpack_require__(205);
 exports.pipeline = __webpack_require__(376);
 
 
@@ -36620,7 +36620,7 @@ var _Object$setPrototypeO;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var finished = __webpack_require__(204);
+var finished = __webpack_require__(205);
 
 var kLastResolve = Symbol('lastResolve');
 var kLastReject = Symbol('lastReject');
@@ -36916,7 +36916,7 @@ function destroyer(stream, reading, writing, callback) {
   stream.on('close', function () {
     closed = true;
   });
-  if (eos === undefined) eos = __webpack_require__(204);
+  if (eos === undefined) eos = __webpack_require__(205);
   eos(stream, {
     readable: reading,
     writable: writing
@@ -37360,7 +37360,7 @@ var unsafeHeaders = [
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Buffer = __webpack_require__(206).Buffer;
+var Buffer = __webpack_require__(207).Buffer;
 var util = __webpack_require__(388);
 
 function copyBuffer(src, target, offset) {
@@ -38350,7 +38350,7 @@ var objectKeys = Object.keys || function (obj) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var http = __webpack_require__(250)
-var url = __webpack_require__(207)
+var url = __webpack_require__(208)
 
 var https = module.exports
 
@@ -38775,7 +38775,7 @@ const Discovery = __webpack_require__(423)
 const EventEmitter = __webpack_require__(159).EventEmitter
 const fs = __webpack_require__(435)
 const FSChunkStore = __webpack_require__(436) // browser: `memory-chunk-store`
-const get = __webpack_require__(205)
+const get = __webpack_require__(206)
 const ImmediateChunkStore = __webpack_require__(437)
 const MultiStream = __webpack_require__(235)
 const net = __webpack_require__(438) // browser exclude
@@ -38789,7 +38789,7 @@ const pump = __webpack_require__(290)
 const queueMicrotask = __webpack_require__(164)
 const randomIterate = __webpack_require__(443)
 const sha1 = __webpack_require__(193)
-const speedometer = __webpack_require__(209)
+const speedometer = __webpack_require__(210)
 const utMetadata = __webpack_require__(444)
 const utp = __webpack_require__(445) // browser exclude
 const utPex = __webpack_require__(446) // browser exclude
@@ -38816,7 +38816,7 @@ const FILESYSTEM_CONCURRENCY = process.browser ? cpus().length : 2
 
 const RECONNECT_WAIT = [1000, 5000, 15000]
 
-const VERSION = __webpack_require__(218).version
+const VERSION = __webpack_require__(219).version
 const USER_AGENT = `WebTorrent/${VERSION} (https://webtorrent.io)`
 
 let TMP
@@ -40702,7 +40702,7 @@ exports.Writable = __webpack_require__(274);
 exports.Duplex = __webpack_require__(179);
 exports.Transform = __webpack_require__(275);
 exports.PassThrough = __webpack_require__(420);
-exports.finished = __webpack_require__(210);
+exports.finished = __webpack_require__(211);
 exports.pipeline = __webpack_require__(421);
 
 
@@ -40935,7 +40935,7 @@ var _Object$setPrototypeO;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var finished = __webpack_require__(210);
+var finished = __webpack_require__(211);
 
 var kLastResolve = Symbol('lastResolve');
 var kLastReject = Symbol('lastReject');
@@ -41231,7 +41231,7 @@ function destroyer(stream, reading, writing, callback) {
   stream.on('close', function () {
     closed = true;
   });
-  if (eos === undefined) eos = __webpack_require__(210);
+  if (eos === undefined) eos = __webpack_require__(211);
   eos(stream, {
     readable: reading,
     writable: writing
@@ -42556,7 +42556,7 @@ var _Object$setPrototypeO;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var finished = __webpack_require__(212);
+var finished = __webpack_require__(213);
 
 var kLastResolve = Symbol('lastResolve');
 var kLastReject = Symbol('lastReject');
@@ -42852,7 +42852,7 @@ function destroyer(stream, reading, writing, callback) {
   stream.on('close', function () {
     closed = true;
   });
-  if (eos === undefined) eos = __webpack_require__(212);
+  if (eos === undefined) eos = __webpack_require__(213);
   eos(stream, {
     readable: reading,
     writable: writing
@@ -42927,7 +42927,7 @@ exports.mime = __webpack_require__(456)
 
 const debug = __webpack_require__(161)('render-media')
 const isAscii = __webpack_require__(457)
-const MediaElementWrapper = __webpack_require__(213)
+const MediaElementWrapper = __webpack_require__(214)
 const path = __webpack_require__(22)
 const streamToBlobURL = __webpack_require__(305)
 const VideoStream = __webpack_require__(307)
@@ -43357,7 +43357,7 @@ exports.Writable = __webpack_require__(303);
 exports.Duplex = __webpack_require__(185);
 exports.Transform = __webpack_require__(304);
 exports.PassThrough = __webpack_require__(464);
-exports.finished = __webpack_require__(214);
+exports.finished = __webpack_require__(215);
 exports.pipeline = __webpack_require__(465);
 
 
@@ -43590,7 +43590,7 @@ var _Object$setPrototypeO;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var finished = __webpack_require__(214);
+var finished = __webpack_require__(215);
 
 var kLastResolve = Symbol('lastResolve');
 var kLastReject = Symbol('lastReject');
@@ -43886,7 +43886,7 @@ function destroyer(stream, reading, writing, callback) {
   stream.on('close', function () {
     closed = true;
   });
-  if (eos === undefined) eos = __webpack_require__(214);
+  if (eos === undefined) eos = __webpack_require__(215);
   eos(stream, {
     readable: reading,
     writable: writing
@@ -44917,7 +44917,7 @@ var _Object$setPrototypeO;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var finished = __webpack_require__(215);
+var finished = __webpack_require__(216);
 
 var kLastResolve = Symbol('lastResolve');
 var kLastReject = Symbol('lastReject');
@@ -45213,7 +45213,7 @@ function destroyer(stream, reading, writing, callback) {
   stream.on('close', function () {
     closed = true;
   });
-  if (eos === undefined) eos = __webpack_require__(215);
+  if (eos === undefined) eos = __webpack_require__(216);
   eos(stream, {
     readable: reading,
     writable: writing
@@ -46849,7 +46849,7 @@ exports.Writable = __webpack_require__(320);
 exports.Duplex = __webpack_require__(189);
 exports.Transform = __webpack_require__(321);
 exports.PassThrough = __webpack_require__(491);
-exports.finished = __webpack_require__(216);
+exports.finished = __webpack_require__(217);
 exports.pipeline = __webpack_require__(492);
 
 
@@ -47082,7 +47082,7 @@ var _Object$setPrototypeO;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var finished = __webpack_require__(216);
+var finished = __webpack_require__(217);
 
 var kLastResolve = Symbol('lastResolve');
 var kLastReject = Symbol('lastReject');
@@ -47378,7 +47378,7 @@ function destroyer(stream, reading, writing, callback) {
   stream.on('close', function () {
     closed = true;
   });
-  if (eos === undefined) eos = __webpack_require__(216);
+  if (eos === undefined) eos = __webpack_require__(217);
   eos(stream, {
     readable: reading,
     writable: writing
@@ -47862,7 +47862,7 @@ exports.Writable = __webpack_require__(328);
 exports.Duplex = __webpack_require__(191);
 exports.Transform = __webpack_require__(329);
 exports.PassThrough = __webpack_require__(502);
-exports.finished = __webpack_require__(217);
+exports.finished = __webpack_require__(218);
 exports.pipeline = __webpack_require__(503);
 
 
@@ -48095,7 +48095,7 @@ var _Object$setPrototypeO;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var finished = __webpack_require__(217);
+var finished = __webpack_require__(218);
 
 var kLastResolve = Symbol('lastResolve');
 var kLastReject = Symbol('lastReject');
@@ -48391,7 +48391,7 @@ function destroyer(stream, reading, writing, callback) {
   stream.on('close', function () {
     closed = true;
   });
-  if (eos === undefined) eos = __webpack_require__(217);
+  if (eos === undefined) eos = __webpack_require__(218);
   eos(stream, {
     readable: reading,
     writable: writing
@@ -48576,11 +48576,11 @@ module.exports = RarityMap
 
 /* WEBPACK VAR INJECTION */(function(Buffer) {const BitField = __webpack_require__(199).default
 const debug = __webpack_require__(161)('webtorrent:webconn')
-const get = __webpack_require__(205)
+const get = __webpack_require__(206)
 const sha1 = __webpack_require__(193)
 const Wire = __webpack_require__(323)
 
-const VERSION = __webpack_require__(218).version
+const VERSION = __webpack_require__(219).version
 
 /**
  * Converts requests for torrent blocks into http range requests.

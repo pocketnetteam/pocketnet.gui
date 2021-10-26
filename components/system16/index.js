@@ -852,6 +852,18 @@ var system16 = (function(){
 			},
 			nodes : {
 
+				pendingpercentdifference : {
+					caption : "Pending request/Probability Difference",
+
+					series : [
+						{
+							name : "PPD",
+							path : "pendingpercentdifference",
+							id : 'ppd'
+						}
+					]
+				}, 
+
 				penalty : {
 					caption : "Nodes Penalty",
 
@@ -1172,7 +1184,7 @@ var system16 = (function(){
 
 				allcountShort : {
 					caption : "Count of requests/ Short",
-
+					many : true,
 					series : [
 						{
 							name : "Count of requests",
@@ -1250,7 +1262,24 @@ var system16 = (function(){
 							path : 'memory.rss',
 							name : "RSS",
 							id : 'rss'
+						},
+						{
+							path : 'memory.external',
+							name : "External",
+							id : 'external'
+						},
+						{
+							path : 'memory.heapTotal',
+							name : "Heap Total",
+							id : 'heapTotal'
+						},
+						{
+							path : 'memory.heapUsed',
+							name : "Heap Used",
+							id : 'heapUsed'
 						}
+
+
 					]
 				},
 
@@ -1372,8 +1401,6 @@ var system16 = (function(){
 
 				var meta = cpsub.chain[subtype]
 
-				console.log('chainCHART', chain, subtype)
-
 				if (subtype == 'blockchain'){
 
 					if(!chain) return {}
@@ -1410,8 +1437,6 @@ var system16 = (function(){
 	
 								return _x;
 							}
-
-							console.log('plotLines', plotLines, options.yAxis)
 
 							options.yAxis[0].plotLines = plotLines
 							
@@ -1853,11 +1878,12 @@ var system16 = (function(){
 
 					})
 
+
 					_el.find('.subcaptiongraphselect').on('click', function(){
 
 						var items = []
 
-						_.each(t.meta.canselect, function(v){
+						_.each(t.canselect, function(v){
 							items.push({
 								text : v,
 								action : function (clbk) {
@@ -1870,6 +1896,19 @@ var system16 = (function(){
 	
 								}
 							})
+						})
+
+						items.unshift({
+							text : "Show All",
+							action : function (clbk) {
+
+								settings.charts[type].selected = null
+
+								chart.make(type, stats)
+
+								clbk()
+
+							}
 						})
 
 						menuDialog({
@@ -3423,6 +3462,22 @@ var system16 = (function(){
 						actions.addnode()
 					})
 
+					el.c.find('.clearnodesstats').on('click', function(){
+						dialog({
+							class : 'zindex',
+							html : "Do you really want to clear nodes history statistic?",
+							btn1text : self.app.localization.e('dyes'),
+							btn2text : self.app.localization.e('dno'),
+							success : function(){	
+
+								proxy.fetchauth('nodes/clearnodesstats', {}).catch(e => {
+									sitemessage(e)
+								})
+
+							}
+						})
+					})
+
 					renders.nodescontenttable(elc)
 
 					if (clbk)
@@ -3460,6 +3515,11 @@ var system16 = (function(){
 							return n.node.key == key
 						})
 					}
+
+					p.el.find('.unlocknode').on('click', function(){
+						api.set.fixednode(null)
+						renders.nodescontenttable(elc)	
+					})
 
 					p.el.find('.use').on('click', function(){
 						var key = $(this).closest('.node').attr('node')
@@ -4085,8 +4145,6 @@ var system16 = (function(){
 
 					info = r.info
 
-					console.log("info", info)
-
 					initsettings()
 					
 					stats = [{
@@ -4102,8 +4160,6 @@ var system16 = (function(){
 
 
 					stats = data.stats
-
-					console.log(stats)
 
 					stats = lastelements(stats, 1000)
 
@@ -4151,13 +4207,7 @@ var system16 = (function(){
 
 					}
 
-					console.log("HERE111")
-
-					
-					
-						
 				}).catch(e => {
-					console.log("E" , e)
 					makers.proxycurrent()
 				})
 			}
