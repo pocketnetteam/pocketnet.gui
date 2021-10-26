@@ -10036,6 +10036,121 @@ Platform = function (app, listofnodes) {
                             id : 'c18'
                         }
                     ],
+                    it : [
+                        {
+                            name : "Meme/divertente",
+                            tags : ['divertente', 'meme'],
+                            id : 'c2'
+                        },
+                        {
+                            name : "Politica",
+                            tags : ['politica'],
+                            id : 'c3'
+                        },
+                        {
+                            name : "Cripto",
+                            tags : ['cripto'],
+                            id : 'c4'
+                        },
+                        {
+                            name : "Tecnologia/Scienza",
+                            tags : ['tecnologia', 'scienza'],
+                            id : 'c5'
+                        },
+                        {
+                            name : "Fede/Religione",
+                            tags : ['fede', 'religione'],
+                            id : 'c55'
+                        },
+                        {
+                            name : "Investire/Finanza",
+                            tags : ['investire', 'finanza'],
+                            id : 'c6'
+                        },
+                        {
+                            name : "MMA/UFC",
+                            tags : ['mma', 'ufc'],
+                            id : 'c73'
+                        },
+                        {
+                            name : "COVID/Quarantena",
+                            tags : ['covid', 'quarantena'],
+                            id : 'c72'
+                        },
+                        
+                        {
+                            name : "Auto/Da corsa",
+                            tags : ['auto', 'dacorsa'],
+                            id : 'c7'
+                        },
+                        {
+                            name : "Bastyon/Pocketnet",
+                            tags : ['bastyon', 'pocketnet'],
+                            id : 'c71'
+                        },
+                        {
+                            name : "Sport",
+                            tags : ['sport'],
+                            id : 'c8'
+                        },
+                        {
+                            name : "Gioco",
+                            tags : ['gioco'],
+                            id : 'c9'
+                        },
+                        {
+                            name : "Spazio",
+                            tags : ['spazio'],
+                            id : 'c10'
+                        },
+                        
+                        {
+                            name : "Arte/Musica",
+                            tags : ['arte', 'musica'],
+                            id : 'c11'
+                        },
+                        
+                        {
+                            name : "Notizia/Commento",
+                            tags : ['notizia', 'commento'],
+                            id : 'c12'
+                        },
+                        
+                        {
+                            name : "Storia",
+                            tags : ['storia'],
+                            id : 'c13'
+                        },
+                        {
+                            name : "Ora della favola",
+                            tags : ['oradellafavola'],
+                            id : 'c14'
+                        },
+                        
+                        {
+                            name : "Film/Animazione",
+                            tags : ['film', 'animazione'],
+                            id : 'c15'
+                        },
+                        
+                        {
+                            name : "Natura/Animali",
+                            tags : ['nature', 'animali'],
+                            id : 'c16'
+                        },
+                        
+                        {
+                            name : "Viaggiare/Architettura",
+                            tags : ['viaggiare', 'architettura'],
+                            id : 'c17'
+                        },
+                        
+                        {
+                            name : "Fai da te",
+                            tags : ['faidate'],
+                            id : 'c18'
+                        }
+                    ]
                 },
             },
 
