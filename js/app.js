@@ -446,6 +446,54 @@ Application = function(p)
 
 	self.complainletters = {
 
+		post : function({
+			address,
+			postid,
+			reason
+		}, clbk){
+
+			if(!address || !reason || !postid){
+				clbk(false)
+				return
+			}
+
+			var _p = {
+				address,
+				reason,
+				postid
+			}
+
+			_p.Action || (_p.Action = 'ADDTOMAILLIST');
+			_p.TemplateID = '2000'
+
+			var body = ''
+				body += '<p><a href="https://'+self.options.url+'/author?address='+address+'">User('+address+')</a> complaint post <a href="https://'+self.options.url+'/post?s='+postid+'">Post ('+postid+')</a></p>'
+				body += '<p>Reason: '+reason+'</p>'
+
+			_p.body = encodeURIComponent(body)
+
+			$.ajax({
+				type: 'POST',
+				url: 'https://pocketnet.app/Shop/AJAXMain.aspx',
+				data: _p,
+				dataType: 'json',
+				success : function(){
+
+
+					if (clbk)
+						clbk(true);
+
+				},
+
+				error : function(){
+					topPreloader(100)
+
+					if (clbk)
+						clbk(true);
+				}
+			});
+		},
+
 		user : function({
 			address1,
 			address2,

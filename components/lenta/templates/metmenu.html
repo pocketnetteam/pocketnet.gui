@@ -34,6 +34,12 @@ var all = {
 		class : 'deleteSavedVideo'
 	},
 
+	complain : {
+		icon : '<i class="fas fa-ban"></i>',
+		text : e('reportpost'),
+		class : 'complain'
+	},
+
 	share : {
 		icon : '<i class="fas fa-share-alt"></i>',
 		text : e('share'),
@@ -58,11 +64,7 @@ var all = {
 		class : 'unsubscribe'
 	},
 
-	complain : {
-		icon : '<i class="fas fa-ban"></i>',
-		text : e('reportpost'),
-		class : 'complain'
-	},
+	
 
 	donation : {
 		icon : '<i class="fas fa-donate"></i>',
@@ -124,6 +126,10 @@ if(share){
 
 		if(!my && me){
 
+			if((typeof mestate!= 'undefined' && !mestate.trial) || window.cordova){
+				m.push('complain')
+			}
+
 			if(app.platform.matrixchat.core){
 				m.push('startchat')
 			}
@@ -142,9 +148,7 @@ if(share){
 			}
 			
 
-			if(typeof mestate!= 'undefined' && mestate.reputation >= 20){
-				m.push('complain')
-			}
+			
 
 			m.push('block')
 

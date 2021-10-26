@@ -791,7 +791,7 @@ var share = (function(){
 							clbk(true)
 						}
 						else{
-							clbk(result.state.id != 2)
+							clbk(result.state.id != 2 && result.state.id != 3)
 
 						}
 						

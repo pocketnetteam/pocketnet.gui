@@ -192,34 +192,64 @@ var complain = (function(){
 
 			complain : function(clbk){
 
-				var complainShare = sobj.complain(selected);
+				self.app.platform.sdk.ustate.me(function(mestate){
 
-				topPreloader(30);
+					if(mestate && !mestate.trial){
+						var complainShare = sobj.complain(selected);
 
-			
-				self.sdk.node.transactions.create.commonFromUnspent(
+						topPreloader(30);
 
-					complainShare,
+					
+						self.sdk.node.transactions.create.commonFromUnspent(
 
-					function(tx, error){
+							complainShare,
 
-						topPreloader(100)
+							function(tx, error){
 
-						if(!tx){
+								topPreloader(100)
 
-							self.app.platform.errorHandler(error, true)	
+								if(!tx){
+
+									self.app.platform.errorHandler(error, true)	
+									
+									if (clbk)
+										clbk()
+								}
+								else
+								{				
+									
+									successCheck()
+
+									if (clbk)
+										clbk(true)
+								}
+
+							}
+						)
+					}	
+
+					else{
+
+						var reason = ((actions.find(selected) || {}).name) || selected;
+
+						self.app.complainletters.post({
+							reason,
+							address : mestate.address,
+							postid : sobj.txid
+						}, function(r){
+
+							successCheck()
 							
 							if (clbk)
-								clbk()
-						}
-						else
-						{						
-							if (clbk)
-								clbk(true)
-						}
-
+								clbk(r)
+						})
 					}
-				)
+
+					
+					
+				})
+
+				
 			},	
 
 			nextActive : function(){

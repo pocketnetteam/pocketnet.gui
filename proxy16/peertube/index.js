@@ -185,7 +185,7 @@ var Peertube = function (settings) {
 					if (r && r.data) {
 						fr = r.data;
 
-						if ((fr && fr.isLive) || (fr.state && fr.state.id == 2))
+						if ((fr && fr.isLive) || (fr.state && (fr.state.id == 2 || fr.state.id == 3)))
 							ontime = 20;
 
 						if (fr && fr.isLive && (!fr.aspectRatio || fr.aspectRatio == '0'))
