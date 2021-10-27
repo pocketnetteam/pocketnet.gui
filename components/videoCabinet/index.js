@@ -119,6 +119,15 @@ var videoCabinet = (function () {
           });
       },
 
+      async getSingleVideo(link) {
+        const { host, id } = self.app.peertubeHandler.parselink(link);
+
+        return self.app.peertubeHandler.api.videos.getDirectVideoInfo(
+          { id },
+          { host },
+        );
+      },
+
       async getQuota() {
         return self.app.peertubeHandler.api.videos
           .getQuotaStatus()
@@ -407,8 +416,9 @@ var videoCabinet = (function () {
 
     var events = {
       onPageScroll() {
-        const scrollProgress = el.windowElement.scrollTop() / el.scrollElement.height();
-        
+        const scrollProgress =
+          el.windowElement.scrollTop() / el.scrollElement.height();
+
         if (scrollProgress >= LAZYLOAD_PERCENTAGE && !newVideosAreUploading) {
           const activeServers = Object.keys(peertubeServers).filter(
             (server) => !(peertubeServers[server] || {}).isFull,
@@ -735,12 +745,18 @@ var videoCabinet = (function () {
             currentLink: '',
             actions: {
               added: function (resultLink) {
-                const { host } = self.app.peertubeHandler.parselink(resultLink);
+                actions.getSingleVideo(resultLink).then((data) => {
+                  const { host } =
+                    self.app.peertubeHandler.parselink(resultLink);
 
-                const videoPortionElement = actions.resetHosts();
+                  const formattedData = {
+                    ...data,
+                    server: host,
+                  }
 
-                actions.getVideos(host).then(() => {
-                  renders.videos(null, videoPortionElement);
+                  peertubeServers[host].videos.unshift(formattedData);
+
+                  renders.videos([formattedData], renders.newVideoContainer(true));
                 });
 
                 actions.getQuota().then(() => renders.quota());
@@ -831,12 +847,14 @@ var videoCabinet = (function () {
         );
       },
       //add new container for a protion of videos (lazyload)
-      newVideoContainer() {
+      newVideoContainer(atStart = false) {
         const videoPortionElement = $(
           '<div class="videoPage"><div class="preloaderwr"><div class="preloader5"><img src="./img/three-dots.svg"/></div></div></div>',
         );
 
-        el.videoContainer.append(videoPortionElement);
+        atStart
+          ? el.videoContainer.prepend(videoPortionElement)
+          : el.videoContainer.append(videoPortionElement);
 
         return videoPortionElement;
       },
