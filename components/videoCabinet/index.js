@@ -25,8 +25,8 @@ var videoCabinet = (function () {
     let tagElement;
     let tagArray = [];
     let newVideosAreUploading = false;
+    let serversList = {};
 
-    var videoServers = {};
     var peertubeServers = {};
     var userQuota = {};
     var blockChainInfo = [];
@@ -38,18 +38,45 @@ var videoCabinet = (function () {
     //actions object for functions received from external object (for example, when loading from 'lenta')
     var externalActions = {};
 
-    var actions = {
-      async getHosts() {
-        const serverStructureHosts = await self.app.peertubeHandler.api.proxy
-          .roys({ type: 'view' })
-          .catch(() => ({}));
+    var helpers = {
+      removeDuplicateVideos(host, videos) {
+        let formattingVideos = [...videos];
 
-        Object.entries(serverStructureHosts).forEach(
-          ([name, bestHost]) =>
-            (videoServers[name] = { ...videoServers[name], bestHost }),
+        console.log('pre', host, formattingVideos);
+
+        const serverRoy = Object.keys(serversList).find((royKey) =>
+          (serversList[royKey] || []).includes(host),
         );
 
-        return Promise.resolve(serverStructureHosts);
+        (serversList[serverRoy] || []).forEach((server) => {
+          if (server === host) return;
+
+          if (!peertubeServers[server]) return;
+
+          formattingVideos = formattingVideos.filter((video) =>
+            peertubeServers[server].videos.find(
+              (duplicatedVideo) => video.uuid === duplicatedVideo.uuid,
+            )
+              ? false
+              : true,
+          );
+        });
+
+        return formattingVideos;
+      },
+    };
+
+    var actions = {
+      async getHosts() {
+        // const serverStructureHosts = await self.app.peertubeHandler.api.proxy
+        //   .roys({ type: 'view' })
+        //   .catch(() => ({}));
+
+        serversList = await self.app.peertubeHandler.api.proxy
+          .allServers()
+          .catch(() => ({}));
+
+        return Promise.resolve(serversList);
       },
 
       async getVideos(server = '', parameters = {}) {
@@ -72,12 +99,19 @@ var videoCabinet = (function () {
             }));
 
             peertubeServers[server].start += perServerCounter;
-            peertubeServers[server].videos.push(...formattedVideos);
+
+            const filteredVideos = helpers.removeDuplicateVideos(
+              server,
+              formattedVideos,
+            );
+
+            peertubeServers[server].videos.push(...filteredVideos);
+
             peertubeServers[server].total = data.total || 0;
             peertubeServers[server].isFull =
               peertubeServers[server].start > data.total;
 
-            return { ...data, data: formattedVideos };
+            return { ...data, data: filteredVideos };
           })
           .catch(() => {
             peertubeServers[server].isFull = true;
@@ -389,7 +423,7 @@ var videoCabinet = (function () {
           );
 
           if (!activeServers.length) return;
-          debugger;
+
           events.getAdditionalVideos(activeServers);
           newVideosAreUploading = true;
         }
@@ -709,8 +743,6 @@ var videoCabinet = (function () {
             currentLink: '',
             actions: {
               added: function (resultLink) {
-                debugger;
-
                 const { host } = self.app.peertubeHandler.parselink(resultLink);
 
                 const videoPortionElement = actions.resetHosts();
