@@ -108,7 +108,8 @@
         "uglify-js": "",
         "uglifycss": "0.0.29",
         "underscore": "",
-        "yuicompressor": "^2.4.8"
+        "yuicompressor": "^2.4.8",
+        "winston": "^3.3.3"
     },
     "build": {
         "productName": "Pocketnet",
