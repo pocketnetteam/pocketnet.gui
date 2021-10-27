@@ -42,8 +42,6 @@ var videoCabinet = (function () {
       removeDuplicateVideos(host, videos) {
         let formattingVideos = [...videos];
 
-        console.log('pre', host, formattingVideos);
-
         const serverRoy = Object.keys(serversList).find((royKey) =>
           (serversList[royKey] || []).includes(host),
         );
@@ -409,15 +407,9 @@ var videoCabinet = (function () {
 
     var events = {
       onPageScroll() {
-        const scrollProgress = el.windowElement.scrollTop() / el.c.height();
-
-        const loadPercent = ed.inLentaWindow
-          ? LAZYLOAD_PERCENTAGE_EXTERNAL
-          : LAZYLOAD_PERCENTAGE;
-
-        console.log(el.windowElement.scrollTop(), el.c.height());
-
-        if (scrollProgress >= loadPercent && !newVideosAreUploading) {
+        const scrollProgress = el.windowElement.scrollTop() / el.scrollElement.height();
+        
+        if (scrollProgress >= LAZYLOAD_PERCENTAGE && !newVideosAreUploading) {
           const activeServers = Object.keys(peertubeServers).filter(
             (server) => !(peertubeServers[server] || {}).isFull,
           );
@@ -1205,6 +1197,10 @@ var videoCabinet = (function () {
         el.windowElement = ed.scrollElementName
           ? $(ed.scrollElementName)
           : $(window);
+
+        el.scrollElement = ed.scrollElementName
+          ? el.c.find('.userVideos')
+          : el.c;
 
         //do nothing if user has no access to videos
         if (!ed.hasAccess) return p.clbk(null, p);
