@@ -4,6 +4,7 @@ const { format } = winston;
 const { combine, label, json, timestamp, prettyPrint, printf } = format;
 var _ = require('underscore')
 var f = require('./functions');
+var fs = require('fs');
 
 class wsstransport extends Transport {
     constructor(opts) {
@@ -37,6 +38,7 @@ var Logger = function(_loggers){
     var self = this
     var loggers = _loggers
     var level = 'warn'
+    var writelogs = false
 
     self.app = null
 
@@ -61,17 +63,22 @@ var Logger = function(_loggers){
 
     var transports = function(key){
 
-        return [
-            new winston.transports.Console({
-               
-            }),
-            new winston.transports.File({ 
-                filename: 'logs/'+key+'.log',
-                maxsize: 5242880, 
-                maxFiles: 5,
-             }),
+        var tr = [
+            new winston.transports.Console({}),
             new wsstransport({ logger : self })
         ]
+
+        if(writelogs){
+            tr.push(
+                new winston.transports.File({ 
+                    filename: f.path('logs/'+key+'.log'),
+                    maxsize: 5242880, 
+                    maxFiles: 5,
+                })
+            )
+        }
+
+        return tr
 
     }
 
@@ -86,7 +93,27 @@ var Logger = function(_loggers){
 
     }
 
+    self.prepare = function(){
+        try{
+			if(!fs.existsSync(f.path('logs'))){
+				fs.mkdirSync(f.path('logs'))
+			}
+
+            writelogs = true
+		}
+		catch(e){
+            console.log("E", e)
+            writelogs = false
+		}
+    }
+
+   
+
     self.init = function(){
+
+        self.prepare()
+
+        console.log('writelogs', writelogs)
 
         _.each(loggers, function(key){
 
@@ -105,9 +132,10 @@ var Logger = function(_loggers){
                 transports: transports(key),
             });
 
-            logger.exceptions.handle(
-                new winston.transports.File({ filename: 'logs/exceptions.log' })
-            );
+            if (writelogs)
+                logger.exceptions.handle(
+                    new winston.transports.File({ filename: f.path('logs/exceptions.log') })
+                );
         })
 
         return self

@@ -825,7 +825,7 @@ Application = function(p)
 
 	self.init = function(p){
 
-		if (navigator.webdriver && !self.test) return
+		if (navigator.webdriver && !self.test && !parameters().webdrivertest) return
 
 		if (typeof localStorage == 'undefined')
 			localStorage = {};
