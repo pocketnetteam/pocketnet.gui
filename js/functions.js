@@ -8437,7 +8437,7 @@
 				'</div>',
 
 				'<div class="searchInputWrapper">' +
-					'<input class="sminput" tabindex="2" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" maxlength="400" type="text" placeholder="' + (p.placeholder || "Search") + '">' +
+					'<input elementsid="sminputsearch" class="sminput" tabindex="2" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" maxlength="400" type="text" placeholder="' + (p.placeholder || "Search") + '">' +
 				'</div>',
 
 				'<div class="searchPanel">' +
