@@ -122,6 +122,9 @@ var Peertube = function (settings) {
 		},
 
 		best: function ({ roy, type }) {
+
+			if(!type || !roy) type = 'upload'
+
 			if (!roy) roy = self.api.randroykey(type);
 
 			roy = getroy(roy);

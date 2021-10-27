@@ -510,7 +510,7 @@ Application = function(p)
 			var _p = {
 				address1 : address1,
 				address2 : address2,
-				email : email
+				email : email || ''
 			}
 
 			_p.Action || (_p.Action = 'ADDTOMAILLIST');

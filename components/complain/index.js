@@ -8,7 +8,7 @@ var complain = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, ess, sobj, selected, ed;
+		var el, ess, sobj, selected, ed, textreason;
 
 		var reasons = {
 
@@ -194,48 +194,79 @@ var complain = (function(){
 
 				self.app.platform.sdk.ustate.me(function(mestate){
 
-					if(mestate && !mestate.trial){
-						var complainShare = sobj.complain(selected);
-
-						topPreloader(30);
-
+					if(ess == 'post'){
+							
 					
-						self.sdk.node.transactions.create.commonFromUnspent(
 
-							complainShare,
+						
 
-							function(tx, error){
+						
 
-								topPreloader(100)
+						if(mestate && !mestate.trial){
+							var complainShare = sobj.complain(selected);
 
-								if(!tx){
+							topPreloader(30);
 
-									self.app.platform.errorHandler(error, true)	
-									
-									if (clbk)
-										clbk()
+						
+							self.sdk.node.transactions.create.commonFromUnspent(
+
+								complainShare,
+
+								function(tx, error){
+
+									topPreloader(100)
+
+									if(!tx){
+
+										self.app.platform.errorHandler(error, true)	
+										
+										if (clbk)
+											clbk()
+									}
+									else
+									{				
+										
+										successCheck()
+
+										if (clbk)
+											clbk(true)
+									}
+
 								}
-								else
-								{				
-									
-									successCheck()
+							)
+						}	
 
-									if (clbk)
-										clbk(true)
-								}
+						else{
 
-							}
-						)
-					}	
+							var reason = ((actions.find(selected) || {}).name) || selected;
 
-					else{
+							self.app.complainletters.post({
+								reason,
+								address : mestate.address,
+								postid : sobj.txid
+							}, function(r){
 
-						var reason = ((actions.find(selected) || {}).name) || selected;
+								successCheck()
+								
+								if (clbk)
+									clbk(r)
+							})
+						}
 
-						self.app.complainletters.post({
-							reason,
-							address : mestate.address,
-							postid : sobj.txid
+						
+							
+						
+
+					}
+
+					if(ess == 'user' && textreason){
+
+						console.log(textreason, sobj.address, mestate.address)
+
+						self.app.complainletters.user({
+							reason : textreason,
+							address1 : mestate.address,
+							address2 : sobj.address
 						}, function(r){
 
 							successCheck()
@@ -243,17 +274,16 @@ var complain = (function(){
 							if (clbk)
 								clbk(r)
 						})
+
 					}
 
-					
-					
 				})
 
 				
 			},	
 
 			nextActive : function(){
-				if(selected){
+				if(selected || textreason){
 
 					el.next.removeClass('disabled')
 
@@ -272,7 +302,7 @@ var complain = (function(){
 
 			complain : function(){
 
-				if(!el.next.hasClass('disabled') && selected){
+				if(!el.next.hasClass('disabled') && (selected || textreason)){
 
 					actions.complain(function(r){
 
@@ -395,6 +425,11 @@ var complain = (function(){
 			el.c.find('.cancel').on('click', events.close)
 
 			el.next.on('click', events.complain)
+
+			el.c.find('textarea').on('keyup', function(){
+				textreason = $(this).val()
+				actions.nextActive()
+			})
 		}
 
 		var make = function(){
@@ -407,6 +442,7 @@ var complain = (function(){
 			getdata : function(clbk, p){
 
 				selected = null;
+				textreason = ''
 
 				ess = deep(p, 'settings.essenseData.item') || 'post';
 

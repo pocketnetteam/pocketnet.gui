@@ -16,6 +16,12 @@ var all = {
 		class : 'unblock'
 	},
 
+	complain : {
+		icon : '<i class="fas fa-ban"></i>',
+		text : e('reportuser'),
+		class : 'complain'
+	},
+
 	startchat : {
 		icon : '<i class="far fa-comment"></i>',
 		text : e('startchat'),
@@ -56,6 +62,10 @@ if(author){
 			else
 			{
 				m.push('block')
+			}
+
+			if(window.cordova){
+				m.push('complain')
 			}
 		}
 

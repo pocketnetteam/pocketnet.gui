@@ -590,6 +590,8 @@ ____loclib.opennewwindow = "Open Post in New Window"
 ____loclib.unsubscribe = "Unsubscribe"
 ____loclib.startchat = "Start chat"
 ____loclib.reportpost = "Report Post"
+____loclib.reportuser = "Report User"
+
 ____loclib.donate = "Donate"
 ____loclib.blockuser = "Block User"
 ____loclib.more = "More"

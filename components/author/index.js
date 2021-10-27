@@ -62,6 +62,27 @@ var author = (function(){
 						r.module.destroy()
 				})
 			},
+
+			complain : function(){
+				self.nav.api.load({
+					open : true,
+					id : 'complain',
+					inWnd : true,
+
+					essenseData : {
+						item : 'user',
+						obj : author,
+
+						success : function(){
+							
+						}
+					},
+
+					clbk : function(){
+						
+					}
+				})
+			}
 		}
 
 		var events = {
@@ -403,6 +424,15 @@ var author = (function(){
 						return template(d);
 
 					}, function(el){
+
+						el.find('.complain').on('click', function(){
+							self.app.mobile.vibration.small()
+							actions.complain()
+
+							if (_el.tooltipster)
+								_el.tooltipster('hide')	
+
+						})
 
 						el.find('.donate').on('click', function(){
 							self.app.mobile.vibration.small()
