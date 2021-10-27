@@ -94,17 +94,21 @@ var Logger = function(_loggers){
     }
 
     self.prepare = function(){
-        try{
-			if(!fs.existsSync(f.path('logs'))){
-				fs.mkdirSync(f.path('logs'))
-			}
-
-            writelogs = true
-		}
-		catch(e){
-            console.log("E", e)
-            writelogs = false
-		}
+        
+        if(global.WRITE_LOGS){
+            try{
+                if(!fs.existsSync(f.path('logs'))){
+                    fs.mkdirSync(f.path('logs'))
+                }
+    
+                writelogs = true
+            }
+            catch(e){
+                console.log("E", e)
+                writelogs = false
+            }
+        }
+        
     }
 
    
