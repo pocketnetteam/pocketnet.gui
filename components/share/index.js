@@ -1690,7 +1690,7 @@ var share = (function(){
 			streamPage(p = {}) {
 
 				var typeDictionary = {
-					addVideo: 'videoCabinet',
+					addVideo: 'uploadpeertube',
 					addStream: 'streampeertube',
 				};
 

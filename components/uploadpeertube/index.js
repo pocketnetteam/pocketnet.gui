@@ -180,7 +180,12 @@ var uploadpeertube = (function () {
             if (e.cancel) {
               sitemessage('Uploading canceled');
             } else {
-              var message = e.text || findResponseError(e) || 'Uploading error';
+              var message =
+                e.text ||
+                findResponseError(e) ||
+                `Uploading error: ${
+                  e.toString ? e.toString() : 'unknown error'
+                }`;
 
               sitemessage(message);
             }
@@ -294,7 +299,11 @@ var uploadpeertube = (function () {
                   sitemessage('Uploading canceled');
                 } else {
                   var message =
-                    e.text || findResponseError(e) || 'Uploading error';
+                    e.text ||
+                    findResponseError(e) ||
+                    `Uploading error: ${
+                      e.toString ? e.toString() : 'unknown error'
+                    }`;
 
                   sitemessage(message);
                 }
