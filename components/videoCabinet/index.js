@@ -35,6 +35,11 @@ var videoCabinet = (function () {
 
     const descriptionCache = {};
 
+    const sorting = {
+      sortType: 'createdAt',
+      sortDirection: '-',
+    };
+
     //actions object for functions received from external object (for example, when loading from 'lenta')
     var externalActions = {};
 
@@ -479,6 +484,9 @@ var videoCabinet = (function () {
       onVideoSort() {
         const sort = `${el.sortDirectionSelect.val()}${el.sortTypeSelect.val()}`;
 
+        sorting.sortType = el.sortTypeSelect.val();
+        sorting.sortDirection = el.sortDirectionSelect.val();
+
         localStorage.setItem('videoCabinetSortType', el.sortTypeSelect.val());
         localStorage.setItem(
           'videoCabinetSortDirection',
@@ -501,12 +509,41 @@ var videoCabinet = (function () {
     var renders = {
       //table with video elements
       videos(videosForRender, videoPortionElement) {
-        const videos =
+        //additional sorting due to different servers
+        console.log(
+          'Videos Pre',
+          videosForRender ||
+            Object.values(peertubeServers)
+              .map((value) => value.videos)
+              .filter((video) => video)
+              .flat(),
+        );
+
+        const videos = (
           videosForRender ||
           Object.values(peertubeServers)
             .map((value) => value.videos)
             .filter((video) => video)
-            .flat();
+            .flat()
+        ).sort((videoA, videoB) => {
+          if (sorting.sortType === 'createdAt') {
+            const sortingValBool = sorting.sortDirection
+              ? moment(videoB[sorting.sortType]).isAfter(
+                  videoA[sorting.sortType],
+                )
+              : moment(videoB[sorting.sortType]).isBefore(
+                  videoA[sorting.sortType],
+                );
+
+            return sortingValBool ? 1 : -1;
+          }
+
+          return sorting.sortDirection
+            ? videoB[sorting.sortType] - videoA[sorting.sortType]
+            : videoB[sorting.sortType] - videoA[sorting.sortType];
+        });
+
+        console.log('Videos post', videos);
 
         videos.forEach((video) => {
           if (video.description) {
@@ -752,11 +789,14 @@ var videoCabinet = (function () {
                   const formattedData = {
                     ...data,
                     server: host,
-                  }
+                  };
 
                   peertubeServers[host].videos.unshift(formattedData);
 
-                  renders.videos([formattedData], renders.newVideoContainer(true));
+                  renders.videos(
+                    [formattedData],
+                    renders.newVideoContainer(true),
+                  );
                 });
 
                 actions.getQuota().then(() => renders.quota());
@@ -1172,6 +1212,9 @@ var videoCabinet = (function () {
               inLentaWindow: ed.inLentaWindow,
               scrollElementName: ed.scrollElementName || '',
             };
+
+            sorting.sortType = data.selectedType;
+            sorting.sortDirection = data.selectedDirection;
 
             ed = {
               ...ed,
