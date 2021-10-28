@@ -610,7 +610,7 @@ var videoCabinet = (function () {
                 const singleVideoSection = $(this);
 
                 const currentElement = singleVideoSection.find(
-                  '.postingStatusWrapper',
+                  '.postingStatusWrapper[videoTranscoding="false"]',
                 );
 
                 const isTranscoding = currentElement.attr('isTranscoding');

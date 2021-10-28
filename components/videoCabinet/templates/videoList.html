@@ -70,7 +70,7 @@
       <div
         class="videoItemPart postingStatusWrapper"
         video="<%- `peertube://${deep(video, 'account.host')}/${video.uuid}` %>"
-        videoTranscoding="<%- (video.state.id !== 1) ? 'true' : '' %>"
+        videoTranscoding="<%- (video.state.id !== 1) ? 'true' : 'false' %>"
       >
         <div class="preloaderwr transcodingPreloader">
           <i class="fas fa-sync fa-spin"></i> <%- e('transcodingShort') %>
