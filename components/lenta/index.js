@@ -3439,7 +3439,9 @@ var lenta = (function(){
 
 								self.app.api.rpc('getaccountsetting', [author])
 								.then(getAccountSettings)
-								.catch(() => getAccountSettings(null))
+								.catch(function(){
+									getAccountSettings(null)
+								})
 
 								
 
