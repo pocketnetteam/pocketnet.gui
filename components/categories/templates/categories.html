@@ -11,7 +11,7 @@
                 <div class="cat">
                     <div class="cattable table">
 
-                        <div class="catvalue catcheckgl" title="<%-title%>">
+                        <div elementsid="<%-title%>" class="catvalue catcheckgl" title="<%-title%>">
                             <span ><%- cat.name %></span>
                         </div>
 
@@ -22,7 +22,7 @@
                         </div>
 
                         <div class="catsearch">
-                            <a href="?sst=<%-cat.tags.join(' ')%>">
+                            <a elementsid="?sst=<%-cat.tags.join(' ')%>" href="?sst=<%-cat.tags.join(' ')%>">
                                 <i class="fas fa-search"></i>
                             </a>
                         </div>

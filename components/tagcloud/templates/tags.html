@@ -12,17 +12,17 @@
                             </div>
                         </div>
 
-                        <div class="tagvalue tagcheckgl">
+                        <div elementsid="tagcheckgl1<%- decodeURIComponent(tag.tag) %>" class="tagvalue tagcheckgl">
                             <span><%- decodeURIComponent(tag.tag) %><% if(tag.count) {%>,&nbsp;<%- compressedNumber(tag.count) %><%}%></span>
                         </div>
 
-                        <div class="tagcheck tagcheckgl">
+                        <div elementsid="tagcheckgl2<%- decodeURIComponent(tag.tag) %>" class="tagcheck tagcheckgl">
                             <i class="far fa-circle unselected"></i>
                             <i class="fas fa-plus-circle selected"></i>
                         </div>
 
                         <div class="tagsearch">
-                            <a href="?sst=<%- tag.tag %>">
+                            <a elementsid="?sst=<%- tag.tag %>" href="?sst=<%- tag.tag %>">
                                 <i class="fas fa-search"></i>
                             </a>
                         </div>

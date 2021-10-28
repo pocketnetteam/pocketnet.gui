@@ -52,13 +52,13 @@
                                
                                 <% if(!app.curation()) {%>
                                     <div class="fitem">
-                                        <a href="about"><%=e('aboutus')%></a>
+                                        <a elementsid="about" href="about"><%=e('aboutus')%></a>
                                     </div>
                                 <% } %>
                                 
                                 <% if(!window.cordova && os() && app.platform.applications.ui[os()]) {%>
                                     <div class="fitem">
-                                        <a href="applications"><%=e('e13120')%></a>
+                                        <a elementsid="applications" href="applications"><%=e('e13120')%></a>
                                     </div>
                                 <% } %>
                                 
