@@ -1119,7 +1119,7 @@ ____loclib.sumoftransaction = "Sum of transaction"
 
 
 ____loclib.videoBitrateError = "Video bitrate is too high. Please, use file with lower quality/resolution"
-____loclib.videoQualityInfo = "Maximum allowed video bitrate  - 8 Mbit/s. If your file exceeds this limit, the download would be terminated."
+____loclib.videoQualityInfo = "Maximum allowed video bitrate  - 8 Mbit/s. If your file exceeds this limit, the download would be terminated. Maximum allowed resolution - 720p. <br/> Recommended bitrates: <br/> <b>1080p:</b> 5081 Kbps <br/> <b>720p:</b>  2680 Kbps <br/> <b>480p:</b>  1300 Kbps <br/> <b>360p:</b>  700 Kbps"
 ____loclib.videoQualityCaption = "Video quality limitations"
 
 ____loclib.streamLinks = "Streaming software links"
@@ -1215,3 +1215,9 @@ ____loclib.successdownloaded = "Video saved";
 
 ____loclib.logoutaccount = "Sign out of your account";
 ____loclib.closeapplication = "Exit the application";
+
+
+____loclib.attachVideoLenta = "Attach video to post";
+____loclib.attachVideoLentaShort = "Attach";
+
+____loclib.linkToPostLenta = "Already posted"
