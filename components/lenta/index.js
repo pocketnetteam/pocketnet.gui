@@ -3400,13 +3400,14 @@ var lenta = (function(){
 											var pinnedShare = t[0];
 											pinnedShare.pin = true;
 											shares.unshift(pinnedShare);
-
-											if (clbk)
-												clbk(shares, error || error2)
-
-											el.loader.fadeOut();
-											return;									
+						
 										}
+										
+										if (clbk)
+										clbk(shares, error || error2)
+
+										el.loader.fadeOut();
+										return;			
 
 									})
 								
@@ -3435,7 +3436,13 @@ var lenta = (function(){
 
 							} else {
 
-								self.app.api.rpc('getaccountsetting', [author]).then(getAccountSettings)
+
+								self.app.api.rpc('getaccountsetting', [author])
+								.then(getAccountSettings)
+								.catch(() => getAccountSettings(null))
+
+								
+
 
 							}
 
