@@ -99,9 +99,7 @@ var uploadpeertube = (function () {
           video: videoInputFile[0],
         };
 
-        if (videoName) {
-          data.name = videoName;
-        }
+        data.name = videoName || fileName;
 
         var options = {
           type: 'uploadVideo',
@@ -147,7 +145,7 @@ var uploadpeertube = (function () {
         };
 
         el.importUrl.addClass('hidden');
-        
+
         self.app.peertubeHandler.api.videos
           .upload(data, options)
           .then((response) => {
