@@ -56,6 +56,7 @@ var uploadpeertube = (function () {
         maxWidth: 600,
         zIndex: 1006,
         position: 'bottom',
+        contentAsHTML: true,
       });
 
       el.videoInput.change(async function (evt) {
