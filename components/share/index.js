@@ -626,9 +626,9 @@ var share = (function(){
 
 					currentShare.settings.a = currentShare.default.a
 
-					self.app.peertubeHandler.api.videos.remove(l).then(r => {
-						self.app.platform.sdk.videos.clearstorage(l)
-					})
+					// self.app.peertubeHandler.api.videos.remove(l).then(r => {
+					// 	self.app.platform.sdk.videos.clearstorage(l)
+					// })
 
 			},
 
@@ -1721,6 +1721,8 @@ var share = (function(){
 						storage : p.storage,
 						value : p.value,
 						currentLink : currentShare.url ? currentShare.url.v : '',
+						inLentaWindow : true,
+						scrollElementName: '.wnd.videoCabinet .wndcontent',
 						actions : {
 							added : function(link, name){
 								var type = 'url';
@@ -1767,8 +1769,6 @@ var share = (function(){
 						external = element;
 
 						videoUploadData = element.essenseData;
-
-						console.log('external', element)
 					}
 				});
 
@@ -1826,23 +1826,7 @@ var share = (function(){
 							});
 
 							p.el.find('.removepeertube').on('click', function(){
-
-								dialog({
-									html : self.app.localization.e('removeVideoDialog'),
-									btn1text : self.app.localization.e('dyes'),
-									btn2text : self.app.localization.e('dno'),
-									class : "zindex",
-									success : function(){
-			
-										events.removelink()
-										
-									},
-			
-									fail : function(){
-									}
-								})
-
-								
+								events.removelink();
 							})
 
 							p.el.find('.streaminfo').on('click', () => {

@@ -301,6 +301,16 @@ var Peertube = function (settings) {
 			return Promise.resolve(output);
 		},
 
+		allservers: ({type}) => {
+			const output = {};
+
+			Object.keys(roys).map((roy) => {
+				output[roy] = roys[roy].instances();
+			});
+
+			return Promise.resolve(output);
+		},
+
 		accountVideos({ account, servers = [], start, count }, cahce) {
 			const requestServers = servers.length
 				? [...servers]
