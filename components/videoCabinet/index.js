@@ -510,15 +510,6 @@ var videoCabinet = (function () {
       //table with video elements
       videos(videosForRender, videoPortionElement) {
         //additional sorting due to different servers
-        console.log(
-          'Videos Pre',
-          videosForRender ||
-            Object.values(peertubeServers)
-              .map((value) => value.videos)
-              .filter((video) => video)
-              .flat(),
-        );
-
         const videos = (
           videosForRender ||
           Object.values(peertubeServers)
@@ -542,8 +533,6 @@ var videoCabinet = (function () {
             ? videoB[sorting.sortType] - videoA[sorting.sortType]
             : videoB[sorting.sortType] - videoA[sorting.sortType];
         });
-
-        console.log('Videos post', videos);
 
         videos.forEach((video) => {
           if (video.description) {
