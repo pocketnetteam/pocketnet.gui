@@ -56,13 +56,20 @@ var videoCabinet = (function () {
 
           if (!peertubeServers[server]) return;
 
-          formattingVideos = formattingVideos.filter((video) =>
-            peertubeServers[server].videos.find(
+          formattingVideos = formattingVideos.filter((video) => {
+            const duplicate = peertubeServers[server].videos.find(
               (duplicatedVideo) => video.uuid === duplicatedVideo.uuid,
-            )
-              ? false
-              : true,
-          );
+            );
+
+            if (duplicate) {
+              //pick max amount of views
+              duplicate.views = Math.max(duplicate.views, video.views);
+
+              return false;
+            }
+
+            return true;
+          });
         });
 
         return formattingVideos;
