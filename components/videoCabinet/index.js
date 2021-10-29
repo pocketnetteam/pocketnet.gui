@@ -74,6 +74,10 @@ var videoCabinet = (function () {
 
         return formattingVideos;
       },
+
+      parseVideoServerError(error = {}) {
+        return error.text || findResponseError(error) || JSON.stringify(error);
+      },
     };
 
     var actions = {
@@ -324,13 +328,14 @@ var videoCabinet = (function () {
         videoElement.find('.transcodingPreloader').addClass('hidden');
       },
 
-      uploadVideoWallpaper(image, shareUrl) {
+      uploadVideoWallpaper(image, uploadParameters) {
+        const { shareUrl, backupHost } = uploadParameters;
+
         const parameters = {
           thumbnailfile: image,
         };
 
         const settingsObject = {};
-
         const urlMeta = self.app.peertubeHandler.parselink(shareUrl);
 
         const host = urlMeta.host || null;
@@ -366,10 +371,17 @@ var videoCabinet = (function () {
               .update(shareUrl, parameters, { host })
               .then(() => img);
           })
-          .catch((e) => {
-            const message = e.text || findResponseError(e) || 'Updating error';
+          .catch((error = {}) => {
+            if ((error.code = 404)) {
+              return self.app.peertubeHandler.api.videos
+                .update(`peertube://${backupHost}/${urlMeta.id}`, parameters, {
+                  host,
+                })
+                .then(() => img)
+                .catch((e = {}) => sitemessage(helpers.parseVideoServerError(e)));
+            }
 
-            sitemessage(message);
+            return sitemessage(helpers.parseVideoServerError(error));
           });
       },
 
@@ -599,11 +611,14 @@ var videoCabinet = (function () {
             });
 
             menuActivator.on('click', function () {
-              const videoLink = $(this).attr('videoLink');
+              const menuActivatorElement = $(this);
+
+              const videoLink = menuActivatorElement.attr('videoLink');
+              const backupHost = menuActivatorElement.attr('backupHost');
 
               return renders.metmenu(
                 $(this),
-                videoLink,
+                { videoLink, backupHost },
                 blockChainInfo[videoLink] ? true : false,
               );
             });
@@ -906,7 +921,9 @@ var videoCabinet = (function () {
         );
       },
       //render menu with video controls
-      metmenu(_el, videoLink, isVideoPosted) {
+      metmenu(_el, parameters, isVideoPosted) {
+        const { videoLink, backupHost } = parameters;
+
         const data = {
           isVideoPosted,
         };
@@ -936,6 +953,28 @@ var videoCabinet = (function () {
                           el.videoContainer
                             .find(`.singleVideoSection[uuid="${meta.id}"]`)
                             .addClass('hidden');
+                        })
+                        .catch((error = {}) => {
+                          if (error.code === 'removeerror') {
+                            return self.app.peertubeHandler.api.videos
+                              .remove(`peertube://${backupHost}/${meta.id}`)
+                              .then(() => {
+                                el.videoContainer
+                                  .find(
+                                    `.singleVideoSection[uuid="${meta.id}"]`,
+                                  )
+                                  .addClass('hidden');
+                              })
+                              .catch((err = {}) => {
+                                sitemessage(
+                                  `Deleting error: ${helpers.parseVideoServerError(err)}`,
+                                );
+                              });
+                          }
+
+                          return sitemessage(
+                            `Deleting error: ${helpers.parseVideoServerError(error)}`,
+                          );
                         });
                     },
                   });
@@ -955,7 +994,10 @@ var videoCabinet = (function () {
 
                   action: function (file, clbk) {
                     actions
-                      .uploadVideoWallpaper(file.file, videoLink)
+                      .uploadVideoWallpaper(file.file, {
+                        shareUrl: videoLink,
+                        backupHost,
+                      })
                       .then((img) => {
                         const previewContainer = el.videoContainer.find(
                           `.singleVideoSection[uuid="${meta.id}"] .videoAvatar`,
@@ -1021,15 +1063,15 @@ var videoCabinet = (function () {
                                 tagElement = {};
                                 tagArray = [];
                               })
-                              .catch((err) => {
+                              .catch((err = {}) => {
                                 tagElement = {};
                                 tagArray = [];
                                 d.close();
 
                                 sitemessage(
-                                  self.app.localization.e(
+                                  `${self.app.localization.e(
                                     'errorChangingDescription',
-                                  ),
+                                  )}: ${helpers.parseVideoServerError(err)}`,
                                 );
                               });
                           },
@@ -1051,11 +1093,13 @@ var videoCabinet = (function () {
                         });
                       });
                     })
-                    .catch(() =>
+                    .catch((err = {}) => {
                       sitemessage(
-                        self.app.localization.e('errorChangingDescription'),
-                      ),
-                    );
+                        `${self.app.localization.e(
+                          'errorChangingDescription',
+                        )}: ${helpers.parseVideoServerError(err)}`,
+                      );
+                    });
 
                   if (_el.tooltipster) _el.tooltipster('hide');
                 });
