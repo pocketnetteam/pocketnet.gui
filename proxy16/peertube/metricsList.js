@@ -4,13 +4,18 @@ module.exports = {
     ratings: [
 
       (serverData, instance) => ({
-        value: instance.availability() / (1 + ((serverData.performance || {}).waitTranscodingJobs || 0)),
+        value: (instance.availability() || 1) / (1 + ((serverData.performance || {}).waitTranscodingJobs || 0)),
         name: 'Waiting Jobs',
         weight: 0.4,
         calculate() {
+
+
+          console.log('(instance.availability() || 1) / (1 + ((serverData.performance || {}).waitTranscodingJobs || 0))',
+          (instance.availability() || 1), (1 + ((serverData.performance || {}).waitTranscodingJobs || 0)))
+
           const { weight, value } = this;
 
-          return weight / (1 + Math.pow(value, 0.25));
+          return value;
         },
       }),
 
