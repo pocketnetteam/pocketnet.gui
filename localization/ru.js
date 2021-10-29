@@ -1014,3 +1014,4 @@ ____loclib.attachVideoLenta = "Прикрепить";
 ____loclib.attachVideoLentaShort = "Прикрепить видео к посту";
 
 ____loclib.linkToPostLenta = "Уже опубликовано"
+____loclib.ReferralUsers = "Реферальные пользователи"

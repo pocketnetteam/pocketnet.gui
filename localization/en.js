@@ -1221,3 +1221,5 @@ ____loclib.attachVideoLenta = "Attach video to post";
 ____loclib.attachVideoLentaShort = "Attach";
 
 ____loclib.linkToPostLenta = "Already posted"
+
+____loclib.ReferralUsers = "Referral Users"

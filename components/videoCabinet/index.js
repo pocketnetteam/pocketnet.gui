@@ -232,6 +232,9 @@ var videoCabinet = (function () {
       getFullPageInfo(videoPortionElement) {
         renders.videos(null, videoPortionElement);
 
+
+        
+
         //getting and rendering bonus program status for views and ratings (same template)
         actions
           .getTotalViews()
@@ -1313,6 +1316,7 @@ var videoCabinet = (function () {
         el.searchInput = el.c.find('.videoSearchInput');
         el.searchButton = el.c.find('.videoSearchButton');
 
+        el.bonusProgramReferContainer = el.c.find('.referContainer');
         el.bonusProgramContainerViews = el.c.find('.leaderBoardContainerViews');
         el.bonusProgramContainerStars = el.c.find(
           '.leaderBoardContainerRatings',
@@ -1332,6 +1336,14 @@ var videoCabinet = (function () {
         const videoParameters = {
           sort: ed.sort,
         };
+
+        renders.bonusProgram(
+          {
+            parameterName: 'ReferralUsers',
+            value: deep(app, 'platform.sdk.user.storage.me.rc') || '&mdash;',
+          },
+          el.bonusProgramReferContainer,
+        );
 
         //getting and rendering videos
         actions
