@@ -22875,7 +22875,10 @@ Platform = function (app, listofnodes) {
 
             if (state) {
 
-                self.matrixchat.init()
+                self.sdk.ustate.me(function(){
+                    self.matrixchat.init()
+                })
+                
 
                 lazyActions([
 
@@ -22895,7 +22898,8 @@ Platform = function (app, listofnodes) {
                     self.sdk.activity.load,
                     self.sdk.node.shares.parameters.load,
                     self.sdk.node.transactions.checkTemps,
-                    self.sdk.user.get
+                    self.sdk.user.get,
+                    
                 ], function () {
 
                     //self.ui.showmykey()
@@ -23059,9 +23063,15 @@ Platform = function (app, listofnodes) {
             
             app.user.isState(function(state){
 
+                
+
                 self.matrixchat.initing = false
 
                 if (state) {
+
+                  
+
+                    if(self.sdk.user.reputationBlockedMe()) return
 
                     var pnet = self.app.platform.sdk.address.pnet()
 
@@ -23094,9 +23104,6 @@ Platform = function (app, listofnodes) {
                             self.matrixchat.el = $('.matrixchatwrapper')
                             self.matrixchat.initevents()
                             self.matrixchat.connect()
-
-
-                           
                             
                         }, null, app);
 
