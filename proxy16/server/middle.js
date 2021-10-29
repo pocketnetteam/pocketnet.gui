@@ -197,6 +197,10 @@ var Middle = function(){
                 if (s && s.node){
                     jsonp.node = s.node.key
                 }
+
+                if (s && s.time){
+                    jsonp.time = s.time
+                }
             }
             catch(e){
                // console.error(e)

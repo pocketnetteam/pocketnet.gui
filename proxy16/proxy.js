@@ -965,6 +965,14 @@ var Proxy = function (settings, manage, test, logger) {
 
 					var node = null;
 					var noderating = 0
+					var timep = performance.now()
+					var time = {
+						preparing : 0,
+						cache : 0,
+						start : 0,
+						ready : 0,
+						
+					}
 
 					var _waitstatus = 'un'
 					var direct = true
@@ -984,6 +992,9 @@ var Proxy = function (settings, manage, test, logger) {
 						return nodeManager.waitreadywithrating().then(resolve).catch(reject)
 						
 					}).then(() => {
+
+						time.preparing = performance.now() - timep
+
 
 						/// ????
 						if (options.locally && options.meta) {
@@ -1023,6 +1034,8 @@ var Proxy = function (settings, manage, test, logger) {
 
 						return new Promise((resolve, reject) => {
 
+
+							
 							if(!noderating) {
 								
 								resolve('nocaching')
@@ -1031,6 +1044,9 @@ var Proxy = function (settings, manage, test, logger) {
 							}
 
 							server.cache.wait(method, cparameters, function (waitstatus) {
+
+								
+
 								resolve(waitstatus);
 
 							}, cachehash);
@@ -1040,6 +1056,8 @@ var Proxy = function (settings, manage, test, logger) {
 					})
 					.then((waitstatus) => {
 
+						time.cache = performance.now() - timep
+
 						_waitstatus = waitstatus
 
 						var cached = server.cache.get(method, cparameters, cachehash);
@@ -1048,12 +1066,14 @@ var Proxy = function (settings, manage, test, logger) {
 							return Promise.resolve({
 								data: cached,
 								code: 208,
+								time : time
 							});
 						}
 
 						if(waitstatus == 'attemps'){
 							return Promise.reject({
 								code: 408,
+								time : time
 							});
 						}
 
@@ -1072,6 +1092,9 @@ var Proxy = function (settings, manage, test, logger) {
 							}
 						}
 
+
+
+
 						
 
 						return new Promise((resolve, reject) => {
@@ -1086,6 +1109,8 @@ var Proxy = function (settings, manage, test, logger) {
 							}
 								
 							else*/
+
+							time.start = performance.now() - timep
 							
 							nodeManager.queue(node, method, parameters, direct, {resolve, reject})
 								
@@ -1097,10 +1122,13 @@ var Proxy = function (settings, manage, test, logger) {
 								server.cache.set(method, cparameters, data, node.height());
 							}
 
+							time.ready = performance.now() - timep
+
 							return Promise.resolve({
 								data: data,
 								code: 200,
 								node: node.exportsafe(),
+								time : time
 							});
 						});
 					})

@@ -951,12 +951,22 @@ var Nodemanager = function(p){
     }
 
     self.waitreadywithrating = function(){
+
+        if (inited && self.initednodeswithrating().length){
+            return Promise.resolve(true)
+        }
+
         return f.pretry(()=>{
             return inited && self.initednodeswithrating().length
         }, 30, 10000)
     }
 
     self.waitready = function(){
+
+        if(inited && self.initednodes().length) {
+            return Promise.resolve(true)
+        }
+
         return f.pretry(()=>{
             return inited && self.initednodes().length
         }, 30, 10000)
