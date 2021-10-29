@@ -551,6 +551,8 @@ Platform = function (app, listofnodes) {
             relay: true
         },
 
+        
+
         'offline': {
             message: function () {
                 return self.app.localization.e('e13231')
@@ -562,6 +564,12 @@ Platform = function (app, listofnodes) {
         "42": {
             message: function () {
                 return self.app.localization.e('e13233')
+            }
+        },
+
+        "313" : {
+            message: function () {
+                return self.app.localization.e('lockedaccount')
             }
         },
 
@@ -6342,6 +6350,53 @@ Platform = function (app, listofnodes) {
                     me = self.app.platform.sdk.users.storage[address.address];
 
                     return me
+                }
+            },
+
+            itisme : function(_address){
+                var address = self.app.platform.sdk.address.pnet()
+
+                if (address && address.address == _address){
+                    return true
+                }
+            },
+
+            reputationBlockedMe : function(address){
+
+                if(!address) address = (self.app.platform.sdk.address.pnet() || {}).address
+
+                return self.app.platform.sdk.user.itisme(address) && self.app.platform.sdk.user.reputationBlocked(address)
+                
+            },
+
+            reputationBlocked : function(address){
+                var ustate = self.sdk.ustate.storage[address] || deep(self, 'sdk.usersl.storage.' + address) || deep(self, 'sdk.users.storage.' + address);
+
+				if (ustate && ustate.reputation < -50){
+                    return true
+                }
+            },
+
+            reputationBlockedRedirect : function(address){
+                if(self.sdk.user.reputationBlocked(address)){
+
+                    if (self.sdk.user.itisme(address)){
+                        self.app.nav.api.load({
+                            open : true,
+                            href : 'userpage',
+                            history : true
+                        })
+                    }
+                    else{
+                        self.app.nav.api.load({
+                            open : true,
+                            href : 'page404',
+                            history : true
+                        })
+                    }
+
+                    return true
+
                 }
             }
         },
@@ -14538,6 +14593,15 @@ Platform = function (app, listofnodes) {
                                 deleted : true,
                                 address : address.address
                             })
+
+                            if(self.sdk.user.reputationBlockedMe()){
+
+                                if (clbk) {
+                                    clbk(null, 313, {})
+                                }
+
+                                return
+                            }
 
 
                             self.sdk.node.transactions.get.unspent(function (unspents) {

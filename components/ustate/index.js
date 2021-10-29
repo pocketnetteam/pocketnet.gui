@@ -223,6 +223,22 @@ var ustate = (function(){
 				})
 			},
 
+			reputationBlockedMe: function(clbk){
+
+				self.shell({
+
+					name :  'reputationBlockedMe',
+					el :   el.c.find('.mwork'),
+					data : {
+						
+					},
+
+				}, function(_p){
+					if (clbk)
+						clbk()
+				})
+			},
+
 			uscnt : function(clbk){
 
 				self.shell({
@@ -288,16 +304,24 @@ var ustate = (function(){
 					waitActions = r;
 					mestate = _mestate;	
 
-					renders.uscnt(function(){
+					if(self.app.platform.sdk.user.reputationBlockedMe()){
 
-						el.ustatecontent = el.c.find('.ustatecontent')
+						renders.reputationBlockedMe()
 
-						renders.ustatecontent()
-						renders.reputationsteps()
+					}
+					else{
 
-						if(clbk) clbk()
-					})
-					
+						renders.uscnt(function(){
+
+							el.ustatecontent = el.c.find('.ustatecontent')
+	
+							renders.ustatecontent()
+							renders.reputationsteps()
+	
+							if(clbk) clbk()
+						})
+
+					}
 
 				}, true)
 			})

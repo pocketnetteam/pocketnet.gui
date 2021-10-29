@@ -951,6 +951,19 @@ var post = (function () {
 					},
 					function (_p) {
 						actions.position();
+						el.wr.addClass('active');
+					},
+				);
+			},
+			lockedaccount: function () {
+				self.shell(
+					{
+						name: 'lockedaccount',
+						el: el.share,
+					},
+					function (_p) {
+						actions.position();
+						el.wr.addClass('active');
 					},
 				);
 			},
@@ -1437,19 +1450,31 @@ var post = (function () {
 
 		var make = function () {
 
-			if (share) {
-				renders.share(function () {
-					renders.comments(function () {
-
-						/*if (el.wnd && el.wnd.length && ed.next && !isMobile()){
 			
-							//el.wnd.on('scroll', events.next)
 
-							events.next()
-						}*/
+			if (share) {
 
+				if(self.app.platform.sdk.user.reputationBlocked(share.address)){
+
+					renders.lockedaccount()
+					
+				}
+				else{
+					renders.share(function () {
+						renders.comments(function () {
+	
+							/*if (el.wnd && el.wnd.length && ed.next && !isMobile()){
+				
+								//el.wnd.on('scroll', events.next)
+	
+								events.next()
+							}*/
+	
+						})
 					})
-				})
+				}
+
+				
 
 			}
 			else {
@@ -1479,7 +1504,6 @@ var post = (function () {
 
 				level = (ed.level || -1) + 1
 
-
 				
 				self.app.platform.sdk.node.shares.getbyid([id], function () {
 
@@ -1503,6 +1527,9 @@ var post = (function () {
 					if (share) {
 						self.app.platform.sdk.node.shares.users([share], function (l, error2) {
 
+							/*if(!ed.repost && self.app.platform.sdk.user.reputationBlockedRedirect(share.address)){
+								return
+							}*/
 
 							var data = {
 								ed: deep(p, 'settings.essenseData') || {},
@@ -1512,8 +1539,6 @@ var post = (function () {
 							self.app.platform.sdk.videos.info([share.url]).then(r => {
 								clbk(data);
 							})
-
-
 
 						})
 					}

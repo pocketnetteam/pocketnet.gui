@@ -1223,3 +1223,5 @@ ____loclib.attachVideoLentaShort = "Attach";
 ____loclib.linkToPostLenta = "Already posted"
 
 ____loclib.ReferralUsers = "Referral Users"
+____loclib.lockedaccount = "Your account is locked due to reputation below -50"
+____loclib.lockedaccounta = "Author Account is locked due to reputation below -50"
