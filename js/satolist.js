@@ -2161,7 +2161,7 @@ Platform = function (app, listofnodes) {
         markReal : function(){
 
             return `<div class="realperson">
-                <span class="fa-stack fa-2x">
+                <span class="fa-stack fa-2x real">
                     <i class="fas fa-certificate fa-stack-2x"></i>
                     <i class="fas fa-check fa-stack-1x"></i>
                 </span>
@@ -2171,8 +2171,9 @@ Platform = function (app, listofnodes) {
         markDev : function(){
 
             return `<div class="realperson">
-                    <span class="fa-stack fa-2x">
-                        <i class="fas fa-code fa-stack-2x"></i>
+                    <span class="fa-stack fa-2x dev">
+                        <i class="fas fa-certificate fa-stack-2x"></i>
+                        <i class="fas fa-code fa-stack-1x"></i>
                     </span>
                 </div>`
 
@@ -3418,15 +3419,20 @@ Platform = function (app, listofnodes) {
                                                 
                                                 alreadyPinned.pin = false;
                                                 var shareslist = $(`[stxid='${alreadyPinned.txid}']`);
-                                                var pinned = shareslist.find('.pinned');
-                                                pinned.children().remove();
+                                                var pinnedIcon = shareslist.find('.pinnedIcon');
+                                                var pinnedLabel = shareslist.find('.pinnedLabel')
+                                                pinnedIcon.children().remove();
+                                                pinnedLabel.empty()
                                 
                                             }
 
                                             d.share.pin = true;
                                             var metatable = _el.closest('.metatable');
-                                            var pineedWrapper = metatable.find('.pinned');
-                                            pineedWrapper.html('<i class="fa fa-link"></i>')
+                                            var pinnedIcon = metatable.find('.pinnedIcon');
+                                            var pinnedLabel = metatable.find('.pinnedLabel');
+                                            pinnedIcon.html('<i class="fa fa-map-pin"></i>');
+                                            pinnedLabel.append(', ' + self.app.localization.e('pinned'));
+
                                         }
 
                                     }, false)
@@ -3454,8 +3460,11 @@ Platform = function (app, listofnodes) {
 
                                             d.share.pin = false;
                                             var metatable = _el.closest('.metatable');
-                                            var pinned = metatable.find('.pinned');                    
-                                            pinned.children().remove();
+                                            var pinnedIcon = metatable.find('.pinnedIcon');   
+                                            var pinnedLabel = metatable.find('.pinnedLabel');                 
+                                            pinnedIcon.children().remove();
+                                            pinnedLabel.empty()
+
                                         }
 
 										
@@ -19319,7 +19328,7 @@ Platform = function (app, listofnodes) {
 
                 if(self.app.platform.ui.markUser){
 
-                    h += self.app.platform.ui.markUser(share.address);
+                    h += self.app.platform.ui.markUser(author.address);
 
                 }
 

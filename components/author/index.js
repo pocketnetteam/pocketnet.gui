@@ -1071,29 +1071,6 @@ var author = (function(){
 			var src = deep(author, 'data.image')
 
 			var me = self.app.platform.sdk.address.pnet() ? self.app.platform.sdk.address.pnet().address : null;
-			console.log('me', me);
-
-			if (!src && me === author.address){
-
-
-
-				el.usericon.addClass('active')
-
-				self.app.platform.api.plissing({
-					el : el.usericon,
-				})
-	
-				el.usericon.on('click', function(){
-					self.app.nav.api.load({
-						open: true,
-						href: 'userpage?id=test',
-						history: true
-					})
-				})
-	
-
-			}
-
 
 			el.up.on('click', events.up)
 

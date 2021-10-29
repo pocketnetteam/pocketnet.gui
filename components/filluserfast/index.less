@@ -618,14 +618,16 @@
 				padding: 12px, 24px, 12px, 24px;
 				border-radius: 12px;
 				font-size: 18px;
-				background: @color-gray-light;
+				background: #FF3B00;
+				opacity: .3;
 				color: @color-white;
 				border: none;
 				cursor: default;
 
 				&.active{
-					background: #011621;
+					background: #FF3B00;
 					cursor: pointer;
+					opacity: 1;
 				}
 
 				&:hover{
@@ -636,7 +638,7 @@
 			.skip{
 				background: transparent;
 				border: none;
-				color: @color-gray-light;
+				color: #575570;
 				font-size: 18px;
 			}
 
@@ -850,8 +852,25 @@ html.stblack{
 	}
 }
 
-/*t*/ @media only screen and (max-width: 768px){
+@media only screen and (max-width: 768px){
 	#filluserfast .mWrapper #test {
 		width: 100%;
+	}
+
+	.categories {
+
+		.cats{
+			padding: @rhythm;
+		}
+
+		.welcome_text{
+			font-size: 35px;
+		}
+		
+		.choosethemes_text{
+			font-size: 23px!important;
+		}
+	}.cat{
+		font-size: .8em!important;
 	}
 }

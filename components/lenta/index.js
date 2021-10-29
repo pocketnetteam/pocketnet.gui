@@ -3398,9 +3398,14 @@ var lenta = (function(){
 										if (t){
 
 											var pinnedShare = t[0];
-											pinnedShare.pin = true;
-											shares.unshift(pinnedShare);
+
+											if (!pinnedShare.deleted){
+
+												pinnedShare.pin = true;
+												shares.unshift(pinnedShare);
 						
+											}
+
 										}
 										
 										if (clbk)
@@ -3435,7 +3440,6 @@ var lenta = (function(){
 
 
 							} else {
-
 
 								self.app.api.rpc('getaccountsetting', [author])
 								.then(getAccountSettings)

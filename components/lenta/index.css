@@ -704,7 +704,7 @@
 #lenta .shares .share .authorTable > div.authorCell {
   padding-right: 0;
 }
-#lenta .shares .share .authorTable > div.authorCell .pinned {
+#lenta .shares .share .authorTable > div.authorCell .pinnedIcon {
   color: #d0c9ca;
 }
 #lenta .shares .share .metatable > div {
