@@ -107,7 +107,6 @@ var Wallet = function(p){
         }
 
         var us = function(){
-            console.log("GET UNSPENTS")
             _.each(addresses, function(a, k){
                 self.unspents.getc(a, true).catch(e => {})
             })

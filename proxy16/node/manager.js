@@ -987,8 +987,6 @@ var Nodemanager = function(p){
         return self.waitready().then(() => {
 
             var node = self.selectProbability();
-
-            console.log("node", node?true : false)
     
             if(!node && self.bestnode) 
                 node = self.nodesmap[self.nodeManager.bestnode]
