@@ -890,23 +890,11 @@ var Nodemanager = function(p){
         var np = _.map(self.initednodes(), function(node){
             return {
                 node : node,
-                probability : node.statistic.probability() + Math.random() / 10000
+                probability : (Number(node.statistic.probability()) || 0) + Math.random() / 10000
             }
         })
-
-        /*var npdb = _.map(self.initednodes(), function(node){
-            return {
-                node : node.key,
-                probability : node.statistic.probability() + Math.random() / 10000
-            }
-        })
-
-        npdb = _.sortBy(npdb, (r) => {return -r.probability})*/
-
-
 
         var r = f.randmap(np)
-        
 
         if (r && r.node){
             return r.node
@@ -991,6 +979,22 @@ var Nodemanager = function(p){
             if(!node) return Promise.reject('node')
 
             return node.rpcs(method, parameters)
+        })
+    }
+
+    self.requestprobnew = function(method, parameters){
+
+        return self.waitready().then(() => {
+
+            var node = self.selectProbability();
+
+            console.log("node", node?true : false)
+    
+            if(!node && self.bestnode) 
+                node = self.nodesmap[self.nodeManager.bestnode]
+    
+            return node.rpcs(method, parameters)
+
         })
     }
     

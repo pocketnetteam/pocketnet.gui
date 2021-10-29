@@ -906,7 +906,7 @@ var test = (function(){
 
 		var renders = {
 			termsconditions : function(clbk){
-				if(self.app.curation() && !termsaccepted && ed.wizard){
+				if(window.cordova && !termsaccepted && ed.wizard){
 
 					self.nav.api.load({
 						open : true,

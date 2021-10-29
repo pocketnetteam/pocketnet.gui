@@ -24,7 +24,7 @@ var Server = function(settings, admins, manage){
     var startedDate = null
     var printstatsInterval = null
 
-    self.cache = new Cache({ dontCache: settings.contCache})
+    self.cache = new Cache({ dontCache: settings.dontCache})
     self.listening = false;
     self.httplistening = false;
 

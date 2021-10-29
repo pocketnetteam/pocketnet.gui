@@ -13,11 +13,14 @@ var WSS = function(admins, manage){
     var users = {}
     var allwss = {}
 
+    var subscribers = {
+        logs : {}
+    }
+
     var create = {
         user : function(address){
 
             var admin = _.indexOf(admins, address) > -1
-
 
             var user = {
     
@@ -263,6 +266,18 @@ var WSS = function(admins, manage){
         return Promise.resolve()
     }
 
+    self.sendlogs = function(info){
+
+        var m = {
+            level : info.level,
+            message : info.message,
+            meta : info.meta,
+            label : info.label,
+            timestamp : info.timestamp
+        }
+  
+    }
+
     var sendMessage = function(message, ws){
 
         return new Promise((resolve, reject) => {
@@ -312,6 +327,17 @@ var WSS = function(admins, manage){
         signout : function(message, ws){
             disconnectClient(ws)
         },
+
+        subscribelogs : function(message, ws){
+            var admin = _.find(users, function(user){
+                return user.clients[ws.id] && user.admin
+            })
+
+            if (admin) {
+
+            }
+        },
+
         registration : function(message, ws){
             
             var address = message.address;
@@ -355,6 +381,7 @@ var WSS = function(admins, manage){
     
                 if (user.admin){
                     user.ticks[ws.id] = setInterval(() => {tick(ws)}, 5000)
+                    
                 }
     
                 connectNode(user, user.nodes[node.key]);
@@ -389,7 +416,13 @@ var WSS = function(admins, manage){
 
         if(!message.action) {
             messages.registration(message, ws)
+            return
         }
+
+        if (messages[message.action]){
+            messages[message.action](message, ws)
+        }
+
     }
 
     self.newconnection = function(ws){

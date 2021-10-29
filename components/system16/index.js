@@ -817,7 +817,7 @@ var system16 = (function(){
 
 					windows.proxieslist(use, "Select Proxy that using Interface", function(selected){
 
-						api.set.current(selected.id, true).then(r => {
+						api.set.currentwithnode(selected.id, true).then(r => {
 							make(api.get.current())
 						})
 
@@ -1078,23 +1078,22 @@ var system16 = (function(){
 				},
 
 
-				transcoding : {
-					caption : "Transcoding",
-					many : true,
+				transcodingWait : {
+					caption : "Waiting Transcoding Jobs",
 					series : [
-						{
+						/*{
 							name : "Fail Imports Count",
 							path : "stats.info.last.performance.failImportsCount",
 							id : 'sac'
-						},
+						},*/
 
 						{
-							name : "Wait Transcoding Jobs",
+							name : "Waiting Transcoding Jobs",
 							path : "stats.info.last.performance.waitTranscodingJobs",
 							id : 'sat'
 						},
 
-						{
+						/*{
 							name : "Failed Transcoding Jobs",
 							path : "stats.info.last.performance.failTranscodingJobs",
 							id : 'saf'
@@ -1103,7 +1102,20 @@ var system16 = (function(){
 							name : "Wait Imports Count",
 							path : "stats.info.last.performance.waitImportsCount",
 							id : 'saw'
+						}*/
+					]
+				},
+
+				transcodingFailed : {
+					caption : "Failed Transcoding Jobs",
+					series : [
+
+						{
+							name : "Failed Transcoding Jobs",
+							path : "stats.info.last.performance.failTranscodingJobs",
+							id : 'saf'
 						}
+
 					]
 				},
 
@@ -2056,7 +2068,7 @@ var system16 = (function(){
 							meta.user = true;
 
 
-							var newproxy = new Proxy16(meta, self.app)
+							var newproxy = new Proxy16(meta, self.app, self.app.api)
 
 							if (self.app.api.get.byid(newproxy.id)){
 								sitemessage(self.app.localization.e('e13058'))
@@ -2094,6 +2106,8 @@ var system16 = (function(){
 								
 
 							}).catch(e => {
+
+								console.log("E", e)
 
 								wnd.find('.addproxy').removeClass('loading')
 

@@ -68,7 +68,8 @@ Platform = function (app, listofnodes) {
         'PSBePd5Tx5KG9vxwAzbaDTfjzDbq1GUTYw' : true,
 
         'PDgbAvsrS4VGKkW5rivcJaiCp7fnBoZRgM' : true,
-        'PQt1eggTZKCCbjVsHx6rcMcBMU2p2PNQmt' : true
+        'PQt1eggTZKCCbjVsHx6rcMcBMU2p2PNQmt' : true,
+        'PPY1UbumjHJaoxsfL7DVTPNLM4g697zdDe' : true
     }
 
     self.nvadr = {
@@ -10264,6 +10265,121 @@ Platform = function (app, listofnodes) {
                             id : 'c18'
                         }
                     ],
+                    it : [
+                        {
+                            name : "Meme/divertente",
+                            tags : ['divertente', 'meme'],
+                            id : 'c2'
+                        },
+                        {
+                            name : "Politica",
+                            tags : ['politica'],
+                            id : 'c3'
+                        },
+                        {
+                            name : "Cripto",
+                            tags : ['cripto'],
+                            id : 'c4'
+                        },
+                        {
+                            name : "Tecnologia/Scienza",
+                            tags : ['tecnologia', 'scienza'],
+                            id : 'c5'
+                        },
+                        {
+                            name : "Fede/Religione",
+                            tags : ['fede', 'religione'],
+                            id : 'c55'
+                        },
+                        {
+                            name : "Investire/Finanza",
+                            tags : ['investire', 'finanza'],
+                            id : 'c6'
+                        },
+                        {
+                            name : "MMA/UFC",
+                            tags : ['mma', 'ufc'],
+                            id : 'c73'
+                        },
+                        {
+                            name : "COVID/Quarantena",
+                            tags : ['covid', 'quarantena'],
+                            id : 'c72'
+                        },
+                        
+                        {
+                            name : "Auto/Da corsa",
+                            tags : ['auto', 'dacorsa'],
+                            id : 'c7'
+                        },
+                        {
+                            name : "Bastyon/Pocketnet",
+                            tags : ['bastyon', 'pocketnet'],
+                            id : 'c71'
+                        },
+                        {
+                            name : "Sport",
+                            tags : ['sport'],
+                            id : 'c8'
+                        },
+                        {
+                            name : "Gioco",
+                            tags : ['gioco'],
+                            id : 'c9'
+                        },
+                        {
+                            name : "Spazio",
+                            tags : ['spazio'],
+                            id : 'c10'
+                        },
+                        
+                        {
+                            name : "Arte/Musica",
+                            tags : ['arte', 'musica'],
+                            id : 'c11'
+                        },
+                        
+                        {
+                            name : "Notizia/Commento",
+                            tags : ['notizia', 'commento'],
+                            id : 'c12'
+                        },
+                        
+                        {
+                            name : "Storia",
+                            tags : ['storia'],
+                            id : 'c13'
+                        },
+                        {
+                            name : "Ora della favola",
+                            tags : ['oradellafavola'],
+                            id : 'c14'
+                        },
+                        
+                        {
+                            name : "Film/Animazione",
+                            tags : ['film', 'animazione'],
+                            id : 'c15'
+                        },
+                        
+                        {
+                            name : "Natura/Animali",
+                            tags : ['nature', 'animali'],
+                            id : 'c16'
+                        },
+                        
+                        {
+                            name : "Viaggiare/Architettura",
+                            tags : ['viaggiare', 'architettura'],
+                            id : 'c17'
+                        },
+                        
+                        {
+                            name : "Fai da te",
+                            tags : ['faidate'],
+                            id : 'c18'
+                        }
+                    ]
                 },
             },
 
@@ -21596,6 +21712,38 @@ Platform = function (app, listofnodes) {
             })
         }
 
+        self.subscribe = {
+            logs : function(){
+
+                address = platform.sdk.address.pnet(keyPair.publicKey).address
+
+                var message = {
+                    signature : platform.app.user.signature(),
+                    address: address,
+                    action : 'subscribe.logs'
+                }
+
+                self.send(JSON.stringify(message))
+            }
+
+            
+        }
+
+        self.unsubscribe ={
+            logs : function(){
+
+                address = platform.sdk.address.pnet(keyPair.publicKey).address
+
+                var message = {
+                    signature : platform.app.user.signature(),
+                    address: address,
+                    action : 'unsubscribe.logs'
+                }
+
+                self.send(JSON.stringify(message))
+            }
+        }
+
         self.addAddress = function (keyPair, n, clbk, proxy) {
 
             /*if(!keyPair){
@@ -22910,14 +23058,15 @@ Platform = function (app, listofnodes) {
 
             self.preparing = false;
 
+            if (typeof PeerTubePocketnet != 'undefined'){
+                self.app.peertubeHandler = new PeerTubePocketnet(self.app);
+            }
 
             self.prepareUser(function() {
-                if (typeof PeerTubePocketnet != 'undefined'){
-                    self.app.peertubeHandler = new PeerTubePocketnet(self.app);
-                    self.app.peertubeHandler.init()
-                }
+                
                 clbk();
             });
+            
         }).catch(e => {
             console.log("ERROR", e)
         })
@@ -23027,6 +23176,10 @@ Platform = function (app, listofnodes) {
                     self.preparingUser = false;
 
                     self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
+
+                    
+
+                    self.app.peertubeHandler.init()
 
                     if (clbk)
                         clbk()

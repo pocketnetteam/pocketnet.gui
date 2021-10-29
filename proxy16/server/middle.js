@@ -74,12 +74,13 @@ var Middle = function(){
 
     self.printstats = function(){
 
+        return
+
         console.log("")
         console.log("_____________________________________")
         console.log("Total Requests count:", requestcountTotal)
         console.log("Finished Requests count:", requestcountFinished)
         console.log("5 Sec. Finished Requests count:", countLast5Seconds())
-        
         console.log(rate() + ' RPS')
     }
     
