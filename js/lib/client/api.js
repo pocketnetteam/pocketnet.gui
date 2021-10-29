@@ -204,8 +204,6 @@ var ProxyRequest = function(app = {}, proxy){
 
         if (options.ex) route = 'rpc-ex'
 
-        
-
         return direct(url + '/'+route+'/' + method, data, requestoptions)
 
     }
@@ -477,7 +475,7 @@ var Proxy16 = function(meta, app, api){
 
             console.log('e.code', e.code)
 
-            if ((e.code == 408 || e.code == -28) && options.node && trying < 2 && !options.fnode){
+            if ((e.code == 408 || e.code == 429 || e.code == -28) && options.node && trying < 2 && !options.fnode){
 
                 if(isonline()){
                     return self.api.nodes.canchange(options.node).then(r => {
@@ -662,7 +660,7 @@ var Api = function(app){
         var lsproxies = JSON.parse(localStorage['listofproxies'] || "[]")
 
             lsproxies = _.filter(lsproxies, function(meta){
-                var proxy = new Proxy16(meta, app)
+                var proxy = new Proxy16(meta, app, self)
 
                 if(proxy.id == key) return false
 
@@ -827,6 +825,7 @@ var Api = function(app){
                     _.each(metas, meta => { this.add(meta) })
                 },
                 add : function(meta){
+
                     var proxy = new Proxy16(meta, app, self)
 
                     if(!this.find(proxy.id) && (proxy.valid() || proxy.direct)){
@@ -953,11 +952,14 @@ var Api = function(app){
         return self.changeProxyIfNeed().then(l => {
 
             if(!l){
+                
 
                 var proxy = self.get.direct() 
 
                 if (proxy){
-                    return self.set.current(proxy.id)
+                    return self.set.current(proxy.id).then(r => {
+                        proxy.api.nodes.canchange()
+                    })
                 }
             }
 
@@ -1067,6 +1069,22 @@ var Api = function(app){
     }
 
     self.set = {
+        currentwithnode : function(ncurrent, reconnectws){
+            var proxy = self.get.byid(ncurrent)
+
+            if(!proxy) return Promise.reject('hasnt')
+
+            current = ncurrent
+
+            localStorage['currentproxy'] = current
+
+            return proxy.api.nodes.select().then(r => {
+                if (reconnectws && app.platform.ws)
+                    app.platform.ws.reconnect()
+
+                 return Promise.resolve(proxy)
+            })
+        },
         current : function(ncurrent, reconnectws){
 
             var proxy = self.get.byid(ncurrent)
@@ -1080,7 +1098,7 @@ var Api = function(app){
             if (reconnectws && app.platform.ws)
                 app.platform.ws.reconnect()
 
-            return Promise.resolve()
+            return Promise.resolve(proxy)
 
         },
         fixednode : function(id){
@@ -1215,7 +1233,7 @@ var Api = function(app){
 
         return self.get.working().then(wproxies => {
             if (wproxies.length){ 
-                return self.set.current(wproxies[0].id)
+                return self.set.currentwithnode(wproxies[0].id)
             }
 
             return Promise.reject('unableChangeProxy')
@@ -1243,7 +1261,7 @@ var Api = function(app){
                 return self.get.working().then(wproxies => {
 
                     if (wproxies.length){ 
-                        self.set.current(wproxies[0].id, true)
+                        self.set.currentwithnode(wproxies[0].id, true)
                     }
 
                     return Promise.resolve(wproxies.length)

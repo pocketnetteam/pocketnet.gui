@@ -5,260 +5,235 @@ const Instance = require('./instance');
 const metricsList = require('./metricsList');
 const PerformanceMetric = require('./PerformanceMetric');
 
-
 const getBestByType = Object.entries(metricsList).reduce(
-	(output, [metricName, metricData]) => {
-		const newMetric = new PerformanceMetric(
-			metricData.ratings,
-			metricData.calculator,
-		);
-		output[metricName] = newMetric;
-		return output;
-	},
-	{},
+  (output, [metricName, metricData]) => {
+    const newMetric = new PerformanceMetric(
+      metricData.ratings,
+      metricData.calculator,
+    );
+    output[metricName] = newMetric;
+    return output;
+  },
+  {},
 );
 
 var Roy = function (parent) {
-	var self = this;
+  var self = this;
 
-	self.parent = parent;
+  self.parent = parent;
 
-	var instances = [];
-	var inited = false;
+  var instances = [];
+  var inited = false;
 
+  self.useall = false;
 
-	self.useall = false;
+  //self.activeForUploading = true;
 
-	//self.activeForUploading = true;
+  self.canupload = function () {
+    var can = true;
 
-	self.canupload = function () {
+    _.each(instances, function (instance) {
+      if (!instance.info().canuploading || instance.cantuploading) can = false;
+    });
 
-		var can = true
+    return can && instances.length;
+  };
 
-		_.each(instances, function (instance) {
+  ///
 
+  self.addInstance = function (url, options) {
+    if (!url) return;
+    if (!options) options = {};
 
-			if (!instance.info().canuploading || instance.cantuploading) can = false
-		})
+    var instance = new Instance(url, self);
 
-		return can && instances.length
+    if (options.cantuploading) instance.cantuploading = true;
 
-	}
+    instance.init();
 
-	///
+    instances.push(instance);
 
-	self.addInstance = function (url, options) {
-		if (!url) return;
-		if(!options) options = {}
+    return instance;
+  };
 
-		var instance = new Instance(url, self);
+  ///
 
-		if (options.cantuploading) instance.cantuploading = true
+  self.removeInstance = function (host) {
+    var instance = self.find(host);
 
-		instance.init();
+    if (instance) {
+      instance.destroy();
+    }
 
-		instances.push(instance);
+    instances = _.filter(instances, function (instance) {
+      return instance.host == host;
+    });
+  };
 
-		return instance
-	};
+  ///
 
-	///
+  self.init = function (urls) {
+    inited = true;
 
-	self.removeInstance = function (host) {
-		var instance = self.find(host);
+    _.each(urls, function (ins) {
+      var host = ins;
+      var s = {};
 
-		if (instance) {
-			instance.destroy();
-		}
+      if (_.isObject(ins)) {
+        host = ins.host;
+        s = ins;
+      }
 
-		instances = _.filter(instances, function (instance) {
-			return instance.host == host;
-		});
-	};
+      if (!host || !host.split) return;
 
-	///
+      const splittedUrl = host.split('.');
 
-	self.init = function (urls) {
+      if (splittedUrl.length != 3 && splittedUrl[0] !== 'test') return;
 
-		inited = true
+      self.addInstance(host, s);
+    });
+  };
 
-		_.each(urls, function (ins) {
+  self.destroy = function () {
+    _.each(instances, function (instance) {
+      instance.destroy();
+    });
 
-			var host = ins
-			var s = {}
+    instances = [];
 
-			if(_.isObject(ins)){
-				host = ins.host
-				s = ins
-			}
-			
+    inited = false;
+  };
 
-			if (!host || !host.split) return;
+  ///___
+  self.findInstanceByName = (name) =>
+    instances.find((server) => server.host === name);
 
-			const splittedUrl = host.split('.');
+  self.bestlist = function (type) {
+    var _instances = _.filter(instances, function (instance) {
+      return instance.canuse() || self.useall;
+    });
 
-			if (splittedUrl.length != 3 && splittedUrl[0] !== 'test') return;
+    return _.sortBy(_instances, (instance) => {
+      return getBestByType[type]
+        ? getBestByType[type].calculate(instance)
+        : -10;
+    });
+  };
 
-			self.addInstance(host, s);
-		});
+  self.best = function (type = 'view') {
+    var bestlist = self.bestlist(type);
 
+    if (bestlist.length) return [...bestlist].pop();
 
-	};
+    return null;
+  };
+
+  self.instances = () => instances.map((instance) => instance.host);
 
-	self.destroy = function () {
-		_.each(instances, function (instance) {
-			instance.destroy();
-		});
+  self.requestToBest = function (method, data, p) {
+    var best = self.best();
 
-		instances = [];
+    if (!best) return Promise.reject('best');
 
-		inited = false;
+    return best.request(method, data, p);
+  };
 
-	};
+  self.direct = function (host, method, data, p) {
+    var instance = self.find(host);
 
-	///___
-	self.findInstanceByName = (name) => instances.find((server) => server.host === name);
+    if (!instance) {
+      return Promise.reject({
+        code: 404,
+        message: 'host',
+      });
+    }
 
-	self.bestlist = function (type) {
-		var _instances = _.filter(instances, function (instance) {
-			return instance.canuse() || self.useall;
-		});
+    return instance.request(method, data, p);
+  };
 
-		return _.sortBy(_instances, (instance) => {
-			return getBestByType[type]
-				? getBestByType[type].calculate(instance)
-				: -10;
-		});
-	};
+  self.request = function (method, data = {}, p = {}, list) {
+    p.royrequest = true;
 
-	self.best = function (type = 'view') {
-		var bestlist = self.bestlist(type);
+    if (!index) index = 0;
 
-		if (bestlist.length) return [...bestlist].pop();
+    if (!list) {
+      var list = [];
 
-		return null;
-	};
+      if (p.host) {
+        var instance = self.findInstanceByName(p.host);
 
-	self.requestToBest = function (method, data, p) {
-		var best = self.best();
+        if (instance) list = [instance];
+      } else {
+        list = self.bestlist();
+      }
+    }
 
-		if (!best) return Promise.reject('best');
+    if (!list.length) return Promise.reject('failed');
 
-		return best.request(method, data, p);
-	};
+    var index = 0;
+    var error = null;
 
-	self.direct = function (host, method, data, p) {
-		var instance = self.find(host);
+    var request = function (instance) {
+      return instance
+        .request(method, data, p)
+        .then((r) => {
+          if (r.data) {
+            r.data.from = instance.host;
+          }
+          return Promise.resolve(r);
+        })
+        .catch((e) => {
+          if (e && e.status) {
+            if (e.status != 500) {
+              error = e;
+            }
+          }
 
-		if (!instance) {
-			return Promise.reject({
-				code: 404,
-				message: 'host',
-			});
-		}
+          return Promise.reject(e);
+        });
+    };
 
-		return instance.request(method, data, p);
-	};
+    var recrequest = function () {
+      var instance = list[index];
 
-	self.request = function (method, data = {}, p = {}, list) {
+      if (!instance) {
+        return Promise.reject(error || 'failed');
+      }
 
-		p.royrequest = true
+      return request(instance).catch((e) => {
+        index++;
+        return recrequest();
+      });
+    };
 
-		if (!index) index = 0;
+    return recrequest();
+  };
 
-		if(!list){
+  self.find = function (host) {
+    return _.find(instances, function (instance) {
+      return instance.host == host;
+    });
+  };
 
-			var list = []
+  self.info = function (compact) {
+    var info = {};
 
-			if (p.host) {
+    _.each(instances, function (instance) {
+      var stats = instance.stats();
 
-				var instance = self.findInstanceByName(p.host);
+      info[instance.host] = {
+        host: instance.host,
+        stats: stats,
+        canuse: instance.canuse(),
+      };
+    });
 
-				if (instance) list = [instance]
+    return info;
+  };
 
-			}
-			else{
-				list = self.bestlist();
-			}
-		}
+  self.hosts = () => instances;
 
-		if(!list.length) return Promise.reject('failed');
-
-
-		var index = 0
-		var error = null
-
-		var request = function(instance){
-
-			return instance.request(method, data, p).then((r) => {
-				if (r.data) {
-					r.data.from = instance.host;
-				}
-				return Promise.resolve(r);
-			}).catch(e => {
-
-
-				if(e && e.status){
-					if(e.status != 500){
-						error = e
-					}
-				}
-
-				return Promise.reject(e)
-			})
-		}
-
-		var recrequest = function(){
-
-			var instance = list[index]
-
-			if(!instance) {
-
-
-				return Promise.reject(error || 'failed');
-			}
-
-			return request(instance).catch(e => {
-				index++
-				return recrequest()
-			})
-		}
-		
-		return recrequest()
-
-	
-	};
-
-	self.find = function (host) {
-		return _.find(instances, function (instance) {
-			return instance.host == host;
-		});
-	};
-
-	self.info = function (compact) {
-
-		var info = {
-			
-		};
-
-		_.each(instances, function (instance) {
-
-			var stats = instance.stats()
-
-			info[instance.host] = {
-				host: instance.host,
-				stats: stats,
-				canuse : instance.canuse()
-			};
-
-		});
-
-		return info;
-	};
-
-	self.hosts = () => instances;
-
-	return self;
+  return self;
 };
 
 module.exports = Roy;

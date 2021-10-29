@@ -4,9 +4,22 @@
 		<div class="caption">
 			<%=e('complain')%>
 		</div>
-		<div class="reasons">
-			
-		</div>
+		<% if(ess == 'post') {%>
+			<div class="reasons">
+				
+			</div>
+
+		<% } %>
+
+		<% if(ess == 'user') {%>
+			<div class="textreasons">
+				<div class="subcaption">
+					
+				</div>
+				<textarea class="reason" placeholder="Describe the reason for the complaint"></textarea>
+			</div>
+
+		<% } %>
 
 		<div class="cbuttons">
 

@@ -107,6 +107,7 @@ var Wallet = function(p){
         }
 
         var us = function(){
+            console.log("GET UNSPENTS")
             _.each(addresses, function(a, k){
                 self.unspents.getc(a, true).catch(e => {})
             })
@@ -263,7 +264,7 @@ var Wallet = function(p){
         },
 
         get : function(address){
-            return self.nodeManager.request('txunspent', [[address], 1, 9999999])
+            return self.nodeManager.requestprobnew('txunspent', [[address], 1, 9999999])
         },
 
         getc : function(addressobj, upd){
@@ -320,6 +321,10 @@ var Wallet = function(p){
     self.kit = {
 
         clearexecuting : function(){
+
+            _.each(addresses, function(a, k){
+                self.unspents.getc(a, true).catch(e => {})
+            })
 
             _.each(addresses, function(r){
                 _.each(r.queue, function(q){
@@ -651,6 +656,18 @@ var Wallet = function(p){
         }
     }
 
+    var getnode = function(){
+
+        if(!self.nodeManager) return
+
+        var node = self.nodeManager.selectProbability();
+
+        if(!node && self.nodeManager.bestnode) 
+            node = self.nodeManager.nodesmap[self.nodeManager.bestnode]
+
+        return node
+    }
+
     self.transactions = {
         txbase : function(unspents, outputs, fee, feeMode){
 
@@ -752,7 +769,7 @@ var Wallet = function(p){
 
             //var amount = 0;
             var k = smulti;
-            var node = self.nodeManager.selectbest();
+            var node = getnode();
 
             if(!node) return Promise.reject('timeDifference')
             
@@ -794,7 +811,7 @@ var Wallet = function(p){
             return tx;
         },
         send : function(tx){
-            return self.nodeManager.request('sendrawtransaction', [tx.toHex()])
+            return self.nodeManager.requestprobnew('sendrawtransaction', [tx.toHex()])
         },
 
         common : function (address, obj, p) {
@@ -836,7 +853,7 @@ var Wallet = function(p){
 
                 if (!p) p = {};
 
-                var node = self.nodeManager.selectbest();
+                var node = getnode();
 
                 if(!node) return Promise.reject('timeDifference')
 
@@ -911,7 +928,7 @@ var Wallet = function(p){
                     if(u) u.cantspend = true
                 })
 
-                return self.nodeManager.request('sendrawtransactionwithmessage', [hex, obj.export(), optstype]).then(data => {
+                return self.nodeManager.requestprobnew('sendrawtransactionwithmessage', [hex, obj.export(), optstype]).then(data => {
 
                     var alias = obj.export(true);
                         alias.txid = data;

@@ -5,6 +5,7 @@ var readline = require('readline');
 process.env.NODE_ENV = 'production'
 
 global.MIN_NODES_COUNT = 10
+global.WRITE_LOGS = true
 
 var destroy = function(repeat){
 

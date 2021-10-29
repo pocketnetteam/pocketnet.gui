@@ -446,6 +446,54 @@ Application = function(p)
 
 	self.complainletters = {
 
+		post : function({
+			address,
+			postid,
+			reason
+		}, clbk){
+
+			if(!address || !reason || !postid){
+				clbk(false)
+				return
+			}
+
+			var _p = {
+				address,
+				reason,
+				postid
+			}
+
+			_p.Action || (_p.Action = 'ADDTOMAILLIST');
+			_p.TemplateID = '2000'
+
+			var body = ''
+				body += '<p><a href="https://'+self.options.url+'/author?address='+address+'">User('+address+')</a> complaint post <a href="https://'+self.options.url+'/post?s='+postid+'">Post ('+postid+')</a></p>'
+				body += '<p>Reason: '+reason+'</p>'
+
+			_p.body = encodeURIComponent(body)
+
+			$.ajax({
+				type: 'POST',
+				url: 'https://pocketnet.app/Shop/AJAXMain.aspx',
+				data: _p,
+				dataType: 'json',
+				success : function(){
+
+
+					if (clbk)
+						clbk(true);
+
+				},
+
+				error : function(){
+					topPreloader(100)
+
+					if (clbk)
+						clbk(true);
+				}
+			});
+		},
+
 		user : function({
 			address1,
 			address2,
@@ -462,7 +510,7 @@ Application = function(p)
 			var _p = {
 				address1 : address1,
 				address2 : address2,
-				email : email
+				email : email || ''
 			}
 
 			_p.Action || (_p.Action = 'ADDTOMAILLIST');
@@ -777,7 +825,7 @@ Application = function(p)
 
 	self.init = function(p){
 
-		if (navigator.webdriver && !self.test) return
+		if (navigator.webdriver && !self.test && !parameters().webdrivertest) return
 
 		if (typeof localStorage == 'undefined')
 			localStorage = {};
@@ -1385,7 +1433,7 @@ Application = function(p)
 
 		moment.locale(self.localization.key)
 
-		return moment(moment.utc(time).toDate()).local().fromNow();
+		return moment(moment.utc((time || new Date())).toDate()).local().fromNow();
 
 		console.log('time', time)
 

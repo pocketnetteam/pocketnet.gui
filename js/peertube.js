@@ -476,21 +476,32 @@ PeerTubePocketnet = function (app) {
       },
 
       best: function (type) {
-
-        return this.roys({type : type})
+        return this.roys({ type: type })
           .then((data = {}) => {
+            //console.log("FDATA", data)
+
             const roysAmount = Object.keys(data).length;
-            const royId =
-              self.helpers.base58.decode(app.user.address.value) % roysAmount;
+            var royId;
+
+            if (app.user.address.value) {
+              royId =
+                self.helpers.base58.decode(app.user.address.value) % roysAmount;
+            }
+
+            if (!royId) royId = rand(0, roysAmount - 1);
+
             return data[royId];
           })
+
           .catch(() => 0)
           .then((roy) => app.api.fetch('peertube/best', { roy, type }))
           .then((data) => {
             if (!data.host) return Promise.reject(error('host'));
+
             activehost = data.host;
             return Promise.resolve(data.host);
           })
+
           .catch((e) => {
             if (e.data == 'best') {
               e.text = 'Unable to connect to video server';
@@ -500,7 +511,7 @@ PeerTubePocketnet = function (app) {
           });
       },
 
-      bestChange: function ({type}) {
+      bestChange: function ({ type }) {
         return self.api.proxy
           .best(type)
           .then((host) => {
@@ -512,7 +523,9 @@ PeerTubePocketnet = function (app) {
           });
       },
 
-      roys: ({type}) => app.api.fetch('peertube/roys', {type}),
+      roys: ({ type }) => app.api.fetch('peertube/roys', { type }),
+
+      allServers: () => app.api.fetch('peertube/allservers'),
     },
 
     videos: {
@@ -900,7 +913,7 @@ PeerTubePocketnet = function (app) {
   };
 
   self.init = function () {
-    return self.api.proxy.bestChange({type : 'upload'});
+    return self.api.proxy.bestChange({ type: 'upload' });
   };
 
   self.helpers = {

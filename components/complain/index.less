@@ -89,6 +89,12 @@
 		}
 
 	}
+
+	.textreasons{
+		textarea{
+			width : 100%;
+		}
+	}
 }	
 
 .wnd.complain{
@@ -110,12 +116,27 @@
 			position: absolute;
 		}
 
+		.textreasons,
 		.reasons{
 			position: absolute;
 			top: 55px;
 			bottom : 55px;
 			left: 0;
 			right: 0;
+		}
+
+		.textreasons{
+			
+			
+			textarea{
+				overflow-y: auto;
+				padding : @rhythm;
+				height : 95%;
+				border : 0;
+				background: fade(@color-main, 3);
+				border-radius: 5px;
+				resize: none;
+			}
 		}
 
 		.cbuttons{
