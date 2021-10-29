@@ -4461,15 +4461,18 @@ html.cordova{
   font-size: 0.25em;
   opacity: 1;
 }
-.usericon .realperson .fa-certificate {
+.usericon .realperson .real .fa-certificate {
   color: #00a4ff;
 }
-.usericon .realperson .fa-code {
-  color: #ff4800;
-}
-.usericon .realperson .fa-check {
+.usericon .realperson .real .fa-check {
   color: #fff;
   box-shadow: none;
+}
+.usericon .realperson .dev .fa-certificate {
+  color: #ff4800;
+}
+.usericon .realperson .dev .fa-code {
+  color: #ffffff;
 }
 .usericon .letter {
   font-size: 1.5em;

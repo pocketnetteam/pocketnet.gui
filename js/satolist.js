@@ -2161,7 +2161,7 @@ Platform = function (app, listofnodes) {
         markReal : function(){
 
             return `<div class="realperson">
-                <span class="fa-stack fa-2x">
+                <span class="fa-stack fa-2x real">
                     <i class="fas fa-certificate fa-stack-2x"></i>
                     <i class="fas fa-check fa-stack-1x"></i>
                 </span>
@@ -2171,8 +2171,9 @@ Platform = function (app, listofnodes) {
         markDev : function(){
 
             return `<div class="realperson">
-                    <span class="fa-stack fa-2x">
-                        <i class="fas fa-code fa-stack-2x"></i>
+                    <span class="fa-stack fa-2x dev">
+                        <i class="fas fa-certificate fa-stack-2x"></i>
+                        <i class="fas fa-code fa-stack-1x"></i>
                     </span>
                 </div>`
 
