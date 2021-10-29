@@ -167,7 +167,7 @@ var uploadpeertube = (function () {
             actions.added(response, wnd.find('.upload-video-name').val());
             wndObj.close();
           })
-          .catch((e) => {
+          .catch((e = {}) => {
             console.error('Uploading error', e);
 
             el.videoInput.val('');
@@ -183,9 +183,7 @@ var uploadpeertube = (function () {
               var message =
                 e.text ||
                 findResponseError(e) ||
-                `Uploading error: ${
-                  e.toString ? e.toString() : 'unknown error'
-                }`;
+                `Uploading error: ${JSON.stringify(e)}`;
 
               sitemessage(message);
             }
@@ -282,7 +280,7 @@ var uploadpeertube = (function () {
 
                 wndObj.close();
               })
-              .catch((e) => {
+              .catch((e = {}) => {
                 el.videoInput.val('');
                 el.wallpaperError.text('');
 
@@ -301,9 +299,7 @@ var uploadpeertube = (function () {
                   var message =
                     e.text ||
                     findResponseError(e) ||
-                    `Uploading error: ${
-                      e.toString ? e.toString() : 'unknown error'
-                    }`;
+                    `Uploading error: ${JSON.stringify(e)}`;
 
                   sitemessage(message);
                 }
