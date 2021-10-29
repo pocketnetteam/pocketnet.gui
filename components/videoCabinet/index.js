@@ -324,7 +324,9 @@ var videoCabinet = (function () {
         videoElement.find('.transcodingPreloader').addClass('hidden');
       },
 
-      uploadVideoWallpaper(image, shareUrl) {
+      uploadVideoWallpaper(image, uploadParameters) {
+        const { shareUrl, backupHost } = uploadParameters;
+
         const parameters = {
           thumbnailfile: image,
         };
@@ -366,10 +368,18 @@ var videoCabinet = (function () {
               .update(shareUrl, parameters, { host })
               .then(() => img);
           })
-          .catch((e) => {
-            const message = e.text || findResponseError(e) || 'Updating error';
+          .catch(() => {
+            return self.app.peertubeHandler.api.videos
+              .update(`peertube://${backupHost}/${urlMeta.id}`, parameters, {
+                host,
+              })
+              .then(() => img)
+              .catch((e) => {
+                const message =
+                  e.text || findResponseError(e) || 'Updating error';
 
-            sitemessage(message);
+                return sitemessage(message);
+              });
           });
       },
 
@@ -599,11 +609,14 @@ var videoCabinet = (function () {
             });
 
             menuActivator.on('click', function () {
-              const videoLink = $(this).attr('videoLink');
+              const menuActivatorElement = $(this);
+
+              const videoLink = menuActivatorElement.attr('videoLink');
+              const backupHost = menuActivatorElement.attr('backupHost');
 
               return renders.metmenu(
                 $(this),
-                videoLink,
+                { videoLink, backupHost },
                 blockChainInfo[videoLink] ? true : false,
               );
             });
@@ -906,7 +919,9 @@ var videoCabinet = (function () {
         );
       },
       //render menu with video controls
-      metmenu(_el, videoLink, isVideoPosted) {
+      metmenu(_el, parameters, isVideoPosted) {
+        const { videoLink, backupHost } = parameters;
+
         const data = {
           isVideoPosted,
         };
@@ -936,6 +951,24 @@ var videoCabinet = (function () {
                           el.videoContainer
                             .find(`.singleVideoSection[uuid="${meta.id}"]`)
                             .addClass('hidden');
+                        })
+                        .catch(() => {
+                          self.app.peertubeHandler.api.videos
+                            .remove(`peertube://${backupHost}/${meta.id}`)
+                            .then(() => {
+                              el.videoContainer
+                                .find(`.singleVideoSection[uuid="${meta.id}"]`)
+                                .addClass('hidden');
+                            })
+                            .catch((err) =>
+                              sitemessage(
+                                `Deleting error: ${
+                                  err.toString
+                                    ? err.toString()
+                                    : 'undefined error'
+                                }`,
+                              ),
+                            );
                         });
                     },
                   });
@@ -955,7 +988,10 @@ var videoCabinet = (function () {
 
                   action: function (file, clbk) {
                     actions
-                      .uploadVideoWallpaper(file.file, videoLink)
+                      .uploadVideoWallpaper(file.file, {
+                        videoLink,
+                        backupHost,
+                      })
                       .then((img) => {
                         const previewContainer = el.videoContainer.find(
                           `.singleVideoSection[uuid="${meta.id}"] .videoAvatar`,
