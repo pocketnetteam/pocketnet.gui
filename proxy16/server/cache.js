@@ -199,6 +199,16 @@ var Cache = function(p){
             getcontentsstatistic: {
                 time : 3600
             },
+
+            searchlinks : {
+                time : 560,
+                block : 0,
+            },
+
+            getaccountsetting : {
+                time : 560,
+                block : 0,
+            }
         }
     }
 
@@ -320,6 +330,8 @@ var Cache = function(p){
                   
                 }
             }
+
+            return undefined
 
         }
     }

@@ -230,14 +230,27 @@
 	}	
 
 	#post{
-		.share{
+		.ra{
 			/*background: fade(#fff, 50);*/
 			.work{
 				padding : 0;
 				padding-right: 30px;
 			}
 
-			.iconWrapper{
+			.removeDescription{
+				display: none;
+				padding-bottom: @rhythm * 3;
+				color: #b2abac;
+			}
+				
+			&.deleted{
+				.cntscontent, .repostWrapper, .commentsWrapperHb, .metapanel, .sys{
+					display: none!important;
+				}
+	
+				.removeDescription{
+					display: block;
+				}
 			}
 
 		}
@@ -258,7 +271,7 @@
 		.cntswrk{
 			margin-left: 8 * @rhythm;
 		}
-
+		
 		.images{
 			max-width: 700px;
 			padding : 2 * @rhythm 0;

@@ -56,6 +56,7 @@ var uploadpeertube = (function () {
         maxWidth: 600,
         zIndex: 1006,
         position: 'bottom',
+        contentAsHTML: true,
       });
 
       el.videoInput.change(async function (evt) {
@@ -99,9 +100,7 @@ var uploadpeertube = (function () {
           video: videoInputFile[0],
         };
 
-        if (videoName) {
-          data.name = videoName;
-        }
+        data.name = videoName || fileName;
 
         var options = {
           type: 'uploadVideo',
@@ -147,7 +146,7 @@ var uploadpeertube = (function () {
         };
 
         el.importUrl.addClass('hidden');
-        
+
         self.app.peertubeHandler.api.videos
           .upload(data, options)
           .then((response) => {
@@ -168,7 +167,7 @@ var uploadpeertube = (function () {
             actions.added(response, wnd.find('.upload-video-name').val());
             wndObj.close();
           })
-          .catch((e) => {
+          .catch((e = {}) => {
             console.error('Uploading error', e);
 
             el.videoInput.val('');
@@ -181,7 +180,10 @@ var uploadpeertube = (function () {
             if (e.cancel) {
               sitemessage('Uploading canceled');
             } else {
-              var message = e.text || findResponseError(e) || 'Uploading error';
+              var message =
+                e.text ||
+                findResponseError(e) ||
+                `Uploading error: ${JSON.stringify(e)}`;
 
               sitemessage(message);
             }
@@ -278,7 +280,7 @@ var uploadpeertube = (function () {
 
                 wndObj.close();
               })
-              .catch((e) => {
+              .catch((e = {}) => {
                 el.videoInput.val('');
                 el.wallpaperError.text('');
 
@@ -295,7 +297,9 @@ var uploadpeertube = (function () {
                   sitemessage('Uploading canceled');
                 } else {
                   var message =
-                    e.text || findResponseError(e) || 'Uploading error';
+                    e.text ||
+                    findResponseError(e) ||
+                    `Uploading error: ${JSON.stringify(e)}`;
 
                   sitemessage(message);
                 }

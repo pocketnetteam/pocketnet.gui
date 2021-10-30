@@ -304,6 +304,7 @@ var Node = function(options, manager){
                     difference : difference,
                     method : method
                 })
+
                    
                 if(!err){
                     return Promise.resolve(data.result)
@@ -907,38 +908,25 @@ var Node = function(options, manager){
 
             var result = null
 
-            return f.pretry(function(){
-
-                if (lastinfo && lastinfoTime){
+            if (lastinfo && lastinfoTime){
     
-                    var dif = Math.floor(((new Date()).getTime()) / 1000) - Math.floor(((lastinfoTime).getTime()) / 1000)
-                    //console.log('dif', dif)
+                var dif = Math.floor(((new Date()).getTime()) / 1000) - Math.floor(((lastinfoTime).getTime()) / 1000)
 
-                    if (dif < 55){
-        
-                        result = _.clone(lastinfo)
-        
-                        result.time += dif
-        
-                        if (lastnodeblock){
-                            result.lastblock = lastnodeblock
-                        }
-        
-                        return true
+                if (dif < 55){
+    
+                    result = _.clone(lastinfo)
+    
+                    result.time += dif
+    
+                    if (lastnodeblock){
+                        result.lastblock = lastnodeblock
                     }
-                }
-
-            }, 40, 3000).then(r => {
-
-                //console.log("HAS RESULT", result ? true : false)
-
-                if (result){
+    
                     return Promise.resolve(result)
                 }
+            }
 
-                return self.info()
-
-            })
+            return self.info()
 
             
         }

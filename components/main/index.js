@@ -928,8 +928,10 @@ var main = (function(){
 				var ncurrentMode = parameters().r || 'common';
 				var nlentakey = parameters().video ? 'video' : (parameters().r || 'index')
 				var nvideomain = nlentakey == 'video'
-				
+				var page = parameters().page
+
 				var changes = false
+
 
 				localStorage['lentakey'] = nlentakey
 
@@ -948,6 +950,8 @@ var main = (function(){
 				if (searchtags != nsearchtags){
 					searchtags = nsearchtags; changes = true
 				}
+
+				if(page) changes = true
 
 				if (videomain){
 

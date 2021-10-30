@@ -182,11 +182,7 @@ var Nodemanager = function(p){
 
     self.rpcs = function(node, method, parameters, clbks){
 
-        node.checkParameters().then((r) => {
-
-            return node.rpcs(method, _.clone(parameters));
-
-        }).then(clbks.resolve).catch(clbks.reject)
+        return node.rpcs(method, _.clone(parameters)).then(clbks.resolve).catch(clbks.reject)
 
     }
 
@@ -951,24 +947,26 @@ var Nodemanager = function(p){
     }
 
     self.waitreadywithrating = function(){
+
+        if (inited && self.initednodeswithrating().length){
+            return Promise.resolve(true)
+        }
+
         return f.pretry(()=>{
             return inited && self.initednodeswithrating().length
         }, 30, 10000)
     }
 
     self.waitready = function(){
+
+        if(inited && self.initednodes().length) {
+            return Promise.resolve(true)
+        }
+
         return f.pretry(()=>{
             return inited && self.initednodes().length
         }, 30, 10000)
     }
-
-    /*self.waitreadywithrating = function(){
-        return f.pretry(()=>{
-            if(inited && self.initednodes().length){
-                
-            }
-        })
-    }*/
 
     self.request = function(method, parameters){
 
@@ -987,8 +985,6 @@ var Nodemanager = function(p){
         return self.waitready().then(() => {
 
             var node = self.selectProbability();
-
-            console.log("node", node?true : false)
     
             if(!node && self.bestnode) 
                 node = self.nodesmap[self.nodeManager.bestnode]

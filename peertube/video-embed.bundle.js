@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=3882"
+/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=7019"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -43799,7 +43799,7 @@ class embed_PeerTubeEmbed {
               videojs,
               video: videoInfo,
             });*/
-            if (this.details.state.id == 2) {
+            if (this.details.state.id == 2 || this.details.state.id == 3) {
                 this.displayWarning('Video is being processed <i class="fas fa-spinner fa-spin"></i>');
             }
             this.initTouchedEvents();

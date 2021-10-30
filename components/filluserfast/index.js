@@ -9,6 +9,89 @@ var filluserfast = (function(){
 		var primary = deep(p, 'history');
 
 		var el, k = {}, needcaptcha = false, gliperror = false, essenseData, initialParameters, ext = null;
+		
+		var categoryIcons = [
+			{
+				"id": "c2",
+				"icon": "far fa-smile"
+			},
+			{
+				"id": "c3",
+				"icon": "fas fa-landmark"
+			},
+			{
+				"id": "c4",
+				"icon": "fab fa-bitcoin"
+			},
+			{
+				"id": "c5",
+				"icon": "fas fa-microscope"
+			},
+			{
+				"id": "c55",
+				"icon": "fas fa-book"
+			},
+			{
+				"id": "c6",
+				"icon": "fas fa-dollar-sign"
+			},
+			{
+				"id": "c73",
+				"icon": "fas fa-fist-raised"
+			},
+			{
+				"id": "c72",
+				"icon": "fas fa-thermometer"
+			},
+			{
+				"id": "c7",
+				"icon": "fas fa-flag-checkered"
+			},
+			{
+				"id": "c8",
+				"icon": "fas fa-running"
+			},
+			{
+				"id": "c9",
+				"icon": "fas fa-gamepad"
+			},
+			{
+				"id": "c10",
+				"icon": "fas fa-space-shuttle"
+			},
+			{
+				"id": "c11",
+				"icon": "fas fa-music"
+			},
+			{
+				"id": "c12",
+				"icon": "fas fa-newspaper"
+			},
+			{
+				"id": "c13",
+				"icon": "fas fa-history"
+			},
+			{
+				"id": "c14",
+				"icon": "fas fa-bookmark"
+			},
+			{
+				"id": "c15",
+				"icon": "fas fa-film"
+			},
+			{
+				"id": "c16",
+				"icon": "fas fa-paw"
+			},
+			{
+				"id": "c17",
+				"icon": "fas fa-route"
+			},
+			{
+				"id": "c18",
+				"icon": "fas fa-pencil-ruler"
+			}
+		]
 
 		
 		var current = null;
@@ -50,7 +133,7 @@ var filluserfast = (function(){
 			captcha : {
 				id : 'captcha',
 				render : 'captcha',
-				nextindex : 'welcome',
+				nextindex : 'categories',
 
 				prev : function(clbk){
 
@@ -259,6 +342,105 @@ var filluserfast = (function(){
 					el.find('.welcome').on('click', function(){
 
 						clbk()
+						
+					})
+				}
+
+
+			},
+
+			
+			categories : {
+
+				id : 'categories',
+				nextindex : 'welcome',
+
+				prev : function(clbk){
+
+					//self.app.platform.sdk.theme.set('black')
+
+					if (essenseData.welcomepart)
+						essenseData.welcomepart()
+
+					clbk()
+				},
+
+				render : 'categories',
+
+				after : function(el){
+
+					var elCategories = el.find('.cat');
+					var next = el.find('.next');
+					var skip = el.find('.skip');
+
+					self.app.platform.sdk.categories.clear()
+					
+					var activeCategories = [];
+
+					elCategories.on('click', function(){
+
+						var cat = $(this);
+						var id = cat.attr('cat');
+
+						var activeIdx = activeCategories.findIndex(function(c){
+							return c === id;
+						})
+
+						if (cat.hasClass('active')){
+
+							cat.removeClass('active')
+							if (activeIdx > -1){
+								activeCategories.splice(activeIdx, 1);
+							}
+
+						} else {
+
+							cat.addClass('active')
+							if (activeIdx === -1){
+								activeCategories.push(id);
+							}
+						}
+
+						if (activeCategories.length){
+
+							next.addClass('active')
+
+						} else {
+
+							next.removeClass('active')
+						}
+
+					})
+
+					var c = false
+
+					var clbk = function(activeCategories){
+
+						if(c) return
+
+						c = true
+
+						for (var catId of activeCategories){
+							self.app.platform.sdk.categories.select(catId);
+
+						}
+
+						actions.next()
+						
+					}
+
+					next.on('click', function(){
+
+						if (activeCategories.length){
+							clbk(activeCategories)
+						}	
+						
+					})
+
+					
+					skip.on('click', function(){
+
+						clbk([])
 						
 					})
 				}
@@ -823,6 +1005,48 @@ var filluserfast = (function(){
 				})
 			},
 
+			categories : function(el, clbk){
+
+				var k =  self.app.localization.key;
+
+				if(!self.sdk.categories.data.all[k]) k = 'en';
+
+				var categories = self.sdk.categories.data.all[k].filter(function(k){
+					return k.id !== 'c71'
+				})
+
+				categories = _.map(categories, function(k){
+					var withIcon = categoryIcons.find(function(ki){
+						return ki.id === k.id;
+					})
+
+					if (withIcon){
+						k.icon = withIcon.icon;
+					}
+
+					return k;
+				})
+
+				var username = deep(app, 'platform.sdk.user.storage.me.name');
+
+				self.shell({
+
+					name :  'categories',
+					turi : 'filluser',
+					el :   el,
+					data : {
+						categories: categories,
+						username : username
+					},
+
+				}, function(_p){
+
+					if (clbk)
+						clbk(_p.el);
+
+				})
+			},
+
 			moneyfail : function(el, clbk){
 				self.shell({
 
@@ -882,6 +1106,7 @@ var filluserfast = (function(){
 			
 
 			settings : function(_el, clbk, pel){
+
 
 				self.nav.api.load({
 

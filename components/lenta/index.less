@@ -132,6 +132,26 @@
 			}
 		}
 
+		.share .sharecnt{
+
+			.removeDescription{
+				display: none;
+				padding-bottom: @rhythm * 3;
+				color: #b2abac;
+			}
+				
+			&.deleted{
+				.cntscontent, .repostWrapper, .commentsWrapperHb, .metapanel, .sys{
+					display: none!important;
+				}
+
+				.removeDescription{
+					display: block;
+				}
+			}
+
+		}
+
 		.statswrapperExtended{
 			display: flex;
 			padding : @rhythm 0;
@@ -392,6 +412,13 @@
 			}
 
 			#post{
+
+				.lockedaccount{
+					span{
+						font-size: 1em;
+						font-weight: 400;
+					}
+				}
 
 				.share{
 					margin-bottom : 0;
@@ -921,6 +948,10 @@
 
 					&.authorCell{
 						padding-right: 0;
+						
+						.pinnedIcon{
+							color: @color-gray-light
+						}
 					}
 				}
 
@@ -1601,6 +1632,7 @@
 					&::-webkit-scrollbar{
 						width: 0!important
 					}
+
 				}
 
 				.statswrapperExtended{

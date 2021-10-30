@@ -74,6 +74,8 @@ var Middle = function(){
 
     self.printstats = function(){
 
+        return
+
         console.log("")
         console.log("_____________________________________")
         console.log("Total Requests count:", requestcountTotal)
@@ -186,19 +188,19 @@ var Middle = function(){
 
             if(!code) code = 200
 
-            try{
                 var jsonp = {
                     result : 'success',
                     data : data
                 }
     
-                if (s && s.node){
+                if (s && s.node && s.node.key){
                     jsonp.node = s.node.key
                 }
-            }
-            catch(e){
-               // console.error(e)
-            }
+
+                if (s && s.time){
+                    jsonp.time = s.time
+                }
+           
 
             result.status(code).jsonp(jsonp)
 

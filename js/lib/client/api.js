@@ -475,7 +475,7 @@ var Proxy16 = function(meta, app, api){
 
             console.log('e.code', e.code)
 
-            if ((e.code == 408 || e.code == -28) && options.node && trying < 2 && !options.fnode){
+            if ((e.code == 408 || e.code == 429 || e.code == -28) && options.node && trying < 2 && !options.fnode){
 
                 if(isonline()){
                     return self.api.nodes.canchange(options.node).then(r => {
@@ -660,7 +660,7 @@ var Api = function(app){
         var lsproxies = JSON.parse(localStorage['listofproxies'] || "[]")
 
             lsproxies = _.filter(lsproxies, function(meta){
-                var proxy = new Proxy16(meta, app)
+                var proxy = new Proxy16(meta, app, self)
 
                 if(proxy.id == key) return false
 
@@ -825,6 +825,7 @@ var Api = function(app){
                     _.each(metas, meta => { this.add(meta) })
                 },
                 add : function(meta){
+
                     var proxy = new Proxy16(meta, app, self)
 
                     if(!this.find(proxy.id) && (proxy.valid() || proxy.direct)){

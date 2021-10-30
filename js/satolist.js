@@ -66,9 +66,11 @@ Platform = function (app, listofnodes) {
         'PKHoxhpnG5CGHDVnxXJwARwPxVre6Qshvn' : true,
         'PXgYFdVs5W831WpksVLA5hNtXa7XSqUzLB' : true,
         'PSBePd5Tx5KG9vxwAzbaDTfjzDbq1GUTYw' : true,
+
         'PDgbAvsrS4VGKkW5rivcJaiCp7fnBoZRgM' : true,
-        'PQt1eggTZKCCbjVsHx6rcMcBMU2p2PNQmt' : true
-        //'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82' : true // test
+        'PQt1eggTZKCCbjVsHx6rcMcBMU2p2PNQmt' : true,
+        'PPY1UbumjHJaoxsfL7DVTPNLM4g697zdDe' : true,
+        'P9nFzh2sSyeTFd1F7fFGByhB6cD886jJi5' : true
     }
 
     self.nvadr = {
@@ -550,6 +552,8 @@ Platform = function (app, listofnodes) {
             relay: true
         },
 
+        
+
         'offline': {
             message: function () {
                 return self.app.localization.e('e13231')
@@ -561,6 +565,23 @@ Platform = function (app, listofnodes) {
         "42": {
             message: function () {
                 return self.app.localization.e('e13233')
+            }
+        },
+
+        "313" : {
+            message: function () {
+                return self.app.localization.e('lockedaccount')
+            }
+        },
+        "48": {
+            message: function(){
+                return self.app.localization.e('canSpendError')
+            }
+        },
+
+        "49": {
+            message: function(){
+                return self.app.localization.e('saveSettingsLimit')
             }
         },
 
@@ -2127,6 +2148,46 @@ Platform = function (app, listofnodes) {
 
     self.ui = {
 
+        markUser : function(address){
+
+            var dev = deep(app, 'platform.sdk.user.storage.'+address+'.dev') || deep(app, 'platform.sdk.usersl.storage.'+address+'.dev');
+
+            if (dev){
+                
+                return this.markDev();
+
+            } else if (deep(app, 'platform.real.'+address)){
+
+                return this.markReal();
+
+            }
+
+            return ''
+
+        },
+
+        markReal : function(){
+
+            return `<div class="realperson">
+                <span class="fa-stack fa-2x real">
+                    <i class="fas fa-certificate fa-stack-2x"></i>
+                    <i class="fas fa-check fa-stack-1x"></i>
+                </span>
+            </div>`
+        },
+
+        markDev : function(){
+
+            return `<div class="realperson">
+                    <span class="fa-stack fa-2x dev">
+                        <i class="fas fa-certificate fa-stack-2x"></i>
+                        <i class="fas fa-code fa-stack-1x"></i>
+                    </span>
+                </div>`
+
+        },
+
+
         images : function(allimages, initialValue, clbk){
 
             if(!_.isArray(allimages)) allimages = [allimages]
@@ -3232,11 +3293,12 @@ Platform = function (app, listofnodes) {
                 self.app.platform.ui.wallet.send({id : id}, function(){
 					
 				})
-            }
+            },
+
         },
 
         metmenu: function (_el, id, actions) {
-            var share = self.sdk.node.shares.storage.trx[id]
+            var share = self.sdk.node.shares.storage.trx[id];
 
             if (!share) {
                 var temp = _.find(self.sdk.node.transactions.temp.share, function (s) {
@@ -3271,6 +3333,8 @@ Platform = function (app, listofnodes) {
                         return template(d);
 
                     }, function (el, f, mme) {
+
+
 
                         el.find('.opennewwindow').on('click', function(){
 
@@ -3310,6 +3374,112 @@ Platform = function (app, listofnodes) {
                             else{
                                 window.open(href, '_blank');
                             }
+                        })
+
+                        var pinPost = function (share, clbk, unpin){
+
+                            var ct = new Settings();
+                            ct.pin.set(unpin ? '' : share.txid);
+
+            
+                            self.app.platform.sdk.node.account.accSet(ct, function(err, alias){
+            
+                                if(!err){
+                                    if (clbk){
+
+                                        clbk(null, alias)
+                                    }
+
+                                } else {
+                                    self.app.platform.errorHandler(err, true)
+            
+                                    if (clbk)
+                                        clbk(err, null)
+                                }
+            
+                            })
+
+                        }
+
+                        el.find('.pin').on('click', function () {
+
+                            if (!mme && _el.tooltipster)
+                                _el.tooltipster('hide')
+
+                            dialog({
+                                class : 'zindex',
+                                html : self.app.localization.e('pinPostDialog'),
+                                btn1text : self.app.localization.e('dyes'),
+                                btn2text : self.app.localization.e('dno'),
+                                success : function(){	
+
+                                    pinPost(d.share, function(err, result){
+
+										if(!err)
+										{
+
+                                            var shares = self.sdk.node.shares.storage.trx;
+                                            var alreadyPinned = Object.values(shares).find(function(share){
+                                                return share.pin
+                                            })
+
+                                            if (alreadyPinned && alreadyPinned.txid){
+                                                
+                                                alreadyPinned.pin = false;
+                                                var shareslist = $(`[stxid='${alreadyPinned.txid}']`);
+                                                var pinnedIcon = shareslist.find('.pinnedIcon');
+                                                var pinnedLabel = shareslist.find('.pinnedLabel')
+                                                pinnedIcon.children().remove();
+                                                pinnedLabel.empty()
+                                
+                                            }
+
+                                            d.share.pin = true;
+                                            var metatable = _el.closest('.metatable');
+                                            var pinnedIcon = metatable.find('.pinnedIcon');
+                                            var pinnedLabel = metatable.find('.pinnedLabel');
+                                            pinnedIcon.html('<i class="fa fa-map-pin"></i>');
+                                            pinnedLabel.append(', ' + self.app.localization.e('pinned'));
+
+                                        }
+
+                                    }, false)
+
+                                }
+                            })
+                        })
+
+                        el.find('.unpin').on('click', function () {
+
+                            if (!mme && _el.tooltipster)
+                                _el.tooltipster('hide')
+
+                            dialog({
+                                class : 'zindex',
+                                html : self.app.localization.e('unpinPostDialog'),
+                                btn1text : self.app.localization.e('dyes'),
+                                btn2text : self.app.localization.e('dno'),
+                                success : function(){	
+
+                                    pinPost(d.share, function(err, result){
+
+										if(!err)
+										{
+
+                                            d.share.pin = false;
+                                            var metatable = _el.closest('.metatable');
+                                            var pinnedIcon = metatable.find('.pinnedIcon');   
+                                            var pinnedLabel = metatable.find('.pinnedLabel');                 
+                                            pinnedIcon.children().remove();
+                                            pinnedLabel.empty()
+
+                                        }
+
+										
+                                    }, true)
+
+                                }
+                            })
                         })
 
                         el.find('.htls').on('click', function () {
@@ -3385,6 +3555,82 @@ Platform = function (app, listofnodes) {
 
                             if (!mme && _el.tooltipster)
                                 _el.tooltipster('hide')
+
+                        })
+
+                        el.find('.remove').on('click', function () {
+                            self.app.mobile.vibration.small();
+                            
+                            if (!mme && _el.tooltipster)
+                                _el.tooltipster('hide')
+
+
+                            dialog({
+                                class : 'zindex',
+                                html : self.app.localization.e('removePostDialog'),
+                                btn1text : self.app.localization.e('dyes'),
+                                btn2text : self.app.localization.e('dno'),
+                                success : function(){	
+
+                                    var shareslist = _el.closest(`[stxid='${id}']`);
+                                    var authorgroup = shareslist.closest('.sharecnt');
+                                                    
+                                    var removePost = function (share, clbk){
+
+                                        share.deleted = true;
+                                        var ct = new Remove();
+                                        ct.txidEdit = share.txid;
+
+                        
+                                        self.app.platform.sdk.node.shares.delete(share.txid, ct, function(err, alias){
+                        
+                                            if(!err){
+                                                if (clbk){
+               
+                                                    // var l = share.url;
+
+
+                                                    // if (self.app.peertubeHandler.checklink(l)) {
+                                                    //     share.settings.a = share.default.a
+
+                                                    //     self.app.peertubeHandler.api.videos.remove(l).then(r => {
+                                                    //         self.app.platform.sdk.videos.clearstorage(l)
+                                                    //     })
+
+
+                                                    // }
+
+                                                    clbk(null, alias)
+                                                }
+    
+                                            } else {
+                                                self.app.platform.errorHandler(err, true)
+                        
+                                                if (clbk)
+                                                    clbk(err, null)
+                                            }
+                        
+                                        })
+
+                                    }
+
+                                    removePost(d.share, function(err, result){
+
+										if(!err)
+										{
+
+                                            console.log('result removed post', result)
+                                            authorgroup.addClass('deleted');
+
+
+                                        }
+
+										
+                                    })
+
+                                }
+                            })
+
 
                         })
 
@@ -6341,6 +6587,53 @@ Platform = function (app, listofnodes) {
                     me = self.app.platform.sdk.users.storage[address.address];
 
                     return me
+                }
+            },
+
+            itisme : function(_address){
+                var address = self.app.platform.sdk.address.pnet()
+
+                if (address && address.address == _address){
+                    return true
+                }
+            },
+
+            reputationBlockedMe : function(address){
+
+                if(!address) address = (self.app.platform.sdk.address.pnet() || {}).address
+
+                return self.app.platform.sdk.user.itisme(address) && self.app.platform.sdk.user.reputationBlocked(address)
+                
+            },
+
+            reputationBlocked : function(address){
+                var ustate = self.sdk.ustate.storage[address] || deep(self, 'sdk.usersl.storage.' + address) || deep(self, 'sdk.users.storage.' + address);
+
+				if (ustate && ustate.reputation < -50){
+                    return true
+                }
+            },
+
+            reputationBlockedRedirect : function(address){
+                if(self.sdk.user.reputationBlocked(address)){
+
+                    if (self.sdk.user.itisme(address)){
+                        self.app.nav.api.load({
+                            open : true,
+                            href : 'userpage',
+                            history : true
+                        })
+                    }
+                    else{
+                        self.app.nav.api.load({
+                            open : true,
+                            href : 'page404',
+                            history : true
+                        })
+                    }
+
+                    return true
+
                 }
             }
         },
@@ -11746,7 +12039,35 @@ Platform = function (app, listofnodes) {
                             self.sdk.node.account.import(email, address, clbk)
                         }
                     })
-                }
+                },
+
+                accSet: function (settings, clbk) {
+    
+                    self.sdk.node.transactions.create.commonFromUnspent(
+    
+                        settings,
+    
+                        function (_alias, error) {
+    
+    
+                            if (!_alias) {
+    
+                                if (clbk) {
+                                    clbk(error, null)
+                                }
+    
+                            }
+    
+                            else {
+    
+                                if (clbk)
+                                    clbk(null, _alias)
+                            }
+    
+                        }
+                    )
+    
+                },
             },
 
             shares: {
@@ -11894,6 +12215,75 @@ Platform = function (app, listofnodes) {
                     _.each(this.clbks.added, function (a) {
                         a(share)
                     })
+
+                },
+
+
+                delete: function (txid, share, clbk) {
+
+                    var s = self.sdk.node.shares.storage;
+    
+                    share.txid = txid
+    
+                    self.sdk.node.transactions.create.commonFromUnspent(
+    
+                        share,
+    
+                        function (_alias, error) {
+    
+    
+                            if (!_alias) {
+    
+                                if (clbk) {
+                                    clbk(error, null)
+                                }
+    
+                            }
+    
+                            else {
+    
+                                s[txid] || (s[txid] = {})
+    
+                                var c = _.find(s[txid][share.parentid || '0'] || [], function (c) {
+                                    return c.id == share.id
+                                })
+    
+                                if (c) c.deleted = true
+    
+                                if (clbk)
+                                    clbk(null, _alias)
+                            }
+    
+                        }
+                    )
+    
+                },
+
+                tempContentDelete: function (shares) {
+
+
+                    _.each(self.sdk.relayTransactions.withtemp('contentDelete'), function (tempShare) {
+
+                        var txid = tempShare.txidEdit;
+
+                        console.log('tempShare', tempShare)
+
+                        _.find(shares, function (share) {
+
+                            if (share.txid == txid) {
+
+                                share.deleted = true;
+
+                                return true
+                            }
+
+
+                        })
+
+                    })
+
+
+
 
                 },
 
@@ -12364,6 +12754,8 @@ Platform = function (app, listofnodes) {
                         return s
 
                     })
+
+                    self.sdk.node.shares.tempContentDelete(shares)
 
                     self.sdk.node.shares.tempLikes(shares)
 
@@ -13230,6 +13622,7 @@ Platform = function (app, listofnodes) {
                 },
 
                 saveTemp: function (clbk) {
+
                     var a = self.sdk.address.pnet();
 
                     if (a) {
@@ -14538,6 +14931,15 @@ Platform = function (app, listofnodes) {
                                 address : address.address
                             })
 
+                            if(self.sdk.user.reputationBlockedMe()){
+
+                                if (clbk) {
+                                    clbk(null, 313, {})
+                                }
+
+                                return
+                            }
+
 
                             self.sdk.node.transactions.get.unspent(function (unspents) {
 
@@ -14658,6 +15060,7 @@ Platform = function (app, listofnodes) {
                                             })
 
                                             self.app.platform.sdk.node.transactions.blockUnspents(bids)
+
 
                                             self.app.api.rpc('sendrawtransactionwithmessage', [hex, obj.export(), optstype]).then(d => {
 
@@ -14902,8 +15305,17 @@ Platform = function (app, listofnodes) {
                         this.common(inputs, share, TXFEE, clbk, p)
                     },
 
+                    
+                    accSet: function (inputs, settings, clbk, p) {
+                        this.common(inputs, settings, TXFEE, clbk, p)
+                    },
+
                     userInfo: function (inputs, userInfo, clbk, p) {
                         this.common(inputs, userInfo, TXFEE, clbk, p)
+                    },
+
+                    contentDelete: function (inputs, remove, clbk, p) {
+                        this.common(inputs, remove, TXFEE, clbk, p)
                     },
 
                     upvoteShare: function (inputs, upvoteShare, clbk, p) {
@@ -18954,7 +19366,6 @@ Platform = function (app, listofnodes) {
                 var name = deep(author, 'name');
                 var letter = name ? name[0] : '';
 
-
                 var link = '<a href="' + encodeURI(clearStringXss(author.name.toLowerCase())) + '">'
                 var clink = "</a>"
 
@@ -18979,14 +19390,10 @@ Platform = function (app, listofnodes) {
                 }
 
 
-                if(deep(platform, 'real.'+author.address)) {
-                    h += '<div class="realperson">'
+                if(self.app.platform.ui.markUser){
 
-                    h += '<span class="fa-stack fa-2x">'
-                    h += '<i class="fas fa-certificate fa-stack-2x"></i>'
-                    h += '<i class="fas fa-check fa-stack-1x"></i>'
-                    h += '</span>'
-                    h += '</div>'
+                    h += self.app.platform.ui.markUser(author.address);
+
                 }
 
 
@@ -22810,7 +23217,10 @@ Platform = function (app, listofnodes) {
 
             if (state) {
 
-                self.matrixchat.init()
+                self.sdk.ustate.me(function(){
+                    self.matrixchat.init()
+                })
+                
 
                 lazyActions([
 
@@ -22830,7 +23240,8 @@ Platform = function (app, listofnodes) {
                     self.sdk.activity.load,
                     self.sdk.node.shares.parameters.load,
                     self.sdk.node.transactions.checkTemps,
-                    self.sdk.user.get
+                    self.sdk.user.get,
+                    
                 ], function () {
 
                     //self.ui.showmykey()
@@ -22994,9 +23405,15 @@ Platform = function (app, listofnodes) {
             
             app.user.isState(function(state){
 
+                
+
                 self.matrixchat.initing = false
 
                 if (state) {
+
+                  
+
+                    if(self.sdk.user.reputationBlockedMe()) return
 
                     var pnet = self.app.platform.sdk.address.pnet()
 
@@ -23029,9 +23446,6 @@ Platform = function (app, listofnodes) {
                             self.matrixchat.el = $('.matrixchatwrapper')
                             self.matrixchat.initevents()
                             self.matrixchat.connect()
-
-
-                           
                             
                         }, null, app);
 

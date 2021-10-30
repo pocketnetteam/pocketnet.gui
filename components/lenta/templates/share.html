@@ -33,7 +33,6 @@ var emptywithrepost = share.isEmpty() && share.repost
 
 var value = Number(share.score)
 
-
 var metadisplay = function(){ %>
 
 <div class="meta unselectablemobile">
@@ -53,10 +52,14 @@ var metadisplay = function(){ %>
 								<b><span class="adr"><%-name || share.address %></span></b><% if(reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
 							</a>
 
+							
+
 							<% if((!state || !my) && (typeof repost == 'undefined' || !repost)) { %> 
 
 								<span class="sbtnxs">
-									&middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><i class="far fa-check-circle"></i>  <%=e('following')%></span> 
+									&middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><i class="far fa-check-circle"></i>  <%=e('following')%></span>
+						
+									
 									<% if(state && !my && user.address.value) {
 										
 										var r = me.relation(share.address, 'subscribes') 
@@ -66,6 +69,7 @@ var metadisplay = function(){ %>
 
 										<span class="notificationturn <% if(r && (r.private == 'true' || r.private === true)) {%> turnon <% } %>">&middot; <i class="far fa-bell-slash"></i></span>
 									<% } %>
+				
 
 									
 								</span>
@@ -78,9 +82,8 @@ var metadisplay = function(){ %>
 						<% if((typeof repost == 'undefined' || !repost || fromempty)) {%>
 							<div class="sys hideOnFullVideo unselectablemobile">
 
-								
-
-								<% if(share.downloadedDate) {%> <span class="fas fa-cloud-download-alt"></span> <span class="realtime editedLabel" time="<%-share.downloadedDate%>"><%- app.reltime(share.downloadedDate) %></span><% } else { %> 
+								<%if(share.pin){%>
+								<span class="pinnedLabel"><i class="fas fa-thumbtack"></i> <%=e('pinned').toLowerCase()%>,</span><%}%><% if(share.downloadedDate) {%> <span class="fas fa-cloud-download-alt"></span> <span class="realtime editedLabel" time="<%-share.downloadedDate%>"><%- app.reltime(share.downloadedDate) %></span><% } else { %> 
 								<% if(share.time) {%><span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span><% } else { %><span><%=e('e13019')%></span><% } %><% if(share.edit == 'true') {%><span class="editedLabel">, <%=e('e13130').toLowerCase()%></span><% } %>
 								<% } %>
 							</div>
@@ -308,7 +311,7 @@ var metadisplay = function(){ %>
 
 } %>
 
-<div class="sharecnt">
+<div class="sharecnt <% if(share.deleted) { %> deleted <% } %>">
 
 	<div class="work unselectablemobile">
 
@@ -325,7 +328,8 @@ var metadisplay = function(){ %>
 						<% 
 							var src = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image');
 							var name = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.name');
-							var letter = name ? name[0] : ''; 	
+							var letter = name ? name[0] : ''; 
+							
 						%>
 
 						<div class="icon">
@@ -343,14 +347,12 @@ var metadisplay = function(){ %>
 				
 								<% } %>
 
-								<% if(deep(app, 'platform.real.'+share.address)) {%>
-									<div class="realperson">
-										<span class="fa-stack fa-2x">
-											<i class="fas fa-certificate fa-stack-2x"></i>
-											<i class="fas fa-check fa-stack-1x"></i>
-										</span>
-									</div>
+								<% if(app.platform.ui.markUser) {%>
+
+									<%= app.platform.ui.markUser(share.address)%>
+
 								<% } %>
+								
 							</div>
 						</div>
 
@@ -367,8 +369,9 @@ var metadisplay = function(){ %>
 				</div> 
 
 			</div>
+			
 
-			<div class="cntswrk">
+			<div class="cntswrk cntscontent">
 
 
 				<% var a = share.settings.a || share.default.a %>
@@ -384,11 +387,16 @@ var metadisplay = function(){ %>
 
 			</div>
 
-			<div class="repostWrapper"></div>
+			
+			<div class="cntswrk removeDescription">
+				<%=e('postRemoved')%>
+			</div>
+
+			<div class="repostWrapper cntscontent"></div>
 
 			<% if(!emptywithrepost) {%>
 
-				<div class="cntswrk">
+				<div class="cntswrk cntscontent">
 					<div class="paddingWrapper">
 						
 						<% if(share.tags && share.tags.length > 0) {

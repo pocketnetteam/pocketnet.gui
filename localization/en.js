@@ -83,9 +83,11 @@ ____loclib.funetworkproblems = "There are some problems with the connection. Ple
 
 ____loclib.pleasewait = "Please Wait";	
 ____loclib.next = "Next";	
+____loclib.welcome = "Welcome";	
 ____loclib.welcometopocketnet = "Welcome to "+appname+"";	
 ____loclib.continue = "continue";	
 
+____loclib.chooseThemes = "Choose interesting themes";
 //user page
 
 ____loclib.rstate = "Reputation";	
@@ -454,6 +456,7 @@ ____loclib.e13030 = "Comments have 1000 character limit per comment"
 ____loclib.e13031 = "Share Comment"
 ____loclib.e13032 = "Do you really want to delete your comment?"
 ____loclib.e13033 = "Comment has been removed"
+____loclib.postRemoved = "Post has been removed"
 ____loclib.e13034 = "Yes"
 ____loclib.e13035 = "No, cancel"
 ____loclib.hide = "Hide"
@@ -584,12 +587,20 @@ ____loclib.e13128 = "Posts from people you follow will be shown here"
 ____loclib.registration = "Registration"
 ____loclib.editpost = "Edit Post"
 ____loclib.removepost = "Remove Post"
+____loclib.removePostDialog = "Do you really want to remove post?"
 ____loclib.opennewwindow = "Open Post in New Window"
+____loclib.pin = "Pin Post"
+____loclib.pinned = "pinned"
+____loclib.pinPostDialog = "Do you realy want to pin this post?"
+____loclib.unpin = "Unpin Post"
+____loclib.unpinPostDialog = "Do you realy want to unpin this post?"
 
 
 ____loclib.unsubscribe = "Unsubscribe"
 ____loclib.startchat = "Start chat"
 ____loclib.reportpost = "Report Post"
+____loclib.reportuser = "Report User"
+
 ____loclib.donate = "Donate"
 ____loclib.blockuser = "Block User"
 ____loclib.more = "More"
@@ -748,8 +759,11 @@ ____loclib.e13242 = "You have been blocked by this person, you will be unable to
 ____loclib.e13243 = "You have reached your limit of upvote comments in a 24 hour period"
 ____loclib.e13244 = "You have reached your limit of editing comments in a 24 hour period"
 ____loclib.e13245 = "You have reached your limit of sending comments in a 24 hour period"
+
 ____loclib.e13246 = "You are trying to edit someone else's post"
 ____loclib.e13247 = "You have reached your limit of editing 5 posts in a 24 hour period"
+____loclib.saveSettingsLimit = "You have reached your limit of saving settings in a 24 hour period"
+
 ____loclib.e13248 = "You can only edit once per blockchain block. Please wait a minute, then try again"
 ____loclib.e13249 = "You cannot block yourself"
 ____loclib.e13250 = "You have already blocked this user"
@@ -1117,7 +1131,7 @@ ____loclib.sumoftransaction = "Sum of transaction"
 
 
 ____loclib.videoBitrateError = "Video bitrate is too high. Please, use file with lower quality/resolution"
-____loclib.videoQualityInfo = "Maximum allowed video bitrate  - 8 Mbit/s. If your file exceeds this limit, the download would be terminated."
+____loclib.videoQualityInfo = "Maximum allowed video bitrate  - 8 Mbit/s. If your file exceeds this limit, the download would be terminated. Maximum allowed resolution - 720p. <br/> Recommended bitrates: <br/> <b>1080p:</b> 5081 Kbps <br/> <b>720p:</b>  2680 Kbps <br/> <b>480p:</b>  1300 Kbps <br/> <b>360p:</b>  700 Kbps"
 ____loclib.videoQualityCaption = "Video quality limitations"
 
 ____loclib.streamLinks = "Streaming software links"
@@ -1213,3 +1227,13 @@ ____loclib.successdownloaded = "Video saved";
 
 ____loclib.logoutaccount = "Sign out of your account";
 ____loclib.closeapplication = "Exit the application";
+
+
+____loclib.attachVideoLenta = "Attach video to post";
+____loclib.attachVideoLentaShort = "Attach";
+
+____loclib.linkToPostLenta = "Already posted"
+
+____loclib.ReferralUsers = "Referral Users"
+____loclib.lockedaccount = "Your account is locked due to reputation below -50"
+____loclib.lockedaccounta = "Author Account is locked due to reputation below -50"
