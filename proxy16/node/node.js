@@ -576,6 +576,7 @@ var Node = function(options, manager){
 
             var time = s.time;
             var rate = (s.rate || 0) + 1
+            var timemult = 1
 
             if (time && time > 0 && time <= 200) time = 200
             if (time && time > 200 && time <= 400) time = 300
@@ -587,6 +588,9 @@ var Node = function(options, manager){
             if (time && time > 7000 && time <= 15000) time = 100000
             if (time && time > 15000) time = 300000
 
+            if (time > 2000) timemult = 2
+            if (time > 7000) timemult = 4
+
             if (rate <= 2) rate = 2
             if (rate > 2 && rate <= 10) rate =5
             if (rate > 10 && rate <= 30) rate = 15
@@ -594,7 +598,7 @@ var Node = function(options, manager){
             if (rate > 100 && rate <= 200) rate = 150
             if (rate > 200) rate = 500
 
-            return ((s.percent * s.percent) / (rate * time))
+            return ((s.percent * s.percent) / (rate * time * timemult))
 
         },
 
@@ -652,10 +656,12 @@ var Node = function(options, manager){
                     if (usersl > 1000) userski = 1000
 
                     userski = 1
+
+                    if(difference <= 1) difference = 0
         
                     result = (
                         penalty.getk() * 
-                        Math.sqrt(Math.sqrt(Math.sqrt(availabilityAllTime) * availability5Minutes * availability5Minutes)) *
+                        Math.sqrt(availabilityAllTime * Math.sqrt(availability5Minutes)) *
                         (lastblock.height || 1) / (1000 * userski * (difference + 1))
                         ) || 0
                 }
