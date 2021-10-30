@@ -48,6 +48,7 @@ var metadisplay = function(){ %>
 
 							<a href="<%-app.platform.api.authorlink(share.address)%>">
 
+
 							<% var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0 %>
 								<b><span class="adr"><%-name || share.address %></span></b><% if(reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
 							</a>
@@ -327,7 +328,6 @@ var metadisplay = function(){ %>
 
 						<% 
 							var src = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image');
-							var name = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.name');
 							var letter = name ? name[0] : ''; 
 							
 						%>
