@@ -182,11 +182,7 @@ var Nodemanager = function(p){
 
     self.rpcs = function(node, method, parameters, clbks){
 
-        node.checkParameters().then((r) => {
-
-            return node.rpcs(method, _.clone(parameters));
-
-        }).then(clbks.resolve).catch(clbks.reject)
+        return node.rpcs(method, _.clone(parameters)).then(clbks.resolve).catch(clbks.reject)
 
     }
 
@@ -971,14 +967,6 @@ var Nodemanager = function(p){
             return inited && self.initednodes().length
         }, 30, 10000)
     }
-
-    /*self.waitreadywithrating = function(){
-        return f.pretry(()=>{
-            if(inited && self.initednodes().length){
-                
-            }
-        })
-    }*/
 
     self.request = function(method, parameters){
 

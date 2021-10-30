@@ -331,6 +331,8 @@ var Cache = function(p){
                 }
             }
 
+            return undefined
+
         }
     }
 

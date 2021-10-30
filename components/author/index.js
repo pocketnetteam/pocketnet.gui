@@ -1294,13 +1294,14 @@ var author = (function(){
 						if (address){
 							author.address = address
 
-							self.sdk.ustate.get(author.address, function(ustate){
 
-								if(self.app.platform.sdk.user.reputationBlockedRedirect(address)){
-									return
-								}
+								
 
 								self.sdk.users.get(author.address, function(){
+
+									if(self.app.platform.sdk.user.reputationBlockedRedirect(address)){
+										return
+									}
 
 									if(!self.app.platform.sdk.address.pnet() || author.address != self.app.platform.sdk.address.pnet().address){
 										reports.shares.name = self.app.localization.e('uposts')
@@ -1343,7 +1344,6 @@ var author = (function(){
 									clbk(data);
 
 								})
-							})
 						}
 
 						else
