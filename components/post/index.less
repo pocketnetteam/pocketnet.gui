@@ -7,6 +7,7 @@
 			.share{
 				margin-bottom: 0;
 			}
+			
 		}
 	}
 }
@@ -139,6 +140,25 @@
 
 		&.active{
 			opacity: 1;
+		}
+		.share .sharecnt{
+
+			.removeDescription{
+				display: none;
+				padding-bottom: @rhythm * 3;
+				color: #b2abac;
+			}
+				
+			&.deleted{
+				.cntscontent, .repostWrapper, .commentsWrapperHb, .metapanel, .sys{
+					display: none!important;
+				}
+
+				.removeDescription{
+					display: block;
+				}
+			}
+
 		}
 	}
 
@@ -380,6 +400,7 @@
 						border-left : 0;
 					}
 				}
+				
 
 				
 			}
@@ -2095,4 +2116,5 @@ html.stblack{
 		right: @rhythm;
 	}
 }
+
 }

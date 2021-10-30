@@ -16,10 +16,23 @@ var all = {
 		class : 'opennewwindow'
 	},
 
+	
+	pin : {
+		icon : '<i class="fas fa-link"></i>',
+		text : e('pin'),
+		class : 'pin'
+	},
+
+	unpin : {
+		icon : '<i class="fas fa-unlink"></i>',
+		text : e('unpin'),
+		class : 'unpin'
+	},
+
 	remove : {
 		icon : '<i class="far fa-times-circle"></i>',
 		text : e('removepost'),
-		class : 'edit'
+		class : 'remove'
 	},
 
 	downloadVideo : {
@@ -119,7 +132,24 @@ if(share){
 		var subscribed = '';
 		var me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
 
+		if (my){
 
+			if (share.pin){
+
+				m.push('unpin')
+
+			} else {
+
+				m.push('pin');
+
+			}
+		}
+
+		if (my){
+			m.push('remove')
+		}
+
+		
 		if (my && (!share.time || share.time > (new Date()).addHours(-24) )){
 			m.push('edit')
 		}

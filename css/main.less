@@ -5240,14 +5240,34 @@ html.cordova{
         font-size: 0.25em;
         opacity: 1;
 
-        .fa-certificate{
-            color : fade(@color-main, 100);
+        .real{
+
+            .fa-certificate{
+                color : fade(@color-main, 100);
+            }
+    
+
+            .fa-check{
+                color : #fff;
+                box-shadow: none;
+            }
+
+
         }
 
-        .fa-check{
-            color : #fff;
-            box-shadow: none;
+        .dev{
+
+            .fa-certificate{
+                color : fade(@color-brick, 100);
+            }
+    
+            .fa-code{
+                color : fade(#fff, 100);
+            }   
         }
+
+
+
     }
 
     .letter{
@@ -5256,7 +5276,7 @@ html.cordova{
 
     &:hover{
         .realperson{
-            opacity: 0.1;
+            opacity: 0.7;
         }
     }
 

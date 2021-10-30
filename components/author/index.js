@@ -1067,50 +1067,16 @@ var author = (function(){
 
 		var initEvents = function(){
 
-			var user = self.app.user
-
-			var my = (user.address.value && author.address == user.address.value)
 
 			var src = deep(author, 'data.image')
 
-			if (!src && my){
-
-
-				/*el.usericon.addClass('active')
-
-				self.app.platform.api.plissing({
-					el : el.usericon,
-				})*/
-	
-				el.usericon.on('click', function(){
-					self.app.nav.api.load({
-						open: true,
-						href: 'userpage?id=test',
-						history: true
-					})
-				})
-	
-
-			}
-
+			var me = self.app.platform.sdk.address.pnet() ? self.app.platform.sdk.address.pnet().address : null;
 
 			el.up.on('click', events.up)
 
 			el.subscribe.find('.subscribe').on('click', events.subscribe)
 			el.subscribe.find('.unsubscribe').on('click', events.unsubscribe)
 			el.c.find('.notificationturn').on('click', events.subscribePrivate)
-
-			el.c.find('.changeaccount').on('click', function(){
-				self.nav.api.go({
-					open : true,
-					href : 'accounts',
-					inWnd : true,
-
-					essenseData : {
-						toaccpage : true
-					}
-				})
-			})
 
 			el.caption.find('.startchat').on('click', events.startchat)
 
