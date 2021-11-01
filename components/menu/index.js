@@ -338,26 +338,33 @@ var menu = (function(){
 					}
 
 
-					self.app.platform.sdk.notifications.init(function(){
-						actions.ahnotify(el, unseen().length, 'notifications')
-					})
+					
 
-					if(!isTablet()){
-						self.nav.api.load({
-							eid : 'menu',
-							open : true,
-							id : 'notifications',
-							el : el,
-							inTooltip : true
+					
+
+
+					setTimeout(function(){
+						self.app.platform.sdk.notifications.init(function(){
+							actions.ahnotify(el, unseen().length, 'notifications')
 						})
-					}
 
-						
+						if(!isTablet()){
+							self.nav.api.load({
+								eid : 'menu',
+								open : true,
+								id : 'notifications',
+								el : el,
+								inTooltip : true
+							})
+						}
+	
+						self.app.platform.sdk.notifications.clbks.added.menu =
+						self.app.platform.sdk.notifications.clbks.seen.menu = function(){
+							actions.ahnotify(el, unseen().length, 'notifications')
+						}
+					},3000)
 
-					self.app.platform.sdk.notifications.clbks.added.menu =
-					self.app.platform.sdk.notifications.clbks.seen.menu = function(){
-						actions.ahnotify(el, unseen().length, 'notifications')
-					}
+					
 				},
 
 				click : function(el){

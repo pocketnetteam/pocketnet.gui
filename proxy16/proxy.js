@@ -1,5 +1,5 @@
 
-var _ = require('underscore')
+var _ = require('lodash')
 var fs = require('fs');
 var path = require('path');
 
@@ -976,6 +976,7 @@ var Proxy = function (settings, manage, test, logger) {
 
 					var _waitstatus = 'un'
 					var direct = true
+					var smartresult = null
 
 					var cparameters = _.clone(parameters)
 
@@ -1043,8 +1044,11 @@ var Proxy = function (settings, manage, test, logger) {
 								return
 							}
 
-							server.cache.wait(method, cparameters, function (waitstatus) {
+							server.cache.wait(method, cparameters, function (waitstatus, smartdata) {
 
+								if (waitstatus == 'smart'){
+									smartresult = smartdata
+								}
 								
 
 								resolve(waitstatus);
@@ -1059,6 +1063,15 @@ var Proxy = function (settings, manage, test, logger) {
 						time.cache = performance.now() - timep
 
 						_waitstatus = waitstatus
+
+						if (waitstatus == 'smart' && smartresult){
+							console.log("SMART", smartresult.length)
+							return Promise.resolve({
+								data: smartresult,
+								code: 207,
+								time : time
+							});
+						}
 
 						var cached = server.cache.get(method, cparameters, cachehash);
 
@@ -1111,6 +1124,8 @@ var Proxy = function (settings, manage, test, logger) {
 							else*/
 
 							time.start = performance.now() - timep
+
+							console.log("REQUEST", method)
 							
 							nodeManager.queue(node, method, parameters, direct, {resolve, reject})
 								
@@ -1121,6 +1136,8 @@ var Proxy = function (settings, manage, test, logger) {
 							if (noderating){
 								server.cache.set(method, cparameters, data, node.height());
 							}
+
+							console.log("SUCCESS", method)
 
 							time.ready = performance.now() - timep
 
@@ -1133,6 +1150,8 @@ var Proxy = function (settings, manage, test, logger) {
 						});
 					})
 					.catch((e) => {
+
+						console.log("E", e, method)
 
 						if (_waitstatus == 'execute'){
 							server.cache.remove(method, cparameters);
@@ -1573,7 +1592,6 @@ var Proxy = function (settings, manage, test, logger) {
 			ping: {
 				path: '/ping',
 				action: function () {
-
 					var node = nodeManager.bestnode
 
 					/*if (nodeManager.bestnodes.length){

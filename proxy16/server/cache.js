@@ -1,4 +1,5 @@
 var f = require('../functions');
+var _ = require('lodash');
 
 var Cache = function(p){
     var self = this;
@@ -125,13 +126,24 @@ var Cache = function(p){
             // node +
             getrawtransactionwithmessagebyid: {
                 time : 460,
-                block : 0
+                block : 0,
+                smart : {
+                    idin : '0',
+                    idou : 'txid',
+                    storage : 'shares',
+                    get : true
+                }
             },
             
             // node +
             getrawtransactionwithmessage: {
                 time : 460,
-                block : 0
+                block : 0,
+                smart : {
+                    idin : '0',
+                    idou : 'txid',
+                    storage : 'shares'
+                }
             },
 
             // ?
@@ -148,7 +160,12 @@ var Cache = function(p){
             // node +
             gethierarchicalstrip: {
                 time : 460,
-                block : 0
+                block : 0,
+                smart : {
+                    idin : '0',
+                    idou : 'txid',
+                    storage : 'shares'
+                }
             },  
 
             // node +
@@ -161,6 +178,12 @@ var Cache = function(p){
             getuserprofile: {
                 time : 560,
                 block : 0,
+                smart : {
+                    idin : '0',
+                    idou : 'address',
+                    storage : 'getuserprofile',
+                    get : true
+                }
             },
 
             getuserstate : {
@@ -268,6 +291,8 @@ var Cache = function(p){
                 time : new Date()
             }
 
+            self.setsmart(key, data)
+
             if (ontime){
                 storage[key][k].ontime = ontime
             }
@@ -299,9 +324,9 @@ var Cache = function(p){
         if (ckeys[key]){
 
 
-            /*if (ckeys[key].smart){
+            if (ckeys[key].smart){
                 return self.getsmart(key, params)
-            }*/
+            }
 
             if(!cachehash){
                 var ks = null
@@ -336,16 +361,55 @@ var Cache = function(p){
         }
     }
 
-
-    /// fail
-
-    self.getsmart = function(key, params){
+    self.setsmart = function(key, data){
 
         var c = ckeys[key]
 
-        var ids = _.map(f.deep(params, c.idin), (r)=>{return r})
+        if(!c.smart) return
 
-        if(!smart[key]) smart[key] = {}
+        var storagekey = c.smart.storage
+
+        if(!smart[storagekey]) smart[storagekey] = {}
+
+        _.each(data, function(d){
+
+            smart[storagekey][d[c.smart.idou]] = {
+                data : d,
+                date : new Date()
+            }
+
+        })
+    }
+
+    self.getsmart = function(key, params){
+
+
+        var c = ckeys[key]
+
+        if(!c.smart || !c.smart.get) return
+
+        var storagekey = c.smart.storage
+
+        var ids = _.map(f.deep(params, c.smart.idin), (r)=>{return r})
+
+        if(!smart[storagekey]) smart[storagekey] = {}
+
+        var result = []
+
+        var notall = _.find(ids, function(id){
+            var data = smart[storagekey][id]
+
+            if(!data) {
+                return true
+            }
+            else{
+                result.push(data.data)
+            }
+        })
+
+        if(!notall){
+            return result
+        }
 
     }
 
@@ -357,8 +421,15 @@ var Cache = function(p){
             return
         }
 
-        if (self.get(key, params, cachehash)){
+        if (typeof self.get(key, params, cachehash) != 'undefined'){
             clbk('hascache')
+            return
+        }
+
+        var smart = self.getsmart(key, params)
+
+        if (smart){
+            clbk('smart', smart)
             return
         }
 
@@ -415,8 +486,15 @@ var Cache = function(p){
         _.each(ckeys, function(k, key){
             if (typeof k.block != undefined){
 
-                if (k.block < block.height)
+                if (k.block < block.height){
                     storage[key] = {}
+
+                    if (k.smart){
+                        smart[key] = {}
+                    }
+                    //console.log("Invalidate cache", key, block.height)
+                }
+                    
             }
         })
     }
@@ -472,7 +550,38 @@ var Cache = function(p){
 
                 if(sd.time){
 
-                    var t = f.date.addseconds(sd.time, 2 * (sd.ontime || c.time))
+                    var t = f.date.addseconds(sd.time, 3 * (sd.ontime || c.time))
+
+                    if (t < date){
+                        removekeys.push(lkey)
+                    }
+                    
+                }
+                
+            })
+
+            _.each(removekeys, function(key){
+                delete s[key]
+            })
+        })
+
+        _.each(smart, function(s, key){
+
+            var time = 460
+
+            var c = ckeys[key]
+
+            if (c && c.time){
+                time = c.time
+            }
+
+            var removekeys = []
+
+            _.each(s, function(sd, lkey){
+
+                if(sd.time){
+
+                    var t = f.date.addseconds(sd.time, 3 * (time))
 
                     if (t < date){
                         removekeys.push(lkey)

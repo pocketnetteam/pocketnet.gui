@@ -7410,11 +7410,11 @@
 			
 		}
 
-		if(!_Node)
+		/*if(!_Node)
 			$.ajaxSetup({
 				// Disable caching of AJAX responses
 				cache: false
-			});
+			});*/
 
 		self.set = {
 			user : function(u){

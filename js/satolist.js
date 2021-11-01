@@ -1836,7 +1836,7 @@ Platform = function (app, listofnodes) {
 
             app.user.isState(function (state) {
 
-                if (state /*&& !self.app.errors._autocheck*/) {
+                if (state) {
 
                     self.update();
 
@@ -7289,10 +7289,7 @@ Platform = function (app, listofnodes) {
                 else {
 
                     return self.sdk.node.get.timepr().then(r => {
-
-
                         return self.sdk.missed.get(n.storage.block)
-                        
                     })
 
                     .then(({block, notifications}) => {
@@ -9436,6 +9433,7 @@ Platform = function (app, listofnodes) {
                     var user =  self.sdk.users.storage[address]
 
                     if (user){
+                        
                         var info = {
                             id : address,
                             index : user.name.toLowerCase(),
@@ -9448,7 +9446,7 @@ Platform = function (app, listofnodes) {
 
                     }
 
-                })
+                }, true)
 
             },
 
@@ -14939,6 +14937,8 @@ Platform = function (app, listofnodes) {
 
                                 return
                             }
+
+                            
 
 
                             self.sdk.node.transactions.get.unspent(function (unspents) {
@@ -22983,7 +22983,7 @@ Platform = function (app, listofnodes) {
         //// ?
         setTimeout(function () {
             self.updating = false;
-        }, 90000)
+        }, 600000)
 
         var methods = [
             'ustate.meUpdate',
@@ -23015,6 +23015,11 @@ Platform = function (app, listofnodes) {
             }
         })
     }
+
+    self.updating = makeid()
+    setTimeout(function () {
+        self.updating = false;
+    }, 600000)
 
     self.appstate = function () {
 
@@ -23112,9 +23117,6 @@ Platform = function (app, listofnodes) {
 
         }).then(r => {
 
-
-            console.log("WEBSOCKET INIT")
-
             self.ws = new self.WSn(self);
 
             self.firebase = new self.Firebase(self);
@@ -23125,8 +23127,12 @@ Platform = function (app, listofnodes) {
             self.focusListener.init();
             self.titleManager = new self.TitleManager();
             self.sdk.captcha.load()
-            self.sdk.tags.getfastsearch()
-            self.sdk.node.get.time()
+
+            setTimeout(function(){
+                self.sdk.tags.getfastsearch()
+                self.sdk.node.get.time()
+            }, 1000)
+            
             self.sdk.videos.init()
 
             self.preparing = false;
@@ -23217,9 +23223,6 @@ Platform = function (app, listofnodes) {
 
             if (state) {
 
-                self.sdk.ustate.me(function(){
-                    self.matrixchat.init()
-                })
                 
 
                 lazyActions([
@@ -23254,7 +23257,7 @@ Platform = function (app, listofnodes) {
 
                     self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
 
-                    
+                    self.matrixchat.init()
 
                     self.app.peertubeHandler.init()
 
@@ -23405,13 +23408,9 @@ Platform = function (app, listofnodes) {
             
             app.user.isState(function(state){
 
-                
-
                 self.matrixchat.initing = false
 
                 if (state) {
-
-                  
 
                     if(self.sdk.user.reputationBlockedMe()) return
 

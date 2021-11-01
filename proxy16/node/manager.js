@@ -223,7 +223,10 @@ var Nodemanager = function(p){
         }
 
         if (e){
+            
             responses++
+
+            console.log("COUNT ERRORS", responses)
         }
 
         if (typeof r != 'undefined'){
@@ -272,7 +275,7 @@ var Nodemanager = function(p){
 
             result = r
 
-            responses = runrpcswideclbks(null, r, clbks, responses, need, result, error)
+            responses = runrpcswideclbks(undefined, r, clbks, responses, need, result, error)
            
 
         }).catch(e => {
@@ -281,7 +284,7 @@ var Nodemanager = function(p){
 
             //console.log('mainerror', method)
 
-            responses = runrpcswideclbks(e, null, clbks, responses, need, result, error)
+            responses = runrpcswideclbks(e, undefined, clbks, responses, need, result, error)
 
         })
 
@@ -295,6 +298,8 @@ var Nodemanager = function(p){
 
                     Promise.race(_.map(similarnodes, function(n){
 
+                        console.log('similar request', n.key, node.key, method)
+
                         return n.rpcs(method, _.clone(parameters))
 
                     })).then(r => {
@@ -303,7 +308,7 @@ var Nodemanager = function(p){
 
                         if(typeof result == 'undefined') result = r
 
-                        responses = runrpcswideclbks(null, result, clbks, responses, need, result, error, true)
+                        responses = runrpcswideclbks(undefined, result, clbks, responses, need, result, error, true)
 
                     }).catch(e => {
 
@@ -311,7 +316,7 @@ var Nodemanager = function(p){
 
                         if(typeof error == 'undefined') error = e
 
-                        responses = runrpcswideclbks(e, null, clbks, responses, need, result, error, true)
+                        responses = runrpcswideclbks(e, undefined, clbks, responses, need, result, error, true)
 
                     })
 
@@ -375,6 +380,8 @@ var Nodemanager = function(p){
         for (var i = 0; i < queue.length; i++){
 
             var rpcs = queue[i]
+
+            console.log("WIDEREQUEST",  rpcs.method)
 
             self.rpcswide(rpcs.node, rpcs.method, rpcs.parameters, rpcs.clbks)
         }
