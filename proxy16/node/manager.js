@@ -51,6 +51,7 @@ var Nodemanager = function(p){
     var statscalculationInterval = null
     var statscalculationTime = 5000
     var findInterval = null
+    var safetimeout = 1000
     var peernodesCheckTime = 1000000
     var usersfornode = 30
     var commonnotinitedInterval = null
@@ -180,9 +181,144 @@ var Nodemanager = function(p){
 
     }
 
+    self.similarnodes = function(node, count){
+        var withrating = _.shuffle(self.initednodeswithrating())
+        var i = 0
+        var mylastblock = node.lastblock()
+        
+
+        if(!mylastblock) return []
+
+        var similar = _.filter(withrating, function(_node){
+            
+            if(i >= count) return
+            
+            if (_node.key != node.key){
+
+                var lastblock =  _node.lastblock()
+
+                if(lastblock) {
+                    if(lastblock.hash == mylastblock.hash){
+                        i++
+                        return true
+                    }
+                }
+            }
+        })
+
+        return similar
+    }
+
     self.rpcs = function(node, method, parameters, clbks){
 
         return node.rpcs(method, _.clone(parameters)).then(clbks.resolve).catch(clbks.reject)
+
+    }
+
+    var runrpcswideclbks = function(e, r, clbks, responses, need, result, error, fromadd){
+        //console.log('responses', responses, need)
+        if (responses >= need){
+            //console.log("ALREADY HAS CLBK")
+            return responses
+        }
+
+        if (e){
+            responses++
+        }
+
+        if (typeof r != 'undefined'){
+            responses = need
+        }
+
+        if (responses >= need){
+
+            /*if(fromadd){
+                console.log("HAS ADD RESULT")
+            }
+            else{
+                console.log("HAS MAIN RESULT")
+            }*/
+            
+            if(typeof result != 'undefined') clbks.resolve(result)
+
+            else clbks.reject(error || {
+                code : 500,
+                text : "rpcswide"
+            })
+        }
+
+        return responses
+
+    }
+
+    self.rpcswide = function(node, method, parameters, clbks){
+
+        var similarnodes = self.similarnodes(node, 1)
+
+        var responses = 0
+        var need = Math.min(similarnodes.length + 1, 2) ///race Promise method
+
+        var result = undefined
+        var error = undefined
+
+
+        node.rpcs(method, _.clone(parameters)).then(r => {
+
+            /*if(method == 'getaccountsetting'){
+                console.log('mainresult', method)
+            }*/
+
+            //console.log('mainresult', method)
+
+            result = r
+
+            responses = runrpcswideclbks(null, r, clbks, responses, need, result, error)
+           
+
+        }).catch(e => {
+
+            error = e
+
+            //console.log('mainerror', method)
+
+            responses = runrpcswideclbks(e, null, clbks, responses, need, result, error)
+
+        })
+
+        //console.log('similarnodes.length', similarnodes.length, method)
+
+        if (similarnodes.length)
+
+            setTimeout(function(){
+
+                if(responses < need){
+
+                    Promise.race(_.map(similarnodes, function(n){
+
+                        return n.rpcs(method, _.clone(parameters))
+
+                    })).then(r => {
+
+                        //console.log('addresult', method)
+
+                        if(typeof result == 'undefined') result = r
+
+                        responses = runrpcswideclbks(null, result, clbks, responses, need, result, error, true)
+
+                    }).catch(e => {
+
+                        //console.log('adderror', method, e)
+
+                        if(typeof error == 'undefined') error = e
+
+                        responses = runrpcswideclbks(e, null, clbks, responses, need, result, error, true)
+
+                    })
+
+                }
+
+            }, safetimeout)
+            
 
     }
 
@@ -210,14 +346,10 @@ var Nodemanager = function(p){
             return
         }
 
-        self.rpcs(node, method, parameters, clbks)
-
-        return 
+        //self.rpcs(node, method, parameters, clbks)
 
         if (direct || !queuemethods[method]){
-
             self.rpcs(node, method, parameters, clbks)
-
         }
 
         else{
@@ -236,7 +368,7 @@ var Nodemanager = function(p){
 
     var worker = function(){
 
-        if(queue.length) console.log('queue', queue.length)
+        //if(queue.length) console.log('queue', queue.length)
 
         var now = performance.now()
 
@@ -244,12 +376,12 @@ var Nodemanager = function(p){
 
             var rpcs = queue[i]
 
-            self.rpcs(rpcs.node, rpcs.method, rpcs.parameters, rpcs.clbks)
+            self.rpcswide(rpcs.node, rpcs.method, rpcs.parameters, rpcs.clbks)
         }
 
         var dif = performance.now() - now
 
-        if(queue.length) console.log('queuedif', dif)
+        //if(queue.length) console.log('queuedif', dif)
 
         queue = []
     }

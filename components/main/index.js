@@ -723,17 +723,19 @@ var main = (function(){
 
 				console.log("INITSTICKER!!!")
 
-				el.leftpanel.hcSticky({
-					stickTo: '#main',
-					top : t1,
-					bottom : 122
-				});
+				if (el.leftpanel)
+					el.leftpanel.hcSticky({
+						stickTo: '#main',
+						top : t1,
+						bottom : 122
+					});
 
-				el.panel.hcSticky({
-					stickTo: '#main',
-					top : t2,
-					bottom : 122
-				});
+				if (el.panel)
+					el.panel.hcSticky({
+						stickTo: '#main',
+						top : t2,
+						bottom : 122
+					});
 
 				hsready = true
 			}
