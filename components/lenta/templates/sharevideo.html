@@ -39,7 +39,7 @@ var metadisplay = function(){ %>
 
                         <div class="iconWrapper">
                             
-                            <a href="<%-app.platform.api.authorlink(share.address)%>">
+                            <a elementsid="<%-app.platform.api.authorlink(share.address)%>" href="<%-app.platform.api.authorlink(share.address)%>">
         
         
                                 <% 
@@ -50,7 +50,7 @@ var metadisplay = function(){ %>
 								%>
         
                                 <div class="icon">
-                                    <div class="usericon usericonsbsa another" image="<%-src || ''%>">
+                                    <div class="usericon usericonsbsa another" elementsid="<%-src || 'userimg'%>" image="<%-src || ''%>">
                                      
 										<% if(deep(app, 'platform.real.'+share.address)) {%>
 											<div class="realperson">
@@ -79,7 +79,7 @@ var metadisplay = function(){ %>
 
 						<div class="authorCell">
 
-							<a href="<%-app.platform.api.authorlink(share.address)%>">
+							<a elementsid="<%-app.platform.api.authorlink(share.address)%>" href="<%-app.platform.api.authorlink(share.address)%>">
 							<% var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0; %>
 								<span class="adr"><%-name || share.address %></span><% if(reputation > 1 || reputation < -1) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
 							</a>
@@ -101,7 +101,7 @@ var metadisplay = function(){ %>
 			
 				<div class="repostCaption">
 					<i class="fas fa-share"></i> 
-					<a href="<%-app.platform.api.authorlink(share.address)%>">
+					<a elementsid="<%-app.platform.api.authorlink(share.address)%>" href="<%-app.platform.api.authorlink(share.address)%>">
 						<span class="adr"><%-name || share.address %></span>
 					</a>
 				</div>
@@ -124,7 +124,7 @@ var metadisplay = function(){ %>
 
 			<div class="metapanel">
 				<div class="metapanelitem">
-					<a href="<%-app.platform.api.authorlink(share.address)%>?s=<%-share.txid%>&mpost=true">
+					<a elementsid="<%-app.platform.api.authorlink(share.address)%>?s=<%-share.txid%>&mpost=true" href="<%-app.platform.api.authorlink(share.address)%>?s=<%-share.txid%>&mpost=true">
 						<i class="fas fa-share"></i> 
 					</a>
 				</div>
@@ -298,7 +298,7 @@ var metadisplay = function(){ %>
 									<% _.each(bycategories.categories, function(category){ %>
 
 										<div class="category">
-											<a href="index?sst=<%-category.tags.join(' ')%>">
+											<a elementsid="index?sst=<%-category.tags.join(' ')%>" href="index?sst=<%-category.tags.join(' ')%>">
 												<span><b>@<%-category.name%></b></span> 
 											</a>
 											<!--<% _.each(category.tags, function(tag){ %><span>#<%-tag%></span><% }) %><span>;</span>-->
@@ -310,7 +310,7 @@ var metadisplay = function(){ %>
 									<% _.each(bycategories.tags, function(tag){ %>
 
 										<div class="tag">
-											<a href="index?sst=<%-tag%>">
+											<a elementsid="index?sst=<%-tag%>" href="index?sst=<%-tag%>">
 												<span>
 													#<%-tag%>
 												</span>
@@ -333,7 +333,7 @@ var metadisplay = function(){ %>
 
 									
 									<% if(app.platform.repost && !my) {%>
-										<div class="item <% if(!my){ %> forrepost <% } else { %> nact <% } %>">
+										<div elementsid="item-forrepost" class="item <% if(!my){ %> forrepost <% } else { %> nact <% } %>">
 
 											<div class="itemwr table">
 												<div class="iconwr">											
@@ -348,7 +348,7 @@ var metadisplay = function(){ %>
 
 									
 
-									<div class="item sharesocial right unselectable">
+									<div elementsid="item-sharesocial" class="item sharesocial right unselectable">
 
 										<div class="itemwr table">
 											<div class="labelwr workstation"><span class="label"><%=e('share').toUpperCase()%></span></div>
