@@ -1125,7 +1125,7 @@ var Proxy = function (settings, manage, test, logger) {
 
 							time.start = performance.now() - timep
 
-							console.log("REQUEST", method)
+							//console.log("REQUEST", method)
 							
 							nodeManager.queue(node, method, parameters, direct, {resolve, reject})
 								
@@ -1137,7 +1137,7 @@ var Proxy = function (settings, manage, test, logger) {
 								server.cache.set(method, cparameters, data, node.height());
 							}
 
-							console.log("SUCCESS", method)
+							//console.log("SUCCESS", method)
 
 							time.ready = performance.now() - timep
 
@@ -1151,7 +1151,7 @@ var Proxy = function (settings, manage, test, logger) {
 					})
 					.catch((e) => {
 
-						console.log("E", e, method)
+						//console.log("E", e, method)
 
 						if (_waitstatus == 'execute'){
 							server.cache.remove(method, cparameters);

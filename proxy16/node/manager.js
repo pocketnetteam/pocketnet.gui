@@ -226,7 +226,7 @@ var Nodemanager = function(p){
             
             responses++
 
-            console.log("COUNT ERRORS", responses)
+            //console.log("COUNT ERRORS", responses)
         }
 
         if (typeof r != 'undefined'){
@@ -298,7 +298,7 @@ var Nodemanager = function(p){
 
                     Promise.race(_.map(similarnodes, function(n){
 
-                        console.log('similar request', n.key, node.key, method)
+                        ///console.log('similar request', n.key, node.key, method)
 
                         return n.rpcs(method, _.clone(parameters))
 
@@ -381,7 +381,7 @@ var Nodemanager = function(p){
 
             var rpcs = queue[i]
 
-            console.log("WIDEREQUEST",  rpcs.method)
+            //console.log("WIDEREQUEST",  rpcs.method)
 
             self.rpcswide(rpcs.node, rpcs.method, rpcs.parameters, rpcs.clbks)
         }
