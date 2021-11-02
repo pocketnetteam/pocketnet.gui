@@ -1027,5 +1027,5 @@ ____loclib.attachVideoLenta = "Прикрепить";
 ____loclib.attachVideoLentaShort = "Прикрепить видео к посту";
 
 ____loclib.linkToPostLenta = "Уже опубликовано"
-____loclib.ReferralUsers = "Реферальные пользователи"
+____loclib.ReferralUsers = "Реферальные пользователи. Всего/c&nbsp;01.11.2021"
 ____loclib.lockedaccount = "Ваш аккаунт заблокирован по причине падения репутации ниже чем 50"

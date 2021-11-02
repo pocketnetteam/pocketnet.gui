@@ -6635,7 +6635,38 @@ Platform = function (app, listofnodes) {
                     return true
 
                 }
+            },
+
+            mystatisticnov : function(){
+                var novblock = 1420300
+                var address = self.sdk.address.pnet().address;
+
+                if(window.testpocketnet) novblock = 302900
+
+                return pretry(function(){
+                    return self.currentBlock
+                }).then(r => {
+                    return self.sdk.user.statistic(address, self.currentBlock - novblock)
+                })
+
+            },
+
+            statistic : function(address, de){
+
+                return self.app.api.rpc('getuserstatistic', [[address], 0, de]).then(d => {
+
+                    var result = _.find(d, function(p){
+                        return p.address == address
+                    })
+
+                    return result
+
+                }).catch(e => {
+                    if (clbk)
+                        clbk([])
+                })
             }
+
         },
 
         processes: {

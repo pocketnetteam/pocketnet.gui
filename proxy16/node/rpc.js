@@ -101,7 +101,8 @@ var publics = {
     gettransaction : true,
     gethierarchicalstrip : true,
     getusercontents : true,
-    getcontentsstatistic : true
+    getcontentsstatistic : true,
+    getuserstatistic : true
 }
 
 function rpc(request, callback, obj) {
@@ -345,6 +346,7 @@ RpcClient.callspec = {
     getlastblocks: 'int int',
     checkstringtype: 'str',
     getstatistic: 'int int',
+    getuserstatistic : 'obj int int',
     
     // Control
     stop: '',

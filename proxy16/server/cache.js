@@ -89,7 +89,9 @@ var Cache = function(p){
     if (!p.dontCache)
     {
         ckeys = {
-
+            getuserstatistic: {
+                time : 960,
+            },
             // node +
             getlastcomments : {
                 time : 960,
