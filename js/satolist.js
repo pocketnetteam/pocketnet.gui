@@ -11195,6 +11195,10 @@ Platform = function (app, listofnodes) {
                     if (!l.storage[id]) return true
                 })
 
+                ids = _.sortBy(ids, function(id){
+                    return id
+                })
+
                 if (ids.length) {
 
                     var commentsid = [];
@@ -11209,6 +11213,10 @@ Platform = function (app, listofnodes) {
                             commentsid.push(lastcomment)
                         }
 
+                    })
+
+                    commentsid = _.sortBy(commentsid, function(id){
+                        return id
                     })
 
                     self.app.user.isState(function (state) {
