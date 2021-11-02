@@ -13,7 +13,7 @@
 	<div class="choosethemes_text">
 		<%=e('chooseThemes')%>
 	</div>
-	<div class="cats">
+	<div class="cats customscroll">
 		<% _.each(categories, function(cat){ %> 
 
 			<div class="cat" cat="<%-cat.id%>">
@@ -29,12 +29,14 @@
 
 		<%	})	%> 
 	</div>
-	<div class="subc">
-		<button class="next">
-			<%=e('next')%>
-		</button>
-	</div>
-	<div class="subc">
-		<div class="skip"><%=e('skip')%></div>
+	<div class="nextStepButtons">
+		<div class="subc">
+			<button class="next">
+				<%=e('next')%>
+			</button>
+		</div>
+		<div class="subc">
+			<div class="skip"><%=e('skip')%></div>
+		</div>
 	</div>
 </div>
