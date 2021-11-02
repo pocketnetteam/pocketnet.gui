@@ -479,7 +479,7 @@ PeerTubePocketnet = function (app) {
 
         var special = false
 
-        if(/*app.user.address.value == 'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM' || */app.user.address.value == 'PDgbAvsrS4VGKkW5rivcJaiCp7fnBoZRgM'){
+        if( app.user.address.value == 'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m' || app.user.address.value == 'PDgbAvsrS4VGKkW5rivcJaiCp7fnBoZRgM'){
             special = true
         }
 
