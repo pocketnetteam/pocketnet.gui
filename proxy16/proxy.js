@@ -36,7 +36,6 @@ var Proxy = function (settings, manage, test, logger) {
 	var self = this;
 
 		self.test = test
-
 	var server = new Server(settings.server, settings.admins, manage);
 	var wss = new WSS(settings.admins, manage);
 	var pocketnet = new Pocketnet();
@@ -605,9 +604,14 @@ var Proxy = function (settings, manage, test, logger) {
 					{host : 'pocketnetpeertube5.nohost.me', cantuploading : true}, 
 					{host : 'pocketnetpeertube7.nohost.me', cantuploading : true}, 
 				],
-        		6: ['pocketnetpeertube4.nohost.me', 'pocketnetpeertube6.nohost.me'],
-        		8: ['pocketnetpeertube8.nohost.me', 'pocketnetpeertube9.nohost.me'],
+        		6:  ['pocketnetpeertube4.nohost.me', 'pocketnetpeertube6.nohost.me'],
+        		8:  ['pocketnetpeertube8.nohost.me', 'pocketnetpeertube9.nohost.me'],
 				10: ['pocketnetpeertube10.nohost.me', 'pocketnetpeertube11.nohost.me'],
+
+				12: [
+					{host : 'bastyonmma.pocketnet.app', special : true}, 
+					{host : 'bastyonmma.nohost.me' , special : true}
+				],
       		};
 
 			if (test){

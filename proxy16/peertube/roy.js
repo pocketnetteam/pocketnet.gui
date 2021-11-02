@@ -39,6 +39,14 @@ var Roy = function (parent) {
     return can && instances.length;
   };
 
+  self.hasspecial = function () {
+
+    return _.find(instances, function (instance) {
+      return instance.special
+    }) ? true : false;
+
+  };
+
   ///
 
   self.addInstance = function (url, options) {
@@ -48,6 +56,7 @@ var Roy = function (parent) {
     var instance = new Instance(url, self);
 
     if (options.cantuploading) instance.cantuploading = true;
+    if (options.special) instance.special = true;
 
     instance.init();
 
