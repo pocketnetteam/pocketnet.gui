@@ -1133,6 +1133,11 @@ ____loclib.sumoftransaction = "Sum of transaction"
 ____loclib.videoBitrateError = "Video bitrate is too high. Please, use file with lower quality/resolution"
 ____loclib.videoQualityInfo = "Maximum allowed video bitrate  - 8 Mbit/s. If your file exceeds this limit, the download would be terminated. Maximum allowed resolution - 720p. <br/> Recommended bitrates: <br/> <b>1080p:</b> 5081 Kbps <br/> <b>720p:</b>  2680 Kbps <br/> <b>480p:</b>  1300 Kbps <br/> <b>360p:</b>  700 Kbps"
 ____loclib.videoQualityCaption = "Video quality limitations"
+____loclib.videoFormats = "List of supported video formats: .mp4, .mkv, .mov, .avi, .wmv, .flv, .f4v, .3g2, .3gp, .mts, .m2ts, .mxf, .nut"
+____loclib.videoSizeError = "Selected video file exceeds the limit of 4 Gb per video. Please compress it or select another one."
+____loclib.videoSizeAtt = "Maximum allowed file size: 4 Gb."
+
+
 
 ____loclib.streamLinks = "Streaming software links"
 ____loclib.linkRTMP = "RTMP Url"

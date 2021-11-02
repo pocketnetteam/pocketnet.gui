@@ -18431,6 +18431,7 @@ Platform = function (app, listofnodes) {
 
                         linkInfo ? link.data = {
                             image : 'https://' + linkInfo.from + linkInfo.previewPath,
+                            thumbnail : 'https://' + linkInfo.from + linkInfo.thumbnailPath,
                             views : linkInfo.views,
                             duration : linkInfo.duration,
                             aspectRatio : linkInfo.aspectRatio || 1,
