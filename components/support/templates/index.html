@@ -6,24 +6,24 @@
 
 		<div class="item">
 			<div class="label"><label><%=e('contactName')%></label></div>
-			<input type="text" class="name forminput" systemId="name" value="<%-deep(user, 'data.firstName') || ''%>" />
+			<input elementsid="nameforminput" type="text" class="name forminput" systemId="name" value="<%-deep(user, 'data.firstName') || ''%>" />
 			
 		</div>
 		<div class="item">
 			<div class="label"><label><%=e('contactEmail')%></label></div>
-			<input type="email" class="email forminput" value="<%-deep(user, 'data.email') || ''%>" systemId="email"/>
+			<input elementsid="emailforminput" type="email" class="email forminput" value="<%-deep(user, 'data.email') || ''%>" systemId="email"/>
 			
 		</div>
 
 		<div class="item">
 			<div class="label"><label><%=e('contactSubj')%></label></div>
-			<input type="text" class="subject forminput" systemId="subject"/>
+			<input elementsid="subjectforminput" type="text" class="subject forminput" systemId="subject"/>
 			
 		</div>
 		<div class="item">
 
 			<div class="label"><label><%=e('contactMessage')%></label></div>
-			<textarea class="forminput" systemId="message"></textarea>	
+			<textarea elementsid="textareaforminput" class="forminput" systemId="message"></textarea>	
 		</div>
 
 	</div>
@@ -34,7 +34,7 @@
 
 	<div class="sendWrapper">
 
-		<button class="send"><%=e('contactSend')%></button>	
+		<button elementsid="contactSend" class="send"><%=e('contactSend')%></button>	
 
 
 	</div>
