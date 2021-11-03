@@ -8,7 +8,7 @@ var arranges = {
 			<input type='text' value="" class="captionshare" placeholder="<%=e(share.itisvideo() ? 'videotitle' : 'scaption')%>">
 		</div>
 		<div class="txt">
-			<div class="message" placeholder="<%=e(share.itisvideo() ? 'videodesc' : 'whatsnew')%>" id='emjcontainer' spellcheck="true"></div>
+			<div elementsid='emjcontainer' class="message" placeholder="<%=e(share.itisvideo() ? 'videodesc' : 'whatsnew')%>" id='emjcontainer' spellcheck="true"></div>
 		</div>
 	
 	<% },
@@ -25,7 +25,7 @@ var arranges = {
 
 	
 	p : function(){ %> 
-		<div class="pollWrapper attachements"></div>
+		<div elementsid="pollWrapper" class="pollWrapper attachements"></div>
 	<% },
 
 

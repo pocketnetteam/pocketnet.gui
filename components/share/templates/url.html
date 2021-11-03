@@ -19,7 +19,7 @@
 					<div class="jsPlayerLoading">
 						<div class="jsPlayerLoadingD table watchonyoutube">
 							<div>
-								<a href="<%- url %>" cordovalink="_system" target="_blank">Watch on Youtube</a>
+								<a elementsid="jsplayerhref" href="<%- url %>" cordovalink="_system" target="_blank">Watch on Youtube</a>
 							</div>
 						</div>
 					</div>
@@ -124,7 +124,7 @@
 					<div class="peertubepanel">
 
 						<% if(info.data && info.data.isLive) {%>
-							<div class="item streaminfo">
+							<div elementsid="streaminfo" class="item streaminfo">
 								<i class="fas fa-broadcast-tower"></i> <span><%- e('streamInfo') %></span>
 							</div>
 						<% } %>
@@ -135,7 +135,7 @@
 
 						<% if(!share.aliasid) {%>
 
-							<div class="item removepeertube">
+							<div elementsid="removepeertube" class="item removepeertube">
 								<i class="far fa-times-circle"></i> <span><%- e('removeVideo') %></span>
 							</div>
 
@@ -168,7 +168,7 @@
 							<div class="image">							
 								<img src="<%- og.image %>">		
 
-								<div class="removeImage">
+								<div elementsid="removeImage" class="removeImage">
 									<i class="fas fa-times-circle"></i>
 								</div>					
 							</div>
@@ -178,13 +178,13 @@
 
 					<div class="cnt">
 						<% if(og.title || og.titlePage) {%>
-							<a href="<%- url %>">
+							<a elementsid="titlehref" href="<%- url %>">
 								<div class="title"><%= clearStringXss(clearScripts(((og.title || og.titlePage)))) %></div>
 							</a>
 						<% } %>
 
 						<% if(og.description || og.descriptionPage) {%>
-							<a href="<%- url %>">
+							<a elementsid="descriptionhref" href="<%- url %>">
 								<div class="description"><%= trimHtml(clearScripts((findAndReplaceLink(clearStringXss(og.description || og.descriptionPage)))), 100) %></div>
 							</a>
 						<% } %>
@@ -203,7 +203,7 @@
 		<div class="urlcnttable table">
 			<div class="linkcnt">
 				<span class="linkedstyle <%- (meta.type === 'peertube' && typeof remove === 'undefined') ? 'hidden' : '' %>">
-					<a href="<%- url %>" cordovalink="_system">
+					<a elementsid="peertubehref" href="<%- url %>" cordovalink="_system">
 						<%- url %>
 					</a>
 				</span>
@@ -212,7 +212,7 @@
 			<% if(typeof remove != 'undefined' && (!share.aliasid || !share.itisvideo || !share.itisvideo())) {%>
 
 				<div class="removeWrapper">
-					<div class="removelink">
+					<div elementsid="removelink" class="removelink">
 						<i class="fas fa-times-circle"></i>
 					</div>
 				</div>
