@@ -7,10 +7,12 @@
         padding : 0 2 * @rhythm;
     }
 
+
     .caption{
         text-align: left;
         color : @color-gray2;
         margin-bottom: @rhythm;
+
         span{
             font-family: Nunito Sans;
             font-style: normal;
@@ -54,14 +56,19 @@
     .itemwr{
         width : auto;
         margin-left: auto;
+        margin-right: auto;
 
         >diV{
             vertical-align: middle;
 
             &.starswr{
                 width: 150px;
+
+                
             }
         }
+
+        
 
         .stars{
             height: 40px;
@@ -69,6 +76,12 @@
             text-align: center;
             color : @color-bright;
             cursor: pointer;
+
+            .starWrapper{
+                display: flex;
+                justify-content: center;
+            }
+
 
             i{
 
@@ -104,8 +117,12 @@
         .detailsWrapper{
             padding-bottom : @rhythm;
             border-bottom : 1px solid @color-gray-mlight;
+
         }
         .bystars{
+            padding-top: 2em;
+            padding-bottom: 1em;
+            
             i{
                 color : #FFAE00;
             }
@@ -115,7 +132,9 @@
                     padding : @rhythm 0;
 
                     &.label{
-                        width : 70px
+                        width : 20px;
+                        color: #8E90A6;
+
                     }
 
                     &.pecent{
@@ -129,22 +148,30 @@
         .linebg{
             width: 100%;
             position: relative;
-            height: 3px;
+            height: 8px;
 
             .line{
                 .transition(0.3s);
                 position: absolute;
+                border-radius: 100px;
                 left : 0;
                 top : 0;
                 bottom : 0;
-                background: #FFAE00;
+            }
+
+            .line-filled{
+                background: #F2994A;
+
+            }
+
+            .line-empty{
+                background: #F2F2F5;
             }
         }
     }
 
     #userslist{
         padding : 0;
-        padding-top : @rhythm;
         background: #fafafa;
 
         .users .user{
@@ -157,14 +184,18 @@
 
         .caption{
             padding : @rhythm 2 * @rhythm;
-            padding-bottom: 2 * @rhythm;
             font-size: 1em;
             border-bottom : 1px solid @color-gray-slight;
             margin-bottom: 0;
+            background: #F2F2F5;
+            font-family: Segoe UI;
+
 
             span{
+                font-style: default;
                 font-size: 0.9em;
-                color : @color-gray-mlight;
+                color : #8E90A6;
+
             }
         }
 
@@ -204,15 +235,30 @@
 
         .fordetailsusers{
             position: absolute;
-            left : 0;
+            left : 0; 
             right : 0;
             bottom: 0;
             overflow-y: scroll;
             top: 54px;
+
+            .rating{
+                font-size: 64px;
+                font-family: Nunito Sans;
+                font-weight: bold;
+                text-align: center;
+            }
+
+            .totalLikes{
+                font-size: 14px;
+                text-align: center;
+                color: #8E90A6;
+            }
         }
 
         .youstars{
             position: absolute;
+            background: #FAFAFC;
+            border: 1px solid #F2F2F5;
             left : 0;
             right : 0;
             top: 0;
@@ -253,6 +299,7 @@ html.stblack{
             }
            
             .linebg{
+
                
                 .line{
                     background: #FFAE00;

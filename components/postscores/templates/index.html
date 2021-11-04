@@ -1,4 +1,5 @@
 <div id="<%-module.map.id%>">
+
 	<% 
 
 	var value = Number(share.score)
@@ -16,15 +17,23 @@
 			<span><%=e('e13150')%></span>
 		</div>
 	</div>
-	<div class="count">
-		<span class="v"><%-value.toFixed(1)%></span> 
-	</div>
-	<div class="likersCount">
-		<%-Number(share.scnt)%>
-	</div>
 
 	<div class="fordetailsusers customscroll">
 
+		<div class="rating">
+			<span class="v"><%-value.toFixed(1)%></span> 
+		</div>
+
+		<div class="forstarsWrapper">
+			<div class="forstars">
+	
+			</div>
+		</div>
+
+		<div class="totalLikes">
+			<%-e('totalLikes') %>: <%-Number(share.scnt)%>
+		</div>
+		
 		<div class="details">
 
 		</div>
@@ -34,4 +43,6 @@
 		</div>
 
 	</div>
+
+
 </div>

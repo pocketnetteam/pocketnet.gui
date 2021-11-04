@@ -196,13 +196,15 @@ var postscores = (function(){
 				
 			},
 			stars : function(clbk){
+				
+				share.hideCount = true;
 
 				self.shell({
 					turi : 'lenta',
 					name :  'stars',
 					el : el.stars,
 					data : {
-						share : share
+						share : share,
 					}					
 
 				}, function(p){					
@@ -226,7 +228,7 @@ var postscores = (function(){
 					el : el.details,
 					data : {
 						share : share,
-						scores : scores
+						scores : scores,
 					}					
 
 				}, function(p){

@@ -42,6 +42,7 @@
 #postscores .itemwr {
   width: auto;
   margin-left: auto;
+  margin-right: auto;
 }
 #postscores .itemwr > diV {
   vertical-align: middle;
@@ -53,8 +54,12 @@
   height: 40px;
   line-height: 40px;
   text-align: center;
-  color: #00A3F7;
+  color: #00a3f7;
   cursor: pointer;
+}
+#postscores .itemwr .stars .starWrapper {
+  display: flex;
+  justify-content: center;
 }
 #postscores .authorTable {
   width: auto;
@@ -74,6 +79,10 @@
   padding-bottom: 0.5em;
   border-bottom: 1px solid #b2abac;
 }
+#postscores .details .bystars {
+  padding-top: 2em;
+  padding-bottom: 1em;
+}
 #postscores .details .bystars i {
   color: #FFAE00;
 }
@@ -82,7 +91,8 @@
   padding: 0.5em 0;
 }
 #postscores .details .bystars .ratingrow > div.label {
-  width: 70px;
+  width: 20px;
+  color: #8E90A6;
 }
 #postscores .details .bystars .ratingrow > div.pecent {
   width: 55px;
@@ -91,7 +101,7 @@
 #postscores .details .linebg {
   width: 100%;
   position: relative;
-  height: 3px;
+  height: 8px;
 }
 #postscores .details .linebg .line {
   -moz-transition: 0.3s;
@@ -99,14 +109,19 @@
   -webkit-transition: 0.3s;
   transition: 0.3s;
   position: absolute;
+  border-radius: 100px;
   left: 0;
   top: 0;
   bottom: 0;
-  background: #FFAE00;
+}
+#postscores .details .linebg .line-filled {
+  background: #F2994A;
+}
+#postscores .details .linebg .line-empty {
+  background: #F2F2F5;
 }
 #postscores #userslist {
   padding: 0;
-  padding-top: 0.5em;
   background: #fafafa;
 }
 #postscores #userslist .users .user {
@@ -117,14 +132,16 @@
 }
 #postscores #userslist .caption {
   padding: 0.5em 1em;
-  padding-bottom: 1em;
   font-size: 1em;
   border-bottom: 1px solid #e4ddde;
   margin-bottom: 0;
+  background: #F2F2F5;
+  font-family: Segoe UI;
 }
 #postscores #userslist .caption span {
+  font-style: default;
   font-size: 0.9em;
-  color: #b2abac;
+  color: #8E90A6;
 }
 #postscores #userslist .wrk {
   padding: 0 1em;
@@ -162,15 +179,28 @@
   overflow-y: scroll;
   top: 54px;
 }
+.postscoreswnd.wnd #postscores .fordetailsusers .rating {
+  font-size: 64px;
+  font-family: Nunito Sans;
+  font-weight: bold;
+  text-align: center;
+}
+.postscoreswnd.wnd #postscores .fordetailsusers .totalLikes {
+  font-size: 14px;
+  text-align: center;
+  color: #8E90A6;
+}
 .postscoreswnd.wnd #postscores .youstars {
   position: absolute;
+  background: #FAFAFC;
+  border: 1px solid #F2F2F5;
   left: 0;
   right: 0;
   top: 0;
   height: 54px;
 }
 html.stblack #postscores .caption {
-  color: #00A3F7;
+  color: #00a3f7;
 }
 html.stblack #postscores .subcaption {
   color: #00a4ff;
@@ -179,7 +209,7 @@ html.stblack #postscores .youstars {
   background: #030f1b;
 }
 html.stblack #postscores .itemwr .stars {
-  color: #00A3F7;
+  color: #00a3f7;
 }
 html.stblack #postscores .details .detailsWrapper {
   border-bottom: 1px solid #1e2328;

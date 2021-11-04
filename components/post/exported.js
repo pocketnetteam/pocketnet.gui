@@ -1020,7 +1020,7 @@ var post = function(nModule){
 					name :  'stars',
 					el : el.stars,
 					data : {
-						share : share
+						share : share,
 					}					
 
 				}, function(p){

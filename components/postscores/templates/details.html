@@ -1,10 +1,8 @@
+
 <% if(scores.length) {%>
 
-    <div class="detailsWrapper">
-            <div class="subcaption">
-                <span><%- scores.length  %> <%=e('e13149')%></span>
-            </div>
-
+    <div class="detailsWrapper"> 
+        
         <div class="bystars">
             <% 
             
@@ -25,12 +23,13 @@
 
                     <div class="ratingrow table">
                         <div class="label">
-                            <%-i%> <i class="fas fa-star"></i>
+                            <%-i%> 
                         </div>
 
                         <div class="lineWrapper">
                             <div class="linebg">
-                                <div class="line" awidth="<%-pc%>"></div>
+                                <div class="line line-empty" awidth="100"></div>
+                                <div class="line line-filled" awidth="<%-pc%>"></div>
                             </div>
                         </div>
 

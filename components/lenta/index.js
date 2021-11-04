@@ -2510,7 +2510,7 @@ var lenta = (function(){
 						name :  'stars',
 						el : _el.find('.forstars'),
 						data : {
-							share : share
+							share : share,
 						},
 						animation : false,				
 
