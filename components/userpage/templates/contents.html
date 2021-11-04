@@ -16,7 +16,7 @@
             <div class="groupNameTable table">
 
                 <div class="groupName">
-                    <div class="reportCaption openReport" rid="<%-id%>">
+                    <div elementsid="openReport" class="reportCaption openReport" rid="<%-id%>">
                         <%= report.name.toUpperCase() %>
 
                         <% if(report.add && report.add()) {%>
@@ -28,7 +28,7 @@
                 </div>
 
                 <div class="groupNamePanel">
-                    <div class="groupNamePanelWrapper">
+                    <div elementsid="groupNamePanelWrapper" class="groupNamePanelWrapper">
                         <i class="fa fa-angle-up" aria-hidden="true"></i>
                     </div>
                 </div>
@@ -80,7 +80,7 @@
 
     <% if(state) {%>
         <div class="additional addmenu">
-            <div class="reportCaption showprivatekey">
+            <div elementsid="showprivatekey" class="reportCaption showprivatekey">
                 <div class="label">
                 <%=e('privatekey')%>
                 </div>
@@ -94,14 +94,14 @@
 
         <div class="reportCaption">
             <div class="label">
-                <a href="help"><%=e('e13183')%></a>
+                <a elementsid="hrefhelp" href="help"><%=e('e13183')%></a>
             </div>
         </div>
 
         
         <div class="reportCaption">
             <div class="label">
-                <a href="https://<%-app.options.url%>/blockexplorer/" cordovalink="_system" external="external">Block Explorer</a>
+                <a elementsid="https://<%-app.options.url%>/blockexplorer/" href="https://<%-app.options.url%>/blockexplorer/" cordovalink="_system" external="external">Block Explorer</a>
             </div>
         </div>
         <% if(state) {%>
@@ -112,7 +112,7 @@
             
             <div class="reportCaption">
                 <div class="label">
-                    <a href="about"><%=e('aboutus')%></a>
+                    <a elementsid="hrefabout" href="about"><%=e('aboutus')%></a>
                 </div>
             </div>
         <% } %>
@@ -121,7 +121,7 @@
         <% if(!app.curation()) {%>
             <div class="reportCaption">
                 <div class="label">
-                    <a href="donations"><%=e('donate')%></a>
+                    <a elementsid="hrefdonations" href="donations"><%=e('donate')%></a>
                 </div>
             </div>
 
