@@ -32,6 +32,7 @@
             e('emptyDescription') %></span
           >
           <button
+            elementsid="showAllDescriptionButton"
             class="
               showAllDescriptionButton
               ghostButton
@@ -76,6 +77,7 @@
           <i class="fas fa-sync fa-spin"></i> <%- e('transcodingShort') %>
         </div>
         <button
+          elementsid="attachVideoToPost"
           class="attachVideoToPost tooltip hidden ghostButton"
           title="<%- e('attachVideoToPost') %>"
           videoLink="<%- `peertube://${deep(video, 'account.host') || video.server}/${video.uuid}` %>"
@@ -85,6 +87,7 @@
       </div>
       <div class="videoItemPart removeButtonWrapper">
         <i
+          elementsid="menuActivator"
           class="fas fa-ellipsis-h menuActivator"
           videoLink="<%- `peertube://${deep(video, 'account.host') || video.server}/${video.uuid}` %>"
         ></i>
