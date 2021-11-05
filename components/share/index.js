@@ -848,7 +848,9 @@ var share = (function(){
 						}
 
 						currentShare.uploadImages(self.app, function(){
-	
+							if (currentShare.repost.v){
+								currentShare.settings.f = '0'
+							}
 							if (currentShare.checkloaded()){
 								
 		
@@ -1590,58 +1592,66 @@ var share = (function(){
 
 			settings : function(clbk){
 
-				currentShare.settings.f || (currentShare.settings.f = '0')
+				if(!currentShare.repost.v) {
 
-				var selector = new Parameter({
+					currentShare.settings.f || (currentShare.settings.f = '0')
 
-					type : "VALUES",
-					name : "Visibility",
-					id : 'organizationCode',
-					dbId : "INS_BROKER_CODE",
-					possibleValues : ['0','1','2'],
-					possibleValuesLabels : [
-						self.app.localization.e('visibletoeveryone'), 
-						self.app.localization.e('visibleonlytosubscribers'),
-						self.app.localization.e('visibleonlytoregistered')
-					],
-					defaultValue : currentShare.settings.f,
-					value : currentShare.settings.f
+					var selector = new Parameter({
 
-				})
+						type : "VALUES",
+						name : "Visibility",
+						id : 'organizationCode',
+						dbId : "INS_BROKER_CODE",
+						possibleValues : ['0','1','2'],
+						possibleValuesLabels : [
+							self.app.localization.e('visibletoeveryone'), 
+							self.app.localization.e('visibleonlytosubscribers'),
+							self.app.localization.e('visibleonlytoregistered')
+						],
+						defaultValue : currentShare.settings.f,
+						value : currentShare.settings.f
 
-				self.shell({
-					name :  'settings',
-					el : el.settings,
-					data : {
-						share : currentShare,
-						essenseData : essenseData,
-						selector : selector
-					},
+					})
 
-				}, function(p){
+					self.shell({
+						name :  'settings',
+						el : el.settings,
+						data : {
+							share : currentShare,
+							essenseData : essenseData,
+							selector : selector
+						},
 
-					ParametersLive([selector], p.el)
+					}, function(p){
 
-
-					selector._onChange = function(){
-
-						currentShare.settings.f = selector.value
-
-						state.save()
-					}
-
-					if (clbk)
-						clbk();
-				})
+						ParametersLive([selector], p.el)
 
 
+						selector._onChange = function(){
+
+							currentShare.settings.f = selector.value
+
+							state.save()
+						}
+
+						if (clbk)
+							clbk();
+					})
+				}
+
+				else{
+
+					el.settings.html('')
+
+					if(clbk) clbk()
+				}
 			},
 
 
 		
 			tgs : function(clbk){
 
-				if(!currentShare.repost.value) {
+				if(!currentShare.repost.v) {
 					
 					self.nav.api.load({
 						open : true,
@@ -1692,6 +1702,9 @@ var share = (function(){
 
 				}
 				else{
+
+					el.tgsWrapperMain.html('')
+
 					if(clbk) clbk()
 				}
 			},

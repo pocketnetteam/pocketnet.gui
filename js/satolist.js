@@ -12192,7 +12192,7 @@ Platform = function (app, listofnodes) {
 
                     var a = self.sdk.address.pnet()
 
-                    if(a && a.adress == share.address) return false
+                    if(a && a.address == share.address) return false
 
                     if(!v) return false
 
