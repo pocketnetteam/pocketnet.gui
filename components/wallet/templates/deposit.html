@@ -3,7 +3,7 @@
 	<div class="subcaptionWrapperTableCnt fadeInByElementStep">
 		<div class="subcaptionWrapperTable table">
 
-			<div class="_stepback"></div>
+			<div elementsid="_stepbackDeposit" class="_stepback"></div>
 
 			<div class="subcaption">
 				<span><%=e('wrecieve').toUpperCase()%></span>
@@ -47,7 +47,7 @@
 
 			<div class="recievecoins"> 
 
-				<button class="recieveaddress">
+				<button elementsid="recieveaddress" class="recieveaddress">
 					<i class="fas fa-chevron-circle-right"></i> <%=e('wrecieveon')%>
 
 					<span class='type'><%-d.parameters.deposit.labelByValue(d.parameters.deposit.value)%></span>
@@ -65,6 +65,6 @@
 			
 	</div>
 
-	<div class="_stepclose fadeInByElementStep"></div>
+	<div elementsid="_stepclosefadeInByElementStepDepost" class="_stepclose fadeInByElementStep"></div>
 
 </div>

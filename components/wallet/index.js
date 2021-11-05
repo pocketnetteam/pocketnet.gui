@@ -312,7 +312,7 @@ var wallet = (function(){
 					label : function(status, info, addressobject){
 						if(status == this.id){
 
-							return '<div class="todeal">'+addressobject.currency.toUpperCase() + ": " + info.Address+' <i class="fas fa-chevron-circle-right"></i> </div>'
+							return '<div elementsid="todeal" class="todeal">'+addressobject.currency.toUpperCase() + ": " + info.Address+' <i class="fas fa-chevron-circle-right"></i> </div>'
 
 						}
 					},
@@ -338,7 +338,7 @@ var wallet = (function(){
 
 					currentLabel : function(info){
 
-						return self.app.localization.e('e13217') + ' <div class="reactivate">'+self.app.localization.e('reactivate')+'</div>'
+						return self.app.localization.e('e13217') + ' <div elementsid="reactivate" class="reactivate">'+self.app.localization.e('reactivate')+'</div>'
 
 					}
 				},
@@ -1068,7 +1068,7 @@ var wallet = (function(){
 
 			stepC : function(s, name){
 				s.find('._stepback').html('<div class="backWrapper"><div class="back"><i class="fas fa-arrow-left"></i></div></div>')
-				s.find('._stepclose').html('<div class="closeAdditional"><span><i class="fas fa-undo"></i> '+self.app.localization.e('wreturntoeallet')+'</span></div>')					
+				s.find('._stepclose').html('<div elementsid="closeAdditionalC" class="closeAdditional"><span><i class="fas fa-undo"></i> '+self.app.localization.e('wreturntoeallet')+'</span></div>')					
 
 
 				s.find('._subcaptionlevel span').html(name || '')
@@ -1076,7 +1076,7 @@ var wallet = (function(){
 
 			stepB : function(s, name){
 				s.find('._stepback').html('<div class="backWrapper"><div class="back"><i class="fas fa-arrow-left"></i></div></div>')
-				s.find('._stepclose').html('<div class="closeAdditional"><span><i class="fas fa-undo"></i> '+self.app.localization.e('wreturntoeallet')+'</span></div>')					
+				s.find('._stepclose').html('<div elementsid="closeAdditionalB" class="closeAdditional"><span><i class="fas fa-undo"></i> '+self.app.localization.e('wreturntoeallet')+'</span></div>')					
 
 
 				s.find('._subcaptionlevel span').html(name || '')

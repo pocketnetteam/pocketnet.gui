@@ -33,7 +33,7 @@
 				</div>
 
 				<div class="existing">
-					<a href="authorization"><%=e('id0')%></a>
+					<a elementsid="hrefauthorization" href="authorization"><%=e('id0')%></a>
 				</div>
 			</div>
 			
@@ -46,21 +46,21 @@
 
 	<div class="navbottom">
 		<div>
-			<a href="https://<%-app.options.url%>/blockexplorer/">Block Explorer</a>
+			<a elementsid="https://<%-app.options.url%>/blockexplorer/" href="https://<%-app.options.url%>/blockexplorer/">Block Explorer</a>
 			<span>&middot;</span>
-			<a href="help?page=faq">F.A.Q.</a>
+			<a elementsid="help?page=faq" href="help?page=faq">F.A.Q.</a>
 			<span>&middot;</span>
-			<a href="userpage">MENU</a>
+			<a elementsid="hrefuserpage" href="userpage">MENU</a>
 
 			<% if(!app.curation()) {%>
 				<span>&middot;</span>
-				<a href="help?page=roadmap">Roadmap</a>
+				<a elementsid="help?page=roadmap" href="help?page=roadmap">Roadmap</a>
 				<span>&middot;</span>
-				<a href="help?page=node">Node&nbsp;Setup</a>
+				<a elementsid="help?page=node" href="help?page=node">Node&nbsp;Setup</a>
 				<span>&middot;</span>
-				<a href="help?page=pkoin" data-anchor="pocketcoin">PKOIN</a>
+				<a elementsid="help?page=pkoin" href="help?page=pkoin" data-anchor="pocketcoin">PKOIN</a>
 				<span>&middot;</span>
-				<a href="help?page=applications">Applications</a>
+				<a elementsid="help?page=applications" href="help?page=applications">Applications</a>
 			<% } %>
 		</div>
 	
