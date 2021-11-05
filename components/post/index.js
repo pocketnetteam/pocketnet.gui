@@ -1418,6 +1418,8 @@ var post = (function () {
 							el.c.find('.shareTable[address="' + address + '"] .notificationturn').removeClass('turnon')
 						}
 					}
+
+					remake()
 				}
 
 			}
@@ -1428,6 +1430,8 @@ var post = (function () {
 
 					el.c.find('.shareTable[address="' + address + '"]').addClass('subscribed');
 					el.c.find('.shareTable[address="' + address + '"] .notificationturn').removeClass('turnon')
+				
+					remake()
 				}
 
 
@@ -1439,6 +1443,8 @@ var post = (function () {
 
 					el.c.find('.shareTable').removeClass('subscribed');
 					el.c.find('.shareTable[address="' + address + '"] .notificationturn').removeClass('turnon')
+				
+					remake()
 				}
 			}
 
@@ -1446,11 +1452,28 @@ var post = (function () {
 
 		}
 
+		var remake = function(){
+			if (inicomments)
+				inicomments.destroy()
 
+			if (player) {
+
+				if (player.destroy) player.destroy()
+
+				player = null
+			}
+
+
+			if (_repost) {
+				_repost.destroy();
+
+				_repost = null;
+			}
+
+			make()
+		}
 
 		var make = function () {
-
-			
 
 			if (share) {
 

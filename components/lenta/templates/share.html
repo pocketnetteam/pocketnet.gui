@@ -33,9 +33,11 @@ var emptywithrepost = share.isEmpty() && share.repost
 
 var value = Number(share.score)
 
+var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share)
+
 var metadisplay = function(){ %>
 
-<div class="meta unselectablemobile">
+<div class="meta unselectablemobile <% checkvisibility ? 'checkvisibility' : '' %>">
 	<div class="metatable table">
 		<div class="metadata">
 
@@ -85,8 +87,7 @@ var metadisplay = function(){ %>
 
 								<%if(share.pin){%>
 								<span class="pinnedLabel"><i class="fas fa-thumbtack"></i> <%=e('pinned').toLowerCase()%>,</span><%}%><% if(share.downloadedDate) {%> <span class="fas fa-cloud-download-alt"></span> <span class="realtime editedLabel" time="<%-share.downloadedDate%>"><%- app.reltime(share.downloadedDate) %></span><% } else { %> 
-								<% if(share.time) {%><span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span><% } else { %><span><%=e('e13019')%></span><% } %><% if(share.edit == 'true') {%><span class="editedLabel">, <%=e('e13130').toLowerCase()%></span><% } %>
-								<% } %>
+								<% if(share.time) {%><span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span><% } else { %><span><%=e('e13019')%></span><% } %><% if(share.edit == 'true') {%><span class="editedLabel">, <%=e('e13130').toLowerCase()%></span><% } %><% } %><% if(share.visibility()) {%><span class="visibilityLabel">, <%=e('sharevisibility_' + share.visibility()).toLowerCase()%></span><% } %>
 							</div>
 						<% } %>
 						
@@ -111,10 +112,10 @@ var metadisplay = function(){ %>
 			
 
 			<div class="metapanel <%-share.txid%>">
-				<% if(typeof openapi == 'undefined' || !openapi) {%>
-				<div class="metapanelitem metmenu">
-					<i class="fas fa-ellipsis-h"></i>
-				</div>
+				<% if(!checkvisibility && (typeof openapi == 'undefined' || !openapi)) {%>
+					<div class="metapanelitem metmenu">
+						<i class="fas fa-ellipsis-h"></i>
+					</div>
 				<% } else { %> 
 					<div class="metapanelitem">
 						
@@ -370,22 +371,57 @@ var metadisplay = function(){ %>
 
 			</div>
 			
+			<% 
+			
+			
+			
+			if(!checkvisibility) {%>
 
-			<div class="cntswrk cntscontent">
+				<div class="cntswrk cntscontent">
 
 
-				<% var a = share.settings.a || share.default.a %>
+					<% var a = share.settings.a || share.default.a %>
 
 
-				<% _.each(a, function(key, i){ %> 
+					<% _.each(a, function(key, i){ %> 
 
-					<% if(arranges[key]) arranges[key]() %>
-							
-				<% }) %>
+						<% if(arranges[key]) arranges[key]() %>
+								
+					<% }) %>
 
+					
+
+				</div>
+
+			<% } else { %> 
+				<div class="cntswrk cntscontent">
+
+					<div class="hiddenpost">
+						<% if(checkvisibility == 'sub'){ %>
+
+							<div class="hiddenlabeltext">
+								Only for subscribers
+							</div>
+
+						<% } %>
+
+						<% if(checkvisibility == 'reg'){ %>
+
+							<div class="hiddenlabeltext">
+								Only for reg
+							</div>
+
+							<div class="hiddenlabelaction">
+								<button class="orange small button"><%=e('signupmenu')%></button>
+							</div>
+
+						<% } %>
+					</div>
+					
+	
+				</div>
 				
-
-			</div>
+			<% } %>
 
 			
 			<div class="cntswrk removeDescription">
@@ -441,12 +477,14 @@ var metadisplay = function(){ %>
 									
 								</div>
 
-								<% if(window.cordova && share.itisvideo()) {
+								<% if(window.cordova && share.itisvideo() ) {
 									
 									
 									var status = app.platform.sdk.localshares.status(share.txid)
 									
 									%>
+
+									<% if(!checkvisibility) {%>
 
 									<div class="item shareSave" status="<%-status%>">
 
@@ -464,24 +502,28 @@ var metadisplay = function(){ %>
 
 									</div>
 
+									<% } %>
+
 								<% } else { %> 
 									
 									
 									
 								
 									<% if(app.platform.repost && !my && !app.curation()) {%>
-										<div class="item <% if(!my){ %> forrepost <% } else { %> nact <% } %>">
+										<% if(!checkvisibility) {%>
+											<div class="item <% if(!my){ %> forrepost <% } else { %> nact <% } %>">
 
-											<div class="itemwr table">
-												<div class="iconwr">											
-													<div class="icon">
-														<i class="fas fa-share"></i>
+												<div class="itemwr table">
+													<div class="iconwr">											
+														<div class="icon">
+															<i class="fas fa-share"></i>
+														</div>
 													</div>
+												
 												</div>
-											
-											</div>
 
-										</div>
+											</div>
+										<% } %>
 									<% } %>
 
 								<% } %>
@@ -543,7 +585,7 @@ var metadisplay = function(){ %>
 
 				<% if(typeof verticalVideo != 'undefined' && verticalVideo) {%>
 
-					<% if(!emptywithrepost) {%>
+					<% if(!emptywithrepost && !checkvisibility) {%>
 
 						<% if(typeof repost == 'undefined' || !repost || fromempty) {%>
 							<div class="cntswrk forcomments">
@@ -587,7 +629,7 @@ var metadisplay = function(){ %>
 
 	<% if(typeof verticalVideo == 'undefined' || !verticalVideo) {%>
 
-		<% if(!emptywithrepost) {%>
+		<% if(!emptywithrepost && !checkvisibility) {%>
 
 			<% if(typeof repost == 'undefined' || !repost || fromempty) {%>
 

@@ -2405,6 +2405,11 @@ var lenta = (function(){
 					}
 
 					renders.repost(p.el, share.repost, share.txid, share.isEmpty())
+
+
+					/*p.el.find('.hiddenlabeltext').on('click', function(){
+						renders.maybechangevisibility(share.address)
+					})*/
 			
 					renders.url(p.el.find('.url'), share.url, share, function(){
 
@@ -2527,6 +2532,44 @@ var lenta = (function(){
 				
 			},
 
+			maybechangevisibility : function(address){
+
+				var shares = []
+				
+				_.each(shareInitedMap, function(v, txid){
+
+					if(!v) return
+
+					var share = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid)
+
+					if(!share) return
+
+					if(share.address == address && share.visibility()) {
+						shares.push(share)
+					}
+				})
+
+
+				renders.sharesVisibilityRestrictions(shares)
+			},
+
+			sharesVisibilityRestrictions : function(shares, clbk){
+
+				_.each(shares, function(share){
+					actions.destroyVideo(share)
+					shareInitedMap[share.txid] = false
+					initedcommentes[share.txid] = false
+					shareInitingMap[share.txid] = false
+
+
+					if (fullscreenvideoShowed == share.txid){
+						actions.exitFullScreenVideo(share.txid)
+					}
+				})
+				
+				renders.sharesInview(shares, clbk)
+			},
+
 			sharesInview : function(shares, clbk){
 
 				shares = _.filter(shares, function(s){
@@ -2581,6 +2624,7 @@ var lenta = (function(){
 
 							renders.mystars(shares)
 
+							if(clbk)
 							clbk()
 						}
 					}
@@ -4017,6 +4061,8 @@ var lenta = (function(){
 
 					addressEl.addClass('subscribed');
 					addressEl.find('.notificationturn').removeClass('turnon')	
+
+					renders.maybechangevisibility(address)
 				}
 
 				self.app.platform.clbks.api.actions.subscribePrivate.lenta = function(address){
@@ -4036,6 +4082,8 @@ var lenta = (function(){
 						}
 					}
 
+					renders.maybechangevisibility(address)
+
 					addressEl.addClass('subscribed');
 				}
 				
@@ -4047,6 +4095,8 @@ var lenta = (function(){
 					addressEl.removeClass('subscribed');
 
 					addressEl.find('.notificationturn').removeClass('turnon')
+
+					renders.maybechangevisibility(address)
 				}
 
 				self.app.platform.clbks.api.actions.blocking.lenta = function(address){

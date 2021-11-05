@@ -1196,6 +1196,7 @@ Share = function(lang){
 		v : 'p',
 		videos : [],
 		image : 'a',
+		f : '0'
 	}
 
 	self.settings = {
@@ -1203,7 +1204,9 @@ Share = function(lang){
 		v : '',
 		videos : [],
 		image : '',
+		f : '0'
 	}
+	
 
 	self.checkloaded = function(){
 		var notloaded = _.find(self.images.v, function(i){
@@ -1986,6 +1989,7 @@ pShare = function(){
 		v : 'p',
 		videos : [],
 		image : 'a',
+		f : '0'
 	}
 
 	self.settings = {
@@ -1993,6 +1997,7 @@ pShare = function(){
 		v : '',
 		videos : [],
 		image : '',
+		f : '0'
 	}
 
 	self.isEmpty = function(){
@@ -2314,6 +2319,17 @@ pShare = function(){
 		share.time = self.time
 
 		return share;
+	}
+
+	self.visibility = function(){
+
+		//if(rand(0, 1)) return 'sub'
+
+		if(self.settings.f == '0') return null
+
+		if(self.settings.f == '1') return 'sub'
+
+		if(self.settings.f == '2') return 'reg'
 	}
 
 	self.type = 'share'

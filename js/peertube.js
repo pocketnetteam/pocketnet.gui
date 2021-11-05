@@ -479,9 +479,9 @@ PeerTubePocketnet = function (app) {
 
         var special = false
 
-        if( app.user.address.value == 'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m' || app.user.address.value == 'PDgbAvsrS4VGKkW5rivcJaiCp7fnBoZRgM'){
+        /*if( app.user.address.value == 'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m' || app.user.address.value == 'PDgbAvsrS4VGKkW5rivcJaiCp7fnBoZRgM'){
             special = true
-        }
+        }*/
 
 
 
@@ -496,12 +496,12 @@ PeerTubePocketnet = function (app) {
               royId = self.helpers.base58.decode(app.user.address.value) % roysAmount;
             }
 
-            if (special){
+            /*if (special){
               var spc = _.find(data, function(i){
                 if(i == 'bastyonmma.pocketnet.app' || i == 'bastyonmma.nohost.me') return true
               })
               if(spc) return spc
-            }
+            }*/
 
             if (!royId) royId = rand(0, roysAmount - 1);
 

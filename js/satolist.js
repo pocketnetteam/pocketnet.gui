@@ -12187,6 +12187,45 @@ Platform = function (app, listofnodes) {
                     }
                 },
 
+                checkvisibility : function(share){
+                    var v = share.visibility()
+
+                    var a = self.sdk.address.pnet()
+
+                    if(a && a.adress == share.address) return false
+
+                    if(!v) return false
+
+                    if (v == 'reg'){
+
+                        if(self.app.user.getstate()) return false
+
+                        return v
+
+                    }
+
+                    if (v == 'sub'){
+
+                        var a = self.sdk.address.pnet()
+
+                        if (a){
+
+                            var me = deep(app, 'platform.sdk.users.storage.' + a.address)
+
+                            if (me && me.relation(share.address, 'subscribes')) {
+                                return false
+                            }
+                            
+                        }
+
+
+                    }
+
+                    return v
+
+
+                },
+
                 default: function (clbk) {
                     var address = deep(app, 'user.address.value')
 

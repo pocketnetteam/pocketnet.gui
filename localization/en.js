@@ -1242,3 +1242,10 @@ ____loclib.linkToPostLenta = "Already posted"
 ____loclib.ReferralUsers = "Referral Users. Total/From&nbsp;01.11.2021"
 ____loclib.lockedaccount = "Your account is locked due to reputation below -50"
 ____loclib.lockedaccounta = "Author Account is locked due to reputation below -50"
+
+____loclib.visibletoeveryone = 'Visible for everyone'
+____loclib.visibleonlytosubscribers = 'Visible only for subscribers'
+____loclib.visibleonlytoregistered = 'Visible only for registered'
+
+____loclib.sharevisibility_sub = 'For subscribers'
+____loclib.sharevisibility_reg = 'For registered users'
