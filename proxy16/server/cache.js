@@ -499,6 +499,8 @@ var Cache = function(p){
                     
             }
         })
+
+        f.gcwrapper()
     }
 
     self.info = function(){
@@ -532,6 +534,8 @@ var Cache = function(p){
     
     self.clear = function(){
         storage = {}
+
+        f.gcwrapper()
     }
 
     var softclear = function(){
@@ -597,6 +601,8 @@ var Cache = function(p){
                 delete s[key]
             })
         })
+
+        f.gcwrapper()
     }
 
     self.init = function(){

@@ -18,6 +18,30 @@ f.mix = function(array){
     })
 }
 
+var lastgctime = new Date()
+
+f.gcwrapper = function(){
+
+    var t = f.date.addseconds(lastgctime, 30)
+
+    if(t < new Date()){
+        try {
+            if (global.gc) {global.gc();}
+
+            lastgctime = new Date()
+    
+            console.log("GCRUN")
+        } catch (e) {
+            console.log("gbremoved");
+        }
+    }
+    else{
+        console.log("NOTYET")
+    }
+
+    
+}
+
 f.esc = function(str) {
     return str.replace(/[\0\x08\x09\x1a\n\r"'\\\%]/g, function (char) {
         switch (char) {
