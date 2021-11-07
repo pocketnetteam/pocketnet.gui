@@ -6,7 +6,7 @@ var commentpanel = function(comment, _class){  %>
 
 		<div class="items">
 			<% if((!state || mestate.reputation >= -50) && !comment.deleted) { %> 
-				<div class="item reply">
+				<div elementsid="comments_reply" class="item reply">
 					<div class="cact">
 						<div class="label">
 							<span><%=e('reply').toUpperCase()%></span>
@@ -23,7 +23,7 @@ var commentpanel = function(comment, _class){  %>
 
 			%>
 
-				<div class="item replies <%-h%>">
+				<div elementsid="comments_replies" class="item replies <%-h%>">
 					<div class="cact">
 						<div class="iconlabelWrapper table">
 							<div class="label">
@@ -44,7 +44,7 @@ var commentpanel = function(comment, _class){  %>
 				%> 
 				<div class="item upvoteCommentWrapper">
 
-					<div class="upvoteComment scoreUp <% if(comment.myScore && comment.myScore > 0) {%> ratedScore <% } %>"  score="scoreUp">
+					<div elementsid="comments_upvoteComment" class="upvoteComment scoreUp <% if(comment.myScore && comment.myScore > 0) {%> ratedScore <% } %>"  score="scoreUp">
 						<div class="upvoteCommentTable table">
 							<div class="upvoteCommentCell">
 								<i class="fas fa-thumbs-up"></i>
@@ -175,7 +175,7 @@ var commentpanel = function(comment, _class){  %>
 						<div class="panelWrapper">
 							<% if(!comment.deleted) {%>
 
-								<div class="panel">
+								<div elementsid="comments_panel" class="panel">
 									<i class="fas fa-ellipsis-h"></i>
 								</div>
 
@@ -251,7 +251,7 @@ var commentpanel = function(comment, _class){  %>
 											<% _.each(comment.images, function(image){ %>
 					
 												<div class="imagesWrapper">
-													<div class="image imageCommentOpen" image="<%-image%>" i="<%-image%>">
+													<div elementsid="comments_imageCommentOpen" class="image imageCommentOpen" image="<%-image%>" i="<%-image%>">
 													</div>
 												</div>
 					

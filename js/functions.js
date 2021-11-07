@@ -1301,8 +1301,8 @@
 			}
 
 			html+=	 '<div class="buttons">\
-							<div class="btn2wr"><button class="btn2 medium">'+p.btn2text+'</button></div>\
-							<div class="btn1wr"><button class="btn1 medium">'+p.btn1text+'</button></div>\
+							<div class="btn2wr"><button elementsid="dialog_btn2" class="btn2 medium">'+p.btn2text+'</button></div>\
+							<div class="btn1wr"><button elementsid="dialog_btn1" class="btn1 medium">'+p.btn1text+'</button></div>\
 						</div><div class="_close"><i class="fa fa-times" aria-hidden="true"></i></div>\
 						</div>\
 						</div></div>'

@@ -9,7 +9,7 @@
             <div class="node table <%- active %>" host="<%- node.host %>" locally="<%- node.locally %>">
 
 
-                <div class="use connectnode"><i class="far fa-circle"></i></div>
+                <div elementsid="connection_connectnode" class="use connectnode"><i class="far fa-circle"></i></div>
                 <div class="hostport connectnode"><%- node.host%>:<%- node.port %> </div>
                 <div class="ws"><%- node.ws %></div>
                 <div class="name"><%- node.nodename.replace(/\+/g, ' ') %></div>
@@ -40,7 +40,7 @@
                     
                     <% if(node.addedby == app.user.address.value) {%>
 
-                        <div class="item edit">
+                        <div elementsid="connection_nodes_edit" class="item edit">
                             <i class="fas fa-cog"></i>
                         </div>
 

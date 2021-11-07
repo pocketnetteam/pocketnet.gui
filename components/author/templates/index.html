@@ -35,14 +35,14 @@ var telements = function(){ %>
 			<% if(!app.curation()) {%> 
 			<span class="subscribebuttonstop <%-_class%>">
 
-				<span class="startchat funf"><%=e('startchat')%></span>
+				<span elementsid="author_startchat" class="startchat funf"><%=e('startchat')%></span>
 				<% if (me){ 
 					var r = me.relation(author.address, 'subscribes') 
 				%>
-					<span class="notificationturn <% if(r && (r.private == 'true' || r.private === true)) {%> turnon <% } %>">&middot;<i class="far fa-bell-slash"></i></span>
+					<span elementsid="author_notificationturn" class="notificationturn <% if(r && (r.private == 'true' || r.private === true)) {%> turnon <% } %>">&middot;<i class="far fa-bell-slash"></i></span>
 				<% } %>
 					
-				<span class="subscribe funf"><%=e('follow')%></span>	
+				<span elementsid="author_subscribe" class="subscribe funf"><%=e('follow')%></span>	
 
 			</span>
 
@@ -53,7 +53,7 @@ var telements = function(){ %>
 
 			<span class="blockingWrapper">
 
-				<span class="unblocking funf"><%=e('blocked')%></span>	
+				<span elementsid="author_unblocking" class="unblocking funf"><%=e('blocked')%></span>	
 
 			</span>
 
@@ -64,7 +64,7 @@ var telements = function(){ %>
 
 		<% if(state && isMobile()) {%>
 
-			<i class="fas fa-chevron-down changeaccount"></i>
+			<i elementsid="author_changeaccount" class="fas fa-chevron-down changeaccount"></i>
 		
 		<% } %>
 
@@ -84,7 +84,7 @@ var telements = function(){ %>
 
 							<% var src = deep(author, 'data.image')  %>
 
-							<div class="usericon" image="<%-src || ''%>">
+							<div elementsid="author_usericon_<%-src || ''%>" class="usericon" image="<%-src || ''%>">
 
 								<% if(!src && letter) {%>
 
@@ -177,7 +177,7 @@ var telements = function(){ %>
 		</div>
 	</div>
 
-	<div class="upbuttonwrapper light">
+	<div elementsid="author_upbuttonwrapper" class="upbuttonwrapper light">
 	</div>
 	
 </div>

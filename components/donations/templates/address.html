@@ -8,7 +8,7 @@
 			<div class="s"><span><%=e('address')%>:</span></div>
 
 			<div class="s right">
-				<span class="copyaddress"><i class="far fa-copy"></i> <%=e('copy')%></span>
+				<span elementsid="donations_copyaddress" class="copyaddress"><i class="far fa-copy"></i> <%=e('copy')%></span>
 			</div>
 		</div>
 		 
@@ -33,7 +33,7 @@
 		<% } %>
 
 		<% if(info.Status == 'EXPIREDAWAITINGFUNDS') {%>
-			<%=e('e13075')%> <div class="reactivate"><%=e('reactivate')%></div>
+			<%=e('e13075')%> <div elementsid="donations_reactivate" class="reactivate"><%=e('reactivate')%></div>
 		<% } %>
 	</div>
 	<% if(info.Status == 'AWAITINGFUNDS' || info.Status == 'AWAITINGDONATION') {%>
@@ -52,7 +52,7 @@
 
 	<div class="backnext table">
 		<div class="backwrapper">
-			<div class="back">
+			<div elementsid="donations_address_back" class="back">
 				<span>
 					<%=e('back')%>
 				</span>
@@ -60,7 +60,7 @@
 		</div>
 
 		<div class="nextwrapper">
-			<div class="next">
+			<div elementsid="donations_address_next" class="next">
 				<span>
 					<i class="far fa-check-circle"></i> <%=e('e13077')%>
 				</span>

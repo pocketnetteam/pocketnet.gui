@@ -3,7 +3,7 @@
 		<div class="topwidthWrapper">
 
 
-			<div class="item back">
+			<div elements="article_back" class="item back">
 
 				<div class="icon">
 
@@ -17,7 +17,7 @@
 				</div>
 			</div>
 
-			<div class="item uic">
+			<div elementsid="article_uic" class="item uic">
 				<% 
 					var src = deep(app, 'platform.sdk.user.storage.me.image');
 					var name = deep(app, 'platform.sdk.user.storage.me.name');
@@ -47,7 +47,7 @@
 				</div>
 			</div>
 
-			<div class="item username">
+			<div elementsid="article_username" class="item username">
 				<div class="label">
 					<b class="adr"><%-deep(app, 'platform.sdk.user.storage.me.name') || user.address.value.toString('hex')%></b>
 				</div>
@@ -58,7 +58,7 @@
 
 					<% if(art.txid) {%>
 
-						<div class="iWrapper table goto">
+						<div elementsid="article_goto" class="iWrapper table goto">
 								
 							<div class="label">
 								Go To Article
@@ -71,7 +71,7 @@
 
 					<% } else {%>
 
-						<div class="iWrapper table add">
+						<div elementsid="article_add" class="iWrapper table add">
 								
 							<div class="label">
 

@@ -11,7 +11,7 @@
 
 %>
 	<div class="wrk">
-		<div class="addressTable table <%-cur%> <%-ncur%>" address="<%-address%>">
+		<div elementsid="accounts_<%-ncur%>" class="addressTable table <%-cur%> <%-ncur%>" address="<%-address%>">
 			<div class="iconWrapper">
 				<div class="icon">
 
@@ -66,7 +66,7 @@
 
 					
 
-					<div class="item remove">
+					<div class="accounts_remove" class="item remove">
 						<i class="fas fa-times-circle"></i>
 					</div>
 
@@ -77,7 +77,7 @@
 					</div>
 					
 				<% } else { %>
-					<div class="item dumpkey">
+					<div elementsid="accounts_dumpkey" class="item dumpkey">
 						<i class="fas fa-key"></i>
 					</div>
 				<% }%>

@@ -47,7 +47,7 @@ if(isMobile()) dplace = e('e13039')
 
 		<% if(edit) {%>
 			<div class="closeWrapper">
-				<div class="closeEdit">
+				<div elementsid="comments_closeEdit" class="closeEdit">
 
 					<div class="icon">
 						<i class="far fa-times-circle"></i>
@@ -70,7 +70,7 @@ if(isMobile()) dplace = e('e13039')
 
 					<% if(sender && sender !== receiver) { %> 
 
-						<div class="embeddonate">
+						<div elementsid="comments_embeddonate" class="embeddonate">
 							<img 
 								class="donateIcon"
 								src="img/logo20.svg" 
@@ -81,12 +81,12 @@ if(isMobile()) dplace = e('e13039')
 					<% } %>
 
 
-					<div class="embedimages">
+					<div elementsid="comments_embedimages" class="embedimages">
 						<i class="fas fa-camera-retro"></i>
 					</div>
 
 					<% if(!isMobile() && !isTablet()) { %> 
-						<div class="embedEmojiPrivew">
+						<div elementsid="comments_embedEmojiPrivew" class="embedEmojiPrivew">
 						</div>
 					<% } %>
 
@@ -106,7 +106,7 @@ if(isMobile()) dplace = e('e13039')
 
 			<div class="postCellWrapper">
 				<div class="cpostWrapper">
-					<div class="postaction">
+					<div elementsid="postaction" class="postaction">
 
 						<div class="preloaderWrapper">
 							<div class="preloader5"><img src="./img/three-dots.svg"/></div>
@@ -129,7 +129,7 @@ if(isMobile()) dplace = e('e13039')
 
 	<% if(answer) {%>
 
-	<div class="closeAnswer">
+	<div elementsid="comments_closeAnswer" class="closeAnswer">
 		<i class="far fa-times-circle"></i>
 	</div>
 

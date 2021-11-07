@@ -11,11 +11,11 @@
                 <div class="cat">
                     <div class="cattable table">
 
-                        <div elementsid="<%-title%>" class="catvalue catcheckgl" title="<%-title%>">
+                        <div elementsid="catchekgl_<%-title%>" class="catvalue catcheckgl" title="<%-title%>">
                             <span ><%- cat.name %></span>
                         </div>
 
-                        <div class="catcheck catcheckgl">
+                        <div class="catcheckgl2" class="catcheck catcheckgl">
                             
                             <i class="far fa-circle unselected"></i>
                             <i class="far fa-check-circle selected"></i>
@@ -27,7 +27,7 @@
                             </a>
                         </div>
                         <% if(cat.added) {%>
-                        <div class="catedit">
+                        <div elementsid="categories_catedit" class="catedit">
                             <i class="fas fa-pencil-alt"></i>
                         </div>
                         <% } %>
@@ -40,11 +40,11 @@
 
     <% if(cats.length > 7) {%>
 
-        <div class="showallcats showhideallcats">
+        <div elementsid="categories_showallcats" class="showallcats showhideallcats">
             <span><%=e('e13021')%></span>
         </div>
 
-        <div class="hideallcats showhideallcats">
+        <div elementsid="categories_hideallcats" class="hideallcats showhideallcats">
             <span><%=e('hide')%></span>
         </div>
 
