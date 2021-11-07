@@ -1286,7 +1286,7 @@
 				poll += '<div class="options description">Poll options</div>';
 
 				for (var i = 0; i < 5; i++){
-					poll += `<div class="poll-item" id="poll-item-${i + 1}"><input class="input" type="text"><i class="fas fa-times-circle"></i></div>`;
+					poll += `<div class="poll-item" id="poll-item-${i + 1}"><input elements="poll-input-item-${i + 1}" class="input" type="text"><i class="fas fa-times-circle"></i></div>`;
 				}
 
 				poll += "</div>";
@@ -1303,7 +1303,7 @@
 			html+=	 '<div class="buttons">\
 							<div class="btn2wr"><button elementsid="dialog_btn2" class="btn2 medium">'+p.btn2text+'</button></div>\
 							<div class="btn1wr"><button elementsid="dialog_btn1" class="btn1 medium">'+p.btn1text+'</button></div>\
-						</div><div class="_close"><i class="fa fa-times" aria-hidden="true"></i></div>\
+						</div><div elementsid="dialog_close" class="_close"><i class="fa fa-times" aria-hidden="true"></i></div>\
 						</div>\
 						</div></div>'
 
@@ -8431,7 +8431,7 @@
 
 			var elements = [
 
-				'<div class="searchIconLabel">' + (p.icon ||
+				'<div elementsid="template_searchIconLabel" class="searchIconLabel">' + (p.icon ||
 					'<i class="fa fa-search" aria-hidden="true"></i>' +
 					'<i class="fas fa-circle-notch fa-spin"></i>') + 
 				'</div>',
@@ -8776,9 +8776,9 @@
 			var edit = el.closest('.editable');
 
 			edit.append("<div class='editForm'><input type='text' value='"+p.el.text()+"'></div>\
-						 <label><div class='lwr'><div class='editButton edt'><i class='fa fa-pencil'></i></div>\
-						 <div class='editButton success'><i class='fa fa-check'></i></div>\
-						 <div class='editButton fail'><i class='fa fa-times'></i></div></div></label>");
+						 <label><div class='lwr'><div elementsid='editable_edt' class='editButton edt'><i class='fa fa-pencil'></i></div>\
+						 <div elementsid='editButton_success' class='editButton success'><i class='fa fa-check'></i></div>\
+						 <div elementsid='editButton_fail' class='editButton fail'><i class='fa fa-times'></i></div></div></label>");
 
 			var mmp = p.mmoneyparam || null;
 
