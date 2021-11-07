@@ -140,7 +140,7 @@
 						</div>
 
 						<div class="items">
-							<div class="item table right user" events="userpage unselectable">
+							<div elementsid="menu_user" class="item table right user" events="userpage unselectable">
 
 								<% 
 								
@@ -263,7 +263,7 @@
 								</div>
 								<div elementsid="eventslang" class="label">
 									<!--<div class="sitenamelabel"><% if(app.test){%>TESTNET<%} else {%><%-app.meta.fullname%><% }%></div>-->
-									<div class="lang localization">
+									<div elementsid="menu_localization" class="lang localization">
 										
 										<% if(isMobile()) {%>
 											<%-(lkey.key || '').toUpperCase()%> 
