@@ -2,7 +2,7 @@
 
 	<div class="mlwr">
 
-		<div class="loadprev"><button><span><%=e('lloadprev')%></span></button></div>
+		<div elementsid="lenta_loadprev" class="loadprev"><button><span><%=e('lloadprev')%></span></button></div>
 
 		<div class="circularprogress">	
 			<div class="circularprogressWrapper"></div>
@@ -16,7 +16,7 @@
 
 		<% if(!app.curation()) {%>
 
-			<div class="loadmore"><button><%=e('lloadmore')%></button></div>
+			<div elementsid="lenta_loadmore" class="loadmore"><button><%=e('lloadmore')%></button></div>
 
 			<% if(recommended == 'recommended') {%>	
 

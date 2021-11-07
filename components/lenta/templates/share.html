@@ -56,7 +56,7 @@ var metadisplay = function(){ %>
 							<% if((!state || !my) && (typeof repost == 'undefined' || !repost)) { %> 
 
 								<span elementsid="sbtnxs-follow" class="sbtnxs">
-									&middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><i class="far fa-check-circle"></i>  <%=e('following')%></span> 
+									&middot; <span elementsid="asubscribe" class="subscribeLabel asubscribe"><%=e('sub')%></span><span elementsid="lenta_aunsubscribe" class="subscribedLabel aunsubscribe"><i class="far fa-check-circle"></i>  <%=e('following')%></span> 
 									<% if(state && !my && user.address.value) {
 										
 										var r = me.relation(share.address, 'subscribes') 
@@ -64,7 +64,7 @@ var metadisplay = function(){ %>
 										%>
 										
 
-										<span class="notificationturn <% if(r && (r.private == 'true' || r.private === true)) {%> turnon <% } %>">&middot; <i class="far fa-bell-slash"></i></span>
+										<span elementsid="lenta_notificationturn" class="notificationturn <% if(r && (r.private == 'true' || r.private === true)) {%> turnon <% } %>">&middot; <i class="far fa-bell-slash"></i></span>
 									<% } %>
 
 									
@@ -108,7 +108,7 @@ var metadisplay = function(){ %>
 
 			<div elementsid="metapanel" class="metapanel <%-share.txid%>">
 				<% if(typeof openapi == 'undefined' || !openapi) {%>
-				<div class="metapanelitem metmenu">
+				<div elementsid="lenta_share_metmenu" class="metapanelitem metmenu">
 					<i class="fas fa-ellipsis-h"></i>
 				</div>
 				<% } else { %> 
@@ -265,7 +265,7 @@ var metadisplay = function(){ %>
 						<% _.each(share.images, function(image){ %>
 
 							<div class="imagesWrapper">
-								<div class="image imageOpen imagePostOpent" save="<% if(typeof nameFromScr != 'undefined') {%><%- nameFromScr(image) %><% } %>" image="<%-image%>" i="<%-image%>">
+								<div elementsid="lenta_imageOpen" class="image imageOpen imagePostOpent" save="<% if(typeof nameFromScr != 'undefined') {%><%- nameFromScr(image) %><% } %>" image="<%-image%>" i="<%-image%>">
 								</div>
 							</div>
 
@@ -274,7 +274,7 @@ var metadisplay = function(){ %>
 						<% if(imageFromVideo) {%>
 
 							<div class="imagesWrapper forvideo">
-								<div class="image videoOpen" image="<%-imageFromVideo%>">
+								<div elementsid="lenta_videoOpen" class="image videoOpen" image="<%-imageFromVideo%>">
 									<div class="playicon"><i class="fas fa-play"></i></div>
 								</div>
 							</div>
@@ -440,7 +440,7 @@ var metadisplay = function(){ %>
 									
 									%>
 
-									<div class="item shareSave" status="<%-status%>">
+									<div elementsid="lenta_shareSave" class="item shareSave" status="<%-status%>">
 
 										<div class="itemwr table">
 
@@ -462,7 +462,7 @@ var metadisplay = function(){ %>
 									
 								
 									<% if(app.platform.repost && !my && !app.curation()) {%>
-										<div class="item <% if(!my){ %> forrepost <% } else { %> nact <% } %>">
+										<div elementsid="lenta_forreport" class="item <% if(!my){ %> forrepost <% } else { %> nact <% } %>">
 
 											<div class="itemwr table">
 												<div class="iconwr">											
@@ -512,7 +512,7 @@ var metadisplay = function(){ %>
 											<div class="preloader5"><img src="./img/three-dots.svg"/></div>
 										</div>
 										
-										<div class="count">
+										<div elementsid="lenta_forstars_count" class="count">
 											<div class="label">
 
 												<span><%=e('postWaitConf')%></span>

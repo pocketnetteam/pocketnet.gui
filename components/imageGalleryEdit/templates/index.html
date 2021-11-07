@@ -23,7 +23,7 @@
 		<div class="items table">
 
 
-			<div class="item editPanel left">
+			<div elementsid="imageg_editPanel" class="item editPanel left">
 				<% if(!essenseData.apply) {%> 
 					<div elementsid="actioncrop" class="eitem" action="crop">
 						<i class="fa fa-crop" aria-hidden="true"></i>
@@ -39,7 +39,7 @@
 			</div>
 
 			<div class="item">
-				<div class="centerWrapper savePanel">
+				<div elementsid="imageg_savePanel" class="centerWrapper savePanel">
 
 					<div elementsid="actioncancel" class="sitem cancel" action="cancel">
 						<i class="far fa-times-circle"></i> <span class="workstation"><%=e('ucancel')%></span>
@@ -51,7 +51,7 @@
 
 				</div>
 
-				<div class="centerWrapper exitPanel">
+				<div elementsid="imageg_exitPanel" class="centerWrapper exitPanel">
 
 					<div elementsid="actionexit" class="sitem cancel" action="exit">
 						<i class="far fa-check-circle"></i> <%=e('finish')%>

@@ -189,7 +189,7 @@ var imageGalleryEdit = (function(){
 
 								parent.find(".cropper-container").addClass(essenseData.crop.style || '')
 
-								parent.find(".cropper-crop-box").append('<div class="applyCrop center" action="apply">\
+								parent.find(".cropper-crop-box").append('<div elementsid="applyCrop" class="applyCrop center" action="apply">\
 									<span class="fa fa-check" aria-hidden="true"></span>\
 								</div>')
 

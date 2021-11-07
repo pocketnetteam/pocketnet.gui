@@ -148,7 +148,7 @@ var metadisplay = function(){ %>
 			c = filterXSS(clearScripts((findAndReplaceLink(c, true))))
 		%>
 			<div class="paddingWrapper">
-				<div class="sharecaption canmark opensviurl">
+				<div class="lenta_opensviurl" class="sharecaption canmark opensviurl">
 					<div>
 						<%=app.actions.emoji(nl2br(trimrn(c)))%>
 					</div>
@@ -188,7 +188,7 @@ var metadisplay = function(){ %>
 			<% if(bigmessage) {%>
 
 				<div class="paddingWrapper showMorePW">
-					<div class="showMore">
+					<div elementsid="lenta_showmore" class="showMore">
 						<div class="showmoretable table">
 							<!-- <div class="linecell">
 								<div class="line"></div>
@@ -348,7 +348,7 @@ var metadisplay = function(){ %>
 
 									
 
-									<div elementsid="item-sharesocial" class="item sharesocial right unselectable">
+									<div elementsid="lenta_sharesocial" class="item sharesocial right unselectable">
 
 										<div class="itemwr table">
 											<div class="labelwr workstation"><span class="label"><%=e('share').toUpperCase()%></span></div>
@@ -414,7 +414,7 @@ var metadisplay = function(){ %>
 					<div class="label"><%=e('e13131')%></div>
 
 					<div class="unblockWrapper">
-						<button class="button small unblockbutton">
+						<button elementsid="lenta_unblockbutton" class="button small unblockbutton">
 							Unblock
 						</button>
 					</div>
@@ -423,7 +423,7 @@ var metadisplay = function(){ %>
 		</div>
 	</div>
 
-	<div class="exitFull roundclosebutton unselectablemobile">
+	<div elementsid="lenta_exitFull" class="exitFull roundclosebutton unselectablemobile">
 		<i class="fa fa-times" aria-hidden="true"></i>
 	</div>
 
