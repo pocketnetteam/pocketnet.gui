@@ -483,6 +483,10 @@ var post = (function () {
 			},
 			like: function (value, clbk) {
 
+				var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share);
+
+				if(checkvisibility) return
+
 				var upvoteShare = share.upvote(value);
 
 
@@ -870,6 +874,9 @@ var post = (function () {
 		var renders = {
 			comments: function (clbk) {
 				if ((!ed.repost || ed.fromempty) && ed.comments != 'no') {
+
+
+					
 					self.fastTemplate(
 						'commentspreview',
 						function (rendered) {
@@ -892,6 +899,8 @@ var post = (function () {
 							if (parameters().address) {
 								url += '&address=' + (parameters().address || '');
 							}
+
+							var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share);
 
 							self.nav.api.load({
 								open: true,
@@ -921,7 +930,7 @@ var post = (function () {
 									fromtop: !ed.fromempty,
 									fromempty: ed.fromempty,
 									lastComment: ed.fromempty ? share.lastComment : null,
-
+									cantsend : checkvisibility,
 									additionalActions: function () {
 										self.closeContainer();
 									},

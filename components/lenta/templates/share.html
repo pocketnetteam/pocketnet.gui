@@ -1,6 +1,7 @@
 <%
 
 var c = share.renders.caption();
+var cc = share.renders.captionclear();
 var m = share.renders.message();
 
 if(typeof ed == 'undefined') ed = {}
@@ -26,6 +27,13 @@ var view = 'post';
 if(share.settings.v == 'a'){
 	view = 'article'
 }
+
+
+var cview = view
+
+if(share.itisvideo()) cview = 'video'
+
+
 var bigmessage = false;
 var name = app.platform.api.name(share.address)
 
@@ -174,9 +182,11 @@ var metadisplay = function(){ %>
 
 %>
 
-<% var arranges = {
-	
-	cm : function(){ %> 
+<% 
+
+var makecaption = function(){
+
+	%> 
 
 		<% if(c) {
 
@@ -188,9 +198,37 @@ var metadisplay = function(){ %>
 				</div>
 			</div>
 
-		<% } %>
+	<% } 
 
-		<% if(m) {
+}
+
+var makecaptionclear = function(){
+
+	%> 
+
+		<% if(cc) {
+
+			cc = filterXSS(clearScripts((findAndReplaceLink(cc))))
+		%>
+			<div class="paddingWrapper hideOnFullVideo">
+				<div class="sharecaption canmark">
+					<%=app.actions.emoji(nl2br(trimrn(cc)))%>
+				</div>
+			</div>
+
+	<% } 
+
+}
+
+var arranges = {
+	
+	cm : function(){ 
+		
+		
+		makecaption()
+		
+		
+		if(m) {
 
 			m = (m)
 			
@@ -206,9 +244,6 @@ var metadisplay = function(){ %>
 			}
 
 			nm = share.renders.xssmessage(nm)
-
-			
-			
 
 		%>
 			<div class="paddingWrapper hideOnFullVideo">
@@ -397,25 +432,39 @@ var metadisplay = function(){ %>
 				<div class="cntswrk cntscontent">
 
 					<div class="hiddenpost">
+
+
+
+						<div class="captionpreview">
+							<% makecaptionclear() %>
+						</div>
+
 						<% if(checkvisibility == 'sub'){ %>
 
 							<div class="hiddenlabeltext">
-								Only for subscribers
+								<%=e('sharevisibilitylabel_sub_' + cview)%>
 							</div>
+
+							
 
 						<% } %>
 
 						<% if(checkvisibility == 'reg'){ %>
 
 							<div class="hiddenlabeltext">
-								Only for reg
+								<%=e('sharevisibilitylabel_reg_' + cview)%>
 							</div>
 
 							<div class="hiddenlabelaction">
-								<button class="orange small button"><%=e('signupmenu')%></button>
+								<a href="registration">
+									<button class="orange small button"><%=e('signupmenu')%></button>
+								</a>
 							</div>
 
 						<% } %>
+
+
+
 					</div>
 					
 	
@@ -585,7 +634,7 @@ var metadisplay = function(){ %>
 
 				<% if(typeof verticalVideo != 'undefined' && verticalVideo) {%>
 
-					<% if(!emptywithrepost && !checkvisibility) {%>
+					<% if(!emptywithrepost) {%>
 
 						<% if(typeof repost == 'undefined' || !repost || fromempty) {%>
 							<div class="cntswrk forcomments">
@@ -629,7 +678,7 @@ var metadisplay = function(){ %>
 
 	<% if(typeof verticalVideo == 'undefined' || !verticalVideo) {%>
 
-		<% if(!emptywithrepost && !checkvisibility) {%>
+		<% if(!emptywithrepost) {%>
 
 			<% if(typeof repost == 'undefined' || !repost || fromempty) {%>
 

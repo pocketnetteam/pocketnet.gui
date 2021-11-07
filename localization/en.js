@@ -1245,7 +1245,16 @@ ____loclib.lockedaccounta = "Author Account is locked due to reputation below -5
 
 ____loclib.visibletoeveryone = 'Visible for everyone'
 ____loclib.visibleonlytosubscribers = 'Visible only for subscribers'
-____loclib.visibleonlytoregistered = 'Visible only for registered'
+____loclib.visibleonlytoregistered = 'Visible only for Bastyon users'
 
 ____loclib.sharevisibility_sub = 'For subscribers'
-____loclib.sharevisibility_reg = 'For registered users'
+____loclib.sharevisibility_reg = 'For Bastyon users'
+
+____loclib.sharevisibilitylabel_sub_post = 'Author chose to make this <b>post</b> available only for subscribers'
+____loclib.sharevisibilitylabel_reg_post = 'Author chose to make this <b>post</b> available only for registered Bastyon users'
+____loclib.sharevisibilitylabel_sub_article = 'Author chose to make this <b>article</b> available only for subscribers'
+____loclib.sharevisibilitylabel_reg_article = 'Author chose to make this <b>article</b> available only for registered Bastyon users'
+
+____loclib.sharevisibilitylabel_sub_video = 'Author chose to make this <b>video</b> available only for subscribers'
+____loclib.sharevisibilitylabel_reg_video = 'Author chose to make this <b>video</b> available only for registered Bastyon users'
+

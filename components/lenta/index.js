@@ -1175,6 +1175,10 @@ var lenta = (function(){
 
 			like : function(obj, value, clbk){
 
+				var checkvisibility = app.platform.sdk.node.shares.checkvisibility(obj);
+
+				if(checkvisibility) return
+
 				var upvoteShare = obj.upvote(value);
 
 				if(!upvoteShare){
@@ -2274,6 +2278,8 @@ var lenta = (function(){
 
 				var share = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid)
 
+				var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share);
+
 				self.fastTemplate('commentspreview', function(rendered){
 					
 
@@ -2334,9 +2340,8 @@ var lenta = (function(){
 							init : essenseData.comments == 'all' ? false : init,
 							hr : hr,
 							receiver: share.address,
-							
+							cantsend : checkvisibility,
 							renderClbk : function(){
-
 
 								essenserenderclbk()
 							}
@@ -3336,7 +3341,7 @@ var lenta = (function(){
 		
 								}
 
-								////// SHIT
+								
 								if ((!shares.length || shares.length < pr.count) && (recommended || author || essenseData.search)){
 
 									if(essenseData.ended) {
@@ -3361,6 +3366,14 @@ var lenta = (function(){
 									return bshare.txid == share.txid
 								})
 							})
+
+							if(!essenseData.author){
+								shares = _.filter(shares, function(share){
+									var checkvisibility = self.app.platform.sdk.node.shares.checkvisibility(share)
+
+									return !checkvisibility
+								})
+							}
 
 							shares.concat(bshares)
 
