@@ -9906,6 +9906,10 @@
 		return str.replace(/\n/g, '<br/>');
 	}
 
+	nl2space = function(str){	
+		return str.replace(/\n/g, ' ');
+	}
+
 	trimHtml = function(str, num){
 
 		var remove = function(tag){

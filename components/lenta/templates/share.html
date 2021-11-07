@@ -209,6 +209,8 @@ var makecaptionclear = function(){
 		<% if(cc) {
 
 			cc = filterXSS(clearScripts((findAndReplaceLink(cc))))
+
+
 		%>
 			<div class="paddingWrapper hideOnFullVideo">
 				<div class="sharecaption canmark">
@@ -227,20 +229,31 @@ var arranges = {
 		
 		makecaption()
 		
-		
 		if(m) {
 
-			m = (m)
-			
 			var nm = m;
 
 			if(typeof all == 'undefined' || !all){
 
 				nm = trimHtml(m, 750);
 
-				if(nm != m){
+				var nmbrar = nm.split("\n")
+				var nmbrarl = nmbrar.length
+
+
+				if (nmbrarl > 25){
 					bigmessage = true;
+
+					nm = _.first(nmbrar, 25).join('\n')
 				}
+
+				else{
+					if (nm != m){
+						bigmessage = true;
+					}
+				}
+
+				
 			}
 
 			nm = share.renders.xssmessage(nm)
@@ -406,11 +419,7 @@ var arranges = {
 
 			</div>
 			
-			<% 
-			
-			
-			
-			if(!checkvisibility) {%>
+			<% if(!checkvisibility) {%>
 
 				<div class="cntswrk cntscontent">
 

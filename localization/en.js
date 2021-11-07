@@ -1254,7 +1254,6 @@ ____loclib.sharevisibilitylabel_sub_post = 'Author chose to make this <b>post</b
 ____loclib.sharevisibilitylabel_reg_post = 'Author chose to make this <b>post</b> available only for registered Bastyon users'
 ____loclib.sharevisibilitylabel_sub_article = 'Author chose to make this <b>article</b> available only for subscribers'
 ____loclib.sharevisibilitylabel_reg_article = 'Author chose to make this <b>article</b> available only for registered Bastyon users'
-
 ____loclib.sharevisibilitylabel_sub_video = 'Author chose to make this <b>video</b> available only for subscribers'
 ____loclib.sharevisibilitylabel_reg_video = 'Author chose to make this <b>video</b> available only for registered Bastyon users'
 
