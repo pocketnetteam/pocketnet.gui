@@ -261,18 +261,20 @@ function rpc(request, callback, obj) {
         if(!called) {
 
             callback({
-                code : 408
+                code : 408,
+                error : 'requesterror'
             });
 
             called = true;
         }
         
-    }).setTimeout(5000, function(){
+    }).setTimeout(20000, function(){
 
         if(!called) {
 
             callback({
-                code : 408
+                code : 408,
+                error : 'timeout'
             });
 
             called = true;
