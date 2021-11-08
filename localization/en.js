@@ -1134,6 +1134,11 @@ ____loclib.sumoftransaction = "Sum of transaction"
 ____loclib.videoBitrateError = "Video bitrate is too high. Please, use file with lower quality/resolution"
 ____loclib.videoQualityInfo = "Maximum allowed video bitrate  - 8 Mbit/s. If your file exceeds this limit, the download would be terminated. Maximum allowed resolution - 720p. <br/> Recommended bitrates: <br/> <b>1080p:</b> 5081 Kbps <br/> <b>720p:</b>  2680 Kbps <br/> <b>480p:</b>  1300 Kbps <br/> <b>360p:</b>  700 Kbps"
 ____loclib.videoQualityCaption = "Video quality limitations"
+____loclib.videoFormats = "List of supported video formats: .mp4, .mkv, .mov, .avi, .wmv, .flv, .f4v, .3g2, .3gp, .mts, .m2ts, .mxf, .nut"
+____loclib.videoSizeError = "Selected video file exceeds the limit of 4 Gb per video. Please compress it or select another one."
+____loclib.videoSizeAtt = "Maximum allowed file size: 4 Gb."
+
+
 
 ____loclib.streamLinks = "Streaming software links"
 ____loclib.linkRTMP = "RTMP Url"
@@ -1235,6 +1240,21 @@ ____loclib.attachVideoLentaShort = "Attach";
 
 ____loclib.linkToPostLenta = "Already posted"
 
-____loclib.ReferralUsers = "Referral Users"
+____loclib.ReferralUsers = "Referral Users. Total/From&nbsp;01.11.2021"
 ____loclib.lockedaccount = "Your account is locked due to reputation below -50"
 ____loclib.lockedaccounta = "Author Account is locked due to reputation below -50"
+
+____loclib.visibletoeveryone = 'Visible for everyone'
+____loclib.visibleonlytosubscribers = 'Visible only for subscribers'
+____loclib.visibleonlytoregistered = 'Visible only for Bastyon users'
+
+____loclib.sharevisibility_sub = 'For subscribers'
+____loclib.sharevisibility_reg = 'For Bastyon users'
+
+____loclib.sharevisibilitylabel_sub_post = 'Author chose to make this <b>post</b> available only for subscribers'
+____loclib.sharevisibilitylabel_reg_post = 'Author chose to make this <b>post</b> available only for registered Bastyon users'
+____loclib.sharevisibilitylabel_sub_article = 'Author chose to make this <b>article</b> available only for subscribers'
+____loclib.sharevisibilitylabel_reg_article = 'Author chose to make this <b>article</b> available only for registered Bastyon users'
+____loclib.sharevisibilitylabel_sub_video = 'Author chose to make this <b>video</b> available only for subscribers'
+____loclib.sharevisibilitylabel_reg_video = 'Author chose to make this <b>video</b> available only for registered Bastyon users'
+

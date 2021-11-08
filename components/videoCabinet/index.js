@@ -1337,13 +1337,24 @@ var videoCabinet = (function () {
           sort: ed.sort,
         };
 
-        renders.bonusProgram(
-          {
-            parameterName: 'ReferralUsers',
-            value: deep(app, 'platform.sdk.user.storage.me.rc') || '&mdash;',
-          },
-          el.bonusProgramReferContainer,
-        );
+        self.app.platform.sdk.user.mystatisticnov().catch(() => {
+          return Promise.resolve(null)
+        }).then(r => {
+
+
+          var addtext = ' / ' + (r ? r.histreferals : '&mdash;')
+          
+          renders.bonusProgram(
+            {
+              parameterName: 'ReferralUsers',
+              value: (deep(app, 'platform.sdk.user.storage.me.rc') || '0') + addtext,
+            },
+            el.bonusProgramReferContainer,
+          );
+          
+
+        })
+
 
         //getting and rendering videos
         actions

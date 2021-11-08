@@ -2,6 +2,7 @@
 
 var c = share.renders.caption();
 var m = share.renders.message();
+var cc = share.renders.captionclear();
 var bigmessage = false
 
 if(typeof ed == 'undefined') ed = {}
@@ -22,9 +23,33 @@ if(share.address){
 var view = 'post';
 var name = app.platform.api.name(share.address)
 
+var cview = view
 
+if(share.itisvideo()) cview = 'video'
+
+var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share)
 var emptywithrepost = share.isEmpty() && share.repost
 var value = Number(share.score)
+
+var makecaptionclear = function(){
+
+	%> 
+
+		<% if(cc) {
+
+			cc = filterXSS(clearScripts((findAndReplaceLink(cc))))
+
+
+		%>
+			<div class="">
+				<div class="sharecaption canmark">
+					<%=app.actions.emoji(nl2br(trimrn(cc)))%>
+				</div>
+			</div>
+
+	<% } 
+
+}
 
 var metadisplay = function(){ %>
 
@@ -85,6 +110,28 @@ var metadisplay = function(){ %>
 							<% var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0; %>
 								<span class="adr"><%-name || share.address %></span><% if(reputation > 1 || reputation < -1) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
 							</a>
+
+							<% if((!state || !my) && (typeof repost == 'undefined' || !repost)) { %> 
+
+								<span class="sbtnxs">
+									&middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><i class="far fa-check-circle"></i>  <%=e('following')%></span>
+						
+									
+									<% if(state && !my && user.address.value) {
+										
+										var r = me.relation(share.address, 'subscribes') 
+										
+										%>
+										
+
+										<span class="notificationturn <% if(r && (r.private == 'true' || r.private === true)) {%> turnon <% } %>">&middot; <i class="far fa-bell-slash"></i></span>
+									<% } %>
+				
+
+									
+								</span>
+
+							<% } %>
 							
 						</div>			
                         
@@ -112,7 +159,7 @@ var metadisplay = function(){ %>
 		
 		</div>
 
-		<% if(state && (typeof repost == 'undefined' || !repost)) { %>			
+		<% if(!checkvisibility && state && (typeof repost == 'undefined' || !repost)) { %>			
 
 			<div class="metapanel">
 				<div class="metapanelitem metmenu">
@@ -122,7 +169,7 @@ var metadisplay = function(){ %>
 
 		<% } %>
 
-		<% if(typeof repost != 'undefined' && repost && !fromempty) { %> 
+		<% if(!checkvisibility && typeof repost != 'undefined' && repost && !fromempty) { %> 
 
 			<div class="metapanel">
 				<div class="metapanelitem">
@@ -248,17 +295,61 @@ var metadisplay = function(){ %>
 
 		<div class="shareTable  <%-subscribed%> <%-view%> <% if(emptywithrepost) { %> emptywithrepost <% } else { %> truerepost <% } %>" address="<%-share.address%>" stxid="<%-share.txid%>">
 
-			<div class="cntswrk forurl <%- (aspectRatio > 0.9) && (aspectRatio < 1.25) ? 'squareVideo' : ''%> <%- (aspectRatio < 0.9) && (aspectRatio > 0) ? 'verticalVideo' : ''%>">
+			<% if(!checkvisibility) {%>
+				<div class="cntswrk forurl <%- (aspectRatio > 0.9) && (aspectRatio < 1.25) ? 'squareVideo' : ''%> <%- (aspectRatio < 0.9) && (aspectRatio > 0) ? 'verticalVideo' : ''%>">
 
-				<% var a = ["u"] %>
+					<% var a = ["u"] %>
 
-				<% _.each(a, function(key, i){ %> 
+					<% _.each(a, function(key, i){ %> 
 
-					<% if(arranges[key]) arranges[key]() %>
-							
-				<% }) %>
+						<% if(arranges[key]) arranges[key]() %>
+								
+					<% }) %>
 
-			</div>
+				</div>
+				<% } else { %> 
+					<div class="cntswrk cntscontent">
+	
+						<div class="hiddenpost">
+	
+	
+	
+							<div class="captionpreview">
+								<% makecaptionclear() %>
+							</div>
+	
+							<% if(checkvisibility == 'sub'){ %>
+	
+								<div class="hiddenlabeltext">
+									<%=e('sharevisibilitylabel_sub_' + cview)%>
+								</div>
+	
+								
+	
+							<% } %>
+	
+							<% if(checkvisibility == 'reg'){ %>
+	
+								<div class="hiddenlabeltext">
+									<%=e('sharevisibilitylabel_reg_' + cview)%>
+								</div>
+	
+								<div class="hiddenlabelaction">
+									<a href="registration">
+										<button class="orange small button"><%=e('signupmenu')%></button>
+									</a>
+								</div>
+	
+							<% } %>
+	
+	
+	
+						</div>
+						
+		
+					</div>
+					
+				<% } %>
 
 			<div class="anothercntswrk">
 
@@ -334,7 +425,7 @@ var metadisplay = function(){ %>
 									</div>
 
 									
-									<% if(app.platform.repost && !my) {%>
+									<% if(app.platform.repost && !my && !checkvisibility) {%>
 										<div class="item <% if(!my){ %> forrepost <% } else { %> nact <% } %>">
 
 											<div class="itemwr table">

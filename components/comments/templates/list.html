@@ -5,7 +5,7 @@ var commentpanel = function(comment, _class){  %>
 	<div class="commentpanel">
 
 		<div class="items">
-			<% if((!state || mestate.reputation >= -50) && !comment.deleted) { %> 
+			<% if((!state || mestate.reputation >= -50) && !comment.deleted && !ed.cantsend) { %> 
 				<div class="item reply">
 					<div class="cact">
 						<div class="label">

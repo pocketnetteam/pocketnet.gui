@@ -102,11 +102,15 @@ var Peertube = function (settings) {
 	};
 
 	self.api = {
-		randroykey: function (type) {
+		randroykey: function (type, special) {
 			var _roys = {};
 
 			_.each(roys, function (r, c) {
 				if (!r.auto) {
+
+					if (!special){
+						if(r.hasspecial()) return
+					}
 
 					if (type && type == 'upload' && !r.canupload()) return
 
@@ -121,7 +125,7 @@ var Peertube = function (settings) {
 			return keys[f.rand(0, keys.length - 1)];
 		},
 
-		best: function ({ roy, type }) {
+		best: function ({ roy, type, special }) {
 
 			if(!type || !roy) {
 				type = 'upload'
@@ -130,7 +134,7 @@ var Peertube = function (settings) {
 
 			
 
-			if (!roy) roy = self.api.randroykey(type);
+			if (!roy) roy = self.api.randroykey(type, special);
 
 			roy = getroy(roy);
 
@@ -283,7 +287,7 @@ var Peertube = function (settings) {
 			return Promise.resolve({})
 		},
 
-		roys: ({type}) => {
+		roys: ({type, special}) => {
 			const output = {};
 
 			var _roys = _.filter(roys, function (r) {
@@ -291,6 +295,11 @@ var Peertube = function (settings) {
 			});
 
 			if (type && type == 'upload') _roys = _.filter(_roys, function (r) {
+
+				if (!special){
+					if(r.hasspecial()) return
+				}
+
 				return r.canupload();
 			});
 

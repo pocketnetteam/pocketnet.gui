@@ -141,6 +141,44 @@ var article = (function(){
 				return art;
 			},	
 
+			changeVisibility : function(share, clbk){
+
+				var visibilities = [
+					{
+						v : '0',
+						t : self.app.localization.e('visibletoeveryone')
+					},
+					{
+						v : '1',
+						t : self.app.localization.e('visibleonlytosubscribers')
+					},
+					{
+						v : '2',
+						t : self.app.localization.e('visibleonlytoregistered')
+					}
+				]
+
+				var items = _.map(visibilities, function(i){
+					return {
+						text : i.t,
+						action : function(_clbk){
+							share.settings.f = i.v
+
+							if (clbk)
+								clbk()
+
+							_clbk()
+						}
+					}
+				})
+		
+				menuDialog({
+                    items: items,
+					class : "zIndex"
+                })
+
+			},
+
 			add : function(){
 
 				var share = new Share(self.app.localization.key);
@@ -169,8 +207,8 @@ var article = (function(){
 
 					var dialogtext = "Do you really want to publish this article?";
 
-					if(ed.share){
-						dialogtext = "Do you really want to change and publish this article?";
+					if (ed.share){
+						dialogtext = "Do you really want to change this article?";
 					}
 
 					dialog({
@@ -215,10 +253,11 @@ var article = (function(){
 
 							share.message.set(text)
 
+							actions.changeVisibility(share, function(){
+								actions.trx(share)
+							})
 
-
-
-							actions.trx(share)
+							
 
 							
 						}

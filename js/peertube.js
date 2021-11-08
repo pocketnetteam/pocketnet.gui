@@ -476,7 +476,16 @@ PeerTubePocketnet = function (app) {
       },
 
       best: function (type) {
-        return this.roys({ type: type })
+
+        var special = false
+
+        /*if( app.user.address.value == 'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m' || app.user.address.value == 'PDgbAvsrS4VGKkW5rivcJaiCp7fnBoZRgM'){
+            special = true
+        }*/
+
+
+
+        return this.roys({ type: type, special : special })
           .then((data = {}) => {
             //console.log("FDATA", data)
 
@@ -484,9 +493,15 @@ PeerTubePocketnet = function (app) {
             var royId;
 
             if (app.user.address.value) {
-              royId =
-                self.helpers.base58.decode(app.user.address.value) % roysAmount;
+              royId = self.helpers.base58.decode(app.user.address.value) % roysAmount;
             }
+
+            /*if (special){
+              var spc = _.find(data, function(i){
+                if(i == 'bastyonmma.pocketnet.app' || i == 'bastyonmma.nohost.me') return true
+              })
+              if(spc) return spc
+            }*/
 
             if (!royId) royId = rand(0, roysAmount - 1);
 
@@ -523,7 +538,7 @@ PeerTubePocketnet = function (app) {
           });
       },
 
-      roys: ({ type }) => app.api.fetch('peertube/roys', { type }),
+      roys: ({ type, special }) => app.api.fetch('peertube/roys', { type, special}),
 
       allServers: () => app.api.fetch('peertube/allservers'),
     },

@@ -147,9 +147,12 @@ var Middle = function(){
   
     self.headers = function(request, result, next){
         result.setHeader('Access-Control-Allow-Origin', '*');
+        result.setHeader('Access-Control-Max-Age', '600');
+        result.setHeader('Strict-Transport-Security', 'max-age=31536000');
         result.setHeader("Access-Control-Allow-Methods", "GET, POST");
         result.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
         result.set('Cache-control', 'public, max-age=10')
+
         
         if (next) 
             next(null)
@@ -229,6 +232,7 @@ var Middle = function(){
     }
     
     self.data = function(request, result, next){
+
      
         request.data = _.merge(request.query, request.body)
         

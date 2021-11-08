@@ -158,7 +158,8 @@ var share = (function(){
 
 							clbk()
 
-							renders.postline();
+							renders.settings();
+							renders.postline();	
 
 							if(_clbk) _clbk()
 
@@ -847,7 +848,9 @@ var share = (function(){
 						}
 
 						currentShare.uploadImages(self.app, function(){
-	
+							if (currentShare.repost.v){
+								currentShare.settings.f = '0'
+							}
 							if (currentShare.checkloaded()){
 								
 		
@@ -1587,10 +1590,68 @@ var share = (function(){
 
 			},
 
+			settings : function(clbk){
+
+				if(!currentShare.repost.v) {
+
+					currentShare.settings.f || (currentShare.settings.f = '0')
+
+					var selector = new Parameter({
+
+						type : "VALUES",
+						name : "Visibility",
+						id : 'organizationCode',
+						dbId : "INS_BROKER_CODE",
+						possibleValues : ['0','1','2'],
+						possibleValuesLabels : [
+							self.app.localization.e('visibletoeveryone'), 
+							self.app.localization.e('visibleonlytosubscribers'),
+							self.app.localization.e('visibleonlytoregistered')
+						],
+						defaultValue : currentShare.settings.f,
+						value : currentShare.settings.f
+
+					})
+
+					self.shell({
+						name :  'settings',
+						el : el.settings,
+						data : {
+							share : currentShare,
+							essenseData : essenseData,
+							selector : selector
+						},
+
+					}, function(p){
+
+						ParametersLive([selector], p.el)
+
+
+						selector._onChange = function(){
+
+							currentShare.settings.f = selector.value
+
+							state.save()
+						}
+
+						if (clbk)
+							clbk();
+					})
+				}
+
+				else{
+
+					el.settings.html('')
+
+					if(clbk) clbk()
+				}
+			},
+
+
 		
 			tgs : function(clbk){
 
-				if(!currentShare.repost.value) {
+				if(!currentShare.repost.v) {
 					
 					self.nav.api.load({
 						open : true,
@@ -1641,6 +1702,9 @@ var share = (function(){
 
 				}
 				else{
+
+					el.tgsWrapperMain.html('')
+
 					if(clbk) clbk()
 				}
 			},
@@ -1668,6 +1732,7 @@ var share = (function(){
 					renders.repost();
 
 					renders.postline();
+					renders.settings();
 
 				});
 
@@ -2071,6 +2136,7 @@ var share = (function(){
 								renders.repost(function(){
 									renders.tgs();
 									renders.postline();
+									renders.settings();
 								});
 
 							})
@@ -2540,6 +2606,7 @@ var share = (function(){
 				el.changeAddress = el.c.find('.changeAddress')
 				el.repostWrapper = el.c.find('.repostWrapper')
 				el.postline = el.c.find('.postlineWrapper')
+				el.settings = el.c.find('.settingsWrapper')
 				el.body = el.c.find('.bodywrapper')
 
 				initEvents();

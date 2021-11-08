@@ -5,7 +5,8 @@
     "main": "index.js",
     "scripts": {
         "start": "node cli.js --cli",
-        "serve": "node cli.js --cli",
+        "serve": "node --nouse-idle-notification --expose-gc --always-compact --max-old-space-size=8192 cli.js --cli",
+        "servecl": "node cli.js --cli",
         "serveinspect": "node --inspect cli.js --cli",
         "serve:test": "node cli.js --cli --test",
         "serveTest": "nodemon cli.js --cli --test",

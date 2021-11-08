@@ -89,7 +89,9 @@ var Cache = function(p){
     if (!p.dontCache)
     {
         ckeys = {
-
+            getuserstatistic: {
+                time : 960,
+            },
             // node +
             getlastcomments : {
                 time : 960,
@@ -127,23 +129,23 @@ var Cache = function(p){
             getrawtransactionwithmessagebyid: {
                 time : 460,
                 block : 0,
-                smart : {
+                /*smart : {
                     idin : '0',
                     idou : 'txid',
                     storage : 'shares',
                     get : true
-                }
+                }*/
             },
             
             // node +
             getrawtransactionwithmessage: {
                 time : 460,
                 block : 0,
-                smart : {
+                /*smart : {
                     idin : '0',
                     idou : 'txid',
                     storage : 'shares'
-                }
+                }*/
             },
 
             // ?
@@ -161,11 +163,11 @@ var Cache = function(p){
             gethierarchicalstrip: {
                 time : 460,
                 block : 0,
-                smart : {
+                /*smart : {
                     idin : '0',
                     idou : 'txid',
                     storage : 'shares'
-                }
+                }*/
             },  
 
             // node +
@@ -178,12 +180,12 @@ var Cache = function(p){
             getuserprofile: {
                 time : 560,
                 block : 0,
-                smart : {
+                /*smart : {
                     idin : '0',
                     idou : 'address',
                     storage : 'getuserprofile',
                     get : true
-                }
+                }*/
             },
 
             getuserstate : {
@@ -497,6 +499,8 @@ var Cache = function(p){
                     
             }
         })
+
+        f.gcwrapper()
     }
 
     self.info = function(){
@@ -530,6 +534,8 @@ var Cache = function(p){
     
     self.clear = function(){
         storage = {}
+
+        f.gcwrapper()
     }
 
     var softclear = function(){
@@ -595,6 +601,8 @@ var Cache = function(p){
                 delete s[key]
             })
         })
+
+        f.gcwrapper()
     }
 
     self.init = function(){

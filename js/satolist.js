@@ -6635,7 +6635,38 @@ Platform = function (app, listofnodes) {
                     return true
 
                 }
+            },
+
+            mystatisticnov : function(){
+                var novblock = 1420300
+                var address = self.sdk.address.pnet().address;
+
+                if(window.testpocketnet) novblock = 302900
+
+                return pretry(function(){
+                    return self.currentBlock
+                }).then(r => {
+                    return self.sdk.user.statistic(address, self.currentBlock - novblock)
+                })
+
+            },
+
+            statistic : function(address, de){
+
+                return self.app.api.rpc('getuserstatistic', [[address], 0, de]).then(d => {
+
+                    var result = _.find(d, function(p){
+                        return p.address == address
+                    })
+
+                    return result
+
+                }).catch(e => {
+                    if (clbk)
+                        clbk([])
+                })
             }
+
         },
 
         processes: {
@@ -12154,6 +12185,45 @@ Platform = function (app, listofnodes) {
                     added: {
 
                     }
+                },
+
+                checkvisibility : function(share){
+                    var v = share.visibility()
+
+                    var a = self.sdk.address.pnet()
+
+                    if(a && a.address == share.address) return false
+
+                    if(!v) return false
+
+                    if (v == 'reg'){
+
+                        if(self.app.user.getstate()) return false
+
+                        return v
+
+                    }
+
+                    if (v == 'sub'){
+
+                        var a = self.sdk.address.pnet()
+
+                        if (a){
+
+                            var me = deep(app, 'platform.sdk.users.storage.' + a.address)
+
+                            if (me && me.relation(share.address, 'subscribes')) {
+                                return false
+                            }
+                            
+                        }
+
+
+                    }
+
+                    return v
+
+
                 },
 
                 default: function (clbk) {
@@ -18431,6 +18501,7 @@ Platform = function (app, listofnodes) {
 
                         linkInfo ? link.data = {
                             image : 'https://' + linkInfo.from + linkInfo.previewPath,
+                            thumbnail : 'https://' + linkInfo.from + linkInfo.thumbnailPath,
                             views : linkInfo.views,
                             duration : linkInfo.duration,
                             aspectRatio : linkInfo.aspectRatio || 1,
