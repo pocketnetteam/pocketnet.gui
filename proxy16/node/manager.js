@@ -1196,6 +1196,7 @@ var Nodemanager = function(p){
             //return Promise.resolve()
   
             return node.peers().then(nodes => {
+                
 
                 nodes = _.filter(nodes, function(n){
                     return !self.nodesmap[n.key] && !self.peers[n.key]
