@@ -4945,7 +4945,7 @@
 
 								input += '<div class="vmt_value" level="'+level+'" groupid="'+value.id+'">'
 									input += '<div class="vmt_checkbox">'
-										input += '<input elementsidid="checkbox_'+ self.id + value.id + '" type="checkbox" value="'+value.id+'" id="checkbox_'+ self.id + value.id + '" class="checkbox" />'
+										input += '<input elementsid="checkbox_'+ self.id + value.id + '" type="checkbox" value="'+value.id+'" id="checkbox_'+ self.id + value.id + '" class="checkbox" />'
 										input += '<label for="checkbox_'+self.id + value.id + '">'+v+'</label>';
 									input += '</div>'
 								input += '</div>'
