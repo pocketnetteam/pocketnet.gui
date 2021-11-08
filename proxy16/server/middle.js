@@ -204,10 +204,17 @@ var Middle = function(){
                     jsonp.time = s.time
                 }
            
+            try{
+                result.status(code).jsonp(jsonp)
 
-            result.status(code).jsonp(jsonp)
-
-            addLogs(request.data, request.clientIP, code, request.baseUrl + request.path, start)
+                addLogs(request.data, request.clientIP, code, request.baseUrl + request.path, start)
+            }  
+            
+            catch(e){
+                result.status(500).jsonp({
+                    code : 500
+                })
+            }
     
         }
     
@@ -227,7 +234,11 @@ var Middle = function(){
             }  
             
             catch(e){
-                console.log(e)
+
+                result.status(500).jsonp({
+                    code : 500
+                })
+
             }
 
 

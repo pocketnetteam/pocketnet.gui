@@ -47,6 +47,8 @@ function rpca(request, obj){
 
             resolve(res)
         }, obj)
+
+
     })
 }
 
@@ -111,7 +113,7 @@ function rpc(request, callback, obj) {
 
     var pbl = publics[request.method]
     var pst = posts[request.method]
-    var timeout = 120000
+    var timeout = 60000
 
     var self = obj;
     try{
@@ -139,9 +141,12 @@ function rpc(request, callback, obj) {
 
             if(!called && !hasdata){
                 ac.abort();
+                called = true;
+                callback({
+                    code : 408
+                });
             }
-            else{
-            }
+            
 
             ac = null
 
@@ -193,15 +198,20 @@ function rpc(request, callback, obj) {
 
             if (res.statusCode === 401) {
 
-                var exceededError = new Error(errorMessage + 'Connection Rejected: 401 Unnauthorized');
-                    exceededError.code = 401;
+                var exceededError = {
+                    error : errorMessage + 'Connection Rejected: 401 Unnauthorized',
+                    code : 401
+                } 
 
                 callback(exceededError);
                 return;
             }
             if (res.statusCode === 403) {
-                var exceededError = new Error(errorMessage + 'Connection Rejected: 403 Forbidden');
-                    exceededError.code = 403;
+
+                var exceededError = {
+                    error : errorMessage + 'Connection Rejected: 403 Forbidden',
+                    code : 403
+                } 
 
                 callback(exceededError);
 
@@ -209,9 +219,11 @@ function rpc(request, callback, obj) {
             }
             if (res.statusCode === 500 && buf.toString('utf8') === 'Work queue depth exceeded') {
 
-                var exceededError = new Error('Bitcoin JSON-RPC: ' + buf.toString('utf8'));
-
-                exceededError.code = 429;
+                var exceededError = {
+                    error : 'Bitcoin JSON-RPC: ' + buf.toString('utf8'),
+                    code : 429
+                } 
+                
 
                 callback(exceededError);
 
@@ -224,8 +236,10 @@ function rpc(request, callback, obj) {
                 parsedBuf = JSON.parse(buf);
             } catch (e) {
 
-                var exceededError = (new Error(errorMessage + 'Error Parsing JSON: ' + e.message)) || {};
-                    exceededError.code = res.statusCode
+                var exceededError = {
+                    error : 'Error Parsing JSON: ' + e.message,
+                    code : res.statusCode || 500
+                } 
 
                 callback(exceededError);
 
@@ -239,8 +253,8 @@ function rpc(request, callback, obj) {
 
     req.on('error', function(e) {
 
-        if (!called) {
 
+        if(!called) {
             called = true;
 
             callback({
