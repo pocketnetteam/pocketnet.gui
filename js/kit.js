@@ -2046,6 +2046,10 @@ pShare = function(){
 
 		}
 
+		if (self.message){
+			self.message = self.message.replace(/\n{2,}/g, '\n\n');
+		}
+
 		if(v.myVal) self.myVal = Number(v.myVal)
 
 		self.language = v.l || v.language || 'en'
