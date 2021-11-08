@@ -228,13 +228,13 @@ var filluser = (function(){
 								
 								_p.ref += ', ' + name
 			
-								body += '<p><a href="https://'+self.app.options.url+'/author?address='+self.app.ref+'">Referrer: '+name+'</a></p>'
+								body += '<p><a elementsid="https://'+self.app.options.url+'/author?address='+self.app.ref+'" href="https://'+self.app.options.url+'/author?address='+self.app.ref+'">Referrer: '+name+'</a></p>'
 							}							
 			
 							var r = deep(document, 'referrer')
 			
 							if (r) {
-								body += '<p><a href="'+r+'">From: '+r+'</a></p>'
+								body += '<p><a elementsid="'+r+'" href="'+r+'">From: '+r+'</a></p>'
 							}
 			
 							_p.body = encodeURIComponent(body)

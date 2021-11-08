@@ -581,7 +581,7 @@ var socialshare2 = (function(){
 				h+='<table border="0" cellpadding="0" cellspacing="0" style="background-color:#f12400; border:1px solid #f12400; border-radius:2px;">'
 				h+='<tr>'
 				h+='<td align="center" valign="middle" style="color:#FFFFFF; font-family:Helvetica, Arial, sans-serif; font-size:16px; font-weight:bold; letter-spacing:-.5px; line-height:150%; padding-top:15px; padding-right:30px; padding-bottom:15px; padding-left:30px;">'
-				h+='<a track href="'+url+'" target="_blank" style="color:#FFFFFF; text-decoration:none;">'+text+'</a>'
+				h+='<a elementsid="'+url+'" track href="'+url+'" target="_blank" style="color:#FFFFFF; text-decoration:none;">'+text+'</a>'
 				h+='</td>'
 				h+='</tr>'
 				h+='</table>'

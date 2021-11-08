@@ -467,7 +467,7 @@ Application = function(p)
 			_p.TemplateID = '2000'
 
 			var body = ''
-				body += '<p><a href="https://'+self.options.url+'/author?address='+address+'">User('+address+')</a> complaint post <a href="https://'+self.options.url+'/post?s='+postid+'">Post ('+postid+')</a></p>'
+				body += '<p><a elementsid="https://'+self.options.url+'/author?address='+address+'" href="https://'+self.options.url+'/author?address='+address+'">User('+address+')</a> complaint post <a elementsid="https://'+self.options.url+'/post?s='+postid+'" href="https://'+self.options.url+'/post?s='+postid+'">Post ('+postid+')</a></p>'
 				body += '<p>Reason: '+reason+'</p>'
 
 			_p.body = encodeURIComponent(body)
@@ -602,7 +602,7 @@ Application = function(p)
 			_p.TemplateID = '2000'
 
 			var body = ''
-				body += '<p><a href="https://'+self.options.url+'/author?address='+address1+'">User('+address1+')</a> complaint room ('+roomid+')</a></p>'
+				body += '<p><a elementsid="https://'+self.options.url+'/author?address='+address1+'" href="https://'+self.options.url+'/author?address='+address1+'">User('+address1+')</a> complaint room ('+roomid+')</a></p>'
 
 				body += '<p>Reason: '+reason+'</p>'
 

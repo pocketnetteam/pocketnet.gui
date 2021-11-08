@@ -56,7 +56,7 @@ _.each(messages, function(message){
 		<div class="iconWrapper">
 			<div class="icon">
 
-				<a href="<%-app.platform.api.authorlink(message.f)%>">
+				<a elementsid="<%-app.platform.api.authorlink(message.f)%>" href="<%-app.platform.api.authorlink(message.f)%>">
 					<div class="usericon" image="<%-src || ''%>">
 
 						<% if(!src && letter) {%>
@@ -155,7 +155,7 @@ _.each(messages, function(message){
 									<b>
 	
 									<% if(!mine) {%>
-										<span class="name"><a href="<%-app.platform.api.authorlink(message.f)%>"><%-n%>:</a></span>
+										<span class="name"><a elementsid="<%-app.platform.api.authorlink(message.f)%>" href="<%-app.platform.api.authorlink(message.f)%>"><%-n%>:</a></span>
 									<% } else { %>
 										<span class="name">You:</span>
 									<% } %>

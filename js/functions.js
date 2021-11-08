@@ -10366,7 +10366,7 @@
 
 	                   
 
-	                    return prefix + '<a cordovalink="_system" href="'+ (protocol + url).replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '" target="_blank">' + full + '</a>';
+	                    return prefix + '<a elementsid="href_cordovalink_systel" cordovalink="_system" href="'+ (protocol + url).replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '" target="_blank">' + full + '</a>';
 	            });
 
 	    return replacedText;
