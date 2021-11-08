@@ -1637,6 +1637,7 @@ var system16 = (function(){
 					var nodes = _.filter(_.sortBy(info.nodeManager.nodes, function(node){
 						return -node.users
 					}), function(n, i){
+						return true
 						return i < 5
 					})
 

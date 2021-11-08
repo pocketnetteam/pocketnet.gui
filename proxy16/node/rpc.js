@@ -131,14 +131,16 @@ function rpc(request, callback, obj) {
 
 
     ///need to test
-    /*if (typeof AbortController != 'undefined'){
+    if (typeof AbortController != 'undefined'){
 
-        const ac = new AbortController();
+        var ac = new AbortController();
 
         setTimeout(function(){
 
             if(!called && !hasdata){
                 ac.abort();
+            }
+            else{
             }
 
             ac = null
@@ -146,7 +148,7 @@ function rpc(request, callback, obj) {
         }, timeout)
 
         signal = ac.signal
-    }*/
+    }
 
     
 
@@ -186,8 +188,8 @@ function rpc(request, callback, obj) {
             if (called) {
                 return;
             }
-            called = true;
 
+            called = true;
 
             if (res.statusCode === 401) {
 
@@ -236,7 +238,7 @@ function rpc(request, callback, obj) {
     });
 
     req.on('error', function(e) {
-        
+
         if (!called) {
 
             called = true;
