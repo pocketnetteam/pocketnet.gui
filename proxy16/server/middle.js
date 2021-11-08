@@ -217,12 +217,21 @@ var Middle = function(){
 
             if(code < 100) code = 500
 
-            result.status(code).jsonp({
-                error : error,
-                code : code
-            })
+            try{
+                result.status(code).jsonp({
+                    error : error,
+                    code : code
+                })
 
-            addLogs(request.data, request.clientIP, code, request.baseUrl + request.path, start)
+                addLogs(request.data, request.clientIP, code, request.baseUrl + request.path, start)
+            }  
+            
+            catch(e){
+                console.log(e)
+            }
+
+
+            
     
         }
     
