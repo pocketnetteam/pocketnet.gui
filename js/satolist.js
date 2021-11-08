@@ -2289,7 +2289,10 @@ Platform = function (app, listofnodes) {
             }, 50)
         },
 
-        showmykeyfast: function () {
+        showmykeyfast: function (p) {
+
+            if(!p) p = {}
+
             app.nav.api.load({
 
                 open: true,
@@ -2297,7 +2300,8 @@ Platform = function (app, listofnodes) {
                 href: 'pkview',
 
                 essenseData: {
-                    dumpkey: true
+                    dumpkey: true,
+                    showsavelabel : p.showsavelabel,
                 },
 
                 clbk: function (p, s) {
@@ -4832,6 +4836,14 @@ Platform = function (app, listofnodes) {
         registrations: {
             storage: {},
             clbks: {},
+
+            redirect : null,
+
+            getredirectFromCurrentPage : function(){
+                self.sdk.registrations.redirect = self.app.nav.get.pathnameSearch()
+
+                console.log('self.sdk.registrations', self.sdk.registrations)
+            },
 
             remove: function (address) {
 

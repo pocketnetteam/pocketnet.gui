@@ -1020,6 +1020,7 @@ var menu = (function(){
 				},
 				click : function(){
 					self.app.mobile.vibration.small()
+					self.app.platform.sdk.registrations.getredirectFromCurrentPage()
 					self.nav.api.go({
 						href : 'authorization',
 						history : true,
@@ -1034,6 +1035,7 @@ var menu = (function(){
 				},
 				click : function(){
 					self.app.mobile.vibration.small()
+					self.app.platform.sdk.registrations.getredirectFromCurrentPage()
 					self.nav.api.go({
 						href : 'registration',
 						history : true,

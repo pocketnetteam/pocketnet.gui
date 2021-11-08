@@ -301,24 +301,29 @@ var filluserfast = (function(){
 						c = true
 
 						if (deep(essenseData, 'successHref') == '_this'){
+
 							var close = deep(initialParameters, 'container.close')
+
 							if (close)
 								close();
+
 							if (essenseData.signInClbk)
 								essenseData.signInClbk();
+
 						}
 						else
 						{
-
+							self.app.platform.sdk.registrations.redirect
 
 							self.nav.api.go({
-								href : 'index?r=recommended',
+								href : self.app.platform.sdk.registrations.redirect || 'index?r=recommended',
 								history : true,
 								open : true
 							})	
 
 						}
 
+						self.app.platform.sdk.registrations.redirect = null
 
 						if (isMobile()){
 							self.app.platform.ui.showmykey({
@@ -1236,7 +1241,7 @@ var filluserfast = (function(){
 			getdata : function(clbk, p){
 
 				if (p.state && !self.user.validateVay()){
-
+					
 					self.app.nav.api.load({
 						open : true,
 						href : 'index',

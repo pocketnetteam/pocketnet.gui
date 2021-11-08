@@ -899,6 +899,8 @@ Application = function(p)
 
 			if(typeof p.nav.href == 'function') p.nav.href = p.nav.href()
 
+			console.log('p.nav.href', p.nav.href)
+
 
 			self.nav.init(p.nav);
 			

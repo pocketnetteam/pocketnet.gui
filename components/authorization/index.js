@@ -91,19 +91,10 @@ var authorization = (function(){
 
 
 				self.user.signin(mnemonicKey, function(state){
-
 				
 					if(!state){
 
 						sitemessage(self.app.localization.e('e13028'))
-
-						/*dialog({
-							class : "one",
-							header : self.app.localization.e('id98'),
-							html : self.app.localization.e('id99'),
-							btn1text : self.app.localization.e('daccept'),
-							btn2text : self.app.localization.e('dcancel'),
-						})*/
 
 						return;
 					}
@@ -123,6 +114,8 @@ var authorization = (function(){
 								if (app.curation()){
 									return 'index';
 								}
+
+								return self.app.platform.sdk.registrations.redirect || undefined
 							
 							}
 							else
@@ -139,7 +132,6 @@ var authorization = (function(){
 							}
 
 						}
-					
 
 						_p.nav = essenseData.nav;							
 
@@ -182,6 +174,7 @@ var authorization = (function(){
 					}
 					else
 					{
+
 						self.app.reload(_p);
 					}
 
@@ -351,6 +344,8 @@ var authorization = (function(){
 
 				if(p.state && primary)
 				{
+
+					console.log("IM HRER")
 
 					self.nav.api.load({
 						open : true,
