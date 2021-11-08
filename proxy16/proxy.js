@@ -1488,11 +1488,11 @@ var Proxy = function (settings, manage, test, logger) {
 			},
 			heapdump: {
 				path: '/heapdump',
-				//authorization: 'signature',
+				authorization: 'signature',
 				action: function (message) {
 
-					/*if (!message.A)
-						return Promise.reject({ error: 'Unauthorized', code: 401 });*/
+					if (!message.A)
+						return Promise.reject({ error: 'Unauthorized', code: 401 });
 						
 					var dumpdata = _.clone(dump)
 
