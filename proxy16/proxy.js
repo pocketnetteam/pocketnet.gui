@@ -1533,6 +1533,9 @@ var Proxy = function (settings, manage, test, logger) {
 
 					try{
 
+						remote.clear()
+						server.cache.clear()
+
 						f.createfolder(filename)
 
 						heapdump.writeSnapshot(filename, function(err, filename) {

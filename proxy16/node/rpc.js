@@ -40,14 +40,23 @@ RpcClient.config = {
 
 function rpca(request, obj){
     return new Promise(function(resolve, reject){
-        
-        rpc(request, function(err, res){
 
-            if(err) return reject(err)
+        try{
+            rpc(request, function(err, res){
 
-            resolve(res)
-        }, obj)
+                if(err) return reject(err)
+    
+                resolve(res)
+    
+            }, obj)
+        }
+        catch(e) {
 
+            reject({
+                code : 500
+            })
+
+        }
 
     })
 }
@@ -107,19 +116,22 @@ var publics = {
     getuserstatistic : true
 }
 
+const keepAliveAgent = new http.Agent({ keepAlive: true });
+
 function rpc(request, callback, obj) {
 
     var m = request.method
 
     var pbl = publics[request.method]
     var pst = posts[request.method]
-    var timeout = 60000
-
+    var timeout = 45000
     var self = obj;
+
     try{
         request = JSON.stringify(request);
     }
     catch(e){
+
         callback({
             code : 499
         });
@@ -131,31 +143,22 @@ function rpc(request, callback, obj) {
 
     var signal = null
 
-
     ///need to test
     if (typeof AbortController != 'undefined'){
 
         var ac = new AbortController();
+            signal = ac.signal
 
         setTimeout(function(){
 
-            if(!called && !hasdata){
+            if(!called){
                 ac.abort();
-                called = true;
-                callback({
-                    code : 408
-                });
             }
-            
 
             ac = null
 
         }, timeout)
-
-        signal = ac.signal
     }
-
-    
 
     var options = {
         host: self.host,
@@ -163,8 +166,8 @@ function rpc(request, callback, obj) {
         method: 'POST',
         port: self.port,
         //rejectUnauthorized: self.rejectUnauthorized,
-        agent: self.disableAgent ? false : undefined,
-        timeout: 5000,
+        agent: keepAliveAgent,//self.disableAgent ? false : undefined,
+        //timeout: 5000,
         signal : signal
     };
 
@@ -175,17 +178,17 @@ function rpc(request, callback, obj) {
     }
 
     var called = false;
-
     var errorMessage = 'Bitcoin JSON-RPC: ';
-    var hasdata = false
-
 
     var req = self.protocol.request(options, function(res) {
 
         var buf = '';
+        var parsedBuf = null;
+        var exceededError = null
+
         res.on('data', function(data) {
             buf += data;
-            hasdata = true
+
         });
 
         res.on('end', function() {
@@ -194,76 +197,89 @@ function rpc(request, callback, obj) {
                 return;
             }
 
-            called = true;
-
             if (res.statusCode === 401) {
 
-                var exceededError = {
+                exceededError = {
                     error : errorMessage + 'Connection Rejected: 401 Unnauthorized',
                     code : 401
                 } 
 
-                callback(exceededError);
-                return;
             }
+
             if (res.statusCode === 403) {
 
-                var exceededError = {
+                exceededError = {
                     error : errorMessage + 'Connection Rejected: 403 Forbidden',
                     code : 403
                 } 
 
-                callback(exceededError);
-
-                return;
             }
+
             if (res.statusCode === 500 && buf.toString('utf8') === 'Work queue depth exceeded') {
 
-                var exceededError = {
+                exceededError = {
                     error : 'Bitcoin JSON-RPC: ' + buf.toString('utf8'),
                     code : 429
                 } 
-                
 
-                callback(exceededError);
-
-                return;
             }
 
-            var parsedBuf;
+            if(!exceededError){
 
-            try {
-                parsedBuf = JSON.parse(buf);
-            } catch (e) {
-
-                var exceededError = {
-                    error : 'Error Parsing JSON: ' + e.message,
-                    code : res.statusCode || 500
+                try {
+                    parsedBuf = JSON.parse(buf);
                 } 
+                catch (e) {
+                    exceededError = {
+                        error : 'Error Parsing JSON: ' + e.message,
+                        code : res.statusCode || 500
+                    }   
+                }
 
-                callback(exceededError);
-
-                return;
             }
 
-            callback(parsedBuf.error, parsedBuf);
+            if (exceededError){
+
+                res.resume()
+
+                callback(exceededError);
+            }
+            else{
+                callback(parsedBuf.error, parsedBuf);
+            }
+            
+            buf = '';
+            parsedBuf = null;
+            exceededError = null;
+
+            called = true;
 
         });
-    });
 
-    req.on('error', function(e) {
-
+    }).on('error', function(e) {
 
         if(!called) {
-            called = true;
 
             callback({
                 code : 408
             });
-        }
-    });
 
-    
+            called = true;
+        }
+        
+    }).setTimeout(5000, function(){
+
+        if(!called) {
+
+            callback({
+                code : 408
+            });
+
+            called = true;
+        }
+
+        req.destroy()
+    })
 
     req.setHeader('Content-Length', request.length);
     req.setHeader('Content-Type', 'application/json');

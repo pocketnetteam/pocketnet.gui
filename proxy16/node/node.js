@@ -274,7 +274,6 @@ var Node = function(options, manager){
 
             return self.rpc[method](parsed).catch(e => {
 
-
                 err = e
     
                 return Promise.resolve(null)
