@@ -1,6 +1,8 @@
 #postscores .work {
   width: 100%;
-  padding: 0 1em;
+}
+#postscores .ratingrowWrapper {
+  width: 100%;
 }
 #postscores .caption {
   text-align: left;
@@ -54,7 +56,7 @@
   height: 40px;
   line-height: 40px;
   text-align: center;
-  color: #00a3f7;
+  color: #00A3F7;
   cursor: pointer;
 }
 #postscores .itemwr .stars .starWrapper {
@@ -75,13 +77,18 @@
 #postscores .userscore {
   color: #FFAE00;
 }
+#postscores .details {
+  margin-top: 1em;
+}
 #postscores .details .detailsWrapper {
   padding-bottom: 0.5em;
   border-bottom: 1px solid #b2abac;
 }
 #postscores .details .bystars {
-  padding-top: 2em;
+  margin-top: 2em;
   padding-bottom: 1em;
+  border-top: 1px solid #F2F2F5;
+  margin: 0 1em;
 }
 #postscores .details .bystars i {
   color: #FFAE00;
@@ -91,12 +98,12 @@
   padding: 0.5em 0;
 }
 #postscores .details .bystars .ratingrow > div.label {
-  width: 20px;
+  width: 20PX;
   color: #8E90A6;
 }
 #postscores .details .bystars .ratingrow > div.pecent {
   width: 55px;
-  text-align: right;
+  padding-left: 10px;
 }
 #postscores .details .linebg {
   width: 100%;
@@ -200,7 +207,7 @@
   height: 54px;
 }
 html.stblack #postscores .caption {
-  color: #00a3f7;
+  color: #00A3F7;
 }
 html.stblack #postscores .subcaption {
   color: #00a4ff;
@@ -209,7 +216,7 @@ html.stblack #postscores .youstars {
   background: #030f1b;
 }
 html.stblack #postscores .itemwr .stars {
-  color: #00a3f7;
+  color: #00A3F7;
 }
 html.stblack #postscores .details .detailsWrapper {
   border-bottom: 1px solid #1e2328;

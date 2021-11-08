@@ -4,7 +4,11 @@
 
     .work{
         width: 100%;
-        padding : 0 2 * @rhythm;
+    }
+
+    .ratingrowWrapper{
+        width: 100%;
+
     }
 
 
@@ -114,14 +118,19 @@
     }
 
     .details{
+        margin-top: 2 * @rhythm;
+
         .detailsWrapper{
             padding-bottom : @rhythm;
             border-bottom : 1px solid @color-gray-mlight;
 
         }
         .bystars{
-            padding-top: 2em;
+            margin-top: 2em;
             padding-bottom: 1em;
+            border-top: 1px solid @color-background-light;
+            margin: 0 1em;
+            
             
             i{
                 color : #FFAE00;
@@ -132,14 +141,14 @@
                     padding : @rhythm 0;
 
                     &.label{
-                        width : 20px;
-                        color: #8E90A6;
+                        width : 20PX;
+                        color: @color-border-light;
 
                     }
 
                     &.pecent{
                         width : 55px;
-                        text-align: right;
+                        padding-left: 10px;
                     }
                 }
             }
@@ -165,7 +174,7 @@
             }
 
             .line-empty{
-                background: #F2F2F5;
+                background: @color-background-light;
             }
         }
     }
@@ -187,14 +196,14 @@
             font-size: 1em;
             border-bottom : 1px solid @color-gray-slight;
             margin-bottom: 0;
-            background: #F2F2F5;
+            background: @color-background-light;
             font-family: Segoe UI;
 
 
             span{
                 font-style: default;
                 font-size: 0.9em;
-                color : #8E90A6;
+                color : @color-border-light;
 
             }
         }
@@ -251,14 +260,14 @@
             .totalLikes{
                 font-size: 14px;
                 text-align: center;
-                color: #8E90A6;
+                color: @color-border-light;
             }
         }
 
         .youstars{
             position: absolute;
             background: #FAFAFC;
-            border: 1px solid #F2F2F5;
+            border: 1px solid @color-background-light;
             left : 0;
             right : 0;
             top: 0;
