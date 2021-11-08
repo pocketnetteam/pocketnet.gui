@@ -395,8 +395,6 @@ var post = (function () {
 							startTime = pr.time
 					}
 
-					console.log('startTime', startTime)
-
 					var options = {
 						//autoplay : pels.length <= 1,
 						resetOnEnd: true,
@@ -700,7 +698,6 @@ var post = (function () {
 			},
 
 			postscores: function () {
-				console.log('postscorespostscorespostscores')
 				actions.postscores()
 			},
 			repost: function () {
@@ -1619,6 +1616,10 @@ var post = (function () {
 				authblock = false;
 
 				if (player) {
+
+					if (player.playing){
+						player.stop()
+					}
 
 					if (player.destroy) player.destroy()
 

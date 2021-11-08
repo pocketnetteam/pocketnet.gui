@@ -379,7 +379,7 @@ Nav = function(app)
 					p.goback = backManager.add(href, p.lastScroll, p.back)
 				}
 
-				if(history.state && history.state.href == href){
+				if (history.state && history.state.href == href){
 					return
 				}
 
@@ -425,6 +425,7 @@ Nav = function(app)
 			if (history.state && history.state.lfox) { 
 
 				core.removeWindows(history.state.href)
+
 				var chh = core.removeChat(history.state.href)
 
 				if(history.state.href.split('?')[0] != current.href){
@@ -564,6 +565,7 @@ Nav = function(app)
 					}
 				}
 
+
 				if(p.completeHref == current.completeHref && !p.loadDefault)
 				{
 					run = false;
@@ -571,11 +573,9 @@ Nav = function(app)
 				else
 				{
 
-
 					p.lastScroll = app.lastScrollTop // $(window).scrollTop();
 
 					if(!p.reload){
-
 						historyManager.add(p.completeHref, p);
 
 						p.fail = function(){
@@ -607,7 +607,6 @@ Nav = function(app)
 
 						}
 						catch(e){
-							console.log("CANT DESTROY " + p.href)
 							console.error(e)
 						}
 					}
@@ -911,7 +910,6 @@ Nav = function(app)
 				p.href = p.href.split("?")[0];
 
 				p.map = module.find(p.href);
-
 
 			}
 
@@ -1342,7 +1340,6 @@ Nav = function(app)
 
 				if(error)
 				{
-					console.log(p, error);
 					e = true;
 				}
 
@@ -1364,7 +1361,8 @@ Nav = function(app)
 			var fpt = p.href.split("?")[0]
 
 			if (p.href == 'blank' || !fpt)
-				p.href  = defaultpathname
+				p.href = defaultpathname
+
 
 
 			if (fpt == defaultpathname){
@@ -1481,7 +1479,6 @@ Nav = function(app)
 							
 						}
 						catch(e){
-							console.log("electron not installed")
 
 							localStorage['electron_hrefs'] = '[]'
 						}

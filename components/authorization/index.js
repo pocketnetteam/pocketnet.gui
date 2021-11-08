@@ -104,6 +104,7 @@ var authorization = (function(){
 					var _p = {};
 
 					_p.href = essenseData.successHref;
+					
 
 					if(!_p.href && primary)
 
@@ -114,6 +115,8 @@ var authorization = (function(){
 								if (app.curation()){
 									return 'index';
 								}
+
+								console.log('self.app.platform.sdk.registrations.redirect', self.app.platform.sdk.registrations.redirect)
 
 								return self.app.platform.sdk.registrations.redirect || undefined
 							
@@ -133,7 +136,11 @@ var authorization = (function(){
 
 						}
 
-						_p.nav = essenseData.nav;							
+						_p.nav = essenseData.nav || {};		
+
+
+						if(typeof _p.nav.reload == 'undefined')
+							_p.nav.reload = false
 
 						_p.clbk = function(){
 							topPreloader(100);
@@ -174,8 +181,10 @@ var authorization = (function(){
 					}
 					else
 					{
-
-						self.app.reload(_p);
+						setTimeout(function(){
+							self.app.reload(_p);
+						}, 30)
+						
 					}
 
 					
@@ -350,7 +359,8 @@ var authorization = (function(){
 					self.nav.api.load({
 						open : true,
 						href : 'index',
-						history : true
+						history : true,
+						replaceState : true
 					})
 					
 				}
