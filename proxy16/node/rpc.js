@@ -111,7 +111,7 @@ function rpc(request, callback, obj) {
 
     var pbl = publics[request.method]
     var pst = posts[request.method]
-    var timeout = 30000
+    var timeout = 120000
 
     var self = obj;
     try{
