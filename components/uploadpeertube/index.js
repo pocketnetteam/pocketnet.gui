@@ -26,14 +26,20 @@ var uploadpeertube = (function () {
           video.onloadedmetadata = () => {
             window.URL.revokeObjectURL(video.src);
 
-            // to bits and then to bitrate
+            
+
+            
+
+            resolve()
+
+            /*// to bits and then to bitrate
             var averageBitrate = (8 * file.size) / video.duration;
 
             return averageBitrate > 8000000
               ? reject({
                   text: self.app.localization.e('videoBitrateError'),
                 })
-              : resolve();
+              : resolve();*/
           };
 
           video.src = URL.createObjectURL(file);
@@ -56,10 +62,14 @@ var uploadpeertube = (function () {
         maxWidth: 600,
         zIndex: 1006,
         position: 'bottom',
+        contentAsHTML: true,
       });
 
       el.videoInput.change(async function (evt) {
         var fileName = evt.target.files[0].name;
+
+
+        
 
         el.videoError.text(
           fileName.slice(0, 20) + (fileName.length > 20 ? '...' : ''),
@@ -71,6 +81,15 @@ var uploadpeertube = (function () {
         var nameError = wnd.find('.name-type-error');
 
         nameError.text('');
+
+        console.log('videoInputFile[0].size', videoInputFile[0].size)
+
+        if(videoInputFile[0].size > 4 * 1024 * 1024 * 1024){
+          el.videoError.text(self.app.localization.e('videoSizeError'));
+          el.videoError.addClass('error-message');
+
+          return;
+        }
 
         // validation
         if (!videoInputFile[0]) {
@@ -99,9 +118,7 @@ var uploadpeertube = (function () {
           video: videoInputFile[0],
         };
 
-        if (videoName) {
-          data.name = videoName;
-        }
+        data.name = videoName || fileName;
 
         var options = {
           type: 'uploadVideo',
@@ -147,7 +164,7 @@ var uploadpeertube = (function () {
         };
 
         el.importUrl.addClass('hidden');
-        
+
         self.app.peertubeHandler.api.videos
           .upload(data, options)
           .then((response) => {
@@ -168,7 +185,7 @@ var uploadpeertube = (function () {
             actions.added(response, wnd.find('.upload-video-name').val());
             wndObj.close();
           })
-          .catch((e) => {
+          .catch((e = {}) => {
             console.error('Uploading error', e);
 
             el.videoInput.val('');
@@ -181,7 +198,10 @@ var uploadpeertube = (function () {
             if (e.cancel) {
               sitemessage('Uploading canceled');
             } else {
-              var message = e.text || findResponseError(e) || 'Uploading error';
+              var message =
+                e.text ||
+                findResponseError(e) ||
+                `Uploading error: ${JSON.stringify(e)}`;
 
               sitemessage(message);
             }
@@ -278,7 +298,7 @@ var uploadpeertube = (function () {
 
                 wndObj.close();
               })
-              .catch((e) => {
+              .catch((e = {}) => {
                 el.videoInput.val('');
                 el.wallpaperError.text('');
 
@@ -295,7 +315,9 @@ var uploadpeertube = (function () {
                   sitemessage('Uploading canceled');
                 } else {
                   var message =
-                    e.text || findResponseError(e) || 'Uploading error';
+                    e.text ||
+                    findResponseError(e) ||
+                    `Uploading error: ${JSON.stringify(e)}`;
 
                   sitemessage(message);
                 }

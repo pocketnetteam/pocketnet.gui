@@ -1,5 +1,5 @@
 
-var _ = require('underscore')
+var _ = require('lodash')
 var fs = require('fs');
 var path = require('path');
 
@@ -31,12 +31,11 @@ if (process.platform === 'win32') expectedExitCodes = [3221225477];
 
 console.log('expectedExitCodes' , expectedExitCodes)*/
 
-var Proxy = function (settings, manage, test) {
+var Proxy = function (settings, manage, test, logger) {
 
 	var self = this;
 
 		self.test = test
-
 	var server = new Server(settings.server, settings.admins, manage);
 	var wss = new WSS(settings.admins, manage);
 	var pocketnet = new Pocketnet();
@@ -56,12 +55,14 @@ var Proxy = function (settings, manage, test) {
 	self.userDataPath = null
 	self.session = 'pocketnetproxy' //f.makeid()
 
+	logger.setapp(self)
+
 	f.mix({
 		wss, server, pocketnet, nodeControl,
 		remote, firebase, nodeManager, wallet,
 		proxies, exchanges, peertube, bots,
 		systemnotify,
-
+		logger,
 		proxy: self
 	})
 
@@ -262,7 +263,8 @@ var Proxy = function (settings, manage, test) {
 
 				}).catch(e => {
 
-					console.log(e)
+					logger.w('system', 'warn', 'SSL Settings Error', e)
+
 				
 					return server.init({
 						ssl: ini.ssl('default'),
@@ -452,6 +454,10 @@ var Proxy = function (settings, manage, test) {
 
 		wssdummy: function (wssdummy) {
 			wss.wssdummy(wssdummy)
+		},
+
+		sendlogs: function(d){
+			wss.sendlogs(d)
 		}
 	}
 
@@ -598,9 +604,14 @@ var Proxy = function (settings, manage, test) {
 					{host : 'pocketnetpeertube5.nohost.me', cantuploading : true}, 
 					{host : 'pocketnetpeertube7.nohost.me', cantuploading : true}, 
 				],
-        		6: ['pocketnetpeertube4.nohost.me', 'pocketnetpeertube6.nohost.me'],
-        		8: ['pocketnetpeertube8.nohost.me', 'pocketnetpeertube9.nohost.me'],
+        		6:  ['pocketnetpeertube4.nohost.me', 'pocketnetpeertube6.nohost.me'],
+        		8:  ['pocketnetpeertube8.nohost.me', 'pocketnetpeertube9.nohost.me'],
 				10: ['pocketnetpeertube10.nohost.me', 'pocketnetpeertube11.nohost.me'],
+
+				12: [
+					{host : 'bastyonmma.pocketnet.app', special : true}, 
+					{host : 'bastyonmma.nohost.me' , special : true}
+				],
       		};
 
 			if (test){
@@ -770,6 +781,9 @@ var Proxy = function (settings, manage, test) {
 
 			var catchError = function (key) {
 				return (e) => {
+
+					logger.w('system', 'error', 'Proxy '+key+' Error', e)
+
 					return Promise.resolve()
 				}
 			}
@@ -846,7 +860,6 @@ var Proxy = function (settings, manage, test) {
 			var rpc = self.api.node.rpc.action
 			var videosapi = self.api.peertube.videos.action
 
-			//console.log('gethierarchicalstrip')
 
 			var users = []
 			var videos = []
@@ -855,7 +868,6 @@ var Proxy = function (settings, manage, test) {
 
 			return rpc({ method, parameters, options, U }).then(r => {
 
-				//console.log('gethierarchicalstrip done')
 
 				var posts = r.data.contents || []
 
@@ -887,7 +899,6 @@ var Proxy = function (settings, manage, test) {
 					options, U
 				}).then(users => {
 
-					//console.log("USERS LOADED")
 
 					result.data.users = users.data
 
@@ -899,7 +910,6 @@ var Proxy = function (settings, manage, test) {
 					fast : true
 				}).then(videos => {
 
-					//console.log("VIDEOS LOADED")
 
 					result.data.videos = videos.data
 
@@ -959,12 +969,22 @@ var Proxy = function (settings, manage, test) {
 
 					var node = null;
 					var noderating = 0
+					var timep = performance.now()
+					var time = {
+						preparing : 0,
+						cache : 0,
+						start : 0,
+						ready : 0,
+						
+					}
 
 					var _waitstatus = 'un'
 					var direct = true
+					var smartresult = null
 
 					var cparameters = _.clone(parameters)
 
+					//self.logger.w('rpc', 'warn', 'RPC REQUEST')
 
 					return new Promise((resolve, reject) => {
 
@@ -978,8 +998,9 @@ var Proxy = function (settings, manage, test) {
 						
 					}).then(() => {
 
+						time.preparing = performance.now() - timep
 
-					
+
 						/// ????
 						if (options.locally && options.meta) {
 							node = nodeManager.temp(options.meta);
@@ -1001,15 +1022,7 @@ var Proxy = function (settings, manage, test) {
 
 							direct = false
 						}
-
-						if (internal){
-							if(!node){
-								console.log("FAIL")
-							}
-							
-						}
 						
-
 						if (!node) {
 							return Promise.reject({
 								error: 'node',
@@ -1026,6 +1039,8 @@ var Proxy = function (settings, manage, test) {
 
 						return new Promise((resolve, reject) => {
 
+
+							
 							if(!noderating) {
 								
 								resolve('nocaching')
@@ -1033,7 +1048,13 @@ var Proxy = function (settings, manage, test) {
 								return
 							}
 
-							server.cache.wait(method, cparameters, function (waitstatus) {
+							server.cache.wait(method, cparameters, function (waitstatus, smartdata) {
+
+								if (waitstatus == 'smart'){
+									smartresult = smartdata
+								}
+								
+
 								resolve(waitstatus);
 
 							}, cachehash);
@@ -1043,20 +1064,33 @@ var Proxy = function (settings, manage, test) {
 					})
 					.then((waitstatus) => {
 
+						time.cache = performance.now() - timep
+
 						_waitstatus = waitstatus
+
+						if (waitstatus == 'smart' && smartresult){
+							console.log("SMART", smartresult.length)
+							return Promise.resolve({
+								data: smartresult,
+								code: 207,
+								time : time
+							});
+						}
 
 						var cached = server.cache.get(method, cparameters, cachehash);
 
-						if (cached) {
+						if (typeof cached != 'undefined') {
 							return Promise.resolve({
 								data: cached,
 								code: 208,
+								time : time
 							});
 						}
 
 						if(waitstatus == 'attemps'){
 							return Promise.reject({
 								code: 408,
+								time : time
 							});
 						}
 
@@ -1075,8 +1109,30 @@ var Proxy = function (settings, manage, test) {
 							}
 						}
 
+
+
+
+						
+
 						return new Promise((resolve, reject) => {
+
+							/*if(!f.rand(0,1)) {
+
+								self.logger.w('rpc', 'debug', 'DELAY 10000')
+
+								f.delay(10000).then(r => {
+									nodeManager.queue(node, method, parameters, direct, {resolve, reject})
+								})
+							}
+								
+							else*/
+
+							time.start = performance.now() - timep
+
+							//console.log("REQUEST", method)
+							
 							nodeManager.queue(node, method, parameters, direct, {resolve, reject})
+								
 						})
 
 						.then((data) => {
@@ -1085,14 +1141,21 @@ var Proxy = function (settings, manage, test) {
 								server.cache.set(method, cparameters, data, node.height());
 							}
 
+							//console.log("SUCCESS", method)
+
+							time.ready = performance.now() - timep
+
 							return Promise.resolve({
 								data: data,
 								code: 200,
 								node: node.exportsafe(),
+								time : time
 							});
 						});
 					})
 					.catch((e) => {
+
+						//console.log("E", e, method)
 
 						if (_waitstatus == 'execute'){
 							server.cache.remove(method, cparameters);
@@ -1469,7 +1532,7 @@ var Proxy = function (settings, manage, test) {
 						})
 					}
 
-					console.log('heapdump start')
+					logger.w('system', 'info', 'Heapdump start')
 
 					var filename = f.path('heapdump/' + Date.now() + '.heapsnapshot')
 					var heapdump = require('heapdump');
@@ -1493,11 +1556,12 @@ var Proxy = function (settings, manage, test) {
 	
 								dump.error = err.toString ? err.toString() : err
 	
-								console.log(dump.error)
+								logger.w('system', 'error', 'Dump Error', dump.error)
 							}
 							else{
-								console.log('dump written to', filename);
-	
+
+								logger.w('system', 'info', 'Dump written to ' + filename)
+
 								dump.success = true
 							}
 							
@@ -1507,7 +1571,7 @@ var Proxy = function (settings, manage, test) {
 					}
 					catch(err){	
 
-						console.log('err', err)
+						logger.w('system', 'error', 'Dump Error', err)
 
 						return Promise.reject({
 							result : 'error',
@@ -1532,7 +1596,6 @@ var Proxy = function (settings, manage, test) {
 			ping: {
 				path: '/ping',
 				action: function () {
-
 					var node = nodeManager.bestnode
 
 					/*if (nodeManager.bestnodes.length){

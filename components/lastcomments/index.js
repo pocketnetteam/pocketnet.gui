@@ -132,17 +132,20 @@ var lastcomments = (function(){
 			
 			self.app.platform.ws.messages['newblocks'].clbks['lastcomments'] =
 			self.app.platform.ws.messages['new block'].clbks['lastcomments'] = function(data, p){
-				console.log("CLBKS")
-				//if(self.app.platform.focus){
-					make()
-				//}
+				
+				if(self.app.platform.focus){
+					if(!rand(0, 5)){
+						make()
+					}
+					
+				}
 
 				//multimake()
 				
 
 			}
 
-			self.app.platform.clbks._focus.lastcomments = function(time){
+			/*self.app.platform.clbks._focus.lastcomments = function(time){
 
 				if(time > 120 && typeof _Electron != 'undefined'){
 					console.log("CLBKS2")
@@ -150,7 +153,7 @@ var lastcomments = (function(){
 
 					
 				}
-			}
+			}*/
 
 
 		}

@@ -7410,11 +7410,11 @@
 			
 		}
 
-		if(!_Node)
+		/*if(!_Node)
 			$.ajaxSetup({
 				// Disable caching of AJAX responses
 				cache: false
-			});
+			});*/
 
 		self.set = {
 			user : function(u){
@@ -9904,6 +9904,10 @@
 	}
 	nl2br = function(str){	
 		return str.replace(/\n/g, '<br/>');
+	}
+
+	nl2space = function(str){	
+		return str.replace(/\n/g, ' ');
 	}
 
 	trimHtml = function(str, num){

@@ -1,8 +1,8 @@
 {
     "name": "pocketnet",
-    "version": "0.4.59",
-    "cordovaversion": "1.1.124",
-    "cordovaversioncode": "10124",
+    "version": "0.4.80",
+    "cordovaversion": "1.1.136",
+    "cordovaversioncode": "10136",
     "description": "Pocketnet desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
     "company": "Pocketnet Community",
@@ -108,7 +108,8 @@
         "uglify-js": "",
         "uglifycss": "0.0.29",
         "underscore": "",
-        "yuicompressor": "^2.4.8"
+        "yuicompressor": "^2.4.8",
+        "winston": "^3.3.3"
     },
     "build": {
         "productName": "Pocketnet",

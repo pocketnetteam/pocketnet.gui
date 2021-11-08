@@ -18,6 +18,30 @@ f.mix = function(array){
     })
 }
 
+var lastgctime = new Date()
+
+f.gcwrapper = function(){
+
+    var t = f.date.addseconds(lastgctime, 30)
+
+    if(t < new Date()){
+        try {
+            if (global.gc) {global.gc();}
+
+            lastgctime = new Date()
+    
+            console.log("GCRUN")
+        } catch (e) {
+            console.log("gbremoved");
+        }
+    }
+    else{
+        console.log("NOTYET")
+    }
+
+    
+}
+
 f.esc = function(str) {
     return str.replace(/[\0\x08\x09\x1a\n\r"'\\\%]/g, function (char) {
         switch (char) {
@@ -315,15 +339,18 @@ f.randomizer = function(values){
 f.randmap = function(ar){
 
     if(!ar) return null
+    if(!ar.length) return null
 
     //ar = _.shuffle(ar)
     
     
-    ar = _.sortBy(ar, (r) => {return -r.probability})
+    ar = _.sortBy(ar, (r) => {return - Number(r.probability || 0) })
 
-    var total = _.reduce(ar, function(sum, r){ return sum + r.probability }, 0)
+    var total = _.reduce(ar, function(sum, r){ 
+        return sum + Number(r.probability || 0) 
+    }, 0)
 
-    if (total <= 0) return ar[0]
+    if (total <= 0) return ar[f.rand(0, ar.length - 1)]
 
     var seed = random.float(0, total)
 
@@ -339,7 +366,10 @@ f.randmap = function(ar){
         counter = counter + a.probability
     })
 
+
+
 }
+
 
 f.makeid = function(){
 

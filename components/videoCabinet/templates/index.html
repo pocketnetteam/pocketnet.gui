@@ -1,5 +1,5 @@
 <div id="<%-module.map.id%>">
-  <div class="work">
+  <div class="work cabinetHeaderWrapper">
     <div class="moduleHeader">
       <div class="cabinetName"><%- e('videoCabinet') %></div>
         <button
@@ -12,10 +12,17 @@
     </div>
   </div>
   <% if (hasAccess) { %>
+
+  <% if (!inLentaWindow) { %>
   <div class="work">
     <div class="statsdiv">
       <div class="reputation">
         <div class="reputationblock quotaContainer">
+          <div class="preloaderwr">
+            <div class="preloader5"><img src="./img/three-dots.svg"/></div>
+          </div>
+        </div>
+        <div class="reputationblock referContainer">
           <div class="preloaderwr">
             <div class="preloader5"><img src="./img/three-dots.svg"/></div>
           </div>
@@ -38,6 +45,7 @@
       </div>
     </div>
   </div>
+  <% } %>
   <div class="videoContainer">
     <div class="work">
       <div class="videoControls">

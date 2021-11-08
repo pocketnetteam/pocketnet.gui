@@ -24,7 +24,7 @@ var Server = function(settings, admins, manage){
     var startedDate = null
     var printstatsInterval = null
 
-    self.cache = new Cache({ dontCache: settings.contCache})
+    self.cache = new Cache({ dontCache: settings.dontCache})
     self.listening = false;
     self.httplistening = false;
 
@@ -64,7 +64,7 @@ var Server = function(settings, admins, manage){
         }
     }
     
-    self.init = function(settings){
+    self.init = function(_settings){
 
         app = express();
         app.use(express.json({limit: '5mb'})) 
@@ -77,22 +77,25 @@ var Server = function(settings, admins, manage){
 
         app.use(async (request, result, next) => {
 
-            if(request && request.method && request.method == "OPTIONS"){
+            if (request && request.method && request.method == "OPTIONS"){
                 next()
                 return
             }
 
             middle.prepare(request, result, function(){
 
-                if (settings.iplimiter){
+                /*if (settings.iplimiter && request.clientIP){
 
-                    return iplimiter.check().then(r => {
+                    return iplimiter.check(request.clientIP).then(r => {
+
+                        console.log("IPCHECK")
+
                         next()
                     }).catch(e => {
 
                         result._fail('iplimiter')
                     })
-                }
+                }*/
 
                 next()
             })
@@ -116,7 +119,7 @@ var Server = function(settings, admins, manage){
         self.link()
 
         return self.http().then(r => {
-            return  self.https(settings)
+            return  self.https(_settings)
         })
 
     }

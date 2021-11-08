@@ -35,6 +35,26 @@
         }
     }
 
+    .alreadyPostedVideo {
+        position: relative;
+
+        opacity: 0.5;
+
+        // &::before {
+        //     content: "";
+
+        //     position: absolute;
+        //     top: 0;
+
+        //     width: 100%;
+        //     height: 100%;
+
+        //     background-color: rgba(0, 0, 0, 0.5);
+
+        //     z-index: 10000;
+        // }
+    }
+
     .videoName {
         flex-grow: 1;
         position: relative;
@@ -669,8 +689,10 @@
     }
 
     .metricsContainer {
+        
         .metricsContainerHeader {
             font-size: 0.8em;
+            min-height: 36px;
         }
 
         .metricsMain {
@@ -690,7 +712,8 @@
                     }
                 }
 
-                .fa-exclamation-circle, .errorLoading {
+                .fa-exclamation-circle,
+                .errorLoading {
                     font-size: 0.8em;
                 }
 
@@ -1130,6 +1153,26 @@ html.stblack {
                 }
             }
 
+        }
+    }
+}
+
+.wndcontent {
+    #videoCabinet {
+        position: relative;
+
+        .cabinetHeaderWrapper {
+            position: absolute;
+
+            top: 0;
+        }
+
+        .videoContainer {
+            position: absolute;
+
+            top: 120px;
+
+            width: 100%;
         }
     }
 }

@@ -64,6 +64,7 @@ var publics = {
     getrawtransaction: true,
     getuserprofile:true,
     getuserstate: true,
+    getaccountsetting: true,
     getaddressregistration: true,
     
     signrawtransactionwithkey: true,
@@ -100,7 +101,8 @@ var publics = {
     gettransaction : true,
     gethierarchicalstrip : true,
     getusercontents : true,
-    getcontentsstatistic : true
+    getcontentsstatistic : true,
+    getuserstatistic : true
 }
 
 function rpc(request, callback, obj) {
@@ -109,6 +111,7 @@ function rpc(request, callback, obj) {
 
     var pbl = publics[request.method]
     var pst = posts[request.method]
+    var timeout = 30000
 
     var self = obj;
     try{
@@ -124,6 +127,28 @@ function rpc(request, callback, obj) {
     
     var auth = new Buffer(self.user + ':' + self.pass).toString('base64');
 
+    var signal = null
+
+
+    ///need to test
+    /*if (typeof AbortController != 'undefined'){
+
+        const ac = new AbortController();
+
+        setTimeout(function(){
+
+            if(!called && !hasdata){
+                ac.abort();
+            }
+
+            ac = null
+
+        }, timeout)
+
+        signal = ac.signal
+    }*/
+
+    
 
     var options = {
         host: self.host,
@@ -132,7 +157,8 @@ function rpc(request, callback, obj) {
         port: self.port,
         //rejectUnauthorized: self.rejectUnauthorized,
         agent: self.disableAgent ? false : undefined,
-        timeout: 5000
+        timeout: 5000,
+        signal : signal
     };
 
     if (self.httpOptions) {
@@ -144,12 +170,15 @@ function rpc(request, callback, obj) {
     var called = false;
 
     var errorMessage = 'Bitcoin JSON-RPC: ';
+    var hasdata = false
+
 
     var req = self.protocol.request(options, function(res) {
 
         var buf = '';
         res.on('data', function(data) {
             buf += data;
+            hasdata = true
         });
 
         res.on('end', function() {
@@ -217,6 +246,8 @@ function rpc(request, callback, obj) {
             });
         }
     });
+
+    
 
     req.setHeader('Content-Length', request.length);
     req.setHeader('Content-Type', 'application/json');
@@ -315,6 +346,7 @@ RpcClient.callspec = {
     getrawtransactionwithmessage: 'str',
     getuserprofile: 'obj',
     getuserstate: 'str',
+    getaccountsetting: 'str',
     getaddressregistration: 'obj',
     signrawtransactionwithkey: 'str obj',
     getrecommendedposts: 'str',
@@ -343,6 +375,7 @@ RpcClient.callspec = {
     getlastblocks: 'int int',
     checkstringtype: 'str',
     getstatistic: 'int int',
+    getuserstatistic : 'obj int int',
     
     // Control
     stop: '',

@@ -102,7 +102,7 @@ var Node = function(options, manager){
         },
 
         getk : function(){
-            return 1 - penalty.k
+            return 1 - (penalty.k || 0)
         },
 
         get : function(){
@@ -304,6 +304,7 @@ var Node = function(options, manager){
                     difference : difference,
                     method : method
                 })
+
                    
                 if(!err){
                     return Promise.resolve(data.result)
@@ -575,6 +576,7 @@ var Node = function(options, manager){
 
             var time = s.time;
             var rate = (s.rate || 0) + 1
+            var timemult = 1
 
             if (time && time > 0 && time <= 200) time = 200
             if (time && time > 200 && time <= 400) time = 300
@@ -586,6 +588,9 @@ var Node = function(options, manager){
             if (time && time > 7000 && time <= 15000) time = 100000
             if (time && time > 15000) time = 300000
 
+            if (time > 2000) timemult = 2
+            if (time > 7000) timemult = 4
+
             if (rate <= 2) rate = 2
             if (rate > 2 && rate <= 10) rate =5
             if (rate > 10 && rate <= 30) rate = 15
@@ -593,7 +598,7 @@ var Node = function(options, manager){
             if (rate > 100 && rate <= 200) rate = 150
             if (rate > 200) rate = 500
 
-            return ((s.percent * s.percent) / (rate * time))
+            return ((s.percent * s.percent) / (rate * time * timemult))
 
         },
 
@@ -602,7 +607,7 @@ var Node = function(options, manager){
             if(cachedrating){
             
                 if(f.date.addseconds(cachedrating.time, 10) > new Date()){
-                    return cachedrating.result
+                    return cachedrating.result || 0
                 }
             }
 
@@ -636,8 +641,8 @@ var Node = function(options, manager){
                     var slice = statistic.historyslice
 
 
-                    var availabilityAllTime = self.statistic.calcAvailability(s)
-                    var availability5Minutes = self.statistic.calcAvailability(slice)
+                    var availabilityAllTime = self.statistic.calcAvailability(s) || 0
+                    var availability5Minutes = self.statistic.calcAvailability(slice) || 0
                     ///
         
         
@@ -651,12 +656,14 @@ var Node = function(options, manager){
                     if (usersl > 1000) userski = 1000
 
                     userski = 1
+
+                    if(difference <= 1) difference = 0
         
                     result = (
                         penalty.getk() * 
-                        Math.sqrt(Math.sqrt(Math.sqrt(availabilityAllTime) * availability5Minutes * availability5Minutes)) *
+                        Math.sqrt(availabilityAllTime * Math.sqrt(availability5Minutes)) *
                         (lastblock.height || 1) / (1000 * userski * (difference + 1))
-                        )
+                        ) || 0
                 }
             }
 
@@ -699,7 +706,7 @@ var Node = function(options, manager){
 
                 var rating = node.statistic.rating();
 
-                if (rating)
+                if (rating && rating > 0)
                     total += rating
             })
             
@@ -790,7 +797,7 @@ var Node = function(options, manager){
 
         if(!r) return null
 
-        if(r.node.key == self.key) return null
+        if (r.node.key == self.key) return null
 
         return r.node
     }
@@ -907,38 +914,25 @@ var Node = function(options, manager){
 
             var result = null
 
-            return f.pretry(function(){
-
-                if (lastinfo && lastinfoTime){
+            if (lastinfo && lastinfoTime){
     
-                    var dif = Math.floor(((new Date()).getTime()) / 1000) - Math.floor(((lastinfoTime).getTime()) / 1000)
-                    //console.log('dif', dif)
+                var dif = Math.floor(((new Date()).getTime()) / 1000) - Math.floor(((lastinfoTime).getTime()) / 1000)
 
-                    if (dif < 55){
-        
-                        result = _.clone(lastinfo)
-        
-                        result.time += dif
-        
-                        if (lastnodeblock){
-                            result.lastblock = lastnodeblock
-                        }
-        
-                        return true
+                if (dif < 55){
+    
+                    result = _.clone(lastinfo)
+    
+                    result.time += dif
+    
+                    if (lastnodeblock){
+                        result.lastblock = lastnodeblock
                     }
-                }
-
-            }, 40, 3000).then(r => {
-
-                //console.log("HAS RESULT", result ? true : false)
-
-                if (result){
+    
                     return Promise.resolve(result)
                 }
+            }
 
-                return self.info()
-
-            })
+            return self.info()
 
             
         }

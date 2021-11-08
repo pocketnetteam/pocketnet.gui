@@ -62,6 +62,27 @@ var author = (function(){
 						r.module.destroy()
 				})
 			},
+
+			complain : function(){
+				self.nav.api.load({
+					open : true,
+					id : 'complain',
+					inWnd : true,
+
+					essenseData : {
+						item : 'user',
+						obj : author,
+
+						success : function(){
+							
+						}
+					},
+
+					clbk : function(){
+						
+					}
+				})
+			}
 		}
 
 		var events = {
@@ -403,6 +424,15 @@ var author = (function(){
 						return template(d);
 
 					}, function(el){
+
+						el.find('.complain').on('click', function(){
+							self.app.mobile.vibration.small()
+							actions.complain()
+
+							if (_el.tooltipster)
+								_el.tooltipster('hide')	
+
+						})
 
 						el.find('.donate').on('click', function(){
 							self.app.mobile.vibration.small()
@@ -1037,50 +1067,16 @@ var author = (function(){
 
 		var initEvents = function(){
 
-			var user = self.app.user
-
-			var my = (user.address.value && author.address == user.address.value)
 
 			var src = deep(author, 'data.image')
 
-			if (!src && my){
-
-
-				/*el.usericon.addClass('active')
-
-				self.app.platform.api.plissing({
-					el : el.usericon,
-				})*/
-	
-				el.usericon.on('click', function(){
-					self.app.nav.api.load({
-						open: true,
-						href: 'userpage?id=test',
-						history: true
-					})
-				})
-	
-
-			}
-
+			var me = self.app.platform.sdk.address.pnet() ? self.app.platform.sdk.address.pnet().address : null;
 
 			el.up.on('click', events.up)
 
 			el.subscribe.find('.subscribe').on('click', events.subscribe)
 			el.subscribe.find('.unsubscribe').on('click', events.unsubscribe)
 			el.c.find('.notificationturn').on('click', events.subscribePrivate)
-
-			el.c.find('.changeaccount').on('click', function(){
-				self.nav.api.go({
-					open : true,
-					href : 'accounts',
-					inWnd : true,
-
-					essenseData : {
-						toaccpage : true
-					}
-				})
-			})
 
 			el.caption.find('.startchat').on('click', events.startchat)
 
@@ -1298,8 +1294,14 @@ var author = (function(){
 						if (address){
 							author.address = address
 
-							self.sdk.ustate.get(author.address, function(){
+
+								
+
 								self.sdk.users.get(author.address, function(){
+
+									if(self.app.platform.sdk.user.reputationBlockedRedirect(address)){
+										return
+									}
 
 									if(!self.app.platform.sdk.address.pnet() || author.address != self.app.platform.sdk.address.pnet().address){
 										reports.shares.name = self.app.localization.e('uposts')
@@ -1342,7 +1344,6 @@ var author = (function(){
 									clbk(data);
 
 								})
-							})
 						}
 
 						else

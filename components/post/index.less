@@ -7,6 +7,7 @@
 			.share{
 				margin-bottom: 0;
 			}
+			
 		}
 	}
 }
@@ -16,6 +17,39 @@
 #post{
 
 	background: #f6f6f6;
+
+	.lockedaccount,
+	.empty{
+		text-align: center;
+		padding : 10 * @rhythm;
+
+		span{
+			font-size: 2em;
+			font-weight: 100;
+		}
+	}
+
+	.hiddenpost{
+		padding : 14 * @rhythm 10 * @rhythm;
+		font-size: 0.9em;
+		text-align: center;
+		border-radius: 5px;
+		background: fade(@color-gray-slight, 5);
+		margin-bottom : 4 * @rhythm;
+		margin-top : @rhythm;
+
+		.sharecaption{
+			max-width: none!important;
+		}
+
+		.hiddenlabelaction{
+			margin-top : 2 * @rhythm;
+		}
+
+		.hiddenlabeltext{
+			opacity: 0.6;
+		}
+	}
 
 	.js-player .warning-overlay{
 		opacity: 0;
@@ -128,6 +162,25 @@
 
 		&.active{
 			opacity: 1;
+		}
+		.share .sharecnt{
+
+			.removeDescription{
+				display: none;
+				padding-bottom: @rhythm * 3;
+				color: #b2abac;
+			}
+				
+			&.deleted{
+				.cntscontent, .repostWrapper, .commentsWrapperHb, .metapanel, .sys{
+					display: none!important;
+				}
+
+				.removeDescription{
+					display: block;
+				}
+			}
+
 		}
 	}
 
@@ -369,6 +422,7 @@
 						border-left : 0;
 					}
 				}
+				
 
 				
 			}
@@ -1097,6 +1151,9 @@
 
 	&.videomainpost{
 
+		.hiddenpost{
+			background: #fff;
+		}
 		
 		.postWrapper{
 			background: transparent;
@@ -1705,6 +1762,9 @@ html.stblack{
 
 		&.videomainpost{
 
+			.hiddenpost{
+				background: @color-black4;
+			}
 		
 			.share{
 				
@@ -2084,4 +2144,5 @@ html.stblack{
 		right: @rhythm;
 	}
 }
+
 }

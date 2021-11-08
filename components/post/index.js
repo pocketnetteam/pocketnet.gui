@@ -483,6 +483,10 @@ var post = (function () {
 			},
 			like: function (value, clbk) {
 
+				var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share);
+
+				if(checkvisibility) return
+
 				var upvoteShare = share.upvote(value);
 
 
@@ -870,6 +874,9 @@ var post = (function () {
 		var renders = {
 			comments: function (clbk) {
 				if ((!ed.repost || ed.fromempty) && ed.comments != 'no') {
+
+
+					
 					self.fastTemplate(
 						'commentspreview',
 						function (rendered) {
@@ -892,6 +899,8 @@ var post = (function () {
 							if (parameters().address) {
 								url += '&address=' + (parameters().address || '');
 							}
+
+							var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share);
 
 							self.nav.api.load({
 								open: true,
@@ -921,7 +930,7 @@ var post = (function () {
 									fromtop: !ed.fromempty,
 									fromempty: ed.fromempty,
 									lastComment: ed.fromempty ? share.lastComment : null,
-
+									cantsend : checkvisibility,
 									additionalActions: function () {
 										self.closeContainer();
 									},
@@ -951,6 +960,19 @@ var post = (function () {
 					},
 					function (_p) {
 						actions.position();
+						el.wr.addClass('active');
+					},
+				);
+			},
+			lockedaccount: function () {
+				self.shell(
+					{
+						name: 'lockedaccount',
+						el: el.share,
+					},
+					function (_p) {
+						actions.position();
+						el.wr.addClass('active');
 					},
 				);
 			},
@@ -1405,6 +1427,8 @@ var post = (function () {
 							el.c.find('.shareTable[address="' + address + '"] .notificationturn').removeClass('turnon')
 						}
 					}
+
+					remake()
 				}
 
 			}
@@ -1415,6 +1439,8 @@ var post = (function () {
 
 					el.c.find('.shareTable[address="' + address + '"]').addClass('subscribed');
 					el.c.find('.shareTable[address="' + address + '"] .notificationturn').removeClass('turnon')
+				
+					remake()
 				}
 
 
@@ -1426,6 +1452,8 @@ var post = (function () {
 
 					el.c.find('.shareTable').removeClass('subscribed');
 					el.c.find('.shareTable[address="' + address + '"] .notificationturn').removeClass('turnon')
+				
+					remake()
 				}
 			}
 
@@ -1433,23 +1461,52 @@ var post = (function () {
 
 		}
 
+		var remake = function(){
+			if (inicomments)
+				inicomments.destroy()
 
+			if (player) {
+
+				if (player.destroy) player.destroy()
+
+				player = null
+			}
+
+
+			if (_repost) {
+				_repost.destroy();
+
+				_repost = null;
+			}
+
+			make()
+		}
 
 		var make = function () {
 
 			if (share) {
-				renders.share(function () {
-					renders.comments(function () {
 
-						/*if (el.wnd && el.wnd.length && ed.next && !isMobile()){
-			
-							//el.wnd.on('scroll', events.next)
+				if(self.app.platform.sdk.user.reputationBlocked(share.address)){
 
-							events.next()
-						}*/
-
+					renders.lockedaccount()
+					
+				}
+				else{
+					renders.share(function () {
+						renders.comments(function () {
+	
+							/*if (el.wnd && el.wnd.length && ed.next && !isMobile()){
+				
+								//el.wnd.on('scroll', events.next)
+	
+								events.next()
+							}*/
+	
+						})
 					})
-				})
+				}
+
+				
 
 			}
 			else {
@@ -1479,7 +1536,6 @@ var post = (function () {
 
 				level = (ed.level || -1) + 1
 
-
 				
 				self.app.platform.sdk.node.shares.getbyid([id], function () {
 
@@ -1503,6 +1559,9 @@ var post = (function () {
 					if (share) {
 						self.app.platform.sdk.node.shares.users([share], function (l, error2) {
 
+							/*if(!ed.repost && self.app.platform.sdk.user.reputationBlockedRedirect(share.address)){
+								return
+							}*/
 
 							var data = {
 								ed: deep(p, 'settings.essenseData') || {},
@@ -1512,8 +1571,6 @@ var post = (function () {
 							self.app.platform.sdk.videos.info([share.url]).then(r => {
 								clbk(data);
 							})
-
-
 
 						})
 					}

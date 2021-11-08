@@ -158,7 +158,8 @@ var share = (function(){
 
 							clbk()
 
-							renders.postline();
+							renders.settings();
+							renders.postline();	
 
 							if(_clbk) _clbk()
 
@@ -626,9 +627,9 @@ var share = (function(){
 
 					currentShare.settings.a = currentShare.default.a
 
-					self.app.peertubeHandler.api.videos.remove(l).then(r => {
-						self.app.platform.sdk.videos.clearstorage(l)
-					})
+					// self.app.peertubeHandler.api.videos.remove(l).then(r => {
+					// 	self.app.platform.sdk.videos.clearstorage(l)
+					// })
 
 			},
 
@@ -791,7 +792,7 @@ var share = (function(){
 							clbk(true)
 						}
 						else{
-							clbk(result.state.id != 2)
+							clbk(result.state.id != 2 && result.state.id != 3)
 
 						}
 						
@@ -804,7 +805,7 @@ var share = (function(){
 			},
 
 			post : function(clbk, p){
-
+				
 				el.postWrapper.removeClass('showError');
 
 				if(essenseData.hash == currentShare.shash()){
@@ -847,7 +848,9 @@ var share = (function(){
 						}
 
 						currentShare.uploadImages(self.app, function(){
-	
+							if (currentShare.repost.v){
+								currentShare.settings.f = '0'
+							}
 							if (currentShare.checkloaded()){
 								
 		
@@ -1587,10 +1590,68 @@ var share = (function(){
 
 			},
 
+			settings : function(clbk){
+
+				if(!currentShare.repost.v) {
+
+					currentShare.settings.f || (currentShare.settings.f = '0')
+
+					var selector = new Parameter({
+
+						type : "VALUES",
+						name : "Visibility",
+						id : 'organizationCode',
+						dbId : "INS_BROKER_CODE",
+						possibleValues : ['0','1','2'],
+						possibleValuesLabels : [
+							self.app.localization.e('visibletoeveryone'), 
+							self.app.localization.e('visibleonlytosubscribers'),
+							self.app.localization.e('visibleonlytoregistered')
+						],
+						defaultValue : currentShare.settings.f,
+						value : currentShare.settings.f
+
+					})
+
+					self.shell({
+						name :  'settings',
+						el : el.settings,
+						data : {
+							share : currentShare,
+							essenseData : essenseData,
+							selector : selector
+						},
+
+					}, function(p){
+
+						ParametersLive([selector], p.el)
+
+
+						selector._onChange = function(){
+
+							currentShare.settings.f = selector.value
+
+							state.save()
+						}
+
+						if (clbk)
+							clbk();
+					})
+				}
+
+				else{
+
+					el.settings.html('')
+
+					if(clbk) clbk()
+				}
+			},
+
+
 		
 			tgs : function(clbk){
 
-				if(!currentShare.repost.value) {
+				if(!currentShare.repost.v) {
 					
 					self.nav.api.load({
 						open : true,
@@ -1641,6 +1702,9 @@ var share = (function(){
 
 				}
 				else{
+
+					el.tgsWrapperMain.html('')
+
 					if(clbk) clbk()
 				}
 			},
@@ -1668,6 +1732,7 @@ var share = (function(){
 					renders.repost();
 
 					renders.postline();
+					renders.settings();
 
 				});
 
@@ -1721,6 +1786,8 @@ var share = (function(){
 						storage : p.storage,
 						value : p.value,
 						currentLink : currentShare.url ? currentShare.url.v : '',
+						inLentaWindow : true,
+						scrollElementName: '.wnd.videoCabinet .wndcontent',
 						actions : {
 							added : function(link, name){
 								var type = 'url';
@@ -1767,8 +1834,6 @@ var share = (function(){
 						external = element;
 
 						videoUploadData = element.essenseData;
-
-						console.log('external', element)
 					}
 				});
 
@@ -1826,23 +1891,7 @@ var share = (function(){
 							});
 
 							p.el.find('.removepeertube').on('click', function(){
-
-								dialog({
-									html : self.app.localization.e('removeVideoDialog'),
-									btn1text : self.app.localization.e('dyes'),
-									btn2text : self.app.localization.e('dno'),
-									class : "zindex",
-									success : function(){
-			
-										events.removelink()
-										
-									},
-			
-									fail : function(){
-									}
-								})
-
-								
+								events.removelink();
 							})
 
 							p.el.find('.streaminfo').on('click', () => {
@@ -2087,6 +2136,7 @@ var share = (function(){
 								renders.repost(function(){
 									renders.tgs();
 									renders.postline();
+									renders.settings();
 								});
 
 							})
@@ -2556,6 +2606,7 @@ var share = (function(){
 				el.changeAddress = el.c.find('.changeAddress')
 				el.repostWrapper = el.c.find('.repostWrapper')
 				el.postline = el.c.find('.postlineWrapper')
+				el.settings = el.c.find('.settingsWrapper')
 				el.body = el.c.find('.bodywrapper')
 
 				initEvents();

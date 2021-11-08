@@ -44,7 +44,7 @@ var Peertube = function (settings) {
 	};
 
 	self.timeout = function () {
-		return 3500;
+		return 5500;
 	};
 
 	self.statsInterval = function () {
@@ -102,11 +102,20 @@ var Peertube = function (settings) {
 	};
 
 	self.api = {
-		randroykey: function () {
+		randroykey: function (type, special) {
 			var _roys = {};
 
 			_.each(roys, function (r, c) {
-				if (!r.auto) _roys[c] = r;
+				if (!r.auto) {
+
+					if (!special){
+						if(r.hasspecial()) return
+					}
+
+					if (type && type == 'upload' && !r.canupload()) return
+
+					_roys[c] = r;
+				}
 			});
 
 			var keys = _.map(_roys, function (i, c) {
@@ -116,8 +125,16 @@ var Peertube = function (settings) {
 			return keys[f.rand(0, keys.length - 1)];
 		},
 
-		best: function ({ roy, type }) {
-			if (!roy) roy = self.api.randroykey();
+		best: function ({ roy, type, special }) {
+
+			if(!type || !roy) {
+				type = 'upload'
+				roy = null
+			}
+
+			
+
+			if (!roy) roy = self.api.randroykey(type, special);
 
 			roy = getroy(roy);
 
@@ -180,7 +197,7 @@ var Peertube = function (settings) {
 					if (r && r.data) {
 						fr = r.data;
 
-						if ((fr && fr.isLive) || (fr.state && fr.state.id == 2))
+						if ((fr && fr.isLive) || (fr.state && (fr.state.id == 2 || fr.state.id == 3)))
 							ontime = 20;
 
 						if (fr && fr.isLive && (!fr.aspectRatio || fr.aspectRatio == '0'))
@@ -270,7 +287,7 @@ var Peertube = function (settings) {
 			return Promise.resolve({})
 		},
 
-		roys: ({type}) => {
+		roys: ({type, special}) => {
 			const output = {};
 
 			var _roys = _.filter(roys, function (r) {
@@ -279,11 +296,25 @@ var Peertube = function (settings) {
 
 			if (type && type == 'upload') _roys = _.filter(_roys, function (r) {
 
+				if (!special){
+					if(r.hasspecial()) return
+				}
+
 				return r.canupload();
 			});
 
 			Object.keys(_roys).map((roy) => {
 				_roys[roy].best() ? (output[roy] = _roys[roy].best().host) : null;
+			});
+
+			return Promise.resolve(output);
+		},
+
+		allservers: ({type}) => {
+			const output = {};
+
+			Object.keys(roys).map((roy) => {
+				output[roy] = roys[roy].instances();
 			});
 
 			return Promise.resolve(output);

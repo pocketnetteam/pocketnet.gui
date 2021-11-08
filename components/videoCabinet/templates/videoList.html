@@ -71,18 +71,19 @@
       <div
         class="videoItemPart postingStatusWrapper"
         video="<%- `peertube://${deep(video, 'account.host')}/${video.uuid}` %>"
-        videoTranscoding="<%- (video.state.id !== 1) ? 'true' : '' %>"
+        videoTranscoding="<%- (video.state.id !== 1) ? 'true' : 'false' %>"
       >
         <div class="preloaderwr transcodingPreloader">
           <i class="fas fa-sync fa-spin"></i> <%- e('transcodingShort') %>
         </div>
         <button
           elementsid="attachVideoToPost"
-          class="attachVideoToPost tooltip hidden ghostButton"
-          title="<%- e('attachVideoToPost') %>"
+          class="<%- buttonCaption %> tooltip hidden ghostButton"
+          title="<%- e(buttonCaption) %>"
           videoLink="<%- `peertube://${deep(video, 'account.host') || video.server}/${video.uuid}` %>"
+          videoName="<%- video.name %>"
         >
-          <i class="fas fa-signature"></i> <%- e('attachVideoToPostShort') %>
+          <i class="fas fa-signature"></i> <%- e(`${buttonCaption}Short`) %>
         </button>
       </div>
       <div class="videoItemPart removeButtonWrapper">
@@ -90,6 +91,7 @@
           elementsid="menuActivator"
           class="fas fa-ellipsis-h menuActivator"
           videoLink="<%- `peertube://${deep(video, 'account.host') || video.server}/${video.uuid}` %>"
+          backupHost="<%- video.server %>"
         ></i>
       </div>
     </div>

@@ -54,6 +54,31 @@
 		}
 	}
 
+	.settingsWrapper{
+		.visibilityWrapper{
+			.vc_valuecustom{
+				width: auto;
+				padding-top : 0.5 * @rhythm;
+				font-size: 0.8em;
+				font-weight: 500;
+				border-bottom : 1px solid @color-gray-slight;
+				.vc_selectInput{
+					border : 0;
+					background: #FAFAFA;
+					.shadowSmaller();
+				}
+			}
+		
+			.vc_valuecustom .vc_textInput {
+
+				.vc_iconWrapper,
+				.vc_inputWrapper{
+					border : 0;
+				}
+			}
+		}
+	}
+
 	&.minimized{
 		padding : 0;
 		min-height: 0!important;
@@ -62,6 +87,7 @@
 
 		}
 
+		.settingsWrapper,
 		.tgsWrapperMain{
 			display: none!important;
 		}
@@ -231,13 +257,31 @@
 
 	#post{
 		.share{
+			.work{
+				padding-top : 0;
+			}
+		}
+		.ra{
 			/*background: fade(#fff, 50);*/
 			.work{
 				padding : 0;
 				padding-right: 30px;
 			}
 
-			.iconWrapper{
+			.removeDescription{
+				display: none;
+				padding-bottom: @rhythm * 3;
+				color: #b2abac;
+			}
+				
+			&.deleted{
+				.cntscontent, .repostWrapper, .commentsWrapperHb, .metapanel, .sys{
+					display: none!important;
+				}
+	
+				.removeDescription{
+					display: block;
+				}
 			}
 
 		}
@@ -258,7 +302,7 @@
 		.cntswrk{
 			margin-left: 8 * @rhythm;
 		}
-
+		
 		.images{
 			max-width: 700px;
 			padding : 2 * @rhythm 0;
@@ -974,7 +1018,7 @@
     }
     
     .postlineWrapper{
-		margin-top: 3 * @rhythm;
+		margin-top : @rhythm;
 		/*padding-left: 1em;
 		padding-right: 30px;*/
     }   
@@ -1273,10 +1317,16 @@
 			}
 
 			.postpanel>div.postWrapper{
-				width: 270px;
+				width: 280px;
 			}
 
 			#taginput .tgs .search .searchFastResultWrapper{
+				top : auto;
+				bottom : 100%;
+				max-height: 170px;
+			}
+
+			.settingsWrapper .vc_selectInput{
 				top : auto;
 				bottom : 100%;
 				max-height: 170px;
@@ -1354,6 +1404,7 @@ html.stblack{
 				/*background: fade(@color-black3, 50);*/
 				
 				background: @color-black2;
+				
 			}
 			
 	
@@ -1777,6 +1828,9 @@ html.stblack{
 				margin-left: 3.5em;
 			}
 			
+			.absolutetxwrapper{
+				overflow-y: visible;
+			}
 
 			.mobilecaption{
 				display: block;
@@ -1836,6 +1890,10 @@ html.stblack{
 
 			}
 
+			.postpanel>div.postWrapper{
+				width: 100%;
+			}
+
 			.sLoader{
 				left : 2 * @rhythm;
 				top : 2 * @rhythm;
@@ -1881,6 +1939,8 @@ html.stblack{
 			top : 2 * @rhythm;
 		}
 	}	
+
+	
 
 	#post{
 		.share{
@@ -2041,6 +2101,39 @@ html.stblack{
 	
 	.draggablepart.itisvideopart{
 		padding-right: 0;
+	}
+
+	.settingsWrapper{
+		background: #fff;
+		padding : @rhythm;
+		margin-bottom: @rhythm;
+
+		.visibilityWrapper{
+			.vc_valuecustom{
+				width: auto;
+				padding-top : 0;
+				font-size: 1em;
+				font-weight: 400;
+				border-bottom : 0;
+				input{
+					color: #838688;
+					padding-top : @rhythm;
+					padding-bottom : @rhythm;
+				}
+				.vc_selectInput{
+					border : 0;
+					background: #FAFAFA;
+					.shadowSmaller();
+				}
+
+				.vc_value{
+					padding-top : @rhythm;
+					padding-bottom: @rhythm;
+				}
+			}
+		
+			
+		}
 	}
 
 	.mobilecaption{

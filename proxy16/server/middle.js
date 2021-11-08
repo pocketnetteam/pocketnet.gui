@@ -74,12 +74,13 @@ var Middle = function(){
 
     self.printstats = function(){
 
+        return
+
         console.log("")
         console.log("_____________________________________")
         console.log("Total Requests count:", requestcountTotal)
         console.log("Finished Requests count:", requestcountFinished)
         console.log("5 Sec. Finished Requests count:", countLast5Seconds())
-        
         console.log(rate() + ' RPS')
     }
     
@@ -146,9 +147,12 @@ var Middle = function(){
   
     self.headers = function(request, result, next){
         result.setHeader('Access-Control-Allow-Origin', '*');
+        result.setHeader('Access-Control-Max-Age', '600');
+        result.setHeader('Strict-Transport-Security', 'max-age=31536000');
         result.setHeader("Access-Control-Allow-Methods", "GET, POST");
         result.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
         result.set('Cache-control', 'public, max-age=10')
+
         
         if (next) 
             next(null)
@@ -187,19 +191,19 @@ var Middle = function(){
 
             if(!code) code = 200
 
-            try{
                 var jsonp = {
                     result : 'success',
                     data : data
                 }
     
-                if (s && s.node){
+                if (s && s.node && s.node.key){
                     jsonp.node = s.node.key
                 }
-            }
-            catch(e){
-               // console.error(e)
-            }
+
+                if (s && s.time){
+                    jsonp.time = s.time
+                }
+           
 
             result.status(code).jsonp(jsonp)
 
@@ -228,6 +232,7 @@ var Middle = function(){
     }
     
     self.data = function(request, result, next){
+
      
         request.data = _.merge(request.query, request.body)
         

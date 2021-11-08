@@ -388,9 +388,10 @@ var Control = function(settings) {
                 self.autorun.init()
 
                 return self.kit.check()
-            }).catch(e => {
+            }).catch(e => { 
 
-                console.log("ERROR", e)
+                self.logger.w('nodecontrol', 'error', 'Node Update', e)
+
                 lock = ''
 
                 return Promise.reject(e)

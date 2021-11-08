@@ -723,17 +723,19 @@ var main = (function(){
 
 				console.log("INITSTICKER!!!")
 
-				el.leftpanel.hcSticky({
-					stickTo: '#main',
-					top : t1,
-					bottom : 122
-				});
+				if (el.leftpanel)
+					el.leftpanel.hcSticky({
+						stickTo: '#main',
+						top : t1,
+						bottom : 122
+					});
 
-				el.panel.hcSticky({
-					stickTo: '#main',
-					top : t2,
-					bottom : 122
-				});
+				if (el.panel)
+					el.panel.hcSticky({
+						stickTo: '#main',
+						top : t2,
+						bottom : 122
+					});
 
 				hsready = true
 			}
@@ -928,8 +930,10 @@ var main = (function(){
 				var ncurrentMode = parameters().r || 'common';
 				var nlentakey = parameters().video ? 'video' : (parameters().r || 'index')
 				var nvideomain = nlentakey == 'video'
-				
+				var page = parameters().page
+
 				var changes = false
+
 
 				localStorage['lentakey'] = nlentakey
 
@@ -948,6 +952,8 @@ var main = (function(){
 				if (searchtags != nsearchtags){
 					searchtags = nsearchtags; changes = true
 				}
+
+				if(page) changes = true
 
 				if (videomain){
 

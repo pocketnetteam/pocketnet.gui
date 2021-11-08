@@ -5,7 +5,7 @@ var commentpanel = function(comment, _class){  %>
 	<div class="commentpanel">
 
 		<div class="items">
-			<% if((!state || mestate.reputation >= -50) && !comment.deleted) { %> 
+			<% if((!state || mestate.reputation >= -50) && !comment.deleted && !ed.cantsend) { %> 
 				<div elementsid="comments_reply" class="item reply">
 					<div class="cact">
 						<div class="label">
@@ -94,7 +94,7 @@ var commentpanel = function(comment, _class){  %>
 
 	var m = '' %> 
 
-	<div class="comment <% if(comment.my(app)) {%> mycomment <% } %> <% if(comment.deleted) {%> deleted <% } %> <% if(comment.myScore) {%> rated <% } %> <% if(comment.temp) {%> temptransaction <% } %> <% if(Number(comment.timeUpd) === Number(comment.time)) {%> commentnotedited <% } %> <%-newcomments%> <%- _class %>" id="<%-comment.id%>" aid="<%-comment.answerid%>" pid='<%-comment.parentid%>'>
+	<div class="comment <% if(comment.my(app)) {%> mycomment <% } %> <% if(deep(app, 'platform.sdk.user.storage.'+comment.address+'.dev') || deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.dev')) {%> dev <% } %> <% if(comment.deleted) {%> deleted <% } %> <% if(comment.myScore) {%> rated <% } %> <% if(comment.temp) {%> temptransaction <% } %> <% if(Number(comment.timeUpd) === Number(comment.time)) {%> commentnotedited <% } %> <%-newcomments%> <%- _class %>" id="<%-comment.id%>" aid="<%-comment.answerid%>" pid='<%-comment.parentid%>'>
 
 		<div class="commentPaddingWrapper">
 
@@ -106,7 +106,7 @@ var commentpanel = function(comment, _class){  %>
 							var src = deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.image');
 							var name = deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.name');
 							var letter = name ? name[0] : '';  
-  	
+							var dev = deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.dev');
 						%>
 
 						<div class="icon">
@@ -125,15 +125,12 @@ var commentpanel = function(comment, _class){  %>
 				
 								<% } %>
 
-								<% if(deep(app, 'platform.real.'+comment.address)) {%>
-									<div class="realperson">
+								<% if(app.platform.ui.markUser) {%>
 
-										<span class="fa-stack fa-2x">
-											<i class="fas fa-certificate fa-stack-2x"></i>
-											<i class="fas fa-check fa-stack-1x"></i>
-										  </span>
-									</div>
+									<%= app.platform.ui.markUser(comment.address)%>
+
 								<% } %>
+
 							</div>
 
 							<!--<% if(comment.donation === 'true' && comment.amount) {%>

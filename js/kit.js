@@ -1196,6 +1196,7 @@ Share = function(lang){
 		v : 'p',
 		videos : [],
 		image : 'a',
+		f : '0'
 	}
 
 	self.settings = {
@@ -1203,7 +1204,9 @@ Share = function(lang){
 		v : '',
 		videos : [],
 		image : '',
+		f : '0'
 	}
+	
 
 	self.checkloaded = function(){
 		var notloaded = _.find(self.images.v, function(i){
@@ -1302,6 +1305,10 @@ Share = function(lang){
 
 	self.validation = function(){
 
+		if (self.delete){
+			return false;
+		}
+
 		if(!self.message.v && !self.caption.v && !self.repost.v){
 			return 'message'
 		}
@@ -1335,6 +1342,7 @@ Share = function(lang){
 	}
 
 	self.serialize = function(){
+		
 		return encodeURIComponent(self.url.v) 
 		
 		+ encodeURIComponent(self.caption.v) 
@@ -1734,6 +1742,7 @@ UserInfo = function(){
 	}
 
 	self.serialize = function(){
+
 		return encodeURIComponent(self.name.v)
 		 + encodeURIComponent(self.site.v)
 		 + self.language.v
@@ -1745,6 +1754,7 @@ UserInfo = function(){
 
 	self.alias = function(txid){
 		var userInfo = new pUserInfo();
+		
 
 			userInfo._import(self.export())
 
@@ -1870,6 +1880,9 @@ pUserInfo = function(){
 
 		self.temp = v.temp || null;
 
+		self.dev = v.dev;
+
+
 	}
 
 	self.export = function(){
@@ -1964,6 +1977,8 @@ pShare = function(){
 	self.lastComment = null;
 	self.reposted = 0;
 
+	self.deleted = false;
+
 	self.on = {}
 	self.off = function(e){
 		delete self.on[e]
@@ -1974,6 +1989,7 @@ pShare = function(){
 		v : 'p',
 		videos : [],
 		image : 'a',
+		f : '0'
 	}
 
 	self.settings = {
@@ -1981,6 +1997,7 @@ pShare = function(){
 		v : '',
 		videos : [],
 		image : '',
+		f : '0'
 	}
 
 	self.isEmpty = function(){
@@ -2035,6 +2052,8 @@ pShare = function(){
 		self.images = v.i || v.images || [];
 		self.repost = v.r || v.repost || v.txidRepost || ''
 
+		if (v.deleted) self.deleted = true
+
 
 		if (v.txid)
 			self.txid = v.txid;
@@ -2088,6 +2107,7 @@ pShare = function(){
 		v.s = _.clone(self.settings)
 		v.l = self.language
 		v.p = self.poll
+		v.deleted = self.deleted
 
 		return v
 	}
@@ -2299,6 +2319,17 @@ pShare = function(){
 		share.time = self.time
 
 		return share;
+	}
+
+	self.visibility = function(){
+
+		//if(rand(0, 1)) return 'sub'
+
+		if(self.settings.f == '0') return null
+
+		if(self.settings.f == '1') return 'sub'
+
+		if(self.settings.f == '2') return 'reg'
 	}
 
 	self.type = 'share'
@@ -2553,3 +2584,277 @@ kits = {
 		comment : pComment,
 	}
 }
+
+Remove = function(lang){
+
+	var self = this;
+
+	self.clear = function(){
+		
+		self.txidEdit.set()
+		self.s.set()
+
+	}
+
+	self.ustate = function(){
+
+		return self.type;
+	} 
+
+	self.on = {
+		change : {}
+	}
+	self.off = function(e){
+		delete self.on[e]
+	}
+
+
+	self.checkloaded = function(){
+		return false
+	}
+
+
+	self.validation = function(){
+		return false
+	}
+
+	self.serialize = function(){
+
+        return encodeURIComponent(self.txid)
+
+	}
+
+	self.shash = function(){
+		return bitcoin.crypto.sha256(self.serialize()).toString('hex')
+	}
+	
+
+	self.export = function(){
+
+		return {
+			txidEdit: self.txidEdit || "",
+		}
+
+	}
+
+	self.import = function(v){
+
+		self.txidEdit.set(v.txidEdit || ""); 
+
+		
+	}
+
+	self.alias = function(txid){
+		var remove = new pRemove();
+
+            remove.time = new Date();
+
+			remove._import(self.export())
+
+			remove.txid = txid || self.txidEdit
+
+		return remove;
+	}
+
+	self.optstype = function(){
+
+		return self.type	
+	}
+
+
+
+	self.typeop = function(){
+
+        return self.type;
+
+	}
+
+	self.type = 'contentDelete'
+
+	return self;
+}
+
+
+pRemove = function(){
+
+	var self = this;
+
+	self.txidEdit = '';
+	self.s = ''
+
+	self.on = {}
+	self.off = function(e){
+		delete self.on[e]
+	}
+
+	self.isEmpty = function(){
+
+		return !self.txidEdit && !self.s
+	}
+
+	self._import = function(v, notdecode){
+
+		if (v.txidEdit)
+			self.txidEdit = v.txidEdit;	
+
+		
+		if (v.s)
+			self.s = v.s;	
+
+	}
+
+	self.export = function(){
+
+		var v = {}
+	
+		v.txidEdit = self.txidEdit;
+
+		if (v.s){
+			v.s = self.s;
+		}
+
+		return v
+	}
+
+	self.import = function(v){
+
+		v = JSON.parse(v)
+
+		self._import(v)
+	}
+
+
+	self.delete = function(){
+		var c = new Remove();
+
+		c.txidEdit = self.txidEdit;
+		c.c = self.c;
+		
+
+		return c
+
+	}
+
+
+	self.alias = function(){
+		var remove = new Remove();
+
+		remove.import(self)
+
+		remove.txidEdit = self.txidEdit
+
+		if (remove.s){
+			remove.s = self.s;
+		}
+
+		return remove;
+	}
+
+	self.type = 'contentDelete'
+
+	return self;
+}
+
+Settings = function(){
+
+	var self = this;
+
+	self.pin = {
+		set : function(_v){
+
+			if(!_v){
+				this.v = ''
+			}
+			else
+			{
+				this.v = _v
+			}
+
+			_.each(self.on.change || {}, function(f){
+				f('pin', this.v)
+			})
+
+		},
+		get : function(){
+			return this.v
+		},
+		v : ''
+	};
+
+	self.clear = function(){
+
+		self.pin.set()
+
+	}
+
+	self.ustate = function(){
+
+		return self.type;
+	} 
+
+	self.on = {
+		change : {}
+	}
+	self.off = function(e){
+		delete self.on[e]
+	}
+
+
+	self.checkloaded = function(){
+		return false
+	}
+
+
+	self.validation = function(){
+		return false
+	}
+
+	self.serialize = function(){
+
+        return JSON.stringify({
+			pin: self.pin.v
+		})
+
+	}
+
+	self.shash = function(){
+		return bitcoin.crypto.sha256(self.serialize()).toString('hex')
+	}
+
+
+	self.export = function(){
+
+		return {
+			d: JSON.stringify({
+				pin: self.pin.v || "",
+			})
+		} 
+
+	}
+
+	self.import = function(v){
+
+		self.pin.set(v.pin || ""); 
+
+
+	}
+
+
+	self.optstype = function(){
+
+		return self.type	
+	}
+
+
+
+	self.typeop = function(){
+
+        return self.type;
+
+	}
+
+	self.type = 'accSet'
+
+	return self;
+}
+

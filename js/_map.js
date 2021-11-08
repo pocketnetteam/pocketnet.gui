@@ -1777,12 +1777,19 @@ __map =  {
 		href : "videoCabinet",
 		add : function(settings, p){
 
+			if(p.inWnd)
+			{
+				return {
+					insert : 'wnd'
+				}
+			}
+			else
 			if(p.inTooltip)
-
+			{
 				return {
 					insert : 'tooltip'
 				}
-
+			}
 			else
 			{
 				return {

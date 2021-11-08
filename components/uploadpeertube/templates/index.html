@@ -36,10 +36,16 @@
                 <% if((deep(app,
                 'platform.real.'+user.address.value.toString('hex')) ||
                 window.testpocketnet) && !isMobile()) {%>
-                <div elementsid="caption-container" class="caption-container import-container">
-                  <%- e('importFromExternal') %>
-                </div>
+                  <div elementsid="caption-container" class="caption-container import-container">
+                    <%- e('importFromExternal') %>
+                  </div>
                 <% } %>
+
+                <div class="note">
+                  <%- e('videoSizeAtt') %>
+                  <%- e('videoFormats') %>
+                </div>
+
               </div>
               <div class="activeOnRolled verticalSection progressSection">
                 <div class="upload-progress-container activeOnRolled hidden">

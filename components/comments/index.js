@@ -1044,7 +1044,9 @@ var comments = (function(){
 
 					if(!comment) return
 
-					if (comment.address == self.app.platform.sdk.address.pnet().address){
+					var dev = deep(app, 'platform.sdk.user.storage.'+comment.address+'.dev') || deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.dev');
+
+					if (comment.address == self.app.platform.sdk.address.pnet().address || dev){
 						return
 					}
 
@@ -1085,6 +1087,8 @@ var comments = (function(){
 		var events = {
 
 			upvoteComment : function(){
+
+				if(ed.cantsend) return
 
 				if($(this).closest('.comment').hasClass('rated')) return
 
@@ -1781,8 +1785,9 @@ var comments = (function(){
 
 			post : function(clbk, p){
 
-				if(ed.openapi) {
+				if (ed.openapi || ed.cantsend) {
 					if(clbk) clbk()
+
 					return
 				}
 
@@ -1792,142 +1797,142 @@ var comments = (function(){
 
 					if(!p) p = {};
 
-				p.el || (p.el = el.post)
+					p.el || (p.el = el.post)
 
-				var _preview = preview && !p.answer && !p.editid
+					var _preview = preview && !p.answer && !p.editid
 
-				self.shell({
-					name :  'post',
-					el : p.el,
+					self.shell({
+						name :  'post',
+						el : p.el,
 
-					data : {
-						placeholder : p.placeholder || '',
-						answer : p.answer || '',
-						edit : p.edit || '',
-						preview : _preview,
-						mestate : mestate,
-						sender : self.app.platform.sdk.address.pnet() ? self.app.platform.sdk.address.pnet().address : null,
-						receiver: receiver
-					},
+						data : {
+							placeholder : p.placeholder || '',
+							answer : p.answer || '',
+							edit : p.edit || '',
+							preview : _preview,
+							mestate : mestate,
+							sender : self.app.platform.sdk.address.pnet() ? self.app.platform.sdk.address.pnet().address : null,
+							receiver: receiver
+						},
 
-				}, function(_p){				
+					}, function(_p){				
 
-					var ini = function(_clbk){
+						var ini = function(_clbk){
 
-						if(!preview) return
+							if(!preview) return
 
-						preview = false;
-							
-						p.init = true;
-						el.c.removeClass('preview')
+							preview = false;
+								
+							p.init = true;
+							el.c.removeClass('preview')
 
-						var __clbk = function(a, b){
-							  clbk(a, b)
+							var __clbk = function(a, b){
+								clbk(a, b)
 
 
-							if (_clbk){
-								_clbk(a, b)
-							}
-							
-						}
-
-						postEvents(p, _p, __clbk)
-					}
-
-					_p.el.find('.embeddonate').off('click').on('click', function(){
-
-						self.app.platform.sdk.node.transactions.get.balance(function(amount){
-
-							balance = amount.toFixed(3);
-							
-							var id = actions.getid(_p.el.find('.postbody'))
-
-							if(state){
-								actions.embeddonate(id, p)
-								if(!p.answer && !p.editid){
-	
-									ini()
-	
-								}	
-							}
-							else{
-								actions.stateAction(function(){
-								})
+								if (_clbk){
+									_clbk(a, b)
+								}
+								
 							}
 
-
-						})
-
-
-					})
-
-					_p.el.find('.embedimages').off('click').on('click', function(){
-
-						var id = actions.getid(_p.el.find('.postbody'))
-
-						if(state){
-							actions.embedimages(id, p)
-							if(!p.answer && !p.editid){
-
-								ini()
-
-							}	
+							postEvents(p, _p, __clbk)
 						}
-						else{
-							actions.stateAction(function(){
-							})
-						}
-					})
 
-					if(_preview){
+						_p.el.find('.embeddonate').off('click').on('click', function(){
 
-						_p.el.find('textarea').on('click', function(){
+							self.app.platform.sdk.node.transactions.get.balance(function(amount){
 
-							$(this).blur();
-
-							self.app.user.isState(function(state){
+								balance = amount.toFixed(3);
+								
+								var id = actions.getid(_p.el.find('.postbody'))
 
 								if(state){
-									ini()
+									actions.embeddonate(id, p)
+									if(!p.answer && !p.editid){
+		
+										ini()
+		
+									}	
 								}
 								else{
 									actions.stateAction(function(){
 									})
 								}
 
+
 							})
 
-							
 
-							
-							
-
-							
 						})
 
-						_p.el.find('.embedEmojiPrivew').on('click', function(){
+						_p.el.find('.embedimages').off('click').on('click', function(){
+
+							var id = actions.getid(_p.el.find('.postbody'))
 
 							if(state){
-								ini(function(t, a){
-									t.showPicker()
-								})	
+								actions.embedimages(id, p)
+								if(!p.answer && !p.editid){
+
+									ini()
+
+								}	
 							}
 							else{
 								actions.stateAction(function(){
 								})
 							}
-							
-							
-							
 						})
 
-						return
-					}
+						if(_preview){
 
-					postEvents(p, _p, clbk)
+							_p.el.find('textarea').on('click', function(){
 
-					
-				})
+								$(this).blur();
+
+								self.app.user.isState(function(state){
+
+									if(state){
+										ini()
+									}
+									else{
+										actions.stateAction(function(){
+										})
+									}
+
+								})
+
+								
+
+								
+								
+
+								
+							})
+
+							_p.el.find('.embedEmojiPrivew').on('click', function(){
+
+								if(state){
+									ini(function(t, a){
+										t.showPicker()
+									})	
+								}
+								else{
+									actions.stateAction(function(){
+									})
+								}
+								
+								
+								
+							})
+
+							return
+						}
+
+						postEvents(p, _p, clbk)
+
+						
+					})
 
 
 				})
@@ -2091,7 +2096,9 @@ var comments = (function(){
 						replaceNameNoComment : function(name, p){
 							return '<span elementsid="comments_tocommentno" class="tocommentno">' + name + "</span>"
 						},
-						mestate : mestate
+						mestate : mestate,
+
+						ed : ed
 					},
 
 					additionalActions : function(){
