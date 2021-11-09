@@ -25,7 +25,6 @@
   color: #b2abac;
 }
 #postscores .youstars {
-  background: #FAFAFC;
   padding: 1em;
   padding-bottom: 1em;
 }
@@ -142,7 +141,6 @@
   font-size: 1em;
   border-bottom: 1px solid #e4ddde;
   margin-bottom: 0;
-  background: #F2F2F5;
   font-family: Segoe UI;
 }
 #postscores #userslist .caption span {
@@ -199,8 +197,6 @@
 }
 .postscoreswnd.wnd #postscores .youstars {
   position: absolute;
-  background: #FAFAFC;
-  border: 1px solid #F2F2F5;
   left: 0;
   right: 0;
   top: 0;
@@ -220,9 +216,6 @@ html.stblack #postscores .itemwr .stars {
 }
 html.stblack #postscores .details .detailsWrapper {
   border-bottom: 1px solid #1e2328;
-}
-html.stblack #postscores .details .linebg .line {
-  background: #FFAE00;
 }
 html.stblack #postscores #userslist {
   background: #030f1b;
