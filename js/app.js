@@ -991,7 +991,8 @@ Application = function(p)
 				p || (p = {});
 
 				p.clbk = function(){
-					navigator.splashscreen.hide();
+					if (navigator.splashscreen)
+						navigator.splashscreen.hide();
 				}
 
 				if (window.Keyboard && window.Keyboard.disableScroll){

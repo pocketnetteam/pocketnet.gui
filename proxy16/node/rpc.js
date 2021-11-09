@@ -268,7 +268,7 @@ function rpc(request, callback, obj) {
             called = true;
         }
         
-    }).setTimeout(20000, function(){
+    }).setTimeout(timeout, function(){
 
         if(!called) {
 
