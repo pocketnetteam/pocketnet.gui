@@ -8,6 +8,7 @@
   text-align: left;
   color: #1e2328;
   margin-bottom: 0.5em;
+  background: #FAFAFC;
 }
 #postscores .caption span {
   font-family: Nunito Sans;
@@ -201,15 +202,18 @@
   right: 0;
   top: 0;
   height: 54px;
+  background: #FAFAFC;
+  border-bottom: 1px solid #F2F2F5;
 }
 html.stblack #postscores .caption {
   color: #00A3F7;
+  background: #030f1b !important;
 }
 html.stblack #postscores .subcaption {
   color: #00a4ff;
 }
 html.stblack #postscores .youstars {
-  background: #030f1b;
+  background: #030f1b !important;
 }
 html.stblack #postscores .itemwr .stars {
   color: #00A3F7;
