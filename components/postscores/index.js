@@ -135,6 +135,9 @@ var postscores = (function(){
 				var addresses = _.map(scores, function(s){
 					return s.address
 				})
+				.filter(function(value, index, self){
+					return self.indexOf(value) === index;
+				})
 
 				var map = {};
 
