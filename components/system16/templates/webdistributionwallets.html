@@ -49,11 +49,11 @@
                     
                     </div>
 
-                    <div class="name"><%- wallet.key.toUpperCase() %> 
+                    <div elementsid="graycoinsname" class="name"><%- wallet.key.toUpperCase() %> 
 
-                        <% if(wallet.ready && admin) {%> <span class="gray coins">Send Coins</span> <% } %>
-                        <% if(wallet.ready && admin) {%> <span class="gray remove">Delete</span> <% } %>
-                        <% if(wallet.ready && admin) {%> <span class="gray apply">Apply</span> <% } %>
+                        <% if(wallet.ready && admin) {%> <span elementsid="graycoins" class="gray coins">Send Coins</span> <% } %>
+                        <% if(wallet.ready && admin) {%> <span elementsid="grayremove" class="gray remove">Delete</span> <% } %>
+                        <% if(wallet.ready && admin) {%> <span elementsid="grayapply" class="gray apply">Apply</span> <% } %>
                     </div>
                     <div class="queue"><%- wallet.queue %></div>
                     <div class="balance"><%- wallet.balance %> PKOIN</div>

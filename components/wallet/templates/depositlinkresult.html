@@ -50,7 +50,7 @@
 	<div class="row table">
 		<div class="address">
 			<div class="inputWrapper">
-				<textarea class="linkInTextArea">https://<%- app.options.url %>/send?address=<%-address%>&amount=<%-d.parameters.depositamount.value%>&message=<%-hexEncode(d.parameters.message.value)%>&label=<%-d.parameters.label.value%></textarea>
+				<textarea elementsid="linkInTextArea" class="linkInTextArea">https://<%- app.options.url %>/send?address=<%-address%>&amount=<%-d.parameters.depositamount.value%>&message=<%-hexEncode(d.parameters.message.value)%>&label=<%-d.parameters.label.value%></textarea>
 			</div>
 		</div>
 
@@ -60,7 +60,7 @@
 	<div class="row table">
 		
 		<div class="cell">
-			<button class="copylink"><i class="fas fa-clone"></i> <%=e('copylink')%></button>
+			<button elementsid="walletcopylink" class="copylink"><i class="fas fa-clone"></i> <%=e('copylink')%></button>
 		</div>
 
 		

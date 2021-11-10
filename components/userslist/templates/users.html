@@ -20,7 +20,7 @@ var telements = function(address){ %>
 		
 		<span class="subscribebuttonstop <%-_class%>">
 
-			<span class="unsubscribe funf">&middot; You are Following <i class="far fa-check-circle"></i></span>	
+			<span elementsid="unsubscribe" class="unsubscribe funf">&middot; You are Following <i class="far fa-check-circle"></i></span>	
 
 			<% if (me){ 
 				
@@ -28,11 +28,11 @@ var telements = function(address){ %>
 				
 			%>
 
-				<span class="notificationturn <% if(r && (r.private == 'true' || r.private === true)) {%> turnon <% } %>">&middot; <i class="far fa-bell-slash"></i></span>
+				<span elementsid="notificationturn" class="notificationturn <% if(r && (r.private == 'true' || r.private === true)) {%> turnon <% } %>">&middot; <i class="far fa-bell-slash"></i></span>
 			
 			<% } %>
 
-			<span class="subscribe funf">
+			<span elementsid="subscribe" class="subscribe funf">
 				<button>Follow</button>
 			</span>	
 
@@ -40,7 +40,7 @@ var telements = function(address){ %>
 
 		<span class="blockingWrapper">
 
-			<span class="unblocking funf"><%=e('unblock')%></span>	
+			<span elementsid="unblocking" class="unblocking funf"><%=e('unblock')%></span>	
 
 		</span>
 					
@@ -62,7 +62,7 @@ _.each(addresses, function(address){
 			<div class="addressTable table" address="<%-address%>">
 				<div class="iconWrapper">
 					
-					<a href="<%-app.platform.api.authorlink(address)%>">
+					<a elementsid="<%-app.platform.api.authorlink(address)%>" href="<%-app.platform.api.authorlink(address)%>">
 						<div class="icon">
 
 							<% 
@@ -92,7 +92,7 @@ _.each(addresses, function(address){
 				</div>
 
 				<div class="label">
-					<a href="<%-app.platform.api.authorlink(address)%>">
+					<a elementsid="userlistauthorlink" href="<%-app.platform.api.authorlink(address)%>">
 
 						<div class="name">						
 							<%- app.platform.api.name(address) || address %>							

@@ -14,7 +14,7 @@
 
 						%>
 
-						<div class="user" address="<%- user.address %>" name="<%- decodeURIComponent(user.name) %>">
+						<div class="user" elementsid="<%- user.address %>_open" address="<%- user.address %>" name="<%- decodeURIComponent(user.name) %>">
 							<div class="userTable table">
 								<div class="iconWrapper">
 									<div class="usicon">
@@ -29,7 +29,7 @@
 
 										%>
 
-										<div class="usericon" image="<%-src || ''%>">
+										<div elementsid="<%-src || 'usericon'%>" class="usericon" image="<%-src || ''%>">
 
 											<% if(!src && !letter) {%>
 
@@ -70,7 +70,7 @@
 
 						<div class="searchbywrapper small">
 
-							<div class="searchby searchbytag">
+							<div elementsid="searchbytag" class="searchby searchbytag">
 								<div class="swrp table">
 									<div class="rsicon">
 										<i class="fas fa-hashtag"></i>
@@ -88,7 +88,7 @@
 					<% if(r.type == 'str') {%>
 
 						<div class="searchbywrapper small">
-							<a href="index?ss=<%- r.data.value %>">
+							<a elementsid="index?ss=<%- r.data.value %>" href="index?ss=<%- r.data.value %>">
 								<div class="searchby searchbyusers">
 									<div class="swrp table">
 										<div class="rsicon">
@@ -108,7 +108,7 @@
 					<% if(r.type == 'tags') {%>
 
 						<div class="searchbywrapper small">
-							<a href="index?sst=<%- r.data.value.replace(/#/g, '') %>">
+							<a elementsid="index?sst=<%- r.data.value.replace(/#/g, '') %>" href="index?sst=<%- r.data.value.replace(/#/g, '') %>">
 								<div class="searchby searchbyusers">
 									<div class="swrp table">
 										<div class="rsicon">
@@ -168,7 +168,7 @@
 
 			<% if(value.indexOf("#") == -1) {%>
 
-				<a href="index?ss=<%-value%>">
+				<a elementsid="index?ss=<%-value%>" href="index?ss=<%-value%>">
 					<div class="searchby searchbyvalue">
 				
 						<div class="swrp table">
@@ -196,7 +196,7 @@
 
 				if(words.length){ %>
 
-					<a href="index?sst=<%-words.join(' ')%>">
+					<a elementsid="index?sst=<%-words.join(' ')%>" href="index?sst=<%-words.join(' ')%>">
 						<div class="searchby searchbytag">
 							<div class="swrp table">
 								<div class="rsicon">

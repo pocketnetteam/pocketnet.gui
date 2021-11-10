@@ -13,7 +13,7 @@
                     <div class="admin table">
 
                         <div class="iconWrapper">
-                            <% if(!app.curation()) {%> <a href="<%-app.platform.api.authorlink(uadmin)%>"> <% } %>
+                            <% if(!app.curation()) {%> <a elementsid="<%-app.platform.api.authorlink(uadmin)%>" href="<%-app.platform.api.authorlink(uadmin)%>"> <% } %>
 
                                 <% 
                                     var src = user.image;  
@@ -43,7 +43,7 @@
                         
                         <div class="nameWrapper">
 
-                            <% if(!app.curation()) {%><a href="<%-app.platform.api.authorlink(uadmin)%>"><% } %>
+                            <% if(!app.curation()) {%><a elementsid="<%-app.platform.api.authorlink(uadmin)%>" href="<%-app.platform.api.authorlink(uadmin)%>"><% } %>
                                 <%- user.name || uadmin %>
                             <% if(!app.curation()) {%></a><% } %>
                             
@@ -52,7 +52,7 @@
                         <div class="panelWrapper">
                             <% if(admin) { %>
 
-                                <div class="item remove" address="<%-uadmin%>">
+                                <div elementsid="removeuadmin" class="item remove" address="<%-uadmin%>">
                                     <i class="far fa-times-circle"></i>
                                 </div>
                                 
@@ -79,7 +79,7 @@
     <div class="adminpanel">
         <div class="work">
             <div class="buttons">
-                <button class="button addadmin">
+                <button elementsid="addadmin" class="button addadmin">
                     <i class="fas fa-plus"></i> Add admin Address
                 </button>
             </div>

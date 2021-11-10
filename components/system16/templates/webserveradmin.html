@@ -19,13 +19,13 @@
                         <span>Enabled</span>
                     </div>
 
-                    <div class="value" sys="serverenabled" value="<%-(typeof changes.enabled != 'undefined' ? changes.enabled : system.server.enabled)%>">
+                    <div elementsid="serverenabled" class="value" sys="serverenabled" value="<%-(typeof changes.enabled != 'undefined' ? changes.enabled : system.server.enabled)%>">
                         <span><%- (typeof changes.enabled != 'undefined' ? changes.enabled : system.server.enabled) ? 'Yes' : 'No' %></span>
                     </div>
 
                     <% if(typeof changes.enabled != 'undefined') {%>
                         <div class="icon">
-                            <i class="far fa-times-circle" remove="enabled"></i>
+                            <i elementsid="fa-times-circle" class="far fa-times-circle" remove="enabled"></i>
                         </div>
                     <% } %>
                 </div>
@@ -37,9 +37,9 @@
                         <span>Domain</span>
                     </div>
 
-                    <div class="value" sys="domain">
+                    <div elementsid="domain" class="value" sys="domain">
                         <div class="input">
-                            <input type="text" class="domain" value="<%- typeof changes.domain != 'undefined' ? changes.domain : (system.server.domain || '')%>">
+                            <input elementsid="inputdomain" type="text" class="domain" value="<%- typeof changes.domain != 'undefined' ? changes.domain : (system.server.domain || '')%>">
                         </div>
                     </div>
 
@@ -58,9 +58,9 @@
                         <span>Https port</span>
                     </div>
 
-                    <div class="value" sys="https">
+                    <div elementsid="https" class="value" sys="https">
                         <div class="input">
-                            <input type="number" class="httpsport" value="<%-changes.https || system.server.ports.https%>">
+                            <input elementsid="httpsport" type="number" class="httpsport" value="<%-changes.https || system.server.ports.https%>">
                         </div>
                     </div>
 
@@ -79,9 +79,9 @@
                         <span>Websocket port</span>
                     </div>
 
-                    <div class="value" sys="wss">
+                    <div elementsid="wss" class="value" sys="wss">
                         <div class="input">
-                            <input type="number" class="wsssport" value="<%-changes.wss || system.server.ports.wss%>">
+                            <input elementsid="wsssport" type="number" class="wsssport" value="<%-changes.wss || system.server.ports.wss%>">
                         </div>
                     </div>
                     <% if(changes.wss) {%>
@@ -98,7 +98,7 @@
                         <span>Certificate</span>
                     </div>
 
-                    <div class="value" sys="certificate">
+                    <div elementsid="certificate" class="value" sys="certificate">
                         <span><%- deep(changes, 'ssl.name') || deep(system, 'server.ssl.name') || 'None' %></span>
                     </div>
 
@@ -109,7 +109,7 @@
                     <% } else { %> 
 
                         <% if(deep(system, 'server.ssl.certpath') || deep(system, 'server.ssl.keypath')) {%>
-                            <div class="todefaultcert">
+                            <div elementsid="todefaultcert" class="todefaultcert">
                                 <span>Set do default</span>
                             </div>
                         <% } %>
@@ -126,7 +126,7 @@
                         <span>Firebase</span>
                     </div>
 
-                    <div class="value" sys="firebase">
+                    <div elementsid="firebase" class="value" sys="firebase">
                         <span><%- deep(changes, 'firebase.id') || deep(system, 'firebase.id') || 'None' %></span>
 
                        
@@ -145,7 +145,7 @@
                     <% } else { %> 
 
                         <% if(deep(system, 'firebase.key') || deep(system, 'firebase.id')) {%>
-                            <div class="icon clearfirebase">
+                            <div elementsid="clearfirebase" class="icon clearfirebase">
                                 <i class="far fa-times-circle"></i>
                             </div>
                         <% } %>
@@ -167,11 +167,11 @@
             <div class="work">
                 <div class="haschanges">
                     <div class="buttons">
-                        <button class="button save">
+                        <button elementsid="savewebserveradmin" class="button save">
                             Save Changes
                         </button>
 
-                        <button class="button ghost discard">
+                        <button elementsid="discardwebserveradmin" class="button ghost discard">
                             Discard Changes
                         </button>
                     </div>

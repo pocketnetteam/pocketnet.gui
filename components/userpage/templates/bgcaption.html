@@ -47,12 +47,12 @@ var letter = name ? name[0] : ''
 									<b><%=e('pnetAddress')%>:</b>
 								</div>
 								<div class="addressseparate">
-									<span class="copyaddress">
+									<span elementsid="copyaddresshex" class="copyaddress">
 										<%- user.address.value.toString('hex') %>
 									</span>
 
 
-									<a external='external' href="https://<%-app.options.url%>/blockexplorer/address/<%- user.address.value.toString('hex') %>"> <i class="fas fa-th"></i></a>
+									<a elementsid='blockexplorer/address' external='external' href="https://<%-app.options.url%>/blockexplorer/address/<%- user.address.value.toString('hex') %>"> <i class="fas fa-th"></i></a>
 
 									
 								</div>
@@ -64,7 +64,7 @@ var letter = name ? name[0] : ''
 					
 
 					<div class="tips">
-						<a href="<%-app.platform.api.authorlink(user.address.value.toString('hex'))%>">
+						<a elementsid='authorlink' href="<%-app.platform.api.authorlink(user.address.value.toString('hex'))%>">
 							<button class="contrast profile"><%=e('profile')%></button>
 						</a>
 						
