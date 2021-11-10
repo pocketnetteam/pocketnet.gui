@@ -1,6 +1,8 @@
 <div class="ta">
     <% _.each(cats, function(cat, i){ 
-        
+
+        console.log('cat!!', cat);
+                
         var title = _.map(cat.tags, function(w){return "#" + w}).join(', ')
         
         %>

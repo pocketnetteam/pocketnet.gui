@@ -1012,25 +1012,7 @@ var filluserfast = (function(){
 
 			categories : function(el, clbk){
 
-				var k =  self.app.localization.key;
-
-				if(!self.sdk.categories.data.all[k]) k = 'en';
-
-				var categories = self.sdk.categories.data.all[k].filter(function(k){
-					return k.id !== 'c71'
-				})
-
-				categories = _.map(categories, function(k){
-					var withIcon = categoryIcons.find(function(ki){
-						return ki.id === k.id;
-					})
-
-					if (withIcon){
-						k.icon = withIcon.icon;
-					}
-
-					return k;
-				})
+				var categories = self.sdk.categories.get();
 
 				var username = deep(app, 'platform.sdk.user.storage.me.name');
 

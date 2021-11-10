@@ -10486,6 +10486,89 @@ Platform = function (app, listofnodes) {
                         }
                     ]
                 },
+
+                categoryIcons : [
+                    {
+                        "id": "c2",
+                        "icon": "far fa-smile"
+                    },
+                    {
+                        "id": "c3",
+                        "icon": "fas fa-landmark"
+                    },
+                    {
+                        "id": "c4",
+                        "icon": "fab fa-bitcoin"
+                    },
+                    {
+                        "id": "c5",
+                        "icon": "fas fa-microscope"
+                    },
+                    {
+                        "id": "c55",
+                        "icon": "fas fa-book"
+                    },
+                    {
+                        "id": "c6",
+                        "icon": "fas fa-dollar-sign"
+                    },
+                    {
+                        "id": "c73",
+                        "icon": "fas fa-fist-raised"
+                    },
+                    {
+                        "id": "c72",
+                        "icon": "fas fa-thermometer"
+                    },
+                    {
+                        "id": "c7",
+                        "icon": "fas fa-flag-checkered"
+                    },
+                    {
+                        "id": "c8",
+                        "icon": "fas fa-running"
+                    },
+                    {
+                        "id": "c9",
+                        "icon": "fas fa-gamepad"
+                    },
+                    {
+                        "id": "c10",
+                        "icon": "fas fa-space-shuttle"
+                    },
+                    {
+                        "id": "c11",
+                        "icon": "fas fa-music"
+                    },
+                    {
+                        "id": "c12",
+                        "icon": "fas fa-newspaper"
+                    },
+                    {
+                        "id": "c13",
+                        "icon": "fas fa-history"
+                    },
+                    {
+                        "id": "c14",
+                        "icon": "fas fa-bookmark"
+                    },
+                    {
+                        "id": "c15",
+                        "icon": "fas fa-film"
+                    },
+                    {
+                        "id": "c16",
+                        "icon": "fas fa-paw"
+                    },
+                    {
+                        "id": "c17",
+                        "icon": "fas fa-route"
+                    },
+                    {
+                        "id": "c18",
+                        "icon": "fas fa-pencil-ruler"
+                    }
+                ]
             },
 
             settings : {
@@ -10755,18 +10838,42 @@ Platform = function (app, listofnodes) {
             },
 
             get : function(_k){
-                var k = _k || self.app.localization.key
+                var k = _k || self.app.localization.key;
 
                 var added = _.map(self.sdk.categories.settings.added[k]|| {}, 
                 function(c){
-                    var cc = _.clone(c)
+                    var cc = _.clone(c);
 
-                    cc.added = true
+                    cc.added = true;
 
+                    var withIcon = categoryIcons.find(function(ki){
+						return ki.id === k.id;
+					})
+
+					if (withIcon){
+						k.icon = withIcon.icon;
+					}
+                    
                     return cc
                 })
 
-                return (self.sdk.categories.data.all[k] || self.sdk.categories.data.all['en']).concat(added)
+                var categories = self.sdk.categories.data.all[k] || self.sdk.categories.data.all['en'];
+
+                var categoryIcons = self.sdk.categories.data.categoryIcons;
+
+				categories = _.map(categories, function(k){
+					var withIcon = categoryIcons.find(function(ki){
+						return ki.id === k.id;
+					})
+
+					if (withIcon){
+						k.icon = withIcon.icon;
+					}
+
+					return k;
+				})
+
+                return (categories).concat(added)
             },
 
             getbyid : function(id, _k){
