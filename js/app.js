@@ -706,8 +706,9 @@ Application = function(p)
 		if (self.ref)
 			self.platform.sdk.users.addressByName(self.ref, function(r){
 				if(r){
-					self.ref = r;
-					localStorage['ref'] = self.ref
+					self.setref(r)
+					/*self.ref = r;
+					localStorage['ref'] = self.ref*/
 				}
 
 			})
@@ -1911,10 +1912,22 @@ Application = function(p)
 		}
 	}
 
+	self.setref = function(r, na){
+
+		if(na && self.ref) return
+
+		self.ref = r;
+		localStorage['ref'] = self.ref
+
+
+		console.log('self.ref', self.ref)
+
+	}
+
 	self.ref = null;
 	
 	try{
-		self.ref = localStorage['ref'] || parameters().ref;
+		self.ref = parameters().ref || localStorage['ref'];
 	}catch(e){}
 	
 

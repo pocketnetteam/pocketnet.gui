@@ -100,6 +100,9 @@ var filluserfast = (function(){
 		var termsaccepted = false
 
 		var getproxyoptions = function(){
+
+			console.log('regproxy', regproxy)
+
 			if(regproxy){
 				return {
 					proxy : regproxy.id
@@ -322,6 +325,8 @@ var filluserfast = (function(){
 							})	
 
 						}
+
+						localStorage['regproxy'] = ''
 
 						self.app.platform.sdk.registrations.redirect = null
 
@@ -1278,7 +1283,6 @@ var filluserfast = (function(){
 						localStorage['regproxy'] = regproxy.id
 					}
 
-					console.log('regproxy', regproxy)
 
 					clbk(data);
 				})

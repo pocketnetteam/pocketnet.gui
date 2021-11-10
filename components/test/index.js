@@ -1176,7 +1176,7 @@ var test = (function(){
 
 						if (_r && _r != self.app.platform.sdk.address.pnet())
 
-						ref = _r;
+							ref = _r;
 					}
 
 					prepare();
@@ -1203,6 +1203,8 @@ var test = (function(){
 							if(ref) ref.address = address;
 							
 							data.ref = ref;
+
+							console.log('ref', ref)
 
 							clbk(data);
 

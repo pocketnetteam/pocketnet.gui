@@ -1088,8 +1088,8 @@ ____loclib.pbp_10 = "If you invite a video blogger and can prove it, you get a b
 ____loclib.pbp_11 = "For any questions, email"
 
 ____loclib.pbp_6_1 = "Referral Users"
-____loclib.pbp_6_2 = "1250"
-____loclib.pbp_6_3 = "Important: Starting November 1 there is an additional requirement for each bonus. You must have 1250 Referral Users for each bonus. To get Referral Users you must Include Referral Link when sharing!"
+____loclib.pbp_6_2 = "1000"
+____loclib.pbp_6_3 = "Important: Starting November 1 there is an additional requirement for each bonus. You must have 1000 Referral Users for each bonus. To get Referral Users you must Include Referral Link when sharing!"
 
 
 
