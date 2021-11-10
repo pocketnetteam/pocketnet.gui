@@ -1,5 +1,5 @@
 #categories {
-  color: #b2abac;
+  color: #555770;
 }
 #categories .pocketcaption {
   /*.transition(0.3s);*/
@@ -78,7 +78,8 @@
 #categories .cat .cattable > div.catvalue {
   padding-right: 0;
 }
-#categories .cat .cattable > div.catvalue span {
+#categories .cat .cattable > div.catvalue .catname {
+  margin-left: 13px;
   font-size: 0.8em;
 }
 #categories .cat .cattable > div.iconWrapper {
@@ -142,7 +143,7 @@
   display: none;
 }
 #categories .tg.selected {
-  color: #ff4800;
+  color: #0992DF;
 }
 #categories .tg.selected.added {
   color: #ff6e84;

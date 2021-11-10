@@ -1,5 +1,5 @@
 #main {
-  background: #011621;
+  background: #f2f2f5;
   min-height: 1200px;
 }
 #main.wshar .bgCaption {
@@ -111,8 +111,8 @@
 }
 #main .bastyonhelper .wndredirect ._close {
   position: absolute;
-  right: .75em;
-  top: .5em;
+  right: 0.75em;
+  top: 0.5em;
   cursor: pointer;
   color: #fff;
   z-index: 150;
@@ -172,7 +172,7 @@
   position: fixed;
   bottom: 20%;
   padding: 0.5em;
-  background: #ffffff;
+  background: #fff;
   box-shadow: 0 5px 7px -5px rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(60, 65, 70, 0.3);
   color: #3c4146;
@@ -225,7 +225,7 @@
   opacity: 1;
 }
 #main .addbutton:hover {
-  background: #00a3f7;
+  background: #00A3F7;
 }
 #main #share {
   min-height: 130px;

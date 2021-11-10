@@ -1,7 +1,5 @@
 <div class="ta">
     <% _.each(cats, function(cat, i){ 
-
-        console.log('cat!!', cat);
                 
         var title = _.map(cat.tags, function(w){return "#" + w}).join(', ')
         
@@ -14,7 +12,8 @@
                     <div class="cattable table">
 
                         <div class="catvalue catcheckgl" title="<%-title%>">
-                            <span ><%- cat.name %></span>
+                            <i class="<%- cat.icon %>"></i>
+                            <span class="catname"><%- cat.name %></span>
                         </div>
 
                         <div class="catcheck catcheckgl">

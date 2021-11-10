@@ -2,7 +2,7 @@
 
 #categories{
 
-    color : @color-gray-mlight;
+    color : @color-dark-mlight;
 
     .pocketcaption{
         /*.transition(0.3s);*/
@@ -105,7 +105,8 @@
 
                 &.catvalue{
                     padding-right: 0;
-                    span{
+                    .catname{
+                        margin-left: 13px;
                         font-size: 0.8em;
                     }
                 }
@@ -193,7 +194,7 @@
             display: none;
         }
         &.selected{
-            color : @color-orange;
+            color : @color-blue-mlight;
 
             &.added{
                 color : @color-contrast;
