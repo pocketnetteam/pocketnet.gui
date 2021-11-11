@@ -23,7 +23,7 @@
 }
 #aboutContentCreators .works {
   padding: 30px;
-  background: url(src/bg-bastion-section1.jpg) no-repeat fixed;
+  background: url(../../img/aboutcontentcreators/bg-bastion-section1.jpg) no-repeat fixed;
   background-size: cover;
   position: relative;
 }
@@ -219,7 +219,7 @@
 }
 #aboutContentCreators .blog {
   padding: 60px 0;
-  background: url(src/andreas-brun-14IbodW7owU-unsplash.jpg) no-repeat;
+  background: url(../../img/aboutcontentcreators/andreas-brun-14IbodW7owU-unsplash.jpg) no-repeat;
   background-position: center center;
   background-size: cover;
   position: relative;
@@ -319,7 +319,7 @@
 }
 #aboutContentCreators .main-board {
   height: 500px;
-  background: url(src/Content-Creators.jpg) no-repeat fixed;
+  background: url(../../img/aboutcontentcreators/Content-Creators.jpg) no-repeat fixed;
   background-position: center center;
   background-size: cover;
   position: relative;
@@ -629,7 +629,7 @@
   }
 }
 #aboutContentCreators .main-board-2 {
-  background: url(src/Unlike-YouTube.jpg) no-repeat fixed;
+  background: url(../../img/aboutcontentcreators/Unlike-YouTube.jpg) no-repeat fixed;
   background-position: center center;
   background-size: cover;
   position: relative;
@@ -663,7 +663,7 @@
 }
 @media (max-width: 380px) {
   #aboutContentCreators .main-board-2 {
-    background: url(src/bastyon-alternative.jpg) no-repeat fixed;
+    background: url(../../img/aboutcontentcreators/bastyon-alternative.jpg) no-repeat fixed;
     background-position: center center;
     background-size: cover;
     position: relative;
@@ -755,7 +755,7 @@
   }
 }
 #aboutContentCreators .main-board-3 {
-  background: url(src/money-block.jpg) no-repeat fixed;
+  background: url(../../img/aboutcontentcreators/money-block.jpg) no-repeat fixed;
   background-position: center center;
   background-size: cover;
   position: relative;
@@ -797,7 +797,7 @@
 }
 @media (max-width: 380px) {
   #aboutContentCreators .main-board-3 {
-    background: url(src/dark-bg-bastyon-pais.jpg) no-repeat fixed;
+    background: url(../../img/aboutcontentcreators/dark-bg-bastyon-pais.jpg) no-repeat fixed;
     background-position: center center;
     background-size: cover;
     position: relative;
@@ -975,16 +975,16 @@
   text-decoration: underline;
 }
 #aboutContentCreators .block-image1 {
-  background: url(src/6-850x850.jpg);
+  background: url(../../img/aboutcontentcreators/6-850x850.jpg);
 }
 #aboutContentCreators .block-image2 {
-  background: url(src/5-850x850.jpg);
+  background: url(../../img/aboutcontentcreators/5-850x850.jpg);
 }
 #aboutContentCreators .block-image3 {
-  background: url(src/2-850x850.jpg);
+  background: url(../../img/aboutcontentcreators/2-850x850.jpg);
 }
 #aboutContentCreators .block-image4 {
-  background: url(src/1-850x850.jpg);
+  background: url(../../img/aboutcontentcreators/1-850x850.jpg);
 }
 #aboutContentCreators .blog-container__image {
   flex: 0 0 50%;
@@ -1049,7 +1049,7 @@
 }
 #aboutContentCreators .form {
   height: 200px;
-  background: url(src/bg.jpg) no-repeat fixed;
+  background: url(../../img/aboutcontentcreators/bg.jpg) no-repeat fixed;
   background-position: 50% -50px;
   background-size: cover;
   position: relative;
@@ -1424,7 +1424,7 @@
     margin-bottom: 10px;
   }
   #aboutContentCreators .main-board:first-child {
-    background: url(src/bastyon-youtube-main1.jpg) no-repeat fixed;
+    background: url(../../img/aboutcontentcreators/bastyon-youtube-main1.jpg) no-repeat fixed;
     background-size: cover;
   }
   #aboutContentCreators .main-board:first-child .main-wrapper .main-board__left-block h1 {

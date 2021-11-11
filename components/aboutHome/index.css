@@ -81,7 +81,7 @@
 }
 #aboutHome .works {
   padding: 30px;
-  background: url(src/bg-bastion-section1.jpg) no-repeat fixed;
+  background: url(../../img/bg-bastion-section1.jpg) no-repeat fixed;
   background-size: cover;
   position: relative;
 }
@@ -276,7 +276,7 @@
 }
 #aboutHome .blog {
   padding: 60px 0;
-  background: url(src/andreas-brun-14IbodW7owU-unsplash.jpg) no-repeat;
+  background: url(../../img/andreas-brun-14IbodW7owU-unsplash.jpg) no-repeat;
   background-position: center center;
   background-size: cover;
   position: relative;
@@ -326,7 +326,7 @@
 }
 #aboutHome .main-board {
   height: 500px;
-  background: url(src/bg-desctop1.jpg) no-repeat fixed;
+  background: url(../../img/bg-desctop1.jpg) no-repeat fixed;
   background-position: center center;
   background-size: cover;
   position: relative;
@@ -602,16 +602,16 @@
   text-decoration: underline;
 }
 #aboutHome .block-image1 {
-  background: url(src/6-850x850.jpg);
+  background: url(../../img/6-850x850.jpg);
 }
 #aboutHome .block-image2 {
-  background: url(src/5-850x850.jpg);
+  background: url(../../img/5-850x850.jpg);
 }
 #aboutHome .block-image3 {
-  background: url(src/2-850x850.jpg);
+  background: url(../../img/2-850x850.jpg);
 }
 #aboutHome .block-image4 {
-  background: url(src/1-850x850.jpg);
+  background: url(../../img/1-850x850.jpg);
 }
 #aboutHome .blog-container__image {
   flex: 0 0 50%;
@@ -676,7 +676,7 @@
 }
 #aboutHome .form {
   height: 200px;
-  background: url(src/bg.jpg) no-repeat fixed;
+  background: url(../../img/bg.jpg) no-repeat fixed;
   background-position: 50% -50px;
   background-size: cover;
   position: relative;
@@ -1046,7 +1046,7 @@
     margin-bottom: 10px;
   }
   #aboutHome .main-board:first-child {
-    background: url(src/bg-img.jpg) no-repeat fixed;
+    background: url(../../img/bg-img.jpg) no-repeat fixed;
     background-size: cover;
   }
   #aboutHome .open .main-wrapper {

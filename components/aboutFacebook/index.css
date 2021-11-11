@@ -318,7 +318,7 @@
 }
 #aboutFacebook .main-board {
   height: 500px;
-  background: url(src/facebook.jpg) no-repeat fixed;
+  background: url('../../img/aboutFacebook/facebook.jpg') no-repeat fixed;
   background-position: center center;
   background-size: cover;
   position: relative;
@@ -721,7 +721,7 @@
   }
 }
 #aboutFacebook .main-board-3 {
-  background: url(src/money-block.jpg) no-repeat fixed;
+  background: url(../../img/aboutFacebook/money-block.jpg) no-repeat fixed;
   background-position: center center;
   background-size: cover;
   position: relative;
