@@ -1352,6 +1352,5 @@ ____loclib.sourceCode = 'Source Code';
 
 ____loclib.aboutYoutubeDiscover1 = 'Contact us';
 ____loclib.aboutYoutubeDiscover2 = 'Send us a message if you need help or if you are a content creator, blogger, influencer and would like to unlock your bonus and verify your profile!';
-____loclib.aboutYoutubeDiscover3 = 'Official Website';
-____loclib.aboutYoutubeDiscover4 = 'Official Website';
+
 
