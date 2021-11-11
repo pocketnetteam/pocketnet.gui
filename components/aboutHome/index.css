@@ -325,8 +325,8 @@
   max-width: 1170px;
 }
 #aboutHome .main-board {
+  z-index: 9;
   height: 500px;
-  background: url(../../img/bg-desctop1.jpg) no-repeat fixed;
   background-position: center center;
   background-size: cover;
   position: relative;

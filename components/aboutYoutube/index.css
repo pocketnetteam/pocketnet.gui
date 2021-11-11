@@ -436,6 +436,8 @@
   font-weight: 600;
 }
 #aboutYoutube .main-description {
+  position: relative;
+  z-index: 9;
   background: #262626;
   color: #fff;
   padding: 50px 15px;

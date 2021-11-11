@@ -352,38 +352,7 @@ var about = (function(){
 		}
 
 		var renders = {
-			bgcaption : function(clbk){
 
-
-				if(!el || !el.bgcaption) return
-
-				if(!self.app.user.validate()) {
-					el.bgcaption.html('<div class="bgCaptionSpacer"></div>')
-				}
-				else{
-					self.shell({
-
-						name :  'bgcaption',
-						el :   el.bgcaption,
-						data : {
-							
-						},
-	
-					}, function(_p){
-						console.log(_p.el)
-						_p.el.find('.copyaddress').on(clickAction(), function(){
-							copyText($(this))
-
-							sitemessage(self.app.localization.e('successcopied'))
-						})
-					})
-
-					
-				}
-
-				
-		
-			},
 			contents : function(clbk, id){
 
 				if(!el.contents) return
@@ -543,7 +512,6 @@ var about = (function(){
 		}
 
 		self.authclbk = function(){
-			renders.bgcaption();
 		}
 
 		var makerep = function(clbk){
@@ -593,8 +561,6 @@ var about = (function(){
 
 		var make = function(clbk){
 			
-			renders.bgcaption();
-
 			makerep(clbk)
 
 			if(!self.app.user.validate()){
