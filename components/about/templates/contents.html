@@ -1,0 +1,150 @@
+<!--
+<div class=" selector">
+	<%= selector.input() %>
+</div>-->
+<div class="contentsInner">
+    <div class=" contentmenu">
+
+        <%
+
+		each({
+
+			group : function(report, level, id, clbk){ %>
+
+        <div class="group" level="<%-level%>" levelid="<%-id%>">
+
+            <div class="groupNameTable table">
+
+                <div class="groupName">
+                    <div elementsid="openReport" class="reportCaption openReport" rid="<%-id%>">
+                        <%= report.name.toUpperCase() %>
+
+                        <% if(report.add && report.add()) {%>
+
+                        <%- report.add() %>
+
+                        <% } %>
+                    </div>
+                </div>
+
+                <div class="groupNamePanel">
+                    <div elementsid="groupNamePanelWrapper" class="groupNamePanelWrapper">
+                        <i class="fa fa-angle-up" aria-hidden="true"></i>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="groupContent">
+
+                <% clbk(); %>
+
+            </div>
+
+        </div>
+
+        <% 
+			},
+
+			report : function(report, level, id){ 
+
+				if(report.if && !report.if()) return
+
+
+			%>
+        <div class="reportCaption openReport" rid="<%-id%>">
+
+            <div class="reportCaptionTable table">
+
+                <div class="reportCaptionCell">
+                    <%= report.name.toUpperCase() %>
+                </div>
+
+                <% if(report.add && report.add()) {%>
+                <div class="reportCaptionCell added">
+                    <span class="add bright"><%- report.add() %></span>
+                </div>
+                <% } %>
+
+            </div>
+        </div>
+        <% 
+
+			}
+
+		})
+
+	%>
+
+    </div>
+
+    <% if(state) {%>
+        <div class="additional addmenu">
+            <div elementsid="showprivatekey" class="reportCaption showprivatekey">
+                <div class="label">
+                <%=e('privatekey')%>
+                </div>
+            </div>
+        </div>
+
+    <% } %>
+
+    <% if(isTablet()) {%>
+    <div class="additional addmenu">
+
+        <div class="reportCaption">
+            <div class="label">
+                <a elementsid="hrefhelp" href="help"><%=e('e13183')%></a>
+            </div>
+        </div>
+
+        
+        <div class="reportCaption">
+            <div class="label">
+                <a elementsid="https://<%-app.options.url%>/blockexplorer/" href="https://<%-app.options.url%>/blockexplorer/" cordovalink="_system" external="external">Block Explorer</a>
+            </div>
+        </div>
+        <% if(state) {%>
+
+           
+
+        <% } else { %> 
+            
+            <div class="reportCaption">
+                <div class="label">
+                    <a elementsid="hrefabout" href="about"><%=e('aboutus')%></a>
+                </div>
+            </div>
+        <% } %>
+           
+
+        <% if(!app.curation()) {%>
+            <div class="reportCaption">
+                <div class="label">
+                    <a elementsid="hrefdonations" href="donations"><%=e('donate')%></a>
+                </div>
+            </div>
+
+        <% } %>
+
+    </div>
+
+    <% } %>
+
+    <% if(state) {%>
+
+    <div class="additional">
+
+        <div class="reportCaption signout">
+            <div elementsid="userpage_signout" class="label" action="signout"><%=e('signout').toUpperCase()%> <i class="fas fa-sign-out"
+                    aria-hidden="true"></i></div>
+        </div>
+
+    </div>
+
+
+
+
+    <% } %>
+
+</div>

@@ -187,6 +187,20 @@ __map =  {
 		anonimus : true,
 	},
 
+	aboutHome : {
+		uri : "aboutHome",
+		href : "aboutHome",
+		add : {
+			el : 'content'
+		},
+		anonimus : true,
+		/*redirect : {
+			auth : 'authorization',
+			//validate : 'filluser'
+		},*/
+	
+	},
+
 	applications : {
 		uri : "applications",
 		href : "applications",
