@@ -1304,8 +1304,54 @@ ____loclib.aboutYoutubeImgAndText15 = "Bastyon runs on a network of nodes that n
 ____loclib.aboutYoutubeImgAndText16 = 'NO COMPANY BEHIND BASTYON ';
 ____loclib.aboutYoutubeImgAndText17 = 'Unlike Facebook and the main Social Networks, there is no company behind Bastyon. It is an open source project. This means that there is no company that can control the contents posted on Bastyon. No bans, no censorship.';
 
+____loclib.aboutYoutubeSecondBoard1 = 'Bastyon - the best alternative to YouTube';
+____loclib.aboutYoutubeSecondBoard2 = 'Your personal data is not sold to external companies';
+____loclib.aboutYoutubeSecondBoard3 = 'No one can block your account or remove your videos and subscribers';
+____loclib.aboutYoutubeSecondBoard4 = 'Privacy is complete and guaranteed';
+____loclib.aboutYoutubeSecondBoard5 = 'Access is always possible from any country and region of the world. For you to post videos and for your subscribers to watch them.';
+____loclib.aboutYoutubeSecondBoard6 = 'Bastyon will not remove your subscribers, videos and money!';
+____loclib.aboutYoutubeSecondBoard7 = 'You will never get DEMONETIZED. You can talk about everything, freedom of speech is real.';
+____loclib.aboutYoutubeSecondBoard8 = 'You will get pay WAY MORE to post your videos!';
 
+____loclib.aboutYoutubeThirdBoard1 = 'You account can be banned and blocked';
+____loclib.aboutYoutubeThirdBoard2 = 'Yes. YouTube can ban you or block/limit your account at its sole discretion, without notice. They can use this power at their will, whenever they believe that you are publishing sometihn that they do not like.';
+____loclib.aboutYoutubeThirdBoard3 = 'No. Your account will always be accessible. Bastyon cannot ban users.';
+____loclib.aboutYoutubeThirdBoard4 = 'Videos can be removed';
+____loclib.aboutYoutubeThirdBoard5 = `For sure. YouTube can remove your videos for many reasons. Not complying with "the policy", copyright, or just for saying something that they don't like. Or that some governments don't like...`;
+____loclib.aboutYoutubeThirdBoard6 = 'No. By design, it is impossible to remove videos from Bastyon. No one, even admins, can remove your videos.';
+____loclib.aboutYoutubeThirdBoard7 = 'YES. YouTube can limit your account and delete it. If it happens, you lose everything. Access to your videos, your subscribers, your earnings.';
+____loclib.aboutYoutubeThirdBoard8 = 'NO. Bastyon will never remove your followers. And on Bastyon your account cannot be blocked, banned or cancelled. This cannot happen, technically speaking. There is no way at all to do so.';
+____loclib.aboutYoutubeThirdBoard9 = 'Earn with ADS';
+____loclib.aboutYoutubeThirdBoard11 = 'YES and you can select which ADS to show. In addition, with the BONUS Program you get 1,000 $ for each 15,000 views + 1,250 "5 stars" reactions. Contact our support team to activate it.';
+____loclib.aboutYoutubeThirdBoard12 = 'Personal privacy';
+____loclib.aboutYoutubeThirdBoard13 = 'Nah, not really';
+____loclib.aboutYoutubeThirdBoard14 = 'Completely protected. No tracking of IP, websites visits, email address, phone number.';
+____loclib.aboutYoutubeThirdBoard15 = 'Availability';
+____loclib.aboutYoutubeThirdBoard16 = 'Some countries block or limit access to Twitter. Some countries actively monitor what users write on Facebook.';
+____loclib.aboutYoutubeThirdBoard17 = 'Always, in every country, even without the need of a VPN. You can publish your videos wherever you are and people from "restricted countries" (think about China and Iran) can watch your videos.';
+____loclib.aboutYoutubeThirdBoard18 = 'Reporting videos';
+____loclib.aboutYoutubeThirdBoard19 = 'YES, YouTube algorithms analyze videos and remove or block them automatically if they believe that they are against the policy. In addition YouTube can remove posts and ban users at its sole discretion.';
+____loclib.aboutYoutubeThirdBoard20 = `YES, however only users with a high reputation can report post and a post is made "invisible" on the feed page (but remains available on the user's profile page) only if several tens of high reputation users report it (reports can be made only for racism, hate speech and pornography).`;
+____loclib.aboutYoutubeThirdBoard21 = 'Hashtags to classify videos';
+____loclib.aboutYoutubeThirdBoard22 = 'Videoa can be shared on multiple platforms';
+____loclib.aboutYoutubeThirdBoard23 = 'Dictatorship bans';
+____loclib.aboutYoutubeThirdBoard24 = 'Way too many!';
+____loclib.aboutYoutubeThirdBoard25 = 'Bastyon pays you way more than YouTube!';
+____loclib.aboutYoutubeThirdBoard26 = 'You can earn money with Bastyon.';
+____loclib.aboutYoutubeThirdBoard27 = 'Bastyon uses its own Cryptocurrency:';
+____loclib.aboutYoutubeThirdBoard28 = 'Each time your posts and videos receive comments and likes, you get PKOIN.';
+____loclib.aboutYoutubeThirdBoard29 = 'Each time one of your videos gets 15,000 views + 1,250 reactions, you get 1,000 $ in PKOIN (you can convert them in USD!). THIS IS A LIMITED TIME OFFER!!!';
+____loclib.aboutYoutubeThirdBoard30 = 'Each time someone joins Bastyon with your referral link, you get PKOIN.';
+____loclib.aboutYoutubeThirdBoard31 = 'Contact us to learn more and to activate your account as “CREATOR” so that you can post unlimited videos and get paid!';
 
-____loclib.aboutYoutubeH3Section = "Building a community of followers on YouTube is like building a home on a land you don't own.";
+____loclib.aboutYoutubeOpenBoard1 = 'Discover Bastyon';
+____loclib.aboutYoutubeOpenBoard2 = 'You can use Bastyon from your browser or dowload the mobile and desktop app.';
+____loclib.aboutYoutubeOpenBoard3 = 'Official Website';
 
+____loclib.sourceCode = 'Source Code';
+
+____loclib.aboutYoutubeDiscover1 = 'Contact us';
+____loclib.aboutYoutubeDiscover2 = 'Send us a message if you need help or if you are a content creator, blogger, influencer and would like to unlock your bonus and verify your profile!';
+____loclib.aboutYoutubeDiscover3 = 'Official Website';
+____loclib.aboutYoutubeDiscover4 = 'Official Website';
 
