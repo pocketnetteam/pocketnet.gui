@@ -21,60 +21,7 @@ var about = (function(){
 
 		var init = function(){
 			reports = []
-
-			if(!self.app.user.getstate()){
-
-
-				reports.push({
-					name : self.app.localization.e('createnew'),
-					id : 'registration',
-					report : 'registration',
-					mobile : true,
-					rh : true
-				})
-				
-				reports.push({
-					name : self.app.localization.e('signin'),
-					id : 'authorization',
-					report : 'authorization',
-					mobile : true,
-					rh : true
-				})
-
-				
-		
-
-			}
-			else{
-				if(!self.app.user.validate()){
-
-					var h = self.app.localization.e('e13184');
-	
-					if (self.app.errors.connection()){
-						h = self.app.localization.e('e13185')
-					}
-	
-					reports.push({
-						name : h,
-						id : 'test',
-						report : 'fillUser',
-						mobile : true
-					})
-		
-				}
-			}
 			
-			
-
-			reports.push({
-				name : self.app.localization.e('notifications'),
-				id : 'notifications',
-				report : 'notifications',
-				mobile : true,
-				if : function(){
-					return true
-				}
-			})
 
 			reports.push({
 				name :  self.app.localization.e('home'),
@@ -94,154 +41,42 @@ var about = (function(){
 
 				}
 			})
-
 		
 
 			reports.push({
-				name : self.app.localization.e('rwallet'),
-				id : 'wallet',
-				report : 'wallet',
-				mobile : true,
-
-				add : function(){
-
-					if (isMobile() && allbalance && !self.app.curation()){
-						return  self.app.platform.mp.coin(allbalance)
-					}
-
-				}
-			})
-
-			reports.push({
-
-				name : self.app.localization.e('followers'),
-				id : 'followers',
-				report : 'followers',
-				mobile : true,
-
-				if : function(){
-					return isMobile() && !self.app.curation()
-				},
-
-				add : function(){
-
-					var address = deep(self, 'app.user.address.value')
-
-					if (address){
-						var s = deep(self, 'sdk.users.storage.'+address+'.subscribers.length')
-
-						if (isMobile() && s){
-							return s
-						}
-					}	
-
-					
-
-				}
-			})
-
-			reports.push({
-				
-				name :  self.app.localization.e('following'),
-				id : 'following',
-				report : 'following',
-				mobile : true,
-
-				if : function(){
-					return isMobile() && !self.app.curation()
-				},
-
-				add : function(){
-
-					var address = deep(self, 'app.user.address.value')
-
-					if (address){
-						var s = deep(self, 'sdk.users.storage.'+address+'.subscribes.length')
-
-						if (isMobile() && s){
-							return s
-						}
-					}	
-
-				}
-			})
-
-		
-
-			if(self.app.user.validate()) {
-
-				reports.push({
-					name : self.app.localization.e('e13186'),
-					id : 'test',
-					report : 'test',
-					mobile : true
-				})
-
-			}
-		
-
-			reports.push({
-				name : self.app.localization.e('rsttings'),
-				id : 'usersettings',
-				report : 'usersettings',
+				name : self.app.localization.e('youtube'),
+				id : 'aboutYoutube',
+				report : 'aboutYoutube',
 				mobile : true
 			})
 			
-
 			reports.push({
-				name : self.app.localization.e('raccounts'),
-				id : 'accounts',
-				report : 'accounts',
+				name : self.app.localization.e('facebook'),
+				id : 'aboutFacebook',
+				report : 'aboutFacebook',
 				mobile : true
 			})
 
-
 			reports.push({
-				name : self.app.localization.e('rsystem'),
-				id : 'system16',
-				report : 'system16',
-				mobile : false
+				name : self.app.localization.e('contentCreators'),
+				id : 'aboutContentCreators',
+				report : 'aboutContentCreators',
+				mobile : true
 			})
-
-			reports.push({
-				name : 'Pocketcoin',
-				id : 'staking',
-				report : 'staking',
-				mobile : true,
-				if : function(){
-					return isMobile()
-				},
-			})
-
-			if(self.app.user.validate()) {
-
-				reports.push({
-					name : self.app.localization.e('videoCabinet'),
-					id : 'videoCabinet',
-					report : 'videoCabinet',
-					mobile : true,
-
-					if : function(){
-
-						if (self.app.curation()) return false
-
-						if (window.testpocketnet) return true
-
-						if (typeof mestate != 'undefined' && mestate && (
-					
-							(mestate.reputation > 50 || !mestate.trial || mestate.balance > 500000000)
-
-						)){
-							return true
-						}
-					}
-				})
-
-			}
-
-
-
 				
+			reports.push({
+				name : self.app.localization.e('twitter'),
+				id : 'aboutTwitter',
+				report : 'aboutTwitter',
+				mobile : true
+			})
+			
+			reports.push({
+				name : self.app.localization.e('howItWorks'),
+				id : 'aboutHIW',
+				report : 'aboutHIW',
+				mobile : true
+			})
 		}
 
 		var helpers = {
@@ -343,11 +178,6 @@ var about = (function(){
 							m.push(report)	
 						}
 					}
-				})
-
-				m.push({
-					name : self.app.localization.e('signout'),
-					id : 'signout'
 				})
 
 				return m;
@@ -496,89 +326,8 @@ var about = (function(){
 
 
 				}
-			},
-			signout : function(){
-
-				var so = function(){
-					self.app.user.signout();
-
-					self.app.reload({
-						href : 'authorization',
-					});
-
-					self.app.nav.api.history.add('authorization')
-				}
-
-				var so2 = function(){
-					if (self.app.platform.sdk.address.pnet()){
-
-						if (self.app.platform.sdk.registrations.showprivate()){
-							
-							self.app.platform.ui.showmykey({
-								text : self.app.localization.e('e13188'),
-								faillabel : self.app.localization.e('e13189'),
-								fail : function(){
-									so()
-								}
-							})
-	
-							return
-						}
-	
-					}
-	
-					so()
-				}
-
-
-				if(window.cordova && !isios()){
-					menuDialog({
-
-						items: [
-	
-							{
-								text: self.app.localization.e('logoutaccount'),
-								class: 'itemmain',
-								action: function (clbk) {
-	
-									so2()
-
-									clbk()
-	
-								}
-							},
-	
-							{
-								text:  self.app.localization.e('closeapplication'),
-								action: function (clbk) {
-	
-									clbk()
-
-									setTimeout(function(){
-
-										if (navigator.app) {
-											navigator.app.exitApp();
-										} else if (navigator.device) {
-											navigator.device.exitApp();
-										} else {
-											window.close();
-										}
-
-									}, 100)
-	
-								}
-							}
-	
-	
-						]
-					})
-				}
-				else{
-					so2()
-				}
-
-				
 			}
+
 		}
 
 		var events = {
@@ -664,13 +413,6 @@ var about = (function(){
 
 						self.app.actions.scroll(0)
 
-						_p.el.find('.showprivatekey').on('click', function(){
-							self.app.platform.ui.showmykey({
-								text : self.app.localization.e('doyouwantseepk'),
-								successLabel : self.app.localization.e('dyes'),
-								faillabel : self.app.localization.e('dno')
-							})
-						})
 
 						if (hcready)
 							el.contents.hcSticky('refresh');
@@ -917,12 +659,6 @@ var about = (function(){
 
 		var initEvents = function(){
 			
-			el.c.on('click', '.signout', function(){
-
-				self.app.mobile.vibration.small()
-				actions.signout()
-
-			})
 
 		}
 
