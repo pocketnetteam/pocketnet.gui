@@ -1,271 +1,394 @@
+
+<% 
+
+var src = deep(app, 'platform.sdk.user.storage.me.image')  
+
+var name = app.platform.api.clearname(deep(app, 'platform.sdk.user.storage.me.name') || (user.address.value && user.address.value.toString('hex')) )
+var letter = name ? name[0] : ''
+
+
+%>
+
 <div id="<%-module.map.id%>">
-	
-	<div class="slide main" image="img/mainbg.jpg">
-		<div class="work">
-			<div class="slideSubCaption">
-				<span><b><%-app.meta.fullname%></b> &mdash; first fully decentralized social network</span>
-			</div>
 
 
-			<div class="mainAnimation">
-				<div class="line"><span class="tes">No corporation.</span> <span class="tes">Open Source.</span> <span class="tes">Nobody can take your subscribers away.</span></div>
-				<div class="line"><span class="tes">All advertising revenue</span> <span class="tes black">goes directly to you as content creator.</span></div>
-				<div class="line"><span class="tes" >Owned & self-policed by users like you.</span></div>
 
-				<div class="line big right"><span class="tes black slow ">Join the revolution today!</span></div>
-			</div>
+    <header>
+        <div class="main-wrapper">
+            <!-- <img class="logo" src="img/logo.png"> -->
+            <nav class="main-menu">
+<!-- 
+                <div class="item table sitename" >
+                    <div elementsid="eventssitename" class="icon" events="sitename">
+                        <img class="header_logo all" src="img/logotypes/bastyon_logo_white.svg">
+                    </div>
+                    <div elementsid="eventslang" class="label">
+                        <div elementsid="menu_localization" class="lang localization">
+                            
+                            <% if(isMobile()) {%>
+                                <%-(lkey.key || '').toUpperCase()%> 
+                            <% } else { %>
+                                <%-(lkey.name || '').toLowerCase()%> 
+                            <% } %>
+                            
+                            <i class="fas fa-caret-down"></i>
+                        </div>
+                    </div>						
 
-			<div class="buttons tes">
-				<div class="buttonsWrapper">
-					<div class="buttonItem">
-						<a elementsid="563873d38950b841aebf89c3be1b1a35" href="registration"><button class="shadowWhite">Join <%-app.meta.fullname%> Now</button></a>
-					</div>
-					<div class="buttonItem">
-						<button elementsid="button_downloadwhitepaper" class="ghost whitepaper">Download Whitepaper</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!--<div class="slide video">
-		<div class="work">
+                </div> -->
 
-			<div class="wrapper">
+                <ul>
+                    <% _.each(reports, function(report){ 
 
-				<div class="slideCaption">
-					<span><b><%-app.meta.fullname%> - Decentralized Social Network on the Blockchain</b></span>
-				</div>
+                        if(typeof report.if != 'undefined' && !report.if()) return
+                    
+                        var active = ''
+                    
+                        if(report.active) active = 'active'
+                    
+                    
+                    %> 
+                    
+                    
+                    <li><a href="/">Home</a></li>
+                    <li><a href="?id=services-link">Services</a></li>
+                    <li><a href="?id=works-link">How it works</a></li>
+                    <li><a href="?id=team-link">Team</a></li>
+                    <li><a href="?id=blog-link">Our blog</a></li>
+                    <li><a href="?id=contact-link">Contact</a></li>
 
-				<div class="videoContent">
-					<iframe src="https://player.vimeo.com/video/311925017?title=0&byline=0&portrait=0" width="560" height="315" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-				</div>
-			</div>
-		</div>
-	</div>-->
+                    <% 
+                        })
+                    %> 
+                </ul> 
 
-	
+                <div class="icon">
+                    <a elementsid="<%-app.platform.api.authorlink(user.address.value.toString('hex'))%>" href="<%-app.platform.api.authorlink(user.address.value.toString('hex'))%>">	
+                        <div class="usericon" image="<%-src || ''%>">
+        
+                            <% if(!src && letter) {%>
+        
+                                <span class="letter">
+                                    <%-letter.toUpperCase()%>
+                                </span>
+        
+                            <% } else if (!src) { %>
+        
+                                <i class="far fa-user"></i>
+        
+                            <% } %>
+        
+                            <% if(app.platform.ui.markUser) {%>
+        
+                                <%= app.platform.ui.markUser(user.address.value && user.address.value.toString('hex'))%>
+        
+                            <% } %>
+                        
+                        </div>
+                    </a>
+        
+        
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <main>
+        <section class="main-board bg" id="home-link">
+            <div class="main-wrapper">
+                <div class="main-board__left-block">
+                    <h1>The fresh air
+                    of <br> censorship resistance</h1>               
+                    
+                
+                <!-- <img class="main-board__image" src="img/bastyon.jpg"> -->
+            </div>
+        </section>
+        <section class="main-board grey" id="first-description">
+            <div class="main-wrapper">
+                <div class="main-board__left-block_2">
+                    
+                    
+                    <div>
+                        The first censorship-resistant Social Network
+                    </div>
+                    <div>Based on Blockchain technology, decentralized and secure. </div>
+                    <div>No bans, no risk of losing your account, followers and posts. </div>
+                    <div>Privacy protection, no government control.
+                    Enforced by the technology, not by humans.</div>
+                    <div>
+                        <a href="https://play.google.com/store/apps/details?id=pocketnet.app&hl=en_US&gl=US" class="main-board__button-link">
+                            <i class="fab fa-android"></i>
+                            <div>
+                                <div>Get it on</div>
+                                <div class="main-board__button-link_bold">Google Play</div>
+                            </div>
+                        </a>
+                         <a href="https://github.com/pocketnetteam/pocketnet.gui/releases/tag/v0.4.21" class="main-board__button-link">
+                            <i class="fas fa-desktop"></i>
+                            <div>
+                                <div>Download for the</div>
+                                <div class="main-board__button-link_bold">Windows</div>
+                            </div>
+                         </a>
+                    </div>
+                </div>
+                
+               
+            </div>
+        </section>
 
-	<div class="slide faq">
-		<div class="work">
+         <section class="works" id="works-link">
+            <div class="main-wrapper">
+                <h2><span>We Believe in Freedom</span></h2>
+                <div>
+                    <div class="works__container">
+                        <!-- <h3>We Believe in Freedom</h3> -->
+                        <div class="text">
+                            <p>
+                            Bastyon is an innovative social network that brings fresh by contrasting censorship and limitations.</p>
 
-			<div class="wrapper">
+                            <p>Bastyon is also a video sharing platform that, unlike the traditional and mainstream social medias, guarantees freedom, no censorship and real privacy protection.  </p>
 
-				<div class="slideCaption">
-					<span><b>FAQ</b></span>
-				</div>
-				<div class="faqContent">
-					<div class="part">
-						<div class="slideSubCaption">
-							<%=e('e14078')%>
-						</div>
+                            <p>It is really impossible to apply censorship to Bastyon, as it a distributed, decentralized platform that runs on a blockchain that is always accessible. </p>
+                        </div>
+                        
+                        
+                    </div>
+                    
+                    <!-- <div class="image"> <img class="" src="img/kyle-glenn-nXt5HtLmlgE-unsplash.jpg"></div>
+                     -->
+                    
+                </div>
+            </div>
+        </section>
 
-						<div class="faqtext">
-							<div class="question"><span><%=e('e14079')%></span></div>
-							<div class="answer"><%=e('e14080')%></div> 
-						</div>
-						<div class="faqtext">
-							<div class="question"><span><%=e('e14081')%></span></div>
-							<div class="answer"><%=e('e14082')%></div>
-						</div>
+        <section class="darkbg" id="works-link">
+            <div class="main-wrapper">
+                
+                
+                    <div class="dark__container">
 
-						<div class="faqtext">
-							<div class="question"><span><%=e('e14083')%></span></div>
-							<div class="answer"><%=e('e14084')%></div>
-						</div>
-
-						<div class="faqtext">
-							<div class="question"><span><%=e('e14085')%></span></div>
-							<div class="answer"><%=e('e14086')%></div>
-						</div>
-
-					</div>
-
-					<div class="part">
-						
-						<div class="slideSubCaption">
-							<%=e('e14087')%>
-						</div>
-
-						<div class="faqtext">
-							<div class="question"><span><%=e('e14088')%></span></div>
-							<div class="answer"><%=e('e14089')%></div>
-						</div>
-					
-
-						<div class="faqtext">
-							<div class="question"><span><%=e('e14090')%></span></div>
-							<div class="answer"><%=e('e14091')%></div>
-						</div>
-
-						<div class="faqtext">
-							<div class="question"><span><%=e('e14092')%></span></div>
-							<div class="answer"><%=e('e14093')%></div>
-						</div>
-
-						<div class="faqtext">
-							<div class="question"><span><%=e('e14094')%></span></div>
-							<div class="answer"><%=e('e14095')%></div>
-						</div>
-
-					</div>
-				</div>
-
-			</div>
-		</div>
-	</div>
-	
-	<div class="work">
-		<div class="slide withLenta">
-			<div class="slideCaption">
-				<span><b>Liberate Your Content</b></span>
-			</div>
-			<div class="slideSubCaption">
-				<span><b>with <%-app.meta.fullname%></b></span>
-			</div>
-			<div class="lenta">
-			</div>
-		</div>
-	</div>
-
-	<div class="slide surveyWr">
-		<div class="work">
-			<div class="surveyContent">
-				<div class="slideSubCaption">
-					Vote Now & See Results 
-				</div>
-
-				<div class="slideCaption">
-					<span><%-survey.question%></span>
-				</div>
-
-				<div class="survey">
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<div class="slide join">
-		<div class="work">
-
-			<div class="wrapper">
-
-				<!--<div class="iconWrapper">
-					<div class="icon">
-						<img src="img/logo20.png">
-					</div>
-				</div>-->
-
-				<div class="slideCaption small">
-					<span>Time to Beta Launch. Join <%-app.meta.fullname%> & Take a Stand!</span>
-				</div>
-
-
-				<!--<div class="time">
-
-					<div class="timerwr table">
-
-						<div class="twrapper">
-							
-							<div>
-								<div class="bigNumbers days">06</div>
-								<div class="smallLabel">days</div>
-							</div>
-											
-						</div>
-
-						<div class="twrapper">
-							
-							<div>
-								<div class="bigNumbers hours">15</div>
-								<div class="smallLabel">hours</div>
-							</div>
-											
-						</div>
-
-						<div class="twrapper">
-							
-							<div>
-								<div class="bigNumbers minutes">25</div>
-								<div class="smallLabel">minutes</div>
-							</div>
-											
-						</div>
-
-						<div class="twrapper ">
-							
-							<div>
-								<div class="bigNumbers seconds">11</div>
-								<div class="smallLabel">seconds</div>
-							</div>
-						
-						</div>
-						
-					</div>
-
-				</div>-->
-				
-
-				<div class="slideCaption">
-					<span><b>Join beta test.</b></span>
-				</div>
-				<div class="socialContent">
-
-					<div class="buttons tes">
-						<div class="buttonsWrapper">
-							<div class="buttonItem">
-								<a href="registration"><button class="shadowWhite">JOIN</button></a>
-							</div>
-						</div>
-					</div>
-					
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<div class="slide social">
-		<div class="work">
-			<div class="slideCaption">
-				<span><b>Follow us</b></span>
-			</div>
-			<div class="socialContent">
-
-				<div class="socialTable table">
-					<% _.each(socials, function(social){ 
-
-						if(!social.icon) return
-
-					%> 
-						<div class="itemWrapper">
-							<a href="<%-social.href%>">
-								<div class="item">
-									<%=social.icon%>
-								</div>
-							</a>
-						</div>
+                        <img class="image" src="img/pexels-amine-msiouri-2246258.resized.jpg">
+                        
+                        <div class="text">
+                            <h2>We are driven by FREEDOM</h2>
+                            <p><i class="fas fa-check"></i>
+                            Against censorship</p>
+                            <p><i class="fas fa-check"></i>Against limitations
+                            </p>
+                            <p><i class="fas fa-check"></i>Against bans </p>
+                        </div>                       
+                        
+                    </div>
+            </div>
+        </section>
 
 
-					<% }) %>
-				</div>
-				
-			</div>
-		</div>
-	</div>
-	<% if(!state) {%>
-		<div class="fixedButton">
-			<a href="registration"><button class="contrast ">Join <%-app.meta.fullname%> Now</button></a>
-		</div>
-	<% } %>
+        <section class="services" id="services-link">
+            <div class="main-wrapper">
+                <h2><span>NO CENSORSHIP</span></h2>
+                <div class="services__block-item">
+                    <div class="services__item">
+                        <div class="box-icon">
+                            <img src=" img/c77dithd_tk.jpeg" alt="">
+                            <!-- <i class="fas fa-heart"></i> -->
+                        </div>
+                        <h3>Censorship resistant</h2>
+                        <p>
+                            Bastyon fights to remove censorship from the digital world. Too many times we see accounts being blocked or limited, contents removed by the platform or the governments. <b>On Bastyon, not even admins can remove your posts or close your account. </b> 
+                        </p>
+                        <!-- <a href="#">Read More</a> -->
+                    </div>
 
+                    <div class="services__item">
+                        <div class="box-icon">
+                            <img src=" img/2b.jpg" alt="">
+                            <!-- <i class="fas fa-heart"></i> -->
+                        </div>
+                        <h3>Blockchain based</h2>
+                        <p>
+                            Bastyon runs on the blockchain. This means that it is decentralized and there is no way to control it and no way to limit access to it. The blockchain is composed of a network of servers all over the world and <b>there is no government that can limit access to it. Bastyon is the "bitcoin" of social medias.  </b> 
+                        </p>
+                        <!-- <a href="#">Read More</a> -->
+                    </div>
+
+                    <div class="services__item">
+                        <div class="box-icon">
+                            <img src=" img/3b.jpg" alt="">
+                            <!-- <i class="fas fa-heart"></i> -->
+                        </div>
+                        <h3>Privacy Protection</h2>
+                        <p>
+                            Privacy and Security are completely respected. You do not need to use an email or phone number to register. Bastyon does not store any personal data, not even your IP address. We REALLY value your privacy. <b>Your privacy is safe.</b> In addition, hackers cannot enter your account and change your password.
+                        </p>
+                        <!-- <a href="#">Read More</a> -->
+                    </div>
+
+                    <div class="services__item">
+                        <div class="box-icon">
+                            <img src=" img/4b.jpg" alt="">
+                            <!-- <i class="fas fa-heart"></i> -->
+                        </div>
+                        <h3>Earn with Bastyon</h2>
+                        <p>
+                            <b>You can get paid 1,000 USD</b> for each 10,000 views of your videos and at least 750 "5 stars" reactions. The payment is done in cryptocurrency, so, again, your privacy is safe. You also earn from referrals! 
+                        </p>
+                        <!-- <a href="#">Read More</a> -->
+                    </div>
+
+                    <div class="services__item">
+                        <div class="box-icon">
+                            <img src=" img/5b.jpg" alt="">
+                            <!-- <i class="fas fa-heart"></i> -->
+                        </div>
+                        <h3>Upload your videos</h2>
+                        <p>
+                            Bastyon lets you <b>share</b> your posts and <b>videos</b>   , Upload them safely, import them from YouTube (contact us so that we can help!), make sure to let them visible to everyone. Forever. No one will be able to remove or ban them.
+                        </p>
+                        <!-- <a href="#">Read More</a> -->
+                    </div>
+
+                    <div class="services__item">
+                        <div class="box-icon">
+                            <img src=" img/6b.jpg" alt="">
+                            <!-- <i class="fas fa-heart"></i> -->
+                        </div>
+                        <h3>Open Source</h2>
+                        <p>
+                            We believe that <b>privacy and security</b>  have to pass through Open Source projects. The entire project is available on GitHub so that you can check that there are no backdoors and that Bastyon is not storing any personal data.
+                        </p>
+                        <!-- <a href="#">Read More</a> -->
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+
+       
+      
+
+        <section class="videos">
+            <div class="main-wrapper">
+                <div class="video1">
+                    <iframe width="320" height="180" src="https://bastyon.com/embedVideo.php?embed=true&s=8f122cc4e18e727add8b062e1491d6c1eaa0b165eaf7685f7b1b038d41e5b0d6&host=pocketnetpeertube6.nohost.me&id=16784175-275a-4c11-aad5-6a45cc479217" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+
+                <div class="video1">
+                    <iframe width="320" height="180" src="https://bastyon.com/embedVideo.php?embed=true&s=d74c3521bb6584f9ea844bbffbc793964d711ddca98f0637d38aba121f6469ee&host=pocketnetpeertube5.nohost.me&id=c9232428-2e52-4b82-b3b1-57a775d059ca" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                
+                <div class="video1">
+                    <iframe width="320" height="180" src="https://bastyon.com/embedVideo.php?embed=true&s=bff8ec099b47ee809140e6c1c3411023b8575364f4202cc33f26aa7b1878a2f6&host=pocketnetpeertube1.nohost.me&id=72e6bdcd-5aa7-424f-aa09-24eba4a322d4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                
+                
+            </div>
+            
+        </section>
+
+
+        <section class="open">
+
+            <div class="main-wrapper">
+                
+                <div class="content">
+                    
+                    <div class="discover">
+                        <h2>Discover Bastyon</h2>
+                        <p>You can use Bastyon from your browser or dowload the mobile and desktop app.</p>
+
+                        <div class="one-item">
+
+                            <div>
+                                <a href="https://bastyon.com/">
+                                    <img src="img/LOGO bastyon.png" alt="">
+                                    <p>Official Website</p>
+                                </a>
+                            </div>
+
+
+                            <div>
+                                <a href="https://github.com/pocketnetteam/pocketnet.gui/releases/tag/v0.4.21">
+                                <i class="fab fa-windows"></i>
+                                <p>Windows</p>
+                                </a>
+                            </div>                            
+
+                            <div>
+                                <a href="https://play.google.com/store/apps/details?id=pocketnet.app&hl=en_US&gl=US">
+                                <i class="fab fa-google-play"></i>
+                                <p>Android</p>
+                                </a>
+                            </div>
+
+
+                            <div>
+                                <a href="https://github.com/pocketnetteam/">
+                                <i class="fab fa-github"></i>
+                                <p>MacOS</p>
+                                </a>
+                            </div>
+
+
+                            <div>
+                                <a href="https://github.com/pocketnetteam/pocketnet.gui/releases/tag/v0.4.21">
+                                <i class="fab fa-linux"></i>
+                                <p>Linux/ Ubuntu</p>
+                                </a>
+                            </div>
+
+
+                            <div>
+                                <a href="https://github.com/pocketnetteam/pocketnet.gui/releases/tag/v0.4.21">
+                                <i class="fab fa-apple"></i>
+                                <p>Source Code</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="discover">
+
+                        <h2>Contact us</h2>
+                        <p>Send us a message if you need help or if you are a content creator, blogger, influencer and would like to unlock your bonus and verify your profile!</p>
+
+                        <div class="one-item">
+
+                            <div class="text">
+                                <p>email:<a href="mailto:support@pocketnet.app">support@pocketnet.app</a></p>
+                                <p>Twitter:<a href="https://twitter.com/OfficialBastyon">@OfficialBastyon</a></p>
+                                <!-- <a href="https://bastyon.com/">
+                                <img src="img/LOGO bastyon.png" alt="">
+                                <p>Official Website</p>
+                                </a> -->
+                            </div>
+
+                        
+                    </div>
+
+                </div>
+
+
+
+            </div>
+            
+        </section>
+
+        
+       
+       
+    </main>
+   <!--  <footer>
+        <div class="main-wrapper">
+            <img src="img/footer-logo.png">
+            <div class="social-cont">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-google-plus-g"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p>Misma 2019 All Rights Reserved Papa</p>
+        </div>
+    </footer> -->
 
 </div>
-
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-131365418-1"></script> 
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-131365418-1');
-</script> 
