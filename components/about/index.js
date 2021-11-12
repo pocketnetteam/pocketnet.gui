@@ -662,6 +662,14 @@ var about = (function(){
 
 				make(function(){					
 					p.clbk(null, p);
+
+					$('#panelWrapper').hide();
+					
+					setTimeout(function(){
+
+						$('#menu').hide();
+						
+					}, 500)
 				})
 
 				
@@ -673,6 +681,8 @@ var about = (function(){
 
 	self.run = function(p){
 
+		// $('#menuWrapper #menu').hide();
+
 		var essense = self.addEssense(essenses, Essense, p);
 
 		self.init(essense, p);
@@ -681,6 +691,11 @@ var about = (function(){
 
 	self.stop = function(){
 
+		
+		$('#panelWrapper').show();
+		$('#menu').show();
+		
+		$(document.body).removeClass('removed-menu');
 		_.each(essenses, function(essense){
 
 			essense.destroy();
