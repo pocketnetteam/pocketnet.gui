@@ -10621,7 +10621,7 @@ Platform = function (app, listofnodes) {
             add : function(category, _k){
 
                 if(!category.id) return 'id'
-                if(!category.name) return 'name'
+                if(!category.name.trim()) return 'name'
                 if(!category.tags) return 'tags'
                 if(!category.tags.length) return 'tags'
 
