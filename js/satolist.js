@@ -6182,7 +6182,7 @@ Platform = function (app, listofnodes) {
                         var errtext = 'Undefined Error'
                         
 						if(err == 'namelength'){
-							errtext = 'The name length can be more than 20 symbols'
+							errtext = "The name length can't be more than 20 symbols"
 						}
 
 						if(err == 'pocketnet'){
