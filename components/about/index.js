@@ -515,42 +515,42 @@ var about = (function(){
 		}
 
 		var makerep = function(clbk){
-			var id = parameters().id;
+			var id = parameters().id || 'aboutHome';
 
 
-				if(!isMobile() && state){
-					if(!id) {
+			if(!isMobile() && state){
+				if(!id) {
 
-						if(self.app.user.validate()){
+					if(self.app.user.validate()){
 
-							if(self.app.curation()){
-								id = 'wallet'	
-							}
-							else{
-								id = 'ustate'	
-							}
+						if(self.app.curation()){
+							id = 'wallet'	
 						}
 						else{
-							id = 'test'
+							id = 'ustate'	
 						}
 					}
-				}
-				
-				renders.contents(function(){
-
-					//self.app.actions.scrollBMenu()
-
-					if(id){
-						actions.openReport(id)
-					}
 					else{
-						actions.closeReport()
+						id = 'test'
 					}
+				}
+			}
+			
+			renders.contents(function(){
 
-					if (clbk)
-						clbk();
+				//self.app.actions.scrollBMenu()
 
-				}, id);
+				if(id){
+					actions.openReport(id)
+				}
+				else{
+					actions.closeReport()
+				}
+
+				if (clbk)
+					clbk();
+
+			}, id);
 
 
 			
@@ -562,34 +562,6 @@ var about = (function(){
 		var make = function(clbk){
 			
 			makerep(clbk)
-
-			if(!self.app.user.validate()){
-				el.c.addClass("validate")
-
-
-				if(self.app.errors.connectionRs()){
-
-					self.iclbks.mn = function(){
-						delete self.iclbks.mn
-						make()
-					}
-
-				}
-			}
-
-			if(!isMobile()){
-
-				el.contents.hcSticky({
-					stickTo: '#userpagestick',
-					top : 77,
-					bottom : 177
-				});
-
-				hcready = true
-
-			}
-
-
 			
 			
 		}
