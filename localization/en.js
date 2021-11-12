@@ -1353,4 +1353,110 @@ ____loclib.sourceCode = 'Source Code';
 ____loclib.aboutYoutubeDiscover1 = 'Contact us';
 ____loclib.aboutYoutubeDiscover2 = 'Send us a message if you need help or if you are a content creator, blogger, influencer and would like to unlock your bonus and verify your profile!';
 
+____loclib.aboutMainBoard = 'Bastyon, The best alternative to Twitter. Leave behind the bans and suspensions.';
+____loclib.aboutMainBoard1 = 'Free, private and secure social network';
+
+____loclib.aboutTwitterMainDescriptionText1 = 'Some people ask us:';
+____loclib.aboutTwitterMainDescriptionText2 = '"Why should I use Bastyon?"';
+____loclib.aboutTwitterMainDescriptionText3 = 'The real question is:';
+____loclib.aboutTwitterMainDescriptionText4 = '"Why should you use Twitter?!"';
+____loclib.aboutTwitterMainDescriptionText5 = '- TWITTER IS ACTING LIKE A DICTATORSHIP GOVERNMENT';
+____loclib.aboutTwitterMainDescriptionText6 = '- Yes, we know that this is a strong statement.';
+____loclib.aboutTwitterMainDescriptionText7 = '- But unfortunately, this is what has been happening on Twitter.';
+
+____loclib.aboutTwitterThreeColumn1 = 'Many, way too many accounts have been banned in the past few years. Some of them without any reason.';
+____loclib.aboutTwitterThreeColumn2 = 'Others just because they were from a specific political side (conservative)';
+____loclib.aboutTwitterThreeColumn3 = 'Here below you can find a short list of accounts that have been banned or suspended by Twitter, along with the reason.';
+____loclib.aboutTwitterThreeColumn4 = 'You can make your own considerations: you can easily realize how Twitter has been banning people for several unspecified reasons, for simply saying that the leader of Talibans was pro-sharia, for supporting the "Occupy" movement without breaking any policy.';
+____loclib.aboutTwitterThreeColumn5 = 'This is the kind of censorship that we do not want on Bastyon, and this is the type of limitations people should be fight against.';
+
+____loclib.aboutTitterBannedAcc1 = "Building a community on Twitter is like building a home on a land you don't own.";
+____loclib.aboutTitterBannedAcc2 = 'Click here to see the list of the accounts banned by Twitter in 2019';
+____loclib.aboutTitterBannedAcc3 = 'Account';
+____loclib.aboutTitterBannedAcc4 = 'Wikipedia';
+____loclib.aboutTitterBannedAcc5 = 'Individual/account';
+____loclib.aboutTitterBannedAcc6 = 'Description';
+____loclib.aboutTitterBannedAcc7 = 'Date';
+____loclib.aboutTitterBannedAcc8 = 'Duration';
+____loclib.aboutTitterBannedAcc9 = 'Reason for suspension';
+____loclib.aboutTitterBannedAcc10 = 'Followers at the time of suspension';
+____loclib.aboutTitterBannedAcc11 = '“Darren Mills” ';
+____loclib.aboutTitterBannedAcc12 = 'Russian-linked account ';
+____loclib.aboutTitterBannedAcc13 = '43285';
+____loclib.aboutTitterBannedAcc14 = 'Permanent';
+____loclib.aboutTitterBannedAcc15 = 'Unmasked as a fictitious person operated by a Russian troll factory.';
+
+
+
+____loclib.aboutTitterH3Section1 = 'Why Bastyon?';
+____loclib.aboutTitterH3Section2 = 'NO GOVERNMENT CONTROL';
+____loclib.aboutTitterH3Section3 = 'Bastyon runs on a network of nodes that no government can block or limit. Even if the main website Bastyon.com is made unaccessible or compromised, the platform still runs normally. A government cannot impose its censorship or limitations on Bastyon.';
+____loclib.aboutTitterH3Section4 = 'PRIVATE AND SECURE';
+____loclib.aboutTitterH3Section5 = 'Bastyon does not collect any personal information. No IP Address, no email, no phone number. We believe in real privacy protection and data security.';
+
+
+
+____loclib.aboutTitterImgAndText1 = 'NO CENSORSHIP';
+____loclib.aboutTitterImgAndText2 = 'Bastyon will not censor your posts and videos. Not even admins can block your account and ban you.';
+____loclib.aboutTitterImgAndText3 = 'Unlike Twitter, Bastyon does not apply a dictatorship-like method to remove content and users. There is a loooong list of people that have been banned, temporarily or permanently, by Twitter for shallow reasons or for no apparent reason at all.';
+____loclib.aboutTitterImgAndText4 = 'On Bastyon bans are simply impossible: it is based on the blockchain and no one has the power to cancel a block from it. Every post will always remain there. Even if an admin or a user wants to ban your posts, he will never be able to do so.';
+____loclib.aboutTitterImgAndText5 = 'Censorship is banned by the technology itself. Even if one day Bastyon`s creators want to shut down the platform, the posts will always be there and the social network can be re-created again from the same point it was left.';
+____loclib.aboutTitterImgAndText6 = 'NO COMPANY BEHIND BASTYON';
+____loclib.aboutTitterImgAndText7 = 'Unlike Twitter and the main Social Networks, there is no company behind Bastyon. It is an open source project. This means that there is no company that can control the contents posted on Bastyon. No bans, no censorship.';
+____loclib.aboutTitterImgAndText8 = 'Unlike Twitter...';
+____loclib.aboutTitterImgAndText9 = '1. You will never be blocked or banned for simply supporting your ideas, religions, movements without hurting other people.';
+____loclib.aboutTitterImgAndText10 = '2. No one can block your account or remove your posts';
+____loclib.aboutTitterImgAndText11 = '3. Privacy is complete and guaranteed';
+____loclib.aboutTitterImgAndText12 = '4. Access is always possible from any country and region of the world';
+____loclib.aboutTitterImgAndText13 = '5. Chat sessions are entirely private and encrypted and not even Bastyon can access them. Not even with a court warrant.';
+____loclib.aboutTitterImgAndText14 = '6. Your posts can be longer';
+
+
+
+____loclib.aboutTitterTable1 = 'TWITTER';
+____loclib.aboutTitterTable2 = 'BASTYON';
+____loclib.aboutTitterTable3 = 'Personal privacy';
+____loclib.aboutTitterTable4 = 'Nah';
+____loclib.aboutTitterTable5 = 'Completely protected. No tracking of IP, websites visits, email address, phone number.';
+____loclib.aboutTitterTable6 = 'Chat Encryption';
+____loclib.aboutTitterTable7 = 'None';
+____loclib.aboutTitterTable8 = 'Yes. 1 to 1 chats are entirely encrypted without any possibility for Bastyon to decrypt the messages. No "master key" available (unlike WhatsApp), no way to monitor users messages.';
+____loclib.aboutTitterTable9 = 'Availability';
+____loclib.aboutTitterTable10 = 'Some countries block or limit access to Twitter. Some countries actively monitor what users write on Facebook. ';
+____loclib.aboutTitterTable11 = 'Always, in every country, even without the need of a VPN.';
+____loclib.aboutTitterTable12 = 'Account risks blocks and bans ';
+____loclib.aboutTitterTable13 = 'YES, for many reasons. Blasphemy, Religion, Politics, Science... Even Trump`s account is blocked. Hundreds of famous people have been banned, too.';
+____loclib.aboutTitterTable14 = 'No. No one, not even Bastyon admins can block or ban accounts.';
+____loclib.aboutTitterTable15 = 'Reporting posts';
+____loclib.aboutTitterTable16 = 'YES, Twitter`s algorithms analyze the posts and remove or block them automatically. In addition Twitter can remove posts and ban users at its sole discretion. They have a dictatorship-like management. Many people got banned just because of their political views (some were considered "potentially dangerous" based on alleged rumors).';
+____loclib.aboutTitterTable17 = 'YES, only users with a high reputation can report post and a post is made "invisible" on the feed page (but remains available on the user`s profile page) only if several tens of high reputation users report it (reports can be made only for racism, hate speech and pornography)';
+____loclib.aboutTitterTable18 = 'Posts limitations';
+____loclib.aboutTitterTable19 = '280 characters';
+____loclib.aboutTitterTable20 = 'Variable, approx 2000 characters';
+____loclib.aboutTitterTable21 = 'Hashtags to classify posts';
+____loclib.aboutTitterTable22 = 'YES';
+____loclib.aboutTitterTable23 = 'Video posts';
+____loclib.aboutTitterTable24 = 'YES';
+____loclib.aboutTitterTable25 = 'YES, and highly rewarded. Up to 1,000 $ for 15,000 views + 1,250 "5 stars" reactions';
+____loclib.aboutTitterTable26 = 'Dictatoriship bans';
+____loclib.aboutTitterTable27 = 'Way too many!';
+____loclib.aboutTitterTable28 = 'NO!';
+
+
+
+____loclib.aboutTitterMainBoard31 = 'And there`s more! Bastyon pays you.';
+____loclib.aboutTitterMainBoard32 = 'You can earn money with Bastyon.';
+____loclib.aboutTitterMainBoard33 = 'Bastyon uses its own Cryptocurrency:';
+____loclib.aboutTitterMainBoard34 = 'Each time your posts and videos receive comments and likes, you get PKOIN.';
+____loclib.aboutTitterMainBoard35 = 'Each time one of your videos gets 15,000 views + 1,250 reactions, you get 1,000 $ in PKOIN (you can convert them in USD!). THIS IS A LIMITED TIME OFFER!!!';
+____loclib.aboutTitterMainBoard36 = 'Each time someone joins Bastyon with your referral link, you get PKOIN.';
+____loclib.aboutTitterMainBoard37 = 'Contact us to learn more and to activate your account as “CREATOR” so that you can post unlimited videos and get paid!';
+
+
+____loclib.aboutTitterOpen1 = 'Discover Bastyon';
+____loclib.aboutTitterOpen2 = 'You can use Bastyon from your browser or dowload the mobile and desktop app.';
+____loclib.aboutTitterOpen3 = 'Official Website';
+____loclib.aboutTitterOpen4 = 'Source Code';
+____loclib.aboutTitterOpen5 = 'Contact us';
+____loclib.aboutTitterOpen6 = 'Send us a message if you need help or if you are a content creator, blogger, influencer and would like to unlock your bonus and verify your profile!';
 
