@@ -8427,7 +8427,6 @@
 
 		var template = function(){
 
-			console.log('p!!!!', p);
 			p.class || (p.class = "")
 
 			var elements = [
