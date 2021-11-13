@@ -8427,17 +8427,18 @@
 
 		var template = function(){
 
+			console.log('p!!!!', p);
 			p.class || (p.class = "")
 
 			var elements = [
 
-				'<div elementsid="template_searchIconLabel" class="searchIconLabel">' + (p.icon ||
+				'<div elementsid="template_searchIconLabel_' +  (p.id || p.placeholder) + '" class="searchIconLabel">' + (p.icon ||
 					'<i class="fa fa-search" aria-hidden="true"></i>' +
 					'<i class="fas fa-circle-notch fa-spin"></i>') + 
 				'</div>',
 
 				'<div class="searchInputWrapper">' +
-					'<input elementsid="sminputsearch" class="sminput" tabindex="2" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" maxlength="400" type="text" placeholder="' + (p.placeholder || "Search") + '">' +
+					'<input elementsid="sminputsearch_' + (p.id || p.placeholder) + '" class="sminput" tabindex="2" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" maxlength="400" type="text" placeholder="' + (p.placeholder || "Search") + '">' +
 				'</div>',
 
 				'<div class="searchPanel">' +
