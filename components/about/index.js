@@ -368,6 +368,8 @@ var about = (function(){
 						data : {
 							reports : reports,
 							each : helpers.eachReport,
+							lkey : app.localization.current(),
+							theme : self.app.platform.sdk.theme.current,
 	
 							selector : s
 						},
@@ -388,6 +390,36 @@ var about = (function(){
 	
 						if (clbk)
 							clbk();
+
+						el.c.find('.localization').on('click', function(){
+							self.app.mobile.vibration.small()
+							var items = []
+			
+							_.each(self.app.localization.available, function(a){
+								items.push({
+									text : a.name,
+									action : function (clbk) {
+			
+										var na = app.localization.findByName(a.name);
+			
+			
+										if (na && na.key != self.app.localization.key){
+											self.app.mobile.vibration.small()
+											self.app.localization.set(na.key);
+										}
+			
+										clbk()
+			
+									}
+								})
+							})
+			
+							menuDialog({
+			
+								items: items
+							})
+							
+						})
 					})
 				}
 

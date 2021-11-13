@@ -1,56 +1,59 @@
-#about header {
-  background-color: #dddddd;
-  height: 65px;
-  position: sticky;
+#about .maket {
+  position: fixed;
   top: 0;
-  z-index: 10;
+  background: white;
+  z-index: 4999;
+  width: 100%;
+  height: 70px;
 }
-#about header > .main-wrapper {
-  display: flex;
-  align-items: center;
-  height: 100%;
-}
-#about header .main-menu {
+#about .maket .contentsInner {
   display: flex;
   justify-content: space-between;
-  width: 100%;
+  align-items: center;
+  padding-left: 2em;
+  padding-right: 2em;
 }
-#about header .main-menu > ul {
+#about .maket .contentsInner .items {
+  display: flex;
+  height: 100%;
+}
+#about .maket .contentsInner .items .sitename {
+  display: flex;
+}
+#about .maket .contentsInner .items .icon {
+  padding: 0;
+  padding-left: 0.5em;
+  padding-right: 0.35em;
+  position: relative;
+  cursor: pointer;
+}
+#about .maket .contentsInner .items .icon .header_logo {
+  height: 20px;
+  vertical-align: bottom;
+}
+#about .maket .contentsInner .items .lang {
+  cursor: pointer;
+  font-weight: 100;
+  padding-left: 0.5em;
+}
+#about .maket .contentsInner .contentmenu {
+  display: flex;
+  max-width: 800px;
+}
+#about .maket .contentsInner .contentmenu .reportCaption.active {
+  border-bottom: 1px solid red;
+}
+#about .maket .contentsInner .contentmenu .reportCaptionCell {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5em;
+}
+#about .maket .contentsInner .icon {
   display: flex;
   align-items: center;
 }
-#about header .main-menu > ul > li {
-  display: inline-block;
-  font-size: 15px;
-  font-family: 'Roboto', sans-serif;
-  font-weight: 400;
-  letter-spacing: 1px;
-  color: black;
-  margin-right: 15px;
-  cursor: pointer;
-  position: relative;
-}
-#about header .main-menu > ul > li > a {
-  text-decoration: none;
-  color: inherit;
-}
-#about header .main-menu > ul > li:last-child {
-  margin-right: 0;
-}
-#about header .main-menu > ul > li::after {
-  content: '';
-  width: 10%;
-  height: 3px;
-  background: #00D5C3;
-  position: absolute;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  top: 25px;
-  opacity: 0;
-  transition-duration: 0.3s;
-}
-#about header .main-menu > ul > li:hover::after {
-  opacity: 1;
-  width: 100%;
+#about .report {
+  margin-top: 70px;
 }

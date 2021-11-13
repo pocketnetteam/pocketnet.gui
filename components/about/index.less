@@ -1,69 +1,92 @@
 @import "../../css/__cssvar";
 
+@reportMarginTop : 70px;
 
 #about{
 
-	header {
-		background-color: #dddddd;
-		height: 65px;
-		position: sticky;
+	.maket {
+		position: fixed;
 		top: 0;
-		z-index: 10;
-		>.main-wrapper {
-			display: flex;
-			align-items: center;
-			height: 100%;
-		}
+		background: white;
+		z-index: 4999;
+		width: 100%;
+		height: @reportMarginTop;
 
 
-		.main-menu {
+		.contentsInner{
 			display: flex;
 			justify-content: space-between;
-			width: 100%;
-			>ul {
+			align-items: center;
+			padding-left: @rhythm * 4;
+			padding-right: @rhythm * 4;
+	
+			
+	
+			.items{
 				display: flex;
-				align-items: center;
-				
-				>li {
-					display: inline-block;
-					font-size: 15px;
-					font-family: 'Roboto', sans-serif;
-					font-weight: 400;
-					letter-spacing: 1px;
-					color: black;
-					margin-right: 15px;
-					cursor: pointer;
+				height: 100%;
+	
+				.sitename{
+					display: flex;
+				}
+	
+	
+				.icon{
+					padding: 0;
+					padding-left: @rhythm;
+					padding-right: .7 * @rhythm;
 					position: relative;
-					>a {
-						text-decoration: none;
-						color: inherit;
-					}
-					&:last-child {
-						margin-right: 0;
-					}
-					&::after {
-						content: '';
-						width: 10%;
-						height: 3px;
-						background: #00D5C3;
-						position: absolute;
-						left: 0;
-						right: 0;
-						margin: 0 auto;
-						top: 25px;
-						opacity: 0;
-						transition-duration: 0.3s;
-					}
-					&:hover {
-						&::after {
-							opacity: 1;
-							width: 100%;
-						}
+					cursor: pointer;
+	
+	
+					.header_logo{
+						height: 20px;
+						vertical-align: bottom;
 					}
 				}
+	
+				.lang{
+					cursor: pointer;
+					font-weight: 100;
+					padding-left: 0.5em;
+				}
+			
+	
+			}
+	
+	
+			.contentmenu{
+				display: flex;
+				max-width: 800px;
+	
+				.reportCaption{
+					&.active{
+						border-bottom: 1px solid red;
+					}
+				}
+	
+				.reportCaptionCell{
+					cursor: pointer;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					padding: @rhythm * 3;
+				}
+				
+			}
+	
+			.icon{
+				display: flex;
+				align-items: center
 			}
 		}
 	}
+
+	.report{
+		margin-top: @reportMarginTop;
+	}
+
+
 
 }
 

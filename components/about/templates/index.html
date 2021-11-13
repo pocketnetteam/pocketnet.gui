@@ -1,67 +1,6 @@
 
-<% 
-
-var src = deep(app, 'platform.sdk.user.storage.me.image')  
-
-var name = app.platform.api.clearname(deep(app, 'platform.sdk.user.storage.me.name') || (user.address.value && user.address.value.toString('hex')) )
-var letter = name ? name[0] : ''
-
-
-%>
-
 <div id="<%-module.map.id%>">
 
-
-    
-    <header>
-        <div class="main-wrapper">
-            <!-- <img class="logo" src="img/logo.png"> -->
-            <nav class="main-menu">
-
-
-                <ul>
-
-                    
-                    
-                    <li><a href="/">Home</a></li>
-                    <li><a href="?id=services-link">Services</a></li>
-                    <li><a href="?id=works-link">How it works</a></li>
-                    <li><a href="?id=team-link">Team</a></li>
-                    <li><a href="?id=blog-link">Our blog</a></li>
-                    <li><a href="?id=contact-link">Contact</a></li>
-
-                </ul> 
-
-                <div class="icon">
-                    <a elementsid="<%-app.platform.api.authorlink(user.address.value.toString('hex'))%>" href="<%-app.platform.api.authorlink(user.address.value.toString('hex'))%>">	
-                        <div class="usericon" image="<%-src || ''%>">
-        
-                            <% if(!src && letter) {%>
-        
-                                <span class="letter">
-                                    <%-letter.toUpperCase()%>
-                                </span>
-        
-                            <% } else if (!src) { %>
-        
-                                <i class="far fa-user"></i>
-        
-                            <% } %>
-        
-                            <% if(app.platform.ui.markUser) {%>
-        
-                                <%= app.platform.ui.markUser(user.address.value && user.address.value.toString('hex'))%>
-        
-                            <% } %>
-                        
-                        </div>
-                    </a>
-        
-        
-                </div>
-            </nav>
-        </div>
-    </header>
     
     <div class="maket left roller" roller="contents">
         <div class="cnt">
