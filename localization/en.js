@@ -1244,7 +1244,7 @@ ____loclib.attachVideoLentaShort = "Attach";
 
 ____loclib.linkToPostLenta = "Already posted"
 
-____loclib.ReferralUsers = "Referral Users. Total/From&nbsp;01.11.2021"
+____loclib.ReferralUsersTotal = "Referral Users Total"
 ____loclib.lockedaccount = "Your account is locked due to reputation below -50"
 ____loclib.lockedaccounta = "Author Account is locked due to reputation below -50"
 
@@ -1262,3 +1262,4 @@ ____loclib.sharevisibilitylabel_reg_article = 'Author chose to make this <b>arti
 ____loclib.sharevisibilitylabel_sub_video = 'Author chose to make this <b>video</b> available only for subscribers'
 ____loclib.sharevisibilitylabel_reg_video = 'Author chose to make this <b>video</b> available only for registered Bastyon users'
 
+____loclib.ReferralUsersLatest = "Referral Users From&nbsp;01.11.2021"
