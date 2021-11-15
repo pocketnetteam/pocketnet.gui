@@ -298,13 +298,13 @@ var Middle = function(){
     
         if(!request.headers) return
 
-        var ua = {}
+        /*var ua = {}
     
         var source = request.headers['user-agent'];
 
         if (source){
             ua = useragent.parse(source);
-        }
+        }*/
     
         var ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress || "::1";
     
