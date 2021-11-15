@@ -170,6 +170,9 @@ var Remote = function(app){
 					_.each(d, function(v, k){
 						if (k.split(':').length)
 							dn[k.split(':')[1]] = v
+
+						else
+							dn[k] = v
 					})
 					//d = d.data || {}
 				}
@@ -248,9 +251,10 @@ var Remote = function(app){
 
 	self.info = function(){
 		return {
-			size : JSON.stringify(ogcache).length + 
-				JSON.stringify(errors).length + 
-				JSON.stringify(ogloading).length
+
+			size : ogcache.length,
+			loading : _.toArray(ogloading).length,
+			errors : _.toArray(errors).length
 				
 		}
 	}

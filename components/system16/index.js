@@ -1364,7 +1364,19 @@ var system16 = (function(){
 							path : 'remote.size',
 							name : "RMTS",
 							id : 'rmts'
+						},
+						{
+							path : 'remote.loading',
+							name : "RMTS loading",
+							id : 'rmtsl'
+						},
+						{
+							path : 'remote.errors',
+							name : "RMTS Errors",
+							id : 'rmtser'
 						}
+
+						
 					]
 				},
 
