@@ -1056,8 +1056,8 @@ var Node = function(options, manager){
 
         serviceConnection()
 
-        if(!changeNodeUsersInterval)
-            changeNodeUsersInterval = setInterval(changeNodeUsers, 10000)
+        /*if(!changeNodeUsersInterval)
+            changeNodeUsersInterval = setInterval(changeNodeUsers, 10000)*/
 
         self.inited = true
         self.initedTime = new Date()

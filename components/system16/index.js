@@ -2832,6 +2832,32 @@ var system16 = (function(){
 					renders.webserverstatus(p.el)
 					renders.webserveradmin(p.el)
 
+					p.el.find('.heapdump').on('click', function(){
+						dialog({
+							class : 'zindex',
+							html : "Do you really want to make heap dump?",
+							btn1text : self.app.localization.e('dyes'),
+							btn2text : self.app.localization.e('dno'),
+							success : function(){	
+
+								proxy.fetchauth('heapdump', {
+									
+									data : {}
+	
+								}).catch(e => {
+									
+									return Promise.resolve()
+		
+								}).then(r => {
+				
+									topPreloader(100);
+		
+								})
+
+							}
+						})
+					})
+
 					if (clbk)
 						clbk()
 				})
