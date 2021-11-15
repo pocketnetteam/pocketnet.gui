@@ -17,8 +17,10 @@
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-			padding-left: @rhythm * 4;
-			padding-right: @rhythm * 4;
+			max-width: 1280px;
+			width: 100%;
+			margin-left: auto;
+			margin-right: auto;
 	
 			
 	
@@ -57,11 +59,13 @@
 	
 			.contentmenu{
 				display: flex;
-				max-width: 800px;
+				max-width: 550px;
 	
 				.reportCaption{
+					color: #b2abac;
+
 					&.active{
-						border-bottom: 1px solid red;
+						color: #0e1c2b;
 					}
 				}
 	
@@ -71,6 +75,7 @@
 					align-items: center;
 					justify-content: center;
 					padding: @rhythm * 3;
+					font-size: .9em;
 				}
 				
 			}

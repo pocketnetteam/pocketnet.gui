@@ -25,9 +25,9 @@ var letter = name ? name[0] : ''
                 <div elementsid="menu_localization" class="lang localization">
                     
                     <% if(isMobile()) {%>
-                        <%-(lkey.key || '').toUpperCase()%> 
+                        <%-(lkey.key || '')%> 
                     <% } else { %>
-                        <%-(lkey.name || '').toLowerCase()%> 
+                        <%-(lkey.name || '')%> 
                     <% } %>
                     
                     <i class="fas fa-caret-down"></i>
@@ -51,7 +51,7 @@ var letter = name ? name[0] : ''
 
                 <div class="groupName">
                     <div elementsid="openReport" class="reportCaption openReport" rid="<%-id%>">
-                        <%= report.name.toUpperCase() %>
+                        <%= report.name %>
 
                         <% if(report.add && report.add()) {%>
 
@@ -91,7 +91,7 @@ var letter = name ? name[0] : ''
             <div class="reportCaptionTable table">
 
                 <div class="reportCaptionCell">
-                    <%= report.name.toUpperCase() %>
+                    <%= report.name %>
                 </div>
 
                 <% if(report.add && report.add()) {%>

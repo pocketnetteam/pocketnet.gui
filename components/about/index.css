@@ -10,8 +10,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-left: 2em;
-  padding-right: 2em;
+  max-width: 1280px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 #about .maket .contentsInner .items {
   display: flex;
@@ -38,10 +40,13 @@
 }
 #about .maket .contentsInner .contentmenu {
   display: flex;
-  max-width: 800px;
+  max-width: 550px;
+}
+#about .maket .contentsInner .contentmenu .reportCaption {
+  color: #b2abac;
 }
 #about .maket .contentsInner .contentmenu .reportCaption.active {
-  border-bottom: 1px solid red;
+  color: #0e1c2b;
 }
 #about .maket .contentsInner .contentmenu .reportCaptionCell {
   cursor: pointer;
@@ -49,6 +54,7 @@
   align-items: center;
   justify-content: center;
   padding: 1.5em;
+  font-size: 0.9em;
 }
 #about .maket .contentsInner .icon {
   display: flex;
