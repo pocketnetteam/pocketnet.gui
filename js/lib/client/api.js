@@ -100,7 +100,7 @@ var ProxyRequest = function(app = {}, proxy){
 
             var time = p.timeout || 30000
     
-            if (window.cordova || isInStandaloneMode()){
+            if (isMobile()){
                 time = time * 2
             }
 
