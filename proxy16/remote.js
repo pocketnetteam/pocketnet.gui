@@ -551,7 +551,7 @@ var Remote = function(app){
 					})
 				}
 				
-
+				console.log('self.jsdom')
 
 				self.jsdom(html, clbk)
 			}

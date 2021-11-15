@@ -5,7 +5,7 @@ workbox.setConfig({
   debug: false
 });
 
-const { strategies, core, routing, cacheableResponse } = workbox;
+const { strategies, core, routing, cacheableResponse, expiration } = workbox;
 
 self.skipWaiting();
 core.clientsClaim();
@@ -24,11 +24,23 @@ routing.registerRoute(
     return request.destination === 'style' ||
     request.destination === 'script' ||
     request.destination === 'worker' ||
-    request.destination === 'image' ||
     request.mode === 'navigate'},
   // Use a Network First caching strategy
-  new strategies.NetworkFirst()
+  new strategies.CacheFirst()
 );
+/*
+routing.registerRoute(
+  ({request}) => request.destination === 'image',
+  new strategies.CacheFirst({
+    cacheName: 'image-cache',
+    plugins: [
+      new expiration.ExpirationPlugin({
+        maxAgeSeconds: 124 * 60 * 60,
+        maxEntries: 500,
+      }),
+    ],
+  })
+);*/
 
 
 

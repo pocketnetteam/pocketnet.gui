@@ -73,6 +73,8 @@ if(!_Node)
 
 	app.preapi()
 
+	console.log('ini')
+
 	// Prepare notifications
 	//app.notifications = new Notifications(app);
 

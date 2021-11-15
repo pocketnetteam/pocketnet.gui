@@ -1104,6 +1104,20 @@ var author = (function(){
 			})
 
 
+			el.c.find('.changeaccount').on('click', function(){
+
+				self.nav.api.go({
+					open : true,
+					href : 'accounts',
+					inWnd : true,
+
+					essenseData : {
+						href : deep(self, 'app.nav.current.href') || 'index'
+					}
+
+				})
+			})
+
 			self.app.platform.ws.messages.event.clbks.author = function(data){
 			
 				if(data.mesType == 'subscribe' || data.mesType == 'unsubscribe'){

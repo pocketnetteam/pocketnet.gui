@@ -177,7 +177,7 @@ ____loclib.wsaddressnotv = "Address is not valid";
 ____loclib.uaddaddressdona = "Add address For Donations";
 ____loclib.uaddaddressdonaplace = "Enter Address";
 ____loclib.uchangeicon = "Upload Profile Image";
-____loclib.utip1 = "You must create name & avatar on blockchain before using "+appname+"";
+____loclib.utip1 = "You must create name on blockchain before using "+appname+"";
 ____loclib.utip2 = "You have only one step left";
 ____loclib.upicset = "Set Profile Icon";
 ____loclib.upic = "Profile Icon";
@@ -186,7 +186,7 @@ ____loclib.usave = "Save";
 ____loclib.ucancel = "Cancel";
 ____loclib.uwaitb = "Wait for confirmation to save information ";
 ____loclib.uchanges = "There are no changes";
-____loclib.uchangesvalid = "You need to upload profile image & create username";
+____loclib.uchangesvalid = "You need to type username";
 ____loclib.uname = "Name";
 ____loclib.unickname = "Nickname";
 ____loclib.ulanguage = "Language";
@@ -1089,8 +1089,8 @@ ____loclib.pbp_10 = "If you invite a video blogger and can prove it, you get a b
 ____loclib.pbp_11 = "For any questions, email"
 
 ____loclib.pbp_6_1 = "Referral Users"
-____loclib.pbp_6_2 = "1250"
-____loclib.pbp_6_3 = "Important: Starting November 1 there is an additional requirement for each bonus. You must have 1250 Referral Users for each bonus. To get Referral Users you must Include Referral Link when sharing!"
+____loclib.pbp_6_2 = "1000"
+____loclib.pbp_6_3 = "Important: Starting November 1 there is an additional requirement for each bonus. You must have 1000 Referral Users for each bonus. To get Referral Users you must Include Referral Link when sharing!"
 
 
 
@@ -1245,7 +1245,7 @@ ____loclib.attachVideoLentaShort = "Attach";
 
 ____loclib.linkToPostLenta = "Already posted"
 
-____loclib.ReferralUsers = "Referral Users. Total/From&nbsp;01.11.2021"
+____loclib.ReferralUsersTotal = "Referral Users Total"
 ____loclib.lockedaccount = "Your account is locked due to reputation below -50"
 ____loclib.lockedaccounta = "Author Account is locked due to reputation below -50"
 
@@ -1263,3 +1263,4 @@ ____loclib.sharevisibilitylabel_reg_article = 'Author chose to make this <b>arti
 ____loclib.sharevisibilitylabel_sub_video = 'Author chose to make this <b>video</b> available only for subscribers'
 ____loclib.sharevisibilitylabel_reg_video = 'Author chose to make this <b>video</b> available only for registered Bastyon users'
 
+____loclib.ReferralUsersLatest = "Referral Users From&nbsp;01.11.2021"

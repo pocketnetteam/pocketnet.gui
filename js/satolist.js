@@ -6182,7 +6182,7 @@ Platform = function (app, listofnodes) {
                         var errtext = 'Undefined Error'
                         
 						if(err == 'namelength'){
-							errtext = 'The name length can be more than 20 symbols'
+							errtext = "The name length can't be more than 20 symbols"
 						}
 
 						if(err == 'pocketnet'){
@@ -8349,7 +8349,9 @@ Platform = function (app, listofnodes) {
             get: function (clbk, refresh, proxyoptions) {
                 if (refresh) this.current = null;
 
-                self.app.api.fetch('captcha', {
+                console.log('proxyoptions', proxyoptions)
+
+                self.app.api.fetchauth('captcha', {
                     captcha: this.done || this.current || null
                 }, proxyoptions).then(d => {
 
@@ -10619,7 +10621,7 @@ Platform = function (app, listofnodes) {
             add : function(category, _k){
 
                 if(!category.id) return 'id'
-                if(!category.name) return 'name'
+                if(!category.name.trim()) return 'name'
                 if(!category.tags) return 'tags'
                 if(!category.tags.length) return 'tags'
 
@@ -22113,11 +22115,23 @@ Platform = function (app, listofnodes) {
                 txid: "b52f38b272b7a18c0947b853ee35fee2aa0e0105aa86daa9cd1efcb35b54f036"
             })*/
 
+            // referral
+            /*self.messageHandler({
+                addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
+                addrFrom: "PJTjvqynFHqarEKgg6UJMQBSjuDsqn1ztF",
+                mesType: "userInfo",
+                msg: "event",
+                nameFrom: "reftest1011",
+                node: "137.135.25.73:38081:8087",
+                time: 1636521290,
+                txid: "65fee9b1e925833c5ff623178efecc436d3af0c9f6a4baa0b73c52907a9d1d7b"
+            })*/
             
 
 
 		}, 6000)
     }
+    
     
     
     self.convertUTCSS = function (str) {
@@ -24366,6 +24380,7 @@ Platform = function (app, listofnodes) {
                     var w = parameters(url, true).connect
                     var cr = parameters(url, true).publicroom   
                     var ps =  parameters(url, true).ps
+                    var ref =  parameters(url, true).ref
 
                     self.matrixchat.connectWith = w || null
                     self.matrixchat.joinRoom = cr || null
@@ -24374,13 +24389,25 @@ Platform = function (app, listofnodes) {
                     if(!ps && !cr && !w && !app.curation()){
                         self.matrixchat.backtoapp()
                     }
-                    
 
                     setTimeout(function(){
                         self.matrixchat.wait().then(r => {
                             self.matrixchat.connect()
                         })
                     }, 500)
+
+                    if(ref){
+
+                        self.app.setref(ref)
+
+                        /*self.sdk.users.addressByName(ref, function(r){
+                            if(r){
+                                self.app.ref = r;
+                                localStorage['ref'] = r
+                            }
+            
+                        })*/
+                    }
 
             })
         }

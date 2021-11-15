@@ -16,7 +16,6 @@ var staking = (function(){
 
 		var market_keys = {
 			'mercatox' : 'last_price',
-			'bilaxy' : 'close',
 			'digifinex' : 'last'
 		}
 

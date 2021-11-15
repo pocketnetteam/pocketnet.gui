@@ -139,7 +139,7 @@ function rpc(request, callback, obj) {
         return
     }
     
-    var auth = new Buffer(self.user + ':' + self.pass).toString('base64');
+    
 
     var signal = null
 
@@ -261,18 +261,20 @@ function rpc(request, callback, obj) {
         if(!called) {
 
             callback({
-                code : 408
+                code : 408,
+                error : 'requesterror'
             });
 
             called = true;
         }
         
-    }).setTimeout(5000, function(){
+    }).setTimeout(timeout, function(){
 
         if(!called) {
 
             callback({
-                code : 408
+                code : 408,
+                error : 'timeout'
             });
 
             called = true;
@@ -284,8 +286,9 @@ function rpc(request, callback, obj) {
     req.setHeader('Content-Length', request.length);
     req.setHeader('Content-Type', 'application/json');
 
-    if(!pbl)
-        req.setHeader('Authorization', 'Basic ' + auth);
+    if(!pbl){
+        req.setHeader('Authorization', 'Basic ' + (self.user + ':' + self.pass).toString('base64'));
+    }
 
     req.write(request);
     req.end();

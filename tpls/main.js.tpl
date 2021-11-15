@@ -372,6 +372,12 @@ function createWindow() {
 
     win.webContents.session.setSpellCheckerLanguages(['en-US', 'ru'])
 
+    globalShortcut.register('f5', function() {
+		win.reload()
+	})
+	globalShortcut.register('CommandOrControl+R', function() {
+		win.reload()
+	})
 
     win.webContents.on('context-menu', (event, params) => {
         const menu = new Menu()
