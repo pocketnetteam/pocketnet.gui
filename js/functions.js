@@ -936,7 +936,7 @@
 
 			if(value.text)
 			{
-				p.html += '<textarea placeholder="'+(value.placeholder || value.label || '')+'" class="'+_class+'" index="'+index+'">' + (value.defValue || '') + '</textarea>';
+				p.html += '<textarea elementsid="textarea_'+index+'" placeholder="'+(value.placeholder || value.label || '')+'" class="'+_class+'" index="'+index+'">' + (value.defValue || '') + '</textarea>';
 
 			}
 
@@ -1281,12 +1281,12 @@
 
 				poll += '<div class="question description">Question</div>'
 
-				poll += '<div class="title"><input class="input" type="text"><i class="fas fa-times-circle"></i></div>'
+				poll += '<div class="title"><input elementsid="input_poll_title" class="input" type="text"><i class="fas fa-times-circle"></i></div>'
 
 				poll += '<div class="options description">Poll options</div>';
 
 				for (var i = 0; i < 5; i++){
-					poll += `<div class="poll-item" id="poll-item-${i + 1}"><input class="input" type="text"><i class="fas fa-times-circle"></i></div>`;
+					poll += `<div class="poll-item" id="poll-item-${i + 1}"><input elements="poll-input-item-${i + 1}" class="input" type="text"><i class="fas fa-times-circle"></i></div>`;
 				}
 
 				poll += "</div>";
@@ -1301,9 +1301,9 @@
 			}
 
 			html+=	 '<div class="buttons">\
-							<div class="btn2wr"><button class="btn2 medium">'+p.btn2text+'</button></div>\
-							<div class="btn1wr"><button class="btn1 medium">'+p.btn1text+'</button></div>\
-						</div><div class="_close"><i class="fa fa-times" aria-hidden="true"></i></div>\
+							<div class="btn2wr"><button elementsid="dialog_btn2" class="btn2 medium">'+p.btn2text+'</button></div>\
+							<div class="btn1wr"><button elementsid="dialog_btn1" class="btn1 medium">'+p.btn1text+'</button></div>\
+						</div><div elementsid="dialog_close" class="_close"><i class="fa fa-times" aria-hidden="true"></i></div>\
 						</div>\
 						</div></div>'
 
@@ -4395,7 +4395,7 @@
 
 				if(self.value && self.value != '0') checked = 'checked';
 
-				input += '<input pid="'+self.id+'" type="checkbox" disabled id="checkbox_'+self.id+'"' + checked + ' class="checkbox nolabel ' + self.type + '" />'
+				input += '<input elementsid="'+self.id+'" pid="'+self.id+'" type="checkbox" disabled id="checkbox_'+self.id+'"' + checked + ' class="checkbox nolabel ' + self.type + '" />'
 				input += '<label for="checkbox_'+self.id+'"></label>';
 				
 				return input;
@@ -4601,10 +4601,10 @@
 
 
 				return '<div pid="'+self.id+'" class="locationInputWrapper '+notused+'"><div class="table locationInputs">'+
-				'<div class="locationInputUse"><input type="checkbox" id="checkbox_'+self.id+'_location" ' + checked + ' class="checkbox nolabel" />'+
+				'<div class="locationInputUse"><input elementsid="locationInputUse" type="checkbox" id="checkbox_'+self.id+'_location" ' + checked + ' class="checkbox nolabel" />'+
 
 				'<label for="checkbox_'+self.id+'_location"></label>'+'</div>'+
-					'<div class="locationInput place"><input type="text" notmasked="notmasked" placeholder="Name Of Place"></div><div class="locationInput radius">'+
+					'<div class="locationInput place"><input elementsid="locationInputPlace" type="text" notmasked="notmasked" placeholder="Name Of Place"></div><div class="locationInput radius">'+
 					'<select>'+
 					'<option value="1000">1 mi</option><option value="5000">5 mi</option><option value="10000">10 mi</option><option value="20000">20 mi</option><option value="50000">50 mi</option><option value="100000">100 mi</option><option value="500000">500 mi</option>'
 					+ '</select>'
@@ -4663,7 +4663,7 @@
 						input += caret;
 
 					input += 		'<div class="vc_inputWrapper">';
-					input += 			'<input '+disabled+' type="text" value="'+displayValue+'" placeholder="'+self.placeholder+'">';
+					input += 			'<input elementsid="vs_input" '+disabled+' type="text" value="'+displayValue+'" placeholder="'+self.placeholder+'">';
 					input += 		'</div>';
 
 					if(!self.format.right)
@@ -4756,7 +4756,7 @@
 
 			if (self.type == 'text' || self.type == 'html') {
 
-				var input = '<textarea placeholder="'+self.placeholder+'" notmasked="notmasked" pid="'+self.id+'" class="' + self.type + ' ">' + self.render(true) + '</textarea>';
+				var input = '<textarea elementsid="textarea_'+self.id+'" placeholder="'+self.placeholder+'" notmasked="notmasked" pid="'+self.id+'" class="' + self.type + ' ">' + self.render(true) + '</textarea>';
 
 				return input;
 			}
@@ -4802,7 +4802,7 @@
 						}
 
 						input += '<div class="vm_value">'
-							input += '<input val="'+value+'" type="checkbox" id="checkbox_'+self.id+'_'+value+'"' + checked + ' class="checkbox nolabel ' + self.type + '" />'
+							input += '<input elementsid="checkbox_'+self.id+'_'+value+'" val="'+value+'" type="checkbox" id="checkbox_'+self.id+'_'+value+'"' + checked + ' class="checkbox nolabel ' + self.type + '" />'
 						input += '<label for="checkbox_'+self.id+'_'+value+'">'+label+'</label>';
 
 						input+= '</div>'
@@ -4829,7 +4829,7 @@
 				var input = '<div class="vmt_valuesmultitree" pid="'+self.id+'">';
 
 				if(self.autoSearch){
-					input += '<div class="autoSearchWrapper"><input type="text" class="autoSearch" placeholder="Search Code"></div>'
+					input += '<div class="autoSearchWrapper"><input elementsid="autoSearch_input" type="text" class="autoSearch" placeholder="Search Code"></div>'
 				}
 
 				if(inputp.init){
@@ -4904,7 +4904,7 @@
 								input += '<div class="vmt_group " level="'+level+'" groupid="'+group.id+'">'
 									input += '<div class="vmt_name table">'
 										input += '<div class="vmt_checkbox">'
-											input += '<input type="checkbox" value="'+group.id+'" id="checkbox_' + self.id + group.id + '" class="checkbox" />'
+											input += '<input elementsid="checkbox_' + self.id + group.id + '" type="checkbox" value="'+group.id+'" id="checkbox_' + self.id + group.id + '" class="checkbox" />'
 											input += '<label for="checkbox_' + self.id + group.id + '">'+v+'</label>';
 										input += '</div>'
 										input += '<div class="vmt_panel">'
@@ -4945,7 +4945,7 @@
 
 								input += '<div class="vmt_value" level="'+level+'" groupid="'+value.id+'">'
 									input += '<div class="vmt_checkbox">'
-										input += '<input type="checkbox" value="'+value.id+'" id="checkbox_'+ self.id + value.id + '" class="checkbox" />'
+										input += '<input elementsid="checkbox_'+ self.id + value.id + '" type="checkbox" value="'+value.id+'" id="checkbox_'+ self.id + value.id + '" class="checkbox" />'
 										input += '<label for="checkbox_'+self.id + value.id + '">'+v+'</label>';
 									input += '</div>'
 								input += '</div>'
@@ -4988,7 +4988,7 @@
 
 				if(self.value && self.value != '0') checked = 'checked';
 
-				input += '<input pid="'+self.id+'" type="checkbox" id="checkbox_'+self.id+'"' + checked + ' class="checkbox nolabel ' + self.type + '" />'
+				input += '<input elementsid="'+self.id+'" pid="'+self.id+'" type="checkbox" id="checkbox_'+self.id+'"' + checked + ' class="checkbox nolabel ' + self.type + '" />'
 				input += '<label for="checkbox_'+self.id+'"></label>';
 				
 
@@ -5002,7 +5002,7 @@
 
 					input += '<div class="inputCashWrapper">';
 
-					input += '<input ' + m + ' class="' + self.type + ' input" value="' + self.render(true) + '">';
+					input += '<input elementsid="input_cash" ' + m + ' class="' + self.type + ' input" value="' + self.render(true) + '">';
 
 					input += '</div>';
 
@@ -5028,13 +5028,13 @@
 
 						input += '<div class="inputCashrangeWrapper">';
 
-						input += '<input index="0" ' + m + ' class="' + self.type + ' input" placeholder="From" value="' + self.render(true, 0) + '">';
+						input += '<input elementsid="input_cashrange" index="0" ' + m + ' class="' + self.type + ' input" placeholder="From" value="' + self.render(true, 0) + '">';
 
 						input += '</div>';
 
 						input += '<div class="inputCashrangeWrapper">';
 
-						input += '<input index="1" ' + m + ' class="' + self.type + ' input" placeholder="To" value="' + self.render(true, 1) + '">';
+						input += '<input elementsid="input_cashrange_2" index="1" ' + m + ' class="' + self.type + ' input" placeholder="To" value="' + self.render(true, 1) + '">';
 
 						input += '</div>';
 
@@ -5072,13 +5072,13 @@
 
 					input += '<div class="inputNumberrangeWrapperFrom">';
 
-					input += '<input index="0" ' + m + ' class="' + self.type + ' input" placeholder="From" value="' + self.render(true, 0) + '">';
+					input += '<input elementsid="input_numberrangefrom" index="0" ' + m + ' class="' + self.type + ' input" placeholder="From" value="' + self.render(true, 0) + '">';
 
 					input += '</div>';
 
 					input += '<div class="inputNumberrangeWrapperTo">';
 
-					input += '<input index="1" ' + m + ' class="' + self.type + ' input" placeholder="To" value="' + self.render(true, 1) + '">';
+					input += '<input elementsid="input_numberrangeto" index="1" ' + m + ' class="' + self.type + ' input" placeholder="To" value="' + self.render(true, 1) + '">';
 
 					input += '</div>';
 
@@ -5088,7 +5088,7 @@
 			}			
 
 			if(self.type == 'color'){
-				var input = '<input notmasked="notmasked" pid="'+self.id+'" class="simpleColor input" value="' + self.value + '">';
+				var input = '<input elementsid="input_cashrange" notmasked="notmasked" pid="'+self.id+'" class="simpleColor input" value="' + self.value + '">';
 				
 				return input
 
@@ -5100,13 +5100,13 @@
 
 					input += '<div class="inputNumberrangeWrapperFrom">';
 
-					input += '<input notmasked="notmasked" pid="'+self.id+'" class="datePicker input from" placeholder="From">'
+					input += '<input elementsid="input_numberrangefrom_"' + self.id + ' notmasked="notmasked" pid="'+self.id+'" class="datePicker input from" placeholder="From">'
 
 					input += '</div>';
 
 					input += '<div class="inputNumberrangeWrapperTo">';
 
-					input += '<input notmasked="notmasked" pid="'+self.id+'" class="datePicker input to" placeholder="To">'
+					input += '<input elementsid="input_numberrangeto_"' + self.id + ' notmasked="notmasked" pid="'+self.id+'" class="datePicker input to" placeholder="To">'
 
 					input += '</div>';
 
@@ -5117,7 +5117,7 @@
 			}
 
 			if(self.type == 'daterange'){
-				var input = '<input notmasked="notmasked" pid="'+self.id+'" class="datePicker input">';
+				var input = '<input elementsid="input_numberrange_"' + self.id + ' notmasked="notmasked" pid="'+self.id+'" class="datePicker input">';
 				
 				return input
 
@@ -5126,7 +5126,7 @@
 			if(self.type == 'phone'){
 
 
-				var input = '<input notmasked="notmasked" pid="'+self.id+'" class="' + self.type + ' input" value="' + self.render(true) + '" type="text">';;
+				var input = '<input elementsid="input_numberrange_"' + self.id + ' notmasked="notmasked" pid="'+self.id+'" class="' + self.type + ' input" value="' + self.render(true) + '" type="text">';;
 				
 				return input
 
@@ -5137,7 +5137,7 @@
 				var input = '<div class="vc_autosearchInput">\
 				<div class="placeholder"><div class="placeholderghost">&nbsp;</div></div>\
 				<div class="autosearchInputCnt">\
-				<input notmasked="notmasked" ' + m + ' pid="'+self.id+'" class="' + self.type + ' input" placeholder="'+(self.placeholder || "")+'" value="' + self.render(true) + '" type="text">\
+				<input elementsid="input_autosearch_"' + self.id + ' notmasked="notmasked" ' + m + ' pid="'+self.id+'" class="' + self.type + ' input" placeholder="'+(self.placeholder || "")+'" value="' + self.render(true) + '" type="text">\
 				</div></div>';
 
 
@@ -5145,28 +5145,28 @@
 			}
 
 			if(self.type == 'password'){
-				var input = '<input '+__disabled+' pid="'+self.id+'" class="' + self.type + ' input" placeholder="'+(self.placeholder || "")+'" value="' + self.render(true) + '" type="password">';
+				var input = '<input elementsid="input_numberrangepassword_"' + self.id + ' '+__disabled+' pid="'+self.id+'" class="' + self.type + ' input" placeholder="'+(self.placeholder || "")+'" value="' + self.render(true) + '" type="password">';
 
 				return input; 
 
             }
             
             if(self.type == 'label'){
-				return `<div ${__disabled} ${m} pid="${self.id}" class="simpleColor inpLabel">${self.value}</div>`
+				return `<div elementsid="${self.id}" ${__disabled} ${m} pid="${self.id}" class="simpleColor inpLabel">${self.value}</div>`
             }
 
             if(self.type == 'file_select'){
                 return `
-                    <input ${__disabled} ${m} pid="${self.id}" class="${self.type} input" placeholder="${(self.placeholder || "")}" value="${self.render(true)}" type="text">
-                    <button ${__disabled} ${m} pid="${self.id}_Selector" class="simpleColor inpButton btn_select">...</button>
+                    <input elementsid="input_file_select_${self.id}" ${__disabled} ${m} pid="${self.id}" class="${self.type} input" placeholder="${(self.placeholder || "")}" value="${self.render(true)}" type="text">
+                    <button elementsid="button_file_select_${self.id}" ${__disabled} ${m} pid="${self.id}_Selector" class="simpleColor inpButton btn_select">...</button>
                 `;
             }
             
             if(self.type == 'button'){
-				return `<button ${__disabled} ${m} pid="${self.id}" class="simpleColor inpButton" value="${self.value}">${self.text}</button>`
+				return `<button elementsid="button_${self.id}" ${__disabled} ${m} pid="${self.id}" class="simpleColor inpButton" value="${self.value}">${self.text}</button>`
 			}
 
-			var input = `<input ${__disabled} ${m} pid="${self.id}" class="${self.type} input" placeholder="${(self.placeholder || "")}" value="${self.render(true)}" type="text">`
+			var input = `<input elementsid="button_${self.id}_2" ${__disabled} ${m} pid="${self.id}" class="${self.type} input" placeholder="${(self.placeholder || "")}" value="${self.render(true)}" type="text">`
 
 			return input; 
 		}
@@ -8431,13 +8431,13 @@
 
 			var elements = [
 
-				'<div class="searchIconLabel">' + (p.icon ||
+				'<div elementsid="template_searchIconLabel_' +  (p.id || p.placeholder) + '" class="searchIconLabel">' + (p.icon ||
 					'<i class="fa fa-search" aria-hidden="true"></i>' +
 					'<i class="fas fa-circle-notch fa-spin"></i>') + 
 				'</div>',
 
 				'<div class="searchInputWrapper">' +
-					'<input class="sminput" tabindex="2" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" maxlength="400" type="text" placeholder="' + (p.placeholder || "Search") + '">' +
+					'<input elementsid="sminputsearch_' + (p.id || p.placeholder) + '" class="sminput" tabindex="2" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" maxlength="400" type="text" placeholder="' + (p.placeholder || "Search") + '">' +
 				'</div>',
 
 				'<div class="searchPanel">' +
@@ -8775,10 +8775,10 @@
 
 			var edit = el.closest('.editable');
 
-			edit.append("<div class='editForm'><input type='text' value='"+p.el.text()+"'></div>\
-						 <label><div class='lwr'><div class='editButton edt'><i class='fa fa-pencil'></i></div>\
-						 <div class='editButton success'><i class='fa fa-check'></i></div>\
-						 <div class='editButton fail'><i class='fa fa-times'></i></div></div></label>");
+			edit.append("<div class='editForm'><input elementsid='editable_input' type='text' value='"+p.el.text()+"'></div>\
+						 <label><div class='lwr'><div elementsid='editable_edt' class='editButton edt'><i class='fa fa-pencil'></i></div>\
+						 <div elementsid='editButton_success' class='editButton success'><i class='fa fa-check'></i></div>\
+						 <div elementsid='editButton_fail' class='editButton fail'><i class='fa fa-times'></i></div></div></label>");
 
 			var mmp = p.mmoneyparam || null;
 
@@ -9327,7 +9327,7 @@
 
 			el.addClass("upload dropZone");
 			el.wrapInner('<div class="fileUploader"><div class="elContent"></div></div>');
-			el.find('.fileUploader').append('<div class="spinner"></div><div class="inputWrapper"><input type="file" '+ m +'></div>');
+			el.find('.fileUploader').append('<div class="spinner"></div><div class="inputWrapper"><input elementsid="fileuploader_input" type="file" '+ m +'></div>');
 
 			dropZone = p.dropZone || el,
 			input = el.find('input');
@@ -10366,7 +10366,7 @@
 
 	                   
 
-	                    return prefix + '<a cordovalink="_system" href="'+ (protocol + url).replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '" target="_blank">' + full + '</a>';
+	                    return prefix + '<a elementsid="href_cordovalink_systel" cordovalink="_system" href="'+ (protocol + url).replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '" target="_blank">' + full + '</a>';
 	            });
 
 	    return replacedText;

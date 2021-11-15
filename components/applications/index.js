@@ -55,12 +55,14 @@ var applications = (function(){
 
 				var current = oses[_os];
 				var extraKeys = keys.filter(function(key){
-					return key !== _os;
+					return true
+					
+					// key !== _os;
 				})
 
 				if (_os && current && (typeof _Electron == 'undefined' ) && !window.cordova && !isInStandaloneMode()){
 
-					renders.os(current, clbk)
+					//renders.os(current, clbk)
 
 					extraKeys.forEach(function(key){
 						renders.os(oses[key], clbk, true);

@@ -192,7 +192,7 @@
     livejournal: function (options) {
       return 'http://livejournal.com/update.bml'
         + '?subject=' + encodeURIComponent(options.title)
-        + '&event=' + encodeURIComponent(options.text + '<br/><a href="' + _getURL(options) + '">' + options.title + '</a>')
+        + '&event=' + encodeURIComponent(options.text + '<br/><a elementsid="' + _getURL(options) + '" href="' + _getURL(options) + '">' + options.title + '</a>')
         + '&transform=1';
     },
 

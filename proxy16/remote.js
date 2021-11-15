@@ -20,7 +20,7 @@ var Remote = function(app){
 	var loading = {};
 	var errors = {};
 	var ogcache = [];
-	var ogloading = [];
+	var ogloading = {};
 
 	var hexEncode = function(text)
 	{
@@ -322,7 +322,7 @@ var Remote = function(app){
 							if (error){
 								errors[uri] = error
 
-								if(_.toArray(errors[uri]).length > 3000) {
+								if(_.toArray(errors[uri]).length > 1000) {
 									errors = {}
 								}
 
@@ -501,6 +501,7 @@ var Remote = function(app){
 		
 	}
 
+	
 	self.jsdom = function(html, clbk){
 		try{
 
@@ -686,6 +687,15 @@ var Remote = function(app){
 
 		})
 	}
+
+	self.clear = function(){
+		cache = [];
+		loading = {};
+		errors = {};
+		ogcache = [];
+		ogloading = {};
+	}
+
 
 	self.info = function(){
 		return {

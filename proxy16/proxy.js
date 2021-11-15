@@ -984,7 +984,7 @@ var Proxy = function (settings, manage, test, logger) {
 
 					var cparameters = _.clone(parameters)
 
-					//self.logger.w('rpc', 'warn', 'RPC REQUEST')
+					self.logger.w('rpc', 'debug', 'RPC REQUEST')
 
 					return new Promise((resolve, reject) => {
 
@@ -997,6 +997,8 @@ var Proxy = function (settings, manage, test, logger) {
 						return nodeManager.waitreadywithrating().then(resolve).catch(reject)
 						
 					}).then(() => {
+
+						self.logger.w('rpc', 'debug', 'AFTER WAITING NODEMANAGER')
 
 						time.preparing = performance.now() - timep
 
@@ -1039,7 +1041,7 @@ var Proxy = function (settings, manage, test, logger) {
 
 						return new Promise((resolve, reject) => {
 
-
+							self.logger.w('rpc', 'debug', 'BEFORE CACHE')
 							
 							if(!noderating) {
 								
@@ -1064,12 +1066,14 @@ var Proxy = function (settings, manage, test, logger) {
 					})
 					.then((waitstatus) => {
 
+						self.logger.w('rpc', 'debug', 'AFTER CACHE:' + waitstatus)
+
 						time.cache = performance.now() - timep
 
 						_waitstatus = waitstatus
 
 						if (waitstatus == 'smart' && smartresult){
-							console.log("SMART", smartresult.length)
+			
 							return Promise.resolve({
 								data: smartresult,
 								code: 207,
@@ -1078,6 +1082,8 @@ var Proxy = function (settings, manage, test, logger) {
 						}
 
 						var cached = server.cache.get(method, cparameters, cachehash);
+
+						
 
 						if (typeof cached != 'undefined') {
 							return Promise.resolve({
@@ -1099,8 +1105,7 @@ var Proxy = function (settings, manage, test, logger) {
 								return new Promise((resolve, reject) => {
 									setTimeout(function () {
 										resolve({
-											data:
-												'319f9e3f40e7f82ee7d32224fe2f7c1247f7f8f390930574b8c627d0fed3c312',
+											data: '319f9e3f40e7f82ee7d32224fe2f7c1247f7f8f390930574b8c627d0fed3c312',
 											code: 200,
 											node: node.exportsafe(),
 										});
@@ -1109,27 +1114,13 @@ var Proxy = function (settings, manage, test, logger) {
 							}
 						}
 
-
-
-
-						
+						self.logger.w('rpc', 'debug', 'BEFORE QUEUE')
 
 						return new Promise((resolve, reject) => {
 
-							/*if(!f.rand(0,1)) {
-
-								self.logger.w('rpc', 'debug', 'DELAY 10000')
-
-								f.delay(10000).then(r => {
-									nodeManager.queue(node, method, parameters, direct, {resolve, reject})
-								})
-							}
-								
-							else*/
-
 							time.start = performance.now() - timep
 
-							//console.log("REQUEST", method)
+							self.logger.w('rpc', 'debug', 'ADD TO QUEUE')
 							
 							nodeManager.queue(node, method, parameters, direct, {resolve, reject})
 								
@@ -1497,11 +1488,11 @@ var Proxy = function (settings, manage, test, logger) {
 			},
 			heapdump: {
 				path: '/heapdump',
-				//authorization: 'signature',
+				authorization: 'signature',
 				action: function (message) {
 
-					/*if (!message.A)
-						return Promise.reject({ error: 'Unauthorized', code: 401 });*/
+					if (!message.A)
+						return Promise.reject({ error: 'Unauthorized', code: 401 });
 						
 					var dumpdata = _.clone(dump)
 
@@ -1541,6 +1532,9 @@ var Proxy = function (settings, manage, test, logger) {
 					dump.stared = Date.now()
 
 					try{
+
+						remote.clear()
+						server.cache.clear()
 
 						f.createfolder(filename)
 

@@ -33,7 +33,7 @@ if (!isVideoPosted) {
 
 	<% _.each(m, function(m){ var mo = all[m] %>
 
-	<div class="menuitem <%-mo.class||''%>">
+	<div elementsid="videomenuitem_<%-mo.class||''%>" class="menuitem <%-mo.class||''%>">
 		
 		<div class="icon"><span><%=mo.icon%></span></div>
 		<div class="label"><span><%-mo.text%></span></div>

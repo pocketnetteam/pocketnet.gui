@@ -66,13 +66,8 @@ var testnodes = [
 ]
 
 var activenodes = [
-	/*{
-		host : '192.168.0.15',
-		port : 38081,
-		ws : 8087,
-		name : 'CryptoserverTEST',
-		stable : true
-	},*/
+	
+
 
 	{
 		host : '64.235.45.119',
@@ -113,13 +108,6 @@ var activenodes = [
 	}
 
 
-	/*{
-		host : '185.148.147.15',
-		port : 38081,
-		ws : 8087,
-		name : 'Cryptoserver',
-		stable : true
-	},*/
 	
 ]
 

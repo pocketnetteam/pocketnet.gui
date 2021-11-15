@@ -58,8 +58,8 @@
 				<div class="adressesTable table">
 					<div class="name">
 						<div class="addresscode">
-							<span class="copyaddress"><%- ad.address %></span> 
-							<a external='external' href="https://<%- app.meta.url %>/blockexplorer/address/<%- ad.address %>"> 	<i class="fas fa-th toblockexplorer"></i>
+							<span elementsid="walletcopyaddress2" class="copyaddress"><%- ad.address %></span> 
+							<a elementsid="https://<%- app.meta.url %>/blockexplorer/address/<%- ad.address %>" external='external' href="https://<%- app.meta.url %>/blockexplorer/address/<%- ad.address %>"> 	<i class="fas fa-th toblockexplorer"></i>
 							</a>
 						</div>
 
@@ -98,7 +98,7 @@
 	<% }) %>
 
 	<div class="bottomPanel">
-		<div class="item addaddress">
+		<div elementsid="walletaddaddress" class="item addaddress">
 			<button><i class="fas fa-plus-circle"></i> <%=e('waddaddress')%></button>
 		</div>
 	</div>

@@ -16,7 +16,7 @@
                         <div class="admin table">
     
                             <div class="iconWrapper">
-                                <% if(!app.curation()) {%> <a href="<%-app.platform.api.authorlink(uadmin)%>"> <% } %>
+                                <% if(!app.curation()) {%> <a elementsid="<%-app.platform.api.authorlink(uadmin)%>" href="<%-app.platform.api.authorlink(uadmin)%>"> <% } %>
     
                                     <% 
                                         var src = user.image;
@@ -25,7 +25,7 @@
                                     %>
     
                                     <div class="icon">
-                                        <div class="usericon usericonsbsa another" image="<%-src || ''%>">
+                                        <div class="usericon usericonsbsa another" elementsid="<%-src || 'usericon'%>" image="<%-src || ''%>">
 
                                             <% if(!src && letter) { %>
 
@@ -46,7 +46,7 @@
                             
                             <div class="nameWrapper">
     
-                                <% if(!app.curation()) {%><a href="<%-app.platform.api.authorlink(uadmin)%>"><% } %>
+                                <% if(!app.curation()) {%><a elementsid="<%-app.platform.api.authorlink(uadmin)%>" href="<%-app.platform.api.authorlink(uadmin)%>"><% } %>
                                     <%- user.name || uadmin %>
                                 <% if(!app.curation()) {%></a><% } %>
                                 

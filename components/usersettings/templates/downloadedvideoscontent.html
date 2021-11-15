@@ -16,7 +16,7 @@
             <% if(app.platform.sdk.localshares.getTotalSize() <= 0) { %>
                 <span><%=e('noDownloadedVideos')%></span>
             <% } else { %>
-                <button id="deleteAllDownloadedVideos"><%=e('deleteAllDownloadedVideos')%> (<%-formatBytes(app.platform.sdk.localshares.getTotalSize())%>)</button>
+                <button elementsid="deleteAllDownloadedVideos" id="deleteAllDownloadedVideos"><%=e('deleteAllDownloadedVideos')%> (<%-formatBytes(app.platform.sdk.localshares.getTotalSize())%>)</button>
             <% } %>
 
         </div>

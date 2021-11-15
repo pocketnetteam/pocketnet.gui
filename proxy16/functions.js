@@ -30,13 +30,12 @@ f.gcwrapper = function(){
 
             lastgctime = new Date()
     
-            console.log("GCRUN")
         } catch (e) {
-            console.log("gbremoved");
+           // console.log("gbremoved");
         }
     }
     else{
-        console.log("NOTYET")
+        //console.log("NOTYET")
     }
 
     

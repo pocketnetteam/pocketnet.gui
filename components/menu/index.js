@@ -571,6 +571,8 @@ var menu = (function(){
 					menusearch = new search(el.postssearch, {
 						placeholder : self.app.localization.e('e13139'),
 
+						id : 'searchOnBastyon',
+
 						right : true,
 
 						clbk : function(_el){
@@ -1020,6 +1022,7 @@ var menu = (function(){
 				},
 				click : function(){
 					self.app.mobile.vibration.small()
+					self.app.platform.sdk.registrations.getredirectFromCurrentPage()
 					self.nav.api.go({
 						href : 'authorization',
 						history : true,
@@ -1034,6 +1037,7 @@ var menu = (function(){
 				},
 				click : function(){
 					self.app.mobile.vibration.small()
+					self.app.platform.sdk.registrations.getredirectFromCurrentPage()
 					self.nav.api.go({
 						href : 'registration',
 						history : true,

@@ -849,7 +849,7 @@ var videoCabinet = (function () {
           self.nav.api.links(null, element);
         } else {
           element.html(
-            `<span class="videoPostLinkinWindow"><i class="far fa-check-circle"></i>${self.app.localization.e(
+            `<span elementsid="videoPostLinkinWindow" class="videoPostLinkinWindow"><i class="far fa-check-circle"></i>${self.app.localization.e(
               buttonCaption,
             )}</span>`,
           );

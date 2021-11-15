@@ -11,17 +11,17 @@
 
             <div class="botinlist">
                 <div>
-                    <a href="<%-app.platform.api.authorlink(bot)%>"><%- user.name %></a>
+                    <a elementsid="<%-app.platform.api.authorlink(bot)%>" href="<%-app.platform.api.authorlink(bot)%>"><%- user.name %></a>
                 </div> 
                 <div>(<%-bot%>)</div> 
-                <div><i bot="<%-bot%>" class="far fa-times-circle removefromlist"></i></div>
+                <div><i elementsid="removefromlist" bot="<%-bot%>" class="far fa-times-circle removefromlist"></i></div>
             </div>
             
         <% }) %>
     </div>
 
     <div class="exportpanel">
-        <button class="exportlist medium">Export bots list</button>
+        <button elementsid="exportlist" class="exportlist medium">Export bots list</button>
     </div>
 
 <% } else { %> 

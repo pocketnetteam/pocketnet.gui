@@ -20,7 +20,7 @@
 				<div class="mnemonicKeyTable table">
 					<div class="iconWrapper">
 
-						<div class="qrcode"></div>
+						<div elementsid="getqrcode" class="qrcode"></div>
 
 						<!--<svg width="65" height="65" data-jdenticon-value="<%-mainAddress.toString('hex')%>"></svg>-->
 					</div>
@@ -46,7 +46,7 @@
 				<div class="panel">
 
 					<div class="item right">
-						<button class="continue disabled"><%=e('rcontinue')%> <i class="fas fa-chevron-circle-right"></i></button>
+						<button elementsid="rcontinue" class="continue disabled"><%=e('rcontinue')%> <i class="fas fa-chevron-circle-right"></i></button>
 					</div>
 
 					<div class="item preloader right">
@@ -61,11 +61,11 @@
 					</div>
 
 					<div class="item  workstation">
-						<button class="save"><%=e('saveqrcode')%> <i class="fas fa-save"></i></button>
+						<button elementsid="saveqrcode" class="save"><%=e('saveqrcode')%> <i class="fas fa-save"></i></button>
 					</div>
 
 					<div class="item workstation">
-						<button class="copy ghost"><i class="fas fa-copy"></i></button>
+						<button elementsid="workcopyghost" class="copy ghost"><i class="fas fa-copy"></i></button>
 					</div>
 
 					

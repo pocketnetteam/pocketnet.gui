@@ -23,7 +23,7 @@
                         class="upload-peertube-label upload-video-file-label"
                         ><%- e('selectVideoFile') %></label
                       >
-                      <input
+                      <input elementsid="upload-video-file"
                         type="file"
                         class="upload-video-file hidden"
                         upload-input
@@ -36,7 +36,7 @@
                 <% if((deep(app,
                 'platform.real.'+user.address.value.toString('hex')) ||
                 window.testpocketnet) && !isMobile()) {%>
-                  <div class="caption-container import-container">
+                  <div elementsid="caption-container" class="caption-container import-container">
                     <%- e('importFromExternal') %>
                   </div>
                 <% } %>
@@ -58,7 +58,7 @@
                     </div>
                     <div class="upload-progress-bar"></div>
                   </div>
-                  <div class="cancelButton controlButton hidden">
+                  <div elementsid="cancelButtonControl" class="cancelButton controlButton hidden">
                     <span><%- e('ucancel') %></span>
                   </div>
                 </div>
@@ -76,7 +76,7 @@
         </div>
       </div>
 
-      <div class="challengeoffer" image="img/videoofferbg.jpg">
+      <div class="challengeoffer" image="img/videoofferbg2.jpg">
         <div class="pbg">
           <div class="caption">
             <span><%- e('pbp_1') %></span>
@@ -90,6 +90,10 @@
             <div class="table">
               <div class="forlabel"><span><%- e('pbp_4') %></span></div>
               <div class="forvalue"><span><%- e('pbp_5') %></span></div>
+            </div>
+            <div class="table">
+              <div class="forlabel"><span><%- e('pbp_6_1') %></span></div>
+              <div class="forvalue"><span><%- e('pbp_6_2') %></span></div>
             </div>
           </div>
 
@@ -108,10 +112,11 @@
           </div>
 
           <div class="infopart">
+            <div><b><%- e('pbp_6_3') %></b></div>
             <div><%- e('pbp_10') %></div>
             <div>
               <%- e('pbp_11') %>
-              <a href="mailto:support@<%- app.meta.url %>">support@<%- app.meta.url %></a>.
+              <a elementsid="mailto:support@<%- app.meta.url %>" href="mailto:support@<%- app.meta.url %>">support@<%- app.meta.url %></a>.
             </div>
           </div>
         </div>

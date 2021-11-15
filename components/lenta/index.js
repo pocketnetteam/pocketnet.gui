@@ -2762,6 +2762,12 @@ var lenta = (function(){
 	
 						
 					}
+
+					if(!essenseData.openapi && !essenseData.author){
+						if(!essenseData.notscrollloading && recommended != 'saved'){
+							///events.loadmorescroll() ???
+						}
+					}
 					
 
 					if (clbk)

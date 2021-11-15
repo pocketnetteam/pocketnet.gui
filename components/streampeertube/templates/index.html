@@ -11,6 +11,7 @@
       <div class="upload-field-container">
         <label for="result-video-rtmp"><%- e('linkRTMP') %>:</label>
         <input
+          elementsid="copyStreamInfo"
           type="text"
           class="result-video-rtmp result-video-info copyStreamInfo"
           id="result-video-rtmp"
@@ -43,7 +44,7 @@
       </div>
 
       <div class="closewindow">
-        <button class="button medium closewindowaction"><%- e('close') %></button>
+        <button elementsid="closewindowaction" class="button medium closewindowaction"><%- e('close') %></button>
       </div>
     </section>
   </section>

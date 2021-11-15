@@ -12,7 +12,7 @@
 					
 					%>
 
-					<div class="item" group="<%-gr.id%>">
+					<div elementsid="group-<%-gr.id%>" class="item" group="<%-gr.id%>">
 						<%- gr.name %>
 					</div>
 
@@ -47,7 +47,7 @@
 								%>
 
 								<div class="question" question="<%- fq.id %>">
-									<div class="questionName">
+									<div elementsid="questionName_<%- fq.id %>" class="questionName">
 										<%= fq.q %> 
 									</div>
 
@@ -56,7 +56,7 @@
 										<%= fq.a %>
 									</div>
 
-									<div class="share">
+									<div elementsid="share-<%- fq.id %>" class="share">
 										<%=e('e14108')%>
 									</div>
 

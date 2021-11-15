@@ -235,12 +235,12 @@ var Nodemanager = function(p){
 
         if (responses >= need){
 
-            /*if(fromadd){
-                console.log("HAS ADD RESULT")
+            if(fromadd){
+                //console.log("HAS ADD RESULT")
             }
             else{
-                console.log("HAS MAIN RESULT")
-            }*/
+                //console.log("HAS MAIN RESULT")
+            }
             
             if(typeof result != 'undefined') clbks.resolve(result)
 
@@ -1196,6 +1196,7 @@ var Nodemanager = function(p){
             //return Promise.resolve()
   
             return node.peers().then(nodes => {
+                
 
                 nodes = _.filter(nodes, function(n){
                     return !self.nodesmap[n.key] && !self.peers[n.key]

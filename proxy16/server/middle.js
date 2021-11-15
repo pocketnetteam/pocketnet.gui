@@ -204,10 +204,17 @@ var Middle = function(){
                     jsonp.time = s.time
                 }
            
+            try{
+                result.status(code).jsonp(jsonp)
 
-            result.status(code).jsonp(jsonp)
-
-            addLogs(request.data, request.clientIP, code, request.baseUrl + request.path, start)
+                addLogs(request.data, request.clientIP, code, request.baseUrl + request.path, start)
+            }  
+            
+            catch(e){
+                result.status(500).jsonp({
+                    code : 500
+                })
+            }
     
         }
     
@@ -217,12 +224,25 @@ var Middle = function(){
 
             if(code < 100) code = 500
 
-            result.status(code).jsonp({
-                error : error,
-                code : code
-            })
+            try{
+                result.status(code).jsonp({
+                    error : error,
+                    code : code
+                })
 
-            addLogs(request.data, request.clientIP, code, request.baseUrl + request.path, start)
+                addLogs(request.data, request.clientIP, code, request.baseUrl + request.path, start)
+            }  
+            
+            catch(e){
+
+                result.status(500).jsonp({
+                    code : 500
+                })
+
+            }
+
+
+            
     
         }
     

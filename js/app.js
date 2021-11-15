@@ -467,7 +467,7 @@ Application = function(p)
 			_p.TemplateID = '2000'
 
 			var body = ''
-				body += '<p><a href="https://'+self.options.url+'/author?address='+address+'">User('+address+')</a> complaint post <a href="https://'+self.options.url+'/post?s='+postid+'">Post ('+postid+')</a></p>'
+				body += '<p><a elementsid="https://'+self.options.url+'/author?address='+address+'" href="https://'+self.options.url+'/author?address='+address+'">User('+address+')</a> complaint post <a elementsid="https://'+self.options.url+'/post?s='+postid+'" href="https://'+self.options.url+'/post?s='+postid+'">Post ('+postid+')</a></p>'
 				body += '<p>Reason: '+reason+'</p>'
 
 			_p.body = encodeURIComponent(body)
@@ -602,7 +602,7 @@ Application = function(p)
 			_p.TemplateID = '2000'
 
 			var body = ''
-				body += '<p><a href="https://'+self.options.url+'/author?address='+address1+'">User('+address1+')</a> complaint room ('+roomid+')</a></p>'
+				body += '<p><a elementsid="https://'+self.options.url+'/author?address='+address1+'" href="https://'+self.options.url+'/author?address='+address1+'">User('+address1+')</a> complaint room ('+roomid+')</a></p>'
 
 				body += '<p>Reason: '+reason+'</p>'
 
@@ -899,7 +899,6 @@ Application = function(p)
 
 			if(typeof p.nav.href == 'function') p.nav.href = p.nav.href()
 
-
 			self.nav.init(p.nav);
 			
 		})
@@ -1117,9 +1116,6 @@ Application = function(p)
 
 			self.playingvideo = v
 
-			console.log('self.playingvideo', self.playingvideo)
-			
-
 			if(self.playingvideo){
 
 				setTimeout(function(){
@@ -1139,8 +1135,6 @@ Application = function(p)
 			setTimeout(function(){
 
 				var duration = deep(self.playingvideo, 'embed.details.duration') || 0
-
-				//console.log('self.playingvideo.volume', self.platform.sdk.videos.volume)
 
 				self.mobile.backgroundMode(self.playingvideo && self.playingvideo.playing && (!duration || duration > 60)/* && self.platform.sdk.videos.volume*/)
 
@@ -1435,20 +1429,7 @@ Application = function(p)
 
 		return moment(moment.utc((time || new Date())).toDate()).local().fromNow();
 
-		console.log('time', time)
 
-		var tt = convertDateRel(time)
-
-		if (tt[0]) {
-			tt[0] = self.localization.e(tt[0], tt[2])
-			tt[2] = ''
-		}
-
-		tt = _.filter(tt, function(t){
-			return t;
-		})
-
-		return tt.join(' ')
 	}
 
 	self.realtime = function(){
@@ -1582,7 +1563,6 @@ Application = function(p)
 								
 
 							}, function(error) {
-								console.error(error)
 								return reject(error);
 							});
 
@@ -1861,8 +1841,6 @@ Application = function(p)
 			if (window.cordova){
 				if (window.cordova.plugins && window.cordova.plugins.backgroundMode){
 
-					console.log("BACKGROUNDMODE ENABLED", t ? true : false)
-
 					if(t) {
 						cordova.plugins.backgroundMode.enable()
 					}
@@ -1893,12 +1871,6 @@ Application = function(p)
 			}
 			else{
 				self.fullscreenmode = v
-
-				/*window.PictureInPicture.enter(400, 200, function(){
-					console.log("success")
-				}, function(e){
-					console.log("RERE", e)
-				})*/
 
 				
 			}

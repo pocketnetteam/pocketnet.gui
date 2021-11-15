@@ -349,7 +349,7 @@ var registration = (function(){
 				actions.download(function(link){
 					el.c.find('.osStep').addClass('rundownloading')
 					el.c.find('.skipositem').html('<div class="downloadstart">'+self.app.localization.e('e13011')+'</div>'+
-						'<div><a href="'+link+'"><b>'+self.app.localization.e('e13012')+'</b></a></div>')
+						'<div><a elementsid="'+link+'" href="'+link+'"><b>'+self.app.localization.e('e13012')+'</b></a></div>')
 				})
 			}
 

@@ -6,7 +6,7 @@ var commentpanel = function(comment, _class){  %>
 
 		<div class="items">
 			<% if((!state || mestate.reputation >= -50) && !comment.deleted && !ed.cantsend) { %> 
-				<div class="item reply">
+				<div elementsid="comments_reply" class="item reply">
 					<div class="cact">
 						<div class="label">
 							<span><%=e('reply').toUpperCase()%></span>
@@ -23,7 +23,7 @@ var commentpanel = function(comment, _class){  %>
 
 			%>
 
-				<div class="item replies <%-h%>">
+				<div elementsid="comments_replies" class="item replies <%-h%>">
 					<div class="cact">
 						<div class="iconlabelWrapper table">
 							<div class="label">
@@ -44,7 +44,7 @@ var commentpanel = function(comment, _class){  %>
 				%> 
 				<div class="item upvoteCommentWrapper">
 
-					<div class="upvoteComment scoreUp <% if(comment.myScore && comment.myScore > 0) {%> ratedScore <% } %>"  score="scoreUp">
+					<div elementsid="comments_upvoteComment" class="upvoteComment scoreUp <% if(comment.myScore && comment.myScore > 0) {%> ratedScore <% } %>"  score="scoreUp">
 						<div class="upvoteCommentTable table">
 							<div class="upvoteCommentCell">
 								<i class="fas fa-thumbs-up"></i>
@@ -101,7 +101,7 @@ var commentpanel = function(comment, _class){  %>
 			<div class="commentWrapper table">
 
 				<div class="iconWrapper">
-					<% if(!app.curation()) {%><a href="<%-app.platform.api.authorlink(comment.address)%>"><% } %>
+					<% if(!app.curation()) {%><a elementsid="<%-app.platform.api.authorlink(comment.address)%>" href="<%-app.platform.api.authorlink(comment.address)%>"><% } %>
 						<% 
 							var src = deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.image');
 							var name = deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.name');
@@ -150,7 +150,7 @@ var commentpanel = function(comment, _class){  %>
 					<div class="metatable table">
 						<div class="author">
 
-							<% if(!app.curation()) {%><a href="<%-app.platform.api.authorlink(comment.address)%>"><% } %>
+							<% if(!app.curation()) {%><a elementsid="<%-app.platform.api.authorlink(comment.address)%>" href="<%-app.platform.api.authorlink(comment.address)%>"><% } %>
 							
 							<b><span class="adr"><%-deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.name') || comment.address %></span></b> <% if(!app.curation()) {%></a><% } %> &middot;
 							<span class="date realtime" time="<%-comment.time%>"><%- app.reltime(comment.time) %></span>
@@ -172,7 +172,7 @@ var commentpanel = function(comment, _class){  %>
 						<div class="panelWrapper">
 							<% if(!comment.deleted) {%>
 
-								<div class="panel">
+								<div elementsid="comments_panel" class="panel">
 									<i class="fas fa-ellipsis-h"></i>
 								</div>
 
@@ -248,7 +248,7 @@ var commentpanel = function(comment, _class){  %>
 											<% _.each(comment.images, function(image){ %>
 					
 												<div class="imagesWrapper">
-													<div class="image imageCommentOpen" image="<%-image%>" i="<%-image%>">
+													<div elementsid="comments_imageCommentOpen" class="image imageCommentOpen" image="<%-image%>" i="<%-image%>">
 													</div>
 												</div>
 					
@@ -265,7 +265,7 @@ var commentpanel = function(comment, _class){  %>
 
 									<div class="url">
 										<span>
-											<a href="<%-comment.url%>"><%-comment.url%></a>
+											<a elementsid="<%-comment.url%>" href="<%-comment.url%>"><%-comment.url%></a>
 										</span>
 									</div>
 

@@ -42,7 +42,7 @@ var faq = (function(){
 					{
 						id : 'behind-scenes',
 						q : 'How does it work behind the scenes? Where are the servers?',
-						a : '<div><p>'+self.app.meta.fullname+' is modelled on the style of cryptocurrency (like Bitcoin and Ethereum), because it has no central authority and uses the blockchain to make transactions and ensure security.&nbsp;</p><p>There is no central server: instead, the platform relies on a network of nodes, located all over the world. Every person in the world with a computer can actually run a node (and be rewarded to do so).&nbsp;</p><p>Each post, each comment, each interaction (except chat messages!) is stored on the <a href="https://en.wikipedia.org/wiki/Blockchain">blockchain</a>. This means that there is no way to remove a post or to censor it. Every post is and will always be available on the blockchain and no authority, government or corporation can remove it.</p><p>'+self.app.meta.fullname+' usesa dedicated blockchain, derived directly from the Bitcoin chain.&nbsp;</p></div>',
+						a : '<div><p>'+self.app.meta.fullname+' is modelled on the style of cryptocurrency (like Bitcoin and Ethereum), because it has no central authority and uses the blockchain to make transactions and ensure security.&nbsp;</p><p>There is no central server: instead, the platform relies on a network of nodes, located all over the world. Every person in the world with a computer can actually run a node (and be rewarded to do so).&nbsp;</p><p>Each post, each comment, each interaction (except chat messages!) is stored on the <a elementsid="https://en.wikipedia.org/wiki/Blockchain" href="https://en.wikipedia.org/wiki/Blockchain">blockchain</a>. This means that there is no way to remove a post or to censor it. Every post is and will always be available on the blockchain and no authority, government or corporation can remove it.</p><p>'+self.app.meta.fullname+' usesa dedicated blockchain, derived directly from the Bitcoin chain.&nbsp;</p></div>',
 					},
 						
 					{
@@ -394,7 +394,7 @@ var faq = (function(){
 			faqcontent[0].group.splice(1, 0, {
 				id : 'downloadandroid',
 				q : self.app.localization.e('e14109'),
-				a : `<div><a href="https://play.google.com/store/apps/details?id=pocketnet.app">https://play.google.com/store/apps/details?id=pocketnet.app</a></div><div>${self.app.localization.e('e14110')}</div>`,
+				a : `<div><a elementsid="https://play.google.com/store/apps/details?id=pocketnet.app" href="https://play.google.com/store/apps/details?id=pocketnet.app">https://play.google.com/store/apps/details?id=pocketnet.app</a></div><div>${self.app.localization.e('e14110')}</div>`,
 			})
 		}
 

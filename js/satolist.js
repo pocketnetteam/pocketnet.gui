@@ -2039,7 +2039,7 @@ Platform = function (app, listofnodes) {
         },
 
         route : function(href, el, clbk, p){
-            el.html('<div class="internalpocketnetlink"><a href="https://'+app.options.url+'/'+href+'"><i class="fas fa-link"></i> https://'+app.options.url+'/'+href+'</a></div>')
+            el.html('<div class="internalpocketnetlink"><a elementsid="https://'+app.options.url+'/'+href+'" href="https://'+app.options.url+'/'+href+'"><i class="fas fa-link"></i> https://'+app.options.url+'/'+href+'</a></div>')
 
             app.nav.api.links(null, el);
 
@@ -2289,7 +2289,10 @@ Platform = function (app, listofnodes) {
             }, 50)
         },
 
-        showmykeyfast: function () {
+        showmykeyfast: function (p) {
+
+            if(!p) p = {}
+
             app.nav.api.load({
 
                 open: true,
@@ -2297,7 +2300,8 @@ Platform = function (app, listofnodes) {
                 href: 'pkview',
 
                 essenseData: {
-                    dumpkey: true
+                    dumpkey: true,
+                    showsavelabel : p.showsavelabel,
                 },
 
                 clbk: function (p, s) {
@@ -4832,6 +4836,14 @@ Platform = function (app, listofnodes) {
         registrations: {
             storage: {},
             clbks: {},
+
+            redirect : null,
+
+            getredirectFromCurrentPage : function(){
+                self.sdk.registrations.redirect = self.app.nav.get.pathnameSearch()
+
+                console.log('self.sdk.registrations', self.sdk.registrations)
+            },
 
             remove: function (address) {
 
@@ -17728,7 +17740,7 @@ Platform = function (app, listofnodes) {
 
                                         case "text_link":
 
-                                            return `<a href='${ent.url}' target='_blank' rel='noopener noreferrer'>${snippet}</a>`
+                                            return `<a elementsid='${ent.url}' href='${ent.url}' target='_blank' rel='noopener noreferrer'>${snippet}</a>`
 
                                         default:
 
@@ -19445,7 +19457,7 @@ Platform = function (app, listofnodes) {
                 var name = deep(author, 'name');
                 var letter = name ? name[0] : '';
 
-                var link = '<a href="' + encodeURI(clearStringXss(author.name.toLowerCase())) + '">'
+                var link = '<a elementsid="' + encodeURI(clearStringXss(author.name.toLowerCase())) + '" href="' + encodeURI(clearStringXss(author.name.toLowerCase())) + '">'
                 var clink = "</a>"
 
                 /*if (app.curation()) {
