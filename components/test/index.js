@@ -240,7 +240,7 @@ var test = (function(){
 
 						if(err == 'namelength'){
 							
-							el.c.find('.errorname span').html('The name length can be more than 20 symbols');
+							el.c.find('.errorname span').html("The name length can't be more than 20 symbols");
 							
 						}
 
@@ -587,7 +587,7 @@ var test = (function(){
 							
 							if (tempInfo[parameter.id].length > 20){
 								el.c.find('.errorname').fadeIn();
-								el.c.find('.errorname span').html('The name length can be more than 20 symbols');	
+								el.c.find('.errorname span').html("The name length can't be more than 20 symbols");	
 							}
 							else
 							{

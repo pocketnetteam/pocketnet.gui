@@ -177,7 +177,7 @@ ____loclib.wsaddressnotv = "Address is not valid";
 ____loclib.uaddaddressdona = "Add address For Donations";
 ____loclib.uaddaddressdonaplace = "Enter Address";
 ____loclib.uchangeicon = "Upload Profile Image";
-____loclib.utip1 = "You must create name & avatar on blockchain before using "+appname+"";
+____loclib.utip1 = "You must create name on blockchain before using "+appname+"";
 ____loclib.utip2 = "You have only one step left";
 ____loclib.upicset = "Set Profile Icon";
 ____loclib.upic = "Profile Icon";
@@ -186,7 +186,7 @@ ____loclib.usave = "Save";
 ____loclib.ucancel = "Cancel";
 ____loclib.uwaitb = "Wait for confirmation to save information ";
 ____loclib.uchanges = "There are no changes";
-____loclib.uchangesvalid = "You need to upload profile image & type username";
+____loclib.uchangesvalid = "You need to type username";
 ____loclib.uname = "Name";
 ____loclib.unickname = "Nickname";
 ____loclib.ulanguage = "Language";
@@ -1244,7 +1244,7 @@ ____loclib.attachVideoLentaShort = "Attach";
 
 ____loclib.linkToPostLenta = "Already posted"
 
-____loclib.ReferralUsers = "Referral Users. Total/From&nbsp;01.11.2021"
+____loclib.ReferralUsersTotal = "Referral Users Total"
 ____loclib.lockedaccount = "Your account is locked due to reputation below -50"
 ____loclib.lockedaccounta = "Author Account is locked due to reputation below -50"
 
@@ -1262,3 +1262,4 @@ ____loclib.sharevisibilitylabel_reg_article = 'Author chose to make this <b>arti
 ____loclib.sharevisibilitylabel_sub_video = 'Author chose to make this <b>video</b> available only for subscribers'
 ____loclib.sharevisibilitylabel_reg_video = 'Author chose to make this <b>video</b> available only for registered Bastyon users'
 
+____loclib.ReferralUsersLatest = "Referral Users From&nbsp;01.11.2021"

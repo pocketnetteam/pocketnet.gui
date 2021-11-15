@@ -232,9 +232,6 @@ var videoCabinet = (function () {
       getFullPageInfo(videoPortionElement) {
         renders.videos(null, videoPortionElement);
 
-
-        
-
         //getting and rendering bonus program status for views and ratings (same template)
         actions
           .getTotalViews()
@@ -271,13 +268,14 @@ var videoCabinet = (function () {
               result.countLikers || 0
             }  <i class="fas fa-users"></i>`;
 
-            renders.bonusProgram(
-              {
-                parameterName: 'bonusProgramRatings',
-                value: renderingStarts,
-              },
-              el.bonusProgramContainerViews,
-            );
+            // removed tempararily due to blockchain issues
+            // renders.bonusProgram(
+            //   {
+            //     parameterName: 'bonusProgramRatings',
+            //     value: renderingStarts,
+            //   },
+            //   el.bonusProgramContainerViews,
+            // );
 
             renders.bonusProgram(
               {
@@ -381,7 +379,9 @@ var videoCabinet = (function () {
                   host,
                 })
                 .then(() => img)
-                .catch((e = {}) => sitemessage(helpers.parseVideoServerError(e)));
+                .catch((e = {}) =>
+                  sitemessage(helpers.parseVideoServerError(e)),
+                );
             }
 
             return sitemessage(helpers.parseVideoServerError(error));
@@ -970,13 +970,17 @@ var videoCabinet = (function () {
                               })
                               .catch((err = {}) => {
                                 sitemessage(
-                                  `Deleting error: ${helpers.parseVideoServerError(err)}`,
+                                  `Deleting error: ${helpers.parseVideoServerError(
+                                    err,
+                                  )}`,
                                 );
                               });
                           }
 
                           return sitemessage(
-                            `Deleting error: ${helpers.parseVideoServerError(error)}`,
+                            `Deleting error: ${helpers.parseVideoServerError(
+                              error,
+                            )}`,
                           );
                         });
                     },
@@ -1316,7 +1320,8 @@ var videoCabinet = (function () {
         el.searchInput = el.c.find('.videoSearchInput');
         el.searchButton = el.c.find('.videoSearchButton');
 
-        el.bonusProgramReferContainer = el.c.find('.referContainer');
+        el.bonusProgramReferContainerTotal = el.c.find('.referContainerTotal');
+        el.bonusProgramReferContainerLatest = el.c.find('.referContainerLatest');
         el.bonusProgramContainerViews = el.c.find('.leaderBoardContainerViews');
         el.bonusProgramContainerStars = el.c.find(
           '.leaderBoardContainerRatings',
@@ -1337,24 +1342,32 @@ var videoCabinet = (function () {
           sort: ed.sort,
         };
 
-        self.app.platform.sdk.user.mystatisticnov().catch(() => {
-          return Promise.resolve(null)
-        }).then(r => {
+        self.app.platform.sdk.user
+          .mystatisticnov()
+          .catch(() => {
+            return Promise.resolve(null);
+          })
+          .then((r = {}) => {
 
+            const latestlReferals = r.histreferals || '&mdash;';
+            const totalReferals = deep(app, 'platform.sdk.user.storage.me.rc') || '0';
 
-          var addtext = ' / ' + (r ? r.histreferals : '&mdash;')
-          
-          renders.bonusProgram(
-            {
-              parameterName: 'ReferralUsers',
-              value: (deep(app, 'platform.sdk.user.storage.me.rc') || '0') + addtext,
-            },
-            el.bonusProgramReferContainer,
-          );
-          
+            renders.bonusProgram(
+              {
+                parameterName: 'ReferralUsersTotal',
+                value: totalReferals,
+              },
+              el.bonusProgramReferContainerTotal,
+            );
 
-        })
-
+            renders.bonusProgram(
+              {
+                parameterName: 'ReferralUsersLatest',
+                value: latestlReferals,
+              },
+              el.bonusProgramReferContainerLatest,
+            );
+          });
 
         //getting and rendering videos
         actions

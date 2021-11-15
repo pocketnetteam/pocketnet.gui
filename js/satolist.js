@@ -6182,7 +6182,7 @@ Platform = function (app, listofnodes) {
                         var errtext = 'Undefined Error'
                         
 						if(err == 'namelength'){
-							errtext = 'The name length can be more than 20 symbols'
+							errtext = "The name length can't be more than 20 symbols"
 						}
 
 						if(err == 'pocketnet'){
@@ -10621,7 +10621,7 @@ Platform = function (app, listofnodes) {
             add : function(category, _k){
 
                 if(!category.id) return 'id'
-                if(!category.name) return 'name'
+                if(!category.name.trim()) return 'name'
                 if(!category.tags) return 'tags'
                 if(!category.tags.length) return 'tags'
 
