@@ -2857,6 +2857,58 @@ var system16 = (function(){
 							}
 						})
 					})
+					
+					p.el.find('.clearrmt').on('click', function(){
+						dialog({
+							class : 'zindex',
+							html : "Do you really want to clear RMT cache?",
+							btn1text : self.app.localization.e('dyes'),
+							btn2text : self.app.localization.e('dno'),
+							success : function(){	
+
+								proxy.fetchauth('clearrmt', {
+									
+									data : {}
+	
+								}).catch(e => {
+									
+									return Promise.resolve()
+		
+								}).then(r => {
+				
+									topPreloader(100);
+		
+								})
+
+							}
+						})
+					})
+
+					p.el.find('.clearcache').on('click', function(){
+						dialog({
+							class : 'zindex',
+							html : "Do you really want to clear cache?",
+							btn1text : self.app.localization.e('dyes'),
+							btn2text : self.app.localization.e('dno'),
+							success : function(){	
+
+								proxy.fetchauth('clearcache', {
+									
+									data : {}
+	
+								}).catch(e => {
+									
+									return Promise.resolve()
+		
+								}).then(r => {
+				
+									topPreloader(100);
+		
+								})
+
+							}
+						})
+					})
 
 					if (clbk)
 						clbk()

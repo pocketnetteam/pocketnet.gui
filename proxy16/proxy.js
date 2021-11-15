@@ -1548,6 +1548,37 @@ var Proxy = function (settings, manage, test, logger) {
 					
 				},
 			},
+
+			clearcache: {
+				path: '/clearcache',
+				authorization: 'signature',
+				action: function (message) {
+
+					if (!message.A)
+						return Promise.reject({ error: 'Unauthorized', code: 401 });
+						
+						server.cache.clear()
+
+					return Promise.resolve('success');
+					
+				},
+			},
+
+			clearrmt: {
+				path: '/clearrmt',
+				authorization: 'signature',
+				action: function (message) {
+
+					if (!message.A)
+						return Promise.reject({ error: 'Unauthorized', code: 401 });
+						
+						remote.clear()
+
+					return Promise.resolve('success');
+					
+				},
+			},
+
 			stats: {
 				path: '/stats',
 				action: function () {
