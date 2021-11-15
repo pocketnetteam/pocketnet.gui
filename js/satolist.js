@@ -8195,6 +8195,8 @@ Platform = function (app, listofnodes) {
                 }
                 else {
 
+                    name = name.toLowerCase()
+
                     var lf = _.find(self.sdk.usersl.storage, function (s) {
                         if (s && s.name && s.name.toLowerCase() == name.toLowerCase()) return true
                     })

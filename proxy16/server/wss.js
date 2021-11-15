@@ -380,7 +380,7 @@ var WSS = function(admins, manage){
                 }
     
                 if (user.admin){
-                    user.ticks[ws.id] = setInterval(() => {tick(ws)}, 5000)
+                    user.ticks[ws.id] = setInterval(() => {tick(ws)}, 30000)
                     
                 }
     

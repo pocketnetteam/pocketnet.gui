@@ -2,6 +2,7 @@
 var Datastore = require('nedb');
 const { object } = require('underscore');
 var f = require('../functions');
+var _ = require('lodash');
 
 var compensation = [
 
@@ -182,7 +183,8 @@ var Wallet = function(p){
             db.loadDatabase(err => {
 
 
-                db.find({}).exec(function (err, docs) {
+                db.find({}).sort({ date: -1 }).limit(3000).exec(function (err, docs) {
+               
                     _.each(docs || [], function(obj){
 
                         if (obj.key && addresses[obj.key]){
@@ -195,8 +197,6 @@ var Wallet = function(p){
 
                 db.find({executed : '-'}).exec(function (err, docs) {
                     _.each(docs || [], function(obj){
-
-
 
                         if(!self.patterns.validAddress(obj.address)) return
 
