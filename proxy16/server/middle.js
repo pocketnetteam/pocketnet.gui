@@ -15,7 +15,7 @@ var Middle = function(){
     var addLogs = function(parameters, ip, status, pathname, start){
 		
 		logs.push({
-			p : _.clone(parameters),
+			//p : _.clone(parameters),
 			ip : ip,
 			s : status,
 			pn : pathname,
@@ -27,7 +27,7 @@ var Middle = function(){
 
 		var d = logs.length - countlogs
 
-		if (d > countlogs / 1000){
+		if (d > countlogs / 10){
 			logs = logs.slice(d)
 		}
     }
@@ -97,10 +97,10 @@ var Middle = function(){
                 return true
             }
         })        
+
+
         _.each(f.group(rpclogs, function(l){
-
             return l.s
-
         }), function(lc, code){
 
             byCodes[code] = {
@@ -113,7 +113,7 @@ var Middle = function(){
         var signatures = {}
 
         _.each(f.group(logs, function(l){
-            if(f.deep(l, 'p.signature')){
+            if( l.p && l.p.signature){
                 return 'exist'
             }
             else{
@@ -135,7 +135,7 @@ var Middle = function(){
             rate : rate()
         }
 
-        if(!compact) data.logs = logs
+        if(!compact) data.logs = _.clone(logs)
 
         return data
     }
@@ -252,7 +252,6 @@ var Middle = function(){
     }
     
     self.data = function(request, result, next){
-
      
         request.data = _.merge(request.query, request.body)
         

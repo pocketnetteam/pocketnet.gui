@@ -1328,7 +1328,7 @@ var system16 = (function(){
 				},
 				
 
-				signatures : {
+				/*signatures : {
 					caption : "Signed requests",
 					objects : 'server.middle.signatures',
 					series : [
@@ -1340,7 +1340,7 @@ var system16 = (function(){
 						}
 					]
 					//method : 'fromarray'
-				},
+				},*/
 
 				responses : {
 					caption : "Responses",
@@ -2857,7 +2857,7 @@ var system16 = (function(){
 							}
 						})
 					})
-					
+
 					p.el.find('.clearrmt').on('click', function(){
 						dialog({
 							class : 'zindex',
