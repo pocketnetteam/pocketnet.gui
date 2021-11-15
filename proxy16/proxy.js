@@ -1549,6 +1549,21 @@ var Proxy = function (settings, manage, test, logger) {
 				},
 			},
 
+			clearlogs : {
+				path: '/clearlogs',
+				authorization: 'signature',
+				action: function (message) {
+
+					if (!message.A)
+						return Promise.reject({ error: 'Unauthorized', code: 401 });
+						
+						server.middle.clear()
+
+					return Promise.resolve('success');
+					
+				},
+			},
+
 			clearcache: {
 				path: '/clearcache',
 				authorization: 'signature',

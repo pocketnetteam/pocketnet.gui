@@ -2910,6 +2910,34 @@ var system16 = (function(){
 						})
 					})
 
+					p.el.find('.clearlogs').on('click', function(){
+						dialog({
+							class : 'zindex',
+							html : "Do you really want to clear logs?",
+							btn1text : self.app.localization.e('dyes'),
+							btn2text : self.app.localization.e('dno'),
+							success : function(){	
+
+								proxy.fetchauth('clearlogs', {
+									
+									data : {}
+	
+								}).catch(e => {
+									
+									return Promise.resolve()
+		
+								}).then(r => {
+				
+									topPreloader(100);
+		
+								})
+
+							}
+						})
+					})
+
+					
+
 					if (clbk)
 						clbk()
 				})

@@ -6,7 +6,7 @@ var Middle = function(){
 
     var self = this
 
-    var countlogs = 10000
+    var countlogs = 15000
     var logs = []
 
     var requestcountFinished = 0
