@@ -16,12 +16,6 @@
                             <span class="catname"><%- cat.name %></span>
                         </div>
 
-                        <div class="catcheck catcheckgl">
-                            
-                            <i class="far fa-circle unselected"></i>
-                            <i class="far fa-check-circle selected"></i>
-                        </div>
-
                         <div class="catsearch">
                             <a href="?sst=<%-cat.tags.join(' ')%>">
                                 <i class="fas fa-search"></i>
@@ -42,11 +36,13 @@
     <% if(cats.length > 7) {%>
 
         <div class="showallcats showhideallcats">
-            <span><%=e('e13021')%></span>
+            <i class="fa fa-chevron-down"></i>
+            <span class="text"><%=e('e13021')%></span>
         </div>
 
         <div class="hideallcats showhideallcats">
-            <span><%=e('hide')%></span>
+            <i class="fa fa-chevron-up"></i>
+            <span class="text"><%=e('hide')%></span>
         </div>
 
     <% } %>

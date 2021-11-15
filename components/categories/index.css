@@ -19,36 +19,42 @@
   justify-content: space-between;
   width: auto;
 }
-#categories .tcaptiontable > div.tcaption {
+#categories .tcaptiontable .tcaption {
   padding-right: 1em;
 }
-#categories .tcaptiontable > div.ticon {
+#categories .tcaptiontable .buttons {
+  display: flex;
+}
+#categories .tcaptiontable .buttons > div {
+  display: inline-block;
+}
+#categories .tcaptiontable .buttons > div.ticon {
   cursor: pointer;
   width: 33px;
   text-align: center;
   /*.transition(0.3s);*/
 }
-#categories .tcaptiontable > div.ticon:hover i {
+#categories .tcaptiontable .buttons > div.ticon:hover i {
   color: #00a4ff;
 }
-#categories .tcaptiontable > div.mlab {
+#categories .tcaptiontable .buttons > div.mlab {
   opacity: 0.5;
   width: 33px;
   cursor: pointer;
   /*.transition(0.3s);*/
 }
-#categories .tcaptiontable > div.mlab span {
+#categories .tcaptiontable .buttons > div.mlab span {
   font-weight: 100;
   font-size: 0.8em;
 }
-#categories .tcaptiontable > div.mlab:hover {
+#categories .tcaptiontable .buttons > div.mlab:hover {
   opacity: 1;
   color: #F41A4D;
 }
-#categories .tcaptiontable > div.clearcategories {
+#categories .tcaptiontable .buttons > div.clearcategories {
   display: none;
 }
-#categories .tcaptiontable > div.clearcategories.showed {
+#categories .tcaptiontable .buttons > div.clearcategories.showed {
   display: table-cell;
 }
 #categories .tcaptionwrapper {
@@ -56,10 +62,11 @@
   padding-top: 1em;
   padding-left: 0;
   margin-bottom: 0.5em;
+  border-top: 1px solid #E3E4EB;
 }
 #categories .tcaptionwrapper span {
   font-size: 0.8em;
-  font-weight: 700;
+  font-weight: 600;
 }
 #categories .tcaptionwrapper i {
   font-size: 0.6em;
@@ -189,9 +196,15 @@
   color: #00a4ff;
 }
 #categories .hideallcats span,
-#categories .showallcats span {
+#categories .showallcats span,
+#categories .hideallcats i,
+#categories .showallcats i {
   font-weight: 700;
   font-size: 0.8em;
+}
+#categories .hideallcats .text,
+#categories .showallcats .text {
+  margin-left: 0.5em;
 }
 #categories .showallcats {
   display: block;

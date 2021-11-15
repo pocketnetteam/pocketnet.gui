@@ -27,50 +27,57 @@
         justify-content: space-between;
         width : auto;
 
-        >div{
+        .tcaption{
+            padding-right: 2 * @rhythm;
+        }
 
-            &.tcaption{
-                padding-right: 2 * @rhythm;
-            }
-           
-            &.ticon{
-                cursor: pointer;
-                width: 33px;
-                text-align: center;
-                /*.transition(0.3s);*/
+        .buttons{
+            display: flex;
 
-                &:hover{
-                    i{
-                        color : @color-main;
+            >div{
+                display: inline-block;
+
+                &.ticon{
+                    cursor: pointer;
+                    width: 33px;
+                    text-align: center;
+                    /*.transition(0.3s);*/
+    
+                    &:hover{
+                        i{
+                            color : @color-main;
+                        }
+                        
                     }
-                    
+                }
+    
+                &.mlab{
+                    opacity: 0.5;
+                    width: 33px;
+                    cursor: pointer;
+                    /*.transition(0.3s);*/
+    
+                    span{
+                        font-weight: 100;
+                        font-size: 0.8em;
+                    }
+    
+                    &:hover{
+                        opacity: 1;
+                        color : @color-bad;
+                    }
+                }
+    
+                &.clearcategories{
+                    display: none;
+    
+                    &.showed{
+                        display: table-cell;
+                    }
                 }
             }
 
-            &.mlab{
-                opacity: 0.5;
-                width: 33px;
-                cursor: pointer;
-                /*.transition(0.3s);*/
-
-                span{
-                    font-weight: 100;
-                    font-size: 0.8em;
-                }
-
-                &:hover{
-                    opacity: 1;
-                    color : @color-bad;
-                }
-            }
-
-            &.clearcategories{
-                display: none;
-
-                &.showed{
-                    display: table-cell;
-                }
-            }
+            
         }
     }
     
@@ -82,9 +89,11 @@
        
         margin-bottom: @rhythm;
 
+        border-top: 1px solid #E3E4EB;
+
         span{
             font-size : 0.8em;
-            font-weight: 700;
+            font-weight: 600;
         }
 
         i{
@@ -265,9 +274,13 @@
             color : @color-main;
         }
 
-        span{
+        span, i{
             font-weight: 700;
             font-size: 0.8em;
+        }
+
+        .text{
+            margin-left: @rhythm;
         }
     }
 

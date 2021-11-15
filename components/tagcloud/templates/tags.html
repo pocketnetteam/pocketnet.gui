@@ -5,28 +5,9 @@
 
             
                 <div class="tag">
-                    <div class="tagtable table">
-                        <div class="iconWrapper">
-                            <div class="icon">
-                                <i class="fas fa-hashtag"></i>
-                            </div>
-                        </div>
-
-                        <div class="tagvalue tagcheckgl">
-                            <span><%- decodeURIComponent(tag.tag) %><% if(tag.count) {%>,&nbsp;<%- compressedNumber(tag.count) %><%}%></span>
-                        </div>
-
-                        <div class="tagcheck tagcheckgl">
-                            <i class="far fa-circle unselected"></i>
-                            <i class="fas fa-plus-circle selected"></i>
-                        </div>
-
-                        <div class="tagsearch">
-                            <a href="?sst=<%- tag.tag %>">
-                                <i class="fas fa-search"></i>
-                            </a>
-                        </div>
-
+                    <div class="tagvalue tagcheckgl">
+                        <i class="fas fa-hashtag"></i>
+                        <span><%- decodeURIComponent(tag.tag) %><% if(tag.count) {%>,&nbsp;<%- compressedNumber(tag.count) %><%}%></span>
                     </div>
                 </div>
         </div>
@@ -36,11 +17,13 @@
     <% if(tags.length > 7) {%>
 
         <div class="showalltags showhidealltags">
-            <span><%=e('e13021')%></span>
+            <i class="fa fa-chevron-down"></i>
+            <span class="text"><%=e('e13021')%></span>
         </div>
 
         <div class="hidealltags showhidealltags">
-            <span><%=e('hide')%></span>
+            <i class="fa fa-chevron-up"></i>
+            <span class="text"><%=e('hide')%></span>
         </div>
 
     <% } %>

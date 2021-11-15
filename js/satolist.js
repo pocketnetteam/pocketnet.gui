@@ -10846,13 +10846,6 @@ Platform = function (app, listofnodes) {
 
                     cc.added = true;
 
-                    var withIcon = categoryIcons.find(function(ki){
-						return ki.id === k.id;
-					})
-
-					if (withIcon){
-						k.icon = withIcon.icon;
-					}
                     
                     return cc
                 })
@@ -10868,7 +10861,9 @@ Platform = function (app, listofnodes) {
 
 					if (withIcon){
 						k.icon = withIcon.icon;
-					}
+					} else {
+                        k.icon = 'fa fa-mouse-pointer'
+                    }
 
 					return k;
 				})
