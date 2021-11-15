@@ -485,7 +485,7 @@ var Wallet = function(p){
                     queue.push(object)
                     all.push(object)
 
-                    db.insert(object, function (err, docs) {
+                    db.insert(_.clone(object), function (err, docs) {
                         if(err) {
 
                             addresses[key].queue = _.filter(addresses[key].queue, function(q){
