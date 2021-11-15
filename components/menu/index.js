@@ -571,6 +571,8 @@ var menu = (function(){
 					menusearch = new search(el.postssearch, {
 						placeholder : self.app.localization.e('e13139'),
 
+						id : 'searchOnBastyon',
+
 						right : true,
 
 						clbk : function(_el){
