@@ -19,12 +19,17 @@ var NodeControl = require('./node/control.js');
 var NodeManager = require('./node/manager.js');
 var Pocketnet = require('./pocketnet.js');
 var Wallet = require('./wallet/wallet.js');
-var Remote = require('./remote.js');
+var Remote = require('./remotelight.js');
 var Proxies = require('./proxies.js');
 var Exchanges = require('./exchanges.js');
 var Peertube = require('./peertube/index.js');
 var Bots = require('./bots.js');
 var SystemNotify = require('./systemnotify.js');
+
+process.setMaxListeners(0);
+require('events').EventEmitter.defaultMaxListeners = 0
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
 //////////////
 /*
 if (process.platform === 'win32') expectedExitCodes = [3221225477];
@@ -1380,57 +1385,23 @@ var Proxy = function (settings, manage, test, logger) {
 			bitchute: {
 				path: '/bitchute',
 				action: function ({ url }) {
-					return new Promise((resolve, reject) => {
-						remote.make(url, function (err, data, html, $) {
-							if (!err) {
-								data.magnet = $('[title="Magnet Link"]').attr('href');
 
-								if (data.magnet && data.magnet.indexOf('magnet') == 0) {
-									var sp = parameters(data.magnet, true);
 
-									data.video = sp;
+					return Promise.reject({
+						error : 'deprecated'
+					})
 
-									if (data.og) {
-										data.video.title = data.og.titlePage;
-										data.video.preview = data.og.image;
-									}
-								} else {
-									var src = $('#player source').attr('src');
-
-									if (src) {
-										data.video = {
-											as: src,
-										};
-
-										if (data.og) {
-											data.video.title = data.og.titlePage;
-											data.video.preview = data.og.image;
-										}
-									}
-								}
-
-								resolve({ data });
-							} else {
-								reject(err);
-							}
-						});
-					});
 				},
 			},
 
 			url: {
 				path: '/url',
 				action: function ({ url }) {
-					return new Promise((resolve, reject) => {
-						remote.make(url, function (err, data, html) {
-							if (!err) {
-								data.html = html;
-								resolve({ data });
-							} else {
-								reject(err);
-							}
-						});
-					});
+
+					return Promise.reject({
+						error : 'deprecated'
+					})
+
 				},
 			},
 
