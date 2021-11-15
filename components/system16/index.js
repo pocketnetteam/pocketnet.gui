@@ -1275,6 +1275,14 @@ var system16 = (function(){
 							name : "RSS",
 							id : 'rss'
 						},
+
+						{
+							path : 'memory.arrayBuffers',
+							name : "Array Buffers",
+							id : 'arrayBuffers'
+						},
+
+						
 						{
 							path : 'memory.external',
 							name : "External",
