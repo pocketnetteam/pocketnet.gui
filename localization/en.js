@@ -1540,3 +1540,67 @@ ____loclib.aboutFbOpen2 = 'Official Website';
 ____loclib.aboutFbOpen3 = 'Source Code'; 
 ____loclib.aboutFbOpen4 = 'Contact us'; 
 ____loclib.aboutFbOpen5 = 'Send us a message if you need help or if you are a content creator, blogger, influencer and would like to unlock your bonus and verify your profile!'; 
+
+
+/////aboutHIW
+
+____loclib.aboutHowItWMainBoard = 'HOW DOES BASTYON RESIST TO CENSORSHIP?';
+____loclib.aboutHowItWMainBoard1 = 'FREE, PRIVATE, SECURE AND WITHOUT GOVERNMENT CONTROL.';
+____loclib.aboutHowItWMainBoard2 = 'ENJOY THE FRESH AIR OF BASTYON.';
+
+
+
+____loclib.aboutHowItWMD = '"Bastyon is the bitcoin of social networks."';
+
+
+
+____loclib.aboutHowItWImgAndText = 'Blockchain based';
+____loclib.aboutHowItWImgAndText1 = 'What is the blockchain?';
+____loclib.aboutHowItWImgAndText2 = 'As Wikipedia mentions, “A blockchain is a growing list of records, called blocks, that are linked together using cryptography.';
+____loclib.aboutHowItWImgAndText3 = 'It’s also described as a “trustless and fully decentralized peer-to-peer immutable data storage” that is spread over a network of participants often referred to as nodes. Each block contains a cryptographic hash of the previous block, a timestamp, and transaction data.';
+____loclib.aboutHowItWImgAndText4 = 'The timestamp proves that the transaction data existed when the block was published in order to get into its hash.';
+____loclib.aboutHowItWImgAndText5 = 'As blocks each contain information about the block previous to it, they form a chain, with each additional block reinforcing the ones before it.';
+____loclib.aboutHowItWImgAndText6 = 'Therefore, blockchains are resistant to modification of their data because once recorded, the data in any given block cannot be altered retroactively without altering all subsequent blocks.”';
+____loclib.aboutHowItWImgAndText7 = 'So, how does the blockchain  protects from censorship?';
+____loclib.aboutHowItWImgAndText8 = 'From Bitcoins to Bastyon.';
+____loclib.aboutHowItWImgAndText9 = 'The blockchain is the technology behind all the cryptocurrencies. Bitcoins, Ethereum, Dogecoins and so on are all powered by the Blockchain.';
+____loclib.aboutHowItWImgAndText10 = 'The principle is simple: what happens on the blockchain, stays on the blockchain. Forever.';
+____loclib.aboutHowItWImgAndText11 = 'All the existing blocks of the blockchain are immutable and permanent. ';
+____loclib.aboutHowItWImgAndText12 = 'Think about cryptocurrency: when you send some Bitcoins (or parts of it) to someone, the transaction is registered on the blockchain.';
+____loclib.aboutHowItWImgAndText13 = 'From that moment the transaction cannot be reverted, modified, changed, removed, suspended, edited in any of its parts. It is there and stays there forever. And you can explore the blocks on the blockchain to see all the transactions.';
+____loclib.aboutHowItWImgAndText14 = 'Bastyon works EXACTLY the same way. Each post, each account, each video is recorded on the blockchain. And once there, it cannot be removed.';
+____loclib.aboutHowItWImgAndText15 = 'Indeed, Bastyon works on a fork of the original Bitcoin blockchain.';
+____loclib.aboutHowItWImgAndText16 = 'Censorship-resistant';
+____loclib.aboutHowItWImgAndText17 = 'Not only the Blockchain.';
+____loclib.aboutHowItWImgAndText18 = 'Bastyon is not ruled by any company. ';
+____loclib.aboutHowItWImgAndText19 = 'It is an open source project.';
+____loclib.aboutHowItWImgAndText20 = 'Since it runs on the blockchain, there is no way to apply censorship: each post, each video, each comment is a “block” on the “blockchain” and remains there, immutable, available to anyone.';
+____loclib.aboutHowItWImgAndText21 = 'In addition, even if a government wants to remove a post, it is technically impossible.';
+____loclib.aboutHowItWImgAndText22 = 'Likewise, since it runs on a network of nodes, there is no way to limit the access to Bastyon. Even in the event of a government blocking access to https://bastyon.com, you will always be able to access it using the mobile or desktop app, which connects directly to the nodes.';
+____loclib.aboutHowItWImgAndText23 = 'Privacy protection,';
+____loclib.aboutHowItWImgAndText24 = 'for your security';
+____loclib.aboutHowItWImgAndText25 = 'Bastyon does not know who you are.';
+____loclib.aboutHowItWImgAndText26 = 'Bastyon DOES NOT collect any personal information.';
+____loclib.aboutHowItWImgAndText27 = '1. You can register without providing email or phone numbers.';
+____loclib.aboutHowItWImgAndText28 = '2. Bastyon does not ask for your real name.';
+____loclib.aboutHowItWImgAndText29 = '3. Bastyon does not collect IP addresses.';
+____loclib.aboutHowItWImgAndText30 = 'Bastyon will never know who you are, unless you explicitly share your personal data.';
+____loclib.aboutHowItWImgAndText31 = 'If you don’t share your data, no one, no company, no government, can know who you are.';
+____loclib.aboutHowItWImgAndText32 = 'And there`s more!';
+____loclib.aboutHowItWImgAndText33 = 'Bastyon pays you';
+____loclib.aboutHowItWImgAndText34 = 'You can earn money with Bastyon.';
+____loclib.aboutHowItWImgAndText35 = 'Bastyon uses its own Cryptocurrency:';
+____loclib.aboutHowItWImgAndText36 = 'Each time your posts receive comments and likes, you get PKOIN.';
+____loclib.aboutHowItWImgAndText37 = 'Each time your video gets 15,000 views + 750 “5 stars” reactions, you get 1,000 $ in PKOIN (you can convert them in USD!). THIS IS A LIMITED TIME OFFER!!! ';
+____loclib.aboutHowItWImgAndText38 = 'Each time someone joins Bastyon with your referral link, you get PKOIN.';
+____loclib.aboutHowItWImgAndText39 = 'Contact us to learn more and to activate your account as “CREATOR” so that you can post unlimited videos and get paid!';
+____loclib.aboutHowItWImgAndText40 = 'Next step: contact us to get your Bastyon account verified and to access the bonus program.';
+____loclib.aboutHowItWImgAndText41 = 'Contact Us Now';
+
+
+____loclib.aboutHowItWOpen = 'Discover Bastyon';
+____loclib.aboutHowItWOpen1 = 'You can use Bastyon from your browser or dowload the mobile and desktop app.';
+____loclib.aboutHowItWOpen2 = 'Official Website';
+____loclib.aboutHowItWOpen3 = 'Source Code';
+____loclib.aboutHowItWOpen4 = 'Contact us';
+____loclib.aboutHowItWOpen5 = 'Send us a message if you need help or if you are a content creator, blogger, influencer and would like to unlock your bonus and verify your profile!';
