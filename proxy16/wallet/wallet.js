@@ -166,9 +166,7 @@ var Wallet = function(p){
             }
             else{
 
-                /*self.unspents.getc(addresses[key]).catch(e => {
-                    console.log("catch", e)
-                })*/
+                
             }
 
         })

@@ -1381,13 +1381,13 @@ var system16 = (function(){
 				},
 
 				cache : {
-					caption : "Cache Size",
+					caption : "Cache Length",
 					objects : 'server.cache.meta',
 					series : [
 						{
-							path : 'size',
-							name : "Size",
-							id : 'size'
+							path : 'length',
+							name : "Length",
+							id : 'length'
 						}
 					]
 				},
