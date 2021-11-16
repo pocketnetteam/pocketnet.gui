@@ -38,6 +38,9 @@
   font-weight: 100;
   padding-left: 0.5em;
 }
+#about .maket .contentsInner .items .lang i {
+  opacity: 0.4;
+}
 #about .maket .contentsInner .contentmenu {
   display: flex;
   max-width: 550px;

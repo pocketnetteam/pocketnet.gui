@@ -420,6 +420,54 @@ var about = (function(){
 							})
 							
 						})
+
+
+						el.c.find('[elementsid="eventssitename"]').on('click', function(){
+
+							console.log('click')
+			
+							self.app.user.isState(function(state){
+			
+								//if(self.app.nav.get.pathname() != 'index'){
+									var k = localStorage['lentakey'] || 'index';
+			
+									if (parameters().r == k) k = 'index'
+			
+									if (k != 'index') {
+										if (k == 'video'){
+											k = 'index?video=1'
+										}
+										else{
+											k = 'index?r=' + k
+										}
+										
+									}
+			
+									if(!state) k = 'index'
+			
+									if(self.app.curation()){
+										if(!state){
+											k = 'welcome'
+										}
+										else{
+											k = 'userpage'
+										}
+										
+									}
+			
+									self.nav.api.go({
+										href : k,
+										history : true,
+										open : true,
+										handler : true
+									})
+								//}
+			
+							})
+			
+							
+					
+						})
 					})
 				}
 
@@ -539,7 +587,8 @@ var about = (function(){
 		}
 
 		var initEvents = function(){
-			
+
+		
 
 		}
 
@@ -657,6 +706,7 @@ var about = (function(){
 				el.c = p.el.find('#' + self.map.id);
 				el.contents = el.c.find('.contents');
 				el.report = el.c.find(".report");
+
 			
 				el.bgcaption = el.c.find('.bgCaptionWrapper')
 
