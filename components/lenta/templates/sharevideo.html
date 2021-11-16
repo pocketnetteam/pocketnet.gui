@@ -334,16 +334,17 @@ var metadisplay = function(){ %>
 									<%=e('sharevisibilitylabel_reg_' + cview)%>
 								</div>
 	
-								<div class="hiddenlabelaction">
-									<a href="registration">
-										<button class="orange small button"><%=e('signupmenu')%></button>
-									</a>
-								</div>
 	
 							<% } %>
 	
 	
+							<% if(!state) {%>
+
+								<div class="hiddenlabelaction">
+									<button class="orange small button toregistration"><%=e('signupmenu')%></button>
+								</div>
 	
+							<% } %>
 						</div>
 						
 		

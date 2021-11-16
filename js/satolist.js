@@ -12752,6 +12752,13 @@ Platform = function (app, listofnodes) {
                                 })
         
                             }).catch(e => {
+
+                                console.log("E", e)
+
+                                _.each(txids, function (id) {
+                                    delete loading[id];
+                                })
+
                                 if (clbk) {
                                     clbk(null, e, {})
                                 }
