@@ -1262,7 +1262,7 @@ ____loclib.sharevisibilitylabel_reg_article = 'Author chose to make this <b>arti
 ____loclib.sharevisibilitylabel_sub_video = 'Author chose to make this <b>video</b> available only for subscribers'
 ____loclib.sharevisibilitylabel_reg_video = 'Author chose to make this <b>video</b> available only for registered Bastyon users'
 
-
+/////////////aboutHome
 ____loclib.aboutMainBoard = 'Bastyon - the best alternative to YouTube';
 ____loclib.aboutYoutubeMainDescription1 = 'Some people ask us:';
 ____loclib.aboutYoutubeMainDescription2 = '"Why should I use Bastyon?"';
@@ -1460,3 +1460,83 @@ ____loclib.aboutTitterOpen4 = 'Source Code';
 ____loclib.aboutTitterOpen5 = 'Contact us';
 ____loclib.aboutTitterOpen6 = 'Send us a message if you need help or if you are a content creator, blogger, influencer and would like to unlock your bonus and verify your profile!';
 
+
+/////////////aboutFacebook
+____loclib.aboutFbMainBoard = 'Bastyon - the best alternative to Facebook';
+____loclib.aboutFbMainBoard1 = 'Free, private and secure social network';
+
+____loclib.aboutFbMainDesc = '"Bastyon is not an alternative to Facebook.';
+____loclib.aboutFbMainDesc1 = 'Bastyon is the Anti-Facebook.';
+____loclib.aboutFbMainDesc2 = '-- John Milton';
+
+
+____loclib.aboutFbH3Section = 'Why Bastyon?';
+____loclib.aboutFbH3Section1 = 'NO GOVERNMENT CONTROL';
+____loclib.aboutFbH3Section2 = 'Bastyon runs on a network of nodes that no government can block or limit. Even if the main website Bastyon.com is made unaccessible or compromised, the platform still runs normally. A government cannot impose its censorship or limitations on Bastyon.';
+____loclib.aboutFbH3Section3 = 'PRIVATE AND SECURE';
+____loclib.aboutFbH3Section4 = 'Bastyon does not collect any personal information. No IP Address, no email, no phone number. We believe in real privacy protection and data security.';
+
+
+
+____loclib.aboutFbImgAndText = 'NO CENSORSHIP';
+____loclib.aboutFbImgAndText2 = 'Bastyon will not censor your posts and videos. Not even admins can block your account and ban you.';
+____loclib.aboutFbImgAndText3 = 'Bastyon is based on the blockchain: there is no way, at all, to remove posts. Each post is registered on the blockchain and, for its nature, it cannot be removed. By anyone.';
+____loclib.aboutFbImgAndText4 = 'NO COMPANY BEHIND BASTYON';
+____loclib.aboutFbImgAndText5 = 'Unlike Facebook and the main Social Networks, there is no company behind Bastyon. It is an open source project. This means that there is no company that can control the contents posted on Bastyon. No bans, no censorship.';
+____loclib.aboutFbImgAndText6 = 'Unlike Facebook...';
+____loclib.aboutFbImgAndText7 = '1. Your personal data is not sold to external companies';
+____loclib.aboutFbImgAndText8 = '2. No one can block your account or remove your posts';
+____loclib.aboutFbImgAndText9 = '3. Privacy is complete and guaranteed';
+____loclib.aboutFbImgAndText10 = '4. Access is always possible from any country and region of the world';
+____loclib.aboutFbImgAndText11 = '5. Chat sessions are entirely private and encrypted and not even Bastyon can access them. Not even with a court warrant.';
+____loclib.aboutFbImgAndText12 = '6. Mark Zuckerberg won’t bother you!';
+
+
+
+____loclib.aboutFbTable = 'FACEBOOK';
+____loclib.aboutFbTable1 = 'BASTYON';
+____loclib.aboutFbTable2 = 'Personal privacy';
+____loclib.aboutFbTable3 = 'Nah ';
+____loclib.aboutFbTable4 = 'Completely protected. No tracking of IP, websites visits, email address, phone number.';
+____loclib.aboutFbTable5 = 'Chat Encryption';
+____loclib.aboutFbTable6 = 'None';
+____loclib.aboutFbTable7 = 'Yes. 1 to 1 chats are entirely encrypted without any possibility for Bastyon to decrypt the messages. No "master key" available (unlike WhatsApp), no way to monitor users` messages.';
+____loclib.aboutFbTable8 = 'Availability';
+____loclib.aboutFbTable9 = 'Some countries block or limit access to Facebook. Some countries actively monitor what users write on Facebook.';
+____loclib.aboutFbTable10 = 'Always, in every country, even without the need of a VPN.';
+____loclib.aboutFbTable11 = 'Account risks blocks and bans ';
+____loclib.aboutFbTable12 = 'YES, for many reasons. Blasphemy, Religion, Politics, Science...';
+____loclib.aboutFbTable13 = 'No. No one, not even Bastyon admins can block or ban accounts.';
+____loclib.aboutFbTable14 = 'Reporting posts';
+____loclib.aboutFbTable15 = 'YES, Facebook`s algorithms analyze the posts and remove or block them automatically. Facebook can remove posts at its sole discretion.';
+____loclib.aboutFbTable16 = 'YES, only users with a high reputation can report post and a post is made "invisible" on the feed page (but remains available on the user`s profile page) only if several tens of high reputation users report it (reports can be made only for racism, hate speech and pornography)';
+____loclib.aboutFbTable17 = 'Groups';
+____loclib.aboutFbTable18 = 'YES, public and private';
+____loclib.aboutFbTable19 = 'Not yet, expected to be released in early 2022.';
+____loclib.aboutFbTable20 = 'Hashtags to classify posts';
+____loclib.aboutFbTable21 = 'YES';
+____loclib.aboutFbTable22 = 'YES';
+____loclib.aboutFbTable23 = 'Video posts';
+____loclib.aboutFbTable24 = 'YES';
+____loclib.aboutFbTable25 = 'YES, and highly rewarded. Up to 1,000 $ for 15,000 views + 1,250 "5 stars" reactions';
+____loclib.aboutFbTable26 = 'Mark Zuckerberg';
+____loclib.aboutFbTable27 = 'Always besides you';
+____loclib.aboutFbTable28 = 'NO!';
+
+
+
+____loclib.aboutFbMainBoard3 = 'And there`s more! Bastyon pays you.';
+____loclib.aboutFbMainBoard31 = 'You can earn money with Bastyon.';
+____loclib.aboutFbMainBoard32 = 'Bastyon uses its own Cryptocurrency: ';
+____loclib.aboutFbMainBoard33 = 'Each time your posts and videos receive comments and likes, you get PKOIN.';
+____loclib.aboutFbMainBoard34 = 'Each time one of your videos gets 15,000 views + 1,250 reactions, you get 1,000 $ in PKOIN (you can convert them in USD!). THIS IS A LIMITED TIME OFFER!!!';
+____loclib.aboutFbMainBoard34 = 'Each time someone joins Bastyon with your referral link, you get PKOIN.';
+____loclib.aboutFbMainBoard35 = 'Contact us to learn more and to activate your account as “CREATOR” so that you can post unlimited videos and get paid!';
+
+
+____loclib.aboutFbOpen = 'Discover Bastyon'; 
+____loclib.aboutFbOpen1 = 'You can use Bastyon from your browser or dowload the mobile and desktop app.'; 
+____loclib.aboutFbOpen2 = 'Official Website'; 
+____loclib.aboutFbOpen3 = 'Source Code'; 
+____loclib.aboutFbOpen4 = 'Contact us'; 
+____loclib.aboutFbOpen5 = 'Send us a message if you need help or if you are a content creator, blogger, influencer and would like to unlock your bonus and verify your profile!'; 
