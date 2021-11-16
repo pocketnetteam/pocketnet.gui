@@ -685,6 +685,19 @@ var post = (function () {
 		}
 
 		var events = {
+
+			toregistration: function(){
+
+				self.sdk.registrations.redirect = 'post?s=' + share.txid
+
+				self.nav.api.go({
+					href : 'authorization',
+					history : true,
+					open : true
+				})	
+			
+			},
+			
 			shareSave : function(){
 
 				self.app.platform.ui.saveShare(share, function(id, deleted){
@@ -1092,6 +1105,8 @@ var post = (function () {
 											el.share.on('click', '.forrepost', events.repost);
 
 											el.share.find('.shareSave').on('click', events.shareSave);
+
+											el.share.find('.toregistration').on('click', events.toregistration)
 
 											el.share.find('.txid').on('click', events.getTransaction);
 											el.share.find('.donate').on('click', events.donate);

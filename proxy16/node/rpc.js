@@ -38,35 +38,14 @@ RpcClient.config = {
     logger: 'normal' // none, normal, debug
 };
 
-function rpca(request, obj){
-    return new Promise(function(resolve, reject){
 
-        try{
-            rpc(request, function(err, res){
 
-                if(err) return reject(err)
-    
-                resolve(res)
-    
-            }, obj)
-        }
-        catch(e) {
-
-            reject({
-                code : 500
-            })
-
-        }
-
-    })
-}
-
-var posts = {
+const posts = {
     sendrawtransaction : true,
     sendrawtransactionwithmessage : true
 }
 
-var publics = {
+const publics = {
     getcontents: true,
     getlastcomments: true,
     gettags: true,
@@ -117,6 +96,29 @@ var publics = {
 }
 
 const keepAliveAgent = new http.Agent({ keepAlive: true });
+
+function rpca(request, obj){
+    return new Promise(function(resolve, reject){
+
+        try{
+            rpc(request, function(err, res){
+
+                if(err) return reject(err)
+    
+                resolve(res)
+    
+            }, obj)
+        }
+        catch(e) {
+
+            reject({
+                code : 500
+            })
+
+        }
+
+    })
+}
 
 function rpc(request, callback, obj) {
 

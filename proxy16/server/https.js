@@ -179,6 +179,10 @@ var Server = function(settings, admins, manage){
                     reject(e) 
                 });
 
+                server.on('connection', function(socket) {
+                    socket.setNoDelay();
+                });
+
                 server.listen(settings.port || 8899);
 
             }

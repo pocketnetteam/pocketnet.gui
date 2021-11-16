@@ -1687,7 +1687,18 @@ var lenta = (function(){
 		}
 
 		var events = {
+			toregistration: function(){
+				var shareId = $(this).closest('.share').attr('id');
 
+				self.sdk.registrations.redirect = 'post?s=' + shareId
+
+				self.nav.api.go({
+					href : 'authorization',
+					history : true,
+					open : true
+				})	
+			
+			},
 			shareSave : function(){
 				var shareId = $(this).closest('.share').attr('id');
 
@@ -3755,6 +3766,7 @@ var lenta = (function(){
 			el.c.on('click', '.showmorebyauthor', events.showmorebyauthor)
 			el.c.on('click', '.commentsAction', events.toComments)
 			el.c.on('click', '.shareSave', events.shareSave)
+			el.c.on('click', '.toregistration', events.toregistration)
 			//el.c.on('click', '.downloadBtn', events.downloadVideo)
 			//el.c.on('click', '.deleteBtn', events.deleteVideo)
 

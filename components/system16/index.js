@@ -1328,7 +1328,7 @@ var system16 = (function(){
 				},
 				
 
-				signatures : {
+				/*signatures : {
 					caption : "Signed requests",
 					objects : 'server.middle.signatures',
 					series : [
@@ -1340,7 +1340,7 @@ var system16 = (function(){
 						}
 					]
 					//method : 'fromarray'
-				},
+				},*/
 
 				responses : {
 					caption : "Responses",
@@ -1364,18 +1364,30 @@ var system16 = (function(){
 							path : 'remote.size',
 							name : "RMTS",
 							id : 'rmts'
+						},
+						{
+							path : 'remote.loading',
+							name : "RMTS loading",
+							id : 'rmtsl'
+						},
+						{
+							path : 'remote.errors',
+							name : "RMTS Errors",
+							id : 'rmtser'
 						}
+
+						
 					]
 				},
 
 				cache : {
-					caption : "Cache Size",
+					caption : "Cache Length",
 					objects : 'server.cache.meta',
 					series : [
 						{
-							path : 'size',
-							name : "Size",
-							id : 'size'
+							path : 'length',
+							name : "Length",
+							id : 'length'
 						}
 					]
 				},
@@ -2752,7 +2764,7 @@ var system16 = (function(){
 							clbk()
 					})
 
-				})
+				}, true)
 			},
 			servercontent : function(elc, clbk){
 
@@ -2831,6 +2843,112 @@ var system16 = (function(){
 				function(p){
 					renders.webserverstatus(p.el)
 					renders.webserveradmin(p.el)
+
+					p.el.find('.heapdump').on('click', function(){
+						dialog({
+							class : 'zindex',
+							html : "Do you really want to make heap dump?",
+							btn1text : self.app.localization.e('dyes'),
+							btn2text : self.app.localization.e('dno'),
+							success : function(){	
+
+								proxy.fetchauth('heapdump', {
+									
+									data : {}
+	
+								}).catch(e => {
+									
+									return Promise.resolve()
+		
+								}).then(r => {
+				
+									topPreloader(100);
+		
+								})
+
+							}
+						})
+					})
+
+					p.el.find('.clearrmt').on('click', function(){
+						dialog({
+							class : 'zindex',
+							html : "Do you really want to clear RMT cache?",
+							btn1text : self.app.localization.e('dyes'),
+							btn2text : self.app.localization.e('dno'),
+							success : function(){	
+
+								proxy.fetchauth('clearrmt', {
+									
+									data : {}
+	
+								}).catch(e => {
+									
+									return Promise.resolve()
+		
+								}).then(r => {
+				
+									topPreloader(100);
+		
+								})
+
+							}
+						})
+					})
+
+					p.el.find('.clearcache').on('click', function(){
+						dialog({
+							class : 'zindex',
+							html : "Do you really want to clear cache?",
+							btn1text : self.app.localization.e('dyes'),
+							btn2text : self.app.localization.e('dno'),
+							success : function(){	
+
+								proxy.fetchauth('clearcache', {
+									
+									data : {}
+	
+								}).catch(e => {
+									
+									return Promise.resolve()
+		
+								}).then(r => {
+				
+									topPreloader(100);
+		
+								})
+
+							}
+						})
+					})
+
+					p.el.find('.clearlogs').on('click', function(){
+						dialog({
+							class : 'zindex',
+							html : "Do you really want to clear logs?",
+							btn1text : self.app.localization.e('dyes'),
+							btn2text : self.app.localization.e('dno'),
+							success : function(){	
+
+								proxy.fetchauth('clearlogs', {
+									
+									data : {}
+	
+								}).catch(e => {
+									
+									return Promise.resolve()
+		
+								}).then(r => {
+				
+									topPreloader(100);
+		
+								})
+
+							}
+						})
+					})
+
+					
 
 					if (clbk)
 						clbk()
@@ -4183,6 +4301,8 @@ var system16 = (function(){
 
 
 					stats = data.stats
+
+					console.log('stats', data.stats)
 
 					stats = lastelements(stats, 1000)
 

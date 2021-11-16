@@ -89,9 +89,9 @@ var Cache = function(p){
     if (!p.dontCache)
     {
         ckeys = {
-            getuserstatistic: {
+            /*getuserstatistic: {
                 time : 960,
-            },
+            },*/
             // node +
             getlastcomments : {
                 time : 960,
@@ -513,10 +513,10 @@ var Cache = function(p){
             var size = 0;
             
             
-            try{
+            /*try{
                 size = JSON.stringify(storage[key] || "").length / 1024;
             }
-            catch(e){}
+            catch(e){}*/
 
             var length = _.toArray(storage[key] || {}).length /// ???
 

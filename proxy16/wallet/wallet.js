@@ -2,6 +2,7 @@
 var Datastore = require('nedb');
 const { object } = require('underscore');
 var f = require('../functions');
+var _ = require('lodash');
 
 var compensation = [
 
@@ -97,10 +98,8 @@ var Wallet = function(p){
             _.each(addresses, function(a, k){
                 self.kit.makequeueE(k).catch(e => {
 
-                    console.log("ERROR", e)
-
                     self.lastprocesserror = e
-                    self.lastprocesserrorDate = new Date()
+                    self.lastprocesserrorDate = (new Date()).toString()
 
                 })
             })
@@ -121,7 +120,7 @@ var Wallet = function(p){
 
                 mk();
 
-                self.lastprocess = new Date()
+                self.lastprocess = (new Date()).toString()
 
             }, 10000)
 
@@ -167,9 +166,7 @@ var Wallet = function(p){
             }
             else{
 
-                /*self.unspents.getc(addresses[key]).catch(e => {
-                    console.log("catch", e)
-                })*/
+                
             }
 
         })
@@ -182,7 +179,8 @@ var Wallet = function(p){
             db.loadDatabase(err => {
 
 
-                db.find({}).exec(function (err, docs) {
+                db.find({}).sort({ date: -1 }).limit(3000).exec(function (err, docs) {
+               
                     _.each(docs || [], function(obj){
 
                         if (obj.key && addresses[obj.key]){
@@ -195,8 +193,6 @@ var Wallet = function(p){
 
                 db.find({executed : '-'}).exec(function (err, docs) {
                     _.each(docs || [], function(obj){
-
-
 
                         if(!self.patterns.validAddress(obj.address)) return
 
@@ -347,7 +343,7 @@ var Wallet = function(p){
                 kp = self.pocketnet.kit.keyPair(options.privatekey)
             }
             catch(e){
-                console.log("E", e)
+                //console.log("E", e)
             }
           
             return {
@@ -485,7 +481,7 @@ var Wallet = function(p){
                     queue.push(object)
                     all.push(object)
 
-                    db.insert(object, function (err, docs) {
+                    db.insert(_.clone(object), function (err, docs) {
                         if(err) {
 
                             addresses[key].queue = _.filter(addresses[key].queue, function(q){
@@ -588,7 +584,6 @@ var Wallet = function(p){
                
             }).catch(e => {
 
-                console.log("E", e)
                 var catchederror = false
 
                 _.each(addresses[key].queue, function(object){

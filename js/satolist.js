@@ -8195,6 +8195,8 @@ Platform = function (app, listofnodes) {
                 }
                 else {
 
+                    name = name.toLowerCase()
+
                     var lf = _.find(self.sdk.usersl.storage, function (s) {
                         if (s && s.name && s.name.toLowerCase() == name.toLowerCase()) return true
                     })
@@ -12750,6 +12752,13 @@ Platform = function (app, listofnodes) {
                                 })
         
                             }).catch(e => {
+
+                                console.log("E", e)
+
+                                _.each(txids, function (id) {
+                                    delete loading[id];
+                                })
+
                                 if (clbk) {
                                     clbk(null, e, {})
                                 }
@@ -19674,7 +19683,7 @@ Platform = function (app, listofnodes) {
                             clbk()
                         })
 
-                    })
+                    }, true)
 
                 },
 
@@ -19768,7 +19777,7 @@ Platform = function (app, listofnodes) {
                             clbk()
                         })
 
-                    })
+                    }, true)
 
                 },
 
@@ -19885,7 +19894,7 @@ Platform = function (app, listofnodes) {
                                 clbk()
                             })
 
-                        })
+                        }, true)
 
                         return
                     }
@@ -20008,7 +20017,7 @@ Platform = function (app, listofnodes) {
                                 clbk()
                             })
 
-                        })
+                        }, true)
 
                         return
                     }
@@ -20700,7 +20709,7 @@ Platform = function (app, listofnodes) {
                         })
 
 
-                    })
+                    }, true)
                 },
 
                 notificationData: function (data) {
@@ -20928,7 +20937,7 @@ Platform = function (app, listofnodes) {
                             }
 
 
-                        })
+                        }, true)
 
                         return
                     }
@@ -21161,7 +21170,7 @@ Platform = function (app, listofnodes) {
 
                                 clbk()
                             }
-                        })
+                        }, true)
 
                     }
                 },
@@ -24397,7 +24406,6 @@ Platform = function (app, listofnodes) {
                     }, 500)
 
                     if(ref){
-
                         self.app.setref(ref)
 
                         /*self.sdk.users.addressByName(ref, function(r){
