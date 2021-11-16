@@ -23,8 +23,7 @@ routing.registerRoute(
   ({ request }) => {
     return request.destination === 'style' ||
     request.destination === 'script' ||
-    request.destination === 'worker' ||
-    request.mode === 'navigate'},
+    request.destination === 'worker'},
   // Use a Network First caching strategy
   new strategies.CacheFirst()
 );
