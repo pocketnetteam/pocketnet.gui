@@ -1662,4 +1662,38 @@ ____loclib.aboutHowItWOpen3 = 'Source Code';
 ____loclib.aboutHowItWOpen4 = 'Contact us';
 ____loclib.aboutHowItWOpen5 = 'Send us a message if you need help or if you are a content creator, blogger, influencer and would like to unlock your bonus and verify your profile!';
 
+//aboutContentCreator
+
+____loclib.ContentCreatorsMainBoard = 'Great bonus for Content Creators';
+____loclib.ContentCreatorsMainBoard1 = '"There are many ways to earn money with Bastyon..."';
+
+
+____loclib.ContentCreatorsImgAndText = 'Post your videos';
+____loclib.ContentCreatorsImgAndText1 = 'Post your videos on Bastyon';
+____loclib.ContentCreatorsImgAndText2 = 'Reach at least 15,000 views and 750 "5 stars" reactions';
+____loclib.ContentCreatorsImgAndText3 = 'Earn the equivalent of 1,000 $ in PKOIN';
+____loclib.ContentCreatorsImgAndText4 = 'Next step: contact us to get your Bastyon account verified and to access the bonus program.';
+____loclib.ContentCreatorsImgAndText5 = 'Contact Us Now ';
+____loclib.ContentCreatorsImgAndText6 = 'Invite your followers';
+____loclib.ContentCreatorsImgAndText7 = 'Share your personal referral link';
+____loclib.ContentCreatorsImgAndText8 = 'Invite your followers from other platforms (Youtube, Instagram, Facebook, Twitter...)';
+____loclib.ContentCreatorsImgAndText9 = 'Earn from the posts of your followers!';
+____loclib.ContentCreatorsImgAndText10 = 'Next step: contact us to get your "Verified" badge and to access the bonus program.';
+____loclib.ContentCreatorsImgAndText11 = 'Contact Us Now ';
+____loclib.ContentCreatorsImgAndText12 = 'Earn from every post';
+____loclib.ContentCreatorsImgAndText13 = 'Each time your post gets a like or a comment, you receive a small reward';
+____loclib.ContentCreatorsImgAndText14 = 'The more you post, the more your earn';
+____loclib.ContentCreatorsImgAndText15 = 'The more followers you have, the more your earn';
+____loclib.ContentCreatorsImgAndText16 = 'Next step: contact us to get your "Verified" badge and to access the bonus program.';
+____loclib.ContentCreatorsImgAndText17 = 'Contact Us Now';
+
+
+____loclib.ContentCreatorsOpen = 'Discover Bastyon';
+____loclib.ContentCreatorsOpen1 = 'You can use Bastyon from your browser or dowload the mobile and desktop app.';
+____loclib.ContentCreatorsOpen2 = 'Official Website';
+____loclib.ContentCreatorsOpen3 = 'Source Code';
+____loclib.ContentCreatorsOpen4 = 'Contact us';
+____loclib.ContentCreatorsOpen5 = 'Send us a message if you need help or if you are a content creator, blogger, influencer and would like to unlock your bonus and verify your profile!';
+
+
 
