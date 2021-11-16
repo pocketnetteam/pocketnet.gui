@@ -73,7 +73,7 @@ var Proxy = function (settings, manage, test, logger) {
 
 
 	var stats = [];
-	var statcount = 1000;
+	var statcount = 100;
 	var statInterval = null;
 
 	var captchas = {};
@@ -90,7 +90,7 @@ var Proxy = function (settings, manage, test, logger) {
 
 		var d = stats.length - statcount
 
-		if (d > 100) {
+		if (statcount / d > 10) {
 			stats = stats.slice(d)
 		}
 	}

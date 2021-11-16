@@ -147,11 +147,11 @@ var Middle = function(){
   
     self.headers = function(request, result, next){
         result.setHeader('Access-Control-Allow-Origin', '*');
-        result.setHeader('Access-Control-Max-Age', '600');
+        result.setHeader('Access-Control-Max-Age', '7200');
         result.setHeader('Strict-Transport-Security', 'max-age=31536000');
         result.setHeader("Access-Control-Allow-Methods", "GET, POST");
         result.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-        result.set('Cache-control', 'public, max-age=10')
+        result.set('Cache-control', 'public, max-age=20')
 
         
         if (next) 
@@ -266,20 +266,23 @@ var Middle = function(){
      
         request.data = _.merge(request.query, request.body)
         
-        _.each(request.data, function(v, key){
+        /*_.each(request.data, function(v, key){
     
             if(v && v[0] && (v[0] == "{" || v[0] == "[")){
                 try{
+                    console.log("PARSE")
                     request.data[key] = JSON.parse(v)
                 }
                 catch(e){
                     
                 }
             }
-        })
+        })*/
 
         request.data.ip = request.clientIP
-        request.data.ua = request.clientUA || {}
+        //request.data.ua = request.clientUA || {}
+
+
         delete request.data.U
         delete request.data.A
 
