@@ -2764,7 +2764,7 @@ var system16 = (function(){
 							clbk()
 					})
 
-				})
+				}, true)
 			},
 			servercontent : function(elc, clbk){
 
@@ -4301,6 +4301,8 @@ var system16 = (function(){
 
 
 					stats = data.stats
+
+					console.log('stats', data.stats)
 
 					stats = lastelements(stats, 1000)
 

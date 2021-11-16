@@ -81,15 +81,12 @@ var Proxy = function (settings, manage, test, logger) {
 
 	var addStats = function () {
 
-		var ws = {};
-
 		var data = {
 			time: f.now(),
 			info: self.kit.info(true)
 		}
 
 		stats.push(data)
-
 
 		var d = stats.length - statcount
 

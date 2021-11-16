@@ -184,6 +184,16 @@ var Middle = function(){
     
     }
 
+    var clearreq = function(request, result){
+
+        delete result._success
+        delete result._fail
+        delete request.clientIP
+
+        request.data = {}
+
+    }
+
     self.extend = function(request, result, next){
         var start = new Date()
 
@@ -215,7 +225,9 @@ var Middle = function(){
                     code : 500
                 })
             }
-    
+
+            
+            clearreq(request, result)
         }
     
         result._fail = function(error, code){
@@ -241,8 +253,7 @@ var Middle = function(){
 
             }
 
-
-            
+            clearreq(request, result)
     
         }
     

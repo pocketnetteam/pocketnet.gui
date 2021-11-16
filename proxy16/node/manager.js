@@ -4,7 +4,7 @@ var Datastore = require('nedb');
 var _ = require('lodash');
 var f = require('../functions');
 const { performance } = require('perf_hooks');
-var queuemethods = {
+const queuemethods = {
     getcontents: true,
     getlastcomments: true,
     gettags: true,
@@ -27,7 +27,7 @@ var queuemethods = {
     getcontentsstatistic : true
 }
 
-var exepmethods = {
+const exepmethods = {
     getnodeinfo : true
 }
 

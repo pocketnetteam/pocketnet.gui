@@ -19676,7 +19676,7 @@ Platform = function (app, listofnodes) {
                             clbk()
                         })
 
-                    })
+                    }, true)
 
                 },
 
@@ -19770,7 +19770,7 @@ Platform = function (app, listofnodes) {
                             clbk()
                         })
 
-                    })
+                    }, true)
 
                 },
 
@@ -19887,7 +19887,7 @@ Platform = function (app, listofnodes) {
                                 clbk()
                             })
 
-                        })
+                        }, true)
 
                         return
                     }
@@ -20010,7 +20010,7 @@ Platform = function (app, listofnodes) {
                                 clbk()
                             })
 
-                        })
+                        }, true)
 
                         return
                     }
@@ -20702,7 +20702,7 @@ Platform = function (app, listofnodes) {
                         })
 
 
-                    })
+                    }, true)
                 },
 
                 notificationData: function (data) {
@@ -20930,7 +20930,7 @@ Platform = function (app, listofnodes) {
                             }
 
 
-                        })
+                        }, true)
 
                         return
                     }
@@ -21163,7 +21163,7 @@ Platform = function (app, listofnodes) {
 
                                 clbk()
                             }
-                        })
+                        }, true)
 
                     }
                 },
@@ -24399,7 +24399,6 @@ Platform = function (app, listofnodes) {
                     }, 500)
 
                     if(ref){
-
                         self.app.setref(ref)
 
                         /*self.sdk.users.addressByName(ref, function(r){

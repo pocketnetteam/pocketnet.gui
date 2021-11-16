@@ -101,7 +101,7 @@ var Wallet = function(p){
                     console.log("ERROR", e)
 
                     self.lastprocesserror = e
-                    self.lastprocesserrorDate = new Date()
+                    self.lastprocesserrorDate = (new Date()).toString()
 
                 })
             })
@@ -122,7 +122,7 @@ var Wallet = function(p){
 
                 mk();
 
-                self.lastprocess = new Date()
+                self.lastprocess = (new Date()).toString()
 
             }, 10000)
 

@@ -41,7 +41,7 @@ var Node = function(options, manager){
     var lastinfoTime = null
     var eventscheckInterval = null
 
-    var test = new Test(self, manager)
+    
 
     var wss = {
         service : null,
@@ -1026,10 +1026,15 @@ var Node = function(options, manager){
 
     self.test = function(scenario){
 
+        if(self.testing){
+            return Promise.reject('testing')
+        }
+
         self.testing = scenario
 
         self.statistic.clear()
 
+        var test = new Test(self, manager)
 
         return test.scenarios[scenario]().then(r => {
 
@@ -1094,15 +1099,14 @@ var Node = function(options, manager){
         add : function(user){
             var old = wss.users[user.address]
 
-            if (old) {
-                if(old.closed) old.disconnect()
+            if (old && old.closed) {
+                old.disconnect()
             }
 
             delete wss.changing[user.address]
 
             if(!wss.users[user.address]){
                 wss.users[user.address] = (new Wss(self)).connect(user)
-
 
                 return wss.users[user.address]
             }
@@ -1114,6 +1118,7 @@ var Node = function(options, manager){
                 wss.users[user.address].disconnect()
 
                 delete wss.users[user.address]
+                delete wss.changing[user.address]
             }
         }
 

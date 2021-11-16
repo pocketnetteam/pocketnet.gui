@@ -5,7 +5,6 @@ var _ = require('underscore')
 
 var WSS = function(admins, manage){
     var self = this;
-
         self.listening = false;
 
     var wss = null, server = null;
@@ -76,12 +75,14 @@ var WSS = function(admins, manage){
                     }, 100, 10000).then(r => {
     
                         if(node){
+
                             return Promise.resolve({
                                 instance : node,
                                 ini : {},
                                 auto : auto,
                                 key : node.wskey
                             })
+
                         }
                         else
                         {
@@ -268,13 +269,13 @@ var WSS = function(admins, manage){
 
     self.sendlogs = function(info){
 
-        var m = {
+        /*var m = {
             level : info.level,
             message : info.message,
             meta : info.meta,
             label : info.label,
             timestamp : info.timestamp
-        }
+        }*/
   
     }
 
@@ -428,15 +429,26 @@ var WSS = function(admins, manage){
     self.newconnection = function(ws){
         ws.id = f.makeid();
 
+        var disc = false
+
         ws.on('message', (msg) => {
             handleMessage(msg, ws)
         })
 
         ws.on('close', (code, reason) => {
+            if (disc) return
+
+                disc = true
+
             disconnectClient(ws)
         });
 
         ws.on('error', (err) => {
+
+            if (disc) return
+
+                disc = true
+
             disconnectClient(ws)
         });
 
