@@ -98,8 +98,6 @@ var Wallet = function(p){
             _.each(addresses, function(a, k){
                 self.kit.makequeueE(k).catch(e => {
 
-                    console.log("ERROR", e)
-
                     self.lastprocesserror = e
                     self.lastprocesserrorDate = (new Date()).toString()
 
@@ -347,7 +345,7 @@ var Wallet = function(p){
                 kp = self.pocketnet.kit.keyPair(options.privatekey)
             }
             catch(e){
-                console.log("E", e)
+                //console.log("E", e)
             }
           
             return {
@@ -588,7 +586,6 @@ var Wallet = function(p){
                
             }).catch(e => {
 
-                console.log("E", e)
                 var catchederror = false
 
                 _.each(addresses[key].queue, function(object){
