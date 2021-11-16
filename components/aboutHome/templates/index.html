@@ -1,15 +1,13 @@
-<div id="<%-module.map.id%>">
-    	
+<div id="<%-module.map.id%>"> 
     <main>
-
         <section class="main-board bg" id="home-link">
             <div class="main-wrapper">
                 <div class="main-board__left-block">
-                    <h1>The fresh air
-                    of <br> censorship resistance</h1>               
-                    
-                
-                <img class="main-board__image" src="img/bastyon.jpg">
+                    <h1><%= e('MainBoard') %> <br> 
+                        <%= e('MainBoard1') %></h1>
+
+                        <img class="main-board__image" src="img/bastyon.jpg">
+
             </div>
         </section>
         <section class="main-board grey" id="first-description">
@@ -18,55 +16,46 @@
                     
                     
                     <div>
-                        The first censorship-resistant Social Network
+                        <%= e('MainBoard2') %>
                     </div>
-                    <div>Based on Blockchain technology, decentralized and secure. </div>
-                    <div>No bans, no risk of losing your account, followers and posts. </div>
-                    <div>Privacy protection, no government control.
-                    Enforced by the technology, not by humans.</div>
+                    <div><%= e('MainBoard3') %> </div>
+                    <div><%= e('MainBoard4') %> </div>
+                    <div><%= e('MainBoard5') %></div>
                     <div>
                         <a href="https://play.google.com/store/apps/details?id=pocketnet.app&hl=en_US&gl=US" class="main-board__button-link">
                             <i class="fab fa-android"></i>
                             <div>
-                                <div>Get it on</div>
-                                <div class="main-board__button-link_bold">Google Play</div>
+                                <div><%= e('MainBoard6') %></div>
+                                <div class="main-board__button-link_bold"><%= e('MainBoard7') %></div>
                             </div>
                         </a>
                          <a href="https://github.com/pocketnetteam/pocketnet.gui/releases/tag/v0.4.21" class="main-board__button-link">
                             <i class="fas fa-desktop"></i>
                             <div>
-                                <div>Download for the</div>
+                                <div><%= e('MainBoard8') %></div>
                                 <div class="main-board__button-link_bold">Windows</div>
                             </div>
                          </a>
                     </div>
                 </div>
-                
-               
             </div>
         </section>
 
-         <section class="works" id="works-link">
+        <section class="works" id="works-link">
             <div class="main-wrapper">
-                <h2><span>We Believe in Freedom</span></h2>
+                <h2><span><%= e('works') %></span></h2>
                 <div>
                     <div class="works__container">
                         <!-- <h3>We Believe in Freedom</h3> -->
                         <div class="text">
                             <p>
-                            Bastyon is an innovative social network that brings fresh by contrasting censorship and limitations.</p>
+                            <%= e('works1') %></p>
 
-                            <p>Bastyon is also a video sharing platform that, unlike the traditional and mainstream social medias, guarantees freedom, no censorship and real privacy protection.  </p>
+                            <p><%= e('works2') %></p>
 
-                            <p>It is really impossible to apply censorship to Bastyon, as it a distributed, decentralized platform that runs on a blockchain that is always accessible. </p>
+                            <p><%= e('works3') %> </p>
                         </div>
-                        
-                        
                     </div>
-                    
-                    <!-- <div class="image"> <img class="" src="img/kyle-glenn-nXt5HtLmlgE-unsplash.jpg"></div>
-                     -->
-                    
                 </div>
             </div>
         </section>
@@ -80,12 +69,13 @@
                         <img class="image" src="img/pexels-amine-msiouri-2246258.resized.jpg">
                         
                         <div class="text">
-                            <h2>We are driven by FREEDOM</h2>
+                            <h2><%= e('works4') %></h2>
                             <p><i class="fas fa-check"></i>
-                            Against censorship</p>
-                            <p><i class="fas fa-check"></i>Against limitations
+                            <%= e('works5') %></p>
+                            <p><i class="fas fa-check"></i>
+                                <%= e('works6') %>
                             </p>
-                            <p><i class="fas fa-check"></i>Against bans </p>
+                            <p><i class="fas fa-check"></i><%= e('works7') %> </p>
                         </div>                       
                         
                     </div>
@@ -95,64 +85,56 @@
 
         <section class="services" id="services-link">
             <div class="main-wrapper">
-                <h2><span>NO CENSORSHIP</span></h2>
+                <h2><span><%= e('aboutServices') %></span></h2>
                 <div class="services__block-item">
                     <div class="services__item">
                         <div class="box-icon">
-                            <img src=" img/c77dithd_tk.jpeg" alt="">
-                            <!-- <i class="fas fa-heart"></i> -->
+                            <img src=" img/c77dithd_tk.jpeg" alt="">                            
                         </div>
-                        <h3>Censorship resistant</h2>
+                        <h3><%= e('aboutServices1') %></h2>
                         <p>
-                            Bastyon fights to remove censorship from the digital world. Too many times we see accounts being blocked or limited, contents removed by the platform or the governments. <b>On Bastyon, not even admins can remove your posts or close your account. </b> 
-                        </p>
-                        <!-- <a href="#">Read More</a> -->
+                            <%= e('aboutServices2') %> <b><%= e('aboutServices3') %> </b> 
+                        </p>                        
                     </div>
 
                     <div class="services__item">
                         <div class="box-icon">
                             <img src=" img/2b.jpg" alt="">
-                            <!-- <i class="fas fa-heart"></i> -->
                         </div>
-                        <h3>Blockchain based</h2>
+                        <h3><%= e('aboutServices4') %></h2>
                         <p>
-                            Bastyon runs on the blockchain. This means that it is decentralized and there is no way to control it and no way to limit access to it. The blockchain is composed of a network of servers all over the world and <b>there is no government that can limit access to it. Bastyon is the "bitcoin" of social medias.  </b> 
+                            <%= e('aboutServices5') %> <b><%= e('aboutServices6') %>  </b> 
                         </p>
-                        <!-- <a href="#">Read More</a> -->
                     </div>
 
                     <div class="services__item">
                         <div class="box-icon">
                             <img src=" img/3b.jpg" alt="">
-                            <!-- <i class="fas fa-heart"></i> -->
                         </div>
-                        <h3>Privacy Protection</h2>
+                        <h3><%= e('aboutServices7') %></h2>
                         <p>
-                            Privacy and Security are completely respected. You do not need to use an email or phone number to register. Bastyon does not store any personal data, not even your IP address. We REALLY value your privacy. <b>Your privacy is safe.</b> In addition, hackers cannot enter your account and change your password.
+                            <%= e('aboutServices8') %> <b><%= e('aboutServices9') %></b> <%= e('aboutServices10') %>
                         </p>
-                        <!-- <a href="#">Read More</a> -->
+                        
                     </div>
 
                     <div class="services__item">
                         <div class="box-icon">
                             <img src=" img/4b.jpg" alt="">
-                            <!-- <i class="fas fa-heart"></i> -->
                         </div>
-                        <h3>Earn with Bastyon</h2>
+                        <h3><%= e('aboutServices11') %></h2>
                         <p>
-                            <b>You can get paid 1,000 USD</b> for each 10,000 views of your videos and at least 750 "5 stars" reactions. The payment is done in cryptocurrency, so, again, your privacy is safe. You also earn from referrals! 
+                            <b><%= e('aboutServices12') %></b> <%= e('aboutServices13') %> 
                         </p>
-                        <!-- <a href="#">Read More</a> -->
                     </div>
 
                     <div class="services__item">
                         <div class="box-icon">
                             <img src=" img/5b.jpg" alt="">
-                            <!-- <i class="fas fa-heart"></i> -->
                         </div>
-                        <h3>Upload your videos</h2>
+                        <h3><%= e('aboutServices14') %> </h2>
                         <p>
-                            Bastyon lets you <b>share</b> your posts and <b>videos</b>   , Upload them safely, import them from YouTube (contact us so that we can help!), make sure to let them visible to everyone. Forever. No one will be able to remove or ban them.
+                           <%= e('aboutServices15') %> <b><%= e('aboutServices16') %></b>   <%= e('aboutServices17') %>
                         </p>
                         <!-- <a href="#">Read More</a> -->
                     </div>
@@ -162,9 +144,9 @@
                             <img src=" img/6b.jpg" alt="">
                             <!-- <i class="fas fa-heart"></i> -->
                         </div>
-                        <h3>Open Source</h2>
+                        <h3><%= e('aboutServices18') %></h2>
                         <p>
-                            We believe that <b>privacy and security</b>  have to pass through Open Source projects. The entire project is available on GitHub so that you can check that there are no backdoors and that Bastyon is not storing any personal data.
+                            <%= e('aboutServices19') %> <b><%= e('aboutServices20') %></b>  <%= e('aboutServices21') %>
                         </p>
                         <!-- <a href="#">Read More</a> -->
                     </div>
@@ -203,15 +185,15 @@
                 <div class="content">
                     
                     <div class="discover">
-                        <h2>Discover Bastyon</h2>
-                        <p>You can use Bastyon from your browser or dowload the mobile and desktop app.</p>
+                        <h2><%= e('aboutOpen') %></h2>
+                        <p><%= e('aboutOpen1') %></p>
 
                         <div class="one-item">
 
                             <div>
                                 <a href="https://bastyon.com/">
                                     <img src="img/LOGO bastyon.png" alt="">
-                                    <p>Official Website</p>
+                                    <p><%= e('aboutOpen2') %></p>
                                 </a>
                             </div>
 
@@ -250,15 +232,15 @@
                             <div>
                                 <a href="https://github.com/pocketnetteam/pocketnet.gui/releases/tag/v0.4.21">
                                 <i class="fab fa-apple"></i>
-                                <p>Source Code</p>
+                                <p><%= e('aboutOpen5') %></p>
                                 </a>
                             </div>
                         </div>
                     </div>
                     <div class="discover">
 
-                        <h2>Contact us</h2>
-                        <p>Send us a message if you need help or if you are a content creator, blogger, influencer and would like to unlock your bonus and verify your profile!</p>
+                        <h2><%= e('aboutOpen3') %></h2>
+                        <p><%= e('aboutOpen4') %></p>
 
                         <div class="one-item">
 
@@ -286,16 +268,4 @@
        
        
     </main>
-   <!--  <footer>
-        <div class="main-wrapper">
-            <img src="img/footer-logo.png">
-            <div class="social-cont">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-google-plus-g"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-            </div>
-            <p>Misma 2019 All Rights Reserved Papa</p>
-        </div>
-    </footer> -->
 </div>

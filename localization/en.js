@@ -1262,7 +1262,64 @@ ____loclib.sharevisibilitylabel_reg_article = 'Author chose to make this <b>arti
 ____loclib.sharevisibilitylabel_sub_video = 'Author chose to make this <b>video</b> available only for subscribers'
 ____loclib.sharevisibilitylabel_reg_video = 'Author chose to make this <b>video</b> available only for registered Bastyon users'
 
-/////////////aboutHome
+
+____loclib.MainBoard = 'The fresh air of';
+____loclib.MainBoard1 = 'censorship resistance';
+____loclib.MainBoard2 = 'The first censorship-resistant Social Network';
+____loclib.MainBoard3 = 'Based on Blockchain technology, decentralized and secure.';
+____loclib.MainBoard4 = 'No bans, no risk of losing your account, followers and posts. ';
+____loclib.MainBoard5 = 'Privacy protection, no government control. Enforced by the technology, not by humans.';
+____loclib.MainBoard6 = 'Get it on';
+____loclib.MainBoard7 = 'Google Play';
+____loclib.MainBoard8 = 'Download for the';
+
+
+
+
+____loclib.works = 'We Believe in Freedom';
+____loclib.works1 = 'Bastyon is an innovative social network that brings fresh by contrasting censorship and limitations.';
+____loclib.works2 = 'Bastyon is also a video sharing platform that, unlike the traditional and mainstream social medias, guarantees freedom, no censorship and real privacy protection.';
+____loclib.works3 = 'It is really impossible to apply censorship to Bastyon, as it a distributed, decentralized platform that runs on a blockchain that is always accessible.';
+____loclib.works4 = 'We are driven by FREEDOM';
+____loclib.works5 = 'Against censorship';
+____loclib.works6 = 'Against limitations';
+____loclib.works7 = 'Against bans';
+
+
+//aboutHome
+____loclib.aboutServices = 'NO CENSORSHIP';
+____loclib.aboutServices1 = 'Censorship resistant';
+____loclib.aboutServices2 = 'Bastyon fights to remove censorship from the digital world. Too many times we see accounts being blocked or limited, contents removed by the platform or the governments.';
+____loclib.aboutServices3 = 'On Bastyon, not even admins can remove your posts or close your account.';
+____loclib.aboutServices4 = 'Blockchain based';
+____loclib.aboutServices5 = 'Bastyon runs on the blockchain. This means that it is decentralized and there is no way to control it and no way to limit access to it. The blockchain is composed of a network of servers all over the world and';
+____loclib.aboutServices6 = 'there is no government that can limit access to it. Bastyon is the "bitcoin" of social medias.';
+____loclib.aboutServices7 = 'Privacy Protection';
+____loclib.aboutServices8 = 'Privacy and Security are completely respected. You do not need to use an email or phone number to register. Bastyon does not store any personal data, not even your IP address. We REALLY value your privacy.';
+____loclib.aboutServices9 = 'Your privacy is safe.';
+____loclib.aboutServices10 = 'In addition, hackers cannot enter your account and change your password.';
+____loclib.aboutServices11 = 'Earn with Bastyon';
+____loclib.aboutServices12 = 'You can get paid 1,000 USD';
+____loclib.aboutServices13 = 'for each 10,000 views of your videos and at least 750 "5 stars" reactions. The payment is done in cryptocurrency, so, again, your privacy is safe. You also earn from referrals! ';
+____loclib.aboutServices14 = 'Upload your videos';
+____loclib.aboutServices15 = 'Bastyon lets you';
+____loclib.aboutServices16 = 'share your posts and videos';
+____loclib.aboutServices17 = ', Upload them safely, import them from YouTube (contact us so that we can help!), make sure to let them visible to everyone. Forever. No one will be able to remove or ban them.';
+____loclib.aboutServices18 = 'Open Source';
+____loclib.aboutServices19 = 'We believe that';
+____loclib.aboutServices20 = 'privacy and security';
+____loclib.aboutServices21 = 'have to pass through Open Source projects. The entire project is available on GitHub so that you can check that there are no backdoors and that Bastyon is not storing any personal data.';
+
+
+
+____loclib.aboutOpen = 'Discover Bastyon';
+____loclib.aboutOpen1 = 'You can use Bastyon from your browser or dowload the mobile and desktop app.';
+____loclib.aboutOpen2 = 'Official Website';
+____loclib.aboutOpen3 = 'Contact us';
+____loclib.aboutOpen4 = 'Send us a message if you need help or if you are a content creator, blogger, influencer and would like to unlock your bonus and verify your profile!';
+____loclib.aboutOpen5 = 'Source Code';
+
+/////////////aboutYoutube
 ____loclib.aboutMainBoard = 'Bastyon - the best alternative to YouTube';
 ____loclib.aboutYoutubeMainDescription1 = 'Some people ask us:';
 ____loclib.aboutYoutubeMainDescription2 = '"Why should I use Bastyon?"';
@@ -1604,3 +1661,5 @@ ____loclib.aboutHowItWOpen2 = 'Official Website';
 ____loclib.aboutHowItWOpen3 = 'Source Code';
 ____loclib.aboutHowItWOpen4 = 'Contact us';
 ____loclib.aboutHowItWOpen5 = 'Send us a message if you need help or if you are a content creator, blogger, influencer and would like to unlock your bonus and verify your profile!';
+
+
