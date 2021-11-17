@@ -16,22 +16,17 @@ core.setCacheNameDetails({
 });
 
 
-
 // Cache CSS, JS, and Web Worker requests with a Network First strategy
 routing.registerRoute(
   // Check to see if the request's destination is style for stylesheets, script for JavaScript, or worker for web worker
   ({ request }) => {
-
-    setTimeout(function(){
-      console.log('request', request)
-    }, 100)
     
     return 
       request.destination === 'style' ||
       request.destination === 'script' ||
       request.destination === 'worker'},
 
-    new strategies.NetworkFirst({
+    new strategies.CacheFirst({
       cacheName: 'assets-cache',
       plugins: [
         new cacheableResponse.CacheableResponsePlugin({
