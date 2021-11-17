@@ -1190,3 +1190,5 @@ ____loclib.bastyonhelperTitle1 = "Pocketnet si è spostato,";
 ____loclib.bastyonhelperTitle2 = "Bastyon, libertà di espressione";
 ____loclib.bastyonhelperSubtitle1 = "Pocketnet è ora";
 ____loclib.bastyonhelperSubtitle2 = "Per favore, segui il link qui sotto";
+
+____loclib.buy = 'Acquistare';

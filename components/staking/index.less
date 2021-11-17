@@ -3,6 +3,39 @@
 #staking{
     
 
+    .wrp{
+        &.hide{
+
+            .tcaptionwrapper{
+                display: none;
+            }
+
+            .lastpriceCnt{
+                .logo, .caret{
+                    display: block;
+                }
+
+                .chwr{
+                    right: 2.5em;
+                }
+                
+                .lastprice, .change .percent{
+                    font-size: 12px;
+                }
+
+                .lastprice{
+                    margin-left: @rhythm;
+                }
+
+            }
+
+            .lastpriceCnts, .buycoin, .earnlabel, .pcoin{
+                display: none;
+            }
+
+        }
+    }
+
     .pcoin{
         position: absolute;
         bottom : @rhythm;
@@ -85,11 +118,12 @@
     .chwr{
         position: absolute;
         right : @rhythm;
-        top : 2 * @rhythm;
+        top : 2px;
     }
     
     .rcptwrp{
         background: #fff;
+        border-radius: 0px 0px 12px 12px;
         position : relative;
         border-radius: 3px;
     }   
@@ -140,12 +174,30 @@
             //     border-color : #b70067;
             // }
         }
+
+        
+        .buyButton{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            padding: 6px;
+            max-width: 253px;
+            width: 100%;
+            height: 28px;
+            left: 16px;
+            top: 70px;
+            border: 1px solid #E3E4EB;
+            box-sizing: border-box;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+        }
     }
 
     .tcaptionwrapper{
         display: flex;
         align-items: center;    
-        border-bottom : 1px solid @color-gray-slight;
 
         .vc_valuecustom{
             width: 75px;
@@ -160,12 +212,7 @@
     .tcaption{
         flex-grow: 2;
         font-weight: 100;
-        padding  : @rhythm 2 * @rhythm;
-        
-
-        .logo{
-            width: 12px;
-        }
+        padding: 12px 16px;
 
         .label{
             font-weight: 700;
@@ -186,6 +233,22 @@
         
     }
 
+    .logo{
+        width: 12px;
+    }
+
+    .caret{
+        padding: 12px 16px;
+        font-weight: 200;
+        font-size: .8em;
+        cursor: pointer;
+
+        &.caret-down{
+            position: absolute;
+            right: 0;
+        }
+    }
+
     .commoncaption{
         font-size: 0.8em;
         font-weight: 700;
@@ -193,49 +256,34 @@
     }
 
     .lastpriceCnt{
+        display: flex;
+        align-items: center;
         text-align: center;
-        padding : @rhythm 2 * @rhythm;
+        padding: 12px 16px;
         color : @color-black2;
-        min-height: 120px;
-        .chart{
-            width: 70px;
-        }
-        .lastprice{
-            font-size: 3.5em;
-            font-weight: 700;
-        }
+        border-top: 1px solid fade(#E5E5E5, 50);
+        border-bottom: 1px solid fade(#E5E5E5, 50);
 
-        .currency{
-            flex-grow: 2;
-            font-size: 0.8em;
-            text-align: left;
+        .logo, .caret{
+            display: none;
         }
 
         .lastpriceWrapper{
             display: flex;
-            align-items: baseline;
+            align-items: center;
+        }
 
-            &.cb{
-                padding-top : 2 * @rhythm;
-                text-align: left;
-
-                .change{
-                    padding-left: 0;
-                }
-            }
-
-            &.bc{
-                .lastprice{
-                    font-size: 2em;
-                    font-weight: 700;
-                }
-            }
-            /*justify-content : center;*/
+        .chart{
+            width: 70px;
+        }
+        .lastprice{
+            font-size: 26px;
+            font-weight: 700;
         }
 
         .change{
             flex-grow: 2;
-            padding-left: 2 * @rhythm;
+            padding-left: @rhythm;
             word-break: keep-all;
             white-space : nowrap;
             width: 69px;
@@ -253,7 +301,7 @@
                 border-radius: 8px;
                 font-size: 16px;
                 font-weight: 500;
-                background: fade(@color-nrml, 20);
+                background: fade(@color-nrml, 50);
                 color: #FFFFFF;
             }
 
@@ -277,6 +325,74 @@
         }
     }
 
+    .lastpriceCnts{
+        padding-top: @rhythm * 2;
+        padding-bottom: @rhythm * 2;
+
+        .lastpriceCntSmall{
+            padding : 0 @rhythm * 2;
+    
+            
+            .lastpriceWrapper{
+                display: flex;
+                align-items: baseline;
+            }
+    
+            .lastprice{
+                font-size: 14px;
+                color: #555770;
+
+                .currency{
+                    font-weight: 500;
+                }
+            }
+            
+            .change{
+                flex-grow: 2;
+                padding-left: @rhythm;
+                word-break: keep-all;
+                white-space : nowrap;
+                width: 69px;
+                align-items: center;
+                display: flex;
+                flex-direction: row;
+    
+                i{
+                    font-size: .8em;
+                    
+                }
+    
+                .percent{
+                    padding: 2px 8px;
+                    border-radius: 8px;
+                    font-size: 14px;
+                    font-weight: 500;
+                    color: fade(@color-nrml, 50);
+                }
+    
+                
+    
+                &.bad{
+                    .percent{
+                        color: #EB5757;
+    
+                    }
+                }
+    
+                &.good{
+                    .percent{
+                        color: #6FCF97
+    
+                    }
+                }
+    
+                
+            }
+        }
+    }
+
+
+
 }
 
 html.stblack{
@@ -293,24 +409,7 @@ html.stblack{
             }
         }
 
-        .lastpriceCnt{
-            color : @color-gray-slight;
-            
-            .change{
-    
-                background: fade(@color-nrml, 40);
-    
-                &.bad{
-                    background: fade(@color-bad, 40);                    
-                }
-    
-                &.good{
-                    background: fade(@color-good, 40);
-                }
-    
-                
-            }
-        }
+
         .rcptwrp{
             background: transparent;
             border-radius: 5px;
@@ -319,10 +418,6 @@ html.stblack{
     
         .tcaption{
     
-        }
-
-        .tcaptionwrapper{
-            border-bottom : 1px solid @color-black;
         }
     
     
@@ -418,18 +513,6 @@ html.stblack{
             font-size: 0.9em;
         }
     
-        .lastpriceCnt{
-           
-            .lastprice{
-                font-size: 3.5em;
-            }
-    
-            .currency{
-                font-size: 0.8em;
-            }
-    
-        
-        }
     
     }
 }

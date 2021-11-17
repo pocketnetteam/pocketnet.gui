@@ -1262,3 +1262,4 @@ ____loclib.sharevisibilitylabel_reg_article = 'Author chose to make this <b>arti
 ____loclib.sharevisibilitylabel_sub_video = 'Author chose to make this <b>video</b> available only for subscribers'
 ____loclib.sharevisibilitylabel_reg_video = 'Author chose to make this <b>video</b> available only for registered Bastyon users'
 
+____loclib.buy = 'Buy';

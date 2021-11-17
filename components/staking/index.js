@@ -22,6 +22,13 @@ var staking = (function(){
 
 		var currencies = {
 
+			USD : {
+				id : 'USD',
+				key : 'USD',
+				view : function(v){
+					return self.app.platform.mp.dollars(v, {prefix : ''})
+				}
+			},
 
 			USDT : {
 				id : 'USDT',
@@ -37,15 +44,8 @@ var staking = (function(){
 				view : function(v){
 					return self.app.platform.mp.acoin(v)
 				}
-			},
-
-			USD : {
-				id : 'USD',
-				key : 'USD',
-				view : function(v){
-					return self.app.platform.mp.dollars(v, {prefix : ''})
-				}
 			}
+
 		}
 
 		var blocktime = [{
@@ -65,21 +65,6 @@ var staking = (function(){
 			label : '1 Year',
 			id : '1y'
 		}]
-
-
-		var parameters = {
-			currency : new Parameter({
-				name : self.app.localization.e('source'),
-				type : "VALUES",
-				id : 'source',
-				defaultValue : "USD",
-				possibleValuesLabels : ['USD', 'USDT', 'BTC'],
-				possibleValues : ['USD', 'USDT', 'BTC'],
-				format : {
-					right : true
-				},
-			})
-		}
 
 		var calc = {
 			netstakeweight : function(){
@@ -368,24 +353,42 @@ var staking = (function(){
 						change.percent = v / price
 					}
 	
-					self.shell({
-						inner : html,
-						name : 'lastprice',
-						data : {
-							price : text,
-							currency : currencies[currency],
-							change : change,
-						},
-	
-						el : el.c.find('.lastpriceCnt' + currency)
-	
-					},
-					function(p){
+					if (currency === 'USD'){
 
-						if (p.data.currency.id === 'USD'){
+						self.shell({
+							inner : html,
+							name : 'lastprice',
+							data : {
+								price : text,
+								currency : currencies[currency],
+								change : change,
+							},
+		
+							el : el.c.find('.lastpriceCnt')
+		
+						},
+						function(p){
+
 							renders.pricechart()
-						}
-					})
+							
+						})
+
+					} else {
+
+						self.shell({
+							inner : html,
+							name : 'lastpricesmall',
+							data : {
+								price : text,
+								currency : currencies[currency],
+								change : change,
+							},
+		
+							el : el.c.find('.lastpriceCnt' + currency)
+		
+						})
+
+					}
 	
 				}
 
@@ -430,6 +433,14 @@ var staking = (function(){
 
 		var initEvents = function(){
 			
+			el.caretUp.on('click', function(){
+				p.el.find('.wrp').addClass('hide');
+
+				p.el.find('.caret-down').on('click', function(){
+					console.log('down!!!');
+					p.el.find('.wrp').removeClass('hide');
+				})
+			})
 			
 			el.am.on('keyup', function(){
 				var v = $(this).val() || ''
@@ -579,6 +590,7 @@ var staking = (function(){
 				el.c = p.el.find('#' + self.map.id);
 				el.calculator = el.c.find('.calculator');
 				el.am = el.c.find('.amredits');
+				el.caretUp = el.c.find('.caret-up')
 				initEvents();
 
 				make()
