@@ -84,7 +84,7 @@ var Server = function(settings, admins, manage){
 
             middle.prepare(request, result, function(){
 
-                /*if (settings.iplimiter && request.clientIP){
+                if (settings.iplimiter && request.clientIP){
 
                     return iplimiter.check(request.clientIP).then(r => {
 
@@ -95,7 +95,7 @@ var Server = function(settings, admins, manage){
 
                         result._fail('iplimiter')
                     })
-                }*/
+                }
 
                 next()
             })
