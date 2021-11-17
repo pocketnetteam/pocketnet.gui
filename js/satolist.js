@@ -19468,7 +19468,7 @@ Platform = function (app, listofnodes) {
                 var name = deep(author, 'name');
                 var letter = name ? name[0] : '';
 
-                var link = '<a href="' + encodeURI(clearStringXss(author.name.toLowerCase())) + '">'
+                var link = '<a elementsid="' + encodeURI(clearStringXss(author.name.toLowerCase())) + '" href="' + encodeURI(clearStringXss(author.name.toLowerCase())) + '">'
                 var clink = "</a>"
 
                 /*if (app.curation()) {
@@ -19573,7 +19573,7 @@ Platform = function (app, listofnodes) {
 
             subscribe: function (author) {
 
-                var me = deep(app, 'platform.sdk.users.storage.' + platform.sdk.address.pnet().address)
+                var me = deep(app, 'platform.sdk.users.storage.' + platform.sdk.address.pnet().address) || deep(app, 'platform.sdk.usersl.storage.' + platform.sdk.address.pnet().address)
 
                 var d = ''
 
@@ -19659,7 +19659,7 @@ Platform = function (app, listofnodes) {
                     platform.sdk.users.get([data.addrFrom], function () {
 
 
-                        data.user = platform.sdk.users.storage[data.addrFrom] || {}
+                        data.user = platform.sdk.users.storage[data.addrFrom] || platform.sdk.usersl.storage[data.addrFrom] || {}
 
                         data.user.address = data.addrFrom;
 
@@ -19757,7 +19757,7 @@ Platform = function (app, listofnodes) {
 
                     platform.sdk.users.get([data.addrFrom], function () {
 
-                        data.user = platform.sdk.users.storage[data.addrFrom] || {}
+                        data.user = platform.sdk.users.storage[data.addrFrom] ||platform.sdk.usersl.storage[data.addrFrom] || {}
 
                         data.user.address = data.addrFrom
 
@@ -19877,7 +19877,7 @@ Platform = function (app, listofnodes) {
 
                         platform.sdk.users.get([data.addrFrom], function () {
 
-                            data.user = platform.sdk.users.storage[data.addrFrom] || {}
+                            data.user = platform.sdk.users.storage[data.addrFrom] || platform.sdk.usersl.storage[data.addrFrom] || {}
 
                             data.user.address = data.addrFrom
 
@@ -20000,7 +20000,7 @@ Platform = function (app, listofnodes) {
 
                         platform.sdk.users.get([data.addrFrom], function () {
 
-                            data.user = platform.sdk.users.storage[data.addrFrom] || {}
+                            data.user = platform.sdk.users.storage[data.addrFrom] || platform.sdk.usersl.storage[data.addrFrom] || {}
 
                             data.user.address = data.addrFrom
 
@@ -20328,7 +20328,7 @@ Platform = function (app, listofnodes) {
 
                                 html += self.tempates.user(
 
-                                    platform.sdk.users.storage[platform.sdk.address.pnet().address],
+                                    platform.sdk.users.storage[platform.sdk.address.pnet().address] || platform.sdk.usersl.storage[platform.sdk.address.pnet().address],
 
                                     self.tempates.transaction(data,
 
