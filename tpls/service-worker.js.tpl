@@ -31,7 +31,8 @@ routing.registerRoute(
       request.destination === 'script' ||
       request.destination === 'worker'},
 
-    new strategies.CacheFirst({
+    new strategies.NetworkFirst({
+      cacheName: 'assets-cache',
       plugins: [
         new cacheableResponse.CacheableResponsePlugin({
           statuses: [200],
