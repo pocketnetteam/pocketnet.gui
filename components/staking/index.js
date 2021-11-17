@@ -10,7 +10,6 @@ var staking = (function(){
 
 		var el, info = null, amount = 1000, graph = null, history;
 
-		var currency = 'USD',
 			// exchange = 'mercatox'
 			exchange = 'digifinex'
 
@@ -22,13 +21,7 @@ var staking = (function(){
 		var charts = {}
 
 		var currencies = {
-			USD : {
-				id : 'USD',
-				key : 'USD',
-				view : function(v){
-					return self.app.platform.mp.dollars(v, {prefix : ''})
-				}
-			},
+
 
 			USDT : {
 				id : 'USDT',
@@ -43,6 +36,14 @@ var staking = (function(){
 				key : 'BTC',
 				view : function(v){
 					return self.app.platform.mp.acoin(v)
+				}
+			},
+
+			USD : {
+				id : 'USD',
+				key : 'USD',
+				view : function(v){
+					return self.app.platform.mp.dollars(v, {prefix : ''})
 				}
 			}
 		}
@@ -145,7 +146,7 @@ var staking = (function(){
 				return prevprice
 			},	
 
-			prices : function(currency){
+			prices : function(){
 				var p = []
 
 				if(history && history[exchange] && history[exchange].length){
@@ -156,10 +157,11 @@ var staking = (function(){
 
 					p = _.map(p, function(pn){
 
-						if(pn.prices[currency]) {
+
+						if(pn.prices['USD']) {
 							return {
 								x : fromutc(new Date(pn.date)),
-								y : Number(pn.prices[currency].data[market_keys[exchange]])
+								y : Number(pn.prices['USD'].data[market_keys[exchange]])
 							}
 						}
 
@@ -240,6 +242,7 @@ var staking = (function(){
 						series: helpers.series()
 					});
 
+			
 					if(clbk) clbk(graph, _el)
 				}
 				else{
@@ -336,52 +339,61 @@ var staking = (function(){
 				}, rand(400, 1200), function(){
 				});
 			},
-			lastPrice : function(currency){
-				graph = null
-				var text = ''
-				
-				var price = calc.price(0, currency)
-				var prevprice = calc.prevprice(0, currency)
+			lastPrice : function(){
 
+				for (var currency in currencies){
 
-				var change = {
-					value : 0,
-					percent : 0
-				}
-
-				if (price){
-
-
-					text = currencies[currency].view(price)
-
-				}
-
-				if (prevprice && price){
-					var v = price - prevprice
-
-					change.value = v
-					change.percent = v / price
-				}
-
-				self.shell({
-					inner : html,
-					name : 'lastprice',
-					data : {
-						price : text,
-						currency : currencies[currency],
-						change : change,
+					var text = ''
+					
+					var price = calc.price(0, currency)
+					var prevprice = calc.prevprice(0, currency)
+	
+	
+					var change = {
+						value : 0,
+						percent : 0
+					}
+	
+					if (price){
+	
+	
+						text = currencies[currency].view(price)
+	
+					}
+	
+					if (prevprice && price){
+						var v = price - prevprice
+	
+						change.value = v
+						change.percent = v / price
+					}
+	
+					self.shell({
+						inner : html,
+						name : 'lastprice',
+						data : {
+							price : text,
+							currency : currencies[currency],
+							change : change,
+						},
+	
+						el : el.c.find('.lastpriceCnt' + currency)
+	
 					},
+					function(p){
 
-					el : el.c.find('.lastpriceCnt')
-
-				},
-				function(p){
-					renders.pricechart()
-				})
+						if (p.data.currency.id === 'USD'){
+							renders.pricechart()
+						}
+					})
+	
+				}
 
 				
 			},
 			pricechart : function(){
+
+				console.log('el.c', el.c)
 				var _el = el.c.find('.chart')
 
 				var d = $('<div></div>', {
@@ -447,14 +459,6 @@ var staking = (function(){
 			})
 
 			ParametersLive(_.toArray(parameters), el.c)
-
-			parameters.currency._onChange = function(v){
-				currency = v
-
-				actions.loadhistory(function(){
-					renders.lastPrice(v)
-				})
-			}
 
 			el.c.find('.earnlabel').on('click', function(){
 
@@ -530,7 +534,7 @@ var staking = (function(){
 		var make = function(){
 
 			actions.loadhistory(function(){
-				renders.lastPrice(currency)
+				renders.lastPrice()
 			})
 
 			load(function(error){
