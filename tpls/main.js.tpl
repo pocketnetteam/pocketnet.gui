@@ -372,11 +372,14 @@ function createWindow() {
 
     win.webContents.session.setSpellCheckerLanguages(['en-US', 'ru'])
 
-    globalShortcut.register('f5', function() {
+    electronLocalshortcut.register(win, 'f5', function() {
 		win.reload()
+        win.loadFile('index_el.html')
 	})
-	globalShortcut.register('CommandOrControl+R', function() {
+    
+	electronLocalshortcut.register(win, 'CommandOrControl+R', function() {
 		win.reload()
+        win.loadFile('index_el.html')
 	})
 
     win.webContents.on('context-menu', (event, params) => {

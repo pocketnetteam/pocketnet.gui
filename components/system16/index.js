@@ -1240,8 +1240,14 @@ var system16 = (function(){
 					series : [
 						{
 							path : 'wss.users',
+							name : "Websocket Users",
+							id : 'wssu'
+						},
+
+						{
+							path : 'wss.clients',
 							name : "Websocket Connections",
-							id : 'wss'
+							id : 'wssc'
 						},
 	
 						{
