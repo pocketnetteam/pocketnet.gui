@@ -16,18 +16,25 @@ core.setCacheNameDetails({
 });
 
 
-
 // Cache CSS, JS, and Web Worker requests with a Network First strategy
 routing.registerRoute(
   // Check to see if the request's destination is style for stylesheets, script for JavaScript, or worker for web worker
   ({ request }) => {
-    return request.destination === 'style' ||
-    request.destination === 'script' ||
-    request.destination === 'worker'},
-  // Use a Network First caching strategy
-  new strategies.CacheFirst()
+    
+    return 
+      request.destination === 'style' ||
+      request.destination === 'script' ||
+      request.destination === 'worker'},
+
+    new strategies.CacheFirst({
+      plugins: [
+        new cacheableResponse.CacheableResponsePlugin({
+          statuses: [200],
+        }),
+      ],
+    })
 );
-/*
+
 routing.registerRoute(
   ({request}) => request.destination === 'image',
   new strategies.CacheFirst({
@@ -39,7 +46,7 @@ routing.registerRoute(
       }),
     ],
   })
-);*/
+);
 
 
 
