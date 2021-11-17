@@ -16,7 +16,6 @@ var staking = (function(){
 
 		var market_keys = {
 			'mercatox' : 'last_price',
-			'bilaxy' : 'close',
 			'digifinex' : 'last'
 		}
 
@@ -95,7 +94,7 @@ var staking = (function(){
 
 			},
 
-			price : function(c){ //00
+			price : function(c, currency){ //00
 				if(!c) c = 0
 
 				if(history && history[exchange] && history[exchange].length > c){
@@ -132,13 +131,13 @@ var staking = (function(){
 				return 0
 			},
 
-			prevprice : function(){
+			prevprice : function(c, currency){
 				var i = -1
 				var prevprice = 0
-				var price = this.price()
+				var price = this.price(null, currency)
 
 				do{
-					prevprice = this.price(i)
+					prevprice = this.price(i, currency)
 					i--
 				}
 				while(prevprice > 0 && (prevprice - price == 0))
@@ -146,7 +145,7 @@ var staking = (function(){
 				return prevprice
 			},	
 
-			prices : function(){
+			prices : function(currency){
 				var p = []
 
 				if(history && history[exchange] && history[exchange].length){
@@ -337,12 +336,12 @@ var staking = (function(){
 				}, rand(400, 1200), function(){
 				});
 			},
-			lastPrice : function(){
+			lastPrice : function(currency){
 				graph = null
 				var text = ''
 				
-				var price = calc.price(0)
-				var prevprice = calc.prevprice(0)
+				var price = calc.price(0, currency)
+				var prevprice = calc.prevprice(0, currency)
 
 
 				var change = {
@@ -453,7 +452,7 @@ var staking = (function(){
 				currency = v
 
 				actions.loadhistory(function(){
-					renders.lastPrice()
+					renders.lastPrice(v)
 				})
 			}
 
@@ -531,7 +530,7 @@ var staking = (function(){
 		var make = function(){
 
 			actions.loadhistory(function(){
-				renders.lastPrice()
+				renders.lastPrice(currency)
 			})
 
 			load(function(error){
