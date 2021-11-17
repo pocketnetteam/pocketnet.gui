@@ -523,7 +523,12 @@ var WSS = function(admins, manage){
                 wss.clients.forEach((socket) => {
 
                     if ([socket.CLOSED].includes(socket.readyState)) {
-                        console.log('socket', socket)
+
+                        if(allwss[socket.id]){
+                            disconnectClient(socket)
+                        }
+
+                        console.log('CLOSED')
                     }
 
                 });
@@ -669,10 +674,26 @@ var WSS = function(admins, manage){
 
     self.info = function(compact){
 
+        var clients = 0
+        var open = 0
+
+        if(wss && wss.clients){
+            wss.clients.forEach(socket => {
+                clients++
+
+                if ([socket.OPEN, socket.CLOSING].includes(socket.readyState)) {
+                    open++
+                }
+
+                
+            })
+        }
+
 
         var data = {
             listening : self.listening,
-            clients : wss && wss.clients ? wss.clients.length : 0
+            clients : clients,
+            open : open
         }
 
         if(!compact) data.users = _.map(users, function(user){

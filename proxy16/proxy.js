@@ -670,7 +670,6 @@ var Proxy = function (settings, manage, test, logger) {
 		info: function (compact) {
 
 			var mem = process.memoryUsage()
-
 			
 			var loads = os.loadavg();
 

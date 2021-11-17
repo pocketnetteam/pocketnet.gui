@@ -87,12 +87,8 @@ var Server = function(settings, admins, manage){
                 if (settings.iplimiter && request.clientIP){
 
                     return iplimiter.check(request.clientIP).then(r => {
-
-                        console.log("IPCHECK")
-
                         next()
                     }).catch(e => {
-
                         result._fail('iplimiter')
                     })
                 }

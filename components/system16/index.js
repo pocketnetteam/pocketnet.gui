@@ -1249,6 +1249,12 @@ var system16 = (function(){
 							name : "Websocket Connections",
 							id : 'wssc'
 						},
+
+						{
+							path : 'wss.open',
+							name : "Websocket Connections/O",
+							id : 'wsso'
+						},
 	
 						{
 							path : 'server.middle.requestsIp',
