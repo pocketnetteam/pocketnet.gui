@@ -1779,7 +1779,7 @@ var Proxy = function (settings, manage, test, logger) {
 						data: {
 							id: captcha.id,
 							img: captcha.data,
-							result: captcha.text, ///
+							//result: captcha.text, ///
 							done: false,
 						},
 					});
