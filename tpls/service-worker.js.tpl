@@ -26,11 +26,18 @@ routing.registerRoute(
       console.log('request', request)
     }, 100)
     
-    return (request.referrer != request.url) && (request.destination === 'style' ||
-    request.destination === 'script' ||
-    request.destination === 'worker')},
-  // Use a Network First caching strategy
-  new strategies.CacheFirst()
+    return 
+      request.destination === 'style' ||
+      request.destination === 'script' ||
+      request.destination === 'worker'},
+
+    new strategies.CacheFirst({
+      plugins: [
+        new cacheableResponse.CacheableResponsePlugin({
+          statuses: [200],
+        }),
+      ],
+    })
 );
 
 routing.registerRoute(
