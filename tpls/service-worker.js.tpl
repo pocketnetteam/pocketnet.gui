@@ -21,6 +21,7 @@ core.setCacheNameDetails({
 routing.registerRoute(
   // Check to see if the request's destination is style for stylesheets, script for JavaScript, or worker for web worker
   ({ request }) => {
+    console.log('request', request)
     return request.destination === 'style' ||
     request.destination === 'script' ||
     request.destination === 'worker'},
