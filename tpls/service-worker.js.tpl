@@ -26,13 +26,13 @@ routing.registerRoute(
       console.log('request', request)
     }, 100)
     
-    return !request.isHistoryNavigation && (request.destination === 'style' ||
+    return (request.referrer != request.url) && (request.destination === 'style' ||
     request.destination === 'script' ||
     request.destination === 'worker')},
   // Use a Network First caching strategy
   new strategies.CacheFirst()
 );
-/*
+
 routing.registerRoute(
   ({request}) => request.destination === 'image',
   new strategies.CacheFirst({
@@ -44,7 +44,7 @@ routing.registerRoute(
       }),
     ],
   })
-);*/
+);
 
 
 
