@@ -104,7 +104,7 @@
                     
                     %> 
 
-                    <div class="comment " id="<%-comment.id%>" aid="<%-comment.answerid%>" pid='<%-comment.parentid%>'>
+                    <div elementsid="lastcomments_<%-comment.id%>" class="comment " id="<%-comment.id%>" aid="<%-comment.answerid%>" pid='<%-comment.parentid%>'>
 
                         <div class="commentPaddingWrapper">
 
@@ -149,7 +149,7 @@
                                     %>
             
                                     <div class="icon">
-                                        <div class="usericon" image="<%-src2 || ''%>">
+                                        <div elementsid="usericon<%-src2 || ''%>" class="usericon" image="<%-src2 || ''%>">
                                             <% if(!src2 && letter2) { %>
 
                                                 <span 

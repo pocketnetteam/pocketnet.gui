@@ -49,7 +49,7 @@
 						<% if(report.href) {
 							
 							var h = report.href; if(typeof h == 'function') h = h() %>
-							<a href="https://<%-domain%>/<%-h%>">
+							<a elementsid="<%-h%>" href="https://<%-domain%>/<%-h%>">
 						<% } %>
 				
 							<%=report.icon%> 
@@ -72,14 +72,14 @@
 			<% if(typeof ed == 'undefined' || !ed.openapi) {%>
 				<div class="action">
 					<% if(!connect) {%>
-						<a href="https://<%-domain%>/<%-name%>">
+						<a elementsid="<%-domain%>/<%-name%>" href="https://<%-domain%>/<%-name%>">
 							<button class="button medium">
 								Follow <%-name || author.address%> on <%-app.meta.fullname%>
 							</button>
 						</a>
 
 					<% } else { %> 
-						<a href="https://<%-domain%>/welcome?connect=<%-author.address%>">
+						<a elementsid="<%-author.address%>" href="https://<%-domain%>/welcome?connect=<%-author.address%>">
 							<button class="button medium">
 								Connect with <%-name || author.address%>
 							</button>

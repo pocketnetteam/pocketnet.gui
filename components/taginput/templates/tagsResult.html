@@ -6,7 +6,7 @@
 
 			<% _.each(results, function(result, i){ %>
 
-				<div class="result <% if(result.id) {%>bright<% } %>" tag="<%-result.tag || ''%>" category="<%- result.id || '' %>">
+				<div elementsid="result_tag_<%-result.tag || ''%>" class="result <% if(result.id) {%>bright<% } %>" tag="<%-result.tag || ''%>" category="<%- result.id || '' %>">
 					<%- result.name  %>
 				</div>
 			<% }) %>
@@ -15,7 +15,7 @@
 
 	<% } else { %>
 	
-		<div class="empty">
+		<div elementsid="snotags" class="empty">
 			<span>
 				<%=e('snotags')%>
 			</span>

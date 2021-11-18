@@ -528,7 +528,6 @@ var WSS = function(admins, manage){
                             disconnectClient(socket)
                         }
 
-                        console.log('CLOSED')
                     }
 
                 });

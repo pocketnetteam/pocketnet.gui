@@ -2046,7 +2046,7 @@ Platform = function (app, listofnodes) {
         },
 
         route : function(href, el, clbk, p){
-            el.html('<div class="internalpocketnetlink"><a href="https://'+app.options.url+'/'+href+'"><i class="fas fa-link"></i> https://'+app.options.url+'/'+href+'</a></div>')
+            el.html('<div class="internalpocketnetlink"><a elementsid="https://'+app.options.url+'/'+href+'" href="https://'+app.options.url+'/'+href+'"><i class="fas fa-link"></i> https://'+app.options.url+'/'+href+'</a></div>')
 
             app.nav.api.links(null, el);
 
@@ -17762,7 +17762,7 @@ Platform = function (app, listofnodes) {
 
                                         case "text_link":
 
-                                            return `<a href='${ent.url}' target='_blank' rel='noopener noreferrer'>${snippet}</a>`
+                                            return `<a elementsid='${ent.url}' href='${ent.url}' target='_blank' rel='noopener noreferrer'>${snippet}</a>`
 
                                         default:
 

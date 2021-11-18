@@ -3,6 +3,7 @@
     <div class="moduleHeader">
       <div class="cabinetName"><%- e('videoCabinet') %></div>
         <button
+          elementsid="videoActiveButton"
           class="uploadVideo videoActiveButton ghostButton"
           rendersElement="addVideo"
         >
@@ -55,7 +56,7 @@
             class="videoSearchInput"
             placeholder="<%- e('enterVideoName') %>"
           />
-          <button class="videoSearchButton ghostButton">
+          <button elementsid="videoSearchButton" class="videoSearchButton ghostButton">
             <i class="fas fa-search"></i>
           </button>
         </div>

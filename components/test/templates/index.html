@@ -86,7 +86,7 @@ if (firstTime){
 								</div>
 								<div class="refName"><%- ref.name || ref.address %></div>
 
-								<div class="refRemove">
+								<div elementsid="refRemove" class="refRemove">
 									<i class="far fa-times-circle"></i>
 								</div>
 							</div>
@@ -105,11 +105,11 @@ if (firstTime){
 						
 
 						<div class="item">
-							<button class="save"><%=e('usave')%></button>
+							<button elementsid="usave" class="save"><%=e('usave')%></button>
 						</div>
 
 						<div class="item cancelwr">
-							<button class="cancel ghost"><%=e('ucancel')%></button>
+							<button elementsid="ucancel" class="cancel ghost"><%=e('ucancel')%></button>
 						</div>
 
 						<div class="item loadingToB">
@@ -144,7 +144,7 @@ if (firstTime){
 		<!--
 			<div class="testPanel">
 			
-				<div class="showhidetestpanel">
+				<div elementsid="showhidetestpanel" class="showhidetestpanel">
 					Show/Hide Testing panel
 				</div>
 			

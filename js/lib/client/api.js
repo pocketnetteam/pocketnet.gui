@@ -30,6 +30,7 @@ var sequence = function(tasks, fn, result) {
 var isonline = function(){
 
     if (window.cordova){
+        
         if(navigator.connection.type === 'none') return false
 
         return true

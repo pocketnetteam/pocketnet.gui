@@ -18,12 +18,12 @@
 %> 
 
 	<div class="art <%-cl%>" art="<%-art.id%>">
-		<div class="apanel">
-			<div class="item remove">
+		<div elementsid="apanel">
+			<div class="articles_remove" class="item remove">
 				<i class="fa fa-times" aria-hidden="true"></i>
 			</div>
 		</div>
-		<div class="artcnt">
+		<div elementsid="authorization_artcnt" class="artcnt">
 			<div class="captionBgWrapper" image="<%-image || ''%>" style="background: <%-art.background%>">
 
 				<% if(image) {%>

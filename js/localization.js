@@ -67,7 +67,7 @@ Localization = function(app){
 	self.locLinks = function(){
 		return _.reduce(self.available, function(m, loc){
 
-			return m + '<a href="?loc='+loc.key+'">'+loc.name+'</a>'
+			return m + '<a elementsid="?loc='+loc.key+'" href="?loc='+loc.key+'">'+loc.name+'</a>'
 
 		}, '')
 	}

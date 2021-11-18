@@ -14,6 +14,8 @@ var taginput = (function(){
 			initsearch : function(){
 				search(el.tagSearch, {
 					placeholder : essenseData.placeholder || self.app.localization.e('addtagsCategories'),
+
+					id : 'addtagsCategories',
 	
 					clbk : function(el){
 	
