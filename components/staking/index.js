@@ -497,6 +497,25 @@ var staking = (function(){
 				})
 			})
 
+			el.buyButton.on('click', function(){
+				self.nav.api.load({
+					open : true,
+					id : 'buy',
+					inWnd : true,
+
+					essenseData : {
+
+						success : function(){
+							
+						}
+					},
+
+					clbk : function(){
+						
+					}
+				})
+			})
+
 			amountmask()
 		}
 
@@ -590,7 +609,8 @@ var staking = (function(){
 				el.c = p.el.find('#' + self.map.id);
 				el.calculator = el.c.find('.calculator');
 				el.am = el.c.find('.amredits');
-				el.caretUp = el.c.find('.caret-up')
+				el.caretUp = el.c.find('.caret-up');
+				el.buyButton = el.c.find('.buyButton')
 				initEvents();
 
 				make()
