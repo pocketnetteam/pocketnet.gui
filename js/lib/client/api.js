@@ -31,9 +31,11 @@ var isonline = function(){
 
     if (window.cordova){
         if(navigator.connection.type === 'none') return false
+
+        return true
     }
 
-    if(typeof window.navigator && window.navigator.onLine === false){
+    if(typeof window.navigator != 'undefined' && window.navigator.onLine === false){
         return window.navigator.onLine
     }
 
@@ -104,7 +106,7 @@ var ProxyRequest = function(app = {}, proxy){
                 time = time * 2
             }
 
-            if(!isonline()) time = 3000
+            //if(!isonline()) time = 3000
     
             return timeout(time, directclear(url, data, controller.signal, p), controller)
         }   
@@ -171,7 +173,7 @@ var ProxyRequest = function(app = {}, proxy){
 
             if (e.code == 20){
                 return Promise.reject({
-                    code : 20
+                    code : 2000
                 })
             }
 
@@ -473,11 +475,9 @@ var Proxy16 = function(meta, app, api){
 
             if (options.fnode && e) e.code = 700
 
-            console.log('e.code', e.code)
-
             if ((e.code == 408 || e.code == 429 || e.code == -28) && options.node && trying < 2 && !options.fnode){
 
-                if(isonline()){
+                //if(isonline()){
                     return self.api.nodes.canchange(options.node).then(r => {
 
                         if (r){
@@ -487,12 +487,12 @@ var Proxy16 = function(meta, app, api){
     
                         return Promise.reject(e)
                     })
-                }
+                //}
 
                 
             }
 
-            if (e.code == 20){
+            if (e.code == 2000){
                 return Promise.reject(e)
             }
 
@@ -919,16 +919,16 @@ var Api = function(app){
 
             if(!e) e = 'TypeError: Failed to fetch'
 
-            if((!e.code || e.code == 20) && trying < 2){
+            if((!e.code || e.code == 2000) && trying < 2){
 
-                if(isonline()){
+                //if(isonline()){
                     return self.changeProxyIfNeedWithDirect().then(r => {
 
                         trying++
 
                         return self.rpc(method, parameters, options, trying)
                     })
-                }
+                //}
             }
 
             if (e.code != 700){

@@ -706,6 +706,13 @@ Platform = function (app, listofnodes) {
                 return  self.app.localization.e('e13253')
             }
         },
+
+        "2000": {
+            message: function () {
+                return  self.app.localization.e('e2000')
+            }
+        },
+        
         "19": {
             message: function () {
                 return self.app.localization.e('e13254')
@@ -4191,9 +4198,12 @@ Platform = function (app, listofnodes) {
         
                                                                         window.resolveLocalFileSystemURL(videoFile.nativeURL, function(entry) {
         
-                                                                            videoFile.internalURL = entry.toInternalURL();
-                                                                            to.videos[videoFolder.name].video = videoFile;
+                                                                            videoFile.internalURL = entry.toInternalURL()
                                                                             
+                                                                            to.videos[videoFolder.name].video = videoFile;
+
+                                                                            console.log('entry')
+
                                                                             _p.success()
                                                                         });
 
@@ -4473,8 +4483,9 @@ Platform = function (app, listofnodes) {
                                                                                     v[shareFolder.name].videos[videoFolder.name].size = fileDetails.size;
                                                                                 // Resolve internal URL
                                                                                 window.resolveLocalFileSystemURL(videoFile.nativeURL, function(entry) {
-                                                                                    videoFile.internalURL = entry.toInternalURL();
+                                                                                    videoFile.internalURL = entry.toInternalURL()
                                                                                     v[shareFolder.name].videos[videoFolder.name].video = videoFile;
+
                                                                                 });
                                                                             }
                                                                             if (!infoFile && file.name == 'info.json') {
@@ -6621,7 +6632,7 @@ Platform = function (app, listofnodes) {
             reputationBlocked : function(address){
                 var ustate = self.sdk.ustate.storage[address] || deep(self, 'sdk.usersl.storage.' + address) || deep(self, 'sdk.users.storage.' + address);
 
-				if (ustate && ustate.reputation < -50){
+				if (ustate && ustate.reputation < -30){
                     return true
                 }
             },

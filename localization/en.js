@@ -775,6 +775,7 @@ ____loclib.e13255 = "This username is already in use"
 ____loclib.e13256 = "This post is too long, please break it up."
 ____loclib.e13257 = "Your "+appname+" reputation score does not allow for registering of complaints yet"
 ____loclib.e13258 = "You have reached the limit of complaints in a 24 hour period"
+____loclib.e2000 = "Connection error. Please try again"
 
 ____loclib.e13259 = "Cannot complain about your own post"
 ____loclib.e13260 = "You have already registered your complaint about this post"
