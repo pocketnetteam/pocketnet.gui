@@ -1199,8 +1199,6 @@ var Api = function(app){
 
                     var wallet = deep(r, 'info.wallet.addresses.registration') || {}
 
-                    console.log('walletwallet', wallet)
-
                     if (wallet.ready && wallet.unspents){
                         f = p
                     }

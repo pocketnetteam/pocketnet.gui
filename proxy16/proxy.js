@@ -1868,6 +1868,13 @@ var Proxy = function (settings, manage, test, logger) {
 					return self.wallet
 						.addqueue(key || 'registration', address, ip)
 						.then((r) => {
+
+							if (settings.server.captcha) {
+								if (captcha) {
+									delete captchas[captcha]
+								}
+							}
+
 							return Promise.resolve({
 								data: r,
 							});

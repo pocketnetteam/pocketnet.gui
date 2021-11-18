@@ -1592,59 +1592,66 @@ var share = (function(){
 
 			settings : function(clbk){
 
-				if(!currentShare.repost.v) {
+				self.app.platform.sdk.ustate.me(function(_mestate){
 
-					currentShare.settings.f || (currentShare.settings.f = '0')
+					var u = _mestate
 
-					var selector = new Parameter({
+					if(!currentShare.repost.v && (u.reputation > 50 || !u.trial)) {
 
-						type : "VALUES",
-						name : "Visibility",
-						id : 'organizationCode',
-						dbId : "INS_BROKER_CODE",
-						possibleValues : ['0','1','2'],
-						possibleValuesLabels : [
-							self.app.localization.e('visibletoeveryone'), 
-							self.app.localization.e('visibleonlytosubscribers'),
-							self.app.localization.e('visibleonlytoregistered')
-						],
-						defaultValue : currentShare.settings.f,
-						value : currentShare.settings.f
+						
 
-					})
+						currentShare.settings.f || (currentShare.settings.f = '0')
 
-					self.shell({
-						name :  'settings',
-						el : el.settings,
-						data : {
-							share : currentShare,
-							essenseData : essenseData,
-							selector : selector
-						},
+						var selector = new Parameter({
 
-					}, function(p){
+							type : "VALUES",
+							name : "Visibility",
+							id : 'organizationCode',
+							dbId : "INS_BROKER_CODE",
+							possibleValues : ['0','1','2'],
+							possibleValuesLabels : [
+								self.app.localization.e('visibletoeveryone'), 
+								self.app.localization.e('visibleonlytosubscribers'),
+								self.app.localization.e('visibleonlytoregistered')
+							],
+							defaultValue : currentShare.settings.f,
+							value : currentShare.settings.f
 
-						ParametersLive([selector], p.el)
+						})
+
+						self.shell({
+							name :  'settings',
+							el : el.settings,
+							data : {
+								share : currentShare,
+								essenseData : essenseData,
+								selector : selector
+							},
+
+						}, function(p){
+
+							ParametersLive([selector], p.el)
 
 
-						selector._onChange = function(){
+							selector._onChange = function(){
 
-							currentShare.settings.f = selector.value
+								currentShare.settings.f = selector.value
 
-							state.save()
-						}
+								state.save()
+							}
 
-						if (clbk)
-							clbk();
-					})
-				}
+							if (clbk)
+								clbk();
+						})
+					}
 
-				else{
+					else{
 
-					el.settings.html('')
+						el.settings.html('')
 
-					if(clbk) clbk()
-				}
+						if(clbk) clbk()
+					}
+				})
 			},
 
 

@@ -572,7 +572,7 @@ var arranges = {
 									
 								
 									<% if(app.platform.repost && !my && !app.curation()) {%>
-										<% if(!checkvisibility) {%>
+										<% if(!checkvisibility && !share.visibility()) {%>
 											<div elementsid="lenta_forreport" class="item <% if(!my){ %> forrepost <% } else { %> nact <% } %>">
 
 												<div class="itemwr table">

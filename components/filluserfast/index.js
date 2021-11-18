@@ -156,8 +156,6 @@ var filluserfast = (function(){
 
 					balance.check(function(result){
 
-						console.log('result', result)
-
 						if (result){
 							actions.next()
 						}
@@ -175,7 +173,11 @@ var filluserfast = (function(){
 								
 								if (captcha.done){
 
+									actions.preloader(true)
+
 									balance.request(function(r){
+
+										actions.preloader(false)
 
 										if(r){
 											actions.next()
@@ -255,8 +257,11 @@ var filluserfast = (function(){
 							
 								if (captcha.done){
 									
-
+									actions.preloader(true)
+									
 									balance.request(function(r){
+
+										actions.preloader(false)
 
 										if(r){
 											actions.next()
@@ -1263,7 +1268,6 @@ var filluserfast = (function(){
 
 				essenseData = deep(p, 'settings.essenseData') || {}
 
-
 				current = null;
 
 				var data = {
@@ -1271,11 +1275,18 @@ var filluserfast = (function(){
 					inauth : deep(p, 'settings.essenseData.inauth') || false
 				};
 
-				if (localStorage['regproxy']){
+
+					regproxy = self.app.api.get.byid('pocketnet.app:8899:8099')
+
+				
+
+				/*if (localStorage['regproxy']){
 					regproxy = self.app.api.get.byid(localStorage['regproxy'])
-				}
+				}*/
 
 				self.app.api.get.proxywithwallet().then(r => {
+
+					console.log("R", r)
 
 					if(r && !regproxy) regproxy = r
 
@@ -1283,6 +1294,7 @@ var filluserfast = (function(){
 						localStorage['regproxy'] = regproxy.id
 					}
 
+					console.log('regproxy', regproxy)
 
 					clbk(data);
 				})
