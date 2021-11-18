@@ -24,13 +24,13 @@
 }
 #categories .tcaptiontable .buttons {
   display: flex;
+  padding-right: 0.5em;
 }
 #categories .tcaptiontable .buttons > div {
   display: inline-block;
 }
 #categories .tcaptiontable .buttons > div.ticon {
   cursor: pointer;
-  width: 33px;
   text-align: center;
   /*.transition(0.3s);*/
 }
@@ -39,7 +39,7 @@
 }
 #categories .tcaptiontable .buttons > div.mlab {
   opacity: 0.5;
-  width: 33px;
+  padding-left: 0.5em;
   cursor: pointer;
   /*.transition(0.3s);*/
 }
@@ -58,9 +58,7 @@
   display: table-cell;
 }
 #categories .tcaptionwrapper {
-  padding: 1em;
   padding-top: 1em;
-  padding-left: 0;
   margin-bottom: 0.5em;
   border-top: 1px solid #E3E4EB;
 }
@@ -69,7 +67,7 @@
   font-weight: 600;
 }
 #categories .tcaptionwrapper i {
-  font-size: 0.6em;
+  font-size: 0.8em;
 }
 #categories .cat {
   /*.transition(0.3s);*/

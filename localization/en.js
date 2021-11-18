@@ -616,6 +616,7 @@ ____loclib.e13136 = "All Posts"
 ____loclib.e13137 = "My Subscriptions" // This is the equivalent of a ‘News feed’. Don’t change the word ‘Pocket’ however, it’s a feature of "+appname+".
 ____loclib.e13138 = "Top posts"
 ____loclib["Top Posts Over"] = "Top Posts Over"
+____loclib.bestFirst = "The best first"
 ____loclib.topnext = "Next"
 ____loclib.topprevious = "Previous"
 ____loclib.topactual = "Return to the latest"

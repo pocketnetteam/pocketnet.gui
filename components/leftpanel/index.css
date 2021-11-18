@@ -1,5 +1,33 @@
+#leftpanel {
+  padding-right: 16px;
+}
 #leftpanel > div .wrp {
   padding-bottom: 10px;
+}
+#leftpanel .best {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #555770;
+  padding-bottom: 0.5em;
+}
+#leftpanel .best .bestLabel {
+  display: flex;
+  align-items: center;
+}
+#leftpanel .best .fire,
+#leftpanel .best .toggle {
+  font-size: 1.5em;
+}
+#leftpanel .best .text {
+  margin-left: 0.5em;
+}
+#leftpanel .best .toggle {
+  margin-left: 0.5em;
+  cursor: pointer;
+}
+#leftpanel .best .toggle i {
+  transform: scaleX(-1);
 }
 #leftpanel .closecategoriesContainer {
   text-align: right;

@@ -33,13 +33,13 @@
 
         .buttons{
             display: flex;
+            padding-right: @rhythm;
 
             >div{
                 display: inline-block;
 
                 &.ticon{
                     cursor: pointer;
-                    width: 33px;
                     text-align: center;
                     /*.transition(0.3s);*/
     
@@ -53,7 +53,7 @@
     
                 &.mlab{
                     opacity: 0.5;
-                    width: 33px;
+                    padding-left: @rhythm;
                     cursor: pointer;
                     /*.transition(0.3s);*/
     
@@ -83,12 +83,8 @@
     
     .tcaptionwrapper{
        
-        padding : 2 * @rhythm;
         padding-top : 2 * @rhythm;
-        padding-left: 0;
-       
         margin-bottom: @rhythm;
-
         border-top: 1px solid #E3E4EB;
 
         span{
@@ -97,7 +93,7 @@
         }
 
         i{
-            font-size : 0.6em;
+            font-size : 0.8em;
         }
     }
 

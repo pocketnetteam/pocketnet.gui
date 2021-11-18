@@ -1,6 +1,7 @@
 @import "../../css/__cssvar";
 
 #leftpanel{
+	padding-right: 16px;
 	
 	>div{
 
@@ -8,6 +9,36 @@
 			padding-bottom : 10px;
 		}
 	
+	}
+
+	.best{
+		display : flex;
+		align-items : center;
+		justify-content: space-between;
+		color : #555770;
+		padding-bottom : @rhythm;
+
+		.bestLabel{
+			display: flex;
+			align-items: center;
+		}
+
+		.fire, .toggle{
+			font-size : 1.5em;
+		}
+
+		.text{
+			margin-left : @rhythm;
+		}
+
+		.toggle{
+			margin-left : @rhythm;
+			cursor: pointer;
+			i{
+				transform : scaleX(-1);
+			}
+		}
+
 	}
 
 	.closecategoriesContainer{
