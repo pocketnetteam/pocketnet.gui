@@ -1007,6 +1007,7 @@
 }
 @media (max-width: 412px) {
   #aboutHome .main-board__image {
+    display: none;
     width: 100%;
   }
   #aboutHome .works img {

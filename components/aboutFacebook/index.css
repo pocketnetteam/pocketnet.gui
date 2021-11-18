@@ -23,7 +23,7 @@
 }
 #aboutFacebook .works {
   padding: 30px;
-  background: url(src/bg-bastion-section1.jpg) no-repeat fixed;
+  background: url(../../img/aboutFacebook/bg-bastion-section1.jpg) no-repeat fixed;
   background-size: cover;
   position: relative;
 }
@@ -218,7 +218,7 @@
 }
 #aboutFacebook .blog {
   padding: 60px 0;
-  background: url(src/andreas-brun-14IbodW7owU-unsplash.jpg) no-repeat;
+  background: url(../../img/aboutFacebook/andreas-brun-14IbodW7owU-unsplash.jpg) no-repeat;
   background-position: center center;
   background-size: cover;
   position: relative;
@@ -595,7 +595,7 @@
   }
 }
 #aboutFacebook .main-board-2 {
-  background: url(src/Unlike-YouTube.jpg) no-repeat fixed;
+  background: url(../../img/aboutFacebook/Unlike-YouTube.jpg) no-repeat fixed;
   background-position: center center;
   background-size: cover;
   position: relative;
@@ -629,7 +629,7 @@
 }
 @media (max-width: 380px) {
   #aboutFacebook .main-board-2 {
-    background: url(src/bastyon-alternative.jpg) no-repeat fixed;
+    background: url(../../img/aboutFacebook/bastyon-alternative.jpg) no-repeat fixed;
     background-position: center center;
     background-size: cover;
     position: relative;
@@ -762,7 +762,7 @@
 }
 @media (max-width: 380px) {
   #aboutFacebook .main-board-3 {
-    background: url(src/dark-bg-bastyon-pais.jpg) no-repeat fixed;
+    background: url(../../img/aboutFacebook/dark-bg-bastyon-pais.jpg) no-repeat fixed;
     background-position: center center;
     background-size: cover;
     position: relative;
@@ -940,16 +940,16 @@
   text-decoration: underline;
 }
 #aboutFacebook .block-image1 {
-  background: url(src/6-850x850.jpg);
+  background: url(../../img/aboutFacebook/6-850x850.jpg);
 }
 #aboutFacebook .block-image2 {
-  background: url(src/5-850x850.jpg);
+  background: url(../../img/aboutFacebook/5-850x850.jpg);
 }
 #aboutFacebook .block-image3 {
-  background: url(src/2-850x850.jpg);
+  background: url(../../img/aboutFacebook/2-850x850.jpg);
 }
 #aboutFacebook .block-image4 {
-  background: url(src/1-850x850.jpg);
+  background: url(../../img/aboutFacebook/1-850x850.jpg);
 }
 #aboutFacebook .blog-container__image {
   flex: 0 0 50%;
@@ -1014,7 +1014,7 @@
 }
 #aboutFacebook .form {
   height: 200px;
-  background: url(src/bg.jpg) no-repeat fixed;
+  background: url(../../img/aboutFacebook/bg.jpg) no-repeat fixed;
   background-position: 50% -50px;
   background-size: cover;
   position: relative;
@@ -1389,7 +1389,7 @@
     margin-bottom: 10px;
   }
   #aboutFacebook .main-board:first-child {
-    background: url(src/bastyon-youtube-main1.jpg) no-repeat fixed;
+    background: url(../../img/aboutFacebook/bastyon-youtube-main1.jpg) no-repeat fixed;
     background-size: cover;
   }
   #aboutFacebook .main-board:first-child .main-wrapper .main-board__left-block h1 {
