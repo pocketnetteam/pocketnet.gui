@@ -6,6 +6,11 @@
   width: 100%;
   height: 70px;
 }
+#about .maket .menuWrapper {
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+}
 #about .maket .contentsInner {
   display: flex;
   justify-content: space-between;
