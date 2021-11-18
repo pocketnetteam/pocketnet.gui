@@ -2532,6 +2532,7 @@ var lenta = (function(){
 						el : _el.find('.forstars'),
 						data : {
 							share : share,
+							hideCount : undefined
 						},
 						animation : false,				
 
