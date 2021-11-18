@@ -1021,6 +1021,7 @@ var post = function(nModule){
 					el : el.stars,
 					data : {
 						share : share,
+						hideCount : undefined
 					}					
 
 				}, function(p){

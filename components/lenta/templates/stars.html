@@ -91,7 +91,7 @@
 			</div>
 		</div>
 	</div>
-	<% if(!share.hideCount) {%>
+	<% if(typeof hideCount === 'undefined' || !hideCount) {%>
 
 	<div elementsid="conutdetails" class="count">
 		<span class="v"><%-value.toFixed(1)%></span> 
