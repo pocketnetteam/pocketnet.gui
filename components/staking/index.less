@@ -10,6 +10,29 @@
                 display: none;
             }
 
+            .change{
+
+                .percent{
+                    background: transparent!important;
+                    color: fade(@color-nrml, 50);
+                }
+    
+                
+    
+                &.bad{
+                    .percent{
+                        color: #EB5757;
+    
+                    }
+                }
+    
+                &.good{
+                    .percent{
+                        color: #6FCF97
+                    }
+                }
+            }
+
             .lastpriceCnt{
                 .logo, .caret{
                     display: block;
@@ -253,6 +276,13 @@
         font-size: 0.8em;
         font-weight: 700;
         margin-bottom : @rhythm;
+    }
+
+    .change{
+        i{
+            position: relative;
+            bottom: 2px;
+        }
     }
 
     .lastpriceCnt{

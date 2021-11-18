@@ -1,6 +1,16 @@
 #staking .wrp.hide .tcaptionwrapper {
   display: none;
 }
+#staking .wrp.hide .change .percent {
+  background: transparent!important;
+  color: rgba(0, 0, 0, 0.5);
+}
+#staking .wrp.hide .change.bad .percent {
+  color: #EB5757;
+}
+#staking .wrp.hide .change.good .percent {
+  color: #6FCF97;
+}
 #staking .wrp.hide .lastpriceCnt .logo,
 #staking .wrp.hide .lastpriceCnt .caret {
   display: block;
@@ -189,6 +199,10 @@
   font-size: 0.8em;
   font-weight: 700;
   margin-bottom: 0.5em;
+}
+#staking .change i {
+  position: relative;
+  bottom: 2px;
 }
 #staking .lastpriceCnt {
   display: flex;
