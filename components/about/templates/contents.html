@@ -112,33 +112,60 @@ var letter = name ? name[0] : ''
 
     </div>
 
-    <div class="icon">
-        <a elementsid="<%-app.platform.api.authorlink(user.address.value.toString('hex'))%>" href="<%-app.platform.api.authorlink(user.address.value.toString('hex'))%>">	
-            <div class="usericon" image="<%-src || ''%>">
+    <% if(state) { %>
 
-                <% if(!src && letter) {%>
+        <div class="icon">
+            <a elementsid="<%-app.platform.api.authorlink(user.address.value.toString('hex'))%>" href="<%-app.platform.api.authorlink(user.address.value.toString('hex'))%>">	
+                <div class="usericon" image="<%-src || ''%>">
 
-                    <span class="letter">
-                        <%-letter.toUpperCase()%>
-                    </span>
+                    <% if(!src && letter) {%>
 
-                <% } else if (!src) { %>
+                        <span class="letter">
+                            <%-letter.toUpperCase()%>
+                        </span>
 
-                    <i class="far fa-user"></i>
+                    <% } else if (!src) { %>
 
-                <% } %>
+                        <i class="far fa-user"></i>
 
-                <% if(app.platform.ui.markUser) {%>
+                    <% } %>
 
-                    <%= app.platform.ui.markUser(user.address.value && user.address.value.toString('hex'))%>
+                    <% if(app.platform.ui.markUser) {%>
 
-                <% } %>
-            
+                        <%= app.platform.ui.markUser(user.address.value && user.address.value.toString('hex'))%>
+
+                    <% } %>
+                
+                </div>
+            </a>
+
+
+        </div>
+
+    <% } %>
+						
+    <% if(!state) { %>
+
+						
+        <div class="authorization">
+            <div elementsid="eventssignin" class="item signin" events="signin">
+                <div class="label">
+                    <b><%=e('signinmenu')%></b>
+                </div>
             </div>
-        </a>
+            <div elementsid="eventssignup" class="item signup" events="signup">
+
+                <div class="label">
+                    <b><%=e('signupmenu')%></b>
+                </div>
+
+            </div>
+
+        </div>
 
 
-    </div>
+    <% } %>
+
 
 
 </div>

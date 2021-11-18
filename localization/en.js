@@ -1695,5 +1695,8 @@ ____loclib.ContentCreatorsOpen3 = 'Source Code';
 ____loclib.ContentCreatorsOpen4 = 'Contact us';
 ____loclib.ContentCreatorsOpen5 = 'Send us a message if you need help or if you are a content creator, blogger, influencer and would like to unlock your bonus and verify your profile!';
 
-
+///about menu
+____loclib.contentCreators = 'For content creators';
+____loclib.howItWorks = 'How it works';
+____loclib.insteadOf = 'Instead of';
 

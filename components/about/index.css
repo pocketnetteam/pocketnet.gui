@@ -15,6 +15,22 @@
   margin-left: auto;
   margin-right: auto;
 }
+#about .maket .contentsInner .authorization {
+  display: flex;
+}
+#about .maket .contentsInner .authorization .item {
+  cursor: pointer;
+}
+#about .maket .contentsInner .authorization .item.signin:hover {
+  color: #00a4ff;
+}
+#about .maket .contentsInner .authorization .item.signup {
+  color: #ff4800;
+  margin-left: 2em;
+}
+#about .maket .contentsInner .authorization .item .label {
+  font-size: 0.95em;
+}
 #about .maket .contentsInner .items {
   display: flex;
   height: 100%;
@@ -43,7 +59,7 @@
 }
 #about .maket .contentsInner .contentmenu {
   display: flex;
-  max-width: 550px;
+  max-width: 700px;
 }
 #about .maket .contentsInner .contentmenu .reportCaption {
   color: #b2abac;

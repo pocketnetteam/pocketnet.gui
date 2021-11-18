@@ -21,17 +21,43 @@
 			width: 100%;
 			margin-left: auto;
 			margin-right: auto;
-	
+
 			
+			.authorization{
+				display: flex;
+
+				.item{
+					cursor: pointer;
+
+					&.signin{
+						&:hover{
+							color: @color-main;
+						}
+					}
+
+					&.signup{
+						color: #ff4800;
+						margin-left: @rhythm * 4;
+					}
+
+					.label{
+						font-size: .95em;
+					}
+				}
+			}
 	
 			.items{
 				display: flex;
 				height: 100%;
+
+				
 	
 				.sitename{
 					display: flex;
 				}
-	
+
+
+
 	
 				.icon{
 					padding: 0;
@@ -63,7 +89,7 @@
 	
 			.contentmenu{
 				display: flex;
-				max-width: 550px;
+				max-width: 700px;
 	
 				.reportCaption{
 					color: #b2abac;

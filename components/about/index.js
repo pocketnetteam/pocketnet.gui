@@ -24,8 +24,8 @@ var about = (function(){
 			
 
 			reports.push({
-				name :  self.app.localization.e('home'),
-				id : 'aboutHome',
+				name :  self.app.localization.e('about'),
+				id : 'about-home',
 				report : 'aboutHome',
 				mobile : true,
 
@@ -43,38 +43,42 @@ var about = (function(){
 			})
 		
 
+
+
 			reports.push({
-				name : self.app.localization.e('youtube'),
-				id : 'aboutYoutube',
+				name : self.app.localization.e('contentCreators'),
+				id : 'about-content-creators',
+				report : 'aboutContentCreators',
+				mobile : true
+			})
+
+			
+			reports.push({
+				name : self.app.localization.e('howItWorks'),
+				id : 'about-hiw',
+				report : 'aboutHIW',
+				mobile : true
+			})
+
+			reports.push({
+				name : self.app.localization.e('insteadOf') + ' youtube',
+				id : 'about-youtube',
 				report : 'aboutYoutube',
 				mobile : true
 			})
 			
 			reports.push({
-				name : self.app.localization.e('facebook'),
-				id : 'aboutFacebook',
+				name : self.app.localization.e('insteadOf') + ' facebook',
+				id : 'about-facebook',
 				report : 'aboutFacebook',
 				mobile : true
 			})
 
+							
 			reports.push({
-				name : self.app.localization.e('contentCreators'),
-				id : 'aboutContentCreators',
-				report : 'aboutContentCreators',
-				mobile : true
-			})
-				
-			reports.push({
-				name : self.app.localization.e('twitter'),
-				id : 'aboutTwitter',
+				name : self.app.localization.e('insteadOf') + ' twitter',
+				id : 'about-twitter',
 				report : 'aboutTwitter',
-				mobile : true
-			})
-			
-			reports.push({
-				name : self.app.localization.e('howItWorks'),
-				id : 'aboutHIW',
-				report : 'aboutHIW',
 				mobile : true
 			})
 		}
@@ -421,6 +425,26 @@ var about = (function(){
 							
 						})
 
+						el.c.find('.signin').on('click', function(){
+							self.app.mobile.vibration.small()
+							self.app.platform.sdk.registrations.getredirectFromCurrentPage()
+							self.nav.api.go({
+								href : 'authorization',
+								history : true,
+								open : true
+							})	
+						})
+
+						el.c.find('.signup').on('click', function(){
+							self.app.mobile.vibration.small()
+							self.app.platform.sdk.registrations.getredirectFromCurrentPage()
+							self.nav.api.go({
+								href : 'registration',
+								history : true,
+								open : true
+							})	
+						})
+
 
 						el.c.find('[elementsid="eventssitename"]').on('click', function(){
 
@@ -596,7 +620,7 @@ var about = (function(){
 		}
 
 		var makerep = function(clbk){
-			var id = parameters().id || 'aboutHome';
+			var id = parameters().id || 'about-home';
 
 
 			if(!isMobile() && state){
