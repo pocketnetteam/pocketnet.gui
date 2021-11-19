@@ -680,7 +680,7 @@ var WSS = function(admins, manage){
             wss.clients.forEach(socket => {
                 clients++
 
-                if ([socket.OPEN, socket.CLOSING].includes(socket.readyState)) {
+                if ([socket.OPEN].includes(socket.readyState)) {
                     open++
                 }
 
