@@ -1796,6 +1796,9 @@ var Proxy = function (settings, manage, test, logger) {
 				path: '/makecaptcha',
 
 				action: function ({ captcha, ip, text }) {
+
+					var _captcha = captcha
+
 					var captcha = captchas[captcha];
 
 					if (!captcha) {
@@ -1834,7 +1837,7 @@ var Proxy = function (settings, manage, test, logger) {
 						f.date.addseconds(captcha.time, 120) < currentTime ||
 						f.date.addseconds(captcha.time, 2) > currentTime
 					) {
-						delete captchas[request.data.captcha];
+						delete captchas[_captcha];
 
 						return Promise.reject('captchashots');
 					}
