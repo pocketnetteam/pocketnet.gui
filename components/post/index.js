@@ -1498,7 +1498,7 @@ var post = (function () {
 
 			if (share) {
 
-				if(self.app.platform.sdk.user.reputationBlocked(share.address)){
+				if(self.app.platform.sdk.user.reputationBlockedNotMe(share.address)){
 
 					renders.lockedaccount()
 					

@@ -70,7 +70,8 @@ Platform = function (app, listofnodes) {
         'PDgbAvsrS4VGKkW5rivcJaiCp7fnBoZRgM' : true,
         'PQt1eggTZKCCbjVsHx6rcMcBMU2p2PNQmt' : true,
         'PPY1UbumjHJaoxsfL7DVTPNLM4g697zdDe' : true,
-        'P9nFzh2sSyeTFd1F7fFGByhB6cD886jJi5' : true
+        'P9nFzh2sSyeTFd1F7fFGByhB6cD886jJi5' : true,
+        'PMf2RiHZiZTtQZftkxhRYbN5CgBH6dNh5A' : true
     }
 
     self.nvadr = {
@@ -6626,6 +6627,14 @@ Platform = function (app, listofnodes) {
                 if(!address) address = (self.app.platform.sdk.address.pnet() || {}).address
 
                 return self.app.platform.sdk.user.itisme(address) && self.app.platform.sdk.user.reputationBlocked(address)
+                
+            },
+
+            reputationBlockedNotMe : function(address){
+
+                if(!address) address = (self.app.platform.sdk.address.pnet() || {}).address
+
+                return !self.app.platform.sdk.user.itisme(address) && self.app.platform.sdk.user.reputationBlocked(address)
                 
             },
 

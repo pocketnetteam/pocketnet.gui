@@ -33,7 +33,6 @@ var cview = view
 
 if(share.itisvideo()) cview = 'video'
 
-
 var bigmessage = false;
 var name = app.platform.api.name(share.address)
 
@@ -43,6 +42,10 @@ var value = Number(share.score)
 
 var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share)
 
+var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
+
+
+	console.log('lockedaccount', lockedaccount)
 
 var metadisplay = function(){ %>
 
@@ -420,7 +423,7 @@ var arranges = {
 
 			</div>
 			
-			<% if(!checkvisibility) {%>
+			<% if(!checkvisibility && !lockedaccount) {%>
 
 				<div class="cntswrk cntscontent">
 
@@ -444,37 +447,41 @@ var arranges = {
 					<div class="hiddenpost">
 
 
-
-						<div class="captionpreview">
-							<% makecaptionclear() %>
-						</div>
-
-						<% if(checkvisibility == 'sub'){ %>
-
-							<div class="hiddenlabeltext">
-								<%=e('sharevisibilitylabel_sub_' + cview)%>
+						<% if(!lockedaccount) {%>
+							<div class="captionpreview">
+								<% makecaptionclear() %>
 							</div>
 
+							<% if(checkvisibility == 'sub'){ %>
+
+								<div class="hiddenlabeltext">
+									<%=e('sharevisibilitylabel_sub_' + cview)%>
+								</div>
+
+							<% } %>
+
+							<% if(checkvisibility == 'reg'){ %>
+
+								<div class="hiddenlabeltext">
+									<%=e('sharevisibilitylabel_reg_' + cview)%>
+								</div>
+
+							<% } %>
+
+							<% if(!state) {%>
+
+								<div class="hiddenlabelaction">
+									<button elementsid="hrefregistration" class="orange small button toregistration"><%=e('signupmenu')%></button>
+								</div>
+
+							<% } %>
+						
+						<% } else { %> 
 							
-
-						<% } %>
-
-						<% if(checkvisibility == 'reg'){ %>
-
 							<div class="hiddenlabeltext">
-								<%=e('sharevisibilitylabel_reg_' + cview)%>
+								<%=e('lockedaccounta')%>
 							</div>
-
 							
-
-						<% } %>
-
-						<% if(!state) {%>
-
-							<div class="hiddenlabelaction">
-								<button elementsid="hrefregistration" class="orange small button toregistration"><%=e('signupmenu')%></button>
-							</div>
-
 						<% } %>
 
 
