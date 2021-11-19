@@ -13,15 +13,17 @@ var letter = name ? name[0] : ''
 
 %>
 
-<div class="contentsInner">
+<div class="contentsInner" id="contentsInner">
+    <div class="item sitenames burgerMenu">
+        <i class="fa fa-bars"></i>
+    </div>
+    <div class="items sitenames logoWrapper">
 
-    <div class="items sitenames">
-        <div class="item table sitename" >
+        <div class="item table sitename">
             <div elementsid="eventssitename" class="icon" events="sitename">
                 <img class="header_logo all" src="img/logotypes/<%-app.meta.fullname.toLowerCase()%>_logo_<%-theme%>.svg">
             </div>
-            <div elementsid="eventslang" class="label">
-                <!--<div class="sitenamelabel"><% if(app.test){%>TESTNET<%} else {%><%-app.meta.fullname%><% }%></div>-->
+            <div elementsid="eventslang" class="label eventslang">
                 <div elementsid="menu_localization" class="lang localization">
                     
                     <% if(isMobile()) {%>
@@ -43,66 +45,29 @@ var letter = name ? name[0] : ''
 
 		each({
 
-			group : function(report, level, id, clbk){ %>
-
-        <div class="group" level="<%-level%>" levelid="<%-id%>">
-
-            <div class="groupNameTable table">
-
-                <div class="groupName">
-                    <div elementsid="openReport" class="reportCaption openReport" rid="<%-id%>">
-                        <%= report.name %>
-
-                        <% if(report.add && report.add()) {%>
-
-                        <%- report.add() %>
-
-                        <% } %>
-                    </div>
-                </div>
-
-                <div class="groupNamePanel">
-                    <div elementsid="groupNamePanelWrapper" class="groupNamePanelWrapper">
-                        <i class="fa fa-angle-up" aria-hidden="true"></i>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="groupContent">
-
-                <% clbk(); %>
-
-            </div>
-
-        </div>
-
-        <% 
-			},
 
 			report : function(report, level, id){ 
 
 				if(report.if && !report.if()) return
 
-
 			%>
-        <div class="reportCaption openReport" rid="<%-id%>">
+                <div class="reportCaption openReport" rid="<%-id%>">
 
-            <div class="reportCaptionTable table">
+                    <div class="reportCaptionTable table">
 
-                <div class="reportCaptionCell">
-                    <%= report.name %>
+                        <div class="reportCaptionCell">
+                            <%= report.name %>
+                        </div>
+
+                    </div>
                 </div>
-
-            </div>
-        </div>
         <% 
 
 			}
 
 		})
 
-	%>
+	    %>
 
     </div>
 
@@ -160,6 +125,57 @@ var letter = name ? name[0] : ''
 
     <% } %>
 
+    <div class="mobileMenu">
+        <div class="leftSection">
+            <div class="closeCross">
+                <i class="fa fa-times"></i>
+            </div>
+        </div>
+        <div class="menuContent">
+            
+            <%
+
+            each({
+        
+        
+                report : function(report, level, id){ 
+        
+                    if(report.if && !report.if()) return
+        
+                %>
+                    <div class="reportCaption openReport" rid="<%-id%>">
+        
+                        <div class="reportCaptionTable table">
+        
+                            <div class="reportCaptionCell">
+                                <%= report.name %>
+                            </div>
+        
+                        </div>
+                    </div>
+            <% 
+        
+                }
+        
+            })
+        
+            %>
+            <div elementsid="eventslang" class="label eventslang">
+                <div elementsid="menu_localization" class="lang localization">
+                    
+                    <% if(isMobile()) {%>
+                        <%-(lkey.key || '')%> 
+                    <% } else { %>
+                        <%-(lkey.name || '')%> 
+                    <% } %>
+                    
+                    <i class="fas fa-caret-down"></i>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
 
 
 </div>

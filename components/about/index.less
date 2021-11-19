@@ -4,19 +4,40 @@
 
 #about{
 
+	table{
+		td{
+			position: static;
+		}
+	}
+
+	.lang{
+		cursor: pointer;
+		font-weight: 100;
+
+		i{
+			opacity: 0.4;
+		}
+	}
+
 	.maket {
-		position: fixed;
 		top: 0;
 		background: white;
 		z-index: 4999;
 		width: 100%;
 		height: @reportMarginTop;
 
-		.menuWrapper{
-			width: 95%;
-			margin-left: auto;
-			margin-right: auto;
+		.cnt{
+			height: 100%;
+
+			.menuWrapper{
+				width: 95%;
+				height: 100%;
+				margin-left: auto;
+				margin-right: auto;
+			}
 		}
+
+
 
 
 		.contentsInner{
@@ -24,9 +45,16 @@
 			justify-content: space-between;
 			align-items: center;
 			max-width: 1280px;
+			height: 100%;
 			width: 100%;
 			margin-left: auto;
 			margin-right: auto;
+
+			.burgerMenu{
+				display: none;
+				font-size: @rhythm * 3;
+				cursor: pointer;
+			}
 
 			
 			.authorization{
@@ -60,6 +88,11 @@
 	
 				.sitename{
 					display: flex;
+				
+					.eventslang{
+						display: flex;
+						align-items: center;
+					}
 				}
 
 
@@ -76,18 +109,12 @@
 					.header_logo{
 						height: 20px;
 						vertical-align: bottom;
-					}
-				}
-	
-				.lang{
-					cursor: pointer;
-					font-weight: 100;
-					padding-left: 0.5em;
+						padding-right: 0.5em;
 
-					i{
-						opacity: 0.4;
 					}
+
 				}
+
 			
 	
 			}
@@ -127,7 +154,100 @@
 		margin-top: @reportMarginTop;
 	}
 
+	.mobileMenu{
+		display: none;
+		position: fixed;
+		width: 100%;
+		height: 100%;
+		z-index: 9999;
+		margin-right: auto;
+		margin-left: auto;
+		top: 0;
+		left: 0;
 
+
+
+		.leftSection{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 80px;
+			height: 100%;
+			background: rgba(10,12,23,.5);
+			cursor: pointer;
+			color: @color-gray-mlight;
+
+			&:hover{
+				color: #ffffff;
+			}
+	
+			.closeCross{
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				font-size: 1.5em;
+			}
+
+		}
+
+
+		.menuContent{
+			padding: 2em;
+			position: relative;
+			top: 0;
+			background: #ffffff;
+			height: 100%;
+			width: 100%;
+
+			.openReport{
+				padding: 15px 0;
+				cursor: pointer;
+
+				&:hover{
+					color: @color-main;
+				}
+			}
+
+			.eventslang{
+				margin-top: 4em;
+			}
+
+		}
+	}
+
+
+
+}
+
+@media (max-width: 780px) {
+
+	#about{
+
+		margin-top: -65px;
+		
+		.contentsInner{
+			.burgerMenu{
+				display: block!important;
+			}
+			.logoWrapper{
+				display: none!important;
+			}
+			.contentmenu{
+				display: none!important;
+			}
+		}
+
+		.showMobileMenu{
+
+			.mobileMenu{
+				display: flex!important;
+			}
+		}
+
+
+
+
+	}
 
 }
 

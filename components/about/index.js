@@ -335,11 +335,7 @@ var about = (function(){
 		}
 
 		var events = {
-			closeGroup : function(){
-				var id = $(this).closest('[levelid]').attr('levelid')
 
-				actions.closeGroup(id);
-			},
 			openReport : function(){
 				var id = $(this).attr('rid');
 
@@ -351,7 +347,25 @@ var about = (function(){
 
 				}
 
+				events.hideMobileMenu()
+
 				actions.openReport(id, true);
+			},
+
+			hideMobileMenu : function(){
+
+				var contentsInner = el.c.find('#contentsInner')
+
+				contentsInner.removeClass('showMobileMenu');
+			},
+
+			showMobileMenu : function(){
+
+				var contentsInner = el.c.find('#contentsInner')
+
+				contentsInner.addClass('showMobileMenu');
+
+				
 			}
 		}
 
@@ -380,10 +394,15 @@ var about = (function(){
 	
 					}, function(_p){
 	
-						_p.el.find('.groupNamePanelWrapper').on('click', events.closeGroup);
+
 						//_p.el.find('.groupName').on(clickAction(), events.closeGroup);
 						_p.el.find('.openReport').on('click', events.openReport);
+
 	
+						_p.el.find('.burgerMenu').on('click', events.showMobileMenu)
+
+						_p.el.find('.leftSection').on('click', events.hideMobileMenu)
+
 						ParametersLive([s], _p.el)
 
 						self.app.actions.scroll(0)
