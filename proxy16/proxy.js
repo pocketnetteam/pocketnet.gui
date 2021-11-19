@@ -599,8 +599,8 @@ var Proxy = function (settings, manage, test, logger) {
 		init: function () {
 			var ins = {
         		1: [
-					{host : 'pocketnetpeertube1.nohost.me', cantuploading : true}, 
-					{host : 'pocketnetpeertube2.nohost.me' , cantuploading : true}
+					{host : 'pocketnetpeertube1.nohost.me'}, 
+					{host : 'pocketnetpeertube2.nohost.me' }
 				],
         		5: [
 					{host : 'pocketnetpeertube5.nohost.me', cantuploading : true}, 
@@ -611,7 +611,13 @@ var Proxy = function (settings, manage, test, logger) {
 					{host : 'pocketnetpeertube6.nohost.me', cantuploading : true}, 
 				],
         		8:  ['pocketnetpeertube8.nohost.me', 'pocketnetpeertube9.nohost.me'],
-				10: ['pocketnetpeertube10.nohost.me', 'pocketnetpeertube11.nohost.me'],
+				
+				10: [
+					
+					{host : 'pocketnetpeertube10.nohost.me', cantuploading : true}, 
+					{host : 'pocketnetpeertube11.nohost.me', cantuploading : true}, 
+					
+				],
 
 				12: ['bastyonmma.pocketnet.app', 'bastyonmma.nohost.me'],
       		};
