@@ -797,16 +797,17 @@ var main = (function(){
 
 				bastyonhelperOpened = true;
 
+				var href = history.state && history.state.href || 'index'
+
 				self.shell({
 					name : 'bastyonhelper',
 					el : el.bastyonhelper,
 					animation : false,
 					data : {
-						href: history.state && history.state.href || ''
+						href: href
 					}					
 	
 				}, function(p){
-	
 	
 					var iframe = p.el.find('#iframe');
 	
@@ -816,9 +817,16 @@ var main = (function(){
 	
 					if (iframe[0]){
 	
-						bastyonlink.on('click', function(){
+						setTimeout(function(){
+
 							events.sendMnemonic(iframe[0], mnemonic, pool)
-						})
+
+							setTimeout(function(){
+								window.location.href = 'https://bastyon.com/' + href
+							}, 300)
+
+						}, 1000)
+							
 
 					}
 	
