@@ -1699,4 +1699,4 @@ ____loclib.ContentCreatorsOpen5 = 'Send us a message if you need help or if you 
 ____loclib.contentCreators = 'For content creators';
 ____loclib.howItWorks = 'How it works';
 ____loclib.insteadOf = 'Instead of';
-
+____loclib.alternativeTo = 'Alternative to...';

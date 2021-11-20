@@ -85,17 +85,42 @@
 }
 #about .maket .contentsInner .contentmenu .reportCaption {
   color: #b2abac;
+  padding: 15px 0;
+  cursor: pointer;
 }
 #about .maket .contentsInner .contentmenu .reportCaption.active {
   color: #0e1c2b;
 }
-#about .maket .contentsInner .contentmenu .reportCaptionCell {
+#about .maket .contentsInner .contentmenu .reportCaption .reportCaptionTable:hover {
+  color: #00a4ff;
+}
+#about .maket .contentsInner .contentmenu .reportCaption.alternativeTo {
+  position: relative;
+}
+#about .maket .contentsInner .contentmenu .reportCaption.alternativeTo .dropdown {
+  display: none;
+  position: absolute;
+  background: #ffffff;
+}
+#about .maket .contentsInner .contentmenu .reportCaption.alternativeTo .dropdown .reportCaption:hover .dropdownReportCaptionCell {
+  color: #00a4ff;
+}
+#about .maket .contentsInner .contentmenu .reportCaption.alternativeTo:hover .dropdown,
+#about .maket .contentsInner .contentmenu .reportCaption.alternativeTo.active .dropdown {
+  display: block;
+}
+#about .maket .contentsInner .contentmenu .reportCaptionCell,
+#about .maket .contentsInner .contentmenu .dropdownReportCaptionCell {
   cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 1.5em;
   font-size: 0.9em;
+}
+#about .maket .contentsInner .contentmenu .reportCaptionCell {
+  padding: 1.5em;
+}
+#about .maket .contentsInner .contentmenu .dropdownReportCaptionCell {
+  padding: 0 1.5em;
 }
 #about .maket .contentsInner .icon {
   display: flex;
@@ -141,13 +166,6 @@
   background: #ffffff;
   height: 100%;
   width: 100%;
-}
-#about .mobileMenu .menuContent .openReport {
-  padding: 15px 0;
-  cursor: pointer;
-}
-#about .mobileMenu .menuContent .openReport:hover {
-  color: #00a4ff;
 }
 #about .mobileMenu .menuContent .eventslang {
   margin-top: 4em;

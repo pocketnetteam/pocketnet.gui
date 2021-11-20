@@ -122,25 +122,72 @@
 	
 	
 			.contentmenu{
-				display: flex;
-				max-width: 700px;
+				display : flex;
+				max-width : 700px;
 	
 				.reportCaption{
-					color: #b2abac;
+					color : #b2abac;
+					padding : 15px 0;
+					cursor : pointer;
 
 					&.active{
-						color: #0e1c2b;
+						color : #0e1c2b;
 					}
+
+					.reportCaptionTable{
+						&:hover{
+							color : @color-main;
+						}
+					}
+
+					&.alternativeTo{
+						position : relative;
+			
+						.dropdown{
+							display : none;
+							position : absolute;
+							background : #ffffff;
+
+							.reportCaption{
+								&:hover{
+									.dropdownReportCaptionCell{
+										color : @color-main;
+									}
+								}
+							}
+						}
+					}
+
+
+					&.alternativeTo{
+
+						&:hover, &.active{
+							.dropdown{
+								display : block;
+							}
+						}
+					}
+
+
+		
 				}
 	
-				.reportCaptionCell{
+				.reportCaptionCell, .dropdownReportCaptionCell{
 					cursor: pointer;
 					display: flex;
 					align-items: center;
-					justify-content: center;
-					padding: @rhythm * 3;
 					font-size: .9em;
 				}
+
+				.reportCaptionCell{
+					padding: @rhythm * 3;
+				}
+
+				.dropdownReportCaptionCell{
+					padding: 0 @rhythm * 3;
+
+				}
+
 				
 			}
 	
@@ -199,15 +246,6 @@
 			background: #ffffff;
 			height: 100%;
 			width: 100%;
-
-			.openReport{
-				padding: 15px 0;
-				cursor: pointer;
-
-				&:hover{
-					color: @color-main;
-				}
-			}
 
 			.eventslang{
 				margin-top: 4em;

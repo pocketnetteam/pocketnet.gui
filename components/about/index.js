@@ -64,6 +64,7 @@ var about = (function(){
 				name : self.app.localization.e('insteadOf') + ' youtube',
 				id : 'about-youtube',
 				report : 'aboutYoutube',
+				group : true,
 				mobile : true
 			})
 			
@@ -71,6 +72,7 @@ var about = (function(){
 				name : self.app.localization.e('insteadOf') + ' facebook',
 				id : 'about-facebook',
 				report : 'aboutFacebook',
+				group : true,
 				mobile : true
 			})
 
@@ -79,6 +81,7 @@ var about = (function(){
 				name : self.app.localization.e('insteadOf') + ' twitter',
 				id : 'about-twitter',
 				report : 'aboutTwitter',
+				group : true,
 				mobile : true
 			})
 		}
@@ -347,10 +350,22 @@ var about = (function(){
 
 				}
 
-				events.hideMobileMenu()
+				events.hideMobileMenu();
+
+				events.removeAlternativeTo();
 
 				actions.openReport(id, true);
 			},
+
+			toggleAlternativeTo : function(){
+				$(this).toggleClass('active');
+			},
+
+			removeAlternativeTo : function(){
+				var alternativeTo = el.c.find('.alternativeTo');
+				alternativeTo.removeClass('active');
+			},
+
 
 			hideMobileMenu : function(){
 
@@ -394,11 +409,22 @@ var about = (function(){
 	
 					}, function(_p){
 	
-
+						var alternativeTo = _p.el.find('.alternativeTo');
 						//_p.el.find('.groupName').on(clickAction(), events.closeGroup);
 						_p.el.find('.openReport').on('click', events.openReport);
 
-	
+						alternativeTo.on('click', events.toggleAlternativeTo);
+
+						$(document).on('click',function (e) {
+
+							if ($(e.target).closest('.alternativeTo').length) return;
+							alternativeTo.removeClass('active');
+
+						});
+
+
+
+
 						_p.el.find('.burgerMenu').on('click', events.showMobileMenu)
 
 						_p.el.find('.leftSection').on('click', events.hideMobileMenu)

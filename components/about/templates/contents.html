@@ -48,7 +48,7 @@ var letter = name ? name[0] : ''
 
 			report : function(report, level, id){ 
 
-				if(report.if && !report.if()) return
+				if(report.group) return
 
 			%>
                 <div class="reportCaption openReport" rid="<%-id%>">
@@ -68,6 +68,48 @@ var letter = name ? name[0] : ''
 		})
 
 	    %>
+
+        <div class="reportCaption alternativeTo">
+
+            <div class="reportCaptionTable table">
+
+                <div class="reportCaptionCell">
+                    <%=e('alternativeTo')%>
+                </div>
+
+            </div>
+            <div class="dropdown">
+
+                <%
+
+                each({
+        
+        
+                    report : function(report, level, id){ 
+        
+                        if(!report.group) return
+        
+                    %>
+                        <div class="reportCaption openReport" rid="<%-id%>">
+        
+                            <div class="reportCaptionTable table">
+        
+                                <div class="dropdownReportCaptionCell">
+                                    <%= report.name %>
+                                </div>
+        
+                            </div>
+                        </div>
+                <% 
+        
+                    }
+        
+                })
+        
+                %>
+
+            </div>
+        </div>
 
     </div>
 
