@@ -21,8 +21,7 @@ routing.registerRoute(
   // Check to see if the request's destination is style for stylesheets, script for JavaScript, or worker for web worker
   ({ request }) => {
     
-    return 
-      request.destination === 'style' ||
+    return request.destination === 'style' ||
       request.destination === 'script' ||
       request.destination === 'worker'},
 
