@@ -799,18 +799,38 @@
 		border-right : 1px solid fade(@color-gray-slight, 30);
 		.shadowSmaller();
 
+		.ways{
+			display : flex;
+			align-items: flex-start;
+
+			>div{
+				flex-shrink: 1;
+  				flex-basis: 0;
+				flex-grow: 1;
+			}
+		}
+
 		.row{
 			display : flex;
 			flex-wrap : wrap;
 			padding : 0 2 * @rhythm;
 
 			.button{
-				min-width: 160px;
+				min-width: 220px;
+
+				&.ghost{
+					min-width: 0;
+				}
 			}
 
 			>div{
 				padding : @rhythm 2 * @rhythm;
 				text-align: center;
+				min-width: 60px;
+				
+				.clogo{
+					height: 24px;
+				}
 
 				img{
 					width: 18px;
@@ -822,6 +842,7 @@
 					font-size: 0.8em;
 					font-weight: 500;
 				}
+
 
 			}
 		}

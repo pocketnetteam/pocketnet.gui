@@ -816,6 +816,7 @@ var share = (function(){
 				}
 
 				el.c.addClass('loading')
+				
 				topPreloader(50)
 
 				var SAVE = function(){
@@ -848,9 +849,17 @@ var share = (function(){
 						}
 
 						currentShare.uploadImages(self.app, function(){
+
+							if (currentShare.hasexchangetag()){
+								currentShare.repost.v = ''
+								currentShare.settings.f = '0'
+								currentShare.url.set()
+							}
+
 							if (currentShare.repost.v){
 								currentShare.settings.f = '0'
 							}
+
 							if (currentShare.checkloaded()){
 								
 		
@@ -1011,6 +1020,7 @@ var share = (function(){
 				}
 
 			},
+
 			error : function(onlyremove){
 				var error = currentShare.validation();
 
@@ -1075,10 +1085,12 @@ var share = (function(){
 			images : self.app.localization.e('maximages'),
             url : self.app.localization.e('e13164'),
             error_video : self.app.localization.e('e13165'),
-			videocaption : self.app.localization.e('entervideocaption')
+			videocaption : self.app.localization.e('entervideocaption'),
+			pkoin_commerce_tag : self.app.localization.e('pkoin_commerce_tag_share_error') 
 		}
 
 		var events = {
+
 			unfocus : function(e){
 
 				
@@ -1088,6 +1100,7 @@ var share = (function(){
 				}
 		
 			},
+
 			selectTime : function(){
 
 				var d = new Date()
@@ -1164,6 +1177,7 @@ var share = (function(){
 
 				
 			},
+
 			changePostTime : function(){
 
 				var _el = $(this);
@@ -1223,6 +1237,7 @@ var share = (function(){
 				}
 
 			},
+
 			changeAddress : function(){
 				var address = $(this).val();
 
@@ -1596,9 +1611,7 @@ var share = (function(){
 
 					var u = _mestate
 
-					if(!currentShare.repost.v && (u.reputation > 50 || !u.trial)) {
-
-						
+					if(!currentShare.hasexchangetag() && !currentShare.repost.v && (u.reputation > 50 || !u.trial)) {
 
 						currentShare.settings.f || (currentShare.settings.f = '0')
 
@@ -1673,22 +1686,22 @@ var share = (function(){
 
 							removeTag : function(tag){
 								actions.removeTag(tag)
-								renders.tgs()
+								renders.stateline()
 							},
 
 							removeTags : function(tag){
 								actions.removeTags(tag)
-								renders.tgs()
+								renders.stateline()
 							},
 
 							addTag : function(tag){
 								actions.addTag(tag)
-								renders.tgs()
+								renders.stateline()
 							},
 
 							addTags : function(tags){
 								actions.addTags(tags)
-								renders.tgs()
+								renders.stateline()
 							},
 
 							language : function(){
@@ -1716,7 +1729,11 @@ var share = (function(){
 				}
 			},
 
-			
+			stateline : function(){
+				renders.tgs();
+				renders.postline();
+				renders.settings();
+			},
 
 			all : function(){
 

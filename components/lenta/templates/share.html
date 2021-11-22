@@ -516,28 +516,37 @@ var arranges = {
 
 									<div class="category">
 										<a elementsid="index?sst=<%-category.tags.join(' ')%>" href="index?sst=<%-category.tags.join(' ')%>">
-											<span>@<%-category.name%></span> 
+											<span>@<%-category.name%></span><% if(category.new) {%>&nbsp;<span class="newlabel">New!</span><% } %> 
 										</a>
 									</div>
 
 								<% }) %>
 
-								<% _.each(bycategories.tags, function(tag){ %>
+								<% _.each(bycategories.tags, function(tag){ 
+									
+									var additional = app.platform.sdk.tags.findadditional(tag)
+									
+									%>
 
 									<div class="tag">
 										<a elementsid="index?sst=<%-tag%>" href="index?sst=<%-tag%>">
-											<span>
-												#<%-tag%>
-											</span>
+											<span>#<%-tag%></span><% if(additional && additional.new) {%>&nbsp;<span class="newlabel">New!</span><% } %>
 										</a>
 									</div>
 
 								<% }) %>
 							</div>
 
+
+
+
 						<% } %>
 
-						
+						<% if(share.hasexchangetag()) {%>
+							<div class="pkoin_commerce_info">
+								<span><%=e('pkoin_commerce_info')%></span>
+							</div>
+						<% } %>
 						
 
 						<% if(!share.temp &&  (typeof repost == 'undefined' || !repost || fromempty)) {%>
