@@ -54,6 +54,9 @@ self.addEventListener('activate', event => {
   const currentCacheName = core.cacheNames.runtime;
   // Find the old caches if there are any
   caches.keys().then(cacheNames => {
+
+    console.log('cacheNames', cacheNames, currentCacheName)
+
     return cacheNames.filter(cacheName => cacheName != currentCacheName);
   }).then(cachesToDelete => {
     return Promise.all(cachesToDelete.map(cacheToDelete => {
