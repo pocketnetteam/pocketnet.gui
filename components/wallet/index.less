@@ -835,6 +835,21 @@
 				img{
 					width: 18px;
 					height: 18px;
+
+					&.wh{
+						height: 8px;
+						width: auto;
+					}
+
+					&.wh2{
+						height: 18px;
+						width: auto;
+					}
+
+					&.wh3{
+						height: 22px;
+						width: auto;
+					}
 				}
 
 				.label{
@@ -2112,6 +2127,19 @@ html.stblack{
 
 	.buypkoin{
 		padding : @rhythm;
+
+		.ways{
+			display : flex;
+			align-items: flex-start;
+			flex-wrap: wrap;
+
+			>div{
+				flex-shrink: 1;
+  				flex-basis: content;
+				flex-grow: 1;
+				padding-bottom: 6 * @rhythm;
+			}
+		}
 		
 		.row{
 			padding : 0;
@@ -2119,14 +2147,16 @@ html.stblack{
 			.button{
 				min-width: 310px;
 			}
-
-			>div{
-				width: 12.5%;
-				padding : @rhythm @rhythm;
-				text-align: center;
-
-
+			&.flx{
+				>div{
+					width: 12.5%;
+					padding : @rhythm @rhythm;
+					text-align: center;
+	
+	
+				}
 			}
+			
 		}
 
 	}

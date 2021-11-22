@@ -1268,5 +1268,9 @@ ____loclib.sharevisibilitylabel_reg_video = 'Author chose to make this <b>video<
 
 ____loclib.pkoin_commerce_tag_share_error = 'The "pkoin_commerce" tag can only be used as a separate tag. A post with this tag cannot contain videos or images'
 
-
 ____loclib.pkoin_commerce_info = 'Any peer-to-peer PKOIN transactions are not moderatred and at your own risk.'
+
+
+____loclib.buyforcrypto = 'Buy for crypto'
+____loclib.buywithcreditcard = 'Buy with credit card'
+____loclib.buylogo = 'Buy Pocketcoin (PKOIN)'

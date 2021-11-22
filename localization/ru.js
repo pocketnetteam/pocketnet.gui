@@ -1056,3 +1056,7 @@ ____loclib.sharevisibilitylabel_reg_video = 'Автор решил сделат�
 
 ____loclib.pkoin_commerce_tag_share_error = 'Тэг "pkoin_commerce" может использоваться только как отдельный тэг'
 ____loclib.pkoin_commerce_info = 'Из рук в руки PKOIN транзакции не модерируются, пользователи несут все  риски'
+
+____loclib.buyforcrypto = 'Купить за криптовалюту'
+____loclib.buywithcreditcard = 'Купить с карты'
+____loclib.buylogo = 'Купить Pocketcoin (PKOIN)'
