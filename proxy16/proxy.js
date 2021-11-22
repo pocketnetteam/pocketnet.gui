@@ -599,8 +599,8 @@ var Proxy = function (settings, manage, test, logger) {
 		init: function () {
 			var ins = {
         		1: [
-					{host : 'pocketnetpeertube1.nohost.me', cantuploading : true}, 
-					{host : 'pocketnetpeertube2.nohost.me' , cantuploading : true}
+					{host : 'pocketnetpeertube1.nohost.me'}, 
+					{host : 'pocketnetpeertube2.nohost.me' }
 				],
         		5: [
 					{host : 'pocketnetpeertube5.nohost.me', cantuploading : true}, 
@@ -611,7 +611,13 @@ var Proxy = function (settings, manage, test, logger) {
 					{host : 'pocketnetpeertube6.nohost.me', cantuploading : true}, 
 				],
         		8:  ['pocketnetpeertube8.nohost.me', 'pocketnetpeertube9.nohost.me'],
-				10: ['pocketnetpeertube10.nohost.me', 'pocketnetpeertube11.nohost.me'],
+				
+				10: [
+					
+					{host : 'pocketnetpeertube10.nohost.me', cantuploading : true}, 
+					{host : 'pocketnetpeertube11.nohost.me', cantuploading : true}, 
+					
+				],
 
 				12: ['bastyonmma.pocketnet.app', 'bastyonmma.nohost.me'],
       		};
@@ -670,7 +676,6 @@ var Proxy = function (settings, manage, test, logger) {
 		info: function (compact) {
 
 			var mem = process.memoryUsage()
-
 			
 			var loads = os.loadavg();
 
@@ -1791,6 +1796,9 @@ var Proxy = function (settings, manage, test, logger) {
 				path: '/makecaptcha',
 
 				action: function ({ captcha, ip, text }) {
+
+					var _captcha = captcha
+
 					var captcha = captchas[captcha];
 
 					if (!captcha) {
@@ -1829,7 +1837,7 @@ var Proxy = function (settings, manage, test, logger) {
 						f.date.addseconds(captcha.time, 120) < currentTime ||
 						f.date.addseconds(captcha.time, 2) > currentTime
 					) {
-						delete captchas[request.data.captcha];
+						delete captchas[_captcha];
 
 						return Promise.reject('captchashots');
 					}
@@ -1869,6 +1877,13 @@ var Proxy = function (settings, manage, test, logger) {
 					return self.wallet
 						.addqueue(key || 'registration', address, ip)
 						.then((r) => {
+
+							if (settings.server.captcha) {
+								if (captcha) {
+									delete captchas[captcha]
+								}
+							}
+
 							return Promise.resolve({
 								data: r,
 							});

@@ -9198,6 +9198,8 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
 
       if (localVideo != undefined && !localVideo.infos.videoDetails) {
 
+        console.log('localVideo', localVideo)
+
         var new_target = document.createElement('video');
         target.parentNode.replaceChild(new_target, target);
         target = new_target
@@ -9229,7 +9231,7 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
           return typeof PeerTubeEmbeding != 'undefined'
         }, function(){
   
-          
+          console.log('localVideo', localVideo)
   
           PeerTubeEmbeding.main(target, clear_peertube_id, {
             host : host,

@@ -627,6 +627,8 @@ var author = (function(){
 
 					author.state = self.sdk.ustate.storage[author.address]
 
+					console.log('author', author)
+
 					self.shell({
 
 						name :  'info',

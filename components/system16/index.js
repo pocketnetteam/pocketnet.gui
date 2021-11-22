@@ -1249,6 +1249,12 @@ var system16 = (function(){
 							name : "Websocket Connections",
 							id : 'wssc'
 						},
+
+						{
+							path : 'wss.open',
+							name : "Websocket Connections/O",
+							id : 'wsso'
+						},
 	
 						{
 							path : 'server.middle.requestsIp',
@@ -1619,7 +1625,7 @@ var system16 = (function(){
 						
 						series[smeta.id + key] = {
 
-							name : smeta.name + ": " + key,
+							name : smeta.name + (key ? (": " + key) : ''),
 							path : ekey + smeta.path,
 							color : colors[ i % colors.length ],
 							type : smeta.type

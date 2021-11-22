@@ -161,6 +161,8 @@ var instance = function (host, Roy) {
 
 		}).catch((error) => {
 
+			console.log(`http://${host}${url}`, ((error || {}).response || {}).statusText)
+
 
 			var meta = {
 				code : ((error || {}).response || {}).status || 500,

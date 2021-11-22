@@ -22,16 +22,22 @@
 
 					<% if(state) {%>
 
-					<div class="chat">
-						<button elementsid="chatbutton" class="button ghost ">
-							<%- e('sendMessenger') %> <i class="fas fa-envelope"></i>
-						</button>
-					</div>
+						<% if(!share || !share.visibility()){ %>
+
+							<div class="chat">
+								<button elementsid="chatbutton" class="button ghost ">
+									<%- e('sendMessenger') %> <i class="fas fa-envelope"></i>
+								</button>
+							</div>
+
+						<% } %>
 
 					<% } %>
 
 
-					<% if(postId) {%>
+					<% if(postId) {
+						
+						if(share && !share.visibility()){ %>
 
 						<div elementsid="itemforrepost" class="item forrepost">
 
@@ -40,6 +46,8 @@
 							</button>
 
 						</div>
+
+						<% } %>
 
 					<% } %>
 

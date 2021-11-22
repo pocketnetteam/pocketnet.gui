@@ -17,31 +17,74 @@
 
 	<div class="action">
 
-		<div class="row flx">
-			<% _.each(coins, function(coin){ %>
-                
-                <div class="coin">
-                    <div class="clogo">
-                        <img src="./img/coins/<%-coin.image%>">
-                    </div>
-                    <div class="label">
-                        <%- coin.code %>
-                    </div>
-                </div>
-                
-            <% }) %>
-		</div>
+		<div class="ways">
+			<div class="wayf">
 
-		<div class="row table">
-		
+				<div class="row flx">
+					<div class="fiat">
+						<div class="clogo">
+							<i class="fab fa-cc-visa"></i>
+						</div>
+						<div class="label">
+							Visa
+						</div>
+					</div>
 
-			<div class="reciever">
-                <a elementsid="https://pkoin.net/?address=<%-a.address || ''%>" href="https://pkoin.net/?address=<%-a.address || ''%>">
-                    <button class="button"><i class="fas fa-chevron-circle-right"></i> Buy</button>
-                </a>
+					
+					<div class="fiat">
+						<div class="clogo">
+							<i class="fab fa-cc-mastercard"></i>
+						</div>
+						<div class="label">
+							Mastercard
+						</div>
+					</div>
+					
+				</div>
+
+				<div class="row table">
+					<div class="reciever">
+						<a elementsid="https://buy.pkoin.indacoin.io" href="https://buy.pkoin.indacoin.io/index?address=<%-a.address || ''%>">
+							<button class="button orange"><i class="fas fa-chevron-circle-right"></i> Buy with credit card</button>
+						</a>
+					</div>
+				</div>
+
 			</div>
-		</div>
 
+			<div class="wayf">
+
+				<div class="row flx">
+					<% _.each(coins, function(coin){ %>
+						
+						<div class="coin">
+							<div class="clogo">
+								<img src="./img/coins/<%-coin.image%>">
+							</div>
+							<div class="label">
+								<%- coin.code %>
+							</div>
+						</div>
+						
+					<% }) %>
+					
+				</div>
+
+				<div class="row table">
+
+					<div class="reciever">
+						<a elementsid="https://pkoin.net" href="https://pkoin.net/?address=<%-a.address || ''%>">
+							<button class="button ghost"><i class="fas fa-chevron-circle-right"></i> Buy for crypto</button>
+						</a>
+					</div>
+				</div>
+
+			</div>
+
+
+			
+
+		</div>
 	
 		
 	</div>

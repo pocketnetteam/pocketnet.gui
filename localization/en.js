@@ -776,6 +776,7 @@ ____loclib.e13255 = "This username is already in use"
 ____loclib.e13256 = "This post is too long, please break it up."
 ____loclib.e13257 = "Your "+appname+" reputation score does not allow for registering of complaints yet"
 ____loclib.e13258 = "You have reached the limit of complaints in a 24 hour period"
+____loclib.e2000 = "Connection error. Please try again"
 
 ____loclib.e13259 = "Cannot complain about your own post"
 ____loclib.e13260 = "You have already registered your complaint about this post"
@@ -1089,7 +1090,7 @@ ____loclib.pbp_10 = "If you invite a video blogger and can prove it, you get a b
 ____loclib.pbp_11 = "For any questions, email"
 
 ____loclib.pbp_6_1 = "Referral Users"
-____loclib.pbp_6_2 = "1250"
+____loclib.pbp_6_2 = "1000"
 ____loclib.pbp_6_3 = "Important: Starting November 1 there is an additional requirement for each bonus. You must have 1000 Referral Users for each bonus. To get Referral Users you must Include Referral Link when sharing!"
 
 
@@ -1246,8 +1247,8 @@ ____loclib.attachVideoLentaShort = "Attach";
 ____loclib.linkToPostLenta = "Already posted"
 
 ____loclib.ReferralUsers = "Referral Users. Total/From&nbsp;01.11.2021"
-____loclib.lockedaccount = "Your account is locked due to reputation below -50"
-____loclib.lockedaccounta = "Author Account is locked due to reputation below -50"
+____loclib.lockedaccount = "Your account is locked due to reputation below -30"
+____loclib.lockedaccounta = "Author Account is locked due to reputation below -30"
 
 ____loclib.visibletoeveryone = 'Visible for everyone'
 ____loclib.visibleonlytosubscribers = 'Visible only for subscribers'
@@ -1701,3 +1702,8 @@ ____loclib.contentCreators = 'For content creators';
 ____loclib.howItWorks = 'How it works';
 ____loclib.insteadOf = 'Instead of';
 
+
+____loclib.pkoin_commerce_tag_share_error = 'The "pkoin_commerce" tag can only be used as a separate tag. A post with this tag cannot contain videos or images'
+
+
+____loclib.pkoin_commerce_info = 'Any peer-to-peer PKOIN transactions are not moderatred and at your own risk.'

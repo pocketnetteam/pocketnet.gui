@@ -816,6 +816,7 @@ var share = (function(){
 				}
 
 				el.c.addClass('loading')
+				
 				topPreloader(50)
 
 				var SAVE = function(){
@@ -848,9 +849,17 @@ var share = (function(){
 						}
 
 						currentShare.uploadImages(self.app, function(){
+
+							if (currentShare.hasexchangetag()){
+								currentShare.repost.v = ''
+								currentShare.settings.f = '0'
+								currentShare.url.set()
+							}
+
 							if (currentShare.repost.v){
 								currentShare.settings.f = '0'
 							}
+
 							if (currentShare.checkloaded()){
 								
 		
@@ -1011,6 +1020,7 @@ var share = (function(){
 				}
 
 			},
+
 			error : function(onlyremove){
 				var error = currentShare.validation();
 
@@ -1075,10 +1085,12 @@ var share = (function(){
 			images : self.app.localization.e('maximages'),
             url : self.app.localization.e('e13164'),
             error_video : self.app.localization.e('e13165'),
-			videocaption : self.app.localization.e('entervideocaption')
+			videocaption : self.app.localization.e('entervideocaption'),
+			pkoin_commerce_tag : self.app.localization.e('pkoin_commerce_tag_share_error') 
 		}
 
 		var events = {
+
 			unfocus : function(e){
 
 				
@@ -1088,6 +1100,7 @@ var share = (function(){
 				}
 		
 			},
+
 			selectTime : function(){
 
 				var d = new Date()
@@ -1164,6 +1177,7 @@ var share = (function(){
 
 				
 			},
+
 			changePostTime : function(){
 
 				var _el = $(this);
@@ -1223,6 +1237,7 @@ var share = (function(){
 				}
 
 			},
+
 			changeAddress : function(){
 				var address = $(this).val();
 
@@ -1592,59 +1607,64 @@ var share = (function(){
 
 			settings : function(clbk){
 
-				if(!currentShare.repost.v) {
+				self.app.platform.sdk.ustate.me(function(_mestate){
 
-					currentShare.settings.f || (currentShare.settings.f = '0')
+					var u = _mestate
 
-					var selector = new Parameter({
+					if(!currentShare.hasexchangetag() && !currentShare.repost.v && (u.reputation > 50 || !u.trial)) {
 
-						type : "VALUES",
-						name : "Visibility",
-						id : 'organizationCode',
-						dbId : "INS_BROKER_CODE",
-						possibleValues : ['0','1','2'],
-						possibleValuesLabels : [
-							self.app.localization.e('visibletoeveryone'), 
-							self.app.localization.e('visibleonlytosubscribers'),
-							self.app.localization.e('visibleonlytoregistered')
-						],
-						defaultValue : currentShare.settings.f,
-						value : currentShare.settings.f
+						currentShare.settings.f || (currentShare.settings.f = '0')
 
-					})
+						var selector = new Parameter({
 
-					self.shell({
-						name :  'settings',
-						el : el.settings,
-						data : {
-							share : currentShare,
-							essenseData : essenseData,
-							selector : selector
-						},
+							type : "VALUES",
+							name : "Visibility",
+							id : 'organizationCode',
+							dbId : "INS_BROKER_CODE",
+							possibleValues : ['0','1','2'],
+							possibleValuesLabels : [
+								self.app.localization.e('visibletoeveryone'), 
+								self.app.localization.e('visibleonlytosubscribers'),
+								self.app.localization.e('visibleonlytoregistered')
+							],
+							defaultValue : currentShare.settings.f,
+							value : currentShare.settings.f
 
-					}, function(p){
+						})
 
-						ParametersLive([selector], p.el)
+						self.shell({
+							name :  'settings',
+							el : el.settings,
+							data : {
+								share : currentShare,
+								essenseData : essenseData,
+								selector : selector
+							},
+
+						}, function(p){
+
+							ParametersLive([selector], p.el)
 
 
-						selector._onChange = function(){
+							selector._onChange = function(){
 
-							currentShare.settings.f = selector.value
+								currentShare.settings.f = selector.value
 
-							state.save()
-						}
+								state.save()
+							}
 
-						if (clbk)
-							clbk();
-					})
-				}
+							if (clbk)
+								clbk();
+						})
+					}
 
-				else{
+					else{
 
-					el.settings.html('')
+						el.settings.html('')
 
-					if(clbk) clbk()
-				}
+						if(clbk) clbk()
+					}
+				})
 			},
 
 
@@ -1666,22 +1686,22 @@ var share = (function(){
 
 							removeTag : function(tag){
 								actions.removeTag(tag)
-								renders.tgs()
+								renders.stateline()
 							},
 
 							removeTags : function(tag){
 								actions.removeTags(tag)
-								renders.tgs()
+								renders.stateline()
 							},
 
 							addTag : function(tag){
 								actions.addTag(tag)
-								renders.tgs()
+								renders.stateline()
 							},
 
 							addTags : function(tags){
 								actions.addTags(tags)
-								renders.tgs()
+								renders.stateline()
 							},
 
 							language : function(){
@@ -1709,7 +1729,11 @@ var share = (function(){
 				}
 			},
 
-			
+			stateline : function(){
+				renders.tgs();
+				renders.postline();
+				renders.settings();
+			},
 
 			all : function(){
 

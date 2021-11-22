@@ -1150,26 +1150,38 @@ var lenta = (function(){
 
 			postscores : function(txid, clbk){
 
-				self.app.nav.api.load({
-					open : true,
-					href : 'postscores?p=' + txid,
-					inWnd : true,
-					history : true,
+				var share = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid)
 
-					essenseData : {
-						share : txid,
+				if(!share) return
 
-						like : function(share){
-							renders.stars(share)
+				var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share);
+
+				var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0
+
+				if(!checkvisibility || reputation < 50){
+
+					self.app.nav.api.load({
+						open : true,
+						href : 'postscores?p=' + txid,
+						inWnd : true,
+						history : true,
+	
+						essenseData : {
+							share : txid,
+	
+							like : function(share){
+								renders.stars(share)
+							},
+	
 						},
+	
+						clbk : function(){
+							if (clbk)
+								clbk()
+						}
+					})
 
-					},
-
-					clbk : function(){
-						if (clbk)
-							clbk()
-					}
-				})
+				}
 
 			},
 
@@ -1177,7 +1189,9 @@ var lenta = (function(){
 
 				var checkvisibility = app.platform.sdk.node.shares.checkvisibility(obj);
 
-				if(checkvisibility) return
+				var reputation = deep(app, 'platform.sdk.usersl.storage.'+obj.address+'.reputation') || 0
+
+				if(checkvisibility && reputation >= 50) return
 
 				var upvoteShare = obj.upvote(value);
 

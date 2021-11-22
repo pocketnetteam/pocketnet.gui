@@ -33,7 +33,6 @@ var cview = view
 
 if(share.itisvideo()) cview = 'video'
 
-
 var bigmessage = false;
 var name = app.platform.api.name(share.address)
 
@@ -42,6 +41,11 @@ var emptywithrepost = share.isEmpty() && share.repost
 var value = Number(share.score)
 
 var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share)
+
+var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
+
+
+	console.log('lockedaccount', lockedaccount)
 
 var metadisplay = function(){ %>
 
@@ -419,7 +423,7 @@ var arranges = {
 
 			</div>
 			
-			<% if(!checkvisibility) {%>
+			<% if(!checkvisibility && !lockedaccount) {%>
 
 				<div class="cntswrk cntscontent">
 
@@ -443,37 +447,41 @@ var arranges = {
 					<div class="hiddenpost">
 
 
-
-						<div class="captionpreview">
-							<% makecaptionclear() %>
-						</div>
-
-						<% if(checkvisibility == 'sub'){ %>
-
-							<div class="hiddenlabeltext">
-								<%=e('sharevisibilitylabel_sub_' + cview)%>
+						<% if(!lockedaccount) {%>
+							<div class="captionpreview">
+								<% makecaptionclear() %>
 							</div>
 
+							<% if(checkvisibility == 'sub'){ %>
+
+								<div class="hiddenlabeltext">
+									<%=e('sharevisibilitylabel_sub_' + cview)%>
+								</div>
+
+							<% } %>
+
+							<% if(checkvisibility == 'reg'){ %>
+
+								<div class="hiddenlabeltext">
+									<%=e('sharevisibilitylabel_reg_' + cview)%>
+								</div>
+
+							<% } %>
+
+							<% if(!state) {%>
+
+								<div class="hiddenlabelaction">
+									<button elementsid="hrefregistration" class="orange small button toregistration"><%=e('signupmenu')%></button>
+								</div>
+
+							<% } %>
+						
+						<% } else { %> 
 							
-
-						<% } %>
-
-						<% if(checkvisibility == 'reg'){ %>
-
 							<div class="hiddenlabeltext">
-								<%=e('sharevisibilitylabel_reg_' + cview)%>
+								<%=e('lockedaccounta')%>
 							</div>
-
 							
-
-						<% } %>
-
-						<% if(!state) {%>
-
-							<div class="hiddenlabelaction">
-								<button elementsid="hrefregistration" class="orange small button toregistration"><%=e('signupmenu')%></button>
-							</div>
-
 						<% } %>
 
 
@@ -508,28 +516,37 @@ var arranges = {
 
 									<div class="category">
 										<a elementsid="index?sst=<%-category.tags.join(' ')%>" href="index?sst=<%-category.tags.join(' ')%>">
-											<span>@<%-category.name%></span> 
+											<span>@<%-category.name%></span><% if(category.new) {%>&nbsp;<span class="newlabel">New!</span><% } %> 
 										</a>
 									</div>
 
 								<% }) %>
 
-								<% _.each(bycategories.tags, function(tag){ %>
+								<% _.each(bycategories.tags, function(tag){ 
+									
+									var additional = app.platform.sdk.tags.findadditional(tag)
+									
+									%>
 
 									<div class="tag">
 										<a elementsid="index?sst=<%-tag%>" href="index?sst=<%-tag%>">
-											<span>
-												#<%-tag%>
-											</span>
+											<span>#<%-tag%></span><% if(additional && additional.new) {%>&nbsp;<span class="newlabel">New!</span><% } %>
 										</a>
 									</div>
 
 								<% }) %>
 							</div>
 
+
+
+
 						<% } %>
 
-						
+						<% if(share.hasexchangetag()) {%>
+							<div class="pkoin_commerce_info">
+								<span><%=e('pkoin_commerce_info')%></span>
+							</div>
+						<% } %>
 						
 
 						<% if(!share.temp &&  (typeof repost == 'undefined' || !repost || fromempty)) {%>
@@ -571,7 +588,7 @@ var arranges = {
 									
 								
 									<% if(app.platform.repost && !my && !app.curation()) {%>
-										<% if(!checkvisibility) {%>
+										<% if(!checkvisibility && !share.visibility()) {%>
 											<div elementsid="lenta_forreport" class="item <% if(!my){ %> forrepost <% } else { %> nact <% } %>">
 
 												<div class="itemwr table">

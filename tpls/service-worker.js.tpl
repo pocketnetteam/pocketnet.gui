@@ -21,13 +21,11 @@ routing.registerRoute(
   // Check to see if the request's destination is style for stylesheets, script for JavaScript, or worker for web worker
   ({ request }) => {
     
-    return 
-      request.destination === 'style' ||
+    return request.destination === 'style' ||
       request.destination === 'script' ||
       request.destination === 'worker'},
 
     new strategies.CacheFirst({
-      cacheName: 'assets-cache',
       plugins: [
         new cacheableResponse.CacheableResponsePlugin({
           statuses: [200],
@@ -56,6 +54,9 @@ self.addEventListener('activate', event => {
   const currentCacheName = core.cacheNames.runtime;
   // Find the old caches if there are any
   caches.keys().then(cacheNames => {
+
+    console.log('cacheNames', cacheNames, currentCacheName)
+
     return cacheNames.filter(cacheName => cacheName != currentCacheName);
   }).then(cachesToDelete => {
     return Promise.all(cachesToDelete.map(cacheToDelete => {

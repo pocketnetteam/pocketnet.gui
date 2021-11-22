@@ -13,7 +13,7 @@
                         </div>
 
                         <div elementsid="tagcheckgl1<%- decodeURIComponent(tag.tag) %>" class="tagvalue tagcheckgl">
-                            <span><%- decodeURIComponent(tag.tag) %><% if(tag.count) {%>,&nbsp;<%- compressedNumber(tag.count) %><%}%></span>
+                            <span><%- decodeURIComponent(tag.tag) %><% if(tag.new) {%>&nbsp;<span class="newlabel">New!</span><% } else { %><% if(tag.count) {%>,&nbsp;<%- compressedNumber(tag.count) %><%}%><%}%></span>
                         </div>
 
                         <div elementsid="tagcheckgl2<%- decodeURIComponent(tag.tag) %>" class="tagcheck tagcheckgl">

@@ -60,9 +60,10 @@
 	
 <% 
 
-var _d = deep(author, 'state.user_reg_date')
+var _d = deep(author, 'data.regdate')
 
-if(_d && _d > -1) {
+
+if(_d ) {
 
 	var d = new Date();
 		d.setTime(_d * 1000);	
@@ -74,7 +75,7 @@ if(_d && _d > -1) {
 	<div class="item date">
 		<div class="itemtable table">
 			<div class="icon"><i class="far fa-calendar"></i></div>
-			<div class="label"><%=e('joined')%> <b><%-d.yyyymmdd('.')%></b></div>
+			<div class="label"><%=e('joined')%> <b><%-_d.yyyymmdd('.')%></b></div>
 		</div>
 	</div>
 

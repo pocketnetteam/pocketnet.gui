@@ -68,8 +68,6 @@ var tagcloud = (function(){
 
 				maxcount++
 
-				
-
 				tags = _.sortBy(tags, function(tag){
 
 					var bonus = 1
@@ -95,6 +93,29 @@ var tagcloud = (function(){
 					return t.tag
 				})
 
+
+				var fpl = [], _tgs = []
+
+				_.each(tags, function(t){
+
+					console.log(t)
+
+					if(t.positionincloud && t.positionincloud < tags.length - 1){
+						fpl.push(t)
+					} 
+					else{
+						_tgs.push(t)
+					}
+				})
+
+
+				console.log('fpl', fpl)
+
+				_.each(fpl, function(t){
+					_tgs.splice(t.positionincloud, 0, t)
+				})
+
+				tags = _tgs
 
 				if(!tags.length){
 					el.c.addClass('hidden')

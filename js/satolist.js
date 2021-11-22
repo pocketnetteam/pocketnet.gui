@@ -70,7 +70,11 @@ Platform = function (app, listofnodes) {
         'PDgbAvsrS4VGKkW5rivcJaiCp7fnBoZRgM' : true,
         'PQt1eggTZKCCbjVsHx6rcMcBMU2p2PNQmt' : true,
         'PPY1UbumjHJaoxsfL7DVTPNLM4g697zdDe' : true,
-        'P9nFzh2sSyeTFd1F7fFGByhB6cD886jJi5' : true
+        'P9nFzh2sSyeTFd1F7fFGByhB6cD886jJi5' : true,
+        'PMf2RiHZiZTtQZftkxhRYbN5CgBH6dNh5A' : true,
+        'PJg4gur26sCRukHcn5aoDSRZTQF5dxTMUS' : true,
+        'PDz71dsW1cPwNewGHVUteFgQx3ZmBf4gaf' : true,
+        'PFjWEfsm3jX81MctFU2VSJ17LGVKDc99oH' : true
     }
 
     self.nvadr = {
@@ -706,6 +710,13 @@ Platform = function (app, listofnodes) {
                 return  self.app.localization.e('e13253')
             }
         },
+
+        "2000": {
+            message: function () {
+                return  self.app.localization.e('e2000')
+            }
+        },
+        
         "19": {
             message: function () {
                 return self.app.localization.e('e13254')
@@ -4191,9 +4202,12 @@ Platform = function (app, listofnodes) {
         
                                                                         window.resolveLocalFileSystemURL(videoFile.nativeURL, function(entry) {
         
-                                                                            videoFile.internalURL = entry.toInternalURL();
-                                                                            to.videos[videoFolder.name].video = videoFile;
+                                                                            videoFile.internalURL = entry.toInternalURL()
                                                                             
+                                                                            to.videos[videoFolder.name].video = videoFile;
+
+                                                                            console.log('entry')
+
                                                                             _p.success()
                                                                         });
 
@@ -4473,8 +4487,9 @@ Platform = function (app, listofnodes) {
                                                                                     v[shareFolder.name].videos[videoFolder.name].size = fileDetails.size;
                                                                                 // Resolve internal URL
                                                                                 window.resolveLocalFileSystemURL(videoFile.nativeURL, function(entry) {
-                                                                                    videoFile.internalURL = entry.toInternalURL();
+                                                                                    videoFile.internalURL = entry.toInternalURL()
                                                                                     v[shareFolder.name].videos[videoFolder.name].video = videoFile;
+
                                                                                 });
                                                                             }
                                                                             if (!infoFile && file.name == 'info.json') {
@@ -6618,10 +6633,18 @@ Platform = function (app, listofnodes) {
                 
             },
 
+            reputationBlockedNotMe : function(address){
+
+                if(!address) address = (self.app.platform.sdk.address.pnet() || {}).address
+
+                return !self.app.platform.sdk.user.itisme(address) && self.app.platform.sdk.user.reputationBlocked(address)
+                
+            },
+
             reputationBlocked : function(address){
                 var ustate = self.sdk.ustate.storage[address] || deep(self, 'sdk.usersl.storage.' + address) || deep(self, 'sdk.users.storage.' + address);
 
-				if (ustate && ustate.reputation < -50){
+				if (ustate && ustate.reputation <= -30){
                     return true
                 }
             },
@@ -9605,11 +9628,14 @@ Platform = function (app, listofnodes) {
                             tags : ['investing', 'finance'],
                             id : 'c6'
                         },
+
                         {
-                            name : "MMA/UFC",
-                            tags : ['mma', 'ufc'],
-                            id : 'c73'
+                            name : "PKOIN/peer-to-peer",
+                            tags : ['pkoin_commerce'],
+                            id : 'c63',
+                            new : true
                         },
+                       
                         {
                             name : "COVID/Lockdowns",
                             tags : ['covid', 'lockdowns'],
@@ -9640,6 +9666,12 @@ Platform = function (app, listofnodes) {
                             name : "Space",
                             tags : ['space'],
                             id : 'c10'
+                        },
+
+                        {
+                            name : "MMA/UFC",
+                            tags : ['mma', 'ufc'],
+                            id : 'c73'
                         },
                         
                         {
@@ -9720,11 +9752,15 @@ Platform = function (app, listofnodes) {
                             tags : ['финансы', 'инвестиции'],
                             id : 'c6'
                         },
+
                         {
-                            name : "MMA/UFC",
-                            tags : ['mma', 'ufc'],
-                            id : 'c73'
+                            name : "PKOIN/из рук в руки",
+                            tags : ['pkoin_commerce'],
+                            id : 'c63',
+                            new : true
                         },
+                       
+                       
                         {
                             name : "COVID/локдаун",
                             tags : ['covid', 'локдаун'],
@@ -9739,6 +9775,11 @@ Platform = function (app, listofnodes) {
                             name : "Bastyon/Pocketnet",
                             tags : ['bastyon', 'pocketnet'],
                             id : 'c71'
+                        },
+                        {
+                            name : "MMA/UFC",
+                            tags : ['mma', 'ufc'],
+                            id : 'c73'
                         },
                         {
                             name : "Спорт",
@@ -9833,6 +9874,12 @@ Platform = function (app, listofnodes) {
                             name : "金融/投資",
                             tags : ['金融', '投資'],
                             id : 'c6'
+                        },
+                        {
+                            name : "PKOIN/peer-to-peer",
+                            tags : ['pkoin_commerce'],
+                            id : 'c63',
+                            new : true
                         },
                         {
                             name : "MMA/UFC",
@@ -9947,6 +9994,12 @@ Platform = function (app, listofnodes) {
                             name : "금융/투자",
                             tags : ['금융', '투자'],
                             id : 'c6'
+                        },
+                        {
+                            name : "PKOIN/peer-to-peer",
+                            tags : ['pkoin_commerce'],
+                            id : 'c63',
+                            new : true
                         },
                         {
                             name : "MMA/UFC",
@@ -10065,6 +10118,12 @@ Platform = function (app, listofnodes) {
                             id : 'c6'
                         },
                         {
+                            name : "PKOIN/peer-to-peer",
+                            tags : ['pkoin_commerce'],
+                            id : 'c63',
+                            new : true
+                        },
+                        {
                             name : "MMA/UFC",
                             tags : ['mma', 'ufc'],
                             id : 'c73'
@@ -10178,6 +10237,12 @@ Platform = function (app, listofnodes) {
                             name : "Finanzas/Inversiones",
                             tags : ['finanzas', 'inversiones'],
                             id : 'c6'
+                        },
+                        {
+                            name : "PKOIN/peer-to-peer",
+                            tags : ['pkoin_commerce'],
+                            id : 'c63',
+                            new : true
                         },
                         {
                             name : "MMA/UFC",
@@ -10294,6 +10359,12 @@ Platform = function (app, listofnodes) {
                             id : 'c6'
                         },
                         {
+                            name : "PKOIN/peer-to-peer",
+                            tags : ['pkoin_commerce'],
+                            id : 'c63',
+                            new : true
+                        },
+                        {
                             name : "MMA/UFC",
                             tags : ['mma', 'ufc'],
                             id : 'c73'
@@ -10406,6 +10477,12 @@ Platform = function (app, listofnodes) {
                             name : "Investire/Finanza",
                             tags : ['investire', 'finanza'],
                             id : 'c6'
+                        },
+                        {
+                            name : "PKOIN/peer-to-peer",
+                            tags : ['pkoin_commerce'],
+                            id : 'c63',
+                            new : true
                         },
                         {
                             name : "MMA/UFC",
@@ -10806,7 +10883,6 @@ Platform = function (app, listofnodes) {
 
                 var all = self.sdk.categories.get()
 
-
                 return _.map(all, function(c){
                     var cs = _.clone(c)
 
@@ -10855,14 +10931,29 @@ Platform = function (app, listofnodes) {
 
                 cloud: null,
 
-                all: ['love', 'followback', 'instagramers', 'socialsteeze', 'tweegram', 'photooftheday', '20likes', 'amazing', 'smile', 'follow4follow', 'like4like', 'look', 'instalike', 'igers', 'picoftheday', 'food', 'instadaily', 'instafollow', 'followme', 'girl', 'instagood', 'bestoftheday', 'instacool', 'carryme', 'follow', 'colorful', 'style', 'swag', 'fun', 'instagramers', 'model', 'socialsteeze', 'food', 'smile', 'pretty', 'followme', 'nature', 'lol', 'dog', 'hair', 'sunset', 'swag', 'throwbackthursday', 'instagood', 'beach', 'friends', 'hot', 'funny', 'blue', 'life', 'art', 'photo', 'cool', 'carryme', 'bestoftheday', 'clouds', 'amazing', 'socialsteeze', 'fitness', 'followme', 'all_shots', 'textgram', 'family', 'instago', 'igaddict', 'awesome', 'girls', 'instagood', 'my', 'bored', 'baby', 'music', 'red', 'green', 'water', 'bestoftheday', 'black', 'party', 'white', 'yum', 'flower', 'carryme', 'night', 'instalove', 'photo', 'photos', 'pic', 'pics', 'socialsteeze', 'picture', 'pictures', 'snapshot', 'art', 'beautiful', 'instagood', 'picoftheday', 'photooftheday', 'color', 'all_shots', 'exposure', 'composition', 'focus', 'capture', 'moment', 'hdr', 'hdrspotters', 'hdrstyles_gf', 'hdri', 'hdroftheday', 'hdriphonegraphy', 'hdr_lovers', 'awesome_hdr']
+                all: ['love', 'followback', 'instagramers', 'socialsteeze', 'tweegram', 'photooftheday', '20likes', 'amazing', 'smile', 'follow4follow', 'like4like', 'look', 'instalike', 'igers', 'picoftheday', 'food', 'instadaily', 'instafollow', 'followme', 'girl', 'instagood', 'bestoftheday', 'instacool', 'carryme', 'follow', 'colorful', 'style', 'swag', 'fun', 'instagramers', 'model', 'socialsteeze', 'food', 'smile', 'pretty', 'followme', 'nature', 'lol', 'dog', 'hair', 'sunset', 'swag', 'throwbackthursday', 'instagood', 'beach', 'friends', 'hot', 'funny', 'blue', 'life', 'art', 'photo', 'cool', 'carryme', 'bestoftheday', 'clouds', 'amazing', 'socialsteeze', 'fitness', 'followme', 'all_shots', 'textgram', 'family', 'instago', 'igaddict', 'awesome', 'girls', 'instagood', 'my', 'bored', 'baby', 'music', 'red', 'green', 'water', 'bestoftheday', 'black', 'party', 'white', 'yum', 'flower', 'carryme', 'night', 'instalove', 'photo', 'photos', 'pic', 'pics', 'socialsteeze', 'picture', 'pictures', 'snapshot', 'art', 'beautiful', 'instagood', 'picoftheday', 'photooftheday', 'color', 'all_shots', 'exposure', 'composition', 'focus', 'capture', 'moment', 'hdr', 'hdrspotters', 'hdrstyles_gf', 'hdri', 'hdroftheday', 'hdriphonegraphy', 'hdr_lovers', 'awesome_hdr'],
+
+               
             },
 
-            ex: { 'news': true, 'images': true, 'videos': true, 'politics': true, 'funny': true, 'art': true, 'photo': true },
+            additional : [{
+                tag : 'pkoin_commerce',
+                new : true,
+                class : 'bright',
+                info : 'pkoin_commerce_info' 
+            }],
+
+            findadditional : function(tag){
+                return _.find(this.additional, function(v){
+                    return v.tag == tag
+                })
+            },
+
+            ex: {'news': true, 'images': true, 'videos': true, 'politics': true, 'funny': true, 'art': true, 'photo': true },
 
             search: function (str, clbk) {
 
-                str = str.toLowerCase().replace(/[^a-z0-9_]/g, '');
+                str = clearTagString(str);
 
                 var s = _.filter(this.storage.all, function (t) {
 
@@ -10894,7 +10985,7 @@ Platform = function (app, listofnodes) {
                     var _d = _.map(d, function(_d){
                         return {
                             count : _d.count,
-                            tag : trim(decodeURIComponent(decodeURIComponent(_d.tag)))
+                            tag : clearTagString(trim(decodeURIComponent(decodeURIComponent(_d.tag))))
                         }
                     })
 
@@ -10936,10 +11027,18 @@ Platform = function (app, listofnodes) {
                     t.get('', 150, round(self.currentBlock, 1000) - 20000, function (d) {
 
                         if (d && d.length) {
+
                             s.all = _.map(d, function (t) {
                                 return t.tag
                             })
+
                         }
+
+                        _.each(t.additional, function(at){
+                            if (s.all.indexOf(at.tag) == -1){
+                                s.all.unshift(at.tag)
+                            }
+                        })
     
                         if (clbk) {
                             clbk()
@@ -10957,8 +11056,9 @@ Platform = function (app, listofnodes) {
 
             cloud: function (clbk, update) {
 
-                var s = this.storage;
                 var t = this
+                var s = this.storage;
+
                 if (s.cloud && !update) {
                     if (clbk) {
 
@@ -10978,6 +11078,35 @@ Platform = function (app, listofnodes) {
 
                             if (!error)
                                 s.cloud = d
+
+
+                            _.each(t.additional, function(at){
+
+                                if (at.positionincloud){
+
+                                    var lt = _.find(s.cloud, function(t){
+                                        return t.tag == at.tag
+                                    })
+
+                                    if(!lt){
+                                        var vs = _.clone(at)
+                                            s.cloud.push(vs)
+                                    }
+
+                                    if (lt){
+
+                                        lt.positionincloud = at.positionincloud
+                                        lt.class = at.class
+
+                                        if (lt.count < 2000){
+                                            lt.new = at.new
+                                        }
+                                    }
+
+                                }
+
+                               
+                            })
 
                             if (clbk) {
                                 clbk(s.cloud, error)
@@ -19575,7 +19704,7 @@ Platform = function (app, listofnodes) {
 
             subscribe: function (author) {
 
-                var me = deep(app, 'platform.sdk.users.storage.' + platform.sdk.address.pnet().address)
+                var me = deep(app, 'platform.sdk.users.storage.' + platform.sdk.address.pnet().address) || deep(app, 'platform.sdk.usersl.storage.' + platform.sdk.address.pnet().address)
 
                 var d = ''
 
@@ -19657,11 +19786,10 @@ Platform = function (app, listofnodes) {
 
                 loadMore: function (data, clbk, wa) {
 
-
                     platform.sdk.users.get([data.addrFrom], function () {
 
 
-                        data.user = platform.sdk.users.storage[data.addrFrom] || {}
+                        data.user = platform.sdk.users.storage[data.addrFrom] || platform.sdk.usersl.storage[data.addrFrom] || {}
 
                         data.user.address = data.addrFrom;
 
@@ -19759,7 +19887,7 @@ Platform = function (app, listofnodes) {
 
                     platform.sdk.users.get([data.addrFrom], function () {
 
-                        data.user = platform.sdk.users.storage[data.addrFrom] || {}
+                        data.user = platform.sdk.users.storage[data.addrFrom] ||platform.sdk.usersl.storage[data.addrFrom] || {}
 
                         data.user.address = data.addrFrom
 
@@ -19879,7 +20007,7 @@ Platform = function (app, listofnodes) {
 
                         platform.sdk.users.get([data.addrFrom], function () {
 
-                            data.user = platform.sdk.users.storage[data.addrFrom] || {}
+                            data.user = platform.sdk.users.storage[data.addrFrom] || platform.sdk.usersl.storage[data.addrFrom] || {}
 
                             data.user.address = data.addrFrom
 
@@ -20002,7 +20130,7 @@ Platform = function (app, listofnodes) {
 
                         platform.sdk.users.get([data.addrFrom], function () {
 
-                            data.user = platform.sdk.users.storage[data.addrFrom] || {}
+                            data.user = platform.sdk.users.storage[data.addrFrom] || platform.sdk.usersl.storage[data.addrFrom] || {}
 
                             data.user.address = data.addrFrom
 
@@ -20330,7 +20458,7 @@ Platform = function (app, listofnodes) {
 
                                 html += self.tempates.user(
 
-                                    platform.sdk.users.storage[platform.sdk.address.pnet().address],
+                                    platform.sdk.users.storage[platform.sdk.address.pnet().address] || platform.sdk.usersl.storage[platform.sdk.address.pnet().address],
 
                                     self.tempates.transaction(data,
 
@@ -20677,7 +20805,7 @@ Platform = function (app, listofnodes) {
 
                     platform.sdk.users.get([data.addrFrom], function () {
 
-                        data.user = platform.sdk.users.storage[data.addrFrom] || {}
+                        data.user = platform.sdk.users.storage[data.addrFrom] || platform.sdk.usersl.storage[data.addrFrom] || {}
                         data.user.address = data.addrFrom
 
                         if (!data.commentid && data.txid)
@@ -20846,7 +20974,7 @@ Platform = function (app, listofnodes) {
 
                         platform.sdk.users.get([data.addrFrom], function () {
 
-                            data.user = platform.sdk.users.storage[data.addrFrom] || {}
+                            data.user = platform.sdk.users.storage[data.addrFrom] || platform.sdk.usersl.storage[data.addrFrom] || {}
 
                             data.user.address = data.addrFrom
 
@@ -21165,7 +21293,7 @@ Platform = function (app, listofnodes) {
 
                         platform.sdk.users.get([data.address], function () {
 
-                            data.user = platform.sdk.users.storage[data.address]
+                            data.user = platform.sdk.users.storage[data.address] || platform.sdk.usersl.storage[data.address]
 
                             if (data.user) {
                                 data.user.address = data.address
