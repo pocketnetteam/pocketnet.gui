@@ -217,23 +217,37 @@ var videoCabinet = (function () {
         );
 
         //aggregating video views from different servers into one number
-        return Promise.allSettled(serverPromises).then((data) =>
-          data
-            .filter((promise) => promise.status === POSITIVE_STATUS)
-            .map((info) => info.value)
-            .reduce(
-              (accumulator, currServer) =>
-                (accumulator += Number(currServer.total_views || 0)),
-              0,
-            ),
-        );
+        return Promise.allSettled(serverPromises)
+          .then((data) =>
+            data
+              .filter((promise) => promise.status === POSITIVE_STATUS)
+              .map((info) => info.value)
+              .reduce(
+                (accumulator, currServer) =>
+                  (accumulator += Number(currServer.total_views || 0)),
+                0,
+              ),
+          )
+          .then((aggregatedNumberViews) => {
+            const cachedViews = +(
+              localStorage.getItem('aggregatedVideoViews') || 0
+            );
+
+            if (aggregatedNumberViews > cachedViews) {
+              localStorage.setItem(
+                'aggregatedVideoViews',
+                aggregatedNumberViews,
+              );
+
+              return aggregatedNumberViews;
+            }
+
+            return cachedViews;
+          });
       },
 
       getFullPageInfo(videoPortionElement) {
         renders.videos(null, videoPortionElement);
-
-
-        
 
         //getting and rendering bonus program status for views and ratings (same template)
         actions
@@ -381,7 +395,9 @@ var videoCabinet = (function () {
                   host,
                 })
                 .then(() => img)
-                .catch((e = {}) => sitemessage(helpers.parseVideoServerError(e)));
+                .catch((e = {}) =>
+                  sitemessage(helpers.parseVideoServerError(e)),
+                );
             }
 
             return sitemessage(helpers.parseVideoServerError(error));
@@ -970,13 +986,17 @@ var videoCabinet = (function () {
                               })
                               .catch((err = {}) => {
                                 sitemessage(
-                                  `Deleting error: ${helpers.parseVideoServerError(err)}`,
+                                  `Deleting error: ${helpers.parseVideoServerError(
+                                    err,
+                                  )}`,
                                 );
                               });
                           }
 
                           return sitemessage(
-                            `Deleting error: ${helpers.parseVideoServerError(error)}`,
+                            `Deleting error: ${helpers.parseVideoServerError(
+                              error,
+                            )}`,
                           );
                         });
                     },
@@ -1337,24 +1357,24 @@ var videoCabinet = (function () {
           sort: ed.sort,
         };
 
-        self.app.platform.sdk.user.mystatisticnov().catch(() => {
-          return Promise.resolve(null)
-        }).then(r => {
+        self.app.platform.sdk.user
+          .mystatisticnov()
+          .catch(() => {
+            return Promise.resolve(null);
+          })
+          .then((r) => {
+            var addtext = ' / ' + (r ? r.histreferals : '&mdash;');
 
-
-          var addtext = ' / ' + (r ? r.histreferals : '&mdash;')
-          
-          renders.bonusProgram(
-            {
-              parameterName: 'ReferralUsers',
-              value: (deep(app, 'platform.sdk.user.storage.me.rc') || '0') + addtext,
-            },
-            el.bonusProgramReferContainer,
-          );
-          
-
-        })
-
+            renders.bonusProgram(
+              {
+                parameterName: 'ReferralUsers',
+                value:
+                  (deep(app, 'platform.sdk.user.storage.me.rc') || '0') +
+                  addtext,
+              },
+              el.bonusProgramReferContainer,
+            );
+          });
 
         //getting and rendering videos
         actions
