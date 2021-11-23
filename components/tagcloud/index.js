@@ -98,8 +98,6 @@ var tagcloud = (function(){
 
 				_.each(tags, function(t){
 
-					console.log(t)
-
 					if(t.positionincloud && t.positionincloud < tags.length - 1){
 						fpl.push(t)
 					} 
@@ -108,8 +106,6 @@ var tagcloud = (function(){
 					}
 				})
 
-
-				console.log('fpl', fpl)
 
 				_.each(fpl, function(t){
 					_tgs.splice(t.positionincloud, 0, t)

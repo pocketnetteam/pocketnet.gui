@@ -623,13 +623,7 @@ var author = (function(){
 
 			info : function(_el){
 
-				
-
-				
-
 					author.state = self.sdk.ustate.storage[author.address]
-
-					console.log('author', author)
 
 					self.shell({
 
@@ -1342,7 +1336,8 @@ var author = (function(){
 											self.nav.api.go({
 												href : 'userpage?id=test',
 												history : true,
-												open : true
+												open : true,
+												replaceState : true
 											})
 
 											return;

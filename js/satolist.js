@@ -6656,14 +6656,16 @@ Platform = function (app, listofnodes) {
                         self.app.nav.api.load({
                             open : true,
                             href : 'userpage',
-                            history : true
+                            history : true,
+                            replaceState : true
                         })
                     }
                     else{
                         self.app.nav.api.load({
                             open : true,
                             href : 'page404',
-                            history : true
+                            history : true,
+                            replaceState : true
                         })
                     }
 
@@ -13794,6 +13796,10 @@ Platform = function (app, listofnodes) {
 
                     }
 
+                    if(self.sdk.node.transactions.findInputInTemp(tx.txid, tx.vout)){
+                        return 2
+                    }
+
                     return 0
                 },
 
@@ -13813,6 +13819,7 @@ Platform = function (app, listofnodes) {
 
                     if (!wait) return true
                 },
+
 
                 sign: function (tx, clbk) {
                     var hex = tx.toHex();
@@ -13878,6 +13885,20 @@ Platform = function (app, listofnodes) {
                     if (clbk)
                         clbk()
 
+
+                },
+
+                findInputInTemp: function (txid, vout) {
+
+                    return _.find(this.temp, function (ts) {
+
+                        return _.find(ts, function(tx){
+                            return _.find(tx.inputs, function(input){
+                                return input.txid == txid && input.vout == vout
+                            })
+                        })
+
+                    })
 
                 },
 
@@ -14079,8 +14100,6 @@ Platform = function (app, listofnodes) {
                     var outputs = [];
                     var myaddresses = [self.sdk.address.pnet().address].concat(self.sdk.addresses.storage.addresses || [])
 
-
-
                     _.each(t, function (ts) {
 
                         _.each(ts, function (alias) {
@@ -14088,7 +14107,6 @@ Platform = function (app, listofnodes) {
                             if (alias.outputs) {
 
                                 _.each(alias.outputs, function (i) {
-
 
                                     var f = _.find(myaddresses, function(a){
                                         if(a == i.address) return true
@@ -14231,7 +14249,6 @@ Platform = function (app, listofnodes) {
                         var unspents = _.filter(s.unspent[pnet.address] || [], function(u){
                             return self.sdk.node.transactions.canSpend(u) && u.amount
                         })
-                        
 
                         if (unspents.length > 200){
                             unspents = _.filter(unspents, function(u, i){
@@ -14842,6 +14859,40 @@ Platform = function (app, listofnodes) {
 
                 create: {
 
+                    selectBestInputs : function(unspent){
+
+                        var inputs = []
+
+                        if (unspent.length) {
+
+                            unspent = _.sortBy(unspent, function(u){
+                                return -u.amount
+                            })
+
+                            inputs = [{
+        
+                                txId: unspent[unspent.length - 1].txid,
+                                vout: unspent[unspent.length - 1].vout,
+                                amount: unspent[unspent.length - 1].amount,
+                                scriptPubKey: unspent[unspent.length - 1].scriptPubKey,
+
+                            }]
+
+                            if (unspent.length > 60) {
+
+                                inputs.push({
+                                    txId: unspent[unspent.length - 2].txid,
+                                    vout: unspent[unspent.length - 2].vout,
+                                    amount: unspent[unspent.length - 2].amount,
+                                    scriptPubKey: unspent[unspent.length - 2].scriptPubKey,
+                                })
+
+                            }
+                        }
+
+                        return inputs
+                    },
+
                     commonFromUnspent: function (obj, clbk, p, telegram) {
 
                         if (!p) p = {};
@@ -14892,34 +14943,13 @@ Platform = function (app, listofnodes) {
 
                             var inputs = [];
 
-                            var totalInputs = 0;
-
-                            if (unspent.length && !(obj.donate && obj.donate.v.length)) {
-
-                                totalInputs += unspent[unspent.length - 1].amount;
-
-                                inputs = [{
-
-                                    txId: unspent[unspent.length - 1].txid,
-                                    vout: unspent[unspent.length - 1].vout,
-                                    amount: unspent[unspent.length - 1].amount,
-                                    scriptPubKey: unspent[unspent.length - 1].scriptPubKey,
-
-                                }]
-                            }
-                            //remove for donations
-                            if (unspent.length > 60 && !(obj.donate && obj.donate.v.length)) {
-                                inputs.push({
-                                    txId: unspent[unspent.length - 2].txid,
-                                    vout: unspent[unspent.length - 2].vout,
-                                    amount: unspent[unspent.length - 2].amount,
-                                    scriptPubKey: unspent[unspent.length - 2].scriptPubKey,
-                                })
-
+                            if(!(obj.donate && obj.donate.v.length)){
+                                inputs = self.sdk.node.transactions.create.selectBestInputs(unspent)
                             }
 
-                            /// ++++
-
+                            var totalInputs = _.reduce(inputs, function(m, i){
+                                return m + i.amount
+                            }, 0)
 
                             var feerate = TXFEE;
 
@@ -15196,7 +15226,11 @@ Platform = function (app, listofnodes) {
                                 }
 
 
-                                if (!(obj.donate && obj.donate.v.length) && unspents.length < 50 && amount > 2 * 10000000) {
+                                if (
+                                    !(obj.donate && obj.donate.v.length) && 
+                                    
+                                
+                                    unspents.length < 50 && amount > 0.2 * smulti) {
 
                                     var ds = Number((amount / 2).toFixed(0))
 
