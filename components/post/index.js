@@ -455,6 +455,8 @@ var post = (function () {
 							if (wa) {
 
 								player.play()
+
+								console.log('self.sdk.videos.volume', self.sdk.videos.volume)
 								
 
 								if (player.setVolume)

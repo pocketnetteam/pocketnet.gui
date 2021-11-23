@@ -66,7 +66,7 @@ Platform = function (app, listofnodes) {
         'PKHoxhpnG5CGHDVnxXJwARwPxVre6Qshvn' : true,
         'PXgYFdVs5W831WpksVLA5hNtXa7XSqUzLB' : true,
         'PSBePd5Tx5KG9vxwAzbaDTfjzDbq1GUTYw' : true,
-
+        
         'PDgbAvsrS4VGKkW5rivcJaiCp7fnBoZRgM' : true,
         'PQt1eggTZKCCbjVsHx6rcMcBMU2p2PNQmt' : true,
         'PPY1UbumjHJaoxsfL7DVTPNLM4g697zdDe' : true,
@@ -14632,7 +14632,7 @@ Platform = function (app, listofnodes) {
                                     _.each(d, function (u) {
                                         self.sdk.node.transactions.clearTemp(u.txid, u.vout);
                                     })
-                                    
+
                                     s.unspent[address] = d || [];
 
                                     if (s.unspentLoading)
@@ -18787,13 +18787,18 @@ Platform = function (app, listofnodes) {
 
             volume : 0,
             save : function(){
-                localStorage['pn_videovolume'] = self.sdk.videos.volume || 0.5
+                localStorage['pn_videovolume_2'] = self.sdk.videos.volume || 1
             },
             load : function(){
 
-                var _v = localStorage['pn_videovolume']
+                var _v = localStorage['pn_videovolume_2'] 
 
-                if(typeof _v == 'undefined' || window.cordova || isMobile()) _v = '0'
+                if(typeof _v == 'undefined') {
+                    if(window.cordova || isMobile())
+                        _v = '0'
+                    else
+                        _v = '1'
+                }
 
 
                 self.sdk.videos.volume = Number(_v)
