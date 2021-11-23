@@ -11418,7 +11418,7 @@ Platform = function (app, listofnodes) {
                                     if (v.cmntid) {
                                         if (v.myscore) {
 
-                                            l.storage[v.cmntid] = v.myscore
+                                            l.storage[v.cmntid] = Number(v.myscore)
 
                                         }
                                     }
@@ -11859,7 +11859,7 @@ Platform = function (app, listofnodes) {
 
                             if (comment) {
 
-                                comment.myScore = upvote.value.v
+                                comment.myScore = Number(upvote.value.v)
 
                                 if (upvote.value.v > 0) {
                                     comment.scoreUp++

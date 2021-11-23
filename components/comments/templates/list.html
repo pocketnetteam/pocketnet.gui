@@ -91,10 +91,9 @@ var commentpanel = function(comment, _class){  %>
 
 	if(me && me.relation(comment.address, 'blocking')) return
 
-
 	var m = '' %> 
 
-	<div class="comment <% if(comment.my(app)) {%> mycomment <% } %> <% if(deep(app, 'platform.sdk.user.storage.'+comment.address+'.dev') || deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.dev')) {%> dev <% } %> <% if(comment.deleted) {%> deleted <% } %> <% if(comment.myScore) {%> rated <% } %> <% if(comment.temp) {%> temptransaction <% } %> <% if(Number(comment.timeUpd) === Number(comment.time)) {%> commentnotedited <% } %> <%-newcomments%> <%- _class %>" id="<%-comment.id%>" aid="<%-comment.answerid%>" pid='<%-comment.parentid%>'>
+	<div class="comment <% if(comment.my(app)) {%> mycomment <% } %> <% if(deep(app, 'platform.sdk.user.storage.'+comment.address+'.dev') || deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.dev')) {%> dev <% } %> <% if(comment.deleted) {%> deleted <% } %> <% if(comment.myScore > 0 || comment.myScore < 0) {%> rated <% } %> <% if(comment.temp) {%> temptransaction <% } %> <% if(Number(comment.timeUpd) === Number(comment.time)) {%> commentnotedited <% } %> <%-newcomments%> <%- _class %>" id="<%-comment.id%>" aid="<%-comment.answerid%>" pid='<%-comment.parentid%>'>
 
 		<div class="commentPaddingWrapper">
 

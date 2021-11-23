@@ -38,16 +38,11 @@ var name = app.platform.api.name(share.address)
 
 var emptywithrepost = share.isEmpty() && share.repost
 
-/*emptywithrepost = false*/
-
 var value = Number(share.score)
 
 var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share)
 
 var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
-
-
-	console.log('lockedaccount', lockedaccount)
 
 var metadisplay = function(){ %>
 
