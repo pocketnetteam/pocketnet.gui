@@ -453,6 +453,7 @@ var WSS = function(admins, manage){
         });
 
         allwss[ws.id] = ws
+        
     }
 
     self.wssdummy = function(wssdummy){

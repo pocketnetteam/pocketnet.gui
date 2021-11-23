@@ -14629,7 +14629,10 @@ Platform = function (app, listofnodes) {
                                 if(!s.unspent)
                                     s.unspent = {};
 
-
+                                    _.each(d, function (u) {
+                                        self.sdk.node.transactions.clearTemp(u.txid, u.vout);
+                                    })
+                                    
                                     s.unspent[address] = d || [];
 
                                     if (s.unspentLoading)
@@ -14653,6 +14656,7 @@ Platform = function (app, listofnodes) {
                             })
 
                         }
+
 
 
                     },
