@@ -143,10 +143,14 @@ var accounts = (function(){
 								self.app.platform.sdk.pool.add(expandedPack, mnemonic, function(expandedPack, error){
 
 									if (error){
+
+										//hasinthispack
+
 										dialog({
-											html : self.app.localization.e('aused'),
-											class : "one"
+											html : self.app.localization.e('acc' + error),
+											class : "one zIndex"
 										})
+
 									}
 									else
 									{

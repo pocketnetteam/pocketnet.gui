@@ -504,6 +504,8 @@ var videoCabinet = (function () {
 
       onSearchVideo() {
         const searchString = el.searchInput.val();
+        
+        if((ed.search || '') == (searchString || '')) return
 
         ed.search = searchString;
 
@@ -1248,6 +1250,12 @@ var videoCabinet = (function () {
       });
 
       el.searchButton.on('click', events.onSearchVideo);
+
+      el.searchInput.on('change', function (e) {
+        //if (e.key === 'Enter' || e.keyCode === 13) {
+          events.onSearchVideo(e)
+        //}
+      });
 
       el.sortTypeSelect.on('change', events.onVideoSort);
       el.sortDirectionSelect.on('change', events.onVideoSort);

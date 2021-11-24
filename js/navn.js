@@ -663,6 +663,8 @@ Nav = function(app)
 
 			else
 			{
+				app.actions.scrollToTop()
+
 				p.clbk(null, p);
 			}
 		},

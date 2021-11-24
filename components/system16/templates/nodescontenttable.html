@@ -19,9 +19,15 @@
 
         <div class="fixednotinlist">
             
-            <div class="fsubcaption">
-                <span>You have selected a node that is not on this server</span>
-            </div>
+            <% if(!inlist) {%>
+                <div class="fsubcaption">
+                    <span>You have selected a node that is not on this server</span>
+                </div>
+            <% } else { %> 
+                <div class="fsubcaption">
+                    <span>You have selected a node</span>
+                </div>
+            <% } %>
 
             <div class="fsubdata">
                 <span class="bld"><%- fixednode %></span>

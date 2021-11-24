@@ -1386,6 +1386,17 @@ html.stblack{
 			color : @color-bright;
 		}
 
+		.imgpanel{
+			
+			
+			.item{
+				color : fade(@color-gray-slight, 70);
+				&:hover{
+					background : fade(@color-gray-slight, 60);
+				}
+			}
+		}
+
 		&.minimized{
 			
 			.txt{
@@ -1635,18 +1646,7 @@ html.stblack{
 	
 			.imageContainer{
 	
-				.imgpanel{
-					background: fade(@color-black2, 80);
-					.item{
-					
-						color : fade(@color-gray2, 90);
-						
-						&:hover{
-							background : fade(@color-gray2, 60);
-						}
-	
-					}
-				}
+				
 	
 			
 				.spinnerWrapperCnt{
@@ -2281,17 +2281,7 @@ html:not(.stblack){
 
 			.imgpanel{
 				display: block;
-				position: absolute;
-				left: 0;
-				right: 0;
-				padding : 5px;
-				margin-left: 0;
-				
-				.item{
-					margin : 0;
-					width: 50%;
-
-				}
+				bottom : 2 * @rhythm;
 			}
 
 			&:hover{

@@ -560,13 +560,20 @@ var author = (function(){
 
 				}, function(p){
 
-					p.el.find('.usermenuitem').swipe({
+					/*p.el.find('.usermenuitem').swipe({
 						tap : function(){
 							var r = $(this).attr('menuitem');
 
 							if (reports[r] && reports[r].render)
 								renders.report(reports[r])
 						}
+					})*/
+
+					p.el.find('.usermenuitem').on('click', function(){
+						var r = $(this).attr('menuitem');
+
+							if (reports[r] && reports[r].render)
+								renders.report(reports[r])
 					})
 
 					
@@ -577,16 +584,16 @@ var author = (function(){
 
 							_.each(r.events, function(e, i){
 
-								if(i == 'click' && isTablet()){
+								/*if(i == 'click' && isTablet()){
 
 									el.swipe({
 										tap : e
 									})
 
 								}
-								else{
+								else{*/
 									el.on(i, e)
-								}
+								//}
 
 								
 							})

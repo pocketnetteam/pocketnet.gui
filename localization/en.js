@@ -215,6 +215,10 @@ ____loclib.aaddacc = "Add Account";
 ____loclib.ascheduler = "Scheduler";
 ____loclib.aused = "This address is already use in another addresses pool";
 
+____loclib.accfailedkeypair = "Wrong Private Key";
+____loclib.acchasinthispack = "This address is already added";
+____loclib.acchasinanotherpack = "This address is already use in another addresses pool";
+
 
 //author
 ____loclib.sub = "Follow";

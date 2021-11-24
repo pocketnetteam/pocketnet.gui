@@ -16047,6 +16047,13 @@ Platform = function (app, listofnodes) {
 
                 var mk = keyPair.privateKey.toString('hex');
 
+                if (_.indexOf(pack.addresses, address) > -1){
+                    if (clbk)
+                        clbk(null, 'hasinthispack')
+
+                    return;
+                }
+
                 if (pool.map[address]) {
 
                     var id = pool.map[address];
@@ -16150,6 +16157,9 @@ Platform = function (app, listofnodes) {
 
                     if (state && !_Node) {
                         var pool = s.get();
+
+
+                        console.log('pool', pool)
 
                         var address = self.sdk.address.pnet().address;
 

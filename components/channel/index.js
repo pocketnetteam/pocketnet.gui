@@ -125,8 +125,9 @@ var channel = (function(){
 					var el = p.el.find('[menuitem="'+j+'"]')
 
 					_.each(r.events, function(e, i){
+						el.on(i, e)
 
-						if(i == 'click' && isMobile()){
+						/*if(i == 'click' && isMobile()){
 
 							el.swipe({
 								tap : e
@@ -135,7 +136,7 @@ var channel = (function(){
 						}
 						else{
 							el.on(i, e)
-						}
+						}*/
 
 						
 					})

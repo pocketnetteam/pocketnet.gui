@@ -157,8 +157,8 @@ ____loclib.wsreciever = "Адрес получателя";
 ____loclib.wsamount = "Сумма";	
 ____loclib.wsamountof = "Сумма транзакции";	
 ____loclib.wsincludefees = "Включение комиссии в сумму";	
-____loclib.wsrecieverpay = "Отправитель платит";	
-____loclib.wssenderpay = "Получатель платит";	
+____loclib.wsrecieverpay = "Получатель платит";	
+____loclib.wssenderpay = "Отправитель платит";	
 ____loclib.wdselectfrom = "Выбрать";	
 
 ____loclib.wdenteramount = "Введите сумму";	
@@ -218,8 +218,11 @@ ____loclib.aaddedacc = "Сменить аккаунт";
 ____loclib.acure = "Текущий";
 ____loclib.aaddacc = "Добавить аккаунт";
 ____loclib.ascheduler = "Планировщик задач";
-____loclib.aused = "Этот адрес уже использоуется на этом устройстве";
+____loclib.aused = "Этот адрес уже используется на этом устройстве";
 
+____loclib.accfailedkeypair = "Не верный приватный ключ";
+____loclib.acchasinthispack = "Этот адрес уже добавлен";
+____loclib.acchasinanotherpack = "Этот адрес уже используется на этом устройстве";
 
 //author
 ____loclib.sub = "Подписаться";
