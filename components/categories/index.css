@@ -25,6 +25,8 @@
 #categories .tcaptiontable .buttons {
   display: flex;
   padding-right: 0.5em;
+  font-size: 0.8em;
+  padding: 0.5em 1em;
 }
 #categories .tcaptiontable .buttons > div {
   display: inline-block;
@@ -34,12 +36,12 @@
   text-align: center;
   /*.transition(0.3s);*/
 }
-#categories .tcaptiontable .buttons > div.ticon:hover i {
-  color: #00a4ff;
+#categories .tcaptiontable .buttons > div.ticon i {
+  font-size: 1em;
 }
 #categories .tcaptiontable .buttons > div.mlab {
   opacity: 0.5;
-  padding-left: 0.5em;
+  padding-left: 1em;
   cursor: pointer;
   /*.transition(0.3s);*/
 }
@@ -50,6 +52,9 @@
 #categories .tcaptiontable .buttons > div.mlab:hover {
   opacity: 1;
   color: #F41A4D;
+}
+#categories .tcaptiontable .buttons > div.addcategory:hover {
+  color: #00a4ff;
 }
 #categories .tcaptiontable .buttons > div.clearcategories {
   display: none;
@@ -73,10 +78,22 @@
   /*.transition(0.3s);*/
 }
 #categories .cat .cattable {
-  width: auto;
+  width: 100%;
+}
+#categories .cat .cattable .minus {
+  font-size: 0.8em;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  color: #555770;
+}
+#categories .cat .cattable .minus i {
+  top: 0;
+  left: 0;
 }
 #categories .cat .cattable > div {
-  vertical-align: middle;
   padding: 0.5em 1em;
   padding-left: 0;
 }
@@ -101,6 +118,7 @@
 #categories .cat .cattable > div.catvalue {
   /*.transition(0.3s);*/
   cursor: pointer;
+  width: 80%;
 }
 #categories .cat .cattable > div.catvalue:hover {
   color: #00a4ff;
@@ -134,8 +152,7 @@
   opacity: 1;
 }
 #categories .cat:hover .cattable > div.catedit,
-#categories .cat:hover .cattable > div.catcheck,
-#categories .cat:hover .cattable > div.catsearch {
+#categories .cat:hover .cattable > div.catcheck {
   opacity: 1;
 }
 #categories .cat:hover .cattable > div.catedit {
@@ -161,6 +178,14 @@
 }
 #categories .tg.selected .cat .cattable > div.catcheck {
   opacity: 1;
+}
+#categories .tg.excluded .catvalue {
+  color: #555770;
+  opacity: 0.5;
+  pointer-events: none;
+}
+#categories .tg.excluded .minus {
+  color: #F41A4D;
 }
 #categories .ta .tg {
   display: block;

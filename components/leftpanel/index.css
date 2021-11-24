@@ -29,6 +29,12 @@
 #leftpanel .best .toggle i {
   transform: scaleX(-1);
 }
+#leftpanel .best .toggle.on {
+  color: #076C34;
+}
+#leftpanel .best .toggle.on i {
+  transform: none;
+}
 #leftpanel .closecategoriesContainer {
   text-align: right;
   font-size: 0.8em;

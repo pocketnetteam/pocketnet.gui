@@ -497,24 +497,24 @@ var staking = (function(){
 				})
 			})
 
-			el.buyButton.on('click', function(){
-				self.nav.api.load({
-					open : true,
-					id : 'buy',
-					inWnd : true,
+			// el.buyButton.on('click', function(){
+			// 	self.nav.api.load({
+			// 		open : true,
+			// 		id : 'buy',
+			// 		inWnd : true,
 
-					essenseData : {
+			// 		essenseData : {
 
-						success : function(){
+			// 			success : function(){
 							
-						}
-					},
+			// 			}
+			// 		},
 
-					clbk : function(){
+			// 		clbk : function(){
 						
-					}
-				})
-			})
+			// 		}
+			// 	})
+			// })
 
 			amountmask()
 		}

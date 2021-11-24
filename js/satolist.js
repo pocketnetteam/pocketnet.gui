@@ -10574,14 +10574,16 @@ Platform = function (app, listofnodes) {
             settings : {
                 tags : {},
                 selected : {},
-                added : {}
+                added : {},
+                excluded : {}
             },
 
             clbks : {
                 selected : {},
                 added : {},
-                tags  :{},
-                removed : {}
+                tags  : {},
+                removed : {},
+                excluded : {}
             },
 
             fromTags : function(tags, _k){
@@ -10805,6 +10807,7 @@ Platform = function (app, listofnodes) {
 
             select : function(id, _k){
 
+
                 if(!id) return 'emptyid'
 
                 var allcats = self.sdk.categories.get(_k)
@@ -10828,10 +10831,45 @@ Platform = function (app, listofnodes) {
 
                 else s.selected[k][id] = true
 
-                self.sdk.categories.save()
+                self.sdk.categories.save();
 
                 _.each(self.sdk.categories.clbks.selected, function(f){
                     f(id, s.selected[k][id], k)
+                })
+
+                return false
+            },
+
+            exclude : function(id, _k){
+
+
+                if(!id) return 'emptyid'
+
+                var allcats = self.sdk.categories.get(_k)
+
+                var cat = _.find(allcats, function(c){
+                    return c.id == id
+                })
+
+                if(!cat) return 'cantonfound'
+
+                var s = self.sdk.categories.settings
+                var k = _k || self.app.localization.key
+
+                if(!self.sdk.categories.data.all[k]) k = 'en'
+
+                s.excluded[k] || (s.excluded[k] = {})
+
+
+                if (s.excluded[k][id]) 
+                    delete s.excluded[k][id]
+
+                else s.excluded[k][id] = true
+
+                self.sdk.categories.save()
+
+                _.each(self.sdk.categories.clbks.excluded, function(f){
+                    f(id, s.excluded[k][id], k)
                 })
 
                 return false
@@ -10899,6 +10937,7 @@ Platform = function (app, listofnodes) {
                 if(!self.sdk.categories.data.all[k]) k = 'en'
 
                 var selected = self.sdk.categories.settings.selected[k] || {}
+                var excluded = self.sdk.categories.settings.excluded[k] || {}
 
                 var all = self.sdk.categories.get()
 
@@ -10907,6 +10946,7 @@ Platform = function (app, listofnodes) {
                     var cs = _.clone(c)
 
                     cs.selected = selected[c.id] ? true : false
+                    cs.excluded = excluded[c.id] ? true : false
 
                     return cs
                 })
@@ -10925,6 +10965,7 @@ Platform = function (app, listofnodes) {
                 self.sdk.categories.clbks.removed = {}
                 self.sdk.categories.clbks.added = {}
                 self.sdk.categories.clbks.tags = {}
+                self.sdk.categories.clbks.excluded = {}
 
                 
 
@@ -10941,6 +10982,7 @@ Platform = function (app, listofnodes) {
                 self.sdk.categories.settings.tags || (self.sdk.categories.settings.tags = {})
                 self.sdk.categories.settings.selected || (self.sdk.categories.settings.selected = {})
                 self.sdk.categories.settings.added || (self.sdk.categories.settings.added = {})
+                self.sdk.categories.settings.excluded || (self.sdk.categories.settings.excluded = {})
 
                 if(clbk) clbk()
             }

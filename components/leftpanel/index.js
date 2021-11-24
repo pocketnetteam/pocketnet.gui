@@ -146,8 +146,15 @@ var leftpanel = (function(){
 
 		var initEvents = function(){
 			
+
 			el.c.find('.closecategories').on('click', function(){
 				if(ed.close) ed.close()
+			})
+
+			el.c.find('.toggle').on('click', function(){
+
+				$(this).toggleClass('on');
+
 			})
 		}
 

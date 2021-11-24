@@ -118,6 +118,7 @@ var categories = (function(){
 				})
 			},
 
+
 			addtag : function(tag, category){
 
 				tag = tag.toLowerCase()
@@ -257,6 +258,14 @@ var categories = (function(){
 
 						})
 
+						p.el.find('.minus').on('click', function(){
+							var id = $(this).closest('.tg').attr('category');
+
+							var r = self.app.platform.sdk.categories.exclude(id)
+
+
+						})
+
 						if(essenseData.renderclbk) essenseData.renderclbk()
 	
 						if (clbk)
@@ -278,10 +287,20 @@ var categories = (function(){
 		}
 
 		var initEvents = function(){
-			
+			self.app.platform.sdk.categories.clbks.excluded.mainmodule = function(id, value, l){
+
+				if(!id) return
+
+				var e = el.c.find('.tg[category="'+id+'"]')
+
+				if(value) e.addClass('excluded')
+				else e.removeClass('excluded')
+
+				actions.showhideclear()
+			}	
+
 			self.app.platform.sdk.categories.clbks.tags.mainmodule =
 			self.app.platform.sdk.categories.clbks.selected.mainmodule = function(id, value, l){
-
 
 				if(!id) return
 
@@ -314,6 +333,7 @@ var categories = (function(){
 
 		var removeEvents = function(){
 			delete self.app.platform.sdk.categories.clbks.selected.mainmodule
+			delete self.app.platform.sdk.categories.clbks.excluded.mainmodule
 		}
 
 		var load = function(clbk){

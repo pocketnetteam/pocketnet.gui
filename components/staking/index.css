@@ -120,6 +120,7 @@
 }
 #staking .buycoin {
   padding: 0 1em;
+  padding-bottom: 1em;
 }
 #staking .buycoin a {
   display: inline-block;
@@ -340,6 +341,9 @@ html.stblack #staking .rcptwrp {
   }
   #staking .calcCaption span {
     font-size: 0.9em;
+  }
+  #staking .buycoin {
+    padding-bottom: 0.5em;
   }
   #staking .buycoin button {
     font-size: 0.8em !important;

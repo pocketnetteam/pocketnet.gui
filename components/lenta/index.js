@@ -4048,7 +4048,8 @@ var lenta = (function(){
 
 					self.app.platform.ws.messages["newblocks"].clbks.newsharesLenta = 
 					self.app.platform.ws.messages["new block"].clbks.newsharesLenta = actions.newmaterials
-
+					
+					self.app.platform.sdk.categories.clbks.excluded.lenta =
 					self.app.platform.sdk.categories.clbks.tags.lenta =
 					self.app.platform.sdk.categories.clbks.selected.lenta = function(data){
 
@@ -4488,6 +4489,7 @@ var lenta = (function(){
 
 				if(!essenseData.openapi && !essenseData.second && !essenseData.txids){
 
+					delete self.app.platform.sdk.categories.clbks.excluded.lenta
 					delete self.app.platform.sdk.categories.clbks.tags.lenta
 					delete self.app.platform.sdk.categories.clbks.selected.lenta
 

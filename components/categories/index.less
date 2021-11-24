@@ -34,6 +34,8 @@
         .buttons{
             display: flex;
             padding-right: @rhythm;
+            font-size: 0.8em;
+            padding: @rhythm @rhythm * 2;
 
             >div{
                 display: inline-block;
@@ -42,18 +44,16 @@
                     cursor: pointer;
                     text-align: center;
                     /*.transition(0.3s);*/
-    
-                    &:hover{
-                        i{
-                            color : @color-main;
-                        }
-                        
+
+                    i{
+                        font-size: 1em;
                     }
+    
                 }
     
                 &.mlab{
                     opacity: 0.5;
-                    padding-left: @rhythm;
+                    padding-left: @rhythm * 2;
                     cursor: pointer;
                     /*.transition(0.3s);*/
     
@@ -65,6 +65,12 @@
                     &:hover{
                         opacity: 1;
                         color : @color-bad;
+                    }
+                }
+
+                &.addcategory{
+                    &:hover{
+                        color: @color-main;
                     }
                 }
     
@@ -100,13 +106,27 @@
     .cat{
         /*.transition(0.3s);*/
         .cattable{
-            width: auto;
+            width: 100%;
+            
+            .minus{
+                font-size: 0.8em;
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                position: relative;
+                cursor: pointer;
+                color: #555770;
+
+                i{
+                    top: 0;
+                    left: 0;
+                }
+            }
+
+
             >div{
-                vertical-align: middle;
                 padding : @rhythm 2 * @rhythm;
                 padding-left: 0;
-
-                
 
                 &.catvalue{
                     padding-right: 0;
@@ -133,6 +153,7 @@
                 &.catvalue{
                     /*.transition(0.3s);*/
                     cursor: pointer;
+                    width: 80%;
                     &:hover{
                         color : @color-main;
                     }
@@ -175,8 +196,7 @@
             .cattable{
                 >div{
                     &.catedit,
-                    &.catcheck,
-                    &.catsearch{
+                    &.catcheck{
                         opacity: 1;
                     }
 
@@ -221,6 +241,20 @@
                         }
                     }
                 }
+            }
+        }
+
+        &.excluded{
+            
+            .catvalue{
+                color : #555770;
+                opacity: 0.5;
+                pointer-events: none;
+
+            }
+
+            .minus{
+                color: @color-bad;
             }
         }
     }
