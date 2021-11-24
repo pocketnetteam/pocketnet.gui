@@ -3,6 +3,7 @@ var bastyonhelper = (function(){
 	var self = new nModule();
 
 	var essenses = {};
+	var bastyonhelperOpened = false
 
 	var Essense = function(p){
 
