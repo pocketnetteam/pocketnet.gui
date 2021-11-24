@@ -1,4 +1,4 @@
-# Pocketnet Desktop Browser
+# Bastyon Desktop Browser
 ![GitHub](https://img.shields.io/github/license/pocketnetteam/pocketnet.api)
 ![contributors](https://img.shields.io/github/contributors/pocketnetteam/pocketnet.gui)
 ![last_commit](https://img.shields.io/github/last-commit/pocketnetteam/pocketnet.gui)
@@ -7,9 +7,9 @@
 ![GitHub release (latest by date)](https://img.shields.io/github/downloads/pocketnetteam/pocketnet.gui/latest/total)
 [![CI to Docker Hub](https://github.com/pocketnetteam/pocketnet.gui/actions/workflows/docker_registry.yml/badge.svg?branch=master&event=push)](https://github.com/pocketnetteam/pocketnet.gui/actions/workflows/docker_registry.yml)
 
-# What is Pocketnet?
+# What is Bastyon?
 
-[Pocketnet](https://pocketnet.app/about) is a decentralized social network based on the blockchain.
+[Bastyon](https://pocketnet.app/about) is a decentralized social network based on the blockchain.
 There is no central authority or corporation. Platform is run by equal
 nodes on a blockchain with no centralized server. All revenue is split
 between node operators and content creators. Node operators stake Pocketcoin
@@ -18,11 +18,11 @@ in each block go to content creators based on ratings their content gathers
 from users. [Read more in the article.](https://pocketnet.app/docs/Pocketnet%20Whitepaper%20Draft%20v2.pdf)
 
 # What should I know?
-This software allows you to participate in the network from the user's side - to view, create and moderate content, communicate with other network participants and earn coins by your activity. - [Help center `https://pocketnet.app/help`](https://pocketnet.app/help?page=faq).
+This software allows you to participate in the network from the user's side - to view, create and moderate content, communicate with other network participants and earn coins by your activity. - [Help center `https://bastyon.com/help`](https://pocketnet.app/help?page=faq).
 
 # Usage
 At the moment, users can connect to the network in two ways:
-- Website [https://pocketnet.app/](https://pocketnet.app/)
+- Website [https://bastyon.com/](https://bastyon.com/)
 - Desktop application [https://github.com/pocketnetteam/pocketnet.gui/releases/latest](https://github.com/pocketnetteam/pocketnet.gui/releases/latest)
 
 # Contacts
