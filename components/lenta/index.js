@@ -3613,6 +3613,9 @@ var lenta = (function(){
 							if (essenseData.from) _beginmaterial = essenseData.from
 
 							var tagsfilter = self.app.platform.sdk.categories.gettags()
+							var tagsexcluded = self.app.platform.sdk.categories.gettagsexcluded()
+
+
 
 							if (essenseData.tags) tagsfilter = essenseData.tags
 
@@ -3628,7 +3631,8 @@ var lenta = (function(){
 								video : video || essenseData.videomobile,
 								count : video ? 20 : 10,
 								page : page,
-								period : essenseData.period
+								period : essenseData.period,
+								tagsexcluded : tagsexcluded
 
 							}, function(shares, error, pr){
 

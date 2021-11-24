@@ -10631,6 +10631,29 @@ Platform = function (app, listofnodes) {
                 return addedtags
             },
 
+            gettagsexcluded : function(_k, onlycategories){
+                var tags = []
+
+                var k = _k || self.app.localization.key
+
+                if(!self.sdk.categories.data.all[k]) k = 'en'
+
+                var excluded = self.sdk.categories.settings.excluded[k] || {};
+
+
+
+                var all = self.sdk.categories.get(k)
+
+                _.each(all, function(c){
+                    if(excluded[c.id]) tags = tags.concat(c.tags)
+                })
+
+
+                if(onlycategories === 'onlytags') tags = excludedtags
+
+                return tags
+            },  
+
             gettags : function(_k, onlycategories){
                 var tags = []
 
@@ -13388,6 +13411,7 @@ Platform = function (app, listofnodes) {
                         p.lang || (p.lang = self.app.localization.key)
                         p.height || (p.height = 0)
                         p.tagsfilter || (p.tagsfilter = [])
+                        p.tagsexcluded || (p.tagsexcluded = [])
                         p.begin || (p.begin = '')
 
                         if (state) {
@@ -13451,6 +13475,10 @@ Platform = function (app, listofnodes) {
                                 return encodeURIComponent(t)
                             })
 
+                            p.tagsexcluded = _.map(p.tagsexcluded, function(t){
+                                return encodeURIComponent(t)
+                            })
+
                             /////temp
 
                             if (p.video && !self.videoenabled){
@@ -13460,7 +13488,7 @@ Platform = function (app, listofnodes) {
 
                             ////
 
-                            var parameters = [Number(p.height), p.txid, p.count, p.lang, p.tagsfilter, p.video && self.videoenabled ? 'video' : ''];
+                            var parameters = [Number(p.height), p.txid, p.count, p.lang, p.tagsfilter, p.video && self.videoenabled ? 'video' : '', '', '', p.tagsexcluded];
 
                             if(p.author) parameters.unshift(p.author)
 
