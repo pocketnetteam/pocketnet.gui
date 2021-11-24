@@ -176,8 +176,11 @@ var tagcloud = (function(){
 			
 			self.app.platform.sdk.categories.clbks.selected.tagsmodule = function(id, value, l){
 				make()
-				
 			}	
+
+			/*self.app.platform.sdk.categories.clbks.selected.tagsmodule = function(id, value, l){
+				make()
+			}	*/
 
 			self.app.platform.sdk.categories.clbks.tags.tagsmodule = function(id, value, l){
 
@@ -215,7 +218,6 @@ var tagcloud = (function(){
 			self.app.platform.sdk.tags.cloud(function(tags, error){
 
 				tags = self.app.platform.sdk.tags.filterEx(tags)
-
 
 				if (clbk)
 					clbk(tags, error)

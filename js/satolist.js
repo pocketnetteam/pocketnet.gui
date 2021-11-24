@@ -106,7 +106,7 @@ Platform = function (app, listofnodes) {
     self.repost = true;
     self.videoenabled = true;
 
-
+    var bastyonhelperOpened = false
     //////////////
     self.test = false;
     //////////////
@@ -10968,16 +10968,21 @@ Platform = function (app, listofnodes) {
 
             },
 
-            get: function (address, count, block, clbk) {
+            get: function (address, count, block, localization, clbk) {
 
                 var parameters = [address || ''];
 
                 if (count) parameters.push(count.toString())
                 else parameters.push('')
+
                 if (block) parameters.push(block.toString())
                 else parameters.push('')
 
-                parameters.push(self.app.localization.key)
+
+                ///
+               // parameters.push(self.app.localization.key)
+
+                parameters.push(localization || self.app.localization.key)
 
                 self.app.api.rpc('gettags', parameters).then(d => {
 
@@ -11015,8 +11020,10 @@ Platform = function (app, listofnodes) {
 
             getfastsearch: function (clbk) {
                 var s = this.storage;
-
                 var t = this
+                var loc = self.app.localization.key
+
+                if(!s.all) s.all = {}
 
                 retry(function(){
                     return self.currentBlock
@@ -11024,19 +11031,21 @@ Platform = function (app, listofnodes) {
 
                     var round = (a, b) => a - a % b
 
-                    t.get('', 150, round(self.currentBlock, 1000) - 20000, function (d) {
+                    t.get('', 150, round(self.currentBlock, 1000) - 20000, loc, function (d) {
+
+                        if(!s.all) s.all = {}
 
                         if (d && d.length) {
 
-                            s.all = _.map(d, function (t) {
+                            s.all[loc] = _.map(d, function (t) {
                                 return t.tag
                             })
 
                         }
 
                         _.each(t.additional, function(at){
-                            if (s.all.indexOf(at.tag) == -1){
-                                s.all.unshift(at.tag)
+                            if (s.all[loc].indexOf(at.tag) == -1){
+                                s.all[loc].unshift(at.tag)
                             }
                         })
     
@@ -11058,12 +11067,13 @@ Platform = function (app, listofnodes) {
 
                 var t = this
                 var s = this.storage;
+                var loc = self.app.localization.key
 
-                if (s.cloud && !update) {
+                if(!s.cloud) s.cloud = {}
+
+                if (s.cloud[loc] && !update) {
                     if (clbk) {
-
-                        clbk(s.cloud)
-
+                        clbk(s.cloud[loc])
                     }
                 }
                 else {
@@ -11074,11 +11084,10 @@ Platform = function (app, listofnodes) {
                         return self.currentBlock
                     }, function(){
 
-                        t.get('', 50, (round(self.currentBlock, 1000) - 23700), function (d, error) {
+                        t.get('', 50, (round(self.currentBlock, 1000) - 23700), loc, function (d, error) {
+                            if(!s.cloud) s.cloud = {}
 
-                            if (!error)
-                                s.cloud = d
-
+                            if (!error) s.cloud[loc] = d
 
                             _.each(t.additional, function(at){
 
@@ -11102,14 +11111,12 @@ Platform = function (app, listofnodes) {
                                             lt.new = at.new
                                         }
                                     }
-
                                 }
-
                                
                             })
 
                             if (clbk) {
-                                clbk(s.cloud, error)
+                                clbk(s.cloud[loc], error)
                             }
 
                         })
@@ -13507,9 +13514,10 @@ Platform = function (app, listofnodes) {
                                             })
                                         }
 
-
-
                                         _.each(shares || [], function (s) {
+
+                                            if(!storage[key]) storage[key] = []
+
                                             if (p.count > 0) {
                                                 storage[key].push(s)
                                             }
@@ -23430,6 +23438,24 @@ Platform = function (app, listofnodes) {
                 
                 clbk();
             });
+
+            if (typeof _Electron == 'undefined' && !window.cordova && window.pocketnetproject !== 'Bastyon' && !bastyonhelperOpened && !window.testpocketnet){
+
+                bastyonhelperOpened = true
+
+                setTimeout(function(){
+
+                    app.nav.api.load({
+                        open : true,
+                        id : 'bastyonhelper',
+                        inWnd : true,
+                    })
+
+                }, 1000)
+
+            }
+
+            
             
         }).catch(e => {
             console.log("ERROR", e)

@@ -844,6 +844,8 @@ var Nodemanager = function(p){
 
                 db.find({bchain}).exec(function (err, docs) {
 
+                    console.log("err", err)
+
 
                     self.nodes = []
 
@@ -866,6 +868,8 @@ var Nodemanager = function(p){
 
                     //// remove
                     //docs = []
+
+                    console.log('docs', docs, p.stable)
 
                     var nodes = _.map(c.concat(p.stable, docs || []) , function(options){
 

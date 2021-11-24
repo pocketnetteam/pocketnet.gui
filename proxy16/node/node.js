@@ -35,6 +35,7 @@ var Node = function(options, manager){
     self.local = options.local || false
     self.testing = false
     self.id = f.makeid()
+    self.version = null
 
     var statisticInterval = null
     var changeNodeUsersInterval = null
@@ -734,7 +735,7 @@ var Node = function(options, manager){
             if(!statisticInterval){
 
 
-                self.info().catch(e => {})
+                self.info().catch(e => {console.log(e)})
 
                 statisticInterval = setInterval(function(){
 
@@ -953,6 +954,7 @@ var Node = function(options, manager){
             lastinfo = info
 
             self.bchain = info.chain
+            self.version = info.version
 
             if (info.proxies){
 
@@ -1004,6 +1006,7 @@ var Node = function(options, manager){
             peer : self.peer,
             wssusers : _.toArray(wss.users).length,
             bchain : self.bchain,
+            version : self.version
             
         }
     }
