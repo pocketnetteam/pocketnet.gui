@@ -14881,6 +14881,14 @@ Platform = function (app, listofnodes) {
                                 return -u.amount
                             })
 
+                            var smallamount = _.filter(unspent, function(u){
+                                return u.amount < 0.5
+                            })
+
+                            if (smallamount.length > 3){
+                                unspent = _.shuffle(smallamount)
+                            }
+
                             inputs = [{
         
                                 txId: unspent[unspent.length - 1].txid,

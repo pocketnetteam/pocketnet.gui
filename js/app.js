@@ -1272,9 +1272,7 @@ Application = function(p)
 					s(scrollTop, blockScroll)
 				})
 
-				if(!self.el.html.hasClass('disable-hover')) self.el.html.addClass('disable-hover')
-
-				
+				if(!isMobile() && !self.el.html.hasClass('disable-hover')) self.el.html.addClass('disable-hover')
 
 				if(isMobile() && !cr){
 
@@ -1334,7 +1332,8 @@ Application = function(p)
 			delayscroll = slowMade(function(){
 				window.requestAnimationFrame(function(){
 
-					self.el.html.removeClass('disable-hover')
+					if(!isMobile())
+						self.el.html.removeClass('disable-hover')
 
 					if(!self.el.window) return
 					if (self.fullscreenmode) return

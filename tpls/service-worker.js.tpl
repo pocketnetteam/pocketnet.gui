@@ -48,7 +48,6 @@ routing.registerRoute(
 );
 
 
-
 // The activate handler takes care of cleaning up old caches
 self.addEventListener('activate', event => {
   const currentCacheName = core.cacheNames.runtime;
@@ -60,6 +59,7 @@ self.addEventListener('activate', event => {
     return cacheNames.filter(cacheName => cacheName != currentCacheName);
   }).then(cachesToDelete => {
     return Promise.all(cachesToDelete.map(cacheToDelete => {
+      console.log('delete cache', cacheToDelete)
       return caches.delete(cacheToDelete);
     }));
   });
