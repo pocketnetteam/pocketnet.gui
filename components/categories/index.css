@@ -90,6 +90,9 @@
 #categories .cat .cattable > div.catvalue i {
   width: 17px;
 }
+#categories .cat .cattable > div.catvalue i.fa-star {
+  color: #FFAE00;
+}
 #categories .cat .cattable > div.catvalue .catname {
   margin-left: 13px;
   font-size: 0.8em;
@@ -174,7 +177,7 @@
   color: #0992DF;
 }
 #categories .tg.selected.added {
-  color: #ff6e84;
+  font-weight: 700;
 }
 #categories .tg.selected .unselected {
   display: none;

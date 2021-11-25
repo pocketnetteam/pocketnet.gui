@@ -216,13 +216,62 @@ var categories = (function(){
 
 					el.c.removeClass('hidden')
 
-					cats = _.sortBy(cats, function(c){
-						if(c.added) return - 1
-						if (c.selected) return -1;
 
-						if(!c.excluded) return -1;
+					cats = cats.sort(function(a, b){
+
+
+						if (a.selected){
+
+							if (b.selected && b.added){
+
+								return 1;
+
+							} else {
+
+								return -1;
+
+							}
+						}
+
+						if (a.excluded){
+
+							if (a.added && !b.selected && b.excluded){
+								
+								return -1;
+
+							} else {
+
+								return 1;
+
+							}
+
+
+						}
+
+						if (!a.excluded){
+
+							if (a.added && !b.selected){
+								return -1;
+							}
+
+							if (b.added || b.selected){
+								return 1;
+							}
+
+							if (b.excluded && !b.added){
+
+								return -1;
+
+							} else {
+
+								return 1;
+							}
+
+						}
+
+						return 0;
+
 					})
-
 					
 
 					self.shell({
