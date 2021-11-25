@@ -1090,7 +1090,6 @@ var Proxy = function (settings, manage, test, logger) {
 
 						var cached = server.cache.get(method, cparameters, cachehash);
 
-						
 
 						if (typeof cached != 'undefined') {
 							return Promise.resolve({

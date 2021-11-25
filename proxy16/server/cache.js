@@ -303,7 +303,6 @@ var Cache = function(p){
             if (block && typeof ckeys[key].block != undefined){
                 ckeys[key].block = block
             }
-            
 
             if(!waiting[key])
                 waiting[key] = {}

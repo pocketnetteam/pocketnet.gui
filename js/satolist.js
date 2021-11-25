@@ -2025,7 +2025,7 @@ Platform = function (app, listofnodes) {
                         }
                     })
 
-                })
+                }, true)
             })
 
         },
@@ -12870,8 +12870,7 @@ Platform = function (app, listofnodes) {
 
                                     if (state && temp['share'] && temp['share'][s.txid]) delete temp['share'][s.txid]
 
-                                    self.sdk.node.shares.takeusers(share, state)
-
+                                    self.sdk.node.shares.takeusers([share], state)
 
                                     return s
 
@@ -18599,11 +18598,10 @@ Platform = function (app, listofnodes) {
 
 
                 var links = _.filter(_.map(shares, function(s){
-                    return s.url
+                    return s ? s.url : null
                 }), function(l){
                     return l ? true : false
                 })
-
 
                 return self.sdk.videos.info(links)
 
