@@ -10884,10 +10884,21 @@ Platform = function (app, listofnodes) {
                 s.excluded[k] || (s.excluded[k] = {})
 
 
-                if (s.excluded[k][id]) 
-                    delete s.excluded[k][id]
+                if (s.excluded[k][id]){
 
-                else s.excluded[k][id] = true
+                    delete s.excluded[k][id];
+
+                } else {
+                    s.excluded[k][id] = true;
+
+                        
+                    s.selected[k] || (s.selected[k] = {})
+
+                    if (s.selected[k][id]){
+                        delete s.selected[k][id]
+                    }
+                } 
+
 
                 self.sdk.categories.save()
 

@@ -4,12 +4,30 @@
 #leftpanel > div .wrp {
   padding-bottom: 10px;
 }
+#leftpanel .closecategoriesContainer {
+  text-align: right;
+  font-size: 1em;
+}
+#leftpanel .closecategoriesContainer button {
+  padding: 0;
+  text-decoration: none;
+}
 #leftpanel .best {
   display: flex;
   align-items: center;
   justify-content: space-between;
   color: #555770;
   padding-bottom: 0.5em;
+  margin-top: 1em;
+}
+#leftpanel .best.on .fire {
+  color: #F41A4D;
+}
+#leftpanel .best.on .toggle {
+  color: #076C34;
+}
+#leftpanel .best.on .toggle i {
+  transform: none;
 }
 #leftpanel .best .bestLabel {
   display: flex;
@@ -28,20 +46,6 @@
 }
 #leftpanel .best .toggle i {
   transform: scaleX(-1);
-}
-#leftpanel .best .toggle.on {
-  color: #076C34;
-}
-#leftpanel .best .toggle.on i {
-  transform: none;
-}
-#leftpanel .closecategoriesContainer {
-  text-align: right;
-  font-size: 0.8em;
-}
-#leftpanel .closecategoriesContainer button {
-  padding-right: 1em;
-  text-decoration: none;
 }
 #leftpanel .sections {
   background: rgba(240, 240, 240, 0.3);
@@ -177,7 +181,7 @@
     padding-left: 1em;
   }
   #leftpanel > div {
-    font-size: 1.3em;
+    font-size: 1em;
   }
   #leftpanel .subtop .topnavigation button {
     width: 135px;

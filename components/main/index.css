@@ -762,7 +762,7 @@ html.testpocketnet #main.testpocketnetbg {
     z-index: 201;
     background: #fff;
     color: #011621;
-    padding-top: 75px;
+    padding-top: 25px;
     overflow-y: scroll;
     padding-bottom: 90px;
     -moz-transition: 0.3s;

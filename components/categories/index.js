@@ -218,7 +218,9 @@ var categories = (function(){
 
 					cats = _.sortBy(cats, function(c){
 						if(c.added) return - 1
-						return c.selected ? 0 : 1
+						if (c.selected) return -1;
+
+						if(!c.excluded) return -1;
 					})
 
 					

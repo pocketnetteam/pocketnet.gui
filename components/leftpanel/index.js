@@ -153,7 +153,7 @@ var leftpanel = (function(){
 
 			el.c.find('.toggle').on('click', function(){
 
-				$(this).toggleClass('on');
+				$(this).closest('.best').toggleClass('on');
 
 			})
 		}

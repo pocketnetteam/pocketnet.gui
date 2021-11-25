@@ -108,20 +108,6 @@
         .cattable{
             width: 100%;
             
-            .minus{
-                font-size: 0.8em;
-                display: flex;
-                justify-content: flex-end;
-                align-items: center;
-                position: relative;
-                cursor: pointer;
-                color: #555770;
-
-                i{
-                    top: 0;
-                    left: 0;
-                }
-            }
 
 
             >div{
@@ -130,6 +116,11 @@
 
                 &.catvalue{
                     padding-right: 0;
+
+                    i{
+                        width: 17px;
+                    }
+
                     .catname{
                         margin-left: 13px;
                         font-size: 0.8em;
@@ -160,7 +151,6 @@
                 }
 
                 &.catedit,
-                &.catsearch,
                 &.catcheck{
                     /*.transition(0.3s);*/
                     padding : 0;
@@ -177,14 +167,33 @@
                         color : @color-main;
                     }
                 }
+                
 
-                &.catedit,
-                &.catsearch{
+                &.catedit{
                     width : 33px;
                     opacity: 0;
                 }
 
+                &.minus{
+                    opacity: 0;
+                    font-size: 0.8em;
+                    display: flex;
+                    justify-content: flex-end;
+                    align-items: center;
+                    position: relative;
+                    cursor: pointer;
+                    color: #555770;
+    
+                    i{
+                        top: 0;
+                        left: 0;
+                    }
+                }
+
                 &.catedit{
+                    position: relative;
+                    right: 10px;
+
                     &:hover{
                         opacity: 1;
                     }
@@ -200,7 +209,8 @@
                         opacity: 1;
                     }
 
-                    &.catedit{
+                    &.catedit,
+                    &.minus{
                         opacity: 0.5;
 
                         &:hover{
@@ -214,7 +224,7 @@
     }
 
     .tg{
-       
+
         .selected{
             display: none;
         }
@@ -240,23 +250,11 @@
                             opacity: 1;
                         }
                     }
+
                 }
             }
         }
 
-        &.excluded{
-            
-            .catvalue{
-                color : #555770;
-                opacity: 0.5;
-                pointer-events: none;
-
-            }
-
-            .minus{
-                color: @color-bad;
-            }
-        }
     }
 
     .ta{
@@ -265,6 +263,23 @@
 
             &.hdn{
                 display: none;
+            }
+
+                   
+        
+            &.excluded{
+                
+                .catvalue{
+                    color : #555770;
+                    opacity: 0.5;
+                    pointer-events: none;
+
+                }
+
+                .minus {
+                    color: @color-bad;
+                    opacity: 1!important;
+                }
             }
         }
     }
@@ -429,4 +444,22 @@ html.stblack{
             background: @color-black3;
         }
     }
+
+}
+
+
+@media only screen and (max-width: 768px){
+
+    #categories{
+
+        .cat{
+            .cattable{
+                .catedit, .minus{
+                    opacity: 1!important;
+                }
+            }
+        }
+    
+    }
+
 }

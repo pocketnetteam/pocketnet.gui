@@ -80,25 +80,15 @@
 #categories .cat .cattable {
   width: 100%;
 }
-#categories .cat .cattable .minus {
-  font-size: 0.8em;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  position: relative;
-  cursor: pointer;
-  color: #555770;
-}
-#categories .cat .cattable .minus i {
-  top: 0;
-  left: 0;
-}
 #categories .cat .cattable > div {
   padding: 0.5em 1em;
   padding-left: 0;
 }
 #categories .cat .cattable > div.catvalue {
   padding-right: 0;
+}
+#categories .cat .cattable > div.catvalue i {
+  width: 17px;
 }
 #categories .cat .cattable > div.catvalue .catname {
   margin-left: 13px;
@@ -124,7 +114,6 @@
   color: #00a4ff;
 }
 #categories .cat .cattable > div.catedit,
-#categories .cat .cattable > div.catsearch,
 #categories .cat .cattable > div.catcheck {
   /*.transition(0.3s);*/
   padding: 0;
@@ -134,19 +123,34 @@
   opacity: 0.2;
 }
 #categories .cat .cattable > div.catedit i,
-#categories .cat .cattable > div.catsearch i,
 #categories .cat .cattable > div.catcheck i {
   font-size: 0.8em;
 }
 #categories .cat .cattable > div.catedit:hover,
-#categories .cat .cattable > div.catsearch:hover,
 #categories .cat .cattable > div.catcheck:hover {
   color: #00a4ff;
 }
-#categories .cat .cattable > div.catedit,
-#categories .cat .cattable > div.catsearch {
+#categories .cat .cattable > div.catedit {
   width: 33px;
   opacity: 0;
+}
+#categories .cat .cattable > div.minus {
+  opacity: 0;
+  font-size: 0.8em;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  color: #555770;
+}
+#categories .cat .cattable > div.minus i {
+  top: 0;
+  left: 0;
+}
+#categories .cat .cattable > div.catedit {
+  position: relative;
+  right: 10px;
 }
 #categories .cat .cattable > div.catedit:hover {
   opacity: 1;
@@ -155,10 +159,12 @@
 #categories .cat:hover .cattable > div.catcheck {
   opacity: 1;
 }
-#categories .cat:hover .cattable > div.catedit {
+#categories .cat:hover .cattable > div.catedit,
+#categories .cat:hover .cattable > div.minus {
   opacity: 0.5;
 }
-#categories .cat:hover .cattable > div.catedit:hover {
+#categories .cat:hover .cattable > div.catedit:hover,
+#categories .cat:hover .cattable > div.minus:hover {
   opacity: 1;
 }
 #categories .tg .selected {
@@ -179,19 +185,20 @@
 #categories .tg.selected .cat .cattable > div.catcheck {
   opacity: 1;
 }
-#categories .tg.excluded .catvalue {
-  color: #555770;
-  opacity: 0.5;
-  pointer-events: none;
-}
-#categories .tg.excluded .minus {
-  color: #F41A4D;
-}
 #categories .ta .tg {
   display: block;
 }
 #categories .ta .tg.hdn {
   display: none;
+}
+#categories .ta .tg.excluded .catvalue {
+  color: #555770;
+  opacity: 0.5;
+  pointer-events: none;
+}
+#categories .ta .tg.excluded .minus {
+  color: #F41A4D;
+  opacity: 1!important;
 }
 #categories.showedallcats .showallcats {
   display: none;
@@ -298,4 +305,10 @@ html.stblack .addcategorydialog .namewrapper .label span {
 }
 html.stblack .addcategorydialog input {
   background: #112035;
+}
+@media only screen and (max-width: 768px) {
+  #categories .cat .cattable .catedit,
+  #categories .cat .cattable .minus {
+    opacity: 1!important;
+  }
 }

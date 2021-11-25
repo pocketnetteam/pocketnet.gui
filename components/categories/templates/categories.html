@@ -5,14 +5,14 @@
         
         %>
 
-        <div category="<%-cat.id%>" class="tg <% if(cat.added) {%> added <% } %> <% if(cat.selected) {%> selected <% } %>  <% if(cat.excluded) {%> excluded <% } %> <% if(i > 7) {%> hdn <% } %>">
+        <div category="<%-cat.id%>" class="tg <% if(cat.added) {%> added <% } %> <% if(cat.selected) {%> selected <% } %> <% if(cat.excluded) {%> excluded <% } %> <% if(i > 7) {%> hdn <% } %>">
 
             
                 <div class="cat">
                     <div class="cattable table">
 
                         <div class="catvalue catcheckgl" title="<%-title%>">
-                            <i class="<%- cat.icon %>"></i>
+                            <i class="<%- cat.icon ||  'fa fa-mouse-pointer'%>"></i>
                             <span class="catname"><%- cat.name %></span>
                         </div>
 
