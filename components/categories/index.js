@@ -294,7 +294,7 @@ var categories = (function(){
 						})
 
 						p.el.find('.catcheckgl').on('click', function(){
-							var id = $(this).closest('.tg').attr('category')
+							var id = $(this).closest('.tg').attr('category');
 
 							var r = self.app.platform.sdk.categories.select(id)
 

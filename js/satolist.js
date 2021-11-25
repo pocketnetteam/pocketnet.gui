@@ -5442,6 +5442,62 @@ Platform = function (app, listofnodes) {
                     clbk()
             }
         },
+        
+        lentaMethod: {
+            all: {
+                hierarchical: 'gethierarchicalstrip',
+                historical: 'gethistoricalstrip'
+            },
+            default: "hierarchical",
+            current: null,
+
+            save: function () {
+
+                var c = self.sdk.lentaMethod.current
+
+                localStorage['lentaMethod'] = c;
+
+            },
+
+            load: function (clbk) {
+
+                var t = self.sdk.lentaMethod
+
+                t.current = localStorage['lentaMethod'] || t.default;
+
+                t.set()
+
+                if (clbk) clbk()
+            },
+
+            get: function(){
+                var t = self.sdk.lentaMethod;
+
+                console.log('t.all[t.current]',  t.all[t.current])
+
+                return t.all[t.current];
+            },
+
+            set: function (value) {
+
+                var t = self.sdk.lentaMethod
+
+                if (!value) {
+                    value = t.current || t.default
+                }
+
+                if (value && t.all[value]) {
+
+                    t.current = value;
+
+                    self.app.platform.sdk.categories.clbks.selected.lenta && self.app.platform.sdk.categories.clbks.selected.lenta();
+
+                    t.save()
+
+                }
+
+            }
+        },
 
         theme: {
             all: {
@@ -13503,7 +13559,6 @@ Platform = function (app, listofnodes) {
 
                             if(p.author) parameters.unshift(p.author)
 
-
                             s.getex(parameters, function (data, error) {
 
                                 var shares = data.contents || []
@@ -13572,7 +13627,7 @@ Platform = function (app, listofnodes) {
                                         clbk(shares, error, p)
                                 }
 
-                            }, methodparams.method || 'gethierarchicalstrip')
+                            }, methodparams.method || self.sdk.lentaMethod.get())
 
 
                         }
@@ -23351,6 +23406,7 @@ Platform = function (app, listofnodes) {
         self.sdk.relayTransactions.load();
         self.applications = self.__applications()
         self.sdk.theme.load()
+        self.sdk.lentaMethod.load()
         self.sdk.system16.init()
 
         //self.app.platform.sdk.node.sys.load()
