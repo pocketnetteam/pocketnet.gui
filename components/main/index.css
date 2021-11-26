@@ -7,7 +7,7 @@
 }
 #main #lenta .shares .showmorebyauthor,
 #main #lenta .shares .share {
-  border-radius: 3px;
+  border-radius: 12px;
 }
 #main .bastyonhelper .layout {
   display: flex;
@@ -129,7 +129,7 @@
   margin-bottom: 0.5em;
   min-height: 160px;
   position: relative;
-  border-radius: 3px;
+  border-radius: 12px;
 }
 #main .topvideosWrapper.hasshares {
   display: block;
@@ -255,6 +255,11 @@
 #main .lentacell .cf_spacer,
 #main .lentacell .bgCaption {
   margin-bottom: 0.5em;
+}
+#main .lentacell .bgCaption,
+#main .lentacell .topvideosWrapper,
+#main .lentacell .share {
+  box-shadow: 0px 10px 14px rgba(0, 0, 0, 0.08);
 }
 #main .lentacellsvi {
   margin-right: 0;
@@ -389,7 +394,7 @@
 #main .bgCaption {
   height: auto;
   padding-bottom: 0;
-  border-radius: 3px;
+  border-radius: 12px;
 }
 #main .bgCaption.sec {
   color: #0a0c17;
@@ -762,7 +767,7 @@ html.testpocketnet #main.testpocketnetbg {
     z-index: 201;
     background: #fff;
     color: #011621;
-    padding-top: 25px;
+    padding-top: 75px;
     overflow-y: scroll;
     padding-bottom: 90px;
     -moz-transition: 0.3s;
@@ -1019,6 +1024,6 @@ html.tablet #main {
     padding-top: 0;
   }
   #main .panel {
-    border-radius: 3px;
+    border-radius: 12px;
   }
 }
