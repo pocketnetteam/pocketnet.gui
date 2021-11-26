@@ -103,8 +103,12 @@
   display: none;
 }
 #share.minimized .iconWrapper {
-  padding: 0.5em;
+  padding: 12px;
   padding-right: 0;
+}
+#share.minimized .iconWrapper .usericon {
+  width: 36px;
+  height: 36px;
 }
 #share.minimized .cntwrk {
   padding-left: 0;

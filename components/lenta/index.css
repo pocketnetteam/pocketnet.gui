@@ -250,7 +250,7 @@
 #lenta .shares .videoWrapper {
   max-width: 600px;
   position: relative;
-  border-radius: 3px;
+  border-radius: 12px;
   overflow: hidden;
 }
 #lenta .shares .videoWrapper .videoTips {
@@ -823,12 +823,14 @@
   height: 140px;
   float: left;
   background: #e4ddde;
+  border-radius: 12px;
 }
 #lenta .shares .share .images .imagesWrapper .image {
   opacity: 0;
   width: 100%;
   height: 100%;
   cursor: pointer;
+  border-radius: 12px;
 }
 #lenta .shares .share .images .imagesWrapper .image.active {
   opacity: 1;
@@ -1463,6 +1465,7 @@
   background: #fff;
   padding: 1em 0;
   text-align: center;
+  border-radius: 12px;
 }
 #lenta .seemore button,
 #lenta .loadprev button,
@@ -1716,8 +1719,8 @@
   flex-grow: 1;
   width: 300px;
   margin: 0;
-  margin-right: 0.5em;
-  margin-bottom: 0.5em;
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 #lenta.horizontal .shares .share:nth-last-child(1) {
   margin-right: 0;
@@ -1812,6 +1815,7 @@
   height: 180px;
 }
 #lenta.horizontal.compact.mainvideo .shares .share .forurl {
+  border-radius: 12px;
   height: 140px;
 }
 #lenta.horizontal.compact.mainvideo .shares .share .forurl.verticalVideo {

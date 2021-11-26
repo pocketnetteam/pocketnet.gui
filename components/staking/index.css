@@ -96,9 +96,8 @@
 }
 #staking .rcptwrp {
   background: #fff;
-  border-radius: 0px 0px 12px 12px;
+  border-radius: 12px;
   position: relative;
-  border-radius: 3px;
 }
 #staking .earnlabel {
   padding: 0.75em 1em;
