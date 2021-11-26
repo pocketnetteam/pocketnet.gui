@@ -135,9 +135,6 @@ var postscores = (function(){
 				var addresses = _.map(scores, function(s){
 					return s.address
 				})
-				.filter(function(value, index, self){
-					return self.indexOf(value) === index;
-				})
 
 				var map = {};
 
@@ -205,8 +202,7 @@ var postscores = (function(){
 					name :  'stars',
 					el : el.stars,
 					data : {
-						share : share,
-						hideCount : true
+						share : share
 					}					
 
 				}, function(p){					
@@ -230,7 +226,7 @@ var postscores = (function(){
 					el : el.details,
 					data : {
 						share : share,
-						scores : scores,
+						scores : scores
 					}					
 
 				}, function(p){
