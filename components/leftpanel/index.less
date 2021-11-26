@@ -55,6 +55,7 @@
 
 		.text{
 			margin-left : @rhythm;
+			font-weight: 600;
 		}
 
 		.toggle{
@@ -180,6 +181,48 @@
 
 			.vc_iconSpinWrapper{
 				width: 22px;
+			}
+		}
+	}
+
+
+	.rightbottomnav {
+		color: #555770;
+
+		a,
+		span{
+			font-size: 0.8em;
+		}
+
+		a{
+			.transition(0.3s);
+
+			&:hover{
+				color : @color-main;
+			}
+		}
+
+		.rightbottomlinks {
+			padding-top: @rhythm;
+		}
+
+		.copyright {
+			display: flex;
+			justify-content: flex-start;
+			align-items: center;
+			margin-top: 4 * @rhythm;
+
+			.copy_logo {
+				width: 14px;
+				height: 14px;
+			}
+
+			img{
+				opacity: 0.5;
+			}
+
+			.copyright_text {
+				margin-left: @rhythm;
 			}
 		}
 	}
