@@ -6,7 +6,7 @@
 			<div elementsid="_stepbackBuy" class="_stepback"></div>
 
 			<div class="subcaption">
-				<span>Buy Pocketcoin (PKOIN)</span>
+				<span><%=e('buylogo')%></span>
 			</div>
 
 			<div class="_subcaptionlevel">
@@ -21,31 +21,41 @@
 			<div class="wayf">
 
 				<div class="row flx">
+
 					<div class="fiat">
 						<div class="clogo">
-							<i class="fab fa-cc-visa"></i>
+							<img class="wh2" src="./img/mc_symbol.svg">
+						</div>
+						<div class="label">
+							Mastercard
+						</div>
+					</div>
+
+					<div class="fiat">
+						<div class="clogo">
+							<img class="wh3" src="./img/visa.svg">
 						</div>
 						<div class="label">
 							Visa
 						</div>
 					</div>
 
-					
 					<div class="fiat">
 						<div class="clogo">
-							<i class="fab fa-cc-mastercard"></i>
+							<img class="wh" src="./img/6ff9233688ba95fe3e02f381443539fc.svg">
 						</div>
 						<div class="label">
-							Mastercard
+							Indacoin
 						</div>
 					</div>
+					
 					
 				</div>
 
 				<div class="row table">
 					<div class="reciever">
 						<a elementsid="https://buy.pkoin.indacoin.io" href="https://buy.pkoin.indacoin.io/index?address=<%-a.address || ''%>">
-							<button class="button orange"><i class="fas fa-chevron-circle-right"></i> Buy with credit card</button>
+							<button class="button orange"><i class="fas fa-chevron-circle-right"></i> <%=e('buywithcreditcard')%></button>
 						</a>
 					</div>
 				</div>
@@ -72,9 +82,12 @@
 
 				<div class="row table">
 
+					
+
+
 					<div class="reciever">
 						<a elementsid="https://pkoin.net" href="https://pkoin.net/?address=<%-a.address || ''%>">
-							<button class="button ghost"><i class="fas fa-chevron-circle-right"></i> Buy for crypto</button>
+							<button class="button "><i class="fas fa-chevron-circle-right"></i> <%=e('buyforcrypto')%></button>
 						</a>
 					</div>
 				</div>

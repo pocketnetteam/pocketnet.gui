@@ -1088,6 +1088,8 @@ var comments = (function(){
 
 			upvoteComment : function(){
 
+				console.log('upvoteComment', ed.cantsend)
+
 				if(ed.cantsend) return
 
 				if($(this).closest('.comment').hasClass('rated')) return

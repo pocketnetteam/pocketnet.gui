@@ -1090,7 +1090,6 @@ var Proxy = function (settings, manage, test, logger) {
 
 						var cached = server.cache.get(method, cparameters, cachehash);
 
-						
 
 						if (typeof cached != 'undefined') {
 							return Promise.resolve({
@@ -1446,11 +1445,11 @@ var Proxy = function (settings, manage, test, logger) {
 			},
 			logs: {
 				path: '/logs',
-				authorization: 'signature',
+				/*authorization: 'signature',*/
 				action: function (message) {
 
-					if (!message.A)
-						return Promise.reject({ error: 'Unauthorized', code: 401 });
+					/*if (!message.A)
+						return Promise.reject({ error: 'Unauthorized', code: 401 });*/
 
 					var data = {
 						logs: server.middle.getlogs()

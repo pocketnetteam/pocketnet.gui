@@ -2545,8 +2545,6 @@ var share = (function(){
 
 			getdata : function(clbk, p){
 
-				console.log("!")
-
 				intro = false;
 				external = null
 				currentShare = deep(p, 'settings.essenseData.share') || new Share(self.app.localization.key);

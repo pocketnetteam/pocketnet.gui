@@ -215,6 +215,10 @@ ____loclib.aaddacc = "Add Account";
 ____loclib.ascheduler = "Scheduler";
 ____loclib.aused = "This address is already use in another addresses pool";
 
+____loclib.accfailedkeypair = "Wrong Private Key";
+____loclib.acchasinthispack = "This address is already added";
+____loclib.acchasinanotherpack = "This address is already use in another addresses pool";
+
 
 //author
 ____loclib.sub = "Follow";
@@ -1229,7 +1233,7 @@ ____loclib.bastyonhelperSubtitle1 = "Pocketnet is now";
 ____loclib.bastyonhelperSubtitle2 = "Please, follow the link bellow";
 
 
-____loclib.videotranscodingwait = "The video is being processed. After it is transcoded, you can post it on Bastyon.";
+____loclib.videotranscodingwait = "Please wait, this video is being processed. This may take some time, after it is transcoded, you will be able to post it on Bastyon.";
 ____loclib.views = "Views";
 
 
@@ -1264,6 +1268,7 @@ ____loclib.sharevisibilitylabel_reg_article = 'Author chose to make this <b>arti
 ____loclib.sharevisibilitylabel_sub_video = 'Author chose to make this <b>video</b> available only for subscribers'
 ____loclib.sharevisibilitylabel_reg_video = 'Author chose to make this <b>video</b> available only for registered Bastyon users'
 
+____loclib.setupVideoNodeGuide = 'Setup Video Node'
 
 ____loclib.MainBoard = 'The fresh air of';
 ____loclib.MainBoard1 = 'censorship resistance';
@@ -1705,5 +1710,9 @@ ____loclib.insteadOf = 'Instead of';
 
 ____loclib.pkoin_commerce_tag_share_error = 'The "pkoin_commerce" tag can only be used as a separate tag. A post with this tag cannot contain videos or images'
 
-
 ____loclib.pkoin_commerce_info = 'Any peer-to-peer PKOIN transactions are not moderatred and at your own risk.'
+
+
+____loclib.buyforcrypto = 'Buy for crypto'
+____loclib.buywithcreditcard = 'Buy with credit card'
+____loclib.buylogo = 'Buy Pocketcoin (PKOIN)'

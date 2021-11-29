@@ -109,7 +109,7 @@ Application = function(p)
 		localStoragePrefix : self.meta.protocol,
 
 		
-		server : p.server || 'https://'+url+'/Shop/AJAXMain.aspx', //donations will be removed
+		server : p.server || 'https://pocketnet.app/Shop/AJAXMain.aspx', //donations will be removed
 
 		//////////////
 		
@@ -1272,6 +1272,8 @@ Application = function(p)
 					s(scrollTop, blockScroll)
 				})
 
+				if(!isMobile() && !self.el.html.hasClass('disable-hover')) self.el.html.addClass('disable-hover')
+
 				if(isMobile() && !cr){
 
 					var cs = (lastScrollTop + 40 < scrollTop || lastScrollTop - 40 < scrollTop)
@@ -1329,6 +1331,9 @@ Application = function(p)
 
 			delayscroll = slowMade(function(){
 				window.requestAnimationFrame(function(){
+
+					if(!isMobile())
+						self.el.html.removeClass('disable-hover')
 
 					if(!self.el.window) return
 					if (self.fullscreenmode) return

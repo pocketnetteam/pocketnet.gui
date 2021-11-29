@@ -98,8 +98,6 @@ var tagcloud = (function(){
 
 				_.each(tags, function(t){
 
-					console.log(t)
-
 					if(t.positionincloud && t.positionincloud < tags.length - 1){
 						fpl.push(t)
 					} 
@@ -108,8 +106,6 @@ var tagcloud = (function(){
 					}
 				})
 
-
-				console.log('fpl', fpl)
 
 				_.each(fpl, function(t){
 					_tgs.splice(t.positionincloud, 0, t)
@@ -180,8 +176,11 @@ var tagcloud = (function(){
 			
 			self.app.platform.sdk.categories.clbks.selected.tagsmodule = function(id, value, l){
 				make()
-				
 			}	
+
+			/*self.app.platform.sdk.categories.clbks.selected.tagsmodule = function(id, value, l){
+				make()
+			}	*/
 
 			self.app.platform.sdk.categories.clbks.tags.tagsmodule = function(id, value, l){
 
@@ -219,7 +218,6 @@ var tagcloud = (function(){
 			self.app.platform.sdk.tags.cloud(function(tags, error){
 
 				tags = self.app.platform.sdk.tags.filterEx(tags)
-
 
 				if (clbk)
 					clbk(tags, error)

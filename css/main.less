@@ -11,8 +11,11 @@
 /* ==========================================================================
    Base styles: opinionated defaults
    ========================================================================== */
-
    
+.disable-hover,
+.disable-hover * {
+  pointer-events: none !important;
+}
 
 .customscroll{
     overflow-y: overlay;
@@ -6587,6 +6590,18 @@ html{
   
 }
 
+@media only screen and (max-width: 1400px) {
+    .rightchatspacer{
+        margin-right: 33px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .rightchatspacer{
+        margin-right: 0;
+    }
+}
+
 @media only screen and (max-width: 1366px) {
     
     #content{
@@ -6597,7 +6612,6 @@ html{
     }
 
     .upbutton{
-        
 
         .full{
             padding-right : 0;
@@ -6624,6 +6638,8 @@ html{
     }
 }
 
+
+
 @media only screen and (max-width: 1280px) {
     #content{
         .work{
@@ -6631,10 +6647,8 @@ html{
             margin-right: auto;
         }
     }
-
-    
-    
 }
+
 
 
 

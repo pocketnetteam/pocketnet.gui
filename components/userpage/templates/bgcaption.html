@@ -5,76 +5,79 @@ var letter = name ? name[0] : ''
 
 
 <div class="bgCaption">
-	<div class="bgCaptionInner">
 	
-<div class="infoWrapper">
-	<div class="work">
-		<div class="cwrapper table">
+		<div class="bgCaptionInner">
+		
+			<div class="infoWrapper">
+				<div class="rightchatspacer">
+					<div class="work">
+						<div class="cwrapper table">
 
-			<div class="cell cellforimage">
-				<div class="icon">
+							<div class="cell cellforimage">
+								<div class="icon">
 
-					<% var src = deep(app, 'platform.sdk.user.storage.me.image')  %>
+									<% var src = deep(app, 'platform.sdk.user.storage.me.image')  %>
 
-					<div class="usericon" image="<%-src || ''%>">
+									<div class="usericon" image="<%-src || ''%>">
 
-						<% if(!src && letter) {%>
+										<% if(!src && letter) {%>
 
-							<span class="letter">
-								<%-letter.toUpperCase()%>
-							</span>
+											<span class="letter">
+												<%-letter.toUpperCase()%>
+											</span>
 
-						<% } else if (!src) { %>
+										<% } else if (!src) { %>
 
-							<i class="far fa-user"></i>
+											<i class="far fa-user"></i>
 
-						<% } %>
+										<% } %>
 
-					</div>
-				</div>
-			</div>
-
-			<div class="ccell">
-				<div class="infomain">
-					<div class="captionWrapperFloat">
-						<div class="caption">
-							<b class="adr"><%-name%></b>
-						</div>
-						
-						<% if(deep(app, 'platform.sdk.user.storage.me.name')) {%>
-							<div class="addressseparateWrapper">
-								<div class="addressseparate">
-									<b><%=e('pnetAddress')%>:</b>
-								</div>
-								<div class="addressseparate">
-									<span elementsid="copyaddresshex" class="copyaddress">
-										<%- user.address.value.toString('hex') %>
-									</span>
-
-
-									<a elementsid='blockexplorer/address' external='external' href="https://<%-app.options.url%>/blockexplorer/address/<%- user.address.value.toString('hex') %>"> <i class="fas fa-th"></i></a>
-
-									
+									</div>
 								</div>
 							</div>
 
-						<% } %>
-					</div>
+							<div class="ccell">
+								<div class="infomain">
+									<div class="captionWrapperFloat">
+										<div class="caption">
+											<b class="adr"><%-name%></b>
+										</div>
+										
+										<% if(deep(app, 'platform.sdk.user.storage.me.name')) {%>
+											<div class="addressseparateWrapper">
+												<div class="addressseparate">
+													<b><%=e('pnetAddress')%>:</b>
+												</div>
+												<div class="addressseparate">
+													<span elementsid="copyaddresshex" class="copyaddress">
+														<%- user.address.value.toString('hex') %>
+													</span>
 
-					
 
-					<div class="tips">
-						<a elementsid='authorlink' href="<%-app.platform.api.authorlink(user.address.value.toString('hex'))%>">
-							<button class="contrast profile"><%=e('profile')%></button>
-						</a>
-						
+													<a elementsid='blockexplorer/address' external='external' href="https://<%-app.options.url%>/blockexplorer/address/<%- user.address.value.toString('hex') %>"> <i class="fas fa-th"></i></a>
+
+													
+												</div>
+											</div>
+
+										<% } %>
+									</div>
+
+									
+
+									<div class="tips">
+										<a elementsid='authorlink' href="<%-app.platform.api.authorlink(user.address.value.toString('hex'))%>">
+											<button class="contrast profile"><%=e('profile')%></button>
+										</a>
+										
+									</div>
+								</div>
+
+							</div>
+						</div>
 					</div>
 				</div>
-
 			</div>
 		</div>
-	</div>
-</div>
 
-	</div>
 </div>

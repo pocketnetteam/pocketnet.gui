@@ -711,11 +711,8 @@ html.testpocketnet #main.testpocketnetbg {
   #main:not(.videomain) .mainpanelcell {
     display: none;
   }
-  #main:not(.videomain) .leftpanelcell {
-    float: right;
-  }
   #main:not(.videomain) .lentacell {
-    margin-left: 0;
+    margin-right: 0;
   }
 }
 /*t*/
@@ -775,6 +772,7 @@ html.testpocketnet #main.testpocketnetbg {
   }
   #main .lentacell {
     margin-right: 0;
+    margin-left: 0;
   }
   #main.videomain .lentacell {
     margin-left: 0;

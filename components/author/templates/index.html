@@ -33,28 +33,29 @@ var telements = function(){ %>
 			<span class="middotwrapper">&middot;</span>
 
 			<% if(!app.curation()) {%> 
-			<span class="subscribebuttonstop <%-_class%>">
 
-				<span elementsid="author_startchat" class="startchat funf"><%=e('startchat')%></span>
-				<% if (me){ 
-					var r = me.relation(author.address, 'subscribes') 
-				%>
-					<span elementsid="author_notificationturn" class="notificationturn <% if(r && (r.private == 'true' || r.private === true)) {%> turnon <% } %>">&middot;<i class="far fa-bell-slash"></i></span>
-				<% } %>
+				<span class="subscribebuttonstop <%-_class%>">
+
 					
-				<span elementsid="author_subscribe" class="subscribe funf"><%=e('follow')%></span>	
+					<span elementsid="author_unsubscribe" class="unsubscribe funf"><%=e('youarefollowing')%></span>	
+					<% if (me){ 
+						var r = me.relation(author.address, 'subscribes') 
+					%>
+						<span elementsid="author_notificationturn" class="notificationturn <% if(r && (r.private == 'true' || r.private === true)) {%> turnon <% } %>">&middot; <i class="far fa-bell-slash"></i></span>
+					<% } %>
+						
+					<span elementsid="author_subscribe" class="subscribe funf"><%=e('follow')%></span>	
 
-			</span>
+					&middot; <span elementsid="author_startchat" class="startchat funf"><%=e('startchat').toLowerCase()%></span>
+
+				</span>
 
 			<% } else { %> 
-				
 				<span class="startchat funf"><%=e('startchat')%></span>
 			<% } %>
 
 			<span class="blockingWrapper">
-
 				<span elementsid="author_unblocking" class="unblocking funf"><%=e('blocked')%></span>	
-
 			</span>
 
 		<% } %>
@@ -147,14 +148,15 @@ var telements = function(){ %>
 	
 
 	<div class="mworkwrapper " id="sticktop">
-		<div class="work adj mwork">
+		<div class="rightchatspacer">
+			<div class="work adj mwork">
+					
+				<div class="leftpanelcell">
+					<div class="authorinfoWrapper"></div>
+					<div class="contentswrapper"></div>
+				</div>
 				
-			<div class="leftpanelcell">
-				<div class="authorinfoWrapper"></div>
-				<div class="contentswrapper"></div>
-			</div>
-			
-			
+				
 				<div class="lentacell">
 					<div class="cnt">
 						<% if(!app.curation()) {%>
@@ -171,8 +173,9 @@ var telements = function(){ %>
 						<% } %>
 					</div>
 				</div>
-			
+				
 
+			</div>
 		</div>
 	</div>
 

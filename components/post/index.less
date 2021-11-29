@@ -939,9 +939,36 @@
 			}
 		}
 
+		.pkoin_commerce_info{
+			padding : 2 * @rhythm 0;
+			max-width: 350px;
+			padding-top : @rhythm;
+			position: relative;
+
+			&:before{
+				content: '';
+				width: 70px;
+				position: absolute;
+				left: 0;
+				top : 0;
+				height: 1px;
+				background: rgb(255, 0, 51);
+			}
+			span{
+				font-size: 0.8em;
+				opacity: 0.8;
+			}
+		}
+
 		.tags{
 			margin-bottom: 2 * @rhythm;
 			overflow: hidden;
+
+			.newlabel{
+				background: rgb(255, 5, 101);
+				   color : #fff;
+			}
+			
 			>div{
 				float: left;
 				margin-right: @rhythm;
@@ -1383,6 +1410,12 @@ html.mobile.fullscreen{
 	}
 }
 
+html.stblack{
+	#post{
+		background: transparent;
+	}
+}
+
 .wnd.postwindow{
 	z-index: 1000;
 
@@ -1666,6 +1699,8 @@ html.stblack{
 				}
 			
 			}
+
+			
 	
 			.tags{
 				>div{

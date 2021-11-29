@@ -16,7 +16,7 @@ var lenta = (function(){
 		var mid = p.mid;
 		var making = false, ovf = false;
 		var w, essenseData, recomended = [], recommended, mestate, initedcommentes = {}, canloadprev = false,
-		video = false, isotopeinited = false, videosVolume = 0;
+		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null;
 
 		var openedPost = null
 		var shareInitedMap = {},
@@ -1005,9 +1005,11 @@ var lenta = (function(){
 
 			fullScreenVideo : function(id, clbk, auto){
 
-				if (fullscreenvideoShowed) {return}
+				if (fullscreenvideoShowing) { return }
+				if (fullscreenvideoShowed) { return }
+				if (essenseData.openapi){ return }
 
-				if (essenseData.openapi){return}
+				fullscreenvideoShowing = id
 
 				var _el = el.c.find("#" + id)
 				var share = self.app.platform.sdk.node.shares.storage.trx[id];
@@ -1017,23 +1019,26 @@ var lenta = (function(){
 						return s.txid == id
 					})
 
-
 					share = new pShare();
 					share._import(temp);
 					share.temp = true;
 					share.address = self.app.platform.sdk.address.pnet().address
 				}
-			
+
+
 
 				actions.initVideo(_el, share, function(res){
 
-					if(!res){
-						sitemessage('')
+					fullscreenvideoShowing = null
 
+					if(!res){
 						return
 					}
 					
 					if(!players[id]) return;
+
+
+					fullscreenvideoShowed = id;
 
 					_el.addClass('fullScreenVideo')
 				
@@ -1050,23 +1055,20 @@ var lenta = (function(){
 					var player = players[id]
 
 					if(!essenseData.openapi && !essenseData.second){
+
+						lastscroll = self.app.lastScrollTop
+						self.app.actions.offScroll()
+
+
 						if(!player.p.playing && !auto){
 							player.p.play()
 						}
+						
 					}
 
 					actions.setVolume(players[id], videosVolume || 0.5)
 
-					lastscroll = self.app.lastScrollTop// el.w.scrollTop()
-					//ovf = !self.app.actions.offScroll()
-
-					self.app.actions.offScroll()
-
 					if(!essenseData.comments){
-
-						/*if (initedcommentes[id])
-							initedcommentes[id].changein(el.c.find("#" + id), 0)*/
-
 
 						retry(function(){
 							return initedcommentes[id] || !el.c
@@ -1085,7 +1087,7 @@ var lenta = (function(){
 						
 					}
 
-					fullscreenvideoShowed = id;
+					
 
 					if (clbk)
 						clbk()
@@ -1097,6 +1099,7 @@ var lenta = (function(){
 
 			exitFullScreenVideo : function(id){
 
+				if(!fullscreenvideoShowed) return
 				
 				if (el.c){
 					var _el = el.c.find("#" + id)
@@ -1125,6 +1128,7 @@ var lenta = (function(){
 				self.app.nav.api.history.removeParameters(['v'])
 
 				self.app.actions.onScroll()
+
 				el.w.scrollTop(lastscroll || 0)
 
 				fullscreenvideoShowed = null;
@@ -1191,7 +1195,7 @@ var lenta = (function(){
 
 				var reputation = deep(app, 'platform.sdk.usersl.storage.'+obj.address+'.reputation') || 0
 
-				if(checkvisibility && reputation >= 50) return
+				if (checkvisibility && reputation >= 50) return
 
 				var upvoteShare = obj.upvote(value);
 

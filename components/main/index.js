@@ -10,7 +10,6 @@ var main = (function(){
 
 		var el = {};
 
-		var bastyonhelperOpened = false;
 
 		var roller = null, lenta = null, share = null, panel,leftpanel, uptimer = null;
 
@@ -157,15 +156,7 @@ var main = (function(){
 
 		var events = {
 
-			sendMnemonic(iframe, mnemonic, pool){
-
-				iframe.contentWindow.postMessage({
-					pocketnet: true,
-					mnemonic: mnemonic,
-					pool: pool,
-				}, 'https://bastyon.com')
-
-			},
+			
 			currentMode : function(){
 				currentMode = $(this).attr('lenta')
 
@@ -789,58 +780,6 @@ var main = (function(){
 				}
 			}
 			
-			
-			var mnemonic = localStorage.getItem('mnemonic');
-			var pool = localStorage.getItem('pool');
-
-			if (!electron && !window.cordova && window.pocketnetproject !== 'Bastyon' && mnemonic && !bastyonhelperOpened && !window.testpocketnet){
-
-				bastyonhelperOpened = true;
-
-				var href = history.state && history.state.href || 'index'
-
-				self.shell({
-					name : 'bastyonhelper',
-					el : el.bastyonhelper,
-					animation : false,
-					data : {
-						href: href
-					}					
-	
-				}, function(p){
-	
-					var iframe = p.el.find('#iframe');
-	
-					var bastyonlink = p.el.find('#bastyonlink');
-					var _close = p.el.find('._close');
-					
-	
-					if (iframe[0]){
-	
-						setTimeout(function(){
-
-							events.sendMnemonic(iframe[0], mnemonic, pool)
-
-							setTimeout(function(){
-								window.location.href = 'https://bastyon.com/' + href
-							}, 300)
-
-						}, 1000)
-							
-
-					}
-	
-					_close.on('click', function(){
-
-						el.bastyonhelper.remove()
-					})
-					
-					
-				})
-	
-			}	
-
-
 
 		}
 
@@ -1211,7 +1150,6 @@ var main = (function(){
 				el.addbutton = el.c.find('.addbutton')
 				el.slwork = el.c.find('.maincntwrapper >div.work')
 				el.topvideos = el.c.find('.topvideosWrapper')
-				el.bastyonhelper = el.c.find('#bastyonhelper');
 
 
 				self.app.el.footer.addClass('workstation')

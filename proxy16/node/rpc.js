@@ -90,6 +90,7 @@ const publics = {
     estimatesmartfee: true,
     gettransaction : true,
     gethierarchicalstrip : true,
+    gethistoricalstrip : true,
     getusercontents : true,
     getcontentsstatistic : true,
     getuserstatistic : true
@@ -401,6 +402,7 @@ RpcClient.callspec = {
     getpostscores: 'str',
     getpagescores: 'obj str',
     gethierarchicalstrip : 'int str int str obj str',
+    gethistoricalstrip : 'int str int str obj str',
     getusercontents : 'str int str int obj str',
     getcontentsstatistic : 'obj str int int',
     // BlockExplorer
