@@ -1233,7 +1233,7 @@ ____loclib.bastyonhelperSubtitle1 = "Pocketnet is now";
 ____loclib.bastyonhelperSubtitle2 = "Please, follow the link bellow";
 
 
-____loclib.videotranscodingwait = "The video is being processed. After it is transcoded, you can post it on Bastyon.";
+____loclib.videotranscodingwait = "Please wait, this video is being processed. This may take some time, after it is transcoded, you will be able to post it on Bastyon.";
 ____loclib.views = "Views";
 
 

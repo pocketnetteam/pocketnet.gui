@@ -309,12 +309,6 @@ var about = (function(){
 			},
 
 			{
-				name : 'Linkedin',
-				icon : '<i class="fab fa-linkedin"></i>',
-				href : 'https://www.linkedin.com/company/cryptolo-io'
-			},
-
-			{
 				name : 'Mastodon',
 				icon : '<i class="fab fa-mastodon"></i>',
 				href : 'https://mastodon.social/@PocketRep'
@@ -325,18 +319,6 @@ var about = (function(){
 				image : 'https://gab.com/assets/img/logo-dec.png',
 				href : 'https://gab.com/PocketNet'
 			},
-
-			{
-				name : 'Sola',
-				image : 'https://web.solacore.net/img/logo_medium-3_mNF.png',
-				href : 'https://sola.ai/cryptolo_io'
-			},
-
-			{
-				name : 'Medium',
-				icon : '<i class="fab fa-medium"></i>',
-				href : 'https://medium.com/@cryptolo.io'
-			}
 
 		]
 
