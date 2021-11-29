@@ -2005,10 +2005,14 @@ var lenta = (function(){
 
 					self.app.platform.sdk.node.shares.getbyid(id, function(){
 
-
 						var s = self.app.platform.sdk.node.shares.storage.trx[id]
 
 						if (self.app.platform.sdk.address.pnet() && s.address == self.app.platform.sdk.address.pnet().address) return
+
+
+						var dev = deep(app, 'platform.sdk.user.storage.'+s.address+'.dev') || deep(app, 'platform.sdk.usersl.storage.'+s.address+'.dev');
+
+						if (dev) return;
 
 						p.attr('value', value)
 						p.addClass('liked')
