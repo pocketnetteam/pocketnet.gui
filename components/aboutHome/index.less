@@ -173,16 +173,21 @@
     .videos{
         background: #262626;
         padding: 80px 0;
+        h3{
+            text-align: center;
+            color: #fff;
+            padding: 30px 0;
+        }
         .main-wrapper{
-        display: flex;
-        justify-content: space-around;
-        flex-wrap: wrap;
-        border-radius: 20px;
-            .video1{
-                display: flex;
-                justify-content: center;
-                margin-top: 25px;
-            }
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            border-radius: 20px;
+                .video1{
+                    display: flex;
+                    justify-content: center;
+                    margin-top: 25px;
+                }
         }
 
     }
@@ -455,7 +460,7 @@
         width: 100%;
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-around;
+        justify-content: start;
         >div {
             
             color: black;
@@ -484,6 +489,74 @@
         background: #dddddd;
         padding: 70px 0;
     }
+
+
+
+    .new-block{
+        background: #dcdcdf;
+        padding: 30px 0;
+        .main-wrapper{
+            h2{
+                color: black;
+                margin-bottom: 30px;
+                height: 40px;
+            }
+            div{
+                display: flex;
+                width: 100%;
+                justify-content: space-around;
+                flex-wrap: wrap;
+                div{
+                    display: flex;
+                    flex-direction: column;
+                    width: 300px;
+
+                    h3{
+                        height: 50px;
+                        margin-bottom: 20px;
+                        font-size: 1.3em;
+                    }
+                    p{
+                        height: 170px;
+                        margin-bottom: 20px;
+                    }
+                }
+            } 
+ 
+        }
+    }
+
+    @media (max-width: 380px) {
+        .new-block{
+            
+            .main-wrapper{
+                h2{
+                    color: black;
+                    margin-bottom: 30px;
+                    height: 40px;
+                    font-size: 1.4em;
+                }
+                div{
+                    
+                    div{
+                        
+
+                        h3{
+                            
+                        }
+                        p{
+                            
+                        }
+                    }
+                } 
+     
+            }
+        }
+
+    }
+
+
+
     .main-board__image {
         margin: auto;
         width: 30%;
@@ -1209,6 +1282,7 @@
                             width: 100%;
                             min-width: 100%;
                             justify-content: center;
+                            margin: 0;
                             >div{
 
                                 width:100px;
