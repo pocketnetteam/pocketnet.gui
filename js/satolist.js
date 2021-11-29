@@ -2061,8 +2061,10 @@ Platform = function (app, listofnodes) {
 
             var r = false
 
+            id = id.replace(/[^a-zA-Z_0-9]/g, '')
+
             try {
-                r = bitcoin.address.fromBase58Check(v);
+                r = bitcoin.address.fromBase58Check(id);
             }
             catch (e) {
 
@@ -20363,8 +20365,10 @@ Platform = function (app, listofnodes) {
 
                         var outs = platform.sdk.node.transactions.toUTs(tx, address);
 
-                        _.each(outs, function (o) {
 
+                        console.log('outs', outs)
+
+                        _.each(outs, function (o) {
 
                             platform.sdk.node.transactions.clearTemp(data.txid, o.vout, true);
 
@@ -20408,15 +20412,11 @@ Platform = function (app, listofnodes) {
                             return m + v.amount
                         }, 0)
 
-                        data.address = platform.sdk.node.transactions.addressFromScryptSig(deep(data.txinfo, 'vin.0.scriptSig.asm'))
+                        data.address = deep(data.txinfo, 'vin.0.address') || platform.sdk.node.transactions.addressFromScryptSig(deep(data.txinfo, 'vin.0.scriptSig.asm'))
 
                         data.opmessage = platform.sdk.node.transactions.getOpreturn(data.txinfo)
 
                         data.cointype = platform.sdk.node.transactions.getCoibaseTypeN(data.txinfo, platform.sdk.address.pnet().address) 
-
-                        
-
-
 
                         platform.sdk.users.getone(data.address || '', function () {
 
@@ -20437,7 +20437,6 @@ Platform = function (app, listofnodes) {
 
 
                         }, data.type != "userInfo", data.type == "userInfo")
-
 
                     }
 
@@ -23483,7 +23482,6 @@ Platform = function (app, listofnodes) {
     self.prepareUserData = function(clbk){
 
 
-
         lazyActions([
 
             self.sdk.node.transactions.loadTemp,
@@ -23569,16 +23567,20 @@ Platform = function (app, listofnodes) {
                     self.sdk.categories.load,
                     self.sdk.activity.load,
                     self.sdk.node.shares.parameters.load,
-                    self.sdk.node.transactions.checkTemps,
+                    
                     self.sdk.user.get,
                     
                 ], function () {
 
                     //self.ui.showmykey()
 
+                    self.sdk.node.transactions.checkTemps(function(){
+                        self.sdk.relayTransactions.send()
+                    })
+
                     self.sdk.node.transactions.setUnspentoptimizationInterval()
 
-                    self.sdk.relayTransactions.send()
+                    //self.sdk.relayTransactions.send()
 
                     self.preparingUser = false;
 
