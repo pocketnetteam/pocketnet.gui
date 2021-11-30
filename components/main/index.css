@@ -714,6 +714,9 @@ html.testpocketnet #main.testpocketnetbg {
 }
 /*t*/
 @media only screen and (max-width: 768px) {
+  #main .topvideosWrapper {
+    border-radius: 0px;
+  }
   #main .mainpanelcell {
     display: block;
   }

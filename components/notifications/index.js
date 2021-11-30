@@ -118,7 +118,7 @@ var notifications = (function(){
 					
 				
 				_notifications = _.sortBy(_notifications, function(n){
-					return Number(-n.nblock)
+					return -Number(n.time || n.nTime)
 				})
 
 				var currentDate = new Date();
@@ -141,6 +141,8 @@ var notifications = (function(){
 
 					return true
 				})
+
+				console.log('_notifications2', _notifications.length)
 
 				var grou = group(_notifications, function(n){
 

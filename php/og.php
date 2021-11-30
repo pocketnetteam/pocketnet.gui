@@ -81,7 +81,10 @@ class OG {
 
         if (isset($_SERVER['HTTP_USER_AGENT'])){
             if(preg_match('/mozila|gekko|safari|chrome|khtml|webkit/i', $_SERVER['HTTP_USER_AGENT'])){
-                
+                if(preg_match('/vkshare/i', $_SERVER['HTTP_USER_AGENT'])){
+                    return true;
+                }
+
                 return false;
             }
 

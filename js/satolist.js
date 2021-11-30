@@ -7096,8 +7096,12 @@ Platform = function (app, listofnodes) {
                         return makeid()
 
                     })
+
+                    e.notifications = _.sortBy(e.notifications, function (n) {
+                        return -Number(n.time || n.nTime)
+                    })
                     
-                    e.notifications = firstEls(e.notifications, 50)
+                    e.notifications = firstEls(e.notifications, 75)
 
                     localStorage[self.sdk.address.pnet().address + 'notificationsv14'] = JSON.stringify(e)
                 }
@@ -7259,6 +7263,8 @@ Platform = function (app, listofnodes) {
 
                 n.loading = true
 
+                notifications = firstEls(notifications, 75)
+
                 notifications = _.filter(notifications, function (ns) {
                     if (ns.loading || ns.loaded || !self.ws.messages[ns.msg]) return false;
 
@@ -7274,10 +7280,10 @@ Platform = function (app, listofnodes) {
                 })
 
                 notifications = _.sortBy(notifications, function (n) {
-                    return -Number(n.nblock)
+                    return -Number(n.time || n.nTime)
                 })
 
-                notifications = firstEls(notifications, 50)
+                
 
                 lazyEach({
                     array: notifications,
@@ -7368,7 +7374,7 @@ Platform = function (app, listofnodes) {
 
                         return new Promise((resolve, reject) => {
 
-                            n.getNotificationsInfo(notifications, function () {
+                            n.getNotificationsInfo(notifications || [], function () {
 
                                 n.inited = true;
     
