@@ -1653,7 +1653,7 @@ ____loclib.aboutFbOpen5 = 'Send us a message if you need help or if you are a co
 
 /////aboutHIW
 
-____loclib.aboutHowItWMainBoard = 'HOW DOES BASTYON RESIST TO CENSORSHIP?';
+____loclib.aboutHowItWMainBoard = 'HOW DOES BASTYON RESIST CENSORSHIP?';
 ____loclib.aboutHowItWMainBoard1 = 'FREE, PRIVATE, SECURE AND WITHOUT CORPORATE CONTROL.';
 ____loclib.aboutHowItWMainBoard2 = 'ENJOY THE FRESH AIR OF BASTYON.';
 
