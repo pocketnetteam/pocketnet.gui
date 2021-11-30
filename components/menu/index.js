@@ -113,8 +113,8 @@ var menu = (function(){
 
 			sitenameToNav : function(){
 
-				if(!events.navinit.el) return
-
+				if(!events.navinit.el) 
+				
 				if (menusearch && menusearch.active || parameters().ss) return
 
 				var pn = self.app.nav.current.href
@@ -127,11 +127,16 @@ var menu = (function(){
 
 						el.nav.find('.pcenterLabel').removeClass('active')
 
+
+						console.log("HERE")
 			
-						el.postssearch.find('input').blur()
+						/*el.postssearch.find('input').blur()
+
+
+						
 
 						if (menusearch)
-							menusearch.blur()
+							menusearch.blur()*/
 
 						var r = parameters(self.app.nav.current.completeHref, true).r || 'empty'
 
@@ -465,33 +470,20 @@ var menu = (function(){
 			search : {
 				fast : true,
 				click : function(){
+
 					self.app.mobile.vibration.small()
 					el.c.addClass('searchactive')
 
-					//if (el.c.hasClass('searchactive')){
+					searchBackAction = null;
 
-						searchBackAction = null;
+					el.postssearch.find('input').focus();
+					el.postssearch.addClass('active')
 
-						el.postssearch.find('input').focus();
-						el.postssearch.addClass('active')
+					if (searchBlurTimer) {
+						clearTimeout(searchBlurTimer)
+						searchBlurTimer = null
+					}
 
-						if (searchBlurTimer) {
-							clearTimeout(searchBlurTimer)
-							searchBlurTimer = null
-						}
-
-						
-					//}
-					/*else
-					{
-						el.postssearch.removeClass('active')
-
-						el.postssearch.find('input').val('')
-
-						if (authorForSearch){
-							authorForSearch.clear()
-						}
-					}*/
 
 				}
 			},
@@ -583,7 +575,7 @@ var menu = (function(){
 
 								searchBlurTimer = slowMade(function(){
 
-									close()
+									close(true)
 
 								}, searchBlurTimer, 200)
 								
@@ -733,8 +725,10 @@ var menu = (function(){
 								_el.find('input').blur();
 								
 								setTimeout(function(){
+
 									close(true)
 									clearex()
+
 								}, 100)
 
 								if(parameters().sst || parameters().ss){
@@ -798,91 +792,7 @@ var menu = (function(){
 				}
 			},
 
-			/*ustate : {
-				click : function(){
-
-					if(isMobile())
-						self.nav.api.go({
-							href : 'userpage?id=ustate&report=ustate',
-							history : true,
-							open : true
-						})
-					
-				},
-
-				init : function(el){
-
-					if(!isMobile())
-
-						self.nav.api.load({
-							open : true,
-							id : 'ustate',
-							el : el,
-							inTooltip : true
-						})
-
-					var act = function(){
-						self.app.platform.sdk.user.waitActions(function(r){
-							self.app.platform.sdk.ustate.attention(1, function(error){
-
-								if(isMobile()) return
-
-								if(error || !self.app.user.validate() || r){
-									el.removeClass('hidden')
-								}
-								else
-								{
-									el.addClass('hidden')
-								}
-
-								self.app.platform.sdk.ustate.me(function(_mestate){
-									if(_mestate){										
-
-										if (self.app.user.validate() && r){
-											el.addClass('wait')
-										}
-										else
-										{
-											el.removeClass('wait')
-										}
-									}
-									else
-									{
-										
-
-									}
-								})
-								
-							})
-						})
-					}
-
-					act()
-
-					self.app.platform.sdk.ustate.clbks.menu = act;
-					self.app.platform.ws.messages.transaction.clbks.menu = act;
-
-
-					if(self.app.platform.online){
-						el.removeClass('disconected')
-					}
-					else{
-						el.addClass('disconected')
-					}
-
-					self.app.platform.clbks.online.menu = function(online){
-
-
-						if(online){
-							el.removeClass('disconected')
-						}
-						else{
-							el.addClass('disconected')
-						}
-					}
-					
-				}
-			},*/
+		
 			changeaccount : {
 				click : function(){
 					self.nav.api.go({
@@ -1198,15 +1108,14 @@ var menu = (function(){
 
 			self.app.user.isState(function(state){
 
-				if((parameters().ss || parameters().sst) && (isMobile() || self.app.nav.get.pathname() == 's')){
+				if((parameters().ss || parameters().sst) && (isMobile() || self.app.nav.get.pathname() == 'index')){
 
 					el.c.addClass('searchactive')
-
 					el.c.find('.postssearch').addClass('active')					
 
 					actions.elswidth()
-
-					el.postssearch.find('input').val(parameters().ss.replace('tag:', "#"));
+					el.postssearch.find('input').val((parameters().ss || parameters().sst).replace('tag:', "#"));
+					el.postssearch.find('.search').addClass('searchFilled')
 
 				}
 				
@@ -1232,8 +1141,11 @@ var menu = (function(){
 			if (el.c)
 				el.c.removeClass('searchactive')
 				
-			if (el.postssearch)
+			if (el.postssearch){
 				el.postssearch.find('.search').removeClass('fastSearchShow')
+				el.postssearch.find('.search').removeClass('searchFilled')
+			}
+				
 		}
 
 		return {

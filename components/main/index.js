@@ -62,10 +62,12 @@ var main = (function(){
 						el.panel.hcSticky('refresh');
 						el.leftpanel.hcSticky('refresh');
 
-						setTimeout(function(){
+						console.log("REFRESH STICKY")
+
+						/*setTimeout(function(){
 							if(el.panel) el.panel.hcSticky('refresh');
 							if(el.leftpanel) el.leftpanel.hcSticky('refresh');
-						}, 300)
+						}, 300)*/
 					}
 
 					
@@ -373,7 +375,7 @@ var main = (function(){
 					essenseData : {
 					
 						renderclbk : function(){
-							actions.refreshSticky()
+							actions.refreshSticky(true)
 						},
 
 						changed : function(){
@@ -407,7 +409,8 @@ var main = (function(){
 					essenseData : {
 					
 						renderclbk : function(){
-							actions.refreshSticky()
+							console.log("renderclbk")
+							actions.refreshSticky(true)
 	
 						}
 					},
@@ -736,11 +739,11 @@ var main = (function(){
 
 			self.app.events.scroll.main = actions.addbuttonscroll
 
-			self.app.events.resize.mainpage = function(){
+			/*self.app.events.resize.mainpage = function(){
 				setTimeout(function(){
 					actions.refreshSticky(true)
 				}, 500)
-			}
+			}*/
 
 
 			el.c.find('.backtolenta').on('click', actions.backtolenta)

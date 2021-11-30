@@ -23735,6 +23735,7 @@ Platform = function (app, listofnodes) {
 
             self.matrixchat.initing = true
             
+            
             app.user.isState(function(state){
 
                 self.matrixchat.initing = false

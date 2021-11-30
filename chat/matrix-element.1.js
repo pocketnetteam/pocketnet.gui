@@ -1290,7 +1290,7 @@ var list = __webpack_require__("4e29");
   mounted: function mounted() {
     var _this = this;
 
-    this.core.pcrypto.addroom(this.chat).then(function (r) {
+    this.core.mtrx.kit.prepareChat(this.chat).then(function (r) {
       index_all["default"].each(_this.imageEvents, function (e) {
         if (_this.encrypted(e)) {
           _this.core.mtrx.getImage(_this.chat, e).catch(function (e) {
@@ -1670,7 +1670,7 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
         var _this = this;
 
         if (this.m_chat && !index_all["default"].isEmpty(this.m_chat)) {
-          this.core.pcrypto.addroom(this.m_chat).then(function (r) {
+          this.core.mtrx.kit.prepareChat(this.m_chat).then(function (r) {
             _this.ready = true;
             _this.encrypted = _this.m_chat.pcrypto.canBeEncrypt();
           });

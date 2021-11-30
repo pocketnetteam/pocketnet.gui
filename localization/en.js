@@ -50,7 +50,7 @@ return h
 }
 
 ____loclib.generatepkey = "Generate Private Key";
-____loclib.rtip3 = "Write this login key down or save it as a QR code. We do not store your personal data. It cannot be recovered if lost! ";
+____loclib.rtip3 = "Write this login key down. We do not store your personal data. It cannot be recovered if lost! ";
 ____loclib.saveqrcode = "Save Qr Code" 
 ____loclib.copyprivkey = "Copy Private Key"
 ____loclib.rcontinue = "Continue"
@@ -393,6 +393,8 @@ ____loclib.actionWaitConf = "Action is waiting for a blockchain confirmation";
 ____loclib.ntnow = "Now"
 ____loclib.ntlasthour = "This hour"
 ____loclib.nttoday = "Today"
+____loclib.ntyesterday = "Yesterday"
+
 ____loclib.ntmounth = "This month"
 ____loclib.ntearlier = "Earlier"
 

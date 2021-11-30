@@ -150,7 +150,8 @@ var notifications = (function(){
 
 					if (d.addMinutes(60) > currentDate) return 'ntlasthour';
 
-					if (dateToStrSmall(d) == dateToStrSmall(currentDate)) return 'nttoday';
+					if (d.addMinutes(1440) > currentDate) return 'nttoday';
+					if (d.addMinutes(2880) > currentDate) return 'ntyesterday';
 
 					if (d.getFullYear().toString() + (d.getMonth() + 1).toString() == currentDate.getFullYear().toString() + (currentDate.getMonth() + 1).toString()) return 'ntmounth';
 
