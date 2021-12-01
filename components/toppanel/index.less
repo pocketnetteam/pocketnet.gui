@@ -4,7 +4,7 @@
 	
 	width: 100%;
 	height: 45px;
-	background: #F1F1F1;
+	background: #FFFFFF;
 	white-space: nowrap;
 
 	.work{
@@ -83,18 +83,30 @@
 
 					.pcenterLabel{
 						.transition(0.3s);
-						height: 100%;
+						height : 100%;
+						padding-top : 0.8em;
+						padding-bottom : 0.8em;
+
+						i{
+							margin-right: @rhythm;
+						}
 						//line-height: 45px;
 
 						&:hover,
 						&.active{
-							color : @color-black2;
+							color : #00A4FF;
+
+							
 
 							a{
 								span{
 									background: fade(@color-black2, 70);
 								}
 							}
+						}
+
+						&.active{
+							border-bottom : 3px solid #00A4FF;
 						}
 					}
 
