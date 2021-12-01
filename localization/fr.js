@@ -824,6 +824,31 @@ ____loclib.deleteAllVideoDialog = "Etes-vous sûr de vouloir supprimer toutes le
 ____loclib.videosDeleted = "Vidéos supprimées!";
 ____loclib.noDownloadedVideos = "Aucune vidéos téléchargées";
 
+
+____loclib.MainBoard = 'Levez-vous contre la censure &';
+____loclib.MainBoard1 = 'Obtenez une indépendance financière';
+____loclib.MainBoard2 = 'Le premier protocole de réseau social résistant à la censure';
+____loclib.MainBoard3 = 'Basé sur la technologie Blockchain, décentralisé et sécurisé.';
+____loclib.MainBoard4 = 'Pas de société, pas de serveurs centralisés, modéré par la communauté'
+____loclib.MainBoard5 = 'Propulsé par Pocket coin (PKOIN) pour récompenser les créateurs et les contributeurs' ;
+____loclib.MainBoard55 = 'Règles Open-source & transparentes qui sont les mêmes pour tout le monde' ; 
+____loclib.MainBoard6 = 'Commencez';
+____loclib.MainBoard7 = 'Google Play';
+____loclib.MainBoard8 = 'Télécharger pour';
+____loclib.works = 'Nous croyons à la liberté';
+____loclib.works1 = 'Bastyon est un réseau innovant qui peut contourner les tactiques de censure courantes, telles que le blocage des domaines et l’interdiction des blogueurs pour dissidence';
+____loclib.works2 = 'Bastyon est également une plate-forme de partage de vidéos qui, contrairement aux médias sociaux traditionnels et traditionnels, donne votre vie privée et la liberté de la censure arbitraire';  
+____loclib.works3 = 'Bastyon est également un système financier privé et axé sur la liberté alimenté par Pocketcoin (PKOIN) qui est utilisé pour promouvoir le contenu et les biens';
+____loclib.works4 = 'Nous sommes motivés par la LIBERTÉ';
+____loclib.works5 = 'Ne dépend pas des entités corporatives' ;
+____loclib.works6 = 'Ne dépend pas des banques pour le financement et les opérations' ;
+____loclib.works7 = 'Ne dépend d’aucun domaine ou site web qui peut être facilement bloqué';
+ ____loclib.contentCreators = 'Pour les créateurs de contenu';
+____loclib.howItWorks = 'Comment cela fonctionne';
+____loclib.insteadOf = 'Au lieu de';
+____loclib.alternativeTo = 'Une alternative à...';
+
+
 ____loclib.aboutServices = 'AUCUNE CENSURE';
 
 ____loclib.aboutServices1 = 'Résistant à la censure';
