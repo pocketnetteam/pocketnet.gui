@@ -276,9 +276,7 @@ var author = (function(){
 							return blocked.length
 						}
 					},
-		
-					
-		
+			
 					share : {
 						name : self.app.localization.e('share').toUpperCase() + ' <i class="fas fa-share-alt"></i>',
 						mobile : '<i class="fas fa-share-alt"></i>',

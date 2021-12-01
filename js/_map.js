@@ -187,6 +187,81 @@ __map =  {
 		anonimus : true,
 	},
 
+	aboutHome : {
+		uri : "aboutHome",
+		href : "aboutHome",
+		add : {
+			el : 'content'
+		},
+		anonimus : true,
+		/*redirect : {
+			auth : 'authorization',
+			//validate : 'filluser'
+		},*/
+	
+	},
+
+	aboutYoutube : {
+		uri : "aboutYoutube",
+		href : "aboutYoutube",
+		add : {
+			el : 'content'
+		},
+		anonimus : true,
+		/*redirect : {
+			auth : 'authorization',
+			//validate : 'filluser'
+		},*/
+	
+	},
+
+	aboutFacebook : {
+		uri : "aboutFacebook",
+		href : "aboutFacebook",
+		add : {
+			el : 'content'
+		},
+		anonimus : true,
+		/*redirect : {
+			auth : 'authorization',
+			//validate : 'filluser'
+		},*/
+	
+	},
+
+	aboutContentCreators : {
+		uri : "aboutContentCreators",
+		href : "aboutContentCreators",
+		add : {
+			el : 'content'
+		},
+		anonimus : true,
+
+	
+	},
+
+	aboutHIW : {
+		uri : "aboutHIW",
+		href : "aboutHIW",
+		add : {
+			el : 'content'
+		},
+		anonimus : true,
+
+	
+	},
+
+	aboutTwitter : {
+		uri : "aboutTwitter",
+		href : "aboutTwitter",
+		add : {
+			el : 'content'
+		},
+		anonimus : true,
+
+	
+	},
+
 	applications : {
 		uri : "applications",
 		href : "applications",
