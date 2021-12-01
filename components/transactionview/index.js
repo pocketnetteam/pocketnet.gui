@@ -29,6 +29,8 @@ var transactionview = (function(){
 
 		var actions = {
 			type : function(tx){
+
+				if(!tx) return ''
 			
 				var asm = tx.vout[0].scriptPubKey.asm.split(' ');
 
@@ -152,15 +154,68 @@ var transactionview = (function(){
 				function(p){
 					renders.addresses(p.el)
 				})
+			},
+
+			tx : function(clbk){
+
+				var type = null
+
+				console.log("TX", tx)
+
+				if (tx) 
+					type = actions.type(tx)
+
+				self.shell({
+					inner : html,
+					name : 'tx',
+					data : {
+						tx : tx,
+						type
+					},
+					el : el.c.find('.txcnt')
+				},
+				function(p){
+
+					p.el.find('.remake').on('click', function(){
+						make()
+					})
+
+					p.el.find('.copytext').on('click', function(){
+						copyText($(this))
+		
+						sitemessage(self.app.localization.e('successcopied'))
+					})
+
+					if(clbk) clbk()
+					
+				})
 			}
 		}
 
 		var make = function(){
-			if(!tx) return
 
-			actions.usersinfo(function(){
-				renders.inputs()
-				renders.outputs()
+			console.log("make", txid)
+
+			self.app.platform.sdk.node.transactions.get.tx(txid, function(_tx){
+
+				if(_.isArray(_tx) && _tx.length) _tx = _tx[0]
+
+				tx = _tx
+
+				if(!tx){
+					renders.tx()
+				}
+				else{
+					actions.usersinfo(function(){
+						renders.tx(function(){
+							renders.inputs()
+							renders.outputs()
+						})
+					})
+				}
+
+				
+
 			})
 		}
 
@@ -173,22 +228,13 @@ var transactionview = (function(){
 			}
 		}
 
-		var initEvents = function(){
-			el.c.find('.copytext').on('click', function(){
-				copyText($(this))
-
-				sitemessage(self.app.localization.e('successcopied'))
-			})
-			
-		}
-
+	
 		return {
 			primary : primary,
 
 			getdata : function(clbk, p){
 
 				txid = (p.settings.essenseData || {}).txid || parameters().txid
-
 
 				if(!txid){
 
@@ -202,19 +248,8 @@ var transactionview = (function(){
 				}
 
 				var data = {};
-
-				self.app.platform.sdk.node.transactions.get.tx(txid, function(_tx){
-
-					tx = _tx
-
-
-					data.tx = tx
-
-					if(tx) data.type = actions.type(tx)
 					
-					clbk(data);
-
-				})
+				clbk(data);
 
 			},
 
@@ -228,8 +263,6 @@ var transactionview = (function(){
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
-
-				initEvents();
 
 				make()
 

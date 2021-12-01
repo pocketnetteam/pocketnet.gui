@@ -240,11 +240,11 @@ var accounts = (function(){
 
 		var renders = {
 			qrcode : function(el, c){
-				var qrcode = new QRCode(el[0], {
+				/*var qrcode = new QRCode(el[0], {
 					text: c,
 					width: 256,
 					height: 256
-				});
+				});*/
 			},
 			dumpkeyabout : function(){
 				

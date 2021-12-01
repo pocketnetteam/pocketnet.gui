@@ -134,17 +134,16 @@ var pkview = (function(){
 					
 					});
 
-					var container = p.el.find('.qrcode');
-
+					/*var container = p.el.find('.qrcode');
 					var qr = renders.qrcode(container, current.mk)
 
-					var base64 = qr._oDrawing._elCanvas.toDataURL("image/png")
+					var base64 = qr._oDrawing._elCanvas.toDataURL("image/png")*/
 
 
-					container.attr('save', name + '.png')
+					/*container.attr('save', name + '.png')
 					container.attr('src', base64)
 
-					self.app.mobile.saveImages.init(container)
+					self.app.mobile.saveImages.init(container)*/
 
 						
 
@@ -154,32 +153,15 @@ var pkview = (function(){
 						sitemessage(self.app.localization.e('successfullycopied'))
 					})
 
-					p.el.find('.save').on('click', function(){
+					/*p.el.find('.save').on('click', function(){
 
 						actions.saveqr(base64, function(){
 							successCheck()
 						})
 
-						/*var text = p.el.find('.qrcode img').attr('src')
+					
 
-						p_saveAs({
-							file : text,
-							format : 'png',
-							name : 'pocketnetkey'
-						})*/
-
-						/*if(window.cordova){
-							p_saveAsWithCordova(b64toBlob(text, 'image/png'), 'pocketnet_' + rand(1000, 9999) + '.png')
-						}
-						else{
-							p_saveAs({
-								file : text,
-								format : 'png',
-								name : 'pocketnetkey'
-							})
-						}*/
-
-					})
+					})*/ 
 
 					
 

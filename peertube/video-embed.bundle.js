@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=7829"
+/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=8436"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -39647,6 +39647,7 @@ class PeerTubeEmbedApi {
                     return;
                 if (e && e.toString) {
                     e = e.toString();
+                    console.log("E", e);
                     if (e && e.indexOf('request was interrupted') > -1) {
                         this.mute();
                         this.embed.player.play();
