@@ -1,4 +1,3 @@
-var RpcClient = require('./rpc');
 var f = require('../functions');
 const { performance } = require('perf_hooks');
 var addresses = require('./addresses.json');

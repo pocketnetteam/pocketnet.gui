@@ -799,22 +799,57 @@
 		border-right : 1px solid fade(@color-gray-slight, 30);
 		.shadowSmaller();
 
+		.ways{
+			display : flex;
+			align-items: flex-start;
+
+			>div{
+				flex-shrink: 1;
+  				flex-basis: 0;
+				flex-grow: 1;
+			}
+		}
+
 		.row{
 			display : flex;
 			flex-wrap : wrap;
 			padding : 0 2 * @rhythm;
 
 			.button{
-				min-width: 160px;
+				min-width: 220px;
+
+				&.ghost{
+					min-width: 0;
+				}
 			}
 
 			>div{
 				padding : @rhythm 2 * @rhythm;
 				text-align: center;
+				min-width: 60px;
+				
+				.clogo{
+					height: 24px;
+				}
 
 				img{
 					width: 18px;
 					height: 18px;
+
+					&.wh{
+						height: 8px;
+						width: auto;
+					}
+
+					&.wh2{
+						height: 18px;
+						width: auto;
+					}
+
+					&.wh3{
+						height: 22px;
+						width: auto;
+					}
 				}
 
 				.label{
@@ -822,6 +857,7 @@
 					font-size: 0.8em;
 					font-weight: 500;
 				}
+
 
 			}
 		}
@@ -2091,6 +2127,19 @@ html.stblack{
 
 	.buypkoin{
 		padding : @rhythm;
+
+		.ways{
+			display : flex;
+			align-items: flex-start;
+			flex-wrap: wrap;
+
+			>div{
+				flex-shrink: 1;
+  				flex-basis: content;
+				flex-grow: 1;
+				padding-bottom: 6 * @rhythm;
+			}
+		}
 		
 		.row{
 			padding : 0;
@@ -2098,14 +2147,16 @@ html.stblack{
 			.button{
 				min-width: 310px;
 			}
-
-			>div{
-				width: 12.5%;
-				padding : @rhythm @rhythm;
-				text-align: center;
-
-
+			&.flx{
+				>div{
+					width: 12.5%;
+					padding : @rhythm @rhythm;
+					text-align: center;
+	
+	
+				}
 			}
+			
 		}
 
 	}

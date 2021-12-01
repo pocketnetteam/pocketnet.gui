@@ -455,6 +455,8 @@ var post = (function () {
 							if (wa) {
 
 								player.play()
+
+								console.log('self.sdk.videos.volume', self.sdk.videos.volume)
 								
 
 								if (player.setVolume)
@@ -685,6 +687,19 @@ var post = (function () {
 		}
 
 		var events = {
+
+			toregistration: function(){
+
+				self.sdk.registrations.redirect = 'post?s=' + share.txid
+
+				self.nav.api.go({
+					href : 'authorization',
+					history : true,
+					open : true
+				})	
+			
+			},
+			
 			shareSave : function(){
 
 				self.app.platform.ui.saveShare(share, function(id, deleted){
@@ -1093,6 +1108,8 @@ var post = (function () {
 
 											el.share.find('.shareSave').on('click', events.shareSave);
 
+											el.share.find('.toregistration').on('click', events.toregistration)
+
 											el.share.find('.txid').on('click', events.getTransaction);
 											el.share.find('.donate').on('click', events.donate);
 											el.share
@@ -1483,7 +1500,7 @@ var post = (function () {
 
 			if (share) {
 
-				if(self.app.platform.sdk.user.reputationBlocked(share.address)){
+				if(self.app.platform.sdk.user.reputationBlockedNotMe(share.address)){
 
 					renders.lockedaccount()
 					

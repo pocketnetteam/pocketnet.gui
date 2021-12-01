@@ -12,7 +12,7 @@
                     <div class="cattable table">
 
                         <div elementsid="catchekgl_<%-title%>" class="catvalue catcheckgl" title="<%-title%>">
-                            <span ><%- cat.name %></span>
+                            <span><%- cat.name %></span><% if(cat.new) {%>&nbsp;<span class="newlabel">New!</span><% } %>
                         </div>
 
                         <div elementsid="catcheckgl2" class="catcheck catcheckgl">
@@ -27,9 +27,9 @@
                             </a>
                         </div>
                         <% if(cat.added) {%>
-                        <div elementsid="categories_catedit" class="catedit">
-                            <i class="fas fa-pencil-alt"></i>
-                        </div>
+                            <div elementsid="categories_catedit" class="catedit">
+                                <i class="fas fa-pencil-alt"></i>
+                            </div>
                         <% } %>
 
                     </div>

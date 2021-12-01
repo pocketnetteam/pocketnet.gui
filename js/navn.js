@@ -36,6 +36,8 @@ Nav = function(app)
 
 	if (typeof window != 'undefined'){
 		protocol = window.location.protocol.replace(":",'');
+
+		if(window.cordova) protocol = 'file'
 	}
 
 	if (protocol == "http" || protocol == "https" || _Node)
@@ -661,6 +663,8 @@ Nav = function(app)
 
 			else
 			{
+				app.actions.scrollToTop()
+
 				p.clbk(null, p);
 			}
 		},
@@ -1240,6 +1244,7 @@ Nav = function(app)
 			prefix : function(){
 				var pathname = window.location.pathname;
 
+
 				if (pathname.indexOf('android') > -1)
 				{
 					options.navPrefix = '/android_asset/www/';
@@ -1247,15 +1252,23 @@ Nav = function(app)
 				else
 				if (window.cordova)
 				{
-					var arr = pathname.split("/");
-					arr.splice(arr.length-1, 1);
 
-					options.navPrefix = arr.join("/") + "/";
+					if(pathname == '/indexcordova.html'){
+						options.navPrefix = '/'
+					}
+					else{
+						var arr = pathname.split("/");
+						arr.splice(arr.length-1, 1);
+
+						options.navPrefix = arr.join("/") + "/";
+					}
+					
 
 				}
 				else {
 					options.navPrefix = pathname;
 				}
+
 			},
 
 			pathnameSearch : function(){

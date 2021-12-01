@@ -22,7 +22,7 @@ var lastgctime = new Date()
 
 f.gcwrapper = function(){
 
-    var t = f.date.addseconds(lastgctime, 30)
+    var t = f.date.addseconds(lastgctime, 15)
 
     if(t < new Date()){
         try {

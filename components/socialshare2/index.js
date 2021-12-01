@@ -797,15 +797,19 @@ var socialshare2 = (function(){
 
 				}
 
+				var share = null
+
 				ed.url = self.app.nav.api.history.removeParametersFromHref(ed.url, ['mpost', 'msocialshare2'])
 
 				if(ed.embedding && ed.embedding.type == 'post'){
 					postId = ed.embedding && ed.embedding.id;
+					
 				}
 				else{
 					postId = ''
 				}
-				
+
+				if (postId){share = self.app.platform.sdk.node.shares.storage.trx[postId];}
 
 				changeRef()
 			
@@ -814,7 +818,8 @@ var socialshare2 = (function(){
 					style : ed.style || "",
 					eparameters : eparameters,
 					notincludedRef : ed.notincludedRef, 
-					postId: postId
+					postId: postId,
+					share : share
 				};
 
 				clbk(data);

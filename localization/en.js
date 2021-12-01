@@ -50,7 +50,7 @@ return h
 }
 
 ____loclib.generatepkey = "Generate Private Key";
-____loclib.rtip3 = "Write this login key down or save it as a QR code. We do not store your personal data. It cannot be recovered if lost! ";
+____loclib.rtip3 = "Write this login key down. We do not store your personal data. It cannot be recovered if lost! ";
 ____loclib.saveqrcode = "Save Qr Code" 
 ____loclib.copyprivkey = "Copy Private Key"
 ____loclib.rcontinue = "Continue"
@@ -177,7 +177,7 @@ ____loclib.wsaddressnotv = "Address is not valid";
 ____loclib.uaddaddressdona = "Add address For Donations";
 ____loclib.uaddaddressdonaplace = "Enter Address";
 ____loclib.uchangeicon = "Upload Profile Image";
-____loclib.utip1 = "You must create name & avatar on blockchain before using "+appname+"";
+____loclib.utip1 = "You must create name on blockchain before using "+appname+"";
 ____loclib.utip2 = "You have only one step left";
 ____loclib.upicset = "Set Profile Icon";
 ____loclib.upic = "Profile Icon";
@@ -186,7 +186,7 @@ ____loclib.usave = "Save";
 ____loclib.ucancel = "Cancel";
 ____loclib.uwaitb = "Wait for confirmation to save information ";
 ____loclib.uchanges = "There are no changes";
-____loclib.uchangesvalid = "You need to upload profile image & create username";
+____loclib.uchangesvalid = "You need to type username";
 ____loclib.uname = "Name";
 ____loclib.unickname = "Nickname";
 ____loclib.ulanguage = "Language";
@@ -214,6 +214,10 @@ ____loclib.acure = "Current";
 ____loclib.aaddacc = "Add Account";
 ____loclib.ascheduler = "Scheduler";
 ____loclib.aused = "This address is already use in another addresses pool";
+
+____loclib.accfailedkeypair = "Wrong Private Key";
+____loclib.acchasinthispack = "This address is already added";
+____loclib.acchasinanotherpack = "This address is already use in another addresses pool";
 
 
 //author
@@ -389,6 +393,8 @@ ____loclib.actionWaitConf = "Action is waiting for a blockchain confirmation";
 ____loclib.ntnow = "Now"
 ____loclib.ntlasthour = "This hour"
 ____loclib.nttoday = "Today"
+____loclib.ntyesterday = "Yesterday"
+
 ____loclib.ntmounth = "This month"
 ____loclib.ntearlier = "Earlier"
 
@@ -635,6 +641,7 @@ ____loclib.e13147 = "Share"
 ____loclib.e13148 = "Do yor really want to complain on this post?"
 ____loclib.e13149 = "user ratings"
 ____loclib.e13150 = "Post Rating"
+____loclib.totalLikes = "Total likes"
 ____loclib.e13151 = "Nobody rate this post"
 ____loclib.e13152 = "User scores"
 ____loclib.e13153 = "Skip and proceed to website"
@@ -774,7 +781,10 @@ ____loclib.e13254 = "This username is too long"
 ____loclib.e13255 = "This username is already in use"
 ____loclib.e13256 = "This post is too long, please break it up."
 ____loclib.e13257 = "Your "+appname+" reputation score does not allow for registering of complaints yet"
+____loclib.e13257_1 = "Your "+appname+" reputation score does not allow you to put negative ratings on publications"
+
 ____loclib.e13258 = "You have reached the limit of complaints in a 24 hour period"
+____loclib.e2000 = "Connection error. Please try again"
 
 ____loclib.e13259 = "Cannot complain about your own post"
 ____loclib.e13260 = "You have already registered your complaint about this post"
@@ -1088,8 +1098,8 @@ ____loclib.pbp_10 = "If you invite a video blogger and can prove it, you get a b
 ____loclib.pbp_11 = "For any questions, email"
 
 ____loclib.pbp_6_1 = "Referral Users"
-____loclib.pbp_6_2 = "1250"
-____loclib.pbp_6_3 = "Important: Starting November 1 there is an additional requirement for each bonus. You must have 1250 Referral Users for each bonus. To get Referral Users you must Include Referral Link when sharing!"
+____loclib.pbp_6_2 = "1000"
+____loclib.pbp_6_3 = "Important: Starting November 1 there is an additional requirement for each bonus. You must have 1000 Referral Users for each bonus. To get Referral Users you must Include Referral Link when sharing!"
 
 
 
@@ -1227,7 +1237,7 @@ ____loclib.bastyonhelperSubtitle1 = "Pocketnet is now";
 ____loclib.bastyonhelperSubtitle2 = "Please, follow the link bellow";
 
 
-____loclib.videotranscodingwait = "The video is being processed. After it is transcoded, you can post it on Bastyon.";
+____loclib.videotranscodingwait = "Please wait, this video is being processed. This may take some time, after it is transcoded, you will be able to post it on Bastyon.";
 ____loclib.views = "Views";
 
 
@@ -1245,8 +1255,8 @@ ____loclib.attachVideoLentaShort = "Attach";
 ____loclib.linkToPostLenta = "Already posted"
 
 ____loclib.ReferralUsers = "Referral Users. Total/From&nbsp;01.11.2021"
-____loclib.lockedaccount = "Your account is locked due to reputation below -50"
-____loclib.lockedaccounta = "Author Account is locked due to reputation below -50"
+____loclib.lockedaccount = "Your account is locked due to reputation below -30"
+____loclib.lockedaccounta = "Author Account is locked due to reputation below -30"
 
 ____loclib.visibletoeveryone = 'Visible for everyone'
 ____loclib.visibleonlytosubscribers = 'Visible only for subscribers'
@@ -1262,6 +1272,7 @@ ____loclib.sharevisibilitylabel_reg_article = 'Author chose to make this <b>arti
 ____loclib.sharevisibilitylabel_sub_video = 'Author chose to make this <b>video</b> available only for subscribers'
 ____loclib.sharevisibilitylabel_reg_video = 'Author chose to make this <b>video</b> available only for registered Bastyon users'
 
+____loclib.setupVideoNodeGuide = 'Setup Video Node'
 
 ____loclib.MainBoard = 'Stand up to censorship &';
 ____loclib.MainBoard1 = 'gain financial independence';
@@ -1800,3 +1811,13 @@ ____loclib.contentCreators = 'For content creators';
 ____loclib.howItWorks = 'How it works';
 ____loclib.insteadOf = 'Instead of';
 ____loclib.alternativeTo = 'Alternative to...';
+
+
+____loclib.pkoin_commerce_tag_share_error = 'The "pkoin_commerce" tag can only be used as a separate tag. A post with this tag cannot contain videos or images'
+
+____loclib.pkoin_commerce_info = 'Any peer-to-peer PKOIN transactions are not moderatred and at your own risk.'
+
+
+____loclib.buyforcrypto = 'Buy for crypto'
+____loclib.buywithcreditcard = 'Buy with credit card'
+____loclib.buylogo = 'Buy Pocketcoin (PKOIN)'

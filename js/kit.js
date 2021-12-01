@@ -1035,6 +1035,9 @@ Share = function(lang){
 				return false
 			}
 		},
+		/*clear : function(t){
+			return t.substr(0, 25).toLowerCase().replace(/[^\w]/g, "")
+		},*/
 		set : function(tags){
 
 			if(typeof tags == 'undefined'){
@@ -1048,7 +1051,7 @@ Share = function(lang){
 					}
 
 					tags = _.map(tags, function(t){
-						return t.replace("#", '').toLowerCase()
+						return clearTagString(t)
 					})
 
 					this.v = tags;
@@ -1058,7 +1061,7 @@ Share = function(lang){
 
 					if(!tags) return;
 
-						tags = tags.replace("#", '').toLowerCase()
+						tags = clearTagString(tags)
 
 					if(this.v.length > 4){
 						return false;
@@ -1333,6 +1336,19 @@ Share = function(lang){
 			return 'tags'
 		}
 
+
+		if(self.hasexchangetag() && 
+		(
+			self.tags.v.length > 1 || 
+			self.repost.v || 
+			self.itisvideo() || 
+			(self.url.v && self.url.v.length) 
+			
+			)){
+
+			return 'pkoin_commerce_tag'
+		}
+
 		/*if(!self.tags.v.length && self.settings.v != 'a'){
 
 			return 'tags'
@@ -1370,6 +1386,10 @@ Share = function(lang){
 		//if(meta.type) return true
 
 		if(meta.type == 'peertube') return true
+	}
+
+	self.hasexchangetag = function(){
+		return self.tags.have('pkoin_commerce')
 	}
 
 	self.export = function(extend){
@@ -1453,8 +1473,6 @@ Share = function(lang){
 
 		return self.type	
 	}
-
-
 
 	self.typeop = function(platform){
 
@@ -2022,6 +2040,10 @@ pShare = function(){
 		if(meta.type == 'peertube') return true
 	}
 
+	self.hasexchangetag = function(){
+		return self.tags.indexOf('pkoin_commerce') > -1
+	}
+
 	self._import = function(v, notdecode){
 
 		
@@ -2041,9 +2063,17 @@ pShare = function(){
 			self.url = decodeURIComponent(v.u || v.url || '');
 			self.message = decodeURIComponent((v.m || v.message || "").replace(/\+/g, " "))
 			self.caption = decodeURIComponent((v.c || v.caption || "").replace(/\+/g, " "))
-			self.tags = _.map(v.t || v.tags || [], function(t){ return decodeURIComponent(t) })
+
+			self.tags = _.map(v.t || v.tags || [], function(t){ 
+				return clearTagString(decodeURIComponent(t))
+			})
+			
 			self.poll = v.p || v.poll || {}
 
+		}
+
+		if (self.message){
+			self.message = self.message.replace(/\n{2,}/g, '\n\n');
 		}
 
 		if(v.myVal) self.myVal = Number(v.myVal)

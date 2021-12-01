@@ -68,8 +68,6 @@ var tagcloud = (function(){
 
 				maxcount++
 
-				
-
 				tags = _.sortBy(tags, function(tag){
 
 					var bonus = 1
@@ -95,6 +93,25 @@ var tagcloud = (function(){
 					return t.tag
 				})
 
+
+				var fpl = [], _tgs = []
+
+				_.each(tags, function(t){
+
+					if(t.positionincloud && t.positionincloud < tags.length - 1){
+						fpl.push(t)
+					} 
+					else{
+						_tgs.push(t)
+					}
+				})
+
+
+				_.each(fpl, function(t){
+					_tgs.splice(t.positionincloud, 0, t)
+				})
+
+				tags = _tgs
 
 				if(!tags.length){
 					el.c.addClass('hidden')
@@ -159,8 +176,11 @@ var tagcloud = (function(){
 			
 			self.app.platform.sdk.categories.clbks.selected.tagsmodule = function(id, value, l){
 				make()
-				
 			}	
+
+			/*self.app.platform.sdk.categories.clbks.selected.tagsmodule = function(id, value, l){
+				make()
+			}	*/
 
 			self.app.platform.sdk.categories.clbks.tags.tagsmodule = function(id, value, l){
 
@@ -198,7 +218,6 @@ var tagcloud = (function(){
 			self.app.platform.sdk.tags.cloud(function(tags, error){
 
 				tags = self.app.platform.sdk.tags.filterEx(tags)
-
 
 				if (clbk)
 					clbk(tags, error)

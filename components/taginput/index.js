@@ -14,6 +14,8 @@ var taginput = (function(){
 			initsearch : function(){
 				search(el.tagSearch, {
 					placeholder : essenseData.placeholder || self.app.localization.e('addtagsCategories'),
+
+					id : 'addtagsCategories',
 	
 					clbk : function(el){
 	
@@ -43,9 +45,7 @@ var taginput = (function(){
 								}
 							}
 	
-	
 							self.app.platform.sdk.tags.search(value, function(data){
-
 
 								var tagsmap = _.map(data, function(t){
 									return {
@@ -67,6 +67,8 @@ var taginput = (function(){
 
 						
 								var all = categories.concat(tagsmap)
+
+								if(essenseData.filter) all = _.filter(all, essenseData.filter)
 								
 								renders.tagsResults(all, function(tpl){
 	

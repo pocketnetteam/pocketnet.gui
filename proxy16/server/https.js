@@ -84,18 +84,14 @@ var Server = function(settings, admins, manage){
 
             middle.prepare(request, result, function(){
 
-                /*if (settings.iplimiter && request.clientIP){
+                if (settings.iplimiter && request.clientIP){
 
                     return iplimiter.check(request.clientIP).then(r => {
-
-                        console.log("IPCHECK")
-
                         next()
                     }).catch(e => {
-
                         result._fail('iplimiter')
                     })
-                }*/
+                }
 
                 next()
             })
@@ -177,6 +173,10 @@ var Server = function(settings, admins, manage){
 
                 server.on('error',function(e){
                     reject(e) 
+                });
+
+                server.on('connection', function(socket) {
+                    socket.setNoDelay();
                 });
 
                 server.listen(settings.port || 8899);

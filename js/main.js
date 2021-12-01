@@ -14,11 +14,11 @@ if(!_Node)
 			wss : 8099
 	    },
 
-		{
+		/*{
 			host : 'wellai.health',
 			port : 8899,
 			wss : 8099
-	    },
+	    },*/
 	
 	    {
 			host : '1.pocketnet.app',
@@ -63,8 +63,9 @@ if(!_Node)
 			wss : 8099
 	    }]
 
-		matrix = 'test.matrix.pocketnet.app'
+		matrix = 'vamily.ru'
 	}
+
 
 	app = new Application({
 		listofproxies : _listofproxies,
@@ -72,6 +73,8 @@ if(!_Node)
 	});
 
 	app.preapi()
+
+	console.log('ini')
 
 	// Prepare notifications
 	//app.notifications = new Notifications(app);

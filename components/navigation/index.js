@@ -91,6 +91,16 @@ var navigation = (function(){
 
 					p.el.find('.toup').on('click', events.toup)
 
+					p.el.find('.toregistration').on('click', function(){
+						self.app.platform.sdk.registrations.getredirectFromCurrentPage()
+						self.nav.api.go({
+							href : 'authorization',
+							history : true,
+							open : true
+						})	
+					})
+
+
 					p.el.find('.matrixchat').on('click', function(){
 
 						var show = deep(self, 'app.platform.matrixchat.core.apptochat')

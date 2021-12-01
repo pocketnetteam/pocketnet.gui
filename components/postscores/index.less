@@ -4,16 +4,25 @@
 
     .work{
         width: 100%;
-        padding : 0 2 * @rhythm;
     }
+
+    .ratingrowWrapper{
+        width: 100%;
+
+    }
+
 
     .caption{
         text-align: left;
         color : @color-gray2;
         margin-bottom: @rhythm;
+        background: #FAFAFC;
+
         span{
-            font-size: 1.3em;
-            font-weight: 100;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 16px;
+            line-height: 27px;
         }
         
     }
@@ -29,7 +38,6 @@
     }
 
     .youstars{
-        background: #f1f1f1;
         padding : 2 * @rhythm;
         padding-bottom: 2 * @rhythm;
 
@@ -51,14 +59,19 @@
     .itemwr{
         width : auto;
         margin-left: auto;
+        margin-right: auto;
 
         >diV{
             vertical-align: middle;
 
             &.starswr{
                 width: 150px;
+
+                
             }
         }
+
+        
 
         .stars{
             height: 40px;
@@ -66,6 +79,12 @@
             text-align: center;
             color : @color-bright;
             cursor: pointer;
+
+            .starWrapper{
+                display: flex;
+                justify-content: center;
+            }
+
 
             i{
 
@@ -98,11 +117,20 @@
     }
 
     .details{
+        margin-top: 2 * @rhythm;
+
         .detailsWrapper{
             padding-bottom : @rhythm;
             border-bottom : 1px solid @color-gray-mlight;
+
         }
         .bystars{
+            margin-top: 2em;
+            padding-bottom: 1em;
+            border-top: 1px solid @color-background-light;
+            margin: 0 1em;
+            
+            
             i{
                 color : #FFAE00;
             }
@@ -112,12 +140,14 @@
                     padding : @rhythm 0;
 
                     &.label{
-                        width : 70px
+                        width : 20PX;
+                        color: @color-border-light;
+
                     }
 
                     &.pecent{
                         width : 55px;
-                        text-align: right;
+                        padding-left: 10px;
                     }
                 }
             }
@@ -126,22 +156,30 @@
         .linebg{
             width: 100%;
             position: relative;
-            height: 3px;
+            height: 8px;
 
             .line{
                 .transition(0.3s);
                 position: absolute;
+                border-radius: 100px;
                 left : 0;
                 top : 0;
                 bottom : 0;
-                background: #FFAE00;
+            }
+
+            .line-filled{
+                background: #ff7800;
+
+            }
+
+            .line-empty{
+                background: @color-background-light;
             }
         }
     }
 
     #userslist{
         padding : 0;
-        padding-top : @rhythm;
         background: #fafafa;
 
         .users .user{
@@ -154,14 +192,17 @@
 
         .caption{
             padding : @rhythm 2 * @rhythm;
-            padding-bottom: 2 * @rhythm;
             font-size: 1em;
             border-bottom : 1px solid @color-gray-slight;
             margin-bottom: 0;
+            font-family: Segoe UI;
+
 
             span{
+                font-style: default;
                 font-size: 0.9em;
-                color : @color-gray-mlight;
+                color : @color-border-light;
+
             }
         }
 
@@ -201,11 +242,25 @@
 
         .fordetailsusers{
             position: absolute;
-            left : 0;
+            left : 0; 
             right : 0;
             bottom: 0;
             overflow-y: scroll;
-            top: 110px;
+            top: 54px;
+
+            .rating{
+                font-size: 64px;
+                font-weight: bold;
+                text-align: center;
+                font-family: Nunito Sans;
+
+            }
+
+            .totalLikes{
+                font-size: 14px;
+                text-align: center;
+                color: @color-border-light;
+            }
         }
 
         .youstars{
@@ -213,7 +268,9 @@
             left : 0;
             right : 0;
             top: 0;
-            height: 110px;
+            height: 54px;
+            background : #FAFAFC;
+            border-bottom: 1px solid #ff7800;
         }
     }
     
@@ -226,6 +283,7 @@ html.stblack{
     
         .caption{
             color : @color-bright;
+            background: @color-black4!important;
         }
     
         .subcaption{
@@ -233,7 +291,7 @@ html.stblack{
         }
     
         .youstars{
-            background: @color-black4;
+            background: @color-black4!important;
         }
     
         .itemwr{
@@ -248,13 +306,7 @@ html.stblack{
             .detailsWrapper{
                 border-bottom : 1px solid @color-gray2;
             }
-           
-            .linebg{
-               
-                .line{
-                    background: #FFAE00;
-                }
-            }
+        
         }
     
         #userslist{

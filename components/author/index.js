@@ -558,13 +558,20 @@ var author = (function(){
 
 				}, function(p){
 
-					p.el.find('.usermenuitem').swipe({
+					/*p.el.find('.usermenuitem').swipe({
 						tap : function(){
 							var r = $(this).attr('menuitem');
 
 							if (reports[r] && reports[r].render)
 								renders.report(reports[r])
 						}
+					})*/
+
+					p.el.find('.usermenuitem').on('click', function(){
+						var r = $(this).attr('menuitem');
+
+							if (reports[r] && reports[r].render)
+								renders.report(reports[r])
 					})
 
 					
@@ -575,16 +582,16 @@ var author = (function(){
 
 							_.each(r.events, function(e, i){
 
-								if(i == 'click' && isTablet()){
+								/*if(i == 'click' && isTablet()){
 
 									el.swipe({
 										tap : e
 									})
 
 								}
-								else{
+								else{*/
 									el.on(i, e)
-								}
+								//}
 
 								
 							})
@@ -620,10 +627,6 @@ var author = (function(){
 			},
 
 			info : function(_el){
-
-				
-
-				
 
 					author.state = self.sdk.ustate.storage[author.address]
 
@@ -1102,6 +1105,20 @@ var author = (function(){
 			})
 
 
+			el.c.find('.changeaccount').on('click', function(){
+
+				self.nav.api.go({
+					open : true,
+					href : 'accounts',
+					inWnd : true,
+
+					essenseData : {
+						href : deep(self, 'app.nav.current.href') || 'index'
+					}
+
+				})
+			})
+
 			self.app.platform.ws.messages.event.clbks.author = function(data){
 			
 				if(data.mesType == 'subscribe' || data.mesType == 'unsubscribe'){
@@ -1324,7 +1341,8 @@ var author = (function(){
 											self.nav.api.go({
 												href : 'userpage?id=test',
 												history : true,
-												open : true
+												open : true,
+												replaceState : true
 											})
 
 											return;

@@ -5,13 +5,13 @@ var _ = require('underscore')
 
 var WSS = function(admins, manage){
     var self = this;
-
         self.listening = false;
 
     var wss = null, server = null;
 
     var users = {}
     var allwss = {}
+    var gcinfointerval = null
 
     var subscribers = {
         logs : {}
@@ -76,12 +76,14 @@ var WSS = function(admins, manage){
                     }, 100, 10000).then(r => {
     
                         if(node){
+
                             return Promise.resolve({
                                 instance : node,
                                 ini : {},
                                 auto : auto,
                                 key : node.wskey
                             })
+
                         }
                         else
                         {
@@ -225,7 +227,7 @@ var WSS = function(admins, manage){
         delete allwss[ws.id]
 
         var wsusers = _.filter(users, function(user){
-            return user.clients[ws.id]
+            return user.clients[ws.id] || user.devices.ws[ws.id]
         })
         
         var clearUsers = []
@@ -268,13 +270,13 @@ var WSS = function(admins, manage){
 
     self.sendlogs = function(info){
 
-        var m = {
+        /*var m = {
             level : info.level,
             message : info.message,
             meta : info.meta,
             label : info.label,
             timestamp : info.timestamp
-        }
+        }*/
   
     }
 
@@ -380,7 +382,7 @@ var WSS = function(admins, manage){
                 }
     
                 if (user.admin){
-                    user.ticks[ws.id] = setInterval(() => {tick(ws)}, 5000)
+                    user.ticks[ws.id] = setInterval(() => {tick(ws)}, 30000)
                     
                 }
     
@@ -427,20 +429,31 @@ var WSS = function(admins, manage){
 
     self.newconnection = function(ws){
         ws.id = f.makeid();
+        
+
+        var disc = false
 
         ws.on('message', (msg) => {
             handleMessage(msg, ws)
         })
 
         ws.on('close', (code, reason) => {
+            if (disc) return
+                disc = true
+
             disconnectClient(ws)
         });
 
         ws.on('error', (err) => {
+
+            if (disc) return
+                disc = true
+
             disconnectClient(ws)
         });
 
         allwss[ws.id] = ws
+        
     }
 
     self.wssdummy = function(wssdummy){
@@ -467,11 +480,13 @@ var WSS = function(admins, manage){
                 });
 
                 wss.on('connection', (ws, req) => {
-                    ws.ip = req.connection.remoteAddress
 
                     if(!self.listening) return
                     
+                    ws.ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
+                    
                     self.newconnection(ws)
+
                 })
 
                 wss.on('listening',function(){
@@ -488,6 +503,10 @@ var WSS = function(admins, manage){
 
                 server.listen(settings.port || 8099);
 
+                if(!gcinfointerval) {
+                    gcinfointerval = setInterval(self.gc, 30000)
+                }
+
             }
 
             catch(e) {
@@ -498,9 +517,36 @@ var WSS = function(admins, manage){
         })
     }
 
+    self.gc = function(){
+        try{
+
+            if (wss && wss.clients)
+                wss.clients.forEach((socket) => {
+
+                    if ([socket.CLOSED].includes(socket.readyState)) {
+
+                        if(allwss[socket.id]){
+                            disconnectClient(socket)
+                        }
+
+                    }
+
+                });
+
+        }
+        catch(e){
+
+        }
+    }
+
     self.destroy = function(){
 
         self.listening = false
+
+        if (gcinfointerval){
+            clearInterval(gcinfointerval)
+            gcinfointerval = null
+        }
 
         if (wss && wss.clients)
             wss.clients.forEach((socket) => {
@@ -628,9 +674,26 @@ var WSS = function(admins, manage){
 
     self.info = function(compact){
 
+        var clients = 0
+        var open = 0
+
+        if(wss && wss.clients){
+            wss.clients.forEach(socket => {
+                clients++
+
+                if ([socket.OPEN].includes(socket.readyState)) {
+                    open++
+                }
+
+                
+            })
+        }
+
 
         var data = {
-            listening : self.listening
+            listening : self.listening,
+            clients : clients,
+            open : open
         }
 
         if(!compact) data.users = _.map(users, function(user){

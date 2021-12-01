@@ -35,13 +35,14 @@ var Node = function(options, manager){
     self.local = options.local || false
     self.testing = false
     self.id = f.makeid()
+    self.version = null
 
     var statisticInterval = null
     var changeNodeUsersInterval = null
     var lastinfoTime = null
     var eventscheckInterval = null
 
-    var test = new Test(self, manager)
+    
 
     var wss = {
         service : null,
@@ -734,7 +735,7 @@ var Node = function(options, manager){
             if(!statisticInterval){
 
 
-                self.info().catch(e => {})
+                self.info().catch(e => {console.log(e)})
 
                 statisticInterval = setInterval(function(){
 
@@ -953,6 +954,7 @@ var Node = function(options, manager){
             lastinfo = info
 
             self.bchain = info.chain
+            self.version = info.version
 
             if (info.proxies){
 
@@ -1004,6 +1006,7 @@ var Node = function(options, manager){
             peer : self.peer,
             wssusers : _.toArray(wss.users).length,
             bchain : self.bchain,
+            version : self.version
             
         }
     }
@@ -1026,10 +1029,15 @@ var Node = function(options, manager){
 
     self.test = function(scenario){
 
+        if(self.testing){
+            return Promise.reject('testing')
+        }
+
         self.testing = scenario
 
         self.statistic.clear()
 
+        var test = new Test(self, manager)
 
         return test.scenarios[scenario]().then(r => {
 
@@ -1056,8 +1064,8 @@ var Node = function(options, manager){
 
         serviceConnection()
 
-        if(!changeNodeUsersInterval)
-            changeNodeUsersInterval = setInterval(changeNodeUsers, 10000)
+        /*if(!changeNodeUsersInterval)
+            changeNodeUsersInterval = setInterval(changeNodeUsers, 10000)*/
 
         self.inited = true
         self.initedTime = new Date()
@@ -1094,15 +1102,14 @@ var Node = function(options, manager){
         add : function(user){
             var old = wss.users[user.address]
 
-            if (old) {
-                if(old.closed) old.disconnect()
+            if (old && old.closed) {
+                old.disconnect()
             }
 
             delete wss.changing[user.address]
 
             if(!wss.users[user.address]){
                 wss.users[user.address] = (new Wss(self)).connect(user)
-
 
                 return wss.users[user.address]
             }
@@ -1114,6 +1121,7 @@ var Node = function(options, manager){
                 wss.users[user.address].disconnect()
 
                 delete wss.users[user.address]
+                delete wss.changing[user.address]
             }
         }
 

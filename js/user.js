@@ -120,17 +120,16 @@ User = function(app, p) {
 
 		var setKeysClbk = function(){
 
-			if (self.stay){
-
-				app.platform.cryptography.api.aeswc.encryption(mnemonic, app.options.fingerPrint, {}, function(enc){
+			app.platform.cryptography.api.aeswc.encryption(mnemonic, app.options.fingerPrint, {}, function(enc){
+				if (self.stay){
 					localStorage['mnemonic'] = enc
-				})
-				
-			}
-			else
-			{
-				localStorage['mnemonic'] = ''
-			}
+				}
+				else
+				{
+					sessionStorage['mnemonic'] = enc
+				}
+			})
+		
 
 			self.isState(function(state){
 
@@ -149,8 +148,6 @@ User = function(app, p) {
 				}
 			})
 		}
-
-		console.log("mnemonic")
 
 		if(!bitcoin.bip39.validateMnemonic(mnemonic)){
 
@@ -199,6 +196,7 @@ User = function(app, p) {
 		state = 0;
 		self.data = {};
 		localStorage['mnemonic'] = ''
+		sessionStorage['mnemonic'] = ''
 
 		settings.clear();
 
@@ -255,9 +253,11 @@ User = function(app, p) {
 		}
 		else{
 
-			if (localStorage['mnemonic'] && self.stay){
+			console.log("sessionStorage['mnemonic']", sessionStorage['mnemonic'])
 
-				var m = localStorage['mnemonic'];
+			if ( (localStorage['mnemonic'] && self.stay) || sessionStorage['mnemonic']){
+
+				var m = localStorage['mnemonic'] || sessionStorage['mnemonic'];
 
 				app.platform.cryptography.api.aeswc.decryption(m, app.options.fingerPrint, {}, function(m){
 
@@ -278,8 +278,11 @@ User = function(app, p) {
 					}
 					else
 					{
-						if(!_OpenApi)
+						if(!_OpenApi){
 							localStorage['mnemonic'] = ''
+							sessionStorage['mnemonic'] = ''
+						}
+							
 
 						state = 0;	
 						clbk(state);
@@ -306,9 +309,6 @@ User = function(app, p) {
 		if(!self.address.value) return 'fu';
 
 		var me = deep(app, 'platform.sdk.user.storage.me');
-
-		console.log("MEEE!!", me)
-
 
 		if (me && me.relay){
 

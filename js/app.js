@@ -109,7 +109,7 @@ Application = function(p)
 		localStoragePrefix : self.meta.protocol,
 
 		
-		server : p.server || 'https://'+url+'/Shop/AJAXMain.aspx', //donations will be removed
+		server : p.server || 'https://pocketnet.app/Shop/AJAXMain.aspx', //donations will be removed
 
 		//////////////
 		
@@ -706,8 +706,9 @@ Application = function(p)
 		if (self.ref)
 			self.platform.sdk.users.addressByName(self.ref, function(r){
 				if(r){
-					self.ref = r;
-					localStorage['ref'] = self.ref
+					self.setref(r)
+					/*self.ref = r;
+					localStorage['ref'] = self.ref*/
 				}
 
 			})
@@ -991,7 +992,8 @@ Application = function(p)
 				p || (p = {});
 
 				p.clbk = function(){
-					navigator.splashscreen.hide();
+					if (navigator.splashscreen)
+						navigator.splashscreen.hide();
 				}
 
 				if (window.Keyboard && window.Keyboard.disableScroll){
@@ -1270,6 +1272,7 @@ Application = function(p)
 					s(scrollTop, blockScroll)
 				})
 
+
 				if(isMobile() && !cr){
 
 					var cs = (lastScrollTop + 40 < scrollTop || lastScrollTop - 40 < scrollTop)
@@ -1328,6 +1331,7 @@ Application = function(p)
 			delayscroll = slowMade(function(){
 				window.requestAnimationFrame(function(){
 
+
 					if(!self.el.window) return
 					if (self.fullscreenmode) return
 					
@@ -1335,7 +1339,7 @@ Application = function(p)
 						s(self.lastScrollTop, blockScroll)
 					})
 
-					if(!t){
+					if(!t && isMobile()){
 
 						if (showPanel == '2' && !self.el.html.hasClass('scrollmodedown')){
 							self.el.html.addClass('scrollmodedown')
@@ -1910,10 +1914,22 @@ Application = function(p)
 		}
 	}
 
+	self.setref = function(r, na){
+
+		if(na && self.ref) return
+
+		self.ref = r;
+		localStorage['ref'] = self.ref
+
+
+		console.log('self.ref', self.ref)
+
+	}
+
 	self.ref = null;
 	
 	try{
-		self.ref = localStorage['ref'] || parameters().ref;
+		self.ref = parameters().ref || localStorage['ref'];
 	}catch(e){}
 	
 

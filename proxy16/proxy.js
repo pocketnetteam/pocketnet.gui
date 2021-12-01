@@ -19,12 +19,17 @@ var NodeControl = require('./node/control.js');
 var NodeManager = require('./node/manager.js');
 var Pocketnet = require('./pocketnet.js');
 var Wallet = require('./wallet/wallet.js');
-var Remote = require('./remote.js');
+var Remote = require('./remotelight.js');
 var Proxies = require('./proxies.js');
 var Exchanges = require('./exchanges.js');
 var Peertube = require('./peertube/index.js');
 var Bots = require('./bots.js');
 var SystemNotify = require('./systemnotify.js');
+
+process.setMaxListeners(0);
+require('events').EventEmitter.defaultMaxListeners = 0
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
 //////////////
 /*
 if (process.platform === 'win32') expectedExitCodes = [3221225477];
@@ -68,15 +73,13 @@ var Proxy = function (settings, manage, test, logger) {
 
 
 	var stats = [];
-	var statcount = 1000;
+	var statcount = 100;
 	var statInterval = null;
 
 	var captchas = {};
 	var captchaip = {};
 
 	var addStats = function () {
-
-		var ws = {};
 
 		var data = {
 			time: f.now(),
@@ -85,10 +88,9 @@ var Proxy = function (settings, manage, test, logger) {
 
 		stats.push(data)
 
-
 		var d = stats.length - statcount
 
-		if (d > 100) {
+		if (statcount / d > 10) {
 			stats = stats.slice(d)
 		}
 	}
@@ -597,21 +599,27 @@ var Proxy = function (settings, manage, test, logger) {
 		init: function () {
 			var ins = {
         		1: [
-					{host : 'pocketnetpeertube1.nohost.me', cantuploading : true}, 
-					{host : 'pocketnetpeertube2.nohost.me' , cantuploading : true}
+					{host : 'pocketnetpeertube1.nohost.me'}, 
+					{host : 'pocketnetpeertube2.nohost.me' }
 				],
         		5: [
 					{host : 'pocketnetpeertube5.nohost.me', cantuploading : true}, 
 					{host : 'pocketnetpeertube7.nohost.me', cantuploading : true}, 
 				],
-        		6:  ['pocketnetpeertube4.nohost.me', 'pocketnetpeertube6.nohost.me'],
-        		8:  ['pocketnetpeertube8.nohost.me', 'pocketnetpeertube9.nohost.me'],
-				10: ['pocketnetpeertube10.nohost.me', 'pocketnetpeertube11.nohost.me'],
-
-				12: [
-					{host : 'bastyonmma.pocketnet.app', special : true}, 
-					{host : 'bastyonmma.nohost.me' , special : true}
+        		6: [
+					{host : 'pocketnetpeertube4.nohost.me', cantuploading : true}, 
+					{host : 'pocketnetpeertube6.nohost.me', cantuploading : true}, 
 				],
+        		8:  ['pocketnetpeertube8.nohost.me', 'pocketnetpeertube9.nohost.me'],
+				
+				10: [
+					
+					{host : 'pocketnetpeertube10.nohost.me', cantuploading : true}, 
+					{host : 'pocketnetpeertube11.nohost.me', cantuploading : true}, 
+					
+				],
+
+				12: ['bastyonmma.pocketnet.app', 'bastyonmma.nohost.me'],
       		};
 
 			if (test){
@@ -668,7 +676,6 @@ var Proxy = function (settings, manage, test, logger) {
 		info: function (compact) {
 
 			var mem = process.memoryUsage()
-
 			
 			var loads = os.loadavg();
 
@@ -1083,7 +1090,6 @@ var Proxy = function (settings, manage, test, logger) {
 
 						var cached = server.cache.get(method, cparameters, cachehash);
 
-						
 
 						if (typeof cached != 'undefined') {
 							return Promise.resolve({
@@ -1380,57 +1386,23 @@ var Proxy = function (settings, manage, test, logger) {
 			bitchute: {
 				path: '/bitchute',
 				action: function ({ url }) {
-					return new Promise((resolve, reject) => {
-						remote.make(url, function (err, data, html, $) {
-							if (!err) {
-								data.magnet = $('[title="Magnet Link"]').attr('href');
 
-								if (data.magnet && data.magnet.indexOf('magnet') == 0) {
-									var sp = parameters(data.magnet, true);
 
-									data.video = sp;
+					return Promise.reject({
+						error : 'deprecated'
+					})
 
-									if (data.og) {
-										data.video.title = data.og.titlePage;
-										data.video.preview = data.og.image;
-									}
-								} else {
-									var src = $('#player source').attr('src');
-
-									if (src) {
-										data.video = {
-											as: src,
-										};
-
-										if (data.og) {
-											data.video.title = data.og.titlePage;
-											data.video.preview = data.og.image;
-										}
-									}
-								}
-
-								resolve({ data });
-							} else {
-								reject(err);
-							}
-						});
-					});
 				},
 			},
 
 			url: {
 				path: '/url',
 				action: function ({ url }) {
-					return new Promise((resolve, reject) => {
-						remote.make(url, function (err, data, html) {
-							if (!err) {
-								data.html = html;
-								resolve({ data });
-							} else {
-								reject(err);
-							}
-						});
-					});
+
+					return Promise.reject({
+						error : 'deprecated'
+					})
+
 				},
 			},
 
@@ -1473,11 +1445,11 @@ var Proxy = function (settings, manage, test, logger) {
 			},
 			logs: {
 				path: '/logs',
-				authorization: 'signature',
+				/*authorization: 'signature',*/
 				action: function (message) {
 
-					if (!message.A)
-						return Promise.reject({ error: 'Unauthorized', code: 401 });
+					/*if (!message.A)
+						return Promise.reject({ error: 'Unauthorized', code: 401 });*/
 
 					var data = {
 						logs: server.middle.getlogs()
@@ -1577,6 +1549,52 @@ var Proxy = function (settings, manage, test, logger) {
 					
 				},
 			},
+
+			clearlogs : {
+				path: '/clearlogs',
+				authorization: 'signature',
+				action: function (message) {
+
+					if (!message.A)
+						return Promise.reject({ error: 'Unauthorized', code: 401 });
+						
+						server.middle.clear()
+
+					return Promise.resolve('success');
+					
+				},
+			},
+
+			clearcache: {
+				path: '/clearcache',
+				authorization: 'signature',
+				action: function (message) {
+
+					if (!message.A)
+						return Promise.reject({ error: 'Unauthorized', code: 401 });
+						
+						server.cache.clear()
+
+					return Promise.resolve('success');
+					
+				},
+			},
+
+			clearrmt: {
+				path: '/clearrmt',
+				authorization: 'signature',
+				action: function (message) {
+
+					if (!message.A)
+						return Promise.reject({ error: 'Unauthorized', code: 401 });
+						
+						remote.clear()
+
+					return Promise.resolve('success');
+					
+				},
+			},
+
 			stats: {
 				path: '/stats',
 				action: function () {
@@ -1765,7 +1783,7 @@ var Proxy = function (settings, manage, test, logger) {
 						data: {
 							id: captcha.id,
 							img: captcha.data,
-							result: captcha.text, ///
+							//result: captcha.text, ///
 							done: false,
 						},
 					});
@@ -1777,6 +1795,9 @@ var Proxy = function (settings, manage, test, logger) {
 				path: '/makecaptcha',
 
 				action: function ({ captcha, ip, text }) {
+
+					var _captcha = captcha
+
 					var captcha = captchas[captcha];
 
 					if (!captcha) {
@@ -1815,7 +1836,7 @@ var Proxy = function (settings, manage, test, logger) {
 						f.date.addseconds(captcha.time, 120) < currentTime ||
 						f.date.addseconds(captcha.time, 2) > currentTime
 					) {
-						delete captchas[request.data.captcha];
+						delete captchas[_captcha];
 
 						return Promise.reject('captchashots');
 					}
@@ -1855,6 +1876,13 @@ var Proxy = function (settings, manage, test, logger) {
 					return self.wallet
 						.addqueue(key || 'registration', address, ip)
 						.then((r) => {
+
+							if (settings.server.captcha) {
+								if (captcha) {
+									delete captchas[captcha]
+								}
+							}
+
 							return Promise.resolve({
 								data: r,
 							});

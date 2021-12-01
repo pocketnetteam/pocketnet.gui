@@ -13,7 +13,7 @@
                     <i class="fas fa-camera"></i> <span class="mobiledevice"><%=e('saddimages')%></span>
                 </div>
                 
-                <% if(!share.aliasid && !share.repost.v) {%>
+                <% if(!share.aliasid && !share.repost.v && !share.hasexchangetag()) {%>
                 
                     <div elementsid="sarticle" class="item article tooltip" embeding="article" title="<%=e('sarticle')%>">
                         <i class="fas fa-book-open"></i> <span class="mobiledevice"><%=e('sarticle')%></span>
@@ -25,37 +25,40 @@
 
             <% 
 
-            
-            if (typeof u != 'undefined' && u  && !share.repost.v && (
+            if(!share.hasexchangetag()){
+
                     
-                (u.reputation > 50 || !u.trial || u.balance > 500000000)
-            
-            
-                    || window.testpocketnet) && !share.itisvideo() && !share.aliasid) { %>
-                <div elementsid="peertubeAddVideo" class="item peertube tooltip nowidth" embeding="addVideo" title="<%=e('peertubeAddVideo')%>">
-                    <i class="fas fa-video"></i> <span><%- e('peertubeAddVideo') %></span>
-                </div>
+                if (typeof u != 'undefined' && u  && !share.repost.v && (
+                        
+                    (u.reputation > 50 || !u.trial || u.balance > 500000000)
+                
+                
+                        || window.testpocketnet) && !share.itisvideo() && !share.aliasid) { %>
+                    <div elementsid="peertubeAddVideo" class="item peertube tooltip nowidth" embeding="addVideo" title="<%=e('peertubeAddVideo')%>">
+                        <i class="fas fa-video"></i> <span><%- e('peertubeAddVideo') %></span>
+                    </div>
 
-                <% if(
-                    (
-                        (u.reputation > 100 || !u.trial || u.balance > 5000000000) || 
-                        deep(app, 'platform.real.'+user.address.value.toString('hex')) || window.testpocketnet
+                    <% if(
+                        (
+                            (u.reputation > 100 || !u.trial || u.balance > 5000000000) || 
+                            deep(app, 'platform.real.'+user.address.value.toString('hex')) || window.testpocketnet
 
-                    ) && !isMobile()) {%>
+                        ) && !isMobile()) {%>
 
-                <div elementsid="goLive" class="item peertubeLiveStream tooltip nowidth" embeding="addStream" title="<%=e('peertubeAddStream')%>">
-                    <i class="fas fa-dot-circle"></i> <span><%- e('goLive') %></span>
-                </div>
+                    <div elementsid="goLive" class="item peertubeLiveStream tooltip nowidth" embeding="addStream" title="<%=e('peertubeAddStream')%>">
+                        <i class="fas fa-dot-circle"></i> <span><%- e('goLive') %></span>
+                    </div>
 
-                <% } %>
-            <%} %>
-            <!--<div class="item language tooltip" embeding="language" title="<%=e('e14001')%>">
-                <%-(share.language.v || '').toUpperCase()%>
-            </div>-->
+                    <% } %>
+                <%
+                }
+        
+            } %>
+           
 
             <% if(!share.aliasid) {%>
-                <div elementsid="stimes" class="item times tooltip <% if(share.itisvideo()) {%> nowidth <%} %>" embeding="times" title="<%=e('stimes')%>">
-                    <i class="fas fa-times-circle"></i> <span class="<% if(!share.itisvideo()) {%>mobiledevice <% } %>"><%=e('stimes')%></span>
+                <div elementsid="stimes" class="item times tooltip <% if(share.itisvideo() || share.hasexchangetag()) {%> nowidth <%} %>" embeding="times" title="<%=e('stimes')%>">
+                    <i class="fas fa-times-circle"></i> <span class="<% if(!share.itisvideo() && !share.hasexchangetag()) {%>mobiledevice <% } %>"><%=e('stimes')%></span>
                 </div>
             <% } %>
 

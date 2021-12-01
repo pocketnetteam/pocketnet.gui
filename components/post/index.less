@@ -671,11 +671,9 @@
 						text-align: center;
 						border-radius: 50%;
 						color : @color-gray2;
-						.transition(0.3s);
 
 						&:hover{
-							color : #fff;
-							background: @color-gray2;
+							color : @color-black2;
 						}
 
 					}
@@ -757,16 +755,16 @@
 			.imagesWrapper{
 				width: 100%;
 				margin-bottom : 2 * @rhythm;
-			
+				border-radius: 5px;
 				background: transparent;
-				
+				border-radius: 5px;	
 
 				.image{
 					opacity: 0;
 					width: 100%;
 					height: 100%;
+					border-radius: 5px;
 					margin : 0 auto;
-					
 					.transition(0.3s);
 					cursor: pointer;
 
@@ -820,6 +818,7 @@
 					&.image{
 						width: 200px;
 						padding-right : 2 * @rhythm;
+						border-radius: 5px;
 
 						.removeImage{
 							display: none;
@@ -828,6 +827,7 @@
 						img{
 							opacity: 0;
 							width: 100%;
+							border-radius: 5px;
 							.transition(0.3s);
 
 							&.active{
@@ -939,9 +939,36 @@
 			}
 		}
 
+		.pkoin_commerce_info{
+			padding : 2 * @rhythm 0;
+			max-width: 350px;
+			padding-top : @rhythm;
+			position: relative;
+
+			&:before{
+				content: '';
+				width: 70px;
+				position: absolute;
+				left: 0;
+				top : 0;
+				height: 1px;
+				background: rgb(255, 0, 51);
+			}
+			span{
+				font-size: 0.8em;
+				opacity: 0.8;
+			}
+		}
+
 		.tags{
 			margin-bottom: 2 * @rhythm;
 			overflow: hidden;
+
+			.newlabel{
+				background: rgb(255, 5, 101);
+				   color : #fff;
+			}
+			
 			>div{
 				float: left;
 				margin-right: @rhythm;
@@ -1383,6 +1410,12 @@ html.mobile.fullscreen{
 	}
 }
 
+html.stblack{
+	#post{
+		background: transparent;
+	}
+}
+
 .wnd.postwindow{
 	z-index: 1000;
 
@@ -1586,8 +1619,7 @@ html.stblack{
 							color : @color-main;
 						
 							&:hover{
-								color : @color-black;
-								background: @color-main;
+								color : @color-add;
 							}
 	
 						}
@@ -1666,6 +1698,8 @@ html.stblack{
 				}
 			
 			}
+
+			
 	
 			.tags{
 				>div{

@@ -5,7 +5,6 @@ const WebSocket   = require('ws');
 var Wss = function(node, service){
 
     var self = this
-
     
     var attempt = 0;
     var ws = null
@@ -31,17 +30,13 @@ var Wss = function(node, service){
         msg.signature = '0'
         msg.pubkey = '0'
 
-       
-
         return sendMessage(msg)
     }
 
     var sendMessage = function(message){
         return new Promise((resolve, reject) => {
-           
 
             ws.send(JSON.stringify(message), (err) => {
-
            
                 if (err){
                     reject(err)
@@ -64,8 +59,6 @@ var Wss = function(node, service){
     }
 
     self.emit = emit
-
-    
 
     self.send = function(message){
 
