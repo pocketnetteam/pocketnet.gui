@@ -19,13 +19,115 @@
 		}
 	}
 
+	.open{
+
+        width: 100%;	
+
+        >.main-wrapper{
+            padding: 50px 30px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+
+            .content{
+                display: flex;
+                justify-content: space-around;		
+                flex-wrap: wrap;
+                .discover{		
+                    padding : 0 20px;	
+                    width: 400px;
+                    h2{
+                        text-align: center;
+                        font-size: 1.5em;
+                        }
+                    p{
+                        text-align: left;
+                        margin: 15px 0;
+                        font-size: 1.1em;
+                        height: 60px;
+                        }
+                    .one-item{					
+                        display: flex;
+                        flex-wrap: wrap;
+                        justify-content: center;
+                        margin: 50px 0 ;
+                        >.text{
+                            width: 100%;
+                            flex-direction: column;
+                            >p{
+                                padding: 0;
+                                height: 100%;
+                                margin-top: 0;
+                                margin-bottom: 15px;
+                                width: 100%;
+                                padding-left: 20px;
+                                text-align: left;
+                                }
+                            }
+                        >div{
+                            width: 40px;
+                            margin: 10px 10px;
+                            display: flex;	
+                            align-items: center;
+                            justify-content:center;
+                            &:first-child{
+                                margin-left:0;
+                                }
+                    
+                            >a {
+                                display: flex;
+                                flex-direction: column;
+                                align-items: center;
+                                justify-content:center;
+                                text-decoration: none;
+                                color: #000;
+                                >img{
+                                    width: 25px;
+                                    height: 35px;
+                                    }
+                                >p{
+                                    height: 50px;
+                                    width: 100%;
+                                    text-align: center;
+                                    font-weight: 500;
+                                    font-size: 0.6em;
+                                    }
+                                >i{
+                                    color: #00a6ff;
+                                    font-size: 2em;
+                                    width: 25px;
+                                    height: 25px;
+                                    text-align: center;
+                                    }
+                            }
+                
+                
+                    }
+                }
+
+                }
+            }
+
+
+        }
+
+
+
+
+
+    }
+
 	.maket {
 		top: 0;
 		position: fixed;
 		background: white;
-		z-index: 9999;
+		z-index: 300;
 		width: 100%;
 		height: @reportMarginTop;
+
+		.localization{
+			white-space: nowrap;
+		}
 
 		.cnt{
 			height: 100%;
@@ -55,6 +157,7 @@
 				display: none;
 				font-size: @rhythm * 3;
 				cursor: pointer;
+				padding-left: 15px;
 			}
 
 			
