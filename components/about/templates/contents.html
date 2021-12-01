@@ -24,14 +24,9 @@ var letter = name ? name[0] : ''
                 <img class="header_logo all" src="img/logotypes/<%-app.meta.fullname.toLowerCase()%>_logo_<%-theme%>.svg">
             </div>
             <div elementsid="eventslang" class="label eventslang">
-                <div elementsid="menu_localization" class="lang localization">
-                    
-                    <% if(isMobile()) {%>
-                        <%-(lkey.key || '')%> 
-                    <% } else { %>
-                        <%-(lkey.name || '')%> 
-                    <% } %>
-                    
+                <div elementsid="menu_localization" class="lang localization">                    
+
+                    <%-(lkey.name || '')%> 
                     <i class="fas fa-caret-down"></i>
                 </div>
             </div>						
@@ -205,11 +200,7 @@ var letter = name ? name[0] : ''
             <div elementsid="eventslang" class="label eventslang">
                 <div elementsid="menu_localization" class="lang localization">
                     
-                    <% if(isMobile()) {%>
-                        <%-(lkey.key || '')%> 
-                    <% } else { %>
-                        <%-(lkey.name || '')%> 
-                    <% } %>
+                    <%-(lkey.name || '')%> 
                     
                     <i class="fas fa-caret-down"></i>
                 </div>
