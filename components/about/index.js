@@ -443,24 +443,30 @@ var about = (function(){
 						el.c.find('.localization').on('click', function(){
 							self.app.mobile.vibration.small()
 							var items = []
+							var available = ['en', 'fr']
 			
 							_.each(self.app.localization.available, function(a){
-								items.push({
-									text : a.name,
-									action : function (clbk) {
-			
-										var na = app.localization.findByName(a.name);
-			
-			
-										if (na && na.key != self.app.localization.key){
-											self.app.mobile.vibration.small()
-											self.app.localization.set(na.key);
+
+								if (available.indexOf(a.key) > -1){
+
+									items.push({
+										text : a.name,
+										action : function (clbk) {
+				
+											var na = app.localization.findByName(a.name);
+				
+				
+											if (na && na.key != self.app.localization.key){
+												self.app.mobile.vibration.small()
+												self.app.localization.set(na.key);
+											}
+				
+											clbk()
+				
 										}
-			
-										clbk()
-			
-									}
-								})
+									})
+								}
+
 							})
 			
 							menuDialog({
