@@ -566,6 +566,12 @@ Platform = function (app, listofnodes) {
             relay: true
         },
 
+        "60": {
+            message: function () {
+                return self.app.localization.e('e13257_1')
+            }
+        },
+
         "42": {
             message: function () {
                 return self.app.localization.e('e13233')
@@ -7052,7 +7058,8 @@ Platform = function (app, listofnodes) {
 
             clbks: {
                 added: {},
-                seen: {}
+                seen: {},
+                inited : {}
             },
             clearlocalstorage : function(){
 
@@ -7224,7 +7231,7 @@ Platform = function (app, listofnodes) {
                 this.storage.notifications || (this.storage.notifications = [])
 
                 
-                    return this.getNotifications()
+                return this.getNotifications()
     
 
                 
@@ -7359,6 +7366,7 @@ Platform = function (app, listofnodes) {
             getNotifications: function () {
                 var n = this;
 
+
                 if(!n.inited && !n.loading) {
                     return n.init()
                 }
@@ -7374,11 +7382,18 @@ Platform = function (app, listofnodes) {
 
                         return new Promise((resolve, reject) => {
 
+
+
                             n.getNotificationsInfo(notifications || [], function () {
+
 
                                 n.inited = true;
     
                                 n.save()
+
+                                _.each(n.clbks.inited, function (f) {
+                                    f()
+                                })
     
                                 resolve()
     
@@ -7390,7 +7405,7 @@ Platform = function (app, listofnodes) {
 
                     }).catch(e => {
 
-
+                        console.error(e)
                         n.inited = false;
                         n.loading = false;
 
@@ -21780,18 +21795,31 @@ Platform = function (app, listofnodes) {
 
             message.el.on('click', function(){
 
-				if(!message.expanded){
+                if(isMobile()){
 
-					message.el.removeClass('smallsize');
+                    platform.app.nav.api.load({
+                        open : true,
+                        href : 'userpage?id=notifications&report=notifications',
+                        history : true,
+                    })
 
-					message.expanded = true
+                }
+                else{
+                    if(!message.expanded){
 
-					arrangeMessages();
+                        message.el.removeClass('smallsize');
+    
+                        message.expanded = true
+    
+                        arrangeMessages();
+    
+                        setTimeout(function(){
+                            arrangeMessages();
+                        }, 300)
+                    }
+                }
 
-					setTimeout(function(){
-						arrangeMessages();
-					}, 300)
-				}
+				
 
 			})
 
@@ -23504,10 +23532,8 @@ Platform = function (app, listofnodes) {
 
             self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
 
-           
-
-            if (self.loadingWithErrors)
-                self.sdk.notifications.init().catch(e => {})
+            console.log(" self.sdk.notifications.init 2")
+            self.sdk.notifications.init().catch(e => {})
 
             if(clbk) clbk()
         })
@@ -23636,9 +23662,8 @@ Platform = function (app, listofnodes) {
                             }
                         }
                     
-
-                        if (self.loadingWithErrors)
-                            self.sdk.notifications.init().catch(e => {})
+                        console.log(" self.sdk.notifications.init")
+                        self.sdk.notifications.init().catch(e => {})
 
                         if (self.sdk.address.pnet()){
 

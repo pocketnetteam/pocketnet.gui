@@ -93,7 +93,7 @@ var notifications = (function(){
 
 				if(!p) p = {};
 
-				var _notifications = p.notifications || self.app.platform.sdk.notifications.storage.notifications;
+				var _notifications = p.notifications || self.app.platform.sdk.notifications.storage.notifications || [];
 				var rnow = false;
 				
 				p.el = el.new;
@@ -102,19 +102,13 @@ var notifications = (function(){
 
 				var time = self.app.platform.currentTime()
 				var timedif = 286400
+				var inr = html
 
-				
 
-				if(p.seenFilter){
-					/*_notifications = _.filter(_notifications, function(n){
-						if(!n.seen || time - n.seen < timedif){
-							return true
-						}
-					})*/
-					
-				}
+				if(p.notifications) inr = prepend
+			
 
-				var watched = - _notifications.length + (p.notifications || self.app.platform.sdk.notifications.storage.notifications).length
+				var watched = - _notifications.length + (p.notifications || self.app.platform.sdk.notifications.storage.notifications || []).length
 					
 				
 				_notifications = _.sortBy(_notifications, function(n){
@@ -142,13 +136,11 @@ var notifications = (function(){
 					return true
 				})
 
-				console.log('_notifications2', _notifications.length)
-
 				var grou = group(_notifications, function(n){
 
 					if (p.now) return 'ntnow';
 
-					var d = new Date(n.time * 1000);
+					var d = new Date( (n.time || n.nTime)  * 1000);
 
 					if (d.addMinutes(60) > currentDate) return 'ntlasthour';
 
@@ -181,9 +173,10 @@ var notifications = (function(){
 						grou : grou,
 						rnow : rnow
 					},
-					inner : prepend
+					inner : inr
 
 				}, function(_p){
+
 
 					renders.loadingAndEmpty()
 
@@ -235,8 +228,9 @@ var notifications = (function(){
 				}
 
 				el.error.addClass('hidden')
+				el.empty.removeClass('hidden')
 
-				if (self.app.platform.sdk.notifications.loading){
+				if (!self.app.platform.sdk.notifications.inited || self.app.platform.sdk.notifications.loading){
 					el.loader.removeClass('hidden')
 				}
 				else{
@@ -273,9 +267,9 @@ var notifications = (function(){
 			})
 
 			self.iclbks.lenta = function(){
+				console.log("HERE&")
 				renders.loadingAndEmpty()
 			}
-
 
 			if(isMobile()){
 
@@ -368,10 +362,18 @@ var notifications = (function(){
 
 		var addWSClbk = function(){
 			self.app.platform.sdk.notifications.clbks.added['notifications' + t] = function(notifications, now){
+
 				renders.notifications({
 					notifications : notifications,
 					now : now
 				})
+
+			}
+
+			self.app.platform.sdk.notifications.clbks.inited['notifications' + t] = function(notifications, now){
+					console.log('renders.notifications()')
+				renders.notifications()
+
 			}
 		}
 
@@ -388,9 +390,14 @@ var notifications = (function(){
 
 				var _notifications = p.notifications || self.app.platform.sdk.notifications.storage.notifications;
 
+				clbk(data);
+
+				return
 
 				if(!_notifications){
+					console.log("IM HERE1")
 					self.app.platform.sdk.notifications.init(function(){
+						console.log("IM HERE2")
 						clbk(data);
 					})
 				}

@@ -349,9 +349,9 @@ var menu = (function(){
 
 
 					setTimeout(function(){
-						self.app.platform.sdk.notifications.init(function(){
+						/*self.app.platform.sdk.notifications.init(function(){
 							actions.ahnotify(el, unseen().length, 'notifications')
-						})
+						})*/
 
 						if(!isTablet()){
 							self.nav.api.load({
@@ -362,7 +362,8 @@ var menu = (function(){
 								inTooltip : true
 							})
 						}
-	
+						
+						self.app.platform.sdk.notifications.clbks.inited.menu =
 						self.app.platform.sdk.notifications.clbks.added.menu =
 						self.app.platform.sdk.notifications.clbks.seen.menu = function(){
 							actions.ahnotify(el, unseen().length, 'notifications')
