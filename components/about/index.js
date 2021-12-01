@@ -11,6 +11,8 @@ var about = (function(){
 
 		var el, ed;
 
+		var available = ['en', 'fr'];
+
 		var currentExternalEssense = null;
 
 		var hcready = false;
@@ -443,7 +445,6 @@ var about = (function(){
 						el.c.find('.localization').on('click', function(){
 							self.app.mobile.vibration.small()
 							var items = []
-							var available = ['en', 'fr']
 			
 							_.each(self.app.localization.available, function(a){
 
