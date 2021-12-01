@@ -117,6 +117,10 @@ Application = function(p)
 
 		//////////////
 
+		peertubeServer : 'https://test.peertube.pocketnet.app/api/v1/',
+
+		//////////////
+
 		imageServer : p.imageServer || 'https://api.imgur.com/3/',
 		imageStorage : 'https://api.imgur.com/3/images/',
 

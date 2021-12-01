@@ -23,6 +23,13 @@ User = function(app, p) {
 		secret : 'ea4020d8024dfb78d372d1cd21c2f3215c72ead4'
 	};	
 
+	self.peertube = {
+		username : 'test_bastyon',
+		password : 'test_bastyon',
+		client_id : '11yes98akef92mynd1203a6qw3pwiuqh',
+		client_secret : 'VSIhKu1tpvi1JHMBG6XwFhZlOoZ9ogtV'
+	}
+
 	var keys = {
 		private : {
 			set : function(l){

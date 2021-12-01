@@ -1237,15 +1237,16 @@ Share = function(lang){
 
 						app.ajax.run({
 							type : "POST",
-							imgur : true,
+							peertubeImage : true,
 							data : {
-								Action : "image",
-								image : r[1]
+								Action : "upload",
+								image : r[1],
+								base64: image
 							},
 
 							success : function(data){
 
-								self.images.v[index] = deep(data, 'data.link');
+								self.images.v[index] = deep(data, 'image.url');
 								
 								p.success();
 
