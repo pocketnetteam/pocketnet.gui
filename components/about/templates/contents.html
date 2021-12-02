@@ -12,8 +12,9 @@ var letter = name ? name[0] : ''
 
 
 %>
-
+<div class="rightchatspacer">
 <div class="contentsInner" id="contentsInner">
+   
     <div class="item sitenames burgerMenu">
         <i class="fa fa-bars"></i>
     </div>
@@ -26,7 +27,7 @@ var letter = name ? name[0] : ''
             <div elementsid="eventslang" class="label eventslang">
                 <div elementsid="menu_localization" class="lang localization">                    
 
-                    <%-(lkey.name || '')%> 
+                    <%-(lkey.name || '').toLowerCase()%> 
                     <i class="fas fa-caret-down"></i>
                 </div>
             </div>						
@@ -210,5 +211,7 @@ var letter = name ? name[0] : ''
 
     </div>
 
+
+</div>
 
 </div>
