@@ -72,6 +72,7 @@ const publics = {
     getaccountsetting : true,
     getpostscores:true,
     getpagescores:true,
+    getrandomcontents : true,
 
     // BlockExplorer
     getblocktransactions: true,
@@ -375,6 +376,7 @@ RpcClient.callspec = {
     //setAccount: '',
     setGenerate: 'bool int',
     getreputations: '',
+    getrandomcontents : 'str',
 
 
     getcontents: 'str',
