@@ -11,7 +11,7 @@ var about = (function(){
 
 		var el, ed;
 
-		var available = ['en', 'fr'];
+		var available = ['en', 'fr', 'ru'];
 
 		var currentExternalEssense = null;
 
@@ -26,7 +26,7 @@ var about = (function(){
 			
 
 			reports.push({
-				name :  self.app.localization.e('about'),
+				name :  self.app.localization.e('aboutus'),
 				id : 'about-home',
 				report : 'aboutHome',
 				mobile : true,
