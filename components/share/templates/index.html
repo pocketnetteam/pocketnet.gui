@@ -15,13 +15,15 @@ var postline = function(){ %>
 	<div class="mobilecaption">
 		<% if(!share.aliasid) {%>
 
-			<% if(postcnt === 0) {%>
+			<span><%=e('newShare')%></span>
+
+			<!--<% if(postcnt === 0) {%>
 				<span><%=e('firstShare')%></span>
 			<% } else { %> 
 			
 				<span><%=e('newShare')%></span>
 				
-			<% }%>
+			<% }%>-->
 			
 		<% } else { %> 
 			<span><%=e('editpost')%></span>
