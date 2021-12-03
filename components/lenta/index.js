@@ -1394,8 +1394,11 @@ var lenta = (function(){
 
 			///
 			scrollToPost : function(id){
+
 			
-				_scrollTo($('#' + id))
+				_scrollTo($('#' + id), null, 0, -110)
+
+
 				
 			},
 
@@ -4259,8 +4262,12 @@ var lenta = (function(){
 									if(!isMobile())
 	
 										actions.openPost(p.s, function(){
-											actions.scrollToPost(p.p)
+											actions.scrollToPost(p.s)
 										})
+
+									else{
+										actions.scrollToPost(p.s)
+									}
 								}
 	
 								if (p.i){
@@ -4281,22 +4288,25 @@ var lenta = (function(){
 	
 								if(p.v){
 	
-									//actions.scrollToPost(p.v)
-	
 									if(video){
 									}
 									else{	
 	
 										if(!isMobile())
 											actions.fullScreenVideo(p.v, function(){})
+										else{
+
+											actions.scrollToPost(p.v)
+											console.log('actions.scrollToPost(p.v)actions.scrollToPost(p.v)actions.scrollToPost(p.v)actions.scrollToPost(p.v)')
+
+										}
+											
 									}
 									
 								}
 	
 								if (p.p){
-									actions.postscores(p.p, function(){
-										/*actions.scrollToPost(p.p)*/
-									})
+									actions.postscores(p.p, function(){})
 								}
 							}
 							
