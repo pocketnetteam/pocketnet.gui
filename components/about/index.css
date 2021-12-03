@@ -193,6 +193,7 @@
 }
 #about .maket .contentsInner .contentmenu .reportCaption.alternativeTo .dropdown {
   display: none;
+  width: 180px;
   padding-top: 1em;
   position: absolute;
   background: #ffffff;
