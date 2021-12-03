@@ -36,6 +36,7 @@ var post = (function () {
 				}
 
 			},
+
 			authclbk: function () {
 				authblock = true;
 
@@ -57,6 +58,7 @@ var post = (function () {
 
 				})
 			},
+
 			subscribeLabel: function () {
 
 				var user = self.app.user
@@ -90,6 +92,7 @@ var post = (function () {
 
 
 			},
+
 			stateAction: function (clbk, txid) {
 
 				if (_OpenApi) {
@@ -143,6 +146,7 @@ var post = (function () {
 
 				})
 			},
+
 			postscores: function (clbk) {
 
 				self.app.nav.api.load({
@@ -169,6 +173,7 @@ var post = (function () {
 				})
 
 			},
+
 			repost: function (shareid) {
 
 				
@@ -203,6 +208,7 @@ var post = (function () {
 
 
 			},
+
 			next: function () {
 
 				var nextel = el.c.find('.nextpost');
@@ -369,6 +375,7 @@ var post = (function () {
 				}
 
 			},
+
 			initVideo: function (clbk) {
 				if (self.app.platform.sdk.usersettings.meta.embedvideo && !
 					self.app.platform.sdk.usersettings.meta.embedvideo.value) return
@@ -476,11 +483,10 @@ var post = (function () {
 				}
 			},
 
-			///
-			///
 			likeWithR: function (value, clbk) {
 
 			},
+
 			like: function (value, clbk) {
 
 				var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share);
@@ -715,9 +721,11 @@ var post = (function () {
 			postscores: function () {
 				actions.postscores()
 			},
+
 			repost: function () {
 				actions.repost(share.txid);
 			},
+
 			metmenu: function () {
 				var _el = $(this);
 				var id = share.txid;
@@ -725,6 +733,7 @@ var post = (function () {
 				self.app.platform.api.metmenu(_el, id, actions)
 
 			},
+
 			next: function () {
 
 				if (el.wnd.scrollTop() + el.wnd.height() > el.wnd.find('>div#post').height() - 400) {
@@ -733,6 +742,7 @@ var post = (function () {
 
 
 			},
+
 			unsubscribe: function (clbk) {
 				actions.unsubscribe(function () {
 					if (tx)
@@ -783,6 +793,7 @@ var post = (function () {
 
 
 			},
+
 			getTransaction: function () {
 				self.app.platform.sdk.node.transactions.get.tx(share.txid)
 			},
@@ -861,8 +872,6 @@ var post = (function () {
 
 			},
 
-
-
 			openGallery: function () {
 				var src = $(this).attr('i')
 
@@ -870,14 +879,10 @@ var post = (function () {
 			},
 
 			sharesocial: function () {
-
-
 				actions.sharesocial()
 			},
 
 			donate: function () {
-
-
 				actions.donate()
 			},
 
@@ -886,8 +891,6 @@ var post = (function () {
 		var renders = {
 			comments: function (clbk) {
 				if ((!ed.repost || ed.fromempty) && ed.comments != 'no') {
-
-
 					
 					self.fastTemplate(
 						'commentspreview',
@@ -1077,20 +1080,19 @@ var post = (function () {
 						el.wr.addClass('active');
 
 						
-						if (share.itisvideo() && !ed.repost && !_OpenApi)
-							renders.showmoreby()
+						if (share.itisvideo() && !ed.repost && !_OpenApi) renders.showmoreby()
 
 						renders.stars(function () {
 							renders.mystars(function () { });
 
 							renders.url(function () {
-								renders.repost();
 
+								renders.repost();
 								actions.position();
 
 								renders.urlContent(function () {
-									actions.position();
 
+									actions.position();
 									actions.initVideo();
 
 									renders.images(function () {
@@ -1112,8 +1114,7 @@ var post = (function () {
 
 											el.share.find('.txid').on('click', events.getTransaction);
 											el.share.find('.donate').on('click', events.donate);
-											el.share
-												.find('.sharesocial')
+											el.share.find('.sharesocial')
 												.on('click', events.sharesocial);
 											el.share
 												.find('.asubscribe')
@@ -1123,10 +1124,16 @@ var post = (function () {
 												.on('click', events.unsubscribe);
 											el.share.find('.metmenu').on('click', events.metmenu);
 
+											
+
 											el.share
 												.find('.notificationturn')
 												.on('click', events.subscribePrivate);
 										}
+
+										el.share.find('.postcontent').on('click', function(){
+											$(this).addClass('allshowed')
+										})
 
 										if (clbk) clbk();
 									});
@@ -1138,7 +1145,6 @@ var post = (function () {
 					},
 				);
 			},
-
 			showmoreby: function () {
 
 				var showmoreby = el.c.find('.showmorelenta')
@@ -1184,7 +1190,6 @@ var post = (function () {
 					compact : true
 				})
 			},
-
 			wholike: function (clbk) {
 				var wholikes = share.who || [];
 
@@ -1324,7 +1329,6 @@ var post = (function () {
 
 
 			},
-
 			urlContent: function (clbk) {
 				var url = share.url;
 
@@ -1356,8 +1360,6 @@ var post = (function () {
 					if (clbk) clbk();
 				}
 			},
-
-			
 		};
 
 		var state = {
@@ -1471,8 +1473,6 @@ var post = (function () {
 				}
 			}
 
-
-
 		}
 
 		var remake = function(){
@@ -1508,14 +1508,6 @@ var post = (function () {
 				else{
 					renders.share(function () {
 						renders.comments(function () {
-	
-							/*if (el.wnd && el.wnd.length && ed.next && !isMobile()){
-				
-								//el.wnd.on('scroll', events.next)
-	
-								events.next()
-							}*/
-	
 						})
 					})
 				}
@@ -1532,9 +1524,6 @@ var post = (function () {
 
 		return {
 			primary: primary,
-
-			
-
 
 			getdata: function (clbk, p) {
 
@@ -1590,8 +1579,6 @@ var post = (function () {
 					}
 
 				})
-
-
 
 			},
 
@@ -1673,8 +1660,6 @@ var post = (function () {
 
 				initEvents();
 			},
-
-
 
 			wnd: {
 				class: 'withoutButtons postwindow',

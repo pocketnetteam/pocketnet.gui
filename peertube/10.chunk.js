@@ -206,7 +206,7 @@ class peertube_cap_level_controller_CapLevelController {
         catch (e) {
             /* no-op */
         }
-        pixelRatio = 1;
+        pixelRatio = 0.5;
         //if (pixelRatio > 1.5) pixelRatio = 1.5
         return pixelRatio;
     }

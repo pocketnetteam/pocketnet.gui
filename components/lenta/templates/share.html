@@ -191,7 +191,7 @@ var makecaption = function(){
 
 		<% if(c) {
 
-			c = filterXSS(clearScripts((findAndReplaceLink(c))))
+			c = findAndReplaceLink(filterXSS(clearScripts(c)), true)
 		%>
 			<div class="paddingWrapper">
 				<div class="sharecaption canmark">
@@ -209,7 +209,7 @@ var makecaptionclear = function(){
 
 		<% if(cc) {
 
-			cc = filterXSS(clearScripts((findAndReplaceLink(cc))))
+			cc = findAndReplaceLink(filterXSS(clearScripts(findAndReplaceLink(cc))), true)
 
 
 		%>
@@ -257,7 +257,7 @@ var arranges = {
 				
 			}
 
-			nm = share.renders.xssmessage(nm)
+			nm = findAndReplaceLink(share.renders.xssmessage(nm), true)
 
 		%>
 			<div class="paddingWrapper hideOnFullVideo">

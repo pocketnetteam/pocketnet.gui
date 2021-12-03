@@ -276,9 +276,7 @@ var author = (function(){
 							return blocked.length
 						}
 					},
-		
-					
-		
+			
 					share : {
 						name : self.app.localization.e('share').toUpperCase() + ' <i class="fas fa-share-alt"></i>',
 						mobile : '<i class="fas fa-share-alt"></i>',
@@ -1306,69 +1304,54 @@ var author = (function(){
 
 					self.sdk.users.addressByName(p.address, function(address){
 
-						
-
 						if (address){
 							author.address = address
 
+							self.sdk.users.get(author.address, function(){
 
+								if(self.app.platform.sdk.user.reputationBlockedRedirect(address)){
+									return
+								}
+
+								if(!self.app.platform.sdk.address.pnet() || author.address != self.app.platform.sdk.address.pnet().address){
+									reports.shares.name = self.app.localization.e('uposts')
+								}
+								else
+								{
+									reports.shares.name = self.app.localization.e('myuposts')
+
+									if(!self.app.user.validate()){
+
+										self.nav.api.go({
+											href : 'userpage?id=test',
+											history : true,
+											open : true,
+											replaceState : true
+										})
+
+										return;
+									}
 								
+								}
 
-								self.sdk.users.get(author.address, function(){
+								author.data = self.sdk.users.storage[author.address]
 
-									if(self.app.platform.sdk.user.reputationBlockedRedirect(address)){
-										return
-									}
+								var data = {
+									author : author
+								};
 
-									if(!self.app.platform.sdk.address.pnet() || author.address != self.app.platform.sdk.address.pnet().address){
-										reports.shares.name = self.app.localization.e('uposts')
+								clbk(data);
 
-										/*if(self.app.curation()){
-											self.nav.api.load({
-												open : true,
-												href : 'userpage',
-												history : true
-											})
-						
-											return
-										}*/
-									}
-									else
-									{
-										reports.shares.name = self.app.localization.e('myuposts')
-
-
-										if(!self.app.user.validate()){
-
-											self.nav.api.go({
-												href : 'userpage?id=test',
-												history : true,
-												open : true,
-												replaceState : true
-											})
-
-											return;
-										}
-									
-									}
-
-									author.data = self.sdk.users.storage[author.address]
-									//author.state = self.sdk.ustate.storage[author.address]
-
-									var data = {
-										author : author
-									};
-
-									clbk(data);
-
-								})
+							})
 						}
-
-						else
-						{
-							
+						else{
+							self.app.nav.api.load({
+								open : true,
+								href : 'page404',
+								history : true,
+								replaceState : true
+							})
 						}
-
 						
 					})
 

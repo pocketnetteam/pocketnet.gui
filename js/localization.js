@@ -21,6 +21,11 @@ Localization = function(app){
 			key : 'en'
 		},
 
+		ru : {
+			name : "Русский",
+			key : 'ru'
+		},
+
 		de : {
 			name : "Deutsch",
 			key : 'de'
@@ -43,10 +48,7 @@ Localization = function(app){
 			name : "Italiano",
 			key : 'it'
 		},
-		ru : {
-			name : "Русский",
-			key : 'ru'
-		},
+		
 
 		cmn : {
 			name : "官話",
@@ -197,7 +199,7 @@ Localization = function(app){
 				return
 			}
 
-			var src = 'localization/' + (__k) + '.js?v=12'
+			var src = 'localization/' + (__k) + '.js?v=15'
 
 			self.loading[__k] = true
 

@@ -63,8 +63,9 @@ if(!_Node)
 			wss : 8099
 	    }]
 
-		matrix = 'test.matrix.pocketnet.app'
+		matrix = 'vamily.ru'
 	}
+
 
 	app = new Application({
 		listofproxies : _listofproxies,

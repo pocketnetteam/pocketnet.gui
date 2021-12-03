@@ -4,416 +4,666 @@ var about = (function(){
 
 	var essenses = {};
 
+
 	var Essense = function(p){
 
 		var primary = deep(p, 'history');
 
-		var el, l = null, timeend, timeOutOfferInterval;
+		var el, ed;
 
-		var survey = null;
+		var available = ['en', 'fr', 'ru'];
 
-		var actions = {
+		var currentExternalEssense = null;
 
-			videoWidth : function(el)
-			{
+		var hcready = false;
 
-				var info = {
-					width : 560,
-					height : 315,
-				}
+		var mestate = null, allbalance;
 
-				var w = el.width();
+		var reports = []
 
-				var c = info.width / info.height;
-
-				var h = w / c;
-
-				el.find("iframe").width(w);
-				el.find("iframe").height(h);
-			},
-
-			time : function(){
-
-			    today = new Date();
-			    today = Math.floor((timeend-today)/1000);
-			    tsec=today%60; today=Math.floor(today/60); if(tsec<0)tsec='00'; else if(tsec<10)tsec='0'+tsec; 
-			    tmin=today%60; today=Math.floor(today/60); if(tmin<0)tmin='00'; else if(tmin<10)tmin='0'+tmin; 
-			    thour=today%24; today=Math.floor(today/24);if(thour<0)thour='00'; if(today<0)today='00';
-
-				el.days.html(today);
-				el.seconds.html(tsec);
-				el.minutes.html(tmin);
-				el.hours.html(thour);
-	
-			},
-			fixed : function(){
-				var s = $(window).scrollTop();
-				var h = el.main.offset().top + el.main.height()
-
-				if (s > h){
-					el.fixed.addClass('active')
-				}
-				else
-				{
-					el.fixed.removeClass('active')
-				}
-			},
-			explore : function(){
-				var _el = el.c.find('.faq');
-
-
-				_scrollToTop(_el)
-			},
-			validateEmail : function(v){
-				if(/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/.test(v)){
-					return true;
-				}
-				else
-				{
-					return false;
-				}
-			},
-			saveEmail : function(email, name, clbk, id){
-
-				if(!id) id = '4'
-
-				var _p = {
-					Email : email,
-					Name : name,
-				}
-
-				_p.Action || (_p.Action = 'ADDTOMAILLIST');
-				_p.TemplateID || (_p.TemplateID = id);
-
-				$.ajax({
-					type: 'POST',
-					url: self.app.options.server,
-					data: _p,
-					dataType: 'json',
-					success : function(){
-
-						if (clbk)
-							clbk();
-
-					},
-
-					error : function(){
-
-						if (clbk)
-							clbk();
-
-					},
-				});
-
-			},
-			joinSuccess : function(email){
-				self.fastTemplate('joinSuccess', function(rendered){
-					dialog({
-						html : rendered,
-						class : "one joinbeta",
-
-						btn1text : 'Okay'
-					})
-				}, {
-					email : email
-				})
-			},
+		var init = function(){
+			reports = []
 			
-			join : function(action){
 
-				self.fastTemplate('join', function(rendered){
+			reports.push({
+				name :  self.app.localization.e('aboutus'),
+				id : 'about-home',
+				report : 'aboutHome',
+				mobile : true,
 
-					dialog({
-						html : rendered,
+				if : function(){
+					if(!self.app.curation()) return true
+				},
 
-						wrap : true,
+				add : function(){
 
-						success : function(d){
+					if (isMobile() && deep(mestate, 'reputation')){
+						return mestate.reputation.toFixed(1)
+					}
 
-							var i = d.el.find('.email')
-							var n = d.el.find('.name')
+				}
+			})
+		
 
-							var email = i.val();
-							var name = n.val();
 
-							if (actions.validateEmail(email) && name){
 
-								actions.saveEmail(email, name)
+			reports.push({
+				name : self.app.localization.e('contentCreators'),
+				id : 'about-content-creators',
+				report : 'aboutContentCreators',
+				mobile : true
+			})
 
-								actions.joinSuccess(email, name)
+			
+			reports.push({
+				name : self.app.localization.e('howItWorks'),
+				id : 'about-hiw',
+				report : 'aboutHIW',
+				mobile : true
+			})
 
-								return true
-							}
-						},
-
-						clbk : function(_el){
-
-							var n = _el.find('.name')
-							var i = _el.find('.email')
-
-							var vl = function(){
-								var email = i.val();
-								var name = n.val();
+			reports.push({
+				name : self.app.localization.e('insteadOf') + ' youtube',
+				id : 'about-youtube',
+				report : 'aboutYoutube',
+				group : true,
+				mobile : true
+			})
+			
+			reports.push({
+				name : self.app.localization.e('insteadOf') + ' facebook',
+				id : 'about-facebook',
+				report : 'aboutFacebook',
+				group : true,
+				mobile : true
+			})
 
 							
-								if(actions.validateEmail(email) && name){
-									b.removeClass('disabled')
-
-									return true;
-								}
-								else
-								{
-									b.addClass('disabled')
-									return false;
-								}
-							}
-
-							var b = _el.find('.btn1')
-								b.addClass('disabled')
-								b.on('click', function(){
-
-								})
-
-								n.focus()
-								n.on('change', vl)
-								n.on('keyup', vl)						
-					
-								i.on('change', vl)
-								i.on('keyup', vl)
-						},
-
-						class : "one joinbeta"
-					})
-
-				}, {
-					action : action
-				})
-
-				
-			},
-
-			whitepaperSuccess : function(){
-				self.fastTemplate('whitepaperSuccess', function(rendered){
-					dialog({
-						html : rendered,
-						class : "one joinbeta",
-
-						btn1text : 'Okay'
-					})
-				})
-			},
-			whitepaper : function(){
-
-				self.fastTemplate('whitepaper', function(rendered){
-
-					dialog({
-						html : rendered,
-
-						wrap : true,
-
-						success : function(d){
-
-							var i = d.el.find('input')
-
-							var email = i.val();
-
-							if (actions.validateEmail(email)){
-								actions.saveEmail(email, '', null, '5')
-
-								actions.whitepaperSuccess()
-
-								return true
-							}
-						},
-
-						clbk : function(_el){
-
-							var vl = function(){
-								var value = $(this).val();
-
-								if(actions.validateEmail(value)){
-									b.removeClass('disabled')
-
-									return true;
-								}
-								else
-								{
-									b.addClass('disabled')
-									return false;
-								}
-							}
-
-							var b = _el.find('.btn1')
-								b.addClass('disabled')
-								b.on('click', function(){
-
-								})
-
-							var i = _el.find('input')
-								i.focus()
-								i.on('change', vl)
-								i.on('keyup', vl)
-						},
-
-						class : "one joinbeta"
-					})
-
-				})
-
-				
-			},
+			reports.push({
+				name : self.app.localization.e('insteadOf') + ' twitter',
+				id : 'about-twitter',
+				report : 'aboutTwitter',
+				group : true,
+				mobile : true
+			})
 		}
 
-		var events = {
-			whitepaper : function(){
-				actions.whitepaper()
-			},
-			join : function(){
-				actions.join()
-			},
-			sendanswer : function(){
-				var v = $(this).attr('answer');
+		var helpers = {
+			eachReport : function(actions, _reports, id){
+				if(!_reports) 
+					_reports = reports;
 
-				if (v){
-					survey.send(v, function(){
-						renders.survey()
+				var onlevel = function(reports, level, id){
+
+					if(!level) level = 0;
+
+					if(!id) id = '';
+
+					_.each(reports, function(report, index){
+
+						var _id = id;
+
+						if (_id) _id = _id + '_'
+
+							_id = _id + report.id
+
+
+						if(report.reports){
+
+							actions.group(report, level, _id, function(){
+
+								onlevel(report.reports, level + 1, _id);
+
+							}, index)
+
+						}
+
+						else
+						{
+							actions.report(report, level, _id)
+						}
+
 					})
+
 				}
+
+				onlevel(_reports, 0, id);
+			},
+			findReport : function(id){
+
+				var onlevel = function(reports, id){
+
+					var ids = id.split("_");
+
+					if(!ids.length) return null;
+
+						id = ids[0];
+
+					var report = _.find(reports || [], function(v){
+						return v.id == id;
+					})
+
+					if (report){
+
+						ids.splice(0, 1);
+
+						id = ids.join('_');
+
+						if(!id || !report.reports){
+
+							return report;
+
+						}
+
+						else
+						{
+							return onlevel(report.reports,  id)
+						}
+
+					}
+					else
+					{
+						return null;
+					}
+				}
+
+				return onlevel(reports, id);
+			},
+
+			mobileReports : function(){
+				var m = [];
+
+				helpers.eachReport({
+					group : function(report, level, id, clbk){
+
+						if(report.mobile){
+							m.push(report)	
+						}
+						
+						clbk()
+					},
+					report : function(report){
+						if(report.mobile){
+							m.push(report)	
+						}
+					}
+				})
+
+				return m;
+			},
+
+			selector : function(){
+				var m = helpers.mobileReports();
+				var pv = _.map(m, function(m){return m.id})
+				var pvl = _.map(m, function(m){return m.text || m.name})
+
+				var contents = new Parameter({
+					type : "VALUES",
+					name : self.app.localization.e('e13187'),
+					id : 'contents',
+					possibleValues : pv, 
+					possibleValuesLabels : pvl,
+					defaultValue : pv[0]
+				
+				})
+
+				contents.value = parameters().id || pv[0]
+
+				contents._onChange = function(v){
+
+					if(v == 'signout'){
+						actions.signout()
+					}	
+					else
+					{
+						var r = helpers.findReport(v);
+
+						var _p = parameters();
+							_p.report = r.report;
+							_p.id = r.id;
+
+						var href = 'userpage' + collectParameters(_p);
+
+						self.nav.api.load({
+							open : true,
+							href : href,
+							history : true,
+							
+						})
+					}
+
+					
+				}
+
+				return contents;
+
 			}
 		}
 
-		var socials = [
+		var actions = {
+			closeGroup : function(id){
 
-			{
-				name : 'Twitter',
-				icon : '<i class="fab fa-twitter"></i>',
-				href : 'https://twitter.com/Pocket_Net'
+				var group = helpers.findReport(id);
+
+				if (group){
+					group.active = !!!group.active;
+
+					var _el = el.c.find('[levelid="'+id+'"]');
+
+					if(group.active){
+						_el.addClass('active')
+					}
+					else{
+						_el.removeClass('active');
+					}
+				}		
+			},
+			openTree : function(_id){
+				helpers.eachReport({
+					group : function(r, l, id, clbk){
+
+						var _el = el.c.find('[levelid="'+id+'"]');
+
+						if(_id.indexOf(id) == 0){
+
+							r.active = true;
+							_el.addClass('active');
+
+
+							clbk()
+						}
+						else
+						{
+							r.active = false;
+							_el.find('.openReport').removeClass('active');
+						}
+						
+					},
+					report : function(r, l, id){
+						var _el = el.c.find('[id="'+id+'"]');
+
+						if(_id == id){
+
+							r.active = true;
+
+							_el.addClass('active');
+						}
+						else
+						{
+							r.active = false;
+
+							_el.removeClass('active');
+						}
+					}
+				})
 			},
 
-			{
-				name : 'Telegram',
-				icon : '<i class="fab fa-telegram"></i>',
-				href : 'https://t.me/PocketRep'
+			closeReport : function(){
+				el.report.html('')
+				el.c.removeClass('reportshowed')
 			},
 
-			{
-				name : 'Facebook',
-				icon : '<i class="fab fa-facebook"></i>',
-				href : 'https://www.facebook.com/PocketNet'
+			openReport : function(id, addToHistory){
+
+				el.c.find('.openReport').removeClass('active')
+
+				el.c.find('[rid="'+id+'"]').addClass('active')
+
+				actions.openTree(id);
+
+				el.c.addClass('reportshowed')
+
+				renders.report(id);
+
+
+				var report = helpers.findReport(id)
+
+				if (report && report.rh) return
+
+
+				if (addToHistory){
+
+					self.nav.api.history.addParameters({
+						id : id
+					}, {
+						removefromback : false
+					})
+
+
+					if (self.app.nav.clbks.history.navigation)
+						self.app.nav.clbks.history.navigation()
+
+
+				}
+			}
+
+		}
+
+		var events = {
+
+			openReport : function(){
+				var id = $(this).attr('rid');
+
+				if(isMobile()){
+
+					self.app.mobile.vibration.small()
+
+					renders.contents(null, id)
+
+				}
+
+				events.hideMobileMenu();
+
+				events.removeAlternativeTo();
+
+				actions.openReport(id, true);
 			},
 
-			{
-				name : 'Minds',
-				image : 'https://cdn-assets.minds.com/front/dist/assets/logos/bulb.svg',
-				href : 'https://www.minds.com/PocketNet'
+			toggleAlternativeTo : function(){
+				$(this).toggleClass('active');
 			},
 
-			{
-				name : 'Mastodon',
-				icon : '<i class="fab fa-mastodon"></i>',
-				href : 'https://mastodon.social/@PocketRep'
+			removeAlternativeTo : function(){
+				var alternativeTo = el.c.find('.alternativeTo');
+				alternativeTo.removeClass('active');
 			},
 
-			{
-				name : 'Gab',
-				image : 'https://gab.com/assets/img/logo-dec.png',
-				href : 'https://gab.com/PocketNet'
+
+			hideMobileMenu : function(){
+
+				var contentsInner = el.c.find('#contentsInner')
+
+				contentsInner.removeClass('showMobileMenu');
 			},
 
-		]
+			showMobileMenu : function(){
+
+				var contentsInner = el.c.find('#contentsInner')
+
+				contentsInner.addClass('showMobileMenu');
+
+				
+			}
+		}
 
 		var renders = {
 
-			survey : function(clbk){
+			contents : function(clbk, id){
+
+				if(!el.contents) return
+
+				var s = helpers.selector();
+
+				var r = function(){
+
+					console.log('current', app.localization.current());
+
+					var lkey = app.localization.current();
+
+					if (available.indexOf(lkey.key) === -1){
+						
+						self.app.localization.set('en');
+
+					} else {
+
+						self.shell({
+							
+
+							name :  'contents',
+							el :   el.contents,
+							data : {
+								reports : reports,
+								each : helpers.eachReport,
+								lkey : app.localization.current(),
+								theme : self.app.platform.sdk.theme.current,
+		
+								selector : s
+							},
+		
+						}, function(_p){
+		
+							var alternativeTo = _p.el.find('.alternativeTo');
+							//_p.el.find('.groupName').on(clickAction(), events.closeGroup);
+							_p.el.find('.openReport').on('click', events.openReport);
+	
+							alternativeTo.on('click', events.toggleAlternativeTo);
+	
+							$(document).on('click',function (e) {
+	
+								if ($(e.target).closest('.alternativeTo').length) return;
+								alternativeTo.removeClass('active');
+	
+							});
+	
+	
+	
+	
+							_p.el.find('.burgerMenu').on('click', events.showMobileMenu)
+	
+							_p.el.find('.leftSection').on('click', events.hideMobileMenu)
+	
+							ParametersLive([s], _p.el)
+	
+							self.app.actions.scroll(0)
+	
+	
+							if (hcready)
+								el.contents.hcSticky('refresh');
+		
+							if (clbk)
+								clbk();
+	
+							el.c.find('.localization').on('click', function(){
+								self.app.mobile.vibration.small()
+								var items = []
+				
+								_.each(self.app.localization.available, function(a){
+	
+									if (available.indexOf(a.key) > -1){
+	
+										items.push({
+											text : a.name,
+											action : function (clbk) {
+					
+												var na = app.localization.findByName(a.name);
+					
+					
+												if (na && na.key != self.app.localization.key){
+													self.app.mobile.vibration.small()
+													self.app.localization.set(na.key);
+												}
+					
+												clbk()
+					
+											}
+										})
+									}
+	
+								})
+				
+								menuDialog({
+				
+									items: items
+								})
+								
+							})
+	
+							el.c.find('.signin').on('click', function(){
+								self.app.mobile.vibration.small()
+								self.app.platform.sdk.registrations.getredirectFromCurrentPage()
+								self.nav.api.go({
+									href : 'authorization',
+									history : true,
+									open : true
+								})	
+							})
+	
+							el.c.find('.signup').on('click', function(){
+								self.app.mobile.vibration.small()
+								self.app.platform.sdk.registrations.getredirectFromCurrentPage()
+								self.nav.api.go({
+									href : 'registration',
+									history : true,
+									open : true
+								})	
+							})
+	
+	
+							el.c.find('[elementsid="eventssitename"]').on('click', function(){
+	
+								console.log('click')
+				
+								self.app.user.isState(function(state){
+				
+									//if(self.app.nav.get.pathname() != 'index'){
+										var k = localStorage['lentakey'] || 'index';
+				
+										if (parameters().r == k) k = 'index'
+				
+										if (k != 'index') {
+											if (k == 'video'){
+												k = 'index?video=1'
+											}
+											else{
+												k = 'index?r=' + k
+											}
+											
+										}
+				
+										if(!state) k = 'index'
+				
+										if(self.app.curation()){
+											if(!state){
+												k = 'welcome'
+											}
+											else{
+												k = 'userpage'
+											}
+											
+										}
+				
+										self.nav.api.go({
+											href : k,
+											history : true,
+											open : true,
+											handler : true
+										})
+									//}
+				
+								})
+				
+								
+						
+							})
+						})
+					}
 
 
-				self.shell({
 
-					name :  'survey',
-					el :   el.survey,
+				}
 
-					data : {
-						survey : survey
-					},
+				
 
-					animation : 'fadeIn',
+				self.app.user.isState(function (state) { 
 
-				}, function(p){
+					if(isMobile() && state){
+						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
+							var temp = self.app.platform.sdk.node.transactions.tempBalance()
 
-					p.el.find('.sendanswer').on('click', events.sendanswer)
+							allbalance = amount + temp
+							
 
-					p.el.find('.resultpercent').each(function(){
+							r()
+						
+						})
+					}
+					else{
+						r()
+					}
 
-						var _el = $(this);
+				})
+					
+			},
 
-						_el.animate({
-							width : _el.attr('w') + "%"
-						}, 130)
+			report : function(id, clbk){
 
-					})
+				
+
+				if (currentExternalEssense)
+					currentExternalEssense.destroy();
+
+
+				var report = helpers.findReport(id)
+
+				if(!report){
+					if(clbk) clbk()
+
+					return
+				}
+
+				var _clbk = function(e, p){
+					self.app.actions.scroll(0)
+	
+					currentExternalEssense = p;
+
+					
 
 					if (clbk)
 						clbk();
-				})
-			},
+				}
 
-			tes : function(){
-				var tes = el.c.find('.tes');
+				if(report.rh){
+					renders[report.report]()
+					return
+				}
+				
+				
+				self.shell({
 
-				lazyEach({
-					array : tes, 
-					sync : true,
-
-					action : function(p){
-						var _el = $(p.item);
-
-						var time = _el.attr('time') || 600;
-
-						_el.addClass('show');
-
-						setTimeout(function(){
-							p.success()
-						}, time)
-					}
-				})
-			},
-
-			lenta : function(){
-
-				self.nav.api.load({
-
-					open : true,
-					id : 'lenta',
-					el : el.lenta,
-					animation : false,
-
-					mid : 'about',
-
-					essenseData : {
-						author : 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd',
-						byauthor : true,
-						authAction : function(event){
-
-							actions.join(event)
-
-						},
-
-						notscrollloading : true,
-						//nourlload : true,
-
-						/*filter : function(share, i){
-
-							if(i < 2) return true
-
-						}*/
-
-						//txids : ['823ab9614a183b737fbc2374094a006d0368361bdcdc7d0324919474fe17814a', '85d3f59c842e72490e23c0d6ec2db270a6d501cd14ad4cdbe01e4cfccaa6dd37']
+					name :  'report',
+					el :   el.report,
+					data : {
+						
 					},
-					
-					clbk : function(e, p){
-						l = p
+
+				}, function(_p){
+
+					if (renders[report.report]){
+						renders[report.report](_p.el.find('.reportCnt'), _clbk)
+
+						if (hcready)
+							el.contents.hcSticky('refresh');
+					}
+					else{
+						self.nav.api.load({
+
+							open : true,
+							id : report.report,
+							el : _p.el.find('.reportCnt'),
+							animation : false,
+							primary : true,
+	
+							essenseData : {
+								sub : report.sub,
+
+								dumpkey : ed.dumpkey
+							},
+							
+							clbk : function(e, p){
+	
+								_clbk(e, p)
+
+								if (hcready)
+									el.contents.hcSticky('refresh');
+								
+							}
+	
+						})
 					}
 
+					
+
+					
 				})
 			}
 		}
@@ -428,74 +678,113 @@ var about = (function(){
 		}
 
 		var initEvents = function(){
-			
-			el.join.on('click', events.join)
-			el.whitepaper.on('click', events.whitepaper)
 
-			el.c.find('.exploremore').on('click', actions.explore)
+		
 
-
-
-			window.addEventListener('scroll', actions.fixed)
 		}
 
-		var make = function(){
-			renders.tes()
+		self.authclbk = function(){
+		}
 
-			renders.lenta()
+		var makerep = function(clbk){
+			var id = parameters().id || 'about-home';
 
-			survey.init(function(){
-				renders.survey()
-			})
 
-			actions.videoWidth(el.c.find('.videoContent'));
+			if(!isMobile() && state){
+				if(!id) {
+
+					if(self.app.user.validate()){
+
+						if(self.app.curation()){
+							id = 'wallet'	
+						}
+						else{
+							id = 'ustate'	
+						}
+					}
+					else{
+						id = 'test'
+					}
+				}
+			}
+			
+			renders.contents(function(){
+
+				//self.app.actions.scrollBMenu()
+
+				if(id){
+					actions.openReport(id)
+				}
+				else{
+					actions.closeReport()
+				}
+
+				if (clbk)
+					clbk();
+
+			}, id);
+
+
+			
+
+			
+
+		}
+
+		var make = function(clbk){
+			
+			makerep(clbk)
+			
+			
 		}
 
 		return {
 			primary : primary,
 
-			getdata : function(clbk){
+			parametersHandler : function(){
 
-				l = null
+				makerep()
+			},
 
-				survey = new sQuestion({
-					id : 'pocketnetlanding',
-					ajax : self.app.ajax,
-					question : "Are you fed up with traditional social media like Facebook, Twitter and others?",
-					answers : [{
-						t : 'Yes, very',
-						v : 1,
-					}, {
-						t : 'Yes, somewhat',
-						v : 2
-					}, {
-						t : 'Facebook and Twitter are just great',
-						v : 3
-					}]
+			getdata : function(clbk, p){
+
+				ed = deep(p, 'settings.essenseData') || {}
+				
+				init();
+
+
+				var data = {};
+
+				var p = parameters();
+
+				data.p2pkh = self.app.platform.sdk.address.pnet()
+
+				self.app.platform.sdk.ustate.me(function(_mestate){					
+
+
+					mestate = _mestate
+
+					clbk(data);
+
 				})
 
-				var data = {
-					socials : socials,
-					survey : survey
-				};
-
-				clbk(data);
+					
 
 			},
 
 			destroy : function(){
 
-				if (timeOutOfferInterval)
+				delete self.iclbks.mn
 
-					clearInterval(timeOutOfferInterval)
+				hcready = false;
 
-				if (l){
-					l.destroy()
+				if (currentExternalEssense)
+					currentExternalEssense.destroy();
 
-					l = null
-				}
+				currentExternalEssense = null;
 
-				window.removeEventListener('scroll', actions.fixed)
+
+				$('#menu').removeClass('abs')
 
 				el = {};
 			},
@@ -504,33 +793,31 @@ var about = (function(){
 
 				state.load();
 
-				
-
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
-				el.lenta = p.el.find('.lenta');
-				el.main = el.c.find('.main')
+				el.contents = el.c.find('.contents');
+				el.report = el.c.find(".report");
 
-				el.fixed = el.c.find('.fixedButton');
-				el.join = el.c.find('.ejoin')
-				el.whitepaper = el.c.find('.whitepaper')
+			
+				el.bgcaption = el.c.find('.bgCaptionWrapper')
 
-				el.days = p.el.find('.days');
-				el.seconds = p.el.find('.seconds');
-				el.minutes = p.el.find('.minutes');
-				el.hours = p.el.find('.hours');
-
-				el.survey = p.el.find('.survey')
-
-				timeend = new Date(2019, 0, 23, 23, 59);
-
-				timeOutOfferInterval = setInterval(actions.time, 1000);
+				$('#menu').addClass('abs')
 
 				initEvents();
 
-				make();
+				make(function(){					
+					p.clbk(null, p);
 
-				p.clbk(null, p);
+					$('#panelWrapper').hide();
+					
+					setTimeout(function(){
+
+						$('#menu').hide();
+						
+					}, 500)
+				})
+
+				
 			}
 		}
 	};
@@ -538,6 +825,8 @@ var about = (function(){
 
 
 	self.run = function(p){
+
+		// $('#menuWrapper #menu').hide();
 
 		var essense = self.addEssense(essenses, Essense, p);
 
@@ -547,6 +836,11 @@ var about = (function(){
 
 	self.stop = function(){
 
+		
+		$('#panelWrapper').show();
+		$('#menu').show();
+		
+		$(document.body).removeClass('removed-menu');
 		_.each(essenses, function(essense){
 
 			essense.destroy();

@@ -2551,17 +2551,17 @@ var share = (function(){
 				essenseData = deep(p, 'settings.essenseData') || {};
 
 
-				self.app.platform.sdk.user.get(function(u){
+				//self.app.platform.sdk.user.get(function(u){
 
 					if(!essenseData.share){
 
 						state.load()
 
-						if (u.postcnt === 0 && !currentShare.message.v && essenseData.hello){
+						/*if (u.postcnt === 0 && !currentShare.message.v && essenseData.hello){
 							currentShare.message.v = m
 
 							intro = true;
-						}
+						}*/
 
 						currentShare.language.set(self.app.localization.key)
 					}
@@ -2574,13 +2574,13 @@ var share = (function(){
 					var data = {
 						essenseData : essenseData,
 						share : currentShare,
-						postcnt : u.postcnt,
+						postcnt : 1,
 						checkEntity : checkEntity,
 					};
 
 					clbk(data);
 
-				})
+				//})
 
 
 			},

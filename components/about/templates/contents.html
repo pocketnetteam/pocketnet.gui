@@ -1,0 +1,217 @@
+<!--
+<div class=" selector">
+	<%= selector.input() %>
+</div>-->
+
+<% 
+
+var src = deep(app, 'platform.sdk.user.storage.me.image')  
+
+var name = app.platform.api.clearname(deep(app, 'platform.sdk.user.storage.me.name') || (user.address.value && user.address.value.toString('hex')) )
+var letter = name ? name[0] : ''
+
+
+%>
+<div class="rightchatspacer">
+<div class="contentsInner" id="contentsInner">
+   
+    <div class="item sitenames burgerMenu">
+        <i class="fa fa-bars"></i>
+    </div>
+    <div class="items sitenames logoWrapper">
+
+        <div class="item table sitename">
+            <div elementsid="eventssitename" class="icon" events="sitename">
+                <img class="header_logo all" src="img/logotypes/<%-app.meta.fullname.toLowerCase()%>_logo_<%-theme%>.svg">
+            </div>
+            <div elementsid="eventslang" class="label eventslang">
+                <div elementsid="menu_localization" class="lang localization">                    
+
+                    <%-(lkey.name || '').toLowerCase()%> 
+                    <i class="fas fa-caret-down"></i>
+                </div>
+            </div>						
+
+        </div>
+    </div>
+    
+    <div class=" contentmenu">
+
+        <%
+
+		each({
+
+
+			report : function(report, level, id){ 
+
+				if(report.group) return
+
+			%>
+                <div class="reportCaption openReport" rid="<%-id%>">
+
+                    <div class="reportCaptionTable table">
+
+                        <div class="reportCaptionCell">
+                            <%= report.name %>
+                        </div>
+
+                    </div>
+                </div>
+        <% 
+
+			}
+
+		})
+
+	    %>
+
+        <div class="reportCaption alternativeTo">
+
+            <div class="reportCaptionTable table">
+
+                <div class="reportCaptionCell">
+                    <%=e('alternativeTo')%>
+                </div>
+
+            </div>
+            <div class="dropdown">
+
+                <%
+
+                each({
+        
+        
+                    report : function(report, level, id){ 
+        
+                        if(!report.group) return
+        
+                    %>
+                        <div class="reportCaption openReport" rid="<%-id%>">
+        
+                            <div class="reportCaptionTable table">
+        
+                                <div class="dropdownReportCaptionCell">
+                                    <%= report.name %>
+                                </div>
+        
+                            </div>
+                        </div>
+                <% 
+        
+                    }
+        
+                })
+        
+                %>
+
+            </div>
+        </div>
+
+    </div>
+
+    <% if(state) { %>
+
+        <div class="icon">
+            <a elementsid="<%-app.platform.api.authorlink(user.address.value.toString('hex'))%>" href="<%-app.platform.api.authorlink(user.address.value.toString('hex'))%>">	
+                <div class="usericon" image="<%-src || ''%>">
+
+                    <% if(!src && letter) {%>
+
+                        <span class="letter">
+                            <%-letter.toUpperCase()%>
+                        </span>
+
+                    <% } else if (!src) { %>
+
+                        <i class="far fa-user"></i>
+
+                    <% } %>
+
+                    <% if(app.platform.ui.markUser) {%>
+
+                        <%= app.platform.ui.markUser(user.address.value && user.address.value.toString('hex'))%>
+
+                    <% } %>
+                
+                </div>
+            </a>
+
+
+        </div>
+
+    <% } %>
+						
+    <% if(!state) { %>
+
+						
+        <div class="authorization">
+            <div elementsid="eventssignin" class="item signin" events="signin">
+                <div class="label">
+                    <b><%=e('signinmenu')%></b>
+                </div>
+            </div>
+            <div elementsid="eventssignup" class="item signup" events="signup">
+
+                <div class="label">
+                    <b><%=e('signupmenu')%></b>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    <% } %>
+
+    <div class="mobileMenu">
+        <div class="leftSection">
+            <div class="closeCross">
+                <i class="fa fa-times"></i>
+            </div>
+        </div>
+        <div class="menuContent">
+            
+            <%
+
+            each({
+        
+        
+                report : function(report, level, id){ 
+        
+                    if(report.if && !report.if()) return
+        
+                %>
+                    <div class="reportCaption openReport" rid="<%-id%>">
+        
+                        <div class="reportCaptionTable table">
+        
+                            <div class="reportCaptionCell">
+                                <%= report.name %>
+                            </div>
+        
+                        </div>
+                    </div>
+            <% 
+        
+                }
+        
+            })
+        
+            %>
+            <div elementsid="eventslang" class="label eventslang">
+                <div elementsid="menu_localization" class="lang localization">
+                    
+                    <%-(lkey.name || '')%> 
+                    
+                    <i class="fas fa-caret-down"></i>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+</div>
+
+</div>
