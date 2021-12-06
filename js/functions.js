@@ -7704,8 +7704,12 @@
 
 				if (p.peertubeImage) {
 
+					// Prepare URL
 					ap.url = app.peertubeServer + 'images/' + data.Action;
 					delete data.Action;
+					if (data.type && data.type.length > 0)
+						ap.url += '?type=' + data.type;
+					delete data.type;
 					// Get or refresh access token
 					var xmlHttp = new XMLHttpRequest();
 					xmlHttp.open("POST", app.peertubeServer + 'users/token', false);
