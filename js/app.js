@@ -705,6 +705,8 @@ Application = function(p)
 
 		self.platform = new Platform(self, self.options.listofnodes);
 
+		self.imageUploader = new ImageUploader(self);
+
 		self.options.platform = self.platform
 
 		if (self.ref)

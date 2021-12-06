@@ -575,71 +575,43 @@ var article = (function(){
 
 									if (r[1]){
 
-						            	self.ajax.run({
-											type : "POST",
-											imgur : true,
-											data : {
-												Action : "image",
-												image : r[1]
-											},
+										app.imageUploader.uploadImage({
+											image : r[1],
+											base64: resized,
+										}).then((data) => {
+						
+											var l = deep(data, 'image.url');
+											if (clbk)
+												clbk(l)
+						
+										}, (err) => {
 
-											success : function(data){
-
-												var l = deep(data, 'data.link')
-
-												if (l){
-													//art.images.push(l)
-
-													var h = deep(data, 'data.deletehash')
-
-													if (h){
-														self.sdk.imagesH.add(l, h)
-													}
-
-												}
-												else
-												{
+											app.ajax.run({
+												type : "POST",
+												up1 : true,
+												data : {
+													file : r[1]
+												},
+					
+												success : function(data){
+					
+													var l = 'https://'+self.app.options.url+':8092/i/' + deep(data, 'data.ident');
+			
+													if (clbk)
+														clbk(l)
+					
+												},
+					
+												fail : function(d){
+					
 													l = 'https://'+self.app.options.url+'/img/imagenotuploaded.jpg'
+
+													if (clbk)
+														clbk(l)
 												}
+											})
 
-												if (clbk)
-													clbk(l)
-
-											},
-
-											fail : function(d){
-
-
-												app.ajax.run({
-													type : "POST",
-													up1 : true,
-													data : {
-														file : r[1]
-													},
-						
-													success : function(data){
-						
-														var l = 'https://'+self.app.options.url+':8092/i/' + deep(data, 'data.ident');
-				
-														if (clbk)
-															clbk(l)
-						
-													},
-						
-													fail : function(d){
-						
-														l = 'https://'+self.app.options.url+'/img/imagenotuploaded.jpg'
-
-														if (clbk)
-															clbk(l)
-													}
-												})
-												
-				
-												
-											}
-
-										})
+										});
 
 						            }
 						        })
