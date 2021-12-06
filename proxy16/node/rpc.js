@@ -73,6 +73,10 @@ const publics = {
     getpostscores:true,
     getpagescores:true,
     getrandomcontents : true,
+    getrecomendedaccountsbysubscriptions : true,
+    getrecomendedaccountsbyscoresonsimilaraccounts : true,
+    getrecomendedaccountsbyscoresfromaddress : true,
+
 
     // BlockExplorer
     getblocktransactions: true,
@@ -417,7 +421,10 @@ RpcClient.callspec = {
     checkstringtype: 'str',
     getstatistic: 'int int',
     getuserstatistic : 'obj int int',
-    
+    getrecomendedaccountsbysubscriptions : 'str',
+    getrecomendedaccountsbyscoresonsimilaraccounts : 'str',
+    getrecomendedaccountsbyscoresfromaddress : 'str',
+
     // Control
     stop: '',
 
