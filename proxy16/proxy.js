@@ -610,7 +610,10 @@ var Proxy = function (settings, manage, test, logger) {
 					{host : 'pocketnetpeertube4.nohost.me', cantuploading : true}, 
 					{host : 'pocketnetpeertube6.nohost.me', cantuploading : true}, 
 				],
-        		8:  ['pocketnetpeertube8.nohost.me', 'pocketnetpeertube9.nohost.me'],
+        		8:  [
+					{host : 'pocketnetpeertube8.nohost.me', cantuploading : true}, 
+					{host : 'pocketnetpeertube9.nohost.me', cantuploading : true}, 
+				],
 				
 				10: [
 					
@@ -621,6 +624,7 @@ var Proxy = function (settings, manage, test, logger) {
 
 				12: ['bastyonmma.pocketnet.app', 'bastyonmma.nohost.me'],
 
+				//server of gf110
 				13: ['01rus.nohost.me'],
       		};
 
