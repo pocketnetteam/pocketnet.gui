@@ -526,6 +526,9 @@ var imagegallery = (function(){
 
 			actions.prepareImage(image, function(image){
 
+				// Remove the "-thumbnail" to target the high quality image (if needed)
+				image.src = image.src.replace('-thumbnail.', '.');
+
 				renders.image({
 					image : image
 				})
