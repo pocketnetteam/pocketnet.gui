@@ -230,7 +230,7 @@ var postscores = (function(){
 					el : el.details,
 					data : {
 						share : share,
-						scores : scores,
+						scores : scores
 					}					
 
 				}, function(p){

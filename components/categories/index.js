@@ -168,9 +168,14 @@ var categories = (function(){
 							renders.tagsinput(_el, category)
 						},
 
-						addTag : function(tag){
-							actions.addtag(tag, category)
-							renders.tagsinput(_el, category)
+						addTag : function(tag){							
+							
+							if (tag && tag.trim()){
+
+								actions.addtag(tag, category);
+								renders.tagsinput(_el, category);
+								
+							}
 						},
 
 						addTags : function(tags){
