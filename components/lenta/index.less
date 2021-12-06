@@ -1897,17 +1897,16 @@
 		}
 
 		.showmorebyauthor{
-			text-align: center;
-			background: fade(#00A4FF, 100);
-			padding : 2 * @rhythm;
+			display: flex;
+			justify-content: space-between;
+			padding : @rhythm;
+			margin-left: 16px;
+			margin-right: 16px;
 			cursor: pointer;
 			font-size: 0.8em;
-			color : #fff;
+			color : #555770			;
 			margin-bottom :  1.2 * @rhythm;
 
-			&:hover{
-				background: fade(@color-main, 100)
-			}
 		}
 
 		.share{
@@ -2987,12 +2986,10 @@ html.stblack{
 			}
 	
 			.showmorebyauthor{
-				background: fade(#0180ff, 10);
 				color : @color-bright;
 	
 				&:hover{
 					color : fade(#fff, 70);
-					background: fade(@color-bright, 30)
 				}
 			}
 	

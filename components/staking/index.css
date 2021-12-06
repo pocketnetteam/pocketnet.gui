@@ -302,6 +302,9 @@
 html.stblack #staking .earnlabel {
   color: #22B2A4;
 }
+html.stblack #staking .lastprice {
+  color: #b2abac;
+}
 html.stblack #staking .buycoin button {
   background: #016452;
   border-color: #016452;

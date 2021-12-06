@@ -11,9 +11,14 @@
 						</span>
 					</span>
 				</div>
-				<div class="caret caret-up">
-					<i class="fa fa-caret-up"></i>
-				</div>
+
+				<% if(!app.test) {%>
+
+					<div class="caret caret-up">
+						<i class="fa fa-caret-up"></i>
+					</div>
+
+				<% } %> 
 			</div>
 
 			<% if(!app.test) {%>

@@ -220,7 +220,7 @@
   padding: 1em;
   padding-left: 0;
   cursor: pointer;
-  opacity: 0.5;
+  color: #8E90A6;
   /*.transition(0.3s);*/
 }
 #categories .hideallcats:hover,
@@ -232,7 +232,7 @@
 #categories .showallcats span,
 #categories .hideallcats i,
 #categories .showallcats i {
-  font-weight: 700;
+  font-weight: 600;
   font-size: 0.8em;
 }
 #categories .hideallcats .text,
@@ -279,6 +279,9 @@
   width: 100%;
   border: 0;
   box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.4);
+}
+html.stblack #categories .cat {
+  color: #b2abac;
 }
 html.stblack #categories .cat:hover {
   color: #00a4ff;
