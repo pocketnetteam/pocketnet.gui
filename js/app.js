@@ -117,6 +117,10 @@ Application = function(p)
 
 		//////////////
 
+		peertubeServer : 'https://test.peertube.pocketnet.app/api/v1/',
+
+		//////////////
+
 		imageServer : p.imageServer || 'https://api.imgur.com/3/',
 		imageStorage : 'https://api.imgur.com/3/images/',
 
@@ -700,6 +704,8 @@ Application = function(p)
 		self.ajax.set.user(self.user);
 
 		self.platform = new Platform(self, self.options.listofnodes);
+
+		self.imageUploader = new ImageUploader(self);
 
 		self.options.platform = self.platform
 
