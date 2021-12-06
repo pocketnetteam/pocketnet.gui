@@ -7230,20 +7230,27 @@ Platform = function (app, listofnodes) {
 
                 this.load();
 
+                console.log('this.storage.block', this.storage.block)
+
                 this.storage.block || (this.storage.block = self.currentBlock)
                 this.storage.notifications || (this.storage.notifications = [])
 
                 
-                return this.getNotifications()
-    
+                return this.getNotifications().then(r => {
 
-                
+                    _.each(n.clbks.inited, function (f) {
+                        f()
+                    })
+
+                    return Promise.resolve(r)
+                })
 
             },
 
             wsBlock: function (block) {
 
-                this.storage.block = block;
+                if (block > this.storage.block)
+                    this.storage.block = block;
 
                 this.save()
             },
@@ -7292,8 +7299,6 @@ Platform = function (app, listofnodes) {
                 notifications = _.sortBy(notifications, function (n) {
                     return -Number(n.time || n.nTime)
                 })
-
-                
 
                 lazyEach({
                     array: notifications,
@@ -7376,29 +7381,22 @@ Platform = function (app, listofnodes) {
                 else {
 
                     return self.sdk.node.get.timepr().then(r => {
+
                         return self.sdk.missed.get(n.storage.block)
-                    })
 
-                    .then(({block, notifications}) => {
-
-                        n.storage.block = block.block
-
+                    }).then(({block, notifications}) => {
+                        
                         return new Promise((resolve, reject) => {
-
-
 
                             n.getNotificationsInfo(notifications || [], function () {
 
+                                if (block.block > n.storage.block)
+                                    n.storage.block = block.block
 
                                 n.inited = true;
-    
-                                n.save()
+                                n.save();
 
-                                _.each(n.clbks.inited, function (f) {
-                                    f()
-                                })
-    
-                                resolve()
+                                resolve();
     
                             })
 
@@ -7409,6 +7407,7 @@ Platform = function (app, listofnodes) {
                     }).catch(e => {
 
                         console.error(e)
+
                         n.inited = false;
                         n.loading = false;
 
