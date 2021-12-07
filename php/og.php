@@ -64,10 +64,8 @@ class OG {
 
         if (isset($get['s'])) $this->txid = $this->clean($get['s']);
         if (isset($get['v'])) $this->txid = $this->clean($get['v']);
-
-        if ($this->author == NULL && isset($get['i'])) $this->txid = $this->clean($get['i']);
-
-        if ($this->author == NULL && isset($get['v'])) $this->txid = $this->clean($get['v']);
+        if (isset($get['i'])) $this->txid = $this->clean($get['i']);
+        //if ($this->author == NULL && isset($get['v'])) $this->txid = $this->clean($get['v']);
 
         if (isset($get['num'])) $this->imageNum = $this->clean($get['num']);
 
@@ -78,6 +76,8 @@ class OG {
     }
 
     public function is_bot() {
+
+        return true;
 
         if (isset($_SERVER['HTTP_USER_AGENT'])){
             
@@ -199,35 +199,52 @@ class OG {
         $type = NULL;
         $id = NULL;
 
-        if(($test && strpos($_url, 'channel') == false && strpos($_url, 'user') == false) || strpos($url, 'peertube://') !== false){
-            if($test[3]){
+        if(strpos($url, 'peertube://') !== false){
 
-                if (strpos($test[3], 'youtu') !== false) {
-                    $type = 'youtube';
-                    $id = $test[6];
+            $cl = str_replace('peertube://', '', $url);
 
-                } 
-                
-                if (strpos($test[3], 'vimeo')  !== false) {
-                    $type = 'vimeo';
-                    $id = $test[2];
+            $keywords = explode('/',  $cl);
+
+            $type = 'peertube';
+            $id = $keywords[1];
+            
+            $host_name = $keywords[0];
+
+           
+        }
+        else{
+            if(($test && strpos($_url, 'channel') == false && strpos($_url, 'user') == false) || strpos($url, 'peertube://') !== false){
+                if($test[3]){
+    
+                    if (strpos($test[3], 'youtu') !== false) {
+                        $type = 'youtube';
+                        $id = $test[6];
+    
+                    } 
+                    
+                    if (strpos($test[3], 'vimeo')  !== false) {
+                        $type = 'vimeo';
+                        $id = $test[2];
+                    }
+    
+                    if (strpos($test[3], 'bitchute.com') !== false) {
+                        $type = 'bitchute';
+                        $id = $test[9];	
+                    }
+    
                 }
-
-                if (strpos($test[3], 'bitchute.com') !== false) {
-					$type = 'bitchute';
-					$id = $test[9];	
-			    }
-
-            }
-
-            if (strpos($url, 'peertube://') !== false) {
-
-                $type = 'peertube';
-                $id = $test[9];
-                
-                $host_name = $test[4];
+    
+                if (strpos($url, 'peertube://') !== false) {
+    
+                    $type = 'peertube';
+                    $id = $test[9];
+                    
+                    $host_name = $test[4];
+                }
             }
         }
+
+        
 
         $r = array(
             'type' => $type,
@@ -305,6 +322,7 @@ class OG {
                 }
             }
 
+
             if($this->txid != NULL){
 
                 $r = $this->rpc->share($this->txid);
@@ -312,6 +330,8 @@ class OG {
                 if($r != false){
 
                     $r = $r[0];
+
+                    echo 
 
                     $pca = 'p';
 
@@ -326,6 +346,8 @@ class OG {
                     $description = true;
 
                     $this->currentOg['type'] = 'article';
+
+                    
 
                     if (isset($r->u) && $r->u != ''){
                         $this->ogFromVideo(urldecode($r->u), $this->txid);

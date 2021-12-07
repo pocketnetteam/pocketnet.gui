@@ -998,34 +998,161 @@ var post = (function () {
 				if (images.hasClass('active') || !_el.length || !images.length) {
 					if (clbk) clbk();
 				} else {
+
+
 					_el.imagesLoaded({ background: true }, function (image) {
+
 						if (share.settings.v != 'a') {
-							_.each(image.images, function (img, n) {
-								var _img = img.img;
 
-								var el = $(image.elements[n]).closest('.imagesWrapper');
-								var ac = '';
+							if((isMobile() || ed.repost) && image.images.length > 1){
 
-								var _w = el.width();
-								var _h = el.height();
+								var aspectRatio = 0
+								
+								_.each(image.images, function(img){
+									var _img = img.img;
 
-								var w = _w * (_img.width / _img.height);
+									var _aspectRatio = _img.naturalHeight / _img.naturalWidth
 
-								if (_img.width < el.width()) {
-									el.find('.image').width(_img.width);
-									el.find('.image').height(_img.height);
-								} else {
-									el.height(_w * (_img.height / _img.width));
+									if(_aspectRatio > aspectRatio) aspectRatio = _aspectRatio
+								})
+
+								if (aspectRatio){
+
+									if(aspectRatio > 1.66) aspectRatio = 1.66
+
+									images.find('.imagesWrapper').height( Math.min( 400, images.width() )* aspectRatio)
 								}
-							});
+								
+							}
+							else{
+
+								var imageswidth = images.width()
+
+								_.each(image.images, function(img, n){
+
+									var _img = img.img;
+									var el = $(image.elements[n]).closest('.imagesWrapper');
+
+									var ac = '';
+
+									/*var _w = imagesWrapperWidth;
+									var _h = imagesWrapperHeight*/
+
+									var _w = el.width();
+									var _h = el.height()
+
+									if(_img.width > _img.height && (!isMobile() && self.app.width > 768 && !ed.openapi)){
+										ac = 'w2'
+
+										var w = _w * (_img.width / _img.height);
+
+										if (w > imageswidth){
+											w = imageswidth
+
+											h = w * ( _img.height / _img.width) 
+
+											el.height(h);
+										}
+
+										el.width(w);
+									}
+
+									if(_img.height > _img.width || (isMobile() || self.app.width <= 768 || ed.openapi)){
+										ac = 'h2'
+
+										el.height(_w * (_img.height / _img.width))
+									}
+
+									if(ac){
+										el.addClass(ac)
+									}
+									
+								})
+
+								/*_.each(image.images, function (img, n) {
+									var _img = img.img;
+
+									var el = $(image.elements[n]).closest('.imagesWrapper');
+									var ac = '';
+
+									var _w = el.width();
+									var _h = el.height();
+
+									var w = _w * (_img.width / _img.height);
+
+									if (_img.width < el.width()) {
+										el.find('.image').width(_img.width);
+										el.find('.image').height(_img.height);
+									} else {
+										el.height(_w * (_img.height / _img.width));
+									}
+								});*/
+
+							}
+
 						}
 
-						images.addClass('active');
+						var isclbk = function(){
+							images.addClass('active');
 
-						_el.addClass('active');
+							_el.addClass('active');
 
-						if (clbk) clbk();
+							if (clbk) clbk();
+						}
+
+						if(share.settings.v != 'a' && image.images.length > 1){
+
+							var gutter = 5;
+
+							if (isMobile() || ed.repost) {
+
+								console.log("HERE")
+
+								images.find('.imagesContainer').owlCarousel({
+									items: 1,
+									dots: true,
+									nav: !isMobile(),
+									navText: [
+										'<i class="fas fa-chevron-left"></i> ',
+										'<i class="fas fa-chevron-right"></i>'
+										]
+								  
+								});
+
+								isclbk()
+
+							}
+							else{
+								images.isotope({
+
+									layoutMode: 'packery',
+									itemSelector: '.imagesWrapper',
+									packery: {
+										gutter: gutter
+									},
+									initLayout: false
+								});
+	
+								images.on('arrangeComplete', function(){
+									isclbk()
+								});
+	
+								images.isotope()
+							}
+
+							
+
+							
+						}
+						else
+						{
+							isclbk()
+						}
+
+						
 					});
+
+
 				}
 			},
 			share: function (clbk) {

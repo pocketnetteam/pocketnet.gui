@@ -75,7 +75,8 @@ Platform = function (app, listofnodes) {
         'PJg4gur26sCRukHcn5aoDSRZTQF5dxTMUS' : true,
         'PDz71dsW1cPwNewGHVUteFgQx3ZmBf4gaf' : true,
         'PFjWEfsm3jX81MctFU2VSJ17LGVKDc99oH' : true,
-        'PBo7zu6xguzzftFE8c3Urgz4D6YVnj8oux' : true
+        'PBo7zu6xguzzftFE8c3Urgz4D6YVnj8oux' : true,
+        'P9KXb7sS2JDjV5jnXu4t2WwwbvzYeu6yds' : true
     }
 
     self.nvadr = {
@@ -23852,6 +23853,12 @@ Platform = function (app, listofnodes) {
 
 					self.matrixchat.el.swipe({
 						swipeLeft : function(e, phase, direction, distance){
+                            if(_.find(e.path, function(el){
+                                return el.className && el.className.indexOf('noswipepnt') > -1
+                            })) return
+                            
+
+                            console.log("E", e)
 
                             if (self.matrixchat.core && (!self.matrixchat.core.canback || self.matrixchat.core.canback()))
                                 self.matrixchat.core.backtoapp()
