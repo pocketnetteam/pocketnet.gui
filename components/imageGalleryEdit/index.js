@@ -172,6 +172,8 @@ var imageGalleryEdit = (function(){
 							checkOrientation : false,
 						  	crop: function(e) {
 
+								console.log("E", e)
+
 						  		var W = currentCaman.width,
 						  			H = currentCaman.height;
 
@@ -189,7 +191,7 @@ var imageGalleryEdit = (function(){
 
 								parent.find(".cropper-container").addClass(essenseData.crop.style || '')
 
-								parent.find(".cropper-crop-box").append('<div class="applyCrop center" action="apply">\
+								parent.find(".cropper-crop-box").append('<div elementsid="applyCrop" class="applyCrop center" action="apply">\
 									<span class="fa fa-check" aria-hidden="true"></span>\
 								</div>')
 
@@ -276,6 +278,7 @@ var imageGalleryEdit = (function(){
 							width : filter.w * W,
 							height : filter.h * H
 						}
+
 
 						img.crop(absolute.width, absolute.height, absolute.x, absolute.y);	
 
@@ -628,6 +631,7 @@ var imageGalleryEdit = (function(){
 				el.filters.html('')
 
 				resizeFit(p.image.original, 80, 80, function(resized){
+					
 
 					self.shell({
 						name :  'filters',

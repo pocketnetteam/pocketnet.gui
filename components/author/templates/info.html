@@ -36,7 +36,7 @@
 				<div class="label">
 					<div class="aboutwrapper"> <%=filterXSS(clearScripts((findAndReplaceLink(am, true))))%></div>
 					<% if(am != a){ %> 
-						<div class="showmoreabout">
+						<div elementsid="showmoreabout" class="showmoreabout">
 							<span>
 								<%=e('e13021')%>
 							</span>
@@ -55,16 +55,17 @@
 			<div class="icon"><i class="fas fa-map-marker-alt"></i></div>
 			<div class="label">
 			
-				<span class="copyaddress"><%-deep(author, 'address')%></span>
+				<span elementsid="copyaddress" class="copyaddress"><%-deep(author, 'address')%></span>
 			</div>
 		</div>
 	</div>
 	
 <% 
 
-var _d = deep(author, 'state.user_reg_date')
+var _d = deep(author, 'data.regdate')
 
-if(_d && _d > -1) {
+
+if(_d ) {
 
 	var d = new Date();
 		d.setTime(_d * 1000);	
@@ -76,7 +77,7 @@ if(_d && _d > -1) {
 	<div class="item date">
 		<div class="itemtable table">
 			<div class="icon"><i class="far fa-calendar"></i></div>
-			<div class="label"><%=e('joined')%> <b><%-d.yyyymmdd('.')%></b></div>
+			<div class="label"><%=e('joined')%> <b><%-_d.yyyymmdd('.')%></b></div>
 		</div>
 	</div>
 
@@ -85,7 +86,7 @@ if(_d && _d > -1) {
 
 <% if(deep(author, 'data.postcnt')) {%>
 
-	<div class="item postcnt">
+	<div elementsid="author_postcnt" class="item postcnt">
 		<div class="itemtable table">
 			<div class="icon"><i class="fas fa-rss"></i></div>
 			<div class="label"><%=e('shares').toLowerCase()%> <span><%-deep(author, 'data.postcnt')%></span></div>
@@ -99,7 +100,7 @@ if(_d && _d > -1) {
 	<div class="item site">
 		<div class="itemtable table">
 			<div class="icon"><i class="fas fa-link"></i></div>
-			<div class="label"><a href="<%-deep(author, 'data.site')%>"><%-filterXSS(deep(author, 'data.site'))%></a></div>
+			<div class="label"><a elementsid="<%-deep(author, 'data.site')%>" href="<%-deep(author, 'data.site')%>"><%-filterXSS(deep(author, 'data.site'))%></a></div>
 		</div>
 	</div>
 

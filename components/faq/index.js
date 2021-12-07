@@ -19,36 +19,36 @@ var faq = (function(){
 				id : 'how-it-works',
 		
 				group : [
-    
+		
 					{
 						id : 'what-is',
 						q : 'What is ' +self.app.meta.fullname+'?',
-						a : '<div><p>' +self.app.meta.fullname+' is an innovative social network and video sharing platform. Unlike the mainstream social networks, it is not ruled by a company. It is an open source project run by a team of developers and experts, and its scope is to provide a censorship-free platform where the freedom of speech is seriously respected.&nbsp;</p><p>The project was created by&nbsp;Daniel Satchkov and is a decentralized social media platform without any central authority. The platform does not run on a single server but on a network of <em>nodes</em> that are located all throughout the world.&nbsp;</p><p>This means, in practical terms, that users are always able to connect to it, see the content and post as long as they have an internet connection.</p><p>This overcomes the limitations that some governments put in place to block or limit the use of social medias. While for example in China some social networks can be used only behind a VPN, there is no need for that with '+self.app.meta.fullname+'.&nbsp;</p><p>In addition,&nbsp;'+self.app.meta.fullname+' grants complete anonymity: users register without any email or phone number and no personal data like the IP or MAC address are stored in any way.&nbsp;</p><p>By doing so,&nbsp;'+self.app.meta.fullname+' removes the chance for governments to track specific users and to associate an identity to users. Today, anonymity is a requirement for security and privacy and&nbsp;'+self.app.meta.fullname+' is able to guarantee it.&nbsp;</p><p>Furthermore, in order to deliver completely private and anonymous communication,&nbsp;'+self.app.meta.fullname+' provides an encrypted chat system, not associated to any phone number or personal data, protected with 1 to 1 encryption model. No one except the two persons involved in the chat session can access the messages and governments have no way to look into the database since the communication is encrypted and there are no backdoors and no "master keys" that can be used for decryption. Moreover, all the chat messages are automatically deleted after 7 day.</p><p>'+self.app.meta.fullname+' wants to deliver a completly free, safe and anonymous social platform where people can chat, communicate and share contents without the risk of being controlled, limited or censored by governments or corporations.</p></div>',
+						a : '<div><p>' +self.app.meta.fullname+' is an innovative social network and video sharing platform. Unlike the mainstream social networks, there is no corporation behind it, it is based on the Bitcoin model. Bastyon is an open source project run by a team of developers and experts, and its goal is to provide a community moderated platform where the freedom of speech is seriously respected.&nbsp;</p><p>The project was originally created by&nbsp;Daniel Satchkov, but now encompasses over 25 developers and many volunteers across the globe. Bastyon is more of a protocol than a platform, since any developer can build its own app on it. The platform does not run on a single server but on a network of <em>user nodes</em> that are located all throughout the world.&nbsp;</p><p>This means that users are always able to get information and communicate, see the content and post as long as they have an internet connection and only a handful of nodes somewhere in the world are operational,.</p><p>This overcomes the limitations that censors put in place to block or limit communication and spread of information. Information wants to move freely. While, for example, in China some social networks can be used only behind a VPN, there is no need for that with '+self.app.meta.fullname+'.&nbsp;</p><p>In addition,&nbsp;'+self.app.meta.fullname+' does not collect personal information: users register without any email or phone number and no personal data like the IP or MAC address are stored in any way. Note, that while Bastyon does not collect any IPs (as can be seen in open code), it is not possible to hide your IP completely when using the internet, unless you are using a VPN.&nbsp;</p><p>By doing so,&nbsp;'+self.app.meta.fullname+' enables users to discuss issues freely. Today, anonymity is a requirement for security and privacy and&nbsp;'+self.app.meta.fullname+' is able to guarantee it.&nbsp;</p><p>Furthermore, in order to deliver completely private and anonymous communication,&nbsp;'+self.app.meta.fullname+' provides an encrypted chat system, not associated to any phone number or personal data, protected with peer-to-peer encryption model (note, that group chats are not encrypted, only 1-on-1 chats). No one except the two users involved in the chat session can access the messages. All the claims are easy to verify, since Bastyon app and Pocketnet blockchain are both completely open-source, with code visible to everyone. Moreover, all the chat messages are automatically deleted after 7 day.</p><p>'+self.app.meta.fullname+' is a censorship-resistant pseudonymous social platform where people can chat, communicate and share contents with others transparent rules that are the same for every user and developer.</p></div>',
 					},
 					
 					{
 						id : 'how-it-words',
-						q : 'How does it work?',
-						a : '<div><p>'+self.app.meta.fullname+' is pretty simple to use: you just have to create an account and you can immediately start posting contents, follow other users and chat.</p><p>During the registration you just need to create a username (it must be unique!) and upload a picture or a photo (not necessarily your own photo!). No email, no phone number, no verifications. Not even a password: the system will generate a passphrase that you have to use to login.&nbsp;</p></div>',
+						q : 'How do I get started?',
+						a : '<div><p>'+self.app.meta.fullname+" is pretty simple to use: you just have to create an account and you can immediately start posting contents, follow other users and chat.</p><p>During the registration you just need to create a username (it must be unique!) and upload a picture or a photo (not necessarily your own photo!). No email (you can leave an email for the mailing list, but it is not connected to your account on Bastyon), no phone number, no verifications. Not even a password: the system will generate a passphrase that you have to use to login, this passprhase is your private key which replaces both the login and password, it is the only thing you need to login. If you lose the private key, nobody can recover it, even developers don't have access to users' accounts..&nbsp;</p></div>",
 					},
 						
 					{
 						id : 'signback',
-						q : 'How do I register and log in?',
-						a : '<div><p>The first time you use '+self.app.meta.fullname+' you need to create an account, composed only of your unique username.</p><p><strong>There is no password. </strong></p><p>Instead, you will be given a unique 12-words key (passphrase) and a QR code. <strong>Keep this data safe and NEVER reveal it to anyone.</strong></p><p>Then, when you need to log in, you just need to input your passphrase (or scan the QR from the app).&nbsp;</p><p><strong>Remember</strong>: if you lose your passphrase, your account is locked forever. There is no way to restore the password, there is no way for '+self.app.meta.fullname+' to let you log in again. Your passphrase and QR code are the only ways to access your account.&nbsp;</p></div>',
+						q : 'What is the difference between the 12-word passphrase and a private key?',
+						a : '<div><p>The first time you use '+self.app.meta.fullname+' you need to create an account, composed only of your unique username.</p><p><strong>There is no password. </strong></p><p>Instead, you will be given a unique 12-words key (passphrase). Alternatively, you can use a private key, which is a long number (those two are equivalent). <strong>Keep this data safe and NEVER reveal it to anyone.</strong></p><p>Then, when you need to log in, you just need to input your passphrase (or scan the QR from the app).&nbsp;</p><p><strong>Remember</strong>: if you lose your passphrase, your account is locked forever. There is no way to restore the password, there is no way for '+self.app.meta.fullname+' to let you log in again. Your passphrase or private key code are the only ways to access your account, plase write it down on a piece of paper somewhere. You can find it in your profile under Accounts (click the symbol of a key).&nbsp;</p></div>',
 					},
 					
 					
 					{
 						id : 'behind-scenes',
 						q : 'How does it work behind the scenes? Where are the servers?',
-						a : '<div><p>'+self.app.meta.fullname+' is modelled on the style of cryptocurrency (like Bitcoin and Ethereum), because it has no central authority and uses the blockchain to make transactions and ensure security.&nbsp;</p><p>There is no central server: instead, the platform relies on a network of nodes, located all over the world. Every person in the world with a computer can actually run a node (and be rewarded to do so).&nbsp;</p><p>Each post, each comment, each interaction (except chat messages!) is stored on the <a href="https://en.wikipedia.org/wiki/Blockchain">blockchain</a>. This means that there is no way to remove a post or to censor it. Every post is and will always be available on the blockchain and no authority, government or corporation can remove it.</p><p>'+self.app.meta.fullname+' usesa dedicated blockchain, derived directly from the Bitcoin chain.&nbsp;</p></div>',
+						a : '<div><p>'+self.app.meta.fullname+' is modeled on decentralized a cryptocurrency Bitcoin, because it has no central authority and uses the blockchain to make transactions and ensure security.&nbsp;</p><p>There is no central server: instead, the platform relies on a network of nodes, located all over the world. Every person in the world with a computer can actually run a node (and be rewarded to do so by using coinstaking with Pocketcoin).&nbsp;</p><p>Hash of each post, each comment, each interaction (except chat messages!) is stored on the <a elementsid="https://en.wikipedia.org/wiki/Blockchain" href="https://en.wikipedia.org/wiki/Blockchain">blockchain</a>. The posts and comments themselves are not in the blockchain, but in a companion database tied to a blockchain.</p><p>'+self.app.meta.fullname+' usesa dedicated blockchain, derived directly from the Bitcoin chain.&nbsp;</p></div>',
 					},
 						
 					{
 						id : 'blocks',
-						q : 'What would happen if my government blocks access to Bastyon.com?',
-						a : '<div><p>Nothing.</p><p>You would still be able to use Bastyon as if nothing happened.</p><p>This is the power of censorship resistance. <br />You can verify this yourself by simulating a disappearance of the domain name bastyon.com. <br /><br /><strong>On Windows:</strong><br />just open this file:<br />Windows/System32/hosts<br /><br /><strong>On Linux/Ubuntu:</strong><br />Open this file<br />/etc/hosts<br /><br />Then add this row: <br />127.0.0.1 bastyon.com</p><p>This would ensure that bastyon.com is pointing to your local machine, which means that it is not pointing to any outside IP address.<br /><br />Then launch the desktop app and you will be able to continue using Bastyon has if nothing happened. <br />Cool huh?</p></div>',
+						q : 'What would happen if some country (ies) blocks access to Bastyon.com?',
+						a : '<div><p>Nothing.</p><p>You would still be able to use Bastyon as if nothing happened if you use a desktop app, because the Bastyon desktop app speaks directly to the nodes and does not use websites.</p><p>This is the power of censorship resistance. <br />You can verify this yourself by simulating a disappearance of the domain name bastyon.com. <br /><br /><strong>On Windows:</strong><br />just open this file:<br />Windows/System32/hosts<br /><br /><strong>On Linux/Ubuntu:</strong><br />Open this file<br />/etc/hosts<br /><br />Then add this row: <br />127.0.0.1 bastyon.com</p><p>This would ensure that bastyon.com is pointing to your local machine, which means that it is not pointing to any outside IP address.<br /><br />Then launch the desktop app and you will be able to continue using Bastyon has if nothing happened. <br />Cool huh?</p></div>',
 					}
 			
 				]
@@ -72,8 +72,8 @@ var faq = (function(){
 					{
 						id : 'linktoprofile',
 						q : 'Can I link to my profile? or my "page"? So that i can post it into my community to bring members over.',
-						a : '<div>In the browser, go to your profile by clicking on avatar in the upper right and just copy the browser address, everyone who will sign up from that link will follow you automatically and you will actually get rewards.</div>\
-							<div>On the desktop,  from a desktop application go to your profile,  once there, there will be three icons to the right of your avatar first there will be a wallet with number of coins, then a bell with notifications and a third is a green cross icon click on that green cross  and click copy,  send that link around everyone who subscribes will follow you and you will get rewards.</div>',
+						a : '<div>In the browser, go to your profile by clicking on avatar in the upper right and click Share, then select Use Referral Link checkmark, everyone who will sign up from the link that is generated will be offered to follow you automatically when signing up. For every referral that signs up through you link, you will get a bonus equal to 20% of the Pocketcoin (PKOIN) they earn through posting and commenting for the first 6 months. To be clear, your referral does not earn less, you get a bonus.</div>\
+							<div>On the desktop, </div>',
 					},
 					{
 						id : 'starsystem',
@@ -84,27 +84,20 @@ var faq = (function(){
 			
 					{
 						id : 'updateprofiletime',
-						q : 'How long until I am able to update my profile? ',
+						q : 'How often can I update my profile? ',
 						a : '<div>You are able to update your profile once every hour.</div>',
-					},
-			
-					{
-						id : 'savevideo',
-						q : 'Where do you save the video content?',
-						a : '<div>'+self.app.meta.fullname+' uses open source platform called PeerTube. PeerTube is fully integrated with '+self.app.meta.fullname+' authorization, each video server is registered on the blockchain. Details of the algorithm are coming.</div>',
-					},
-			
+					},  
 			
 					{
 						id : 'mobileapp',
 						q : 'Is there a mobile app?',
-						a : '<div>There is an Android app, you can download it here: https://play.google.com/store/apps/details?id=pocketnet.app  iPhone app is not available, because Apple required us to remove any content on 24 hour notice. We refused, so you can use the mobile web app.</div>',
+						a : '<div>There is an Android app, you can download it here: https://play.google.com/store/apps/details?id=pocketnet.app  iPhone app is not available, because Apple required us to censor any content on 24 hour notice. In Bastyon even developers cannot remove content, it is moderated by the users. Batyon is optimized for mobile browsers like Safari on the iPhone.</div>',
 					},
 			
 					{
 						id : 'postinglimit',
-						q : 'Can you tell me what is the limit for posting each day or hour?',
-						a : '<div>We do have some limitations, but after testing it we have increased our limits. At the outset you can make 15 posts and issue 100 ratings every 24 hours. Once your reputation grows above 50, you will be able to make up to 30 posts and 200 ratings every 24 hours.</div>',
+						q : 'Can you tell me what is the limit for posts and ratings each day or hour?',
+						a : '<div>We do have some limitations, but after testing it we have increased our limits. At the outset you can make 5 posts and issue 15 ratings every 24 hours. Once your reputation grows above 100 and there at least 100 high reputation users who upvoted you (or 30 users after 3 months), you will be able to make up to 30 posts and 200 ratings, plus 300 comments every 24 hours.</div>',
 					},
 			
 					{
@@ -117,7 +110,7 @@ var faq = (function(){
 					{
 						id : 'deletepostoruser',
 						q : 'Is there a way to delete or edit a post?',
-						a : '<div>Not at this point, as it is baked into blockchain. However, we are working on a feature to create an overwrite transaction as well &#10075;hide&#10076; transaction, which would effectively translate to edit or delete.</div>',
+						a : '<div>Yes, you can edit and delete posts.</div>',
 					},
 			
 					{
@@ -128,14 +121,14 @@ var faq = (function(){
 					{
 						id : 'follow',
 						q : 'How do you follow someone?',
-						a : '<div>Next to post author (on top of post) there is a Follow link, you can find his posts in Top posts (red flame on top of the page). You will also soon see Subscriptions feed, which is going to be different from the main feed. The main feed will be everything that anyone posts chronologically, but Subscriptions feed will only contain posts from people you follow. So, you will go into general feed in search of good content, though you may not like everything. Then select those you want to keep. Kind of like fishing :)</div>',
+						a : '<div>Next to post author (on top of post) there is a Follow link, you can find his posts in Top posts (red flame on top of the page). You will also soon see My Subscriptions feed, which is going to be different from the main feed. The main feed will be everything that anyone posts, but Subscriptions feed will only contain posts from people you follow. So, you will go into general feed in search of good content, though you may not like everything. Then select those you want to keep. Kind of like fishing :)</div>',
 					},
 			
 			
 					{
 						id : 'otherbrowsers',
 						q : 'Can it be used on Brave or Duck Duck go browsers?',
-						a : '<div>'+self.app.meta.fullname+' should work on those browsers. It is fully functional on Chrome and Firefox. But we strongly encourage everyone to download the desktop app (grab '+self.app.meta.fullname+'Setup.exe here: https://github.com/pocketnetteam/pocketnet.gui/releases/tag/v0.0.33-beta). It cannot be blocked ever (even if <%- app.meta.url %> is down or blocked for some reason). This is a serious consideration in totalitarian and quasi-totalitarian countries which, if you think about it, is beginning to include more and more of the globe.</div>',
+						a : '<div>'+self.app.meta.fullname+' should work on those browsers. It is fully functional on Chrome and Firefox. But we strongly encourage everyone to download the desktop app (grab '+self.app.meta.fullname+'Setup.exe here: https://bastyon.com/help?page=applications). The desktop app cannot be blocked ever (even if <%- app.meta.url %> is down or blocked for some reason). This is a serious consideration in totalitarian and quasi-totalitarian countries which, if you think about it, is beginning to include more and more of the globe.</div>',
 					},
 			
 					{
@@ -147,7 +140,7 @@ var faq = (function(){
 					{
 						id : 'addtags',
 						q : 'How to add a tag to a post?',
-						a : '<div>Just type in the field tag and press enter. No need to specify #, it will be added automatically.</div>',
+						a : '<div>Select a category or type in the field tag and press enter. No need to specify #, it will be added automatically.</div>',
 					},
 			
 					{
@@ -158,7 +151,7 @@ var faq = (function(){
 					{
 						id : 'desktopmac',
 						q : 'Will there be a downloadable executable for Mac?',
-						a : '<div>Yes - we are working of Mac platform. Target is for mid-April.</div>',
+						a : '<div>Yes - you can find it here https://bastyon.com/help?page=applications. </div>',
 					},
 					{
 						id : 'dark-mode',
@@ -168,17 +161,12 @@ var faq = (function(){
 					{
 						id : 'banning',
 						q : 'Can people be banned?',
-						a : '<div>If a someone is posting unorthodox content then people will rate their content low causing their reputation to fall, if their reputation is less than -50 then they will be shadow banned. This means they can still post but no one can see their content unless directly on their page.</div>',
-					},
-					{
-						id : 'app-store',
-						q : 'What can be expected to purchase with PKOIN?',
-						a : '<div>Soon there will be a way to boost posts in the feed and to Top Posts. Also, there will be special emojis and color of page, and badges.</div>',
-					},
+						a : '<div>Yes, Bastyon is a community moderated platform, however, there are only certain topics that community will flag like pornography, narcotics and direct threats of violence. You will never be banned for an opinion or free speech, and even for specific banned topics there has to be a consensus of experienced users without other users defending the content. Currently, users with rep below -30 are losing their account privileges, but this is a temporary system. By the end of 2021, Bastyon is releasing a new moderation system where posts are initially flagged by any high rep user, but account can be blocked only by a certain group of jurors who are selected using a blockchain lottery. Thus, nobody can choose to attack someone for an opinion, jurors will be selected to moderate certain content and they have to all agree. Account cannot be banned until two sets of jurors decided and they cannot be the same. This system protects against any kind of mob rule on Bastyon, while protecting the platform from unsavory content.</div>',
+					},        
 					{
 						id : 'Apple App',
-						q : 'When will PocketNet be added to Apple?',
-						a : '<div>2-3 months</div>',
+						q : 'When will Bastyon be added to Apple?',
+						a : '<div>Apple decided not to allow Bastyon due to lack of centralized censorship opportunities by Apples, we wear it as a badge of honor. </div>',
 					},
 					{
 						id : 'Missing PKCOIN',
@@ -190,6 +178,44 @@ var faq = (function(){
 			
 			
 			},
+				{
+			
+				name : 'Video',
+				id : 'video',
+			
+				group : [
+					{
+						id : 'savevideo',
+						q : 'Where do you save the video content?',
+						a : '<div>'+self.app.meta.fullname+' uses a modified open source platform called PeerTube, connected to the Pocketnet blockchain and the Bastyon app. PeerTube is fully integrated with '+self.app.meta.fullname+' authorization, each video server is registered on the blockchain.</div>',
+					},
+			
+					{
+						id : 'permissions',
+						q : 'Who can load video in Bastyon?',
+						a : '<div> Bastyon does not have centralized servers or venture capital financing, all video is stored on servers maintained by users. Therefore, we cannot allow everyone to load video, servers will fill up quickly. To load video you need to have 5 PKOIN (500 MB) or 50 PKOIN (5 GB) in your account. You can buy PKOIN from other users if you select a category PKOIN/Peer-to-Peer. </div>',
+					},
+					{
+						id : 'stats',
+						q : 'Where can I see my video stats?',
+						a : '<div> Go to your profile and see My Videos. </div> ',
+					},
+					 {
+						id : 'technology',
+						q : 'What player do you use to play the video?',
+						a : '<div> Bastyon has its own player, which is a significantly modified version of PeerTube. Same as PeerTube it uses WebTorrent technology to reduce the load on the server. This means that users watching the video are sharing it. Note, that in some cases it means users can see IP addresses of each other. Bastyon servers do not have any mechanism to record these IP addresses, however, if you really care about exposing your IP address, you should use a reliable VPN provider. If you want to minimize any peer-to-peer sharing, you can use download video function in Bastyon. </div> ',
+					},
+					{
+						id : 'taking time',
+						q : 'Why is the video taking time to upload?',
+						a : "<div> Again, Bastyon does not have the resources the Google has. Video needs to be loaded to one of the video nodes and it also needs to be transcoded. Remember, YouTube is not free, it extracts value by using your private information and monetizing it. Bastyon is run by the community and a little bit of a delay is a small price to pay for privace and freedom. Besides, Bastyon devs have made the process of loading super-easy and much more robust than other freedom oriented platforms (they frequently don't even do transcoding for different qualities). </div>",
+					},
+			
+			
+				]
+			
+			},
+			
 			
 			
 			{
@@ -201,10 +227,10 @@ var faq = (function(){
 			
 					
 			
-					{
-						id : 'pocketcoin',
-						q : 'What can I do with Pocketcoin?',
-						a : '<div>Currently you can win it or send as a gift. However, when '+self.app.meta.fullname+' takes off, Pocketcoin will be the main method of buying advertising on the platform. Advertisers will be able to easily find content authors with the right audience and then offer them advertising opportunities. This will be a trustless endeavor (i.e. neither side can cheat), because of something called multi-signature contracts. Multisig contract requires a digital signature of both parties to be valid. When advertiser offers an ad to the content creator, he creates the first of two required signatures. He signs the actual ad and the amount bid. Content creator reviews this partially signed multisig and if it is accepted, then he appends the second signature. When a blockchain sees both signatures, content creator is automatically paid and an ad is automatically shown on creator’s channel. These transactions will only be done through Pocketcoin. Thus, if Pocketcoin becomes big, it will be an immensely valuable token.</div>',
+					 {
+						id : 'app-store',
+						q : 'What can be expected to purchase with PKOIN?',
+						a : '<div>PKOIN has a multitude of uses on Bastyon. First, 50 PKOIN in your account removes all posting limitations and allows you to load video. PKOIN can be used to boost comments, making your comments visible to everyone. The PKOIN from boosted comments goes to the blogger, and bloggers should reply or feature such comments to encourage such boosts. You can boost a post to move it up in the feed. It is used for staking in nodes, you can run a node and earn more PKOIN by staking PKOIN. It will be used in a Decentralized Ad Marketplace with 100% of proceeds going to bloggers. It will also be used to buy special wallpaper profiles, animated profile images etc. </div>',
 					},
 			
 			
@@ -217,14 +243,20 @@ var faq = (function(){
 					{
 						id : 'pocketcoinbuy',
 						q : 'Can I buy additional Pocketcoin?',
-						a : '<div>Yes, currently you can buy Pocketcoin on the following exchanges: Bilaxy, Mercatox, BTCPOP.</div>',
+						a : '<div>Yes, currently you can buy Pocketcoin on the following exchanges: DigiFinex, Bitforex, Mercatox. You can also buy it for 19 different cryptos at https://pkoin.net/ and there is a Category within Bastyon called PKOIN/Peer-to-Peer where you can buy and sell it with other users. </div>',
 					},
 			
 					{
 						id : 'pocketcoinbuyfiat',
 						q : 'Can I buy Pocketcoin for US Dollars or other fiat currency?',
-						a : '<div>Some exchanges allow that.</div>',
+						a : '<div>Yes, you can buy it under the category PKOIN/Peer-to-Peer or through a company called Indacoin at https://buy.pkoin.indacoin.io/ Indacoin has nothing to do with Bastyon, they are just selling PKOIN for credit cards after buying it on exchanges.</div>',
 					},
+					
+					{
+						id : 'pocketcoinbuyfiat',
+						q : 'Why do I need to buy Pocketcoin?',
+						a : "<div>Bastyon has no backing by bankers or venture capitalists, it is a decentralized social platform that is supported by PKOIN. When you use Bastyon, you are using users' nodes, video nodes, they all have to pay for computers, internet and electricity. Bloggers need to earn for content. The only way Bastyon can function is if users own and support PKOIN. So, buying PKOIN is a way to support decentralization and freedom. However, there is one other important reason to own Pocketcoin. Soon it is very possible that even having a bank account will be tied to submitting your freedom, to some QR code. Pocketcoin is not tied to your name or passport, it is a way to do commerce in a world where financial censorship reigns, it might be the only way to buy food soon without a certain certificate or a QR code. So, buy some PKOIN for freedom. </div>",
+					}
 				]
 			},
 			{
@@ -244,7 +276,7 @@ var faq = (function(){
 					{
 						id : 'viewoutside',
 						q : 'Can someone view a profile (someone&rsquo;s posts) outside the garden? Is it a walled garden?',
-						a : '<div>Since the whole blockchain and all the posts are in opensource anyone can have access to your posts and profile. They just know that it is linked to your public address. In practice, you can have multiple accounts. You can use some with your real name and others anonymously. Anonymity is a great tool to protect free speech from abuse of power.</div>',
+						a : '<div>Since the whole blockchain and all the posts are in open-source anyone can have access to your posts and profile. They just know that it is linked to your public address. In practice, you can have multiple accounts and switch between them. You can use some with your real name and others anonymously. Anonymity is a great tool to protect free speech from abuse of power.</div>',
 					},
 			
 			
@@ -257,13 +289,13 @@ var faq = (function(){
 					{
 						id : 'runnode',
 						q : 'Can I run a node on my headless server?',
-						a : '<div>We will put the node&rsquo;s sources into GitHub. Instructions for running a node will be made available in early April.</div>',
+						a : '<div> Instructions are here https://github.com/pocketnetteam/pocketnet.core/blob/master/README.md </div>',
 					},
 			
 					{
 						id : 'signback',
 						q : 'How can I sign back in?',
-						a : '<div>You can use your private 12-word key or a QR code to sign in.</div>',
+						a : '<div>You can use your private 12-word key or a private key that consists of letters and numbers.</div>',
 					}
 				]
 			},
@@ -277,17 +309,17 @@ var faq = (function(){
 					{
 						id : 'content',
 						q : 'Is any content allowed on '+self.app.meta.fullname+'? If some content is not allowed, can the platform still be called free speech?',
-						a : '<div>This is a very important question and we will be releasing many videos and articles about it, as well as looking for your input. To begin with, not all types of content are allowed. However, and this is crucial, the enforcement is transparent and up to the community in the way we will explain below. Enforcement is done by the community and is in the open with no hidden shadow bans or selective banning practiced by the Silicon Valley.</div>',
+						a : '<div>This is a very important question. To begin with, not all types of content are allowed. However, and this is crucial, the enforcement is transparent and up to the community in the way we will explain below. Enforcement is done by the community and is in the open with no hidden shadow bans or selective banning practiced by the Silicon Valley.</div>',
 					},
 					{
 						id : 'specific',
 						q : 'Specifics of curation on '+self.app.meta.fullname+'.',
-						a : '<div>When your reputation gets to 100 and you press on dots in the upper right of any post, you will see an option to Complain. If enough Complaints come in, the post will not be shown anymore. When someone has more than 2 posts that are voted off the platform in 24 hours, they cannot post for another 48 hours after the second post. Complain is completed when number of complaints is at least ⅓ of the number of 4 and 5 star ratings, subject to a minimum of 10 complaints (which will be adjusted over time in consultation with the community).</div><div>We are extremely and passionately pro-speech. However, we do not want to turn '+self.app.meta.fullname+' into a marginal forum where lunatics reign. What would cause you to Complain?</div><div>Do NOT complain about stuff that you simply don’t like or that offends you. That is not a high enough bar. Do not follow people who offend you, soon we will have a feature for not seeing their posts, but do not complain about them. Complain only about things that threaten long term viability of '+self.app.meta.fullname+' as a mass communication platform that intends to reach to all levels of society in many countries.</div><div>We strongly recommend that you complain about porn of any kind. There are plenty of porn sites on the web, we do not want to mix our free speech endeavor with that. We strongly encourage the community to vote off porn. Secondly, any type of a direct threat should be voted off and clear examples of racism should too. If we allow MSM to tie us to racism or violence directly, '+self.app.meta.fullname+' will cease to exist before we can even get it out there. Just because MSM media cries wolf about fake racism, doesn’t mean we should prove them right by tolerating it in our platform. It will detract from what we are trying to achieve, which is to challenge new totalitarianism created by the unholy alliance of media, finance and corrupt government officials.</div> ',
+						a : '<div> Currently the moderation of content is done through 1 star votes by high reputation  users. When reputation reaches -30, the access to the account is restricted. However, there is a completely new moderation algorithm that will be released by the end of 2021. Under the new algorithms, there will be an option to flag a user or a post by any high rep user, but that is not goign to affect the account directly. After certain numbers of flags a lottery on the blockchain will be drawn and a group of juror moderators will be chosen for that account. Jurors have to agree that this user posted pornography, narcotics or a direct threat to violence. Any other opinion or a disagreement is not a grounds for flagging or any sanctions.</div> ',
 					},
 					{
 						id : 'racism',
 						q : 'Important Note on Racism.',
-						a : '<div>Free thought and free speech is under attack on mainstream social platforms and in the media. We need to speak the truth and this platform is non-corporate and decentralized for that very reason. But we ask everyone make your point without attacking people&rsquo;s nationality or race. You can make your point based on evidence. We cannot afford to turn '+self.app.meta.fullname+' into a marginal platform. Speak the truth, but please avoid racism and attacks against specific nationalities on the whole. We know that Silicon Valley and MSM has turned the issue of racism into their playing card and they constantly cry wolf. Even more the reason for us to be measured and evidence based and not let them smear us with that. If we are not, we are not allowing most of the population to weigh the evidence of MSM corruption presented on '+self.app.meta.fullname+'. Please keep that in mind, so that free speech can thrive and we can beat the facebokks of the world.</div><div>Ultimately, it is the community that will determine the direction of the platform. Having a bunch of snowflakes that complain about stuff that offends them is equally as bad as when people want to voice direct violent threats. However, the first indication is that early users of the platform are generally intelligent and evidence based, so the future looks incredibly bright. '+self.app.meta.fullname+' team has noticed after a few days of the beta test, that we stopped reading even alternative news, because there was so much interesting content on '+self.app.meta.fullname+'. Keep it up!</div><div>Please get involved in the discussion on these topics. This is a community platform. We are always eager to improve transparency of the platform and you should let us know how we can improve our content curation and policing. Use group chat or email support(at)pocketnet*dot*app or make full posts on this topic.</div>',
+						a : '<div>Free thought and free speech is under attack on mainstream social platforms and in the media. We need to speak the truth and this platform is non-corporate and decentralized for that very reason. But we ask everyone make your point without attacking people&rsquo;s nationality or race. You can make your point based on evidence. We cannot afford to turn '+self.app.meta.fullname+' into a marginal platform. Speak the truth, but please avoid racism and attacks against specific nationalities on the whole. We know that Silicon Valley and MSM has turned the issue of racism into their playing card and they constantly cry wolf. Even more the reason for us to be measured and evidence based and not let them smear us with that. If we are not, we are not allowing most of the population to weigh the evidence of MSM corruption presented on '+self.app.meta.fullname+'. Please keep that in mind, so that free speech can thrive and we can beat the facebokks of the world.</div><div>Ultimately, it is the community that will determine the direction of the platform. Having a bunch of snowflakes that complain about stuff that offends them is equally as bad as when people want to voice direct violent threats. However, the first indication is that early users of the platform are generally intelligent and evidence based, so the future looks incredibly bright. '+self.app.meta.fullname+' team has noticed after a few days of the beta test, that we stopped reading even alternative news, because there was so much interesting content on '+self.app.meta.fullname+'. Keep it up!</div><div>Please get involved in the discussion on these topics. This is a community platform. We are always eager to improve transparency of the platform and you should let us know how we can improve our content curation and policing. You can make posts on this topic under the tag Bastyon/Pocketnet.</div>',
 					},
 			
 			
@@ -295,27 +327,6 @@ var faq = (function(){
 			
 			},
 			
-			{
-			
-				name : 'Specifics of curation on '+self.app.meta.fullname+'.',
-				id : 'specificscuration',
-			
-				group : [
-			
-					{
-						id : 'trolls',
-						q : 'Is any content allowed on '+self.app.meta.fullname+'? If some content is not allowed, can the platform still be called free speech?',
-						a : '<div>Sometimes we can have a user who comes in with a specific purpose to attack '+self.app.meta.fullname+' by posting a series of vile images. To protect against that we have a following mechanism. If someone’s reputation reaches -50 (negative 50), their account is automatically blocked. Getting a reputation of -50 is equivalent to having 25 one star ratings and no four or five star ratings. This is nearly impossible to achieve without having lots of bad posts.</div>',
-					},
-					{
-						id : 'flagging',
-						q : 'Flagging a specific post',
-						a : '<div>When your reputation gets to 50 and you press on dots in the upper right of any post, you will see an option to Complain. If enough Complaints come in, the post will not be shown anymore. Complain is completed when number of complaints is at least ⅓ of the number of 4 and 5 star ratings, subject to a minimum of 10 complaints (which will be adjusted over time in consultation with the community).</div><div>We are extremely and passionately pro-speech. However, we do not want to turn '+self.app.meta.fullname+' into a marginal forum where lunatics reign. What would cause you to Complain?</div><div>Do NOT complain about stuff that you simply don’t like or that offends you. That is not a high enough bar. Do not follow people who offend you, soon we will have a feature for not seeing their posts, but do not complain about them. Complain only about things that threaten long term viability of '+self.app.meta.fullname+' as a mass communication platform that intends to reach to all levels of society in many countries.</div><div>We strongly recommend that you complain about porn of any kind. There are plenty of porn sites on the web, we do not want to mix our free speech endeavor with that. We strongly encourage the community to vote off porn. Secondly, any type of a direct threat should be voted off and clear examples of racism should too. If we allow MSM to tie us to racism or violence directly, '+self.app.meta.fullname+' will cease to exist before we can even get it out there. Just because MSM media cries wolf about fake racism, doesn’t mean we should prove them right by tolerating it in our platform. It will detract from what we are trying to achieve, which is to challenge new totalitarianism created by the unholy alliance of media, finance and corrupt government officials.</div>',
-					}
-			
-				]
-			
-			},
 			
 			{
 			
@@ -359,12 +370,12 @@ var faq = (function(){
 					{
 						id : 'ecosystem1',
 						q : 'How is '+self.app.meta.fullname+' development funded?',
-						a : '<div>'+self.app.meta.fullname+' is open sourced and is currently run by the group of volunteers with some serious programming and math skills. After launch '+self.app.meta.fullname+' will attract top programming talent based on its promise of creating a decentralized fair social network. Programmers and marketers working on Pocketcoin receive 5% of emission. The awards to developers and marketers will be assigned by nodes voting in a transparent manner.</div>',
+						a : '<div>'+self.app.meta.fullname+' is open sourced and is currently run by the group of volunteers experts in programming and math. After launch '+self.app.meta.fullname+' will attract top programming talent based on its promise of creating a decentralized fair social network. Programmers and marketers working for Pocketcoin donated by large owners of PKOIN.</div>',
 					},
 					{
 						id : 'ecosystem2',
 						q : 'What is Pocketcoin?',
-						a : '<div>Pocketcoin is a network token. It is used exclusively to buy advertising from '+self.app.meta.fullname+' contributors and to pay transaction fees for such payments. Pocketcoin emission depends on the number of users of '+self.app.meta.fullname+' and has inherent algorithmic factors tying its long term value to Annual Revenue Per User (ARPU). ARPU is a term in digital advertising which signifies the total amount of revenue platform receives for one active user per year. In Pocketent all of the revenue is split between content creators and nodes.</div>',
+						a : '<div>Pocketcoin is a network token. It is used exclusively to buy advertising from '+self.app.meta.fullname+' contributors and to pay transaction fees for such payments. It is also used for boosting comments, posts and to buy privileges for your account. In Pocketent all of the revenue is split between content creators and nodes.</div>',
 					},
 					{
 						id : 'ecosystem3',
@@ -374,12 +385,12 @@ var faq = (function(){
 					{
 						id : 'ecosystem4',
 						q : 'What if users post illegal content, pornography and SPAM?',
-						a : '<div>'+self.app.meta.fullname+' is not a darknet platform or some sort of pornhub. While it is decentralized and censorship resistant, it is policed by the users. Any illegal content is flagged and removed from the platform using the Wikipedia model. This means that users with highest reputation can police the platform. However, there are safeguards in place (within the open source code) from same or very similar group(s) of people repeatedly voting content off the platform. Also, users are explicitly encouraged to flag illegal content OR content that threatens mass adoption of '+self.app.meta.fullname+', not simply the content they find offensive. To make sure that '+self.app.meta.fullname+' is a free speech platform, we encourage you to start participate, grow your reputation and police the platform properly without the censorship currently prevalent in centralized social media.</div>',
+						a : '<div>'+self.app.meta.fullname+' is not a darknet platform or some sort of pornhub. While it is decentralized and censorship resistant, it is moderated by the users. Any illegal content is flagged and removed from the platform. This means that users with highest reputation can moderate the platform. However, there are safeguards in place (within the open source code) from same or very similar group(s) of people repeatedly voting content off the platform. Moderators for content are chosen randomly using a lottery on the blockchain to avoid any kind of mob rule. Also, users are explicitly encouraged to illicit content, NOT simply the content they find offensive. To make sure that '+self.app.meta.fullname+' is a free speech platform, we encourage you to start participate, grow your reputation and police the platform properly without the censorship currently prevalent in centralized social media.</div>',
 					},
 					{
 						id : 'ecosystem5',
 						q : 'Who runs the '+self.app.meta.fullname+'?',
-						a : '<div>There is no corporate entity or single individual who owns or controls the '+self.app.meta.fullname+'.</div></div>',
+						a : '<div>There is no corporate entity or single individual who owns or controls the '+self.app.meta.fullname+'. Pocketnet blockchain and Bastyon are run by a group of programmers, but this group is growing and changing all the time. If any set of programmers takes a wrong turn and violates the principles on which Bastyon is founded, other programmers can simply fork an open-source code and continue the censorship resistant platform. </div></div>',
 					},
 					
 				]
@@ -394,7 +405,7 @@ var faq = (function(){
 			faqcontent[0].group.splice(1, 0, {
 				id : 'downloadandroid',
 				q : self.app.localization.e('e14109'),
-				a : `<div><a href="https://play.google.com/store/apps/details?id=pocketnet.app">https://play.google.com/store/apps/details?id=pocketnet.app</a></div><div>${self.app.localization.e('e14110')}</div>`,
+				a : `<div><a elementsid="https://play.google.com/store/apps/details?id=pocketnet.app" href="https://play.google.com/store/apps/details?id=pocketnet.app">https://play.google.com/store/apps/details?id=pocketnet.app</a></div><div>${self.app.localization.e('e14110')}</div>`,
 			})
 		}
 

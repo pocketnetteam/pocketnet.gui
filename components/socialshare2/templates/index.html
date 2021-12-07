@@ -15,31 +15,39 @@
 				<div class="flexWrapper">	
 
 					<div class="url">
-						<button class="button ghost ">
+						<button elementsid="urlbutton" class="button ghost ">
 							<%- e('copyLink') %> <i class="fas fa-link"></i>
 						</button>
 					</div>
 
 					<% if(state) {%>
 
-					<div class="chat">
-						<button class="button ghost ">
-							<%- e('sendMessenger') %> <i class="fas fa-envelope"></i>
-						</button>
-					</div>
+						<% if(!share || !share.visibility() || share.visibility() == 'reg'){ %>
+
+							<div class="chat">
+								<button elementsid="chatbutton" class="button ghost ">
+									<%- e('sendMessenger') %> <i class="fas fa-envelope"></i>
+								</button>
+							</div>
+
+						<% } %>
 
 					<% } %>
 
 
-					<% if(postId) {%>
+					<% if(postId) {
+						
+						if(share && !share.visibility() || share.visibility() == 'reg'){ %>
 
-						<div class="item forrepost">
+						<div elementsid="itemforrepost" class="item forrepost">
 
 							<button class="button ghost ">
 								<%- e('repost') %> <i class="fas fa-reply"></i>
 							</button>
 
 						</div>
+
+						<% } %>
 
 					<% } %>
 

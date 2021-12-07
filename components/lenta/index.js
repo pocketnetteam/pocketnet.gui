@@ -16,7 +16,7 @@ var lenta = (function(){
 		var mid = p.mid;
 		var making = false, ovf = false;
 		var w, essenseData, recomended = [], recommended, mestate, initedcommentes = {}, canloadprev = false,
-		video = false, isotopeinited = false, videosVolume = 0;
+		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null;
 
 		var openedPost = null
 		var shareInitedMap = {},
@@ -78,6 +78,44 @@ var lenta = (function(){
 
 
 		var actions = {
+
+			subscribeunsubscribeclbk : function(address){
+
+				var addressEl = el.c.find('.shareTable[address="'+address+'"]')
+
+				var me = deep(self.app, 'platform.sdk.users.storage.' + self.user.address.value.toString('hex'))
+
+				if (me){
+					var r = me.relation(address, 'subscribes') 
+
+					if (r) {
+
+						addressEl.addClass('subscribed');
+
+						if((r.private == 'true' || r.private === true)){
+							addressEl.find('.notificationturn').addClass('turnon')	
+						}
+						else{
+							addressEl.find('.notificationturn').removeClass('turnon')	
+						}
+					}
+					else{
+						addressEl.removeClass('subscribed');
+						addressEl.find('.notificationturn').removeClass('turnon')
+					}
+
+				}
+				else{
+					addressEl.removeClass('subscribed');
+					addressEl.find('.notificationturn').removeClass('turnon')
+				}
+
+				console.log("ADDRESS", address)
+
+				renders.maybechangevisibility(address, 'sub')
+
+			},
+
 			changeSavingStatusLight : function(share){
 
 				if (el.share[share.txid]){
@@ -85,6 +123,7 @@ var lenta = (function(){
 				}
 
 			},
+
 			changeSavingStatus : function(shareId, deleted){
 
 				if((self.app.playingvideo || fullscreenvideoShowed) && !deleted ) return
@@ -120,6 +159,7 @@ var lenta = (function(){
 
 				}, true);
 			},	
+
 			newmaterials : function(data){
 				if(making || essenseData.author || essenseData.txids) return
 
@@ -146,6 +186,7 @@ var lenta = (function(){
 					)
 				}
 			},
+
 			scrollmode : function(m){
 				if(m){
 					$('html').addClass('scrollmodedown')
@@ -154,6 +195,7 @@ var lenta = (function(){
 					$('html').removeClass('scrollmodedown')
 				}
 			},
+
 			authclbk : function(){
 
 				authblock = true;
@@ -179,16 +221,21 @@ var lenta = (function(){
 			},
 
 			subscribeLabels : function(){
-				_.each(shareInitedMap, function(s, id){
+				_.each(_.uniq(shareInitedMap, function(s){
+
+					return s.address
+
+				}), function(s, id){
 					var share =  self.app.platform.sdk.node.shares.storage.trx[id]
 
 					if (share){
-						actions.subscribeLabel(share)
+						actions.subscribeunsubscribeclbk(share.address)
+						//actions.subscribeLabel(share)
 					}
 				})
 			},
 
-			subscribeLabel : function(share){
+			/*subscribeLabel : function(share){
 
 				var user = self.app.user
 
@@ -220,7 +267,7 @@ var lenta = (function(){
 				
 				
 
-			},
+			},*/
 
 			repost : function(shareid){
 
@@ -1005,9 +1052,11 @@ var lenta = (function(){
 
 			fullScreenVideo : function(id, clbk, auto){
 
-				if (fullscreenvideoShowed) {return}
+				if (fullscreenvideoShowing) { return }
+				if (fullscreenvideoShowed) { return }
+				if (essenseData.openapi){ return }
 
-				if (essenseData.openapi){return}
+				fullscreenvideoShowing = id
 
 				var _el = el.c.find("#" + id)
 				var share = self.app.platform.sdk.node.shares.storage.trx[id];
@@ -1017,23 +1066,26 @@ var lenta = (function(){
 						return s.txid == id
 					})
 
-
 					share = new pShare();
 					share._import(temp);
 					share.temp = true;
 					share.address = self.app.platform.sdk.address.pnet().address
 				}
-			
+
+
 
 				actions.initVideo(_el, share, function(res){
 
-					if(!res){
-						sitemessage('')
+					fullscreenvideoShowing = null
 
+					if(!res){
 						return
 					}
 					
 					if(!players[id]) return;
+
+
+					fullscreenvideoShowed = id;
 
 					_el.addClass('fullScreenVideo')
 				
@@ -1050,23 +1102,20 @@ var lenta = (function(){
 					var player = players[id]
 
 					if(!essenseData.openapi && !essenseData.second){
+
+						lastscroll = self.app.lastScrollTop
+						self.app.actions.offScroll()
+
+
 						if(!player.p.playing && !auto){
 							player.p.play()
 						}
+						
 					}
 
 					actions.setVolume(players[id], videosVolume || 0.5)
 
-					lastscroll = self.app.lastScrollTop// el.w.scrollTop()
-					//ovf = !self.app.actions.offScroll()
-
-					self.app.actions.offScroll()
-
 					if(!essenseData.comments){
-
-						/*if (initedcommentes[id])
-							initedcommentes[id].changein(el.c.find("#" + id), 0)*/
-
 
 						retry(function(){
 							return initedcommentes[id] || !el.c
@@ -1085,7 +1134,7 @@ var lenta = (function(){
 						
 					}
 
-					fullscreenvideoShowed = id;
+					
 
 					if (clbk)
 						clbk()
@@ -1094,9 +1143,9 @@ var lenta = (function(){
 
 			},
 
-
 			exitFullScreenVideo : function(id){
 
+				if(!fullscreenvideoShowed) return
 				
 				if (el.c){
 					var _el = el.c.find("#" + id)
@@ -1125,6 +1174,7 @@ var lenta = (function(){
 				self.app.nav.api.history.removeParameters(['v'])
 
 				self.app.actions.onScroll()
+
 				el.w.scrollTop(lastscroll || 0)
 
 				fullscreenvideoShowed = null;
@@ -1150,26 +1200,38 @@ var lenta = (function(){
 
 			postscores : function(txid, clbk){
 
-				self.app.nav.api.load({
-					open : true,
-					href : 'postscores?p=' + txid,
-					inWnd : true,
-					history : true,
+				var share = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid)
 
-					essenseData : {
-						share : txid,
+				if(!share) return
 
-						like : function(share){
-							renders.stars(share)
+				var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share);
+
+				var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0
+
+				if(!checkvisibility || reputation < 50){
+
+					self.app.nav.api.load({
+						open : true,
+						href : 'postscores?p=' + txid,
+						inWnd : true,
+						history : true,
+	
+						essenseData : {
+							share : txid,
+	
+							like : function(share){
+								renders.stars(share)
+							},
+	
 						},
+	
+						clbk : function(){
+							if (clbk)
+								clbk()
+						}
+					})
 
-					},
-
-					clbk : function(){
-						if (clbk)
-							clbk()
-					}
-				})
+				}
 
 			},
 
@@ -1177,7 +1239,9 @@ var lenta = (function(){
 
 				var checkvisibility = app.platform.sdk.node.shares.checkvisibility(obj);
 
-				if(checkvisibility) return
+				var reputation = deep(app, 'platform.sdk.usersl.storage.'+obj.address+'.reputation') || 0
+
+				if (checkvisibility && reputation >= 50) return
 
 				var upvoteShare = obj.upvote(value);
 
@@ -1226,7 +1290,7 @@ var lenta = (function(){
 				
 			},
 
-			complain : function(obj, clbk){
+			/*complain : function(obj, clbk){
 
 				var complainShare = obj.complain();
 
@@ -1257,7 +1321,7 @@ var lenta = (function(){
 
 					}
 				)
-			},			
+			},*/			
 			
 			openGalleryRec : function(share, initialValue, clbk){
 
@@ -1376,12 +1440,8 @@ var lenta = (function(){
 
 			///
 			scrollToPost : function(id){
-			
-				_scrollTo($('#' + id))
-				
+				_scrollTo($('#' + id), null, 0, -110)
 			},
-
-
 
 			videosInview : function(players, action, nvaction){	
 				
@@ -1515,9 +1575,6 @@ var lenta = (function(){
 
 			},
 
-
-
-
 			complain : function(id){
 			
 				self.nav.api.load({
@@ -1619,9 +1676,7 @@ var lenta = (function(){
 						w = last.width()
 
 					__el.html('<div class="shareSpacerOptimized" style="height:'+h+'px;width:'+w+'px"></div>')
-
 				}
-
 				
 			},
 
@@ -1687,7 +1742,18 @@ var lenta = (function(){
 		}
 
 		var events = {
+			toregistration: function(){
+				var shareId = $(this).closest('.share').attr('id');
 
+				self.sdk.registrations.redirect = 'post?s=' + shareId
+
+				self.nav.api.go({
+					href : 'authorization',
+					history : true,
+					open : true
+				})	
+			
+			},
 			shareSave : function(){
 				var shareId = $(this).closest('.share').attr('id');
 
@@ -1976,10 +2042,14 @@ var lenta = (function(){
 
 					self.app.platform.sdk.node.shares.getbyid(id, function(){
 
-
 						var s = self.app.platform.sdk.node.shares.storage.trx[id]
 
 						if (self.app.platform.sdk.address.pnet() && s.address == self.app.platform.sdk.address.pnet().address) return
+
+
+						var dev = deep(app, 'platform.sdk.user.storage.'+s.address+'.dev') || deep(app, 'platform.sdk.usersl.storage.'+s.address+'.dev');
+
+						if (dev) return;
 
 						p.attr('value', value)
 						p.addClass('liked')
@@ -2107,8 +2177,6 @@ var lenta = (function(){
 					})
 
 				}, txid)
-
-				
 
 			},
 
@@ -2520,7 +2588,8 @@ var lenta = (function(){
 						name :  'stars',
 						el : _el.find('.forstars'),
 						data : {
-							share : share
+							share : share,
+							hideCount : undefined
 						},
 						animation : false,				
 
@@ -2537,7 +2606,7 @@ var lenta = (function(){
 				
 			},
 
-			maybechangevisibility : function(address){
+			maybechangevisibility : function(address, reason){
 
 				var shares = []
 				
@@ -2549,7 +2618,10 @@ var lenta = (function(){
 
 					if(!share) return
 
-					if(share.address == address && share.visibility()) {
+					if (share.address == address && share.visibility()) {
+
+						if(reason && reason == 'sub' && share.visibility() != 'sub') return
+
 						shares.push(share)
 					}
 				})
@@ -3759,6 +3831,7 @@ var lenta = (function(){
 			el.c.on('click', '.showmorebyauthor', events.showmorebyauthor)
 			el.c.on('click', '.commentsAction', events.toComments)
 			el.c.on('click', '.shareSave', events.shareSave)
+			el.c.on('click', '.toregistration', events.toregistration)
 			//el.c.on('click', '.downloadBtn', events.downloadVideo)
 			//el.c.on('click', '.deleteBtn', events.deleteVideo)
 
@@ -4079,66 +4152,23 @@ var lenta = (function(){
 					
 				}
 
-				self.app.platform.clbks.api.actions.subscribe.lenta = function(address){
+				self.app.platform.clbks.api.actions.anysubscribe.lenta = actions.subscribeunsubscribeclbk
 
-					var addressEl = el.c.find('.shareTable[address="'+address+'"]')
+				/*self.app.platform.clbks.api.actions.subscribe.lenta =
+				self.app.platform.clbks.api.actions.subscribePrivate.lenta = *
+				self.app.platform.clbks.api.actions.unsubscribe.lenta = actions.subscribeunsubscribeclbk*/
 
-					addressEl.addClass('subscribed');
-					addressEl.find('.notificationturn').removeClass('turnon')	
-
-					renders.maybechangevisibility(address)
-				}
-
-				self.app.platform.clbks.api.actions.subscribePrivate.lenta = function(address){
-
-					var addressEl = el.c.find('.shareTable[address="'+address+'"]')
-
-					var me = deep(self.app, 'platform.sdk.users.storage.' + self.user.address.value.toString('hex'))
-
-					if (me){
-						var r = me.relation(address, 'subscribes') 
-
-						if (r && (r.private == 'true' || r.private === true)){
-							addressEl.find('.notificationturn').addClass('turnon')	
-						}
-						else{
-							addressEl.find('.notificationturn').removeClass('turnon')	
-						}
-					}
-
-					renders.maybechangevisibility(address)
-
-					addressEl.addClass('subscribed');
-				}
-				
-
-				self.app.platform.clbks.api.actions.unsubscribe.lenta = function(address){
-
-					var addressEl = el.c.find('.shareTable[address="'+address+'"]')
-
-					addressEl.removeClass('subscribed');
-
-					addressEl.find('.notificationturn').removeClass('turnon')
-
-					renders.maybechangevisibility(address)
-				}
 
 				self.app.platform.clbks.api.actions.blocking.lenta = function(address){
-
 					var addressEl = el.c.find('.shareTable[address="'+address+'"]').closest('.share')
-
-					addressEl.addClass('blocking');
-
-					actions.stopPlayers()
+						addressEl.addClass('blocking');
+						actions.stopPlayers()
 				}
 
 				self.app.platform.clbks.api.actions.unblocking.lenta = function(address){
-
 					var addressEl = el.c.find('.shareTable[address="'+address+'"]').closest('.share')
-
-					addressEl.removeClass('blocking');
-
-					actions.stopPlayers()
+						addressEl.removeClass('blocking');
+						actions.stopPlayers()
 				}
 
 
@@ -4233,8 +4263,12 @@ var lenta = (function(){
 									if(!isMobile())
 	
 										actions.openPost(p.s, function(){
-											actions.scrollToPost(p.p)
+											actions.scrollToPost(p.s)
 										})
+
+									else{
+										actions.scrollToPost(p.s)
+									}
 								}
 	
 								if (p.i){
@@ -4255,22 +4289,25 @@ var lenta = (function(){
 	
 								if(p.v){
 	
-									//actions.scrollToPost(p.v)
-	
 									if(video){
 									}
 									else{	
 	
 										if(!isMobile())
 											actions.fullScreenVideo(p.v, function(){})
+										else{
+
+											actions.scrollToPost(p.v)
+											console.log('actions.scrollToPost(p.v)actions.scrollToPost(p.v)actions.scrollToPost(p.v)actions.scrollToPost(p.v)')
+
+										}
+											
 									}
 									
 								}
 	
 								if (p.p){
-									actions.postscores(p.p, function(){
-										/*actions.scrollToPost(p.p)*/
-									})
+									actions.postscores(p.p, function(){})
 								}
 							}
 							
@@ -4502,10 +4539,15 @@ var lenta = (function(){
 					delete self.app.platform.ws.messages.transaction.clbks.temp
 					delete self.app.platform.ws.messages.event.clbks.lenta
 
+
 					delete self.app.platform.ws.messages["new block"].clbks.newsharesLenta
-					delete self.app.platform.clbks.api.actions.subscribe.lenta
+
+					
+					delete self.app.platform.clbks.api.actions.anysubscribe.lenta
+
+					/*delete self.app.platform.clbks.api.actions.subscribe.lenta
 					delete self.app.platform.clbks.api.actions.unsubscribe.lenta
-					delete self.app.platform.clbks.api.actions.subscribePrivate.lenta 
+					delete self.app.platform.clbks.api.actions.subscribePrivate.lenta */
 
 					delete self.app.platform.clbks.api.actions.blocking.lenta
 					delete self.app.platform.clbks.api.actions.unblocking.lenta

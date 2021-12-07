@@ -23,6 +23,13 @@ User = function(app, p) {
 		secret : 'ea4020d8024dfb78d372d1cd21c2f3215c72ead4'
 	};	
 
+	self.peertube = {
+		username : 'test_bastyon',
+		password : 'test_bastyon',
+		client_id : '11yes98akef92mynd1203a6qw3pwiuqh',
+		client_secret : 'VSIhKu1tpvi1JHMBG6XwFhZlOoZ9ogtV'
+	}
+
 	var keys = {
 		private : {
 			set : function(l){
@@ -49,7 +56,7 @@ User = function(app, p) {
 
 		var keyPair = self.keys()
 
-		const currentMomentInUTC = new Date().toISOString();
+		const currentMomentInUTC = (new Date()).toISOString();
 
 		var nonce = 'date=' + currentMomentInUTC + ",exp=" + exp + ',s=' + hexEncode(str);
 
@@ -120,17 +127,16 @@ User = function(app, p) {
 
 		var setKeysClbk = function(){
 
-			if (self.stay){
-
-				app.platform.cryptography.api.aeswc.encryption(mnemonic, app.options.fingerPrint, {}, function(enc){
+			app.platform.cryptography.api.aeswc.encryption(mnemonic, app.options.fingerPrint, {}, function(enc){
+				if (self.stay){
 					localStorage['mnemonic'] = enc
-				})
-				
-			}
-			else
-			{
-				localStorage['mnemonic'] = ''
-			}
+				}
+				else
+				{
+					sessionStorage['mnemonic'] = enc
+				}
+			})
+		
 
 			self.isState(function(state){
 
@@ -149,8 +155,6 @@ User = function(app, p) {
 				}
 			})
 		}
-
-		console.log("mnemonic")
 
 		if(!bitcoin.bip39.validateMnemonic(mnemonic)){
 
@@ -199,6 +203,7 @@ User = function(app, p) {
 		state = 0;
 		self.data = {};
 		localStorage['mnemonic'] = ''
+		sessionStorage['mnemonic'] = ''
 
 		settings.clear();
 
@@ -255,9 +260,11 @@ User = function(app, p) {
 		}
 		else{
 
-			if (localStorage['mnemonic'] && self.stay){
+			console.log("sessionStorage['mnemonic']", sessionStorage['mnemonic'])
 
-				var m = localStorage['mnemonic'];
+			if ( (localStorage['mnemonic'] && self.stay) || sessionStorage['mnemonic']){
+
+				var m = localStorage['mnemonic'] || sessionStorage['mnemonic'];
 
 				app.platform.cryptography.api.aeswc.decryption(m, app.options.fingerPrint, {}, function(m){
 
@@ -278,8 +285,11 @@ User = function(app, p) {
 					}
 					else
 					{
-						if(!_OpenApi)
+						if(!_OpenApi){
 							localStorage['mnemonic'] = ''
+							sessionStorage['mnemonic'] = ''
+						}
+							
 
 						state = 0;	
 						clbk(state);
@@ -306,9 +316,6 @@ User = function(app, p) {
 		if(!self.address.value) return 'fu';
 
 		var me = deep(app, 'platform.sdk.user.storage.me');
-
-		console.log("MEEE!!", me)
-
 
 		if (me && me.relay){
 

@@ -19,16 +19,22 @@
 
         <div class="fixednotinlist">
             
-            <div class="fsubcaption">
-                <span>You have selected a node that is not on this server</span>
-            </div>
+            <% if(!inlist) {%>
+                <div class="fsubcaption">
+                    <span>You have selected a node that is not on this server</span>
+                </div>
+            <% } else { %> 
+                <div class="fsubcaption">
+                    <span>You have selected a node</span>
+                </div>
+            <% } %>
 
             <div class="fsubdata">
                 <span class="bld"><%- fixednode %></span>
             </div>
 
             <div class="fsubdatabutton">
-                <button class="button small unlocknode">
+                <button elementsid="unlocknode" class="button small unlocknode">
                     <i class="fas fa-lock-open"></i> Unlock
                 </button>
             </div>
@@ -50,14 +56,8 @@
     <% 
 
     var sorted = _.sortBy(manager[key] || [], function(nodeinfo){
-
-
         return -(nodeinfo.rating || deep(nodeinfo,'status.difference') || 0)
-
     })
-
-
-
 
     _.each(sorted, function(nodeinfo){ 
                     
@@ -65,11 +65,11 @@
         
         %>
 
-        <div class="nodeWrapper" key="<%-key%>">
+        <div elementsid="nodeWrapper_<%-key%>" class="nodeWrapper" key="<%-key%>">
             <div class="work">
                 <div class="tableovfWrapper">
                     <div class="node table <%- !node.canuse ? 'cantuse' : ''%>" node="<%-node.key%>">
-                        <div class="use <% if(node.key == currentnode) {%> using <% } %> <% if(typeof fixednode != 'undefined' && fixednode == node.key) {%> locked <% } %>">
+                        <div elementsid="usenode" class="use <% if(node.key == currentnode) {%> using <% } %> <% if(typeof fixednode != 'undefined' && fixednode == node.key) {%> locked <% } %>">
 
                             <% if(key == 'nodes') {%>
 
@@ -93,7 +93,7 @@
                             <% if(node.testing) {%>
                                 <span class="testing">Testing</span>
                             <% } else { %> 
-                                <span><%- node.name %></span>
+                                <span>v<%- node.version || '-' %>, <%- node.name %></span>
                             <% } %> 
                             
                             <% if(key != 'tmp') {%>
@@ -193,7 +193,7 @@
                             
                                 <% if(node.addedby == app.user.address.value || admin) {%>
 
-                                    <div class="item edit">
+                                    <div elementsid="fa-cog" class="item edit">
                                         <i class="fas fa-cog"></i>
                                     </div>
             

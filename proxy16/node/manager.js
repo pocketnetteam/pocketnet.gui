@@ -4,7 +4,7 @@ var Datastore = require('nedb');
 var _ = require('lodash');
 var f = require('../functions');
 const { performance } = require('perf_hooks');
-var queuemethods = {
+const queuemethods = {
     getcontents: true,
     getlastcomments: true,
     gettags: true,
@@ -27,7 +27,7 @@ var queuemethods = {
     getcontentsstatistic : true
 }
 
-var exepmethods = {
+const exepmethods = {
     getnodeinfo : true
 }
 
@@ -216,9 +216,7 @@ var Nodemanager = function(p){
     }
 
     var runrpcswideclbks = function(e, r, clbks, responses, need, result, error, fromadd){
-        //console.log('responses', responses, need)
         if (responses >= need){
-            //console.log("ALREADY HAS CLBK")
             return responses
         }
 
@@ -226,7 +224,6 @@ var Nodemanager = function(p){
             
             responses++
 
-            //console.log("COUNT ERRORS", responses)
         }
 
         if (typeof r != 'undefined'){
@@ -236,10 +233,8 @@ var Nodemanager = function(p){
         if (responses >= need){
 
             if(fromadd){
-                //console.log("HAS ADD RESULT")
             }
             else{
-                //console.log("HAS MAIN RESULT")
             }
             
             if(typeof result != 'undefined') clbks.resolve(result)
@@ -267,11 +262,7 @@ var Nodemanager = function(p){
 
         node.rpcs(method, _.clone(parameters)).then(r => {
 
-            /*if(method == 'getaccountsetting'){
-                console.log('mainresult', method)
-            }*/
-
-            //console.log('mainresult', method)
+           
 
             result = r
 
@@ -282,13 +273,11 @@ var Nodemanager = function(p){
 
             error = e
 
-            //console.log('mainerror', method)
 
             responses = runrpcswideclbks(e, undefined, clbks, responses, need, result, error)
 
         })
 
-        //console.log('similarnodes.length', similarnodes.length, method)
 
         if (similarnodes.length)
 
@@ -298,13 +287,11 @@ var Nodemanager = function(p){
 
                     Promise.race(_.map(similarnodes, function(n){
 
-                        ///console.log('similar request', n.key, node.key, method)
 
                         return n.rpcs(method, _.clone(parameters))
 
                     })).then(r => {
 
-                        //console.log('addresult', method)
 
                         if(typeof result == 'undefined') result = r
 
@@ -312,7 +299,6 @@ var Nodemanager = function(p){
 
                     }).catch(e => {
 
-                        //console.log('adderror', method, e)
 
                         if(typeof error == 'undefined') error = e
 
@@ -373,7 +359,6 @@ var Nodemanager = function(p){
 
     var worker = function(){
 
-        //if(queue.length) console.log('queue', queue.length)
 
         var now = performance.now()
 
@@ -381,14 +366,12 @@ var Nodemanager = function(p){
 
             var rpcs = queue[i]
 
-            //console.log("WIDEREQUEST",  rpcs.method)
 
             self.rpcswide(rpcs.node, rpcs.method, rpcs.parameters, rpcs.clbks)
         }
 
         var dif = performance.now() - now
 
-        //if(queue.length) console.log('queuedif', dif)
 
         queue = []
     }
@@ -861,6 +844,8 @@ var Nodemanager = function(p){
 
                 db.find({bchain}).exec(function (err, docs) {
 
+                    console.log("err", err)
+
 
                     self.nodes = []
 
@@ -883,6 +868,8 @@ var Nodemanager = function(p){
 
                     //// remove
                     //docs = []
+
+                    console.log('docs', docs, p.stable)
 
                     var nodes = _.map(c.concat(p.stable, docs || []) , function(options){
 

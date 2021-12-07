@@ -6,7 +6,7 @@ var Middle = function(){
 
     var self = this
 
-    var countlogs = 10000
+    var countlogs = 15000
     var logs = []
 
     var requestcountFinished = 0
@@ -15,7 +15,7 @@ var Middle = function(){
     var addLogs = function(parameters, ip, status, pathname, start){
 		
 		logs.push({
-			p : _.clone(parameters),
+			//p : _.clone(parameters),
 			ip : ip,
 			s : status,
 			pn : pathname,
@@ -27,7 +27,7 @@ var Middle = function(){
 
 		var d = logs.length - countlogs
 
-		if (d > countlogs / 1000){
+		if (d > countlogs / 10){
 			logs = logs.slice(d)
 		}
     }
@@ -97,10 +97,10 @@ var Middle = function(){
                 return true
             }
         })        
+
+
         _.each(f.group(rpclogs, function(l){
-
             return l.s
-
         }), function(lc, code){
 
             byCodes[code] = {
@@ -113,7 +113,7 @@ var Middle = function(){
         var signatures = {}
 
         _.each(f.group(logs, function(l){
-            if(f.deep(l, 'p.signature')){
+            if( l.p && l.p.signature){
                 return 'exist'
             }
             else{
@@ -135,7 +135,7 @@ var Middle = function(){
             rate : rate()
         }
 
-        if(!compact) data.logs = logs
+        if(!compact) data.logs = _.clone(logs)
 
         return data
     }
@@ -147,11 +147,11 @@ var Middle = function(){
   
     self.headers = function(request, result, next){
         result.setHeader('Access-Control-Allow-Origin', '*');
-        result.setHeader('Access-Control-Max-Age', '600');
+        result.setHeader('Access-Control-Max-Age', '7200');
         result.setHeader('Strict-Transport-Security', 'max-age=31536000');
         result.setHeader("Access-Control-Allow-Methods", "GET, POST");
         result.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-        result.set('Cache-control', 'public, max-age=10')
+        result.set('Cache-control', 'public, max-age=20')
 
         
         if (next) 
@@ -182,6 +182,16 @@ var Middle = function(){
         if (next)
             next(null)
     
+    }
+
+    var clearreq = function(request, result){
+
+        delete result._success
+        delete result._fail
+        delete request.clientIP
+
+        request.data = {}
+
     }
 
     self.extend = function(request, result, next){
@@ -215,7 +225,9 @@ var Middle = function(){
                     code : 500
                 })
             }
-    
+
+            
+            clearreq(request, result)
         }
     
         result._fail = function(error, code){
@@ -241,8 +253,7 @@ var Middle = function(){
 
             }
 
-
-            
+            clearreq(request, result)
     
         }
     
@@ -252,24 +263,26 @@ var Middle = function(){
     }
     
     self.data = function(request, result, next){
-
      
         request.data = _.merge(request.query, request.body)
         
-        _.each(request.data, function(v, key){
+        /*_.each(request.data, function(v, key){
     
             if(v && v[0] && (v[0] == "{" || v[0] == "[")){
                 try{
+                    console.log("PARSE")
                     request.data[key] = JSON.parse(v)
                 }
                 catch(e){
                     
                 }
             }
-        })
+        })*/
 
         request.data.ip = request.clientIP
-        request.data.ua = request.clientUA || {}
+        //request.data.ua = request.clientUA || {}
+
+
         delete request.data.U
         delete request.data.A
 
@@ -298,13 +311,13 @@ var Middle = function(){
     
         if(!request.headers) return
 
-        var ua = {}
+        /*var ua = {}
     
         var source = request.headers['user-agent'];
 
         if (source){
             ua = useragent.parse(source);
-        }
+        }*/
     
         var ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress || "::1";
     

@@ -7,7 +7,7 @@ _.each((info.peertube || {}).instances, function(instance){
 %>
 
     <div class="instanceWrapper">
-        <div class="work">
+        <div elementsid="openinstance" class="work">
             <div class="tableovfWrapper">
                 <div class="instance table" instance="<%-instance.host%>">
                     <div class="use <% if(instance.host == currentinstance) {%> using <% } %> <% if(typeof fixedinstance != 'undefined' && fixedinstance == instance.key) {%> locked <% } %>">

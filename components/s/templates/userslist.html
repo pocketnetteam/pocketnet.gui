@@ -5,7 +5,7 @@
 	%>
 	<div class="user">
 
-		<a href="<%-(user.name.toLowerCase())%>">
+		<a elementsid="user-<%-(user.name.toLowerCase())%>" href="<%-(user.name.toLowerCase())%>">
 
 			<div class="tableview">
 
@@ -18,7 +18,7 @@
 					%>
 					
 					<div class="icon">
-						<div class="usericon" image="<%-src || ''%>">
+						<div elementsid="<%-src || 'usericon'%>" class="usericon" image="<%-src || ''%>">
 
 							<% if(!src && letter) { %>
 

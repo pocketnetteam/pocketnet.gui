@@ -1,6 +1,6 @@
 <div id="<%-module.map.id%>">
 
-	<div class="bgCaption">
+	<div elementsid="help_bgCaption" class="bgCaption">
 		<div class="work">
 
 			<div class="cwrapper table">
@@ -16,25 +16,25 @@
 							
 							
 							<% if(os() && self.app.platform.applications.ui[os()] && typeof _Electron == 'undefined' && !window.cordova) {%>
-								<div class="tipitem bright" page="applications">Download Applications</div>
+								<div elementsid="help_tipitem_applications" class="tipitem bright" page="applications">Download Applications</div>
 							<% } %>
 
-							<div class="tipitem" page="faq"><%=e('e14102')%></div>
+							<div elementsid="help_tipitem_faq" class="tipitem" page="faq"><%=e('e14102')%></div>
 							<!--<div class="tipitem" page="curation">Specifics of curation on <%-app.meta.fullname%></div>
-							<div class="tipitem" page="racism">Important Note on Racism</div>
+							<div elementsid="help_tipitem_racism" class="tipitem" page="racism">Important Note on Racism</div>
 
-							<div class="tipitem" page="differents">How is <%-app.meta.fullname%> different from...</div>
-							<div class="tipitem" page="ecosystem"><%-app.meta.fullname%> ecosystem</div>-->
+							<div elementsid="help_tipitem_differents" class="tipitem" page="differents">How is <%-app.meta.fullname%> different from...</div>
+							<div elementsid="help_tipitem_ecosystem" class="tipitem" page="ecosystem"><%-app.meta.fullname%> ecosystem</div>-->
 
-							<div class="tipitem" page="roadmap"><%=e('e14103')%></div>
-							<div class="tipitem" page="guides"><%=e('userGuides')%></div>
+							<div elementsid="help_tipitem_roadmap" class="tipitem" page="roadmap"><%=e('e14103')%></div>
+							<div elementsid="help_tipitem_guides" class="tipitem" page="guides"><%=e('userGuides')%></div>
 							<!--<div class="tipitem" page="videos"><%=e('e14105')%></div>-->
 
 							
 							
-							<div class="tipitem" page="pkoin">Pocketcoin (PKOIN)</div>
+							<!--<div elementsid="help_tipitem_pkoin" class="tipitem" page="pkoin">Pocketcoin (PKOIN)</div>-->
 
-							<div class="tipitem"><a href="https://<%-app.options.url%>/blockexplorer/" external="external"><%=e('e14101')%> <i class="fas fa-external-link-square-alt"></i></a></div>
+							<div elementsid="help_tipitem_be" class="tipitem"><a href="https://<%-app.options.url%>/blockexplorer/" external="external"><%=e('e14101')%> <i class="fas fa-external-link-square-alt"></i></a></div>
 
 						</div>
 					</div>

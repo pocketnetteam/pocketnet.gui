@@ -290,7 +290,18 @@ parameters = function(uri, split){
 
         p2.splice(0, 1);
 
-        r[uParts[p][0]] = decodeURI(p2.join("=").replace(/!!/g, "&"));
+        var p3 = p2.join("=").replace(/!!/g, "&");
+
+        try{
+
+            r[uParts[p][0]] = decodeURI(p3);
+
+        } catch(e){
+
+            r[uParts[p][0]] = p3;
+
+        }
+
     }
 
     return r;

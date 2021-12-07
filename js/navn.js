@@ -36,6 +36,8 @@ Nav = function(app)
 
 	if (typeof window != 'undefined'){
 		protocol = window.location.protocol.replace(":",'');
+
+		if(window.cordova) protocol = 'file'
 	}
 
 	if (protocol == "http" || protocol == "https" || _Node)
@@ -661,6 +663,8 @@ Nav = function(app)
 
 			else
 			{
+				app.actions.scrollToTop()
+
 				p.clbk(null, p);
 			}
 		},
@@ -1153,24 +1157,7 @@ Nav = function(app)
 				}
 				else
 				{
-					/*if (_SEO){
-
-						var _href = link.attr('href');
-							_href = decodeSeoLinks(_href).replace("#!", "");
-
-						var hrefParameters = parameters(_href, true);
-
-							hrefParameters.loc || (hrefParameters.loc = app.localization.key);
-
-							_href = _href.split("?")[0];
-
-							_href = _href + collectParameters(hrefParameters);
-
-							_href = "#!" + _href;
-
-							link.attr('href', encodeSeoLinks(_href));
-					}*/
-
+				
 					var eve = function(e){
 
 						if(blockclick) return false
@@ -1209,9 +1196,6 @@ Nav = function(app)
 
 			})
 
-			/*var p = {};
-
-				p.href = $(this).attr('href');*/
 		},
 		go : function(p){
 			if(!p) p = {};
@@ -1240,6 +1224,7 @@ Nav = function(app)
 			prefix : function(){
 				var pathname = window.location.pathname;
 
+
 				if (pathname.indexOf('android') > -1)
 				{
 					options.navPrefix = '/android_asset/www/';
@@ -1247,15 +1232,23 @@ Nav = function(app)
 				else
 				if (window.cordova)
 				{
-					var arr = pathname.split("/");
-					arr.splice(arr.length-1, 1);
 
-					options.navPrefix = arr.join("/") + "/";
+					if(pathname == '/indexcordova.html'){
+						options.navPrefix = '/'
+					}
+					else{
+						var arr = pathname.split("/");
+						arr.splice(arr.length-1, 1);
+
+						options.navPrefix = arr.join("/") + "/";
+					}
+					
 
 				}
 				else {
 					options.navPrefix = pathname;
 				}
+
 			},
 
 			pathnameSearch : function(){

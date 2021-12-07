@@ -4,30 +4,30 @@
     <section class="contentSection queryStringSection">
       <header><h2>Link</h2></header>
       <main>
-        <input placeholder="Link" id="testQueryInput" class="fieldInput testQueryInput" />
+        <input elementsid="testQueryInput" placeholder="Link" id="testQueryInput" class="fieldInput testQueryInput" />
       </main>
     </section>
     <section class="contentSection headersSection">
       <header><h2>Headers</h2></header>
       <main class="headerswrapper">
         <div class="headersContainer"></div>
-        <button class="addTestHeader testButton">
+        <button elementsid="addTestHeader" class="addTestHeader testButton">
           <i class="fas fa-plus buttonIcon"></i>Add header
         </button>
       </main>
     </section>
     <section class="contentSection methodSection">
-      <select class="testMethodSelect">
-        <option value="get" selected>GET</option>
-        <option value="post">POST</option>
+      <select elementsid="testMethodSelect" class="testMethodSelect">
+        <option elementsid="testMethodSelectGet" value="get" selected>GET</option>
+        <option elementsid="testMethodSelectPost" value="post">POST</option>
       </select>
     </section>
     <section>
-      <button class="contentSection sendRequest testButton">
+      <button elementsid="sendRequest" class="contentSection sendRequest testButton">
         <i class="fas fa-paper-plane buttonIcon"></i>Send
       </button>
     </section>
-    <section class="contentSection responseSection">
+    <section class="contentSection" class="contentSection responseSection">
       <header><h2>Response</h2></header>
       <main>
         <pre class="responseOutput"></pre>

@@ -161,7 +161,6 @@ var instance = function (host, Roy) {
 
 		}).catch((error) => {
 
-
 			var meta = {
 				code : ((error || {}).response || {}).status || 500,
 				difference : performance.now() - responseTime,

@@ -1088,6 +1088,8 @@ var comments = (function(){
 
 			upvoteComment : function(){
 
+				console.log('upvoteComment', ed.cantsend)
+
 				if(ed.cantsend) return
 
 				if($(this).closest('.comment').hasClass('rated')) return
@@ -2090,11 +2092,11 @@ var comments = (function(){
 						newcomments : p.newcomments || '',
 
 						replaceName : function(name, p){
-							return '<span class="tocomment" comment="'+p.comment+'">' + name + "</span>"
+							return '<span elementsid="comments_tocomment" class="tocomment" comment="'+p.comment+'">' + name + "</span>"
 						},
 
 						replaceNameNoComment : function(name, p){
-							return '<span class="tocommentno">' + name + "</span>"
+							return '<span elementsid="comments_tocommentno" class="tocommentno">' + name + "</span>"
 						},
 						mestate : mestate,
 

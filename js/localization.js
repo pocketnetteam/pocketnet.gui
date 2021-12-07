@@ -21,6 +21,11 @@ Localization = function(app){
 			key : 'en'
 		},
 
+		ru : {
+			name : "Русский",
+			key : 'ru'
+		},
+
 		de : {
 			name : "Deutsch",
 			key : 'de'
@@ -43,10 +48,7 @@ Localization = function(app){
 			name : "Italiano",
 			key : 'it'
 		},
-		ru : {
-			name : "Русский",
-			key : 'ru'
-		},
+		
 
 		cmn : {
 			name : "官話",
@@ -67,7 +69,7 @@ Localization = function(app){
 	self.locLinks = function(){
 		return _.reduce(self.available, function(m, loc){
 
-			return m + '<a href="?loc='+loc.key+'">'+loc.name+'</a>'
+			return m + '<a elementsid="?loc='+loc.key+'" href="?loc='+loc.key+'">'+loc.name+'</a>'
 
 		}, '')
 	}
@@ -197,7 +199,7 @@ Localization = function(app){
 				return
 			}
 
-			var src = 'localization/' + (__k) + '.js?v=10'
+			var src = 'localization/' + (__k) + '.js?v=15'
 
 			self.loading[__k] = true
 

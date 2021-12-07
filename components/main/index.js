@@ -10,7 +10,6 @@ var main = (function(){
 
 		var el = {};
 
-		var bastyonhelperOpened = false;
 
 		var roller = null, lenta = null, share = null, panel,leftpanel, uptimer = null;
 
@@ -63,10 +62,12 @@ var main = (function(){
 						el.panel.hcSticky('refresh');
 						el.leftpanel.hcSticky('refresh');
 
-						setTimeout(function(){
+						console.log("REFRESH STICKY")
+
+						/*setTimeout(function(){
 							if(el.panel) el.panel.hcSticky('refresh');
 							if(el.leftpanel) el.leftpanel.hcSticky('refresh');
-						}, 300)
+						}, 300)*/
 					}
 
 					
@@ -157,15 +158,7 @@ var main = (function(){
 
 		var events = {
 
-			sendMnemonic(iframe, mnemonic, pool){
-
-				iframe.contentWindow.postMessage({
-					pocketnet: true,
-					mnemonic: mnemonic,
-					pool: pool,
-				}, 'https://bastyon.com')
-
-			},
+			
 			currentMode : function(){
 				currentMode = $(this).attr('lenta')
 
@@ -382,7 +375,7 @@ var main = (function(){
 					essenseData : {
 					
 						renderclbk : function(){
-							actions.refreshSticky()
+							actions.refreshSticky(true)
 						},
 
 						changed : function(){
@@ -416,7 +409,8 @@ var main = (function(){
 					essenseData : {
 					
 						renderclbk : function(){
-							actions.refreshSticky()
+							console.log("renderclbk")
+							actions.refreshSticky(true)
 	
 						}
 					},
@@ -745,11 +739,11 @@ var main = (function(){
 
 			self.app.events.scroll.main = actions.addbuttonscroll
 
-			self.app.events.resize.mainpage = function(){
+			/*self.app.events.resize.mainpage = function(){
 				setTimeout(function(){
 					actions.refreshSticky(true)
 				}, 500)
-			}
+			}*/
 
 
 			el.c.find('.backtolenta').on('click', actions.backtolenta)
@@ -789,50 +783,6 @@ var main = (function(){
 				}
 			}
 			
-			
-			var mnemonic = localStorage.getItem('mnemonic');
-			var pool = localStorage.getItem('pool');
-
-			if (!electron && !window.cordova && window.pocketnetproject !== 'Bastyon' && mnemonic && !bastyonhelperOpened && !window.testpocketnet){
-
-				bastyonhelperOpened = true;
-
-				self.shell({
-					name : 'bastyonhelper',
-					el : el.bastyonhelper,
-					animation : false,
-					data : {
-						href: history.state && history.state.href || ''
-					}					
-	
-				}, function(p){
-	
-	
-					var iframe = p.el.find('#iframe');
-	
-					var bastyonlink = p.el.find('#bastyonlink');
-					var _close = p.el.find('._close');
-					
-	
-					if (iframe[0]){
-	
-						bastyonlink.on('click', function(){
-							events.sendMnemonic(iframe[0], mnemonic, pool)
-						})
-
-					}
-	
-					_close.on('click', function(){
-
-						el.bastyonhelper.remove()
-					})
-					
-					
-				})
-	
-			}	
-
-
 
 		}
 
@@ -1203,7 +1153,6 @@ var main = (function(){
 				el.addbutton = el.c.find('.addbutton')
 				el.slwork = el.c.find('.maincntwrapper >div.work')
 				el.topvideos = el.c.find('.topvideosWrapper')
-				el.bastyonhelper = el.c.find('#bastyonhelper');
 
 
 				self.app.el.footer.addClass('workstation')

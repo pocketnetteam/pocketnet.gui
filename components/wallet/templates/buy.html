@@ -3,10 +3,10 @@
 	<div class="subcaptionWrapperTableCnt">
 		<div class="subcaptionWrapperTable table">
 
-			<div class="_stepback"></div>
+			<div elementsid="_stepbackBuy" class="_stepback"></div>
 
 			<div class="subcaption">
-				<span>Buy Pocketcoin (PKOIN)</span>
+				<span><%=e('buylogo')%></span>
 			</div>
 
 			<div class="_subcaptionlevel">
@@ -17,31 +17,87 @@
 
 	<div class="action">
 
-		<div class="row flx">
-			<% _.each(coins, function(coin){ %>
-                
-                <div class="coin">
-                    <div class="clogo">
-                        <img src="./img/coins/<%-coin.image%>">
-                    </div>
-                    <div class="label">
-                        <%- coin.code %>
-                    </div>
-                </div>
-                
-            <% }) %>
-		</div>
+		<div class="ways">
+			<div class="wayf">
 
-		<div class="row table">
-		
+				<div class="row flx">
 
-			<div class="reciever">
-                <a href="https://pkoin.net/?address=<%-a.address || ''%>">
-                    <button class="button"><i class="fas fa-chevron-circle-right"></i> Buy</button>
-                </a>
+					<div class="fiat">
+						<div class="clogo">
+							<img class="wh2" src="./img/mc_symbol.svg">
+						</div>
+						<div class="label">
+							Mastercard
+						</div>
+					</div>
+
+					<div class="fiat">
+						<div class="clogo">
+							<img class="wh3" src="./img/visa.svg">
+						</div>
+						<div class="label">
+							Visa
+						</div>
+					</div>
+
+					<div class="fiat">
+						<div class="clogo">
+							<img class="wh" src="./img/6ff9233688ba95fe3e02f381443539fc.svg">
+						</div>
+						<div class="label">
+							Indacoin
+						</div>
+					</div>
+					
+					
+				</div>
+
+				<div class="row table">
+					<div class="reciever">
+						<a elementsid="https://buy.pkoin.indacoin.io" href="https://buy.pkoin.indacoin.io/index?address=<%-a.address || ''%>">
+							<button class="button orange"><i class="fas fa-chevron-circle-right"></i> <%=e('buywithcreditcard')%></button>
+						</a>
+					</div>
+				</div>
+
 			</div>
-		</div>
 
+			<div class="wayf">
+
+				<div class="row flx">
+					<% _.each(coins, function(coin){ %>
+						
+						<div class="coin">
+							<div class="clogo">
+								<img src="./img/coins/<%-coin.image%>">
+							</div>
+							<div class="label">
+								<%- coin.code %>
+							</div>
+						</div>
+						
+					<% }) %>
+					
+				</div>
+
+				<div class="row table">
+
+					
+
+
+					<div class="reciever">
+						<a elementsid="https://pkoin.net" href="https://pkoin.net/?address=<%-a.address || ''%>">
+							<button class="button "><i class="fas fa-chevron-circle-right"></i> <%=e('buyforcrypto')%></button>
+						</a>
+					</div>
+				</div>
+
+			</div>
+
+
+			
+
+		</div>
 	
 		
 	</div>

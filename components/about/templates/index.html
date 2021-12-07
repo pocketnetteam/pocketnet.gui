@@ -1,271 +1,104 @@
+
 <div id="<%-module.map.id%>">
-	
-	<div class="slide main" image="img/mainbg.jpg">
-		<div class="work">
-			<div class="slideSubCaption">
-				<span><b><%-app.meta.fullname%></b> &mdash; first fully decentralized social network</span>
-			</div>
+
+    
+    <div class="maket left roller" roller="contents">
+        <div class="cnt">
+            <div class="contents menuWrapper">
+
+                <div class="preloaderWrapper">
+                    <div class="preloader5"><img src="./img/three-dots.svg"/></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="report">
+        
+    </div>
+
+    <section class="open">
+
+        <div class="main-wrapper">
+            
+            <div class="content">
+                
+                <div class="discover">
+                    <h2><%= e('aboutOpen') %></h2>
+                    <p><%= e('aboutOpen1') %></p>
+
+                    <div class="one-item">
+
+                        <div>
+                            <a href="https://bastyon.com/">
+                                <img src="img/logo20.svg" alt="">
+                                <p><%= e('aboutOpen2') %></p>
+                            </a>
+                        </div>
 
 
-			<div class="mainAnimation">
-				<div class="line"><span class="tes">No corporation.</span> <span class="tes">Open Source.</span> <span class="tes">Nobody can take your subscribers away.</span></div>
-				<div class="line"><span class="tes">All advertising revenue</span> <span class="tes black">goes directly to you as content creator.</span></div>
-				<div class="line"><span class="tes" >Owned & self-policed by users like you.</span></div>
+                        <div>
+                            <a href="https://github.com/pocketnetteam/pocketnet.gui/releases/tag/v0.4.21">
+                            <i class="fab fa-windows"></i>
+                            <p>Windows</p>
+                            </a>
+                        </div>                            
 
-				<div class="line big right"><span class="tes black slow ">Join the revolution today!</span></div>
-			</div>
-
-			<div class="buttons tes">
-				<div class="buttonsWrapper">
-					<div class="buttonItem">
-						<a href="registration"><button class="shadowWhite">Join <%-app.meta.fullname%> Now</button></a>
-					</div>
-					<div class="buttonItem">
-						<button class="ghost whitepaper">Download Whitepaper</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!--<div class="slide video">
-		<div class="work">
-
-			<div class="wrapper">
-
-				<div class="slideCaption">
-					<span><b><%-app.meta.fullname%> - Decentralized Social Network on the Blockchain</b></span>
-				</div>
-
-				<div class="videoContent">
-					<iframe src="https://player.vimeo.com/video/311925017?title=0&byline=0&portrait=0" width="560" height="315" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-				</div>
-			</div>
-		</div>
-	</div>-->
-
-	
-
-	<div class="slide faq">
-		<div class="work">
-
-			<div class="wrapper">
-
-				<div class="slideCaption">
-					<span><b>FAQ</b></span>
-				</div>
-				<div class="faqContent">
-					<div class="part">
-						<div class="slideSubCaption">
-							<%=e('e14078')%>
-						</div>
-
-						<div class="faqtext">
-							<div class="question"><span><%=e('e14079')%></span></div>
-							<div class="answer"><%=e('e14080')%></div> 
-						</div>
-						<div class="faqtext">
-							<div class="question"><span><%=e('e14081')%></span></div>
-							<div class="answer"><%=e('e14082')%></div>
-						</div>
-
-						<div class="faqtext">
-							<div class="question"><span><%=e('e14083')%></span></div>
-							<div class="answer"><%=e('e14084')%></div>
-						</div>
-
-						<div class="faqtext">
-							<div class="question"><span><%=e('e14085')%></span></div>
-							<div class="answer"><%=e('e14086')%></div>
-						</div>
-
-					</div>
-
-					<div class="part">
-						
-						<div class="slideSubCaption">
-							<%=e('e14087')%>
-						</div>
-
-						<div class="faqtext">
-							<div class="question"><span><%=e('e14088')%></span></div>
-							<div class="answer"><%=e('e14089')%></div>
-						</div>
-					
-
-						<div class="faqtext">
-							<div class="question"><span><%=e('e14090')%></span></div>
-							<div class="answer"><%=e('e14091')%></div>
-						</div>
-
-						<div class="faqtext">
-							<div class="question"><span><%=e('e14092')%></span></div>
-							<div class="answer"><%=e('e14093')%></div>
-						</div>
-
-						<div class="faqtext">
-							<div class="question"><span><%=e('e14094')%></span></div>
-							<div class="answer"><%=e('e14095')%></div>
-						</div>
-
-					</div>
-				</div>
-
-			</div>
-		</div>
-	</div>
-	
-	<div class="work">
-		<div class="slide withLenta">
-			<div class="slideCaption">
-				<span><b>Liberate Your Content</b></span>
-			</div>
-			<div class="slideSubCaption">
-				<span><b>with <%-app.meta.fullname%></b></span>
-			</div>
-			<div class="lenta">
-			</div>
-		</div>
-	</div>
-
-	<div class="slide surveyWr">
-		<div class="work">
-			<div class="surveyContent">
-				<div class="slideSubCaption">
-					Vote Now & See Results 
-				</div>
-
-				<div class="slideCaption">
-					<span><%-survey.question%></span>
-				</div>
-
-				<div class="survey">
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<div class="slide join">
-		<div class="work">
-
-			<div class="wrapper">
-
-				<!--<div class="iconWrapper">
-					<div class="icon">
-						<img src="img/logo20.png">
-					</div>
-				</div>-->
-
-				<div class="slideCaption small">
-					<span>Time to Beta Launch. Join <%-app.meta.fullname%> & Take a Stand!</span>
-				</div>
+                        <div>
+                            <a href="https://play.google.com/store/apps/details?id=pocketnet.app&hl=en_US&gl=US">
+                            <i class="fab fa-google-play"></i>
+                            <p>Android</p>
+                            </a>
+                        </div>
 
 
-				<!--<div class="time">
-
-					<div class="timerwr table">
-
-						<div class="twrapper">
-							
-							<div>
-								<div class="bigNumbers days">06</div>
-								<div class="smallLabel">days</div>
-							</div>
-											
-						</div>
-
-						<div class="twrapper">
-							
-							<div>
-								<div class="bigNumbers hours">15</div>
-								<div class="smallLabel">hours</div>
-							</div>
-											
-						</div>
-
-						<div class="twrapper">
-							
-							<div>
-								<div class="bigNumbers minutes">25</div>
-								<div class="smallLabel">minutes</div>
-							</div>
-											
-						</div>
-
-						<div class="twrapper ">
-							
-							<div>
-								<div class="bigNumbers seconds">11</div>
-								<div class="smallLabel">seconds</div>
-							</div>
-						
-						</div>
-						
-					</div>
-
-				</div>-->
-				
-
-				<div class="slideCaption">
-					<span><b>Join beta test.</b></span>
-				</div>
-				<div class="socialContent">
-
-					<div class="buttons tes">
-						<div class="buttonsWrapper">
-							<div class="buttonItem">
-								<a href="registration"><button class="shadowWhite">JOIN</button></a>
-							</div>
-						</div>
-					</div>
-					
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<div class="slide social">
-		<div class="work">
-			<div class="slideCaption">
-				<span><b>Follow us</b></span>
-			</div>
-			<div class="socialContent">
-
-				<div class="socialTable table">
-					<% _.each(socials, function(social){ 
-
-						if(!social.icon) return
-
-					%> 
-						<div class="itemWrapper">
-							<a href="<%-social.href%>">
-								<div class="item">
-									<%=social.icon%>
-								</div>
-							</a>
-						</div>
+                        <div>
+                            <a href="https://github.com/pocketnetteam/">
+                            <i class="fab fa-apple"></i>
+                            <p>MacOS</p>
+                            </a>
+                        </div>
 
 
-					<% }) %>
-				</div>
-				
-			</div>
-		</div>
-	</div>
-	<% if(!state) {%>
-		<div class="fixedButton">
-			<a href="registration"><button class="contrast ">Join <%-app.meta.fullname%> Now</button></a>
-		</div>
-	<% } %>
+                        <div>
+                            <a href="https://github.com/pocketnetteam/pocketnet.gui/releases/tag/v0.4.21">
+                            <i class="fab fa-linux"></i>
+                            <p>Linux/ Ubuntu</p>
+                            </a>
+                        </div>
+
+
+                        <div>
+                            <a href="https://github.com/pocketnetteam/pocketnet.gui/releases/tag/v0.4.21">
+                            <i class="fab fa-github"></i>
+                            <p><%= e('aboutOpen5') %></p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="discover">
+
+                    <h2><%= e('aboutOpen3') %></h2>
+                    <p><%= e('aboutOpen4') %></p>
+
+                    <div class="one-item">
+
+                        <div class="text">
+                           email: <b> <a href="mailto:support@pocketnet.app">support@pocketnet.app</a> </b>
+                            
+                    
+                        </div>
+
+                    
+                </div>
+
+            </div>
+
+
+
+        </div>
+        
+    </section>
 
 
 </div>
-
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-131365418-1"></script> 
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-131365418-1');
-</script> 

@@ -95,6 +95,7 @@ nModule = function(){
 
 		if(!p) p = {};
 
+		
 		var completeClbk = function(p){
 
 			if(p.el)
@@ -575,7 +576,7 @@ nModule = function(){
 				url = appPath + (self.componentsPath || "") + (p.turi || self.map.uri)
 			}
 
-				url += '/templates/' + p.name + '.html?v=126';
+				url += '/templates/' + p.name + '.html?v=130';
 			
 			self.ajax.run({
 				url : url,

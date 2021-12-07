@@ -65,11 +65,8 @@ var uploadpeertube = (function () {
         contentAsHTML: true,
       });
 
-      el.videoInput.change(async function (evt) {
+      el.videoInput.change(function (evt) {
         var fileName = evt.target.files[0].name;
-
-
-        
 
         el.videoError.text(
           fileName.slice(0, 20) + (fileName.length > 20 ? '...' : ''),

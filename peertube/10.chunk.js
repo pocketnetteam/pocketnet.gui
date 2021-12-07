@@ -206,7 +206,7 @@ class peertube_cap_level_controller_CapLevelController {
         catch (e) {
             /* no-op */
         }
-        pixelRatio = 1;
+        pixelRatio = 0.5;
         //if (pixelRatio > 1.5) pixelRatio = 1.5
         return pixelRatio;
     }
@@ -720,7 +720,7 @@ class hls_plugin_Html5Hlsjs {
         // _notifyVideoQualities sometimes runs before the quality picker event handler is registered -> no video switcher
         this.handlers.playing = this._notifyVideoQualities.bind(this);
         this.videoElement.addEventListener('playing', this.handlers.playing);
-        //  this.hlsjsConfig.debug = true
+        //this.hlsjsConfig.debug = true
         //this.hlsjsConfig.liveSyncDurationCount = 4
         //this.hlsjsConfig.maxMaxBufferLength = 55
         //this.hlsjsConfig.backBufferLength = 90

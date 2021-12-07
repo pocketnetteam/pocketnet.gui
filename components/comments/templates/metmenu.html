@@ -64,7 +64,7 @@ var all = {
 
 	<% _.each(m, function(m){ var mo = all[m] %>
 
-	<div class="menuitem <%-mo.class||''%> table">
+	<div elementsid="comments_menuitem_<%-mo.class||''%>" class="menuitem <%-mo.class||''%> table">
 		
 		<div class="icon"><span><%=mo.icon%></span></div>
 		<div class="label"><span><%-mo.text%></span></div>

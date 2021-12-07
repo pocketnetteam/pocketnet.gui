@@ -111,7 +111,7 @@ var userslist = (function(){
 
 				if (
 
-					($(window).scrollTop() + $(window).height() > $(document).height() - 400) 
+					($('#userslist').height()- $('#fordetailsusers').scrollTop() < 400) 
 
 					&& !loading && !end) {
 
@@ -265,7 +265,7 @@ var userslist = (function(){
 
 		var make = function(){
 			makepage(function(){
-				window.addEventListener('scroll', events.loadmorescroll)
+				document.getElementById('fordetailsusers').addEventListener('scroll', events.loadmorescroll)
 			})
 		}
 
@@ -280,7 +280,7 @@ var userslist = (function(){
 
 				var data = {};
 
-				addresses = deep(p.settings, 'essenseData.addresses') || []
+				addresses = deep(p.settings, 'essenseData.addresses') || [];
 
 				data.addresses = addresses
 				data.empty = deep(p.settings, 'essenseData.empty');

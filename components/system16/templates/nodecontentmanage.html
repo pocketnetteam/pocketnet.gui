@@ -70,8 +70,8 @@
                             
 
                             <div class="buttons">
-                                <button class="addstacking button small"><i class="fas fa-plus"></i> Add adress</button>
-                                <button class="refreshstacking button small ghost"><i class="fas fa-sync"></i> Refresh</button>
+                                <button elementsid="addstacking" class="addstacking button small"><i class="fas fa-plus"></i> Add adress</button>
+                                <button elementsid="refreshstacking" class="refreshstacking button small ghost"><i class="fas fa-sync"></i> Refresh</button>
                             </div>
                             
                         </div>
@@ -116,7 +116,7 @@
 
                         <% if(nc.hasapplication) {%>
                     
-                            <div class="notfound install">
+                            <div elementsid="notfoundinstall" class="notfound install">
                                 <div class="text">
                                     <%-app.meta.fullname%> Node was not found. Download and Install it
                                 </div>
@@ -166,7 +166,7 @@
                     
                     <% } else { %>
                         
-                        <div class="notfound refreshother">
+                        <div elementsid="refreshother" class="notfound refreshother">
                             <div class="text">
                                 Your device already has <%-app.meta.fullname%> Node.<br>
 
@@ -238,7 +238,7 @@
                                 <span>Set Paths to Default</span>
                             </div>
         
-                            <div class="value toDefaultPath">
+                            <div elementsid="toDefaultPath" class="value toDefaultPath">
                                 <div>
                                     <span>
                                         To Default 
@@ -264,7 +264,7 @@
     
                         <div class="value">
                             <% if(nc.hasupdates) {%>
-                                <button class="button small updatenode">
+                                <button elementsid="buttonsmallupdatenode" class="button small updatenode">
                                     Update Node
                                 </button>
                             <% } else { %> 
@@ -286,13 +286,13 @@
                             </div>
         
                             <div class="value">
-                                <button class="button small removenode">
+                                <button elementsid="buttonsmallremovenode" class="button small removenode">
                                     Delete Daemon
                                 </button>
                             </div>
 
                             <div class="value">
-                                <button class="button small ghost removenodeall">
+                                <button elementsid="buttonsmallghostremovenodeall" class="button small ghost removenodeall">
                                     Delete Daemon and Data
                                 </button>
                             </div>

@@ -2,8 +2,6 @@ var socialshare2 = (function(){
 
 	var self = new nModule();
 
-	console.log('@@@@@@', localStorage.getItem('usertheme') === 'black' ? true : false)
-
 	var essenses = {};
 
 	var Essense = function(p){
@@ -581,7 +579,7 @@ var socialshare2 = (function(){
 				h+='<table border="0" cellpadding="0" cellspacing="0" style="background-color:#f12400; border:1px solid #f12400; border-radius:2px;">'
 				h+='<tr>'
 				h+='<td align="center" valign="middle" style="color:#FFFFFF; font-family:Helvetica, Arial, sans-serif; font-size:16px; font-weight:bold; letter-spacing:-.5px; line-height:150%; padding-top:15px; padding-right:30px; padding-bottom:15px; padding-left:30px;">'
-				h+='<a track href="'+url+'" target="_blank" style="color:#FFFFFF; text-decoration:none;">'+text+'</a>'
+				h+='<a elementsid="'+url+'" track href="'+url+'" target="_blank" style="color:#FFFFFF; text-decoration:none;">'+text+'</a>'
 				h+='</td>'
 				h+='</tr>'
 				h+='</table>'
@@ -797,15 +795,19 @@ var socialshare2 = (function(){
 
 				}
 
+				var share = null
+
 				ed.url = self.app.nav.api.history.removeParametersFromHref(ed.url, ['mpost', 'msocialshare2'])
 
 				if(ed.embedding && ed.embedding.type == 'post'){
 					postId = ed.embedding && ed.embedding.id;
+					
 				}
 				else{
 					postId = ''
 				}
-				
+
+				if (postId){share = self.app.platform.sdk.node.shares.storage.trx[postId];}
 
 				changeRef()
 			
@@ -814,7 +816,8 @@ var socialshare2 = (function(){
 					style : ed.style || "",
 					eparameters : eparameters,
 					notincludedRef : ed.notincludedRef, 
-					postId: postId
+					postId: postId,
+					share : share
 				};
 
 				clbk(data);

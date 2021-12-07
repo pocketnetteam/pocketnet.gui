@@ -38,35 +38,14 @@ RpcClient.config = {
     logger: 'normal' // none, normal, debug
 };
 
-function rpca(request, obj){
-    return new Promise(function(resolve, reject){
 
-        try{
-            rpc(request, function(err, res){
 
-                if(err) return reject(err)
-    
-                resolve(res)
-    
-            }, obj)
-        }
-        catch(e) {
-
-            reject({
-                code : 500
-            })
-
-        }
-
-    })
-}
-
-var posts = {
+const posts = {
     sendrawtransaction : true,
     sendrawtransactionwithmessage : true
 }
 
-var publics = {
+const publics = {
     getcontents: true,
     getlastcomments: true,
     gettags: true,
@@ -93,6 +72,11 @@ var publics = {
     getaccountsetting : true,
     getpostscores:true,
     getpagescores:true,
+    getrandomcontents : true,
+    getrecomendedaccountsbysubscriptions : true,
+    getrecomendedaccountsbyscoresonsimilaraccounts : true,
+    getrecomendedaccountsbyscoresfromaddress : true,
+
 
     // BlockExplorer
     getblocktransactions: true,
@@ -111,12 +95,36 @@ var publics = {
     estimatesmartfee: true,
     gettransaction : true,
     gethierarchicalstrip : true,
+    gethistoricalstrip : true,
     getusercontents : true,
     getcontentsstatistic : true,
     getuserstatistic : true
 }
 
 const keepAliveAgent = new http.Agent({ keepAlive: true });
+
+function rpca(request, obj){
+    return new Promise(function(resolve, reject){
+
+        try{
+            rpc(request, function(err, res){
+
+                if(err) return reject(err)
+    
+                resolve(res)
+    
+            }, obj)
+        }
+        catch(e) {
+
+            reject({
+                code : 500
+            })
+
+        }
+
+    })
+}
 
 function rpc(request, callback, obj) {
 
@@ -139,7 +147,7 @@ function rpc(request, callback, obj) {
         return
     }
     
-    var auth = new Buffer(self.user + ':' + self.pass).toString('base64');
+    
 
     var signal = null
 
@@ -261,18 +269,20 @@ function rpc(request, callback, obj) {
         if(!called) {
 
             callback({
-                code : 408
+                code : 408,
+                error : 'requesterror'
             });
 
             called = true;
         }
         
-    }).setTimeout(5000, function(){
+    }).setTimeout(timeout, function(){
 
         if(!called) {
 
             callback({
-                code : 408
+                code : 408,
+                error : 'timeout'
             });
 
             called = true;
@@ -284,8 +294,9 @@ function rpc(request, callback, obj) {
     req.setHeader('Content-Length', request.length);
     req.setHeader('Content-Type', 'application/json');
 
-    if(!pbl)
-        req.setHeader('Authorization', 'Basic ' + auth);
+    if(!pbl){
+        req.setHeader('Authorization', 'Basic ' + (self.user + ':' + self.pass).toString('base64'));
+    }
 
     req.write(request);
     req.end();
@@ -369,6 +380,7 @@ RpcClient.callspec = {
     //setAccount: '',
     setGenerate: 'bool int',
     getreputations: '',
+    getrandomcontents : 'str',
 
 
     getcontents: 'str',
@@ -396,6 +408,7 @@ RpcClient.callspec = {
     getpostscores: 'str',
     getpagescores: 'obj str',
     gethierarchicalstrip : 'int str int str obj str',
+    gethistoricalstrip : 'int str int str obj str',
     getusercontents : 'str int str int obj str',
     getcontentsstatistic : 'obj str int int',
     // BlockExplorer
@@ -408,7 +421,10 @@ RpcClient.callspec = {
     checkstringtype: 'str',
     getstatistic: 'int int',
     getuserstatistic : 'obj int int',
-    
+    getrecomendedaccountsbysubscriptions : 'str',
+    getrecomendedaccountsbyscoresonsimilaraccounts : 'str',
+    getrecomendedaccountsbyscoresfromaddress : 'str',
+
     // Control
     stop: '',
 

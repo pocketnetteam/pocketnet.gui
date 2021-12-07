@@ -7,7 +7,7 @@
 	<div class="waystable">
 		<% _.each(ways, function(way){ %> 
 
-			<div class="way table" way="<%- way.id %>">
+			<div elementsid="way_<%- way.id %>" class="way table" way="<%- way.id %>">
 				<div class="icon"><i class="far fa-circle"></i></div>
 				<div class="name"><span><%- way.name %></span></div>
 			</div>
@@ -15,7 +15,7 @@
 		<% }) %>
 	</div>
 
-	<div class="back">
+	<div elementsid="ways_back" class="back">
 		<span>
 			<%=e('back')%>
 		</span>

@@ -1,5 +1,5 @@
 <% if(!last) {%>
-    <div class="os downloadOs">
+    <div elementsid="applications_downloadOs" class="os downloadOs">
         <div class="stepTable">
             <div class="numberWr">
                 <div class="icon">
@@ -16,7 +16,7 @@
 
                 <div class="panel">
                     <div class="item">
-                        <button class=" ghost"><%- os.text.label %> </button>
+                        <button elementsid="download<%- os.text.name %>" class=" ghost"><%- os.text.label %> </button>
                     </div>
                 </div>
             </div>

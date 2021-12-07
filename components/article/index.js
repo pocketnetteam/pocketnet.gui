@@ -158,6 +158,8 @@ var article = (function(){
 					}
 				]
 
+				share.settings.f = '0'
+
 				var items = _.map(visibilities, function(i){
 					return {
 						text : i.t,
@@ -192,11 +194,12 @@ var article = (function(){
 				share.images.set(self.app.platform.sdk.articles.getImages(text))
 
 				//var tags = actions.tagsFromText(text)
-				share.tags.set(art.tags || []) 
+				share.tags.set(_.filter(art.tags || [], function(t){
+					return t != 'pkoin_commerce'
+				})) 
 
 				share.settings.v = 'a'
 				share.settings.videos = self.app.platform.sdk.articles.getVideos(text)
-
 
 
 				var error = share.validation()
@@ -276,10 +279,14 @@ var article = (function(){
 			tagsFromText : function(text){
 				var words = text.split(wordsRegExp);
 
+				console.log(text)
+
 				var tags = _.filter(words, function(w){
 					if(w[0] == '#'){
 
-						w = w.replace(/#/g, '')
+						w = w.replace(/#/g, '').replace(/@/g, '')
+
+						if(w.indexOf('pkoin_commerce') > -1) return false 
 
 						if(!w) return false
 
@@ -290,7 +297,7 @@ var article = (function(){
 
 				_.each(tags, function(tag, i){
 
-					tags[i] = tag.replace(/\#/g, '')
+					tags[i] = tag.replace(/\#/g, '').replace(/\@/g, '')
 					
 				})
 
@@ -301,7 +308,6 @@ var article = (function(){
 			_addtag : function(tag){
 
 				if (art.tags.length < 5){
-
 					
 					removeEqual(art.tags, tag)
 					art.tags.push(tag)
@@ -466,6 +472,9 @@ var article = (function(){
 							addTags : function(tags){
 								actions.addTags(tags)
 								renders.tgs()
+							},
+							filter :  function(v){
+								return v.tag != 'pkoin_commerce'
 							}
 						},
 
@@ -566,71 +575,43 @@ var article = (function(){
 
 									if (r[1]){
 
-						            	self.ajax.run({
-											type : "POST",
-											imgur : true,
-											data : {
-												Action : "image",
-												image : r[1]
-											},
+										app.imageUploader.uploadImage({
+											image : r[1],
+											base64: resized,
+										}).then((data) => {
+						
+											var l = deep(data, 'image.url');
+											if (clbk)
+												clbk(l)
+						
+										}, (err) => {
 
-											success : function(data){
-
-												var l = deep(data, 'data.link')
-
-												if (l){
-													//art.images.push(l)
-
-													var h = deep(data, 'data.deletehash')
-
-													if (h){
-														self.sdk.imagesH.add(l, h)
-													}
-
-												}
-												else
-												{
+											app.ajax.run({
+												type : "POST",
+												up1 : true,
+												data : {
+													file : r[1]
+												},
+					
+												success : function(data){
+					
+													var l = 'https://'+self.app.options.url+':8092/i/' + deep(data, 'data.ident');
+			
+													if (clbk)
+														clbk(l)
+					
+												},
+					
+												fail : function(d){
+					
 													l = 'https://'+self.app.options.url+'/img/imagenotuploaded.jpg'
+
+													if (clbk)
+														clbk(l)
 												}
+											})
 
-												if (clbk)
-													clbk(l)
-
-											},
-
-											fail : function(d){
-
-
-												app.ajax.run({
-													type : "POST",
-													up1 : true,
-													data : {
-														file : r[1]
-													},
-						
-													success : function(data){
-						
-														var l = 'https://'+self.app.options.url+':8092/i/' + deep(data, 'data.ident');
-				
-														if (clbk)
-															clbk(l)
-						
-													},
-						
-													fail : function(d){
-						
-														l = 'https://'+self.app.options.url+'/img/imagenotuploaded.jpg'
-
-														if (clbk)
-															clbk(l)
-													}
-												})
-												
-				
-												
-											}
-
-										})
+										});
 
 						            }
 						        })

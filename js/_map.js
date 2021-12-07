@@ -52,6 +52,7 @@ __map =  {
 		"js/vendor/underscore-min.js",  
 		"js/functionsfirst.js",  
 		"js/localization.js",
+		"js/image-uploader.js",
 		//"js/notifications.js",
 		"js/lib/client/system16.js",
 		"js/lib/client/api.js",
@@ -95,7 +96,7 @@ __map =  {
 	__templates : [
 		{ c : 'navigation', n : 'menu' },
 		{ c : 'menu', n : 'index' },
-
+		{ c : 'share', n : 'body' },
 		{ c : 'toppanel', n : 'index' },
 		{ c : 'navigation', n : 'index' },
 		{ c : 'footer', n : 'index' },
@@ -185,6 +186,81 @@ __map =  {
 
 		},
 		anonimus : true,
+	},
+
+	aboutHome : {
+		uri : "aboutHome",
+		href : "aboutHome",
+		add : {
+			el : 'content'
+		},
+		anonimus : true,
+		/*redirect : {
+			auth : 'authorization',
+			//validate : 'filluser'
+		},*/
+	
+	},
+
+	aboutYoutube : {
+		uri : "aboutYoutube",
+		href : "aboutYoutube",
+		add : {
+			el : 'content'
+		},
+		anonimus : true,
+		/*redirect : {
+			auth : 'authorization',
+			//validate : 'filluser'
+		},*/
+	
+	},
+
+	aboutFacebook : {
+		uri : "aboutFacebook",
+		href : "aboutFacebook",
+		add : {
+			el : 'content'
+		},
+		anonimus : true,
+		/*redirect : {
+			auth : 'authorization',
+			//validate : 'filluser'
+		},*/
+	
+	},
+
+	aboutContentCreators : {
+		uri : "aboutContentCreators",
+		href : "aboutContentCreators",
+		add : {
+			el : 'content'
+		},
+		anonimus : true,
+
+	
+	},
+
+	aboutHIW : {
+		uri : "aboutHIW",
+		href : "aboutHIW",
+		add : {
+			el : 'content'
+		},
+		anonimus : true,
+
+	
+	},
+
+	aboutTwitter : {
+		uri : "aboutTwitter",
+		href : "aboutTwitter",
+		add : {
+			el : 'content'
+		},
+		anonimus : true,
+
+	
 	},
 
 	applications : {
@@ -875,7 +951,65 @@ __map =  {
 			relationsSunc : true
 		},	
 
-		
+		articlesv : {
+			uri : "articlesv",
+			href : "articlesv",
+			add : function(settings, p){
+
+				if(p.inWnd)
+				{
+					return {
+						insert : 'wnd'
+					}
+				}
+				else
+				if(p.inTooltip)
+				{
+					return {
+						insert : 'tooltip'
+					}
+				}
+				else
+				{
+					return {
+						el : 'content'
+					}
+				}
+
+			},
+		},	
+		articlev : {
+			uri : "articlev",
+			href : "articlev",
+			add : function(settings, p){
+
+				if(p.inWnd)
+				{
+					return {
+						insert : 'wnd'
+					}
+				}
+				else
+				if(p.inTooltip)
+				{
+					return {
+						insert : 'tooltip'
+					}
+				}
+				else
+				{
+					return {
+						el : 'content'
+					}
+				}
+
+			},
+			relations : [
+				{src : 'js/vendor/editor/editor.js',			   f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},
+				
+			],
+			relationsSunc : true
+		},
 
 		video : {
 			uri : "video",
@@ -1447,7 +1581,35 @@ __map =  {
 		]*/
 	},
 
-	
+	bastyonhelper : {
+		uri : "bastyonhelper",
+		href : "bastyonhelper",
+		add : function(settings, p){
+
+			if(p.inWnd)
+			{
+				return {
+					insert : 'wnd'
+				}
+			}
+			else
+			if(p.inTooltip)
+			{
+				return {
+					insert : 'tooltip'
+				}
+			}
+			else
+			{
+				return {
+					el : 'content'
+				}
+			}
+
+		},
+		
+		anonimus : true,
+	},
 
 	authorization : {
 		uri : "authorization",

@@ -463,54 +463,45 @@ Comment = function(txid){
 
 					var r = image.split(',');
 
-				if (r[1]){
+					if (r[1]){
 
-						app.ajax.run({
-							type : "POST",
-							imgur : true,
-							data : {
-								Action : "image",
-								image : r[1]
-							},
+						app.imageUploader.uploadImage({
+							image : r[1],
+							base64: image
+						}).then((data) => {
 
-							success : function(data){
+							self.images.v[index] = deep(data, 'image.url');
+							p.success();
 
-								self.images.v[index] = deep(data, 'data.link');
-								
-								p.success();
+						}, (err) => {
 
-							},
+							app.ajax.run({
+								type : "POST",
+								up1 : true,
+								data : {
+									file : r[1]
+								},
 
-							fail : function(d){
+								success : function(data){
 
-								app.ajax.run({
-									type : "POST",
-									up1 : true,
-									data : {
-										file : r[1]
-									},
-		
-									success : function(data){
-		
-										self.images.v[index] = 'https://'+app.options.url+':8092/i/' + deep(data, 'data.ident');
+									self.images.v[index] = 'https://'+app.options.url+':8092/i/' + deep(data, 'data.ident');
 
-										console.log('self.images.v[index]', self.images.v[index])
-										p.success();
-		
-									},
-		
-									fail : function(d){
-		
-										//self.images.v[index] = ''
-		
-										//index++;
-		
-										p.success();
-									}
-								})
-							}
-						})
+									console.log('self.images.v[index]', self.images.v[index])
+									p.success();
 
+								},
+
+								fail : function(d){
+
+									//self.images.v[index] = ''
+
+									//index++;
+
+									p.success();
+								}
+							})
+
+						});
 
 					}
 				}
@@ -1035,6 +1026,9 @@ Share = function(lang){
 				return false
 			}
 		},
+		/*clear : function(t){
+			return t.substr(0, 25).toLowerCase().replace(/[^\w]/g, "")
+		},*/
 		set : function(tags){
 
 			if(typeof tags == 'undefined'){
@@ -1048,7 +1042,7 @@ Share = function(lang){
 					}
 
 					tags = _.map(tags, function(t){
-						return t.replace("#", '').toLowerCase()
+						return clearTagString(t)
 					})
 
 					this.v = tags;
@@ -1058,7 +1052,7 @@ Share = function(lang){
 
 					if(!tags) return;
 
-						tags = tags.replace("#", '').toLowerCase()
+						tags = clearTagString(tags)
 
 					if(this.v.length > 4){
 						return false;
@@ -1230,57 +1224,45 @@ Share = function(lang){
 
 					var r = image.split(',');
 
-				if (r[1]){
+					if (r[1]){
 
-						app.ajax.run({
-							type : "POST",
-							imgur : true,
-							data : {
-								Action : "image",
-								image : r[1]
-							},
+						app.imageUploader.uploadImage({
+							image : r[1],
+							base64: image
+						}).then((data) => {
 
-							success : function(data){
+							var url = (self.images.v.length >= 3) ? deep(data, 'image.thumbnailUrl') : deep(data, 'image.url');
+							self.images.v[index] = url;
+							p.success();
 
-								self.images.v[index] = deep(data, 'data.link');
-								
-								p.success();
+						}, (err) => {
 
-							},
+							app.ajax.run({
+								type : "POST",
+								up1 : true,
+								data : {
+									file : r[1]
+								},
 
-							fail : function(d){
+								success : function(data){
 
+									self.images.v[index] = 'https://'+app.options.url+':8092/i/' + deep(data, 'data.ident');
 
-								app.ajax.run({
-									type : "POST",
-									up1 : true,
-									data : {
-										file : r[1]
-									},
-		
-									success : function(data){
-		
-										self.images.v[index] = 'https://'+app.options.url+':8092/i/' + deep(data, 'data.ident');
+									p.success();
 
-										p.success();
-		
-									},
-		
-									fail : function(d){
-		
-										//self.images.v[index] = ''
-		
-										//index++;
-		
-										p.success();
-									}
-								})
-								
+								},
 
-								
-							}
-						})
+								fail : function(d){
 
+									//self.images.v[index] = ''
+
+									//index++;
+
+									p.success();
+								}
+							})
+
+						});
 
 					}
 				}
@@ -1333,6 +1315,19 @@ Share = function(lang){
 			return 'tags'
 		}
 
+
+		if(self.hasexchangetag() && 
+		(
+			self.tags.v.length > 1 || 
+			self.repost.v || 
+			self.itisvideo() || 
+			(self.url.v && self.url.v.length) 
+			
+			)){
+
+			return 'pkoin_commerce_tag'
+		}
+
 		/*if(!self.tags.v.length && self.settings.v != 'a'){
 
 			return 'tags'
@@ -1370,6 +1365,10 @@ Share = function(lang){
 		//if(meta.type) return true
 
 		if(meta.type == 'peertube') return true
+	}
+
+	self.hasexchangetag = function(){
+		return self.tags.have('pkoin_commerce')
 	}
 
 	self.export = function(extend){
@@ -1453,8 +1452,6 @@ Share = function(lang){
 
 		return self.type	
 	}
-
-
 
 	self.typeop = function(platform){
 
@@ -1665,52 +1662,42 @@ UserInfo = function(){
 
 			if (r[1]){
 
-				app.ajax.run({
-					type : "POST",
-					imgur : true,
-					data : {
-						Action : "image",
-						image : r[1]
-					},
+				app.imageUploader.uploadImage({
+					image : r[1],
+					base64: image,
+					type: 'avatar'
+				}).then((data) => {
 
-					success : function(data){
+					self.image.v = deep(data, 'image.url');
+					if (clbk)
+						clbk();
 
-						self.image.v = deep(data, 'data.link');
-						
-						if (clbk)
-							clbk();
+				}, (err) => {
 
-					},
-					fail : function(d){
+					app.ajax.run({
+						type : "POST",
+						up1 : true,
+						data : {
+							file : r[1]
+						},
 
+						success : function(data){
+							self.image.v = 'https://pocketnet.app:8092/i/' + deep(data, 'data.ident');
+							//self.image.v = 'https://'+app.options.url+':8092/i/' + deep(data, 'data.ident');
 
-						app.ajax.run({
-							type : "POST",
-							up1 : true,
-							data : {
-								file : r[1]
-							},
+							if (clbk)
+								clbk();
 
-							success : function(data){
-								self.image.v = 'https://pocketnet.app:8092/i/' + deep(data, 'data.ident');
-								//self.image.v = 'https://'+app.options.url+':8092/i/' + deep(data, 'data.ident');
+						},
 
-								if (clbk)
-									clbk();
+						fail : function(d){
+											
+							if (clbk)
+								clbk(d);
+						}
+					})
 
-							},
-
-							fail : function(d){
-												
-								if (clbk)
-									clbk(d);
-							}
-						})
-
-		
-					}
-				})
-
+				});
 
 			}
 		}
@@ -2022,6 +2009,10 @@ pShare = function(){
 		if(meta.type == 'peertube') return true
 	}
 
+	self.hasexchangetag = function(){
+		return self.tags.indexOf('pkoin_commerce') > -1
+	}
+
 	self._import = function(v, notdecode){
 
 		
@@ -2041,9 +2032,17 @@ pShare = function(){
 			self.url = decodeURIComponent(v.u || v.url || '');
 			self.message = decodeURIComponent((v.m || v.message || "").replace(/\+/g, " "))
 			self.caption = decodeURIComponent((v.c || v.caption || "").replace(/\+/g, " "))
-			self.tags = _.map(v.t || v.tags || [], function(t){ return decodeURIComponent(t) })
+
+			self.tags = _.map(v.t || v.tags || [], function(t){ 
+				return clearTagString(decodeURIComponent(t))
+			})
+			
 			self.poll = v.p || v.poll || {}
 
+		}
+
+		if (self.message){
+			self.message = self.message.replace(/\n{2,}/g, '\n\n');
 		}
 
 		if(v.myVal) self.myVal = Number(v.myVal)

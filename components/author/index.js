@@ -276,9 +276,7 @@ var author = (function(){
 							return blocked.length
 						}
 					},
-		
-					
-		
+			
 					share : {
 						name : self.app.localization.e('share').toUpperCase() + ' <i class="fas fa-share-alt"></i>',
 						mobile : '<i class="fas fa-share-alt"></i>',
@@ -560,13 +558,20 @@ var author = (function(){
 
 				}, function(p){
 
-					p.el.find('.usermenuitem').swipe({
+					/*p.el.find('.usermenuitem').swipe({
 						tap : function(){
 							var r = $(this).attr('menuitem');
 
 							if (reports[r] && reports[r].render)
 								renders.report(reports[r])
 						}
+					})*/
+
+					p.el.find('.usermenuitem').on('click', function(){
+						var r = $(this).attr('menuitem');
+
+							if (reports[r] && reports[r].render)
+								renders.report(reports[r])
 					})
 
 					
@@ -577,16 +582,16 @@ var author = (function(){
 
 							_.each(r.events, function(e, i){
 
-								if(i == 'click' && isTablet()){
+								/*if(i == 'click' && isTablet()){
 
 									el.swipe({
 										tap : e
 									})
 
 								}
-								else{
+								else{*/
 									el.on(i, e)
-								}
+								//}
 
 								
 							})
@@ -622,10 +627,6 @@ var author = (function(){
 			},
 
 			info : function(_el){
-
-				
-
-				
 
 					author.state = self.sdk.ustate.storage[author.address]
 
@@ -1104,6 +1105,20 @@ var author = (function(){
 			})
 
 
+			el.c.find('.changeaccount').on('click', function(){
+
+				self.nav.api.go({
+					open : true,
+					href : 'accounts',
+					inWnd : true,
+
+					essenseData : {
+						href : deep(self, 'app.nav.current.href') || 'index'
+					}
+
+				})
+			})
+
 			self.app.platform.ws.messages.event.clbks.author = function(data){
 			
 				if(data.mesType == 'subscribe' || data.mesType == 'unsubscribe'){
@@ -1289,68 +1304,54 @@ var author = (function(){
 
 					self.sdk.users.addressByName(p.address, function(address){
 
-						
-
 						if (address){
 							author.address = address
 
+							self.sdk.users.get(author.address, function(){
 
+								if(self.app.platform.sdk.user.reputationBlockedRedirect(address)){
+									return
+								}
+
+								if(!self.app.platform.sdk.address.pnet() || author.address != self.app.platform.sdk.address.pnet().address){
+									reports.shares.name = self.app.localization.e('uposts')
+								}
+								else
+								{
+									reports.shares.name = self.app.localization.e('myuposts')
+
+									if(!self.app.user.validate()){
+
+										self.nav.api.go({
+											href : 'userpage?id=test',
+											history : true,
+											open : true,
+											replaceState : true
+										})
+
+										return;
+									}
 								
+								}
 
-								self.sdk.users.get(author.address, function(){
+								author.data = self.sdk.users.storage[author.address]
 
-									if(self.app.platform.sdk.user.reputationBlockedRedirect(address)){
-										return
-									}
+								var data = {
+									author : author
+								};
 
-									if(!self.app.platform.sdk.address.pnet() || author.address != self.app.platform.sdk.address.pnet().address){
-										reports.shares.name = self.app.localization.e('uposts')
+								clbk(data);
 
-										/*if(self.app.curation()){
-											self.nav.api.load({
-												open : true,
-												href : 'userpage',
-												history : true
-											})
-						
-											return
-										}*/
-									}
-									else
-									{
-										reports.shares.name = self.app.localization.e('myuposts')
-
-
-										if(!self.app.user.validate()){
-
-											self.nav.api.go({
-												href : 'userpage?id=test',
-												history : true,
-												open : true
-											})
-
-											return;
-										}
-									
-									}
-
-									author.data = self.sdk.users.storage[author.address]
-									//author.state = self.sdk.ustate.storage[author.address]
-
-									var data = {
-										author : author
-									};
-
-									clbk(data);
-
-								})
+							})
 						}
-
-						else
-						{
-							
+						else{
+							self.app.nav.api.load({
+								open : true,
+								href : 'page404',
+								history : true,
+								replaceState : true
+							})
 						}
-
 						
 					})
 

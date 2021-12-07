@@ -455,7 +455,8 @@ if (true) {
 // see https://tools.ietf.org/html/rfc1808
 
 (function (root) {
-  var URL_REGEX = /^((?:[a-zA-Z0-9+\-.]+:)?)(\/\/[^\/?#]*)?((?:[^\/?#]*\/)*[^;?#]*)?(;[^?#]*)?(\?[^#]*)?(#[^]*)?$/;
+  var URL_REGEX =
+    /^((?:[a-zA-Z0-9+\-.]+:)?)(\/\/[^\/?#]*)?((?:[^\/?#]*\/)*[^;?#]*)?(;[^?#]*)?(\?[^#]*)?(#[^]*)?$/;
   var FIRST_SEGMENT_REGEX = /^([^\/?#]*)([^]*)$/;
   var SLASH_DOT_REGEX = /(?:\/|^)\.(?=\/)/g;
   var SLASH_DOT_DOT_REGEX = /(?:\/|^)\.\.\/(?!\.\.\/)[^\/]*(?=\/)/g;
@@ -859,11 +860,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _controller_cap_level_controller__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./controller/cap-level-controller */ "./src/controller/cap-level-controller.ts");
 /* harmony import */ var _controller_fps_controller__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./controller/fps-controller */ "./src/controller/fps-controller.ts");
 /* harmony import */ var _controller_eme_controller__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./controller/eme-controller */ "./src/controller/eme-controller.ts");
-/* harmony import */ var _utils_xhr_loader__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./utils/xhr-loader */ "./src/utils/xhr-loader.ts");
-/* harmony import */ var _utils_fetch_loader__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./utils/fetch-loader */ "./src/utils/fetch-loader.ts");
-/* harmony import */ var _utils_cues__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./utils/cues */ "./src/utils/cues.ts");
-/* harmony import */ var _utils_mediakeys_helper__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./utils/mediakeys-helper */ "./src/utils/mediakeys-helper.ts");
-/* harmony import */ var _utils_logger__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./utils/logger */ "./src/utils/logger.ts");
+/* harmony import */ var _controller_cmcd_controller__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./controller/cmcd-controller */ "./src/controller/cmcd-controller.ts");
+/* harmony import */ var _utils_xhr_loader__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./utils/xhr-loader */ "./src/utils/xhr-loader.ts");
+/* harmony import */ var _utils_fetch_loader__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./utils/fetch-loader */ "./src/utils/fetch-loader.ts");
+/* harmony import */ var _utils_cues__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./utils/cues */ "./src/utils/cues.ts");
+/* harmony import */ var _utils_mediakeys_helper__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./utils/mediakeys-helper */ "./src/utils/mediakeys-helper.ts");
+/* harmony import */ var _utils_logger__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./utils/logger */ "./src/utils/logger.ts");
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
@@ -871,6 +873,7 @@ function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (O
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -975,7 +978,7 @@ var hlsDefaultConfig = _objectSpread(_objectSpread({
   // used by fps-controller
   appendErrorMaxRetry: 3,
   // used by buffer-controller
-  loader: _utils_xhr_loader__WEBPACK_IMPORTED_MODULE_10__["default"],
+  loader: _utils_xhr_loader__WEBPACK_IMPORTED_MODULE_11__["default"],
   // loader: FetchLoader,
   fLoader: undefined,
   // used by fragment-loader
@@ -1025,23 +1028,25 @@ var hlsDefaultConfig = _objectSpread(_objectSpread({
   // used by eme-controller
   drmSystemOptions: {},
   // used by eme-controller
-  requestMediaKeySystemAccessFunc: _utils_mediakeys_helper__WEBPACK_IMPORTED_MODULE_13__["requestMediaKeySystemAccess"],
+  requestMediaKeySystemAccessFunc: _utils_mediakeys_helper__WEBPACK_IMPORTED_MODULE_14__["requestMediaKeySystemAccess"],
   // used by eme-controller
   testBandwidth: true,
   progressive: false,
-  lowLatencyMode: true
+  lowLatencyMode: true,
+  cmcd: undefined
 }, timelineConfig()), {}, {
   subtitleStreamController:  true ? _controller_subtitle_stream_controller__WEBPACK_IMPORTED_MODULE_3__["SubtitleStreamController"] : undefined,
   subtitleTrackController:  true ? _controller_subtitle_track_controller__WEBPACK_IMPORTED_MODULE_4__["default"] : undefined,
   timelineController:  true ? _controller_timeline_controller__WEBPACK_IMPORTED_MODULE_6__["TimelineController"] : undefined,
   audioStreamController:  true ? _controller_audio_stream_controller__WEBPACK_IMPORTED_MODULE_1__["default"] : undefined,
   audioTrackController:  true ? _controller_audio_track_controller__WEBPACK_IMPORTED_MODULE_2__["default"] : undefined,
-  emeController:  true ? _controller_eme_controller__WEBPACK_IMPORTED_MODULE_9__["default"] : undefined
+  emeController:  true ? _controller_eme_controller__WEBPACK_IMPORTED_MODULE_9__["default"] : undefined,
+  cmcdController:  true ? _controller_cmcd_controller__WEBPACK_IMPORTED_MODULE_10__["default"] : undefined
 });
 
 function timelineConfig() {
   return {
-    cueHandler: _utils_cues__WEBPACK_IMPORTED_MODULE_12__["default"],
+    cueHandler: _utils_cues__WEBPACK_IMPORTED_MODULE_13__["default"],
     // used by timeline-controller
     enableCEA708Captions: true,
     // used by timeline-controller
@@ -1087,18 +1092,18 @@ function mergeConfig(defaultConfig, userConfig) {
 function enableStreamingMode(config) {
   var currentLoader = config.loader;
 
-  if (currentLoader !== _utils_fetch_loader__WEBPACK_IMPORTED_MODULE_11__["default"] && currentLoader !== _utils_xhr_loader__WEBPACK_IMPORTED_MODULE_10__["default"]) {
+  if (currentLoader !== _utils_fetch_loader__WEBPACK_IMPORTED_MODULE_12__["default"] && currentLoader !== _utils_xhr_loader__WEBPACK_IMPORTED_MODULE_11__["default"]) {
     // If a developer has configured their own loader, respect that choice
-    _utils_logger__WEBPACK_IMPORTED_MODULE_14__["logger"].log('[config]: Custom loader detected, cannot enable progressive streaming');
+    _utils_logger__WEBPACK_IMPORTED_MODULE_15__["logger"].log('[config]: Custom loader detected, cannot enable progressive streaming');
     config.progressive = false;
   } else {
-    var canStreamProgressively = Object(_utils_fetch_loader__WEBPACK_IMPORTED_MODULE_11__["fetchSupported"])();
+    var canStreamProgressively = Object(_utils_fetch_loader__WEBPACK_IMPORTED_MODULE_12__["fetchSupported"])();
 
     if (canStreamProgressively) {
-      config.loader = _utils_fetch_loader__WEBPACK_IMPORTED_MODULE_11__["default"];
+      config.loader = _utils_fetch_loader__WEBPACK_IMPORTED_MODULE_12__["default"];
       config.progressive = true;
       config.enableSoftwareAES = true;
-      _utils_logger__WEBPACK_IMPORTED_MODULE_14__["logger"].log('[config]: Progressive streaming enabled, using FetchLoader');
+      _utils_logger__WEBPACK_IMPORTED_MODULE_15__["logger"].log('[config]: Progressive streaming enabled, using FetchLoader');
     }
   }
 }
@@ -1447,8 +1452,6 @@ var AbrController = /*#__PURE__*/function () {
     var live = !!(level !== null && level !== void 0 && (_level$details = level.details) !== null && _level$details !== void 0 && _level$details.live);
     var currentCodecSet = level === null || level === void 0 ? void 0 : level.codecSet;
     var currentFragDuration = partCurrent ? partCurrent.duration : fragCurrent ? fragCurrent.duration : 0;
-
-
 
     for (var i = maxAutoLevel; i >= minAutoLevel; i--) {
       var levelInfo = levels[i];
@@ -1980,7 +1983,9 @@ var AudioStreamController = /*#__PURE__*/function (_BaseStreamController) {
       }
 
       if (!track.details && newDetails.hasProgramDateTime && mainDetails.hasProgramDateTime) {
-        Object(_utils_discontinuities__WEBPACK_IMPORTED_MODULE_12__["alignPDT"])(newDetails, mainDetails);
+        // Make sure our audio rendition is aligned with the "main" rendition, using
+        // pdt as our reference times.
+        Object(_utils_discontinuities__WEBPACK_IMPORTED_MODULE_12__["alignMediaPlaylistByPDT"])(newDetails, mainDetails);
         sliding = newDetails.fragments[0].start;
       } else {
         sliding = this.alignPlaylists(newDetails, track.details);
@@ -2069,9 +2074,9 @@ var AudioStreamController = /*#__PURE__*/function (_BaseStreamController) {
     _BaseStreamController.prototype._handleFragmentLoadComplete.call(this, fragLoadedData);
   };
 
-  _proto.onBufferReset = function onBufferReset()
-  /* event: Events.BUFFER_RESET */
-  {
+  _proto.onBufferReset = function
+    /* event: Events.BUFFER_RESET */
+  onBufferReset() {
     // reset reference to sourcebuffers
     this.mediaBuffer = this.videoBuffer = null;
     this.loadedmetadata = false;
@@ -5232,7 +5237,6 @@ var CapLevelController = /*#__PURE__*/function () {
   };
 
   _proto.detectPlayerSize = function detectPlayerSize() {
-
     if (this.media && this.mediaHeight > 0 && this.mediaWidth > 0) {
       var levels = this.hls.levels;
 
@@ -5279,7 +5283,6 @@ var CapLevelController = /*#__PURE__*/function () {
 
     this.autoLevelCapping = Number.POSITIVE_INFINITY;
     this.hls.firstLevel = this.getMaxLevel(this.firstLevel);
-
     self.clearInterval(this.timer);
     this.timer = self.setInterval(this.detectPlayerSize.bind(this), 1000);
     this.detectPlayerSize();
@@ -5297,8 +5300,6 @@ var CapLevelController = /*#__PURE__*/function () {
   };
 
   _proto.getDimensions = function getDimensions() {
-
-
     if (this.clientRect) {
       return this.clientRect;
     }
@@ -5394,6 +5395,568 @@ var CapLevelController = /*#__PURE__*/function () {
 }();
 
 /* harmony default export */ __webpack_exports__["default"] = (CapLevelController);
+
+/***/ }),
+
+/***/ "./src/controller/cmcd-controller.ts":
+/*!*******************************************!*\
+  !*** ./src/controller/cmcd-controller.ts ***!
+  \*******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return CMCDController; });
+/* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../events */ "./src/events.ts");
+/* harmony import */ var _types_cmcd__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../types/cmcd */ "./src/types/cmcd.ts");
+/* harmony import */ var _utils_buffer_helper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/buffer-helper */ "./src/utils/buffer-helper.ts");
+/* harmony import */ var _utils_logger__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/logger */ "./src/utils/logger.ts");
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _createForOfIteratorHelperLoose(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (it) return (it = it.call(o)).next.bind(it); if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; return function () { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+
+
+
+
+/**
+ * Controller to deal with Common Media Client Data (CMCD)
+ * @see https://cdn.cta.tech/cta/media/media/resources/standards/pdfs/cta-5004-final.pdf
+ */
+
+var CMCDController = /*#__PURE__*/function () {
+  // eslint-disable-line no-restricted-globals
+  // eslint-disable-line no-restricted-globals
+  function CMCDController(hls) {
+    var _this = this;
+
+    this.hls = void 0;
+    this.config = void 0;
+    this.media = void 0;
+    this.sid = void 0;
+    this.cid = void 0;
+    this.useHeaders = false;
+    this.initialized = false;
+    this.starved = false;
+    this.buffering = true;
+    this.audioBuffer = void 0;
+    this.videoBuffer = void 0;
+
+    this.onWaiting = function () {
+      if (_this.initialized) {
+        _this.starved = true;
+      }
+
+      _this.buffering = true;
+    };
+
+    this.onPlaying = function () {
+      if (!_this.initialized) {
+        _this.initialized = true;
+      }
+
+      _this.buffering = false;
+    };
+
+    this.applyPlaylistData = function (context) {
+      try {
+        _this.apply(context, {
+          ot: _types_cmcd__WEBPACK_IMPORTED_MODULE_1__["CMCDObjectType"].MANIFEST,
+          su: !_this.initialized
+        });
+      } catch (error) {
+        _utils_logger__WEBPACK_IMPORTED_MODULE_3__["logger"].warn('Could not generate manifest CMCD data.', error);
+      }
+    };
+
+    this.applyFragmentData = function (context) {
+      try {
+        var fragment = context.frag;
+        var level = _this.hls.levels[fragment.level];
+
+        var ot = _this.getObjectType(fragment);
+
+        var data = {
+          d: fragment.duration * 1000,
+          ot: ot
+        };
+
+        if (ot === _types_cmcd__WEBPACK_IMPORTED_MODULE_1__["CMCDObjectType"].VIDEO || ot === _types_cmcd__WEBPACK_IMPORTED_MODULE_1__["CMCDObjectType"].AUDIO || ot == _types_cmcd__WEBPACK_IMPORTED_MODULE_1__["CMCDObjectType"].MUXED) {
+          data.br = level.bitrate / 1000;
+          data.tb = _this.getTopBandwidth(ot);
+          data.bl = _this.getBufferLength(ot);
+        }
+
+        _this.apply(context, data);
+      } catch (error) {
+        _utils_logger__WEBPACK_IMPORTED_MODULE_3__["logger"].warn('Could not generate segment CMCD data.', error);
+      }
+    };
+
+    this.hls = hls;
+    var config = this.config = hls.config;
+    var cmcd = config.cmcd;
+
+    if (cmcd != null) {
+      config.pLoader = this.createPlaylistLoader();
+      config.fLoader = this.createFragmentLoader();
+      this.sid = cmcd.sessionId || CMCDController.uuid();
+      this.cid = cmcd.contentId;
+      this.useHeaders = cmcd.useHeaders === true;
+      this.registerListeners();
+    }
+  }
+
+  var _proto = CMCDController.prototype;
+
+  _proto.registerListeners = function registerListeners() {
+    var hls = this.hls;
+    hls.on(_events__WEBPACK_IMPORTED_MODULE_0__["Events"].MEDIA_ATTACHED, this.onMediaAttached, this);
+    hls.on(_events__WEBPACK_IMPORTED_MODULE_0__["Events"].MEDIA_DETACHED, this.onMediaDetached, this);
+    hls.on(_events__WEBPACK_IMPORTED_MODULE_0__["Events"].BUFFER_CREATED, this.onBufferCreated, this);
+  };
+
+  _proto.unregisterListeners = function unregisterListeners() {
+    var hls = this.hls;
+    hls.off(_events__WEBPACK_IMPORTED_MODULE_0__["Events"].MEDIA_ATTACHED, this.onMediaAttached, this);
+    hls.off(_events__WEBPACK_IMPORTED_MODULE_0__["Events"].MEDIA_DETACHED, this.onMediaDetached, this);
+    hls.off(_events__WEBPACK_IMPORTED_MODULE_0__["Events"].BUFFER_CREATED, this.onBufferCreated, this);
+    this.onMediaDetached();
+  };
+
+  _proto.destroy = function destroy() {
+    this.unregisterListeners(); // @ts-ignore
+
+    this.hls = this.config = this.audioBuffer = this.videoBuffer = null;
+  };
+
+  _proto.onMediaAttached = function onMediaAttached(event, data) {
+    this.media = data.media;
+    this.media.addEventListener('waiting', this.onWaiting);
+    this.media.addEventListener('playing', this.onPlaying);
+  };
+
+  _proto.onMediaDetached = function onMediaDetached() {
+    if (!this.media) {
+      return;
+    }
+
+    this.media.removeEventListener('waiting', this.onWaiting);
+    this.media.removeEventListener('playing', this.onPlaying); // @ts-ignore
+
+    this.media = null;
+  };
+
+  _proto.onBufferCreated = function onBufferCreated(event, data) {
+    var _data$tracks$audio, _data$tracks$video;
+
+    this.audioBuffer = (_data$tracks$audio = data.tracks.audio) === null || _data$tracks$audio === void 0 ? void 0 : _data$tracks$audio.buffer;
+    this.videoBuffer = (_data$tracks$video = data.tracks.video) === null || _data$tracks$video === void 0 ? void 0 : _data$tracks$video.buffer;
+  };
+
+  /**
+   * Create baseline CMCD data
+   */
+  _proto.createData = function createData() {
+    var _this$media;
+
+    return {
+      v: _types_cmcd__WEBPACK_IMPORTED_MODULE_1__["CMCDVersion"],
+      sf: _types_cmcd__WEBPACK_IMPORTED_MODULE_1__["CMCDStreamingFormat"].HLS,
+      sid: this.sid,
+      cid: this.cid,
+      pr: (_this$media = this.media) === null || _this$media === void 0 ? void 0 : _this$media.playbackRate,
+      mtp: this.hls.bandwidthEstimate / 1000
+    };
+  }
+  /**
+   * Apply CMCD data to a request.
+   */
+  ;
+
+  _proto.apply = function apply(context, data) {
+    if (data === void 0) {
+      data = {};
+    }
+
+    // apply baseline data
+    _extends(data, this.createData());
+
+    var isVideo = data.ot === _types_cmcd__WEBPACK_IMPORTED_MODULE_1__["CMCDObjectType"].INIT || data.ot === _types_cmcd__WEBPACK_IMPORTED_MODULE_1__["CMCDObjectType"].VIDEO || data.ot === _types_cmcd__WEBPACK_IMPORTED_MODULE_1__["CMCDObjectType"].MUXED;
+
+    if (this.starved && isVideo) {
+      data.bs = true;
+      data.su = true;
+      this.starved = false;
+    }
+
+    if (data.su == null) {
+      data.su = this.buffering;
+    } // TODO: Implement rtp, nrr, nor, dl
+
+
+    if (this.useHeaders) {
+      var headers = CMCDController.toHeaders(data);
+
+      if (!Object.keys(headers).length) {
+        return;
+      }
+
+      if (!context.headers) {
+        context.headers = {};
+      }
+
+      _extends(context.headers, headers);
+    } else {
+      var query = CMCDController.toQuery(data);
+
+      if (!query) {
+        return;
+      }
+
+      context.url = CMCDController.appendQueryToUri(context.url, query);
+    }
+  }
+  /**
+   * Apply CMCD data to a manifest request.
+   */
+  ;
+
+  /**
+   * The CMCD object type.
+   */
+  _proto.getObjectType = function getObjectType(fragment) {
+    var type = fragment.type;
+
+    if (type === 'subtitle') {
+      return _types_cmcd__WEBPACK_IMPORTED_MODULE_1__["CMCDObjectType"].TIMED_TEXT;
+    }
+
+    if (fragment.sn === 'initSegment') {
+      return _types_cmcd__WEBPACK_IMPORTED_MODULE_1__["CMCDObjectType"].INIT;
+    }
+
+    if (type === 'audio') {
+      return _types_cmcd__WEBPACK_IMPORTED_MODULE_1__["CMCDObjectType"].AUDIO;
+    }
+
+    if (type === 'main') {
+      if (!this.hls.audioTracks.length) {
+        return _types_cmcd__WEBPACK_IMPORTED_MODULE_1__["CMCDObjectType"].MUXED;
+      }
+
+      return _types_cmcd__WEBPACK_IMPORTED_MODULE_1__["CMCDObjectType"].VIDEO;
+    }
+
+    return undefined;
+  }
+  /**
+   * Get the highest bitrate.
+   */
+  ;
+
+  _proto.getTopBandwidth = function getTopBandwidth(type) {
+    var bitrate = 0;
+    var levels = type === _types_cmcd__WEBPACK_IMPORTED_MODULE_1__["CMCDObjectType"].AUDIO ? this.hls.audioTracks : this.hls.levels;
+
+    for (var _iterator = _createForOfIteratorHelperLoose(levels), _step; !(_step = _iterator()).done;) {
+      var level = _step.value;
+
+      if (level.bitrate > bitrate) {
+        bitrate = level.bitrate;
+      }
+    }
+
+    return bitrate > 0 ? bitrate : NaN;
+  }
+  /**
+   * Get the buffer length for a media type in milliseconds
+   */
+  ;
+
+  _proto.getBufferLength = function getBufferLength(type) {
+    var media = this.hls.media;
+    var buffer = type === _types_cmcd__WEBPACK_IMPORTED_MODULE_1__["CMCDObjectType"].AUDIO ? this.audioBuffer : this.videoBuffer;
+
+    if (!buffer || !media) {
+      return NaN;
+    }
+
+    var info = _utils_buffer_helper__WEBPACK_IMPORTED_MODULE_2__["BufferHelper"].bufferInfo(buffer, media.currentTime, this.config.maxBufferHole);
+    return info.len * 1000;
+  }
+  /**
+   * Create a playlist loader
+   */
+  ;
+
+  _proto.createPlaylistLoader = function createPlaylistLoader() {
+    var pLoader = this.config.pLoader;
+    var apply = this.applyPlaylistData;
+    var Ctor = pLoader || this.config.loader;
+    return /*#__PURE__*/function () {
+      function CmcdPlaylistLoader(config) {
+        this.loader = void 0;
+        this.loader = new Ctor(config);
+      }
+
+      var _proto2 = CmcdPlaylistLoader.prototype;
+
+      _proto2.destroy = function destroy() {
+        this.loader.destroy();
+      };
+
+      _proto2.abort = function abort() {
+        this.loader.abort();
+      };
+
+      _proto2.load = function load(context, config, callbacks) {
+        apply(context);
+        this.loader.load(context, config, callbacks);
+      };
+
+      _createClass(CmcdPlaylistLoader, [{
+        key: "stats",
+        get: function get() {
+          return this.loader.stats;
+        }
+      }, {
+        key: "context",
+        get: function get() {
+          return this.loader.context;
+        }
+      }]);
+
+      return CmcdPlaylistLoader;
+    }();
+  }
+  /**
+   * Create a playlist loader
+   */
+  ;
+
+  _proto.createFragmentLoader = function createFragmentLoader() {
+    var fLoader = this.config.fLoader;
+    var apply = this.applyFragmentData;
+    var Ctor = fLoader || this.config.loader;
+    return /*#__PURE__*/function () {
+      function CmcdFragmentLoader(config) {
+        this.loader = void 0;
+        this.loader = new Ctor(config);
+      }
+
+      var _proto3 = CmcdFragmentLoader.prototype;
+
+      _proto3.destroy = function destroy() {
+        this.loader.destroy();
+      };
+
+      _proto3.abort = function abort() {
+        this.loader.abort();
+      };
+
+      _proto3.load = function load(context, config, callbacks) {
+        apply(context);
+        this.loader.load(context, config, callbacks);
+      };
+
+      _createClass(CmcdFragmentLoader, [{
+        key: "stats",
+        get: function get() {
+          return this.loader.stats;
+        }
+      }, {
+        key: "context",
+        get: function get() {
+          return this.loader.context;
+        }
+      }]);
+
+      return CmcdFragmentLoader;
+    }();
+  }
+  /**
+   * Generate a random v4 UUI
+   *
+   * @returns {string}
+   */
+  ;
+
+  CMCDController.uuid = function uuid() {
+    var url = URL.createObjectURL(new Blob());
+    var uuid = url.toString();
+    URL.revokeObjectURL(url);
+    return uuid.substr(uuid.lastIndexOf('/') + 1);
+  }
+  /**
+   * Serialize a CMCD data object according to the rules defined in the
+   * section 3.2 of
+   * [CTA-5004](https://cdn.cta.tech/cta/media/media/resources/standards/pdfs/cta-5004-final.pdf).
+   */
+  ;
+
+  CMCDController.serialize = function serialize(data) {
+    var results = [];
+
+    var isValid = function isValid(value) {
+      return !Number.isNaN(value) && value != null && value !== '' && value !== false;
+    };
+
+    var toRounded = function toRounded(value) {
+      return Math.round(value);
+    };
+
+    var toHundred = function toHundred(value) {
+      return toRounded(value / 100) * 100;
+    };
+
+    var toUrlSafe = function toUrlSafe(value) {
+      return encodeURIComponent(value);
+    };
+
+    var formatters = {
+      br: toRounded,
+      d: toRounded,
+      bl: toHundred,
+      dl: toHundred,
+      mtp: toHundred,
+      nor: toUrlSafe,
+      rtp: toHundred,
+      tb: toRounded
+    };
+    var keys = Object.keys(data || {}).sort();
+
+    for (var _iterator2 = _createForOfIteratorHelperLoose(keys), _step2; !(_step2 = _iterator2()).done;) {
+      var key = _step2.value;
+      var value = data[key]; // ignore invalid values
+
+      if (!isValid(value)) {
+        continue;
+      } // Version should only be reported if not equal to 1.
+
+
+      if (key === 'v' && value === 1) {
+        continue;
+      } // Playback rate should only be sent if not equal to 1.
+
+
+      if (key == 'pr' && value === 1) {
+        continue;
+      } // Certain values require special formatting
+
+
+      var formatter = formatters[key];
+
+      if (formatter) {
+        value = formatter(value);
+      } // Serialize the key/value pair
+
+
+      var type = typeof value;
+      var result = void 0;
+
+      if (key === 'ot' || key === 'sf' || key === 'st') {
+        result = key + "=" + value;
+      } else if (type === 'boolean') {
+        result = key;
+      } else if (type === 'number') {
+        result = key + "=" + value;
+      } else {
+        result = key + "=" + JSON.stringify(value);
+      }
+
+      results.push(result);
+    }
+
+    return results.join(',');
+  }
+  /**
+   * Convert a CMCD data object to request headers according to the rules
+   * defined in the section 2.1 and 3.2 of
+   * [CTA-5004](https://cdn.cta.tech/cta/media/media/resources/standards/pdfs/cta-5004-final.pdf).
+   */
+  ;
+
+  CMCDController.toHeaders = function toHeaders(data) {
+    var keys = Object.keys(data);
+    var headers = {};
+    var headerNames = ['Object', 'Request', 'Session', 'Status'];
+    var headerGroups = [{}, {}, {}, {}];
+    var headerMap = {
+      br: 0,
+      d: 0,
+      ot: 0,
+      tb: 0,
+      bl: 1,
+      dl: 1,
+      mtp: 1,
+      nor: 1,
+      nrr: 1,
+      su: 1,
+      cid: 2,
+      pr: 2,
+      sf: 2,
+      sid: 2,
+      st: 2,
+      v: 2,
+      bs: 3,
+      rtp: 3
+    };
+
+    for (var _i = 0, _keys = keys; _i < _keys.length; _i++) {
+      var key = _keys[_i];
+      // Unmapped fields are mapped to the Request header
+      var index = headerMap[key] != null ? headerMap[key] : 1;
+      headerGroups[index][key] = data[key];
+    }
+
+    for (var i = 0; i < headerGroups.length; i++) {
+      var value = CMCDController.serialize(headerGroups[i]);
+
+      if (value) {
+        headers["CMCD-" + headerNames[i]] = value;
+      }
+    }
+
+    return headers;
+  }
+  /**
+   * Convert a CMCD data object to query args according to the rules
+   * defined in the section 2.2 and 3.2 of
+   * [CTA-5004](https://cdn.cta.tech/cta/media/media/resources/standards/pdfs/cta-5004-final.pdf).
+   */
+  ;
+
+  CMCDController.toQuery = function toQuery(data) {
+    return "CMCD=" + encodeURIComponent(CMCDController.serialize(data));
+  }
+  /**
+   * Append query args to a uri.
+   */
+  ;
+
+  CMCDController.appendQueryToUri = function appendQueryToUri(uri, query) {
+    if (!query) {
+      return uri;
+    }
+
+    var separator = uri.includes('?') ? '&' : '?';
+    return "" + uri + separator + query;
+  };
+
+  return CMCDController;
+}();
+
+
 
 /***/ }),
 
@@ -9598,7 +10161,7 @@ var StreamController = /*#__PURE__*/function (_BaseStreamController) {
       var bufferStart = buffered.length ? buffered.start(0) : 0;
       var delta = bufferStart - startPosition;
 
-      if (delta > 0 && delta < this.config.maxBufferHole) {
+      if (delta > 0 && (delta < this.config.maxBufferHole || delta < this.config.maxFragLookUpTolerance)) {
         _utils_logger__WEBPACK_IMPORTED_MODULE_12__["logger"].log("adjusting start position by " + delta + " to match buffer start");
         startPosition += delta;
         this.startPosition = startPosition;
@@ -10261,7 +10824,7 @@ var SubtitleStreamController = /*#__PURE__*/function (_BaseStreamController) {
 
       if (!track.details) {
         if (newDetails.hasProgramDateTime && mainDetails.hasProgramDateTime) {
-          Object(_utils_discontinuities__WEBPACK_IMPORTED_MODULE_4__["alignPDT"])(newDetails, mainDetails);
+          Object(_utils_discontinuities__WEBPACK_IMPORTED_MODULE_4__["alignMediaPlaylistByPDT"])(newDetails, mainDetails);
         } else if (mainSlidingStartFragment) {
           // line up live playlist with main so that fragments in range are loaded
           Object(_level_helper__WEBPACK_IMPORTED_MODULE_5__["addSliding"])(newDetails, mainSlidingStartFragment.start);
@@ -16558,6 +17121,7 @@ var Hls = /*#__PURE__*/function () {
     this.audioTrackController = void 0;
     this.subtitleTrackController = void 0;
     this.emeController = void 0;
+    this.cmcdController = void 0;
     this._media = null;
     this.url = null;
     var config = this.config = Object(_config__WEBPACK_IMPORTED_MODULE_10__["mergeConfig"])(Hls.DefaultConfig, userConfig);
@@ -16600,6 +17164,7 @@ var Hls = /*#__PURE__*/function () {
     this.createController(config.subtitleStreamController, fragmentTracker, networkControllers);
     this.createController(config.timelineController, null, coreComponents);
     this.emeController = this.createController(config.emeController, null, coreComponents);
+    this.cmcdController = this.createController(config.cmcdController, null, coreComponents);
     this.latencyController = this.createController(_controller_latency_controller__WEBPACK_IMPORTED_MODULE_4__["default"], null, coreComponents);
     this.coreComponents = coreComponents;
   }
@@ -17013,7 +17578,6 @@ var Hls = /*#__PURE__*/function () {
      * @type {number}
      */
     function set(newLevel) {
-      //console.log('setautoLevelCapping', newLevel, this)
       if (this._autoLevelCapping !== newLevel) {
         _utils_logger__WEBPACK_IMPORTED_MODULE_9__["logger"].log("set autoLevelCapping:" + newLevel);
         this._autoLevelCapping = newLevel;
@@ -17082,8 +17646,6 @@ var Hls = /*#__PURE__*/function () {
       var levels = this.levels,
           autoLevelCapping = this.autoLevelCapping;
       var maxAutoLevel;
-
-      //console.log('autoLevelCapping', autoLevelCapping, this)
 
       if (autoLevelCapping === -1 && levels && levels.length) {
         maxAutoLevel = levels.length - 1;
@@ -17294,7 +17856,7 @@ var Hls = /*#__PURE__*/function () {
   }], [{
     key: "version",
     get: function get() {
-      return "1.0.7";
+      return "1.1.1";
     }
   }, {
     key: "Events",
@@ -17667,6 +18229,7 @@ function createLoaderContext(frag, part) {
     part: part,
     responseType: 'arraybuffer',
     url: segment.url,
+    headers: {},
     rangeStart: 0,
     rangeEnd: 0
   };
@@ -21023,39 +21586,39 @@ var MP4Remuxer = /*#__PURE__*/function () {
         // 3: currentTime (aka nextPtsNorm) is not 0
         // 4: remuxing with video (videoTimeOffset !== undefined)
         else if (delta >= maxAudioFramesDrift * inputSampleDuration && duration < MAX_SILENT_FRAME_DURATION && alignedWithVideo) {
-            var missing = Math.round(delta / inputSampleDuration); // Adjust nextPts so that silent samples are aligned with media pts. This will prevent media samples from
-            // later being shifted if nextPts is based on timeOffset and delta is not a multiple of inputSampleDuration.
+          var missing = Math.round(delta / inputSampleDuration); // Adjust nextPts so that silent samples are aligned with media pts. This will prevent media samples from
+          // later being shifted if nextPts is based on timeOffset and delta is not a multiple of inputSampleDuration.
 
-            nextPts = pts - missing * inputSampleDuration;
+          nextPts = pts - missing * inputSampleDuration;
 
-            if (nextPts < 0) {
-              missing--;
-              nextPts += inputSampleDuration;
-            }
-
-            if (i === 0) {
-              this.nextAudioPts = nextAudioPts = nextPts;
-            }
-
-            _utils_logger__WEBPACK_IMPORTED_MODULE_5__["logger"].warn("[mp4-remuxer]: Injecting " + missing + " audio frame @ " + (nextPts / inputTimeScale).toFixed(3) + "s due to " + Math.round(1000 * delta / inputTimeScale) + " ms gap.");
-
-            for (var j = 0; j < missing; j++) {
-              var newStamp = Math.max(nextPts, 0);
-              var fillFrame = _aac_helper__WEBPACK_IMPORTED_MODULE_1__["default"].getSilentFrame(track.manifestCodec || track.codec, track.channelCount);
-
-              if (!fillFrame) {
-                _utils_logger__WEBPACK_IMPORTED_MODULE_5__["logger"].log('[mp4-remuxer]: Unable to get silent frame for given audio codec; duplicating last frame instead.');
-                fillFrame = sample.unit.subarray();
-              }
-
-              inputSamples.splice(i, 0, {
-                unit: fillFrame,
-                pts: newStamp
-              });
-              nextPts += inputSampleDuration;
-              i++;
-            }
+          if (nextPts < 0) {
+            missing--;
+            nextPts += inputSampleDuration;
           }
+
+          if (i === 0) {
+            this.nextAudioPts = nextAudioPts = nextPts;
+          }
+
+          _utils_logger__WEBPACK_IMPORTED_MODULE_5__["logger"].warn("[mp4-remuxer]: Injecting " + missing + " audio frame @ " + (nextPts / inputTimeScale).toFixed(3) + "s due to " + Math.round(1000 * delta / inputTimeScale) + " ms gap.");
+
+          for (var j = 0; j < missing; j++) {
+            var newStamp = Math.max(nextPts, 0);
+            var fillFrame = _aac_helper__WEBPACK_IMPORTED_MODULE_1__["default"].getSilentFrame(track.manifestCodec || track.codec, track.channelCount);
+
+            if (!fillFrame) {
+              _utils_logger__WEBPACK_IMPORTED_MODULE_5__["logger"].log('[mp4-remuxer]: Unable to get silent frame for given audio codec; duplicating last frame instead.');
+              fillFrame = sample.unit.subarray();
+            }
+
+            inputSamples.splice(i, 0, {
+              unit: fillFrame,
+              pts: newStamp
+            });
+            nextPts += inputSampleDuration;
+            i++;
+          }
+        }
 
         sample.pts = nextPts;
         nextPts += inputSampleDuration;
@@ -21708,6 +22271,68 @@ var TaskLoop = /*#__PURE__*/function () {
 }();
 
 
+
+/***/ }),
+
+/***/ "./src/types/cmcd.ts":
+/*!***************************!*\
+  !*** ./src/types/cmcd.ts ***!
+  \***************************/
+/*! exports provided: CMCDVersion, CMCDObjectType, CMCDStreamingFormat, CMCDStreamType */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CMCDVersion", function() { return CMCDVersion; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CMCDObjectType", function() { return CMCDObjectType; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CMCDStreamingFormat", function() { return CMCDStreamingFormat; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CMCDStreamType", function() { return CMCDStreamType; });
+/**
+ * CMCD spec version
+ */
+var CMCDVersion = 1;
+/**
+ * CMCD Object Type
+ */
+
+var CMCDObjectType;
+/**
+ * CMCD Streaming Format
+ */
+
+(function (CMCDObjectType) {
+  CMCDObjectType["MANIFEST"] = "m";
+  CMCDObjectType["AUDIO"] = "a";
+  CMCDObjectType["VIDEO"] = "v";
+  CMCDObjectType["MUXED"] = "av";
+  CMCDObjectType["INIT"] = "i";
+  CMCDObjectType["CAPTION"] = "c";
+  CMCDObjectType["TIMED_TEXT"] = "tt";
+  CMCDObjectType["KEY"] = "k";
+  CMCDObjectType["OTHER"] = "o";
+})(CMCDObjectType || (CMCDObjectType = {}));
+
+var CMCDStreamingFormat;
+/**
+ * CMCD Streaming Type
+ */
+
+(function (CMCDStreamingFormat) {
+  CMCDStreamingFormat["DASH"] = "d";
+  CMCDStreamingFormat["HLS"] = "h";
+  CMCDStreamingFormat["SMOOTH"] = "s";
+  CMCDStreamingFormat["OTHER"] = "o";
+})(CMCDStreamingFormat || (CMCDStreamingFormat = {}));
+
+var CMCDStreamType;
+/**
+ * CMCD Headers
+ */
+
+(function (CMCDStreamType) {
+  CMCDStreamType["VOD"] = "v";
+  CMCDStreamType["LIVE"] = "l";
+})(CMCDStreamType || (CMCDStreamType = {}));
 
 /***/ }),
 
@@ -23982,7 +24607,7 @@ var Cues = {
 /*!**************************************!*\
   !*** ./src/utils/discontinuities.ts ***!
   \**************************************/
-/*! exports provided: findFirstFragWithCC, shouldAlignOnDiscontinuities, findDiscontinuousReferenceFrag, adjustSlidingStart, alignStream, alignPDT */
+/*! exports provided: findFirstFragWithCC, shouldAlignOnDiscontinuities, findDiscontinuousReferenceFrag, adjustSlidingStart, alignStream, alignPDT, alignFragmentByPDTDelta, alignMediaPlaylistByPDT */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -23993,6 +24618,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "adjustSlidingStart", function() { return adjustSlidingStart; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "alignStream", function() { return alignStream; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "alignPDT", function() { return alignPDT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "alignFragmentByPDTDelta", function() { return alignFragmentByPDTDelta; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "alignMediaPlaylistByPDT", function() { return alignMediaPlaylistByPDT; });
 /* harmony import */ var _home_runner_work_hls_js_hls_js_src_polyfills_number__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./src/polyfills/number */ "./src/polyfills/number.ts");
 /* harmony import */ var _logger__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./logger */ "./src/utils/logger.ts");
 /* harmony import */ var _controller_level_helper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../controller/level-helper */ "./src/controller/level-helper.ts");
@@ -24142,6 +24769,55 @@ function alignPDT(details, lastDetails) {
     _logger__WEBPACK_IMPORTED_MODULE_1__["logger"].log("Adjusting PTS using programDateTime delta " + (newPDT - lastPDT) + "ms, sliding:" + sliding.toFixed(3) + " " + details.url + " ");
     adjustSlidingStart(sliding, details);
   }
+}
+function alignFragmentByPDTDelta(frag, delta) {
+  var programDateTime = frag.programDateTime;
+  if (!programDateTime) return;
+  var start = (programDateTime - delta) / 1000;
+  frag.start = frag.startPTS = start;
+  frag.endPTS = start + frag.duration;
+}
+/**
+ * Ensures appropriate time-alignment between renditions based on PDT. Unlike `alignPDT`, which adjusts
+ * the timeline based on the delta between PDTs of the 0th fragment of two playlists/`LevelDetails`,
+ * this function assumes the timelines represented in `refDetails` are accurate, including the PDTs,
+ * and uses the "wallclock"/PDT timeline as a cross-reference to `details`, adjusting the presentation
+ * times/timelines of `details` accordingly.
+ * Given the asynchronous nature of fetches and initial loads of live `main` and audio/subtitle tracks,
+ * the primary purpose of this function is to ensure the "local timelines" of audio/subtitle tracks
+ * are aligned to the main/video timeline, using PDT as the cross-reference/"anchor" that should
+ * be consistent across playlists, per the HLS spec.
+ * @param details - The details of the rendition you'd like to time-align (e.g. an audio rendition).
+ * @param refDetails - The details of the reference rendition with start and PDT times for alignment.
+ */
+
+function alignMediaPlaylistByPDT(details, refDetails) {
+  // This check protects the unsafe "!" usage below for null program date time access.
+  if (!refDetails.fragments.length || !details.hasProgramDateTime || !refDetails.hasProgramDateTime) {
+    return;
+  }
+
+  var refPDT = refDetails.fragments[0].programDateTime; // hasProgramDateTime check above makes this safe.
+
+  var refStart = refDetails.fragments[0].start; // Use the delta between the reference details' presentation timeline's start time and its PDT
+  // to align the other rendtion's timeline.
+
+  var delta = refPDT - refStart * 1000; // Per spec: "If any Media Playlist in a Master Playlist contains an EXT-X-PROGRAM-DATE-TIME tag, then all
+  // Media Playlists in that Master Playlist MUST contain EXT-X-PROGRAM-DATE-TIME tags with consistent mappings
+  // of date and time to media timestamps."
+  // So we should be able to use each rendition's PDT as a reference time and use the delta to compute our relevant
+  // start and end times.
+  // NOTE: This code assumes each level/details timelines have already been made "internally consistent"
+
+  details.fragments.forEach(function (frag) {
+    alignFragmentByPDTDelta(frag, delta);
+  });
+
+  if (details.fragmentHint) {
+    alignFragmentByPDTDelta(details.fragmentHint, delta);
+  }
+
+  details.alignedSliding = true;
 }
 
 /***/ }),
@@ -24327,6 +25003,8 @@ function _isNativeFunction(fn) { return Function.toString.call(fn).indexOf("[nat
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 
 
@@ -24532,13 +25210,12 @@ function getRequestParameters(context, signal) {
     method: 'GET',
     mode: 'cors',
     credentials: 'same-origin',
-    signal: signal
+    signal: signal,
+    headers: new self.Headers(_extends({}, context.headers))
   };
 
   if (context.rangeEnd) {
-    initParams.headers = new self.Headers({
-      Range: 'bytes=' + context.rangeStart + '-' + String(context.rangeEnd - 1)
-    });
+    initParams.headers.set('Range', 'bytes=' + context.rangeStart + '-' + String(context.rangeEnd - 1));
   }
 
   return initParams;
@@ -26960,6 +27637,14 @@ var XhrLoader = /*#__PURE__*/function () {
 
       if (!xhr.readyState) {
         xhr.open('GET', context.url, true);
+      }
+
+      var headers = this.context.headers;
+
+      if (headers) {
+        for (var header in headers) {
+          xhr.setRequestHeader(header, headers[header]);
+        }
       }
     } catch (e) {
       // IE11 throws an exception on xhr.open if attempting to access an HTTP resource over HTTPS

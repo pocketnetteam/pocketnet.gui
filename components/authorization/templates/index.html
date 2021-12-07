@@ -25,11 +25,14 @@
 
 										<div>
 											<div class="inputWrapperKey">
-												<input type="text" class="loginValue" value="<%- (mnemonic) %>" placeholder="<%=e('e13024')%>" autocomplete="on"/>
+												<input elementsid="inputloginkey" type="text" class="loginValue" value="<%- (mnemonic) %>" placeholder="<%=e('e13024')%>" autocomplete="on"/>
 											</div>
 										</div>
 										<div class="fileUploaderWrapper">
-											<div class="uploadFile">
+											<div 
+												elementsid="uploadqrcode"
+												class="uploadFile"
+											>
 												<div class="icon"><i class="fas fa-qrcode"></i></div>
 												<div class="label"><%=e('loadqrcode')%></div>
 											</div>
@@ -40,12 +43,12 @@
 								</div>
 
 								<div class="item e buttons">
-									<button class="enter"><%=e('signin')%></button>
+									<button elementsid="buttonsignin" class="enter"><%=e('signin')%></button>
 								</div>
 
 								<% if(fast) {%>
 									<div class="item e buttons ">
-										<button class="showformh ghost"><i class="fas fa-chevron-circle-left"></i> <%=e('e13025')%></button>
+										<button elementsid="showforwh" class="showformh ghost"><i class="fas fa-chevron-circle-left"></i> <%=e('e13025')%></button>
 									</div>	
 								<% } %>
 
@@ -108,7 +111,7 @@
 					
 
 					<% if(!fast) {%> 
-						<button class="good toRegistration"><%=e('createnew')%></button>
+						<button elementsid="toregistration" class="good toRegistration"><%=e('createnew')%></button>
 					<% } else { %>
 
 						<div class="filluserform">

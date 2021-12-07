@@ -109,11 +109,15 @@ Application = function(p)
 		localStoragePrefix : self.meta.protocol,
 
 		
-		server : p.server || 'https://'+url+'/Shop/AJAXMain.aspx', //donations will be removed
+		server : p.server || 'https://pocketnet.app/Shop/AJAXMain.aspx', //donations will be removed
 
 		//////////////
 		
 		firebase : p.firebase || 'https://'+url+':8888', /// will be removed
+
+		//////////////
+
+		peertubeServer : 'https://test.peertube.pocketnet.app/api/v1/',
 
 		//////////////
 
@@ -467,7 +471,7 @@ Application = function(p)
 			_p.TemplateID = '2000'
 
 			var body = ''
-				body += '<p><a href="https://'+self.options.url+'/author?address='+address+'">User('+address+')</a> complaint post <a href="https://'+self.options.url+'/post?s='+postid+'">Post ('+postid+')</a></p>'
+				body += '<p><a elementsid="https://'+self.options.url+'/author?address='+address+'" href="https://'+self.options.url+'/author?address='+address+'">User('+address+')</a> complaint post <a elementsid="https://'+self.options.url+'/post?s='+postid+'" href="https://'+self.options.url+'/post?s='+postid+'">Post ('+postid+')</a></p>'
 				body += '<p>Reason: '+reason+'</p>'
 
 			_p.body = encodeURIComponent(body)
@@ -602,7 +606,7 @@ Application = function(p)
 			_p.TemplateID = '2000'
 
 			var body = ''
-				body += '<p><a href="https://'+self.options.url+'/author?address='+address1+'">User('+address1+')</a> complaint room ('+roomid+')</a></p>'
+				body += '<p><a elementsid="https://'+self.options.url+'/author?address='+address1+'" href="https://'+self.options.url+'/author?address='+address1+'">User('+address1+')</a> complaint room ('+roomid+')</a></p>'
 
 				body += '<p>Reason: '+reason+'</p>'
 
@@ -701,13 +705,16 @@ Application = function(p)
 
 		self.platform = new Platform(self, self.options.listofnodes);
 
+		self.imageUploader = new ImageUploader(self);
+
 		self.options.platform = self.platform
 
 		if (self.ref)
 			self.platform.sdk.users.addressByName(self.ref, function(r){
 				if(r){
-					self.ref = r;
-					localStorage['ref'] = self.ref
+					self.setref(r)
+					/*self.ref = r;
+					localStorage['ref'] = self.ref*/
 				}
 
 			})
@@ -991,7 +998,8 @@ Application = function(p)
 				p || (p = {});
 
 				p.clbk = function(){
-					navigator.splashscreen.hide();
+					if (navigator.splashscreen)
+						navigator.splashscreen.hide();
 				}
 
 				if (window.Keyboard && window.Keyboard.disableScroll){
@@ -1270,6 +1278,7 @@ Application = function(p)
 					s(scrollTop, blockScroll)
 				})
 
+
 				if(isMobile() && !cr){
 
 					var cs = (lastScrollTop + 40 < scrollTop || lastScrollTop - 40 < scrollTop)
@@ -1328,6 +1337,7 @@ Application = function(p)
 			delayscroll = slowMade(function(){
 				window.requestAnimationFrame(function(){
 
+
 					if(!self.el.window) return
 					if (self.fullscreenmode) return
 					
@@ -1335,7 +1345,7 @@ Application = function(p)
 						s(self.lastScrollTop, blockScroll)
 					})
 
-					if(!t){
+					if(!t && isMobile()){
 
 						if (showPanel == '2' && !self.el.html.hasClass('scrollmodedown')){
 							self.el.html.addClass('scrollmodedown')
@@ -1910,10 +1920,22 @@ Application = function(p)
 		}
 	}
 
+	self.setref = function(r, na){
+
+		if(na && self.ref) return
+
+		self.ref = r;
+		localStorage['ref'] = self.ref
+
+
+		console.log('self.ref', self.ref)
+
+	}
+
 	self.ref = null;
 	
 	try{
-		self.ref = localStorage['ref'] || parameters().ref;
+		self.ref = parameters().ref || localStorage['ref'];
 	}catch(e){}
 	
 

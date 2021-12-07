@@ -3,7 +3,7 @@
 	<div class="subcaptionWrapperTableCnt">
 		<div class="subcaptionWrapperTable table">
 
-			<div class="_stepback"></div>
+			<div elementsid="_stepbackSend" class="_stepback"></div>
 
 			<div class="subcaption">
 				<span><%=e('wsend').toUpperCase()%></span>
@@ -44,7 +44,7 @@
 			</div>
 
 			<div class="changer">
-				<div class="change">
+				<div elementsid="sendchange" class="change">
 					<i class="fas fa-exchange-alt"></i>
 				</div>
 			</div>
@@ -104,7 +104,7 @@
 			</div>
 
 			<div class="sendcoins"> 
-				<button class="calculateFee"><i class="fas fa-chevron-circle-right"></i> <%=e('calcfeesandsend')%></button>
+				<button elementsid="sendcalculateFee" class="calculateFee"><i class="fas fa-chevron-circle-right"></i> <%=e('calcfeesandsend')%></button>
 			</div>
 		</div>
 
@@ -116,6 +116,6 @@
 			
 	</div>
 
-	<div class="_stepclose fadeInByElementStep"></div>
+	<div elementsid="_stepclosefadeInByElementStepSend" class="_stepclose fadeInByElementStep"></div>
 
 </div>

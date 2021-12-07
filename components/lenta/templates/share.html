@@ -33,7 +33,6 @@ var cview = view
 
 if(share.itisvideo()) cview = 'video'
 
-
 var bigmessage = false;
 var name = app.platform.api.name(share.address)
 
@@ -42,6 +41,8 @@ var emptywithrepost = share.isEmpty() && share.repost
 var value = Number(share.score)
 
 var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share)
+
+var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
 var metadisplay = function(){ %>
 
@@ -56,7 +57,7 @@ var metadisplay = function(){ %>
 					<div class="authorTable">
 						<div class="authorCell">
 
-							<a href="<%-app.platform.api.authorlink(share.address)%>">
+							<a elementsid="shareaddresslink" href="<%-app.platform.api.authorlink(share.address)%>">
 
 
 							<% var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0 %>
@@ -67,7 +68,7 @@ var metadisplay = function(){ %>
 
 							<% if((!state || !my) && (typeof repost == 'undefined' || !repost)) { %> 
 
-								<span class="sbtnxs">
+								<span elementsid="sbtnxs-follow" class="sbtnxs">
 									&middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><i class="far fa-check-circle"></i>  <%=e('following')%></span>
 						
 									
@@ -78,7 +79,7 @@ var metadisplay = function(){ %>
 										%>
 										
 
-										<span class="notificationturn <% if(r && (r.private == 'true' || r.private === true)) {%> turnon <% } %>">&middot; <i class="far fa-bell-slash"></i></span>
+										<span elementsid="lenta_notificationturn" class="notificationturn <% if(r && (r.private == 'true' || r.private === true)) {%> turnon <% } %>">&middot; <i class="far fa-bell-slash"></i></span>
 									<% } %>
 				
 
@@ -91,7 +92,7 @@ var metadisplay = function(){ %>
 						</div>	
 						
 						<% if((typeof repost == 'undefined' || !repost || fromempty)) {%>
-							<div class="sys hideOnFullVideo unselectablemobile">
+							<div class="sys unselectablemobile">
 
 								<%if(share.pin){%>
 								<span class="pinnedLabel"><i class="fas fa-thumbtack"></i> <%=e('pinned').toLowerCase()%>,</span><%}%><% if(share.downloadedDate) {%> <span class="fas fa-cloud-download-alt"></span> <span class="realtime editedLabel" time="<%-share.downloadedDate%>"><%- app.reltime(share.downloadedDate) %></span><% } else { %> 
@@ -106,7 +107,7 @@ var metadisplay = function(){ %>
 			
 				<div class="repostCaption">
 					<i class="fas fa-share"></i> 
-					<a href="<%-app.platform.api.authorlink(share.address)%>">
+					<a elementsid="repostcaptionlink" href="<%-app.platform.api.authorlink(share.address)%>">
 						<span class="adr"><%-name || share.address %></span>
 					</a>
 				</div>
@@ -119,7 +120,7 @@ var metadisplay = function(){ %>
 			
 			
 
-			<div class="metapanel <%-share.txid%>">
+			<div elementsid="lenta_metapanel" class="metapanel <%-share.txid%>">
 				<% if(!checkvisibility && (typeof openapi == 'undefined' || !openapi)) {%>
 					<div class="metapanelitem metmenu">
 						<i class="fas fa-ellipsis-h"></i>
@@ -167,7 +168,7 @@ var metadisplay = function(){ %>
 
 			<div class="metapanel">
 				<div class="metapanelitem">
-					<a href="<%-app.platform.api.authorlink(share.address)%>?s=<%-share.txid%>&mpost=true">
+					<a elementsid="sharebuttonlink" href="<%-app.platform.api.authorlink(share.address)%>?s=<%-share.txid%>&mpost=true">
 						<i class="fas fa-share"></i> 
 					</a>
 				</div>
@@ -190,11 +191,11 @@ var makecaption = function(){
 
 		<% if(c) {
 
-			c = filterXSS(clearScripts((findAndReplaceLink(c))))
+			c = findAndReplaceLink(filterXSS(clearScripts(c)), true)
 		%>
-			<div class="paddingWrapper hideOnFullVideo">
+			<div class="paddingWrapper">
 				<div class="sharecaption canmark">
-					<%=app.actions.emoji(nl2br(trimrn(c)))%>
+					<span><%=app.actions.emoji(nl2br(trimrn(c)))%></span>
 				</div>
 			</div>
 
@@ -208,7 +209,7 @@ var makecaptionclear = function(){
 
 		<% if(cc) {
 
-			cc = filterXSS(clearScripts((findAndReplaceLink(cc))))
+			cc = findAndReplaceLink(filterXSS(clearScripts(findAndReplaceLink(cc))), true)
 
 
 		%>
@@ -256,7 +257,7 @@ var arranges = {
 				
 			}
 
-			nm = share.renders.xssmessage(nm)
+			nm = findAndReplaceLink(share.renders.xssmessage(nm), true)
 
 		%>
 			<div class="paddingWrapper hideOnFullVideo">
@@ -318,7 +319,7 @@ var arranges = {
 						<% _.each(share.images, function(image){ %>
 
 							<div class="imagesWrapper">
-								<div class="image imageOpen imagePostOpent" save="<% if(typeof nameFromScr != 'undefined') {%><%- nameFromScr(image) %><% } %>" image="<%-image%>" i="<%-image%>">
+								<div elementsid="lenta_imageOpen" class="image imageOpen imagePostOpent" save="<% if(typeof nameFromScr != 'undefined') {%><%- nameFromScr(image) %><% } %>" image="<%-image%>" i="<%-image%>">
 								</div>
 							</div>
 
@@ -327,7 +328,7 @@ var arranges = {
 						<% if(imageFromVideo) {%>
 
 							<div class="imagesWrapper forvideo">
-								<div class="image videoOpen" image="<%-imageFromVideo%>">
+								<div elementsid="lenta_videoOpen" class="image videoOpen" image="<%-imageFromVideo%>">
 									<div class="playicon"><i class="fas fa-play"></i></div>
 								</div>
 							</div>
@@ -372,7 +373,7 @@ var arranges = {
 				<div class="iconWrapper">
 
 					
-					<a href="<%-app.platform.api.authorlink(share.address)%>">
+					<a elementsid="shareiconprofilelink" href="<%-app.platform.api.authorlink(share.address)%>">
 
 
 						<% 
@@ -411,7 +412,7 @@ var arranges = {
 
 			<% } %>
 
-			<div class="cntswrk hideOnFullVideo formeta">
+			<div class="cntswrk  formeta">
 
 				<div class="metawrapper"> 
 					<% metadisplay() %> 
@@ -419,9 +420,9 @@ var arranges = {
 
 			</div>
 			
-			<% if(!checkvisibility) {%>
+			<% if(!checkvisibility && !lockedaccount) {%>
 
-				<div class="cntswrk cntscontent">
+				<div class="cntswrk cntscontent postcontent">
 
 
 					<% var a = share.settings.a || share.default.a %>
@@ -438,40 +439,47 @@ var arranges = {
 				</div>
 
 			<% } else { %> 
-				<div class="cntswrk cntscontent">
+				<div class="cntswrk cntscontent postcontent">
 
 					<div class="hiddenpost">
 
 
-
-						<div class="captionpreview">
-							<% makecaptionclear() %>
-						</div>
-
-						<% if(checkvisibility == 'sub'){ %>
-
-							<div class="hiddenlabeltext">
-								<%=e('sharevisibilitylabel_sub_' + cview)%>
+						<% if(!lockedaccount) {%>
+							<div class="captionpreview">
+								<% makecaptionclear() %>
 							</div>
 
+							<% if(checkvisibility == 'sub'){ %>
+
+								<div class="hiddenlabeltext">
+									<%=e('sharevisibilitylabel_sub_' + cview)%>
+								</div>
+
+							<% } %>
+
+							<% if(checkvisibility == 'reg'){ %>
+
+								<div class="hiddenlabeltext">
+									<%=e('sharevisibilitylabel_reg_' + cview)%>
+								</div>
+
+							<% } %>
+
+							<% if(!state) {%>
+
+								<div class="hiddenlabelaction">
+									<button elementsid="hrefregistration" class="orange small button toregistration"><%=e('signupmenu')%></button>
+								</div>
+
+							<% } %>
+						
+						<% } else { %> 
 							
-
-						<% } %>
-
-						<% if(checkvisibility == 'reg'){ %>
-
 							<div class="hiddenlabeltext">
-								<%=e('sharevisibilitylabel_reg_' + cview)%>
+								<%=e('lockedaccounta')%>
 							</div>
-
-							<div class="hiddenlabelaction">
-								<a href="registration">
-									<button class="orange small button"><%=e('signupmenu')%></button>
-								</a>
-							</div>
-
+							
 						<% } %>
-
 
 
 					</div>
@@ -482,11 +490,11 @@ var arranges = {
 			<% } %>
 
 			
-			<div class="cntswrk removeDescription">
+			<div class="cntswrk removeDescription postcontent">
 				<%=e('postRemoved')%>
 			</div>
 
-			<div class="repostWrapper cntscontent"></div>
+			<div class="repostWrapper cntscontent postcontent"></div>
 
 			<% if(!emptywithrepost) {%>
 
@@ -504,29 +512,38 @@ var arranges = {
 								<% _.each(bycategories.categories, function(category){ %>
 
 									<div class="category">
-										<a href="index?sst=<%-category.tags.join(' ')%>">
-											<span>@<%-category.name%></span> 
+										<a elementsid="tagslink" href="index?sst=<%-category.tags.join(' ')%>">
+											<span>@<%-category.name%></span><% if(category.new) {%>&nbsp;<span class="newlabel">New!</span><% } %> 
 										</a>
 									</div>
 
 								<% }) %>
 
-								<% _.each(bycategories.tags, function(tag){ %>
+								<% _.each(bycategories.tags, function(tag){ 
+									
+									var additional = app.platform.sdk.tags.findadditional(tag)
+									
+									%>
 
 									<div class="tag">
-										<a href="index?sst=<%-tag%>">
-											<span>
-												#<%-tag%>
-											</span>
+										<a elementsid="tagslink2" href="index?sst=<%-tag%>">
+											<span>#<%-tag%></span><% if(additional && additional.new) {%>&nbsp;<span class="newlabel">New!</span><% } %>
 										</a>
 									</div>
 
 								<% }) %>
 							</div>
 
+
+
+
 						<% } %>
 
-						
+						<% if(share.hasexchangetag()) {%>
+							<div class="pkoin_commerce_info">
+								<span><%=e('pkoin_commerce_info')%></span>
+							</div>
+						<% } %>
 						
 
 						<% if(!share.temp &&  (typeof repost == 'undefined' || !repost || fromempty)) {%>
@@ -544,7 +561,7 @@ var arranges = {
 
 									<% if(!checkvisibility) {%>
 
-									<div class="item shareSave" status="<%-status%>">
+									<div elementsid="lenta_shareSave" class="item shareSave" status="<%-status%>">
 
 										<div class="itemwr table">
 
@@ -568,8 +585,8 @@ var arranges = {
 									
 								
 									<% if(app.platform.repost && !my && !app.curation()) {%>
-										<% if(!checkvisibility) {%>
-											<div class="item <% if(!my){ %> forrepost <% } else { %> nact <% } %>">
+										<% if(!checkvisibility && !share.visibility()) {%>
+											<div elementsid="lenta_forreport" class="item <% if(!my){ %> forrepost <% } else { %> nact <% } %>">
 
 												<div class="itemwr table">
 													<div class="iconwr">											
@@ -620,7 +637,7 @@ var arranges = {
 											<div class="preloader5"><img src="./img/three-dots.svg"/></div>
 										</div>
 										
-										<div class="count">
+										<div elementsid="lenta_forstars_count" class="count">
 											<div class="label">
 
 												<span><%=e('postWaitConf')%></span>

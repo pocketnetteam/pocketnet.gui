@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=7019"
+/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=9310"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -1598,7 +1598,7 @@ function getPointerPosition(el, event) {
   if (IS_IOS) {
     var item = el;
 
-    while (item && item.nodeName.toLowerCase() !== 'html' && item.nodeName != '#document-fragment') {
+    while (item && item.nodeName.toLowerCase() !== 'html') {
       var transform = computedStyle(item, 'transform');
 
       if (/^matrix/.test(transform)) {
@@ -1628,7 +1628,7 @@ function getPointerPosition(el, event) {
     offsetX = event.changedTouches[0].pageX - box.left;
     offsetY = event.changedTouches[0].pageY + box.top;
 
-    if (IS_IOS || window.cordova) {
+    if (IS_IOS) {
       offsetX -= translated.x;
       offsetY -= translated.y;
     }
@@ -12630,9 +12630,8 @@ var Slider = /*#__PURE__*/function (_Component) {
     _this = _Component.call(this, player, options) || this; // Set property names to bar to match with the child Slider class is looking for
 
     _this.bar = _this.getChild(_this.options_.barName); // Set a horizontal or vertical class on the slider depending on the slider type
-    
-    _this.vertical(!!_this.options_.vertical);
 
+    _this.vertical(!!_this.options_.vertical);
 
     _this.enable();
 
@@ -12865,10 +12864,9 @@ var Slider = /*#__PURE__*/function (_Component) {
     this.progress_ = progress;
     this.requestNamedAnimationFrame('Slider#update', function () {
       // Set the new bar width or height
-
       var sizeKey = _this2.vertical() ? 'height' : 'width'; // Convert to a percentage for css value
+
       _this2.bar.el().style[sizeKey] = (progress * 100).toFixed(2) + '%';
-      
     });
     return progress;
   }
@@ -13609,9 +13607,9 @@ var SeekBar = /*#__PURE__*/function (_Slider) {
       } // update the progress bar time tooltip with the current time
 
 
-      /*if (_this2.bar) {
+      if (_this2.bar) {
         _this2.bar.update(getBoundingClientRect(_this2.el()), _this2.getProgress());
-      }*/
+      }
     });
     return percent;
   }
@@ -13696,7 +13694,6 @@ var SeekBar = /*#__PURE__*/function (_Slider) {
     var distance = this.calculateDistance(event);
     var liveTracker = this.player_.liveTracker;
 
-
     if (!liveTracker || !liveTracker.isLive()) {
       newTime = distance * this.player_.duration(); // Don't let video end while scrubbing.
 
@@ -13771,7 +13768,6 @@ var SeekBar = /*#__PURE__*/function (_Slider) {
   _proto.handleMouseUp = function handleMouseUp(event) {
     _Slider.prototype.handleMouseUp.call(this, event); // Stop event propagation to prevent double fire in progress-control.js
 
-    console.log('this.videoWasPlaying', this.videoWasPlaying)
 
     if (event) {
       event.stopPropagation();
@@ -39651,6 +39647,7 @@ class PeerTubeEmbedApi {
                     return;
                 if (e && e.toString) {
                     e = e.toString();
+                    console.log("E", e);
                     if (e && e.indexOf('request was interrupted') > -1) {
                         this.mute();
                         this.embed.player.play();
@@ -42749,8 +42746,8 @@ class peertube_player_manager_PeertubePlayerManager {
                     maxBufferHole: 0.5,
                     maxFragLookUpTolerance: 0,
                     highBufferWatchdogPeriod: 1,
-                    lowLatencyMode: true,
-                    enableWorker: true,
+                    /*lowLatencyMode: true,
+                    enableWorker: true,*/
                     capLevelToPlayerSize: true,
                     autoStartLoad: false,
                     //liveSyncDurationCount: 4,

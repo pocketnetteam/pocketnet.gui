@@ -258,40 +258,41 @@
 	}
 
 	
-
+	.seemore,
+	.loadprev,
+	.loadmore{
+		border-radius: 3px;
+	}
 	
 
 	.addbutton{
 		position: fixed;
-		left :  @rhythm;
-		bottom : @rhythm;
-		background: fade(#00a3f7, 90);
+		left :  0;
+		bottom : 0;
+		background: #011621;
 		color : #fff;
-		border-radius: 44px;
-		line-height: 44px;
-		width : 44px;
+		padding : 2 * @rhythm;
 		text-align: center;
 		cursor: pointer;
 		display : none;
 		opacity: 0;
-		z-index: 999;
+		z-index: 30;
 		.transition(0.3s);
 
+		span,
 		i{
 			font-size: 0.8em;
 		}
 
-		&.active{
-			
-		}
+		
 
 		&.scrollactive{
 			display: block;
-			opacity: 1;
+			opacity: 0.5;
 		}
 
 		&:hover{
-			background: @color-bright;
+			opacity: 0.8;
 		}
 
 		
@@ -302,10 +303,10 @@
 		min-height: 130px;
 	}
 
-	.mainpanelcell,
+	/*.mainpanelcell,
 	.leftpanelcell{
 		min-height: 1024px;
-	}
+	}*/
 
 	.leftpanelsvicell,
 	.leftpanelcell{
@@ -414,7 +415,6 @@
 		transition-delay: 0.5s;
 	}
 
-	.leftpanelcell,
 	.upbuttonwrapper{
 		opacity: 1;
 		-webkit-transition-delay: 0.5s;
@@ -955,12 +955,6 @@ html {
 		}
 
 	}
-
-	/*.lentacell{
-		margin-right : 128px;
-		margin-left : 121px;
-	}*/
-
 }
 }
 
@@ -971,17 +965,16 @@ html {
 				display: none;
 			}
 	
-			.leftpanelcell{
-				float: right;
-			}
+		
 	
 			.lentacell{
-				margin-left: 0;
+				margin-right: 0;
 			}
 		}
 		
 	}
 }
+
 
 /*t*/ @media only screen and (max-width: 768px){
 
@@ -989,49 +982,8 @@ html {
 	
 	#main{
 
-		.bastyonhelper{
-
-		
-			.layout{
-				flex-wrap: wrap;
-		
-				.imagepart{
-					width: 100%;
-					height: auto;
-		
-					.img{
-						height: 242px;
-					}
-				}
-		
-			   
-		
-				.contentpart{
-					padding : 2 * @rhythm;
-					padding-left: 2 * @rhythm;
-		
-		
-					.caption{
-						font-size: 1.5em;
-					}
-		
-					.wrp{
-						max-width: 100%;
-					}
-		
-					.signinpart{
-						padding : 2 * @rhythm 0;
-						padding-top : 3 * @rhythm;
-						.sin{
-							width: 100%;
-							border-radius: 30px;
-						}
-					}
-		
-				
-				}
-			}
-	
+		.topvideosWrapper{
+			border-radius: 0px;
 		}
 
 		.mainpanelcell{
@@ -1052,7 +1004,7 @@ html {
 			padding-top : 75px;
 			overflow-y: scroll;
 			padding-bottom: 90px;
-			.transition(0.3s);
+			.transition(0.3s, transform);
 		}
 
 		&.leftshowed{
@@ -1063,18 +1015,16 @@ html {
 
 		.lentacell{
 			margin-right: 0;
+			margin-left: 0;
 		}
-
 	
 		&.videomain {
 			.lentacell{
 				margin-left: 0;
 			}
-			
 		}
 
 		.addbutton{
-			
 			display : none!important;
 			
 			&.active{

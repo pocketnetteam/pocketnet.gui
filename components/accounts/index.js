@@ -143,10 +143,14 @@ var accounts = (function(){
 								self.app.platform.sdk.pool.add(expandedPack, mnemonic, function(expandedPack, error){
 
 									if (error){
+
+										//hasinthispack
+
 										dialog({
-											html : self.app.localization.e('aused'),
-											class : "one"
+											html : self.app.localization.e('acc' + error),
+											class : "one zIndex"
 										})
+
 									}
 									else
 									{
@@ -236,11 +240,11 @@ var accounts = (function(){
 
 		var renders = {
 			qrcode : function(el, c){
-				var qrcode = new QRCode(el[0], {
+				/*var qrcode = new QRCode(el[0], {
 					text: c,
 					width: 256,
 					height: 256
-				});
+				});*/
 			},
 			dumpkeyabout : function(){
 				
