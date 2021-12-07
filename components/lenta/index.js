@@ -1159,7 +1159,7 @@ var lenta = (function(){
 
 				var player = players[id]
 
-				if ((isMobile() || window.cordova || isTablet()) && player && player.p.playing){
+				if ((isMobile() || window.cordova || isTablet() || _el.find('.hiddenurl').length) && player && player.p.playing){
 					player.p.pause()
 				}
 
@@ -2887,7 +2887,7 @@ var lenta = (function(){
 				var _el = sel.find(".shareImages .image");
 				var images = sel.find(".shareImages");
 
-				if(images.hasClass('active') || !_el.length || !images.length){
+				if (images.hasClass('active') || !_el.length || !images.length){
 
 					if (clbk)
 						clbk()
@@ -2902,54 +2902,73 @@ var lenta = (function(){
 
 						if(s.settings.v != "a"){
 
-							var imageswidth = images.width()
-							/*var el = images.find('.imagesWrapper')
+							if(isMobile() && image.images.length > 1){
 
-							var imagesWrapperWidth = el.width(),
-								imagesWrapperHeight = el.height();*/
-
-							_.each(image.images, function(img, n){
-
+								var aspectRatio = 0
 								
+								_.each(image.images, function(img){
+									var _img = img.img;
 
-								var _img = img.img;
-								var el = $(image.elements[n]).closest('.imagesWrapper');
+									var _aspectRatio = _img.naturalHeight / _img.naturalWidth
 
-								var ac = '';
+									if(_aspectRatio > aspectRatio) aspectRatio = _aspectRatio
+								})
 
-								/*var _w = imagesWrapperWidth;
-								var _h = imagesWrapperHeight*/
+								if (aspectRatio){
 
-								var _w = el.width();
-								var _h = el.height()
+									if(aspectRatio > 1.66) aspectRatio = 1.66
 
-								if(_img.width > _img.height && (!isMobile() && self.app.width > 768 && !essenseData.openapi)){
-									ac = 'w2'
+									sel.find('.imagesWrapper').height(Math.min(400, isMobile() ? self.app.width : images.width() ) * aspectRatio)
+								}
+								
+							}
+							else{
 
-									var w = _w * (_img.width / _img.height);
+								var imageswidth = images.width()
 
-									if (w > imageswidth){
-										w = imageswidth
+								_.each(image.images, function(img, n){
 
-										h = w * ( _img.height / _img.width) 
+									var _img = img.img;
+									var el = $(image.elements[n]).closest('.imagesWrapper');
 
-										el.height(h);
+									var ac = '';
+
+									/*var _w = imagesWrapperWidth;
+									var _h = imagesWrapperHeight*/
+
+									var _w = el.width();
+									var _h = el.height()
+
+									if(_img.width > _img.height && (!isMobile() && self.app.width > 768 && !essenseData.openapi)){
+										ac = 'w2'
+
+										var w = _w * (_img.width / _img.height);
+
+										if (w > imageswidth){
+											w = imageswidth
+
+											h = w * ( _img.height / _img.width) 
+
+											el.height(h);
+										}
+
+										el.width(w);
 									}
 
-									el.width(w);
-								}
+									if(_img.height > _img.width || (isMobile() || self.app.width <= 768 || essenseData.openapi)){
+										ac = 'h2'
 
-								if(_img.height > _img.width || (isMobile() || self.app.width <= 768 || essenseData.openapi)){
-									ac = 'h2'
+										el.height(_w * (_img.height / _img.width))
+									}
 
-									el.height(_w * (_img.height / _img.width))
-								}
+									if(ac){
+										el.addClass(ac)
+									}
+									
+								})
 
-								if(ac){
-									el.addClass(ac)
-								}
-								
-							})
+
+							}
 
 
 						}
@@ -2970,23 +2989,41 @@ var lenta = (function(){
 
 							var gutter = 5;
 
-							if (isMobile() || essenseData.openapi) gutter = 0
+							if (isMobile() || essenseData.openapi) {
 
-							images.isotope({
+								sel.find('.imagesContainer').owlCarousel({
+									items: 1,
+									dots: true,
+									nav: !isMobile(),
+									navText: [
+										'<i class="fas fa-chevron-circle-left"></i> ',
+										'<i class="fas fa-chevron-circle-right"></i>'
+										]
+								  
+								});
 
-								layoutMode: 'packery',
-								itemSelector: '.imagesWrapper',
-								packery: {
-									gutter: gutter
-								},
-								initLayout: false
-							});
-
-							images.on('arrangeComplete', function(){
 								isclbk()
-							});
 
-							images.isotope()
+							}
+							else{
+								images.isotope({
+
+									layoutMode: 'packery',
+									itemSelector: '.imagesWrapper',
+									packery: {
+										gutter: gutter
+									},
+									initLayout: false
+								});
+	
+								images.on('arrangeComplete', function(){
+									isclbk()
+								});
+	
+								images.isotope()
+							}
+
+							
 
 							
 						}

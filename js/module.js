@@ -159,13 +159,10 @@ nModule = function(){
 
 							if(p){
 								if(!key != 'auto'){
-
 									self.app.nav.api.history.removeParameters(['m' + p.id].concat(p.clearparameters || []))
-
 								}
 								
 								if (p.destroy)
-
 									return p.destroy(key)
 							}
 
