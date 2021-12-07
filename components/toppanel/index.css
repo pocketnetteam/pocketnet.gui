@@ -82,6 +82,9 @@
 #toppanel .panelitems .panelitemCenter .centerTable > div .pcenterLabel i {
   margin-right: 0.5em;
 }
+#toppanel .panelitems .panelitemCenter .centerTable > div .pcenterLabel a span {
+  margin-left: 1em;
+}
 #toppanel .panelitems .panelitemCenter .centerTable > div .pcenterLabel:hover,
 #toppanel .panelitems .panelitemCenter .centerTable > div .pcenterLabel.active {
   color: #00A4FF;
@@ -89,7 +92,6 @@
 #toppanel .panelitems .panelitemCenter .centerTable > div .pcenterLabel:hover a span,
 #toppanel .panelitems .panelitemCenter .centerTable > div .pcenterLabel.active a span {
   background: rgba(14, 28, 43, 0.7);
-  margin-left: 1em;
 }
 #toppanel .panelitems .panelitemCenter .centerTable > div .pcenterLabel.active {
   border-bottom: 3px solid #00A4FF;

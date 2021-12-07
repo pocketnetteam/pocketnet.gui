@@ -119,11 +119,6 @@ var topusers = (function(){
 
 				}
 			},
-			unblocking : function(){
-				var address = $(this).closest('.user').attr('address')
-
-				actions.unblocking(address)
-			},
 			unsubscribe : function(){
 
 				var address = $(this).closest('.user').attr('address')
@@ -258,7 +253,6 @@ var topusers = (function(){
 
 			el.c.on('click', '.subscribe', events.subscribe)
 			el.c.on('click', '.unsubscribe', events.unsubscribe)
-			el.c.on('click', '.unblocking', events.unblocking)
 			el.c.on('click', '.notificationturn', events.subscribePrivate)
 			
 		}

@@ -20,29 +20,18 @@ var telements = function(address){ %>
 		
 		<span class="subscribebuttonstop <%-_class%>">
 
-			<span class="unsubscribe funf">&middot; You are Following <i class="far fa-check-circle"></i></span>	
-
-			<% if (me){ 
-				
-				var r = me.relation(address, 'subscribes') 
-				
-			%>
-
-				<span class="notificationturn <% if(r && (r.private == 'true' || r.private === true)) {%> turnon <% } %>">&middot; <i class="far fa-bell-slash"></i></span>
-			
-			<% } %>
-
 			<span class="subscribe funf">
-				<button>Follow</button>
+				<i class="fa fa-user"></i>
+				<i class="fa fa-plus"></i>
+			</span>	
+
+			<span class="unsubscribe funf">
+				<i class="fa fa-user"></i>
+				<i class="fa fa-plus"></i>
 			</span>	
 
 		</span>
 
-		<span class="blockingWrapper">
-
-			<span class="unblocking funf"><%=e('unblock')%></span>	
-
-		</span>
 					
 				
 	<% } %>
@@ -66,6 +55,8 @@ _.each(addresses, function(address){
 						<div class="icon">
 
 							<% 
+
+							console.log('usericon', deep(app, 'platform.sdk.users.storage.'+address))
 
 								var src = deep(app, 'platform.sdk.users.storage.'+address+'.image');  
 								var name = deep(app, 'platform.sdk.users.storage.'+address+'.name');
@@ -94,19 +85,33 @@ _.each(addresses, function(address){
 				<div class="label">
 					<a href="<%-app.platform.api.authorlink(address)%>">
 
-						<div class="name">						
-							<%- app.platform.api.name(address) || address %>							
+						<div class="top">
+							<div class="name">
+								<%- app.platform.api.name(address) || address %>							
+							</div>		
+							<% var r = deep(app, 'platform.sdk.users.storage.'+address+'.reputation'); %>
+
+							<% if (r) {%>
+								<div class="reputation">
+									<%- Number(r).toFixed(0)  %>
+								</div>
+							<% } %>
+
 						</div>
 
-						<% var r = deep(app, 'platform.sdk.users.storage.'+address+'.reputation'); %>
+						<% var subscribers = deep(app, 'platform.sdk.users.storage.'+address+'.subscribers');   %>
 
-						<% if (r) {%>
+						<% if (subscribers) {%>
 
 							<div class="light">						
-								Reputation: <%- Number(r).toFixed(0)  %>						
+								<%- subscribers.length  %>	<%=e('subscribers') %>
+
 							</div>
 
 						<% } %>
+
+				
+
 
 					</a>			
 
