@@ -3059,7 +3059,7 @@ Platform = function (app, listofnodes) {
 
         relation : function(address, type){
 
-            var me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
+            var me = deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value.toString('hex'))
 
             if(!me) return
 
