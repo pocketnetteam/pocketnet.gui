@@ -89,7 +89,7 @@
 #toppanel .panelitems .panelitemCenter .centerTable > div .pcenterLabel:hover a span,
 #toppanel .panelitems .panelitemCenter .centerTable > div .pcenterLabel.active a span {
   background: rgba(14, 28, 43, 0.7);
-  margin-left: 0.5em;
+  margin-left: 1em;
 }
 #toppanel .panelitems .panelitemCenter .centerTable > div .pcenterLabel.active {
   border-bottom: 3px solid #00A4FF;
