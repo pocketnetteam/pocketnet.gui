@@ -211,9 +211,13 @@
 @media only screen and (max-width: 768px) {
   #leftpanel {
     padding-left: 1em;
+    padding-bottom: 3em;
   }
   #leftpanel > div {
     font-size: 1em;
+  }
+  #leftpanel .rightbottomnav {
+    margin-bottom: 7em;
   }
   #leftpanel .subtop .topnavigation button {
     width: 135px;
