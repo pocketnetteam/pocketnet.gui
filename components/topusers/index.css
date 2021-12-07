@@ -1,0 +1,159 @@
+#topusers {
+  padding: 2.5em;
+  background: #fff;
+}
+#topusers .rcptwrp {
+  background: #fff;
+  border-radius: 12px;
+  position: relative;
+}
+#topusers .tcaptionwrapper {
+  display: flex;
+  align-items: center;
+}
+#topusers .tcaptionwrapper .vc_valuecustom {
+  width: 75px;
+  font-size: 0.8em;
+  font-weight: 500;
+}
+#topusers .tcaptionwrapper .vc_valuecustom .vc_textInput .vc_iconWrapper,
+#topusers .tcaptionwrapper .vc_valuecustom .vc_textInput .vc_inputWrapper {
+  border: 0;
+}
+#topusers .tcaption {
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 2;
+  font-weight: 100;
+  padding: 12px 16px;
+  border-bottom: 1px solid #C7C8D9;
+}
+#topusers .tcaption .authors {
+  font-weight: 700;
+}
+#topusers .tcaption .rating {
+  color: #00a4ff;
+  cursor: pointer;
+}
+#topusers .caption {
+  font-weight: 100;
+  font-size: 2em;
+  margin-bottom: 1em;
+}
+#topusers .loaderWrapper {
+  display: none;
+  padding: 1em;
+  text-align: center;
+}
+#topusers.loading .loaderWrapper {
+  display: block;
+}
+#topusers .users .user {
+  padding: 0.5em 0;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+#topusers .users .user .addressTable {
+  cursor: pointer;
+}
+#topusers .users .user .addressTable > div {
+  vertical-align: middle;
+}
+#topusers .users .user .addressTable > div.iconWrapper {
+  width: 45px;
+  text-align: center;
+}
+#topusers .users .user .addressTable > div.label {
+  padding-left: 1em;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+#topusers .users .user .addressTable > div.label .cur {
+  color: #00a4ff;
+}
+#topusers .users .user .addressTable > div.label .name {
+  font-weight: 100;
+  font-size: 1.2em;
+}
+#topusers .users .user .addressTable > div.label .light {
+  font-size: 0.8em;
+  color: #3c4146;
+}
+#topusers .users .user .addressTable > div.extra {
+  width: 200px;
+  padding-left: 1em;
+  text-align: right;
+}
+#topusers .users .user .blockingWrapper {
+  display: none;
+}
+#topusers .users .user .subscribebuttonstop i {
+  color: #076C34;
+}
+#topusers .users .user .subscribebuttonstop button {
+  font-size: 0.9em;
+  font-weight: 100;
+  padding: 0.5em 2em;
+}
+#topusers .users .user .subscribebuttonstop .unsubscribe {
+  color: #b2abac;
+}
+#topusers .users .user .subscribebuttonstop .notificationturn {
+  display: none;
+}
+#topusers .users .user .subscribebuttonstop .notificationturn i {
+  width: 20px;
+  text-align: center;
+}
+#topusers .users .user .subscribebuttonstop .notificationturn.turnon i:before {
+  content: '\f0f3';
+}
+#topusers .users .user.userblocking .subscribebuttonstop {
+  display: none;
+}
+#topusers .users .user.userblocking .blockingWrapper {
+  display: inline;
+}
+#topusers .users .user .subscribebuttonstop .unsubscribe {
+  display: none;
+}
+#topusers .users .user .subscribebuttonstop.following .unsubscribe {
+  display: inline;
+}
+#topusers .users .user .subscribebuttonstop.following .notificationturn {
+  display: inline;
+}
+#topusers .users .user .subscribebuttonstop.following .subscribe {
+  display: none;
+}
+html.stblack #topusers {
+  background: transparent;
+}
+html.stblack #topusers .users .user .addressTable {
+  cursor: pointer;
+}
+html.stblack #topusers .users .user .addressTable > div.label .cur {
+  color: #00a4ff;
+}
+html.stblack #topusers .users .user .addressTable > div.label .light {
+  color: #3c4146;
+}
+html.stblack #topusers .users .user .subscribebuttonstop i {
+  color: #076C34;
+}
+html.stblack #topusers .users .user .subscribebuttonstop .unsubscribe {
+  color: #b2abac;
+}
+html.stblack #topusers .users .user.blocking {
+  background: #290318;
+}
+/*t*/
+@media only screen and (max-width: 768px) {
+  #userslist {
+    padding: 1em;
+  }
+  #userslist .users .addressTable > div.extra {
+    width: 60px;
+  }
+}

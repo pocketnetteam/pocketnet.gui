@@ -117,10 +117,10 @@ var lastcomments = (function(){
 				
 			})
 
-			self.app.platform.sdk.users.getBestUsers(function(c, error){
+			// self.app.platform.sdk.users.getBestUsers(function(c, error){
 
-				console.log('c!!', c, error);
-			})
+			// 	console.log('c!!', c, error);
+			// })
 
 		}
 

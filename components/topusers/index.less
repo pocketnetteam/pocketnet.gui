@@ -1,0 +1,262 @@
+@import "../../css/__cssvar";
+
+#topusers{
+	padding : 5 * @rhythm;
+	background: #fff;
+
+	    
+    .rcptwrp{
+        background: #fff;
+        border-radius: 12px;
+        position : relative;
+    }   
+
+    
+
+    .tcaptionwrapper{
+        display: flex;
+        align-items: center;    
+
+        .vc_valuecustom{
+            width: 75px;
+            font-size: 0.8em;
+            font-weight: 500;
+            .vc_textInput .vc_iconWrapper,
+            .vc_textInput .vc_inputWrapper{
+                border : 0;
+            }
+        }
+    }
+    .tcaption{
+        display: flex;
+        justify-content: space-between;
+        flex-grow: 2;
+        font-weight: 100;
+        padding: 12px 16px;
+        border-bottom: 1px solid #C7C8D9;
+
+        .authors{
+            font-weight : 700;
+        }
+
+        .rating{
+            color : @color-main;
+            cursor : pointer;
+        }
+
+       
+        
+    }
+
+	.caption{
+		font-weight: 100;
+		font-size: 2em;
+		margin-bottom: 2 * @rhythm;
+	}
+
+	.loaderWrapper{
+		display : none;
+		padding : 2 * @rhythm;
+		text-align: center;
+	}
+
+	&.loading{
+		.loaderWrapper{
+			display: block;
+		}
+	}
+
+	.users{
+		.user{
+			padding : @rhythm 0;
+			margin-top: @rhythm;
+			margin-bottom: @rhythm;
+
+			.addressTable{
+				cursor: pointer;
+				
+				>div{
+	
+					vertical-align: middle;
+	
+					&.iconWrapper{
+						width: 45px;
+						text-align: center;
+					}
+	
+					&.label{
+						padding-left:  2 * @rhythm;
+						text-overflow: ellipsis;
+						overflow: hidden;
+						white-space: nowrap;
+	
+						.cur{
+							color : @color-main;
+						}
+
+						.name{
+							font-weight: 100;
+							font-size : 1.2em;
+						}
+
+						.light{
+							font-size : 0.8em;
+							color : @color-gray;
+						}
+					}
+	
+					&.extra{
+						width: 200px;
+						padding-left:  2 * @rhythm;
+						text-align: right;
+					}
+				}
+	
+			}
+
+			.blockingWrapper{
+				display : none;
+			}
+
+			.subscribebuttonstop{
+				i{
+					color : @color-good;
+				}
+
+				button{
+					font-size: 0.9em;
+					font-weight: 100;
+					padding : @rhythm 4 * @rhythm;
+				}
+
+				.unsubscribe{
+					color : @color-gray-mlight;
+				}
+
+				.notificationturn{
+					display: none;
+
+					i{
+						width : 20px;
+						text-align: center;
+					}
+
+					&.turnon{
+						i{
+							&:before{
+								content : '\f0f3';
+							}
+						}
+					}
+				}
+			}
+
+			&.userblocking{
+	
+				.subscribebuttonstop{
+					display: none;
+				}
+	
+				.blockingWrapper{
+					display: inline;
+				}
+
+				
+			}
+	
+			.subscribebuttonstop{
+				.unsubscribe{
+					display : none;
+				}
+
+	
+				&.following{
+					.unsubscribe{
+						display : inline;
+					}
+
+					.notificationturn{
+						display: inline;
+					}
+					
+					.subscribe{
+						display : none;
+					}
+				}
+			}
+		}
+		
+	}
+}
+
+html.stblack{
+	#topusers{
+		background: transparent;
+	
+	
+		.users{
+			.user{
+			
+				.addressTable{
+					cursor: pointer;
+					
+					>div{
+		
+						&.label{
+		
+							.cur{
+								color : @color-main;
+							}
+	
+							.light{
+								color : @color-gray;
+							}
+						}
+		
+					}
+		
+				}
+	
+				.subscribebuttonstop{
+					i{
+						color : @color-good;
+					}
+	
+					.unsubscribe{
+						color : @color-gray-mlight;
+					}
+	
+					
+				}
+	
+				&.blocking{
+					background: rgb(41, 3, 24);	
+				}
+		
+			}
+			
+		}
+	}	
+}
+
+/*t*/ @media only screen and (max-width: 768px){
+#userslist{
+	padding : 2 * @rhythm;
+
+	.caption{
+	}
+
+	.users{
+		.addressTable{
+			>div{
+
+
+				&.extra{
+					width: 60px;
+				}
+			}
+
+		}
+	}
+}
+}

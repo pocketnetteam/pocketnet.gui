@@ -8,7 +8,7 @@ var panel = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, discussions = null, tags = null, comments = null, stacking = null;
+		var el, discussions = null, tags = null, comments = null, stacking = null, topusers = null;
 
 		var ed = null;
 
@@ -50,6 +50,31 @@ var panel = (function(){
 
 				})
 
+			},
+
+			topusers : function(){
+
+
+				
+				// self.nav.api.load({
+
+				// 	open : true,
+				// 	id : 'topusers',
+				// 	el : el.topusers,
+				// 	animation : false,
+
+				// 	essenseData : {
+				// 		addresses : ['PEJhUMmCwkngRQELKacxWiJHBEdAsYRZoB'],
+				// 		empty : 'empty',
+				// 		caption : 'caption'
+				// 	},
+					
+				// 	clbk : function(e, p){
+				// 		if (clbk)
+				// 			clbk(e, p)
+				// 	}
+
+				// })
 			},
 
 			recommendationslist : function(users, clbk){
@@ -389,7 +414,8 @@ var panel = (function(){
 				})
 			*/
 			
-		
+			renders.topusers()
+
 
 		}
 
@@ -431,6 +457,11 @@ var panel = (function(){
 					stacking = null
 				}
 
+				if(topusers){
+					topusers.destroy()
+					topusers = null
+				}
+
 
 				el = {};
 			},
@@ -456,7 +487,7 @@ var panel = (function(){
 				el.tags = el.c.find('.tagscnt')
 				el.comments = el.c.find('.lastcommentscnt')
 				el.stacking = el.c.find('.stackingcnt')
-
+				el.topusers = el.c.find('.topuserscnt')
 				el.r = el.c.find(".recommendationscnt")
 
 				initEvents();
