@@ -116,6 +116,12 @@ var lastcomments = (function(){
 
 				
 			})
+
+			self.app.platform.sdk.users.getBestUsers(function(c, error){
+
+				console.log('c!!', c, error);
+			})
+
 		}
 
 		var state = {

@@ -8334,6 +8334,17 @@ Platform = function (app, listofnodes) {
                     return str.replace(sreg, cname)
                 }
 
+            },
+
+            getBestUsers : function(){
+
+                var my = self.app.user.address.value;
+
+                self.app.api.rpc('GetRecomendedAccountsByScoresFromAddress', [my]).then(d => {
+
+                    console.log('d!!!', d);
+
+                })
             }
         },
 

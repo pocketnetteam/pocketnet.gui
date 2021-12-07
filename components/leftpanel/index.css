@@ -16,7 +16,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: #555770;
   padding-bottom: 0.5em;
   margin-top: 1em;
 }
@@ -40,7 +39,6 @@
 #leftpanel .best .text {
   margin-left: 0.5em;
   font-weight: 600;
-  color: #b2abac;
 }
 #leftpanel .best .toggle {
   margin-left: 0.5em;
@@ -135,9 +133,6 @@
 }
 #leftpanel .subtop .vc_iconWrapper .vc_iconSpinWrapper {
   width: 22px;
-}
-#leftpanel .rightbottomnav {
-  color: #555770;
 }
 #leftpanel .rightbottomnav a,
 #leftpanel .rightbottomnav span {
