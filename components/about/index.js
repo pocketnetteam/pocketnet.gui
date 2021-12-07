@@ -11,6 +11,8 @@ var about = (function(){
 
 		var el, ed;
 
+		var available = ['en', 'fr', 'ru'];
+
 		var currentExternalEssense = null;
 
 		var hcready = false;
@@ -24,7 +26,7 @@ var about = (function(){
 			
 
 			reports.push({
-				name :  self.app.localization.e('about'),
+				name :  self.app.localization.e('aboutus'),
 				id : 'about-home',
 				report : 'aboutHome',
 				mobile : true,
@@ -43,14 +45,13 @@ var about = (function(){
 			})
 		
 
-
-
 			reports.push({
 				name : self.app.localization.e('contentCreators'),
 				id : 'about-content-creators',
 				report : 'aboutContentCreators',
 				mobile : true
 			})
+
 
 			
 			reports.push({
@@ -60,10 +61,19 @@ var about = (function(){
 				mobile : true
 			})
 
+			
+			reports.push({
+				name : 'FAQ',
+				id : 'about-faq',
+				report : 'faq',
+				mobile : true
+			})
+
 			reports.push({
 				name : self.app.localization.e('insteadOf') + ' youtube',
 				id : 'about-youtube',
 				report : 'aboutYoutube',
+				group : true,
 				mobile : true
 			})
 			
@@ -71,6 +81,7 @@ var about = (function(){
 				name : self.app.localization.e('insteadOf') + ' facebook',
 				id : 'about-facebook',
 				report : 'aboutFacebook',
+				group : true,
 				mobile : true
 			})
 
@@ -79,6 +90,7 @@ var about = (function(){
 				name : self.app.localization.e('insteadOf') + ' twitter',
 				id : 'about-twitter',
 				report : 'aboutTwitter',
+				group : true,
 				mobile : true
 			})
 		}
@@ -347,10 +359,22 @@ var about = (function(){
 
 				}
 
-				events.hideMobileMenu()
+				events.hideMobileMenu();
+
+				events.removeAlternativeTo();
 
 				actions.openReport(id, true);
 			},
+
+			toggleAlternativeTo : function(){
+				$(this).toggleClass('active');
+			},
+
+			removeAlternativeTo : function(){
+				var alternativeTo = el.c.find('.alternativeTo');
+				alternativeTo.removeClass('active');
+			},
+
 
 			hideMobileMenu : function(){
 
@@ -378,140 +402,171 @@ var about = (function(){
 				var s = helpers.selector();
 
 				var r = function(){
-					self.shell({
+
+					console.log('current', app.localization.current());
+
+					var lkey = app.localization.current();
+
+					if (available.indexOf(lkey.key) === -1){
+						
+						self.app.localization.set('en');
+
+					} else {
+
+						self.shell({
 							
 
-						name :  'contents',
-						el :   el.contents,
-						data : {
-							reports : reports,
-							each : helpers.eachReport,
-							lkey : app.localization.current(),
-							theme : self.app.platform.sdk.theme.current,
+							name :  'contents',
+							el :   el.contents,
+							data : {
+								reports : reports,
+								each : helpers.eachReport,
+								lkey : app.localization.current(),
+								theme : self.app.platform.sdk.theme.current,
+		
+								selector : s
+							},
+		
+						}, function(_p){
+		
+							var alternativeTo = _p.el.find('.alternativeTo');
+							//_p.el.find('.groupName').on(clickAction(), events.closeGroup);
+							_p.el.find('.openReport').on('click', events.openReport);
 	
-							selector : s
-						},
+							alternativeTo.on('click', events.toggleAlternativeTo);
 	
-					}, function(_p){
+							$(document).on('click',function (e) {
 	
-
-						//_p.el.find('.groupName').on(clickAction(), events.closeGroup);
-						_p.el.find('.openReport').on('click', events.openReport);
-
+								if ($(e.target).closest('.alternativeTo').length) return;
+								alternativeTo.removeClass('active');
 	
-						_p.el.find('.burgerMenu').on('click', events.showMobileMenu)
-
-						_p.el.find('.leftSection').on('click', events.hideMobileMenu)
-
-						ParametersLive([s], _p.el)
-
-						self.app.actions.scroll(0)
-
-
-						if (hcready)
-							el.contents.hcSticky('refresh');
+							});
 	
-						if (clbk)
-							clbk();
-
-						el.c.find('.localization').on('click', function(){
-							self.app.mobile.vibration.small()
-							var items = []
-			
-							_.each(self.app.localization.available, function(a){
-								items.push({
-									text : a.name,
-									action : function (clbk) {
-			
-										var na = app.localization.findByName(a.name);
-			
-			
-										if (na && na.key != self.app.localization.key){
-											self.app.mobile.vibration.small()
-											self.app.localization.set(na.key);
-										}
-			
-										clbk()
-			
-									}
-								})
-							})
-			
-							menuDialog({
-			
-								items: items
-							})
-							
-						})
-
-						el.c.find('.signin').on('click', function(){
-							self.app.mobile.vibration.small()
-							self.app.platform.sdk.registrations.getredirectFromCurrentPage()
-							self.nav.api.go({
-								href : 'authorization',
-								history : true,
-								open : true
-							})	
-						})
-
-						el.c.find('.signup').on('click', function(){
-							self.app.mobile.vibration.small()
-							self.app.platform.sdk.registrations.getredirectFromCurrentPage()
-							self.nav.api.go({
-								href : 'registration',
-								history : true,
-								open : true
-							})	
-						})
-
-
-						el.c.find('[elementsid="eventssitename"]').on('click', function(){
-
-							console.log('click')
-			
-							self.app.user.isState(function(state){
-			
-								//if(self.app.nav.get.pathname() != 'index'){
-									var k = localStorage['lentakey'] || 'index';
-			
-									if (parameters().r == k) k = 'index'
-			
-									if (k != 'index') {
-										if (k == 'video'){
-											k = 'index?video=1'
-										}
-										else{
-											k = 'index?r=' + k
-										}
-										
-									}
-			
-									if(!state) k = 'index'
-			
-									if(self.app.curation()){
-										if(!state){
-											k = 'welcome'
-										}
-										else{
-											k = 'userpage'
-										}
-										
-									}
-			
-									self.nav.api.go({
-										href : k,
-										history : true,
-										open : true,
-										handler : true
-									})
-								//}
-			
-							})
-			
-							
+	
+	
+	
+							_p.el.find('.burgerMenu').on('click', events.showMobileMenu)
+	
+							_p.el.find('.leftSection').on('click', events.hideMobileMenu)
+	
+							ParametersLive([s], _p.el)
+	
+							self.app.actions.scroll(0)
+	
+	
+							if (hcready)
+								el.contents.hcSticky('refresh');
+		
+							if (clbk)
+								clbk();
+	
+							el.c.find('.localization').on('click', function(){
+								self.app.mobile.vibration.small()
+								var items = []
+				
+								_.each(self.app.localization.available, function(a){
+	
+									if (available.indexOf(a.key) > -1){
+	
+										items.push({
+											text : a.name,
+											action : function (clbk) {
 					
+												var na = app.localization.findByName(a.name);
+					
+					
+												if (na && na.key != self.app.localization.key){
+													self.app.mobile.vibration.small()
+													self.app.localization.set(na.key);
+												}
+					
+												clbk()
+					
+											}
+										})
+									}
+	
+								})
+				
+								menuDialog({
+				
+									items: items
+								})
+								
+							})
+	
+							el.c.find('.signin').on('click', function(){
+								self.app.mobile.vibration.small()
+								self.app.platform.sdk.registrations.getredirectFromCurrentPage()
+								self.nav.api.go({
+									href : 'authorization',
+									history : true,
+									open : true
+								})	
+							})
+	
+							el.c.find('.signup').on('click', function(){
+								self.app.mobile.vibration.small()
+								self.app.platform.sdk.registrations.getredirectFromCurrentPage()
+								self.nav.api.go({
+									href : 'registration',
+									history : true,
+									open : true
+								})	
+							})
+	
+	
+							el.c.find('[elementsid="eventssitename"]').on('click', function(){
+	
+								console.log('click')
+				
+								self.app.user.isState(function(state){
+				
+									//if(self.app.nav.get.pathname() != 'index'){
+										var k = localStorage['lentakey'] || 'index';
+				
+										if (parameters().r == k) k = 'index'
+				
+										if (k != 'index') {
+											if (k == 'video'){
+												k = 'index?video=1'
+											}
+											else{
+												k = 'index?r=' + k
+											}
+											
+										}
+				
+										if(!state) k = 'index'
+				
+										if(self.app.curation()){
+											if(!state){
+												k = 'welcome'
+											}
+											else{
+												k = 'userpage'
+											}
+											
+										}
+				
+										self.nav.api.go({
+											href : k,
+											history : true,
+											open : true,
+											handler : true
+										})
+									//}
+				
+								})
+				
+								
+						
+							})
 						})
-					})
+					}
+
+
+
 				}
 
 				

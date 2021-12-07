@@ -6081,7 +6081,7 @@
 		
 	}
 
-	_scrollTo = function(to, el, time, _if){
+	_scrollTo = function(to, el, time, ofs){
 		
 		if(!to) to = $(this);
 
@@ -6095,6 +6095,8 @@
 
 			if (el) scrollTop = scrollTop + el.scrollTop() - el.offset().top
 
+
+			scrollTop = scrollTop + (ofs || 0)
 
 			_scrollTop(scrollTop, el, time);
 		}

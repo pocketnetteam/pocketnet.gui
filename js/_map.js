@@ -96,7 +96,7 @@ __map =  {
 	__templates : [
 		{ c : 'navigation', n : 'menu' },
 		{ c : 'menu', n : 'index' },
-
+		{ c : 'share', n : 'body' },
 		{ c : 'toppanel', n : 'index' },
 		{ c : 'navigation', n : 'index' },
 		{ c : 'footer', n : 'index' },
@@ -915,7 +915,65 @@ __map =  {
 			relationsSunc : true
 		},	
 
-		
+		articlesv : {
+			uri : "articlesv",
+			href : "articlesv",
+			add : function(settings, p){
+
+				if(p.inWnd)
+				{
+					return {
+						insert : 'wnd'
+					}
+				}
+				else
+				if(p.inTooltip)
+				{
+					return {
+						insert : 'tooltip'
+					}
+				}
+				else
+				{
+					return {
+						el : 'content'
+					}
+				}
+
+			},
+		},	
+		articlev : {
+			uri : "articlev",
+			href : "articlev",
+			add : function(settings, p){
+
+				if(p.inWnd)
+				{
+					return {
+						insert : 'wnd'
+					}
+				}
+				else
+				if(p.inTooltip)
+				{
+					return {
+						insert : 'tooltip'
+					}
+				}
+				else
+				{
+					return {
+						el : 'content'
+					}
+				}
+
+			},
+			relations : [
+				{src : 'js/vendor/editor/editor.js',			   f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},
+				
+			],
+			relationsSunc : true
+		},
 
 		video : {
 			uri : "video",

@@ -56,7 +56,7 @@ User = function(app, p) {
 
 		var keyPair = self.keys()
 
-		const currentMomentInUTC = new Date().toISOString();
+		const currentMomentInUTC = (new Date()).toISOString();
 
 		var nonce = 'date=' + currentMomentInUTC + ",exp=" + exp + ',s=' + hexEncode(str);
 

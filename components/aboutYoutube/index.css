@@ -1,3 +1,6 @@
+#aboutYoutube img {
+  border-radius: 10px;
+}
 #aboutYoutube h1 {
   font-size: 50px;
   font-weight: 600;
@@ -23,7 +26,7 @@
 }
 #aboutYoutube .works {
   padding: 30px;
-  background: url(../../img/aboutYoutube/bg-bastion-section1.jpg) no-repeat fixed;
+  background: url(../../img/about/bg-bastion-section1.jpg) no-repeat fixed;
   background-size: cover;
   position: relative;
 }
@@ -44,7 +47,6 @@
   margin-top: 30px;
   font-size: 16px;
   font-weight: 400;
-  font-family: 'Open Sans', sans-serif;
   line-height: 24px;
   color: #FFFFFF;
 }
@@ -218,7 +220,7 @@
 }
 #aboutYoutube .blog {
   padding: 60px 0;
-  background: url(../../img/aboutYoutube/andreas-brun-14IbodW7owU-unsplash.jpg) no-repeat;
+  background: url(../../img/about/andreas-brun-14IbodW7owU-unsplash.jpg) no-repeat;
   background-position: center center;
   background-size: cover;
   position: relative;
@@ -284,7 +286,6 @@
 #aboutYoutube .main-menu > ul > li {
   display: inline-block;
   font-size: 15px;
-  font-family: 'Roboto', sans-serif;
   font-weight: 400;
   letter-spacing: 1px;
   color: black;
@@ -317,11 +318,12 @@
   width: 100%;
 }
 #aboutYoutube .main-board {
-  height: 500px;
-  background: url(../../img/aboutYoutube/bastyon-vs-youtube.jpg) no-repeat fixed;
+  height: 600px;
+  background: url(../../img/about/bastyon-vs-youtube.jpg) no-repeat fixed;
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: cover;
   background-position: center center;
-  position: relative;
-  position: reletive;
   padding: 50px 0 ;
 }
 #aboutYoutube .main-board > .main-wrapper {
@@ -333,7 +335,7 @@
 }
 #aboutYoutube .main-board h1 {
   color: #3b3b3b;
-  padding: 25px 0 0 30px;
+  padding: 0;
   position: relative;
   margin-bottom: 35px;
   margin: auto 0;
@@ -356,7 +358,6 @@
 }
 #aboutYoutube .main-board__left-block > div {
   color: #FFFFFF;
-  font-family: 'Open Sans', sans-serif;
   font-weight: 600;
   font-size: 16px;
   margin-bottom: 15px;
@@ -373,7 +374,6 @@
 }
 #aboutYoutube .main-board__left-block_2 > div {
   color: black;
-  font-family: 'Open Sans', sans-serif;
   font-weight: 600;
   font-size: 16px;
   margin: 10px 0;
@@ -567,7 +567,7 @@
   }
 }
 #aboutYoutube .main-board-2 {
-  background: url(../../img/aboutYoutube/Unlike-YouTube.jpg) no-repeat fixed;
+  background: url(../../img/about/Unlike-YouTube.jpg) no-repeat fixed;
   background-position: center center;
   background-size: cover;
   position: relative;
@@ -601,7 +601,7 @@
 }
 @media (max-width: 380px) {
   #aboutYoutube .main-board-2 {
-    background: url(../../img/aboutYoutube/bastyon-alternative.jpg) no-repeat fixed;
+    background: url(../../img/about/bastyon-alternative.jpg) no-repeat fixed;
     background-position: center center;
     background-size: cover;
     position: relative;
@@ -632,19 +632,17 @@
   align-items: center;
 }
 #aboutYoutube .table .main-wrapper table {
-  font-family: arial, sans-serif;
   width: 70%;
 }
 #aboutYoutube .table .main-wrapper table tr {
-  border: 1px solid #cfcfcf;
   text-align: left;
   padding: 8px;
 }
 #aboutYoutube .table .main-wrapper table tr td {
   width: 30%;
   border: 1px solid #cfcfcf;
-  padding: 10px;
-  font-size: 0.9em;
+  padding: 20px;
+  font-size: 0.8em;
   font-weight: 500;
 }
 #aboutYoutube .table .main-wrapper table tr .center {
@@ -656,13 +654,17 @@
 #aboutYoutube .table .main-wrapper table tr .right {
   text-align: right;
 }
+#aboutYoutube .table .main-wrapper table tr .bold {
+  font-weight: 700;
+}
 #aboutYoutube .table .main-wrapper table th {
   border: 1px solid #cfcfcf;
   text-align: center;
-  padding: 8px;
+  padding: 20px;
+  font-size: 0.9em;
 }
 #aboutYoutube .main-board-3 {
-  background: url(../../img/aboutYoutube/money-block.jpg) no-repeat fixed;
+  background: url(../../img/about/money-block.jpg) no-repeat fixed;
   background-position: center center;
   background-size: cover;
   position: relative;
@@ -703,7 +705,7 @@
 }
 @media (max-width: 380px) {
   #aboutYoutube .main-board-3 {
-    background: url(../../img/aboutYoutube/dark-bg-bastyon-pais.jpg) no-repeat fixed;
+    background: url(../../img/about/dark-bg-bastyon-pais.jpg) no-repeat fixed;
     background-position: center center;
     background-size: cover;
     position: relative;
@@ -746,7 +748,6 @@
 #aboutYoutube .services__item > p {
   font-size: 16px;
   font-weight: 400;
-  font-family: 'Open Sans', sans-serif;
   line-height: 24px;
   margin-bottom: 20px;
   color: #666666;
@@ -853,7 +854,6 @@
   display: block;
   font-size: 12px;
   color: #666666;
-  font-family: 'Roboto', sans-serif;
   font-weight: 300;
 }
 #aboutYoutube .team-container__item-footer > h3 {
@@ -881,16 +881,16 @@
   text-decoration: underline;
 }
 #aboutYoutube .block-image1 {
-  background: url(../../img/aboutYoutube/6-850x850.jpg);
+  background: url(../../img/about/6-850x850.jpg);
 }
 #aboutYoutube .block-image2 {
-  background: url(../../img/aboutYoutube/5-850x850.jpg);
+  background: url(../../img/about/5-850x850.jpg);
 }
 #aboutYoutube .block-image3 {
-  background: url(../../img/aboutYoutube/2-850x850.jpg);
+  background: url(../../img/about/2-850x850.jpg);
 }
 #aboutYoutube .block-image4 {
-  background: url(../../img/aboutYoutube/1-850x850.jpg);
+  background: url(../../img/about/1-850x850.jpg);
 }
 #aboutYoutube .blog-container__image {
   flex: 0 0 50%;
@@ -934,7 +934,6 @@
   letter-spacing: 1px;
   color: #161C35;
   text-align: center;
-  font-family: 'Open Sans', sans-serif;
   text-transform: uppercase;
   font-weight: 600;
   line-height: 24px;
@@ -955,7 +954,7 @@
 }
 #aboutYoutube .form {
   height: 200px;
-  background: url(../../img/aboutYoutube/bg.jpg) no-repeat fixed;
+  background: url(../../img/about/bg.jpg) no-repeat fixed;
   background-position: 50% -50px;
   background-size: cover;
   position: relative;
@@ -984,7 +983,6 @@
   border: 1px solid #00D5C3;
   color: #FFFFFF;
   font-size: 18px;
-  font-family: 'Roboto', sans-serif;
   font-weight: 300;
   padding: 10px;
   width: 450px;
@@ -1075,7 +1073,6 @@
   margin-top: 30px;
   font-size: 16px;
   font-weight: 400;
-  font-family: 'Open Sans', sans-serif;
   line-height: 24px;
   color: #FFFFFF;
 }
@@ -1119,7 +1116,6 @@
     margin-top: 30px;
     font-size: 16px;
     font-weight: 400;
-    font-family: 'Open Sans', sans-serif;
     line-height: 24px;
     color: #FFFFFF;
   }
@@ -1325,7 +1321,7 @@
     margin-bottom: 10px;
   }
   #aboutYoutube .main-board:first-child {
-    background: url(../../img/aboutYoutube/bastyon-youtube-main1.jpg) no-repeat fixed;
+    background: url(../../img/about/bastyon-youtube-main1.jpg) no-repeat fixed;
     background-size: cover;
   }
   #aboutYoutube .main-board:first-child .main-wrapper .main-board__left-block h1 {

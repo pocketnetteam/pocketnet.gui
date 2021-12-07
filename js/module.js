@@ -95,6 +95,7 @@ nModule = function(){
 
 		if(!p) p = {};
 
+		
 		var completeClbk = function(p){
 
 			if(p.el)

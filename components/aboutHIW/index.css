@@ -1,3 +1,6 @@
+#aboutHIW img {
+  border-radius: 10px;
+}
 #aboutHIW h1 {
   font-size: 50px;
   font-weight: 600;
@@ -228,7 +231,6 @@
 #aboutHIW .main-menu > ul > li {
   display: inline-block;
   font-size: 15px;
-  font-family: 'Roboto', sans-serif;
   font-weight: 400;
   letter-spacing: 1px;
   color: black;
@@ -262,38 +264,35 @@
 }
 #aboutHIW .main-board {
   height: 500px;
-  background: url(../../img/aboutHIW/how-it-works.jpg) no-repeat fixed;
-  background-position: center center;
-  background-size: cover;
-  position: relative;
   position: reletive;
-  padding: 50px 0 ;
+  padding: 0px 0 ;
 }
 #aboutHIW .main-board > .main-wrapper {
   display: flex;
   align-items: center;
+  justify-content: space-around;
   height: 100%;
   position: relative;
-  z-index: 2;
+}
+#aboutHIW .main-board img {
+  width: 400px;
+  border-radius: 10px;
 }
 #aboutHIW .main-board h1 {
   color: #45473a;
-  padding: 25px 0 0 30px;
   position: relative;
   margin-bottom: 35px;
   margin: auto 0;
   font-weight: 600;
-  width: 50%;
+  width: 90%;
 }
 #aboutHIW .main-board h2 {
   position: relative;
   color: #45473a;
   font-size: 30px;
   text-align: left;
-  margin-left: 30px;
   text-transform: capitalize;
   margin-bottom: 35px;
-  width: 50%;
 }
 #aboutHIW .main-board h3 {
   position: relative;
@@ -302,24 +301,21 @@
   text-align: left;
   text-transform: capitalize;
   margin-bottom: 35px;
-  width: 50%;
 }
 #aboutHIW .main-board__left-block {
   width: 100%;
   display: block;
+  padding: 50px 0;
 }
 #aboutHIW .main-board__left-block h3 {
-  padding-left: 30px;
   margin-top: 30px;
   color: #3b3b3b;
 }
 #aboutHIW .main-board__left-block > div {
   color: #FFFFFF;
-  font-family: 'Open Sans', sans-serif;
   font-weight: 600;
   font-size: 16px;
   margin-bottom: 15px;
-  margin-left: 30px;
 }
 #aboutHIW .main-board__left-block > div:last-of-type {
   display: flex;
@@ -332,7 +328,6 @@
 }
 #aboutHIW .main-board__left-block_2 > div {
   color: black;
-  font-family: 'Open Sans', sans-serif;
   font-weight: 600;
   font-size: 16px;
   margin: 10px 0;
@@ -407,12 +402,11 @@
   padding: 0 15px;
 }
 #aboutHIW .main-description .main-wrapper .row .text {
-  width: 90%;
+  width: 100%;
   font-size: 1.5em;
-  margin-top: 40px;
 }
 #aboutHIW .main-description .main-wrapper .row .text .extra-text {
-  font-size: 2.1em;
+  font-size: 1.5em;
   font-weight: 700;
   margin-top: 10px;
   text-align: right;
@@ -515,8 +509,8 @@
   padding: 40px 0;
 }
 #aboutHIW .img-and-text .main-wrapper .works {
-  padding: 30px;
-  background: url(../../img/aboutHIW/blockchain-bg-dark.jpg) no-repeat fixed;
+  padding: 30px 15px;
+  background: url(../../img/about/blockchain-bg-dark.jpg) no-repeat fixed;
   background-size: cover;
   position: relative;
 }
@@ -533,7 +527,6 @@
   margin-top: 30px;
   font-size: 16px;
   font-weight: 400;
-  font-family: 'Open Sans', sans-serif;
   line-height: 24px;
   color: #FFFFFF;
 }
@@ -552,15 +545,16 @@
   font-weight: 200;
 }
 #aboutHIW .img-and-text .main-wrapper .works > div > .image {
-  width: 40%;
+  width: 30%;
   height: auto;
   margin-left: 20px;
   margin: 0 auto;
   display: flex;
   align-items: center;
-  min-width: 250px;
+  min-width: 180px;
 }
 #aboutHIW .img-and-text .main-wrapper .works > div > .image > img {
+  border-radius: 10px;
   width: 100%;
 }
 #aboutHIW .img-and-text .main-wrapper .works h2 {
@@ -607,8 +601,11 @@
   justify-content: space-around;
   align-items: center;
 }
+#aboutHIW .img-and-text .main-wrapper .row p {
+  width: 90%;
+}
 #aboutHIW .img-and-text .main-wrapper .row .text {
-  width: 400px;
+  width: 600px;
 }
 #aboutHIW .img-and-text .main-wrapper .row .text h4 {
   margin-bottom: 30px;
@@ -622,7 +619,8 @@
   text-align: left;
 }
 #aboutHIW .img-and-text .main-wrapper .row .img img {
-  width: 400px;
+  border-radius: 10px;
+  width: 300px;
 }
 #aboutHIW .img-and-text .main-wrapper .reverse {
   flex-direction: row-reverse;
@@ -664,6 +662,43 @@
   #aboutHIW .img-and-text .main-wrapper .works div .works__container .text p {
     width: 100%;
   }
+}
+#aboutHIW .table .main-wrapper table {
+  width: 100%;
+}
+#aboutHIW .table .main-wrapper table tr {
+  border: none !important;
+  text-align: center;
+}
+#aboutHIW .table .main-wrapper table tr td {
+  border: 1px solid #cfcfcf;
+  padding: 30px;
+  font-size: 0.9em;
+  font-weight: 500;
+  text-align: center;
+}
+#aboutHIW .table .main-wrapper table tr .table-center {
+  text-align: center;
+  font-weight: 700;
+  font-size: 1em;
+  border: none;
+}
+#aboutHIW .table .main-wrapper table tr .center {
+  text-align: center;
+}
+#aboutHIW .table .main-wrapper table tr .bold {
+  font-weight: 700;
+}
+#aboutHIW .table .main-wrapper table tr .noline {
+  border: none;
+}
+#aboutHIW .table .main-wrapper table tr th {
+  border: 1px solid #cfcfcf;
+  text-align: center;
+  padding: 30px;
+}
+#aboutHIW .table .main-wrapper table tr .noline {
+  border: 0;
 }
 #aboutHIW .main-board-2 {
   background: url(src/Unlike-YouTube.jpg) no-repeat fixed;
@@ -731,7 +766,6 @@
   align-items: center;
 }
 #aboutHIW .table .main-wrapper table {
-  font-family: arial, sans-serif;
   width: 70%;
 }
 #aboutHIW .table .main-wrapper table tr {
@@ -742,7 +776,7 @@
 #aboutHIW .table .main-wrapper table tr td {
   width: 30%;
   border: 1px solid #cfcfcf;
-  padding: 10px;
+  padding: 30px;
   font-size: 0.9em;
   font-weight: 500;
 }
@@ -758,7 +792,7 @@
 #aboutHIW .table .main-wrapper table th {
   border: 1px solid #cfcfcf;
   text-align: center;
-  padding: 8px;
+  padding: 30px;
 }
 @media (max-width: 380px) {
   #aboutHIW .table .main-wrapper table {
@@ -772,8 +806,8 @@
   #aboutHIW .table .main-wrapper table tr td {
     width: 30%;
     border: 1px solid #cfcfcf;
-    padding: 10px;
-    font-size: 0.9em;
+    padding: 5px;
+    font-size: 0.8em;
     font-weight: 500;
   }
   #aboutHIW .table .main-wrapper table tr .center {
@@ -788,7 +822,11 @@
   #aboutHIW .table .main-wrapper table th {
     border: 1px solid #cfcfcf;
     text-align: center;
-    padding: 8px;
+    padding: 5px!important;
+    font-size: 0.8em !important;
+  }
+  #aboutHIW .table .main-wrapper p {
+    padding: 1em;
   }
 }
 #aboutHIW .main-board-3 {
@@ -877,7 +915,6 @@
 #aboutHIW .services__item > p {
   font-size: 16px;
   font-weight: 400;
-  font-family: 'Open Sans', sans-serif;
   line-height: 24px;
   margin-bottom: 20px;
   color: #666666;
@@ -984,7 +1021,6 @@
   display: block;
   font-size: 12px;
   color: #666666;
-  font-family: 'Roboto', sans-serif;
   font-weight: 300;
 }
 #aboutHIW .team-container__item-footer > h3 {
@@ -1065,7 +1101,6 @@
   letter-spacing: 1px;
   color: #161C35;
   text-align: center;
-  font-family: 'Open Sans', sans-serif;
   text-transform: uppercase;
   font-weight: 600;
   line-height: 24px;
@@ -1115,7 +1150,6 @@
   border: 1px solid #00D5C3;
   color: #FFFFFF;
   font-size: 18px;
-  font-family: 'Roboto', sans-serif;
   font-weight: 300;
   padding: 10px;
   width: 450px;
@@ -1206,7 +1240,6 @@
   margin-top: 30px;
   font-size: 16px;
   font-weight: 400;
-  font-family: 'Open Sans', sans-serif;
   line-height: 24px;
   color: #FFFFFF;
 }
@@ -1250,7 +1283,6 @@
     margin-top: 30px;
     font-size: 16px;
     font-weight: 400;
-    font-family: 'Open Sans', sans-serif;
     line-height: 24px;
     color: #FFFFFF;
   }

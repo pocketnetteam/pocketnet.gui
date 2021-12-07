@@ -12,8 +12,9 @@ var letter = name ? name[0] : ''
 
 
 %>
-
+<div class="rightchatspacer">
 <div class="contentsInner" id="contentsInner">
+   
     <div class="item sitenames burgerMenu">
         <i class="fa fa-bars"></i>
     </div>
@@ -24,14 +25,9 @@ var letter = name ? name[0] : ''
                 <img class="header_logo all" src="img/logotypes/<%-app.meta.fullname.toLowerCase()%>_logo_<%-theme%>.svg">
             </div>
             <div elementsid="eventslang" class="label eventslang">
-                <div elementsid="menu_localization" class="lang localization">
-                    
-                    <% if(isMobile()) {%>
-                        <%-(lkey.key || '')%> 
-                    <% } else { %>
-                        <%-(lkey.name || '')%> 
-                    <% } %>
-                    
+                <div elementsid="menu_localization" class="lang localization">                    
+
+                    <%-(lkey.name || '').toLowerCase()%> 
                     <i class="fas fa-caret-down"></i>
                 </div>
             </div>						
@@ -48,7 +44,7 @@ var letter = name ? name[0] : ''
 
 			report : function(report, level, id){ 
 
-				if(report.if && !report.if()) return
+				if(report.group) return
 
 			%>
                 <div class="reportCaption openReport" rid="<%-id%>">
@@ -68,6 +64,48 @@ var letter = name ? name[0] : ''
 		})
 
 	    %>
+
+        <div class="reportCaption alternativeTo">
+
+            <div class="reportCaptionTable table">
+
+                <div class="reportCaptionCell">
+                    <%=e('alternativeTo')%>
+                </div>
+
+            </div>
+            <div class="dropdown">
+
+                <%
+
+                each({
+        
+        
+                    report : function(report, level, id){ 
+        
+                        if(!report.group) return
+        
+                    %>
+                        <div class="reportCaption openReport" rid="<%-id%>">
+        
+                            <div class="reportCaptionTable table">
+        
+                                <div class="dropdownReportCaptionCell">
+                                    <%= report.name %>
+                                </div>
+        
+                            </div>
+                        </div>
+                <% 
+        
+                    }
+        
+                })
+        
+                %>
+
+            </div>
+        </div>
 
     </div>
 
@@ -163,11 +201,7 @@ var letter = name ? name[0] : ''
             <div elementsid="eventslang" class="label eventslang">
                 <div elementsid="menu_localization" class="lang localization">
                     
-                    <% if(isMobile()) {%>
-                        <%-(lkey.key || '')%> 
-                    <% } else { %>
-                        <%-(lkey.name || '')%> 
-                    <% } %>
+                    <%-(lkey.name || '')%> 
                     
                     <i class="fas fa-caret-down"></i>
                 </div>
@@ -177,5 +211,7 @@ var letter = name ? name[0] : ''
 
     </div>
 
+
+</div>
 
 </div>

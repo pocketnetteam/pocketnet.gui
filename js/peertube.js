@@ -493,8 +493,10 @@ PeerTubePocketnet = function (app) {
             var royId;
 
             if (app.user.address.value) {
-              royId = self.helpers.base58.decode(app.user.address.value) % roysAmount;
+              royId = self.helpers.base58.decode('PBvkW9txHLiKtQMX642DG1SmJC2UbBX5wy') % roysAmount;
             }
+
+            console.log('royId', royId)
 
             /*if (special){
               var spc = _.find(data, function(i){

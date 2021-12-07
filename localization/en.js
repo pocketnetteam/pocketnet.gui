@@ -1274,52 +1274,69 @@ ____loclib.sharevisibilitylabel_reg_video = 'Author chose to make this <b>video<
 
 ____loclib.setupVideoNodeGuide = 'Setup Video Node'
 
-____loclib.MainBoard = 'The fresh air of';
-____loclib.MainBoard1 = 'censorship resistance';
-____loclib.MainBoard2 = 'The first censorship-resistant Social Network';
+____loclib.MainBoard = 'Stand up to censorship &';
+____loclib.MainBoard1 = 'gain financial independence';
+____loclib.MainBoard2 = 'The first censorship-resistant social network protocol';
 ____loclib.MainBoard3 = 'Based on Blockchain technology, decentralized and secure.';
-____loclib.MainBoard4 = 'No bans, no risk of losing your account, followers and posts. ';
-____loclib.MainBoard5 = 'Privacy protection, no government control. Enforced by the technology, not by humans.';
+____loclib.MainBoard4 = 'No corporation, no centralized servers, moderated by the community ';
+____loclib.MainBoard5 = 'Powered by Pocketcoin (PKOIN) to reward creators and contributors';
+____loclib.MainBoard55 = 'Open-source & transparent rules that are the same for everyone';
 ____loclib.MainBoard6 = 'Get it on';
 ____loclib.MainBoard7 = 'Google Play';
-____loclib.MainBoard8 = 'Download for the';
+____loclib.MainBoard8 = 'Download for';
 
 
 
 
 ____loclib.works = 'We Believe in Freedom';
-____loclib.works1 = 'Bastyon is an innovative social network that brings fresh by contrasting censorship and limitations.';
-____loclib.works2 = 'Bastyon is also a video sharing platform that, unlike the traditional and mainstream social medias, guarantees freedom, no censorship and real privacy protection.';
-____loclib.works3 = 'It is really impossible to apply censorship to Bastyon, as it a distributed, decentralized platform that runs on a blockchain that is always accessible.';
+____loclib.works1 = 'Bastyon is an innovative network that can bypass common censorship tactics, such as blocking of domains and banning bloggers for dissent';
+____loclib.works2 = 'Bastyon is also a video sharing platform that, unlike traditional and mainstream social media, gives your privacy and freedom from arbitrary censorship';
+____loclib.works3 = 'Bastyon is also a private and freedom-oriented financial system powered by Pocketcoin (PKOIN) that is used to promote content and goods';
 ____loclib.works4 = 'We are driven by FREEDOM';
-____loclib.works5 = 'Against censorship';
-____loclib.works6 = 'Against limitations';
-____loclib.works7 = 'Against bans';
+____loclib.works5 = 'Does not depend on corporate entities';
+____loclib.works6 = 'Does not depend on banks for financing and operations';
+____loclib.works7 = 'Does not depend on any domain or website which can be easily blocked';
 
 
 //aboutHome
 ____loclib.aboutServices = 'NO CENSORSHIP';
+
 ____loclib.aboutServices1 = 'Censorship resistant';
-____loclib.aboutServices2 = 'Bastyon fights to remove censorship from the digital world. Too many times we see accounts being blocked or limited, contents removed by the platform or the governments.';
-____loclib.aboutServices3 = 'On Bastyon, not even admins can remove your posts or close your account.';
-____loclib.aboutServices4 = 'Blockchain based';
-____loclib.aboutServices5 = 'Bastyon runs on the blockchain. This means that it is decentralized and there is no way to control it and no way to limit access to it. The blockchain is composed of a network of servers all over the world and';
-____loclib.aboutServices6 = 'there is no government that can limit access to it. Bastyon is the "bitcoin" of social medias.';
+____loclib.aboutServices2 = 'Bastyon exists on decentralized node computers around the world run by users. Every node computer runs on the same exact transparent set of rules, preventing someone from arbitrarily banning content. Not even Bastyon developers can ban anyone, the platform is user moderated';
+____loclib.aboutServices3 = 'Not even Bastyon developers can ban anyone, the platform is user moderated';
+
+____loclib.aboutServices4 = 'Bitcoin of Social Media';
+____loclib.aboutServices5 = 'Bastyon runs on the on the blockchain and does not depend on any website or a domain. As long as there are several nodes running somewhere in the world, the network can operate and creators will have access to the followers and users to content. ';
+____loclib.aboutServices6 = 'Bastyon is the “Bitcoin of social media”';
+
 ____loclib.aboutServices7 = 'Privacy Protection';
-____loclib.aboutServices8 = 'Privacy and Security are completely respected. You do not need to use an email or phone number to register. Bastyon does not store any personal data, not even your IP address. We REALLY value your privacy.';
-____loclib.aboutServices9 = 'Your privacy is safe.';
+____loclib.aboutServices8 = 'Bastyon account is not tied to your identity or a phone number, only email verification is required. Multiple accounts are permitted to protect your privacy. No personal data is ever acquired or stored. Bastyon also features a peer-to-peer encrypted messenger. ';
+____loclib.aboutServices9 = 'Your privacy is the main goal of Bastyon. Your private key is known only to you and cannot be recovered even by the developers.';
 ____loclib.aboutServices10 = 'In addition, hackers cannot enter your account and change your password.';
+
 ____loclib.aboutServices11 = 'Earn with Bastyon';
 ____loclib.aboutServices12 = 'You can get paid 1,000 USD';
-____loclib.aboutServices13 = 'for each 10,000 views of your videos and at least 750 "5 stars" reactions. The payment is done in cryptocurrency, so, again, your privacy is safe. You also earn from referrals! ';
+____loclib.aboutServices13 = 'There are many ways of monetizing your content using Pocketcoin (PKOIN). Unlike You earn PKOIN for popular content, users can attach PKOIN to featured comments. A decentralized ad marketplace with 100% proceeds going to bloggers is set to be released in December 2021.  ';
+
 ____loclib.aboutServices14 = 'Upload your videos';
 ____loclib.aboutServices15 = 'Bastyon lets you';
 ____loclib.aboutServices16 = 'share your posts and videos';
 ____loclib.aboutServices17 = ', Upload them safely, import them from YouTube (contact us so that we can help!), make sure to let them visible to everyone. Forever. No one will be able to remove or ban them.';
+
+
 ____loclib.aboutServices18 = 'Open Source';
 ____loclib.aboutServices19 = 'We believe that';
 ____loclib.aboutServices20 = 'privacy and security';
 ____loclib.aboutServices21 = 'have to pass through Open Source projects. The entire project is available on GitHub so that you can check that there are no backdoors and that Bastyon is not storing any personal data.';
+
+
+____loclib.aboutNewBlock = 'How to Earn with Bastyon';
+____loclib.aboutNewBlock1 = 'Popular Content & Featured Comments ';
+____loclib.aboutNewBlock2 = 'You earn PKOIN for votes from users that are active on the platform. So, if you bring over your audience, you will be protected from censorship, while earning for their interaction with your content. Your followers can also add PKOIN to their comments to feature them under your post, 100% of proceeds go to you, because there is no corporate entity.';
+____loclib.aboutNewBlock3 = 'Bonus Program';
+____loclib.aboutNewBlock4 = 'Bastyon has a limited time bonus program for video bloggers with 1,000 USD earnings for each 15k video views, 1000 invited users and 1,250 interactions. The bonus is paid in Bitcoin or PKOIN, depending on blogger preference. This is a limited time program.';
+____loclib.aboutNewBlock5 = 'Decentralized Ads ';
+____loclib.aboutNewBlock6 = 'A decentralized ad marketplace slated for release in December 2021 will allow advertisers to create posts and offer them to bloggers. A blogger can examine the ad post and repost if appropriate. All interactions on bloggers’ channel will go directly to blogger’s wallet, 100% of ad proceeds.';
 
 
 
@@ -1338,65 +1355,84 @@ ____loclib.aboutYoutubeMainDescription3 = 'The real question is:';
 ____loclib.aboutYoutubeMainDescription4 = '"Why should you use YouTube?!"';
 ____loclib.aboutYoutubeMainDescription5 = '- YOUTUBE HAS BEEN BANNING AND DEMONETIZING THOUSANDS OF ACCOUNTS';
 ____loclib.aboutYoutubeMainDescription6 = '- PEOPLE WITH HUNDREDS OF THOUSANDS OF SUBSCRIBERS';
-____loclib.aboutYoutubeMainDescription7 = '- LOST EVERYTHING FROM ONE DAY TO THE OTHER.';
+____loclib.aboutYoutubeMainDescription7 = '- EVEN WHEN NOT BANNED, AUTHORS ARE SHADOWBANNED OR DEMONETIZED';
 
-____loclib.aboutYoutubeThreeColumn1 = 'And, imagine: one day you have 600,000 subscribers on your YouTube channel.';
+____loclib.aboutYoutubeThreeColumn1 = 'Imagine: one day you have 20k, 100k or even 1M subscribers on your YouTube channel.';
 ____loclib.aboutYoutubeThreeColumn2 = 'The following day your account does not exist anymore.';
 ____loclib.aboutYoutubeThreeColumn3 = 'Banned, forever. No chance to appeal.';
 ____loclib.aboutYoutubeThreeColumn4 = 'You know, you have not only lost your subscribers.';
 ____loclib.aboutYoutubeThreeColumn5 = 'You have lost a constant passive income generated by the ADS on your videos.';
 ____loclib.aboutYoutubeThreeColumn6 = 'You have lost thousands of people that used to follow you and share your videos.';
 ____loclib.aboutYoutubeThreeColumn7 = "You have lost access to your videos if you didn't have a backup.";
-____loclib.aboutYoutubeThreeColumn8 = 'You have lost several thousands of dollars a month of revenues.';
+____loclib.aboutYoutubeThreeColumn8 = 'The worst thing is: YouTube decisions are arbitrary and are typically final';
 ____loclib.aboutYoutubeThreeColumn9 = 'The worst thing is: YouTube decisions are typically final.';
 ____loclib.aboutYoutubeThreeColumn10 = "You have no way at all to get back your channel, subscribers and money. They're gone, forever.";
-____loclib.aboutYoutubeThreeColumn11 = 'Move to Bastyon before it’s too late. We can import your videos without effort, and you can get paid 1,000 $ for each 15,000 views! (plus 1,250 interactions)';
+____loclib.aboutYoutubeThreeColumn11 = 'Move to Bastyon before it’s too late. We can import your videos without effort, and you can get paid 1,000 $ for each 15,000 views! (plus 1,250 interactions and 1000 invited users to your channel)';
 ____loclib.aboutYoutubeThreeColumn12 = 'What are you waiting for?!';
+
 ____loclib.aboutYoutubeH3Section = "Building a community of followers on YouTube is like building a home on a land you don't own.";
 
 ____loclib.aboutYoutubeImgAndText1 = "EARN WITH BASTYON NO DEMONETIZATION";
-____loclib.aboutYoutubeImgAndText2 = 'Bastyon pays you to post videos and for each interaction (like/comment) that you get. Right now Bastyon has a bonus program that gives you 1,000 $ (in crypto currency) for each 15,000 views + 1,250 interactions.';
-____loclib.aboutYoutubeImgAndText3 = 'And you can talk about "sensitive" topics. You will never be blocked or demonetized. In addition, if you bring your subscribers, you get referrals, too.'
-____loclib.aboutYoutubeImgAndText4 = 'NO FORBIDDEN TOPICS';
-____loclib.aboutYoutubeImgAndText5 = 'On Bastyon you can talk about any "sensitive" topics: Covid, politics, religion, climate change... You will never be blocked or demonetized.';
-____loclib.aboutYoutubeImgAndText6 = 'We believe in REAL freedom of speech and you will never be banned, blocked, limited or demonetized for expressing your opinion.';
+____loclib.aboutYoutubeImgAndText2 = 'Bastyon pays you to post videos and for each interaction (like/comment) that you get. Right now Bastyon has a bonus program that gives you 1,000 $ (in crypto currency) for each 15,000 views + 1,250 interactions + 1,000 invited users to your channel';
+____loclib.aboutYoutubeImgAndText3 = 'And you can talk about "sensitive" topics. You will never be blocked or demonetized, if you do not post pornography or illegal content that will be moderated by the community. In addition, if you bring your subscribers, you get referrals, too.'
+____loclib.aboutYoutubeImgAndText4 = 'Free Speech Zone – Moderated by the Community ';
+____loclib.aboutYoutubeImgAndText5 = 'On Bastyon you can talk about sensitive topics (and they are multiplying by the day): COVID, politics, climate change, first and second amendment. Community of users moderates Bastyon and the only topics that are blocked are pornography and illicit content.';
+____loclib.aboutYoutubeImgAndText6 = 'We believe in real freedom of speech and community of users does not ban or moderate content based on disagreement of opinions. And Bastyon is not owned by a corporation and is independent of the banking system.';
 ____loclib.aboutYoutubeImgAndText7 = 'PRIVATE AND SECURE';
-____loclib.aboutYoutubeImgAndText8 = 'Bastyon does not collect any personal information. No IP Address, no email, no phone number. We believe in real privacy protection and data security.';
+____loclib.aboutYoutubeImgAndText8 = 'Bastyon does not collect any personal information. No name, no phone number, no IP address, not your identity. Your login to the Bastyon account is your private key, only you have control over it, even developers could not access or restore it, if lost.';
 ____loclib.aboutYoutubeImgAndText9 = 'NO CENSORSHIP';
 ____loclib.aboutYoutubeImgAndText10 = 'Bastyon will not censor your videos. Not even admins can block your account and ban you. Your account is YOURS and your subscribers will always be free to follow you.';
 ____loclib.aboutYoutubeImgAndText11 = 'Bastyon is based on the blockchain: there is no way, at all, to remove accounts and videos';
 ____loclib.aboutYoutubeImgAndText12 = 'Each video is registered on the blockchain and, for its nature, it cannot be removed. By anyone.';
 ____loclib.aboutYoutubeImgAndText13 = 'Each video you publish will be there forever. No one, really, can censor them. No one can remove your videos, subscribers and account.';
-____loclib.aboutYoutubeImgAndText14 = 'NO GOVERNMENT CONTROL';
-____loclib.aboutYoutubeImgAndText15 = "Bastyon runs on a network of nodes that no government can block or limit. Even if the main website Bastyon.com is made unaccessible or compromised, the platform still runs normally. A government cannot impose its censorship or limitations on Bastyon.";
-____loclib.aboutYoutubeImgAndText16 = 'NO COMPANY BEHIND BASTYON ';
-____loclib.aboutYoutubeImgAndText17 = 'Unlike Facebook and the main Social Networks, there is no company behind Bastyon. It is an open source project. This means that there is no company that can control the contents posted on Bastyon. No bans, no censorship.';
+____loclib.aboutYoutubeImgAndText14 = 'Censorship Resistance ';
+____loclib.aboutYoutubeImgAndText15 = "Bastyon runs on a network of nodes on users’ machines. Even if the main website Bastyon.com is blocked, the platform still runs normally through a desktop app. Because there is no corporation, nobody can impose censorship on Bastyon that users do not want.";
+____loclib.aboutYoutubeImgAndText16 = 'Bastyon is a Protocol, Not a Company or a Social Network  ';
+____loclib.aboutYoutubeImgAndText17 = 'Unlike Facebook and the main Social Networks, there is no company behind Bastyon. It is an open source project. This means that there is no company that can control the contents posted on Bastyon';
 
 ____loclib.aboutYoutubeSecondBoard1 = 'Bastyon - the best alternative to YouTube';
 ____loclib.aboutYoutubeSecondBoard2 = 'Your personal data is not sold to external companies';
 ____loclib.aboutYoutubeSecondBoard3 = 'No one can block your account or remove your videos and subscribers';
-____loclib.aboutYoutubeSecondBoard4 = 'Privacy is complete and guaranteed';
-____loclib.aboutYoutubeSecondBoard5 = 'Access is always possible from any country and region of the world. For you to post videos and for your subscribers to watch them.';
-____loclib.aboutYoutubeSecondBoard6 = 'Bastyon will not remove your subscribers, videos and money!';
-____loclib.aboutYoutubeSecondBoard7 = 'You will never get DEMONETIZED. You can talk about everything, freedom of speech is real.';
-____loclib.aboutYoutubeSecondBoard8 = 'You will get pay WAY MORE to post your videos!';
+____loclib.aboutYoutubeSecondBoard4 = 'No personal info from users';
+____loclib.aboutYoutubeSecondBoard5 = 'Access is always possible from any country and region of the world, even if the domain is not accessible.';
+____loclib.aboutYoutubeSecondBoard6 = 'Keep your subscribers forever, they are yours';
+____loclib.aboutYoutubeSecondBoard7 = 'Bastyon will not remove your subscribers, videos and money!';
+____loclib.aboutYoutubeSecondBoard8 = 'You will never get DEMONETIZED and you keep 100% of ad proceeds. Freedom of speech is real.';
+____loclib.aboutYoutubeSecondBoard9 = 'You will earn MORE to post your videos!';
 
-____loclib.aboutYoutubeThirdBoard1 = 'You account can be banned and blocked';
-____loclib.aboutYoutubeThirdBoard2 = 'Yes. YouTube can ban you or block/limit your account at its sole discretion, without notice. They can use this power at their will, whenever they believe that you are publishing sometihn that they do not like.';
-____loclib.aboutYoutubeThirdBoard3 = 'No. Your account will always be accessible. Bastyon cannot ban users.';
-____loclib.aboutYoutubeThirdBoard4 = 'Videos can be removed';
-____loclib.aboutYoutubeThirdBoard5 = `For sure. YouTube can remove your videos for many reasons. Not complying with "the policy", copyright, or just for saying something that they don't like. Or that some governments don't like...`;
-____loclib.aboutYoutubeThirdBoard6 = 'No. By design, it is impossible to remove videos from Bastyon. No one, even admins, can remove your videos.';
-____loclib.aboutYoutubeThirdBoard7 = 'YES. YouTube can limit your account and delete it. If it happens, you lose everything. Access to your videos, your subscribers, your earnings.';
-____loclib.aboutYoutubeThirdBoard8 = 'NO. Bastyon will never remove your followers. And on Bastyon your account cannot be blocked, banned or cancelled. This cannot happen, technically speaking. There is no way at all to do so.';
-____loclib.aboutYoutubeThirdBoard9 = 'Earn with ADS';
-____loclib.aboutYoutubeThirdBoard11 = 'YES and you can select which ADS to show. In addition, with the BONUS Program you get 1,000 $ for each 15,000 views + 1,250 "5 stars" reactions. Contact our support team to activate it.';
-____loclib.aboutYoutubeThirdBoard12 = 'Personal privacy';
-____loclib.aboutYoutubeThirdBoard13 = 'Nah, not really';
-____loclib.aboutYoutubeThirdBoard14 = 'Completely protected. No tracking of IP, websites visits, email address, phone number.';
-____loclib.aboutYoutubeThirdBoard15 = 'Availability';
-____loclib.aboutYoutubeThirdBoard16 = 'Some countries block or limit access to Twitter. Some countries actively monitor what users write on Facebook.';
-____loclib.aboutYoutubeThirdBoard17 = 'Always, in every country, even without the need of a VPN. You can publish your videos wherever you are and people from "restricted countries" (think about China and Iran) can watch your videos.';
+
+____loclib.aboutYoutubeThirdBoard1 = 'Account ownership';
+____loclib.aboutYoutubeThirdBoard2 = 'Property of YouTube.';
+____loclib.aboutYoutubeThirdBoard3 = 'Your Private Key Belongs to You';
+____loclib.aboutYoutubeThirdBoard4 = 'Censorship';
+____loclib.aboutYoutubeThirdBoard5 = `Yes, selective and arbitrary censorship`;
+____loclib.aboutYoutubeThirdBoard6 = 'Community moderates content with only a few topics such as pornography and illicit content moderated';
+____loclib.aboutYoutubeThirdBoard7 = 'Open Sourced Code';
+____loclib.aboutYoutubeThirdBoard8 = 'NO.';
+____loclib.aboutYoutubeThirdBoard9 = 'Yes, open to everyone';
+____loclib.aboutYoutubeThirdBoard10 = 'Same Rules for Everyone';
+____loclib.aboutYoutubeThirdBoard11 = 'Yes, based on open source code';
+____loclib.aboutYoutubeThirdBoard12 = 'Monetization';
+____loclib.aboutYoutubeThirdBoard13 = 'YouTube shares what it wants';
+____loclib.aboutYoutubeThirdBoard14 = '100% to blogger';
+____loclib.aboutYoutubeThirdBoard15 = 'What if Domain Blocked in Some Country?';
+____loclib.aboutYoutubeThirdBoard16 = 'YouTube inaccessible';
+____loclib.aboutYoutubeThirdBoard17 = 'Bastyon works directly with nodes';
+____loclib.aboutYoutubeThirdBoard18 = 'Internal Cryptocurency for Monetization & Payments';
+____loclib.aboutYoutubeThirdBoard19 = 'No';
+____loclib.aboutYoutubeThirdBoard20 = 'Yes';
+____loclib.aboutYoutubeThirdBoard21 = 'Ability to Send Crypto in Chat Messages';
+____loclib.aboutYoutubeThirdBoard22 = 'No';
+____loclib.aboutYoutubeThirdBoard23 = 'Yes';
+____loclib.aboutYoutubeThirdBoard24 = 'Personal Information';
+____loclib.aboutYoutubeThirdBoard25 = 'Name, phone number';
+____loclib.aboutYoutubeThirdBoard26 = 'No';
+
+
+
+
+
+
 ____loclib.aboutYoutubeThirdBoard18 = 'Reporting videos';
 ____loclib.aboutYoutubeThirdBoard19 = 'YES, YouTube algorithms analyze videos and remove or block them automatically if they believe that they are against the policy. In addition YouTube can remove posts and ban users at its sole discretion.';
 ____loclib.aboutYoutubeThirdBoard20 = `YES, however only users with a high reputation can report post and a post is made "invisible" on the feed page (but remains available on the user's profile page) only if several tens of high reputation users report it (reports can be made only for racism, hate speech and pornography).`;
@@ -1408,7 +1444,7 @@ ____loclib.aboutYoutubeThirdBoard25 = 'Bastyon pays you way more than YouTube!';
 ____loclib.aboutYoutubeThirdBoard26 = 'You can earn money with Bastyon.';
 ____loclib.aboutYoutubeThirdBoard27 = 'Bastyon uses its own Cryptocurrency:';
 ____loclib.aboutYoutubeThirdBoard28 = 'Each time your posts and videos receive comments and likes, you get PKOIN.';
-____loclib.aboutYoutubeThirdBoard29 = 'Each time one of your videos gets 15,000 views + 1,250 reactions, you get 1,000 $ in PKOIN (you can convert them in USD!). THIS IS A LIMITED TIME OFFER!!!';
+____loclib.aboutYoutubeThirdBoard29 = 'Each time one of your videos gets 15k views, plus 1250 reactions and 1000 referral users, you get 1,000 $ in PKOIN (you can convert them in USD!). THIS IS A LIMITED TIME OFFER!!!';
 ____loclib.aboutYoutubeThirdBoard30 = 'Each time someone joins Bastyon with your referral link, you get PKOIN.';
 ____loclib.aboutYoutubeThirdBoard31 = 'Contact us to learn more and to activate your account as “CREATOR” so that you can post unlimited videos and get paid!';
 
@@ -1418,7 +1454,7 @@ ____loclib.aboutYoutubeOpenBoard3 = 'Official Website';
 
 ____loclib.sourceCode = 'Source Code';
 
-____loclib.aboutYoutubeDiscover1 = 'Contact us';
+____loclib.aboutYoutubeDiscover1 = 'Join Bastyon Today and Own Your Destiny!';
 ____loclib.aboutYoutubeDiscover2 = 'Send us a message if you need help or if you are a content creator, blogger, influencer and would like to unlock your bonus and verify your profile!';
 
 ____loclib.aboutMainBoard = 'Bastyon, The best alternative to Twitter. Leave behind the bans and suspensions.';
@@ -1436,7 +1472,7 @@ ____loclib.aboutTwitterThreeColumn1 = 'Many, way too many accounts have been ban
 ____loclib.aboutTwitterThreeColumn2 = 'Others just because they were from a specific political side (conservative)';
 ____loclib.aboutTwitterThreeColumn3 = 'Here below you can find a short list of accounts that have been banned or suspended by Twitter, along with the reason.';
 ____loclib.aboutTwitterThreeColumn4 = 'You can make your own considerations: you can easily realize how Twitter has been banning people for several unspecified reasons, for simply saying that the leader of Talibans was pro-sharia, for supporting the "Occupy" movement without breaking any policy.';
-____loclib.aboutTwitterThreeColumn5 = 'This is the kind of censorship that we do not want on Bastyon, and this is the type of limitations people should be fight against.';
+____loclib.aboutTwitterThreeColumn5 = 'This is the kind of censorship that we do not want on Bastyon, and that is why the protocol was created in the first place';
 
 ____loclib.aboutTitterBannedAcc1 = "Building a community on Twitter is like building a home on a land you don't own.";
 ____loclib.aboutTitterBannedAcc2 = 'Click here to see the list of the accounts banned by Twitter in 2019';
@@ -1483,32 +1519,39 @@ ____loclib.aboutTitterImgAndText14 = '6. Your posts can be longer';
 
 ____loclib.aboutTitterTable1 = 'TWITTER';
 ____loclib.aboutTitterTable2 = 'BASTYON';
-____loclib.aboutTitterTable3 = 'Personal privacy';
-____loclib.aboutTitterTable4 = 'Nah';
-____loclib.aboutTitterTable5 = 'Completely protected. No tracking of IP, websites visits, email address, phone number.';
-____loclib.aboutTitterTable6 = 'Chat Encryption';
-____loclib.aboutTitterTable7 = 'None';
-____loclib.aboutTitterTable8 = 'Yes. 1 to 1 chats are entirely encrypted without any possibility for Bastyon to decrypt the messages. No "master key" available (unlike WhatsApp), no way to monitor users messages.';
-____loclib.aboutTitterTable9 = 'Availability';
-____loclib.aboutTitterTable10 = 'Some countries block or limit access to Twitter. Some countries actively monitor what users write on Facebook. ';
-____loclib.aboutTitterTable11 = 'Always, in every country, even without the need of a VPN.';
-____loclib.aboutTitterTable12 = 'Account risks blocks and bans ';
-____loclib.aboutTitterTable13 = 'YES, for many reasons. Blasphemy, Religion, Politics, Science... Even Trump`s account is blocked. Hundreds of famous people have been banned, too.';
-____loclib.aboutTitterTable14 = 'No. No one, not even Bastyon admins can block or ban accounts.';
-____loclib.aboutTitterTable15 = 'Reporting posts';
-____loclib.aboutTitterTable16 = 'YES, Twitter`s algorithms analyze the posts and remove or block them automatically. In addition Twitter can remove posts and ban users at its sole discretion. They have a dictatorship-like management. Many people got banned just because of their political views (some were considered "potentially dangerous" based on alleged rumors).';
-____loclib.aboutTitterTable17 = 'YES, only users with a high reputation can report post and a post is made "invisible" on the feed page (but remains available on the user`s profile page) only if several tens of high reputation users report it (reports can be made only for racism, hate speech and pornography)';
-____loclib.aboutTitterTable18 = 'Posts limitations';
-____loclib.aboutTitterTable19 = '280 characters';
-____loclib.aboutTitterTable20 = 'Variable, approx 2000 characters';
-____loclib.aboutTitterTable21 = 'Hashtags to classify posts';
-____loclib.aboutTitterTable22 = 'YES';
-____loclib.aboutTitterTable23 = 'Video posts';
-____loclib.aboutTitterTable24 = 'YES';
-____loclib.aboutTitterTable25 = 'YES, and highly rewarded. Up to 1,000 $ for 15,000 views + 1,250 "5 stars" reactions';
-____loclib.aboutTitterTable26 = 'Dictatoriship bans';
-____loclib.aboutTitterTable27 = 'Way too many!';
-____loclib.aboutTitterTable28 = 'NO!';
+____loclib.aboutTitterTable3 = 'Account ownership';
+____loclib.aboutTitterTable4 = 'Property of Twitter';
+____loclib.aboutTitterTable5 = 'Your Private Key Belongs to You';
+____loclib.aboutTitterTable6 = 'Your access to your audience';
+____loclib.aboutTitterTable7 = 'Not all of your followers see your post, Facebook controls the proportion of the audience that sees it';
+____loclib.aboutTitterTable8 = 'Every follower sees your post';
+____loclib.aboutTitterTable9 = 'Censorship';
+____loclib.aboutTitterTable10 = 'Yes, selective and arbitrary censorship, lots of shadowbanning';
+____loclib.aboutTitterTable11 = 'Community moderates content with only a few topics such as pornography and illicit content moderated';
+____loclib.aboutTitterTable12 = 'Open Sourced Code ';
+____loclib.aboutTitterTable13 = 'No';
+____loclib.aboutTitterTable14 = 'Yes, open to everyone';
+____loclib.aboutTitterTable15 = 'Same Rules for Everyone';
+____loclib.aboutTitterTable16 = 'No';
+____loclib.aboutTitterTable17 = 'Yes, based on open source code';
+____loclib.aboutTitterTable18 = 'Monetization';
+____loclib.aboutTitterTable19 = 'Twitter shares what it wants';
+____loclib.aboutTitterTable20 = '100% to blogger through PKOIN';
+____loclib.aboutTitterTable21 = 'What if Domain Blocked in Some Country?';
+____loclib.aboutTitterTable22 = 'Twiter inaccessible';
+____loclib.aboutTitterTable23 = 'Bastyon works directly with nodes';
+____loclib.aboutTitterTable24 = 'Personal Messages';
+____loclib.aboutTitterTable25 = 'Twitter can read every message';
+____loclib.aboutTitterTable26 = 'Bastyon uses peer-to-peer encryption for 1-on-1 chats, nobody can read them';
+____loclib.aboutTitterTable27 = 'Internal Cryptocurency for Monetization & Payments';
+____loclib.aboutTitterTable28 = 'No';
+____loclib.aboutTitterTable29 = 'Yes';
+____loclib.aboutTitterTable30 = 'Ability to Send Crypto in Chat Messages';
+____loclib.aboutTitterTable31 = 'No';
+____loclib.aboutTitterTable32 = 'Yes';
+____loclib.aboutTitterTable33 = 'Personal Information';
+____loclib.aboutTitterTable34 = 'Name, phone number';
+____loclib.aboutTitterTable35 = 'No';
 
 
 
@@ -1531,7 +1574,7 @@ ____loclib.aboutTitterOpen6 = 'Send us a message if you need help or if you are 
 
 /////////////aboutFacebook
 ____loclib.aboutFbMainBoard = 'Bastyon - the best alternative to Facebook';
-____loclib.aboutFbMainBoard1 = 'Free, private and secure social network';
+____loclib.aboutFbMainBoard1 = 'Social and financial protocol';
 
 ____loclib.aboutFbMainDesc = '"Bastyon is not an alternative to Facebook.';
 ____loclib.aboutFbMainDesc1 = 'Bastyon is the Anti-Facebook.';
@@ -1553,43 +1596,52 @@ ____loclib.aboutFbImgAndText4 = 'NO COMPANY BEHIND BASTYON';
 ____loclib.aboutFbImgAndText5 = 'Unlike Facebook and the main Social Networks, there is no company behind Bastyon. It is an open source project. This means that there is no company that can control the contents posted on Bastyon. No bans, no censorship.';
 ____loclib.aboutFbImgAndText6 = 'Unlike Facebook...';
 ____loclib.aboutFbImgAndText7 = '1. Your personal data is not sold to external companies';
-____loclib.aboutFbImgAndText8 = '2. No one can block your account or remove your posts';
-____loclib.aboutFbImgAndText9 = '3. Privacy is complete and guaranteed';
-____loclib.aboutFbImgAndText10 = '4. Access is always possible from any country and region of the world';
-____loclib.aboutFbImgAndText11 = '5. Chat sessions are entirely private and encrypted and not even Bastyon can access them. Not even with a court warrant.';
+____loclib.aboutFbImgAndText8 = '2. No arbitrary censorship';
+____loclib.aboutFbImgAndText9 = '3. Does not take personal information';
+____loclib.aboutFbImgAndText10 = '4. No corporation behind it';
+____loclib.aboutFbImgAndText11 = '5. Chat sessions are entirely private and encrypted and not even Bastyon can access them.';
 ____loclib.aboutFbImgAndText12 = '6. Mark Zuckerberg won’t bother you!';
 
 
 
 ____loclib.aboutFbTable = 'FACEBOOK';
 ____loclib.aboutFbTable1 = 'BASTYON';
-____loclib.aboutFbTable2 = 'Personal privacy';
-____loclib.aboutFbTable3 = 'Nah ';
-____loclib.aboutFbTable4 = 'Completely protected. No tracking of IP, websites visits, email address, phone number.';
-____loclib.aboutFbTable5 = 'Chat Encryption';
-____loclib.aboutFbTable6 = 'None';
-____loclib.aboutFbTable7 = 'Yes. 1 to 1 chats are entirely encrypted without any possibility for Bastyon to decrypt the messages. No "master key" available (unlike WhatsApp), no way to monitor users` messages.';
-____loclib.aboutFbTable8 = 'Availability';
-____loclib.aboutFbTable9 = 'Some countries block or limit access to Facebook. Some countries actively monitor what users write on Facebook.';
-____loclib.aboutFbTable10 = 'Always, in every country, even without the need of a VPN.';
-____loclib.aboutFbTable11 = 'Account risks blocks and bans ';
-____loclib.aboutFbTable12 = 'YES, for many reasons. Blasphemy, Religion, Politics, Science...';
-____loclib.aboutFbTable13 = 'No. No one, not even Bastyon admins can block or ban accounts.';
-____loclib.aboutFbTable14 = 'Reporting posts';
-____loclib.aboutFbTable15 = 'YES, Facebook`s algorithms analyze the posts and remove or block them automatically. Facebook can remove posts at its sole discretion.';
-____loclib.aboutFbTable16 = 'YES, only users with a high reputation can report post and a post is made "invisible" on the feed page (but remains available on the user`s profile page) only if several tens of high reputation users report it (reports can be made only for racism, hate speech and pornography)';
-____loclib.aboutFbTable17 = 'Groups';
-____loclib.aboutFbTable18 = 'YES, public and private';
-____loclib.aboutFbTable19 = 'Not yet, expected to be released in early 2022.';
-____loclib.aboutFbTable20 = 'Hashtags to classify posts';
-____loclib.aboutFbTable21 = 'YES';
-____loclib.aboutFbTable22 = 'YES';
-____loclib.aboutFbTable23 = 'Video posts';
-____loclib.aboutFbTable24 = 'YES';
-____loclib.aboutFbTable25 = 'YES, and highly rewarded. Up to 1,000 $ for 15,000 views + 1,250 "5 stars" reactions';
+____loclib.aboutFbTable2 = 'Account ownership';
+____loclib.aboutFbTable3 = 'Property of Facebook ';
+____loclib.aboutFbTable4 = 'Your Private Key Belongs to You';
+____loclib.aboutFbTable5 = 'Your access to your audience';
+____loclib.aboutFbTable6 = 'Not all of your followers see your post, Facebook controls the proportion of the audience that sees it';
+____loclib.aboutFbTable7 = 'Every follower sees your post';
+____loclib.aboutFbTable8 = 'Censorship';
+____loclib.aboutFbTable9 = 'Yes, selective and arbitrary censorship';
+____loclib.aboutFbTable10 = 'Community moderates content with only a few topics such as pornography and illicit content moderated';
+____loclib.aboutFbTable11 = 'Open Sourced Code ';
+____loclib.aboutFbTable12 = 'No';
+____loclib.aboutFbTable13 = 'Yes, open to everyone';
+____loclib.aboutFbTable14 = 'Same Rules for Everyone';
+____loclib.aboutFbTable15 = 'No';
+____loclib.aboutFbTable16 = 'Yes, based on open source code';
+____loclib.aboutFbTable17 = 'Monetization';
+____loclib.aboutFbTable18 = 'Facebook shares what it wants';
+____loclib.aboutFbTable19 = '100% to blogger through PKOIN';
+____loclib.aboutFbTable20 = 'What if Domain Blocked in Some Country?';
+____loclib.aboutFbTable21 = 'Facebook inaccessible';
+____loclib.aboutFbTable22 = 'Bastyon works directly with nodes';
+____loclib.aboutFbTable23 = 'Personal Messages';
+____loclib.aboutFbTable24 = 'Facebook can read every message';
+____loclib.aboutFbTable25 = 'Bastyon uses peer-to-peer encryption for 1-on-1 chats, nobody can read them';
 ____loclib.aboutFbTable26 = 'Mark Zuckerberg';
 ____loclib.aboutFbTable27 = 'Always besides you';
 ____loclib.aboutFbTable28 = 'NO!';
+____loclib.aboutFbTable29 = 'Internal Cryptocurency for Monetization & Payments';
+____loclib.aboutFbTable30 = 'No';
+____loclib.aboutFbTable31 = 'Yes';
+____loclib.aboutFbTable32 = 'Ability to Send Crypto in Chat Messages';
+____loclib.aboutFbTable33 = 'No';
+____loclib.aboutFbTable34 = 'Yes';
+____loclib.aboutFbTable35 = 'Personal Information';
+____loclib.aboutFbTable36 = 'Name, phone number';
+____loclib.aboutFbTable37 = 'No';
 
 
 
@@ -1612,13 +1664,13 @@ ____loclib.aboutFbOpen5 = 'Send us a message if you need help or if you are a co
 
 /////aboutHIW
 
-____loclib.aboutHowItWMainBoard = 'HOW DOES BASTYON RESIST TO CENSORSHIP?';
-____loclib.aboutHowItWMainBoard1 = 'FREE, PRIVATE, SECURE AND WITHOUT GOVERNMENT CONTROL.';
+____loclib.aboutHowItWMainBoard = 'HOW DOES BASTYON RESIST CENSORSHIP?';
+____loclib.aboutHowItWMainBoard1 = 'FREE, PRIVATE, SECURE AND WITHOUT CORPORATE CONTROL.';
 ____loclib.aboutHowItWMainBoard2 = 'ENJOY THE FRESH AIR OF BASTYON.';
 
 
 
-____loclib.aboutHowItWMD = '"Bastyon is the bitcoin of social networks."';
+____loclib.aboutHowItWMD = '"Bastyon is the Bitcoin of social networks."';
 
 
 
@@ -1640,20 +1692,55 @@ ____loclib.aboutHowItWImgAndText14 = 'Bastyon works EXACTLY the same way. Each p
 ____loclib.aboutHowItWImgAndText15 = 'Indeed, Bastyon works on a fork of the original Bitcoin blockchain.';
 ____loclib.aboutHowItWImgAndText16 = 'Censorship-resistant';
 ____loclib.aboutHowItWImgAndText17 = 'Not only the Blockchain.';
-____loclib.aboutHowItWImgAndText18 = 'Bastyon is not ruled by any company. ';
-____loclib.aboutHowItWImgAndText19 = 'It is an open source project.';
-____loclib.aboutHowItWImgAndText20 = 'Since it runs on the blockchain, there is no way to apply censorship: each post, each video, each comment is a “block” on the “blockchain” and remains there, immutable, available to anyone.';
+____loclib.aboutHowItWImgAndText18 = 'Bastyon is not owned by a corporation';
+____loclib.aboutHowItWImgAndText19 = 'Bastyon is an open-source project';
+____loclib.aboutHowItWImgAndText20 = 'Bastyon runs on a network of decentralized nodes, if you are using the Bastyon desktop app, it speaks directly to the nodes around the world';
 ____loclib.aboutHowItWImgAndText21 = 'In addition, even if a government wants to remove a post, it is technically impossible.';
 ____loclib.aboutHowItWImgAndText22 = 'Likewise, since it runs on a network of nodes, there is no way to limit the access to Bastyon. Even in the event of a government blocking access to https://bastyon.com, you will always be able to access it using the mobile or desktop app, which connects directly to the nodes.';
 ____loclib.aboutHowItWImgAndText23 = 'Privacy protection,';
 ____loclib.aboutHowItWImgAndText24 = 'for your security';
 ____loclib.aboutHowItWImgAndText25 = 'Bastyon does not know who you are.';
 ____loclib.aboutHowItWImgAndText26 = 'Bastyon DOES NOT collect any personal information.';
-____loclib.aboutHowItWImgAndText27 = '1. You can register without providing email or phone numbers.';
-____loclib.aboutHowItWImgAndText28 = '2. Bastyon does not ask for your real name.';
-____loclib.aboutHowItWImgAndText29 = '3. Bastyon does not collect IP addresses.';
+____loclib.aboutHowItWImgAndText27 = '1. You can register without revealing your phone number (only email is required)';
+____loclib.aboutHowItWImgAndText28 = '2. Bastyon does not ask for your real name to protect dissent';
+____loclib.aboutHowItWImgAndText29 = '3. Bastyon does not collect IP addresses and does not track you';
+____loclib.aboutHowItWImgAndText291 = '4. Bastyon allows multiple accounts for different purposes';
 ____loclib.aboutHowItWImgAndText30 = 'Bastyon will never know who you are, unless you explicitly share your personal data.';
 ____loclib.aboutHowItWImgAndText31 = 'If you don’t share your data, no one, no company, no government, can know who you are.';
+
+
+____loclib.aboutHowItWImgAndText51 = 'Why is Cryptocurrency Good for Freedom?';
+____loclib.aboutHowItWImgAndText52 = 'Some people think that digital currency is a tool for enslavement. Ironically, many of those people are carrying bank cards with a microship in their pockets. Bank cards that track every purchase and tie directly to your identity. The reason cryptocurrency is good for freedom is that it is not tied to your identity. Both in Bitcoin and Pocketcoin, each user can create millions of addresses and change them as much as necessary.';
+
+
+
+____loclib.HIVTable1 = 'Credit Cards';
+____loclib.HIVTable2 = 'Cash';
+____loclib.HIVTable3 = 'Cryptocurrency';
+____loclib.HIVTable4 = 'Tied to your identity';
+____loclib.HIVTable5 = 'Yes';
+____loclib.HIVTable6 = 'No';
+____loclib.HIVTable7 = 'No';
+____loclib.HIVTable8 = 'Government controls money supply';
+____loclib.HIVTable9 = 'Yes';
+____loclib.HIVTable10 = 'Yes';
+____loclib.HIVTable11 = 'No';
+____loclib.HIVTable12 = 'Anonimity';
+____loclib.HIVTable13 = 'Non-Anonymous';
+____loclib.HIVTable14 = 'Anonymous';
+____loclib.HIVTable15 = 'Pseudonymous';
+____loclib.HIVTable16 = 'Easy to pay over large distances';
+____loclib.HIVTable17 = 'Yes';
+____loclib.HIVTable18 = 'No';
+____loclib.HIVTable19 = 'Yes';
+____loclib.HIVTable20 = 'Transparent, open to public';
+____loclib.HIVTable21 = 'No';
+____loclib.HIVTable22 = 'No';
+____loclib.HIVTable23 = 'Yes';
+
+
+
+
 ____loclib.aboutHowItWImgAndText32 = 'And there`s more!';
 ____loclib.aboutHowItWImgAndText33 = 'Bastyon pays you';
 ____loclib.aboutHowItWImgAndText34 = 'You can earn money with Bastyon.';
@@ -1675,14 +1762,14 @@ ____loclib.aboutHowItWOpen5 = 'Send us a message if you need help or if you are 
 
 //aboutContentCreator
 
-____loclib.ContentCreatorsMainBoard = 'Great bonus for Content Creators';
+____loclib.ContentCreatorsMainBoard = 'Great Bonus Program for Content Creators';
 ____loclib.ContentCreatorsMainBoard1 = '"There are many ways to earn money with Bastyon..."';
 
 
 ____loclib.ContentCreatorsImgAndText = 'Post your videos';
 ____loclib.ContentCreatorsImgAndText1 = 'Post your videos on Bastyon';
-____loclib.ContentCreatorsImgAndText2 = 'Reach at least 15,000 views and 750 "5 stars" reactions';
-____loclib.ContentCreatorsImgAndText3 = 'Earn the equivalent of 1,000 $ in PKOIN';
+____loclib.ContentCreatorsImgAndText2 = '15,000 vides, 1250 reactions from different users and 1000 invited users to your channel';
+____loclib.ContentCreatorsImgAndText3 = 'Earns you $1,000 paid in Bitcoin or PKOIN';
 ____loclib.ContentCreatorsImgAndText4 = 'Next step: contact us to get your Bastyon account verified and to access the bonus program.';
 ____loclib.ContentCreatorsImgAndText5 = 'Contact Us Now ';
 ____loclib.ContentCreatorsImgAndText6 = 'Invite your followers';
@@ -1697,6 +1784,19 @@ ____loclib.ContentCreatorsImgAndText14 = 'The more you post, the more your earn'
 ____loclib.ContentCreatorsImgAndText15 = 'The more followers you have, the more your earn';
 ____loclib.ContentCreatorsImgAndText16 = 'Next step: contact us to get your "Verified" badge and to access the bonus program.';
 ____loclib.ContentCreatorsImgAndText17 = 'Contact Us Now';
+____loclib.ContentCreatorsImgAndText18 = 'Earn with Decentralized Ads';
+____loclib.ContentCreatorsImgAndText19 = 'Ads comes to you through Bastyon Ad Marketplace';
+____loclib.ContentCreatorsImgAndText20 = 'You can choose which ads to repost to your channel';
+____loclib.ContentCreatorsImgAndText21 = '100% of ad proceeds from interactions to go your wallet';
+____loclib.ContentCreatorsImgAndText22 = 'Next step: contact us to get your "Verified" badge and to access the bonus program.';
+____loclib.ContentCreatorsImgAndText23 = 'Contact Us Now';
+____loclib.ContentCreatorsImgAndText24 = 'Earn with Featured Comments';
+____loclib.ContentCreatorsImgAndText25 = 'Your followers can attach PKOIN to comments';
+____loclib.ContentCreatorsImgAndText26 = 'Comments with PKOIN are featured under your post';
+____loclib.ContentCreatorsImgAndText27 = 'You can mention comments on air encouraging users to add PKOIN';
+____loclib.ContentCreatorsImgAndText28 = 'Next step: contact us to get your "Verified" badge and to access the bonus program.';
+____loclib.ContentCreatorsImgAndText29 = 'Contact Us Now';
+
 
 
 ____loclib.ContentCreatorsOpen = 'Discover Bastyon';
@@ -1710,6 +1810,7 @@ ____loclib.ContentCreatorsOpen5 = 'Send us a message if you need help or if you 
 ____loclib.contentCreators = 'For content creators';
 ____loclib.howItWorks = 'How it works';
 ____loclib.insteadOf = 'Instead of';
+____loclib.alternativeTo = 'Alternative to...';
 
 
 ____loclib.pkoin_commerce_tag_share_error = 'The "pkoin_commerce" tag can only be used as a separate tag. A post with this tag cannot contain videos or images'

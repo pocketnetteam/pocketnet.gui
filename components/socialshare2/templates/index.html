@@ -22,7 +22,7 @@
 
 					<% if(state) {%>
 
-						<% if(!share || !share.visibility()){ %>
+						<% if(!share || !share.visibility() || share.visibility() == 'reg'){ %>
 
 							<div class="chat">
 								<button elementsid="chatbutton" class="button ghost ">
@@ -37,7 +37,7 @@
 
 					<% if(postId) {
 						
-						if(share && !share.visibility()){ %>
+						if(share && !share.visibility() || share.visibility() == 'reg'){ %>
 
 						<div elementsid="itemforrepost" class="item forrepost">
 

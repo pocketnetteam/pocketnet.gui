@@ -1157,24 +1157,7 @@ Nav = function(app)
 				}
 				else
 				{
-					/*if (_SEO){
-
-						var _href = link.attr('href');
-							_href = decodeSeoLinks(_href).replace("#!", "");
-
-						var hrefParameters = parameters(_href, true);
-
-							hrefParameters.loc || (hrefParameters.loc = app.localization.key);
-
-							_href = _href.split("?")[0];
-
-							_href = _href + collectParameters(hrefParameters);
-
-							_href = "#!" + _href;
-
-							link.attr('href', encodeSeoLinks(_href));
-					}*/
-
+				
 					var eve = function(e){
 
 						if(blockclick) return false
@@ -1213,9 +1196,6 @@ Nav = function(app)
 
 			})
 
-			/*var p = {};
-
-				p.href = $(this).attr('href');*/
 		},
 		go : function(p){
 			if(!p) p = {};

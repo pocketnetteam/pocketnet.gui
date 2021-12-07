@@ -342,11 +342,11 @@ var menu = (function(){
 
 					}
 
-
-					
-
-					
-
+					self.app.platform.sdk.notifications.clbks.inited.menu =
+					self.app.platform.sdk.notifications.clbks.added.menu =
+					self.app.platform.sdk.notifications.clbks.seen.menu = function(){
+						actions.ahnotify(el, unseen().length, 'notifications')
+					}
 
 					setTimeout(function(){
 						/*self.app.platform.sdk.notifications.init(function(){
@@ -363,11 +363,7 @@ var menu = (function(){
 							})
 						}
 						
-						self.app.platform.sdk.notifications.clbks.inited.menu =
-						self.app.platform.sdk.notifications.clbks.added.menu =
-						self.app.platform.sdk.notifications.clbks.seen.menu = function(){
-							actions.ahnotify(el, unseen().length, 'notifications')
-						}
+						
 					},3000)
 
 					

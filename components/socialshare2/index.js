@@ -2,8 +2,6 @@ var socialshare2 = (function(){
 
 	var self = new nModule();
 
-	console.log('@@@@@@', localStorage.getItem('usertheme') === 'black' ? true : false)
-
 	var essenses = {};
 
 	var Essense = function(p){
