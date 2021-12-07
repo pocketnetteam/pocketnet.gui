@@ -146,8 +146,26 @@ var leftpanel = (function(){
 
 		var initEvents = function(){
 			
+
 			el.c.find('.closecategories').on('click', function(){
 				if(ed.close) ed.close()
+			})
+
+			el.c.find('.toggle').on('click', function(){
+
+				var best = $(this).closest('.best');
+				var method = 'historical'
+
+				best.toggleClass('on');
+
+				if (best.hasClass('on')){
+
+					method = 'hierarchical';
+
+				}
+
+				self.sdk.lentaMethod.set(method)
+
 			})
 		}
 
@@ -239,6 +257,7 @@ var leftpanel = (function(){
 			
 			init : function(p){
 
+				console.log('self.app.settings', self.app.settings);
 				state.load();
 
 				el = {};

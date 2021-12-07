@@ -1,7 +1,8 @@
 @import "../../css/__cssvar";
 
 #leftpanel{
-
+	padding-right: 16px;
+	
 	>div{
 
 		.wrp{
@@ -9,16 +10,65 @@
 		}
 	
 	}
-
 	.closecategoriesContainer{
 		text-align: right;
-		font-size: 0.8em;
+		font-size: 1em;
 
 		button{
-			padding-right: 2 * @rhythm;
+			padding: 0;
 			text-decoration: none;
 		}
 	}
+
+	.best{
+		display : flex;
+		align-items : center;
+		justify-content: space-between;
+		padding-bottom : @rhythm;
+		margin-top: @rhythm * 2;
+
+		&.on{
+
+			.fire{
+				color: @color-bad;
+			}
+
+			.toggle{
+
+				color: @color-good;
+				i{
+					transform : none;
+				}
+			}
+
+		}
+
+		.bestLabel{
+			display: flex;
+			align-items: center;
+
+		}
+
+		.fire, .toggle{
+			font-size : 1.5em;
+		}
+
+		.text{
+			margin-left : @rhythm;
+			font-weight: 600;
+		}
+
+		.toggle{
+			margin-left : @rhythm;
+			cursor: pointer;
+			i{
+				transform : scaleX(-1);
+			}
+			
+		}
+
+	}
+
 
 	.sections{
 		background: fade(#F0F0F0, 30);
@@ -41,6 +91,14 @@
 				color : #fff;
 			}
 		}
+	}
+
+	.tcaption{
+		color : #8E90A6;
+		font-size: 16px;
+		font-weight: 600;
+		line-height: 21px;
+
 	}
 
 	.currentsearch{
@@ -127,6 +185,47 @@
 		}
 	}
 
+
+	.rightbottomnav {
+
+		a,
+		span{
+			font-size: 0.8em;
+		}
+
+		a{
+			.transition(0.3s);
+
+			&:hover{
+				color : @color-main;
+			}
+		}
+
+		.rightbottomlinks {
+			padding-top: @rhythm;
+		}
+
+		.copyright {
+			display: flex;
+			justify-content: flex-start;
+			align-items: center;
+			margin-top: 4 * @rhythm;
+
+			.copy_logo {
+				width: 14px;
+				height: 14px;
+			}
+
+			img{
+				opacity: 0.5;
+			}
+
+			.copyright_text {
+				margin-left: @rhythm;
+			}
+		}
+	}
+
 	.vc_valuecustom{
 		font-size: 1.5em;
 		font-weight: 100;
@@ -182,7 +281,7 @@
 		padding-left: 2 * @rhythm;
 
 		>div{
-			font-size: 1.3em;
+			font-size: 1em;
 		}
 
 		.subtop{

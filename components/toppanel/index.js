@@ -179,7 +179,7 @@ var toppanel = (function(){
 				renders.menu(app.nav.current.href)
 			}
 
-
+			self.app.platform.sdk.categories.clbks.excluded.toppanel =
 			self.app.platform.sdk.categories.clbks.tags.toppanel =
 			self.app.platform.sdk.categories.clbks.selected.toppanel = function(data){
 

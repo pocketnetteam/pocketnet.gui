@@ -1,17 +1,13 @@
 #main {
-  background: #011621;
+  background: #f2f2f5;
   min-height: 1200px;
-  /*.mainpanelcell,
-	.leftpanelcell{
-		min-height: 1024px;
-	}*/
 }
 #main.wshar .bgCaption {
   display: none;
 }
 #main #lenta .shares .showmorebyauthor,
 #main #lenta .shares .share {
-  border-radius: 3px;
+  border-radius: 12px;
 }
 #main .bastyonhelper .layout {
   display: flex;
@@ -115,8 +111,8 @@
 }
 #main .bastyonhelper .wndredirect ._close {
   position: absolute;
-  right: .75em;
-  top: .5em;
+  right: 0.75em;
+  top: 0.5em;
   cursor: pointer;
   color: #fff;
   z-index: 150;
@@ -133,7 +129,7 @@
   margin-bottom: 0.5em;
   min-height: 160px;
   position: relative;
-  border-radius: 3px;
+  border-radius: 12px;
 }
 #main .topvideosWrapper.hasshares {
   display: block;
@@ -147,6 +143,7 @@
 #main .topvideosWrapper .horizontalLentacaption {
   padding: 1em 0;
   padding-bottom: 0.5em;
+  font-size: 18px;
 }
 #main .topvideosWrapper .horizontalLentacaption span {
   font-weight: 700;
@@ -176,7 +173,7 @@
   position: fixed;
   bottom: 20%;
   padding: 0.5em;
-  background: #ffffff;
+  background: #fff;
   box-shadow: 0 5px 7px -5px rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(60, 65, 70, 0.3);
   color: #3c4146;
@@ -202,41 +199,41 @@
   border-bottom-right-radius: 0;
   padding-right: 0;
 }
-#main .seemore,
-#main .loadprev,
-#main .loadmore {
-  border-radius: 3px;
-}
 #main .addbutton {
   position: fixed;
-  left: 0;
-  bottom: 0;
-  background: #011621;
+  left: 0.5em;
+  bottom: 0.5em;
+  background: rgba(0, 163, 247, 0.9);
   color: #fff;
-  padding: 1em;
+  border-radius: 44px;
+  line-height: 44px;
+  width: 44px;
   text-align: center;
   cursor: pointer;
   display: none;
   opacity: 0;
-  z-index: 30;
+  z-index: 999;
   -moz-transition: 0.3s;
   -o-transition: 0.3s;
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
-#main .addbutton span,
 #main .addbutton i {
   font-size: 0.8em;
 }
 #main .addbutton.scrollactive {
   display: block;
-  opacity: 0.5;
+  opacity: 1;
 }
 #main .addbutton:hover {
-  opacity: 0.8;
+  background: #00A3F7;
 }
 #main #share {
   min-height: 130px;
+}
+#main .mainpanelcell,
+#main .leftpanelcell {
+  min-height: 1024px;
 }
 #main .leftpanelsvicell,
 #main .leftpanelcell {
@@ -259,6 +256,11 @@
 #main .lentacell .cf_spacer,
 #main .lentacell .bgCaption {
   margin-bottom: 0.5em;
+}
+#main .lentacell .bgCaption,
+#main .lentacell .topvideosWrapper,
+#main .lentacell .authorgroup .share {
+  box-shadow: 0px 10px 14px rgba(0, 0, 0, 0.08);
 }
 #main .lentacellsvi {
   margin-right: 0;
@@ -322,6 +324,7 @@
   -moz-transition-delay: 0.5s;
   transition-delay: 0.5s;
 }
+#main .leftpanelcell,
 #main .upbuttonwrapper {
   opacity: 1;
   -webkit-transition-delay: 0.5s;
@@ -392,11 +395,11 @@
 #main .bgCaption {
   height: auto;
   padding-bottom: 0;
-  border-radius: 3px;
+  border-radius: 12px;
 }
 #main .bgCaption.sec {
   color: #0a0c17;
-  background: #FAFAFA;
+  background: #fff;
 }
 #main .bgCaption.cf_caption {
   padding: 0;
@@ -697,6 +700,12 @@ html.testpocketnet #main.testpocketnetbg {
   }
 }
 @media only screen and (max-width: 1280px) {
+  #main {
+    /*.lentacell{
+		margin-right : 128px;
+		margin-left : 121px;
+	}*/
+  }
   #main .addbutton {
     display: none!important;
   }
@@ -708,14 +717,42 @@ html.testpocketnet #main.testpocketnetbg {
   #main:not(.videomain) .mainpanelcell {
     display: none;
   }
+  #main:not(.videomain) .leftpanelcell {
+    float: right;
+  }
   #main:not(.videomain) .lentacell {
-    margin-right: 0;
+    margin-left: 0;
   }
 }
 /*t*/
 @media only screen and (max-width: 768px) {
-  #main .topvideosWrapper {
-    border-radius: 0px;
+  #main .bastyonhelper .layout {
+    flex-wrap: wrap;
+  }
+  #main .bastyonhelper .layout .imagepart {
+    width: 100%;
+    height: auto;
+  }
+  #main .bastyonhelper .layout .imagepart .img {
+    height: 242px;
+  }
+  #main .bastyonhelper .layout .contentpart {
+    padding: 1em;
+    padding-left: 1em;
+  }
+  #main .bastyonhelper .layout .contentpart .caption {
+    font-size: 1.5em;
+  }
+  #main .bastyonhelper .layout .contentpart .wrp {
+    max-width: 100%;
+  }
+  #main .bastyonhelper .layout .contentpart .signinpart {
+    padding: 1em 0;
+    padding-top: 1.5em;
+  }
+  #main .bastyonhelper .layout .contentpart .signinpart .sin {
+    width: 100%;
+    border-radius: 30px;
   }
   #main .mainpanelcell {
     display: block;
@@ -734,17 +771,16 @@ html.testpocketnet #main.testpocketnetbg {
     padding-top: 75px;
     overflow-y: scroll;
     padding-bottom: 90px;
-    -moz-transition: transform 0.3s;
-    -o-transition: transform 0.3s;
-    -webkit-transition: transform 0.3s;
-    transition: transform 0.3s;
+    -moz-transition: 0.3s;
+    -o-transition: 0.3s;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
   }
   #main.leftshowed .leftpanelcell {
     transform: translateX(-100%);
   }
   #main .lentacell {
     margin-right: 0;
-    margin-left: 0;
   }
   #main.videomain .lentacell {
     margin-left: 0;
@@ -989,6 +1025,6 @@ html.tablet #main {
     padding-top: 0;
   }
   #main .panel {
-    border-radius: 3px;
+    border-radius: 12px;
   }
 }

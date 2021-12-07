@@ -1,6 +1,5 @@
 <div id="<%-module.map.id%>">
 
-
 	<div class="mobiledevice">
 		<div class="closecategoriesContainer">
 			<button elementsid="closecategories" class="button closecategories ghost">
@@ -8,6 +7,21 @@
 			</button>
 		</div>
 	</div>
+	
+	<div class="best <%= app.platform.sdk.lentaMethod.current === 'hierarchical' ? 'on' : ''%> ">
+		<span class="bestLabel">
+			<span class="fire">
+				<i class="fab fa-gripfire"></i>
+			</span>
+			<span class="text">
+				<%=e('bestFirst')%>
+			</span>
+		</span>
+		<span class="toggle">
+			<i class="fa fa-toggle-on"></i>
+		</span>
+	</div>
+
 
 	<div class="catscnt">	
 	</div>
@@ -19,6 +33,32 @@
 	</div>
 
 	<div class="subtop">
+	</div>
+
+	
+	<div class="rightbottomnav">
+
+		<div class="rightbottomlinks">
+			<a href="https://<%-app.options.url%>/blockexplorer/">Block Explorer</a>
+			<span>&middot;</span>
+			<a href="help?page=faq">F.A.Q.</a>
+			<span>&middot;</span>
+			<a href="help?page=roadmap">Roadmap</a>
+			<span>&middot;</span>
+			<a href="help?page=node">Node&nbsp;Setup</a>
+			<span>&middot;</span>
+			<a href="help?page=pkoin" data-anchor="pocketcoin">PKOIN</a>
+			<span>&middot;</span>
+			<a href="help?page=applications">Applications</a>
+
+			<% var year = new Date().getFullYear() %>
+
+			<div class="copyright">
+				<img class="copy_logo" src="img/logogray.png" alt="logo">
+				<span class="copyright_text"><%-app.meta.fullname%>, 2019&mdash;<%-year%></span>
+			</div>
+		</div>
+
 	</div>
 
 </div>

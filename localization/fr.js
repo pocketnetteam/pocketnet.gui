@@ -824,6 +824,7 @@ ____loclib.deleteAllVideoDialog = "Etes-vous sûr de vouloir supprimer toutes le
 ____loclib.videosDeleted = "Vidéos supprimées!";
 ____loclib.noDownloadedVideos = "Aucune vidéos téléchargées";
 
+____loclib.buy = 'Acheter';
 
 ____loclib.MainBoard = 'Levez-vous contre la censure &';
 ____loclib.MainBoard1 = 'Obtenez une indépendance financière';
