@@ -543,11 +543,15 @@
 				.message{
 					
 					p img{
-						max-width: 100%;
+						max-width: 95%;
+						border-radius: 3px;
+						margin: 0 auto;
 					}
 
 					figure img{
-						max-width: 100%;
+						max-width: 95%;
+						border-radius: 3px;
+						margin: 0 auto;
 					}
 
 					span{
@@ -1190,6 +1194,24 @@
 							border-radius: 30px;
 							overflow: hidden;
 							margin-right: @rhythm;
+							margin-bottom: @rhythm;
+						}
+					}
+
+					&.owlcar{
+						height: auto;
+						width: 100%;
+						max-width: 400px;
+
+						.imagesWrapper{
+							height: 500px;
+							float: none;
+							width: 100%;
+							background: transparent;
+
+							.image{
+								background-size: contain!important;
+							}
 						}
 					}
 				}
@@ -2040,6 +2062,8 @@
 			}
 		}
 	}
+
+	
 
 	.subc{
 		margin-top : 2 * @rhythm;
@@ -3715,6 +3739,8 @@ html.stblack{
 							}
 						}
 
+						
+
 						&.two,
 						&.three,
 						&.more,
@@ -3737,8 +3763,12 @@ html.stblack{
 							padding : @rhythm;
 							.imagesWrapper{
 								float: left;
+								width: 30px;
+								height: 30px;
 							}
 						}
+
+					
 					}
 				}
 

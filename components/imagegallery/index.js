@@ -611,7 +611,7 @@ var imagegallery = (function(){
 				self.app.mobile.statusbar.background()
 
 			},
-			clearparameters : ['i', 'num', 's', 'com'],
+			clearparameters : ['i', 'num', 'com'],
 			init : function(p){
 				
 				self.app.mobile.statusbar.gallerybackground()
