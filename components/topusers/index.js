@@ -216,6 +216,11 @@ var topusers = (function(){
 
 			},
 			load : function(){
+
+				self.app.platform.sdk.users.getBestUsers(function(c, error){
+
+					console.log('c!!', c, error);
+				})
 				
 			}
 		}
@@ -277,8 +282,6 @@ var topusers = (function(){
 				addresses = deep(p.settings, 'essenseData.addresses') || []
 
 				data.addresses = addresses
-				data.empty = deep(p.settings, 'essenseData.empty');
-				data.caption = deep(p.settings, 'essenseData.caption');
 
 				extra = deep(p.settings, 'essenseData.extra');
 

@@ -8398,14 +8398,25 @@ Platform = function (app, listofnodes) {
 
             },
 
-            getBestUsers : function(){
+            getBestUsers : function(clbk){
 
                 var my = self.app.user.address.value;
 
-                self.app.api.rpc('GetRecomendedAccountsByScoresFromAddress', [my]).then(d => {
+                self.app.api.rpc('getrecomendedaccountsbyscoresfromaddress', [my])
+                .then(function(d){
 
                     console.log('d!!!', d);
 
+                    if (clbk){
+                        clbk(d)
+                    }
+
+                })
+                .catch(function(e){
+
+                    if (clbk){
+                        clbk(null)
+                    }
                 })
             }
         },
