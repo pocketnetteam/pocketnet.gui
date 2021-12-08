@@ -53,28 +53,26 @@ var panel = (function(){
 			},
 
 			topusers : function(){
-
-
 				
-				// self.nav.api.load({
+				self.nav.api.load({
 
-				// 	open : true,
-				// 	id : 'topusers',
-				// 	el : el.topusers,
-				// 	animation : false,
+					open : true,
+					id : 'topusers',
+					el : el.topusers,
+					animation : false,
 
-				// 	essenseData : {
-				// 		addresses : ['PEJhUMmCwkngRQELKacxWiJHBEdAsYRZoB'],
-				// 		empty : 'empty',
-				// 		caption : 'caption'
-				// 	},
+					essenseData : {
+						addresses : ['PEJhUMmCwkngRQELKacxWiJHBEdAsYRZoB', 'PH6ovi9jUVF4GZ4oGUeKLqcUYV1aSPTj8B', 'PJFSiYQtPQNwWJrKXyzBuvWoqc11RkWRRd', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd'],
+						empty : 'empty',
+						caption : 'caption'
+					},
 					
-				// 	clbk : function(e, p){
-				// 		if (clbk)
-				// 			clbk(e, p)
-				// 	}
+					clbk : function(e, p){
+						if (clbk)
+							clbk(e, p)
+					}
 
-				// })
+				})
 			},
 
 			recommendationslist : function(users, clbk){
@@ -414,7 +412,7 @@ var panel = (function(){
 				})
 			*/
 			
-			renders.topusers()
+			// renders.topusers()
 
 
 		}

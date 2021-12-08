@@ -1,8 +1,8 @@
 @import "../../css/__cssvar";
 
 #topusers{
-	padding : 5 * @rhythm;
 	background: #fff;
+	border-radius: 12px;
 
 	    
     .rcptwrp{
@@ -66,48 +66,93 @@
 		}
 	}
 
+	.subscribe, .unsubscribe{
+		position: relative;
+
+
+		.fa-plus{
+			position: absolute;
+			top: 3px;
+			left: 14px;
+			font-size: @rhythm;
+		}
+
+	}
+
+	.subscribe{
+		color : @color-gray-mlight;
+	}
+
+	.unsubscribe{
+		color: @color-good;
+	}
+
 	.users{
+		padding-bottom: @rhythm;
+
 		.user{
 			padding : @rhythm 0;
 			margin-top: @rhythm;
 			margin-bottom: @rhythm;
+			padding-left: @rhythm * 2;
+			padding-right: @rhythm * 3;
 
 			.addressTable{
 				cursor: pointer;
 				
 				>div{
-	
+
 					vertical-align: middle;
 	
 					&.iconWrapper{
-						width: 45px;
+						width: 50px;
 						text-align: center;
+
+						.usericon{
+							height: 40px;
+							width: 40px;
+						}
 					}
 	
 					&.label{
-						padding-left:  2 * @rhythm;
 						text-overflow: ellipsis;
 						overflow: hidden;
 						white-space: nowrap;
 	
 						.cur{
 							color : @color-main;
+
 						}
 
-						.name{
-							font-weight: 100;
-							font-size : 1.2em;
+						.top{
+							display: flex;
+							.name{
+								font-weight: 600;
+								font-size: .9em;
+								max-width: 120px;
+								text-overflow: ellipsis;
+								white-space: nowrap;
+								overflow: hidden;
+							}
+
+							.reputation{
+								position: relative;
+								bottom: 2px;
+								left: 3px;
+								font-size: .6em;
+								color: @color-main;
+							}
+
 						}
 
 						.light{
-							font-size : 0.8em;
+							font-size : 0.7em;
 							color : @color-gray;
 						}
 					}
 	
 					&.extra{
-						width: 200px;
-						padding-left:  2 * @rhythm;
+						width: 20px;
 						text-align: right;
 					}
 				}
@@ -116,39 +161,6 @@
 
 			.blockingWrapper{
 				display : none;
-			}
-
-			.subscribebuttonstop{
-				i{
-					color : @color-good;
-				}
-
-				button{
-					font-size: 0.9em;
-					font-weight: 100;
-					padding : @rhythm 4 * @rhythm;
-				}
-
-				.unsubscribe{
-					color : @color-gray-mlight;
-				}
-
-				.notificationturn{
-					display: none;
-
-					i{
-						width : 20px;
-						text-align: center;
-					}
-
-					&.turnon{
-						i{
-							&:before{
-								content : '\f0f3';
-							}
-						}
-					}
-				}
 			}
 
 			&.userblocking{
@@ -215,18 +227,6 @@ html.stblack{
 		
 					}
 		
-				}
-	
-				.subscribebuttonstop{
-					i{
-						color : @color-good;
-					}
-	
-					.unsubscribe{
-						color : @color-gray-mlight;
-					}
-	
-					
 				}
 	
 				&.blocking{
