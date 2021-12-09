@@ -80,7 +80,7 @@ class OG {
         if (isset($_SERVER['HTTP_USER_AGENT'])){
             
             if(preg_match('/mozila|gekko|safari|chrome|khtml|webkit/i', $_SERVER['HTTP_USER_AGENT'])){
-                if(preg_match('/vkshare|whatsapp/i', $_SERVER['HTTP_USER_AGENT'])){
+                if(preg_match('/vkshare|whatsapp|viber/i', $_SERVER['HTTP_USER_AGENT'])){
                     return true;
                 }
 
