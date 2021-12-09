@@ -192,6 +192,11 @@
 					.icon{
 						height: 45px;
 						width: 100%;
+						padding-top : 3px;
+
+						.usericon{
+							margin : 0 auto;
+						}
 					}
 				}
 
@@ -201,6 +206,7 @@
 			}
 
 			.shareprwrapper{
+				display: none;
 	            >div{
 	                vertical-align: middle;
 	                padding : @rhythm / 2;
@@ -229,6 +235,10 @@
 	                }
 	            }
 
+				.additionalcontent{
+					font-size: 0.8em;
+				}
+
 	            .img{
 	                width: 25px;
 	                height: 25px;
@@ -255,6 +265,72 @@
 	}
 
 	.list{
+		
+
+		.transition(0.3s, opacity);
+
+		&.listloading{
+			opacity: 0.5;
+		}
+
+		.commentsorting{
+			.vc_valuecustom{
+				margin : 0 auto;
+				padding-left: 30px;
+				border-radius: 30px;
+				background: #fff;
+				margin-top : @rhythm;
+				width: 300px;
+				cursor: pointer;
+				.transition(0.3s);
+
+				&.opened{
+					border-bottom-left-radius: 0;
+					border-bottom-right-radius: 0;
+				}
+
+				.vc_value{
+					padding : 2 * @rhythm;
+				}
+
+				.vc_iconWrapper{
+					border : 0;
+					
+				}
+				.vc_selectInput{
+					border : 0;
+					text-align: center;
+					border-bottom-left-radius: 20px;
+					border-bottom-right-radius: 20px;
+				}
+				.vc_inputWrapper{
+					border : 0;
+					text-align: center;
+					text-decoration: underline;
+					input{
+						text-align: center;
+						font-size: 0.8em;
+						cursor: pointer!important;
+					}
+				}
+			}
+		}
+
+		.showmorecomments{
+			text-align: center;
+			padding : @rhythm;
+			cursor: pointer;
+			margin : 0 auto;
+			border-radius: 30px;
+			margin-top : @rhythm;
+			padding-bottom : 2 * @rhythm;
+			width: 300px;
+
+			span{
+				font-size: 0.8em;
+				text-decoration: underline;
+			}
+		}
 				
 		.comment{
 			border-bottom : 1px solid @color-gray-slight;

@@ -9867,7 +9867,6 @@
 
 		if(_url && _url.indexOf('peertube://') > -1){
 			var ch = _url.replace('peertube://', '').split('/');
-
 			id = ch[1]
 			type = 'peertube'
 			host_name = ch[0]

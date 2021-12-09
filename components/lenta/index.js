@@ -1621,15 +1621,18 @@ var lenta = (function(){
 
 				if(!player || player.error) return
 
-				player.p.muted = true;
+				if (player.p){
+					player.p.muted = true;
 
-				if (player.p.playing){
-					player.p.stop()
+					if (player.p.playing){
+						player.p.stop()
 
-					setTimeout(function(){
-						videopaused = false
-					}, 100)
+						setTimeout(function(){
+							videopaused = false
+						}, 100)
+					}
 				}
+				
 			},
 
 			setVolume : function(player, v){
@@ -2380,16 +2383,17 @@ var lenta = (function(){
 									initedcommentes[txid].hideall(true)
 								}
 
-								//_el.html('')
+								delete initedcommentes[txid]
+
+								_el.html('')
 
 								_scrollToTop(_el, 0, 0, -65)
-								
 
-								//renders.comments(txid, init, showall, preview)
+								renders.comments(txid, init, showall, preview)
 
 							},
 							totop : el.c.find('#' + txid),
-							//caption : rendered,
+							caption : rendered,
 							send : function(comment, last){
 
 								var c = el.c.find('#' + txid + " .commentsAction .count span");
@@ -2477,7 +2481,8 @@ var lenta = (function(){
 						renders.comments(share.txid, false, false, true)
 					}
 
-					renders.repost(p.el, share.repost, share.txid, share.isEmpty())
+					if(!p.el.find('.showMore').length)
+						renders.repost(p.el, share.repost, share.txid, share.isEmpty(), null, all)
 
 
 					/*p.el.find('.hiddenlabeltext').on('click', function(){
@@ -3041,7 +3046,7 @@ var lenta = (function(){
 				
 			},
 
-			repost : function(el, repostid, txid, empty, clbk){
+			repost : function(el, repostid, txid, empty, clbk, all){
 				if(repostid){
 
 					//self.app.platform.sdk.node.shares.getbyid([repostid], function(){
@@ -3078,7 +3083,8 @@ var lenta = (function(){
 									repost : true,
 									eid : txid + 'lenta',
 									level : 1,
-									fromempty : empty
+									fromempty : empty,
+									minimize : !all ? true : false
 								})
 							}	
 
@@ -4065,16 +4071,19 @@ var lenta = (function(){
 							}
 						}
 						else{
+							
 
-							actions.destroyVideo(share)
+							if (essenseData.author && (essenseData.author != self.user.address.value.toString('hex')) || essenseData.txids) return
 
-							renders.shares([share], function(){
-								renders.sharesInview([share], function(){
-									
+								actions.destroyVideo(share)
+
+								renders.shares([share], function(){
+									renders.sharesInview([share], function(){
+										
+									})
+								}, {
+									inner : prepend
 								})
-							}, {
-								inner : prepend
-							})
 						}
 	
 						
@@ -4082,8 +4091,7 @@ var lenta = (function(){
 	
 					self.app.platform.ws.messages.transaction.clbks.temp = function(data){
 	
-						if(/*beginmaterial || */essenseData.author || essenseData.txids) return
-	
+						if(essenseData.author && (essenseData.author != self.user.address.value.toString('hex')) || essenseData.txids) return
 	
 						if(data.temp){
 	

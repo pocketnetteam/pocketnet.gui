@@ -76,7 +76,9 @@ Platform = function (app, listofnodes) {
         'PDz71dsW1cPwNewGHVUteFgQx3ZmBf4gaf' : true,
         'PFjWEfsm3jX81MctFU2VSJ17LGVKDc99oH' : true,
         'PBo7zu6xguzzftFE8c3Urgz4D6YVnj8oux' : true,
-        'P9KXb7sS2JDjV5jnXu4t2WwwbvzYeu6yds' : true
+        'P9KXb7sS2JDjV5jnXu4t2WwwbvzYeu6yds' : true,
+        'PUYEkLb6szwxjw3cq6FvLxDPmedbyd3foq' : true,
+        'PU6LDxDqNBDipG4usCqhebgJWeA4fQR5R4' : true
     }
 
     self.nvadr = {
@@ -2030,7 +2032,8 @@ Platform = function (app, listofnodes) {
                             comments : p.comments,
                             video : p.video,
                             autoplay : p.autoplay,
-                            opensvi : p.opensvi
+                            opensvi : p.opensvi,
+                            minimize : p.minimize
                         }
                     })
 
@@ -11077,6 +11080,9 @@ Platform = function (app, listofnodes) {
                             })
 
                         }
+                        else{
+                            s.all[loc] = []
+                        }
 
                         _.each(t.additional, function(at){
                             if (s.all[loc].indexOf(at.tag) == -1){
@@ -11586,20 +11592,6 @@ Platform = function (app, listofnodes) {
                     }
                 })
 
-                /*self.app.ajax.rpc({
-                    method: 'getcomments',
-                    parameters: ['', '', ids],
-                    success: function (d) {
-
-                        
-
-                    },
-                    fail: function (d, e) {
-                        if (clbk) {
-                            clbk(e, d)
-                        }
-                    }
-                })*/
             },
 
             checkSign: function (comment, signature, pubkey) {
@@ -11647,11 +11639,11 @@ Platform = function (app, listofnodes) {
                     comment.import(data)
                     comment.setTime(data.time, data.timeUpd)
 
-                    comment.children = data.children
+                    comment.children = Number(data.children)
                     comment.address = data.address;
                     comment.verify = true;
 
-
+                    comment.rating = data.rating
 
                     _.each(self.sdk.relayTransactions.withtemp('comment'), function (c) {
                         if (c.optype == 'comment' || !c.optype) {
@@ -11678,8 +11670,6 @@ Platform = function (app, listofnodes) {
                     }
 
                 })
-
-
 
                 _.each(c, function (c) {
                     s.all[c.id] = c
@@ -11809,6 +11799,46 @@ Platform = function (app, listofnodes) {
 
 
                     })
+                })
+            },
+
+            getclear: function (txid, pid, clbk, ccha) {
+
+                var s = self.sdk.comments.storage;
+                var i = self.sdk.comments.ini;
+                var address = ''
+
+                var ao = self.app.platform.sdk.address.pnet();
+
+                if (ao) address = ao.address
+
+                s[txid] || (s[txid] = {})
+
+
+                if(ccha && s[txid][pid || '0']){
+
+                    if (clbk)
+                        clbk(s[txid][pid || '0'])
+
+                    return
+                }
+
+
+                self.app.api.rpc('getcomments', [txid, pid || '', address]).then(d => {
+
+                    self.sdk.comments.temps(d, txid, pid)
+
+                    var c = i(d)
+
+                    s[txid][pid || '0'] = c
+
+                    if (clbk)
+                        clbk(c)
+        
+                }).catch(e => {
+                    if (clbk) {
+                        clbk(null, e)
+                    }
                 })
             },
 

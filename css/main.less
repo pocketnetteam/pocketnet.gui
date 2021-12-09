@@ -6280,6 +6280,12 @@ html.stblack{
             -webkit-backface-visibility: hidden;
         }
 
+        #comments .captionfwrapper{
+            will-change: transform;
+            .transition(0.3s, transform);
+            -webkit-backface-visibility: hidden;
+        }
+
         #panelWrapper{
             will-change: transform;
             .transition(0.3s, transform);
@@ -6300,6 +6306,12 @@ html.stblack{
             #panelWrapper{
                 transform:  translateY(-165px);
                 
+            }
+
+            #comments{
+                .captionfwrapper{
+                    transform:  translateY(-65px);
+                }
             }
     
             #navigation{
