@@ -559,7 +559,7 @@ nModule = function(){
 			var appPath = (self.map.pathtpl || self.map.path || "");	
 
 			if (_Node){
-				appPath = 'https://pocketnet.app/'
+				appPath = 'https://bastyon.com/'
 			}		
 
 			if(p.common){
