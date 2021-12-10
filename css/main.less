@@ -4025,6 +4025,78 @@ input[type=radio].radio:checked + label {
     }
 }
 
+#application{
+    .owl-dots {
+        text-align: center;
+        margin-top: @rhythm;
+    }
+    .owl-carousel button.owl-dot {
+        width: @rhythm;
+        height: @rhythm;
+        border-radius: 50%;
+        background: @color-gray-mlight;
+        margin: 0 0.5 * @rhythm;
+    }
+    
+    .owl-carousel button.owl-dot.active {
+        background: @color-main;
+    }
+
+    .owl-carousel .owl-nav{
+        opacity: 0;
+        .transition(0.3s);
+    }
+
+    .owl-carousel .owl-nav button{
+        text-align: center;
+        position: absolute;
+        top : 50%;
+        margin-top : -33px;
+        width: 44px;
+        height: 44px;
+        line-height: 44px;
+        color: #fff;
+        border-radius: 50%;
+        .transition(0.3s);
+        i{
+            font-size: 0.7em;
+            opacity: 0.7;
+            .transition(0.3s);
+        }
+
+        &:hover{
+            .shadowSmaller();
+            i{
+                .shadowSmaller();
+                opacity: 0.87;
+            }
+        }
+    }
+
+    .owl-carousel{
+        &:hover{
+            .owl-nav{
+                opacity: 1;
+            }
+        }
+    }
+
+    .owl-carousel .owl-nav button.owl-next{
+        right: 0;
+    }
+
+    .owl-carousel .owl-nav button.owl-prev{
+        left: 0;
+    }
+
+    .owl-carousel .owl-nav button.disabled {
+        opacity: .5;
+    }
+
+   
+}
+
+
 .errorcntplyrex{
     width : 100%;
     padding-bottom : 56%;
@@ -6208,6 +6280,12 @@ html.stblack{
             -webkit-backface-visibility: hidden;
         }
 
+        #comments .captionfwrapper{
+            will-change: transform;
+            .transition(0.3s, transform);
+            -webkit-backface-visibility: hidden;
+        }
+
         #panelWrapper{
             will-change: transform;
             .transition(0.3s, transform);
@@ -6228,6 +6306,12 @@ html.stblack{
             #panelWrapper{
                 transform:  translateY(-165px);
                 
+            }
+
+            #comments{
+                .captionfwrapper{
+                    transform:  translateY(-65px);
+                }
             }
     
             #navigation{

@@ -159,13 +159,10 @@ nModule = function(){
 
 							if(p){
 								if(!key != 'auto'){
-
 									self.app.nav.api.history.removeParameters(['m' + p.id].concat(p.clearparameters || []))
-
 								}
 								
 								if (p.destroy)
-
 									return p.destroy(key)
 							}
 
@@ -289,7 +286,7 @@ nModule = function(){
 
 		delete p.animation
 
-		if(p.animation )
+		if(p.animation)
 		{
 
 			if(!p.animation.timeouts)
@@ -477,7 +474,6 @@ nModule = function(){
 		{
 
 			p.inner(p.el, _html);
-
 
 			if(!p.notdisplay){
 				p.display || (p.display = "block")

@@ -78,6 +78,44 @@ var lenta = (function(){
 
 
 		var actions = {
+
+			subscribeunsubscribeclbk : function(address){
+
+				var addressEl = el.c.find('.shareTable[address="'+address+'"]')
+
+				var me = deep(self.app, 'platform.sdk.users.storage.' + self.user.address.value.toString('hex'))
+
+				if (me){
+					var r = me.relation(address, 'subscribes') 
+
+					if (r) {
+
+						addressEl.addClass('subscribed');
+
+						if((r.private == 'true' || r.private === true)){
+							addressEl.find('.notificationturn').addClass('turnon')	
+						}
+						else{
+							addressEl.find('.notificationturn').removeClass('turnon')	
+						}
+					}
+					else{
+						addressEl.removeClass('subscribed');
+						addressEl.find('.notificationturn').removeClass('turnon')
+					}
+
+				}
+				else{
+					addressEl.removeClass('subscribed');
+					addressEl.find('.notificationturn').removeClass('turnon')
+				}
+
+				console.log("ADDRESS", address)
+
+				renders.maybechangevisibility(address, 'sub')
+
+			},
+
 			changeSavingStatusLight : function(share){
 
 				if (el.share[share.txid]){
@@ -85,6 +123,7 @@ var lenta = (function(){
 				}
 
 			},
+
 			changeSavingStatus : function(shareId, deleted){
 
 				if((self.app.playingvideo || fullscreenvideoShowed) && !deleted ) return
@@ -120,6 +159,7 @@ var lenta = (function(){
 
 				}, true);
 			},	
+
 			newmaterials : function(data){
 				if(making || essenseData.author || essenseData.txids) return
 
@@ -146,6 +186,7 @@ var lenta = (function(){
 					)
 				}
 			},
+
 			scrollmode : function(m){
 				if(m){
 					$('html').addClass('scrollmodedown')
@@ -154,6 +195,7 @@ var lenta = (function(){
 					$('html').removeClass('scrollmodedown')
 				}
 			},
+
 			authclbk : function(){
 
 				authblock = true;
@@ -179,16 +221,21 @@ var lenta = (function(){
 			},
 
 			subscribeLabels : function(){
-				_.each(shareInitedMap, function(s, id){
+				_.each(_.uniq(shareInitedMap, function(s){
+
+					return s.address
+
+				}), function(s, id){
 					var share =  self.app.platform.sdk.node.shares.storage.trx[id]
 
 					if (share){
-						actions.subscribeLabel(share)
+						actions.subscribeunsubscribeclbk(share.address)
+						//actions.subscribeLabel(share)
 					}
 				})
 			},
 
-			subscribeLabel : function(share){
+			/*subscribeLabel : function(share){
 
 				var user = self.app.user
 
@@ -220,7 +267,7 @@ var lenta = (function(){
 				
 				
 
-			},
+			},*/
 
 			repost : function(shareid){
 
@@ -1096,7 +1143,6 @@ var lenta = (function(){
 
 			},
 
-
 			exitFullScreenVideo : function(id){
 
 				if(!fullscreenvideoShowed) return
@@ -1113,7 +1159,7 @@ var lenta = (function(){
 
 				var player = players[id]
 
-				if ((isMobile() || window.cordova || isTablet()) && player && player.p.playing){
+				if ((isMobile() || window.cordova || isTablet() || _el.find('.hiddenurl').length) && player && player.p.playing){
 					player.p.pause()
 				}
 
@@ -1244,7 +1290,7 @@ var lenta = (function(){
 				
 			},
 
-			complain : function(obj, clbk){
+			/*complain : function(obj, clbk){
 
 				var complainShare = obj.complain();
 
@@ -1275,7 +1321,7 @@ var lenta = (function(){
 
 					}
 				)
-			},			
+			},*/			
 			
 			openGalleryRec : function(share, initialValue, clbk){
 
@@ -1394,15 +1440,8 @@ var lenta = (function(){
 
 			///
 			scrollToPost : function(id){
-
-			
 				_scrollTo($('#' + id), null, 0, -110)
-
-
-				
 			},
-
-
 
 			videosInview : function(players, action, nvaction){	
 				
@@ -1536,9 +1575,6 @@ var lenta = (function(){
 
 			},
 
-
-
-
 			complain : function(id){
 			
 				self.nav.api.load({
@@ -1585,15 +1621,18 @@ var lenta = (function(){
 
 				if(!player || player.error) return
 
-				player.p.muted = true;
+				if (player.p){
+					player.p.muted = true;
 
-				if (player.p.playing){
-					player.p.stop()
+					if (player.p.playing){
+						player.p.stop()
 
-					setTimeout(function(){
-						videopaused = false
-					}, 100)
+						setTimeout(function(){
+							videopaused = false
+						}, 100)
+					}
 				}
+				
 			},
 
 			setVolume : function(player, v){
@@ -1640,9 +1679,7 @@ var lenta = (function(){
 						w = last.width()
 
 					__el.html('<div class="shareSpacerOptimized" style="height:'+h+'px;width:'+w+'px"></div>')
-
 				}
-
 				
 			},
 
@@ -2144,8 +2181,6 @@ var lenta = (function(){
 
 				}, txid)
 
-				
-
 			},
 
 			aunsubscribe : function(){
@@ -2348,16 +2383,17 @@ var lenta = (function(){
 									initedcommentes[txid].hideall(true)
 								}
 
-								//_el.html('')
+								delete initedcommentes[txid]
+
+								_el.html('')
 
 								_scrollToTop(_el, 0, 0, -65)
-								
 
-								//renders.comments(txid, init, showall, preview)
+								renders.comments(txid, init, showall, preview)
 
 							},
 							totop : el.c.find('#' + txid),
-							//caption : rendered,
+							caption : rendered,
 							send : function(comment, last){
 
 								var c = el.c.find('#' + txid + " .commentsAction .count span");
@@ -2445,7 +2481,8 @@ var lenta = (function(){
 						renders.comments(share.txid, false, false, true)
 					}
 
-					renders.repost(p.el, share.repost, share.txid, share.isEmpty())
+					if(!p.el.find('.showMore').length)
+						renders.repost(p.el, share.repost, share.txid, share.isEmpty(), null, all)
 
 
 					/*p.el.find('.hiddenlabeltext').on('click', function(){
@@ -2574,7 +2611,7 @@ var lenta = (function(){
 				
 			},
 
-			maybechangevisibility : function(address){
+			maybechangevisibility : function(address, reason){
 
 				var shares = []
 				
@@ -2586,7 +2623,10 @@ var lenta = (function(){
 
 					if(!share) return
 
-					if(share.address == address && share.visibility()) {
+					if (share.address == address && share.visibility()) {
+
+						if(reason && reason == 'sub' && share.visibility() != 'sub') return
+
 						shares.push(share)
 					}
 				})
@@ -2852,7 +2892,7 @@ var lenta = (function(){
 				var _el = sel.find(".shareImages .image");
 				var images = sel.find(".shareImages");
 
-				if(images.hasClass('active') || !_el.length || !images.length){
+				if (images.hasClass('active') || !_el.length || !images.length){
 
 					if (clbk)
 						clbk()
@@ -2867,54 +2907,73 @@ var lenta = (function(){
 
 						if(s.settings.v != "a"){
 
-							var imageswidth = images.width()
-							/*var el = images.find('.imagesWrapper')
+							if(isMobile() && image.images.length > 1){
 
-							var imagesWrapperWidth = el.width(),
-								imagesWrapperHeight = el.height();*/
-
-							_.each(image.images, function(img, n){
-
+								var aspectRatio = 0
 								
+								_.each(image.images, function(img){
+									var _img = img.img;
 
-								var _img = img.img;
-								var el = $(image.elements[n]).closest('.imagesWrapper');
+									var _aspectRatio = _img.naturalHeight / _img.naturalWidth
 
-								var ac = '';
+									if(_aspectRatio > aspectRatio) aspectRatio = _aspectRatio
+								})
 
-								/*var _w = imagesWrapperWidth;
-								var _h = imagesWrapperHeight*/
+								if (aspectRatio){
 
-								var _w = el.width();
-								var _h = el.height()
+									if(aspectRatio > 1.66) aspectRatio = 1.66
 
-								if(_img.width > _img.height && (!isMobile() && self.app.width > 768 && !essenseData.openapi)){
-									ac = 'w2'
+									sel.find('.imagesWrapper').height(Math.min(400, isMobile() ? self.app.width : images.width() ) * aspectRatio)
+								}
+								
+							}
+							else{
 
-									var w = _w * (_img.width / _img.height);
+								var imageswidth = images.width()
 
-									if (w > imageswidth){
-										w = imageswidth
+								_.each(image.images, function(img, n){
 
-										h = w * ( _img.height / _img.width) 
+									var _img = img.img;
+									var el = $(image.elements[n]).closest('.imagesWrapper');
 
-										el.height(h);
+									var ac = '';
+
+									/*var _w = imagesWrapperWidth;
+									var _h = imagesWrapperHeight*/
+
+									var _w = el.width();
+									var _h = el.height()
+
+									if(_img.width > _img.height && (!isMobile() && self.app.width > 768 && !essenseData.openapi)){
+										ac = 'w2'
+
+										var w = _w * (_img.width / _img.height);
+
+										if (w > imageswidth){
+											w = imageswidth
+
+											h = w * ( _img.height / _img.width) 
+
+											el.height(h);
+										}
+
+										el.width(w);
 									}
 
-									el.width(w);
-								}
+									if(_img.height > _img.width || (isMobile() || self.app.width <= 768 || essenseData.openapi)){
+										ac = 'h2'
 
-								if(_img.height > _img.width || (isMobile() || self.app.width <= 768 || essenseData.openapi)){
-									ac = 'h2'
+										el.height(_w * (_img.height / _img.width))
+									}
 
-									el.height(_w * (_img.height / _img.width))
-								}
+									if(ac){
+										el.addClass(ac)
+									}
+									
+								})
 
-								if(ac){
-									el.addClass(ac)
-								}
-								
-							})
+
+							}
 
 
 						}
@@ -2935,23 +2994,41 @@ var lenta = (function(){
 
 							var gutter = 5;
 
-							if (isMobile() || essenseData.openapi) gutter = 0
+							if (isMobile() || essenseData.openapi) {
 
-							images.isotope({
+								sel.find('.imagesContainer').owlCarousel({
+									items: 1,
+									dots: true,
+									nav: !isMobile(),
+									navText: [
+										'<i class="fas fa-chevron-circle-left"></i> ',
+										'<i class="fas fa-chevron-circle-right"></i>'
+										]
+								  
+								});
 
-								layoutMode: 'packery',
-								itemSelector: '.imagesWrapper',
-								packery: {
-									gutter: gutter
-								},
-								initLayout: false
-							});
-
-							images.on('arrangeComplete', function(){
 								isclbk()
-							});
 
-							images.isotope()
+							}
+							else{
+								images.isotope({
+
+									layoutMode: 'packery',
+									itemSelector: '.imagesWrapper',
+									packery: {
+										gutter: gutter
+									},
+									initLayout: false
+								});
+	
+								images.on('arrangeComplete', function(){
+									isclbk()
+								});
+	
+								images.isotope()
+							}
+
+							
 
 							
 						}
@@ -2969,7 +3046,7 @@ var lenta = (function(){
 				
 			},
 
-			repost : function(el, repostid, txid, empty, clbk){
+			repost : function(el, repostid, txid, empty, clbk, all){
 				if(repostid){
 
 					//self.app.platform.sdk.node.shares.getbyid([repostid], function(){
@@ -3006,7 +3083,8 @@ var lenta = (function(){
 									repost : true,
 									eid : txid + 'lenta',
 									level : 1,
-									fromempty : empty
+									fromempty : empty,
+									minimize : !all ? true : false
 								})
 							}	
 
@@ -3993,16 +4071,19 @@ var lenta = (function(){
 							}
 						}
 						else{
+							
 
-							actions.destroyVideo(share)
+							if (essenseData.author && (essenseData.author != self.user.address.value.toString('hex')) || essenseData.txids) return
 
-							renders.shares([share], function(){
-								renders.sharesInview([share], function(){
-									
+								actions.destroyVideo(share)
+
+								renders.shares([share], function(){
+									renders.sharesInview([share], function(){
+										
+									})
+								}, {
+									inner : prepend
 								})
-							}, {
-								inner : prepend
-							})
 						}
 	
 						
@@ -4010,8 +4091,7 @@ var lenta = (function(){
 	
 					self.app.platform.ws.messages.transaction.clbks.temp = function(data){
 	
-						if(/*beginmaterial || */essenseData.author || essenseData.txids) return
-	
+						if(essenseData.author && (essenseData.author != self.user.address.value.toString('hex')) || essenseData.txids) return
 	
 						if(data.temp){
 	
@@ -4112,66 +4192,23 @@ var lenta = (function(){
 					
 				}
 
-				self.app.platform.clbks.api.actions.subscribe.lenta = function(address){
+				self.app.platform.clbks.api.actions.anysubscribe.lenta = actions.subscribeunsubscribeclbk
 
-					var addressEl = el.c.find('.shareTable[address="'+address+'"]')
+				/*self.app.platform.clbks.api.actions.subscribe.lenta =
+				self.app.platform.clbks.api.actions.subscribePrivate.lenta = *
+				self.app.platform.clbks.api.actions.unsubscribe.lenta = actions.subscribeunsubscribeclbk*/
 
-					addressEl.addClass('subscribed');
-					addressEl.find('.notificationturn').removeClass('turnon')	
-
-					renders.maybechangevisibility(address)
-				}
-
-				self.app.platform.clbks.api.actions.subscribePrivate.lenta = function(address){
-
-					var addressEl = el.c.find('.shareTable[address="'+address+'"]')
-
-					var me = deep(self.app, 'platform.sdk.users.storage.' + self.user.address.value.toString('hex'))
-
-					if (me){
-						var r = me.relation(address, 'subscribes') 
-
-						if (r && (r.private == 'true' || r.private === true)){
-							addressEl.find('.notificationturn').addClass('turnon')	
-						}
-						else{
-							addressEl.find('.notificationturn').removeClass('turnon')	
-						}
-					}
-
-					renders.maybechangevisibility(address)
-
-					addressEl.addClass('subscribed');
-				}
-				
-
-				self.app.platform.clbks.api.actions.unsubscribe.lenta = function(address){
-
-					var addressEl = el.c.find('.shareTable[address="'+address+'"]')
-
-					addressEl.removeClass('subscribed');
-
-					addressEl.find('.notificationturn').removeClass('turnon')
-
-					renders.maybechangevisibility(address)
-				}
 
 				self.app.platform.clbks.api.actions.blocking.lenta = function(address){
-
 					var addressEl = el.c.find('.shareTable[address="'+address+'"]').closest('.share')
-
-					addressEl.addClass('blocking');
-
-					actions.stopPlayers()
+						addressEl.addClass('blocking');
+						actions.stopPlayers()
 				}
 
 				self.app.platform.clbks.api.actions.unblocking.lenta = function(address){
-
 					var addressEl = el.c.find('.shareTable[address="'+address+'"]').closest('.share')
-
-					addressEl.removeClass('blocking');
-
-					actions.stopPlayers()
+						addressEl.removeClass('blocking');
+						actions.stopPlayers()
 				}
 
 
@@ -4541,10 +4578,15 @@ var lenta = (function(){
 					delete self.app.platform.ws.messages.transaction.clbks.temp
 					delete self.app.platform.ws.messages.event.clbks.lenta
 
+
 					delete self.app.platform.ws.messages["new block"].clbks.newsharesLenta
-					delete self.app.platform.clbks.api.actions.subscribe.lenta
+
+					
+					delete self.app.platform.clbks.api.actions.anysubscribe.lenta
+
+					/*delete self.app.platform.clbks.api.actions.subscribe.lenta
 					delete self.app.platform.clbks.api.actions.unsubscribe.lenta
-					delete self.app.platform.clbks.api.actions.subscribePrivate.lenta 
+					delete self.app.platform.clbks.api.actions.subscribePrivate.lenta */
 
 					delete self.app.platform.clbks.api.actions.blocking.lenta
 					delete self.app.platform.clbks.api.actions.unblocking.lenta

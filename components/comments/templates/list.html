@@ -1,6 +1,4 @@
 <%
-
-
 var commentpanel = function(comment, _class){  %>
 	<div class="commentpanel">
 
@@ -80,13 +78,10 @@ var commentpanel = function(comment, _class){  %>
 		</div>
 
 	</div>
-<% }
+<% } %>
 
-%>
-
-
-<% _.each(comments, function(comment){ 
-
+<%
+var commentf = function(comment){  
 	var me = app.platform.sdk.user.me()
 
 	if(me && me.relation(comment.address, 'blocking')) return
@@ -113,8 +108,6 @@ var commentpanel = function(comment, _class){  %>
 								<div class="donatedbefore"></div>
 							<% } %>
 							<div class="usericon <% if(comment.donation === 'true' && comment.amount) {%> donated <% } %>" image="<%-src || ''%>">
-
-
 
 								<% if(!src && letter) { %>
 
@@ -316,5 +309,28 @@ var commentpanel = function(comment, _class){  %>
 			</div>
 		<% } %>
 	</div>
+	
+<% } %>
 
-<% }) %>
+<% if(!pid && needtoshow > 10 && typeof sort != 'undefined') {%>
+
+	<div class="commentsorting">
+		<%= sort.input() %>
+	</div>
+
+<% } %>
+
+
+<% _.each(comments, function(comment){ 
+
+	commentf(comment) 
+
+}) %>
+
+<% if(needtoshow) {%>
+
+	<div class="showmorecomments">
+		<span><%=e('comments_next')%> (<%-needtoshow%>)</span>
+	</div>
+
+<% } %>

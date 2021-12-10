@@ -610,7 +610,7 @@ var Proxy = function (settings, manage, test, logger) {
 					{host : 'pocketnetpeertube4.nohost.me', cantuploading : true}, 
 					{host : 'pocketnetpeertube6.nohost.me', cantuploading : true}, 
 				],
-        		8:  [
+				8 : [
 					{host : 'pocketnetpeertube8.nohost.me', cantuploading : true}, 
 					{host : 'pocketnetpeertube9.nohost.me', cantuploading : true}, 
 				],

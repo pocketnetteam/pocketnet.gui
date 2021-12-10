@@ -2394,6 +2394,8 @@ pComment = function(){
 	self.myScore = 0;
 	self.deleted = false;
 
+	self.reputation = 0;
+
 	self.my = function(app){
 
 		var ao = app.platform.sdk.address.pnet();

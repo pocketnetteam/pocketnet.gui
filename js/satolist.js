@@ -75,7 +75,10 @@ Platform = function (app, listofnodes) {
         'PJg4gur26sCRukHcn5aoDSRZTQF5dxTMUS' : true,
         'PDz71dsW1cPwNewGHVUteFgQx3ZmBf4gaf' : true,
         'PFjWEfsm3jX81MctFU2VSJ17LGVKDc99oH' : true,
-        'PBo7zu6xguzzftFE8c3Urgz4D6YVnj8oux' : true
+        'PBo7zu6xguzzftFE8c3Urgz4D6YVnj8oux' : true,
+        'P9KXb7sS2JDjV5jnXu4t2WwwbvzYeu6yds' : true,
+        'PUYEkLb6szwxjw3cq6FvLxDPmedbyd3foq' : true,
+        'PU6LDxDqNBDipG4usCqhebgJWeA4fQR5R4' : true
     }
 
     self.nvadr = {
@@ -1870,6 +1873,7 @@ Platform = function (app, listofnodes) {
 
         api: {
             actions: {
+                anysubscribe : {},
                 subscribe: {},
                 unsubscribe: {},
                 subscribePrivate: {},
@@ -2028,7 +2032,8 @@ Platform = function (app, listofnodes) {
                             comments : p.comments,
                             video : p.video,
                             autoplay : p.autoplay,
-                            opensvi : p.opensvi
+                            opensvi : p.opensvi,
+                            minimize : p.minimize
                         }
                     })
 
@@ -2588,8 +2593,6 @@ Platform = function (app, listofnodes) {
         }
     }
 
-    
-
     self.api = {
 
         keypair: function (m) {
@@ -3057,106 +3060,18 @@ Platform = function (app, listofnodes) {
             }
         },
 
+        relation : function(address, type){
+
+            var me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
+
+            if(!me) return
+
+            var r = me.relation(address, type) 
+
+            return r
+        },
+
         actions: {
-            unsubscribe: function (address, clbk) {
-                var unsubscribe = new Unsubscribe();
-                unsubscribe.address.set(address);
-
-                topPreloader(10)
-
-                self.sdk.node.transactions.create.commonFromUnspent(
-
-                    unsubscribe,
-
-                    function (tx, error) {
-
-                        if (tx) {
-                            var me = deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value.toString('hex'))
-
-                            var u = self.sdk.users.storage[address];
-
-                            if (me) {
-
-                                me.removeRelation({
-                                    adddress: address
-                                })
-
-                            }
-
-
-                            if (u) {
-                                u.removeRelation(address, 'subscribers')
-                            }
-
-                            var clbks = deep(self.clbks, 'api.actions.unsubscribe') || {}
-
-                            _.each(clbks, function (c) {
-                                c(address)
-                            })
-
-                        }
-
-                        topPreloader(100)
-
-                        clbk(tx, error)
-
-                    }
-                )
-            },
-
-            subscribe: function (address, clbk) {
-                var subscribe = new Subscribe();
-                subscribe.address.set(address);
-
-                topPreloader(10)
-
-                self.sdk.node.transactions.create.commonFromUnspent(
-
-                    subscribe,
-
-                    function (tx, error) {
-
-                        if (tx) {
-                            var me = deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value.toString('hex'))
-
-                            var u = self.sdk.users.storage[address];
-
-                            if (me) {
-
-                                me.removeRelation({
-                                    adddress: address
-                                })
-
-                                me.addRelation({
-                                    adddress: address,
-                                    private: false
-                                })
-
-                                me.removeRelation(address, 'recomendedSubscribes')
-                            }
-
-                            if (u) {
-                                u.removeRelation(address, 'subscribers')
-                                u.addRelation(address, 'subscribers')
-                            }
-
-                            var clbks = deep(self.clbks, 'api.actions.subscribe') || {}
-
-                            _.each(clbks, function (c) {
-                                c(address)
-                            })
-
-
-                            self.sdk.activity.adduser('subscribe', address)
-                        }
-
-                        topPreloader(100)
-
-                        clbk(tx, error)
-
-                    }
-                )
-            },
 
             blocking: function (address, clbk) {
                 var blocking = new Blocking();
@@ -3226,10 +3141,6 @@ Platform = function (app, listofnodes) {
                 )
             },
 
-            notificationsTurnOff: function (address, clbk) {
-                self.api.actions.subscribe(address, clbk)
-            },
-
             subscribeWithDialog: function (address, clbk) {
                 menuDialog({
 
@@ -3240,7 +3151,13 @@ Platform = function (app, listofnodes) {
                             class: 'itemmain',
                             action: function (clbk) {
 
-                                self.api.actions.notificationsTurnOn(address, clbk)
+                                self.api.actions.notificationsTurnOn(address, function(tx, error){
+                                    if (error) {
+                                        self.errorHandler(error, true)
+                                    }
+                                })
+
+                                clbk()
 
                             }
                         },
@@ -3249,7 +3166,13 @@ Platform = function (app, listofnodes) {
                             text:  self.app.localization.e('e13264'),
                             action: function (clbk) {
 
-                                self.api.actions.subscribe(address, clbk)
+                                self.api.actions.subscribe(address, function(tx, error){
+                                    if (error) {
+                                        self.errorHandler(error, true)
+                                    }
+                                })
+
+                                clbk()
 
                             }
                         }
@@ -3260,49 +3183,20 @@ Platform = function (app, listofnodes) {
 
             },
 
-            notificationsTurnOn: function (address, clbk) {
-                var subscribe = new SubscribePrivate();
-                subscribe.address.set(address);
+            unsubscribe: function (address, clbk) {
+                var unsubscribe = new Unsubscribe();
+                    unsubscribe.address.set(address);
 
                 topPreloader(10)
 
                 self.sdk.node.transactions.create.commonFromUnspent(
 
-                    subscribe,
+                    unsubscribe,
 
                     function (tx, error) {
 
                         if (tx) {
-                            var me = deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value.toString('hex'))
-
-                            var u = self.sdk.users.storage[address];
-
-                            if (me) {
-
-                                me.removeRelation({
-                                    adddress: address
-                                })
-
-                                me.addRelation({
-                                    adddress: address,
-                                    private: true
-                                })
-
-                                me.removeRelation(address, 'recomendedSubscribes')
-                            }
-
-                            if (u) {
-                                u.removeRelation(address, 'subscribers')
-                                u.addRelation(address, 'subscribers')
-                            }
-
-                            var clbks = deep(self.clbks, 'api.actions.subscribePrivate') || {}
-
-                            self.sdk.activity.adduser('subscribe', address)
-
-                            _.each(clbks, function (c) {
-                                c(address)
-                            })
+                            self.api.actions.managesubscribelist(address)
                         }
 
                         topPreloader(100)
@@ -3311,6 +3205,123 @@ Platform = function (app, listofnodes) {
 
                     }
                 )
+            },
+
+            subscribe: function (address, clbk) {
+                var subscribe = new Subscribe();
+                subscribe.address.set(address);
+
+                topPreloader(10)
+
+                var lr = self.api.relation(address)
+
+                self.api.actions.managesubscribelist(address, true)
+
+                self.sdk.node.transactions.create.commonFromUnspent(
+
+                    subscribe,
+
+                    function (tx, error) {
+
+                        if (!tx) {
+
+                            if(!lr){
+                                self.api.actions.managesubscribelist(address)
+                            }
+                            else{
+                                self.api.actions.managesubscribelist(address, true, lt.private)
+                            }
+                            
+                        }
+
+                        topPreloader(100)
+
+                        if (clbk)
+                            clbk(tx, error)
+
+                    }
+                )
+            },
+
+            notificationsTurnOff: function (address, clbk) {
+                self.api.actions.subscribe(address, clbk)
+            },
+
+            notificationsTurnOn: function (address, clbk) {
+                var subscribe = new SubscribePrivate();
+                subscribe.address.set(address);
+
+                topPreloader(10)
+
+                self.api.actions.managesubscribelist(address, true, true)
+
+                self.sdk.node.transactions.create.commonFromUnspent(
+
+                    subscribe,
+
+                    function (tx, error) {
+
+                        if(!tx) {
+                            self.api.actions.managesubscribelist(address)
+                        }
+
+                        topPreloader(100)
+
+                        clbk(tx, error)
+
+                    }
+                )
+            },
+
+            managesubscribelist : function(address, add, notificationturnon){
+
+                var me = deep(app, 'platform.sdk.users.storage.' + app.user.address.value.toString('hex'))
+                var u = self.sdk.users.storage[address];
+
+                if (me) {
+
+                    me.removeRelation({
+                        adddress: address
+                    })
+
+                    if (add){
+                        me.addRelation({
+                            adddress: address,
+                            private: notificationturnon ? true : false
+                        })
+                    }
+
+                    me.removeRelation(address, 'recomendedSubscribes')
+                }
+
+                if (u) {
+
+                    u.removeRelation(address, 'subscribers')
+
+                    if (add){
+                        u.addRelation(address, 'subscribers')
+                    }
+                }
+
+                if (add){
+                    self.sdk.activity.adduser('subscribe', address)
+                }
+
+                _.each(deep(self.clbks, 'api.actions.anysubscribe') || {}, function (c) {
+                    c(address, add, notificationturnon)
+                })
+
+                var cname = 'subscribe'
+
+                if(!add) cname = 'unsubscribe'
+
+                else if(notificationturnon) cname = 'subscribePrivate'
+
+                _.each(deep(self.clbks, 'api.actions.' + cname) || {}, function (c) {
+                    c(address, add, notificationturnon)
+                })
+
+
             },
 
             htls : function(id){
@@ -3537,9 +3548,11 @@ Platform = function (app, listofnodes) {
                         el.find('.subscribe').on('click', function () {
                             self.app.mobile.vibration.small()
                             self.api.actions.subscribe(address, function (tx, error) {
-                                if (!tx) {
+
+                                if (error) {
                                     self.errorHandler(error, true)
                                 }
+
                             })
 
                             if (!mme && _el.tooltipster)
@@ -3549,7 +3562,7 @@ Platform = function (app, listofnodes) {
                         el.find('.unsubscribe').on('click', function () {
                             self.app.mobile.vibration.small()
                             self.api.actions.unsubscribe(address, function (tx, error) {
-                                if (!tx) {
+                                if (error) {
                                     self.errorHandler(error, true)
                                 }
                             })
@@ -11067,6 +11080,9 @@ Platform = function (app, listofnodes) {
                             })
 
                         }
+                        else{
+                            s.all[loc] = []
+                        }
 
                         _.each(t.additional, function(at){
                             if (s.all[loc].indexOf(at.tag) == -1){
@@ -11576,20 +11592,6 @@ Platform = function (app, listofnodes) {
                     }
                 })
 
-                /*self.app.ajax.rpc({
-                    method: 'getcomments',
-                    parameters: ['', '', ids],
-                    success: function (d) {
-
-                        
-
-                    },
-                    fail: function (d, e) {
-                        if (clbk) {
-                            clbk(e, d)
-                        }
-                    }
-                })*/
             },
 
             checkSign: function (comment, signature, pubkey) {
@@ -11637,11 +11639,11 @@ Platform = function (app, listofnodes) {
                     comment.import(data)
                     comment.setTime(data.time, data.timeUpd)
 
-                    comment.children = data.children
+                    comment.children = Number(data.children)
                     comment.address = data.address;
                     comment.verify = true;
 
-
+                    comment.rating = data.rating
 
                     _.each(self.sdk.relayTransactions.withtemp('comment'), function (c) {
                         if (c.optype == 'comment' || !c.optype) {
@@ -11668,8 +11670,6 @@ Platform = function (app, listofnodes) {
                     }
 
                 })
-
-
 
                 _.each(c, function (c) {
                     s.all[c.id] = c
@@ -11799,6 +11799,46 @@ Platform = function (app, listofnodes) {
 
 
                     })
+                })
+            },
+
+            getclear: function (txid, pid, clbk, ccha) {
+
+                var s = self.sdk.comments.storage;
+                var i = self.sdk.comments.ini;
+                var address = ''
+
+                var ao = self.app.platform.sdk.address.pnet();
+
+                if (ao) address = ao.address
+
+                s[txid] || (s[txid] = {})
+
+
+                if(ccha && s[txid][pid || '0']){
+
+                    if (clbk)
+                        clbk(s[txid][pid || '0'])
+
+                    return
+                }
+
+
+                self.app.api.rpc('getcomments', [txid, pid || '', address]).then(d => {
+
+                    self.sdk.comments.temps(d, txid, pid)
+
+                    var c = i(d)
+
+                    s[txid][pid || '0'] = c
+
+                    if (clbk)
+                        clbk(c)
+        
+                }).catch(e => {
+                    if (clbk) {
+                        clbk(null, e)
+                    }
                 })
             },
 
@@ -15440,6 +15480,7 @@ Platform = function (app, listofnodes) {
                                             }).catch(e => {
                                                 self.app.platform.sdk.node.transactions.unblockUnspents(bids)
 
+                                                console.error(e)
 
                                                 if (clbk) {
                                                     clbk(null, e.code, data)
@@ -23842,6 +23883,12 @@ Platform = function (app, listofnodes) {
 
 					self.matrixchat.el.swipe({
 						swipeLeft : function(e, phase, direction, distance){
+                            if(_.find(e.path, function(el){
+                                return el.className && el.className.indexOf('noswipepnt') > -1
+                            })) return
+                            
+
+                            console.log("E", e)
 
                             if (self.matrixchat.core && (!self.matrixchat.core.canback || self.matrixchat.core.canback()))
                                 self.matrixchat.core.backtoapp()

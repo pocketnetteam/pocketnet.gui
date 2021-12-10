@@ -7,6 +7,9 @@ var m = share.renders.message();
 if(typeof ed == 'undefined') ed = {}
 
 
+var thisrepost = (typeof repost != 'undefined' && repost)
+
+
 if(share.address){
 
 	var my = (user.address.value && share.address == user.address.value.toString('hex'))
@@ -37,6 +40,7 @@ var bigmessage = false;
 var name = app.platform.api.name(share.address)
 
 var emptywithrepost = share.isEmpty() && share.repost
+
 
 var value = Number(share.score)
 
@@ -93,10 +97,13 @@ var metadisplay = function(){ %>
 						
 						<% if((typeof repost == 'undefined' || !repost || fromempty)) {%>
 							<div class="sys unselectablemobile">
-
 								<%if(share.pin){%>
 								<span class="pinnedLabel"><i class="fas fa-thumbtack"></i> <%=e('pinned').toLowerCase()%>,</span><%}%><% if(share.downloadedDate) {%> <span class="fas fa-cloud-download-alt"></span> <span class="realtime editedLabel" time="<%-share.downloadedDate%>"><%- app.reltime(share.downloadedDate) %></span><% } else { %> 
 								<% if(share.time) {%><span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span><% } else { %><span><%=e('e13019')%></span><% } %><% if(share.edit == 'true') {%><span class="editedLabel">, <%=e('e13130').toLowerCase()%></span><% } %><% } %><% if(share.visibility()) {%><span class="visibilityLabel">, <%=e('sharevisibility_' + share.visibility()).toLowerCase()%></span><% } %>
+							</div>
+						<% } else { %> 
+							<div class="sys unselectablemobile">
+								<% if(share.time) {%><span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span><% } else { %><span><%=e('e13019')%></span><% } %><% if(share.edit == 'true') {%><span class="editedLabel">, <%=e('e13130').toLowerCase()%></span><% } %><% if(share.visibility()) {%><span class="visibilityLabel">, <%=e('sharevisibility_' + share.visibility()).toLowerCase()%></span><% } %>
 							</div>
 						<% } %>
 						
@@ -242,10 +249,10 @@ var arranges = {
 				var nmbrarl = nmbrar.length
 
 
-				if (nmbrarl > 25){
+				if (nmbrarl > 15){
 					bigmessage = true;
 
-					nm = _.first(nmbrar, 25).join('\n')
+					nm = _.first(nmbrar, 15).join('\n')
 				}
 
 				else{
@@ -300,43 +307,56 @@ var arranges = {
 				if (share.images.length + additionall == 4) icClass = 'four';
 				if (share.images.length + additionall > 4) icClass = 'more';
 				
+				if(share.settings.v != 'a' || share.images.length + additionall > 2){ 
+
+					if(share.settings.v == 'a'){ 
+
+						icClass = 'articleImages'
+
+					%>
+
+						<div class="imagecaption">
+							<%=e('e13129')%>:
+						</div>
+
+					<% } else {
+
+						if((thisrepost || isMobile() || (typeof openapi != 'undefined' && openapi)) && share.images.length + additionall > 1){
+							icClass = 'owlcar owl-carousel noswipepnt'
+						}
+
+					} %>
 
 
-				if(share.settings.v == 'a'){ 
+	
+					<div class="images shareImages hideOnFullVideo unselectable">
+						<div class="imagesContainer <%-icClass%>">
 
-					icClass = 'articleImages'
+							<% if(imageFromVideo) {%>
 
-				%>
+								<div class="imagesWrapper forvideo">
+									<div elementsid="lenta_videoOpen" class="image videoOpen" image="<%-imageFromVideo%>">
+										<div class="playicon"><i class="fas fa-play"></i></div>
+									</div>
+								</div>
 
-					<div class="imagecaption">
-						<%=e('e13129')%>:
+							<% } %>
+							
+							<% _.each(share.images, function(image){ %>
+
+								<div class="imagesWrapper">
+									<div elementsid="lenta_imageOpen" class="image imageOpen imagePostOpent" save="<% if(typeof nameFromScr != 'undefined') {%><%- nameFromScr(image) %><% } %>" image="<%-image%>" i="<%-image%>">
+									</div>
+								</div>
+
+							<% }) %>
+
+						
+							
+						</div>
 					</div>
 
 				<% } %>
- 
-				<div class="images shareImages hideOnFullVideo unselectable">
-					<div class="imagesContainer <%-icClass%>">
-						<% _.each(share.images, function(image){ %>
-
-							<div class="imagesWrapper">
-								<div elementsid="lenta_imageOpen" class="image imageOpen imagePostOpent" save="<% if(typeof nameFromScr != 'undefined') {%><%- nameFromScr(image) %><% } %>" image="<%-image%>" i="<%-image%>">
-								</div>
-							</div>
-
-						<% }) %>
-
-						<% if(imageFromVideo) {%>
-
-							<div class="imagesWrapper forvideo">
-								<div elementsid="lenta_videoOpen" class="image videoOpen" image="<%-imageFromVideo%>">
-									<div class="playicon"><i class="fas fa-play"></i></div>
-								</div>
-							</div>
-
-						<% } %>
-						
-					</div>
-				</div>
 
 		<% } %>
 	<% },

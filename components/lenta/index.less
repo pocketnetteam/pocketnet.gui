@@ -346,6 +346,16 @@
 					opacity: 1;
 				}
 			}
+
+			.js-player{
+				border-radius: 10px;
+				overflow: hidden;
+
+				.vjs-control-bar{
+					border-radius: 10px;
+					overflow: hidden;
+				}
+			}
 		}
 
 		.verticalVideo {
@@ -486,11 +496,12 @@
 
 				.share{
 					padding : 0;
+					
 					.work{
 						padding: 0;
 						margin: 0;
 						padding-top : @rhythm;
-						border-left : @rhythm solid @color-black3;
+						border-left : @rhythm dotted fade(@color-gray-slight, 40);
 					}
 
 					.sharecaption{
@@ -541,13 +552,21 @@
 
 			.article{
 				.message{
+
+					b{
+						font-size: 1em!important;
+					}
 					
 					p img{
-						max-width: 100%;
+						max-width: 95%;
+						border-radius: 3px;
+						margin: 0 auto;
 					}
 
 					figure img{
-						max-width: 100%;
+						max-width: 95%;
+						border-radius: 3px;
+						margin: 0 auto;
 					}
 
 					span{
@@ -1190,6 +1209,24 @@
 							border-radius: 30px;
 							overflow: hidden;
 							margin-right: @rhythm;
+							margin-bottom: @rhythm;
+						}
+					}
+
+					&.owlcar{
+						height: auto;
+						width: 100%;
+						max-width: 400px;
+
+						.imagesWrapper{
+							height: 500px;
+							float: none;
+							width: 100%;
+							background: transparent;
+
+							.image{
+								background-size: contain!important;
+							}
 						}
 					}
 				}
@@ -1692,6 +1729,16 @@
 
 					.videoWrapper{
 						border-radius: 0;
+
+						.js-player{
+							border-radius: 0;
+							overflow: visible;
+
+							.vjs-control-bar{
+								border-radius: 0;
+								overflow: visible;
+							}
+						}
 					}
 
 					&::-webkit-scrollbar{
@@ -2041,6 +2088,8 @@
 			}
 		}
 	}
+
+	
 
 	.subc{
 		margin-top : 2 * @rhythm;
@@ -3319,6 +3368,16 @@ html.stblack{
 				position : relative;
 				border-radius: 0;
 
+				.js-player{
+					border-radius: 0;
+					overflow: visible;
+
+					.vjs-control-bar{
+						border-radius: 0;
+						overflow: visible;
+					}
+				}
+
 				.videoTips{
 					cursor: default;
 					position : absolute;
@@ -3480,7 +3539,7 @@ html.stblack{
 
 					.share{
 						.work{
-							border-left : 0.5 * @rhythm solid @color-black3;
+							border-left : @rhythm dotted fade(@color-gray-slight, 70);
 						}
 						.sharecaption{
 							font-size: 1em;
@@ -3715,6 +3774,8 @@ html.stblack{
 							}
 						}
 
+						
+
 						&.two,
 						&.three,
 						&.more,
@@ -3737,8 +3798,12 @@ html.stblack{
 							padding : @rhythm;
 							.imagesWrapper{
 								float: left;
+								width: 30px;
+								height: 30px;
 							}
 						}
+
+					
 					}
 				}
 

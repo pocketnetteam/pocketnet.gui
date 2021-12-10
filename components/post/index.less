@@ -357,7 +357,7 @@
 					width: 100%;
 					padding-top : @rhythm;
 					padding-bottom: @rhythm;
-					border-left : @rhythm solid @color-main;
+					border-left : @rhythm dotted fade(@color-gray-slight, 70);
 				}
 			} 
 
@@ -490,9 +490,9 @@
 			display: none;
 		}
 
-		.showMore{
+		/*.showMore{
 			display: none;
-		}
+		}*/
 
 		img{
 			max-width: 100%;
@@ -502,6 +502,10 @@
 			.message{
 				p img{
 					max-width: 100%;
+				}
+
+				b{
+					font-size: 1em!important;
 				}
 
 				figure img{
@@ -753,7 +757,9 @@
 			}
 
 			.imagesWrapper{
-				width: 100%;
+				width: 180px;
+				height: 180px;
+				float: left;
 				margin-bottom : 2 * @rhythm;
 				border-radius: 5px;
 				background: transparent;
@@ -777,10 +783,84 @@
 					display : none;
 				}
 
+				
+
 			}
 
 			.imagesContainer{
+				&.owlcar{
+					height: auto;
+					width: 100%;
+					max-width: 400px;
+					
+
+					.imagesWrapper{
+						height: 500px;
+						float: none;
+						width: 100%;
+						background: transparent;
+
+						.image{
+							background-size: contain!important;
+						}
+					}
+				}
+
+				&.one{
+					.imagesWrapper{
+						width: 400px;
+						height: 400px;
+
+						&.w2{
+							width: 600px
+						}
+
+						&.h2{
+							width: 400px;
+						}
+					}
+				}
+
+				&.two{
+					.imagesWrapper{
+						width: 200px;
+						height: 200px;
+
+						&.w2{
+							width: 400px
+						}
+
+						&.h2{
+							width: 200px; 
+						}
+					}
+				}
+
+				&.four{
+					.imagesWrapper{
+						width: 200px;
+						height: 200px;
+						&.w2{
+							width: 400px
+						}
+
+						&.h2{
+							width: 200px; 
+						}
+					}
+				}
 				
+
+				&.articleImages{
+					.imagesWrapper{
+						width: 60px;
+						height: 60px;
+						border-radius: 30px;
+						overflow: hidden;
+						margin-right: @rhythm;
+						margin-bottom: @rhythm;
+					}
+				}
 			}
 		}
 
@@ -1527,7 +1607,7 @@ html.stblack{
 				.share{
 					background: transparent;
 					.work{
-						border-left : @rhythm solid @color-main;
+						border-left : @rhythm dotted fade(@color-gray-slight, 70);
 					}
 				} 
 	
@@ -1856,6 +1936,10 @@ html.stblack{
 		
 	}
 
+	.repostsecond{
+		text-align: center;
+	}
+
 	.nextpost{
 		display: none;
 	}
@@ -2052,7 +2136,7 @@ html.stblack{
 	
 			.share{
 				.work{
-					border-left : 0.5 * @rhythm solid @color-main;
+					border-left : @rhythm dotted fade(@color-gray-slight, 70);
 				}
 				.sharecaption{
 					font-size: 1em;
