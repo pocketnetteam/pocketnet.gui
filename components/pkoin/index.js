@@ -7,7 +7,7 @@ var pkoin = (function(){
 	var Essense = function(p){
 
 		var primary = deep(p, 'history');
-		var el, optionsValue = 'donateToTheAuthor'
+		var el, optionsValue = 'pkoinComment'
 
 		var renders = {
 			fields: function(){
@@ -19,8 +19,8 @@ var pkoin = (function(){
 					name : "Localization",
 					id : 'localization',
 					defaultValue : optionsValue,
-					possibleValues : ['donateToTheAuthor', 'pkoinComment', 'liftUpThePost'],
-					possibleValuesLabels : [self.app.localization.e('donateToTheAuthor'), self.app.localization.e('pkoinComment'), self.app.localization.e('liftUpThePost')],
+					possibleValues : ['pkoinComment', 'donateToTheAuthor', 'liftUpThePost'],
+					possibleValuesLabels : [self.app.localization.e('pkoinComment'), self.app.localization.e('donateToTheAuthor'), self.app.localization.e('liftUpThePost')],
 
 		
 					_onChange : function(value){
