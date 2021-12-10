@@ -1518,10 +1518,10 @@ var share = (function(){
 
 						el.panel = el.c.find('.panel .item');
 						el.postWrapper = el.c.find('.postWrapper');					
-						el.changePostTime = el.c.find('.postTime')
-						el.selectTime = el.c.find('.selectedTimeWrapper')
-						el.post = el.c.find('.post')
-						el.times = el.c.find('.panel .times')
+						el.changePostTime = el.c.find('.postTime');
+						el.selectTime = el.c.find('.selectedTimeWrapper');
+						el.post = el.c.find('.post');
+						el.times = el.c.find('.panel .times');
 
 						el.changePostTime.on('change', events.changePostTime)
 						el.selectTime.on('click', events.selectTime)
@@ -2511,6 +2511,9 @@ var share = (function(){
 					el.c.addClass('focus').removeClass('unfocus')
 
 			})
+
+
+
 
 			$('html').on('click', events.unfocus);
 

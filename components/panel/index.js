@@ -19,7 +19,7 @@ var panel = (function(){
 		var renders = {
 
 			tags : function(){
-
+				
 				self.nav.api.load({
 
 					open : true,

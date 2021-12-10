@@ -1,0 +1,162 @@
+#pkoin .content .top,
+#pkoin .content .fieldsWrapper,
+#pkoin .content .sendButtonWrapper {
+  padding: 1em;
+}
+#pkoin .content .top {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 1em;
+  border-bottom: 1px solid rgba(229, 229, 229, 0.5);
+}
+#pkoin .content .top .profile {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90px;
+}
+#pkoin .content .top .profile .balance {
+  display: flex;
+  flex-direction: column;
+}
+#pkoin .content .top .profile .balance .amount,
+#pkoin .content .top .profile .balance .label {
+  line-height: 14px;
+}
+#pkoin .content .top .profile .balance .amount {
+  font-size: 14px;
+  font-weight: 600;
+}
+#pkoin .content .top .profile .balance .label {
+  font-size: 12px;
+  color: #3c4146;
+}
+#pkoin .content .top .buyButtonWrapper {
+  display: flex;
+  align-items: center;
+}
+#pkoin .content .top .buyButtonWrapper .buyButton {
+  border: 1px solid #E3E4EB;
+  box-sizing: border-box;
+  border-radius: 100px;
+  padding: 8px 16px;
+  cursor: pointer;
+  display: flex;
+}
+#pkoin .content .top .buyButtonWrapper .buyButton .text {
+  margin-right: 1em;
+  font-weight: 600;
+}
+#pkoin .content .fieldsWrapper {
+  margin-top: 1em;
+  padding-bottom: 0;
+}
+#pkoin .content .fieldsWrapper .fields .inputWrapper {
+  margin-bottom: 2em;
+}
+#pkoin .content .fieldsWrapper .fields .inputWrapper input,
+#pkoin .content .fieldsWrapper .fields .inputWrapper textarea {
+  width: 100%;
+}
+#pkoin .content .fieldsWrapper .fields .inputWrapper .vc_valuecustom {
+  width: 100%;
+}
+#pkoin .content .fieldsWrapper .fields .inputWrapper .vc_valuecustom.opened .vc_inputWrapper,
+#pkoin .content .fieldsWrapper .fields .inputWrapper .vc_valuecustom.opened .vc_iconWrapper {
+  border: 1px solid #00A4FF;
+}
+#pkoin .content .fieldsWrapper .fields .inputWrapper .vc_valuecustom.opened .vc_iconWrapper {
+  border-left: none;
+}
+#pkoin .content .fieldsWrapper .fields .inputWrapper .vc_valuecustom.opened .vc_inputWrapper {
+  border-right: none;
+}
+#pkoin .content .fieldsWrapper .fields .inputWrapper .vc_inputWrapper {
+  border-radius: 10px 0px 0px 10px;
+  border: 1px solid #EBEBEB;
+  border-right: none;
+}
+#pkoin .content .fieldsWrapper .fields .inputWrapper .vc_inputWrapper input {
+  padding: 12px 16px;
+}
+#pkoin .content .fieldsWrapper .fields .inputWrapper .vc_iconWrapper {
+  border-radius: 0px 10px 10px 0px;
+  border: 1px solid #EBEBEB;
+  border-left: none;
+}
+#pkoin .content .fieldsWrapper .fields .inputWrapper .vc_selectInput {
+  top: 100%;
+  box-shadow: 0px 8px 24px -6px rgba(0, 0, 0, 0.16), 0px 0px 1px rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
+  border: none;
+}
+#pkoin .content .fieldsWrapper .fields .inputWrapper .vc_selectInput .vc_value {
+  padding: 12px;
+  color: #555770;
+}
+#pkoin .content .fieldsWrapper .fields .inputWrapper .vc_selectInput .vc_value:hover {
+  background: #F5F5F5;
+  color: default;
+}
+#pkoin .content .fieldsWrapper .fields .inputWrapper .inputSum,
+#pkoin .content .fieldsWrapper .fields .inputWrapper .textareaComment {
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid #EBEBEB;
+}
+#pkoin .content .fieldsWrapper .fields .inputWrapper > textarea {
+  min-height: 100px;
+}
+#pkoin .content .fieldsWrapper .fields .sum .inputWrapper {
+  position: relative;
+}
+#pkoin .content .fieldsWrapper .fields .sum .inputWrapper .pkoinLabel {
+  color: #00A4FF;
+  position: absolute;
+  right: 12px;
+  top: 12px;
+}
+#pkoin .content .fieldsWrapper .fields .comment .text {
+  line-height: 24px;
+  color: #555770;
+}
+#pkoin .content .sendButtonWrapper {
+  padding: 1.5em 1em;
+  border-top: 1px solid rgba(229, 229, 229, 0.5);
+}
+#pkoin .content .sendButtonWrapper .sendButton {
+  padding: 12px 16px;
+  text-align: center;
+  background: #00A4FF;
+  color: #ffff;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.wnd.sharingwindow2 {
+  z-index: 5000;
+}
+.wnd.sharingwindow2.textshowedwnd .wndinner {
+  max-height: 600px;
+}
+.wnd.sharingwindow2 .wndinner.pkoin {
+  max-width: 400px;
+  max-height: 480px;
+}
+.wnd.sharingwindow2 .wndinner.pkoin .wndcontent {
+  height: fit-content;
+}
+.wnd.sharingwindow2 .wndinner .wndheader {
+  display: none;
+}
+.wnd.sharingwindow2 .wndinner .wndcontent {
+  top: 0;
+  bottom: 0;
+  padding: 0;
+}
+.wnd.sharingwindow2 .wndinner > div.buttons {
+  display: none;
+}
+.wnd.sharingwindow2 .roundclosebutton {
+  color: #FFF;
+}
+/*t*/
