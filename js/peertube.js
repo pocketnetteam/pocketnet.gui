@@ -479,9 +479,9 @@ PeerTubePocketnet = function (app) {
 
         var special = false
 
-        /*if( app.user.address.value == 'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m' || app.user.address.value == 'PDgbAvsrS4VGKkW5rivcJaiCp7fnBoZRgM'){
+        if( app.user.address.value == 'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m' || app.user.address.value == 'PDgbAvsrS4VGKkW5rivcJaiCp7fnBoZRgM' || app.user.address.value == 'PU6LDxDqNBDipG4usCqhebgJWeA4fQR5R4'){
             special = true
-        }*/
+        }
 
 
 
@@ -498,12 +498,12 @@ PeerTubePocketnet = function (app) {
 
             console.log('royId', royId)
 
-            /*if (special){
+            if (special){
               var spc = _.find(data, function(i){
-                if(i == 'bastyonmma.pocketnet.app' || i == 'bastyonmma.nohost.me') return true
+                if(i == 'pocketnetpeertube12.nohost.me') return true
               })
               if(spc) return spc
-            }*/
+            }
 
             if (!royId) royId = rand(0, roysAmount - 1);
 
@@ -705,7 +705,7 @@ PeerTubePocketnet = function (app) {
           .catch((e = {}) => {
             const errorBody = e.response ? e.response.data : {};
 
-            if (errorBody.code !== 3) {
+            if (errorBody.code !== 3 && errorBody.code !== 'max_user_lives_limit_reached' ) {
               e.cancel = axios.isCancel(e);
 
               return Promise.reject(e);
