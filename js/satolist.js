@@ -2005,6 +2005,61 @@ Platform = function (app, listofnodes) {
             })
         },
 
+        editImage : function(src, p, clbk){
+
+            if(!p) p = {}
+
+            var images = [
+                {
+                    original : src,
+                    index : 0
+                }
+            ]
+
+            return new Promise((resolve, reject) => {
+
+                app.nav.api.load({
+                    open : true,
+                    id : 'imageGalleryEdit',
+                    inWnd : true,
+            
+                    essenseData : {
+                        edit : true,
+                        initialValue : 0,
+                        images : images,
+                        apply : p.apply,
+                        crop : {
+                            aspectRatio : p.aspectRatio || null,
+                            style : 'apply',
+                            autoCropArea : 1,
+                        },
+                
+                        success : function(i, editclbk){
+
+                            resize(images[0].original, p.w || 1920, p.h || 1080, function(resized){
+                                var r = resized.split(',');
+                
+                                if (r[1]){
+                
+                                    editclbk()
+
+                                    resolve(resized)
+                
+                                }
+                                else{
+                                    reject("error")
+                                }
+                            
+                            })
+
+            
+                        }
+                    }
+
+                })
+            })
+        },
+
         post: function (id, el, clbk, p) {
 
             if (!p) p = {}
@@ -2212,7 +2267,7 @@ Platform = function (app, listofnodes) {
 
         },
 
-
+      
         images : function(allimages, initialValue, clbk){
 
             if(!_.isArray(allimages)) allimages = [allimages]
@@ -5299,7 +5354,7 @@ Platform = function (app, listofnodes) {
             storage: [],
 
 
-            empty: function (id) {
+            empty: function (id, version) {
                 return {
 
                     id: id || makeid(),
@@ -5309,7 +5364,8 @@ Platform = function (app, listofnodes) {
                     images: [],
                     content: null,
                     tags : [],
-                    u: ''
+                    u: '',
+                    version : version || 1
                     
                 }
             },
@@ -5379,33 +5435,6 @@ Platform = function (app, listofnodes) {
                 return _videos
             },
 
-            getVideos: function (cnt) {
-                var h = $('<div>')
-
-                h.html(cnt)
-
-                var videos = h.find('.js-player');
-
-                var _videos = [];
-
-                $.each(videos, function () {
-
-                    var v = {
-                        type: $(this).attr('data-plyr-provider'),
-                        id: $(this).attr('data-plyr-embed-id')
-                    }
-
-                    if (v.type && v.id) {
-
-                        _videos.push(v)
-
-                    }
-
-                })
-
-                return _videos
-            },
-
             lightVideo: function (content) {
 
                 _.each(content, function (c, i) {
@@ -5442,7 +5471,6 @@ Platform = function (app, listofnodes) {
             },
 
             save: function () {
-
 
                 var address = self.sdk.address.pnet().address;
 
@@ -13019,6 +13047,12 @@ Platform = function (app, listofnodes) {
 
                         s.edit = share.edit || false
                         s.info = null
+
+
+                        /*if (s.url){
+                            s.url = s.url.replace('peertube://pocketnetpeertube8', 'peertube://pocketnetpeertube9')
+                        }*/
+
 
                         if (share.ranks){
                             s.info = share.ranks

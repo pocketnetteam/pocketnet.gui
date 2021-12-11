@@ -1,0 +1,4 @@
+<span class="captiontext"><% if(art.caption.value) {%><%- art.caption.value %><% } else { %>New Article<% }  %></span><% if(art.content && art.content.time) {%>, <span class="saveddate realtime" time="<%- new Date(art.content.time) %>">
+        сохранено <%- app.reltime(new Date(art.content.time))  %>
+    </span>
+<% } %>

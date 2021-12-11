@@ -1544,7 +1544,14 @@
 /* ______________________________ */
 
 /* IMAGES */
-
+	bgImagesClear = function(el){
+		el.css({
+			'background-image': '',
+			'background-size': 'cover',
+			'background-position': 'center center',
+			'background-repeat':'no-repeat'
+		});
+	}
 	bgImages = function(el, p){
 
 		if(!p) p = {};

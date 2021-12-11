@@ -973,8 +973,8 @@ __map =  {
 
 			},
 			relations : [
-				{src : 'js/vendor/editor/editor.js',			   f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},
-				
+				{src : 'js/vendor/editor/editor.js',			   f : 'js'},
+				{src : 'js/vendor/editor/imageloader.js',			   f : 'js'},
 			],
 			relationsSunc : true
 		},

@@ -50,10 +50,8 @@ var categories = (function(){
 						clbk : function(el, d){
 							renders.tagsinput(el, category)
 
-
 							el.find('.name').on('keyup', function(){
 								category.name = flb($(this).val().replace(/[^a-zA-Zа-яА-Я0-9_ ]/g, ''))
-
 							})
 
 							el.find('.removecat').on('click', function(){

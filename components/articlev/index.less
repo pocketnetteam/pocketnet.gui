@@ -1,5 +1,367 @@
 @import "../../css/__cssvar";
 
-#pdf{
+#articlev{
 
+    /*.aheader{
+        max-width: 750px;
+        padding-left: 50px;
+        margin : 0 auto;
+    }*/
+
+    .bgwrapper{
+        position: relative;
+        height: 250px;
+        background: @color-gray2;
+
+        .myarticles{
+            /*font-size: 1.2em;
+            opacity: 0.6;
+
+            &:hover{
+                opacity: 1;
+            }*/
+
+            i{
+                width: 30px;
+                text-align: center;
+                font-size: 0.8em;
+            }
+        }
+
+        .aheaderWrapper{
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding-top : 2 * @rhythm;
+            padding-bottom: 4 * @rhythm;
+        }
+
+        .changeBgWrapper{
+            position: absolute;
+            left: 3 * @rhythm;
+            top : 2 * @rhythm;
+        }
+    }
+
+    .aheader,
+    .abody{
+        max-width: 850px;
+        margin : 0 auto;
+    }
+   
+    .abody{
+        padding : @rhythm;
+    }
+    
+    .captionWrapper{
+        padding : 4 * @rhythm 0;
+        padding-bottom: 0;
+
+        textarea{
+            font-size: 2em;
+            width: 100%;
+            border : 0;
+            resize: none;
+            padding : 0;
+            overflow: hidden;
+
+            &:placeholder-shown{
+                color : @color-gray-mlight;
+            }
+        }
+    }
+
+    .editorWrapper{
+        padding : 2 * @rhythm 0;
+
+        .ce-paragraph{
+            &:placeholder-shown{
+                color : @color-gray-mlight!important;
+            }
+        }
+
+        .ce-toolbar__content,
+        .ce-block__content{
+            max-width: none;
+        }
+
+        .simple-image {
+            padding: 20px 0;
+        }
+        
+        .simple-image input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #e4e4e4;
+            border-radius: 3px;
+            outline: none;
+            font-size: 14px;
+        }
+    }
+
+    button{
+        border-radius: 30px;
+
+        &.ghost{
+            text-decoration: none;
+            
+        }
+
+        i{
+            width: 20px;
+            text-align: center;
+        }
+    }
+
+    
+    .dst{
+        background: fade(@color-gray2, 10);
+        backdrop-filter: blur(7px) grayscale(30%);
+        -webkit-backdrop-filter: blur(7px) grayscale(30%);  
+    }
+
+    #taginput .tgs{
+        margin-bottom: 0;
+        .search .searchPanel,
+        .category,
+        .search input,
+        .tag{
+            background: fade(@color-gray2, 10);
+            backdrop-filter: blur(7px) grayscale(30%);
+            -webkit-backdrop-filter: blur(7px) grayscale(30%);  
+        }
+
+        .category .categoryInner>div.label{
+            color : #fff
+        }
+
+        .search input{
+            padding-left: 0!important;
+            color : #fff;
+            .shadowText();
+        }
+
+        .searchFastResultWrapper{
+            border : 0;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            .result{
+                padding : 2 * @rhythm;
+                font-size: 0.7em;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                color: #000;
+                text-shadow: none;
+            }
+        }
+    }
+
+    .aheader{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color : #FFF;
+        padding : @rhythm @rhythm;
+        padding-right: 2 * @rhythm;
+        border-radius: 80px;
+        .shadowText();
+
+        .tagsinputwrapper{
+            display: none;
+            min-height: 36px;
+        }
+
+        .forback{
+            width: 60px;
+            min-width: 60px;
+            i{
+                text-align: left;
+            }
+
+            display: none;
+        }
+
+        &.tagsinput{
+           
+            .tagsinputwrapper{
+                display: flex;
+                align-items: center;
+                justify-content: start;
+                
+            }
+            .iconWrapper{
+                display: none;
+            }
+            .forback{
+                display: block;
+            }
+
+            .tagswrapper{
+                display: none;
+            }
+
+            .rightpart {
+                display: none;
+            }
+
+        }
+        
+        &.top{
+            padding : 0;
+            button{
+                
+                padding : @rhythm;
+                padding-left: 2 * @rhythm;
+                padding-right: 0;
+            }
+        }
+
+        button{
+            &.publish{
+                &:hover{
+                    background: transparent;
+                    backdrop-filter: blur(2px);
+                    -webkit-backdrop-filter: blur(2px);  
+                }
+            }
+
+            &.ghost{
+                color : #FFF!important;
+                .shadowText();
+            }
+
+            
+        }
+
+
+        .part{
+            display: flex;
+            align-items: center;
+        }
+
+        .arttags{
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            min-height: 36px;
+
+            .tags{
+				overflow: hidden;
+				max-width: 650px;
+				>div{
+					float: left;
+					margin-right: @rhythm;
+
+					span{
+						font-size: 0.8em;
+					}
+				}
+
+				.newlabel{
+					background: rgb(255, 5, 101);
+       				color : #fff;
+				}
+			}
+
+            button{
+                padding-bottom : 0;
+            }
+        }
+
+        .rightpart{
+            >div{
+                padding-left: 2 * @rhythm;
+            }
+        }
+
+        .leftpart{
+            >div{
+                padding-right: 2 * @rhythm;
+            }
+        }
+        .lst,
+        .articlecaptiondouble{
+            max-width: 230px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .lst{
+            width: 120px;
+            height: 30px;
+            position: relative;
+
+            .upload{
+                height: 100%;
+                width: 100%;
+            }
+        }
+        .maxtext{
+            max-width: 150px;
+            text-overflow: ellipsis;
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            vertical-align: bottom;
+        }
+
+        .vc_valuecustom{
+            margin : 0 auto;
+            width: 150px;
+            cursor: pointer;
+            .transition(0.3s);
+            
+
+            input{
+                font-weight: 500;
+            }
+
+            &.opened{
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+
+            .vc_value{
+                padding : 2 * @rhythm;
+                font-size: 0.7em;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                color: #000;
+                text-shadow: none;
+            }
+
+            .vc_iconWrapper{
+                border : 0;
+                color : #FFF;
+                .shadowText();
+            }
+            .vc_selectInput{
+                border : 0;
+                border-bottom-left-radius: 20px;
+                border-bottom-right-radius: 20px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                right: auto;
+                
+            }
+            .vc_inputWrapper{
+                border : 0;
+                text-align: center;
+                text-decoration: underline;
+                input{
+                    text-align: center;
+                    font-size: 0.8em;
+                    cursor: pointer!important;
+
+                    &[disabled]{
+                        color : #FFF!important;
+                        .shadowText();
+                    }
+                }
+            }
+        }
+    }
 }

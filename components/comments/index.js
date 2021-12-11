@@ -1113,8 +1113,10 @@ var comments = (function(){
 		var commentPoint = function(comment){
 			var p = 0
 
+			var my = comment.address == self.app.user.address.value
+
 			p += comment.scoreUp * 250
-			p += comment.children * 450
+			p += comment.children * (my ? 4500 : 450)
 
 			if(comment.scoreUp > comment.scoreDown) p += comment.scoreDown * 50
 			else p -= comment.scoreDown * 10
@@ -1127,6 +1129,8 @@ var comments = (function(){
 			if(comment.deleted) p = p / 1300
 
 			if(deep(self.app, 'platform.real.'+ comment.address)) p = p * 1000
+			else
+			if(my) p = p * 20
 
 
 			return p
