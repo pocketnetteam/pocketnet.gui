@@ -1169,7 +1169,7 @@ var comments = (function(){
 
 					var timec = ((ms - oldest) / (newest - oldest)) 
 
-					return - (commentPoint(c) + (timec * 10000) )
+					return - (commentPoint(c) + (timec * 3000) )
 				}) 
 			}
 

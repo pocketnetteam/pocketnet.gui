@@ -11,6 +11,7 @@ var userslist = (function(){
 		var el;
 		var addresses = [],
 			cnt = 50,
+			scnt = null,
 			end = false,
 			extra = null,
 			page = 0;
@@ -111,7 +112,7 @@ var userslist = (function(){
 
 				if (
 
-					($('#userslist').height()- $('#fordetailsusers').scrollTop() < 400) 
+					(el.c.height() - scnt.scrollTop() < 400) 
 
 					&& !loading && !end) {
 
@@ -265,7 +266,8 @@ var userslist = (function(){
 
 		var make = function(){
 			makepage(function(){
-				document.getElementById('fordetailsusers').addEventListener('scroll', events.loadmorescroll)
+				console.log('scnt', scnt)
+				scnt.on('scroll', events.loadmorescroll)
 			})
 		}
 
@@ -288,13 +290,16 @@ var userslist = (function(){
 
 				extra = deep(p.settings, 'essenseData.extra');
 
+				scnt = deep(p.settings, 'essenseData.cnt') || $(window);
+
 				clbk(data);
 
 			},
 
 			destroy : function(){
 
-				window.removeEventListener('scroll', events.loadmorescroll)
+				scnt.off('scroll', events.loadmorescroll)
+				//scnt.removeEventListener('scroll', events.loadmorescroll)
 
 				delete self.app.platform.clbks.api.actions.subscribe.userlist
 				delete self.app.platform.clbks.api.actions.subscribePrivate.userlist
