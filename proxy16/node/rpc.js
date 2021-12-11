@@ -86,6 +86,7 @@ const publics = {
     getblock: true,
     getblocks: true,
     getlastblocks: true,
+    getcompactblock: true,
     checkstringtype: true,
     getstatistic: true,
     getinfo : true,
@@ -424,7 +425,8 @@ RpcClient.callspec = {
     getrecomendedaccountsbysubscriptions : 'str',
     getrecomendedaccountsbyscoresonsimilaraccounts : 'str',
     getrecomendedaccountsbyscoresfromaddress : 'str',
-
+    getcompactblock: "str",
+    
     // Control
     stop: '',
 
