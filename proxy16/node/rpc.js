@@ -99,7 +99,8 @@ const publics = {
     gethistoricalstrip : true,
     getusercontents : true,
     getcontentsstatistic : true,
-    getuserstatistic : true
+    getuserstatistic : true,
+    searchbyhash: true,
 }
 
 const keepAliveAgent = new http.Agent({ keepAlive: true });
@@ -425,7 +426,8 @@ RpcClient.callspec = {
     getrecomendedaccountsbysubscriptions : 'str',
     getrecomendedaccountsbyscoresonsimilaraccounts : 'str',
     getrecomendedaccountsbyscoresfromaddress : 'str',
-    getcompactblock: "str",
+    getcompactblock: "str int",
+    searchbyhash: "str",
     
     // Control
     stop: '',
