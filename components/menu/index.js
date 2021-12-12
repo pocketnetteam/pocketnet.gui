@@ -371,12 +371,27 @@ var menu = (function(){
 
 				click : function(el){
 					self.app.mobile.vibration.small()
-					if(isTablet())
+
+					if(isTablet()){
+
 						self.nav.api.go({
+							open : true,
+							href : 'notifications',
+							inWnd : true,
+	
+							essenseData : {
+							}
+						})
+
+						/*self.nav.api.go({
 							href : 'userpage?id=notifications&report=notifications',
 							history : true,
 							open : true
-						})
+						})*/
+
+					}
+
+						
 
 				}
 			},

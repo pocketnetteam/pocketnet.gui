@@ -565,7 +565,7 @@
 
 				if(p.header) 
 				{
-					h+='<div class="wndheader">'+p.header+'</div>';
+					h+='<div class="wndheader">'+ (app.localization.e(p.header) || p.header)+'</div>';
 				}
 				else
 				{	
@@ -1562,12 +1562,17 @@
 
 			var _el = $(this);
 			var image = _el.attr('image')
+			var ban = _el.attr('ban')
 			//var save = _el.attr('save')
 
 			if (image)
 			{
+
+				if (ban && image.indexOf(ban) > -1){
+					image = 'img/imagenotuploaded.jpg'
+				}
+
 				image = image.replace('bastyon.com:8092', 'pocketnet.app:8092')
-				
 
 				_el.css({
 					'background-image': 'url('+image+')',

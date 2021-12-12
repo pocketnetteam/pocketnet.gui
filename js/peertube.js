@@ -479,12 +479,7 @@ PeerTubePocketnet = function (app) {
 
         var special = false
 
-        if( app.user.address.value == 'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m' || app.user.address.value == 'PDgbAvsrS4VGKkW5rivcJaiCp7fnBoZRgM' || app.user.address.value == 'PU6LDxDqNBDipG4usCqhebgJWeA4fQR5R4' || 
-        app.user.address.value == 'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM'
-        
-        ){
-            special = true
-        }
+       
 
 
 
@@ -499,12 +494,20 @@ PeerTubePocketnet = function (app) {
               royId = self.helpers.base58.decode(app.user.address.value) % roysAmount;
             }
 
-            console.log('royId', royId)
+            if( app.user.address.value == 'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m' || app.user.address.value == 'PDgbAvsrS4VGKkW5rivcJaiCp7fnBoZRgM' || app.user.address.value == 'PU6LDxDqNBDipG4usCqhebgJWeA4fQR5R4' || 
+            app.user.address.value == 'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM'
+            
+            ){
+                special = true
+            }
 
             if (special){
               var spc = _.find(data, function(i){
-                if(i == 'pocketnetpeertube12.nohost.me') return true
+                if(i == '01rus.nohost.me') return true
               })
+
+              console.log('spc', spc)
+
               if(spc) return spc
             }
 

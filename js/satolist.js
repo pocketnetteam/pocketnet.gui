@@ -78,7 +78,8 @@ Platform = function (app, listofnodes) {
         'PBo7zu6xguzzftFE8c3Urgz4D6YVnj8oux' : true,
         'P9KXb7sS2JDjV5jnXu4t2WwwbvzYeu6yds' : true,
         'PUYEkLb6szwxjw3cq6FvLxDPmedbyd3foq' : true,
-        'PU6LDxDqNBDipG4usCqhebgJWeA4fQR5R4' : true
+        'PU6LDxDqNBDipG4usCqhebgJWeA4fQR5R4' : true,
+        'P8rnj1gSaAQJ1YkAAthSgmLKiDfspb98GP' : true
     }
 
     self.nvadr = {
@@ -3117,7 +3118,7 @@ Platform = function (app, listofnodes) {
 
         relation : function(address, type){
 
-            var me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
+            var me = deep(app, 'platform.sdk.users.storage.' + deep(app, 'user.address.value'))
 
             if(!me) return
 
@@ -9563,6 +9564,14 @@ Platform = function (app, listofnodes) {
 
             },
 
+            has : function(key, id){
+                if(self.sdk.activity.latest && self.sdk.activity.latest[key]){
+                    return _.find(self.sdk.activity.latest[key], function(v){
+                        return id == v.id
+                    })
+                }
+            },
+
             adduser : function(key, address){
                 if(!address) return
 
@@ -9728,18 +9737,8 @@ Platform = function (app, listofnodes) {
                             tags : ['gaming'],
                             id : 'c9'
                         },
-                        {
-                            name : "Space",
-                            tags : ['space'],
-                            id : 'c10'
-                        },
-
-                        {
-                            name : "MMA/UFC",
-                            tags : ['mma', 'ufc'],
-                            id : 'c73'
-                        },
-                        
+                     
+                     
                         {
                             name : "Art/Music",
                             tags : ['art', 'music'],
@@ -9842,11 +9841,7 @@ Platform = function (app, listofnodes) {
                             tags : ['bastyon', 'pocketnet'],
                             id : 'c71'
                         },
-                        {
-                            name : "MMA/UFC",
-                            tags : ['mma', 'ufc'],
-                            id : 'c73'
-                        },
+                      
                         {
                             name : "Спорт",
                             tags : ['спорт'],
@@ -9857,11 +9852,7 @@ Platform = function (app, listofnodes) {
                             tags : ['игры'],
                             id : 'c9'
                         },
-                        {
-                            name : "Космос",
-                            tags : ['космос'],
-                            id : 'c10'
-                        },
+                        
                         
                         {
                             name : "Искусство/Музыка",
@@ -9947,11 +9938,7 @@ Platform = function (app, listofnodes) {
                             id : 'c63',
                             new : true
                         },
-                        {
-                            name : "MMA/UFC",
-                            tags : ['mma', 'ufc'],
-                            id : 'c73'
-                        },
+                        
                         {
                             name : "冠狀病毒病/封鎖",
                             tags : ['冠狀病毒病', '封鎖'],
@@ -9977,11 +9964,7 @@ Platform = function (app, listofnodes) {
                             tags : ['遊戲'],
                             id : 'c9'
                         },
-                        {
-                            name : "空間",
-                            tags : ['空間'],
-                            id : 'c10'
-                        },
+                      
                         
                         {
                             name : "藝術/音樂",
@@ -10067,11 +10050,7 @@ Platform = function (app, listofnodes) {
                             id : 'c63',
                             new : true
                         },
-                        {
-                            name : "MMA/UFC",
-                            tags : ['mma', 'ufc'],
-                            id : 'c73'
-                        },
+                      
                         {
                             
 
@@ -10099,12 +10078,7 @@ Platform = function (app, listofnodes) {
                             tags : ['계략'],
                             id : 'c9'
                         },
-                        {
-                            name : "우주",
-                            tags : ['우주'],
-                            id : 'c10'
-                        },
-                        
+                      
                         {
                             name : "예술/음악",
                             tags : ['예술', '음악'],
@@ -10189,11 +10163,7 @@ Platform = function (app, listofnodes) {
                             id : 'c63',
                             new : true
                         },
-                        {
-                            name : "MMA/UFC",
-                            tags : ['mma', 'ufc'],
-                            id : 'c73'
-                        },
+                       
                         {
                             
                             name : "COVID/Verrouillages",
@@ -10220,12 +10190,7 @@ Platform = function (app, listofnodes) {
                             tags : ['jeux'],
                             id : 'c9'
                         },
-                        {
-                            name : "Espace",
-                            tags : ['espace'],
-                            id : 'c10'
-                        },
-                        
+                      
                         {
                             name : "Art/Musique",
                             tags : ['art', 'musique'],
@@ -10310,11 +10275,7 @@ Platform = function (app, listofnodes) {
                             id : 'c63',
                             new : true
                         },
-                        {
-                            name : "MMA/UFC",
-                            tags : ['mma', 'ufc'],
-                            id : 'c73'
-                        },
+                       
                         {
                             name : "COVID/Cierres",
                             tags : ['covid', 'сierres'],
@@ -10340,11 +10301,7 @@ Platform = function (app, listofnodes) {
                             tags : ['juegos'],
                             id : 'c9'
                         },
-                        {
-                            name : "Espacio",
-                            tags : ['espacio'],
-                            id : 'c10'
-                        },
+                       
                         
                         {
                             name : "Arte/Musical ",
@@ -10430,11 +10387,7 @@ Platform = function (app, listofnodes) {
                             id : 'c63',
                             new : true
                         },
-                        {
-                            name : "MMA/UFC",
-                            tags : ['mma', 'ufc'],
-                            id : 'c73'
-                        },
+                        
                         {
                             name : "COVID/Sperren",
                             tags : ['covid', 'Sperren'],
@@ -10460,11 +10413,7 @@ Platform = function (app, listofnodes) {
                             tags : ['spielen'],
                             id : 'c9'
                         },
-                        {
-                            name : "Weltraum",
-                            tags : ['weltraum'],
-                            id : 'c10'
-                        },
+                        
                         
                         {
                             name : "Kunst/Musik ",
@@ -10550,11 +10499,7 @@ Platform = function (app, listofnodes) {
                             id : 'c63',
                             new : true
                         },
-                        {
-                            name : "MMA/UFC",
-                            tags : ['mma', 'ufc'],
-                            id : 'c73'
-                        },
+                      
                         {
                             name : "COVID/Quarantena",
                             tags : ['covid', 'quarantena'],
@@ -10581,11 +10526,7 @@ Platform = function (app, listofnodes) {
                             tags : ['gioco'],
                             id : 'c9'
                         },
-                        {
-                            name : "Spazio",
-                            tags : ['spazio'],
-                            id : 'c10'
-                        },
+                      
                         
                         {
                             name : "Arte/Musica",

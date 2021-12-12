@@ -1411,12 +1411,20 @@ __map =  {
 		href : "notifications",
 		add : function(settings, p){
 
+			
+			if(p.inWnd)
+			{
+				return {
+					insert : 'wnd'
+				}
+			}
+			else
 			if(p.inTooltip)
-
+			{
 				return {
 					insert : 'tooltip'
 				}
-
+			}
 			else
 			{
 				return {

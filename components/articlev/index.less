@@ -12,6 +12,7 @@
         position: relative;
         height: 250px;
         background: @color-gray2;
+        z-index: 2;
 
         .myarticles{
             /*font-size: 1.2em;
@@ -123,18 +124,32 @@
 
     #taginput .tgs{
         margin-bottom: 0;
+
         .search .searchPanel,
+        .search input{
+            background : transparent;
+            
+        }
+
+
+        .tagsWrapper>div.tagsInputWrapper>div.inputWrapper{
+            box-shadow: none;
+        }
+
         .category,
-        .search input,
         .tag{
             background: fade(@color-gray2, 10);
             backdrop-filter: blur(7px) grayscale(30%);
             -webkit-backdrop-filter: blur(7px) grayscale(30%);  
-        }
+        }   
 
+        .tag .tagInner>div.remove,
+        .category .categoryInner>div.remove,
+        .tag .tagInner>div.label,
         .category .categoryInner>div.label{
             color : #fff
         }
+
 
         .search input{
             padding-left: 0!important;
@@ -146,8 +161,8 @@
             border : 0;
             border-bottom-left-radius: 20px;
             border-bottom-right-radius: 20px;
-            overflow: hidden;
             text-overflow: ellipsis;
+
             .result{
                 padding : 2 * @rhythm;
                 font-size: 0.7em;
@@ -161,13 +176,20 @@
 
     .aheader{
         display: flex;
-        align-items: center;
+        align-items:flex-end;
         justify-content: space-between;
         color : #FFF;
         padding : @rhythm @rhythm;
         padding-right: 2 * @rhythm;
         border-radius: 80px;
         .shadowText();
+
+        .truestatuswrapper{
+            padding-left: 3 * @rhythm;
+            span{
+                font-size: 0.8em;
+            }
+        }
 
         .tagsinputwrapper{
             display: none;
@@ -177,10 +199,6 @@
         .forback{
             width: 60px;
             min-width: 60px;
-            i{
-                text-align: left;
-            }
-
             display: none;
         }
 
@@ -211,6 +229,8 @@
         
         &.top{
             padding : 0;
+            align-items: center;
+            justify-content: flex-start;
             button{
                 
                 padding : @rhythm;
@@ -251,14 +271,25 @@
             .tags{
 				overflow: hidden;
 				max-width: 650px;
+                display: flex;
+                justify-items: start;
+                align-items: center;
+                flex-wrap: nowrap;
+                
 				>div{
-					float: left;
 					margin-right: @rhythm;
-
+                    white-space: nowrap;
 					span{
 						font-size: 0.8em;
 					}
 				}
+
+                .editicon{
+                    i{
+                        font-size: 0.7em;
+                        opacity: 0.7;
+                    }
+                }
 
 				.newlabel{
 					background: rgb(255, 5, 101);
@@ -278,16 +309,22 @@
         }
 
         .leftpart{
+            padding-bottom: 0.2em;
             >div{
                 padding-right: 2 * @rhythm;
             }
         }
         .lst,
         .articlecaptiondouble{
-            max-width: 230px;
+            max-width: 260px;
             text-overflow: ellipsis;
             overflow: hidden;
             white-space: nowrap;
+        }
+
+        .articlecaptiondouble{
+            font-size: 2em;
+            font-weight: 700;
         }
         .lst{
             width: 120px;

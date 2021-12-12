@@ -273,6 +273,8 @@ var notifications = (function(){
 
 			if(isMobile()){
 
+				return
+
 				var cc = el.c.find('.circularprogress');
 				var maxheight = 220;
 
@@ -485,6 +487,11 @@ var notifications = (function(){
 					}
 				},
 				//event : 'click'
+			},
+
+			wnd : {
+				header : "notifications",
+				class : 'wndnotifications normalizedmobile',
 			}
 
 		}

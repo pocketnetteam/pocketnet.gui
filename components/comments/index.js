@@ -1133,18 +1133,43 @@ var comments = (function(){
 			if(my) p = p * 20
 
 
+			var me = deep(self.app, 'platform.sdk.users.storage.' + self.user.address.value.toString('hex'))
+
+			if (!my && me){
+
+				if (me.relation(comment.address, 'subscribes') )
+					p = p * 7
+
+				if (me.relation(comment.address, 'subscribers') )
+					p = p * 1.2
+
+				if (me.relation(comment.address, 'blocking') )
+					p = p * 0
+
+			}
+
+			var post = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid)
+
+			if (post && post.address == comment.address) p = p * 50
+
+			if(!my){
+				if(self.app.platform.sdk.activity.has('user', comment.address)){
+					p = p * 3
+				}
+			}
+
 			return p
 
 		}
 
-		var sorting = function(comments){
+		var sorting = function(comments, pid){
 
-			console.log('comments', comments)
+			console.log('comments, pid', comments, pid)
 
 			if(!comments.length) return comments
 
 			try {
-				if(comments.length < 10 || sortby == 'time'){
+				if(comments.length < 10 || pid || sortby == 'time'){
 
 					return _.sortBy(comments, function(c){
 						return c.time
@@ -1162,15 +1187,26 @@ var comments = (function(){
 
 				var oldest = (_.min(comments, function(c){return c.time}).time).getTime() / 1000
 				var newest = (_.max(comments, function(c){return c.time}).time).getTime() / 1000
+
+				var cbyauthors = group(comments, function(c){ return c.address })
 	
-				return _.sortBy(comments, function(c){
+				comments = _.sortBy(comments, function(c){
 
 					var ms = (c.time || new Date()) / 1000
 
 					var timec = ((ms - oldest) / (newest - oldest)) 
 
-					return - (commentPoint(c) + (timec * 3000) )
+					var count = cbyauthors[c.address].length
+
+					return - (commentPoint(c) + (timec * 3000) ) / count
 				}) 
+
+				/*var authors = {}
+
+				_.each*/
+
+
+				return comments
 			}
 
 			catch(e){
@@ -2153,7 +2189,7 @@ var comments = (function(){
 						})
 					}
 	
-					comments = sorting(comments)
+					comments = sorting(comments, pid)
 	
 					commentslength = comments.length
 	
@@ -2164,13 +2200,14 @@ var comments = (function(){
 					currentstate.pagination[ pid || '0' ] || (currentstate.pagination[ pid || '0' ] = 1)
 	
 					var pg = currentstate.pagination[ pid || '0' ]
-	
-					comments = _.filter(comments , function(c, i){
-						if(i < pg * paginationcount){
-							return true
-						}
-					})
-	
+
+					if(!ed.commentPs && !ed.reply){
+						comments = _.filter(comments , function(c, i){
+							if(i < pg * paginationcount){
+								return true
+							}
+						})
+					}
 					
 				}
 

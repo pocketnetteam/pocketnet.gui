@@ -126,6 +126,28 @@ var articlev = (function(){
 
 				
 			},
+
+			_removetag : function(tag){
+				removeEqual(art.tags, tag)
+
+				
+			},
+
+			removeTags: function(tags){
+
+				_.each(tags, function(tag){
+					actions._removetag(tag)
+				})
+
+				actions.save()
+			},
+
+			removeTag : function(tag){
+				actions._removetag(tag)
+
+				actions.save()
+			},
+
 			_addtag : function(tag){
 
 				if (art.tags.length < 5){
@@ -139,6 +161,7 @@ var articlev = (function(){
 
 				return false
 			},
+			
 
 			addTags : function(tags){
 
@@ -196,6 +219,7 @@ var articlev = (function(){
 					art.content = outputData
 
 					renders.captiondouble()
+					renders.status()
 
 					self.app.platform.sdk.articles.save()
 				})
@@ -368,6 +392,23 @@ var articlev = (function(){
 
 				})
 
+			},
+			status : function(){
+				
+				self.shell({
+
+					animation : false,
+					name : 'status',
+					data : {
+						art : art
+					},
+					el : el.status
+
+				},
+				function(p){
+
+				})
+
 			}
 		}
 
@@ -396,6 +437,7 @@ var articlev = (function(){
 				console.log('text', text)
 
 				renders.captiondouble()
+				renders.status()
 
 				actions.save()
 			})
@@ -495,6 +537,7 @@ var articlev = (function(){
 			renders.tgstags()
 			renders.settings()
 			renders.captiondouble()
+			renders.status()
 		}
 
 		return {
@@ -537,6 +580,7 @@ var articlev = (function(){
 				el.head = el.c.find('.aheadermain')
 				el.backfromedittags = el.c.find('.backfromedittags')
 				el.caption.val(art.caption.value || '')
+				el.status = el.c.find('.truestatuswrapper')
 
 				initEvents();
 				make()
