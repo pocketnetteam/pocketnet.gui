@@ -9,6 +9,8 @@ var comments = (function(){
 
 	var essenses = {};
 
+	
+
 	var Essense = function(p){
 
 		var primary = deep(p, 'history');
@@ -16,6 +18,8 @@ var comments = (function(){
 		var el, txid, ed, currents = {}, caption, _in, top, eid, preview = false, listpreview = false, showedall = false, receiver, balance = 0;
 
 		var authblock = false;
+
+		var paginationcount = 10;
 
 		var errors = {
 			content : self.app.localization.e('e13029'),
@@ -25,14 +29,13 @@ var comments = (function(){
 
 		var mestate;
 		var rendered = {};
-
 		var areas = {};
-
 		var external = null;
-
 		var currentstate = {};
-
 		var wordsRegExp = /[,.!?;:() \n\r]/g
+		var sortby = 'interesting' 
+
+		
 
 		var clbks = {
 			upvote : function(err, comment, value, address, temp){
@@ -141,7 +144,7 @@ var comments = (function(){
 
 						_el.removeClass('editing')
 
-						p.inner = replaceWith
+						p.replace = true
 						p.el = _el
 
 					}
@@ -162,11 +165,17 @@ var comments = (function(){
 
 				p.newcomments = 'newcomments'
 
+
+				/////// ADD COMMENT
+
+				//todo
+
 				renders.list(p, function(){
 
 					if (manual){
 						actions.tocomment(alias.id)
 					}
+					
 				})
 
 				if (!editid && ed.send){
@@ -672,7 +681,6 @@ var comments = (function(){
 
 					var _el = el.c.find('#' + id);
 					var answer = _el.find('.answer');
-
 				
 					renders.post(function(area, el){
 
@@ -683,8 +691,6 @@ var comments = (function(){
 						var address = self.app.platform.sdk.comments.address(txid, aid, pid) || deep(ed, 'lastComment.address')
 
 						var name = (deep(self.app, 'platform.sdk.usersl.storage.'+address+'.name') || address)
-
-						console.log("NAME", name)
 
 						var str = '@' + name + '  '
 
@@ -760,13 +766,15 @@ var comments = (function(){
 				if (show){
 					load.level(id, function(comments){
 
-						c.find('.repliesloaderWrapper').addClass('hidden')
+						
 
 						p.comments = self.app.platform.sdk.comments.storage[txid][id]
 						
 						c.addClass('showedreplies')
 
 						renders.list(p, function(){
+
+							c.find('.repliesloaderWrapper').addClass('hidden')
 
 							if(!caption)
 								renders.caption()
@@ -777,17 +785,17 @@ var comments = (function(){
 
 						}, id)
 
-					})
+					}, currentstate.levels[id] ? true : false)
 				}
 				else
 				{
 
 					delete currentstate.levels[id]
 
-					if (self.app.platform.sdk.comments.storage[txid])
+					/*if (self.app.platform.sdk.comments.storage[txid])
 						_.each(self.app.platform.sdk.comments.storage[txid][id], function(c){
 							delete rendered[c.id]
-						})
+						})*/
 
 					c.removeClass('showedreplies')
 
@@ -910,12 +918,10 @@ var comments = (function(){
 					el.c.removeClass('listpreview')
 
 					el.c.find('.loaderWrapper').removeClass('hidden')
-					
 
 					load.level(null, function(comments, e){
 
 						if(e){
-
 							self.app.platform.errorHandler(e, true)
 
 							el.c.addClass('listpreview')
@@ -942,9 +948,7 @@ var comments = (function(){
 						p.inner = html
 
 						renders.list(p, function(){
-
 							el.c.find('.loaderWrapper').addClass('hidden')
-
 						})
 					})
 				}
@@ -1069,19 +1073,150 @@ var comments = (function(){
 
 				if(ed.openapi) return
 
-				if (el && el.length > 0 && el[0].scrollIntoView && isMobile() && $(window).width() <= 768) {
-					el[0].scrollIntoView(true);
+				if (el && el.length > 0 && el[0].scrollIntoView && isMobile()) {
+
+					_scrollTo(el, _in, 0)
+
+					//el[0].scrollIntoView(true);
+					
 					// Scroll until the comment section is at 120 px from the top
 
-
-					var container =  $('html');
-					
+					/*var container =  $('html');
 					
 					var offset = 120 - el[0].getBoundingClientRect().top;
 					if (offset > 0)
-						container.animate({scrollTop: '-=' + offset + 'px'}, 0);
+						container.animate({scrollTop: '-=' + offset + 'px'}, 0);*/
 				}
 			}
+		}
+
+		var sortParameter = function(){
+			
+			var ps = new Parameter({
+
+				type : "VALUES",
+				name : "Contents",
+				id : 'contents',
+				possibleValues : ['interesting', 'timeup', 'time'], 
+				possibleValuesLabels : [self.app.localization.e('comments_interesting'),self.app.localization.e('comments_timeup'),self.app.localization.e('comments_time')],
+				defaultValue : sortby
+			
+			})
+
+			ps.value = sortby
+
+			
+
+			return ps
+		}
+
+		var commentPoint = function(comment){
+			var p = 0
+
+			var my = comment.address == self.app.user.address.value
+
+			p += comment.scoreUp * 250
+			p += comment.children * (my ? 4500 : 450)
+
+			if(comment.scoreUp > comment.scoreDown) p += comment.scoreDown * 50
+			else p -= comment.scoreDown * 10
+
+			p += Math.min(comment.message.length, 200) * 3
+			p += comment.amount * 1000
+
+			p += comment.reputation / 20
+
+			if(comment.deleted) p = p / 1300
+
+			if(deep(self.app, 'platform.real.'+ comment.address)) p = p * 1000
+			else
+			if(my) p = p * 20
+
+
+			var me = deep(self.app, 'platform.sdk.users.storage.' + self.user.address.value.toString('hex'))
+
+			if (!my && me){
+
+				if (me.relation(comment.address, 'subscribes') )
+					p = p * 7
+
+				if (me.relation(comment.address, 'subscribers') )
+					p = p * 1.2
+
+				if (me.relation(comment.address, 'blocking') )
+					p = p * 0
+
+			}
+
+			var post = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid)
+
+			if (post && post.address == comment.address) p = p * 50
+
+			if(!my){
+				if(self.app.platform.sdk.activity.has('user', comment.address)){
+					p = p * 3
+				}
+			}
+
+			return p
+
+		}
+
+		var sorting = function(comments, pid){
+
+			console.log('comments, pid', comments, pid)
+
+			if(!comments.length) return comments
+
+			try {
+				if(comments.length < 10 || pid || sortby == 'time'){
+
+					return _.sortBy(comments, function(c){
+						return c.time
+					})
+	
+				}
+
+				if(sortby == 'timeup'){
+
+					return _.sortBy(comments, function(c){
+						return - (c.time || new Date()) / 1000
+					})
+	
+				}
+
+				var oldest = (_.min(comments, function(c){return c.time}).time).getTime() / 1000
+				var newest = (_.max(comments, function(c){return c.time}).time).getTime() / 1000
+
+				var cbyauthors = group(comments, function(c){ return c.address })
+	
+				comments = _.sortBy(comments, function(c){
+
+					var ms = (c.time || new Date()) / 1000
+
+					var timec = ((ms - oldest) / (newest - oldest)) 
+
+					var count = cbyauthors[c.address].length
+
+					return - (commentPoint(c) + (timec * 3000) ) / count
+				}) 
+
+				/*var authors = {}
+
+				_.each*/
+
+
+				return comments
+			}
+
+			catch(e){
+				console.error(e)
+
+				return []
+			}
+
+			
+
 		}
 
 		var events = {
@@ -1125,19 +1260,21 @@ var comments = (function(){
 			},
 			replyandreplies : function(){
 				var id = $(this).closest('.firstcomment').attr('id')
+				var c = $(this).closest('.comment');
+				var cf = $(this).closest('.firstcomment');
+
+				var _id = cf.attr('id')
+				var _aid = c.attr('id')
+
+				
 
 				actions.replies(id, true, function() {
 					// Scroll comment section to top of the screen
 					actions.scrollToComment(el.list.find('.answer.active'));
+					actions.reply(_id, _aid)
 				});
 
-				var c = $(this).closest('.comment');
-				var cf = $(this).closest('.firstcomment');
-
-				var id = cf.attr('id')
-				var aid = c.attr('id')
-
-				actions.reply(id, aid)
+				
 			},
 			replies : function(){
 				var id = $(this).closest('.firstcomment').attr('id')
@@ -1703,7 +1840,9 @@ var comments = (function(){
 
 			caption : function(clbk){
 
-				if(ed.caption){
+				var cl = deep(self.app.platform.sdk.comments.storage, txid + '.0.length') || 0
+
+				if(ed.caption && cl > 5){
 					self.shell({
 						name :  'caption',
 						el : el.caption,
@@ -1714,8 +1853,6 @@ var comments = (function(){
 					}, function(p){
 
 						renders.cpreview()
-
-						return
 
 						caption = new Caption({
 							container: el.c,
@@ -2040,102 +2177,134 @@ var comments = (function(){
 
 				if(!p) p = {};
 
-				p.comments = _.filter(p.comments || [], function(c){
-					if(!rendered[c.id]) {
-						rendered[c.id] = true
+				var commentslength
+				var comments = p.comments
+				var sort = new sortParameter()
 
-						return true
+				if(!p.replace){
+
+					if (ed.commentPs){
+						comments = _.filter( comments || [], function(c){
+							if(c.id == ed.commentPs.commentid || c.id == ed.commentPs.parentid) return true
+						})
 					}
-				})
-
-				if (ed.commentPs){
-					p.comments = _.filter(p.comments || [], function(c){
-						if(c.id == ed.commentPs.commentid || c.id == ed.commentPs.parentid) return true
-					})
-				}
-
-				var _in = append
-
-				if(ed.fromtop && !p.el){
-
-					p.comments = _.sortBy(p.comments, function(c){
-						return -c.time
-					})
-
-					_in = prepend
-				}
-				else{
-
-					p.comments = _.sortBy(p.comments, function(c){
-						return c.time
-					})
-
-				}
-
-				if(pid){
-					currentstate.levels[pid] = pid
-				}
-
-				
-
-				if(p.in) _in = p.in
-
-				p.el || (p.el = el.list)
-
-				self.shell({
-					name :  'list',
-					el : p.el || el.list,
-					inner : p.inner || _in,
-					data : {
-						comments : p.comments || [],
-						_class : p.class || '',
-						newcomments : p.newcomments || '',
-
-						replaceName : function(name, p){
-							return '<span elementsid="comments_tocomment" class="tocomment" comment="'+p.comment+'">' + name + "</span>"
-						},
-
-						replaceNameNoComment : function(name, p){
-							return '<span elementsid="comments_tocommentno" class="tocommentno">' + name + "</span>"
-						},
-						mestate : mestate,
-
-						ed : ed
-					},
-
-					additionalActions : function(){
-						if (ed && ed.additionalActions)
-							ed.additionalActions()
+	
+					comments = sorting(comments, pid)
+	
+					commentslength = comments.length
+	
+					if (pid){
+						currentstate.levels[pid] = pid
 					}
+	
+					currentstate.pagination[ pid || '0' ] || (currentstate.pagination[ pid || '0' ] = 1)
+	
+					var pg = currentstate.pagination[ pid || '0' ]
 
-				}, function(_p){
-
-					if(ed.renderClbk) ed.renderClbk()
-
-					if (clbk)
-						clbk();
-
-					if (el.list){
-					
-						setTimeout(function(){
-							if (el.list)
-								el.list.find('.newcomments').removeClass('newcomments')
-						}, 600)
-						
-						bgImages(el.list)
-
-						lazyEach({
-							array : p.comments,
-
-							action : function(_p){
-								renders.commentimages(_p.item, _p.success)
+					if(!ed.commentPs && !ed.reply){
+						comments = _.filter(comments , function(c, i){
+							if(i < pg * paginationcount){
+								return true
 							}
 						})
 					}
 					
+				}
 
-					
-					
+				p.el || (p.el = el.list)
+	
+					p.el.addClass('listloading')
+
+				self.sdk.comments.users(comments, function (i, e) {
+
+					self.shell({
+						name :  'list',
+						el : p.el,
+
+						inner : p.replace ? replaceWith : html,
+
+						//inner : p.inner || _in, /// html
+						
+						data : {
+							comments : comments || [],
+							_class : p.class || '',
+							newcomments : p.newcomments || '',
+
+							needtoshow : commentslength - comments.length,
+
+							replaceName : function(name, p){
+								return '<span elementsid="comments_tocomment" class="tocomment" comment="'+p.comment+'">' + name + "</span>"
+							},
+
+							replaceNameNoComment : function(name, p){
+								return '<span elementsid="comments_tocommentno" class="tocommentno">' + name + "</span>"
+							},
+							mestate : mestate,
+							sort : sort,
+							ed : ed,
+							pid
+						},
+
+						additionalActions : function(){
+							if (ed && ed.additionalActions)
+								ed.additionalActions()
+						}
+
+					}, function(_p){
+
+						p.el.removeClass('listloading')
+
+						if(!p.replace){
+						
+							if(!pid){
+								makeCurrentLevels()
+
+								sort._onChange = function(v){
+									sortby = v
+
+									currentstate.pagination = {}
+
+									renders.list(p, null, pid)
+								}
+
+								ParametersLive([sort], _p.el)
+							}
+
+							if (el.list){
+
+								_p.el.find('.showmorecomments').on('click', function(){
+									currentstate.pagination[ pid || '0' ]++
+
+									renders.list(p, null, pid)
+								})
+							
+								setTimeout(function(){
+									if (el.list)
+										el.list.find('.newcomments').removeClass('newcomments')
+								}, 600)
+								
+								
+							}
+						}
+						if (el.list){
+							bgImages(el.list)
+
+							lazyEach({
+								array : p.comments,
+
+								action : function(_p){
+									renders.commentimages(_p.item, _p.success)
+								}
+							})
+						}
+
+						if (clbk)
+							clbk();
+
+						if(ed.renderClbk) ed.renderClbk()
+						
+					})
+
 				})
 			}
 		}
@@ -2170,8 +2339,9 @@ var comments = (function(){
 			self.app.platform.ws.messages.comment.clbks[eid] = function(data){
 
 
-				if (data.posttxid == txid){
+				return //// TODO
 
+				if (data.posttxid == txid){
 					
 					var p = {};
 						p.comments = [data.comment]
@@ -2260,6 +2430,37 @@ var comments = (function(){
 			}
 
 			
+		}
+
+		var makeCurrentLevels = function(clbk){
+			var lvls = _.map(currentstate.levels, function(id){
+				return id
+			})
+
+			if(lvls.length){
+
+				lazyEach({
+					array : lvls,
+					action : function(p){
+
+						var id = p.item;
+
+						actions.replies(id, true, p.success, {
+							in : html
+						})
+					},
+
+					all : {
+						success : function(){
+							if(clbk) clbk()
+						}
+					}
+				})
+
+			}
+			else{
+				if(clbk) clbk()
+			}
 		}
 
 		var makeCurrents = function(clbk){
@@ -2364,7 +2565,7 @@ var comments = (function(){
 					renders.post(function(area){
 						areas["0"] = area
 
-						if(ed.reply){
+						if (ed.reply){
 							actions.fastreply(ed.reply)
 						}
 						else
@@ -2407,14 +2608,14 @@ var comments = (function(){
 
 				})
 			},	
-			level : function(pid, clbk){
+			level : function(pid, clbk, ccha){
 
-				self.app.platform.sdk.comments.get(txid, pid || "", function(comments, e){
+				self.app.platform.sdk.comments.getclear(txid, pid || "", function(comments, e){
 
 					if (clbk)
 						clbk(comments, e)
 
-				})
+				}, ccha)
 
 			}
 		}
@@ -2457,7 +2658,8 @@ var comments = (function(){
 
 				currentstate = {
 					reply : null,
-					levels : {}
+					levels : {},
+					pagination : {}
 				}
 
 				ed = p.settings.essenseData || {}
@@ -2498,14 +2700,15 @@ var comments = (function(){
 
 						mestate = _mestate
 
-						reloadCurrents(function(){
+						authblock = false;
+
+						/*reloadCurrents(function(){
 
 							actions.myscores()
 
 							authblock = false;
-							
 
-						})
+						})*/
 
 						renders.post(function(area){
 							areas["0"] = area
@@ -2553,7 +2756,7 @@ var comments = (function(){
 				_in = el.c.closest('.wndcontent');
 
 
-				el.list.on('click', '.reply', events.replyandreplies);
+				el.list.on('click', '.reply', events.reply);
 				el.list.on('click', '.replies', events.replies);
 				el.list.on('click', '.panel', events.metmenu);
 				el.list.on('click', '.tocomment', events.tocomment)
@@ -2567,6 +2770,8 @@ var comments = (function(){
 				{
 					top = 0
 				}
+
+				
 
 				if(preview){
 
@@ -2584,6 +2789,8 @@ var comments = (function(){
 						actions.showall()
 					}
 				}
+
+				
 
 				initEvents();
 

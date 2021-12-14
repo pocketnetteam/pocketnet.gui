@@ -1,49 +1,53 @@
 <div id="<%-module.map.id%>">
 
-	<div class="work hideprocess">
-		<div class="splits table">
-			<div class="textsplit">
-				<div class="caption">
-					<%=e('e13078')%>
-				</div>
+	<% if(!window.cordova) {%>
 
-				<div class="text">
-					<%=e('e13079')%>
-				</div>
-
-				<div class="caption">
-					<%=e('e13080')%>
-				</div>
-
-				<div class="text">
-					<%=e('e13081')%>
-				</div>
-
-				<div class="caption">
-					<%=e('e13082')%>
-				</div>
-
-				<div class="text">
-					<div class="subtext">
-						<%=e('e13083')%>
+		<div class="work hideprocess">
+			<div class="splits table">
+				<div class="textsplit">
+					<div class="caption">
+						<%=e('e13078')%>
 					</div>
-					<div class="subtext">
-						<%=e('e13084')%>
+
+					<div class="text">
+						<%=e('e13079')%>
 					</div>
-					<div class="subtext">
-						<%=e('e13085')%>
+
+					<div class="caption">
+						<%=e('e13080')%>
+					</div>
+
+					<div class="text">
+						<%=e('e13081')%>
+					</div>
+
+					<div class="caption">
+						<%=e('e13082')%>
+					</div>
+
+					<div class="text">
+						<div class="subtext">
+							<%=e('e13083')%>
+						</div>
+						<div class="subtext">
+							<%=e('e13084')%>
+						</div>
+						<div class="subtext">
+							<%=e('e13085')%>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="dsplit">
-				<div elementsid="donations_donate" class="donate">
-					<button class="orange"><%=e('e13086')%></button>
+				<div class="dsplit">
+					<div elementsid="donations_donate" class="donate">
+						<button class="orange"><%=e('e13086')%></button>
 
-					<div class="label"><%=e('e13087')%></div>
+						<div class="label"><%=e('e13087')%></div>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+
+	<% } %>
 
 	<div class="supporting hideprocess">
 		<div class="work">

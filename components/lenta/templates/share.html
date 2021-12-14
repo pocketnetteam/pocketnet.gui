@@ -41,6 +41,7 @@ var name = app.platform.api.name(share.address)
 
 var emptywithrepost = share.isEmpty() && share.repost
 
+
 var value = Number(share.score)
 
 var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share)
@@ -82,7 +83,7 @@ var metadisplay = function(){ %>
 										%>
 										
 
-										<span elementsid="lenta_notificationturn" class="notificationturn <% if(r && (r.private == 'true' || r.private === true)) {%> turnon <% } %>">&middot; <i class="far fa-bell-slash"></i></span>
+										<span elementsid="lenta_notificationturn" class="notificationturn <% if(r && (r.private == 'true' || r.private == '1' || r.private === true)) {%> turnon <% } %>">&middot; <i class="far fa-bell-slash"></i></span>
 									<% } %>
 				
 
@@ -96,10 +97,13 @@ var metadisplay = function(){ %>
 						
 						<% if((typeof repost == 'undefined' || !repost || fromempty)) {%>
 							<div class="sys unselectablemobile">
-
 								<%if(share.pin){%>
 								<span class="pinnedLabel"><i class="fas fa-thumbtack"></i> <%=e('pinned').toLowerCase()%>,</span><%}%><% if(share.downloadedDate) {%> <span class="fas fa-cloud-download-alt"></span> <span class="realtime editedLabel" time="<%-share.downloadedDate%>"><%- app.reltime(share.downloadedDate) %></span><% } else { %> 
 								<% if(share.time) {%><span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span><% } else { %><span><%=e('e13019')%></span><% } %><% if(share.edit == 'true') {%><span class="editedLabel">, <%=e('e13130').toLowerCase()%></span><% } %><% } %><% if(share.visibility()) {%><span class="visibilityLabel">, <%=e('sharevisibility_' + share.visibility()).toLowerCase()%></span><% } %>
+							</div>
+						<% } else { %> 
+							<div class="sys unselectablemobile">
+								<% if(share.time) {%><span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span><% } else { %><span><%=e('e13019')%></span><% } %><% if(share.edit == 'true') {%><span class="editedLabel">, <%=e('e13130').toLowerCase()%></span><% } %><% if(share.visibility()) {%><span class="visibilityLabel">, <%=e('sharevisibility_' + share.visibility()).toLowerCase()%></span><% } %>
 							</div>
 						<% } %>
 						
@@ -245,10 +249,10 @@ var arranges = {
 				var nmbrarl = nmbrar.length
 
 
-				if (nmbrarl > 25){
+				if (nmbrarl > 15){
 					bigmessage = true;
 
-					nm = _.first(nmbrar, 25).join('\n')
+					nm = _.first(nmbrar, 15).join('\n')
 				}
 
 				else{
@@ -399,7 +403,7 @@ var arranges = {
 						%>
 
 						<div class="icon">
-							<div class="usericon usericonsbsa another" image="<%-src || ''%>">
+							<div class="usericon usericonsbsa another" image="<%-src || ''%>" ban=".gif">
 
 								<% if(!src && letter) { %>
 

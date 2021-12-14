@@ -565,7 +565,7 @@
 
 				if(p.header) 
 				{
-					h+='<div class="wndheader">'+p.header+'</div>';
+					h+='<div class="wndheader">'+ (app.localization.e(p.header) || p.header)+'</div>';
 				}
 				else
 				{	
@@ -1544,7 +1544,14 @@
 /* ______________________________ */
 
 /* IMAGES */
-
+	bgImagesClear = function(el){
+		el.css({
+			'background-image': '',
+			'background-size': 'cover',
+			'background-position': 'center center',
+			'background-repeat':'no-repeat'
+		});
+	}
 	bgImages = function(el, p){
 
 		if(!p) p = {};
@@ -1555,12 +1562,17 @@
 
 			var _el = $(this);
 			var image = _el.attr('image')
+			var ban = _el.attr('ban')
 			//var save = _el.attr('save')
 
 			if (image)
 			{
+
+				if (ban && image.indexOf(ban) > -1){
+					image = 'img/imagenotuploaded.jpg'
+				}
+
 				image = image.replace('bastyon.com:8092', 'pocketnet.app:8092')
-				
 
 				_el.css({
 					'background-image': 'url('+image+')',
@@ -9867,7 +9879,6 @@
 
 		if(_url && _url.indexOf('peertube://') > -1){
 			var ch = _url.replace('peertube://', '').split('/');
-
 			id = ch[1]
 			type = 'peertube'
 			host_name = ch[0]

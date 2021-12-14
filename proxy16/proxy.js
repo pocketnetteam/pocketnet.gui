@@ -626,6 +626,10 @@ var Proxy = function (settings, manage, test, logger) {
 
 				//server of gf110
 				13: ['01rus.nohost.me'],
+
+				14: [
+					{host : 'pocketnetpeertube12.nohost.me', special : true},
+				],
       		};
 
 			if (test){

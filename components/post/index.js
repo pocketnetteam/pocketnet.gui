@@ -1189,7 +1189,7 @@ var post = (function () {
 
 						data: {
 							share: share,
-							all: true,
+							all: (ed.repost && ed.minimize) ? false : true,
 							mestate: {},
 							repost: ed.repost,
 							fromempty: ed.fromempty,
@@ -1382,7 +1382,8 @@ var post = (function () {
 							data: {
 								repost: share.repost,
 								level: level,
-								share: share,
+								share: share
+
 								//fromrepost : ed.repost
 							},
 						},
@@ -1403,6 +1404,7 @@ var post = (function () {
 										eid: eid + share.txid,
 										level: level,
 										fromempty: share.isEmpty(),
+										minimize : ed.minimize || false
 									},
 								);
 							}

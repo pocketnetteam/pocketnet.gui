@@ -286,7 +286,7 @@ nModule = function(){
 
 		delete p.animation
 
-		if(p.animation )
+		if(p.animation)
 		{
 
 			if(!p.animation.timeouts)
@@ -475,7 +475,6 @@ nModule = function(){
 
 			p.inner(p.el, _html);
 
-
 			if(!p.notdisplay){
 				p.display || (p.display = "block")
 				p.el.css("display", p.display)
@@ -560,7 +559,7 @@ nModule = function(){
 			var appPath = (self.map.pathtpl || self.map.path || "");	
 
 			if (_Node){
-				appPath = 'https://pocketnet.app/'
+				appPath = 'https://bastyon.com/'
 			}		
 
 			if(p.common){

@@ -76,7 +76,10 @@ Platform = function (app, listofnodes) {
         'PDz71dsW1cPwNewGHVUteFgQx3ZmBf4gaf' : true,
         'PFjWEfsm3jX81MctFU2VSJ17LGVKDc99oH' : true,
         'PBo7zu6xguzzftFE8c3Urgz4D6YVnj8oux' : true,
-        'P9KXb7sS2JDjV5jnXu4t2WwwbvzYeu6yds' : true
+        'P9KXb7sS2JDjV5jnXu4t2WwwbvzYeu6yds' : true,
+        'PUYEkLb6szwxjw3cq6FvLxDPmedbyd3foq' : true,
+        'PU6LDxDqNBDipG4usCqhebgJWeA4fQR5R4' : true,
+        'P8rnj1gSaAQJ1YkAAthSgmLKiDfspb98GP' : true
     }
 
     self.nvadr = {
@@ -2003,6 +2006,61 @@ Platform = function (app, listofnodes) {
             })
         },
 
+        editImage : function(src, p, clbk){
+
+            if(!p) p = {}
+
+            var images = [
+                {
+                    original : src,
+                    index : 0
+                }
+            ]
+
+            return new Promise((resolve, reject) => {
+
+                app.nav.api.load({
+                    open : true,
+                    id : 'imageGalleryEdit',
+                    inWnd : true,
+            
+                    essenseData : {
+                        edit : true,
+                        initialValue : 0,
+                        images : images,
+                        apply : p.apply,
+                        crop : {
+                            aspectRatio : p.aspectRatio || null,
+                            style : 'apply',
+                            autoCropArea : 1,
+                        },
+                
+                        success : function(i, editclbk){
+
+                            resize(images[0].original, p.w || 1920, p.h || 1080, function(resized){
+                                var r = resized.split(',');
+                
+                                if (r[1]){
+                
+                                    editclbk()
+
+                                    resolve(resized)
+                
+                                }
+                                else{
+                                    reject("error")
+                                }
+                            
+                            })
+
+            
+                        }
+                    }
+
+                })
+            })
+        },
+
         post: function (id, el, clbk, p) {
 
             if (!p) p = {}
@@ -2030,7 +2088,8 @@ Platform = function (app, listofnodes) {
                             comments : p.comments,
                             video : p.video,
                             autoplay : p.autoplay,
-                            opensvi : p.opensvi
+                            opensvi : p.opensvi,
+                            minimize : p.minimize
                         }
                     })
 
@@ -2209,7 +2268,7 @@ Platform = function (app, listofnodes) {
 
         },
 
-
+      
         images : function(allimages, initialValue, clbk){
 
             if(!_.isArray(allimages)) allimages = [allimages]
@@ -3059,7 +3118,7 @@ Platform = function (app, listofnodes) {
 
         relation : function(address, type){
 
-            var me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
+            var me = deep(app, 'platform.sdk.users.storage.' + deep(app, 'user.address.value'))
 
             if(!me) return
 
@@ -5296,7 +5355,7 @@ Platform = function (app, listofnodes) {
             storage: [],
 
 
-            empty: function (id) {
+            empty: function (id, version) {
                 return {
 
                     id: id || makeid(),
@@ -5306,7 +5365,8 @@ Platform = function (app, listofnodes) {
                     images: [],
                     content: null,
                     tags : [],
-                    u: ''
+                    u: '',
+                    version : version || 1
                     
                 }
             },
@@ -5376,33 +5436,6 @@ Platform = function (app, listofnodes) {
                 return _videos
             },
 
-            getVideos: function (cnt) {
-                var h = $('<div>')
-
-                h.html(cnt)
-
-                var videos = h.find('.js-player');
-
-                var _videos = [];
-
-                $.each(videos, function () {
-
-                    var v = {
-                        type: $(this).attr('data-plyr-provider'),
-                        id: $(this).attr('data-plyr-embed-id')
-                    }
-
-                    if (v.type && v.id) {
-
-                        _videos.push(v)
-
-                    }
-
-                })
-
-                return _videos
-            },
-
             lightVideo: function (content) {
 
                 _.each(content, function (c, i) {
@@ -5439,7 +5472,6 @@ Platform = function (app, listofnodes) {
             },
 
             save: function () {
-
 
                 var address = self.sdk.address.pnet().address;
 
@@ -9532,6 +9564,14 @@ Platform = function (app, listofnodes) {
 
             },
 
+            has : function(key, id){
+                if(self.sdk.activity.latest && self.sdk.activity.latest[key]){
+                    return _.find(self.sdk.activity.latest[key], function(v){
+                        return id == v.id
+                    })
+                }
+            },
+
             adduser : function(key, address){
                 if(!address) return
 
@@ -9697,18 +9737,8 @@ Platform = function (app, listofnodes) {
                             tags : ['gaming'],
                             id : 'c9'
                         },
-                        {
-                            name : "Space",
-                            tags : ['space'],
-                            id : 'c10'
-                        },
-
-                        {
-                            name : "MMA/UFC",
-                            tags : ['mma', 'ufc'],
-                            id : 'c73'
-                        },
-                        
+                     
+                     
                         {
                             name : "Art/Music",
                             tags : ['art', 'music'],
@@ -9811,11 +9841,7 @@ Platform = function (app, listofnodes) {
                             tags : ['bastyon', 'pocketnet'],
                             id : 'c71'
                         },
-                        {
-                            name : "MMA/UFC",
-                            tags : ['mma', 'ufc'],
-                            id : 'c73'
-                        },
+                      
                         {
                             name : "Спорт",
                             tags : ['спорт'],
@@ -9826,11 +9852,7 @@ Platform = function (app, listofnodes) {
                             tags : ['игры'],
                             id : 'c9'
                         },
-                        {
-                            name : "Космос",
-                            tags : ['космос'],
-                            id : 'c10'
-                        },
+                        
                         
                         {
                             name : "Искусство/Музыка",
@@ -9916,11 +9938,7 @@ Platform = function (app, listofnodes) {
                             id : 'c63',
                             new : true
                         },
-                        {
-                            name : "MMA/UFC",
-                            tags : ['mma', 'ufc'],
-                            id : 'c73'
-                        },
+                        
                         {
                             name : "冠狀病毒病/封鎖",
                             tags : ['冠狀病毒病', '封鎖'],
@@ -9946,11 +9964,7 @@ Platform = function (app, listofnodes) {
                             tags : ['遊戲'],
                             id : 'c9'
                         },
-                        {
-                            name : "空間",
-                            tags : ['空間'],
-                            id : 'c10'
-                        },
+                      
                         
                         {
                             name : "藝術/音樂",
@@ -10036,11 +10050,7 @@ Platform = function (app, listofnodes) {
                             id : 'c63',
                             new : true
                         },
-                        {
-                            name : "MMA/UFC",
-                            tags : ['mma', 'ufc'],
-                            id : 'c73'
-                        },
+                      
                         {
                             
 
@@ -10068,12 +10078,7 @@ Platform = function (app, listofnodes) {
                             tags : ['계략'],
                             id : 'c9'
                         },
-                        {
-                            name : "우주",
-                            tags : ['우주'],
-                            id : 'c10'
-                        },
-                        
+                      
                         {
                             name : "예술/음악",
                             tags : ['예술', '음악'],
@@ -10158,11 +10163,7 @@ Platform = function (app, listofnodes) {
                             id : 'c63',
                             new : true
                         },
-                        {
-                            name : "MMA/UFC",
-                            tags : ['mma', 'ufc'],
-                            id : 'c73'
-                        },
+                       
                         {
                             
                             name : "COVID/Verrouillages",
@@ -10189,12 +10190,7 @@ Platform = function (app, listofnodes) {
                             tags : ['jeux'],
                             id : 'c9'
                         },
-                        {
-                            name : "Espace",
-                            tags : ['espace'],
-                            id : 'c10'
-                        },
-                        
+                      
                         {
                             name : "Art/Musique",
                             tags : ['art', 'musique'],
@@ -10279,11 +10275,7 @@ Platform = function (app, listofnodes) {
                             id : 'c63',
                             new : true
                         },
-                        {
-                            name : "MMA/UFC",
-                            tags : ['mma', 'ufc'],
-                            id : 'c73'
-                        },
+                       
                         {
                             name : "COVID/Cierres",
                             tags : ['covid', 'сierres'],
@@ -10309,11 +10301,7 @@ Platform = function (app, listofnodes) {
                             tags : ['juegos'],
                             id : 'c9'
                         },
-                        {
-                            name : "Espacio",
-                            tags : ['espacio'],
-                            id : 'c10'
-                        },
+                       
                         
                         {
                             name : "Arte/Musical ",
@@ -10399,11 +10387,7 @@ Platform = function (app, listofnodes) {
                             id : 'c63',
                             new : true
                         },
-                        {
-                            name : "MMA/UFC",
-                            tags : ['mma', 'ufc'],
-                            id : 'c73'
-                        },
+                        
                         {
                             name : "COVID/Sperren",
                             tags : ['covid', 'Sperren'],
@@ -10429,11 +10413,7 @@ Platform = function (app, listofnodes) {
                             tags : ['spielen'],
                             id : 'c9'
                         },
-                        {
-                            name : "Weltraum",
-                            tags : ['weltraum'],
-                            id : 'c10'
-                        },
+                        
                         
                         {
                             name : "Kunst/Musik ",
@@ -10519,11 +10499,7 @@ Platform = function (app, listofnodes) {
                             id : 'c63',
                             new : true
                         },
-                        {
-                            name : "MMA/UFC",
-                            tags : ['mma', 'ufc'],
-                            id : 'c73'
-                        },
+                      
                         {
                             name : "COVID/Quarantena",
                             tags : ['covid', 'quarantena'],
@@ -10550,11 +10526,7 @@ Platform = function (app, listofnodes) {
                             tags : ['gioco'],
                             id : 'c9'
                         },
-                        {
-                            name : "Spazio",
-                            tags : ['spazio'],
-                            id : 'c10'
-                        },
+                      
                         
                         {
                             name : "Arte/Musica",
@@ -11077,6 +11049,9 @@ Platform = function (app, listofnodes) {
                             })
 
                         }
+                        else{
+                            s.all[loc] = []
+                        }
 
                         _.each(t.additional, function(at){
                             if (s.all[loc].indexOf(at.tag) == -1){
@@ -11586,20 +11561,6 @@ Platform = function (app, listofnodes) {
                     }
                 })
 
-                /*self.app.ajax.rpc({
-                    method: 'getcomments',
-                    parameters: ['', '', ids],
-                    success: function (d) {
-
-                        
-
-                    },
-                    fail: function (d, e) {
-                        if (clbk) {
-                            clbk(e, d)
-                        }
-                    }
-                })*/
             },
 
             checkSign: function (comment, signature, pubkey) {
@@ -11647,11 +11608,11 @@ Platform = function (app, listofnodes) {
                     comment.import(data)
                     comment.setTime(data.time, data.timeUpd)
 
-                    comment.children = data.children
+                    comment.children = Number(data.children)
                     comment.address = data.address;
                     comment.verify = true;
 
-
+                    comment.rating = data.rating
 
                     _.each(self.sdk.relayTransactions.withtemp('comment'), function (c) {
                         if (c.optype == 'comment' || !c.optype) {
@@ -11678,8 +11639,6 @@ Platform = function (app, listofnodes) {
                     }
 
                 })
-
-
 
                 _.each(c, function (c) {
                     s.all[c.id] = c
@@ -11809,6 +11768,46 @@ Platform = function (app, listofnodes) {
 
 
                     })
+                })
+            },
+
+            getclear: function (txid, pid, clbk, ccha) {
+
+                var s = self.sdk.comments.storage;
+                var i = self.sdk.comments.ini;
+                var address = ''
+
+                var ao = self.app.platform.sdk.address.pnet();
+
+                if (ao) address = ao.address
+
+                s[txid] || (s[txid] = {})
+
+
+                if(ccha && s[txid][pid || '0']){
+
+                    if (clbk)
+                        clbk(s[txid][pid || '0'])
+
+                    return
+                }
+
+
+                self.app.api.rpc('getcomments', [txid, pid || '', address]).then(d => {
+
+                    self.sdk.comments.temps(d, txid, pid)
+
+                    var c = i(d)
+
+                    s[txid][pid || '0'] = c
+
+                    if (clbk)
+                        clbk(c)
+        
+                }).catch(e => {
+                    if (clbk) {
+                        clbk(null, e)
+                    }
                 })
             },
 
@@ -12989,6 +12988,12 @@ Platform = function (app, listofnodes) {
 
                         s.edit = share.edit || false
                         s.info = null
+
+
+                        /*if (s.url){
+                            s.url = s.url.replace('peertube://pocketnetpeertube8', 'peertube://pocketnetpeertube9')
+                        }*/
+
 
                         if (share.ranks){
                             s.info = share.ranks

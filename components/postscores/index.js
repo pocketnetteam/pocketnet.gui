@@ -161,7 +161,7 @@ var postscores = (function(){
 						addresses : addresses,
 						empty : self.app.localization.e('e13151'),
 						caption : self.app.localization.e('e13152'),
-
+						cnt : el.c.find('#fordetailsusers'),
 						extra : function(address){
 
 							var h = ''
