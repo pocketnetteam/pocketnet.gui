@@ -1,11 +1,11 @@
 <% if(mestate) {%>
 
 
-<% _.each(metrics, function(metrica){ 
+<% 
+
+_.each(metrics, function(metrica){ 
 
 	if(metrica.if && !metrica.if()) return
-
-	if(metrica.vis == 'profileInfo' && !metrica.bad()) return
 
 %> 
 

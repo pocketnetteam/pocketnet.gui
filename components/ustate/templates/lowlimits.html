@@ -1,0 +1,21 @@
+<div class="lowlimitstr">
+
+    <div class="lowlimitscont">
+
+        <div class="textbox">
+            
+            <% if(zerolimits.length) {%>
+                <%- e('reachedlimits') %>
+            <% } else { %>  
+                <%- e('closestreachedlimits') %>
+            <% } %>
+            
+        </div>
+
+        <div class="buttonrow">
+            <button class="buypkoins orange"><%=e('buylogo')%></button>
+        </div>
+
+    </div>
+
+</div>

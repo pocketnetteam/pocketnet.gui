@@ -1181,6 +1181,12 @@
 			}
 		}
 	}
+
+	&.simple{
+		._stepback{
+			display: none!important;
+		}
+	}
 }
 
 html.stblack{
@@ -1573,6 +1579,7 @@ html.stblack{
 	}
 
 	#wallet{
+		padding-bottom: 0;
 		min-height: none;
 
 		.workstation{
@@ -1806,6 +1813,87 @@ html.stblack{
 					}
 				}
 			}
+		}
+
+		.buypkoin{
+			padding : @rhythm;
+	
+			.ways{
+				display : flex;
+				align-items: flex-start;
+				flex-wrap: wrap;
+	
+				>div{
+					flex-shrink: 1;
+					  flex-basis: content;
+					flex-grow: 1;
+					padding-bottom: 6 * @rhythm;
+				}
+			}
+			
+			.row{
+				padding : 0;
+	
+				.button{
+					min-width: 310px;
+				}
+	
+				&.flx{
+					justify-content: center;
+					>div{
+						width: 12.5%;
+						padding : @rhythm @rhythm;
+						text-align: center;
+					}
+				}
+	
+				&.forfiats{
+					justify-content: center;
+	
+					>div{
+						width: 25%;
+					}
+				}
+	
+				&.one{
+					display: block;
+					padding : @rhythm 0;
+					margin-bottom: 3 * @rhythm;
+	
+					.wrp{
+						padding : 4 * @rhythm 2 * @rhythm;
+					}
+	
+					.flxbtn{
+						flex-direction: column;
+						text-align: center;
+						justify-content: center;
+	
+						div{
+							margin-right: 0;
+						}
+					}
+	
+					.flxbtnlbk{
+						margin-top : 2 * @rhythm;
+					}
+				}
+	
+				&.table{
+					display: block;
+					text-align: center;
+	
+					>div{
+						display: block;
+					}
+	
+					.reciever{
+						margin : 0 auto;
+					}
+				}
+				
+			}
+	
 		}
 	
 		.crowdfunding{

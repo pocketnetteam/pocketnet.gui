@@ -205,7 +205,15 @@ ____loclib.spv = "Video Post count";
 ____loclib.ssc = "Stars count";
 ____loclib.ccc = "Comments count";
 ____loclib.crc = "Comment Rate count";
+
 ____loclib.stp = "Trial period";
+____loclib.stpg = "Member of the Bastyon community";
+____loclib.stpreal = "Famous person";
+____loclib.stpdev = "Bastyon developer";
+
+____loclib.trialreputationtip = "To become a member of the Bastyon community, you need to earn a reputation of 100 or have 50 PKOIN on your account. Earn a reputation by getting positive ratings for your posts and comments! Or share a referral link to Bastyon";
+
+
 ____loclib.srep = "Reputation";
 ____loclib.ccpl = "Complains count";
 
@@ -699,7 +707,7 @@ ____loclib.e13190 = ""+appname+" theme"
 ____loclib.e13191 = "Set Theme"
 ____loclib.e13192 = "Level"
 ____loclib.e13193 = "BONUS"
-____loclib.e13194 = "Reputation and Rewards"
+____loclib.e13194 = "Reputation and Status"
 ____loclib.e13195 = "Limitations"
 ____loclib.с= "It much take up"
 ____loclib.e13197 = "Recieve Pocketcoins"
@@ -1192,7 +1200,13 @@ ____loclib.sortByDuration = "Duration";
 ____loclib.sortByViews = "Views";
 
 ____loclib.unableToAuthorize = "Unable to authorize";
-____loclib.unableToAuthorizeBody = "Unfortunately, the application cannot authenticate this account on the video server. You need at least 5 PKOIN or 100 reputation to upload videos. If you do, please try again later";
+____loclib.unableToAuthorizeBody = "Unfortunately, the application cannot authenticate this account on the video server. You need at least 5 PKOIN or 50 reputation to upload videos.";
+
+____loclib.unableToAuthorizeConnection = "Unable to authorize";
+____loclib.unableToAuthorizeConnectionBody = "Unfortunately, the application cannot authenticate this account on the video server.  Please try again later";
+
+
+
 
 ____loclib.downloaded = "Downloaded";
 ____loclib.downloadedEmpty = "Downloaded posts will be shown here";
@@ -1835,3 +1849,8 @@ ____loclib.create = 'Create'
 ____loclib.drafts = 'Drafts'
 
 ____loclib.repostyourown = 'You cannot repost your own post'
+
+
+____loclib.reachedlimits = 'You reached your daily limit of actions. To increase your limit you need to have at least 50 PKOIN in your account or have a valid reputation.'
+
+____loclib.closestreachedlimits = 'You are close to hitting your daily action limit. To increase your limit you need to have at least 50 PKOIN in your account or have a valid reputation.'

@@ -57,6 +57,25 @@ var uploadpeertube = (function () {
     };
 
     var initEvents = function () {
+
+      el.c.find('.buypkoins').on('click', function(){
+
+        self.closeContainer()
+
+        self.nav.api.load({
+          open : true,
+          href : 'wallet',
+          history : true,
+          inWnd : true,
+
+          essenseData : {
+            simple : true,
+            action : 'buy'
+          }
+        })
+
+      })
+
       el.c.find('.tooltip').tooltipster({
         theme: 'tooltipster-light',
         maxWidth: 600,
@@ -333,7 +352,8 @@ var uploadpeertube = (function () {
         actions = ed.actions;
 
         var data = {
-          hasAccess : false
+          hasAccess : false,
+          increase : {}
         };
 
         error = false
@@ -351,7 +371,15 @@ var uploadpeertube = (function () {
           data.e = e
           error = true
 
-          clbk(data);
+          self.app.platform.sdk.ustate.canincrease({template : 'video'}, function(r){
+
+            data.increase = r
+
+            clbk(data);
+
+          })
+
+          
 
         }).then(() => {
           globalpreloader(false)

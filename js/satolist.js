@@ -2235,20 +2235,29 @@ Platform = function (app, listofnodes) {
     }
 
     self.ui = {
-
-        markUser : function(address){
+        usertype : function(address){
 
             var dev = deep(app, 'platform.sdk.user.storage.'+address+'.dev') || deep(app, 'platform.sdk.usersl.storage.'+address+'.dev');
 
             if (dev){
                 
-                return this.markDev();
+                return 'dev';
 
             } else if (deep(app, 'platform.real.'+address)){
 
-                return this.markReal();
+                return 'real';
 
             }
+
+            return ''
+
+        },
+        markUser : function(address){
+
+            var t = self.ui.usertype(address)
+
+            if (t == 'dev') return this.markDev();
+            if (t == 'real') return this.markReal();
 
             return ''
 
@@ -7106,6 +7115,121 @@ Platform = function (app, listofnodes) {
                 else {
                     if (clbk)
                         clbk()
+                }
+            },
+
+            haslowlimits : function(state){ 
+
+                state || (state = {})
+
+                var m = self.sdk.ustate.metrics()
+
+                return _.filter(m, function(metrica){
+
+                    var l = Number(state[metrica.key + "_unspent"])
+
+                    return metrica.bad(l)
+
+                })
+            },
+
+            haszerolimits : function(state){ 
+
+                state || (state = {})
+
+                var m = self.sdk.ustate.metrics()
+
+                return _.filter(m, function(metrica){
+                    return Number(state[metrica.key + "_unspent"]) === 0
+                })
+            },
+
+            canincrease : function(p, clbk){
+
+                if(!p) p = {}
+
+                if (p.template == 'trial'){
+                    p.balance = 1000000000
+                    p.reputation = 100
+                    p.trial = true
+                }
+
+                if (p.template == 'video'){
+                    p.balance = 500000000
+                    p.reputation = 50
+                }
+
+                var result = {}
+
+                self.sdk.ustate.me(function(info){
+
+                    if(p.balance && info.balance < p.balance) result.balance = true
+                    else
+                    if(p.reputation && info.reputation < p.reputation) result.reputation = true
+                    else
+                    if(p.trial && !info.trial) result.trial = true
+
+                    clbk(result)
+                })
+            },
+
+            metrics : function(){
+                return {
+
+		
+                    post : {
+                        key : 'post',
+                        vis : 'scale',
+                        name : self.app.localization.e('spc'),
+                        bad : function(v){
+                            if(v <= 3) return true
+                        }
+                    },
+        
+                    video : {
+                        key : 'video',
+                        vis : 'scale',
+                        name : self.app.localization.e('spv'),
+                        bad : function(v){
+                            if(v <= 3) return true
+                        }
+                    },
+        
+                    score : {
+                        key : 'score',
+                        vis : 'scale',
+                        name : self.app.localization.e('ssc'),
+                        bad : function(v){
+                            if(v <= 7) return true
+                        }
+                    },
+        
+                    comment : {
+                        key : 'comment',
+                        vis : 'scale',
+                        name : self.app.localization.e('ccc'),
+                        bad : function(v){
+                            if(v <= 7) return true
+                        }
+                    },
+        
+                    comment_score : {
+                        key : 'comment_score',
+                        vis : 'scale',
+                        name : self.app.localization.e('crc'),
+                        bad : function(v){
+                            if(v <= 10) return true
+                        }
+                    },		
+                    
+                    complain : {
+                        key : 'complain',
+                        vis : 'scale',
+                        name : self.app.localization.e('ccpl'),
+                        bad : function(v){
+                            if(v <= 3) return true
+                        }
+                    }
                 }
             }
 

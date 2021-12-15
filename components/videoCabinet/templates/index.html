@@ -99,9 +99,26 @@
       </div>
     <% } else { %>
       <div class="videoContainer videoErrorContainer">
+
+
+
+        
         <div class="work">
-          <div class="videoErrorHeading"><i class="fas fa-exclamation-circle"></i> <%- e('unableToAuthorize') %></div>
-          <div class="videoErrorBody"><%- e('unableToAuthorizeBody') %></div>
+          <% if(typeof increase == 'undefined' || _.isEmpty(increase)) {%>
+
+              <div class="videoErrorHeading"><i class="fas fa-exclamation-circle"></i> <%- e('unableToAuthorizeConnection') %></div>
+              <div class="videoErrorBody"><%- e('unableToAuthorizeConnectionBody') %></div>
+
+          <% } else { %>
+
+              <div class="videoErrorHeading"><i class="fas fa-exclamation-circle"></i> <%- e('unableToAuthorize') %></div>
+              <div class="videoErrorBody"><%- e('unableToAuthorizeBody') %></div>
+
+              <div class="buttonwrapper">
+                  <button class="buypkoins orange"><%=e('buylogo')%></button>
+              </div>
+
+          <% } %>
         </div>
       </div>
     <% } %>

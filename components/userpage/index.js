@@ -98,7 +98,15 @@ var userpage = (function(){
 						return mestate.reputation.toFixed(1)
 					}
 
-				}
+				},
+
+				addtoname : function(){
+
+					if (isMobile() && deep(mestate, 'trial')){
+						return self.app.localization.e('stp')
+					}
+
+				},
 			})
 
 		
@@ -236,6 +244,8 @@ var userpage = (function(){
 						if (self.app.curation()) return false
 
 						if (window.testpocketnet) return true
+
+						return true
 
 						if (typeof mestate != 'undefined' && mestate && (
 					

@@ -753,6 +753,24 @@ var wallet = (function(){
 				})
 			},
 
+			showBuyInStep : function(action, step, name, clbk){
+
+				console.log('showBuyInStep')
+
+				renders.step(function(el){
+					renders.buy(function(_el){
+
+						//actions[action](_el)
+
+						renders.stepB(_el, name)
+
+						if(clbk) clbk()
+					}, el)
+				}, step, {
+					class : 'buy'
+				})
+			},
+
 			showHtlsInStep : function(action, step, name, clbk){
 
 				var _el = el.c.find('.htlsnoredraw')
@@ -1048,10 +1066,7 @@ var wallet = (function(){
 					el.crowdfunding = el.c.find('.crowdfunding');
 					el.htls = el.c.find('.htls')
 
-					console.log('el.htls', el.htls)
-
 					self.iclbks.main = function(){
-
 
 						if(self.app.errors.connection()){
 							el.totaler.addClass('active')
@@ -2220,14 +2235,14 @@ var wallet = (function(){
 
 			////
 
-			buy : function(clbk){
+			buy : function(clbk, _el){
 
 				var a = self.app.platform.sdk.address.pnet() || {}
 
 				self.shell({
 
 					name :  'buy',
-					el :   el.buy,
+					el : _el || el.buy,
 					data : {
 						coins : coins,
 						a : a
@@ -2237,7 +2252,7 @@ var wallet = (function(){
 
 					
 					if (clbk)
-						clbk()
+						clbk(_p.el)
 
 				})
 				
@@ -2375,6 +2390,8 @@ var wallet = (function(){
 			},
 
 			total : function(item, clbk){
+
+				if(!el.c) return
 
 				if (item.update || el.total.find('[item="'+item.id+'"]').length){
 
@@ -2648,19 +2665,6 @@ var wallet = (function(){
 
 			if(clbk) clbk()
 
-			return
-
-			var actions = [renders.send, renders.deposit, renders.addresses]
-
-			if(essenseData.api && essenseData.action) actions = []
-
-			el.c.addClass('loading')
-
-			console.log('actions', actions)
-
-			lazyActions(actions, function(){
-				clbk()
-			})
 		}
 
 		var make = function(clbk){
@@ -2719,12 +2723,12 @@ var wallet = (function(){
 
 				el = {};
 			},
+
+			clearparameters: ['action'],
 			
 			init : function(p){
 
 				var _p = _.extend(parameters(), essenseData)
-
-				
 
 				charts = {};
 
@@ -2741,20 +2745,19 @@ var wallet = (function(){
 
 				initEvents();
 
-
-				if(essenseData.class) el.c.addClass(essenseData.class)
-
 				var executor = make
 
-				if(_p.api) executor = makesimple
+				if(_p.api || _p.simple) {
+
+					executor = makesimple
+
+					el.c.addClass('simple')
+
+				}
 
 				renders.main(function(){
 					executor(function(){
 						
-
-						console.log('_p', _p)
-						
-
 						if (_p.action){
 
 							if(_p.action == 'send'){
@@ -2767,50 +2770,28 @@ var wallet = (function(){
 
 								if(_p.address){
 									send.parameters.reciever.disabled = true
-									console.log('send.parameters.reciever.disabled', send.parameters.reciever)
 								}
-								if(send.parameters.amount._onChange)
+								if (send.parameters.amount._onChange)
 									send.parameters.amount._onChange();
 
-								console.log('_p.address ? true : false', _p.address ? true : false)
-
-								//renders.send()
-
-								/*setTimeout(function(){
-									renders.step(function(__el){
-										renders.send(function(_el){
-	
-											el.c.removeClass('loading')
-	
-										}, __el, _p.address ? true : false)
-									}, 1, {
-										class : 'send'
-									})
-								},1000)*/
-
 								renders.send(null, null, true)
-
-								/*actions.showSendInStep('calculateSend', 0, self.app.localization.e('wscalculatefees'), function(){
-									el.c.removeClass('loading')
-								})*/
-
 
 							}
 
 							if(_p.action == 'htls'){
-
 								actions.showHtlsInStep('calculateFeeHtls', 1, 'HTLS', function(){
 									el.c.removeClass('loading')
 								})
+							}
 
-
+							if(_p.action == 'buy'){
+								actions.showBuyInStep('buy', 1, '', function(){
+									el.c.removeClass('loading')
+								})
 							}
 
 							if(_p.action == 'recieve'){
-
 								actions.showDepositInStep('showDeposit', 1, self.app.localization.e('wdoptions'))
-
-
 							}
 
 						}
