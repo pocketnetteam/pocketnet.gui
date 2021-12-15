@@ -210,7 +210,7 @@ ____loclib.ccc = "Количество комментариев";
 ____loclib.crc = "Количество оценок комментариев";
 ____loclib.stp = "Триальный период";
 ____loclib.srep = "Репутация";
-
+____loclib.ccpl = "Количество жалоб";
 
 
 //accounts
@@ -1067,6 +1067,7 @@ ____loclib.pkoin_commerce_info = 'Из рук в руки PKOIN транзакц
 ____loclib.buyforcrypto = 'Купить за криптовалюту'
 ____loclib.buywithcreditcard = 'Купить с карты'
 ____loclib.buylogo = 'Купить Pocketcoin (PKOIN)'
+____loclib.buypeertopeer = 'Купить Peer-to-Peer'
 
 
 ____loclib.aboutServices = 'БЕЗ ЦЕНЗУРЫ';
@@ -1602,3 +1603,8 @@ ____loclib.comments_interesting = 'Сначала интересные'
 ____loclib.comments_timeup = 'Сначала новые'
 ____loclib.comments_time = 'Сначала старые'
 ____loclib.comments_next = 'Показать следующие'
+
+____loclib.create = 'Создать'
+____loclib.drafts = 'Черновики'
+
+____loclib.repostyourown = 'Вы не можете сделать репост своей собственной публикации'

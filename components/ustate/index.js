@@ -84,7 +84,16 @@ var ustate = (function(){
 				bad : function(v){
 					if(v <= 10) return true
 				}
-			},			
+			},		
+			
+			complain : {
+				key : 'complain',
+				vis : 'scale',
+				name : self.app.localization.e('ccpl'),
+				bad : function(v){
+					if(v <= 2) return true
+				}
+			},
 
 			/*reputation : {
 				key : 'reputation',

@@ -103,11 +103,7 @@ nModule = function(){
 
 				self.nav.api.links(null, p.el, p.additionalActions || null);
 
-				window.requestAnimationFrame(function(){
-
-					bgImages(p.el, p.bgImages)
-				})
-				
+				bgImages(p.el, p.bgImages)
 				
 			}
 
@@ -475,10 +471,12 @@ nModule = function(){
 
 			p.inner(p.el, _html);
 
-			if(!p.notdisplay){
-				p.display || (p.display = "block")
+			if (p.display){
 				p.el.css("display", p.display)
 			}
+			
+				
+			
 
 
 			if (p.postAnimation)

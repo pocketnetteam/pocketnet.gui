@@ -8,7 +8,7 @@ var uploadpeertube = (function () {
   var Essense = function (p) {
     var primary = deep(p, 'history');
 
-    var el;
+    var el, error;
 
     var wnd;
     var wndObj;
@@ -332,9 +332,32 @@ var uploadpeertube = (function () {
 
         actions = ed.actions;
 
-        var data = {};
+        var data = {
+          hasAccess : false
+        };
 
-        clbk(data);
+        error = false
+
+        globalpreloader(true, true)
+
+        self.app.peertubeHandler.api.user.me().then((res) => {
+
+          data.hasAccess = true
+
+          clbk(data);
+
+        }).catch(e => {
+
+          data.e = e
+          error = true
+
+          clbk(data);
+
+        }).then(() => {
+          globalpreloader(false)
+        })
+
+       
       },
 
       destroy: function () {
@@ -366,6 +389,8 @@ var uploadpeertube = (function () {
         el.preloaderElement = el.c.find('.iconwr');
 
         initEvents();
+
+        if(error) el.c.closest('.wnd').addClass('witherror')
 
         p.clbk(null, p);
       },

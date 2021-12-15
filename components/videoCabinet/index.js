@@ -1265,7 +1265,7 @@ var videoCabinet = (function () {
       primary: primary,
 
       getdata: function (clbk, p) {
-        ed = p.settings.essenseData;
+        ed = p.settings.essenseData || {};
 
         externalActions = ed.actions || {};
 

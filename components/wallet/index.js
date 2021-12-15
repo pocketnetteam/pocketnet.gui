@@ -8,7 +8,7 @@ var wallet = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el;
+		var el, w;
 
 		var charts = {},
 			essenseData = {};
@@ -1102,7 +1102,7 @@ var wallet = (function(){
 
 					renders.clearMain(function(){
 
-						_scrollToTop(el.step, 0, 200, -70)
+						_scrollToTop(el.step, w, 200, -70)
 
 						setTimeout(function(){
 
@@ -1718,7 +1718,7 @@ var wallet = (function(){
 
 				deposit : function(clbk, _el){
 					self.shell({
-
+						display : 'block',
 						name :  'deposit',
 						el :   _el || el.deposit,
 						data : {
@@ -1883,7 +1883,7 @@ var wallet = (function(){
 				actions.htlsParameters();
 
 				self.shell({
-
+					display : 'block',
 					name :  'htls',
 					el :   _el ||  el.htls,
 					data : {
@@ -2067,7 +2067,7 @@ var wallet = (function(){
 						
 
 					self.shell({
-
+						display : 'block',
 						name :  'send',
 						el :   _el ||  el.send,
 						data : {
@@ -2376,7 +2376,7 @@ var wallet = (function(){
 
 			total : function(item, clbk){
 
-				if(item.update){
+				if (item.update || el.total.find('[item="'+item.id+'"]').length){
 
 					renders.updateTotal(item, clbk)
 
@@ -2482,7 +2482,7 @@ var wallet = (function(){
 
 				var trueshold = 80
 
-				var w = $(window)
+				
 
 				if(!essenseData.api){
 					var parallax = new SwipeParallaxNew({
@@ -2498,9 +2498,6 @@ var wallet = (function(){
 								positionclbk : function(px){
 									var percent = Math.abs(px) / trueshold;
 	
-	
-									console.log("PX", px)
-	
 									if (px >= 0){
 	
 										progress.options.text = {
@@ -2508,7 +2505,6 @@ var wallet = (function(){
 										};
 										cc.fadeIn(1)
 										progress.update(percent * 100);
-	
 	
 										cc.height((maxheight * percent)+ 'px')								
 	
@@ -2728,6 +2724,8 @@ var wallet = (function(){
 
 				var _p = _.extend(parameters(), essenseData)
 
+				
+
 				charts = {};
 
 
@@ -2738,6 +2736,8 @@ var wallet = (function(){
 
 				el.step = el.c.find('.actionstep');
 				el.main = el.c.find('.mainstep')
+
+				w = el.c.closest('.customscroll')
 
 				initEvents();
 
@@ -2827,6 +2827,7 @@ var wallet = (function(){
 			},
 
 			wnd : {
+				//header : 'rwallet',
 				class : 'withoutButtons walletwindow normalizedmobile'
 			}
 		}

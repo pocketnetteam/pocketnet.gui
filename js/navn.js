@@ -195,7 +195,6 @@ Nav = function(app)
 							href : href
 						})
 
-						//if (riobj && riobj.index == 0) return
 	
 						if (riobj && riobj.index == 1 && backManager.chain.length > 1){
 							backManager.chain.splice(0, 1);
@@ -385,12 +384,11 @@ Nav = function(app)
 					return
 				}
 
-
 				if (self.addParameters){
 					href = self.addParameters(href)
 				}
 
-				if(p.replaceState){
+				if (p.replaceState){
 					
 					history.replaceState({
 
@@ -399,8 +397,10 @@ Nav = function(app)
 						lfox : true
 	
 					}, null, href);
+					
 				}
 				else{
+
 					history.pushState({
 
 						href : href,
@@ -408,11 +408,8 @@ Nav = function(app)
 						lfox : true
 	
 					}, null, href);
+
 				}
-
-				
-
-				
 				
 			}
 
@@ -424,45 +421,38 @@ Nav = function(app)
 
 		openCurrent : function(){
 
+			console.log('history.state.href', history.state)
+
 			if (history.state && history.state.lfox) { 
 
+				console.log('history.state.href', history.state.href)
+
 				core.removeWindows(history.state.href)
+				core.removeChat(history.state.href)
 
-				var chh = core.removeChat(history.state.href)
+				if(!_.isEmpty(self.wnds)){
+					_.each(self.wnds, function(w){
+						if (w.module.parametersHandler){
+							w.module.parametersHandler()
+						}
+					})
+				}
 
-				if(history.state.href.split('?')[0] != current.href){
+
+				if(history.state.href.split('?')[0] != current.href || current.map.exhandler){
 
 					self.api.load({
 		        		href : history.state.href,
 		        		open : true,
-			   			//history : true,
 						loadDefault : true,
-						back : true
-						//removefromback : firsttime
+						replaceState : true
 		        	}); 
 
 				}
 				else
 				{
-					///core.removeWindows(history.state.href)
-
-					if(chh) return
-
-					if(!_.isEmpty(self.wnds)){
-						_.each(self.wnds, function(w){
-							if (w.module.parametersHandler){
-								w.module.parametersHandler()
-							}
-						})
-					}
-					else{
-	
-						if (current.module && current.module.parametersHandler){
-	
-							current.module.parametersHandler(function(){	
-	
-							})
-						}
+					if (current.module && current.module.parametersHandler){
+						current.module.parametersHandler(function(){})
 					}
 					
 				}
@@ -533,7 +523,7 @@ Nav = function(app)
 			if((p.history || p.loadDefault) && options.history)
 			{
 
-				if(p.href == current.href){
+				if(p.href == current.href && !p.map.exhandler){
 
 					if (current.module && current.module.parametersHandler && p.handler){
 						
@@ -542,6 +532,7 @@ Nav = function(app)
 						historyManager.add(p.completeHref, p);
 
 						current.completeHref = p.completeHref;
+						
 
 						if(!p.goback){
 							app.actions.scrollToTop()
@@ -618,6 +609,7 @@ Nav = function(app)
 						current.href = p.href;
 						current.completeHref = p.completeHref;
 						current.module = p.module;		
+						current.map = p.map
 
 						var c = p.clbk;
 
@@ -1162,9 +1154,10 @@ Nav = function(app)
 
 						if(blockclick) return false
 
-						var href = core.thisSiteLink($(this).attr('href'));
+						var href = core.thisSiteLink( $(this).attr('href') );
 
 						var handler = $(this).attr('handler') || null
+						var replace = $(this).attr('replace') || false
 
 						if (additionalActions){
 							additionalActions(e);
@@ -1177,7 +1170,8 @@ Nav = function(app)
 							href : href,
 							history : true,
 							open : true,
-							handler : handler
+							handler : handler,
+							replaceState : replace
 						})
 
 						blockclick = true
@@ -1363,6 +1357,8 @@ Nav = function(app)
 			}
 
 			backManager.add(p.href)
+
+			historyManager.add(p.href, { replaceState : true })
 
 			self.api.load(p);
 		},

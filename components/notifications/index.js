@@ -273,8 +273,6 @@ var notifications = (function(){
 
 			if(isMobile()){
 
-				return
-
 				var cc = el.c.find('.circularprogress');
 				var maxheight = 220;
 
@@ -300,7 +298,7 @@ var notifications = (function(){
 
 				var trueshold = 90
 
-				var w = $(window)
+				var w = el.c.closest('.customscroll')
 
 				var parallax = new SwipeParallaxNew({
 
@@ -342,7 +340,17 @@ var notifications = (function(){
 							trueshold : trueshold,
 							clbk : function(){
 
-								self.app.platform.sdk.notifications.getNotifications(function(){
+								el.loader.removeClass('hidden')
+
+								self.app.platform.sdk.notifications.getNotifications(5000).catch(e=>{
+									return Promise.resolve()
+								}).then(r => {
+
+									if(!el.c) return
+
+									el.loader.addClass('hidden')
+
+									renders.notifications()
 								})
 	
 							}
@@ -373,7 +381,6 @@ var notifications = (function(){
 			}
 
 			self.app.platform.sdk.notifications.clbks.inited['notifications' + t] = function(notifications, now){
-					console.log('renders.notifications()')
 				renders.notifications()
 
 			}

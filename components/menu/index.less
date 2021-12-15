@@ -959,11 +959,19 @@
 			overflow: hidden;
 			background: #F1F1F1;
 			border : 1px solid fade(@color-black2, 2);
+			.transition(0.1s, border-radius);
 		}
 
 		.search {
 			max-width: 700px;
 			margin : 0 auto;
+
+			&.fastSearchShow{
+				/*.searchInput{
+					border-bottom-left-radius: 0px;
+					border-bottom-right-radius: 0px;
+				}*/
+			}
 		}
 
 		.searchInputIcon{
@@ -1013,6 +1021,8 @@
 				}*/
 			}
 		}
+
+		
 	}
 
 	&.menupanelactive{
@@ -1454,6 +1464,44 @@ html.stblack{
 
 
 }
+
+html.allcontent{
+	#menu{
+		.menuWrapper {
+			background: transparent;
+
+			.searchIconLabel i,
+			.icon i{
+				background-image: -webkit-linear-gradient(left, #00aeff, rgb(122, 40, 255)); /* For Chrome and Safari */
+				background-image:    -moz-linear-gradient(left, #00aeff, rgb(122, 40, 255)); /* For old Fx (3.6 to 15) */
+				background-image:     -ms-linear-gradient(left, #00aeff, rgb(122, 40, 255)); /* For pre-releases of IE 10*/
+				background-image:      -o-linear-gradient(left, #00aeff, rgb(122, 40, 255)); /* For old Opera (11.1 to 12.0) */
+				background-image:         linear-gradient(to right, #00aeff, rgb(122, 40, 255)); /* Standard syntax; must be last */
+				color:transparent;
+				-webkit-background-clip: text;
+				background-clip: text;
+			}
+
+		}
+
+		.centerpart,
+		.walletsWrapper,
+		.keyexportWrapper,
+		.notificationsWrapper{
+			display: none!important;
+		}
+
+		.usericon{
+			.shadowSmaller();
+		}
+
+		.far.fa-comment{
+			font-weight: 700;
+		}
+
+	}
+
+} 
 }
 
 

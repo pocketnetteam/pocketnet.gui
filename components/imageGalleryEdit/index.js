@@ -333,8 +333,6 @@ var imageGalleryEdit = (function(){
 
 						actions.camanFilter(img, filter, function(){
 							
-							
-							
 							if (clbk)
 								clbk(img);
 
@@ -379,7 +377,7 @@ var imageGalleryEdit = (function(){
 			createunvisibleImage : function(src, clbk){
 				el.invisibleimagewrapper.html('<img id="invisibleimage" src="'+src+'">')
 
-				el.invisibleimagewrapper.imagesLoaded(function(image){
+				el.invisibleimagewrapper.imagesLoadedPN(function(image){
 					if(clbk) clbk('#invisibleimage')
 				})
 			},
@@ -681,7 +679,7 @@ var imageGalleryEdit = (function(){
 
 				}, function(_p){
 					
-					_p.el.find('img').imagesLoaded(function(image){
+					_p.el.find('img').imagesLoadedPN(function(image){
 
 						currentImage = deep(image, 'images.0.img');
 						currentOriginal = p.image;

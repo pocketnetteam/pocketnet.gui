@@ -79,7 +79,8 @@ Platform = function (app, listofnodes) {
         'P9KXb7sS2JDjV5jnXu4t2WwwbvzYeu6yds' : true,
         'PUYEkLb6szwxjw3cq6FvLxDPmedbyd3foq' : true,
         'PU6LDxDqNBDipG4usCqhebgJWeA4fQR5R4' : true,
-        'P8rnj1gSaAQJ1YkAAthSgmLKiDfspb98GP' : true
+        'P8rnj1gSaAQJ1YkAAthSgmLKiDfspb98GP' : true,
+        'PUXG7rfX19Xoco1FXjXBW8qt6NEZpp8maL' : true
     }
 
     self.nvadr = {
@@ -561,8 +562,6 @@ Platform = function (app, listofnodes) {
             relay: true
         },
 
-        
-
         'offline': {
             message: function () {
                 return self.app.localization.e('e13231')
@@ -571,32 +570,36 @@ Platform = function (app, listofnodes) {
             relay: true
         },
 
+        "313" : {
+            message: function () {
+                return self.app.localization.e('lockedaccount')
+            }
+        },
+
+        ///// NODE
+
+        
         "60": {
             message: function () {
                 return self.app.localization.e('e13257_1')
             }
         },
 
-        "42": {
-            message: function () {
-                return self.app.localization.e('e13233')
+        "49": {
+            message: function(){
+                return self.app.localization.e('saveSettingsLimit')
             }
         },
 
-        "313" : {
-            message: function () {
-                return self.app.localization.e('lockedaccount')
-            }
-        },
         "48": {
             message: function(){
                 return self.app.localization.e('canSpendError')
             }
         },
 
-        "49": {
-            message: function(){
-                return self.app.localization.e('saveSettingsLimit')
+        "42": {
+            message: function () {
+                return self.app.localization.e('e13233')
             }
         },
 
@@ -722,12 +725,6 @@ Platform = function (app, listofnodes) {
             }
         },
 
-        "2000": {
-            message: function () {
-                return  self.app.localization.e('e2000')
-            }
-        },
-        
         "19": {
             message: function () {
                 return self.app.localization.e('e13254')
@@ -914,6 +911,13 @@ Platform = function (app, listofnodes) {
 
             }
 
+        },
+
+
+        "2000": {
+            message: function () {
+                return  self.app.localization.e('e2000')
+            }
         },
 
         "-26": {
@@ -1948,6 +1952,7 @@ Platform = function (app, listofnodes) {
                     horizontal : p.horizontal,
                     second : true,
                     loaderkey : p.loaderkey,
+                    openPostInWindowMobile : p.openPostInWindowMobile,
                     hasshares : function(shares){
 
                         if (p.hcnt){
@@ -2135,7 +2140,6 @@ Platform = function (app, listofnodes) {
                 r = bitcoin.address.fromBase58Check(id);
             }
             catch (e) {
-
             }
 
             var c = function(){
@@ -2156,6 +2160,9 @@ Platform = function (app, listofnodes) {
     
                 })
             }
+
+            console.log('r', r)
+
 
             if(r){ c() }
 
@@ -2365,6 +2372,8 @@ Platform = function (app, listofnodes) {
                         name,
                         description,
                         tags,
+
+                        dontsave : (p.repost || p.videoLink) ? true : false
                     }
                 })
             }, 50)
@@ -2975,7 +2984,9 @@ Platform = function (app, listofnodes) {
                     clbk : function(el){
 
                         if(clbk) clbk(el, null, 'mobiletooltip')
-                    }
+                    },
+
+                    app : app
                     
                 })
             }
@@ -5359,15 +5370,21 @@ Platform = function (app, listofnodes) {
                 return {
 
                     id: id || makeid(),
+
                     caption: {
                         value: ''
                     },
+
                     images: [],
                     content: null,
                     tags : [],
                     u: '',
-                    version : version || 1
+                    version : version || 1,
+                    time : null,
+                    cover : '',
+                    visibility : 0,
                     
+                    language : self.app.localization.key
                 }
             },
 
@@ -6578,7 +6595,7 @@ Platform = function (app, listofnodes) {
                                         h += '<div class="refaddTable table">'
                                         h += '<div class="imageCell">'
 
-                                        h += '<div class="usericon" image="' + (src || '') + '">'
+                                        h += '<div class="usericon" ban=".gif,.png" image="' + (src || '') + '">'
 
                                         if (!src && letter) {
 
@@ -7413,7 +7430,7 @@ Platform = function (app, listofnodes) {
                 })
             },
 
-            getNotifications: function () {
+            getNotifications: function (blockdif) {
                 var n = this;
 
 
@@ -7424,7 +7441,7 @@ Platform = function (app, listofnodes) {
 
                     return self.sdk.node.get.timepr().then(r => {
 
-                        return self.sdk.missed.get(n.storage.block)
+                        return self.sdk.missed.get(n.storage.block - (blockdif || 0))
 
                     }).then(({block, notifications}) => {
                         
@@ -8287,7 +8304,7 @@ Platform = function (app, listofnodes) {
                 }
                 else {
 
-                    name = name.toLowerCase()
+                    name = (name || '').toLowerCase()
 
                     var lf = _.find(self.sdk.usersl.storage, function (s) {
                         if (s && s.name && s.name.toLowerCase() == name.toLowerCase()) return true
@@ -11589,7 +11606,8 @@ Platform = function (app, listofnodes) {
                     timeUpd: comment.timeUpd,
                     scoreDown: 0,
                     scoreUp: 0,
-                    myScore: 0
+                    myScore: 0,
+                    deleted : comment.deleted
                 }
 
                 return lc;
@@ -11613,6 +11631,7 @@ Platform = function (app, listofnodes) {
                     comment.verify = true;
 
                     comment.rating = data.rating
+                    comment.deleted= data.deleted || data.blck
 
                     _.each(self.sdk.relayTransactions.withtemp('comment'), function (c) {
                         if (c.optype == 'comment' || !c.optype) {
@@ -19721,7 +19740,7 @@ Platform = function (app, listofnodes) {
 
                 if (gotoprofile) h += link
 
-                h += '<div class="usericon" image="' + clearStringXss(src || '') + '">'
+                h += '<div class="usericon" ban=".gif,.png" image="' + clearStringXss(src || '') + '">'
 
                 if (!src && letter){
 
@@ -24032,7 +24051,7 @@ Platform = function (app, listofnodes) {
             core.backtoapp = function(link){
 
                 if (isTablet() ||isMobile() || window.cordova)
-                    app.nav.api.history.removeParameters(['pc'])
+                    app.nav.api.history.removeParameters(['pc'], null, {replaceState : true})
 
                 if (link){
                     link = link.replace('https://' + self.app.options.url + '/', '')
@@ -24110,16 +24129,13 @@ Platform = function (app, listofnodes) {
                     self.app.actions.optimize()   
                 }
                     
-                if (isTablet() ||isMobile() || window.cordova)
+                if (isTablet() || isMobile() || window.cordova)
                     app.nav.api.history.addParameters({
                         'pc' : '1'
                     })
 
                 if (self.matrixchat.core){ 
                     self.matrixchat.core.hideInParent(false) 
-
-                    
-                
                 }
                 
 

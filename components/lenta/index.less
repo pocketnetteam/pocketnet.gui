@@ -4,6 +4,10 @@
 #lenta{
 	/*background: #F9F9F9;*/
 
+	&.destroying{
+		display: none;
+	}
+
 
 	&.rebuilding{
 		.transition(0.3s);
@@ -122,7 +126,6 @@
 		overflow: hidden; 
 		display: flex;
 		flex-direction: column;
-		.transition(0.1s, transform);
 
 		.authorgroup{
 			display: flex;
@@ -1284,7 +1287,7 @@
 					text-overflow: ellipsis;
 					overflow: hidden;
 					display: inline-block;
-					vertical-align : middle;
+					vertical-align : bottom;
 				}
 			}
 
@@ -1725,7 +1728,6 @@
 					scrollbar-width: none;
 					overscroll-behavior: none;
 					transform: translate3d(0, 0, 0);
-					.transition(0.1s, transform);
 
 					.videoWrapper{
 						border-radius: 0;
@@ -2326,7 +2328,7 @@
 					position: absolute;
 					left : 0;
 					top : 0;
-					display: none;
+					//display: none; //
 
 					.videoWrapper{
 						height: 100%;

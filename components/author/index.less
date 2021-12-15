@@ -7,6 +7,8 @@
 		text-align: center;
 	}
 
+	
+
 
 	.mobileinfo{
 		display: none;
@@ -289,6 +291,12 @@
 		.site{
 			text-decoration: underline;
 			color : @color-main;
+		}
+
+		.showmoreinabout{
+			display: none;
+			color : @color-main;
+			text-decoration: underline;
 		}
 	}
 
@@ -998,6 +1006,7 @@ html.stblack{
 html.mobile,
 html.cordova,
 html.tablet{
+
 	#author{
 
 		.leftpanelcell{
@@ -1128,6 +1137,27 @@ html.tablet{
 				overflow: hidden;
 			}
 		}
+		.authorinfo{
+
+			.showmoreinabout{
+				display: inline;
+			}
+
+			.additionalinfo.hasabout{
+				display: none;
+			}
+
+			&.displayedall{
+				.showmoreinabout{
+					display: none;
+				}	
+
+				.additionalinfo.hasabout{
+					display: block;
+				}
+			}
+		}
+		
 	}
 }
 /*t*/ @media only screen and (max-width: 768px){
@@ -1287,6 +1317,10 @@ html.tablet{
 					}
 				}
 
+				.foraddress{
+					opacity: 0.3;
+				}
+
 				.work{
 					padding-right: 0;
 				}
@@ -1341,6 +1375,11 @@ html.tablet{
 						font-size: 1.4em;
 						border-bottom : 1px solid @color-orange;
 						opacity: 1;
+					}
+
+					.notificationturn i, 
+					.unsubscribe{
+						font-size: 1.4em;
 					}
 
 					.startchat{
@@ -1415,7 +1454,6 @@ html.tablet{
 				.authorinfo{
 					padding : @rhythm;
 					margin-bottom: 0;
-
 					.postcnt,
 					.name{
 						display: none;

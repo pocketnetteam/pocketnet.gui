@@ -378,7 +378,7 @@ var menu = (function(){
 							open : true,
 							href : 'notifications',
 							inWnd : true,
-	
+							history : true,
 							essenseData : {
 							}
 						})
@@ -811,9 +811,9 @@ var menu = (function(){
 						open : true,
 						href : 'accounts',
 						inWnd : true,
-
+						
 						essenseData : {
-							href : deep(self, 'app.nav.current.href') || 'index'
+							href : history.state.href || 'index'
 						}
 					})
 					
@@ -825,8 +825,9 @@ var menu = (function(){
 					
 					self.nav.api.go({
 						open : true,
-						href : 'userpage?id=wallet',
-						history : true
+						href : isMobile() ? 'wallet' : 'userpage?id=wallet',
+						history : true,
+						inWnd : isMobile()
 					})
 					
 				},

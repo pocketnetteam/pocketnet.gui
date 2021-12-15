@@ -15,12 +15,38 @@
 		</div>
 	</div>
 
+	
+
 	<div class="action">
 
 		<div class="ways">
 			<div class="wayf">
 
-				<div class="row flx">
+				<div class="row one">
+					<div class="wrp">
+						<div class="flxbtn">
+							<div>
+								<a href="index?sst=pkoin_commerce">
+									<button class="button medium orange"><i class="fas fa-hashtag"></i> <%=e('buypeertopeer')%></button>
+								</a>
+							</div>
+							<div class="flxbtnlbk">
+								<span><%- e('pkoin_commerce_info') %></span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class="ways">
+
+			
+			<div class="wayf">
+
+				<div class="row flx forfiats">
 
 					<div class="fiat">
 						<div class="clogo">
@@ -55,7 +81,7 @@
 				<div class="row table">
 					<div class="reciever">
 						<a elementsid="https://buy.pkoin.indacoin.io" href="https://buy.pkoin.indacoin.io/index?address=<%-a.address || ''%>">
-							<button class="button orange"><i class="fas fa-chevron-circle-right"></i> <%=e('buywithcreditcard')%></button>
+							<button class="button medium black"><i class="fas fa-chevron-circle-right"></i> <%=e('buywithcreditcard')%></button>
 						</a>
 					</div>
 				</div>
@@ -87,7 +113,7 @@
 
 					<div class="reciever">
 						<a elementsid="https://pkoin.net" href="https://pkoin.net/?address=<%-a.address || ''%>">
-							<button class="button "><i class="fas fa-chevron-circle-right"></i> <%=e('buyforcrypto')%></button>
+							<button class="button medium black"><i class="fas fa-chevron-circle-right"></i> <%=e('buyforcrypto')%></button>
 						</a>
 					</div>
 				</div>

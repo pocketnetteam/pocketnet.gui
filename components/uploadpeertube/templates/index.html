@@ -1,4 +1,7 @@
 <div id="<%-module.map.id%>">
+
+  <% if(hasAccess) {%>
+
   <div class="upload-header-wrapper activeOnRolled">
     <div class="upload-header activeOnRolled">
       <div class="logo-container">
@@ -136,4 +139,15 @@
       <div class="preloader5"><img src="./img/three-dots.svg"/></div>
     </div>
   </div>
+
+  <% } else { %> 
+    <div class="errorWrapper">
+      <div>
+        <div class="videoErrorHeading"><i class="fas fa-exclamation-circle"></i> <%- e('unableToAuthorize') %></div>
+        <div class="videoErrorBody"><%- e('unableToAuthorizeBody') %></div>
+      </div>
+    </div>
+  <% } %>
+
+
 </div>

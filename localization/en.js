@@ -207,6 +207,7 @@ ____loclib.ccc = "Comments count";
 ____loclib.crc = "Comment Rate count";
 ____loclib.stp = "Trial period";
 ____loclib.srep = "Reputation";
+____loclib.ccpl = "Complains count";
 
 //accounts
 ____loclib.aaddedacc = "Change Account";
@@ -1822,8 +1823,15 @@ ____loclib.pkoin_commerce_info = 'Any peer-to-peer PKOIN transactions are not mo
 ____loclib.buyforcrypto = 'Buy for crypto'
 ____loclib.buywithcreditcard = 'Buy with credit card'
 ____loclib.buylogo = 'Buy Pocketcoin (PKOIN)'
+____loclib.buypeertopeer = 'Buy Peer-to-Peer'
+
 
 ____loclib.comments_interesting = 'Interesting at first'
 ____loclib.comments_timeup = 'New first'
 ____loclib.comments_time = 'Old first'
 ____loclib.comments_next = 'Show next'
+
+____loclib.create = 'Create'
+____loclib.drafts = 'Drafts'
+
+____loclib.repostyourown = 'You cannot repost your own post'

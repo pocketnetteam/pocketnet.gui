@@ -37,8 +37,17 @@ var accounts = (function(){
 
 							self.user.signin(private, function(state){
 
+
+
 								var h = ed.href || 'userpage?id=accounts&s=' + makeid()
 								var history = false;
+
+								if(isMobile()){
+
+									h = window.history.state.href || 'index'
+									
+								}
+								
 
 								if (ed.toaccpage) {
 									h = 'author?address=' + address
@@ -49,6 +58,8 @@ var accounts = (function(){
 									h = 'filluser'
 									history = true
 								}
+
+								
 
 								globalpreloader(false)
 
@@ -64,19 +75,6 @@ var accounts = (function(){
 									}
 									
 								})
-
-								/*self.app.reloadLight(function(){
-
-									
-
-									self.app.nav.api.load({
-										open : true,
-										href : h,
-										history : history
-									})
-
-									
-								});*/
 
 							})
 						});

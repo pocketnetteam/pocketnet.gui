@@ -100,6 +100,36 @@ var navigation = (function(){
 						})	
 					})
 
+					p.el.find('.addshare').on('click', function(){
+
+						self.nav.api.go({
+							open : true,
+							href : 'share',
+							inWnd : isMobile(),
+							history : true,
+							
+							essenseData : {
+								rmhistory : true
+							}
+						})
+
+					})
+
+					p.el.find('.showmenu').on('click', function(){
+
+						self.nav.api.go({
+							open : true,
+							href : 'userpage',
+							inWnd : isMobile(),
+							history : true,
+							
+							essenseData : {
+								rmhistory : true
+							}
+						})
+
+					})
+
 
 					p.el.find('.matrixchat').on('click', function(){
 

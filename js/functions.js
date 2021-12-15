@@ -553,7 +553,9 @@
 
 		var render = function(tpl){
 
-			var h = p.allowHide ? '<div class="wndback" id='+id+'></div><div class="wndinner">' : '<div class="wndback" id='+id+'></div><div class="_close roundclosebutton '+closedbtnclass+'"><i class="fa fa-times" aria-hidden="true"></i></div><div class="wndinner ' + p.type + '">\
+			if(!p.type) p. type = ''
+
+			var h = p.allowHide ? '<div class="wndback" id='+id+'></div><div class="wndinner">' : '<div class="wndback" id='+id+'></div><div class="_close roundclosebutton '+closedbtnclass+'"><i class="fa fa-times" aria-hidden="true"></i></div><div class="closeline"></div><div class="wndinner ' + p.type + '">\
 			';
 
 			var closedbtnclass = ''
@@ -585,7 +587,8 @@
 				/*wnd.css('top', app.lastScrollTop)
 			   	wnd.css('height', app.height)*/
 
-		   	if(!p.header) wnd.addClass('noheader')
+		   	if(!p.header) 
+			   	wnd.addClass('noheader')
 
 			el.append(wnd);		
 
@@ -596,7 +599,13 @@
 			_.each(p.buttons, function(button){
 				button.el = $("<div>",{
 				   "class" 	: "button " + (button.class || ""),
-				   "html"	: "<div>" + button.html + "</div>"
+				   "html"	: "<div>" + 
+				   
+				   (button.html ? button.html : 
+						(app ? ( app.localization.e(button.text) || button.text || '') : 
+						(button.text || '')) ) + 
+				   
+				   "</div>"
 			    });
 
 				wnd.find(".wndinner>div.buttons").append(button.el);
@@ -613,6 +622,16 @@
 			}
 
 			wnd.css("display", "block");
+			wnd.addClass('asette')
+			
+
+			setTimeout(function(){
+				wnd.addClass('sette')
+			}, 20)
+
+			setTimeout(function(){
+				wnd.removeClass('asette')
+			}, 320)
 
 			app.actions.playingvideo(null);
 		}
@@ -635,6 +654,49 @@
 				wnd.find('.expandButton').on('click', actions.show);
 			}
 
+			
+
+			/*wnd.find('.wndback,.wndheader').swipe({
+				swipeDown : function(e, phase, direction, distance){
+					actions.close(true)
+				},
+			})*/
+
+			if(isMobile() && wnd.hasClass('normalizedmobile')){
+
+				var trueshold = 20
+
+				var parallax = new SwipeParallaxNew({
+
+					el : wnd.find('.wndback,.wndheader'),
+					transformel : wnd.find('.wndinner'),
+
+					allowPageScroll : 'vertical',
+	
+					directions : {
+						down : {
+							cancellable : true,						
+
+							positionclbk : function(px){
+								var percent = Math.abs(px) / trueshold;
+							},
+
+							constraints : function(){
+								return true;
+							},
+
+							restrict : true,
+							trueshold : trueshold,
+							clbk : function(){
+								actions.close(true)
+							}
+	
+						}
+					}
+					
+	
+				}).init()
+			}
 
 			app.events.resize[id] = resize
 			app.events.scroll[id] = wndfixed
@@ -655,10 +717,16 @@
 				if (self.essenseDestroy)
 					self.essenseDestroy(key)
 				
-				wnd.remove();
-
 				delete app.events.resize[id]
 				delete app.events.scroll[id]
+
+				wnd.addClass('asette')
+				wnd.removeClass('sette')
+
+				setTimeout(function(){
+					wnd.remove();
+				}, 100)
+				
 
 			},
 
@@ -770,7 +838,7 @@
 
 		p.class = 'tooltipMobileDialog';
 
-		p.html = '<div class="mobiledialogcontent">'+(p.html || '')+'</div><div class="closeButton"><button class="button ghost"><i class="far fa-times-circle"></i></button></div>'
+		p.html = '<div class="mobiledialogcontent">'+(p.html || '')+'</div><div class="closeButton"><button class="button ghost"><i class="far fa-times-circle"></i> '+app.localization.e('close')+'</button></div>'
 
 		var c = p.clbk || function(){}
 
@@ -779,6 +847,11 @@
 			el.on('click', function(){
 				self.destroy()
 			})
+
+			setTimeout(function(){
+				el.addClass('animend')
+			}, 20)
+			
 
 			c(el)
 		}
@@ -1384,13 +1457,15 @@
 
 			destroyed = true;
 
-			$el.fadeOut(200);
+			$el.remove();
+
+			/*$el.fadeOut(200);
 
 			setTimeout(function(){
 
 				$el.remove();
 
-			},200);
+			},200);*/
 
 			if(removescroll)
 			{
@@ -1552,27 +1627,47 @@
 			'background-repeat':'no-repeat'
 		});
 	}
+
 	bgImages = function(el, p){
 
 		if(!p) p = {};
 
 		var els = el.find('[image]')
 
+		if(!els.length){
+
+			if(typeof p.clbk === 'function') p.clbk();
+
+			return
+		}
+
+		els.imagesLoadedPN({ imageAttr: true }, function(image) {
+
+			if(typeof p.clbk === 'function') p.clbk(image);
+			
+		});
+
+		return
+
 		els.each(function(){
 
 			var _el = $(this);
 			var image = _el.attr('image')
-			var ban = _el.attr('ban')
+
+
+
+
+			/*var ban = _el.attr('ban')
 			//var save = _el.attr('save')
 
-			if (image)
+			if (image && image != '*')
 			{
 
 				if (ban && image.indexOf(ban) > -1){
 					image = 'img/imagenotuploaded.jpg'
 				}
 
-				image = image.replace('bastyon.com:8092', 'pocketnet.app:8092')
+					image = image.replace('bastyon.com:8092', 'pocketnet.app:8092')
 
 				_el.css({
 					'background-image': 'url('+image+')',
@@ -1581,30 +1676,21 @@
 					'background-repeat': p.repeat || 'no-repeat'
 				});
 
-				_el.attr('image', '')
+				_el.attr('image', '*')
 
-				/*if(save){
-					_el.swipe({
-						longTap : function(){
-
-						}
-					})
-				}*/
-			}
-
-			if(p.clbk)
-			{
-				_el.imagesLoaded({ background: true }, function(image) {
-
-					el.fadeIn({queue: false, duration: 'fast'});
-
-				  	if(typeof p.clbk === 'function')
-				  		p.clbk(image);
-				});
-			}
-		})
+			}*/
 
 			
+		})
+
+		if(p.clbk)
+		{
+			els.imagesLoaded({ background: true }, function(image) {
+
+				if(typeof p.clbk === 'function') p.clbk(image);
+				
+			});
+		}
 	}
 
 	pathFromMD5Name = function(name){
@@ -6325,10 +6411,6 @@
 				d.i = i
 			})
 
-			/*p.direction || (p.direction = 'up');
-			p.trueshold || (p.trueshold = 90);
-			p.iniMargin || (p.iniMargin = 0);*/
-
 		var self = this;
 
 		var animationInterval = null;
@@ -6482,71 +6564,15 @@
 
 				var v = (ap.x || ap.y || 0);
 
-				/*p.el.css({transition: "transform " + animatedurations + " ease"});*/
-
-				/*if (ap.y){
-					p.el.css("transform","translate3d(0, "+ap.y+", 0)");
-				}
-				else{
-					p.el.css("transform","translate3d("+ap.x+", 0, 0)");
-				}*/
-
 				p.el.css({transform: ""});
 				p.el.css({transition: ""});
 				
-
-				/*var td = 16;
-				var stepd = 16 / animateduration;
-				var step = 0;
-
-				self.animation = {
-
-					interval : setInterval(function(){
-
-						var z = (v || '0').replace('px', '')
-
-						if (options.step){
-
-							var s = z //ease.inOutCubic(step * stepd * z / p.directions[direction].trueshold)
-
-							//s = s * p.directions[direction].trueshold
-
-							options.step(s)	
-						}
-
-						step++
-
-					}, td),
-
-					stop : function(){
-
-						if(!options.dontstop){
-							p.el.css({transform: ""});
-							p.el.css({transition: ""});
-						}
-
-						if(self.animation.interval){
-							clearInterval(self.animation.interval)
-							self.animation.interval = null;
-						}
-						
-					}
-				}*/
-
-
-					/*if (self.animation)
-						self.animation.stop()*/;
 
 					if (options.complete)
 						options.complete()
 
 
 			}
-
-
-			/*else{
-				self.animation = p.el.animate(ap, options);	
-			}*/
 		}
 
 		var parseStart = function(direction){
@@ -6573,9 +6599,7 @@
 
 			var prop = directiontoprop(direction);
 
-			var value = _value// ease.inOutCubic(_value / p.directions[direction].trueshold)
-
-			//value = value * p.directions[direction].trueshold
+			var value = _value
 
 			if (p.prop != 'translate'){
 				p.el.css(prop, value + 'px');	
@@ -6624,7 +6648,6 @@
 			self.lastDirection = direction;
 
 			var css = directiontoprop(direction)
-			//var upborder = Number(p.el.css(directiontoprop(direction) || '0px').replace('px', ''))
 
 			var ap = {}
 				ap[css] =  '0px'
@@ -6678,13 +6701,6 @@
 
 				allowPageScroll : p.allowPageScroll,
 					
-				/*swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
-
-					if(direction == 'up' && distance - startMargin > p.trueshold){
-						actions.close(true)	
-					}
-				},*/
-
 				swipeStatus:function(event, phase, _direction, distance, duration, fingers, fingerData, currentDirection){
 
 
@@ -6699,15 +6715,6 @@
 						startMargin = 0;
 
 						self.renew()
-
-						/*console.log('self.lastDirection', self.lastDirection)
-						if (self.lastDirection){
-							startMargin = parseStart(self.lastDirection) 
-
-							self.animation.stop();
-							self.renew()
-						}*/
-
 						
 						return true
 					}
@@ -6778,22 +6785,6 @@
 							}
 
 							mintruesholdGone = true;
-
-							/*if (Math.abs(dp) >= (direction.trueshold || 1)){
-
-								self.ended = true
-
-								if(!direction.restrict)
-									self.goup(mainDirection.i)
-								else{
-									self.backup(mainDirection.i)
-								}
-								
-
-								mainDirection = null;
-
-								return false;
-							}*/
 
 							if (direction.positionclbk){
 								direction.positionclbk(dp)
@@ -6876,18 +6867,20 @@
 		
 		var set = function(direction, value){
 
+			var __el = p.transformel || p.el
+
 			var prop = directiontoprop(direction);
 
 			if(direction == 'up' || direction == 'left') value = -value
 
 			if (prop == 'x'){
-				p.el[0].style["transform"] = "scale(0.9) translate3d("+(value || 0)+"px, 0, 0)"
-				p.el[0].style['transform-origin'] = 'left center'
+				__el[0].style["transform"] = "scale(0.9) translate3d("+(value || 0)+"px, 0, 0)"
+				__el[0].style['transform-origin'] = 'left center'
 			}
 
 			if (prop == 'y'){
-				p.el[0].style["transform"] = "scale(0.9) translate3d(0, "+(value || 0)+"px, 0)"
-				p.el[0].style['transform-origin'] = 'center top'
+				__el[0].style["transform"] = "scale(0.9) translate3d(0, "+(value || 0)+"px, 0)"
+				__el[0].style['transform-origin'] = 'center top'
 			}
 		}
 
@@ -6903,8 +6896,10 @@
 
 			if (needclear){
 
-				p.el.css({transform: ""});
-				p.el.css({transition: ""});
+				var __el = p.transformel || p.el
+
+				__el.css({transform: ""});
+				__el.css({transition: ""});
 				
 				_.each(p.directions, function(d){
 					applyDirection(d, 0)
@@ -8163,6 +8158,9 @@
 		el.after(h);
 	}
 	html = function(el, h){
+
+		//console.log("DEBUG HTML FR", {html : h})
+
 		el.html(h);
 	}
 	append = function(el, h){

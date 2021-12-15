@@ -839,7 +839,7 @@ var post = function(nModule){
 				}
 				else
 				{
-					_el.imagesLoaded({ background: true }, function(image) {
+					_el.imagesLoadedPN({ imageAttr: true }, function(image) {
 
 						if(share.settings.v != 'a'){
 
@@ -1107,7 +1107,7 @@ var post = function(nModule){
 
 					var images = _p.el.find('img');
 
-					_p.el.find('img').imagesLoaded({ background: true }, function(image) {
+					_p.el.find('img').imagesLoadedPN({ imageAttr: true }, function(image) {
 
 						_.each(image.images, function(i, index){
 							if(i.isLoaded){
