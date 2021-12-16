@@ -987,7 +987,6 @@ var lenta = (function(){
 						})
 
 					})
-
 				
 
 				}
