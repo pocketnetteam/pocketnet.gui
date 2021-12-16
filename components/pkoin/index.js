@@ -179,39 +179,49 @@ var pkoin = (function(){
 				self.app.platform.sdk.node.transactions.get.balance(function(amount){
 
 					balance = amount.toFixed(3);
-					valSum = el.inputSum.val();
+					valSum = Number(el.inputSum.val());
 
-					if (el.textareaComment){
-						valComment = el.textareaComment.val();
-					}
+					if (valSum){
 
-					if (valSum < Number(balance)){
+						if (valSum < Number(balance)){
 
-						if (optionsValue === 'pkoinComment'){
+							if (optionsValue === 'pkoinComment'){
 
-							valComment = el.textareaComment.val();
+								if (el.textareaComment){
+									valComment = el.textareaComment.val();
+								}
 
-							events.donate(final);
+								if (valComment){
 
+									events.donate(final);
+
+								} else {
+
+									sitemessage(self.app.localization.e('e13057'))
+								}
+	
+							}
+	
+							if (optionsValue === 'donateToTheAuthor'){
+	
+								
+								closeContainer();
+								self.app.platform.ui.wallet.send({
+									address : receiver,
+									amount: valSum
+								})
+	
+							}
+	
+						} else {
+	
+							sitemessage(self.app.localization.e('incoins'))
 						}
-
-						if (optionsValue === 'donateToTheAuthor'){
-
-							
-							closeContainer();
-							self.app.platform.ui.wallet.send({
-								address : receiver,
-								amount: valSum
-							})
-
-						}
-
 					} else {
 
-						sitemessage(self.app.localization.e('incoins'))
+						sitemessage(self.app.localization.e('e13057'))
+
 					}
-
-
 					
 				
 				})
