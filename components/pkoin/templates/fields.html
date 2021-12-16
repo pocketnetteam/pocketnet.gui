@@ -9,7 +9,7 @@
     <div class="sum">
 				
         <div class="inputWrapper">
-            <input type="text" class="inputSum" placeholder="<%= e('wsamountof') %>">
+            <input type="number" id="inputSum" class="inputSum" placeholder="<%= e('wsamountof') %>" value="<%= valSum %>">
             <div class="pkoinLabel">
                 PKOIN
             </div>
@@ -23,8 +23,7 @@
                 <%= e('comment') %>
             </div>
             <div class="inputWrapper">
-                <textarea class="textareaComment" placeholder="<%= e('e13038') %>"></textarea>
-
+                <textarea type="text" id="textareaComment" class="textareaComment" placeholder="<%= e('e13038') %>"><%= valComment %></textarea>
             </div>
         </div>
 

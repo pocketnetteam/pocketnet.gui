@@ -981,6 +981,7 @@ var lenta = (function(){
 							essenseData : {
 								userinfo: userinfo,
 								balance : balance,
+								id : id,
 								embedding : {
 									type : 'pkoin',
 									id : share.address
