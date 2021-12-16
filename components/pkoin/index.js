@@ -82,7 +82,8 @@ var pkoin = (function(){
 					}
 				
 			},
-			send : function(comment, clbk, pid, aid, editid, id){	
+			send : function(comment, clbk){	
+
 
 				console.log('send!!');
 				self.app.platform.sdk.comments.send(shareId, comment, null, null, function(err, alias){
@@ -107,7 +108,7 @@ var pkoin = (function(){
 						}
 					}
 
-				});
+				}, null, "0");
 			}
 
 		}
@@ -119,7 +120,6 @@ var pkoin = (function(){
 				var comment = new Comment(shareId);
 				comment.message.set(valComment);
 				actions.links(comment, valComment);
-				comment.donate.set(valSum);
 
 				comment.donate.set({
 					address: receiver,
