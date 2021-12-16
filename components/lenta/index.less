@@ -8,6 +8,12 @@
 		display: none;
 	}
 
+	&.openapi{
+		.loadmore{
+			display: none!important;
+		}
+	}
+
 
 	&.rebuilding{
 		.transition(0.3s);
@@ -85,6 +91,15 @@
 	.loader{
 		background: #fff;
 		padding : 6 * @rhythm 0;
+		display: none;
+	}
+
+
+	&.loading{
+		.loader{
+			display: block;
+		}
+		
 	}
 
 	.panel{
@@ -2129,9 +2144,17 @@
 		}
 	}
 
+	.loadmore{
+		display: none;
+	}
+
 	.loadprev{
 		display : none;
 		margin-bottom: @rhythm;
+	}
+
+	&.showLoadmore{
+		display: none;
 	}
 
 	&.showprev{

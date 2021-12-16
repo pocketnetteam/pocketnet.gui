@@ -14525,6 +14525,8 @@ Platform = function (app, listofnodes) {
                                 total += amount
                             })
 
+                            total = Number(total.toFixed(8))
+
                             if (clbk)
                                 clbk(total, allunspents, e)
 
@@ -14577,9 +14579,9 @@ Platform = function (app, listofnodes) {
                                     unspent = _.filter(unspent, self.sdk.node.transactions.canSpend)
                                 }
 
-                                var amount = _.reduce(unspent, function (m, u) {
+                                var amount = Number(_.reduce(unspent, function (m, u) {
                                     return m + Number(u.amount)
-                                }, 0)
+                                }, 0).toFixed(8))
 
                                 if (clbk)
                                     clbk(amount, unspent, e)

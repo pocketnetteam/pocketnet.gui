@@ -3022,6 +3022,12 @@
 	    }
 	}
 
+	dround = function (n, d){
+		var digits = + "1".padEnd(d + 1, "0");
+
+		return Math.round(n * digits) / digits;
+	}
+
 	ParametersLive = function(parameters, el, p){
 
 
@@ -4158,6 +4164,18 @@
 						$(this).val(value); 	
 					}
 
+					if (parameter.type == 'number'){
+
+						if(!isNaN(Number(value))){
+							value = dround(value, deep(parameter, 'format.Precision') || 0)
+						}
+						else{
+							value = ''	
+						}
+
+						$(this).val(value); 
+					}
+
 					if (parameter.isValid(value))
 					{
 						_el.removeClass('error')
@@ -4175,6 +4193,35 @@
 
 				if (parameter.onType){
 					_el.on('keyup', _change)
+				}
+
+				if (parameter.type == 'number'){
+					_el.on('keyup', function(){
+
+						var value = $(this).val(); 	
+
+						console.log('value1', value, !isNaN(Number(value)))
+
+						if(value.length > 1) {
+							if (value[0] == '0')
+								value = value.substr(1)
+
+							var l = value[value.length - 1]
+
+							if(l == '.' || l == '0' || l == ',') return
+						}
+
+						if(!isNaN(Number(value))){
+
+							value = dround(value, deep(parameter, 'format.Precision') || 0)
+
+							$(this).val(value); 
+						}
+
+
+
+								
+					})
 				}
 			}
 
@@ -4286,6 +4333,7 @@
             self.if = p.if || null;
             
             self.text = p.text || null;
+
 
 		if(self.type.indexOf('range') > -1) self.dbFunc = 'fromto'
 
@@ -4523,6 +4571,10 @@
 
 			if(self.type == 'number' || self.type == 'cash')
 			{
+
+
+				return null
+
 				mask.alias = 'numeric';
 				mask.groupSeparator = typeof f.groupSeparator != 'undefined' ? f.groupSeparator : ',';
 				mask.radixPoint =  '.';
@@ -5264,7 +5316,11 @@
 				return `<button elementsid="button_${self.id}" ${__disabled} ${m} pid="${self.id}" class="simpleColor inpButton" value="${self.value}">${self.text}</button>`
 			}
 
-			var input = `<input elementsid="button_${self.id}_2" ${__disabled} ${m} pid="${self.id}" class="${self.type} input" placeholder="${(self.placeholder || "")}" value="${self.render(true)}" type="text">`
+			if(self.type == 'number'){
+				return `<input elementsid="button_${self.id}_2" ${__disabled} step="${deep(self, 'format.Step') || ''}" min="${deep(self, 'format.Min') || ''}" max="${deep(self, 'format.Max') || ''}" pid="${self.id}" class="${self.type} input" placeholder="${(self.placeholder || "")}" value="${self.render(true)}" type="text">`
+			}
+
+			var input = `<input elementsid="button_${self.id}_2" ${__disabled} ${m ? m : ''} pid="${self.id}" class="${self.type} input" placeholder="${(self.placeholder || "")}" value="${self.render(true)}" type="text">`
 
 			return input; 
 		}

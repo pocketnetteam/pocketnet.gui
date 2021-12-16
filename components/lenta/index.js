@@ -3406,8 +3406,9 @@ var lenta = (function(){
 
 						loading = false;
 
-						if (!el.c)
-							return
+						if (!el.c) return
+
+						el.c.removeClass('loading');
 
 						if(!error && !error2){
 
@@ -4624,6 +4625,10 @@ var lenta = (function(){
 				clearnewmaterials()	
 
 				make(null, p);
+
+				if(essenseData.openapi){
+					el.c.addClass('openapi')
+				}
 
 				if (video){
 					el.c.addClass('mainvideo')

@@ -468,9 +468,9 @@
 		}
 	}
 
-	.captionshare{
+	/*.captionshare{
 		.shadowSmall();
-	}
+	}*/
 
 
 	.txt{
@@ -934,17 +934,21 @@
 				}
 			}
 		}
-
-		.vjs-big-play-button{
-			left : 2 * @rhythm;
-			bottom : 2 *  @rhythm;
-			top : auto;
-			font-size: 2em;
-			margin-top : 0!important;
-			margin-left : 0!important;
-			width: 1em;
-			.shadowText();
+		.video-js:not(.vjs-is-mobile),
+		.video-js.vjs-is-mobile.vjs-paused:not(.vjs-has-started){
+			.vjs-big-play-button{
+				left : 2 * @rhythm;
+				bottom : 2 *  @rhythm;
+				top : auto;
+				font-size: 2em;
+				margin-top : 0!important;
+				margin-left : 0!important;
+				width: 1em;
+				.shadowText();
+			}
 		}
+		
+		
 
 		.videoWrapper{
 			position: relative;
@@ -1909,7 +1913,7 @@ html.stblack{
 	}
 }
 
-
+/*
 html:not(.stblack){
 
 	#share{
@@ -1948,7 +1952,9 @@ html:not(.stblack){
 		}
 	}
 
-}
+}*/
+
+
 #share{
 	background: #FAFAFA;
 
@@ -1982,7 +1988,41 @@ html:not(.stblack){
 		}
 	}	
 
-	
+	.settingsWrapper{
+		.settings{
+			background: #fff;
+			padding : 1.6 * @rhythm @rhythm;
+			margin-bottom: @rhythm;
+
+			.visibilityWrapper{
+				.vc_valuecustom{
+					width: auto;
+					padding-top : 0;
+					font-size: 1em;
+					font-weight: 400;
+					border-bottom : 0;
+					input{
+						color: #838688;
+						padding-top : @rhythm;
+						padding-bottom : @rhythm;
+					}
+					.vc_selectInput{
+						border : 0;
+						background: #FAFAFA;
+						.shadowSmaller();
+					}
+
+					.vc_value{
+						padding-top : @rhythm;
+						padding-bottom: @rhythm;
+					}
+				}
+			
+				
+			}
+		}
+		
+	}
 
 	#post{
 		.share{
@@ -2461,6 +2501,12 @@ html:not(.stblack){
 		padding-right: 0;
     }
 
+	.cpt{
+		input{
+			padding : 3 * @rhythm 2 * @rhythm;
+		}
+	}
+
 	.postpanel{
 		display: block;
 		margin-top : 0;
@@ -2634,6 +2680,32 @@ html.stblack{
 	}
 	#share{
 		background: @color-black;
+
+
+		.settingsWrapper{
+			.settings{
+				background: @color-block;
+				
+	
+				.visibilityWrapper{
+					.vc_valuecustom{
+					
+						input{
+							color: @color-main;
+						
+						}
+						.vc_selectInput{
+							background: @color-block;
+						}
+	
+						
+					}
+				
+					
+				}
+			}
+			
+		}
 	
 		.paddingmobilewrapper{
 			background: @color-black;
@@ -2753,7 +2825,7 @@ html.stblack{
 					.panel{
 						.item {
 							color : @color-main;
-							background: @color-black;
+							background: @color-block;
 						}
 					}
 				}
@@ -2777,6 +2849,8 @@ html.stblack{
 				}
 			}
 		}
+
+		
 	
 	}	
 }

@@ -16,17 +16,20 @@
 
 		<% if(!app.curation()) {%>
 
-			<div elementsid="lenta_loadmore" class="loadmore"><button><%=e('lloadmore')%></button></div>
+			<!--<div elementsid="lenta_loadmore" class="loadmore"><button><%=e('lloadmore')%></button></div>-->
 
 			<% if(recommended == 'recommended') {%>	
 
 			<% } else { %> 
+
 				<% if(state) {%>
-				<div class="ended">
-					<a elementsid="index?r=recommended" href="index?r=recommended">
-						<button style="border-radius: 50px;"><%=e('e13124')%></button>
-					</a>
-				</div>
+
+					<div class="ended">
+						<a elementsid="index?r=recommended" href="index?r=recommended">
+							<button style="border-radius: 50px;"><%=e('e13124')%></button>
+						</a>
+					</div>
+
 				<% } %>
 
 			<% } %>

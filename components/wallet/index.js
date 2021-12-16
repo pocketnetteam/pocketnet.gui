@@ -143,7 +143,9 @@ var wallet = (function(){
 					placeholder : self.app.localization.e('wsamountof'),
 
 					format : {
-						Precision : 6
+						Precision : 8,
+						Step : 0.01,
+						Min : 0
 					}
 				}),
 
