@@ -52,7 +52,6 @@ var pkoin = (function(){
 					el.inputSum = _p.el.find('#inputSum');
 					el.textareaComment = _p.el.find('#textareaComment');
 
-
 					
 				})
 
@@ -84,11 +83,7 @@ var pkoin = (function(){
 			},
 			send : function(comment, clbk){	
 
-
-				console.log('send!!');
 				self.app.platform.sdk.comments.send(shareId, comment, null, null, function(err, alias){
-
-					console.log('err alias', err, alias);
 
 					if(!err){
 						if (clbk)
@@ -114,7 +109,7 @@ var pkoin = (function(){
 		}
 
 		var events = {
-			donate : function(valSum, valComment){
+			donate : function(clbk){
 
 				
 				var comment = new Comment(shareId);
@@ -127,27 +122,47 @@ var pkoin = (function(){
 				})
 				
 
-				actions.send(comment, function(data){
-
-					console.log('data!!!', data);
-
-				});
+				actions.send(comment, clbk);
 
 			}
 		}
 
 
-		var initEvents = function(){
+		var initEvents = function(_p){
 
+			console.log('_p', _p);
 
 			el.send.on('click', function(){
+
+
+				var final = function(err, data){
+
+					console.log('err data', err, data);
+
+					if (!err){
+
+						new Audio('sounds/donate.mp3').play();
+
+						if (_p.container && _p.container.close){
+	
+							_p.container.close();
+	
+						}
+					}
+
+
+
+				}
 
 				self.app.platform.sdk.node.transactions.get.balance(function(amount){
 
 					balance = amount.toFixed(3);
 
 					valSum = el.inputSum.val();
-					valSum = Number(valSum);
+
+					if (el.textareaComment){
+						valComment = el.textareaComment.val();
+					}
 
 					console.log('balamce', valSum, balance, optionsValue);
 
@@ -157,7 +172,7 @@ var pkoin = (function(){
 
 							valComment = el.textareaComment.val();
 
-							events.donate(valSum, valComment);
+							events.donate(final);
 
 						}
 
@@ -166,10 +181,6 @@ var pkoin = (function(){
 						sitemessage(self.app.localization.e('incoins'))
 					}
 
-					new Audio('sounds/donate.mp3').play();
-
-
-					console.log('balance', self.map.id, amount,shareId);
 
 					
 				
@@ -202,6 +213,10 @@ var pkoin = (function(){
 					balance : essenseData.balance
 				}
 
+				if (p.settings.container){
+					actions.closeContainer = p.settings.container.close;
+				}
+
 
 				shareId = essenseData.id;
 
@@ -222,7 +237,7 @@ var pkoin = (function(){
 				el.send = el.c.find('.sendButton')
 
 
-				initEvents();
+				initEvents(p);
 			
 				p.clbk(null, p);
 			},

@@ -984,7 +984,10 @@ var lenta = (function(){
 								id : id,
 								embedding : {
 									type : 'pkoin',
-									id : share.address
+									id : share.address,
+									close : function(){
+										renders.articles();
+									},
 								},	
 							}
 						})
