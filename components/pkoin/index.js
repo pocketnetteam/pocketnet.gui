@@ -176,6 +176,22 @@ var pkoin = (function(){
 
 						}
 
+						if (optionsValue === 'donateToTheAuthor'){
+
+							if (_p.container && _p.container.close){
+	
+								_p.container.close();
+							}
+
+							self.app.platform.ui.wallet.send({
+								address : receiver,
+								amount: valSum
+							}, function(){
+					
+							})
+
+						}
+
 					} else {
 
 						sitemessage(self.app.localization.e('incoins'))
