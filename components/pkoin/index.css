@@ -147,6 +147,7 @@
 .wnd.sharingwindow2 .wndinner.pkoin {
   max-width: 370px;
   max-height: 480px;
+  box-shadow: none;
 }
 .wnd.sharingwindow2 .wndinner.pkoin .wndcontent {
   height: fit-content;

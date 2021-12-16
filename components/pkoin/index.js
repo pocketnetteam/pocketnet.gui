@@ -138,15 +138,24 @@ var pkoin = (function(){
 
 		var initEvents = function(_p){
 
-			el.buy.on('click', function(){
+
+			var closeContainer = function(){
+
+				valSum = null;
+				valComment = null;
 
 				if (_p.container && _p.container.close){
 	
 					_p.container.close();
 
 				}
+			}
 
-				self.app.platform.ui.wallet.buy({})
+			el.buy.on('click', function(){
+
+				self.app.platform.ui.wallet.buy({});
+
+				closeContainer();
 
 				
 			})
@@ -160,11 +169,7 @@ var pkoin = (function(){
 
 						new Audio('sounds/donate.mp3').play();
 
-						if (_p.container && _p.container.close){
-	
-							_p.container.close();
-	
-						}
+						closeContainer();
 					}
 
 
@@ -192,11 +197,8 @@ var pkoin = (function(){
 
 						if (optionsValue === 'donateToTheAuthor'){
 
-							if (_p.container && _p.container.close){
-	
-								_p.container.close();
-							}
-
+							
+							closeContainer();
 							self.app.platform.ui.wallet.send({
 								address : receiver,
 								amount: valSum
@@ -241,9 +243,6 @@ var pkoin = (function(){
 					balance : essenseData.balance
 				}
 
-				if (p.settings.container){
-					actions.closeContainer = p.settings.container.close;
-				}
 
 
 				shareId = essenseData.id;
