@@ -76,7 +76,8 @@ __map =  {
 		"js/kit.js",
 		"js/satolist.js",
 		"js/peertube.js",
-		"js/widgets.js"
+		"js/widgets.js",
+		"js/logger.js"
 	],
 
 	__css : [

@@ -23462,6 +23462,12 @@ Platform = function (app, listofnodes) {
                 self.app.peertubeHandler = new PeerTubePocketnet(self.app);
             }
 
+            if (typeof FrontendLogger !== 'undefined') {
+                self.app.Logger = new FrontendLogger(navigator.userAgent);
+
+                self.app.Logger.error('', 'test')
+            }
+
             self.prepareUser(function() {
                 
                 clbk();
