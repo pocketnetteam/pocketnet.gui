@@ -966,12 +966,6 @@ var lenta = (function(){
 							addresses : [],
 						}
 	
-						var t = (share.caption || share.message)
-	
-						var link = 'send?address=' + share.address + '&amount=1'
-						+'&label=' + (userinfo.name || userinfo.address) + '&setammount=true'
-	
-	
 						self.nav.api.load({
 							open : true,
 							href : 'pkoin',

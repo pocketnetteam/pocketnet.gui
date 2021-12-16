@@ -802,11 +802,18 @@
 		.ways{
 			display : flex;
 			align-items: flex-start;
+			flex-wrap: wrap;
+
 
 			>div{
 				flex-shrink: 1;
   				flex-basis: 0;
 				flex-grow: 1;
+
+				
+				&:first-child{
+					padding-bottom: @rhythm * 4;
+				}
 			}
 		}
 

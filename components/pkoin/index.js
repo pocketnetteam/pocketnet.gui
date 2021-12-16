@@ -20,8 +20,8 @@ var pkoin = (function(){
 					name : "Localization",
 					id : 'localization',
 					defaultValue : optionsValue,
-					possibleValues : ['pkoinComment', 'donateToTheAuthor', 'liftUpThePost'],
-					possibleValuesLabels : [self.app.localization.e('pkoinComment'), self.app.localization.e('donateToTheAuthor'), self.app.localization.e('liftUpThePost')],
+					possibleValues : ['pkoinComment', 'donateToTheAuthor'],
+					possibleValuesLabels : [self.app.localization.e('pkoinComment'), self.app.localization.e('donateToTheAuthor')],
 
 		
 					_onChange : function(value){
@@ -33,6 +33,14 @@ var pkoin = (function(){
 		
 				})
 
+				if (el.inputSum){
+					valSum = el.inputSum.val();
+
+				}
+
+				if (el.textareaComment){
+					valComment = el.textareaComment.val();
+				}
 
 				self.shell({
 
@@ -130,14 +138,23 @@ var pkoin = (function(){
 
 		var initEvents = function(_p){
 
-			console.log('_p', _p);
+			el.buy.on('click', function(){
+
+				if (_p.container && _p.container.close){
+	
+					_p.container.close();
+
+				}
+
+				self.app.platform.ui.wallet.buy({})
+
+				
+			})
 
 			el.send.on('click', function(){
 
 
 				var final = function(err, data){
-
-					console.log('err data', err, data);
 
 					if (!err){
 
@@ -157,14 +174,11 @@ var pkoin = (function(){
 				self.app.platform.sdk.node.transactions.get.balance(function(amount){
 
 					balance = amount.toFixed(3);
-
 					valSum = el.inputSum.val();
 
 					if (el.textareaComment){
 						valComment = el.textareaComment.val();
 					}
-
-					console.log('balamce', valSum, balance, optionsValue);
 
 					if (valSum < Number(balance)){
 
@@ -186,8 +200,6 @@ var pkoin = (function(){
 							self.app.platform.ui.wallet.send({
 								address : receiver,
 								amount: valSum
-							}, function(){
-					
 							})
 
 						}
@@ -250,7 +262,8 @@ var pkoin = (function(){
 				el.c = p.el.find('#' + self.map.id);
 
 				el.fields = el.c.find("#fieldsWrapper");
-				el.send = el.c.find('.sendButton')
+				el.send = el.c.find('.sendButton');
+				el.buy = el.c.find('#buyButton');
 
 
 				initEvents(p);
