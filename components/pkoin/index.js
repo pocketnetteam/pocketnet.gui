@@ -153,7 +153,7 @@ var pkoin = (function(){
 
 			el.buy.on('click', function(){
 
-				self.app.platform.ui.wallet.buy({});
+				self.app.platform.ui.wallet.buy();
 
 				closeContainer();
 

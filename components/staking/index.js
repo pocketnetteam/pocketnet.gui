@@ -432,6 +432,12 @@ var staking = (function(){
 		}
 
 		var initEvents = function(){
+
+			el.buyButton.on('click', function(){
+
+				self.app.platform.ui.wallet.buy();
+
+			})
 			
 			el.caretUp.on('click', function(){
 				p.el.find('.wrp').addClass('hide');
