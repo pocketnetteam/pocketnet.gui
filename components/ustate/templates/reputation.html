@@ -118,7 +118,17 @@
         if(mestate && mestate.trial && !type) {%>
 
             <div class="reputationtip">
-                <%- e('trialreputationtip') %>
+
+                <div class="textpart">
+                    <%- e('trialreputationtip') %>
+                </div>
+
+                <div class="buttonWrapper">
+                    <a href="faq?id=starsystem">
+                        <button class="button"><%- e('trialreputationtipaction') %></button>
+                    </a>
+                </div>
+                
             </div>
 
         <% } %>

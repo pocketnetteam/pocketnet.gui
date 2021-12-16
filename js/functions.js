@@ -662,7 +662,7 @@
 				},
 			})*/
 
-			if(isMobile() && wnd.hasClass('normalizedmobile')){
+			if(isTablet() && wnd.hasClass('normalizedmobile')){
 
 				var trueshold = 20
 

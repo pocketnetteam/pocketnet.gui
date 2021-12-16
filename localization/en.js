@@ -206,12 +206,13 @@ ____loclib.ssc = "Stars count";
 ____loclib.ccc = "Comments count";
 ____loclib.crc = "Comment Rate count";
 
-____loclib.stp = "Trial period";
-____loclib.stpg = "Member of the Bastyon community";
-____loclib.stpreal = "Famous person";
+____loclib.stp = "Beginner";
+____loclib.stpg = "Top";
+____loclib.stpreal = "Verified";
 ____loclib.stpdev = "Bastyon developer";
 
-____loclib.trialreputationtip = "To become a member of the Bastyon community, you need to earn a reputation of 100 or have 50 PKOIN on your account. Earn a reputation by getting positive ratings for your posts and comments! Or share a referral link to Bastyon";
+____loclib.trialreputationtip = "To become a top user you need to have a valid reputation. It requires at least 100 different people with top reputation to upvote your content (after 3 months this requirement is relaxed to 30). The second requirement is minimum 100 overall reputation.";
+____loclib.trialreputationtipaction = "Learn more about reputation here"
 
 
 ____loclib.srep = "Reputation";

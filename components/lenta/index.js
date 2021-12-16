@@ -2825,7 +2825,6 @@ var lenta = (function(){
 							isotopeinited = true
 						}
 						else{
-
 							
 						}
 	
@@ -2985,7 +2984,7 @@ var lenta = (function(){
 
 						if(s.settings.v != 'a' && image.images.length > 1){
 
-							var gutter = 5;
+							var gutter = self.app.width <= 768 ? 0 : 5;
 
 							if (isMobile() || essenseData.openapi) {
 

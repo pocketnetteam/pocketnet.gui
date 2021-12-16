@@ -7315,6 +7315,96 @@ html{
 
 }
 
+html.cordova,
+html.tablet,
+html.mobile{
+    .wnd{
+        &.normalizedmobile{
+            .wndinner{
+                width: 65%;
+            }
+            .wndback{
+                backface-visibility: hidden;
+                will-change: transform;
+                backdrop-filter: none!important;
+                -webkit-backdrop-filter: none!important;  
+                .transition(0.3s);
+            }
+            .hideButton{
+                display: none!important;
+            }
+    
+            .closeline{
+                top : 15%;
+                height: 2px;
+                background: fade(#fff, 80);
+                border-radius: 2px;
+                width: 44%;
+                left: 28%;
+                opacity: 0;
+                position: absolute;
+            }
+    
+            .wndinner{
+                max-height: none!important;
+                top : 17%!important;
+                bottom : 0;
+                height: auto!important;
+                max-width: none!important;
+                -webkit-transform: translateY(100%);
+                transform: translateY(100%);
+                backface-visibility: hidden;
+    
+                .wndcontent{
+                    border-top-left-radius: 10px;
+                    border-top-right-radius: 10px;
+                    border-bottom-right-radius: 0;
+                    border-bottom-left-radius: 0;
+                    bottom : 0;
+                    backface-visibility: hidden;
+                    .shadowSmaller();
+    
+                    &::-webkit-scrollbar{
+                        width: 0;
+                    }
+            
+                    &::-webkit-scrollbar{
+                        display: none!important;
+                    }
+                }
+                
+                >div.buttons{
+                    display: none!important;
+                }
+            }
+            &.asette{
+                .wndback{
+                    .transition(0.3s);
+                }
+                .closeline{
+                    .transition(0.3s);
+                }
+                .wndinner{
+                    .transition(0.3s);
+                }   
+            }
+            &.sette{
+      
+                .wndinner{
+                    -webkit-transform: translateY(0);
+                    transform: translateY(0);
+                }   
+                
+                .closeline,
+                .wndback{
+                    opacity: 1;
+                }
+                
+            }
+        }
+    }
+}   
+
 
 
 

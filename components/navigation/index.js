@@ -105,7 +105,7 @@ var navigation = (function(){
 						self.nav.api.go({
 							open : true,
 							href : 'share',
-							inWnd : isMobile(),
+							inWnd : isTablet(),
 							history : true,
 							
 							essenseData : {
