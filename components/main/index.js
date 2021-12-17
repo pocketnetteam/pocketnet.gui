@@ -1037,7 +1037,7 @@ var main = (function(){
 
 			destroy : function(){
 
-				//if(el.c) el.c[0].innerHTML = ''
+				//if(el.c && !isMobile()) el.c.html('')
 
 				showCategories(false)
 

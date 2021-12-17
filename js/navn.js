@@ -519,6 +519,7 @@ Nav = function(app)
 			var lastHref = current.href;
 
 			var run = true;
+			var nav = false
 
 			if((p.history || p.loadDefault) && options.history)
 			{
@@ -571,6 +572,15 @@ Nav = function(app)
 					if(!p.reload){
 						historyManager.add(p.completeHref, p);
 
+						/*if (current.module && !p.inWnd){
+							nav = true
+
+							window.requestAnimationFrame(function(){
+								app.el.html.addClass('nav')
+							}) 
+
+						}*/
+
 						p.fail = function(){
 							sitemessage('<i class="fas fa-wifi"></i>')
 						}
@@ -598,11 +608,14 @@ Nav = function(app)
 								p.preshell = stop;
 							}
 
+							app.actions.scrollToTop()
+
 						}
 						catch(e){
 							console.error(e)
 						}
 					}
+					
 
 					if (p.href && !p.inWnd){
 
@@ -617,17 +630,21 @@ Nav = function(app)
 							core.removeWindows(p.completeHref)
 							core.removeChat(p.completeHref)
 
+							/*if (nav) 
+								window.requestAnimationFrame(function(){
+									app.el.html.removeClass('nav')
+								}) 
+
+							nav = false*/
+
 							if (p.goback){
 								app.actions.scroll(p.goback.scroll)
 							}
 
 							c(a, b, d)
 						}
-
 						
 					}	
-
-
 
 					p.module.active = true;
 

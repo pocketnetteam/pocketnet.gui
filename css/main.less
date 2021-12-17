@@ -109,6 +109,10 @@ html {
     opacity: 0;
     .transition(0.3s, opacity);
 }
+[image][visibleimage]{
+    opacity: 1;
+}
+
 
 [image="*"]{
     opacity: 1;
@@ -2878,8 +2882,10 @@ input[type=radio].radio:checked + label {
 }
 
 
+
 .contentWrapper{
 
+    .transition(0.1s, opacity);
 
     #panelc{
        
@@ -2958,6 +2964,13 @@ input[type=radio].radio:checked + label {
     }
 }
 
+/*
+html.nav{
+    .contentWrapper{
+        opacity: 0.9;
+        pointer-events: none;
+    }
+}*/
 
 
 .bgCaption{

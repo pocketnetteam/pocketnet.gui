@@ -1293,6 +1293,7 @@ var author = (function(){
 			author = {};
 
 			if (address){
+				
 				author.address = address
 
 				self.sdk.users.get(author.address, function(){

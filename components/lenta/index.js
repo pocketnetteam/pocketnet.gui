@@ -4501,10 +4501,7 @@ var lenta = (function(){
 					delete self.app.platform.sdk.node.shares.storage.trx[id]
 				})
 
-				_.each(players, function(p){
-					if (p.p)
-						p.p.destroy()
-				})
+				
 
 				if (fullScreenVideoParallax) {
 					fullScreenVideoParallax.destroy()
@@ -4519,9 +4516,10 @@ var lenta = (function(){
 					openedPost = null
 				}
 
-				players = {}
+				
 
 				app.actions.playingvideo(null);
+
 				_.each(initedcommentes, function(c){
 					c.destroy()
 				})
@@ -4560,8 +4558,12 @@ var lenta = (function(){
 					delete self.app.platform.matrixchat.clbks.SHOWING.lenta
 				}
 
+				_.each(players, function(p){
+					if (p.p)
+						p.p.destroy()
+				})
 
-
+				players = {}
 
 				self.app.platform.sdk.chats.removeTemp()
 				video = false					
