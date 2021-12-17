@@ -91,7 +91,6 @@ var wallet = (function(){
 					possibleValuesLabels : [],
 					possibleValues : [],
 					placeholder : self.app.localization.e('wsenter'),
-					onType : true,
 
 					labelToInput : function(d){
 						if(_.isObject(d)){
