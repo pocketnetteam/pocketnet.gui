@@ -352,6 +352,46 @@ var post = (function () {
 
 			},
 
+			pkoin : function(id){
+
+				if (share){
+
+					self.app.platform.sdk.node.transactions.get.balance(function(amount){
+
+						var balance = amount.toFixed(3);
+
+						var userinfo = deep(app, 'platform.sdk.usersl.storage.' + share.address) || {
+							address : share.address,
+							addresses : [],
+						}
+	
+						self.nav.api.load({
+							open : true,
+							href : 'pkoin',
+							history : true,
+							inWnd : true,
+		
+							essenseData : {
+								userinfo: userinfo,
+								balance : balance,
+								id : id,
+								embedding : {
+									type : 'pkoin',
+									id : share.address,
+									close : function(){
+										renders.articles();
+									},
+								},	
+							}
+						})
+
+					})
+				
+
+				}
+
+			},
+
 			position: function () {
 
 				if (isMobile()) return
@@ -886,6 +926,15 @@ var post = (function () {
 				actions.donate()
 			},
 
+			pkoin : function(){
+
+
+				var shareId = $(this).closest('.share').attr('id');
+
+				actions.pkoin(shareId)
+
+			},
+
 		}
 
 		var renders = {
@@ -1241,6 +1290,8 @@ var post = (function () {
 
 											el.share.find('.txid').on('click', events.getTransaction);
 											el.share.find('.donate').on('click', events.donate);
+											el.share.find('.pkoin').on('click', events.pkoin);
+
 											el.share.find('.sharesocial')
 												.on('click', events.sharesocial);
 											el.share

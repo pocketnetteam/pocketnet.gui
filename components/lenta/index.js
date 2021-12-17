@@ -859,16 +859,17 @@ var lenta = (function(){
 						href : 'socialshare2',
 						history : true,
 						inWnd : true,
-
+						
+	
 						essenseData : {
-							url : url,
-							caption : self.app.localization.e('e13133'),
-
-							sharing : share.social(self.app),
+							url : 'hr',
+							caption : "Share comment",
+							sharing : '',
 							embedding : {
-								type : 'post',
-								id : share.txid,
-								fullscreenvideoShowed : fullscreenvideoShowed
+								type : "comment",
+								commentid : 'comment.id',
+								parentid : 'comment.parentid',
+								id : 'txid'
 							}
 						}
 					})
@@ -947,6 +948,49 @@ var lenta = (function(){
 				
 
 				}
+			},
+
+			pkoin : function(id){
+
+				var share = self.app.platform.sdk.node.shares.storage.trx[id];
+
+				if (share){
+
+
+					self.app.platform.sdk.node.transactions.get.balance(function(amount){
+
+						var balance = amount.toFixed(3);
+
+						var userinfo = deep(app, 'platform.sdk.usersl.storage.' + share.address) || {
+							address : share.address,
+							addresses : [],
+						}
+	
+						self.nav.api.load({
+							open : true,
+							href : 'pkoin',
+							history : true,
+							inWnd : true,
+		
+							essenseData : {
+								userinfo: userinfo,
+								balance : balance,
+								id : id,
+								embedding : {
+									type : 'pkoin',
+									id : share.address,
+									close : function(){
+										renders.articles();
+									},
+								},	
+							}
+						})
+
+					})
+				
+
+				}
+
 			},
 
 			videoPosition : function(id){
@@ -1921,6 +1965,15 @@ var lenta = (function(){
 				self.app.mobile.vibration.small()
 
 				actions.repost(shareId);
+			},
+
+			pkoin : function(){
+
+
+				var shareId = $(this).closest('.share').attr('id');
+
+				actions.pkoin(shareId)
+
 			},
 
 			showmorebyauthor : function(){
@@ -3853,6 +3906,7 @@ var lenta = (function(){
 			el.c.on('click', '.txid', events.getTransaction)
 			el.c.on('click', '.showMore', events.openPost)
 			el.c.on('click', '.forrepost', events.repost)
+			el.c.on('click', '.panel .pkoin', events.pkoin)
 			el.c.on('click', '.unblockbutton', events.unblock)
 			el.c.on('click', '.videoTips', events.fullScreenVideo)
 			el.c.on('click', '.videoOpen', events.fullScreenVideo)

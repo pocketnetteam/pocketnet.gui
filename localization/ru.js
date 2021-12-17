@@ -1598,3 +1598,8 @@ ____loclib.contentCreators = 'Для создателей контента';
 ____loclib.howItWorks = 'Как это работает';
 ____loclib.insteadOf = 'Вместо';
 ____loclib.alternativeTo = 'Альтернатива...';
+
+____loclib.comment = 'Комментарий';
+____loclib.donateToTheAuthor = 'Поощрить автора';
+____loclib.pkoinComment = 'PKOIN комментарий';
+____loclib.upPost = 'Поднять пост';

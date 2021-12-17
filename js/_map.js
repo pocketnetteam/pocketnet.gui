@@ -1860,6 +1860,38 @@ __map =  {
 		],
 	},
 
+	pkoin : {
+		uri : "pkoin",
+		href : "pkoin",
+		add : function(settings, p){
+
+			if(p.inWnd)
+			{
+				return {
+					insert : 'wnd'
+				}
+			}
+			else
+			if(p.inTooltip)
+			{
+				return {
+					insert : 'tooltip'
+				}
+			}
+			else
+			{
+				return {
+					el : 'content'
+				}
+			}
+
+		},
+
+		anonimus : true,
+
+		relations : [],
+	},
+
 	main : {
 		uri : "main",
 		href : "index",

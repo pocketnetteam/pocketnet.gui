@@ -1826,3 +1826,8 @@ ____loclib.pkoin_commerce_info = 'Any peer-to-peer PKOIN transactions are not mo
 ____loclib.buyforcrypto = 'Buy for crypto'
 ____loclib.buywithcreditcard = 'Buy with credit card'
 ____loclib.buylogo = 'Buy Pocketcoin (PKOIN)'
+
+____loclib.comment = 'Comment';
+____loclib.donateToTheAuthor = 'Donate to the author';
+____loclib.pkoinComment = 'PKOIN comment';
+____loclib.liftUpThePost = 'Lift up the post';

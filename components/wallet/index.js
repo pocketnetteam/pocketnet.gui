@@ -2752,10 +2752,20 @@ var wallet = (function(){
 					executor(function(){
 						
 
-						console.log('_p', _p)
 						
 
 						if (_p.action){
+
+							
+							if(_p.action == 'buy'){
+
+								actions.sendParameters();
+
+								renders.buy(null, null, true);
+
+
+							}
+
 
 							if(_p.action == 'send'){
 

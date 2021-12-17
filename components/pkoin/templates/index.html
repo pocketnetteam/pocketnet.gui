@@ -1,0 +1,65 @@
+<div id="<%-module.map.id%>">
+
+	<% 
+	var src = deep(app, 'platform.sdk.usersl.storage.'+address+'.image');
+	deep(app, 'platform.sdk.user.storage.me.image'); 
+	var name = deep(app, 'platform.sdk.usersl.storage.'+address+'.name');
+	var letter = name ? name[0] : '';  
+	var dev = deep(app, 'platform.sdk.usersl.storage.'+address+'.dev');
+%>
+	<div class="content">
+		<div class="top">
+			<div class="profile">
+				<div class="icon">
+					<a elementsid="<%-app.platform.api.authorlink(address)%>" href="<%-app.platform.api.authorlink(address)%>">	
+
+						<div class="usericon" image="<%-src || ''%>">
+					
+							<% if(!src && letter) { %>
+					
+								<span 
+									class="letter"
+								>
+									<%-letter.toUpperCase()%>
+								</span>
+					
+							<% } else if (!src) { %>
+					
+								<svg width="30" height="30" data-jdenticon-value="<%-address%>"></svg>
+							<% } %>
+					
+						</div>
+
+					</a>
+				
+				</div>
+				<div class="balance">
+					<div class="amount">
+						<%-balance%>
+					</div>
+					<div class="label">
+						PKOIN
+					</div>
+				</div>
+			</div>
+			<div class="buyButtonWrapper">
+				<div class="buyButton" id="buyButton">
+					<span class="text">
+						<%-e('buy')%>
+					</span>
+					<img src="img/logo201.png">
+
+				</div>
+			</div>
+		</div>
+		<div id="fieldsWrapper" class="fieldsWrapper">
+		</div>
+		<div class="sendButtonWrapper">
+			<div class="sendButton">
+				<%-e('send')%>
+			</div>
+		</div>
+	</div>
+
+
+</div>

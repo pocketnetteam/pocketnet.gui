@@ -19,7 +19,7 @@ var panel = (function(){
 		var renders = {
 
 			tags : function(){
-
+				
 				self.nav.api.load({
 
 					open : true,
@@ -36,6 +36,8 @@ var panel = (function(){
 			},
 
 			stacking : function(){
+
+				console.log('staking!!!')
 
 				self.nav.api.load({
 
@@ -54,6 +56,8 @@ var panel = (function(){
 
 			topusers : function(){
 				
+				console.log('topusers!!!', el.topusers)
+
 				self.nav.api.load({
 
 					open : true,
@@ -62,14 +66,11 @@ var panel = (function(){
 					animation : false,
 
 					essenseData : {
-						addresses : ['PEJhUMmCwkngRQELKacxWiJHBEdAsYRZoB', 'PH6ovi9jUVF4GZ4oGUeKLqcUYV1aSPTj8B', 'PJFSiYQtPQNwWJrKXyzBuvWoqc11RkWRRd', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd'],
-						empty : 'empty',
-						caption : 'caption'
+						addresses : ['PEJhUMmCwkngRQELKacxWiJHBEdAsYRZoB', 'PH6ovi9jUVF4GZ4oGUeKLqcUYV1aSPTj8B', 'PJFSiYQtPQNwWJrKXyzBuvWoqc11RkWRRd', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd']
 					},
 					
 					clbk : function(e, p){
-						if (clbk)
-							clbk(e, p)
+						topusers = p;
 					}
 
 				})
@@ -412,7 +413,7 @@ var panel = (function(){
 				})
 			*/
 			
-			// renders.topusers()
+			renders.topusers()
 
 
 		}

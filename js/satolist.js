@@ -2451,6 +2451,59 @@ Platform = function (app, listofnodes) {
 
                 
                 
+            },
+
+            buy : function(p, clbk, el){
+
+                if(!p) p = {}
+
+                var id = 'papiwalletbuy'
+
+                globalpreloader(true, true)
+
+                p.action = p.htls ? 'htls' : 'buy'
+                p.class = 'api'
+                p.api = true
+                
+
+                var es = null
+
+                return new Promise((resolve, reject) => {
+                    
+                    p.sendclbk = function(d){
+
+                        if (p.roomid && d.txid){
+                            self.matrixchat.shareInChat.url(p.roomid, app.meta.protocol + '://i?stx=' + d.txid) /// change protocol
+                        }
+
+                        resolve(d)
+
+                        if(es && es.container) es.container.close()
+                    }
+
+                    app.nav.api.load({
+                        open : true,
+                        id : 'wallet',
+                        inWnd : el ? false : true,
+                        el : el ? el : null,
+                        eid : id,
+                        mid : id,
+                        animation : false,
+                        essenseData : p,
+                        clbk : function(e, _p){
+
+                            es = _p
+    
+                            globalpreloader(false)
+    
+                            if(clbk) clbk(e, _p)
+                        }
+                    })
+
+                })
+
+                
+                
             }
         },
 
@@ -3059,7 +3112,7 @@ Platform = function (app, listofnodes) {
 
         relation : function(address, type){
 
-            var me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
+            var me = deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value.toString('hex'))
 
             if(!me) return
 
@@ -8398,14 +8451,25 @@ Platform = function (app, listofnodes) {
 
             },
 
-            getBestUsers : function(){
+            getBestUsers : function(clbk){
 
                 var my = self.app.user.address.value;
 
-                self.app.api.rpc('GetRecomendedAccountsByScoresFromAddress', [my]).then(d => {
+                self.app.api.rpc('getrecomendedaccountsbyscoresfromaddress', [my])
+                .then(function(d){
 
                     console.log('d!!!', d);
 
+                    if (clbk){
+                        clbk(d)
+                    }
+
+                })
+                .catch(function(e){
+
+                    if (clbk){
+                        clbk(null)
+                    }
                 })
             }
         },

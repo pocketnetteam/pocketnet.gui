@@ -94,9 +94,6 @@ var embeding = (function(){
 						self.closeContainer()
 					}
 				},
-
-
-
 				
 				donate : function(){
 
