@@ -17,13 +17,16 @@
 
                 <div class="groupName">
                     <div elementsid="openReport" class="reportCaption openReport" rid="<%-id%>">
+
                         <%= report.name.toUpperCase() %>
+                        
 
                         <% if(report.add && report.add()) {%>
 
-                        <%- report.add() %>
+                            <%- report.add() %>
 
                         <% } %>
+
                     </div>
                 </div>
 
@@ -52,22 +55,28 @@
 
 
 			%>
-        <div class="reportCaption openReport" rid="<%-id%>">
+                <div class="reportCaption openReport" rid="<%-id%>">
 
-            <div class="reportCaptionTable table">
+                    <div class="reportCaptionTable table">
 
-                <div class="reportCaptionCell">
-                    <%= report.name.toUpperCase() %>
+                        <div class="reportCaptionCell">
+                            <%= report.name.toUpperCase() %>
+
+                            <% if(report.addtoname && report.addtoname()) {%>
+                                <span class="addtoname"><%- report.addtoname() %></span>
+                            <% } %>
+
+
+                        </div>
+
+                        <% if(report.add && report.add()) {%>
+                            <div class="reportCaptionCell added">
+                                <span class="add bright"><%- report.add() %></span>
+                            </div>
+                        <% } %>
+
+                    </div>
                 </div>
-
-                <% if(report.add && report.add()) {%>
-                <div class="reportCaptionCell added">
-                    <span class="add bright"><%- report.add() %></span>
-                </div>
-                <% } %>
-
-            </div>
-        </div>
         <% 
 
 			}
@@ -98,12 +107,21 @@
             </div>
         </div>
 
+        <div class="reportCaption">
+            <div class="label">
+                <a elementsid="hrefabout" href="about"><%=e('aboutus')%></a>
+            </div>
+        </div>
+
         
         <div class="reportCaption">
             <div class="label">
                 <a elementsid="https://<%-app.options.url%>/blockexplorer/" href="https://<%-app.options.url%>/blockexplorer/" cordovalink="_system" external="external">Block Explorer</a>
             </div>
         </div>
+
+
+
         <% if(state) {%>
 
            

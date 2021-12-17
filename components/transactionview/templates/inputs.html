@@ -12,6 +12,10 @@
             <div class="info" address="<%-actions.iaddress(input)%>">
                 
             </div>
+
+            <div class="amount">
+                <i class="fas fa-minus-circle"></i> <%- app.platform.mp.coin(input.value) %> PKOIN
+            </div>
         </div>
     <% }) %>
     

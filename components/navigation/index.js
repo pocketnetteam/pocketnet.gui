@@ -68,6 +68,8 @@ var navigation = (function(){
 
 				var shw = parameters().video
 
+				var search = parameters().ss || parameters().sst
+
 				var back = self.app.nav.api.backChainGet()
 
 
@@ -82,6 +84,7 @@ var navigation = (function(){
 						lentakey : k,
 						indexkey : indexkey,
 						shw : shw,
+						search,
 						haschat : self.app.platform.matrixchat.core,
 						thref : self.app.nav.get.href()
 					}
@@ -98,6 +101,36 @@ var navigation = (function(){
 							history : true,
 							open : true
 						})	
+					})
+
+					p.el.find('.addshare').on('click', function(){
+
+						self.nav.api.go({
+							open : true,
+							href : 'share',
+							inWnd : isTablet(),
+							history : true,
+							
+							essenseData : {
+								rmhistory : true
+							}
+						})
+
+					})
+
+					p.el.find('.showmenu').on('click', function(){
+
+						self.nav.api.go({
+							open : true,
+							href : 'userpage',
+							inWnd : isMobile(),
+							history : true,
+							
+							essenseData : {
+								rmhistory : true
+							}
+						})
+
 					})
 
 

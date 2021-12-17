@@ -8,7 +8,7 @@ var uploadpeertube = (function () {
   var Essense = function (p) {
     var primary = deep(p, 'history');
 
-    var el;
+    var el, error;
 
     var wnd;
     var wndObj;
@@ -57,6 +57,25 @@ var uploadpeertube = (function () {
     };
 
     var initEvents = function () {
+
+      el.c.find('.buypkoins').on('click', function(){
+
+        self.closeContainer()
+
+        self.nav.api.load({
+          open : true,
+          href : 'wallet',
+          history : true,
+          inWnd : true,
+
+          essenseData : {
+            simple : true,
+            action : 'buy'
+          }
+        })
+
+      })
+
       el.c.find('.tooltip').tooltipster({
         theme: 'tooltipster-light',
         maxWidth: 600,
@@ -332,9 +351,41 @@ var uploadpeertube = (function () {
 
         actions = ed.actions;
 
-        var data = {};
+        var data = {
+          hasAccess : false,
+          increase : {}
+        };
 
-        clbk(data);
+        error = false
+
+        globalpreloader(true, true)
+
+        self.app.peertubeHandler.api.user.me().then((res) => {
+
+          data.hasAccess = true
+
+          clbk(data);
+
+        }).catch(e => {
+
+          data.e = e
+          error = true
+
+          self.app.platform.sdk.ustate.canincrease({template : 'video'}, function(r){
+
+            data.increase = r
+
+            clbk(data);
+
+          })
+
+          
+
+        }).then(() => {
+          globalpreloader(false)
+        })
+
+       
       },
 
       destroy: function () {
@@ -366,6 +417,8 @@ var uploadpeertube = (function () {
         el.preloaderElement = el.c.find('.iconwr');
 
         initEvents();
+
+        if(error) el.c.closest('.wnd').addClass('witherror')
 
         p.clbk(null, p);
       },

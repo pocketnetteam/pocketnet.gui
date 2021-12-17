@@ -205,8 +205,18 @@ ____loclib.spv = "Video Post count";
 ____loclib.ssc = "Stars count";
 ____loclib.ccc = "Comments count";
 ____loclib.crc = "Comment Rate count";
-____loclib.stp = "Trial period";
+
+____loclib.stp = "Beginner";
+____loclib.stpg = "Top";
+____loclib.stpreal = "Verified";
+____loclib.stpdev = "Bastyon developer";
+
+____loclib.trialreputationtip = "To become a top user you need to have a valid reputation. It requires at least 100 different people with top reputation to upvote your content (after 3 months this requirement is relaxed to 30). The second requirement is minimum 100 overall reputation.";
+____loclib.trialreputationtipaction = "Learn more about reputation here"
+
+
 ____loclib.srep = "Reputation";
+____loclib.ccpl = "Complains count";
 
 //accounts
 ____loclib.aaddedacc = "Change Account";
@@ -264,6 +274,10 @@ ____loclib.newShare = "New Post";
 ____loclib.firstShare = "Share Your First Post in "+appname+"";
 ____loclib.scaption = "Caption";
 ____loclib.whatsnew = "What's new?";
+____loclib.whatsnewrepost = "What's new?";
+
+
+
 ____loclib.saddlink = "Add link to external site or video";
 ____loclib.saddimages = "Add Images to Post";
 ____loclib.sarticle = "To write an article";
@@ -698,7 +712,7 @@ ____loclib.e13190 = ""+appname+" theme"
 ____loclib.e13191 = "Set Theme"
 ____loclib.e13192 = "Level"
 ____loclib.e13193 = "BONUS"
-____loclib.e13194 = "Reputation and Rewards"
+____loclib.e13194 = "Reputation and Status"
 ____loclib.e13195 = "Limitations"
 ____loclib.с= "It much take up"
 ____loclib.e13197 = "Recieve Pocketcoins"
@@ -1191,7 +1205,13 @@ ____loclib.sortByDuration = "Duration";
 ____loclib.sortByViews = "Views";
 
 ____loclib.unableToAuthorize = "Unable to authorize";
-____loclib.unableToAuthorizeBody = "Unfortunately, the application cannot authenticate this account on the video server. You need at least 5 PKOIN or 100 reputation to upload videos. If you do, please try again later";
+____loclib.unableToAuthorizeBody = "Unfortunately, the application cannot authenticate this account on the video server. You need at least 5 PKOIN or 50 reputation to upload videos.";
+
+____loclib.unableToAuthorizeConnection = "Unable to authorize";
+____loclib.unableToAuthorizeConnectionBody = "Unfortunately, the application cannot authenticate this account on the video server.  Please try again later";
+
+
+
 
 ____loclib.downloaded = "Downloaded";
 ____loclib.downloadedEmpty = "Downloaded posts will be shown here";
@@ -1822,8 +1842,20 @@ ____loclib.pkoin_commerce_info = 'Any peer-to-peer PKOIN transactions are not mo
 ____loclib.buyforcrypto = 'Buy for crypto'
 ____loclib.buywithcreditcard = 'Buy with credit card'
 ____loclib.buylogo = 'Buy Pocketcoin (PKOIN)'
+____loclib.buypeertopeer = 'Buy Peer-to-Peer'
+
 
 ____loclib.comments_interesting = 'Interesting at first'
 ____loclib.comments_timeup = 'New first'
 ____loclib.comments_time = 'Old first'
 ____loclib.comments_next = 'Show next'
+
+____loclib.create = 'Create'
+____loclib.drafts = 'Drafts'
+
+____loclib.repostyourown = 'You cannot repost your own post'
+
+
+____loclib.reachedlimits = 'You reached your daily limit of actions. To increase your limit you need to have at least 50 PKOIN in your account or have a valid reputation.'
+
+____loclib.closestreachedlimits = 'You are close to hitting your daily action limit. To increase your limit you need to have at least 50 PKOIN in your account or have a valid reputation.'

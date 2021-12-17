@@ -138,32 +138,6 @@ var metadisplay = function(){ %>
 					</div>
 				<% } %>
 
-				<!--<div class="downloadMetapanel invisible">
-					<% if(share.itisvideo()) { %>
-						<div class="metapanelitem canDownloadBtn">
-							<div class="downloadBtn <%-share.txid%>">
-								<i class="fas fa-download"></i>
-							</div>
-						</div>
-
-						<div class="metapanelitem downloadingBtn">
-							<div class="downloadLoader">Downloading...</div>
-						</div>
-
-						<div class="metapanelitem downloadedBtn">
-							<div class="downloadDone">
-								<i class="fas fa-check-circle"></i>
-							</div>
-						</div>
-						<div class="metapanelitem downloadedBtn">
-							<div class="deleteBtn <%-share.txid%>">
-								<i class="fas fa-trash"></i>
-							</div>
-						</div>
-					<% } %>
-				</div>-->
-
-
 			</div>
 			
 
@@ -335,7 +309,7 @@ var arranges = {
 							<% if(imageFromVideo) {%>
 
 								<div class="imagesWrapper forvideo">
-									<div elementsid="lenta_videoOpen" class="image videoOpen" image="<%-imageFromVideo%>">
+									<div elementsid="lenta_videoOpen" class="image videoOpen" image="<%-imageFromVideo || '*'%>">
 										<div class="playicon"><i class="fas fa-play"></i></div>
 									</div>
 								</div>
@@ -345,7 +319,7 @@ var arranges = {
 							<% _.each(share.images, function(image){ %>
 
 								<div class="imagesWrapper">
-									<div elementsid="lenta_imageOpen" class="image imageOpen imagePostOpent" save="<% if(typeof nameFromScr != 'undefined') {%><%- nameFromScr(image) %><% } %>" image="<%-image%>" i="<%-image%>">
+									<div elementsid="lenta_imageOpen" class="image imageOpen imagePostOpent" save="<% if(typeof nameFromScr != 'undefined') {%><%- nameFromScr(image) %><% } %>" image="<%-image || '*'%>" i="<%-image%>">
 									</div>
 								</div>
 
@@ -391,10 +365,7 @@ var arranges = {
 			<% if(!emptywithrepost) { %>
 
 				<div class="iconWrapper">
-
-					
 					<a elementsid="shareiconprofilelink" href="<%-app.platform.api.authorlink(share.address)%>">
-
 
 						<% 
 							var src = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image');
@@ -403,7 +374,7 @@ var arranges = {
 						%>
 
 						<div class="icon">
-							<div class="usericon usericonsbsa another" image="<%-src || ''%>" ban=".gif">
+							<div class="usericon usericonsbsa another" image="<%-src || '*'%>" ban=".gif">
 
 								<% if(!src && letter) { %>
 
@@ -454,15 +425,12 @@ var arranges = {
 								
 					<% }) %>
 
-					
-
 				</div>
 
 			<% } else { %> 
 				<div class="cntswrk cntscontent postcontent">
 
 					<div class="hiddenpost">
-
 
 						<% if(!lockedaccount) {%>
 							<div class="captionpreview">

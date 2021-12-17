@@ -1,106 +1,126 @@
 <div id="<%-module.map.id%>">
-  <div class="work cabinetHeaderWrapper">
-    <div class="moduleHeader">
-      <div class="cabinetName"><%- e('videoCabinet') %></div>
-        <button
-          elementsid="videoActiveButton"
-          class="uploadVideo videoActiveButton ghostButton"
-          rendersElement="addVideo"
-        >
-          <i class="fas fa-video"></i><%- e('peertubeAddVideo') %>
-        </button>
-    </div>
-  </div>
-  <% if (hasAccess) { %>
 
-  <% if (!inLentaWindow) { %>
-  <div class="work">
-    <div class="statsdiv">
-      <div class="reputation">
-        <div class="reputationblock quotaContainer">
-          <div class="preloaderwr">
-            <div class="preloader5"><img src="./img/three-dots.svg"/></div>
-          </div>
-        </div>
-        <div class="reputationblock referContainer">
-          <div class="preloaderwr">
-            <div class="preloader5"><img src="./img/three-dots.svg"/></div>
-          </div>
-        </div>
-        <div class="leaderBoardContainer leaderBoardContainerViews">
-          <div class="preloaderwr">
-            <div class="preloader5"><img src="./img/three-dots.svg"/></div>
-          </div>
-        </div>
-        <div class="leaderBoardContainer leaderBoardContainerRatings">
-          <div class="preloaderwr">
-            <div class="preloader5"><img src="./img/three-dots.svg"/></div>
-          </div>
-        </div>
-        <div class="leaderBoardContainer leaderBoardContainerUniqueUsers">
-          <div class="preloaderwr">
-            <div class="preloader5"><img src="./img/three-dots.svg"/></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <% } %>
-  <div class="videoContainer">
-    <div class="work">
-      <div class="videoControls">
-        <div class="videoSearchWrapper videoControlItem">
-          <input
-            type="text"
-            id="videoSearchInput"
-            class="videoSearchInput"
-            placeholder="<%- e('enterVideoName') %>"
-          />
-          <button elementsid="videoSearchButton" class="videoSearchButton ghostButton">
-            <i class="fas fa-search"></i>
+  <div class="rightchatspacer">
+    <div class="work cabinetHeaderWrapper">
+      <div class="moduleHeader">
+        <div class="cabinetName"><%- e('videoCabinet') %></div>
+          <button
+            elementsid="videoActiveButton"
+            class="uploadVideo videoActiveButton ghostButton"
+            rendersElement="addVideo"
+          >
+            <i class="fas fa-video"></i><%- e('peertubeAddVideo') %>
           </button>
-        </div>
-        <div class="videoSortWrapper videoControlItem">
-          <div class="sortTypeSelectWrapper sortSelectWrapper">
-            <div class="selectBorderCaption"><%- e('sortBy') %></div>
-            <div class="selectIcon">
-              <i class="fas fa-sort-amount-down-alt"></i>
-            </div>
-            <select class="videoSelect sortTypeSelect">
-              <option value="name" <%- selectedType === 'name' ? 'selected' : '' %>><%- e('sortByName') %></option>
-              <option value="createdAt" <%- selectedType === 'createdAt' ? 'selected' : '' %>><%- e('sortByCreatedAt') %></option>
-              <option value="duration" <%- selectedType === 'duration' ? 'selected' : '' %>><%- e('sortByDuration') %></option>
-              <option value="views" <%- selectedType === 'views' ? 'selected' : '' %>><%- e('sortByViews') %></option>
-            </select>
-          </div>
+      </div>
+    </div>
+    <% if (hasAccess) { %>
 
-          <div class="sortDirectionSelectWrapper sortSelectWrapper">
-            <div class="selectBorderCaption"><%- e('sortDirection') %></div>
-            <div class="selectIcon">
-              <i class="fas fa-sort-amount-down-alt"></i>
+    <% if (!inLentaWindow) { %>
+      <div class="work">
+        <div class="statsdiv">
+          <div class="reputation">
+            <div class="reputationblock quotaContainer">
+              <div class="preloaderwr">
+                <div class="preloader5"><img src="./img/three-dots.svg"/></div>
+              </div>
             </div>
-            <select class="videoSelect sortDirectionSelect">
-              <option value="" <%- selectedDirection === '' ? 'selected' : '' %>><%- e('sortDirectionAsc') %></option>
-              <option value="-" <%- selectedDirection === '-' ? 'selected' : '' %>><%- e('sortDirectionDesc') %></option>
-            </select>
+            <div class="reputationblock referContainer">
+              <div class="preloaderwr">
+                <div class="preloader5"><img src="./img/three-dots.svg"/></div>
+              </div>
+            </div>
+            <div class="leaderBoardContainer leaderBoardContainerViews">
+              <div class="preloaderwr">
+                <div class="preloader5"><img src="./img/three-dots.svg"/></div>
+              </div>
+            </div>
+            <div class="leaderBoardContainer leaderBoardContainerRatings">
+              <div class="preloaderwr">
+                <div class="preloader5"><img src="./img/three-dots.svg"/></div>
+              </div>
+            </div>
+            <div class="leaderBoardContainer leaderBoardContainerUniqueUsers">
+              <div class="preloaderwr">
+                <div class="preloader5"><img src="./img/three-dots.svg"/></div>
+              </div>
+            </div>
           </div>
         </div>
-        <!-- <button
-          class="startStream videoActiveButton"
-          rendersElement="addStream"
-        >
-          <i class="fas fa-dot-circle"></i><%- e('peertubeAddStream') %>
-        </button> -->
       </div>
-    </div>
-    <div class="userVideos"></div>
+    <% } %>
+      <div class="videoContainer">
+        <div class="work">
+          <div class="videoControls">
+            <div class="videoSearchWrapper videoControlItem">
+              <input
+                type="text"
+                id="videoSearchInput"
+                class="videoSearchInput"
+                placeholder="<%- e('enterVideoName') %>"
+              />
+              <button elementsid="videoSearchButton" class="videoSearchButton ghostButton">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+            <div class="videoSortWrapper videoControlItem">
+              <div class="sortTypeSelectWrapper sortSelectWrapper">
+                <div class="selectBorderCaption"><%- e('sortBy') %></div>
+                <div class="selectIcon">
+                  <i class="fas fa-sort-amount-down-alt"></i>
+                </div>
+                <select class="videoSelect sortTypeSelect">
+                  <option value="name" <%- selectedType === 'name' ? 'selected' : '' %>><%- e('sortByName') %></option>
+                  <option value="createdAt" <%- selectedType === 'createdAt' ? 'selected' : '' %>><%- e('sortByCreatedAt') %></option>
+                  <option value="duration" <%- selectedType === 'duration' ? 'selected' : '' %>><%- e('sortByDuration') %></option>
+                  <option value="views" <%- selectedType === 'views' ? 'selected' : '' %>><%- e('sortByViews') %></option>
+                </select>
+              </div>
+
+              <div class="sortDirectionSelectWrapper sortSelectWrapper">
+                <div class="selectBorderCaption"><%- e('sortDirection') %></div>
+                <div class="selectIcon">
+                  <i class="fas fa-sort-amount-down-alt"></i>
+                </div>
+                <select class="videoSelect sortDirectionSelect">
+                  <option value="" <%- selectedDirection === '' ? 'selected' : '' %>><%- e('sortDirectionAsc') %></option>
+                  <option value="-" <%- selectedDirection === '-' ? 'selected' : '' %>><%- e('sortDirectionDesc') %></option>
+                </select>
+              </div>
+            </div>
+            <!-- <button
+              class="startStream videoActiveButton"
+              rendersElement="addStream"
+            >
+              <i class="fas fa-dot-circle"></i><%- e('peertubeAddStream') %>
+            </button> -->
+          </div>
+        </div>
+        <div class="userVideos"></div>
+      </div>
+    <% } else { %>
+      <div class="videoContainer videoErrorContainer">
+
+
+
+        
+        <div class="work">
+          <% if(typeof increase == 'undefined' || _.isEmpty(increase)) {%>
+
+              <div class="videoErrorHeading"><i class="fas fa-exclamation-circle"></i> <%- e('unableToAuthorizeConnection') %></div>
+              <div class="videoErrorBody"><%- e('unableToAuthorizeConnectionBody') %></div>
+
+          <% } else { %>
+
+              <div class="videoErrorHeading"><i class="fas fa-exclamation-circle"></i> <%- e('unableToAuthorize') %></div>
+              <div class="videoErrorBody"><%- e('unableToAuthorizeBody') %></div>
+
+              <div class="buttonwrapper">
+                  <button class="buypkoins orange"><%=e('buylogo')%></button>
+              </div>
+
+          <% } %>
+        </div>
+      </div>
+    <% } %>
   </div>
-  <% } else { %>
-    <div class="videoContainer videoErrorContainer">
-      <div class="work">
-        <div class="videoErrorHeading"><i class="fas fa-exclamation-circle"></i> <%- e('unableToAuthorize') %></div>
-        <div class="videoErrorBody"><%- e('unableToAuthorizeBody') %></div>
-      </div>
-    </div>
-  <% } %>
 </div>

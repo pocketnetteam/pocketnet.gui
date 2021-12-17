@@ -154,7 +154,7 @@
 										
 										<div class="icon">
 											<a elementsid="<%-app.platform.api.authorlink(user.address.value.toString('hex'))%>" href="<%-app.platform.api.authorlink(user.address.value.toString('hex'))%>">	
-												<div class="usericon" image="<%-src || ''%>" ban=".gif">
+												<div class="usericon" visibleimage="true" image="<%-src || '*'%>" ban=".gif">
 
 													<% if(!src && letter) {%>
 

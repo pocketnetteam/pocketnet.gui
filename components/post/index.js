@@ -424,7 +424,7 @@ var post = (function () {
 						play : function(){
 							self.app.actions.playingvideo(player)
 
-							if(isMobile() && !ed.repost){
+							if(isMobile() && !ed.repost && !el.c.closest('.wndcontent').length){
 								
 								self.app.actions.scroll(125)
 							}
@@ -1000,7 +1000,7 @@ var post = (function () {
 				} else {
 
 
-					_el.imagesLoaded({ background: true }, function (image) {
+					_el.imagesLoadedPN({ imageAttr: true }, function (image) {
 
 						if (share.settings.v != 'a') {
 
@@ -1093,6 +1093,9 @@ var post = (function () {
 						}
 
 						var isclbk = function(){
+
+
+							
 							images.addClass('active');
 
 							_el.addClass('active');
@@ -1791,13 +1794,7 @@ var post = (function () {
 			},
 
 			wnd: {
-				class: 'withoutButtons postwindow',
-				swipeClose: true,
-				swipeCloseDir: 'right',
-				swipeMintrueshold: 30,
-				close: function () {
-					//self.app.nav.api.history.removeParameters(['s'])
-				}
+				class: 'withoutButtons postwindow normalizedmobile',
 			}
 		}
 	};

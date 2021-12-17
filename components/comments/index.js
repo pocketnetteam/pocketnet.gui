@@ -1153,8 +1153,11 @@ var comments = (function(){
 			if (post && post.address == comment.address) p = p * 50
 
 			if(!my){
-				if(self.app.platform.sdk.activity.has('user', comment.address)){
-					p = p * 3
+
+				var activities = self.app.platform.sdk.activity.has('users', comment.address)
+
+				if (activities.point){
+					p = p * activities.point / 10
 				}
 			}
 
@@ -1164,12 +1167,10 @@ var comments = (function(){
 
 		var sorting = function(comments, pid){
 
-			console.log('comments, pid', comments, pid)
-
 			if(!comments.length) return comments
 
 			try {
-				if(comments.length < 10 || pid || sortby == 'time'){
+				if(pid || sortby == 'time'){
 
 					return _.sortBy(comments, function(c){
 						return c.time
@@ -1222,8 +1223,6 @@ var comments = (function(){
 		var events = {
 
 			upvoteComment : function(){
-
-				console.log('upvoteComment', ed.cantsend)
 
 				if(ed.cantsend) return
 
@@ -1350,8 +1349,6 @@ var comments = (function(){
 						return template(d);
 
 					}, function(__el, f, mme){
-
-						console.log(__el)
 
 						__el.find('.edit').on('click', function(){
 
@@ -1757,7 +1754,7 @@ var comments = (function(){
 						})
 					})
 
-					_p.el.find('.image').imagesLoaded({ background: true }, function(image) {
+					_p.el.find('.image').imagesLoadedPN({ imageAttr: true }, function(image) {
 
 						if(!isMobile()){
 							var elimages = _p.el.find('.imagesEmbWr')
@@ -1839,6 +1836,8 @@ var comments = (function(){
 			},
 
 			caption : function(clbk){
+
+				if(isMobile() && _in) return
 
 				var cl = deep(self.app.platform.sdk.comments.storage, txid + '.0.length') || 0
 
@@ -2098,7 +2097,7 @@ var comments = (function(){
 
 				var h = sel.height()
 
-				_el.imagesLoaded({ background: true }, function(image) {
+				_el.imagesLoadedPN({ imageAttr: true }, function(image) {
 		
 
 					_.each(image.images, function(img, n){
@@ -2212,7 +2211,8 @@ var comments = (function(){
 				}
 
 				p.el || (p.el = el.list)
-	
+				
+				if(!preview)
 					p.el.addClass('listloading')
 
 				self.sdk.comments.users(comments, function (i, e) {
@@ -2252,7 +2252,8 @@ var comments = (function(){
 
 					}, function(_p){
 
-						p.el.removeClass('listloading')
+						if(!preview)
+							p.el.removeClass('listloading')
 
 						if(!p.replace){
 						
@@ -2278,10 +2279,10 @@ var comments = (function(){
 									renders.list(p, null, pid)
 								})
 							
-								setTimeout(function(){
+								/*setTimeout(function(){
 									if (el.list)
 										el.list.find('.newcomments').removeClass('newcomments')
-								}, 600)
+								}, 600)*/
 								
 								
 							}
@@ -2675,7 +2676,11 @@ var comments = (function(){
 				if (txid){
 					//state.load()
 
-					var data = {};
+					var data = {
+						preview,
+						listpreview,
+						showedall
+					};
 
 						data.ed = ed;
 
@@ -2764,7 +2769,13 @@ var comments = (function(){
 
 				if(!_in.length) {
 					_in = null
-					top = 65
+
+					if(!self.app.el.html.hasClass('allcontent')){
+						top = 65
+					} else {
+						top = 0
+					}
+					
 				}
 				else
 				{
@@ -2775,9 +2786,7 @@ var comments = (function(){
 
 				if(preview){
 
-					el.c.find('.loaderWrapper').addClass('hidden')
-					el.c.addClass('preview')
-					el.c.addClass('listpreview')
+					
 
 					makePreview()
 				}
@@ -2810,7 +2819,8 @@ var comments = (function(){
 				if(typeof preview != 'undefined')
 					listpreview = preview || false;
 
-				if (listpreview){
+				if (listpreview){ 
+					
 					el.c.addClass('listpreview')
 
 					if (caption)

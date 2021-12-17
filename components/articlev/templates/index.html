@@ -38,7 +38,7 @@
 									%>
 
 										
-									<div class="usericon" image="<%-src || ''%>">
+									<div class="usericon" ban=".gif" image="<%-src || '*'%>">
 
 										<% if(!src && letter) {%>
 											<span class="letter">
@@ -86,14 +86,7 @@
 								</div>
 
 								<div class="settingsWrapper">
-									
 								</div>
-
-								<!--<div class="settingsWrapper2">
-									<button class="button medium ghost nopadding" >
-										<span class="maxtext" title="<%- e('visibleonlytosubscribers') %>"><%- e('visibleonlytosubscribers') %></span> <i class="fas fa-users"></i>
-									</button>
-								</div>-->
 
 								<div class="publish">
 									<button class="publish button medium orange">Publish</button>

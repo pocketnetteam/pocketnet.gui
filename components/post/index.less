@@ -884,6 +884,15 @@
 				text-decoration: underline;
 				color : @color-main;
 			}
+
+			a{
+				white-space: nowrap;
+				max-width: 70%;
+				text-overflow: ellipsis;
+				overflow: hidden;
+				display: inline-block;
+				vertical-align : bottom;
+			}
 		}
 
 
@@ -2255,12 +2264,39 @@ html.stblack{
 		}
 	}
 }
-.wnd.postwindow{
 
-	._close{
-		color : #000;
-		right: @rhythm;
+
+
+html.cordova,
+html.tablet,
+html.mobile{
+	.wnd.postwindow{
+
+		&.normalizedmobile{
+			.closeline{
+				top : 50px!important;
+			}
+			.wndinner {
+				top : 60px!important;
+			}
+
+			.wndcontent{
+				background: #fff;
+			}
+
+			#post .postWrapper{
+				padding-top : @rhythm;
+			}
+
+			#post{
+				.cntswrk.forcomments{
+					.paddingWrapper{
+						padding : 0;
+					}
+				}
+			}
+		}
 	}
-}
 
+	}
 }

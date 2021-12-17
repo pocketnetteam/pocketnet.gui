@@ -378,7 +378,7 @@ var menu = (function(){
 							open : true,
 							href : 'notifications',
 							inWnd : true,
-	
+							history : true,
 							essenseData : {
 							}
 						})
@@ -546,8 +546,10 @@ var menu = (function(){
 								bgImages(el)
 
 								self.app.nav.api.links(null, el, function(){
+
 									helpers.closeResults()
 									clearex()
+
 								});
 
 
@@ -565,6 +567,10 @@ var menu = (function(){
 									helpers.closeResults()
 									close()
 									clearex()
+
+									if (name){
+										close(true)
+									}
 
 								})
 							})
@@ -811,9 +817,9 @@ var menu = (function(){
 						open : true,
 						href : 'accounts',
 						inWnd : true,
-
+						
 						essenseData : {
-							href : deep(self, 'app.nav.current.href') || 'index'
+							href : history.state.href || 'index'
 						}
 					})
 					
@@ -825,8 +831,9 @@ var menu = (function(){
 					
 					self.nav.api.go({
 						open : true,
-						href : 'userpage?id=wallet',
-						history : true
+						href : isMobile() ? 'wallet' : 'userpage?id=wallet',
+						history : true,
+						inWnd : isMobile()
 					})
 					
 				},
@@ -1248,12 +1255,14 @@ var menu = (function(){
 
 			showsearch : function(v, _searchBackAction){
 
-
 				if(v){
 					el.c.addClass('searchactive')
 					el.postssearch.find('.search').addClass('searchFilled')
 				}
 				else{
+					if(isMobile())
+						el.c.removeClass('searchactive')
+						
 					el.postssearch.find('.search').removeClass('searchFilled')
 				}
 				

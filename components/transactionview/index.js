@@ -34,7 +34,7 @@ var transactionview = (function(){
 
 				if(!tx) return ''
 
-				console.log("tx.vout[0].scriptPubKey", tx.vout[0].scriptPubKey, tx)
+				console.log("tx.vout[0].scriptPubKey", tx)
 			
 				var asm = tx.vout[0].scriptPubKey.asm.split(' ');
 
@@ -45,6 +45,7 @@ var transactionview = (function(){
 			},
 
 			iaddress : function(input){
+				return input.address
 				return self.app.platform.sdk.node.transactions.addressFromScryptSig(deep(input, 'scriptSig.asm'))
 			},
 

@@ -141,48 +141,21 @@
 			}
 		}	
 	}
-
 	
-
-	&.menupanelactive{
-		.sections{
-			.items{				
-				.item{
-					&.navWrapperItem{
-						display: block;
-					}
-				}
-			}
-		}
-	}
-
 	&.searchactive{
+
 		.additionalbar{
 			top: 65px;
 			.shadowSmall();
 		}
 
 		.sections{
-			
 
 			.items{
 				
 				&.searchWrapper{
 					display: block;
 				}
-
-				/*&.walletsWrapper,
-				&.notificationsWrapper,
-				&.saveCrossWrapper,
-				&.gethotpostsWrapper{
-					display: none;
-				}*/
-
-				/*&.sitenames{
-					.label{
-						display: none;
-					}
-				}*/
 
 				&.mdl{
 					display: none;
@@ -221,6 +194,63 @@
 		}
 		
 	}
+
+	&.menupanelactive{
+		&:not(.searchactive){
+
+			.sections{
+				.items{				
+					.item{
+						&.navWrapperItem{
+							display: block;
+						}
+					}
+				}
+			}
+
+			.postssearch{
+		
+				.searchPanel,
+				.searchInputWrapper{
+					display: none;
+				}
+	
+				.searchInput{
+					background: transparent;
+					border : 1px solid transparent;
+				}
+		
+		
+				input{
+					color : @color-black2;
+					background: transparent;
+				}
+		
+				.searchIconLabel,
+				.searchPanel{
+					color : @color-black2;
+					background: transparent;
+				}
+		
+				
+			}
+
+			.sections{
+				.items.searchWrapper{
+					max-width: 40px;
+				}
+			}
+
+			.postssearch{
+				.searchFastResultWrapper{
+					display: none!important;
+				}
+			}
+		}
+		
+	}
+
+	
 
 	.additionalbar{
 		width: 100%;
@@ -820,19 +850,21 @@
 		padding : 0;
 		left: 0;
 		max-height: 540px;
-		overflow-y: auto;
-		scrollbar-width: none;
-
-		&::-webkit-scrollbar{
-            width: 0!important
-        }
-
+		overflow-y: overlay;
+		border-radius: @rhythm;
+		border: 1px solid fade(@color-gray-slight, 20);
+		background-color: fade(#fff, 95);
+		backdrop-filter: blur(4px);
+		-webkit-backdrop-filter: blur(4px);
+		padding: @rhythm;
+		margin-top : @rhythm;
+	
+		
 		.table{
 			>div{
 				padding : 0;
 			}
 		}
-		
 
 		.results{
 			padding :  @rhythm 0;
@@ -964,6 +996,8 @@
 		.search {
 			max-width: 700px;
 			margin : 0 auto;
+
+			
 		}
 
 		.searchInputIcon{
@@ -999,58 +1033,21 @@
 
 		.searchIconLabel{
 			width: 38px;
+			-webkit-transition: none;
+			transition: none;
 		}
 
 		.searchPanel{
 			width: 4 * @rhythm;
 			font-size: 0.8em;
 			text-align: center;
-			.searchPanelWrapper{
-				/*>div{
-					&[event=clear]{
-						display: none!important;
-					}
-				}*/
-			}
+			
 		}
+
+		
 	}
 
-	&.menupanelactive{
-		&:not(.searchactive){
-			.postssearch{
-		
-				/*.searchPanel,*/
-				.searchInputWrapper{
-					display: none;
-				}
 	
-				.searchInput{
-					background: transparent;
-					border : 1px solid transparent;
-				}
-		
-		
-				input{
-					color : @color-black2;
-					background: transparent;
-				}
-		
-				.searchIconLabel,
-				.searchPanel{
-					color : @color-black2;
-					background: transparent;
-				}
-		
-				
-			}
-			.sections{
-				.items.searchWrapper{
-					max-width: 40px;
-				}
-			}
-		}
-		
-	}
 
 	.signup,
     .signout,
@@ -1191,6 +1188,9 @@ html.stblack{
 
 		.searchFastResultWrapper{
 
+			border: 1px solid fade(@color-gray-slight, 20);
+			background-color: fade(@color-black2, 95);
+
 			.searchbywrapper{
 				
 	
@@ -1211,6 +1211,9 @@ html.stblack{
 				}
 			}
 		}
+
+
+			
 	
 	}
 }
@@ -1454,179 +1457,223 @@ html.stblack{
 
 
 }
+
+html.allcontent{
+	#menu{
+		.menuWrapper {
+			background: transparent;
+
+			.searchIconLabel i,
+			.icon i{
+				background-image: -webkit-linear-gradient(left, #00aeff, rgb(122, 40, 255)); /* For Chrome and Safari */
+				background-image:    -moz-linear-gradient(left, #00aeff, rgb(122, 40, 255)); /* For old Fx (3.6 to 15) */
+				background-image:     -ms-linear-gradient(left, #00aeff, rgb(122, 40, 255)); /* For pre-releases of IE 10*/
+				background-image:      -o-linear-gradient(left, #00aeff, rgb(122, 40, 255)); /* For old Opera (11.1 to 12.0) */
+				background-image:         linear-gradient(to right, #00aeff, rgb(122, 40, 255)); /* Standard syntax; must be last */
+				color:transparent;
+				-webkit-background-clip: text;
+				background-clip: text;
+			}
+
+		}
+
+		.centerpart,
+		.walletsWrapper,
+		.keyexportWrapper,
+		.notificationsWrapper{
+			display: none!important;
+		}
+
+		.usericon{
+			.shadowSmaller();
+		}
+
+		.far.fa-comment{
+			font-weight: 700;
+		}
+
+	}
+
+} 
 }
 
 
 /*t*/ @media only screen and (max-width: 768px){
-#menu{
-	background: @color-contrast;
+	#menu{
+		background: @color-contrast;
 
-	.searchFastResultWrapper{
+		.searchFastResultWrapper{
 
-		.fastsearch{
-			padding-left: 40px;
-		}
-
-		.users{
-			padding-left: 0px;
-		}
-	}
-
-	&:not(.searchactive){
-		.postssearch{
-	
-			.searchPanel,
-			.searchInputWrapper{
-				display: none;
+			.fastsearch{
+				padding-left: 40px;
 			}
 
-			.searchInput{
-				background: transparent!important;
-				border : 1px solid transparent!important;
-			}
-	
-			input{
-				color : @color-black2;
-				background: transparent;
-			}
-	
-			.searchIconLabel,
-			.searchPanel{
-				color : @color-black2;
-				background: transparent;
-			}
-	
-			
-		}
-		.sections{
-			.items.searchWrapper{
-				max-width: 40px;
+			.users{
+				padding-left: 0px;
 			}
 		}
-	}
 
-	.postssearch{
-		input{
-			padding : 0;
-		}
+		&:not(.searchactive){
+			.postssearch{
 		
-	}
-
-	&.searchactive{
-
-		.postssearch{
-			font-size: 1.2em;
-
-		}
-
-		.sections{
-			padding : 0;
-
-			.section{
-				width : 100%;
-				&.right{
-					width : 100%;
+				.searchPanel,
+				.searchInputWrapper{
+					display: none;
 				}
+
+				.searchInput{
+					background: transparent!important;
+					border : 1px solid transparent!important;
+				}
+		
+				input{
+					color : @color-black2;
+					background: transparent;
+				}
+		
+				.searchIconLabel,
+				.searchPanel{
+					color : @color-black2;
+					background: transparent;
+				}
+		
 				
+			}
+			.sections{
 				.items.searchWrapper{
-					width : 100%;
-
-					.item{
-						width : 100%;
-					}
-
-					.postssearch{
-						width : 100%;
-					}
-				}
-
-				&.leftpart{
-					display: none;
-				}
-
-				&.right{
-					display: none;
+					max-width: 40px;
 				}
 			}
+		}
 
-
-			.items{
-				&.searchWrapper{
-					width: 100%;
-					max-width: none;
-					padding-right: 0;
-
-					.postssearchwrapper{
-						padding : 1.5 * @rhythm @rhythm;
-					}
-				}
+		.postssearch{
+			input{
+				padding : 0;
 			}
 			
 		}
 
 		
-	}
 
-	.sections{
-		.items{
-			.item{
+		.sections{
+			.items{
+				.item{
 
-			
-
-				&.user{
-					margin-right : 0;
-
-						.icon{
-							padding-right: @rhythm;
-						}
-				}
 				
-			}
 
-			&.searchWrapper{
-				.postssearch{
-					.searchIconLabel{
-						width: 40px;
+					&.user{
+						margin-right : 0;
+
+							.icon{
+								padding-right: @rhythm;
+							}
 					}
+					
+				}
 
-					.searchPanel{
-						width: 40px;
+				&.searchWrapper{
+					.postssearch{
+						.searchIconLabel{
+							width: 40px;
+						}
 
-						.searchPanelWrapper{
-							>div{
-								&[event=clear]{
-									display: block!important;
+						.searchPanel{
+							width: 40px;
+
+							.searchPanelWrapper{
+								>div{
+									&[event=clear]{
+										display: block!important;
+									}
 								}
 							}
 						}
 					}
+				}	
+
+				&.navWrapperItem{
+					display: none!important;
 				}
-			}	
 
-			&.navWrapperItem{
-				display: none!important;
-			}
+				&.hamb{
 
-			&.hamb{
-
-				.item{
-					width: auto;
+					.item{
+						width: auto;
+					}
+					
 				}
-				
-			}
 
-			&.saveCrossWrapper{
-				display : none;
-			}
+				&.saveCrossWrapper{
+					display : none;
+				}
 
-			&.gethotpostsWrapper{
-				margin-left : 2 * @rhythm;
+				&.gethotpostsWrapper{
+					margin-left : 2 * @rhythm;
 
-				.label{
-					display: none;
+					.label{
+						display: none;
+					}
 				}
 			}
 		}
 	}
-}
+
+	html:not(.allcontent){
+		#menu{
+			&.searchactive{
+
+				.postssearch{
+					font-size: 1.2em;
+	
+				}
+	
+				.sections{
+					padding : 0;
+	
+					.section{
+						width : 100%;
+						&.right{
+							width : 100%;
+						}
+						
+						.items.searchWrapper{
+							width : 100%;
+	
+							.item{
+								width : 100%;
+							}
+	
+							.postssearch{
+								width : 100%;
+							}
+						}
+	
+						&.leftpart{
+							display: none;
+						}
+	
+						&.right{
+							display: none;
+						}
+					}
+	
+	
+					.items{
+						&.searchWrapper{
+							width: 100%;
+							max-width: none;
+							padding-right: 0;
+	
+							.postssearchwrapper{
+								padding : 1.5 * @rhythm @rhythm;
+							}
+						}
+					}
+					
+				}
+	
+				
+			}
+		}
+	}
 }

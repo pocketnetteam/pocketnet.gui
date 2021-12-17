@@ -1,8 +1,10 @@
 <div class="arttags">
     <% if(!tags.length) {%>
+
         <div>
             <button class="button medium ghost nopadding ">Категории и тэги <i class="fas fa-plus"></i></button>
         </div>
+        
     <% } else { 
         
         var bycategories = app.platform.sdk.categories.fromTags(tags, language)

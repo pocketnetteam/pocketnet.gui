@@ -4,6 +4,16 @@
 #lenta{
 	/*background: #F9F9F9;*/
 
+	&.destroying{
+		display: none;
+	}
+
+	&.openapi{
+		.loadmore{
+			display: none!important;
+		}
+	}
+
 
 	&.rebuilding{
 		.transition(0.3s);
@@ -81,6 +91,15 @@
 	.loader{
 		background: #fff;
 		padding : 6 * @rhythm 0;
+		display: none;
+	}
+
+
+	&.loading{
+		.loader{
+			display: block;
+		}
+		
 	}
 
 	.panel{
@@ -122,7 +141,6 @@
 		overflow: hidden; 
 		display: flex;
 		flex-direction: column;
-		.transition(0.1s, transform);
 
 		.authorgroup{
 			display: flex;
@@ -1284,7 +1302,7 @@
 					text-overflow: ellipsis;
 					overflow: hidden;
 					display: inline-block;
-					vertical-align : middle;
+					vertical-align : bottom;
 				}
 			}
 
@@ -1725,7 +1743,6 @@
 					scrollbar-width: none;
 					overscroll-behavior: none;
 					transform: translate3d(0, 0, 0);
-					.transition(0.1s, transform);
 
 					.videoWrapper{
 						border-radius: 0;
@@ -2127,9 +2144,17 @@
 		}
 	}
 
+	.loadmore{
+		display: none;
+	}
+
 	.loadprev{
 		display : none;
 		margin-bottom: @rhythm;
+	}
+
+	&.showLoadmore{
+		display: none;
 	}
 
 	&.showprev{
@@ -2326,7 +2351,7 @@
 					position: absolute;
 					left : 0;
 					top : 0;
-					display: none;
+					//display: none; //
 
 					.videoWrapper{
 						height: 100%;
@@ -3364,7 +3389,7 @@ html.stblack{
 
 
 			.videoWrapper{
-				max-width: 700px;
+				max-width: 768px;
 				position : relative;
 				border-radius: 0;
 
@@ -3384,7 +3409,6 @@ html.stblack{
 					left: 0;
 					right: 0;
 					top: 0;
-					bottom: 75%;
 					cursor: pointer;
 					background: rgb(0,0,0);
 					background: linear-gradient(180deg, rgba(0,0,0,0.9528186274509804) 0%, rgba(0,0,0,0.9472163865546218) 6%, rgba(0,0,0,0.21612394957983194) 76%, rgba(0,0,0,0.09007352941176472) 82%, rgba(0,0,0,0) 100%);
@@ -4018,6 +4042,20 @@ html.stblack{
 				.shares{
 					.authorgroup{
 						width: 50%;
+					}
+
+					.authorgroup {
+						.share{
+							padding : 15px;
+						}
+						.anothercntswrk{
+							height: 100px;
+							overflow: hidden;
+						}
+					}
+
+					.paddingWrapper{
+						margin-left: 46px;
 					}
 				}
 			}

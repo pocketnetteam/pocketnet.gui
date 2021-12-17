@@ -84,7 +84,7 @@ var commentpanel = function(comment, _class){  %>
 var commentf = function(comment){  
 	var me = app.platform.sdk.user.me()
 
-	if(me && me.relation(comment.address, 'blocking')) return
+	/*if(me && me.relation(comment.address, 'blocking')) return*/
 
 	var m = '' %> 
 
@@ -107,7 +107,7 @@ var commentf = function(comment){
 							<% if(comment.donation === 'true' && comment.amount) {%>
 								<div class="donatedbefore"></div>
 							<% } %>
-							<div class="usericon <% if(comment.donation === 'true' && comment.amount) {%> donated <% } %>" image="<%-src || ''%>">
+							<div  ban=".gif" class="usericon <% if(comment.donation === 'true' && comment.amount) {%> donated <% } %>" image="<%-src || '*'%>">
 
 								<% if(!src && letter) { %>
 
@@ -240,7 +240,7 @@ var commentf = function(comment){
 											<% _.each(comment.images, function(image){ %>
 					
 												<div class="imagesWrapper">
-													<div elementsid="comments_imageCommentOpen" class="image imageCommentOpen" image="<%-image%>" i="<%-image%>">
+													<div elementsid="comments_imageCommentOpen" class="image imageCommentOpen" image="<%-image || '*'%>" i="<%-image%>">
 													</div>
 												</div>
 					

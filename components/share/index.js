@@ -14,7 +14,7 @@ var share = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, currentShare = null, essenseData, taginput;
+		var el, currentShare = null, essenseData, taginput, eblock;
 
 		var focusfixed = false, external = null, pliss;
 
@@ -29,7 +29,28 @@ var share = (function(){
 
 		var actions = {
 
-			resizeImage : function(base64, settings = {}){
+			getrepost : function(clbk){
+				var repost = currentShare.repost.v;
+
+				if (repost){
+					self.app.platform.sdk.node.shares.getbyid([repost], function(){
+
+						var share = self.app.platform.sdk.node.shares.storage.trx[repost]
+
+						if (clbk) clbk(share)
+	
+					})
+				}
+				else{
+					if(clbk) clbk()
+				}
+
+				
+			},
+
+			resizeImage : function(base64, settings){
+
+				if(!settings) settings = {}
 
 				var images = [{
 				  original : base64,
@@ -326,9 +347,18 @@ var share = (function(){
 			},
 
 			embeding : function(type, value){
+
+				if (eblock) return
+
+					eblock = true
+
+				setTimeout(function(){
+					eblock = false
+				}, 1000)
+
 				var storage = currentShare.export(true)
 
-				if (type === 'addVideo' || type === 'addStream') {
+				if (type === 'addVideo'/* || type === 'addStream'*/) {
 					renders.streamPage({ value, storage, type });
 				} 
 
@@ -450,10 +480,6 @@ var share = (function(){
 						}
 					})
 				}
-
-		
-
-
 				
 			},
 			addTags : function(tags){
@@ -952,11 +978,13 @@ var share = (function(){
 										else{
 		
 											if(isMobile()){
+
 												self.app.nav.api.load({
 													open : true,
-													href : 'index',
+													href : 'author?address=' + self.app.user.address.value,
 													history : true
 												})
+
 											}
 											else{
 												self.app.actions.scroll(0)
@@ -989,35 +1017,53 @@ var share = (function(){
 					
 				}
 
-
-				if (currentShare.itisvideo()) {
-
-					const options = {};
-
-					if (currentShare.message.v) options.description = `Watch more exciting videos at https://`+self.app.options.url+`/! \n ${currentShare.message.v}`;
-					if (currentShare.caption.v) options.name = currentShare.caption.v;
-
-					var urlMeta = self.app.peertubeHandler.parselink(currentShare.url.v);
-					options.host = urlMeta.host;
-		
-					return self.app.peertubeHandler.api.videos.update(currentShare.url.v, options).then(SAVE).catch((e) => {
-						// console.error(e);
-
-						// SAVE();
-						var message = e.text || findResponseError(e) || 'Updating error';
+				var fail = function(e){
+					var message = e.text || findResponseError(e) || 'Updating error';
 
 						sitemessage(message);
 
-						el.c.removeClass('loading')
+					el.c.removeClass('loading')
 
-						topPreloader(100)
-            		});
-
-				} else {
-
-					SAVE()
-
+					topPreloader(100)
 				}
+
+				
+				actions.getrepost(function(share){
+
+					if(share && share.address == deep(self.app, 'user.address.value')){
+
+						fail({
+							text : self.app.localization.e('repostyourown')
+						})
+
+						return
+					}
+
+					if (currentShare.itisvideo()) {
+
+						const options = {};
+	
+						if (currentShare.message.v) options.description = `Watch more exciting videos at https://`+self.app.options.url+`/! \n ${currentShare.message.v}`;
+						if (currentShare.caption.v) options.name = currentShare.caption.v;
+	
+						var urlMeta = self.app.peertubeHandler.parselink(currentShare.url.v);
+						options.host = urlMeta.host;
+			
+						return self.app.peertubeHandler.api.videos.update(currentShare.url.v, options).then(SAVE).catch((e) => {
+							
+							fail(e)
+						
+						});
+	
+					} else {
+	
+						SAVE()
+	
+					}
+
+				})
+
+				
 
 			},
 
@@ -1792,12 +1838,8 @@ var share = (function(){
 				}
 
 				if (external) external.container.close();
-				
-				// globalpreloader(true);
 
 				var serverLink = currentShare.url ? self.app.peertubeHandler.parselink(currentShare.url.v).host : null;
-
-				// globalpreloader(false);
 
 				self.nav.api.load({
 					open : true,
@@ -1858,6 +1900,7 @@ var share = (function(){
 						external = element;
 
 						videoUploadData = element.essenseData;
+
 					}
 				});
 
@@ -1967,7 +2010,7 @@ var share = (function(){
 
 							var images = p.el.find('img');
 
-								p.el.find('img').imagesLoaded({ background: true }, function(image) {
+								p.el.find('img').imagesLoadedPN({ imageAttr: true }, function(image) {
 
 									_.each(image.images, function(i, index){
 										if(i.isLoaded){
@@ -2075,7 +2118,7 @@ var share = (function(){
 						})
 					})
 
-					p.el.find('.image').imagesLoaded({ background: true }, function(image) {
+					p.el.find('.image').imagesLoadedPN({ imageAttr: true }, function(image) {
 
 						if(!isMobile()){
 							var elimages = el.images.find('.imagesEmbWr')
@@ -2121,8 +2164,9 @@ var share = (function(){
 			},
 
 			repost : function(clbk){
+
+
 				var repost = currentShare.repost.v;
-				
 
 				self.app.platform.sdk.node.shares.getbyid([repost], function(){
 
@@ -2450,6 +2494,8 @@ var share = (function(){
 		var state = {
 			save : function(){
 
+				if(essenseData.dontsave) return
+
 				if(!currentShare){
 					self.app.settings.set(self.map.id, 'currentShare_v1', '');
 				}
@@ -2466,14 +2512,14 @@ var share = (function(){
 
 					var scs = self.app.settings.set(self.map.id, 'currentShare_v1', exp);
 
-
 				}
-
 				
 			},
 			load : function(){
-				var last = self.app.settings.get(self.map.id, 'currentShare_v1')
 
+				if(essenseData.dontsave) return
+
+				var last = self.app.settings.get(self.map.id, 'currentShare_v1')
 				if (last)
 					currentShare.import(last)
 
@@ -2507,9 +2553,7 @@ var share = (function(){
 			self.app.platform.ws.messages.transaction.clbks.share = actions.waitActions
 
 			el.c.on('click', function(){
-				if (el.c)
-					el.c.addClass('focus').removeClass('unfocus')
-
+				if (el.c) el.c.addClass('focus').removeClass('unfocus')
 			})
 
 			$('html').on('click', events.unfocus);
