@@ -79,13 +79,27 @@
 
 							<% } else { %> 
 
-								<% if(typeof shw != 'undefined' && shw) {%>
+								<% if((typeof shw != 'undefined' && shw) || (typeof search != 'undefined' && search) ) {%>
 
-									<a elementsid="hrefindex" href="index" fast="fast">
-										<div class="iconWrapper">
-											<i class="fas fa-rss"></i>
-										</div>
-									</a>
+									<% if((typeof search != 'undefined' && search)) {%>
+
+										<a href="index" fast="fast">
+											<div class="iconWrapper">
+												<i class="fas fa-chevron-left"></i>
+											</div>
+										</a>
+
+									<% } else { %> 
+
+										<a elementsid="hrefindex" href="index" fast="fast">
+											<div class="iconWrapper">
+												<i class="fas fa-rss"></i>
+											</div>
+										</a>
+										
+									<% } %> 
+
+									
 	
 									
 								<% } else { %>

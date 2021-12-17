@@ -18,7 +18,7 @@ var letter = name ? name[0] : ''
 
 									<% var src = deep(app, 'platform.sdk.user.storage.me.image')  %>
 
-									<div class="usericon" image="<%-src || ''%>">
+									<div class="usericon" image="<%-src || '*'%>">
 
 										<% if(!src && letter) {%>
 

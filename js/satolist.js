@@ -8513,6 +8513,37 @@ Platform = function (app, listofnodes) {
                     return str.replace(sreg, cname)
                 }
 
+            },
+
+
+            commonuserpoint : function(address, me){
+                var point = 1;
+
+
+                if (me.relation(address, 'subscribes')){
+                    point += 100
+                }
+
+                if (me.relation(address, 'subscribers')){
+                    point += 20
+                }
+
+                if(self.sdk.usersl.storage[address]) point += 40
+                if(self.sdk.users.storage[address]) point += 40
+                
+
+                var activities = self.app.platform.sdk.activity.has('users', address)
+
+				if (activities.point){
+					point = point * activities.point / 10
+				}
+
+
+
+
+                return point
+
+                
             }
         },
 
@@ -9651,19 +9682,6 @@ Platform = function (app, listofnodes) {
                             clbk(null)
                     })
 
-                    /*self.app.ajax.api({
-                        action: action || 'urlPreview',
-                        errorHandler: false,
-                        data: {
-                            url: hexEncode(url)
-                        },
-                        success: function (d) {
-                            
-                        },
-                        fail: function () {
-                            
-                        }
-                    })*/
                 }
 
 
@@ -9705,20 +9723,62 @@ Platform = function (app, listofnodes) {
 
             },
 
+            points : {
+                users : {
+                    like : 50,
+                    search : 30,
+                    subscribe : 100,
+                    visited : 20
+                }
+            },
+
             has : function(key, id){
-                if(self.sdk.activity.latest && self.sdk.activity.latest[key]){
-                    return _.find(self.sdk.activity.latest[key], function(v){
-                        return id == v.id
+
+                var sum = 1
+
+                var activities = _.filter(
+                    
+                    _.map(self.sdk.activity.latest, function(ar, k){
+
+
+                        if(_.find(ar, function(u, k){
+                            return id == u.id
+                        })){
+
+                            var p = self.sdk.activity.points[key][k] || 20
+
+                            sum += p
+
+                            return {
+                                k : k,
+                                p : p
+                            }
+
+                        }
+                        else{
+                            return null
+                        }
+
+                    
                     })
+
+                , function(v){ return v })
+
+                return {
+                    activities,
+                    point : sum
                 }
             },
 
             adduser : function(key, address){
+
+                console.log('adduser', key, address)
+
                 if(!address) return
 
                 self.sdk.users.get([address], function () {
 
-                    var user =  self.sdk.users.storage[address]
+                    var user = self.sdk.usersl.storage[address] || self.sdk.users.storage[address]
 
                     if (user){
                         
@@ -9784,7 +9844,7 @@ Platform = function (app, listofnodes) {
 
                 l[key].unshift(obj)
 
-                l[key] = firstEls(l[key], 50)
+                l[key] = firstEls(l[key], 300)
 
                 self.sdk.activity.save()
             },
@@ -15803,6 +15863,8 @@ Platform = function (app, listofnodes) {
 
                     commentShare: function (inputs, commentShare, clbk, p) {
                         this.common(inputs, commentShare, TXFEE, clbk, p)
+
+                        
                     },
 
                     cScore: function (inputs, cScore, clbk, p) {
@@ -16037,7 +16099,7 @@ Platform = function (app, listofnodes) {
             current: null,
 
             info: function (pack, clbk) {
-                self.sdk.users.get(pack.addresses, clbk)
+                self.sdk.users.get(pack.addresses, clbk, true)
             },
 
             dumpKey: function (pack, address, clbk) {

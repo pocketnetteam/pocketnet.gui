@@ -778,7 +778,9 @@ var userpage = (function(){
 					essenseData : {
 						addresses : users,
 						empty : empty,
-						caption : caption
+						caption : caption,
+
+						sort : 'commonuserrelation'
 					},
 					
 					clbk : function(e, p){
@@ -794,6 +796,7 @@ var userpage = (function(){
 				var address = deep(self, 'app.user.address.value')
 
 				if (address){
+
 					var author = deep(self, 'sdk.users.storage.'+address)
 
 					var u = _.map(deep(author, 'subscribers') || [], function(a){
@@ -814,7 +817,6 @@ var userpage = (function(){
 
 					renders.userslist(_el, u, e, self.app.localization.e('followers'), clbk)
 				}
-
 				
 			},
 

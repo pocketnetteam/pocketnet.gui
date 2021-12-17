@@ -2264,36 +2264,39 @@ html.stblack{
 		}
 	}
 }
-.wnd.postwindow{
 
-	._close{
-		right: @rhythm;
-	}
 
-	&.normalizedmobile{
-		.closeline{
-			top : 50px!important;
-		}
-		.wndinner {
-			top : 60px!important;
-		}
 
-		.wndcontent{
-			background: #fff;
-		}
+html.cordova,
+html.tablet,
+html.mobile{
+	.wnd.postwindow{
 
-		#post .postWrapper{
-			padding-top : @rhythm;
-		}
+		&.normalizedmobile{
+			.closeline{
+				top : 50px!important;
+			}
+			.wndinner {
+				top : 60px!important;
+			}
 
-		#post{
-			.cntswrk.forcomments{
-				.paddingWrapper{
-					padding : 0;
+			.wndcontent{
+				background: #fff;
+			}
+
+			#post .postWrapper{
+				padding-top : @rhythm;
+			}
+
+			#post{
+				.cntswrk.forcomments{
+					.paddingWrapper{
+						padding : 0;
+					}
 				}
 			}
 		}
 	}
-}
 
+	}
 }

@@ -668,7 +668,8 @@ var author = (function(){
 					essenseData : {
 						addresses : users,
 						empty : empty,
-						caption : caption
+						caption : caption,
+						sort : 'commonuserrelation',
 					},
 					
 					clbk : function(e, p){

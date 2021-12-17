@@ -309,7 +309,7 @@ var arranges = {
 							<% if(imageFromVideo) {%>
 
 								<div class="imagesWrapper forvideo">
-									<div elementsid="lenta_videoOpen" class="image videoOpen" image="<%-imageFromVideo%>">
+									<div elementsid="lenta_videoOpen" class="image videoOpen" image="<%-imageFromVideo || '*'%>">
 										<div class="playicon"><i class="fas fa-play"></i></div>
 									</div>
 								</div>
@@ -319,7 +319,7 @@ var arranges = {
 							<% _.each(share.images, function(image){ %>
 
 								<div class="imagesWrapper">
-									<div elementsid="lenta_imageOpen" class="image imageOpen imagePostOpent" save="<% if(typeof nameFromScr != 'undefined') {%><%- nameFromScr(image) %><% } %>" image="<%-image%>" i="<%-image%>">
+									<div elementsid="lenta_imageOpen" class="image imageOpen imagePostOpent" save="<% if(typeof nameFromScr != 'undefined') {%><%- nameFromScr(image) %><% } %>" image="<%-image || '*'%>" i="<%-image%>">
 									</div>
 								</div>
 
@@ -374,7 +374,7 @@ var arranges = {
 						%>
 
 						<div class="icon">
-							<div class="usericon usericonsbsa another" image="<%-src || ''%>" ban=".gif">
+							<div class="usericon usericonsbsa another" image="<%-src || '*'%>" ban=".gif">
 
 								<% if(!src && letter) { %>
 

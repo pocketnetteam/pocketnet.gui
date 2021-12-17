@@ -4200,6 +4200,11 @@
 
 						var value = $(this).val(); 	
 
+						if(!value) {
+
+							return false
+						}
+
 						console.log('value1', value, !isNaN(Number(value)))
 
 						if(value.length > 1) {
@@ -5317,7 +5322,7 @@
 			}
 
 			if(self.type == 'number'){
-				return `<input elementsid="button_${self.id}_2" ${__disabled} step="${deep(self, 'format.Step') || ''}" min="${deep(self, 'format.Min') || ''}" max="${deep(self, 'format.Max') || ''}" pid="${self.id}" class="${self.type} input" placeholder="${(self.placeholder || "")}" value="${self.render(true)}" type="text">`
+				return `<input elementsid="button_${self.id}_2" ${__disabled} step="${deep(self, 'format.Step') || ''}" min="${deep(self, 'format.Min') || ''}" max="${deep(self, 'format.Max') || ''}" pid="${self.id}" class="${self.type} input" placeholder="${(self.placeholder || "")}" value="${self.render(true)}" type="number">`
 			}
 
 			var input = `<input elementsid="button_${self.id}_2" ${__disabled} ${m ? m : ''} pid="${self.id}" class="${self.type} input" placeholder="${(self.placeholder || "")}" value="${self.render(true)}" type="text">`

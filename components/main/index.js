@@ -444,6 +444,7 @@ var main = (function(){
 					var c = deep(self, 'app.modules.menu.module.showsearch')
 
 					if (c)
+
 						c(value)
 
 					self.app.platform.sdk.search.get(searchvalue, 'posts', 0, 10, null, function(r, block){
@@ -471,10 +472,10 @@ var main = (function(){
 					if (c){
 
 						if(searchtags){
+
 							var val = _.map(searchtags, function(w){return '#' + w}).join(' ')
 
 							c(val)
-
 
 							self.app.platform.sdk.activity.addtagsearch(val)
 
@@ -484,7 +485,6 @@ var main = (function(){
 						}
 
 					}
-					
 
 					renders.lenta(clbk, p)
 				}

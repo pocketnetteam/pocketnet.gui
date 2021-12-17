@@ -274,6 +274,10 @@ ____loclib.newShare = "New Post";
 ____loclib.firstShare = "Share Your First Post in "+appname+"";
 ____loclib.scaption = "Caption";
 ____loclib.whatsnew = "What's new?";
+____loclib.whatsnewrepost = "What's new?";
+
+
+
 ____loclib.saddlink = "Add link to external site or video";
 ____loclib.saddimages = "Add Images to Post";
 ____loclib.sarticle = "To write an article";

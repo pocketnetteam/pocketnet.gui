@@ -1153,8 +1153,11 @@ var comments = (function(){
 			if (post && post.address == comment.address) p = p * 50
 
 			if(!my){
-				if(self.app.platform.sdk.activity.has('user', comment.address)){
-					p = p * 3
+
+				var activities = self.app.platform.sdk.activity.has('users', comment.address)
+
+				if (activities.point){
+					p = p * activities.point / 10
 				}
 			}
 

@@ -546,8 +546,10 @@ var menu = (function(){
 								bgImages(el)
 
 								self.app.nav.api.links(null, el, function(){
+
 									helpers.closeResults()
 									clearex()
+
 								});
 
 
@@ -565,6 +567,10 @@ var menu = (function(){
 									helpers.closeResults()
 									close()
 									clearex()
+
+									if (name){
+										close(true)
+									}
 
 								})
 							})
@@ -1249,12 +1255,14 @@ var menu = (function(){
 
 			showsearch : function(v, _searchBackAction){
 
-
 				if(v){
 					el.c.addClass('searchactive')
 					el.postssearch.find('.search').addClass('searchFilled')
 				}
 				else{
+					if(isMobile())
+						el.c.removeClass('searchactive')
+						
 					el.postssearch.find('.search').removeClass('searchFilled')
 				}
 				

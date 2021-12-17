@@ -127,7 +127,7 @@
 				<div class="transaction">
 					<div class="user">
 						<div class="iconWrapper">
-							<div class="usericon" image="<%-senderImg || ''%>">
+							<div class="usericon" image="<%-senderImg || '*'%>">
 								
 								<% if(!senderImg && senderLetter) { %>
 
@@ -150,7 +150,7 @@
 					</div>
 					<div class="user">
 						<div class="iconWrapper">
-							<div class="usericon" image="<%-receiverImg || ''%>">
+							<div class="usericon" image="<%-receiverImg || '*'%>">
 								<% if(!receiverImg && receiverLetter) { %>
 
 									<span 
