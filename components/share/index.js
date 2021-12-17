@@ -978,11 +978,13 @@ var share = (function(){
 										else{
 		
 											if(isMobile()){
+
 												self.app.nav.api.load({
 													open : true,
-													href : 'index',
+													href : 'author?address=' + self.app.user.address.value,
 													history : true
 												})
+
 											}
 											else{
 												self.app.actions.scroll(0)
