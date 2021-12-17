@@ -628,7 +628,8 @@ var Proxy = function (settings, manage, test, logger) {
 				13: ['01rus.nohost.me'],
 
 				14: [
-					{host : 'pocketnetpeertube12.nohost.me', special : true},
+					'pocketnetpeertube12.nohost.me',
+					'pocketnetpeertube13.nohost.me'
 				],
       		};
 
