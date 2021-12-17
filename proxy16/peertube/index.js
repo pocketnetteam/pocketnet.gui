@@ -287,14 +287,14 @@ var Peertube = function (settings) {
 			return Promise.resolve({})
 		},
 
-		roys: ({type, special}) => {
+		roys: ({type = 'upload', special}) => {
 			const output = {};
 
 			var _roys = _.filter(roys, function (r) {
 				return !r.auto;
 			});
 
-			if (type && type == 'upload') _roys = _.filter(_roys, function (r) {
+			if (type == 'upload') _roys = _.filter(_roys, function (r) {
 
 				if (!special){
 					if(r.hasspecial()) return
