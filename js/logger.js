@@ -1,5 +1,5 @@
 const LOGGER_ENDPOINT_ADDRESS =
-  'https://metrix.pocketnet.app:8123?query=INSERT INTO FrontendMetrics VALUES';
+  'http://clickhouse.clickhouse.metrix.pocketnet.app:8123?query=INSERT INTO FrontendMetrics VALUES';
 const DEFAULT_CONTENT_TYPE = 'text/plain';
 
 class FrontendLogger {
@@ -23,11 +23,11 @@ class FrontendLogger {
         error,
         type,
       })
-      .then(() => {
-        debugger;
-      })
-      .catch(() => {
-        debugger;
-      });
+    //   .then(() => {
+    //     debugger;
+    //   })
+    //   .catch(() => {
+    //     debugger;
+    //   });
   }
 }
