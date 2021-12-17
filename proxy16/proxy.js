@@ -628,7 +628,9 @@ var Proxy = function (settings, manage, test, logger) {
 				],
 
 				//server of gf110
-				13: ['01rus.nohost.me'],
+				13: [
+					{host : '01rus.nohost.me', cantuploading : true}, 
+				],
 
 				14: [
 					'pocketnetpeertube12.nohost.me',

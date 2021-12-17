@@ -442,14 +442,11 @@ var comments = (function(){
 
 										}	
 
-								
+										return true
 	
 									} else {
-	
 										sitemessage(self.app.localization.e('incoins'))
 									}
-	
-				
 	
 								}
 							}
