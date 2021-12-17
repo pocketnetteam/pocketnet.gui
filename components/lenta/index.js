@@ -2673,7 +2673,7 @@ var lenta = (function(){
 
 				lazyEach({
 					array : rs,
-					//sync : true,
+					sync : true,
 
 					action : function(p){
 						var share = p.item;
@@ -2691,15 +2691,14 @@ var lenta = (function(){
 						
 					},
 
-					sync : isMobile(),
+					//sync : isMobile(),
 
 					all : {
 						success : function(){
 
 							renders.mystars(shares)
 
-							if(clbk)
-							clbk()
+							if(clbk) clbk()
 						}
 					}
 				})
@@ -3407,7 +3406,7 @@ var lenta = (function(){
 
 						if (!el.c) return
 
-						el.c.removeClass('loading');
+						
 
 						if(!error && !error2){
 
@@ -3534,7 +3533,7 @@ var lenta = (function(){
 									if (clbk)
 										clbk(shares, error || error2)
 
-									//el.loader.fadeOut();
+										el.c.removeClass('loading');
 									return;
 
 								} else {
@@ -3554,10 +3553,9 @@ var lenta = (function(){
 
 										}
 										
-										if (clbk)
-										clbk(shares, error || error2)
+										if (clbk) clbk(shares, error || error2)
 
-										//el.loader.fadeOut();
+										el.c.removeClass('loading');
 										return;			
 
 									})
@@ -3568,7 +3566,7 @@ var lenta = (function(){
 							} else if(clbk){
 
 								clbk(shares, error || error2);
-								//el.loader.fadeOut();
+								el.c.removeClass('loading');
 
 							}
 
@@ -3601,7 +3599,7 @@ var lenta = (function(){
 
 						} else if (clbk){
 							
-							//el.loader.fadeOut();
+							el.c.removeClass('loading');
 							clbk(shares, error || error2);
 						}
 						

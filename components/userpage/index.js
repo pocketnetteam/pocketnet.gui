@@ -488,9 +488,6 @@ var userpage = (function(){
 
 				var report = helpers.findReport(id)
 
-				
-				
-
 				if(report && isMobile() && report.openReportPageMobile){
 
 					self.closeContainer()
@@ -530,7 +527,6 @@ var userpage = (function(){
 				renders.report(id);
 
 				if (report && report.rh) return
-
 
 				if (addToHistory){
 
@@ -692,6 +688,8 @@ var userpage = (function(){
 			},
 			contents : function(clbk, id){
 
+				console.log("render contents", id, el)
+
 				if(!el.contents) return
 
 				var s = helpers.selector();
@@ -736,8 +734,6 @@ var userpage = (function(){
 					})
 				}
 
-				
-
 				self.app.user.isState(function (state) { 
 
 					if(isMobile() && state){
@@ -756,14 +752,6 @@ var userpage = (function(){
 					}
 
 				})
-					
-
-					
-
-					
-
-
-				
 		
 			},
 
@@ -990,8 +978,10 @@ var userpage = (function(){
 		}
 
 		var makerep = function(clbk){
+			
 			var id = parameters().id;
 
+			self.app.user.isState(function (state) { 
 
 				if(!isMobile() && state){
 					if(!id) {
@@ -1027,10 +1017,8 @@ var userpage = (function(){
 
 				}, id);
 
+			})
 
-			
-
-			
 
 		}
 
@@ -1042,7 +1030,6 @@ var userpage = (function(){
 
 			if(!self.app.user.validate()){
 				el.c.addClass("validate")
-
 
 				if(self.app.errors.connectionRs()){
 

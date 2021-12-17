@@ -21863,7 +21863,9 @@ Platform = function (app, listofnodes) {
 
 			var boffset = 0;
 
-			if(isMobile()){
+            var mtbl = (isMobile() || (isTablet() && platform.app.width <= 768))
+
+			if (mtbl){
 				maxCount = 1;
                 showremove = 0;
 			}
@@ -21885,7 +21887,7 @@ Platform = function (app, listofnodes) {
 			if(self.fastMessages.length >= maxCount){
 				_.each(self.fastMessages, function(m, i){
 
-					if(!isMobile() && !m.expanded && !m.el.hasClass('smallsize')){
+					if(!mtbl && !m.expanded && !m.el.hasClass('smallsize')){
 
 						m.el.addClass('smallsize');
 
@@ -21917,11 +21919,11 @@ Platform = function (app, listofnodes) {
 
 					else
 					{
-						if(!isMobile()){
+						if(!mtbl){
 							offset += 5;
 						}
 
-						if(!isMobile())
+						if(!mtbl)
 
 							m.el.css('bottom', offset + 'px');
 
@@ -23843,7 +23845,7 @@ Platform = function (app, listofnodes) {
 
                     self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
 
-                    self.matrixchat.init()
+                    
 
                     self.app.peertubeHandler.init()
 
@@ -23851,11 +23853,14 @@ Platform = function (app, listofnodes) {
                         clbk()
 
                     setTimeout(function(){
+                        self.matrixchat.init()
+                    }, 300)
+
+                    setTimeout(function(){
 
                         lazyActions([
                             self.cryptography.prepare,
                             self.sdk.pool.init,
-                            
                             self.sdk.tempmessenger.init,
                             self.sdk.chats.load,
                             self.sdk.user.subscribeRef
@@ -23959,7 +23964,9 @@ Platform = function (app, listofnodes) {
                     if(clbk) clbk()
                 }
                 else{
-                    importScript('chat/matrix-element.min.js?v=8', clbk)
+                    importScript('chat/matrix-element.min.js?v=9', clbk)
+
+                    //importScript('chat/matrix-element.js?v=9', clbk)
                 }
                 
             }

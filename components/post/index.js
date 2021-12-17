@@ -1093,6 +1093,9 @@ var post = (function () {
 						}
 
 						var isclbk = function(){
+
+
+							
 							images.addClass('active');
 
 							_el.addClass('active');

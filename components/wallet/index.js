@@ -16,6 +16,8 @@ var wallet = (function(){
 		var craddress = 'PFF7PevK753eYTwWBScdEAbWQrgu36AdUA';
 		var first = true;
 
+		var unspentRequestDate = null
+
 		var coins = [
 			{name: 'Bitcoin (BTC)', code: 'BTC', image : "bitcoin-btc-logo.svg"},
 			{name: 'Ethereum (ETH)', code: 'ETH', image : "ethereum-eth-logo.svg"},
@@ -2692,7 +2694,17 @@ var wallet = (function(){
 
 			})
 
-			self.app.platform.sdk.node.transactions.get.allBalance(null, true)
+			setTimeout(function(){
+
+				if(el.c && (!unspentRequestDate || unspentRequestDate.addSeconds(90) < new Date())) 
+				{
+					self.app.platform.sdk.node.transactions.get.allBalance(null, true)
+
+					unspentRequestDate = new Date()
+				}
+
+			}, 2000)
+			
 
 		}
 
