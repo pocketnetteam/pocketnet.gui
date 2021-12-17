@@ -153,14 +153,20 @@ var videoCabinet = (function () {
       getBlockchainPostByVideos: (videoArray = []) =>
         self.app.api
           .rpc('searchlinks', [videoArray, 'video', 0, videoArray.length])
-          .then((res = {}) => {
-            if (!res.contents) return;
 
-            res.contents.forEach((post) => {
+
+          .then((res = []) => {
+
+            console.log("RESULT ", res)
+
+            res.forEach((post) => {
               const postUrl = decodeURIComponent(post.u);
 
               blockChainInfo[postUrl] = { ...post };
             });
+
+            console.log('blockChainInfo', blockChainInfo)
+
           })
           .catch((err) => {}),
 
@@ -644,9 +650,13 @@ var videoCabinet = (function () {
               );
             });
 
+
             const blockchainStrings = videos.map(
-              (video) => `peertube://${video.account.host}/${video.uuid}`,
+              (video) => encodeURIComponent(`peertube://${video.account.host}/${video.uuid}`) ,
             );
+
+              console.log('blockchainStrings', blockchainStrings)
+
             //get information about videos being published to blockchain
             actions.getBlockchainPostByVideos(blockchainStrings).then(() => {
               p.el.find('.singleVideoSection').each(function () {
