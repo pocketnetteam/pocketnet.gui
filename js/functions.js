@@ -1641,56 +1641,62 @@
 			return
 		}
 
-		els.imagesLoadedPN({ imageAttr: true }, function(image) {
+		try{
 
-			if(typeof p.clbk === 'function') p.clbk(image);
-			
-		});
-
-		return
-
-		els.each(function(){
-
-			var _el = $(this);
-			var image = _el.attr('image')
-
-
-
-
-			/*var ban = _el.attr('ban')
-			//var save = _el.attr('save')
-
-			if (image && image != '*')
-			{
-
-				if (ban && image.indexOf(ban) > -1){
-					image = 'img/imagenotuploaded.jpg'
-				}
-
-					image = image.replace('bastyon.com:8092', 'pocketnet.app:8092')
-
-				_el.css({
-					'background-image': 'url('+image+')',
-					'background-size': p.size || 'cover',
-					'background-position': p.position || 'center center',
-					'background-repeat': p.repeat || 'no-repeat'
-				});
-
-				_el.attr('image', '*')
-
-			}*/
-
-			
-		})
-
-		if(p.clbk)
-		{
-			els.imagesLoaded({ background: true }, function(image) {
+			els.imagesLoadedPN({ imageAttr: true }, function(image) {
 
 				if(typeof p.clbk === 'function') p.clbk(image);
 				
 			});
+
 		}
+
+		catch(e){
+
+
+			els.each(function(){
+
+				var _el = $(this);
+				var image = _el.attr('image')
+	
+				if (image && image != '*'){
+	
+						
+						image = image.replace('bastyon.com:8092', 'pocketnet.app:8092')
+	
+						_el.css({
+							'background-image': 'url('+image+')',
+							'background-size': p.size || 'cover',
+							'background-position': p.position || 'center center',
+							'background-repeat': p.repeat || 'no-repeat'
+						});
+		
+						_el.attr('image', '*')
+		
+				}
+				
+			})
+	
+			if(p.clbk)
+			{
+				if (els.imagesLoaded)
+					els.imagesLoaded({ background: true }, function(image) {
+		
+						if(typeof p.clbk === 'function') p.clbk(image);
+						
+					});
+
+				else{
+					if(typeof p.clbk === 'function') p.clbk(image);
+				}
+			}
+		}
+
+		
+
+		return
+
+		
 	}
 
 	pathFromMD5Name = function(name){
