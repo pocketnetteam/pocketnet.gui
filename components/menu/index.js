@@ -349,9 +349,6 @@ var menu = (function(){
 					}
 
 					setTimeout(function(){
-						/*self.app.platform.sdk.notifications.init(function(){
-							actions.ahnotify(el, unseen().length, 'notifications')
-						})*/
 
 						if(!isTablet()){
 							self.nav.api.load({
@@ -363,16 +360,17 @@ var menu = (function(){
 							})
 						}
 						
-						
-					},3000)
+					},2000)
 
 					
 				},
 
 				click : function(el){
-					self.app.mobile.vibration.small()
+					self.app.mobile.vibration.small(true)
 
 					if(isTablet()){
+
+						console.log("click")
 
 						self.nav.api.go({
 							open : true,

@@ -678,6 +678,8 @@ nModule = function(){
 
 		var add = self.map.add;
 		var frommodule = true;
+		var globalpreloaderTimer = p.globalpreloaderTimer || null
+
 
 		if (p.restartModule) frommodule = false
 
@@ -688,12 +690,19 @@ nModule = function(){
 		settings = _.extend(settings, add);
 		settings = _.extend(settings, p);	
 
+		/*if(p.inWnd){
+
+			globalpreloaderTimer = setTimeout(function(){
+				globalpreloader(true)
+			}, 100)
+			
+		}*/
+
 		beforegetdata(settings, function(){
 			self.user.isState(function(state){	
 				
 				
 				settings.getdata(function(data){
-					
 
 					topPreloader(45);
 
@@ -702,6 +711,11 @@ nModule = function(){
 					if(p.preshell) p.preshell();
 
 					self.shell(settings, function(p){
+
+						if(globalpreloaderTimer){
+							globalpreloader(false)
+							clearTimeout(globalpreloaderTimer)
+						}
 
 						topPreloader(100);	
 
@@ -730,6 +744,7 @@ nModule = function(){
 
 			})
 		})
+
 	}
 
 	self.init = function(settings, p){

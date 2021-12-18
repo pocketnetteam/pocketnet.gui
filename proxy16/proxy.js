@@ -626,8 +626,7 @@ var Proxy = function (settings, manage, test, logger) {
 					{host : 'bastyonmma.pocketnet.app', cantuploading : true}, 
 					{host : 'bastyonmma.nohost.me', cantuploading : true}, 
 				],
-
-				//server of gf110
+	
 				13: [
 					{host : '01rus.nohost.me', cantuploading : true}, 
 				],

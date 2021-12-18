@@ -2237,13 +2237,15 @@ Platform = function (app, listofnodes) {
     self.ui = {
         usertype : function(address){
 
-            var dev = deep(app, 'platform.sdk.user.storage.'+address+'.dev') || deep(app, 'platform.sdk.usersl.storage.'+address+'.dev');
+            var dev = self.sdk.usersl.storage[address] && self.sdk.usersl.storage[address].dev
 
             if (dev){
                 
                 return 'dev';
 
-            } else if (deep(app, 'platform.real.'+address)){
+            } else 
+            
+            if ( self.real[address]){
 
                 return 'real';
 
@@ -19618,10 +19620,6 @@ Platform = function (app, listofnodes) {
                     }
                 });
 
-              
-                //nm = share.renders.xssmessage(nm)
-
-
                 var images = _.map(share.images, function (i) {
                     return {
                         i: i,
@@ -19630,20 +19628,6 @@ Platform = function (app, listofnodes) {
                 });
 
                 var meta = parseVideo(share.url || "")
-
-              
-
-                /*if (share.url) {
-
-                    var video = videoImage(share.url)
-
-                    if (video) {
-                        images.push({
-                            i: video,
-                            v: true
-                        })
-                    }
-                }*/
 
                 if(app.curation()) return ''
 
@@ -19654,7 +19638,7 @@ Platform = function (app, listofnodes) {
                     var img = images[0]
 
                     h += '<div class="tcell forimage">'
-                    h += '<div class="img" image="' + clearStringXss(img.i) + '">'
+                    h += '<div class="img" image="' + img.i + '">'
 
                     if (img.v) {
                         h += '<div class="vstyle">'
@@ -19682,7 +19666,7 @@ Platform = function (app, listofnodes) {
                         _.each(images, function (image) {
 
                             h += '<div class="imagesWrapper">'
-                            h += '<div class="image" image="' + clearStringXss(image.i) + '" i="' + clearStringXss(image.i) + '">'
+                            h += '<div class="image" image="' + image.i + '" i="' + image.i + '">'
 
                             if (image.v) {
                                 h += '<div class="vstyle">'
@@ -19779,7 +19763,7 @@ Platform = function (app, listofnodes) {
             },
 
             comment: function (comment, share) {
-                var t = comment.renders.preview();
+                var t = comment.renders.previewEmojidis();
 
 
                 var h = '<div class="commentmessage">'
@@ -19825,7 +19809,7 @@ Platform = function (app, listofnodes) {
 
             commentScore: function (comment, thumbs) {
 
-                var t = comment.renders.preview();
+                var t = comment.renders.previewEmojidis();
 
                 var h = '<div class="commentmessage">'
 
@@ -20074,8 +20058,8 @@ Platform = function (app, listofnodes) {
                             platform.app.nav.api.load({
                                 open: true,
                                 href: 'post?s=' + data.comment.txid,
-                                inWnd: !isMobile(),
-                                history: isMobile(),
+                                inWnd: true,
+                                history: true,
                                 clbk: function (d, p) {
                                     app.nav.wnds['post'] = p
                                 },
@@ -20292,8 +20276,8 @@ Platform = function (app, listofnodes) {
                             platform.app.nav.api.load({
                                 open: true,
                                 href: 'post?s=' + data.txid,
-                                inWnd: !isMobile(),
-                                history: isMobile(),
+                                inWnd: true,
+                                history: true,
                                 clbk: function (d, p) {
                                     app.nav.wnds['post'] = p
                                 },
@@ -20413,8 +20397,8 @@ Platform = function (app, listofnodes) {
                             platform.app.nav.api.load({
                                 open: true,
                                 href: 'post?s=' + data.txid,
-                                inWnd: !isMobile(),
-                                history: isMobile(),
+                                inWnd: true,
+                                history: true,
                                 clbk: function (d, p) {
                                     app.nav.wnds['post'] = p
                                 },
@@ -20523,8 +20507,8 @@ Platform = function (app, listofnodes) {
                             platform.app.nav.api.load({
                                 open: true,
                                 href: 'post?s=' + data.txid,
-                                inWnd: !isMobile(),
-                                history: isMobile(),
+                                inWnd: true,
+                                history: true,
                                 clbk: function (d, p) {
                                     app.nav.wnds['post'] = p
                                 },
@@ -21040,8 +21024,8 @@ Platform = function (app, listofnodes) {
                             platform.app.nav.api.load({
                                 open: true,
                                 href: 'post?s=' + data.posttxid,
-                                inWnd: !isMobile(),
-                                history: isMobile(),
+                                inWnd: true,
+                                history: true,
                                 clbk: function (d, p) {
                                     app.nav.wnds['post'] = p
                                 },
@@ -21068,8 +21052,8 @@ Platform = function (app, listofnodes) {
                             platform.app.nav.api.load({
                                 open: true,
                                 href: 'post?s=' + data.posttxid,
-                                inWnd: !isMobile(),
-                                history: isMobile(),
+                                inWnd: true,
+                                history: true,
                                 clbk: function (d, p) {
                                     app.nav.wnds['post'] = p
                                 },
@@ -21459,8 +21443,8 @@ Platform = function (app, listofnodes) {
                                 platform.app.nav.api.load({
                                     open: true,
                                     href: 'post?s=' + data.posttxid,
-                                    inWnd: !isMobile(),
-                                    history: isMobile(),
+                                    inWnd: true,
+                                    history: true,
                                     clbk: function (d, p) {
                                         app.nav.wnds['post'] = p
                                     },
@@ -22022,13 +22006,22 @@ Platform = function (app, listofnodes) {
 
             message.el.on('click', function(){
 
-                if(isMobile()){
+                if (isTablet()){
 
-                    platform.app.nav.api.load({
+                    self.nav.api.go({
+                        open : true,
+                        href : 'notifications',
+                        inWnd : true,
+                        history : true,
+                        essenseData : {
+                        }
+                    })
+
+                    /*platform.app.nav.api.load({
                         open : true,
                         href : 'userpage?id=notifications&report=notifications',
                         history : true,
-                    })
+                    })*/
 
                 }
                 else{
@@ -22064,13 +22057,13 @@ Platform = function (app, listofnodes) {
                 return false
             })
 
-            if (isMobile()) {
+            if (isTablet()) {
                 var parallax = new SwipeParallaxNew({
                     //prop : 'position',
                     el: message.el,
                     directions: {
                         up : {
-                            trueshold: 50,
+                            trueshold: 10,
                             positionclbk: function (px) {
 
                             },

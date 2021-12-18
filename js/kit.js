@@ -1856,11 +1856,11 @@ pUserInfo = function(){
 	self._import = function(v){
 
 
-		self.name = decodeURIComponent(v.n || v.name || '');
-		self.image = v.i || v.image;
-		self.about = decodeURIComponent(v.a || v.about || '');
-		self.language = v.l || v.language;
-		self.site = decodeURIComponent(v.s || v.site || '');
+		self.name = clearStringXss(decodeURIComponent(v.n || v.name || ''));
+		self.image = clearStringXss(v.i || v.image);
+		self.about = clearStringXss(decodeURIComponent(v.a || v.about || ''));
+		self.language = clearStringXss(v.l || v.language);
+		self.site = clearStringXss(decodeURIComponent(v.s || v.site || ''));
 
 		self.ref = v.r || v.ref;
 		self.rc = v.rc || 0;
@@ -2060,12 +2060,12 @@ pShare = function(){
 		}
 		else
 		{	
-			self.url = decodeURIComponent(v.u || v.url || '');
-			self.message = decodeURIComponent((v.m || v.message || "").replace(/\+/g, " "))
-			self.caption = decodeURIComponent((v.c || v.caption || "").replace(/\+/g, " "))
+			self.url = clearStringXss(decodeURIComponent(v.u || v.url || ''));
+			self.message =clearStringXss( decodeURIComponent((v.m || v.message || "").replace(/\+/g, " ")))
+			self.caption = clearStringXss(decodeURIComponent((v.c || v.caption || "").replace(/\+/g, " ")))
 
 			self.tags = _.map(v.t || v.tags || [], function(t){ 
-				return clearTagString(decodeURIComponent(t))
+				return clearStringXss(clearTagString(decodeURIComponent(t)))
 			})
 			
 			self.poll = v.p || v.poll || {}
@@ -2079,7 +2079,7 @@ pShare = function(){
 		if(v.myVal) self.myVal = Number(v.myVal)
 
 		self.language = v.l || v.language || 'en'
-		self.images = v.i || v.images || [];
+		self.images = _.map(v.i || v.images || [], function(i){return clearStringXss(i)});
 		self.repost = v.r || v.repost || v.txidRepost || ''
 
 		if (v.deleted) self.deleted = true
@@ -2411,11 +2411,11 @@ pComment = function(){
 		if (v.msgparsed){
 
 			try {	
-				self.url = decodeURIComponent(v.msgparsed.url || "");
-				self.message = decodeURIComponent((v.msgparsed.message || "").replace(/\+/g, " ")).replace(/\n{2,}/g, '\n\n')
+				self.url = clearStringXss(decodeURIComponent(v.msgparsed.url || ""));
+				self.message = clearStringXss(decodeURIComponent((v.msgparsed.message || "").replace(/\+/g, " ")).replace(/\n{2,}/g, '\n\n'))
 				self.images = _.map(v.msgparsed.images || [], function(i){
 
-					return decodeURIComponent(i)
+					return clearStringXss(decodeURIComponent(i))
 				});
 			}
 

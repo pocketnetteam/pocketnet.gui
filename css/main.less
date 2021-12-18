@@ -22,6 +22,10 @@
     overflow-x: hidden;
     scrollbar-width: 4px;
     scrollbar-color: rgba(0, 0, 0, .15) rgba(0, 0, 0, .05);
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+
+    
 }
 .customscroll::-webkit-scrollbar {
     width: 4px;
@@ -53,6 +57,11 @@ html.stblack{
     }
 }
 
+body{
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+}
+
 html {
     font-size: 15px;
     line-height: 1.4;
@@ -60,8 +69,7 @@ html {
     position: relative;
     overflow-x: hidden;
     overflow-y: overlay;
-    
-    /*touch-action: none;*/
+    touch-action: none;
     /*overflow-x: hidden;*/
     // background: #f6f6f6;
     /*overflow-anchor: none;*/
@@ -349,22 +357,22 @@ hr {
 .updatingFrontend{
     position: fixed;
     left : 0;
-    top : 0;
-    bottom : 0;
+    top : -100%;
+    bottom : 100%;
     right : 0;
     z-index: 2000000;
-    background: fade(@color-white, 90);
-    .transition(0.3s);
-    display: none;
+    /* background: fade(@color-white, 90);*/
+    .transition(0.3s, transform);
 
     &.show{
-        display: block;
+        transform:  translateY(100%);
     }
 
     .table{
         width : 100%;
         height  :100%;
-        color : @color-gray-mlight;
+        color : #fff;
+        .shadowText();
 
         >div{
             vertical-align: middle;
@@ -400,12 +408,13 @@ hr {
 
 html.stblack{
     #globalpreloader{
-        background: fade(@color-black2, 90);
         &.dark{
             background: fade(@color-black2, 90);
         }
     }
 }
+
+
 /*
 html{
     &.mobile{
@@ -2264,6 +2273,9 @@ input[type=radio].radio:checked + label {
 
 #windowsContainer{
     .wnd{
+
+       
+
         &:nth-last-child(1){
             .wndback{
                 background: fade(#00112C, 75);
@@ -2294,6 +2306,8 @@ input[type=radio].radio:checked + label {
     width : 100%;
     display: none;
     z-index: 1005;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
 
     &.embeding{
         z-index: 2005

@@ -968,6 +968,14 @@ Nav = function(app)
 				return
 			}
 
+			if(p.inWnd){
+
+				p.globalpreloaderTimer = setTimeout(function(){
+					globalpreloader(true)
+				}, 100)
+				
+			}
+
 			core.loadSource(p.map, function(module){
 
 				if(!module)
@@ -1001,6 +1009,7 @@ Nav = function(app)
 				}
 				
 			})
+
 		},
 		externalLink : function(link){
 

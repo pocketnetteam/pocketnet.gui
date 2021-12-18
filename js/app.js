@@ -1757,7 +1757,7 @@ Application = function(p)
 			}
 		},
 		vibration : {
-            small : function(time){
+            small : function(android){
 
 				if(!window.cordova) return
 
@@ -1771,9 +1771,9 @@ Application = function(p)
                     return
                 }
 
-                /*if (navigator.vibrate){
-                    navigator.vibrate(time || 50)
-                }*/
+                if (navigator.vibrate && android){
+                    navigator.vibrate(50)
+                }
             }
         },
 		statusbar : {
