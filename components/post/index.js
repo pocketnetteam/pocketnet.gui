@@ -1442,7 +1442,7 @@ var post = (function () {
 
 					var images = _p.el.find('img');
 
-					_p.el.find('img').imagesLoaded({ background: true }, function (image) {
+					_p.el.find('img').imagesLoadedPN({ background: true }, function (image) {
 						_.each(image.images, function (i, index) {
 							if (i.isLoaded) {
 								$(images[index]).addClass('active');

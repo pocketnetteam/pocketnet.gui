@@ -279,7 +279,15 @@ var embeding = (function(){
 		}
 
 		var initEvents = function(){
-			el.c.find('input').focus().on('change', events.action)
+
+
+			setTimeout(function(){
+				el.c.find('input').focus()
+			}, 300)
+			
+			
+			el.c.find('input').on('change', events.action)
+
 			el.action.on('click', events.action)
 
 			if(type == 'images'){

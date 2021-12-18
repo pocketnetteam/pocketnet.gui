@@ -361,7 +361,6 @@ hr {
     bottom : 100%;
     right : 0;
     z-index: 2000000;
-    /* background: fade(@color-white, 90);*/
     .transition(0.3s, transform);
 
     &.show{
@@ -385,7 +384,7 @@ hr {
             padding : 2 * @rhythm;
 
             span{
-                font-size: 2em;
+                font-size: 1.5em;
                 font-weight: 100;
             }
         }
@@ -400,19 +399,6 @@ hr {
     }
 }
 
-#globalpreloader{
-    &.dark{
-        background: fade(@color-black2, 90);
-    }
-}
-
-html.stblack{
-    #globalpreloader{
-        &.dark{
-            background: fade(@color-black2, 90);
-        }
-    }
-}
 
 
 /*
