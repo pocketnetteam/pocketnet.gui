@@ -1653,8 +1653,9 @@
 
 		catch(e){
 
+			console.error(e)
 
-			els.each(function(){
+			/*els.each(function(){
 
 				var _el = $(this);
 				var image = _el.attr('image')
@@ -1689,7 +1690,7 @@
 				else{
 					if(typeof p.clbk === 'function') p.clbk(image);
 				}
-			}
+			}*/
 		}
 
 		

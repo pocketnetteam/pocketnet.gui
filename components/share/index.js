@@ -2341,8 +2341,10 @@ var share = (function(){
 						attributes: {
 							spellcheck : true,
 						},
+
+						shortnames : !isTablet(),
 		
-						filters : {
+						filters : isTablet() ? null : {
 							smileys_people: {
 								icon: "yum",
 								title: "Smileys & People",

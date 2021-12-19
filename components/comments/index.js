@@ -1444,9 +1444,10 @@ var comments = (function(){
 				attributes: {
 					spellcheck : true,
 				},
-				
-				
-				filters : {
+
+				shortnames : !isTablet(),
+		
+				filters : isTablet() ? null : {
 					smileys_people: {
 						icon: "yum",
 						title: "Smileys & People",

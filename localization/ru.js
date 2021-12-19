@@ -219,7 +219,7 @@ ____loclib.trialreputationtip = "Чтобы стать топовым польз
 ____loclib.trialreputationtipaction = "Узнать больше о репутации"
 
 ____loclib.stpreal = "Известная личность";
-____loclib.stpdev = "Разработчик Bastyon";
+
 ____loclib.srep = "Репутация";
 ____loclib.ccpl = "Количество жалоб";
 

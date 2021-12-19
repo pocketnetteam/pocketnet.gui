@@ -2061,8 +2061,8 @@ pShare = function(){
 		else
 		{	
 			self.url = clearStringXss(decodeURIComponent(v.u || v.url || ''));
-			self.message =clearStringXss( decodeURIComponent((v.m || v.message || "").replace(/\+/g, " ")))
-			self.caption = clearStringXss(decodeURIComponent((v.c || v.caption || "").replace(/\+/g, " ")))
+			self.message =(decodeURIComponent((v.m || v.message || "").replace(/\+/g, " ")))
+			self.caption = (decodeURIComponent((v.c || v.caption || "").replace(/\+/g, " ")))
 
 			self.tags = _.map(v.t || v.tags || [], function(t){ 
 				return clearStringXss(clearTagString(decodeURIComponent(t)))

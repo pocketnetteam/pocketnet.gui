@@ -2986,6 +2986,8 @@ var lenta = (function(){
 
 							var gutter = self.app.width <= 768 ? 0 : 5;
 
+							console.log('self.app.width', self.app.width, self.app)
+
 							if (isMobile() || essenseData.openapi) {
 
 								sel.find('.imagesContainer').owlCarousel({
