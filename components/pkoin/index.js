@@ -204,13 +204,14 @@ var pkoin = (function(){
 	
 							if (optionsValue === 'donateToTheAuthor'){
 	
-								
-								closeContainer();
+						
 								self.app.platform.ui.wallet.send({
 									address : receiver,
 									amount: valSum
 								})
 	
+								closeContainer();
+		
 							}
 	
 						} else {
