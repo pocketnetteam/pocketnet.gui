@@ -1,1 +1,365 @@
-#staking .wrp.hide .tcaptionwrapper{display:none}#staking .wrp.hide .change .percent{background:0 0!important;color:rgba(0,0,0,.5)}#staking .wrp.hide .change.bad .percent{color:#EB5757}#staking .wrp.hide .change.good .percent{color:#6fcf97}#staking .wrp.hide .lastpriceCnt .caret,#staking .wrp.hide .lastpriceCnt .logo{display:block}#staking .wrp.hide .lastpriceCnt .chwr{right:2.5em}#staking .wrp.hide .lastpriceCnt .change .percent,#staking .wrp.hide .lastpriceCnt .lastprice{font-size:12px}#staking .wrp.hide .lastpriceCnt .lastprice{margin-left:.5em}#staking .wrp.hide .buycoin,#staking .wrp.hide .earnlabel,#staking .wrp.hide .lastpriceCnts,#staking .wrp.hide .pcoin{display:none}#staking .pcoin{position:absolute;bottom:.5em;right:1em;opacity:.6}#staking .pcoin span{font-size:1.5em}#staking .numbers .inputWrapper{padding:1em}#staking .numbers .amredits{background:#fe0;padding:.25em .5em;border:1px solid #ff6e84;border-radius:10px;outline:0}#staking .numbers .ihave{font-weight:700}#staking .totalNumbers{background:rgba(178,171,172,.1);padding:1.5em 0;overflow:hidden}#staking .totalNumbers .totalRow{float:left;width:50%}#staking .totalNumbers .totalRow .label span{font-size:.8em;font-weight:700}#staking .totalNumbers .totalRow .value span{font-size:2.2em;font-weight:100}#staking .totalNumbers .totalRow .value span.cur{font-weight:300;font-size:.8em}#staking .calculator,#staking .calculatordummy{position:relative}#staking .calculatordummy{min-height:80px}#staking .calculatordummy .calculatordummytext{padding:1em}#staking .calculatordummy .calculatordummytext span{font-size:.8em;font-weight:700;color:#ff6e84}#staking .chwr{position:absolute;right:.5em;top:2px}#staking .rcptwrp{background:#fff;border-radius:12px;position:relative}#staking .earnlabel{padding:.75em 1em;padding-top:0;font-weight:700;color:#ff4800;cursor:pointer}#staking .earnlabel span{font-size:.8em}#staking .calcCaption{padding:.75em 1em;font-weight:700;color:#00a3f7}#staking .calcCaption span{font-size:.8em}#staking .buycoin{padding:0 1em 1em}#staking .buycoin a{display:inline-block;opacity:.8;font-size:.8em;margin-right:1em}#staking .buycoin button{border-radius:20px;background:#ff0090;border-color:#ff0090;font-size:.7em;margin-bottom:.25em}#staking .buycoin .buyButton{display:flex;flex-direction:row;justify-content:center;align-items:center;padding:6px;max-width:253px;width:100%;height:28px;left:16px;top:70px;border:1px solid #E3E4EB;box-sizing:border-box;border-radius:8px;font-weight:700;cursor:pointer}#staking .tcaptionwrapper{display:flex;align-items:center}#staking .tcaptionwrapper .vc_valuecustom{width:75px;font-size:.8em;font-weight:500}#staking .tcaptionwrapper .vc_valuecustom .vc_textInput .vc_iconWrapper,#staking .tcaptionwrapper .vc_valuecustom .vc_textInput .vc_inputWrapper{border:0}#staking .tcaption{flex-grow:2;font-weight:100;padding:12px 16px}#staking .tcaption .label{font-weight:700;font-size:12px}#staking .tcaption .pkoin{font-size:12px;background:#F2F2F5;border-radius:8px;padding:2px 8px}#staking .tcaption .pkoin span{color:#8E90A6}#staking .logo{width:12px}#staking .caret{padding:12px 16px;font-weight:200;font-size:.8em;cursor:pointer}#staking .caret.caret-down{position:absolute;right:0}#staking .commoncaption{font-size:.8em;font-weight:700;margin-bottom:.5em}#staking .change i{position:relative;bottom:2px}#staking .lastpriceCnt{display:flex;align-items:center;text-align:center;padding:12px 16px;color:#0e1c2b;border-top:1px solid rgba(229,229,229,.5);border-bottom:1px solid rgba(229,229,229,.5)}#staking .lastpriceCnt .caret,#staking .lastpriceCnt .logo{display:none}#staking .lastpriceCnt .lastpriceWrapper{display:flex;align-items:center}#staking .lastpriceCnt .chart{width:70px}#staking .lastpriceCnt .lastprice{font-size:26px;font-weight:700}#staking .lastpriceCnt .change{flex-grow:2;padding-left:.5em;word-break:keep-all;white-space:nowrap;width:69px;align-items:center;display:flex;flex-direction:row}#staking .lastpriceCnt .change i{font-size:.8em}#staking .lastpriceCnt .change .percent{padding:2px 8px;border-radius:8px;font-size:16px;font-weight:500;background:rgba(0,0,0,.5);color:#FFF}#staking .lastpriceCnt .change.bad .percent{background:#EB5757}#staking .lastpriceCnt .change.good .percent{background:#6fcf97}#staking .lastpriceCnts{padding-top:1em;padding-bottom:1em}#staking .lastpriceCnts .lastpriceCntSmall{padding:0 1em}#staking .lastpriceCnts .lastpriceCntSmall .lastpriceWrapper{display:flex;align-items:baseline}#staking .lastpriceCnts .lastpriceCntSmall .lastprice{font-size:14px;color:#555770}#staking .lastpriceCnts .lastpriceCntSmall .lastprice .currency{font-weight:500}#staking .lastpriceCnts .lastpriceCntSmall .change{flex-grow:2;padding-left:.5em;word-break:keep-all;white-space:nowrap;width:69px;align-items:center;display:flex;flex-direction:row}#staking .lastpriceCnts .lastpriceCntSmall .change i{font-size:.8em}#staking .lastpriceCnts .lastpriceCntSmall .change .percent{padding:2px 8px;border-radius:8px;font-size:14px;font-weight:500;color:rgba(0,0,0,.5)}#staking .lastpriceCnts .lastpriceCntSmall .change.bad .percent{color:#EB5757}#staking .lastpriceCnts .lastpriceCntSmall .change.good .percent{color:#6fcf97}html.stblack #staking .earnlabel{color:#22b2a4}html.stblack #staking .lastprice{color:#b2abac}html.stblack #staking .buycoin button{background:#016452;border-color:#016452}html.stblack #staking .rcptwrp{background:0 0;border-radius:5px;border:1px solid #0a0c17}@media only screen and (max-width:768px){#staking .pcoin span{font-size:1.5em}#staking .numbers .ihave{padding:2em 1em}#staking .totalNumbers .totalRow .label span{font-size:1em}#staking .totalNumbers .totalRow .value span{font-size:2.2em}#staking .totalNumbers .totalRow .value span.cur{font-size:.9em}#staking .earnlabel{padding:2em 1em}#staking .earnlabel span{font-size:.9em}#staking .calcCaption{padding:2em 1em 1em}#staking .calcCaption span{font-size:.9em}#staking .buycoin{padding-bottom:.5em}#staking .buycoin button{font-size:.8em!important}#staking .tcaptionwrapper{padding-right:.5em}#staking .commoncaption,#staking .tcaption span,#staking .tcaptionwrapper .vc_valuecustom{font-size:.9em}}
+#staking .wrp.hide .tcaptionwrapper {
+  display: none;
+}
+#staking .wrp.hide .change .percent {
+  background: transparent!important;
+  color: rgba(0, 0, 0, 0.5);
+}
+#staking .wrp.hide .change.bad .percent {
+  color: #EB5757;
+}
+#staking .wrp.hide .change.good .percent {
+  color: #6FCF97;
+}
+#staking .wrp.hide .lastpriceCnt .logo,
+#staking .wrp.hide .lastpriceCnt .caret {
+  display: block;
+}
+#staking .wrp.hide .lastpriceCnt .chwr {
+  right: 2.5em;
+}
+#staking .wrp.hide .lastpriceCnt .lastprice,
+#staking .wrp.hide .lastpriceCnt .change .percent {
+  font-size: 12px;
+}
+#staking .wrp.hide .lastpriceCnt .lastprice {
+  margin-left: 0.5em;
+}
+#staking .wrp.hide .lastpriceCnts,
+#staking .wrp.hide .buycoin,
+#staking .wrp.hide .earnlabel,
+#staking .wrp.hide .pcoin {
+  display: none;
+}
+#staking .pcoin {
+  position: absolute;
+  bottom: 0.5em;
+  right: 1em;
+  opacity: 0.6;
+}
+#staking .pcoin span {
+  font-size: 1.5em;
+}
+#staking .numbers .inputWrapper {
+  padding: 1em;
+}
+#staking .numbers .amredits {
+  background: #ffee00;
+  padding: 0.25em 0.5em;
+  border: 1px solid #ff6e84;
+  border-radius: 10px;
+  outline: none;
+}
+#staking .numbers .ihave {
+  font-weight: 700;
+}
+#staking .totalNumbers {
+  background: rgba(178, 171, 172, 0.1);
+  padding: 1.5em 0;
+  overflow: hidden;
+}
+#staking .totalNumbers .totalRow {
+  float: left;
+  width: 50%;
+}
+#staking .totalNumbers .totalRow .label span {
+  font-size: 0.8em;
+  font-weight: 700;
+}
+#staking .totalNumbers .totalRow .value span {
+  font-size: 2.2em;
+  font-weight: 100;
+}
+#staking .totalNumbers .totalRow .value span.cur {
+  font-weight: 300;
+  font-size: 0.8em;
+}
+#staking .calculatordummy,
+#staking .calculator {
+  position: relative;
+}
+#staking .calculatordummy {
+  min-height: 80px;
+}
+#staking .calculatordummy .calculatordummytext {
+  padding: 1em;
+}
+#staking .calculatordummy .calculatordummytext span {
+  font-size: 0.8em;
+  font-weight: 700;
+  color: #ff6e84;
+}
+#staking .chwr {
+  position: absolute;
+  right: 0.5em;
+  top: 2px;
+}
+#staking .rcptwrp {
+  background: #fff;
+  border-radius: 12px;
+  position: relative;
+}
+#staking .earnlabel {
+  padding: 0.75em 1em;
+  padding-top: 0;
+  font-weight: 700;
+  color: #ff4800;
+  cursor: pointer;
+}
+#staking .earnlabel span {
+  font-size: 0.8em;
+}
+#staking .calcCaption {
+  padding: 0.75em 1em;
+  font-weight: 700;
+  color: #00A3F7;
+}
+#staking .calcCaption span {
+  font-size: 0.8em;
+}
+#staking .buycoin {
+  padding: 0 1em;
+  padding-bottom: 1em;
+}
+#staking .buycoin a {
+  display: inline-block;
+  opacity: 0.8;
+  font-size: 0.8em;
+  margin-right: 1em;
+}
+#staking .buycoin button {
+  border-radius: 20px;
+  background: #ff0090;
+  border-color: #ff0090;
+  font-size: 0.7em;
+  margin-bottom: 0.25em;
+}
+#staking .buycoin .buyButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 6px;
+  max-width: 253px;
+  width: 100%;
+  height: 28px;
+  left: 16px;
+  top: 70px;
+  border: 1px solid #E3E4EB;
+  box-sizing: border-box;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+#staking .tcaptionwrapper {
+  display: flex;
+  align-items: center;
+}
+#staking .tcaptionwrapper .vc_valuecustom {
+  width: 75px;
+  font-size: 0.8em;
+  font-weight: 500;
+}
+#staking .tcaptionwrapper .vc_valuecustom .vc_textInput .vc_iconWrapper,
+#staking .tcaptionwrapper .vc_valuecustom .vc_textInput .vc_inputWrapper {
+  border: 0;
+}
+#staking .tcaption {
+  flex-grow: 2;
+  font-weight: 100;
+  padding: 12px 16px;
+}
+#staking .tcaption .label {
+  font-weight: 700;
+  font-size: 12px;
+}
+#staking .tcaption .pkoin {
+  font-size: 12px;
+  background: #F2F2F5;
+  border-radius: 8px;
+  padding: 2px 8px;
+}
+#staking .tcaption .pkoin span {
+  color: #8E90A6;
+}
+#staking .logo {
+  width: 12px;
+}
+#staking .caret {
+  padding: 12px 16px;
+  font-weight: 200;
+  font-size: 0.8em;
+  cursor: pointer;
+}
+#staking .caret.caret-down {
+  position: absolute;
+  right: 0;
+}
+#staking .commoncaption {
+  font-size: 0.8em;
+  font-weight: 700;
+  margin-bottom: 0.5em;
+}
+#staking .change i {
+  position: relative;
+  bottom: 2px;
+}
+#staking .lastpriceCnt {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  padding: 12px 16px;
+  color: #0e1c2b;
+  border-top: 1px solid rgba(229, 229, 229, 0.5);
+  border-bottom: 1px solid rgba(229, 229, 229, 0.5);
+}
+#staking .lastpriceCnt .logo,
+#staking .lastpriceCnt .caret {
+  display: none;
+}
+#staking .lastpriceCnt .lastpriceWrapper {
+  display: flex;
+  align-items: center;
+}
+#staking .lastpriceCnt .chart {
+  width: 70px;
+}
+#staking .lastpriceCnt .lastprice {
+  font-size: 26px;
+  font-weight: 700;
+}
+#staking .lastpriceCnt .change {
+  flex-grow: 2;
+  padding-left: 0.5em;
+  word-break: keep-all;
+  white-space: nowrap;
+  width: 69px;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+#staking .lastpriceCnt .change i {
+  font-size: 0.8em;
+}
+#staking .lastpriceCnt .change .percent {
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  background: rgba(0, 0, 0, 0.5);
+  color: #FFFFFF;
+}
+#staking .lastpriceCnt .change.bad .percent {
+  background: #EB5757;
+}
+#staking .lastpriceCnt .change.good .percent {
+  background: #6FCF97;
+}
+#staking .lastpriceCnts {
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+#staking .lastpriceCnts .lastpriceCntSmall {
+  padding: 0 1em;
+}
+#staking .lastpriceCnts .lastpriceCntSmall .lastpriceWrapper {
+  display: flex;
+  align-items: baseline;
+}
+#staking .lastpriceCnts .lastpriceCntSmall .lastprice {
+  font-size: 14px;
+  color: #555770;
+}
+#staking .lastpriceCnts .lastpriceCntSmall .lastprice .currency {
+  font-weight: 500;
+}
+#staking .lastpriceCnts .lastpriceCntSmall .change {
+  flex-grow: 2;
+  padding-left: 0.5em;
+  word-break: keep-all;
+  white-space: nowrap;
+  width: 69px;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+#staking .lastpriceCnts .lastpriceCntSmall .change i {
+  font-size: 0.8em;
+}
+#staking .lastpriceCnts .lastpriceCntSmall .change .percent {
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.5);
+}
+#staking .lastpriceCnts .lastpriceCntSmall .change.bad .percent {
+  color: #EB5757;
+}
+#staking .lastpriceCnts .lastpriceCntSmall .change.good .percent {
+  color: #6FCF97;
+}
+html.stblack #staking .earnlabel {
+  color: #22B2A4;
+}
+html.stblack #staking .lastprice {
+  color: #b2abac;
+}
+html.stblack #staking .buycoin button {
+  background: #016452;
+  border-color: #016452;
+}
+html.stblack #staking .rcptwrp {
+  background: transparent;
+  border-radius: 5px;
+  border: 1px solid #0a0c17;
+}
+/*t*/
+@media only screen and (max-width: 768px) {
+  #staking .pcoin span {
+    font-size: 1.5em;
+  }
+  #staking .numbers .ihave {
+    padding: 2em 1em;
+  }
+  #staking .totalNumbers .totalRow .label span {
+    font-size: 1em;
+  }
+  #staking .totalNumbers .totalRow .value span {
+    font-size: 2.2em;
+  }
+  #staking .totalNumbers .totalRow .value span.cur {
+    font-size: 0.9em;
+  }
+  #staking .earnlabel {
+    padding: 2em 1em;
+  }
+  #staking .earnlabel span {
+    font-size: 0.9em;
+  }
+  #staking .calcCaption {
+    padding: 2em 1em;
+    padding-bottom: 1em;
+  }
+  #staking .calcCaption span {
+    font-size: 0.9em;
+  }
+  #staking .buycoin {
+    padding-bottom: 0.5em;
+  }
+  #staking .buycoin button {
+    font-size: 0.8em !important;
+  }
+  #staking .tcaptionwrapper {
+    padding-right: 0.5em;
+  }
+  #staking .tcaptionwrapper .vc_valuecustom {
+    font-size: 0.9em;
+  }
+  #staking .tcaption span {
+    font-size: 0.9em;
+  }
+  #staking .commoncaption {
+    font-size: 0.9em;
+  }
+}
