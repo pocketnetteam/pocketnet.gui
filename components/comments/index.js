@@ -1981,7 +1981,7 @@ var comments = (function(){
 
 								}	
 							}
-							else{
+							else if (_preview){
 								actions.stateAction(function(){
 								})
 							}
@@ -2006,11 +2006,6 @@ var comments = (function(){
 								})
 
 								
-
-								
-								
-
-								
 							})
 
 							_p.el.find('.embedEmojiPrivew').on('click', function(){
@@ -2030,6 +2025,24 @@ var comments = (function(){
 							})
 
 							return
+						} else {
+
+							_p.el.find('.txt').on('click', function(){
+
+								$(this).blur();
+
+								self.app.user.isState(function(state){
+
+									if(!state){
+
+										actions.stateAction(function(){
+										})
+									}
+
+								})
+
+								
+							})
 						}
 
 						postEvents(p, _p, clbk)
