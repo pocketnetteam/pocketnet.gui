@@ -31,7 +31,7 @@ var uploadpeertube = (function () {
 
 						/*// to bits and then to bitrate
 						var averageBitrate = (8 * file.size) / video.duration;
-			
+
 						return averageBitrate > 8000000
 						  ? reject({
 							  text: self.app.localization.e('videoBitrateError'),
@@ -61,14 +61,14 @@ var uploadpeertube = (function () {
 						id : 'abilityincrease',
 						el : errorel,
 
-						essenseData : {	
+						essenseData : {
 							template : 'video'
 						}
 					}, function(v, p){
 						errorcomp = p
 					})
 				}
-				
+
 			},
 		};
 
@@ -157,9 +157,93 @@ var uploadpeertube = (function () {
 
 				data.name = videoName || fileName;
 
-				var options = {
-					type: 'uploadVideo',
-				};
+        /**
+         * Enumeration for Resolutions of videos
+         * @type {{p720: string, p240: string, p360: string, p480: string}}
+         */
+        const Resolution = {
+          p240: '352:240',
+          p360: '640:360',
+          p480: '854:480',
+          p720: '1280:720',
+        }
+
+        /**
+         * Video transcoder function
+         *
+         * @param {Buffer} inputBuff
+         * @param {typeof Resolution} resolution
+         *
+         * @returns {Promise<Buffer>} result
+         */
+        function transcodeVideo(inputBuff, resolution) {
+          function executor(resolve, reject) {
+            let videoProcess;
+
+            try {
+              videoProcess = ffmpeg(inputBuff);
+            } catch (err) {
+              console.error('FFMPEG error occured', err);
+            }
+
+            function videoProcessor(video) {
+              video.addCommand('-preset', 'veryfast');
+              video.addCommand('-vf', `scale=${resolution}`);
+              video.addCommand('-maxrate', '2000');
+
+              const command = ffmpeg()
+                  .input(inputBuff)
+                  /*.videoCodec('libx264')
+                  .audioCodec('aac')
+                  .outputFormat('mp4')*/
+                  .outputOptions([
+                    '-preset veryfast',
+                    `-vf scale=${resolution}`,
+                    '-maxrate 2000'
+                  ])
+                  .pipe();
+
+              const ffstream = command.pipe();
+
+              let outputParts = [];
+
+              ffstream.on('data', (chunk) => {
+                console.log('ffmpeg just wrote ' + chunk.length + ' bytes');
+
+                outputParts.push(chunk);
+              });
+
+              ffstream.on('end', () => {
+                resolve(Buffer.concat(outputParts));
+              });
+            }
+
+            function errorProcessor(err) {
+              console.error('Error occured:', err);
+              reject(err);
+            }
+
+            videoProcess.then(videoProcessor, errorProcessor);
+          }
+
+          return new Promise(executor);
+        }
+
+        let videoBuff;
+
+        videoBuff = fs.readFileSync(data.video);
+
+        /** Writing transcoded alternatives to target object */
+        data.video = {
+          p240: transcodeVideo(videoBuff, Resolution.p240),
+          p360: transcodeVideo(videoBuff, Resolution.p360),
+          p480: transcodeVideo(videoBuff, Resolution.p480),
+          p720: transcodeVideo(videoBuff, Resolution.p720),
+        };
+
+        var options = {
+          type: 'uploadVideo',
+        };
 
 				options.progress = function (percentComplete) {
 					var formattedProgress = (percentComplete * 0.9).toFixed(2);

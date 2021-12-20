@@ -55,6 +55,7 @@
         "express": "^4.17.1",
         "express-useragent": "^1.0.15",
         "express-ws": "^4.0.0",
+        "ffmpeg": "^0.0.4",
         "filestorage": "^1.7.1",
         "firebase-admin": "^9.3.0",
         "github-download": "^0.5.0",
