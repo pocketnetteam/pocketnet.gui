@@ -11,101 +11,7 @@ var ustate = (function(){
 
 		var el, mestate, waitActions, charts = {};
 
-		var metrics = {
-
-			/*profileInfo : {
-				vis : 'profileInfo',
-				name : self.app.localization.e('sprofile'),
-				bad : function(){
-
-					return !self.app.user.validate()
-				},
-
-				if : function(){
-					
-					if(!waitActions || waitActions == 'inf') return true;
-				}
-			},
-
-			waitActions : {
-				vis : 'waitActions',
-				name : '',
-				bad : function(){
-
-					return false
-				},
-
-				if : function(){
-
-					if(waitActions && waitActions != 'inf') return true;
-				}
-			},*/
-
-			post : {
-				key : 'post',
-				vis : 'scale',
-				name : self.app.localization.e('spc'),
-				bad : function(v){
-					if(v <= 2) return true
-				}
-			},
-
-			video : {
-				key : 'video',
-				vis : 'scale',
-				name : self.app.localization.e('spv'),
-				bad : function(v){
-					if(v <= 2) return true
-				}
-			},
-
-			score : {
-				key : 'score',
-				vis : 'scale',
-				name : self.app.localization.e('ssc'),
-				bad : function(v){
-					if(v <= 10) return true
-				}
-			},
-
-			comment : {
-				key : 'comment',
-				vis : 'scale',
-				name : self.app.localization.e('ccc'),
-				bad : function(v){
-					if(v <= 10) return true
-				}
-			},
-
-			comment_score : {
-				key : 'comment_score',
-				vis : 'scale',
-				name : self.app.localization.e('crc'),
-				bad : function(v){
-					if(v <= 10) return true
-				}
-			},			
-
-			/*reputation : {
-				key : 'reputation',
-				vis : 'number',
-				name : self.app.localization.e('srep'),
-				bad : function(v){
-
-					return false
-				}
-			},*/
-
-			
-		}
-
-		var actions = {
-
-		}
-
-		var events = {
-			
-		}
+		
 
 		var renders = {
 
@@ -201,13 +107,15 @@ var ustate = (function(){
 						data : {
 							reputation : mestate.reputation,
 							level : level,
-							levels : levels
+							levels : levels,
+							mestate : mestate,
+							address : mestate.address
 						},
 	
 					}, function(_p){
 
 						renders.currentLevel(_p.el)
-						renders.gifts(_p.el)
+						//renders.gifts(_p.el)
 
 						_p.el.find('.tooltip').tooltipster({
 			                theme: 'tooltipster-light',
@@ -239,6 +147,74 @@ var ustate = (function(){
 				})
 			},
 
+			lowlimits : function(clbk){
+
+				var lowlimits = self.app.platform.sdk.ustate.haslowlimits(mestate)
+				var zerolimits = self.app.platform.sdk.ustate.haszerolimits(mestate)
+
+				if(!el.lowlimits) return
+
+				if (lowlimits.length || zerolimits.length){
+
+					self.app.platform.sdk.ustate.canincrease({template : 'trial'}, function(r){
+
+						if(_.isEmpty(r)){
+
+							if(clbk) clbk()
+
+							return
+						}
+
+
+						self.shell({
+
+							name :  'lowlimits',
+							el :   el.lowlimits,
+							data : {
+								zerolimits,
+								lowlimits,
+								increase : r
+							},
+		
+						}, function(_p){
+
+							_p.el.find('.buypkoins').on('click', function(){
+
+								self.closeContainer()
+
+								self.nav.api.load({
+									open : true,
+									href : 'wallet',
+									history : true,
+									inWnd : true,
+
+									essenseData : {
+										simple : true,
+										action : 'buy'
+									}
+								})
+
+							})
+
+
+							if (clbk)
+								clbk()
+						})
+
+					})
+
+
+				}
+				else{
+					el.lowlimits.html('')
+
+					if (clbk)
+						clbk()
+				}
+				
+				
+			},
+
 			uscnt : function(clbk){
 
 				self.shell({
@@ -247,24 +223,27 @@ var ustate = (function(){
 					el :   el.c.find('.mwork'),
 					data : {
 						mestate : mestate,
-						metrics : metrics
+						metrics : self.app.platform.sdk.ustate.metrics()
 					},
 
 				}, function(_p){
+
+
 					if (clbk)
 						clbk()
+
+
 				})
 			},
 			ustatecontent : function(clbk){
 
-				var _metrics = metrics;
 
 				self.shell({
 
 					name :  'ustatecontentnew',
 					el :   el.ustatecontent,
 					data : {
-						metrics : _metrics,
+						metrics : self.app.platform.sdk.ustate.metrics(),
 						mestate : mestate,
 						waitActions : waitActions
 					},
@@ -314,9 +293,11 @@ var ustate = (function(){
 						renders.uscnt(function(){
 
 							el.ustatecontent = el.c.find('.ustatecontent')
+							el.lowlimits = el.c.find('.lowlimits')
 	
 							renders.ustatecontent()
 							renders.reputationsteps()
+							renders.lowlimits()
 	
 							if(clbk) clbk()
 						})

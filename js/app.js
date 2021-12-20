@@ -8,7 +8,7 @@ if (typeof _OpenApi == 'undefined') _OpenApi = false;
 
 if(typeof _Electron != 'undefined' && _Electron){
 
-	imagesLoaded = require('imagesloaded');
+	imagesLoaded = require('./js/vendor/imagesloaded.pkgd.min.js');
 
 	emojione = require('emojione')
 
@@ -1757,7 +1757,7 @@ Application = function(p)
 			}
 		},
 		vibration : {
-            small : function(time){
+            small : function(android){
 
 				if(!window.cordova) return
 
@@ -1771,9 +1771,9 @@ Application = function(p)
                     return
                 }
 
-                /*if (navigator.vibrate){
-                    navigator.vibrate(time || 50)
-                }*/
+                if (navigator.vibrate && android){
+                    navigator.vibrate(50)
+                }
             }
         },
 		statusbar : {

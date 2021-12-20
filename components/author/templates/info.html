@@ -1,3 +1,5 @@
+<% var hasabout = false %>
+
 <div class="authorinfo">
 <% if(deep(author, 'data.name')) {%>
 
@@ -10,9 +12,7 @@
 
 <% } %>
 
-	
-
-	<% if(!app.curation()) { %>
+<% if(!app.curation()) { %>
 
 	<div class="item reputation">
 		<div class="itemtable table">
@@ -20,91 +20,98 @@
 			<div class="label"><%=e('rstate')%> <b><%- (deep(author, 'state.reputation') || deep(author, 'data.reputation')  || 0).toFixed(1) %></b></div>
 		</div>
 	</div>
-	<% } %>
+<% } %>
 
-	<% if(deep(author, 'data.about')) {
+<% if(deep(author, 'data.about')) {
 
-		var a = deep(author, 'data.about');
-	
-		var am = a; /*trimHtml(a, 1500);*/
-	
-	%>
-	
-		<div class="item about">
-			<div class="itemtable table">
-				<div class="icon"><i class="fas fa-pen"></i></div>
-				<div class="label">
-					<div class="aboutwrapper"> <%=filterXSS(clearScripts((findAndReplaceLink(am, true))))%></div>
-					<% if(am != a){ %> 
-						<div elementsid="showmoreabout" class="showmoreabout">
-							<%=e('e13021')%>
-						</div>
-					<% } %>
-				</div>
-			</div>
-		</div>
-	
-	<% } %>
-	
-	
+	var a = deep(author, 'data.about');
 
-	<div class="item foraddress">
-		<div class="itemtable table">
-			<div class="icon"><i class="fas fa-map-marker-alt"></i></div>
-			<div class="label">
-			
-				<span elementsid="copyaddress" class="copyaddress"><%-deep(author, 'address')%></span>
-			</div>
-		</div>
-	</div>
-	
-<% 
+	var am = a; /*trimHtml(a, 1500);*/
 
-var _d = deep(author, 'data.regdate')
-
-
-if(_d ) {
-
-	var d = new Date();
-		d.setTime(_d * 1000);	
-
-
+	hasabout = true
 
 %>
 
-	<div class="item date">
+	<div class="item about">
 		<div class="itemtable table">
-			<div class="icon"><i class="far fa-calendar"></i></div>
-			<div class="label"><%=e('joined')%> <b><%-_d.yyyymmdd('.')%></b></div>
+			<div class="icon"><i class="fas fa-pen"></i></div>
+			<div class="label">
+				<div class="aboutwrapper">
+
+					<%=filterXSS(clearScripts((findAndReplaceLink(am, true))))%>
+
+					<span class="showmoreinabout">
+						<%=e('e13021')%>
+					</span>
+
+				</div>
+				
+				<!--<% if(am != a){ %> 
+					<div elementsid="showmoreabout" class="showmoreabout">
+						<%=e('e13021')%>
+					</div>
+				<% } %>-->
+
+			</div>
 		</div>
 	</div>
 
 <% } %>
 
+<div class="additionalinfo <% if(hasabout) { %> hasabout <% } %>">
 
-<% if(deep(author, 'data.postcnt')) {%>
+	<% 
 
-	<div elementsid="author_postcnt" class="item postcnt">
-		<div class="itemtable table">
-			<div class="icon"><i class="fas fa-rss"></i></div>
-			<div class="label"><%=e('shares').toLowerCase()%> <span><%-deep(author, 'data.postcnt')%></span></div>
+	var _d = deep(author, 'data.regdate')
+
+	if(_d ) {
+
+		var d = new Date();
+			d.setTime(_d * 1000);	
+
+	%>
+
+		<div class="item date">
+			<div class="itemtable table">
+				<div class="icon"><i class="far fa-calendar"></i></div>
+				<div class="label"><%=e('joined')%> <b><%-_d.yyyymmdd('.')%></b></div>
+			</div>
 		</div>
-	</div>
 
-<% } %>
+	<% } %>
 
-<% if(deep(author, 'data.site')) {%>
+	<% if(deep(author, 'data.postcnt')) {%>
 
-	<div class="item site">
-		<div class="itemtable table">
-			<div class="icon"><i class="fas fa-link"></i></div>
-			<div class="label"><a elementsid="<%-deep(author, 'data.site')%>" href="<%-deep(author, 'data.site')%>"><%-filterXSS(deep(author, 'data.site'))%></a></div>
+		<div elementsid="author_postcnt" class="item postcnt">
+			<div class="itemtable table">
+				<div class="icon"><i class="fas fa-rss"></i></div>
+				<div class="label"><%=e('shares').toLowerCase()%> <span><%-deep(author, 'data.postcnt')%></span></div>
+			</div>
 		</div>
-	</div>
 
-<% } %>
+	<% } %>
 
+	<% if(deep(author, 'data.site')) {%>
 
+		<div class="item site">
+			<div class="itemtable table">
+				<div class="icon"><i class="fas fa-link"></i></div>
+				<div class="label"><a elementsid="<%-deep(author, 'data.site')%>" href="<%-deep(author, 'data.site')%>"><%-filterXSS(deep(author, 'data.site'))%></a></div>
+			</div>
+		</div>
 
+	<% } %>
 
+		<div class="item foraddress">
+			<div class="itemtable table">
+				<div class="icon"><i class="fas fa-map-marker-alt"></i></div>
+				<div class="label">
+				
+					<span elementsid="copyaddress" class="copyaddress"><%-deep(author, 'address')%></span>
+				</div>
+			</div>
+		</div>
+
+</div>
+		
 </div>

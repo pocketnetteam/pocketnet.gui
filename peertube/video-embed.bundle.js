@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=9310"
+/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=7770"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -43632,7 +43632,7 @@ class embed_PeerTubeEmbed {
             }
             catch (e) { }
             pel.removeAttribute('style');
-            if (Object(player_utils["e" /* isAndroid */])())
+            if (Object(player_utils["e" /* isAndroid */])() || window.cordova)
                 pel.setAttribute('poster', this.localVideo.infos.thumbnail);
             this.player.on("customError", (event, data) => this.handleError(data.err /*, serverTranslations*/));
             const overlayString = this.logoType === 'Pocketnet'

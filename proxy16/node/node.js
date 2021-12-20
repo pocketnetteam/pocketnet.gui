@@ -735,7 +735,7 @@ var Node = function(options, manager){
             if(!statisticInterval){
 
 
-                self.info().catch(e => {console.log(e)})
+                self.info().catch(e => { /*console.log(e)*/ })
 
                 statisticInterval = setInterval(function(){
 

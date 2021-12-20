@@ -290,7 +290,7 @@ var imagegallery = (function(){
 
 					
 					
-					p.el.find('img').imagesLoaded(function(image){
+					p.el.find('img').imagesLoadedPN(function(image){
 
 						el.c.removeClass('loading')
 

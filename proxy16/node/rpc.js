@@ -137,6 +137,9 @@ function rpc(request, callback, obj) {
     var timeout = 45000
     var self = obj;
 
+
+    
+
     try{
         request = JSON.stringify(request);
     }
@@ -180,6 +183,8 @@ function rpc(request, callback, obj) {
         //timeout: 5000,
         signal : signal
     };
+
+    var lg = self.host == '135.181.196.243' || self.host == '65.21.56.203' || self.host == '51.174.99.18'
 
     if (self.httpOptions) {
         for (var k in self.httpOptions) {
@@ -250,6 +255,8 @@ function rpc(request, callback, obj) {
 
             if (exceededError){
 
+                if(lg) console.log("exceededError", self.host, m, exceededError)
+
                 res.resume()
 
                 callback(exceededError);
@@ -270,6 +277,9 @@ function rpc(request, callback, obj) {
 
         if(!called) {
 
+            if(lg) console.log("requesterror", self.host, m, e)
+            
+
             callback({
                 code : 408,
                 error : 'requesterror'
@@ -281,6 +291,8 @@ function rpc(request, callback, obj) {
     }).setTimeout(timeout, function(){
 
         if(!called) {
+
+            if(lg) console.log("timeout", self.host, m)
 
             callback({
                 code : 408,

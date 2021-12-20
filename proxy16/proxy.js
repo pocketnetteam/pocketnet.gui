@@ -622,13 +622,18 @@ var Proxy = function (settings, manage, test, logger) {
 					
 				],
 
-				12: ['bastyonmma.pocketnet.app', 'bastyonmma.nohost.me'],
-
-				//server of gf110
-				13: ['01rus.nohost.me'],
+				12: [
+					{host : 'bastyonmma.pocketnet.app', cantuploading : true}, 
+					{host : 'bastyonmma.nohost.me', cantuploading : true}, 
+				],
+	
+				13: [
+					'01rus.nohost.me'
+				],
 
 				14: [
-					{host : 'pocketnetpeertube12.nohost.me', special : true},
+					'pocketnetpeertube12.nohost.me',
+					'pocketnetpeertube13.nohost.me'
 				],
       		};
 

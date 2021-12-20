@@ -24,8 +24,12 @@
 									<div class="inputTable table keytable">
 
 										<div>
-											<div class="inputWrapperKey">
-												<input elementsid="inputloginkey" type="text" class="loginValue" value="<%- (mnemonic) %>" placeholder="<%=e('e13024')%>" autocomplete="on"/>
+											<div class="inputWrapperKey">	
+												<!--<form autocomplete="on">
+													<input elementsid="hiddenname" type="text" name='username' class="loginValue hidden" value="user"/>-->
+
+													<input elementsid="inputloginkey" type="password" name='password' class="loginValue" value="<%- (mnemonic) %>" placeholder="<%=e('e13024')%>" />
+												<!--</form>-->
 											</div>
 										</div>
 										<div class="fileUploaderWrapper">

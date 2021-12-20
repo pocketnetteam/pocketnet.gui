@@ -13,45 +13,7 @@ var articlev = (function(){
 		var primary = deep(p, 'history');
 
 		var el, editor, art, taginput;
-
-		var imagesHelper = {
-			slowUploadGif : function(file, storage, clbk){
-			
-						
-				file.id = makeid();
-				file.slow = true;
-				file.base64 = file.base64;
-
-				storage.push(file)
-
-
-				if (clbk)
-					clbk()
-			
-			},
-			slowUpload : function(file, storage , clbk){
-				resize(file.base64, 1080, 1080, function(resized){
-
-					var r = resized.split(',');
-
-					if (r[1]){
-
-						
-						file.id = makeid();
-						file.slow = true;
-						file.base64 = resized;
-
-						storage.push(file)
-
-
-					}
-
-					if (clbk)
-						clbk()
-				})
-			},
-		}
-
+		
 		var actions = {
 
 			edittags : function(show){
@@ -72,60 +34,30 @@ var articlev = (function(){
 				}
 			},
 
-			editImage : function(src){
-
-				var images = [
-					{
-						original : src,
-						index : 0
-					}
-				]
-
-				return new Promise((resolve, reject) => {
-
-					self.nav.api.load({
-						open : true,
-						id : 'imageGalleryEdit',
-						inWnd : true,
-				
-						essenseData : {
-							edit : true,
-							initialValue : 0,
-							images : images,
-							apply : true,
-							crop : {
-								aspectRatio : 2.5,
-								style : 'apply',
-								autoCropArea : 1,
-							},
-					
-							success : function(i, editclbk){
-	
-								resize(images[0].original, 1920, 1080, function(resized){
-									var r = resized.split(',');
-					
-									if (r[1]){
-					
-										editclbk()
-	
-										resolve(resized)
-					
-									}
-									else{
-										reject("error")
-									}
-								
-								})
-	
-				
-							}
-						}
-					})
-
-				})
+			_removetag : function(tag){
+				removeEqual(art.tags, tag)
 
 				
 			},
+
+			removeTags: function(tags){
+
+				_.each(tags, function(tag){
+					actions._removetag(tag)
+				})
+
+				actions.save()
+				actions.apply()
+			},
+
+			removeTag : function(tag){
+
+				actions._removetag(tag)
+				actions.save()
+				actions.apply()
+
+			},
+
 			_addtag : function(tag){
 
 				if (art.tags.length < 5){
@@ -151,8 +83,10 @@ var articlev = (function(){
 				})
 
 				actions.save()
+				actions.apply()
 
 			},
+
 			addTag : function(tag){
 
 				if(!actions._addtag(tag)){
@@ -161,7 +95,15 @@ var articlev = (function(){
 				else
 				{
 					actions.save()
+					actions.apply()
 				}
+			},
+
+			apply : function(){
+
+				art.time = new Date();
+				renders.status()
+
 			},
 
 			save : function(){
@@ -193,13 +135,25 @@ var articlev = (function(){
 			saveEditor : function(){
 
 				editor.save().then(outputData => {
+
 					art.content = outputData
 
-					renders.captiondouble()
-
 					self.app.platform.sdk.articles.save()
+
+					actions.apply()
+
 				})
 
+			},
+
+			setArticle : function(nart){
+				nart || (nart = self.app.platform.sdk.articles.empty(null, 2))
+
+				art = nart
+
+				destroy()
+
+				make()
 			}
 		}
 
@@ -265,9 +219,9 @@ var articlev = (function(){
 			},
 
 			cover : function(){
+
 				if (art.cover){
 					el.cover.attr('image', art.cover)
-
 					bgImages(el.c)
 				}
 				else{
@@ -283,7 +237,7 @@ var articlev = (function(){
 					name : 'tags',
 					data : {
 						tags : art.tags,
-						language : app.localization.key
+						language : art.language
 					},
 					el : el.tgsWrapperMain
 
@@ -368,6 +322,28 @@ var articlev = (function(){
 
 				})
 
+			},
+
+			status : function(){
+				
+				self.shell({
+
+					animation : false,
+					name : 'status',
+					data : {
+						art : art
+					},
+					el : el.status
+
+				},
+				function(p){
+
+				})
+
+			},
+
+			captionvalue : function(){
+				el.caption.val(art.caption.value || '')
 			}
 		}
 
@@ -377,8 +353,6 @@ var articlev = (function(){
 			},
 			load : function(){
 				art = self.app.platform.sdk.articles.empty(null, 2)
-
-				console.log("ART", art)
 			}
 		}
 
@@ -396,8 +370,23 @@ var articlev = (function(){
 				console.log('text', text)
 
 				renders.captiondouble()
-
 				actions.save()
+
+				actions.apply()
+			})
+
+			el.myarticles.on('click', function(){
+
+				self.nav.api.load({
+					open : true,
+					href : 'articlesv',
+					inWnd : true,
+
+					essenseData : {
+					}
+				})
+
+				//actions.setArticle()
 			})
 
 			initUpload({
@@ -422,6 +411,8 @@ var articlev = (function(){
 
 						actions.save()
 
+						actions.apply()
+
 						clbk()
 					})
 
@@ -432,13 +423,29 @@ var articlev = (function(){
 			})
 		}
 
-		
+		var destroy = function(){
+
+			actions.edittags(false)
+
+			if (taginput) {
+				taginput.destroy()
+				taginput = null
+			}
+
+			if (editor)
+				editor.destroy();
+
+			editor = null
+		}
 
 		var make = function(){
 
-			if(!el.c) return
-
-			console.log("window.ImageTool", window.ImageTool)
+			renders.tgstags()
+			renders.settings()
+			renders.captiondouble()
+			renders.status()
+			renders.cover()
+			renders.captionvalue()
 
 			editor = new EditorJS({
 
@@ -492,9 +499,8 @@ var articlev = (function(){
 				console.log(`Editor.js initialization failed because of ${reason}`)
 			});
 
-			renders.tgstags()
-			renders.settings()
-			renders.captiondouble()
+			
+
 		}
 
 		return {
@@ -509,17 +515,11 @@ var articlev = (function(){
 			},
 
 			destroy : function(){
+
+				destroy()
+
 				el = {};
-
-				if (taginput) {
-					taginput.destroy()
-					taginput = null
-				}
-
-				if (editor)
-					editor.destroy();
-
-				editor = null
+				
 			},
 			
 			init : function(p){
@@ -536,7 +536,9 @@ var articlev = (function(){
 				el.cover = el.c.find('.bgwrapper')
 				el.head = el.c.find('.aheadermain')
 				el.backfromedittags = el.c.find('.backfromedittags')
-				el.caption.val(art.caption.value || '')
+
+				el.status = el.c.find('.truestatuswrapper')
+				el.myarticles = el.c.find('.myarticles')
 
 				initEvents();
 				make()

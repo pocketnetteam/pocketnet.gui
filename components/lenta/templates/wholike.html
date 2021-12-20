@@ -10,7 +10,7 @@
             %> 
             <div class="wholikeAuthorTable table">
                 <div class="uiconcell">
-                    <div class="usericon usericonsbsa another" elementsid="<%-whl.avatar%>" image="<%-whl.avatar%>">
+                    <div class="usericon usericonsbsa another" elementsid="<%-whl.avatar%>" image="<%-whl.avatar || '*'%>">
                         <% if(!whl.avatar) {%>
                             <svg width="30" height="30" data-jdenticon-value="<%-whl.address%>"></svg>
                         <% } %>

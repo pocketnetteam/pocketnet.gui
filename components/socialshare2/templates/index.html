@@ -37,15 +37,15 @@
 
 					<% if(postId) {
 						
-						if(share && !share.visibility() || share.visibility() == 'reg'){ %>
+						if(share && share.address != app.user.address.value && (!share.visibility() || share.visibility() == 'reg')){ %>
 
-						<div elementsid="itemforrepost" class="item forrepost">
+							<div elementsid="itemforrepost" class="item forrepost">
 
-							<button class="button ghost ">
-								<%- e('repost') %> <i class="fas fa-reply"></i>
-							</button>
+								<button class="button ghost ">
+									<%- e('repost') %> <i class="fas fa-reply"></i>
+								</button>
 
-						</div>
+							</div>
 
 						<% } %>
 

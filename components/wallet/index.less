@@ -17,9 +17,6 @@
 		}
 	}
 
-	.ntf{
-		.transition(0.1s, transform);
-	}
 
 	.copyaddress{
 		cursor: pointer;
@@ -808,12 +805,43 @@
   				flex-basis: 0;
 				flex-grow: 1;
 			}
+
+			
 		}
 
 		.row{
 			display : flex;
 			flex-wrap : wrap;
 			padding : 0 2 * @rhythm;
+
+			&.one{
+				display: block;
+				padding : 2 * @rhythm;
+				margin-bottom: 3 * @rhythm;
+
+				.wrp{
+					padding : 4 * @rhythm 2 * @rhythm;
+					text-align: left;
+					border-radius: 5px;
+					border : 1px dashed fade(@color-gray-mlight, 50);
+					background: #001b37;
+				}
+
+				.flxbtn{
+					display: flex;
+					justify-content: center;
+					align-items: center;
+
+					div{
+						margin-right: 2 * @rhythm;
+					}
+
+					span{
+						color : #fff;
+						font-size: 0.8em;
+					}
+				}
+			}
 
 			.button{
 				min-width: 220px;
@@ -824,6 +852,7 @@
 			}
 
 			>div{
+				
 				padding : @rhythm 2 * @rhythm;
 				text-align: center;
 				min-width: 60px;
@@ -1150,6 +1179,12 @@
 					border-radius: 50%;
 				}
 			}
+		}
+	}
+
+	&.simple{
+		._stepback{
+			display: none!important;
 		}
 	}
 }
@@ -1544,6 +1579,7 @@ html.stblack{
 	}
 
 	#wallet{
+		padding-bottom: 0;
 		min-height: none;
 
 		.workstation{
@@ -1777,6 +1813,87 @@ html.stblack{
 					}
 				}
 			}
+		}
+
+		.buypkoin{
+			padding : @rhythm;
+	
+			.ways{
+				display : flex;
+				align-items: flex-start;
+				flex-wrap: wrap;
+	
+				>div{
+					flex-shrink: 1;
+					  flex-basis: content;
+					flex-grow: 1;
+					padding-bottom: 6 * @rhythm;
+				}
+			}
+			
+			.row{
+				padding : 0;
+	
+				.button{
+					min-width: 310px;
+				}
+	
+				&.flx{
+					justify-content: center;
+					>div{
+						width: 12.5%;
+						padding : @rhythm @rhythm;
+						text-align: center;
+					}
+				}
+	
+				&.forfiats{
+					justify-content: center;
+	
+					>div{
+						width: 25%;
+					}
+				}
+	
+				&.one{
+					display: block;
+					padding : @rhythm 0;
+					margin-bottom: 3 * @rhythm;
+	
+					.wrp{
+						padding : 4 * @rhythm 2 * @rhythm;
+					}
+	
+					.flxbtn{
+						flex-direction: column;
+						text-align: center;
+						justify-content: center;
+	
+						div{
+							margin-right: 0;
+						}
+					}
+	
+					.flxbtnlbk{
+						margin-top : 2 * @rhythm;
+					}
+				}
+	
+				&.table{
+					display: block;
+					text-align: center;
+	
+					>div{
+						display: block;
+					}
+	
+					.reciever{
+						margin : 0 auto;
+					}
+				}
+				
+			}
+	
 		}
 	
 		.crowdfunding{
@@ -2147,13 +2264,58 @@ html.stblack{
 			.button{
 				min-width: 310px;
 			}
+
 			&.flx{
+				justify-content: center;
 				>div{
 					width: 12.5%;
 					padding : @rhythm @rhythm;
 					text-align: center;
-	
-	
+				}
+			}
+
+			&.forfiats{
+				justify-content: center;
+
+				>div{
+					width: 25%;
+				}
+			}
+
+			&.one{
+				display: block;
+				padding : @rhythm 0;
+				margin-bottom: 3 * @rhythm;
+
+				.wrp{
+					padding : 4 * @rhythm 2 * @rhythm;
+				}
+
+				.flxbtn{
+					flex-direction: column;
+					text-align: center;
+					justify-content: center;
+
+					div{
+						margin-right: 0;
+					}
+				}
+
+				.flxbtnlbk{
+					margin-top : 2 * @rhythm;
+				}
+			}
+
+			&.table{
+				display: block;
+				text-align: center;
+
+				>div{
+					display: block;
+				}
+
+				.reciever{
+					margin : 0 auto;
 				}
 			}
 			
@@ -2192,9 +2354,8 @@ html.stblack{
 		button{
 			min-width : 0;
 			width: 100%;
+			max-width: none!important;
 		}
-
-		
 
 		.row{
 			display: block;
@@ -2218,6 +2379,10 @@ html.stblack{
 
 				&.label{
 					width: 100%;
+				}
+
+				&.cell{
+					
 				}
 			}
 		}
@@ -2417,8 +2582,11 @@ html.stblack{
 		padding : 0;
 	}
 	#wallet{
-		padding-left: @rhythm;
-		padding-right: @rhythm;
+		.caption{
+			padding-left: @rhythm;
+			padding-right: @rhythm;
+		}
+		
 	}
 
 }

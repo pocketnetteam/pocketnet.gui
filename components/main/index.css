@@ -834,7 +834,7 @@ html.tablet #main .bgCaption {
   display: none;
 }
 html.tablet #main {
-  padding-top: 55px;
+  padding-top: 50px;
 }
 @media only screen and (max-width: 768px) {
   html.toppanelshowed #main {

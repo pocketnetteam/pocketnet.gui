@@ -45,11 +45,13 @@ var PNWIDGETS = function(){
     self.url = function(url){
 
         var parsed_url = new URL(url)
-        var postid = parsed_url.searchParams.get('s') || parsed_url.searchParams.get('v') 
+        var postid = parsed_url.searchParams.get('s') || parsed_url.searchParams.get('v')
         var connect = parsed_url.searchParams.get('connect')
         var action = parsed_url.searchParams.get('commentid') ? 'commment' : postid ? 'post' : 'channel'
 
         var id = action === 'channel' ? ( parsed_url.pathname.replace('/', '')) : postid
+
+        if(id == 'author' && action === 'channel' ) id = parsed_url.searchParams.get('address')
 
         if (connect) {
             action = 'connect'
