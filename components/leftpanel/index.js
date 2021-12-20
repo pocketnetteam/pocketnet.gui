@@ -44,12 +44,14 @@ var leftpanel = (function(){
 				if(!el.c) return;
 
 				self.shell({
-					name :  'bestfirst',
+					name :  'best',
 					data : {},
 					el : el.bestfirst
 
 
-				}, function(_p){
+				}, function(_p, i, e){
+
+					bestfirst = _p;
 
 					_p.el.find('.toggle').on('click', function(){
 
@@ -205,9 +207,9 @@ var leftpanel = (function(){
 			},
 
 			main : function(){
+				renders.best()
 				renders.tags()
 				renders.cats()
-				renders.best()
 
 			},
 
@@ -287,7 +289,7 @@ var leftpanel = (function(){
 				el.cnt = el.c.find('.leftpanelcnt')
 				el.tags = el.c.find('.tagscnt')
 				el.cats = el.c.find('.catscnt')
-				el.bestfirst = el.c.find('#bestfirst');
+				el.bestfirst = el.c.find('.bestfirst');
 
 				el.currentsearch = el.c.find('.currentsearchcnt')
 				el.subtop = el.c.find('.subtop')

@@ -244,6 +244,7 @@
         }
 
         .pkoin{
+            margin-left: @rhythm;
             font-size: 12px;
             background: #F2F2F5;
             border-radius: 8px;
@@ -292,8 +293,7 @@
         text-align: center;
         padding: 12px 16px;
         color : @color-black2;
-        border-top: 1px solid fade(#E5E5E5, 50);
-        border-bottom: 1px solid fade(#E5E5E5, 50);
+        // border-bottom: 1px solid fade(#E5E5E5, 50);
 
         .logo, .caret{
             display: none;
@@ -432,7 +432,9 @@ html.stblack{
         .earnlabel{
             color: @color-azure;
         }
-
+        .caret{
+            color : #b2abac;
+        }
         .lastprice{
             color : #b2abac;
         }
@@ -447,12 +449,20 @@ html.stblack{
 
 
         .rcptwrp{
+            border: 1px solid fade(#E5E5E5, 50);
             background: transparent;
             border-radius: 5px;
-            border : 1px solid @color-black;
         }
     
         .tcaption{
+
+            .pkoin{
+                background: @color-main;
+
+                span{
+                    color: #FFFFFF;;
+                }
+            }
     
         }
     
