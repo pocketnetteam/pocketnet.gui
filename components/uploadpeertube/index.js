@@ -1,3 +1,5 @@
+const ffmpeg = require('fluent-ffmpeg');
+
 var uploadpeertube = (function () {
 	var self = new nModule();
 
@@ -159,86 +161,71 @@ var uploadpeertube = (function () {
 
         /**
          * Enumeration for Resolutions of videos
-         * @type {{p720: string, p240: string, p360: string, p480: string}}
+         * @type {Object.<string, [number, number]>}
          */
         const Resolution = {
-          p240: '352:240',
-          p360: '640:360',
-          p480: '854:480',
-          p720: '1280:720',
-        }
+          p240: [352, 240],
+          p360: [640, 360],
+          p480: [854, 480],
+          p720: [1280, 720],
+        };
 
         /**
          * Video transcoder function
          *
-         * @param {Buffer} inputBuff
+         * @param {NodeJS.ReadableStream} readStream
          * @param {typeof Resolution} resolution
          *
          * @returns {Promise<Buffer>} result
          */
-        function transcodeVideo(inputBuff, resolution) {
+        function transcodeVideo(readStream, resolution) {
           function executor(resolve, reject) {
-            let videoProcess;
-
             try {
-              videoProcess = ffmpeg(inputBuff);
-            } catch (err) {
-              console.error('FFMPEG error occured', err);
-            }
+              let bufferStream = new stream.PassThrough();
 
-            function videoProcessor(video) {
-              video.addCommand('-preset', 'veryfast');
-              video.addCommand('-vf', `scale=${resolution}`);
-              video.addCommand('-maxrate', '2000');
-
-              const command = ffmpeg()
-                  .input(inputBuff)
-                  /*.videoCodec('libx264')
-                  .audioCodec('aac')
-                  .outputFormat('mp4')*/
-                  .outputOptions([
-                    '-preset veryfast',
-                    `-vf scale=${resolution}`,
-                    '-maxrate 2000'
-                  ])
-                  .pipe();
-
-              const ffstream = command.pipe();
+              /**
+               * Fixme: Sometimes FFMPEG falls. Make new tries on error
+               * Todo: Check parameters. Do they fit the task?
+               */
+              ffmpeg({ source: readStream })
+                  .videoFilter({ filter: 'scale', options: resolution })
+                  .format('flv')
+                  .writeToStream(bufferStream);
 
               let outputParts = [];
 
-              ffstream.on('data', (chunk) => {
+              bufferStream.on('data', (chunk) => {
                 console.log('ffmpeg just wrote ' + chunk.length + ' bytes');
 
                 outputParts.push(chunk);
               });
 
-              ffstream.on('end', () => {
+              bufferStream.on('end', () => {
                 resolve(Buffer.concat(outputParts));
               });
-            }
-
-            function errorProcessor(err) {
-              console.error('Error occured:', err);
+            } catch (err) {
+              console.error('Error occurred:', err);
               reject(err);
             }
-
-            videoProcess.then(videoProcessor, errorProcessor);
           }
 
           return new Promise(executor);
         }
 
-        let videoBuff;
-
-        videoBuff = fs.readFileSync(data.video);
+        let readStream;
+        try {
+          readStream = fs.createReadStream(data.video.path);
+        } catch (err) {
+          console.log('Error on reading file', err);
+          return;
+        }
 
         /** Writing transcoded alternatives to target object */
         data.video = {
-          p240: transcodeVideo(videoBuff, Resolution.p240),
-          p360: transcodeVideo(videoBuff, Resolution.p360),
-          p480: transcodeVideo(videoBuff, Resolution.p480),
-          p720: transcodeVideo(videoBuff, Resolution.p720),
+          p240: transcodeVideo(readStream, Resolution.p240),
+          p360: transcodeVideo(readStream, Resolution.p360),
+          p480: transcodeVideo(readStream, Resolution.p480),
+          p720: transcodeVideo(readStream, Resolution.p720),
         };
 
         var options = {
