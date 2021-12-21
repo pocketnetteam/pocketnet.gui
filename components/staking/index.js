@@ -370,6 +370,13 @@ var staking = (function(){
 						function(p){
 
 							renders.pricechart()
+
+							p.el.find('.caret-down').on('click', function(){
+
+								el.c.find('.wrp').removeClass('hide');
+				
+						
+							})
 							
 						})
 
@@ -439,13 +446,10 @@ var staking = (function(){
 
 			})
 			
-			el.caretUp.on('click', function(){
-				p.el.find('.wrp').addClass('hide');
+			el.c.find('.caret-up').on('click', function(){
 
-				p.el.find('.caret-down').on('click', function(){
-					console.log('down!!!');
-					p.el.find('.wrp').removeClass('hide');
-				})
+				el.c.find('.wrp').addClass('hide');
+				
 			})
 			
 			el.am.on('keyup', function(){
@@ -615,7 +619,6 @@ var staking = (function(){
 				el.c = p.el.find('#' + self.map.id);
 				el.calculator = el.c.find('.calculator');
 				el.am = el.c.find('.amredits');
-				el.caretUp = el.c.find('.caret-up');
 				el.buyButton = el.c.find('.buyButton')
 				initEvents();
 

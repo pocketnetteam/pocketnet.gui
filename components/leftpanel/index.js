@@ -39,6 +39,39 @@ var leftpanel = (function(){
 				})
 			},
 
+			best : function(){
+
+				if(!el.c) return;
+
+				self.shell({
+					name :  'best',
+					data : {},
+					el : el.bestfirst
+
+
+				}, function(_p){
+
+					_p.el.find('.toggle').on('click', function(){
+
+						var best = $(this).closest('.best');
+						var method = 'historical'
+		
+						best.toggleClass('on');
+		
+						if (best.hasClass('on')){
+		
+							method = 'hierarchical';
+		
+						}
+		
+						self.sdk.lentaMethod.set(method)
+		
+					})
+
+				})
+
+			},
+
 			tags : function(){
 
 				if(!el.c) return
@@ -151,22 +184,7 @@ var leftpanel = (function(){
 				if(ed.close) ed.close()
 			})
 
-			el.c.find('.toggle').on('click', function(){
 
-				var best = $(this).closest('.best');
-				var method = 'historical'
-
-				best.toggleClass('on');
-
-				if (best.hasClass('on')){
-
-					method = 'hierarchical';
-
-				}
-
-				self.sdk.lentaMethod.set(method)
-
-			})
 		}
 
 		var makers = {
@@ -187,6 +205,9 @@ var leftpanel = (function(){
 			main : function(){
 				renders.tags()
 				renders.cats()
+				renders.best()
+
+
 			},
 
 			sub : function(){
@@ -199,7 +220,6 @@ var leftpanel = (function(){
 		}
 
 		var make = function(){
-
 			var pps = parameters()
 
 			if (pps.sst || pps.ss){
@@ -265,6 +285,7 @@ var leftpanel = (function(){
 				el.cnt = el.c.find('.leftpanelcnt')
 				el.tags = el.c.find('.tagscnt')
 				el.cats = el.c.find('.catscnt')
+				el.bestfirst = el.c.find('.bestfirst');
 
 				el.currentsearch = el.c.find('.currentsearchcnt')
 				el.subtop = el.c.find('.subtop')
