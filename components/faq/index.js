@@ -24,6 +24,7 @@ var faq = (function(){
 						id : 'what-is',
 						q : 'What is ' +self.app.meta.fullname+'?',
 						a : '<div><p>' +self.app.meta.fullname+' is an innovative social network and video sharing platform. Unlike the mainstream social networks, there is no corporation behind it, it is based on the Bitcoin model. Bastyon is an open source project run by a team of developers and experts, and its goal is to provide a community moderated platform where the freedom of speech is seriously respected.&nbsp;</p><p>The project was originally created by&nbsp;Daniel Satchkov, but now encompasses over 25 developers and many volunteers across the globe. Bastyon is more of a protocol than a platform, since any developer can build its own app on it. The platform does not run on a single server but on a network of <em>user nodes</em> that are located all throughout the world.&nbsp;</p><p>This means that users are always able to get information and communicate, see the content and post as long as they have an internet connection and only a handful of nodes somewhere in the world are operational,.</p><p>This overcomes the limitations that censors put in place to block or limit communication and spread of information. Information wants to move freely. While, for example, in China some social networks can be used only behind a VPN, there is no need for that with '+self.app.meta.fullname+'.&nbsp;</p><p>In addition,&nbsp;'+self.app.meta.fullname+' does not collect personal information: users register without any email or phone number and no personal data like the IP or MAC address are stored in any way. Note, that while Bastyon does not collect any IPs (as can be seen in open code), it is not possible to hide your IP completely when using the internet, unless you are using a VPN.&nbsp;</p><p>By doing so,&nbsp;'+self.app.meta.fullname+' enables users to discuss issues freely. Today, anonymity is a requirement for security and privacy and&nbsp;'+self.app.meta.fullname+' is able to guarantee it.&nbsp;</p><p>Furthermore, in order to deliver completely private and anonymous communication,&nbsp;'+self.app.meta.fullname+' provides an encrypted chat system, not associated to any phone number or personal data, protected with peer-to-peer encryption model (note, that group chats are not encrypted, only 1-on-1 chats). No one except the two users involved in the chat session can access the messages. All the claims are easy to verify, since Bastyon app and Pocketnet blockchain are both completely open-source, with code visible to everyone. Moreover, all the chat messages are automatically deleted after 7 day.</p><p>'+self.app.meta.fullname+' is a censorship-resistant pseudonymous social platform where people can chat, communicate and share contents with others transparent rules that are the same for every user and developer.</p></div>',
+						
 					},
 					
 					{
@@ -391,6 +392,231 @@ var faq = (function(){
 						id : 'ecosystem5',
 						q : 'Who runs the '+self.app.meta.fullname+'?',
 						a : '<div>There is no corporate entity or single individual who owns or controls the '+self.app.meta.fullname+'. Pocketnet blockchain and Bastyon are run by a group of programmers, but this group is growing and changing all the time. If any set of programmers takes a wrong turn and violates the principles on which Bastyon is founded, other programmers can simply fork an open-source code and continue the censorship resistant platform. </div></div>',
+						
+					},
+					
+				]
+			
+			},
+			{
+			
+				name : 'How do I find the private key?',
+				id : 'privatekey',
+			
+				group : [
+			
+					{
+						id : 'privatekey1',
+						q : 'Click your avatar icon in the top right corner',
+						a : '',
+						img: '<img src="img/privatekey1.jpg" alt="" />'
+					},
+					{
+						id : 'privatekey2',
+						q : 'Then, click “Manage” button',
+						a : '',
+						img: '<img src="img/privatekey2.jpg" alt="" />'
+					},
+					{
+						id : 'privatekey3',
+						q : 'Click “private key” button.',
+						a : '',
+						img: '<img src="img/privatekey3.jpg" alt="" />'
+					},
+					{
+						id : 'privatekey4',
+						q : 'Then, click “Yes”',
+						a : '',
+						img: '<img src="img/privatekey4.jpg" alt="" />'
+					},
+					{
+						id : 'privatekey5',
+						q : 'Then, you can see your private key. Keep it in a safe place. This key cannot be restored if it’s lost',
+						a : '',
+						img: '<img src="img/privatekey5.jpg" alt="" />'
+					},	
+					
+					
+				]
+			
+			},
+			{
+			
+				name : 'Uploading videos',
+				id : 'Uploading',
+			
+				group : [
+			
+					{
+						id : 'Uploading1',
+						q : '  ',
+						a : 'Important: The uploading video function is available for users who have at least 5 PKOIN, or high enough rating. If you have 50 PKOIN you can upload 4 Gb video per day, with 50 PKOIN you can upload up to 5 GB. Note, you do not spend PKOIN, it just has to be in your account to verify that you are not a bot.',
+						img: ''
+					},
+					{
+						id : 'Uploading2',
+						q : 'Click to the “What`s new?” section on the “All Posts” tab.',
+						a : '',
+						img: '<img src="img/Uploading2.jpg" alt="" />'
+					},
+					{
+						id : 'Uploading3',
+						q : 'Then, click “Upload Video” button and in the popup click “Select video file” button. After that, chose necessary video file from your PC and wait for uploading to be finished.',
+						a : '',
+						img: '<img src="img/Uploading3.jpg" alt="" />',
+						
+					},
+					{
+						id : 'Uploading4',
+						q : '',
+						a : '',
+						img: '<img src="img/Uploading4.jpg" alt="" />'
+					},
+					{
+						id : 'Uploading5',
+						q : 'Click to the “What`s new?” section on the “All Posts” tab.',
+						a : '',
+						img: '<img src="img/Uploading5.jpg" alt="" />'
+					},
+					{
+						id : 'Uploading6',
+						q : 'Then, when uploading ends, add title, description, category and choose visibility for your post: <br>			“Visible for everyone”, <br> “Visible only for subscribers”, <br> “Visible only for Bastyon users”, <br> After that, click “Post” button.',
+						a : '',
+						img: '<img src="img/Uploading6.jpg" alt="" />'
+					},
+					{
+						id : 'Uploading7',
+						q : '',
+						a : '',
+						img: '<img src="img/Uploading7.jpg" alt="" />'
+					},
+					
+					
+				]
+			
+			},
+			{
+			
+				name : 'How I can buy PKOIN?',
+				id : 'buy-pkoin',
+			
+				group : [
+			
+					{
+						id : 'buy-pkoin1',
+						q : '  ',
+						a : 'You can buy PKOIN in the following ways: <br>	Select PKOIN/Peer-to-Peer Category on the right and look for ads, then connect in chat <br> <a target="_blank" href="https://www.bitforex.com/en/spot/pkoin_usdt">https://www.bitforex.com/en/spot/pkoin_usdt</a> <br> <a target="_blank" href="https://www.digifinex.com/en-ww/trade/USDT/PKOIN">https://www.digifinex.com/en-ww/trade/USDT/PKOIN</a>  <br> <a target="_blank" href="https://pkoin.net/">https://pkoin.net/</a> - you can buy PKOIN for cryptocurrencies <br>		<a target="_blank" href="https://buy.pkoin.indacoin.io/">https://buy.pkoin.indacoin.io/</a> - you can buy PKOIN for credit cards.',
+						img: ''
+					},
+					{
+						id : 'buy-pkoin2',
+						q : 'Pkoin.net  ',
+						a : 'Choose a cryptocurrency and enter amount of the crypto into the left field. After that, enter your own PKOIN wallet address.',
+						img: '<img src="img/buy-pkoin2.jpg" alt="" />'
+					},
+					{
+						id : 'buy-pkoin3',
+						q : '  ',
+						a : 'Your PKOIN wallet address is placed in your account. <br>For looking that Click your avatar icon into the right top corner',
+						img: '<img src="img/buy-pkoin3.jpg" alt="" />'
+					},
+					{
+						id : 'buy-pkoin4',
+						q : '  ',
+						a : 'Then click to PKOIN address for copy',
+						img: '<img src="img/buy-pkoin4.jpg" alt="" />'
+					},
+					{
+						id : 'buy-pkoin5',
+						q : '  ',
+						a : 'Then, you should to enter your PKOIN wallet address in the above field and click “Purchase” button.',
+						img: '<img src="img/buy-pkoin5.jpg" alt="" />'
+					},
+					{
+						id : 'buy-pkoin6',
+						q : '  ',
+						a : 'After that you should to send your BTC (or another crypto which was chosen) to this address',
+						img: '<img src="img/buy-pkoin6.jpg" alt="" />'
+					},
+					{
+						id : 'buy-pkoin7',
+						q : ' <a href="Buy.pkoin.indacoin.io">Buy.pkoin.indacoin.io</a>     ',
+						a : 'First step – choose currency, enter amount, your email address and PKOIN address.  Then click “Buy PKOIN ” button.',
+						img: '<img src="img/buy-pkoin7.jpg" alt="" />'
+					},
+					{
+						id : 'buy-pkoin8',
+						q : '  ',
+						a : 'Then you can see “Buy PKOIN with credit or debit card” window. Click “Continue” button',
+						img: '<img src="img/buy-pkoin8.jpg" alt="" />'
+					},
+					{
+						id : 'buy-pkoin9',
+						q : '  ',
+						a : 'Then, enter your Address, ZIP and your Country',
+						img: '<img src="img/buy-pkoin9.jpg" alt="" />'
+					},
+					{
+						id : 'buy-pkoin10',
+						q : '  ',
+						a : 'Then enter your Full Name, Country, Date of berth',
+						img: '<img src="img/buy-pkoin10.jpg" alt="" />'
+					},
+					{
+						id : 'buy-pkoin11',
+						q : '  ',
+						a : 'Then, enter your card data and click “Continue” button',
+						img: '<img src="img/buy-pkoin11.jpg" alt="" />'
+					},
+					
+					
+					
+					
+				]
+			
+			},
+			{
+			
+				name : 'My Videos',
+				id : 'Myvideos',
+			
+				group : [
+			
+					{
+						id : 'Myvideos1',
+						q : '  ',
+						a : 'Click your avatar icon in the top right corner',
+						img: '<img src="img/Myvideos1.jpg" alt="" />'
+					},
+					{
+						id : 'Myvideos2',
+						q : ' ',
+						a : 'Then, click “Manage” button',
+						img: '<img src="img/Myvideos2.jpg" alt="" />'
+					},
+					{
+						id : 'Myvideos3',
+						q : '  ',
+						a : 'Then, click “My Videos”',
+						img: '<img src="img/Myvideos3.jpg" alt="" />'
+					},
+					{
+						id : 'Myvideos4',
+						q : '  ',
+						a : 'Then, you can see your video cabinet, which contain information about your uploaded videos, average rating, video views and video settings.',
+						img: '<img src="img/Myvideos4.jpg" alt="" />'
+					},
+					{
+						id : 'Myvideos5',
+						q : '  ',
+						a : 'If you want to change the video description, name or a preview image, click the three dots and choose necessary action.',
+						img: '<img src="img/Myvideos5.jpg" alt="" />'
+					},
+					{
+						id : 'Myvideos6',
+						q : '  ',
+						a : 'On the top of the video cabinet page you can see your Daily Uploading Quota, Total Referral Users, Total Ratings, Total Video Views, Unique Raters, Search Field and also you can sort your videos.',
+						img: '<img src="img/Myvideos6.jpg" alt="" />'
 					},
 					
 				]
