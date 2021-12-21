@@ -8,7 +8,7 @@ var leftpanel = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, categories = null, tags = null, cats = null, bestfirst = null;
+		var el, categories = null, tags = null, cats = null;
 
 		var ed = null;
 
@@ -49,9 +49,7 @@ var leftpanel = (function(){
 					el : el.bestfirst
 
 
-				}, function(_p, i, e){
-
-					bestfirst = _p;
+				}, function(_p){
 
 					_p.el.find('.toggle').on('click', function(){
 
@@ -70,8 +68,6 @@ var leftpanel = (function(){
 		
 					})
 
-
-					if(clbk) clbk()
 				})
 
 			},
@@ -207,9 +203,10 @@ var leftpanel = (function(){
 			},
 
 			main : function(){
-				renders.best()
 				renders.tags()
 				renders.cats()
+				renders.best()
+
 
 			},
 
@@ -223,7 +220,6 @@ var leftpanel = (function(){
 		}
 
 		var make = function(){
-
 			var pps = parameters()
 
 			if (pps.sst || pps.ss){
