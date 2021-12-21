@@ -1,4 +1,5 @@
 const ffmpeg = require('fluent-ffmpeg');
+const stream = require('stream');
 
 var uploadpeertube = (function () {
 	var self = new nModule();
@@ -107,7 +108,7 @@ var uploadpeertube = (function () {
 				contentAsHTML: true,
 			});
 
-			el.videoInput.change(function (evt) {
+			el.videoInput.change(async function (evt) {
 				var fileName = evt.target.files[0].name;
 
 				el.videoError.text(
@@ -173,60 +174,64 @@ var uploadpeertube = (function () {
         /**
          * Video transcoder function
          *
-         * @param {NodeJS.ReadableStream} readStream
+         * @param {string} filePath
          * @param {typeof Resolution} resolution
          *
          * @returns {Promise<Buffer>} result
          */
-        function transcodeVideo(readStream, resolution) {
+        function transcodeVideo(filePath, resolution) {
           function executor(resolve, reject) {
-            try {
-              let bufferStream = new stream.PassThrough();
+            let triesCount = 0;
 
-              /**
-               * Fixme: Sometimes FFMPEG falls. Make new tries on error
-               * Todo: Check parameters. Do they fit the task?
-               */
-              ffmpeg({ source: readStream })
-                  .videoFilter({ filter: 'scale', options: resolution })
-                  .format('flv')
-                  .writeToStream(bufferStream);
+            function startTranscoding() {
+              const readStream = fs.createReadStream(filePath);
+
+              let bufferStream = new stream.PassThrough();
 
               let outputParts = [];
 
-              bufferStream.on('data', (chunk) => {
-                console.log('ffmpeg just wrote ' + chunk.length + ' bytes');
-
-                outputParts.push(chunk);
+              bufferStream.on('data', (data) => {
+                outputParts.push(data);
               });
 
               bufferStream.on('end', () => {
                 resolve(Buffer.concat(outputParts));
               });
-            } catch (err) {
-              console.error('Error occurred:', err);
-              reject(err);
+
+              try {
+                ffmpeg({ source: readStream })
+                    .videoFilter({ filter: 'scale', options: resolution })
+                    .format('flv')
+                    .writeToStream(bufferStream);
+              } catch (err) {
+                console.error('Error occured:', err);
+
+                if (triesCount < 3) {
+                  startTranscoding();
+                  triesCount++;
+                } else {
+                  reject(err);
+                }
+              }
             }
+
+            startTranscoding();
           }
 
           return new Promise(executor);
         }
 
-        let readStream;
-        try {
-          readStream = fs.createReadStream(data.video.path);
-        } catch (err) {
-          console.log('Error on reading file', err);
-          return;
-        }
+        const filePath = evt.target.files[0].path;
 
         /** Writing transcoded alternatives to target object */
         data.video = {
-          p240: transcodeVideo(readStream, Resolution.p240),
-          p360: transcodeVideo(readStream, Resolution.p360),
-          p480: transcodeVideo(readStream, Resolution.p480),
-          p720: transcodeVideo(readStream, Resolution.p720),
+          p240: transcodeVideo(filePath, Resolution.p240),
+          p360: transcodeVideo(filePath, Resolution.p360),
+          p480: transcodeVideo(filePath, Resolution.p480),
+          p720: transcodeVideo(filePath, Resolution.p720),
         };
+
+        await Promise.all(Object.values(data.video));
 
         var options = {
           type: 'uploadVideo',
