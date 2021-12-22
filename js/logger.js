@@ -58,8 +58,8 @@ class FrontendLogger {
   error(error = {}) {
     const { instance, _createErrorBody, guid, userAgent, loggerActive } = this;
     debugger;
-    //protection from incorrect error formats
-    if (typeof error !== 'object') return;
+    //protection from incorrect error formats or logger is turned off
+    if (typeof error !== 'object' || !loggerActive) return;
 
     const formattedError = _createErrorBody({ ...error, guid, userAgent });
 
