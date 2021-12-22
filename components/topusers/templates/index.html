@@ -1,30 +1,22 @@
 <div id="<%-module.map.id%>">
-	<% if(addresses.length) {%>
-
-		<!-- <div class="tcaptionwrapper">
-			<div class="tcaption">
-				<span class="authors">
-					<%- e('topAuthors') %> 
-				</span>
-				<span class="rating">
-					<%- e('rating') %> 
-				</span>
-			</div>
+	<div class="tcaptionwrapper">
+		<div class="tcaption">
+			<span class="authors">
+				<%- e('topAuthors') %> 
+			</span>
+			<span class="rating">
+				<%- e('rating') %> 
+			</span>
 		</div>
+	</div>
 
-		<div class="users">
+	<div class="users">
+	</div>
+	<div class="loaderWrapper">
+		<div class="loader">
+			<div class="preloader5"><img src="./img/three-dots.svg"/></div>
 		</div>
-		<div class="loaderWrapper">
-			<div class="loader">
-				<div class="preloader5"><img src="./img/three-dots.svg"/></div>
-			</div>
-		</div> -->
+	</div>
 
-	<% } else { %> 
 
-		<div class="empty">
-			<%=empty%>
-		</div>
-
-	<% } %>
 </div>

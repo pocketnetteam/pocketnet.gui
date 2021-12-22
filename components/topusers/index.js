@@ -107,18 +107,7 @@ var topusers = (function(){
 		}
 
 		var events = {
-			loadmorescroll : function(){
 
-				if (
-
-					($(window).scrollTop() + $(window).height() > $(document).height() - 400) 
-
-					&& !loading && !end) {
-
-					makepage()
-
-				}
-			},
 			unsubscribe : function(){
 
 				var address = $(this).closest('.user').attr('address')
@@ -163,65 +152,58 @@ var topusers = (function(){
 		}
 
 		var load = {
-			info : function(addresses, clbk){
-				if(loading) return
-
-				loading = true;
-
-				topPreloader(80);
-
-				el.c.addClass('loading')
-
-				self.sdk.users.get(addresses, function(){
-
-					el.c.removeClass('loading')
-
-					loading = false;
-
-					topPreloader(100);
-
-					if (clbk)
-						clbk()
-				})
-			}
-		}
-
-		var makepage = function(clbk){
-
-			var newadresses = _.filter(addresses, function(a, i){
-				if(i >= (page * cnt) && i < ((page + 1) * cnt)){
-					return true;
-				}
-			})	
-
-			if(newadresses.length){
-
-				load.info(newadresses, function(){
-					renders.page(newadresses, clbk)
-				})
-
-				page++
-			}
-			else
-			{
-				end = true;
-			}
-
-			
 
 		}
+
 
 		var state = {
 			save : function(){
 
 			},
-			load : function(){
+			load : function(clbk){
 
-				self.app.platform.sdk.users.getBestUsers(function(c, error){
+				console.log('addresses', addresses)
 
-					console.log('c!!', c, error);
-				})
 				
+				var shuffle = function(array) {
+					let currentIndex = array.length,  randomIndex;
+				  
+					while (currentIndex != 0) {
+				  
+					  randomIndex = Math.floor(Math.random() * currentIndex);
+					  currentIndex--;
+				  
+					  [array[currentIndex], array[randomIndex]] = [
+						array[randomIndex], array[currentIndex]];
+					}
+				  
+					return array;
+				}
+
+				if (addresses.length){
+
+					setTimeout(() => {
+
+						if (clbk){
+							clbk(shuffle(addresses).slice(0, 5));
+						}
+
+					}, 0)
+
+
+				} else {
+
+					self.app.platform.sdk.users.getBestUsers(function(c, error){
+
+						addresses = c;
+	
+						if (clbk){
+							clbk(shuffle(addresses).slice(0, 5))
+						}
+					})
+
+				}
+
 			}
 		}
 
@@ -263,9 +245,7 @@ var topusers = (function(){
 		}
 
 		var make = function(){
-			makepage(function(){
-				window.addEventListener('scroll', events.loadmorescroll)
-			})
+
 		}
 
 		return {
@@ -278,12 +258,6 @@ var topusers = (function(){
 				loading = false;
 
 				var data = {};
-
-				addresses = deep(p.settings, 'essenseData.addresses') || []
-
-				data.addresses = addresses
-
-				extra = deep(p.settings, 'essenseData.extra');
 
 				clbk(data);
 
@@ -305,7 +279,7 @@ var topusers = (function(){
 			
 			init : function(p){
 
-				state.load();
+				state.load(renders.page);
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id);

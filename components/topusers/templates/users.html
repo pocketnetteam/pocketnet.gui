@@ -37,12 +37,10 @@ var telements = function(address){ %>
 	<% } %>
 	
 <% }
+_.each(addresses, function(u){ 
 
-_.each(addresses, function(address){ 
-
-	var _class=''
-
-	if (me && me.relation(address, 'blocking')){ _class="userblocking" }
+	var _class='';
+	var address = u.address;
 
 %>
 	<div class="wrk">
@@ -56,9 +54,7 @@ _.each(addresses, function(address){
 
 							<% 
 
-							console.log('usericon', deep(app, 'platform.sdk.users.storage.'+address))
-
-								var src = deep(app, 'platform.sdk.users.storage.'+address+'.image');  
+								var src = u.avatar;
 								var name = deep(app, 'platform.sdk.users.storage.'+address+'.name');
 								var letter = name ? name[0] : ''; 
 

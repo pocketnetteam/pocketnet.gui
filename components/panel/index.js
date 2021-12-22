@@ -56,7 +56,6 @@ var panel = (function(){
 
 			topusers : function(){
 				
-				console.log('topusers!!!', el.topusers)
 
 				self.nav.api.load({
 
@@ -66,7 +65,6 @@ var panel = (function(){
 					animation : false,
 
 					essenseData : {
-						addresses : ['PEJhUMmCwkngRQELKacxWiJHBEdAsYRZoB', 'PH6ovi9jUVF4GZ4oGUeKLqcUYV1aSPTj8B', 'PJFSiYQtPQNwWJrKXyzBuvWoqc11RkWRRd', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd']
 					},
 					
 					clbk : function(e, p){
