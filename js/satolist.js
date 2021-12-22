@@ -9872,7 +9872,6 @@ Platform = function (app, listofnodes) {
                 if(clbk) clbk()
             }
         },
-
         categories : {
             data : {
                 all : {

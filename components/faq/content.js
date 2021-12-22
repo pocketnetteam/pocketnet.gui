@@ -328,8 +328,6 @@ var faqcontent = [
 	
 
 ]
-
-module.exports = faqcontent;
 	
 
 
