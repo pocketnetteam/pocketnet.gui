@@ -49,7 +49,7 @@ class FrontendLogger {
       userAgent,
       guid,
     ].map((element) =>
-      typeof element === 'string' ? `'${element}'` : element,
+      typeof element !== 'number' ? `'${element}'` : element,
     );
 
     return `(${parametersOrder.join(',')})`;
