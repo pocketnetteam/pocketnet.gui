@@ -133,6 +133,8 @@ var topusers = (function(){
 		var renders = {
 			page : function(addresses, clbk){
 
+				el.loader.fadeOut();
+				
 				self.shell({
 
 					name :  'users',
@@ -277,7 +279,8 @@ var topusers = (function(){
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
-				el.users = el.c.find('.users')
+				el.users = el.c.find('.users');
+				el.loader = el.c.find('.loader');
 
 				state.load(renders.page);
 
