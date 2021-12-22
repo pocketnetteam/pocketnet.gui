@@ -235,8 +235,6 @@ var Cache = function(p){
                 block : 0,
             },
 
-
-
             getstatisticcontent : {
                 time : 560,
                 block : 0,

@@ -52,7 +52,7 @@ var cli = {
 
         var kaction = f.deep(kit, 'manage.' + action)
 
-		if(!kaction) return Promise.reject('unknownAction')
+		if(!kaction || typeof kaction !== 'function') return Promise.reject('unknownAction')
 
         return kaction(data)
         
