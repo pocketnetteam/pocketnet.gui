@@ -182,14 +182,9 @@ var topusers = (function(){
 
 				if (addresses.length){
 
-					setTimeout(() => {
-
-						if (clbk){
-							clbk(shuffle(addresses).slice(0, 5));
-						}
-
-					}, 0)
-
+					if (clbk){
+						clbk(shuffle(addresses).slice(0, 5));
+					}
 
 				} else {
 
@@ -279,11 +274,13 @@ var topusers = (function(){
 			
 			init : function(p){
 
-				state.load(renders.page);
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
 				el.users = el.c.find('.users')
+
+				state.load(renders.page);
+
 
 				initEvents();
 
