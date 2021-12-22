@@ -2,8 +2,10 @@ const LOGGER_ENDPOINT_ADDRESS = 'https://metrix.pocketnet.app/';
 const DEFAULT_CONTENT_TYPE = 'text/plain';
 
 class FrontendLogger {
-  constructor(userAgent = '') {
+  constructor(userAgent = '', app = {}) {
     this.userAgent = userAgent;
+    this.app = app;
+
     this.guid = this._createGUID();
 
     //configuration of the axios instance
@@ -12,6 +14,10 @@ class FrontendLogger {
     });
     this.instance.defaults.headers.common['Content-Type'] =
       DEFAULT_CONTENT_TYPE;
+  }
+
+  get loggerActive() {
+    return this.app.platform.sdk.usersettings.meta.sendUserStatistics.value;
   }
 
   _createGUID() {
@@ -50,20 +56,13 @@ class FrontendLogger {
   }
 
   error(error = {}) {
-    const { instance, _createErrorBody, guid, userAgent } = this;
-
+    const { instance, _createErrorBody, guid, userAgent, loggerActive } = this;
+    debugger;
     //protection from incorrect error formats
     if (typeof error !== 'object') return;
 
     const formattedError = _createErrorBody({ ...error, guid, userAgent });
 
-    instance
-      .post('front/add', formattedError)
-      .then((data) => {
-        debugger;
-      })
-      .catch((err) => {
-        debugger;
-      });
+    instance.post('front/add', formattedError);
   }
 }

@@ -6003,6 +6003,13 @@ Platform = function (app, listofnodes) {
 					type : "BOOLEAN",
 					value : false,
 				},
+
+                sendUserStatistics : {
+                    name: self.app.localization.e('sendUserStatistics'),
+					id : 'sendUserStatistics',
+					type : "BOOLEAN",
+					value : true,
+                },
             },
 
             create: function (id) {
@@ -6077,7 +6084,12 @@ Platform = function (app, listofnodes) {
                     },
 
                     
-
+                    stats: {
+                        name: self.app.localization.e('captionUserStats'),
+                        options: {
+                            sendUserStatistics: options.sendUserStatistics,
+                        }  
+                    },
                 }
 
 
@@ -6125,7 +6137,6 @@ Platform = function (app, listofnodes) {
                         }
 
                     }
-          
                 }
 
                 _.each(options, function (o, i) {
@@ -23463,9 +23474,7 @@ Platform = function (app, listofnodes) {
             }
 
             if (typeof FrontendLogger !== 'undefined') {
-                self.app.Logger = new FrontendLogger(navigator.userAgent);
-
-                self.app.Logger.error({payload: 'test', err: 'test'}, 'test')
+                self.app.Logger = new FrontendLogger(navigator.userAgent, self.app);
             }
 
             self.prepareUser(function() {

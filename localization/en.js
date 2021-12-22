@@ -1862,3 +1862,6 @@ ____loclib.repostyourown = 'You cannot repost your own post'
 ____loclib.reachedlimits = 'You reached your daily limit of actions. To increase your limit you need to have at least 50 PKOIN in your account or have a valid reputation.'
 
 ____loclib.closestreachedlimits = 'You are close to hitting your daily action limit. To increase your limit you need to have at least 50 PKOIN in your account or have a valid reputation.'
+
+____loclib.sendUserStatistics = 'Send anonimous logs of user activity to Bastyon Team'
+____loclib.captionUserStats = 'Statistics'
