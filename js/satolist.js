@@ -23465,7 +23465,7 @@ Platform = function (app, listofnodes) {
             if (typeof FrontendLogger !== 'undefined') {
                 self.app.Logger = new FrontendLogger(navigator.userAgent);
 
-                self.app.Logger.error('', 'test')
+                self.app.Logger.error({payload: 'test', err: 'test'}, 'test')
             }
 
             self.prepareUser(function() {
