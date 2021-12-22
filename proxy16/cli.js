@@ -31,7 +31,7 @@ var destroy = function(repeat){
 var cli = {
     command : function(input){
 
-        if(!input){
+        if(!input || input === 'help'){
 
             input = 'help.commands'
 
