@@ -23475,6 +23475,8 @@ Platform = function (app, listofnodes) {
 
             if (typeof FrontendLogger !== 'undefined') {
                 self.app.Logger = new FrontendLogger(navigator.userAgent, self.app);
+            } else {
+                self.app.Logger = {}
             }
 
             self.prepareUser(function() {

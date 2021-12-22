@@ -195,8 +195,9 @@ var uploadpeertube = (function () {
             wndObj.close();
           })
           .catch((e = {}) => {
-            console.error('Uploading error', e);
             self.app.Logger.error({ err: e });
+
+            console.error('Uploading error', e);
 
             el.videoInput.val('');
             el.wallpaperError.text('');
