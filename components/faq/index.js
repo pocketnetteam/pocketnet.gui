@@ -194,7 +194,6 @@ var faq = (function(){
 					groups : faqcontent
 				};
 
-				console.log('data!!!', data)
 				clbk(data);
 
 			},
