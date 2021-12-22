@@ -1,6 +1,12 @@
 const ffmpeg = require('fluent-ffmpeg');
 const stream = require('stream');
 
+let ipcRenderer;
+
+if (typeof _Electron !== 'undefined') {
+  ipcRenderer = require('electron').ipcRenderer;
+}
+
 var uploadpeertube = (function () {
 	var self = new nModule();
 
@@ -221,7 +227,7 @@ var uploadpeertube = (function () {
           return new Promise(executor);
         }
 
-        const filePath = evt.target.files[0].path;
+        const filePath = event.target.files[0].path;
 
         /** Writing transcoded alternatives to target object */
         data.video = {
@@ -278,12 +284,40 @@ var uploadpeertube = (function () {
 
 				el.importUrl.addClass('hidden');
 
-				self.app.peertubeHandler.api.videos
-					.upload(data, options)
-					.then((response) => {
-						el.uploadButton.prop('disabled', false);
-						el.header.addClass('activeOnRolled');
-						el.uploadProgress.addClass('hidden');
+        if (typeof _Electron !== 'undefined') {
+          const filePath = event.target.files[0].path;
+
+          function processTranscoding() {
+            return new Promise((resolve, reject) => {
+              options.progress(60);
+              ipcRenderer.send('transcode-video-request', filePath);
+              ipcRenderer.on('transcode-video-response', (event, transcoded, error) => {
+                if (error) {
+                  reject('Error on transcoding');
+                  return;
+                }
+
+                resolve(transcoded);
+              });
+            });
+          }
+
+          await processTranscoding()
+            .then((transcoded) => {
+              /** Writing transcoded alternatives to target object */
+              data.video = transcoded;
+            })
+            .catch(() => {
+              sitemessage('There was an error with processing your video');
+            });
+        }
+
+        self.app.peertubeHandler.api.videos
+          .upload(data, options)
+          .then((response) => {
+            el.uploadButton.prop('disabled', false);
+            el.header.addClass('activeOnRolled');
+            el.uploadProgress.addClass('hidden');
 
 						el.preloaderElement.addClass('hidden');
 

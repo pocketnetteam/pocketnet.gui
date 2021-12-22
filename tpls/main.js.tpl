@@ -29,6 +29,9 @@ const { autoUpdater } = require("electron-updater");
 const log = require('electron-log');
 const is = require('electron-is');
 const AutoLaunch = require('auto-launch');
+const os = require('os');
+const fs = require('fs');
+const ffmpeg = require('fluent-ffmpeg');
 
 const contextMenu = require('electron-context-menu');
 
@@ -699,6 +702,117 @@ function createWindow() {
         console.log('autoLaunchManage', p)
 
         autoLaunchManage(p.enable)
+    })
+
+    ipcMain.on('transcode-video-request', async function(e, filePath) {
+        const tempDir = os.tmpdir();
+
+        /**
+         * Enumeration for Resolutions of videos
+         * @type {Object.<string, string>}
+         */
+        const Resolution = {
+            p240: '352x240',
+            p360: '640x360',
+            p480: '854x480',
+            p720: '1280x720',
+        };
+
+        /**
+         * Video transcoder function
+         *
+         * @param {string} filePath
+         * @param {typeof Resolution} resolution
+         *
+         * @returns {Promise<Buffer>} result
+         */
+        function transcodeVideo(filePath, resolution) {
+            function randomId(length) {
+                var result           = '';
+                var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                var charactersLength = characters.length;
+                for ( var i = 0; i < length; i++ ) {
+                    result += characters.charAt(Math.floor(Math.random() *
+                        charactersLength));
+                }
+                return result;
+            }
+
+            function executor(resolve, reject) {
+                let triesCount = 0;
+
+                function startTranscoding() {
+                    const readStream = fs.createReadStream(filePath);
+
+                    try {
+                        const fileName = `transvideo-${randomId(6)}.temp.mp4`;
+                        const fileLocation = path.join(tempDir, fileName);
+
+                        console.log('Created temporary file', fileLocation);
+                        fs.writeFileSync(fileLocation);
+
+                        ffmpeg({ source: readStream })
+                            .withVideoCodec('libx264')
+                            .withAudioCodec('libmp3lame')
+                            .withSize(resolution)
+                            .format('mp4')
+                            .on('error', (err) => {
+                                console.error('FFmpeg error occurred:', err);
+                                reject(err);
+                            })
+                            .on('end', () => {
+                                resolve(fs.readFileSync(fileLocation));
+                                fs.unlink(fileLocation, () => {
+                                    console.log('Purged temporary file');
+                                });
+                            })
+                            .saveToFile(fileLocation);
+                    } catch (err) {
+                        console.error('Error occurred:', err);
+
+                        if (triesCount <= 3) {
+                            triesCount++;
+                            startTranscoding();
+                        } else {
+                            reject(err);
+                        }
+                    }
+                }
+
+                startTranscoding();
+            }
+
+            return new Promise(executor);
+        }
+
+        /** Writing transcoded alternatives to target object */
+        let videos = {
+            //p240: transcodeVideo(readStream, Resolution.p240),
+            //p360: transcodeVideo(readStream, Resolution.p360),
+            //p480: transcodeVideo(readStream, Resolution.p480),
+            p720: transcodeVideo(filePath, Resolution.p720),
+        };
+
+        await Promise.all([
+            //videos.p240,
+            //videos.p360,
+            //videos.p480,
+            videos.p720,
+        ]).catch(() => {
+            /** Responding with error */
+            e.reply('transcode-video-response', null, true);
+            return;
+        });
+
+        const resolutions = Object.keys(videos);
+
+        for (const size of resolutions) {
+            const promise = videos[size];
+            videos[size] = await promise;
+        }
+
+        e.reply('transcode-video-response', null, true);
+        //e.reply('transcode-video-response', videos);
     })
 
     /**
