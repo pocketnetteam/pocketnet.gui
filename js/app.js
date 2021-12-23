@@ -118,7 +118,7 @@ Application = function(p)
 
 		//////////////
 
-		peertubeServer : 'https://test.peertube.pocketnet.app/api/v1/',
+		peertubeServer : 'http://65.108.83.132/api/v1/',
 
 		//////////////
 
