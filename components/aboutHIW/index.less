@@ -303,23 +303,18 @@
 		}
 	}
 	.main-board {
-		height: 500px;
-		// background: url(../../img/about/how-it-works.jpg) no-repeat fixed;
-		// background-position: center center;
-		// background-size: cover;
-		// position: relative;	 	
-		//height: 100%;
+		height: 500px;		
 		position: reletive;
 		padding: 0px 0 ;
 
 		
 		>.main-wrapper {
-			display: flex;
-			align-items: center;
-			justify-content: space-around;
-			height: 100%;
-			position: relative;
-			//z-index: 2;
+				display: flex;
+				align-items: center;
+				justify-content: space-around;
+				height: 100%;
+				position: relative;
+				//z-index: 2;
 			}
 			img {
 				width: 400px;
@@ -352,100 +347,18 @@
 			}
 	}
 	.main-board__left-block {
-		width: 100%;
-		display: block;
-		padding: 50px 0;
+			width: 100%;
+			display: block;
+			padding: 50px 0;
 		
-		h3{
-			margin-top: 30px;
-			color:#3b3b3b;
-		}
-		>div {
-			
-				color: #FFFFFF;
-				font-weight: 600;
-				font-size: 16px;
-				margin-bottom: 15px;
-			
+			h3{
+					margin-top: 30px;
+					color:#3b3b3b;
+					padding-right: 50px;
+			}
+		
+	}
 
-			&:last-of-type {
-				display: flex;
-			}
-		}
-	}
-	.main-board__left-block_2 {
-		width: 100%;
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-around;
-		>div {
-			
-			color: black;
-			font-weight: 600;
-			font-size: 16px;
-			//margin-bottom: 15px;
-			margin: 10px 0;
-			width: 45%;
-			&:last-child {
-				width: 100%;
-				display: flex;
-				justify-content: center;
-				margin-top: 60px;
-				>a{
-				color: black;
-				&:hover{
-				color: #fff;
-				}
-				}
-				}		
-			}
-			
-	}
-	.grey {
-		background: #dddddd;
-		padding: 70px 0;
-	}
-	.main-board__image {
-		margin: auto;
-		width: 30%;
-		border-radius: 10px;
-		//position: fixed;
-		
-	}
-	.main-board__button-link {
-		&:first-of-type {
-			margin-right: 20px;
-		}
-		display: flex;
-		align-items: center;
-		width: 165px;
-		height: 50px;
-		border: 1px solid #00a6ff;
-		font-size: 18px;
-		border-radius: 0 5px 0 5px;
-		text-decoration: none;
-		color: #FFFFFF;
-		font-size: 12px;
-		transition-duration: 0.3s;
-		>i {
-			margin-left: 20px;
-			margin-right: 15px;
-			font-size: 30px;
-			color: #00a6ff;
-			width: 26px;
-			transition-duration: 0.3s;
-		}
-		&:hover {
-			background: #00a6ff;
-			>i {
-				color: #FFFFFF;
-			}
-		}
-	}
-	.main-board__button-link_bold {
-		font-size: 14px;
-		font-weight: 600;
-	}
 
 	.main-description{
 		background: #262626;
@@ -457,36 +370,19 @@
 			justify-content: space-around;
 			.row{
 				padding: 0 15px;
-				.text{
-					width: 100%;				
-					font-size: 1.5em;
-					.extra-text{
-						font-size:1.5em;
-						font-weight: 700;
-						margin-top: 10px;
-						text-align:right;					
-					}
-					.author{
-						text-align: right;
-						width: 100%;				
-						font-size: 1em;
-						margin-top: 40px; 
-					}
-				}
-				.text-point{
-					width: 450px;				
-					font-size: 1.5em;
-					margin-top: 40px;
-					.one-text-point{
-						text-transform:uppercase;
-						margin-bottom: 20px;
-					}
+				width: 100%;				
+				font-size: 1.5em;
+				.extra-text{
+					font-size:1.5em;
+					font-weight: 700;
+					//margin-top: 10px;
+					text-align:right;					
 				}
 				
-
+				}
 			}
 		}
-	}
+//here
 	@media (max-width: 380px){
 		.main-description{
 			padding: 0;
@@ -517,54 +413,9 @@
 		}
 	}
 
-	.description-three-column{
-		background: #cfcfcf;
-		.main-wrapper{
-			padding: 60px 0;		
-			color: #000;
-			font-weight: 600;
-			display: flex;
-			flex-wrap: wrap;
-			justify-content: space-around;
-			.one-column{
-				width: 250px;
-				margin-bottom: 40px;
-				padding: 0 15px;
-				p{
-					margin-bottom: 20px;
-				}
-			}
-		}
-	}
-	.h3-section{
-		.main-wrapper{
-			width: 100%;
-			h3{
-				color:#000;
-				font-size: 2.2em;
-				padding: 50px;
-				text-align: center;
-			}
-			div{
-				display:flex;
-				justify-content: space-around;
-				
-				div{
-					display: block;
-					width: 30%;
-					h4{
-						color:#000;
-						font-size: 1.8em;
-						margin-bottom: 20px;
-						height: 60px;
-					}
-				}
+	
 
-			}
-		}
-	}
-
-	@media (max-width: 380px){
+	@media (max-width: 450px){
 		.h3-section{
 			width: 100%;
 			.main-wrapper{
@@ -583,9 +434,9 @@
 				padding: 30px 15px;
 				background: url(../../img/about/blockchain-bg-dark.jpg) no-repeat fixed;
 				background-size: cover;
-				position: relative;
+				position: relative;}
 					
-					>div{
+				>div{
 						display: flex;
 						flex-wrap: wrap;
 						padding: 30px 0; 
@@ -613,8 +464,9 @@
 									width: 30%;
 									text-align: left;
 									font-weight: 200;
-							}
-						}	
+								}			
+															
+									
 				
 					}
 					>.image{
@@ -641,8 +493,8 @@
 					}
 				}
 
-			}
-			padding: 40px 0;
+				}
+				
 			h2{
 				text-align: center;
 				padding-bottom:20px;
@@ -661,7 +513,8 @@
 				height: 3px;
 				width: 100%;
 				margin: 40px 0;
-				background-color: #9b7b31
+				background-color: #9b7b31;
+				padding: 0;
 			}
 			.link{
 				text-align: center;
@@ -680,8 +533,10 @@
 				color: #000 !important;
 				justify-content: space-around;
 				align-items:center;
+				text-align: left;
 				p{
 					width: 90%;
+					text-align: left;
 				}
 				.text{
 					width: 600px;
@@ -695,6 +550,16 @@
 					p{
 						margin-bottom: 15px;
 						text-align: left;
+					}
+					div{
+						display: flex;
+						p{
+							text-align: left;
+						}
+						span{
+							margin: 15px 0;
+							margin-right: 4px;
+						}
 					}
 
 				}
@@ -710,9 +575,10 @@
 			.reverse{
 				flex-direction:row-reverse;
 			}
+			
 		}
-	}
-	@media (max-width: 380px){
+}
+	@media (max-width: 450px){
 		.img-and-text{
 			width: 100%;
 			.main-wrapper{
@@ -805,74 +671,72 @@
 		}
 	}
 
-	.main-board-2 {
-		//height: 500px;
-		background: url(src/Unlike-YouTube.jpg) no-repeat fixed;
-		background-position: center center;
-		background-size: cover;
-		position: relative;	 	
-		//height: 100%;
-		position: reletive;
-		padding: 50px 0;	
-		>.main-wrapper {
-			display: flex;
-			align-items: center;
-			height: 100%;
-			position: relative;
-			z-index: 2;
-			padding: 40px 0;
-			.main-board__left-block{
-				display: block;
-				padding-left: 15px;
-				width: 40%;
+	// .main-board-2 {
+	// 	//height: 500px;
+	// 	background: url(src/Unlike-YouTube.jpg) no-repeat fixed;
+	// 	background-position: center center;
+	// 	background-size: cover;
+	// 	position: relative;	 	
+	// 	//height: 100%;
+	// 	position: reletive;
+	// 	padding: 50px 0;	
+	// 	>.main-wrapper {
+	// 		display: flex;
+	// 		align-items: center;
+	// 		height: 100%;
+	// 		position: relative;
+	// 		z-index: 2;
+	// 		padding: 40px 0;
+	// 		.main-board__left-block{
+	// 			display: block;
+	// 			padding-left: 15px;
+	// 			width: 40%;
 
-				h2 {
-					color: #3b3b3b;
-					//padding: 25px 0 0 30px;
-					//position: relative;
-					margin-bottom: 35px !important;
-					margin: auto 0;
-					font-weight: 600;
-					//width: 40%;	
-					text-align: left;		
-					}
-				p {
-					margin-bottom:20px;
-					font-size: 1.2em;
-					font-weight: 500;
-					}
-			}
-			}
+	// 			h2 {
+	// 				color: #3b3b3b;
+	// 				//padding: 25px 0 0 30px;
+	// 				//position: relative;
+	// 				margin-bottom: 35px !important;
+	// 				margin: auto 0;
+	// 				font-weight: 600;
+	// 				//width: 40%;	
+	// 				text-align: left;		
+	// 				}
+	// 			p {
+	// 				margin-bottom:20px;
+	// 				font-size: 1.2em;
+	// 				font-weight: 500;
+	// 				}
+	// 		}
+	// 		}
 			
 			
-	}
-	@media (max-width: 380px){
-		.main-board-2{
-			background: url(src/bastyon-alternative.jpg) no-repeat fixed;
-			background-position: center center;
-			background-size: cover;
-			position: relative;	 	
-			//height: 100%;
-			position: reletive;
-			padding: 50px 0;
-			color: #fff;
-			.main-wrapper{
-				.main-board__left-block{
-					width: 100%;
-					padding: 15px;
-					h2{
-						color: #fff;
-					}
-					h3{
-						color: #fff;
-					}
-					p{
-
-					}
-				}
-			}
-		}
-	}
+	// }
+	// @media (max-width: 380px){
+	// 	.main-board-2{
+	// 		background: url(src/bastyon-alternative.jpg) no-repeat fixed;
+	// 		background-position: center center;
+	// 		background-size: cover;
+	// 		position: relative;	 	
+	// 		//height: 100%;
+	// 		position: reletive;
+	// 		padding: 50px 0;
+	// 		color: #fff;
+	// 		.main-wrapper{
+	// 			.main-board__left-block{
+	// 				width: 100%;
+	// 				padding: 15px;
+	// 				h2{
+	// 					color: #fff;
+	// 				}
+	// 				h3{
+	// 					color: #fff;
+	// 				}
+					
+	// 			}
+	// 		}
+	// 	}
+	// }
 	.table{
 		background-color: rgb(246, 246, 246);
 		padding: 50px 0;
@@ -918,7 +782,7 @@
 		}
 	}
 
-	@media (max-width: 380px){
+	@media (max-width: 450px){
 		.table{
 			.main-wrapper{
 				table{
@@ -960,82 +824,80 @@
 		}
 	}
 
-	.main-board-3 {
-		//height: 500px;
-		background: url(src/money-block.jpg) no-repeat fixed;
-		background-position: center center;
-		background-size: cover;
-		position: relative;	 	
-		//height: 100%;
-		position: reletive;
-		padding: 50px 0;	
-		>.main-wrapper {
-			display: flex;
-			align-items: center;
-			height: 100%;
-			position: relative;
-			z-index: 2;
-			padding: 40px 0;
-			.main-board__left-block{
-				display: block;
-				padding-left: 15px;
-				width: 40%;
+	// .main-board-3 {
+	// 	//height: 500px;
+	// 	background: url(src/money-block.jpg) no-repeat fixed;
+	// 	background-position: center center;
+	// 	background-size: cover;
+	// 	position: relative;	 	
+	// 	//height: 100%;
+	// 	position: reletive;
+	// 	padding: 50px 0;	
+	// 	>.main-wrapper {
+	// 		display: flex;
+	// 		align-items: center;
+	// 		height: 100%;
+	// 		position: relative;
+	// 		z-index: 2;
+	// 		padding: 40px 0;
+	// 		.main-board__left-block{
+	// 			display: block;
+	// 			padding-left: 15px;
+	// 			width: 40%;
 
-				h2 {
-					color: #000;
-					//padding: 25px 0 0 30px;
-					//position: relative;
-					margin-bottom: 35px !important;
-					margin: auto 0;
-					font-weight: 600;
-					//width: 40%;	
-					text-align: left;		
-					}
-				h3{
-					color: #000;				
-					margin-bottom: 35px !important;
-					margin: auto 0;
-					font-weight: 600;					
-					text-align: left;
-					padding-left: 0;
-				}
-				p {
-					margin-bottom:20px;
-					font-size: 1.2em;
-					font-weight: 500;
-					}
-			}
-			}
+	// 			h2 {
+	// 				color: #000;
+	// 				//padding: 25px 0 0 30px;
+	// 				//position: relative;
+	// 				margin-bottom: 35px !important;
+	// 				margin: auto 0;
+	// 				font-weight: 600;
+	// 				//width: 40%;	
+	// 				text-align: left;		
+	// 				}
+	// 			h3{
+	// 				color: #000;				
+	// 				margin-bottom: 35px !important;
+	// 				margin: auto 0;
+	// 				font-weight: 600;					
+	// 				text-align: left;
+	// 				padding-left: 0;
+	// 			}
+	// 			p {
+	// 				margin-bottom:20px;
+	// 				font-size: 1.2em;
+	// 				font-weight: 500;
+	// 				}
+	// 		}
+	// 		}
 			
 			
-	}
-	@media (max-width: 380px){
-		.main-board-3{
-			background: url(src/dark-bg-bastyon-pais.jpg) no-repeat fixed;
-			background-position: center center;
-			background-size: cover;
-			position: relative;	 	
-			//height: 100%;
-			position: reletive;
-			padding: 50px 0;
-			color: #fff;
-			.main-wrapper{
-				.main-board__left-block{
-					width: 100%;
-					padding: 15px;
-					h2{
-						color: #fff;
-					}
-					h3{
-						color: #fff;
-					}
-					p{
-
-					}
-				}
-			}
-		}
-	}
+	// }
+	// @media (max-width: 380px){
+	// 	.main-board-3{
+	// 		background: url(src/dark-bg-bastyon-pais.jpg) no-repeat fixed;
+	// 		background-position: center center;
+	// 		background-size: cover;
+	// 		position: relative;	 	
+	// 		//height: 100%;
+	// 		position: reletive;
+	// 		padding: 50px 0;
+	// 		color: #fff;
+	// 		.main-wrapper{
+	// 			.main-board__left-block{
+	// 				width: 100%;
+	// 				padding: 15px;
+	// 				h2{
+	// 					color: #fff;
+	// 				}
+	// 				h3{
+	// 					color: #fff;
+	// 				}
+					
+	// 			}
+	// 		}
+	// 	}
+	// }
 	.services__block-item {
 		display: flex;
 		justify-content: space-between;
@@ -1648,7 +1510,7 @@
 			}
 		}
 	}
-	@media (max-width: 380px) {
+	@media (max-width: 450px) {
 		
 		.main-board{
 			height: 100%;
@@ -1771,9 +1633,7 @@
 		.works{
 			.main-wrapper{
 				h2{
-					span{
-
-					}
+					
 				}
 				div{
 					.works__container{
@@ -1813,7 +1673,7 @@
 		
 	}
 
-	@media (max-width: 380px){
+	@media (max-width: 450px){
 		.viseos{
 			width:100%;
 			.main-wrapper{

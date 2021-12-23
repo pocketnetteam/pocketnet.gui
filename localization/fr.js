@@ -901,9 +901,9 @@ ____loclib.aboutYoutubeMainDescription1 = 'Certaines personnes nous demandent:';
 ____loclib.aboutYoutubeMainDescription2 = '"Pourquoi devrais-je utiliser Bastyon?"';
 ____loclib.aboutYoutubeMainDescription3 = 'La vraie question est:';
 ____loclib.aboutYoutubeMainDescription4 = '"Pourquoi devriez-vous utiliser YouTube?!"';
-____loclib.aboutYoutubeMainDescription5 = '- YOUTUBE A BANNI ET DÉMONÉTISÉ DES MILLIERS DE COMPTES';
-____loclib.aboutYoutubeMainDescription6 = '- DES PERSONNES AVEC DES CENTAINES DE MILLIERS D’ABONNÉS';
-____loclib.aboutYoutubeMainDescription7 = '- MÊME LORSQU’ILS NE SONT PAS INTERDITS, LES AUTEURS SONT BANNIS OU DEMONÉTISER';
+____loclib.aboutYoutubeMainDescription5 = 'YOUTUBE A BANNI ET DÉMONÉTISÉ DES MILLIERS DE COMPTES';
+____loclib.aboutYoutubeMainDescription6 = 'DES PERSONNES AVEC DES CENTAINES DE MILLIERS D’ABONNÉS';
+____loclib.aboutYoutubeMainDescription7 = 'MÊME LORSQU’ILS NE SONT PAS INTERDITS, LES AUTEURS SONT BANNIS OU DEMONÉTISER';
 
 ____loclib.aboutYoutubeThreeColumn1 = 'Imagine: un jour vous avez 20k, 100k ou même 1M d’abonnés sur votre chaîne YouTube.';
 ____loclib.aboutYoutubeThreeColumn2 = 'Le lendemain, votre compte n’existe plus.';
@@ -1012,9 +1012,9 @@ ____loclib.aboutTwitterMainDescriptionText1 = 'Certaines personnes nous demanden
 ____loclib.aboutTwitterMainDescriptionText2 = '"Pourquoi devrais-je utiliser Bastyon?"';
 ____loclib.aboutTwitterMainDescriptionText3 = 'La vraie question est:';
 ____loclib.aboutTwitterMainDescriptionText4 = '"Pourquoi devriez-vous utiliser Twitter?!"';
-____loclib.aboutTwitterMainDescriptionText5 =  '- TWITTER AGIT COMME UN GOUVERNEMENT DICTATORIQUE';
-____loclib.aboutTwitterMainDescriptionText6 = '- Oui, nous savons que c’est une déclaration forte.';
-____loclib.aboutTwitterMainDescriptionText7 =  '- Mais malheureusement, c’est ce qui s’est passé sur Twitter.';
+____loclib.aboutTwitterMainDescriptionText5 =  'TWITTER AGIT COMME UN GOUVERNEMENT DICTATORIQUE';
+____loclib.aboutTwitterMainDescriptionText6 = 'Oui, nous savons que c’est une déclaration forte.';
+____loclib.aboutTwitterMainDescriptionText7 =  'Mais malheureusement, c’est ce qui s’est passé sur Twitter.';
 
 ____loclib.aboutTwitterThreeColumn1 = 'Beaucoup, beaucoup trop de comptes ont été interdits ces dernières années. Certains d’entre eux sans aucune raison.' ;
 ____loclib.aboutTwitterThreeColumn2 = 'Autres simplement parce qu’ils étaient d’un côté politique spécifique (conservateur)';
@@ -1052,12 +1052,12 @@ ____loclib.aboutTitterImgAndText5 = 'La censure est interdite par la technologie
 ____loclib.aboutTitterImgAndText6 = 'AUCUNE ENTREPRISE DERRIÈRE BASTYON';
 ____loclib.aboutTitterImgAndText7 = 'Contrairement à Twitter et aux principaux réseaux sociaux, il n’y a pas d’entreprise derrière Bastyon. C’est un projet open source. Cela signifie qu’il n’y a pas d’entreprise qui peut contrôler les contenus publiés sur Bastyon. Pas d’interdictions, pas de censure.' ;
 ____loclib.aboutTitterImgAndText8 = 'Contrairement à Twitter...';
-____loclib.aboutTitterImgAndText9 = '1. Vous ne serez jamais bloqué ou banni pour avoir simplement soutenu vos idées, vos religions, vos mouvements sans blesser les autres.' ;
-____loclib.aboutTitterImgAndText10 = '2. Personne ne peut bloquer votre compte ou supprimer vos publications. ' ;
-____loclib.aboutTitterImgAndText11 = '3. La confidentialité est complète et garantie' ;
-____loclib.aboutTitterImgAndText12 = '4. L’accès est toujours possible depuis n’importe quel pays et région du monde' ;
-____loclib.aboutTitterImgAndText13 = '5. Les sessions de chat sont entièrement privées et cryptées et même Bastyon ne peut y accéder. Pas même avec un mandat d’arrêt du tribunal.' ;
-____loclib.aboutTitterImgAndText14 = '6. Vos publications peuvent être plus longues';
+____loclib.aboutTitterImgAndText9 = 'Vous ne serez jamais bloqué ou banni pour avoir simplement soutenu vos idées, vos religions, vos mouvements sans blesser les autres.' ;
+____loclib.aboutTitterImgAndText10 = 'Personne ne peut bloquer votre compte ou supprimer vos publications. ' ;
+____loclib.aboutTitterImgAndText11 = 'La confidentialité est complète et garantie' ;
+____loclib.aboutTitterImgAndText12 = 'L’accès est toujours possible depuis n’importe quel pays et région du monde' ;
+____loclib.aboutTitterImgAndText13 = 'Les sessions de chat sont entièrement privées et cryptées et même Bastyon ne peut y accéder. Pas même avec un mandat d’arrêt du tribunal.' ;
+____loclib.aboutTitterImgAndText14 = 'Vos publications peuvent être plus longues';
 
 
 
@@ -1139,12 +1139,12 @@ ____loclib.aboutFbImgAndText3 = 'Bastyon est basé sur la blockchain: il n’y a
 ____loclib.aboutFbImgAndText4 = 'AUCUNE ENTREPRISE DERRIÈRE BASTYON';
 ____loclib.aboutFbImgAndText5 = 'Contrairement à Facebook et aux principaux réseaux sociaux, il n’y a pas d’entreprise derrière Bastyon. C’est un projet open source. Cela signifie qu’il n’y a pas d’entreprise qui peut contrôler les contenus publiés sur Bastyon. Pas d’interdictions, pas de censure.' ;
 ____loclib.aboutFbImgAndText6 = 'Contrairement à Facebook…';
-____loclib.aboutFbImgAndText7 = '1. Vos données personnelles ne sont pas vendues à des sociétés externes ' ;
-____loclib.aboutFbImgAndText8 = '2. Pas de censure arbitraire ';
-____loclib.aboutFbImgAndText9 = '3. Ne prends aucune information personnelle';
-____loclib.aboutFbImgAndText10 = '4. Aucune société derrière cela ';
-____loclib.aboutFbImgAndText11 = '5. Les sessions de chat sont entièrement privées et cryptées et même Bastyon ne peut y accéder. ';
-____loclib.aboutFbImgAndText12 = '6. Mark Zuckerberg ne vous dérangera pas!';
+____loclib.aboutFbImgAndText7 = 'Vos données personnelles ne sont pas vendues à des sociétés externes ' ;
+____loclib.aboutFbImgAndText8 = 'Pas de censure arbitraire ';
+____loclib.aboutFbImgAndText9 = 'Ne prends aucune information personnelle';
+____loclib.aboutFbImgAndText10 = 'Aucune société derrière cela ';
+____loclib.aboutFbImgAndText11 = 'Les sessions de chat sont entièrement privées et cryptées et même Bastyon ne peut y accéder. ';
+____loclib.aboutFbImgAndText12 = 'Mark Zuckerberg ne vous dérangera pas!';
 
 
 
@@ -1246,10 +1246,10 @@ ____loclib.aboutHowItWImgAndText23 = 'Protection de la vie privée,';
 ____loclib.aboutHowItWImgAndText24 = 'pour votre sécurité';
 ____loclib.aboutHowItWImgAndText25 = 'Bastyon ne sait pas qui vous êtes.';
 ____loclib.aboutHowItWImgAndText26 = 'Bastyon NE collecte AUCUNE information personnelle.';
-____loclib.aboutHowItWImgAndText27 = '1. Vous pouvez vous inscrire sans révéler votre numéro de téléphone (seul l’e-mail est requis)' ;
-____loclib.aboutHowItWImgAndText28 = '2. Bastyon ne demande pas votre vrai nom pour protéger la dissidence';
-____loclib.aboutHowItWImgAndText29 = '3. Bastyon ne collecte pas d’adresses IP et ne vous suit pas' ;
-____loclib.aboutHowItWImgAndText291 = '4. Bastyon autorise plusieurs comptes à des fins différentes ';
+____loclib.aboutHowItWImgAndText27 = 'Vous pouvez vous inscrire sans révéler votre numéro de téléphone (seul l’e-mail est requis)' ;
+____loclib.aboutHowItWImgAndText28 = 'Bastyon ne demande pas votre vrai nom pour protéger la dissidence';
+____loclib.aboutHowItWImgAndText29 = 'Bastyon ne collecte pas d’adresses IP et ne vous suit pas' ;
+____loclib.aboutHowItWImgAndText291 = 'Bastyon autorise plusieurs comptes à des fins différentes ';
 ____loclib.aboutHowItWImgAndText30 ='Bastyon ne saura jamais qui vous êtes, à moins que vous ne partagiez explicitement vos données personnelles.';
 ____loclib.aboutHowItWImgAndText31 = 'Si vous ne partagez pas vos données, personne, aucune entreprise, aucun gouvernement, ne peut savoir qui vous êtes.';
 

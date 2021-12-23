@@ -366,8 +366,8 @@
 		}
 	}
 	.main-board {
-		height: 600px;
-		background: url(../../img/about/twitter-bg.jpg) no-repeat fixed;
+		//height: 600px;
+		//background: url(../../img/about/twitter-bg.jpg) no-repeat fixed;
 		background-position: 0 0;
 		background-repeat: no-repeat;
 		background-size: cover;
@@ -377,7 +377,7 @@
 		//position: relative;	 	
 		//height: 100%;
 		//position: reletive;
-		padding: 50px 0 ;
+		//padding: 50px 0 ;
 		
 		>.main-wrapper {
 			display: flex;
@@ -406,11 +406,15 @@
 			}
 	}
 	.main-board__left-block {
-		width: 100%;
+		width: 50%;
 		display: block;
 		h3{
 			margin-top: 30px;
 			color:#3b3b3b;
+			width: 90%;
+		}
+		h1{
+			width: 90%;
 		}
 		>div {
 			
@@ -424,6 +428,12 @@
 			&:last-of-type {
 				display: flex;
 			}
+		}
+	}
+	.img-main-block{
+		width: 50%;
+		img{
+			width: 500px;;
 		}
 	}
 	.main-board__left-block_2 {
@@ -531,15 +541,20 @@
 					font-size: 1.5em;
 					margin-top: 40px;
 					.one-text-point{
+						display: flex;
 						text-transform:uppercase;
 						margin-bottom: 30px;
+						i{
+							margin-right: 10px;
+							margin-top: 4px;
+						}
 					}
 				}
 
 			}
 		}
 	}
-	@media (max-width: 380px){
+	@media (max-width: 450px){
 		.main-description{
 			padding: 0;
 			width:100%;
@@ -580,7 +595,7 @@
 			justify-content: space-around;
 			.one-column{
 				width: 250px;
-				margin-bottom: 40px;
+				//margin-bottom: 40px;
 				padding: 0 15px;
 				p{
 					margin-bottom: 20px;
@@ -683,7 +698,7 @@
 		}
 	}
 
-	@media (max-width: 380px){
+	@media (max-width: 450px){
 		.h3-section{
 			width: 100%;
 			.main-wrapper{
@@ -730,6 +745,15 @@
 					}
 					p{
 						margin-bottom: 15px;
+						
+					}
+					
+						
+					ol{
+						margin: 10px 0;
+						li{
+							margin: 10px 0;
+						}
 					}
 
 				}
@@ -743,7 +767,7 @@
 			}
 		}
 	}
-	@media (max-width: 380px){
+	@media (max-width: 450px){
 		.img-and-text{
 			width: 100%;
 			.main-wrapper{
@@ -802,7 +826,7 @@
 			
 			
 	}
-	@media (max-width: 380px){
+	@media (max-width: 450px){
 		.main-board-2{
 			background: url(../../img/about/bastyon-alternative.jpg) no-repeat fixed;
 			background-position: center center;
@@ -879,7 +903,7 @@
 		}
 	}
 
-	@media (max-width: 380px){
+	@media (max-width: 450px){
 		.table{
 			.main-wrapper{
 				table{
@@ -966,7 +990,7 @@
 			
 			
 	}
-	@media (max-width: 380px){
+	@media (max-width: 450px){
 		.main-board-3{
 			background: url(../../img/about/dark-bg-bastyon-pais.jpg) no-repeat fixed;
 			background-position: center center;
@@ -1595,17 +1619,8 @@
 		justify-content: center;
 		}
 	}
-	@media (max-width: 412px) {
-		.main-board__image {
-			width: 100%;
-		}
-		.works {
-			img {
-				width: 100%;
-			}
-		}
-	}
-	@media (max-width: 380px) {
+	
+	@media (max-width: 450px) {
 		
 		.main-board{
 
@@ -1631,6 +1646,12 @@
 							}
 						}
 					}	
+				.img-main-block{
+					width: 100%;
+					img{
+						width: 100%;
+					}
+				}
 				.main-board__left-block_2 {
 					width: 100%;
 					>div{
@@ -1755,7 +1776,7 @@
 		
 	}
 
-	@media (max-width: 380px){
+	@media (max-width: 450px){
 		.viseos{
 			width:100%;
 			.main-wrapper{

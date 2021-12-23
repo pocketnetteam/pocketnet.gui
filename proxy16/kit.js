@@ -45,7 +45,7 @@ var testnodes = [
 		host : '116.203.219.28',
 		port : 39091,
 		ws : 6067,
-		name : 'v0.20.0 (sqlite)',
+		name : 'test.pocketnet.app',
 		stable : true
 	},
 	{
@@ -65,15 +65,13 @@ var testnodes = [
     
 ]
 
+
 var activenodes = [
-	
-
-
 	{
 		host : '64.235.45.119',
 		port : 38081,
 		ws : 8087,
-		name : 'CryptoserverSP',
+		name : '64.235.45.119',
 		stable : true
 	},
 
@@ -81,34 +79,30 @@ var activenodes = [
 		host : '216.108.231.40',
 		port : 38081,
 		ws : 8087,
-		name : 'CryptoserverSP5',
+		name : '216.108.231.40',
 		stable : true
 	},
-
 	{
 		host : '135.181.196.243',
 		port : 38081,
 		ws : 8087,
-		name : 'Cryptoserver243',
+		name : '135.181.196.243',
 		stable : true
 	},
 	{
 		host : '65.21.56.203',
 		port : 38081,
 		ws : 8087,
-		name : 'Cryptoserver0610',
+		name : '65.21.56.203',
 		stable : true
 	},
 	{
 		host : '65.21.57.14',
 		port : 38081,
 		ws : 8087,
-		name : 'Cryptoserver0610_2',
+		name : '65.21.57.14',
 		stable : true
-	}
-
-
-	
+	}	
 ]
 
 var nodes = activenodes
@@ -984,7 +978,13 @@ var kit = {
 					return proxy.bots.remove(address)
 				})
 			}
-		}
+		},
+
+        quit : function() {
+            return kit.destroy().then(r => {
+                process.exit([0]);
+            });
+        },
 	},
 
 	gateway : function(message){
@@ -1136,7 +1136,6 @@ var kit = {
 			return proxy.kit.candestroy()
 		})
 	},
-
 	
 }
 
