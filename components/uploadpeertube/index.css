@@ -130,7 +130,7 @@
   width: 100%;
 }
 #uploadpeertube .upload-progress-bar {
-  height: 1px;
+  height: 3px;
   width: 100%;
 }
 #uploadpeertube .upload-progress-bar.processing {
