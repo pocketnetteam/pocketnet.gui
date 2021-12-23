@@ -168,7 +168,13 @@
         height: 1px;
         width: 100%;
 
-        background-color: @color-orange;
+        &.processing {
+            background-color: @color-orange;
+        }
+
+        &.uploading {
+            background-color: @color-dark-blue;
+        }
     }
 
     .disabledInput {

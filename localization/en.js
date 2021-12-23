@@ -10,22 +10,22 @@ var ____loclib = loclib.en;
 
 //time
 
-____loclib.fewseconds = "Few seconds ago";	
-____loclib.oneminute = "One minute ago";	
+____loclib.fewseconds = "Few seconds ago";
+____loclib.oneminute = "One minute ago";
 
 ____loclib.minutes = function(v){
 return v + " minutes ago"
 }
 
-____loclib.tenminutes = "Ten minutes ago";	
-____loclib.halfanhour = "An hour ago";	
-____loclib.anhour = "An hour ago";	
-____loclib.today = "Today at";	
+____loclib.tenminutes = "Ten minutes ago";
+____loclib.halfanhour = "An hour ago";
+____loclib.anhour = "An hour ago";
+____loclib.today = "Today at";
 
 //authorization
 
-____loclib.id0 = "Login to an existing account";	
-____loclib.id1 = "If you are already registered, please sign in";	
+____loclib.id0 = "Login to an existing account";
+____loclib.id1 = "If you are already registered, please sign in";
 ____loclib.loadqrcode = "Upload QR Code";
 ____loclib.stay = "Stay Signed In";
 ____loclib.signin = "Sign In";
@@ -40,18 +40,18 @@ ____loclib.id72 = "Already a Member? Sign In";
 
 ____loclib.rtip1 = "Take Note of Your Private Login Key!";
 ____loclib.rtip2 = function(mobile){
-var h = "Below is your Private Key passphrase. Write it down and make sure to save your QR code" 
+var h = "Below is your Private Key passphrase. Write it down and make sure to save your QR code"
 
 if(mobile){ h += "device" } else { h+="PC" }
 
 h+=" and be sure not to lose it. We do not store your personal data. Private Key cannot be recovered if lost!"
 
-return h 
+return h
 }
 
 ____loclib.generatepkey = "Generate Private Key";
 ____loclib.rtip3 = "Write this login key down. We do not store your personal data. It cannot be recovered if lost! ";
-____loclib.saveqrcode = "Save Qr Code" 
+____loclib.saveqrcode = "Save Qr Code"
 ____loclib.copyprivkey = "Copy Private Key"
 ____loclib.rcontinue = "Continue"
 ____loclib.idle = "Idle for some time"
@@ -72,8 +72,8 @@ ____loclib.confirmcreate = "Create Account"
 
 //user activation
 
-____loclib.useractivation = "User activation";	
-____loclib.wesentmoney = "We sent you a few coins for registration";	
+____loclib.useractivation = "User activation";
+____loclib.wesentmoney = "We sent you a few coins for registration";
 ____loclib.wesentmoneym = "We have already sent you a few coins for registration";
 
 
@@ -81,88 +81,88 @@ ____loclib.wesentmoneydelay = "The process is taking more time than usual, pleas
 
 ____loclib.funetworkproblems = "There are some problems with the connection. Please try later";
 
-____loclib.pleasewait = "Please Wait";	
-____loclib.next = "Next";	
-____loclib.welcome = "Welcome";	
-____loclib.welcometopocketnet = "Welcome to "+appname+"";	
-____loclib.continue = "continue";	
+____loclib.pleasewait = "Please Wait";
+____loclib.next = "Next";
+____loclib.welcome = "Welcome";
+____loclib.welcometopocketnet = "Welcome to "+appname+"";
+____loclib.continue = "continue";
 
 ____loclib.chooseThemes = "Choose interesting themes";
 //user page
 
-____loclib.rstate = "Reputation";	
-____loclib.rprofile = "Profile";	
-____loclib.rsettings = "Settings";	
-____loclib.rwallet = "Wallet";	
-____loclib.raccounts = "Accounts";	
+____loclib.rstate = "Reputation";
+____loclib.rprofile = "Profile";
+____loclib.rsettings = "Settings";
+____loclib.rwallet = "Wallet";
+____loclib.raccounts = "Accounts";
 ____loclib.rsystem = "System";
 ____loclib.rconnection = "Connection";
-____loclib.pnetAddress = ""+appname+" Address";	
-____loclib.profile = "Profile";	
+____loclib.pnetAddress = ""+appname+" Address";
+____loclib.profile = "Profile";
 ____loclib.signout = "Sign out";
 
 //send
 
-____loclib.postlabel = "Donation for post";	
-____loclib.donationlabel = "Donation";	
+____loclib.postlabel = "Donation for post";
+____loclib.donationlabel = "Donation";
 ____loclib.donationwel = "If you want to thank the author you can use a "+appname+" transaction";
-____loclib.donationwela = ""+appname+" transaction";	
-____loclib.donationwelan = "Or you can use another crypto payment system";	
-____loclib.successfullycopiedaddress = "Address was successfully copied";	
+____loclib.donationwela = ""+appname+" transaction";
+____loclib.donationwelan = "Or you can use another crypto payment system";
+____loclib.successfullycopiedaddress = "Address was successfully copied";
 
 //wallet
 
-____loclib.wrecieve = "Receive Coins By Sharing Address";	
-____loclib.wcopyshare = "Copy & Share Address:";	
-____loclib.wqrcode = "Qr code";		
-____loclib.wcopeaddress = "Copy Address";	
-____loclib.wcreatelink = "Or Create Link For Your Payment";	
-____loclib.required = "Required";	
-____loclib.wgetlink = "Get Link";	
-____loclib.waddresses = "Addresses";	
-____loclib.waddress = "Address";	
-____loclib.wbalance = "Balance";	
-____loclib.wpercente = "Percente";	
-____loclib.waddaddress = "Explore a new Wallet address";	
-____loclib.wrecieve = "Receive";	
-____loclib.wrecieveon = "Receive on";	
+____loclib.wrecieve = "Receive Coins By Sharing Address";
+____loclib.wcopyshare = "Copy & Share Address:";
+____loclib.wqrcode = "Qr code";
+____loclib.wcopeaddress = "Copy Address";
+____loclib.wcreatelink = "Or Create Link For Your Payment";
+____loclib.required = "Required";
+____loclib.wgetlink = "Get Link";
+____loclib.waddresses = "Addresses";
+____loclib.waddress = "Address";
+____loclib.wbalance = "Balance";
+____loclib.wpercente = "Percente";
+____loclib.waddaddress = "Explore a new Wallet address";
+____loclib.wrecieve = "Receive";
+____loclib.wrecieveon = "Receive on";
 ____loclib.wcopyshareorcreate = "Copy & Share Address or Create Payment Link";
-____loclib.wdgetlink = "Get Link";	
+____loclib.wdgetlink = "Get Link";
 ____loclib.wdqrcode = "Qr code";
-____loclib.wdcopyaddress = "Copy Address";	
+____loclib.wdcopyaddress = "Copy Address";
 ____loclib.wdpleasefill = "Please fill in these fields";
-____loclib.wduseqr = "Use this QR code to receive funds";	
+____loclib.wduseqr = "Use this QR code to receive funds";
 ____loclib.wdaddress = "Address";
-____loclib.wdamount = "Amount";	
-____loclib.wdlabel = "Label";	
-____loclib.wdmessage = "Message";	
+____loclib.wdamount = "Amount";
+____loclib.wdlabel = "Label";
+____loclib.wdmessage = "Message";
 ____loclib.wsend = "Send";
-____loclib.calcfeesandsend = "Calculate Fees And Send";	
-____loclib.wstrfees = "Transaction Fees";	
-____loclib.wsfees = "Fees";	
+____loclib.calcfeesandsend = "Calculate Fees And Send";
+____loclib.wstrfees = "Transaction Fees";
+____loclib.wsfees = "Fees";
 
-____loclib.wssendto = "SEND COINS TO";	
-____loclib.wssendb = "SEND";	
+____loclib.wssendto = "SEND COINS TO";
+____loclib.wssendb = "SEND";
 
-____loclib.tacaddress = "Account Address";	
-____loclib.twallet = "Wallet";	
-____loclib.twalletaddresses = "Wallet addresses";	
-____loclib.tTotal = "Total";	
-____loclib.wsselect = "Select Source From Menu";	
-____loclib.wsenter = "Enter Address Or Select From Menu";	
-____loclib.wsreciever = "Receiver address";	
-____loclib.wsamount = "Amount";	
-____loclib.wsamountof = "Amount of your transaction";	
-____loclib.wsincludefees = "Include Fees in Amount";	
-____loclib.wsrecieverpay = "To be paid by Receiver";	
-____loclib.wssenderpay = "To be paid by Sender";	
-____loclib.wdselectfrom = "Select From menu";	
+____loclib.tacaddress = "Account Address";
+____loclib.twallet = "Wallet";
+____loclib.twalletaddresses = "Wallet addresses";
+____loclib.tTotal = "Total";
+____loclib.wsselect = "Select Source From Menu";
+____loclib.wsenter = "Enter Address Or Select From Menu";
+____loclib.wsreciever = "Receiver address";
+____loclib.wsamount = "Amount";
+____loclib.wsamountof = "Amount of your transaction";
+____loclib.wsincludefees = "Include Fees in Amount";
+____loclib.wsrecieverpay = "To be paid by Receiver";
+____loclib.wssenderpay = "To be paid by Sender";
+____loclib.wdselectfrom = "Select From menu";
 
-____loclib.wdenteramount = "Enter Amount";	
+____loclib.wdenteramount = "Enter Amount";
 ____loclib.wdmessageplaceholder = "What is this transaction for?";
 ____loclib.wrenteraddress = "Enter Address";
 ____loclib.wrenteraddressselect = "Enter Address Or Select From menu";
-____loclib.wreturntoeallet = "RETURN TO WALLET";	
+____loclib.wreturntoeallet = "RETURN TO WALLET";
 ____loclib.linkCreated = "LINK CREATED";
 ____loclib.waddresswascop = "Address was successfully copied";
 ____loclib.wqrcodecreated = "QR CODE CREATED";
@@ -369,8 +369,8 @@ ____loclib.checkScoreErrorLight = "Account is not activated";
 ____loclib.timestamperror = "Time in application and in node do not match";
 
 // Error Page 404
-____loclib.e404 = "ERROR 404";	
-____loclib.e404e = "Page not Found. Return to Main Page";	
+____loclib.e404 = "ERROR 404";
+____loclib.e404e = "Page not Found. Return to Main Page";
 ____loclib.postLimitLight = function(v){
 return "You have reached your limit of " + (v || 15) + " posts in a 24 hour period";
 }
@@ -378,7 +378,7 @@ ____loclib.postLimitLight = function(v){
 return "You have reached your limit of " + (v || 15) + " grading in a 24 hour period";
 }
 
-____loclib.doubleLimitLight = "You have already rated this";	
+____loclib.doubleLimitLight = "You have already rated this";
 
 ____loclib.SelfSubscribeError = "Cannot subscribe to yourself";
 ____loclib.DoubleSubscribeError = "You already follow this user";
@@ -1094,10 +1094,12 @@ ____loclib.pterror_getToken = "Peertube: Unable to get Token"
 ____loclib.pterror_videonotselected = "Peertube: Video not Selected"
 
 
+____loclib.videoTranscodingError = "There was an error with processing your video"
 ____loclib.videoUploadingFinish = "Finishing uploading..."
 ____loclib.uploadNewVideo = "Upload New Pocketvideo"
 ____loclib.selectVideoFile = "Select video file"
-____loclib.uploadVideoProgress = "Progress:"
+____loclib.uploadVideoProgress_processing = "Processed:"
+____loclib.uploadVideoProgress_uploading = "Uploaded:"
 
 
 ____loclib.pbp_1 = ""+appname+" Bonus Program"
@@ -1151,7 +1153,7 @@ ____loclib.e133453 = "invite you in chat"
 ____loclib.createnewcontinue = "Continue creating account";
 
 
-____loclib.transactionnotfound = "Transaction not found";	
+____loclib.transactionnotfound = "Transaction not found";
 
 ____loclib.donateself = "You can't donate yourself";
 ____loclib.donated = "commented your post and donated"
@@ -1175,7 +1177,7 @@ ____loclib.linkStreamKey = "Stream Key"
 
 
 
-____loclib.videoCabinet = "My Videos";	
+____loclib.videoCabinet = "My Videos";
 ____loclib.uploadQuota = "Daily Uploading Quota";
 ____loclib.attachVideoToPost = "Create Post With This Video";
 
@@ -1675,12 +1677,12 @@ ____loclib.aboutFbMainBoard34 = 'Each time someone joins Bastyon with your refer
 ____loclib.aboutFbMainBoard35 = 'Contact us to learn more and to activate your account as “CREATOR” so that you can post unlimited videos and get paid!';
 
 
-____loclib.aboutFbOpen = 'Discover Bastyon'; 
-____loclib.aboutFbOpen1 = 'You can use Bastyon from your browser or dowload the mobile and desktop app.'; 
-____loclib.aboutFbOpen2 = 'Official Website'; 
-____loclib.aboutFbOpen3 = 'Source Code'; 
-____loclib.aboutFbOpen4 = 'Contact us'; 
-____loclib.aboutFbOpen5 = 'Send us a message if you need help or if you are a content creator, blogger, influencer and would like to unlock your bonus and verify your profile!'; 
+____loclib.aboutFbOpen = 'Discover Bastyon';
+____loclib.aboutFbOpen1 = 'You can use Bastyon from your browser or dowload the mobile and desktop app.';
+____loclib.aboutFbOpen2 = 'Official Website';
+____loclib.aboutFbOpen3 = 'Source Code';
+____loclib.aboutFbOpen4 = 'Contact us';
+____loclib.aboutFbOpen5 = 'Send us a message if you need help or if you are a content creator, blogger, influencer and would like to unlock your bonus and verify your profile!';
 
 
 /////aboutHIW
