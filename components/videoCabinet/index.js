@@ -964,10 +964,14 @@ var videoCabinet = (function () {
         self.fastTemplate(
           'metmenu',
           (rendered, template) => {
+
+
+
+
             self.app.platform.api.tooltip(
               _el,
               () => template(data),
-              (element) => {
+              (element, v, close) => {
                 //remove user video (popup menu)
                 element.find('.remove').on('click', function () {
                   const { host } = meta;
@@ -1014,7 +1018,7 @@ var videoCabinet = (function () {
                     },
                   });
 
-                  if (_el.tooltipster) _el.tooltipster('hide');
+                  close()
                 });
 
                 //edit wallpaper in menu
@@ -1043,7 +1047,7 @@ var videoCabinet = (function () {
                         );
                       });
 
-                    if (_el.tooltipster) _el.tooltipster('hide');
+                      close()
                   },
 
                   onError: function (er, file, text) {
@@ -1136,7 +1140,7 @@ var videoCabinet = (function () {
                       );
                     });
 
-                  if (_el.tooltipster) _el.tooltipster('hide');
+                    close()
                 });
               },
             );

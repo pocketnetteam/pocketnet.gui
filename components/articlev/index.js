@@ -12,9 +12,32 @@ var articlev = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, editor, art, taginput;
+		var el, editor, art, taginput, delay, external = {};
 		
 		var actions = {
+
+			publish : function(){
+				return actions.saveEditor().then(r => {
+					
+				})
+			},
+
+			viewandpublish : function(){
+
+				return actions.saveEditor().then(r => {
+
+					var share = self.app.platform.sdk.articles.share(art)
+
+					var alias = share.alias()
+
+						alias.address = self.app.user.address.value
+
+					renders.preview(alias)
+
+				})
+
+				
+			},
 
 			edittags : function(show){
 
@@ -108,16 +131,16 @@ var articlev = (function(){
 
 			save : function(){
 
-				return
-
-				self.app.platform.sdk.articles.storage || (self.app.platform.sdk.articles.storage = [])
+				if (self.app.platform.sdk.articles.itisdraft(art)){
+					self.app.platform.sdk.articles.storage || (self.app.platform.sdk.articles.storage = [])
 								
-				var f = _.find(self.app.platform.sdk.articles.storage, function(a){
-					if(art.id == a.id) return true
-				})
+					var f = _.find(self.app.platform.sdk.articles.storage, function(a){
+						if(art.id == a.id) return true
+					})
 
-				if(!f){
-					self.app.platform.sdk.articles.storage.unshift(art)
+					if(!f){
+						self.app.platform.sdk.articles.storage.unshift(art)
+					}
 				}
 
 				self.app.platform.sdk.articles.save()
@@ -134,13 +157,17 @@ var articlev = (function(){
 
 			saveEditor : function(){
 
-				editor.save().then(outputData => {
+				return editor.save().then(outputData => {
+
+					
 
 					art.content = outputData
 
-					self.app.platform.sdk.articles.save()
+					actions.save()
 
 					actions.apply()
+
+					return Promise.resolve()
 
 				})
 
@@ -162,6 +189,19 @@ var articlev = (function(){
 		}
 
 		var renders = {
+
+			preview : function(share){
+				if (share){
+
+					self.app.platform.papi.postpreview(share, null, function(){
+
+					}, {
+						inWnd : true
+					})
+
+				}
+			},
+
 			settings : function(clbk){
 
 				self.app.platform.sdk.ustate.me(function(_mestate){
@@ -175,8 +215,6 @@ var articlev = (function(){
 
 							type : "VALUES",
 							name : "Visibility",
-							id : 'organizationCode',
-							dbId : "INS_BROKER_CODE",
 							possibleValues : ['0','1','2'],
 							possibleValuesLabels : [
 								self.app.localization.e('visibletoeveryone'), 
@@ -221,11 +259,16 @@ var articlev = (function(){
 			cover : function(){
 
 				if (art.cover){
+
 					el.cover.attr('image', art.cover)
 					bgImages(el.c)
+
+					el.head.addClass('hascover')
 				}
+
 				else{
 					bgImagesClear(el.cover)
+					el.head.removeClass('hascover')
 				}
 			},
 
@@ -331,7 +374,8 @@ var articlev = (function(){
 					animation : false,
 					name : 'status',
 					data : {
-						art : art
+						art : art,
+						itisdraft : self.app.platform.sdk.articles.itisdraft(art)
 					},
 					el : el.status
 
@@ -351,12 +395,38 @@ var articlev = (function(){
 			save : function(){
 
 			},
-			load : function(){
-				art = self.app.platform.sdk.articles.empty(null, 2)
+			load : function(id){
+
+				art = null
+
+				console.log("ID", id)
+
+				if (id){
+					art = self.app.platform.sdk.articles.getbyid(id)
+				}
+
+				if(!art)
+					art = self.app.platform.sdk.articles.empty(null, 2)
+
+
 			}
 		}
 
 		var initEvents = function(){
+
+			el.publish.on('click', function(){
+				console.log('initEvents1212')
+				actions.viewandpublish()
+			})
+
+			el.removeCover.on('click', function(){
+				art.cover = ''
+				actions.save()
+
+				actions.apply()
+
+				renders.cover()
+			})
 
 			el.backfromedittags.on('click', function(){
 				actions.edittags(false)
@@ -381,9 +451,17 @@ var articlev = (function(){
 					open : true,
 					href : 'articlesv',
 					inWnd : true,
-
+					history : true,
 					essenseData : {
+						current : art.id,
+
+						select : function(art){
+							changeArticle(art.id)
+
+							return true
+						}
 					}
+				}, function(p){
 				})
 
 				//actions.setArticle()
@@ -400,7 +478,7 @@ var articlev = (function(){
 
 					self.app.platform.papi.editImage(file.base64, {
 
-						aspectRatio : 2.5,
+						aspectRatio : 1.7,
 						apply : true
 
 					}).then( base64 => {
@@ -436,9 +514,35 @@ var articlev = (function(){
 				editor.destroy();
 
 			editor = null
+
+			art = null
+		}
+
+		var uploadImage = function(file){
+			return new Promise((resolve) => {
+				const reader = new FileReader();
+		
+				reader.readAsDataURL(file);
+				reader.onload = (e) => {
+
+					resize(e.target.result, 1920, 1080, function(resized){
+						return resolve({
+							success : 1,
+							file : {
+								url : resized
+							}
+						})
+					})
+
+
+				};
+
+			})
 		}
 
 		var make = function(){
+
+			//actions.save()
 
 			renders.tgstags()
 			renders.settings()
@@ -453,41 +557,84 @@ var articlev = (function(){
 				placeholder: 'Let`s write an awesome story!',
 				data: art.content || {},
 				tools: {
+
+					carousel: {
+						class: window.Carousel,
+						config : {
+							uploader : {
+								uploadByFile : uploadImage
+							}
+						}
+					},
+
+					paragraph: {
+						class: window.Paragraph,
+						inlineToolbar: true,
+					},
+
+					header: {
+						class: window.Header,
+						levels: [2, 3, 4],
+        				defaultLevel: 2,
+						shortcut: 'CMD+SHIFT+H',
+					},
+
+					quote: {
+						class: window.Quote,
+						inlineToolbar: true,
+						shortcut: 'CMD+SHIFT+O',
+
+						config: {
+						  quotePlaceholder: 'Enter a quote',
+						  captionPlaceholder: 'Quote\'s author',
+						},
+
+					},
+
+					linkTool: {
+						class: LinkTool,
+						config: {
+						  endpoint: 'https://localhost:8887/urlPreviewFormatted', // Your backend endpoint for url data fetching
+						}
+					},
+
+					/*inlineCode: {
+						class: window.InlineCode,
+						inlineToolbar: true,
+						shortcut: 'CMD+SHIFT+M',
+					},*/
+
+					warning: {
+						class: window.Warning,
+						shortcut: 'CMD+SHIFT+W'
+					},
+
+					list: {
+						class: window.List,
+						inlineToolbar: true,
+					},
+
+					delimiter: window.Delimiter,
+
 					image: {
 						class : window.ImageTool,
 						config : {
 							uploader : {
-								uploadByFile : function(file){
-
-									return new Promise((resolve) => {
-										const reader = new FileReader();
-								
-										reader.readAsDataURL(file);
-										reader.onload = (e) => {
-
-											resize(e.target.result, 1920, 1080, function(resized){
-												return resolve({
-													success : 1,
-													file : {
-														url : resized
-													}
-												})
-											})
-
-
-										};
-
-									})
-
-								}
+								uploadByFile : uploadImage
 							}
 						}
 					}
 				},
 
 				onChange : function(){
-					actions.saveEditor()
+
+					delay = slowMade(function(){
+
+						actions.saveEditor()
+					}, delay,  1000)
+
 				}
+
 			});
 
 			editor.isReady.then(() => {
@@ -503,12 +650,36 @@ var articlev = (function(){
 
 		}
 
+		var setArticle = function(id){
+			state.load(id);
+
+			self.app.nav.api.history.addRemoveParameters([], {
+				art : art.id
+			}, {
+				replaceState : true
+			})
+		}
+
+		var changeArticle = function(id){
+			destroy()
+
+			setArticle(id)
+
+			make()
+		}
+
 		return {
 			primary : primary,
 
-			getdata : function(clbk){
+			parametersHandler : function(){
+				changeArticle(parameters().art)
+			},
+
+			getdata : function(clbk, p){
 
 				var data = {};
+
+				setArticle(deep(p, 'settings.essenseData.article') || parameters().art)
 
 				clbk(data);
 
@@ -524,7 +695,7 @@ var articlev = (function(){
 			
 			init : function(p){
 
-				state.load();
+				
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
@@ -536,7 +707,9 @@ var articlev = (function(){
 				el.cover = el.c.find('.bgwrapper')
 				el.head = el.c.find('.aheadermain')
 				el.backfromedittags = el.c.find('.backfromedittags')
-
+				el.removeCover = el.c.find('.removeCover')
+				el.publish = el.c.find('.publish.action')
+				el.share = el.c.find('.shareWrapper')
 				el.status = el.c.find('.truestatuswrapper')
 				el.myarticles = el.c.find('.myarticles')
 

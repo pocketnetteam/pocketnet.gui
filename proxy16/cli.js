@@ -31,7 +31,7 @@ var destroy = function(repeat){
 var cli = {
     command : function(input){
 
-        if(!input){
+        if(!input || input === 'help'){
 
             input = 'help.commands'
 
@@ -52,7 +52,7 @@ var cli = {
 
         var kaction = f.deep(kit, 'manage.' + action)
 
-		if(!kaction) return Promise.reject('unknownAction')
+		if(!kaction || typeof kaction !== 'function') return Promise.reject('unknownAction')
 
         return kaction(data)
         

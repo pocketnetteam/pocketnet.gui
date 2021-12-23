@@ -142,7 +142,7 @@
         <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application">
             <application android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true"/>
         </edit-config>
-      
+        <preference name="AndroidXEnabled" value="true" />
     </platform>
 
     <universal-links>

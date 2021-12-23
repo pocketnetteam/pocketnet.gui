@@ -2,25 +2,34 @@
 
 var info = {}
 var aspectRatio = 0
+var widthcontainer = ''
 
-if(typeof share != 'undefined'){
+if(typeof share != 'undefined' && share){
 	info = app.platform.sdk.videos.storage[share.url || "undefined"] || {}
 	aspectRatio = deep(info, 'data.aspectRatio') || 0
+
+	if(!share.itisarticle()){
+		widthcontainer = 'widthcontainer'
+	}
 }
 
 %>
 
-<div id="<%-module.map.id%>" class="<% if(ed.video) {%> videomainpost <%- (aspectRatio <= 0.9) && (aspectRatio > 0) ? 'verticalVideo' : ''%>  <%- (aspectRatio > 0.9) && (aspectRatio < 1.25) ? 'squareVideo' : ''%> <% } %>">
-	<div class="postWrapper">
-		<div elementsid="openshare" class="share">
-		</div>
-	</div>
-
-	<!--<% if(ed.next) {%>
-
-	<div class="nextpost"></div>
-
-	<% } %>-->
+<div id="<%-module.map.id%>" class="<% if(ed.video) {%> videomainpost <%- (aspectRatio <= 0.9) && (aspectRatio > 0) ? 'verticalVideo' : ''%>  <%- (aspectRatio > 0.9) && (aspectRatio < 1.25) ? 'squareVideo' : ''%> <% } %> <%-widthcontainer%>">
+	<% if(typeof notfound == 'undefined' || !notfound) {%>
 	
+		<div class="postWrapper">
+
+			<div elementsid="openshare" class="share">
+			</div>
+
+		
+		</div>
+
+	<% } else { %> 
+		<div class="empty allb">
+			<%=e('postNotFound')%>
+		</div>
+	<% } %> 
 </div>
 

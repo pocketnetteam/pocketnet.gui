@@ -312,7 +312,7 @@ var commentf = function(comment){
 	
 <% } %>
 
-<% if(!pid && needtoshow > 10 && typeof sort != 'undefined') {%>
+<% if(!pid && comments.length > 2 && typeof sort != 'undefined') {%>
 
 	<div class="commentsorting">
 		<%= sort.input() %>

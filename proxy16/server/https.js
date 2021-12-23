@@ -264,7 +264,9 @@ var Server = function(settings, admins, manage){
                         }
 
                         meta.action(request.data, request).then(d => {
-                            result._success(d.data, d.code, d)
+
+                            result._success(d.data, d.code, d, meta.formatdata)
+
                         }).catch(e => {
                             result._fail(e, e.code)
                         })

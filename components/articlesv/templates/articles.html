@@ -1,74 +1,81 @@
 
 <% if(articles.length) {%>
 
-<% _.each(articles, function(article){
-
-    var echo = app.platform.sdk.articles.echo(article);
-    
-    %>
-
-    <div class="article">
-
-        <!--<div class="image">
-            
-        </div>-->
-
-        <div class="cnt">
-            <div class="name">
-                <%- (deep(article, 'caption.value') || 'Draft') %>
-            </div>  
-
-            <% if(article.tags && article.language) {%>
-            <div class="textpreview">
-                <%
-                
-                var bycategories = app.platform.sdk.categories.fromTags(article.tags, article.language)
-                
-                %>
-
-                <div class="tags">
-
-                    <% _.each(bycategories.categories, function(category){ %>
+    <% _.each(articles, function(article){
         
-                        <div class="category">
-                            <span>@<%-category.name%></span><% if(category.new) {%>&nbsp;<span class="newlabel">New!</span><% } %> 
-                        </div>
-        
-                    <% }) %>
-        
-                    <% _.each(bycategories.tags, function(tag){ 
-                        
-                        var additional = app.platform.sdk.tags.findadditional(tag)
-                        
-                        %>
-        
-                        <div class="tag">
-                            <span>#<%-tag%></span><% if(additional && additional.new) {%>&nbsp;<span class="newlabel">New!</span><% } %>
-                        </div>
-        
-                    <% }) %>
-        
-                   
+        %>
+
+        <div class="article <%- article.id == current ? 'current' : '' %>" art="<%-article.id%>">
+
+            <div class="imageWrapper openart">
+                <div class="img" image="<%-article.cover || ''%>">
                 </div>
             </div>
-            <% } %>
+
+            <div class="cnt openart">
+                <div class="name">
+                    <%- (deep(article, 'caption.value') || 'Draft') %> 
+                    <% if(article.id == current) {%>
+                        <i class="fas fa-pen-nib"></i>
+                    <% } %>
+                </div>  
+
+                <% if(article.tags && article.language) {%>
+                <div class="textpreview">
+                    <%
+                    
+                    var bycategories = app.platform.sdk.categories.fromTags(article.tags, article.language)
+                    
+                    %>
+
+                    <div class="tags">
+
+                        <% _.each(bycategories.categories, function(category){ %>
+            
+                            <div class="category">
+                                <span>@<%-category.name%></span><% if(category.new) {%>&nbsp;<span class="newlabel">New!</span><% } %> 
+                            </div>
+            
+                        <% }) %>
+            
+                        <% _.each(bycategories.tags, function(tag){ 
+                            
+                            var additional = app.platform.sdk.tags.findadditional(tag)
+                            
+                            %>
+            
+                            <div class="tag">
+                                <span>#<%-tag%></span><% if(additional && additional.new) {%>&nbsp;<span class="newlabel">New!</span><% } %>
+                            </div>
+            
+                        <% }) %>
+            
+                    
+                    </div>
+                </div>
+                <% } %>
+
+            </div>
+
+            <div class="time">
+                <% if(article.time) {%>
+
+                    <span>12.12.2021</span>
+
+                <% } else { %> 
+
+                    <span><%=e('e13019')%></span>
+
+                <% } %>
+            </div>
+
+            <div class="menupanel">
+                <i class="fas fa-ellipsis-h"></i>
+            </div>
 
         </div>
-
-        <div class="time">
-            <% if(article.time) {%>
-
-                <span>12.12.2021</span>
-
-            <% } else { %> 
-
-                <span><%=e('e13019')%></span>
-
-            <% } %>
-        </div>
-    </div>
-    
-<% }) %>
+        
+    <% }) %>
 
 
 <% } else { %> 
