@@ -1116,6 +1116,7 @@ ____loclib.pterror_getToken = "Peertube: Unable to get Token"
 ____loclib.pterror_videonotselected = "Peertube: Video not Selected"
 
 
+____loclib.videoTranscodingError = "There was an error with processing your video"
 ____loclib.videoUploadingFinish = "Finishing uploading..."
 ____loclib.uploadNewVideo = "Upload New Pocketvideo"
 ____loclib.selectVideoFile = "Select video file"

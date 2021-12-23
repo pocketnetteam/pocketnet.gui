@@ -317,7 +317,7 @@ var uploadpeertube = (function () {
               data.video = transcoded;
             })
             .catch(() => {
-              sitemessage('There was an error with processing your video');
+              sitemessage(self.app.localization.e('videoTranscodingError'));
             });
         }
 

@@ -806,6 +806,7 @@ ____loclib.noDownloadedVideos = "No hay vídeos descargados";
 ____loclib.buy = 'Comprar';
 
 // Uploadpeertube component
+____loclib.videoTranscodingError = "Se ha producido un error al procesar su vídeo"
 ____loclib.videoUploadingFinish = "Terminando de subir el archivo..."
 ____loclib.uploadNewVideo = "Subir un nuevo Pocketvídeo"
 ____loclib.selectVideoFile = "Seleccione el archivo de vídeo"
