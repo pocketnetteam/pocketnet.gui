@@ -712,6 +712,10 @@ var userpage = (function(){
 						_p.el.find('.groupNamePanelWrapper').on('click', events.closeGroup);
 						//_p.el.find('.groupName').on(clickAction(), events.closeGroup);
 						_p.el.find('.openReport').on('click', events.openReport);
+
+						_p.el.find('.changelang').on('click', function(){
+							self.app.platform.ui.changeloc(self.closeContainer)
+						})
 	
 						ParametersLive([s], _p.el)
 

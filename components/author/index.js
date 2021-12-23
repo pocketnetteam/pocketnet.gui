@@ -487,14 +487,13 @@ var author = (function(){
 					
 						return template(d);
 
-					}, function(el){
+					}, function(el, n, close){
 
 						el.find('.complain').on('click', function(){
 							self.app.mobile.vibration.small()
 							actions.complain()
 
-							if (_el.tooltipster)
-								_el.tooltipster('hide')	
+							close()
 
 						})
 
@@ -502,8 +501,7 @@ var author = (function(){
 							self.app.mobile.vibration.small()
 							actions.donate(id)
 
-							if (_el.tooltipster)
-								_el.tooltipster('hide')	
+							close()
 
 						})
 
@@ -515,8 +513,7 @@ var author = (function(){
 								}
 							})
 
-							if (_el.tooltipster)
-								_el.tooltipster('hide')	
+							close()
 
 						})
 
@@ -524,8 +521,7 @@ var author = (function(){
 
 							events.startchat()
 
-							if (_el.tooltipster)
-								_el.tooltipster('hide')	
+							close()
 						})
 						
 						el.find('.unblock').on('click', function(){
@@ -536,8 +532,7 @@ var author = (function(){
 								}
 							})
 
-							if (_el.tooltipster)
-								_el.tooltipster('hide')	
+							close()
 
 						})
 
@@ -553,8 +548,7 @@ var author = (function(){
                                 }
                             })*/
 
-                            if (_el.tooltipster)
-                                _el.tooltipster('hide')
+							close()
 
 
 						})
@@ -578,8 +572,6 @@ var author = (function(){
 					if (report.id != 'shares' || cl) rem.push('ss')
 
 					if(!npsh){
-
-						console.log("ADDTO HISTORY")
 
 						self.app.nav.api.history.addRemoveParameters(rem, {
 							report : report.id

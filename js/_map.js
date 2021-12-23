@@ -75,7 +75,6 @@ __map =  {
 		"js/validation.js",
 		"js/kit.js",
 		"js/satolist.js",
-		"js/messenger2/clientrtc.js",
 		"js/peertube.js",
 		"js/widgets.js"
 	],
@@ -87,12 +86,14 @@ __map =  {
 		"css/main.css",
 		"css/stblack.css",
 		"css/plyr.css",
+		"css/pniframe.css",
 		"js/vendor/DateTimePicker.min.css",
 		/*"css/swiper-bundle.min.css",*/
 		"peertube/video-embed.css",
 		"js/vendor/emojionearea.min.css",
 		"js/vendor/owl/assets/owl.carousel.min.css",
 		"js/vendor/owl/assets/owl.theme.default.min.css",
+		
 		
 	],
 
@@ -108,7 +109,6 @@ __map =  {
 		{ c : 'main', n : 'index' },
 		{ c : 'panel', n : 'index' },
 		{ c : 'leftpanel', n : 'index' },
-		{ c : 'panel', n : 'discussiondummy' },
 		{ c : 'lastcomments', n : 'index' },
 		{ c : 'tagcloud', n : 'index' },
 		{ c : 'userpage', n : 'index' },
@@ -342,7 +342,7 @@ __map =  {
 			if(p.inTooltip)
 			{
 				return {
-					insert : 'tooltip'
+					insert : 'bstntooltip'
 				}
 			}
 			else
@@ -978,9 +978,17 @@ __map =  {
 			},
 			relations : [
 				{src : 'js/vendor/editor/editor.js',			   f : 'js'},
+				{src : 'js/vendor/editor/carousel.js',			   f : 'js'},
+				{src : 'js/vendor/editor/paragraph.js',			   f : 'js'},
+				{src : 'js/vendor/editor/header.js',			   f : 'js'},
 				{src : 'js/vendor/editor/imageloader.js',			   f : 'js'},
-			],
-			relationsSunc : true
+				{src : 'js/vendor/editor/delimiter.js',			   f : 'js'},
+				{src : 'js/vendor/editor/link.js',			   f : 'js'},
+				{src : 'js/vendor/editor/list.js',			   f : 'js'},
+				{src : 'js/vendor/editor/quote.js',			   f : 'js'},
+				{src : 'js/vendor/editor/warning.js',			   f : 'js'},
+				{src : 'js/vendor/editor/inlinecode.js',			   f : 'js'}
+			]
 		},
 
 		video : {
@@ -1132,20 +1140,6 @@ __map =  {
 			}
 			
 		},
-		oldchat : {
-			uri : "oldchat",
-			href : "oldchat",
-			add : {
-				el : 'content'
-			},
-			anonimus : true,
-
-			relations : [
-				{src : 'js/vendor/emojionearea.min.js',			   f : 'js'},	
-				{src : 'js/vendor/emojionearea.min.css',			   f : 'css'},	
-			]
-		},
-
 	
 
 		wallet : {
@@ -1539,47 +1533,7 @@ __map =  {
 		anonimus : true,
 	},
 
-	discussions : {
-		uri : "discussions",
-		href : "discussions",
-		add : function(settings, p){
 
-			if(p.inWnd)
-			{
-				return {
-					insert : 'wnd'
-				}
-			}
-			else
-			if(p.inTooltip)
-			{
-				return {
-					insert : 'tooltip'
-				}
-			}
-			else
-			{
-				return {
-					el : 'content'
-				}
-			}
-
-		},
-		/*redirect : {
-			auth : 'authorization',
-			validate : 'filluser'
-		},*/
-		//anonimus : true,
-		/*relationsSunc : true,
-		relations : [
-
-			
-			{src : 'js/vendor/rtc/RTCMultiConnection.min.js',			   f : 'js'},	
-			{src : 'js/vendor/rtc/socket.io.js',			   f : 'js'}	
-
-			
-		]*/
-	},
 
 	bastyonhelper : {
 		uri : "bastyonhelper",

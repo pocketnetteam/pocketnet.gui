@@ -166,7 +166,7 @@ var wallet = (function(){
 					name : self.app.localization.e('wsincludefees'),
 					type : "VALUES",
 					id : 'fees',
-					defaultValue : "include",
+					defaultValue : "exclude",
 					possibleValuesLabels : [self.app.localization.e('wsrecieverpay'), self.app.localization.e('wssenderpay')],
 					possibleValues : ['include', 'exclude']
 				}),

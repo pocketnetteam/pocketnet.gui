@@ -17,6 +17,7 @@
 #post{
 
 	background: #f6f6f6;
+	
 
 	.lockedaccount,
 	.empty{
@@ -26,6 +27,15 @@
 		span{
 			font-size: 2em;
 			font-weight: 100;
+		}
+
+		&.allb{
+			background: #f6f6f6;
+			margin: 0 auto;
+			margin-top : 10 * @rhythm;
+			max-width: 400px;
+			
+			border-radius: 10px;
 		}
 	}
 
@@ -866,9 +876,7 @@
 
 		.sharecaption{
 			font-size: 1.6em;
-			color : @color-black2;
 			margin-bottom: @rhythm;
-			cursor: pointer;
 
 			a{
 				text-decoration: underline;
@@ -1052,6 +1060,7 @@
 		.tags{
 			margin-bottom: 2 * @rhythm;
 			overflow: hidden;
+			display: flex;
 
 			.newlabel{
 				background: rgb(255, 5, 101);
@@ -1059,7 +1068,6 @@
 			}
 			
 			>div{
-				float: left;
 				margin-right: @rhythm;
 
 				span{
@@ -1490,6 +1498,95 @@
 	}
 }
 
+#post{
+	.sharearticle{
+		.shareBgCaption{
+			height: 640px;
+			position: relative;
+
+			.divider{
+				margin : 0 auto;
+				margin-bottom: @rhythm;
+				height: 1px;
+				width: 110px;
+				background: #fff;
+			}
+
+			.blackmatte{
+				background: rgb(0,0,0);
+				background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(255,255,255,0) 100%);
+			}
+
+			.captioncnt{
+				padding-bottom: 4 * @rhythm;
+				display: flex;
+				flex-direction: column;
+				justify-content: flex-end;
+				z-index: 1;
+				color : #fff;
+				text-align: center;
+
+				.tags{
+					justify-content: center;
+				}
+
+				.sharecaption{
+					font-size: 4em;
+					font-family: Georgia, serif;
+				}
+
+
+				
+			}
+			.icon{
+				position: absolute;
+				bottom : -22px;
+				left : 0;
+				right: 0;
+
+				.usericon{
+					margin : 0 auto;
+	
+					
+				}
+			}
+			
+
+			.captioncnt,
+			.blackmatte{
+				position: absolute;
+				left: 0;
+				right: 0;
+				top : 0;
+				bottom : 0;
+			}
+		}
+
+		.articlecontent{
+			padding-top : 8 * @rhythm;
+			padding-bottom : 8 * @rhythm;
+			
+			.cntswrk{
+				margin-left: 0;
+				padding-left: 0;
+				padding-right: 0;
+			}
+
+			.articleend{
+				margin-top : 6 * @rhythm;
+			}
+
+			.commentsWrapper{
+				border-radius: 15px;
+			}
+
+			.forcomments{
+				margin-top : 12 * @rhythm;
+			}
+		}
+	}
+}
+
 html.tablet.fullscreen,
 html.mobile.fullscreen{
 	#post{
@@ -1519,7 +1616,7 @@ html.stblack{
 		width : 100%;
 		padding-top : 0;
 		padding-bottom: 0;
-		overflow-y : scroll;
+		margin: 0 auto;
 	}
 
 	.wndinner{
@@ -1529,16 +1626,42 @@ html.stblack{
 		background: transparent;
 	}
 
-	._close{
-		color : #fff;
-		.shadowSmall();
+	&.articlewindow{
+		.wndcontent{
+			padding : 0;
+			border-radius: 0;
+		}
+
+		#post{
+			.postWrapper{
+				max-width: none;
+			}
+		}
+
+		._close{
+			backdrop-filter: blur(7px) grayscale(30%);
+        	-webkit-backdrop-filter: blur(7px) grayscale(30%); 
+			color : #fff;
+			.shadowSmall();
+		}
+	}
+
+	.widthcontainer{
+		width: 80%;
+		max-width: 800px;
+		margin : 0 auto;
 	}
 
 	#post{
+		margin : 0 auto;
 		background: transparent;
 
+		
+
 		.postWrapper{
+			overflow: hidden;
 			border-radius: 3px;
+			padding-bottom: 4 * @rhythm;
 		}
 
 		.nextpost{
@@ -2266,7 +2389,11 @@ html.stblack{
 		}
 	}
 }
-
+.wnd.postwindow{
+	.widthcontainer{
+		width: 100%;
+	}
+}
 
 
 html.cordova,
@@ -2274,7 +2401,11 @@ html.tablet,
 html.mobile{
 	.wnd.postwindow{
 
-			z-index: 1005;
+		z-index: 1005;
+
+		.widthcontainer{
+			width: 100%;
+		}
 
 		&.normalizedmobile{
 			.closeline{

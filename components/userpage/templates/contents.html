@@ -145,20 +145,34 @@
 
         <% } %>
 
+        <% if(isTablet()) {%>
+
+            <div class="reportCaption">
+                <div class="label">
+                    <span class="changelang">
+                        <%= app.localization.current().name %> <i class="fas fa-caret-down"></i>
+                    </span>
+                </div>
+            </div>
+
+        <% } %>
+
     </div>
 
     <% } %>
 
+  
+
     <% if(state) {%>
 
-    <div class="additional">
+        <div class="additional">
 
-        <div class="reportCaption signout">
-            <div elementsid="userpage_signout" class="label" action="signout"><%=e('signout').toUpperCase()%> <i class="fas fa-sign-out"
-                    aria-hidden="true"></i></div>
+            <div class="reportCaption signout">
+                <div elementsid="userpage_signout" class="label" action="signout"><%=e('signout').toUpperCase()%> <i class="fas fa-sign-out"
+                        aria-hidden="true"></i></div>
+            </div>
+
         </div>
-
-    </div>
 
 
 

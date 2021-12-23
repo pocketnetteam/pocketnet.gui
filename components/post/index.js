@@ -358,7 +358,7 @@ var post = (function () {
 
 				if (primary) return
 
-				if (ed.removemargin) return
+				if (ed.removemargin || isMobile()) return
 
 
 				var h = $(window).height();
@@ -934,7 +934,7 @@ var post = (function () {
 
 										c.html(Number(c.html() || '0') + 1);
 									},
-									txid: share.txid,
+									txid: ed.commentsid || share.txid,
 
 									reply: ed.reply,
 
@@ -1002,7 +1002,6 @@ var post = (function () {
 
 					_el.imagesLoadedPN({ imageAttr: true, debug : true }, function (image) {
 
-						console.log('image', image)
 
 						if (share.settings.v != 'a') {
 
@@ -1143,6 +1142,8 @@ var post = (function () {
 			share: function (clbk) {
 
 
+				console.log("RENDER SHARE")
+
 				var verticalVideo = false
 				var squareVideo = false
 
@@ -1165,7 +1166,7 @@ var post = (function () {
 				self.shell(
 					{
 						turi: 'lenta',
-						name: ed.video ? 'sharevideo' : 'share',
+						name: ed.video ? 'sharevideo' : share.itisarticle() ? 'sharearticle' : 'share',
 						el: el.share,
 
 						additionalActions: function () {
@@ -1179,7 +1180,8 @@ var post = (function () {
 							repost: ed.repost,
 							fromempty: ed.fromempty,
 							verticalVideo: verticalVideo,
-							squareVideo: squareVideo
+							squareVideo: squareVideo,
+							preview : ed.preview
 						},
 					},
 					function (_p) {
@@ -1254,8 +1256,26 @@ var post = (function () {
 								});
 							});
 						});
+
+
+						if(share.itisarticle){
+
+							renders.articlespart(_p.el)
+
+						}
 					},
 				);
+			},
+			articlespart : function(el){
+
+				el.find('.article_carousel').each(function(){
+					self.app.platform.ui.carousel($(this))
+				})
+
+				el.find('.article_this_embed').each(function(){
+					self.app.platform.ui.embeding($(this))
+				})
+				
 			},
 			showmoreby: function () {
 
@@ -1324,7 +1344,7 @@ var post = (function () {
 				);
 			},
 			mystars: function (clbk) {
-				if (typeof share.myVal == 'undefined') {
+				if (typeof share.myVal == 'undefined' && !ed.preview) {
 					var ids = [share.txid];
 
 					self.app.platform.sdk.likes.get(ids, function () {
@@ -1636,6 +1656,23 @@ var post = (function () {
 
 		}
 
+		var getshareprominitialp = function(id, share, clbk){
+
+
+			if(share){
+				clbk(share)
+			}
+			else{
+				self.app.platform.sdk.node.shares.getbyid([id], function () {
+
+					var share = self.app.platform.sdk.node.shares.storage.trx[id]
+
+					clbk(share)
+
+				})
+			}
+		}
+
 		return {
 			primary: primary,
 
@@ -1653,13 +1690,12 @@ var post = (function () {
 
 				level = (ed.level || -1) + 1
 
-				
-				self.app.platform.sdk.node.shares.getbyid([id], function () {
+				getshareprominitialp(id, deep(p, 'settings.essenseData.shareobj'), function(_share){
 
-					share = self.app.platform.sdk.node.shares.storage.trx[id]
-
+					share = _share
 
 					if (!share) {
+
 						var temp = _.find(self.sdk.node.transactions.temp.share, function (s) {
 							return s.txid == id
 						})
@@ -1673,12 +1709,10 @@ var post = (function () {
 
 					}
 
+					console.log("share", share)
+
 					if (share) {
 						self.app.platform.sdk.node.shares.users([share], function (l, error2) {
-
-							/*if(!ed.repost && self.app.platform.sdk.user.reputationBlockedRedirect(share.address)){
-								return
-							}*/
 
 							var data = {
 								ed: deep(p, 'settings.essenseData') || {},
@@ -1692,8 +1726,18 @@ var post = (function () {
 						})
 					}
 
+					else{
+
+						clbk({
+							ed,
+							share,
+							notfound : true
+						});
+
+					}
 				})
 
+				
 			},
 
 			authclbk: function () {
@@ -1757,6 +1801,12 @@ var post = (function () {
 
 			init: function (p) {
 
+				p.clbk(null, p);
+
+				console.log("INIT SHARE")
+
+				if(!share) return
+
 				state.load();
 
 				el = {};
@@ -1765,9 +1815,12 @@ var post = (function () {
 				el.wr = el.c.find('.postWrapper')
 				el.wnd = el.c.closest('.wndcontent');
 
-				make()
+				
+				if(share.itisarticle()){
+					el.c.closest('.wnd').addClass('articlewindow')
+				}
 
-				p.clbk(null, p);
+				make()
 
 				if (ed.video && !window.cordova && !isTablet() && !isMobile())
 					self.app.el.menu.find('#menu').addClass('static')

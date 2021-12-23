@@ -366,7 +366,9 @@ var help = (function () {
       el.menuitem.on('click', events.menuitem);
 
       el.caption.find('.checkversion').on('click', function () {
+
         if (typeof _Electron != 'undefined') {
+          
           el.caption.find('.checking').addClass('active');
 
           var electron = require('electron');
