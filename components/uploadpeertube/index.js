@@ -314,7 +314,8 @@ var uploadpeertube = (function () {
           await processTranscoding()
             .then((transcoded) => {
               /** Writing transcoded alternatives to target object */
-              data.video = transcoded;
+              /** At this for backend reasons, sending only 720p */
+              data.video = transcoded.p720;
             })
             .catch(() => {
               sitemessage(self.app.localization.e('videoTranscodingError'));
