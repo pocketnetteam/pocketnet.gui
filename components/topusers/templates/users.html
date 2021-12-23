@@ -85,7 +85,7 @@ _.each(addresses, function(u){
 							<div class="name">
 								<%- app.platform.api.name(address) || address %>							
 							</div>		
-							<% var r = deep(app, 'platform.sdk.users.storage.'+address+'.reputation'); %>
+							<% var r = u.reputation %>
 
 							<% if (r) {%>
 								<div class="reputation">
