@@ -288,19 +288,28 @@ var uploadpeertube = (function () {
           const filePath = event.target.files[0].path;
 
           function processTranscoding() {
+            ipcRenderer.send('transcode-video-request', filePath);
+
+            ipcRenderer.on('transcode-video-progress', (event, progress) => {
+              options.progress(progress);
+            });
+
             return new Promise((resolve, reject) => {
-              options.progress(60);
-              ipcRenderer.send('transcode-video-request', filePath);
               ipcRenderer.on('transcode-video-response', (event, transcoded, error) => {
                 if (error) {
                   reject('Error on transcoding');
                   return;
                 }
 
-                resolve(transcoded);
+                setTimeout(() => resolve(transcoded), 1000);
               });
             });
           }
+
+          el.uploadProgress.find('.bold-font')
+              .text(self.app.localization.e('uploadVideoProgress_processing'));
+
+          options.progress(5);
 
           await processTranscoding()
             .then((transcoded) => {
@@ -311,6 +320,15 @@ var uploadpeertube = (function () {
               sitemessage('There was an error with processing your video');
             });
         }
+
+        el.uploadProgress.find('.bold-font')
+            .text(self.app.localization.e('uploadVideoProgress_uploading'));
+        el.uploadProgress
+            .find('.upload-progress-bar')
+            .removeClass('processing')
+            .addClass('uploading');
+
+        options.progress(0);
 
         self.app.peertubeHandler.api.videos
           .upload(data, options)

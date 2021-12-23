@@ -785,6 +785,15 @@ function createWindow() {
             return new Promise(executor);
         }
 
+        /**
+         * Progress calculation function
+         * @returns {number} percents
+         */
+        function calcProgress() {
+            const partPercent = 100 / resolutionsArr.length;
+            return partPercent * processedCounter;
+        }
+
         /** Writing transcoded alternatives to target object */
         let videos = {
             //p240: transcodeVideo(readStream, Resolution.p240),
@@ -793,26 +802,48 @@ function createWindow() {
             p720: transcodeVideo(filePath, Resolution.p720),
         };
 
-        await Promise.all([
-            //videos.p240,
-            //videos.p360,
-            //videos.p480,
-            videos.p720,
-        ]).catch(() => {
-            /** Responding with error */
-            e.reply('transcode-video-response', null, true);
-            return;
-        });
+        let processedCounter = 0;
+
+        const resolutionsArr = Object.values(videos);
+
+        /**
+         * Progress reports.
+         * When one of promises is fulfilled, message is sent
+         * to renderer script with percent amount.
+         *
+         * Todo: This function can be better if we use FFmpeg
+         *       progress events.
+         */
+        resolutionsArr.forEach((resolution) => {
+            resolution.then(() => {
+                processedCounter++;
+                e.reply('transcode-video-progress', calcProgress());
+            });
+        })
+
+        /** While all aren't fulfilled, waiting... */
+        await Promise.all(Object.values(videos))
+            .catch((err) => {
+                console.error(err);
+
+                /** Responding with error if the is one */
+                e.reply('transcode-video-response', null, true);
+                return;
+            });
+
 
         const resolutions = Object.keys(videos);
 
+        /**
+         * Extracting values of promises as e.reply doesn't
+         * support this type of objects.
+         */
         for (const size of resolutions) {
             const promise = videos[size];
             videos[size] = await promise;
         }
 
-        e.reply('transcode-video-response', null, true);
-        //e.reply('transcode-video-response', videos);
+        e.reply('transcode-video-response', videos);
     })
 
     /**
