@@ -95,6 +95,8 @@ nModule = function(){
 
 		if(!p) p = {};
 
+		delete p.animation
+
 		
 		var completeClbk = function(p){
 
@@ -103,11 +105,7 @@ nModule = function(){
 
 				self.nav.api.links(null, p.el, p.additionalActions || null);
 
-				window.requestAnimationFrame(function(){
-
-					bgImages(p.el, p.bgImages)
-				})
-				
+				bgImages(p.el, p.bgImages)
 				
 			}
 
@@ -124,104 +122,108 @@ nModule = function(){
 
 			self.renderTemplate(template, function(html){
 
-				var inserted = false;
+				//window.requestAnimationFrame(function(){
 
-				if(!_.isObject(p.el) || p.insert)
-				{
+					var inserted = false;
 
-					var insert = self.inserts[p.insert];
-
-					if (insert)
+					if(!_.isObject(p.el) || p.insert)
 					{
-						var options = p[insert.storageKey] || {};
 
-					
+						var insert = self.inserts[p.insert];
 
-							options.content = html;
-							options.el = p.el;
-							options.app = self.app
-
-						if (insert.after)
+						if (insert)
 						{
-							options.clbk = function(_p){
+							var options = p[insert.storageKey] || {};
 
-								if(!_p) _p = {};
+						
 
-								p = _.extend(p, _p)
+								options.content = html;
+								options.el = p.el;
+								options.app = self.app
 
-								completeClbk(p)
+							if (insert.after)
+							{
+								options.clbk = function(_p){
 
-							}
-							
-						}
+									if(!_p) _p = {};
 
-						options.destroy = function(key){
+									p = _.extend(p, _p)
 
-							if(p){
-								if(!key != 'auto'){
-									self.app.nav.api.history.removeParameters(['m' + p.id].concat(p.clearparameters || []))
+									completeClbk(p)
+
 								}
 								
-								if (p.destroy)
-									return p.destroy(key)
 							}
 
-							
+							options.destroy = function(key){
 
-						};
+								if(p){
+									if(!key != 'auto'){
+										self.app.nav.api.history.removeParameters(['m' + p.id].concat(p.clearparameters || []))
+									}
+									
+									if (p.destroy)
+										return p.destroy(key)
+								}
 
-						var type = p.essenseData && p.essenseData.type
+								
 
-						if (type){
+							};
 
-							options.type = type;
+							var type = p.essenseData && p.essenseData.type
+
+							if (type){
+
+								options.type = type;
+
+							}
+
+							self .container = new insert.obj(options);
+								p.container = self.container;
+
+							self.container.essenseDestroy = options.destroy
+
+							if (insert.after) 
+							{
+								topPreloader(100);
+								return;
+							}
+
+							var el = deep(self, 'container.el')
+
+							if (el){
+								p.el = el;
+							}
+
+							inserted = true;
 
 						}
-
-						self .container = new insert.obj(options);
-							p.container = self.container;
-
-						self.container.essenseDestroy = options.destroy
-
-						if (insert.after) 
+						else
 						{
-							topPreloader(100);
-							return;
+							var el = self.app.el[p.el];
+
+							if (el)
+								p.el = el;
 						}
-
-						var el = deep(self, 'container.el')
-
-						if (el){
-							p.el = el;
-						}
-
-						inserted = true;
 
 					}
-					else
+
+					if(typeof p.el == 'function') p.el = p.el();
+				
+					if(!inserted)
 					{
-						var el = self.app.el[p.el];
-
-						if (el)
-							p.el = el;
+						if (p.el) {
+							self.insertTemplate(p, html);
+						}
 					}
 
-				}
-
-				if(typeof p.el == 'function') p.el = p.el();
-			
-				if(!inserted)
-				{
-					if (p.el) {
-						self.insertTemplate(p, html);
+					if(!p.animation)
+					{
+						completeClbk(p);
 					}
-				}
 
-				if(!p.animation)
-				{
-					completeClbk(p);
-				}
-			
+				//})
+				
 
 			} ,p)
 
@@ -475,10 +477,12 @@ nModule = function(){
 
 			p.inner(p.el, _html);
 
-			if(!p.notdisplay){
-				p.display || (p.display = "block")
+			if (p.display){
 				p.el.css("display", p.display)
 			}
+			
+				
+			
 
 
 			if (p.postAnimation)
@@ -582,17 +586,15 @@ nModule = function(){
 
 					try{
 						self.storage.templates[p.name] = _.template(tpl);
-
-						if (clbk)
-							clbk(self.storage.templates[p.name]);
-
 						loading.templates[p.name] = false;
 					}
+
 					catch(e){
 						console.log('p.name', p.name, url)
 						console.error(e)
 					}
 
+					if (clbk) clbk(self.storage.templates[p.name]);
 					
 
 				},
@@ -676,6 +678,8 @@ nModule = function(){
 
 		var add = self.map.add;
 		var frommodule = true;
+		var globalpreloaderTimer = p.globalpreloaderTimer || null
+
 
 		if (p.restartModule) frommodule = false
 
@@ -686,12 +690,19 @@ nModule = function(){
 		settings = _.extend(settings, add);
 		settings = _.extend(settings, p);	
 
+		/*if(p.inWnd){
+
+			globalpreloaderTimer = setTimeout(function(){
+				globalpreloader(true)
+			}, 100)
+			
+		}*/
+
 		beforegetdata(settings, function(){
 			self.user.isState(function(state){	
 				
 				
 				settings.getdata(function(data){
-					
 
 					topPreloader(45);
 
@@ -700,6 +711,11 @@ nModule = function(){
 					if(p.preshell) p.preshell();
 
 					self.shell(settings, function(p){
+
+						if(globalpreloaderTimer){
+							globalpreloader(false)
+							clearTimeout(globalpreloaderTimer)
+						}
 
 						topPreloader(100);	
 
@@ -728,6 +744,7 @@ nModule = function(){
 
 			})
 		})
+
 	}
 
 	self.init = function(settings, p){

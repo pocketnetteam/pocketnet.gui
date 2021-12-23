@@ -13,8 +13,6 @@ shares = _.filter(shares, function(s){
 	}
 })
 
-console.log('shares', shares)
-
 var groupshares = group(shares, function(s){
 	return s.address
 })
@@ -25,11 +23,7 @@ if(typeof video != 'undefined' && video) groupshares = group(shares, function(s)
 
 var me = app.platform.sdk.user.me()
 
-_.each(groupshares, function(gs, address){ 
-	
-	
-	
-	%>
+_.each(groupshares, function(gs, address){ %>
 
 	<div class="authorgroup <% if(me && me.relation(address, 'blocking')) {%>blocking<% } %>">
 

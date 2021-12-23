@@ -67,13 +67,13 @@ _.each(addresses, function(address){
 
 							<% 
 
-								var src = deep(app, 'platform.sdk.users.storage.'+address+'.image');  
-								var name = deep(app, 'platform.sdk.users.storage.'+address+'.name');
+								var src = deep(app, 'platform.sdk.usersl.storage.'+address+'.image');  
+								var name = deep(app, 'platform.sdk.usersl.storage.'+address+'.name');
 								var letter = name ? name[0] : ''; 
 
 							%>
 
-							<div class="usericon" image="<%-src || ''%>">
+							<div class="usericon" image="<%-src || '*'%>">
 
 								<% if(!src && letter) {%>
 

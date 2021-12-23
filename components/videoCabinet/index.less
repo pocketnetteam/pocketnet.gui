@@ -18,6 +18,15 @@
         margin-top: 2*@rhythm;
     }
 
+    .buttonwrapper{
+        margin-top : 3 * @rhythm;
+
+        button{
+            padding-left: 3 * @rhythm;
+            padding-right: 3 * @rhythm;
+        }
+    }
+
     .singleVideoSection {
         display: flex;
         justify-content: space-between;
@@ -944,6 +953,8 @@ html.stblack {
     #videoCabinet {
         background: #fff;
 
+       
+
         .caption {
 
             span {
@@ -1092,6 +1103,10 @@ html.stblack {
 
         .videoContainer {
             padding: 0;
+
+            &.videoErrorContainer{
+                padding : @rhythm;
+            }
 
             .work {
                 padding-left: @rhythm;

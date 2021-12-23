@@ -4429,7 +4429,7 @@ typeof navigator === "object" && (function (global, factory) {
 
         var title = !is$1.empty(this.config.title) ? this.config.title : 'video';
         var format = i18n.get('frameTitle', this.config);
-        iframe.setAttribute('title', format.replace('{title}', title));
+        //iframe.setAttribute('title', format.replace('{title}', title));
       }
     },
     // Toggle poster

@@ -32,6 +32,7 @@ var embeding = (function(){
 				type : "NUMBER",
 				id : 'amount',
 				placeholder : '0',
+				onType : true,
 				format : {
 					Precision : 3
 				}
@@ -47,7 +48,10 @@ var embeding = (function(){
 		var actions = {
 			
 			check : function(type){
-				if(options[type].isValid(options[type].value)){
+
+				if(!el.error) return
+
+				if (options[type].isValid(options[type].value)){
 
 					el.error.html('')
 
@@ -100,11 +104,13 @@ var embeding = (function(){
 				
 				donate : function(){
 
-					if(actions.check('donate')){
+					if (actions.check('donate')){
 
-						on.added(options.donate.value)
 
-						self.closeContainer()
+						if(on.added(Number(options.donate.value)))
+						
+
+							self.closeContainer()
 					}
 				},
 
@@ -273,7 +279,15 @@ var embeding = (function(){
 		}
 
 		var initEvents = function(){
-			el.c.find('input').focus().on('change', events.action)
+
+
+			setTimeout(function(){
+				el.c.find('input').focus()
+			}, 300)
+			
+			
+			el.c.find('input').on('change', events.action)
+
 			el.action.on('click', events.action)
 
 			if(type == 'images'){
@@ -398,7 +412,7 @@ var embeding = (function(){
 						class : "save",
 						html : '<i class="fa fa-check"></i> ' + self.app.localization.e('add'),
 						fn : function(wnd, wndObj){
-
+							console.log("save")
 							actions.add[type]()
 
 						}

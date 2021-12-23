@@ -413,7 +413,14 @@ var faq = (function(){
 
 		var actions = {
 			question : function(id){
-				_scrollToTop(el.c.find('.faqcnt .question[question="'+id+'"]'), null, null, -110)
+
+
+				var _el = el.c.find('.faqcnt .question[question="'+id+'"]')
+
+				_scrollToTop(_el, null, null, -110)
+
+
+				_el.addClass('opened')
 			},
 			contents : function(group){
 
@@ -480,6 +487,7 @@ var faq = (function(){
 						offsetTop : h,
 						offsetBottom : h,
 						mode : 'line',
+						app : self.app
 					})
 
 					var id = null;
@@ -596,7 +604,11 @@ var faq = (function(){
 
 				var id = parameters().id;
 
-				if (id) actions.question(id)
+				setTimeout(function(){
+					if (id) 
+						actions.question(id)
+				}, 300)
+				
 
 				p.clbk(null, p);
 			}

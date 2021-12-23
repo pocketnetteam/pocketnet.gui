@@ -57,7 +57,7 @@ _.each(messages, function(message){
 			<div class="icon">
 
 				<a elementsid="<%-app.platform.api.authorlink(message.f)%>" href="<%-app.platform.api.authorlink(message.f)%>">
-					<div class="usericon" image="<%-src || ''%>">
+					<div class="usericon" image="<%-src || '*'%>">
 
 						<% if(!src && letter) {%>
 

@@ -205,8 +205,18 @@ ____loclib.spv = "Video Post count";
 ____loclib.ssc = "Stars count";
 ____loclib.ccc = "Comments count";
 ____loclib.crc = "Comment Rate count";
-____loclib.stp = "Trial period";
+
+____loclib.stp = "Beginner";
+____loclib.stpg = "Top";
+____loclib.stpreal = "Verified";
+____loclib.stpdev = "Bastyon developer";
+
+____loclib.trialreputationtip = "To become a top user you need to have a valid reputation. It requires at least 100 different people with top reputation to upvote your content (after 3 months this requirement is relaxed to 30). The second requirement is minimum 100 overall reputation.";
+____loclib.trialreputationtipaction = "Learn more about reputation here"
+
+
 ____loclib.srep = "Reputation";
+____loclib.ccpl = "Complains count";
 
 //accounts
 ____loclib.aaddedacc = "Change Account";
@@ -264,6 +274,10 @@ ____loclib.newShare = "New Post";
 ____loclib.firstShare = "Share Your First Post in "+appname+"";
 ____loclib.scaption = "Caption";
 ____loclib.whatsnew = "What's new?";
+____loclib.whatsnewrepost = "What's new?";
+
+
+
 ____loclib.saddlink = "Add link to external site or video";
 ____loclib.saddimages = "Add Images to Post";
 ____loclib.sarticle = "To write an article";
@@ -698,7 +712,7 @@ ____loclib.e13190 = ""+appname+" theme"
 ____loclib.e13191 = "Set Theme"
 ____loclib.e13192 = "Level"
 ____loclib.e13193 = "BONUS"
-____loclib.e13194 = "Reputation and Rewards"
+____loclib.e13194 = "Reputation and Status"
 ____loclib.e13195 = "Limitations"
 ____loclib.с= "It much take up"
 ____loclib.e13197 = "Recieve Pocketcoins"
@@ -1087,7 +1101,7 @@ ____loclib.uploadVideoProgress = "Progress:"
 
 
 ____loclib.pbp_1 = ""+appname+" Bonus Program"
-____loclib.pbp_2 = "Criteria for Receiving Bonus:"
+____loclib.pbp_2 = "Criteria for bonus for original content:"
 ____loclib.pbp_3 = "Every 15k views + 1250 five star ratings from unique users"
 ____loclib.pbp_4 = "PKOIN Equivalent:"
 ____loclib.pbp_5 = "1,000 USDT"
@@ -1191,7 +1205,13 @@ ____loclib.sortByDuration = "Duration";
 ____loclib.sortByViews = "Views";
 
 ____loclib.unableToAuthorize = "Unable to authorize";
-____loclib.unableToAuthorizeBody = "Unfortunately, the application cannot authenticate this account on the video server. You need at least 5 PKOIN or 100 reputation to upload videos. If you do, please try again later";
+____loclib.unableToAuthorizeBody = "Unfortunately, the application cannot authenticate this account on the video server. You need at least 5 PKOIN or 50 reputation to upload videos.";
+
+____loclib.unableToAuthorizeConnection = "Unable to authorize";
+____loclib.unableToAuthorizeConnectionBody = "Unfortunately, the application cannot authenticate this account on the video server.  Please try again later";
+
+
+
 
 ____loclib.downloaded = "Downloaded";
 ____loclib.downloadedEmpty = "Downloaded posts will be shown here";
@@ -1354,9 +1374,9 @@ ____loclib.aboutYoutubeMainDescription1 = 'Some people ask us:';
 ____loclib.aboutYoutubeMainDescription2 = '"Why should I use Bastyon?"';
 ____loclib.aboutYoutubeMainDescription3 = 'The real question is:';
 ____loclib.aboutYoutubeMainDescription4 = '"Why should you use YouTube?!"';
-____loclib.aboutYoutubeMainDescription5 = '- YOUTUBE HAS BEEN BANNING AND DEMONETIZING THOUSANDS OF ACCOUNTS';
-____loclib.aboutYoutubeMainDescription6 = '- PEOPLE WITH HUNDREDS OF THOUSANDS OF SUBSCRIBERS';
-____loclib.aboutYoutubeMainDescription7 = '- EVEN WHEN NOT BANNED, AUTHORS ARE SHADOWBANNED OR DEMONETIZED';
+____loclib.aboutYoutubeMainDescription5 = 'YOUTUBE HAS BEEN BANNING AND DEMONETIZING THOUSANDS OF ACCOUNTS';
+____loclib.aboutYoutubeMainDescription6 = 'PEOPLE WITH HUNDREDS OF THOUSANDS OF SUBSCRIBERS';
+____loclib.aboutYoutubeMainDescription7 = 'EVEN WHEN NOT BANNED, AUTHORS ARE SHADOWBANNED OR DEMONETIZED';
 
 ____loclib.aboutYoutubeThreeColumn1 = 'Imagine: one day you have 20k, 100k or even 1M subscribers on your YouTube channel.';
 ____loclib.aboutYoutubeThreeColumn2 = 'The following day your account does not exist anymore.';
@@ -1465,9 +1485,9 @@ ____loclib.aboutTwitterMainDescriptionText1 = 'Some people ask us:';
 ____loclib.aboutTwitterMainDescriptionText2 = '"Why should I use Bastyon?"';
 ____loclib.aboutTwitterMainDescriptionText3 = 'The real question is:';
 ____loclib.aboutTwitterMainDescriptionText4 = '"Why should you use Twitter?!"';
-____loclib.aboutTwitterMainDescriptionText5 = '- TWITTER IS ACTING LIKE A DICTATORSHIP GOVERNMENT';
-____loclib.aboutTwitterMainDescriptionText6 = '- Yes, we know that this is a strong statement.';
-____loclib.aboutTwitterMainDescriptionText7 = '- But unfortunately, this is what has been happening on Twitter.';
+____loclib.aboutTwitterMainDescriptionText5 = 'TWITTER IS ACTING LIKE A DICTATORSHIP GOVERNMENT';
+____loclib.aboutTwitterMainDescriptionText6 = 'Yes, we know that this is a strong statement.';
+____loclib.aboutTwitterMainDescriptionText7 = 'But unfortunately, this is what has been happening on Twitter.';
 
 ____loclib.aboutTwitterThreeColumn1 = 'Many, way too many accounts have been banned in the past few years. Some of them without any reason.';
 ____loclib.aboutTwitterThreeColumn2 = 'Others just because they were from a specific political side (conservative)';
@@ -1509,12 +1529,12 @@ ____loclib.aboutTitterImgAndText5 = 'Censorship is banned by the technology itse
 ____loclib.aboutTitterImgAndText6 = 'NO COMPANY BEHIND BASTYON';
 ____loclib.aboutTitterImgAndText7 = 'Unlike Twitter and the main Social Networks, there is no company behind Bastyon. It is an open source project. This means that there is no company that can control the contents posted on Bastyon. No bans, no censorship.';
 ____loclib.aboutTitterImgAndText8 = 'Unlike Twitter...';
-____loclib.aboutTitterImgAndText9 = '1. You will never be blocked or banned for simply supporting your ideas, religions, movements without hurting other people.';
-____loclib.aboutTitterImgAndText10 = '2. No one can block your account or remove your posts';
-____loclib.aboutTitterImgAndText11 = '3. Privacy is complete and guaranteed';
-____loclib.aboutTitterImgAndText12 = '4. Access is always possible from any country and region of the world';
-____loclib.aboutTitterImgAndText13 = '5. Chat sessions are entirely private and encrypted and not even Bastyon can access them. Not even with a court warrant.';
-____loclib.aboutTitterImgAndText14 = '6. Your posts can be longer';
+____loclib.aboutTitterImgAndText9 = 'You will never be blocked or banned for simply supporting your ideas, religions, movements without hurting other people.';
+____loclib.aboutTitterImgAndText10 = 'No one can block your account or remove your posts';
+____loclib.aboutTitterImgAndText11 = 'Privacy is complete and guaranteed';
+____loclib.aboutTitterImgAndText12 = 'Access is always possible from any country and region of the world';
+____loclib.aboutTitterImgAndText13 = 'Chat sessions are entirely private and encrypted and not even Bastyon can access them. Not even with a court warrant.';
+____loclib.aboutTitterImgAndText14 = 'Your posts can be longer';
 
 
 
@@ -1596,12 +1616,12 @@ ____loclib.aboutFbImgAndText3 = 'Bastyon is based on the blockchain: there is no
 ____loclib.aboutFbImgAndText4 = 'NO COMPANY BEHIND BASTYON';
 ____loclib.aboutFbImgAndText5 = 'Unlike Facebook and the main Social Networks, there is no company behind Bastyon. It is an open source project. This means that there is no company that can control the contents posted on Bastyon. No bans, no censorship.';
 ____loclib.aboutFbImgAndText6 = 'Unlike Facebook...';
-____loclib.aboutFbImgAndText7 = '1. Your personal data is not sold to external companies';
-____loclib.aboutFbImgAndText8 = '2. No arbitrary censorship';
-____loclib.aboutFbImgAndText9 = '3. Does not take personal information';
-____loclib.aboutFbImgAndText10 = '4. No corporation behind it';
-____loclib.aboutFbImgAndText11 = '5. Chat sessions are entirely private and encrypted and not even Bastyon can access them.';
-____loclib.aboutFbImgAndText12 = '6. Mark Zuckerberg won’t bother you!';
+____loclib.aboutFbImgAndText7 = 'Your personal data is not sold to external companies';
+____loclib.aboutFbImgAndText8 = 'No arbitrary censorship';
+____loclib.aboutFbImgAndText9 = 'Does not take personal information';
+____loclib.aboutFbImgAndText10 = 'No corporation behind it';
+____loclib.aboutFbImgAndText11 = 'Chat sessions are entirely private and encrypted and not even Bastyon can access them.';
+____loclib.aboutFbImgAndText12 = 'Mark Zuckerberg won’t bother you!';
 
 
 
@@ -1702,10 +1722,10 @@ ____loclib.aboutHowItWImgAndText23 = 'Privacy protection,';
 ____loclib.aboutHowItWImgAndText24 = 'for your security';
 ____loclib.aboutHowItWImgAndText25 = 'Bastyon does not know who you are.';
 ____loclib.aboutHowItWImgAndText26 = 'Bastyon DOES NOT collect any personal information.';
-____loclib.aboutHowItWImgAndText27 = '1. You can register without revealing your phone number (only email is required)';
-____loclib.aboutHowItWImgAndText28 = '2. Bastyon does not ask for your real name to protect dissent';
-____loclib.aboutHowItWImgAndText29 = '3. Bastyon does not collect IP addresses and does not track you';
-____loclib.aboutHowItWImgAndText291 = '4. Bastyon allows multiple accounts for different purposes';
+____loclib.aboutHowItWImgAndText27 = ' You can register without revealing your phone number (only email is required)';
+____loclib.aboutHowItWImgAndText28 = 'Bastyon does not ask for your real name to protect dissent';
+____loclib.aboutHowItWImgAndText29 = 'Bastyon does not collect IP addresses and does not track you';
+____loclib.aboutHowItWImgAndText291 = 'Bastyon allows multiple accounts for different purposes';
 ____loclib.aboutHowItWImgAndText30 = 'Bastyon will never know who you are, unless you explicitly share your personal data.';
 ____loclib.aboutHowItWImgAndText31 = 'If you don’t share your data, no one, no company, no government, can know who you are.';
 
@@ -1822,8 +1842,20 @@ ____loclib.pkoin_commerce_info = 'Any peer-to-peer PKOIN transactions are not mo
 ____loclib.buyforcrypto = 'Buy for crypto'
 ____loclib.buywithcreditcard = 'Buy with credit card'
 ____loclib.buylogo = 'Buy Pocketcoin (PKOIN)'
+____loclib.buypeertopeer = 'Buy Peer-to-Peer'
+
 
 ____loclib.comments_interesting = 'Interesting at first'
 ____loclib.comments_timeup = 'New first'
 ____loclib.comments_time = 'Old first'
 ____loclib.comments_next = 'Show next'
+
+____loclib.create = 'Create'
+____loclib.drafts = 'Drafts'
+
+____loclib.repostyourown = 'You cannot repost your own post'
+
+
+____loclib.reachedlimits = 'You reached your daily limit of actions. To increase your limit you need to have at least 50 PKOIN in your account or have a valid reputation.'
+
+____loclib.closestreachedlimits = 'You are close to hitting your daily action limit. To increase your limit you need to have at least 50 PKOIN in your account or have a valid reputation.'

@@ -42,9 +42,13 @@
 
 			<% if(back) {  
 				
-				var ur = addtouri(back.href, 'back', 'true') %>
+				var ur = back.href;
 				
-					<a elementsid="<%- ur %>" href="<%- ur %>" fast="fast" handler="true">
+				/*addtouri(back.href, 'back', 'true') */ 
+				
+				%>
+				
+					<a elementsid="<%- ur %>" href="<%- ur %>" fast="fast" handler="true" replace="true">
 						<div class="iconWrapper">
 							<% if(ur.indexOf('index') > -1 && (!self.app.curation() || !state) ){ %>
 								<i class="fas fa-home"></i>
@@ -75,13 +79,27 @@
 
 							<% } else { %> 
 
-								<% if(typeof shw != 'undefined' && shw) {%>
+								<% if((typeof shw != 'undefined' && shw) || (typeof search != 'undefined' && search) ) {%>
 
-									<a elementsid="hrefindex" href="index" fast="fast">
-										<div class="iconWrapper">
-											<i class="fas fa-rss"></i>
-										</div>
-									</a>
+									<% if((typeof search != 'undefined' && search)) {%>
+
+										<a href="index" fast="fast">
+											<div class="iconWrapper">
+												<i class="fas fa-chevron-left"></i>
+											</div>
+										</a>
+
+									<% } else { %> 
+
+										<a elementsid="hrefindex" href="index" fast="fast">
+											<div class="iconWrapper">
+												<i class="fas fa-rss"></i>
+											</div>
+										</a>
+										
+									<% } %> 
+
+									
 	
 									
 								<% } else { %>
@@ -183,11 +201,11 @@
 
 			<% if(state){ %>
 
-				<a elementsid="hrefshare" href="share" fast="fast">
-					<div class="iconWrapper shr <%-sharec%>">
+				<!--<a elementsid="hrefshare" href="share" fast="fast">-->
+					<div class="iconWrapper addshare shr <%-sharec%>">
 						<i class="fas fa-plus-circle"></i>
 					</div>
-				</a>
+				<!--</a>-->
 
 			<% } else { %> 
 				<% if(!(!state && window.cordova)) {%>
@@ -207,11 +225,11 @@
 	<div class="item">
 
 
-		<a elementsid="hrefuserpage" href="userpage" fast="fast" handler="true">
-			<div class="iconWrapper">
+		<!--<a elementsid="hrefuserpage" href="userpage" fast="fast" handler="true">-->
+			<div class="iconWrapper showmenu">
 				<i class="fas fa-bars"></i>
 			</div>
-		</a>
+		<!--</a>-->
 
 
 	</div>

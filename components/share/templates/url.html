@@ -33,7 +33,7 @@
 
 						<div class="jsPlayerPreview">
 							<% if(info.data) {%>
-								<div class="wpl opensviurl" image="<%-info.data.thumbnail || ''%>">
+								<div class="wpl opensviurl" image="<%-info.data.thumbnail || '*'%>">
 								</div>
 								<% if(info.data.duration) {%>
 									<div class="durationWrapper">

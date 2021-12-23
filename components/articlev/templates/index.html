@@ -1,7 +1,120 @@
 <div id="<%-module.map.id%>">
-	<div class="work">
-		<div class="rightchatspacer">
-			<div id="editorjs"></div>
+	
+
+		<div class="bgwrapper">
+			<div class="aheaderWrapper">
+				<div class="work">
+					<div class="rightchatspacer">
+						<div class="aheader top">
+							<div>
+								<button class="button medium ghost nopadding myarticles ">
+									My articles <i class="fas fa-chevron-down"></i>
+								</button>
+							</div>
+
+							<div class="truestatuswrapper">
+								
+							</div>
+							
+						</div>
+					</div>
+				</div>
+
+				<div class="work">
+					<div class="rightchatspacer">
+						<div class="aheader bottom dst aheadermain">
+
+							<div class="leftpart part">
+								<div class="iconWrapper">
+
+									<% 
+														
+										var src = deep(app, 'platform.sdk.user.storage.me.image')  
+
+										var name = app.platform.api.clearname(deep(app, 'platform.sdk.user.storage.me.name') || (user.address.value && user.address.value.toString('hex')) )
+										var letter = name ? name[0] : ''
+
+
+									%>
+
+										
+									<div class="usericon" ban=".gif" image="<%-src || '*'%>">
+
+										<% if(!src && letter) {%>
+											<span class="letter">
+												<%-letter.toUpperCase()%>
+											</span>
+										<% } else if (!src) { %>
+											<i class="far fa-user"></i>
+										<% } %>
+
+										<% if(app.platform.ui.markUser) {%>
+											<%= app.platform.ui.markUser(user.address.value && user.address.value.toString('hex'))%>
+										<% } %>
+									
+									</div>
+								</div>
+
+								<div class="forback">
+									<button class="button ghost backfromedittags"><i class="fas fa-chevron-left"></i></button>
+								</div>
+
+								<div class="statusWrapper">
+									<div class="articlecaptiondouble">
+										
+									</div>
+									<div class="tagswrapper">
+										<div></div>
+									</div>
+									<div class="tagsinputwrapper">
+										
+										<div class="forinput">
+
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="rightpart part">
+
+								<div class="lst">
+									<div class="uploadcover">
+										<button class="button medium ghost nopadding" >
+											Change Cover <i class="far fa-file-image"></i>
+										</button>
+									</div>
+								</div>
+
+								<div class="settingsWrapper">
+								</div>
+
+								<div class="publish">
+									<button class="publish button medium orange">Publish</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		
 		</div>
-	</div>
+
+		<div class="work">
+			<div class="rightchatspacer">
+				<div class="abody">
+			
+					<div class="captionWrapper">
+						<textarea rows="2" placeholder="Caption of new article"></textarea>
+					</div>		
+
+					<div class="editorWrapper">
+						<div id="editorjs"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
 </div>

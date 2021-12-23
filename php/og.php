@@ -3,7 +3,6 @@ require_once('php/rpc.php');
 require_once('php/api.php');
 
 
-
 class OG {
 
     private $rpc = NULL;
@@ -64,8 +63,10 @@ class OG {
 
         if (isset($get['s'])) $this->txid = $this->clean($get['s']);
         if (isset($get['v'])) $this->txid = $this->clean($get['v']);
-        if (isset($get['i'])) $this->txid = $this->clean($get['i']);
-        //if ($this->author == NULL && isset($get['v'])) $this->txid = $this->clean($get['v']);
+
+        if ($this->author == NULL && isset($get['i'])) $this->txid = $this->clean($get['i']);
+
+        if ($this->author == NULL && isset($get['v'])) $this->txid = $this->clean($get['v']);
 
         if (isset($get['num'])) $this->imageNum = $this->clean($get['num']);
 
@@ -78,9 +79,8 @@ class OG {
     public function is_bot() {
 
         if (isset($_SERVER['HTTP_USER_AGENT'])){
-            
             if(preg_match('/mozila|gekko|safari|chrome|khtml|webkit/i', $_SERVER['HTTP_USER_AGENT'])){
-                if(preg_match('/vkshare|whatsapp|viber/i', $_SERVER['HTTP_USER_AGENT'])){
+                if(preg_match('/vkshare|whatsapp|viber|instagram/i', $_SERVER['HTTP_USER_AGENT'])){
                     return true;
                 }
 
@@ -144,6 +144,7 @@ class OG {
     public function ogFromVideo($url, $txid){
 
         $v = $this->parseVideo($url);
+
 
 
 		if ($v['type'] == 'youtube' || $v['type'] == 'vimeo' || $v['type'] == 'peertube'){
@@ -241,8 +242,7 @@ class OG {
                 }
             }
         }
-
-        
+       
 
         $r = array(
             'type' => $type,
@@ -320,7 +320,6 @@ class OG {
                 }
             }
 
-
             if($this->txid != NULL){
 
                 $r = $this->rpc->share($this->txid);
@@ -328,8 +327,6 @@ class OG {
                 if($r != false){
 
                     $r = $r[0];
-
-                    echo 
 
                     $pca = 'p';
 
@@ -344,8 +341,6 @@ class OG {
                     $description = true;
 
                     $this->currentOg['type'] = 'article';
-
-                    
 
                     if (isset($r->u) && $r->u != ''){
                         $this->ogFromVideo(urldecode($r->u), $this->txid);

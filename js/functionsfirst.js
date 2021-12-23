@@ -145,6 +145,14 @@ MD5 = function(d){result = M(V(Y(X(d),8*d.length)));return result.toLowerCase()}
 /* TIMEOUT, INTERVALS */
 
 retry = function(_function, clbk, time, totaltime){
+
+    if (_function()){
+
+        if (clbk) clbk();
+
+        return
+    }
+
     if(!time) time = 20;
 
     var totalTimeCounter = 0 
@@ -589,6 +597,8 @@ importCss = function(src, _document) {
     link.setAttribute('href', src);
     
     var appendTo = _document.getElementsByTagName('body')[0];
+
+    console.log("src", src)
 
     appendTo.appendChild(link);
 }

@@ -127,7 +127,11 @@ __map =  {
 		{ c : 'comments', n : 'index' },
 		{ c : 'lastcomments', n : 'lastcommentslist'},
 		{ c : 'author', n : 'preshell'},
+		{ c : 'author', n : 'authorcaption'},
 		{ c : 'post', n : 'preshell'}
+
+
+		
 		/*,
 		{ c : '', n : '' },
 		{ c : '', n : '' },
@@ -973,8 +977,8 @@ __map =  {
 
 			},
 			relations : [
-				{src : 'js/vendor/editor/editor.js',			   f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},
-				
+				{src : 'js/vendor/editor/editor.js',			   f : 'js'},
+				{src : 'js/vendor/editor/imageloader.js',			   f : 'js'},
 			],
 			relationsSunc : true
 		},
@@ -1099,8 +1103,28 @@ __map =  {
 			uri : "userpage",
 			href : "userpage",
 			preshell : true,
-			add : {
-				el : 'content'
+			add : function(settings, p){
+
+				if(p.inWnd)
+				{
+					return {
+						insert : 'wnd'
+					}
+				}
+				else
+				if(p.inTooltip)
+				{
+					return {
+						insert : 'tooltip'
+					}
+				}
+				else
+				{
+					return {
+						el : 'content'
+					}
+				}
+
 			},
 			anonimus : true,
 			redirect : {
@@ -1411,12 +1435,20 @@ __map =  {
 		href : "notifications",
 		add : function(settings, p){
 
+			
+			if(p.inWnd)
+			{
+				return {
+					insert : 'wnd'
+				}
+			}
+			else
 			if(p.inTooltip)
-
+			{
 				return {
 					insert : 'tooltip'
 				}
-
+			}
 			else
 			{
 				return {
@@ -1839,7 +1871,8 @@ __map =  {
 			el : 'content'
 		},
 		anonimus : true,
-		preshell : true
+		preshell : true,
+		//exhandler : true
 		
 	},
 
@@ -1881,6 +1914,7 @@ __map =  {
 
 		},
 		anonimus : true,
+		//exhandler : true
 	},
 	userslist : {
 		uri : "userslist",

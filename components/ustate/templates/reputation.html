@@ -1,176 +1,140 @@
 <div class="reputation">
 
-   
+    <% var type = app.platform.ui.usertype(address) %>
 
     <div class="reputationblock">
         <div class="blockswrapper">
+            <div class="metricablockwrapper">
+                <div class="metricablock">
+                    <div class="blockWrapper">
+                        <div class="blockContentWrapper">
+                            <div class="blockContent">
+                                <div class="vidgetNameWrapper">
 
+                                    <div class="vidgetNameWrapperTable table">
+                                        <div class="cellleft"><span>
+                                                <%=e('rstate')%>
+                                            </span></div>
+                                        <div class="cellright">
 
-                <div class="metricablockwrapper">
+                                            <% if(reputation) {%>
 
-                    <div class="metricablock">
-                        <div class="blockWrapper">
-                            <div class="blockContentWrapper">
-                                <div class="blockContent">
-                                    <div class="vidgetNameWrapper">
-                                        
+                                                <div class="reputationCount">
+                                                    <span><b>
+                                                            <%- reputation.toFixed(1) %>
+                                                        </b> <i class="far fa-star"></i></span>
+                                                </div>
 
-                                        <div class="vidgetNameWrapperTable table">
-                                            <div class="cellleft"><span><%=e('rstate')%></span></div>
-                                            <div class="cellright">
-
-                                                <% if(reputation) {%>
-
-                                                    <div class="reputationCount">
-                                                        <span><b><%- reputation.toFixed(0) %></b> <i class="far fa-star"></i></span>
-                                                    </div>
-                                                    
                                                 <% } %>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="vidgetIconWrapper">
+                                    <div class="vidgetIcon">
+                                        <div class="table">
+                                            <div>
+                                                <div class="unspentWrapper repv">
+                                                    <% if(reputation) {%>
+                                                        <span class="value">
+                                                            <%- reputation.toFixed(1) %>
+                                                        </span>
+                                                    <% } else { %>
+
+                                                        0
+
+                                                    <% } %>
+                                                </div>
                                             </div>
                                         </div>
-
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                                    
+            <div class="metricablockwrapper">
+                <div class="metricablock">
+                    <div class="blockWrapper">
+                        <div class="blockContentWrapper">
+                            <div class="blockContent">
+                                <div class="vidgetNameWrapper">
 
-                                    <div class="vidgetIconWrapper">
-                                        <div class="vidgetIcon">
+                                    <div class="vidgetNameWrapperTable table">
+                                        <div class="cellleft"><span>
+                                                <%=e('e13049')%>
+                                            </span></div>
+                                        <div class="cellright">
 
-                                            <div class="table">
-                                                <div>
-                                                    <div class="unspentWrapper repv">
-                                                        <% if(reputation) {%>
-                                                            <span class="value">
-                                                                <%- reputation.toFixed(1) %>
-                                                            </span>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="vidgetIconWrapper">
+                                    <div class="vidgetIcon">
+                                        <div class="table">
+                                            <div>
+                                                <div class="unspentWrapper repd">
+                                                    <b>
+                                                        <% if(type) {%>
+
+                                                            <%- e('stp' + type) %>
+
+
                                                         <% } else { %> 
-        
-                                                            0
+
+                                                            <% if(mestate.trial) {%>
+
+                                                                <%- e('stp') %>
+
+                                                            <% } else { %> 
+                                                                
+                                                                <%- e('stpg') %>
+                                                                
+                                                            <% } %>
                                                             
                                                         <% } %>
-                                                    </div>
+                                                    </b>
+                                                    
                                                 </div>
                                             </div>
-                                            
-                                           
-                
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
                     </div>
+                </div>
+            </div>
+
+        </div>
+
+        <% 
+        
+        
+        if(mestate && mestate.trial && !type) {%>
+
+            <div class="reputationtip">
+
+                <div class="textpart">
+                    <%- e('trialreputationtip') %>
+                </div>
+
+                <div class="buttonWrapper">
+                    <a href="faq?id=starsystem">
+                        <button class="button"><%- e('trialreputationtipaction') %></button>
+                    </a>
+                </div>
                 
             </div>
 
-
-        </div>
+        <% } %>
     </div>
 
-    
-
-    <% if(levels) {%>
-
-        <div class="levelsblock">
-            <div class="blockswrapper">
-                <% 
-
-                    var _levels = _.clone(levels).reverse()
-                
-                    _.each(_levels, function(lvl){ 
-                    
-                        if(!lvl.level) return
-                    
-                    %> 
-
-                        <div class="metricablockwrapper level" level="<%-lvl.level%>">
-
-                            <div class="metricablock">
-                                <div class="blockWrapper">
-                                    
-                                    <div class="blockContentWrapper">
-                                        <div class="blockContent">
-                                            
-                                            <div class="vidgetNameWrapper">
-
-                                                <div class="vidgetNameWrapperTable table">
-                                                    <div class="cellleft"><span><%=e('e13192')%> <%- lvl.level %></span></div>
-                                                    <div class="cellright">
-                                                        <div class="reputationCount">
-                                                            <span><b><%- lvl.reputation %></b> <i class="far fa-star"></i></span>
-                                                        </div>
-
-                                                        <div class="valued">
-                                                            <span class="value"><%- app.platform.mp.coin(lvl.bonus) %> PKOIN</span>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-                                            <div class="vidgetIconWrapper">
-                                                <div class="vidgetIcon">
-
-                                                    <div class="table">
-                                                        <div>
-
-                                                            <div class="vidgetcaption"><%=e('e13193')%></div>
-
-                                                            <div class="preloaderGift tooltip" title="You will recieve your coins soon">
-                                                                <div class="preloader5"><img src="./img/three-dots.svg"/></div>
-                                                            </div>
-                                                
-                                                            <div class="valuewrappe">
-                                                                <span class="value"><%- app.platform.mp.coin(lvl.bonus) %> PKOIN</span>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                
-                                                
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="chart">
-
-
-                                                <div class="repchart">
-                                                    <div class="repchartTable table">
-                                                        <div class="pointCell">
-                                                            <div class="point start"></div>
-                                                        </div>
-        
-                                                        <div class="lineCell">
-                                                            <div class="lineBg">
-                                                                <div class="line good">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-        
-                                                        <div class="pointCell">
-                                                            <div class="point end"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-        
-                                            </div>
-
-                                    </div>
-                                </div>
-                                
-                            </div>
-                        
-                        </div>
-
-                <% }) %>
-            </div>
-        </div>
-
-    <% } %>
-
-    <% if(!reputation && !levels && app.errors.connection()) {%>
+    <% if(!reputation && app.errors.connection()) {%>
 
         <div class="connectionFailed">
             <i class="fas fa-wifi"></i>

@@ -1,12 +1,11 @@
-<div id="<%-module.map.id%>" class="<% if(ed.fromtop) {%> fromtop <% } %> <% if(ed.openapi) {%> fromopenapi <% } %>">
-
+<div id="<%-module.map.id%>" class="<% if(ed.fromtop) {%> fromtop <% } %> <% if(ed.openapi) {%> fromopenapi <% } %> <% if(preview) {%> preview <% } %> <% if(listpreview) {%> listpreview <% } %>">
 
 	<div class="captionfwrapper">
 		<div class="captionCnt">
 		</div>
 	</div>
 
-	<div class="loaderWrapper">
+	<div class="loaderWrapper <% if(preview) {%> hidden <% } %>">
 		<div class="preloader5"><img src="./img/three-dots.svg"/></div>
 	</div>
 

@@ -19,7 +19,21 @@ var articlesv = (function(){
 		}
 
 		var renders = {
+			articles : function(){
+				self.shell({
 
+					animation : false,
+					name : 'articles',
+					data : {
+						articles : self.app.platform.sdk.articles.storage || []
+					},
+					el : el.articles
+
+				},
+				function(p){
+				
+				})
+			}
 		}
 
 		var state = {
@@ -57,10 +71,25 @@ var articlesv = (function(){
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
+				el.articles = el.c.find('.articles')
 
 				initEvents();
 
+				renders.articles()
+
 				p.clbk(null, p);
+			},
+			wnd : {
+				class : 'wndarticles normalizedmobile',
+				header : "drafts",
+				buttons : {
+					success : {
+						text : "create",
+						action : function(){
+
+						}
+					}
+				}
 			}
 		}
 	};

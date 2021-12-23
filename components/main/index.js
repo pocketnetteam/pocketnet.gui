@@ -300,6 +300,7 @@ var main = (function(){
 						shuffle : true,
 						period : '4320',
 						page : 0,
+						openPostInWindowMobile : true,
 						afterload : function(ed, s, e){
 
 							if(e || !s.length) return
@@ -320,15 +321,26 @@ var main = (function(){
 							
 						},
 	
-						opensvi : function(id, share){
+						opensvi : isMobile() ? null : function(id, share){
+
+							self.nav.api.load({
+								open : true,
+								href : 'index?video=1&v=' + id,
+								history : true,
+								handler : true
+							})
+
+							return
 
 							if(isMobile() && share){
+
 								self.nav.api.load({
 									open : true,
 									href : 'post?&s=' + id,
 									history : true,
 									handler : true
 								})
+
 							}
 							else{
 								self.nav.api.load({
@@ -432,6 +444,7 @@ var main = (function(){
 					var c = deep(self, 'app.modules.menu.module.showsearch')
 
 					if (c)
+
 						c(value)
 
 					self.app.platform.sdk.search.get(searchvalue, 'posts', 0, 10, null, function(r, block){
@@ -459,10 +472,10 @@ var main = (function(){
 					if (c){
 
 						if(searchtags){
+
 							var val = _.map(searchtags, function(w){return '#' + w}).join(' ')
 
 							c(val)
-
 
 							self.app.platform.sdk.activity.addtagsearch(val)
 
@@ -472,7 +485,6 @@ var main = (function(){
 						}
 
 					}
-					
 
 					renders.lenta(clbk, p)
 				}
@@ -752,35 +764,13 @@ var main = (function(){
 
 			if(!isMobile() && !isTablet()){
 
-				if(!videomain)
-					initstick()
+				if(!videomain) initstick()
 
 			}
 			else{
 
 
-				if (self.app.scrolling){
-	
-					el.lentacell.on('scroll', function(){
-
-						if (el.lentacell){
-
-							var st = el.lentacell.scrollTop()
-
-							if (st < 200){
-								self.app.el.html.removeClass('scrollmodedown')
-							}
-	
-							_.each(self.app.scrolling.clbks, function(c){
-								c(st)
-							})
-						}
-
-
-						
-					})
-	
-				}
+				
 			}
 			
 
@@ -1047,20 +1037,17 @@ var main = (function(){
 
 			destroy : function(){
 
-				if(el.c) el.c.html('')
+				//if(el.c && !isMobile()) el.c.html('')
 
 				showCategories(false)
 
 				delete self.app.events.scroll.main
 				delete self.app.events.resize.mainpage
 					
-				self.app.el.html.removeClass('scrollmodedown')
 
 				renders.post(null)
 
 				hsready = false
-
-
 
 				//searchvalue = '', searchtags = null
 
@@ -1113,7 +1100,7 @@ var main = (function(){
 				fixeddirection = null
 				addbuttonShowed = false
 
-				self.app.el.footer.removeClass('workstation')
+				//self.app.el.footer.removeClass('workstation')
 
 				el = {}
 				
@@ -1154,8 +1141,7 @@ var main = (function(){
 				el.slwork = el.c.find('.maincntwrapper >div.work')
 				el.topvideos = el.c.find('.topvideosWrapper')
 
-
-				self.app.el.footer.addClass('workstation')
+				//self.app.el.footer.addClass('workstation')
 
 				initEvents();
 

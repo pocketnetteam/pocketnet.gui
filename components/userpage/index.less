@@ -10,6 +10,8 @@
 		
 	}
 
+	
+
 	.fillUserWrapper{
 		height: 400px;
 		background: #F1F1F1;
@@ -253,6 +255,11 @@
 						color : @color-raspberry;
 						font-weight: 700!important;
 					}
+				}
+
+				.addtoname{
+					opacity: 0.5;
+					font-weight: 500;
 				}
 			}
 
@@ -612,10 +619,31 @@ html.stblack{
 	}
 }
 
+.wnd.wnduserpage{
+	.wndcontent{
+		padding-top : 0;
+		.work{
+			width: 100%!important;
+			padding : 0!important;
+		}
+	}
+
+	#userpage{
+		.bgCaptionWrapper{
+			display: none;
+		}
+	}
+	
+}
 
 /*t*/ @media only screen and (max-width: 768px){
 
 #userpage{
+
+	.preloaderWrapper{
+		padding : 4 * @rhythm;
+		text-align: center;
+	}
 
 	.profile{
 		display: none;
@@ -713,6 +741,11 @@ html.stblack{
 	}
 
 }
+html.tablet{
+	#userpage{
+		padding-top : 55px;
+	}
+}
 }
 
 @media only screen and (max-width: 640px){
@@ -807,11 +840,7 @@ html.stblack{
 		}
 	}
 
-	html.tablet{
-		#userpage{
-			padding-top : 55px;
-		}
-	}
+	
 }
 
 html.tablet{

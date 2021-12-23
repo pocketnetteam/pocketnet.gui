@@ -580,6 +580,10 @@ var staking = (function(){
 				make()
 
 				p.clbk(null, p);
+			},
+
+			wnd : {
+				class : 'normalizedmobile'
 			}
 		}
 	};

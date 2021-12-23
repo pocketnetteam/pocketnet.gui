@@ -3,6 +3,28 @@
 #uploadpeertube {
     width: 100%;
 
+    .errorWrapper{
+        display: flex;
+        width: 100%;
+        height: 100%;
+        align-items: center;
+
+        >div{
+            padding : 4 * @rhythm;
+        }
+
+        .videoErrorHeading {
+            font-size: 1.5em;
+            font-weight: 200;
+            color: @color-bad;
+        }
+
+        .videoErrorBody {
+            font-weight: 200;
+            padding : 2 * @rhythm 0;
+        }
+    }
+
     .upload-header-wrapper {
         position: absolute;
         left: 2 * @rhythm;
@@ -505,6 +527,14 @@
     }
 }
 
+html.stblack{
+    #uploadpeertube{
+        .note{
+            color : fade(#fff, 70);
+        }
+    }
+}
+
 
 .wnd.uploadpeertube {
     .wndinner {
@@ -521,6 +551,23 @@
             justify-content: space-around;
 
             overflow: hidden;
+        }
+    }
+
+    &.witherror{
+
+        .hideButton {
+            display: none!important;
+        }
+        .wndinner {
+            max-width: 450px;
+            max-height: 385px;
+
+            
+            
+            #uploadpeertube{
+                height: 100%;
+            }
         }
     }
 
@@ -548,6 +595,9 @@
 
 /*t*/ @media only screen and (max-width: 768px){
     #uploadpeertube {
+        .quality-limit-container{
+            display: none;
+        }
         .sectionsWrapper {
             display: flex;
             flex-direction: column;

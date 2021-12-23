@@ -424,7 +424,7 @@ var post = (function () {
 						play : function(){
 							self.app.actions.playingvideo(player)
 
-							if(isMobile() && !ed.repost){
+							if(isMobile() && !ed.repost && !el.c.closest('.wndcontent').length){
 								
 								self.app.actions.scroll(125)
 							}
@@ -992,15 +992,17 @@ var post = (function () {
 				);
 			},
 			images: function (clbk) {
-				var _el = el.c.find('.image');
-				var images = el.c.find('.images');
+				var _el = el.c.find('.postcontent .image');
+				var images = el.c.find('.postcontent .images');
 
 				if (images.hasClass('active') || !_el.length || !images.length) {
 					if (clbk) clbk();
 				} else {
 
 
-					_el.imagesLoaded({ background: true }, function (image) {
+					_el.imagesLoadedPN({ imageAttr: true, debug : true }, function (image) {
+
+						console.log('image', image)
 
 						if (share.settings.v != 'a') {
 
@@ -1069,30 +1071,15 @@ var post = (function () {
 									
 								})
 
-								/*_.each(image.images, function (img, n) {
-									var _img = img.img;
-
-									var el = $(image.elements[n]).closest('.imagesWrapper');
-									var ac = '';
-
-									var _w = el.width();
-									var _h = el.height();
-
-									var w = _w * (_img.width / _img.height);
-
-									if (_img.width < el.width()) {
-										el.find('.image').width(_img.width);
-										el.find('.image').height(_img.height);
-									} else {
-										el.height(_w * (_img.height / _img.width));
-									}
-								});*/
 
 							}
 
 						}
 
 						var isclbk = function(){
+
+
+							
 							images.addClass('active');
 
 							_el.addClass('active');
@@ -1105,8 +1092,6 @@ var post = (function () {
 							var gutter = 5;
 
 							if (isMobile() || ed.repost) {
-
-								console.log("HERE")
 
 								images.find('.imagesContainer').owlCarousel({
 									items: 1,
@@ -1439,7 +1424,7 @@ var post = (function () {
 
 					var images = _p.el.find('img');
 
-					_p.el.find('img').imagesLoaded({ background: true }, function (image) {
+					_p.el.find('img').imagesLoadedPN({ background: true }, function (image) {
 						_.each(image.images, function (i, index) {
 							if (i.isLoaded) {
 								$(images[index]).addClass('active');
@@ -1791,13 +1776,7 @@ var post = (function () {
 			},
 
 			wnd: {
-				class: 'withoutButtons postwindow',
-				swipeClose: true,
-				swipeCloseDir: 'right',
-				swipeMintrueshold: 30,
-				close: function () {
-					//self.app.nav.api.history.removeParameters(['s'])
-				}
+				class: 'withoutButtons postwindow normalizedmobile',
 			}
 		}
 	};

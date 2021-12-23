@@ -409,6 +409,72 @@ var author = (function(){
 
 				})
 			},
+
+			authorcaption : function(clbk){
+				self.shell({
+
+					name :  'authorcaption',
+					el :   el.authorcaption,
+
+					data : {
+						author
+					},
+
+
+				}, function(p){
+
+					el.menu = p.el.find('.usermenu')
+					el.panel = el.c.find('.panel')
+					el.caption = el.c.find('.bgCaption')
+					el.usericon = el.c.find('.usericon');
+					el.subscribe = el.c.find('.subscribebuttonstop');
+
+
+					el.subscribe.find('.subscribe').on('click', events.subscribe)
+					el.subscribe.find('.unsubscribe').on('click', events.unsubscribe)
+					el.caption.find('.startchat').on('click', events.startchat)
+					el.caption.find('.unblocking').on('click', function(){
+		
+						dialog({
+							html : self.app.localization.e('e13023'),
+							btn1text : self.app.localization.e('unblock'),
+							btn2text : self.app.localization.e('ucancel'),
+		
+							class : 'zindex',
+		
+							success : function(){
+		
+								self.app.platform.api.actions.unblocking(author.address, function(tx, error){
+									if(!tx){
+										self.app.platform.errorHandler(error, true)	
+									}
+								})
+		
+							}
+						})
+		
+						
+					})
+
+					p.el.find('.notificationturn').on('click', events.subscribePrivate)
+		
+					p.el.find('.changeaccount').on('click', function(){
+		
+						self.nav.api.go({
+							open : true,
+							href : 'accounts',
+							inWnd : true,
+							history : true,
+							essenseData : {
+								toaccpage : true
+							}
+		
+						})
+					})
+
+					renders.menu(clbk)
+				})
+			},
 			
 			metmenu : function(_el){
 
@@ -511,10 +577,17 @@ var author = (function(){
 
 					if (report.id != 'shares' || cl) rem.push('ss')
 
-					if(!npsh)
+					if(!npsh){
+
+						console.log("ADDTO HISTORY")
+
 						self.app.nav.api.history.addRemoveParameters(rem, {
 							report : report.id
 						})
+
+
+					}
+						
 				}
 
 				report.active = true;
@@ -533,6 +606,9 @@ var author = (function(){
 			},
 
 			menulight : function(){
+
+				if(!el.menu) return
+
 				el.menu.find('.usermenuitem').removeClass('active')
 
 				var r = _.find(reports, function(r){
@@ -554,18 +630,8 @@ var author = (function(){
 						reports : reports
 					},
 
-					//animation : 'fadeIn',
 
 				}, function(p){
-
-					/*p.el.find('.usermenuitem').swipe({
-						tap : function(){
-							var r = $(this).attr('menuitem');
-
-							if (reports[r] && reports[r].render)
-								renders.report(reports[r])
-						}
-					})*/
 
 					p.el.find('.usermenuitem').on('click', function(){
 						var r = $(this).attr('menuitem');
@@ -573,7 +639,6 @@ var author = (function(){
 							if (reports[r] && reports[r].render)
 								renders.report(reports[r])
 					})
-
 					
 					_.each(reports, function(r, j){
 						if(r.events){
@@ -581,19 +646,7 @@ var author = (function(){
 							var el = p.el.find('[menuitem="'+j+'"]')
 
 							_.each(r.events, function(e, i){
-
-								/*if(i == 'click' && isTablet()){
-
-									el.swipe({
-										tap : e
-									})
-
-								}
-								else{*/
-									el.on(i, e)
-								//}
-
-								
+								el.on(i, e)
 							})
 
 						}
@@ -615,7 +668,8 @@ var author = (function(){
 					essenseData : {
 						addresses : users,
 						empty : empty,
-						caption : caption
+						caption : caption,
+						sort : 'commonuserrelation',
 					},
 					
 					clbk : function(e, p){
@@ -655,6 +709,10 @@ var author = (function(){
 
 							renders.report(reports.contents)
 
+						})
+
+						p.el.find('.showmoreinabout').on('click', function(){
+							p.el.find('.authorinfo').addClass('displayedall')
 						})
 					})
 
@@ -1068,56 +1126,9 @@ var author = (function(){
 
 		var initEvents = function(){
 
-
-			var src = deep(author, 'data.image')
-
-			var me = self.app.platform.sdk.address.pnet() ? self.app.platform.sdk.address.pnet().address : null;
-
 			el.up.on('click', events.up)
 
-			el.subscribe.find('.subscribe').on('click', events.subscribe)
-			el.subscribe.find('.unsubscribe').on('click', events.unsubscribe)
-			el.c.find('.notificationturn').on('click', events.subscribePrivate)
 
-			el.caption.find('.startchat').on('click', events.startchat)
-
-			el.caption.find('.unblocking').on('click', function(){
-
-				dialog({
-					html : self.app.localization.e('e13023'),
-					btn1text : self.app.localization.e('unblock'),
-					btn2text : self.app.localization.e('ucancel'),
-
-					class : 'zindex',
-
-					success : function(){
-
-						self.app.platform.api.actions.unblocking(author.address, function(tx, error){
-							if(!tx){
-								self.app.platform.errorHandler(error, true)	
-							}
-						})
-
-					}
-				})
-
-				
-			})
-
-
-			el.c.find('.changeaccount').on('click', function(){
-
-				self.nav.api.go({
-					open : true,
-					href : 'accounts',
-					inWnd : true,
-
-					essenseData : {
-						href : deep(self, 'app.nav.current.href') || 'index'
-					}
-
-				})
-			})
 
 			self.app.platform.ws.messages.event.clbks.author = function(data){
 			
@@ -1133,8 +1144,11 @@ var author = (function(){
 
 			self.app.platform.clbks.api.actions.subscribe.author = function(address){
 
-				if(address == author.address){
-					el.subscribe.addClass('following')
+				if (address == author.address){
+
+					if (el.subscribe)
+						el.subscribe.addClass('following')
+
 					el.c.find('.notificationturn').removeClass('turnon')	
 
 					el.c.find('.toReport[report="followers"] .count').html(reports.followers.count())
@@ -1150,7 +1164,9 @@ var author = (function(){
 			self.app.platform.clbks.api.actions.subscribePrivate.author = function(address){
 
 				if(address == author.address){
-					el.subscribe.addClass('following')
+					if (el.subscribe)
+						el.subscribe.addClass('following')
+
 					el.c.find('.notificationturn').addClass('turnon')	
 
 					el.c.find('.toReport[report="followers"] .count').html(reports.followers.count())
@@ -1167,7 +1183,10 @@ var author = (function(){
 
 				if(address == author.address){
 
-					el.subscribe.removeClass('following')
+					if (el.subscribe)
+						el.subscribe.removeClass('following')
+
+
 					el.c.find('.notificationturn').removeClass('turnon')	
 
 					el.c.find('.toReport[report="followers"] .count').html(reports.followers.count())
@@ -1186,7 +1205,10 @@ var author = (function(){
 			self.app.platform.clbks.api.actions.blocking.author = function(address){
 
 				if(address == author.address){
-					el.caption.addClass('blocking');
+
+					if (el.caption)
+						el.caption.addClass('blocking');
+
 					el.c.find('.notificationturn').removeClass('turnon')
 				}
 
@@ -1196,7 +1218,8 @@ var author = (function(){
 			self.app.platform.clbks.api.actions.unblocking.author = function(address){
 
 				if(address == author.address){
-					el.caption.removeClass('blocking');
+					if (el.caption)
+						el.caption.removeClass('blocking');
 				}
 
 			}
@@ -1250,16 +1273,114 @@ var author = (function(){
 				renders.info(el.info)
 		}
 
+		var init = function(){
+
+			renders.authorcaption(function(){
+				make(true);
+
+				self.sdk.activity.adduser('visited', author.address)
+
+				if(self.user.isItMe(author.address)){
+					self.app.nav.api.backChainClear()
+				}
+			})
+
+			
+		}
+
+		var preinit = function(address, clbk){
+
+			author = {};
+
+			if (address){
+				
+				author.address = address
+
+				self.sdk.users.get(author.address, function(){
+
+					if(self.app.platform.sdk.user.reputationBlockedRedirect(address)){
+
+						self.app.el.html.removeClass('allcontent')
+
+						return
+					}
+
+					if(!self.app.platform.sdk.address.pnet() || author.address != self.app.platform.sdk.address.pnet().address){
+						reports.shares.name = self.app.localization.e('uposts')
+					}
+					else
+					{
+						reports.shares.name = self.app.localization.e('myuposts')
+
+						if(!self.app.user.validate()){
+
+							self.app.el.html.removeClass('allcontent')
+
+							self.nav.api.go({
+								href : 'userpage?id=test',
+								history : true,
+								open : true,
+								replaceState : true
+							})
+
+							return;
+						}
+					
+					}
+
+					author.data = self.sdk.users.storage[author.address]
+
+					var data = {
+						author : author
+					};
+
+					clbk(data);
+
+				})
+			}
+			else{
+
+				self.app.el.html.removeClass('allcontent')
+
+				self.app.nav.api.load({
+					open : true,
+					href : 'page404',
+					history : true,
+					replaceState : true
+				})
+			}
+		}
+		
+
 		return {
 			primary : primary,
 
 			parametersHandler : function(){
-				var r = parameters().report || 'shares'
 
-				renders.report(reports[r], null, true)
-				renders.menu()
+				var r = parameters().report || 'shares'
+				var address = parameters().address
+
+				if(address && author.address != address){
+					preinit(address, function(){
+						init()
+					})
+				}
+				else{
+
+					var active = _.find(reports, function(r){
+						return r.active
+					})
+
+					if (active && (active.id == r || (!r && active.id == 'shares') ) ){
+						return
+					}
+
+					renders.report(reports[r], null, true)
+					renders.menu()
+				}
 
 				
+
 			},
 
 			authclbk : function(){
@@ -1277,8 +1398,8 @@ var author = (function(){
 			},
 
 			getdata : function(clbk, settings){
-
-				author = {};
+				self.app.el.html.addClass('allcontent')
+				
 
 				self.app.platform.sdk.search.clear()
 
@@ -1299,60 +1420,19 @@ var author = (function(){
 				initreports()
 
 				self.loadTemplate({
-					name : 'info'
+					name : 'authorcaption'
 				}, function(){
 
-					self.sdk.users.addressByName(p.address, function(address){
+					self.loadTemplate({
+						name : 'info'
+					}, function(){
 
-						if (address){
-							author.address = address
+						self.sdk.users.addressByName(p.address, function(address){
 
-							self.sdk.users.get(author.address, function(){
+							preinit(address, clbk)
+							
+						})
 
-								if(self.app.platform.sdk.user.reputationBlockedRedirect(address)){
-									return
-								}
-
-								if(!self.app.platform.sdk.address.pnet() || author.address != self.app.platform.sdk.address.pnet().address){
-									reports.shares.name = self.app.localization.e('uposts')
-								}
-								else
-								{
-									reports.shares.name = self.app.localization.e('myuposts')
-
-									if(!self.app.user.validate()){
-
-										self.nav.api.go({
-											href : 'userpage?id=test',
-											history : true,
-											open : true,
-											replaceState : true
-										})
-
-										return;
-									}
-								
-								}
-
-								author.data = self.sdk.users.storage[author.address]
-
-								var data = {
-									author : author
-								};
-
-								clbk(data);
-
-							})
-						}
-						else{
-							self.app.nav.api.load({
-								open : true,
-								href : 'page404',
-								history : true,
-								replaceState : true
-							})
-						}
-						
 					})
 
 				})
@@ -1361,6 +1441,8 @@ var author = (function(){
 			},
 
 			destroy : function(){
+
+				self.app.el.html.removeClass('allcontent')
 
 				if (upbutton)
 					upbutton.destroy()
@@ -1379,43 +1461,29 @@ var author = (function(){
 
 				actions.destroy();
 
-				/*var c = deep(self, 'app.modules.menu.module.destroyauthorsearch')
-
-				if (c && isTablet()){
-					c()
-				}*/
-				
 				el = {};
 			},
 			
 			init : function(p){
+
+				self.app.el.html.addClass('allcontent')
 
 				state.load();
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
 				el.lenta = el.c.find('.lentaWrapper');
-				el.menu = el.c.find('.usermenu')
-				el.panel = el.c.find('.panel')
-				el.caption = el.c.find('.bgCaption')
-				el.fxd = el.c.find('.fxd')
-				el.subscribe = el.c.find('.subscribebuttonstop');
+				
+				
+
 				el.up = el.c.find('.upbuttonwrapper');
 				el.w = $(window);
-				el.usericon = el.c.find('.usericon');
-
 				el.contents = el.c.find('.contentswrapper')
-
 				el.info = el.c.find('.authorinfoWrapper')
+				el.authorcaption = el.c.find('.bgCaptionWrapper')
 
-				make(true);
 				initEvents();
-
-				self.sdk.activity.adduser('visited', author.address)
-
-				if(self.user.isItMe(author.address)){
-					self.app.nav.api.backChainClear()
-				}
+				init()
 
 				p.clbk(null, p);
 			}
