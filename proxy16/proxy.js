@@ -1439,6 +1439,53 @@ var Proxy = function (settings, manage, test, logger) {
 					});
 				},
 			},
+
+			urlPreviewFormatted: {
+				path: '/urlPreviewFormatted',
+				
+				formatdata : function(data){
+
+					console.log('data2', data)
+
+					return data
+				},
+
+				action: function ({ url }) {
+
+					console.log("url", url)
+
+					return new Promise((resolve, reject) => {
+
+						remote.nmake(url, function (err, data) {
+
+							console.log('err', err)
+							if (!err) {
+
+								console.log('data', data)
+
+								resolve({
+
+									data : {
+										"success" : 1,
+										"meta": {
+											"title" : data.title || data.site_name,
+											"description" : data.description,
+											"image" : {
+												"url" : data.image
+											}
+										}
+									}
+
+								});
+
+							} else {
+								reject(err);
+							}
+						});
+					});
+
+				},
+			}
 		},
 
 		common: {

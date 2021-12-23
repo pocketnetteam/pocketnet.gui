@@ -477,6 +477,9 @@ ____loclib.e13031 = "Share Comment"
 ____loclib.e13032 = "Do you really want to delete your comment?"
 ____loclib.e13033 = "Comment has been removed"
 ____loclib.postRemoved = "Post has been removed"
+____loclib.postNotFound = "Post not found"
+
+
 ____loclib.e13034 = "Yes"
 ____loclib.e13035 = "No, cancel"
 ____loclib.hide = "Hide"

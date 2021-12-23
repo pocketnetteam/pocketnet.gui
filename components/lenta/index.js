@@ -4568,7 +4568,6 @@ var lenta = (function(){
 
 				players = {}
 
-				self.app.platform.sdk.chats.removeTemp()
 				video = false					
 
 				if (el.w){
@@ -4635,6 +4634,7 @@ var lenta = (function(){
 				if (video){
 					el.c.addClass('mainvideo')
 				}
+
 
 				if(!essenseData.goback)
 					p.clbk(null, p);

@@ -947,6 +947,12 @@ Application = function(p)
 
 	}
 
+	self.chatposition= function(ab){
+		var attr = ab ? 'above' : 'under'
+
+		self.el.html.attr('chatposition', attr)
+	}
+
 	self.deviceReadyInit = function(p){
 
 		self.el = {
@@ -959,7 +965,8 @@ Application = function(p)
 			footer : 		$('#footerWrapper'),
 			chats : 		$('.chats'),
 			html : 			$('html'),
-			window : 		$(window)
+			window : 		$(window),
+			windows : 		$('#windowsContainer')
 		};
 
 
@@ -1429,11 +1436,22 @@ Application = function(p)
 
 	self.reltime = function(time){
 
+		var value = time || new Date()
+
 		moment.locale(self.localization.key)
 
-		return moment(moment.utc((time || new Date())).toDate()).local().fromNow();
+		if ((moment().diff(value, 'days')) === 0) {
 
+			if((moment().diff(value, 'hours') < 12 )) 
+				return moment(moment.utc(value).toDate()).local().fromNow();
 
+			return new Date(value).toLocaleTimeString([], {hour: '2-digit', minute: "2-digit", hour12: false})
+		} 
+
+		if (moment().year() === moment(value).year()) 
+			return moment(value).local().format('D MMMM')
+
+		return moment(value).local().format('D.MMMM.YYYY')
 	}
 
 	self.realtime = function(){
@@ -1912,6 +1930,37 @@ Application = function(p)
 
 			clbks : {}
 		}
+	}
+
+	self.thislink = function(_url){
+
+		var url = {}
+
+		try{
+			url = new URL(_url)
+		}
+		catch(e){
+			url.host = ''
+		}
+
+		console.log('url', url, _url)
+
+		var groups = {
+			p : ['pocketnet.app', 'bastyon.com'],
+			pt : ['test.pocketnet.app', 'test.bastyon.com']
+		}
+
+		if (_url.indexOf('bastyon://') > -1) return true
+		if (_url.indexOf('pocketnet://') > -1) return true
+
+		var domain = self.options.url
+
+		var m = _.find(groups, function(g){
+			return _.indexOf(g, url.host) > -1 &&  _.indexOf(g, domain) > -1
+		})
+
+		if(m) return true
+
 	}
 
 	self.setref = function(r, na){

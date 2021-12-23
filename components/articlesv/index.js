@@ -8,7 +8,7 @@ var articlesv = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el;
+		var el, ed;
 
 		var actions = {
 
@@ -25,13 +25,28 @@ var articlesv = (function(){
 					animation : false,
 					name : 'articles',
 					data : {
-						articles : self.app.platform.sdk.articles.storage || []
+						articles : self.app.platform.sdk.articles.getlist(),
+						current : ed.current
 					},
 					el : el.articles
 
 				},
 				function(p){
-				
+					p.el.find('.openart').on('click', function(){
+						var article =  self.app.platform.sdk.articles.getbyid(
+							$(this).closest('.article').attr('art')
+						)
+
+						if (article){
+
+							if(ed.select){
+								if(!ed.select(article)) return
+							}
+
+						}
+
+						self.closeContainer()
+					})
 				})
 			}
 		}
@@ -53,9 +68,11 @@ var articlesv = (function(){
 		return {
 			primary : primary,
 
-			getdata : function(clbk){
+			getdata : function(clbk, p){
 
 				var data = {};
+
+				ed = deep(p, 'settings.essenseData') || {}
 
 				clbk(data);
 

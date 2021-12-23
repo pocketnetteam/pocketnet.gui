@@ -218,7 +218,7 @@ var ProxyRequest = function(app = {}, proxy){
     return self
 }
 
-var Node = function(meta, app/*, proxy ??*/){
+var ProxyNode = function(meta, app){
     var self = this
 
     self.host = meta.host || ""
@@ -262,7 +262,7 @@ var Proxy16 = function(meta, app, api){
                     _.each(metas, meta => { this.add(meta) })
                 },
                 add : function(meta){
-                    var node = new Node(meta, app)
+                    var node = new ProxyNode(meta, app)
                     nodes.push(node)
                 }
             }
@@ -427,7 +427,7 @@ var Proxy16 = function(meta, app, api){
             },
 
             add : function(meta){
-                var node = new Node(meta, app)
+                var node = new ProxyNode(meta, app)
 
                 if(!this.find(node.id)){
                     nodes.push(node)
@@ -1300,5 +1300,5 @@ var Api = function(app){
     return self
 }   
 
-if(typeof module != "undefined"){ module.exports = {Api, ProxyRequest, Proxy16, Node}; } 
+if(typeof module != "undefined"){ module.exports = {Api, ProxyRequest, Proxy16, ProxyNode}; } 
 else { window.Api = Api; window.ProxyRequest = ProxyRequest; window.Proxy16 = Proxy16 }

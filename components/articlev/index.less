@@ -8,6 +8,19 @@
         margin : 0 auto;
     }*/
 
+    h1{
+        font-size: 2em;
+    }
+
+    h2{
+        font-size: 1.7em;
+    }
+
+    h3{
+        font-size: 1.3em;
+    }
+    
+
     .bgwrapper{
         position: relative;
         height: 250px;
@@ -35,7 +48,6 @@
             flex-direction: column;
             justify-content: space-between;
             padding-top : 2 * @rhythm;
-            padding-bottom: 4 * @rhythm;
         }
 
         .changeBgWrapper{
@@ -43,6 +55,14 @@
             left: 3 * @rhythm;
             top : 2 * @rhythm;
         }
+    }
+
+    .mwork{
+        padding : 0 2 * @rhythm;
+    }
+
+    &.dst{
+        padding-bottom : 4 * @rhythm;
     }
 
     .aheader,
@@ -74,6 +94,22 @@
         }
     }
 
+    .previewSection{
+
+    }
+    
+    &.showpreview{
+        .editorSection{
+            display: none;
+        }
+
+        .previewSection{
+            display: block;
+        }
+    }
+
+    
+
     .editorWrapper{
         padding : 2 * @rhythm 0;
 
@@ -88,18 +124,89 @@
             max-width: none;
         }
 
-        .simple-image {
-            padding: 20px 0;
+        .icon(@content, @weight){
+            position: relative;
+
+            &:before{
+                text-align: center;
+                font-weight: @weight;
+                content: @content;
+                width: 18px;
+                height: 18px;
+                position: absolute;
+                margin-top: 12px;
+                left: -30px;
+                font-family: "Font Awesome 5 Free";
+                color : @color-gray-mlight;
+            }
         }
-        
-        .simple-image input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #e4e4e4;
+        .link-tool{
+            .icon('\f0c1', 700);
+        }
+
+        .ce-header{
+            .icon('\f1dc', 700);
+        }
+
+        .cdxcarousel-wrapper{
+
+            padding: 2 * @rhythm;
             border-radius: 3px;
-            outline: none;
-            font-size: 14px;
+            background: fade(@color-gray-slight, 15);
+
+            .icon('\f302', 700);
+
+            .cdxcarousel-list{
+                .cdxcarousel-item{
+                    height: 250px;
+                    padding : 2 * @rhythm;
+
+                    img{
+                        margin-bottom: 0;
+                        border-radius: 3px;
+                    }
+                }
+
+                .cdxcarousel-removeBtn{
+                    top : 3 * @rhythm;
+                    right: 23px;
+                }
+
+                .cdxcarousel-rightBtn{
+                    top : 3 * @rhythm;
+                    right: 62px;
+                }
+
+                .cdxcarousel-leftBtn{
+                    top : 3 * @rhythm;
+                    right: 101px;
+                }
+
+                .cdxcarousel-block{
+                    width: 33.33%;
+                }
+
+                .cdx-input{
+                    border : 0;
+                }
+
+                .cdxcarousel-addImage{
+                    margin-top : 2 * @rhythm;
+                    margin-left : 2 * @rhythm;
+                    margin-right: 2 * @rhythm;
+                    height: 250px;
+                }
+            }
+    
         }
+
+        .cdx-quote{
+            
+            .icon('\f10e', 700);
+        }
+
+        
+      
     }
 
     button{
@@ -226,6 +333,14 @@
                 display: none;
             }
 
+            .searchInputWrapper{
+                input{
+                    &:placeholder-shown{
+                        color : #fff;
+                    }
+                }
+            }
+
         }
         
         &.top{
@@ -241,7 +356,13 @@
         }
 
         button{
+
             &.publish{
+
+                font-size: 0.8em;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+
                 &:hover{
                     background: transparent;
                     backdrop-filter: blur(2px);
@@ -271,11 +392,13 @@
 
             .tags{
 				overflow: hidden;
-				max-width: 650px;
+				max-width: 250px;
                 display: flex;
                 justify-items: start;
                 align-items: center;
                 flex-wrap: nowrap;
+                text-overflow: ellipsis;
+                
                 
 				>div{
 					margin-right: @rhythm;
@@ -327,8 +450,9 @@
             font-size: 2em;
             font-weight: 700;
         }
+
         .lst{
-            width: 120px;
+            width: 100px;
             height: 30px;
             position: relative;
 
@@ -337,6 +461,23 @@
                 width: 100%;
             }
         }
+
+        .removeCover{
+            display: none;
+            max-width: 33px;
+            cursor: pointer;
+
+            i{
+                font-size: 0.8em;
+            }
+        }
+    
+        &.hascover{
+            .removeCover{
+                display: block;
+            }
+        }
+
         .maxtext{
             max-width: 150px;
             text-overflow: ellipsis;

@@ -1116,12 +1116,12 @@ var comments = (function(){
 			p += comment.children * (my ? 4500 : 450)
 
 			if(comment.scoreUp > comment.scoreDown) p += comment.scoreDown * 50
-			else p -= comment.scoreDown * 10
+			else p -= comment.scoreDown * 1000
 
 			p += Math.min(comment.message.length, 200) * 3
 			p += comment.amount * 1000
 
-			p += comment.reputation / 20
+			p += Math.max(comment.reputation, 100) * 10 + comment.reputation / 20
 
 			if(comment.deleted) p = p / 1300
 
@@ -1133,12 +1133,6 @@ var comments = (function(){
 			var me = deep(self.app, 'platform.sdk.users.storage.' + self.user.address.value.toString('hex'))
 
 			if (!my && me){
-
-				if (me.relation(comment.address, 'subscribes') )
-					p = p * 7
-
-				if (me.relation(comment.address, 'subscribers') )
-					p = p * 1.2
 
 				if (me.relation(comment.address, 'blocking') )
 					p = p * 0
@@ -1154,7 +1148,7 @@ var comments = (function(){
 				var activities = self.app.platform.sdk.activity.has('users', comment.address)
 
 				if (activities.point){
-					p = p * activities.point / 10
+					p = p + activities.point * 10
 				}
 			}
 
@@ -1246,9 +1240,10 @@ var comments = (function(){
 
 				var comment = self.app.platform.sdk.comments.find(txid, id, pid)
 
-				if (listpreview && ed.lastComment){
-					comment = self.app.platform.sdk.comments.ini([ed.lastComment])[0]
+				console.log('comment', comment)
 
+				if (!comment && listpreview && ed.lastComment){
+					comment = self.app.platform.sdk.comments.ini([ed.lastComment])[0]
 				}
 
 
@@ -1345,14 +1340,13 @@ var comments = (function(){
 						
 						return template(d);
 
-					}, function(__el, f, mme){
+					}, function(__el, f, close){
 
 						__el.find('.edit').on('click', function(){
 
 							renders.edit(localParent, comment)
 
-							if (!mme && _el.tooltipster)
-								_el.tooltipster('hide')	
+							close()
 						})
 
 						__el.find('.block').on('click', function(){
@@ -1366,8 +1360,7 @@ var comments = (function(){
 									parent.remove()
 								}
 
-								if (!mme && _el.tooltipster)
-									_el.tooltipster('hide')	
+								close()
                             })
 
 							
@@ -1401,16 +1394,14 @@ var comments = (function(){
 								btn2text : self.app.localization.e('e13035')
 							})
 
-							if (!mme && _el.tooltipster)
-								_el.tooltipster('hide')		
+							close()
 						})
 
 						__el.find('.socialshare').on('click', function(){
 
 							actions.sharesocial(comment)
 
-							if (!mme && _el.tooltipster)
-								_el.tooltipster('hide')		
+							close()	
 
 						})
 

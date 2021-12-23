@@ -1052,7 +1052,7 @@ Nav = function(app)
 
 			var e = href && (href.indexOf('/') > -1 || href.indexOf('.') > -1) || _OpenApi
 
-			if (href.indexOf('http') == -1){
+			if (href.indexOf('http') == -1 && href.indexOf('mailto:') == -1){
 
 				if(_OpenApi) {
 					href = app.options.url + '/' + href
@@ -1253,15 +1253,20 @@ Nav = function(app)
 				if (window.cordova)
 				{
 
-					if(pathname == '/indexcordova.html'){
-						options.navPrefix = '/'
-					}
-					else{
-						var arr = pathname.split("/");
-						arr.splice(arr.length-1, 1);
+					var arr = pathname.split('/');
+					arr.splice(arr.length-1, 1);
 
-						options.navPrefix = arr.join("/") + "/";
-					}
+					options.navPrefix = arr.join('/') + '/';
+
+					// if(pathname == '/indexcordova.html'){
+					// 	options.navPrefix = '/'
+					// }
+					// else{
+					// 	var arr = pathname.split("/");
+					// 	arr.splice(arr.length-1, 1);
+
+					// 	options.navPrefix = arr.join("/") + "/";
+					// }
 					
 
 				}

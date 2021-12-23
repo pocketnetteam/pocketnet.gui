@@ -1,4 +1,4 @@
-<span class="captiontext"><% if(1 == 2) {%>Редактирование статьи<% } else { %>Создание статьи<% }  %></span><% if(art.time) {%><span>, черновик сохранён </span><span class="saveddate realtime" time="<%- new Date(art.time) %>">
+<span class="captiontext"><% if(itisdraft) {%>Редактирование статьи<% } else { %>Создание статьи<% }  %></span><% if(itisdraft && art.time) {%><span>, черновик сохранён </span><span class="saveddate realtime" time="<%- new Date(art.time) %>">
     <%- app.reltime(new Date(art.time))  %>
 </span>
 <% } %>

@@ -1,0 +1,406 @@
+<%
+
+var cc = share.renders.captionclear();
+
+if(typeof ed == 'undefined') ed = {}
+
+var thisrepost = (typeof repost != 'undefined' && repost)
+
+var cover = share.images[0]
+
+
+var my = (user.address.value && share.address == user.address.value.toString('hex'))
+var subscribed = '';
+
+if(!my && user.address.value){
+
+    var me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
+
+    if (me && me.relation(share.address, 'subscribes')){
+        subscribed = 'subscribed'
+    }
+}
+
+///all
+
+var cview = 'article'
+
+var name = app.platform.api.name(share.address)
+
+var value = Number(share.score)
+
+var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share)
+
+var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
+
+%> 
+
+<% var maketags = function() { %> 
+
+
+    <% if(share.tags && share.tags.length > 0) {
+
+        var bycategories = app.platform.sdk.categories.fromTags(share.tags, share.lanuage)
+
+        
+        %>
+
+        <div class="tags canmark hideOnFullVideo unselectablemobile">
+            <% _.each(bycategories.categories, function(category){ %>
+
+                <div class="category">
+                    <span>@<%-category.name%></span><% if(category.new) {%>&nbsp;<span class="newlabel">New!</span><% } %> 
+                </div>
+
+            <% }) %>
+
+            <% _.each(bycategories.tags, function(tag){ 
+                
+                var additional = app.platform.sdk.tags.findadditional(tag)
+                
+                %>
+
+                <div class="tag">
+                    <span>#<%-tag%></span><% if(additional && additional.new) {%>&nbsp;<span class="newlabel">New!</span><% } %>
+                </div>
+
+            <% }) %>
+        </div>
+
+
+    <% } %>
+
+    
+<%} %>
+
+<% var displaysys = function(){ %> 
+
+    <% if((typeof repost == 'undefined' || !repost || fromempty)) {%>
+        <div class="sys unselectablemobile">
+            <%if(share.pin){%>
+            <span class="pinnedLabel"><i class="fas fa-thumbtack"></i> <%=e('pinned').toLowerCase()%>,</span><%}%><% if(share.downloadedDate) {%> <span class="fas fa-cloud-download-alt"></span> <span class="realtime editedLabel" time="<%-share.downloadedDate%>"><%- app.reltime(share.downloadedDate) %></span><% } else { %> 
+            <% if(share.time) {%><span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span><% } else { %><span><%=e('e13019')%></span><% } %><% if(share.edit == 'true') {%><span class="editedLabel">, <%=e('e13130').toLowerCase()%></span><% } %><% } %><% if(share.visibility()) {%><span class="visibilityLabel">, <%=e('sharevisibility_' + share.visibility()).toLowerCase()%></span><% } %>
+        </div>
+    <% } else { %> 
+        <div class="sys unselectablemobile">
+            <% if(share.time) {%><span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span><% } else { %><span><%=e('e13019')%></span><% } %><% if(share.edit == 'true') {%><span class="editedLabel">, <%=e('e13130').toLowerCase()%></span><% } %><% if(share.visibility()) {%><span class="visibilityLabel">, <%=e('sharevisibility_' + share.visibility()).toLowerCase()%></span><% } %>
+        </div>
+    <% } %>
+    
+<% } %>
+
+<% var metadisplay = function(){ %>
+
+	<div class="meta unselectablemobile <% checkvisibility ? 'checkvisibility' : '' %>">
+		<div class="metatable table">
+			<div class="metadata">
+
+                <div class="author">
+
+                    <% var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0 %>
+
+                        <b><span class="adr"><%-name || share.address %></span></b><% if(reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
+
+
+                    <% if((!state || !my) && (typeof repost == 'undefined' || !repost)) { %> 
+
+                        <span elementsid="sbtnxs-follow" class="sbtnxs">
+                            &middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><i class="far fa-check-circle"></i>  <%=e('following')%></span>
+                            
+                            <% if(state && !my && user.address.value) {
+                                
+                                var r = me.relation(share.address, 'subscribes')  %>
+                                
+
+                                <span elementsid="lenta_notificationturn" class="notificationturn <% if(r && (r.private == 'true' || r.private == '1' || r.private === true)) {%> turnon <% } %>">&middot; <i class="far fa-bell-slash"></i></span>
+                            <% } %>
+        
+
+                            
+                        </span>
+
+                    <% } %>
+
+                    
+                </div>	
+        
+			
+			</div>
+
+			<% if((typeof repost == 'undefined' || !repost) && (typeof preview == 'undefined' || !preview)) { %>
+				
+				<div elementsid="lenta_metapanel" class="metapanel <%-share.txid%>">
+					<% if(!checkvisibility && (typeof openapi == 'undefined' || !openapi)) {%>
+						<div class="metapanelitem metmenu">
+							<i class="fas fa-ellipsis-h"></i>
+						</div>
+					<% } else { %> 
+						<div class="metapanelitem">
+							
+						</div>
+					<% } %>
+
+				</div>
+				
+
+			<% } %>
+
+			<% if(typeof repost != 'undefined' && !fromempty) { %> 
+
+				<div class="metapanel">
+					<div class="metapanelitem">
+						<a elementsid="sharebuttonlink" href="<%-app.platform.api.authorlink(share.address)%>?s=<%-share.txid%>&mpost=true">
+							<i class="fas fa-share"></i> 
+						</a>
+					</div>
+				</div>
+				
+			<% } %>
+			
+		</div>					
+	</div>
+	
+<% } %>
+
+<% var makecaptionclear = function(){ %> 
+
+	<% if(cc) { %>
+        <div class="sharecaption canmark">
+            <%=app.actions.emoji(nl2br(trimrn(findAndReplaceLink(filterXSS(clearScripts(cc)), true))))%>
+        </div>
+	<% } 
+
+} %>
+
+<% var makestarspanel = function(){ %>
+
+    <div class="item forstars">
+									
+    </div>
+
+    <% if(!checkvisibility && !share.visibility() && !my) {%>
+        <div elementsid="lenta_forreport" class="item <% if(!my){ %> forrepost <% } else { %> nact <% } %>">
+
+            <div class="itemwr table">
+                <div class="iconwr">											
+                    <div class="icon">
+                        <i class="fas fa-share"></i>
+                    </div>
+                </div>
+            
+            </div>
+
+        </div>
+    <% } %>
+
+    <div class="item <% if(!preview) {%> sharesocial <% } %> right unselectable">
+
+        <div class="itemwr table">
+            <div class="labelwr workstation"><span class="label"><%=e('share').toUpperCase()%></span></div>
+            <div class="iconwr">
+                
+                <div class="icon">
+                    <i class="fas fa-share-alt"></i>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+<% } %>
+
+<% var makeavatar = function(){
+
+    var src = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image');
+    var letter = name ? name[0] : ''; 
+    
+%>
+    <div class="icon">
+        <div class="usericon usericonsbsa another" image="<%-src || '*'%>" ban=".gif">
+
+            <% if(!src && letter) { %>
+
+                <span class="letter">
+                    <%-letter.toUpperCase()%>
+                </span>
+
+            <% } else if (!src) { %>
+
+                <svg width="30" height="30" data-jdenticon-value="<%-share.address%>"></svg>
+
+            <% } %>
+
+            <% if(app.platform.ui.markUser) {%>
+
+                <%= app.platform.ui.markUser(share.address)%>
+
+            <% } %>
+            
+        </div>
+    </div>
+
+<% } %>
+
+<% var maketemp = function(){ %>
+
+    <div class="iconwr">
+        <div class="preloader5"><img src="./img/three-dots.svg"/> <%=e('postWaitConf')%></div>
+    </div>
+
+<% } %> 
+
+<% var notvisible = function(){ %>
+
+
+    <div class="hiddenpost">
+
+        <% if(!lockedaccount) {%>
+            <div class="captionpreview">
+                <% makecaptionclear() %>
+            </div>
+
+            <% if(checkvisibility == 'sub'){ %>
+
+                <div class="hiddenlabeltext">
+                    <%=e('sharevisibilitylabel_sub_' + cview)%>
+                </div>
+
+            <% } %>
+
+            <% if(checkvisibility == 'reg'){ %>
+
+                <div class="hiddenlabeltext">
+                    <%=e('sharevisibilitylabel_reg_' + cview)%>
+                </div>
+
+            <% } %>
+
+            <% if(!state) {%>
+
+                <div class="hiddenlabelaction">
+                    <button elementsid="hrefregistration" class="orange small button toregistration"><%=e('signupmenu')%></button>
+                </div>
+
+            <% } %>
+        
+        <% } else { %> 
+            
+            <div class="hiddenlabeltext">
+                <%=e('lockedaccounta')%>
+            </div>
+            
+        <% } %>
+
+
+    </div>
+
+
+<% } %>
+
+<% var makearticle = function(){ 
+
+	var edjs = new edjsHTML(null, app)
+	
+	%> 
+
+	<div class="article">
+		<%=edjs.parse(share.message)%>
+	</div>
+
+<% } %>
+
+<div class="sharecnt <% if(share.deleted) { %> deleted <% } %>">
+
+    <div class="sharearticle">
+
+        <div class="shareTable <%-subscribed%>" address="<%-share.address%>" stxid="<%-share.txid%>">
+
+            <div class="shareBgCaption" image="<%- cover %>">
+
+                <div class="sharecaptionabsolutewrapper">
+
+                    <div class="blackmatte">
+
+                    </div>
+
+                    <div class="captioncnt ">
+                        <div class="textscnts widthcontainer">
+                            <% maketags() %>
+
+                            <% makecaptionclear() %>
+
+                            <div class="divider"></div>
+
+                            <% displaysys() %>
+
+                            <% metadisplay() %>
+                            
+    
+                            <% /* maketemp()*/%>
+    
+                        </div>
+
+                       
+                    </div>
+
+                    <% makeavatar() %>
+                </div>
+
+            </div>
+            <% if(all) {%>
+
+                <div class="articlecontent widthcontainer">
+                    <% if(!checkvisibility && !lockedaccount) {%>
+
+                        <div class="cntswrk">
+                            <% makearticle() %>
+                        </div>
+
+                        <div class="articleend">
+                            <% maketags() %>
+                            <% displaysys() %>
+                        </div>
+
+                        <div class="cntswrk forcomments">
+                            <div class="paddingWrapper">
+                                <div class="commentsWrapperHb">
+                                
+                                    <div class="commentsWrapper">
+                                    </div>
+                
+                                </div>
+                            </div>
+                        </div>
+        
+        
+                    <% } else { %> 
+        
+                        <div class="cntswrk">
+                            <% notvisible() %>
+                        </div>
+                        
+                    <% } %>
+
+                    <div class="cntswrk removeDescription postcontent">
+                        <%=e('postRemoved')%>
+                    </div>
+
+                </div>
+
+                
+
+            <% } %>
+
+        </div>
+
+    </div>
+
+
+
+
+              
+
+
+		
+
+</div>	

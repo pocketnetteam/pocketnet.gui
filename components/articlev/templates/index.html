@@ -3,7 +3,7 @@
 
 		<div class="bgwrapper">
 			<div class="aheaderWrapper">
-				<div class="work">
+				<div class="mwork">
 					<div class="rightchatspacer">
 						<div class="aheader top">
 							<div>
@@ -20,9 +20,9 @@
 					</div>
 				</div>
 
-				<div class="work">
+				<div class="mwork dst">
 					<div class="rightchatspacer">
-						<div class="aheader bottom dst aheadermain">
+						<div class="aheader bottom aheadermain">
 
 							<div class="leftpart part">
 								<div class="iconWrapper">
@@ -34,10 +34,8 @@
 										var name = app.platform.api.clearname(deep(app, 'platform.sdk.user.storage.me.name') || (user.address.value && user.address.value.toString('hex')) )
 										var letter = name ? name[0] : ''
 
-
 									%>
 
-										
 									<div class="usericon" ban=".gif" image="<%-src || '*'%>">
 
 										<% if(!src && letter) {%>
@@ -64,32 +62,37 @@
 										
 									</div>
 									<div class="tagswrapper">
-										<div></div>
+										<div class=""></div>
 									</div>
 									<div class="tagsinputwrapper">
 										
-										<div class="forinput">
+										<div class="forinput ">
 
 										</div>
 									</div>
 								</div>
 							</div>
 
-							<div class="rightpart part">
+							<div class="rightpart part ">
+
+								<div class="removeCover">
+									<i class="far fa-times-circle"></i>
+								</div>
 
 								<div class="lst">
+									
 									<div class="uploadcover">
-										<button class="button medium ghost nopadding" >
-											Change Cover <i class="far fa-file-image"></i>
+										<button class="button medium ghost nopadding ">
+											Change Cover
 										</button>
 									</div>
 								</div>
 
-								<div class="settingsWrapper">
+								<div class="settingsWrapper ">
 								</div>
 
 								<div class="publish">
-									<button class="publish button medium orange">Publish</button>
+									<button class="publish action button medium orange ">View and publish</button>
 								</div>
 							</div>
 						</div>
@@ -102,14 +105,27 @@
 
 		<div class="work">
 			<div class="rightchatspacer">
-				<div class="abody">
-			
-					<div class="captionWrapper">
-						<textarea rows="2" placeholder="Caption of new article"></textarea>
-					</div>		
 
-					<div class="editorWrapper">
-						<div id="editorjs"></div>
+				<div class="editorSection">
+
+					<div class="abody">
+				
+						<div class="captionWrapper">
+							<textarea rows="2" placeholder="Caption of new article"></textarea>
+						</div>		
+
+						<div class="editorWrapper">
+							<div id="editorjs"></div>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="previewSection">
+					<div class="abody">
+						<div class="shareWrapper">
+
+						</div>
 					</div>
 				</div>
 			</div>

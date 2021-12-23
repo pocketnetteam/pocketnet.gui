@@ -25,16 +25,67 @@
     .article{
         display: flex;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-start;
+        margin-top : 2 * @rhythm;
+        margin-bottom: 2 * @rhythm;
         >div{
-            padding : 2 * @rhythm;
+            padding : 0 2 * @rhythm;
+        }
+
+        .openart{
+            cursor: pointer;
+        }
+
+        .imageWrapper{
+            max-width: 55px;
+            padding-left: 2 * @rhythm;
+            padding-right: 0;
+            padding-top: 0.5 * @rhythm;
+
+            .img{
+                margin : 0 auto;
+                border-radius: 3px;
+                width: 33px;
+                height: 33px;
+                margin : 0 auto;
+                opacity: 1!important;
+                background: fade(@color-gray-mlight, 50);
+            }
+        }
+
+        .menupanel{
+            max-width: 33px;
+            opacity: 0.6;
+            cursor: pointer;
+            color: @color-gray-mlight;
+            text-align: right;
+            padding-left: 0;
+
+            &.hover{
+                opacity: 1;
+            }
+
+            i{
+                font-size: 0.8em;
+                
+            }
+
+        }
+
+        .cnt{
+            flex-grow: 2;
         }
 
         .name{
             font-weight: 500;
+
+            i{
+                font-size: 0.8em;
+            }
         }
         .time{
             text-align: right;
+            padding-top: 0.5 * @rhythm;
         }
 
         .time,
@@ -44,11 +95,12 @@
 
         .tags{
             overflow: hidden;
-            max-width: 150px;
+            max-width: 250px;
             display: flex;
             justify-items: start;
             align-items: center;
-            flex-wrap: nowrap;
+            flex-wrap: wrap;
+            text-overflow: ellipsis;
             
             >div{
                 margin-right: @rhythm;
@@ -68,6 +120,17 @@
             .newlabel{
                 background: rgb(255, 5, 101);
                 color : #fff;
+            }
+        }
+
+        &.current{
+            .name{
+                text-decoration: underline;
+                text-decoration-color: #ff0565;
+
+                i{
+                    color : #ff0565;
+                }
             }
         }
     }

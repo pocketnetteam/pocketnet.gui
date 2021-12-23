@@ -394,52 +394,7 @@ var menu = (function(){
 				}
 			},
 
-			messenger : {
-				init : function(el){
-
-					var rtchttp = self.app.platform.clientrtc.rtchttp;
-
-					var unread = function(){
-
-						var c = 0;
-
-
-						_.each(rtchttp.storage.chat, function(info, id){
-
-							c = c + info.messages.unreaded 
-						})
-
-						return c;
-					}
-
-					self.app.platform.clientrtc.rtchttp.info.allchats(function(){
-						actions.ahnotify(el, unread(), 'chat')
-					})	
-
-					self.app.platform.sdk.messenger.clbks.menu = function(){
-						actions.ahnotify(el, unread(), 'chat')
-					}
-
-				},
-
-				click : function(el){
-
-					if(!isMobile())
-						self.nav.api.go({
-							href : 'userpage?id=messenger&report=messenger',
-							history : true,
-							open : true
-						})
-					else
-						self.nav.api.load({
-							href : 'messenger',
-							history : true,
-							open : true
-						})
-
-				}
-			},
-
+			
 			savecross : {
 				init : function(el){
 
@@ -1225,11 +1180,8 @@ var menu = (function(){
 				delete self.app.platform.sdk.notifications.clbks.seen.menu
 				delete self.app.platform.sdk.notifications.clbks.added.menu
 
-				delete self.app.platform.sdk.messenger.clbks.menu
 				delete self.app.errors.clbks.menu
-
 				delete self.app.platform.sdk.registrations.clbks.menu
-
 
 				delete self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu
 				delete self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu2

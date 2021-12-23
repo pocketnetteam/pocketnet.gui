@@ -1,5 +1,6 @@
 /* PDF */
 
+
 	var tableAlignmentCenter = function(obj){
 
 		obj.width = 'auto';
@@ -511,7 +512,7 @@
 
 			id = 'w' + makeid().split('-')[0],
 			nooverflow = p.nooverflow || app.scrollRemoved,
-			el = p.el || $('#windowsContainer');
+			el = p.el || p.app.el.windows;
 
 		//var _w = $(window);
 
@@ -520,6 +521,12 @@
 		var find = function(s){
 			if (wnd)
 				return wnd.find(s);
+		}
+
+		var hasonewindow = function(){
+			if(p.app.el.windows.find('.wnd').length) p.app.el.html.addClass('haswindow')
+
+			else p.app.el.html.removeClass('haswindow')
 		}
 
 		self.redraw = function(){
@@ -623,7 +630,9 @@
 
 			wnd.css("display", "block");
 			wnd.addClass('asette')
-			
+
+
+			hasonewindow()
 
 			setTimeout(function(){
 				wnd.addClass('sette')
@@ -725,6 +734,8 @@
 
 				setTimeout(function(){
 					wnd.remove();
+
+					hasonewindow()
 				}, 100)
 				
 
@@ -816,6 +827,8 @@
 			}
 
 
+			app.chatposition(false)
+
 			if(content) success();
 			
 		}
@@ -844,7 +857,7 @@
 
 		p.clbk = function(el){
 			
-			el.on('click', function(){
+			el.find('.closeButton').on('click', function(){
 				self.destroy()
 			})
 
@@ -10573,6 +10586,183 @@ checkAddress = function(address){
 }
 
 
+Base64Helper = {
+    // private property
+    _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+
+    // public method for encoding
+    encode: function (input) {
+        var output = "";
+        var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
+        var i = 0;
+
+        input = Base64._utf8_encode(input);
+
+        while (i < input.length) {
+
+            chr1 = input.charCodeAt(i++);
+            chr2 = input.charCodeAt(i++);
+            chr3 = input.charCodeAt(i++);
+
+            enc1 = chr1 >> 2;
+            enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+            enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+            enc4 = chr3 & 63;
+
+            if (isNaN(chr2)) {
+                enc3 = enc4 = 64;
+            } else if (isNaN(chr3)) {
+                enc4 = 64;
+            }
+
+            output = output +
+                Base64._keyStr.charAt(enc1) + Base64._keyStr.charAt(enc2) +
+                Base64._keyStr.charAt(enc3) + Base64._keyStr.charAt(enc4);
+
+        }
+
+        return output;
+    },
+
+    // public method for decoding
+    decode: function (input) {
+        var output = "";
+        var chr1, chr2, chr3;
+        var enc1, enc2, enc3, enc4;
+        var i = 0;
+
+        input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+
+        while (i < input.length) {
+
+            enc1 = Base64._keyStr.indexOf(input.charAt(i++));
+            enc2 = Base64._keyStr.indexOf(input.charAt(i++));
+            enc3 = Base64._keyStr.indexOf(input.charAt(i++));
+            enc4 = Base64._keyStr.indexOf(input.charAt(i++));
+
+            chr1 = (enc1 << 2) | (enc2 >> 4);
+            chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
+            chr3 = ((enc3 & 3) << 6) | enc4;
+
+            output = output + String.fromCharCode(chr1);
+
+            if (enc3 != 64) {
+                output = output + String.fromCharCode(chr2);
+            }
+            if (enc4 != 64) {
+                output = output + String.fromCharCode(chr3);
+            }
+
+        }
+
+        output = Base64._utf8_decode(output);
+
+        return output;
+
+    },
+
+    // private method for UTF-8 encoding
+    _utf8_encode: function (string) {
+        string = string.replace(/\r\n/g, "\n");
+        var utftext = "";
+
+        for (var n = 0; n < string.length; n++) {
+
+            var c = string.charCodeAt(n);
+
+            if (c < 128) {
+                utftext += String.fromCharCode(c);
+            }
+            else if ((c > 127) && (c < 2048)) {
+                utftext += String.fromCharCode((c >> 6) | 192);
+                utftext += String.fromCharCode((c & 63) | 128);
+            }
+            else {
+                utftext += String.fromCharCode((c >> 12) | 224);
+                utftext += String.fromCharCode(((c >> 6) & 63) | 128);
+                utftext += String.fromCharCode((c & 63) | 128);
+            }
+
+        }
+
+        return utftext;
+    },
+
+    // private method for UTF-8 decoding
+    _utf8_decode: function (utftext) {
+        var string = "";
+        var i = 0;
+        var c = 0, c1 = 0, c2 = 0;
+
+        while (i < utftext.length) {
+
+            c = utftext.charCodeAt(i);
+
+            if (c < 128) {
+                string += String.fromCharCode(c);
+                i++;
+            }
+            else if ((c > 191) && (c < 224)) {
+                c2 = utftext.charCodeAt(i + 1);
+                string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
+                i += 2;
+            }
+            else {
+                c2 = utftext.charCodeAt(i + 1);
+                c3 = utftext.charCodeAt(i + 2);
+                string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
+                i += 3;
+            }
+
+        }
+        return string;
+    },
+
+    fromFile: file => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.readAsDataURL(file);
+        reader.onloadend = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    }),
+
+    toFileFetch: function (base64) {
+        return fetch(base64).then(res => {
+            return res.blob()
+        }).then(blob => {
+            return new (window.wFile || window.File)([blob], "File name", { type: "image/png" })
+        })
+    },
+
+    toFile: function (base64) {
+
+        try {
+            var arr = base64.split(','),
+                mime = arr[0].match(/:(.*?);/)[1],
+                bstr = atob(arr[1]),
+                n = bstr.length,
+                u8arr = new Uint8Array(n);
+
+            while (n--) {
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+
+            var file = new (window.wFile || window.File)([u8arr], "Filename", { type: mime });
+
+            return Promise.resolve(file)
+        }
+        catch (e) {
+            return Promise.reject(e)
+        }
+
+
+
+    }
+
+
+
+}
+
 /* ______________________________ */
 
 /* EXTRA */
@@ -10719,6 +10909,184 @@ stringEqTrig = function(s1, s2){
 
 
 }
+
+edjsHTML = function() {
+    "use strict";
+
+    var e = {
+        delimiter: function() {
+            return '<div class="article_delimiter"><i class="fas fa-asterisk"></i><i class="fas fa-asterisk"></i><i class="fas fa-asterisk"></i></div>'
+        },
+
+        header: function(e) {
+            var t = e.data;
+            return "<h" + _.escape(t.level) + ">" + (t.text) + "</h" + (t.level) + ">"
+        },
+
+        paragraph: function(e) {
+            return "<p>" + (e.data.text) + "</p>"
+        },
+
+        list: function(e) {
+            var t = e.data,
+                r = "unordered" === t.style ? "ul" : "ol",
+
+                n = function(e, t) {
+					
+                    var r = e.map((function(e) {
+                        if (!e.content && !e.items) return "<li>" + (e) + "</li>";
+                        var r = "";
+                        return e.items && (r = n(e.items, t)), e.content ? "<li> " + e.content + " </li>" + r : void 0
+                    }));
+
+                    return "<" + t + ">" + r.join("") + "</" + t + ">"
+                };
+            return '<div class="article_list">' + n(t.items, r) + '</div>'
+        },
+
+        image: function(e) {
+            var t = e.data,
+
+                r = _.escape(t.caption ? t.caption : "Image");
+
+
+			var cl = []
+
+			if(t.withBackground) cl.push('withBackground')
+			if(t.withBorder) cl.push('withBorder')
+			if(t.stretched) cl.push('stretched')
+
+			var src = t.file && t.file.url ? t.file.url : t.file
+
+			return '<div class="article_image '+ cl.join(' ') +'"><img src="' + src + '" alt="' + _.escape(r) + '" /><div class="article_image_caption">'+_.escape(r)+'</div></div>'
+
+        },
+
+        quote: function(e) {
+
+            var t = e.data;
+
+            return '<div class="article_quote"><div class="article_quote_text">' + (t.text) + '</div><div class="article_quote_author">' + (t.caption) +' </div></div>'
+        },
+
+        code: function(e) {
+            return "<pre><code>" + _.escape(e.data.code) + "</code></pre>"
+        },
+
+        /*embed: function(e) {
+            var t = e.data;
+            switch (t.service) {
+                case "vimeo":
+                    return '<iframe src="' + t.embed + '" height="' + t.height + '" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>';
+                case "youtube":
+                    return '<iframe width="' + t.width + '" height="' + t.height + '" src="' + t.embed + '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+                default:
+                    throw new Error("Only Youtube and Vime Embeds are supported right now.")
+            }
+        },*/
+
+		warning : function(e){
+
+			var t = e.data;
+
+			if (!t.title || !t.message){
+				return this.error('warning', e)
+			}
+
+			return '<div class="article_warning"><div class="article_warning_icon"><i class="fas fa-exclamation-triangle"></i></div><div class="article_warning_content"><div class="article_warning_title">' + _.escape(t.title || '') + '</div><div class="article_warning_message">' + _.escape(t.message || '') + '</div></div></div>'
+		},
+
+		carousel: function(e){
+
+
+			var imageshtml = _.map(e.data, function(i){
+				return '<div class="img" image="' + _.escape(i.url) + '" i="' + _.escape(i.url) + '" save="' + _.escape(i.url) + '"></div>'
+			}).join('')
+
+			
+			return '<div class="article_carousel">'+imageshtml+'</div>'
+		},
+
+		linkTool : function(e){
+			var t = e.data;
+
+			if (!t.link){
+				return this.error('link', e)
+			}
+
+			var url = {}
+
+			try{
+				url = new URL(t.link)
+			}
+			catch(e){
+				url.host = ''
+			}
+
+			if (app.thislink(t.link)){
+				return '<div class="article_this_embed" href="'+_.escape(t.link)+'"></div>'
+			}
+			else{
+				return '<a href="'+t.link+'" donottrust="true"><div class="article_link_custom"><div class="article_link_custom_image"><div class="img" image="' + _.escape(deep(t, 'meta.image.url'))+'"></div></div><div class="article_link_custom_content"><div class="article_link_custom_title">' + _.escape(deep(t, 'meta.title') || url.host || 'Undefined Link') + '</div><div class="article_link_custom_description">' + _.escape(deep(t, 'meta.description') || '') + '</div><div class="article_link_custom_href">' + _.escape(t.link) + '</div></div></div></a>'
+			}
+
+
+		},
+
+		error : function(type, e){
+			return '<div class="article_error">' + 'Error:' + _.escape(type) + '</div>'
+		}
+    };
+
+    function t(e) {
+        return new Error('[31m The Parser function of type "' + _.escape(e) + '" is not defined. \n\n  Define your custom parser functions as: [34mhttps://github.com/pavittarx/editorjs-html#extend-for-custom-blocks [0m')
+    }
+	
+    var r = function(n, app) {
+
+        void 0 === n && (n = {});
+
+        var i = Object.assign({}, e, n);
+
+        return {
+            parse: function(e) {
+                return '<div class="article_body">' + e.blocks.map((function(e) {
+                    return i[e.type] ? i[e.type](e) : t(e.type)
+                })).join('') + '</div>'
+            },
+			
+            parseBlock: function(e) {
+                return i[e.type] ? i[e.type](e) : t(e.type)
+            },
+
+            parseStrict: function(e) {
+                var n = e.blocks,
+                    o = r(i).validate({
+                        blocks: n
+                    });
+                if (o.length) throw new Error("Parser Functions missing for blocks: " + o.toString());
+                for (var a = [], u = 0; u < n.length; u++) {
+                    if (!i[n[u].type]) throw t(n[u].type);
+                    a.push(i[n[u].type](n[u]))
+                }
+                return a
+            },
+
+            validate: function(e) {
+                var t = e.blocks.map((function(e) {
+                        return e.type
+                    })).filter((function(e, t, r) {
+                        return r.indexOf(e) === t
+                    })),
+                    r = Object.keys(i);
+                return t.filter((function(e) {
+                    return !r.includes(e)
+                }))
+            }
+        }
+    };
+    return r
+}();
 
 function formatBytes(bytes, decimals = 2) {
     if (bytes === 0) return '0 Bytes';
