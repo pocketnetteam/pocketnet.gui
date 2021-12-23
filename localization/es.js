@@ -804,3 +804,10 @@ ____loclib.videosDeleted = "Vídeos eliminados!";
 ____loclib.noDownloadedVideos = "No hay vídeos descargados";
 
 ____loclib.buy = 'Comprar';
+
+// Uploadpeertube component
+____loclib.videoUploadingFinish = "Terminando de subir el archivo..."
+____loclib.uploadNewVideo = "Subir un nuevo Pocketvídeo"
+____loclib.selectVideoFile = "Seleccione el archivo de vídeo"
+____loclib.uploadVideoProgress_processing = "Procesados:"
+____loclib.uploadVideoProgress_uploading = "Cargados:"
