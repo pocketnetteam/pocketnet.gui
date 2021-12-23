@@ -132,6 +132,7 @@
 #uploadpeertube .upload-progress-bar {
   height: 3px;
   width: 100%;
+  transition: width 0.3s linear;
 }
 #uploadpeertube .upload-progress-bar.processing {
   background-color: #ff4800;

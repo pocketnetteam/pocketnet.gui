@@ -114,8 +114,8 @@ var uploadpeertube = (function () {
 				contentAsHTML: true,
 			});
 
-			el.videoInput.change(async function (evt) {
-				var fileName = evt.target.files[0].name;
+      el.videoInput.change(async function (evt) {
+        var fileName = evt.target.files[0].name;
 
 				el.videoError.text(
 					fileName.slice(0, 20) + (fileName.length > 20 ? '...' : ''),
@@ -227,7 +227,7 @@ var uploadpeertube = (function () {
           return new Promise(executor);
         }
 
-        const filePath = event.target.files[0].path;
+        const filePath = evt.target.files[0].path;
 
         /** Writing transcoded alternatives to target object */
         data.video = {
@@ -285,7 +285,7 @@ var uploadpeertube = (function () {
 				el.importUrl.addClass('hidden');
 
         if (typeof _Electron !== 'undefined') {
-          const filePath = event.target.files[0].path;
+          const filePath = evt.target.files[0].path;
 
           function processTranscoding() {
             ipcRenderer.send('transcode-video-request', filePath);

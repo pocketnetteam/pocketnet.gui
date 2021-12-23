@@ -1120,7 +1120,8 @@ ____loclib.videoTranscodingError = "There was an error with processing your vide
 ____loclib.videoUploadingFinish = "Finishing uploading..."
 ____loclib.uploadNewVideo = "Upload New Pocketvideo"
 ____loclib.selectVideoFile = "Select video file"
-____loclib.uploadVideoProgress = "Progress:"
+____loclib.uploadVideoProgress_processing = "Processed:"
+____loclib.uploadVideoProgress_uploading = "Uploaded:"
 
 
 
@@ -2012,10 +2013,10 @@ ____loclib.easyNode_e2002_1 = " earns "
 ____loclib.easyNode_e2002_2 = "Pocketcoin. Your computer can be one of those nodes, assuming you have at least 50 GB of free SSD space and a decent internet connection.  Node has to lock some Pocketcoin in it to"
 ____loclib.easyNode_e2002_2_1 = " earn "
 ____loclib.easyNode_e2002_2_2 = "more Pocketcoin. That is called staking in cryptocurency."
-____loclib.minPkoin = function (p){	
+____loclib.minPkoin = function (p){
 	return  String(p) + " PKOIN Minimum"
 }
-____loclib.maxPkoin = function (p){	
+____loclib.maxPkoin = function (p){
 	return  String(p) + " PKOIN Maximum"
 }
 
@@ -2110,7 +2111,7 @@ ____loclib.submitapplicationVideo = "Request PKOIN for video"
 ____loclib.submitapplicationVideoSmall = "Send & request PKOIN"
 
 ____loclib.videobloggerRequest = "If you are a blogger with an established audience, you can get a gift of PKOIN to load video. Click the button below if you are a blogger:"
-    
+
 
 ____loclib.videobloggerRequest_pl1 = "Link to existing channel 1"
 ____loclib.videobloggerRequest_pl2 = "Link to existing channel 2"
