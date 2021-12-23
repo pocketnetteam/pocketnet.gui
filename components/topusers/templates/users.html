@@ -95,18 +95,13 @@ _.each(addresses, function(u){
 
 						</div>
 
-						<% var subscribers = deep(app, 'platform.sdk.users.storage.'+address+'.subscribers');   %>
+						<% var subscribers = u.subscribers_count   %>
 
-						<% if (subscribers) {%>
+			
+						<div class="light">						
+							<%- subscribers  %>	<%=e('subscribers') %>
 
-							<div class="light">						
-								<%- subscribers.length  %>	<%=e('subscribers') %>
-
-							</div>
-
-						<% } %>
-
-				
+						</div>
 
 
 					</a>			
