@@ -324,7 +324,8 @@ var faqcontent = [
 				
 			]
 	
-		}
+		},
+		
 		
 	
 	]
