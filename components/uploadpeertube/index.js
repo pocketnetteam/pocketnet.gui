@@ -1,3 +1,9 @@
+let ipcRenderer;
+
+if (typeof _Electron !== 'undefined') {
+  ipcRenderer = require('electron').ipcRenderer;
+}
+
 var uploadpeertube = (function () {
   var self = new nModule();
 
@@ -84,7 +90,7 @@ var uploadpeertube = (function () {
         contentAsHTML: true,
       });
 
-      el.videoInput.change(function (evt) {
+      el.videoInput.change(async function (evt) {
         var fileName = evt.target.files[0].name;
 
         el.videoError.text(
@@ -180,6 +186,52 @@ var uploadpeertube = (function () {
         };
 
         el.importUrl.addClass('hidden');
+
+        if (typeof _Electron !== 'undefined') {
+          const filePath = event.target.files[0].path;
+
+          function processTranscoding() {
+            ipcRenderer.send('transcode-video-request', filePath);
+
+            ipcRenderer.on('transcode-video-progress', (event, progress) => {
+              options.progress(progress);
+            });
+
+            return new Promise((resolve, reject) => {
+              ipcRenderer.on('transcode-video-response', (event, transcoded, error) => {
+                if (error) {
+                  reject('Error on transcoding');
+                  return;
+                }
+
+                setTimeout(() => resolve(transcoded), 1000);
+              });
+            });
+          }
+
+          el.uploadProgress.find('.bold-font')
+              .text(self.app.localization.e('uploadVideoProgress_processing'));
+
+          options.progress(5);
+
+          await processTranscoding()
+            .then((transcoded) => {
+              /** Writing transcoded alternatives to target object */
+              data.video = transcoded;
+            })
+            .catch(() => {
+              sitemessage(self.app.localization.e('videoTranscodingError'));
+            });
+        }
+
+        el.uploadProgress.find('.bold-font')
+            .text(self.app.localization.e('uploadVideoProgress_uploading'));
+        el.uploadProgress
+            .find('.upload-progress-bar')
+            .removeClass('processing')
+            .addClass('uploading');
+
+        options.progress(0);
 
         self.app.peertubeHandler.api.videos
           .upload(data, options)
