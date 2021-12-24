@@ -83,7 +83,7 @@ _.each(addresses, function(u){
 
 						<div class="top">
 							<div class="name">
-								<%- app.platform.api.name(address) || address %>							
+								<%- u.name %>							
 							</div>		
 							<% var r = u.reputation %>
 
@@ -99,7 +99,7 @@ _.each(addresses, function(u){
 
 			
 						<div class="light">						
-							<%- subscribers  %>	<%=e('subscribers') %>
+							<%- subscribers %> <%=e('subscribers3') %>
 
 						</div>
 

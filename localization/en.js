@@ -1275,9 +1275,10 @@ ____loclib.sharevisibilitylabel_reg_video = 'Author chose to make this <b>video<
 
 ____loclib.buy = 'Buy';
 
-____loclib.topAuthors = 'Top Authors'
+____loclib.topAuthors = 'Top Authors';
 ____loclib.rating = 'Rating';
 ____loclib.setupVideoNodeGuide = 'Setup Video Node'
+____loclib.subscribers3 = 'Subscribers';
 
 ____loclib.MainBoard = 'Stand up to censorship &';
 ____loclib.MainBoard1 = 'gain financial independence';
