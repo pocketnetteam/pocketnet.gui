@@ -24086,7 +24086,8 @@ Platform = function (app, listofnodes) {
                     return
                 }
 
-                app.chatposition(true)
+                if (app.chatposition)
+                    app.chatposition(true)
                     
                 self.app.actions.playingvideo()
 
