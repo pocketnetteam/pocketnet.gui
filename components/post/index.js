@@ -188,25 +188,7 @@ var post = (function () {
 						repost : shareid
 					})
 
-					/*var href = 'index';
-
-					if (isMobile()) href = 'share'
-
-					self.closeContainer()
-
-					self.nav.api.load({
-						open: true,
-						href: href + '?repost=' + shareid,
-						history: true,
-						handler: true,
-						essenseData: {
-
-						},
-
-						clbk: function (p) {
-
-						}
-					})*/
+				
 				}, shareid)
 
 
@@ -228,7 +210,6 @@ var post = (function () {
 						self.nav.api.load({
 							open: true,
 							href: 'post?s=' + txid,
-							//history : true,
 
 							eid: 'nextpost' + txid,
 							el: nextel,
@@ -1257,55 +1238,17 @@ var post = (function () {
 						});
 
 						if (share.itisarticle){
-							renders.articlespart(_p.el)
+							renders.articlespart(_p.el.find('.sharearticle'))
 						}
 
 						
 					},
 				);
 			},
-			articlespart : function(el){
+			articlespart : function(wr){
 
-				var wr = el.find('.sharearticle')
-				var caption = wr.find('.shareBgCaption')
+				self.app.platform.ui.articledecoration(wr, share, true)
 
-				el.find('.article_carousel').each(function(){
-					self.app.platform.ui.carousel($(this))
-				})
-
-				el.find('.article_this_embed').each(function(){
-					self.app.platform.ui.embeding($(this))
-				})
-
-
-				el.find('.articleCover').imagesLoadedPN({imageAttr : true}, function (image) {
-
-
-					var aspectRatio = 0.6
-					var small = false
-								
-					_.each(image.images, function(img){
-
-						var _img = img.img;
-						aspectRatio = _img.naturalHeight / _img.naturalWidth
-
-						if(_img.naturalHeight < 400 || _img.naturalWidth < 400){
-							small = true
-						}
-
-					})
-
-					wr.addClass('ready')
-
-					if(small){
-						caption.addClass('smallimage')
-					}
-
-					if(aspectRatio > 1 && !small){
-						caption.addClass('verticalcover')
-					}
-
-				})
 				
 			},
 			showmoreby: function () {

@@ -159,8 +159,6 @@ var articlev = (function(){
 
 				return editor.save().then(outputData => {
 
-					
-
 					art.content = outputData
 
 					actions.save()
@@ -437,11 +435,11 @@ var articlev = (function(){
 
 				art.caption.value = text || ''
 
-				console.log('text', text)
+				console.log('text', text, art)
 
 				renders.captiondouble()
+				
 				actions.save()
-
 				actions.apply()
 			})
 
@@ -453,7 +451,15 @@ var articlev = (function(){
 					inWnd : true,
 					history : true,
 					essenseData : {
-						current : art.id,
+						current : art.id,	
+
+						create : function(){
+
+							console.log("create")
+
+							changeArticle()
+							return true
+						},
 
 						select : function(art){
 							changeArticle(art.id)

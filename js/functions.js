@@ -826,8 +826,8 @@
 				} 
 			}
 
-
-			app.chatposition(false)
+			if (app.chatposition)
+				app.chatposition(false)
 
 			if(content) success();
 			

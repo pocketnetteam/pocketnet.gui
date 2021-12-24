@@ -1,0 +1,46 @@
+<%
+
+var m = [];
+
+var all = {
+
+	edit : {
+		icon : '<i class="fas fa-pencil-alt"></i>',
+		text : e('editarticledraft'),
+		class : 'edit'
+	},
+
+	delete : {
+		icon : '<i class="fas fa-trash"></i>',
+		text : e('deletearticledraft'),
+		class : 'delete'
+	},
+
+    preview : {
+		icon : '<i class="far fa-newspaper"></i>',
+		text : 'previewarticledraft',
+		class : 'preview'
+	},
+
+	
+}
+
+m.push(all.edit)
+m.push(all.delete)
+m.push(all.preview)
+
+
+%>
+
+<div class="sharepostmenu">
+
+	<% _.each(m, function(m){ var mo = all[m] %>
+
+	<div class="menuitem <%-mo.class||''%> table">
+		<div class="icon"><span><%=mo.icon%></span></div>
+		<div class="label"><span><%-mo.text%></span></div>
+	</div>
+		
+	<% }) %>
+
+</div>

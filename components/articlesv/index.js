@@ -102,8 +102,13 @@ var articlesv = (function(){
 				buttons : {
 					success : {
 						text : "create",
-						action : function(){
+						fn : function(){
 
+							ed.create ? ed.create() : ''
+
+							self.closeContainer()
+
+							return true
 						}
 					}
 				}

@@ -2263,6 +2263,54 @@ Platform = function (app, listofnodes) {
 
     self.ui = {
 
+        articledecoration : function(wr, share, extend){
+            var caption = wr.find('.shareBgCaption')
+            var capiontextclass = 'caption_small'
+
+            if(share.caption.length > 10) capiontextclass = 'caption_medium'
+            if(share.caption.length > 60) capiontextclass = 'caption_long'
+
+            caption.addClass(capiontextclass)
+
+            if(extend){
+                wr.find('.article_carousel').each(function(){
+                    self.app.platform.ui.carousel($(this))
+                })
+    
+                wr.find('.article_this_embed').each(function(){
+                    self.app.platform.ui.embeding($(this))
+                })
+            }
+
+            wr.find('.articleCover').imagesLoadedPN({imageAttr : true}, function (image) {
+
+                var aspectRatio = 0.6
+                var small = false
+                            
+                _.each(image.images, function(img){
+
+                    var _img = img.img;
+                    aspectRatio = _img.naturalHeight / _img.naturalWidth
+
+                    if(_img.naturalHeight < 400 || _img.naturalWidth < 400){
+                        small = true
+                    }
+
+                })
+
+                wr.addClass('ready')
+
+                if(small){
+                    caption.addClass('smallimage')
+                }
+
+                if(aspectRatio > 1 && !small){
+                    caption.addClass('verticalcover')
+                }
+
+            })
+        },
+
         changeloc : function(_clbk){
             var items = []
 
@@ -23989,7 +24037,8 @@ Platform = function (app, listofnodes) {
                     return
                 }
 
-                app.chatposition(false)
+                if (app.chatposition)
+                    app.chatposition(false)
 
                 self.app.actions.playingvideo()
 
@@ -24104,7 +24153,8 @@ Platform = function (app, listofnodes) {
             delete self.app.platform.ws.messages["new block"].clbks.matrixchat
             delete self.matrixchat.core
 
-            app.chatposition(false)
+            if (app.chatposition)
+                app.chatposition(false)
 
             var cm = deep(app, 'modules.menu.module.restart')
 

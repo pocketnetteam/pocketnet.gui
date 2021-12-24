@@ -165,8 +165,12 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 <% var makecaptionclear = function(){ %> 
 
 	<% if(cc) { %>
-        <div class="sharecaption canmark">
-            <%=app.actions.emoji(nl2br(trimrn(findAndReplaceLink(filterXSS(clearScripts(cc)), true))))%>
+        <div class="captionmult">
+            <div class="sharecaption canmark">
+                
+                    <%=app.actions.emoji(nl2br(trimrn(findAndReplaceLink(filterXSS(clearScripts(cc)), true))))%>
+                
+            </div>
         </div>
 	<% } 
 
