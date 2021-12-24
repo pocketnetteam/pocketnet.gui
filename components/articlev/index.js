@@ -477,8 +477,7 @@ var articlev = (function(){
 				action : function(file, clbk){
 
 					self.app.platform.papi.editImage(file.base64, {
-
-						aspectRatio : 1.7,
+						autoCropArea : 0.95,
 						apply : true
 
 					}).then( base64 => {

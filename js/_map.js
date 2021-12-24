@@ -97,7 +97,7 @@ __map =  {
 		
 	],
 
-
+	
 	__templates : [
 		{ c : 'navigation', n : 'menu' },
 		{ c : 'menu', n : 'index' },
@@ -130,19 +130,6 @@ __map =  {
 		{ c : 'author', n : 'authorcaption'},
 		{ c : 'post', n : 'preshell'}
 
-
-		
-		/*,
-		{ c : '', n : '' },
-		{ c : '', n : '' },
-		{ c : '', n : '' },
-		{ c : '', n : '' },
-		{ c : '', n : '' },
-		{ c : '', n : '' },
-		{ c : '', n : '' },
-		{ c : '', n : '' },
-		{ c : '', n : '' },*/
-		
 	],
 
     pkview  : {

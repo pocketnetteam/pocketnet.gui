@@ -315,7 +315,11 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
         <div class="shareTable <%-subscribed%>" address="<%-share.address%>" stxid="<%-share.txid%>">
 
-            <div class="shareBgCaption" image="<%- cover %>">
+            <div class="shareBgCaption">
+
+                <div class="articleCover" image="<%- cover %>">
+
+                </div>
 
                 <div class="sharecaptionabsolutewrapper">
 
@@ -340,10 +344,11 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
     
                         </div>
 
+                        <% makeavatar() %>
                        
                     </div>
 
-                    <% makeavatar() %>
+                   
                 </div>
 
             </div>
@@ -394,13 +399,5 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
         </div>
 
     </div>
-
-
-
-
-              
-
-
-		
 
 </div>	

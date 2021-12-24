@@ -2038,7 +2038,7 @@ Platform = function (app, listofnodes) {
                         crop : {
                             aspectRatio : p.aspectRatio || null,
                             style : 'apply',
-                            autoCropArea : 1,
+                            autoCropArea : p.autoCropArea || 1,
                         },
                 
                         success : function(i, editclbk){
@@ -2121,8 +2121,7 @@ Platform = function (app, listofnodes) {
                     shareobj: share,
                     nocommentcaption : true,
                     eid: 'postpreview',
-                    //comments : 'no',
-                    commentsid : 'a73e92e41efb9df2d496db75a6ecad2b5713fb37a858a8e158253d78c7dd89db',
+                    comments : 'no',
                     video : false,
                     autoplay : false,
                     preview : true,
@@ -2299,8 +2298,6 @@ Platform = function (app, listofnodes) {
             var h = el.attr('href')
             var w = new window.PNWIDGETS()
 
-
-            console.log("E", el[0], w, h)
 
             w.makefromurl(el[0], h, true)
 
@@ -2654,7 +2651,6 @@ Platform = function (app, listofnodes) {
             if(!_p) _p = {}
 
             var error = function(e){
-                console.log(e)
                 sitemessage(e)
 
                 topPreloader2(100)
@@ -3112,7 +3108,6 @@ Platform = function (app, listofnodes) {
                         if(clbk) 
                         
                             clbk(el, null, function(){
-                                console.log('close')
                                 dialog.destroy()
                             })
                     },
@@ -3294,7 +3289,6 @@ Platform = function (app, listofnodes) {
 
                     function (tx, error) {
 
-                        console.log('tx, error', tx, error)
 
                         if (tx) {
                             var me = deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value.toString('hex'))
@@ -3864,7 +3858,6 @@ Platform = function (app, listofnodes) {
 										if(!err)
 										{
 
-                                            console.log('result removed post', result)
                                             authorgroup.addClass('deleted');
 
 
@@ -4431,7 +4424,6 @@ Platform = function (app, listofnodes) {
                                                                             
                                                                             to.videos[videoFolder.name].video = videoFile;
 
-                                                                            console.log('entry')
 
                                                                             _p.success()
                                                                         });
@@ -4575,7 +4567,6 @@ Platform = function (app, listofnodes) {
 
                                 shareReader.readEntries(function(shares) {
 
-                                    console.log('shares', shares)
 
                                     Promise.all(_.map(shares, function(shareFolder){
 
@@ -5082,7 +5073,6 @@ Platform = function (app, listofnodes) {
             getredirectFromCurrentPage : function(){
                 self.sdk.registrations.redirect = self.app.nav.get.pathnameSearch()
 
-                console.log('self.sdk.registrations', self.sdk.registrations)
             },
 
             remove: function (address) {
@@ -5515,8 +5505,6 @@ Platform = function (app, listofnodes) {
 
             itisdraft(art){
 
-                console.log('ar', art)
-
                 if(
 
                     art.caption.value && 
@@ -5687,8 +5675,6 @@ Platform = function (app, listofnodes) {
             share : function(art){
 
                 var artcontent = art.content 
-
-                console.log('artcontent', artcontent)
 
                 var share = new Share(art.language || self.app.localization.key);
 
@@ -7611,8 +7597,6 @@ Platform = function (app, listofnodes) {
 
                 this.load();
 
-                console.log('this.storage.block', this.storage.block)
-
                 this.storage.block || (this.storage.block = self.currentBlock)
                 this.storage.notifications || (this.storage.notifications = [])
 
@@ -8813,8 +8797,6 @@ Platform = function (app, listofnodes) {
             get: function (clbk, refresh, proxyoptions) {
                 if (refresh) this.current = null;
 
-                console.log('proxyoptions', proxyoptions)
-
                 self.app.api.fetchauth('captcha', {
                     captcha: this.done || this.current || null
                 }, proxyoptions).then(d => {
@@ -9969,8 +9951,6 @@ Platform = function (app, listofnodes) {
             },
 
             adduser : function(key, address){
-
-                console.log('adduser', key, address)
 
                 if(!address) return
 
@@ -12930,8 +12910,6 @@ Platform = function (app, listofnodes) {
                     _.each(self.sdk.relayTransactions.withtemp('contentDelete'), function (tempShare) {
 
                         var txid = tempShare.txidEdit;
-
-                        console.log('tempShare', tempShare)
 
                         _.find(shares, function (share) {
 
@@ -18794,7 +18772,6 @@ Platform = function (app, listofnodes) {
 
                                 },
                                 error : function(){
-                                    console.log("FAILED")
                                     reject()
                                 }
                             });
@@ -19349,9 +19326,17 @@ Platform = function (app, listofnodes) {
             share: function (share, extra, extendedpreview) {
                 var h = '';
 
-                var m = share.caption || share.message;
+                var m = share.caption;
+                
+                if(!m) m = share.renders.text()
 
-                var symbols = 20;
+                var symbols = extendedpreview ? 180 : 20;
+
+                var nm = trimHtml(m, symbols)
+                
+                //share.message;
+
+                /*var symbols = 20;
 
                 if (extendedpreview) {
                     m = '';
@@ -19361,20 +19346,18 @@ Platform = function (app, listofnodes) {
                     if (share.message) m = m + '' + share.message + ''
 
                     symbols = 180;
-                }
+                }*/
 
-                var links = linkify.find(m);
 
-                _.each(links, function(l){
-                    m = m.replace(l.href, "")
-                })
+               /* var nm = filterXSS(trimHtml(m, symbols), {
+                    stripIgnoreTag: true
+                });*/
 
-                var nm = filterXSS(trimHtml(m, symbols), {
-                    stripIgnoreTag: true,
-                    whiteList: {
-                        b: ["style"]
-                    }
-                });
+                var links = linkify.find(share.message);
+
+                /*_.each(links, function(l){
+                    nm = nm.replace(l.href, "")
+                })*/
 
                 var images = _.map(share.images, function (i) {
                     return {
@@ -20350,9 +20333,6 @@ Platform = function (app, listofnodes) {
                         }
 
                         var outs = platform.sdk.node.transactions.toUTs(tx, address);
-
-
-                        console.log('outs', outs)
 
                         _.each(outs, function (o) {
 
@@ -23510,7 +23490,6 @@ Platform = function (app, listofnodes) {
 
             self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
 
-            console.log(" self.sdk.notifications.init 2")
             self.sdk.notifications.init().catch(e => {})
 
             if(clbk) clbk()
@@ -23564,7 +23543,6 @@ Platform = function (app, listofnodes) {
 
                     self.sdk.node.transactions.loadTemp,
                     self.sdk.addresses.init,
-                    
                     self.sdk.ustate.me,
                     self.sdk.usersettings.init,
                     self.sdk.imagesH.load,
@@ -23584,6 +23562,7 @@ Platform = function (app, listofnodes) {
 
                     //self.ui.showmykey()
 
+              
                     self.sdk.node.transactions.checkTemps(function(){
                         self.sdk.relayTransactions.send()
                     })
@@ -23619,12 +23598,6 @@ Platform = function (app, listofnodes) {
 
 
 
-                        /*self.sdk.keys.init().then(r => {
-                            console.log("RSUCCESS", r)
-                        }).catch(r => {
-                            console.log("RFAIL", r)
-                        })*/
-
                         
                         
                         if (app.curation()){
@@ -23638,7 +23611,6 @@ Platform = function (app, listofnodes) {
                             }
                         }
                     
-                        console.log(" self.sdk.notifications.init")
                         self.sdk.notifications.init().catch(e => {})
 
                         if (self.sdk.address.pnet()){
@@ -23822,8 +23794,6 @@ Platform = function (app, listofnodes) {
                                 return el.className && el.className.indexOf('noswipepnt') > -1
                             })) return
                             
-
-                            console.log("E", e)
 
                             if (self.matrixchat.core && (!self.matrixchat.core.canback || self.matrixchat.core.canback()))
                                 self.matrixchat.core.backtoapp()
@@ -24490,8 +24460,6 @@ Platform = function (app, listofnodes) {
             cordova.openwith.init();
             cordova.openwith.addHandler(function(intent){
                 var sharing = {}
-
-                console.log("intent", intent)
 
                 if(intent.action == 'VIEW') return
                 

@@ -1493,10 +1493,18 @@
 
 #post{
 	.sharearticle{
+		opacity: 0;
+		.transition(0.1s, opacity);
+
+		&.ready{
+			opacity: 1;
+		}
+
 		.shareBgCaption{
 			height: 640px;
 			position: relative;
 
+			
 			.divider{
 				margin : 0 auto;
 				margin-bottom: @rhythm;
@@ -1527,10 +1535,9 @@
 					font-size: 4em;
 					font-family: Georgia, serif;
 				}
-
-
 				
 			}
+
 			.icon{
 				position: absolute;
 				bottom : -22px;
@@ -1544,7 +1551,7 @@
 				}
 			}
 			
-
+			.articleCover,
 			.captioncnt,
 			.blackmatte{
 				position: absolute;
@@ -1553,6 +1560,49 @@
 				top : 0;
 				bottom : 0;
 			}
+
+			&.smallimage{
+				.articleCover{
+					background-color: @color-black2;
+					background-size: 100px auto!important;
+				}
+			}
+
+			&.verticalcover{
+				height: 720px;
+				border-bottom : 1px dashed fade(@color-gray-mlight, 50);
+				.articleCover{
+					left : @rhythm;
+					top : @rhythm;
+					bottom : @rhythm;
+					right : 56%;
+				}
+
+				.captioncnt{
+					left: 44%;
+					right : @rhythm;
+					top : @rhythm;
+					bottom : @rhythm;
+				}
+
+				.blackmatte{
+					display: none;
+				}
+
+				.icon{
+					position: static;
+				}
+
+				.captioncnt{
+					justify-content: center;
+					color : @color-black4;
+				}
+
+				.divider{
+					background: @color-black4;
+				}
+			}
+
 		}
 
 		.articlecontent{
@@ -1578,6 +1628,133 @@
 			}
 		}
 	}
+}
+
+@media only screen and (max-width: 768px) {
+	#post{
+
+		.sharearticle{
+			
+			.shareBgCaption{
+				
+	
+				
+
+				&:not(.verticalcover){
+					height: auto;
+
+					.captioncnt{
+						padding-bottom: 4 * @rhythm;
+						display: flex;
+						flex-direction: column;
+						justify-content: flex-end;
+						z-index: 1;
+						color : #fff;
+						text-align: center;
+		
+						.tags{
+							justify-content: center;
+						}
+		
+						.sharecaption{
+							font-size: 4em;
+							font-family: Georgia, serif;
+						}
+						
+					}
+		
+					.icon{
+						position: absolute;
+						bottom : -22px;
+						left : 0;
+						right: 0;
+		
+						.usericon{
+							margin : 0 auto;
+						}
+					}
+
+					.articleCover{
+						height: 300px;
+						position: relative;
+					}
+
+					.blackmatte{
+						display: none;
+					}
+
+					.captioncnt{
+						position: relative;
+						border-bottom : 1px dashed fade(@color-gray-mlight, 50);
+						color : @color-black2;
+					}
+
+		
+					
+				}
+				
+				&.verticalcover{
+					height: 720px;
+					border-bottom : 0;
+					.articleCover{
+						left : 0;
+						top :0;
+						bottom : 0;
+						right : 0;
+					}
+	
+					.captioncnt{
+						left: 0;
+						right : 0;
+						top : 0;
+						bottom : 0;
+
+						.sharecaption{
+							font-size: 2em;
+						}
+					}
+	
+					.blackmatte{
+						display: block;
+					}
+	
+					.icon{
+						position: absolute;
+					}
+	
+					.captioncnt{
+						justify-content: flex-end;
+						color : #fff;
+					}
+	
+					.divider{
+						background: #fff;
+					}
+				}
+	
+			}
+
+			.articlecontent{
+				padding-left: @rhythm;
+				padding-right: @rhythm;
+
+				.article_quote,
+				.article_link_custom{
+					width: 96%;
+					max-width: none;
+				}
+
+				.article_this_embed{
+					padding : 0;
+					border : 0;
+				}
+			}
+	
+			
+		}
+	}
+
+	
 }
 
 html.tablet.fullscreen,
@@ -2042,389 +2219,403 @@ html.stblack{
 }
 
 @media only screen and (max-width: 768px) {
-#post{
-	border-top: 1px solid fade(@color-gray-slight,0.3);
+	#post{
+		border-top: 1px solid fade(@color-gray-slight,0.3);
 
-	.statswrapperExtended{
-		padding : @rhythm;
-	}
-
-	.showmorelenta{
-
-		.horizontalLentaWrapper{
-			padding : @rhythm 0;
-		}
-
-		.horizontalLentacaption{
+		.statswrapperExtended{
 			padding : @rhythm;
-
 		}
 
-		
-	}
+		.showmorelenta{
 
-	.repostsecond{
-		text-align: center;
-	}
-
-	.nextpost{
-		display: none;
-	}
-
-	.iconWrapper{
-		width: 8 * @rhythm;
-		padding-top: @rhythm;
-		padding-left: @rhythm;
-		padding-right: 0;
-	}
-
-	.cntswrk{
-		margin-left: 0;
-		padding-left : 0;
-		padding-right : 0;
-
-		&.formeta{
-			margin-left: 8 * @rhythm;
-			padding-left : 0;
-		}
-
-		.paddingWrapper{
-			padding-left:  @rhythm;
-			padding-right: @rhythm;
-		}
-	}
-
-	.share{
-		.meta{
-			padding-right: @rhythm;
-		}
-		.metatable{
-			>div{
-				vertical-align: top;
-				&.metapanel{
-					width: 90px;
-				}
+			.horizontalLentaWrapper{
+				padding : @rhythm 0;
 			}
-		}
-	}
 
-	#comments{
-		.answer,
-		.post{
-			padding-left:  @rhythm;
-			padding-right: @rhythm;
-		}
-		.answer{
-			padding : 0;
-		}
+			.horizontalLentacaption{
+				padding : @rhythm;
 
-		.caption{
-			padding-left:  0.5 * @rhythm;
-			padding-right: 7 * @rhythm;
-		}
-
-		.list{
-			.comment{
-
-				.commentPaddingWrapper{
-					padding-left:  @rhythm;
-					padding-right: @rhythm;
-				}
 			}
 
 			
-
-			.answer{
-				.postbody{
-					padding-left:  @rhythm;
-					padding-right: @rhythm;
-				}
-				
-			}
 		}
 
-		.answers{		
-			.comment{
-				.commentPaddingWrapper{
-					padding-left:  0;
-					padding-right: 0;
-				}
-				
-			}
+		.repostsecond{
+			text-align: center;
 		}
-	}
 
-	&.videomainpost{
+		.nextpost{
+			display: none;
+		}
+
+		.iconWrapper{
+			width: 8 * @rhythm;
+			padding-top: @rhythm;
+			padding-left: @rhythm;
+			padding-right: 0;
+		}
 
 		.cntswrk{
+			margin-left: 0;
+			padding-left : 0;
+			padding-right : 0;
+
 			&.formeta{
-				margin-left: 0;
-				padding-left: 0;
+				margin-left: 8 * @rhythm;
+				padding-left : 0;
 			}
 
+			.paddingWrapper{
+				padding-left:  @rhythm;
+				padding-right: @rhythm;
+			}
 		}
 
-		&.squareVideo,
-		&.verticalVideo {
-			.forurl{
-				.videoWrapper{
-					max-width: none;
+		.share{
+			.meta{
+				padding-right: @rhythm;
+			}
+			.metatable{
+				>div{
+					vertical-align: top;
+					&.metapanel{
+						width: 90px;
+					}
 				}
 			}
 		}
 
-		
+		#comments{
+			.answer,
+			.post{
+				padding-left:  @rhythm;
+				padding-right: @rhythm;
+			}
+			.answer{
+				padding : 0;
+			}
 
-		.share {
+			.caption{
+				padding-left:  0.5 * @rhythm;
+				padding-right: 7 * @rhythm;
+			}
+
+			.list{
+				.comment{
+
+					.commentPaddingWrapper{
+						padding-left:  @rhythm;
+						padding-right: @rhythm;
+					}
+				}
+
+				
+
+				.answer{
+					.postbody{
+						padding-left:  @rhythm;
+						padding-right: @rhythm;
+					}
+					
+				}
+			}
+
+			.answers{		
+				.comment{
+					.commentPaddingWrapper{
+						padding-left:  0;
+						padding-right: 0;
+					}
+					
+				}
+			}
+		}
+
+		&.videomainpost{
+
+			.cntswrk{
+				&.formeta{
+					margin-left: 0;
+					padding-left: 0;
+				}
+
+			}
+
+			&.squareVideo,
+			&.verticalVideo {
+				.forurl{
+					.videoWrapper{
+						max-width: none;
+					}
+				}
+			}
+
+			
+
+			.share {
 
 
 
-			.anothercntswrk{
+				.anothercntswrk{
+					padding-right: @rhythm;
+				}
+				
+				.paddingWrapper{
+					margin-left: 0;
+					padding-left: 0;
+				}
+			}
+
+			#comments .post{
+				padding-left: @rhythm;
 				padding-right: @rhythm;
 			}
 			
-			.paddingWrapper{
-				margin-left: 0;
-				padding-left: 0;
-			}
 		}
 
-		#comments .post{
-			padding-left: @rhythm;
-			padding-right: @rhythm;
-		}
-		 
-	}
-
-	/*.shareTable{
-		display: block;
-		overflow-y: hidden;
-		>div{
+		/*.shareTable{
 			display: block;
-			float: left;
-			width: 100%;
+			overflow-y: hidden;
+			>div{
+				display: block;
+				float: left;
+				width: 100%;
 
-			&.iconWrapper{
-				width: 60px;
-				padding-top: @rhythm;
-				padding-left: @rhythm;
-			}
-
-			&.metawrapper{
-				padding : 0;
-				padding-top : @rhythm;
-				width: 75%;
-			}
-
-		}
-	}
-*/
-
-	
-
-	.share{
-
-		#post{
-
-			#comments{
-				.caption{
+				&.iconWrapper{
+					width: 60px;
+					padding-top: @rhythm;
 					padding-left: @rhythm;
-					padding-right: @rhythm;
 				}
-				
-				.commentPaddingWrapper,
-				.post{
-					padding-left: 0;
-					padding-right: @rhythm;
-				}
-	
-				.commentPaddingWrapper{
-					padding-right: @rhythm;
-				}
-	
-				.list .answer .postbody{
-					padding-left: 0;
-					padding-right: @rhythm;
-				}
-	
-				.answers{
-					.commentPaddingWrapper{
-						padding-right: 0;
-						padding-left: 0;
-					}
-				}				
-	
-				.answer .posttable>div.postCellWrapper .postaction, 
-				.edit .posttable>div.postCellWrapper .postaction, 
-				.post .posttable>div.postCellWrapper .postaction{
-					text-align: center;
-				}
-			}
-	
-			.share{
-				.work{
-					border-left : @rhythm dotted fade(@color-gray-slight, 70);
-				}
-				.sharecaption{
-					font-size: 1em;
-				}
-			} 
 
-			.shareTable{
-				&.truerepost{
-					.iconWrapper{
-						width: 6 * @rhythm;
-						padding-left: @rhythm;
-					}
+				&.metawrapper{
+					padding : 0;
+					padding-top : @rhythm;
+					width: 75%;
 				}
+
 			}
-	
-			.iconWrapper{
-				width: 6 * @rhythm;
-				padding-left: @rhythm;
-	
-				.usericon{
-					width: 5 * @rhythm;
-					height: 5 * @rhythm;
-				}
-			}
+		}
+	*/
+
 		
-			.cntswrk{
-				margin-left: 0 * @rhythm;
-				margin-right: 0 * @rhythm;
-				padding-right: @rhythm;
-				padding-left: @rhythm;
-				&.formeta{
-					margin-left: 6 * @rhythm;
-					padding-left : 0.5 * @rhythm;
-				}
 
-				
-			}
-	
-			.meta{
-				padding-top: 2.3 * @rhythm;
-			}
-	
-	
+		.share{
+
 			#post{
+
+				#comments{
+					.caption{
+						padding-left: @rhythm;
+						padding-right: @rhythm;
+					}
+					
+					.commentPaddingWrapper,
+					.post{
+						padding-left: 0;
+						padding-right: @rhythm;
+					}
+		
+					.commentPaddingWrapper{
+						padding-right: @rhythm;
+					}
+		
+					.list .answer .postbody{
+						padding-left: 0;
+						padding-right: @rhythm;
+					}
+		
+					.answers{
+						.commentPaddingWrapper{
+							padding-right: 0;
+							padding-left: 0;
+						}
+					}				
+		
+					.answer .posttable>div.postCellWrapper .postaction, 
+					.edit .posttable>div.postCellWrapper .postaction, 
+					.post .posttable>div.postCellWrapper .postaction{
+						text-align: center;
+					}
+				}
+		
+				.share{
+					.work{
+						border-left : @rhythm dotted fade(@color-gray-slight, 70);
+					}
+					.sharecaption{
+						font-size: 1em;
+					}
+				} 
+
+				.shareTable{
+					&.truerepost{
+						.iconWrapper{
+							width: 6 * @rhythm;
+							padding-left: @rhythm;
+						}
+					}
+				}
+		
+				.iconWrapper{
+					width: 6 * @rhythm;
+					padding-left: @rhythm;
+		
+					.usericon{
+						width: 5 * @rhythm;
+						height: 5 * @rhythm;
+					}
+				}
+			
 				.cntswrk{
 					margin-left: 0 * @rhythm;
-					padding-right: 0;
-					padding-left: 0;
-	
+					margin-right: 0 * @rhythm;
+					padding-right: @rhythm;
+					padding-left: @rhythm;
 					&.formeta{
-						margin-left: 7 * @rhythm;
+						margin-left: 6 * @rhythm;
 						padding-left : 0.5 * @rhythm;
 					}
-	
+
 					
 				}
-			}
-		}
-
-		.work{
-			padding : 0;
-			width: 100%;
-		}
-
-		.shareContent{
-			position: relative;
-
-			.tempPreloader{
-				padding : 2 * @rhythm 0;
-				.label{
-					padding-top : @rhythm;
-					color : @color-main;
-					font-size: 0.8em;
+		
+				.meta{
+					padding-top: 2.3 * @rhythm;
 				}
-			}
-		}	
-
-
-		.article{
-			.images{
-				.imagesWrapper{
-					width: 60px;
-					height: 60px;
-					border-radius: 30px;
-					margin-right: @rhythm;
-					overflow: hidden;
-					float: left;
+		
+		
+				#post{
+					.cntswrk{
+						margin-left: 0 * @rhythm;
+						padding-right: 0;
+						padding-left: 0;
+		
+						&.formeta{
+							margin-left: 7 * @rhythm;
+							padding-left : 0.5 * @rhythm;
+						}
+		
+						
+					}
 				}
 			}
 
-			figure{
-				width: 100%!important;
-				display: block;
-				margin-bottom : @rhythm;
-
-				img{
-					margin : 0;
-					
-					
-				}
-			}
-			
-		}
-
-		.medium-insert-images{
-			img{
+			.work{
+				padding : 0;
 				width: 100%;
 			}
-		}
 
-		.jsPlayerLoading{
-			
-			width: 100%;
-			height: 210px;
-			
+			.shareContent{
+				position: relative;
+
+				.tempPreloader{
+					padding : 2 * @rhythm 0;
+					.label{
+						padding-top : @rhythm;
+						color : @color-main;
+						font-size: 0.8em;
+					}
+				}
+			}	
+
+
+			.article{
+				.images{
+					.imagesWrapper{
+						width: 60px;
+						height: 60px;
+						border-radius: 30px;
+						margin-right: @rhythm;
+						overflow: hidden;
+						float: left;
+					}
+				}
+
+				figure{
+					width: 100%!important;
+					display: block;
+					margin-bottom : @rhythm;
+
+					img{
+						margin : 0;
+						
+						
+					}
+				}
+				
+			}
+
+			.medium-insert-images{
+				img{
+					width: 100%;
+				}
+			}
+
+			.jsPlayerLoading{
+				
+				width: 100%;
+				height: 210px;
+				
+			}
 		}
 	}
-}
-.wnd.postwindow{
-	.widthcontainer{
-		width: 100%;
-	}
-}
-
-
-html.cordova,
-html.tablet,
-html.mobile{
 	.wnd.postwindow{
-
-		z-index: 1005;
-
 		.widthcontainer{
 			width: 100%;
 		}
+	}
 
-		&.normalizedmobile{
-			.closeline{
-				top : 50px!important;
-			}
-			.wndinner {
-				top : 60px!important;
+
+	html.cordova,
+	html.tablet,
+	html.mobile{
+
+		
+		.wnd.postwindow{
+
+			z-index: 1005;
+
+			.widthcontainer{
+				width: 100%;
 			}
 
-			.wndcontent{
-				background: #fff;
-			}
+			&.normalizedmobile{
+				.closeline{
+					top : 50px!important;
+				}
+				.wndinner {
+					top : 60px!important;
+				}
 
-			#post .postWrapper{
-				padding-top : @rhythm;
-			}
+				.wndcontent{
+					background: #fff;
+				}
 
-			#post{
-				.cntswrk.forcomments{
-					.paddingWrapper{
-						padding : 0;
+				#post .postWrapper{
+					padding-top : @rhythm;
+				}
+
+				#post{
+					border-top : 0;
+					.cntswrk.forcomments{
+						.paddingWrapper{
+							padding : 0;
+						}
 					}
 				}
 			}
 		}
-	}
+
+		.wnd.articlewindow{
+			&.normalizedmobile{
+				
+
+				#post .postWrapper{
+					padding-top : 0;
+				}
+
+			}
+		}
 
 	}
 }

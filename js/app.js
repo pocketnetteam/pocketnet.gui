@@ -1943,8 +1943,6 @@ Application = function(p)
 			url.host = ''
 		}
 
-		console.log('url', url, _url)
-
 		var groups = {
 			p : ['pocketnet.app', 'bastyon.com'],
 			pt : ['test.pocketnet.app', 'test.bastyon.com']
@@ -1969,9 +1967,6 @@ Application = function(p)
 
 		self.ref = r;
 		localStorage['ref'] = self.ref
-
-
-		console.log('self.ref', self.ref)
 
 	}
 

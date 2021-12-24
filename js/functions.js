@@ -4225,8 +4225,6 @@
 							return false
 						}
 
-						console.log('value1', value, !isNaN(Number(value)))
-
 						if(value.length > 1) {
 							if (value[0] == '0')
 								value = value.substr(1)

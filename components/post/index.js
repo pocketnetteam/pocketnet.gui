@@ -149,27 +149,31 @@ var post = (function () {
 
 			postscores: function (clbk) {
 
-				self.app.nav.api.load({
-					open: true,
-					href: 'postscores?p=' + share.txid,
-					inWnd: true,
-					history: true,
+				actions.stateAction('_this', function(){
 
-					essenseData: {
-						share: share.txid,
+					self.app.nav.api.load({
+						open: true,
+						href: 'postscores?p=' + share.txid,
+						inWnd: true,
+						history: true,
 
-						like: function (share) {
-							renders.stars()
+						essenseData: {
+							share: share.txid,
 
-							if (ed.like) ed.like()
+							like: function (share) {
+								renders.stars()
+
+								if (ed.like) ed.like()
+							},
+
 						},
 
-					},
+						clbk: function () {
+							if (clbk)
+								clbk()
+						}
+					})
 
-					clbk: function () {
-						if (clbk)
-							clbk()
-					}
 				})
 
 			},
@@ -462,9 +466,6 @@ var post = (function () {
 							if (wa) {
 
 								player.play()
-
-								console.log('self.sdk.videos.volume', self.sdk.videos.volume)
-								
 
 								if (player.setVolume)
 									player.setVolume(self.sdk.videos.volume)
@@ -1142,8 +1143,6 @@ var post = (function () {
 			share: function (clbk) {
 
 
-				console.log("RENDER SHARE")
-
 				var verticalVideo = false
 				var squareVideo = false
 
@@ -1257,16 +1256,18 @@ var post = (function () {
 							});
 						});
 
-
-						if(share.itisarticle){
-
+						if (share.itisarticle){
 							renders.articlespart(_p.el)
-
 						}
+
+						
 					},
 				);
 			},
 			articlespart : function(el){
+
+				var wr = el.find('.sharearticle')
+				var caption = wr.find('.shareBgCaption')
 
 				el.find('.article_carousel').each(function(){
 					self.app.platform.ui.carousel($(this))
@@ -1274,6 +1275,36 @@ var post = (function () {
 
 				el.find('.article_this_embed').each(function(){
 					self.app.platform.ui.embeding($(this))
+				})
+
+
+				el.find('.articleCover').imagesLoadedPN({imageAttr : true}, function (image) {
+
+
+					var aspectRatio = 0.6
+					var small = false
+								
+					_.each(image.images, function(img){
+
+						var _img = img.img;
+						aspectRatio = _img.naturalHeight / _img.naturalWidth
+
+						if(_img.naturalHeight < 400 || _img.naturalWidth < 400){
+							small = true
+						}
+
+					})
+
+					wr.addClass('ready')
+
+					if(small){
+						caption.addClass('smallimage')
+					}
+
+					if(aspectRatio > 1 && !small){
+						caption.addClass('verticalcover')
+					}
+
 				})
 				
 			},
@@ -1709,8 +1740,6 @@ var post = (function () {
 
 					}
 
-					console.log("share", share)
-
 					if (share) {
 						self.app.platform.sdk.node.shares.users([share], function (l, error2) {
 
@@ -1802,8 +1831,6 @@ var post = (function () {
 			init: function (p) {
 
 				p.clbk(null, p);
-
-				console.log("INIT SHARE")
 
 				if(!share) return
 

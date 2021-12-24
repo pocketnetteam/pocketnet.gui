@@ -1130,7 +1130,7 @@ var comments = (function(){
 			if(my) p = p * 20
 
 
-			var me = deep(self.app, 'platform.sdk.users.storage.' + self.user.address.value.toString('hex'))
+			var me = deep(self.app, 'platform.sdk.users.storage.' + (self.user.address.value || ''))
 
 			if (!my && me){
 
@@ -1324,7 +1324,7 @@ var comments = (function(){
 				var d = {
 					address : self.app.user.address.value,
 					caddress : self.app.platform.sdk.comments.address(txid, id, pid),
-					txid : id
+					txid : idg
 				};
 
 				if (listpreview && ed.lastComment && !pid){
