@@ -597,11 +597,42 @@ var articlev = (function(){
 					},
 
 					linkTool: {
-						class: LinkTool,
+						class: window.LinkTool,
 						config: {
-						  endpoint: 'https://localhost:8887/urlPreviewFormatted', // Your backend endpoint for url data fetching
+
+							fetch : function(url){
+
+								return self.app.api.fetch('urlPreviewFormatted', {url}).then(r => {
+
+									return r
+								})
+
+								/*if(self.app.thislink(url)){
+									need js preview
+								}
+								else{
+									return self.app.api.fetch('urlPreviewFormatted', {url})
+								}*/
+
+
+								/*body = await (ajax.get({
+
+									url: this.config.endpoint,
+
+									data: {
+									  url,
+									},
+						  
+								})).body;*/
+
+
+								//endpoint: 'https://localhost:8887/urlPreviewFormatted', // Your backend endpoint for url data fetching
+
+							}
+
 						}
 					},
+
 
 					/*inlineCode: {
 						class: window.InlineCode,

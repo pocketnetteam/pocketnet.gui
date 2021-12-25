@@ -947,7 +947,7 @@ Application = function(p)
 
 	}
 
-	self.chatposition= function(ab){
+	self.chatposition = function(ab){
 		var attr = ab ? 'above' : 'under'
 
 		self.el.html.attr('chatposition', attr)

@@ -5545,6 +5545,14 @@ Platform = function (app, listofnodes) {
                 })
             },
 
+            deletebyid : function(id){
+                self.sdk.articles.storage = _.filter(self.sdk.articles.storage, function(s){
+                    return s.id != id
+                })
+
+                self.sdk.articles.save()
+            },
+
             getlist : function(){
                 return _.filter(self.sdk.articles.storage, function(s){
                     return s.version >= 2

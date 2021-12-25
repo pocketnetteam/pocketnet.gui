@@ -2054,9 +2054,7 @@ var lenta = (function(){
 						if (self.app.platform.sdk.address.pnet() && s.address == self.app.platform.sdk.address.pnet().address) return
 
 
-						var dev = deep(app, 'platform.sdk.user.storage.'+s.address+'.dev') || deep(app, 'platform.sdk.usersl.storage.'+s.address+'.dev');
-
-						if (dev) return;
+					
 
 						p.attr('value', value)
 						p.addClass('liked')

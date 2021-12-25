@@ -1045,9 +1045,8 @@ var comments = (function(){
 
 					if(!comment) return
 
-					var dev = deep(app, 'platform.sdk.user.storage.'+comment.address+'.dev') || deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.dev');
-
-					if (comment.address == self.app.platform.sdk.address.pnet().address || dev){
+					
+					if (comment.address == self.app.platform.sdk.address.pnet().address){
 						return
 					}
 
@@ -1324,7 +1323,7 @@ var comments = (function(){
 				var d = {
 					address : self.app.user.address.value,
 					caddress : self.app.platform.sdk.comments.address(txid, id, pid),
-					txid : idg
+					txid : id
 				};
 
 				if (listpreview && ed.lastComment && !pid){

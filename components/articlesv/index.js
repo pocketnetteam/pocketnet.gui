@@ -11,7 +11,76 @@ var articlesv = (function(){
 		var el, ed;
 
 		var actions = {
+			create : function(){
+				ed.create ? ed.create() : self.nav.api.go({
+					href : 'articlev',
+					history : true,
+					open : true
+				})	
+			},
+			edit : function(article){
+				if (article){
 
+					if(ed.select){
+						if(!ed.select(article)) return
+					}
+					else{
+
+						self.nav.api.go({
+							href : 'articlev?art=' + article.id,
+							history : true,
+							open : true
+						})	
+						
+					}
+
+				}
+
+				self.closeContainer()
+			},
+
+			
+
+			delete : function(article){
+
+				var d = dialog({
+					html:  self.app.localization.e('deletedraftquestion'),
+					btn1text: self.app.localization.e('dyes'),
+					btn2text: self.app.localization.e('dno'),
+		
+					success: function () {
+						if(ed.current && ed.current == article.id) actions.create()
+
+						self.app.platform.sdk.articles.deletebyid(article.id)
+
+						renders.articles()
+					},
+		
+					fail: function () {
+
+					},
+	
+					class : 'zindex'
+				})
+
+			},
+
+			preview : function(article){
+
+				var share = self.app.platform.sdk.articles.share(article)
+
+				var alias = share.alias()
+
+					alias.address = self.app.user.address.value
+
+				self.app.platform.papi.postpreview(alias, null, function(){
+
+				}, {
+					inWnd : true
+				})
+
+
+			}
 		}
 
 		var events = {
@@ -19,6 +88,44 @@ var articlesv = (function(){
 		}
 
 		var renders = {
+			menu : function(el, article){
+
+				var d = {
+					article
+				}
+
+				self.fastTemplate('metmenu', (rendered, template) => {
+
+					self.app.platform.api.tooltip(el, function(){
+
+						return template(d);
+
+					}, function(el, f, close){
+
+						el.find('.edit').on('click', function(){
+							actions.edit(article)
+
+							close()
+						})
+
+						el.find('.delete').on('click', function(){
+							actions.delete(article)
+							
+							close()
+						})
+
+						el.find('.preview').on('click', function(){
+							actions.preview(article)
+
+							close()
+						})
+
+					})
+
+				}, d)
+		  
+				
+			},
 			articles : function(){
 				self.shell({
 
@@ -32,20 +139,26 @@ var articlesv = (function(){
 
 				},
 				function(p){
-					p.el.find('.openart').on('click', function(){
-						var article =  self.app.platform.sdk.articles.getbyid(
-							$(this).closest('.article').attr('art')
+
+					var getart = function(t){
+						return self.app.platform.sdk.articles.getbyid(
+							$(t).closest('.article').attr('art')
 						)
+					}
 
-						if (article){
+					p.el.find('.openart').on('click', function(){
 
-							if(ed.select){
-								if(!ed.select(article)) return
-							}
+						var article = getart(this)
 
-						}
+						actions.edit(article)
+						
+					})
 
-						self.closeContainer()
+
+					p.el.find('.menupanel').on('click', function(){
+						var article = getart(this)
+
+						renders.menu($(this), article)
 					})
 				})
 			}
@@ -104,7 +217,7 @@ var articlesv = (function(){
 						text : "create",
 						fn : function(){
 
-							ed.create ? ed.create() : ''
+							actions.create()
 
 							self.closeContainer()
 

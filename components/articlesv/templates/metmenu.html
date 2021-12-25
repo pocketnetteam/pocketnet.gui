@@ -18,23 +18,27 @@ var all = {
 
     preview : {
 		icon : '<i class="far fa-newspaper"></i>',
-		text : 'previewarticledraft',
+		text : e('previewarticledraft'),
 		class : 'preview'
 	},
-
 	
 }
 
-m.push(all.edit)
-m.push(all.delete)
-m.push(all.preview)
+m.push('edit')
+m.push('delete')
+m.push('preview')
 
 
 %>
 
 <div class="sharepostmenu">
 
-	<% _.each(m, function(m){ var mo = all[m] %>
+	<% 
+    
+    _.each(m, function(m){ 
+        var mo = all[m] 
+        
+    %>
 
 	<div class="menuitem <%-mo.class||''%> table">
 		<div class="icon"><span><%=mo.icon%></span></div>

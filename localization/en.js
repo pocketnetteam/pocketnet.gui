@@ -1862,3 +1862,8 @@ ____loclib.repostyourown = 'You cannot repost your own post'
 ____loclib.reachedlimits = 'You reached your daily limit of actions. To increase your limit you need to have at least 50 PKOIN in your account or have a valid reputation.'
 
 ____loclib.closestreachedlimits = 'You are close to hitting your daily action limit. To increase your limit you need to have at least 50 PKOIN in your account or have a valid reputation.'
+
+____loclib.editarticledraft = 'Edit article Draft'
+____loclib.deletearticledraft = 'Delete article Draft'
+____loclib.previewarticledraft = 'View article Draft'
+____loclib.deletedraftquestion = 'Are you sure you want to delete the draft article? Recovery is impossible'

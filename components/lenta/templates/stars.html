@@ -19,11 +19,10 @@
 		liked = 'liked'
 	}
 
-	var dev = deep(app, 'platform.sdk.user.storage.'+share.address+'.dev') || deep(app, 'platform.sdk.usersl.storage.'+share.address+'.dev');
 	var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share)
 
 
-	if(my || dev || checkvisibility) liked = 'disabled'
+	if(my || checkvisibility) liked = 'disabled'
 
 	
 
