@@ -59,6 +59,17 @@ var Control = function(settings) {
             return binPath
         },
 
+        data_checkpoints_path : function(withFile = false) {
+            // TODO (brangr): add chec test network
+            // if ('main')
+                return Path.join( node.dataPath, 'checkpoints', (withFile ? 'main.sqlite3' : '') );
+
+            // if ('test')
+            //     return Path.join( node.dataPath, 'checkpoints' );
+            
+            return '';
+        },
+
         defaults : {
             dataPath : function(){
 
@@ -119,7 +130,14 @@ var Control = function(settings) {
             }catch(e){
                 return Promise.reject('nodedatapath')
             }
-            
+        }
+
+        if(!fs.existsSync(self.helpers.data_checkpoints_path())){
+            try{
+                fs.mkdirSync(self.helpers.data_checkpoints_path(), { recursive: true });
+            }catch(e){
+                return Promise.reject('chkpPath')
+            }
         }
 
         if(!fs.existsSync(node.binPath)){
@@ -128,7 +146,6 @@ var Control = function(settings) {
             }catch(e){
                 return Promise.reject('binpath')
             }
-            
         }
 
         return Promise.resolve()
@@ -138,15 +155,21 @@ var Control = function(settings) {
 
         try{
             if (!fs.existsSync(node.confPath)) {
-                let data = 'server=1' + EOL +
+                let data =
+                    'server=1' + EOL +
                     'port=37070' + EOL +
-                    'rpcport=38081' + EOL +
+                    'rpcport=37071' + EOL +
+                    'publicrpcport=38081' + EOL +
+                    'staticrpcport=38082' + EOL +
+                    'restrpcport=38083' + EOL +
                     'wsport=8087' + EOL +
-                    'rpcallowip=0.0.0.0/0' + EOL +
+                    'rpcallowip=127.0.0.1' + EOL +
                     'rpchost=localhost' + EOL +
                     'rpcuser=' + f.randomString(10) + EOL +
                     'rpcpassword=' + f.randomString(256) + EOL +
-                    'wsuse=1' + EOL
+                    'api=1' + EOL +
+                    'wsuse=1' + EOL +
+                    'rest=0' + EOL
     
                 fs.writeFileSync(node.confPath, data)
             }
@@ -240,7 +263,7 @@ var Control = function(settings) {
                 nodeAutorunInterval = setInterval(function(){
                     self.kit.autorun().catch(e => {
                     })
-                }, 500)
+                }, 5000)
             }
         },
 
@@ -329,7 +352,9 @@ var Control = function(settings) {
             }).then(r => {
                 return makeconfig()
             }).then(r => {
-                return applications.install(self.helpers.complete_bin_path())
+                return applications.install('bin', self.helpers.complete_bin_path())
+            }).then(r => {
+                return applications.install('checkpoint_main', self.helpers.data_checkpoints_path(true))
             }).then(r => {
                 lock = ''
                 self.autorun.init()
@@ -462,8 +487,6 @@ var Control = function(settings) {
       
         autorun: function() {
 
-            return Promise.resolve()
-
             if(!self.kit.hasbin()) {
                 return Promise.resolve()
             }
@@ -504,10 +527,7 @@ var Control = function(settings) {
                         `-conf=${node.confPath}`,
                         `-datadir=${node.dataPath}`,
                         `-silent`,
-                        `-blocksonly=1`,
-                        `-dbcache=50`,
-                        `-maxorphantx=10`,
-                        `-maxmempool=100`
+                        `-blocksonly=0`,
                     ], { stdio: ['ignore'], detached : true, shell : true})
 
                     node.instance.unref()
@@ -618,7 +638,8 @@ var Control = function(settings) {
             if(!node.proxy) 
                 node.proxy = self.nodeManager.temp({
                     host : '127.0.0.1',
-                    port : config.rpcport,
+                    port : config.publicrpcport,
+                    portPrivate : config.rpcport,
                     ws : config.wsport,
                     rpcuser : config.rpcuser,
                     rpcpass : config.rpcpassword

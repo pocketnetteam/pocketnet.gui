@@ -17,9 +17,18 @@ var Applications = function(settings) {
 
     var applications = {
         win32: {
-            github: {
-                //name : "win_x64_setup.exe",
+            bin: {
                 name: "_win_x64_daemon.bin",
+                url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
+                page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
+            },
+            checkpoint_main: {
+                name: "main.sqlite3",
+                url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
+                page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
+            },
+            checkpoint_test: {
+                name: "test.sqlite3",
                 url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
                 page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
             }
@@ -37,17 +46,17 @@ var Applications = function(settings) {
     var platform = process.platform
     var meta = applications[platform]
 
-    self.getinfo = function(){
+    self.getinfo = function(key){
 
         if(!meta) return Promise.reject('platform')
 
-        return axios.get(meta.github.url).then(function(response) {
+        return axios.get(meta[key].url).then(function(response) {
 
             var d = response.data
             var assets = d.assets || [];
 
             var l = _.find(assets, function(a){
-                return a.name.indexOf(meta.github.name) > -1
+                return a.name.indexOf(meta[key].name) > -1
             })
 
             if(l) return Promise.resolve(l)
@@ -77,7 +86,7 @@ var Applications = function(settings) {
 
         var gitasset = null
 
-        return self.getinfo().then(asset => {
+        return self.getinfo('bin').then(asset => {
             gitasset = asset
 
             return self.current()
@@ -139,10 +148,10 @@ var Applications = function(settings) {
         
     }
 
-    self.install = function(dest){
+    self.install = function(key, dest){
         return new Promise((resolve, reject) => {
 
-            return self.download().then(r => {
+            return self.download(key).then(r => {
                 try{
                     fs.copyFile(r.path, dest, (e) => {
 
@@ -175,17 +184,16 @@ var Applications = function(settings) {
         })
     }
 
-    self.download = function(){
+    self.download = function(key){
 
         var r = {}
 
-        return self.getinfo().then(asset => {
+        return self.getinfo(key).then(asset => {
 
             r.asset = asset
 
 
             return f.downloadgitrelease(r.asset.name, {
-                //dest : dest,
                 check : function(stats){
                     if (stats.size >= r.asset.size){
 

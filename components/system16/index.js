@@ -4002,7 +4002,7 @@ var system16 = (function(){
 						p.el.find('.removenodeall').on('click', function(){
 							dialog({
 								class : 'zindex',
-								html : "Do you really want to remove "+self.app.meta.fullname+" Node and All Blockchain Data?",
+								html : "<b>Attention!</b><br><br>Make a wallet backup:<br><b>wallet.dat</b><br><b>wallets/</b><br><br>Do you really want to remove "+self.app.meta.fullname+" Node and All Blockchain Data?",
 								btn1text : self.app.localization.e('dyes'),
 								btn2text : self.app.localization.e('dno'),
 								success : function(){
