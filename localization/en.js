@@ -1863,6 +1863,10 @@ ____loclib.reachedlimits = 'You reached your daily limit of actions. To increase
 
 ____loclib.closestreachedlimits = 'You are close to hitting your daily action limit. To increase your limit you need to have at least 50 PKOIN in your account or have a valid reputation.'
 
+
+____loclib.sendUserStatistics = 'Send anonimous logs of user activity to Bastyon Team'
+____loclib.captionUserStats = 'Statistics'
+
 ____loclib.editarticledraft = 'Edit article Draft'
 ____loclib.deletearticledraft = 'Delete article Draft'
 ____loclib.previewarticledraft = 'View article Draft'

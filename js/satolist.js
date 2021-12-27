@@ -6133,6 +6133,13 @@ Platform = function (app, listofnodes) {
 					type : "BOOLEAN",
 					value : false,
 				},
+
+                sendUserStatistics : {
+                    name: self.app.localization.e('sendUserStatistics'),
+					id : 'sendUserStatistics',
+					type : "BOOLEAN",
+					value : true,
+                },
             },
 
             create: function (id) {
@@ -6207,7 +6214,12 @@ Platform = function (app, listofnodes) {
                     },
 
                     
-
+                    stats: {
+                        name: self.app.localization.e('captionUserStats'),
+                        options: {
+                            sendUserStatistics: options.sendUserStatistics,
+                        }  
+                    },
                 }
 
 
@@ -6255,7 +6267,6 @@ Platform = function (app, listofnodes) {
                         }
 
                     }
-          
                 }
 
                 _.each(options, function (o, i) {
@@ -23584,6 +23595,12 @@ Platform = function (app, listofnodes) {
 
             if (typeof PeerTubePocketnet != 'undefined'){
                 self.app.peertubeHandler = new PeerTubePocketnet(self.app);
+            }
+
+            if (typeof FrontendLogger !== 'undefined') {
+                self.app.Logger = new FrontendLogger(navigator.userAgent, self.app);
+            } else {
+                self.app.Logger = {}
             }
 
             self.prepareUser(function() {

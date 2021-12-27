@@ -26,11 +26,7 @@ var uploadpeertube = (function () {
           video.onloadedmetadata = () => {
             window.URL.revokeObjectURL(video.src);
 
-            
-
-            
-
-            resolve()
+            resolve();
 
             /*// to bits and then to bitrate
             var averageBitrate = (8 * file.size) / video.duration;
@@ -57,24 +53,21 @@ var uploadpeertube = (function () {
     };
 
     var initEvents = function () {
-
-      el.c.find('.buypkoins').on('click', function(){
-
-        self.closeContainer()
+      el.c.find('.buypkoins').on('click', function () {
+        self.closeContainer();
 
         self.nav.api.load({
-          open : true,
-          href : 'wallet',
-          history : true,
-          inWnd : true,
+          open: true,
+          href: 'wallet',
+          history: true,
+          inWnd: true,
 
-          essenseData : {
-            simple : true,
-            action : 'buy'
-          }
-        })
-
-      })
+          essenseData: {
+            simple: true,
+            action: 'buy',
+          },
+        });
+      });
 
       el.c.find('.tooltip').tooltipster({
         theme: 'tooltipster-light',
@@ -98,9 +91,9 @@ var uploadpeertube = (function () {
 
         nameError.text('');
 
-        console.log('videoInputFile[0].size', videoInputFile[0].size)
+        console.log('videoInputFile[0].size', videoInputFile[0].size);
 
-        if(videoInputFile[0].size > 4 * 1024 * 1024 * 1024){
+        if (videoInputFile[0].size > 4 * 1024 * 1024 * 1024) {
           el.videoError.text(self.app.localization.e('videoSizeError'));
           el.videoError.addClass('error-message');
 
@@ -202,6 +195,8 @@ var uploadpeertube = (function () {
             wndObj.close();
           })
           .catch((e = {}) => {
+            self.app.Logger.error({ err: e });
+
             console.error('Uploading error', e);
 
             el.videoInput.val('');
@@ -315,6 +310,8 @@ var uploadpeertube = (function () {
                 wndObj.close();
               })
               .catch((e = {}) => {
+                self.app.Logger.error({ err: e });
+                
                 el.videoInput.val('');
                 el.wallpaperError.text('');
 
@@ -352,40 +349,39 @@ var uploadpeertube = (function () {
         actions = ed.actions;
 
         var data = {
-          hasAccess : false,
-          increase : {}
+          hasAccess: false,
+          increase: {},
         };
 
-        error = false
+        error = false;
 
-        globalpreloader(true, true)
+        globalpreloader(true, true);
 
-        self.app.peertubeHandler.api.user.me().then((res) => {
-
-          data.hasAccess = true
-
-          clbk(data);
-
-        }).catch(e => {
-
-          data.e = e
-          error = true
-
-          self.app.platform.sdk.ustate.canincrease({template : 'video'}, function(r){
-
-            data.increase = r
+        self.app.peertubeHandler.api.user
+          .me()
+          .then((res) => {
+            data.hasAccess = true;
 
             clbk(data);
-
           })
+          .catch((e) => {
+            self.app.Logger.error({ err: e });
 
-          
+            data.e = e;
+            error = true;
 
-        }).then(() => {
-          globalpreloader(false)
-        })
+            self.app.platform.sdk.ustate.canincrease(
+              { template: 'video' },
+              function (r) {
+                data.increase = r;
 
-       
+                clbk(data);
+              },
+            );
+          })
+          .then(() => {
+            globalpreloader(false);
+          });
       },
 
       destroy: function () {
@@ -418,7 +414,7 @@ var uploadpeertube = (function () {
 
         initEvents();
 
-        if(error) el.c.closest('.wnd').addClass('witherror')
+        if (error) el.c.closest('.wnd').addClass('witherror');
 
         p.clbk(null, p);
       },
