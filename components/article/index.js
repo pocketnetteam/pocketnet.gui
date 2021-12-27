@@ -578,7 +578,7 @@ var article = (function(){
 										app.imageUploader.uploadImage({
 											image : r[1],
 											base64: resized,
-										}).then((data) => {
+										}, 'peertube').then((data) => {
 						
 											var l = deep(data, 'image.url');
 											if (clbk)
@@ -586,29 +586,22 @@ var article = (function(){
 						
 										}, (err) => {
 
-											app.ajax.run({
-												type : "POST",
-												up1 : true,
-												data : {
-													file : r[1]
-												},
-					
-												success : function(data){
-					
-													var l = 'https://'+self.app.options.url+':8092/i/' + deep(data, 'data.ident');
+											app.imageUploader.uploadImage({
+												file : r[1]
+											}, 'up1').then((data) => {
+						
+												var l = 'https://'+self.app.options.url+':8092/i/' + deep(data, 'data.ident');
 			
-													if (clbk)
-														clbk(l)
-					
-												},
-					
-												fail : function(d){
-					
-													l = 'https://'+self.app.options.url+'/img/imagenotuploaded.jpg'
+												if (clbk)
+													clbk(l)
+						
+											}, (err) => {
+						
+												l = 'https://'+self.app.options.url+'/img/imagenotuploaded.jpg'
 
-													if (clbk)
-														clbk(l)
-												}
+												if (clbk)
+													clbk(l)
+						
 											})
 
 										});
