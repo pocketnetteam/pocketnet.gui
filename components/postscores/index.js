@@ -213,7 +213,7 @@ var postscores = (function(){
 
 					fastars(p.el.find('.stars'))
 
-					p.el.find('.stars i').on('click', events.like)
+					p.el.find('.stars img').on('click', events.like)
 
 					if (clbk)
 						clbk()

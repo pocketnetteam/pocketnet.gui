@@ -952,7 +952,7 @@ pie {
 }
 .forstars{
     .count{
-        i{
+        i, img{
             opacity: 0.5;
             font-size: 0.3em;
             vertical-align: middle;
@@ -971,6 +971,10 @@ pie {
         float: left;
         text-align: left;
         width: 1.8em;
+    }
+
+    .star{
+        height: 17px;
     }
 
     [value="5"]{
@@ -992,6 +996,8 @@ pie {
     .selected(){
         /*font-weight: 900;*/
         color: #FFAE00;
+        filter: grayscale(1);
+
     }
 
     .selectedUser(){
@@ -1133,7 +1139,7 @@ pie {
         }
     }
 
-    i{
+    i, img{
         line-height: 1.8em;
     }
 
@@ -1206,6 +1212,13 @@ pie {
     }
     
 }
+
+.starsWrapperM{
+    img{
+        filter: grayscale(100%) brightness(110%) contrast(0.9);
+    }
+}
+
 .subscribebuttons{
     width : auto;
 

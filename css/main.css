@@ -790,6 +790,9 @@ pie {
   text-align: left;
   width: 1.8em;
 }
+.stars .star {
+  height: 17px;
+}
 .stars [value="5"] {
   -moz-transition: 0.5s;
   -o-transition: 0.5s;
@@ -826,24 +829,29 @@ pie {
 .stars[tempValue="5"] [value="2"],
 .stars[tempValue="5"] [value="1"] {
   color: #204867;
+  filter: grayscale(1);
 }
 .stars[tempValue="4"] [value="4"],
 .stars[tempValue="4"] [value="3"],
 .stars[tempValue="4"] [value="2"],
 .stars[tempValue="4"] [value="1"] {
   color: #204867;
+  filter: grayscale(1);
 }
 .stars[tempValue="3"] [value="3"],
 .stars[tempValue="3"] [value="2"],
 .stars[tempValue="3"] [value="1"] {
   color: #204867;
+  filter: grayscale(1);
 }
 .stars[tempValue="2"] [value="2"],
 .stars[tempValue="2"] [value="1"] {
   color: #204867;
+  filter: grayscale(1);
 }
 .stars[tempValue="1"] [value="1"] {
   color: #204867;
+  filter: grayscale(1);
 }
 .stars[value="5"] [value="5"],
 .stars[value="5"] [value="4"],
@@ -961,6 +969,7 @@ pie {
 .stars .tstars .tstarsov i {
   /*font-weight: 900;*/
   color: #FFAE00;
+  filter: grayscale(1);
 }
 .stars .tstars .tstarsov .starsWrapper {
   width: 20em;
@@ -986,6 +995,9 @@ pie {
 }
 .stars.disabled:hover .tstars {
   display: block;
+}
+.starsWrapperM img {
+  filter: grayscale(100%) brightness(110%) contrast(0.9);
 }
 .subscribebuttons {
   width: auto;

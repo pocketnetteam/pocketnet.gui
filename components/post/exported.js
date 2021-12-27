@@ -1029,7 +1029,7 @@ var post = function(nModule){
 
 					fastars(p.el.find('.stars'))
 
-					el.share.find('.stars i').on('click', events.like)
+					el.share.find('.stars img').on('click', events.like)
 
 					if (clbk)
 						clbk()
