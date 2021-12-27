@@ -958,8 +958,6 @@ var share = (function(){
 												make();	
 											}
 		
-																			
-		
 										}
 		
 										catch (e){

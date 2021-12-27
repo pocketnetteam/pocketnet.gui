@@ -1499,12 +1499,9 @@
 		&.ready{
 			opacity: 1;
 		}
-		
 
-		.shareBgCaption{
-			height: 640px;
-			position: relative;
-
+		.shareBgCaption,
+		.articleend{
 			.forstars{
 				.itemwr{
 					display: flex;
@@ -1519,15 +1516,21 @@
 				.starWrapper{
 					text-align: center;
 				}
-
 				.count{
 					span{
-						font-weight: 100;
+						font-size: 2em;
+						font-weight: 700;
+						font-family: Nunito Sans;
 					}
 				}
+
 			}
 
 			
+			.sys{
+				text-align: center;
+			}
+
 			.divider{
 				margin : 0 auto;
 				margin-bottom: @rhythm;
@@ -1535,6 +1538,17 @@
 				width: 110px;
 				background: #fff;
 			}
+
+			.tags{
+				justify-content: center;
+			}
+		}
+		
+
+		.shareBgCaption{
+			height: 640px;
+			position: relative;
+		
 
 			.blackmatte{
 				background: rgb(0,0,0);
@@ -1550,9 +1564,7 @@
 				color : #fff;
 				text-align: center;
 
-				.tags{
-					justify-content: center;
-				}
+				
 
 				.sharecaption{
 					font-size: 4em;
@@ -1571,6 +1583,29 @@
 					margin : 0 auto;
 	
 					
+				}
+			}
+
+			.socialsharewrapper{
+				position: absolute;
+				bottom :  1.5 * @rhythm;
+				right: 1.5 * @rhythm;
+
+				.iconwrapper{
+					width: 3.5em;
+					height: 3.5em;
+					line-height: 3.5em;
+					border-radius: 3.5em;
+					color : #fff;
+					cursor: pointer;
+
+					&:hover{
+						opacity: 0.6;
+					}
+
+					i{
+						font-size: 0.8em;
+					}
 				}
 			}
 			

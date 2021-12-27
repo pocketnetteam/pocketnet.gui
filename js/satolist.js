@@ -5496,6 +5496,8 @@ Platform = function (app, listofnodes) {
 
                             delete t.storage[src]
 
+                            t.save()
+
                             if (clbk)
                                 clbk()
 
@@ -5532,6 +5534,57 @@ Platform = function (app, listofnodes) {
 
                 if (clbk)
                     clbk()
+
+            },
+
+            upload : function(image){
+
+                return new Promise((resolve, reject) => {
+                    if (image.indexOf('data:image') > -1){
+
+                        var r = image.split(',');
+
+                        app.ajax.run({
+                            type : "POST",
+                            imgur : true,
+                            data : {
+                                Action : "image",
+                                image : r[1]
+                            },
+    
+                            success : function(data){
+                                resolve(deep(data, 'data.link'));
+                            },
+    
+                            fail : function(d){
+    
+                                app.ajax.run({
+                                    type : "POST",
+                                    up1 : true,
+                                    data : {
+                                        file : r[1]
+                                    },
+        
+                                    success : function(data){
+    
+                                        resolve('https://pocketnet.app:8092/i/' + deep(data, 'data.ident'));
+        
+                                    },
+        
+                                    fail : function(d){
+                                        reject('imageloadingfailed')
+                                    }
+                                })
+                                
+                            }
+                        })
+
+                    }
+
+                    else{
+                        resolve(image)
+                    }
+                })
 
             }
         },
@@ -5730,8 +5783,8 @@ Platform = function (app, listofnodes) {
 
             share : function(art){
 
-                var artcontent = art.content 
-
+                var artcontent = art.content
+           
                 var share = new Share(art.language || self.app.localization.key);
 
                     share.tags.set(_.clone(art.tags))
@@ -5751,27 +5804,62 @@ Platform = function (app, listofnodes) {
             uploadresource : {
                 image : function(e){
 
+                    if(!deep(e, 'data.file.url')){
+                        return Promise.resolve()
+                    }
+                    
+                    return self.sdk.imagesH.upload(e.data.file.url).then(r => {
+                        e.data.file.url = r
+
+                        return Promise.resolve()
+                    })
                 },
                 carousel : function(e){
 
+                    return Promise.all(_.map(e.data, (d => {
+                        return self.sdk.imagesH.upload(d.url).then(r => {
+                            d.url = r
+
+                            return Promise.resolve()
+                        })
+                    })))
+                },
+
+                content : function(content){
+                    var tps = self.sdk.articles.uploadresource
+
+                    var promises = _.map(content.blocks, function(e){
+
+                        if (tps[e.type]){
+                            return tps[e.type](e)
+                        }
+    
+                        return Promise.resolve()
+    
+                    })
+
+                    return Promise.all(promises)
+                },
+
+                art : function(art){
+                    if(!art.cover){
+                        return Promise.resolve()
+                    }
+                    
+                    return self.sdk.imagesH.upload(art.cover).then(r => {
+                        art.cover = r
+
+                        return Promise.resolve()
+                    })
                 }
             },
 
             uploadresources : function(art){
 
-                var tps = self.sdk.articles.uploadresource
-                
-                var promises = _.map(art.content.blocks, function(e){
-
-                    if (tps[e.type]){
-                        return tps[e.type](e)
-                    }
-
-                    return Promise.resolve()
-
+                return self.sdk.articles.uploadresource.art(art).then(r => {
+                    return self.sdk.articles.uploadresource.content(art.content)
                 })
-
-                return Promise.all(promises)
+               
             }
         },
 
@@ -21969,7 +22057,7 @@ Platform = function (app, listofnodes) {
 
 
                                     var message = self.fastMessage(html, function () {
-                                        platform.sdk.notifications.seen([data.txid])
+                                        //platform.sdk.notifications.seen([data.txid])
                                     });
 
                                     if (m.fastMessageEvents) {

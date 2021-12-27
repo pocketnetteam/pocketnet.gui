@@ -182,33 +182,16 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 									
     </div>
 
-    <% if(!checkvisibility && !share.visibility() && !my) {%>
-        <div elementsid="lenta_forreport" class="item <% if(!my){ %> forrepost <% } else { %> nact <% } %>">
+ 
 
-            <div class="itemwr table">
-                <div class="iconwr">											
-                    <div class="icon">
-                        <i class="fas fa-share"></i>
-                    </div>
-                </div>
-            
-            </div>
+<% } %>
 
+<% var makesharepanel = function(){ %>
+
+    <div class="socialsharewrapper">
+        <div class="iconwrapper">
+            <i class="fas fa-share-alt"></i>
         </div>
-    <% } %>
-
-    <div class="item <% if(!preview) {%> sharesocial <% } %> right unselectable">
-
-        <div class="itemwr table">
-            <div class="labelwr workstation"><span class="label"><%=e('share').toUpperCase()%></span></div>
-            <div class="iconwr">
-                
-                <div class="icon">
-                    <i class="fas fa-share-alt"></i>
-                </div>
-            </div>
-        </div>
-        
     </div>
 
 <% } %>
@@ -333,6 +316,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
                     <div class="captioncnt ">
                         <div class="textscnts widthcontainer">
+                            <% makestarspanel() %>
                             <% maketags() %>
 
                             <% makecaptionclear() %>
@@ -341,7 +325,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
                             <% displaysys() %>
 
-                            <% makestarspanel() %>
+                            
 
                             <% metadisplay() %>
                             
@@ -351,6 +335,8 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
                         </div>
 
                         <% makeavatar() %>
+
+                        <% makesharepanel() %>
                        
                     </div>
 
@@ -363,14 +349,16 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
                 <div class="articlecontent widthcontainer">
                     <% if(!checkvisibility && !lockedaccount) {%>
 
-                        <div class="cntswrk">
+                        <div class="cntswrk acticletext">
                             <% makearticle() %>
                         </div>
 
                         <div class="articleend">
                             <% makestarspanel() %>
                             <% maketags() %>
+                            <div class="divider"></div>
                             <% displaysys() %>
+                            <div class="divider"></div>
                         </div>
 
                         <div class="cntswrk forcomments">

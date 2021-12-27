@@ -1358,6 +1358,15 @@ Share = function(lang){
 	}
 
 	self.serialize = function(){
+
+		/// if (articleversion2){
+		/*	try{
+				textvalue = JSON.parse(Base64Helper.decode(textvalue))
+			}
+			catch(e) {
+				textvalue = ''
+			}
+		}*/
 		
 		return encodeURIComponent(self.url.v) 
 		
@@ -1399,7 +1408,7 @@ Share = function(lang){
 		var articleversion2 = self.settings.v == 'a' && self.settings.version && self.settings.version >= 2
 
 		if (articleversion2){
-			textvalue = JSON.stringify(textvalue)
+			textvalue = Base64Helper.encode(JSON.stringify(textvalue))
 		}
 
 		if (extend){
@@ -1456,7 +1465,7 @@ Share = function(lang){
 
 		if (articleversion2){
 			try{
-				textvalue = JSON.parse(textvalue)
+				textvalue = JSON.parse(Base64Helper.decode(textvalue))
 			}
 			catch(e) {
 				textvalue = ''
@@ -2098,7 +2107,7 @@ pShare = function(){
 
 		if (articleversion2){
 			try{
-				textvalue = JSON.parse(textvalue)
+				textvalue = JSON.parse(Base64Helper.decode(textvalue))
 			}
 			catch(e) {
 				textvalue = ''
