@@ -149,27 +149,31 @@ var post = (function () {
 
 			postscores: function (clbk) {
 
-				self.app.nav.api.load({
-					open: true,
-					href: 'postscores?p=' + share.txid,
-					inWnd: true,
-					history: true,
+				actions.stateAction('_this', function(){
 
-					essenseData: {
-						share: share.txid,
+					self.app.nav.api.load({
+						open: true,
+						href: 'postscores?p=' + share.txid,
+						inWnd: true,
+						history: true,
 
-						like: function (share) {
-							renders.stars()
+						essenseData: {
+							share: share.txid,
 
-							if (ed.like) ed.like()
+							like: function (share) {
+								renders.stars()
+
+								if (ed.like) ed.like()
+							},
+
 						},
 
-					},
+						clbk: function () {
+							if (clbk)
+								clbk()
+						}
+					})
 
-					clbk: function () {
-						if (clbk)
-							clbk()
-					}
 				})
 
 			},
@@ -184,25 +188,7 @@ var post = (function () {
 						repost : shareid
 					})
 
-					/*var href = 'index';
-
-					if (isMobile()) href = 'share'
-
-					self.closeContainer()
-
-					self.nav.api.load({
-						open: true,
-						href: href + '?repost=' + shareid,
-						history: true,
-						handler: true,
-						essenseData: {
-
-						},
-
-						clbk: function (p) {
-
-						}
-					})*/
+				
 				}, shareid)
 
 
@@ -224,7 +210,6 @@ var post = (function () {
 						self.nav.api.load({
 							open: true,
 							href: 'post?s=' + txid,
-							//history : true,
 
 							eid: 'nextpost' + txid,
 							el: nextel,
@@ -462,9 +447,6 @@ var post = (function () {
 							if (wa) {
 
 								player.play()
-
-								console.log('self.sdk.videos.volume', self.sdk.videos.volume)
-								
 
 								if (player.setVolume)
 									player.setVolume(self.sdk.videos.volume)
@@ -1142,8 +1124,6 @@ var post = (function () {
 			share: function (clbk) {
 
 
-				console.log("RENDER SHARE")
-
 				var verticalVideo = false
 				var squareVideo = false
 
@@ -1257,24 +1237,18 @@ var post = (function () {
 							});
 						});
 
-
-						if(share.itisarticle){
-
-							renders.articlespart(_p.el)
-
+						if (share.itisarticle){
+							renders.articlespart(_p.el.find('.sharearticle'))
 						}
+
+						
 					},
 				);
 			},
-			articlespart : function(el){
+			articlespart : function(wr){
 
-				el.find('.article_carousel').each(function(){
-					self.app.platform.ui.carousel($(this))
-				})
+				self.app.platform.ui.articledecoration(wr, share, true)
 
-				el.find('.article_this_embed').each(function(){
-					self.app.platform.ui.embeding($(this))
-				})
 				
 			},
 			showmoreby: function () {
@@ -1709,8 +1683,6 @@ var post = (function () {
 
 					}
 
-					console.log("share", share)
-
 					if (share) {
 						self.app.platform.sdk.node.shares.users([share], function (l, error2) {
 
@@ -1802,8 +1774,6 @@ var post = (function () {
 			init: function (p) {
 
 				p.clbk(null, p);
-
-				console.log("INIT SHARE")
 
 				if(!share) return
 

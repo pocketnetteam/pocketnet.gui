@@ -1629,5 +1629,12 @@ ____loclib.reachedlimits = 'Вы достигли лимита в некотор
 
 ____loclib.closestreachedlimits = 'Вы близки к достижению лимита в некоторых действиях. Чтобы увеличить лимиты, вы должны иметь как минимум 50 PKOIN на счету своего аккаунта или иметь валидную репутацию'
 
+
 ____loclib.sendUserStatistics = 'Отправлять анонимную статистику команде разработчиков Bastyon'
 ____loclib.captionUserStats = 'Статистика'
+
+____loclib.editarticledraft = 'Редактировать черновик статьи'
+____loclib.deletearticledraft = 'Удалить черновик статьи'
+____loclib.previewarticledraft = 'Просмотр статьи'
+____loclib.deletedraftquestion = 'Вы действительно хотите удалить черновик статьи? Восстановление невозможно'
+

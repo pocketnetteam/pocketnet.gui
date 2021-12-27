@@ -392,8 +392,6 @@ var Proxy16 = function(meta, app, api){
             canchange : function(node){
                 return self.fetch('nodes/canchange', {node}, 'wait').then(r => {
 
-                    //console.log(node, r.node)
-
                     return Promise.resolve(self.changeNode(r.node))
                 }).catch(e => {
                     return Promise.resolve(false)
@@ -876,8 +874,6 @@ var Api = function(app){
                     return current.api.actualping().catch(e => {return Promise.resolve()}).then(() => {
 
 
-                        console.log('self.ready.use()', self.ready.use())
-
                         if(self.ready.use()) return Promise.resolve()
 
                         proxies = _.filter(proxies, function(p){
@@ -885,7 +881,6 @@ var Api = function(app){
                         })
 
                         return internal.proxy.api.softping(proxies).then(r => {
-                            console.log("ADD DONE")
 
                             return Promise.resolve()
                         })
@@ -1278,7 +1273,6 @@ var Api = function(app){
         return internal.proxy.manage.init().then(r => { 
             //softping
             internal.proxy.api.mixedping(proxies).catch(e => {
-                console.log("ERROR", e)
             })
 
             return Promise.resolve()

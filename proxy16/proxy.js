@@ -1443,16 +1443,7 @@ var Proxy = function (settings, manage, test, logger) {
 			urlPreviewFormatted: {
 				path: '/urlPreviewFormatted',
 				
-				formatdata : function(data){
-
-					console.log('data2', data)
-
-					return data
-				},
-
 				action: function ({ url }) {
-
-					console.log("url", url)
 
 					return new Promise((resolve, reject) => {
 

@@ -1201,34 +1201,38 @@ var lenta = (function(){
 
 				if(!share) return
 
-				var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share);
+				actions.stateAction('_this', function(){
 
-				var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0
+					var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share);
 
-				if(!checkvisibility || reputation < 50){
+					var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0
 
-					self.app.nav.api.load({
-						open : true,
-						href : 'postscores?p=' + txid,
-						inWnd : true,
-						history : true,
-	
-						essenseData : {
-							share : txid,
-	
-							like : function(share){
-								renders.stars(share)
+					if(!checkvisibility || reputation < 50){
+
+						self.app.nav.api.load({
+							open : true,
+							href : 'postscores?p=' + txid,
+							inWnd : true,
+							history : true,
+		
+							essenseData : {
+								share : txid,
+		
+								like : function(share){
+									renders.stars(share)
+								},
+		
 							},
-	
-						},
-	
-						clbk : function(){
-							if (clbk)
-								clbk()
-						}
-					})
+		
+							clbk : function(){
+								if (clbk)
+									clbk()
+							}
+						})
 
-				}
+					}
+
+				})
 
 			},
 
@@ -2050,9 +2054,7 @@ var lenta = (function(){
 						if (self.app.platform.sdk.address.pnet() && s.address == self.app.platform.sdk.address.pnet().address) return
 
 
-						var dev = deep(app, 'platform.sdk.user.storage.'+s.address+'.dev') || deep(app, 'platform.sdk.usersl.storage.'+s.address+'.dev');
-
-						if (dev) return;
+					
 
 						p.attr('value', value)
 						p.addClass('liked')

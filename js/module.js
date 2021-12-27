@@ -713,7 +713,9 @@ nModule = function(){
 					self.shell(settings, function(p){
 
 						if(globalpreloaderTimer){
+
 							globalpreloader(false)
+
 							clearTimeout(globalpreloaderTimer)
 						}
 
@@ -762,6 +764,13 @@ nModule = function(){
 
 			}
 			else{
+
+				if (p.globalpreloaderTimer){
+
+					globalpreloader(false)
+					
+					clearTimeout(p.globalpreloaderTimer)
+				}
 
 				if(p.el) p.el.html('')
 

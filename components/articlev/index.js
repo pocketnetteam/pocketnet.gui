@@ -159,8 +159,6 @@ var articlev = (function(){
 
 				return editor.save().then(outputData => {
 
-					
-
 					art.content = outputData
 
 					actions.save()
@@ -437,11 +435,11 @@ var articlev = (function(){
 
 				art.caption.value = text || ''
 
-				console.log('text', text)
+				console.log('text', text, art)
 
 				renders.captiondouble()
+				
 				actions.save()
-
 				actions.apply()
 			})
 
@@ -453,7 +451,15 @@ var articlev = (function(){
 					inWnd : true,
 					history : true,
 					essenseData : {
-						current : art.id,
+						current : art.id,	
+
+						create : function(){
+
+							console.log("create")
+
+							changeArticle()
+							return true
+						},
 
 						select : function(art){
 							changeArticle(art.id)
@@ -477,8 +483,7 @@ var articlev = (function(){
 				action : function(file, clbk){
 
 					self.app.platform.papi.editImage(file.base64, {
-
-						aspectRatio : 1.7,
+						autoCropArea : 0.95,
 						apply : true
 
 					}).then( base64 => {
@@ -592,11 +597,42 @@ var articlev = (function(){
 					},
 
 					linkTool: {
-						class: LinkTool,
+						class: window.LinkTool,
 						config: {
-						  endpoint: 'https://localhost:8887/urlPreviewFormatted', // Your backend endpoint for url data fetching
+
+							fetch : function(url){
+
+								return self.app.api.fetch('urlPreviewFormatted', {url}).then(r => {
+
+									return r
+								})
+
+								/*if(self.app.thislink(url)){
+									need js preview
+								}
+								else{
+									return self.app.api.fetch('urlPreviewFormatted', {url})
+								}*/
+
+
+								/*body = await (ajax.get({
+
+									url: this.config.endpoint,
+
+									data: {
+									  url,
+									},
+						  
+								})).body;*/
+
+
+								//endpoint: 'https://localhost:8887/urlPreviewFormatted', // Your backend endpoint for url data fetching
+
+							}
+
 						}
 					},
+
 
 					/*inlineCode: {
 						class: window.InlineCode,

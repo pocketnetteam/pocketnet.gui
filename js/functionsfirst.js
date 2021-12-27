@@ -598,8 +598,6 @@ importCss = function(src, _document) {
     
     var appendTo = _document.getElementsByTagName('body')[0];
 
-    console.log("src", src)
-
     appendTo.appendChild(link);
 }
 

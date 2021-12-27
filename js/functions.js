@@ -826,8 +826,8 @@
 				} 
 			}
 
-
-			app.chatposition(false)
+			if (app.chatposition)
+				app.chatposition(false)
 
 			if(content) success();
 			
@@ -4224,8 +4224,6 @@
 
 							return false
 						}
-
-						console.log('value1', value, !isNaN(Number(value)))
 
 						if(value.length > 1) {
 							if (value[0] == '0')
@@ -10958,7 +10956,7 @@ edjsHTML = function() {
 
 			var src = t.file && t.file.url ? t.file.url : t.file
 
-			return '<div class="article_image '+ cl.join(' ') +'"><img src="' + src + '" alt="' + _.escape(r) + '" /><div class="article_image_caption">'+_.escape(r)+'</div></div>'
+			return '<div class="article_image '+ cl.join(' ') +'"><img src="' + src + '" alt="' + _.escape(r) + '" /><div class="article_image_caption">'+_.escape(t.caption || '')+'</div></div>'
 
         },
 
@@ -11027,7 +11025,13 @@ edjsHTML = function() {
 				return '<div class="article_this_embed" href="'+_.escape(t.link)+'"></div>'
 			}
 			else{
-				return '<a href="'+t.link+'" donottrust="true"><div class="article_link_custom"><div class="article_link_custom_image"><div class="img" image="' + _.escape(deep(t, 'meta.image.url'))+'"></div></div><div class="article_link_custom_content"><div class="article_link_custom_title">' + _.escape(deep(t, 'meta.title') || url.host || 'Undefined Link') + '</div><div class="article_link_custom_description">' + _.escape(deep(t, 'meta.description') || '') + '</div><div class="article_link_custom_href">' + _.escape(t.link) + '</div></div></div></a>'
+
+				var img = ''
+
+				if (deep(t, 'meta.image.url'))
+					img = '<div class="article_link_custom_image"><div class="img" image="' + _.escape(deep(t, 'meta.image.url'))+'"></div></div>'
+
+				return '<a href="'+t.link+'" donottrust="true"><div class="article_link_custom">'+img+'<div class="article_link_custom_content"><div class="article_link_custom_title">' + _.escape(deep(t, 'meta.title') || url.host || 'Undefined Link') + '</div><div class="article_link_custom_description">' + _.escape(deep(t, 'meta.description') || '') + '</div><div class="article_link_custom_href">' + _.escape(t.link) + '</div></div></div></a>'
 			}
 
 
