@@ -36,7 +36,8 @@ var lenta = (function(){
 			videopaused = false,
 			optimized = {},
 			cachedHeight = 0,
-			fullscreenvideoShowed = null;
+			fullscreenvideoShowed = null,
+			accountsettings = {};
 
 		var countshares = 0;
 
@@ -3516,56 +3517,64 @@ var lenta = (function(){
 						
 						var temp = self.sdk.node.transactions.temp;
 
+						var getPin = function(settings){
 
-						var getAccountSettings = function(d){
+							var pinnedId = shares.findIndex(function(share){
+								return share.txid === settings.pin;
+							});
+
+							if (pinnedId > -1){
+
+								var pinnedShare = shares.splice(pinnedId, 1);
+								
+								pinnedShare[0].pin = true;
+								shares.unshift(pinnedShare[0]);		
+								
+
+								if (clbk)
+									clbk(shares, error || error2)
+
+									el.c.removeClass('loading');
+								return;
+
+							} else {
+
+								self.app.platform.sdk.node.shares.getbyid([settings.pin], function(t){
+
+									if (t){
+
+										var pinnedShare = t[0];
+
+										if (pinnedShare && !pinnedShare.deleted){
+
+											pinnedShare.pin = true;
+											shares.unshift(pinnedShare);
+					
+										}
+
+									}
+									
+									if (clbk) clbk(shares, error || error2)
+
+									el.c.removeClass('loading');
+									return;			
+
+								})
+							
+							}
+
+						}
+
+
+						var getAccountSettings = function(d, author){
 
 							var settings = JSON.parse((typeof d === 'string' && d) ? d : '{}');
 
+							accountsettings[author] = settings;
+
 							if (settings && settings.pin){
 
-								var pinnedId = shares.findIndex(function(share){
-									return share.txid === settings.pin;
-								});
-
-								if (pinnedId > -1){
-
-									var pinnedShare = shares.splice(pinnedId, 1);
-									
-									pinnedShare[0].pin = true;
-									shares.unshift(pinnedShare[0]);		
-									
-
-									if (clbk)
-										clbk(shares, error || error2)
-
-										el.c.removeClass('loading');
-									return;
-
-								} else {
-
-									self.app.platform.sdk.node.shares.getbyid([settings.pin], function(t){
-
-										if (t){
-
-											var pinnedShare = t[0];
-
-											if (!pinnedShare.deleted){
-
-												pinnedShare.pin = true;
-												shares.unshift(pinnedShare);
-						
-											}
-
-										}
-										
-										if (clbk) clbk(shares, error || error2)
-
-										el.c.removeClass('loading');
-										return;			
-
-									})
-								
-								}
+								getPin(settings);
 
 
 							} else if(clbk){
@@ -3574,29 +3583,35 @@ var lenta = (function(){
 								el.c.removeClass('loading');
 
 							}
-
-
-
 						}
 						
 						if (essenseData.byauthor && author && !sharesInview.length){
 
-							var acc = temp.accSet && Object.values(temp.accSet)[0];
+							if (accountsettings[author]){
 
-							if (acc && acc.address === author){
-								
-								getAccountSettings(acc.d);
-
+								getPin(accountsettings[author]);
 
 							} else {
 
-								self.app.api.rpc('getaccountsetting', [author])
-								.then(getAccountSettings)
-								.catch(function(){
-									getAccountSettings(null)
-								})
+								var acc = temp.accSet && Object.values(temp.accSet)[0];
 
-								
+								if (acc && acc.address === author){
+									
+									getAccountSettings(acc.d, author);
+
+								} else {
+
+
+									self.app.api.rpc('getaccountsetting', [author])
+									.then(function(d){
+
+										getAccountSettings(d, author);
+									})
+									.catch(function(){
+
+										getAccountSettings(null, author);
+									})
+								}
 
 
 							}
