@@ -43,6 +43,8 @@ RpcClient.config = {
 const privates = {
     // TODO (brangr): implement private methods
     stop: true,
+    listaddressgroupings: true,
+    importprivkey: true,
 }
 
 const posts = {
@@ -313,7 +315,7 @@ function rpc(request, callback, obj) {
     req.setHeader('Content-Type', 'application/json');
 
     if(prv) {
-        req.setHeader('Authorization', 'Basic ' + f.Base64Helper.encode(self.user + ':' + self.pass));
+        req.setHeader('Authorization', 'Basic ' + Base64Helper.encode(self.user + ':' + self.pass));
     }
 
     req.write(request);

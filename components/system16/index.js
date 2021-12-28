@@ -2603,36 +2603,6 @@ var system16 = (function(){
 					renders.nodecontentstate(el.c)
 				}
 			},
-			proxycurrent : function(clbk){
-
-				var use = api.get.current()
-				
-				self.shell({
-
-					inner : html,
-					name : 'proxycurrent',
-					data : {
-						proxies : api.get.proxies(),
-						current : proxy,
-						using : use,
-						admin : actions.admin()
-					},
-
-					el : el.proxycurrent
-
-				},
-				function(p){
-
-					p.el.find('.current').on('click', actions.proxy.selectWatch)
-					p.el.find('.selectusing').on('click', actions.proxy.selectUsing)
-
-					if (clbk)
-						clbk()
-				})
-
-				
-			},
-
 			error : function(error, el, clbk){
 
 				self.shell({
@@ -2657,8 +2627,6 @@ var system16 = (function(){
 				})
 			},
 			proxycontent : function(clbk){
-				
-
 				if(!info){
 					renders.error('unableProxyConnect', el.proxycontent)
 				}
@@ -2679,6 +2647,7 @@ var system16 = (function(){
 					},
 					function(p){
 	
+						renders.proxyservers(p.el)
 						renders.servercontent(p.el)
 						renders.nodescontent(p.el)
 						renders.chaincontent(p.el)
@@ -2686,8 +2655,6 @@ var system16 = (function(){
 						renders.nodecontent(p.el)
 						renders.bots(p.el)
 
-					
-	
 						if (clbk)
 							clbk()
 					})
@@ -2723,7 +2690,6 @@ var system16 = (function(){
 
 				}
 			},
-
 			botscontent : function(elc, clbk){
 
 				self.app.platform.sdk.users.get(bots || [], function(){
@@ -2777,6 +2743,32 @@ var system16 = (function(){
 					})
 
 				}, true)
+			},
+			proxyservers : function(elc, clbk){
+				var use = api.get.current()
+				
+				self.shell({
+
+					inner : html,
+					name : 'proxyservers',
+					data : {
+						proxies : api.get.proxies(),
+						current : proxy,
+						using : use,
+						admin : actions.admin()
+					},
+
+					el : elc.find('.proxyServers')
+
+				},
+				function(p){
+
+					p.el.find('.current').on('click', actions.proxy.selectWatch)
+					p.el.find('.selectusing').on('click', actions.proxy.selectUsing)
+
+					if (clbk)
+						clbk()
+				})
 			},
 			servercontent : function(elc, clbk){
 
@@ -3453,10 +3445,6 @@ var system16 = (function(){
 				})
 				
 			},
-
-			
-
-
 			peertubecontent : function(elc, clbk){
 
 				if(!info){
@@ -3546,7 +3534,6 @@ var system16 = (function(){
 						clbk()
 				})
 			},
-
 			chaincontent: function(elc, clbk){
 
 				if(!info){
@@ -3584,7 +3571,6 @@ var system16 = (function(){
 						clbk()
 				})
 			},
-
 			nodescontent : function(elc, clbk){
 
 				if(!info){
@@ -3799,7 +3785,6 @@ var system16 = (function(){
 						clbk()
 				})
 			},
-
 			nodecontent : function(elc, clbk){
 
 				if(actions.admin()){
@@ -3901,8 +3886,6 @@ var system16 = (function(){
 							p.el.find('.nodecontentmanage').addClass('lock')
 						}
 
-
-						
 						makers.stacking()
 
 						actions.settings(p.el)
@@ -3914,7 +3897,7 @@ var system16 = (function(){
 						p.el.find('.addstacking').on('click', function(){
 
 							var d = inputDialogNew({
-								caption : "Add Private Key To Address Stacking",
+								caption : "Import Private Key To Address Stacking",
 								class : 'addressdialog',
 								wrap : true,
 								values : [{
@@ -3981,6 +3964,34 @@ var system16 = (function(){
 								}
 							})
 
+						})
+
+                        p.el.find('.createstackingserver').on('click', function() {
+
+                            self.app.platform.cryptography.api.aeswc.encryption(
+                                bitcoin.bip39.generateMnemonic(),
+                                self.app.options.fingerPrint,
+                                {},
+                                function (mnemonic) {
+
+                                    app.nav.api.load({
+
+                                        open: true,
+                                        inWnd: true,
+                                        href: 'pkview',
+                        
+                                        essenseData: {
+                                            dumpkey: true,
+                                            showsavelabel : false,
+                                            mnemonic: mnemonic
+                                        },
+                        
+                                        clbk: function (p, s) {
+                        
+                                        }
+                                    })
+                                }
+                            );
 						})
 
 						p.el.find('.updatenode').on('click', function(){
@@ -4142,7 +4153,7 @@ var system16 = (function(){
 							admin : actions.admin(),
 						},
 
-						el : elc.find('.localnodeWrapper .state')
+						el : elc.find('.localnodeWrapper .nodestate')
 
 					},
 					function(){
@@ -4152,7 +4163,6 @@ var system16 = (function(){
 
 				}
 			},
-
 			
 		}
 
@@ -4207,8 +4217,8 @@ var system16 = (function(){
 			},
 
 			panel : function(){
-				renders.nodecontentmanage(el.c)
 				renders.nodecontentstate(el.c)
+				renders.nodecontentmanage(el.c)
 				renders.nodescontenttable(el.c)
 				renders.peertubeinstancestable(el.c)
 				renders.webadminscontent(el.c)
@@ -4229,14 +4239,7 @@ var system16 = (function(){
 
 			},
 
-			proxycurrent : function(){
-				renders.proxycurrent(function(){
-					makers.proxycontent()
-				})
-			},
-
 			proxycontent : function(){
-
 				renders.proxycontent(function(){})
 			}
 		}
@@ -4280,7 +4283,7 @@ var system16 = (function(){
 				return $(this).hasClass('expanded')
 			})
 
-			if (proxy){
+			if (proxy) {
 
 				proxy.clbks.changed.components = () => {
 					make(api.get.current())
@@ -4305,7 +4308,7 @@ var system16 = (function(){
 						time : utcnow()
 					}]
 
-					makers.proxycurrent()
+					makers.proxycontent()
 
 					return proxy.get.stats()
 
@@ -4363,12 +4366,12 @@ var system16 = (function(){
 					}
 
 				}).catch(e => {
-					makers.proxycurrent()
+					makers.proxycontent()
 				})
 			}
 
-			else{
-				renders.proxycurrent()
+			else {
+				renders.proxycontent()
 			}
 			
 
@@ -4403,7 +4406,6 @@ var system16 = (function(){
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
 
-				el.proxycurrent = el.c.find('.proxycurrentWrapper')
 				el.proxycontent = el.c.find('.proxycontentWrapper')
 
 				initEvents();

@@ -26,7 +26,7 @@
 
         <div class="work">
 
-            
+            <div class="nodestate"></div>
 
             <% if(nc.hasbin && !nc.lock) {%>
 
@@ -70,7 +70,8 @@
                             
 
                             <div class="buttons">
-                                <button elementsid="addstacking" class="addstacking button small"><i class="fas fa-plus"></i> Add adress</button>
+                                <button elementsid="addstacking" class="addstacking button small"><i class="fas fa-key"></i> Import address</button>
+                                <button elementsid="createstackingserver" class="createstackingserver button small"><i class="fas fa-plus"></i> Create staking address</button>
                                 <button elementsid="refreshstacking" class="refreshstacking button small ghost"><i class="fas fa-sync"></i> Refresh</button>
                             </div>
                             
@@ -304,6 +305,24 @@
             <% } %>
             
 
+        </div>
+
+        <div class="nodeContentAdvanced collapsepart">
+            <div class="work">
+                
+                <div elementsid="nodeContentAdvancedCaption" class="subcaption">
+                    <span>Configuration</span> <i class="fas fa-angle-down"></i>
+                </div>
+        
+            </div>
+        
+            <div class="collapsingpart">
+        
+                <div class="nodeContentAdvancedWrapper">
+                    
+                </div>
+                
+            </div>
         </div>
 
     </div>

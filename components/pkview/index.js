@@ -213,7 +213,7 @@ var pkview = (function(){
 
 			current = {}
 
-			var mnemonic = localStorage['mnemonic'];
+			var mnemonic = ed.mnemonic || localStorage['mnemonic'];
 
 			if (mnemonic){
 
