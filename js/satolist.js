@@ -3669,7 +3669,21 @@ Platform = function (app, listofnodes) {
                             var ct = new Settings();
                             ct.pin.set(unpin ? '' : share.txid);
 
-            
+                            if (!self.sdk.accountsettings.storage[share.address]){
+
+                                self.sdk.accountsettings.storage[share.address] = {};
+                            }
+
+                            if (unpin){
+
+                                self.sdk.accountsettings.storage[share.address].pin = null;
+
+                            } else {
+
+                                self.sdk.accountsettings.storage[share.address].pin = share.txid;
+                            }
+
+
                             self.app.platform.sdk.node.account.accSet(ct, function(err, alias){
 
 
@@ -5928,6 +5942,10 @@ Platform = function (app, listofnodes) {
 
                 app.mobile.statusbar.background()
             }
+        },
+
+        accountsettings: {
+            storage: {}
         },
 
         usersettings: {

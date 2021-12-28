@@ -36,8 +36,7 @@ var lenta = (function(){
 			videopaused = false,
 			optimized = {},
 			cachedHeight = 0,
-			fullscreenvideoShowed = null,
-			accountsettings = {};
+			fullscreenvideoShowed = null;
 
 		var countshares = 0;
 
@@ -3570,7 +3569,7 @@ var lenta = (function(){
 
 							var settings = JSON.parse((typeof d === 'string' && d) ? d : '{}');
 
-							accountsettings[author] = settings;
+							self.app.platform.sdk.accountsettings.storage[author] = settings;
 
 							if (settings && settings.pin){
 
@@ -3587,9 +3586,9 @@ var lenta = (function(){
 						
 						if (essenseData.byauthor && author && !sharesInview.length){
 
-							if (accountsettings[author]){
+							if (self.app.platform.sdk.accountsettings.storage[author]){
 
-								getPin(accountsettings[author]);
+								getPin(self.app.platform.sdk.accountsettings.storage[author]);
 
 							} else {
 
@@ -4626,7 +4625,7 @@ var lenta = (function(){
 				el.lentacnt = el.c.find('.lentacell .cnt')
 				el.w = essenseData.window || w
 
-				el.share = {}
+				el.share = {};
 
 				if (essenseData.horizontal){
 
