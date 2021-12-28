@@ -8458,8 +8458,6 @@ Platform = function (app, listofnodes) {
                 self.app.api.rpc('getrecomendedaccountsbyscoresfromaddress', [my, ['share', 'video'], 0, 300000, 15])
                 .then(function(d){
 
-                    console.log('d!!!', d);
-
                     if (clbk){
                         clbk(d)
                     }

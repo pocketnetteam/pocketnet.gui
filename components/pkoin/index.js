@@ -91,7 +91,11 @@ var pkoin = (function(){
 			},
 			send : function(comment, clbk){	
 
+				globalpreloader(true);
+
 				self.app.platform.sdk.comments.send(shareId, comment, null, null, function(err, alias){
+
+					globalpreloader(false)
 
 					if(!err){
 						if (clbk)
@@ -226,11 +230,6 @@ var pkoin = (function(){
 					
 				
 				})
-
-
-
-
-
 
 				
 			})
