@@ -51,7 +51,7 @@ var metadisplay = function(){ %>
 		<div class="metatable table">
 			<div class="metadata">
 
-				<% if(!emptywithrepost) {%>
+				
 
 					<div class="author">
 
@@ -107,14 +107,15 @@ var metadisplay = function(){ %>
 						</div>
 					</div>
 
+				<% if(!emptywithrepost) {%>
 				<% } else { %> 
 				
-					<div class="repostCaption">
+					<!--<div class="repostCaption">
 						<i class="fas fa-share"></i> 
 						<a elementsid="repostcaptionlink" href="<%-app.platform.api.authorlink(share.address)%>">
 							<span class="adr"><%-name || share.address %></span>
 						</a>
-					</div>
+					</div>-->
 					
 				<% } %>
 			
@@ -375,9 +376,9 @@ var arranges = {
 
 	<div class="work unselectablemobile">
 
-		<div class="shareTable <%-subscribed%> <%-view%> <% if(emptywithrepost) { %> emptywithrepost <% } else { %> truerepost <% } %>" address="<%-share.address%>" stxid="<%-share.txid%>">
+		<div class="shareTable <%-subscribed%> <%-view%> truerepost" address="<%-share.address%>" stxid="<%-share.txid%>">
 
-			<% if(!emptywithrepost) { %>
+			
 
 				<div class="iconWrapper">
 					<a elementsid="shareiconprofilelink" href="<%-app.platform.api.authorlink(share.address)%>">
@@ -415,6 +416,8 @@ var arranges = {
 					</a>
 
 				</div>
+
+			<% if(!emptywithrepost) { %>
 
 			<% } %>
 

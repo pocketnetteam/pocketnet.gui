@@ -43,13 +43,15 @@ var articlev = (function(){
 
 							if(!_alias){
 
+								console.log('error', error)
+
 								var t = self.app.platform.errorHandler(error, true);
 
 								if (t){
 									sitemessage(t)
 								}
 
-								return Promise.reject(error)
+								return reject(error)
 							}
 							else
 							{
@@ -72,7 +74,7 @@ var articlev = (function(){
 									actions.complete();
 								}
 
-								return Promise.resolve(_alias)
+								return resolve(_alias)
 							}
 
 						}
@@ -107,7 +109,6 @@ var articlev = (function(){
 						var share = self.app.platform.sdk.articles.share(art)
 
 						return actions.trx(share)
-
 						
 					}).then(alias => {
 
@@ -119,7 +120,7 @@ var articlev = (function(){
 						actions.complete();
 
 						globalpreloader(false)
-						
+
 					}).catch(e => {
 
 						globalpreloader(false)

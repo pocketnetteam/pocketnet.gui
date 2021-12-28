@@ -259,7 +259,6 @@
 	
 	&.fromtop{
 		.list{
-			border-top : 1px solid @color-gray-slight;
 			border-bottom : 0;
 		}
 	}
@@ -333,9 +332,13 @@
 		}
 				
 		.comment{
-			border-bottom : 1px solid @color-gray-slight;
+			border-top : 1px solid @color-gray-slight;
 			.transition(0.9s, color);
 			position : relative;
+
+			&:nth-child(1){
+				border-top : 0;
+			}
 
 			&.mycomment,
 			&.dev,
