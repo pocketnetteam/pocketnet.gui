@@ -2341,11 +2341,8 @@ Platform = function (app, listofnodes) {
 
         embeding : function(el){
 
-           
-
             var h = el.attr('href')
             var w = new window.PNWIDGETS()
-
 
             w.makefromurl(el[0], h, true)
 
@@ -19508,7 +19505,7 @@ Platform = function (app, listofnodes) {
                     stripIgnoreTag: true
                 });*/
 
-                var links = linkify.find(share.message);
+                var links = _.isObject(share.message) ? [] : linkify.find(share.message);
 
                 /*_.each(links, function(l){
                     nm = nm.replace(l.href, "")

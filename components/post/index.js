@@ -251,8 +251,6 @@ var post = (function () {
 
 				var m = share.message;
 
-				var nm = trimHtml(m, 130).replace(/ &hellip;/g, '...').replace(/&hellip;/g, '...');
-
 				var image = share.images[0];
 
 				if (!image && share.url) {
@@ -1237,10 +1235,12 @@ var post = (function () {
 							});
 						});
 
-						if (share.itisarticle){
+						if (share.itisarticle()){
 							renders.articlespart(_p.el.find('.sharearticle'))
 						}
 
+
+						p.el.find('.postscoresshow').on('click', events.postscores);
 						
 					},
 				);

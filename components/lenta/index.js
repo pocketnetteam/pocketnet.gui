@@ -755,9 +755,9 @@ var lenta = (function(){
 
 			openPost : function(id, clbk){
 
-				console.log('openPost')
+				var share = self.app.platform.sdk.node.shares.storage.trx[id];
 
-				if((!isMobile() && !isTablet()) || essenseData.openPostInWindowMobile){
+				if((!isMobile() && !isTablet()) || essenseData.openPostInWindowMobile || (share && share.itisarticle())){
 
 					self.app.user.isState(function(state){
 
@@ -2249,8 +2249,10 @@ var lenta = (function(){
 				if (islink) return		
 
 				var shareId = $(this).closest('.shareinlenta').attr('id');
+
 				self.app.mobile.vibration.small()
-					actions.openPost(shareId)
+
+				actions.openPost(shareId)
 			},
 
 			sharesocial : function(){
@@ -2448,7 +2450,8 @@ var lenta = (function(){
 				shareInitingMap[share.txid] = true;
 
 				self.shell({
-					name : video ? 'sharevideolight' :  'share',
+					name : video ? 'sharevideolight' : share.itisarticle() ? 'sharearticle' : 'share',
+
 					el : _el,
 					animation : false,
 					data : {
@@ -2472,8 +2475,7 @@ var lenta = (function(){
 						renders.comments(share.txid, false, false, true)
 					}
 
-					if(!p.el.find('.showMore').length)
-						renders.repost(p.el, share.repost, share.txid, share.isEmpty(), null, all)
+					
 			
 					renders.url(p.el.find('.url'), share.url, share, function(){
 
@@ -2506,9 +2508,20 @@ var lenta = (function(){
 					})
 
 					
+					if (share.itisarticle()){
+						renders.articlespart(p.el.find('.sharearticle'), share)
+					}
+					else{
+						if(!p.el.find('.showMore').length)
+							renders.repost(p.el, share.repost, share.txid, share.isEmpty(), null, all)
+					}
 					
 				})
 
+			},
+
+			articlespart : function(wr, share){
+				self.app.platform.ui.articledecoration(wr, share)
 			},
 
 			mystars : function(shares, clbk){
@@ -3819,12 +3832,15 @@ var lenta = (function(){
 
 		var initEvents = function(){	
 			
-			el.c.on('click', '.forstars .count', events.postscores)
+			el.c.on('click', '.forstars .count, .postscoresshow', events.postscores)
 			el.c.on('click', '.stars i', events.like)
 			el.c.on('click', '.complain', events.complain)
 			el.c.on('click', '.imageOpen', events.openGallery)
 			el.c.on('click', '.txid', events.getTransaction)
 			el.c.on('click', '.showMore', events.openPost)
+			el.c.on('click', '.showMoreArticle', events.openPost)
+
+			
 			el.c.on('click', '.forrepost', events.repost)
 			el.c.on('click', '.unblockbutton', events.unblock)
 			el.c.on('click', '.videoTips', events.fullScreenVideo)

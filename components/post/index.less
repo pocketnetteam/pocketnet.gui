@@ -1503,6 +1503,7 @@
 		.shareBgCaption,
 		.articleend{
 			.forstars{
+				margin-bottom: 2 * @rhythm;
 				.itemwr{
 					display: flex;
 					flex-direction: column-reverse;
@@ -1548,7 +1549,12 @@
 		.shareBgCaption{
 			height: 640px;
 			position: relative;
-		
+
+			.tags{
+				div span {
+					color : #fff;
+				}
+			}
 
 			.blackmatte{
 				background: rgb(0,0,0);
@@ -1586,10 +1592,12 @@
 				}
 			}
 
+			
+			.starstoppanel,
 			.socialsharewrapper{
 				position: absolute;
 				bottom :  1.5 * @rhythm;
-				right: 1.5 * @rhythm;
+				right: 2.5 * @rhythm;
 
 				.iconwrapper{
 					width: 3.5em;
@@ -1598,16 +1606,35 @@
 					border-radius: 3.5em;
 					color : #fff;
 					cursor: pointer;
+					display: flex;
+					align-items: center;
+					font-family: Nunito Sans;
 
 					&:hover{
 						opacity: 0.6;
 					}
 
 					i{
-						font-size: 0.8em;
+						width: 30px;
+						text-align: center;
+						font-size: 0.7em;
 					}
 				}
 			}
+
+			.socialsharewrapper{
+				.iconwrapper{
+					justify-content: flex-end;
+				}
+			}
+
+			.starstoppanel{
+				bottom :  1.5 * @rhythm;
+				left: 3 * @rhythm;
+				right: auto;
+				display: flex;
+			}
+
 			
 			.articleCover,
 			.captioncnt,
@@ -1667,6 +1694,19 @@
 				.divider{
 					background: @color-black4;
 				}
+
+				.tags{
+					div span {
+						color : @color-black4;
+					}
+				}
+
+				.starstoppanel,
+				.socialsharewrapper{
+					.iconwrapper{
+						color : @color-black4;
+					}
+				}
 			}
 
 		}
@@ -1690,7 +1730,7 @@
 			}
 
 			.forcomments{
-				margin-top : 12 * @rhythm;
+				margin-top : 4 * @rhythm;
 			}
 		}
 	}
@@ -1703,9 +1743,6 @@
 			
 			.shareBgCaption{
 				
-	
-				
-
 				&:not(.verticalcover){
 					height: auto;
 
@@ -1720,10 +1757,14 @@
 		
 						.tags{
 							justify-content: center;
+
+							div span{
+								color : @color-black2;
+							}
 						}
 		
 						.sharecaption{
-							font-size: 4em;
+							font-size: 3em;
 							font-family: Georgia, serif;
 						}
 						
@@ -1795,6 +1836,19 @@
 	
 					.divider{
 						background: #fff;
+					}
+
+					.tags{
+						div span{
+							color : #fff;
+						}
+					}
+
+					.starstoppanel,
+					.socialsharewrapper{
+						.iconwrapper{
+							color : #fff;
+						}
 					}
 				}
 	
