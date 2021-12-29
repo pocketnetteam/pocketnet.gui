@@ -59,7 +59,10 @@ if(isMobile()) dplace = e('e13039')
 
 		<% } %>
 
-		<% if(!state || mestate.reputation >= -50) { %> 
+		<% 
+			
+		
+		if(!state || !user.validate() || _.isEmpty(mestate) || (mestate.reputation >= -50)) { %> 
  
 			<div class="lcpp">
 				<div class="txt">
@@ -129,9 +132,9 @@ if(isMobile()) dplace = e('e13039')
 
 	<% if(answer) {%>
 
-	<div elementsid="comments_closeAnswer" class="closeAnswer">
-		<i class="far fa-times-circle"></i>
-	</div>
+		<div elementsid="comments_closeAnswer" class="closeAnswer">
+			<i class="far fa-times-circle"></i>
+		</div>
 
 	<% } %>
 

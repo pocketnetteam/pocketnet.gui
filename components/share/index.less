@@ -208,16 +208,21 @@
 
 
 
-	.repostShareWrapper{
+	.repostShareWrapperInns{
 		position: relative;
 		overflow: hidden;
-		padding : @rhythm;
 
-		.repostShare{
+		.metapanelitem {
+			display: none!important;
+		}
+
+		#post .share .work{
+			padding-top : @rhythm!important;
+		}
+
+		.repostShareInns{
 			border-radius: 3px;
 			background: #fff;
-			padding : 2 * @rhythm;
-			padding-right: 4 * @rhythm;
 			padding-left: 0;
 		}
 
@@ -254,7 +259,7 @@
 			padding : 2 * @rhythm 0;
 		}*/
 	}	
-
+	/*
 	#post{
 		.share{
 			.work{
@@ -262,7 +267,6 @@
 			}
 		}
 		.ra{
-			/*background: fade(#fff, 50);*/
 			.work{
 				padding : 0;
 				padding-right: 30px;
@@ -434,7 +438,7 @@
 	}
 
 
-
+	*/
 	
 
 	select{
@@ -1352,9 +1356,9 @@ html.stblack{
 	#share{
 		
 
-		.repostShareWrapper{
+		.repostShareWrapperInns{
 	
-			.repostShare{
+			.repostShareInns{
 				background: @color-black2;
 			}
 	
@@ -1817,6 +1821,7 @@ html.stblack{
 			padding-right: 2 * @rhythm;
 			top : 0;
 			background: #FAFAFA;
+			padding-bottom: 10 * @rhythm;
 
 			.result{
 				margin-top : 0;
@@ -1934,18 +1939,16 @@ html.stblack{
 			margin-right: 0;
 		}
 
-		.repostShareWrapper{
+		.repostShareWrapperInns{
 
 			border-radius: 5px;
 			border : 1px solid fade(@color-gray-slight, 50);
 			background: #fff;
 			margin-bottom: @rhythm;
 
-			.repostShare{
+			.repostShareInns{
 				padding : 0;
 			}
-
-			
 
 			.repostCaption{
 				right :  @rhythm;

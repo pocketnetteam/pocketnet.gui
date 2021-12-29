@@ -20,66 +20,6 @@
 		opacity: 0.3;
 	}
 
-	/***/
-
-	.webadminscontent{
-		padding: 3 * @rhythm 2 * @rhythm;
-
-
-        .admin{
-
-            >div{
-                vertical-align: middle;
-
-				.icon{
-					display: block!important;
-				}
-
-                &.iconWrapper{
-                    width: 44px;
-                    padding-left: 0;
-                    padding-right: 0;
-					float: none;
-                }
-
-                &.panelWrapper{
-                    width : 140px;
-                    padding : 2 * @rhythm;
-                    padding-left: 0;
-
-                    .item{
-                        width: 40px;
-                        float: right;
-                        padding : @rhythm;
-                        color : @color-gray-mlight;
-                        margin-left : 4px;
-                        text-align: center;
-                        cursor: pointer;
-
-                        &:hover{
-                            color : @color-main;
-                        }
-
-                        &.edit{
-                            cursor: pointer;
-                            &:hover{
-                                color : @color-main;
-                            }
-                        }
-
-                        &.stable{
-                            color : @color-good;
-                        }
-                       
-                    }
-                }
-
-              
-            }
-        }
-    }
-	/***/
-
 	.work{
 		padding-right: 0;
 	}
@@ -114,6 +54,8 @@
 		display: inline-block;
 		white-space: nowrap;
 	}
+
+	
 	.authorCell a,
 	.sbtnxs,
 	.spsp{
@@ -313,12 +255,53 @@
 			padding-left: 2 * @rhythm;
 			padding-right: 0;
 			float: left;
+		}	
+
+		.repostShareWrapper{
+			.openetc{
+				cursor: pointer;
+				padding : 2 * @rhythm;
+				text-align: center;
+				i,
+				span{
+					color : fade(@color-gray-mlight, 80);
+					font-size: 0.9em;
+				}
+
+				i{
+					font-size: 0.8em;
+				}
+			}
+		}
+
+		.repostShare{
+			border-radius: 5px;
+			border : 1px solid fade(@color-gray-slight, 50);
+			border-bottom: 1px solid fade(#fff, 75);
+			border-right: 1px solid fade(#fff, 75);
+			.shadowSmaller();
+			margin-left: @rhythm;
+			margin-right: @rhythm;
+			margin-bottom: @rhythm;
+
+			.share{
+				margin-bottom: 0;
+
+				.videoTips{
+					display: none!important;
+				}
+			}
+
+			
+			
 		}
 
 		.cntswrk{
 			margin-left: 8 * @rhythm;
 			padding-left : 2 * @rhythm;
 			padding-right : 4 * @rhythm;
+
+		
 		}
 
 		.work{
@@ -399,36 +382,14 @@
 		}
 		
 		.share{
-			//padding : 2 * @rhythm 0;
 			background: #fff;
 			margin-bottom: @rhythm;
 			padding-bottom : 0;
 
-			.shareTable{
-				padding-top : 2 * @rhythm;
-			}
-			
-			/*content-visibility: auto;
-			contain-intrinsic-size: 800px;*/
+		
 
 			.commentsWrapperHb{
 				min-height: 2 * @rhythm;
-			}
-
-			.shareTable{
-				&.truerepost{
-					#post{
-						.iconWrapper{
-							width: 7 * @rhythm;
-							padding-left: 2 * @rhythm;
-		
-							.usericon{
-								width: 5 * @rhythm;
-								height: 5 * @rhythm;
-							}
-						}
-					}
-				}
 			}
 
 			#comments{
@@ -463,108 +424,6 @@
 				.edit .posttable>div.postCellWrapper .postaction, 
 				.post .posttable>div.postCellWrapper .postaction{
 					text-align: center;
-				}
-			}
-
-			#post{
-
-				.lockedaccount{
-					span{
-						font-size: 1em;
-						font-weight: 400;
-					}
-				}
-
-				.share{
-					margin-bottom : 0;
-				}
-
-				#comments{
-
-					.caption{
-						padding-left: 3 * @rhythm;
-						padding-right: 4 * @rhythm;
-					}
-
-					
-					.commentPaddingWrapper,
-					.post{
-						padding-left: 3 * @rhythm;
-						padding-right: 4 * @rhythm;
-					}
-	
-					.commentPaddingWrapper{
-						padding-right: 6 * @rhythm;
-					}
-	
-					.list .answer .postbody{
-						padding-left: 3 * @rhythm;
-						padding-right: 4 * @rhythm;
-					}
-	
-					.answers{
-						.commentPaddingWrapper{
-							padding-right: 0;
-							padding-left: 0;
-						}
-					}				
-	
-					.answer .posttable>div.postCellWrapper .postaction, 
-					.edit .posttable>div.postCellWrapper .postaction, 
-					.post .posttable>div.postCellWrapper .postaction{
-						text-align: center;
-					}
-				}
-
-				.share{
-					padding : 0;
-					
-					.work{
-						padding: 0;
-						margin: 0;
-						padding-top : @rhythm;
-						border-left : @rhythm dotted fade(@color-gray-slight, 40);
-					}
-
-					.sharecaption{
-						
-						font-size: 1em;
-					}
-				} 
-
-				/*.postcontent{
-					max-height: 300px;
-					overflow: hidden;
-					-webkit-mask-image: linear-gradient(to top, transparent 10%, rgb(61, 61, 61) 20%);
-                    mask-image: linear-gradient(to top, transparent 10%, rgb(61, 61, 61) 20%);
-
-					&.allshowed{
-						max-height: none;
-						overflow: visible;
-						-webkit-mask-image: none;
-                    	mask-image: none;
-					}
-				}*/
-
-				#post{
-					.share{
-						.work{
-							border-left : 0;
-						}
-					}
-
-					.cntswrk{
-						padding-right: 4 * @rhythm;
-					}
-				}
-			
-				.cntswrk{
-					margin-left: 7 * @rhythm;
-				}
-
-				.meta{
-					padding-top: 2.3 * @rhythm;
-		
 				}
 			}
 
@@ -665,6 +524,7 @@
 					display: none;
 				}
 			}
+
 			&.showAdditional{
 				.iconWrapper{
 
@@ -779,7 +639,7 @@
 			}
 
 			.shareTable{
-
+				padding-top : 2 * @rhythm;
 				.sbtnxs{
 					.subscribedLabel{
 						display : none;
@@ -1036,8 +896,10 @@
 			}
 
 			.metatable{
+				display: flex;
+				justify-content: space-between;
+				align-items: top;
 				>div{
-					vertical-align: middle;
 
 					&.metadata{
 						overflow: hidden;
@@ -1046,25 +908,15 @@
 
 					&.metapanel{
 						vertical-align: top;
-						width: 40px;
+
 						.metapanelitem{
-							opacity: 0.6;
 							cursor: pointer;
 							margin-left: auto;
 							font-size: 0.8em;
-							color : #fff;
-							width: 40px;
-							height: 22px;
-							line-height: 22px;
 							margin-right: auto;
 							text-align: center;
 							border-radius: 50%;
-							color : @color-gray2;
-							/*.transition(0.3s);*/
-
-							&:hover{
-								opacity: 0.8;
-							}
+							color : fade(@color-gray2, 60);
 						}
 
 						.downloadMetapanel {
@@ -1112,8 +964,6 @@
 					}
 				}
 			}
-
-
 
 			.meta{
 				padding-top: 1.5 * @rhythm;
@@ -1731,6 +1581,10 @@
 				top: 0;
 				background: fade(@color-black2, 90);
 				padding-top: 0;
+
+				.shareTable{
+					padding-top : 0;
+				}
 
 				.sharecnt{
 					position: absolute;
@@ -2645,11 +2499,11 @@
 
 #lenta{
 	.shares .share{
+		
+		
 		.sharearticle{
 			opacity: 0;
 			.transition(0.1s, opacity);
-			
-	
 			&.ready{
 				opacity: 1;
 			}
@@ -2660,6 +2514,17 @@
 	
 			.shareBgCaption,
 			.articleend{
+				.author{
+					margin-top: 2 * @rhythm;
+					margin-bottom: @rhythm;
+
+					i{
+						display: none;
+					}
+					.notificationturn{
+						display: none!important;
+					}
+				}
 				.forstars{
 					.itemwr{
 						display: flex;
@@ -2687,6 +2552,23 @@
 				
 				.sys{
 					text-align: center;
+				}
+
+				.buttonOpenWrapper{
+					margin-bottom: @rhythm;
+					
+					button{
+						width: 130px;
+						border-radius: 0;
+						background: fade(@color-black2, 10);
+						backdrop-filter: blur(14px);
+        				-webkit-backdrop-filter: blur(14px); 
+						border : 1px solid transparent!important; 
+
+						&:hover{
+							background: fade(@color-black2, 1);
+						}
+					}
 				}
 	
 				.divider{
@@ -2727,8 +2609,6 @@
 					color : #fff;
 					text-align: center;
 	
-					
-	
 					.sharecaption{
 						font-size: 3em;
 						font-family: Georgia, serif;
@@ -2743,6 +2623,15 @@
 					.usericon{
 						margin : 0 auto;
 						position: relative;
+					}
+				}
+	
+				&.showtext{
+					.icon{
+						position: absolute;
+						bottom : -22px;
+						left : 0;
+						right: 0;
 					}
 				}
 
@@ -2862,6 +2751,17 @@
 	
 					.divider{
 						background: @color-black4;
+					}
+
+					.buttonOpenWrapper{
+						margin-bottom: @rhythm;
+						
+						button{
+							background: fade(@color-black2, 100);
+							&:hover{
+								background: fade(@color-black2, 90);
+							}
+						}
 					}
 
 					.tags{
@@ -3007,6 +2907,10 @@
 		
 				
 			}
+		}
+
+		.openoriginallabel{
+			display: none;
 		}
 	}
 
@@ -3738,11 +3642,19 @@ html.stblack{
 				padding-top: @rhythm;
 				padding-left: @rhythm;
 			}
+			
+			.repostShare{
+				margin-left: 0.5 * @rhythm;
+				margin-right: 0.5 * @rhythm;
+				margin-bottom: 0.5 * @rhythm;
+			}
 
 			.cntswrk{
 				margin-left: 0;
 				padding-left : 0;
 				padding-right : 0;
+		
+			
 
 				&.formeta{
 					margin-left: 8 * @rhythm;

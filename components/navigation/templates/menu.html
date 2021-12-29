@@ -201,11 +201,19 @@
 
 			<% if(state){ %>
 
-				<!--<a elementsid="hrefshare" href="share" fast="fast">-->
+				<% if(user.validate()) {%>
+
 					<div class="iconWrapper addshare shr <%-sharec%>">
 						<i class="fas fa-plus-circle"></i>
 					</div>
-				<!--</a>-->
+
+				<% } else { %> 
+					
+					<div class="iconWrapper shr disabled">
+						<i class="fas fa-plus-circle"></i>
+					</div>
+					
+				<% } %>
 
 			<% } else { %> 
 				<% if(!(!state && window.cordova)) {%>
