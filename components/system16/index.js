@@ -2599,7 +2599,7 @@ var system16 = (function(){
 		var renders = {
 			allsettings : function(){
 				if (el.c){
-					renders.nodecontentmanage(el.c)
+					// renders.nodecontentmanage(el.c)
 					renders.nodecontentstate(el.c)
 				}
 			},
