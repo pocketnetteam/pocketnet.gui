@@ -108,44 +108,38 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 <% } %>
 <% var metadisplay = function(){ %>
 
-	<div class="meta unselectablemobile <% checkvisibility ? 'checkvisibility' : '' %>">
-		<div class="metatable table">
-			<div class="metadata">
+	<div class="unselectablemobile <% checkvisibility ? 'checkvisibility' : '' %>">
 
-                <div class="author">
+        <div class="author">
 
-                    <% var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0 %>
+            <% var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0 %>
 
-                        <b><span class="adr"><%-name || share.address %></span></b><% if(reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
+                <b><span class="adr"><%-name || share.address %></span></b><% if(reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
 
 
-                    <% if((!state || !my) && (typeof repost == 'undefined' || !repost)) { %> 
+            <% if((!state || !my) && (typeof repost == 'undefined' || !repost)) { %> 
 
-                        <span elementsid="sbtnxs-follow" class="sbtnxs">
-                            &middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><i class="far fa-check-circle"></i>  <%=e('following')%></span>
-                            
-                            <% if(state && !my && user.address.value) {
-                                
-                                var r = me.relation(share.address, 'subscribes')  %>
-                                
+                <span elementsid="sbtnxs-follow" class="sbtnxs">
+                    &middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><i class="far fa-check-circle"></i>  <%=e('following')%></span>
+                    
+                    <% if(state && !my && user.address.value) {
+                        
+                        var r = me.relation(share.address, 'subscribes')  %>
+                        
 
-                                <span elementsid="lenta_notificationturn" class="notificationturn <% if(r && (r.private == 'true' || r.private == '1' || r.private === true)) {%> turnon <% } %>">&middot; <i class="far fa-bell-slash"></i></span>
-                            <% } %>
-        
-
-                            
-                        </span>
-
+                        <span elementsid="lenta_notificationturn" class="notificationturn <% if(r && (r.private == 'true' || r.private == '1' || r.private === true)) {%> turnon <% } %>">&middot; <i class="far fa-bell-slash"></i></span>
                     <% } %>
 
+
                     
-                </div>	
-        
+                </span>
+
+            <% } %>
+
+            
+        </div>	
 			
-			</div>
 			
-			
-		</div>					
 	</div>
 	
 <% } %>
@@ -332,7 +326,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
         <div class="shareTable <%-subscribed%>" address="<%-share.address%>" stxid="<%-share.txid%>">
 
-            <div class="shareBgCaption">
+            <div class="shareBgCaption <% if(all) {%> showtext <% } %>">
 
                 <div class="articleCover showMoreArticle" image="<%- cover %>">
 
@@ -355,7 +349,11 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
                             <% displaysys() %>
 
-                            
+                            <% if(!all) {%>
+                                <div class="buttonOpenWrapper">
+                                    <button class="black showMoreArticle">Read</button>
+                                </div>
+                            <% } %>
 
                             <% metadisplay() %>
                             

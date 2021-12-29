@@ -8,14 +8,14 @@ if(typeof share != 'undefined' && share){
 	info = app.platform.sdk.videos.storage[share.url || "undefined"] || {}
 	aspectRatio = deep(info, 'data.aspectRatio') || 0
 
-	if(!share.itisarticle()){
+	if(!share.itisarticle() && !ed.repost){
 		widthcontainer = 'widthcontainer'
 	}
 }
 
 %>
 
-<div id="<%-module.map.id%>" class="<% if(ed.video) {%> videomainpost <%- (aspectRatio <= 0.9) && (aspectRatio > 0) ? 'verticalVideo' : ''%>  <%- (aspectRatio > 0.9) && (aspectRatio < 1.25) ? 'squareVideo' : ''%> <% } %> <%-widthcontainer%>">
+<div id="<%- ed.repost && !ed.postclass ? makeid() : module.map.id%>" class="poctelc <% if(ed.video) {%> videomainpost <%- (aspectRatio <= 0.9) && (aspectRatio > 0) ? 'verticalVideo' : ''%>  <%- (aspectRatio > 0.9) && (aspectRatio < 1.25) ? 'squareVideo' : ''%> <% } %> <%-widthcontainer%>">
 	<% if(typeof notfound == 'undefined' || !notfound) {%>
 	
 		<div class="postWrapper">
@@ -23,7 +23,6 @@ if(typeof share != 'undefined' && share){
 			<div elementsid="openshare" class="share">
 			</div>
 
-		
 		</div>
 
 	<% } else { %> 

@@ -11,7 +11,7 @@ var post = (function () {
 
 	var Essense = function (p) {
 
-		var primary = deep(p, 'history') || deep(p, 'primary');
+		var primary = (deep(p, 'history')  && !p.inWnd) || deep(p, 'primary');
 
 
 		var el, share, ed, inicomments, eid = '', _repost = null, level = 0, external = null;
@@ -21,6 +21,19 @@ var post = (function () {
 		var authblock = false;
 
 		var actions = {
+
+			openPost : function(id, clbk){
+
+				self.closeContainer()
+
+				self.nav.api.load({
+					open : true,
+					href : 'post?s=' + id,
+					inWnd : true,
+					history : true
+				})
+
+			},
 
 			changeSavingStatus : function(shareId, deleted){
 
@@ -149,7 +162,7 @@ var post = (function () {
 
 			postscores: function (clbk) {
 
-				actions.stateAction('_this', function(){
+				actions.stateAction(function(){
 
 					self.app.nav.api.load({
 						open: true,
@@ -174,13 +187,11 @@ var post = (function () {
 						}
 					})
 
-				})
+				}, share.txid)
 
 			},
 
 			repost: function (shareid) {
-
-				
 
 				actions.stateAction(function () {
 
@@ -188,7 +199,6 @@ var post = (function () {
 						repost : shareid
 					})
 
-				
 				}, shareid)
 
 
@@ -337,6 +347,8 @@ var post = (function () {
 
 			position: function () {
 
+				console.log("??? position", share.txid, primary)
+
 				if (isMobile()) return
 
 				if (primary) return
@@ -348,7 +360,7 @@ var post = (function () {
 
 				var wh = el.wr.height();
 
-				var d = (h - wh) / 2
+				var d = Math.min((h - wh) / 2, h / 6)
 
 				if (d > 0) {
 					el.wr.css('margin-top', d + 'px')
@@ -1141,6 +1153,8 @@ var post = (function () {
 					squareVideo = true
 				}
 
+				
+
 				self.shell(
 					{
 						turi: 'lenta',
@@ -1153,7 +1167,7 @@ var post = (function () {
 
 						data: {
 							share: share,
-							all: (ed.repost && ed.minimize) ? false : true,
+							all: (ed.repost && (ed.minimize || share.itisarticle()) ) ? false : true,
 							mestate: {},
 							repost: ed.repost,
 							fromempty: ed.fromempty,
@@ -1161,11 +1175,19 @@ var post = (function () {
 							squareVideo: squareVideo,
 							preview : ed.preview
 						},
+
+						
 					},
 					function (_p) {
+
 						if(!el.share) return
 
-						el.stars = el.share.find('.forstars');
+						el.stars = el.share.find('.forstars');	
+
+						if (ed.repost)
+							_p.el.find('.showMoreArticle, .openoriginal').on('click', function(){
+								actions.openPost(share.txid)
+							})
 
 						actions.position();
 
@@ -1179,7 +1201,8 @@ var post = (function () {
 
 							renders.url(function () {
 
-								renders.repost();
+								if(!el.share.find('.showMore').length) renders.repost();
+
 								actions.position();
 
 								renders.urlContent(function () {
@@ -1188,7 +1211,10 @@ var post = (function () {
 									actions.initVideo();
 
 									renders.images(function () {
+
+
 										if (!ed.repost) {
+
 											actions.position();
 
 											el.share.find('.complain').on('click', events.complain);
@@ -1206,8 +1232,7 @@ var post = (function () {
 
 											el.share.find('.txid').on('click', events.getTransaction);
 											el.share.find('.donate').on('click', events.donate);
-											el.share.find('.sharesocial')
-												.on('click', events.sharesocial);
+											
 											el.share
 												.find('.asubscribe')
 												.on('click', events.subscribe);
@@ -1216,15 +1241,31 @@ var post = (function () {
 												.on('click', events.unsubscribe);
 											el.share.find('.metmenu').on('click', events.metmenu);
 
-											
 
 											el.share
 												.find('.notificationturn')
 												.on('click', events.subscribePrivate);
 										}
 
+										el.share.find('.sharesocial').on('click', events.sharesocial);
+
+										el.share.find('.postscoresshow').on('click', events.postscores);
+
 										el.share.find('.postcontent').on('click', function(){
 											$(this).addClass('allshowed')
+										})
+
+										el.share.find('.openetc').on('click', function(){
+											
+
+											self.closeContainer()
+
+											self.nav.api.load({
+												open : true,
+												href : 'post?s=' + $(this).attr('share'),
+												inWnd : true,
+												history : true
+											})
 										})
 
 										if (clbk) clbk();
@@ -1240,7 +1281,7 @@ var post = (function () {
 						}
 
 
-						p.el.find('.postscoresshow').on('click', events.postscores);
+						
 						
 					},
 				);
@@ -1355,7 +1396,6 @@ var post = (function () {
 				if (share.repost) {
 					self.shell(
 						{
-							turi: 'lenta',
 							name: 'repost',
 							el: el.c.find('.repostWrapper'),
 							data: {
@@ -1367,13 +1407,16 @@ var post = (function () {
 							},
 						},
 						function (_p) {
+
 							actions.position();
 
 							if (_p.el && _p.el.length) {
+
 								self.app.platform.papi.post(
 									share.repost,
 									_p.el.find('.repostShare'),
-									function (p) {
+									function (e, p) {
+
 										_repost = p;
 
 										actions.position();
@@ -1468,6 +1511,8 @@ var post = (function () {
 					if (clbk) clbk();
 				}
 			},
+
+			
 		};
 
 		var state = {
@@ -1723,6 +1768,8 @@ var post = (function () {
 			destroy: function (key) {
 				el = {};
 
+				console.log("DESTROY POST")
+
 				if (external){
 
 					external.destroy()
@@ -1763,7 +1810,6 @@ var post = (function () {
 
 				if (_repost) {
 					_repost.destroy();
-
 					_repost = null;
 				}
 
@@ -1780,7 +1826,7 @@ var post = (function () {
 				state.load();
 
 				el = {};
-				el.c = p.el.find('#' + self.map.id);
+				el.c = p.el.find('.poctelc');
 				el.share = el.c.find('.share');
 				el.wr = el.c.find('.postWrapper')
 				el.wnd = el.c.closest('.wndcontent');

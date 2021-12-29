@@ -324,7 +324,7 @@ var filluserfast = (function(){
 							self.app.platform.sdk.registrations.redirect
 
 							self.nav.api.go({
-								href : self.app.platform.sdk.registrations.redirect || 'index?r=recommended',
+								href : self.app.platform.sdk.registrations.redirect || 'index',
 								history : true,
 								open : true
 							})	
@@ -794,7 +794,6 @@ var filluserfast = (function(){
 
 			testqrcodeandkey : function(hm, clbk){
 
-
 				var keyPair =  self.app.user.keysFromMnemo(trim(hm))  
 
 				var mk = keyPair.privateKey.toString('hex');
@@ -838,27 +837,18 @@ var filluserfast = (function(){
 				else{
 					var key = bitcoin.bip39.generateMnemonic();
 
-					actions.testqrcodeandkey(key, function(result){
 
-						if(!result){
-							actions.generate()
-						}
-						else
-						{
+					k.mnemonicKey = key;
 
-							k.mnemonicKey = key;
+					var keys = self.app.user.keysFromMnemo(k.mnemonicKey)
 
-							var keys = self.app.user.keysFromMnemo(k.mnemonicKey)
+					k.mainAddress = app.platform.sdk.address.pnetsimple(keys.publicKey).address;
 
-							k.mainAddress = app.platform.sdk.address.pnetsimple(keys.publicKey).address;
+					k.mk = keys.privateKey.toString('hex');
 
-							k.mk = keys.privateKey.toString('hex');
-
-
-							if (clbk)
-								clbk()
-						}
-					})
+					if (clbk)
+						clbk()
+				
 				}
 				
 				
@@ -1137,8 +1127,6 @@ var filluserfast = (function(){
 						},
 						presave : function(clbk){
 
-							
-
 								actions.waitgeneration(function(){
 
 
@@ -1214,6 +1202,7 @@ var filluserfast = (function(){
 		var initEvents = function(){
 			
 			window.addEventListener('resize', events.width)
+
 		}
 
 		var make = function(){

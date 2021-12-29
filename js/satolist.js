@@ -440,7 +440,7 @@ Platform = function (app, listofnodes) {
                                     html: self.app.localization.e('canSpendError'),
                                     btn1text: self.app.localization.e('daccept'),
 
-                                    class: 'one'
+                                    class: 'zindex one'
                                 })
                             }
                             else {
@@ -471,7 +471,7 @@ Platform = function (app, listofnodes) {
                                                 html: self.app.localization.e('noMoneyError'),
                                                 btn1text: self.app.localization.e('daccept'),
 
-                                                class: 'one'
+                                                class: 'zindex one'
                                             })
                                         }
                                     })
@@ -497,7 +497,7 @@ Platform = function (app, listofnodes) {
                                         html: self.app.localization.e('noMoneyError'),
                                         btn1text: self.app.localization.e('daccept'),
 
-                                        class: 'one'
+                                        class: 'zindex one'
                                     })
                                 }
                                 else {
@@ -505,7 +505,7 @@ Platform = function (app, listofnodes) {
                                         html: self.app.localization.e('waitConf'),
                                         btn1text: self.app.localization.e('daccept'),
 
-                                        class: 'one'
+                                        class: 'zindex one'
                                     })
                                 }
 
@@ -844,6 +844,8 @@ Platform = function (app, listofnodes) {
             },
             action: function () {
 
+                globalpreloader(true)
+
 
                 self.app.platform.sdk.user.waitActions(function (r) {
 
@@ -856,6 +858,8 @@ Platform = function (app, listofnodes) {
                                 var a = self.app.platform.sdk.address.pnet().address
 
                                 self.sdk.users.getone(a, function(){
+
+                                    globalpreloader(false)
 
                                     var exist = self.sdk.users.storage[a]
 
@@ -874,11 +878,12 @@ Platform = function (app, listofnodes) {
                                             },
                                             fail: function () {
                 
-                                            }
+                                            },
+
+                                            class : 'zindex'
                                         })
                                     }
                                     else{
-
 
                                         dialog({
                                             html: self.app.localization.e('waitConf'),
@@ -887,28 +892,59 @@ Platform = function (app, listofnodes) {
                                             class: 'one'
                                         })
 
+                                       
+
                                     }
 
                                 }, false, true)
                                 
+                            }
+                            else{
+                                globalpreloader(false)
                             }
 
                         })
 
                     }
                     else {
-                        dialog({
-                            html: self.app.localization.e('waitConf'),
-                            btn1text: self.app.localization.e('daccept'),
 
-                            class: 'one'
+                        self.sdk.ustate.meUpdate(function(mestate){
+
+                            globalpreloader(false)
+
+                            if(!mestate || _.isEmpty(mestate)){
+
+                                dialog({
+                                    html: self.app.localization.e('accountnotfound'),
+                                    btn1text: self.app.localization.e('daccept'),
+        
+                                    class: 'zindex one'
+                                })
+
+                            }
+                            else{
+
+                                dialog({
+                                    html: self.app.localization.e('waitConf'),
+                                    btn1text: self.app.localization.e('daccept'),
+        
+                                    class: 'zindex one'
+                                })
+                                
+                            }
+                            
                         })
+
+
+                       
                     }
 
                 })
 
 
-            }
+            },
+
+            relay: true
 
         },
 
@@ -2095,7 +2131,8 @@ Platform = function (app, listofnodes) {
                             video : p.video,
                             autoplay : p.autoplay,
                             opensvi : p.opensvi,
-                            minimize : p.minimize
+                            minimize : p.minimize,
+                            postclass : p.postclass
                         }
                     })
 
@@ -2604,8 +2641,8 @@ Platform = function (app, listofnodes) {
                     app.nav.api.load({
 
                         open: true,
-                        inWnd: !isMobile(),
-                        history: isMobile(),
+                        inWnd: true,
+                        history: true,
                         href: 'pkview',
 
                         essenseData: {
@@ -5208,143 +5245,152 @@ Platform = function (app, listofnodes) {
 
                         if (!_.isEmpty(rs)) {
 
-                            self.sdk.node.transactions.get.balance(function (a) {
+                            self.app.platform.sdk.ustate.me(function (_mestate) {
+                                self.sdk.node.transactions.get.balance(function (a) {
 
-                                var arranges = _.clone(self.sdk.relayTransactions.arranges)
+                                    var arranges = _.clone(self.sdk.relayTransactions.arranges)
 
-                                _.each(rs, function (tr, cat) {
-                                    if (_.indexOf(arranges, cat) == -1) {
-                                        arranges.push(cat)
-                                    }
-                                })
-
-                                lazyEach({
-                                    array: arranges,
-                                    sync: true,
-                                    action: function (p) {
-                                        var key = p.item;
-
-                                        var objects = rs[key]
-
-                                        if (!objects || !objects.length) {
-                                            p.success()
+                                    _.each(rs, function (tr, cat) {
+                                        if (_.indexOf(arranges, cat) == -1) {
+                                            arranges.push(cat)
                                         }
-                                        else {
-                                            if (key == 'userInfo') {
-                                                objects = [objects[objects.length - 1]]
+                                    })
+
+                                    lazyEach({
+                                        array: arranges,
+                                        sync: true,
+                                        action: function (p) {
+                                            var key = p.item;
+
+                                            var objects = rs[key]
+
+                                            if (!objects || !objects.length) {
+                                                p.success()
                                             }
+                                            else {
+                                                if (key == 'userInfo') {
+                                                    objects = [objects[objects.length - 1]]
+                                                }
+                                                else{
 
-                                            lazyEach({
-                                                sync: true,
-                                                array: objects,
-                                                action: function (p) {
-                                                    var object = p.item;
-
-                                                    if (object.sending) {
+                                                    if(_.isEmpty(_mestate)){
 
                                                         p.success()
 
                                                         return
                                                     }
 
-                                                    var c = kits.c[object.type]
+                                                }
 
-                                                    var trobj = new c();
+                                                lazyEach({
+                                                    sync: true,
+                                                    array: objects,
+                                                    action: function (p) {
+                                                        var object = p.item;
 
-                                                    trobj.import(object);
-
-                                                    trobj.fromrelay = true;
-
-                                                    object.sending = true;
-
-                                                    self.sdk.node.transactions.create.commonFromUnspent(
-
-                                                        trobj,
-
-                                                        function (_alias, error) {
-
-
-                                                            var eh = self.errors[error] || {}
-
-                                                            delete object.sending;
-
-                                                            if (error) {
-                                                                if (key == 'userInfo') {
-
-                                                                    var _nsh = bitcoin.crypto.hash256(JSON.stringify(object))
-
-                                                                    needaction = true
-
-                                                                    if (error == '18' && _nsh != nshowed) {
-
-                                                                        nshowed = _nsh
-
-                                                                        app.nav.api.load({
-                                                                            open: true,
-                                                                            href: 'test',
-                                                                            inWnd: true,
-
-                                                                            essenseData: {
-                                                                                caption: self.app.localization.e('e13265'),
-                                                                                failedrelay : trobj
-                                                                            }
-                                                                        })
-                                                                    }
-
-                                                                    if (clbk)
-                                                                        clbk(needaction)
-
-                                                                    return
-                                                                }
-                                                            }
-
-                                                            if (!error || (eh && !eh.relay)) {
-
-                                                                if (key == 'userInfo') {
-
-                                                                    delete rs[key]
-
-                                                                }
-                                                                else {
-                                                                    rs[key] = _.filter(rs[key], function (t) {
-                                                                        return t.txid != object.txid
-                                                                    })
-                                                                }
-
-                                                                self.sdk.relayTransactions.save()
-
-                                                            }
-                                                            else {
-
-                                                            }
+                                                        if (object.sending) {
 
                                                             p.success()
 
+                                                            return
                                                         }
-                                                    )
+
+                                                        var c = kits.c[object.type]
+
+                                                        var trobj = new c();
+
+                                                        trobj.import(object);
+
+                                                        trobj.fromrelay = true;
+
+                                                        object.sending = true;
+
+                                                        self.sdk.node.transactions.create.commonFromUnspent(
+
+                                                            trobj,
+
+                                                            function (_alias, error) {
+
+                                                                var eh = self.errors[error] || {}
+
+                                                                delete object.sending;
+
+                                                                if (error) {
+                                                                    if (key == 'userInfo') {
+
+                                                                        var _nsh = bitcoin.crypto.hash256(JSON.stringify(object))
+
+                                                                        needaction = true
+
+                                                                        if (error == '18' && _nsh != nshowed) {
+
+                                                                            nshowed = _nsh
+
+                                                                            app.nav.api.load({
+                                                                                open: true,
+                                                                                href: 'test',
+                                                                                inWnd: true,
+
+                                                                                essenseData: {
+                                                                                    caption: self.app.localization.e('e13265'),
+                                                                                    failedrelay : trobj
+                                                                                }
+                                                                            })
+                                                                        }
+
+                                                                        if (clbk)
+                                                                            clbk(needaction)
+
+                                                                        return
+                                                                    }
+                                                                }
+
+                                                                if (!error || (eh && !eh.relay)) {
+
+                                                                    if (key == 'userInfo') {
+
+                                                                        delete rs[key]
+
+                                                                    }
+                                                                    else {
+                                                                        rs[key] = _.filter(rs[key], function (t) {
+                                                                            return t.txid != object.txid
+                                                                        })
+                                                                    }
+
+                                                                    self.sdk.relayTransactions.save()
+
+                                                                }
+                                                                else {
+
+                                                                }
+
+                                                                p.success()
+
+                                                            }
+                                                        )
 
 
 
-                                                },
+                                                    },
 
-                                                all: {
-                                                    success: p.success
-                                                }
-                                            })
+                                                    all: {
+                                                        success: p.success
+                                                    }
+                                                })
+                                            }
+
+                                        },
+
+                                        all: {
+                                            success: function () {
+                                                if (clbk)
+                                                    clbk(needaction)
+                                            }
                                         }
+                                    })
 
-
-
-                                    },
-
-                                    all: {
-                                        success: function () {
-                                            if (clbk)
-                                                clbk(needaction)
-                                        }
-                                    }
                                 })
-
                             })
 
                         }
@@ -7226,6 +7272,7 @@ Platform = function (app, listofnodes) {
 
             clbks: {},
 
+
             validationcurrent: function (address, parameter, clbk) {
                 var s = self.sdk.ustate.storage;
 
@@ -7357,9 +7404,8 @@ Platform = function (app, listofnodes) {
 
                             }
                         }
+                        
                     }
-
-
 
                     if (clbk)
                         clbk(info)
@@ -7379,7 +7425,6 @@ Platform = function (app, listofnodes) {
                         var address = self.sdk.address.pnet().address;
 
                         self.sdk.ustate.get(address, function () {
-
 
                             if (clbk)
                                 clbk(s[address])
@@ -7427,25 +7472,16 @@ Platform = function (app, listofnodes) {
 
 
                     }).catch(e => {
+
+                        if(e && e.code == -5){
+                            _.each(addresses || [], function (address) {
+                                s[address] = {}
+                            })
+                        }
+
                         if (clbk)
                             clbk([])
                     })
-
-                    /*self.app.ajax.rpc({
-                        method: 'getuserstate',
-                        parameters: [(addresses || []).join(',')],
-                        success: function (d) {
-
-                            
-
-                        },
-
-                        fail: function () {
-
-                            if (clbk)
-                                clbk([])
-                        }
-                    })*/
 
                 }
                 else {
@@ -7965,7 +8001,7 @@ Platform = function (app, listofnodes) {
                 if (self.currentBlock == block) return Promise.resolve(dummy())
 
                 
-                return self.app.api.rpc('getmissedinfo', [self.sdk.address.pnet().address, block]).then(d => {
+                return self.app.api.rpc('getmissedinfo', [self.sdk.address.pnet().address, block, 30]).then(d => {
 
                     if(!d || !d.length){
                         return Promise.resolve(dummy())
@@ -15974,7 +16010,7 @@ Platform = function (app, listofnodes) {
                                                         if (ustate) {
                                                             var us = self.sdk.ustate.storage;
 
-                                                            if (us[address.address]) {
+                                                            if (us[address.address] && !_.isEmpty(us[address.address])) {
                                                                 us[address.address][obj.ustate + "_spent"]++
                                                                 us[address.address][obj.ustate + "_unspent"]--
                                                             }
@@ -16745,9 +16781,6 @@ Platform = function (app, listofnodes) {
 
                     if (state && !_Node) {
                         var pool = s.get();
-
-
-                        console.log('pool', pool)
 
                         var address = self.sdk.address.pnet().address;
 
@@ -19445,6 +19478,7 @@ Platform = function (app, listofnodes) {
         var closing = false;
         var lost = 0;
         var wait = null;
+        var slowMadeRelayTransactions = null
 
         self.connected = {};
         self.online = false;
@@ -20510,8 +20544,6 @@ Platform = function (app, listofnodes) {
 
                         if (platform.sdk.address.pnet()) {
 
-                            
-
                             var regs = platform.sdk.registrations.storage[addr];
 
                             if (regs && regs == 3) {
@@ -20839,12 +20871,10 @@ Platform = function (app, listofnodes) {
 
                         })
                     })
-                    
 
                     platform.sdk.newmaterials.update(data)
 
                     platform.sdk.user.subscribeRef()
-
                     
 
                     ////////////////
@@ -20864,10 +20894,11 @@ Platform = function (app, listofnodes) {
 
                     ////////
 
-                    setTimeout(function () {
-                        platform.sdk.relayTransactions.send()
-                    }, 30000)
 
+                    slowMadeRelayTransactions = slowMade(function(){
+
+                        platform.sdk.relayTransactions.send()
+                    }, slowMadeRelayTransactions, 10000)	
 
                     clbk()
 
@@ -20971,7 +21002,7 @@ Platform = function (app, listofnodes) {
 
                     var getpost = function (pid, clbk) {
 
-                        if (pid)
+                       /* if (pid)
 
                             platform.sdk.node.shares.getbyid(pid, function (s, fromcashe) {
 
@@ -20985,7 +21016,7 @@ Platform = function (app, listofnodes) {
 
                             })
 
-                        else
+                        else*/
 
                             clbk()
                     }
@@ -21071,10 +21102,10 @@ Platform = function (app, listofnodes) {
                         
                     }
 
-                    if (data.reason == 'post' && data.comment && data.share && data.user &&
+                    if (data.reason == 'post' && data.comment && data.user &&
                         (!platform.sdk.usersettings.meta.comments || platform.sdk.usersettings.meta.comments.value)) {
 
-                        text = self.tempates.comment(data.comment, self.tempates.share(data.share))
+                        text = self.tempates.comment(data.comment)
 
                         var toptext = self.app.localization.e('e13337');
 
@@ -21090,18 +21121,16 @@ Platform = function (app, listofnodes) {
                             html += toptext
                         }
 
-                                             
-
                     }
 
-                    if (data.reason == 'answer' && data.comment && data.share && data.user &&
+                    if (data.reason == 'answer' && data.comment && data.user &&
                         (!platform.sdk.usersettings.meta.answers || platform.sdk.usersettings.meta.answers.value)) {
 
-                        text = self.tempates.comment(data.comment/*, self.tempates.share(data.share)*/)
+                        text = self.tempates.comment(data.comment)
 
                         if (text) {
 
-                            var toptext = self.app.localization.e('e13337')
+                            var toptext = self.app.localization.e('e13338')
 
                             html += self.tempates.user(data.user, '<div class="text">' + text + '</div>', true, ' ' + toptext, extra, data.time)
                         }
@@ -22016,8 +22045,6 @@ Platform = function (app, listofnodes) {
 
                     if (platform.sdk.notifications.find(data.txid)) return
                 }
-
-                //console.log("DA", data)
 
 
                 var clbks = function (loadedData) {
@@ -23382,6 +23409,7 @@ Platform = function (app, listofnodes) {
         self.sdk.notifications.loading = false;
 
         self.sdk.ustate.clbks = {};
+        
         self.sdk.registrations.clbks = {};
 
         self.sdk.node.storage = { balance: {} }

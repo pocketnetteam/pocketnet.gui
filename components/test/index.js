@@ -412,7 +412,7 @@ var test = (function(){
 
 								topPreloader(100)
 
-								var txt = 'This username is taken in ' + self.app.meta.fullname
+								var txt = self.app.localization.e('nametaken')
 
 								el.c.find('.errorname').fadeIn();
 								el.c.find('.errorname span').html(txt);
@@ -604,7 +604,7 @@ var test = (function(){
 										else
 										{
 											el.c.find('.errorname').fadeIn();
-											el.c.find('.errorname span').html('This username is taken in ' + self.app.meta.fullname);									
+											el.c.find('.errorname span').html(self.app.localization.e('nametaken'));									
 										}
 									})	
 

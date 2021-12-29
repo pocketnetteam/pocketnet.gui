@@ -1365,7 +1365,14 @@ Nav = function(app)
 
 			}
 
-			core.load(p)
+			if (p.timeout){
+				setTimeout(function(){
+					core.load(p)
+				}, p.timeout)
+			}
+			else
+
+				core.load(p)
 		},
 		
 		loadDefault : function(p){

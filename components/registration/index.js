@@ -203,14 +203,16 @@ var registration = (function(){
 
 				var key = bitcoin.bip39.generateMnemonic();
 
-				actions.testqrcodeandkey(key, function(result){
+				console.log("key", key)
+
+				/*actions.testqrcodeandkey(key, function(result){
 
 
 					if(!result){
 						actions.generate()
 					}
 					else
-					{
+					{*/
 
 						current.mnemonicKey = key;
 
@@ -224,10 +226,9 @@ var registration = (function(){
 
 						current.mk = keys.privateKey.toString('hex');
 
-
 						renders.key()
-					}
-				})
+					/*}
+				})*/
 				
 			},
 

@@ -1,8 +1,8 @@
 {
     "name": "pocketnet",
-    "version": "0.4.116",
-    "cordovaversion": "1.1.172",
-    "cordovaversioncode": "10172",
+    "version": "0.4.117",
+    "cordovaversion": "1.1.173",
+    "cordovaversioncode": "10173",
     "description": "Pocketnet desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
     "company": "Pocketnet Community",

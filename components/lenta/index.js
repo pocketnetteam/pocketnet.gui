@@ -16,7 +16,7 @@ var lenta = (function(){
 		var mid = p.mid;
 		var making = false, ovf = false;
 		var w, essenseData, recomended = [], recommended, mestate, initedcommentes = {}, canloadprev = false,
-		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null;
+		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null, loadedcachedHeight;
 
 		var openedPost = null
 		var shareInitedMap = {},
@@ -231,40 +231,6 @@ var lenta = (function(){
 				})
 			},
 
-			/*subscribeLabel : function(share){
-
-				var user = self.app.user
-
-				var my = (user.address.value && share.address == user.address.value)
-				var subscribed = false;
-
-
-				if(!my && user.address.value){
-
-					var me = deep(self.app, 'platform.sdk.users.storage.' + user.address.value)
-
-					if (me && me.relation(share.address, 'subscribes')){
-						subscribed = true
-					}
-				}
-
-				if(el.c){
-
-					var _el = el.c.find('#'  + share.txid + " .shareTable")
-
-					if(subscribed){
-						_el.addClass("subscribed")
-					}
-					else{
-						_el.removeClass("subscribed")
-					}
-
-				}
-				
-				
-
-			},*/
-
 			repost : function(shareid){
 
 				actions.stateAction('_this', function(){
@@ -345,7 +311,10 @@ var lenta = (function(){
 				})
 
 				_.each(_reposts, function(p){
-					if(p)
+
+					console.log("DESTROY REPOST", p)
+
+					if (p)
 						p.destroy()
 				})
 
@@ -385,6 +354,8 @@ var lenta = (function(){
 
 				newmaterials = 0;
 				fixedblock = 0;
+
+				loadedcachedHeight = 0
 			},
 
 			next : function(txid, clbk){
@@ -457,7 +428,6 @@ var lenta = (function(){
 
 			removeAdditionalByScroll : function(){
 
-
 				if(ascrollel){
 					var s = self.app.lastScrollTop;
 
@@ -497,7 +467,6 @@ var lenta = (function(){
 					else
 					{
 
-
 						if (_OpenApi){
 
 							var phref = 'https://'+self.app.options.url+'/post?openapi=true&s=' + txid
@@ -510,7 +479,6 @@ var lenta = (function(){
 		
 							return
 						}
-
 
 						self.nav.api.load({
 							open : true,
@@ -757,6 +725,8 @@ var lenta = (function(){
 
 				var share = self.app.platform.sdk.node.shares.storage.trx[id];
 
+				if(!shareInitedMap[id]) return
+
 				if((!isMobile() && !isTablet()) || essenseData.openPostInWindowMobile || (share && share.itisarticle())){
 
 					self.app.user.isState(function(state){
@@ -827,6 +797,8 @@ var lenta = (function(){
 
 			sharesocial : function(id, clbk){
 
+				if(!shareInitedMap[id]) return
+
 				var share = self.app.platform.sdk.node.shares.storage.trx[id];
 
 				if (share){
@@ -839,8 +811,6 @@ var lenta = (function(){
 						url = 'https://'+self.app.options.url+'/' + ('index?') + 'v='+id+'&mpost=true&video=1'
 					
 					}
-
-					
 					
 					var n = 'Post';
 					if(share.settings.v == 'a') n = 'Article'
@@ -1289,40 +1259,7 @@ var lenta = (function(){
 
 			block : function(address, clbk){
 				
-			},
-
-			/*complain : function(obj, clbk){
-
-				var complainShare = obj.complain();
-
-			
-				self.sdk.node.transactions.create.commonFromUnspent(
-
-					complainShare,
-
-					function(tx, error){
-
-						topPreloader(100)
-
-						if(!tx){
-
-							el.postWrapper.addClass('showError');
-
-							self.app.platform.errorHandler(error, true)	
-							
-							if (clbk)
-								clbk()
-						}
-						else
-						{
-
-							if (clbk)
-								clbk(true)
-						}
-
-					}
-				)
-			},*/			
+			},	
 			
 			openGalleryRec : function(share, initialValue, clbk){
 
@@ -1439,7 +1376,7 @@ var lenta = (function(){
 				
 			},
 
-			///
+
 			scrollToPost : function(id){
 				_scrollTo($('#' + id), null, 0, -110)
 			},
@@ -1966,16 +1903,22 @@ var lenta = (function(){
 
 			loadmorescroll : function(){
 
-
 				if(!essenseData.horizontal){
 					if (
 						!loading && !ended && (recommended != 'recommended' || isMobile()) &&
+
 						(self.app.lastScrollTop + self.app.height > cachedHeight - 2000) 
+
+						&& loadedcachedHeight != cachedHeight
 	
 						) {
 
+							loadedcachedHeight = cachedHeight
+
+
+							console.log('actions.loadmore()')
 	
-						actions.loadmore()
+							actions.loadmore()
 	
 					}
 				}
@@ -1986,6 +1929,8 @@ var lenta = (function(){
 						(el.w.scrollLeft() + el.w.width() > el.c.find('.shares').width() - 2000) 
 	
 						) {
+
+						
 
 						actions.loadmore()
 	
@@ -2255,8 +2200,17 @@ var lenta = (function(){
 				actions.openPost(shareId)
 			},
 
+			openArticle : function(e){
+
+				var shareId = $(this).closest('.shareTable').attr('stxid');
+
+				self.app.mobile.vibration.small()
+
+				actions.openPost(shareId)
+			},
+
 			sharesocial : function(){
-				var shareId = $(this).closest('.shareinlenta').attr('id');
+				var shareId = $(this).closest('.shareTable').attr('stxid');
 
 				self.app.mobile.vibration.small()
 					actions.sharesocial(shareId)
@@ -2447,7 +2401,8 @@ var lenta = (function(){
 
 				var _el = p.el || el.share[share.txid] 
 
-				shareInitingMap[share.txid] = true;
+				if(!p.repost)
+					shareInitingMap[share.txid] = true;
 
 				self.shell({
 					name : video ? 'sharevideolight' : share.itisarticle() ? 'sharearticle' : 'share',
@@ -2466,16 +2421,15 @@ var lenta = (function(){
 				}, function(p){
 
 					var work = _el.find('.work');
-				
-					shareInitedMap[share.txid] = true;	
+					
+					if(!p.repost)
+						shareInitedMap[share.txid] = true;	
 
 					renders.stars(share)
 
 					if(!share.temp){
 						renders.comments(share.txid, false, false, true)
 					}
-
-					
 			
 					renders.url(p.el.find('.url'), share.url, share, function(){
 
@@ -2503,17 +2457,13 @@ var lenta = (function(){
 
 					})
 
-					renders.images(share, function(){
-						
-					})
-
+					renders.images(p.el, share, function(){})
 					
 					if (share.itisarticle()){
 						renders.articlespart(p.el.find('.sharearticle'), share)
 					}
 					else{
-						if(!p.el.find('.showMore').length)
-							renders.repost(p.el, share.repost, share.txid, share.isEmpty(), null, all)
+						if(!p.el.find('.showMore').length) renders.repost(p.el, share.repost, share.txid, share.isEmpty(), null, all)
 					}
 					
 				})
@@ -2887,7 +2837,7 @@ var lenta = (function(){
 				}
 			},
 
-			images : function(s, clbk){
+			images : function(el, s, clbk){
 
 				var share = s
 
@@ -2895,7 +2845,7 @@ var lenta = (function(){
 
 				if (video) { return }
 
-				var sel =  el.share[s.txid] 
+				var sel =  el
 
 				var _el = sel.find(".shareImages .image");
 				var images = sel.find(".shareImages");
@@ -3056,50 +3006,53 @@ var lenta = (function(){
 			},
 
 			repost : function(el, repostid, txid, empty, clbk, all){
+
+				/*self.app.platform.sdk.node.shares.getbyid([repostid], function(){
+
+					var share = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + repostid)
+
+					console.log('share', share)
+
+					renders.share(share, function(){
+
+					}, false, {
+						el : el.find('.repostShare'),
+						repost : true
+					})
+
+				})*/
+
 				if(repostid){
+			
+					self.shell({
+						animation : false,
+						name :  'repost',
+						el : el.find('.repostWrapper'),
+						data : {
+							repost : repostid,
+							share : deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid),
+							level : 1
+						},
+	
+					}, function(_p){
 
-					//self.app.platform.sdk.node.shares.getbyid([repostid], function(){
+						if(_p.el && _p.el.length){
+							
+							self.app.platform.papi.post(repostid, _p.el.find('.repostShare'), function(e, p){
 
-						//var share = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + repostid)
+								_reposts[txid] = p;
+	
+							}, {
+								repost : true,
+								eid : txid + 'lenta',
+								level : 1,
+								fromempty : empty,
+								minimize : !all ? true : false
+							})
+						}	
 
-						self.shell({
-							animation : false,
-							name :  'repost',
-							el : el.find('.repostWrapper'),
-							data : {
-								repost : repostid,
-								share : deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid),
-								level : 1
-							},
-		
-						}, function(_p){
+					})
 
-							if(_p.el && _p.el.length){
-
-								/*console.log('share', share)
-
-								renders.share(share, function(){
-
-								}, false, {
-									el : _p.el.find('.repostShare')
-								})*/
-								
-								self.app.platform.papi.post(repostid, _p.el.find('.repostShare'), function(p){
-
-									_reposts[txid] = p;
-		
-								}, {
-									repost : true,
-									eid : txid + 'lenta',
-									level : 1,
-									fromempty : empty,
-									minimize : !all ? true : false
-								})
-							}	
-
-						})
-
-					//})
 				}
 			},
 
@@ -3420,11 +3373,10 @@ var lenta = (function(){
 
 						countshares = countshares + allshares.length
 
-						loading = false;
+							loading = false;
+						
 
 						if (!el.c) return
-
-						
 
 						if(!error && !error2){
 
@@ -3837,8 +3789,8 @@ var lenta = (function(){
 			el.c.on('click', '.complain', events.complain)
 			el.c.on('click', '.imageOpen', events.openGallery)
 			el.c.on('click', '.txid', events.getTransaction)
-			el.c.on('click', '.showMore', events.openPost)
-			el.c.on('click', '.showMoreArticle', events.openPost)
+			el.c.on('click', '.showMore,.showmoreRep', events.openPost)
+			el.c.on('click', '.showMoreArticle', events.openArticle)
 
 			
 			el.c.on('click', '.forrepost', events.repost)
@@ -4522,6 +4474,15 @@ var lenta = (function(){
 					delete self.app.platform.sdk.node.shares.storage.trx[id]
 				})
 
+				_.each(_reposts, function(p){
+
+					console.log("DESTROY", p)
+
+					if (p)
+						p.destroy()
+				})
+
+				_reposts = {};
 				
 
 				if (fullScreenVideoParallax) {
