@@ -296,6 +296,11 @@ var uploadpeertube = (function () {
 
             return new Promise((resolve, reject) => {
               ipcRenderer.on('transcode-video-response', (event, transcoded, error) => {
+                if (error === 'NO_TRANSCODED') {
+                  setTimeout(() => resolve(null));
+                  return;
+                }
+
                 if (error) {
                   reject('Error on transcoding');
                   return;
@@ -315,7 +320,12 @@ var uploadpeertube = (function () {
             .then((transcoded) => {
               /** Writing transcoded alternatives to target object */
               /** At this for backend reasons, sending only 720p */
-              data.video = transcoded.p720;
+
+              if (!transcoded) {
+                return;
+              }
+
+              data.video = new File([transcoded.p720.buffer], data.video.name, { type: 'video/mp4' });
             })
             .catch(() => {
               sitemessage(self.app.localization.e('videoTranscodingError'));
