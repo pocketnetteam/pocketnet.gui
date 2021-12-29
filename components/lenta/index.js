@@ -2839,9 +2839,9 @@ var lenta = (function(){
 
 			images : function(el, s, clbk){
 
-				var share = s
+				console.log("imagesimagesimagesimagesimages")
 
-				if(!el.c) return
+				var share = s
 
 				if (video) { return }
 
@@ -2852,6 +2852,8 @@ var lenta = (function(){
 
 				if (images.hasClass('active') || !_el.length || !images.length){
 
+					
+
 					if (clbk)
 						clbk()
 
@@ -2861,7 +2863,11 @@ var lenta = (function(){
 
 				window.requestAnimationFrame(function(){
 
+					console.log("ASD")
+
 					_el.imagesLoadedPN({ imageAttr: true }, function(image) {
+
+						console.log('imagesLoadedPNCLBK')
 
 						if(s.settings.v != "a"){
 
@@ -2937,6 +2943,9 @@ var lenta = (function(){
 						}
 
 						var isclbk = function(){
+
+							console.log('isclbk')
+
 							images.addClass('active')
 
 							_el.addClass('active')

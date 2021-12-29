@@ -105,21 +105,12 @@ var share = (function(){
 
 			uploadVideoWallpaper : function(image){
 				var shareUrl = (currentShare.url || {}).v || '';
-				/*var metaInfo = self.app.platform.parseUrl(shareUrl);
-
-				if (!metaInfo){
-					return Promise.reject('image')
-				}*/
-
+			
 				var parameters = {
 					thumbnailfile: image,
 				};
 
 				var settingsObject = {}
-
-				/*var parameters = {
-					server: metaInfo.host_name,
-				}*/
 
 				var urlMeta = self.app.peertubeHandler.parselink(shareUrl);
 
