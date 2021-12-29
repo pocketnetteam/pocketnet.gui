@@ -921,20 +921,50 @@ function createWindow() {
 
         /**
          * Enumeration for Resolutions of videos
-         * @type {Object.<string, string>}
+         * @type {Object.<string, [string, string]>}
          */
         const Resolution = {
-            p240: '352x240',
-            p360: '640x360',
-            p480: '854x480',
-            p720: '1280x720',
+            p240: [352, 240],
+            p360: [640, 360],
+            p480: [854, 480],
+            p720: [1280, 720],
         };
+
+        /**
+         * Transcoding progress data
+         * @type {Object.<string, number>}
+         */
+        let progressKeeper = {
+            //p240: 0,
+            //p360: 0,
+            //p480: 0,
+            p720: 0,
+        };
+
+        /**
+         * Overall transcoding progress calculation function
+         * @param {string} key - Transcoding key in object
+         * @param {number} value - Percents to add in processKeeper
+         *
+         * @returns {number} percents
+         */
+        function calcProgress(key, value) {
+            progressKeeper[key] = value;
+
+            const videosElems = Object.values(progressKeeper);
+            const countVideos = videosElems.length;
+
+            const fullPercent = countVideos * 100;
+            const sumPercent = videosElems.reduce((partial_sum, a) => partial_sum + a, 0);
+
+            return 100 / fullPercent * sumPercent;
+        }
 
         /**
          * Video transcoder function
          *
          * @param {string} filePath
-         * @param {typeof Resolution} resolution
+         * @param {[string, string]} resolution
          *
          * @returns {Promise<Buffer>} result
          */
@@ -950,12 +980,33 @@ function createWindow() {
                 return result;
             }
 
-            function executor(resolve, reject) {
+            async function executor(resolve, reject) {
                 let triesCount = 0;
 
-                function startTranscoding() {
-                    const readStream = fs.createReadStream(filePath);
+                /**
+                 * @typedef {Object} ResolutionObject
+                 * @property {number} width - Video width
+                 * @property {number} height - Video height
+                 */
 
+                /**
+                 * @returns {Promise<ResolutionObject>}
+                 */
+                function getVideoResolution() {
+                    return new Promise((resolve, reject) => {
+                        ffmpeg.ffprobe(filePath, (err, meta) => {
+                            if (err) {
+                                reject('Error accessing video file');
+                            }
+
+                            const { width, height } = meta.streams[0];
+
+                            resolve({ width, height });
+                        });
+                    });
+                }
+
+                function startTranscoding() {
                     try {
                         const fileName = `transvideo-${randomId(6)}.temp.mp4`;
                         const fileLocation = path.join(tempDir, fileName);
@@ -963,13 +1014,18 @@ function createWindow() {
                         console.log('Created temporary file', fileLocation);
                         fs.writeFileSync(fileLocation);
 
-                        ffmpeg({ source: readStream })
+                        ffmpeg(filePath)
                             .withVideoCodec('libx264')
                             .withAudioCodec('libmp3lame')
-                            .withSize(resolution)
+                            .withSize(resolution.join('x'))
                             .format('mp4')
+                            .on('progress', (progress) => {
+                                console.log('Processing: ' + progress.percent + '% done');
+                                e.reply('transcode-video-progress', calcProgress(`p${resolution[1]}`, progress.percent));
+                            })
                             .on('error', (err) => {
                                 console.error('FFmpeg error occurred:', err);
+                                e.reply('transcode-video-progress', calcProgress(`p${resolution[1]}`, 100));
                                 reject(err);
                             })
                             .on('end', () => {
@@ -991,60 +1047,48 @@ function createWindow() {
                     }
                 }
 
+                const originalResolution = await getVideoResolution(filePath);
+                const isWidthUpscaling = (originalResolution.width < resolution[0]);
+                const isHeightUpscaling = (originalResolution.height < resolution[1]);
+
+                const isUpscaling = (isWidthUpscaling || isHeightUpscaling);
+
+                if (isUpscaling) {
+                    reject('Upscaling is disabled');
+                    return;
+                }
+
                 startTranscoding();
             }
 
             return new Promise(executor);
         }
 
-        /**
-         * Progress calculation function
-         * @returns {number} percents
-         */
-        function calcProgress() {
-            const partPercent = 100 / resolutionsArr.length;
-            return partPercent * processedCounter;
+        const spaceCalc = await checkDiskSpace(tempDir);
+        const fileSize = fs.statSync(filePath).size;
+
+        const isEnoughSpace = (spaceCalc.free > fileSize * 1.5);
+
+        if (!isEnoughSpace) {
+            const err = 'NO_DISK_SPACE';
+            e.reply('transcode-video-response', null, err);
+            return;
         }
 
         /** Writing transcoded alternatives to target object */
         let videos = {
-            //p240: transcodeVideo(readStream, Resolution.p240),
-            //p360: transcodeVideo(readStream, Resolution.p360),
-            //p480: transcodeVideo(readStream, Resolution.p480),
+            //p240: transcodeVideo(filePath, Resolution.p240),
+            //p360: transcodeVideo(filePath, Resolution.p360),
+            //p480: transcodeVideo(filePath, Resolution.p480),
             p720: transcodeVideo(filePath, Resolution.p720),
         };
 
-        let processedCounter = 0;
-
-        const resolutionsArr = Object.values(videos);
-
-        /**
-         * Progress reports.
-         * When one of promises is fulfilled, message is sent
-         * to renderer script with percent amount.
-         *
-         * Todo: This function can be better if we use FFmpeg
-         *       progress events.
-         */
-        resolutionsArr.forEach((resolution) => {
-            resolution.then(() => {
-                processedCounter++;
-                e.reply('transcode-video-progress', calcProgress());
-            });
-        })
-
         /** While all aren't fulfilled, waiting... */
-        await Promise.all(Object.values(videos))
-            .catch((err) => {
-                console.error(err);
-
-                /** Responding with error if the is one */
-                e.reply('transcode-video-response', null, true);
-                return;
-            });
-
+        await Promise.allSettled(Object.values(videos));
 
         const resolutions = Object.keys(videos);
+
+        const transcodedResults = {};
 
         /**
          * Extracting values of promises as e.reply doesn't
@@ -1052,10 +1096,32 @@ function createWindow() {
          */
         for (const size of resolutions) {
             const promise = videos[size];
-            videos[size] = await promise;
+
+            let buffer;
+
+            try {
+                buffer = await promise;
+            } catch (e) {
+                console.log('Rejected promise');
+            }
+
+            if (buffer) {
+                transcodedResults[size] = buffer;
+            }
         }
 
-        e.reply('transcode-video-response', videos);
+        /**
+         * Return error if no transcoding made.
+         * In this case client must use original.
+         */
+        if (!Object.keys(transcodedResults).length) {
+            /** Responding with error if the is one */
+            const err = 'NO_TRANSCODED';
+            e.reply('transcode-video-response', null, err);
+            return;
+        }
+
+        e.reply('transcode-video-response', transcodedResults);
     })
 
     /**
