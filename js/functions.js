@@ -1935,7 +1935,7 @@
             u8arr[n] = bstr.charCodeAt(n);
         }
         
-        return new File([u8arr], filename, {type:mime});
+        return new (window.wFile || window.File)([u8arr], filename, {type:mime});
     }
 
 	toDataURL = file => new Promise((resolve, reject) => {
