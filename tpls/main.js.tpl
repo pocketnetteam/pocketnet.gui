@@ -723,6 +723,36 @@ function createWindow() {
         };
 
         /**
+         * Transcoding progress data
+         * @type {Object.<string, number>}
+         */
+        let progressKeeper = {
+            //p240: 0,
+            //p360: 0,
+            //p480: 0,
+            p720: 0,
+        };
+
+        /**
+         * Overall transcoding progress calculation function
+         * @param {string} key - Transcoding key in object
+         * @param {number} value - Percents to add in processKeeper
+         *
+         * @returns {number} percents
+         */
+        function calcProgress(key, value) {
+            progressKeeper[key] = value;
+
+            const videosElems = Object.values(progressKeeper);
+            const countVideos = videosElems.length;
+
+            const fullPercent = countVideos * 100;
+            const sumPercent = videosElems.reduce((partial_sum, a) => partial_sum + a, 0);
+
+            return 100 / fullPercent * sumPercent;
+        }
+
+        /**
          * Video transcoder function
          *
          * @param {string} filePath
@@ -769,8 +799,6 @@ function createWindow() {
                 }
 
                 function startTranscoding() {
-                    const readStream = fs.createReadStream(filePath);
-
                     try {
                         const fileName = `transvideo-${randomId(6)}.temp.mp4`;
                         const fileLocation = path.join(tempDir, fileName);
@@ -778,13 +806,18 @@ function createWindow() {
                         console.log('Created temporary file', fileLocation);
                         fs.writeFileSync(fileLocation);
 
-                        ffmpeg({ source: readStream })
+                        ffmpeg(filePath)
                             .withVideoCodec('libx264')
                             .withAudioCodec('libmp3lame')
                             .withSize(resolution.join('x'))
                             .format('mp4')
+                            .on('progress', (progress) => {
+                                console.log('Processing: ' + progress.percent + '% done');
+                                e.reply('transcode-video-progress', calcProgress(`p${resolution[1]}`, progress.percent));
+                            })
                             .on('error', (err) => {
                                 console.error('FFmpeg error occurred:', err);
+                                e.reply('transcode-video-progress', calcProgress(`p${resolution[1]}`, 100));
                                 reject(err);
                             })
                             .on('end', () => {
@@ -823,15 +856,6 @@ function createWindow() {
             return new Promise(executor);
         }
 
-        /**
-         * Progress calculation function
-         * @returns {number} percents
-         */
-        function calcProgress() {
-            const partPercent = 100 / resolutionsArr.length;
-            return partPercent * processedCounter;
-        }
-
         const spaceCalc = await checkDiskSpace(tempDir);
         const fileSize = fs.statSync(filePath).size;
 
@@ -845,40 +869,13 @@ function createWindow() {
 
         /** Writing transcoded alternatives to target object */
         let videos = {
-            //p240: transcodeVideo(readStream, Resolution.p240),
-            //p360: transcodeVideo(readStream, Resolution.p360),
-            //p480: transcodeVideo(readStream, Resolution.p480),
+            //p240: transcodeVideo(filePath, Resolution.p240),
+            //p360: transcodeVideo(filePath, Resolution.p360),
+            //p480: transcodeVideo(filePath, Resolution.p480),
             p720: transcodeVideo(filePath, Resolution.p720),
         };
 
-        let processedCounter = 0;
-
-        const resolutionsArr = Object.values(videos);
-
-        /**
-         * Progress reports.
-         * When one of promises is fulfilled, message is sent
-         * to renderer script with percent amount.
-         *
-         * Todo: This function can be better if we use FFmpeg
-         *       progress events.
-         */
-        resolutionsArr.forEach((resolution) => {
-            resolution
-              .then(() => {
-                processedCounter++;
-                e.reply('transcode-video-progress', calcProgress());
-              })
-              .catch((error) => {
-                  processedCounter++;
-                  e.reply('transcode-video-progress', calcProgress());
-
-                  console.error(error);
-              });
-        });
-
         /** While all aren't fulfilled, waiting... */
-
         await Promise.allSettled(Object.values(videos));
 
         const resolutions = Object.keys(videos);
