@@ -2388,6 +2388,8 @@ var share = (function(){
 							keyup : events.eText,
 		
 							onLoad : function(c,d){
+
+								el.c.find('.emojionearea-editor').attr('elementsid', 'emjInput');
 		
 								if (parameters().newshare){
 									el.c.find('.emojionearea-editor').focus()
