@@ -41,6 +41,7 @@
         "async-each": "^1.0.3",
         "auto-launch": "^5.0.5",
         "body-parser": "^1.19.0",
+        "check-disk-space": "^3.1.0",
         "clone-deep": "^4.0.1",
         "compression": "^1.7.4",
         "deep-extend": "^0.6.0",
