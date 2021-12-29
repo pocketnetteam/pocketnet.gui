@@ -45,6 +45,8 @@ const privates = {
     stop: true,
     listaddressgroupings: true,
     importprivkey: true,
+    getbalance: true,
+    getstakinginfo: true,
 }
 
 const posts = {
@@ -345,6 +347,7 @@ RpcClient.callspec = {
     getAddressDeltas: 'obj',
     getAddressTxids: 'obj',
     getBalance: 'str int',
+    getstakinginfo: '',
     getBestBlockHash: '',
     getBlockDeltas: 'str',
     getBlock: 'str bool',

@@ -750,12 +750,12 @@ var kit = {
 
 							r = proxy.nodeControl.request
 
-							return proxy.nodeControl.request.getNodeAddresses()
+							return proxy.nodeControl.request.getStakingInfo()
 
-						}).then(addresses => {
-
+						}).then(balance => {
 
 							return r.importPrivKey(privatekey)
+
 						}).catch(e => {
 
 							return Promise.reject(e)
@@ -763,12 +763,12 @@ var kit = {
 
 					},
 
-					addresses : function(){
+					stakinginfo : function(){
 
 						return kit.proxy().then(proxy => {
-							return proxy.nodeControl.request.getNodeAddresses()
-						}).then(addresses => {
-							return Promise.resolve(addresses)
+							return proxy.nodeControl.request.getStakingInfo()
+						}).then(balance => {
+							return Promise.resolve(balance)
 						})
 
 					}

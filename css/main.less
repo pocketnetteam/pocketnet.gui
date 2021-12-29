@@ -592,9 +592,8 @@ button{
         border: 1px solid @color-good;
 
         &:hover{
-            background: @color-main;
-            border: 1px solid @color-main;
-            color : #fff;
+            background : #fff;
+            color : @color-good;
         }
     }
 
@@ -612,6 +611,17 @@ button{
     &.orange{
         background: #FF4800;
         border: 1px solid #FF4800;
+        color: #fff;
+
+        &:hover{
+            background : #fff;
+            color: #FF4800;
+        }
+    }
+
+    &.yellow{
+        background: #ffa600;
+        border: 1px solid #ffa600;
         color: #fff;
 
         &:hover{
@@ -639,6 +649,10 @@ button{
         &:hover{
             color : @color-main;
         }
+    }
+
+    &.orange.ghost{
+        color: #FF4800;
     }
 
     &.nopadding{

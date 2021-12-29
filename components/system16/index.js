@@ -2599,7 +2599,7 @@ var system16 = (function(){
 		var renders = {
 			allsettings : function(){
 				if (el.c){
-					renders.nodecontentmanage(el.c)
+					// renders.nodecontentmanage(el.c)
 					renders.nodecontentstate(el.c)
 				}
 			},
@@ -3835,15 +3835,18 @@ var system16 = (function(){
 							stacking : stacking
 						},
 
-						el : elc.find('.stacking')
+						el : elc.find('.stakingWrapper')
 
 					},
 					function(p){
 
 						p.el.find('.copyaddress').on('click', function(){
 							copyText($(this))
-
 							sitemessage(self.app.localization.e('successcopied'))
+						})
+
+                        p.el.find('.refreshstakinginfo').on('click', function(){
+							makers.stacking(true)
 						})
 
 						if (clbk)
@@ -3889,10 +3892,6 @@ var system16 = (function(){
 						makers.stacking()
 
 						actions.settings(p.el)
-						
-						p.el.find('.refreshstacking').on('click', function(){
-							makers.stacking(true)
-						})
 
 						p.el.find('.addstacking').on('click', function(){
 
@@ -4153,7 +4152,7 @@ var system16 = (function(){
 							admin : actions.admin(),
 						},
 
-						el : elc.find('.localnodeWrapper .nodestate')
+						el : elc.find('.localnodeWrapper .nodestateWrapper')
 
 					},
 					function(){
@@ -4190,7 +4189,7 @@ var system16 = (function(){
 
 					proxy.fetchauth('manage', {
 
-						action : 'set.node.stacking.addresses',
+						action : 'set.node.stacking.stakinginfo',
 						data : {}
 
 					}).then(r => {

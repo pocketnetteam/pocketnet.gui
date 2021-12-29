@@ -22,69 +22,12 @@
                     </div>
                 </div>
             </div>
-        </div>    
+        </div>
 
-        <div class="work">
 
-            <div class="nodestate"></div>
-
-            <% if(nc.hasbin && !nc.lock) {%>
-
-                <div class="setting togglebutton">
-                        
-                    <div class="settingTable table">
-                        <div class="label">
-                            <span>Enabled</span>
-                        </div>
-
-                        <% if(!dis) {%>
-
-                            <div class="value" sys="nodeenabled">
-                                <span><%- system.node.enabled?  'Yes' : 'No' %></span>
-                            </div>
-
-                        <% } else { %> 
-                            
-                            <div class="value">
-                                <div class="preloader5"><img src="./img/three-dots.svg"/></div>
-                            </div>
-
-                        <% } %>
-                    </div>
-                </div>
-
-                <% if(system.node.enabled && nodestate && !_.isEmpty(nodestate.info)) {%> 
-
-                <div class="setting addresses">
-                    <div class="settingTable table">
-                        <div class="label">
-                            <span>Stacking Adresses</span>
-                        </div>
-
-                        <div class="value">
-
-                            <div class="stacking">
-
-                            </div>
-
-                            
-
-                            <div class="buttons">
-                                <button elementsid="addstacking" class="addstacking button small"><i class="fas fa-key"></i> Import address</button>
-                                <button elementsid="createstackingserver" class="createstackingserver button small"><i class="fas fa-plus"></i> Create staking address</button>
-                                <button elementsid="refreshstacking" class="refreshstacking button small ghost"><i class="fas fa-sync"></i> Refresh</button>
-                            </div>
-                            
-                        </div>
-
-                        
-                    </div>
-                </div>
-
-                <% } %>
-
-            <% } else { %> 
-
+        <!-- Section `Download & Install` -->        
+        <% if(!nc.hasbin || nc.lock) { %>
+            <div class="work">
                 <% if(nc.lock == 'installing') {%>
 
                     <div class="notfound loading">
@@ -188,17 +131,72 @@
                     <% }%>
 
                 <% }%>
-                
+            </div>
+        <% } %>
+
+        <!-- Section `Node state` -->
+        <% if(nc.hasbin && !nc.lock) { %>
+            <div class="nodecontent">
+                <div class="work nodestatebox">
+                    <div elementsid="nodestatebox" class="subcaption">
+                        <span>Synchronization</span>
+                    </div>
+                    <div class="nodestateWrapper"></div>
+                </div>
+            </div>
+
+            <% if(system.node.enabled && nodestate && !_.isEmpty(nodestate.info)) { %>
+                <div class="nodecontent">
+                    <div class="work stakingBox">
+                        <div elementsid="stakingBox" class="subcaption">
+                            <span>Staking</span>
+                        </div>
+                        <div class="stakingWrapper"></div>
+                    </div>
+                </div>
             <% } %>
+
+        <% } %>
+
+        <div class="nodecontent">
+            <div class="work configurationBox">
+                <div elementsid="nodestatebox" class="subcaption">
+                    <span>Configuration</span>
+                </div>
+
+                <div class="setting togglebutton">
+                            
+                    <div class="settingTable table">
+                        <div class="label">
+                            <span>Autostart</span>
+                        </div>
+
+                        <% if(!dis) {%>
+
+                            <div class="value" sys="nodeenabled">
+                                <span><%- system.node.enabled?  'Yes' : 'No' %></span>
+                            </div>
+
+                        <% } else { %> 
+                            
+                            <div class="value">
+                                <div class="preloader5"><img src="./img/three-dots.svg"/></div>
+                            </div>
+
+                        <% } %>
+                    </div>
+                </div>
+
+            
 
             <% if(!nc.lock && proxy.direct) {%>
 
                 <div class="setting systempath">
                     <div class="settingTable table">
                             <div class="label">
-                                <span>Node Daemon Path</span>
+                                <span>Daemon Path</span>
                             </div>
-    
+
                             <div class="value" <% if(!nc.hasbin || !system.node.enabled) {%> sys="binPath" <% } %> >
                                 <span><%- system.node.binPath || 'Default' %></span> 
                             </div>
@@ -212,13 +210,13 @@
                         <% } %>
                     </div>
                 </div>
-    
+
                 <div class="setting systempath">
                     <div class="settingTable table">
                         <div class="label">
-                            <span>Node Data Path</span>
+                            <span>Data Path</span>
                         </div>
-    
+
                         <div class="value" <% if(!nc.hasbin || !system.node.enabled) {%> sys="ndataPath" <% } %>>
                             <span><%- system.node.ndataPath || 'Default' %></span>
                         </div>
@@ -232,6 +230,7 @@
                         <% } %>
                     </div>
                 </div>
+                
                 <% if(system.node.ndataPath || system.node.binPath) {%>
                     <div class="setting systempathsDefaults">
                         <div class="settingTable table">
@@ -262,7 +261,7 @@
                         <div class="label">
                             <span>Update <%-app.meta.fullname%> Node</span>
                         </div>
-    
+
                         <div class="value">
                             <% if(nc.hasupdates) {%>
                                 <button elementsid="buttonsmallupdatenode" class="button small updatenode">
@@ -280,20 +279,20 @@
 
                 <% if(!system.node.binPath && !system.node.ndataPath) {%>
 
-                    <div class="setting deletenodeWrapper">
+                    <div class="setting">
                         <div class="settingTable table">
                             <div class="label">
                                 <span>Delete <%-app.meta.fullname%> Node</span>
                             </div>
         
                             <div class="value">
-                                <button elementsid="buttonsmallremovenode" class="button small removenode">
+                                <button elementsid="buttonsmallremovenode" class="button small orange removenode">
                                     Delete Daemon
                                 </button>
                             </div>
 
                             <div class="value">
-                                <button elementsid="buttonsmallghostremovenodeall" class="button small ghost removenodeall">
+                                <button elementsid="buttonsmallghostremovenodeall" class="button small ghost orange removenodeall">
                                     Delete Daemon and Data
                                 </button>
                             </div>
@@ -303,25 +302,6 @@
 
                 <% } %>
             <% } %>
-            
-
-        </div>
-
-        <div class="nodeContentAdvanced collapsepart">
-            <div class="work">
-                
-                <div elementsid="nodeContentAdvancedCaption" class="subcaption">
-                    <span>Configuration</span> <i class="fas fa-angle-down"></i>
-                </div>
-        
-            </div>
-        
-            <div class="collapsingpart">
-        
-                <div class="nodeContentAdvancedWrapper">
-                    
-                </div>
-                
             </div>
         </div>
 

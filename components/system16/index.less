@@ -158,8 +158,7 @@
 
     .stacking{
         .canstacking{
-            padding : 3 * @rhythm 0;
-
+            
             i{
                 width : 20px;
                 font-size: 0.9em;
@@ -186,34 +185,9 @@
                 color : @color-bright;
             }
         }
-        .adresses{
+        
+        .balance {
 
-            .address{
-                width: auto;
-
-                >div{
-                    &.balance{
-                        padding : 0 2 * @rhythm;
-                        padding-left: @rhythm;
-                        font-weight: 400;
-                        font-size: 0.9em;
-                    }
-    
-                    &.namewrapper{
-                        width: 270px;
-                    }
-                    &.iconWrapper{
-                        width: 44px;
-                        text-align: right;
-
-                        i{
-                            font-size: 0.8em;
-                        }
-                    }
-                }
-
-                
-            }
         }
     }
 
@@ -260,7 +234,6 @@
     }
 
     .staterowTable,
-
     .settingTable{
         width : auto;
 
@@ -312,7 +285,7 @@
         }
         .value{
             
-            color : @color-gray-mlight;
+            color : @color-gray;
 
             &[fss],
             &[sys]{
@@ -682,6 +655,22 @@
             span{
                 font-size: 0.8em;
             }
+            i{
+                width : 20px;
+                font-size: 0.9em;
+            }
+
+            .good{
+                color : @color-good;
+            }
+
+            .bad{
+                color : @color-bad;
+            }
+
+            .gray{
+                color : @color-gray-mlight;
+            }
         }
         
         .notfound{
@@ -706,22 +695,6 @@
                 color : @color-bright;
             }
             
-        }
-
-        .addresses{
-            padding-top : 2 * @rhythm;
-            margin-top : 2 * @rhythm;
-            margin-bottom : 2 * @rhythm;
-            padding-bottom : 2 * @rhythm;
-            border-top : 1px solid @color-gray-slight;
-            border-bottom : 1px solid @color-gray-slight;
-        }
-
-        .deletenodeWrapper{
-            padding-top : 2 * @rhythm;
-            margin-top : 2 * @rhythm;
-            padding-bottom : 2 * @rhythm;
-            border-top : 1px solid @color-gray-slight;
         }
     }
 

@@ -9,7 +9,11 @@
                 </div>
 
                 <div class="value">
-                    <span><b><%-nodestate.status%></b></span>
+                    <% if(nodestate.status == 'launched') { %>
+                        <i class="fas fa-check-circle good"></i> <span class="good">Active</span>
+                    <% } else { %> 
+                        <span class="bad"><%-nodestate.status%></span>
+                    <% } %>
                 </div>
             </div>
         </div>
@@ -26,10 +30,6 @@
                 </div>
             </div>
         <% } %>
-
-   
-
-   
 
         <% if(nodestate.info.lastblock) {%>
 

@@ -305,26 +305,9 @@ var Control = function(settings) {
             return self.kit.rpc('getnodeinfo')
         },
 
-        getNodeAddresses: function() {
-            return self.kit.rpc('listaddressgroupings').then(result => {
-
-
-                var addresses = []
-
-                _.each(result, function(rs){
-                    _.each(rs, function(au){
-                        addresses.push(au)
-                    })
-                })
-
-                addresses = _.map(addresses, function(a){
-                    return {
-                        address : a[0],
-                        balance : a[1] || 0
-                    }
-                })
-
-                return Promise.resolve(addresses)
+        getStakingInfo: function() {
+            return self.kit.rpc('getstakinginfo').then(result => {
+                return Promise.resolve(result)
             })
         },
 
