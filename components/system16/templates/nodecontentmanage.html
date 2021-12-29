@@ -77,19 +77,19 @@
                                 
                                 <div class="req">
                                     <div>
-                                        >12Gb RAM
+                                        4Gb RAM
                                     </div>
 
                                     <div>
-                                        >6 core CPU
+                                        4 cores CPU
                                     </div>
 
                                     <div>
-                                        >10Gb free disk space
+                                        50Gb free disk space (SSD drive to ensure speed)
                                     </div>
 
                                     <div>
-                                        >10Mb/s internet speed
+                                        10Mb/s internet speed
                                     </div>
                                 </div>
                                 
@@ -138,7 +138,7 @@
         <% if(nc.hasbin && !nc.lock) { %>
             <div class="nodecontent">
                 <div class="work nodestatebox">
-                    <div elementsid="nodestatebox" class="subcaption">
+                    <div elementsid="nodestatebox" class="ssubcaption">
                         <span>Synchronization</span>
                     </div>
                     <div class="nodestateWrapper"></div>
@@ -148,7 +148,7 @@
             <% if(system.node.enabled && nodestate && !_.isEmpty(nodestate.info)) { %>
                 <div class="nodecontent">
                     <div class="work stakingBox">
-                        <div elementsid="stakingBox" class="subcaption">
+                        <div elementsid="stakingBox" class="ssubcaption">
                             <span>Staking</span>
                         </div>
                         <div class="stakingWrapper"></div>
@@ -160,7 +160,7 @@
 
         <div class="nodecontent">
             <div class="work configurationBox">
-                <div elementsid="nodestatebox" class="subcaption">
+                <div elementsid="nodestatebox" class="ssubcaption">
                     <span>Configuration</span>
                 </div>
 
@@ -168,7 +168,7 @@
                             
                     <div class="settingTable table">
                         <div class="label">
-                            <span>Autostart</span>
+                            <span>Enabled</span>
                         </div>
 
                         <% if(!dis) {%>
@@ -231,7 +231,7 @@
                     </div>
                 </div>
                 
-                <% if(system.node.ndataPath || system.node.binPath) {%>
+                <% if((system.node.ndataPath || system.node.binPath) && !system.node.enabled) {%>
                     <div class="setting systempathsDefaults">
                         <div class="settingTable table">
                             <div class="label">
@@ -259,7 +259,7 @@
                 <div class="setting ">
                     <div class="settingTable table">
                         <div class="label">
-                            <span>Update <%-app.meta.fullname%> Node</span>
+                            <span>Update Node</span>
                         </div>
 
                         <div class="value">
@@ -282,7 +282,7 @@
                     <div class="setting">
                         <div class="settingTable table">
                             <div class="label">
-                                <span>Delete <%-app.meta.fullname%> Node</span>
+                                <span>Delete Node</span>
                             </div>
         
                             <div class="value">

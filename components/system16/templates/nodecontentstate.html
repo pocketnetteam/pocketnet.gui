@@ -2,12 +2,11 @@
 
     <% if(nc.hasbin && !nc.lock) {%>
 
-        <div class="staterow">
-            <div class="staterowTable table">
+        <div class="setting">
+            <div class="settingTable table">
                 <div class="label">
-                    <span>Status:</span>
+                    <span>Status</span>
                 </div>
-
                 <div class="value">
                     <% if(nodestate.status == 'launched') { %>
                         <i class="fas fa-check-circle good"></i> <span class="good">Active</span>
@@ -17,13 +16,13 @@
                 </div>
             </div>
         </div>
-        <% if(nodestate.error) {%>
-            <div class="staterow">
-                <div class="staterowTable table">
-                    <div class="label">
-                        <span>Description:</span>
-                    </div>
 
+        <% if(nodestate.error) {%>
+            <div class="setting">
+                <div class="settingTable table">
+                    <div class="label">
+                        <span>Description</span>
+                    </div>
                     <div class="value">
                         <span><b><%-nodestate.error.code || '0'%></b>: <%-deep(nodestate, 'error.message') || "Undefined Error"%></span>
                     </div>
@@ -32,40 +31,38 @@
         <% } %>
 
         <% if(nodestate.info.lastblock) {%>
-
-            <div class="staterow">
-                <div class="tableovfWrapper">
-                    <div class="staterowTable table">
-                        <div class="label">
-                            <span>Height:</span>
-                        </div>
-            
-                        <div class="value">
-                            <span><b><%-nodestate.info.lastblock.height%></b> / <%= manager.chain? manager.chain.commonHeight || '&mdash;' : '&mdash;' %></span>
-                        </div>
-
-                        <div class="icon">
-                            <% if(!manager.chain || nodestate.info.lastblock.height < manager.chain.commonHeight) {%>
-                                <i class="fas fa-spinner fa-spin"></i>
-                            <% } else {%> 
-                                <i class="fas fa-check-circle good"></i>
-                            <% } %>
+            <div class="setting">
+                <div class="settingTable table">
+                    <div class="label">
+                        <span>Height</span>
+                    </div>
+                    <div class="value">
+                        <div>
+                            <span>
+                                <b><%-nodestate.info.lastblock.height%></b> / <%= manager.chain? manager.chain.commonHeight || '&mdash;' : '&mdash;' %>
+                                <% if(!manager.chain || nodestate.info.lastblock.height < manager.chain.commonHeight) {%>
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                <% } else {%> 
+                                    <i class="fas fa-check-circle good"></i>
+                                <% } %>
+                            </span>
                         </div>
 
+                        <% percent = nodestate.info.lastblock.height * 100 / manager.chain.commonHeight %>
+                        <div elementsid="nodestateheightprogress" class="nodestateheightprogress">
+                            <div elementsid="nodestateheightprogressinner" class="nodestateheightprogressinner" style="width: <%-percent%>%"></div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="staterow">
-                <div class="tableovfWrapper">
-                    <div class="staterowTable table">
-                        <div class="label">
-                            <span>Block Hash:</span>
-                        </div>
-            
-                        <div class="value">
-                            <span><%-nodestate.info.lastblock.hash%></span>
-                        </div>
+            <div class="setting">
+                <div class="settingTable table">
+                    <div class="label">
+                        <span>Block Hash</span>
+                    </div>
+                    <div class="value">
+                        <span><%-nodestate.info.lastblock.hash%></span>
                     </div>
                 </div>
             </div>

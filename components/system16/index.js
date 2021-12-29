@@ -2599,7 +2599,7 @@ var system16 = (function(){
 		var renders = {
 			allsettings : function(){
 				if (el.c){
-					// renders.nodecontentmanage(el.c)
+					renders.nodecontentmanage(el.c)
 					renders.nodecontentstate(el.c)
 				}
 			},
@@ -3860,11 +3860,9 @@ var system16 = (function(){
 					var timestamp = deep(info,'nodeControl.state.timestamp')
 					var dis = false
 
-					if (timestamp){
-						dis = (new Date()) < fromutc((new Date(timestamp)).addSeconds(60))
-
+					if (timestamp && info.nodeControl.hasbin){
+						dis = (new Date()) < fromutc((new Date(timestamp)).addSeconds(5))
 					}
-
 
 					self.shell({
 						inner : html,

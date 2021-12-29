@@ -652,11 +652,7 @@
 
     .nodecontent{
         .nodecontentstate{
-            span{
-                font-size: 0.8em;
-            }
             i{
-                width : 20px;
                 font-size: 0.9em;
             }
 
@@ -670,6 +666,18 @@
 
             .gray{
                 color : @color-gray-mlight;
+            }
+
+            .nodestateheightprogress{
+                width: 25em;
+                height: 0.3em;
+                background: #bdbdbd;
+                
+                .nodestateheightprogressinner {
+                    background: #00A3F7;
+                    display: block;
+                    height: 100%;
+                }
             }
         }
         
@@ -735,6 +743,10 @@
                 font-size: 0.9em;
                 color : @color-bright;
             }
+        }
+
+        .value.balance {
+            font-weight: 600;
         }
     }
 

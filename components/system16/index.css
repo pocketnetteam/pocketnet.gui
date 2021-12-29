@@ -482,11 +482,7 @@
 #system16 .nodedummy i {
   font-size: 0.9em;
 }
-#system16 .nodecontent .nodecontentstate span {
-  font-size: 0.8em;
-}
 #system16 .nodecontent .nodecontentstate i {
-  width: 20px;
   font-size: 0.9em;
 }
 #system16 .nodecontent .nodecontentstate .good {
@@ -497,6 +493,16 @@
 }
 #system16 .nodecontent .nodecontentstate .gray {
   color: #b2abac;
+}
+#system16 .nodecontent .nodecontentstate .nodestateheightprogress {
+  width: 25em;
+  height: 0.3em;
+  background: #bdbdbd;
+}
+#system16 .nodecontent .nodecontentstate .nodestateheightprogress .nodestateheightprogressinner {
+  background: #00A3F7;
+  display: block;
+  height: 100%;
 }
 #system16 .nodecontent .notfound {
   text-align: center;
@@ -548,6 +554,9 @@
 #system16 .nodecontentmanage .felockcnt i {
   font-size: 0.9em;
   color: #00A3F7;
+}
+#system16 .nodecontentmanage .value.balance {
+  font-weight: 600;
 }
 #system16 .empty {
   padding-top: 1em;
