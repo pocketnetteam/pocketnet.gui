@@ -106,7 +106,6 @@ var lenta = (function(){
 					addressEl.find('.notificationturn').removeClass('turnon')
 				}
 
-				console.log("ADDRESS", address)
 
 				renders.maybechangevisibility(address, 'sub')
 
@@ -311,8 +310,6 @@ var lenta = (function(){
 				})
 
 				_.each(_reposts, function(p){
-
-					console.log("DESTROY REPOST", p)
 
 					if (p)
 						p.destroy()
@@ -1914,9 +1911,6 @@ var lenta = (function(){
 						) {
 
 							loadedcachedHeight = cachedHeight
-
-
-							console.log('actions.loadmore()')
 	
 							actions.loadmore()
 	
@@ -2839,8 +2833,6 @@ var lenta = (function(){
 
 			images : function(el, s, clbk){
 
-				console.log("imagesimagesimagesimagesimages")
-
 				var share = s
 
 				if (video) { return }
@@ -2863,11 +2855,8 @@ var lenta = (function(){
 
 				window.requestAnimationFrame(function(){
 
-					console.log("ASD")
-
 					_el.imagesLoadedPN({ imageAttr: true }, function(image) {
 
-						console.log('imagesLoadedPNCLBK')
 
 						if(s.settings.v != "a"){
 
@@ -2944,8 +2933,6 @@ var lenta = (function(){
 
 						var isclbk = function(){
 
-							console.log('isclbk')
-
 							images.addClass('active')
 
 							_el.addClass('active')
@@ -2960,7 +2947,6 @@ var lenta = (function(){
 
 							var gutter = self.app.width <= 768 ? 0 : 5;
 
-							console.log('self.app.width', self.app.width, self.app)
 
 							if (isMobile() || essenseData.openapi) {
 
@@ -4300,7 +4286,6 @@ var lenta = (function(){
 										else{
 
 											actions.scrollToPost(p.v)
-											console.log('actions.scrollToPost(p.v)actions.scrollToPost(p.v)actions.scrollToPost(p.v)actions.scrollToPost(p.v)')
 
 										}
 											
@@ -4499,7 +4484,6 @@ var lenta = (function(){
 
 				_.each(_reposts, function(p){
 
-					console.log("DESTROY", p)
 
 					if (p)
 						p.destroy()
