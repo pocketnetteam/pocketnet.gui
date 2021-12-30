@@ -158,12 +158,13 @@
 
         <% } %>
 
-        <div class="nodecontent">
+        <div class="nodecontent collapsepart">
             <div class="work configurationBox">
                 <div elementsid="nodestatebox" class="ssubcaption">
                     <span>Configuration</span>
                 </div>
 
+            <div class="collapsingpart">
                 <div class="setting togglebutton">
                             
                     <div class="settingTable table">
@@ -187,122 +188,118 @@
                     </div>
                 </div>
 
-            
+                <% if(!nc.lock && proxy.direct) {%>
+                    <div class="setting systempath">
+                        <div class="settingTable table">
+                                <div class="label">
+                                    <span>Daemon Path</span>
+                                </div>
 
-            <% if(!nc.lock && proxy.direct) {%>
+                                <div class="value" <% if(!nc.hasbin || !system.node.enabled) {%> sys="binPath" <% } %>>
+                                    <span><%- system.node.binPath || 'Default' %></span> 
+                                </div>
 
-                <div class="setting systempath">
-                    <div class="settingTable table">
+                            <% if(nc.hasbin && system.node.enabled) {%>
+
+                                <div class="icon">
+                                    <i class="fas fa-lock"></i>
+                                </div>
+
+                            <% } %>
+                        </div>
+                    </div>
+
+                    <div class="setting systempath">
+                        <div class="settingTable table">
                             <div class="label">
-                                <span>Daemon Path</span>
+                                <span>Data Path</span>
                             </div>
 
-                            <div class="value" <% if(!nc.hasbin || !system.node.enabled) {%> sys="binPath" <% } %> >
-                                <span><%- system.node.binPath || 'Default' %></span> 
+                            <div class="value" <% if(!nc.hasbin || !system.node.enabled) {%> sys="ndataPath" <% } %>>
+                                <span><%- system.node.ndataPath || 'Default' %></span>
                             </div>
 
-                        <% if(nc.hasbin && system.node.enabled) {%>
+                            <% if(nc.hasbin && system.node.enabled) {%>
 
                             <div class="icon">
                                 <i class="fas fa-lock"></i>
                             </div>
 
-                        <% } %>
+                            <% } %>
+                        </div>
                     </div>
-                </div>
+                    
+                    <% if((system.node.ndataPath || system.node.binPath) && !system.node.enabled) {%>
+                        <div class="setting systempathsDefaults">
+                            <div class="settingTable table">
+                                <div class="label">
+                                    <span>Set Paths to Default</span>
+                                </div>
+            
+                                <div elementsid="toDefaultPath" class="value toDefaultPath">
+                                    <div>
+                                        <span>
+                                            To Default 
+                                        </span>
 
-                <div class="setting systempath">
-                    <div class="settingTable table">
-                        <div class="label">
-                            <span>Data Path</span>
-                        </div>
-
-                        <div class="value" <% if(!nc.hasbin || !system.node.enabled) {%> sys="ndataPath" <% } %>>
-                            <span><%- system.node.ndataPath || 'Default' %></span>
-                        </div>
-
-                        <% if(nc.hasbin && system.node.enabled) {%>
-
-                        <div class="icon">
-                            <i class="fas fa-lock"></i>
-                        </div>
-
-                        <% } %>
-                    </div>
-                </div>
-                
-                <% if((system.node.ndataPath || system.node.binPath) && !system.node.enabled) {%>
-                    <div class="setting systempathsDefaults">
-                        <div class="settingTable table">
-                            <div class="label">
-                                <span>Set Paths to Default</span>
-                            </div>
-        
-                            <div elementsid="toDefaultPath" class="value toDefaultPath">
-                                <div>
-                                    <span>
-                                        To Default 
-                                    </span>
-
-                                    <i class="far fa-times-circle"></i>
+                                        <i class="far fa-times-circle"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    <% } %>
+
                 <% } %>
 
-            <% } %>
-
-
-            <% if(nc.hasbin && !nc.lock) {%>
-
-                <div class="setting ">
-                    <div class="settingTable table">
-                        <div class="label">
-                            <span>Update Node</span>
-                        </div>
-
-                        <div class="value">
-                            <% if(nc.hasupdates) {%>
-                                <button elementsid="buttonsmallupdatenode" class="button small updatenode">
-                                    Update Node
-                                </button>
-                            <% } else { %> 
-
-                                <span>No Updates Available</span>
-                                
-                            <% }%>
-                        </div>
-
-                    </div>
-                </div>
-
-                <% if(!system.node.binPath && !system.node.ndataPath) {%>
-
-                    <div class="setting">
+                <% if(nc.hasbin && !nc.lock) {%>
+                    <div class="setting ">
                         <div class="settingTable table">
                             <div class="label">
-                                <span>Delete Node</span>
-                            </div>
-        
-                            <div class="value">
-                                <button elementsid="buttonsmallremovenode" class="button small orange removenode">
-                                    Delete Daemon
-                                </button>
+                                <span>Update Node</span>
                             </div>
 
                             <div class="value">
-                                <button elementsid="buttonsmallghostremovenodeall" class="button small ghost orange removenodeall">
-                                    Delete Daemon and Data
-                                </button>
+                                <% if(nc.hasupdates) {%>
+                                    <button elementsid="buttonsmallupdatenode" class="button small updatenode">
+                                        Update Node
+                                    </button>
+                                <% } else { %> 
+
+                                    <span>No Updates Available</span>
+                                    
+                                <% }%>
                             </div>
 
                         </div>
                     </div>
 
+                    <% if(!system.node.binPath && !system.node.ndataPath) {%>
+                        <div class="setting">
+                            <div class="settingTable table">
+                                <div class="label">
+                                    <span>Delete Node</span>
+                                </div>
+            
+                                <div class="value">
+                                    <button elementsid="buttonsmallremovenode" class="button small orange removenode">
+                                        Delete Daemon
+                                    </button>
+                                </div>
+
+                                <div class="value">
+                                    <button elementsid="buttonsmallghostremovenodeall" class="button small ghost orange removenodeall">
+                                        Delete Daemon and Data
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    <% } %>
                 <% } %>
-            <% } %>
+
             </div>
+        </div>
         </div>
 
     </div>

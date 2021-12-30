@@ -16,10 +16,10 @@
         
         <div class="settingTable table">
             <div class="label">
-                <span>Balance</span>
+                <span>Balance (Available/Full)</span>
             </div>
             <div class="value balance">
-                <%= stacking.weight/100000000.0  %> PKOIN
+                <%= stacking.weight/100000000.0 %> / <%= stacking.balance/100000000.0 %> PKOIN
                 <button elementsid="refreshstakinginfo" class="refreshstakinginfo button small ghost"><i class="fas fa-sync"></i> Refresh</button>
             </div>
         </div>

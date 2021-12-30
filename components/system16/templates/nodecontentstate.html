@@ -17,6 +17,17 @@
             </div>
         </div>
 
+        <div class="setting">
+            <div class="settingTable table">
+                <div class="label">
+                    <span>Version</span>
+                </div>
+                <div class="value">
+                    <%- nodestate.version %>
+                </div>
+            </div>
+        </div>
+
         <% if(nodestate.error) {%>
             <div class="setting">
                 <div class="settingTable table">
@@ -40,11 +51,6 @@
                         <div>
                             <span>
                                 <b><%-nodestate.info.lastblock.height%></b> / <%= manager.chain? manager.chain.commonHeight || '&mdash;' : '&mdash;' %>
-                                <% if(!manager.chain || nodestate.info.lastblock.height < manager.chain.commonHeight) {%>
-                                    <i class="fas fa-spinner fa-spin"></i>
-                                <% } else {%> 
-                                    <i class="fas fa-check-circle good"></i>
-                                <% } %>
                             </span>
                         </div>
 

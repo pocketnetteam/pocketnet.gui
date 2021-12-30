@@ -4178,6 +4178,10 @@ var system16 = (function(){
 				$(this).closest('.collapsepart').toggleClass('expanded')
 			})
 
+            // el.c.on('click', '.collapsepart .ssubcaption', function(){
+			// 	$(this).closest('.collapsepart').toggleClass('expanded')
+			// })
+
 		}
 
 		var makers = {
