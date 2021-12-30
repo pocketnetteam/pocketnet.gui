@@ -1329,6 +1329,7 @@
 		.videoWrapper{
 			overflow: hidden;
 			border-radius: 5px;
+			max-width: none;
 		}
 
 		/*.video-js{
@@ -1701,7 +1702,26 @@
 	}
 }
 
+#content>div#post.sharec{
+	.postWrapper{
+		max-width: none;
+	}
+	.widthcontainer{
+		width: 80%;
+		max-width: 800px;
+		margin : 0 auto;
+	}
+}
+
 @media only screen and (max-width: 768px) {
+	#content>div#post.sharec{
+		
+		.widthcontainer{
+			width: 100%;
+			padding-left: @rhythm;
+			padding-right: @rhythm;
+		}
+	}
 	#post{
 
 		.videoWrapper{
