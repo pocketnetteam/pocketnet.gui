@@ -4144,6 +4144,7 @@ html.cordova .matrixchatwrapper,
 html.mobile .matrixchatwrapper,
 html.tablet .matrixchatwrapper {
   position: fixed;
+  contain: strict;
   left: -100%;
   top: 0;
   right: 100%;
@@ -6132,6 +6133,9 @@ html.cordova #navigation .fakem {
   .contentWrapper #content .bgCaption .cwrapper {
     height: 100%;
   }
+  .dialog {
+    z-index: 1006;
+  }
   .dialog .buttons {
     overflow: hidden;
   }
@@ -6412,6 +6416,7 @@ html.mobile .wnd.normalizedmobile .wndinner .wndcontent {
   border-bottom-left-radius: 0;
   bottom: 0;
   backface-visibility: hidden;
+  contain: strict;
   box-shadow: 0 5px 7px -5px rgba(0, 0, 0, 0.4);
 }
 html.cordova .wnd.normalizedmobile .wndinner .wndcontent::-webkit-scrollbar,

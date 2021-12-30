@@ -504,6 +504,19 @@
   display: block;
   height: 100%;
 }
+#system16 .nodecontent .nodecontentstate i {
+  width: 20px;
+  font-size: 0.9em;
+}
+#system16 .nodecontent .nodecontentstate .good {
+  color: #076C34;
+}
+#system16 .nodecontent .nodecontentstate .bad {
+  color: #F41A4D;
+}
+#system16 .nodecontent .nodecontentstate .gray {
+  color: #b2abac;
+}
 #system16 .nodecontent .notfound {
   text-align: center;
   padding: 2em 0;
@@ -554,6 +567,9 @@
 #system16 .nodecontentmanage .felockcnt i {
   font-size: 0.9em;
   color: #00A3F7;
+}
+#system16 .nodecontentmanage .value.balance {
+  font-weight: 600;
 }
 #system16 .empty {
   padding-top: 1em;
