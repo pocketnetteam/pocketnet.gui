@@ -3716,6 +3716,8 @@ Platform = function (app, listofnodes) {
                                                 return share.pin
                                             })
 
+
+
                                             if (alreadyPinned && alreadyPinned.txid){
                                                 
                                                 alreadyPinned.pin = false;
@@ -3729,10 +3731,9 @@ Platform = function (app, listofnodes) {
 
                                             d.share.pin = true;
                                             var metatable = _el.closest('.metatable');
-                                            var pinnedIcon = metatable.find('.pinnedIcon');
-                                            var pinnedLabel = metatable.find('.pinnedLabel');
-                                            pinnedIcon.html('<i class="fa fa-map-pin"></i>');
-                                            pinnedLabel.append(', ' + self.app.localization.e('pinned'));
+                                            var sys = metatable.find('.sys');
+
+                                            sys.prepend('<span class="pinnedLabel"><i class="fas fa-thumbtack"></i> ' + self.app.localization.e('pinned').toLowerCase() + ', ' + '</span>');
 
                                         }
 
