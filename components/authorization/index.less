@@ -29,8 +29,8 @@
 		}
 	}
 	.work{
-		padding-top: 4 * @rhythm!important;
-		padding-bottom : 4 * @rhythm!important;
+		padding-top: 4 * @rhythm;
+		padding-bottom : 4 * @rhythm;
 	}
 	.maket{
 
@@ -41,7 +41,7 @@
 	.caption{
 		font-size: 4.1em;
 		font-weight: 100;
-		margin-bottom : @rhythm!important;
+		margin-bottom : @rhythm;
 	}
 
 	button{
@@ -241,6 +241,45 @@
 		height: 90%;
 		max-height: 600px;
 		background: #fff;
+		border-radius: 5px;
+
+		.wndcontent{
+			padding : 0;
+		}
+	}
+
+	#authorization{
+		.topCaption{
+			padding-top : 2 * @rhythm;
+			padding-bottom : 2 * @rhythm;
+		}
+		.caption{
+			text-align: center;
+			font-size: 1.5em;
+			margin-bottom: 0;
+		}
+
+		.work{
+			padding-top : 0;
+			padding-bottom: 0;
+		}
+
+		.leftPart{
+			display: none;
+		}
+
+		#filluserfast .mWrapper .panelWrapper{
+			padding-bottom: 2 * @rhythm;
+		}
+	}
+}
+/*
+.wnd.authwindow{
+	.wndinner{
+		width : 400px;
+		height: 90%;
+		max-height: 600px;
+		background: #fff;
 		border-radius: 30px;
 
 		.wndcontent{
@@ -258,8 +297,6 @@
 
 	#authorization{	
 
-		
-
 		position: absolute;
 		left : 0;
 		right : 0;
@@ -273,23 +310,7 @@
 					padding-top : 18 * @rhythm;
 				}
 			}	
-
-			.mWrapper{
-
-	
-				
-				
-
-			}
-
-			.hasaccount{
-				display: none;
-			}
-
-			
 		}
-
-		
 
 		.topCaption{
 			position: absolute;
@@ -496,12 +517,7 @@
 				padding-top : 2 * @rhythm;
 				min-height: 350px;
 
-				/*.parameterMaketWrapper{
-					&[parameter="site"],
-					&[parameter="language"]{
-						display: none;
-					}
-				}*/
+			
 
 				.parameter textarea {
 					min-height: 85px;
@@ -519,7 +535,7 @@
 		
 	
 	}
-}
+}*/
 
 html.stblack{
 	#authorization{	
@@ -685,10 +701,10 @@ html.stblack{
 	#authorization{	
 		padding-bottom : 6 * @rhythm;
 		.work{
-			padding-top: 2 * @rhythm!important;
-			padding-bottom : 2 * @rhythm!important;
-			padding-left : 2 * @rhythm!important;
-			padding-right: 2 * @rhythm!important;
+			padding-top: 2 * @rhythm;
+			padding-bottom : 2 * @rhythm;
+			padding-left : 2 * @rhythm;
+			padding-right: 2 * @rhythm;
 		}
 		.maket{
 
@@ -789,19 +805,10 @@ html.stblack{
 			}
 			
 			.work{
-				padding-top: 2 * @rhythm!important;
-				padding-bottom : 2 * @rhythm!important;
-				padding-left: 0!important;
-				padding-right: 0!important;
-			}
-		
-			.caption{
-				font-size: 1.3em;
-				margin-bottom : 0!important;
-				margin-top : 0!important;
-				text-align: center;
-				font-weight: 100;
-				color : @color-bright;
+				padding-top: 0;
+				padding-bottom : 0;
+				padding-left: 0;
+				padding-right: 0;
 			}
 	
 			.label{

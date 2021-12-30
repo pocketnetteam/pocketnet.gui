@@ -849,9 +849,7 @@ nModule = function(){
 		}
 	}
 
-
 	self.closeContainer = function(key){
-
 
 		var close = deep(self, 'container.close')
 

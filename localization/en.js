@@ -467,7 +467,7 @@ ____loclib.onlyVideo = "Only video"
 ____loclib.e13023 = "Do you really want to unblock user?"
 ____loclib.e13024 = "Your Private Login Key"
 ____loclib.e13025 = "Create a new account"
-____loclib.e13026 = "Join "+appname+""
+____loclib.e13026 = "Registration "+appname+""
 
 ____loclib.e13027 = "Stay Signed"
 ____loclib.e13028 = "You entered not valid private key"

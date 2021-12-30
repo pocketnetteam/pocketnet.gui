@@ -4425,7 +4425,8 @@ var lenta = (function(){
 						beginmaterial : beginmaterial,
 						author : essenseData.author,
 						recommended : recommended,
-						filters : essenseData.search || essenseData.tags
+						filters : essenseData.search || essenseData.tags,
+						ed : essenseData
 					};
 
 					self.loadTemplate({

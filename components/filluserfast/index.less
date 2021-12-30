@@ -856,25 +856,24 @@ html.stblack{
 }
 
 .wndcontent{
-	.categories{
+	#filluserfast{
+		.categories{
 
-		.welcome_text{
-			margin-top: @rhythm!important
-		}
-		.cats{
-			margin-top: 15px!important;
-			max-height: 285px;
-			overflow-y: scroll;
-		}
+			.welcome_text{
+				margin-top: @rhythm!important
+			}
+		
+			.nextStepButtons{
+				position: fixed;
+				bottom: 30px;
+				left: 0;
+				right: 0;
+			}
 
-		.nextStepButtons{
-			position: absolute;
-			bottom: 30px;
-			left: 0;
-			right: 0;
+		
 		}
-
 	}
+	
 
 }
 
@@ -907,5 +906,21 @@ html.stblack{
 		
 	}
 
+	.wndcontent{
+		#filluserfast{
+			.categories{
+			
+				.nextStepButtons{
+					position: static;
+				}
+	
+			
+			}
+
+			
+		}
+		
+	
+	}
 	
 }
