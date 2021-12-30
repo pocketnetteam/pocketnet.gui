@@ -3783,6 +3783,7 @@ html.stblack{
 				}
 
 				&.fullScreenVideo{
+					contain: strict;
 					#comments{
 						.caption{
 							padding-left: 1 * @rhythm;
@@ -3806,92 +3807,7 @@ html.stblack{
 					}
 				}
 
-				#post{
-
-					#comments{
-						.caption{
-							padding-left: @rhythm;
-							padding-right: @rhythm;
-						}
-						
-						.commentPaddingWrapper,
-						.post{
-							padding-left: 0;
-							padding-right: @rhythm;
-						}
-		
-						.commentPaddingWrapper{
-							padding-right: @rhythm;
-						}
-		
-						.list .answer .postbody{
-							padding-left: 0;
-							padding-right: @rhythm;
-						}
-		
-						.answers{
-							.commentPaddingWrapper{
-								padding-right: 0;
-								padding-left: 0;
-							}
-						}				
-		
-						.answer .posttable>div.postCellWrapper .postaction, 
-						.edit .posttable>div.postCellWrapper .postaction, 
-						.post .posttable>div.postCellWrapper .postaction{
-							text-align: center;
-						}
-					}
-
-					.share{
-						.work{
-							border-left : @rhythm dotted fade(@color-gray-slight, 70);
-						}
-						.sharecaption{
-							font-size: 1em;
-						}
-					} 
-
-					
-					
-
-					.iconWrapper{
-						width: 7 * @rhythm;
-						padding-left: 1.5 * @rhythm;
-
-						.usericon{
-							width: 5 * @rhythm;
-							height: 5 * @rhythm;
-						}
-					}
-				
-					.cntswrk{
-						margin-left: 0 * @rhythm;
-
-						&.formeta{
-							margin-left: 7 * @rhythm;
-							padding-left : 0.5 * @rhythm;
-						}
-					}
-
-					.meta{
-						padding-top: 2.3 * @rhythm;
-					}
-
-
-					#post{
-						.cntswrk{
-							margin-left: 0 * @rhythm;
-		
-							&.formeta{
-								margin-left: 7 * @rhythm;
-								padding-left : 0.5 * @rhythm;
-							}
-
-							padding-right: 0;
-						}
-					}
-				}
+			
 
 				.medium-insert-embeds{
 					position: relative;
@@ -4275,6 +4191,10 @@ html.stblack{
 
 				.authorgroup{
 					width: 50%;
+				}
+
+				.shareTable{
+					padding-top : 0;
 				}
 
 				.shareTable .authorTable>div span{
