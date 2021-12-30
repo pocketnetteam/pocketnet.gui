@@ -255,6 +255,7 @@
 	}
 
 	.list{
+		background: #fff;
 				
 		.comment{
 			border-bottom : 1px solid @color-gray-slight;
@@ -764,15 +765,18 @@
 	}
 
 	.showall{
-		padding : 2 * @rhythm;
-		padding-left:  3 * @rhythm;
-		padding-right: 3 * @rhythm;
-		padding-bottom: 0;
-		text-align: center;
-		color : @color-main;
+		display: flex;
+		justify-content: space-between;
+		// color : @color-main;
 		.transition(0.3s);
 		cursor : pointer;
 		position: sticky;
+		color: #555770;
+		padding-top: @rhythm;
+		padding-bottom: @rhythm;
+		padding-left: @rhythm * 3;
+		padding-right: @rhythm * 4;
+		font-size: .9em;
 
 		span{
 			font-size : 0.8em;

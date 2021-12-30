@@ -438,7 +438,7 @@ var arranges = {
 			
 			<% if(!checkvisibility && !lockedaccount) {%>
 
-				<div class="cntswrk cntscontent postcontent">
+				<div class="cntswrkcontent cntscontent postcontent postmessage">
 
 
 					<% var a = share.settings.a || share.default.a %>
@@ -455,7 +455,7 @@ var arranges = {
 				</div>
 
 			<% } else { %> 
-				<div class="cntswrk cntscontent postcontent">
+				<div class="cntswrkcontent cntscontent postcontent">
 
 					<div class="hiddenpost">
 
@@ -506,7 +506,7 @@ var arranges = {
 			<% } %>
 
 			
-			<div class="cntswrk removeDescription postcontent">
+			<div class="cntswrkcontent removeDescription postcontent">
 				<%=e('postRemoved')%>
 			</div>
 
@@ -514,7 +514,7 @@ var arranges = {
 
 			<% if(!emptywithrepost) {%>
 
-				<div class="cntswrk cntscontent">
+				<div class="cntscontent">
 					<div class="paddingWrapper">
 						
 						<% if(share.tags && share.tags.length > 0) {

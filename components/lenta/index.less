@@ -292,15 +292,28 @@
 		.iconWrapper{
 			width: 8 * @rhythm;
 			padding-top: @rhythm;
-			padding-left: 2 * @rhythm;
+			padding-left: 3 * @rhythm;
 			padding-right: 0;
 			float: left;
 		}
 
 		.cntswrk{
-			margin-left: 8 * @rhythm;
+			margin-left: 9 * @rhythm;
 			padding-left : 2 * @rhythm;
 			padding-right : 4 * @rhythm;
+		}
+
+		.cntswrkcontent{
+			padding-left : 3 * @rhythm;
+		}
+
+		.postcontent{
+			padding-top: @rhythm * 2;
+		}
+
+		.postmessage{
+			border-top: 1px solid #F5F5F9;
+			padding-right: @rhythm;
 		}
 
 		.work{
@@ -371,7 +384,7 @@
 		}
 		
 		.share{
-			padding : 2 * @rhythm 0;
+			padding : @rhythm 0;
 			background: #fff;
 			margin-bottom: @rhythm;
 			padding-bottom : 0;
@@ -388,7 +401,7 @@
 					#post{
 						.iconWrapper{
 							width: 7 * @rhythm;
-							padding-left: 2 * @rhythm;
+							padding-left: 3 * @rhythm;
 		
 							.usericon{
 								width: 5 * @rhythm;
@@ -408,7 +421,7 @@
 				.commentPaddingWrapper,
 				.post{
 					padding-left: 3 * @rhythm;
-					padding-right: 4 * @rhythm;
+					padding-right: 3 * @rhythm;
 				}
 
 				.commentPaddingWrapper{
@@ -499,6 +512,10 @@
 					}
 				} 
 
+
+								
+
+				}
 				/*.postcontent{
 					max-height: 300px;
 					overflow: hidden;
@@ -530,7 +547,8 @@
 				}
 
 				.meta{
-					padding-top: 2.3 * @rhythm;
+					padding-top: 0.7em;
+					padding-left: 2 * @rhythm;
 		
 				}
 			}
@@ -1079,7 +1097,7 @@
 
 
 			.meta{
-				padding-top: 1.5 * @rhythm;
+				padding-top: @rhythm;
 				margin-bottom: @rhythm;
 
 				>div{
@@ -1257,7 +1275,7 @@
 
 			.message{
 				margin-bottom: 2 * @rhythm;
-				max-width: 700px;
+				padding-right: 2 * @rhythm;
 
 				a{
 					text-decoration: underline;
@@ -1447,6 +1465,7 @@
 			}
 
 			.tags{
+				padding-left: 3 * @rhythm;
 				margin-bottom: 2 * @rhythm;
 				overflow: hidden;
 				max-width: 650px;
@@ -1481,6 +1500,10 @@
 
 			.panel{
 				/*margin-bottom : 2 * @rhythm;*/
+				padding-right: 4 * @rhythm;
+				padding-left: 3 * @rhythm;
+				padding-top: 2 * @rhythm;
+				border-top: 1px solid #F5F5F9;
 				
 				.itemwr{
 					width: auto;
@@ -2444,7 +2467,7 @@
 			}
 		}
 	}
-}
+
 
 #lenta{
 	.js-player .warning-overlay{
@@ -3555,7 +3578,7 @@ html.stblack{
 					}
 
 					.meta{
-						padding-top: 2.3 * @rhythm;
+						padding-top: 2 * @rhythm;
 					}
 
 

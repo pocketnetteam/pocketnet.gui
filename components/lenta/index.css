@@ -235,14 +235,24 @@
 #lenta .shares .iconWrapper {
   width: 4em;
   padding-top: 0.5em;
-  padding-left: 1em;
+  padding-left: 1.5em;
   padding-right: 0;
   float: left;
 }
 #lenta .shares .cntswrk {
-  margin-left: 4em;
+  margin-left: 4.5em;
   padding-left: 1em;
   padding-right: 2em;
+}
+#lenta .shares .cntswrkcontent {
+  padding-left: 1.5em;
+}
+#lenta .shares .postcontent {
+  padding-top: 1em;
+}
+#lenta .shares .postmessage {
+  border-top: 1px solid #F5F5F9;
+  padding-right: 0.5em;
 }
 #lenta .shares .work {
   padding-left: 0;
@@ -302,19 +312,32 @@
   font-size: 2em;
 }
 #lenta .shares .share {
-  padding: 1em 0;
+  padding: 0.5em 0;
   background: #fff;
   margin-bottom: 0.5em;
   padding-bottom: 0;
   /*content-visibility: auto;
 			contain-intrinsic-size: 800px;*/
+  /*.postcontent{
+					max-height: 300px;
+					overflow: hidden;
+					-webkit-mask-image: linear-gradient(to top, transparent 10%, rgb(61, 61, 61) 20%);
+                    mask-image: linear-gradient(to top, transparent 10%, rgb(61, 61, 61) 20%);
+
+					&.allshowed{
+						max-height: none;
+						overflow: visible;
+						-webkit-mask-image: none;
+                    	mask-image: none;
+					}
+				}*/
 }
 #lenta .shares .share .commentsWrapperHb {
   min-height: 1em;
 }
 #lenta .shares .share .shareTable.truerepost #post .iconWrapper {
   width: 3.5em;
-  padding-left: 1em;
+  padding-left: 1.5em;
 }
 #lenta .shares .share .shareTable.truerepost #post .iconWrapper .usericon {
   width: 2.5em;
@@ -327,7 +350,7 @@
 #lenta .shares .share #comments .commentPaddingWrapper,
 #lenta .shares .share #comments .post {
   padding-left: 1.5em;
-  padding-right: 2em;
+  padding-right: 1.5em;
 }
 #lenta .shares .share #comments .commentPaddingWrapper {
   padding-right: 3em;
@@ -344,21 +367,6 @@
 #lenta .shares .share #comments .edit .posttable > div.postCellWrapper .postaction,
 #lenta .shares .share #comments .post .posttable > div.postCellWrapper .postaction {
   text-align: center;
-}
-#lenta .shares .share #post {
-  /*.postcontent{
-					max-height: 300px;
-					overflow: hidden;
-					-webkit-mask-image: linear-gradient(to top, transparent 10%, rgb(61, 61, 61) 20%);
-                    mask-image: linear-gradient(to top, transparent 10%, rgb(61, 61, 61) 20%);
-
-					&.allshowed{
-						max-height: none;
-						overflow: visible;
-						-webkit-mask-image: none;
-                    	mask-image: none;
-					}
-				}*/
 }
 #lenta .shares .share #post .lockedaccount span {
   font-size: 1em;
@@ -404,38 +412,39 @@
 #lenta .shares .share #post .share .sharecaption {
   font-size: 1em;
 }
-#lenta .shares .share #post #post .share .work {
+#lenta .shares .share #post .share .work {
   border-left: 0;
 }
-#lenta .shares .share #post #post .cntswrk {
+#lenta .shares .share #post .cntswrk {
   padding-right: 2em;
 }
-#lenta .shares .share #post .cntswrk {
+#lenta .shares .share .cntswrk {
   margin-left: 3.5em;
 }
-#lenta .shares .share #post .meta {
-  padding-top: 1.15em;
+#lenta .shares .share .meta {
+  padding-top: 0.7em;
+  padding-left: 1em;
 }
-#lenta .shares .share img {
+#lenta .shares img {
   max-width: 100%;
 }
-#lenta .shares .share .article .message p img {
+#lenta .shares .article .message p img {
   max-width: 95%;
   border-radius: 3px;
   margin: 0 auto;
 }
-#lenta .shares .share .article .message figure img {
+#lenta .shares .article .message figure img {
   max-width: 95%;
   border-radius: 3px;
   margin: 0 auto;
 }
-#lenta .shares .share .article .message span {
+#lenta .shares .article .message span {
   font-size: 1em!important;
 }
-#lenta .shares .share .medium-insert-embeds {
+#lenta .shares .medium-insert-embeds {
   position: relative;
 }
-#lenta .shares .share .medium-insert-embeds:after {
+#lenta .shares .medium-insert-embeds:after {
   content: '';
   position: absolute;
   left: 0;
@@ -446,14 +455,14 @@
   cursor: pointer;
   background: transparent;
 }
-#lenta .shares .share .work {
+#lenta .shares .work {
   overflow: hidden;
   position: relative;
 }
-#lenta .shares .share .shareWrapper {
+#lenta .shares .shareWrapper {
   position: relative;
 }
-#lenta .shares .share .subscribeWrapper {
+#lenta .shares .subscribeWrapper {
   z-index: 19;
   position: absolute;
   left: 0;
@@ -464,21 +473,21 @@
   padding: 2em 1em;
   display: none;
 }
-#lenta .shares .share .subscribeWrapper .name {
+#lenta .shares .subscribeWrapper .name {
   padding-top: 0.5em / 4;
 }
-#lenta .shares .share .subscribeWrapper .unsubscribeevent,
-#lenta .shares .share .subscribeWrapper .subscribeevent {
+#lenta .shares .subscribeWrapper .unsubscribeevent,
+#lenta .shares .subscribeWrapper .subscribeevent {
   margin-top: 18px;
   overflow-y: hidden;
 }
-#lenta .shares .share .subscribeWrapper .unsubscribeevent > div,
-#lenta .shares .share .subscribeWrapper .subscribeevent > div {
+#lenta .shares .subscribeWrapper .unsubscribeevent > div,
+#lenta .shares .subscribeWrapper .subscribeevent > div {
   float: left;
   margin-right: 0.5em;
 }
-#lenta .shares .share .subscribeWrapper .unsubscribeevent > div button,
-#lenta .shares .share .subscribeWrapper .subscribeevent > div button {
+#lenta .shares .subscribeWrapper .unsubscribeevent > div button,
+#lenta .shares .subscribeWrapper .subscribeevent > div button {
   padding-left: 0;
   padding-right: 0;
   background: transparent;
@@ -486,61 +495,61 @@
   text-decoration: underline;
   color: #000;
 }
-#lenta .shares .share .subscribeWrapper .unsubscribeevent > div button:hover,
-#lenta .shares .share .subscribeWrapper .subscribeevent > div button:hover {
+#lenta .shares .subscribeWrapper .unsubscribeevent > div button:hover,
+#lenta .shares .subscribeWrapper .subscribeevent > div button:hover {
   background: transparent;
   border-color: transparent;
 }
-#lenta .shares .share .subscribeWrapper .unsubscribeevent {
+#lenta .shares .subscribeWrapper .unsubscribeevent {
   display: none;
 }
-#lenta .shares .share.showAdditional .iconWrapper .additional i {
+#lenta .shares.showAdditional .iconWrapper .additional i {
   transform: rotate(45deg);
 }
-#lenta .shares .share.showAdditional .iconWrapper .additional:hover i {
+#lenta .shares.showAdditional .iconWrapper .additional:hover i {
   transform: rotate(135deg);
   -webkit-transform: rotate(135deg);
 }
-#lenta .shares .share .shareSave i {
+#lenta .shares .shareSave i {
   display: none;
 }
-#lenta .shares .share .shareSave[status="cansave"] .cansave {
+#lenta .shares .shareSave[status="cansave"] .cansave {
   display: inline-block;
 }
-#lenta .shares .share .shareSave[status="saving"] .saving {
+#lenta .shares .shareSave[status="saving"] .saving {
   display: inline-block;
 }
-#lenta .shares .share .shareSave[status="saved"] .saved {
+#lenta .shares .shareSave[status="saved"] .saved {
   display: inline-block;
 }
-#lenta .shares .share .shareSpacer {
+#lenta .shares .shareSpacer {
   height: 400px;
   padding: 0 2em;
 }
-#lenta .shares .share .shareContent {
+#lenta .shares .shareContent {
   position: relative;
 }
-#lenta .shares .share .tempPreloader {
+#lenta .shares .tempPreloader {
   padding: 1em 0;
   margin-bottom: 1em;
 }
-#lenta .shares .share .tempPreloader .label {
+#lenta .shares .tempPreloader .label {
   padding-top: 0.5em;
   color: #00a4ff;
   font-size: 0.8em;
 }
-#lenta .shares .share .tempPreloader .iconwr {
+#lenta .shares .tempPreloader .iconwr {
   padding-bottom: 1em;
 }
-#lenta .shares .share .tempPreloader .count {
+#lenta .shares .tempPreloader .count {
   padding-right: 0;
 }
-#lenta .shares .share .iconWrapper .icon {
+#lenta .shares .iconWrapper .icon {
   height: 45px;
 }
-#lenta .shares .share .iconWrapper .aitem,
-#lenta .shares .share .iconWrapper .additional,
-#lenta .shares .share .iconWrapper .subscribe {
+#lenta .shares .iconWrapper .aitem,
+#lenta .shares .iconWrapper .additional,
+#lenta .shares .iconWrapper .subscribe {
   text-align: center;
   margin: 0 auto;
   border-radius: 50%;
@@ -554,129 +563,129 @@
   border: 1px solid transparent;
   font-size: 0.8em;
 }
-#lenta .shares .share .iconWrapper .aitem:hover,
-#lenta .shares .share .iconWrapper .additional:hover,
-#lenta .shares .share .iconWrapper .subscribe:hover {
+#lenta .shares .iconWrapper .aitem:hover,
+#lenta .shares .iconWrapper .additional:hover,
+#lenta .shares .iconWrapper .subscribe:hover {
   box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.4);
   border-color: #1e2328;
   color: #1e2328;
 }
-#lenta .shares .share .iconWrapper .notificationturn {
+#lenta .shares .iconWrapper .notificationturn {
   display: none;
   color: #d0c9ca;
 }
-#lenta .shares .share .iconWrapper .aunsubscribe {
+#lenta .shares .iconWrapper .aunsubscribe {
   display: none;
   color: #00a4ff;
 }
-#lenta .shares .share .shareTable .sbtnxs .subscribedLabel {
+#lenta .shares .shareTable .sbtnxs .subscribedLabel {
   display: none;
 }
-#lenta .shares .share .shareTable .sbtnxs span {
+#lenta .shares .shareTable .sbtnxs span {
   cursor: pointer;
 }
-#lenta .shares .share .shareTable .sbtnxs span i {
+#lenta .shares .shareTable .sbtnxs span i {
   color: #076C34;
 }
-#lenta .shares .share .shareTable .sbtnxs span:hover {
+#lenta .shares .shareTable .sbtnxs span:hover {
   color: #00a4ff;
 }
-#lenta .shares .share .shareTable .sbtnxs .notificationturn {
+#lenta .shares .shareTable .sbtnxs .notificationturn {
   display: none;
 }
-#lenta .shares .share .shareTable .sbtnxs .notificationturn i {
+#lenta .shares .shareTable .sbtnxs .notificationturn i {
   text-align: center;
   color: rgba(7, 108, 52, 0.8);
   /*.transition(0.3s);*/
 }
-#lenta .shares .share .shareTable .sbtnxs .notificationturn.turnon i:before {
+#lenta .shares .shareTable .sbtnxs .notificationturn.turnon i:before {
   content: '\f0f3';
 }
-#lenta .shares .share .shareTable .sbtnxs .notificationturn:hover i {
+#lenta .shares .shareTable .sbtnxs .notificationturn:hover i {
   color: #076c34;
 }
-#lenta .shares .share .shareTable.subscribed .sbtnxs .subscribedLabel {
+#lenta .shares .shareTable.subscribed .sbtnxs .subscribedLabel {
   display: inline;
 }
-#lenta .shares .share .shareTable.subscribed .sbtnxs .notificationturn {
+#lenta .shares .shareTable.subscribed .sbtnxs .notificationturn {
   display: inline;
 }
-#lenta .shares .share .shareTable.subscribed .sbtnxs .subscribeLabel {
+#lenta .shares .shareTable.subscribed .sbtnxs .subscribeLabel {
   display: none;
 }
-#lenta .shares .share .shareTable.subscribed .iconWrapper .aunsubscribe {
+#lenta .shares .shareTable.subscribed .iconWrapper .aunsubscribe {
   display: block;
 }
-#lenta .shares .share .shareTable.subscribed .iconWrapper .asubscribe {
+#lenta .shares .shareTable.subscribed .iconWrapper .asubscribe {
   display: none;
 }
-#lenta .shares .share .shareTable.subscribed .iconWrapper .notificationturn {
+#lenta .shares .shareTable.subscribed .iconWrapper .notificationturn {
   display: block;
 }
-#lenta .shares .share .shareTable.subscribed .iconWrapper .additional i:before {
+#lenta .shares .shareTable.subscribed .iconWrapper .additional i:before {
   content: '\f068';
 }
-#lenta .shares .share .shareTable.subscribed .subscribeWrapper .subscribeevent {
+#lenta .shares .shareTable.subscribed .subscribeWrapper .subscribeevent {
   display: none;
 }
-#lenta .shares .share .shareTable.subscribed .subscribeWrapper .unsubscribeevent {
+#lenta .shares .shareTable.subscribed .subscribeWrapper .unsubscribeevent {
   display: block;
 }
-#lenta .shares .share .shareTable.emptywithrepost .cntswrk {
+#lenta .shares .shareTable.emptywithrepost .cntswrk {
   margin-left: 0;
 }
-#lenta .shares .share .shareTable.emptywithrepost .meta {
+#lenta .shares .shareTable.emptywithrepost .meta {
   padding-top: 0;
 }
-#lenta .shares .share .shareTable.emptywithrepost .meta .repostCaption i {
+#lenta .shares .shareTable.emptywithrepost .meta .repostCaption i {
   font-size: 0.8em;
   color: #00a4ff;
   width: 20px;
 }
-#lenta .shares .share .shareTable.emptywithrepost .meta .repostCaption span {
+#lenta .shares .shareTable.emptywithrepost .meta .repostCaption span {
   font-size: 0.8em;
 }
-#lenta .shares .share:hover .iconWrapper .aitem {
+#lenta .shares:hover .iconWrapper .aitem {
   color: #d0c9ca;
   border: 1px solid #d0c9ca;
 }
-#lenta .shares .share:hover .iconWrapper .aitem:hover {
+#lenta .shares:hover .iconWrapper .aitem:hover {
   border-color: #00a4ff;
   color: #00a4ff;
 }
-#lenta .shares .share:hover .iconWrapper .additional,
-#lenta .shares .share:hover .iconWrapper .subscribe {
+#lenta .shares:hover .iconWrapper .additional,
+#lenta .shares:hover .iconWrapper .subscribe {
   color: #d0c9ca;
   border: 1px solid #d0c9ca;
 }
-#lenta .shares .share:hover .iconWrapper .additional:hover,
-#lenta .shares .share:hover .iconWrapper .subscribe:hover {
+#lenta .shares:hover .iconWrapper .additional:hover,
+#lenta .shares:hover .iconWrapper .subscribe:hover {
   border-color: #00a4ff;
   color: #00a4ff;
 }
-#lenta .shares .share:hover .iconWrapper .additional:hover i,
-#lenta .shares .share:hover .iconWrapper .subscribe:hover i {
+#lenta .shares:hover .iconWrapper .additional:hover i,
+#lenta .shares:hover .iconWrapper .subscribe:hover i {
   transform: rotate(90deg);
   -webkit-transform: rotate(90deg);
 }
-#lenta .shares .share .jsPlayerPreview {
+#lenta .shares .jsPlayerPreview {
   height: 100%;
   width: 100%;
   position: relative;
   overflow: hidden;
   border-radius: 3px;
 }
-#lenta .shares .share .jsPlayerPreview .wpl {
+#lenta .shares .jsPlayerPreview .wpl {
   width: 100%;
   height: 100%;
   cursor: pointer;
   /*.transition(0.3s);*/
 }
-#lenta .shares .share .jsPlayerPreview .wpl:hover {
+#lenta .shares .jsPlayerPreview .wpl:hover {
   opacity: 0.9;
 }
-#lenta .shares .share .jsPlayerPreview .statswrapper,
-#lenta .shares .share .jsPlayerPreview .durationWrapper {
+#lenta .shares .jsPlayerPreview .statswrapper,
+#lenta .shares .jsPlayerPreview .durationWrapper {
   position: absolute;
   bottom: 0;
   right: 0;
@@ -689,42 +698,42 @@
   text-shadow: 1px 1px 3px #323232;
   background: rgba(10, 12, 23, 0.75);
 }
-#lenta .shares .share .jsPlayerPreview .statswrapper.live,
-#lenta .shares .share .jsPlayerPreview .durationWrapper.live {
+#lenta .shares .jsPlayerPreview .statswrapper.live,
+#lenta .shares .jsPlayerPreview .durationWrapper.live {
   background: rgba(255, 17, 0, 0.8);
 }
-#lenta .shares .share .jsPlayerPreview .statswrapper i,
-#lenta .shares .share .jsPlayerPreview .durationWrapper i,
-#lenta .shares .share .jsPlayerPreview .statswrapper span,
-#lenta .shares .share .jsPlayerPreview .durationWrapper span {
+#lenta .shares .jsPlayerPreview .statswrapper i,
+#lenta .shares .jsPlayerPreview .durationWrapper i,
+#lenta .shares .jsPlayerPreview .statswrapper span,
+#lenta .shares .jsPlayerPreview .durationWrapper span {
   font-size: 1em;
 }
-#lenta .shares .share .jsPlayerPreview .durationWrapper {
+#lenta .shares .jsPlayerPreview .durationWrapper {
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 0;
   border-top-left-radius: 0;
 }
-#lenta .shares .share .jsPlayerPreview .statswrapper {
+#lenta .shares .jsPlayerPreview .statswrapper {
   right: auto;
   left: 0;
   border-bottom-right-radius: 6px;
   border-bottom-left-radius: 0;
   border-top-right-radius: 0;
 }
-#lenta .shares .share .jsPlayerPreview .statswrapper > div {
+#lenta .shares .jsPlayerPreview .statswrapper > div {
   float: left;
   margin-right: 0.5em;
 }
-#lenta .shares .share .jsPlayerPreview .statswrapper > div:nth-last-child(1) {
+#lenta .shares .jsPlayerPreview .statswrapper > div:nth-last-child(1) {
   margin-right: 0;
 }
-#lenta .shares .share .jsPlayerLoading {
+#lenta .shares .jsPlayerLoading {
   width: auto;
   height: auto;
   background: #000000;
   position: relative;
 }
-#lenta .shares .share .jsPlayerLoading .jsPlayerLoadingD {
+#lenta .shares .jsPlayerLoading .jsPlayerLoadingD {
   width: 100%;
   height: 100%;
   position: absolute;
@@ -732,33 +741,33 @@
   top: 50%;
   transform: translate(-50%, -50%);
 }
-#lenta .shares .share .jsPlayerLoading .jsPlayerLoadingD > div {
+#lenta .shares .jsPlayerLoading .jsPlayerLoadingD > div {
   vertical-align: middle;
   text-align: center;
 }
-#lenta .shares .share .authorTable {
+#lenta .shares .authorTable {
   width: auto;
 }
-#lenta .shares .share .authorTable > div {
+#lenta .shares .authorTable > div {
   vertical-align: middle;
 }
-#lenta .shares .share .authorTable > div.authorCell {
+#lenta .shares .authorTable > div.authorCell {
   padding-right: 0;
 }
-#lenta .shares .share .authorTable > div.authorCell .pinnedIcon {
+#lenta .shares .authorTable > div.authorCell .pinnedIcon {
   color: #d0c9ca;
 }
-#lenta .shares .share .metatable > div {
+#lenta .shares .metatable > div {
   vertical-align: middle;
 }
-#lenta .shares .share .metatable > div.metadata {
+#lenta .shares .metatable > div.metadata {
   overflow: hidden;
 }
-#lenta .shares .share .metatable > div.metapanel {
+#lenta .shares .metatable > div.metapanel {
   vertical-align: top;
   width: 40px;
 }
-#lenta .shares .share .metatable > div.metapanel .metapanelitem {
+#lenta .shares .metatable > div.metapanel .metapanelitem {
   opacity: 0.6;
   cursor: pointer;
   margin-left: auto;
@@ -773,58 +782,58 @@
   color: #1e2328;
   /*.transition(0.3s);*/
 }
-#lenta .shares .share .metatable > div.metapanel .metapanelitem:hover {
+#lenta .shares .metatable > div.metapanel .metapanelitem:hover {
   opacity: 0.8;
 }
-#lenta .shares .share .metatable > div.metapanel .downloadMetapanel.canDownload .downloadingBtn,
-#lenta .shares .share .metatable > div.metapanel .downloadMetapanel.canDownload .downloadedBtn {
+#lenta .shares .metatable > div.metapanel .downloadMetapanel.canDownload .downloadingBtn,
+#lenta .shares .metatable > div.metapanel .downloadMetapanel.canDownload .downloadedBtn {
   display: none;
 }
-#lenta .shares .share .metatable > div.metapanel .downloadMetapanel.downloading .canDownloadBtn,
-#lenta .shares .share .metatable > div.metapanel .downloadMetapanel.downloading .downloadedBtn {
+#lenta .shares .metatable > div.metapanel .downloadMetapanel.downloading .canDownloadBtn,
+#lenta .shares .metatable > div.metapanel .downloadMetapanel.downloading .downloadedBtn {
   display: none;
 }
-#lenta .shares .share .metatable > div.metapanel .downloadMetapanel.downloaded .canDownloadBtn,
-#lenta .shares .share .metatable > div.metapanel .downloadMetapanel.downloaded .downloadingBtn {
+#lenta .shares .metatable > div.metapanel .downloadMetapanel.downloaded .canDownloadBtn,
+#lenta .shares .metatable > div.metapanel .downloadMetapanel.downloaded .downloadingBtn {
   display: none;
 }
-#lenta .shares .share .metatable > div.metapanel .downloadMetapanel.downloaded .deleteBtn {
+#lenta .shares .metatable > div.metapanel .downloadMetapanel.downloaded .deleteBtn {
   color: #ff6d6d;
 }
-#lenta .shares .share .metatable > div.metapanel .downloadMetapanel.downloaded .downloadDone {
+#lenta .shares .metatable > div.metapanel .downloadMetapanel.downloaded .downloadDone {
   color: green;
 }
-#lenta .shares .share .metatable > div.metapanel .downloadMetapanel.invisible .canDownloadBtn,
-#lenta .shares .share .metatable > div.metapanel .downloadMetapanel.invisible .downloadingBtn,
-#lenta .shares .share .metatable > div.metapanel .downloadMetapanel.invisible .downloadedBtn {
+#lenta .shares .metatable > div.metapanel .downloadMetapanel.invisible .canDownloadBtn,
+#lenta .shares .metatable > div.metapanel .downloadMetapanel.invisible .downloadingBtn,
+#lenta .shares .metatable > div.metapanel .downloadMetapanel.invisible .downloadedBtn {
   display: none;
 }
-#lenta .shares .share:hover .metatable > div.metapanel .metapanelitem {
+#lenta .shares:hover .metatable > div.metapanel .metapanelitem {
   opacity: 1;
 }
-#lenta .shares .share .meta {
-  padding-top: 0.75em;
+#lenta .shares .meta {
+  padding-top: 0.5em;
   margin-bottom: 0.5em;
 }
-#lenta .shares .share .meta > div {
+#lenta .shares .meta > div {
   margin-right: 1em;
 }
-#lenta .shares .share .meta .authorCell {
+#lenta .shares .meta .authorCell {
   white-space: nowrap;
 }
-#lenta .shares .share .meta .authorCell a {
+#lenta .shares .meta .authorCell a {
   font-weight: 700;
   cursor: pointer;
   /*.transition(0.3s);*/
 }
-#lenta .shares .share .meta .authorCell a:hover {
+#lenta .shares .meta .authorCell a:hover {
   color: #00a4ff;
 }
-#lenta .shares .share .imagecaption {
+#lenta .shares .imagecaption {
   font-weight: 700;
   font-size: 0.8em;
 }
-#lenta .shares .share .images {
+#lenta .shares .images {
   max-width: 700px;
   padding: 1em 0;
   opacity: 0;
@@ -834,57 +843,57 @@
   transition: 0.3s;
   overflow: hidden;
 }
-#lenta .shares .share .images.active {
+#lenta .shares .images.active {
   opacity: 1;
 }
-#lenta .shares .share .images .imagesWrapper {
+#lenta .shares .images .imagesWrapper {
   width: 140px;
   height: 140px;
   float: left;
   background: #e4ddde;
   border-radius: 12px;
 }
-#lenta .shares .share .images .imagesWrapper .image {
+#lenta .shares .images .imagesWrapper .image {
   opacity: 0;
   width: 100%;
   height: 100%;
   cursor: pointer;
   border-radius: 12px;
 }
-#lenta .shares .share .images .imagesWrapper .image.active {
+#lenta .shares .images .imagesWrapper .image.active {
   opacity: 1;
 }
-#lenta .shares .share .images .imagesContainer.one .imagesWrapper {
+#lenta .shares .images .imagesContainer.one .imagesWrapper {
   width: 400px;
   height: 400px;
 }
-#lenta .shares .share .images .imagesContainer.one .imagesWrapper.w2 {
+#lenta .shares .images .imagesContainer.one .imagesWrapper.w2 {
   width: 600px;
 }
-#lenta .shares .share .images .imagesContainer.one .imagesWrapper.h2 {
+#lenta .shares .images .imagesContainer.one .imagesWrapper.h2 {
   width: 400px;
 }
-#lenta .shares .share .images .imagesContainer.two .imagesWrapper {
+#lenta .shares .images .imagesContainer.two .imagesWrapper {
   width: 200px;
   height: 200px;
 }
-#lenta .shares .share .images .imagesContainer.two .imagesWrapper.w2 {
+#lenta .shares .images .imagesContainer.two .imagesWrapper.w2 {
   width: 400px;
 }
-#lenta .shares .share .images .imagesContainer.two .imagesWrapper.h2 {
+#lenta .shares .images .imagesContainer.two .imagesWrapper.h2 {
   width: 200px;
 }
-#lenta .shares .share .images .imagesContainer.four .imagesWrapper {
+#lenta .shares .images .imagesContainer.four .imagesWrapper {
   width: 200px;
   height: 200px;
 }
-#lenta .shares .share .images .imagesContainer.four .imagesWrapper.w2 {
+#lenta .shares .images .imagesContainer.four .imagesWrapper.w2 {
   width: 400px;
 }
-#lenta .shares .share .images .imagesContainer.four .imagesWrapper.h2 {
+#lenta .shares .images .imagesContainer.four .imagesWrapper.h2 {
   width: 200px;
 }
-#lenta .shares .share .images .imagesContainer.articleImages .imagesWrapper {
+#lenta .shares .images .imagesContainer.articleImages .imagesWrapper {
   width: 60px;
   height: 60px;
   border-radius: 30px;
@@ -892,24 +901,24 @@
   margin-right: 0.5em;
   margin-bottom: 0.5em;
 }
-#lenta .shares .share .images .imagesContainer.owlcar {
+#lenta .shares .images .imagesContainer.owlcar {
   height: auto;
   width: 100%;
   max-width: 400px;
 }
-#lenta .shares .share .images .imagesContainer.owlcar .imagesWrapper {
+#lenta .shares .images .imagesContainer.owlcar .imagesWrapper {
   height: 500px;
   float: none;
   width: 100%;
   background: transparent;
 }
-#lenta .shares .share .images .imagesContainer.owlcar .imagesWrapper .image {
+#lenta .shares .images .imagesContainer.owlcar .imagesWrapper .image {
   background-size: contain!important;
 }
-#lenta .shares .share .images .videoOpen {
+#lenta .shares .images .videoOpen {
   position: relative;
 }
-#lenta .shares .share .images .videoOpen .playicon {
+#lenta .shares .images .videoOpen .playicon {
   background: rgba(0, 0, 0, 0.5);
   color: #fff;
   position: absolute;
@@ -920,32 +929,32 @@
   padding-right: 0.8em;
   border-radius: 3px;
 }
-#lenta .shares .share .images .videoOpen .playicon i {
+#lenta .shares .images .videoOpen .playicon i {
   font-size: 0.8em;
 }
-#lenta .shares .share .sharecaption {
+#lenta .shares .sharecaption {
   color: #0e1c2b;
   margin-bottom: 0.5em;
   cursor: pointer;
 }
-#lenta .shares .share .sharecaption div {
+#lenta .shares .sharecaption div {
   font-size: 1.6em;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-#lenta .shares .share .sharecaption a {
+#lenta .shares .sharecaption a {
   text-decoration: underline;
   color: #00a4ff;
 }
-#lenta .shares .share .message {
+#lenta .shares .message {
   margin-bottom: 1em;
-  max-width: 700px;
+  padding-right: 1em;
 }
-#lenta .shares .share .message a {
+#lenta .shares .message a {
   text-decoration: underline;
   color: #00a4ff;
 }
-#lenta .shares .share .message a {
+#lenta .shares .message a {
   white-space: nowrap;
   max-width: 70%;
   text-overflow: ellipsis;
@@ -953,114 +962,114 @@
   display: inline-block;
   vertical-align: middle;
 }
-#lenta .shares .share .showMore {
+#lenta .shares .showMore {
   padding: 1.5em 0;
   text-align: center;
   max-width: 700px;
 }
-#lenta .shares .share .showMore button {
+#lenta .shares .showMore button {
   min-width: 250px;
   border-radius: 30px;
 }
-#lenta .shares .share .shareContent {
+#lenta .shares .shareContent {
   cursor: pointer;
 }
-#lenta .shares .share .sharecaption {
+#lenta .shares .sharecaption {
   max-width: 700px;
 }
-#lenta .shares .share .urlhtmlcontent {
+#lenta .shares .urlhtmlcontent {
   font-size: 0.85em;
 }
-#lenta .shares .share .urlhtmlcontent .ogtable > div {
+#lenta .shares .urlhtmlcontent .ogtable > div {
   vertical-align: top;
   padding: 0.5em 0;
 }
-#lenta .shares .share .urlhtmlcontent .ogtable > div.image {
+#lenta .shares .urlhtmlcontent .ogtable > div.image {
   width: 200px;
   padding-right: 1em;
   border-radius: 5px;
 }
-#lenta .shares .share .urlhtmlcontent .ogtable > div.image .removeImage {
+#lenta .shares .urlhtmlcontent .ogtable > div.image .removeImage {
   display: none;
 }
-#lenta .shares .share .urlhtmlcontent .ogtable > div.image img {
+#lenta .shares .urlhtmlcontent .ogtable > div.image img {
   width: 100%;
   border-radius: 5px;
   /*.transition(0.3s);*/
 }
-#lenta .shares .share .urlhtmlcontent .ogtable > div.image img.active {
+#lenta .shares .urlhtmlcontent .ogtable > div.image img.active {
   opacity: 1;
 }
-#lenta .shares .share .urlhtmlcontent .ogtable > div.cnt .title {
+#lenta .shares .urlhtmlcontent .ogtable > div.cnt .title {
   max-width: 400px;
   font-weight: 700;
   color: #00a4ff;
 }
-#lenta .shares .share .urlhtmlcontent .ogtable > div.cnt .description {
+#lenta .shares .urlhtmlcontent .ogtable > div.cnt .description {
   max-width: 400px;
   margin-top: 0.5em;
 }
-#lenta .shares .share .url {
+#lenta .shares .url {
   margin-bottom: 1em;
 }
-#lenta .shares .share .url.hiddenurl .videoWrapper {
+#lenta .shares .url.hiddenurl .videoWrapper {
   display: none;
 }
-#lenta .shares .share .url span.linkedstyle {
+#lenta .shares .url span.linkedstyle {
   font-size: 0.8em;
   color: #00a4ff;
   text-decoration: underline;
 }
-#lenta .shares .share .url .videoviews span {
+#lenta .shares .url .videoviews span {
   font-size: 0.8em;
   color: #00a4ff;
 }
-#lenta .shares .share .url .urlcnt {
+#lenta .shares .url .urlcnt {
   overflow: hidden;
 }
-#lenta .shares .share .url .urlcnt .linkcnt {
+#lenta .shares .url .urlcnt .linkcnt {
   white-space: nowrap;
   overflow: hidden;
   max-width: 640px;
   text-overflow: ellipsis;
 }
-#lenta .shares .share .url .urlcnt .urlcnttable {
+#lenta .shares .url .urlcnt .urlcnttable {
   width: auto;
   height: auto;
 }
-#lenta .shares .share .url .urlcnt .urlcnttable > div {
+#lenta .shares .url .urlcnt .urlcnttable > div {
   vertical-align: middle;
 }
-#lenta .shares .share .url .urlcnt .urlcnttable > div.removeWrapper {
+#lenta .shares .url .urlcnt .urlcnttable > div.removeWrapper {
   padding-left: 1em;
 }
-#lenta .shares .share .url.bigimageinlink .urlhtmlcontent .ogtable {
+#lenta .shares .url.bigimageinlink .urlhtmlcontent .ogtable {
   max-width: 600px;
   border-radius: 3px;
   display: block;
 }
-#lenta .shares .share .url.bigimageinlink .urlhtmlcontent .ogtable > div {
+#lenta .shares .url.bigimageinlink .urlhtmlcontent .ogtable > div {
   display: block;
 }
-#lenta .shares .share .url.bigimageinlink .urlhtmlcontent .ogtable > div.image {
+#lenta .shares .url.bigimageinlink .urlhtmlcontent .ogtable > div.image {
   width: auto;
 }
-#lenta .shares .share .url.bigimageinlink .urlhtmlcontent .ogtable > div.image img {
+#lenta .shares .url.bigimageinlink .urlhtmlcontent .ogtable > div.image img {
   width: 100%;
 }
-#lenta .shares .share .url.bigimageinlink .urlhtmlcontent .ogtable > div.cnt .title {
+#lenta .shares .url.bigimageinlink .urlhtmlcontent .ogtable > div.cnt .title {
   max-width: none;
 }
-#lenta .shares .share .url.bigimageinlink .urlhtmlcontent .ogtable > div.cnt .description {
+#lenta .shares .url.bigimageinlink .urlhtmlcontent .ogtable > div.cnt .description {
   max-width: none;
 }
-#lenta .shares .share .pkoin_commerce_info {
+#lenta .shares .pkoin_commerce_info {
   padding: 1em 0;
   max-width: 350px;
   padding-top: 0.5em;
   position: relative;
 }
-#lenta .shares .share .pkoin_commerce_info:before {
+#lenta .shares .pkoin_commerce_info:before {
   content: '';
   width: 70px;
   position: absolute;
@@ -1069,82 +1078,87 @@
   height: 1px;
   background: #ff0033;
 }
-#lenta .shares .share .pkoin_commerce_info span {
+#lenta .shares .pkoin_commerce_info span {
   font-size: 0.8em;
   opacity: 0.8;
 }
-#lenta .shares .share .tags {
+#lenta .shares .tags {
+  padding-left: 1.5em;
   margin-bottom: 1em;
   overflow: hidden;
   max-width: 650px;
 }
-#lenta .shares .share .tags > div {
+#lenta .shares .tags > div {
   float: left;
   margin-right: 0.5em;
 }
-#lenta .shares .share .tags > div span {
+#lenta .shares .tags > div span {
   font-size: 0.8em;
   color: #b2abac;
 }
-#lenta .shares .share .tags .newlabel {
+#lenta .shares .tags .newlabel {
   background: #ff0565;
   color: #fff;
 }
-#lenta .shares .share .sys {
+#lenta .shares .sys {
   margin-bottom: 1em;
 }
-#lenta .shares .share .sys span {
+#lenta .shares .sys span {
   cursor: pointer;
   font-size: 0.9em;
   color: #b2abac;
 }
-#lenta .shares .share .panel {
+#lenta .shares .panel {
   /*margin-bottom : 2 * @rhythm;*/
+  padding-right: 2em;
+  padding-left: 1.5em;
+  padding-top: 1em;
+  border-top: 1px solid #F5F5F9;
 }
-#lenta .shares .share .panel .itemwr {
+#lenta .shares .panel .itemwr {
   width: auto;
 }
-#lenta .shares .share .panel .itemwr > div {
+#lenta .shares .panel .itemwr > div {
   vertical-align: middle;
   padding-bottom: 0.5em;
 }
-#lenta .shares .share .panel .itemwr > div.iconwr {
+#lenta .shares .panel .itemwr > div.iconwr {
   width: 40px;
 }
-#lenta .shares .share .panel .itemwr > div.labelwr {
+#lenta .shares .panel .itemwr > div.labelwr {
   padding-left: 0.5em;
   cursor: pointer;
 }
-#lenta .shares .share .panel .itemwr > div.labelwr span {
+#lenta .shares .panel .itemwr > div.labelwr span {
   font-weight: 700;
   font-size: 0.8em;
 }
-#lenta .shares .share .panel .itemwr > div.count {
+#lenta .shares .panel .itemwr > div.count {
   padding-left: 0.5em;
 }
-#lenta .shares .share .panel .itemwr > div.count span {
+#lenta .shares .panel .itemwr > div.count span {
   font-weight: 700;
   font-size: 0.8em;
   color: #3c4146;
 }
-#lenta .shares .share .panel > div {
+#lenta .shares .panel > div {
   float: left;
   margin-right: 1em;
 }
-#lenta .shares .share .panel > div:nth-last-child(1) {
+#lenta .shares .panel > div:nth-last-child(1) {
   margin-right: 0;
 }
-#lenta .shares .share .panel > div .stars {
+#lenta .shares .panel > div .stars {
   height: 40px;
   line-height: 40px;
   text-align: center;
   color: #00A3F7;
   cursor: pointer;
 }
-#lenta .shares .share .panel > div .count {
+#lenta .shares .panel > div .count {
   cursor: pointer;
 }
-#lenta .shares .share .panel > div .icon {
+#lenta .shares .panel > div .icon {
   height: 40px;
   line-height: 40px;
   text-align: center;
@@ -1154,37 +1168,37 @@
   /*.transition(0.3s);*/
   border-radius: 40%;
 }
-#lenta .shares .share .panel > div.right {
+#lenta .shares .panel > div.right {
   float: right;
   margin-left: 0;
 }
-#lenta .shares .share .panel > div.right .itemwr > div.iconwr {
+#lenta .shares .panel > div.right .itemwr > div.iconwr {
   text-align: center;
   width: 40px;
 }
-#lenta .shares .share .panel > div.donate,
-#lenta .shares .share .panel > div.promote {
+#lenta .shares .panel > div.donate,
+#lenta .shares .panel > div.promote {
   color: #00a4ff;
 }
-#lenta .shares .share .panel > div.donate .count span,
-#lenta .shares .share .panel > div.promote .count span {
+#lenta .shares .panel > div.donate .count span,
+#lenta .shares .panel > div.promote .count span {
   color: #00a4ff;
   font-weight: 700;
   font-size: 0.8em;
 }
-#lenta .shares .share .panel > div.discussion .count {
+#lenta .shares .panel > div.discussion .count {
   padding-right: 0.5em / 2;
 }
-#lenta .shares .share .panel > div.discussion .count b {
+#lenta .shares .panel > div.discussion .count b {
   color: #ff6e84;
 }
-#lenta .shares .share .panel > div.discussion .count span {
+#lenta .shares .panel > div.discussion .count span {
   font-weight: 300;
 }
-#lenta .shares .share .panel > div:hover .icon {
+#lenta .shares .panel > div:hover .icon {
   opacity: 0.7;
 }
-#lenta .shares .share .panel > div.pkoin {
+#lenta .shares .panel > div.pkoin {
   display: flex;
   align-items: center;
   background: #00a4ff;
@@ -1193,77 +1207,77 @@
   padding: 4px 8px;
   cursor: pointer;
 }
-#lenta .shares .share .panel > div.pkoin img {
+#lenta .shares .panel > div.pkoin img {
   width: 15px;
 }
-#lenta .shares .share .panel > div.pkoin span {
+#lenta .shares .panel > div.pkoin span {
   margin-left: 2px;
 }
-#lenta .shares .share .panel > div.sharesocial .label,
-#lenta .shares .share .panel > div.sharesocial .icon {
+#lenta .shares .panel > div.sharesocial .label,
+#lenta .shares .panel > div.sharesocial .icon {
   color: #ff6e84;
 }
-#lenta .shares .share .panel > div.sharesocial:hover .label {
+#lenta .shares .panel > div.sharesocial:hover .label {
   color: #00a4ff;
 }
-#lenta .shares .share .panel > div.sharesocial:hover .icon {
+#lenta .shares .panel > div.sharesocial:hover .icon {
   border-radius: 0;
   box-shadow: none;
   color: #00a4ff;
   background: transparent;
 }
-#lenta .shares .share .panel > div.nact {
+#lenta .shares .panel > div.nact {
   cursor: default;
 }
-#lenta .shares .share .panel > div.nact .icon {
+#lenta .shares .panel > div.nact .icon {
   cursor: default;
 }
-#lenta .shares .share .panel > div.nact:hover .icon {
+#lenta .shares .panel > div.nact:hover .icon {
   border-radius: 0%;
   box-shadow: none;
   color: #00A3F7;
   background: transparent;
 }
-#lenta .shares .share .pollWrapper {
+#lenta .shares .pollWrapper {
   margin-top: 1.5em;
   margin-bottom: 1em;
 }
-#lenta .shares .share .pollWrapper .list {
+#lenta .shares .pollWrapper .list {
   margin-top: 0.5em;
 }
-#lenta .shares .share .pollWrapper .list .item-progress {
+#lenta .shares .pollWrapper .list .item-progress {
   min-height: 40px;
   margin-bottom: 10px;
 }
-#lenta .shares .share .pollWrapper .list .item-progress .top,
-#lenta .shares .share .pollWrapper .list .item-progress .bottom {
+#lenta .shares .pollWrapper .list .item-progress .top,
+#lenta .shares .pollWrapper .list .item-progress .bottom {
   display: flex;
   align-items: center;
 }
-#lenta .shares .share .pollWrapper .list .item-progress .percent {
+#lenta .shares .pollWrapper .list .item-progress .percent {
   width: 45px;
   text-align: right;
   padding-right: 15px;
 }
-#lenta .shares .share .pollWrapper .list .item-progress .check {
+#lenta .shares .pollWrapper .list .item-progress .check {
   color: #00a4ff;
   display: flex;
   justify-content: flex-end;
   width: 45px;
   padding-right: 15px;
 }
-#lenta .shares .share .pollWrapper .list .item-progress progress {
+#lenta .shares .pollWrapper .list .item-progress progress {
   width: 100%;
   max-width: 350px;
   color: #00a4ff;
 }
-#lenta .shares .share .exitFull {
+#lenta .shares .exitFull {
   display: none;
   position: fixed;
   right: 2em;
   top: 1em;
 }
-#lenta .shares .share.fullScreenVideo {
+#lenta .shares.fullScreenVideo {
   padding: 0;
   margin: 0;
   z-index: 2000;
@@ -1275,7 +1289,7 @@
   background: rgba(14, 28, 43, 0.9);
   padding-top: 0;
 }
-#lenta .shares .share.fullScreenVideo .sharecnt {
+#lenta .shares.fullScreenVideo .sharecnt {
   position: absolute;
   overflow-y: scroll;
   left: 0;
@@ -1290,19 +1304,19 @@
   -webkit-transition: transform 0.1s;
   transition: transform 0.1s;
 }
-#lenta .shares .share.fullScreenVideo .sharecnt .videoWrapper {
+#lenta .shares.fullScreenVideo .sharecnt .videoWrapper {
   border-radius: 0;
 }
-#lenta .shares .share.fullScreenVideo .sharecnt::-webkit-scrollbar {
+#lenta .shares.fullScreenVideo .sharecnt::-webkit-scrollbar {
   width: 0 !important;
 }
-#lenta .shares .share.fullScreenVideo .statswrapperExtended {
+#lenta .shares.fullScreenVideo .statswrapperExtended {
   padding-left: 1em;
 }
-#lenta .shares .share.fullScreenVideo .videoviews {
+#lenta .shares.fullScreenVideo .videoviews {
   padding-left: 1em;
 }
-#lenta .shares .share.fullScreenVideo #comments {
+#lenta .shares.fullScreenVideo #comments {
   /*.list{
 						.comment{
 							content-visibility: auto;
@@ -1310,181 +1324,181 @@
 						}
 					}*/
 }
-#lenta .shares .share.fullScreenVideo #comments .caption {
+#lenta .shares.fullScreenVideo #comments .caption {
   padding-left: 1em;
   padding-right: 1.5em;
 }
-#lenta .shares .share.fullScreenVideo #comments .commentPaddingWrapper,
-#lenta .shares .share.fullScreenVideo #comments .post {
+#lenta .shares.fullScreenVideo #comments .commentPaddingWrapper,
+#lenta .shares.fullScreenVideo #comments .post {
   padding-left: 1em;
   padding-right: 1.5em;
 }
-#lenta .shares .share.fullScreenVideo #comments .commentPaddingWrapper {
+#lenta .shares.fullScreenVideo #comments .commentPaddingWrapper {
   padding-right: 2em;
 }
-#lenta .shares .share.fullScreenVideo #comments .list .answer .postbody {
+#lenta .shares.fullScreenVideo #comments .list .answer .postbody {
   padding-left: 1em;
   padding-right: 1.5em;
 }
-#lenta .shares .share.fullScreenVideo #comments .answers .commentPaddingWrapper {
+#lenta .shares.fullScreenVideo #comments .answers .commentPaddingWrapper {
   padding-right: 0;
   padding-left: 0;
 }
-#lenta .shares .share.fullScreenVideo .exitFull {
+#lenta .shares.fullScreenVideo .exitFull {
   display: block;
 }
-#lenta .shares .share.fullScreenVideo .medium-insert-embeds {
+#lenta .shares.fullScreenVideo .medium-insert-embeds {
   position: relative;
 }
-#lenta .shares .share.fullScreenVideo .medium-insert-embeds:after {
+#lenta .shares.fullScreenVideo .medium-insert-embeds:after {
   display: none;
 }
-#lenta .shares .share.fullScreenVideo .showMore {
+#lenta .shares.fullScreenVideo .showMore {
   display: none;
 }
-#lenta .shares .share.fullScreenVideo .commentsWrapper {
+#lenta .shares.fullScreenVideo .commentsWrapper {
   margin: 0 auto;
   max-width: 960px;
 }
-#lenta .shares .share.fullScreenVideo .url.hiddenurl .videoWrapper {
+#lenta .shares.fullScreenVideo .url.hiddenurl .videoWrapper {
   display: block;
 }
-#lenta .shares .share.fullScreenVideo .commentsWrapperHb {
+#lenta .shares.fullScreenVideo .commentsWrapperHb {
   padding-bottom: 20%;
 }
-#lenta .shares .share.fullScreenVideo .cntswrk {
+#lenta .shares.fullScreenVideo .cntswrk {
   margin-left: 0;
   padding: 0;
 }
-#lenta .shares .share.fullScreenVideo .shareTable {
+#lenta .shares.fullScreenVideo .shareTable {
   display: flex;
   flex-direction: column;
 }
-#lenta .shares .share.fullScreenVideo .shareTable .postcontent {
+#lenta .shares.fullScreenVideo .shareTable .postcontent {
   order: -2;
 }
-#lenta .shares .share.fullScreenVideo .shareTable .formeta {
+#lenta .shares.fullScreenVideo .shareTable .formeta {
   order: -1;
 }
-#lenta .shares .share.fullScreenVideo .cntscontent.postcontent {
+#lenta .shares.fullScreenVideo .cntscontent.postcontent {
   display: flex;
   flex-direction: column;
 }
-#lenta .shares .share.fullScreenVideo .cntscontent.postcontent .url {
+#lenta .shares.fullScreenVideo .cntscontent.postcontent .url {
   order: -1;
 }
-#lenta .shares .share.fullScreenVideo .sharecaption {
+#lenta .shares.fullScreenVideo .sharecaption {
   padding-left: 1em;
   max-width: 450px;
 }
-#lenta .shares .share.fullScreenVideo .sharecaption span {
+#lenta .shares.fullScreenVideo .sharecaption span {
   font-size: 0.9em;
 }
-#lenta .shares .share.fullScreenVideo .formeta {
+#lenta .shares.fullScreenVideo .formeta {
   padding-left: 1em;
 }
-#lenta .shares .share.fullScreenVideo .formeta .sys {
+#lenta .shares.fullScreenVideo .formeta .sys {
   display: none;
 }
-#lenta .shares .share.fullScreenVideo .formeta .sbtnxs {
+#lenta .shares.fullScreenVideo .formeta .sbtnxs {
   display: none;
 }
-#lenta .shares .share.fullScreenVideo .formeta .meta {
+#lenta .shares.fullScreenVideo .formeta .meta {
   padding-top: 0;
   margin-bottom: 0;
 }
-#lenta .shares .share.fullScreenVideo .metapanel,
-#lenta .shares .share.fullScreenVideo .hideOnFullVideo {
+#lenta .shares.fullScreenVideo .metapanel,
+#lenta .shares.fullScreenVideo .hideOnFullVideo {
   display: none;
 }
-#lenta .shares .share.fullScreenVideo .repostWrapper {
+#lenta .shares.fullScreenVideo .repostWrapper {
   display: none;
 }
-#lenta .shares .share.fullScreenVideo .statswrapperExtended {
+#lenta .shares.fullScreenVideo .statswrapperExtended {
   background: #fff;
 }
-#lenta .shares .share.fullScreenVideo .work {
+#lenta .shares.fullScreenVideo .work {
   margin: 0 auto;
   max-width: 960px;
   background: #fff;
   padding: 0;
 }
-#lenta .shares .share.fullScreenVideo .work .iconWrapper {
+#lenta .shares.fullScreenVideo .work .iconWrapper {
   display: none;
 }
-#lenta .shares .share.fullScreenVideo .work .shareWrapper {
+#lenta .shares.fullScreenVideo .work .shareWrapper {
   padding: 0;
 }
-#lenta .shares .share.fullScreenVideo .work .shareWrapper .meta {
+#lenta .shares.fullScreenVideo .work .shareWrapper .meta {
   display: none;
   margin-top: 0;
   margin-bottom: 0;
   padding: 1em;
 }
-#lenta .shares .share.fullScreenVideo .work .shareWrapper .meta .metapanel {
+#lenta .shares.fullScreenVideo .work .shareWrapper .meta .metapanel {
   display: none;
 }
-#lenta .shares .share.fullScreenVideo .work .shareContent {
+#lenta .shares.fullScreenVideo .work .shareContent {
   padding: 0;
 }
-#lenta .shares .share.fullScreenVideo .work .shareContent .sharecaption {
+#lenta .shares.fullScreenVideo .work .shareContent .sharecaption {
   display: none;
   padding: 1em;
   padding-top: 0;
 }
-#lenta .shares .share.fullScreenVideo .work .shareContent .message {
+#lenta .shares.fullScreenVideo .work .shareContent .message {
   display: none;
 }
-#lenta .shares .share.fullScreenVideo .work .shareContent .images {
+#lenta .shares.fullScreenVideo .work .shareContent .images {
   display: none;
 }
-#lenta .shares .share.fullScreenVideo .work .videoWrapper {
+#lenta .shares.fullScreenVideo .work .videoWrapper {
   max-width: none;
   background: #000;
 }
-#lenta .shares .share.fullScreenVideo .work .videoWrapper.squareVideo,
-#lenta .shares .share.fullScreenVideo .work .videoWrapper.verticalVideo {
+#lenta .shares.fullScreenVideo .work .videoWrapper.squareVideo,
+#lenta .shares.fullScreenVideo .work .videoWrapper.verticalVideo {
   background: #000;
   position: relative;
   overflow: hidden;
 }
-#lenta .shares .share.fullScreenVideo .work .videoWrapper.squareVideo .js-player,
-#lenta .shares .share.fullScreenVideo .work .videoWrapper.verticalVideo .js-player {
+#lenta .shares.fullScreenVideo .work .videoWrapper.squareVideo .js-player,
+#lenta .shares.fullScreenVideo .work .videoWrapper.verticalVideo .js-player {
   margin: 0 auto;
   max-width: 450px;
   position: static;
 }
-#lenta .shares .share.fullScreenVideo .work .videoWrapper.squareVideo .video-js,
-#lenta .shares .share.fullScreenVideo .work .videoWrapper.verticalVideo .video-js {
+#lenta .shares.fullScreenVideo .work .videoWrapper.squareVideo .video-js,
+#lenta .shares.fullScreenVideo .work .videoWrapper.verticalVideo .video-js {
   position: static;
 }
-#lenta .shares .share.fullScreenVideo .work .videoWrapper.squareVideo .js-player {
+#lenta .shares.fullScreenVideo .work .videoWrapper.squareVideo .js-player {
   max-width: 500px;
 }
-#lenta .shares .share.fullScreenVideo .work .videoWrapper .videoTips {
+#lenta .shares.fullScreenVideo .work .videoWrapper .videoTips {
   display: none;
 }
-#lenta .shares .share.fullScreenVideo .work .urlcnt {
+#lenta .shares.fullScreenVideo .work .urlcnt {
   display: none;
 }
-#lenta .shares .share.fullScreenVideo .work .sys,
-#lenta .shares .share.fullScreenVideo .work .tags {
+#lenta .shares.fullScreenVideo .work .sys,
+#lenta .shares.fullScreenVideo .work .tags {
   padding: 0 1em;
 }
-#lenta .shares .share.fullScreenVideo .work .panel {
+#lenta .shares.fullScreenVideo .work .panel {
   overflow: hidden;
   padding: 1em;
   padding-bottom: 1em;
   padding-top: 0.5em;
 }
-#lenta .shares .share.fullScreenVideoShowing {
+#lenta .shares.fullScreenVideoShowing {
   opacity: 0;
   -moz-transition: 0s;
   -o-transition: 0s;
   -webkit-transition: 0s;
   transition: 0s;
 }
-#lenta .shares .share.vstars .stars:not(.liked) .starWrapper {
+#lenta .shares.vstars .stars:not(.liked) .starWrapper {
   /*&:nth-child(1){
 								
 								animation: vstars 0.9s ease  0.1s infinite ;
@@ -1510,7 +1524,7 @@
 								animation: vstars 0.9s ease  0.9s infinite ;
 							}*/
 }
-#lenta .shares .showmorebyauthor {
+#lenta .showmorebyauthor {
   display: flex;
   justify-content: space-between;
   padding: 0.5em;
@@ -1521,7 +1535,7 @@
   color: #555770;
   margin-bottom: 0.6em;
 }
-#lenta .shares .share .blockAuthor {
+#lenta .share .blockAuthor {
   display: none;
   position: absolute;
   left: 0;
@@ -1532,32 +1546,32 @@
   z-index: 10;
   align-items: center;
 }
-#lenta .shares .share .blockAuthor .blockCell {
+#lenta .share .blockAuthor .blockCell {
   text-align: center;
   width: 100%;
 }
-#lenta .shares .share .blockAuthor .blockCell .label {
+#lenta .share .blockAuthor .blockCell .label {
   margin-bottom: 1.5em;
 }
-#lenta .shares .share .blockAuthor .blockCell button {
+#lenta .share .blockAuthor .blockCell button {
   width: 180px;
   border-radius: 30px;
   font-size: 0.8em;
 }
-#lenta .shares .share.blocking .commentsWrapperHb {
+#lenta .share.blocking .commentsWrapperHb {
   display: none;
 }
-#lenta .shares .share.blocking .blockAuthor {
+#lenta .share.blocking .blockAuthor {
   display: flex;
 }
-#lenta .subc {
+.subc {
   margin-top: 1em;
 }
-#lenta .subc button {
+.subc button {
   min-width: 220px;
 }
-#lenta .zero,
-#lenta .ended {
+.zero,
+.ended {
   display: none;
   padding: 4em 0;
   padding-bottom: 4em;
@@ -1565,83 +1579,83 @@
   text-align: center;
   background: #fff;
 }
-#lenta .zero .tou,
-#lenta .ended .tou {
+.zero .tou,
+.ended .tou {
   padding: 2em 0;
   color: #00a4ff;
 }
-#lenta .seemore,
-#lenta .loadprev,
-#lenta .loadmore {
+.seemore,
+.loadprev,
+.loadmore {
   background: #fff;
   padding: 1em 0;
   text-align: center;
   border-radius: 12px;
 }
-#lenta .seemore button,
-#lenta .loadprev button,
-#lenta .loadmore button {
+.seemore button,
+.loadprev button,
+.loadmore button {
   border-radius: 30px;
   width: 350px;
   max-width: 90%;
 }
-#lenta .loadprev {
+.loadprev {
   display: none;
   margin-bottom: 0.5em;
 }
-#lenta.showprev .loadprev {
+.showprev .loadprev {
   display: block;
 }
-#lenta.loading .loadmore {
+.loading .loadmore {
   display: none;
 }
-#lenta.sharesZero .zero {
+.sharesZero .zero {
   display: block;
 }
-#lenta.sharesZero .loadmore {
+.sharesZero .loadmore {
   display: none;
 }
-#lenta .networkErrorMessage {
+.networkErrorMessage {
   display: none;
   padding: 3em;
   text-align: center;
 }
-#lenta .networkErrorMessage i {
+.networkErrorMessage i {
   font-size: 2em;
   color: rgba(0, 164, 255, 0.15);
 }
-#lenta.networkError .networkErrorMessage {
+.networkError .networkErrorMessage {
   display: block;
 }
-#lenta.networkError .loadmore {
+.networkError .loadmore {
   display: none;
 }
-#lenta.networkError .loader {
+.networkError .loader {
   display: none!important;
 }
-#lenta .seemore {
+.seemore {
   display: none;
 }
-#lenta.sharesEnded .ended {
+.sharesEnded .ended {
   display: block;
 }
-#lenta.sharesEnded .seemore {
+.sharesEnded .seemore {
   display: block;
 }
-#lenta.sharesEnded .loadmore {
+.sharesEnded .loadmore {
   display: none;
 }
-#lenta.mainvideo .zero,
-#lenta.mainvideo .seemore,
-#lenta.mainvideo .loadprev,
-#lenta.mainvideo .loadmore,
-#lenta.mainvideo .ended {
+.mainvideo .zero,
+.mainvideo .seemore,
+.mainvideo .loadprev,
+.mainvideo .loadmore,
+.mainvideo .ended {
   background: transparent;
 }
-#lenta.mainvideo .loader {
+.mainvideo .loader {
   background: transparent;
 }
-#lenta.mainvideo .shares .share {
+.mainvideo .shares .share {
   background: transparent;
   color: #b2abac;
   padding: 0;
@@ -1649,80 +1663,80 @@
   overflow: hidden;
   border-radius: 3px;
 }
-#lenta.mainvideo .shares .share .sharecaption {
+.mainvideo .shares .share .sharecaption {
   margin-bottom: 0;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-#lenta.mainvideo .shares .share .tags {
+.mainvideo .shares .share .tags {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-#lenta.mainvideo .shares .share .tags .tag {
+.mainvideo .shares .share .tags .tag {
   float: none;
   display: inline;
   margin-right: 0;
 }
-#lenta.mainvideo .shares .share.hidden {
+.mainvideo .shares .share.hidden {
   display: block!important;
 }
-#lenta.mainvideo .shares .share .sharecaption {
+.mainvideo .shares .share .sharecaption {
   color: #3c4146;
   white-space: inherit;
   padding-right: 1em;
 }
-#lenta.mainvideo .shares .share .sharecaption div {
+.mainvideo .shares .share .sharecaption div {
   font-size: 1em;
   font-weight: 500;
   text-transform: capitalize;
 }
-#lenta.mainvideo .shares .share .durationWrapper {
+.mainvideo .shares .share .durationWrapper {
   border-radius: 0;
   border-top-left-radius: 6px;
 }
-#lenta.mainvideo .shares .share .statswrapper {
+.mainvideo .shares .share .statswrapper {
   border-radius: 0;
   border-top-right-radius: 6px;
 }
-#lenta.mainvideo .shares .share .meta {
+.mainvideo .shares .share .meta {
   padding-top: 0.5em;
   margin-bottom: 0;
 }
-#lenta.mainvideo .shares .share .commentsWrapperHb {
+.mainvideo .shares .share .commentsWrapperHb {
   display: none;
 }
-#lenta.mainvideo .shares .share .hideOnFullVideo {
+.mainvideo .shares .share .hideOnFullVideo {
   display: none;
 }
-#lenta.mainvideo .shares .share .videoviews {
+.mainvideo .shares .share .videoviews {
   display: none;
 }
-#lenta.mainvideo .shares .share .showMore {
+.mainvideo .shares .share .showMore {
   display: none;
 }
-#lenta.mainvideo .shares .share .iconWrapper {
+.mainvideo .shares .share .iconWrapper {
   padding: 0;
   z-index: 12;
   width: 32px!important;
 }
-#lenta.mainvideo .shares .share .iconWrapper .icon {
+.mainvideo .shares .share .iconWrapper .icon {
   width: auto;
   height: 32px!important;
 }
-#lenta.mainvideo .shares .share .iconWrapper .icon .usericon {
+.mainvideo .shares .share .iconWrapper .icon .usericon {
   width: 32px!important;
   height: 32px!important;
   line-height: 32px!important;
   font-size: 1.5em;
 }
-#lenta.mainvideo .shares .share .forurl {
+.mainvideo .shares .share .forurl {
   height: 200px;
   position: relative;
 }
-#lenta.mainvideo .shares .share .forurl.verticalVideo {
+.mainvideo .shares .share .forurl.verticalVideo {
   height: 530px;
 }
-#lenta.mainvideo .shares .share .url {
+.mainvideo .shares .share .url {
   margin-bottom: 0;
   height: 100%;
   width: 100%;
@@ -1731,78 +1745,78 @@
   top: 0;
   display: none;
 }
-#lenta.mainvideo .shares .share .url .videoWrapper {
+.mainvideo .shares .share .url .videoWrapper {
   height: 100%;
 }
-#lenta.mainvideo .shares .share .url .videoWrapper .js-player {
+.mainvideo .shares .share .url .videoWrapper .js-player {
   height: 100%;
 }
-#lenta.mainvideo .shares .share .urlcnt {
+.mainvideo .shares .share .urlcnt {
   display: none;
 }
-#lenta.mainvideo .shares .share .panel {
+.mainvideo .shares .share .panel {
   display: none;
 }
-#lenta.mainvideo .shares .share .tags > div span {
+.mainvideo .shares .share .tags > div span {
   color: #b2abac;
   opacity: 0.7;
   text-decoration: none;
 }
-#lenta.mainvideo .shares .spsp {
+.mainvideo .shares .spsp {
   font-weight: 400;
 }
-#lenta.mainvideo .shares .authorgroup {
+.mainvideo .shares .authorgroup {
   float: left;
   width: 33.3333%;
 }
-#lenta.mainvideo .shares .authorgroup .share {
+.mainvideo .shares .authorgroup .share {
   padding: 15px;
 }
-#lenta.mainvideo .shares .authorgroup .anothercntswrk {
+.mainvideo .shares .authorgroup .anothercntswrk {
   height: 100px;
   overflow: hidden;
 }
-#lenta.mainvideo .shares .authorgroup:nth-child(3n + 1) {
+.mainvideo .shares .authorgroup:nth-child(3n + 1) {
   clear: left;
 }
-#lenta.mainvideo .shares .cntswrk {
+.mainvideo .shares .cntswrk {
   margin-left: 0;
   padding-left: 0;
   padding-right: 0;
 }
-#lenta.mainvideo .shares .paddingWrapper {
+.mainvideo .shares .paddingWrapper {
   margin-left: 32px;
   padding-left: 0.5em;
 }
-#lenta.mainvideo .shares .showmorebyauthor {
+.mainvideo .shares .showmorebyauthor {
   display: none;
 }
-#lenta.mainvideo .shares .shareTable .authorTable > div.authorCell {
+.mainvideo .shares .shareTable .authorTable > div.authorCell {
   padding-left: 0.5em;
   padding-right: 0;
   color: #3c4146;
 }
-#lenta.mainvideo .shares .shareTable .authorTable > div a {
+.mainvideo .shares .shareTable .authorTable > div a {
   font-size: 0.9em;
 }
-#lenta.mainvideo .shares .shareTable .authorTable > div.datetime {
+.mainvideo .shares .shareTable .authorTable > div.datetime {
   padding-left: 0.5em;
   opacity: 0.5;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-#lenta.mainvideo .shares .shareTable .authorTable > div.datetime span {
+.mainvideo .shares .shareTable .authorTable > div.datetime span {
   color: #000;
 }
-#lenta.mainvideo .shares .shareTable .authorTable > div span {
+.mainvideo .shares .shareTable .authorTable > div span {
   font-size: 0.9em;
   font-weight: 400;
 }
-#lenta.mainvideo .shares .shareTable .metatable > div.metapanel {
+.mainvideo .shares .shareTable .metatable > div.metapanel {
   width: 40px;
   color: #b2abac;
 }
-#lenta.mainvideo .shares .shareTable .metatable > div.metapanel .metapanelitem {
+.mainvideo .shares .shareTable .metatable > div.metapanel .metapanelitem {
   opacity: 1;
 }
 #lenta .js-player .warning-overlay {
@@ -2493,7 +2507,7 @@ html.stblack #lenta.horizontal .shares .share {
     padding-left: 0.25em;
   }
   #lenta .shares .share #post .meta {
-    padding-top: 1.15em;
+    padding-top: 1em;
   }
   #lenta .shares .share #post #post .cntswrk {
     margin-left: 0em;
