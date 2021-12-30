@@ -1104,7 +1104,8 @@ var filluser = (function(){
 						self.app.nav.api.load({
 							open : true,
 							href : 'userpage?id=test',
-							history : true
+							history : true,
+							replaceState : true
 						})
 					}
 					else{

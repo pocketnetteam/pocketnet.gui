@@ -107,6 +107,8 @@ var ProxyRequest = function(app = {}, proxy){
                 time = time * 2
             }
 
+            if(data && data.method == 'sendrawtransactionwithmessage') time = time * 4
+
             //if(!isonline()) time = 3000
     
             return timeout(time, directclear(url, data, controller.signal, p), controller)
@@ -471,6 +473,8 @@ var Proxy16 = function(meta, app, api){
         return promise.then(r => {
             return Promise.resolve(r)
         }).catch(e => {
+
+            
 
             if (options.fnode && e) e.code = 700
 
@@ -912,6 +916,7 @@ var Api = function(app){
             return Promise.resolve(r)
 
         }).catch(e => {
+
 
             if(!e) e = 'TypeError: Failed to fetch'
 

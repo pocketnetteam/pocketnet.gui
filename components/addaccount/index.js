@@ -173,7 +173,7 @@ var addaccount = (function(){
 			},
 
 			wnd : {
-				class : 'addaccountwnd'
+				class : 'addaccountwnd normalizedmobile'
 			}
 		}
 	};

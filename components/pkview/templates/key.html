@@ -24,7 +24,7 @@
                         </div>
 
                         <div class="buttonWrapper">
-                            <button elementsid="copycode" class="copy button"><i class="fas fa-copy"></i> <%=e('copycode')%></button>
+                            <button elementsid="copycode" class="copy button orange rounded"><i class="fas fa-copy"></i> <%=e('copycode')%></button>
                         </div>
                         
                     </div>
@@ -50,7 +50,16 @@
                 <%-mnemonicKey%>
             </div>
 
-           
+            <div class="hidden forform">
+                <form id="loginform" autocomplete="on" action="signin.xxx" method='post'>
+
+                    <input elementsid="hiddenname" autocomplete="username" value="user" type="text" name='username' class="hidden"/>
+                    <input elementsid="inputloginkey" autocomplete="current-password" type="password" name='password' class="loginValue" placeholder="<%=e('e13024')%>" />
+                              
+                    <button type="submit" elementsid="buttonsignin" class="enter"><%=e('signin')%></button>
+
+                </form>
+            </div>
 
         </div>
     </div>

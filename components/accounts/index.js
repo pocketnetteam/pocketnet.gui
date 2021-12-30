@@ -20,6 +20,9 @@ var accounts = (function(){
 				
 				
 				self.app.platform.sdk.pool.expand(pack, function(expandedPack){
+
+					console.log('expandedPack', expandedPack)
+
 					var index = _.indexOf(expandedPack.addresses, address);
 
 					if (index > -1){
@@ -55,7 +58,7 @@ var accounts = (function(){
 								}
 
 								if(!self.app.user.validate()){
-									h = 'filluser'
+									h = 'filluserfast'
 									history = true
 								}
 

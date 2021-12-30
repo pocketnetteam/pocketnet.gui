@@ -27,7 +27,7 @@ if(share.settings.v == 'a'){
 	view = 'article'
 }
 
-console.log('view')
+fromempty = false
 
 var cview = view
 
@@ -36,7 +36,7 @@ if(share.itisvideo()) cview = 'video'
 var bigmessage = false;
 var name = app.platform.api.name(share.address)
 
-var emptywithrepost = share.isEmpty() && share.repost
+var emptywithrepost = false
 
 
 var value = Number(share.score)
@@ -48,108 +48,87 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 var metadisplay = function(){ %>
 
 	<div class="meta unselectablemobile <% checkvisibility ? 'checkvisibility' : '' %>">
-		<div class="metatable table">
+		<div class="metatable">
 			<div class="metadata">
 
-				<% if(!emptywithrepost) {%>
+				<div class="author">
 
-					<div class="author">
+					<div class="authorTable">
+						<div class="authorCell">
 
-						<div class="authorTable">
-							<div class="authorCell">
+							<a elementsid="shareaddresslink" href="<%-app.platform.api.authorlink(share.address)%>">
+							<% var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0 %>
+								<b><span class="adr"><%-name || share.address %></span></b><% if(reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
+							</a>
 
-								<a elementsid="shareaddresslink" href="<%-app.platform.api.authorlink(share.address)%>">
-
-
-								<% var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0 %>
-									<b><span class="adr"><%-name || share.address %></span></b><% if(reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
-								</a>
-
-								
-
-								<% if((!state || !my) && (typeof repost == 'undefined' || !repost)) { %> 
-
-									<span elementsid="sbtnxs-follow" class="sbtnxs">
-										&middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><i class="far fa-check-circle"></i>  <%=e('following')%></span>
 							
+
+							<% if((!state || !my) && (typeof repost == 'undefined' || !repost)) { %> 
+
+								<span elementsid="sbtnxs-follow" class="sbtnxs">
+									&middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><i class="far fa-check-circle"></i>  <%=e('following')%></span>
+						
+									
+									<% if(state && !my && user.address.value) {
 										
-										<% if(state && !my && user.address.value) {
-											
-											var r = me.relation(share.address, 'subscribes') 
-											
-											%>
-											
-
-											<span elementsid="lenta_notificationturn" class="notificationturn <% if(r && (r.private == 'true' || r.private == '1' || r.private === true)) {%> turnon <% } %>">&middot; <i class="far fa-bell-slash"></i></span>
-										<% } %>
-					
-
+										var r = me.relation(share.address, 'subscribes') 
 										
-									</span>
+										%>
+										
 
-								<% } %>
-
-								
-							</div>	
-							
-							<% if((typeof repost == 'undefined' || !repost || fromempty)) {%>
-								<div class="sys unselectablemobile">
-									<%if(share.pin){%>
-									<span class="pinnedLabel"><i class="fas fa-thumbtack"></i> <%=e('pinned').toLowerCase()%>,</span><%}%><% if(share.downloadedDate) {%> <span class="fas fa-cloud-download-alt"></span> <span class="realtime editedLabel" time="<%-share.downloadedDate%>"><%- app.reltime(share.downloadedDate) %></span><% } else { %> 
-									<% if(share.time) {%><span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span><% } else { %><span><%=e('e13019')%></span><% } %><% if(share.edit == 'true') {%><span class="editedLabel">, <%=e('e13130').toLowerCase()%></span><% } %><% } %><% if(share.visibility()) {%><span class="visibilityLabel">, <%=e('sharevisibility_' + share.visibility()).toLowerCase()%></span><% } %>
-								</div>
-							<% } else { %> 
-								<div class="sys unselectablemobile">
-									<% if(share.time) {%><span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span><% } else { %><span><%=e('e13019')%></span><% } %><% if(share.edit == 'true') {%><span class="editedLabel">, <%=e('e13130').toLowerCase()%></span><% } %><% if(share.visibility()) {%><span class="visibilityLabel">, <%=e('sharevisibility_' + share.visibility()).toLowerCase()%></span><% } %>
-								</div>
-							<% } %>
-							
-						</div>
-					</div>
-
-				<% } else { %> 
+										<span elementsid="lenta_notificationturn" class="notificationturn <% if(r && (r.private == 'true' || r.private == '1' || r.private === true)) {%> turnon <% } %>">&middot; <i class="far fa-bell-slash"></i></span>
+									<% } %>
 				
-					<div class="repostCaption">
-						<i class="fas fa-share"></i> 
-						<a elementsid="repostcaptionlink" href="<%-app.platform.api.authorlink(share.address)%>">
-							<span class="adr"><%-name || share.address %></span>
-						</a>
-					</div>
+
+									
+								</span>
+
+							<% } %>
+
+							
+						</div>	
+						
+						<div class="sys unselectablemobile">
+							<%if(share.pin){%><span class="pinnedLabel"><i class="fas fa-thumbtack"></i> <%=e('pinned').toLowerCase()%>,</span><%} else { if(share.repost) { %><span><i class="fas fa-share"></i> <%=e('repost')%>, </span><% } }%><% if(share.downloadedDate) {%> <span class="fas fa-cloud-download-alt"></span> <span class="realtime editedLabel" time="<%-share.downloadedDate%>"><%- app.reltime(share.downloadedDate) %></span><% } else { %> 
+							<% if(share.time) {%><span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span><% } else { %><span><%=e('e13019')%></span><% } %><% if(share.edit == 'true') {%><span class="editedLabel">, <%=e('e13130').toLowerCase()%></span><% } %><% } %><% if(share.visibility()) {%><span class="visibilityLabel">, <%=e('sharevisibility_' + share.visibility()).toLowerCase()%></span><% } %>
+						</div>
 					
-				<% } %>
+						
+					</div>
+				</div>
 			
 			</div>
 
-			<% if((typeof repost == 'undefined' || !repost) && (typeof preview == 'undefined' || !preview)) { %>
-				
-				
+			<% if((typeof preview == 'undefined' || !preview)) {%>
 
-				<div elementsid="lenta_metapanel" class="metapanel <%-share.txid%>">
-					<% if(!checkvisibility && (typeof openapi == 'undefined' || !openapi)) {%>
-						<div class="metapanelitem metmenu">
-							<i class="fas fa-ellipsis-h"></i>
-						</div>
-					<% } else { %> 
-						<div class="metapanelitem">
-							
-						</div>
-					<% } %>
+				<% if((typeof repost == 'undefined' || !repost)) { %>
 
-				</div>
-				
+					<div elementsid="lenta_metapanel" class="metapanel <%-share.txid%>">
+						<% if(!checkvisibility && (typeof openapi == 'undefined' || !openapi)) {%>
+							<div class="metapanelitem metmenu">
+								<i class="fas fa-ellipsis-h"></i>
+							</div>
+						<% } else { %> 
+							<div class="metapanelitem">
+								
+							</div>
+						<% } %>
 
-			<% } %>
-
-			<% if(typeof repost != 'undefined' && !fromempty) { %> 
-
-				<div class="metapanel">
-					<div class="metapanelitem">
-						<a elementsid="sharebuttonlink" href="<%-app.platform.api.authorlink(share.address)%>?s=<%-share.txid%>&mpost=true">
-							<i class="fas fa-share"></i> 
-						</a>
 					</div>
-				</div>
-				
+					
+
+				<% } %>
+
+				<% if(typeof repost != 'undefined' && !fromempty) { %> 
+
+					<div class="metapanel">
+						<div class="metapanelitem openoriginal">
+							<i class="fas fa-link"></i> <span class="openoriginallabel"><%= e('opennew') %></span>
+						</div>
+					</div>
+					
+				<% } %>
+
 			<% } %>
 			
 		</div>					
@@ -375,9 +354,9 @@ var arranges = {
 
 	<div class="work unselectablemobile">
 
-		<div class="shareTable <%-subscribed%> <%-view%> <% if(emptywithrepost) { %> emptywithrepost <% } else { %> truerepost <% } %>" address="<%-share.address%>" stxid="<%-share.txid%>">
+		<div class="shareTable <%-subscribed%> <%-view%> truerepost" address="<%-share.address%>" stxid="<%-share.txid%>">
 
-			<% if(!emptywithrepost) { %>
+			
 
 				<div class="iconWrapper">
 					<a elementsid="shareiconprofilelink" href="<%-app.platform.api.authorlink(share.address)%>">
@@ -415,6 +394,8 @@ var arranges = {
 					</a>
 
 				</div>
+
+			<% if(!emptywithrepost) { %>
 
 			<% } %>
 

@@ -23,7 +23,6 @@ var userpage = (function(){
 
 			if(!self.app.user.getstate()){
 
-
 				reports.push({
 					name : self.app.localization.e('createnew'),
 					id : 'registration',
@@ -39,12 +38,9 @@ var userpage = (function(){
 					mobile : true,
 					rh : true
 				})
-
-				
-		
-
 			}
 			else{
+				
 				if(!self.app.user.validate()){
 
 					var h = self.app.localization.e('e13184');
@@ -59,7 +55,7 @@ var userpage = (function(){
 						report : 'fillUser',
 						mobile : true,
 
-						openReportPageMobile : true
+						//openReportPageMobile : true
 					})
 		
 				}

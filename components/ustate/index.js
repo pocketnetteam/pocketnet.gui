@@ -245,7 +245,8 @@ var ustate = (function(){
 					data : {
 						metrics : self.app.platform.sdk.ustate.metrics(),
 						mestate : mestate,
-						waitActions : waitActions
+						waitActions : waitActions,
+						address : self.app.user.address.value
 					},
 
 				}, function(_p){

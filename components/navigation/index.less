@@ -11,6 +11,7 @@
 	padding-bottom : 30px;
 	height: 90px;
 	z-index: 200;
+	contain: strict;
 
 
 	.fakem{
@@ -72,6 +73,10 @@
 			&.shr{
 				font-size: 1.7em;
 				color : #0026ff;
+
+				&.disabled{
+					color : fade(@color-gray-slight, 50);
+				}
 			}
 
 		

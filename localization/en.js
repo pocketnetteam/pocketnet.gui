@@ -612,6 +612,7 @@ ____loclib.editpost = "Edit Post"
 ____loclib.removepost = "Remove Post"
 ____loclib.removePostDialog = "Do you really want to remove post?"
 ____loclib.opennewwindow = "Open Post in New Window"
+____loclib.opennew = "Open Post"
 ____loclib.pin = "Pin Post"
 ____loclib.pinned = "pinned"
 ____loclib.pinPostDialog = "Do you realy want to pin this post?"
@@ -620,7 +621,7 @@ ____loclib.unpinPostDialog = "Do you realy want to unpin this post?"
 
 
 ____loclib.unsubscribe = "Unsubscribe"
-____loclib.startchat = "Start chat"
+____loclib.startchat = "Chat"
 ____loclib.reportpost = "Report Post"
 ____loclib.reportuser = "Report User"
 
@@ -1872,3 +1873,9 @@ ____loclib.deletearticledraft = 'Delete article Draft'
 ____loclib.previewarticledraft = 'View article Draft'
 ____loclib.deletedraftquestion = 'Are you sure you want to delete the draft article? Recovery is impossible'
 ____loclib.publishquestion = 'Are you sure you want to public this article?'
+
+____loclib.etc = 'And so on...'
+
+____loclib.nametaken = 'This username is taken in Bastyon'
+
+____loclib.accountnotfound = 'We could not find your account on the blockchain. Perhaps the registration process was not completed, or there is no Internet connection'

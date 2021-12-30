@@ -89,75 +89,57 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
     
 <% } %>
 
+<% var threedots = function(){ %> 
+
+    <% if((typeof repost == 'undefined' || !repost) && (typeof preview == 'undefined' || !preview)) { %>
+				
+        <% if(!checkvisibility && (typeof openapi == 'undefined' || !openapi)) {%>
+            <div class="metapanelitem metmenu">
+                <i class="fas fa-ellipsis-v"></i>
+            </div>
+        <% } else { %> 
+            
+        <% } %>
+
+        
+
+    <% } %>
+    
+<% } %>
 <% var metadisplay = function(){ %>
 
-	<div class="meta unselectablemobile <% checkvisibility ? 'checkvisibility' : '' %>">
-		<div class="metatable table">
-			<div class="metadata">
+	<div class="unselectablemobile <% checkvisibility ? 'checkvisibility' : '' %>">
 
-                <div class="author">
+        <div class="author">
 
-                    <% var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0 %>
+            <% var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0 %>
 
-                        <b><span class="adr"><%-name || share.address %></span></b><% if(reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
+                <b><span class="adr"><%-name || share.address %></span></b><% if(reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
 
 
-                    <% if((!state || !my) && (typeof repost == 'undefined' || !repost)) { %> 
+            <% if((!state || !my) && (typeof repost == 'undefined' || !repost)) { %> 
 
-                        <span elementsid="sbtnxs-follow" class="sbtnxs">
-                            &middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><i class="far fa-check-circle"></i>  <%=e('following')%></span>
-                            
-                            <% if(state && !my && user.address.value) {
-                                
-                                var r = me.relation(share.address, 'subscribes')  %>
-                                
+                <span elementsid="sbtnxs-follow" class="sbtnxs">
+                    &middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><i class="far fa-check-circle"></i>  <%=e('following')%></span>
+                    
+                    <% if(state && !my && user.address.value) {
+                        
+                        var r = me.relation(share.address, 'subscribes')  %>
+                        
 
-                                <span elementsid="lenta_notificationturn" class="notificationturn <% if(r && (r.private == 'true' || r.private == '1' || r.private === true)) {%> turnon <% } %>">&middot; <i class="far fa-bell-slash"></i></span>
-                            <% } %>
-        
-
-                            
-                        </span>
-
+                        <span elementsid="lenta_notificationturn" class="notificationturn <% if(r && (r.private == 'true' || r.private == '1' || r.private === true)) {%> turnon <% } %>">&middot; <i class="far fa-bell-slash"></i></span>
                     <% } %>
 
+
                     
-                </div>	
-        
+                </span>
+
+            <% } %>
+
+            
+        </div>	
 			
-			</div>
-
-			<% if((typeof repost == 'undefined' || !repost) && (typeof preview == 'undefined' || !preview)) { %>
-				
-				<div elementsid="lenta_metapanel" class="metapanel <%-share.txid%>">
-					<% if(!checkvisibility && (typeof openapi == 'undefined' || !openapi)) {%>
-						<div class="metapanelitem metmenu">
-							<i class="fas fa-ellipsis-h"></i>
-						</div>
-					<% } else { %> 
-						<div class="metapanelitem">
-							
-						</div>
-					<% } %>
-
-				</div>
-				
-
-			<% } %>
-
-			<% if(typeof repost != 'undefined' && !fromempty) { %> 
-
-				<div class="metapanel">
-					<div class="metapanelitem">
-						<a elementsid="sharebuttonlink" href="<%-app.platform.api.authorlink(share.address)%>?s=<%-share.txid%>&mpost=true">
-							<i class="fas fa-share"></i> 
-						</a>
-					</div>
-				</div>
-				
-			<% } %>
 			
-		</div>					
 	</div>
 	
 <% } %>
@@ -166,7 +148,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
 	<% if(cc) { %>
         <div class="captionmult">
-            <div class="sharecaption canmark">
+            <div class="sharecaption canmark showMoreArticle">
                 
                     <%=app.actions.emoji(nl2br(trimrn(findAndReplaceLink(filterXSS(clearScripts(cc)), true))))%>
                 
@@ -175,6 +157,34 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 	<% } 
 
 } %>
+
+<% var makestarstoppanel = function(){
+    
+    									
+    var value = Number(share.score)
+
+    if (Number(share.scnt) && _.isNumber(Number(share.scnt))) {
+        value = value / Number(share.scnt)
+    }
+    else {
+        value = 0
+    }
+    
+    %>
+
+    <div class="item starstoppanel">
+		<div class="iconwrapper">
+            <span><%-compressedNumber(share.comment || 0)%></span> <i class="fas fa-comments"></i>
+        </div>
+
+        <div class="iconwrapper postscoresshow">
+            <span><%-Number(value).toFixed(1)%></span> <i class="fas fa-star"></i> 
+        </div>		
+    </div>
+
+ 
+
+<% } %>
 
 <% var makestarspanel = function(){ %>
 
@@ -186,12 +196,26 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
 <% } %>
 
-<% var makesharepanel = function(){ %>
+<% var makesharepanel = function(){ 
+    
+    
+	
+        
+        %>
+     
 
     <div class="socialsharewrapper">
-        <div class="iconwrapper">
+
+       
+
+        <div class="iconwrapper ">
+            <% threedots() %>
+        </div>
+
+        <div class="iconwrapper sharesocial">
             <i class="fas fa-share-alt"></i>
         </div>
+        
     </div>
 
 <% } %>
@@ -302,9 +326,9 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
         <div class="shareTable <%-subscribed%>" address="<%-share.address%>" stxid="<%-share.txid%>">
 
-            <div class="shareBgCaption">
+            <div class="shareBgCaption <% if(all) {%> showtext <% } %>">
 
-                <div class="articleCover" image="<%- cover %>">
+                <div class="articleCover showMoreArticle" image="<%- cover %>">
 
                 </div>
 
@@ -316,7 +340,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
                     <div class="captioncnt ">
                         <div class="textscnts widthcontainer">
-                            <% makestarspanel() %>
+                           
                             <% maketags() %>
 
                             <% makecaptionclear() %>
@@ -325,7 +349,11 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
                             <% displaysys() %>
 
-                            
+                            <% if(!all) {%>
+                                <div class="buttonOpenWrapper">
+                                    <button class="black showMoreArticle">Read</button>
+                                </div>
+                            <% } %>
 
                             <% metadisplay() %>
                             
@@ -336,6 +364,8 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
                         <% makeavatar() %>
 
+                        <% makestarstoppanel() %>
+                        
                         <% makesharepanel() %>
                        
                     </div>

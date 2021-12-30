@@ -105,21 +105,12 @@ var share = (function(){
 
 			uploadVideoWallpaper : function(image){
 				var shareUrl = (currentShare.url || {}).v || '';
-				/*var metaInfo = self.app.platform.parseUrl(shareUrl);
-
-				if (!metaInfo){
-					return Promise.reject('image')
-				}*/
-
+			
 				var parameters = {
 					thumbnailfile: image,
 				};
 
 				var settingsObject = {}
-
-				/*var parameters = {
-					server: metaInfo.host_name,
-				}*/
 
 				var urlMeta = self.app.peertubeHandler.parselink(shareUrl);
 
@@ -2183,11 +2174,12 @@ var share = (function(){
 					}, function(_p){	
 
 						if(repost){
-							self.app.platform.papi.post(repost, _p.el.find('.repostShare'), function(){
+							self.app.platform.papi.post(repost, _p.el.find('.repostShareInns'), function(){
 
 							}, {
 								repost : true,
-								eid : "share"
+								eid : "share",
+								postclass : true
 							})
 
 							_p.el.find('.repostCaption').on('click', function(){
@@ -2596,37 +2588,28 @@ var share = (function(){
 				currentShare = deep(p, 'settings.essenseData.share') || new Share(self.app.localization.key);
 				essenseData = deep(p, 'settings.essenseData') || {};
 
+				if(!essenseData.share){
 
-				//self.app.platform.sdk.user.get(function(u){
+					state.load()
 
-					if(!essenseData.share){
+					
+					currentShare.language.set(self.app.localization.key)
+				}
 
-						state.load()
+				if (essenseData.repost || parameters().repost) 
+					currentShare.repost.set(essenseData.repost || parameters().repost)
 
-						/*if (u.postcnt === 0 && !currentShare.message.v && essenseData.hello){
-							currentShare.message.v = m
+				var checkEntity = currentShare.message.v || currentShare.caption.v || currentShare.repost.v || currentShare.url.v || currentShare.images.v.length || currentShare.tags.v.length;
 
-							intro = true;
-						}*/
+				var data = {
+					essenseData : essenseData,
+					share : currentShare,
+					postcnt : 1,
+					checkEntity : checkEntity,
+				};
 
-						currentShare.language.set(self.app.localization.key)
-					}
+				clbk(data);
 
-					if (essenseData.repost || parameters().repost) 
-						currentShare.repost.set(essenseData.repost || parameters().repost)
-
-					var checkEntity = currentShare.message.v || currentShare.caption.v || currentShare.repost.v || currentShare.url.v || currentShare.images.v.length || currentShare.tags.v.length;
-
-					var data = {
-						essenseData : essenseData,
-						share : currentShare,
-						postcnt : 1,
-						checkEntity : checkEntity,
-					};
-
-					clbk(data);
-
-				//})
 
 
 			},

@@ -4887,6 +4887,7 @@ html.nav{
 
 .matrixchatwrapper{
     font-size: 16px;
+    
 }
 
 html.cordova,
@@ -4895,6 +4896,7 @@ html.tablet{
     
     .matrixchatwrapper{
         position: fixed;
+        contain: strict;
         left : -100%;
         top : 0;
         right: 100%;
@@ -7303,7 +7305,7 @@ html{
     }
 
     .dialog{
-       
+        z-index: 1006;
 
         .buttons{
             overflow: hidden;
@@ -7636,7 +7638,10 @@ html.mobile{
                     border-bottom-left-radius: 0;
                     bottom : 0;
                     backface-visibility: hidden;
+                    contain: strict;
                     .shadowSmaller();
+
+                    
     
                     &::-webkit-scrollbar{
                         width: 0;

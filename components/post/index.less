@@ -17,6 +17,23 @@
 #post{
 
 	background: #f6f6f6;
+
+	.videoWrapper {
+		max-width: 650px;
+		position: relative;
+		border-radius: 10px;
+		overflow: hidden;
+
+		.js-player{
+			border-radius: 10px;
+			overflow: hidden;
+
+			.vjs-control-bar{
+				border-radius: 10px;
+				overflow: hidden;
+			}
+		}
+	}
 	
 
 	.lockedaccount,
@@ -161,6 +178,44 @@
 		}*/
 	}
 
+	.repostShareWrapper{
+		.openetc{
+			cursor: pointer;
+			padding : 2 * @rhythm;
+			text-align: center;
+			i,
+			span{
+				color : fade(@color-gray-mlight, 80);
+				font-size: 0.9em;
+			}
+
+			i{
+				font-size: 0.8em;
+			}
+		}
+	}
+
+	.repostShare{
+		border-radius: 5px;
+		border : 1px solid fade(@color-gray-slight, 50);
+		border-bottom: 1px solid fade(#fff, 75);
+		border-right: 1px solid fade(#fff, 75);
+		.shadowSmaller();
+		margin-left: @rhythm;
+		margin-right: @rhythm;
+		margin-bottom: @rhythm;
+
+		.share{
+			margin-bottom: 0;
+
+			.videoTips{
+				display: none!important;
+			}
+		}
+
+		
+	}
+
 	.postWrapper{
 		margin : 0 auto;
 		max-width: 930px;
@@ -285,17 +340,17 @@
 	}
 
 	.iconWrapper{
-		width: 13 * @rhythm;
+		width: 8 * @rhythm;
 		padding-top: @rhythm;
-		padding-left: 7 * @rhythm;
+		padding-left: 2 * @rhythm;
 		padding-right: 0;
 		float: left;
 	}
 
 	.cntswrk{
-		margin-left: 13 * @rhythm;
+		margin-left: 8 * @rhythm;
 		padding-left : 2 * @rhythm;
-		padding-right : 10 * @rhythm;
+		padding-right : 3 * @rhythm;
 
 		&.forcomments{
 			padding-left: 0;
@@ -303,9 +358,13 @@
 			margin-left: 0;
 			margin-right: 0;
 		}
+
+		/*&.cntscontent{
+			padding-right: 9 * @rhythm;
+		}*/
 	}
 
-	.repostsecond{
+	/*.repostsecond{
 		padding-top : 2 * @rhythm;
 
 		div{
@@ -313,7 +372,7 @@
 			color : @color-main;
 			text-decoration: underline;
 		}
-	}
+	}*/
 
 	.share{
 		overflow: hidden;
@@ -357,88 +416,7 @@
 
 		
 
-		#post{
-			.postWrapper{
-				background: #fff;
-			}
-			.share{
-				background: #fff;
-				.work{
-					width: 100%;
-					padding-top : @rhythm;
-					padding-bottom: @rhythm;
-					border-left : @rhythm dotted fade(@color-gray-slight, 70);
-				}
-			} 
-
-			
-
-			.shareTable{
-				&.truerepost{
-					.iconWrapper{
-						width: 12 * @rhythm;
-						padding-left: 6 * @rhythm;
-		
-						.usericon{
-							width: 5 * @rhythm;
-							height: 5 * @rhythm;
-						}
-					}
-				}
-			}
-		
-			
-		
-			.cntswrk{
-				margin-left: 12 * @rhythm;
-				padding-left : 2 * @rhythm;
-				padding-right : 10 * @rhythm;
-			}
-
-			/*#comments{
-
-					
-				.commentPaddingWrapper,
-				.post{
-					padding-left: 8 * @rhythm;
-					padding-right: 11 * @rhythm;
-				}
-
-				.commentPaddingWrapper{
-					padding-right: 11 * @rhythm;
-				}
-
-				.list .answer .postbody{
-					padding-left: 8 * @rhythm;
-					padding-right: 11 * @rhythm;
-				}
-
-				.answers{
-					.commentPaddingWrapper{
-						padding-right: 0;
-						padding-left: 0;
-					}
-				}
-
-				
-			}*/
-		
-
-			#post{
-
-				.share{
-					.work{
-						
-						border-left : 0;
-					}
-				}
-				
-
-				
-			}
-
-		}
-		
+	
 
 		.blockAuthor{
 			display: none;
@@ -500,9 +478,6 @@
 			display: none;
 		}
 
-		/*.showMore{
-			display: none;
-		}*/
 
 		img{
 			max-width: 100%;
@@ -666,79 +641,36 @@
 		}
 
 		.metatable{
+
+			display: flex;
+			justify-content: space-between;
+			align-items: top;
+
 			>div{
-				vertical-align: middle;
-				
 
 				&.metapanel{
-					width: 50%;
+					
 					.metapanelitem{
-						opacity: 0.6;
-						margin-left: auto;
 						cursor: pointer;
-						float: right;
+						margin-left: auto;
 						font-size: 0.8em;
-						color : #fff;
-						width: 22px;
-						height: 22px;
-						line-height: 22px;
+						margin-right: auto;
 						text-align: center;
 						border-radius: 50%;
-						color : @color-gray2;
-
-						&:hover{
-							color : @color-black2;
-						}
-
+						color : fade(@color-gray2, 60);
 					}
 
-					.downloadMetapanel {
-
-						&.canDownload {
-							.downloadingBtn, .downloadedBtn {
-								display: none;
-							}
-						}
-						&.downloading {
-							.canDownloadBtn, .downloadedBtn {
-								display: none;
-							}
-						}
-						&.downloaded {
-							.canDownloadBtn, .downloadingBtn {
-								display: none;
-							}
-							.deleteBtn {
-								color:  #ff6d6d;
-							}
-							.downloadDone {
-								color: green;
-							}
-						}
-						&.invisible {
-							.canDownloadBtn, .downloadingBtn, .downloadedBtn {
-								display: none;
-							}
-						}
-					}
 				}
 			}
 		}
 
 		.meta{
 			padding-top: 1.5 * @rhythm;
-
 			margin-bottom: @rhythm;
 
 			>div{
 				margin-right: 2 * @rhythm;
-
-				
-
-
-				
 			}
-
 	
 			.authorCell{
 
@@ -886,7 +818,6 @@
 
 		.message{
 			margin-bottom: 2 * @rhythm;
-		
 
 			a{
 				text-decoration: underline;
@@ -1369,7 +1300,6 @@
 			.metatable{
 				>div{
 					&.metapanel{
-						width: 20px;
 						color : @color-gray-mlight;
 
 						.metapanelitem{
@@ -1502,7 +1432,21 @@
 
 		.shareBgCaption,
 		.articleend{
+
+			.author{
+				margin-top: 2 * @rhythm;
+				margin-bottom: @rhythm;
+
+				i{
+					display: none;
+				}
+				.notificationturn{
+					display: none!important;
+				}
+			}
+
 			.forstars{
+				margin-bottom: 2 * @rhythm;
 				.itemwr{
 					display: flex;
 					flex-direction: column-reverse;
@@ -1531,6 +1475,23 @@
 				text-align: center;
 			}
 
+			.buttonOpenWrapper{
+				margin-bottom: @rhythm;
+				
+				button{
+					width: 130px;
+					border-radius: 0;
+					background: fade(@color-black2, 10);
+					backdrop-filter: blur(14px);
+					-webkit-backdrop-filter: blur(14px); 
+					border : 1px solid transparent!important; 
+
+					&:hover{
+						background: fade(@color-black2, 1);
+					}
+				}
+			}
+
 			.divider{
 				margin : 0 auto;
 				margin-bottom: @rhythm;
@@ -1543,12 +1504,16 @@
 				justify-content: center;
 			}
 		}
-		
 
 		.shareBgCaption{
 			height: 640px;
 			position: relative;
-		
+
+			.tags{
+				div span {
+					color : #fff;
+				}
+			}
 
 			.blackmatte{
 				background: rgb(0,0,0);
@@ -1574,22 +1539,26 @@
 			}
 
 			.icon{
-				position: absolute;
-				bottom : -22px;
-				left : 0;
-				right: 0;
-
 				.usericon{
 					margin : 0 auto;
-	
-					
+					position: relative;
 				}
 			}
 
+			&.showtext{
+				.icon{
+					position: absolute;
+					bottom : -22px;
+					left : 0;
+					right: 0;
+				}
+			}
+			
+			.starstoppanel,
 			.socialsharewrapper{
 				position: absolute;
 				bottom :  1.5 * @rhythm;
-				right: 1.5 * @rhythm;
+				right: 2.5 * @rhythm;
 
 				.iconwrapper{
 					width: 3.5em;
@@ -1598,16 +1567,35 @@
 					border-radius: 3.5em;
 					color : #fff;
 					cursor: pointer;
+					display: flex;
+					align-items: center;
+					font-family: Nunito Sans;
 
 					&:hover{
 						opacity: 0.6;
 					}
 
 					i{
-						font-size: 0.8em;
+						width: 30px;
+						text-align: center;
+						font-size: 0.7em;
 					}
 				}
 			}
+
+			.socialsharewrapper{
+				.iconwrapper{
+					justify-content: flex-end;
+				}
+			}
+
+			.starstoppanel{
+				bottom :  1.5 * @rhythm;
+				left: 3 * @rhythm;
+				right: auto;
+				display: flex;
+			}
+
 			
 			.articleCover,
 			.captioncnt,
@@ -1636,7 +1624,11 @@
 
 			&.verticalcover{
 				height: 720px;
-				border-bottom : 1px dashed fade(@color-gray-mlight, 50);
+
+				&.showtext{
+					border-bottom : 1px dashed fade(@color-gray-mlight, 50);
+				}
+				
 				.articleCover{
 					left : @rhythm;
 					top : @rhythm;
@@ -1667,6 +1659,19 @@
 				.divider{
 					background: @color-black4;
 				}
+
+				.tags{
+					div span {
+						color : @color-black4;
+					}
+				}
+
+				.starstoppanel,
+				.socialsharewrapper{
+					.iconwrapper{
+						color : @color-black4;
+					}
+				}
 			}
 
 		}
@@ -1690,7 +1695,7 @@
 			}
 
 			.forcomments{
-				margin-top : 12 * @rhythm;
+				margin-top : 4 * @rhythm;
 			}
 		}
 	}
@@ -1699,13 +1704,24 @@
 @media only screen and (max-width: 768px) {
 	#post{
 
+		.videoWrapper{
+			border-radius: 0;
+
+			.js-player{
+				border-radius: 0;
+				overflow: visible;
+
+				.vjs-control-bar{
+					border-radius: 0;
+					overflow: visible;
+				}
+			}
+		}
+
 		.sharearticle{
 			
 			.shareBgCaption{
 				
-	
-				
-
 				&:not(.verticalcover){
 					height: auto;
 
@@ -1720,10 +1736,14 @@
 		
 						.tags{
 							justify-content: center;
+
+							div span{
+								color : @color-black2;
+							}
 						}
 		
 						.sharecaption{
-							font-size: 4em;
+							font-size: 3em;
 							font-family: Georgia, serif;
 						}
 						
@@ -1796,6 +1816,19 @@
 					.divider{
 						background: #fff;
 					}
+
+					.tags{
+						div span{
+							color : #fff;
+						}
+					}
+
+					.starstoppanel,
+					.socialsharewrapper{
+						.iconwrapper{
+							color : #fff;
+						}
+					}
 				}
 	
 			}
@@ -1830,8 +1863,6 @@ html.mobile.fullscreen{
 			display: none;
 		}
 	}
-
-	
 }
 
 html.stblack{
@@ -1851,8 +1882,8 @@ html.stblack{
 		height: 100%;
 		width : 100%;
 		padding-top : 0;
-		padding-bottom: 0;
 		margin: 0 auto;
+		padding-bottom: 20 * @rhythm;
 	}
 
 	.wndinner{
@@ -1860,6 +1891,7 @@ html.stblack{
 		width : 100%;
 		max-height: none;
 		background: transparent;
+		
 	}
 
 	&.articlewindow{
@@ -1897,7 +1929,6 @@ html.stblack{
 		.postWrapper{
 			overflow: hidden;
 			border-radius: 3px;
-			padding-bottom: 4 * @rhythm;
 		}
 
 		.nextpost{
@@ -1969,20 +2000,6 @@ html.stblack{
 		.share{
 			background: @color-black;
 	
-	
-			#post{
-				.postWrapper{
-					background: transparent;
-				}
-				.share{
-					background: transparent;
-					.work{
-						border-left : @rhythm dotted fade(@color-gray-slight, 70);
-					}
-				} 
-	
-			}
-			
 			.statswrapperExtended{
 				background: @color-black;
 			}
@@ -2321,10 +2338,24 @@ html.stblack{
 			padding-right: 0;
 		}
 
+		.openoriginallabel{
+			display: none;
+		}
+
+		.repostShare{
+			margin-left: 0.5 * @rhythm;
+			margin-right: 0.5 * @rhythm;
+			margin-bottom: 0.5 * @rhythm;
+		}
+
 		.cntswrk{
 			margin-left: 0;
 			padding-left : 0;
 			padding-right : 0;
+
+			&.cntscontent{
+				padding-right: 0;
+			}
 
 			&.formeta{
 				margin-left: 8 * @rhythm;
@@ -2341,14 +2372,7 @@ html.stblack{
 			.meta{
 				padding-right: @rhythm;
 			}
-			.metatable{
-				>div{
-					vertical-align: top;
-					&.metapanel{
-						width: 90px;
-					}
-				}
-			}
+			
 		}
 
 		#comments{
@@ -2467,105 +2491,6 @@ html.stblack{
 
 		.share{
 
-			#post{
-
-				#comments{
-					.caption{
-						padding-left: @rhythm;
-						padding-right: @rhythm;
-					}
-					
-					.commentPaddingWrapper,
-					.post{
-						padding-left: 0;
-						padding-right: @rhythm;
-					}
-		
-					.commentPaddingWrapper{
-						padding-right: @rhythm;
-					}
-		
-					.list .answer .postbody{
-						padding-left: 0;
-						padding-right: @rhythm;
-					}
-		
-					.answers{
-						.commentPaddingWrapper{
-							padding-right: 0;
-							padding-left: 0;
-						}
-					}				
-		
-					.answer .posttable>div.postCellWrapper .postaction, 
-					.edit .posttable>div.postCellWrapper .postaction, 
-					.post .posttable>div.postCellWrapper .postaction{
-						text-align: center;
-					}
-				}
-		
-				.share{
-					.work{
-						border-left : @rhythm dotted fade(@color-gray-slight, 70);
-					}
-					.sharecaption{
-						font-size: 1em;
-					}
-				} 
-
-				.shareTable{
-					&.truerepost{
-						.iconWrapper{
-							width: 6 * @rhythm;
-							padding-left: @rhythm;
-						}
-					}
-				}
-		
-				.iconWrapper{
-					width: 6 * @rhythm;
-					padding-left: @rhythm;
-		
-					.usericon{
-						width: 5 * @rhythm;
-						height: 5 * @rhythm;
-					}
-				}
-			
-				.cntswrk{
-					margin-left: 0 * @rhythm;
-					margin-right: 0 * @rhythm;
-					padding-right: @rhythm;
-					padding-left: @rhythm;
-					&.formeta{
-						margin-left: 6 * @rhythm;
-						padding-left : 0.5 * @rhythm;
-					}
-
-					
-				}
-		
-				.meta{
-					padding-top: 2.3 * @rhythm;
-				}
-		
-		
-				#post{
-					.cntswrk{
-						margin-left: 0 * @rhythm;
-						padding-right: 0;
-						padding-left: 0;
-		
-						&.formeta{
-							margin-left: 7 * @rhythm;
-							padding-left : 0.5 * @rhythm;
-						}
-		
-						
-					}
-				}
-			}
-
 			.work{
 				padding : 0;
 				width: 100%;
@@ -2628,6 +2553,19 @@ html.stblack{
 	.wnd.postwindow{
 		.widthcontainer{
 			width: 100%;
+		}
+		.wndcontent{
+			padding-bottom: 0;
+		}
+
+		#post{
+			.share .sharearticle .commentsWrapper{
+				padding-bottom: 0;
+			}
+		}
+
+		#post .share .commentsWrapper{
+			padding-bottom: 10 * @rhythm;
 		}
 	}
 

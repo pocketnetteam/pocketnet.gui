@@ -30,74 +30,82 @@
 	%>
 
 <div class="itemwr table unselectable">
-	<div class="starswr">
-		<div elementsid="lenta_stars" class="stars likeAction <%-liked%>" <%-v%>>
+		<div class="starswr">
+			<div elementsid="lenta_stars" class="stars likeAction <%-liked%>" <%-v%>>
 
-			<div class="starsWrapper starsWrapperM">
-				<div 
-					elementsid="fa-star-1"
-					class="starWrapper"
-				>
-					<i class="far fa-star" value="1"></i>
-				</div>
-				<div 
-					elementsid="fa-star-2"
-					class="starWrapper"
-				>
-					<i class="far fa-star" value="2"></i>
-				</div>
-				<div 
-					elementsid="fa-star-3"
-					class="starWrapper"
-				>
-					<i class="far fa-star" value="3"></i>
-				</div>
-				<div 
-					class="starWrapper"
-					elementsid="fa-star-4"
-				>
-					<i class="far fa-star" value="4"></i>
-				</div>
-				<div 
-					class="starWrapper"
-					elementsid="fa-star-5"
-				>
-					<i class="far fa-star" value="5"></i>
-				</div>
-			</div>
-
-			<div class="tstars">
-				<div class="tstarsov" style="width: <%-100*(value / 5)%>%">
-					<div class="starsWrapper">
-						<div class="starWrapper">
-							<i class="far fa-star" value="1"></i>
-						</div>
-						<div class="starWrapper">
-							<i class="far fa-star" value="2"></i>
-						</div>
-						<div class="starWrapper">
-							<i class="far fa-star" value="3"></i>
-						</div>
-						<div class="starWrapper">
-							<i class="far fa-star" value="4"></i>
-						</div>
-						<div class="starWrapper">
-							<i class="far fa-star" value="5"></i>
-						</div>
+				<div class="starsWrapper starsWrapperM">
+					<div 
+						elementsid="fa-star-1"
+						class="starWrapper"
+					>
+						<i class="far fa-star" value="1"></i>
 					</div>
+					<div 
+						elementsid="fa-star-2"
+						class="starWrapper"
+					>
+						<i class="far fa-star" value="2"></i>
+					</div>
+					<div 
+						elementsid="fa-star-3"
+						class="starWrapper"
+					>
+						<i class="far fa-star" value="3"></i>
+					</div>
+					<div 
+						class="starWrapper"
+						elementsid="fa-star-4"
+					>
+						<i class="far fa-star" value="4"></i>
+					</div>
+					<div 
+						class="starWrapper"
+						elementsid="fa-star-5"
+					>
+						<i class="far fa-star" value="5"></i>
+					</div>
+				</div>
 
+				<div class="tstars">
+					<div class="tstarsov" style="width: <%-100*(value / 5)%>%">
+						<div class="starsWrapper">
+							<div class="starWrapper">
+								<i class="far fa-star" value="1"></i>
+							</div>
+							<div class="starWrapper">
+								<i class="far fa-star" value="2"></i>
+							</div>
+							<div class="starWrapper">
+								<i class="far fa-star" value="3"></i>
+							</div>
+							<div class="starWrapper">
+								<i class="far fa-star" value="4"></i>
+							</div>
+							<div class="starWrapper">
+								<i class="far fa-star" value="5"></i>
+							</div>
+						</div>
+
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+
 	<% if(typeof hideCount === 'undefined' || !hideCount) {%>
 
-	<div elementsid="conutdetails" class="count">
-		<span class="v"><%-value.toFixed(1)%></span> 
-		<% if(value) {%>
-		<% if(Number(share.scnt)) {%> <i class="fas fa-user"></i> <span class="c"><%-Number(share.scnt)%></span> <% } %>
-		<% } %>
-	</div>
+		<div elementsid="conutdetails" class="count">
+			<span class="v"><%-value.toFixed(1)%></span> 
+
+			<% if(value) {%>
+				<% if(Number(share.scnt)) {%> <i class="fas fa-user"></i> <span class="c"><%-Number(share.scnt)%></span> <% } %>
+			<% } %>
+			<!--
+			<% if(share.itisarticle()) {%>
+				<i class="fas fa-comment"></i> <span class="c"><%-Number(share.comments)%></span>
+			<% } %>
+			-->
+		</div>
+		
 	<% } %>
 
 

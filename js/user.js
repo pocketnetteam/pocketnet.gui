@@ -253,8 +253,6 @@ User = function(app, p) {
 		}
 		else{
 
-			console.log("sessionStorage['mnemonic']", sessionStorage['mnemonic'])
-
 			if ( (localStorage['mnemonic'] && self.stay) || sessionStorage['mnemonic']){
 
 				var m = localStorage['mnemonic'] || sessionStorage['mnemonic'];

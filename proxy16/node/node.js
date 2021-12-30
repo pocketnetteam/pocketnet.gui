@@ -294,6 +294,8 @@ var Node = function(options, manager){
                         code = 521
                     }
 
+                    if(err.code == -5) code = 200 // not found
+
                     if(err.code == 521) penalty.set(0.8, 220000, '521')
                     if(err.code == 408) penalty.set(0.5, 60000, '408')
                     if(err.code == 429) penalty.set(0.3, 60000, '429')
