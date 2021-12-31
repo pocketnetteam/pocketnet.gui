@@ -138,7 +138,7 @@
   background-color: #ff4800;
 }
 #uploadpeertube .upload-progress-bar.uploading {
-  background-color: #008EBF;
+  background-color: #ff0090;
 }
 #uploadpeertube .disabledInput {
   color: rgb(var(--neutral-grad-3));
