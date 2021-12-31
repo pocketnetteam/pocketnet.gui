@@ -2163,7 +2163,31 @@ var lenta = (function(){
 					}
 				})
 
-				
+
+			},
+
+			clickOutsideOfWindow: function(e){
+				const clickedElem = e.target;
+
+				/**
+				 * HTML layout is made incorrectly. This becomes problem to
+				 * make outside of window click detector. So, using hacky
+				 * method: 2 elements instead of 1.
+				 *
+				 * TODO: After layout is fixed, remove redundant code here.
+				 */
+
+				const isElem1Clicked = clickedElem.classList.contains('sharecnt');
+				const isElem2Clicked = clickedElem.classList.contains('commentsWrapperHb');
+
+				const isClickOutside = (isElem1Clicked || isElem2Clicked);
+
+				if (!isClickOutside) {
+					return;
+				}
+
+				const shareId = $(this).closest('.share').attr('id');
+				actions.exitFullScreenVideo(shareId);
 			},
 
 			exitFullScreenVideo : function(){
@@ -3819,6 +3843,8 @@ var lenta = (function(){
 			el.c.on('click', '.videoOpen', events.fullScreenVideo)
 			el.c.on('click', '.opensviurl', events.opensvi)
 			el.c.on('click', '.exitFull', events.exitFullScreenVideo)
+			el.c.on('click', '.sharecnt', events.clickOutsideOfWindow)
+			el.c.on('click', '.commentsWrapperHb', events.clickOutsideOfWindow)
 			el.c.on('click', '.additional', events.additional)
 			el.c.on('click', '.asubscribe', events.asubscribe)
 			el.c.on('click', '.aunsubscribe', events.aunsubscribe)
