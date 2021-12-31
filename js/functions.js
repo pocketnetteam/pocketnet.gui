@@ -603,6 +603,10 @@
 				actions["close"](true);
 			});
 
+			/**
+			 * Image gallery window. This function detects clicks
+			 * made outside of the photo to close the gallery.
+			 */
 			wnd.find(".wndinner").on('click', function(e){
 				const clickedElem = e.target;
 
@@ -615,6 +619,11 @@
 				actions["close"](true);
 			});
 
+			/**
+			 * Article window. This function detects clicks
+			 * made outside of the article text and comments
+			 * block to close the article.
+			 */
 			wnd.find(".wndcontent").on('click', function(e){
 				const clickedElem = e.target;
 
