@@ -603,6 +603,30 @@
 				actions["close"](true);
 			});
 
+			wnd.find(".wndinner").on('click', function(e){
+				const clickedElem = e.target;
+
+				const isClickInside = (clickedElem.id === 'galleryImage');
+
+				if (isClickInside) {
+					return;
+				}
+
+				actions["close"](true);
+			});
+
+			wnd.find(".wndcontent").on('click', function(e){
+				const clickedElem = e.target;
+
+				const isClickOutside = (clickedElem.classList.contains('wndcontent'));
+
+				if (!isClickOutside) {
+					return;
+				}
+
+				actions["close"](true);
+			});
+
 			_.each(p.buttons, function(button){
 				button.el = $("<div>",{
 				   "class" 	: "button " + (button.class || ""),
