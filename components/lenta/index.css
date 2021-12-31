@@ -1525,15 +1525,16 @@
 							}*/
 }
 #lenta .showmorebyauthor {
-  display: flex;
-  justify-content: space-between;
-  padding: 0.5em;
-  margin-left: 16px;
-  margin-right: 16px;
+  text-align: center;
+  background: #00a4ff;
+  padding: 1em;
+  color: #fff;
   cursor: pointer;
   font-size: 0.8em;
-  color: #555770;
   margin-bottom: 0.6em;
+}
+#lenta .showmorebyauthor:hover {
+  background: #00a4ff;
 }
 #lenta .share .blockAuthor {
   display: none;
@@ -2197,10 +2198,12 @@ html.stblack #lenta .shares .share.fullScreenVideo .statswrapperExtended {
   background: #0a0c17;
 }
 html.stblack #lenta .shares .showmorebyauthor {
+  background: rgba(1, 128, 255, 0.1);
   color: #00A3F7;
 }
 html.stblack #lenta .shares .showmorebyauthor:hover {
   color: rgba(255, 255, 255, 0.7);
+  background: rgba(0, 163, 247, 0.3);
 }
 html.stblack #lenta .shares .share .blockAuthor {
   background: rgba(10, 12, 23, 0.9);

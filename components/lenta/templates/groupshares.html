@@ -54,12 +54,7 @@ _.each(groupshares, function(gs, address){
 		<% if(gs.length > 1) { %>
 
 			<div elementsid="lenta_showmorebyauthor" class="showmorebyauthor">
-				<div class="left">
-					<%=e('e13123')%> (<%- gs.length - 1 %>) from <span class="adr"><%-deep(app, 'platform.sdk.usersl.storage.'+address+'.name') || address %></span>
-				</div>
-				<div class="right">
-					<i class="fa fa-chevron-down"></i>
-				</div>
+				<%=e('e13123')%> (<%- gs.length - 1 %>) from <span class="adr"><%-deep(app, 'platform.sdk.usersl.storage.'+address+'.name') || address %></span>
 			</div>
 
 		<% } %>
