@@ -811,10 +811,6 @@
 #lenta .shares:hover .metatable > div.metapanel .metapanelitem {
   opacity: 1;
 }
-#lenta .shares .meta {
-  padding-top: 0.5em;
-  margin-bottom: 0.5em;
-}
 #lenta .shares .meta > div {
   margin-right: 1em;
 }
@@ -1526,7 +1522,7 @@
 }
 #lenta .showmorebyauthor {
   text-align: center;
-  background: #00a4ff;
+  background: rgba(0, 164, 255, 0.9);
   padding: 1em;
   color: #fff;
   cursor: pointer;

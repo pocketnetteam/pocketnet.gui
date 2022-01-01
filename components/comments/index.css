@@ -591,9 +591,10 @@
   padding-right: 2em;
   font-size: 0.9em;
 }
-#comments .showall span {
+#comments .showall span,
+#comments .showall i {
   font-size: 0.8em;
-  font-weight: 700;
+  font-weight: 600;
 }
 #comments .showall:hover {
   color: #d0c9ca;

@@ -14,10 +14,14 @@
 
 	var v = ''
 
+	console.log('share!!', 20*share.myVal);
+
 	if (share.myVal) {
 		v = 'value=' + share.myVal
 		liked = 'liked'
 	}
+
+	var percent = share.myVal ? share.myVal * 20 : 0;
 
 	var dev = deep(app, 'platform.sdk.user.storage.'+share.address+'.dev') || deep(app, 'platform.sdk.usersl.storage.'+share.address+'.dev');
 	var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share)
@@ -76,7 +80,7 @@
 			</div>
 
 			<div class="tstars">
-				<div class="tstarsov" style="width: <%-100*(value / 5)%>%">
+				<div class="tstarsov" style="width: <%-percent%>%">
 					<div class="starsWrapper">
 						<div class="starWrapper">
 							<!-- <i class="far fa-star" value="1"></i> -->
