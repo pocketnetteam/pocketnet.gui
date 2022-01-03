@@ -1036,8 +1036,6 @@ var lenta = (function(){
 					share.address = self.app.platform.sdk.address.pnet().address
 				}
 
-
-
 				actions.initVideo(_el, share, function(res){
 
 					fullscreenvideoShowing = null
@@ -2179,9 +2177,10 @@ var lenta = (function(){
 			fullScreenVideo : function(){
 
 				var shareId = $(this).closest('.share').attr('id');
-				self.app.mobile.vibration.small()
 
-					actions.fullScreenVideo(shareId)
+					self.app.mobile.vibration.small()
+
+				actions.fullScreenVideo(shareId)
 			},
 
 			opensvi : function(){
@@ -4503,6 +4502,9 @@ var lenta = (function(){
 
 				isotopeinited = false
 
+				fullscreenvideoShowed = null
+				fullscreenvideoShowing = null
+
 				_.each(shareInitedMap, function(s, id){
 					delete self.app.platform.sdk.node.shares.storage.trx[id]
 				})
@@ -4523,6 +4525,7 @@ var lenta = (function(){
 				}
 
 				if(openedPost){
+					
 					if (openedPost.container)
 						openedPost.container.close()
 					else openedPost.destroy()
