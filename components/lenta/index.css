@@ -77,6 +77,9 @@
 #lenta .spsp {
   display: inline-block;
 }
+#lenta .spsp {
+  color: #00A4FF;
+}
 #lenta .circularprogress {
   overflow: hidden;
   height: 0px;
@@ -243,6 +246,9 @@
   margin-left: 4.5em;
   padding-left: 1em;
   padding-right: 2em;
+}
+#lenta .shares .cntswrk.formeta {
+  padding-right: 1em;
 }
 #lenta .shares .cntswrkcontent {
   padding-left: 1.5em;
@@ -1113,9 +1119,6 @@
   padding-left: 1.5em;
   padding-top: 1em;
 }
-#lenta .shares .panel.actions {
-  border-top: 1px solid #F5F5F9;
-}
 #lenta .shares .panel .stars_repost {
   display: flex;
 }
@@ -1138,10 +1141,13 @@
   font-size: 0.8em;
 }
 #lenta .shares .panel .itemwr > div.count {
-  padding-left: 0.5em;
+  display: flex;
+  align-items: center;
+  padding-bottom: 0;
+  line-height: 40px;
+  padding-top: 3px;
 }
-#lenta .shares .panel .itemwr > div.count span {
-  font-weight: 700;
+#lenta .shares .panel .itemwr > div.count > div {
   font-size: 0.8em;
   color: #3c4146;
 }
@@ -1958,6 +1964,7 @@
   #lenta .panel.unselectablemobile {
     padding-left: 0;
     padding-right: 0;
+    flex-wrap: wrap;
   }
   #lenta .loadprev.fxdp {
     position: fixed;

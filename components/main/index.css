@@ -115,8 +115,8 @@
 }
 #main .bastyonhelper .wndredirect ._close {
   position: absolute;
-  right: .75em;
-  top: .5em;
+  right: 0.75em;
+  top: 0.5em;
   cursor: pointer;
   color: #fff;
   z-index: 150;
@@ -177,7 +177,7 @@
   position: fixed;
   bottom: 20%;
   padding: 0.5em;
-  background: #ffffff;
+  background: #fff;
   box-shadow: 0 5px 7px -5px rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(60, 65, 70, 0.3);
   color: #3c4146;
@@ -250,8 +250,8 @@
   float: right;
 }
 #main .lentacell {
-  margin-right: 256px;
-  margin-left: 242px;
+  margin-right: 286px;
+  margin-left: 272px;
   padding-top: 0.5em;
   min-height: 3000px;
   padding-bottom: 1000px;

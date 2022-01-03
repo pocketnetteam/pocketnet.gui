@@ -952,11 +952,29 @@ pie {
 }
 .forstars{
     .count{
-        i, img{
+
+        img{
+            vertical-align: middle;
             opacity: 0.5;
             font-size: 0.3em;
-            vertical-align: middle;
         }
+
+        .countusers{
+            margin-left: @rhythm * 2;
+            white-space: nowrap;
+
+            .circle{
+                padding: 2px 12px;
+                border-radius: 12px;
+                border: 1px solid  #E3E4EB;
+
+                .c{
+                    padding-left: 3px;
+                }
+            }
+
+        }
+
     }
 }
 .stars{

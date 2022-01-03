@@ -101,6 +101,10 @@
 		display: inline-block;
 	}
 
+	.spsp{
+		color: #00A4FF;
+	}
+
 	.circularprogress{
 		overflow: hidden;
 		height: 0px;
@@ -301,6 +305,10 @@
 			margin-left: 9 * @rhythm;
 			padding-left : 2 * @rhythm;
 			padding-right : 4 * @rhythm;
+
+			&.formeta{
+				padding-right: 2 * @rhythm;
+			}
 		}
 
 		.cntswrkcontent{
@@ -1505,10 +1513,6 @@
 				padding-left: 3 * @rhythm;
 				padding-top: 2 * @rhythm;
 
-				&.actions{
-					border-top: 1px solid #F5F5F9;
-				}
-
 				.stars_repost{
 					display: flex;
 
@@ -1535,13 +1539,18 @@
 						}
 
 						&.count{
-							padding-left : @rhythm;
+							display: flex;
+							align-items: center;
+							padding-bottom: 0;
+							line-height: 40px;
+							padding-top: 3px;
 
-							span{
-								font-weight: 700;
+							>div{
 								font-size: 0.8em;
 								color : @color-gray;
 							}
+
+
 							
 						}
 					}
@@ -2668,6 +2677,7 @@
 			&.unselectablemobile{
 				padding-left: 0;
 				padding-right: 0;
+				flex-wrap: wrap;
 			}
 
 		}
