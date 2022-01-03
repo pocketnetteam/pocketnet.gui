@@ -156,6 +156,21 @@
 
 		}
 
+		.sharecnt{
+
+			.iconWrapper{
+				margin-left: 3 * @rhythm;
+			}
+			
+			.cntswrk{
+				margin-left: 9 * @rhythm;
+				padding-left : 2 * @rhythm;
+				padding-right : 4 * @rhythm;
+				padding-right: 2 * @rhythm;
+	
+			}
+		}
+
 		.hiddenpost{
 			padding : 14 * @rhythm 10 * @rhythm;
 			font-size: 0.9em;
@@ -295,20 +310,8 @@
 	
 		.iconWrapper{
 			width: 8 * @rhythm;
-			padding-top: @rhythm;
-			padding-left: 3 * @rhythm;
 			padding-right: 0;
 			float: left;
-		}
-
-		.cntswrk{
-			margin-left: 9 * @rhythm;
-			padding-left : 2 * @rhythm;
-			padding-right : 4 * @rhythm;
-
-			&.formeta{
-				padding-right: 2 * @rhythm;
-			}
 		}
 
 		.cntswrkcontent{
@@ -550,15 +553,7 @@
 					}
 				}
 			
-				.cntswrk{
-					margin-left: 7 * @rhythm;
-				}
 
-				.meta{
-					padding-top: 0.7em;
-					padding-left: 2 * @rhythm;
-		
-				}
 			}
 
 			img{
@@ -939,8 +934,8 @@
 				.statswrapper,
 				.durationWrapper{
 					position: absolute;
-					bottom : 0;
-					right : 0;
+					bottom : 6px;
+					right : 6px;
 					border-radius: 3px;
 					background: fade(@color-black, 0.8);
 					color : @color-gray-slight;
@@ -1268,7 +1263,6 @@
 				cursor: pointer;
 
 				div{
-					font-size: 1.6em;
 					overflow: hidden;
 					text-overflow: ellipsis;
 				}
@@ -2238,8 +2232,7 @@
 			background: transparent;
 		}
 
-		
-
+	
 
 		.shares{
 			.share{
@@ -2379,7 +2372,8 @@
 			}
 
 			.spsp{
-				font-weight: 400;
+				font-weight: 400;				
+	
 			}
 
 			.authorgroup{
@@ -4023,11 +4017,12 @@ html.stblack{
 				}
 
 				.cntswrk{
-					margin-left: 0;
-					padding-left : 0;
-					padding-right : 0;
+
 		
 					&.formeta{
+						margin-left: 0;
+						padding-left : 0;
+						padding-right : 0;
 						padding-top : 2 * @rhythm;
 						margin-left: 2 * @rhythm;
 					}

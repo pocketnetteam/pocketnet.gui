@@ -33,11 +33,6 @@
   border-top: 1px solid #F5F5F9;
   padding-right: 0.5em;
 }
-#post .cntswrk {
-  margin-left: 0;
-  padding-left: 0;
-  padding-right: 0;
-}
 #post .cntswrk.formeta {
   margin-left: 4.5em;
   padding-left: 0;
@@ -244,6 +239,9 @@
 #post .cntswrk .meta {
   padding-top: 0.7em;
   padding-left: 1em;
+}
+#post .cntswrk .lenta_opensviurl {
+  padding-left: 1.5em;
 }
 #post .repostsecond {
   padding-top: 1em;
@@ -1012,7 +1010,7 @@
 }
 #post.videomainpost .share .anothercntswrk {
   background: #fff;
-  padding-left: 1em;
+  padding-left: 0.5em;
   padding-right: 1em;
 }
 #post.videomainpost .share .work {
@@ -1042,7 +1040,7 @@
   height: 48px;
 }
 #post.videomainpost .shareTable .authorTable > div.authorCell {
-  padding-left: 0.5em;
+  padding-left: 1em;
   padding-right: 0;
 }
 #post.videomainpost .shareTable .authorTable > div.datetime {

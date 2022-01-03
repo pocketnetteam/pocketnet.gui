@@ -126,6 +126,15 @@
 #lenta .shares .share .sharecnt.deleted .removeDescription {
   display: block;
 }
+#lenta .shares .sharecnt .iconWrapper {
+  margin-left: 1.5em;
+}
+#lenta .shares .sharecnt .cntswrk {
+  margin-left: 4.5em;
+  padding-left: 1em;
+  padding-right: 2em;
+  padding-right: 1em;
+}
 #lenta .shares .hiddenpost {
   padding: 7em 5em;
   font-size: 0.9em;
@@ -237,18 +246,8 @@
 }
 #lenta .shares .iconWrapper {
   width: 4em;
-  padding-top: 0.5em;
-  padding-left: 1.5em;
   padding-right: 0;
   float: left;
-}
-#lenta .shares .cntswrk {
-  margin-left: 4.5em;
-  padding-left: 1em;
-  padding-right: 2em;
-}
-#lenta .shares .cntswrk.formeta {
-  padding-right: 1em;
 }
 #lenta .shares .cntswrkcontent {
   padding-left: 1.5em;
@@ -423,13 +422,6 @@
 }
 #lenta .shares .share #post .cntswrk {
   padding-right: 2em;
-}
-#lenta .shares .share .cntswrk {
-  margin-left: 3.5em;
-}
-#lenta .shares .share .meta {
-  padding-top: 0.7em;
-  padding-left: 1em;
 }
 #lenta .shares img {
   max-width: 100%;
@@ -693,8 +685,8 @@
 #lenta .shares .jsPlayerPreview .statswrapper,
 #lenta .shares .jsPlayerPreview .durationWrapper {
   position: absolute;
-  bottom: 0;
-  right: 0;
+  bottom: 6px;
+  right: 6px;
   border-radius: 3px;
   background: rgba(10, 12, 23, 0.008);
   color: #e4ddde;
@@ -940,7 +932,6 @@
   cursor: pointer;
 }
 #lenta .shares .sharecaption div {
-  font-size: 1.6em;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -2772,12 +2763,10 @@ html.stblack #lenta.horizontal .shares .share {
     max-height: none;
     height: auto;
   }
-  #lenta.mainvideo .shares .cntswrk {
+  #lenta.mainvideo .shares .cntswrk.formeta {
     margin-left: 0;
     padding-left: 0;
     padding-right: 0;
-  }
-  #lenta.mainvideo .shares .cntswrk.formeta {
     padding-top: 1em;
     margin-left: 1em;
   }
