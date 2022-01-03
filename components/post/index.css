@@ -10,6 +10,9 @@
 #post {
   background: #f6f6f6;
 }
+#post .spsp {
+  color: #00A4FF;
+}
 #post .lockedaccount,
 #post .empty {
   text-align: center;
@@ -19,6 +22,29 @@
 #post .empty span {
   font-size: 2em;
   font-weight: 100;
+}
+#post .cntswrkcontent {
+  padding-left: 1.5em;
+}
+#post .postcontent {
+  padding-top: 1em;
+}
+#post .postmessage {
+  border-top: 1px solid #F5F5F9;
+  padding-right: 0.5em;
+}
+#post .cntswrk {
+  margin-left: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+#post .cntswrk.formeta {
+  margin-left: 4.5em;
+  padding-left: 0;
+}
+#post .cntswrk .paddingWrapper {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
 }
 #post .hiddenpost {
   padding: 7em 5em;
@@ -199,22 +225,25 @@
   font-size: 0.8em;
 }
 #post .iconWrapper {
-  width: 6.5em;
+  width: 4em;
   padding-top: 0.5em;
-  padding-left: 3.5em;
+  padding-left: 1.5em;
   padding-right: 0;
   float: left;
 }
 #post .cntswrk {
-  margin-left: 6.5em;
-  padding-left: 1em;
-  padding-right: 5em;
+  margin-left: 3.5em;
+  padding-right: 1em;
 }
 #post .cntswrk.forcomments {
   padding-left: 0;
   padding-right: 0;
   margin-left: 0;
   margin-right: 0;
+}
+#post .cntswrk .meta {
+  padding-top: 0.7em;
+  padding-left: 1em;
 }
 #post .repostsecond {
   padding-top: 1em;
@@ -302,8 +331,11 @@
   border-left: 0.5em solid #00a4ff;
 }
 #post .share #post .shareTable.truerepost .iconWrapper {
-  width: 6em;
-  padding-left: 3em;
+  width: 4em;
+  padding-left: 3.5em;
+  padding-top: 0.5em;
+  padding-right: 0;
+  float: left;
 }
 #post .share #post .shareTable.truerepost .iconWrapper .usericon {
   width: 2.5em;
@@ -349,7 +381,7 @@
   display: block;
 }
 #post .share .work {
-  padding: 2em 0;
+  padding: 1em 0;
   padding-right: 0;
   margin: 0;
   padding-bottom: 0;
@@ -496,7 +528,8 @@
   vertical-align: middle;
 }
 #post .share .metatable > div.metapanel {
-  width: 50%;
+  width: 40px;
+  vertical-align: top;
 }
 #post .share .metatable > div.metapanel .metapanelitem {
   opacity: 0.6;
@@ -537,10 +570,6 @@
 #post .share .metatable > div.metapanel .downloadMetapanel.invisible .downloadingBtn,
 #post .share .metatable > div.metapanel .downloadMetapanel.invisible .downloadedBtn {
   display: none;
-}
-#post .share .meta {
-  padding-top: 0.75em;
-  margin-bottom: 0.5em;
 }
 #post .share .meta > div {
   margin-right: 1em;
@@ -769,6 +798,7 @@
 }
 #post .share .tags {
   margin-bottom: 1em;
+  padding-left: 1.5em;
   overflow: hidden;
 }
 #post .share .tags .newlabel {
@@ -792,7 +822,16 @@
   color: #b2abac;
 }
 #post .share .panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 1.5em;
+  padding-left: 1.5em;
+  padding-top: 1em;
   overflow: hidden;
+}
+#post .share .panel .stars_repost {
+  display: flex;
 }
 #post .share .panel .itemwr {
   width: auto;
@@ -1323,27 +1362,19 @@ html.stblack .wnd.postwindow ._close {
   #post .showmorelenta .horizontalLentacaption {
     padding: 0.5em;
   }
+  #post .panel.unselectablemobile {
+    padding-left: 0;
+    padding-right: 0;
+    flex-wrap: wrap;
+  }
   #post .nextpost {
     display: none;
   }
   #post .iconWrapper {
     width: 4em;
     padding-top: 0.5em;
-    padding-left: 0.5em;
+    padding-left: 1.5em;
     padding-right: 0;
-  }
-  #post .cntswrk {
-    margin-left: 0;
-    padding-left: 0;
-    padding-right: 0;
-  }
-  #post .cntswrk.formeta {
-    margin-left: 4em;
-    padding-left: 0;
-  }
-  #post .cntswrk .paddingWrapper {
-    padding-left: 0.5em;
-    padding-right: 0.5em;
   }
   #post .share .meta {
     padding-right: 0.5em;

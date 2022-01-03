@@ -18,6 +18,10 @@
 
 	background: #f6f6f6;
 
+	.spsp{
+		color: #00A4FF;
+	}
+
 	.lockedaccount,
 	.empty{
 		text-align: center;
@@ -28,6 +32,36 @@
 			font-weight: 100;
 		}
 	}
+
+	.cntswrkcontent{
+		padding-left : 3 * @rhythm
+	}
+
+	.postcontent{
+		padding-top: @rhythm * 2;
+	}
+
+	.postmessage{
+		border-top: 1px solid #F5F5F9;
+		padding-right: @rhythm;
+	}
+
+	.cntswrk{
+		margin-left: 0;
+		padding-left : 0;
+		padding-right : 0;
+
+		&.formeta{
+			margin-left: 9 * @rhythm;
+			padding-left : 0;
+		}
+
+		.paddingWrapper{
+			padding-left:  @rhythm;
+			padding-right: @rhythm;
+		}
+	}
+
 
 	.hiddenpost{
 		padding : 14 * @rhythm 10 * @rhythm;
@@ -275,23 +309,28 @@
 	}
 
 	.iconWrapper{
-		width: 13 * @rhythm;
+		width: 8 * @rhythm;
 		padding-top: @rhythm;
-		padding-left: 7 * @rhythm;
+		padding-left: 3 * @rhythm;
 		padding-right: 0;
 		float: left;
 	}
 
 	.cntswrk{
-		margin-left: 13 * @rhythm;
-		padding-left : 2 * @rhythm;
-		padding-right : 10 * @rhythm;
+		margin-left: 7 * @rhythm;
+		padding-right : 2 * @rhythm;
 
 		&.forcomments{
 			padding-left: 0;
 			padding-right: 0;
 			margin-left: 0;
 			margin-right: 0;
+		}
+
+		.meta{
+			padding-top: 0.7em;
+			padding-left: 1em;
+
 		}
 	}
 
@@ -366,8 +405,11 @@
 			.shareTable{
 				&.truerepost{
 					.iconWrapper{
-						width: 12 * @rhythm;
-						padding-left: 6 * @rhythm;
+						width: 8 * @rhythm;
+						padding-left: 7 * @rhythm;
+						padding-top: @rhythm;
+						padding-right: 0;
+						float: left;
 		
 						.usericon{
 							width: 5 * @rhythm;
@@ -474,7 +516,7 @@
 		}
 
 		.work{
-			padding : 4 * @rhythm 0;
+			padding : 2 * @rhythm 0;
 			padding-right: 0;
 			margin : 0;
 			padding-bottom: 0;
@@ -657,7 +699,9 @@
 				
 
 				&.metapanel{
-					width: 50%;
+					width: 40px;
+					vertical-align: top;
+
 					.metapanelitem{
 						opacity: 0.6;
 						margin-left: auto;
@@ -712,9 +756,6 @@
 		}
 
 		.meta{
-			padding-top: 1.5 * @rhythm;
-
-			margin-bottom: @rhythm;
 
 			>div{
 				margin-right: 2 * @rhythm;
@@ -1038,6 +1079,7 @@
 
 		.tags{
 			margin-bottom: 2 * @rhythm;
+			padding-left: 3 * @rhythm;
 			overflow: hidden;
 
 			.newlabel{
@@ -1069,8 +1111,18 @@
 		}
 
 		.panel{
-
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding-right: 3 * @rhythm;
+			padding-left: 3 * @rhythm;
+			padding-top: 2 * @rhythm;
 			overflow: hidden;
+
+			.stars_repost{
+				display: flex;
+
+			}
 			
 			.itemwr{
 				width: auto;
@@ -1950,6 +2002,15 @@ html.stblack{
 		
 	}
 
+	.panel{
+		&.unselectablemobile{
+			padding-left: 0;
+			padding-right: 0;
+			flex-wrap: wrap;
+		}
+
+	}
+
 	.nextpost{
 		display: none;
 	}
@@ -1957,24 +2018,8 @@ html.stblack{
 	.iconWrapper{
 		width: 8 * @rhythm;
 		padding-top: @rhythm;
-		padding-left: @rhythm;
+		padding-left: 3 * @rhythm;
 		padding-right: 0;
-	}
-
-	.cntswrk{
-		margin-left: 0;
-		padding-left : 0;
-		padding-right : 0;
-
-		&.formeta{
-			margin-left: 8 * @rhythm;
-			padding-left : 0;
-		}
-
-		.paddingWrapper{
-			padding-left:  @rhythm;
-			padding-right: @rhythm;
-		}
 	}
 
 	.share{

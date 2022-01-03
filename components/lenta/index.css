@@ -1140,17 +1140,6 @@
   font-weight: 700;
   font-size: 0.8em;
 }
-#lenta .shares .panel .itemwr > div.count {
-  display: flex;
-  align-items: center;
-  padding-bottom: 0;
-  line-height: 40px;
-  padding-top: 3px;
-}
-#lenta .shares .panel .itemwr > div.count > div {
-  font-size: 0.8em;
-  color: #3c4146;
-}
 #lenta .shares .panel > div {
   float: left;
   margin-right: 1em;

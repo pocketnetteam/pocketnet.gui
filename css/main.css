@@ -772,6 +772,17 @@ pie {
 .sort:hover i {
   color: #00a4ff;
 }
+.forstars .count {
+  display: flex;
+  align-items: center;
+  padding-bottom: 0;
+  line-height: 40px;
+  padding-top: 3px;
+}
+.forstars .count > div {
+  font-size: 0.8em;
+  color: #3c4146;
+}
 .forstars .count img {
   vertical-align: middle;
   opacity: 0.5;
