@@ -155,6 +155,17 @@
                     </div>
                 </div>
             <% } %>
+            
+            <% if(system.node.enabled && nodestate && !_.isEmpty(nodestate.info)) { %>
+                <div class="nodecontent">
+                    <div class="work walletBox">
+                        <div elementsid="walletBox" class="ssubcaption">
+                            <span>Wallet</span>
+                        </div>
+                        <div class="walletWrapper"></div>
+                    </div>
+                </div>
+            <% } %>
 
         <% } %>
 
@@ -195,7 +206,7 @@
                                     <span>Daemon Path</span>
                                 </div>
 
-                                <div class="value" <% if(!nc.hasbin || !system.node.enabled) {%> sys="binPath" <% } %>>
+                                <div class="value" <% if(!nc.hasbin || !system.node.enabled) {%> sys="binPath" <% } %> path="<%-system.node.binPath%>">
                                     <span><%- system.node.binPath || 'Default' %></span> 
                                 </div>
 
@@ -215,7 +226,7 @@
                                 <span>Data Path</span>
                             </div>
 
-                            <div class="value" <% if(!nc.hasbin || !system.node.enabled) {%> sys="ndataPath" <% } %>>
+                            <div class="value" <% if(!nc.hasbin || !system.node.enabled) {%> sys="ndataPath" <% } %> path="<%-system.node.ndataPath%>" >
                                 <span><%- system.node.ndataPath || 'Default' %></span>
                             </div>
 

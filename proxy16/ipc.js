@@ -138,7 +138,8 @@ var IPC = function(ipc, wc){
 			node : {
 				ndataPath : function(message){
 					return helpers.dialog({
-						properties: ['openDirectory']
+						properties: ['openDirectory'],
+                        defaultPath: message.data.defaultPath || ''
 					}).then(res => {
 	
 						message.data = {
@@ -153,6 +154,7 @@ var IPC = function(ipc, wc){
 				binPath : function(message){
 					return helpers.dialog({
 						properties: ['openDirectory'],
+                        defaultPath: message.data.defaultPath || ''
 						/*filters: [
 							{ name: 'Pocketcoin Executable', extensions: ['exe'] },
 							{ name: 'All Files', extensions: ['*'] }

@@ -311,6 +311,18 @@ var Control = function(settings) {
             })
         },
 
+        listAddresses: function() {
+            return self.kit.rpc('listaddresses').then(result => {
+                return Promise.resolve(result)
+            })
+        },
+
+        getnewaddress: function() {
+            return self.kit.rpc('getnewaddress').then(result => {
+                return Promise.resolve(result)
+            })
+        },
+
         importPrivKey: function(private) {
             return self.kit.rpc('importprivkey', private)
         },

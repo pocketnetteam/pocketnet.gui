@@ -16,6 +16,7 @@ var system16 = (function(){
 		var colors = ['#F0810F', '#011A27', '#4897D8', '#E6DF44', '#063852', '#486824']
 
 		var stacking = null
+        var wallet = null
 
 		var changes = {
 			server : {}
@@ -210,42 +211,22 @@ var system16 = (function(){
 				}
 			},
 			
-			'binPath' : function(){
-
-				globalpreloader(true)
-
-				return proxy.system.request('set.node.binPath', {}).then(r => {
-
+			'binPath' : function(caller, defaultPath){
+				return proxy.system.request('set.node.binPath', {defaultPath: defaultPath}).then(r => {
 					actions.refresh().then(r => {
 						actions.refreshsystem()
-
-						globalpreloader(false)
 					})
-					
 				}).catch(e => {
-
-					globalpreloader(false)
 
 				})
 			},
 
-			'ndataPath' : function(){
-
-				globalpreloader(true)
-
-				return proxy.system.request('set.node.ndataPath', {}).then(r => {
-
-
-					globalpreloader(false)
-
+			'ndataPath' : function(caller, defaultPath){
+				return proxy.system.request('set.node.ndataPath', {defaultPath: defaultPath}).then(r => {
 					actions.refresh().then(r => {
 						actions.refreshsystem()
 					})
-					
 				}).catch(e => {
-
-					globalpreloader(false)
-
 				})
 			}
 		}
@@ -756,11 +737,12 @@ var system16 = (function(){
 			settings : function(el){
 				el.find('[sys]').on('click', function(){
 					var sys = $(this).attr('sys')
+                    var path = $(this).attr('path')
 
 					if (sys){
 						var s = deep(systemsettings, sys)
 
-						if (s) s($(this))
+						if (s) s($(this), path)
 					}
 				})
 			},
@@ -2599,7 +2581,7 @@ var system16 = (function(){
 		var renders = {
 			allsettings : function(){
 				if (el.c){
-					// renders.nodecontentmanage(el.c)
+				    renders.nodecontentmanage(el.c)
 					renders.nodecontentstate(el.c)
 				}
 			},
@@ -3840,13 +3822,55 @@ var system16 = (function(){
 					},
 					function(p){
 
-						p.el.find('.copyaddress').on('click', function(){
-							copyText($(this))
-							sitemessage(self.app.localization.e('successcopied'))
-						})
+						if (clbk)
+							clbk()
+					})
+				}
+			},
+			nodecontentmanagewallet : function(elc, clbk){
+				if (actions.admin() && wallet){
 
-                        p.el.find('.refreshstakinginfo').on('click', function(){
-							makers.stacking(true)
+					self.shell({
+						inner : html,
+						name : 'nodecontentmanagewallet',
+						data : {
+							info : info,
+							manager : info.nodeManager,
+							nodestate : info.nodeControl.state,
+							nc : info.nodeControl,
+							proxy : proxy,
+							admin : actions.admin(),
+							system : system,
+							wallet : wallet
+						},
+
+						el : elc.find('.walletWrapper')
+
+					},
+					function(p) {
+
+                        // TODO (brangr): clicks for buttons
+
+						p.el.find('.nodebalancedeposit').on('click', function(){
+                            proxy.fetchauth('manage', {
+                                action : 'set.node.wallet.getnewaddress',
+                                data : {}
+                            }).then(r => {
+
+                                dialog({
+                                    class : 'zindex',
+                                    html : "Your new address " + r,
+                                    btn1text : self.app.localization.e('Copy to ClipBoard'),
+                                    btn2text : self.app.localization.e('Cancel'),
+                                    success : function(){
+                                        copycleartext(r)
+                                        sitemessage(self.app.localization.e('successcopied'))
+                                    }
+                                })
+    
+                            }).catch(e => {
+                                sitemessage(deep(e, 'message') || self.app.localization.e('e13293'))
+                            })
 						})
 
 						if (clbk)
@@ -3888,9 +3912,11 @@ var system16 = (function(){
 						}
 
 						makers.stacking()
+						makers.wallet()
 
 						actions.settings(p.el)
 
+                        // TODO (brangr): use for import wallet in future
 						p.el.find('.addstacking').on('click', function(){
 
 							var d = inputDialogNew({
@@ -4122,15 +4148,6 @@ var system16 = (function(){
 
 						if (clbk)
 							clbk()
-
-					
-						/*if(!info.nodeManager.chain){
-
-							setTimeout(function(){
-								renders.allsettings()
-							}, 2000)
-
-						}*/
 					})
 
 				}
@@ -4214,6 +4231,31 @@ var system16 = (function(){
 				}
 				else{
 					renders.nodecontentmanagestacking(el.c)
+				}
+			},
+
+            wallet : function(update){
+				if (actions.admin() && (!wallet || update) && deep(info, 'nodeControl.enabled')){
+					proxy.fetchauth('manage', {
+						action : 'set.node.wallet.listaddresses',
+						data : {}
+					}).then(r => {
+						wallet = r
+                        
+                        let total = 0;
+                        for (let key in wallet)
+                            total += wallet[key].balance
+                        wallet.total = total;
+
+						renders.nodecontentmanagewallet(el.c)
+						topPreloader(100);
+					}).catch(e => {
+						if (update)
+							sitemessage(deep(e, 'message') || self.app.localization.e('e13293'))
+						topPreloader(100);
+					})
+				} else {
+					renders.nodecontentmanagewallet(el.c)
 				}
 			},
 

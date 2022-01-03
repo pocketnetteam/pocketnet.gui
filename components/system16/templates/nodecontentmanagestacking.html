@@ -16,24 +16,10 @@
         
         <div class="settingTable table">
             <div class="label">
-                <span>Balance (Available/Full)</span>
+                <span>Available balance</span>
             </div>
             <div class="value balance">
-                <%= stacking.weight/100000000.0 %> / <%= stacking.balance/100000000.0 %> PKOIN
-                <button elementsid="refreshstakinginfo" class="refreshstakinginfo button small ghost"><i class="fas fa-sync"></i> Refresh</button>
-            </div>
-        </div>
-        
-        <div class="settingTable table">
-            <div class="label">
-                <span>Control</span>
-            </div>
-            <div class="value control">
-                <div class="buttons">
-                    <button elementsid="nodebalancedeposit" class="nodebalancedeposit button good"><i class="fas fa-key"></i> Deposit</button>
-                    <button elementsid="nodebalancewithdraw" class="nodebalancewithdraw button yellow"><i class="fas fa-plus"></i> Withdraw</button>
-                    <button elementsid="nodedumpwallet" class="nodedumpwallet button"><i class="fas fa-plus"></i> Dump Wallet</button>
-                </div>
+                <%= (stacking.weight/100000000.0).toLocaleString(undefined, {minimumFractionDigits:8}) %> PKOIN
             </div>
         </div>
 

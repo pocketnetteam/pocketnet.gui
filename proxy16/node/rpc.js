@@ -44,9 +44,11 @@ const privates = {
     // TODO (brangr): implement private methods
     stop: true,
     listaddressgroupings: true,
+    listaddresses: true,
     importprivkey: true,
     getbalance: true,
     getstakinginfo: true,
+    getnewaddress: true,
 }
 
 const posts = {
@@ -384,7 +386,9 @@ RpcClient.callspec = {
     invalidateBlock: 'str',
     keyPoolRefill: '',
     //listAccounts: 'int',
-    listAddressGroupings: '',
+    listaddressgroupings: '',
+    getnewaddress: '',
+    listaddresses: '',
     listReceivedByAccount: 'int bool',
     listReceivedByAddress: 'int bool',
     listSinceBlock: 'str int',

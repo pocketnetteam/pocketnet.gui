@@ -1,0 +1,29 @@
+<% if(wallet) { %>
+
+    <div class="setting wallet">
+        
+        <div class="settingTable table">
+            <div class="label">
+                <span>Total balance</span>
+            </div>
+            <div class="value balance">
+                <%= (wallet.total/100000000.0).toLocaleString(undefined, {minimumFractionDigits:8}) %> PKOIN
+            </div>
+        </div>
+        
+        <div class="settingTable table">
+            <div class="label">
+                <span>Control</span>
+            </div>
+            <div class="value control">
+                <div class="buttons">
+                    <button elementsid="nodebalancedeposit" class="nodebalancedeposit button good"><i class="fas fa-key"></i> Deposit</button>
+                    <button elementsid="nodebalancewithdraw" class="nodebalancewithdraw button yellow"><i class="fas fa-plus"></i> Withdraw</button>
+                    <button elementsid="nodedumpwallet" class="nodedumpwallet button"><i class="fas fa-plus"></i> Dump Wallet</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+<% } %>

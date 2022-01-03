@@ -23,7 +23,18 @@
                     <span>Version</span>
                 </div>
                 <div class="value">
-                    <%- nodestate.version %>
+                    <%- nodestate.info.version %>
+                </div>
+            </div>
+        </div>
+
+        <div class="setting">
+            <div class="settingTable table">
+                <div class="label">
+                    <span>Chain</span>
+                </div>
+                <div class="value">
+                    <%- nodestate.info.chain %>
                 </div>
             </div>
         </div>
@@ -50,13 +61,13 @@
                     <div class="value">
                         <div>
                             <span>
-                                <b><%-nodestate.info.lastblock.height%></b> / <%= manager.chain? manager.chain.commonHeight || '&mdash;' : '&mdash;' %>
+                                <%-nodestate.info.lastblock.height.toLocaleString()%> / <%= manager.chain ? Number(manager.chain.commonHeight).toLocaleString() : '&mdash;' %>
                             </span>
                         </div>
 
                         <% percent = nodestate.info.lastblock.height * 100 / manager.chain.commonHeight %>
                         <div elementsid="nodestateheightprogress" class="nodestateheightprogress">
-                            <div elementsid="nodestateheightprogressinner" class="nodestateheightprogressinner" style="width: <%-percent%>%"></div>
+                            <div elementsid="nodestateheightprogressinner" class="nodestateheightprogressinner" style="width:<%-percent%>%" ></div>
                         </div>
                     </div>
                 </div>

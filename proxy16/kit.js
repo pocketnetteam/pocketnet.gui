@@ -773,7 +773,26 @@ var kit = {
 
 					}
 
-				}
+				},
+
+                wallet : {
+
+                    listaddresses : function(){
+						return kit.proxy().then(proxy => {
+							return proxy.nodeControl.request.listAddresses()
+						}).then(result => {
+							return Promise.resolve(result)
+						})
+					},
+
+                    getnewaddress : function(){
+						return kit.proxy().then(proxy => {
+							return proxy.nodeControl.request.getnewaddress()
+						}).then(result => {
+							return Promise.resolve(result)
+						})
+					}
+                },
 			},
 
 			testkeys : {
