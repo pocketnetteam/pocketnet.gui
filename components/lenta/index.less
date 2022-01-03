@@ -1497,11 +1497,22 @@
 			}
 
 			.panel{
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
 				/*margin-bottom : 2 * @rhythm;*/
-				padding-right: 4 * @rhythm;
+				padding-right: 3 * @rhythm;
 				padding-left: 3 * @rhythm;
 				padding-top: 2 * @rhythm;
-				border-top: 1px solid #F5F5F9;
+
+				&.actions{
+					border-top: 1px solid #F5F5F9;
+				}
+
+				.stars_repost{
+					display: flex;
+
+				}
 				
 				.itemwr{
 					width: auto;
@@ -2651,6 +2662,14 @@
 					}
 				}
 			}
+		}
+
+		.panel{
+			&.unselectablemobile{
+				padding-left: 0;
+				padding-right: 0;
+			}
+
 		}
 
 		.loadprev{
