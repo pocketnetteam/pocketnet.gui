@@ -87,6 +87,10 @@ var articlev = (function(){
 
 				var _art = art
 
+				sitemessage('Creation of articles will be available later')
+
+				return
+
 				return actions.saveEditor().then(r => {
 
 					globalpreloader(true)

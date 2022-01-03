@@ -1872,7 +1872,11 @@ var lenta = (function(){
 
 				self.app.mobile.vibration.small()
 
-				actions.repost(shareId);
+				var share = self.app.platform.sdk.node.shares.storage.trx[shareId] || {};
+
+				console.log('share', share)
+
+				actions.repost(share.repost || shareId);
 			},
 
 			showmorebyauthor : function(){

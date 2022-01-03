@@ -540,15 +540,6 @@ html.stblack #main .bastyonhelper .wndredirect ._close {
 html.stblack #main .topvideosWrapper {
   background: #0a0c17;
 }
-html.stblack #main .addbutton {
-  background: #00a3f7;
-  border: 1px solid #00a3f7;
-  color: #fff;
-}
-html.stblack #main .addbutton:hover {
-  background: transparent;
-  color: #00a3f7;
-}
 html.stblack #main.videomain #categories {
   color: #d0c9ca;
 }

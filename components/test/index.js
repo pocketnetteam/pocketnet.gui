@@ -239,20 +239,21 @@ var test = (function(){
 						el.c.find('.errorname').fadeIn();
 
 						if(err == 'namelength'){
+
 							
-							el.c.find('.errorname span').html("The name length can't be more than 20 symbols");
+							el.c.find('.errorname span').html(self.app.localization.e('name20symbols'));
 							
 						}
 
 						if(err == 'pocketnet'){
 
-							el.c.find('.errorname span').html('To avoid user confusion using Pocketnet in name is reserved');
+							el.c.find('.errorname span').html(self.app.localization.e('namereservedpn'));
 							
 						}
 
 						if(err == 'bastyon'){
 
-							el.c.find('.errorname span').html('To avoid user confusion using Bastyon in name is reserved');
+							el.c.find('.errorname span').html(self.app.localization.e('namereservedbn'));
 							
 						}
 
@@ -572,7 +573,7 @@ var test = (function(){
 							if (hash.indexOf('pocketnet') > -1) {
 
 								el.c.find('.errorname').fadeIn();
-								el.c.find('.errorname span').html('To avoid user confusion using Pocketnet in name is reserved');	
+								el.c.find('.errorname span').html(self.app.localization.e('namereservedpn'));	
 
 								return
 							}
@@ -580,14 +581,14 @@ var test = (function(){
 							if (hash.indexOf('bastyon') > -1) {
 
 								el.c.find('.errorname').fadeIn();
-								el.c.find('.errorname span').html('To avoid user confusion using Bastyon in name is reserved');	
+								el.c.find('.errorname span').html(self.app.localization.e('namereservedbn'));	
 
 								return
 							}
 							
 							if (tempInfo[parameter.id].length > 20){
 								el.c.find('.errorname').fadeIn();
-								el.c.find('.errorname span').html("The name length can't be more than 20 symbols");	
+								el.c.find('.errorname span').html(self.app.localization.e('name20symbols'));	
 							}
 							else
 							{
@@ -973,6 +974,8 @@ var test = (function(){
 
 						multiple : false,
 
+						app : self.app,
+
 						action : function(file, clbk){
 
 							actions.upload(file, function(){		
@@ -994,12 +997,6 @@ var test = (function(){
 						}
 					})
 
-					/*if (ed.wizard && !tempInfo.image)
-
-						plissing = self.app.platform.api.plissing({
-							el : _p.el.find('.iconWrapper'),
-							text : "Upload Profile Image"
-						})*/
 
 					if (clbk)
 						clbk();

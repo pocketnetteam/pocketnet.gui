@@ -9251,6 +9251,14 @@
 							fileext : "Invalid format of picture. Only png and jpeg are allowed"
 						}
 
+						if(p.app){
+
+							et = {
+								filesize : self.app.localization.e('photohassizegreater', fs),
+								fileext : self.app.localization.e('invalidformat')
+							}
+						}
+
 						if(error){
 							if (p.onError){
 								p.onError(error, file, et[error]);

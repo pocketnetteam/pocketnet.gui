@@ -677,6 +677,7 @@ ____loclib.e13157 = "Search by"
 ____loclib.e13158 = "hasn't any results"
 ____loclib.e13159 = "The search phrase is empty"
 ____loclib.repost = "Repost"
+____loclib.reposted = "Repost"
 ____loclib.e13160 = "Hello Pocketeers!"
 
 ____loclib.e13161 = "Add Tags For Your Post"
@@ -1879,3 +1880,13 @@ ____loclib.etc = 'And so on...'
 ____loclib.nametaken = 'This username is taken in Bastyon'
 
 ____loclib.accountnotfound = 'We could not find your account on the blockchain. Perhaps the registration process was not completed, or there is no Internet connection'
+
+
+____loclib.name20symbols = "The name length can't be more than 20 symbols"
+____loclib.namereservedpn = 'To avoid user confusion using Pocketnet in name is reserved'
+____loclib.namereservedbn = 'To avoid user confusion using Bastyon in name is reserved'
+
+____loclib.photohassizegreater = function(v){
+    return "Your photo has size greater than "+v+"MB. Please upload a photo under "+v+"MB in size."
+}
+____loclib.invalidformat = "Invalid format of picture. Only png and jpeg are allowed"
