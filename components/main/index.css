@@ -157,7 +157,7 @@
 }
 #main .topvideosWrapper .durationWrapper,
 #main .topvideosWrapper .statswrapper {
-  top: 0;
+  top: 6px;
   bottom: auto!important;
 }
 #main.videomain {

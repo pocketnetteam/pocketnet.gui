@@ -810,14 +810,14 @@
 				.statswrapper,
 				.durationWrapper{
 					position: absolute;
-					bottom : 0;
-					right : 0;
-					border-radius: 3px;
+					bottom : 6px;
+					right : 6px;
+					border-radius: 6px;
 					background: fade(@color-black, 0.8);
 					color : @color-gray-slight;
 					padding : 0.5 * @rhythm @rhythm;
 					padding-top : 0.5* @rhythm;
-					font-size: 0.9em;
+					font-size: 0.8em;
 					text-shadow: 1px 1px 3px rgba(50, 50, 50, 1);
 					background: fade(#0a0c17, 75);
 
@@ -832,18 +832,11 @@
 					}
 				}
 
-				.durationWrapper{
-					border-bottom-left-radius: 6px;
-					border-bottom-right-radius: 0;
-					border-top-left-radius: 0;
-				}
+			
 
 				.statswrapper{
 					right: auto;
-					left :0;
-					border-bottom-right-radius: 6px;
-					border-bottom-left-radius: 0;
-					border-top-right-radius: 0;
+					left :6px;
 					>div{
 						float: left;
 						margin-right: @rhythm;
@@ -2135,14 +2128,7 @@
 						
 					}
 				}
-				.durationWrapper{
-					border-radius: 0;
-					border-top-left-radius: 6px;
-				}
-				.statswrapper{
-					border-radius: 0;
-					border-top-right-radius: 6px;
-				}
+			
 
 
 				.meta{
@@ -2269,9 +2255,8 @@
 				display: none;
 			}
 
-			
-
 			.shareTable{
+				padding-top : 0;
 				.authorTable{
 					
 					>div{
@@ -2360,14 +2345,7 @@
 					margin-right: 0;
 				}
 
-				.durationWrapper{
-					border-radius: 0;
-					border-bottom-left-radius: 6px;
-				}
-				.statswrapper{
-					border-radius: 0;
-					border-bottom-right-radius: 6px;
-				}
+			
 			}
 		}
 
@@ -2480,6 +2458,7 @@
 			&.mainvideo{
 				.shareTable{
 					height: 180px;
+					padding-top : 0;
 				}
 				.shares .share .forurl{
 					height: 140px;
