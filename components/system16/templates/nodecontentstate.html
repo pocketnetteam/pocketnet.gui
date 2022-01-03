@@ -17,27 +17,31 @@
             </div>
         </div>
 
-        <div class="setting">
-            <div class="settingTable table">
-                <div class="label">
-                    <span>Version</span>
-                </div>
-                <div class="value">
-                    <%- nodestate.info.version %>
+        <% if(nodestate.status == 'launched') { %>
+            <div class="setting">
+                <div class="settingTable table">
+                    <div class="label">
+                        <span>Version</span>
+                    </div>
+                    <div class="value">
+                        <%- nodestate.info.version %>
+                    </div>
                 </div>
             </div>
-        </div>
+        <% } %>
 
-        <div class="setting">
-            <div class="settingTable table">
-                <div class="label">
-                    <span>Chain</span>
-                </div>
-                <div class="value">
-                    <%- nodestate.info.chain %>
+        <% if(nodestate.status == 'launched') { %>
+            <div class="setting">
+                <div class="settingTable table">
+                    <div class="label">
+                        <span>Chain</span>
+                    </div>
+                    <div class="value">
+                        <%- nodestate.info.chain %>
+                    </div>
                 </div>
             </div>
-        </div>
+        <% } %>
 
         <% if(nodestate.error) {%>
             <div class="setting">

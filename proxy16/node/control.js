@@ -4,6 +4,7 @@ const child_process = require('child_process');
 const { EOL } = require('os');
 var Applications = require('./applications');
 var f = require('../functions');
+const { clearTimeout } = require('timers');
 
 var Control = function(settings) {
     if (!settings) settings = {};
@@ -20,7 +21,9 @@ var Control = function(settings) {
     var lock = ''
 
     var state = {
-        info : {}
+        info: {},
+        staking: {},
+        wallet: {},
     }
 
     var node = {
@@ -60,7 +63,7 @@ var Control = function(settings) {
         },
 
         data_checkpoints_path : function(withFile = false) {
-            // TODO (brangr): add chec test network
+            // TODO (brangr): add check test network
             // if ('main')
                 return Path.join( node.dataPath, 'checkpoints', (withFile ? 'main.sqlite3' : '') );
 
@@ -199,7 +202,6 @@ var Control = function(settings) {
 
         return applications.checkupdate().then(r => {
             hasupdates = r
-
             return Promise.resolve()
         })
     }
@@ -224,21 +226,10 @@ var Control = function(settings) {
         }).then(r => {
             return self.checkUpdates()
         }).then(r => {
-
-            // create pocketcoin.conf
-           
-        
             self.autorun.init()
-
-            return self.kit.autorun().then(r => {
-
-                self.kit.nodeState()
-
-                return Promise.resolve()
-            })
+            self.updates.init()
+            self.state.init()
         })
-
-        
     }
 
     self.updates = {
@@ -250,7 +241,7 @@ var Control = function(settings) {
             }
         },
         destroy : function(){
-            if (checkUpdatesInterval){
+            if (!checkUpdatesInterval){
                 clearInterval(checkUpdatesInterval)
                 checkUpdatesInterval = null
             }
@@ -261,8 +252,7 @@ var Control = function(settings) {
         init : function(){
             if(!nodeAutorunInterval){
                 nodeAutorunInterval = setInterval(function(){
-                    self.kit.autorun().catch(e => {
-                    })
+                    self.kit.autorun().catch(e => {})
                 }, 5000)
             }
         },
@@ -271,6 +261,26 @@ var Control = function(settings) {
             if (nodeAutorunInterval){
                 clearInterval(nodeAutorunInterval)
                 nodeAutorunInterval = null
+            }
+        }
+    }
+
+    self.state = {
+        init : function(){
+            if(!nodeStateInterval){
+                (function me() {
+                    self.kit.stakingState().catch(e => {})
+                    self.kit.walletState().catch(e => {})
+                
+                    nodeStateInterval = setTimeout(me, 5000);
+                })()
+            }
+        },
+
+        destroy : function(){
+            if (nodeStateInterval){
+                clearTimeout(nodeStateInterval)
+                nodeStateInterval = null
             }
         }
     }
@@ -347,9 +357,9 @@ var Control = function(settings) {
             }).then(r => {
                 return makeconfig()
             }).then(r => {
-                return applications.install('bin', self.helpers.complete_bin_path())
-            }).then(r => {
                 return applications.install('checkpoint_main', self.helpers.data_checkpoints_path(true))
+            }).then(r => {
+                return applications.install('bin', self.helpers.complete_bin_path())
             }).then(r => {
                 lock = ''
                 self.autorun.init()
@@ -386,8 +396,6 @@ var Control = function(settings) {
             })
         },
 
-       
-
         update : function(){
 
 
@@ -423,8 +431,6 @@ var Control = function(settings) {
         },
 
         check : function(){
-            //return Promise.resolve({})
-
             node.hasbin = self.kit.hasbin();
             node.other = false
 
@@ -444,14 +450,12 @@ var Control = function(settings) {
 
                 if (stopped){
                     state.status = 'stopped'
-
                     return Promise.resolve(false)
                 }
                 else
                 {
                     if(!node.hasbin || e.code == 401){
                         node.other = true
-
                         return Promise.resolve(true)
                     }
                 }
@@ -482,23 +486,55 @@ var Control = function(settings) {
       
         autorun: function() {
 
-            if(!self.kit.hasbin()) {
+            if(!self.kit.hasbin())
                 return Promise.resolve()
-            }
             
-            return self.kit.check().then(running => {
-                
-                if (enabled === true && running === false) return self.kit.start()
-                if (enabled === false && running === true) return self.kit.stop()
-    
-                return Promise.resolve()
-            })
+            return self.kit.check()
+                .then(running => {
+                    
+                    if (enabled === true && running === false) return self.kit.start()
+                    if (enabled === false && running === true) return self.kit.stop()
+        
+                    return Promise.resolve()
+                })
+                .catch(e => {
+
+                })
         
         },
 
-        nodeState: function() {
+        stakingState: function() {
+            if (state.status != 'launched')
+                return Promise.resolve()
+                
+            return self.request.getStakingInfo()
+                .then(data => {
+                    state.staking = data
+                    return Promise.resolve()
+                })
+                .catch(e => {
+                    Promise.resolve()
+                })
+        },
+        
+        walletState: function() {
+            if (state.status != 'launched')
+                return Promise.resolve()
+                
+            return self.request.listAddresses()
+                .then(data => {
+                    state.wallet = data
+                    
+                    let total = 0;
+                    for (let key in state.wallet)
+                        total += state.wallet[key].balance
+                        state.wallet.total = total;
 
-            return self.kit.check()
+                    return Promise.resolve()
+                })
+                .catch(e => {
+                    Promise.resolve()
+                })
         },
 
         detach : function(){

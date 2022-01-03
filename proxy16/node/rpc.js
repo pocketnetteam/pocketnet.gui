@@ -41,7 +41,6 @@ RpcClient.config = {
 
 
 const privates = {
-    // TODO (brangr): implement private methods
     stop: true,
     listaddressgroupings: true,
     listaddresses: true,

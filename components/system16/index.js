@@ -15,9 +15,6 @@ var system16 = (function(){
 
 		var colors = ['#F0810F', '#011A27', '#4897D8', '#E6DF44', '#063852', '#486824']
 
-		var stacking = null
-        var wallet = null
-
 		var changes = {
 			server : {}
 		}
@@ -443,7 +440,6 @@ var system16 = (function(){
 					stats = lastelements(stats, 1000)
 
 					if (el.c){
-						renders.nodecontentstate(el.c)
 						renders.nodescontenttable(el.c)
 						renders.peertubeinstancestable(el.c)
 						renders.webadminscontent(el.c)
@@ -2581,8 +2577,10 @@ var system16 = (function(){
 		var renders = {
 			allsettings : function(){
 				if (el.c){
-				    renders.nodecontentmanage(el.c)
-					renders.nodecontentstate(el.c)
+					renders.nodecontentmanage(el.c)
+                    renders.nodecontentstate(el.c)
+				    renders.nodecontentmanagestacking(el.c)
+				    renders.nodecontentmanagewallet(el.c)
 				}
 			},
 			error : function(error, el, clbk){
@@ -3800,8 +3798,8 @@ var system16 = (function(){
 
 				
 			},
-			nodecontentmanagestacking : function(elc, clbk){
-				if (actions.admin() && stacking){
+			nodecontentmanagestacking : function(elc, clbk) {
+				if (actions.admin() && info.nodeControl.state.staking){
 
 					self.shell({
 						inner : html,
@@ -3814,7 +3812,6 @@ var system16 = (function(){
 							proxy : proxy,
 							admin : actions.admin(),
 							system : system,
-							stacking : stacking
 						},
 
 						el : elc.find('.stakingWrapper')
@@ -3828,7 +3825,7 @@ var system16 = (function(){
 				}
 			},
 			nodecontentmanagewallet : function(elc, clbk){
-				if (actions.admin() && wallet){
+				if (actions.admin() && info.nodeControl.state.wallet) {
 
 					self.shell({
 						inner : html,
@@ -3841,7 +3838,6 @@ var system16 = (function(){
 							proxy : proxy,
 							admin : actions.admin(),
 							system : system,
-							wallet : wallet
 						},
 
 						el : elc.find('.walletWrapper')
@@ -3849,9 +3845,9 @@ var system16 = (function(){
 					},
 					function(p) {
 
-                        // TODO (brangr): clicks for buttons
+						p.el.find('.nodebalancedeposit').on('click', function() {
+                            topPreloader(30);
 
-						p.el.find('.nodebalancedeposit').on('click', function(){
                             proxy.fetchauth('manage', {
                                 action : 'set.node.wallet.getnewaddress',
                                 data : {}
@@ -3873,13 +3869,16 @@ var system16 = (function(){
                             })
 						})
 
+                        // TODO (brangr): button withdraw - show dialog for transfer money
+                        // TODO (brangr): dump wallet - show dialog for saving file
+
 						if (clbk)
 							clbk()
 					})
 				}
 			},
 			nodecontentmanage : function(elc, clbk){
-				if(actions.admin()){
+				if(actions.admin()) {
 
 					var timestamp = deep(info,'nodeControl.state.timestamp')
 					var dis = false
@@ -3911,111 +3910,7 @@ var system16 = (function(){
 							p.el.find('.nodecontentmanage').addClass('lock')
 						}
 
-						makers.stacking()
-						makers.wallet()
-
 						actions.settings(p.el)
-
-                        // TODO (brangr): use for import wallet in future
-						p.el.find('.addstacking').on('click', function(){
-
-							var d = inputDialogNew({
-								caption : "Import Private Key To Address Stacking",
-								class : 'addressdialog',
-								wrap : true,
-								values : [{
-									defValue : '',
-									validate : 'empty',
-									placeholder : "Private Key (WIF Format)",
-									label : "Private Key"
-								}],
-			
-								success : function(v){
-			
-									var pk = v[0]
-
-									var destroyed = false
-
-									var ds = function(){
-
-										if(destroyed) return
-
-										clearTimeout(dds)
-
-										destroyed = true
-										makers.stacking(true)
-			
-										d.destroy();
-			
-										topPreloader(100);
-									}
-
-									var dds = setTimeout(function(){
-										ds()
-
-										sitemessage('Stacking address will be added soon')
-
-									}, 2000)
-			
-									topPreloader(30);
-			
-									proxy.fetchauth('manage', {
-
-										action : 'set.node.stacking.import',
-										data : {
-											privatekey : pk
-										}
-
-									}).then(r => {
-
-										ds()
-			
-									}).catch(e => {
-
-										if(destroyed) return
-
-										clearTimeout(dds)
-										
-										sitemessage(deep(e, 'message') || self.app.localization.e('e13293'))
-			
-										topPreloader(100);
-			
-									})
-									
-
-									return false
-								}
-							})
-
-						})
-
-                        p.el.find('.createstackingserver').on('click', function() {
-
-                            self.app.platform.cryptography.api.aeswc.encryption(
-                                bitcoin.bip39.generateMnemonic(),
-                                self.app.options.fingerPrint,
-                                {},
-                                function (mnemonic) {
-
-                                    app.nav.api.load({
-
-                                        open: true,
-                                        inWnd: true,
-                                        href: 'pkview',
-                        
-                                        essenseData: {
-                                            dumpkey: true,
-                                            showsavelabel : false,
-                                            mnemonic: mnemonic
-                                        },
-                        
-                                        clbk: function (p, s) {
-                        
-                                        }
-                                    })
-                                }
-                            );
-						})
 
 						p.el.find('.updatenode').on('click', function(){
 							dialog({
@@ -4177,7 +4072,6 @@ var system16 = (function(){
 
 				}
 			},
-			
 		}
 
 		var state = {
@@ -4202,62 +4096,6 @@ var system16 = (function(){
 		}
 
 		var makers = {
-
-			stacking : function(update){
-				if (actions.admin() && (!stacking || update) && deep(info, 'nodeControl.enabled')){
-
-					proxy.fetchauth('manage', {
-
-						action : 'set.node.stacking.stakinginfo',
-						data : {}
-
-					}).then(r => {
-
-						stacking = r
-
-						renders.nodecontentmanagestacking(el.c)
-
-						topPreloader(100);
-
-					}).catch(e => {
-
-						if (update)
-							sitemessage(deep(e, 'message') || self.app.localization.e('e13293'))
-
-						topPreloader(100);
-
-					})
-
-				}
-				else{
-					renders.nodecontentmanagestacking(el.c)
-				}
-			},
-
-            wallet : function(update){
-				if (actions.admin() && (!wallet || update) && deep(info, 'nodeControl.enabled')){
-					proxy.fetchauth('manage', {
-						action : 'set.node.wallet.listaddresses',
-						data : {}
-					}).then(r => {
-						wallet = r
-                        
-                        let total = 0;
-                        for (let key in wallet)
-                            total += wallet[key].balance
-                        wallet.total = total;
-
-						renders.nodecontentmanagewallet(el.c)
-						topPreloader(100);
-					}).catch(e => {
-						if (update)
-							sitemessage(deep(e, 'message') || self.app.localization.e('e13293'))
-						topPreloader(100);
-					})
-				} else {
-					renders.nodecontentmanagewallet(el.c)
-				}
-			},
 
 			panel : function(){
 				renders.nodecontentstate(el.c)

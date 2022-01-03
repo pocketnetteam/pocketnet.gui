@@ -146,25 +146,11 @@
             </div>
 
             <% if(system.node.enabled && nodestate && !_.isEmpty(nodestate.info)) { %>
-                <div class="nodecontent">
-                    <div class="work stakingBox">
-                        <div elementsid="stakingBox" class="ssubcaption">
-                            <span>Staking</span>
-                        </div>
-                        <div class="stakingWrapper"></div>
-                    </div>
-                </div>
+                <div class="stakingWrapper"></div>
             <% } %>
             
             <% if(system.node.enabled && nodestate && !_.isEmpty(nodestate.info)) { %>
-                <div class="nodecontent">
-                    <div class="work walletBox">
-                        <div elementsid="walletBox" class="ssubcaption">
-                            <span>Wallet</span>
-                        </div>
-                        <div class="walletWrapper"></div>
-                    </div>
-                </div>
+                <div class="walletWrapper"></div>
             <% } %>
 
         <% } %>
