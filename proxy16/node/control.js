@@ -458,8 +458,13 @@ var Control = function(settings) {
                 if (state.info.lastblock) {
                     let chunk = data.lastblock.height - state.info.lastblock.height
                     state.sync.chunks.push(chunk)
+
+                    if (state.sync.chunks.length > 10) {
+                        let avg = (state.sync.chunks.reduce((a, b) => a + b, 0) / state.sync.chunks.length)
+                        state.sync.chunks = []
+                        state.sync.chunks.push(avg)
+                    }
                 }
-                // 
 
                 state.info = data
                 state.status = 'launched'    
@@ -467,11 +472,9 @@ var Control = function(settings) {
 
                 // Calculate elapsed time
                 // (total - current) / avg(chunk) * (nodeAutorunInterval / 1000)
-                // self.proxy.nodeManager.chain().commonHeight
-
                 state.sync.left = Math.round(
                     (self.proxy.nodeManager.chain().commonHeight - state.info.lastblock.height) /
-                    (state.sync.chunks.reduce((a, b) => a + b, 0)/ state.sync.chunks.length) *
+                    (state.sync.chunks.reduce((a, b) => a + b, 0) / state.sync.chunks.length) *
                     (nodeAutorunInterval / 1000) /
                     3600
                 );
