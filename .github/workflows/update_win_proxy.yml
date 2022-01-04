@@ -12,8 +12,11 @@ jobs:
 
     steps:
       - name: Update repository
-        run: cd C:\proxy_update && .\update_proxy.cmd
+        run: |
+          cd C:\proxy_update
+          .\update_proxy.cmd
         
-    steps:
       - name: Restart service
-        run: net stop pocketnetproxy && net start pocketnetproxy
+        run: |
+          net stop pocketnetproxy
+          net start pocketnetproxy
