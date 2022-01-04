@@ -2895,7 +2895,7 @@ Platform = function (app, listofnodes) {
         },
 
         name: function (address) {
-            var n = deep(app, 'platform.sdk.usersl.storage.' + address + '.name') || deep(app, 'platform.sdk.users.storage.' + address + '.name');
+            var n = deep(self.sdk.usersl.storage, address + '.name') || deep(self.sdk.users.storage, address + '.name');
 
             if (n) {
                 n = this.clearname(n)
@@ -2905,7 +2905,7 @@ Platform = function (app, listofnodes) {
         },
 
         authorlink: function (address, namelink) {
-            var name = deep(app, 'platform.sdk.usersl.storage.' + address + '.name');
+            var name = deep(self.sdk.usersl.storage, address + '.name');
 
             if (name && (!isMobile() || namelink)) return encodeURIComponent(name.toLowerCase());
 
@@ -9515,7 +9515,6 @@ Platform = function (app, listofnodes) {
                             el.append('<div class="spendLine"><div class="line"></div></div>')
                         }
 
-                        var line = el.find('.spendLine .line');
                         var sline = el.find('.spendLine .line');;
 
                         if (amount == 0) {
@@ -9525,10 +9524,8 @@ Platform = function (app, listofnodes) {
                             sline.removeClass('bad')
                         }
 
-
-                        line.animate({
-                            width: (100 * amount / total) + "%",
-                        }, 140)
+                        sline.css('width', (100 * amount / total) + "%")
+                        
 
                     }
                     else {

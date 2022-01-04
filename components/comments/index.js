@@ -2782,7 +2782,7 @@ var comments = (function(){
 				if(!_in.length) {
 					_in = null
 
-					if(!self.app.el.html.hasClass('allcontent')){
+					if(!self.app.el.html.hasClass('allcontent') || !isTablet()){
 						top = 65
 					} else {
 						top = 0

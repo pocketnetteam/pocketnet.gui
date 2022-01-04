@@ -1461,6 +1461,7 @@ pie {
         bottom : 0;
         top : 0;
         background: @color-good;
+        .transition(0.3s, width)
     }
 }
 
@@ -2315,11 +2316,9 @@ input[type=radio].radio:checked + label {
         z-index: 2005
     }
 
-    &.embeding{
-        z-index: 2005; 
-    }
+ 
 
-    &.authwindow, &.pkviewwnd{
+    &.pkviewwnd{
         z-index: 9999;
     }
 

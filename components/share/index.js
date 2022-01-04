@@ -769,9 +769,11 @@ var share = (function(){
 				var words = text.split(wordsRegExp);
 
 				var newtags = _.filter(words, function(w){
-					if(w[0] == '#'){
+					if (w[0] == '#'){
 
-						w = w.replace(/#/g, '')
+						w = w.replace(/[^a-zA-Z0-9а-яА-Я?]*/g, '').replace(/[# ?]*/g, '')
+
+						console.log("W"+ w + 'W')
 
 						if(!w) return false
 
@@ -780,13 +782,15 @@ var share = (function(){
 					}
 				})
 
+				console.log('newtags', newtags)
+
 				if(newtags.length){
 
 					_.each(newtags, function(tag){
 
 						tag = tag.replace(/\#/g, '')
 
-						if(!currentShare.tags.set(tag)){
+						if(tag && !currentShare.tags.set(tag)){
 							
 						}
 					})

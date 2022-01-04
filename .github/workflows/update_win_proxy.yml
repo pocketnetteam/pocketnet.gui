@@ -1,0 +1,22 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Update Win Proxies
+
+on:
+  push:
+    tags: v*.*.*-proxy
+
+jobs:
+  build:
+    runs-on: proxy
+
+    steps:
+      - name: Update repository
+        run: |
+          cd C:\proxy_update
+          .\update_proxy.cmd
+        
+      - name: Restart service
+        run: |
+          net stop pocketnetproxy
+          net start pocketnetproxy

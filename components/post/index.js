@@ -1834,6 +1834,7 @@ var post = (function () {
 				
 				if(share.itisarticle()){
 					el.c.closest('.wnd').addClass('articlewindow')
+					el.c.addClass('sharec')
 				}
 
 				make()

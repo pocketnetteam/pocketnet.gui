@@ -1203,6 +1203,17 @@ var filluserfast = (function(){
 			
 			window.addEventListener('resize', events.width)
 
+			el.c.find('.gotohasaccount').on('click', function(){
+
+				if (essenseData.close) essenseData.close()
+
+				self.nav.api.go({
+					href : 'authorization',
+					history : true,
+					open : true
+				})
+			})
+
 		}
 
 		var make = function(){
@@ -1264,18 +1275,13 @@ var filluserfast = (function(){
 					inauth : deep(p, 'settings.essenseData.inauth') || false
 				};
 
-
-					regproxy = self.app.api.get.byid('pocketnet.app:8899:8099')
-
-				
+				regproxy = self.app.api.get.byid('pocketnet.app:8899:8099')
 
 				/*if (localStorage['regproxy']){
 					regproxy = self.app.api.get.byid(localStorage['regproxy'])
 				}*/
 
 				self.app.api.get.proxywithwallet().then(r => {
-
-					console.log("R", r)
 
 					if(r && !regproxy) regproxy = r
 

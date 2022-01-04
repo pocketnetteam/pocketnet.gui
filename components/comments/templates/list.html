@@ -88,7 +88,7 @@ var commentf = function(comment){
 
 	var m = '' %> 
 
-	<div class="comment <% if(comment.my(app)) {%> mycomment <% } %> <% if(deep(app, 'platform.sdk.user.storage.'+comment.address+'.dev') || deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.dev')) {%> dev <% } %> <% if(comment.deleted) {%> deleted <% } %> <% if(comment.myScore > 0 || comment.myScore < 0) {%> rated <% } %> <% if(comment.temp) {%> temptransaction <% } %> <% if(Number(comment.timeUpd) === Number(comment.time)) {%> commentnotedited <% } %> <%-newcomments%> <%- _class %>" id="<%-comment.id%>" aid="<%-comment.answerid%>" pid='<%-comment.parentid%>'>
+	<div class="comment <% if(comment.my(app)) {%> mycomment <% } %>  <% if(comment.deleted) {%> deleted <% } %> <% if(comment.myScore > 0 || comment.myScore < 0) {%> rated <% } %> <% if(comment.temp) {%> temptransaction <% } %> <% if(Number(comment.timeUpd) === Number(comment.time)) {%> commentnotedited <% } %> <%-newcomments%> <%- _class %>" id="<%-comment.id%>" aid="<%-comment.answerid%>" pid='<%-comment.parentid%>'>
 
 		<div class="commentPaddingWrapper">
 
@@ -100,7 +100,6 @@ var commentf = function(comment){
 							var src = deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.image');
 							var name = deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.name');
 							var letter = name ? name[0] : '';  
-							var dev = deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.dev');
 						%>
 
 						<div class="icon">
@@ -320,12 +319,13 @@ var commentf = function(comment){
 
 <% } %>
 
-
+<div>
 <% _.each(comments, function(comment){ 
 
 	commentf(comment) 
 
 }) %>
+</div>
 
 <% if(needtoshow) {%>
 

@@ -1451,7 +1451,7 @@ Application = function(p)
 		if (moment().year() === moment(value).year()) 
 			return moment(value).local().format('D MMMM')
 
-		return moment(value).local().format('D.MMMM.YYYY')
+		return moment(value).local().format('D MMMM YYYY')
 	}
 
 	self.realtime = function(){

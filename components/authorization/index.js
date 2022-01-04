@@ -321,17 +321,15 @@ var authorization = (function(){
 
 							essenseData.signInClbk()
 
+						},
+
+						close : function(){
+							self.closeContainer()
 						}
 					},
 					
 					clbk : function(e, p){
-
-						/*setTimeout(function(){
-							_scrollToTop(el.c.find('.userpart'), el.c.find('.scrollmaketpart'))
-						}, 400)		*/				
-
 						ext = p
-
 					}
 
 				})
@@ -343,7 +341,7 @@ var authorization = (function(){
 
 			ParametersLive([stay], el.c)
 
-			if(p.restore){
+			if (p.restore){
 				events.forgotPassword();
 			}
 
@@ -444,7 +442,7 @@ var authorization = (function(){
 			},
 
 			wnd : {
-				class : 'withoutButtons allscreen authwindow'
+				class : 'withoutButtons authwindow normalizedmobile'
 			}
 		}
 	};
