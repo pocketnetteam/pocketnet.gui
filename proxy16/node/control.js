@@ -357,9 +357,9 @@ var Control = function(settings) {
             }).then(r => {
                 return makeconfig()
             }).then(r => {
-                return applications.install('checkpoint_main', self.helpers.data_checkpoints_path(true))
+                return applications.install('checkpoint_main', self.helpers.data_checkpoints_path(true), false)
             }).then(r => {
-                return applications.install('bin', self.helpers.complete_bin_path())
+                return applications.install('bin', self.helpers.complete_bin_path(), true)
             }).then(r => {
                 lock = ''
                 self.autorun.init()
@@ -406,8 +406,8 @@ var Control = function(settings) {
 
             return this.stop().then(r => {
 
-
                 return self.kit.install()
+
             }).then(r => {
 
                 hasupdates = false

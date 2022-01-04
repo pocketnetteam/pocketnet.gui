@@ -148,7 +148,7 @@ var Applications = function(settings) {
         
     }
 
-    self.install = function(key, dest){
+    self.install = function(key, dest, save){
         return new Promise((resolve, reject) => {
 
             return self.download(key).then(r => {
@@ -180,7 +180,10 @@ var Applications = function(settings) {
             })
 
         }).then(r => {
-            return self.save(r.asset)
+            if (save)
+                return self.save(r.asset)
+                
+            return Promise.reject()
         })
     }
 
