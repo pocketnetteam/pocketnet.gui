@@ -669,15 +669,12 @@ var kit = {
 					})
 
 				},
-
 				apply : function({key}){
 					return proxy.wallet.apply(key)
 				}
-
 			},
 	
 			node : {
-
 				check : function(){
 					return kit.proxy().then(proxy => {
 
@@ -687,7 +684,6 @@ var kit = {
 						return Promise.resolve()
 					})
 				},
-	
 				enabled : function({enabled}){
 
 
@@ -727,8 +723,7 @@ var kit = {
 					})
 					
 				},
-	
-				ndataPath : function({ndataPath}){
+	    		ndataPath : function({ndataPath}){
 					if(settings.node.ndataPath == ndataPath) return Promise.resolve()
 
 					settings.node.ndataPath = ndataPath
@@ -739,7 +734,13 @@ var kit = {
 					})
 					
 				},
-				
+	    		dumpWallet : function({path}){
+                    return kit.proxy().then(proxy => {
+                        return proxy.nodeControl.request.dumpwallet(path)
+                    }).then(result => {
+                        return Promise.resolve(result)
+                    })
+				},
 				stacking : {
 
 					import : function({privatekey}){
@@ -774,7 +775,6 @@ var kit = {
 					}
 
 				},
-
                 wallet : {
 
                     listaddresses : function(){
@@ -791,7 +791,7 @@ var kit = {
 						}).then(result => {
 							return Promise.resolve(result)
 						})
-					}
+					},
                 },
 			},
 

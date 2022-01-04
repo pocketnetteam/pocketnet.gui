@@ -182,8 +182,8 @@ var Applications = function(settings) {
         }).then(r => {
             if (save)
                 return self.save(r.asset)
-                
-            return Promise.reject()
+
+            return Promise.resolve()
         })
     }
 

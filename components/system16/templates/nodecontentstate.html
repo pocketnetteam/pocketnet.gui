@@ -67,6 +67,16 @@
                             <span>
                                 <%-nodestate.info.lastblock.height.toLocaleString()%> / <%= manager.chain ? Number(manager.chain.commonHeight).toLocaleString() : '&mdash;' %>
                             </span>
+
+                            <% if(nodestate.sync.left && nodestate.sync.left >= 1) { %>
+                                <span class="syncLeft">
+                                    Left <%-nodestate.sync.left%> hour(s)
+                                </span>
+                            <% } else if(nodestate.sync.left && nodestate.sync.left < 1) { %>
+                                <span class="syncLeft">
+                                    Less than an hour left
+                                </span>
+                            <% }%>
                         </div>
 
                         <% percent = nodestate.info.lastblock.height * 100 / manager.chain.commonHeight %>

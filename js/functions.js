@@ -1605,7 +1605,7 @@
 		return self;
 	}
 
-	sitemessage = function (message, func) {
+	sitemessage = function (message, func, delay = 2200) {
 		$("<div/>", {
 			"class": "sitemessage remove_now",
 			"style": "opacity:0",
@@ -1627,7 +1627,7 @@
 				
 			}, 500)
 
-		}, 2200)
+		}, delay)
 	}
 /* ______________________________ */
 

@@ -517,6 +517,11 @@
 #system16 .nodecontent .nodecontentstate .gray {
   color: #b2abac;
 }
+#system16 .nodecontent .nodecontentstate .syncLeft {
+  float: right;
+  font-size: 0.8em;
+  color: #7d7d7d;
+}
 #system16 .nodecontent .notfound {
   text-align: center;
   padding: 2em 0;

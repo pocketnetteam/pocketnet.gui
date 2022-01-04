@@ -217,13 +217,25 @@ var system16 = (function(){
 
 				})
 			},
-
 			'ndataPath' : function(caller, defaultPath){
 				return proxy.system.request('set.node.ndataPath', {defaultPath: defaultPath}).then(r => {
 					actions.refresh().then(r => {
 						actions.refreshsystem()
 					})
 				}).catch(e => {
+				})
+			},
+            'dumpWallet' : function(caller, defaultPath){
+				return proxy.system.request('set.node.dumpWallet', {}).then(r => {
+
+                    if (r.filename)
+                        sitemessage(`Your wallet saved to ${r.filename}`, null, 5000) // self.app.localization.e('successcopied')
+
+				}).catch(e => {
+                    if (e.code && e.message)
+                        sitemessage(`(Code ${e.code}): ${e.message}`, null, 5000)
+                    else
+                        sitemessage(`Unknown error`)
 				})
 			}
 		}
@@ -3844,6 +3856,8 @@ var system16 = (function(){
 
 					},
 					function(p) {
+
+                        actions.settings(p.el)
 
 						p.el.find('.nodebalancedeposit').on('click', function() {
                             topPreloader(30);

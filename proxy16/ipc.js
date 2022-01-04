@@ -128,8 +128,15 @@ var IPC = function(ipc, wc){
 
 				return Promise.reject()
 			})
+        },
+		saveDialog : function(options){
+			return dialog.showSaveDialog(options).then(res => {
+				if (!res.canceled && (res.filePath && res.filePath.length > 0)) {
+					return Promise.resolve(res.filePath)
+				}
 
-          
+				return Promise.reject()
+			})
         }
 	}
 
@@ -169,7 +176,20 @@ var IPC = function(ipc, wc){
 						return Promise.resolve()
 	
 					}) 
-				}
+				},
+                dumpWallet : function(message) {
+					return helpers.saveDialog({
+						properties: ['dontAddToRecent'],
+                        defaultPath: message.data.defaultPath || ''
+					}).then(res => {
+	
+                        message.data = {
+							path : res
+						}
+
+						return Promise.resolve()
+					})
+				},
 			}
 		}
 		

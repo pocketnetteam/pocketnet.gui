@@ -5,6 +5,7 @@ const { EOL } = require('os');
 var Applications = require('./applications');
 var f = require('../functions');
 const { clearTimeout } = require('timers');
+const { auth } = require('firebase-admin');
 
 var Control = function(settings) {
     if (!settings) settings = {};
@@ -14,14 +15,20 @@ var Control = function(settings) {
     var self = this;
     var applications = new Applications(settings)
     
-    var nodeStateInterval = null
-    var nodeAutorunInterval = null
+    var nodeStateTimer = null
+    var nodeStateInterval = 15000
+    var nodeAutorunTimer = null
+    var nodeAutorunInterval = 15000
     var checkUpdatesInterval = null
 
     var lock = ''
 
     var state = {
         info: {},
+        sync: {
+            left: NaN,
+            chunks: []
+        },
         staking: {},
         wallet: {},
     }
@@ -250,37 +257,41 @@ var Control = function(settings) {
 
     self.autorun = {
         init : function(){
-            if(!nodeAutorunInterval){
-                nodeAutorunInterval = setInterval(function(){
+            if(!nodeAutorunTimer){
+                (function me() {
+                    
                     self.kit.autorun().catch(e => {})
-                }, 5000)
+                
+                    nodeAutorunTimer = setTimeout(me, nodeAutorunInterval);
+                })()
             }
         },
 
         destroy : function(){
-            if (nodeAutorunInterval){
-                clearInterval(nodeAutorunInterval)
-                nodeAutorunInterval = null
+            if (nodeAutorunTimer){
+                clearInterval(nodeAutorunTimer)
+                nodeAutorunTimer = null
             }
         }
     }
 
     self.state = {
         init : function(){
-            if(!nodeStateInterval){
+            if(!nodeStateTimer){
                 (function me() {
+
                     self.kit.stakingState().catch(e => {})
                     self.kit.walletState().catch(e => {})
                 
-                    nodeStateInterval = setTimeout(me, 5000);
+                    nodeStateTimer = setTimeout(me, nodeStateInterval);
                 })()
             }
         },
 
         destroy : function(){
-            if (nodeStateInterval){
-                clearTimeout(nodeStateInterval)
-                nodeStateInterval = null
+            if (nodeStateTimer){
+                clearTimeout(nodeStateTimer)
+                nodeStateTimer = null
             }
         }
     }
@@ -335,6 +346,12 @@ var Control = function(settings) {
 
         importPrivKey: function(private) {
             return self.kit.rpc('importprivkey', private)
+        },
+
+        dumpwallet: function(filePath) {
+            return self.kit.rpc('dumpwallet', filePath).then(result => {
+                return Promise.resolve(result)
+            })
         },
     }
 
@@ -438,9 +455,26 @@ var Control = function(settings) {
 
             return self.request.getNodeInfo().then(data => {
 
+                if (state.info.lastblock) {
+                    let chunk = data.lastblock.height - state.info.lastblock.height
+                    state.sync.chunks.push(chunk)
+                }
+                // 
+
                 state.info = data
                 state.status = 'launched'    
                 delete state.error
+
+                // Calculate elapsed time
+                // (total - current) / avg(chunk) * (nodeAutorunInterval / 1000)
+                // self.proxy.nodeManager.chain().commonHeight
+
+                state.sync.left = Math.round(
+                    (self.proxy.nodeManager.chain().commonHeight - state.info.lastblock.height) /
+                    (state.sync.chunks.reduce((a, b) => a + b, 0)/ state.sync.chunks.length) *
+                    (nodeAutorunInterval / 1000) /
+                    3600
+                );
 
                 return Promise.resolve(true)
 
