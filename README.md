@@ -69,4 +69,4 @@ If you need assistance, if you want to report a bug or if you are a content crea
 - support@pocketnet.app
 
 You can also contact us directly on Bastyon: 
-- https://pocketnet.app/pocketnet_team
+- https://bastyon.com/pocketnet_team
