@@ -16,7 +16,7 @@ var lenta = (function(){
 		var mid = p.mid;
 		var making = false, ovf = false;
 		var w, essenseData, recomended = [], recommended, mestate, initedcommentes = {}, canloadprev = false,
-		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null;
+		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null, recommendedusers = null;
 
 		var openedPost = null
 		var shareInitedMap = {},
@@ -2346,6 +2346,25 @@ var lenta = (function(){
 		}	
 
 		var renders = {
+			recommendedusers : function(){
+				
+
+				self.nav.api.load({
+
+					open : true,
+					id : 'recommendedusers',
+					el : el.recommendedusers,
+					animation : false,
+
+					essenseData : {
+					},
+					
+					clbk : function(e, p){
+						recommendedusers = p;
+					}
+
+				})
+			},
 			debugusers : function(el){
 				var _cn = el.find('.testusersprofiles')
 
@@ -4125,7 +4144,6 @@ var lenta = (function(){
 						else{
 
 							actions.destroyVideo(share)
-
 							renders.shares([share], function(){
 								renders.sharesInview([share], function(){
 									
@@ -4333,6 +4351,10 @@ var lenta = (function(){
 
 					if (clear)
 						el.c.find('.shares').html('')
+
+					if (!essenseData.video){
+						renders.recommendedusers();
+					}
 
 					renders.shares(shares, function(){
 
@@ -4691,8 +4713,9 @@ var lenta = (function(){
 				el.c = p.el.find('#' + self.map.id);
 				el.shares = el.c.find('.shares');
 				el.loader = el.c.find('.loader');
-				el.lentacnt = el.c.find('.lentacell .cnt')
-				el.w = essenseData.window || w
+				el.lentacnt = el.c.find('.lentacell .cnt');
+				el.w = essenseData.window || w;
+				el.recommendedusers = el.c.find('.recommendeduserscnt')
 
 				el.share = {}
 

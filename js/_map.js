@@ -803,6 +803,40 @@ __map =  {
 			anonimus : true,
 		},	
 
+		recommendedusers : {
+			uri : "recommendedusers",
+			href : "recommendedusers",
+			relations : [
+		
+				{src : 'js/vendor/highcharts.js', 		f : 'js', require : function(){
+					Highcharts = require('./js/vendor/highcharts.js')
+				}},
+			],
+			add : function(settings, p){
+
+				if(p.inWnd)
+				{
+					return {
+						insert : 'wnd'
+					}
+				}
+				else
+				if(p.inTooltip)
+				{
+					return {
+						insert : 'tooltip'
+					}
+				}
+				else
+				{
+					return {
+						el : 'content'
+					}
+				}
+
+			},
+			anonimus : true,
+		},
 		
 		topusers : {
 			uri : "topusers",
