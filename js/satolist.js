@@ -8455,7 +8455,7 @@ Platform = function (app, listofnodes) {
 
                 var my = self.app.user.address.value;
 
-                self.app.api.rpc('getrecomendedaccountsbyscoresfromaddress', ['TSisNge5kisi7cwGRwmUBuZQWZFD8cRoG8', ['share', 'video'], 0, 300000, 15])
+                self.app.api.rpc('getrecomendedaccountsbyscoresfromaddress', [my, ['share', 'video'], 0, 300000, 15])
                 .then(function(d){
 
                     if (clbk){

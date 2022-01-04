@@ -260,11 +260,6 @@
 #main .lentacell .bgCaption {
   margin-bottom: 0.5em;
 }
-#main .lentacell .bgCaption,
-#main .lentacell .topvideosWrapper,
-#main .lentacell .authorgroup .share {
-  padding: 15px;
-}
 #main .lentacellsvi {
   margin-right: 0;
   padding-top: 0.5em;
