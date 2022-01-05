@@ -1218,6 +1218,7 @@ ____loclib.unableToAuthorizeConnectionBody = "Unfortunately, the application can
 
 
 
+____loclib.download = "Download";
 ____loclib.downloaded = "Downloaded";
 ____loclib.downloadedEmpty = "Downloaded posts will be shown here";
 ____loclib.emptyDescription = "Description is empty";
