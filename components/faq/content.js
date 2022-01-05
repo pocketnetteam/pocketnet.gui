@@ -208,18 +208,18 @@ var faqcontent = [
 					a : '<div>Yes - no names, phones, email is NOT connected to your account in any way, it is just optionally entered to receive newsletter updates.</div>',
 				},
 	
-				{
-					id : 'viewoutside',
-					q : 'Can someone view a profile (someone&rsquo;s posts) outside the garden? Is it a walled garden?',
-					a : '<div>Since the whole blockchain and all the posts are in opensource anyone can have access to your posts and profile. They just know that it is linked to your public address. In practice, you can have multiple accounts. You can use some with your real name and others anonymously. Anonymity is a great tool to protect free speech from abuse of power.</div>',
-				},
+				// {
+				// 	id : 'viewoutside',
+				// 	q : 'Can someone view a profile (someone&rsquo;s posts) outside the garden? Is it a walled garden?',
+				// 	a : '<div>Since the whole blockchain and all the posts are in opensource anyone can have access to your posts and profile. They just know that it is linked to your public address. In practice, you can have multiple accounts. You can use some with your real name and others anonymously. Anonymity is a great tool to protect free speech from abuse of power.</div>',
+				// },
 	
 	
-				{
-					id : 'walletid',
-					q : 'Is my public key like a wallet ID that I enter on my profile and people can send points to?',
-					a : '<div>Exactly. And it is safe to reveal. But not a secret phrase - keep it safe!</div>',
-				},
+				// {
+				// 	id : 'walletid',
+				// 	q : 'Is my public key like a wallet ID that I enter on my profile and people can send points to?',
+				// 	a : '<div>Exactly. And it is safe to reveal. But not a secret phrase - keep it safe!</div>',
+				// },
 	
 				{
 					id : 'runnode',
