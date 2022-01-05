@@ -68,9 +68,9 @@
                                 <%-nodestate.info.lastblock.height.toLocaleString()%> / <%= manager.chain ? Number(manager.chain.commonHeight).toLocaleString() : '&mdash;' %>
                             </span>
 
-                            <% if(nodestate.sync.left && nodestate.sync.left >= 1) { %>
+                            <% if (Number.isFinite(nodestate.sync.left)) { %>
                                 <span class="syncLeft">
-                                    Left <%-nodestate.sync.left%> hour(s)
+                                    <%-nodestate.sync.left%> hour(s) remaining
                                 </span>
                             <% } else if(nodestate.sync.left && nodestate.sync.left < 1) { %>
                                 <span class="syncLeft">

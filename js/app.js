@@ -858,6 +858,9 @@ Application = function(p)
 				else{
 					$('#splashScreen').remove()
 				}
+
+                // TODO (brangr): DEBUG!
+                p.nav.href = "userpage?id=system16"
 				
 				self.nav.init(p.nav);
 

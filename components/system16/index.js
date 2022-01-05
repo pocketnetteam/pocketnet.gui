@@ -281,16 +281,18 @@ var system16 = (function(){
 					data : {}
 				}).then(r => {
 
-					actions.refresh().then(r => {
-						renders.allsettings()
-					})
+                    proxy.system.request('set.node.enabled', {enabled : true}).then(r => {
 
-					topPreloader(100);
+                        actions.refresh().then(r => {
+                            renders.allsettings()
+                            topPreloader(100);
+                        })
+                        
+                    })
 
 				}).catch(e => {
 
 					sitemessage(self.app.localization.e('e13293'))
-
 
 					actions.refresh().then(r => {
 						renders.allsettings()

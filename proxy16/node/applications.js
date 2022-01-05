@@ -7,6 +7,10 @@ var f = require('../functions');
 var path = require('path');
 var Datastore = require('nedb');
 
+var request = require('request');
+var progress = require('request-progress');
+var targz = require('tar.gz2');
+
 var Applications = function(settings) {
 
     if(!settings) settings = {}
@@ -31,6 +35,21 @@ var Applications = function(settings) {
                 name: "test.sqlite3",
                 url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
                 page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
+            },
+            snapshot_latest: {
+                permanent: true,
+                name: "latest.tgz",
+                url: 'https://snapshot.pocketnet.app/latest.tgz'
+            },
+            bin_permanent: {
+                permanent: true,
+                name: "pocketcoind.exe",
+                url: 'https://snapshot.pocketnet.app/pocketcoind.exe'
+            },
+            checkpoint_main_permanent: {
+                permanent: true,
+                name: "main.sqlite3",
+                url: 'https://snapshot.pocketnet.app/main.sqlite3'
             }
         }
 
@@ -45,6 +64,10 @@ var Applications = function(settings) {
 
     var platform = process.platform
     var meta = applications[platform]
+
+    self.getMeta = function() {
+        return meta
+    }
 
     self.getinfo = function(key){
 
@@ -213,6 +236,105 @@ var Applications = function(settings) {
 
             return Promise.resolve(r)
         })
+    }
+
+    self.downloadPermanent = function(key, dest, progressState) {
+        if (!meta[key] && !meta[key].permanent)
+            return Promise().reject();
+
+        let endFile = path.resolve(dest, meta[key].name)
+
+        return new Promise(function(resolve, reject) {
+
+            // The options argument is optional so you can omit it
+            progress(request(meta[key].url), {
+                // throttle: 2000,                    // Throttle the progress event to 2000ms, defaults to 1000ms
+                // delay: 1000,                       // Only start to emit after 1000ms delay, defaults to 0ms
+                // lengthHeader: 'x-transfer-length'  // Length header to use, defaults to content-length
+            })
+            .on('progress', progressState)
+            // function (state) {
+                // The state is an object that looks like this:
+                // {
+                //     percent: 0.5,               // Overall percent (between 0 to 1)
+                //     speed: 554732,              // The download speed in bytes/sec
+                //     size: {
+                //         total: 90044871,        // The total payload size in bytes
+                //         transferred: 27610959   // The transferred payload size in bytes
+                //     },
+                //     time: {
+                //         elapsed: 36.235,        // The total elapsed seconds since the start (3 decimals)
+                //         remaining: 81.403       // The remaining seconds to finish (3 decimals)
+                //     }
+                // }
+                // console.log('progress', state);
+                // if (progressState) progressState(state);
+            // })
+            .on('error', function (err) {
+                return reject(err)
+            })
+            .on('end', function () {
+                return resolve()
+            })
+            .pipe(fs.createWriteStream(endFile));
+        }).then(r => {
+            return Promise.resolve(endFile);
+        })
+    }
+
+    self.decompress = function(source, destination, progressState) {
+        // return new Promise(function(resolve, reject) {
+        //     targz.decompress({
+        //         src: source,
+        //         dest: destination
+        //     }, function(err){
+        //         if(err) {
+        //             reject()
+        //         } else {
+        //             resolve()
+        //         }
+        //     })
+        // }).then(r => {
+        //     return Promise.resolve()
+        // }).catch(e => {
+        //     return Promise.reject(e)
+        // })
+
+        return new Promise((resolve, reject) => {
+            try {
+              let stat = fs.statSync(source)
+              let read = fs.createReadStream(source)
+              let write = targz().createWriteStream(destination)
+              let pendingBytes = 0
+              let callback = (err, result) => {
+                if (err) {
+                  reject(err)
+                } else {
+                  resolve(result)
+                }
+              }
+        
+              // bind events
+              write.on('error', err => {
+                callback(err)
+              })
+              write.on('finish', () => {
+                callback()
+              })
+              read.on('error', err => {
+                callback(err)
+              })
+              read.on('data', chunk => {
+                pendingBytes += chunk.length
+                if (progressState)
+                    progressState({ size: stat.size, pending: pendingBytes })
+              })
+        
+              read.pipe(write)
+            } catch (err) {
+              reject(err)
+            }
+          })
     }
 
     self.removeAll = function(){

@@ -18,7 +18,7 @@ var Control = function(settings) {
     var nodeStateTimer = null
     var nodeStateInterval = 15000
     var nodeAutorunTimer = null
-    var nodeAutorunInterval = 15000
+    var nodeAutorunInterval = 5000
     var checkUpdatesInterval = null
 
     var lock = ''
@@ -26,17 +26,25 @@ var Control = function(settings) {
     var state = {
         info: {},
         sync: {
-            left: NaN,
+            left: 0,
             chunks: []
         },
         staking: {},
         wallet: {},
+        install: {
+            title: '',
+            progress: {
+                percent: 0
+            }
+        },
+        status: 'stopped'
     }
 
     var node = {
         instance: null,
         binPath: '',
         confPath: '',
+        dataPath: '',
         proxy : null
     }
 
@@ -368,23 +376,93 @@ var Control = function(settings) {
             self.autorun.destroy()
 
             lock = 'installing'
+            let snapshotFile = Path.resolve(node.dataPath, applications.getMeta()['snapshot_latest'].name)
 
             return self.kit.stop().then(r => {
+                
                 return folders()
+
             }).then(r => {
+                
                 return makeconfig()
+
             }).then(r => {
-                return applications.install('checkpoint_main', self.helpers.data_checkpoints_path(true), false)
-            }).then(r => {
-                return applications.install('bin', self.helpers.complete_bin_path(), true)
-            }).then(r => {
+                
+                state.install.progress = { percent: 0 }
+                state.install.title = ''
+
+                if (fs.existsSync(Path.resolve(node.dataPath, 'pocketdb')))
+                    return Promise.resolve()
+
+                return applications.downloadPermanent('snapshot_latest', node.dataPath, function(st) {
+                    state.install.progress = st
+                    state.install.title = `Downloading snapshot database...`
+                        + ` - ${f.unitFormatter(st.size.transferred, 2)} / ${f.unitFormatter(st.size.total, 2)}`
+                        + ` - ${f.unitFormatter(st.speed, 2)}/s`
+                        + ` - ${Math.round(st.time.remaining / 60)} min. remaining`
+                })
+
+            }).then(() => {
+
+                if (!fs.existsSync(snapshotFile))
+                    return Promise.resolve()
+
+                return applications.decompress(snapshotFile, node.dataPath, function(st) {
+                    state.install.progress = {
+                        percent: st.pending / st.size
+                    }
+
+                    if (state.install.progress.percent < 0.99)
+                        state.install.title = 'Decompressing snapshot database...'
+                    else
+                        state.install.title = 'Processing snapshot database...'
+                })
+
+            }).then(() => {
+                
+                if (!fs.existsSync(snapshotFile))
+                    return Promise.resolve()
+
+                // fs.unlinkSync(snapshotFile)
+                // return Promise.resolve()
+
+            }).then(() => {
+                
+                // state.install.progress = { percent: 100 }
+                // state.install.title = 'Installing binary files...'
+                // return applications.install('bin', self.helpers.complete_bin_path(), true)
+                
+                return applications.downloadPermanent('bin_permanent', node.binPath, function(st) {
+                    state.install.progress = st
+                    state.install.title = `Installing binary files...`
+                })
+
+            }).then(() => {
+                
+                // state.install.progress = { percent: 100 }
+                // state.install.title = 'Installing checkpoints database...'
+                // return applications.install('checkpoint_main', self.helpers.data_checkpoints_path(true), false)
+
+                return applications.downloadPermanent('checkpoint_main_permanent', self.helpers.data_checkpoints_path(false), function(st) {
+                    state.install.progress = st
+                    state.install.title = `Installing checkpoints database...`
+                })
+
+            }).then(() => {
+
+                state.install.progress = null
+                state.install.title = ''
+                return Promise.resolve()
+
+            }).then(() => {
+
                 lock = ''
                 self.autorun.init()
                 return self.kit.check()
+
             }).catch(e => {
 
                 lock = ''
-
                 return Promise.reject(e)
             })
            
@@ -483,16 +561,17 @@ var Control = function(settings) {
 
             }).catch(e => {
 
-                var stopped = e.code == 408
-
-                if (stopped){
-                    state.status = 'stopped'
-                    return Promise.resolve(false)
+                if(e.code == 401 && !node.hasbin){
+                    node.other = true
+                    return Promise.resolve(true)
                 }
-                else
-                {
-                    if(!node.hasbin || e.code == 401){
-                        node.other = true
+
+                if (e.code == 408) {
+                    if (!node.instance) {
+                        state.status = 'stopped'
+                        return Promise.resolve(false)
+                    } else {
+                        state.status = 'starting'
                         return Promise.resolve(true)
                     }
                 }
@@ -668,9 +747,10 @@ var Control = function(settings) {
                 return Promise.resolve()
 
             }).catch(e => {
+                state.status = 'stopped'
+                state.timestamp = f.now()
                 return Promise.resolve()
             })
-            
             .then(r => {
 
                 if (node.instance){
