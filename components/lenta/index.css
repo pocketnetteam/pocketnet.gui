@@ -256,7 +256,7 @@
   padding-top: 1em;
 }
 #lenta .shares .postmessage {
-  border-top: 1px solid #F5F5F9;
+  border-top: 1px solid #F2F2F5;
   padding-right: 0.5em;
 }
 #lenta .shares .work {
@@ -2144,7 +2144,7 @@ html.stblack #lenta .shares .share .tags > div span {
   color: #b2abac;
 }
 html.stblack #lenta .shares .share .sys span {
-  color: #076C34;
+  color: #C7C8D9;
 }
 html.stblack #lenta .shares .share .panel .itemwr > div.count span {
   color: #e4ddde;

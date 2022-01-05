@@ -1220,6 +1220,9 @@ html.stblack #comments .caption .csharetable .shareprwrapper .img .vstyle {
 html.stblack #comments.fromtop .list {
   border-top: 1px solid #0e1c2b;
 }
+html.stblack #comments .list {
+  background: #0a0c17;
+}
 html.stblack #comments .list .comment {
   border-bottom: 1px solid #0e1c2b;
 }
@@ -1281,7 +1284,7 @@ html.stblack #comments .list .commentpanel .upvoteComment:hover {
   color: #00a4ff;
 }
 html.stblack #comments .showall {
-  color: #00a4ff;
+  color: #8E90A6;
 }
 html.stblack #comments .showall:hover {
   color: #00A3F7;
