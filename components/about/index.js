@@ -60,6 +60,13 @@ var about = (function(){
 			
 
 			reports.push({
+				name :  self.app.localization.e('download'),
+				id : 'about-download',
+				report : 'applications',
+				mobile : true
+			})
+
+			reports.push({
 				name : self.app.localization.e('insteadOf') + ' youtube',
 				id : 'about-youtube',
 				report : 'aboutYoutube',

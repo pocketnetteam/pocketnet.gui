@@ -1014,6 +1014,7 @@ ____loclib.unableToAuthorizeBody = "К сожалению, у приложени
 ____loclib.unableToAuthorizeConnection = "Ошибка авторизации";
 ____loclib.unableToAuthorizeConnectionBody = "К сожалению, у приложения не получилось авторизовать данный аккаунт на видео-сервере. Повторите попытку позже.";
 
+____loclib.download = "Загрузить";
 ____loclib.downloaded = "Сохранённые";
 ____loclib.downloadedEmpty = "Сохранённые публикации будут показаны здесь";
 ____loclib.emptyDescription = "Описание отсутствует";
