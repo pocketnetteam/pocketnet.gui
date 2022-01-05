@@ -907,12 +907,6 @@
   font-weight: 700;
   font-size: 0.8em;
 }
-#post .share .panel > div:hover .icon {
-  border-radius: 50%;
-  box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.4);
-  color: #fff;
-  background: #00A3F7;
-}
 #post .share .panel > div.sharesocial .label,
 #post .share .panel > div.sharesocial .icon {
   color: #ff6e84;
@@ -1169,6 +1163,9 @@ html.stblack #post .nextpost .ended {
 html.stblack #post .postWrapper {
   background: #0a0c17;
 }
+html.stblack #post .postmessage {
+  border-top: 1px solid rgba(245, 245, 249, 0.1);
+}
 html.stblack #post .shareTable .sbtnxs span i {
   color: #076C34;
 }
@@ -1276,8 +1273,9 @@ html.stblack #post .share .tags > div span {
 html.stblack #post .share .sys span {
   color: #b2abac;
 }
-html.stblack #post .share .panel .itemwr > div.count span {
-  color: #00a4ff;
+html.stblack #post .share .panel .itemwr > div.count .circle {
+  border: 1px solid rgba(199, 200, 217, 0.1);
+  color: #e4ddde;
 }
 html.stblack #post .share .panel > div .stars {
   color: #00A3F7;
@@ -1286,11 +1284,10 @@ html.stblack #post .share .panel > div .count {
   cursor: pointer;
 }
 html.stblack #post .share .panel > div .icon {
-  color: #00A3F7;
+  color: #C7C8D9;
 }
 html.stblack #post .share .panel > div:hover .icon {
-  color: #fff;
-  background: #00A3F7;
+  color: #00A3F7;
 }
 html.stblack #post .share .panel > div.sharesocial .label,
 html.stblack #post .share .panel > div.sharesocial .icon {

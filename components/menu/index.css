@@ -392,6 +392,7 @@
 }
 #menu .sections .items .item.navWrapperItem .centerTable > div .pcenterLabel:hover a span,
 #menu .sections .items .item.navWrapperItem .centerTable > div .pcenterLabel.active a span {
+  margin-left: 0.5em;
   background: rgba(0, 164, 255, 0.7);
 }
 #menu .sections .items .item.navWrapperItem .centerTable > div .pcenterLabel a {

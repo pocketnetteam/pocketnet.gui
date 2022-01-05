@@ -1237,14 +1237,7 @@
 					}
 				}
 
-				&:hover{
-					.icon{
-						border-radius : 50%;
-						.shadowSmall();
-						color : #fff;
-						background: @color-bright;
-					}
-				}
+
 
 				&.sharesocial{
 
@@ -1624,7 +1617,13 @@ html.stblack{
 		.postWrapper{
 			background: @color-black;
 			
+			
 		}
+
+		.postmessage{
+			border-top: 1px solid fade(#F5F5F9, 10);
+		}
+	
 	
 		.shareTable{
 	
@@ -1865,7 +1864,6 @@ html.stblack{
 			}
 	
 			.panel{
-	
 				
 				.itemwr{
 	
@@ -1873,15 +1871,17 @@ html.stblack{
 						
 	
 						&.count{
-	
-							span{
-								color : @color-main;
+
+							.circle{
+								border: 1px solid fade(#C7C8D9, 10);
+								color : #e4ddde;
+
 							}
-							
 							
 						}
 					}
 				}
+				
 				>div{
 				
 	
@@ -1896,14 +1896,13 @@ html.stblack{
 					}
 	
 					.icon{
-						color : @color-bright;
+						color : #C7C8D9;
 					}
 	
 	
 					&:hover{
 						.icon{
-							color : #fff;
-							background: @color-bright;
+							color : @color-bright;
 						}
 					}
 	
