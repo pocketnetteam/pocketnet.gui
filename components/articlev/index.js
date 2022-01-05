@@ -12,30 +12,141 @@ var articlev = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, editor, art, taginput, delay, external = {};
+		var el, editor, art, taginput, delay, external = null;
 		
 		var actions = {
 
+			competed : function(){
+				if(!self.app.platform.sdk.articles.itisdraft(art)){
+					return false
+				}
+
+				if(!art.cover) return false
+
+				return true
+			},
+
+			complete : function(){
+
+			},
+
+			trx : function(share){
+
+				return new Promise((resolve, reject) => {
+				
+
+					self.sdk.node.transactions.create.commonFromUnspent(
+
+						share,
+
+						function(_alias, error){
+
+							if(!_alias){
+
+								console.log('error', error)
+
+								var t = self.app.platform.errorHandler(error, true);
+
+								if (t){
+									sitemessage(t)
+								}
+
+								return reject(error)
+							}
+							else
+							{
+
+								try{
+
+									var alias = new pShare();
+						
+										alias._import(_alias, true)
+										alias.temp = true;
+										alias.address = _alias.address
+										
+									self.app.platform.sdk.node.shares.add(alias)
+									
+								}
+
+								catch (e){
+									console.log(e)
+
+									actions.complete();
+								}
+
+								return resolve(_alias)
+							}
+
+						}
+					)
+
+				})
+			},	
+
 			publish : function(){
+
+				var _art = art
+
+				sitemessage('Creation of articles will be available later')
+
+				return
+
 				return actions.saveEditor().then(r => {
-					
+
+					globalpreloader(true)
+
+					return self.app.platform.sdk.articles.uploadresources(art).then(r => {
+
+						self.app.platform.sdk.articles.save()
+
+						destroy()
+
+						art = _art
+
+						make()
+
+						if (external) {
+							external.destroy()
+							external = null
+						}
+
+						var share = self.app.platform.sdk.articles.share(art)
+
+						return actions.trx(share)
+						
+					}).then(alias => {
+
+						art.txid = alias.txid;
+						art.ptime = Math.floor((new Date().getTime()) / 1000)
+
+						self.app.platform.sdk.articles.save()
+
+						actions.complete();
+
+						globalpreloader(false)
+
+					}).catch(e => {
+
+						globalpreloader(false)
+
+						return Promise.resolve()
+
+					})
 				})
 			},
 
-			viewandpublish : function(){
+			preview : function(){
 
 				return actions.saveEditor().then(r => {
 
 					var share = self.app.platform.sdk.articles.share(art)
 
 					var alias = share.alias()
-
 						alias.address = self.app.user.address.value
 
 					renders.preview(alias)
 
 				})
-
 				
 			},
 
@@ -159,9 +270,9 @@ var articlev = (function(){
 
 				return editor.save().then(outputData => {
 
-					
-
 					art.content = outputData
+
+					console.log("ART", art)
 
 					actions.save()
 
@@ -185,15 +296,33 @@ var articlev = (function(){
 		}
 
 		var events = {
-			
-		}
+			publish : function(){
+				dialog({
+					html:  self.app.localization.e('publishquestion'),
+					btn1text: self.app.localization.e('dyes'),
+					btn2text: self.app.localization.e('dno'),
+		
+					success: function () {
+						actions.publish()
+					},
+		
+					fail: function () {
+
+					},
+	
+					class : 'zindex'
+				})
+			}
+		}	
 
 		var renders = {
 
 			preview : function(share){
 				if (share){
 
-					self.app.platform.papi.postpreview(share, null, function(){
+					self.app.platform.papi.postpreview(share, null, function(p){
+
+						external = p
 
 					}, {
 						inWnd : true
@@ -399,8 +528,6 @@ var articlev = (function(){
 
 				art = null
 
-				console.log("ID", id)
-
 				if (id){
 					art = self.app.platform.sdk.articles.getbyid(id)
 				}
@@ -415,8 +542,11 @@ var articlev = (function(){
 		var initEvents = function(){
 
 			el.publish.on('click', function(){
-				console.log('initEvents1212')
-				actions.viewandpublish()
+				events.publish()
+			})
+
+			el.showpreview.on('click', function(){
+				actions.preview()
 			})
 
 			el.removeCover.on('click', function(){
@@ -437,11 +567,11 @@ var articlev = (function(){
 
 				art.caption.value = text || ''
 
-				console.log('text', text)
+				console.log('text', text, art)
 
 				renders.captiondouble()
+				
 				actions.save()
-
 				actions.apply()
 			})
 
@@ -453,7 +583,15 @@ var articlev = (function(){
 					inWnd : true,
 					history : true,
 					essenseData : {
-						current : art.id,
+						current : art.id,	
+
+						create : function(){
+
+							console.log("create")
+
+							changeArticle()
+							return true
+						},
 
 						select : function(art){
 							changeArticle(art.id)
@@ -477,8 +615,7 @@ var articlev = (function(){
 				action : function(file, clbk){
 
 					self.app.platform.papi.editImage(file.base64, {
-
-						aspectRatio : 1.7,
+						autoCropArea : 0.95,
 						apply : true
 
 					}).then( base64 => {
@@ -509,6 +646,9 @@ var articlev = (function(){
 				taginput.destroy()
 				taginput = null
 			}
+
+			if (external) external.destroy()
+				external = null
 
 			if (editor)
 				editor.destroy();
@@ -592,11 +732,42 @@ var articlev = (function(){
 					},
 
 					linkTool: {
-						class: LinkTool,
+						class: window.LinkTool,
 						config: {
-						  endpoint: 'https://localhost:8887/urlPreviewFormatted', // Your backend endpoint for url data fetching
+
+							fetch : function(url){
+
+								return self.app.api.fetch('urlPreviewFormatted', {url}).then(r => {
+
+									return r
+								})
+
+								/*if(self.app.thislink(url)){
+									need js preview
+								}
+								else{
+									return self.app.api.fetch('urlPreviewFormatted', {url})
+								}*/
+
+
+								/*body = await (ajax.get({
+
+									url: this.config.endpoint,
+
+									data: {
+									  url,
+									},
+						  
+								})).body;*/
+
+
+								//endpoint: 'https://localhost:8887/urlPreviewFormatted', // Your backend endpoint for url data fetching
+
+							}
+
 						}
 					},
+
 
 					/*inlineCode: {
 						class: window.InlineCode,
@@ -688,14 +859,12 @@ var articlev = (function(){
 			destroy : function(){
 
 				destroy()
-
+				
 				el = {};
 				
 			},
 			
 			init : function(p){
-
-				
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
@@ -712,6 +881,7 @@ var articlev = (function(){
 				el.share = el.c.find('.shareWrapper')
 				el.status = el.c.find('.truestatuswrapper')
 				el.myarticles = el.c.find('.myarticles')
+				el.showpreview = el.c.find('.showpreview')
 
 				initEvents();
 				make()

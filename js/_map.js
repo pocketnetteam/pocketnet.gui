@@ -76,7 +76,8 @@ __map =  {
 		"js/kit.js",
 		"js/satolist.js",
 		"js/peertube.js",
-		"js/widgets.js"
+		"js/widgets.js",
+		"js/logger.js"
 	],
 
 	__css : [
@@ -97,7 +98,7 @@ __map =  {
 		
 	],
 
-
+	
 	__templates : [
 		{ c : 'navigation', n : 'menu' },
 		{ c : 'menu', n : 'index' },
@@ -130,19 +131,6 @@ __map =  {
 		{ c : 'author', n : 'authorcaption'},
 		{ c : 'post', n : 'preshell'}
 
-
-		
-		/*,
-		{ c : '', n : '' },
-		{ c : '', n : '' },
-		{ c : '', n : '' },
-		{ c : '', n : '' },
-		{ c : '', n : '' },
-		{ c : '', n : '' },
-		{ c : '', n : '' },
-		{ c : '', n : '' },
-		{ c : '', n : '' },*/
-		
 	],
 
     pkview  : {

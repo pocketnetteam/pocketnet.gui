@@ -76,6 +76,8 @@ var videoCabinet = (function () {
       },
 
       parseVideoServerError(error = {}) {
+        self.app.Logger.error({ err: e });
+        
         return error.text || findResponseError(error) || JSON.stringify(error);
       },
     };
@@ -386,6 +388,7 @@ var videoCabinet = (function () {
             return actions.resizeImage(fileBase64, settingsObject);
           })
           .then((img) => {
+            
             parameters.image = {
               data: img,
             };
@@ -395,12 +398,16 @@ var videoCabinet = (function () {
               .then(() => img);
           })
           .catch((error = {}) => {
+
             if ((error.code = 404)) {
+
               return self.app.peertubeHandler.api.videos
                 .update(`peertube://${backupHost}/${urlMeta.id}`, parameters, {
                   host,
                 })
+
                 .then(() => img)
+                
                 .catch((e = {}) =>
                   sitemessage(helpers.parseVideoServerError(e)),
                 );
@@ -1038,13 +1045,16 @@ var videoCabinet = (function () {
                         backupHost,
                       })
                       .then((img) => {
+
                         const previewContainer = el.videoContainer.find(
                           `.singleVideoSection[uuid="${meta.id}"] .videoAvatar`,
                         );
+
                         previewContainer.attr(
                           'style',
                           `background-image: url("${img}")`,
                         );
+
                       });
 
                       close()

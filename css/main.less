@@ -1447,6 +1447,7 @@ pie {
         bottom : 0;
         top : 0;
         background: @color-good;
+        .transition(0.3s, width)
     }
 }
 
@@ -2301,11 +2302,9 @@ input[type=radio].radio:checked + label {
         z-index: 2005
     }
 
-    &.embeding{
-        z-index: 2005; 
-    }
+ 
 
-    &.authwindow, &.pkviewwnd{
+    &.pkviewwnd{
         z-index: 9999;
     }
 
@@ -4887,6 +4886,7 @@ html.nav{
 
 .matrixchatwrapper{
     font-size: 16px;
+    
 }
 
 html.cordova,
@@ -4895,6 +4895,7 @@ html.tablet{
     
     .matrixchatwrapper{
         position: fixed;
+        contain: strict;
         left : -100%;
         top : 0;
         right: 100%;
@@ -7303,7 +7304,7 @@ html{
     }
 
     .dialog{
-       
+        z-index: 1006;
 
         .buttons{
             overflow: hidden;
@@ -7636,7 +7637,10 @@ html.mobile{
                     border-bottom-left-radius: 0;
                     bottom : 0;
                     backface-visibility: hidden;
+                    contain: strict;
                     .shadowSmaller();
+
+                    
     
                     &::-webkit-scrollbar{
                         width: 0;

@@ -104,7 +104,6 @@ var authorization = (function(){
 					var _p = {};
 
 					_p.href = essenseData.successHref;
-					
 
 					if(!_p.href && primary)
 
@@ -198,8 +197,18 @@ var authorization = (function(){
 
 		var initEvents = function(p){
 			
-			el.enter.on('click', events.login);
-	        
+			//el.enter.on('click', events.login);
+			
+			el.hiddenform.on('submit', function(event) {
+
+				console.log("SUBMIT")
+
+				event.preventDefault();
+				event.stopPropagation();
+				events.login()
+
+				return false
+			})
 
 	        el.toRegistration.on('click', function(){
 	        	self.nav.api.loadSameThis('registration', p)
@@ -238,7 +247,7 @@ var authorization = (function(){
 								{
 									el.login.val(trim(data))
 
-									events.login();
+									el.hiddenform.submit()
 								}
 							}
 
@@ -312,17 +321,15 @@ var authorization = (function(){
 
 							essenseData.signInClbk()
 
+						},
+
+						close : function(){
+							self.closeContainer()
 						}
 					},
 					
 					clbk : function(e, p){
-
-						/*setTimeout(function(){
-							_scrollToTop(el.c.find('.userpart'), el.c.find('.scrollmaketpart'))
-						}, 400)		*/				
-
 						ext = p
-
 					}
 
 				})
@@ -334,7 +341,7 @@ var authorization = (function(){
 
 			ParametersLive([stay], el.c)
 
-			if(p.restore){
+			if (p.restore){
 				events.forgotPassword();
 			}
 
@@ -407,6 +414,8 @@ var authorization = (function(){
 				el.toRegistration = el.c.find('.toRegistration');
 				el.forgotPassword = el.c.find('.forgotPassword');
 
+				el.hiddenform = el.c.find('#loginform')
+
 				essenseData = p.essenseData || {};
 				initialParameters = p;
 
@@ -433,7 +442,7 @@ var authorization = (function(){
 			},
 
 			wnd : {
-				class : 'withoutButtons allscreen authwindow'
+				class : 'withoutButtons authwindow normalizedmobile'
 			}
 		}
 	};

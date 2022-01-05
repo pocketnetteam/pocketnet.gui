@@ -1253,20 +1253,19 @@ Nav = function(app)
 				if (window.cordova)
 				{
 
-					var arr = pathname.split('/');
+					/*var arr = pathname.split('/');
 					arr.splice(arr.length-1, 1);
+					options.navPrefix = arr.join('/') + '/';*/
 
-					options.navPrefix = arr.join('/') + '/';
+					 if(pathname == '/indexcordova.html'){
+					 	options.navPrefix = '/'
+					 }
+					 else{
+					 	var arr = pathname.split("/");
+					 	arr.splice(arr.length-1, 1);
 
-					// if(pathname == '/indexcordova.html'){
-					// 	options.navPrefix = '/'
-					// }
-					// else{
-					// 	var arr = pathname.split("/");
-					// 	arr.splice(arr.length-1, 1);
-
-					// 	options.navPrefix = arr.join("/") + "/";
-					// }
+					 	options.navPrefix = arr.join("/") + "/";
+					 }
 					
 
 				}
@@ -1366,7 +1365,14 @@ Nav = function(app)
 
 			}
 
-			core.load(p)
+			if (p.timeout){
+				setTimeout(function(){
+					core.load(p)
+				}, p.timeout)
+			}
+			else
+
+				core.load(p)
 		},
 		
 		loadDefault : function(p){

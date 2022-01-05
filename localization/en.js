@@ -467,7 +467,7 @@ ____loclib.onlyVideo = "Only video"
 ____loclib.e13023 = "Do you really want to unblock user?"
 ____loclib.e13024 = "Your Private Login Key"
 ____loclib.e13025 = "Create a new account"
-____loclib.e13026 = "Join "+appname+""
+____loclib.e13026 = "Registration "+appname+""
 
 ____loclib.e13027 = "Stay Signed"
 ____loclib.e13028 = "You entered not valid private key"
@@ -612,6 +612,7 @@ ____loclib.editpost = "Edit Post"
 ____loclib.removepost = "Remove Post"
 ____loclib.removePostDialog = "Do you really want to remove post?"
 ____loclib.opennewwindow = "Open Post in New Window"
+____loclib.opennew = "Open Post"
 ____loclib.pin = "Pin Post"
 ____loclib.pinned = "pinned"
 ____loclib.pinPostDialog = "Do you realy want to pin this post?"
@@ -620,7 +621,7 @@ ____loclib.unpinPostDialog = "Do you realy want to unpin this post?"
 
 
 ____loclib.unsubscribe = "Unsubscribe"
-____loclib.startchat = "Start chat"
+____loclib.startchat = "Chat"
 ____loclib.reportpost = "Report Post"
 ____loclib.reportuser = "Report User"
 
@@ -676,6 +677,7 @@ ____loclib.e13157 = "Search by"
 ____loclib.e13158 = "hasn't any results"
 ____loclib.e13159 = "The search phrase is empty"
 ____loclib.repost = "Repost"
+____loclib.reposted = "Repost"
 ____loclib.e13160 = "Hello Pocketeers!"
 
 ____loclib.e13161 = "Add Tags For Your Post"
@@ -1862,3 +1864,29 @@ ____loclib.repostyourown = 'You cannot repost your own post'
 ____loclib.reachedlimits = 'You reached your daily limit of actions. To increase your limit you need to have at least 50 PKOIN in your account or have a valid reputation.'
 
 ____loclib.closestreachedlimits = 'You are close to hitting your daily action limit. To increase your limit you need to have at least 50 PKOIN in your account or have a valid reputation.'
+
+
+____loclib.sendUserStatistics = 'Send anonimous logs of user activity to Bastyon Team'
+____loclib.captionUserStats = 'Statistics'
+
+____loclib.editarticledraft = 'Edit article Draft'
+____loclib.deletearticledraft = 'Delete article Draft'
+____loclib.previewarticledraft = 'View article Draft'
+____loclib.deletedraftquestion = 'Are you sure you want to delete the draft article? Recovery is impossible'
+____loclib.publishquestion = 'Are you sure you want to public this article?'
+
+____loclib.etc = 'And so on...'
+
+____loclib.nametaken = 'This username is taken in Bastyon'
+
+____loclib.accountnotfound = 'We could not find your account on the blockchain. Perhaps the registration process was not completed, or there is no Internet connection'
+
+
+____loclib.name20symbols = "The name length can't be more than 20 symbols"
+____loclib.namereservedpn = 'To avoid user confusion using Pocketnet in name is reserved'
+____loclib.namereservedbn = 'To avoid user confusion using Bastyon in name is reserved'
+
+____loclib.photohassizegreater = function(v){
+    return "Your photo has size greater than "+v+"MB. Please upload a photo under "+v+"MB in size."
+}
+____loclib.invalidformat = "Invalid format of picture. Only png and jpeg are allowed"

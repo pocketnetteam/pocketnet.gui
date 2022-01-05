@@ -258,7 +258,7 @@ function rpc(request, callback, obj) {
 
             if (exceededError){
 
-                if(lg) console.log("exceededError", self.host, m, exceededError)
+                if(lg) console.log("exceededError", self.host, m, exceededError, buf)
 
                 res.resume()
 

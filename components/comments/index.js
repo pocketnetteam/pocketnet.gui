@@ -84,7 +84,6 @@ var comments = (function(){
 			},
 
 			post : function(err, alias, _txid, pid, aid, editid, id, manual){
-
 				
 				if(_txid != txid) return
 
@@ -100,9 +99,16 @@ var comments = (function(){
 
 				el.c.find('.att').html('');
 
-				var p = {
-					comments : [alias]
+				var p = {}
+
+				if (editid || !showedall){
+					p.comments = [alias]
 				}
+				else{
+					p.comments = self.app.platform.sdk.comments.storage[_txid][pid || '0']
+					p.add = alias.id
+				}
+
 
 				if (listpreview){
 					ed.lastComment = self.app.platform.sdk.comments.toLastComment(alias)
@@ -166,6 +172,7 @@ var comments = (function(){
 				p.newcomments = 'newcomments'
 
 
+
 				/////// ADD COMMENT
 
 				//todo
@@ -187,6 +194,7 @@ var comments = (function(){
 					if(ed.comments) ed.comments++
 
 					actions.showhideLabel()
+
 				}
 			}
 		}
@@ -905,7 +913,9 @@ var comments = (function(){
 			showall : function(){
 
 				showedall = true;
-				el.c.addClass('showedall')				
+
+				el.c.addClass('showedall')	
+							
 				actions.showhideLabel()	
 				
 				ed.showall = true
@@ -955,48 +965,33 @@ var comments = (function(){
 					renders.caption()	
 				}
 			},
+
+
 			showhideLabel : function(){
-				
 
 				if(!el.showall) return
+
+				var counts = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid + '.comments') || 0;
+
+				var lastchildren = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid + '.lastComment.children') || 0;
+
+				var needtoshow = false
+
+				if (counts - lastchildren > 1){
+					actions.hiddenCounts(counts - lastchildren - 1)
+
+					needtoshow = true
+				}
 
 				if (showedall){
 					el.showall.addClass('hidden')
 				}
-
-				else
-				{
-					var counts = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid + '.comments') || 0;
-
-					var lastchildren = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid + '.lastComment.children') || 0;
-
-					if (listpreview){
-						
-
-						if (counts - lastchildren > 1){
-							el.showall.removeClass('hidden')
-
-							actions.hiddenCounts(counts - lastchildren - 1)
-						}
-						else
-						{
-							el.showall.addClass('hidden')
-						}
+				else{
+					if (needtoshow ){
+						el.showall.removeClass('hidden')
 					}
-					else
-					{
-
-						if(counts > 5){
-							
-							el.showall.removeClass('hidden')
-
-							actions.hiddenCounts(counts - 5)
-						}
-						else
-						{
-							el.showall.addClass('hidden')
-						}
-
+					else{
+						el.showall.addClass('hidden')
 					}
 				}
 
@@ -1045,9 +1040,8 @@ var comments = (function(){
 
 					if(!comment) return
 
-					var dev = deep(app, 'platform.sdk.user.storage.'+comment.address+'.dev') || deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.dev');
-
-					if (comment.address == self.app.platform.sdk.address.pnet().address || dev){
+					
+					if (comment.address == self.app.platform.sdk.address.pnet().address){
 						return
 					}
 
@@ -1130,7 +1124,7 @@ var comments = (function(){
 			if(my) p = p * 20
 
 
-			var me = deep(self.app, 'platform.sdk.users.storage.' + self.user.address.value.toString('hex'))
+			var me = deep(self.app, 'platform.sdk.users.storage.' + (self.user.address.value || ''))
 
 			if (!my && me){
 
@@ -2185,7 +2179,7 @@ var comments = (function(){
 				if(!p.replace){
 
 					if (ed.commentPs){
-						comments = _.filter( comments || [], function(c){
+						comments = _.filter(comments || [], function(c){
 							if(c.id == ed.commentPs.commentid || c.id == ed.commentPs.parentid) return true
 						})
 					}
@@ -2203,13 +2197,29 @@ var comments = (function(){
 					var pg = currentstate.pagination[ pid || '0' ]
 
 					if(!ed.commentPs && !ed.reply){
+
 						comments = _.filter(comments , function(c, i){
-							if(i < pg * paginationcount){
+							if(i < pg * paginationcount && c.id != p.add){
 								return true
 							}
 						})
+
+						if(p.add){
+							var addcomment = _.find(p.comments, function(c){
+								return c.id == p.add
+							})
+
+							console.log('addcomment', addcomment, comments, p.add)
+
+							if (addcomment){
+								if(ed.fromtop)
+									comments.unshift(addcomment)
+								else	
+									comments.push(addcomment)
+							}
+						}
+
 					}
-					
 				}
 
 				p.el || (p.el = el.list)
@@ -2772,7 +2782,7 @@ var comments = (function(){
 				if(!_in.length) {
 					_in = null
 
-					if(!self.app.el.html.hasClass('allcontent')){
+					if(!self.app.el.html.hasClass('allcontent') || !isTablet()){
 						top = 65
 					} else {
 						top = 0

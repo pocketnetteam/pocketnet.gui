@@ -11,7 +11,7 @@ var post = (function () {
 
 	var Essense = function (p) {
 
-		var primary = deep(p, 'history') || deep(p, 'primary');
+		var primary = (deep(p, 'history')  && !p.inWnd) || deep(p, 'primary');
 
 
 		var el, share, ed, inicomments, eid = '', _repost = null, level = 0, external = null;
@@ -21,6 +21,19 @@ var post = (function () {
 		var authblock = false;
 
 		var actions = {
+
+			openPost : function(id, clbk){
+
+				self.closeContainer()
+
+				self.nav.api.load({
+					open : true,
+					href : 'post?s=' + id,
+					inWnd : true,
+					history : true
+				})
+
+			},
 
 			changeSavingStatus : function(shareId, deleted){
 
@@ -149,34 +162,36 @@ var post = (function () {
 
 			postscores: function (clbk) {
 
-				self.app.nav.api.load({
-					open: true,
-					href: 'postscores?p=' + share.txid,
-					inWnd: true,
-					history: true,
+				actions.stateAction(function(){
 
-					essenseData: {
-						share: share.txid,
+					self.app.nav.api.load({
+						open: true,
+						href: 'postscores?p=' + share.txid,
+						inWnd: true,
+						history: true,
 
-						like: function (share) {
-							renders.stars()
+						essenseData: {
+							share: share.txid,
 
-							if (ed.like) ed.like()
+							like: function (share) {
+								renders.stars()
+
+								if (ed.like) ed.like()
+							},
+
 						},
 
-					},
+						clbk: function () {
+							if (clbk)
+								clbk()
+						}
+					})
 
-					clbk: function () {
-						if (clbk)
-							clbk()
-					}
-				})
+				}, share.txid)
 
 			},
 
 			repost: function (shareid) {
-
-				
 
 				actions.stateAction(function () {
 
@@ -184,25 +199,6 @@ var post = (function () {
 						repost : shareid
 					})
 
-					/*var href = 'index';
-
-					if (isMobile()) href = 'share'
-
-					self.closeContainer()
-
-					self.nav.api.load({
-						open: true,
-						href: href + '?repost=' + shareid,
-						history: true,
-						handler: true,
-						essenseData: {
-
-						},
-
-						clbk: function (p) {
-
-						}
-					})*/
 				}, shareid)
 
 
@@ -224,7 +220,6 @@ var post = (function () {
 						self.nav.api.load({
 							open: true,
 							href: 'post?s=' + txid,
-							//history : true,
 
 							eid: 'nextpost' + txid,
 							el: nextel,
@@ -265,8 +260,6 @@ var post = (function () {
 				if (ed.video) url = 'https://' + self.app.options.url + '/' + (ed.hr || 'index?') + 'v=' + share.txid + '&mpost=true&video=1'
 
 				var m = share.message;
-
-				var nm = trimHtml(m, 130).replace(/ &hellip;/g, '...').replace(/&hellip;/g, '...');
 
 				var image = share.images[0];
 
@@ -365,7 +358,7 @@ var post = (function () {
 
 				var wh = el.wr.height();
 
-				var d = (h - wh) / 2
+				var d = Math.min((h - wh) / 2, h / 6)
 
 				if (d > 0) {
 					el.wr.css('margin-top', d + 'px')
@@ -462,9 +455,6 @@ var post = (function () {
 							if (wa) {
 
 								player.play()
-
-								console.log('self.sdk.videos.volume', self.sdk.videos.volume)
-								
 
 								if (player.setVolume)
 									player.setVolume(self.sdk.videos.volume)
@@ -1142,8 +1132,6 @@ var post = (function () {
 			share: function (clbk) {
 
 
-				console.log("RENDER SHARE")
-
 				var verticalVideo = false
 				var squareVideo = false
 
@@ -1163,6 +1151,8 @@ var post = (function () {
 					squareVideo = true
 				}
 
+				
+
 				self.shell(
 					{
 						turi: 'lenta',
@@ -1175,7 +1165,7 @@ var post = (function () {
 
 						data: {
 							share: share,
-							all: (ed.repost && ed.minimize) ? false : true,
+							all: (ed.repost && (ed.minimize || share.itisarticle()) ) ? false : true,
 							mestate: {},
 							repost: ed.repost,
 							fromempty: ed.fromempty,
@@ -1183,11 +1173,19 @@ var post = (function () {
 							squareVideo: squareVideo,
 							preview : ed.preview
 						},
+
+						
 					},
 					function (_p) {
+
 						if(!el.share) return
 
-						el.stars = el.share.find('.forstars');
+						el.stars = el.share.find('.forstars');	
+
+						if (ed.repost)
+							_p.el.find('.showMoreArticle, .openoriginal').on('click', function(){
+								actions.openPost(share.txid)
+							})
 
 						actions.position();
 
@@ -1201,7 +1199,8 @@ var post = (function () {
 
 							renders.url(function () {
 
-								renders.repost();
+								if(!el.share.find('.showMore').length) renders.repost();
+
 								actions.position();
 
 								renders.urlContent(function () {
@@ -1210,7 +1209,10 @@ var post = (function () {
 									actions.initVideo();
 
 									renders.images(function () {
+
+
 										if (!ed.repost) {
+
 											actions.position();
 
 											el.share.find('.complain').on('click', events.complain);
@@ -1228,8 +1230,7 @@ var post = (function () {
 
 											el.share.find('.txid').on('click', events.getTransaction);
 											el.share.find('.donate').on('click', events.donate);
-											el.share.find('.sharesocial')
-												.on('click', events.sharesocial);
+											
 											el.share
 												.find('.asubscribe')
 												.on('click', events.subscribe);
@@ -1238,15 +1239,31 @@ var post = (function () {
 												.on('click', events.unsubscribe);
 											el.share.find('.metmenu').on('click', events.metmenu);
 
-											
 
 											el.share
 												.find('.notificationturn')
 												.on('click', events.subscribePrivate);
 										}
 
+										el.share.find('.sharesocial').on('click', events.sharesocial);
+
+										el.share.find('.postscoresshow').on('click', events.postscores);
+
 										el.share.find('.postcontent').on('click', function(){
 											$(this).addClass('allshowed')
+										})
+
+										el.share.find('.openetc').on('click', function(){
+											
+
+											self.closeContainer()
+
+											self.nav.api.load({
+												open : true,
+												href : 'post?s=' + $(this).attr('share'),
+												inWnd : true,
+												history : true
+											})
 										})
 
 										if (clbk) clbk();
@@ -1257,24 +1274,20 @@ var post = (function () {
 							});
 						});
 
-
-						if(share.itisarticle){
-
-							renders.articlespart(_p.el)
-
+						if (share.itisarticle()){
+							renders.articlespart(_p.el.find('.sharearticle'))
 						}
+
+
+						
+						
 					},
 				);
 			},
-			articlespart : function(el){
+			articlespart : function(wr){
 
-				el.find('.article_carousel').each(function(){
-					self.app.platform.ui.carousel($(this))
-				})
+				self.app.platform.ui.articledecoration(wr, share, true)
 
-				el.find('.article_this_embed').each(function(){
-					self.app.platform.ui.embeding($(this))
-				})
 				
 			},
 			showmoreby: function () {
@@ -1381,7 +1394,6 @@ var post = (function () {
 				if (share.repost) {
 					self.shell(
 						{
-							turi: 'lenta',
 							name: 'repost',
 							el: el.c.find('.repostWrapper'),
 							data: {
@@ -1393,13 +1405,16 @@ var post = (function () {
 							},
 						},
 						function (_p) {
+
 							actions.position();
 
 							if (_p.el && _p.el.length) {
+
 								self.app.platform.papi.post(
 									share.repost,
 									_p.el.find('.repostShare'),
-									function (p) {
+									function (e, p) {
+
 										_repost = p;
 
 										actions.position();
@@ -1494,6 +1509,8 @@ var post = (function () {
 					if (clbk) clbk();
 				}
 			},
+
+			
 		};
 
 		var state = {
@@ -1709,8 +1726,6 @@ var post = (function () {
 
 					}
 
-					console.log("share", share)
-
 					if (share) {
 						self.app.platform.sdk.node.shares.users([share], function (l, error2) {
 
@@ -1791,7 +1806,6 @@ var post = (function () {
 
 				if (_repost) {
 					_repost.destroy();
-
 					_repost = null;
 				}
 
@@ -1803,14 +1817,12 @@ var post = (function () {
 
 				p.clbk(null, p);
 
-				console.log("INIT SHARE")
-
 				if(!share) return
 
 				state.load();
 
 				el = {};
-				el.c = p.el.find('#' + self.map.id);
+				el.c = p.el.find('.poctelc');
 				el.share = el.c.find('.share');
 				el.wr = el.c.find('.postWrapper')
 				el.wnd = el.c.closest('.wndcontent');
@@ -1818,6 +1830,7 @@ var post = (function () {
 				
 				if(share.itisarticle()){
 					el.c.closest('.wnd').addClass('articlewindow')
+					el.c.addClass('sharec')
 				}
 
 				make()

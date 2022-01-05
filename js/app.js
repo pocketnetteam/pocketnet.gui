@@ -947,7 +947,7 @@ Application = function(p)
 
 	}
 
-	self.chatposition= function(ab){
+	self.chatposition = function(ab){
 		var attr = ab ? 'above' : 'under'
 
 		self.el.html.attr('chatposition', attr)
@@ -1451,7 +1451,7 @@ Application = function(p)
 		if (moment().year() === moment(value).year()) 
 			return moment(value).local().format('D MMMM')
 
-		return moment(value).local().format('D.MMMM.YYYY')
+		return moment(value).local().format('D MMMM YYYY')
 	}
 
 	self.realtime = function(){
@@ -1943,8 +1943,6 @@ Application = function(p)
 			url.host = ''
 		}
 
-		console.log('url', url, _url)
-
 		var groups = {
 			p : ['pocketnet.app', 'bastyon.com'],
 			pt : ['test.pocketnet.app', 'test.bastyon.com']
@@ -1969,9 +1967,6 @@ Application = function(p)
 
 		self.ref = r;
 		localStorage['ref'] = self.ref
-
-
-		console.log('self.ref', self.ref)
 
 	}
 

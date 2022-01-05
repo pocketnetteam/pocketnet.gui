@@ -826,8 +826,8 @@
 				} 
 			}
 
-
-			app.chatposition(false)
+			if (app.chatposition)
+				app.chatposition(false)
 
 			if(content) success();
 			
@@ -1935,7 +1935,7 @@
             u8arr[n] = bstr.charCodeAt(n);
         }
         
-        return new File([u8arr], filename, {type:mime});
+        return new (window.wFile || window.File)([u8arr], filename, {type:mime});
     }
 
 	toDataURL = file => new Promise((resolve, reject) => {
@@ -4224,8 +4224,6 @@
 
 							return false
 						}
-
-						console.log('value1', value, !isNaN(Number(value)))
 
 						if(value.length > 1) {
 							if (value[0] == '0')
@@ -7814,8 +7812,6 @@
 				if (p.up1){
 
 					ap.url = 'https://pocketnet.app:8092/up'
-
-
 					//ap.url = app.imageServerup1;
 					delete data.Action;
 
@@ -9255,6 +9251,14 @@
 							fileext : "Invalid format of picture. Only png and jpeg are allowed"
 						}
 
+						if(p.app){
+
+							et = {
+								filesize : self.app.localization.e('photohassizegreater', fs),
+								fileext : self.app.localization.e('invalidformat')
+							}
+						}
+
 						if(error){
 							if (p.onError){
 								p.onError(error, file, et[error]);
@@ -10596,7 +10600,7 @@ Base64Helper = {
         var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
         var i = 0;
 
-        input = Base64._utf8_encode(input);
+        input = Base64Helper._utf8_encode(input);
 
         while (i < input.length) {
 
@@ -10616,8 +10620,8 @@ Base64Helper = {
             }
 
             output = output +
-                Base64._keyStr.charAt(enc1) + Base64._keyStr.charAt(enc2) +
-                Base64._keyStr.charAt(enc3) + Base64._keyStr.charAt(enc4);
+				Base64Helper._keyStr.charAt(enc1) + Base64Helper._keyStr.charAt(enc2) +
+				Base64Helper._keyStr.charAt(enc3) + Base64Helper._keyStr.charAt(enc4);
 
         }
 
@@ -10635,10 +10639,10 @@ Base64Helper = {
 
         while (i < input.length) {
 
-            enc1 = Base64._keyStr.indexOf(input.charAt(i++));
-            enc2 = Base64._keyStr.indexOf(input.charAt(i++));
-            enc3 = Base64._keyStr.indexOf(input.charAt(i++));
-            enc4 = Base64._keyStr.indexOf(input.charAt(i++));
+            enc1 = Base64Helper._keyStr.indexOf(input.charAt(i++));
+            enc2 = Base64Helper._keyStr.indexOf(input.charAt(i++));
+            enc3 = Base64Helper._keyStr.indexOf(input.charAt(i++));
+            enc4 = Base64Helper._keyStr.indexOf(input.charAt(i++));
 
             chr1 = (enc1 << 2) | (enc2 >> 4);
             chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
@@ -10655,7 +10659,7 @@ Base64Helper = {
 
         }
 
-        output = Base64._utf8_decode(output);
+        output = Base64Helper._utf8_decode(output);
 
         return output;
 
@@ -10958,7 +10962,7 @@ edjsHTML = function() {
 
 			var src = t.file && t.file.url ? t.file.url : t.file
 
-			return '<div class="article_image '+ cl.join(' ') +'"><img src="' + src + '" alt="' + _.escape(r) + '" /><div class="article_image_caption">'+_.escape(r)+'</div></div>'
+			return '<div class="article_image '+ cl.join(' ') +'"><img src="' + src + '" alt="' + _.escape(r) + '" /><div class="article_image_caption">'+_.escape(t.caption || '')+'</div></div>'
 
         },
 
@@ -11027,7 +11031,13 @@ edjsHTML = function() {
 				return '<div class="article_this_embed" href="'+_.escape(t.link)+'"></div>'
 			}
 			else{
-				return '<a href="'+t.link+'" donottrust="true"><div class="article_link_custom"><div class="article_link_custom_image"><div class="img" image="' + _.escape(deep(t, 'meta.image.url'))+'"></div></div><div class="article_link_custom_content"><div class="article_link_custom_title">' + _.escape(deep(t, 'meta.title') || url.host || 'Undefined Link') + '</div><div class="article_link_custom_description">' + _.escape(deep(t, 'meta.description') || '') + '</div><div class="article_link_custom_href">' + _.escape(t.link) + '</div></div></div></a>'
+
+				var img = ''
+
+				if (deep(t, 'meta.image.url'))
+					img = '<div class="article_link_custom_image"><div class="img" image="' + _.escape(deep(t, 'meta.image.url'))+'"></div></div>'
+
+				return '<a href="'+t.link+'" donottrust="true"><div class="article_link_custom">'+img+'<div class="article_link_custom_content"><div class="article_link_custom_title">' + _.escape(deep(t, 'meta.title') || url.host || 'Undefined Link') + '</div><div class="article_link_custom_description">' + _.escape(deep(t, 'meta.description') || '') + '</div><div class="article_link_custom_href">' + _.escape(t.link) + '</div></div></div></a>'
 			}
 
 

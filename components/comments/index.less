@@ -107,12 +107,6 @@
 						display: block;
 					}
 
-					/*&:nth-last-child(2),
-					&:nth-last-child(3),
-					&:nth-last-child(4),
-					&:nth-last-child(5){
-						display: none;
-					}*/
 				}
 			}
 		}
@@ -259,7 +253,6 @@
 	
 	&.fromtop{
 		.list{
-			border-top : 1px solid @color-gray-slight;
 			border-bottom : 0;
 		}
 	}
@@ -333,9 +326,13 @@
 		}
 				
 		.comment{
-			border-bottom : 1px solid @color-gray-slight;
+			border-top : 1px solid @color-gray-slight;
 			.transition(0.9s, color);
 			position : relative;
+
+			&:nth-child(1){
+				border-top : 0;
+			}
 
 			&.mycomment,
 			&.dev,
@@ -371,13 +368,6 @@
 
 				display: none;
 
-				&:nth-last-child(1),
-				&:nth-last-child(2),
-				&:nth-last-child(3),
-				&:nth-last-child(4),
-				&:nth-last-child(5){
-					display: block;
-				}
 			}
 
 			.commentBody{
@@ -894,44 +884,45 @@
 		.imagesContainer{
 			&.one{
 				.imagesWrapper{
-					width: 300px;
-					height: 300px;
+					width: 100px;
+					height: 100px;
 
 					&.w2{
-						width: 500px
+						width: 120px
 					}
 
 					&.h2{
-						width: 300px;
+						width: 120px;
 					}
 				}
 			}
 
 			&.two{
 				.imagesWrapper{
-					width: 200px;
-					height: 200px;
+					width: 70px;
+					height: 70px;
 
 					&.w2{
-						width: 300px
+						width: 140px
 					}
 
 					&.h2{
-						width: 200px; 
+						width: 120px; 
 					}
 				}
 			}
 
 			&.four{
 				.imagesWrapper{
-					width: 200px;
-					height: 200px;
+					width: 70px;
+					height: 70px;
+
 					&.w2{
-						width: 300px
+						width: 140px
 					}
 
 					&.h2{
-						width: 200px; 
+						width: 120px; 
 					}
 				}
 			}

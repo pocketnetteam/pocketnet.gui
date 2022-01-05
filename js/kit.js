@@ -1358,11 +1358,20 @@ Share = function(lang){
 	}
 
 	self.serialize = function(){
+
+		var textvalue = self.message.v
+
+		var articleversion2 = self.settings.v == 'a' && self.settings.version && self.settings.version >= 2
+
+		if (articleversion2){
+			textvalue = Base64Helper.encode(JSON.stringify(textvalue))
+		}
+
 		
 		return encodeURIComponent(self.url.v) 
 		
 		+ encodeURIComponent(self.caption.v) 
-		+ encodeURIComponent(self.message.v) 
+		+ (articleversion2 ? textvalue : encodeURIComponent(textvalue))
 
 		+ _.map(self.tags.v, function(t){ return encodeURIComponent(t) }).join(',')
 		+ self.images.v.join(',')
@@ -1399,7 +1408,7 @@ Share = function(lang){
 		var articleversion2 = self.settings.v == 'a' && self.settings.version && self.settings.version >= 2
 
 		if (articleversion2){
-			textvalue = JSON.stringify(textvalue)
+			textvalue = Base64Helper.encode(JSON.stringify(textvalue))
 		}
 
 		if (extend){
@@ -1456,7 +1465,7 @@ Share = function(lang){
 
 		if (articleversion2){
 			try{
-				textvalue = JSON.parse(textvalue)
+				textvalue = JSON.parse(Base64Helper.decode(textvalue))
 			}
 			catch(e) {
 				textvalue = ''
@@ -2098,7 +2107,7 @@ pShare = function(){
 
 		if (articleversion2){
 			try{
-				textvalue = JSON.parse(textvalue)
+				textvalue = JSON.parse(Base64Helper.decode(textvalue))
 			}
 			catch(e) {
 				textvalue = ''

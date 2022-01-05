@@ -1308,7 +1308,7 @@ var author = (function(){
 
 							self.app.el.html.removeClass('allcontent')
 
-							self.nav.api.go({
+							self.nav.api.load({
 								href : 'userpage?id=test',
 								history : true,
 								open : true,
@@ -1370,13 +1370,11 @@ var author = (function(){
 					renders.report(reports[r], null, true)
 					renders.menu()
 				}
-
 				
 
 			},
 
 			authclbk : function(){
-				
 
 				var active = _.find(reports, function(r){
 					return r.active
@@ -1391,7 +1389,6 @@ var author = (function(){
 
 			getdata : function(clbk, settings){
 				self.app.el.html.addClass('allcontent')
-				
 
 				self.app.platform.sdk.search.clear()
 

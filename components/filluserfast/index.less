@@ -856,25 +856,24 @@ html.stblack{
 }
 
 .wndcontent{
-	.categories{
+	#filluserfast{
+		.categories{
 
-		.welcome_text{
-			margin-top: @rhythm!important
-		}
-		.cats{
-			margin-top: 15px!important;
-			max-height: 285px;
-			overflow-y: scroll;
-		}
+			.welcome_text{
+				margin-top: @rhythm!important
+			}
+		
+			.nextStepButtons{
+				position: fixed;
+				bottom: 30px;
+				left: 0;
+				right: 0;
+			}
 
-		.nextStepButtons{
-			position: absolute;
-			bottom: 30px;
-			left: 0;
-			right: 0;
+		
 		}
-
 	}
+	
 
 }
 
@@ -883,20 +882,45 @@ html.stblack{
 		width: 100%;
 	}
 
-	.categories {
+	#filluserfast{
 
-		.cats{
-			padding: @rhythm;
-		}
+		.mWrapper {
+			.categories {
 
-		.welcome_text{
-			font-size: 35px;
+				.cats{
+					padding: @rhythm;
+					justify-content: space-between;
+				}
+		
+				.welcome_text{
+					font-size: 35px;
+					margin-top : 0;
+				}
+		
+			}
+			
+			.cat{
+				font-size: .8em!important;
+			}
 		}
 		
-		.choosethemes_text{
-			font-size: 23px!important;
-		}
-	}.cat{
-		font-size: .8em!important;
 	}
+
+	.wndcontent{
+		#filluserfast{
+			.categories{
+			
+				.nextStepButtons{
+					position: static;
+				}
+	
+			
+			}
+
+			
+		}
+		
+	
+	}
+	
 }

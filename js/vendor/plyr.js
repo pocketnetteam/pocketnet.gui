@@ -9184,7 +9184,7 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
       var localVideo = self.app.platform.sdk.localshares.getVideo(clear_peertube_id);
 
 
-      if (localVideo != undefined && localVideo.infos && localVideo.video) {
+      if (localVideo != undefined && !localVideo.infos.videoDetails) {
 
         var new_target = document.createElement('video');
         target.parentNode.replaceChild(new_target, target);
