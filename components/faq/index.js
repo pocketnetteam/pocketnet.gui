@@ -55,6 +55,276 @@ var faq = (function(){
 			
 				
 				},
+
+				{
+				
+					name : 'Pocketcoin',
+					id : 'pocketcoin',
+				
+					group : [
+				
+						
+				
+						 {
+							id : 'app-store',
+							q : 'What can be expected to purchase with PKOIN?',
+							a : '<div>PKOIN has a multitude of uses on Bastyon. First, 50 PKOIN in your account removes all posting limitations and allows you to load video. PKOIN can be used to boost comments, making your comments visible to everyone. The PKOIN from boosted comments goes to the blogger, and bloggers should reply or feature such comments to encourage such boosts. You can boost a post to move it up in the feed. It is used for staking in nodes, you can run a node and earn more PKOIN by staking PKOIN. It will be used in a Decentralized Ad Marketplace with 100% of proceeds going to bloggers. It will also be used to buy special wallpaper profiles, animated profile images etc. </div>',
+						},
+				
+				
+						{
+							id : 'pocketcoinstock',
+							q : 'Is Pocketcoin like a share of stock in '+self.app.meta.fullname+'?',
+							a : '<div>Definitely no. '+self.app.meta.fullname+' is not even a corporation and does not have any ownership. It is an open source code that anyone can copy and run. Pocketcoin is a token that facilitates value exchange, specifically advertising transactions. In addition, '+self.app.meta.fullname+' will include a marketplace where goods and services will be sold directly for Pocketcoin</div>',
+						},
+				
+						{
+							id : 'pocketcoinbuy',
+							q : 'Can I buy additional Pocketcoin?',
+							a : '<div>Yes, currently you can buy Pocketcoin on the following exchanges: DigiFinex, Bitforex, Mercatox. You can also buy it for 19 different cryptos at https://pkoin.net/ and there is a Category within Bastyon called PKOIN/Peer-to-Peer where you can buy and sell it with other users. </div>',
+						},
+				
+						{
+							id : 'pocketcoinbuyfiat',
+							q : 'Can I buy Pocketcoin for US Dollars or other fiat currency?',
+							a : '<div>Yes, you can buy it under the category PKOIN/Peer-to-Peer or through a company called Indacoin at https://buy.pkoin.indacoin.io/ Indacoin has nothing to do with Bastyon, they are just selling PKOIN for credit cards after buying it on exchanges.</div>',
+						},
+						
+						{
+							id : 'pocketcoinbuyfiat',
+							q : 'Why do I need to buy Pocketcoin?',
+							a : "<div>Bastyon has no backing by bankers or venture capitalists, it is a decentralized social platform that is supported by PKOIN. When you use Bastyon, you are using users' nodes, video nodes, they all have to pay for computers, internet and electricity. Bloggers need to earn for content. The only way Bastyon can function is if users own and support PKOIN. So, buying PKOIN is a way to support decentralization and freedom. However, there is one other important reason to own Pocketcoin. Soon it is very possible that even having a bank account will be tied to submitting your freedom, to some QR code. Pocketcoin is not tied to your name or passport, it is a way to do commerce in a world where financial censorship reigns, it might be the only way to buy food soon without a certain certificate or a QR code. So, buy some PKOIN for freedom. </div>",
+						}
+					]
+				},
+				{
+				
+					name : 'How I can buy PKOIN?',
+					id : 'buy-pkoin',
+				
+					group : [
+				
+						{
+							id : 'buy-pkoin1',
+							q : '  ',
+							a : 'You can buy PKOIN in the following ways: <br>	Select PKOIN/Peer-to-Peer Category on the right and look for ads, then connect in chat <br> <a target="_blank" href="https://www.bitforex.com/en/spot/pkoin_usdt">https://www.bitforex.com/en/spot/pkoin_usdt</a> <br> <a target="_blank" href="https://www.digifinex.com/en-ww/trade/USDT/PKOIN">https://www.digifinex.com/en-ww/trade/USDT/PKOIN</a>  <br> <a target="_blank" href="https://pkoin.net/">https://pkoin.net/</a> - you can buy PKOIN for cryptocurrencies <br>		<a target="_blank" href="https://buy.pkoin.indacoin.io/">https://buy.pkoin.indacoin.io/</a> - you can buy PKOIN for credit cards.',
+							img: '<img src="img/per-to-per2.jpg" alt="" />'
+						},
+						{
+							id : 'buy-pkoin2',
+							q : 'Pkoin.net  ',
+							a : 'Choose a cryptocurrency and enter amount of the crypto into the left field. After that, enter your own PKOIN wallet address.',
+							img: '<img src="img/buy-pkoin2.jpg" alt="" />'
+						},
+						{
+							id : 'buy-pkoin3',
+							q : '  ',
+							a : 'Your PKOIN wallet address is placed in your account. <br>For looking that Click your avatar icon into the right top corner',
+							img: '<img src="img/buy-pkoin3.jpg" alt="" />'
+						},
+						{
+							id : 'buy-pkoin4',
+							q : '  ',
+							a : 'Then click to PKOIN address for copy',
+							img: '<img src="img/buy-pkoin4.jpg" alt="" />'
+						},
+						{
+							id : 'buy-pkoin5',
+							q : '  ',
+							a : 'Then, you should to enter your PKOIN wallet address in the above field and click “Purchase” button.',
+							img: '<img src="img/buy-pkoin5.jpg" alt="" />'
+						},
+						{
+							id : 'buy-pkoin6',
+							q : '  ',
+							a : 'After that you should to send your BTC (or another crypto which was chosen) to this address',
+							img: '<img src="img/buy-pkoin6.jpg" alt="" />'
+						},
+						{
+							id : 'buy-pkoin7',
+							q : ' <a href="Buy.pkoin.indacoin.io">Buy.pkoin.indacoin.io</a>     ',
+							a : 'First step – choose currency, enter amount, your email address and PKOIN address.  Then click “Buy PKOIN ” button.',
+							img: '<img src="img/buy-pkoin7.jpg" alt="" />'
+						},
+						{
+							id : 'buy-pkoin8',
+							q : '  ',
+							a : 'Then you can see “Buy PKOIN with credit or debit card” window. Click “Continue” button',
+							img: '<img src="img/buy-pkoin8.jpg" alt="" />'
+						},
+						{
+							id : 'buy-pkoin9',
+							q : '  ',
+							a : 'Then, enter your Address, ZIP and your Country',
+							img: '<img src="img/buy-pkoin9.jpg" alt="" />'
+						},
+						{
+							id : 'buy-pkoin10',
+							q : '  ',
+							a : 'Then enter your Full Name, Country, Date of berth',
+							img: '<img src="img/buy-pkoin10.jpg" alt="" />'
+						},
+						{
+							id : 'buy-pkoin11',
+							q : '  ',
+							a : 'Then, enter your card data and click “Continue” button',
+							img: '<img src="img/buy-pkoin11.jpg" alt="" />'
+						},
+						
+						
+						
+						
+					]
+				
+				},
+
+				{
+				
+					name : 'Video',
+					id : 'video',
+				
+					group : [
+						{
+							id : 'savevideo',
+							q : 'Where do you save the video content?',
+							a : '<div>'+self.app.meta.fullname+' uses a modified open source platform called PeerTube, connected to the Pocketnet blockchain and the Bastyon app. PeerTube is fully integrated with '+self.app.meta.fullname+' authorization, each video server is registered on the blockchain.</div>',
+						},
+				
+						{
+							id : 'permissions',
+							q : 'Who can load video in Bastyon?',
+							a : '<div> Bastyon does not have centralized servers or venture capital financing, all video is stored on servers maintained by users. Therefore, we cannot allow everyone to load video, servers will fill up quickly. To load video you need to have 5 PKOIN (500 MB) or 50 PKOIN (5 GB) in your account. You can buy PKOIN from other users if you select a category PKOIN/Peer-to-Peer. </div>',
+						},
+						{
+							id : 'stats',
+							q : 'Where can I see my video stats?',
+							a : '<div> Go to your profile and see My Videos. </div> ',
+						},
+						 {
+							id : 'technology',
+							q : 'What player do you use to play the video?',
+							a : '<div> Bastyon has its own player, which is a significantly modified version of PeerTube. Same as PeerTube it uses WebTorrent technology to reduce the load on the server. This means that users watching the video are sharing it. Note, that in some cases it means users can see IP addresses of each other. Bastyon servers do not have any mechanism to record these IP addresses, however, if you really care about exposing your IP address, you should use a reliable VPN provider. If you want to minimize any peer-to-peer sharing, you can use download video function in Bastyon. </div> ',
+						},
+						{
+							id : 'taking time',
+							q : 'Why is the video taking time to upload?',
+							a : "<div> Again, Bastyon does not have the resources the Google has. Video needs to be loaded to one of the video nodes and it also needs to be transcoded. Remember, YouTube is not free, it extracts value by using your private information and monetizing it. Bastyon is run by the community and a little bit of a delay is a small price to pay for privace and freedom. Besides, Bastyon devs have made the process of loading super-easy and much more robust than other freedom oriented platforms (they frequently don't even do transcoding for different qualities). </div>",
+						},
+				
+				
+					]
+				
+				},
+
+				
+				
+				
+				
+				{
+				
+					name : 'Uploading videos',
+					id : 'Uploading',
+				
+					group : [
+				
+						{
+							id : 'Uploading1',
+							q : '  ',
+							a : 'Important: The uploading video function is available for users who have at least 5 PKOIN, or high enough rating. If you have 50 PKOIN you can upload 4 Gb video per day, with 50 PKOIN you can upload up to 5 GB. Note, you do not spend PKOIN, it just has to be in your account to verify that you are not a bot.',
+							img: ''
+						},
+						{
+							id : 'Uploading2',
+							q : 'Click to the “What`s new?” section on the “All Posts” tab.',
+							a : '',
+							img: '<img src="img/Uploading2.jpg" alt="" />'
+						},
+						{
+							id : 'Uploading3',
+							q : 'Then, click “Upload Video” button and in the popup click “Select video file” button. After that, chose necessary video file from your PC and wait for uploading to be finished.',
+							a : '',
+							img: '<img src="img/Uploading3.jpg" alt="" />',
+							
+						},
+						{
+							id : 'Uploading4',
+							q : '',
+							a : '',
+							img: '<img src="img/Uploading4.jpg" alt="" />'
+						},
+						{
+							id : 'Uploading5',
+							q : 'Click to the “What`s new?” section on the “All Posts” tab.',
+							a : '',
+							img: '<img src="img/Uploading5.jpg" alt="" />'
+						},
+						{
+							id : 'Uploading6',
+							q : 'Then, when uploading ends, add title, description, category and choose visibility for your post: <br>			“Visible for everyone”, <br> “Visible only for subscribers”, <br> “Visible only for Bastyon users”, <br> After that, click “Post” button.',
+							a : '',
+							img: '<img src="img/Uploading6.jpg" alt="" />'
+						},
+						{
+							id : 'Uploading7',
+							q : '',
+							a : '',
+							img: '<img src="img/Uploading7.jpg" alt="" />'
+						},
+						
+						
+					]
+				
+				},
+				
+				{
+				
+					name : 'My Videos',
+					id : 'Myvideos',
+				
+					group : [
+				
+						{
+							id : 'Myvideos1',
+							q : '  ',
+							a : 'Click your avatar icon in the top right corner',
+							img: '<img src="img/Myvideos1.jpg" alt="" />'
+						},
+						{
+							id : 'Myvideos2',
+							q : ' ',
+							a : 'Then, click “Manage” button',
+							img: '<img src="img/Myvideos2.jpg" alt="" />'
+						},
+						{
+							id : 'Myvideos3',
+							q : '  ',
+							a : 'Then, click “My Videos”',
+							img: '<img src="img/Myvideos3.jpg" alt="" />'
+						},
+						{
+							id : 'Myvideos4',
+							q : '  ',
+							a : 'Then, you can see your video cabinet, which contain information about your uploaded videos, average rating, video views and video settings.',
+							img: '<img src="img/Myvideos4.jpg" alt="" />'
+						},
+						{
+							id : 'Myvideos5',
+							q : '  ',
+							a : 'If you want to change the video description, name or a preview image, click the three dots and choose necessary action.',
+							img: '<img src="img/Myvideos5.jpg" alt="" />'
+						},
+						{
+							id : 'Myvideos6',
+							q : '  ',
+							a : 'On the top of the video cabinet page you can see your Daily Uploading Quota, Total Referral Users, Total Ratings, Total Video Views, Unique Raters, Search Field and also you can sort your videos.',
+							img: '<img src="img/Myvideos6.jpg" alt="" />'
+						},
+	
+						
+						
+					]
+				
+				},
 				
 				{
 				
@@ -178,87 +448,6 @@ var faq = (function(){
 				
 				
 				},
-					{
-				
-					name : 'Video',
-					id : 'video',
-				
-					group : [
-						{
-							id : 'savevideo',
-							q : 'Where do you save the video content?',
-							a : '<div>'+self.app.meta.fullname+' uses a modified open source platform called PeerTube, connected to the Pocketnet blockchain and the Bastyon app. PeerTube is fully integrated with '+self.app.meta.fullname+' authorization, each video server is registered on the blockchain.</div>',
-						},
-				
-						{
-							id : 'permissions',
-							q : 'Who can load video in Bastyon?',
-							a : '<div> Bastyon does not have centralized servers or venture capital financing, all video is stored on servers maintained by users. Therefore, we cannot allow everyone to load video, servers will fill up quickly. To load video you need to have 5 PKOIN (500 MB) or 50 PKOIN (5 GB) in your account. You can buy PKOIN from other users if you select a category PKOIN/Peer-to-Peer. </div>',
-						},
-						{
-							id : 'stats',
-							q : 'Where can I see my video stats?',
-							a : '<div> Go to your profile and see My Videos. </div> ',
-						},
-						 {
-							id : 'technology',
-							q : 'What player do you use to play the video?',
-							a : '<div> Bastyon has its own player, which is a significantly modified version of PeerTube. Same as PeerTube it uses WebTorrent technology to reduce the load on the server. This means that users watching the video are sharing it. Note, that in some cases it means users can see IP addresses of each other. Bastyon servers do not have any mechanism to record these IP addresses, however, if you really care about exposing your IP address, you should use a reliable VPN provider. If you want to minimize any peer-to-peer sharing, you can use download video function in Bastyon. </div> ',
-						},
-						{
-							id : 'taking time',
-							q : 'Why is the video taking time to upload?',
-							a : "<div> Again, Bastyon does not have the resources the Google has. Video needs to be loaded to one of the video nodes and it also needs to be transcoded. Remember, YouTube is not free, it extracts value by using your private information and monetizing it. Bastyon is run by the community and a little bit of a delay is a small price to pay for privace and freedom. Besides, Bastyon devs have made the process of loading super-easy and much more robust than other freedom oriented platforms (they frequently don't even do transcoding for different qualities). </div>",
-						},
-				
-				
-					]
-				
-				},
-				
-				
-				
-				{
-				
-					name : 'Pocketcoin',
-					id : 'pocketcoin',
-				
-					group : [
-				
-						
-				
-						 {
-							id : 'app-store',
-							q : 'What can be expected to purchase with PKOIN?',
-							a : '<div>PKOIN has a multitude of uses on Bastyon. First, 50 PKOIN in your account removes all posting limitations and allows you to load video. PKOIN can be used to boost comments, making your comments visible to everyone. The PKOIN from boosted comments goes to the blogger, and bloggers should reply or feature such comments to encourage such boosts. You can boost a post to move it up in the feed. It is used for staking in nodes, you can run a node and earn more PKOIN by staking PKOIN. It will be used in a Decentralized Ad Marketplace with 100% of proceeds going to bloggers. It will also be used to buy special wallpaper profiles, animated profile images etc. </div>',
-						},
-				
-				
-						{
-							id : 'pocketcoinstock',
-							q : 'Is Pocketcoin like a share of stock in '+self.app.meta.fullname+'?',
-							a : '<div>Definitely no. '+self.app.meta.fullname+' is not even a corporation and does not have any ownership. It is an open source code that anyone can copy and run. Pocketcoin is a token that facilitates value exchange, specifically advertising transactions. In addition, '+self.app.meta.fullname+' will include a marketplace where goods and services will be sold directly for Pocketcoin</div>',
-						},
-				
-						{
-							id : 'pocketcoinbuy',
-							q : 'Can I buy additional Pocketcoin?',
-							a : '<div>Yes, currently you can buy Pocketcoin on the following exchanges: DigiFinex, Bitforex, Mercatox. You can also buy it for 19 different cryptos at https://pkoin.net/ and there is a Category within Bastyon called PKOIN/Peer-to-Peer where you can buy and sell it with other users. </div>',
-						},
-				
-						{
-							id : 'pocketcoinbuyfiat',
-							q : 'Can I buy Pocketcoin for US Dollars or other fiat currency?',
-							a : '<div>Yes, you can buy it under the category PKOIN/Peer-to-Peer or through a company called Indacoin at https://buy.pkoin.indacoin.io/ Indacoin has nothing to do with Bastyon, they are just selling PKOIN for credit cards after buying it on exchanges.</div>',
-						},
-						
-						{
-							id : 'pocketcoinbuyfiat',
-							q : 'Why do I need to buy Pocketcoin?',
-							a : "<div>Bastyon has no backing by bankers or venture capitalists, it is a decentralized social platform that is supported by PKOIN. When you use Bastyon, you are using users' nodes, video nodes, they all have to pay for computers, internet and electricity. Bloggers need to earn for content. The only way Bastyon can function is if users own and support PKOIN. So, buying PKOIN is a way to support decentralization and freedom. However, there is one other important reason to own Pocketcoin. Soon it is very possible that even having a bank account will be tied to submitting your freedom, to some QR code. Pocketcoin is not tied to your name or passport, it is a way to do commerce in a world where financial censorship reigns, it might be the only way to buy food soon without a certain certificate or a QR code. So, buy some PKOIN for freedom. </div>",
-						}
-					]
-				},
 				{
 				
 					name : 'Privacy',
@@ -316,11 +505,11 @@ var faq = (function(){
 							q : 'Specifics of curation on '+self.app.meta.fullname+'.',
 							a : '<div> Currently the moderation of content is done through 1 star votes by high reputation  users. When reputation reaches -30, the access to the account is restricted. However, there is a completely new moderation algorithm that will be released by the end of 2021. Under the new algorithms, there will be an option to flag a user or a post by any high rep user, but that is not goign to affect the account directly. After certain numbers of flags a lottery on the blockchain will be drawn and a group of juror moderators will be chosen for that account. Jurors have to agree that this user posted pornography, narcotics or a direct threat to violence. Any other opinion or a disagreement is not a grounds for flagging or any sanctions.</div> ',
 						},
-						{
-							id : 'racism',
-							q : 'Important Note on Racism.',
-							a : '<div>Free thought and free speech is under attack on mainstream social platforms and in the media. We need to speak the truth and this platform is non-corporate and decentralized for that very reason. But we ask everyone make your point without attacking people&rsquo;s nationality or race. You can make your point based on evidence. We cannot afford to turn '+self.app.meta.fullname+' into a marginal platform. Speak the truth, but please avoid racism and attacks against specific nationalities on the whole. We know that Silicon Valley and MSM has turned the issue of racism into their playing card and they constantly cry wolf. Even more the reason for us to be measured and evidence based and not let them smear us with that. If we are not, we are not allowing most of the population to weigh the evidence of MSM corruption presented on '+self.app.meta.fullname+'. Please keep that in mind, so that free speech can thrive and we can beat the facebokks of the world.</div><div>Ultimately, it is the community that will determine the direction of the platform. Having a bunch of snowflakes that complain about stuff that offends them is equally as bad as when people want to voice direct violent threats. However, the first indication is that early users of the platform are generally intelligent and evidence based, so the future looks incredibly bright. '+self.app.meta.fullname+' team has noticed after a few days of the beta test, that we stopped reading even alternative news, because there was so much interesting content on '+self.app.meta.fullname+'. Keep it up!</div><div>Please get involved in the discussion on these topics. This is a community platform. We are always eager to improve transparency of the platform and you should let us know how we can improve our content curation and policing. You can make posts on this topic under the tag Bastyon/Pocketnet.</div>',
-						},
+						// {
+						// 	id : 'racism',
+						// 	q : 'Important Note on Racism.',
+						// 	a : '<div>Free thought and free speech is under attack on mainstream social platforms and in the media. We need to speak the truth and this platform is non-corporate and decentralized for that very reason. But we ask everyone make your point without attacking people&rsquo;s nationality or race. You can make your point based on evidence. We cannot afford to turn '+self.app.meta.fullname+' into a marginal platform. Speak the truth, but please avoid racism and attacks against specific nationalities on the whole. We know that Silicon Valley and MSM has turned the issue of racism into their playing card and they constantly cry wolf. Even more the reason for us to be measured and evidence based and not let them smear us with that. If we are not, we are not allowing most of the population to weigh the evidence of MSM corruption presented on '+self.app.meta.fullname+'. Please keep that in mind, so that free speech can thrive and we can beat the facebokks of the world.</div><div>Ultimately, it is the community that will determine the direction of the platform. Having a bunch of snowflakes that complain about stuff that offends them is equally as bad as when people want to voice direct violent threats. However, the first indication is that early users of the platform are generally intelligent and evidence based, so the future looks incredibly bright. '+self.app.meta.fullname+' team has noticed after a few days of the beta test, that we stopped reading even alternative news, because there was so much interesting content on '+self.app.meta.fullname+'. Keep it up!</div><div>Please get involved in the discussion on these topics. This is a community platform. We are always eager to improve transparency of the platform and you should let us know how we can improve our content curation and policing. You can make posts on this topic under the tag Bastyon/Pocketnet.</div>',
+						// },
 				
 				
 					]
@@ -439,190 +628,7 @@ var faq = (function(){
 					]
 				
 				},
-				{
 				
-					name : 'Uploading videos',
-					id : 'Uploading',
-				
-					group : [
-				
-						{
-							id : 'Uploading1',
-							q : '  ',
-							a : 'Important: The uploading video function is available for users who have at least 5 PKOIN, or high enough rating. If you have 50 PKOIN you can upload 4 Gb video per day, with 50 PKOIN you can upload up to 5 GB. Note, you do not spend PKOIN, it just has to be in your account to verify that you are not a bot.',
-							img: ''
-						},
-						{
-							id : 'Uploading2',
-							q : 'Click to the “What`s new?” section on the “All Posts” tab.',
-							a : '',
-							img: '<img src="img/Uploading2.jpg" alt="" />'
-						},
-						{
-							id : 'Uploading3',
-							q : 'Then, click “Upload Video” button and in the popup click “Select video file” button. After that, chose necessary video file from your PC and wait for uploading to be finished.',
-							a : '',
-							img: '<img src="img/Uploading3.jpg" alt="" />',
-							
-						},
-						{
-							id : 'Uploading4',
-							q : '',
-							a : '',
-							img: '<img src="img/Uploading4.jpg" alt="" />'
-						},
-						{
-							id : 'Uploading5',
-							q : 'Click to the “What`s new?” section on the “All Posts” tab.',
-							a : '',
-							img: '<img src="img/Uploading5.jpg" alt="" />'
-						},
-						{
-							id : 'Uploading6',
-							q : 'Then, when uploading ends, add title, description, category and choose visibility for your post: <br>			“Visible for everyone”, <br> “Visible only for subscribers”, <br> “Visible only for Bastyon users”, <br> After that, click “Post” button.',
-							a : '',
-							img: '<img src="img/Uploading6.jpg" alt="" />'
-						},
-						{
-							id : 'Uploading7',
-							q : '',
-							a : '',
-							img: '<img src="img/Uploading7.jpg" alt="" />'
-						},
-						
-						
-					]
-				
-				},
-				{
-				
-					name : 'How I can buy PKOIN?',
-					id : 'buy-pkoin',
-				
-					group : [
-				
-						{
-							id : 'buy-pkoin1',
-							q : '  ',
-							a : 'You can buy PKOIN in the following ways: <br>	Select PKOIN/Peer-to-Peer Category on the right and look for ads, then connect in chat <br> <a target="_blank" href="https://www.bitforex.com/en/spot/pkoin_usdt">https://www.bitforex.com/en/spot/pkoin_usdt</a> <br> <a target="_blank" href="https://www.digifinex.com/en-ww/trade/USDT/PKOIN">https://www.digifinex.com/en-ww/trade/USDT/PKOIN</a>  <br> <a target="_blank" href="https://pkoin.net/">https://pkoin.net/</a> - you can buy PKOIN for cryptocurrencies <br>		<a target="_blank" href="https://buy.pkoin.indacoin.io/">https://buy.pkoin.indacoin.io/</a> - you can buy PKOIN for credit cards.',
-							img: '<img src="img/per-to-per2.jpg" alt="" />'
-						},
-						{
-							id : 'buy-pkoin2',
-							q : 'Pkoin.net  ',
-							a : 'Choose a cryptocurrency and enter amount of the crypto into the left field. After that, enter your own PKOIN wallet address.',
-							img: '<img src="img/buy-pkoin2.jpg" alt="" />'
-						},
-						{
-							id : 'buy-pkoin3',
-							q : '  ',
-							a : 'Your PKOIN wallet address is placed in your account. <br>For looking that Click your avatar icon into the right top corner',
-							img: '<img src="img/buy-pkoin3.jpg" alt="" />'
-						},
-						{
-							id : 'buy-pkoin4',
-							q : '  ',
-							a : 'Then click to PKOIN address for copy',
-							img: '<img src="img/buy-pkoin4.jpg" alt="" />'
-						},
-						{
-							id : 'buy-pkoin5',
-							q : '  ',
-							a : 'Then, you should to enter your PKOIN wallet address in the above field and click “Purchase” button.',
-							img: '<img src="img/buy-pkoin5.jpg" alt="" />'
-						},
-						{
-							id : 'buy-pkoin6',
-							q : '  ',
-							a : 'After that you should to send your BTC (or another crypto which was chosen) to this address',
-							img: '<img src="img/buy-pkoin6.jpg" alt="" />'
-						},
-						{
-							id : 'buy-pkoin7',
-							q : ' <a href="Buy.pkoin.indacoin.io">Buy.pkoin.indacoin.io</a>     ',
-							a : 'First step – choose currency, enter amount, your email address and PKOIN address.  Then click “Buy PKOIN ” button.',
-							img: '<img src="img/buy-pkoin7.jpg" alt="" />'
-						},
-						{
-							id : 'buy-pkoin8',
-							q : '  ',
-							a : 'Then you can see “Buy PKOIN with credit or debit card” window. Click “Continue” button',
-							img: '<img src="img/buy-pkoin8.jpg" alt="" />'
-						},
-						{
-							id : 'buy-pkoin9',
-							q : '  ',
-							a : 'Then, enter your Address, ZIP and your Country',
-							img: '<img src="img/buy-pkoin9.jpg" alt="" />'
-						},
-						{
-							id : 'buy-pkoin10',
-							q : '  ',
-							a : 'Then enter your Full Name, Country, Date of berth',
-							img: '<img src="img/buy-pkoin10.jpg" alt="" />'
-						},
-						{
-							id : 'buy-pkoin11',
-							q : '  ',
-							a : 'Then, enter your card data and click “Continue” button',
-							img: '<img src="img/buy-pkoin11.jpg" alt="" />'
-						},
-						
-						
-						
-						
-					]
-				
-				},
-				{
-				
-					name : 'My Videos',
-					id : 'Myvideos',
-				
-					group : [
-				
-						{
-							id : 'Myvideos1',
-							q : '  ',
-							a : 'Click your avatar icon in the top right corner',
-							img: '<img src="img/Myvideos1.jpg" alt="" />'
-						},
-						{
-							id : 'Myvideos2',
-							q : ' ',
-							a : 'Then, click “Manage” button',
-							img: '<img src="img/Myvideos2.jpg" alt="" />'
-						},
-						{
-							id : 'Myvideos3',
-							q : '  ',
-							a : 'Then, click “My Videos”',
-							img: '<img src="img/Myvideos3.jpg" alt="" />'
-						},
-						{
-							id : 'Myvideos4',
-							q : '  ',
-							a : 'Then, you can see your video cabinet, which contain information about your uploaded videos, average rating, video views and video settings.',
-							img: '<img src="img/Myvideos4.jpg" alt="" />'
-						},
-						{
-							id : 'Myvideos5',
-							q : '  ',
-							a : 'If you want to change the video description, name or a preview image, click the three dots and choose necessary action.',
-							img: '<img src="img/Myvideos5.jpg" alt="" />'
-						},
-						{
-							id : 'Myvideos6',
-							q : '  ',
-							a : 'On the top of the video cabinet page you can see your Daily Uploading Quota, Total Referral Users, Total Ratings, Total Video Views, Unique Raters, Search Field and also you can sort your videos.',
-							img: '<img src="img/Myvideos6.jpg" alt="" />'
-						},
-	
-						
-						
-					]
-				
-				}
 				
 				
 			],
@@ -637,32 +643,32 @@ var faq = (function(){
 				{
 				id : 'what-is',
 				q : 'Что такое ' +self.app.meta.fullname+'?',
-				a : '<div><p>' +self.app.meta.fullname+' это инновационная социальная сеть и платформа для обмена видео. В отличие от обычных социальных сетей, за ними нет корпорации, они основаны на модели Биткойн. Bastion - это проект с открытым исходным кодом, которым управляет группа разработчиков и экспертов, и его цель - предоставить модерируемую сообществом платформу, в которой серьезно соблюдается свобода слова.  </p> <p> Проект изначально создавался автором Даниилом Сатчковым, но сейчас это более 25 разработчиков и множество волонтеров по всему миру. Bastion - это скорее протокол, чем платформа, поскольку любой разработчик может создать на нем собственное приложение. Платформа работает не на одном сервере, а в сети из <em> пользовательских узлов </em>, расположенных по всему миру.  </p> <p> Это означает, что пользователи всегда могут получать информацию и общаться, просматривать контент и публиковать сообщения, пока у них есть подключение к Интернету и только несколько узлов где-то в мире работают. </p> <p> Это преодолевает ограничения, которые цензоры устанавливают для блокировки или ограничения коммуникация и распространение информации. Информация хочет свободно перемещаться. Хотя, например, в Китае некоторые социальные сети можно использовать только через VPN, в этом нет необходимости с '+ self.app.meta.fullname +'. </p> <p> Кроме того, '+ self.app.meta.fullname +' не собирает личную информацию: пользователи регистрируются без какого-либо адреса электронной почты или номера телефона, и никакие личные данные, такие как IP или MAC-адрес, никоим образом не сохраняются. Обратите внимание: хотя Bastyon не собирает никаких IP-адресов (как видно из открытого кода), невозможно полностью скрыть ваш IP-адрес при использовании Интернета, если только вы не используете VPN. </p> <p> Таким образом, '+ self.app.meta.fullname +' позволяет пользователям свободно обсуждать проблемы. Сегодня анонимность является требованием безопасности и конфиденциальности, и '+ self.app.meta.fullname +' может это гарантировать.  </p> <p> Кроме того, чтобы обеспечить полностью конфиденциальное и анонимное общение, '+ self.app.meta.fullname +' обеспечивает зашифрованную систему чата, не связанную с каким-либо номером телефона или личными данными, защищенную сквозным шифрованием  (обратите внимание, что групповые чаты не шифруются, только 1-на -1 чаты). Никто, кроме двух пользователей, участвующих в сеансе чата, не может получить доступ к сообщениям. Все утверждения легко проверить, поскольку приложение Bastion и блокчейн Pocketnet имеют полностью открытый исходный код, а код виден всем. Более того, все сообщения чата автоматически удаляются через 7 дней. </p> <p> '+ self.app.meta.fullname +' - устойчивая к цензуре псевдонимная социальная платформа, где люди могут общаться, общаться и делиться контентом с другими прозрачно правила, одинаковые для всех пользователей и разработчиков. </p> </div> ', 
+				a : '<div><p>' +self.app.meta.fullname+' это инновационная социальная сеть и платформа для обмена видео. В отличие от обычных социальных сетей, за ' +self.app.meta.fullname+' нет корпорации и он основан на модели Биткойн. Bastyon - это проект с открытым исходным кодом, которым управляет группа разработчиков и экспертов, и его цель - предоставить модерируемую сообществом платформу, в которой серьезно соблюдается свобода слова.  </p> <p>Автором проекта изначально был  Даниэль Сатчков, но сейчас команда ' +self.app.meta.fullname+' - это более 25 разработчиков и множество волонтеров по всему миру. Bastyon - это скорее протокол, чем платформа, поскольку любой разработчик может создать на нем собственное приложение. Платформа работает не на одном сервере, а в сети из <em> пользовательских узлов </em>, расположенных по всему миру.  </p> <p> Это означает, что пользователи всегда могут получать информацию и общаться, просматривать контент и публиковать сообщения, пока у них есть подключение к Интернету и только несколько узлов где-то в мире работают. </p> <p> Это преодолевает ограничения, которые цензоры устанавливают для блокировки или ограничения коммуникация и распространение информации. Информация должна свободно перемещаться. Хотя, например, в Китае некоторые социальные сети можно использовать только через VPN, в этом нет необходимости с '+ self.app.meta.fullname +'. </p> <p> Кроме того, '+ self.app.meta.fullname +' не собирает личную информацию: пользователи регистрируются без какого-либо адреса электронной почты или номера телефона, и никакие личные данные, такие как IP или MAC-адрес, никоим образом не сохраняются. Обратите внимание: хотя Bastyon не собирает никаких IP-адресов (как видно из открытого кода), невозможно полностью скрыть ваш IP-адрес при использовании Интернета, если только вы не используете VPN. </p> <p> Таким образом, '+ self.app.meta.fullname +' позволяет пользователям свободно обсуждать проблемы. Сегодня анонимность является требованием безопасности и конфиденциальности, и '+ self.app.meta.fullname +' может это гарантировать.  </p> <p> Кроме того, чтобы обеспечить полностью конфиденциальное и анонимное общение, '+ self.app.meta.fullname +' обеспечивает зашифрованную систему чата, не связанную с каким-либо номером телефона или личными данными, защищенную сквозным шифрованием  (обратите внимание, что групповые чаты не шифруются. Шифрование обеспечивается только на одноранговых, персональных чатах ( чатах 1-на-1)). Никто, кроме двух пользователей, участвующих в сеансе чата, не может получить доступ к сообщениям. Все утверждения легко проверить, поскольку приложение Bastyon и блокчейн Pocketnet имеют полностью открытый исходный код, а код виден всем. Более того, все сообщения чата автоматически удаляются через 7 дней. </p> <p> '+ self.app.meta.fullname +' - устойчивая к цензуре социальная платформа, где люди могут общаться и делиться контентом с другими пользователями абсолютно прозрачно, где одни правила для всех пользователей и разработчиков. </p> </div> ', 
 				},
 				
 				{
 				id : 'как это-слова',
-				q : 'Как мне начать?',
-				a : '<div><p>'+self.app.meta.fullname+' прост в использовании: вам просто нужно создать учетную запись, и вы можете сразу же начать публиковать контент, подписываться на других пользователей и общаться в чате. </p> <p> Во время регистрации вам просто нужно создать электронную почту (она должна быть уникальной! ) и загрузите картинку или фотографию (не обязательно свою фотографию!). Ни электронной почты (вы можете оставить электронное письмо для списка рассылки, но оно не связано с вашей учетной записью на Bastion), ни номера телефона, ни проверок. Даже пароль: система сгенерирует парольную фразу, которую вы должны использовать для входа в систему, эта парольная фраза - ваш личный ключ, который заменяет логин и пароль, это единственное, что вам нужно для входа в систему. Если вы потеряете личный ключ ключ, никто не может его восстановить, даже разработчики не имеют доступа к учетным записям пользователей.</p></div>',
+				q : 'С чего мне начать?',
+				a : '<div><p>'+self.app.meta.fullname+' прост в использовании: вам нужно создать учетную запись и вы можете сразу же начать публиковать контент, подписываться на других пользователей и общаться в чате. </p> <p> Во время регистрации вам нужно создать уникальное имя и загрузить картинку или фотографию (не обязательно свою фотографию!). Ни электронной почты (вы можете оставить электронное письмо для списка рассылки, но оно не связано с вашей учетной записью на Bastyon), ни номера телефона, ни проверок. Даже пароль: система сгенерирует парольную фразу, которую вы должны использовать для входа в систему, эта парольная фраза - ваш личный ключ, который заменяет логин и пароль, это единственное, что вам нужно для входа в систему. Если вы потеряете личный ключ ключ, никто не может его восстановить, даже разработчики не имеют доступа к учетным записям пользователей.</p></div>',
 				},
 				
 				{
 				id : 'подписаться',
 				q : 'В чем разница между парольной фразой из 12 слов и закрытым ключом?',
-				a : '<div><p>При первом использовании '+ self.app.meta.fullname +' вам необходимо создать учетную запись, состоящую только из вашего уникального имени пользователя. </p> <p> <strong> Нет пароля. </strong> </p> <p> Вместо этого вам будет предоставлен уникальный ключ из 12 слов (кодовая фраза). В качестве альтернативы вы можете использовать закрытый ключ, представляющий собой длинное число (эти два эквивалента). <strong> Храните эти данные в безопасности и НИКОГДА не раскрывайте их никому. </strong> </p> <p> Затем, когда вам нужно войти в систему, вам просто нужно ввести кодовую фразу (или отсканировать QR из приложения). </p> <p> <strong> Помните </strong>: если вы потеряете кодовую фразу, ваша учетная запись будет заблокирована навсегда. Невозможно восстановить пароль, нет возможности для '+ self.app.meta.fullname +' позволить вам снова войти в систему. Ваша кодовая фраза или код закрытого ключа - единственный способ получить доступ к вашей учетной записи, пожалуйста, запишите его где-нибудь на листе бумаги. Вы можете найти его в своем профиле в разделе «Учетные записи» (щелкните символ ключа). </p> </div> ',
+				a : '<div><p>При первом использовании '+ self.app.meta.fullname +' вам необходимо создать учетную запись, состоящую только из вашего уникального имени пользователя. </p> <p> <strong> Нет пароля. </strong> </p> <p> Вместо этого вам будет предоставлен уникальный ключ из 12 слов (кодовая фраза). В качестве альтернативы вы можете использовать закрытый ключ, представляющий собой длинный набор символов. <strong> Храните эти данные в безопасности и НИКОГДА не раскрывайте их никому. </strong> </p> <p> Затем, когда вам нужно войти в систему, вам просто нужно ввести кодовую фразу (или отсканировать QR из приложения). </p> <p> <strong> Помните </strong>: если вы потеряете кодовую фразу, ваша учетная запись будет заблокирована навсегда. Невозможно восстановить пароль, нет возможности для '+ self.app.meta.fullname +' каким-либо способом войти в систему без кодовой фразы или приватного ключа. Ваша кодовая фраза или приватный ключ - единственный способ получить доступ к вашей учетной записи, пожалуйста, запишите его где-нибудь на листке бумаги или сохраните в надежном месте. Вы можете найти его в своем профиле в разделе «Учетные записи» (щелкните символ ключа). </p> </div> ',
 				},
 				
 				
 				{
 				id : 'закулисный',
-				q : 'Как это работает за кадром? Где серверы?',
-				a : '<div><p>'+self.app.meta.fullname+' построен на основе децентрализованной криптовалюты Биткойн, поскольку не имеет центральной власти и использует цепочку блоков для совершения транзакций и обеспечения безопасности.  </p> <p> Центрального сервера нет: вместо этого платформа полагается на сеть узлов, расположены по всему миру. Каждый человек в мире, имеющий компьютер, может фактически запустить узел (и получить за это вознаграждение, используя ставку монет с помощью Pocketcoin). </p> <p> Хеш каждого сообщения, каждого комментария, каждого взаимодействия (кроме чата сообщения!) хранится в <a elementsid="https://en.wikipedia.org/wiki/Blockchain" href="https://en.wikipedia.org/wiki/Blockchain"> блокчейне </a>. Сами сообщения и комментарии находятся не в блокчейне, а в сопутствующей базе данных, привязанной к блокчейну. </p> <p> '+ self.app.meta.fullname +' использует выделенный блокчейн, полученный непосредственно из цепочки биткойнов.  </p> </div> ',
+				q : 'Как это работает за кадром? Где находятся серверы?',
+				a : '<div><p>'+self.app.meta.fullname+' построен на основе децентрализованной криптовалюты Биткойн, не имеет центрального офиса и использует цепочку блоков для совершения транзакций и обеспечения безопасности.  </p> <p> Центрального сервера нет: вместо этого платформа полагается на сеть узлов, расположены по всему миру. Любой человек, имеющий компьютер, может фактически запустить узел (и получить за это вознаграждение в Pocketcoin). </p> <p> Хеш каждого сообщения, каждого комментария, каждого взаимодействия (кроме чата сообщения!) хранится в <a elementsid="https://en.wikipedia.org/wiki/Blockchain" href="https://en.wikipedia.org/wiki/Blockchain"> блокчейне </a>. Сами сообщения и комментарии находятся не в блокчейне, а в сопутствующей базе данных, привязанной к блокчейну. </p> <p> '+ self.app.meta.fullname +' использует выделенный блокчейн, полученный непосредственно из цепочки биткойнов.  </p> </div> ',
 				},
 				
 				{
 				id : 'блоки',
 				q : 'Что произойдет, если какая-то страна (страны) заблокирует доступ к Bastyon.com?',
-				a : '<div><p>Bastyon.com перестанет работать,  но приложение для компьютера будет работать точно также после любых блокировок сайта.</p><p>Вы все равно сможете использовать Bastyon, как будто ничего не произошло, если бы вы использовали приложение для компьютера, потому что настольное приложение Bastyon обращается напрямую к узлам и не использует веб-сайты. </p> <p> В этом сила сопротивления цензуре. <br /> Вы можете убедиться в этом сами, смоделировав исчезновение доменного имени bastyon.com. <br /> <br /> <strong> В Windows: </strong> <br /> просто откройте этот файл: <br /> Windows / System32 / hosts <br /> <br /> <strong> В Linux / Ubuntu: </strong> <br /> Откройте этот файл <br /> / etc / hosts <br /> <br /> Затем добавьте эту строку: <br /> 127.0.0.1 bastyon.com </p> <p > Это гарантирует, что bastyon.com указывает на ваш локальный компьютер, а это означает, что он не указывает ни на какой внешний IP-адрес. <br /> <br /> Затем запустите настольное приложение, и вы сможете продолжить использование Bastyon если ничего не произошло. <br /> Круто, да? </p> </div> <br /> <a href="https://github.com/pocketnetteam/pocketnet.gui/releases/">Скачать Приложение Для Компьютера</a> ',
+				a : '<div><p>Bastyon.com перестанет работать,  но приложение для компьютера будет работать точно также после любых блокировок сайта.</p><p>Вы сможете использовать Bastyon, как будто ничего не произошло, поскольку настольное приложение Bastyon обращается напрямую к узлам и не использует веб-сайты. </p> <p> В этом сила сопротивления цензуре. <br /> Вы можете убедиться в этом сами, смоделировав исчезновение доменного имени bastyon.com. <br /> <br /> <strong> В Windows: </strong> <br /> просто откройте этот файл: <br /> Windows / System32 / hosts <br /> <br /> <strong> В Linux / Ubuntu: </strong> <br /> Откройте этот файл <br /> / etc / hosts <br /> <br /> Затем добавьте эту строку: <br /> 127.0.0.1 bastyon.com </p> <p > Это гарантирует, что bastyon.com указывает на ваш локальный компьютер, а это означает, что он не указывает ни на какой внешний IP-адрес. <br /> <br /> Затем запустите настольное приложение, и вы сможете продолжить использование Bastyon если ничего не произошло. <br /> Круто, да? </p> </div> <br /> <a href="https://github.com/pocketnetteam/pocketnet.gui/releases/">Скачать Приложение Для Компьютера</a> ',
 				
 				}
 				
@@ -670,6 +676,135 @@ var faq = (function(){
 			
 				
 				},
+
+				{
+				
+					name : 'Pocketcoin',
+					id : 'pocketcoin',
+					
+					group : [
+					
+					
+					
+					{
+					id : 'магазин приложений',
+					q : 'Как можно использовать PKOIN?',
+					a : '<div>PKOIN имеет множество применений на Bastyon. Во-первых, 50 PKOIN в вашем аккаунте снимают все ограничения на публикацию и позволяют загружать ежедневно до 5ГБ видео. PKOIN можно использовать для того, чтобы сделать ваши комментарии более заметными для всех (Комментарии с донатами будут находиться в самом верху ленты комментариев). PKOIN от таких поднятых комментариев достается блоггеру, и блоггеры должны отвечать или размещать такие комментарии, чтобы поощрять подобные "поднятия" комментариев. Вы можете поднять пост, чтобы продвинуть его вверх в ленте. Он используется для ставок в узлах, вы можете запустить узел и заработать больше PKOIN, поставив PKOIN. Он будет использоваться на децентрализованной торговой площадке рекламы, при этом 100% доходов будут поступать блоггерам. Также на него можно будет купить специальные "обои", анимированные изображения профиля и т. д. </div>',
+					},
+					
+					
+					{
+					id : 'pocketcoinstock',
+					q : 'Pocketcoin похож на долю акций в '+self.app.meta.fullname+' ?',
+					a : '<div>Нет, это не так. '+self.app.meta.fullname+' даже не корпорация и не имеет никакой собственности. Это открытый код, который может скопировать и запустить каждый. Pocketcoin - это токен, который облегчает обмен ценностями, в частности, рекламные транзакции. Кроме того, '+ self.app.meta.fullname +' будет включать торговую площадку, где товары и услуги будут продаваться напрямую за Pocketcoin.</div>',
+					},
+					
+					// {
+					// id : 'pocketcoinbuy',
+					// q : 'Могу ли я купить дополнительный Pocketcoin?',
+					// a : '<div>Да, в настоящее время вы можете купить Pocketcoin на следующих биржах: DigiFinex, Bitforex, Mercatox. Вы также можете купить его за 19 различных криптовалют на https://pkoin.net/, а в Bastyon есть категория PKOIN / Peer-to-Peer, где вы можете покупать и продавать ее другим пользователям.</div>',
+					// },
+					
+					// {
+					// id : 'pocketcoinbuyfiat',
+					// q : 'Могу ли я купить Pocketcoin за доллары США или другую фиатную валюту? ',
+					// a: '<div> Да, вы можете купить его в категории PKOIN / Peer-to-Peer или через компанию под названием Indacoin по адресу https://buy.pkoin.indacoin.io/ Indacoin не имеет ничего общего с Bastyon, они просто продают PKOIN за кредитные карты после покупки на биржах.</div>',
+					// },
+					
+					{
+					id : 'pocketcoinbuyfiat',
+					q : 'Зачем мне покупать Pocketcoin?',
+					a : '<div>У Bastyon нет поддержки со стороны банкиров или венчурных капиталистов, это децентрализованная социальная платформа, поддерживаемая PKOIN. Когда вы используете Bastyon, вы используете пользовательские узлы, видео узлы, все они должны платить за компьютеры, Интернет и электричество. Блогерам нужно зарабатывать на контенте. Bastyon может работать только в том случае, если пользователи владеют и поддерживают PKOIN. Итак, покупка PKOIN - это способ поддержать децентрализацию и свободу. Однако есть еще одна важная причина для владения Pocketcoin. Вполне возможно, что скоро доступ к вашему банковскому счету будет ограничен без наличия у вас QR-кода.  Pocketcoin не привязан к вашему имени или паспорту и является одним из способ заниматься коммерцией в мире, где царит финансовая цензура. Не исключено, что PKOIN может стать одним из немногих способов покупки еды без определенного сертификата или QR-кода. Покупка PKOIN - отличный способ противостояния цензуре и ограничениям </div>',
+					},
+					]
+					},
+
+					{
+				
+						name : 'Как я могу купить PKOIN?',
+						id : 'buy-pkoin',
+					
+						group : [
+					
+							{
+								id : 'buy-pkoin1',
+								q : '  ',
+								a : 'Вы можете купить PKOIN следующими способами: Выберите категорию «PKOIN/Из рук в руки» и посмотрите на предложения о купле/продаже PKOIN, либо сами разместите свое предложение о купле/продаже PKOIN.	',
+								img: '<img src="img/per-to-per.jpg" alt="" />'
+							},
+							{
+								id : 'buy-pkoin21',
+								q : '',
+								a : 'Покупку PKOIN также можно осуществить на следующих сайтах. 	<br> <a target="_blank" href="https://www.bitforex.com/en/spot/pkoin_usdt">https://www.bitforex.com/en/spot/pkoin_usdt</a> <br> <a target="_blank" href="https://www.digifinex.com/en-ww/trade/USDT/PKOIN">https://www.digifinex.com/en-ww/trade/USDT/PKOIN</a>  <br> <a target="_blank" href="https://pkoin.net/">https://pkoin.net/</a> - здесь приобрести  PKOIN можно за другие криптовалюты. <br>		<a target="_blank" href="https://buy.pkoin.indacoin.io/">https://buy.pkoin.indacoin.io/</a> - здесь приобрести PKOIN можно за кредитную карту.',
+								img: ''
+							},
+							{
+								id : 'buy-pkoin2',
+								q : 'Pkoin.net - для покупки PKOIN за другие криптовалюты ',
+								a : 'Выберите криптовалюту, за которую вы хотите приобрести PKOIN, укажите  количество PKOIN, а также введите адрес своего кошелька.',
+								img: '<img src="img/buy-pkoin2.jpg" alt="" />'
+							},
+							{
+								id : 'buy-pkoin3',
+								q : '  ',
+								a : 'Адрес вашего PKOIN-кошелька находится в вашем аккаунте на Бастионе. Чтобы его найти – кликните иконку вашего аватара, которая расположена в правом верхнем углу.',
+								img: '<img src="img/upl1.jpg" alt="" />'
+							},
+							{
+								id : 'buy-pkoin4',
+								q : '  ',
+								a : 'Далее кликните по адресу PKOIN, чтобы его скопировать.',
+								img: '<img src="img/upl7.jpg" alt="" />'
+							},
+							{
+								id : 'buy-pkoin5',
+								q : '  ',
+								a : 'Далее, вам нужно ввести адрес вашего PKOIN-кошелька в соответствующее поле и нажать кнопку “Purchase”.',
+								img: '<img src="img/buy-pkoin5.jpg" alt="" />'
+							},
+							{
+								id : 'buy-pkoin6',
+								q : '  ',
+								a : 'После этого вы должны отправить BTC (или другую криптовалюту, которую вы выбрали) на предоставленный вам адрес. ',
+								img: '<img src="img/buy-pkoin6.jpg" alt="" />'
+							},
+							{
+								id : 'buy-pkoin7',
+								q : ' Купить PKOIN с помощью кредитной карты на <a href="Buy.pkoin.indacoin.io">indacoin.io</a>     ',
+								a : 'Для начала, выберите валюту, введите количество, ваш электронный адрес и адрес кошелька PKOIN. Далее, нажмите «Купить PKOIN»',
+								img: '<img src="img/buy-pkoin7.jpg" alt="" />'
+							},
+							{
+								id : 'buy-pkoin8',
+								q : '  ',
+								a : 'Вы увидите окно «Купить PKOIN с кредитной или дебетовой картой», нажмите  «Далее»',
+								img: '<img src="img/buy-pkoin8.jpg" alt="" />'
+							},
+							{
+								id : 'buy-pkoin9',
+								q : '  ',
+								a : 'Далее, введите ваш адрес, почтовый индекс и укажите вашу страну. ',
+								img: '<img src="img/buy-pkoin9.jpg" alt="" />'
+							},
+							{
+								id : 'buy-pkoin10',
+								q : '  ',
+								a : 'Далее, введите ваше имя, страну, номер телефона, дату рождения',
+								img: '<img src="img/buy-pkoin10.jpg" alt="" />'
+							},
+							{
+								id : 'buy-pkoin11',
+								q : '  ',
+								a : 'Введите номер вашей карты и нажмите «Далее».',
+								img: '<img src="img/buy-pkoin11.jpg" alt="" />'
+							},
+							
+							
+							
+							
+						]
+					
+					},
 				
 				{
 				
@@ -686,7 +821,7 @@ var faq = (function(){
 				
 				{
 				id : 'ссылка на профиль',
-				q : 'Могу ли я сделать ссылку на свой профиль? или моя "страничка"? Чтобы я мог опубликовать его в своем сообществе, чтобы пригласить участников. ',
+				q : 'Могу ли я сделать ссылку на свой профиль или на пост, чтобы я мог опубликовать его в других социальных сетях чтобы пригласить участников. ',
 				a: '<div> В браузере перейдите в свой профиль, щелкнув аватар в правом верхнем углу и нажмите «Поделиться», затем установите флажок «Использовать реферальную ссылку», всем, кто зарегистрируется по созданной ссылке, будет предложено подписаться на вас автоматически при регистрации. За каждого реферала, который зарегистрируется по вашей ссылке, вы получите бонус, равный 20% от Pocketcoin (PKOIN), который они зарабатывают, публикуя сообщения и комментируя в течение первых 6 месяцев. Чтобы было понятно, ваш реферал не зарабатывает меньше, вы получаете бонус.</div><div>На рабочем столе, </div>',
 				},
 				// {
@@ -705,20 +840,19 @@ var faq = (function(){
 				{
 				id : 'мобильное приложение',
 				q : 'Есть ли мобильное приложение?',
-				a : '<div>Есть приложение для Android, вы можете скачать его <a href="https://play.google.com/store/apps/details?id=pocketnet.app">здесь:</a> <br />  Приложение для iPhone недоступно, потому что Apple требовала от нас цензуры любого контента в круглосуточном режиме. час уведомление. В Bastion даже разработчики не могут удалять контент, он модерируется пользователями. Bastyon оптимизирован для мобильных браузеров, таких как Safari на iPhone.</div>',
+				a : '<div>Есть приложение для Android, вы можете скачать его <a href="https://play.google.com/store/apps/details?id=pocketnet.app">здесь</a>.<br />Приложение для iPhone недоступно, потому что Apple требовала от нас цензуры любого контента в круглосуточном режиме. В Bastyon даже разработчики не могут удалять контент, он модерируется пользователями. Bastyon оптимизирован для мобильных браузеров, таких как Safari на iPhone.</div>',
 				},
 				
 				{
 				id : 'лимит публикации',
 				q : 'Можете ли вы сказать мне, каков лимит публикаций и оценок каждый день или час?',
-				a : '<div>У нас есть некоторые ограничения, но после тестирования мы увеличили наши ограничения. Вначале вы можете размещать 5 постов и выставлять 15 оценок каждые 24 часа. Как только ваша репутация превысит 100 и будет по крайней мере 100 пользователей с высокой репутацией, которые проголосовали за вас (или 30 пользователей через 3 месяца), вы сможете делать до 30 сообщений и 200 оценок, а также 300 комментариев каждые 24 часа.</div>',
+				a : '<div>Да, у нас действительно есть некоторые ограничения публикации материалов, основанные на математическом алгоритме. <br /> Система регистрации нового аккаунта устроена таким образом, что она не требует ни адреса электронной почты, ни номера мобильного телефона при его регистрации, поскольку Bastyon не нуждается в ваших персональных данных. При этом, описанная система регистрации имеет один недостаток – невозможно исключить «Ботов» на этапе регистрации нового аккаунта. <br />Поэтому мы решили, что целесообразно бороться с ботами не в процессе регистрации аккаунта, а после его регистрации, используя систему внутренней модерации Bastyon. Другими словами, борьба с ботами будет настолько эффективна, насколько активно пользователи Bastyon будут оценивать других пользователей Bastyon и насколько активно будут публиковатся интересные материалы.<br />Вот рекомендации, как зарабатывать рейтинги и перейти из категории «аккаунта-новичка» в категорию «аккаунт с высокой репутацией». <br />В целом, залог постоянного роста репутации и получения рейтингов очень прост – публикуйте интересный контент и получайте высокие оценки от других пользователей.<br /> <b> 100 рейтингов + 100 голосов «репутационных» пользователей или 100 рейтингов + 30 голосов «репутационных»  пользователей + 6 первых месяцев после регистрации. </b>  <br />В течение первых 6 месяцев после создания нового аккаунта:<br />вы можете размещать 5 постов и выставлять 15 оценок каждые 24 часа. Как только ваша репутация превысит 100 и будет по крайней мере 100 пользователей с высокой репутацией, которые проголосовали за вас, вы сможете делать до 30 постов и 200 оценок, а также 300 комментариев каждые 24 часа.<br /> При этом, если за 6 месяцев ваша репутация составила 100 и вы получили только 30 (и более) оценок от высокорейтинговых пользователей, то ваш аккаунта автоматически перейдет в категорию высокорейтинговых аккаунтов.<br />Примечание: и в одном и во втором случае появляется возможность публикации видео. Если вы не намерены ожидать, когда ваш рейтинг достигнет более 100 пунктов и когда вы получите более 100 (30) голосов от рейтинговых пользователей, вы можете получить доступ к загрузке видео		путем покупки PKOIN. <br />Квоты на загрузку видео составаят: <br />5PKOIN - до 500Мб видео ежедневно;<br />50PKOIN - до 5Гб видео ежедневно.		</div>',
 				},
 				
 				{
 				id : 'репутация',
 				q : 'Что такое репутация и как она рассчитывается?',
-				a : "<div>Ваша репутация - это сумма ваших рейтингов, рассчитываемых следующим образом. Обратите внимание, что пользователи с репутацией ниже 50 не влияют на чью-либо репутацию или выигрыш монет. Они могут оценивать контент, но это не влияет на репутацию. </div> \
-				<div> 5 = 2 <br> 4 = 1 <br> 3 = 0 <br> 2 = -1 <br> 1 = -2 </div> <div> Итак, если у вас есть два стартовых рейтинга 5 и один 1 звездочка, сумма будет 2 + 2-2 = 2 </div> ",
+				a : "<div>Ваша репутация - это сумма ваших рейтингов. Обратите внимание, что пользователи с репутацией ниже 50 не влияют на чью-либо репутацию. Они могут оценивать контент, но это не влияет на репутацию. </div> <br /> <div> Итак, 5 звоздочек -> 2 рейтинга <br> 4 звездочки -> 1 <br> 3 звездочки -> 0 <br> 2 звездочки -> -1 рейтинг <br> 1 звездочка -> -2 рейтинга </div> <div> Приведем пример: если при публикации поста рейтинговые пользователи поставили вам две оценки по 5 звездочек и одну оценку в 1 звездочку, то формула рассчета будет выглядеть так:<br> 2 + 2 - 2 = 2. Таким образом ваш рейтинг повысится на 2 пункта. </div> ",
 				},
 				
 				{
@@ -734,58 +868,58 @@ var faq = (function(){
 				},
 				{
 				id : 'следить',
-				q : 'Как вы следите за кем-то?',
-				a : '<div>Далее, чтобы опубликовать автора (вверху поста) есть ссылка Follow, вы можете найти его посты в топ постов (красный огонь вверху страницы). Вы также скоро увидите ленту «Мои подписки», которая будет отличаться от основной ленты. Основным фидом будет все, что кто-либо публикует, но фид подписок будет содержать только сообщения людей, на которых вы подписаны. Итак, вы будете заходить в общую ленту в поисках хорошего контента, хотя вам может не все нравиться. Затем выберите те, которые хотите сохранить. Вроде как на рыбалке:)</div>',
+				q : 'Как подписаться, чтобы отслеживать любимых блогеров?',
+				a : '<div>Чтобы подписаться на автора/блогера (вверху поста) есть ссылка Подписаться, вы можете найти его посты в топ постов (красный огонь вверху страницы). Вы также скоро увидите ленту «Мои подписки», которая будет отличаться от основной ленты. Основным фидом будет все, что кто-либо публикует, но фид подписок будет содержать только сообщения пользователей, на которых вы подписаны. Итак, вы будете заходить в общую ленту в поисках хорошего контента, хотя вам может не все нравиться. Затем выберите те, которые хотите сохранить. </div>',
 				},
 				
 				
 				{
 				id : 'другие браузеры',
 				q : 'Можно ли его использовать в браузерах Brave или Duck Duck go?',
-				a : '<div>'+self.app.meta.fullname + 'должен работать в этих браузерах. Он полностью функционален в Chrome и Firefox. Но мы настоятельно рекомендуем всем загрузить настольное приложение (загрузите '+ self.app.meta.fullname +' Setup.exe здесь: https://bastyon.com/help?page=applications). Настольное приложение невозможно заблокировать (даже если <% - app.meta.URL%> не работает или заблокирован по какой-либо причине). Это серьезное соображение в тоталитарных и квазитоталитарных странах, которые, если задуматься, начинают включать все больше и больше земного шара.</div>',
+				a : '<div>'+self.app.meta.fullname + 'должен работать в этих браузерах. Он полностью функционален в Chrome и Firefox. Но мы настоятельно рекомендуем всем загрузить настольное приложение (загрузите '+ self.app.meta.fullname +' Setup.exe <a href="https://github.com/pocketnetteam/pocketnet.gui/releases"> здесь</a>. Настольное приложение невозможно заблокировать (даже если bastyon.com не работает или заблокирован по какой-либо причине). Подобные ограничения являются новым тоталитарным трендом.</div>',
 				},
 				
 				{
 				id : 'ответ на сообщение',
 				q : 'Можем ли мы отвечать на собственные / и другие сообщения?',
-				a : '<div>Да, комментирование доступно под каждым постом..</div>',
+				a : '<div>Да, комментирование доступно под каждым постом.</div>',
 				},
 				
 				{
 				id : 'добавить теги',
 				q : 'Как добавить тег к посту?',
-				a : '<div>Выберите категорию или введите тег поля и нажмите клавишу ВВОД. # Указывать не нужно, он будет добавлен автоматически.</div>',
+				a : '<div>Под постом выберите категорию или введите тег  и нажмите клавишу ВВОД. "#" добавлять не нужно - добавление происходит автоматически.</div>',
 				},
 				
 				{
 				id : 'использовать публичный адрес',
 				q : 'Как я могу использовать публичный адрес?',
-				a : '<div>Ваш публичный адрес - это то, что '+ self.app.meta.fullname +' использует для проверки вашей личности. По сути, ваш закрытый ключ - это действительно большое число (которое может быть представлено последовательностью из 12 слов или QR-кодом). Это число умножается на другое, известное всем (называемое базовой точкой), и мы получаем открытый ключ. Когда вы вводите свой закрытый ключ, мы можем умножить его на базовую точку, чтобы получить ваш открытый ключ и сопоставить его с общедоступным адресом. Если они совпадают, мы знаем, что это вы. Невозможно вернуться назад, т.е. разделить открытый ключ на базовую точку, чтобы получить свой закрытый ключ. В криптографии умножение работает только в одну сторону и не может быть отменено, поэтому ваш ключ в безопасности. '+ self.app.meta.fullname +' использует ту же самую криптографию, что и Биткойн. </div>',
+				a : '<div>Ваш публичный адрес - это то, что '+ self.app.meta.fullname +' использует для проверки вашей личности. По сути, ваш закрытый ключ - это большое число (которое может быть представлено последовательностью из 12 слов или QR-кодом). Это число умножается на другое, известное всем (называемое базовой точкой), и мы получаем открытый ключ. Когда вы вводите свой закрытый ключ, мы можем умножить его на базовую точку, чтобы получить ваш открытый ключ и сопоставить его с общедоступным адресом. Если они совпадают, мы знаем, что это вы. Невозможно вернуться назад, т.е. разделить открытый ключ на базовую точку, чтобы получить свой закрытый ключ. В криптографии умножение работает только в одну сторону и не может быть отменено, поэтому ваш ключ в безопасности. '+ self.app.meta.fullname +' использует ту же самую криптографию, что и Биткойн. </div>',
 				},
 				{
 				id : 'настольный Mac',
 				q : 'Будет ли загружаемый исполняемый файл для Mac?',
-				a : '<div>Да, вы можете найти его здесь https://bastyon.com/help?page=applications.</div>',
+				a : '<div>Да, вы можете найти его <a target="_blank" href="https://github.com/pocketnetteam/pocketnet.gui/releases">здесь</a>.</div>',
 				},
 				{
 				id : 'темный режим',
 				q : 'Как изменить тему на темный режим?',
-				a : "<div>Если вы находитесь в браузере, щелкните изображение своего профиля> Управление> Настройки. Если вы используете мобильный телефон, щелкните три строки в правом нижнем углу> Настройки. </div>",
+				a : '<div>Переключение режима можно найти в настройках. Если вы находитесь в браузере, щелкните изображение своего профиля> Управление> Настройки. Если вы используете мобильный телефон, щелкните "бургер-меню" в правом нижнем углу> Настройки. </div>',
 				},
 				{
 				id : 'запрет ',
 				q : 'Можно ли банить людей?',
-				a : '<div>Да, Bastion - это платформа, модерируемая сообществом, однако есть только определенные темы, которые будут отмечены сообществом, такие как порнография, наркотики и прямые угрозы насилия. Вас никогда не забанят за свое мнение или свободу слова, и даже по конкретным запрещенным темам должен быть консенсус опытных пользователей, при этом другие пользователи не защищают контент. В настоящее время пользователи с репутацией ниже -30 теряют свои привилегии учетной записи, но это временная система. К концу 2021 года Bastion выпускает новую систему модерации, в которой сообщения изначально помечаются любым пользователем с высоким уровнем репутации, но учетные записи могут быть заблокированы только определенной группой присяжных, выбранных с помощью лотереи блокчейна. Таким образом, никто не может атаковать кого-то за мнение, присяжные будут выбраны для модерации определенного контента, и все они должны согласиться. Аккаунт не может быть заблокирован до тех пор, пока не будет определено два состава присяжных, и они не могут быть одинаковыми. Эта система защищает от любых правил мафии на Bastion, одновременно защищая платформу от сомнительного контента.</div>',
+				a : '<div>Да, Bastyon - это платформа, модерируемая сообществом, однако есть только определенные темы, которые будут отмечены сообществом, такие как порнография, наркотики и прямые угрозы насилия. Вас никогда не забанят за свое мнение или свободу слова, и даже по конкретным запрещенным темам должен быть консенсус опытных пользователей, при этом другие пользователи не защищают контент. В настоящее время пользователи с репутацией ниже -30 теряют свои привилегии учетной записи, но это временная система. К концу 2021 года Bastyon выпускает новую систему модерации, в которой сообщения изначально помечаются любым пользователем с высоким уровнем репутации, но учетные записи могут быть заблокированы только определенной группой присяжных, выбранных с помощью лотереи блокчейна. Таким образом, никто не может атаковать кого-то за мнение, присяжные будут выбраны для модерации определенного контента, и все они должны согласиться. Аккаунт не может быть заблокирован до тех пор, пока не будет определено два состава присяжных, и они не могут быть одинаковыми. Эта система защищает от любых правил мафии на Bastyon, одновременно защищая платформу от сомнительного контента.</div>',
 				},	
 				{
 				id : 'Приложение Apple',
-				q : 'Когда в Apple добавят Bastion?',
-				a : '<div>Apple решила не допускать Bastion из-за отсутствия у Apple возможностей централизованной цензуры, мы носим это как знак чести.</div>',
+				q : 'Когда в Apple добавят Bastyon?',
+				a : '<div>Apple решила не допускать Bastyon из-за отсутствия у Bastyon возможностей централизованной цензуры. Мы гордимся этой оценке Apple.</div>',
 				},
 				{
 				id : 'Отсутствует PKCOIN',
 				q : 'Помощь! Мне не хватает моего PKOIN!',
-				a : '<div>Если по какой-то причине кажется, что ваш PKOIN пропал, сначала проверьте обозреватель блоков через <a href="https://'+self.app.options.url+'/blockexplorer/"> BlockExplorer. </a> к тому, что ваши монеты все еще там. Просто найдите адрес своего кошелька в строке поиска, и он покажет вам баланс вашей учетной записи. </div>',
+				a : '<div>Если по какой-то причине кажется, что ваш PKOIN пропал, сначала проверьте обозреватель блоков через <a href="https://'+self.app.options.url+'/blockexplorer/"> BlockExplorer</a> на предмет того, что ваши монеты все еще там. Просто найдите адрес своего кошелька в строке поиска, и он покажет вам баланс вашей учетной записи. </div>',
 				},
 				
 				]
@@ -801,13 +935,13 @@ var faq = (function(){
 				{
 				id : 'сохранить видео',
 				q : 'Где вы сохраняете видеоконтент?',
-				a : '<div>'+self.app.meta.fullname + 'использует модифицированную платформу с открытым исходным кодом под названием PeerTube, подключенную к блокчейну Pocketnet и приложению Bastion. PeerTube полностью интегрирован с авторизацией '+ self.app.meta.fullname +', каждый видеосервер зарегистрирован в блокчейне.</div>',
+				a : '<div>'+self.app.meta.fullname + ' использует модифицированную платформу с открытым исходным кодом под названием PeerTube, подключенную к блокчейну Pocketnet и приложению Bastyon. PeerTube полностью интегрирован с авторизацией '+ self.app.meta.fullname +', каждый видеосервер зарегистрирован в блокчейне.</div>',
 				},
 				
 				{
 				id : 'разрешения',
-				q : 'Кто может загружать видео в Bastion?',
-				a : '<div> Bastion не имеет централизованных серверов или венчурного финансирования, все видео хранится на серверах, обслуживаемых пользователями. Поэтому мы не можем позволить всем загружать видео, серверы быстро заполнятся. Для загрузки видео вам необходимо иметь в аккаунте 5 PKOIN (500 МБ) или 50 PKOIN (5 ГБ). Вы можете купить PKOIN у других пользователей, если выберете категорию PKOIN / Peer-to-Peer. </div>',
+				q : 'Кто может загружать видео в Bastyon?',
+				a : '<div> Bastyon не имеет централизованных серверов или венчурного финансирования, все видео хранится на серверах, обслуживаемых пользователями. Поэтому мы не можем позволить всем загружать видео, серверы быстро заполнятся. Для загрузки видео вам необходимо иметь в аккаунте 5 PKOIN (500 МБ) или 50 PKOIN (5 ГБ). Вы можете купить PKOIN у других пользователей, если выберете категорию PKOIN / Peer-to-Peer. </div>',
 				},
 				{
 				id : 'статистика',
@@ -818,62 +952,127 @@ var faq = (function(){
 				id : 'технологии',
 				q : 'Какой плеер вы используете для воспроизведения видео?',
 			
-				a : '<div> В Бостионе есть собственный плеер, который представляет собой значительно модифицированную версию PeerTube. Как и PeerTube, он использует технологию WebTorrent для снижения нагрузки на сервер. Это означает, что пользователи, просматривающие видео, делятся им. Обратите внимание, что в некоторых случаях это означает, что пользователи могут видеть IP-адреса друг друга. Серверы Bastion не имеют никакого механизма для записи этих IP-адресов, однако, если вы действительно заботитесь о раскрытии своего IP-адреса, вам следует использовать надежного поставщика VPN. Если вы хотите минимизировать одноранговое совместное использование, вы можете использовать функцию загрузки видео в Bastyon.</div> ',
+				a : '<div> В Бастионе есть собственный плеер, который представляет собой значительно модифицированную версию PeerTube. Как и PeerTube, он использует технологию WebTorrent для снижения нагрузки на сервер. Это означает, что пользователи, просматривающие видео, делятся им. Обратите внимание, что в некоторых случаях это означает, что пользователи могут видеть IP-адреса друг друга. Серверы Bastyon не имеют никакого механизма для записи этих IP-адресов, однако, если вы действительно заботитесь о безопасности своего IP-адреса, вам следует использовать надежного поставщика VPN. Если вы хотите минимизировать одноранговое совместное использование, вы можете использовать функцию загрузки видео в Bastyon.</div> ',
 				},
 				{
 				id : 'время',
 				q : 'Почему для загрузки видео требуется время?',
-				a : '<div> Опять же, у Bastion нет ресурсов, которые есть у Google. Видео необходимо загрузить в один из видеоузлов, а также его необходимо перекодировать. Помните, что YouTube не является бесплатным, он извлекает ценность, используя вашу личную информацию и монетизируя ее. Bastion находится в ведении сообщества, и небольшая задержка - небольшая плата за конфиденциальность и свободу. Кроме того, разработчики Bastion сделали процесс загрузки сверхлегким и гораздо более надежным, чем другие платформы, ориентированные на свободу (часто они даже не перекодируют файлы различного качества.). </div>',
+				a : '<div> Опять же, у Bastyon нет ресурсов, которые есть у Google. Видео необходимо загрузить в один из видеоузлов, а также его необходимо перекодировать. Помните, что YouTube не является бесплатным, он извлекает ценность, используя вашу ЛИЧНУЮ информацию и монетизируя ее. Bastyon находится в ведении сообщества, и небольшая задержка - небольшая плата за конфиденциальность и свободу. Кроме того, разработчики Bastyon сделали процесс загрузки сверхлегким и гораздо более надежным, чем на других платформах, и ориентированным на свободу (часто они даже не перекодируют файлы различного качества). </div>',
 				},
 				
 				
 				]
 				
 				},
+				{
 				
+					name : 'Загрузка видео',
+					id : 'Uploading',
 				
+					group : [
+				
+						{
+							id : 'Uploading1',
+							q : '  ',
+							a : 'Важно! Функция загрузки видео доступна для пользователей, которые имеют не менее 5 PKOIN, либо не менее 100 рейтингов. При этом 5 PKOIN позволяют загружать не более 500 Мб в сутки. Если у вас есть 50 PKOIN, ваши лимиты загрузки увеличатся до 5 Гб в сутки. При этом вы должны постоянно иметь не менее 5/50 PKOIN, чтобы вы не были верифицированы как бот.',
+							img: ''
+						},
+						{
+							id : 'Uploading2',
+							q : 'Нажмите «Что нового?» во вкладке «Вся лента»',
+							a : '',
+							img: '<img src="img/upl1.jpg" alt="" />'
+						},
+						{
+							id : 'Uploading3',
+							q : 'Далее, нажмите «Загрузить видео», а затем во всплывающем окне нажмите «Выбрать файл». Выберите на персональном компьютере необходимый файл и ожидайте окончания загрузки и последующего перекодирования видео. ',
+							a : '',
+							img: '<img src="img/upl2.jpg" alt="" />',
+							
+						},
+						{
+							id : 'Uploading4',
+							q : '',
+							a : '',
+							img: '<img src="img/upl3.jpg" alt="" />'
+						},
+						{
+							id : 'Uploading5',
+							q : '',
+							a : '',
+							img: '<img src="img/upl4.jpg" alt="" />'
+						},
+						{
+							id : 'Uploading6',
+							q : '',
+							a : 'Далее, когда загрузка видео будет окончена, добавьте заголовок и описание, категорию, а так же выберите видимость поста: <br />«Видимо для всех»<br />«Видимо только для подписчиков»<br />«Видно только для пользователей Бастиона»',
+							img: '<img src="img/upl5.jpg" alt="" />'
+						},
+						{
+							id : 'Uploading7',
+							q : '',
+							a : '',
+							img: '<img src="img/upl6.jpg" alt="" />'
+						},
+						
+						
+						
+					]
+				
+				},
 				
 				{
 				
-				name : 'Pocketcoin',
-				id : 'pocketcoin',
+					name : 'Мои видео',
+					id : 'Myvideos',
 				
-				group : [
+					group : [
 				
+						{
+							id : 'Myvideos1',
+							q : '  ',
+							a : 'Нажмите иконку вашего аватара в правом верхнем углу.',
+							img: '<img src="img/prkey1.jpg" alt="" />'
+						},
+						{
+							id : 'Myvideos2',
+							q : ' ',
+							a : 'Далее, нажмите кнопку «управление»',
+							img: '<img src="img/prkey2.jpg" alt="" />'
+						},
+						{
+							id : 'Myvideos3',
+							q : '  ',
+							a : 'Далее, нажмите «Мои видео»',
+							img: '<img src="img/myvid.jpg" alt="" />'
+						},
+						{
+							id : 'Myvideos4',
+							q : '  ',
+							a : 'Вы окажетесь в видео кабинете, в котором содержится информация о размещенных вами видео, среднем рейтинге, общем количестве просмотров видео, а также настройки видео.',
+							img: '<img src="img/Myvideos4.jpg" alt="" />'
+						},
+						{
+							id : 'Myvideos5',
+							q : '  ',
+							a : 'Если вы хотите изменить описание или заголовок видео, превью видео, нажмите на три точки и выберите необходимое действие.',
+							img: '<img src="img/chsec.jpg" alt="" />'
+						},
+						{
+							id : 'Myvideos6',
+							q : '  ',
+							a : 'В верхней части видеостраницы вы можете увидеть дневные лимиты на загрузку видео, количество реферальных пользователей, общее количество просмотров видео, количество уникальных посетителей, поле для поиска видео, также вы можете произвести сортировку.',
+							img: '<img src="img/chsec2.jpg" alt="" />'
+						},
+	
+						
+						
+					]
 				
-				
-				{
-				id : 'магазин приложений',
-				q : 'Что можно ожидать от покупок с помощью PKOIN?',
-				a : '<div>PKOIN имеет множество применений на Bastion. Во-первых, 50 PKOIN в вашем аккаунте снимают все ограничения на публикацию и позволяют загружать видео. PKOIN можно использовать для усиления комментариев, делая ваши комментарии видимыми для всех. PKOIN от повышенных комментариев достается блоггеру, и блоггеры должны отвечать или размещать такие комментарии, чтобы поощрять такие повышения. Вы можете поднять пост, чтобы продвинуть его вверх в ленте. Он используется для ставок в узлах, вы можете запустить узел и заработать больше PKOIN, поставив PKOIN. Он будет использоваться на децентрализованной торговой площадке рекламы, при этом 100% доходов будут поступать блоггерам. Также на него можно будет купить специальные профили обоев, анимированные изображения профиля и т. д. </div>',
 				},
 				
 				
-				{
-				id : 'pocketcoinstock',
-				q : 'Pocketcoin похож на долю акций в '+self.app.meta.fullname+' ?',
-				a : '<div>Definitely no. '+self.app.meta.fullname+' даже не корпорация и не имеет никакой собственности. Это открытый код, который может скопировать и запустить каждый. Pocketcoin - это токен, который облегчает обмен ценностями, в частности, рекламные транзакции. Кроме того, '+ self.app.meta.fullname +' будет включать торговую площадку, где товары и услуги будут продаваться напрямую за Pocketcoin.</div>',
-				},
-				
-				// {
-				// id : 'pocketcoinbuy',
-				// q : 'Могу ли я купить дополнительный Pocketcoin?',
-				// a : '<div>Да, в настоящее время вы можете купить Pocketcoin на следующих биржах: DigiFinex, Bitforex, Mercatox. Вы также можете купить его за 19 различных криптовалют на https://pkoin.net/, а в Bastyon есть категория PKOIN / Peer-to-Peer, где вы можете покупать и продавать ее другим пользователям.</div>',
-				// },
-				
-				{
-				id : 'pocketcoinbuyfiat',
-				q : 'Могу ли я купить Pocketcoin за доллары США или другую фиатную валюту? ',
-				a: '<div> Да, вы можете купить его в категории PKOIN / Peer-to-Peer или через компанию под названием Indacoin по адресу https://buy.pkoin.indacoin.io/ Indacoin не имеет ничего общего с Bastyon, они просто продают PKOIN за кредитные карты после покупки на биржах.</div>',
-				},
-				
-				{
-				id : 'pocketcoinbuyfiat',
-				q : 'Зачем мне покупать Pocketcoin?',
-				a : '<div>У Bastyon нет поддержки со стороны банкиров или венчурных капиталистов, это децентрализованная социальная платформа, поддерживаемая PKOIN. Когда вы используете Bastyon, вы используете пользовательские узлы, видео узлы, все они должны платить за компьютеры, Интернет и электричество. Блогерам нужно зарабатывать на контенте. Bastyon может работать только в том случае, если пользователи владеют и поддерживают PKOIN. Итак, покупка PKOIN - это способ поддержать децентрализацию и свободу. Однако есть еще одна важная причина для владения Pocketcoin. Вскоре вполне возможно, что даже наличие банковского счета будет связано с предоставлением вашей свободы какому-то QR-коду. Pocketcoin не привязан к вашему имени или паспорту, это способ заниматься коммерцией в мире, где царит финансовая цензура, это может быть единственный способ вскоре купить еду без определенного сертификата или QR-кода. Итак, купите немного PKOIN для свободы. </div>',
-				},
-				]
-				},
+			
 				{
 				
 				name : 'Конфиденциальность',
@@ -885,26 +1084,26 @@ var faq = (function(){
 				{
 				id : 'анонимный',
 				q : 'Анонимны ли люди, которые не вводят свои настоящие имена?',
-				a : '<div>Да - ни имена, ни телефоны, ни электронная почта НЕ связаны с вашей учетной записью, она просто вводится необязательно для получения обновлений информационных бюллетеней.</div>',
+				a : '<div>Да - ни имена, ни телефоны, ни электронная почта НЕ связаны с вашей учетной записью.  Ввод электронной почты необязателен. Вы можете ввести электронную почту для получения рассылок  от разработчиков.</div>',
 				},
 				
 				{
 				id : 'вид снаружи',
-				q : 'Может ли кто-нибудь просматривать профиль (чьи-то сообщения) за пределами сада? Это обнесенный стеной сад?',
-				a : '<div>Поскольку весь блокчейн и все сообщения находятся в открытом доступе, любой может иметь доступ к вашим сообщениям и профилю. Они просто знают, что это связано с вашим публичным адресом. На практике вы можете иметь несколько учетных записей и переключаться между ними. Вы можете использовать одни со своим настоящим именем, а другие анонимно. Анонимность - отличный инструмент для защиты свободы слова от злоупотребления властью.</div>',
+				q : 'Насколько Bastyon анонимный?',
+				a : '<div>Блокчейн открыт для всех, но там видно лишь действия в соцсети вашего анонимного аккаунта, такие как пост или рейтинг другого поста. Никаких личных данных не видно, и все ваши сообщения зашифрованы сквозным шифрованием. Также вы можете иметь несколько учетных записей в Бастионе и переключаться между ними. Вы можете использовать одни со своим настоящим именем, а другие анонимно. Анонимность - отличный инструмент для защиты свободы слова от злоупотребления властью.</div>',
 				},
 				
 				
-				{
-				id : 'walletid',
-				q : 'Похож ли мой открытый ключ на идентификатор кошелька, который я ввожу в моем профиле и на который люди могут отправлять баллы?',
-				a : '<div>Exactly. И это безопасно. Но не секретная фраза - береги!</div>',
-				},
+				// {
+				// id : 'walletid',
+				// q : 'Похож ли мой открытый ключ на идентификатор кошелька, который я ввожу в моем профиле и на который люди могут отправлять баллы?',
+				// a : '<div>Exactly. И это безопасно. Но не секретная фраза - береги!</div>',
+				// },
 				
 				{
 				id : 'узел',
 				q : 'Могу ли я запустить узел на моем автономном сервере?',
-				a : '<div> Инструкции здесь https://github.com/pocketnetteam/pocketnet.core/blob/master/README.md </div>',
+				a : '<div> Инструкции <a href="https://github.com/pocketnetteam/pocketnet.core/blob/master/README.md" target="_blank">здесь</a>  </div>',
 				},
 				
 				{
@@ -916,19 +1115,19 @@ var faq = (function(){
 				},
 				{
 				
-				name : 'Курирование контента',
+				name : 'Модерация контента',
 				id : 'курирование',
 				
 				group : [
 				
 				{
 				id : 'содержание',
-				q : 'Разрешен ли какой-либо контент на '+ self.app.meta.fullname +'? Если какой-то контент запрещен, можно ли назвать платформу свободой слова?',
-				a : '<div>Это очень важный вопрос. Начнем с того, что разрешены не все типы контента. Однако, и это очень важно, обеспечение соблюдения прозрачно и зависит от сообщества, как мы объясним ниже. Правоприменение осуществляется сообществом и открыто, без скрытых теневых запретов или выборочных запретов, практикуемых Кремниевой долиной.</div>',
+				q : 'Есть ли контент, запрещенный к публикации на  '+ self.app.meta.fullname +'? Если какой-то контент запрещен, можно ли назвать платформу свободой слова?',
+				a : '<div>Это очень важный вопрос. Начнем с того, что разрешены не все типы контента. Модерация производится непосредственно сообщенством '+self.app.meta.fullname+', о чем мы поясним ниже. Скрытые теневые запреты или выборочных запреты, практикуемые Кремниевой долиной, отсутствуют на '+self.app.meta.fullname+'.</div>',
 				},
 				{
 				id : 'конкретный',
-				q : 'Особенности курирования на '+self.app.meta.fullname+'.',
+				q : 'Особенности модерации на '+self.app.meta.fullname+'.',
 				a : '<div> В настоящее время модерация контента осуществляется с помощью оценок в 1 звезду пользователями с высокой репутацией. Когда репутация достигает -30, доступ к аккаунту ограничивается. Однако существует совершенно новый алгоритм модерации, который будет выпущен к концу 2021 года. Согласно новым алгоритмам, будет возможность пометить пользователя или сообщение любым высокопоставленным пользователем, но это не повлияет на счет напрямую. После того, как будет установлено определенное количество флагов, на блокчейне будет разыграна лотерея, и для этой учетной записи будет выбрана группа модераторов присяжных заседателей. Присяжные должны согласиться с тем, что этот пользователь разместил порнографию, наркотики или прямую угрозу насилия. Любое иное мнение или несогласие не является основанием для пометки или каких-либо санкций.</div> ',
 				},
 				{
@@ -936,11 +1135,11 @@ var faq = (function(){
 				q : 'Разрешено ли взаимное голосование?',
 				a : '<div> Взаимность - нормальное человеческое поведение, поэтому в этом смысле с этим нет проблем. Однако механизмы курирования во многом зависят от того факта, что как высокие, так и низкие оценки связаны с контентом и не являются взаимными. Таким образом, Бастион ограничит ответные голоса двумя способами. Во-первых, вы не сможете вернуть пять или одну звезду в течение определенного периода времени. Кроме того, те, кто угрожает возмездием за голоса в одну звезду или обещают награду за голоса в пять звезд, считаются участниками запрещенного поведения. Другие пользователи могут отмечать такие случаи, и псевдослучайная лотерея создаст жюри для их рассмотрения. Хотя такое поведение не будет иметь тех же штрафов, что и незаконный контент, пользователям, задействованным в нем, могут быть предоставлены временные блокировки алгоритмом консенсуса узла. </div> ',
 				},
-				{
-				id : 'расизм',
-				q : 'Важное примечание о расизме.',
-				a : '<div>Свобода мысли и свобода слова подвергаются нападкам со стороны основных социальных платформ и средств массовой информации. Мы должны говорить правду, и именно по этой причине эта платформа не является корпоративной и децентрализованной. Но мы просим всех высказывать свою точку зрения, не нападая на национальность или расу людей. Вы можете обосновать свою точку зрения на доказательствах. Мы не можем позволить себе превратить' + self.app.meta.fullname + 'в маргинальную платформу. Говорите правду, но, пожалуйста, избегайте расизма и нападок на определенные национальности в целом. Мы знаем, что Кремниевая долина и МСМ превратили проблему расизма в свою игральную карту, и они постоянно плачут как волк. Более того, причина, по которой мы должны быть измерены и основаны на доказательствах, и не позволять им опорочивать нас этим. В противном случае мы не позволим большинству населения взвесить доказательства коррупции в МСМ, представленные на '+ self.app.meta.fullname +'. Пожалуйста, имейте это в виду, чтобы свобода слова могла процветать, и мы могли победить фэйсбокков мира. </div> <div> В конечном счете, именно сообщество будет определять направление платформы. Иметь кучу снежинок, которые жалуются на то, что их оскорбляет, так же плохо, как и когда люди хотят озвучить прямые насильственные угрозы. Однако первым признаком является то, что первые пользователи платформы, как правило, умны и основаны на доказательствах, поэтому будущее выглядит невероятно светлым. Команда '+ self.app.meta.fullname +' заметила после нескольких дней бета-тестирования, что мы перестали читать даже альтернативные новости, потому что на '+ self.app.meta.fullname +' было так много интересного контента. Так держать! </div> <div> Пожалуйста, примите участие в обсуждении этих тем. Это платформа сообщества. Мы всегда стремимся повысить прозрачность платформы, и вы должны сообщить нам, как мы можем улучшить контроль и контроль контента. Вы можете публиковать сообщения по этой теме в теге Bastyon / Pocketnet.</div>',
-				},
+				// {
+				// id : 'расизм',
+				// q : 'Важное примечание о расизме.',
+				// a : '<div>Свобода мысли и свобода слова подвергаются нападкам со стороны основных социальных платформ и средств массовой информации. Мы должны говорить правду, и именно по этой причине эта платформа не является корпоративной и децентрализованной. Но мы просим всех высказывать свою точку зрения, не нападая на национальность или расу людей. Вы можете обосновать свою точку зрения на доказательствах. Мы не можем позволить себе превратить ' + self.app.meta.fullname + ' в маргинальную платформу. Говорите правду, но, пожалуйста, избегайте расизма и нападок на определенные национальности в целом. Мы знаем, что Кремниевая долина и СМИ превратили проблему расизма в свою игральную карту, которую они разыгрывают в необходимый момент. Одна из задач '+ self.app.meta.fullname +' - стать платформаой альтернативного мнения, создать техническую и социальную возможность обличать ложь СМИ, рассказывать о произволе властей, коррупции, не опасаясь потери опубликованных материалов. Пожалуйста, имейте это в виду и рассказывайте о платформе близким людям, чтобы свобода слова могла процветать. </div> <div> В конечном счете, именно сообщество будет определять направление платформы. Иметь кучу снежинок, которые жалуются на то, что их оскорбляет, так же плохо, как и когда люди хотят озвучить прямые насильственные угрозы. Однако первым признаком является то, что первые пользователи платформы, как правило, умны и основаны на доказательствах, поэтому будущее выглядит невероятно светлым. Команда '+ self.app.meta.fullname +' заметила после нескольких дней бета-тестирования, что мы перестали читать даже альтернативные новости, потому что на '+ self.app.meta.fullname +' было так много интересного контента. Так держать! </div> <div> Пожалуйста, примите участие в обсуждении этих тем. Это платформа сообщества. Мы всегда стремимся повысить прозрачность платформы, и вы должны сообщить нам, как мы можем улучшить контроль и контроль контента. Вы можете публиковать сообщения по этой теме в теге Bastyon / Pocketnet.</div>',
+				// },
 				
 				
 				]
@@ -950,7 +1149,7 @@ var faq = (function(){
 				
 				{
 				
-				name : 'Как '+self.app.meta.fullname+' отличается от...',
+				name : 'Чем '+self.app.meta.fullname+' отличается от...',
 				id : 'разные',
 				
 				group : [
@@ -958,7 +1157,7 @@ var faq = (function(){
 				{
 				id : 'разные1',
 				q : 'Twitter, Facebook, Reddit и другие централизованные платформы?',
-				a : '<div>Нет центральной власти или корпорации. Платформа управляется равными узлами в цепочке блоков. Вся прибыль делится между операторами узлов и создателями контента. Операторы узлов делают ставку на Pocketcoin, чтобы чеканить блоки с вознаграждениями и комиссиями за транзакции. Половина вознаграждений в каждом блоке достается создателям контента на основе оценок, которые их контент собирает от пользователей.</div>',
+				a : '<div>Нет центрального офиса или корпорации. Платформа управляется равными узлами в цепочке блоков. Вся прибыль делится между операторами узлов и создателями контента. Операторы узлов делают ставку на Pocketcoin, чтобы чеканить блоки с вознаграждениями и комиссиями за транзакции. Половина вознаграждений в каждом блоке достается создателям контента на основе оценок, которые их контент собирает от пользователей.</div>',
 				},
 				{
 				id : 'разные2',
@@ -989,13 +1188,13 @@ var faq = (function(){
 				
 				{
 				id : 'экосистема 1',
-				q : 'Как '+self.app.meta.fullname+' развитие финансируется?',
-				a : '<div>'+self.app.meta.fullname+'имеет открытый исходный код и в настоящее время управляется группой добровольцев-экспертов по программированию и математике. После запуска'+self.app.meta.fullname+' привлечет талантливых программистов, обещая создать децентрализованную социальную сеть. Программисты и маркетологи, работающие на Pocketcoin, пожертвованы крупными владельцами PKOIN.</div>',
+				q : 'Как финансируется развитие '+self.app.meta.fullname+' ?',
+				a : '<div>'+self.app.meta.fullname+'имеет открытый исходный код и в настоящее время управляется группой добровольцев-экспертов по программированию и математике. После запуска '+self.app.meta.fullname+' привлек талантливых программистов, обещая создать децентрализованную социальную сеть. Программисты и маркетологи, работают за Pocketcoin, пожертвованынный крупными владельцами PKOIN.</div>',
 				},
 				{
 				id : 'экосистема 2',
 				q : 'Что такое Pocketcoin?',
-				a : '<div>Pocketcoin - это сетевой токен. Он используется исключительно для покупки рекламы у '+self.app.meta.fullname+' вкладчиков и платить комиссию за такие платежи. Он также используется для повышения комментариев, публикаций и покупки привилегий для вашей учетной записи. В Pocketent весь доход делится между создателями контента и узлами.</div>',
+				a : '<div>Pocketcoin - это сетевой токен. Он используется исключительно для покупки рекламы на '+self.app.meta.fullname+' вкладчиков и платить комиссию за такие платежи. Он также используется для поднятия комментариев, публикаций и покупки привилегий для вашей учетной записи. В '+self.app.meta.fullname+' весь доход делится между создателями контента и узлами.</div>',
 				},
 				{
 				id : 'экосистема 3',
@@ -1005,7 +1204,7 @@ var faq = (function(){
 				{
 				id : 'экосистема 4',
 				q : 'Что, если пользователи размещают незаконный контент, порнографию и СПАМ?',
-				a : '<div>'+self.app.meta.fullname+' это не платформа даркнета или какой-то порнухаб. Хотя он децентрализован и устойчив к цензуре, он модерируется пользователями. Любой незаконный контент помечается и удаляется с платформы. Это означает, что модерировать платформу могут пользователи с наивысшей репутацией. Однако существуют гарантии (в рамках открытого исходного кода) от той же или очень похожей группы (групп) людей, неоднократно голосующих за контент за пределами платформы. Модераторы контента выбираются случайным образом с помощью лотереи на блокчейне, чтобы избежать каких-либо правил мафии. Кроме того, пользователей явно поощряют к незаконному контенту, а НЕ просто к контенту, который они считают оскорбительным. Чтобы убедиться, что '+ self.app.meta.fullname +' является платформой для свободы слова, мы призываем вас начать участвовать, повышать свою репутацию и надлежащим образом контролировать платформу без цензуры, которая в настоящее время распространена в централизованных социальных сетях.</div>',
+				a : '<div>'+self.app.meta.fullname+' это не платформа даркнета или какой-то порнхаб. Хотя <div>'+self.app.meta.fullname+' децентрализован и устойчив к цензуре, он модерируется пользователями. Любой незаконный контент помечается и удаляется с платформы. Это означает, что модерировать платформу могут пользователи с наивысшей репутацией. Однако, не существуют гарантии (в рамках открытого исходного кода), что за деструктивный контент не проголосуют пользователи с высокой репутацией. Модераторы контента выбираются случайным образом с помощью лотереи на блокчейне, чтобы избежать каких-либо подтасовок. Кроме того, пользователей явно поощряют к незаконному контенту, а НЕ просто к контенту, который они считают оскорбительным. Чтобы убедиться, что '+ self.app.meta.fullname +' является платформой для свободы слова, мы призываем каждого участвовать в модерации контента путем проставления оценок, публиковать интересный авторский контент, повышая таким образом свою репутацию и привнося вклад в развитие платформы.</div>',
 				},
 				{
 				id : 'экосистема 5',
@@ -1058,191 +1257,7 @@ var faq = (function(){
 					]
 				
 				},
-				{
 				
-					name : 'Загрузка видео',
-					id : 'Uploading',
-				
-					group : [
-				
-						{
-							id : 'Uploading1',
-							q : '  ',
-							a : 'Важно! Функция загрузки видео доступна для пользователей, которые имеют не менее 5 PKOIN, либо не менее 100 рейтингов. При этом 5 PKOIN позволяют загружать не более 500 Мб в сутки. Если у вас есть 50 PKOIN, ваши лимиты загрузки увеличатся до 5 Гб в сутки. При этом вы должны постоянно иметь не менее 5/50 PKOIN, чтобы вы не были верифицированы как бот.',
-							img: ''
-						},
-						{
-							id : 'Uploading2',
-							q : 'Нажмите «Что нового?» во вкладке «Вся лента»',
-							a : '',
-							img: '<img src="img/upl1.jpg" alt="" />'
-						},
-						{
-							id : 'Uploading3',
-							q : 'Далее, нажмите «Загрузить видео», а затем во всплывающем окне нажмите «Выбрать файл». Выберите на персональном компьютере необходимый файл и ожидайте окончания загрузки видео. ',
-							a : '',
-							img: '<img src="img/upl2.jpg" alt="" />',
-							
-						},
-						{
-							id : 'Uploading4',
-							q : '',
-							a : '',
-							img: '<img src="img/upl3.jpg" alt="" />'
-						},
-						{
-							id : 'Uploading5',
-							q : '',
-							a : '',
-							img: '<img src="img/upl4.jpg" alt="" />'
-						},
-						{
-							id : 'Uploading6',
-							q : '',
-							a : 'Далее, когда загрузка видео будет окончена, добавьте заголовок и описание, категорию, а так же выберите видимость поста: <br />«Видимо для всех»<br />«Видимо только для подписчиков»<br />«Видно только для пользователей Бастиона»',
-							img: '<img src="img/upl5.jpg" alt="" />'
-						},
-						{
-							id : 'Uploading7',
-							q : '',
-							a : '',
-							img: '<img src="img/upl6.jpg" alt="" />'
-						},
-						
-						
-						
-					]
-				
-				},
-				{
-				
-					name : 'Как я могу купить PKOIN?',
-					id : 'buy-pkoin',
-				
-					group : [
-				
-						{
-							id : 'buy-pkoin1',
-							q : '  ',
-							a : 'Вы можете купить PKOIN следующими способами: Выберите категорию «PKOIN/Из рук в руки» и посмотрите на предложения о купле/продаже PKOIN, либо сами разместите свое предложение о купле/продаже PKOIN.	Покупку PKOIN также можно осуществить на следующих сайтах. 	<br> <a target="_blank" href="https://www.bitforex.com/en/spot/pkoin_usdt">https://www.bitforex.com/en/spot/pkoin_usdt</a> <br> <a target="_blank" href="https://www.digifinex.com/en-ww/trade/USDT/PKOIN">https://www.digifinex.com/en-ww/trade/USDT/PKOIN</a>  <br> <a target="_blank" href="https://pkoin.net/">https://pkoin.net/</a> - здесь приобрести  PKOIN можно за другие криптовалюты. <br>		<a target="_blank" href="https://buy.pkoin.indacoin.io/">https://buy.pkoin.indacoin.io/</a> - здесь приобрести PKOIN можно за кредитную карту.',
-							img: '<img src="img/per-to-per.jpg" alt="" />'
-						},
-						{
-							id : 'buy-pkoin2',
-							q : 'Pkoin.net  ',
-							a : 'Выберите криптовалюту, за которую вы хотите приобрести PKOIN, укажите приобретаемое количество PKOIN а также введите адрес своего кошелька.',
-							img: '<img src="img/buy-pkoin2.jpg" alt="" />'
-						},
-						{
-							id : 'buy-pkoin3',
-							q : '  ',
-							a : 'Адрес вашего PKOIN-кошелька находится в вашем аккаунте на Бастионе. Чтобы его найти – кликните иконку вашего аватара, которая расположена в правом верхнем углу.',
-							img: '<img src="img/upl1.jpg" alt="" />'
-						},
-						{
-							id : 'buy-pkoin4',
-							q : '  ',
-							a : 'Далее кликните по адресу PKOIN, чтобы его скопировать.',
-							img: '<img src="img/upl7.jpg" alt="" />'
-						},
-						{
-							id : 'buy-pkoin5',
-							q : '  ',
-							a : 'Далее, вам нужно ввести адрес вашего PKOIN-кошелька в соответствующее поле и нажать кнопку “Purchase”.',
-							img: '<img src="img/buy-pkoin5.jpg" alt="" />'
-						},
-						{
-							id : 'buy-pkoin6',
-							q : '  ',
-							a : 'После этого вы должны отправить BTC (или другую криптовалюту, которую вы выбрали) на предоставленный вам адрес. ',
-							img: '<img src="img/buy-pkoin6.jpg" alt="" />'
-						},
-						{
-							id : 'buy-pkoin7',
-							q : ' Купить PKOIN с помощью кредитной карты на <a href="Buy.pkoin.indacoin.io">indacoin.io</a>     ',
-							a : 'Во-первых, выберите валюту, введите количество, ваш электронный адрес и адрес кошелька PKOIN. Далее, нажмите «Купить PKOIN»',
-							img: '<img src="img/buy-pkoin7.jpg" alt="" />'
-						},
-						{
-							id : 'buy-pkoin8',
-							q : '  ',
-							a : 'Вы увидите окно «Купить PKOIN с кредитной или дебетовой картой», нажмите  «Далее»',
-							img: '<img src="img/buy-pkoin8.jpg" alt="" />'
-						},
-						{
-							id : 'buy-pkoin9',
-							q : '  ',
-							a : 'Далее, введите ваш адрес, почтовый индекс и укажите вашу страну. ',
-							img: '<img src="img/buy-pkoin9.jpg" alt="" />'
-						},
-						{
-							id : 'buy-pkoin10',
-							q : '  ',
-							a : 'Далее, введите ваше имя, страну, номер телефона, дату рождения',
-							img: '<img src="img/buy-pkoin10.jpg" alt="" />'
-						},
-						{
-							id : 'buy-pkoin11',
-							q : '  ',
-							a : 'Введите номер вашей карты и нажмите «Далее».',
-							img: '<img src="img/buy-pkoin11.jpg" alt="" />'
-						},
-						
-						
-						
-						
-					]
-				
-				},
-				{
-				
-					name : 'Мои видео',
-					id : 'Myvideos',
-				
-					group : [
-				
-						{
-							id : 'Myvideos1',
-							q : '  ',
-							a : 'Нажмите иконку вашего аватара в правом верхнем углу.',
-							img: '<img src="img/prkey1.jpg" alt="" />'
-						},
-						{
-							id : 'Myvideos2',
-							q : ' ',
-							a : 'Далее, нажмите кнопку «управление»',
-							img: '<img src="img/prkey2.jpg" alt="" />'
-						},
-						{
-							id : 'Myvideos3',
-							q : '  ',
-							a : 'Далее, нажмите «Мои видео»',
-							img: '<img src="img/myvid.jpg" alt="" />'
-						},
-						{
-							id : 'Myvideos4',
-							q : '  ',
-							a : 'Вы окажетесь в видео кабинете, в котором содержится информация о размещенных вами видео, среднем рейтинге, общем количестве просмотров видео, а также настройки видео.',
-							img: '<img src="img/Myvideos4.jpg" alt="" />'
-						},
-						{
-							id : 'Myvideos5',
-							q : '  ',
-							a : 'Если вы хотите изменить описание или заголовок видео, превью видео, нажмите на три точки и выберите необходимое действие.',
-							img: '<img src="img/chsec.jpg" alt="" />'
-						},
-						{
-							id : 'Myvideos6',
-							q : '  ',
-							a : 'В верхней части видеостраницы вы можете увидеть дневные лимиты на загрузку видео, количество реферальных пользователей, общее количество просмотров видео, количество уникальных посетителей, поле для поиска видео, также вы можете произвести сортировку.',
-							img: '<img src="img/chsec2.jpg" alt="" />'
-						},
-	
-						
-						
-					]
-				
-				}
 				
 
 				
@@ -1290,6 +1305,48 @@ var faq = (function(){
 					]
 			
 				
+				},
+
+				{
+				
+					name : "Pocketcoin",
+					id : "pocketcoin",
+				
+					group : [
+				
+						
+				
+						 {
+							id : "app-store",
+							q : "À quoi peut-on s`attendre pour acheter avec PKOIN?",
+							a : "<div>PKOIN a une multitude d`utilisations sur Bastyon. Tout d`abord, 50 PKOIN dans votre compte supprime toutes les limitations de publication et vous permet de charger la vidéo. PKOIN peut être utilisé pour booster les commentaires, rendant vos commentaires visibles pour tout le monde. Le PKOIN des commentaires boostés va au blogueur, et les blogueurs doivent répondre ou présenter de tels commentaires pour encourager de tels boosts. Vous pouvez booster une publication pour la déplacer vers le haut dans le fil. Il est utilisé pour le jalonnement dans des nœuds, vous pouvez exécuter un nœud et gagner plus de PKOIN en jalonnant PKOIN. Il sera utilisé dans un marché publicitaire décentralisé et 100 % des bénéfices seront reversés aux blogueurs. Il sera également utilisé pour acheter des profils de papier peint spéciaux, des images de profil animées, etc. </div>",
+						},
+				
+				
+						{
+							id : "pocketcoinstock",
+							q : "Est-ce que Pocketcoin est comme une action dans "+self.app.meta.fullname+"?",
+							a : "<div>Définitivement non. "+self.app.meta.fullname+" n`est même pas une société et n`a aucun droit de propriété. C`est un code open source que n`importe qui peut copier et exécuter. Pocketcoin est un jeton qui facilite l`échange de valeur, en particulier les transactions publicitaires. De plus, "+self.app.meta.fullname+" inclura un marché où les biens et services seront vendus directement pour Pocketcoin</div>",
+						},
+				
+						{
+							id : "pocketcoinbuy",
+							q : "Est-ce que je peux acheter des Pocketcoin additionnels?",
+							a : "<div>Oui, actuellement, vous pouvez acheter des Pocketcoin sur les bourses suivantes : DigiFinex, Bitforex, Mercatox. Vous pouvez également l`acheter pour 19 cryptos différents sur https://pkoin.net/ et il existe une catégorie au sein de Bastyon appelée PKOIN/Peer-to-Peer où vous pouvez l`acheter et le vendre avec d`autres utilisateurs. </div>",
+						},
+				
+						{
+							id : "pocketcoinbuyfiat",
+							q : "Est-ce que je peux acheter des Pocketcoin pour des Dollars US ou d`autres devises?",
+							a : "<div>Oui, vous pouvez l`acheter dans la catégorie PKOIN/Peer-to-Peer ou via une société appelée Indacoin à l`adresse https://buy.pkoin.indacoin.io/ Indacoin n`a rien à voir avec Bastyon, ils vendent simplement du PKOIN à crédit cartes après l`avoir acheté sur les échanges.</div>",
+						},
+						
+						{
+							id : "pocketcoinbuyfiat",
+							q : "Pourquoi dois-je acheter des Pocketcoin?",
+							a : "<div>Bastyon n`a aucun soutien de banquiers ou de capital-risqueurs, c`est une plate-forme sociale décentralisée qui est soutenue par PKOIN. Lorsque vous utilisez Bastyon, vous utilisez des nœuds d`utilisateurs, des nœuds vidéo, ils doivent tous payer pour les ordinateurs, Internet et l`électricité. Les blogueurs doivent gagner pour le contenu. Bastyon ne peut fonctionner que si les utilisateurs possèdent et prennent en charge PKOIN. Ainsi, acheter PKOIN est un moyen de soutenir la décentralisation et la liberté. Cependant, il existe une autre raison importante de posséder Pocketcoin. Bientôt, il est très possible que même avoir un compte bancaire soit lié à la soumission de votre liberté, à un code QR. Pocketcoin n`est pas lié à votre nom ou à votre passeport, c`est un moyen de faire du commerce dans un monde où règne la censure financière, c`est peut-être le seul moyen d`acheter de la nourriture bientôt sans un certain certificat ou un code QR. Alors, achetez du PKOIN pour la liberté. </div>",
+						},
+					]
 				},
 				
 				{
@@ -1454,47 +1511,7 @@ var faq = (function(){
 				
 				
 				
-				{
 				
-					name : "Pocketcoin",
-					id : "pocketcoin",
-				
-					group : [
-				
-						
-				
-						 {
-							id : "app-store",
-							q : "À quoi peut-on s`attendre pour acheter avec PKOIN?",
-							a : "<div>PKOIN a une multitude d`utilisations sur Bastyon. Tout d`abord, 50 PKOIN dans votre compte supprime toutes les limitations de publication et vous permet de charger la vidéo. PKOIN peut être utilisé pour booster les commentaires, rendant vos commentaires visibles pour tout le monde. Le PKOIN des commentaires boostés va au blogueur, et les blogueurs doivent répondre ou présenter de tels commentaires pour encourager de tels boosts. Vous pouvez booster une publication pour la déplacer vers le haut dans le fil. Il est utilisé pour le jalonnement dans des nœuds, vous pouvez exécuter un nœud et gagner plus de PKOIN en jalonnant PKOIN. Il sera utilisé dans un marché publicitaire décentralisé et 100 % des bénéfices seront reversés aux blogueurs. Il sera également utilisé pour acheter des profils de papier peint spéciaux, des images de profil animées, etc. </div>",
-						},
-				
-				
-						{
-							id : "pocketcoinstock",
-							q : "Est-ce que Pocketcoin est comme une action dans "+self.app.meta.fullname+"?",
-							a : "<div>Définitivement non. "+self.app.meta.fullname+" n`est même pas une société et n`a aucun droit de propriété. C`est un code open source que n`importe qui peut copier et exécuter. Pocketcoin est un jeton qui facilite l`échange de valeur, en particulier les transactions publicitaires. De plus, "+self.app.meta.fullname+" inclura un marché où les biens et services seront vendus directement pour Pocketcoin</div>",
-						},
-				
-						{
-							id : "pocketcoinbuy",
-							q : "Est-ce que je peux acheter des Pocketcoin additionnels?",
-							a : "<div>Oui, actuellement, vous pouvez acheter des Pocketcoin sur les bourses suivantes : DigiFinex, Bitforex, Mercatox. Vous pouvez également l`acheter pour 19 cryptos différents sur https://pkoin.net/ et il existe une catégorie au sein de Bastyon appelée PKOIN/Peer-to-Peer où vous pouvez l`acheter et le vendre avec d`autres utilisateurs. </div>",
-						},
-				
-						{
-							id : "pocketcoinbuyfiat",
-							q : "Est-ce que je peux acheter des Pocketcoin pour des Dollars US ou d`autres devises?",
-							a : "<div>Oui, vous pouvez l`acheter dans la catégorie PKOIN/Peer-to-Peer ou via une société appelée Indacoin à l`adresse https://buy.pkoin.indacoin.io/ Indacoin n`a rien à voir avec Bastyon, ils vendent simplement du PKOIN à crédit cartes après l`avoir acheté sur les échanges.</div>",
-						},
-						
-						{
-							id : "pocketcoinbuyfiat",
-							q : "Pourquoi dois-je acheter des Pocketcoin?",
-							a : "<div>Bastyon n`a aucun soutien de banquiers ou de capital-risqueurs, c`est une plate-forme sociale décentralisée qui est soutenue par PKOIN. Lorsque vous utilisez Bastyon, vous utilisez des nœuds d`utilisateurs, des nœuds vidéo, ils doivent tous payer pour les ordinateurs, Internet et l`électricité. Les blogueurs doivent gagner pour le contenu. Bastyon ne peut fonctionner que si les utilisateurs possèdent et prennent en charge PKOIN. Ainsi, acheter PKOIN est un moyen de soutenir la décentralisation et la liberté. Cependant, il existe une autre raison importante de posséder Pocketcoin. Bientôt, il est très possible que même avoir un compte bancaire soit lié à la soumission de votre liberté, à un code QR. Pocketcoin n`est pas lié à votre nom ou à votre passeport, c`est un moyen de faire du commerce dans un monde où règne la censure financière, c`est peut-être le seul moyen d`acheter de la nourriture bientôt sans un certain certificat ou un code QR. Alors, achetez du PKOIN pour la liberté. </div>",
-						},
-					]
-				},
 				{
 				
 					name : "Confidentialité",
@@ -1509,23 +1526,23 @@ var faq = (function(){
 							a : "<div>Oui - aucun nom, téléphone, e-mail n`est connecté à votre compte de quelque manière que ce soit, il est simplement entré en option pour recevoir les mises à jour de la newsletter.</div>",
 						},
 				
-						{
-							id : "viewoutside",
-							q : "Est-ce que quelqu`un peut voir un profil (someone&rsquo;s posts) hors du jardin? Is it a walled garden?",
-							a : "<div>Étant donné que l`ensemble de la blockchain et toutes les publications sont en open source, tout le monde peut avoir accès à vos publications et à votre profil. Ils savent juste qu`il est lié à votre adresse publique. En pratique, vous pouvez avoir plusieurs comptes et basculer entre eux. Vous pouvez en utiliser certains avec votre vrai nom et d`autres de manière anonyme. L`anonymat est un excellent outil pour protéger la liberté d`expression contre les abus de pouvoir.</div>",
-						},
+						// {
+						// 	id : "viewoutside",
+						// 	q : "Est-ce que quelqu`un peut voir un profil (someone&rsquo;s posts) hors du jardin? Is it a walled garden?",
+						// 	a : "<div>Étant donné que l`ensemble de la blockchain et toutes les publications sont en open source, tout le monde peut avoir accès à vos publications et à votre profil. Ils savent juste qu`il est lié à votre adresse publique. En pratique, vous pouvez avoir plusieurs comptes et basculer entre eux. Vous pouvez en utiliser certains avec votre vrai nom et d`autres de manière anonyme. L`anonymat est un excellent outil pour protéger la liberté d`expression contre les abus de pouvoir.</div>",
+						// },
 				
 				
-						{
-							id : "walletid",
-							q : "Ma clé publique ressemble-t-elle à un identifiant de portefeuille que j`entre sur mon profil et auquel les gens peuvent envoyer des points ?",
-							a : "<div>Exactement. Et il est sécure de la réveler. Mais pas la phrase secrète -gardez-la pour vous!</div>",
-						},
+						// {
+						// 	id : "walletid",
+						// 	q : "Ma clé publique ressemble-t-elle à un identifiant de portefeuille que j`entre sur mon profil et auquel les gens peuvent envoyer des points ?",
+						// 	a : "<div>Exactement. Et il est sécure de la réveler. Mais pas la phrase secrète -gardez-la pour vous!</div>",
+						// },
 				
 						{
 							id : "runnode",
 							q : "Puis-je exécuter un nœud sur mon serveur headless ?",
-							a : "<div> Les instructions sont ici https://github.com/pocketnetteam/pocketnet.core/blob/master/README.md </div>",
+							a : '<div> Les instructions  <a href="https://github.com/pocketnetteam/pocketnet.core/blob/master/README.md" target="_blank">sont ici</a> </div>',
 						},
 				
 						{
