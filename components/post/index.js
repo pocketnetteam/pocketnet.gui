@@ -680,6 +680,10 @@ var post = (function () {
 
 				return sitemessage(self.app.localization.e('videoCopied'));
 			},
+
+			closeWindow: function() {
+				self.closeContainer();
+			},
 		}
 
 		var events = {
@@ -876,6 +880,17 @@ var post = (function () {
 				actions.donate()
 			},
 
+			clickOut: function(e) {
+				const clickedElem = $(e.target);
+
+				const isClickOut = (clickedElem.hasClass('wndcontent'));
+
+				if (!isClickOut) {
+					return;
+				}
+
+				actions.closeWindow();
+			}
 		}
 
 		var renders = {
@@ -1265,6 +1280,8 @@ var post = (function () {
 												history : true
 											})
 										})
+
+										el.share.closest('.wndcontent').on('click', events.clickOut);
 
 										if (clbk) clbk();
 									});
