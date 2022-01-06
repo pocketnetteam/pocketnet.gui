@@ -4738,21 +4738,23 @@ input[type=radio].radio:checked + label {
     
     .controlhor{
         display: none;
-        position: absolute;
-        top : 45%;
-        border-radius: 50%;
+        align-items: center;
+        // position: absolute;
+        border-radius: 8px;
+        width: 30px;
+        height: 30px;
+        border: 1px solid #E3E4EB;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         backdrop-filter: blur(4px);
         -webkit-backdrop-filter: blur(4px);  
         .shadowSmaller();
         cursor: pointer;
-        height: 44px;
-        width: 44px;
         text-align: center;
-        line-height: 44px;
-        color : #fff;
+        color : @color-black;
         font-size: 0.8em;
-        .transition(0.3s);
-        
+        .transition(0.3s);        
 
         &.controlleft{
             left: @rhythm;
@@ -4770,7 +4772,7 @@ input[type=radio].radio:checked + label {
 
     &.hasitems{
         .controlhor{
-            display: block;
+            display: flex;
         }
     }
 

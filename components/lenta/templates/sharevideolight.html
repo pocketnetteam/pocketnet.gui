@@ -25,6 +25,7 @@ if(share.address){
 
 var view = 'post';
 var name = app.platform.api.name(share.address)
+
 var emptywithrepost = share.isEmpty() && share.repost
 var value = Number(share.score)
 
@@ -112,13 +113,17 @@ var metadisplay = function(){ %>
 
 		<% if(c) {
 
-			c = filterXSS(clearScripts((findAndReplaceLink(c, true))))
+			c = filterXSS(clearScripts((findAndReplaceLink(c, true))));
+				
 		%>
 			<div class="paddingWrapper">
 				<div class="sharecaption canmark opensviurl" title="<%-nl2br(trimrn(c))%>">
-					<div>
-						<% if(ed.horizontal) {%><span class="adr"><%-name || share.address %>:</span><% } %>
+					<div class="title">
 						<%=app.actions.emoji(nl2br(trimrn(c)))%>
+					</div>
+					<div class="subtitle">
+						<% if(ed.horizontal) {%><span class="adr"><%-name || share.address %></span><span class="reputation"><%-reputation %></span><% if(share.time) {%><span class="realtime" time="<%-share.time%>"><%-app.reltime(share.time) %></span><% }  } %>
+
 					</div>
 				</div>
 			</div>
@@ -157,7 +162,6 @@ var metadisplay = function(){ %>
 
 
 	<div class="work unselectablemobile">
-
 		<% 
 
 			var info = app.platform.sdk.videos.storage[share.url || "undefined"] || {}

@@ -185,9 +185,18 @@
 		}
 
 		.horizontalLentacaption{
-			padding : 2 * @rhythm 0;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding : @rhythm 0;
 			padding-bottom: @rhythm;
 			font-size: 18px;
+
+			.controlhors{
+				display: flex;
+				width: 75px;
+				justify-content: space-between;
+			}
 
 			span{
 				font-weight: 700;

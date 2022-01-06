@@ -4010,18 +4010,19 @@ input[type=radio].radio:checked + label {
 }
 .horizontalLentaWrapper .controlhor {
   display: none;
-  position: absolute;
-  top: 45%;
-  border-radius: 50%;
+  border-radius: 8px;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #E3E4EB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   box-shadow: 0 5px 7px -5px rgba(0, 0, 0, 0.4);
   cursor: pointer;
-  height: 44px;
-  width: 44px;
   text-align: center;
-  line-height: 44px;
-  color: #fff;
+  color: #0a0c17;
   font-size: 0.8em;
   -moz-transition: 0.3s;
   -o-transition: 0.3s;
@@ -4039,7 +4040,7 @@ input[type=radio].radio:checked + label {
   -webkit-backdrop-filter: blur(1px);
 }
 .horizontalLentaWrapper.hasitems .controlhor {
-  display: block;
+  display: flex;
 }
 .horizontalLentaWrapper .showmorebywrapper {
   overflow: hidden;

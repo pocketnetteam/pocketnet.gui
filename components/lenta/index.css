@@ -1676,11 +1676,6 @@
   white-space: inherit;
   padding-right: 1em;
 }
-.mainvideo .shares .share .sharecaption div {
-  font-size: 1em;
-  font-weight: 500;
-  text-transform: capitalize;
-}
 .mainvideo .shares .share .durationWrapper {
   border-radius: 0;
   border-top-left-radius: 6px;
@@ -1921,8 +1916,25 @@
   padding-right: 0.5em;
   font-size: 0.85em !important;
 }
-#lenta.horizontal.compact .shares .shareTable .anothercntswrk .sharecaption .adr {
+#lenta.horizontal.compact .shares .shareTable .anothercntswrk .sharecaption .title {
+  margin-top: 5px;
+  font-size: 0.9em;
+  text-transform: capitalize;
+}
+#lenta.horizontal.compact .shares .shareTable .anothercntswrk .sharecaption .subtitle {
+  font-size: 0.8em;
+}
+#lenta.horizontal.compact .shares .shareTable .anothercntswrk .sharecaption .subtitle .adr {
   font-weight: 700;
+  color: #555770;
+}
+#lenta.horizontal.compact .shares .shareTable .anothercntswrk .sharecaption .subtitle .reputation {
+  margin-left: 0.5em;
+  color: #2A85FF;
+}
+#lenta.horizontal.compact .shares .shareTable .anothercntswrk .sharecaption .subtitle .realtime {
+  margin-left: 0.5em;
+  color: #8E90A6;
 }
 #lenta.horizontal.compact.mainvideo .shareTable {
   height: 180px;

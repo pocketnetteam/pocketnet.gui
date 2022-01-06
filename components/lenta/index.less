@@ -2268,12 +2268,7 @@
 					color : @color-gray;
 					white-space: inherit;
 					padding-right: 2 * @rhythm;
-					div{
-						font-size: 1em;
-						font-weight: 500;
-						text-transform: capitalize;
-						
-					}
+
 				}
 				.durationWrapper{
 					border-radius: 0;
@@ -2607,9 +2602,35 @@
 							padding-right: @rhythm;
 							font-size: 0.85em!important;
 
-							.adr{
-								font-weight: 700;
+							.title{
+								margin-top: 5px;
+								font-size: .9em;
+								text-transform: capitalize;
+
 							}
+
+							.subtitle{
+								font-size: .8em;
+
+								.adr{
+									font-weight: 700;
+									color: #555770;
+								}
+
+								.reputation{
+									margin-left: @rhythm;
+									color: #2A85FF;
+								}
+
+								.realtime{
+									margin-left: @rhythm;
+									color: #8E90A6;
+									
+								}
+							}
+
+							
+
 						}
 					}
 				}

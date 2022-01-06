@@ -145,9 +145,17 @@
   padding-top: 0;
 }
 #main .topvideosWrapper .horizontalLentacaption {
-  padding: 1em 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5em 0;
   padding-bottom: 0.5em;
   font-size: 18px;
+}
+#main .topvideosWrapper .horizontalLentacaption .controlhors {
+  display: flex;
+  width: 75px;
+  justify-content: space-between;
 }
 #main .topvideosWrapper .horizontalLentacaption span {
   font-weight: 700;

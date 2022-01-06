@@ -1889,8 +1889,7 @@ Platform = function (app, listofnodes) {
 
             p.horizontal = true
 
-            var tpl = `<div class="horizontalLentaWrapper"><div class="horizontalLentacaption"><span>`+(p.caption || '')+`</span></div><div class="showmorebywrapper"><div class="showmoreby"></div></div>
-            <div class="controlleft controlhor" dir="left"><i class="fas fa-chevron-left"></i></div><div class="controlright controlhor"><i class="fas fa-chevron-right"></i></div>
+            var tpl = `<div class="horizontalLentaWrapper"><div class="horizontalLentacaption"><span>`+(p.caption || '')+`</span><div class="controlhors"><div class="controlleft controlhor" dir="left"><i class="fas fa-arrow-left"></i></div><div class="controlright controlhor"><i class="fas fa-arrow-right"></i></div></div></div><div class="showmorebywrapper"><div class="showmoreby"></div></div>
             </div>`
 
             el.html(tpl)
