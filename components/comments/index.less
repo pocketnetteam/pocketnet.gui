@@ -266,44 +266,75 @@
 			opacity: 0.5;
 		}
 
-		.commentsorting{
-			.vc_valuecustom{
-				margin : 0 auto;
-				padding-left: 30px;
-				border-radius: 30px;
-				background: #fff;
+		.comments-operations{
+			.operations-wrapper {
+				display: flex;
+				justify-content: center;
 				margin-top : @rhythm;
-				width: 300px;
-				cursor: pointer;
-				.transition(0.3s);
 
-				&.opened{
-					border-bottom-left-radius: 0;
-					border-bottom-right-radius: 0;
+				>div {
+					margin: 0 5px;
 				}
 
-				.vc_value{
-					padding : 2 * @rhythm;
-				}
-
-				.vc_iconWrapper{
-					border : 0;
-					
-				}
-				.vc_selectInput{
-					border : 0;
-					text-align: center;
-					border-bottom-left-radius: 20px;
-					border-bottom-right-radius: 20px;
-				}
-				.vc_inputWrapper{
-					border : 0;
-					text-align: center;
-					text-decoration: underline;
-					input{
+				.refresh-comments {
+					.icon-wrapper {
 						text-align: center;
-						font-size: 0.8em;
-						cursor: pointer!important;
+						vertical-align: middle;
+						color : @color-gray-light;
+						.transition(0.3s);
+
+						&:hover{
+							color : @color-black;
+						}
+					}
+
+					&.refreshing i {
+						animation: 0.6s rotate linear;
+					}
+
+					width: 50px;
+					height: 38px;
+					background: #fff;
+					border-radius: 30px;
+					overflow: hidden;
+				}
+
+				.vc_valuecustom{
+					padding-left: 30px;
+					border-radius: 30px;
+					background: #fff;
+					width: 300px;
+					cursor: pointer;
+					.transition(0.3s);
+
+					&.opened{
+						border-bottom-left-radius: 0;
+						border-bottom-right-radius: 0;
+					}
+
+					.vc_value{
+						padding : 2 * @rhythm;
+					}
+
+					.vc_iconWrapper{
+						border : 0;
+
+					}
+					.vc_selectInput{
+						border : 0;
+						text-align: center;
+						border-bottom-left-radius: 20px;
+						border-bottom-right-radius: 20px;
+					}
+					.vc_inputWrapper{
+						border : 0;
+						text-align: center;
+						text-decoration: underline;
+						input{
+							text-align: center;
+							font-size: 0.8em;
+							cursor: pointer!important;
+						}
 					}
 				}
 			}

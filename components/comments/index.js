@@ -2272,6 +2272,16 @@ var comments = (function(){
 							if(!pid){
 								makeCurrentLevels()
 
+								_p.el.find('.refresh-comments').on('click', (e) => {
+									$(e.currentTarget).addClass('refreshing');
+
+									setTimeout(() => {
+										$(e.currentTarget).removeClass('refreshing');
+
+										actions.update();
+									}, 300);
+								});
+
 								sort._onChange = function(v){
 									sortby = v
 
