@@ -68,14 +68,19 @@
                                 <%-nodestate.info.lastblock.height.toLocaleString()%> / <%= manager.chain ? Number(manager.chain.commonHeight).toLocaleString() : '&mdash;' %>
                             </span>
 
-                            <% if (Number.isFinite(nodestate.sync.left)) { %>
-                                <span class="syncLeft">
-                                    <%-nodestate.sync.left%> hour(s) remaining
-                                </span>
-                            <% } else if(nodestate.sync.left && nodestate.sync.left < 1) { %>
-                                <span class="syncLeft">
-                                    Less than an hour left
-                                </span>
+                            <% if (Number.isFinite(nodestate.sync.left) && nodestate.sync.left > 0) { %>
+                    
+                                <% if(nodestate.sync.left < 1) { %>
+                                    <span class="syncLeft">
+                                        Less than an hour left
+                                    </span>
+                                
+                                <% } else if(nodestate.sync.left < 1) { %>
+                                    <span class="syncLeft">
+                                        <%-nodestate.sync.left%> hour(s) remaining
+                                    </span>
+                                <% }%>
+                                
                             <% }%>
                         </div>
 

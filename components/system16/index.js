@@ -3861,7 +3861,7 @@ var system16 = (function(){
 
                         actions.settings(p.el)
 
-						p.el.find('.nodebalancedeposit').on('click', function() {
+						p.el.on('click', '.nodebalancedeposit', function() {
                             topPreloader(30);
 
                             proxy.fetchauth('manage', {
@@ -3885,7 +3885,54 @@ var system16 = (function(){
                             })
 						})
 
-                        // TODO (brangr): button withdraw - show dialog for transfer money
+                        p.el.on('click', '.nodebalancewithdraw', function(){
+
+							inputDialogNew({
+								caption : "Input Address and Amount for transfer PKOIN",
+								class : 'addressdialog',
+								wrap : true,
+								values : [
+                                    {
+                                        defValue : '',
+                                        validate : 'empty',
+                                        placeholder : "Address",
+                                        label : "Destination Address"
+                                    },
+                                    {
+                                        defValue : 0,
+                                        validate : 'empty',
+                                        placeholder : "Amount",
+                                        label : "Amount (PKOIN)"
+                                    }
+                                ],
+								success : function(v){
+                                    topPreloader(30)
+
+                                    // TODO (brangr): test send transaction or create - after OK send
+                                    proxy.fetchauth('manage', {
+                                        action : 'set.node.wallet.',
+                                        data : {}
+                                    }).then(r => {
+
+                                        dialog({
+                                            class : 'zindex',
+                                            html : "Your new address " + r,
+                                            btn1text : self.app.localization.e('Copy to ClipBoard'),
+                                            btn2text : self.app.localization.e('Cancel'),
+                                            success : function(){
+                                                copycleartext(r)
+                                                sitemessage(self.app.localization.e('successcopied'))
+                                            }
+                                        })
+            
+                                    }).catch(e => {
+                                        sitemessage(deep(e, 'message') || self.app.localization.e('e13293'))
+                                    })
+								}
+							})
+
+						})
+
                         // TODO (brangr): dump wallet - show dialog for saving file
 
 						if (clbk)
