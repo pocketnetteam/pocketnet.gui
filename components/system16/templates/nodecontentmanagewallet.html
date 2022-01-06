@@ -13,7 +13,7 @@
                         <span>Total balance</span>
                     </div>
                     <div class="value balance">
-                        <%= (nodestate.wallet.total/100000000.0).toLocaleString(undefined, {minimumFractionDigits:8}) %> PKOIN
+                        <%- (Number.isFinite(nodestate.wallet.total) ? (nodestate.wallet.total/100000000.0) : 0).toLocaleString(undefined, {minimumFractionDigits:8}) %> PKOIN
                     </div>
                 </div>
                 

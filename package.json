@@ -116,7 +116,11 @@
         "files": [
             "**/*",
             "!cordova${/*}",
-            "!external${/*}"
+            "!external${/*}",
+            "!proxy16/data${/*}",
+            "!proxy16/pocketcoin${/*}",
+            "!proxy16/pocketcoind${/*}",
+            "!proxy16/downloads${/*}"
         ],
         "extraFiles": [
             {

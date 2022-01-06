@@ -116,10 +116,6 @@
 #system16 .botsWrapper .botinlist .removefromlist:hover {
   color: #076C34;
 }
-#system16 .stacking .canstacking i {
-  width: 20px;
-  font-size: 0.9em;
-}
 #system16 .stacking .canstacking .good {
   color: #076C34;
 }

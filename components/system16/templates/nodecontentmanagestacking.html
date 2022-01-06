@@ -13,10 +13,18 @@
                         <span>Status</span>
                     </div>
                     <div class="value canstacking">
-                        <% if(nodestate.staking.staking && nodestate.staking.enabled) { %>
+                        <% if (_.isEmpty(nodestate.staking)) { %>
+                            
+                            <i class="fas fa-spinner fa-spin"></i> <span class="">Requesting...</span>
+
+                        <% } else if (nodestate.staking.staking && nodestate.staking.enabled) { %>
+                            
                             <i class="fas fa-check-circle good"></i> <span class="good">Staking</span>
-                        <% } else { %> 
+                        
+                        <% } else { %>
+
                             <i class="far fa-times-circle bad"></i> <span class="bad">Node can't staking. Top up balance and wait for 60 blocks to activate coins.</span>
+
                         <% } %>
                     </div>
                 </div>
