@@ -1891,3 +1891,6 @@ ____loclib.photohassizegreater = function(v){
     return "Your photo has size greater than "+v+"MB. Please upload a photo under "+v+"MB in size."
 }
 ____loclib.invalidformat = "Invalid format of picture. Only png and jpeg are allowed"
+____loclib.downloadDesctApp = "Download Bastyon for desktop"
+____loclib.downloadMobileApp = "Install Mobile Application"
+
