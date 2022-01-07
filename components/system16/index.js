@@ -237,7 +237,19 @@ var system16 = (function(){
                     else
                         sitemessage(`Unknown error`)
 				})
-			}
+			},
+            'importWallet' : function(caller, defaultPath){
+				return proxy.system.request('set.node.importWallet', {}).then(r => {
+
+                    sitemessage(`Your wallet imported to node`, null, 5000) // self.app.localization.e('successcopied')
+
+				}).catch(e => {
+                    if (e.code && e.message)
+                        sitemessage(`(Code ${e.code}): ${e.message}`, null, 5000)
+                    else
+                        sitemessage(`Unknown error`)
+				})
+			},
 		}
 
 		var actions = {
@@ -3932,8 +3944,6 @@ var system16 = (function(){
 							})
 
 						})
-
-                        // TODO (brangr): dump wallet - show dialog for saving file
 
 						if (clbk)
 							clbk()

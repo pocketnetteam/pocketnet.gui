@@ -361,6 +361,12 @@ var Control = function(settings) {
                 return Promise.resolve(result)
             })
         },
+
+        importwallet: function(filePath) {
+            return self.kit.rpc('importwallet', filePath).then(result => {
+                return Promise.resolve(result)
+            })
+        },
     }
 
     self.kit = {
@@ -396,7 +402,7 @@ var Control = function(settings) {
 
                 return applications.downloadPermanent('snapshot_latest', node.dataPath, function(st) {
                     state.install.progress = st
-                    state.install.title = `Downloading snapshot database...`
+                    state.install.title = `Downloading snapshot database`
                         + ` - ${f.unitFormatter(st.size.transferred, 2)} / ${f.unitFormatter(st.size.total, 2)}`
                         + ` - ${f.unitFormatter(st.speed, 2)}/s`
                         + ` - ${Math.round(st.time.remaining / 60)} min. remaining`

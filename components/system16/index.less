@@ -158,7 +158,7 @@
 
     .stacking{
         .canstacking{
-            
+
             .good{
                 color : @color-good;
             }
@@ -663,14 +663,18 @@
             }
 
             .nodestateheightprogress{
-                width: 25em;
-                height: 0.2em;
+                width: 30em;
+                height: 0.1em;
                 background: #bdbdbd;
                 
                 .nodestateheightprogressinner {
                     background: #00A3F7;
                     display: block;
                     height: 100%;
+
+                    &.fork {
+                        background: #f70000;
+                    }
                 }
             }
             i{

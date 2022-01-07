@@ -49,6 +49,7 @@ const privates = {
     getstakinginfo: true,
     getnewaddress: true,
     dumpwallet: true,
+    importwallet: true,
 }
 
 const posts = {
@@ -460,6 +461,7 @@ RpcClient.callspec = {
     // Control
     stop: '',
     dumpwallet: 'str',
+    importwallet: 'str',
 };
 
 var slice = function(arr, start, end) {

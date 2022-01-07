@@ -63,9 +63,16 @@
                         <span>Height</span>
                     </div>
                     <div class="value">
+                        <% fork = (nodestate.info.lastblock.height - manager.chain.commonHeight) > 15 %>
                         <div>
-                            <span>
-                                <%-nodestate.info.lastblock.height.toLocaleString()%> / <%= manager.chain ? Number(manager.chain.commonHeight).toLocaleString() : '&mdash;' %>
+                            <span class="<%- fork ? 'bad' : '' %>">
+                                <%- nodestate.info.lastblock.height.toLocaleString() %>
+                                <%- manager.chain && Math.abs(nodestate.info.lastblock.height - manager.chain.commonHeight) > 15
+                                    ?
+                                    ` / ${Number(manager.chain.commonHeight).toLocaleString()}`
+                                    :
+                                    ''
+                                %>
                             </span>
 
                             <% if (Number.isFinite(nodestate.sync.left) && nodestate.sync.left > 0) { %>
@@ -75,18 +82,24 @@
                                         Less than an hour left
                                     </span>
                                 
-                                <% } else if(nodestate.sync.left < 1) { %>
+                                <% } else if(nodestate.sync.left >= 1) { %>
                                     <span class="syncLeft">
                                         <%-nodestate.sync.left%> hour(s) remaining
                                     </span>
                                 <% }%>
-                                
-                            <% }%>
+
+                            <% } else { %>
+                                <% if (fork) { %>
+                                    <span class="syncLeft">
+                                        <i class="fas fa-code-branch bad"></i>
+                                    </span>
+                                <% } %>
+                            <% } %>
                         </div>
 
                         <% percent = nodestate.info.lastblock.height * 100 / manager.chain.commonHeight %>
                         <div elementsid="nodestateheightprogress" class="nodestateheightprogress">
-                            <div elementsid="nodestateheightprogressinner" class="nodestateheightprogressinner" style="width:<%-percent%>%" ></div>
+                            <div elementsid="nodestateheightprogressinner" class="nodestateheightprogressinner <%- fork ? 'fork' : '' %>" style="width:<%-percent%>%" ></div>
                         </div>
                     </div>
                 </div>

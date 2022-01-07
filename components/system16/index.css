@@ -491,14 +491,17 @@
   color: #b2abac;
 }
 #system16 .nodecontent .nodecontentstate .nodestateheightprogress {
-  width: 25em;
-  height: 0.2em;
+  width: 30em;
+  height: 0.1em;
   background: #bdbdbd;
 }
 #system16 .nodecontent .nodecontentstate .nodestateheightprogress .nodestateheightprogressinner {
   background: #00A3F7;
   display: block;
   height: 100%;
+}
+#system16 .nodecontent .nodecontentstate .nodestateheightprogress .nodestateheightprogressinner.fork {
+  background: #f70000;
 }
 #system16 .nodecontent .nodecontentstate i {
   width: 20px;

@@ -129,10 +129,19 @@ var IPC = function(ipc, wc){
 				return Promise.reject()
 			})
         },
-		saveDialog : function(options){
+		saveFileDialog : function(options){
 			return dialog.showSaveDialog(options).then(res => {
 				if (!res.canceled && (res.filePath && res.filePath.length > 0)) {
 					return Promise.resolve(res.filePath)
+				}
+
+				return Promise.reject()
+			})
+        },
+		openFileDialog : function(options){
+			return dialog.showOpenDialog(options).then(res => {
+				if (!res.canceled && (res.filePaths && res.filePaths.length > 0)) {
+					return Promise.resolve(res.filePaths)
 				}
 
 				return Promise.reject()
@@ -178,13 +187,26 @@ var IPC = function(ipc, wc){
 					}) 
 				},
                 dumpWallet : function(message) {
-					return helpers.saveDialog({
+					return helpers.saveFileDialog({
 						properties: ['dontAddToRecent'],
                         defaultPath: message.data.defaultPath || ''
 					}).then(res => {
 	
                         message.data = {
 							path : res
+						}
+
+						return Promise.resolve()
+					})
+				},
+                importWallet : function(message) {
+					return helpers.openFileDialog({
+						properties: ['openFile'],
+                        defaultPath: message.data.defaultPath || ''
+					}).then(res => {
+	
+                        message.data = {
+							path : res[0]
 						}
 
 						return Promise.resolve()

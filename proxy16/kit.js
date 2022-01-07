@@ -734,13 +734,6 @@ var kit = {
 					})
 					
 				},
-	    		dumpWallet : function({path}){
-                    return kit.proxy().then(proxy => {
-                        return proxy.nodeControl.request.dumpwallet(path)
-                    }).then(result => {
-                        return Promise.resolve(result)
-                    })
-				},
 				stacking : {
 
 					import : function({privatekey}){
@@ -776,7 +769,6 @@ var kit = {
 
 				},
                 wallet : {
-
                     listaddresses : function(){
 						return kit.proxy().then(proxy => {
 							return proxy.nodeControl.request.listAddresses()
@@ -784,7 +776,6 @@ var kit = {
 							return Promise.resolve(result)
 						})
 					},
-
                     getnewaddress : function(){
 						return kit.proxy().then(proxy => {
 							return proxy.nodeControl.request.getnewaddress()
@@ -792,6 +783,20 @@ var kit = {
 							return Promise.resolve(result)
 						})
 					},
+                },
+                dumpWallet : function({path}){
+                    return kit.proxy().then(proxy => {
+                        return proxy.nodeControl.request.dumpwallet(path)
+                    }).then(result => {
+                        return Promise.resolve(result)
+                    })
+                },
+                importWallet : function({path}){
+                    return kit.proxy().then(proxy => {
+                        return proxy.nodeControl.request.importwallet(path)
+                    }).then(result => {
+                        return Promise.resolve(result)
+                    })
                 },
 			},
 
