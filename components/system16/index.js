@@ -3921,7 +3921,8 @@ var system16 = (function(){
 									defValue : '',
 									validate : 'empty',
 									placeholder : "Private Key (WIF Format)",
-									label : "Private Key"
+									label : "Private Key",
+								
 								}],
 			
 								success : function(v){

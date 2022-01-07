@@ -2469,7 +2469,8 @@ var wallet = (function(){
 			})
 
 			self.app.events.resize['wallet'] = function(){
-				el.total.html('')
+				if (el.total)
+					el.total.html('')
 			 	drawCircles(null)
 				
 				
