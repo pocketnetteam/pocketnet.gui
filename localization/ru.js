@@ -1657,3 +1657,5 @@ ____loclib.photohassizegreater = function(v){
 }
 
 ____loclib.invalidformat = "Неверный формат картинки. Разрешено только png, jpeg."
+____loclib.downloadDesctApp = "Загрузить Bastyon для персонального компьютера"
+____loclib.downloadMobileApp = "Установить мобильное приложение"
