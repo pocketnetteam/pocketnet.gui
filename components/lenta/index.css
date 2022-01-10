@@ -2360,16 +2360,11 @@ html.stblack #lenta.horizontal .shares .share {
   }
   #lenta .shares .iconWrapper {
     width: 4em;
-    padding-top: 0.5em;
-    padding-left: 0.5em;
   }
   #lenta .shares .cntswrk {
     margin-left: 0;
     padding-left: 0;
     padding-right: 0;
-  }
-  #lenta .shares .cntswrk.formeta {
-    margin-left: 4em;
   }
   #lenta .shares .work {
     padding-left: 0;

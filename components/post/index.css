@@ -860,7 +860,6 @@
 }
 #post .share .panel > div {
   float: left;
-  margin-right: 1em;
 }
 #post .share .panel > div .stars {
   height: 40px;
@@ -1380,6 +1379,9 @@ html.stblack .wnd.postwindow ._close {
   }
   #post .share .metatable > div.metapanel {
     width: 90px;
+  }
+  #post .share .paddingWrapper {
+    padding: 0 0.5em;
   }
   #post #comments .answer,
   #post #comments .post {
