@@ -32,8 +32,11 @@
 
             .content{
                 display: flex;
-                justify-content: space-around;		
+                justify-content: space-between;		
                 flex-wrap: wrap;
+				max-width: 1140px;
+				width: 100%;
+
                 .discover{		
                     padding : 0 20px;	
                     width: 400px;
@@ -81,8 +84,8 @@
                                 align-items: center;
                                 justify-content:center;
                                 text-decoration: none;
-                                color: #000;
-                                >img{
+
+								>img{
                                     width: 35px;
                                     height: 35px;
                                     }
@@ -392,7 +395,8 @@
 	#about{
 
 		margin-top: -65px;
-		
+
+
 		.contentsInner{
 			.burgerMenu{
 				display: block!important;
@@ -422,6 +426,24 @@
 
 	}
 
+}
+
+html.stblack {
+	#about{
+		.maket{
+			background: #030f1b;
+			color: #b2abac;
+
+
+			.contentmenu{
+				.reportCaption{
+					&.active{
+						color: #fff;
+					}
+				}
+			}
+		}
+	}
 }
 
 
