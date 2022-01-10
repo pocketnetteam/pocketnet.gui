@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=7770"
+/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=4729"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -42744,15 +42744,16 @@ class peertube_player_manager_PeertubePlayerManager {
             html5: {
                 hlsjsConfig: {
                     maxBufferHole: 0.5,
-                    maxFragLookUpTolerance: 0,
+                    maxFragLookUpTolerance: 0.25,
                     highBufferWatchdogPeriod: 1,
-                    /*lowLatencyMode: true,
-                    enableWorker: true,*/
+                    maxLoadingDelay: 2,
+                    lowLatencyMode: true,
+                    enableWorker: true,
                     capLevelToPlayerSize: true,
                     autoStartLoad: false,
-                    //liveSyncDurationCount: 4,
                     maxBufferLength: 30,
-                    maxMaxBufferLength: 55,
+                    maxMaxBufferLength: 300,
+                    startFragPrefetch: true,
                     loader: new p2pMediaLoaderModule.Engine(p2pMediaLoaderConfig).createLoaderClass(),
                 },
             },
