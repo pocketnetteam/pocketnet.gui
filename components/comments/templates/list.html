@@ -313,8 +313,15 @@ var commentf = function(comment){
 
 <% if(!pid && comments.length > 2 && typeof sort != 'undefined') {%>
 
-	<div class="commentsorting">
-		<%= sort.input() %>
+	<div class="comments-operations">
+		<div class="operations-wrapper">
+			<div class="refresh-comments table" pid="refresh-comments">
+				<div class="icon-wrapper">
+					<i class="fa fa-sync-alt" aria-hidden="true"></i>
+				</div>
+			</div>
+			<%= sort.input() %>
+		</div>
 	</div>
 
 <% } %>
