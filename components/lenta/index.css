@@ -111,6 +111,9 @@
 #lenta .shares .authorgroup.blocking {
   display: none;
 }
+#lenta .shares .share .sharecnt .shareTable {
+  margin-top: 0.5em;
+}
 #lenta .shares .share .sharecnt .removeDescription {
   display: none;
   padding-bottom: 1.5em;
@@ -1971,6 +1974,17 @@
   }
   #lenta .loadprev.fxdp button {
     width: 260px;
+  }
+  #lenta .share .cntswrkcontent,
+  #lenta .share .tags,
+  #lenta .share .actions {
+    padding-left: 0.5em;
+  }
+  #lenta .share .sharecnt .iconWrapper {
+    margin-left: 0.5em;
+  }
+  #lenta .share .sharecnt .cntswrk {
+    margin-left: 3.5em;
   }
   html.scrollmodedown #lenta .loadprev.fxdp {
     transform: translateY(-220px);

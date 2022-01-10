@@ -161,6 +161,7 @@
   display: block;
 }
 #post .shareTable {
+  margin-top: 0.5em;
   overflow: hidden;
 }
 #post .shareTable .sbtnxs .subscribedLabel {
@@ -1370,6 +1371,17 @@ html.stblack .wnd.postwindow ._close {
     padding-top: 0.5em;
     padding-left: 1.5em;
     padding-right: 0;
+  }
+  #post .share .cntswrkcontent,
+  #post .share .tags,
+  #post .share .actions {
+    padding-left: 0.5em;
+  }
+  #post .share .sharecnt .iconWrapper {
+    padding-left: 0.5em;
+  }
+  #post .share .sharecnt .cntswrk {
+    margin-left: 3.5em;
   }
   #post .share .meta {
     padding-right: 0.5em;
