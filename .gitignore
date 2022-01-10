@@ -23,6 +23,8 @@ publish.py
 manifest.json
 **/settings
 data/
+downloads/
+pocketcoin/
 pocketcoind*/
 .env
 /index.html

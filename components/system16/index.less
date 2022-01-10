@@ -158,13 +158,6 @@
 
     .stacking{
         .canstacking{
-            padding : 3 * @rhythm 0;
-
-            i{
-                width : 20px;
-                font-size: 0.9em;
-               
-            }
 
             .good{
                 color : @color-good;
@@ -186,34 +179,9 @@
                 color : @color-bright;
             }
         }
-        .adresses{
+        
+        .balance {
 
-            .address{
-                width: auto;
-
-                >div{
-                    &.balance{
-                        padding : 0 2 * @rhythm;
-                        padding-left: @rhythm;
-                        font-weight: 400;
-                        font-size: 0.9em;
-                    }
-    
-                    &.namewrapper{
-                        width: 270px;
-                    }
-                    &.iconWrapper{
-                        width: 44px;
-                        text-align: right;
-
-                        i{
-                            font-size: 0.8em;
-                        }
-                    }
-                }
-
-                
-            }
         }
     }
 
@@ -260,7 +228,6 @@
     }
 
     .staterowTable,
-
     .settingTable{
         width : auto;
 
@@ -312,7 +279,7 @@
         }
         .value{
             
-            color : @color-gray-mlight;
+            color : @color-gray;
 
             &[fss],
             &[sys]{
@@ -679,8 +646,58 @@
 
     .nodecontent{
         .nodecontentstate{
-            span{
+            i{
+                font-size: 0.9em;
+            }
+
+            .good{
+                color : @color-good;
+            }
+
+            .bad{
+                color : @color-bad;
+            }
+
+            .gray{
+                color : @color-gray-mlight;
+            }
+
+            .nodestateheightprogress{
+                width: 30em;
+                height: 0.1em;
+                background: #bdbdbd;
+                
+                .nodestateheightprogressinner {
+                    background: #00A3F7;
+                    display: block;
+                    height: 100%;
+
+                    &.fork {
+                        background: #f70000;
+                    }
+                }
+            }
+            i{
+                width : 20px;
+                font-size: 0.9em;
+            }
+
+            .good{
+                color : @color-good;
+            }
+
+            .bad{
+                color : @color-bad;
+            }
+
+            .gray{
+                color : @color-gray-mlight;
+            }
+
+            .syncLeft {
+                float: right;
                 font-size: 0.8em;
+                color: #7d7d7d;
             }
         }
         
@@ -706,22 +723,6 @@
                 color : @color-bright;
             }
             
-        }
-
-        .addresses{
-            padding-top : 2 * @rhythm;
-            margin-top : 2 * @rhythm;
-            margin-bottom : 2 * @rhythm;
-            padding-bottom : 2 * @rhythm;
-            border-top : 1px solid @color-gray-slight;
-            border-bottom : 1px solid @color-gray-slight;
-        }
-
-        .deletenodeWrapper{
-            padding-top : 2 * @rhythm;
-            margin-top : 2 * @rhythm;
-            padding-bottom : 2 * @rhythm;
-            border-top : 1px solid @color-gray-slight;
         }
     }
 
@@ -761,6 +762,33 @@
             i{
                 font-size: 0.9em;
                 color : @color-bright;
+            }
+        }
+
+        .value.balance {
+            font-weight: 400;
+        }
+
+        .installProgressBox {
+            margin: 2em 1em 0em 1em;
+                
+            .title {
+                font-size: 13px;
+                text-align: right;
+            }
+
+            .installProgress {
+                width: 100%;
+                height: 3px;
+                background-color: #dcdcdc;
+                border-radius: 2px;
+                margin: 0.3em 0em 1.5em 0em;
+
+                .installProgressInner {
+                    height: 3px;
+                    background-color: #00A3F7;
+                    border-radius: 2px;
+                }
             }
         }
     }

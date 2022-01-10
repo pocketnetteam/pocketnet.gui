@@ -1,0 +1,308 @@
+<% if(system && system.node) { %>
+
+    <div class="nodecontentmanage managepanel">
+        
+        <div class="felock">
+            <div class="work">
+                <div class="felockcnt loading">
+                    <div class="text">
+                        Loading
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-spinner fa-spin"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Section `Download & Install` -->        
+        <% if(!nc.hasbin || nc.lock) { %>
+            <div class="work">
+                <% if(nc.lock == 'installing') {%>
+
+                    <div class="notfound loading">
+                        <div class="text">
+                            <%-app.meta.fullname%> Node Installing <i class="fas fa-spinner fa-spin"></i>
+                        </div>
+
+                        <div class="installProgressBox">
+                            <div class="title"><%-nc.state.install.title%></div>
+                            <% if (nc.state.install.progress) { %>
+                                <div class="installProgress">
+                                    <div elementsid="installProgressInner" class="installProgressInner" style="width:<%- nc.state.install.progress.percent * 100 %>%" ></div>
+                                </div>
+                            <% } %>
+                        </div>
+
+                    </div>
+
+                <% } %> 
+
+                <% if(nc.lock == 'removing') {%>
+
+                    <div class="notfound removing">
+                        <div class="text">
+                            <%-app.meta.fullname%> Node Removing
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </div>
+                    </div>
+
+                <% } %> 
+
+                <% if(!nc.lock) {%> 
+
+                    <% if(!nc.other) {%> 
+
+                        <% if(nc.hasapplication) {%>
+                    
+                            <div elementsid="notfoundinstall" class="notfound install">
+                                <div class="text">
+                                    <%-app.meta.fullname%> Node was not found. Download and Install it
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-cloud-download-alt"></i>
+                                </div>
+                            </div>  
+
+                            <div class="systemreq">
+
+                                    <div class="scaption">
+                                        <span>System Requirements</span>
+                                    </div>
+                                
+                                <div class="req">
+                                    <div>
+                                        4Gb RAM
+                                    </div>
+
+                                    <div>
+                                        4 cores CPU
+                                    </div>
+
+                                    <div>
+                                        100Gb free disk space (SSD drive to ensure speed)
+                                    </div>
+
+                                    <div>
+                                        100Mb/s internet speed
+                                    </div>
+                                </div>
+                                
+                            </div>
+
+                        <% } else { %> 
+                            
+                            <div class="notfound">
+                                <div class="text">
+                                    <%-app.meta.fullname%> Node control is not yet available for your operating system
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-wrench"></i>
+                                </div>
+                            </div>  
+
+                        <% }%>
+                    
+                    <% } else { %>
+                        
+                        <div elementsid="refreshother" class="notfound refreshother">
+                            <div class="text">
+                                Your device already has <%-app.meta.fullname%> Node.<br>
+
+                                <% if(proxy.direct || showdirect) {%>
+                                    You can set system pathes or stop it and install via <%-app.meta.fullname%> Desktop Application
+                                <% } else {%> 
+                                    You can't manage node on this device via current application
+                                <% } %>
+                            </div>
+
+                            <% if(proxy.direct || showdirect) {%>
+                                <div class="icon">
+                                    <i class="fas fa-sync"></i> Refresh
+                                </div>
+                            <% }%>
+                        </div>  
+                        
+                    <% }%>
+
+                <% }%>
+            </div>
+        <% } %>
+
+        <!-- Section `Node state` -->
+        <% if(nc.hasbin && !nc.lock) { %>
+            <div class="nodecontent">
+                <div class="work nodestatebox">
+                    <div elementsid="nodestatebox" class="ssubcaption">
+                        <span>Synchronization</span>
+                    </div>
+                    <div class="nodestateWrapper"></div>
+                </div>
+            </div>
+
+            <% if(system.node.enabled && nodestate && !_.isEmpty(nodestate.info)) { %>
+                <div class="stakingWrapper"></div>
+            <% } %>
+            
+            <% if(system.node.enabled && nodestate && !_.isEmpty(nodestate.info)) { %>
+                <div class="walletWrapper"></div>
+            <% } %>
+
+        <% } %>
+
+        <% if(!nc.lock) {%>
+
+        <div class="nodecontent collapsepart">
+            <div class="work configurationBox">
+                <div elementsid="nodestatebox" class="ssubcaption">
+                    <span>Configuration</span>
+                </div>
+
+            <div class="collapsingpart">
+                <div class="setting togglebutton">
+                            
+                    <div class="settingTable table">
+                        <div class="label">
+                            <span>Enabled</span>
+                        </div>
+
+                        <% if(!dis) {%>
+
+                            <div class="value" sys="nodeenabled">
+                                <span><%- system.node.enabled ? 'Yes' : 'No' %></span>
+                            </div>
+
+                        <% } else { %> 
+                            
+                            <div class="value">
+                                <div class="preloader5"><img src="./img/three-dots.svg"/></div>
+                            </div>
+
+                        <% } %>
+                    </div>
+                </div>
+
+                <% if (nodestate.status == 'stopped' && !system.node.enabled) { %>
+                    <% if(!nc.lock && (proxy.direct || showdirect)) {%>
+                        <div class="setting systempath">
+                            <div class="settingTable table">
+                                    <div class="label">
+                                        <span>Daemon Path</span>
+                                    </div>
+
+                                    <div class="value" <% if(!nc.hasbin || !system.node.enabled) {%> sys="binPath" <% } %> path="<%-system.node.binPath%>">
+                                        <span><%- system.node.binPath || 'Default' %></span> 
+                                    </div>
+
+                                <% if(nc.hasbin && system.node.enabled) {%>
+
+                                    <div class="icon">
+                                        <i class="fas fa-lock"></i>
+                                    </div>
+
+                                <% } %>
+                            </div>
+                        </div>
+
+                        <div class="setting systempath">
+                            <div class="settingTable table">
+                                <div class="label">
+                                    <span>Data Path</span>
+                                </div>
+
+                                <div class="value" <% if(!nc.hasbin || !system.node.enabled) {%> sys="ndataPath" <% } %> path="<%-system.node.ndataPath%>" >
+                                    <span><%- system.node.ndataPath || 'Default' %></span>
+                                </div>
+
+                                <% if(nc.hasbin && system.node.enabled) {%>
+
+                                <div class="icon">
+                                    <i class="fas fa-lock"></i>
+                                </div>
+
+                                <% } %>
+                            </div>
+                        </div>
+                        
+                        <% if((system.node.ndataPath || system.node.binPath) && !system.node.enabled) {%>
+                            <div class="setting systempathsDefaults">
+                                <div class="settingTable table">
+                                    <div class="label">
+                                        <span>Set Paths to Default</span>
+                                    </div>
+                
+                                    <div elementsid="toDefaultPath" class="value toDefaultPath">
+                                        <div>
+                                            <span>
+                                                To Default 
+                                            </span>
+
+                                            <i class="far fa-times-circle"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <% } %>
+
+                    <% } %>
+
+                    <% if(nc.hasbin && !nc.lock) {%>
+                        <div class="setting ">
+                            <div class="settingTable table">
+                                <div class="label">
+                                    <span>Update Node</span>
+                                </div>
+
+                                <div class="value">
+                                    <% if(nc.hasupdates) {%>
+                                        <button elementsid="buttonsmallupdatenode" class="button small updatenode">
+                                            Update Node
+                                        </button>
+                                    <% } else { %> 
+
+                                        <span>No Updates Available</span>
+                                        
+                                    <% }%>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <% if(!system.node.binPath && !system.node.ndataPath) {%>
+                            <div class="setting">
+                                <div class="settingTable table">
+                                    <div class="label">
+                                        <span>Delete Node</span>
+                                    </div>
+                
+                                    <div class="value">
+                                        <button elementsid="buttonsmallremovenode" class="button small orange removenode">
+                                            Delete Daemon
+                                        </button>
+                                    </div>
+
+                                    <div class="value">
+                                        <button elementsid="buttonsmallghostremovenodeall" class="button small ghost orange removenodeall">
+                                            Delete Daemon and Data
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        <% } %>
+                    <% } %>
+                <% } %>
+
+            </div>
+        </div>
+        </div>
+
+        <% } %>
+
+    </div>
+
+<% } %>

@@ -669,15 +669,12 @@ var kit = {
 					})
 
 				},
-
 				apply : function({key}){
 					return proxy.wallet.apply(key)
 				}
-
 			},
 	
 			node : {
-
 				check : function(){
 					return kit.proxy().then(proxy => {
 
@@ -687,7 +684,6 @@ var kit = {
 						return Promise.resolve()
 					})
 				},
-	
 				enabled : function({enabled}){
 
 
@@ -727,8 +723,7 @@ var kit = {
 					})
 					
 				},
-	
-				ndataPath : function({ndataPath}){
+	    		ndataPath : function({ndataPath}){
 					if(settings.node.ndataPath == ndataPath) return Promise.resolve()
 
 					settings.node.ndataPath = ndataPath
@@ -739,7 +734,6 @@ var kit = {
 					})
 					
 				},
-				
 				stacking : {
 
 					import : function({privatekey}){
@@ -750,12 +744,12 @@ var kit = {
 
 							r = proxy.nodeControl.request
 
-							return proxy.nodeControl.request.getNodeAddresses()
+							return proxy.nodeControl.request.getStakingInfo()
 
-						}).then(addresses => {
-
+						}).then(balance => {
 
 							return r.importPrivKey(privatekey)
+
 						}).catch(e => {
 
 							return Promise.reject(e)
@@ -763,17 +757,47 @@ var kit = {
 
 					},
 
-					addresses : function(){
+					stakinginfo : function(){
 
 						return kit.proxy().then(proxy => {
-							return proxy.nodeControl.request.getNodeAddresses()
-						}).then(addresses => {
-							return Promise.resolve(addresses)
+							return proxy.nodeControl.request.getStakingInfo()
+						}).then(balance => {
+							return Promise.resolve(balance)
 						})
 
 					}
 
-				}
+				},
+                wallet : {
+                    listaddresses : function(){
+						return kit.proxy().then(proxy => {
+							return proxy.nodeControl.request.listAddresses()
+						}).then(result => {
+							return Promise.resolve(result)
+						})
+					},
+                    getnewaddress : function(){
+						return kit.proxy().then(proxy => {
+							return proxy.nodeControl.request.getnewaddress()
+						}).then(result => {
+							return Promise.resolve(result)
+						})
+					},
+                },
+                dumpWallet : function({path}){
+                    return kit.proxy().then(proxy => {
+                        return proxy.nodeControl.request.dumpwallet(path)
+                    }).then(result => {
+                        return Promise.resolve(result)
+                    })
+                },
+                importWallet : function({path}){
+                    return kit.proxy().then(proxy => {
+                        return proxy.nodeControl.request.importwallet(path)
+                    }).then(result => {
+                        return Promise.resolve(result)
+                    })
+                },
 			},
 
 			testkeys : {

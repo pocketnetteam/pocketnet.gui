@@ -4,6 +4,8 @@ const child_process = require('child_process');
 const { EOL } = require('os');
 var Applications = require('./applications');
 var f = require('../functions');
+const { clearTimeout } = require('timers');
+const { auth } = require('firebase-admin');
 
 var Control = function(settings) {
     if (!settings) settings = {};
@@ -13,20 +15,36 @@ var Control = function(settings) {
     var self = this;
     var applications = new Applications(settings)
     
-    var nodeStateInterval = null
-    var nodeAutorunInterval = null
+    var nodeStateTimer = null
+    var nodeStateInterval = 15000
+    var nodeAutorunTimer = null
+    var nodeAutorunInterval = 5000
     var checkUpdatesInterval = null
 
     var lock = ''
 
     var state = {
-        info : {}
+        info: {},
+        sync: {
+            left: 0,
+            chunks: []
+        },
+        staking: {},
+        wallet: {},
+        install: {
+            title: '',
+            progress: {
+                percent: 0
+            }
+        },
+        status: 'stopped'
     }
 
     var node = {
         instance: null,
         binPath: '',
         confPath: '',
+        dataPath: '',
         proxy : null
     }
 
@@ -57,6 +75,17 @@ var Control = function(settings) {
             }
 
             return binPath
+        },
+
+        data_checkpoints_path : function(withFile = false) {
+            // TODO (brangr): add check test network
+            // if ('main')
+                return Path.join( node.dataPath, 'checkpoints', (withFile ? 'main.sqlite3' : '') );
+
+            // if ('test')
+            //     return Path.join( node.dataPath, 'checkpoints' );
+            
+            return '';
         },
 
         defaults : {
@@ -119,7 +148,14 @@ var Control = function(settings) {
             }catch(e){
                 return Promise.reject('nodedatapath')
             }
-            
+        }
+
+        if(!fs.existsSync(self.helpers.data_checkpoints_path())){
+            try{
+                fs.mkdirSync(self.helpers.data_checkpoints_path(), { recursive: true });
+            }catch(e){
+                return Promise.reject('chkpPath')
+            }
         }
 
         if(!fs.existsSync(node.binPath)){
@@ -128,7 +164,6 @@ var Control = function(settings) {
             }catch(e){
                 return Promise.reject('binpath')
             }
-            
         }
 
         return Promise.resolve()
@@ -138,15 +173,21 @@ var Control = function(settings) {
 
         try{
             if (!fs.existsSync(node.confPath)) {
-                let data = 'server=1' + EOL +
+                let data =
+                    'server=1' + EOL +
                     'port=37070' + EOL +
-                    'rpcport=38081' + EOL +
+                    'rpcport=37071' + EOL +
+                    'publicrpcport=38081' + EOL +
+                    'staticrpcport=38082' + EOL +
+                    'restrpcport=38083' + EOL +
                     'wsport=8087' + EOL +
-                    'rpcallowip=0.0.0.0/0' + EOL +
+                    'rpcallowip=127.0.0.1' + EOL +
                     'rpchost=localhost' + EOL +
                     'rpcuser=' + f.randomString(10) + EOL +
                     'rpcpassword=' + f.randomString(256) + EOL +
-                    'wsuse=1' + EOL
+                    'api=1' + EOL +
+                    'wsuse=1' + EOL +
+                    'rest=0' + EOL
     
                 fs.writeFileSync(node.confPath, data)
             }
@@ -176,7 +217,6 @@ var Control = function(settings) {
 
         return applications.checkupdate().then(r => {
             hasupdates = r
-
             return Promise.resolve()
         })
     }
@@ -201,21 +241,10 @@ var Control = function(settings) {
         }).then(r => {
             return self.checkUpdates()
         }).then(r => {
-
-            // create pocketcoin.conf
-           
-        
             self.autorun.init()
-
-            return self.kit.autorun().then(r => {
-
-                self.kit.nodeState()
-
-                return Promise.resolve()
-            })
+            self.updates.init()
+            self.state.init()
         })
-
-        
     }
 
     self.updates = {
@@ -227,7 +256,7 @@ var Control = function(settings) {
             }
         },
         destroy : function(){
-            if (checkUpdatesInterval){
+            if (!checkUpdatesInterval){
                 clearInterval(checkUpdatesInterval)
                 checkUpdatesInterval = null
             }
@@ -236,18 +265,41 @@ var Control = function(settings) {
 
     self.autorun = {
         init : function(){
-            if(!nodeAutorunInterval){
-                nodeAutorunInterval = setInterval(function(){
-                    self.kit.autorun().catch(e => {
-                    })
-                }, 500)
+            if(!nodeAutorunTimer){
+                (function me() {
+                    
+                    self.kit.autorun().catch(e => {})
+                
+                    nodeAutorunTimer = setTimeout(me, nodeAutorunInterval);
+                })()
             }
         },
 
         destroy : function(){
-            if (nodeAutorunInterval){
-                clearInterval(nodeAutorunInterval)
-                nodeAutorunInterval = null
+            if (nodeAutorunTimer){
+                clearInterval(nodeAutorunTimer)
+                nodeAutorunTimer = null
+            }
+        }
+    }
+
+    self.state = {
+        init : function(){
+            if(!nodeStateTimer){
+                (function me() {
+
+                    self.kit.stakingState().catch(e => {})
+                    self.kit.walletState().catch(e => {})
+                
+                    nodeStateTimer = setTimeout(me, nodeStateInterval);
+                })()
+            }
+        },
+
+        destroy : function(){
+            if (nodeStateTimer){
+                clearTimeout(nodeStateTimer)
+                nodeStateTimer = null
             }
         }
     }
@@ -282,31 +334,38 @@ var Control = function(settings) {
             return self.kit.rpc('getnodeinfo')
         },
 
-        getNodeAddresses: function() {
-            return self.kit.rpc('listaddressgroupings').then(result => {
+        getStakingInfo: function() {
+            return self.kit.rpc('getstakinginfo').then(result => {
+                return Promise.resolve(result)
+            })
+        },
 
+        listAddresses: function() {
+            return self.kit.rpc('listaddresses').then(result => {
+                return Promise.resolve(result)
+            })
+        },
 
-                var addresses = []
-
-                _.each(result, function(rs){
-                    _.each(rs, function(au){
-                        addresses.push(au)
-                    })
-                })
-
-                addresses = _.map(addresses, function(a){
-                    return {
-                        address : a[0],
-                        balance : a[1] || 0
-                    }
-                })
-
-                return Promise.resolve(addresses)
+        getnewaddress: function() {
+            return self.kit.rpc('getnewaddress').then(result => {
+                return Promise.resolve(result)
             })
         },
 
         importPrivKey: function(private) {
             return self.kit.rpc('importprivkey', private)
+        },
+
+        dumpwallet: function(filePath) {
+            return self.kit.rpc('dumpwallet', filePath).then(result => {
+                return Promise.resolve(result)
+            })
+        },
+
+        importwallet: function(filePath) {
+            return self.kit.rpc('importwallet', filePath).then(result => {
+                return Promise.resolve(result)
+            })
         },
     }
 
@@ -323,21 +382,94 @@ var Control = function(settings) {
             self.autorun.destroy()
 
             lock = 'installing'
+            let snapshotFile = Path.resolve(node.dataPath, applications.getMeta()['snapshot_latest'].name)
 
             return self.kit.stop().then(r => {
+                
                 return folders()
+
             }).then(r => {
+                
                 return makeconfig()
+
             }).then(r => {
-                return applications.install(self.helpers.complete_bin_path())
-            }).then(r => {
+                
+                state.install.progress = { percent: 0 }
+                state.install.title = ''
+                state.install.status = ''
+
+                if (fs.existsSync(Path.resolve(node.dataPath, 'pocketdb')))
+                    return Promise.resolve()
+
+                return applications.downloadPermanent('snapshot_latest', node.dataPath, function(st) {
+                    state.install.progress = st
+                    state.install.title = `Downloading snapshot database`
+                        + ` - ${f.unitFormatter(st.size.transferred, 2)} / ${f.unitFormatter(st.size.total, 2)}`
+                        + ` - ${f.unitFormatter(st.speed, 2)}/s`
+                        + ` - ${Math.round(st.time.remaining / 60)} min. remaining`
+                })
+
+            }).then(() => {
+
+                if (!fs.existsSync(snapshotFile))
+                    return Promise.resolve()
+
+                return applications.decompress(snapshotFile, node.dataPath, function(st) {
+                    state.install.progress = {
+                        percent: st.pending / st.size
+                    }
+
+                    if (state.install.progress.percent < 0.99)
+                        state.install.title = 'Decompressing snapshot database...'
+                    else
+                        state.install.title = 'Processing snapshot database...'
+                })
+
+            }).then(() => {
+                
+                if (!fs.existsSync(snapshotFile))
+                    return Promise.resolve()
+
+                // fs.unlinkSync(snapshotFile)
+                // return Promise.resolve()
+
+            }).then(() => {
+                
+                // state.install.progress = { percent: 100 }
+                // state.install.title = 'Installing binary files...'
+                // return applications.install('bin', self.helpers.complete_bin_path(), true)
+                
+                return applications.downloadPermanent('bin_permanent', node.binPath, function(st) {
+                    state.install.progress = st
+                    state.install.title = `Installing binary files...`
+                })
+
+            }).then(() => {
+                
+                // state.install.progress = { percent: 100 }
+                // state.install.title = 'Installing checkpoints database...'
+                // return applications.install('checkpoint_main', self.helpers.data_checkpoints_path(true), false)
+
+                return applications.downloadPermanent('checkpoint_main_permanent', self.helpers.data_checkpoints_path(false), function(st) {
+                    state.install.progress = st
+                    state.install.title = `Installing checkpoints database...`
+                })
+
+            }).then(() => {
+
+                state.install.progress = null
+                state.install.title = ''
+                return Promise.resolve()
+
+            }).then(() => {
+
                 lock = ''
                 self.autorun.init()
                 return self.kit.check()
+
             }).catch(e => {
 
                 lock = ''
-
                 return Promise.reject(e)
             })
            
@@ -366,8 +498,6 @@ var Control = function(settings) {
             })
         },
 
-       
-
         update : function(){
 
 
@@ -378,8 +508,8 @@ var Control = function(settings) {
 
             return this.stop().then(r => {
 
-
                 return self.kit.install()
+
             }).then(r => {
 
                 hasupdates = false
@@ -403,8 +533,6 @@ var Control = function(settings) {
         },
 
         check : function(){
-            //return Promise.resolve({})
-
             node.hasbin = self.kit.hasbin();
             node.other = false
 
@@ -412,26 +540,45 @@ var Control = function(settings) {
 
             return self.request.getNodeInfo().then(data => {
 
+                if (state.info.lastblock) {
+                    let chunk = data.lastblock.height - state.info.lastblock.height
+                    state.sync.chunks.push(chunk)
+
+                    if (state.sync.chunks.length > 10) {
+                        let avg = (state.sync.chunks.reduce((a, b) => a + b, 0) / state.sync.chunks.length)
+                        state.sync.chunks = []
+                        state.sync.chunks.push(avg)
+                    }
+                }
+
                 state.info = data
                 state.status = 'launched'    
                 delete state.error
+
+                // Calculate elapsed time
+                // (total - current) / avg(chunk) * (nodeAutorunInterval / 1000)
+                state.sync.left = Math.round(
+                    (self.proxy.nodeManager.chain().commonHeight - state.info.lastblock.height) /
+                    (state.sync.chunks.reduce((a, b) => a + b, 0) / state.sync.chunks.length) *
+                    (nodeAutorunInterval / 1000) /
+                    3600
+                );
 
                 return Promise.resolve(true)
 
             }).catch(e => {
 
-                var stopped = e.code == 408
-
-                if (stopped){
-                    state.status = 'stopped'
-
-                    return Promise.resolve(false)
+                if(e.code == 401 && !node.hasbin){
+                    node.other = true
+                    return Promise.resolve(true)
                 }
-                else
-                {
-                    if(!node.hasbin || e.code == 401){
-                        node.other = true
 
+                if (e.code == 408) {
+                    if (!node.instance) {
+                        state.status = 'stopped'
+                        return Promise.resolve(false)
+                    } else {
+                        state.status = 'starting'
                         return Promise.resolve(true)
                     }
                 }
@@ -462,25 +609,55 @@ var Control = function(settings) {
       
         autorun: function() {
 
-            return Promise.resolve()
-
-            if(!self.kit.hasbin()) {
+            if(!self.kit.hasbin())
                 return Promise.resolve()
-            }
             
-            return self.kit.check().then(running => {
-                
-                if (enabled === true && running === false) return self.kit.start()
-                if (enabled === false && running === true) return self.kit.stop()
-    
-                return Promise.resolve()
-            })
+            return self.kit.check()
+                .then(running => {
+                    
+                    if (enabled === true && running === false) return self.kit.start()
+                    if (enabled === false && running === true) return self.kit.stop()
+        
+                    return Promise.resolve()
+                })
+                .catch(e => {
+
+                })
         
         },
 
-        nodeState: function() {
+        stakingState: function() {
+            if (state.status != 'launched')
+                return Promise.resolve()
+                
+            return self.request.getStakingInfo()
+                .then(data => {
+                    state.staking = data
+                    return Promise.resolve()
+                })
+                .catch(e => {
+                    Promise.resolve()
+                })
+        },
+        
+        walletState: function() {
+            if (state.status != 'launched')
+                return Promise.resolve()
+                
+            return self.request.listAddresses()
+                .then(data => {
+                    state.wallet = data
+                    
+                    let total = 0;
+                    for (let key in state.wallet)
+                        total += state.wallet[key].balance
+                        state.wallet.total = total;
 
-            return self.kit.check()
+                    return Promise.resolve()
+                })
+                .catch(e => {
+                    Promise.resolve()
+                })
         },
 
         detach : function(){
@@ -504,10 +681,7 @@ var Control = function(settings) {
                         `-conf=${node.confPath}`,
                         `-datadir=${node.dataPath}`,
                         `-silent`,
-                        `-blocksonly=1`,
-                        `-dbcache=50`,
-                        `-maxorphantx=10`,
-                        `-maxmempool=100`
+                        `-blocksonly=0`,
                     ], { stdio: ['ignore'], detached : true, shell : true})
 
                     node.instance.unref()
@@ -526,7 +700,7 @@ var Control = function(settings) {
                             }
 
                             state.status = 'error'
-                            state.timestamp = f.now()
+                            state.timestamp = new Date()
 
                             self.kit.enable(false)
                         }
@@ -546,7 +720,7 @@ var Control = function(settings) {
                     
                 }
 
-                state.timestamp = f.now()
+                state.timestamp = new Date()
             })
 
 
@@ -575,14 +749,15 @@ var Control = function(settings) {
             return self.kit.rpc('stop').then(r => {
 
                 state.status = 'stopped'
-                state.timestamp = f.now()
+                state.timestamp = new Date()
 
                 return Promise.resolve()
 
             }).catch(e => {
+                state.status = 'stopped'
+                state.timestamp = new Date()
                 return Promise.resolve()
             })
-            
             .then(r => {
 
                 if (node.instance){
@@ -609,7 +784,7 @@ var Control = function(settings) {
                 c(enabled, state)
             })
 
-            state.timestamp = f.now()
+            state.timestamp = new Date()
 
         },
 
@@ -618,7 +793,8 @@ var Control = function(settings) {
             if(!node.proxy) 
                 node.proxy = self.nodeManager.temp({
                     host : '127.0.0.1',
-                    port : config.rpcport,
+                    port : config.publicrpcport,
+                    portPrivate : config.rpcport,
                     ws : config.wsport,
                     rpcuser : config.rpcuser,
                     rpcpass : config.rpcpassword

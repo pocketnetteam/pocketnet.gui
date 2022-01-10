@@ -128,8 +128,24 @@ var IPC = function(ipc, wc){
 
 				return Promise.reject()
 			})
+        },
+		saveFileDialog : function(options){
+			return dialog.showSaveDialog(options).then(res => {
+				if (!res.canceled && (res.filePath && res.filePath.length > 0)) {
+					return Promise.resolve(res.filePath)
+				}
 
-          
+				return Promise.reject()
+			})
+        },
+		openFileDialog : function(options){
+			return dialog.showOpenDialog(options).then(res => {
+				if (!res.canceled && (res.filePaths && res.filePaths.length > 0)) {
+					return Promise.resolve(res.filePaths)
+				}
+
+				return Promise.reject()
+			})
         }
 	}
 
@@ -138,7 +154,8 @@ var IPC = function(ipc, wc){
 			node : {
 				ndataPath : function(message){
 					return helpers.dialog({
-						properties: ['openDirectory']
+						properties: ['openDirectory'],
+                        defaultPath: message.data.defaultPath || ''
 					}).then(res => {
 	
 						message.data = {
@@ -153,6 +170,7 @@ var IPC = function(ipc, wc){
 				binPath : function(message){
 					return helpers.dialog({
 						properties: ['openDirectory'],
+                        defaultPath: message.data.defaultPath || ''
 						/*filters: [
 							{ name: 'Pocketcoin Executable', extensions: ['exe'] },
 							{ name: 'All Files', extensions: ['*'] }
@@ -167,7 +185,33 @@ var IPC = function(ipc, wc){
 						return Promise.resolve()
 	
 					}) 
-				}
+				},
+                dumpWallet : function(message) {
+					return helpers.saveFileDialog({
+						properties: ['dontAddToRecent'],
+                        defaultPath: message.data.defaultPath || ''
+					}).then(res => {
+	
+                        message.data = {
+							path : res
+						}
+
+						return Promise.resolve()
+					})
+				},
+                importWallet : function(message) {
+					return helpers.openFileDialog({
+						properties: ['openFile'],
+                        defaultPath: message.data.defaultPath || ''
+					}).then(res => {
+	
+                        message.data = {
+							path : res[0]
+						}
+
+						return Promise.resolve()
+					})
+				},
 			}
 		}
 		
