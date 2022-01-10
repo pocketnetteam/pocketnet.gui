@@ -2,7 +2,10 @@
     <div class="work">
         
         <div elementsid="yournode" class="subcaption">
-            <span>Your node</span> <i class="fas fa-angle-down"></i>
+            <% if(direct) {%><span>Your node</span><% } else { %> 
+                <span>Manage node</span>
+            <% } %>
+            <i class="fas fa-angle-down"></i>
         </div>
 
     </div>

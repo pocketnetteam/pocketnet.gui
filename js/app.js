@@ -860,7 +860,7 @@ Application = function(p)
 				}
 
                 // TODO (brangr): DEBUG!
-                p.nav.href = "userpage?id=system16"
+                //p.nav.href = "userpage?id=system16"
 				
 				self.nav.init(p.nav);
 

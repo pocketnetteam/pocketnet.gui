@@ -13,6 +13,8 @@ var system16 = (function(){
 
 		var graphs = {}
 
+		var etr = null
+
 		var colors = ['#F0810F', '#011A27', '#4897D8', '#E6DF44', '#063852', '#486824']
 
 		var changes = {
@@ -157,99 +159,7 @@ var system16 = (function(){
 
 				renders.webserveradmin(el.c)
 			},
-			'nodeenabled' : function(){
-
-				if (system.node.enabled){
-
-					var items = [{
-						text : "Disable "+self.app.meta.fullname+" Node",
-						action : function (clbk) {
-
-							return proxy.system.request('set.node.enabled', {enabled : false}).then(r => {
-								clbk()
-
-								actions.refresh().then(r => {
-									actions.refreshsystem()
-								})
-								
-							})
-						}
-					}]
-
-					menuDialog({
-						items: items
-					})
-
-				}
-				else{
-
-					var items = [{
-						text : "Enable "+self.app.meta.fullname+" Node",
-						action : function (clbk) {
-
-							return proxy.system.request('set.node.enabled', {enabled : true}).then(r => {
-								actions.refresh().then(r => {
-									actions.refreshsystem()
-								})
-
-								clbk()
-							})
-
-						
-						}
-					}]
-
-					menuDialog({
-						items: items
-					})
-
-					
-
-				}
-			},
 			
-			'binPath' : function(caller, defaultPath){
-				return proxy.system.request('set.node.binPath', {defaultPath: defaultPath}).then(r => {
-					actions.refresh().then(r => {
-						actions.refreshsystem()
-					})
-				}).catch(e => {
-
-				})
-			},
-			'ndataPath' : function(caller, defaultPath){
-				return proxy.system.request('set.node.ndataPath', {defaultPath: defaultPath}).then(r => {
-					actions.refresh().then(r => {
-						actions.refreshsystem()
-					})
-				}).catch(e => {
-				})
-			},
-            'dumpWallet' : function(caller, defaultPath){
-				return proxy.system.request('set.node.dumpWallet', {}).then(r => {
-
-                    if (r.filename)
-                        sitemessage(`Your wallet saved to ${r.filename}`, null, 5000) // self.app.localization.e('successcopied')
-
-				}).catch(e => {
-                    if (e.code && e.message)
-                        sitemessage(`(Code ${e.code}): ${e.message}`, null, 5000)
-                    else
-                        sitemessage(`Unknown error`)
-				})
-			},
-            'importWallet' : function(caller, defaultPath){
-				return proxy.system.request('set.node.importWallet', {}).then(r => {
-
-                    sitemessage(`Your wallet imported to node`, null, 5000) // self.app.localization.e('successcopied')
-
-				}).catch(e => {
-                    if (e.code && e.message)
-                        sitemessage(`(Code ${e.code}): ${e.message}`, null, 5000)
-                    else
-                        sitemessage(`Unknown error`)
-				})
-			},
 		}
 
 		var actions = {
@@ -258,91 +168,8 @@ var system16 = (function(){
 					s.time = fromutc(new Date(s.time))
 				})
 			},
-			updateNode : function(){
-
-				proxy.fetchauth('manage', {
-					action : 'node.update',
-					data : {
-						all : 'all'
-					}
-				}).then(r => {
-
-					actions.refresh().then(r => {
-						renders.allsettings()
-					})
-
-					topPreloader(100);
-
-				}).catch(e => {
-
-					sitemessage(self.app.localization.e('e13293'))
-
-
-					actions.refresh().then(r => {
-						renders.allsettings()
-					})
-
-					topPreloader(100);
-
-				})
-			},
-			installNode : function(){
-
-				proxy.fetchauth('manage', {
-					action : 'node.install',
-					data : {}
-				}).then(r => {
-
-                    proxy.system.request('set.node.enabled', {enabled : true}).then(r => {
-
-                        actions.refresh().then(r => {
-                            renders.allsettings()
-                            topPreloader(100);
-                        })
-                        
-                    })
-
-				}).catch(e => {
-
-					sitemessage(self.app.localization.e('e13293'))
-
-					actions.refresh().then(r => {
-						renders.allsettings()
-					})
-
-					topPreloader(100);
-
-				})
-			},
-			removeNode : function(all){
-
-				proxy.fetchauth('manage', {
-					action : 'node.delete',
-					data : {
-						all : all
-					}
-					
-				}).then(r => {
-
-
-					actions.refresh().then(r => {
-						renders.allsettings()
-					})
-
-					topPreloader(100);
-
-				}).catch(e => {
-
-					sitemessage(self.app.localization.e('e13293'))
-
-					actions.refresh().then(r => {
-						renders.allsettings()
-					})
-
-					topPreloader(100);
-
-				})
-			},
+		
+		
 			admin : function(){
 
 				var address = self.app.platform.sdk.address.pnet()
@@ -427,19 +254,12 @@ var system16 = (function(){
 					system = settings
 				}
 
-				renders.allsettings()
 			},
 
 			refreshsystem : function(){
 				return proxy.system.api.get.settings().then(s => {
 					system = s
-
-					if (el.c){
-						renders.allsettings()
-					}
 				})
-				
-			
 			},
 
 			refresh : function(){
@@ -458,12 +278,15 @@ var system16 = (function(){
 				var laststate = stats[stats.length - 1]
 
 				if(!laststate || (new Date(laststate.time)).addSeconds(10) < new Date() ){
+
 					stats.push({
 						info : info,
 						time : new Date()
 					})
 
 					stats = lastelements(stats, 1000)
+
+					console.log('stats', stats.length)
 
 					if (el.c){
 						renders.nodescontenttable(el.c)
@@ -2601,14 +2424,7 @@ var system16 = (function(){
 		}
 
 		var renders = {
-			allsettings : function(){
-				if (el.c){
-					renders.nodecontentmanage(el.c)
-                    renders.nodecontentstate(el.c)
-				    renders.nodecontentmanagestacking(el.c)
-				    renders.nodecontentmanagewallet(el.c)
-				}
-			},
+			
 			error : function(error, el, clbk){
 
 				self.shell({
@@ -2645,7 +2461,8 @@ var system16 = (function(){
 						data : {
 							info : info,
 							proxy : proxy,
-							admin : actions.admin()
+							admin : actions.admin(),
+							electron : typeof _Electron != 'undefined' ? _Electron : false
 						},
 	
 						el : el.proxycontent
@@ -3791,27 +3608,58 @@ var system16 = (function(){
 						clbk()
 				})
 			},
+
+			nodecontrol : function(_el, _proxy){
+
+				if(etr) etr.destroy()
+
+					etr = null
+
+				
+
+				self.nav.api.load({
+					open : true,
+					id : 'nodecontrol',
+					el : _el,
+					animation : false,
+
+					essenseData : {
+						proxy : _proxy
+					},
+					clbk : function(e, p){
+						etr = p
+
+					}
+
+				})
+			},
+
 			nodecontent : function(elc, clbk){
 
-				if(actions.admin()){
+				if(actions.admin() || (typeof _Electron != 'undefined' && _Electron)){
+
+					var _proxy = proxy
+					var direct = false
+
+					if (typeof _Electron != 'undefined' && self.app.api.get.direct()){
+						_proxy = self.app.api.get.direct()
+						direct = true
+					}
 
 					self.shell({
 						inner : html,
 						name : 'nodecontent',
 						data : {
-							info : info,
-							manager : info.nodeManager,
-							nodestate : info.nodeControl.state,
-							proxy : proxy,
-							admin : actions.admin()
+							direct : direct
 						},
 	
 						el : elc.find('.localnodeWrapper')
 	
 					},
-					function(){
+					function(p){
 
-						renders.nodecontentstate(elc)
+						renders.nodecontrol(p.el.find('.manage'), _proxy)
+
 	
 						if (clbk)
 							clbk()
@@ -3824,327 +3672,7 @@ var system16 = (function(){
 
 				
 			},
-			nodecontentmanagestacking : function(elc, clbk) {
-				if (actions.admin() && info.nodeControl.state.staking){
-
-					self.shell({
-						inner : html,
-						name : 'nodecontentmanagestacking',
-						data : {
-							info : info,
-							manager : info.nodeManager,
-							nodestate : info.nodeControl.state,
-							nc : info.nodeControl,
-							proxy : proxy,
-							admin : actions.admin(),
-							system : system,
-						},
-
-						el : elc.find('.stakingWrapper')
-
-					},
-					function(p){
-
-						if (clbk)
-							clbk()
-					})
-				}
-			},
-			nodecontentmanagewallet : function(elc, clbk){
-				if (actions.admin() && info.nodeControl.state.wallet) {
-
-					self.shell({
-						inner : html,
-						name : 'nodecontentmanagewallet',
-						data : {
-							info : info,
-							manager : info.nodeManager,
-							nodestate : info.nodeControl.state,
-							nc : info.nodeControl,
-							proxy : proxy,
-							admin : actions.admin(),
-							system : system,
-						},
-
-						el : elc.find('.walletWrapper')
-
-					},
-					function(p) {
-
-                        actions.settings(p.el)
-
-						p.el.on('click', '.nodebalancedeposit', function() {
-                            topPreloader(30);
-
-                            proxy.fetchauth('manage', {
-                                action : 'set.node.wallet.getnewaddress',
-                                data : {}
-                            }).then(r => {
-
-                                dialog({
-                                    class : 'zindex',
-                                    html : "Your new address " + r,
-                                    btn1text : self.app.localization.e('Copy to ClipBoard'),
-                                    btn2text : self.app.localization.e('Cancel'),
-                                    success : function(){
-                                        copycleartext(r)
-                                        sitemessage(self.app.localization.e('successcopied'))
-                                    }
-                                })
-    
-                            }).catch(e => {
-                                sitemessage(deep(e, 'message') || self.app.localization.e('e13293'))
-                            })
-						})
-
-                        p.el.on('click', '.nodebalancewithdraw', function(){
-
-							inputDialogNew({
-								caption : "Input Address and Amount for transfer PKOIN",
-								class : 'addressdialog',
-								wrap : true,
-								values : [
-                                    {
-                                        defValue : '',
-                                        validate : 'empty',
-                                        placeholder : "Address",
-                                        label : "Destination Address"
-                                    },
-                                    {
-                                        defValue : 0,
-                                        validate : 'empty',
-                                        placeholder : "Amount",
-                                        label : "Amount (PKOIN)"
-                                    }
-                                ],
-								success : function(v){
-                                    topPreloader(30)
-
-                                    // TODO (brangr): test send transaction or create - after OK send
-                                    proxy.fetchauth('manage', {
-                                        action : 'set.node.wallet.',
-                                        data : {}
-                                    }).then(r => {
-
-                                        dialog({
-                                            class : 'zindex',
-                                            html : "Your new address " + r,
-                                            btn1text : self.app.localization.e('Copy to ClipBoard'),
-                                            btn2text : self.app.localization.e('Cancel'),
-                                            success : function(){
-                                                copycleartext(r)
-                                                sitemessage(self.app.localization.e('successcopied'))
-                                            }
-                                        })
-            
-                                    }).catch(e => {
-                                        sitemessage(deep(e, 'message') || self.app.localization.e('e13293'))
-                                    })
-								}
-							})
-
-						})
-
-						if (clbk)
-							clbk()
-					})
-				}
-			},
-			nodecontentmanage : function(elc, clbk){
-				if(actions.admin()) {
-
-					var timestamp = deep(info,'nodeControl.state.timestamp')
-					var dis = false
-
-					if (timestamp && info.nodeControl.hasbin){
-						dis = (new Date()) < fromutc((new Date(timestamp)).addSeconds(5))
-					}
-
-					self.shell({
-						inner : html,
-						name : 'nodecontentmanage',
-						data : {
-							info : info,
-							manager : info.nodeManager,
-							nodestate : info.nodeControl.state,
-							nc : info.nodeControl,
-							proxy : proxy,
-							admin : actions.admin(),
-							system : system,
-							dis : dis
-						},
-
-						el : elc.find('.localnodeWrapper .manage')
-
-					},
-					function(p){
-
-						var lock = function(){
-							p.el.find('.nodecontentmanage').addClass('lock')
-						}
-
-						actions.settings(p.el)
-
-						p.el.find('.updatenode').on('click', function(){
-							dialog({
-								class : 'zindex',
-								html : "Do you really want to Stop "+self.app.meta.fullname+" Node and Update It?",
-								btn1text : self.app.localization.e('dyes'),
-								btn2text : self.app.localization.e('dno'),
-								success : function(){
-
-									lock()
-
-									actions.updateNode()
-									
-								}
-							})
-						})
-
-						p.el.find('.removenodeall').on('click', function(){
-							dialog({
-								class : 'zindex',
-								html : "<b>Attention!</b><br><br>Make a wallet backup:<br><b>wallet.dat</b><br><b>wallets/</b><br><br>Do you really want to remove "+self.app.meta.fullname+" Node and All Blockchain Data?",
-								btn1text : self.app.localization.e('dyes'),
-								btn2text : self.app.localization.e('dno'),
-								success : function(){
-									lock()
-									actions.removeNode(true)
-									
-								}
-							})
-						})
-
-						p.el.find('.removenode').on('click', function(){
-							dialog({
-								class : 'zindex',
-								html : "Do you really want to remove "+self.app.meta.fullname+" Node Daemon?",
-								btn1text : self.app.localization.e('dyes'),
-								btn2text : self.app.localization.e('dno'),
-								success : function(){
-									lock()
-									actions.removeNode()
-									
-								}
-							})
-						})
-
-						p.el.find('.install').on('click', () => {
-
-							topPreloader(20);
-
-							dialog({
-								class : 'zindex',
-								html : "Do you really want to install "+self.app.meta.fullname+" Node?",
-								btn1text : self.app.localization.e('dyes'),
-								btn2text : self.app.localization.e('dno'),
-								success : function(){
-									lock()
-									actions.installNode()
-									
-								}
-							})
-
-							
-
-						})
-
-						p.el.find('.toDefaultPath').on('click', function(){
-							dialog({
-								class : 'zindex',
-								html : "Do you really want to set "+self.app.meta.fullname+" Node Path to Default path?",
-								btn1text : self.app.localization.e('dyes'),
-								btn2text : self.app.localization.e('dno'),
-								success : function(){
-
-									globalpreloader(true)
-
-									proxy.fetchauth('manage', {
-
-										action : 'set.node.defaultPaths',
-										data : {}
-
-									}).then(r => {
-
-										actions.refresh().then(r => {
-											actions.refreshsystem()
-
-											globalpreloader(false)
-										})
 			
-									}).catch(e => {
-
-										globalpreloader(false)
-										
-										sitemessage(self.app.localization.e('e13293'))
-			
-									})
-								}
-							})
-						})
-
-						p.el.find('.refreshother').on("click", function(){
-
-							globalpreloader(true)
-
-							proxy.fetchauth('manage', {
-
-								action : 'set.node.check',
-								data : {}
-
-							}).then(r => {
-
-								actions.refresh().then(r => {
-									actions.refreshsystem()
-
-									setTimeout(function(){
-										globalpreloader(false)
-									}, 300)
-									
-								})
-	
-							}).catch(e => {
-
-								setTimeout(function(){
-									globalpreloader(false)
-								}, 300)
-								
-								sitemessage(self.app.localization.e('e13293'))
-	
-							})
-						})
-
-						if (clbk)
-							clbk()
-					})
-
-				}
-			},
-			nodecontentstate : function(elc, clbk){
-				if(actions.admin()){
-
-					self.shell({
-						inner : html,
-						name : 'nodecontentstate',
-						data : {
-							info : info,
-							manager : info.nodeManager,
-							nodestate : info.nodeControl.state,
-							nc : info.nodeControl,
-							proxy : proxy,
-							admin : actions.admin(),
-						},
-
-						el : elc.find('.localnodeWrapper .nodestateWrapper')
-
-					},
-					function(){
-						if (clbk)
-							clbk()
-					})
-
-				}
-			},
 		}
 
 		var state = {
@@ -4171,8 +3699,6 @@ var system16 = (function(){
 		var makers = {
 
 			panel : function(){
-				renders.nodecontentstate(el.c)
-				renders.nodecontentmanage(el.c)
 				renders.nodescontenttable(el.c)
 				renders.peertubeinstancestable(el.c)
 				renders.webadminscontent(el.c)
@@ -4277,6 +3803,8 @@ var system16 = (function(){
 
 					actions.convertTime(stats)
 
+					console.log('stats', stats.length)
+
 					setTimeout(function(){
 						makers.stats()
 						makers.panel()
@@ -4298,8 +3826,6 @@ var system16 = (function(){
 						.then(() => proxy.system.request('get.settings'))*/
 						.then((r) => {
 						  system = r;
-		  
-						  renders.allsettings();
 		  
 						  return Promise.resolve();
 						})
@@ -4346,6 +3872,10 @@ var system16 = (function(){
 			},
 
 			destroy : function(){
+
+				if(etr) etr.destroy()
+
+				etr = null
 
 				destroy()
 

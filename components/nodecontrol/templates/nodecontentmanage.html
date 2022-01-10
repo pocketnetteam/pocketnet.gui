@@ -23,11 +23,8 @@
 
                     <div class="notfound loading">
                         <div class="text">
-                            <%-app.meta.fullname%> Node Installing
+                            <%-app.meta.fullname%> Node Installing <i class="fas fa-spinner fa-spin"></i>
                         </div>
-                        <!-- <div class="icon">
-                            <i class="fas fa-spinner fa-spin"></i>
-                        </div> -->
 
                         <div class="installProgressBox">
                             <div class="title"><%-nc.state.install.title%></div>
@@ -115,14 +112,14 @@
                             <div class="text">
                                 Your device already has <%-app.meta.fullname%> Node.<br>
 
-                                <% if(proxy.direct) {%>
+                                <% if(proxy.direct || showdirect) {%>
                                     You can set system pathes or stop it and install via <%-app.meta.fullname%> Desktop Application
                                 <% } else {%> 
                                     You can't manage node on this device via current application
                                 <% } %>
                             </div>
 
-                            <% if(proxy.direct) {%>
+                            <% if(proxy.direct || showdirect) {%>
                                 <div class="icon">
                                     <i class="fas fa-sync"></i> Refresh
                                 </div>
@@ -189,7 +186,7 @@
                 </div>
 
                 <% if (nodestate.status == 'stopped' && !system.node.enabled) { %>
-                    <% if(!nc.lock && proxy.direct) {%>
+                    <% if(!nc.lock && (proxy.direct || showdirect)) {%>
                         <div class="setting systempath">
                             <div class="settingTable table">
                                     <div class="label">

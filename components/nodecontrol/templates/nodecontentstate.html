@@ -11,7 +11,7 @@
                     <% if(nodestate.status == 'launched') { %>
                         <i class="fas fa-check-circle good"></i> <span class="good">Active</span>
                     <% } else { %> 
-                        <span class="bad"><%-nodestate.status%></span>
+                        <span class="bad"><%-flb(nodestate.status)%></span>
                     <% } %>
                 </div>
             </div>
@@ -43,7 +43,7 @@
             </div>
         <% } %>
 
-        <% if(nodestate.error) {%>
+        <% if(nodestate.error && !_.isEmpty(nodestate.error)) {%>
             <div class="setting">
                 <div class="settingTable table">
                     <div class="label">

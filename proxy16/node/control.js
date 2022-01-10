@@ -396,6 +396,7 @@ var Control = function(settings) {
                 
                 state.install.progress = { percent: 0 }
                 state.install.title = ''
+                state.install.status = ''
 
                 if (fs.existsSync(Path.resolve(node.dataPath, 'pocketdb')))
                     return Promise.resolve()
@@ -699,7 +700,7 @@ var Control = function(settings) {
                             }
 
                             state.status = 'error'
-                            state.timestamp = f.now()
+                            state.timestamp = new Date()
 
                             self.kit.enable(false)
                         }
@@ -719,7 +720,7 @@ var Control = function(settings) {
                     
                 }
 
-                state.timestamp = f.now()
+                state.timestamp = new Date()
             })
 
 
@@ -748,13 +749,13 @@ var Control = function(settings) {
             return self.kit.rpc('stop').then(r => {
 
                 state.status = 'stopped'
-                state.timestamp = f.now()
+                state.timestamp = new Date()
 
                 return Promise.resolve()
 
             }).catch(e => {
                 state.status = 'stopped'
-                state.timestamp = f.now()
+                state.timestamp = new Date()
                 return Promise.resolve()
             })
             .then(r => {
@@ -783,7 +784,7 @@ var Control = function(settings) {
                 c(enabled, state)
             })
 
-            state.timestamp = f.now()
+            state.timestamp = new Date()
 
         },
 

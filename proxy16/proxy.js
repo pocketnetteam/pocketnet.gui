@@ -628,7 +628,8 @@ var Proxy = function (settings, manage, test, logger) {
 				],
 	
 				13: [
-					'01rus.nohost.me'
+					'01rus.nohost.me',
+					'02rus.pocketnet.app'
 				],
 
 				14: [
@@ -2018,32 +2019,6 @@ var Proxy = function (settings, manage, test, logger) {
 
 	self.wallet.events()
 
-
-	/////////tests
-
-	/*var ids = []
-
-	var c = 3000000
-
-	for(var i = 0 ; i < c; i++){
-		ids.push(f.makeid())
-	}
-
-	var time = performance.now()
-	
-	for(var i = 0 ; i < c; i++){
-		f.rot13(ids[i])
-	}
-
-	var difference = performance.now() - time;
-	
-
-	var time = performance.now()
-
-	for(var i = 0 ; i < c; i++){
-		f.hash(ids[i])
-	}
-	var difference = performance.now() - time;*/
 	
 		
 	return self

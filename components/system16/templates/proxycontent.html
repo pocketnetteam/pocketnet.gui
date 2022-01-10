@@ -1,10 +1,21 @@
 <div class="proxycontent">
 
-    <div class="localnodeWrapper">
-    </div>
+    <% if(electron) {%>
+
+        <div class="localnodeWrapper">
+        </div>
+
+    <% } %>
 
     <div class="proxyServers">
     </div>
+
+    <% if(!electron) {%>
+
+        <div class="localnodeWrapper">
+        </div>
+
+    <% } %>
 
     <div class="nodesWrapper">
     </div>
