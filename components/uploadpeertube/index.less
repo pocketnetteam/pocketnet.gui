@@ -165,15 +165,17 @@
     }
 
     .upload-progress-bar {
-        height: 1px;
+        height: 3px;
         width: 100%;
+
+        transition: width 0.3s linear;
 
         &.processing {
             background-color: @color-orange;
         }
 
         &.uploading {
-            background-color: @color-dark-blue;
+            background-color: @color-raspberry;
         }
     }
 
