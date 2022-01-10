@@ -47,10 +47,16 @@
 								%>
 
 								<div class="question" question="<%- fq.id %>">
-									<div elementsid="questionName_<%- fq.id %>" class="questionName">
-										<%= fq.q %> 
+									<div class="questiontop">
+										<div elementsid="questionName_<%- fq.id %>" class="questionName">
+											<%= fq.q %> 
+										</div>
+	
+										<div elementsid="share-<%- fq.id %>" class="share">
+											<span><%=e('share')%></span>	 
+											<i class="fas fa-share-alt"></i> 
+										</div>
 									</div>
-
 
 									<div class="answer">
 										<%= fq.a %>
@@ -60,14 +66,9 @@
 										<%= fq.img %>
 									</div>
 
-									<!--<div elementsid="share-<%- fq.id %>" class="share">
-										<%=e('e14108')%>
-									</div>
+		
 
-									<div class="icon">
-										<i class="fas fa-share-alt"></i>
-									</div>
-									 -->
+									
 								</div>
 
 							<% }) %>
