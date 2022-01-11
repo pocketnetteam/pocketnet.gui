@@ -436,8 +436,8 @@ var Control = function(settings) {
                 if (!fs.existsSync(snapshotFile))
                     return Promise.resolve()
 
-                // fs.unlinkSync(snapshotFile)
-                // return Promise.resolve()
+                fs.unlinkSync(snapshotFile)
+                return Promise.resolve()
 
             }).then(() => {
                 
@@ -688,7 +688,7 @@ var Control = function(settings) {
                         `-datadir=${node.dataPath}`,
                         `-silent`,
                         `-blocksonly=0`,
-                    ], { stdio: ['ignore'], detached : false, shell : false})
+                    ], { stdio: ['ignore'], detached : true, shell : false})
 
                     node.instance.unref()
 
