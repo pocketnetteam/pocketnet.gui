@@ -30,8 +30,6 @@ class FrontendLogger {
     guid = '',
     userAgent = '',
   }) {
-    debugger;
-
     const parametersOrder = [
       level,
       date,
