@@ -193,33 +193,6 @@ __map =  {
 		anonimus : true,
 	},
 
-	easynode : {
-		uri : "easynode",
-		href : "easynode",
-		add : function(settings, p){
-
-			if(p.inWnd)
-
-				return {
-					insert : 'wnd'
-				}
-
-			else
-			{
-				return {
-					el : 'content'
-				}
-			}
-
-		},
-		anonimus : true,
-		/*redirect : {
-			auth : 'authorization',
-			//validate : 'filluser'
-		},*/
-	
-	},
-
 	aboutHome : {
 		uri : "aboutHome",
 		href : "aboutHome",
