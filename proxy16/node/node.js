@@ -25,6 +25,7 @@ var Node = function(options, manager){
 
     self.host = options.host
     self.port = options.port
+    self.portPrivate = options.portPrivate
     self.rpcuser = options.rpcuser || ""
     self.rpcpass = options.rpcpass || ""
     self.ws = options.ws
@@ -257,6 +258,7 @@ var Node = function(options, manager){
         pass: self.rpcpass,
         host: self.host,
         port: self.port,
+        portPrivate: self.portPrivate,
     })
 
     self.rpcs = function(method, parsed){

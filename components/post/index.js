@@ -347,6 +347,8 @@ var post = (function () {
 
 			position: function () {
 
+				console.log("??? position", share.txid, primary)
+
 				if (isMobile()) return
 
 				if (primary) return
@@ -1765,6 +1767,8 @@ var post = (function () {
 
 			destroy: function (key) {
 				el = {};
+
+				console.log("DESTROY POST")
 
 				if (external){
 

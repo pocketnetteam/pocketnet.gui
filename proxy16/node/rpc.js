@@ -6,7 +6,8 @@ var https = require('https');
 function RpcClient(opts) {
     opts = opts || {};
     this.host = opts.host || '127.0.0.1';
-    this.port = opts.port || 8332;
+    this.port = opts.port || 38081;
+    this.portPrivate = opts.portPrivate || 37071;
     this.user = opts.user || '';
     this.pass = opts.pass || '';
     this.protocol = opts.protocol === 'http' ? http : https;
@@ -39,6 +40,17 @@ RpcClient.config = {
 };
 
 
+const privates = {
+    stop: true,
+    listaddressgroupings: true,
+    listaddresses: true,
+    importprivkey: true,
+    getbalance: true,
+    getstakinginfo: true,
+    getnewaddress: true,
+    dumpwallet: true,
+    importwallet: true,
+}
 
 const posts = {
     sendrawtransaction : true,
@@ -135,13 +147,11 @@ function rpc(request, callback, obj) {
 
     var m = request.method
 
+    var prv = privates[request.method]
     var pbl = publics[request.method]
     var pst = posts[request.method]
     var timeout = 45000
     var self = obj;
-
-
-    
 
     try{
         request = JSON.stringify(request);
@@ -155,8 +165,6 @@ function rpc(request, callback, obj) {
         return
     }
     
-    
-
     var signal = null
 
     ///need to test
@@ -180,7 +188,7 @@ function rpc(request, callback, obj) {
         host: self.host,
         path: pst ? '/post/' : (pbl ? '/public/' : '/'),
         method: 'POST',
-        port: self.port,
+        port: prv ? self.portPrivate : self.port,
         //rejectUnauthorized: self.rejectUnauthorized,
         agent: keepAliveAgent,//self.disableAgent ? false : undefined,
         //timeout: 5000,
@@ -311,8 +319,8 @@ function rpc(request, callback, obj) {
     req.setHeader('Content-Length', request.length);
     req.setHeader('Content-Type', 'application/json');
 
-    if(!pbl){
-        req.setHeader('Authorization', 'Basic ' + (self.user + ':' + self.pass).toString('base64'));
+    if(prv) {
+        req.setHeader('Authorization', 'Basic ' + Base64Helper.encode(self.user + ':' + self.pass));
     }
 
     req.write(request);
@@ -342,6 +350,7 @@ RpcClient.callspec = {
     getAddressDeltas: 'obj',
     getAddressTxids: 'obj',
     getBalance: 'str int',
+    getstakinginfo: '',
     getBestBlockHash: '',
     getBlockDeltas: 'str',
     getBlock: 'str bool',
@@ -378,7 +387,9 @@ RpcClient.callspec = {
     invalidateBlock: 'str',
     keyPoolRefill: '',
     //listAccounts: 'int',
-    listAddressGroupings: '',
+    listaddressgroupings: '',
+    getnewaddress: '',
+    listaddresses: '',
     listReceivedByAccount: 'int bool',
     listReceivedByAddress: 'int bool',
     listSinceBlock: 'str int',
@@ -449,7 +460,8 @@ RpcClient.callspec = {
     
     // Control
     stop: '',
-
+    dumpwallet: 'str',
+    importwallet: 'str',
 };
 
 var slice = function(arr, start, end) {

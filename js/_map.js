@@ -1521,7 +1521,35 @@ __map =  {
 		anonimus : true,
 	},
 
+	nodecontrol : {
+		uri : "nodecontrol",
+		href : "nodecontrol",
+		add : function(settings, p){
 
+			if(p.inWnd)
+			{
+				return {
+					insert : 'wnd'
+				}
+			}
+			else
+			if(p.inTooltip)
+			{
+				return {
+					insert : 'tooltip'
+				}
+			}
+			else
+			{
+				return {
+					el : 'content'
+				}
+			}
+
+		},
+		
+		anonimus : true,
+	},
 
 	bastyonhelper : {
 		uri : "bastyonhelper",

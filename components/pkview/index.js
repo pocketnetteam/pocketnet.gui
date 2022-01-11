@@ -131,7 +131,7 @@ var pkview = (function(){
 					var name = 'pkey_'+self.app.platform.currentTime()
 
 					renders.mnemonicEffect(m, false, function(){
-					
+						hiddenform.find('button').click();
 					});
 
 					/*var container = p.el.find('.qrcode');
@@ -232,7 +232,7 @@ var pkview = (function(){
 
 			current = {}
 
-			var mnemonic = localStorage['mnemonic'];
+			var mnemonic = ed.mnemonic || localStorage['mnemonic'];
 
 			if (mnemonic){
 

@@ -1,23 +1,18 @@
-<div class="nodecontent collapsepart">
+<div class="nodecontent collapsepart expanded">
     <div class="work">
         
         <div elementsid="yournode" class="subcaption">
-            <span>Your node</span> <i class="fas fa-angle-down"></i>
+            <% if(direct) {%><span>Your node</span><% } else { %> 
+                <span>Manage node</span>
+            <% } %>
+            <i class="fas fa-angle-down"></i>
         </div>
 
     </div>
 
     <div class="collapsingpart">
 
-        <div class="manage">
-
-        </div>
-
-        <div class="work">
-            <div class="state">
-
-            </div>
-        </div>
+        <div class="manage"></div>
 
     </div>
 </div>

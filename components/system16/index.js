@@ -13,9 +13,9 @@ var system16 = (function(){
 
 		var graphs = {}
 
-		var colors = ['#F0810F', '#011A27', '#4897D8', '#E6DF44', '#063852', '#486824']
+		var etr = null
 
-		var stacking = null
+		var colors = ['#F0810F', '#011A27', '#4897D8', '#E6DF44', '#063852', '#486824']
 
 		var changes = {
 			server : {}
@@ -159,95 +159,7 @@ var system16 = (function(){
 
 				renders.webserveradmin(el.c)
 			},
-			'nodeenabled' : function(){
-
-				if (system.node.enabled){
-
-					var items = [{
-						text : "Disable "+self.app.meta.fullname+" Node",
-						action : function (clbk) {
-
-							return proxy.system.request('set.node.enabled', {enabled : false}).then(r => {
-								clbk()
-
-								actions.refresh().then(r => {
-									actions.refreshsystem()
-								})
-								
-							})
-						}
-					}]
-
-					menuDialog({
-						items: items
-					})
-
-				}
-				else{
-
-					var items = [{
-						text : "Enable "+self.app.meta.fullname+" Node",
-						action : function (clbk) {
-
-							return proxy.system.request('set.node.enabled', {enabled : true}).then(r => {
-								actions.refresh().then(r => {
-									actions.refreshsystem()
-								})
-
-								clbk()
-							})
-
-						
-						}
-					}]
-
-					menuDialog({
-						items: items
-					})
-
-					
-
-				}
-			},
 			
-			'binPath' : function(){
-
-				globalpreloader(true)
-
-				return proxy.system.request('set.node.binPath', {}).then(r => {
-
-					actions.refresh().then(r => {
-						actions.refreshsystem()
-
-						globalpreloader(false)
-					})
-					
-				}).catch(e => {
-
-					globalpreloader(false)
-
-				})
-			},
-
-			'ndataPath' : function(){
-
-				globalpreloader(true)
-
-				return proxy.system.request('set.node.ndataPath', {}).then(r => {
-
-
-					globalpreloader(false)
-
-					actions.refresh().then(r => {
-						actions.refreshsystem()
-					})
-					
-				}).catch(e => {
-
-					globalpreloader(false)
-
-				})
-			}
 		}
 
 		var actions = {
@@ -256,89 +168,8 @@ var system16 = (function(){
 					s.time = fromutc(new Date(s.time))
 				})
 			},
-			updateNode : function(){
-
-				proxy.fetchauth('manage', {
-					action : 'node.update',
-					data : {
-						all : 'all'
-					}
-				}).then(r => {
-
-					actions.refresh().then(r => {
-						renders.allsettings()
-					})
-
-					topPreloader(100);
-
-				}).catch(e => {
-
-					sitemessage(self.app.localization.e('e13293'))
-
-
-					actions.refresh().then(r => {
-						renders.allsettings()
-					})
-
-					topPreloader(100);
-
-				})
-			},
-			installNode : function(){
-
-				proxy.fetchauth('manage', {
-					action : 'node.install',
-					data : {}
-				}).then(r => {
-
-					actions.refresh().then(r => {
-						renders.allsettings()
-					})
-
-					topPreloader(100);
-
-				}).catch(e => {
-
-					sitemessage(self.app.localization.e('e13293'))
-
-
-					actions.refresh().then(r => {
-						renders.allsettings()
-					})
-
-					topPreloader(100);
-
-				})
-			},
-			removeNode : function(all){
-
-				proxy.fetchauth('manage', {
-					action : 'node.delete',
-					data : {
-						all : all
-					}
-					
-				}).then(r => {
-
-
-					actions.refresh().then(r => {
-						renders.allsettings()
-					})
-
-					topPreloader(100);
-
-				}).catch(e => {
-
-					sitemessage(self.app.localization.e('e13293'))
-
-					actions.refresh().then(r => {
-						renders.allsettings()
-					})
-
-					topPreloader(100);
-
-				})
-			},
+		
+		
 			admin : function(){
 
 				var address = self.app.platform.sdk.address.pnet()
@@ -423,19 +254,12 @@ var system16 = (function(){
 					system = settings
 				}
 
-				renders.allsettings()
 			},
 
 			refreshsystem : function(){
 				return proxy.system.api.get.settings().then(s => {
 					system = s
-
-					if (el.c){
-						renders.allsettings()
-					}
 				})
-				
-			
 			},
 
 			refresh : function(){
@@ -454,6 +278,7 @@ var system16 = (function(){
 				var laststate = stats[stats.length - 1]
 
 				if(!laststate || (new Date(laststate.time)).addSeconds(10) < new Date() ){
+
 					stats.push({
 						info : info,
 						time : new Date()
@@ -461,8 +286,9 @@ var system16 = (function(){
 
 					stats = lastelements(stats, 1000)
 
+					console.log('stats', stats.length)
+
 					if (el.c){
-						renders.nodecontentstate(el.c)
 						renders.nodescontenttable(el.c)
 						renders.peertubeinstancestable(el.c)
 						renders.webadminscontent(el.c)
@@ -756,11 +582,12 @@ var system16 = (function(){
 			settings : function(el){
 				el.find('[sys]').on('click', function(){
 					var sys = $(this).attr('sys')
+                    var path = $(this).attr('path')
 
 					if (sys){
 						var s = deep(systemsettings, sys)
 
-						if (s) s($(this))
+						if (s) s($(this), path)
 					}
 				})
 			},
@@ -2597,42 +2424,7 @@ var system16 = (function(){
 		}
 
 		var renders = {
-			allsettings : function(){
-				if (el.c){
-					renders.nodecontentmanage(el.c)
-					renders.nodecontentstate(el.c)
-				}
-			},
-			proxycurrent : function(clbk){
-
-				var use = api.get.current()
-				
-				self.shell({
-
-					inner : html,
-					name : 'proxycurrent',
-					data : {
-						proxies : api.get.proxies(),
-						current : proxy,
-						using : use,
-						admin : actions.admin()
-					},
-
-					el : el.proxycurrent
-
-				},
-				function(p){
-
-					p.el.find('.current').on('click', actions.proxy.selectWatch)
-					p.el.find('.selectusing').on('click', actions.proxy.selectUsing)
-
-					if (clbk)
-						clbk()
-				})
-
-				
-			},
-
+			
 			error : function(error, el, clbk){
 
 				self.shell({
@@ -2657,8 +2449,6 @@ var system16 = (function(){
 				})
 			},
 			proxycontent : function(clbk){
-				
-
 				if(!info){
 					renders.error('unableProxyConnect', el.proxycontent)
 				}
@@ -2671,7 +2461,8 @@ var system16 = (function(){
 						data : {
 							info : info,
 							proxy : proxy,
-							admin : actions.admin()
+							admin : actions.admin(),
+							electron : typeof _Electron != 'undefined' ? _Electron : false
 						},
 	
 						el : el.proxycontent
@@ -2679,6 +2470,7 @@ var system16 = (function(){
 					},
 					function(p){
 	
+						renders.proxyservers(p.el)
 						renders.servercontent(p.el)
 						renders.nodescontent(p.el)
 						renders.chaincontent(p.el)
@@ -2686,8 +2478,6 @@ var system16 = (function(){
 						renders.nodecontent(p.el)
 						renders.bots(p.el)
 
-					
-	
 						if (clbk)
 							clbk()
 					})
@@ -2723,7 +2513,6 @@ var system16 = (function(){
 
 				}
 			},
-
 			botscontent : function(elc, clbk){
 
 				self.app.platform.sdk.users.get(bots || [], function(){
@@ -2777,6 +2566,32 @@ var system16 = (function(){
 					})
 
 				}, true)
+			},
+			proxyservers : function(elc, clbk){
+				var use = api.get.current()
+				
+				self.shell({
+
+					inner : html,
+					name : 'proxyservers',
+					data : {
+						proxies : api.get.proxies(),
+						current : proxy,
+						using : use,
+						admin : actions.admin()
+					},
+
+					el : elc.find('.proxyServers')
+
+				},
+				function(p){
+
+					p.el.find('.current').on('click', actions.proxy.selectWatch)
+					p.el.find('.selectusing').on('click', actions.proxy.selectUsing)
+
+					if (clbk)
+						clbk()
+				})
 			},
 			servercontent : function(elc, clbk){
 
@@ -3453,10 +3268,6 @@ var system16 = (function(){
 				})
 				
 			},
-
-			
-
-
 			peertubecontent : function(elc, clbk){
 
 				if(!info){
@@ -3546,7 +3357,6 @@ var system16 = (function(){
 						clbk()
 				})
 			},
-
 			chaincontent: function(elc, clbk){
 
 				if(!info){
@@ -3584,7 +3394,6 @@ var system16 = (function(){
 						clbk()
 				})
 			},
-
 			nodescontent : function(elc, clbk){
 
 				if(!info){
@@ -3800,27 +3609,57 @@ var system16 = (function(){
 				})
 			},
 
+			nodecontrol : function(_el, _proxy){
+
+				if(etr) etr.destroy()
+
+					etr = null
+
+				
+
+				self.nav.api.load({
+					open : true,
+					id : 'nodecontrol',
+					el : _el,
+					animation : false,
+
+					essenseData : {
+						proxy : _proxy
+					},
+					clbk : function(e, p){
+						etr = p
+
+					}
+
+				})
+			},
+
 			nodecontent : function(elc, clbk){
 
-				if(actions.admin()){
+				if(actions.admin() || (typeof _Electron != 'undefined' && _Electron)){
+
+					var _proxy = proxy
+					var direct = false
+
+					if (typeof _Electron != 'undefined' && self.app.api.get.direct()){
+						_proxy = self.app.api.get.direct()
+						direct = true
+					}
 
 					self.shell({
 						inner : html,
 						name : 'nodecontent',
 						data : {
-							info : info,
-							manager : info.nodeManager,
-							nodestate : info.nodeControl.state,
-							proxy : proxy,
-							admin : actions.admin()
+							direct : direct
 						},
 	
 						el : elc.find('.localnodeWrapper')
 	
 					},
-					function(){
+					function(p){
 
-						renders.nodecontentstate(elc)
+						renders.nodecontrol(p.el.find('.manage'), _proxy)
+
 	
 						if (clbk)
 							clbk()
@@ -3833,326 +3672,6 @@ var system16 = (function(){
 
 				
 			},
-			nodecontentmanagestacking : function(elc, clbk){
-				if (actions.admin() && stacking){
-
-					self.shell({
-						inner : html,
-						name : 'nodecontentmanagestacking',
-						data : {
-							info : info,
-							manager : info.nodeManager,
-							nodestate : info.nodeControl.state,
-							nc : info.nodeControl,
-							proxy : proxy,
-							admin : actions.admin(),
-							system : system,
-							stacking : stacking
-						},
-
-						el : elc.find('.stacking')
-
-					},
-					function(p){
-
-						p.el.find('.copyaddress').on('click', function(){
-							copyText($(this))
-
-							sitemessage(self.app.localization.e('successcopied'))
-						})
-
-						if (clbk)
-							clbk()
-					})
-				}
-			},
-			nodecontentmanage : function(elc, clbk){
-				if(actions.admin()){
-
-					var timestamp = deep(info,'nodeControl.state.timestamp')
-					var dis = false
-
-					if (timestamp){
-						dis = (new Date()) < fromutc((new Date(timestamp)).addSeconds(60))
-
-					}
-
-
-					self.shell({
-						inner : html,
-						name : 'nodecontentmanage',
-						data : {
-							info : info,
-							manager : info.nodeManager,
-							nodestate : info.nodeControl.state,
-							nc : info.nodeControl,
-							proxy : proxy,
-							admin : actions.admin(),
-							system : system,
-							dis : dis
-						},
-
-						el : elc.find('.localnodeWrapper .manage')
-
-					},
-					function(p){
-
-						var lock = function(){
-							p.el.find('.nodecontentmanage').addClass('lock')
-						}
-
-
-						
-						makers.stacking()
-
-						actions.settings(p.el)
-						
-						p.el.find('.refreshstacking').on('click', function(){
-							makers.stacking(true)
-						})
-
-						p.el.find('.addstacking').on('click', function(){
-
-							var d = inputDialogNew({
-								caption : "Add Private Key To Address Stacking",
-								class : 'addressdialog',
-								wrap : true,
-								values : [{
-									defValue : '',
-									validate : 'empty',
-									placeholder : "Private Key (WIF Format)",
-									label : "Private Key"
-								}],
-			
-								success : function(v){
-			
-									var pk = v[0]
-
-									var destroyed = false
-
-									var ds = function(){
-
-										if(destroyed) return
-
-										clearTimeout(dds)
-
-										destroyed = true
-										makers.stacking(true)
-			
-										d.destroy();
-			
-										topPreloader(100);
-									}
-
-									var dds = setTimeout(function(){
-										ds()
-
-										sitemessage('Stacking address will be added soon')
-
-									}, 2000)
-			
-									topPreloader(30);
-			
-									proxy.fetchauth('manage', {
-
-										action : 'set.node.stacking.import',
-										data : {
-											privatekey : pk
-										}
-
-									}).then(r => {
-
-										ds()
-			
-									}).catch(e => {
-
-										if(destroyed) return
-
-										clearTimeout(dds)
-										
-										sitemessage(deep(e, 'message') || self.app.localization.e('e13293'))
-			
-										topPreloader(100);
-			
-									})
-									
-
-									return false
-								}
-							})
-
-						})
-
-						p.el.find('.updatenode').on('click', function(){
-							dialog({
-								class : 'zindex',
-								html : "Do you really want to Stop "+self.app.meta.fullname+" Node and Update It?",
-								btn1text : self.app.localization.e('dyes'),
-								btn2text : self.app.localization.e('dno'),
-								success : function(){
-
-									lock()
-
-									actions.updateNode()
-									
-								}
-							})
-						})
-
-						p.el.find('.removenodeall').on('click', function(){
-							dialog({
-								class : 'zindex',
-								html : "Do you really want to remove "+self.app.meta.fullname+" Node and All Blockchain Data?",
-								btn1text : self.app.localization.e('dyes'),
-								btn2text : self.app.localization.e('dno'),
-								success : function(){
-									lock()
-									actions.removeNode(true)
-									
-								}
-							})
-						})
-
-						p.el.find('.removenode').on('click', function(){
-							dialog({
-								class : 'zindex',
-								html : "Do you really want to remove "+self.app.meta.fullname+" Node Daemon?",
-								btn1text : self.app.localization.e('dyes'),
-								btn2text : self.app.localization.e('dno'),
-								success : function(){
-									lock()
-									actions.removeNode()
-									
-								}
-							})
-						})
-
-						p.el.find('.install').on('click', () => {
-
-							topPreloader(20);
-
-							dialog({
-								class : 'zindex',
-								html : "Do you really want to install "+self.app.meta.fullname+" Node?",
-								btn1text : self.app.localization.e('dyes'),
-								btn2text : self.app.localization.e('dno'),
-								success : function(){
-									lock()
-									actions.installNode()
-									
-								}
-							})
-
-							
-
-						})
-
-						p.el.find('.toDefaultPath').on('click', function(){
-							dialog({
-								class : 'zindex',
-								html : "Do you really want to set "+self.app.meta.fullname+" Node Path to Default path?",
-								btn1text : self.app.localization.e('dyes'),
-								btn2text : self.app.localization.e('dno'),
-								success : function(){
-
-									globalpreloader(true)
-
-									proxy.fetchauth('manage', {
-
-										action : 'set.node.defaultPaths',
-										data : {}
-
-									}).then(r => {
-
-										actions.refresh().then(r => {
-											actions.refreshsystem()
-
-											globalpreloader(false)
-										})
-			
-									}).catch(e => {
-
-										globalpreloader(false)
-										
-										sitemessage(self.app.localization.e('e13293'))
-			
-									})
-								}
-							})
-						})
-
-						p.el.find('.refreshother').on("click", function(){
-
-							globalpreloader(true)
-
-							proxy.fetchauth('manage', {
-
-								action : 'set.node.check',
-								data : {}
-
-							}).then(r => {
-
-								actions.refresh().then(r => {
-									actions.refreshsystem()
-
-									setTimeout(function(){
-										globalpreloader(false)
-									}, 300)
-									
-								})
-	
-							}).catch(e => {
-
-								setTimeout(function(){
-									globalpreloader(false)
-								}, 300)
-								
-								sitemessage(self.app.localization.e('e13293'))
-	
-							})
-						})
-
-						if (clbk)
-							clbk()
-
-					
-						/*if(!info.nodeManager.chain){
-
-							setTimeout(function(){
-								renders.allsettings()
-							}, 2000)
-
-						}*/
-					})
-
-				}
-			},
-			nodecontentstate : function(elc, clbk){
-				if(actions.admin()){
-
-					self.shell({
-						inner : html,
-						name : 'nodecontentstate',
-						data : {
-							info : info,
-							manager : info.nodeManager,
-							nodestate : info.nodeControl.state,
-							nc : info.nodeControl,
-							proxy : proxy,
-							admin : actions.admin(),
-						},
-
-						el : elc.find('.localnodeWrapper .state')
-
-					},
-					function(){
-						if (clbk)
-							clbk()
-					})
-
-				}
-			},
-
 			
 		}
 
@@ -4171,44 +3690,15 @@ var system16 = (function(){
 				$(this).closest('.collapsepart').toggleClass('expanded')
 			})
 
+            // el.c.on('click', '.collapsepart .ssubcaption', function(){
+			// 	$(this).closest('.collapsepart').toggleClass('expanded')
+			// })
+
 		}
 
 		var makers = {
 
-			stacking : function(update){
-				if (actions.admin() && (!stacking || update) && deep(info, 'nodeControl.enabled')){
-
-					proxy.fetchauth('manage', {
-
-						action : 'set.node.stacking.addresses',
-						data : {}
-
-					}).then(r => {
-
-						stacking = r
-
-						renders.nodecontentmanagestacking(el.c)
-
-						topPreloader(100);
-
-					}).catch(e => {
-
-						if (update)
-							sitemessage(deep(e, 'message') || self.app.localization.e('e13293'))
-
-						topPreloader(100);
-
-					})
-
-				}
-				else{
-					renders.nodecontentmanagestacking(el.c)
-				}
-			},
-
 			panel : function(){
-				renders.nodecontentmanage(el.c)
-				renders.nodecontentstate(el.c)
 				renders.nodescontenttable(el.c)
 				renders.peertubeinstancestable(el.c)
 				renders.webadminscontent(el.c)
@@ -4229,14 +3719,7 @@ var system16 = (function(){
 
 			},
 
-			proxycurrent : function(){
-				renders.proxycurrent(function(){
-					makers.proxycontent()
-				})
-			},
-
 			proxycontent : function(){
-
 				renders.proxycontent(function(){})
 			}
 		}
@@ -4280,7 +3763,7 @@ var system16 = (function(){
 				return $(this).hasClass('expanded')
 			})
 
-			if (proxy){
+			if (proxy) {
 
 				proxy.clbks.changed.components = () => {
 					make(api.get.current())
@@ -4305,7 +3788,7 @@ var system16 = (function(){
 						time : utcnow()
 					}]
 
-					makers.proxycurrent()
+					makers.proxycontent()
 
 					return proxy.get.stats()
 
@@ -4319,6 +3802,8 @@ var system16 = (function(){
 					stats = lastelements(stats, 1000)
 
 					actions.convertTime(stats)
+
+					console.log('stats', stats.length)
 
 					setTimeout(function(){
 						makers.stats()
@@ -4342,8 +3827,6 @@ var system16 = (function(){
 						.then((r) => {
 						  system = r;
 		  
-						  renders.allsettings();
-		  
 						  return Promise.resolve();
 						})
 						.then((r) => {
@@ -4363,12 +3846,12 @@ var system16 = (function(){
 					}
 
 				}).catch(e => {
-					makers.proxycurrent()
+					makers.proxycontent()
 				})
 			}
 
-			else{
-				renders.proxycurrent()
+			else {
+				renders.proxycontent()
 			}
 			
 
@@ -4390,6 +3873,10 @@ var system16 = (function(){
 
 			destroy : function(){
 
+				if(etr) etr.destroy()
+
+				etr = null
+
 				destroy()
 
 				el = {};
@@ -4403,7 +3890,6 @@ var system16 = (function(){
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
 
-				el.proxycurrent = el.c.find('.proxycurrentWrapper')
 				el.proxycontent = el.c.find('.proxycontentWrapper')
 
 				initEvents();
