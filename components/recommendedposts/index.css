@@ -1,0 +1,172 @@
+#recommendedposts {
+  background: #fff;
+  border-radius: 12px;
+}
+#recommendedposts .rcptwrp {
+  background: #fff;
+  border-radius: 12px;
+  position: relative;
+}
+#recommendedposts .tcaptionwrapper {
+  display: flex;
+  align-items: center;
+}
+#recommendedposts .tcaptionwrapper .vc_valuecustom {
+  width: 75px;
+  font-size: 0.8em;
+  font-weight: 500;
+}
+#recommendedposts .tcaptionwrapper .vc_valuecustom .vc_textInput .vc_iconWrapper,
+#recommendedposts .tcaptionwrapper .vc_valuecustom .vc_textInput .vc_inputWrapper {
+  border: 0;
+}
+#recommendedposts .tcaption {
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 2;
+  font-weight: 100;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(229, 229, 229, 0.5);
+}
+#recommendedposts .tcaption .authors {
+  font-weight: 700;
+}
+#recommendedposts .tcaption .rating {
+  color: #555770;
+}
+#recommendedposts .caption {
+  font-weight: 100;
+  font-size: 2em;
+  margin-bottom: 1em;
+}
+#recommendedposts .loaderWrapper {
+  display: none;
+  padding: 1em;
+  text-align: center;
+}
+#recommendedposts.loading .loaderWrapper {
+  display: block;
+}
+#recommendedposts .subscribe,
+#recommendedposts .unsubscribe {
+  position: relative;
+}
+#recommendedposts .subscribe .fa-plus,
+#recommendedposts .unsubscribe .fa-plus {
+  position: absolute;
+  top: 3px;
+  left: 14px;
+  font-size: 0.5em;
+}
+#recommendedposts .subscribe {
+  color: #b2abac;
+}
+#recommendedposts .unsubscribe {
+  color: #076C34;
+}
+#recommendedposts .posts {
+  padding-bottom: 0.5em;
+}
+#recommendedposts .posts .post {
+  padding: 0.5em 0;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  padding-left: 1em;
+  padding-right: 1.5em;
+}
+#recommendedposts .posts .post .imageWrapper img {
+  max-width: 100%;
+}
+#recommendedposts .posts .post .addressTable {
+  cursor: pointer;
+}
+#recommendedposts .posts .post .addressTable > div {
+  vertical-align: middle;
+}
+#recommendedposts .posts .post .addressTable > div.iconWrapper {
+  width: 50px;
+  text-align: center;
+}
+#recommendedposts .posts .post .addressTable > div.iconWrapper .usericon {
+  height: 40px;
+  width: 40px;
+}
+#recommendedposts .posts .post .addressTable > div.label {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+#recommendedposts .posts .post .addressTable > div.label .cur {
+  color: #00a4ff;
+}
+#recommendedposts .posts .post .addressTable > div.label .top {
+  display: flex;
+}
+#recommendedposts .posts .post .addressTable > div.label .top .name {
+  font-weight: 600;
+  font-size: 0.9em;
+  max-width: 120px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+#recommendedposts .posts .post .addressTable > div.label .top .reputation {
+  position: relative;
+  bottom: 2px;
+  left: 3px;
+  font-size: 0.6em;
+  color: #00a4ff;
+}
+#recommendedposts .posts .post .addressTable > div.label .light {
+  font-size: 0.7em;
+  color: #3c4146;
+}
+#recommendedposts .posts .post .addressTable > div.extra {
+  width: 20px;
+  text-align: right;
+}
+#recommendedposts .posts .post .blockingWrapper {
+  display: none;
+}
+#recommendedposts .posts .post.userblocking .subscribebuttonstop {
+  display: none;
+}
+#recommendedposts .posts .post.userblocking .blockingWrapper {
+  display: inline;
+}
+#recommendedposts .posts .post .subscribebuttonstop .unsubscribe {
+  display: none;
+}
+#recommendedposts .posts .post .subscribebuttonstop.following .unsubscribe {
+  display: inline;
+}
+#recommendedposts .posts .post .subscribebuttonstop.following .notificationturn {
+  display: inline;
+}
+#recommendedposts .posts .post .subscribebuttonstop.following .subscribe {
+  display: none;
+}
+html.stblack #topusers {
+  background: transparent;
+}
+html.stblack #topusers .users .user .addressTable {
+  cursor: pointer;
+}
+html.stblack #topusers .users .user .addressTable > div.label .cur {
+  color: #00a4ff;
+}
+html.stblack #topusers .users .user .addressTable > div.label .light {
+  color: #3c4146;
+}
+html.stblack #topusers .users .user.blocking {
+  background: #290318;
+}
+/*t*/
+@media only screen and (max-width: 768px) {
+  #userslist {
+    padding: 1em;
+  }
+  #userslist .users .addressTable > div.extra {
+    width: 60px;
+  }
+}

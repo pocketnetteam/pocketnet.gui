@@ -8,7 +8,7 @@ var panel = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, discussions = null, tags = null, comments = null, stacking = null, topusers = null;
+		var el, discussions = null, tags = null, comments = null, stacking = null, topusers = null, recommendedposts = null;
 
 		var ed = null;
 
@@ -69,6 +69,27 @@ var panel = (function(){
 					
 					clbk : function(e, p){
 						topusers = p;
+					}
+
+				})
+			},
+
+			
+			recommendedposts : function(){
+				
+
+				self.nav.api.load({
+
+					open : true,
+					id : 'recommendedposts',
+					el : el.recommendedposts,
+					animation : false,
+
+					essenseData : {
+					},
+					
+					clbk : function(e, p){
+						recommendedposts = p;
 					}
 
 				})
@@ -411,7 +432,8 @@ var panel = (function(){
 				})
 			*/
 			
-			renders.topusers()
+			renders.topusers();
+			renders.recommendedposts();
 
 
 		}
@@ -459,6 +481,11 @@ var panel = (function(){
 					topusers = null
 				}
 
+				if(recommendedposts){
+					recommendedposts.destroy()
+					recommendedposts = null
+				}
+
 
 				el = {};
 			},
@@ -485,6 +512,7 @@ var panel = (function(){
 				el.comments = el.c.find('.lastcommentscnt')
 				el.stacking = el.c.find('.stackingcnt')
 				el.topusers = el.c.find('.topuserscnt')
+				el.recommendedposts = el.c.find('.recommendedpostscnt')
 				el.r = el.c.find(".recommendationscnt")
 
 				initEvents();
