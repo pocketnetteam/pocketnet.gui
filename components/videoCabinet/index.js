@@ -76,7 +76,7 @@ var videoCabinet = (function () {
       },
 
       parseVideoServerError(error = {}) {
-        self.app.Logger.error({ err: e });
+        self.app.Logger.error({ err: error });
         
         return error.text || findResponseError(error) || JSON.stringify(error);
       },
