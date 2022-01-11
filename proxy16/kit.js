@@ -783,15 +783,22 @@ var kit = {
 							return Promise.resolve(result)
 						})
 					},
+                    sendtoaddress : function(data) {
+						return kit.proxy().then(proxy => {
+							return proxy.nodeControl.request.sendtoaddress(data.address, data.amount)
+						}).then(result => {
+							return Promise.resolve(result)
+						})
+					},
                 },
-                dumpWallet : function({path}){
+                dumpWallet : function({path}) {
                     return kit.proxy().then(proxy => {
                         return proxy.nodeControl.request.dumpwallet(path)
                     }).then(result => {
                         return Promise.resolve(result)
                     })
                 },
-                importWallet : function({path}){
+                importWallet : function({path}) {
                     return kit.proxy().then(proxy => {
                         return proxy.nodeControl.request.importwallet(path)
                     }).then(result => {

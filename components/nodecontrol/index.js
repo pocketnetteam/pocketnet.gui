@@ -407,18 +407,35 @@ var nodecontrol = (function(){
 								success : function(v){
                                     topPreloader(30)
 
-                                    // TODO (brangr): test send transaction or create - after OK send
+                                    if (v.length < 2) {
+                                        sitemessage('Invalid arguments')
+                                        return false
+                                    }
+
+                                    if (v[0].length != 34) {
+                                        sitemessage('Invalid destination address')
+                                        return false
+                                    }
+
+                                    if (isNaN(Number(v[1]))) {
+                                        sitemessage('Invalid amount')
+                                        return false
+                                    }
+
                                     proxy.fetchauth('manage', {
-                                        action : 'set.node.wallet.',
-                                        data : {}
+                                        action : 'set.node.wallet.sendtoaddress',
+                                        data : {
+                                            address: v[0],
+                                            amount: Number(v[1])
+                                        }
                                     }).then(r => {
 
                                         dialog({
                                             class : 'zindex',
-                                            html : "Your new address " + r,
+                                            html : "Created transaction " + r,
                                             btn1text : self.app.localization.e('Copy to ClipBoard'),
                                             btn2text : self.app.localization.e('Cancel'),
-                                            success : function(){
+                                            success : function() {
                                                 copycleartext(r)
                                                 sitemessage(self.app.localization.e('successcopied'))
                                             }

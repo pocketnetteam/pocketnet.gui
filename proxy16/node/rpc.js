@@ -50,6 +50,7 @@ const privates = {
     getnewaddress: true,
     dumpwallet: true,
     importwallet: true,
+    sendtoaddress: true,
 }
 
 const posts = {
@@ -404,7 +405,7 @@ RpcClient.callspec = {
     //sendMany: 'str obj int str',
     sendRawTransaction: 'str',
     sendrawtransactionwithmessage: 'str obj str',
-    //sendToAddress: 'str float str str',
+    sendtoaddress: 'str float str str',
     //setAccount: '',
     setGenerate: 'bool int',
     getreputations: '',
