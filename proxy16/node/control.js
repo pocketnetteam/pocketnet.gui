@@ -441,25 +441,25 @@ var Control = function(settings) {
 
             }).then(() => {
                 
-                // state.install.progress = { percent: 100 }
-                // state.install.title = 'Installing binary files...'
-                // return applications.install('bin', self.helpers.complete_bin_path(), true)
+                state.install.progress = { percent: 100 }
+                state.install.title = 'Installing binary files...'
+                return applications.install('bin', self.helpers.complete_bin_path(), true)
                 
-                return applications.downloadPermanent('bin_permanent', node.binPath, function(st) {
-                    state.install.progress = st
-                    state.install.title = `Installing binary files...`
-                })
+                // return applications.downloadPermanent('bin_permanent', node.binPath, function(st) {
+                //     state.install.progress = st
+                //     state.install.title = `Installing binary files...`
+                // })
 
             }).then(() => {
                 
-                // state.install.progress = { percent: 100 }
-                // state.install.title = 'Installing checkpoints database...'
-                // return applications.install('checkpoint_main', self.helpers.data_checkpoints_path(true), false)
+                state.install.progress = { percent: 100 }
+                state.install.title = 'Installing checkpoints database...'
+                return applications.install('checkpoint_main', self.helpers.data_checkpoints_path(true), false)
 
-                return applications.downloadPermanent('checkpoint_main_permanent', self.helpers.data_checkpoints_path(false), function(st) {
-                    state.install.progress = st
-                    state.install.title = `Installing checkpoints database...`
-                })
+                // return applications.downloadPermanent('checkpoint_main_permanent', self.helpers.data_checkpoints_path(false), function(st) {
+                //     state.install.progress = st
+                //     state.install.title = `Installing checkpoints database...`
+                // })
 
             }).then(() => {
 
@@ -688,7 +688,7 @@ var Control = function(settings) {
                         `-datadir=${node.dataPath}`,
                         `-silent`,
                         `-blocksonly=0`,
-                    ], { stdio: ['ignore'], detached : true, shell : false})
+                    ], { stdio: ['ignore'], detached : false, shell : false})
 
                     node.instance.unref()
 
@@ -760,19 +760,27 @@ var Control = function(settings) {
                 return Promise.resolve()
 
             }).catch(e => {
-                state.status = 'stopped'
+                node.instance = null
+                state.status = 'detached'
                 state.timestamp = new Date()
                 return Promise.resolve()
             })
             .then(r => {
-
-                if (node.instance){
-                    node.instance = null
-                }
-
                 return Promise.resolve()
             })
                
+        },
+
+        safeStop: function() {
+            self.destroy().then(e => {
+                self.kit.stop().then(e => {
+                    return f.pretry(function() {
+                        return !node.instance || state.status == 'detached'
+                    }, 60, 1000).then(e => {
+                        return Promise.resolve()
+                    })
+                })
+            })
         },
 
         restart : function(){
