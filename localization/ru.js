@@ -677,6 +677,7 @@ ____loclib.e13189 = "Выйти и потерять мой ключ навсег
 ____loclib.e13190 = ""+appname+" тема"
 ____loclib.e13191 = "Выбор темы"
 ____loclib.uiScaleSetting = "Масштаб интерфейса"
+____loclib.uiScaleSettingTitle = "Выбор масштаба"
 ____loclib.e13192 = "Уровень"
 ____loclib.e13193 = "Бонус"
 ____loclib.e13194 = "Репутация и статус"
