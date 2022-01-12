@@ -1,5 +1,180 @@
 @import "../../css/__cssvar";
 
-#easynoe{
+#easynode{
+
+  .container{
+    max-width: 1024px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+
+  .calcWrapper{
     
+    .calc{
+      max-width: 800px;
+      margin: 0 auto;
+
+    }
+
+
+
+    .numbers{
+            
+      .inputWrapper{
+        padding : 2 * @rhythm;
+      }
+
+      .amredits{
+          background: @color-yellow;
+          padding: 0.5 * @rhythm @rhythm;
+          border : 1px solid @color-pink;
+          border-radius: 10px;
+          outline: none;
+      }
+
+      .ihave{
+          font-weight: 700;
+      }
+    }
+
+    .totalNumbers{
+        background: fade(@color-gray-mlight, 10);
+        padding : 3 * @rhythm 0;
+        overflow: hidden;
+        .totalRow{
+            float: left;
+            width: 50%;
+            .label{
+                
+                span{
+                    font-size: 0.8em;
+                    font-weight: 700;
+                }
+            }
+
+            .value{
+                
+                span{
+                    font-size: 2.2em;
+                    font-weight: 100;
+
+                    &.cur{
+                        font-weight: 300;
+                        font-size: 0.8em;
+                    }
+                }
+            }
+        }
+    }
+
+    .calculatordummy,
+    .calculator{
+        position: relative;
+    }
+
+    .calculatordummy{
+        min-height: 80px;
+
+        .calculatordummytext{
+            padding : 2 * @rhythm;
+
+            span{
+                font-size: 0.8em;
+                font-weight: 700;
+                color : @color-contrast;
+            }
+        }
+    }
+    .chwr{
+      position: absolute;
+      right : @rhythm;
+      top : 2 * @rhythm;
+    }
+
+    .rcptwrp{
+      background: #fff;
+      position : relative;
+      border-radius: 3px;
+    }   
+
+
+    .earnlabel{
+      padding : 1.5 * @rhythm 2 * @rhythm;
+      padding-top : 0;
+      font-weight: 700;
+      color : @color-brick;
+      cursor: pointer;
+
+      span{
+          font-size: 0.8em;
+      }
+    }
+
+    .calcCaption{
+      padding : 1.5 * @rhythm 2 * @rhythm;
+      font-weight: 700;
+      color : @color-bright;
+
+      span{
+        font-size: 0.8em;
+      }
+    }
+
+ }
+
+
+  .header {
+    margin-top: 40px;
+    text-align: center;
+    padding: 10px 0;
+    border-top: 2px solid rgb(197, 194, 194);
+    border-bottom: 2px solid rgb(197, 194, 194);  
+    font-size: 1.2em; 
+  }
+
+  h3{
+    font-size: 3.5em;
+    margin-top: 30px;
+  }
+
+  .video {
+    max-width: 1024px;
+    min-height: 600px;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+
+    &__container {
+      max-width: 800px;
+      //min-height: 600px;
+      height: 100%;
+      width: 100%;
+      text-align: center;    
+    }
+
+    &__content {
+      min-height: 600px;
+      height: 100%;
+      //margin: 10px 0;
+    }
+
+  }
+
+
+  @media (max-width: 400px){
+    .video{ 
+      max-width: 100%;
+      min-height: 100%;
+      .video__content{
+        max-width: 100%;
+        min-height: 100%;
+        margin: 20px 0;
+      }
+    }
+  }
 }
