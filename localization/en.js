@@ -1894,3 +1894,6 @@ ____loclib.invalidformat = "Invalid format of picture. Only png and jpeg are all
 ____loclib.downloadDesctApp = "Download Bastyon for desktop"
 ____loclib.downloadMobileApp = "Install Mobile Application"
 
+
+____loclib.easyNode_e10000 = "EasyNode"
+____loclib.easyNode_e10001 = "Download and Install"

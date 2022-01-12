@@ -2,6 +2,40 @@
 
 #nodecontrol{
 
+    .collapsepart{
+        .collapsingpart{
+            display: none;
+        }
+
+        .subcaption{
+            cursor: pointer;
+            i{
+                width: 40px;
+                text-align: center;
+                .transition(0.3s)
+            }
+
+            &:hover{
+                i{
+                    transform: rotate(180deg);
+                }
+                
+            }
+        }
+
+        &.expanded{
+            .subcaption{
+                i{
+                    transform: rotate(180deg);
+                }
+            }
+            
+            .collapsingpart{
+                display: block;
+            }
+        }
+    }
+
     .caption{
         padding : 4 * @rhythm 0 ;
         padding-top : 3 * @rhythm;
@@ -321,6 +355,16 @@
                     background-color: #00A3F7;
                     border-radius: 2px;
                 }
+            }
+        }
+        
+        .toDefaultPath{
+            opacity: 0.5;
+            .transition(0.3s);
+            cursor: pointer;
+
+            &:hover{
+                color : @color-bad;
             }
         }
     }

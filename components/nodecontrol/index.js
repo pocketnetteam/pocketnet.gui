@@ -283,6 +283,11 @@ var nodecontrol = (function(){
 			nodecontent : function(elc, clbk){
 
 				if(actions.admin()){
+                    var direct = false
+                    if (typeof _Electron != 'undefined' && self.app.api.get.direct()){
+						_proxy = self.app.api.get.direct()
+						direct = true
+					}
 
 					self.shell({
 						inner : html,
@@ -292,7 +297,8 @@ var nodecontrol = (function(){
 							manager : info.nodeManager,
 							nodestate : info.nodeControl.state,
 							proxy : proxy,
-							admin : actions.admin()
+							admin : actions.admin(),
+                            direct : direct
 						},
 	
 						el : elc.find('.localnodeWrapper')
@@ -464,11 +470,6 @@ var nodecontrol = (function(){
 						dis = (new Date()) < ((new Date(timestamp)).addSeconds(5))
 					}
 
-					console.log('info', dis, (new Date()), ((new Date(timestamp)).addSeconds(5)),
-					
-					
-					(new Date()) > ((new Date(timestamp)).addSeconds(5)))
-
 					self.shell({
 						inner : html,
 						name : 'nodecontentmanage',
@@ -481,7 +482,7 @@ var nodecontrol = (function(){
 							admin : actions.admin(),
 							system : system,
 							dis : dis,
-							showdirect : true
+							showDirect : true
 						},
 
 						el : elc.find('.manage')
@@ -666,8 +667,11 @@ var nodecontrol = (function(){
 			}
 		}
 
-		var initEvents = function(){
-			
+		var initEvents = function() {
+            
+			el.c.on('click', '.collapsepart .subcaption', function(){
+				$(this).closest('.collapsepart').toggleClass('expanded')
+			})
 
 		}
 
