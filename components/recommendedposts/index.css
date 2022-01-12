@@ -75,6 +75,7 @@
   padding-right: 1.5em;
 }
 #recommendedposts .posts .post .imageWrapper img {
+  border-radius: 8px;
   max-width: 100%;
 }
 #recommendedposts .posts .post .addressTable {
@@ -111,10 +112,9 @@
   overflow: hidden;
 }
 #recommendedposts .posts .post .addressTable > div.label .top .reputation {
-  position: relative;
-  bottom: 2px;
-  left: 3px;
-  font-size: 0.6em;
+  font-size: 0.9em;
+  margin-left: 0.5em;
+  font-weight: 700;
   color: #00a4ff;
 }
 #recommendedposts .posts .post .addressTable > div.label .light {
