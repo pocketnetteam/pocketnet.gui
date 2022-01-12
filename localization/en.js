@@ -1276,6 +1276,7 @@ ____loclib.sharevisibilitylabel_reg_video = 'Author chose to make this <b>video<
 ____loclib.buy = 'Buy';
 
 ____loclib.topAuthors = 'Top Authors';
+____loclib.recommendedPosts = 'Recommended Posts';
 ____loclib.rating = 'Rating';
 ____loclib.setupVideoNodeGuide = 'Setup Video Node'
 ____loclib.subscribers3 = 'Subscribers';

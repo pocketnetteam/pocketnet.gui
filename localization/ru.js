@@ -1066,6 +1066,7 @@ ____loclib.pkoin_commerce_tag_share_error = 'Тэг "pkoin_commerce" может 
 ____loclib.pkoin_commerce_info = 'Из рук в руки PKOIN транзакции не модерируются, пользователи несут все  риски'
 
 ____loclib.topAuthors = 'Популярные авторы'
+____loclib.recommendedPosts = 'Рекомендуемые посты';
 ____loclib.rating = 'Рейтинг';
 ____loclib.setupVideoNodeGuide = 'Настроить ноду для видео'
 ____loclib.subscribers3 = 'подписчиков';
