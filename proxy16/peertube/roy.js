@@ -53,7 +53,7 @@ var Roy = function (parent) {
     if (!url) return;
     if (!options) options = {};
 
-    var instance = new Instance(url, self);
+    var instance = new Instance(url, options.ip, self);
 
     if (options.cantuploading) instance.cantuploading = true;
     if (options.special) instance.special = true;

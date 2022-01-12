@@ -598,53 +598,91 @@ var Proxy = function (settings, manage, test, logger) {
 	self.peertube = {
 		init: function () {
 			var ins = {
-        		1: [
-					{host : 'pocketnetpeertube1.nohost.me'}, 
-					{host : 'pocketnetpeertube2.nohost.me' }
+				1: [
+				  { host: 'pocketnetpeertube1.nohost.me', ip: '188.0.15.28' },
+				  { host: 'pocketnetpeertube2.nohost.me', ip: '94.73.223.24' },
 				],
-        		5: [
-					{host : 'pocketnetpeertube5.nohost.me', cantuploading : true}, 
-					{host : 'pocketnetpeertube7.nohost.me', cantuploading : true}, 
+				5: [
+				  {
+					host: 'pocketnetpeertube5.nohost.me',
+					cantuploading: true,
+					ip: '95.217.209.217',
+				  },
+				  {
+					host: 'pocketnetpeertube7.nohost.me',
+					cantuploading: true,
+					ip: '188.187.45.218',
+				  },
 				],
-        		6: [
-					{host : 'pocketnetpeertube4.nohost.me', cantuploading : true}, 
-					{host : 'pocketnetpeertube6.nohost.me', cantuploading : true}, 
+				6: [
+				  {
+					host: 'pocketnetpeertube4.nohost.me',
+					cantuploading: true,
+					ip: '135.181.108.193',
+				  },
+				  {
+					host: 'pocketnetpeertube6.nohost.me',
+					cantuploading: true,
+					ip: '159.69.127.9',
+				  },
 				],
-				8 : [
-					{host : 'pocketnetpeertube8.nohost.me', cantuploading : true}, 
-					{host : 'pocketnetpeertube9.nohost.me', cantuploading : true}, 
+				8: [
+				  {
+					host: 'pocketnetpeertube8.nohost.me',
+					cantuploading: true,
+					ip: '192.236.161.131',
+				  },
+				  {
+					host: 'pocketnetpeertube9.nohost.me',
+					cantuploading: true,
+					ip: '178.154.200.50',
+				  },
 				],
-				
+		
 				10: [
-					
-					{host : 'pocketnetpeertube10.nohost.me', cantuploading : true}, 
-					{host : 'pocketnetpeertube11.nohost.me', cantuploading : true}, 
-					
+				  {
+					host: 'pocketnetpeertube10.nohost.me',
+					cantuploading: true,
+					ip: '23.254.226.253',
+				  },
+				  {
+					host: 'pocketnetpeertube11.nohost.me',
+					cantuploading: true,
+					ip: '84.252.138.108',
+				  },
 				],
-
+		
 				12: [
-					{host : 'bastyonmma.pocketnet.app', cantuploading : true}, 
-					{host : 'bastyonmma.nohost.me', cantuploading : true}, 
+				  {
+					host: 'bastyonmma.pocketnet.app',
+					cantuploading: true,
+					ip: '88.99.34.74',
+				  },
+				  {
+					host: 'bastyonmma.nohost.me',
+					cantuploading: true,
+					ip: '49.12.231.72',
+				  },
 				],
-	
+		
 				13: [
-					'01rus.nohost.me',
-					'02rus.pocketnet.app'
+				  { host: '01rus.nohost.me', ip: '178.217.159.227' },
+				  { host: '02rus.pocketnet.app', ip: '31.184.215.67' },
 				],
-
+		
 				14: [
-					'pocketnetpeertube12.nohost.me',
-					'pocketnetpeertube13.nohost.me'
+				  { host: 'pocketnetpeertube12.nohost.me', ip: '104.168.248.113' },
+				  { host: 'pocketnetpeertube13.nohost.me', ip: '62.84.115.93' },
 				],
-      		};
-
-			if (test){
-				ins = {0 : ['test.peertube.pocketnet.app']}
-			}
-
-			return peertube.init({
-				roys : ins
-			})
+			  };
+		
+			  if (test) {
+				ins = { 0: ['test.peertube.pocketnet.app'] };
+			  }
+		
+			  return peertube.init({
+				roys: ins,
+			  });
 		},
 
 		destroy: function () {
