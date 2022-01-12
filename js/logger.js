@@ -21,8 +21,8 @@ class FrontendLogger {
   }
 
   _createErrorBody({
-    level = '',
-    date = new Date(),
+    level = 'error',
+    date = moment().format('YYYY-MM-DD hh:mm:ss'),
     moduleVersion = '',
     code = 400,
     payload = '',
