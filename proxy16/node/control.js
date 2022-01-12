@@ -352,6 +352,12 @@ var Control = function(settings) {
             })
         },
 
+        sendtoaddress: function(address, amount) {
+            return self.kit.rpc('sendtoaddress', [address, amount]).then(result => {
+                return Promise.resolve(result)
+            })
+        },
+
         importPrivKey: function(private) {
             return self.kit.rpc('importprivkey', private)
         },
@@ -430,8 +436,8 @@ var Control = function(settings) {
                 if (!fs.existsSync(snapshotFile))
                     return Promise.resolve()
 
-                // fs.unlinkSync(snapshotFile)
-                // return Promise.resolve()
+                fs.unlinkSync(snapshotFile)
+                return Promise.resolve()
 
             }).then(() => {
                 
@@ -682,7 +688,7 @@ var Control = function(settings) {
                         `-datadir=${node.dataPath}`,
                         `-silent`,
                         `-blocksonly=0`,
-                    ], { stdio: ['ignore'], detached : true, shell : true})
+                    ], { stdio: ['ignore'], detached : true, shell : false})
 
                     node.instance.unref()
 
