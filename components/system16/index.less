@@ -4,6 +4,21 @@
     position: relative;
     padding-bottom: 8 * @rhythm;
 
+    #nodecontrol{
+        .captionWrapper{
+            display: none;
+        }
+
+        .manage{
+            border-radius: 10px;
+            background: fade(@color-gray-mlight, 12);
+        }
+
+        .managepanel{
+            padding : 2 * @rhythm 0;
+        }
+    }
+
     .collapsepart{
         .collapsingpart{
             display: none;
@@ -645,6 +660,9 @@
     }
 
     .nodecontent{
+
+       
+
         .nodecontentstate{
             i{
                 font-size: 0.9em;

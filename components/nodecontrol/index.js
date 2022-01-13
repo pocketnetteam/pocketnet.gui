@@ -280,37 +280,7 @@ var nodecontrol = (function(){
 					
 				}
 			},
-			nodecontent : function(elc, clbk){
-
-				if(actions.admin()){
-					self.shell({
-						inner : html,
-						name : 'nodecontent',
-						data : {
-							info : info,
-							manager : info.nodeManager,
-							nodestate : info.nodeControl.state,
-							proxy : proxy,
-							admin : actions.admin(),
-                            direct : direct
-						},
-	
-						el : elc.find('.localnodeWrapper')
-	
-					},
-					function(){
-
-						if (clbk)
-							clbk()
-					})
-
-				}
-				else{
-					if(clbk) clbk()
-				}
-
-				
-			},
+		
 			nodecontentmanagestacking : function(elc, clbk) {
 				if (actions.admin() && info.nodeControl.state.staking){
 
@@ -476,7 +446,7 @@ var nodecontrol = (function(){
 							admin : actions.admin(),
 							system : system,
 							dis : dis,
-							showDirect : true
+							showdirect : true
 						},
 
 						el : elc.find('.manage')
@@ -718,9 +688,12 @@ var nodecontrol = (function(){
 
 				var data = {};
 
-				// proxy = deep(p, 'settings.essenseData.proxy') || api.get.current()
-                proxy = self.app.api.get.direct()
-
+				proxy = deep(p, 'settings.essenseData.proxy')
+				
+				if(!proxy){
+					proxy = typeof _Electron != 'undefined' && _Electron ? self.app.api.get.direct() : api.get.current()
+				}
+				
 				clbk(data);
 
 			},
@@ -738,7 +711,7 @@ var nodecontrol = (function(){
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
 
-				make(api.get.current());
+				make(proxy);
 
 
 				initEvents();

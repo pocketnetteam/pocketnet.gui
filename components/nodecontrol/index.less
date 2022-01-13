@@ -2,7 +2,9 @@
 
 #nodecontrol{
 
-    .collapsepart{
+
+
+    /*.collapsepart{
         .collapsingpart{
             display: none;
         }
@@ -34,7 +36,7 @@
                 display: block;
             }
         }
-    }
+    }*/
 
     .caption{
         padding : 4 * @rhythm 0 ;
@@ -65,7 +67,7 @@
 
     .subcaption{
         
-        padding : 4 * @rhythm 0;
+        padding : 4 * @rhythm;
         padding-top : 5 * @rhythm;
 
         span{
@@ -206,10 +208,13 @@
             cursor: pointer;
         }
     }
+    .manage{
+        border-radius: 10px;
+        background: fade(@color-gray-mlight, 12);
+    }
 
     .managepanel{
-        padding : 2 * @rhythm 0;
-        background: fade(@color-gray-slight, 12);
+        padding : 4 * @rhythm;
     }
 
     .nodecontentstate{

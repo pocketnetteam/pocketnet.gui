@@ -207,7 +207,7 @@ var userpage = (function(){
 				openReportPageMobileInWindow : true
 			})
 
-            if (typeof _Electron != 'undefined' ? _Electron : false) {
+            //if (typeof _Electron != 'undefined' ? _Electron : false) {
                 reports.push({
                     name : self.app.localization.e('easyNode_e10000'),
                     id : 'easynode',
@@ -215,7 +215,7 @@ var userpage = (function(){
                     openReportPageMobile : false,
                     mobile : false
                 })
-            }
+           // }
 
 			reports.push({
 				name : self.app.localization.e('rsystem'),

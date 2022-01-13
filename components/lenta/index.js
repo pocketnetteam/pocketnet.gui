@@ -3116,6 +3116,22 @@ var lenta = (function(){
 						self.app.nav.api.links(null, _p.el, function(event){
 							event.stopPropagation()
 						})
+
+						/*var aspectRatio = deep(self, 'app.platform.sdk.videos.storage.' + url + '.data.aspectRatio') || 0
+
+
+						var info = self.app.platform.sdk.videos.storage[url]
+
+						if (info && info.data){
+							aspectRatio = info.data.aspectRatio || 0
+						}
+
+						if (aspectRatio && !essenseData.horizontal) {
+							var playerContainer = _p.el.find('.jsPlayerLoading');
+							var paddingvalue = 100 / (2 * aspectRatio);
+							playerContainer.css('padding-top', `${paddingvalue}%`);
+							playerContainer.css('padding-bottom', `${paddingvalue}%`);
+						}*/
 	
 						essenserenderclbk()
 						

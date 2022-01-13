@@ -9376,6 +9376,8 @@ Platform = function (app, listofnodes) {
 
             init: function (clbk) {
 
+                ///// TODO OPTIMIZATION
+
                 if (!self.sdk.addresses.storage.addresses) self.sdk.addresses.storage.addresses = [];
                 if (!self.sdk.addresses.storage.addressesobj) self.sdk.addresses.storage.addressesobj = [];
 
@@ -9566,7 +9568,6 @@ Platform = function (app, listofnodes) {
                 var pubkey = keyPair.publicKey;
 
                 var a = bitcoin.payments['p2wpkh']({ pubkey: pubkey })
-
 
                 var p2sh = bitcoin.payments.p2sh({ redeem: a })
 
@@ -15348,8 +15349,10 @@ Platform = function (app, listofnodes) {
                                 var index = _.indexOf(self.sdk.addresses.storage.addresses, i.address);
 
                                 if (index > -1) {
+
                                     var p2sh = self.sdk.addresses.storage.addressesobj[index];
                                     var dumped = self.sdk.address.dumpKeys(index)
+
                                     txb.sign({
                                         prevOutScriptType: 'p2sh-p2wpkh',
                                         redeemScript : p2sh.redeem.output,
