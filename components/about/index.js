@@ -31,7 +31,13 @@ var about = (function(){
 				report : 'aboutHome',
 				mobile : true
 			})
-	
+
+			reports.push({
+				name : self.app.localization.e('contentCreators'),
+				id : 'about-content-creators',
+				report : 'aboutContentCreators',
+				mobile : true
+			})
 			
 			reports.push({
 				name : self.app.localization.e('howItWorks'),
