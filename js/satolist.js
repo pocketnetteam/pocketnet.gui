@@ -6053,14 +6053,10 @@ Platform = function (app, listofnodes) {
                 const keysPressed = {};
 
                 $(document).keydown(function(e) {
-                    console.log('KEYDOWN', e.which);
-
                     keysPressed[e.which] = true;
                 });
 
                 $(document).keyup(function(e) {
-                    console.log('KEYUP', e.which);
-
                     /**
                      * Ctrl - 17,
                      * Command (Mac OS) - 91
@@ -6087,22 +6083,16 @@ Platform = function (app, listofnodes) {
                     const isMinusOutOfRange = (zoomCurrentIndex == 0);
 
                     if ((isCtrlPressed && isMinusPressed) && !isMinusOutOfRange) {
-                        console.log('KEYUP #3');
-
                         const zoomNewIndex = zoomCurrentIndex - 1;
                         const zoomNewName = zoomKeys[zoomNewIndex];
 
                         self.app.platform.sdk.uiScale.set(zoomNewName);
                     } else if ((isCtrlPressed && isPlusPressed) && !isPlusOutOfRange) {
-                        console.log('KEYUP #4');
-
                         const zoomNewIndex = zoomCurrentIndex + 1;
                         const zoomNewName = zoomKeys[zoomNewIndex];
 
                         self.app.platform.sdk.uiScale.set(zoomNewName);
                     }
-
-                    console.log('KEYUP #5');
 
                     delete keysPressed[e.which];
                 });
