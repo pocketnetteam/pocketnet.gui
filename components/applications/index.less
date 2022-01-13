@@ -1,12 +1,52 @@
 @import "../../css/__cssvar";
 
 #applications{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    .devparts{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .flbxDskt{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        margin-top: 30px;
+        .one-column{
+            width: 170px;
+            height: 100px;
+            background: fade(@color-gray-mlight, 20);
+            border-radius: 10px;
+            margin: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            a{
+                font-weight: 700;
+                font-size: 130%;
+                &:hover{
+                    color: @color-main;
+                }
+            }
+            
+        }
+
+    }
 
     .caption{
         font-size: 2.5em;
         font-weight: 700;
         margin: 0 auto;
         margin-top: 2em;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        text-align: center;
     }
 
     &.minimize{
@@ -63,7 +103,8 @@
 
     .flbx{
         display: flex;
-        max-width: 750px;
+        max-width: 200px;
+        justify-content: center;
         >div{
             flex-grow: 1;
             margin-right: 3 * @rhythm;
@@ -124,6 +165,7 @@ html.stblack{
     
         .os{
             background: transparent;
+            width: 200px;
            
             &.rundownloading{
                 .panel{

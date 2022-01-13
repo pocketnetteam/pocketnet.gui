@@ -283,6 +283,11 @@ var nodecontrol = (function(){
 			nodecontent : function(elc, clbk){
 
 				if(actions.admin()){
+                    var direct = false
+                    if (typeof _Electron != 'undefined' && self.app.api.get.direct()){
+						_proxy = self.app.api.get.direct()
+						direct = true
+					}
 
 					self.shell({
 						inner : html,
@@ -292,7 +297,8 @@ var nodecontrol = (function(){
 							manager : info.nodeManager,
 							nodestate : info.nodeControl.state,
 							proxy : proxy,
-							admin : actions.admin()
+							admin : actions.admin(),
+                            direct : direct
 						},
 	
 						el : elc.find('.localnodeWrapper')
@@ -407,18 +413,35 @@ var nodecontrol = (function(){
 								success : function(v){
                                     topPreloader(30)
 
-                                    // TODO (brangr): test send transaction or create - after OK send
+                                    if (v.length < 2) {
+                                        sitemessage('Invalid arguments')
+                                        return false
+                                    }
+
+                                    if (v[0].length != 34) {
+                                        sitemessage('Invalid destination address')
+                                        return false
+                                    }
+
+                                    if (isNaN(Number(v[1]))) {
+                                        sitemessage('Invalid amount')
+                                        return false
+                                    }
+
                                     proxy.fetchauth('manage', {
-                                        action : 'set.node.wallet.',
-                                        data : {}
+                                        action : 'set.node.wallet.sendtoaddress',
+                                        data : {
+                                            address: v[0],
+                                            amount: Number(v[1])
+                                        }
                                     }).then(r => {
 
                                         dialog({
                                             class : 'zindex',
-                                            html : "Your new address " + r,
+                                            html : "Created transaction " + r,
                                             btn1text : self.app.localization.e('Copy to ClipBoard'),
                                             btn2text : self.app.localization.e('Cancel'),
-                                            success : function(){
+                                            success : function() {
                                                 copycleartext(r)
                                                 sitemessage(self.app.localization.e('successcopied'))
                                             }
@@ -447,11 +470,6 @@ var nodecontrol = (function(){
 						dis = (new Date()) < ((new Date(timestamp)).addSeconds(5))
 					}
 
-					console.log('info', dis, (new Date()), ((new Date(timestamp)).addSeconds(5)),
-					
-					
-					(new Date()) > ((new Date(timestamp)).addSeconds(5)))
-
 					self.shell({
 						inner : html,
 						name : 'nodecontentmanage',
@@ -464,7 +482,7 @@ var nodecontrol = (function(){
 							admin : actions.admin(),
 							system : system,
 							dis : dis,
-							showdirect : true
+							showDirect : true
 						},
 
 						el : elc.find('.manage')
@@ -649,8 +667,11 @@ var nodecontrol = (function(){
 			}
 		}
 
-		var initEvents = function(){
-			
+		var initEvents = function() {
+            
+			el.c.on('click', '.collapsepart .subcaption', function(){
+				$(this).closest('.collapsepart').toggleClass('expanded')
+			})
 
 		}
 

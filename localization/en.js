@@ -1218,6 +1218,7 @@ ____loclib.unableToAuthorizeConnectionBody = "Unfortunately, the application can
 
 
 
+____loclib.download = "Download";
 ____loclib.downloaded = "Downloaded";
 ____loclib.downloadedEmpty = "Downloaded posts will be shown here";
 ____loclib.emptyDescription = "Description is empty";
@@ -1890,3 +1891,9 @@ ____loclib.photohassizegreater = function(v){
     return "Your photo has size greater than "+v+"MB. Please upload a photo under "+v+"MB in size."
 }
 ____loclib.invalidformat = "Invalid format of picture. Only png and jpeg are allowed"
+____loclib.downloadDesctApp = "Download Bastyon for desktop"
+____loclib.downloadMobileApp = "Install Mobile Application"
+
+
+____loclib.easyNode_e10000 = "EasyNode"
+____loclib.easyNode_e10001 = "Download and Install"

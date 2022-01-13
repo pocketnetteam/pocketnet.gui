@@ -875,6 +875,7 @@ ____loclib.e14001 = "Язык публикации"
 ____loclib.e14002 = "Вы действительно хотите очистить публикацию?"
 
 
+____loclib.e14109 = "Где я могу скачать приложение для Android?"
 
 ____loclib.e14111 = "Возникла проблема с загрузкой изображений"
 ____loclib.editcomment = "Редактировать"
@@ -1013,6 +1014,7 @@ ____loclib.unableToAuthorizeBody = "К сожалению, у приложени
 ____loclib.unableToAuthorizeConnection = "Ошибка авторизации";
 ____loclib.unableToAuthorizeConnectionBody = "К сожалению, у приложения не получилось авторизовать данный аккаунт на видео-сервере. Повторите попытку позже.";
 
+____loclib.download = "Загрузить";
 ____loclib.downloaded = "Сохранённые";
 ____loclib.downloadedEmpty = "Сохранённые публикации будут показаны здесь";
 ____loclib.emptyDescription = "Описание отсутствует";
@@ -1655,3 +1657,5 @@ ____loclib.photohassizegreater = function(v){
 }
 
 ____loclib.invalidformat = "Неверный формат картинки. Разрешено только png, jpeg."
+____loclib.downloadDesctApp = "Загрузить Bastyon для персонального компьютера"
+____loclib.downloadMobileApp = "Установить мобильное приложение"

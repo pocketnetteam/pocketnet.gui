@@ -783,15 +783,22 @@ var kit = {
 							return Promise.resolve(result)
 						})
 					},
+                    sendtoaddress : function(data) {
+						return kit.proxy().then(proxy => {
+							return proxy.nodeControl.request.sendtoaddress(data.address, data.amount)
+						}).then(result => {
+							return Promise.resolve(result)
+						})
+					},
                 },
-                dumpWallet : function({path}){
+                dumpWallet : function({path}) {
                     return kit.proxy().then(proxy => {
                         return proxy.nodeControl.request.dumpwallet(path)
                     }).then(result => {
                         return Promise.resolve(result)
                     })
                 },
-                importWallet : function({path}){
+                importWallet : function({path}) {
                     return kit.proxy().then(proxy => {
                         return proxy.nodeControl.request.importwallet(path)
                     }).then(result => {
@@ -892,26 +899,22 @@ var kit = {
 					return Promise.resolve(r)
 				})
 			},
-
 			delete : function({all}){
 				return kit.proxy().then(proxy => {
 					return proxy.nodeControl.kit.delete(all)
 				}).then(r => {
-
 					return Promise.resolve(r)
 				})
 			},
-
-
-			//// ?
+            // TODO (brangr): проверить
 			update : function(message){
 				return kit.proxy().then(proxy => {
 					return proxy.nodeControl.kit.update()
 				}).then(r => {
-
 					return Promise.resolve(r)
 				})
 			},
+            // TODO (brangr): почему коммент?
 			/*checkupdate : function(message){
 				return kit.proxy().then(proxy => {
 					return proxy.nodeControl.kit.checkupdate().then(update => {
@@ -934,7 +937,14 @@ var kit = {
 				}).then(data => {
 					send(message.id, null, data)
 				})
-			}
+			},
+			stop : function(message){
+				return kit.proxy().then(proxy => {
+					return proxy.nodeControl.kit.safeStop()
+				}).then(r => {
+					return Promise.resolve(r)
+				})
+			},
 		},
 
 		proxy : {
@@ -1149,7 +1159,7 @@ var kit = {
 
 	destroyhard : function(){
 
-		return kit.manage.proxy.detach().then(r => {
+		return kit.destroy().then(r => {
 			return this.destroy()
 		})
 		

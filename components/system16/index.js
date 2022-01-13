@@ -3689,11 +3689,7 @@ var system16 = (function(){
 			el.c.on('click', '.collapsepart .subcaption', function(){
 				$(this).closest('.collapsepart').toggleClass('expanded')
 			})
-
-            // el.c.on('click', '.collapsepart .ssubcaption', function(){
-			// 	$(this).closest('.collapsepart').toggleClass('expanded')
-			// })
-
+            
 		}
 
 		var makers = {

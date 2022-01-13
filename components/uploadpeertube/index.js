@@ -195,7 +195,12 @@ var uploadpeertube = (function () {
             wndObj.close();
           })
           .catch((e = {}) => {
-            self.app.Logger.error({ err: e });
+            debugger;
+            self.app.Logger.error({
+              err: e.text || 'videoUploadError',
+              payload: JSON.stringify(e),
+              code: 401,
+            });
 
             console.error('Uploading error', e);
 
@@ -310,8 +315,12 @@ var uploadpeertube = (function () {
                 wndObj.close();
               })
               .catch((e = {}) => {
-                self.app.Logger.error({ err: e });
-                
+                self.app.Logger.error({
+                  err: e.text || 'videoImportError',
+                  payload: JSON.stringify(e),
+                  code: 402,
+                });
+
                 el.videoInput.val('');
                 el.wallpaperError.text('');
 
@@ -364,8 +373,12 @@ var uploadpeertube = (function () {
 
             clbk(data);
           })
-          .catch((e) => {
-            self.app.Logger.error({ err: e });
+          .catch((e = {}) => {
+            self.app.Logger.error({
+              err: e.text || 'getInfoError',
+              payload: JSON.stringify(e),
+              code: 501,
+            });
 
             data.e = e;
             error = true;
