@@ -6,9 +6,7 @@ var tagcloud = (function(){
 
 	var Essense = function(p){
 
-		var primary = deep(p, 'history');
-
-		var el, showed = false, essenseData;
+		var el = {}, showed = false, essenseData;
 
 		var actions = {
 			showhideclear : function(){
@@ -39,6 +37,7 @@ var tagcloud = (function(){
 			},
 			tags : function(tags, clbk){
 
+				if(!el.c) return
 
 				var tagsmap = self.app.platform.sdk.categories.gettagsmap()
 				var addedtags = [];
@@ -178,10 +177,6 @@ var tagcloud = (function(){
 				make()
 			}	
 
-			/*self.app.platform.sdk.categories.clbks.selected.tagsmodule = function(id, value, l){
-				make()
-			}	*/
-
 			self.app.platform.sdk.categories.clbks.tags.tagsmodule = function(id, value, l){
 
 				var e = el.c.find('.tg[tag="'+id+'"]')
@@ -190,6 +185,8 @@ var tagcloud = (function(){
 
 				if(value) e.addClass('selected')
 				else e.removeClass('selected')
+
+				e = null
 			}	
 
 
@@ -244,7 +241,6 @@ var tagcloud = (function(){
 		}
 
 		return {
-			primary : primary,
 
 			getdata : function(clbk, p){
 				essenseData = p.settings.essenseData || {};
@@ -257,14 +253,15 @@ var tagcloud = (function(){
 
 			destroy : function(){
 				delete self.iclbks.maintag;
-
+				essenseData = {}
 				removeEvents()
+
+				if(el.c) el.c.empty()
 
 				el = {};
 			},
 			
 			init : function(p){
-
 
 				state.load();
 

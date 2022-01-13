@@ -345,6 +345,8 @@ var panel = (function(){
 				delete self.app.platform.ws.messages.event.clbks.panel
 
 
+				console.log("DESTROY")
+
 				if (tags){
 					tags.destroy()
 					tags = null;
@@ -360,7 +362,9 @@ var panel = (function(){
 					stacking = null
 				}
 
+				ed = null
 
+				if(el.c) el.c.empty()
 				el = {};
 			},
 

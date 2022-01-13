@@ -280,18 +280,15 @@ var main = (function(){
 
 			topvideos: function (show) {
 				
-				var showmoreby = el.topvideos
-
-				//showmoreby.removeClass('hasshares')
-
 				if (show){
 
-					showmoreby.removeClass('hidden')
+					el.topvideos.removeClass('hidden')
 					
-					self.app.platform.papi.horizontalLenta(showmoreby, function (e,p) {
+					self.app.platform.papi.horizontalLenta(el.topvideos, function (e,p) {
 
 						external = p
 						actions.refreshSticky()
+
 					}, {
 						caption : self.app.localization.e("Top videos") ,
 						video: true,
@@ -315,8 +312,8 @@ var main = (function(){
 						},
 						hasshares : function(shares){
 
-							if (shares.length <= 2){
-								showmoreby.addClass('hidden')
+							if (shares.length <= 2 && el.topvideos){
+								el.topvideos.addClass('hidden')
 							}
 							
 						},
@@ -329,28 +326,6 @@ var main = (function(){
 								history : true,
 								handler : true
 							})
-
-							return
-
-							if(isMobile() && share){
-
-								self.nav.api.load({
-									open : true,
-									href : 'post?&s=' + id,
-									history : true,
-									handler : true
-								})
-
-							}
-							else{
-								self.nav.api.load({
-									open : true,
-									href : 'index?video=1&v=' + id,
-									history : true,
-									handler : true
-								})
-							}
-
 							
 						},
 
@@ -361,15 +336,15 @@ var main = (function(){
 
 				else{
 
-					if(external){
+					if (external){
 						external.destroy()
 						external = null
 					}
 
-					showmoreby.html('')
+					el.topvideos.html('')
 					//showmoreby.removeClass('hasshares')
 
-					showmoreby.addClass('hidden')
+					el.topvideos.addClass('hidden')
 				}
 
 				
@@ -427,6 +402,8 @@ var main = (function(){
 						}
 					},
 					clbk : function(e, p){
+
+						console.log("panelss")
 
 						panel = p;
 						
@@ -1037,7 +1014,7 @@ var main = (function(){
 
 			destroy : function(){
 
-				//if(el.c && !isMobile()) el.c.html('')
+				
 
 				showCategories(false)
 
@@ -1080,17 +1057,22 @@ var main = (function(){
 					panel.destroy()
 				}
 
+				if (openedpost){
+					openedpost.clearessense()
+					openedpost = null
+				}
+
 				if (external){
-					external.destroy()
+					external.clearessense()
 					external = null
 				}
 
 				if (leftpanel){
 					leftpanel.destroy()
+					leftpanel = null
 				}
 
 				lastscroll = 0
-				//mobilemode = 'mainshow'
 				leftpanel = null
 				panel = null
 				roller = null
@@ -1100,7 +1082,7 @@ var main = (function(){
 				fixeddirection = null
 				addbuttonShowed = false
 
-				//self.app.el.footer.removeClass('workstation')
+				if(el.c) el.c.empty()
 
 				el = {}
 				

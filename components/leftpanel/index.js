@@ -218,6 +218,8 @@ var leftpanel = (function(){
 
 			destroy : function(){
 
+				console.log("ASDASDASD", tags)
+
 				if (tags){
 					tags.destroy()
 					tags = null;
@@ -227,6 +229,8 @@ var leftpanel = (function(){
 					cats.destroy()
 					cats = null;
 				}
+
+				if(el.c) el.c.empty()
 
 				el = {};
 			},

@@ -6413,6 +6413,7 @@ typeof navigator === "object" && (function (global, factory) {
     instance.elements.container.remove();
   };
 
+
   var Ads =
   /*#__PURE__*/
   function () {
@@ -9158,7 +9159,14 @@ typeof navigator === "object" && (function (global, factory) {
 
 var PlyrEx = function(target, options, clbk, readyCallback) {
     var self = this;
+    var clear = function(){
+      video_options = {}
+      target = null
+      options = {}
+    }
+    
     if (!clbk) clbk = function() {};
+
     var video_options = options;
 
     var provider = target.getAttribute('data-plyr-provider');
@@ -9170,8 +9178,9 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
     var newPlyr = function(target, video_options) {
       var newPlayer = new Plyr(target, video_options);
       // Set the mandatory/missing functions
-      newPlayer.mute = () => newPlayer.muted = true;
-      newPlayer.unmute = () => newPlayer.muted = false;
+        newPlayer.mute = () => newPlayer.muted = true;
+        newPlayer.unmute = () => newPlayer.muted = false;
+
       return newPlayer;
     }
 
@@ -9186,29 +9195,35 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
 
       if (localVideo != undefined && !localVideo.infos.videoDetails) {
 
+        //// old remove later
+
         var new_target = document.createElement('video');
-        target.parentNode.replaceChild(new_target, target);
-        target = new_target
+          target.parentNode.replaceChild(new_target, target);
+          target = new_target
 
         var plyrPlayer = newPlyr(target, video_options);
-        plyrPlayer.source = {
-          type: 'video',
-          sources: [
-            {
-              src: localVideo.video.internalURL,
-              type: 'video/mp4',
-              size: parseInt(localVideo.video.name)
-            }
-          ]
-        };
-        plyrPlayer.poster = localVideo.infos.thumbnail;
-        plyrPlayer.on('ready', readyCallback)
-        plyrPlayer.on('play', video_options.play)
-        plyrPlayer.on('pause', video_options.pause)
 
-        plyrPlayer.localVideoId = clear_peertube_id;
+          plyrPlayer.source = {
+            type: 'video',
+            sources: [
+              {
+                src: localVideo.video.internalURL,
+                type: 'video/mp4',
+                size: parseInt(localVideo.video.name)
+              }
+            ]
+          };
+
+          plyrPlayer.poster = localVideo.infos.thumbnail;
+          plyrPlayer.on('ready', readyCallback)
+          plyrPlayer.on('play', video_options.play)
+          plyrPlayer.on('pause', video_options.pause)
+
+          plyrPlayer.localVideoId = clear_peertube_id;
 
         if (clbk) clbk(plyrPlayer);
+
+        clear()
 
       }
       else {
@@ -9216,8 +9231,6 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
         retry(function(){
           return typeof PeerTubeEmbeding != 'undefined'
         }, function(){
-  
-          console.log('localVideo', localVideo)
   
           PeerTubeEmbeding.main(target, clear_peertube_id, {
             host : host,
@@ -9249,6 +9262,8 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
     
             if (clbk) clbk(api);
             if (readyCallback) readyCallback(api);
+
+            clear()
           })
   
         })
@@ -9257,59 +9272,6 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
 
       return self
     }
-
-    /*if (provider == 'youtube') {
-
-      
-
-      PeerTubeEmbeding.main(target, clear_peertube_id, {
-        contributor : 'youtube',
-        wautoplay : options.wautoplay
-      },{
-
-        playbackStatusChange : function(status){
-        },
-        volumechange : options.volumeChange,
-        fullscreenchange : options.fullscreenchange,
-        play : options.play,
-        pause : options.pause
-
-      }).then(embed => {
-
-        var api = embed.api
-          api.mute()
-
-        if (clbk) clbk(api);
-        if (readyCallback) readyCallback(api);
-      })
-
-      return
-    }*/
-
-    /*if (provider == 'vimeo') {
-
-
-      PeerTubeEmbeding.main(target, clear_peertube_id, {
-        contributor : 'vimeo',
-        wautoplay : options.wautoplay
-      },{
-
-        playbackStatusChange : function(status){
-        },
-        volumechange : function(volume){
-        },
-
-      }).then(embed => {
-
-        var api = embed.api
-          api.mute()
-
-        if (clbk) clbk(api);
-        if (readyCallback) readyCallback(api);
-      })
-
-      return
-    }*/
 
 
     var _plyr = function(video_url, preview_url, title) {
@@ -9349,21 +9311,23 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
 
                     _plyr(response.data.video.as, response.data.video.preview || '', response.data.video.title || '');
 
-
                     var plyrPlayer = newPlyr(target, video_options);
 
-                    plyrPlayer.on('ready', readyCallback)
+                      plyrPlayer.on('ready', readyCallback)
 
-                    plyrPlayer.on('volumechange', function(v){
-
-                      if(video_options.volumeChange)
-                        video_options.volumeChange(plyrPlayer.muted ? 0 : plyrPlayer.volume)
-                    })
+                      plyrPlayer.on('volumechange', function(v){
+                        if(video_options.volumeChange) video_options.volumeChange(plyrPlayer.muted ? 0 : plyrPlayer.volume)
+                      })
 
                     if (clbk) clbk(plyrPlayer);
+
                 } else {
-                    _error();
+
+                  _error();
+
                 }
+
+                clear()
             },
 
             error : function(){
@@ -9375,13 +9339,19 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
 
       var plyrPlayer = newPlyr(target, video_options);
 
-      plyrPlayer.on('ready', readyCallback)
-      plyrPlayer.on('play', video_options.play)
-      plyrPlayer.on('pause', video_options.pause)
+          plyrPlayer.on('ready', readyCallback)
+          plyrPlayer.on('play', video_options.play)
+          plyrPlayer.on('pause', video_options.pause)
+
+        
 
       if (clbk) clbk(plyrPlayer);
 
+      clear()
+
     }
+
+    
 
     return self;
 }

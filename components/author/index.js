@@ -8,10 +8,10 @@ var author = (function(){
 
 		var primary = deep(p, 'history');
 		var author, _state;
-		var el;
+		var el = {};
 		var upbutton;
 
-		var panel = null, uptimer = null, contentsready = false, fixedBlock = null;
+		var panel = null, uptimer = null, contentsready = false, fixedBlock = null, acsearch;
 
 		var actions = {
 			subscribeLabel : function(){
@@ -899,7 +899,12 @@ var author = (function(){
 								}
 							})
 
-							new search(p.el.find('.authorsearch'), {
+							if (acsearch){
+								acsearch.destroy()
+							}
+
+
+							acsearch = new search(p.el.find('.authorsearch'), {
 								placeholder : 'Search on ' + author.data.name,
 		
 								clbk : function(_el){
@@ -1431,6 +1436,8 @@ var author = (function(){
 
 			destroy : function(){
 
+				if(el.c) el.c.empty()
+
 				self.app.el.html.removeClass('allcontent')
 
 				if (upbutton)
@@ -1441,7 +1448,10 @@ var author = (function(){
 				if (panel)
 					panel.destroy();
 
-
+				if (acsearch){
+					acsearch.destroy()
+					acsearch = null
+				}
 
 				delete self.app.platform.ws.messages.event.clbks.author
 				delete self.app.platform.clbks.api.actions.subscribe.author

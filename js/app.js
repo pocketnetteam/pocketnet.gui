@@ -1489,7 +1489,11 @@ Application = function(p)
 
 				el.html(ctime)
 
+				el = null
+
 			})
+
+			realtimeelements = null
 		}, 30000)
 
 	}

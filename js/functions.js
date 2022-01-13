@@ -514,6 +514,9 @@
 			nooverflow = p.nooverflow || app.scrollRemoved,
 			el = p.el || p.app.el.windows;
 
+
+		var parallax = null
+
 		//var _w = $(window);
 
 		var wnd;
@@ -675,7 +678,7 @@
 
 				var trueshold = 20
 
-				var parallax = new SwipeParallaxNew({
+				parallax = new SwipeParallaxNew({
 
 					el : wnd.find('.wndback,.wndheader'),
 					transformel : wnd.find('.wndinner'),
@@ -715,6 +718,12 @@
 
 		var actions = {
 			close : function(cl, key){
+
+				if (parallax) {
+					parallax.clear()
+					parallax.destroy()
+					parallax = null
+				}
 
 				if(cl) if(p.closecross) p.closecross(wnd, self);
 
@@ -6962,7 +6971,6 @@
 			}
 		}
 
-
 		var applyDirection = function(direction, v){
 			if (direction.positionclbk){
 				needclear = true
@@ -6987,14 +6995,6 @@
 
 			needclear = false
 		}
-
-		/*self.backfast = function(){
-
-			_.each(p.directions, function(d){
-				if (d.positionclbk)
-					d.positionclbk(0)
-			})
-		}*/
 
 		self.init = function(){
 
@@ -7067,6 +7067,10 @@
 
 		self.destroy = function(){
 			p.el.swipe('destroy')
+
+			p = {}
+
+			needclear = false
 		}
 
 		return self;
@@ -8235,9 +8239,6 @@
 		el.after(h);
 	}
 	html = function(el, h){
-
-		//console.log("DEBUG HTML FR", {html : h})
-
 		el.html(h);
 	}
 	append = function(el, h){
@@ -8596,8 +8597,6 @@
 			}
 		}
 
-		
-
 		var events = {
 			clear : function(el){
 
@@ -8825,6 +8824,16 @@
 				p.clbk(searchEl)
 		}
 
+		self.destroy = function(){
+			searchEl = null;
+			fastResult = null;
+	
+			bsActive = null;
+			fsActive = null;
+			
+			el = null
+			p = {}
+		}	
 
 		init();
 
@@ -11193,12 +11202,14 @@ if(typeof window != 'undefined'){
 					}
 					// Completely remove the splashscreen
 					splashScreen.remove();
+					splashScreenImg = null
 				}, zoomOutDuration * 2);
 			}
 			// Wait until half the rotation is done
 			setTimeout(() => {
 				// Change the logo image
-				splashScreenImg.src = logos[nextLogoIndex];
+				if (splashScreenImg)
+					splashScreenImg.src = logos[nextLogoIndex];
 				// Increase index
 				nextLogoIndex = (nextLogoIndex >= (logos.length - 1)) ? 0 : nextLogoIndex + 1;
 			}, rotatingDuration * 0.5);

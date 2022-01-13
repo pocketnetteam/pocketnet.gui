@@ -143,6 +143,8 @@ class Html5Hlsjs {
         this.player.textTracks().removeEventListener('change', this.handlers.textTracksChange);
         this.uiTextTrackHandled = false;
         this.hls.destroy();
+        this.handlers = null;
+        console.log("DESTROY PLAYER");
     }
     static addHook(type, callback) {
         Html5Hlsjs.hooks[type] = this.hooks[type] || [];
@@ -490,8 +492,8 @@ class Html5Hlsjs {
             this.videoElement.addEventListener('play', this.handlers.play);
         }
         // _notifyVideoQualities sometimes runs before the quality picker event handler is registered -> no video switcher
-        /*this.handlers.playing = this._notifyVideoQualities.bind(this)
-        this.videoElement.addEventListener('playing', this.handlers.playing)*/
+        this.handlers.playing = this._notifyVideoQualities.bind(this);
+        this.videoElement.addEventListener('playing', this.handlers.playing);
         //this.hlsjsConfig.debug = true
         //this.hlsjsConfig.liveSyncDurationCount = 4
         //this.hlsjsConfig.maxMaxBufferLength = 55

@@ -1364,9 +1364,8 @@ Share = function(lang){
 		var articleversion2 = self.settings.v == 'a' && self.settings.version && self.settings.version >= 2
 
 		if (articleversion2){
-			textvalue = Base64Helper.encode(JSON.stringify(textvalue))
+			textvalue = JSON.stringify(textvalue) //  Base64Helper.encode(JSON.stringify(textvalue))
 		}
-
 		
 		return encodeURIComponent(self.url.v) 
 		
@@ -1408,7 +1407,7 @@ Share = function(lang){
 		var articleversion2 = self.settings.v == 'a' && self.settings.version && self.settings.version >= 2
 
 		if (articleversion2){
-			textvalue = Base64Helper.encode(JSON.stringify(textvalue))
+			textvalue = JSON.stringify(textvalue) //Base64Helper.encode(JSON.stringify(textvalue))
 		}
 
 		if (extend){
@@ -2107,7 +2106,7 @@ pShare = function(){
 
 		if (articleversion2){
 			try{
-				textvalue = JSON.parse(Base64Helper.decode(textvalue))
+				textvalue = JSON.parse(textvalue)// JSON.parse(Base64Helper.decode(textvalue))
 			}
 			catch(e) {
 				textvalue = ''

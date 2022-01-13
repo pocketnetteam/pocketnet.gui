@@ -750,6 +750,7 @@ html.testpocketnet #main.testpocketnetbg {
     height: 195px;
     content-visibility: auto;
     contain-intrinsic-size: 195px;
+    contain: strict;
   }
   #main .topvideosWrapper.hasshares {
     display: block;

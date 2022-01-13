@@ -9,13 +9,11 @@ var comments = (function(){
 
 	var essenses = {};
 
-	
+	var Essense = function(){
 
-	var Essense = function(p){
+		var primary = false;
 
-		var primary = deep(p, 'history');
-
-		var el, txid, ed, currents = {}, caption, _in, top, eid, preview = false, listpreview = false, showedall = false, receiver, balance = 0;
+		var el = {}, txid, ed, currents = {}, caption, _in, top, eid, preview = false, listpreview = false, showedall = false, receiver, balance = 0;
 
 		var authblock = false;
 
@@ -1413,13 +1411,11 @@ var comments = (function(){
 
 		var postEvents = function(p, _p, clbk){
 
-			var textarea = _p.el.find('.leaveComment');
-
 			var c = _p.el.find('.postbody');
 
 			actions.process(p.id || '0')
 
-			textarea.emojioneArea({
+			_p.el.find('.leaveComment').emojioneArea({
 				pickerPosition : 'top',
 				
 				search : false,
@@ -1564,7 +1560,6 @@ var comments = (function(){
 				}
 			});
 
-
 			_p.el.find('.emojionearea-editor').on('focus', function(){
 				actions.process(p.id || '0')	
 
@@ -1573,19 +1568,17 @@ var comments = (function(){
 			})
 
 			_p.el.find('.emojionearea-editor').on('blur', function(){
+
 				setTimeout(function(){
 					_p.el.removeClass('active')
 				}, 150)
 				
 			})
 
-				
-
 			_p.el.find('.postaction').on('click', function(){
 
-				if(c.hasClass('sending')) return
-
-				c.addClass('sending')
+				if (c.hasClass('sending')) return
+					c.addClass('sending')
 
 				actions.post(p.id || '0', p.pid, p.aid, p.editid)
 
@@ -2044,7 +2037,6 @@ var comments = (function(){
 
 							return
 						} else {
-
 							_p.el.find('.txt').on('click', function(){
 
 								$(this).blur();
@@ -2676,7 +2668,6 @@ var comments = (function(){
 				eid = p.settings.eid
 
 				rendered = {}
-
 				currents = {}
 
 				currentstate = {
@@ -2719,7 +2710,7 @@ var comments = (function(){
 
 			authclbk : function(){
 				
-				if(el && el.c){
+				if (el.c){
 
 					authblock = true
 
@@ -2729,20 +2720,11 @@ var comments = (function(){
 
 						authblock = false;
 
-						/*reloadCurrents(function(){
-
-							actions.myscores()
-
-							authblock = false;
-
-						})*/
-
 						renders.post(function(area){
 							areas["0"] = area
 						})
 
 					})
-
 				
 				}
 			},
@@ -2757,13 +2739,25 @@ var comments = (function(){
 
 				authblock = false
 
+				/*_.each(areas, function(a){
+				})*/
+
+				areas = {}; ///
+				currents = {};
+
 				if (external) 
 					external.destroy()
 
 				if (caption)
 					caption.destroy()
 
+				if (el.c) el.c.empty()
+
 				el = {};
+				ed = {};
+				
+
+				_in = null
 			},
 			
 			init : function(p){
@@ -2807,9 +2801,6 @@ var comments = (function(){
 				
 
 				if(preview){
-
-					
-
 					makePreview()
 				}
 				else{

@@ -6,7 +6,7 @@ var menu = (function(){
 
 	var Essense = function(){
 
-		var el,
+		var el = {},
 			searchBlurTimer = null,
 			sitenameToNav = null,
 			plissing = null,
@@ -531,6 +531,8 @@ var menu = (function(){
 						}, p)
 					}
 
+					if(menusearch) menusearch.destroy()
+
 					menusearch = new search(el.postssearch, {
 						placeholder : self.app.localization.e('e13139'),
 
@@ -541,8 +543,6 @@ var menu = (function(){
 						clbk : function(_el){
 
 							_el.find('input').on('blur', function(){
-
-								console.log('blur')
 
 								searchBlurTimer = slowMade(function(){
 
@@ -556,8 +556,6 @@ var menu = (function(){
 
 						last : {
 							get : function(){
-
-								var result = {};
 
 								var getresults = function(){
 									
@@ -803,8 +801,6 @@ var menu = (function(){
 
 						el.removeClass('hidden')
 
-						//if(add < 0) c = 'bad'
-
 						if(add == 0){
 							al.text(self.app.platform.mp.coin(value))
 
@@ -816,10 +812,6 @@ var menu = (function(){
 						    	number: add,
 
 						    	numberStep: function(now, tween) {
-
-						    		//actions.elswidth()
-
-						    		//el.addClass(c)
 
 						        	var number = Number(value + now).toFixed(8),
 						            	target = $(tween.elem);
@@ -1167,6 +1159,9 @@ var menu = (function(){
 
 				destroyauthorsearch()
 				actions.ahnotifyclear()
+
+				if(menusearch) menusearch.destroy()
+
 				menusearch = null
 
 
@@ -1193,6 +1188,8 @@ var menu = (function(){
 					if (e.destroy)
 						e.destroy()
 				})
+
+				if (el.c) el.c.empty()
 
 				el = {};
 			},

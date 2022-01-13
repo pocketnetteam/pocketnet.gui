@@ -71,15 +71,6 @@ Nav = function(app)
 		},
 		run : function(p){
 
-			/*p.clbk = addToFunction(p.clbk, function(){
-
-				console.log(p, p.el)
-
-				if (p.el)
-					core.links(null, p.el);
-
-			})*/
-
 			p.module.nav = self;
 			p.module.app = app;
 			p.module.sdk = app.platform.sdk;
@@ -568,15 +559,6 @@ Nav = function(app)
 					if(!p.reload){
 						historyManager.add(p.completeHref, p);
 
-						/*if (current.module && !p.inWnd){
-							nav = true
-
-							window.requestAnimationFrame(function(){
-								app.el.html.addClass('nav')
-							}) 
-
-						}*/
-
 						p.fail = function(){
 							sitemessage('<i class="fas fa-wifi"></i>')
 						}
@@ -625,13 +607,6 @@ Nav = function(app)
 						p.clbk = function(a, b, d){
 							core.removeWindows(p.completeHref)
 							core.removeChat(p.completeHref)
-
-							/*if (nav) 
-								window.requestAnimationFrame(function(){
-									app.el.html.removeClass('nav')
-								}) 
-
-							nav = false*/
 
 							if (p.goback){
 								app.actions.scroll(p.goback.scroll)
@@ -899,8 +874,6 @@ Nav = function(app)
 		load : function(p){
 			if(!p) p = {};
 
-
-
 			if(!p.href && !p.id) {
 				p.clbk("href and id aren't exist");
 
@@ -1122,9 +1095,7 @@ Nav = function(app)
 
 			var _links = null;
 
-			if(_el) _links = _el.find('a');
-
-			else _links = $('a');		
+			if(_el) _links = _el.find('a'); else _links = $('a');		
 
 			if(!_links.length) return
 
@@ -1211,6 +1182,8 @@ Nav = function(app)
 				}
 
 			})
+
+			_links = null
 
 		},
 		go : function(p){
