@@ -162,6 +162,29 @@ __map =  {
 		],
 	},      
 
+	
+	easynode : {
+		uri : "easynode",
+		href : "easynode",
+		add : function(settings, p){
+
+			if(p.inWnd)
+
+				return {
+					insert : 'wnd'
+				}
+
+			else
+			{
+				return {
+					el : 'content'
+				}
+			}
+
+		},
+		anonimus : true,
+	},
+
 	about : {
 		uri : "about",
 		href : "about",
