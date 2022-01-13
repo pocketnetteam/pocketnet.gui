@@ -727,7 +727,7 @@ class hls_plugin_Html5Hlsjs {
         ///// liveSyncPosition
         /* @ts-ignore */
         this.hlsjsConfig.capLevelController = peertube_cap_level_controller;
-        console.log("INITHLS");
+        console.log("INITHLS", this.hlsjsConfig);
         this.hls = new hls_default.a(this.hlsjsConfig);
         this._executeHooksFor('beforeinitialize');
         this.hls.on(dist_hls["Events"].ERROR, (event, data) => this._onError(event, data));
@@ -749,8 +749,6 @@ class hls_plugin_Html5Hlsjs {
             // Emit custom 'loadedmetadata' event for parity with `videojs-contrib-hls`
             // Ref: https://github.com/videojs/videojs-contrib-hls#loadedmetadata
             this.tech.trigger('loadedmetadata');
-        });
-        this.hls.once(dist_hls["Events"].FRAG_BUFFERED, (e) => {
         });
         this.hls.attachMedia(this.videoElement);
         this.hls.loadSource(this.source.src);
@@ -850,7 +848,6 @@ class p2p_media_loader_plugin_P2pMediaLoaderPlugin extends Plugin {
         const options = this.player.tech(true).options_;
         this.p2pEngine = options.hlsjsConfig.loader.getEngine();
         this.hlsjs.on(dist_hls["Events"].LEVEL_SWITCHING, (_, data) => {
-            console.log("LEVEL_SWITCHING");
             this.trigger('resolutionChange', { auto: this.hlsjs.autoLevelEnabled, resolutionId: data.height });
         });
         this.p2pEngine.on(p2p_media_loader_core_lib["a" /* Events */].SegmentError, (segment, err) => {

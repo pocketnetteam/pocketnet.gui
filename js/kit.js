@@ -1982,7 +1982,7 @@ pUserInfo = function(){
 		if(!key) key = 'subscribes'
 
 		return _.find(self[key], function(o){
-			return o.adddress == address || o.address == address || o == address
+			return (o.adddress || o.address || o) == address 
 		})
 	}
 

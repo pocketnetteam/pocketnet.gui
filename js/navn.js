@@ -421,11 +421,7 @@ Nav = function(app)
 
 		openCurrent : function(){
 
-			console.log('history.state.href', history.state)
-
 			if (history.state && history.state.lfox) { 
-
-				console.log('history.state.href', history.state.href)
 
 				core.removeWindows(history.state.href)
 				core.removeChat(history.state.href)
@@ -1253,20 +1249,33 @@ Nav = function(app)
 				if (window.cordova)
 				{
 
-					/*var arr = pathname.split('/');
-					arr.splice(arr.length-1, 1);
-					options.navPrefix = arr.join('/') + '/';*/
-
-					 if(pathname == '/indexcordova.html'){
-					 	options.navPrefix = '/'
-					 }
-					 else{
-					 	var arr = pathname.split("/");
-					 	arr.splice(arr.length-1, 1);
-
-					 	options.navPrefix = arr.join("/") + "/";
-					 }
 					
+					switch (device.platform) {
+						case "Android":
+							storageLocation = 'file:///storage/emulated/0/';
+							break;
+						case "iOS":
+							storageLocation = cordova.file.dataDirectory;
+							break;
+					}
+					
+					if(device.platform == 'iOS'){
+						var arr = pathname.split('/');
+						arr.splice(arr.length-1, 1);
+						options.navPrefix = arr.join('/') + '/';
+					}
+					else{
+
+						if(pathname == '/indexcordova.html'){
+							options.navPrefix = '/'
+						}
+						else{
+							var arr = pathname.split("/");
+							arr.splice(arr.length-1, 1);
+							options.navPrefix = arr.join("/") + "/";
+						}
+
+					}
 
 				}
 				else {
@@ -1488,9 +1497,15 @@ Nav = function(app)
 
 				//////
 
-				if (1 == 2 && !electron && !window.cordova && !electronopen && !app.platform.sdk.usersettings.meta.openlinksinelectron.value && !isMobile() && !isTablet()){
+				if (!electron && !window.cordova && !electronopen && !app.platform.sdk.usersettings.meta.openlinksinelectron.value && !isMobile() && !isTablet()){
+
 
 					var currentHref = self.get.href();
+					var pathname = self.get.pathname();
+
+					var mpobj = app.map[pathname] || {};
+
+					if (mpobj.electronDontOpen) return
 
 					var electronHrefs = JSON.parse(localStorage['electron_hrefs'] || "[]");
 				

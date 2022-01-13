@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=4729"
+/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=5020"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -42698,22 +42698,6 @@ class peertube_player_manager_PeertubePlayerManager {
             }
         }
         var useP2P = true;
-        /*try{
-    
-          useP2P = (
-    
-            options.common.videoUUID == '6c3c986d-f166-45aa-a7a7-348623acdc43' ||
-            options.common.videoUUID == '0e93af86-5ce7-4f05-8ad3-41009edf33d6' ||
-            options.common.videoUUID == '742515bd-f66f-4c5f-ac15-84daee3e3457' ||
-            options.common.videoUUID == 'ed3afc73-bf0e-43a6-8c0e-28787985f921' ||
-            options.common.videoUUID == 'fdca2575-8ec8-4167-a60c-f1d9c1c23d92'
-    
-          )
-          
-        }catch(e){
-          useP2P = false
-        }*/
-        //console.log('useP2P', useP2P)
         const p2pMediaLoaderConfig = {
             loader: {
                 trackerAnnounce,
@@ -42752,8 +42736,10 @@ class peertube_player_manager_PeertubePlayerManager {
                     capLevelToPlayerSize: true,
                     autoStartLoad: false,
                     maxBufferLength: 30,
-                    maxMaxBufferLength: 300,
+                    maxMaxBufferLength: 600,
+                    maxBufferSize: 20 * 1000 * 1000,
                     startFragPrefetch: true,
+                    nudgeMaxRetry: Infinity,
                     loader: new p2pMediaLoaderModule.Engine(p2pMediaLoaderConfig).createLoaderClass(),
                 },
             },
@@ -43728,7 +43714,7 @@ class embed_PeerTubeEmbed {
                     enableHotkeys: false,
                     pocketnetLink: this.pocketnetLink,
                     logoType: this.logoType || 'Pocketnet',
-                    poster: this.wautoplay && !videoInfo.isLive ? null : this.composePath(videoInfo.previewPath),
+                    poster: this.wautoplay && !videoInfo.isLive && !window.cordova ? null : this.composePath(videoInfo.previewPath),
                     theaterButton: false,
                     serverUrl: this.host,
                     language: this.language,

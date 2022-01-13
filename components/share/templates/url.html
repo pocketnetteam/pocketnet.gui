@@ -179,13 +179,15 @@
 					<div class="cnt">
 						<% if(og.title || og.titlePage) {%>
 							<a elementsid="titlehref" href="<%- url %>" donottrust="true">
-								<div class="title"><%= clearStringXss(clearScripts(((og.title || og.titlePage)))) %></div>
+								<div class="title">
+									<%- truncateString(og.title || og.titlePage, 100) %>
+								</div>
 							</a>
 						<% } %>
 
 						<% if(og.description || og.descriptionPage) {%>
 							<a elementsid="descriptionhref" href="<%- url %>" donottrust="true">
-								<div class="description"><%= trimHtml(clearScripts((findAndReplaceLink(clearStringXss(og.description || og.descriptionPage)))), 100) %></div>
+								<div class="description"><%- truncateString(og.description || og.descriptionPage, 100) %></div>
 							</a>
 						<% } %>
 					</div>

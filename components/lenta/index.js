@@ -2465,13 +2465,16 @@ var lenta = (function(){
 
 					})
 
+					if (video) return
+
 					renders.images(p.el, share, function(){})
 					
 					if (share.itisarticle()){
 						renders.articlespart(p.el.find('.sharearticle'), share)
 					}
 					else{
-						if(!p.el.find('.showMore').length) renders.repost(p.el, share.repost, share.txid, share.isEmpty(), null, all)
+						if(!p.el.find('.showMore').length) 
+							renders.repost(p.el, share.repost, share.txid, share.isEmpty(), null, all)
 					}
 					
 				})
@@ -3068,32 +3071,22 @@ var lenta = (function(){
 			url : function(el, url, share, clbk){
 
 				if(essenseData.nourlload){
-
 					if (clbk)
 						clbk()
-
 					return
-
 				}
-
 
 				var og = self.app.platform.sdk.remote.storage[url];				
 
-				var _el = el.closest('.share')
-
 				var meta = self.app.platform.parseUrl(url);
-
-				var aspectRatio;
-
 
 				var renderclbk = function(_p){
 
-					var aspectRatio = deep(self, 'app.platform.sdk.videos.storage.' + url + '.data.aspectRatio') || 0
-
+					var aspectRatio = deep(self.app.platform.sdk.videos.storage, url + '.data.aspectRatio') || 0
 
 					var info = self.app.platform.sdk.videos.storage[url]
 
-					if (info && info.data){
+					/*if (info && info.data){
 						aspectRatio = info.data.aspectRatio || 0
 					}
 
@@ -3102,48 +3095,32 @@ var lenta = (function(){
 						var paddingvalue = 100 / (2 * aspectRatio);
 						playerContainer.css('padding-top', `${paddingvalue}%`);
 						playerContainer.css('padding-bottom', `${paddingvalue}%`);
-					}
+					}*/ /// ?????? CHECK
 
 					self.app.nav.api.links(null, _p.el, function(event){
-	
 						event.stopPropagation()
 					})
-
 
 					var images = _p.el.find('img');
 
 					essenserenderclbk()
 					
-					_p.el.find('img').imagesLoadedPN({ imageAttr: true }, function(image) {
+					images.imagesLoadedPN({ imageAttr: true }, function(image) {
 
 						_.each(image.images, function(i, index){
-
-
-							if (i.isLoaded){
-								//$(images[index]).addClass('active')
-
-
-								if(i.img.naturalWidth > 500){
-								}
-								
-							}
-							else
-							{
+							if (!i.isLoaded){
 								$(images[index]).closest('.image').css('display', 'none')
-
 							}
 						})
 
-
 						essenserenderclbk()
-						  
 					});
 
 					if (clbk)
 						clbk()
 				}
 
-				var rndr = function(res){
+				var rndr = function(){
 
 					self.shell({
 						animation : false,
@@ -3155,7 +3132,6 @@ var lenta = (function(){
 							url : url,
 							og : og,
 							share : share,
-							//views : res.views || 0,
 							video : video,
 							preview : video ? true : false
 						},
@@ -3167,23 +3143,14 @@ var lenta = (function(){
 					}, renderclbk)
 				}
 
-				if (meta.type === 'peertube') {
+				meta.type === 'peertube' ? self.app.platform.sdk.videos.info([url]).then(rndr) : rndr()
 
-					self.app.platform.sdk.videos.info([url]).then(r => {
-
-						rndr();
-
-					})
-
-				} else {
-					rndr({})
-				}
+			
 			},
 
 			urlContent : function(share, clbk){
 
 				if(!el.c) return
-				
 
 				var url = share.url;
 
@@ -3194,69 +3161,41 @@ var lenta = (function(){
 					var meta = self.app.platform.parseUrl(url);
 					var og = self.app.platform.sdk.remote.storage[url];
 
-					if (url && !og){
+					if(
+						url && !og && 
+						!(meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube') && 
+						!(self.app.platform.sdk.usersettings.meta.preview && self.app.platform.sdk.usersettings.meta.preview.value)
+					){
 
-						if (meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube'){
-
-							if (clbk)
-								clbk()
-
-						}
-						else
-						{
-
-							if (self.app.platform.sdk.usersettings.meta.preview &&
-								self.app.platform.sdk.usersettings.meta.preview.value){
-
-								if (clbk){
+						self.app.platform.sdk.remote.get(url, function(og){
+							
+							if(og){
+								renders.url(_el, url, share, clbk)
+							}
+							else
+							{
+								if (clbk)
 									clbk()
-								}
-
-							} else {
-
-								self.app.platform.sdk.remote.get(url, function(og){
-
-									if(og){
-										renders.url(_el, url, share, clbk)
-									}
-									else
-									{
-										if (clbk)
-											clbk()
-									}
-	
-								})
 							}
 
-						}
-					}
+						})
 
-					else
-					{
-						if(clbk)
-							clbk()
-					}
+						return
 
+					}
+				
 				}	
-
-				else
-				{
-					if(clbk)
-						clbk()
-				}			
+				
+				if (clbk)
+					clbk()
 
 			},
 
 			urlsContent : function(shares){
 
-
 				_.each(shares, function(share){
-
 					renders.urlContent(share)
-
 				})
-
-				
 
 			},
 

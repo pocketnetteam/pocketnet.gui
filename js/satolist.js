@@ -4304,7 +4304,6 @@ Platform = function (app, listofnodes) {
                             return file.resolution.id == p.resolutionId
                         }) 
 
-
                         if(!fileDownloadUrl) return Promise.reject('fileDownloadUrl')
 
                         return new Promise((resolve, reject) => {
@@ -4323,7 +4322,7 @@ Platform = function (app, listofnodes) {
 
                                             fileWriter.write(infos);
 
-                                            dirEntry4.getFile(p.resolutionId + '', { create: true }, function (targetFile) {
+                                            dirEntry4.getFile(p.resolutionId + '.mp4', { create: true }, function (targetFile) {
 
                                                 var downloader = new BackgroundTransfer.BackgroundDownloader();
                                                 // Create a new download operation.
@@ -4502,12 +4501,16 @@ Platform = function (app, listofnodes) {
                                                         action: function (_p) {
                                                             var file = _p.item;
 
+                                                            console.log('file', file)
+
                                                             if (file.isFile && file.file) {
         
                                                                 file.file(function(fileDetails) {
+
+                                                                    console.log('fileDetails', fileDetails)
                                                                     
         
-                                                                    if (!videoFile && fileDetails.type == null) {
+                                                                    if (!videoFile && (!fileDetails.type || fileDetails.type == 'video/mp4')) {
         
                                                                         videoFile = file;
         
@@ -4517,7 +4520,7 @@ Platform = function (app, listofnodes) {
         
                                                                         window.resolveLocalFileSystemURL(videoFile.nativeURL, function(entry) {
         
-                                                                            videoFile.internalURL = entry.toInternalURL()
+                                                                            videoFile.internalURL =  entry.toInternalURL()
                                                                             
                                                                             to.videos[videoFolder.name].video = videoFile;
 
@@ -4628,7 +4631,8 @@ Platform = function (app, listofnodes) {
     
                         }
                         else{
-                            reject('isDirectory')
+                            resolve(null)
+                            //reject('isDirectory')
                         }
 
                     })  
@@ -4669,7 +4673,8 @@ Platform = function (app, listofnodes) {
 
                                         return self.sdk.localshares.get.cordova(shareFolder).then(r => {
 
-                                            v[shareFolder.name] = r
+                                            if (r)
+                                                v[shareFolder.name] = r
 
                                             return Promise.resolve()
 
@@ -4700,6 +4705,10 @@ Platform = function (app, listofnodes) {
                 cordovaStorage : function(){
 
                     if(!window.cordova.file) return null
+
+                    //return 'file:///storage/emulated/0/'
+
+                    //return window.cordova.file.externalApplicationStorageDirectory
 
                     return (window.cordova.file.externalDataDirectory) ? window.cordova.file.externalDataDirectory : window.cordova.file.dataDirectory;
                 }
@@ -4758,408 +4767,7 @@ Platform = function (app, listofnodes) {
            
         },
 
-        local: {
-
-            shares: {
-
-                allShares: {},
-
-                init: function() {
-
-                    var v = self.sdk.local.shares.allShares;
-
-                    if (window.cordova && window.cordova.file) {
-                        // Check if external storage is available, if not, use the internal
-                        var storage = (window.cordova.file.externalDataDirectory) ? window.cordova.file.externalDataDirectory : window.cordova.file.dataDirectory;
-                        // open target file for download
-                        window.resolveLocalFileSystemURL(storage, function(dirEntry) {
-                            // Create a downloads folder
-                            dirEntry.getDirectory('posts', { create: true }, function (dirEntry2) {
-                                var shareReader = dirEntry2.createReader();
-                                shareReader.readEntries(function(shares) {
-                                    _.each(shares, function(shareFolder) {
-                                        if (shareFolder.isDirectory) {
-                                            v[shareFolder.name] = {};
-
-                                            // Look inside the videos folder
-                                            shareFolder.getDirectory('videos', { create: true }, function (videosFolder) {
-                                                v[shareFolder.name].videos = {};
-                                                var videosReader = videosFolder.createReader();
-                                                videosReader.readEntries(function(videoFolders) {
-                                                    _.each(videoFolders, function(videoFolder) {
-                                                        if (videoFolder.isDirectory) {
-                                                            v[shareFolder.name].videos[videoFolder.name] = {};
-                                                            videoFolder.createReader().readEntries(function(files) {
-                                                                var videoFile, infoFile;
-                                                                _.each(files, function(file) {
-                                                                    if (file.isFile && file.file) {
-                                                                        file.file(function(fileDetails) {
-                                                                            if (!videoFile && fileDetails.type == null) {
-                                                                                videoFile = file;
-                                                                                if (fileDetails.size)
-                                                                                    v[shareFolder.name].videos[videoFolder.name].size = fileDetails.size;
-                                                                                // Resolve internal URL
-                                                                                window.resolveLocalFileSystemURL(videoFile.nativeURL, function(entry) {
-                                                                                    videoFile.internalURL = entry.toInternalURL()
-                                                                                    v[shareFolder.name].videos[videoFolder.name].video = videoFile;
-
-                                                                                });
-                                                                            }
-                                                                            if (!infoFile && file.name == 'info.json') {
-                                                                                infoFile = file;
-                                                                                // Read info file
-                                                                                var reader = new FileReader();
-                                                                                reader.onloadend = function() {
-                                                                                    try {
-                                                                                        v[shareFolder.name].videos[videoFolder.name].infos = JSON.parse(this.result);
-                                                                                    } catch(err){ }
-                                                                                };
-                                                                                reader.readAsText(fileDetails);
-                                                                            }
-                                                                        });
-                                                                    }
-                                                                });
-                                                            });
-                                                        }
-                                                    });
-                                                });
-                                            });
-
-                                            // Look for the share.json file
-                                            shareFolder.getFile('share.json', { create: false }, function(shareFile) {
-                                                shareFile.file(function(shareFileDetails) {
-                                                    // Read info file
-                                                    var reader = new FileReader();
-                                                    reader.onloadend = function() {
-                                                        try {
-                                                            v[shareFolder.name].share = JSON.parse(this.result);
-                                                        } catch(err){ }
-                                                    };
-                                                    reader.readAsText(shareFileDetails);
-                                                });
-                                            });
-
-                                        }
-                                    });
-                                });
-                            });
-                        });
-                    }
-                    else if (typeof _Electron != 'undefined' && window.electron) {
-                        const userDataPath = (window.electron.app || window.electron.remote.app).getPath('userData');
-                        // List all the posts
-                        fs.readdir(userDataPath + '/posts', (err, sharesDir) => {
-                            if (!err) {
-                                _.each(sharesDir, function(shareId) {
-                                        v[shareId] = {};
-
-                                        // List all the videos
-                                        fs.readdir(userDataPath + '/posts/' + shareId + '/videos', (err2, videosDir) => {
-                                            if (!err2) {
-                                                v[shareId].videos = {};
-                                                _.each(videosDir, function(videoId) {
-                                                    v[shareId].videos[videoId] = {};
-                                                    v[shareId].videos[videoId].infos = {};
-                                                    fs.readdir(userDataPath + '/posts/' + shareId + '/videos/' + videoId, (err4, files) => {
-                                                        if (!err4) {
-                                                            _.each(files, (file) => {
-                                                                if (!path.extname(file)) {
-                                                                    v[shareId].videos[videoId].video = {
-                                                                        name: file,
-                                                                        internalURL: url.pathToFileURL(userDataPath + '/posts/' + shareId + '/videos/' + videoId + '/' + file).href
-                                                                    };
-                                                                    var stats = fs.statSync(userDataPath + '/posts/' + shareId + '/videos/' + videoId + '/' + file);
-                                                                    if (stats && stats.size)
-                                                                        v[shareId].videos[videoId].size = stats.size;
-                                                                }
-                                                            });
-                                                        }
-                                                    });
-                                                });
-                                            }
-                                        });
-
-                                        // Read the share.json file
-                                        fs.readFile(userDataPath + '/posts/' + shareId + '/share.json', 'utf8', (err3, shareInfoStr) => {
-                                            if (!err3) {
-                                                try {
-                                                    v[shareId].share = JSON.parse(shareInfoStr);
-                                                } catch(err) {}
-                                            }
-                                        });
-
-                                });
-
-                            }
-                        });
-                    }
-
-                },
-
-                // Download a video using Cordova file functions
-                saveVideoCordova: function(shareId, id, video, videoDetails) {
-                    return new Promise((resolve, reject) => {
-                        if (!window.cordova || !window.cordova.file || !window.resolveLocalFileSystemURL)
-                            return reject('Missing cordova file plugin');
-                        var share = self.app.platform.sdk.node.shares.storage.trx[shareId];
-                        var user = deep(self.app, 'platform.sdk.usersl.storage.' + share.address);
-                        // Create share.json file data
-                        var shareInfos = {
-                            share: {
-                                share: share.export(),
-                                user: user.export(),
-                                timestamp: new Date()
-                            }
-                        };
-                        // Check if external storage is available, if not, use the internal
-                        var storage = (window.cordova.file.externalDataDirectory) ? window.cordova.file.externalDataDirectory : window.cordova.file.dataDirectory;
-                        // open target file for download
-                        window.resolveLocalFileSystemURL(storage, function(dirEntry) {
-                            // Create a posts folder
-                            dirEntry.getDirectory('posts', { create: true }, function (dirEntry11) {
-                                dirEntry11.getDirectory(shareId, { create: true }, function (dirEntry2) {
-
-                                    // Create JSON file for share informations
-                                    dirEntry2.getFile('share.json', { create: true }, function (shareFile) {
-                                        // Write into file
-                                        shareFile.createWriter(function (fileWriter) {
-                                            fileWriter.write(shareInfos.share);
-                                        });
-                                    });
-
-                                    dirEntry2.getDirectory('videos', { create: true }, function (dirEntry3) {
-                                        // Get/create a folder for this video
-                                        dirEntry3.getDirectory(id, { create: true }, function (dirEntry4) {
-                                            var infos = {
-                                                thumbnail: 'https://' + videoDetails.from + videoDetails.thumbnailPath,
-                                                videoDetails : videoDetails
-                                            }
-                                            // Create JSON file for video informations
-                                            dirEntry4.getFile('info.json', { create: true }, function (infoFile) {
-                                                // Write into file
-                                                infoFile.createWriter(function (fileWriter) {
-                                                    fileWriter.write(infos);
-                                                });
-                                            });
-                                            // Download the video
-                                            dirEntry4.getFile(video.resolution.id + '', { create: true }, function (targetFile) {
-                                                var downloader = new BackgroundTransfer.BackgroundDownloader();
-                                                // Create a new download operation.
-                                                var download = downloader.createDownload(video.fileDownloadUrl, targetFile, "Bastyon: Downloading video");
-                                                
-                                                // Start the download
-                                                download.startAsync().then(function(e) {
-                                                    // Success
-                                                    // Get file size
-                                                    targetFile.file(function(fileDetails) {
-                                                        // Resolve internal URL
-                                                        window.resolveLocalFileSystemURL(targetFile.nativeURL, function(entry) {
-                                                            targetFile.internalURL = entry.toInternalURL();
-                                                            shareInfos.videos = {};
-                                                            shareInfos.videos[id] = { video: targetFile,  infos: infos };
-                                                            if (fileDetails.size)
-                                                                shareInfos.videos[id].size = fileDetails.size;
-                                                            self.sdk.local.shares.add(shareId, shareInfos);
-                                                            return resolve(targetFile);
-                                                        }, function(err) {
-                                                            return reject(err);
-                                                        });
-                                                    }, function(err) {
-                                                        // Error
-                                                        return reject(err);
-                                                    });
-                                                }, function(err) {
-                                                    // Error
-                                                    return reject(err);
-                                                }, function(e) {
-                                                    // Progress
-                                                    // console.log("progress");
-                                                    // console.log(e);
-                                                });
-                                            }, function(err) {
-                                                return reject(err);
-                                            });
-                                        }, function(err) {
-                                            return reject(err);
-                                        });
-                                    }, function(err) {
-                                        return reject(err);
-                                    });
-                                }, function(err) {
-                                    return reject(err);
-                                });
-                            }, function(err) {
-                                return reject(err);
-                            });
-                        }, function(err) {
-                            return reject(err);
-                        });
-                    });
-                },
-
-                // Download a video using Node file functions
-                saveVideoElectron: function(shareId, id, video, videoDetails) {
-                    return new Promise((resolve, reject) => {
-                        const userDataPath = (window.electron.app || window.electron.remote.app).getPath('userData');
-                        const shareDir = userDataPath + '/posts/' + shareId;
-                        var share = self.app.platform.sdk.node.shares.storage.trx[shareId];
-                        var user = deep(self.app, 'platform.sdk.usersl.storage.' + share.address);
-                        // Create share.json file data
-                        var shareInfos = {
-                            share: {
-                                share: share.export(),
-                                user: user.export(),
-                                timestamp: new Date()
-                            }
-                        };
-                        // Create share directory
-                        if (!fs.existsSync(shareDir))
-                            fs.mkdirSync(shareDir, { recursive: true });
-                        // Create JSON file for share informations
-                        fs.writeFileSync(shareDir + '/share.json', JSON.stringify(shareInfos.share));
-
-                        // Create the video directory
-                        const videoDir = shareDir + '/videos/' + id;
-                        if (!fs.existsSync(videoDir))
-                            fs.mkdirSync(videoDir, { recursive: true });
-
-                        // Start downloading the video
-                        const videoFile = fs.createWriteStream(videoDir + '/' + video.resolution.id);
-                        https.get(video.fileDownloadUrl, function(response) {
-                            if (response.statusCode >= 200 && response.statusCode <= 299) {
-                                // Success
-                                response.on('end', () => {
-                                    // Downloading done
-                                    shareInfos.videos = {};
-                                    shareInfos.videos[id] = {
-                                        video: { name: video.resolution.id, internalURL: url.pathToFileURL(videoFile.path).href },
-                                        infos: {}
-                                    };
-                                    // Get file size
-                                    var stats = fs.statSync(videoFile.path);
-                                    if (stats && stats.size)
-                                        shareInfos.videos[id].size = stats.size;
-                                    // Add the share
-                                    self.sdk.local.shares.add(shareId, shareInfos);
-                                    return resolve();
-                                });
-                                response.pipe(videoFile);
-                            } else {
-                                // Error
-                                return reject("Download error: " + response.statusCode);
-                            }
-                        }).on('error', (e) => {
-                            // Error
-                            return reject(e);
-                        });
-                    });
-                },
-
-                // Returns an array of all the shares ID
-                getAllIds: function() {
-                    res = [];
-                    for (const shareId in self.sdk.local.shares.allShares)
-                        res.push(shareId);
-                    return res;
-                },
-
-                get: function(shareId) {
-                    var v = self.sdk.local.shares.allShares;
-                    return v[shareId];
-                },
-
-                getVideo: function(videoId, shareId) {
-                    var video, shares = self.sdk.local.shares.allShares;
-                    try {
-                        if (shareId) {
-                            var share = shares[shareId];
-                            for (const vidId in share.videos) {
-                                if (vidId == videoId) {
-                                    video = share.videos[vidId];
-                                    break;
-                                }
-                            }
-                        } else {
-                            for (const share in shares) {
-                                if (video) break;
-                                for (const vidId in shares[share].videos) {
-                                    if (vidId == videoId) {
-                                        video = shares[share].videos[vidId];
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                    } catch(err) {}
-                    return video;
-                },
-
-                getTotalSize : function() {
-                    var v = self.sdk.local.shares.allShares, totalSize = 0;
-                    _.each(v, function(share) {
-                        if (share.videos) {
-                            for (const videoId in share.videos) {
-                                if (share.videos[videoId].size)
-                                    totalSize += share.videos[videoId].size;
-                            }
-                        }
-                    });
-                    return totalSize;
-                },
-
-                add : function(shareId, share){
-                    var v = self.sdk.local.shares.allShares;
-                    v[shareId] = share;
-                },
-
-                deleteAll: function(clbk) {
-                    var v = self.sdk.local.shares.allShares;
-                    for (var shareId in v)
-                        self.sdk.local.shares.delete(shareId);
-                    if (clbk)
-                        clbk();
-                },
-
-                delete: function(shareId, clbk) {
-
-                    var v = self.sdk.local.shares.allShares;
-
-                    if (window.cordova && window.cordova.file) {
-                        // Check if external storage is available, if not, use the internal
-                        var storage = (window.cordova.file.externalDataDirectory) ? window.cordova.file.externalDataDirectory : window.cordova.file.dataDirectory;
-                        // open target file for download
-                        window.resolveLocalFileSystemURL(storage, function(dirEntry) {
-                            // Create a downloads folder
-                            dirEntry.getDirectory('posts', { create: true }, function (dirEntry2) {
-                                dirEntry2.getDirectory(shareId, { create: false}, function(dirToDelete) {
-                                    dirToDelete.removeRecursively(function() {
-                                        // Success
-                                        delete v[shareId];
-                                        if (clbk) clbk();
-                                    }, function(err) {
-                                        if (clbk) clbk();
-                                    });
-                                }, function(err) {
-                                    if (clbk) clbk();
-                                });
-                            }, function(err) {
-                                if (clbk) clbk();
-                            });
-                        }, function(err) {
-                            if (clbk) clbk();
-                        });
-                    } else if (typeof _Electron != 'undefined' && window.electron) {
-                        const userDataPath = (window.electron.app || window.electron.remote.app).getPath('userData');
-                        fs.rmdir(userDataPath + '/posts/' + shareId, { recursive: true }, (err) => {
-                            if (!err)
-                                delete v[shareId];
-                            if (clbk) clbk();
-                        });
-                    }
-                }
-            }
-
-        },
+       
 
         registrations: {
             storage: {},

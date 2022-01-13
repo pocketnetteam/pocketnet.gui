@@ -490,8 +490,8 @@ class Html5Hlsjs {
             this.videoElement.addEventListener('play', this.handlers.play);
         }
         // _notifyVideoQualities sometimes runs before the quality picker event handler is registered -> no video switcher
-        this.handlers.playing = this._notifyVideoQualities.bind(this);
-        this.videoElement.addEventListener('playing', this.handlers.playing);
+        /*this.handlers.playing = this._notifyVideoQualities.bind(this)
+        this.videoElement.addEventListener('playing', this.handlers.playing)*/
         //this.hlsjsConfig.debug = true
         //this.hlsjsConfig.liveSyncDurationCount = 4
         //this.hlsjsConfig.maxMaxBufferLength = 55
@@ -499,7 +499,7 @@ class Html5Hlsjs {
         ///// liveSyncPosition
         /* @ts-ignore */
         this.hlsjsConfig.capLevelController = _peertube_cap_level_controller__WEBPACK_IMPORTED_MODULE_1__["default"];
-        console.log("INITHLS");
+        console.log("INITHLS", this.hlsjsConfig);
         this.hls = new hls_js__WEBPACK_IMPORTED_MODULE_0___default.a(this.hlsjsConfig);
         this._executeHooksFor('beforeinitialize');
         this.hls.on(hls_js__WEBPACK_IMPORTED_MODULE_0__["Events"].ERROR, (event, data) => this._onError(event, data));
@@ -521,8 +521,6 @@ class Html5Hlsjs {
             // Emit custom 'loadedmetadata' event for parity with `videojs-contrib-hls`
             // Ref: https://github.com/videojs/videojs-contrib-hls#loadedmetadata
             this.tech.trigger('loadedmetadata');
-        });
-        this.hls.once(hls_js__WEBPACK_IMPORTED_MODULE_0__["Events"].FRAG_BUFFERED, (e) => {
         });
         this.hls.attachMedia(this.videoElement);
         this.hls.loadSource(this.source.src);
@@ -642,7 +640,6 @@ class P2pMediaLoaderPlugin extends Plugin {
         const options = this.player.tech(true).options_;
         this.p2pEngine = options.hlsjsConfig.loader.getEngine();
         this.hlsjs.on(hls_js__WEBPACK_IMPORTED_MODULE_5__["Events"].LEVEL_SWITCHING, (_, data) => {
-            console.log("LEVEL_SWITCHING");
             this.trigger('resolutionChange', { auto: this.hlsjs.autoLevelEnabled, resolutionId: data.height });
         });
         this.p2pEngine.on(_core_p2p_media_loader_master_p2p_media_loader_core_lib__WEBPACK_IMPORTED_MODULE_2__["Events"].SegmentError, (segment, err) => {
@@ -886,7 +883,7 @@ class CapLevelController {
         catch (e) {
             /* no-op */
         }
-        pixelRatio = 1;
+        pixelRatio = 0.5;
         //if (pixelRatio > 1.5) pixelRatio = 1.5
         return pixelRatio;
     }

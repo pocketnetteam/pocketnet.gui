@@ -4,13 +4,10 @@ deep = function(obj, key){
     var _key = []
 
     if (key[0] == "'"){
-
         key = key.substr(1)
         _key = key.split("'")
         tkey = _key[0]
-
         if(_key[1]) _key[1] =  _key[1].substr(1)
-
 
     }
     else{	

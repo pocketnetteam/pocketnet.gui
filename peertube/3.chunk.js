@@ -1117,6 +1117,35 @@ class segments_memory_storage_SegmentsMemoryStorage {
 
 
 
+/*
+const defaultSettings: HybridLoaderSettings = {
+    cachedSegmentExpiration: 5 * 60 * 1000,
+    cachedSegmentsCount: 30,
+
+    useP2P: true,
+    consumeOnly: false,
+
+    requiredSegmentsPriority: 1,
+
+    simultaneousHttpDownloads: 2,
+    httpDownloadProbability: 0.1,
+    httpDownloadProbabilityInterval: 1000,
+    httpDownloadProbabilitySkipIfNoPeers: false,
+    httpFailedSegmentTimeout: 10000,
+    httpDownloadMaxPriority: 20,
+    httpDownloadInitialTimeout: 0,
+    httpDownloadInitialTimeoutPerSegment: 4000,
+    httpUseRanges: false,
+
+    simultaneousP2PDownloads: 3,
+    p2pDownloadMaxPriority: 20,
+    p2pSegmentDownloadTimeout: 60000,
+
+    webRtcMaxMessageSize: 64 * 1024 - 1,
+    trackerAnnounce: ["wss://tracker.novage.com.ua", "wss://tracker.openwebtorrent.com"],
+    peerRequestsPerAnnounce: 10,
+    rtcConfig: (Peer as { config: RTCConfiguration }).config,
+};*/
 const defaultSettings = {
     cachedSegmentExpiration: 10 * 60 * 1000,
     cachedSegmentsCount: 1000,
@@ -1126,12 +1155,12 @@ const defaultSettings = {
     simultaneousHttpDownloads: 2,
     httpDownloadProbability: 0.06,
     httpDownloadProbabilityInterval: 1000,
-    httpDownloadProbabilitySkipIfNoPeers: true,
+    httpDownloadProbabilitySkipIfNoPeers: false,
     httpFailedSegmentTimeout: 1500,
     httpDownloadMaxPriority: 20,
     httpDownloadInitialTimeout: 0,
-    httpDownloadInitialTimeoutPerSegment: 4000,
-    httpUseRanges: true,
+    httpDownloadInitialTimeoutPerSegment: 750,
+    httpUseRanges: false,
     simultaneousP2PDownloads: 20,
     p2pDownloadMaxPriority: 50,
     p2pSegmentDownloadTimeout: 60000,
@@ -2231,7 +2260,7 @@ class engine_Engine extends events["EventEmitter"] {
                     this.load = (context, config, callbacks) => Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
                         this.context = context;
                         this.callbacks = callbacks;
-                        yield this.impl.load(context, config, callbacks);
+                        this.impl.load(context, config, callbacks);
                     });
                     this.abort = () => {
                         if (this.context) {

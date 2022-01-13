@@ -976,7 +976,9 @@ __map =  {
 				{src : 'js/vendor/editor/quote.js',			   f : 'js'},
 				{src : 'js/vendor/editor/warning.js',			   f : 'js'},
 				{src : 'js/vendor/editor/inlinecode.js',			   f : 'js'}
-			]
+			],
+
+			electronDontOpen : true
 		},
 
 		video : {

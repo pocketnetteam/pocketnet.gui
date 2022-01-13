@@ -9,12 +9,12 @@ var thisrepost = (typeof repost != 'undefined' && repost)
 
 if(share.address){
 
-	var my = (user.address.value && share.address == user.address.value.toString('hex'))
+	var my = (user.address.value && share.address == user.address.value)
 	var subscribed = '';
 
 	if(!my && user.address.value){
 
-		var me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
+		var me = app.platform.sdk.users.storage[user.address.value]
 
 		if (me && me.relation(share.address, 'subscribes')){
 			subscribed = 'subscribed'
@@ -57,7 +57,7 @@ var metadisplay = function(){ %>
 						<div class="authorCell">
 
 							<a elementsid="shareaddresslink" href="<%-app.platform.api.authorlink(share.address)%>">
-							<% var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0 %>
+							<% var reputation = deep(app.platform.sdk.usersl.storage, share.address+'.reputation') || 0 %>
 								<b><span class="adr"><%-name || share.address %></span></b><% if(reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
 							</a>
 
@@ -362,7 +362,7 @@ var arranges = {
 					<a elementsid="shareiconprofilelink" href="<%-app.platform.api.authorlink(share.address)%>">
 
 						<% 
-							var src = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image');
+							var src = deep(app.platform.sdk.usersl.storage, share.address + '.image');
 							var letter = name ? name[0] : ''; 
 							
 						%>

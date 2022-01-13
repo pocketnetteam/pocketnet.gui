@@ -1497,22 +1497,16 @@ Application = function(p)
 	self.storage = {
 
 		getStorageLocation: function() {
+
 			if (!device || !device.platform || !cordova || !cordova.file)
 				return undefined;
-			var storageLocation = "";
-			switch (device.platform) {
-				case "Android":
-					storageLocation = 'file:///storage/emulated/0/';
-					break;
-				case "iOS":
-					storageLocation = cordova.file.cacheDirectory;
-					break;
-			}
-			return storageLocation;
+
+			return (window.cordova.file.externalDataDirectory) ? window.cordova.file.externalDataDirectory : window.cordova.file.dataDirectory;
+			
 		},
 	
 		getStorageDirectory: function() {
-			return 'Pocketnet';
+			return 'internal';
 		},
 	
 		saveFile: function(url, blob) {
