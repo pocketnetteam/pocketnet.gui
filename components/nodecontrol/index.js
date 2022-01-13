@@ -283,12 +283,6 @@ var nodecontrol = (function(){
 			nodecontent : function(elc, clbk){
 
 				if(actions.admin()){
-                    var direct = false
-                    if (typeof _Electron != 'undefined' && self.app.api.get.direct()){
-						_proxy = self.app.api.get.direct()
-						direct = true
-					}
-
 					self.shell({
 						inner : html,
 						name : 'nodecontent',
@@ -724,7 +718,8 @@ var nodecontrol = (function(){
 
 				var data = {};
 
-				proxy = deep(p, 'settings.essenseData.proxy') || api.get.current()
+				// proxy = deep(p, 'settings.essenseData.proxy') || api.get.current()
+                proxy = self.app.api.get.direct()
 
 				clbk(data);
 
