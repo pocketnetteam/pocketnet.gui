@@ -6047,7 +6047,66 @@ Platform = function (app, listofnodes) {
 
                     param.save();
                 }
-            }
+            },
+
+            listenKeys: function() {
+                const keysPressed = {};
+
+                $(document).keydown(function(e) {
+                    console.log('KEYDOWN', e.which);
+
+                    keysPressed[e.which] = true;
+                });
+
+                $(document).keyup(function(e) {
+                    console.log('KEYUP', e.which);
+
+                    /**
+                     * Ctrl - 17,
+                     * Command (Mac OS) - 91
+                     *
+                     * Minus - 189
+                     * Minus Numpad - 109
+                     *
+                     * Plus - 187
+                     * Plus Numpad - 107
+                     */
+
+                    const isCtrlPressed = (_.has(keysPressed, 17) || _.has(keysPressed, 91));
+                    const isMinusPressed = (_.has(keysPressed, 189) || _.has(keysPressed, 109));
+                    const isPlusPressed = (_.has(keysPressed, 187) || _.has(keysPressed, 107));
+
+                    const currentZoom = self.app.platform.sdk.uiScale.current;
+
+                    const zoomArrList = self.app.platform.sdk.uiScale.all;
+                    const zoomKeys = Object.keys(zoomArrList);
+
+                    const zoomCurrentIndex = zoomKeys.findIndex(zoom => (zoom === currentZoom));
+
+                    const isPlusOutOfRange = (zoomCurrentIndex == zoomKeys.length - 1);
+                    const isMinusOutOfRange = (zoomCurrentIndex == 0);
+
+                    if ((isCtrlPressed && isMinusPressed) && !isMinusOutOfRange) {
+                        console.log('KEYUP #3');
+
+                        const zoomNewIndex = zoomCurrentIndex - 1;
+                        const zoomNewName = zoomKeys[zoomNewIndex];
+
+                        self.app.platform.sdk.uiScale.set(zoomNewName);
+                    } else if ((isCtrlPressed && isPlusPressed) && !isPlusOutOfRange) {
+                        console.log('KEYUP #4');
+
+                        const zoomNewIndex = zoomCurrentIndex + 1;
+                        const zoomNewName = zoomKeys[zoomNewIndex];
+
+                        self.app.platform.sdk.uiScale.set(zoomNewName);
+                    }
+
+                    console.log('KEYUP #5');
+
+                    delete keysPressed[e.which];
+                });
+            },
         },
 
         accountsettings: {
@@ -23638,6 +23697,7 @@ Platform = function (app, listofnodes) {
         self.applications = self.__applications()
         self.sdk.theme.load()
         self.sdk.uiScale.load();
+        self.sdk.uiScale.listenKeys();
         self.sdk.system16.init()
 
         //self.app.platform.sdk.node.sys.load()
