@@ -333,6 +333,12 @@
 					}
 				}
 			}
+		}
+	}
+
+	.uiscale {
+		.pInput {
+			display: flex;
 
 			.uiscalewrapper {
 				height: 30px;
@@ -340,18 +346,20 @@
 				text-align: center;
 				font-size: 9pt;
 				font-weight: bold;
-				background: #e8e8e8;
-				color: #888888;
 				margin-right: 0;
 				padding: 0 10px;
 				border-width: 0 1px 0 1px;
 				border-style: solid;
-				border-color: rgba(0,0,0, 0.2);
 				cursor: pointer;
 
+				/** White theme */
+				background: @color-gray-slight;
+				color: @color-gray-mlight;
+				border-color: @color-gray-border;
+
 				&.active {
-					background: lightskyblue;
-					color: #fff;
+					background: @color-bright;
+					color: @color-white;
 				}
 			}
 
@@ -367,6 +375,7 @@
 				border-right: 0;
 			}
 		}
+
 	}
 
 	&.unathorized{
@@ -481,6 +490,23 @@ html.stblack{
 			.groupCaption{
 				color : @color-main;
 			}
+		}
+
+		.uiscale {
+			.pInput {
+				.uiscalewrapper {
+					/** Black theme */
+					background: @color-dark-blue;
+					color: @color-white;
+					border-color: @color-add;
+
+					&.active {
+						background: @color-gray-slight;
+						color: @color-black3;
+					}
+				}
+			}
+
 		}
 	}
 }
