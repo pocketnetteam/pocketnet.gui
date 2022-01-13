@@ -318,6 +318,8 @@ ____loclib.dno = "Нет";
 ____loclib.dsa = "Не показывать больше";
 ____loclib.dcode = "Код"
 ____loclib.dcopyToClipboard = "Копировать в буфер обмена"
+____loclib.dwarning = "Внимание"
+____loclib.dyesclose = "Да, закрыть"
 
 // Messages
 
@@ -1724,3 +1726,4 @@ ____loclib.easyNode_e10057 = "ядерный процессор"
 ____loclib.easyNode_e10058 = "ГБ свободного пространства на жестком диске"
 ____loclib.easyNode_e10059 = "Мбит/с скорость интернет"
 ____loclib.easyNode_e10060 = "SSD диск для увеличения производительности"
+____loclib.easyNode_e10061 = "Ваша нода запущена. Все равно закрыть приложение?"

@@ -328,6 +328,8 @@ ____loclib.dno = "No";
 ____loclib.dsa = "Do not Show Anymore";
 ____loclib.dcode = "Code"
 ____loclib.dcopyToClipboard = "Copy to ClipBoard"
+____loclib.dwarning = "Warning"
+____loclib.dyesclose = "Yes, close"
 
 
 // Messages
@@ -1958,3 +1960,4 @@ ____loclib.easyNode_e10057 = "cores CPU"
 ____loclib.easyNode_e10058 = "Gb free disk space"
 ____loclib.easyNode_e10059 = "Mb/s internet speed"
 ____loclib.easyNode_e10060 = "SSD drive to ensure speed"
+____loclib.easyNode_e10061 = "Your node is running. Close the app anyway?"
