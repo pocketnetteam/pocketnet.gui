@@ -316,6 +316,8 @@ ____loclib.dcancel = "Отмена";
 ____loclib.dyes = "Да";
 ____loclib.dno = "Нет";
 ____loclib.dsa = "Не показывать больше";
+____loclib.dcode = "Код"
+____loclib.dcopyToClipboard = "Копировать в буфер обмена"
 
 // Messages
 
