@@ -46,7 +46,7 @@ var easynode = (function(){
 
 		var calc = {
 			netstakeweight : function(){
-				return (deep(info, 'netstakeweight') || 189015830589274) / 100000000
+				return 158185839998602 / 100000000
 			},
 			point : function(t){
 
