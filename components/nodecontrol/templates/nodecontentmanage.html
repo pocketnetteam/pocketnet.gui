@@ -6,7 +6,7 @@
             <div class="work">
                 <div class="felockcnt loading">
                     <div class="text">
-                        Loading
+                        <%-e('easyNode_e10003')%>
                     </div>
                     <div class="icon">
                         <i class="fas fa-spinner fa-spin"></i>
@@ -23,7 +23,7 @@
 
                     <div class="notfound loading">
                         <div class="text">
-                            <%-app.meta.fullname%> Node Installing <i class="fas fa-spinner fa-spin"></i>
+                            <%-e('easyNode_e10004')%> <i class="fas fa-spinner fa-spin"></i>
                         </div>
 
                         <div class="installProgressBox">
@@ -43,7 +43,7 @@
 
                     <div class="notfound removing">
                         <div class="text">
-                            Node Removing
+                            <%-e('easyNode_e10005')%>
                         </div>
                         <div class="icon">
                             <i class="fas fa-spinner fa-spin"></i>
@@ -60,7 +60,7 @@
                     
                             <div elementsid="notfoundinstall" class="notfound install">
                                 <div class="text">
-                                    <%-e('easyNode_e10001')%> <%-app.meta.fullname%> <%-e('easyNode_e10000')%>
+                                    <%-e('easyNode_e10001')%>
                                 </div>
                                 <div class="icon">
                                     <i class="fas fa-cloud-download-alt"></i>
@@ -70,24 +70,28 @@
                             <div class="systemreq">
 
                                     <div class="scaption">
-                                        <span>System Requirements</span>
+                                        <span><%-e('easyNode_e10006')%></span>
                                     </div>
                                 
                                 <div class="req">
                                     <div>
-                                        4Gb RAM
+                                        3 <%-e('easyNode_e10056')%>
                                     </div>
 
                                     <div>
-                                        4 cores CPU
+                                        4 <%-e('easyNode_e10057')%>
                                     </div>
 
                                     <div>
-                                        100Gb free disk space (SSD drive to ensure speed)
+                                        100 <%-e('easyNode_e10058')%>
                                     </div>
 
                                     <div>
-                                        100Mb/s internet speed
+                                        <%-e('easyNode_e10060')%>
+                                    </div>
+
+                                    <div>
+                                        100 <%-e('easyNode_e10059')%>
                                     </div>
                                 </div>
                                 
@@ -97,7 +101,7 @@
                             
                             <div class="notfound">
                                 <div class="text">
-                                    <%-app.meta.fullname%> Node control is not yet available for your operating system
+                                    <%-e('easyNode_e10007')%>
                                 </div>
                                 <div class="icon">
                                     <i class="fas fa-wrench"></i>
@@ -110,7 +114,7 @@
                         
                         <div elementsid="refreshother" class="notfound refreshother">
                             <div class="text">
-                                Your device already has <%-app.meta.fullname%> Node.<br>
+                                Your device already has Node.<br>
 
                                 <% if(proxy.direct || showdirect) {%>
                                     You can set system pathes or stop it and install via <%-app.meta.fullname%> Desktop Application
@@ -137,7 +141,7 @@
             <div class="nodecontent">
                 <div class="work nodestatebox">
                     <div elementsid="nodestatebox" class="ssubcaption">
-                        <span>Synchronization</span>
+                        <span><%-e('easyNode_e10008')%></span>
                     </div>
                     <div class="nodestateWrapper"></div>
                 </div>
@@ -158,7 +162,7 @@
         <div class="nodecontent collapsepart">
             <div class="work configurationBox">
                 <div elementsid="nodestatebox" class="ssubcaption">
-                    <span>Configuration</span>
+                    <span><%-e('easyNode_e10009')%></span>
                 </div>
 
             <div class="collapsingpart">
@@ -166,13 +170,17 @@
                             
                     <div class="settingTable table">
                         <div class="label">
-                            <span>Enabled</span>
+                            <span><%-e('easyNode_e10010')%></span>
                         </div>
 
                         <% if(!dis) {%>
 
                             <div class="value" sys="nodeenabled">
-                                <span><%- system.node.enabled ? 'Yes' : 'No' %></span>
+                                <% if (system.node.enabled) { %>
+                                    <span><%-e('dyes')%></span>
+                                <% } else { %>
+                                    <span><%-e('dno')%></span>
+                                <% } %>
                             </div>
 
                         <% } else { %> 
@@ -190,7 +198,7 @@
                         <div class="setting systempath">
                             <div class="settingTable table">
                                     <div class="label">
-                                        <span>Daemon Path</span>
+                                        <span><%-e('easyNode_e10011')%></span>
                                     </div>
 
                                     <div class="value" <% if(!nc.hasbin || !system.node.enabled) {%> sys="binPath" <% } %> path="<%-system.node.binPath%>">
@@ -210,7 +218,7 @@
                         <div class="setting systempath">
                             <div class="settingTable table">
                                 <div class="label">
-                                    <span>Data Path</span>
+                                    <span><%-e('easyNode_e10012')%></span>
                                 </div>
 
                                 <div class="value" <% if(!nc.hasbin || !system.node.enabled) {%> sys="ndataPath" <% } %> path="<%-system.node.ndataPath%>" >
@@ -231,13 +239,13 @@
                             <div class="setting systempathsDefaults">
                                 <div class="settingTable table">
                                     <div class="label">
-                                        <span>Set Paths to Default</span>
+                                        <span><%-e('easyNode_e10013')%></span>
                                     </div>
                 
                                     <div elementsid="toDefaultPath" class="value toDefaultPath">
                                         <div>
                                             <span>
-                                                To Default 
+                                                <%-e('easyNode_e10014')%>
                                             </span>
 
                                             <i class="far fa-times-circle"></i>
@@ -253,17 +261,17 @@
                         <div class="setting ">
                             <div class="settingTable table">
                                 <div class="label">
-                                    <span>Update Node</span>
+                                    <span><%-e('easyNode_e10015')%></span>
                                 </div>
 
                                 <div class="value">
                                     <% if(nc.hasupdates) {%>
                                         <button elementsid="buttonsmallupdatenode" class="button small updatenode">
-                                            Update Node
+                                            <%-e('easyNode_e10015')%>
                                         </button>
                                     <% } else { %> 
 
-                                        <span>No Updates Available</span>
+                                        <span><%-e('easyNode_e10016')%></span>
                                         
                                     <% }%>
                                 </div>
@@ -275,18 +283,18 @@
                             <div class="setting">
                                 <div class="settingTable table">
                                     <div class="label">
-                                        <span>Delete Node</span>
+                                        <span><%-e('easyNode_e10017')%></span>
                                     </div>
                 
                                     <div class="value">
                                         <button elementsid="buttonsmallremovenode" class="button small orange removenode">
-                                            Delete Daemon
+                                            <%-e('easyNode_e10018')%>
                                         </button>
                                     </div>
 
                                     <div class="value">
                                         <button elementsid="buttonsmallghostremovenodeall" class="button small ghost orange removenodeall">
-                                            Delete Daemon and Data
+                                            <%-e('easyNode_e10019')%>
                                         </button>
                                     </div>
 

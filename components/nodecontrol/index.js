@@ -18,7 +18,7 @@ var nodecontrol = (function(){
 				if (system.node.enabled){
 
 					var items = [{
-						text : "Disable "+self.app.meta.fullname+" Node",
+						text : self.app.localization.e('easyNode_e10039'),
 						action : function (clbk) {
 
 							return proxy.system.request('set.node.enabled', {enabled : false}).then(r => {
@@ -40,7 +40,7 @@ var nodecontrol = (function(){
 				else{
 
 					var items = [{
-						text : "Enable "+self.app.meta.fullname+" Node",
+						text : self.app.localization.e('easyNode_e10040'),
 						action : function (clbk) {
 
 							return proxy.system.request('set.node.enabled', {enabled : true}).then(r => {
@@ -85,11 +85,11 @@ var nodecontrol = (function(){
 				return proxy.system.request('set.node.dumpWallet', {}).then(r => {
 
                     if (r.filename)
-                        sitemessage(`Your wallet saved to ${r.filename}`, null, 5000) // self.app.localization.e('successcopied')
+                        sitemessage(`${self.app.localization.e('easyNode_e10041')} ${r.filename}`, null, 5000) // self.app.localization.e('successcopied')
 
 				}).catch(e => {
                     if (e.code && e.message)
-                        sitemessage(`(Code ${e.code}): ${e.message}`, null, 5000)
+                        sitemessage(`(${self.app.localization.e('dcode')} ${e.code}): ${e.message}`, null, 5000)
                     else
                         sitemessage(`Unknown error`)
 				})
@@ -97,11 +97,11 @@ var nodecontrol = (function(){
             'importWallet' : function(caller, defaultPath){
 				return proxy.system.request('set.node.importWallet', {}).then(r => {
 
-                    sitemessage(`Your wallet imported to node`, null, 5000) // self.app.localization.e('successcopied')
+                    sitemessage(`${self.app.localization.e('easyNode_e10042')}`, null, 5000) // self.app.localization.e('successcopied')
 
 				}).catch(e => {
                     if (e.code && e.message)
-                        sitemessage(`(Code ${e.code}): ${e.message}`, null, 5000)
+                        sitemessage(`(${self.app.localization.e('dcode')} ${e.code}): ${e.message}`, null, 5000)
                     else
                         sitemessage(`Unknown error`)
 				})
@@ -283,12 +283,6 @@ var nodecontrol = (function(){
 			nodecontent : function(elc, clbk){
 
 				if(actions.admin()){
-                    var direct = false
-                    if (typeof _Electron != 'undefined' && self.app.api.get.direct()){
-						_proxy = self.app.api.get.direct()
-						direct = true
-					}
-
 					self.shell({
 						inner : html,
 						name : 'nodecontent',
@@ -376,9 +370,9 @@ var nodecontrol = (function(){
 
                                 dialog({
                                     class : 'zindex',
-                                    html : "Your new address " + r,
-                                    btn1text : self.app.localization.e('Copy to ClipBoard'),
-                                    btn2text : self.app.localization.e('Cancel'),
+                                    html : `${self.app.localization.e('easyNode_e10043')} ${r}`,
+                                    btn1text : self.app.localization.e('dcopyToClipboard'),
+                                    btn2text : self.app.localization.e('dcancel'),
                                     success : function(){
                                         copycleartext(r)
                                         sitemessage(self.app.localization.e('successcopied'))
@@ -393,7 +387,7 @@ var nodecontrol = (function(){
                         p.el.on('click', '.nodebalancewithdraw', function(){
 
 							inputDialogNew({
-								caption : "Input Address and Amount for transfer PKOIN",
+								caption : self.app.localization.e('easyNode_e10044'),
 								class : 'addressdialog',
 								wrap : true,
 								values : [
@@ -401,30 +395,30 @@ var nodecontrol = (function(){
                                         defValue : '',
                                         validate : 'empty',
                                         placeholder : "Address",
-                                        label : "Destination Address"
+                                        label : self.app.localization.e('easyNode_e10045')
                                     },
                                     {
                                         defValue : 0,
                                         validate : 'empty',
                                         placeholder : "Amount",
-                                        label : "Amount (PKOIN)"
+                                        label : `${self.app.localization.e('easyNode_e10046')} (PKOIN)`
                                     }
                                 ],
 								success : function(v){
                                     topPreloader(30)
 
                                     if (v.length < 2) {
-                                        sitemessage('Invalid arguments')
+                                        sitemessage(self.app.localization.e('easyNode_e10047'))
                                         return false
                                     }
 
                                     if (v[0].length != 34) {
-                                        sitemessage('Invalid destination address')
+                                        sitemessage(self.app.localization.e('easyNode_e10048'))
                                         return false
                                     }
 
                                     if (isNaN(Number(v[1]))) {
-                                        sitemessage('Invalid amount')
+                                        sitemessage(self.app.localization.e('easyNode_e10049'))
                                         return false
                                     }
 
@@ -438,9 +432,9 @@ var nodecontrol = (function(){
 
                                         dialog({
                                             class : 'zindex',
-                                            html : "Created transaction " + r,
-                                            btn1text : self.app.localization.e('Copy to ClipBoard'),
-                                            btn2text : self.app.localization.e('Cancel'),
+                                            html : `${self.app.localization.e('easyNode_e10050')} {r}`,
+                                            btn1text : self.app.localization.e(self.app.localization.e('dcopyToClipboard')),
+                                            btn2text : self.app.localization.e('dcancel'),
                                             success : function() {
                                                 copycleartext(r)
                                                 sitemessage(self.app.localization.e('successcopied'))
@@ -499,7 +493,7 @@ var nodecontrol = (function(){
 						p.el.find('.updatenode').on('click', function(){
 							dialog({
 								class : 'zindex',
-								html : "Do you really want to Stop "+self.app.meta.fullname+" Node and Update It?",
+								html : self.app.localization.e('easyNode_e10051'),
 								btn1text : self.app.localization.e('dyes'),
 								btn2text : self.app.localization.e('dno'),
 								success : function(){
@@ -515,7 +509,7 @@ var nodecontrol = (function(){
 						p.el.find('.removenodeall').on('click', function(){
 							dialog({
 								class : 'zindex',
-								html : "<b>Attention!</b><br><br>Make a wallet backup:<br><b>wallet.dat</b><br><b>wallets/</b><br><br>Do you really want to remove "+self.app.meta.fullname+" Node and All Blockchain Data?",
+								html : self.app.localization.e('easyNode_e10052'),
 								btn1text : self.app.localization.e('dyes'),
 								btn2text : self.app.localization.e('dno'),
 								success : function(){
@@ -529,7 +523,7 @@ var nodecontrol = (function(){
 						p.el.find('.removenode').on('click', function(){
 							dialog({
 								class : 'zindex',
-								html : "Do you really want to remove "+self.app.meta.fullname+" Node Daemon?",
+								html : self.app.localization.e('easyNode_e10053'),
 								btn1text : self.app.localization.e('dyes'),
 								btn2text : self.app.localization.e('dno'),
 								success : function(){
@@ -546,7 +540,7 @@ var nodecontrol = (function(){
 
 							dialog({
 								class : 'zindex',
-								html : "Do you really want to install "+self.app.meta.fullname+" Node?",
+								html : self.app.localization.e('easyNode_e10054'),
 								btn1text : self.app.localization.e('dyes'),
 								btn2text : self.app.localization.e('dno'),
 								success : function(){
@@ -563,7 +557,7 @@ var nodecontrol = (function(){
 						p.el.find('.toDefaultPath').on('click', function(){
 							dialog({
 								class : 'zindex',
-								html : "Do you really want to set "+self.app.meta.fullname+" Node Path to Default path?",
+								html : self.app.localization.e('easyNode_e10055'),
 								btn1text : self.app.localization.e('dyes'),
 								btn2text : self.app.localization.e('dno'),
 								success : function(){
@@ -724,7 +718,8 @@ var nodecontrol = (function(){
 
 				var data = {};
 
-				proxy = deep(p, 'settings.essenseData.proxy') || api.get.current()
+				// proxy = deep(p, 'settings.essenseData.proxy') || api.get.current()
+                proxy = self.app.api.get.direct()
 
 				clbk(data);
 
