@@ -346,8 +346,6 @@ var post = (function () {
 
 			position: function () {
 
-				console.log("??? position", share.txid, primary)
-
 				if (isMobile()) return
 
 				if (primary) return
@@ -441,6 +439,16 @@ var post = (function () {
 								})
 
 							}
+						},
+
+						hlsError : function(error){
+
+							self.app.Logger.error({
+								err: 'hlsError',
+								payload: JSON.stringify(error.data),
+								code: 401,
+							});
+							
 						}
 					};
 
@@ -1783,8 +1791,6 @@ var post = (function () {
 
 			destroy: function (key) {
 				el = {};
-
-				console.log("DESTROY POST")
 
 				if (external){
 

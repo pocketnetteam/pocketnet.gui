@@ -17,7 +17,7 @@ class FrontendLogger {
   }
 
   get loggerActive() {
-    return this.app.platform.sdk.usersettings.meta.sendUserStatistics.value;
+    return this.app.platform.sdk.usersettings.meta.sendUserStatistics.value && !this.app.test;
   }
 
   _createErrorBody({
