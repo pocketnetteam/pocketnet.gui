@@ -130,6 +130,14 @@ function quit(){
     app.quit()
 }
 
+function destroyApp() {
+    proxyInterface.destroy().then(r => {
+        quit()
+    }).catch(e => {
+        quit()
+    })
+}
+
 function createTray() {
 
     var defaultImage = nativeImage.createFromPath(defaultTrayIcon);
@@ -149,16 +157,27 @@ function createTray() {
         label: 'Quit',
         click: function() {
 
-            proxyInterface.destroy().then(r => {
-
-                quit()
-
-            }).catch(e => {
-
-                quit()
+            // Check safe destroy
+            proxyInterface.candestroy().then(e => {
+                if (!e.includes('nodeControl')) { // Destroy all
+                    destroyApp()
+                } else { // Need first stop node
+                    dialog.showMessageBox(null, {
+                        type: 'question',
+                        buttons: ['Cancel', 'Yes, close'],
+                        defaultId: 1,
+                        title: 'Warning',
+                        message: 'Your node is running. Close the app anyway?',
+                    }).then(r => {
+                        if (r.response == 1) {
+                            proxyInterface.nodeStop().then(e => {
+                                destroyApp()
+                            })
+                        }
+            })
+                }
 
             })
-
         }
     }]);
 

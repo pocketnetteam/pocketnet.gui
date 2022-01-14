@@ -328,6 +328,8 @@ ____loclib.dno = "No";
 ____loclib.dsa = "Do not Show Anymore";
 ____loclib.dcode = "Code"
 ____loclib.dcopyToClipboard = "Copy to ClipBoard"
+____loclib.dwarning = "Warning"
+____loclib.dyesclose = "Yes, close"
 
 
 // Messages
@@ -1951,10 +1953,11 @@ ____loclib.easyNode_e10050 = "Created transaction"
 ____loclib.easyNode_e10051 = "Do you really want to Stop Node and Update It?"
 ____loclib.easyNode_e10052 = "Make sure that you have made a backup of the wallet. Do you really want to delete the node data directory?"
 ____loclib.easyNode_e10053 = "Do you really want to remove Node Daemon?"
-____loclib.easyNode_e10054 = "Do you really want to install Node?"
+____loclib.easyNode_e10054 = "Do you really want to install the node?"
 ____loclib.easyNode_e10055 = "Do you really want to set Node Path to Default path?"
 ____loclib.easyNode_e10056 = "Gb free RAM"
 ____loclib.easyNode_e10057 = "cores CPU"
 ____loclib.easyNode_e10058 = "Gb free disk space"
 ____loclib.easyNode_e10059 = "Mb/s internet speed"
 ____loclib.easyNode_e10060 = "SSD drive to ensure speed"
+____loclib.easyNode_e10061 = "Your node is running. Close the app anyway?"
