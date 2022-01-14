@@ -107,10 +107,20 @@
             </div>
         </div>
 
+        <% if(!window.cordova) {%>
+
+            <div class="reportCaption">
+                <div class="label">
+                    <a elementsid="hrefabout" href="applications"><%=e('e13120')%> <i class="fas fa-long-arrow-alt-down"></i></a>
+                </div>
+            </div>
+            
+        <% } %>
+
         
         <div class="reportCaption">
             <div class="label">
-                <a elementsid="https://<%-app.options.url%>/blockexplorer/" href="https://<%-app.options.url%>/blockexplorer/" cordovalink="_system" external="external">Block Explorer</a>
+                <a elementsid="https://<%-app.options.url%>/blockexplorer/" href="https://<%-app.options.url%>/blockexplorer/" cordovalink="_system" external="external">Block Explorer <i class="fas fa-external-link-alt"></i></a>
             </div>
         </div>
 

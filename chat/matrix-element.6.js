@@ -1226,7 +1226,6 @@ var preview = __webpack_require__("92a6");
       }).then(function (r) {
         _this5.$emit('sent');
 
-        console.log('text', text);
         text = _this5.replaceMentions(text); /// text
 
         if (_this5.relationEvent) {
