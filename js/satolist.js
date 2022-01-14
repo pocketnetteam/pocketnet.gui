@@ -2889,23 +2889,23 @@ Platform = function (app, listofnodes) {
     self.api = {
 
         keypair: function (m) {
-
-            var keyPair = null;
+            let keyPair;
 
             if (bitcoin.bip39.validateMnemonic(m)) {
-                var seed = bitcoin.bip39.mnemonicToSeedSync(m)
+                const seed = bitcoin.bip39.mnemonicToSeedSync(m);
 
-                var d = bitcoin.bip32.fromSeed(seed).derivePath(app.platform.sdk.address.path(0)).toWIF()
-
-                keyPair = bitcoin.ECPair.fromWIF(d)
+                keyPair = self.sdk.address.dumpKeys(0, seed);
             }
             else {
 
-                try { keyPair = bitcoin.ECPair.fromPrivateKey(Buffer.from(m, 'hex')) }
-
-                catch (e) {
-                    try {keyPair = bitcoin.ECPair.fromWIF(m) }
-                    catch (e) {}
+                try {
+                    keyPair = bitcoin.ECPair.fromPrivateKey(Buffer.from(m, 'hex'));
+                } catch (e) {
+                    try {
+                        keyPair = bitcoin.ECPair.fromWIF(m);
+                    } catch (e) {
+                        // TODO: Do something...
+                    }
                 }
 
             }
@@ -8162,11 +8162,10 @@ Platform = function (app, listofnodes) {
                             amount: amount
                         }]
 
-                        var seed = bitcoin.bip39.mnemonicToSeedSync(mnemonic);
-                        var hash = bitcoin.crypto.sha256(Buffer.from(seed));
-                        var d = bitcoin.bip32.fromSeed(seed).derivePath(app.platform.sdk.address.path(0)).toWIF();
-                        var keyPair = bitcoin.ECPair.fromWIF(d);
-                        var address = self.sdk.address.pnet(keyPair.publicKey, 'p2pkh').address;
+                        const seed = bitcoin.bip39.mnemonicToSeedSync(mnemonic);
+                        const hash = bitcoin.crypto.sha256(Buffer.from(seed));
+                        const keyPair = self.sdk.address.dumpKeys(0, seed);
+                        const { address } = self.sdk.address.pnet(keyPair.publicKey, 'p2pkh');
 
                         self.sdk.wallet.txbase([address], _.clone(outputs), null, null, function (err, inputs, _outputs) {
 
@@ -8296,11 +8295,10 @@ Platform = function (app, listofnodes) {
                             amount: amount
                         }]
 
-                        var seed = bitcoin.bip39.mnemonicToSeedSync(mnemonic);
-                        var hash = bitcoin.crypto.sha256(Buffer.from(seed));
-                        var d = bitcoin.bip32.fromSeed(seed).derivePath(app.platform.sdk.address.path(0)).toWIF();
-                        var keyPair = bitcoin.ECPair.fromWIF(d);
-                        var address = self.sdk.address.pnet(keyPair.publicKey, 'p2pkh').address;
+                        const seed = bitcoin.bip39.mnemonicToSeedSync(mnemonic);
+                        const hash = bitcoin.crypto.sha256(Buffer.from(seed));
+                        const keyPair = self.sdk.address.dumpKeys(0, seed);
+                        const address = self.sdk.address.pnet(keyPair.publicKey, 'p2pkh').address;
 
                         self.sdk.wallet.txbase([address], _.clone(outputs), null, null, function (err, inputs, _outputs) {
 
@@ -9398,45 +9396,89 @@ Platform = function (app, listofnodes) {
             },
 
             init: function (clbk) {
-
-                ///// TODO OPTIMIZATION
-
-                if (!self.sdk.addresses.storage.addresses) self.sdk.addresses.storage.addresses = [];
-                if (!self.sdk.addresses.storage.addressesobj) self.sdk.addresses.storage.addressesobj = [];
-
-                var anum = localStorage[self.sdk.address.pnet().address + 'addressesNum'] || 1;
-
-                if (anum < 10) anum = 10
-
-                for (var i = 0; i < anum; i++) {
-
-                    self.sdk.addresses.addWalletAddress(i)
-
+                if (!self.sdk.addresses.storage.addresses) {
+                    self.sdk.addresses.storage.addresses = [];
                 }
 
-                self.sdk.addresses.save()
+                if (!self.sdk.addresses.storage.addressesobj) {
+                    self.sdk.addresses.storage.addressesobj = [];
+                }
 
-                if (clbk)
-                    clbk()
+                const anum = localStorage[self.sdk.address.pnet().address + 'addressesNum'] || 10;
+
+                const walletsItem = self.sdk.address.pnet().address + 'wallets';
+
+                /**
+                 * Here we take cached wallet ID's
+                 * or generating them dynamically if
+                 * not cached.
+                 */
+                if (walletsItem in localStorage) {
+                    // console.time('LOADING CACHED WALLETS');
+                    const wallets = JSON.parse(localStorage[walletsItem]);
+
+                    wallets.forEach((walletAddress, walletNum) => {
+                        self.sdk.addresses.addCachedWallet(walletNum, walletAddress);
+                    });
+                    // console.timeEnd('LOADING CACHED WALLETS');
+                } else {
+                    // console.time('GENERATING WALLETS');
+                    const addressesList = [];
+
+                    for (let i = 0; i < anum; i++) {
+                        const address = self.sdk.addresses.addWalletAddress(i);
+
+                        addressesList.push(address);
+                    }
+
+                    localStorage[walletsItem] = JSON.stringify(addressesList);
+                    // console.timeEnd('GENERATING WALLETS');
+                }
+
+                self.sdk.addresses.save();
+
+                if (typeof clbk === 'function') {
+                    clbk();
+                }
             },
 
             save: function () {
+                const countAddresses = self.sdk.addresses.storage.addresses.length;
 
-                if (self.sdk.addresses.storage.addresses.length) {
-                    localStorage[self.sdk.address.pnet().address + 'addressesNum'] = self.sdk.addresses.storage.addresses.length
+                if (countAddresses) {
+                    const itemName = self.sdk.address.pnet().address + 'addressesNum';
+                    localStorage[itemName] = countAddresses;
                 }
             },
 
-            addWalletAddress: function (num) {
+            addCachedWallet: function(num, address) {
+                const proxyData = {
+                    getWalletData: self.sdk.address.wallet,
+                    walletNum: num,
+                    walletAddress: address,
+                };
 
-                if (typeof num == 'undefined') num = self.sdk.addresses.storage.addresses.length;
+                const proxy = new Proxy(proxyData, {
+                    get: (p, num) => {
+                        const addressObj = p.getWalletData(p.walletNum);
 
-                var address = self.sdk.address.wallet(num)
+                        self.sdk.addresses.storage.addressesobj[p.walletNum] = addressObj;
 
-                self.sdk.addresses.storage.addresses[num] = address.address;
-                self.sdk.addresses.storage.addressesobj[num] = address;
+                        return addressObj[p.walletNum];
+                    }
+                });
 
-                return address.address;
+                self.sdk.addresses.storage.addresses[num] = address;
+                self.sdk.addresses.storage.addressesobj[num] = proxy;
+            },
+
+            addWalletAddress: function (num = self.sdk.addresses.storage.addresses.length) {
+                const wallet = self.sdk.address.wallet(num);
+
+                self.sdk.addresses.storage.addresses[num] = wallet.address;
+                self.sdk.addresses.storage.addressesobj[num] = wallet;
+
+                return wallet.address;
             },
 
             getFirstRandomAddress : function(clbk){
@@ -9563,7 +9605,7 @@ Platform = function (app, listofnodes) {
                 }
 
                 if (type == 'p2pkh' || type == 'p2wpkh') {
-                    a = bitcoin.payments[type]({ pubkey: pubkey })
+                    a = bitcoin.payments[type]({ pubkey })
 
                     this.storage[type] = a;
 
@@ -9572,7 +9614,7 @@ Platform = function (app, listofnodes) {
 
                 if (type == 'p2sh') {
 
-                    a = bitcoin.payments['p2wpkh']({ pubkey: pubkey })
+                    a = bitcoin.payments['p2wpkh']({ pubkey })
 
                     var p2sh = bitcoin.payments.p2sh({ redeem: a })
 
@@ -9583,35 +9625,26 @@ Platform = function (app, listofnodes) {
             },
 
             wallet: function (n, private) {
+                const { publicKey: pubkey } = self.sdk.address.dumpKeys(n, private);
 
-                var d = bitcoin.bip32.fromSeed(private || self.app.user.private.value).derivePath(app.platform.sdk.address.path(n)).toWIF()
+                const a = bitcoin.payments['p2wpkh']({ pubkey });
 
-                var keyPair = bitcoin.ECPair.fromWIF(d)
-
-                var pubkey = keyPair.publicKey;
-
-                var a = bitcoin.payments['p2wpkh']({ pubkey: pubkey })
-
-                var p2sh = bitcoin.payments.p2sh({ redeem: a })
+                const p2sh = bitcoin.payments.p2sh({ redeem: a });
 
                 return p2sh;
-
             },
 
-            dumpKeys: function (n) {
-                var d = bitcoin.bip32.fromSeed(self.app.user.private.value).derivePath(app.platform.sdk.address.path(n)).toWIF()
+            dumpKeys: function (n, private = self.app.user.private.value) {
+                const addressPath = app.platform.sdk.address.path(n);
+                const d = bitcoin.bip32.fromSeed(private).derivePath(addressPath).toWIF();
 
-                var keyPair = bitcoin.ECPair.fromWIF(d)
+                const keyPair = bitcoin.ECPair.fromWIF(d);
 
                 return keyPair;
             },
 
             dumpPrivKey: function (n) {
-
-
-                var d = bitcoin.bip32.fromSeed(self.app.user.private.value).derivePath(app.platform.sdk.address.path(n)).toWIF()
-
-                var keyPair = bitcoin.ECPair.fromWIF(d)
+                const keyPair = self.sdk.address.dumpKeys(n);
 
                 return keyPair.privateKey;
             },
