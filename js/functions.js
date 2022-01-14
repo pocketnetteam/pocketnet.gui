@@ -11231,3 +11231,23 @@ if(typeof window != 'undefined'){
 		
 
 }
+
+
+errortostring = function(error){
+	try{
+		if(error.toString) {
+
+			var s = error.toString()
+
+			if (s != '[object Object]')
+				return s
+		}
+
+		if(_.isObject(error)) return JSON.stringify(error)
+	}
+
+	catch(e){
+		return ''
+	}
+
+}

@@ -21,6 +21,8 @@ Localization = function(app){
 			key : 'en'
 		},
 
+	
+
 		ru : {
 			name : "Русский",
 			key : 'ru'
@@ -50,9 +52,9 @@ Localization = function(app){
 		},
 		
 
-		cmn : {
+		zh : {
 			name : "官話",
-			key : 'cmn'
+			key : 'zh'
 		}
 
 	}

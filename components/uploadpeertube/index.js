@@ -195,7 +195,6 @@ var uploadpeertube = (function () {
             wndObj.close();
           })
           .catch((e = {}) => {
-            debugger;
             self.app.Logger.error({
               err: e.text || 'videoUploadError',
               payload: JSON.stringify(e),
