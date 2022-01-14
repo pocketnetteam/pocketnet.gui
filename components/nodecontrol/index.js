@@ -129,6 +129,10 @@ var nodecontrol = (function(){
 				})
 			},
 
+			allsettings: function(){
+				renders.all()
+			},
+
 			tick : function(state){
 
 				//var laststate = info
@@ -267,10 +271,17 @@ var nodecontrol = (function(){
 			
 		}
 
+		var lock = function(){
+			el.c.find('.nodecontentmanage').addClass('lock')
+		}
+
 		var renders = {
 			all : function(){
 
 				if (el.c){
+
+					renders.nodelanding(el.c)
+					renders.electronfornode()
 
 					renders.nodecontentmanage(el.c, function(){
 						renders.nodecontentstate(el.c)
@@ -424,6 +435,68 @@ var nodecontrol = (function(){
 					})
 				}
 			},
+			nodelanding : function(elc, clbk){
+
+				self.shell({
+					inner : html,
+					name : 'landing',
+					data : {
+						nc : info.nodeControl,
+						admin : actions.admin(),
+						system : system,
+					},
+
+					el : elc.find('.landing')
+
+				},
+				function(p){
+
+					p.el.find('.learnmore').on('click', function(){
+						
+
+						self.nav.api.go({
+							href : 'easynode',
+							history : true,
+							open : true,
+							inWnd : true,
+
+							essenseData : {
+								action : function(){
+
+									globalpreloader(true)
+
+									setTimeout(function(){
+
+										dialog({
+											class : 'zindex',
+											html : self.app.localization.e('easyNode_e10054'),
+											btn1text : self.app.localization.e('dyes'),
+											btn2text : self.app.localization.e('dno'),
+											success : function(){
+			
+												lock()
+												actions.installNode()
+												
+											}
+										})
+
+										globalpreloader(false)
+
+									}, 600)
+
+									
+
+								}
+							}
+						})	
+
+					})
+
+					if (clbk)
+						clbk()
+				})
+
+			},
 			nodecontentmanage : function(elc, clbk){
 				if(actions.admin()) {
 
@@ -454,9 +527,7 @@ var nodecontrol = (function(){
 					},
 					function(p){
 
-						var lock = function(){
-							p.el.find('.nodecontentmanage').addClass('lock')
-						}
+						
 
 						actions.settings(p.el)
 
@@ -514,13 +585,12 @@ var nodecontrol = (function(){
 								btn1text : self.app.localization.e('dyes'),
 								btn2text : self.app.localization.e('dno'),
 								success : function(){
+
 									lock()
 									actions.installNode()
 									
 								}
 							})
-
-							
 
 						})
 
@@ -620,6 +690,43 @@ var nodecontrol = (function(){
 
 				}
 			},
+
+			electronfornode : function(clbk){
+				if(!actions.admin() && !(typeof _Electron != 'undefined' && _Electron)) {
+
+					self.shell({
+						inner : html,
+						name : 'electronfornode',
+						data : {
+							
+						},
+
+						el : el.c.find('.downloadelectron')
+
+					},
+					function(p){
+
+						self.nav.api.load({
+							id : 'applications',
+							open : true,
+							el : p.el.find('.applicationscontainer'),
+
+							essenseData : {
+								filter : function(os){
+									return os.node
+								}
+							}
+						})
+
+						if (clbk)
+							clbk()
+					})
+
+				}
+				else{
+					el.c.find('.downloadelectron').html('')
+				}
+			}
 		}
 
 		var state = {
@@ -649,8 +756,6 @@ var nodecontrol = (function(){
 		var make = function(){
 			destroy()
 
-			
-
 			info = null
 
 			if (proxy) {
@@ -675,6 +780,11 @@ var nodecontrol = (function(){
 				})
 			}
 
+			else{
+				info = {}
+				renders.all()
+			}
+
 			
 		}
 
@@ -691,7 +801,7 @@ var nodecontrol = (function(){
 				proxy = deep(p, 'settings.essenseData.proxy')
 				
 				if(!proxy){
-					proxy = typeof _Electron != 'undefined' && _Electron ? self.app.api.get.direct() : api.get.current()
+					proxy = typeof _Electron != 'undefined' && _Electron ? self.app.api.get.direct() : null// : api.get.current()
 				}
 				
 				clbk(data);
@@ -717,6 +827,10 @@ var nodecontrol = (function(){
 				initEvents();
 
 				p.clbk(null, p);
+			},
+
+			wnd : {
+				class : 'wndnodecontrol withoutButtons normalizedmobile',
 			}
 		}
 	};

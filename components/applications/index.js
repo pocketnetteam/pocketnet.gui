@@ -8,7 +8,7 @@ var applications = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, ed;
+		var el, ed, oss, block = false;
 
 		var actions = {
 
@@ -17,6 +17,8 @@ var applications = (function(){
 
 					if(os.github){
 
+						globalpreloader(true)
+
 						$.get(os.github.url, {}, function(d){
 
 							var assets = deep(d, 'assets') || [];
@@ -24,8 +26,6 @@ var applications = (function(){
 							var l = _.find(assets, function(a){
 								return a.name == os.github.name
 							})
-
-							console.log('assets', assets, l, os.github.name)
 
 							if (l){
 
@@ -38,6 +38,8 @@ var applications = (function(){
 									clbk(l.browser_download_url)
 							}
 
+							globalpreloader(false)
+
 
 						})
 
@@ -46,70 +48,54 @@ var applications = (function(){
 				}
 			},
 
-			os : function(clbk){
-				var _os = os();
-
-				var oses = self.app.platform.applications[ed.key];
-
-				var keys = Object.keys(oses);
-
-				var current = oses[_os];
-				var extraKeys = keys.filter(function(key){
-					return true
-					
-					// key !== _os;
-				})
-
-				if (_os && current && (typeof _Electron == 'undefined' ) && !window.cordova && !isInStandaloneMode()){
-
-					//renders.os(current, clbk)
-
-					extraKeys.forEach(function(key){
-						renders.os(oses[key], clbk, true);
-					})
-
-				}
-
-				else
-				{	
-					if (clbk)
-						clbk();
-				}
-			}
-
 		}
 
 		var events = {
-			
+			block : function(){
+				block = true
+
+				setTimeout(function(){
+					block = false
+				}, 1000)
+			}
 		}
 
 		var renders = {
-			os : function(os, clbk, extra){
 
+			mainoss : function(){
+				os()
+			},
 
-				if(os.hidden) return
-
-				var attr = extra ? os.id : '.currentos';
+			oss : function(_oss){
 
 				self.shell({
-					name :  'os',
-					el : el.c.find(attr),
+					name :  'oss',
 					data : {
-						os : os,
-						last : false
+						oss : _oss
 					},
 
+					el : el.c.find('.oss')
+
 				}, function(_p){
+
 					_p.el.find('.downloadOs').on('click', function(){
-						console.log('downloadOsdownloadOsdownloadOs', os)
-						actions.download(os, function(link){
 
-							console.log('link', link)
+						if(block) return
 
-							el.c.find(attr + ' .os').addClass('rundownloading');
-							el.c.find(attr + ' .skipositem').html('<div><a href="'+link+'"><b>'+self.app.localization.e('e13012')+'</b></a></div>')
-					
-						})
+						events.block()
+
+						var osid = $(this).closest('.os').attr('osid')
+
+						var os = _.find(_oss, (os) => {return osid == os.id})
+				
+						if (os){
+							actions.download(os, function(link){
+
+							})
+						}
+						else{
+							sitemessage('error')
+						}
 					})
 				})
 			}
@@ -130,7 +116,12 @@ var applications = (function(){
 		}
 
 		var make = function(){
-			actions.os()
+
+			var filtered = _.filter(oss, function(os){
+				return !ed.filter || ed.filter(os)
+			})
+
+			renders.oss(filtered)
 		}
 
 		return {
@@ -140,7 +131,7 @@ var applications = (function(){
 
 				ed = deep(p, 'settings.essenseData') || {}
 
-				ed.key ||(ed.key = 'ui')
+				oss = self.app.platform.applications[ed.key || 'ui']
 
 				var data = {
 					ed : ed
@@ -152,6 +143,7 @@ var applications = (function(){
 
 			destroy : function(){
 				el = {};
+				ed = {}
 			},
 			
 			init : function(p){

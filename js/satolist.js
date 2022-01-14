@@ -281,10 +281,27 @@ Platform = function (app, listofnodes) {
         return {
 
             ui: {
+                android : {
+                    appname: app.meta.fullname,
+                    id: "android",
+                    text: {
+                        name: "Android",
+                        download: self.app.localization.e('e13222'),
+                        label: self.app.localization.e('e13223')
+                    },
+        
+                    icon: '<i class="fab fa-android"></i>',
+        
+                    modile : true,
+                    image : 'applications_android.png',
+
+                    href: 'https://play.google.com/store/apps/details?id=pocketnet.app'
+                },
+
                 windows: {
     
                     appname: app.meta.fullname,
-                    id: "#windows",
+                    id: "windows",
                     text: {
                         name: "Windows",
                         download: self.app.localization.e('e13222'),
@@ -298,12 +315,15 @@ Platform = function (app, listofnodes) {
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
                         page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
                     },
-                    
+                    image : 'applications_windows.png',
+                   
+
+                    node : true
                 },
 
                 macos: {
                     appname: app.meta.fullname,
-                    id: '#macos',
+                    id: 'macos',
                     text: {
                         name: "macOS",
                         download: self.app.localization.e('e13222'),
@@ -311,7 +331,7 @@ Platform = function (app, listofnodes) {
                     },
         
                     icon: '<i class="fab fa-apple"></i>',
-        
+                    image : 'applications_macos.png',
                     github: {
                         name: 'Pocketnet'+ "Setup.dmg", //app.meta.fullname + "Setup.dmg",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
@@ -319,22 +339,25 @@ Platform = function (app, listofnodes) {
                     },
                 },
         
-                currentos: {
+                linux: {
                     appname: app.meta.fullname,
-                    id: "#linux",
+                    id: "linux",
                     text: {
                         name: "Linux",
                         download: self.app.localization.e('e13222'),
                         label: self.app.localization.e('e13224')
                     },
         
+                    image : 'applications_linux.png',
                     icon: '<i class="fab fa-linux"></i>',
         
                     github: {
                         name: 'Pocketnet' + "Setup.deb",//  self.app.meta.fullname + "Setup.deb",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
                         page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
-                    }
+                    },
+
+                    node : true
                 }
             },
     
@@ -6730,7 +6753,7 @@ Platform = function (app, listofnodes) {
             reputationBlocked : function(address){
                 var ustate = self.sdk.ustate.storage[address] || deep(self, 'sdk.usersl.storage.' + address) || deep(self, 'sdk.users.storage.' + address);
 
-				if (ustate && ustate.reputation <= -30){
+				if (ustate && ustate.reputation <= -12){
                     return true
                 }
             },

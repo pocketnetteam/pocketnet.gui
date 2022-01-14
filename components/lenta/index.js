@@ -4174,7 +4174,6 @@ var lenta = (function(){
 				}
 				else
 				{
-
 					if (clear) el.c.find('.shares').empty()
 
 					renders.shares(shares, function(){
@@ -4194,20 +4193,10 @@ var lenta = (function(){
 
 							if(!essenseData.second){
 								if (p.s && !p.msh){
+									actions.openPost(p.s, function(){
+										actions.scrollToPost(p.s)
+									})
 
-									console.log("p.s", p.s)
-
-									//essenseData.openPostInWindowMobile = true
-
-									//if(!isMobile())
-	
-										actions.openPost(p.s, function(){
-											actions.scrollToPost(p.s)
-										})
-
-									//else{
-										//actions.scrollToPost(p.s)
-									//}
 								}
 	
 								if (p.i){
@@ -4248,7 +4237,6 @@ var lenta = (function(){
 									actions.postscores(p.p, function(){})
 								}
 							}
-							
 
 							if (clbk){
 								clbk()
@@ -4262,6 +4250,8 @@ var lenta = (function(){
 							if(essenseData.notscrollloading && essenseData.txids){
 								renders.txidall(essenseData.txids)
 							}
+
+							_p = null
 						
 						})
 
@@ -4448,7 +4438,6 @@ var lenta = (function(){
 				}
 
 				_.each(carousels, function(carousel){
-
 					carousel.owlCarousel('destroy')
 					carousel.empty()
 				})
@@ -4613,10 +4602,8 @@ var lenta = (function(){
 					el.c.addClass('mainvideo')
 				}
 
+				if(!essenseData.goback) p.clbk(null, p);
 
-				if(!essenseData.goback)
-					p.clbk(null, p);
-				
 			},
 
 			hideshowedvideo : function(){

@@ -2,7 +2,9 @@
 
 #nodecontrol{
 
-
+    .maincaption{
+        display: none;
+    }
 
     /*.collapsepart{
         .collapsingpart{
@@ -38,6 +40,35 @@
         }
     }*/
 
+    .nodelanding{
+        margin-bottom: 3 * @rhythm;
+        border-radius: 10px;
+        background: @color-black2;
+        color : #fff;
+        text-align: center;
+        padding : 5 * @rhythm;
+
+        .buttonWrapper{
+            padding : 2 * @rhythm 0;
+        }
+
+        
+    }
+
+    .electronfornode{
+        padding-top: 4 * @rhythm;
+        padding-bottom: 4 * @rhythm;
+        .title{
+            text-align: center;
+            max-width: 450px;
+            margin : 0 auto;
+            
+            span{
+                font-size: 2em;
+            }
+        }
+    }
+
     .caption{
         padding : 4 * @rhythm 0 ;
         padding-top : 3 * @rhythm;
@@ -65,7 +96,7 @@
         }
     }
 
-    .subcaption{
+    .fsubcaption{
         
         padding : 4 * @rhythm;
         padding-top : 5 * @rhythm;
@@ -278,12 +309,16 @@
         padding : 4 * @rhythm 0;
         cursor: pointer;
         color : @color-gray-mlight;
-        
-        .transition(0.3s);
 
-        &:hover{
-            color : @color-bright;
+        &:not(.loading){
+            .transition(0.3s);
+
+            &:hover{
+                color : @color-bright;
+            }
         }
+        
+        
 
         .text{
             padding : @rhythm 0;

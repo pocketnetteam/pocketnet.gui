@@ -1,0 +1,27 @@
+    <% _.each(oss, function(os){ %> 
+        
+        <div osid="<%-os.id%>" class="os">
+
+            <% if(os.image) {%> 
+                <div class="osimage">
+                    <img src="img/<%- os.image %>">
+                </div>
+            <% } %>
+
+            <div class="icon">
+                <%= os.icon %>
+            </div>
+
+            <div class="data">
+                <div class="subcaption">
+                    <span><%- os.text.name %></span>
+                </div>
+
+                <div class="buttonWrapper">
+                    <button elementsid="download<%- os.text.name %>" class="downloadOs"><%- e('download') %></button>
+                </div>
+            </div>
+            
+        </div>
+        
+    <% }) %>

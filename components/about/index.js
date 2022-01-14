@@ -64,6 +64,13 @@ var about = (function(){
 			})
 
 			reports.push({
+				name :  'Easynode',
+				id : 'about-easynode',
+				report : 'easynode',
+				mobile : true
+			})
+
+			reports.push({
 				name : self.app.localization.e('insteadOf') + ' youtube',
 				id : 'about-youtube',
 				report : 'aboutYoutube',

@@ -6,9 +6,9 @@ var easynode = (function(){
 
 	var Essense = function(p){
 
-		var primary = deep(p, 'history');
+		var primary = (p.history && !p.inWnd) || p.primary;
 
-		var el, amount = 1000, info = null;
+		var el, amount = 1000, info = null, ed;
 
 		
 		var blocktime = [{
@@ -127,9 +127,9 @@ var easynode = (function(){
 
 						el.am = el.c.find('.amredits');
 	
-						el.am.focus();
+						//el.am.focus();
 
-						window.scrollTo(0, 0)
+						//window.scrollTo(0, 0)
 						el.am.on('keyup', function(){
 							var v = $(this).text() || ''
 
@@ -145,8 +145,6 @@ var easynode = (function(){
 
 						el.am.on('change', function(){
 							var v = $(this).text() || ''
-
-							console.log('change', v)
 
 							amount = Number(v.replace(/,/g,''));
 
@@ -185,26 +183,52 @@ var easynode = (function(){
 			}
 		}
 
+		var make = function(){
+			renders.calc();
+		}
+
 		var initEvents = function(){
 
-			$('#panelWrapper').hide();
+			el.c.find('.start').on('click', function(){
+
+				if (ed.action){
+
+					ed.action()
+
+					self.closeContainer()
+
+					return
+
+				}
 			
-			renders.calc();
+
+				self.nav.api.go({
+					href : (isMobile() || !(typeof _Electron != 'undefined' && _Electron)) ? 'nodecontrol' : 'userpage?id=nodecontrol',
+					history : true,
+					open : true,
+					inWnd : isMobile()
+				})		
+
+			})
 
 		}
 
 		return {
 			primary : primary,
 
-			getdata : function(clbk){
+			getdata : function(clbk, p){
 
 				var data = {};
+
+					ed = deep(p, 'settings.essenseData') || {}
 
 				clbk(data);
 
 			},
 
 			destroy : function(){
+
+				ed = {};
 				el = {};
 			},
 			
@@ -217,8 +241,13 @@ var easynode = (function(){
 				el.calcWrapper = el.c.find('.calcWrapper');
 
 				initEvents();
+				make()
 
 				p.clbk(null, p);
+			},
+
+			wnd : {
+				class : 'wndeasynode withoutButtons normalizedmobile',
 			}
 		}
 	};

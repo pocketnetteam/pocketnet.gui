@@ -1899,7 +1899,7 @@ ____loclib.downloadMobileApp = "Install Mobile Application"
 
 ____loclib.easyNode_e10000 = "Node"
 ____loclib.easyNode_e10001 = "Download and install node"
-____loclib.easyNode_e10002 = "Manage"
+____loclib.easyNode_e10002 = "Bastyon Node"
 ____loclib.easyNode_e10003 = "Loading"
 ____loclib.easyNode_e10004 = "Node Installing"
 ____loclib.easyNode_e10005 = "Node Removing"

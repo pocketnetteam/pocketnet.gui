@@ -11,8 +11,7 @@ var post = (function () {
 
 	var Essense = function (p) {
 
-		var primary = (deep(p, 'history')  && !p.inWnd) || deep(p, 'primary');
-
+		var primary = (p.history && !p.inWnd) || p.primary;
 
 		var el, share, ed, inicomments, eid = '', _repost = null, level = 0, external = null;
 
