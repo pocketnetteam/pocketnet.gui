@@ -81,13 +81,13 @@ var faq = (function(){
 						{
 							id : 'pocketcoinbuy',
 							q : 'Can I buy additional Pocketcoin?',
-							a : '<div>Yes, currently you can buy Pocketcoin on the following exchanges: DigiFinex, Bitforex, Mercatox. You can also buy it for 19 different cryptos at https://pkoin.net/ and there is a Category within Bastyon called PKOIN/Peer-to-Peer where you can buy and sell it with other users. </div>',
+							a : '<div>Yes, currently you can buy Pocketcoin on the following exchanges: DigiFinex, Bitforex, Mercatox. You can also buy it for 19 different cryptos at <a href="https://pkoin.net/">pkoin.net</a> and there is a Category within Bastyon called PKOIN/Peer-to-Peer where you can buy and sell it with other users. </div>',
 						},
 				
 						{
 							id : 'pocketcoinbuyfiat',
 							q : 'Can I buy Pocketcoin for US Dollars or other fiat currency?',
-							a : '<div>Yes, you can buy it under the category PKOIN/Peer-to-Peer or through a company called Indacoin at https://buy.pkoin.indacoin.io/ Indacoin has nothing to do with Bastyon, they are just selling PKOIN for credit cards after buying it on exchanges.</div>',
+							a : '<div>Yes, you can buy it under the category PKOIN/Peer-to-Peer or through a company called Indacoin at <a href="https://buy.pkoin.indacoin.io/">indacoin.io</a>. Indacoin has nothing to do with Bastyon, they are just selling PKOIN for credit cards after buying it on exchanges.</div>',
 						},
 						
 						{
@@ -99,7 +99,7 @@ var faq = (function(){
 				},
 				{
 				
-					name : 'How I can buy PKOIN?',
+					name : 'How can I buy PKOIN?',
 					id : 'buy-pkoin',
 				
 					group : [
@@ -107,11 +107,17 @@ var faq = (function(){
 						{
 							id : 'buy-pkoin1',
 							q : '  ',
-							a : 'You can buy PKOIN in the following ways: <br>	Select PKOIN/Peer-to-Peer Category on the right and look for ads, then connect in chat <br> <a target="_blank" href="https://www.bitforex.com/en/spot/pkoin_usdt">https://www.bitforex.com/en/spot/pkoin_usdt</a> <br> <a target="_blank" href="https://www.digifinex.com/en-ww/trade/USDT/PKOIN">https://www.digifinex.com/en-ww/trade/USDT/PKOIN</a>  <br> <a target="_blank" href="https://pkoin.net/">https://pkoin.net/</a> - you can buy PKOIN for cryptocurrencies <br>		<a target="_blank" href="https://buy.pkoin.indacoin.io/">https://buy.pkoin.indacoin.io/</a> - you can buy PKOIN for credit cards.',
+							a : 'Select PKOIN/Peer-to-Peer Category on the right and look for ads, then connect in chat <br> ',
 							img: '<img src="img/per-to-per2.jpg" alt="" />'
 						},
 						{
 							id : 'buy-pkoin2',
+							q : 'You can buy PKOIN in the following ways:',
+							a : 'You can buy PKOIN for cryptocurrencies: <br /><a target="_blank" href="https://pkoin.net/">pkoin.net</a><br>	<a target="_blank" href="https://www.bitforex.com/en/spot/pkoin_usdt">www.bitforex.com</a> <br> <a target="_blank" href="www.digifinex.com/en-ww/trade/USDT/PKOIN">www.digifinex.com</a> <br><a target="_blank" href="https://buy.pkoin.indacoin.io/">indacoin.io</a> - you can buy PKOIN for credit cards.',
+							img: ''
+						},
+						{
+							id : 'buy-pkoin23',
 							q : 'Pkoin.net  ',
 							a : 'Choose a cryptocurrency and enter amount of the crypto into the left field. After that, enter your own PKOIN wallet address.',
 							img: '<img src="img/buy-pkoin2.jpg" alt="" />'
@@ -177,6 +183,89 @@ var faq = (function(){
 					]
 				
 				},
+				{
+				
+					name : 'Earn PKOIN with EasyNode?',
+					id : 'earnbastyonen',
+				
+					group : [
+				
+						{
+							id : 'earnbastyon1en',
+							q : '',
+							a : 'Requirements: <br /> <br />•	Your machine is not running any other Bastyon/Pocketnet node software <br />•	Your hard drive is SSD (not HDD) <br />•	Your computer has at least 50 GB empty space on your SSD<br />•	Your computer has at least 2 GB free RAM <br />•	Your internet speed is at least 10 Mb/sec',
+							img: ''
+						},
+						{
+							id : 'earnbastyon2en',
+							q : '',
+							a : 'Go to “Node” tab in “Manage” page',
+							img: '<img src="img/earnbastyon2en.jpg" alt="" />'
+						},
+						{
+							id : 'earnbastyon3en',
+							q : '',
+							a : 'You can change the node and data directory if there is not enough free space on your C drive',
+							img: '<img src="img/earnbastyon3en.jpg" alt="" />'
+						},
+						{
+							id : 'earnbastyon4en',
+							q : '',
+							a : 'Click “Download and install node”',
+							img: '<img src="img/earnbastyon4en.jpg" alt="" />'
+						},
+						{
+							id : 'earnbastyon5en',
+							q : '',
+							a : 'You will see the progress bar',
+							img: '<img src="img/earnbastyon5en.jpg" alt="" />'
+						},	
+						{
+							id : 'earnbastyon6en',
+							q : '',
+							a : 'Wait until the next step and Status Running. First launch of the node can take several hours – DO NOT TURN OFF YOUR COMPUTER',
+							img: '<img src="img/earnbastyon6en.jpg" alt="" />'
+						},	
+						{
+							id : 'earnbastyon7en',
+							q : '',
+							a : '',
+							img: '<img src="img/earnbastyon7en.jpg" alt="" />'
+						},	
+						{
+							id : 'earnbastyon8en',
+							q : '',
+							a : '',
+							img: '<img src="img/earnbastyon8en.jpg" alt="" />'
+						},	
+						{
+							id : 'earnbastyon9en',
+							q : '',
+							a : 'You will need to deposit PKOIN to earn stakes, click Deposit. After clicking Deposit you will see a PKOIN address. You can copy the address and send PKOIN to it. If you did not yet buy PKOIN, you can buy it in the following ways: <br />1.	Buy for cryptocurrency at pkoin.net (or on DigiFinex or Bitforex exchanges) <br />2.	Buy it by selecting PKOIN/Peer-to-Peer tag on the left side of the Bastyon application. Select a seller and write to them in chat (at your own risk)',
+							img: '<img src="img/earnbastyon9ru.jpg" alt="" />'
+						},	
+						{
+							id : 'earnbastyon10en',
+							q : '',
+							a : 'Other functions are available: <br />– Withdraw  - withdraw PKOIN (reduces your chance of winning coins)<br />– Save Wallet  (backup node wallet, very important, saves your private keys if your node crashes)<br />– Import Wallet  (you can import an outside wallet with private keys)',
+							img: '<img src="img/earnbastyon10en.jpg" alt="" />'
+						},	
+						{
+							id : 'earnbastyon11en',
+							q : '',
+							a : 'In this example you see that 500 PKOIN was deposited. Note, that your node wallet is separate from your default Bastyon wallet, they are not connected. You need to transfer coins to the node from the wallet to win stakes.',
+							img: ''
+						},	
+						{
+							id : 'earnbastyon12en',
+							q : '',
+							a : 'After you deposit PKOIN, 60 blocks needs to pass (approx. 60 minutes). Once you see the green checkmark that says Staking, you are now ready to start earning PKOIN. You can periodically go in and see how your balance is changing with winning stakes. For any questions, write to support@bastyon.com',
+							img: '<img src="img/earnbastyon12ru.jpg" alt="" />'
+						},	
+						
+					]
+				
+				},
 
 				{
 				
@@ -193,7 +282,7 @@ var faq = (function(){
 						{
 							id : 'permissions',
 							q : 'Who can load video in Bastyon?',
-							a : '<div> Bastyon does not have centralized servers or venture capital financing, all video is stored on servers maintained by users. Therefore, we cannot allow everyone to load video, servers will fill up quickly. To load video you need to have 5 PKOIN (500 MB) or 50 PKOIN (5 GB) in your account. You can buy PKOIN from other users if you select a category PKOIN/Peer-to-Peer. </div>',
+							a : '<div> Bastyon does not have centralized servers or venture capital financing, all video is stored on servers maintained by users. Therefore, we cannot allow everyone to load video, servers will fill up quickly. To load video you need to have 5 PKOIN (500 MB) or 50 PKOIN (4 GB) in your account. You can buy PKOIN from other users if you select a category PKOIN/Peer-to-Peer. </div>',
 						},
 						{
 							id : 'stats',
@@ -230,7 +319,7 @@ var faq = (function(){
 						{
 							id : 'Uploading1',
 							q : '  ',
-							a : 'Important: The uploading video function is available for users who have at least 5 PKOIN, or high enough rating. If you have 50 PKOIN you can upload 4 Gb video per day, with 50 PKOIN you can upload up to 5 GB. Note, you do not spend PKOIN, it just has to be in your account to verify that you are not a bot.',
+							a : 'Important: The uploading video function is available for users who have at least 5 PKOIN, or high enough rating. If you have 50 PKOIN you can upload 4 Gb video per day, with 50 PKOIN you can upload up to 4 GB. Note, you do not spend PKOIN, it just has to be in your account to verify that you are not a bot.',
 							img: ''
 						},
 						{
@@ -241,7 +330,7 @@ var faq = (function(){
 						},
 						{
 							id : 'Uploading3',
-							q : 'Then, click “Upload Video” button and in the popup click “Select video file” button. After that, chose necessary video file from your PC and wait for uploading to be finished.',
+							q : 'Then, click “Upload Video” button and in the popup click “Select video file” button. After that, choose necessary video file from your PC and wait for uploading to be finished.',
 							a : '',
 							img: '<img src="img/Uploading3.jpg" alt="" />',
 							
@@ -342,8 +431,7 @@ var faq = (function(){
 						{
 							id : 'linktoprofile',
 							q : 'Can I link to my profile? or my "page"? So that i can post it into my community to bring members over.',
-							a : '<div>In the browser, go to your profile by clicking on avatar in the upper right and click Share, then select Use Referral Link checkmark, everyone who will sign up from the link that is generated will be offered to follow you automatically when signing up. For every referral that signs up through you link, you will get a bonus equal to 20% of the Pocketcoin (PKOIN) they earn through posting and commenting for the first 6 months. To be clear, your referral does not earn less, you get a bonus.</div>\
-								<div>On the desktop, </div>',
+							a : '<div>In the browser, go to your profile by clicking on avatar in the upper right and click Share, then select Use Referral Link checkmark, everyone who will sign up from the link that is generated will be offered to follow you automatically when signing up. For every referral that signs up through you link, you will get a bonus equal to 20% of the Pocketcoin (PKOIN) they earn through posting and commenting for the first 6 months. To be clear, your referral does not earn less, you get a bonus.</div>',
 						},
 						{
 							id : 'starsystem',
@@ -361,7 +449,7 @@ var faq = (function(){
 						{
 							id : 'mobileapp',
 							q : 'Is there a mobile app?',
-							a : '<div>There is an Android app, you can download it here: https://play.google.com/store/apps/details?id=pocketnet.app  iPhone app is not available, because Apple required us to censor any content on 24 hour notice. In Bastyon even developers cannot remove content, it is moderated by the users. Batyon is optimized for mobile browsers like Safari on the iPhone.</div>',
+							a : '<div>There is an Android app, you can download it <a href="https://play.google.com/store/apps/details?id=pocketnet.app">here</a>. iPhone app is not available, because Apple required us to censor any content on 24 hour notice. In Bastyon even developers cannot remove content, it is moderated by the users. Batyon is optimized for mobile browsers like Safari on the iPhone.</div>',
 						},
 				
 						{
@@ -398,7 +486,7 @@ var faq = (function(){
 						{
 							id : 'otherbrowsers',
 							q : 'Can it be used on Brave or Duck Duck go browsers?',
-							a : '<div>'+self.app.meta.fullname+' should work on those browsers. It is fully functional on Chrome and Firefox. But we strongly encourage everyone to download the desktop app (grab '+self.app.meta.fullname+'Setup.exe here: https://bastyon.com/help?page=applications). The desktop app cannot be blocked ever (even if <%- app.meta.url %> is down or blocked for some reason). This is a serious consideration in totalitarian and quasi-totalitarian countries which, if you think about it, is beginning to include more and more of the globe.</div>',
+							a : '<div>'+self.app.meta.fullname+' should work on those browsers. It is fully functional on Chrome and Firefox. But we strongly encourage everyone to download the desktop app (grab '+self.app.meta.fullname+'Setup.exe <a href="https://bastyon.com/about?id=about-download">here</a>). The desktop app cannot be blocked ever (even if '+ app.meta.url +' is down or blocked for some reason). This is a serious consideration in totalitarian and quasi-totalitarian countries which, if you think about it, is beginning to include more and more of the globe.</div>',
 						},
 				
 						{
@@ -441,7 +529,7 @@ var faq = (function(){
 						{
 							id : 'Missing PKCOIN',
 							q : 'Help! I am missing my PKOIN!',
-							a : '<div>If for some reason it seems like your PKOIN has gone missing, please first check the blockexplorer via<a href="https://'+self.app.options.url+'/blockexplorer/">BlockExplorer.</a> to that your coins are still there. Just search your wallet address in the search bar and it will show you the balance of your account. </div>',
+							a : '<div>If for some reason it seems like your PKOIN has gone missing, please first check the blockexplorer via <a href="https://'+self.app.options.url+'/blockexplorer/">BlockExplorer.</a> to that your coins are still there. Just search your wallet address in the search bar and it will show you the balance of your account. </div>',
 						},
 				
 					]
@@ -478,7 +566,7 @@ var faq = (function(){
 						{
 							id : 'runnode',
 							q : 'Can I run a node on my headless server?',
-							a : '<div> Instructions are here https://github.com/pocketnetteam/pocketnet.core/blob/master/README.md </div>',
+							a : '<div> Instructions are <a href="https://github.com/pocketnetteam/pocketnet.core/blob/master/README.md">here</a>.</div>',
 						},
 				
 						{
@@ -805,7 +893,90 @@ var faq = (function(){
 						]
 					
 					},
+					{
 				
+						name : 'Как заработать PKOIN, используя легкую ноду?',
+						id : 'earnbastyon',
+					
+						group : [
+					
+							{
+								id : 'earnbastyon1',
+								q : '',
+								a : 'Требования: <br />- На вашем компьютере не установлено другое программное обеспечение Bastion/Pocket net node<br />- Ваш жесткий диск - SSD (не жесткий диск)<br />- На твердотельном накопителе вашего компьютера имеется не менее 50 ГБ свободного места<br />- На вашем компьютере имеется не менее 2 ГБ свободной оперативной памяти<br />- Ваша скорость интернета составляет не менее 10 Мбит/сек',
+								img: ''
+							},
+							{
+								id : 'earnbastyon2',
+								q : '',
+								a : 'Перейдите на вкладку “Нода” на странице “Управление”',
+								img: '<img src="img/earnbastyon2ru.jpg" alt="" />'
+							},
+							{
+								id : 'earnbastyon3',
+								q : '',
+								a : 'Вы можете изменить узел и каталог данных, если на вашем диске C недостаточно свободного места',
+								img: '<img src="img/earnbastyon3ru.jpg" alt="" />'
+							},
+							{
+								id : 'earnbastyon4',
+								q : '',
+								a : 'Кликните “Загрузить и установить ноду”',
+								img: '<img src="img/earnbastyon4ru.jpg" alt="" />'
+							},
+							{
+								id : 'earnbastyon5',
+								q : '',
+								a : 'Вы увидите индикатор установки ноды',
+								img: '<img src="img/earnbastyon5ru.jpg" alt="" />'
+							},	
+							{
+								id : 'earnbastyon6',
+								q : '',
+								a : 'Подождите до следующего шага и статуса Запущено. Первый запуск ноды может занять несколько часов – НЕ ВЫКЛЮЧАЙТЕ КОМПЬЮТЕР',
+								img: '<img src="img/earnbastyon6ru.jpg" alt="" />'
+							},	
+							{
+								id : 'earnbastyon7',
+								q : '',
+								a : '',
+								img: '<img src="img/earnbastyon7ru.jpg" alt="" />'
+							},	
+							{
+								id : 'earnbastyon8',
+								q : '',
+								a : '',
+								img: '<img src="img/earnbastyon8ru.jpg" alt="" />'
+							},	
+							{
+								id : 'earnbastyon9',
+								q : '',
+								a : 'Вам нужно будет внести PKOIN, чтобы заработать ставки, нажмите "Внести". После нажатия кнопки Пополнить счет вы увидите адрес пункта. Вы можете скопировать адрес и отправить по нему PKOIN. Если вы еще не купили PKOIN, вы можете купить его следующими способами: <br />1. Покупайте за криптовалюту на pkoin.net (или на биржах DigiFinex Orbit forex)<br />2. Купите его, выбрав тег "PKOIN/Из рук в руки" в левой части приложения Bastyon. Выберите продавца и напишите ему в чат (на свой страх и риск)',
+								img: '<img src="img/earnbastyon9ru.jpg" alt="" />'
+							},	
+							{
+								id : 'earnbastyon10',
+								q : '',
+								a : 'Доступны и другие функции: <br />– Вывод средств - вывод PKOIN (уменьшает ваши шансы на выигрыш монет)<br />– Сохранить кошелек (кошелек резервного узла, очень важно, сохраняет ваши личные ключи в случае сбоя вашего узла)<br />– Импорт кошелька (вы можете импортировать внешний кошелек с закрытыми ключами)',
+								img: '<img src="img/earnbastyon10ru.jpg" alt="" />'
+							},	
+							{
+								id : 'earnbastyon11',
+								q : '',
+								a : 'В этом примере вы видите, что было внесено 500 PKOIN . Обратите внимание, что ваш кошелек узла отделен от вашего кошелька Бастиона по умолчанию, они не подключены. Вам нужно перевести монеты на узел из кошелька, чтобы выиграть ставки.',
+								img: ''
+							},	
+							{
+								id : 'earnbastyon12',
+								q : '',
+								a : 'После того, как вы внесете PKOIN, необходимо пройти 60 блоков (около 60 минут). Как только вы увидите зеленую галочку с надписью "Стейкинг", вы готовы начать зарабатывать PKOIN. Вы можете периодически заходить и смотреть, как меняется ваш баланс в зависимости от выигрышных ставок. По любым вопросам пишите на support@bastyon.com',
+								img: '<img src="img/earnbastyon12ru.jpg" alt="" />'
+							},	
+							
+						]
+					
+					},
+					
 				{
 				
 				name: self.app.meta.fullname,
@@ -1280,7 +1451,7 @@ var faq = (function(){
 						{
 							id : "How does it work",
 							q : "Comment puis-je débuter?",
-							a : "<div><p>"+self.app.meta.fullname+" est facile à utiliser: vous avez seulement qu'à créer un compte et vous pourrez commencer immédiatement à publier du contenu, suivre d'autres utilisateurs et utiliser le chats.</p><p>Pendant l'enregistrement, vous devez créer un nom d'utilisateur (il doit être unique) et télécharger une image ou une photo (il n'est pas nécessaire que ce soit votre photo!). Aucun courriel (Vous pouvez laisser votre courriel sur la liste d'envoi, mais il ne sera pas connecté à votre compte Bastyon), aucun numéro de téléphone, aucunes vérifications. Même pas de mot de passe: le système génèrera une phrase que vous devrez utiliser pour vous connecter, cette phrase est votre clé secrète qui remplecera votre identifiant et votre mot de passe, la seule chose dont vous avez besoin pour vous connecter. Si vous perdez cette clé secrète. Personne ne peut la retrouvée, même les développeurs n'ont pas accès aux comptes d'utilisateurs.</p></div>",
+							a : "<div><p>"+self.app.meta.fullname+" est facile à utiliser: vous avez seulement qu'à créer un compte et vous pourrez commencer immédiatement à publier du contenu, suivre d'autres utilisateurs et utiliser le chats.</p><p>Pendant l'enregistrement, vous devez créer un nom d'utilisateur (il doit être unique) et télécharger une image ou une photo (il n'est pas nécessaire que ce soit votre photo!). Aucun courriel (Vous pouvez laisser votre courriel sur la liste d'envoi, mais il ne sera pas connecté à votre compte Bastyon), aucun numéro de téléphone, aucunes vérifications. Même pas de mot de passe: le système génèrera une phrase que vous devrez utiliser pour vous connecter, cette phrase est votre clé secrète qui remplecera votre identifiant et votre mot de passe, la seule choose dont vous avez besoin pour vous connecter. Si vous perdez cette clé secrète. Personne ne peut la retrouvée, même les développeurs n'ont pas accès aux comptes d'utilisateurs.</p></div>",
 						},
 							
 						{
