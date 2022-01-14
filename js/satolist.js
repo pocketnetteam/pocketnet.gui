@@ -9458,10 +9458,22 @@ Platform = function (app, listofnodes) {
                     walletAddress: address,
                 };
 
+                /**
+                 * Proxy object is used here to
+                 * give access to wallet credentials
+                 * populator, without really instantiating
+                 * wallet data. It creates data only when
+                 * requested.
+                 */
                 const proxy = new Proxy(proxyData, {
                     get: (p, num) => {
                         const addressObj = p.getWalletData(p.walletNum);
 
+                        /**
+                         * Once wallet credentials populated
+                         * replacing Proxy object with
+                         * original wallet data.
+                         */
                         self.sdk.addresses.storage.addressesobj[p.walletNum] = addressObj;
 
                         return addressObj[p.walletNum];
