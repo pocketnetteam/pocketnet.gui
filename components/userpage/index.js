@@ -8,7 +8,7 @@ var userpage = (function(){
 
 		var primary = (p.history && !p.inWnd) || p.primary;
 
-		var el, ed;
+		var el = {}, ed = {};
 
 		var currentExternalEssense = null;
 
@@ -676,7 +676,6 @@ var userpage = (function(){
 						},
 	
 					}, function(_p){
-						console.log(_p.el)
 						_p.el.find('.copyaddress').on(clickAction(), function(){
 							copyText($(this))
 
@@ -691,8 +690,6 @@ var userpage = (function(){
 		
 			},
 			contents : function(clbk, id){
-
-				console.log("render contents", id, el)
 
 				if(!el.contents) return
 
@@ -1128,10 +1125,12 @@ var userpage = (function(){
 
 				currentExternalEssense = null;
 
-
 				$('#menu').removeClass('abs')
 
+				if(el.c) el.c.empty()
+
 				el = {};
+				ed = {}
 			},
 			
 			init : function(p){

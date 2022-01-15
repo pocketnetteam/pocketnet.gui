@@ -125,8 +125,6 @@ var applications = (function(){
 
 			var __os = os()
 
-			console.log('__os', __os)
-
 			var filtered = _.filter(oss, function(os){
 				return os.id != __os
 			})

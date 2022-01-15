@@ -10,7 +10,7 @@ var test = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, lastTransaction, ed, ref, plissing; 
+		var el = {}, ed, ref, plissing; 
 
 		var firstTime = false;
 		var termsaccepted = false;
@@ -615,12 +615,6 @@ var test = (function(){
 							}
 						}
 					}
-
-					//if(id == 'ref'){
-
-						//self.app.platform.api.inputs.user(parameter)
-
-					//}
 				})
 			},
 
@@ -1219,14 +1213,18 @@ var test = (function(){
 			},
 
 			destroy : function(){
+
+				if (el.c) el.c.empty()
+
+
 				el = {};
+				ed = {};
 
 				saving = false
 
 				tempInfo = {
 					language : self.app.localization.key || 'en'
 				}
-
 
 				return null;
 			},

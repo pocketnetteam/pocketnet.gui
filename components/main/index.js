@@ -978,11 +978,11 @@ var main = (function(){
 					return
 				}
 
-				if(_s.v && (isMobile() || window.cordova)){
+				if((_s.v || _s.s) && (isMobile() || window.cordova)){
 
 					self.nav.api.load({
 						open : true,
-						href : 'post?s=' + _s.v,
+						href : 'post?s=' + (_s.v || _s.s),
 						history : true,
 						replaceState : true
 					})

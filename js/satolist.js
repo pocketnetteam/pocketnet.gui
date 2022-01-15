@@ -24380,27 +24380,11 @@ Platform = function (app, listofnodes) {
 
         }
 
-
-        ///////////
-
         self.sdk.localshares.initclbk()
 
         if(window.cordova){
             setupOpenwith()
         }
-
-
-        /*if(window.cordova){
-            setupOpenwith()
-            self.sdk.local.shares.initclbk()
-            
-            //self.sdk.local.shares.init();
-        } else if (typeof _Electron != 'undefined' && window.electron) {
-            self.sdk.local.shares.initclbk()
-            // self.sdk.local.shares.init();
-        }*/
-
-        
 
     }
 

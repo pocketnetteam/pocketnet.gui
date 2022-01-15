@@ -522,8 +522,7 @@
 		var wnd;
 
 		var find = function(s){
-			if (wnd)
-				return wnd.find(s);
+			if (wnd) return wnd.find(s);
 		}
 
 		var hasonewindow = function(){
@@ -716,6 +715,24 @@
 			
 		}
 
+		var clearmem = function(){
+			wnd = null;
+
+			self.el = null
+			self.close = null
+
+			_.each(p.buttons, function(button){
+				delete button.el
+			})
+
+			el = null
+			app = null
+
+			self.essenseDestroy = null
+
+			p = {}
+		}
+
 		var actions = {
 			close : function(cl, key){
 
@@ -738,13 +755,19 @@
 				delete app.events.resize[id]
 				delete app.events.scroll[id]
 
+				
+
 				wnd.addClass('asette')
 				wnd.removeClass('sette')
 
 				setTimeout(function(){
+
 					wnd.remove();
 
 					hasonewindow()
+
+					clearmem()
+
 				}, 100)
 				
 
@@ -752,6 +775,8 @@
 
 			hide : function(cl, key) {
 				// wnd.find('.wndback').css('display', 'none');
+
+				if(!wnd) return
 
 				wnd.find('.buttons').addClass('hidden');
 				wnd.addClass('hiddenState');
@@ -768,6 +793,9 @@
 			},
 
 			show : function(cl, key) {
+
+				if(!wnd) return
+
 				// wnd.find('.wndback').css('display', 'none');
 				wnd.find('.buttons').removeClass('hidden');
 				wnd.removeClass('hiddenState');
@@ -5898,6 +5926,8 @@
 	os = function() {
 		var os = null;
 		
+
+		if (navigator.appVersion.indexOf("Win")!=-1) os = "windows";
 		if (navigator.appVersion.indexOf("Mac")!=-1) os = "macos";
 		if (navigator.appVersion.indexOf("iPhone")!=-1) os = "ios";
 		if (navigator.appVersion.indexOf("X11")!=-1) os = "unix";

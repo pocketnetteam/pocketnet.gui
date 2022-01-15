@@ -8,7 +8,7 @@ var filluserfast = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, k = {}, needcaptcha = false, gliperror = false, essenseData, initialParameters, ext = null;
+		var el = {}, k = {}, needcaptcha = false, gliperror = false, essenseData, initialParameters, ext = null;
 		
 		var categoryIcons = [
 			{
@@ -1120,7 +1120,7 @@ var filluserfast = (function(){
 
 			
 
-			settings : function(_el, clbk, pel){
+			settings : function(_el, clbk){
 
 
 				self.nav.api.load({
@@ -1177,9 +1177,6 @@ var filluserfast = (function(){
 							self.sdk.registrations.add(k.mainAddress, 2)
 
 							state.save()
-
-
-							console.log('actions.next()', userInfo)
 
 							actions.next()
 						}
@@ -1313,7 +1310,8 @@ var filluserfast = (function(){
 				delete self.app.errors.clbks.filluserfast
 				delete self.app.platform.sdk.node.transactions.clbks.filluser
 
-				if(ext) ext.destroy()
+				if (ext) 
+					ext.destroy()
 
 				ext = null
 
@@ -1322,7 +1320,11 @@ var filluserfast = (function(){
 
 				k = {}
 
+				if(el.c) el.c.empty()
+
 				el = {};
+
+				essenseData = {}
 			},
 			
 			init : function(p){

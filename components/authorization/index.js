@@ -18,8 +18,8 @@ var authorization = (function(){
 
 		//////////////////////////////
 
-		var el,
-			essenseData,
+		var el = {},
+			essenseData = {},
 			initialParameters;
 
 		//var codeReader = new ZXing.BrowserQRCodeReader();
@@ -394,9 +394,12 @@ var authorization = (function(){
 			},
 
 			destroy : function(){
+
+				if(el.c) el.c.empty()
+
 				el = {};
 
-				if(ext) {
+				if (ext) {
 					ext.destroy(); 
 					ext = null;
 				}
