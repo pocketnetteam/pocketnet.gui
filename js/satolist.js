@@ -286,8 +286,8 @@ Platform = function (app, listofnodes) {
                     id: "android",
                     text: {
                         name: "Android",
-                        download: self.app.localization.e('e13222'),
-                        label: self.app.localization.e('e13223')
+                        download: self.app.localization.e('e132221'),
+                        label: self.app.localization.e('e132233')
                     },
         
                     icon: '<i class="fab fa-android"></i>',
@@ -875,6 +875,7 @@ Platform = function (app, listofnodes) {
                     if (!r) {
 
                         self.app.platform.sdk.relayTransactions.send(function(action){
+                            
 
                             if(!action){
 
@@ -4881,7 +4882,6 @@ Platform = function (app, listofnodes) {
             send: function (clbk) {
 
                 var needaction = false
-
                 self.app.user.isState(function (state) {
 
                     if (state) {

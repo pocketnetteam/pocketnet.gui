@@ -5897,11 +5897,12 @@
 
 	os = function() {
 		var os = null;
-
-		if (navigator.appVersion.indexOf("Win")!=-1) os = "windows";
+		
 		if (navigator.appVersion.indexOf("Mac")!=-1) os = "macos";
+		if (navigator.appVersion.indexOf("iPhone")!=-1) os = "ios";
 		if (navigator.appVersion.indexOf("X11")!=-1) os = "unix";
 		if (navigator.appVersion.indexOf("Linux")!=-1) os = "linux";
+		if (navigator.appVersion.indexOf("Android")!=-1) os = "android";
 
 		return os
     }

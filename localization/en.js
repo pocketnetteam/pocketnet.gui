@@ -764,9 +764,16 @@ ____loclib.e13220 = "Pocketcoins delivered"
 ____loclib.errorreload = "Something went wrong. Please reload page and try again"
 ____loclib.e13221 = "Do you really want to delete information about this deal? Deal can't be stop"
 ____loclib.e13222 = "Download Desktop App - this is the most censorship resistant way to use "+appname+". Even if websites are shut down, desktop application will still run directly through the nodes."
+
+
+
 ____loclib.e13223 = "Download "+appname+" for Windows"
 ____loclib.e132232 = "Download "+appname+" for macOs"
 ____loclib.e13224 = "Download "+appname+" for Linux"
+
+____loclib.e132233 = "Download "+appname+" for Android"
+____loclib.e132221 = "Download Mobile App - this is the most usefull way to use "+appname+"."
+
 ____loclib.e13225 = ""+appname+" Node"
 ____loclib.e13226 = "Download Node"
 ____loclib.e13227 = "Download "+appname+" Node for Windows"

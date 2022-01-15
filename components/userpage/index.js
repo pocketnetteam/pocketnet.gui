@@ -6,7 +6,7 @@ var userpage = (function(){
 
 	var Essense = function(p){
 
-		var primary = deep(p, 'history');
+		var primary = (p.history && !p.inWnd) || p.primary;
 
 		var el, ed;
 
@@ -38,6 +38,7 @@ var userpage = (function(){
 					mobile : true,
 					rh : true
 				})
+
 			}
 			else{
 				
@@ -54,8 +55,6 @@ var userpage = (function(){
 						id : 'test',
 						report : 'fillUser',
 						mobile : true,
-
-						//openReportPageMobile : true
 					})
 		
 				}
@@ -845,6 +844,7 @@ var userpage = (function(){
 			},
 
 			fillUser : function(el, clbk){
+
 				self.shell({
 
 					name :  'fillUser',
@@ -860,9 +860,26 @@ var userpage = (function(){
 					}
 
 				})
+
+				
+				/*if(!self.app.errors.connection()){
+					if(!self.app.user.validate()){
+
+
+
+						return
+					}
+				}*/
+
+			
+
+				
 			},
 
 			authorization : function(el, clbk){
+
+				self.closeContainer()
+
 				self.nav.api.go({
 					href : 'authorization',
 					history : true,
@@ -871,6 +888,9 @@ var userpage = (function(){
 			},
 
 			registration : function(el, clbk){
+
+				self.closeContainer()
+				
 				self.nav.api.go({
 					href : 'registration',
 					history : true,
@@ -879,8 +899,6 @@ var userpage = (function(){
 			},
 
 			report : function(id, clbk){
-
-				
 
 				if (currentExternalEssense)
 					currentExternalEssense.destroy();
@@ -899,8 +917,6 @@ var userpage = (function(){
 						self.app.actions.scroll(0)
 	
 					currentExternalEssense = p;
-
-					
 
 					if (clbk)
 						clbk();
@@ -988,7 +1004,10 @@ var userpage = (function(){
 
 		var makerep = function(clbk){
 			
-			var id = parameters().id;
+			var id = null;
+			
+
+			if (primary) id = parameters().id;
 
 			self.app.user.isState(function (state) { 
 
@@ -1090,14 +1109,11 @@ var userpage = (function(){
 
 				self.app.platform.sdk.ustate.me(function(_mestate){					
 
-
 					mestate = _mestate
 
 					clbk(data);
 
 				})
-
-					
 
 			},
 
@@ -1129,16 +1145,8 @@ var userpage = (function(){
 			
 				el.bgcaption = el.c.find('.bgCaptionWrapper')
 
-				$('#menu').addClass('abs')
-
-				
-
-				/*self.app.platform.sdk.keys.init().then(r => {
-					console.log("RESULT", r)
-				})*/
-
-				//self.app.platform.ui.keygeneration()
-
+				if(!p.inWnd)
+					$('#menu').addClass('abs')
 
 				initEvents();
 

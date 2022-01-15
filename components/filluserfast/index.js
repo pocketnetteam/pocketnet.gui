@@ -144,10 +144,14 @@ var filluserfast = (function(){
 
 					var requested = self.app.settings.get(address, 'request') || "";
 
-
-					console.log("requested")
-
 					if (requested){
+
+						var regs = app.platform.sdk.registrations.storage[address];
+
+						if (regs && (regs == 2)) {
+							self.sdk.registrations.add(address, 3)
+						}
+						
 						actions.next()
 
 						return
@@ -157,6 +161,13 @@ var filluserfast = (function(){
 					balance.check(function(result){
 
 						if (result){
+
+							var regs = app.platform.sdk.registrations.storage[address];
+
+							if (regs && (regs == 2)) {
+								self.sdk.registrations.add(address, 3)
+							}
+							
 							actions.next()
 						}
 						else
@@ -836,7 +847,6 @@ var filluserfast = (function(){
 				}
 				else{
 					var key = bitcoin.bip39.generateMnemonic();
-
 
 					k.mnemonicKey = key;
 

@@ -125,15 +125,15 @@ var applications = (function(){
 
 			var __os = os()
 
-			/*var filtered = _.filter(oss, function(os){
+			console.log('__os', __os)
+
+			var filtered = _.filter(oss, function(os){
 				return os.id != __os
 			})
 
-			console.log('filtered.length != fl', filtered.length, fl, __os)
-			
 			if(filtered.length != fl){
 				renders.mainoss(oss[__os])
-			}*/
+			}
 			
 			renders.oss(filtered)
 
