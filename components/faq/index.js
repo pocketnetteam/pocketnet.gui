@@ -242,7 +242,7 @@ var faq = (function(){
 							id : 'earnbastyon9en',
 							q : '',
 							a : 'You will need to deposit PKOIN to earn stakes, click Deposit. After clicking Deposit you will see a PKOIN address. You can copy the address and send PKOIN to it. If you did not yet buy PKOIN, you can buy it in the following ways: <br />1.	Buy for cryptocurrency at pkoin.net (or on DigiFinex or Bitforex exchanges) <br />2.	Buy it by selecting PKOIN/Peer-to-Peer tag on the left side of the Bastyon application. Select a seller and write to them in chat (at your own risk)',
-							img: '<img src="img/earnbastyon9ru.jpg" alt="" />'
+							img: '<img src="img/earnbastyon9ru (1).jpg" alt="" />'
 						},	
 						{
 							id : 'earnbastyon10en',
@@ -952,7 +952,7 @@ var faq = (function(){
 								id : 'earnbastyon9',
 								q : '',
 								a : 'Вам нужно будет внести PKOIN, чтобы заработать ставки, нажмите "Внести". После нажатия кнопки Пополнить счет вы увидите адрес пункта. Вы можете скопировать адрес и отправить по нему PKOIN. Если вы еще не купили PKOIN, вы можете купить его следующими способами: <br />1. Покупайте за криптовалюту на pkoin.net (или на биржах DigiFinex Orbit forex)<br />2. Купите его, выбрав тег "PKOIN/Из рук в руки" в левой части приложения Bastyon. Выберите продавца и напишите ему в чат (на свой страх и риск)',
-								img: '<img src="img/earnbastyon9ru.jpg" alt="" />'
+								img: '<img src="img/earnbastyon9ru (1).jpg" alt="" />'
 							},	
 							{
 								id : 'earnbastyon10',
