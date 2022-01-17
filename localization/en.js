@@ -1969,3 +1969,12 @@ ____loclib.easyNode_e10058 = "Gb free disk space"
 ____loclib.easyNode_e10059 = "Mb/s internet speed"
 ____loclib.easyNode_e10060 = "SSD drive to ensure speed"
 ____loclib.easyNode_e10061 = "Your node is running. Close the app anyway?"
+
+____loclib.IHave = "I have";
+____loclib.downloadNode = "Download Windows Desktop Node";
+____loclib.months = "Months";
+____loclib.year = "Year";
+____loclib.stakingCalculator = "Staking Calculator - calculate how much you earn by putting Pocketcoin (PKOIN) into a node."
+____loclib.easyNode_e2000 = "Help support decentralization, fight corporate censorship and earn Pocketcoin at the same time."
+____loclib.easyNode_e2001 = "What is Pocketcoin? Pocketcoin is a cryptocurrency that powers the decentralized social platform Bastyon.com. It is used to reward content creators, to boost posts and comments, to pay for ads and to unlock special features on Bastyon."
+____loclib.easyNode_e2002 = "What is a  node?  A node is a computer owned by any user of Bastyon that supports the network and earns Pocketcoin. Your computer can be one of those nodes, assuming you have at least 50 GB of free SSD space and a decent internet connection.  <br><br> Your node will verify all of the activities that happen on the Bastyon network. In exchange for that, you will earn Pocketcoin. Node has to lock some Pocketcoin in it to earn more Pocketcoin. That is called staking in cryptocurency."
