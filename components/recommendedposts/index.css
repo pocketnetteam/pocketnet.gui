@@ -74,9 +74,15 @@
   padding-left: 1em;
   padding-right: 1.5em;
 }
+#recommendedposts .posts .post .imageWrapper {
+  margin-top: 0.5em;
+}
 #recommendedposts .posts .post .imageWrapper img {
   border-radius: 8px;
   max-width: 100%;
+}
+#recommendedposts .posts .post .postcontent {
+  margin-top: 0.5em;
 }
 #recommendedposts .posts .post .addressTable {
   cursor: pointer;
@@ -85,14 +91,15 @@
   vertical-align: middle;
 }
 #recommendedposts .posts .post .addressTable > div.iconWrapper {
-  width: 50px;
+  width: 24px;
   text-align: center;
 }
 #recommendedposts .posts .post .addressTable > div.iconWrapper .usericon {
-  height: 40px;
-  width: 40px;
+  height: 24px;
+  width: 100%;
 }
 #recommendedposts .posts .post .addressTable > div.label {
+  padding-left: 0.5em;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -104,9 +111,8 @@
   display: flex;
 }
 #recommendedposts .posts .post .addressTable > div.label .top .name {
-  font-weight: 600;
+  font-weight: 700;
   font-size: 0.9em;
-  max-width: 120px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;

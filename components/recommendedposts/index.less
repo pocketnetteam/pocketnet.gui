@@ -97,11 +97,17 @@
 			padding-right: @rhythm * 3;
 
 			.imageWrapper{
+				margin-top: @rhythm;
+
 				img{
 					border-radius: 8px;
 					max-width: 100%;
 
 				}
+			}
+
+			.postcontent{
+				margin-top: @rhythm;
 			}
 			
 
@@ -115,16 +121,17 @@
 					vertical-align: middle;
 	
 					&.iconWrapper{
-						width: 50px;
+						width: 24px;
 						text-align: center;
 
 						.usericon{
-							height: 40px;
-							width: 40px;
+							height: 24px;
+							width: 100%;
 						}
 					}
 	
 					&.label{
+						padding-left: @rhythm;
 						text-overflow: ellipsis;
 						overflow: hidden;
 						white-space: nowrap;
@@ -137,9 +144,8 @@
 						.top{
 							display: flex;
 							.name{
-								font-weight: 600;
+								font-weight: 700;
 								font-size: .9em;
-								max-width: 120px;
 								text-overflow: ellipsis;
 								white-space: nowrap;
 								overflow: hidden;

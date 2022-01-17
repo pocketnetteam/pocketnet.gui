@@ -16,6 +16,8 @@ _.each(addresses, function(u){
 	var name = userprofile.name
 	var letter = name ? name[0] : ''; 
 	var r = userprofile.reputation
+
+	console.log('u!!!', u)
 %>
 	<div class="wrk">
 
@@ -143,10 +145,28 @@ _.each(addresses, function(u){
 		
 			<% } %>
 
+			<% if(u.m){%>
+
 			<div class="postcontent">
 				<div class="message">
 					<%- decodeURIComponent(u.m) %>							
 				</div>		
+			</div>
+			<% } %>
+
+			<div class="infoWrapper">
+				<div class="date">
+					<%-app.reltime(Number(u.time + '000'))%>
+				</div>
+				<div class="scoreSum">
+					<%- u.scoreSum %>							
+				</div>
+				<div class="scoreCnt">
+					<%- u.scoreCnt %>							
+				</div>
+				<div class="comments">
+					<%- u.comments %>							
+				</div>
 			</div>
 
 		</div>
