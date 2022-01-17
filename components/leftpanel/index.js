@@ -46,8 +46,6 @@ var leftpanel = (function(){
 					
 					clbk : function(e, p){
 
-						//console.log("P", p)
-
 						tags = p
 					}
 
@@ -212,8 +210,6 @@ var leftpanel = (function(){
 			},
 
 			destroy : function(){
-
-				console.log("DESTROY")
 
 				if (tags){
 					tags.destroy()

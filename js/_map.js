@@ -182,6 +182,7 @@ __map =  {
 		href : "about",
 		add : insertingfunc,
 		anonimus : true,
+		electronDontOpen : true
 	},
 
 	aboutHome : {
@@ -272,6 +273,7 @@ __map =  {
 		href : "terms",
 		add : insertingfunc,
 		anonimus : true,
+		electronDontOpen : true
 	},
 
 	
@@ -283,6 +285,7 @@ __map =  {
 		},
 		anonimus : true,
 		relationsSunc : true,
+		electronDontOpen : true
 	},
 
 	welcome : {
@@ -408,7 +411,7 @@ __map =  {
 				auth : 'authorization'
 			},*/
 			relationsSunc : true,
-
+			electronDontOpen : true,
 			relations : [
 
 				{src : 'js/vendor/exif.js', f : 'js', 
@@ -511,6 +514,8 @@ __map =  {
 			uri : "articles",
 			href : "articles",
 			add : insertingfunc,
+
+			electronDontOpen : true
 		},	
 		article : {
 			uri : "article",
@@ -548,13 +553,17 @@ __map =  {
 
 				
 			],
-			relationsSunc : true
+			relationsSunc : true,
+
+			electronDontOpen : true
 		},	
 
 		articlesv : {
 			uri : "articlesv",
 			href : "articlesv",
 			add : insertingfunc,
+
+			electronDontOpen : true
 		},	
 		articlev : {
 			uri : "articlev",
@@ -697,7 +706,7 @@ __map =  {
 
 			relationsSunc : true,
 
-			
+			electronDontOpen : true
 		},
 
 		share : {
@@ -727,6 +736,7 @@ __map =  {
 
 		
 			],
+			electronDontOpen : true
 		},
 
 		comments : {
