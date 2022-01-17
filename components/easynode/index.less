@@ -4,16 +4,26 @@
   .actionWrapper{
     padding : 5 * @rhythm 0;
     text-align: center;
+
+    .button{
+      text-decoration: underline;
+      color: #0f72bb;
+      font-weight: 700;
+      font-size: 2.3rem;
+      cursor: pointer;
+
+    }
   }
 
   .container{
-    max-width: 1024px;
+    max-width: 1280px;
     width: 100%;
     margin: 0 auto;
     padding: 40px 20px;
   }
 
   .calcWrapper{
+    margin-top: @rhythm * 4;
     
     .calc{
       max-width: 800px;
@@ -171,10 +181,118 @@
     &__content {
       min-height: 520px;
       height: 100%;
+
       //margin: 10px 0;
     }
 
   }
+
+  .faqWrapper{
+    max-width: 1280px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: @rhythm * 4;
+    padding-top: @rhythm * 6;
+    border-top: 1px solid #c5c2c2;
+
+    .faq{
+      padding: 0 20px;
+
+      .group{
+        margin-bottom: 4 * @rhythm;
+  
+        .groupCaption{
+          font-size: 2.5em;
+          font-weight: 700;
+          padding-bottom: @rhythm;
+          color : @color-orange;
+        }
+  
+        
+  
+        .groupCnt{
+          .question{
+            font-size: 1.5em;
+            padding-bottom: 6 * @rhythm;
+            max-width: 700px;
+  
+            .questiontop{
+              display: flex;
+              justify-content: space-between;
+            }
+  
+            .questionName{
+              padding-bottom: 2 * @rhythm;
+              font-weight: 700;
+              color : @color-gray;
+              font-size: 1.5em;
+              max-width: 85%;
+            }
+  
+            .answer{
+              font-size : 0.8em;
+              padding-bottom: 20px !important;
+  
+              a{
+                text-decoration: underline;
+                color : @color-main;
+              }
+              .image{
+                width:100% !important;
+                max-width: 700px;
+                position: relative;
+                img{
+                  width:100% !important;
+                }
+              }
+  
+              div{
+                padding-bottom: @rhythm;
+              }
+            }
+  
+            .share{
+              margin-top: @rhythm;
+              color : #ff6e84;
+              font-size: 0.7em;
+              cursor: pointer;
+              &:hover{
+  
+                color : @color-main;
+              }
+              span{
+                padding-right: 2px;
+              }
+            }
+  
+            .icon{
+              background: @color-main;
+              color : #fff;
+              cursor: pointer;
+              .transition(0.3s);
+              width: 44px;
+              height: 44px;
+              line-height: 44px;
+              text-align: center;
+              border-radius: 50%;
+              font-size: 0.6em;
+  
+              &:hover{
+                background : @color-contrast;
+              }						
+  
+              i{
+                
+              }
+            }
+          }
+        }
+      }
+    }
+
+
+	}
 
 
   @media (max-width: 400px){
