@@ -8,7 +8,7 @@ var easynode = (function(){
 
 		var primary = (p.history && !p.inWnd) || p.primary;
 
-		var el, amount = 1000, info = null, ed;
+		var el, amount = 1000, info = null, ed, oss;
 
 		
 		var blocktime = [{
@@ -62,9 +62,54 @@ var easynode = (function(){
 
 		var actions = {
 
+			download : function(os, clbk){
+				if (os){
+					debugger;
+
+					if(os.github){
+
+						globalpreloader(true)
+
+
+						$.get(os.github.url, {}, function(d){
+
+							var assets = deep(d, 'assets') || [];
+
+							var l = _.find(assets, function(a){
+								return a.name == os.github.name
+							})
+
+							if (l){
+
+								var link = document.createElement('a');
+							        link.setAttribute('href', l.browser_download_url);
+							        link.setAttribute('download','download');
+							        link.click();
+
+							    if (clbk)
+									clbk(l.browser_download_url)
+							}
+
+							globalpreloader(false)
+
+
+						})
+
+					}
+
+				}
+			}
+
 		}
 
 		var events = {
+
+			downloadWindow : function(){
+
+				var os = _.find(oss, (os) => {return 'windows' == os.id})
+
+				actions.download(os);
+			}
 			
 		}
 
@@ -189,26 +234,10 @@ var easynode = (function(){
 
 		var initEvents = function(){
 
+
 			el.c.find('.start').on('click', function(){
 
-				if (ed.action){
-
-					ed.action()
-
-					self.closeContainer()
-
-					return
-
-				}
-			
-
-				self.nav.api.go({
-					href : (isMobile() || !(typeof _Electron != 'undefined' && _Electron)) ? 'nodecontrol' : 'userpage?id=nodecontrol',
-					history : true,
-					open : true,
-					inWnd : isMobile()
-				})		
-
+				events.downloadWindow();
 			})
 
 		}
@@ -220,7 +249,11 @@ var easynode = (function(){
 
 				var data = {};
 
-					ed = deep(p, 'settings.essenseData') || {}
+					ed = deep(p, 'settings.essenseData') || {};
+
+					oss = self.app.platform.applications[ed.key || 'ui'];
+
+					console.log('oss!', oss)
 
 				clbk(data);
 
