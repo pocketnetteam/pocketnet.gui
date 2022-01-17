@@ -494,7 +494,6 @@ Comment = function(txid){
 		
 										self.images.v[index] = 'https://'+app.options.url+':8092/i/' + deep(data, 'data.ident');
 
-										console.log('self.images.v[index]', self.images.v[index])
 										p.success();
 		
 									},
@@ -988,7 +987,6 @@ Share = function(lang){
 			}
 			
 			_.each(self.on.change || {}, function(f){
-				console.log('poll', f);
 				f('poll', this.v)
 			})
 

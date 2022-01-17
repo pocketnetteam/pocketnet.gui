@@ -89,9 +89,7 @@ var applications = (function(){
 						var os = _.find(_oss, (os) => {return osid == os.id})
 				
 						if (os){
-							actions.download(os, function(link){
-
-							})
+							actions.download(os, function(link){})
 						}
 						else{
 							sitemessage('error')

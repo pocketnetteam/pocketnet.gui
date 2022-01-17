@@ -26,7 +26,16 @@
                 </div>
 
                 <div class="buttonWrapper">
-                    <button elementsid="download<%- os.text.name %>" class="downloadOs"><%- e('download') %></button>
+                    <% if(os.href) {%>
+                        
+                        <a href="<%-os.href%>">
+                            <button elementsid="download<%- os.text.name %>" class="downloadOsStyle"><%- e('download') %></button>
+                        </a>
+                       
+                    <% } else { %> 
+                        <button elementsid="download<%- os.text.name %>" class="downloadOs"><%- e('download') %></button>
+                    <% } %>
+                    
                 </div>
             </div>
             

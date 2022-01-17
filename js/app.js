@@ -1002,6 +1002,9 @@ Application = function(p)
 				p || (p = {});
 
 				p.clbk = function(){
+
+					self.appready = true
+
 					if (navigator.splashscreen)
 						navigator.splashscreen.hide();
 				}

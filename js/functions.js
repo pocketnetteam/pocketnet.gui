@@ -762,11 +762,14 @@
 
 				setTimeout(function(){
 
-					wnd.remove();
+					if(wnd){
+						wnd.remove();
 
-					hasonewindow()
+						hasonewindow()
 
-					clearmem()
+						clearmem()
+					}
+					
 
 				}, 100)
 				

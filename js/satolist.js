@@ -4525,14 +4525,11 @@ Platform = function (app, listofnodes) {
                                                         action: function (_p) {
                                                             var file = _p.item;
 
-                                                            console.log('file', file)
 
                                                             if (file.isFile && file.file) {
         
                                                                 file.file(function(fileDetails) {
 
-                                                                    console.log('fileDetails', fileDetails)
-                                                                    
         
                                                                     if (!videoFile && (!fileDetails.type || fileDetails.type == 'video/mp4')) {
         
@@ -13183,8 +13180,6 @@ Platform = function (app, listofnodes) {
                                 })
         
                             }).catch(e => {
-
-                                console.log("E", e)
 
                                 _.each(txids, function (id) {
                                     delete loading[id];
@@ -24438,57 +24433,57 @@ Platform = function (app, listofnodes) {
 
         var routing = function(route){
 
-            app.user.isState(function (state) {
+            pretry(function(){
+                return app.appready
+            }).then(r => {
+                app.user.isState(function (state) {
 
-                var url = route
-
-                route = (route || '').replace('pocketnet://', '').replace('https://test.pocketnet.app/', '').replace('https://pocketnet.app/', '').replace('bastyon://', '').replace('https://test.bastyon.com/', '').replace('https://bastyon.com/', '')
-
-                    if (route){
-
-                        if(!state || route.indexOf('welcome?') == -1){
-                            self.app.nav.api.load({
-                                open: true,
-                                href: route,
-                                history: true
-                            })
-                        }
-                    }
-
-                    /////////////
-
-                    var w = parameters(url, true).connect
-                    var cr = parameters(url, true).publicroom   
-                    var ps =  parameters(url, true).ps
-                    var ref =  parameters(url, true).ref
-
-                    self.matrixchat.connectWith = w || null
-                    self.matrixchat.joinRoom = cr || null
-
-
-                    if(!ps && !cr && !w && !app.curation()){
-                        self.matrixchat.backtoapp()
-                    }
-
-                    setTimeout(function(){
-                        self.matrixchat.wait().then(r => {
-                            self.matrixchat.connect()
-                        })
-                    }, 500)
-
-                    if(ref){
-                        self.app.setref(ref)
-
-                        /*self.sdk.users.addressByName(ref, function(r){
-                            if(r){
-                                self.app.ref = r;
-                                localStorage['ref'] = r
+                    var url = route
+    
+                    route = (route || '').replace('pocketnet://', '').replace('https://test.pocketnet.app/', '').replace('https://pocketnet.app/', '').replace('bastyon://', '').replace('https://test.bastyon.com/', '').replace('https://bastyon.com/', '')
+    
+                        if (route){
+    
+                            if(!state || route.indexOf('welcome?') == -1){
+                                self.app.nav.api.load({
+                                    open: true,
+                                    href: route,
+                                    history: true
+                                })
                             }
-            
-                        })*/
-                    }
+                        }
+    
+                        /////////////
+    
+                        var w = parameters(url, true).connect
+                        var cr = parameters(url, true).publicroom   
+                        var ps =  parameters(url, true).ps
+                        var ref =  parameters(url, true).ref
+    
+                        self.matrixchat.connectWith = w || null
+                        self.matrixchat.joinRoom = cr || null
+    
+    
+                        if(!ps && !cr && !w && !app.curation()){
+                            self.matrixchat.backtoapp()
+                        }
+    
+                        setTimeout(function(){
+                            self.matrixchat.wait().then(r => {
+                                self.matrixchat.connect()
+                            })
+                        }, 500)
+    
+                        if (ref){
+                            self.app.setref(ref)
+                        }
+    
+                })
 
             })
+
+           
+
         }
 
         if(electron && _Electron){
@@ -24497,8 +24492,6 @@ Platform = function (app, listofnodes) {
                 if (data.type == 'action') {
                     routing(data.msg)
                 }
-    
-            
             })
 
         }
