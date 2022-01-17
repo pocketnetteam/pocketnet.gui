@@ -8,7 +8,7 @@ var easynode = (function(){
 
 		var primary = (p.history && !p.inWnd) || p.primary;
 
-		var el, amount = 1000, info = null, ed, oss;
+		var el, amount = 1000, info = null, ed, oss, faqLangs;
 
 		
 		var blocktime = [{
@@ -64,8 +64,6 @@ var easynode = (function(){
 
 			download : function(os, clbk){
 				if (os){
-					debugger;
-
 					if(os.github){
 
 						globalpreloader(true)
@@ -213,6 +211,47 @@ var easynode = (function(){
 				})
 
 				
+			},
+
+			faq : function(){
+
+				var faqLangsFiltered = {};
+
+				for (var l in faqLangs){
+
+					if (l !== 'fr'){
+
+
+						faqLangsFiltered[l] = faqLangs[l].filter(function(g){
+
+							return g.id === 'buy-pkoin';
+	
+						})
+					}
+
+				}
+
+				
+				var k = self.app.localization.key;
+
+				if(!faqLangsFiltered[k]) k = 'en';
+
+				var faqcontent = faqLangsFiltered[k];
+
+
+				self.shell({
+					name :  'faq',
+					el : el.faqWrapper,
+					data : {
+						groups : faqcontent
+					},
+					animation : false,				
+
+				}, function(p){
+
+					console.log('pp!!!', p)
+
+				})
 			}
 
 		}
@@ -230,6 +269,7 @@ var easynode = (function(){
 
 		var make = function(){
 			renders.calc();
+			renders.faq();
 		}
 
 		var initEvents = function(){
@@ -253,7 +293,8 @@ var easynode = (function(){
 
 					oss = self.app.platform.applications[ed.key || 'ui'];
 
-					console.log('oss!', oss)
+					faqLangs = self.sdk.faqLangs.get();
+
 
 				clbk(data);
 
@@ -272,6 +313,7 @@ var easynode = (function(){
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
 				el.calcWrapper = el.c.find('.calcWrapper');
+				el.faqWrapper = el.c.find('.faqWrapper');
 
 				initEvents();
 				make()

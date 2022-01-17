@@ -128,6 +128,90 @@
   min-height: 520px;
   height: 100%;
 }
+#easynode .faqWrapper {
+  max-width: 1280px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2em;
+}
+#easynode .faqWrapper .faq {
+  padding: 0 20px;
+}
+#easynode .faqWrapper .faq .group {
+  margin-bottom: 2em;
+}
+#easynode .faqWrapper .faq .group .groupCaption {
+  font-size: 2.5em;
+  font-weight: 700;
+  padding-bottom: 0.5em;
+  color: #ff4800;
+}
+#easynode .faqWrapper .faq .group .groupCnt .question {
+  font-size: 1.5em;
+  padding-bottom: 3em;
+  max-width: 700px;
+}
+#easynode .faqWrapper .faq .group .groupCnt .question .questiontop {
+  display: flex;
+  justify-content: space-between;
+}
+#easynode .faqWrapper .faq .group .groupCnt .question .questionName {
+  padding-bottom: 1em;
+  font-weight: 700;
+  color: #3c4146;
+  font-size: 1.5em;
+  max-width: 85%;
+}
+#easynode .faqWrapper .faq .group .groupCnt .question .answer {
+  font-size: 0.8em;
+  padding-bottom: 20px !important;
+}
+#easynode .faqWrapper .faq .group .groupCnt .question .answer a {
+  text-decoration: underline;
+  color: #00a4ff;
+}
+#easynode .faqWrapper .faq .group .groupCnt .question .answer .image {
+  width: 100% !important;
+  max-width: 700px;
+  position: relative;
+}
+#easynode .faqWrapper .faq .group .groupCnt .question .answer .image img {
+  width: 100% !important;
+}
+#easynode .faqWrapper .faq .group .groupCnt .question .answer div {
+  padding-bottom: 0.5em;
+}
+#easynode .faqWrapper .faq .group .groupCnt .question .share {
+  margin-top: 0.5em;
+  color: #ff6e84;
+  font-size: 0.7em;
+  cursor: pointer;
+}
+#easynode .faqWrapper .faq .group .groupCnt .question .share:hover {
+  color: #00a4ff;
+}
+#easynode .faqWrapper .faq .group .groupCnt .question .share span {
+  padding-right: 2px;
+}
+#easynode .faqWrapper .faq .group .groupCnt .question .icon {
+  background: #00a4ff;
+  color: #fff;
+  cursor: pointer;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  width: 44px;
+  height: 44px;
+  line-height: 44px;
+  text-align: center;
+  border-radius: 50%;
+  font-size: 0.6em;
+}
+#easynode .faqWrapper .faq .group .groupCnt .question .icon:hover {
+  background: #ff6e84;
+}
 @media (max-width: 400px) {
   #easynode .video {
     max-width: 100%;
