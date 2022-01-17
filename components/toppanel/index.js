@@ -129,8 +129,6 @@ var toppanel = (function(){
 
 								var mainmoduleAction = deep(self.app, 'modules.main.module.showCategories')
 				
-								console.log(self.app.modules)
-				
 								if (mainmoduleAction) mainmoduleAction(true)
 							})
 	

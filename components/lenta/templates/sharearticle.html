@@ -120,7 +120,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
             <% if((!state || !my) && (typeof repost == 'undefined' || !repost)) { %> 
 
                 <span elementsid="sbtnxs-follow" class="sbtnxs">
-                    &middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><i class="far fa-check-circle"></i>  <%=e('following')%></span>
+                    &middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><i class="far fa-check-circle"></i>  <%=e('subi')%></span>
                     
                     <% if(state && !my && user.address.value) {
                         
@@ -311,11 +311,29 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 <% var makearticle = function(){ 
 
 	var edjs = new edjsHTML(null, app)
+    var txt = null
+
+
+    try{
+       txt = edjs.parse(share.message)
+    }
+    catch(e){}
+    
 	
 	%> 
 
 	<div class="article">
-		<%=edjs.parse(share.message)%>
+        <% if(txt) {%>
+
+		    <%=txt%>
+
+        <% } else { %> 
+            
+            <div class="articlerenderError">
+                <span><%-e('error')%></span>
+            </div>
+            
+        <% } %>
 	</div>
 
 <% } %>

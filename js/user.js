@@ -321,7 +321,6 @@ User = function(app, p) {
 
 	self.validate = function(){
 
-
 		if(!self.address.value) return false;
 
 		var me = deep(app, 'platform.sdk.user.storage.me');
@@ -331,6 +330,8 @@ User = function(app, p) {
 			var regs = app.platform.sdk.registrations.storage[self.address.value];
 
 			if (regs && (regs === true || regs < 3)){
+
+				
 				return false
 			}
 

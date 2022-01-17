@@ -33,7 +33,9 @@ var Wallet = function(p){
             })
 
             if (allips.length > 5 && f.now(allips[allips.length - 1].date) > f.date.addseconds(f.now(), -10 * 24 * 60 * 60)){
-                return Promise.reject('iplimit')
+
+                if(!self.proxy.test)
+                    return Promise.reject('iplimit')
             }
 
             return Promise.resolve()

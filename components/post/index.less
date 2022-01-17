@@ -1373,6 +1373,10 @@
 			}
 		}
 
+		.statswrapperExtended{
+			display: none;
+		}
+
 		&.squareVideo{
 			.forurl{
 				.videoWrapper{
@@ -1681,6 +1685,10 @@
 		.articlecontent{
 			padding-top : 8 * @rhythm;
 			padding-bottom : 8 * @rhythm;
+
+			.articlerenderError{
+				text-align: center;
+			}
 			
 			.cntswrk{
 				margin-left: 0;
@@ -1754,6 +1762,9 @@
 						z-index: 1;
 						color : #fff;
 						text-align: center;
+						position: relative;
+						border-bottom : 1px dashed fade(@color-gray-mlight, 50);
+						color : @color-black2;
 		
 						.tags{
 							justify-content: center;
@@ -1790,13 +1801,6 @@
 						display: none;
 					}
 
-					.captioncnt{
-						position: relative;
-						border-bottom : 1px dashed fade(@color-gray-mlight, 50);
-						color : @color-black2;
-					}
-
-		
 					
 				}
 				
@@ -1815,6 +1819,7 @@
 						right : 0;
 						top : 0;
 						bottom : 0;
+						padding-bottom: 8 * @rhythm;
 
 						.sharecaption{
 							font-size: 2em;

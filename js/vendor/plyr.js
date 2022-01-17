@@ -9218,6 +9218,8 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
           plyrPlayer.on('ready', readyCallback)
           plyrPlayer.on('play', video_options.play)
           plyrPlayer.on('pause', video_options.pause)
+          //plyrPlayer.on('hlsError', video_options.hlsError)
+          
 
           plyrPlayer.localVideoId = clear_peertube_id;
 
@@ -9239,7 +9241,7 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
             localVideo : localVideo,
             start : options.startTime || 0
           },{
-    
+            hlsError : options.hlsError,
             playbackStatusChange : function(status){
               
             },

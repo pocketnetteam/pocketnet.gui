@@ -4,7 +4,7 @@ var tagcloud = (function(){
 
 	var essenses = {};
 
-	var Essense = function(p){
+	var Essense = function(){
 
 		var el = {}, showed = false, essenseData;
 
@@ -252,8 +252,10 @@ var tagcloud = (function(){
 			},
 
 			destroy : function(){
+
 				delete self.iclbks.maintag;
 				essenseData = {}
+
 				removeEvents()
 
 				if(el.c) el.c.empty()

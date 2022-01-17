@@ -738,7 +738,6 @@ var PNWIDGETS = function PNWIDGETS() {
   self.make = function (seed, action, id, p, fast, __el, resized, additional) {
     if (!additional) additional = {};
     var elem = document.getElementById('pocketnet_' + seed);
-    console.log('additionaladditionaladditional', additional);
 
     if (window.POCKETNETINSTANCE && fast) {
       elem = $(__el).find('#pocketnet_' + seed);
@@ -753,7 +752,6 @@ var PNWIDGETS = function PNWIDGETS() {
 
       embeddingSettigns.openapi = true;
       embeddingSettigns = _.extend(embeddingSettigns, additional);
-      console.log('embeddingSettigns', embeddingSettigns);
       elem.addClass('openapipnet');
       app.platform.papi[action](id, elem, null, embeddingSettigns, additional);
       if (action == 'transaction') return false;

@@ -232,13 +232,14 @@ ____loclib.acchasinanotherpack = "This address is already use in another address
 
 //author
 ____loclib.sub = "Follow";
+____loclib.subi = "Following";
 ____loclib.unsub = "Unfollow";
 ____loclib.joined = "Joined";
 ____loclib.shares = "SHARES";
 ____loclib.uposts = "POSTS";
 ____loclib.myuposts = "MY POSTS";
 ____loclib.followers = "FOLLOWERS";
-____loclib.following = "Following";
+____loclib.following = "FOLLOWING";
 ____loclib.settings = "MANAGE";
 ____loclib.anofollowers = "This user has no followers";
 ____loclib.aynofollowers = "You have no followers";
@@ -601,7 +602,7 @@ ____loclib.joinnow = "Join Now"
 ____loclib.loading = "Loading"
 ____loclib.e13118 = "Words doesn't match"
 ____loclib.e13119 = "Add email and continue"
-____loclib.e13120 = "Applications"
+____loclib.e13120 = "Download Application"
 ____loclib.e13121 = "There aren't Images Here"
 ____loclib.e13122 = "Latest Comments"
 
@@ -764,9 +765,16 @@ ____loclib.e13220 = "Pocketcoins delivered"
 ____loclib.errorreload = "Something went wrong. Please reload page and try again"
 ____loclib.e13221 = "Do you really want to delete information about this deal? Deal can't be stop"
 ____loclib.e13222 = "Download Desktop App - this is the most censorship resistant way to use "+appname+". Even if websites are shut down, desktop application will still run directly through the nodes."
+
+
+
 ____loclib.e13223 = "Download "+appname+" for Windows"
 ____loclib.e132232 = "Download "+appname+" for macOs"
 ____loclib.e13224 = "Download "+appname+" for Linux"
+
+____loclib.e132233 = "Download "+appname+" for Android"
+____loclib.e132221 = "Download Mobile App - this is the most usefull way to use "+appname+"."
+
 ____loclib.e13225 = ""+appname+" Node"
 ____loclib.e13226 = "Download Node"
 ____loclib.e13227 = "Download "+appname+" Node for Windows"
@@ -1881,7 +1889,7 @@ ____loclib.deletedraftquestion = 'Are you sure you want to delete the draft arti
 ____loclib.publishquestion = 'Are you sure you want to public this article?'
 
 ____loclib.etc = 'And so on...'
-
+____loclib.openlinkssettings = 'Do not open links in the desktop application'
 ____loclib.nametaken = 'This username is taken in Bastyon'
 
 ____loclib.accountnotfound = 'We could not find your account on the blockchain. Perhaps the registration process was not completed, or there is no Internet connection'

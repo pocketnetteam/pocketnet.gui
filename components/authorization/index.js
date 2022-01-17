@@ -18,8 +18,8 @@ var authorization = (function(){
 
 		//////////////////////////////
 
-		var el,
-			essenseData,
+		var el = {},
+			essenseData = {},
 			initialParameters;
 
 		//var codeReader = new ZXing.BrowserQRCodeReader();
@@ -89,12 +89,17 @@ var authorization = (function(){
 
 				self.user.stay = stay.value
 
+				globalpreloader(true)
 
 				self.user.signin(mnemonicKey, function(state){
+
+					globalpreloader(false)
 				
 					if(!state){
 
 						sitemessage(self.app.localization.e('e13028'))
+
+						
 
 						return;
 					}
@@ -114,8 +119,6 @@ var authorization = (function(){
 								if (app.curation()){
 									return 'index';
 								}
-
-								console.log('self.app.platform.sdk.registrations.redirect', self.app.platform.sdk.registrations.redirect)
 
 								return self.app.platform.sdk.registrations.redirect || undefined
 							
@@ -173,7 +176,7 @@ var authorization = (function(){
 							{
 								self.nav.api.loadSameThis('filluser', p)
 							}
-								
+
 							
 						});
 
@@ -361,8 +364,6 @@ var authorization = (function(){
 				if(p.state && primary)
 				{
 
-					console.log("IM HRER")
-
 					self.nav.api.load({
 						open : true,
 						href : 'index',
@@ -385,19 +386,20 @@ var authorization = (function(){
 						mnemonic : mnemonic,
 						fast : deep(p, 'settings.essenseData.fast') || false
 					};
-
 					
 					clbk(data);
-
 					
 				}
 
 			},
 
 			destroy : function(){
+
+				if(el.c) el.c.empty()
+
 				el = {};
 
-				if(ext) {
+				if (ext) {
 					ext.destroy(); 
 					ext = null;
 				}

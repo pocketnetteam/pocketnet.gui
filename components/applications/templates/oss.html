@@ -17,8 +17,25 @@
                     <span><%- os.text.name %></span>
                 </div>
 
+                <div class="label">
+                    <span><%- os.text.label %></span>
+                </div>
+
+                <div class="downloadcaption">
+                    <span><%- os.text.download %></span>
+                </div>
+
                 <div class="buttonWrapper">
-                    <button elementsid="download<%- os.text.name %>" class="downloadOs"><%- e('download') %></button>
+                    <% if(os.href) {%>
+                        
+                        <a href="<%-os.href%>">
+                            <button elementsid="download<%- os.text.name %>" class="downloadOsStyle"><%- e('download') %></button>
+                        </a>
+                       
+                    <% } else { %> 
+                        <button elementsid="download<%- os.text.name %>" class="downloadOsStyle"><%- e('download') %></button>
+                    <% } %>
+                    
                 </div>
             </div>
             

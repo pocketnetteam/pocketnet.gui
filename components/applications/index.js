@@ -62,11 +62,11 @@ var applications = (function(){
 
 		var renders = {
 
-			mainoss : function(){
-				os()
-			},
+			mainoss : function(os){
+				renders.oss([os], el.c.find('.mainos'))
+			},	
 
-			oss : function(_oss){
+			oss : function(_oss, _el){
 
 				self.shell({
 					name :  'oss',
@@ -74,7 +74,7 @@ var applications = (function(){
 						oss : _oss
 					},
 
-					el : el.c.find('.oss')
+					el : _el || el.c.find('.oss')
 
 				}, function(_p){
 
@@ -89,9 +89,7 @@ var applications = (function(){
 						var os = _.find(_oss, (os) => {return osid == os.id})
 				
 						if (os){
-							actions.download(os, function(link){
-
-							})
+							actions.download(os, function(link){})
 						}
 						else{
 							sitemessage('error')
@@ -121,7 +119,21 @@ var applications = (function(){
 				return !ed.filter || ed.filter(os)
 			})
 
+			var fl = filtered.length
+
+			var __os = os()
+
+			var filtered = _.filter(oss, function(os){
+				return os.id != __os
+			})
+
+			if(filtered.length != fl){
+				renders.mainoss(oss[__os])
+			}
+			
 			renders.oss(filtered)
+
+			
 		}
 
 		return {

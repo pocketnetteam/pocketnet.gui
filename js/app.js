@@ -1002,6 +1002,9 @@ Application = function(p)
 				p || (p = {});
 
 				p.clbk = function(){
+
+					self.appready = true
+
 					if (navigator.splashscreen)
 						navigator.splashscreen.hide();
 				}
@@ -1021,7 +1024,12 @@ Application = function(p)
 		}
 		else
 		{
+
 			self.init(p);
+
+			setTimeout(function(){
+				self.appready = true
+			}, 2000)
 		}
 
 

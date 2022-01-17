@@ -286,8 +286,8 @@ Platform = function (app, listofnodes) {
                     id: "android",
                     text: {
                         name: "Android",
-                        download: self.app.localization.e('e13222'),
-                        label: self.app.localization.e('e13223')
+                        download: self.app.localization.e('e132221'),
+                        label: self.app.localization.e('e132233')
                     },
         
                     icon: '<i class="fab fa-android"></i>',
@@ -875,6 +875,7 @@ Platform = function (app, listofnodes) {
                     if (!r) {
 
                         self.app.platform.sdk.relayTransactions.send(function(action){
+                            
 
                             if(!action){
 
@@ -2889,23 +2890,23 @@ Platform = function (app, listofnodes) {
     self.api = {
 
         keypair: function (m) {
-
-            var keyPair = null;
+            let keyPair;
 
             if (bitcoin.bip39.validateMnemonic(m)) {
-                var seed = bitcoin.bip39.mnemonicToSeedSync(m)
+                const seed = bitcoin.bip39.mnemonicToSeedSync(m);
 
-                var d = bitcoin.bip32.fromSeed(seed).derivePath(app.platform.sdk.address.path(0)).toWIF()
-
-                keyPair = bitcoin.ECPair.fromWIF(d)
+                keyPair = self.sdk.address.dumpKeys(0, seed);
             }
             else {
 
-                try { keyPair = bitcoin.ECPair.fromPrivateKey(Buffer.from(m, 'hex')) }
-
-                catch (e) {
-                    try {keyPair = bitcoin.ECPair.fromWIF(m) }
-                    catch (e) {}
+                try {
+                    keyPair = bitcoin.ECPair.fromPrivateKey(Buffer.from(m, 'hex'));
+                } catch (e) {
+                    try {
+                        keyPair = bitcoin.ECPair.fromWIF(m);
+                    } catch (e) {
+                        // TODO: Do something...
+                    }
                 }
 
             }
@@ -6348,14 +6349,11 @@ Platform = function (app, listofnodes) {
                                                         action: function (_p) {
                                                             var file = _p.item;
 
-                                                            console.log('file', file)
 
                                                             if (file.isFile && file.file) {
         
                                                                 file.file(function(fileDetails) {
 
-                                                                    console.log('fileDetails', fileDetails)
-                                                                    
         
                                                                     if (!videoFile && (!fileDetails.type || fileDetails.type == 'video/mp4')) {
         
@@ -6705,7 +6703,6 @@ Platform = function (app, listofnodes) {
             send: function (clbk) {
 
                 var needaction = false
-
                 self.app.user.isState(function (state) {
 
                     if (state) {
@@ -7645,7 +7642,7 @@ Platform = function (app, listofnodes) {
 				},
 
                 openlinksinelectron : {
-					name: 'Do not open links in the desktop application',
+					name: self.app.localization.e('openlinkssettings'),
 					id : 'openlinksinelectron',
 					type : "BOOLEAN",
 					value : false,
@@ -9986,11 +9983,10 @@ Platform = function (app, listofnodes) {
                             amount: amount
                         }]
 
-                        var seed = bitcoin.bip39.mnemonicToSeedSync(mnemonic);
-                        var hash = bitcoin.crypto.sha256(Buffer.from(seed));
-                        var d = bitcoin.bip32.fromSeed(seed).derivePath(app.platform.sdk.address.path(0)).toWIF();
-                        var keyPair = bitcoin.ECPair.fromWIF(d);
-                        var address = self.sdk.address.pnet(keyPair.publicKey, 'p2pkh').address;
+                        const seed = bitcoin.bip39.mnemonicToSeedSync(mnemonic);
+                        const hash = bitcoin.crypto.sha256(Buffer.from(seed));
+                        const keyPair = self.sdk.address.dumpKeys(0, seed);
+                        const { address } = self.sdk.address.pnet(keyPair.publicKey, 'p2pkh');
 
                         self.sdk.wallet.txbase([address], _.clone(outputs), null, null, function (err, inputs, _outputs) {
 
@@ -10120,11 +10116,10 @@ Platform = function (app, listofnodes) {
                             amount: amount
                         }]
 
-                        var seed = bitcoin.bip39.mnemonicToSeedSync(mnemonic);
-                        var hash = bitcoin.crypto.sha256(Buffer.from(seed));
-                        var d = bitcoin.bip32.fromSeed(seed).derivePath(app.platform.sdk.address.path(0)).toWIF();
-                        var keyPair = bitcoin.ECPair.fromWIF(d);
-                        var address = self.sdk.address.pnet(keyPair.publicKey, 'p2pkh').address;
+                        const seed = bitcoin.bip39.mnemonicToSeedSync(mnemonic);
+                        const hash = bitcoin.crypto.sha256(Buffer.from(seed));
+                        const keyPair = self.sdk.address.dumpKeys(0, seed);
+                        const address = self.sdk.address.pnet(keyPair.publicKey, 'p2pkh').address;
 
                         self.sdk.wallet.txbase([address], _.clone(outputs), null, null, function (err, inputs, _outputs) {
 
@@ -11222,45 +11217,101 @@ Platform = function (app, listofnodes) {
             },
 
             init: function (clbk) {
-
-                ///// TODO OPTIMIZATION
-
-                if (!self.sdk.addresses.storage.addresses) self.sdk.addresses.storage.addresses = [];
-                if (!self.sdk.addresses.storage.addressesobj) self.sdk.addresses.storage.addressesobj = [];
-
-                var anum = localStorage[self.sdk.address.pnet().address + 'addressesNum'] || 1;
-
-                if (anum < 10) anum = 10
-
-                for (var i = 0; i < anum; i++) {
-
-                    self.sdk.addresses.addWalletAddress(i)
-
+                if (!self.sdk.addresses.storage.addresses) {
+                    self.sdk.addresses.storage.addresses = [];
                 }
 
-                self.sdk.addresses.save()
+                if (!self.sdk.addresses.storage.addressesobj) {
+                    self.sdk.addresses.storage.addressesobj = [];
+                }
 
-                if (clbk)
-                    clbk()
+                const anum = localStorage[self.sdk.address.pnet().address + 'addressesNum'] || 10;
+
+                const walletsItem = self.sdk.address.pnet().address + 'wallets';
+
+                /**
+                 * Here we take cached wallet ID's
+                 * or generating them dynamically if
+                 * not cached.
+                 */
+                if (walletsItem in localStorage) {
+                    // console.time('LOADING CACHED WALLETS');
+                    const wallets = JSON.parse(localStorage[walletsItem]);
+
+                    wallets.forEach((walletAddress, walletNum) => {
+                        self.sdk.addresses.addCachedWallet(walletNum, walletAddress);
+                    });
+                    // console.timeEnd('LOADING CACHED WALLETS');
+                } else {
+                    // console.time('GENERATING WALLETS');
+                    const addressesList = [];
+
+                    for (let i = 0; i < anum; i++) {
+                        const address = self.sdk.addresses.addWalletAddress(i);
+
+                        addressesList.push(address);
+                    }
+
+                    localStorage[walletsItem] = JSON.stringify(addressesList);
+                    // console.timeEnd('GENERATING WALLETS');
+                }
+
+                self.sdk.addresses.save();
+
+                if (typeof clbk === 'function') {
+                    clbk();
+                }
             },
 
             save: function () {
+                const countAddresses = self.sdk.addresses.storage.addresses.length;
 
-                if (self.sdk.addresses.storage.addresses.length) {
-                    localStorage[self.sdk.address.pnet().address + 'addressesNum'] = self.sdk.addresses.storage.addresses.length
+                if (countAddresses) {
+                    const itemName = self.sdk.address.pnet().address + 'addressesNum';
+                    localStorage[itemName] = countAddresses;
                 }
             },
 
-            addWalletAddress: function (num) {
+            addCachedWallet: function(num, address) {
+                const proxyData = {
+                    getWalletData: self.sdk.address.wallet,
+                    walletNum: num,
+                    walletAddress: address,
+                };
 
-                if (typeof num == 'undefined') num = self.sdk.addresses.storage.addresses.length;
+                /**
+                 * Proxy object is used here to
+                 * give access to wallet credentials
+                 * populator, without really instantiating
+                 * wallet data. It creates data only when
+                 * requested.
+                 */
+                const proxy = new Proxy(proxyData, {
+                    get: (p, num) => {
+                        const addressObj = p.getWalletData(p.walletNum);
 
-                var address = self.sdk.address.wallet(num)
+                        /**
+                         * Once wallet credentials populated
+                         * replacing Proxy object with
+                         * original wallet data.
+                         */
+                        self.sdk.addresses.storage.addressesobj[p.walletNum] = addressObj;
 
-                self.sdk.addresses.storage.addresses[num] = address.address;
-                self.sdk.addresses.storage.addressesobj[num] = address;
+                        return addressObj[p.walletNum];
+                    }
+                });
 
-                return address.address;
+                self.sdk.addresses.storage.addresses[num] = address;
+                self.sdk.addresses.storage.addressesobj[num] = proxy;
+            },
+
+            addWalletAddress: function (num = self.sdk.addresses.storage.addresses.length) {
+                const wallet = self.sdk.address.wallet(num);
+
+                self.sdk.addresses.storage.addresses[num] = wallet.address;
+                self.sdk.addresses.storage.addressesobj[num] = wallet;
+
+                return wallet.address;
             },
 
             getFirstRandomAddress : function(clbk){
@@ -11387,7 +11438,7 @@ Platform = function (app, listofnodes) {
                 }
 
                 if (type == 'p2pkh' || type == 'p2wpkh') {
-                    a = bitcoin.payments[type]({ pubkey: pubkey })
+                    a = bitcoin.payments[type]({ pubkey })
 
                     this.storage[type] = a;
 
@@ -11396,7 +11447,7 @@ Platform = function (app, listofnodes) {
 
                 if (type == 'p2sh') {
 
-                    a = bitcoin.payments['p2wpkh']({ pubkey: pubkey })
+                    a = bitcoin.payments['p2wpkh']({ pubkey })
 
                     var p2sh = bitcoin.payments.p2sh({ redeem: a })
 
@@ -11407,35 +11458,26 @@ Platform = function (app, listofnodes) {
             },
 
             wallet: function (n, private) {
+                const { publicKey: pubkey } = self.sdk.address.dumpKeys(n, private);
 
-                var d = bitcoin.bip32.fromSeed(private || self.app.user.private.value).derivePath(app.platform.sdk.address.path(n)).toWIF()
+                const a = bitcoin.payments['p2wpkh']({ pubkey });
 
-                var keyPair = bitcoin.ECPair.fromWIF(d)
-
-                var pubkey = keyPair.publicKey;
-
-                var a = bitcoin.payments['p2wpkh']({ pubkey: pubkey })
-
-                var p2sh = bitcoin.payments.p2sh({ redeem: a })
+                const p2sh = bitcoin.payments.p2sh({ redeem: a });
 
                 return p2sh;
-
             },
 
-            dumpKeys: function (n) {
-                var d = bitcoin.bip32.fromSeed(self.app.user.private.value).derivePath(app.platform.sdk.address.path(n)).toWIF()
+            dumpKeys: function (n, private = self.app.user.private.value) {
+                const addressPath = app.platform.sdk.address.path(n);
+                const d = bitcoin.bip32.fromSeed(private).derivePath(addressPath).toWIF();
 
-                var keyPair = bitcoin.ECPair.fromWIF(d)
+                const keyPair = bitcoin.ECPair.fromWIF(d);
 
                 return keyPair;
             },
 
             dumpPrivKey: function (n) {
-
-
-                var d = bitcoin.bip32.fromSeed(self.app.user.private.value).derivePath(app.platform.sdk.address.path(n)).toWIF()
-
-                var keyPair = bitcoin.ECPair.fromWIF(d)
+                const keyPair = self.sdk.address.dumpKeys(n);
 
                 return keyPair.privateKey;
             },
@@ -14962,8 +15004,6 @@ Platform = function (app, listofnodes) {
                                 })
         
                             }).catch(e => {
-
-                                console.log("E", e)
 
                                 _.each(txids, function (id) {
                                     delete loading[id];
@@ -25612,12 +25652,13 @@ Platform = function (app, listofnodes) {
 
         link : function(core){
 
+            console.log("LINA")
+
             core.update({
                 block : {
                     height : self.currentBlock
                 }
             })
-            
 
             core.backtoapp = function(link){
 
@@ -25663,6 +25704,7 @@ Platform = function (app, listofnodes) {
 
                 if (self.matrixchat.core){ 
                     self.matrixchat.core.cancelshare ? self.matrixchat.core.cancelshare() : '' ;
+
                     self.matrixchat.core.hideInParent(isTablet() ||isMobile() || window.cordova ? true : false )
                 }
 
@@ -25726,8 +25768,9 @@ Platform = function (app, listofnodes) {
             }
 
             self.matrixchat.core = core
-            self.matrixchat.core.hideInParent(isTablet() ||isMobile()|| window.cordova ? true : false)
 
+            core.hideOptimization(isTablet() || isMobile() || window.cordova ? true : false)
+            core.hideInParent(isTablet() || isMobile() || window.cordova ? true : false)
             core.externalLink(self.matrixchat)
 
             self.app.platform.ws.messages["newblocks"].clbks.newsharesLenta = 
@@ -26204,27 +26247,11 @@ Platform = function (app, listofnodes) {
 
         }
 
-
-        ///////////
-
         self.sdk.localshares.initclbk()
 
         if(window.cordova){
             setupOpenwith()
         }
-
-
-        /*if(window.cordova){
-            setupOpenwith()
-            self.sdk.local.shares.initclbk()
-            
-            //self.sdk.local.shares.init();
-        } else if (typeof _Electron != 'undefined' && window.electron) {
-            self.sdk.local.shares.initclbk()
-            // self.sdk.local.shares.init();
-        }*/
-
-        
 
     }
 
@@ -26233,57 +26260,60 @@ Platform = function (app, listofnodes) {
 
         var routing = function(route){
 
-            app.user.isState(function (state) {
+            pretry(function(){
 
-                var url = route
+                return app.appready
 
-                route = (route || '').replace('pocketnet://', '').replace('https://test.pocketnet.app/', '').replace('https://pocketnet.app/', '').replace('bastyon://', '').replace('https://test.bastyon.com/', '').replace('https://bastyon.com/', '')
+            }).then(r => {
 
-                    if (route){
+                app.user.isState(function (state) {
 
-                        if(!state || route.indexOf('welcome?') == -1){
-                            self.app.nav.api.load({
-                                open: true,
-                                href: route,
-                                history: true
-                            })
-                        }
-                    }
-
-                    /////////////
-
-                    var w = parameters(url, true).connect
-                    var cr = parameters(url, true).publicroom   
-                    var ps =  parameters(url, true).ps
-                    var ref =  parameters(url, true).ref
-
-                    self.matrixchat.connectWith = w || null
-                    self.matrixchat.joinRoom = cr || null
-
-
-                    if(!ps && !cr && !w && !app.curation()){
-                        self.matrixchat.backtoapp()
-                    }
-
-                    setTimeout(function(){
-                        self.matrixchat.wait().then(r => {
-                            self.matrixchat.connect()
-                        })
-                    }, 500)
-
-                    if(ref){
-                        self.app.setref(ref)
-
-                        /*self.sdk.users.addressByName(ref, function(r){
-                            if(r){
-                                self.app.ref = r;
-                                localStorage['ref'] = r
+                    var url = route
+    
+                    route = (route || '').replace('pocketnet://', '').replace('https://test.pocketnet.app/', '').replace('https://pocketnet.app/', '').replace('bastyon://', '').replace('https://test.bastyon.com/', '').replace('https://bastyon.com/', '')
+    
+                        if (route){
+    
+                            if(!state || route.indexOf('welcome?') == -1){
+                                self.app.nav.api.load({
+                                    open: true,
+                                    href: route,
+                                    history: true
+                                })
                             }
-            
-                        })*/
-                    }
+                        }
+    
+                        /////////////
+    
+                        var w = parameters(url, true).connect
+                        var cr = parameters(url, true).publicroom   
+                        var ps =  parameters(url, true).ps
+                        var ref =  parameters(url, true).ref
+    
+                        self.matrixchat.connectWith = w || null
+                        self.matrixchat.joinRoom = cr || null
+    
+    
+                        if(!ps && !cr && !w && !app.curation()){
+                            self.matrixchat.backtoapp()
+                        }
+    
+                        setTimeout(function(){
+                            self.matrixchat.wait().then(r => {
+                                self.matrixchat.connect()
+                            })
+                        }, 500)
+    
+                        if (ref){
+                            self.app.setref(ref)
+                        }
+    
+                })
 
             })
+
+           
+
         }
 
         if(electron && _Electron){
@@ -26292,8 +26322,6 @@ Platform = function (app, listofnodes) {
                 if (data.type == 'action') {
                     routing(data.msg)
                 }
-    
-            
             })
 
         }

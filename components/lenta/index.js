@@ -694,6 +694,18 @@ var lenta = (function(){
 								})
 
 							}
+						},
+
+						hlsError : function(error){
+
+							if(!window.cordova)
+
+								self.app.Logger.error({
+									err: 'hlsError',
+									payload: JSON.stringify(error.data),
+									code: 401,
+								});
+							
 						}
 					}
 
@@ -4395,34 +4407,6 @@ var lenta = (function(){
 
 			destroy : function(){
 
-				el.c.off('click', '.forstars .count, .postscoresshow', events.postscores)
-				el.c.off('click', '.stars i', events.like)
-				el.c.off('click', '.complain', events.complain)
-				el.c.off('click', '.imageOpen', events.openGallery)
-				el.c.off('click', '.txid', events.getTransaction)
-				el.c.off('click', '.showMore,.showmoreRep', events.openPost)
-				el.c.off('click', '.showMoreArticle', events.openArticle)
-				el.c.off('click', '.forrepost', events.repost)
-				el.c.off('click', '.unblockbutton', events.unblock)
-				el.c.off('click', '.videoTips', events.fullScreenVideo)
-				el.c.off('click', '.videoOpen', events.fullScreenVideo)
-				el.c.off('click', '.opensviurl', events.opensvi)
-				el.c.off('click', '.exitFull', events.exitFullScreenVideo)
-				el.c.off('click', '.sharecnt', events.clickOutsideOfWindow)
-				el.c.off('click', '.commentsWrapperHb', events.clickOutsideOfWindow)
-				el.c.off('click', '.additional', events.additional)
-				el.c.off('click', '.asubscribe', events.asubscribe)
-				el.c.off('click', '.aunsubscribe', events.aunsubscribe)
-				el.c.off('click', '.notificationturn', events.subscribePrivate)
-				el.c.off('click', '.donate', events.donate)
-				el.c.off('click', '.sharesocial', events.sharesocial)
-				el.c.off('click', '.metmenu', events.metmenu)
-				el.c.off('click', '.showmorebyauthor', events.showmorebyauthor)
-				el.c.off('click', '.commentsAction', events.toComments)
-				el.c.off('click', '.shareSave', events.shareSave)
-				el.c.off('click', '.toregistration', events.toregistration)
-				el.c.find('.loadmore button').off('click', events.loadmore)
-				el.c.find('.loadprev button').off('click', events.loadprev)
 
 				delete self.app.events.delayedscroll['videos' + mid]
 				delete self.app.events.delayedscroll['videosinit' + mid]
