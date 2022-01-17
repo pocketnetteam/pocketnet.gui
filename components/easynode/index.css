@@ -4,12 +4,10 @@
 }
 #easynode .actionWrapper .button {
   text-decoration: underline;
-  color: #ff4800;
-  font-size: 1.5em;
+  color: #0f72bb;
+  font-weight: 700;
+  font-size: 2.3rem;
   cursor: pointer;
-}
-#easynode .actionWrapper .button:hover {
-  text-decoration: none;
 }
 #easynode .container {
   max-width: 1280px;
