@@ -698,11 +698,13 @@ var lenta = (function(){
 
 						hlsError : function(error){
 
-							self.app.Logger.error({
-								err: 'hlsError',
-								payload: JSON.stringify(error.data),
-								code: 401,
-							});
+							if(!window.cordova)
+
+								self.app.Logger.error({
+									err: 'hlsError',
+									payload: JSON.stringify(error.data),
+									code: 401,
+								});
 							
 						}
 					}

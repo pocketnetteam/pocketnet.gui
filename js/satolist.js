@@ -23828,12 +23828,13 @@ Platform = function (app, listofnodes) {
 
         link : function(core){
 
+            console.log("LINA")
+
             core.update({
                 block : {
                     height : self.currentBlock
                 }
             })
-            
 
             core.backtoapp = function(link){
 
@@ -23879,6 +23880,7 @@ Platform = function (app, listofnodes) {
 
                 if (self.matrixchat.core){ 
                     self.matrixchat.core.cancelshare ? self.matrixchat.core.cancelshare() : '' ;
+
                     self.matrixchat.core.hideInParent(isTablet() ||isMobile() || window.cordova ? true : false )
                 }
 
@@ -23942,8 +23944,9 @@ Platform = function (app, listofnodes) {
             }
 
             self.matrixchat.core = core
-            self.matrixchat.core.hideInParent(isTablet() ||isMobile()|| window.cordova ? true : false)
 
+            core.hideOptimization(isTablet() || isMobile() || window.cordova ? true : false)
+            core.hideInParent(isTablet() || isMobile() || window.cordova ? true : false)
             core.externalLink(self.matrixchat)
 
             self.app.platform.ws.messages["newblocks"].clbks.newsharesLenta = 

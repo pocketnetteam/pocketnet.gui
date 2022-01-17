@@ -2341,27 +2341,9 @@ var comments = (function(){
 		}
 
 		var initEvents = function(){
-
-			/*self.app.platform.ws.messages['newblocks'].clbks['comments'] =
-			self.app.platform.ws.messages['new block'].clbks['comments'] = function(){
-
-				load.level(null, function(comments){
-					var p = {}
-					p.comments = self.app.platform.sdk.comments.storage[txid]['0']
-					p.class = "firstcomment"
-
-					renders.list(p, function(){
-					})	
-				})
-
-			}*/
-
 				
 			el.c.find('.showall').on('click', function(){
-
 				actions.showall()
-
-				
 			})
 
 			self.app.platform.sdk.comments.sendclbks[eid] = clbks.post
