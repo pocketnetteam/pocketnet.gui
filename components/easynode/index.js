@@ -52,9 +52,9 @@ var easynode = (function(){
 
 				var r = amount / calc.netstakeweight()
 				var n = 1
+				// return amount * Math.pow( (1 + 1440 * 4.75 / calc.netstakeweight() ),  t)
 
-
-				return amount * Math.pow( (1 + 1440 * 4.75 / calc.netstakeweight() ),  t)
+				return amount / calc.netstakeweight() * 4.75 * 1440 * t
 
 			}
 
