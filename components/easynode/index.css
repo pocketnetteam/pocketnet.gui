@@ -1,1 +1,246 @@
-#easynode .actionWrapper{padding:2.5em 0;text-align:center}#easynode .container{max-width:1024px;width:100%;margin:0 auto;padding:40px 20px}#easynode .calcWrapper .calc{max-width:800px;margin:0 auto}#easynode .calcWrapper .numbers .inputWrapper{padding:1em}#easynode .calcWrapper .numbers .amredits{background:#fe0;padding:.25em .5em;border:1px solid #ff6e84;border-radius:10px;outline:0}#easynode .calcWrapper .numbers .ihave{font-weight:700}#easynode .calcWrapper .totalNumbers{background:rgba(178,171,172,.1);padding:1.5em 0;overflow:hidden}#easynode .calcWrapper .totalNumbers .totalRow{float:left;width:50%}#easynode .calcWrapper .totalNumbers .totalRow .label span{font-size:.8em;font-weight:700}#easynode .calcWrapper .totalNumbers .totalRow .value span{font-size:2.2em;font-weight:100}#easynode .calcWrapper .totalNumbers .totalRow .value span.cur{font-weight:300;font-size:.8em}#easynode .calcWrapper .calculator,#easynode .calcWrapper .calculatordummy{position:relative}#easynode .calcWrapper .calculatordummy{min-height:80px}#easynode .calcWrapper .calculatordummy .calculatordummytext{padding:1em}#easynode .calcWrapper .calculatordummy .calculatordummytext span{font-size:.8em;font-weight:700;color:#ff6e84}#easynode .calcWrapper .chwr{position:absolute;right:.5em;top:1em}#easynode .calcWrapper .rcptwrp{background:#fff;position:relative;border-radius:3px}#easynode .calcWrapper .earnlabel{padding:.75em 1em;padding-top:0;font-weight:700;color:#ff4800;cursor:pointer}#easynode .calcWrapper .earnlabel span{font-size:.8em}#easynode .calcWrapper .calcCaption{padding:.75em 1em;font-weight:700;color:#00a3f7}#easynode .calcWrapper .calcCaption span{font-size:.8em}#easynode .header{margin-top:40px;text-align:center;padding:10px 0;border-top:1px solid #c5c2c2;border-bottom:1px solid #c5c2c2;font-size:1.2em}#easynode h2{font-size:2.5em;color:#ff4800}#easynode h3{font-size:2.5em;margin-top:30px}#easynode .video{max-width:1024px;min-height:600px;height:100%;width:100%;text-align:center;display:flex;flex-direction:column;align-items:center}#easynode .video__container{max-width:800px;height:100%;width:100%;text-align:center}#easynode .video__content{min-height:520px;height:100%}@media (max-width:400px){#easynode .video{max-width:100%;min-height:100%}#easynode .video .video__content{max-width:100%;min-height:100%;margin:20px 0}}.wndeasynode .wndinner{width:90%;max-width:860px;height:95%}.wndeasynode #easynode .header{margin-top:0;border-top:0}.wndeasynode #easynode .container{padding-top:0}
+#easynode .actionWrapper {
+  padding: 2.5em 0;
+  text-align: center;
+}
+#easynode .actionWrapper .button {
+  text-decoration: underline;
+  color: #0f72bb;
+  font-weight: 700;
+  font-size: 2.3rem;
+  cursor: pointer;
+}
+#easynode .container {
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+#easynode .calcWrapper {
+  margin-top: 2em;
+}
+#easynode .calcWrapper .calc {
+  max-width: 800px;
+  margin: 0 auto;
+}
+#easynode .calcWrapper .numbers .inputWrapper {
+  padding: 1em;
+}
+#easynode .calcWrapper .numbers .amredits {
+  background: #ffee00;
+  padding: 0.25em 0.5em;
+  border: 1px solid #ff6e84;
+  border-radius: 10px;
+  outline: none;
+}
+#easynode .calcWrapper .numbers .ihave {
+  font-weight: 700;
+}
+#easynode .calcWrapper .totalNumbers {
+  background: rgba(178, 171, 172, 0.1);
+  padding: 1.5em 0;
+  overflow: hidden;
+}
+#easynode .calcWrapper .totalNumbers .totalRow {
+  float: left;
+  width: 50%;
+}
+#easynode .calcWrapper .totalNumbers .totalRow .label span {
+  font-size: 0.8em;
+  font-weight: 700;
+}
+#easynode .calcWrapper .totalNumbers .totalRow .value span {
+  font-size: 2.2em;
+  font-weight: 100;
+}
+#easynode .calcWrapper .totalNumbers .totalRow .value span.cur {
+  font-weight: 300;
+  font-size: 0.8em;
+}
+#easynode .calcWrapper .calculatordummy,
+#easynode .calcWrapper .calculator {
+  position: relative;
+}
+#easynode .calcWrapper .calculatordummy {
+  min-height: 80px;
+}
+#easynode .calcWrapper .calculatordummy .calculatordummytext {
+  padding: 1em;
+}
+#easynode .calcWrapper .calculatordummy .calculatordummytext span {
+  font-size: 0.8em;
+  font-weight: 700;
+  color: #ff6e84;
+}
+#easynode .calcWrapper .chwr {
+  position: absolute;
+  right: 0.5em;
+  top: 1em;
+}
+#easynode .calcWrapper .rcptwrp {
+  background: #fff;
+  position: relative;
+  border-radius: 3px;
+}
+#easynode .calcWrapper .earnlabel {
+  padding: 0.75em 1em;
+  padding-top: 0;
+  font-weight: 700;
+  color: #ff4800;
+  cursor: pointer;
+}
+#easynode .calcWrapper .earnlabel span {
+  font-size: 0.8em;
+}
+#easynode .calcWrapper .calcCaption {
+  padding: 0.75em 1em;
+  font-weight: 700;
+  color: #00A3F7;
+}
+#easynode .calcWrapper .calcCaption span {
+  font-size: 0.8em;
+}
+#easynode .header {
+  margin-top: 40px;
+  text-align: center;
+  padding: 10px 0;
+  border-top: 1px solid #c5c2c2;
+  border-bottom: 1px solid #c5c2c2;
+  font-size: 1.2em;
+}
+#easynode h2 {
+  font-size: 2.5em;
+  color: #ff4800;
+}
+#easynode h3 {
+  font-size: 2.5em;
+  margin-top: 30px;
+}
+#easynode .video {
+  max-width: 1024px;
+  min-height: 600px;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#easynode .video__container {
+  max-width: 800px;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+}
+#easynode .video__content {
+  min-height: 520px;
+  height: 100%;
+}
+#easynode .faqWrapper {
+  max-width: 1280px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2em;
+  padding-top: 3em;
+  border-top: 1px solid #c5c2c2;
+}
+#easynode .faqWrapper .faq {
+  padding: 0 20px;
+}
+#easynode .faqWrapper .faq .group {
+  margin-bottom: 2em;
+}
+#easynode .faqWrapper .faq .group .groupCaption {
+  font-size: 2.5em;
+  font-weight: 700;
+  padding-bottom: 0.5em;
+  color: #ff4800;
+}
+#easynode .faqWrapper .faq .group .groupCnt .question {
+  font-size: 1.5em;
+  padding-bottom: 3em;
+  max-width: 700px;
+}
+#easynode .faqWrapper .faq .group .groupCnt .question .questiontop {
+  display: flex;
+  justify-content: space-between;
+}
+#easynode .faqWrapper .faq .group .groupCnt .question .questionName {
+  padding-bottom: 1em;
+  font-weight: 700;
+  color: #3c4146;
+  font-size: 1.5em;
+  max-width: 85%;
+}
+#easynode .faqWrapper .faq .group .groupCnt .question .answer {
+  font-size: 0.8em;
+  padding-bottom: 20px !important;
+}
+#easynode .faqWrapper .faq .group .groupCnt .question .answer a {
+  text-decoration: underline;
+  color: #00a4ff;
+}
+#easynode .faqWrapper .faq .group .groupCnt .question .answer .image {
+  width: 100% !important;
+  max-width: 700px;
+  position: relative;
+}
+#easynode .faqWrapper .faq .group .groupCnt .question .answer .image img {
+  width: 100% !important;
+}
+#easynode .faqWrapper .faq .group .groupCnt .question .answer div {
+  padding-bottom: 0.5em;
+}
+#easynode .faqWrapper .faq .group .groupCnt .question .share {
+  margin-top: 0.5em;
+  color: #ff6e84;
+  font-size: 0.7em;
+  cursor: pointer;
+}
+#easynode .faqWrapper .faq .group .groupCnt .question .share:hover {
+  color: #00a4ff;
+}
+#easynode .faqWrapper .faq .group .groupCnt .question .share span {
+  padding-right: 2px;
+}
+#easynode .faqWrapper .faq .group .groupCnt .question .icon {
+  background: #00a4ff;
+  color: #fff;
+  cursor: pointer;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  width: 44px;
+  height: 44px;
+  line-height: 44px;
+  text-align: center;
+  border-radius: 50%;
+  font-size: 0.6em;
+}
+#easynode .faqWrapper .faq .group .groupCnt .question .icon:hover {
+  background: #ff6e84;
+}
+@media (max-width: 400px) {
+  #easynode .video {
+    max-width: 100%;
+    min-height: 100%;
+  }
+  #easynode .video .video__content {
+    max-width: 100%;
+    min-height: 100%;
+    margin: 20px 0;
+  }
+}
+.wndeasynode .wndinner {
+  width: 90%;
+  max-width: 860px;
+  height: 95%;
+}
+.wndeasynode #easynode .header {
+  margin-top: 0;
+  border-top: 0;
+}
+.wndeasynode #easynode .container {
+  padding-top: 0;
+}

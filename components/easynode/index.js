@@ -8,7 +8,7 @@ var easynode = (function(){
 
 		var primary = (p.history && !p.inWnd) || p.primary;
 
-		var el, amount = 1000, info = null, ed;
+		var el, amount = 1000, info = null, ed, oss, faqLangs;
 
 		
 		var blocktime = [{
@@ -52,9 +52,9 @@ var easynode = (function(){
 
 				var r = amount / calc.netstakeweight()
 				var n = 1
+				// return amount * Math.pow( (1 + 1440 * 4.75 / calc.netstakeweight() ),  t)
 
-
-				return amount * Math.pow( (1 + 1440 * 4.75 / calc.netstakeweight() ),  t)
+				return amount / calc.netstakeweight() * 4.75 * 1440 * t
 
 			}
 
@@ -62,9 +62,52 @@ var easynode = (function(){
 
 		var actions = {
 
+			download : function(os, clbk){
+				if (os){
+					if(os.github){
+
+						globalpreloader(true)
+
+
+						$.get(os.github.url, {}, function(d){
+
+							var assets = deep(d, 'assets') || [];
+
+							var l = _.find(assets, function(a){
+								return a.name == os.github.name
+							})
+
+							if (l){
+
+								var link = document.createElement('a');
+							        link.setAttribute('href', l.browser_download_url);
+							        link.setAttribute('download','download');
+							        link.click();
+
+							    if (clbk)
+									clbk(l.browser_download_url)
+							}
+
+							globalpreloader(false)
+
+
+						})
+
+					}
+
+				}
+			}
+
 		}
 
 		var events = {
+
+			downloadWindow : function(){
+
+				var os = _.find(oss, (os) => {return 'windows' == os.id})
+
+				actions.download(os);
+			}
 			
 		}
 
@@ -168,6 +211,47 @@ var easynode = (function(){
 				})
 
 				
+			},
+
+			faq : function(){
+
+				var faqLangsFiltered = {};
+
+				for (var l in faqLangs){
+
+					if (l !== 'fr'){
+
+
+						faqLangsFiltered[l] = faqLangs[l].filter(function(g){
+
+							return g.id === 'buy-pkoin';
+	
+						})
+					}
+
+				}
+
+				
+				var k = self.app.localization.key;
+
+				if(!faqLangsFiltered[k]) k = 'en';
+
+				var faqcontent = faqLangsFiltered[k];
+
+
+				self.shell({
+					name :  'faq',
+					el : el.faqWrapper,
+					data : {
+						groups : faqcontent
+					},
+					animation : false,				
+
+				}, function(p){
+
+					console.log('pp!!!', p)
+
+				})
 			}
 
 		}
@@ -185,30 +269,15 @@ var easynode = (function(){
 
 		var make = function(){
 			renders.calc();
+			renders.faq();
 		}
 
 		var initEvents = function(){
 
+
 			el.c.find('.start').on('click', function(){
 
-				if (ed.action){
-
-					ed.action()
-
-					self.closeContainer()
-
-					return
-
-				}
-			
-
-				self.nav.api.go({
-					href : (isMobile() || !(typeof _Electron != 'undefined' && _Electron)) ? 'nodecontrol' : 'userpage?id=nodecontrol',
-					history : true,
-					open : true,
-					inWnd : isMobile()
-				})		
-
+				events.downloadWindow();
 			})
 
 		}
@@ -220,7 +289,12 @@ var easynode = (function(){
 
 				var data = {};
 
-					ed = deep(p, 'settings.essenseData') || {}
+					ed = deep(p, 'settings.essenseData') || {};
+
+					oss = self.app.platform.applications[ed.key || 'ui'];
+
+					faqLangs = self.sdk.faqLangs.get();
+
 
 				clbk(data);
 
@@ -239,6 +313,7 @@ var easynode = (function(){
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
 				el.calcWrapper = el.c.find('.calcWrapper');
+				el.faqWrapper = el.c.find('.faqWrapper');
 
 				initEvents();
 				make()
