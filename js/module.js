@@ -586,11 +586,9 @@ nModule = function(){
 
 		essenses[id].destroyed = false;
 
-		essense.clearessense = function(){
+		p.clearessense = essense.clearessense = function(){
 			self.removeEssense(essenses, id)
 		}
-
-		p.clearessense = essense.clearessense
 
 		return essenses[id];
 	}

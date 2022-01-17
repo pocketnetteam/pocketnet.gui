@@ -5821,7 +5821,7 @@ Platform = function (app, listofnodes) {
 				},
 
                 openlinksinelectron : {
-					name: 'Do not open links in the desktop application',
+					name: self.app.localization.e('openlinkssettings'),
 					id : 'openlinksinelectron',
 					type : "BOOLEAN",
 					value : false,

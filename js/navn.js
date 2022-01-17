@@ -503,10 +503,7 @@ Nav = function(app)
 
 				p.clbk || (p.clbk = emptyFunction);
 
-			var lastHref = current.href;
-
 			var run = true;
-			var nav = false
 
 			if((p.history || p.loadDefault) && options.history)
 			{
@@ -533,6 +530,8 @@ Nav = function(app)
 
 							core.removeWindows(p.completeHref)
 							core.removeChat(p.completeHref)
+
+							p = {}
 
 						})
 
@@ -576,6 +575,8 @@ Nav = function(app)
 								if (stop.action){
 									stop.action(function(){
 										core.open(p)
+
+										p = {}
 									})
 								}
 
@@ -647,6 +648,9 @@ Nav = function(app)
 
 				p.clbk(null, p);
 			}
+
+			p = {}
+
 		},
 		
 		loadSource : function(map, clbk){
@@ -930,6 +934,8 @@ Nav = function(app)
 
 					}
 
+					p = {}
+
 				})
 
 				
@@ -970,6 +976,8 @@ Nav = function(app)
 						{
 							core.open(p)
 						}
+
+						p = {}
 
 					})
 					

@@ -33,6 +33,7 @@ var comments = (function(){
 		var wordsRegExp = /[,.!?;:() \n\r]/g
 		var sortby = 'interesting' 
 
+		var isotopes = {}
 		
 
 		var clbks = {
@@ -1641,6 +1642,27 @@ var comments = (function(){
 
 		}
 
+		var clears = {
+			isotope : function(){
+
+				try{
+
+					_.each(isotopes, function(i){
+						
+							i.isotope('destroy')
+						
+						
+					})
+
+					isotopes = {}
+
+				}
+				catch(e){
+
+				}
+			}
+		}
+
 		var renders = {
 
 			donate : function(id, p){
@@ -1732,41 +1754,31 @@ var comments = (function(){
 
 					_p.el.find('.image').imagesLoadedPN({ imageAttr: true }, function(image) {
 
-						if(!isMobile()){
-							var elimages = _p.el.find('.imagesEmbWr')
+						if(!el.c) return
 
+						var elimages = _p.el.find('.imagesEmbWr')
 
-						  	elimages.isotope({
+						elimages.isotope({
 
-								layoutMode: 'packery',
-								itemSelector: '.imageContainer',
-								packery: {
-									gutter: 10
-								},
-								initLayout: false
-							});
+							layoutMode: 'packery',
+							itemSelector: '.imageContainer',
+							packery: {
+								gutter: 10
+							},
+							initLayout: false
+						});
 
+						elimages.on('arrangeComplete', function(){
 
-							elimages.on('arrangeComplete', function(){
-
-								if (clbk)
-									clbk();
-			
-									p.el.find('.newcommentimages').addClass('active')
-
-							});
-
-							elimages.isotope()
-						}
-						else
-						{
 							if (clbk)
 								clbk();
-			
-							p.el.find('.newcommentimages').addClass('active')
-						}
+		
+								p.el.find('.newcommentimages').addClass('active')
 
+						});
 
+						elimages.isotope()
+						
 					});
 
 					
@@ -2066,15 +2078,19 @@ var comments = (function(){
 				
 			},
 
+
+
 			commentimages : function(s, clbk){
 				if(!el.c) return
 
 				var sel = el.c.find('#' + s.id)
 
 				var _el = sel.find(".commentimages .image");
+
 				var images = sel.find(".commentimages");
 
-				if(images.hasClass('active') || !_el.length || !images.length){
+
+				if (images.hasClass('active') || !_el.length || !images.length){
 
 					if (clbk)
 						clbk()
@@ -2086,7 +2102,6 @@ var comments = (function(){
 				var h = sel.height()
 
 				_el.imagesLoadedPN({ imageAttr: true }, function(image) {
-		
 
 					_.each(image.images, function(img, n){
 
@@ -2126,7 +2141,6 @@ var comments = (function(){
 						
 					})
 
-
 					var gutter = 10;
 
 					images.isotope({
@@ -2154,7 +2168,7 @@ var comments = (function(){
 
 					images.isotope()
 					
-				
+					isotopes[s.id] = images
 
 				});
 				
@@ -2167,6 +2181,8 @@ var comments = (function(){
 				var commentslength
 				var comments = p.comments
 				var sort = new sortParameter()
+
+				clears.isotope()
 
 				if(!p.replace){
 
@@ -2216,7 +2232,7 @@ var comments = (function(){
 
 				p.el || (p.el = el.list)
 				
-				if(!preview)
+				if(!preview && p.el)
 					p.el.addClass('listloading')
 
 				self.sdk.comments.users(comments, function (i, e) {
@@ -2730,6 +2746,8 @@ var comments = (function(){
 			},
 
 			destroy : function(){
+
+				clears.isotope()
 
 				delete self.app.platform.sdk.comments.sendclbks[eid]
 				delete self.app.platform.ws.messages.comment.clbks[eid]

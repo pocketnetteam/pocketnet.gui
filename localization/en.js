@@ -232,13 +232,14 @@ ____loclib.acchasinanotherpack = "This address is already use in another address
 
 //author
 ____loclib.sub = "Follow";
+____loclib.subi = "Following";
 ____loclib.unsub = "Unfollow";
 ____loclib.joined = "Joined";
 ____loclib.shares = "SHARES";
 ____loclib.uposts = "POSTS";
 ____loclib.myuposts = "MY POSTS";
 ____loclib.followers = "FOLLOWERS";
-____loclib.following = "Following";
+____loclib.following = "FOLLOWING";
 ____loclib.settings = "MANAGE";
 ____loclib.anofollowers = "This user has no followers";
 ____loclib.aynofollowers = "You have no followers";
@@ -601,7 +602,7 @@ ____loclib.joinnow = "Join Now"
 ____loclib.loading = "Loading"
 ____loclib.e13118 = "Words doesn't match"
 ____loclib.e13119 = "Add email and continue"
-____loclib.e13120 = "Applications"
+____loclib.e13120 = "Download Application"
 ____loclib.e13121 = "There aren't Images Here"
 ____loclib.e13122 = "Latest Comments"
 
@@ -1888,7 +1889,7 @@ ____loclib.deletedraftquestion = 'Are you sure you want to delete the draft arti
 ____loclib.publishquestion = 'Are you sure you want to public this article?'
 
 ____loclib.etc = 'And so on...'
-
+____loclib.openlinkssettings = 'Do not open links in the desktop application'
 ____loclib.nametaken = 'This username is taken in Bastyon'
 
 ____loclib.accountnotfound = 'We could not find your account on the blockchain. Perhaps the registration process was not completed, or there is no Internet connection'

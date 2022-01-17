@@ -187,7 +187,8 @@ var help = (function () {
       menuitem: function () {
         var page = $(this).attr('page');
 
-        actions.menuitem(page);
+        if(page)
+          actions.menuitem(page);
       },
     };
 

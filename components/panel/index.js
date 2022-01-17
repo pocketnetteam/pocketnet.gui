@@ -8,7 +8,7 @@ var panel = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el,  tags = null, comments = null, stacking = null;
+		var el = {}, tags = null, comments = null, stacking = null;
 
 		var ed = null;
 
@@ -344,9 +344,6 @@ var panel = (function(){
 				delete self.app.platform.clbks.api.actions.subscribe.panelrec
 				delete self.app.platform.ws.messages.event.clbks.panel
 
-
-				console.log("DESTROY")
-
 				if (tags){
 					tags.destroy()
 					tags = null;
@@ -365,6 +362,7 @@ var panel = (function(){
 				ed = null
 
 				if(el.c) el.c.empty()
+
 				el = {};
 			},
 
