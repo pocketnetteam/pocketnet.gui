@@ -129,7 +129,7 @@ var easynode = (function(){
 				var newvalue = calc.point(item.block)
 
 				al.animateNumber({
-					number: newvalue - value,
+					number: amount + (newvalue - value),
 
 					numberStep: function(now, tween) {
 
@@ -173,12 +173,19 @@ var easynode = (function(){
 						//el.am.focus();
 
 						//window.scrollTo(0, 0)
+
+						el.am.keypress(function(e){ return e.which != 13; });
+
 						el.am.on('keyup', function(){
 							var v = $(this).text() || ''
 
 							amount = Number(v.replace(/,/g,''));
 
-							if(amount < 50) amount = 50
+							if(amount < 50){
+								amount = 50;
+
+							} 
+
 							if(amount > 500000) amount = 500000
 
 							renders.updateValues()
@@ -186,20 +193,24 @@ var easynode = (function(){
 							
 						})
 
-						el.am.on('change', function(){
-							var v = $(this).text() || ''
+						el.am.on('blur', function(){
+							var v = $(this).text() || '';
 
 							amount = Number(v.replace(/,/g,''));
 
-							if(amount < 50) amount = 50
+							if(amount < 50){
+
+								el.am.text(50);
+								amount = 50;
+
+							} 
+
 							if(amount > 500000) amount = 500000
 
-							$(this).val(amount)
-
 							renders.updateValues()
+
 							
 						})
-
 
 						if (clbk)
 							clbk()
