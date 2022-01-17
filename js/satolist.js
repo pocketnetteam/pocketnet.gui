@@ -24437,8 +24437,11 @@ Platform = function (app, listofnodes) {
         var routing = function(route){
 
             pretry(function(){
+
                 return app.appready
+
             }).then(r => {
+
                 app.user.isState(function (state) {
 
                     var url = route

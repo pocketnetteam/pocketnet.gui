@@ -1024,7 +1024,12 @@ Application = function(p)
 		}
 		else
 		{
+
 			self.init(p);
+
+			setTimeout(function(){
+				self.appready = true
+			}, 2000)
 		}
 
 
