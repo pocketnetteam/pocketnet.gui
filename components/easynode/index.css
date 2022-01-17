@@ -2,6 +2,15 @@
   padding: 2.5em 0;
   text-align: center;
 }
+#easynode .actionWrapper .button {
+  text-decoration: underline;
+  color: #ff4800;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+#easynode .actionWrapper .button:hover {
+  text-decoration: none;
+}
 #easynode .container {
   max-width: 1280px;
   width: 100%;
@@ -133,7 +142,7 @@
   width: 100%;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 2em;
+  margin-top: 3em;
 }
 #easynode .faqWrapper .faq {
   padding: 0 20px;
