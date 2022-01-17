@@ -1,29 +1,45 @@
 @import "../../css/__cssvar";
 
 #easynode{
+  .mwork{
+  
+  }
+
   .actionWrapper{
-    padding : 5 * @rhythm 0;
+    padding : 9 * @rhythm 0;
+    margin-top: 7 * @rhythm;
+    padding-top: 7 * @rhythm;
     text-align: center;
+    border-top: 1px solid rgb(197, 194, 194);  
+    border-bottom: 1px solid rgb(197, 194, 194);  
 
     .button{
       text-decoration: underline;
       color: #0f72bb;
       font-weight: 700;
-      font-size: 2.3rem;
+      font-size: 4rem;
       cursor: pointer;
 
     }
   }
 
   .container{
-    max-width: 1280px;
+    max-width: 800px;
     width: 100%;
     margin: 0 auto;
     padding: 40px 20px;
   }
 
+  .faq{
+    .container{
+      max-width: 800px;
+    }
+  }
+
   .calcWrapper{
-    margin-top: @rhythm * 4;
+    margin-top: 0;
+    padding-top:@rhythm * 8;
+    border-top: 1px solid rgb(197, 194, 194);  
     
     .calc{
       max-width: 800px;
@@ -131,7 +147,7 @@
       color : @color-bright;
 
       span{
-        font-size: 0.8em;
+        font-size: 1.5em;
       }
     }
 
@@ -139,11 +155,9 @@
 
 
   .header {
-    margin-top: 40px;
-    text-align: center;
-    padding: 10px 0;
-    border-top: 1px solid rgb(197, 194, 194);
-    border-bottom: 1px solid rgb(197, 194, 194);  
+    margin-top: 10 * @rhythm;
+    padding-bottom: 4 * @rhythm;
+    
     font-size: 1.2em; 
   }
 
@@ -193,8 +207,13 @@
     margin-left: auto;
     margin-right: auto;
     margin-top: @rhythm * 4;
-    padding-top: @rhythm * 6;
-    border-top: 1px solid #c5c2c2;
+    padding-top: @rhythm * 4;
+
+    img{
+      border-radius: 10px;
+      border: 1px solid fade(@color-gray-mlight, 20);
+      .shadowSmaller();
+    }
 
     .faq{
       padding: 0 20px;
