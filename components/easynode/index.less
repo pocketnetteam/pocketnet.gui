@@ -17,17 +17,20 @@
       text-decoration: underline;
       color: #0f72bb;
       font-weight: 700;
-      font-size: 4rem;
+      font-size: 3.6rem;
       cursor: pointer;
 
     }
   }
-
+  .report{
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+  }
   .container{
     max-width: 800px;
     width: 100%;
     margin: 0 auto;
-    padding: 40px 20px;
+    padding: 0px 20px 40px 20px;
   }
 
   .faq{
@@ -50,6 +53,7 @@
 
 
     .numbers{
+      font-size: 1.5em;
             
       .inputWrapper{
         padding : 2 * @rhythm;
@@ -155,15 +159,30 @@
 
 
   .header {
-    margin-top: 10 * @rhythm;
-    padding-bottom: 4 * @rhythm;
+    //margin-top: 10 * @rhythm;
+    //padding-bottom: 4 * @rhythm;
     
     font-size: 1.2em; 
+    .header__subtitle{
+      span{
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+    }
   }
 
   h2{
     font-size: 2.5em;
-    color: #ff4800;
+    color: #f0b811;
+    text-align: center;
+    text-transform: uppercase;
+    margin-top: 0;
+    border-top: 2px solid #c5c2c2;
+    border-bottom: 2px solid #c5c2c2;
+    padding: 10px 0;
+    span{
+      color: #ff4800;
+    }
   }
 
   h3{
