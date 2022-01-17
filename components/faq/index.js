@@ -10,8 +10,6 @@ var faq = (function(){
 
 		var el, vt;
 
-		var faqLangs = self.sdk.faqLangs.get();
-
 		var mp = {};
 
 		var actions = {
@@ -171,6 +169,8 @@ var faq = (function(){
 
 				var k = self.app.localization.key;
 
+				var faqLangs = self.sdk.faqLangs.get();
+				
 				if(!faqLangs[k]) k = 'en';
 
 				var faqcontent = faqLangs[k];
