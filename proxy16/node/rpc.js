@@ -191,7 +191,7 @@ function rpc(request, callback, obj) {
         method: 'POST',
         port: prv ? self.portPrivate : self.port,
         agent: keepAliveAgent,
-        signal : signal
+        signal : signal,
     };
 
     var lg = false //self.host == '135.181.196.243' || self.host == '65.21.56.203' || self.host == '51.174.99.18'

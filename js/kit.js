@@ -1362,7 +1362,7 @@ Share = function(lang){
 		var articleversion2 = self.settings.v == 'a' && self.settings.version && self.settings.version >= 2
 
 		if (articleversion2){
-			textvalue = JSON.stringify(JSON.stringify(textvalue)) //  Base64Helper.encode(JSON.stringify(textvalue))
+			textvalue = JSON.stringify(textvalue) //  Base64Helper.encode(JSON.stringify(textvalue))
 
 			console.log('textvalue', textvalue)
 		}
@@ -1411,7 +1411,7 @@ Share = function(lang){
 		var articleversion2 = self.settings.v == 'a' && self.settings.version && self.settings.version >= 2
 
 		if (articleversion2){
-			textvalue = JSON.stringify(textvalue) //Base64Helper.encode(JSON.stringify(textvalue))
+			textvalue = textvalue //Base64Helper.encode(JSON.stringify(textvalue))
 		}
 
 		if (extend){
@@ -1465,15 +1465,6 @@ Share = function(lang){
 
 		var articleversion2 = self.settings.v == 'a' && self.settings.version && self.settings.version >= 2
 		var textvalue = v.m || v.message
-
-		if (articleversion2){
-			try{
-				textvalue = JSON.parse(textvalue)
-			}
-			catch(e) {
-				textvalue = ''
-			}
-		}
 
 		self.caption.set(v.c || v.caption)
 		self.url.set(v.u || v.url)
@@ -2110,14 +2101,15 @@ pShare = function(){
 		var articleversion2 = self.settings.v == 'a' && self.settings.version && self.settings.version >= 2
 
 
-		if (articleversion2){
+		if(articleversion2){
 			try{
-				textvalue = JSON.parse(textvalue)// JSON.parse(Base64Helper.decode(textvalue))
+				textvalue = JSON.parse(textvalue)
 			}
-			catch(e) {
+			catch(e){
 				textvalue = ''
 			}
 		}
+
 
 		if (notdecode){
 			self.message = textvalue

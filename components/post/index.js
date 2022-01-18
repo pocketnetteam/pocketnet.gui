@@ -13,7 +13,7 @@ var post = (function () {
 
 		var primary = (p.history && !p.inWnd) || p.primary;
 
-		var el, share, ed, inicomments, eid = '', _repost = null, level = 0, external = null;
+		var el = {}, share, ed = {}, inicomments, eid = '', _repost = null, level = 0, external = null;
 
 		var player = null
 

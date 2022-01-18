@@ -111,7 +111,7 @@
                             
                         </div>
 
-                        <div class="hostport"><span><%- node.host%>:<%- node.port %>/<%- node.ws %></span></div>
+                        <div class="hostport"><span><%- node.host%>:<%- node.port %>/<%- node.ws %></span><% if(node.service) {%><i class="fas fa-circle hasserviceconnection"></i> <% } %></div>
 
                         <div class="statistic">
                         

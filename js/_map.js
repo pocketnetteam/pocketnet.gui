@@ -569,8 +569,10 @@ __map =  {
 			uri : "articlev",
 			href : "articlev",
 			add : insertingfunc,
+			
 			relations : [
 				{src : 'js/vendor/editor/editor.js',			   f : 'js'},
+				{src : 'js/vendor/editor/embed.js',			   f : 'js'},
 				{src : 'js/vendor/editor/carousel.js',			   f : 'js'},
 				{src : 'js/vendor/editor/paragraph.js',			   f : 'js'},
 				{src : 'js/vendor/editor/header.js',			   f : 'js'},
