@@ -1468,7 +1468,7 @@ Share = function(lang){
 
 		if (articleversion2){
 			try{
-				textvalue = JSON.parse(Base64Helper.decode(textvalue))
+				textvalue = JSON.parse(textvalue)
 			}
 			catch(e) {
 				textvalue = ''
