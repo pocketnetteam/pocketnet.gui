@@ -21,6 +21,8 @@ var Node = function(options, manager){
 
     var pending = 0
 
+    var wssconnected = false
+
     self.updating = ['rpcuser', 'rpcpass', 'ws', 'name']
 
     self.host = options.host
@@ -125,8 +127,17 @@ var Node = function(options, manager){
      
             wss.service = (new Wss(self, manager.proxy.kit.service())).connect()
 
+            wss.service.on('open', function(){
+                wssconnected = true
+            })
+
+            wss.service.on('close', function(){
+                wssconnected = false
+            })
+
             wss.service.on('disconnected', function(){
                 wss.service = null
+                wssconnected = false
                 serviceConnection()
             })
 
@@ -1010,7 +1021,8 @@ var Node = function(options, manager){
             peer : self.peer,
             wssusers : _.toArray(wss.users).length,
             bchain : self.bchain,
-            version : self.version
+            version : self.version,
+            service : wssconnected ? true : false
             
         }
     }
