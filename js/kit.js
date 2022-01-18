@@ -1020,6 +1020,10 @@ Share = function(lang){
 			return 'video'
 		}
 
+		if(self.itisarticle()){
+			return 'article'
+		}
+
 		return 'post'
 	} 
 
@@ -1347,11 +1351,7 @@ Share = function(lang){
 			return 'pkoin_commerce_tag'
 		}
 
-		/*if(!self.tags.v.length && self.settings.v != 'a'){
-
-			return 'tags'
-		}*/
-
+	
 		return false
 	}
 
@@ -1392,6 +1392,10 @@ Share = function(lang){
 		//if(meta.type) return true
 
 		if(meta.type == 'peertube') return true
+	}
+
+	self.itisarticle = function(){
+		return self.settings.v == 'a' && self.settings.version && self.settings.version >= 2
 	}
 
 	self.hasexchangetag = function(){
@@ -1497,6 +1501,7 @@ Share = function(lang){
 	self.optstype = function(platform){
 
 		if(self.itisvideo()) return 'video'
+		if(self.itisarticle()) return 'article'
 
 		return self.type	
 	}
@@ -1504,6 +1509,7 @@ Share = function(lang){
 	self.typeop = function(platform){
 
 		if (self.itisvideo()) return 'video'
+		if (self.itisarticle()) return 'article'
 
 		if (self.aliasid){
 			return 'share'

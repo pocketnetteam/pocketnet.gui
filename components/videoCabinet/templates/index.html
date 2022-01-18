@@ -48,7 +48,7 @@
         </div>
       </div>
     <% } %>
-      <div class="videoContainer">
+      <div class="videoContainer" elementsid="videocabinet">
         <div class="work">
           <div class="videoControls">
             <div class="videoSearchWrapper videoControlItem">
@@ -98,10 +98,7 @@
         <div class="userVideos"></div>
       </div>
     <% } else { %>
-      <div class="videoContainer videoErrorContainer">
-
-
-
+      <div class="videoContainer videoErrorContainer" elementsid="videocabineterror">
         
         <div class="work">
           <% if(typeof increase == 'undefined' || _.isEmpty(increase)) {%>

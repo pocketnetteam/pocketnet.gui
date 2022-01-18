@@ -127,6 +127,8 @@ var articlev = (function(){
 
 					}).catch(e => {
 
+						console.error(e)
+
 						globalpreloader(false)
 
 						return Promise.resolve()
@@ -608,7 +610,7 @@ var articlev = (function(){
 			initUpload({
 				el : el.c.find('.uploadcover'),
 	
-				ext : ['png', 'jpeg', 'jpg', 'gif', 'jfif'],
+				ext : ['png', 'jpeg', 'jpg', 'gif', 'jfif', 'webp'],
 
 				dropZone : el.c.find('.bgwrapper'),
 
@@ -881,7 +883,7 @@ var articlev = (function(){
 				el.share = el.c.find('.shareWrapper')
 				el.status = el.c.find('.truestatuswrapper')
 				el.myarticles = el.c.find('.myarticles')
-				el.showpreview = el.c.find('.showpreview')
+				el.showpreview = el.c.find('.preview')
 
 				initEvents();
 				make()
