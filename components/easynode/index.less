@@ -6,9 +6,7 @@
   }
 
   .actionWrapper{
-    padding : 9 * @rhythm 0;
-    margin-top: 7 * @rhythm;
-    padding-top: 7 * @rhythm;
+    padding: 7 * @rhythm 20px;
     text-align: center;
     border-top: 1px solid rgb(197, 194, 194);  
     border-bottom: 1px solid rgb(197, 194, 194);  
@@ -148,7 +146,6 @@
     .calcCaption{
       padding : 1.5 * @rhythm 2 * @rhythm;
       font-weight: 700;
-      color : @color-bright;
 
       span{
         font-size: 1.5em;
@@ -180,6 +177,7 @@
     border-top: 2px solid #c5c2c2;
     border-bottom: 2px solid #c5c2c2;
     padding: 10px 0;
+    
     span{
       color: #ff4800;
     }
@@ -334,6 +332,37 @@
 
 
   @media (max-width: 400px){
+
+    h2, h3{
+      font-size: 1.5em;
+    }
+
+    .actionWrapper .button{
+      font-size: 2.4rem;
+    }
+
+    .calcWrapper{
+
+      .inputWrapper{
+        font-size: .9em;
+      }
+
+      .totalNumbers{
+
+
+        .totalRow{
+
+            .value{
+                
+                span{
+                    font-size: 1.2em!important;
+  
+                }
+            }
+        }
+    }
+    }
+
     .video{ 
       max-width: 100%;
       min-height: 100%;

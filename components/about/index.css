@@ -34,6 +34,9 @@
 #about .bottomfooter .discover .items > div {
   padding: 1em;
 }
+#about .bottomfooter .discover .items.support {
+  margin-top: 2em;
+}
 #about .bottomfooter .discover .items a {
   display: flex;
   flex-direction: column;
@@ -348,11 +351,14 @@
   #about .bottomfooter {
     grid-template-columns: 1fr;
   }
-  #about .bottomfooter .items {
+  #about .bottomfooter .discover .items {
     flex-wrap: wrap;
   }
-  #about .bottomfooter .items > div {
+  #about .bottomfooter .discover .items > div {
     width: 33.333%;
+  }
+  #about .bottomfooter .discover .items.support {
+    margin-top: 4.5em;
   }
 }
 html.stblack #about .maket {
