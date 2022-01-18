@@ -320,7 +320,7 @@ function rpc(request, callback, obj) {
     req.setHeader('Content-Length', request.length);
     req.setHeader('Content-Type', 'application/json');
 
-    if(prv) {
+    if (prv) {
         req.setHeader('Authorization', 'Basic ' + Base64Helper.encode(self.user + ':' + self.pass));
     }
 

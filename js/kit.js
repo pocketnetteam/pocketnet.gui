@@ -1362,7 +1362,9 @@ Share = function(lang){
 		var articleversion2 = self.settings.v == 'a' && self.settings.version && self.settings.version >= 2
 
 		if (articleversion2){
-			textvalue = JSON.stringify(textvalue) //  Base64Helper.encode(JSON.stringify(textvalue))
+			textvalue = JSON.stringify(JSON.stringify(textvalue)) //  Base64Helper.encode(JSON.stringify(textvalue))
+
+			console.log('textvalue', textvalue)
 		}
 		
 		return encodeURIComponent(self.url.v) 
