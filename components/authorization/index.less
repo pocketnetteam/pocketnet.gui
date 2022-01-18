@@ -411,8 +411,8 @@
 				.upload .fileUploader, .upload .fileUploader .elContent{
 					position: relative;
 				}
-	
-				&.fileUploaderWrapper{
+
+				&.actionButtonsWrapper{
 					width: 190px;
 	
 					text-align: center;
@@ -551,9 +551,9 @@ html.stblack{
 		.inputTable{
 	
 			>div{
-	
-				&.fileUploaderWrapper{
-	
+
+				&.actionButtonsWrapper{
+
 					>div{
 						color : @color-main;
 					}
@@ -645,11 +645,11 @@ html.stblack{
 	
 		
 			.inputTable{
-		
-				>div{					
-		
-					&.fileUploaderWrapper{
-		
+
+				>div{
+
+					&.actionButtonsWrapper{
+
 						>div{
 							color : @color-main;
 						}
@@ -743,7 +743,7 @@ html.stblack{
 
 			>div{
 				display: block;
-				&.fileUploaderWrapper{
+				&.actionButtonsWrapper{
 					/*width: 50%;*/
 					width: 80px;
 					text-align: center;
@@ -757,27 +757,13 @@ html.stblack{
 						display: none;
 					}
 
-					.icon{
-						font-size: 1.2em;
-						height: 100%;
-						line-height: 76px;
-					}
-
-					.uploadFile{
+					.uploadFile, .showPassword{
 						height: 100%;
 					}
 				}
 
 				input{
 					border-radius: 3px;
-				}
-			}
-
-			&.typeactive{
-				>div{
-					&.fileUploaderWrapper{
-						display: none;
-					}
 				}
 			}
 		}
@@ -831,8 +817,8 @@ html.stblack{
 					.upload .fileUploader, .upload .fileUploader .elContent{
 						position: relative;
 					}
-		
-					&.fileUploaderWrapper{
+
+					&.actionButtonsWrapper{
 						width: 190px;
 		
 						text-align: center;

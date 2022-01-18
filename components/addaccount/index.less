@@ -34,13 +34,17 @@
 				position: relative;
 			}
 
-			&.fileUploaderWrapper{
+			&.actionButtonsWrapper{
 				width: 120px;
 
 				text-align: center;
 
 				.fileUploader{
-					
+					.inputWrapper input {
+						&::-webkit-file-upload-button {
+							display: none;
+						}
+					}
 				}
 
 				>div{
@@ -181,8 +185,8 @@ html.stblack{
 				.upload .fileUploader, .upload .fileUploader .elContent{
 					position: relative;
 				}
-	
-				&.fileUploaderWrapper{
+
+				&.actionButtonsWrapper{
 					width: 120px;
 	
 					text-align: center;
@@ -257,7 +261,7 @@ html.stblack{
 
 			>div{
 				display: block;
-				&.fileUploaderWrapper{
+				&.actionButtonsWrapper{
 					/*width: 50%;*/
 					width: 80px;
 					text-align: center;
@@ -277,21 +281,17 @@ html.stblack{
 						line-height: 76px;
 					}
 
-					.uploadFile{
+					.uploadFile, .showPassword{
 						height: 100%;
+					}
+
+					.showPassword {
+						cursor: pointer;
 					}
 				}
 
 				input{
 					border-radius: 3px;
-				}
-			}
-
-			&.typeactive{
-				>div{
-					&.fileUploaderWrapper{
-						display: none;
-					}
 				}
 			}
 		}
@@ -332,16 +332,8 @@ html.stblack{
 
 			>div{
 
-				&.fileUploaderWrapper{
+				&.actionButtonsWrapper{
 					width: 50%;
-				}
-			}
-
-			&.typeactive{
-				>div{
-					&.fileUploaderWrapper{
-						display: none;
-					}
 				}
 			}
 		}
