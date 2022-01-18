@@ -1314,6 +1314,7 @@ var videoCabinet = (function () {
             clbk(data);
           })
           .catch((err) => {
+
             ed = {
               ...ed,
               hasAccess: false,
@@ -1373,6 +1374,7 @@ var videoCabinet = (function () {
             },
           });
         });
+
 
         //do nothing if user has no access to videos
         if (!ed.hasAccess) return p.clbk(null, p);

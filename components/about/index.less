@@ -11,6 +11,16 @@
 		}
 	}
 
+	.authorization{
+		display: flex;
+
+
+		.signup{
+			margin-left: @rhythm * 4;
+			color: #ff4800;
+		}
+	}
+
 	.lang{
 		cursor: pointer;
 		font-weight: 100;
@@ -40,6 +50,10 @@
 
 				>div{
 					padding : 2 * @rhythm;
+				}
+
+				&.support{
+					margin-top: @rhythm * 4;
 				}
 
 				
@@ -463,6 +477,10 @@
 
 		margin-top: -65px;
 
+		.authorization{
+			display: none;
+		}
+
 
 		.contentsInner{
 			.burgerMenu{
@@ -499,14 +517,21 @@
 		.bottomfooter{
 			grid-template-columns: 1fr;
 
-			.items{
-				flex-wrap: wrap;
+			.discover{
 
-				>div{
-					width: 33.333%;
+				.items{
+					flex-wrap: wrap;
+	
+	
+					>div{
+						width: 33.333%;
+					}
+	
+					&.support{
+						margin-top: @rhythm * 9;
+					}
+					
 				}
-
-				
 			}
 			
 		}

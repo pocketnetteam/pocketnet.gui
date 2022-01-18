@@ -27,7 +27,11 @@ var articlev = (function(){
 			},
 
 			complete : function(){
-
+				self.nav.api.load({
+					open : true,
+					href : 'author?address=' + self.app.user.address.value.toString('hex'),
+					history : true,
+				})
 			},
 
 			trx : function(share){
@@ -87,9 +91,9 @@ var articlev = (function(){
 
 				var _art = art
 
-				sitemessage('Creation of articles will be available later')
+				/*sitemessage('Creation of articles will be available later')
 
-				return
+				return*/
 
 				return actions.saveEditor().then(r => {
 
@@ -126,6 +130,8 @@ var articlev = (function(){
 						globalpreloader(false)
 
 					}).catch(e => {
+
+						console.error(e)
 
 						globalpreloader(false)
 
@@ -608,7 +614,7 @@ var articlev = (function(){
 			initUpload({
 				el : el.c.find('.uploadcover'),
 	
-				ext : ['png', 'jpeg', 'jpg', 'gif', 'jfif'],
+				ext : ['png', 'jpeg', 'jpg', 'gif', 'jfif', 'webp'],
 
 				dropZone : el.c.find('.bgwrapper'),
 
@@ -881,7 +887,7 @@ var articlev = (function(){
 				el.share = el.c.find('.shareWrapper')
 				el.status = el.c.find('.truestatuswrapper')
 				el.myarticles = el.c.find('.myarticles')
-				el.showpreview = el.c.find('.showpreview')
+				el.showpreview = el.c.find('.preview')
 
 				initEvents();
 				make()

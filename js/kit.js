@@ -1020,6 +1020,10 @@ Share = function(lang){
 			return 'video'
 		}
 
+		if(self.itisarticle()){
+			return 'article'
+		}
+
 		return 'post'
 	} 
 
@@ -1347,11 +1351,7 @@ Share = function(lang){
 			return 'pkoin_commerce_tag'
 		}
 
-		/*if(!self.tags.v.length && self.settings.v != 'a'){
-
-			return 'tags'
-		}*/
-
+	
 		return false
 	}
 
@@ -1362,7 +1362,9 @@ Share = function(lang){
 		var articleversion2 = self.settings.v == 'a' && self.settings.version && self.settings.version >= 2
 
 		if (articleversion2){
-			textvalue = JSON.stringify(textvalue) //  Base64Helper.encode(JSON.stringify(textvalue))
+			textvalue = JSON.stringify(JSON.stringify(textvalue)) //  Base64Helper.encode(JSON.stringify(textvalue))
+
+			console.log('textvalue', textvalue)
 		}
 		
 		return encodeURIComponent(self.url.v) 
@@ -1392,6 +1394,10 @@ Share = function(lang){
 		//if(meta.type) return true
 
 		if(meta.type == 'peertube') return true
+	}
+
+	self.itisarticle = function(){
+		return self.settings.v == 'a' && self.settings.version && self.settings.version >= 2
 	}
 
 	self.hasexchangetag = function(){
@@ -1462,7 +1468,7 @@ Share = function(lang){
 
 		if (articleversion2){
 			try{
-				textvalue = JSON.parse(Base64Helper.decode(textvalue))
+				textvalue = JSON.parse(textvalue)
 			}
 			catch(e) {
 				textvalue = ''
@@ -1497,6 +1503,7 @@ Share = function(lang){
 	self.optstype = function(platform){
 
 		if(self.itisvideo()) return 'video'
+		if(self.itisarticle()) return 'article'
 
 		return self.type	
 	}
@@ -1504,6 +1511,7 @@ Share = function(lang){
 	self.typeop = function(platform){
 
 		if (self.itisvideo()) return 'video'
+		if (self.itisarticle()) return 'article'
 
 		if (self.aliasid){
 			return 'share'

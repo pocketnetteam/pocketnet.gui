@@ -109,7 +109,7 @@
         }
         
         i{
-            font-size: 0.8em;
+            font-size: 0.7em;
         }
     }
     
@@ -384,11 +384,27 @@
                 font-size: 0.8em;
                 white-space: nowrap;
                 text-overflow: ellipsis;
+                position: relative;
+                background: @color-orange;
+                border : 1px solid @color-orange;
+                color : #fff;
+                text-align: left;
+                padding-left: 4 * @rhythm;
+
+                i{
+                    position : absolute;
+                    right: @rhythm;
+                    top : 0;
+                    bottom : 0;
+                    padding-top : 1.5 * @rhythm;
+                    opacity: 0.8;
+                    .transition(0.3s, opacity);
+                }
 
                 &:hover{
-                    background: transparent;
-                    backdrop-filter: blur(2px);
-                    -webkit-backdrop-filter: blur(2px);  
+                    i{
+                        opacity: 1;
+                    }
                 }
             }
 

@@ -1450,6 +1450,7 @@ var Proxy = function (settings, manage, test, logger) {
 
 						remote.nmake(url, function (err, data) {
 
+							console.log('err', err)
 							if (!err) {
 
 								resolve({

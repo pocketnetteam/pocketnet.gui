@@ -41,6 +41,17 @@ var testnodes = [
 		name : 'test.2.pocketnet.app',
 		stable : true
 	},
+
+
+	{
+		host : '192.168.0.15',
+		port : 39091,
+		ws : 6067,
+		name : 'test.local',
+		stable : true
+	},
+
+
 	{
 		host : '116.203.219.28',
 		port : 39091,
