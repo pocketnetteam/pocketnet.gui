@@ -233,11 +233,27 @@ var easynode = (function(){
 					if (l !== 'fr'){
 
 
-						faqLangsFiltered[l] = faqLangs[l].filter(function(g){
+						faqLangsFiltered[l] = faqLangs[l]
+						.filter(function(g){
 
 							return g.id === 'buy-pkoin';
 	
 						})
+						.map(function(g){
+							
+							if (g.id === 'buy-pkoin'){
+
+								var newG = JSON.parse(JSON.stringify(g))
+
+								newG.group = g.group.slice(0, 7)
+
+								return newG;
+							}
+
+							return g;
+							
+						})
+
 					}
 
 				}
