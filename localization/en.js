@@ -1385,6 +1385,7 @@ ____loclib.aboutOpen2 = 'Official Website';
 ____loclib.aboutOpen3 = 'Contact us';
 ____loclib.aboutOpen4 = 'Send us a message if you need help or if you are a content creator, blogger, influencer and would like to unlock your bonus and verify your profile!';
 ____loclib.aboutOpen5 = 'Source Code';
+____loclib.aboutOpen5_1 = 'Email us at:';
 
 /////////////aboutYoutube
 ____loclib.aboutMainBoard = 'Bastyon - the best alternative to YouTube';
@@ -1977,8 +1978,8 @@ ____loclib.year = "Year";
 ____loclib.stakingCalculator = "Staking Calculator - calculate how much you earn by putting Pocketcoin (PKOIN) into a node."
 ____loclib.easyNode_e2000 = "Defend Freedom of Speech & "
 ____loclib.easyNode_e2000_1 = "Earn"
-____loclib.easyNode_e2000_2 = " Cryptocurrency."
-____loclib.easyNode_e2001 = "What is Pocketcoin? Pocketcoin is a cryptocurrency that powers the decentralized social platform Bastyon.com. It is used to reward content creators, to boost posts and comments, to pay for ads and to unlock special features on Bastyon."
+____loclib.easyNode_e2000_2 = " Cryptocurrency"
+____loclib.easyNode_e2001 = "What is Pocketcoin? Pocketcoin is a cryptocurrency that powers the decentralized social platform Bastyon. It is used to reward content creators, to boost posts and comments, to pay for ads and to unlock special features on Bastyon."
 ____loclib.easyNode_e2002 = "What is a  node?  A node is a computer owned by any user of Bastyon that supports the network and"
 ____loclib.easyNode_e2002_1 = " earns "
 ____loclib.easyNode_e2002_2 = "Pocketcoin. Your computer can be one of those nodes, assuming you have at least 50 GB of free SSD space and a decent internet connection.  Node has to lock some Pocketcoin in it to"
