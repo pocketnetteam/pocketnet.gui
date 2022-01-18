@@ -27,7 +27,11 @@ var articlev = (function(){
 			},
 
 			complete : function(){
-
+				self.nav.api.load({
+					open : true,
+					href : 'author?address=' + self.app.user.address.value.toString('hex'),
+					history : true,
+				})
 			},
 
 			trx : function(share){
@@ -87,9 +91,9 @@ var articlev = (function(){
 
 				var _art = art
 
-				sitemessage('Creation of articles will be available later')
+				/*sitemessage('Creation of articles will be available later')
 
-				return
+				return*/
 
 				return actions.saveEditor().then(r => {
 
