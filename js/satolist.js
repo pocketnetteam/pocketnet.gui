@@ -21871,7 +21871,7 @@ Platform = function (app, listofnodes) {
             sharepocketnet: {
                 loadMore: function (data, clbk, wa) {
 
-                    data.addrFrom = 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd'
+                    data.addrFrom || (data.addrFrom = window.testpocketnet ? 'TAqR1ncH95eq9XKSDRR18DtpXqktxh74UU' : 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd')
 
                     if (data.addrFrom) {
 
