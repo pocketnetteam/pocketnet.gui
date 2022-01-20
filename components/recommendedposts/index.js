@@ -190,27 +190,25 @@ var recommendedposts = (function(){
 
 				} else {
 
-					// self.app.platform.sdk.posts.getRecommendedPosts(function(c, error){
+					self.app.platform.sdk.posts.getRecommendedPosts(function(c, error){
 
+						var postIds = c.map(function(post){
+							return post.contentid;
+						})
 
+						self.app.platform.sdk.posts.getRecommendedPostsContents([postIds], function(c, error){
+		
+							addresses = c
 	
-					// 	if (clbk){
-					// 		clbk(shuffle(addresses).slice(0, 5))
-					// 	}
-					// })
+							if (clbk){
+								clbk(shuffle(addresses).slice(0, 5))
+							}
+						})
 
-					var postIds = [['826ad31313b2d18351099d63a3fe72ae0c65c5f1df1ac7d381d9d450a58fa363', '25c9ed507272e6638af2a241092b626dde553f519dd85049de1af0c7d2482ce4', '16c0d742056c5b31dce2e8a4358ffc0f99d942e983873fcea678939fe329b30d', '7a649966108d6026e27cdaf9acc94e13f7d6d9e731a7605008c465b6adaa4ee1', '34ad448ee1c31590b12c2791fa05ab31ef4d717165fba5c42f6882fc222b86b2']];
 
-					self.app.platform.sdk.posts.getRecommendedPostsContents(postIds, function(c, error){
-
-						console.log('c!!!!!', c);
-
-						addresses = c
-
-						if (clbk){
-							clbk(shuffle(addresses).slice(0, 5))
-						}
 					})
+
+
 
 				}
 

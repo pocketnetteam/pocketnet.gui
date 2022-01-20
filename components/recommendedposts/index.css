@@ -84,6 +84,19 @@
 #recommendedposts .posts .post .postcontent {
   margin-top: 0.5em;
 }
+#recommendedposts .posts .post .infoWrapper {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8em;
+  color: #C7C8D9;
+  margin-top: 1em;
+}
+#recommendedposts .posts .post .infoWrapper .actionsWrapper {
+  display: flex;
+}
+#recommendedposts .posts .post .infoWrapper .actionsWrapper > div {
+  padding-left: 0.75em;
+}
 #recommendedposts .posts .post .addressTable {
   cursor: pointer;
 }

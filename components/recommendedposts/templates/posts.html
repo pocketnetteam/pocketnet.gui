@@ -155,18 +155,34 @@ _.each(addresses, function(u){
 			<% } %>
 
 			<div class="infoWrapper">
-				<div class="date">
-					<%-app.reltime(Number(u.time + '000'))%>
+				<div class="dateWrapper">
+					<div class="date">
+						<%-app.reltime(Number(u.time + '000'))%>
+					</div>
 				</div>
-				<div class="scoreSum">
-					<%- u.scoreSum %>							
+
+				<div class="actionsWrapper">
+					<div class="scoreSum">
+						<i class="far fa-star"></i>
+						<span>
+							<%- u.scoreSum %>							
+						</span>
+					</div>
+					<div class="scoreCnt">
+						<i class="far fa-user"></i>
+						<span>
+							<%- u.scoreCnt %>							
+						</span>
+					</div>
+					<div class="comments">
+						<i class="far fa-comment">
+						</i>
+						<span>
+							<%- u.comments %>							
+						</span>
+					</div>
 				</div>
-				<div class="scoreCnt">
-					<%- u.scoreCnt %>							
-				</div>
-				<div class="comments">
-					<%- u.comments %>							
-				</div>
+
 			</div>
 
 		</div>

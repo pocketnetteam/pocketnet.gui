@@ -8477,7 +8477,7 @@ Platform = function (app, listofnodes) {
 
                 var my = self.app.user.address.value;
 
-                self.app.api.rpc('getrecomendedcontentsbyscoresonsimilarcontents', ['6ba3d958328bdcbdce021fee23633db362440b1673366d7e7974ccbc043f70a5', ['share', 'video'], 0, 300000, 15])
+                self.app.api.rpc('getrecomendedcontentsbyscoresfromaddress', [my, ['share', 'video'], 0, 300000, 15])
                 .then(function(d){
 
                     if (clbk){
