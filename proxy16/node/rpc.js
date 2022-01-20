@@ -117,6 +117,7 @@ const publics = {
     getstatisticcontent: true,
     getstatisticbyhours: true,
     getstatisticbydays: true,
+    getrecomendedcontentsbyscoresfromaddress : true
 }
 
 const keepAliveAgent = new http.Agent({ keepAlive: true });
@@ -408,7 +409,7 @@ RpcClient.callspec = {
     setGenerate: 'bool int',
     getreputations: '',
     getrandomcontents : 'str',
-
+    getrecomendedcontentsbyscoresfromaddress : 'str obj int int int',
 
     getcontents: 'str',
     getlastcomments: 'str str str',
