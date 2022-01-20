@@ -2790,6 +2790,29 @@
 					margin-top : 12 * @rhythm;
 				}
 			}
+
+			.removeDescription{
+				display: none;
+				padding: @rhythm * 3;
+				color: #7c7c7c;
+			}
+
+			&.deleted{
+
+				.starstoppanel,
+				.socialsharewrapper,
+				.textscnts {
+					display: none!important;
+				}
+
+				.removeDescription{
+					display: block;
+				}
+
+				.articleCover{
+					filter : blur(10px);
+				}
+			}
 		}
 	}
 	

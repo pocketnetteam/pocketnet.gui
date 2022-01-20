@@ -91,9 +91,13 @@ var articlev = (function(){
 
 				var _art = art
 
-				sitemessage('Creation of articles will be available later')
+				if(!window.testpocketnet){
+					sitemessage('Creation of articles will be available later')
 
-				return
+					return
+				}
+
+				
 
 				return actions.saveEditor().then(r => {
 

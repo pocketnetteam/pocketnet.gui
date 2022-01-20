@@ -340,13 +340,14 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
 <% } %>
 
-<div class="sharecnt <% if(share.deleted) { %> deleted <% } %>">
+<div class="sharecnt ">
 
-    <div class="sharearticle">
+    <div class="sharearticle deleted <% if(share.deleted) { %> deleted <% } %>">
 
         <div class="shareTable <%-subscribed%>" address="<%-share.address%>" stxid="<%-share.txid%>">
 
             <div class="shareBgCaption <% if(all) {%> showtext <% } %>">
+                
 
                 <div class="articleCover showMoreArticle" image="<%- cover %>">
 
@@ -387,7 +388,12 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
                         <% makestarstoppanel() %>
                         
                         <% makesharepanel() %>
-                       
+
+                        <% if(!all) {%>
+                            <div class="removeDescription postcontent">
+                                <%=e('postRemoved')%>
+                            </div>
+                        <% } %>
                     </div>
 
                    
@@ -397,6 +403,12 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
             <% if(all) {%>
 
                 <div class="articlecontent widthcontainer">
+
+                    <div class="removeDescription postcontent">
+                        <%=e('postRemoved')%>
+                    </div>
+
+                    
                     <% if(!checkvisibility && !lockedaccount) {%>
 
                         <div class="cntswrk acticletext">
@@ -431,9 +443,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
                         
                     <% } %>
 
-                    <div class="cntswrk removeDescription postcontent">
-                        <%=e('postRemoved')%>
-                    </div>
+                    
 
                 </div>
 
