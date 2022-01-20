@@ -13,8 +13,11 @@
     "main": "main.js",
     "repository": "github:pocketnetapp/pocketnet.gui",
     "scripts": {
-        "gulp:clean": "gulp clean:styles",
-        "gulp:build": "gulp build:styles --debug",
+        "styles:purge": "gulp clean:styles",
+        "styles:build": "gulp build:styles",
+        "styles:build:dev": "gulp build:styles --debug",
+        "build:min": "npm run styles:purge && npm run styles:build && npm run minimize:bastyon",
+        "build:dev": "npm run styles:purge && npm run styles:build:dev && npm run dev:bastyon",
         "start": "electron . --development",
         "start:test": "electron . --development --test",
         "pack": "electron-builder -w --dir --x64",

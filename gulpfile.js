@@ -64,15 +64,6 @@ function buildMasterStyle() {
 }
 
 /**
- * Task to build LESS files into CSS.
- *
- * Use --debug flag to compress and omit
- * source maps.
- */
-const buildCssStyles = () => compileLess('./css/*.less', './css');
-const buildComponentStyles = () => compileLess('./components/**/*.less', './components');
-
-/**
  * CSS and CSS.MAP wildcard purger
  *
  * @param {string} source path
@@ -107,6 +98,15 @@ function purgeCssFiles(source) {
         });
     });
 }
+
+/**
+ * Task to build LESS files into CSS.
+ *
+ * Use --debug flag to compress and omit
+ * source maps.
+ */
+const buildCssStyles = () => compileLess('./css/*.less', './css');
+const buildComponentStyles = () => compileLess('./components/**/*.less', './components');
 
 exports.buildStyles = gulp.series([
     buildCssStyles,
