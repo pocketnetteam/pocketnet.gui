@@ -111,6 +111,10 @@
   height: 24px;
   width: 100%;
 }
+#recommendedposts .posts .post .addressTable > div.iconWrapper .usericon .letter {
+  font-size: 1em;
+  margin-top: -10px;
+}
 #recommendedposts .posts .post .addressTable > div.label {
   padding-left: 0.5em;
   text-overflow: ellipsis;

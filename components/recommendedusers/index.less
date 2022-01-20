@@ -87,74 +87,104 @@
 	}
 
 	.users{
+		display: flex;
+		justify-content: space-between;
 		padding-bottom: @rhythm;
+		padding-left: @rhythm * 2;
+		padding-right: @rhythm * 2;
+
+		.wrk{
+			max-width: 188px;
+			width: 100%;
+
+			&:nth-child(2n) {
+				margin-left: @rhythm * 2;
+				margin-right: @rhythm * 2;
+			}
+
+		}
 
 		.user{
 			padding : @rhythm 0;
 			margin-top: @rhythm;
 			margin-bottom: @rhythm;
-			padding-left: @rhythm * 2;
-			padding-right: @rhythm * 3;
 
-			.addressTable{
+			.addressWrapper{
 				cursor: pointer;
-				
-				>div{
 
-					vertical-align: middle;
-	
-					&.iconWrapper{
-						width: 50px;
-						text-align: center;
+				.iconWrapper{
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					height: 218px;
 
-						.usericon{
-							height: 40px;
-							width: 40px;
-						}
+					a{
+						width: 100%;
 					}
+
+					.icon{
+						display: flex;
+						justify-content: center;
+						align-items: center;
 	
-					&.label{
-						text-overflow: ellipsis;
-						overflow: hidden;
-						white-space: nowrap;
+						img, .letter{
+							width: 100%;
+						}
 	
-						.cur{
-							color : @color-main;
-
+						.letter{
+							font-size: @rhythm * 7;
+							text-align: center;
 						}
-
-						.top{
-							display: flex;
-							.name{
-								font-weight: 600;
-								font-size: .9em;
-								max-width: 120px;
-								text-overflow: ellipsis;
-								white-space: nowrap;
-								overflow: hidden;
-							}
-
-							.reputation{
-								position: relative;
-								bottom: 2px;
-								left: 3px;
-								font-size: .6em;
-								color: @color-main;
-							}
-
-						}
-
-						.light{
-							font-size : 0.7em;
-							color : @color-gray;
-						}
+						
 					}
-	
-					&.extra{
-						width: 20px;
-						text-align: right;
+
+				}
+			
+
+			
+
+				&.label{
+					text-overflow: ellipsis;
+					overflow: hidden;
+					white-space: nowrap;
+
+					.cur{
+						color : @color-main;
+
+					}
+
+					.top{
+						display: flex;
+						.name{
+							font-weight: 600;
+							font-size: .9em;
+							max-width: 120px;
+							text-overflow: ellipsis;
+							white-space: nowrap;
+							overflow: hidden;
+						}
+
+						.reputation{
+							position: relative;
+							bottom: 2px;
+							left: 3px;
+							font-size: .6em;
+							color: @color-main;
+						}
+
+					}
+
+					.light{
+						font-size : 0.7em;
+						color : @color-gray;
 					}
 				}
+
+				&.extra{
+					width: 20px;
+					text-align: right;
+				}
+
 	
 			}
 
@@ -208,7 +238,7 @@ html.stblack{
 		.users{
 			.user{
 			
-				.addressTable{
+				.addressWrapper{
 					cursor: pointer;
 					
 					>div{
@@ -246,7 +276,7 @@ html.stblack{
 	}
 
 	.users{
-		.addressTable{
+		.addressWrapper{
 			>div{
 
 

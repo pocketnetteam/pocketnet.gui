@@ -1,128 +1,133 @@
-<% 
-
-var me = null;
-
-if(user.address.value)
-	me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
-
-var telements = function(address){ %>
-
-	<% if(me && !user.isItMe(address)) {
-		
-		var _class=''
-		
-		%>
-
-		<% if (me && me.relation(address, 'subscribes')){ _class="following" } %>
-
-		<% if (me && me.relation(address, 'blocking')){ _class="blocking" }	%>
-
-		
-		<span class="subscribebuttonstop <%-_class%>">
-
-			<span class="subscribe funf">
-				<i class="fa fa-user"></i>
-				<i class="fa fa-plus"></i>
-			</span>	
-
-			<span class="unsubscribe funf">
-				<i class="fa fa-user"></i>
-				<i class="fa fa-plus"></i>
-			</span>	
-
-		</span>
-
-					
-				
-	<% } %>
 	
-<% }
-_.each(addresses, function(u){ 
+	<div class="users">
+	<% 
 
-	var _class='';
-	var address = u.address;
+	var me = null;
 
-%>
-	<div class="wrk">
+	if(user.address.value)
+		me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
 
-		<div class="user <%-_class%>" address="<%-address%>">
-			<div class="addressTable table" address="<%-address%>">
-				<div class="iconWrapper">
+	var telements = function(address){ %>
+
+		<% if(me && !user.isItMe(address)) {
+			
+			var _class=''
+			
+			%>
+
+			<% if (me && me.relation(address, 'subscribes')){ _class="following" } %>
+
+			<% if (me && me.relation(address, 'blocking')){ _class="blocking" }	%>
+
+			
+			<span class="subscribebuttonstop <%-_class%>">
+
+				<span class="subscribe funf">
+					<i class="fa fa-user"></i>
+					<i class="fa fa-plus"></i>
+				</span>	
+
+				<span class="unsubscribe funf">
+					<i class="fa fa-user"></i>
+					<i class="fa fa-plus"></i>
+				</span>	
+
+			</span>
+
+						
 					
-					<a href="<%-app.platform.api.authorlink(address)%>">
-						<div class="icon">
+		<% } %>
+		
+	<% }
+	_.each(addresses, function(u){ 
 
-							<% 
+		var _class='';
+		var address = u.address;
 
-								var src = u.avatar;
-								var name = deep(app, 'platform.sdk.users.storage.'+address+'.name');
-								var letter = name ? name[0] : ''; 
+	%>
+		<div class="wrk">
 
-							%>
+			<div class="user <%-_class%>" address="<%-address%>">
+				<div class="addressWrapper" address="<%-address%>">
+					<div class="iconWrapper">
+						
+						<a href="<%-app.platform.api.authorlink(address)%>">
+							<div class="icon">
 
-							<div class="usericon" image="<%-src || ''%>">
+								<% 
 
-								<% if(!src && letter) {%>
+									var src = u.avatar;
+									var name = u.name
+									var letter = name ? name[0] : ''; 
 
-									<span class="letter">
-										<%-letter.toUpperCase()%>
-									</span>
-			
-								<% } else if (!src) { %>
-			
-									<svg width="30" height="30" data-jdenticon-value="<%-address%>"></svg>
-			
-								<% } %>
+									console.log('letter', letter, name)
+
+									if (src){
+								%>
+
+									<img class="usericonQ" src="<%-src || ''%>">
+
+									<% } else if(!src && letter) {%>
+
+										<span class="letter">
+											<%-letter.toUpperCase()%>
+										</span>
+				
+									<% } else if (!src) { %>
+				
+										<svg width="30" height="30" data-jdenticon-value="<%-address%>"></svg>
+				
+									<% } %>
 							</div>
-						</div>
-					</a>
-				</div>
+						</a>
+					</div>
 
-				<div class="label">
-					<a href="<%-app.platform.api.authorlink(address)%>">
+					<div class="label">
+						<a href="<%-app.platform.api.authorlink(address)%>">
 
-						<div class="top">
-							<div class="name">
-								<%- u.name %>							
-							</div>		
-							<% var r = u.reputation %>
+							<div class="top">
+								<div class="name">
+									<%- u.name %>							
+								</div>		
+								<% var r = u.reputation %>
 
-							<% if (r) {%>
-								<div class="reputation">
-									<%- Number(r).toFixed(0)  %>
-								</div>
-							<% } %>
+								<% if (r) {%>
+									<div class="reputation">
+										<%- Number(r).toFixed(0)  %>
+									</div>
+								<% } %>
 
-						</div>
+							</div>
 
-						<% var subscribers = u.subscribers_count   %>
+							<% var subscribers = u.subscribers_count   %>
 
-			
-						<div class="light">						
-							<%- subscribers %> <%=e('subscribers3') %>
+				
+							<div class="light">						
+								<%- subscribers %> <%=e('subscribers3') %>
 
-						</div>
+							</div>
 
 
-					</a>			
+						</a>			
 
-				</div>
+					</div>
 
-				<div class="extra">
+					<div class="extra">
 
-					<% if(typeof extra != 'undefined' && extra) {%>
-						<%= extra(address) %>
-					<% } else { %> 
+						<% if(typeof extra != 'undefined' && extra) {%>
+							<%= extra(address) %>
+						<% } else { %> 
 
-						<% telements(address) %>	
+							<% telements(address) %>	
 
-					<% } %>
+						<% } %>
 
-					
+						
 
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	
-<% }) %>
+		
+	<% }) %>
+</div>

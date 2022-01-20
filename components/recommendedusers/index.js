@@ -185,7 +185,7 @@ var recommendedusers = (function(){
 				if (addresses.length){
 
 					if (clbk){
-						clbk(shuffle(addresses).slice(0, 5));
+						clbk(shuffle(addresses).slice(0, 3));
 					}
 
 				} else {
@@ -195,7 +195,7 @@ var recommendedusers = (function(){
 						addresses = c;
 	
 						if (clbk){
-							clbk(shuffle(addresses).slice(0, 5))
+							clbk(shuffle(addresses).slice(0, 3))
 						}
 					})
 
@@ -279,7 +279,7 @@ var recommendedusers = (function(){
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
-				el.users = el.c.find('.users');
+				el.users = el.c.find('.usersWrapper');
 				el.loader = el.c.find('.loader');
 
 				state.load(renders.page);

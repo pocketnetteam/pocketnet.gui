@@ -65,41 +65,62 @@
   color: #076C34;
 }
 #recommendedusers .users {
+  display: flex;
+  justify-content: space-between;
   padding-bottom: 0.5em;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+#recommendedusers .users .wrk {
+  max-width: 188px;
+  width: 100%;
+}
+#recommendedusers .users .wrk:nth-child(2n) {
+  margin-left: 1em;
+  margin-right: 1em;
 }
 #recommendedusers .users .user {
   padding: 0.5em 0;
   margin-top: 0.5em;
   margin-bottom: 0.5em;
-  padding-left: 1em;
-  padding-right: 1.5em;
 }
-#recommendedusers .users .user .addressTable {
+#recommendedusers .users .user .addressWrapper {
   cursor: pointer;
 }
-#recommendedusers .users .user .addressTable > div {
-  vertical-align: middle;
+#recommendedusers .users .user .addressWrapper .iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 218px;
 }
-#recommendedusers .users .user .addressTable > div.iconWrapper {
-  width: 50px;
+#recommendedusers .users .user .addressWrapper .iconWrapper a {
+  width: 100%;
+}
+#recommendedusers .users .user .addressWrapper .iconWrapper .icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#recommendedusers .users .user .addressWrapper .iconWrapper .icon img,
+#recommendedusers .users .user .addressWrapper .iconWrapper .icon .letter {
+  width: 100%;
+}
+#recommendedusers .users .user .addressWrapper .iconWrapper .icon .letter {
+  font-size: 3.5em;
   text-align: center;
 }
-#recommendedusers .users .user .addressTable > div.iconWrapper .usericon {
-  height: 40px;
-  width: 40px;
-}
-#recommendedusers .users .user .addressTable > div.label {
+#recommendedusers .users .user .addressWrapper.label {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 }
-#recommendedusers .users .user .addressTable > div.label .cur {
+#recommendedusers .users .user .addressWrapper.label .cur {
   color: #00a4ff;
 }
-#recommendedusers .users .user .addressTable > div.label .top {
+#recommendedusers .users .user .addressWrapper.label .top {
   display: flex;
 }
-#recommendedusers .users .user .addressTable > div.label .top .name {
+#recommendedusers .users .user .addressWrapper.label .top .name {
   font-weight: 600;
   font-size: 0.9em;
   max-width: 120px;
@@ -107,18 +128,18 @@
   white-space: nowrap;
   overflow: hidden;
 }
-#recommendedusers .users .user .addressTable > div.label .top .reputation {
+#recommendedusers .users .user .addressWrapper.label .top .reputation {
   position: relative;
   bottom: 2px;
   left: 3px;
   font-size: 0.6em;
   color: #00a4ff;
 }
-#recommendedusers .users .user .addressTable > div.label .light {
+#recommendedusers .users .user .addressWrapper.label .light {
   font-size: 0.7em;
   color: #3c4146;
 }
-#recommendedusers .users .user .addressTable > div.extra {
+#recommendedusers .users .user .addressWrapper.extra {
   width: 20px;
   text-align: right;
 }
@@ -146,13 +167,13 @@
 html.stblack #recommendedusers {
   background: transparent;
 }
-html.stblack #recommendedusers .users .user .addressTable {
+html.stblack #recommendedusers .users .user .addressWrapper {
   cursor: pointer;
 }
-html.stblack #recommendedusers .users .user .addressTable > div.label .cur {
+html.stblack #recommendedusers .users .user .addressWrapper > div.label .cur {
   color: #00a4ff;
 }
-html.stblack #recommendedusers .users .user .addressTable > div.label .light {
+html.stblack #recommendedusers .users .user .addressWrapper > div.label .light {
   color: #3c4146;
 }
 html.stblack #recommendedusers .users .user.blocking {
@@ -163,7 +184,7 @@ html.stblack #recommendedusers .users .user.blocking {
   #userslist {
     padding: 1em;
   }
-  #userslist .users .addressTable > div.extra {
+  #userslist .users .addressWrapper > div.extra {
     width: 60px;
   }
 }
