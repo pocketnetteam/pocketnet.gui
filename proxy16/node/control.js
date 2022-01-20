@@ -772,8 +772,8 @@ var Control = function(settings) {
         },
 
         safeStop: function() {
-            self.destroy().then(e => {
-                self.kit.stop().then(e => {
+            return self.destroy().then(e => {
+                return self.kit.stop().then(e => {
                     return f.pretry(function() {
                         return !node.instance || state.status == 'detached'
                     }, 60, 1000).then(e => {
