@@ -68,14 +68,7 @@ function buildMasterStyle() {
  *
  * @param {string} source path
  */
-function purgeCssFiles(source) {
-    function cleanFiles(files) {
-        return gulp.src(files, {
-            read: false,
-            allowEmpty: true,
-        }).pipe(clean());
-    }
-
+function purgeRelatedStyleBuilds(source) {
     return new Promise((resolve, reject) => {
         glob(source, (err, files) => {
             if (err) {
@@ -89,10 +82,12 @@ function purgeCssFiles(source) {
 
             const rawFiles = files.map(f => f.replace(/\.(less|css)$/, ''));
 
-            const cssFiles = rawFiles.map(f => `${f}.css`);
-            const cssMapsFiles = rawFiles.map(f => `${f}.css.map`);
+            const filesList = rawFiles.map(f => `${f}.{css,css.map}`);
 
-            const result = cleanFiles([...cssFiles, ...cssMapsFiles]);
+            const result = gulp.src(filesList, {
+                read: false,
+                allowEmpty: true,
+            }).pipe(clean());
 
             resolve(result);
         });
@@ -118,9 +113,9 @@ exports.buildStyles.displayName = 'build:styles';
 /**
  * Task to clean CSS files.
  */
-const cleanComponentStyles = () => purgeCssFiles('./components/**/*.css');
-const cleanMasterStyle = () => purgeCssFiles('./css/master.css');
-const cleanCssStyles = () => purgeCssFiles('./css/*.less');
+const cleanComponentStyles = () => gulp.src('./components/**/*.{css,css.map}', { allowEmpty: true }).pipe(clean());
+const cleanMasterStyle = () => gulp.src('./css/master.{css,css.map}', { allowEmpty: true }).pipe(clean());
+const cleanCssStyles = () => purgeRelatedStyleBuilds('./css/*.less');
 
 exports.cleanStyles = gulp.series([
     cleanComponentStyles,
