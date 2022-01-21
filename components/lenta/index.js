@@ -3919,7 +3919,7 @@ var lenta = (function(){
 		var initEvents = function(){	
 			
 			el.c.on('click', '.forstars .count', events.postscores)
-			el.c.on('click', '.stars img', events.like)
+			el.c.on('click', '.stars i', events.like)
 			el.c.on('click', '.complain', events.complain)
 			el.c.on('click', '.imageOpen', events.openGallery)
 			el.c.on('click', '.txid', events.getTransaction)

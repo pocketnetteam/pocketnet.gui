@@ -1415,7 +1415,7 @@ var post = (function () {
 					function (p) {
 						fastars(p.el.find('.stars'));
 
-						el.share.find('.stars img').on('click', events.like);
+						el.share.find('.stars i').on('click', events.like);
 
 						p.el.find('.count').on('click', events.postscores);
 

@@ -814,9 +814,6 @@ pie {
   text-align: left;
   width: 1.8em;
 }
-.stars .star {
-  height: 17px;
-}
 .stars [value="5"] {
   -moz-transition: 0.5s;
   -o-transition: 0.5s;
@@ -989,7 +986,6 @@ pie {
 .stars .tstars .tstarsov i {
   /*font-weight: 900;*/
   color: #FFAE00;
-  filter: grayscale(1);
 }
 .stars .tstars .tstarsov .starsWrapper {
   width: 20em;
@@ -1015,9 +1011,6 @@ pie {
 }
 .stars.disabled:hover .tstars {
   display: block;
-}
-.starsWrapperM img {
-  filter: grayscale(100%) brightness(110%) contrast(0.9);
 }
 .subscribebuttons {
   width: auto;
