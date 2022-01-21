@@ -190,7 +190,7 @@ var easynode = (function(){
 							if(amount < 50 && amount !== 0){
 
 								amount = 0;
-								el.err.text(self.app.localization.e('minPkoin'))
+								el.err.text(self.app.localization.e('minPkoin', 50))
 
 							} else {
 

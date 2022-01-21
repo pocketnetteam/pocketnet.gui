@@ -1985,4 +1985,6 @@ ____loclib.easyNode_e2002_1 = " earns "
 ____loclib.easyNode_e2002_2 = "Pocketcoin. Your computer can be one of those nodes, assuming you have at least 50 GB of free SSD space and a decent internet connection.  Node has to lock some Pocketcoin in it to"
 ____loclib.easyNode_e2002_2_1 = " earn "
 ____loclib.easyNode_e2002_2_2 = "more Pocketcoin. That is called staking in cryptocurency."
-____loclib.minPkoin = "50 PKOIN Minimum"
+____loclib.minPkoin = function (p){	
+	return  String(p) + " PKOIN Minimum"
+}
