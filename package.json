@@ -1,9 +1,9 @@
 {
     "name": "pocketnet",
-    "version": "0.4.125",
+    "version": "0.5.0",
     "cordovaversion": "1.1.181",
     "cordovaversioncode": "10181",
-    "description": "Pocketnet desktop application",
+    "description": "Bastyon Desktop Application",
     "author": "Pocketnet Community <support@pocketnet.app>",
     "company": "Pocketnet Community",
     "license": "Apache-2.0",
@@ -114,7 +114,9 @@
         "yuicompressor": "^2.4.8"
     },
     "build": {
-        "productName": "Pocketnet",
+        "productName": "Bastyon",
+        "afterSign": "build/notarize.js",
+        "appId": "app.pocketnet.gui",
         "files": [
             "**/*",
             "!cordova${/*}",
@@ -165,29 +167,31 @@
             ],
             "artifactName": "${productName}_${platform}_${arch}.${ext}",
             "category": "Network",
-            "executableName": "Pocketnet",
-            "description": "Pocketnet Desktop Browser"
+            "executableName": "${productName}",
+            "description": "${productName} Desktop Browser"
         },
         "win": {
-            "target": "nsis",
+            "target": [
+                {
+                    "target": "nsis"
+                }
+            ],
             "icon": "assets/icons/win/icon.ico"
         },
         "nsis": {
             "artifactName": "${productName}Setup.${ext}",
-            "oneClick": false,
+            "oneClick": true,
             "perMachine": false,
-            "allowToChangeInstallationDirectory": true,
+            "allowToChangeInstallationDirectory": false,
             "createDesktopShortcut": true,
             "displayLanguageSelector": true,
             "menuCategory": true,
             "installerIcon": "assets/icons/win/icon.ico",
             "uninstallerIcon": "assets/icons/win/icon.ico",
             "uninstallDisplayName": "${productName}, v${version}",
-            "deleteAppDataOnUninstall": true,
+            "deleteAppDataOnUninstall": false,
             "license": "LICENSE",
             "include": "build/installer.nsh"
-        },
-        "afterSign": "build/notarize.js",
-        "appId": "app.pocketnet.gui"
+        }
     }
 }
