@@ -15351,8 +15351,6 @@ Platform = function (app, listofnodes) {
                                 inputs = self.sdk.node.transactions.create.selectBestInputs(unspent)
                             }
 
-                            debugger;
-
                             var totalInputs = _.reduce(inputs, function(m, i){
                                 return m + i.amount
                             }, 0)
