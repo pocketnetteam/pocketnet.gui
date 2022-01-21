@@ -1830,6 +1830,6 @@ ____loclib.buywithcreditcard = 'Buy with credit card'
 ____loclib.buylogo = 'Buy Pocketcoin (PKOIN)'
 
 ____loclib.comment = 'Comment';
-____loclib.donateToTheAuthor = 'Donate to the author';
+____loclib.sendToAuthor = 'Send to author';
 ____loclib.pkoinComment = 'PKOIN comment';
 ____loclib.liftUpThePost = 'Lift up the post';

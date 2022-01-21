@@ -20,8 +20,8 @@ var pkoin = (function(){
 					name : "Localization",
 					id : 'localization',
 					defaultValue : optionsValue,
-					possibleValues : ['pkoinComment', 'donateToTheAuthor'],
-					possibleValuesLabels : [self.app.localization.e('pkoinComment'), self.app.localization.e('donateToTheAuthor')],
+					possibleValues : ['pkoinComment', 'sendToAuthor', 'liftUpThePost'],
+					possibleValuesLabels : [self.app.localization.e('pkoinComment'), self.app.localization.e('sendToAuthor'), self.app.localization.e('liftUpThePost')],
 
 		
 					_onChange : function(value){
@@ -89,7 +89,7 @@ var pkoin = (function(){
 					}
 				
 			},
-			send : function(comment, clbk){	
+			donate : function(comment, clbk){	
 
 				globalpreloader(true);
 
@@ -134,7 +134,24 @@ var pkoin = (function(){
 				})
 				
 
-				actions.send(comment, clbk);
+				actions.donate(comment, clbk);
+
+			},
+
+			liftUp : function(clbk){
+
+				
+				var comment = new Comment(shareId);
+				comment.message.set(valComment);
+				actions.links(comment, valComment);
+
+				comment.donate.set({
+					address: receiver,
+					amount: valSum
+				})
+				
+
+				actions.liftUp(comment, clbk);
 
 			}
 		}
@@ -205,8 +222,17 @@ var pkoin = (function(){
 								}
 	
 							}
+
+							
+							if (optionsValue === 'liftUpThePost'){
+
+
+								events.liftUp(final);
+		
 	
-							if (optionsValue === 'donateToTheAuthor'){
+							}
+	
+							if (optionsValue === 'sendToAuthor'){
 	
 						
 								self.app.platform.ui.wallet.send({

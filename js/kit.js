@@ -805,6 +805,61 @@ UpvoteShare = function(){
 	return self;
 }
 
+
+ConentBoost = function(){
+	var self = this;
+
+
+	self.value = {
+		set : function(_v){
+			this.v = _v
+		},
+		v : ''
+	};
+
+	self.ustate = 'contentBoost'
+
+	self.opreturn = function(){
+
+		return self.value.v
+	}
+
+
+	self.serialize = function(){
+
+		return self.share.v
+	}
+
+	self.export = function(alias){
+
+		if(!alias){
+			return {
+				value : self.value.v
+			}
+		}
+		else{
+			return {
+				value : self.value.v,
+			}
+		}
+
+	}
+
+	self.import = function(p){
+
+
+
+		if (p.value)
+			self.value.v = p.value
+
+
+	}
+
+	self.type = 'contentBoost'
+
+	return self;
+}
+
 ComplainShare = function(){
 	var self = this;
 

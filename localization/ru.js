@@ -1606,6 +1606,6 @@ ____loclib.insteadOf = 'Вместо';
 ____loclib.alternativeTo = 'Альтернатива...';
 
 ____loclib.comment = 'Комментарий';
-____loclib.donateToTheAuthor = 'Поощрить автора';
+____loclib.sendToAuthor = 'Поощрить автора';
 ____loclib.pkoinComment = 'PKOIN комментарий';
-____loclib.upPost = 'Поднять пост';
+____loclib.liftUpThePost = 'Поднять пост';
