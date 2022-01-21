@@ -50,9 +50,14 @@ var easynode = (function(){
 			},
 			point : function(t){
 
-				var r = amount / calc.netstakeweight()
-				var n = 1
+				// var r = amount / calc.netstakeweight()
+				// var n = 1
 				// return amount * Math.pow( (1 + 1440 * 4.75 / calc.netstakeweight() ),  t)
+				
+
+				if (amount <  50){
+
+				}
 
 				return amount / calc.netstakeweight() * 4.75 * 1440 * t
 
@@ -169,6 +174,7 @@ var easynode = (function(){
 						renders.updateValues()
 
 						el.am = el.c.find('.amredits');
+						el.err = el.c.find('.errWrapper')
 	
 						//el.am.focus();
 
@@ -181,29 +187,15 @@ var easynode = (function(){
 
 							amount = Number(v.replace(/,/g,''));
 
-							if(amount < 50){
-								amount = 50;
+							if(amount < 50 && amount !== 0){
 
-							} 
+								amount = 0;
+								el.err.text(self.app.localization.e('minPkoin'))
 
-							if(amount > 500000) amount = 500000
+							} else {
 
-							renders.updateValues()
-
-							
-						})
-
-						el.am.on('blur', function(){
-							var v = $(this).text() || '';
-
-							amount = Number(v.replace(/,/g,''));
-
-							if(amount < 50){
-
-								el.am.text(50);
-								amount = 50;
-
-							} 
+								el.err.empty();
+							}
 
 							if(amount > 500000) amount = 500000
 
@@ -211,6 +203,25 @@ var easynode = (function(){
 
 							
 						})
+
+						// el.am.on('blur', function(){
+						// 	var v = $(this).text() || '';
+
+						// 	amount = Number(v.replace(/,/g,''));
+
+						// 	if(amount < 50){
+
+						// 		el.am.text(50);
+						// 		amount = 50;
+
+						// 	} 
+
+						// 	if(amount > 500000) amount = 500000
+
+						// 	renders.updateValues()
+
+							
+						// })
 
 						if (clbk)
 							clbk()
