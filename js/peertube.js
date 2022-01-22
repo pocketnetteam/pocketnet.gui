@@ -245,6 +245,37 @@ PeerTubePocketnet = function (app) {
       authorization: true,
     },
 
+    initResumableUploadVideo: {
+      path: 'api/v1/videos/upload-resumable',
+      formdata: true,
+      renew: true,
+      method: 'POST',
+      authorization: true,
+      fullreport: true,
+      axios: true,
+    },
+
+    proceedResumableUploadVideo: {
+      path: 'api/v1/videos/upload-resumable',
+      headers: {
+        "Content-Type": "application/octet-stream",
+      },
+      binary: true,
+      renew: true,
+      method: 'PUT',
+      authorization: true,
+      fullreport: true,
+      axios: true,
+    },
+
+    cancelResumableUploadVideo: {
+      path: 'api/v1/videos/upload-resumable',
+      renew: true,
+      method: 'DELETE',
+      authorization: true,
+      axios: true,
+    },
+
     importVideo: {
       path: 'api/v1/videos/imports',
       formdata: true,
@@ -368,6 +399,13 @@ PeerTubePocketnet = function (app) {
           );
         }
 
+        if ('headers' in options) {
+          requestoptions.headers = {
+            ...requestoptions.headers,
+            ...options.headers,
+          };
+        }
+
         if (meta.method) {
           requestoptions.method = meta.method;
         }
@@ -399,6 +437,10 @@ PeerTubePocketnet = function (app) {
             headers: requestoptions.headers,
           };
 
+          if ('queryParams' in options) {
+            axiosoptions.params = options.queryParams;
+          }
+
           if (requestoptions.method === 'GET')
             data = { ...data, ...axiosoptions };
 
@@ -422,18 +464,42 @@ PeerTubePocketnet = function (app) {
             axiosoptions,
           )
             .then((r) => {
+              if (meta.fullreport) {
+                return r;
+              }
+
               return r.data || {};
             })
             .catch((e) => {
+              if (meta.fullreport) {
+                return e.response;
+              }
+
               //axios.isCancel(e)
 
               return Promise.reject(e);
             });
         }
 
+        let params = '';
+
+        if ('queryParams' in options) {
+          let paramElements = [];
+
+          const paramNames = Object.keys(options.queryParams);
+
+          paramNames.forEach((paramName) => {
+            paramElements.push(`${paramName}=${options.queryParams[paramName]}`);
+          });
+
+          paramElements = paramElements.join('&');
+
+          params = `?${paramElements}`;
+        }
+
         return proxyRequest.fetch(
           'https://' + options.host,
-          meta.path,
+          meta.path + params,
           data,
           requestoptions,
         );
@@ -479,9 +545,9 @@ PeerTubePocketnet = function (app) {
 
         var special = false
 
-           /*if( app.user.address.value == 'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m' || app.user.address.value == 'PDgbAvsrS4VGKkW5rivcJaiCp7fnBoZRgM' || app.user.address.value == 'PU6LDxDqNBDipG4usCqhebgJWeA4fQR5R4' || 
+           /*if( app.user.address.value == 'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m' || app.user.address.value == 'PDgbAvsrS4VGKkW5rivcJaiCp7fnBoZRgM' || app.user.address.value == 'PU6LDxDqNBDipG4usCqhebgJWeA4fQR5R4' ||
             app.user.address.value == 'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM'
-            
+
             ){
                 special = true
             }*/
@@ -497,7 +563,7 @@ PeerTubePocketnet = function (app) {
               royId = self.helpers.base58.decode(app.user.address.value) % roysAmount;
             }
 
-         
+
 
             if (special){
               var spc = _.find(data, function(i){
@@ -645,6 +711,120 @@ PeerTubePocketnet = function (app) {
                 return Promise.reject(e);
               });
           });
+      },
+
+      initResumableUpload: function(parameters, options) {
+        return self.api.videos
+          .checkQuota(parameters.video.size, { type: options.type })
+          .then((rme) => {
+            const videoName = parameters.name || `PocketVideo:${new Date().toISOString()}`;
+
+            const data = {
+              privacy: 1,
+              'scheduleUpdate[updateAt]': new Date().toISOString(),
+              channelId: rme.channelId,
+              name: videoName,
+              filename: videoName,
+            };
+
+            const optionsPrepared = {
+              headers: {
+                "X-Upload-Content-Length": parameters.video.size,
+                "X-Upload-Content-Type": 'video/mp4', // FIXME: Is dynamic variable...
+              },
+              ...options,
+            };
+
+            if (parameters.image) {
+              data.thumbnailfile = data.previewfile = dataURLtoFile(
+                parameters.image.data,
+                parameters.image.name,
+              );
+            }
+            return request('initResumableUploadVideo', data, optionsPrepared)
+              .then((r) => {
+                console.log('INIT RESUMABLE UPLOAD VIDEO', r);
+
+                const handleResume = () => Promise.resolve({
+                  responseType: 'resume_upload',
+                });
+                const handleCreated = () => {
+                  const url = new URL(`http://${r.headers.location}`);
+
+                  return Promise.resolve({
+                    responseType: 'created_upload',
+                    uploadId: url.searchParams.get('upload_id'),
+                  });
+                };
+
+                switch (r.status) {
+                  case 200: return handleResume();
+                  case 201: return handleCreated();
+
+                  case 413: throw Error('max_file_size_reached or quota_reached'); // FIXME: Do separation
+                  case 415: throw Error('Video type unsupported');
+                }
+              })
+              .catch((e) => {
+                e.cancel = axios.isCancel(e);
+
+                return Promise.reject(e);
+              });
+          });
+      },
+
+      proceedResumableUpload: async function(params, options) {
+          if (params.chunkData.size % 256 !== 0) {
+            throw Error('Video chunk is not a multiple of 256 bytes');
+          }
+
+          const data = new Uint8Array(await params.chunkData.arrayBuffer());
+
+          const rangeStr = `bytes ${params.chunkPosition}-${params.chunkData.size - 1}/${params.videoSize}`;
+
+          const optionsPrepared = {
+            queryParams: {
+              upload_id: params.uploadId,
+            },
+            headers: {
+              "Content-Length": params.chunkData.size,
+              "Content-Range": rangeStr,
+            },
+            ...options,
+          };
+
+          if (params.image) {
+            data.thumbnailfile = data.previewfile = dataURLtoFile(
+                params.image.data,
+                params.image.name,
+            );
+          }
+
+          return request('proceedResumableUploadVideo', data, optionsPrepared)
+              .then((r) => {
+                console.log('RESUME RESUMABLE UPLOAD VIDEO', r);
+
+                const handleResume = () => Promise.resolve({
+                  responseType: 'resume_upload',
+                });
+                const handleLastChunk = () => Promise.resolve({
+                  responseType: 'upload_end',
+                });
+
+                switch (r.status) {
+                  case 200: return handleLastChunk();
+                  case 308: return handleResume();
+
+                  case 403: case 404: case 409:
+                  case 422: case 429: case 503:
+                    throw Error('RESUME ERROR OCCURRED');
+                }
+              })
+              .catch((e) => {
+                e.cancel = axios.isCancel(e);
+
+                return Promise.reject(e);
+              });
       },
 
       import: (parameters = {}, options = {}) =>

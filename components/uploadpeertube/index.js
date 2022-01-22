@@ -77,7 +77,7 @@ var uploadpeertube = (function () {
         contentAsHTML: true,
       });
 
-      el.videoInput.change(function (evt) {
+      el.videoInput.change(async function (evt) {
         var fileName = evt.target.files[0].name;
 
         el.videoError.text(
@@ -174,7 +174,87 @@ var uploadpeertube = (function () {
 
         el.importUrl.addClass('hidden');
 
+        async function loadChunked(fromPosition, uploadId, loader) {
+          const videoSize = data.video.size;
+
+          function uploadChunk(pos, chunk) {
+            const data = {
+              chunkData: chunk,
+              chunkPosition: pos,
+              videoSize: videoSize,
+              uploadId,
+            };
+            const options = {};
+
+            console.log(`LAST CHUNK #${i++} CREATED WITH SIZE ${chunk.size}`);
+
+            const startTime = Date.now();
+
+            return new Promise((resolve, reject) => {
+              loader(data, options)
+                .then((res) => {
+                  const endTime = Date.now();
+                  console.log('CHUNK LOADED IN', (endTime - startTime) / 1000, 'seconds');
+                  console.log('CHUNK UPLOAD RESULT', res);
+
+                  resolve(res);
+                })
+                .catch((err) => {
+                  const endTime = Date.now();
+                  console.log('CHUNK LOADED IN', (endTime - startTime) / 1000, 'seconds');
+
+                  reject(Error(err));
+                });
+            });
+          }
+
+          let i = 0;
+          let chunkSize = 262144;
+
+          for(let start = fromPosition; start < videoSize; start += chunkSize) {
+            const restBytes = videoSize - start;
+            const lastChunk = (restBytes < chunkSize);
+
+            let endByte = start + chunkSize;
+
+            if (lastChunk) {
+              endByte = undefined;
+            }
+
+            const chunk = data.video.slice(start, endByte);
+
+            const result = await uploadChunk(start, chunk);
+
+            if (result.responseType !== 'resume_upload') {
+              break;
+            }
+
+            /*if (loadTime < 1000) {
+              console.log('CHUNK SIZE CHANGE TO 1024');
+              chunkSize = 1024;
+            } else if (loadTime > 1000 && loadTime < 2000) {
+              console.log('CHUNK SIZE CHANGE TO 512');
+              chunkSize = 512;
+            } else if (loadTime > 2000 && loadTime < 3000) {
+              console.log('CHUNK SIZE CHANGE TO 256');
+              chunkSize = 256;
+            }*/
+          }
+        }
+
         self.app.peertubeHandler.api.videos
+          .initResumableUpload(data, options)
+          .then(async (res) => {
+            switch(res.responseType) {
+              case 'created_upload': await loadChunked(0, res.uploadId, self.app.peertubeHandler.api.videos.proceedResumableUpload);
+              case 'resume_upload':
+            }
+          })
+          .catch((err) => {
+            console.log('RESUMABLE UPLOAD ERROR', err);
+          });
+
+        /*self.app.peertubeHandler.api.videos
           .upload(data, options)
           .then((response) => {
             el.uploadButton.prop('disabled', false);
@@ -220,7 +300,7 @@ var uploadpeertube = (function () {
 
               sitemessage(message);
             }
-          });
+          });*/
 
         console.log(data, options);
       });
