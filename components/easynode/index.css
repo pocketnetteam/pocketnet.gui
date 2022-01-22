@@ -1,3 +1,25 @@
+#easynode .lenta {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 20px;
+}
+#easynode .lenta #post {
+  background: #ffff;
+}
+#easynode .lenta #post .commentsWrapperHb,
+#easynode .lenta #post .iconWrapper {
+  display: none;
+}
+#easynode .lenta #post .cntswrk.formeta {
+  display: none;
+}
+#easynode .lenta #post .cntscontent .paddingWrapper {
+  display: none;
+}
+#easynode .lenta #post .statswrapperExtended {
+  display: none;
+}
 #easynode .actionWrapper {
   padding: 3.5em 20px;
   text-align: center;
@@ -19,7 +41,7 @@
   max-width: 800px;
   width: 100%;
   margin: 0 auto;
-  padding: 0px 20px 40px 20px;
+  padding: 0px 20px 20px 20px;
 }
 #easynode .faq .container {
   max-width: 800px;

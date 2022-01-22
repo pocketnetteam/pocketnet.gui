@@ -306,6 +306,16 @@ var easynode = (function(){
 		}
 
 		var make = function(){
+
+			self.app.platform.papi.post(
+				"9eb62387e3ae5fa7c257b58799a4619014b98824a6ca466caef739d939f2832a",
+				el.lenta,
+				function (e, p) {
+				  
+				},
+			);
+
+
 			renders.calc();
 			renders.faq();
 		}
@@ -352,6 +362,7 @@ var easynode = (function(){
 				el.c = p.el.find('#' + self.map.id);
 				el.calcWrapper = el.c.find('.calcWrapper');
 				el.faqWrapper = el.c.find('.faqWrapper');
+				el.lenta = el.c.find('.lenta');
 
 				initEvents();
 				make()
