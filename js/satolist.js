@@ -15347,7 +15347,7 @@ Platform = function (app, listofnodes) {
 
                             var inputs = [];
 
-                            if(!(obj.donate && obj.donate.v.length)){
+                            if(!(obj.donate && obj.donate.v.length) && obj.type !== 'contentBoost'){
                                 inputs = self.sdk.node.transactions.create.selectBestInputs(unspent)
                             }
 
@@ -15405,6 +15405,46 @@ Platform = function (app, listofnodes) {
 
                                 feerate = Number((feerate * smulti).toFixed(0));
                             } 
+
+
+                            if (obj.type === 'contentBoost' && obj.amount.v){
+
+                                feerate = 0;
+
+                                var lastUnspent = _.clone(unspent).reverse();
+
+                                for (var u of lastUnspent){
+
+                                    if (obj.amount.v >= totalInputs){
+
+                                        totalInputs += u.amount;
+
+                                        inputs.push({
+                                            txId: u.txid,
+                                            vout: u.vout,
+                                            amount: u.amount,
+                                            scriptPubKey: u.scriptPubKey,
+                                        })
+
+                                    } else {
+
+                                        break;
+                                    }
+
+                                }  
+
+                                if (obj.amount.v > totalInputs){
+
+                                    sitemessage(self.app.localization.e('e13117'))
+
+                                    if (clbk){
+                                        clbk(null, self.app.localization.e('e13117'));
+                                    }
+
+                                    return;
+
+                                }
+                            }
 
                             self.sdk.node.transactions.create[obj.type](inputs, obj, /*feerate,*/ function (a, er, data) {
 
@@ -15674,6 +15714,13 @@ Platform = function (app, listofnodes) {
 
                                     
                                 var totalReturn = Number((amount - totalDonate - (fees || 0)).toFixed(0));
+
+                                if (obj.type === 'contentBoost'){
+
+                                    var amountMulti = obj.amount.v * smulti;;
+                                    totalReturn - amountMulti;
+
+                                }
 
 
                                 if (obj.donate && obj.donate.v.length && (totalReturn < 0 || totalDonate <= fees)){
@@ -15998,6 +16045,10 @@ Platform = function (app, listofnodes) {
                     },
 
                     comment: function (inputs, comment, /*fees, */clbk, p) {
+                        this.common(inputs, comment, TXFEE, clbk, p)
+                    },
+
+                    contentBoost: function (inputs, comment, /*fees, */clbk, p) {
                         this.common(inputs, comment, TXFEE, clbk, p)
                     },
 

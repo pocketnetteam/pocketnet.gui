@@ -116,6 +116,21 @@ var pkoin = (function(){
 					}
 
 				}, null, "0");
+			},
+			liftUp : function(booster, clbk){	
+
+				globalpreloader(true);
+
+				self.sdk.node.transactions.create.commonFromUnspent(
+
+					booster,
+
+					function (_alias, error) {
+
+						console.log('final booster', _alias, error);
+
+					}
+				)
 			}
 
 		}
@@ -126,7 +141,6 @@ var pkoin = (function(){
 				
 				var comment = new Comment(shareId);
 				comment.message.set(valComment);
-				actions.links(comment, valComment);
 
 				comment.donate.set({
 					address: receiver,
@@ -141,17 +155,11 @@ var pkoin = (function(){
 			liftUp : function(clbk){
 
 				
-				var comment = new Comment(shareId);
-				comment.message.set(valComment);
-				actions.links(comment, valComment);
+				var contentBoost = new ContentBoost(shareId);
 
-				comment.donate.set({
-					address: receiver,
-					amount: valSum
-				})
-				
+				contentBoost.amount.set(valSum);
 
-				actions.liftUp(comment, clbk);
+				actions.liftUp(contentBoost, clbk);
 
 			}
 		}

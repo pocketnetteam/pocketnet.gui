@@ -806,11 +806,12 @@ UpvoteShare = function(){
 }
 
 
-ConentBoost = function(){
+ContentBoost = function(txid){
 	var self = this;
+	self.txid = txid;
 
 
-	self.value = {
+	self.amount = {
 		set : function(_v){
 			this.v = _v
 		},
@@ -819,27 +820,36 @@ ConentBoost = function(){
 
 	self.ustate = 'contentBoost'
 
-	self.opreturn = function(){
 
-		return self.value.v
+	self.validation = function(){
+
+		if (!self.amount.v){
+			return 'amount';
+		}
+
+		return false;
 	}
 
+	self.opreturn = function(){
+
+		return self.txid;
+	}
 
 	self.serialize = function(){
 
-		return self.share.v
+		return self.txid;
 	}
 
 	self.export = function(alias){
 
 		if(!alias){
 			return {
-				value : self.value.v
+				amount : self.amount.v
 			}
 		}
 		else{
 			return {
-				value : self.value.v,
+				amount : self.amount.v,
 			}
 		}
 
@@ -847,10 +857,8 @@ ConentBoost = function(){
 
 	self.import = function(p){
 
-
-
-		if (p.value)
-			self.value.v = p.value
+		if (p.amount)
+			self.amount.v = p.amount
 
 
 	}
