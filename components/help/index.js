@@ -229,7 +229,6 @@ var help = (function () {
               .html(
                 '<div class="preloaderwr"><div class="preloader5"><img src="./img/three-dots.svg"/></div></div>',
               );
-
             self.app.platform.papi.post(
               postId,
               _el.find('.lenta'),
