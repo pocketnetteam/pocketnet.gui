@@ -1765,6 +1765,9 @@
 .mainvideo .shares .authorgroup:nth-child(3n + 1) {
   clear: left;
 }
+.mainvideo .shares .authorgroup .share {
+  padding: 15px!important;
+}
 .mainvideo .shares .cntswrk {
   margin-left: 0;
   padding-left: 0;
