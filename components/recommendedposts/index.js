@@ -9,7 +9,7 @@ var recommendedposts = (function(){
 		var primary = deep(p, 'history');
 
 		var el;
-		var addresses = [],
+		var shares = [],
 			cnt = 50,
 			end = false,
 			extra = null,
@@ -131,7 +131,7 @@ var recommendedposts = (function(){
 		}
 
 		var renders = {
-			page : function(addresses, clbk){
+			page : function(shares, clbk){
 
 				el.loader.fadeOut();
 				
@@ -140,7 +140,7 @@ var recommendedposts = (function(){
 					name :  'posts',
 					el :   el.posts,
 					data : {
-						addresses : addresses,
+						shares : shares,
 						extra : extra
 					},
 
@@ -164,8 +164,6 @@ var recommendedposts = (function(){
 			},
 			load : function(clbk){
 
-				console.log('addresses', addresses)
-
 				
 				var shuffle = function(array) {
 					let currentIndex = array.length,  randomIndex;
@@ -182,10 +180,10 @@ var recommendedposts = (function(){
 					return array;
 				}
 
-				if (addresses.length){
+				if (shares.length){
 
 					if (clbk){
-						clbk(shuffle(addresses).slice(0, 5));
+						clbk(shuffle(shares).slice(0, 5));
 					}
 
 				} else {
@@ -196,12 +194,12 @@ var recommendedposts = (function(){
 							return post.contentid;
 						})
 
-						self.app.platform.sdk.posts.getRecommendedPostsContents([postIds], function(c, error){
+						self.app.platform.sdk.node.shares.getbyid(postIds, function(c, error){
 		
-							addresses = c
+							shares = c
 	
 							if (clbk){
-								clbk(shuffle(addresses).slice(0, 5))
+								clbk(shuffle(shares).slice(0, 5))
 							}
 						})
 

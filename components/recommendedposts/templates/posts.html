@@ -6,18 +6,21 @@ if(user.address.value)
 	me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
 
 
-console.log('addresses', addresses);
-_.each(addresses, function(u){ 
+console.log('shares', shares);
+_.each(shares, function(u){ 
+
+	console.log('u11', u);
 
 	var _class='';
 	var address = u.address;
-	var userprofile = u.userprofile;
-	var src = userprofile.i;
-	var name = userprofile.name
-	var letter = name ? name[0] : ''; 
-	var r = userprofile.reputation
+	var src =  deep(app, 'platform.sdk.usersl.storage.'+address + '.image');
 
-	console.log('u!!!', u)
+
+	console.log('address!!!!', deep(app, 'platform.sdk.usersl.storage.' + address));
+	var name = deep(app, 'platform.sdk.usersl.storage.'+address + '.name');
+	var letter = name ? name[0] : ''; 
+	var r = deep(app, 'platform.sdk.usersl.storage.'+address + '.reputation');
+
 %>
 	<div class="wrk">
 
@@ -73,7 +76,6 @@ _.each(addresses, function(u){
 				var url = decodeURIComponent(u.u);
 				var meta = app.platform.parseUrl(url);
 				var info = app.platform.sdk.videos.storage[url] || app.platform.sdk.videos.storage[meta.id] || {}
-				console.log('info!!!', info)
 				var aspectRatio = (info.data || {}).aspectRatio || 0;
 			%>
 				<div class="js-player" data-plyr-provider="<%-meta.type%>" data-plyr-embed-id="<%-meta.url%>" data-plyr-video-id="<%-meta.id%>" data-plyr-host-name="<%-meta.host_name || ''%>">
@@ -135,9 +137,9 @@ _.each(addresses, function(u){
 
 			<% } %>
 
-			<% if(u.i && u.i.length){%>
+			<% if(u.images && u.images.length){%>
 				<div class="imageWrapper">
-					<image src="<%-u.i[0] %>">				
+					<image src="<%-u.images[0] %>">				
 					</image>
 				</div>
 
@@ -145,11 +147,24 @@ _.each(addresses, function(u){
 		
 			<% } %>
 
-			<% if(u.m){%>
+
+			
+			<% if(u.caption){%>
+
+				<div class="postcontent">
+					<div class="cap">
+						<b>
+							<%- u.caption %>							
+						</b>
+					</div>		
+				</div>
+			<% } %>
+
+			<% if(u.message){%>
 
 			<div class="postcontent">
 				<div class="message">
-					<%- decodeURIComponent(u.m) %>							
+					<%- u.message %>							
 				</div>		
 			</div>
 			<% } %>
@@ -157,7 +172,7 @@ _.each(addresses, function(u){
 			<div class="infoWrapper">
 				<div class="dateWrapper">
 					<div class="date">
-						<%-app.reltime(Number(u.time + '000'))%>
+						<%-app.reltime(Number(u.time))%>
 					</div>
 				</div>
 
@@ -165,13 +180,13 @@ _.each(addresses, function(u){
 					<div class="scoreSum">
 						<i class="far fa-star"></i>
 						<span>
-							<%- u.scoreSum %>							
+							<%- u.score %>							
 						</span>
 					</div>
 					<div class="scoreCnt">
 						<i class="far fa-user"></i>
 						<span>
-							<%- u.scoreCnt %>							
+							<%- u.scnt %>							
 						</span>
 					</div>
 					<div class="comments">

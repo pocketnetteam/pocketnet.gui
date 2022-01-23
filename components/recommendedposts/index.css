@@ -68,11 +68,7 @@
   padding-bottom: 0.5em;
 }
 #recommendedposts .posts .post {
-  padding: 0.5em 0;
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-  padding-left: 1em;
-  padding-right: 1.5em;
+  padding: 1em;
 }
 #recommendedposts .posts .post .imageWrapper {
   margin-top: 0.5em;
@@ -83,6 +79,7 @@
 }
 #recommendedposts .posts .post .postcontent {
   margin-top: 0.5em;
+  word-break: break-word;
 }
 #recommendedposts .posts .post .infoWrapper {
   display: flex;
@@ -93,6 +90,8 @@
 }
 #recommendedposts .posts .post .infoWrapper .actionsWrapper {
   display: flex;
+  justify-content: flex-end;
+  width: 100%;
 }
 #recommendedposts .posts .post .infoWrapper .actionsWrapper > div {
   padding-left: 0.75em;
@@ -112,8 +111,9 @@
   width: 100%;
 }
 #recommendedposts .posts .post .addressTable > div.iconWrapper .usericon .letter {
+  position: relative;
   font-size: 1em;
-  margin-top: -10px;
+  top: -10px;
 }
 #recommendedposts .posts .post .addressTable > div.label {
   padding-left: 0.5em;
