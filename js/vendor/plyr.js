@@ -9237,6 +9237,7 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
           PeerTubeEmbeding.main(target, clear_peertube_id, {
             host : host,
             wautoplay : options.wautoplay,
+            useP2P : options.useP2P,
             logoType : options.logoType,
             localVideo : localVideo,
             start : options.startTime || 0

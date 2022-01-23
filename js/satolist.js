@@ -2324,6 +2324,8 @@ Platform = function (app, listofnodes) {
 
     self.ui = {
 
+        
+
         articledecoration : function(wr, share, extend){
             var caption = wr.find('.shareBgCaption')
             var capiontextclass = 'caption_small'
@@ -6003,7 +6005,6 @@ Platform = function (app, listofnodes) {
                     })  
 
                 }).catch(error => {
-                    console.error(error)
                 })
             },
 
@@ -7554,6 +7555,13 @@ Platform = function (app, listofnodes) {
                     value: false
                 },
 
+                videop2p: {
+                    name: self.app.localization.e('videop2psettings'),
+                    id: 'videop2p',
+                    type: "BOOLEAN",
+                    value: true
+                },
+
                 autostart: {
                     name: self.app.localization.e('e13278'),
                     id: 'autostart',
@@ -7731,8 +7739,8 @@ Platform = function (app, listofnodes) {
                         name: self.app.localization.e('video'),
                         options: {
                             embedvideo: options.embedvideo,
-                            videoautoplay2: options.videoautoplay2
-
+                            videoautoplay2: options.videoautoplay2,
+                            videop2p: options.videop2p
                         }
                     },
 
@@ -22973,7 +22981,7 @@ Platform = function (app, listofnodes) {
                     }
 
 
-                    if (data.mesType == 'subscribe') {
+                    if (data.mesType == 'subscribe' || data.mesType == 'subscribePrivate') {
                         if ((!platform.sdk.usersettings.meta.followers || platform.sdk.usersettings.meta.followers.value)) {
 
                             text = ''

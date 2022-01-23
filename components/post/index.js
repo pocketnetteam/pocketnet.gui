@@ -445,14 +445,16 @@ var post = (function () {
 						},
 
 						hlsError : function(error){
-							if(!window.cordova)
+							/*if(!window.cordova)
 								self.app.Logger.error({
 									err: 'hlsError',
 									payload: JSON.stringify(error.data),
 									code: 401,
-								});
+								});*/
 								
-						}
+						},
+
+						useP2P : self.app.platform.sdk.usersettings.meta.videop2p.value 
 					};
 
 					$.each(pels, function (key, el2) {

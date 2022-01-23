@@ -1988,3 +1988,5 @@ ____loclib.easyNode_e2002_2_2 = "more Pocketcoin. That is called staking in cryp
 ____loclib.minPkoin = function (p){	
 	return  String(p) + " PKOIN Minimum"
 }
+
+____loclib.videop2psettings = "Use p2p when watching videos"

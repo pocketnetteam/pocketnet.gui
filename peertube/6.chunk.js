@@ -144,7 +144,6 @@ class Html5Hlsjs {
         this.uiTextTrackHandled = false;
         this.hls.destroy();
         this.handlers = null;
-        console.log("DESTROY PLAYER");
     }
     static addHook(type, callback) {
         Html5Hlsjs.hooks[type] = this.hooks[type] || [];
@@ -169,7 +168,6 @@ class Html5Hlsjs {
         }
     }
     _handleMediaError(error) {
-        console.log('this.errorCounts', this.errorCounts);
         if (this.errorCounts[hls_js__WEBPACK_IMPORTED_MODULE_0__["ErrorTypes"].MEDIA_ERROR] === 1) {
             console.info('trying to recover media error');
             this.hls.recoverMediaError();
@@ -189,6 +187,9 @@ class Html5Hlsjs {
             //this.tech.trigger('error')
             return;
         }
+    }
+    _handleNotFatalError(error) {
+        this.tech.trigger('error');
     }
     _handleNetworkError(error) {
         setTimeout(() => this.hls.startLoad(), 1000);
@@ -211,9 +212,10 @@ class Html5Hlsjs {
         const error = {
             message: `HLS.js error: ${data.type} - fatal: ${data.fatal} - ${data.details}`
         };
-        console.error(error);
-        if (!data.fatal)
+        console.log('d', data);
+        if (!data.fatal) {
             return;
+        }
         // increment/set error count
         if (this.errorCounts[data.type])
             this.errorCounts[data.type] += 1;
@@ -501,7 +503,6 @@ class Html5Hlsjs {
         ///// liveSyncPosition
         /* @ts-ignore */
         this.hlsjsConfig.capLevelController = _peertube_cap_level_controller__WEBPACK_IMPORTED_MODULE_1__["default"];
-        console.log("INITHLS", this.hlsjsConfig);
         this.hls = new hls_js__WEBPACK_IMPORTED_MODULE_0___default.a(this.hlsjsConfig);
         this._executeHooksFor('beforeinitialize');
         this.hls.on(hls_js__WEBPACK_IMPORTED_MODULE_0__["Events"].ERROR, (event, data) => this._onError(event, data));

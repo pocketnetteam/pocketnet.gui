@@ -1763,3 +1763,5 @@ ____loclib.easyNode_e2002_2_2 = " Покеткойна будет пропорц
 ____loclib.minPkoin = function (p){	
 	return `Минимум ${String(p)} PKOIN`
 }
+
+____loclib.videop2psettings = "Использовать p2p при просмотре видео"

@@ -8,7 +8,7 @@ var easynode = (function(){
 
 		var primary = (p.history && !p.inWnd) || p.primary;
 
-		var el, amount = 1000, info = null, ed, oss, faqLangs;
+		var el, amount = 1000, info = null, ed, oss, faqLangs, ext = null;
 
 		
 		var blocktime = [{
@@ -311,7 +311,7 @@ var easynode = (function(){
 				"9eb62387e3ae5fa7c257b58799a4619014b98824a6ca466caef739d939f2832a",
 				el.lenta,
 				function (e, p) {
-				  
+					ext = p
 				},
 			);
 
@@ -350,8 +350,14 @@ var easynode = (function(){
 
 			destroy : function(){
 
+				if (ext) {
+					ext.clearessense()
+				}
+
 				ed = {};
 				el = {};
+
+				
 			},
 			
 			init : function(p){

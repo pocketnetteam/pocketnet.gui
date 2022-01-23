@@ -698,15 +698,17 @@ var lenta = (function(){
 
 						hlsError : function(error){
 
-							if(!window.cordova)
+							/*if(!window.cordova)
 
 								self.app.Logger.error({
 									err: 'hlsError',
 									payload: JSON.stringify(error.data),
 									code: 401,
-								});
+								});*/
 							
-						}
+						},
+
+						useP2P : self.app.platform.sdk.usersettings.meta.videop2p.value 
 					}
 
 					if(share.settings.v == 'a'){

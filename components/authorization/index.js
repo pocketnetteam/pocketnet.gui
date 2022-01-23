@@ -289,9 +289,16 @@ var authorization = (function(){
 				}
 			})
 
-			el.login.on('focus', function() {
-				el.c.find('.uploadFile').addClass('hidden');
-				el.c.find('.showPassword').removeClass('hidden');
+			el.login.on('keyup', function() {
+				if(!$(this).val()){
+					el.c.find('.uploadFile').removeClass('hidden');
+					el.c.find('.showPassword').addClass('hidden');
+				}
+				else{
+					el.c.find('.uploadFile').addClass('hidden');
+					el.c.find('.showPassword').removeClass('hidden');
+				}
+			
 			});
 
 		    el.login.on('blur', function(e) {
@@ -313,8 +320,7 @@ var authorization = (function(){
 					return;
 				}
 
-				el.c.find('.uploadFile').removeClass('hidden');
-				el.c.find('.showPassword').addClass('hidden');
+			
 			});
 
 			el.c.find('.showPassword').on('click', (e) => {
