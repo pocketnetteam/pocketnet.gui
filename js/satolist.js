@@ -2156,7 +2156,8 @@ Platform = function (app, listofnodes) {
                             autoplay : p.autoplay,
                             opensvi : p.opensvi,
                             minimize : p.minimize,
-                            postclass : p.postclass
+                            postclass : p.postclass,
+                            openapi : true
                         }
                     })
 

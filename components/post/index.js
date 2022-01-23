@@ -419,8 +419,8 @@ var post = (function () {
 						play : function(){
 							self.app.actions.playingvideo(player)
 
-							if(isMobile() && !ed.repost && !el.c.closest('.wndcontent').length){
-								
+							if(isMobile() && !ed.repost && !el.c.closest('.wndcontent').length && !ed.openapi){
+								console.log("HHE", ed)
 								self.app.actions.scroll(125)
 							}
 						},
