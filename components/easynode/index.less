@@ -5,6 +5,37 @@
   
   }
 
+  .lenta {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 20px;
+
+    #post{
+      background: #ffff;
+  
+      .commentsWrapperHb, .iconWrapper{
+        display: none;
+      }
+  
+      .cntswrk{
+        &.formeta{
+          display: none;
+        }
+      }
+  
+      .cntscontent{
+        .paddingWrapper{
+          display: none;
+        }
+      }
+  
+      .statswrapperExtended{
+        display: none;
+      }
+    }
+  } 
+
   .actionWrapper{
     padding: 7 * @rhythm 20px;
     text-align: center;
@@ -28,7 +59,7 @@
     max-width: 800px;
     width: 100%;
     margin: 0 auto;
-    padding: 0px 20px 40px 20px;
+    padding: 0px 20px 20px 20px;
   }
 
   .faq{
@@ -63,6 +94,12 @@
           border : 1px solid @color-pink;
           border-radius: 10px;
           outline: none;
+      }
+
+      .errWrapper{
+        margin-left: @rhythm;
+        font-size: .6em;
+        color: @color-bad;
       }
 
       .ihave{
