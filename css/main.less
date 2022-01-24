@@ -2200,6 +2200,7 @@ input[type=radio].radio:checked + label {
     width : 78px;
     height : 78px;
     margin : auto;
+    z-index: 20000;
 
     .successCheckWrapper{
         width: 100%;
@@ -2214,7 +2215,8 @@ input[type=radio].radio:checked + label {
                 width: 78px;
                 height: 78px;
                 border-radius: 50%;
-                background: #fff;
+                backdrop-filter: blur(14px);
+                -webkit-backdrop-filter: blur(14px);  
                 padding : 2 * @rhythm;
                 .shadowSmaller();
             }
@@ -2224,7 +2226,7 @@ input[type=radio].radio:checked + label {
     .text{
         margin-top : @rhythm;
         font-weight: 100;
-        color : @color-main;
+        color : @color-gray-mlight;
         display: none;
     }
 
@@ -2260,13 +2262,13 @@ input[type=radio].radio:checked + label {
     }
     
     60% {
-      fill: @color-main;
+      fill: #FFF;
       opacity: 1;
       transform: translateY(0);
     }
     
     100% {
-      fill: @color-main;
+      fill: #FFF;
       stroke-dashoffset: 0;
       opacity: 0;
       transform: translateY(-10px);

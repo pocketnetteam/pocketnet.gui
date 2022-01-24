@@ -1770,16 +1770,26 @@ ____loclib.art_validatetags = "Пожалуйста добавьте теги к
 ____loclib.art_validatecover = "Пожалуйста добавьте обложку к вашей статье"
 ____loclib.art_validatecaption = "Пожалуйста добавьте заголовок к вашей статье"
 ____loclib.art_validatecontent = "Пожалуйста добавьте текст вашей статьи"
+____loclib.art_nothingchange = "Изменений не произведено"
+
 ____loclib.art_newarticle = "Новая статья"
 ____loclib.art_myarticles = "Мои статьи"
 ____loclib.art_changecover = "Обложка"
 ____loclib.art_publish = "Опубликовать"
 ____loclib.art_editing = "Редактирование"
+
+
+
+
 ____loclib.art_draftsaved = "Черновик сохранён"
 ____loclib.art_gotolastdraft = "Вернуться к последнему черновику"
 ____loclib.art_categoriestags = "Категории и теги"
 ____loclib.art_preview = "Просмотр"
 ____loclib.art_caption = "Заголовок новой статьи"
 ____loclib.art_placeholder = "Давайте напишем здесь замечательную историю!"
+____loclib.art_newarticlecreation = "Создание новой статьи"
+____loclib.art_editingsh = "Редактирование опубликованной статьи"
+____loclib.art_saveedited = "Сохранить"
 
 ____loclib.empty = "Пусто"
+

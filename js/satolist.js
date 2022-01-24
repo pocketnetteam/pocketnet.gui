@@ -4027,30 +4027,62 @@ Platform = function (app, listofnodes) {
 
                             if (editing.settings.v == 'a') {
 
-                                app.nav.api.load({
-                                    open: true,
-                                    href: 'article',
-                                    inWnd: true,
-                                    history: true,
-                                    
-                                    essenseData: {
-                                        share: editing,
-                                        hash: hash,
+                                if(editing.settings.version >= 2){
+
+                                    app.nav.api.load({
+                                        open: true,
+                                        href: 'articlev',
+                                        history: window.cordova,
+                                        inWnd: true,
                                         
-                                        save: function (art) {
+                                        essenseData: {
 
-                                        },
-                                        close: function () {
-
-                                        },
-                                        complete: function () {
-
-                                        },
-                                        closeContainer: function () {
-
+                                            editing,
+                                            
+                                            save: function (art) {
+    
+                                            },
+                                            close: function () {
+    
+                                            },
+                                            complete: function () {
+    
+                                            },
+                                            closeContainer: function () {
+    
+                                            }
                                         }
-                                    }
-                                })
+                                    })
+
+                                }
+                                else{
+                                    app.nav.api.load({
+                                        open: true,
+                                        href: 'article',
+                                        inWnd: true,
+                                        history: true,
+                                        
+                                        essenseData: {
+                                            share: editing,
+                                            hash: hash,
+                                            
+                                            save: function (art) {
+    
+                                            },
+                                            close: function () {
+    
+                                            },
+                                            complete: function () {
+    
+                                            },
+                                            closeContainer: function () {
+    
+                                            }
+                                        }
+                                    })
+                                }
+
+                                
 
                             }
                             else {
@@ -7143,12 +7175,35 @@ Platform = function (app, listofnodes) {
 
             itisdraft(art){
 
+                if(art.editing) return false
+
                 if(
 
                     art.caption.value && 
                     art.content && art.content.blocks && art.content.blocks.length
                     
                 ) return true
+            },
+
+            fromshare : function(share){
+
+                var edjs = new edjsHTML(null, app)
+
+
+                var empty = self.sdk.articles.empty(null, 2)
+
+
+                    empty.visibility = (share.settings.f || 0) + ''
+                    empty.caption.value = share.caption.v
+                    empty.content = edjs.apply(JSON.parse(JSON.stringify(share.message.v)), decodeURIComponent)
+                    empty.tags = _.clone(share.tags.v)
+                    empty.language = share.language.v
+                    empty.time = share.time
+                    empty.cover = deep(share, 'images.v.0')
+                    empty.editing = share.aliasid
+                    empty.shash = share.shash()
+
+                return empty
             },
 
             empty: function (id, version) {
@@ -7321,7 +7376,10 @@ Platform = function (app, listofnodes) {
 
                     share.tags.set(_.clone(art.tags))
                     share.caption.set(art.caption.value)
-                    share.message.set(artcontent)
+                    share.message.set({
+                        blocks : artcontent.blocks,
+                        version : artcontent.version
+                    })
 
                     share.settings.v = 'a'
                     share.settings.version = art.version
@@ -7330,6 +7388,10 @@ Platform = function (app, listofnodes) {
                     share.images.set([art.cover])
 
                     share.address = deep(app, 'user.address.value')
+
+                if (art.editing){
+                    share.aliasid = art.editing
+                }
 
                 return share
             },

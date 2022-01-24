@@ -15,6 +15,15 @@ var articlev = (function(){
 		var el, editor, art, taginput, delay, external = null;
 
 		var errors = {
+
+			nothingchange : {
+				message : 'art_nothingchange',
+				action : function(){
+
+
+				}
+			},
+
 			validatetags : {
 				message : 'art_validatetags',
 				action : function(){
@@ -81,11 +90,15 @@ var articlev = (function(){
 			},
 
 			complete : function(){
-				self.nav.api.load({
+
+				successCheck()
+				self.closeContainer()
+
+				/*self.nav.api.load({
 					open : true,
 					href : 'author?address=' + self.app.user.address.value.toString('hex'),
 					history : true,
-				})
+				})*/
 			},
 
 			trx : function(share){
@@ -119,6 +132,8 @@ var articlev = (function(){
 										alias._import(_alias, true)
 										alias.temp = true;
 										alias.address = _alias.address
+
+									if (share.aliasid) alias.edit = "true"	
 										
 									self.app.platform.sdk.node.shares.add(alias)
 									
@@ -160,8 +175,6 @@ var articlev = (function(){
 			},
 
 			validate : function(art){
-
-				console.log('art', art)
 
 				if(!art.tags.length) return 'validatetags'
 				if(!art.cover) return 'validatecover'
@@ -207,6 +220,17 @@ var articlev = (function(){
 
 						var share = self.app.platform.sdk.articles.share(art)
 
+
+						if (art.shash) {
+
+							if(art.shash == share.shash()){
+								return Promise.reject({
+									text : 'nothingchange'
+								})
+							}
+							
+						}
+
 						return actions.trx(share)
 						
 					}).then(alias => {
@@ -241,8 +265,6 @@ var articlev = (function(){
 
 					var alias = share.alias()
 						alias.address = self.app.user.address.value
-
-						console.log('alias', alias)
 
 					renders.preview(alias)
 
@@ -337,7 +359,6 @@ var articlev = (function(){
 
 				art.time = new Date();
 				renders.status()
-
 			},
 
 			save : function(){
@@ -394,6 +415,25 @@ var articlev = (function(){
 		}
 
 		var events = {
+
+			saveedited : function(){
+				dialog({
+					html:  self.app.localization.e('usavechanges'),
+					btn1text: self.app.localization.e('dyes'),
+					btn2text: self.app.localization.e('dno'),
+		
+					success: function () {
+						actions.publish()
+					},
+		
+					fail: function () {
+
+					},
+	
+					class : 'zindex'
+				})
+			},
+
 			publish : function(){
 				dialog({
 					html:  self.app.localization.e('publishquestion'),
@@ -579,6 +619,31 @@ var articlev = (function(){
 				})
 			},
 
+			publish : function(){
+				
+				self.shell({
+
+					animation : false,
+					name : 'publish',
+					data : {
+						art : art
+					},
+					el : el.publishWrapper
+
+				},
+				function(p){	
+					
+					p.el.find('.publish.action').on('click', function(){
+						events.publish()
+					})
+
+					p.el.find('.publish.saveedited').on('click', function(){
+						events.saveedited()
+					})
+				})	
+
+			},
+
 			captiondouble : function(){
 				
 				self.shell({
@@ -649,9 +714,7 @@ var articlev = (function(){
 
 		var initEvents = function(){
 
-			el.publish.on('click', function(){
-				events.publish()
-			})
+			
 
 			el.showpreview.on('click', function(){
 				actions.preview()
@@ -802,6 +865,7 @@ var articlev = (function(){
 			renders.status()
 			renders.cover()
 			renders.captionvalue()
+			renders.publish()
 
 			editor = new EditorJS({
 
@@ -959,7 +1023,18 @@ var articlev = (function(){
 
 				var data = {};
 
-				setArticle(deep(p, 'settings.essenseData.article') || parameters().art)
+				var editing = deep(p, 'settings.essenseData.editing') || null
+
+				if (editing){
+					art = self.app.platform.sdk.articles.fromshare(editing)
+
+					
+				}
+				else{
+					setArticle(deep(p, 'settings.essenseData.article') || parameters().art)
+				}
+
+				data.art = art
 
 				clbk(data);
 
@@ -986,12 +1061,16 @@ var articlev = (function(){
 				el.head = el.c.find('.aheadermain')
 				el.backfromedittags = el.c.find('.backfromedittags')
 				el.removeCover = el.c.find('.removeCover')
-				el.publish = el.c.find('.publish.action')
+			
 				el.share = el.c.find('.shareWrapper')
 				el.status = el.c.find('.truestatuswrapper')
 				el.myarticles = el.c.find('.myarticles')
 				el.showpreview = el.c.find('.preview')
+				el.publishWrapper = el.c.find('.publish')
 
+				if(art.editing){
+					el.c.addClass('editing')
+				}
 				
 
 				initEvents();
