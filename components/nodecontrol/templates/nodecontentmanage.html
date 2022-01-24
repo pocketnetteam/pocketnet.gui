@@ -1,3 +1,11 @@
+<% if(info.test) {%>
+
+    <div class="testnetwork">
+        <span>Unable to use Node in test network mode</span>
+    </div>
+
+<% } else { %> 
+
 <% if(system && system.node) { %>
 
     <div class="nodecontentmanage managepanel">
@@ -315,5 +323,7 @@
         <% } %>
 
     </div>
+
+<% } %>
 
 <% } %>
