@@ -222,6 +222,11 @@ var Control = function(settings) {
     }
 
     self.init = function(){
+
+        if (self.proxy.test){
+            return Promise.resolve()
+        } 
+
         // change global settings
 
         node.proxy = null

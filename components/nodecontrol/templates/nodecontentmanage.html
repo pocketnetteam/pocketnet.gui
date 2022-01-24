@@ -1,324 +1,337 @@
-<% if(system && system.node) { 
+<% if(info.test) {%>
 
-    %>
+    <div class="testnetwork">
+        <span>Unable to use Node in test network mode</span>
+    </div>
 
-    <div class="nodecontentmanage managepanel">
-        
-        <div class="felock">
-            <div class="work">
-                <div class="felockcnt loading">
-                    <div class="text">
-                        <%-e('easyNode_e10003')%>
-                    </div>
-                    <div class="icon">
-                        <i class="fas fa-spinner fa-spin"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
+<% } else { %> 
+    
 
 
-        <!-- Section `Download & Install` -->        
-        <% if(!nc.hasbin || nc.lock) { %>
-            <div class="work">
-                <% if(nc.lock == 'installing') {%>
 
-                    <div class="notfound loading">
+    <% if(system && system.node) { 
+
+        %>
+
+        <div class="nodecontentmanage managepanel">
+            
+            <div class="felock">
+                <div class="work">
+                    <div class="felockcnt loading">
                         <div class="text">
-                            <%-e('easyNode_e10004')%> <i class="fas fa-spinner fa-spin"></i>
-                        </div>
-
-                        <div class="installProgressBox">
-                            <div class="title"><%-nc.state.install.title%></div>
-                            <% if (nc.state.install.progress) { %>
-                                <div class="installProgress">
-                                    <div elementsid="installProgressInner" class="installProgressInner" style="width:<%- nc.state.install.progress.percent * 100 %>%" ></div>
-                                </div>
-                            <% } %>
-                        </div>
-
-                    </div>
-
-                <% } %> 
-
-                <% if(nc.lock == 'removing') {%>
-
-                    <div class="notfound removing">
-                        <div class="text">
-                            <%-e('easyNode_e10005')%>
+                            <%-e('easyNode_e10003')%>
                         </div>
                         <div class="icon">
                             <i class="fas fa-spinner fa-spin"></i>
                         </div>
                     </div>
+                </div>
+            </div>
 
-                <% } %> 
 
-                <% if(!nc.lock) {%> 
+            <!-- Section `Download & Install` -->        
+            <% if(!nc.hasbin || nc.lock) { %>
+                <div class="work">
+                    <% if(nc.lock == 'installing') {%>
 
-                    <% if(!nc.other) {%> 
-
-                        <% if(nc.hasapplication) {%>
-                    
-                            <div elementsid="notfoundinstall" class="notfound install">
-                                <div class="text">
-                                    <%-e('easyNode_e10001')%>
-                                </div>
-                                <div class="icon">
-                                    <i class="fas fa-cloud-download-alt"></i>
-                                </div>
-                            </div>  
-
-                            <div class="systemreq">
-
-                                    <div class="scaption">
-                                        <span><%-e('easyNode_e10006')%></span>
-                                    </div>
-                                
-                                <div class="req">
-                                    <div>
-                                        3 <%-e('easyNode_e10056')%>
-                                    </div>
-
-                                    <div>
-                                        4 <%-e('easyNode_e10057')%>
-                                    </div>
-
-                                    <div>
-                                        100 <%-e('easyNode_e10058')%>
-                                    </div>
-
-                                    <div>
-                                        <%-e('easyNode_e10060')%>
-                                    </div>
-
-                                    <div>
-                                        100 <%-e('easyNode_e10059')%>
-                                    </div>
-                                </div>
-                                
+                        <div class="notfound loading">
+                            <div class="text">
+                                <%-e('easyNode_e10004')%> <i class="fas fa-spinner fa-spin"></i>
                             </div>
 
-                        <% } else { %> 
-                            
-                            <div class="notfound">
-                                <div class="text">
-                                    <%-e('easyNode_e10007')%>
-                                </div>
-                                <div class="icon">
-                                    <i class="fas fa-wrench"></i>
-                                </div>
-                            </div>  
-
-                        <% }%>
-                    
-                    <% } else { %>
-                        
-                        <div elementsid="refreshother" class="notfound refreshother">
-                            <div class="text">Your device already has Node.<br>
-
-                                <% if(proxy.direct || showdirect) {%>
-                                    You can set system pathes or stop it and install via <%-app.meta.fullname%> Desktop Application
-                                <% } else {%> 
-                                    You can't manage node on this device via current application
+                            <div class="installProgressBox">
+                                <div class="title"><%-nc.state.install.title%></div>
+                                <% if (nc.state.install.progress) { %>
+                                    <div class="installProgress">
+                                        <div elementsid="installProgressInner" class="installProgressInner" style="width:<%- nc.state.install.progress.percent * 100 %>%" ></div>
+                                    </div>
                                 <% } %>
                             </div>
 
-                            <% if(proxy.direct || showdirect) {%>
-                                <div class="icon">
-                                    <i class="fas fa-sync"></i> Refresh
-                                </div>
-                            <% }%>
-                        </div>  
-                        
-                    <% }%>
-
-                <% }%>
-            </div>
-        <% } %>
-
-        <% if(!nc.hasbin && !nc.lock && !nc.other && !nc.hasapplication) {%>
-
-        <% } else { %> 
-            
-            <!-- Section `Node state` -->
-            <% if(nc.hasbin && !nc.lock) { %>
-                <div class="nodecontent">
-                    <div class="work nodestatebox">
-                        <div elementsid="nodestatebox" class="ssubcaption">
-                            <span><%-e('easyNode_e10008')%></span>
                         </div>
-                        <div class="nodestateWrapper"></div>
-                    </div>
-                </div>
 
-                <% if(system.node.enabled && nodestate && !_.isEmpty(nodestate.info)) { %>
-                    <div class="stakingWrapper"></div>
-                <% } %>
-                
-                <% if(system.node.enabled && nodestate && !_.isEmpty(nodestate.info)) { %>
-                    <div class="walletWrapper"></div>
-                <% } %>
+                    <% } %> 
 
-            <% } %>
+                    <% if(nc.lock == 'removing') {%>
 
-            <% if(!nc.lock) {%>
-
-            <div class="nodecontent collapsepart">
-                <div class="work configurationBox">
-                    <div elementsid="nodestatebox" class="ssubcaption">
-                        <span><%-e('easyNode_e10009')%></span>
-                    </div>
-
-                <div class="collapsingpart">
-                    <div class="setting togglebutton">
-                                
-                        <div class="settingTable table">
-                            <div class="label">
-                                <span><%-e('easyNode_e10010')%></span>
+                        <div class="notfound removing">
+                            <div class="text">
+                                <%-e('easyNode_e10005')%>
                             </div>
+                            <div class="icon">
+                                <i class="fas fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
 
-                            <% if(!dis) {%>
+                    <% } %> 
 
-                                <div class="value" sys="nodeenabled">
-                                    <% if (system.node.enabled) { %>
-                                        <span><%-e('dyes')%></span>
-                                    <% } else { %>
-                                        <span><%-e('dno')%></span>
-                                    <% } %>
+                    <% if(!nc.lock) {%> 
+
+                        <% if(!nc.other) {%> 
+
+                            <% if(nc.hasapplication) {%>
+                        
+                                <div elementsid="notfoundinstall" class="notfound install">
+                                    <div class="text">
+                                        <%-e('easyNode_e10001')%>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fas fa-cloud-download-alt"></i>
+                                    </div>
+                                </div>  
+
+                                <div class="systemreq">
+
+                                        <div class="scaption">
+                                            <span><%-e('easyNode_e10006')%></span>
+                                        </div>
+                                    
+                                    <div class="req">
+                                        <div>
+                                            3 <%-e('easyNode_e10056')%>
+                                        </div>
+
+                                        <div>
+                                            4 <%-e('easyNode_e10057')%>
+                                        </div>
+
+                                        <div>
+                                            100 <%-e('easyNode_e10058')%>
+                                        </div>
+
+                                        <div>
+                                            <%-e('easyNode_e10060')%>
+                                        </div>
+
+                                        <div>
+                                            100 <%-e('easyNode_e10059')%>
+                                        </div>
+                                    </div>
+                                    
                                 </div>
 
                             <% } else { %> 
                                 
-                                <div class="value">
-                                    <div class="preloader5"><img src="./img/three-dots.svg"/></div>
+                                <div class="notfound">
+                                    <div class="text">
+                                        <%-e('easyNode_e10007')%>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fas fa-wrench"></i>
+                                    </div>
+                                </div>  
+
+                            <% }%>
+                        
+                        <% } else { %>
+                            
+                            <div elementsid="refreshother" class="notfound refreshother">
+                                <div class="text">Your device already has Node.<br>
+
+                                    <% if(proxy.direct || showdirect) {%>
+                                        You can set system pathes or stop it and install via <%-app.meta.fullname%> Desktop Application
+                                    <% } else {%> 
+                                        You can't manage node on this device via current application
+                                    <% } %>
                                 </div>
 
-                            <% } %>
+                                <% if(proxy.direct || showdirect) {%>
+                                    <div class="icon">
+                                        <i class="fas fa-sync"></i> Refresh
+                                    </div>
+                                <% }%>
+                            </div>  
+                            
+                        <% }%>
+
+                    <% }%>
+                </div>
+            <% } %>
+
+            <% if(!nc.hasbin && !nc.lock && !nc.other && !nc.hasapplication) {%>
+
+            <% } else { %> 
+                
+                <!-- Section `Node state` -->
+                <% if(nc.hasbin && !nc.lock) { %>
+                    <div class="nodecontent">
+                        <div class="work nodestatebox">
+                            <div elementsid="nodestatebox" class="ssubcaption">
+                                <span><%-e('easyNode_e10008')%></span>
+                            </div>
+                            <div class="nodestateWrapper"></div>
                         </div>
                     </div>
 
-                    <% if (nodestate.status == 'stopped' && !system.node.enabled) { %>
-                        <% if(!nc.lock && (proxy.direct || showdirect)) {%>
-                            <div class="setting systempath">
-                                <div class="settingTable table">
+                    <% if(system.node.enabled && nodestate && !_.isEmpty(nodestate.info)) { %>
+                        <div class="stakingWrapper"></div>
+                    <% } %>
+                    
+                    <% if(system.node.enabled && nodestate && !_.isEmpty(nodestate.info)) { %>
+                        <div class="walletWrapper"></div>
+                    <% } %>
+
+                <% } %>
+
+                <% if(!nc.lock) {%>
+
+                <div class="nodecontent collapsepart">
+                    <div class="work configurationBox">
+                        <div elementsid="nodestatebox" class="ssubcaption">
+                            <span><%-e('easyNode_e10009')%></span>
+                        </div>
+
+                    <div class="collapsingpart">
+                        <div class="setting togglebutton">
+                                    
+                            <div class="settingTable table">
+                                <div class="label">
+                                    <span><%-e('easyNode_e10010')%></span>
+                                </div>
+
+                                <% if(!dis) {%>
+
+                                    <div class="value" sys="nodeenabled">
+                                        <% if (system.node.enabled) { %>
+                                            <span><%-e('dyes')%></span>
+                                        <% } else { %>
+                                            <span><%-e('dno')%></span>
+                                        <% } %>
+                                    </div>
+
+                                <% } else { %> 
+                                    
+                                    <div class="value">
+                                        <div class="preloader5"><img src="./img/three-dots.svg"/></div>
+                                    </div>
+
+                                <% } %>
+                            </div>
+                        </div>
+
+                        <% if (nodestate.status == 'stopped' && !system.node.enabled) { %>
+                            <% if(!nc.lock && (proxy.direct || showdirect)) {%>
+                                <div class="setting systempath">
+                                    <div class="settingTable table">
+                                            <div class="label">
+                                                <span><%-e('easyNode_e10011')%></span>
+                                            </div>
+
+                                            <div class="value" <% if(!nc.hasbin || !system.node.enabled) {%> sys="binPath" <% } %> path="<%-system.node.binPath%>">
+                                                <span><%- system.node.binPath || 'Default' %></span> 
+                                            </div>
+
+                                        <% if(nc.hasbin && system.node.enabled) {%>
+
+                                            <div class="icon">
+                                                <i class="fas fa-lock"></i>
+                                            </div>
+
+                                        <% } %>
+                                    </div>
+                                </div>
+
+                                <div class="setting systempath">
+                                    <div class="settingTable table">
                                         <div class="label">
-                                            <span><%-e('easyNode_e10011')%></span>
+                                            <span><%-e('easyNode_e10012')%></span>
                                         </div>
 
-                                        <div class="value" <% if(!nc.hasbin || !system.node.enabled) {%> sys="binPath" <% } %> path="<%-system.node.binPath%>">
-                                            <span><%- system.node.binPath || 'Default' %></span> 
+                                        <div class="value" <% if(!nc.hasbin || !system.node.enabled) {%> sys="ndataPath" <% } %> path="<%-system.node.ndataPath%>" >
+                                            <span><%- system.node.ndataPath || 'Default' %></span>
                                         </div>
 
-                                    <% if(nc.hasbin && system.node.enabled) {%>
+                                        <% if(nc.hasbin && system.node.enabled) {%>
 
                                         <div class="icon">
                                             <i class="fas fa-lock"></i>
                                         </div>
 
-                                    <% } %>
+                                        <% } %>
+                                    </div>
                                 </div>
-                            </div>
+                                
+                                <% if((system.node.ndataPath || system.node.binPath) && !system.node.enabled) {%>
+                                    <div class="setting systempathsDefaults">
+                                        <div class="settingTable table">
+                                            <div class="label">
+                                                <span><%-e('easyNode_e10013')%></span>
+                                            </div>
+                        
+                                            <div elementsid="toDefaultPath" class="value toDefaultPath">
+                                                <div>
+                                                    <span>
+                                                        <%-e('easyNode_e10014')%>
+                                                    </span>
 
-                            <div class="setting systempath">
-                                <div class="settingTable table">
-                                    <div class="label">
-                                        <span><%-e('easyNode_e10012')%></span>
-                                    </div>
-
-                                    <div class="value" <% if(!nc.hasbin || !system.node.enabled) {%> sys="ndataPath" <% } %> path="<%-system.node.ndataPath%>" >
-                                        <span><%- system.node.ndataPath || 'Default' %></span>
-                                    </div>
-
-                                    <% if(nc.hasbin && system.node.enabled) {%>
-
-                                    <div class="icon">
-                                        <i class="fas fa-lock"></i>
-                                    </div>
-
-                                    <% } %>
-                                </div>
-                            </div>
-                            
-                            <% if((system.node.ndataPath || system.node.binPath) && !system.node.enabled) {%>
-                                <div class="setting systempathsDefaults">
-                                    <div class="settingTable table">
-                                        <div class="label">
-                                            <span><%-e('easyNode_e10013')%></span>
-                                        </div>
-                    
-                                        <div elementsid="toDefaultPath" class="value toDefaultPath">
-                                            <div>
-                                                <span>
-                                                    <%-e('easyNode_e10014')%>
-                                                </span>
-
-                                                <i class="far fa-times-circle"></i>
+                                                    <i class="far fa-times-circle"></i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                <% } %>
+
                             <% } %>
 
-                        <% } %>
-
-                        <% if(nc.hasbin && !nc.lock) {%>
-                            <div class="setting ">
-                                <div class="settingTable table">
-                                    <div class="label">
-                                        <span><%-e('easyNode_e10015')%></span>
-                                    </div>
-
-                                    <div class="value">
-                                        <% if(nc.hasupdates) {%>
-                                            <button elementsid="buttonsmallupdatenode" class="button small updatenode">
-                                                <%-e('easyNode_e10015')%>
-                                            </button>
-                                        <% } else { %> 
-
-                                            <span><%-e('easyNode_e10016')%></span>
-                                            
-                                        <% }%>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <% if(!system.node.binPath && !system.node.ndataPath) {%>
-                                <div class="setting">
+                            <% if(nc.hasbin && !nc.lock) {%>
+                                <div class="setting ">
                                     <div class="settingTable table">
                                         <div class="label">
-                                            <span><%-e('easyNode_e10017')%></span>
-                                        </div>
-                    
-                                        <div class="value">
-                                            <button elementsid="buttonsmallremovenode" class="button small orange removenode">
-                                                <%-e('easyNode_e10018')%>
-                                            </button>
+                                            <span><%-e('easyNode_e10015')%></span>
                                         </div>
 
                                         <div class="value">
-                                            <button elementsid="buttonsmallghostremovenodeall" class="button small ghost orange removenodeall">
-                                                <%-e('easyNode_e10019')%>
-                                            </button>
+                                            <% if(nc.hasupdates) {%>
+                                                <button elementsid="buttonsmallupdatenode" class="button small updatenode">
+                                                    <%-e('easyNode_e10015')%>
+                                                </button>
+                                            <% } else { %> 
+
+                                                <span><%-e('easyNode_e10016')%></span>
+                                                
+                                            <% }%>
                                         </div>
 
                                     </div>
                                 </div>
 
+                                <% if(!system.node.binPath && !system.node.ndataPath) {%>
+                                    <div class="setting">
+                                        <div class="settingTable table">
+                                            <div class="label">
+                                                <span><%-e('easyNode_e10017')%></span>
+                                            </div>
+                        
+                                            <div class="value">
+                                                <button elementsid="buttonsmallremovenode" class="button small orange removenode">
+                                                    <%-e('easyNode_e10018')%>
+                                                </button>
+                                            </div>
+
+                                            <div class="value">
+                                                <button elementsid="buttonsmallghostremovenodeall" class="button small ghost orange removenodeall">
+                                                    <%-e('easyNode_e10019')%>
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                <% } %>
                             <% } %>
                         <% } %>
-                    <% } %>
 
+                    </div>
                 </div>
-            </div>
-            </div>
+                </div>
+
+                <% } %>
+
 
             <% } %>
 
+        </div>
 
-        <% } %>
-
-    </div>
+    <% } %>
 
 <% } %>

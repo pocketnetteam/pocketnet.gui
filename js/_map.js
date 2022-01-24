@@ -1055,7 +1055,15 @@ __map =  {
 		add : {
 			el : 'content'
 		},
-		anonimus : true
+		anonimus : true,
+
+		electronDontOpen : function(){
+			var _p = parameters()
+
+			console.log('_p', _p)
+			
+			if(!_p.s && !p.v) return true
+		}
 	},
 
 	author : {

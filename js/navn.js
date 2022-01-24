@@ -1484,9 +1484,25 @@ Nav = function(app)
 					var currentHref = self.get.href();
 					var pathname = self.get.pathname();
 
-					var mpobj = app.map[pathname] || {};
+					var mpobj = app.map[pathname] || _.find(app.map, function(mp){
+						return mp.href == pathname
+					}) || {};
 
-					if (mpobj.electronDontOpen) return
+					var electronDontOpen = false
+
+					if (mpobj.electronDontOpen) {
+
+						console.log('typeof mpobj.electronDontOpen', typeof mpobj.electronDontOpen)
+
+						if(typeof mpobj.electronDontOpen == 'function'){
+							electronDontOpen = mpobj.electronDontOpen()
+						}
+						else{
+							electronDontOpen = mpobj.electronDontOpen
+						}
+					}
+
+					if(electronDontOpen) return
 
 					var electronHrefs = JSON.parse(localStorage['electron_hrefs'] || "[]");
 				

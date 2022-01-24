@@ -280,14 +280,17 @@ var nodecontrol = (function(){
 
 				if (el.c){
 
-					renders.nodelanding(el.c)
-					renders.electronfornode()
+					
+						renders.nodelanding(el.c)
+						renders.electronfornode()
 
-					renders.nodecontentmanage(el.c, function(){
-						renders.nodecontentstate(el.c)
-						renders.nodecontentmanagestacking(el.c)
-						renders.nodecontentmanagewallet(el.c)
-					})
+						renders.nodecontentmanage(el.c, function(){
+							renders.nodecontentstate(el.c)
+							renders.nodecontentmanagestacking(el.c)
+							renders.nodecontentmanagewallet(el.c)
+						})
+
+					
 					
 				}
 			},

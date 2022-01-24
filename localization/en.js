@@ -1990,3 +1990,22 @@ ____loclib.minPkoin = function (p){
 }
 
 ____loclib.videop2psettings = "Use p2p when watching videos"
+
+____loclib.art_validatetags = "Please add Tags For Your Longread"
+____loclib.art_validatecover = "Please add Cover For Your Longread"
+____loclib.art_validatecaption = "Please add Caption For Your Longread"
+____loclib.art_validatecontent = "Please add Content of Your Longread"
+____loclib.art_newarticle = "New Longread"
+____loclib.art_myarticles = "My Longreads"
+____loclib.art_changecover = "Change Cover"
+____loclib.art_publish = "Publish"
+____loclib.art_editing = "Editing"
+____loclib.art_draftsaved = "Draft saved"
+____loclib.art_gotolastdraft = "go to last draft"
+____loclib.art_categoriestags = "Categories and tags"
+____loclib.art_preview = "Preview"
+____loclib.art_caption = "Caption of new Longread"
+____loclib.art_placeholder = "Let`s write an awesome story!"
+
+
+____loclib.empty = "Empty"

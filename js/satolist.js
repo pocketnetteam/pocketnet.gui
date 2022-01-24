@@ -3155,19 +3155,24 @@ Platform = function (app, listofnodes) {
                     ball()
                 }
 
+                if(p.text || p.textHover){
 
-                h += '            <div class="plissingTipCell">'
-                h += '                <div class="plissingTip all">'
-                h += (p.text || '')
-                h += '                </div>'
+               
 
-                if (p.textHover) {
-                    h += '                <div class="plissingTip hover">'
-                    h += (p.textHover || '')
+                    h += '            <div class="plissingTipCell">'
+                    h += '                <div class="plissingTip all">'
+                    h += (p.text || '')
                     h += '                </div>'
-                }
 
-                h += '            </div>'
+                    if (p.textHover) {
+                        h += '                <div class="plissingTip hover">'
+                        h += (p.textHover || '')
+                        h += '                </div>'
+                    }
+
+                    h += '            </div>'
+
+                }
 
                 if (p.left) {
                     ball()
@@ -3202,6 +3207,10 @@ Platform = function (app, listofnodes) {
             }
 
             self.init()
+
+            if(p.time){
+                setTimeout(self.destroy, p.time)
+            }
 
             return self;
 
@@ -7104,6 +7113,14 @@ Platform = function (app, listofnodes) {
 
             storage: [],
 
+            findlastdraft : function(){
+
+                return _.find(self.sdk.articles.storage, function(s){
+                    return s.version >= 2 && !s.txid
+                })
+                
+            },
+
             getbyid : function(id){
                 return _.find(self.sdk.articles.storage, function(s){
                     return s.id == id
@@ -7299,12 +7316,6 @@ Platform = function (app, listofnodes) {
                 var edjs = new edjsHTML(null, app)
 
                 var artcontent = edjs.apply(art.content, encodeURIComponent)
-
-                /*console.log(JSON.stringify(art.content))
-
-                console.log(JSON.stringify(edjs.apply(artcontent, decodeURIComponent)))
-
-                console.log(art.content, edjs.apply(artcontent, decodeURIComponent))*/
            
                 var share = new Share(art.language || self.app.localization.key);
 
@@ -7314,6 +7325,7 @@ Platform = function (app, listofnodes) {
 
                     share.settings.v = 'a'
                     share.settings.version = art.version
+                    share.settings.f = (art.visibility || 0) + ''
 
                     share.images.set([art.cover])
 

@@ -56,6 +56,11 @@
     <% 
 
     var sorted = _.sortBy(manager[key] || [], function(nodeinfo){
+
+        if(nodeinfo.node.local){
+            return -Infinity
+        }
+
         return -(nodeinfo.rating || deep(nodeinfo,'status.difference') || 0)
     })
 
@@ -176,7 +181,7 @@
 
                                     <% if(node.local) {%>
                                     
-                                        <div class="item ">
+                                        <div class="item maincolor">
                                             <i class="fas fa-thumbtack"></i>
                                         </div>
             

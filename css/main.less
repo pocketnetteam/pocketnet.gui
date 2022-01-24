@@ -18,7 +18,7 @@
 }
 
 .customscroll{
-    overflow-y: overlay;
+    overflow-y: overlay!important;
     overflow-x: hidden;
     scrollbar-width: 7px;
     scrollbar-color: rgba(0, 0, 0, .15) rgba(0, 0, 0, .05);
@@ -34,7 +34,6 @@
 }
 .customscroll::-webkit-scrollbar-thumb {
     background-color: rgba(0, 0, 0, .25);
-    border-radius: 3px;
     border: 0 solid rgba(0, 0, 0, 0.05);
     background-image: linear-gradient(
       180deg,
@@ -46,7 +45,6 @@
 html.stblack{
     .customscroll::-webkit-scrollbar-thumb {
         background-color: rgba(17, 0, 255, 0.25);
-        border-radius: 3px;
         border: 0 solid rgba(17, 0, 255, 0.05);
         background-image: linear-gradient(
           180deg,
@@ -2547,10 +2545,10 @@ input[type=radio].radio:checked + label {
         
     }
 
-    .result{
+    /*.result{
         margin-top: 50px;
         text-align: center;
-    }
+    }*/
 
 
     &.small{
@@ -4060,7 +4058,6 @@ html.nav{
 }
 .plissingWrapper{
     .plissingWrapperTable{
-        width : 260px;
         height : 30px;
         >div{
             vertical-align: middle;

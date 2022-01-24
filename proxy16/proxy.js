@@ -701,7 +701,8 @@ var Proxy = function (settings, manage, test, logger) {
 
 			return {
 				status: status,
-
+				test : self.test,
+				
 				nodeManager: self.nodeManager.info(compact),
 				nodeControl: self.nodeControl.info(compact),
 				firebase: self.firebase.info(compact),

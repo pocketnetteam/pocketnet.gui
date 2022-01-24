@@ -1484,6 +1484,8 @@ Share = function(lang){
 
 			share.time = new Date();
 
+			console.log('self.export()', self.export())
+
 			share._import(self.export())
 
 			share.txid = txid || self.aliasid
@@ -2106,7 +2108,7 @@ pShare = function(){
 				textvalue = JSON.parse(textvalue)
 			}
 			catch(e){
-				textvalue = ''
+				textvalue = textvalue
 			}
 		}
 
