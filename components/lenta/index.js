@@ -3507,7 +3507,7 @@ var lenta = (function(){
 							}
 						}
 						
-						if (essenseData.byauthor && author && !sharesInview.length && !parameters().s){
+						if (essenseData.byauthor && author && !sharesInview.length && !parameters().s && !parameters().ssa){
 
 							if (self.app.platform.sdk.accountsettings.storage[author]){
 
