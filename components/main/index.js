@@ -62,8 +62,6 @@ var main = (function(){
 						el.panel.hcSticky('refresh');
 						el.leftpanel.hcSticky('refresh');
 
-						console.log("REFRESH STICKY")
-
 						/*setTimeout(function(){
 							if(el.panel) el.panel.hcSticky('refresh');
 							if(el.leftpanel) el.leftpanel.hcSticky('refresh');
@@ -400,14 +398,11 @@ var main = (function(){
 					essenseData : {
 					
 						renderclbk : function(){
-							console.log("renderclbk")
 							actions.refreshSticky(true)
 	
 						}
 					},
 					clbk : function(e, p){
-
-						console.log("panelss")
 
 						panel = p;
 						
@@ -707,8 +702,6 @@ var main = (function(){
 
 				var t1 = 64
 				var t2 = 76
-
-				console.log("INITSTICKER!!!")
 
 				if (el.leftpanel)
 					el.leftpanel.hcSticky({

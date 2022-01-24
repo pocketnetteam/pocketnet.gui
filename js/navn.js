@@ -1492,8 +1492,6 @@ Nav = function(app)
 
 					if (mpobj.electronDontOpen) {
 
-						console.log('typeof mpobj.electronDontOpen', typeof mpobj.electronDontOpen)
-
 						if(typeof mpobj.electronDontOpen == 'function'){
 							electronDontOpen = mpobj.electronDontOpen()
 						}

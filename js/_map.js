@@ -1060,9 +1060,7 @@ __map =  {
 		electronDontOpen : function(){
 			var _p = parameters()
 
-			console.log('_p', _p)
-			
-			if(!_p.s && !p.v) return true
+			if(!_p.s && !_p.v) return true
 		}
 	},
 

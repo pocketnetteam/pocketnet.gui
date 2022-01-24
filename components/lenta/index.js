@@ -1703,8 +1703,6 @@ var lenta = (function(){
 					self.sdk.registrations.redirect = 'author?address='+share.address+'&s=' + shareId
 				}
 
-				console.log('self.sdk.registrations.redirect', self.sdk.registrations.redirect)
-				
 
 				self.nav.api.go({
 					href : 'authorization',
@@ -1883,8 +1881,6 @@ var lenta = (function(){
 				self.app.mobile.vibration.small()
 
 				var share = self.app.platform.sdk.node.shares.storage.trx[shareId] || {};
-
-				console.log('share', share)
 
 				actions.repost(share.repost || shareId);
 			},

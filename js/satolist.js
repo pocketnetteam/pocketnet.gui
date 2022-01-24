@@ -25746,8 +25746,6 @@ Platform = function (app, listofnodes) {
 
         link : function(core){
 
-            console.log("LINA")
-
             core.update({
                 block : {
                     height : self.currentBlock

@@ -312,7 +312,7 @@ typeof navigator === "object" && (function (global, factory) {
         var max = parseFloat(input.getAttribute('max')) || 100;
         var step = parseFloat(input.getAttribute('step')) || 1;
         var delta = max - min; // Calculate percentage
-        console.log("HERE")
+
         var percent;
         var clientRect = input.getBoundingClientRect();
         var thumbWidth = 100 / clientRect.width * (this.config.thumbWidth / 2) / 100; // Determine left percentage
@@ -2279,7 +2279,6 @@ typeof navigator === "object" && (function (global, factory) {
         return;
       } // Calculate percentage
 
-      console.log("HERE")
       var percent = 0;
       var clientRect = this.elements.progress.getBoundingClientRect();
       var visible = "".concat(this.config.classNames.tooltip, "--visible");
@@ -4846,7 +4845,6 @@ typeof navigator === "object" && (function (global, factory) {
           if (!measure) {
             return setAspectRatio.call(player);
           }
-          console.log("HERE")
           var rect = elements.container.getBoundingClientRect();
           var width = rect.width,
               height = rect.height;
@@ -5126,7 +5124,6 @@ typeof navigator === "object" && (function (global, factory) {
             controls.toggleMenu.call(player, event);
           }
         }); // Set range input alternative "value", which matches the tooltip time (#954)
-        console.log("HERE")
         this.bind(elements.inputs.seek, 'mousedown mousemove', function (event) {
           var rect = elements.progress.getBoundingClientRect();
           var percent = 100 / rect.width * (event.pageX - rect.left);
@@ -6000,8 +5997,6 @@ typeof navigator === "object" && (function (global, factory) {
         youtube.ready.call(this);
       } else {
         // Load the API
-
-        console.log("LOADING YOUTUBE")
         loadScript(this.config.urls.youtube.sdk).catch(function (error) {
           _this.debug.warn('YouTube API failed to load', error);
         }); // Setup callback for the API
@@ -7233,7 +7228,6 @@ typeof navigator === "object" && (function (global, factory) {
           this.seekTime = this.player.media.duration * (this.player.elements.inputs.seek.value / 100);
         } else {
           // Calculate seek hover position as approx video seconds
-          console.log("HERE")
           var clientRect = this.player.elements.progress.getBoundingClientRect();
           var percentage = 100 / clientRect.width * (event.pageX - clientRect.left);
           this.seekTime = this.player.media.duration * (percentage / 100);
@@ -7614,7 +7608,6 @@ typeof navigator === "object" && (function (global, factory) {
     }, {
       key: "setThumbContainerPos",
       value: function setThumbContainerPos() {
-        console.log("HERE")
         var seekbarRect = this.player.elements.progress.getBoundingClientRect();
         var plyrRect = this.player.elements.container.getBoundingClientRect();
         var container = this.elements.thumb.container; // Find the lowest and highest desired left-position, so we don't slide out the side of the video container
