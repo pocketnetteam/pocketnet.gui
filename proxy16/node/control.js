@@ -24,6 +24,7 @@ var Control = function(settings) {
     var lock = ''
 
     var state = {
+        status: 'stopped',
         info: {},
         sync: {
             left: 0,
@@ -38,7 +39,7 @@ var Control = function(settings) {
             },
             break: false,
         },
-        status: 'stopped'
+        hasUpdate: false
     }
 
     var node = {
@@ -49,10 +50,7 @@ var Control = function(settings) {
         proxy : null
     }
 
-    var hasupdates = false
-
     var config = {}
-
     var enabled = false 
 
     self.helpers = {
@@ -217,7 +215,7 @@ var Control = function(settings) {
         }
 
         return applications.checkupdate().then(r => {
-            hasupdates = r
+            state.hasUpdate = r
             return Promise.resolve()
         })
     }
@@ -323,7 +321,6 @@ var Control = function(settings) {
                 binPath : node.binPath,
                 dataPath : node.dataPath
             },
-            hasupdates : hasupdates,
             lock : lock,
             other : node.other,
             hasapplication : applications.hasapplication()
@@ -525,9 +522,7 @@ var Control = function(settings) {
 
             }).then(r => {
 
-                hasupdates = false
-
-
+                state.hasUpdate = false
                 self.autorun.init()
 
                 return self.kit.check()
