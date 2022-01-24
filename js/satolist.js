@@ -16058,7 +16058,7 @@ Platform = function (app, listofnodes) {
                     },
 
                     contentBoost: function (inputs, comment, /*fees, */clbk, p) {
-                        this.common(inputs, comment, TXFEE, clbk, p)
+                        this.common(inputs, comment, 0, clbk, p)
                     },
 
                     commentShare: function (inputs, commentShare, clbk, p) {
