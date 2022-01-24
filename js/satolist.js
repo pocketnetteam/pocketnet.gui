@@ -7291,9 +7291,18 @@ Platform = function (app, listofnodes) {
                     clbk()
             },
 
+
             share : function(art){
 
-                var artcontent = art.content
+                var edjs = new edjsHTML(null, app)
+
+                var artcontent = edjs.apply(art.content, encodeURIComponent)
+
+                /*console.log(JSON.stringify(art.content))
+
+                console.log(JSON.stringify(edjs.apply(artcontent, decodeURIComponent)))
+
+                console.log(art.content, edjs.apply(artcontent, decodeURIComponent))*/
            
                 var share = new Share(art.language || self.app.localization.key);
 
@@ -14543,6 +14552,8 @@ Platform = function (app, listofnodes) {
 
                     _.each(shares || [], function (s) {
 
+                        if(!s) return
+                        
                         users.push(s.address)
 
                         var cuser = deep(s, 'lastComment.address')
@@ -21860,7 +21871,7 @@ Platform = function (app, listofnodes) {
             sharepocketnet: {
                 loadMore: function (data, clbk, wa) {
 
-                    data.addrFrom = 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd'
+                    data.addrFrom || (data.addrFrom = window.testpocketnet ? 'TAqR1ncH95eq9XKSDRR18DtpXqktxh74UU' : 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd')
 
                     if (data.addrFrom) {
 

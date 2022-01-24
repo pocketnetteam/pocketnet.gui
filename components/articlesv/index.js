@@ -11,6 +11,16 @@ var articlesv = (function(){
 		var el, ed;
 
 		var actions = {
+			get : function(){
+
+				var articles = self.app.platform.sdk.articles.getlist()
+
+				articles = _.filter(articles, function(a){
+					return !a.txid
+				})
+
+				return articles
+			},
 			create : function(){
 				ed.create ? ed.create() : self.nav.api.go({
 					href : 'articlev',
@@ -132,7 +142,7 @@ var articlesv = (function(){
 					animation : false,
 					name : 'articles',
 					data : {
-						articles : self.app.platform.sdk.articles.getlist(),
+						articles : actions.get(),
 						current : ed.current
 					},
 					el : el.articles

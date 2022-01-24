@@ -114,7 +114,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
             <% var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0 %>
 
-                <b><span class="adr"><%-name || share.address %></span></b><%if(!preview){%><% if(reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %><% } %>
+                <b><span class="adr"><%-name || share.address %></span></b><%if(typeof preview == 'undefined' || !preview){%><% if(reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %><% } %>
 
 
             <% if((!state || !my) && (typeof repost == 'undefined' || !repost)) { %> 
@@ -212,7 +212,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
             <% threedots() %>
         </div>
 
-        <% if(!preview) {%>
+        <% if(typeof preview == 'undefined' || !preview) {%>
 
         <div class="iconwrapper sharesocial">
             <i class="fas fa-share-alt"></i>
@@ -317,12 +317,10 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 	var edjs = new edjsHTML(null, app)
     var txt = null
 
-
     try{
-       txt = edjs.parse(share.message)
-    }
-    catch(e){}
-    
+        var message = edjs.apply(share.message, decodeURIComponent)
+        txt = edjs.parse(message)
+    } catch(e){}
 	
 	%> 
 
@@ -342,13 +340,14 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
 <% } %>
 
-<div class="sharecnt <% if(share.deleted) { %> deleted <% } %>">
+<div class="sharecnt ">
 
-    <div class="sharearticle">
+    <div class="sharearticle  <% if(share.deleted) { %> deleted <% } %>">
 
         <div class="shareTable <%-subscribed%>" address="<%-share.address%>" stxid="<%-share.txid%>">
 
             <div class="shareBgCaption <% if(all) {%> showtext <% } %>">
+                
 
                 <div class="articleCover showMoreArticle" image="<%- cover %>">
 
@@ -389,7 +388,12 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
                         <% makestarstoppanel() %>
                         
                         <% makesharepanel() %>
-                       
+
+                        <% if(!all) {%>
+                            <div class="removeDescription postcontent">
+                                <%=e('postRemoved')%>
+                            </div>
+                        <% } %>
                     </div>
 
                    
@@ -399,6 +403,12 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
             <% if(all) {%>
 
                 <div class="articlecontent widthcontainer">
+
+                    <div class="removeDescription postcontent">
+                        <%=e('postRemoved')%>
+                    </div>
+
+                    
                     <% if(!checkvisibility && !lockedaccount) {%>
 
                         <div class="cntswrk acticletext">
@@ -433,9 +443,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
                         
                     <% } %>
 
-                    <div class="cntswrk removeDescription postcontent">
-                        <%=e('postRemoved')%>
-                    </div>
+                    
 
                 </div>
 

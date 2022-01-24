@@ -231,7 +231,7 @@ ____loclib.aaddacc = "Добавить аккаунт";
 ____loclib.ascheduler = "Планировщик задач";
 ____loclib.aused = "Этот адрес уже используется на этом устройстве";
 
-____loclib.accfailedkeypair = "Не верный приватный ключ";
+____loclib.accfailedkeypair = "Неверный приватный ключ";
 ____loclib.acchasinthispack = "Этот адрес уже добавлен";
 ____loclib.acchasinanotherpack = "Этот адрес уже используется на этом устройстве";
 
@@ -1760,3 +1760,6 @@ ____loclib.easyNode_e2002_2 = "за это Покеткойны. Вы может
 ____loclib.easyNode_e2002_2_1 = " Заработок ";
 ____loclib.easyNode_e2002_2_2 = " Покеткойна будет пропорционален количеству Покеткойнов, которое вы положите в свою ноду. В криптовалютах такой алгоритм называется стейкинг.";
 
+____loclib.minPkoin = function (p){	
+	return `Минимум ${String(p)} PKOIN`
+}

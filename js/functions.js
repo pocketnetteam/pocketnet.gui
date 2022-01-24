@@ -10982,7 +10982,7 @@ edjsHTML = function() {
 
         header: function(e) {
             var t = e.data;
-            return "<h" + _.escape(t.level) + ">" + (t.text) + "</h" + (t.level) + ">"
+            return "<h" + _.escape(t.level) + ">" + (t.text) + "</h" + _.escape(t.level) + ">"
         },
 
         paragraph: function(e) {
@@ -11106,6 +11106,108 @@ edjsHTML = function() {
 		}
     };
 
+	var encdec = {
+		header: function(data, fu) {
+
+			return {
+				level : data.level,
+				text : fu(data.text)
+			}
+            
+        },
+
+        paragraph: function(data, fu) {
+
+			return {
+				text : fu(data.text)
+			}
+
+        },
+
+        list: function(data, fu) {
+
+			var n = function(e){
+
+
+				if(!e.content && !e.items) return fu(e)
+
+				var nd = {...e}
+
+				if (nd.content)
+					nd.content = fu(nd.content)
+
+				if (nd.items){
+					nd.items = _.map(nd.items, function(i){
+						return n(i)
+					})
+				}
+
+				return nd
+			}
+
+			return n(data)
+
+        },
+
+        image:function(data, fu) {
+
+			var nd = {...data}
+
+			if (nd.caption) nd.caption = fu(nd.caption)
+
+			if (data.file){
+				nd.file = {...data.file}
+				nd.file.url = fu(nd.file.url)
+			}
+
+        },
+
+        quote: function(data, fu) {
+
+			return {
+				caption : fu(data.caption),
+				text : fu(data.text)
+			}
+
+        },
+
+        code: function(data, fu) {
+			return {
+				code : fu(data.code)
+			}
+        },
+
+		warning : function(data, fu) {
+
+			return {
+				title : fu(data.title),
+				message : fu(data.message),
+			}
+
+		},
+
+		linkTool : function(data, fu) {
+
+			var nd = {...data}
+
+			nd.link = fu(nd.link)
+
+			if (data.meta){
+				nd.meta = {...data.meta}
+				nd.meta.title = fu(nd.meta.title)
+				nd.meta.description = fu(nd.meta.description)
+
+				if (data.meta.image){
+					nd.meta.image = {...data.meta.image}
+					nd.meta.image.url = fu(nd.meta.image.url)
+				}
+			}
+
+			return nd
+
+		}
+	}
+
     function t(e) {
         return new Error('[31m The Parser function of type "' + _.escape(e) + '" is not defined. \n\n  Define your custom parser functions as: [34mhttps://github.com/pavittarx/editorjs-html#extend-for-custom-blocks [0m')
     }
@@ -11117,6 +11219,26 @@ edjsHTML = function() {
         var i = Object.assign({}, e, n);
 
         return {
+
+			apply : function(_e, fu){
+
+				if(!fu) fu = encodeURIComponent
+
+				var e = {..._e};
+
+				e.blocks = e.blocks.map((function(e) {
+
+					return {
+						type : e.type,
+						id : e.id,
+						data : encdec[e.type] ? encdec[e.type](e.data, fu) : _.clone(e.data)
+					}
+
+                }))
+
+				return e
+			},
+
             parse: function(e) {
                 return '<div class="article_body">' + e.blocks.map((function(e) {
                     return i[e.type] ? i[e.type](e) : t(e.type)

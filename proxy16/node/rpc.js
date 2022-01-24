@@ -117,6 +117,7 @@ const publics = {
     getstatisticcontent: true,
     getstatisticbyhours: true,
     getstatisticbydays: true,
+    getrecomendedcontentsbyscoresfromaddress : true
 }
 
 const keepAliveAgent = new http.Agent({ keepAlive: true });
@@ -191,7 +192,7 @@ function rpc(request, callback, obj) {
         method: 'POST',
         port: prv ? self.portPrivate : self.port,
         agent: keepAliveAgent,
-        signal : signal
+        signal : signal,
     };
 
     var lg = false //self.host == '135.181.196.243' || self.host == '65.21.56.203' || self.host == '51.174.99.18'
@@ -408,7 +409,7 @@ RpcClient.callspec = {
     setGenerate: 'bool int',
     getreputations: '',
     getrandomcontents : 'str',
-
+    getrecomendedcontentsbyscoresfromaddress : 'str obj int int int',
 
     getcontents: 'str',
     getlastcomments: 'str str str',
