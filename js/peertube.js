@@ -270,9 +270,13 @@ PeerTubePocketnet = function (app) {
 
     cancelResumableUploadVideo: {
       path: 'api/v1/videos/upload-resumable',
+      headers: {
+        "Content-Length": "0",
+      },
       renew: true,
       method: 'DELETE',
       authorization: true,
+      fullreport: true,
       axios: true,
     },
 
@@ -387,9 +391,7 @@ PeerTubePocketnet = function (app) {
       })
       .then((r) => {
         if (meta.authorization) {
-          requestoptions.headers.Authorization = `Bearer ${
-            sessions[options.host].access_token
-          }`;
+          requestoptions.headers.Authorization = `Bearer ${r.access_token}`;
         }
 
         if (meta.headers) {
@@ -458,11 +460,12 @@ PeerTubePocketnet = function (app) {
             });
           }
 
-          return axios[(requestoptions.method || 'post').toLowerCase()](
-            'https://' + options.host + '/' + meta.path,
+          return axios({
+            method: requestoptions.method.toLowerCase() || 'post',
+            url: 'https://' +options.host + '/' + meta.path,
             data,
-            axiosoptions,
-          )
+            ...axiosoptions,
+          })
             .then((r) => {
               if (meta.fullreport) {
                 return r;
@@ -774,57 +777,93 @@ PeerTubePocketnet = function (app) {
       },
 
       proceedResumableUpload: async function(params, options) {
-          if (params.chunkData.size % 256 !== 0) {
-            throw Error('Video chunk is not a multiple of 256 bytes');
-          }
+        const chunkPositionEnd = params.chunkPosition + params.chunkData.size - 1;
 
-          const data = new Uint8Array(await params.chunkData.arrayBuffer());
+        const multiple256 = (params.chunkData.size % 256 == 0);
+        const lastChunk = (params.videoSize - 1 === chunkPositionEnd);
 
-          const rangeStr = `bytes ${params.chunkPosition}-${params.chunkData.size - 1}/${params.videoSize}`;
+        if (!multiple256 && !lastChunk) {
+          throw Error('Video chunk is not a multiple of 256 bytes');
+        }
 
-          const optionsPrepared = {
-            queryParams: {
-              upload_id: params.uploadId,
-            },
-            headers: {
-              "Content-Length": params.chunkData.size,
-              "Content-Range": rangeStr,
-            },
-            ...options,
-          };
+        const data = new Uint8Array(await params.chunkData.arrayBuffer());
 
-          if (params.image) {
-            data.thumbnailfile = data.previewfile = dataURLtoFile(
-                params.image.data,
-                params.image.name,
-            );
-          }
+        const rangeStr = `bytes ${params.chunkPosition}-${chunkPositionEnd}/${params.videoSize}`;
 
-          return request('proceedResumableUploadVideo', data, optionsPrepared)
-              .then((r) => {
-                console.log('RESUME RESUMABLE UPLOAD VIDEO', r);
+        const optionsPrepared = {
+          queryParams: {
+            upload_id: params.uploadId,
+          },
+          headers: {
+            "Content-Length": params.chunkData.size,
+            "Content-Range": rangeStr,
+          },
+          ...options,
+        };
 
-                const handleResume = () => Promise.resolve({
-                  responseType: 'resume_upload',
-                });
-                const handleLastChunk = () => Promise.resolve({
-                  responseType: 'upload_end',
-                });
+        if (params.image) {
+          data.thumbnailfile = data.previewfile = dataURLtoFile(
+            params.image.data,
+            params.image.name,
+          );
+        }
 
-                switch (r.status) {
-                  case 200: return handleLastChunk();
-                  case 308: return handleResume();
+        return request('proceedResumableUploadVideo', data, optionsPrepared)
+          .then((r) => {
+            console.log('RESUME RESUMABLE UPLOAD VIDEO', r);
 
-                  case 403: case 404: case 409:
-                  case 422: case 429: case 503:
-                    throw Error('RESUME ERROR OCCURRED');
-                }
-              })
-              .catch((e) => {
-                e.cancel = axios.isCancel(e);
+            const handleResume = () => Promise.resolve({
+              responseType: 'resume_upload',
+            });
+            const handleLastChunk = () => Promise.resolve({
+              responseType: 'upload_end',
+              videoLink: self.composeLink(optionsPrepared.host, r.data.video.uuid),
+            });
+            const handleNotFound = () => Promise.resolve({
+              responseType: 'not_found',
+            });
 
-                return Promise.reject(e);
-              });
+            switch (r.status) {
+              case 200: return handleLastChunk();
+              case 308: return handleResume();
+              case 404: return handleNotFound();
+
+              case 403: case 409: case 422:
+              case 429: case 503:
+                throw Error('RESUME ERROR OCCURRED');
+            }
+          })
+          .catch((e) => {
+            e.cancel = axios.isCancel(e);
+
+            return Promise.reject(e);
+          });
+      },
+
+      cancelResumableUpload: async function(params, options) {
+        const optionsPrepared = {
+          queryParams: {
+            upload_id: params.uploadId,
+          },
+        };
+
+        return request('cancelResumableUploadVideo', {}, optionsPrepared)
+          .then((r) => {
+            console.log('CANCEL RESUMABLE UPLOAD VIDEO', r);
+
+            const handleSuccess = () => Promise.resolve({ responseType: 'cancel_success' });
+            const handleNotFound = () => Promise.resolve({ responseType: 'not_found' });
+
+            switch (r.status) {
+              case 204: return handleSuccess();
+              case 404: return handleNotFound();
+            }
+          })
+          .catch((e) => {
+            e.cancel = axios.isCancel(e);
+
+            return Promise.reject(e);
+          });
       },
 
       import: (parameters = {}, options = {}) =>
@@ -1018,7 +1057,22 @@ PeerTubePocketnet = function (app) {
       },
 
       authIfNeed: function (need, host, renew) {
+        const userAddress = app.user.address.value;
+        const rawUserToken = localStorage[`token_${userAddress}`];
+
         if (!need) return Promise.resolve();
+
+        if (rawUserToken) {
+          const userToken = JSON.parse(rawUserToken);
+
+          const currentTime = Math.floor(Date.now() / 1000);
+
+          if (currentTime > userToken.expires_in) {
+            return this.auth(host, renew);
+          }
+
+          return userToken;
+        }
 
         return this.auth(host, renew);
       },
@@ -1086,13 +1140,26 @@ PeerTubePocketnet = function (app) {
         else data.grant_type = 'password';
 
         return request('getToken', data, options)
-          .then(({ access_token, refresh_token }) => {
-            if (!access_token || !refresh_token) {
+          .then((res) => {
+            if (!res.access_token || !res.refresh_token) {
               return Promise.reject(error('getToken'));
             }
 
-            data.access_token = access_token;
-            data.refresh_token = refresh_token;
+            data.access_token = res.access_token;
+            data.refresh_token = res.refresh_token;
+            data.expires_in = res.expires_in;
+
+            const currentTime = Math.floor(Date.now() / 1000);
+
+            const storageData = {
+              access_token: res.access_token,
+              refresh_token: res.refresh_token,
+              expires_in: currentTime + res.expires_in - 60,
+              refresh_token_expires_in: currentTime + res.refresh_token_expires_in - 60,
+            };
+
+            const userAddress = app.user.address.value;
+            localStorage[`token_${userAddress}`] = JSON.stringify(storageData);
 
             return data;
           })

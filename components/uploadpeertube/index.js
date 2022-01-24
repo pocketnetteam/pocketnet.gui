@@ -129,15 +129,16 @@ var uploadpeertube = (function () {
 
         data.name = videoName || fileName;
 
-        var options = {
+        const options = {
           type: 'uploadVideo',
         };
 
-        options.progress = function (percentComplete) {
-          var formattedProgress = (percentComplete * 0.9).toFixed(2);
+        function chunkLoadedEvent(percentComplete) {
+          const formattedProgress = (percentComplete * 0.9).toFixed(2);
 
-          if (
-            formattedProgress === '100.00' &&
+          const progress100 = (formattedProgress === '100.00');
+
+          if (progress100 &&
             el.preloaderElement.hasClass('hidden')
           ) {
             el.preloaderElement.removeClass('hidden');
@@ -149,9 +150,9 @@ var uploadpeertube = (function () {
           el.uploadProgress
             .find('.upload-progress-percentage')
             .text(formattedProgress + '%');
-        };
+        }
 
-        options.cancel = function (cancel) {
+        function initCancelListener(cancel) {
           const cancelCloseFunction = () => {
             if (typeof cancel === 'function') cancel();
 
@@ -170,12 +171,19 @@ var uploadpeertube = (function () {
           });
 
           el.cancelButton.removeClass('hidden');
-        };
+        }
 
         el.importUrl.addClass('hidden');
 
         async function loadChunked(fromPosition, uploadId, loader) {
           const videoSize = data.video.size;
+
+          function handleResume(pos, videoSize) {
+            const percent = videoSize / 100;
+            const currentPercent = Math.floor(pos / percent);
+
+            chunkLoadedEvent(currentPercent);
+          }
 
           function uploadChunk(pos, chunk) {
             const data = {
@@ -186,7 +194,7 @@ var uploadpeertube = (function () {
             };
             const options = {};
 
-            console.log(`LAST CHUNK #${i++} CREATED WITH SIZE ${chunk.size}`);
+            console.log(`CHUNK #${i++} CREATED WITH SIZE ${chunk.size}`);
 
             const startTime = Date.now();
 
@@ -208,54 +216,55 @@ var uploadpeertube = (function () {
             });
           }
 
+          let cancelUploadFlag;
+
+          initCancelListener(() => {
+            self.app.peertubeHandler.api.videos
+              .cancelResumableUpload({ uploadId });
+
+            cancelUploadFlag = true;
+          });
+
           let i = 0;
           let chunkSize = 262144;
 
-          for(let start = fromPosition; start < videoSize; start += chunkSize) {
+          let start = fromPosition;
+
+          do {
             const restBytes = videoSize - start;
             const lastChunk = (restBytes < chunkSize);
 
             let endByte = start + chunkSize;
 
             if (lastChunk) {
-              endByte = undefined;
+              endByte = videoSize;
             }
 
             const chunk = data.video.slice(start, endByte);
 
             const result = await uploadChunk(start, chunk);
 
-            if (result.responseType !== 'resume_upload') {
-              break;
+            switch (result.responseType) {
+              case 'resume_upload': handleResume(start, videoSize); break;
+              case 'upload_end': return Promise.resolve(result);
+              case 'not_found': return Promise.resolve('not_found');
             }
 
-            /*if (loadTime < 1000) {
-              console.log('CHUNK SIZE CHANGE TO 1024');
-              chunkSize = 1024;
-            } else if (loadTime > 1000 && loadTime < 2000) {
-              console.log('CHUNK SIZE CHANGE TO 512');
-              chunkSize = 512;
-            } else if (loadTime > 2000 && loadTime < 3000) {
-              console.log('CHUNK SIZE CHANGE TO 256');
-              chunkSize = 256;
-            }*/
-          }
+            start += chunkSize;
+
+            console.log('START LOADING FROM', start, 'VIDEO SIZE', videoSize);
+          } while (start < videoSize && !cancelUploadFlag);
+
+          return Promise.reject({ cancel: true });
         }
 
-        self.app.peertubeHandler.api.videos
+        const initResult = await self.app.peertubeHandler.api.videos
           .initResumableUpload(data, options)
-          .then(async (res) => {
-            switch(res.responseType) {
-              case 'created_upload': await loadChunked(0, res.uploadId, self.app.peertubeHandler.api.videos.proceedResumableUpload);
-              case 'resume_upload':
-            }
-          })
           .catch((err) => {
             console.log('RESUMABLE UPLOAD ERROR', err);
           });
 
-        /*self.app.peertubeHandler.api.videos
-          .upload(data, options)
+        await loadChunked(0, initResult.uploadId, self.app.peertubeHandler.api.videos.proceedResumableUpload)
           .then((response) => {
             el.uploadButton.prop('disabled', false);
             el.header.addClass('activeOnRolled');
@@ -265,13 +274,7 @@ var uploadpeertube = (function () {
 
             ed.uploadInProgress = false;
 
-            if (response.error) {
-              return;
-            }
-
-            videoId = response.split('/').pop();
-
-            actions.added(response, wnd.find('.upload-video-name').val());
+            actions.added(response.videoLink, wnd.find('.upload-video-name').val());
             wndObj.close();
           })
           .catch((e = {}) => {
@@ -300,7 +303,7 @@ var uploadpeertube = (function () {
 
               sitemessage(message);
             }
-          });*/
+          });
 
         console.log(data, options);
       });
