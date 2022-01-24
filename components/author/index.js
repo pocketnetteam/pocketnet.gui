@@ -1358,9 +1358,11 @@ var author = (function(){
 				var address = parameters().address
 
 				if(address && author.address != address){
+
 					preinit(address, function(){
 						init()
 					})
+
 				}
 				else{
 
@@ -1368,7 +1370,7 @@ var author = (function(){
 						return r.active
 					})
 
-					if (active && (active.id == r || (!r && active.id == 'shares') ) ){
+					if (active && (active.id == r || (!r && active.id == 'shares') ) && !parameters().ssa){
 						return
 					}
 
