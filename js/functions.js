@@ -466,7 +466,7 @@
 
 			var h = '<div class="successCheckWrapper table"><div><div class="chw">\
 				<svg viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">\
-					<path d="M 18 32.34 l -8.34 -8.34 -2.83 2.83 11.17 11.17 24 -24 -2.83 -2.83 z" stroke="#4AC6F9" fill="transparent"/>\
+					<path d="M 18 32.34 l -8.34 -8.34 -2.83 2.83 11.17 11.17 24 -24 -2.83 -2.83 z" stroke="#a4a4a4" fill="transparent"/>\
 				</svg>\
 			</div><div class="text">SUCCESS</div></div></div>'
 
@@ -11035,17 +11035,29 @@ edjsHTML = function() {
             return "<pre><code>" + _.escape(e.data.code) + "</code></pre>"
         },
 
-        /*embed: function(e) {
+        embed: function(e) {
             var t = e.data;
+			console.log("T", t)
             switch (t.service) {
+
+				case "vimeo":
+                    return '<div class="js-player" data-plyr-provider="vimeo" data-plyr-embed-id="'+t.embed+'"></div>';
+
+				case "youtube":
+					return '<div class="js-player" data-plyr-provider="youtube" data-plyr-embed-id="'+t.embed+'"></div>';
+
+				default:
+                    throw new Error("Only Youtube and Vime Embeds are supported right now.")
+
+				/*
                 case "vimeo":
                     return '<iframe src="' + t.embed + '" height="' + t.height + '" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>';
                 case "youtube":
                     return '<iframe width="' + t.width + '" height="' + t.height + '" src="' + t.embed + '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
                 default:
-                    throw new Error("Only Youtube and Vime Embeds are supported right now.")
+                    throw new Error("Only Youtube and Vime Embeds are supported right now.")*/
             }
-        },*/
+        },
 
 		warning : function(e){
 
@@ -11149,7 +11161,7 @@ edjsHTML = function() {
 
         },
 
-        image:function(data, fu) {
+        image: function(data, fu) {
 
 			var nd = {...data}
 
@@ -11159,6 +11171,8 @@ edjsHTML = function() {
 				nd.file = {...data.file}
 				nd.file.url = fu(nd.file.url)
 			}
+
+			return nd
 
         },
 

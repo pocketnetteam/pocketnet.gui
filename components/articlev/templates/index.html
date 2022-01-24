@@ -6,16 +6,14 @@
 				<div class="mwork">
 					<div class="rightchatspacer">
 						<div class="aheader top">
-							<div>
+							<div class="myarticleswrapper">
 								<button class="button medium ghost nopadding myarticles ">
-									My articles <i class="fas fa-chevron-down"></i>
+									<%= e('art_myarticles') %> <i class="fas fa-chevron-down"></i>
 								</button>
 							</div>
-
 							<div class="truestatuswrapper">
 								
 							</div>
-							
 						</div>
 					</div>
 				</div>
@@ -82,24 +80,25 @@
 								<div class="lst">
 									
 									<div class="uploadcover">
-										<button class="button medium ghost nopadding ">
-											Change Cover
+										<button class="button medium ghost nopadding">
+											<%= e('art_changecover') %>
+											
 										</button>
 									</div>
 								</div>
 
-								<div class="settingsWrapper ">
+								<div class="settingsWrapper">
 								</div>
 
 								<div class="showpreviewwrapper">
 									<button class="button ghost preview">
-										Preview
+										<%= e('art_preview') %>
 									</button>
 								</div>
 
 
 								<div class="publish">
-									<button class="publish action button medium ">Publish<i class="fas fa-chevron-circle-right"></i></button>
+									
 								</div>
 							</div>
 						</div>
@@ -118,7 +117,7 @@
 					<div class="abody">
 				
 						<div class="captionWrapper">
-							<textarea rows="2" placeholder="Caption of new article"></textarea>
+							<textarea rows="2" placeholder="<%= e('art_caption') %>"></textarea>
 						</div>		
 
 						<div class="editorWrapper">
@@ -127,8 +126,6 @@
 					</div>
 
 				</div>
-
-				
 
 			</div>
 		</div>

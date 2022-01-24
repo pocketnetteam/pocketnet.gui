@@ -2543,11 +2543,12 @@
 				}
 
 				.buttonOpenWrapper{
-					margin-bottom: @rhythm;
+					padding-bottom: 2 * @rhythm;
+					padding-top: 2 * @rhythm;
 					
 					button{
 						width: 130px;
-						border-radius: 0;
+						border-radius: 2px;
 						background: fade(@color-black2, 10);
 						backdrop-filter: blur(14px);
         				-webkit-backdrop-filter: blur(14px); 
@@ -2788,6 +2789,29 @@
 	
 				.forcomments{
 					margin-top : 12 * @rhythm;
+				}
+			}
+
+			.removeDescription{
+				display: none;
+				padding: @rhythm * 3;
+				color: #7c7c7c;
+			}
+
+			&.deleted{
+
+				.starstoppanel,
+				.socialsharewrapper,
+				.textscnts {
+					display: none!important;
+				}
+
+				.removeDescription{
+					display: block;
+				}
+
+				.articleCover{
+					filter : blur(10px);
 				}
 			}
 		}

@@ -1708,6 +1708,35 @@
 				margin-top : 4 * @rhythm;
 			}
 		}
+
+		.removeDescription{
+			display: none;
+			padding: @rhythm * 3;
+			color: #7c7c7c;
+			text-align: center;
+		}
+
+		&.deleted{
+
+			.forcomments,
+			.starstoppanel,
+			.socialsharewrapper,
+			.textscnts {
+				display: none!important;
+			}
+
+			.acticletext{
+				display: none;
+			}
+
+			.removeDescription{
+				display: block!important;
+			}
+
+			.articleCover{
+				filter : blur(10px);
+			}
+		}
 	}
 }
 

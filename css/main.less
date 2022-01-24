@@ -18,23 +18,22 @@
 }
 
 .customscroll{
-    overflow-y: overlay;
+    overflow-y: overlay!important;
     overflow-x: hidden;
-    scrollbar-width: 4px;
+    scrollbar-width: 7px;
     scrollbar-color: rgba(0, 0, 0, .15) rgba(0, 0, 0, .05);
     overscroll-behavior: contain;
 
     
 }
 .customscroll::-webkit-scrollbar {
-    width: 4px;
+    width: 7px;
 }
 .customscroll::-webkit-scrollbar-track {
     background:rgba(0, 0, 0, .05);
 }
 .customscroll::-webkit-scrollbar-thumb {
     background-color: rgba(0, 0, 0, .25);
-    border-radius: 4px;
     border: 0 solid rgba(0, 0, 0, 0.05);
     background-image: linear-gradient(
       180deg,
@@ -46,7 +45,6 @@
 html.stblack{
     .customscroll::-webkit-scrollbar-thumb {
         background-color: rgba(17, 0, 255, 0.25);
-        border-radius: 4px;
         border: 0 solid rgba(17, 0, 255, 0.05);
         background-image: linear-gradient(
           180deg,
@@ -2202,6 +2200,7 @@ input[type=radio].radio:checked + label {
     width : 78px;
     height : 78px;
     margin : auto;
+    z-index: 20000;
 
     .successCheckWrapper{
         width: 100%;
@@ -2216,7 +2215,8 @@ input[type=radio].radio:checked + label {
                 width: 78px;
                 height: 78px;
                 border-radius: 50%;
-                background: #fff;
+                backdrop-filter: blur(14px);
+                -webkit-backdrop-filter: blur(14px);  
                 padding : 2 * @rhythm;
                 .shadowSmaller();
             }
@@ -2226,7 +2226,7 @@ input[type=radio].radio:checked + label {
     .text{
         margin-top : @rhythm;
         font-weight: 100;
-        color : @color-main;
+        color : @color-gray-mlight;
         display: none;
     }
 
@@ -2262,13 +2262,13 @@ input[type=radio].radio:checked + label {
     }
     
     60% {
-      fill: @color-main;
+      fill: #FFF;
       opacity: 1;
       transform: translateY(0);
     }
     
     100% {
-      fill: @color-main;
+      fill: #FFF;
       stroke-dashoffset: 0;
       opacity: 0;
       transform: translateY(-10px);
@@ -2547,10 +2547,10 @@ input[type=radio].radio:checked + label {
         
     }
 
-    .result{
+    /*.result{
         margin-top: 50px;
         text-align: center;
-    }
+    }*/
 
 
     &.small{
@@ -4060,7 +4060,6 @@ html.nav{
 }
 .plissingWrapper{
     .plissingWrapperTable{
-        width : 260px;
         height : 30px;
         >div{
             vertical-align: middle;
@@ -7027,6 +7026,25 @@ html{
     }
   
 }
+
+/*
+.electronapp{
+    .rightchatspacer{
+        margin-left: 44px;
+    }
+
+    .electronnav{
+        position: fixed;
+        left: 0;
+        top : 0;
+        bottom : 0;
+        width : 44px;
+        z-index: 20;
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);  
+    }
+}*/
+
 
 @media only screen and (max-width: 1400px) {
     .rightchatspacer{

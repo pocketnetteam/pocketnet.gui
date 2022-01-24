@@ -419,8 +419,8 @@ var post = (function () {
 						play : function(){
 							self.app.actions.playingvideo(player)
 
-							if(isMobile() && !ed.repost && !el.c.closest('.wndcontent').length){
-								
+							if(isMobile() && !ed.repost && !el.c.closest('.wndcontent').length && !ed.openapi){
+								console.log("HHE", ed)
 								self.app.actions.scroll(125)
 							}
 						},
@@ -445,14 +445,16 @@ var post = (function () {
 						},
 
 						hlsError : function(error){
-							if(!window.cordova)
+							/*if(!window.cordova)
 								self.app.Logger.error({
 									err: 'hlsError',
 									payload: JSON.stringify(error.data),
 									code: 401,
-								});
+								});*/
 								
-						}
+						},
+
+						useP2P : self.app.platform.sdk.usersettings.meta.videop2p.value 
 					};
 
 					$.each(pels, function (key, el2) {

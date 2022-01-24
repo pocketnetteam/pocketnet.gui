@@ -175,6 +175,7 @@ __map =  {
 		href : "easynode",
 		add : insertingfunc,
 		anonimus : true,
+		electronDontOpen : true
 	},
 
 	about : {
@@ -265,6 +266,7 @@ __map =  {
 		href : "applications",
 		add : insertingfunc,
 		anonimus : true,
+		electronDontOpen : true
 	},
 
 
@@ -332,6 +334,7 @@ __map =  {
 			}},	
 
 		],
+		electronDontOpen : true
 	},
 
 	anothersite : {
@@ -690,7 +693,8 @@ __map =  {
 			anonimus : true,
 			redirect : {
 				auth : 'welcome'
-			}
+			},
+			electronDontOpen : true
 			
 		},
 	
@@ -981,6 +985,7 @@ __map =  {
 			
 		],
 		anonimus : true,
+		electronDontOpen : true
 	},
 
 	addaccount : {
@@ -1050,7 +1055,13 @@ __map =  {
 		add : {
 			el : 'content'
 		},
-		anonimus : true
+		anonimus : true,
+
+		electronDontOpen : function(){
+			var _p = parameters()
+
+			if(!_p.s && !_p.v) return true
+		}
 	},
 
 	author : {

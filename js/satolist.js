@@ -2156,7 +2156,8 @@ Platform = function (app, listofnodes) {
                             autoplay : p.autoplay,
                             opensvi : p.opensvi,
                             minimize : p.minimize,
-                            postclass : p.postclass
+                            postclass : p.postclass,
+                            openapi : true
                         }
                     })
 
@@ -2323,6 +2324,8 @@ Platform = function (app, listofnodes) {
     }
 
     self.ui = {
+
+        
 
         articledecoration : function(wr, share, extend){
             var caption = wr.find('.shareBgCaption')
@@ -3152,19 +3155,24 @@ Platform = function (app, listofnodes) {
                     ball()
                 }
 
+                if(p.text || p.textHover){
 
-                h += '            <div class="plissingTipCell">'
-                h += '                <div class="plissingTip all">'
-                h += (p.text || '')
-                h += '                </div>'
+               
 
-                if (p.textHover) {
-                    h += '                <div class="plissingTip hover">'
-                    h += (p.textHover || '')
+                    h += '            <div class="plissingTipCell">'
+                    h += '                <div class="plissingTip all">'
+                    h += (p.text || '')
                     h += '                </div>'
-                }
 
-                h += '            </div>'
+                    if (p.textHover) {
+                        h += '                <div class="plissingTip hover">'
+                        h += (p.textHover || '')
+                        h += '                </div>'
+                    }
+
+                    h += '            </div>'
+
+                }
 
                 if (p.left) {
                     ball()
@@ -3199,6 +3207,10 @@ Platform = function (app, listofnodes) {
             }
 
             self.init()
+
+            if(p.time){
+                setTimeout(self.destroy, p.time)
+            }
 
             return self;
 
@@ -4015,30 +4027,62 @@ Platform = function (app, listofnodes) {
 
                             if (editing.settings.v == 'a') {
 
-                                app.nav.api.load({
-                                    open: true,
-                                    href: 'article',
-                                    inWnd: true,
-                                    history: true,
-                                    
-                                    essenseData: {
-                                        share: editing,
-                                        hash: hash,
+                                if(editing.settings.version >= 2){
+
+                                    app.nav.api.load({
+                                        open: true,
+                                        href: 'articlev',
+                                        history: window.cordova,
+                                        inWnd: true,
                                         
-                                        save: function (art) {
+                                        essenseData: {
 
-                                        },
-                                        close: function () {
-
-                                        },
-                                        complete: function () {
-
-                                        },
-                                        closeContainer: function () {
-
+                                            editing,
+                                            
+                                            save: function (art) {
+    
+                                            },
+                                            close: function () {
+    
+                                            },
+                                            complete: function () {
+    
+                                            },
+                                            closeContainer: function () {
+    
+                                            }
                                         }
-                                    }
-                                })
+                                    })
+
+                                }
+                                else{
+                                    app.nav.api.load({
+                                        open: true,
+                                        href: 'article',
+                                        inWnd: true,
+                                        history: true,
+                                        
+                                        essenseData: {
+                                            share: editing,
+                                            hash: hash,
+                                            
+                                            save: function (art) {
+    
+                                            },
+                                            close: function () {
+    
+                                            },
+                                            complete: function () {
+    
+                                            },
+                                            closeContainer: function () {
+    
+                                            }
+                                        }
+                                    })
+                                }
+
+                                
 
                             }
                             else {
@@ -6003,7 +6047,6 @@ Platform = function (app, listofnodes) {
                     })  
 
                 }).catch(error => {
-                    console.error(error)
                 })
             },
 
@@ -7102,6 +7145,14 @@ Platform = function (app, listofnodes) {
 
             storage: [],
 
+            findlastdraft : function(){
+
+                return _.find(self.sdk.articles.storage, function(s){
+                    return s.version >= 2 && !s.txid
+                })
+                
+            },
+
             getbyid : function(id){
                 return _.find(self.sdk.articles.storage, function(s){
                     return s.id == id
@@ -7124,12 +7175,35 @@ Platform = function (app, listofnodes) {
 
             itisdraft(art){
 
+                if(art.editing) return false
+
                 if(
 
                     art.caption.value && 
                     art.content && art.content.blocks && art.content.blocks.length
                     
                 ) return true
+            },
+
+            fromshare : function(share){
+
+                var edjs = new edjsHTML(null, app)
+
+
+                var empty = self.sdk.articles.empty(null, 2)
+
+
+                    empty.visibility = (share.settings.f || 0) + ''
+                    empty.caption.value = share.caption.v
+                    empty.content = edjs.apply(JSON.parse(JSON.stringify(share.message.v)), decodeURIComponent)
+                    empty.tags = _.clone(share.tags.v)
+                    empty.language = share.language.v
+                    empty.time = share.time
+                    empty.cover = deep(share, 'images.v.0')
+                    empty.editing = share.aliasid
+                    empty.shash = share.shash()
+
+                return empty
             },
 
             empty: function (id, version) {
@@ -7297,25 +7371,27 @@ Platform = function (app, listofnodes) {
                 var edjs = new edjsHTML(null, app)
 
                 var artcontent = edjs.apply(art.content, encodeURIComponent)
-
-                /*console.log(JSON.stringify(art.content))
-
-                console.log(JSON.stringify(edjs.apply(artcontent, decodeURIComponent)))
-
-                console.log(art.content, edjs.apply(artcontent, decodeURIComponent))*/
            
                 var share = new Share(art.language || self.app.localization.key);
 
                     share.tags.set(_.clone(art.tags))
                     share.caption.set(art.caption.value)
-                    share.message.set(artcontent)
+                    share.message.set({
+                        blocks : artcontent.blocks,
+                        version : artcontent.version
+                    })
 
                     share.settings.v = 'a'
                     share.settings.version = art.version
+                    share.settings.f = (art.visibility || 0) + ''
 
                     share.images.set([art.cover])
 
                     share.address = deep(app, 'user.address.value')
+
+                if (art.editing){
+                    share.aliasid = art.editing
+                }
 
                 return share
             },
@@ -7554,6 +7630,13 @@ Platform = function (app, listofnodes) {
                     value: false
                 },
 
+                videop2p: {
+                    name: self.app.localization.e('videop2psettings'),
+                    id: 'videop2p',
+                    type: "BOOLEAN",
+                    value: true
+                },
+
                 autostart: {
                     name: self.app.localization.e('e13278'),
                     id: 'autostart',
@@ -7731,8 +7814,8 @@ Platform = function (app, listofnodes) {
                         name: self.app.localization.e('video'),
                         options: {
                             embedvideo: options.embedvideo,
-                            videoautoplay2: options.videoautoplay2
-
+                            videoautoplay2: options.videoautoplay2,
+                            videop2p: options.videop2p
                         }
                     },
 
@@ -22973,7 +23056,7 @@ Platform = function (app, listofnodes) {
                     }
 
 
-                    if (data.mesType == 'subscribe') {
+                    if (data.mesType == 'subscribe' || data.mesType == 'subscribePrivate') {
                         if ((!platform.sdk.usersettings.meta.followers || platform.sdk.usersettings.meta.followers.value)) {
 
                             text = ''
@@ -25662,8 +25745,6 @@ Platform = function (app, listofnodes) {
         },
 
         link : function(core){
-
-            console.log("LINA")
 
             core.update({
                 block : {

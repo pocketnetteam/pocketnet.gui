@@ -8,6 +8,12 @@
         margin : 0 auto;
     }*/
 
+    &.editing{
+        .myarticleswrapper{
+            display: none;
+        }
+    }
+
     h1{
         font-size: 2em;
     }
@@ -19,11 +25,27 @@
     h3{
         font-size: 1.3em;
     }
+
+    .plissingCnt{
+        top : 0;
+        bottom : 0;
+        left : 0;
+        right : 0;
+
+        .pilsing div{
+            background: fade(@color-black2, 20);
+        }
+    }
     
+    .showpreviewwrapper{
+        button{
+            font-size: 0.8em;
+        }
+    }
 
     .bgwrapper{
         position: relative;
-        height: 250px;
+        min-height: 250px;
         background: @color-gray2;
         z-index: 2;
 
@@ -57,8 +79,15 @@
         }
     }
 
+    .openlastdraft{
+        opacity: 0.8;
+        cursor: pointer;
+        text-decoration: underline;
+    }
+
     .mwork{
         padding : 0 2 * @rhythm;
+        padding-left : 0;
     }
 
     &.dst{
@@ -78,6 +107,7 @@
     .captionWrapper{
         padding : 4 * @rhythm 0;
         padding-bottom: 0;
+        position: relative;
 
         textarea{
             font-size: 2em;
@@ -244,7 +274,7 @@
 
     
     .dst{
-        background: fade(@color-gray2, 10);
+        /*background: fade(@color-gray2, 10);*/
         backdrop-filter: blur(7px) grayscale(30%);
         -webkit-backdrop-filter: blur(7px) grayscale(30%);  
     }
@@ -427,6 +457,7 @@
             align-items: center;
             justify-content: start;
             min-height: 36px;
+            position: relative;
 
             .tags{
 				overflow: hidden;
@@ -583,6 +614,32 @@
     }
 }
 
+#windowsContainer{
+    .wnd.articleWindow{
+        .wndback{
+            background: transparent;
+            backdrop-filter: none;
+        }
+
+    }
+}
+
+.wnd.articleWindow{
+    .wndinner{
+       width: 100%;
+       max-width: none;
+       box-shadow: none;
+       border-radius: 0;
+       max-height: none;
+
+       .wndcontent{
+           padding : 0;
+           border-radius: 0;
+       }
+    }
+}
+
+
 @media only screen and (max-width: 768px) {
     #articlev{
     
@@ -667,7 +724,7 @@
     
     
         .dst{
-            background: fade(@color-gray2, 10);
+            /*background: fade(@color-gray2, 10);*/
             backdrop-filter: blur(7px) grayscale(30%);
             -webkit-backdrop-filter: blur(7px) grayscale(30%);  
         }

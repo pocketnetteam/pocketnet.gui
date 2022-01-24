@@ -1363,8 +1363,6 @@ Share = function(lang){
 
 		if (articleversion2){
 			textvalue = JSON.stringify(textvalue) //  Base64Helper.encode(JSON.stringify(textvalue))
-
-			console.log('textvalue', textvalue)
 		}
 		
 		return encodeURIComponent(self.url.v) 
@@ -1483,6 +1481,8 @@ Share = function(lang){
 		var share = new pShare();
 
 			share.time = new Date();
+
+			console.log('self.export()', self.export())
 
 			share._import(self.export())
 
@@ -2106,7 +2106,7 @@ pShare = function(){
 				textvalue = JSON.parse(textvalue)
 			}
 			catch(e){
-				textvalue = ''
+				textvalue = textvalue
 			}
 		}
 

@@ -231,7 +231,7 @@ ____loclib.aaddacc = "Добавить аккаунт";
 ____loclib.ascheduler = "Планировщик задач";
 ____loclib.aused = "Этот адрес уже используется на этом устройстве";
 
-____loclib.accfailedkeypair = "Не верный приватный ключ";
+____loclib.accfailedkeypair = "Неверный приватный ключ";
 ____loclib.acchasinthispack = "Этот адрес уже добавлен";
 ____loclib.acchasinanotherpack = "Этот адрес уже используется на этом устройстве";
 
@@ -1759,4 +1759,37 @@ ____loclib.easyNode_e2002_1 = " получает ";
 ____loclib.easyNode_e2002_2 = "за это Покеткойны. Вы можете быть владельцем такого компьютера, если у вас компьютер где есть 50 гигабайт ССД памяти и хорошее интернет соединение.";
 ____loclib.easyNode_e2002_2_1 = " Заработок ";
 ____loclib.easyNode_e2002_2_2 = " Покеткойна будет пропорционален количеству Покеткойнов, которое вы положите в свою ноду. В криптовалютах такой алгоритм называется стейкинг.";
+
+____loclib.minPkoin = function (p){	
+	return `Минимум ${String(p)} PKOIN`
+}
+
+____loclib.videop2psettings = "Использовать p2p при просмотре видео"
+
+____loclib.art_validatetags = "Пожалуйста добавьте теги к вашей статье"
+____loclib.art_validatecover = "Пожалуйста добавьте обложку к вашей статье"
+____loclib.art_validatecaption = "Пожалуйста добавьте заголовок к вашей статье"
+____loclib.art_validatecontent = "Пожалуйста добавьте текст вашей статьи"
+____loclib.art_nothingchange = "Изменений не произведено"
+
+____loclib.art_newarticle = "Новая статья"
+____loclib.art_myarticles = "Мои статьи"
+____loclib.art_changecover = "Обложка"
+____loclib.art_publish = "Опубликовать"
+____loclib.art_editing = "Редактирование"
+
+
+
+
+____loclib.art_draftsaved = "Черновик сохранён"
+____loclib.art_gotolastdraft = "Вернуться к последнему черновику"
+____loclib.art_categoriestags = "Категории и теги"
+____loclib.art_preview = "Просмотр"
+____loclib.art_caption = "Заголовок новой статьи"
+____loclib.art_placeholder = "Давайте напишем здесь замечательную историю!"
+____loclib.art_newarticlecreation = "Создание новой статьи"
+____loclib.art_editingsh = "Редактирование опубликованной статьи"
+____loclib.art_saveedited = "Сохранить"
+
+____loclib.empty = "Пусто"
 

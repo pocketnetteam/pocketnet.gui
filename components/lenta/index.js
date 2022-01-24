@@ -698,15 +698,17 @@ var lenta = (function(){
 
 						hlsError : function(error){
 
-							if(!window.cordova)
+							/*if(!window.cordova)
 
 								self.app.Logger.error({
 									err: 'hlsError',
 									payload: JSON.stringify(error.data),
 									code: 401,
-								});
+								});*/
 							
-						}
+						},
+
+						useP2P : self.app.platform.sdk.usersettings.meta.videop2p.value 
 					}
 
 					if(share.settings.v == 'a'){
@@ -1701,8 +1703,6 @@ var lenta = (function(){
 					self.sdk.registrations.redirect = 'author?address='+share.address+'&s=' + shareId
 				}
 
-				console.log('self.sdk.registrations.redirect', self.sdk.registrations.redirect)
-				
 
 				self.nav.api.go({
 					href : 'authorization',
@@ -1881,8 +1881,6 @@ var lenta = (function(){
 				self.app.mobile.vibration.small()
 
 				var share = self.app.platform.sdk.node.shares.storage.trx[shareId] || {};
-
-				console.log('share', share)
 
 				actions.repost(share.repost || shareId);
 			},

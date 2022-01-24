@@ -1985,3 +1985,32 @@ ____loclib.easyNode_e2002_1 = " earns "
 ____loclib.easyNode_e2002_2 = "Pocketcoin. Your computer can be one of those nodes, assuming you have at least 50 GB of free SSD space and a decent internet connection.  Node has to lock some Pocketcoin in it to"
 ____loclib.easyNode_e2002_2_1 = " earn "
 ____loclib.easyNode_e2002_2_2 = "more Pocketcoin. That is called staking in cryptocurency."
+____loclib.minPkoin = function (p){	
+	return  String(p) + " PKOIN Minimum"
+}
+
+____loclib.videop2psettings = "Use p2p when watching videos"
+
+____loclib.art_validatetags = "Please add Tags For Your Longread"
+____loclib.art_validatecover = "Please add Cover For Your Longread"
+____loclib.art_validatecaption = "Please add Caption For Your Longread"
+____loclib.art_validatecontent = "Please add Content of Your Longread"
+____loclib.art_nothingchange = "No changes"
+____loclib.art_newarticle = "New Longread"
+____loclib.art_myarticles = "My Longreads"
+____loclib.art_changecover = "Change Cover"
+____loclib.art_publish = "Publish"
+____loclib.art_editing = "Editing"
+____loclib.art_draftsaved = "Draft saved"
+____loclib.art_gotolastdraft = "go to last draft"
+____loclib.art_categoriestags = "Categories and tags"
+____loclib.art_preview = "Preview"
+____loclib.art_caption = "Caption of new Longread"
+____loclib.art_placeholder = "Let`s write an awesome story!"
+
+____loclib.art_newarticlecreation = "Create a new Longread"
+____loclib.art_editingsh = "Editing a published Longread"
+____loclib.art_saveedited = "Save"
+
+
+____loclib.empty = "Empty"

@@ -62,8 +62,6 @@ var main = (function(){
 						el.panel.hcSticky('refresh');
 						el.leftpanel.hcSticky('refresh');
 
-						console.log("REFRESH STICKY")
-
 						/*setTimeout(function(){
 							if(el.panel) el.panel.hcSticky('refresh');
 							if(el.leftpanel) el.leftpanel.hcSticky('refresh');
@@ -283,6 +281,10 @@ var main = (function(){
 				if (show){
 
 					el.topvideos.removeClass('hidden')
+
+					if (external) {
+						external.clearessense()
+					}
 					
 					self.app.platform.papi.horizontalLenta(el.topvideos, function (e,p) {
 
@@ -396,14 +398,11 @@ var main = (function(){
 					essenseData : {
 					
 						renderclbk : function(){
-							console.log("renderclbk")
 							actions.refreshSticky(true)
 	
 						}
 					},
 					clbk : function(e, p){
-
-						console.log("panelss")
 
 						panel = p;
 						
@@ -474,7 +473,7 @@ var main = (function(){
 				var fp = false
 
 				if (lenta) {
-					lenta.destroy()
+					lenta.clearessense()
 				}
 
 				renders.addpanel();
@@ -513,7 +512,7 @@ var main = (function(){
 					el : el.lenta,
 					animation : false,
 
-					mid : 'main',
+					mid : makeid(),
 
 					essenseData : {
 						hr : 'index?',
@@ -704,8 +703,6 @@ var main = (function(){
 				var t1 = 64
 				var t2 = 76
 
-				console.log("INITSTICKER!!!")
-
 				if (el.leftpanel)
 					el.leftpanel.hcSticky({
 						stickTo: '#main',
@@ -886,12 +883,16 @@ var main = (function(){
 				}
 
 				if (changes){
+
+					if (external) {
+						external.clearessense()
+						external = null
+					}
+
 					renders.topvideos(currentMode == 'common' && !videomain && !searchvalue && !searchtags)
 
-					
-
 					if (lenta) {
-						lenta.destroy()
+						lenta.clearessense()
 						lenta = null
 					}
 	
@@ -1014,13 +1015,10 @@ var main = (function(){
 
 			destroy : function(){
 
-				
-
 				showCategories(false)
 
 				delete self.app.events.scroll.main
 				delete self.app.events.resize.mainpage
-					
 
 				renders.post(null)
 

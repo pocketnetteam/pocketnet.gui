@@ -41,17 +41,6 @@ var testnodes = [
 		name : 'test.2.pocketnet.app',
 		stable : true
 	},
-
-
-	{
-		host : '192.168.0.15',
-		port : 39091,
-		ws : 6067,
-		name : 'test.local',
-		stable : true
-	},
-
-
 	{
 		host : '116.203.219.28',
 		port : 39091,
@@ -60,20 +49,19 @@ var testnodes = [
 		stable : true
 	},
 	{
-		host : '188.187.45.218',
-		port : 39091,
-		ws : 6067,
-		name : 'v0.20.0 (dev)',
-		stable : false
-	},
-	{
 		host : '137.135.25.73',
 		port : 39091,
 		ws : 6067,
 		name : 'tawmaz',
 		stable : false
-	}
-    
+	},
+	{
+		host : '109.173.41.29',
+		port : 39091,
+		ws : 6067,
+		name : 'lostystyg',
+		stable : false
+	}    
 ]
 
 

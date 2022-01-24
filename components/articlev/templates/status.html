@@ -1,4 +1,8 @@
-<span class="captiontext"><% if(itisdraft) {%>Редактирование статьи<% } else { %>Создание статьи<% }  %></span><% if(itisdraft && art.time) {%><span>, черновик сохранён </span><span class="saveddate realtime" time="<%- new Date(art.time) %>">
-    <%- app.reltime(new Date(art.time))  %>
-</span>
+<% if(art.editing) { %>
+    <span class="captiontext"><%= e('art_editingsh') %></span>
+<% } else { %> 
+    <span class="captiontext"><% if(itisdraft) {%><%= e('art_editing') %><% } else { %><%= e('art_newarticlecreation') %><% } %></span><% if(itisdraft && art.time) {%><span>, <%= e('art_draftsaved') %> </span><span class="saveddate realtime" time="<%- new Date(art.time) %>">
+        <%- app.reltime(new Date(art.time)) %>
+    </span>
+    <% } %><% if(!itisdraft && lastdraft) {%> / <span class="openlastdraft" draft="<%-lastdraft.id%>"><%= e('art_gotolastdraft') %></span><% } %>
 <% } %>

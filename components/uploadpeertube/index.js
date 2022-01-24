@@ -155,7 +155,7 @@ var uploadpeertube = (function () {
           const cancelCloseFunction = () => {
             if (typeof cancel === 'function') cancel();
 
-            wndObj.close();
+            self.closeContainer()
           };
 
           ed.cancelCloseFunction = cancelCloseFunction;
@@ -273,7 +273,7 @@ var uploadpeertube = (function () {
               const cancelCloseFunction = () => {
                 if (typeof cancel === 'function') cancel();
 
-                wndObj.close();
+                self.closeContainer()
               };
 
               ed.cancelCloseFunction = cancelCloseFunction;

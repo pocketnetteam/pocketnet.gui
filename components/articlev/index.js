@@ -13,8 +13,71 @@ var articlev = (function(){
 		var primary = deep(p, 'history');
 
 		var el, editor, art, taginput, delay, external = null;
+
+		var errors = {
+
+			nothingchange : {
+				message : 'art_nothingchange',
+				action : function(){
+
+
+				}
+			},
+
+			validatetags : {
+				message : 'art_validatetags',
+				action : function(){
+
+					setTimeout(function(){
+
+						if (el.c){
+							actions.plissing(el.c.find('.arttags'))
+						}
+
+					}, 200)
+
+				}
+			},
+			validatecover : {
+				message : 'art_validatecover',
+				action : function(){
+
+					setTimeout(function(){
+						
+						if (el.c){
+							actions.plissing(el.c.find('.uploadcover'))
+						}
+					}, 200)
+				}
+			},
+			validatecaption : {
+				message : 'art_validatecaption',
+				action : function(){
+					setTimeout(function(){
+
+						if (el.c){
+							el.c.find('.captionWrapper').focus()
+						}
+						
+					}, 500)
+					
+				}
+			},
+			validatecontent : {
+				message : 'art_validatecontent',
+				action : function(){}
+			},
+		}
 		
 		var actions = {
+
+			plissing : function(el){
+
+				self.app.platform.api.plissing({
+					el,
+					time : 2000
+				})
+			},
 
 			competed : function(){
 				if(!self.app.platform.sdk.articles.itisdraft(art)){
@@ -27,11 +90,15 @@ var articlev = (function(){
 			},
 
 			complete : function(){
-				self.nav.api.load({
+
+				successCheck()
+				self.closeContainer()
+
+				/*self.nav.api.load({
 					open : true,
 					href : 'author?address=' + self.app.user.address.value.toString('hex'),
 					history : true,
-				})
+				})*/
 			},
 
 			trx : function(share){
@@ -46,8 +113,6 @@ var articlev = (function(){
 						function(_alias, error){
 
 							if(!_alias){
-
-								console.log('error', error)
 
 								var t = self.app.platform.errorHandler(error, true);
 
@@ -67,6 +132,8 @@ var articlev = (function(){
 										alias._import(_alias, true)
 										alias.temp = true;
 										alias.address = _alias.address
+
+									if (share.aliasid) alias.edit = "true"	
 										
 									self.app.platform.sdk.node.shares.add(alias)
 									
@@ -87,17 +154,54 @@ var articlev = (function(){
 				})
 			},	
 
+
+			error : function(e){
+				console.log(e)
+
+				if(e && e.text){
+
+					if (errors[e.text]){
+
+						sitemessage(self.app.localization.e(errors[e.text].message ? errors[e.text].message : 'e13293'))
+						
+						errors[e.text].action ? errors[e.text].action() : ''
+
+						return
+
+					}
+				}
+
+				sitemessage(e)
+			},
+
+			validate : function(art){
+
+				if(!art.tags.length) return 'validatetags'
+				if(!art.cover) return 'validatecover'
+				if(!art.caption.value) return 'validatecaption'
+				if(!art.content || !art.content.blocks || !art.content.blocks.length ) return 'validatecontent'
+				
+			},
+
 			publish : function(){
 
 				var _art = art
 
-				sitemessage('Creation of articles will be available later')
+				if(!window.testpocketnet){
+					sitemessage('Creation of articles will be available later')
 
-				return
+					return
+				}
+
+				globalpreloader(true)
 
 				return actions.saveEditor().then(r => {
 
-					globalpreloader(true)
+					var error = actions.validate(art)
+
+					if (error) return Promise.reject({
+						text : error
+					})
 
 					return self.app.platform.sdk.articles.uploadresources(art).then(r => {
 
@@ -116,6 +220,17 @@ var articlev = (function(){
 
 						var share = self.app.platform.sdk.articles.share(art)
 
+
+						if (art.shash) {
+
+							if(art.shash == share.shash()){
+								return Promise.reject({
+									text : 'nothingchange'
+								})
+							}
+							
+						}
+
 						return actions.trx(share)
 						
 					}).then(alias => {
@@ -129,15 +244,16 @@ var articlev = (function(){
 
 						globalpreloader(false)
 
-					}).catch(e => {
-
-						console.error(e)
-
-						globalpreloader(false)
-
-						return Promise.resolve()
-
 					})
+
+				}).catch(e => {
+
+					globalpreloader(false)
+
+					actions.error(e)
+
+					return Promise.resolve()
+
 				})
 			},
 
@@ -243,7 +359,6 @@ var articlev = (function(){
 
 				art.time = new Date();
 				renders.status()
-
 			},
 
 			save : function(){
@@ -278,8 +393,6 @@ var articlev = (function(){
 
 					art.content = outputData
 
-					console.log("ART", art)
-
 					actions.save()
 
 					actions.apply()
@@ -302,6 +415,25 @@ var articlev = (function(){
 		}
 
 		var events = {
+
+			saveedited : function(){
+				dialog({
+					html:  self.app.localization.e('usavechanges'),
+					btn1text: self.app.localization.e('dyes'),
+					btn2text: self.app.localization.e('dno'),
+		
+					success: function () {
+						actions.publish()
+					},
+		
+					fail: function () {
+
+					},
+	
+					class : 'zindex'
+				})
+			},
+
 			publish : function(){
 				dialog({
 					html:  self.app.localization.e('publishquestion'),
@@ -345,7 +477,6 @@ var articlev = (function(){
 
 					if(u.reputation > 50 || !u.trial) {
 
-
 						var selector = new Parameter({
 
 							type : "VALUES",
@@ -357,7 +488,7 @@ var articlev = (function(){
 								self.app.localization.e('visibleonlytoregistered')
 							],
 							defaultValue : '0',
-							value : '0'
+							value : (art.visibility || 0) + ''
 
 						})
 
@@ -374,7 +505,9 @@ var articlev = (function(){
 							ParametersLive([selector], p.el)
 
 							selector._onChange = function(){
-								
+								art.visibility = Number(selector.value)
+
+								actions.save()
 							}
 
 							if (clbk)
@@ -424,6 +557,8 @@ var articlev = (function(){
 					p.el.find('.arttags').on('click', function(){
 						actions.edittags(true)
 					})
+
+					
 				})
 
 			},
@@ -484,6 +619,31 @@ var articlev = (function(){
 				})
 			},
 
+			publish : function(){
+				
+				self.shell({
+
+					animation : false,
+					name : 'publish',
+					data : {
+						art : art
+					},
+					el : el.publishWrapper
+
+				},
+				function(p){	
+					
+					p.el.find('.publish.action').on('click', function(){
+						events.publish()
+					})
+
+					p.el.find('.publish.saveedited').on('click', function(){
+						events.saveedited()
+					})
+				})	
+
+			},
+
 			captiondouble : function(){
 				
 				self.shell({
@@ -503,6 +663,8 @@ var articlev = (function(){
 			},
 
 			status : function(){
+
+				//console.log('self.app.platform.sdk.articles.findlastdraft()', self.app.platform.sdk.articles.findlastdraft())
 				
 				self.shell({
 
@@ -510,13 +672,18 @@ var articlev = (function(){
 					name : 'status',
 					data : {
 						art : art,
-						itisdraft : self.app.platform.sdk.articles.itisdraft(art)
+						itisdraft : self.app.platform.sdk.articles.itisdraft(art),
+						lastdraft : self.app.platform.sdk.articles.findlastdraft()
 					},
 					el : el.status
 
 				},
 				function(p){
+					p.el.find('.openlastdraft').on('click', function(){
+						var id = $(this).attr('draft')
 
+						changeArticle(id)
+					})
 				})
 
 			},
@@ -547,9 +714,7 @@ var articlev = (function(){
 
 		var initEvents = function(){
 
-			el.publish.on('click', function(){
-				events.publish()
-			})
+			
 
 			el.showpreview.on('click', function(){
 				actions.preview()
@@ -688,6 +853,10 @@ var articlev = (function(){
 
 		var make = function(){
 
+
+			if (self.app.height && !isTablet())
+				el.cover.height(self.app.height / 2.333 + 'px')
+
 			//actions.save()
 
 			renders.tgstags()
@@ -696,11 +865,14 @@ var articlev = (function(){
 			renders.status()
 			renders.cover()
 			renders.captionvalue()
+			renders.publish()
 
 			editor = new EditorJS({
 
+				
+
 				holderId : 'editorjs',
-				placeholder: 'Let`s write an awesome story!',
+				placeholder: self.app.localization.e('art_placeholder'),
 				data: art.content || {},
 				tools: {
 
@@ -748,27 +920,6 @@ var articlev = (function(){
 									return r
 								})
 
-								/*if(self.app.thislink(url)){
-									need js preview
-								}
-								else{
-									return self.app.api.fetch('urlPreviewFormatted', {url})
-								}*/
-
-
-								/*body = await (ajax.get({
-
-									url: this.config.endpoint,
-
-									data: {
-									  url,
-									},
-						  
-								})).body;*/
-
-
-								//endpoint: 'https://localhost:8887/urlPreviewFormatted', // Your backend endpoint for url data fetching
-
 							}
 
 						}
@@ -800,8 +951,22 @@ var articlev = (function(){
 								uploadByFile : uploadImage
 							}
 						}
+					},
+					embed : {
+						class: window.Embed,
+						config: {
+							inlineToolbar: true,
+							services: {
+								youtube: true,
+								vimeo: true
+							}
+						}
 					}
+
+					
 				},
+
+				///https://www.youtube.com/watch?v=cGYyOY4XaFs
 
 				onChange : function(){
 
@@ -852,11 +1017,24 @@ var articlev = (function(){
 				changeArticle(parameters().art)
 			},
 
+			clearparameters : ['art'],
+
 			getdata : function(clbk, p){
 
 				var data = {};
 
-				setArticle(deep(p, 'settings.essenseData.article') || parameters().art)
+				var editing = deep(p, 'settings.essenseData.editing') || null
+
+				if (editing){
+					art = self.app.platform.sdk.articles.fromshare(editing)
+
+					
+				}
+				else{
+					setArticle(deep(p, 'settings.essenseData.article') || parameters().art)
+				}
+
+				data.art = art
 
 				clbk(data);
 
@@ -883,16 +1061,26 @@ var articlev = (function(){
 				el.head = el.c.find('.aheadermain')
 				el.backfromedittags = el.c.find('.backfromedittags')
 				el.removeCover = el.c.find('.removeCover')
-				el.publish = el.c.find('.publish.action')
+			
 				el.share = el.c.find('.shareWrapper')
 				el.status = el.c.find('.truestatuswrapper')
 				el.myarticles = el.c.find('.myarticles')
 				el.showpreview = el.c.find('.preview')
+				el.publishWrapper = el.c.find('.publish')
+
+				if(art.editing){
+					el.c.addClass('editing')
+				}
+				
 
 				initEvents();
 				make()
 
 				p.clbk(null, p);
+			},
+
+			wnd : {			
+				class : 'articleWindow withoutButtons fullscreenActive',
 			}
 		}
 	};

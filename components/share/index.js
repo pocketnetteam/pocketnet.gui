@@ -354,28 +354,50 @@ var share = (function(){
 				} 
 
 				if(type == 'article'){
-					self.nav.api.load({
-						open : true,
-						id : 'articles',
-						inWnd : true,
 
-						history : true,
 
-						essenseData : {
-							storage : storage,
-							value : value,
-							on : {
-								added : function(value){
-
-									
-								}
+					if(self.app.test){
+						self.nav.api.load({
+							open : true,
+							id : 'articlev',
+							inWnd : true,
+							history : true,
+	
+							essenseData : {
+								
+							},
+	
+							clbk : function(p){
+								external = p
 							}
-						},
+						})
+					}
+					else{
+						self.nav.api.load({
+							open : true,
+							id : 'articles',
+							inWnd : true,
+	
+							history : true,
+	
+							essenseData : {
+								storage : storage,
+								value : value,
+								on : {
+									added : function(value){
+	
+										
+									}
+								}
+							},
+	
+							clbk : function(p){
+								external = p
+							}
+						})
+					}
 
-						clbk : function(p){
-							external = p
-						}
-					})
+					
 
 					return
 				}
@@ -2578,6 +2600,10 @@ var share = (function(){
 
 			auto : function(){
 				var _p = parameters();
+
+				if (_p.marticlev && !self.app.nav.wnds['articlev']){
+					actions.embeding('article', null)
+				}
 
 				if (_p.marticles && !self.app.nav.wnds['articles']){
 					actions.embeding('article', null)
