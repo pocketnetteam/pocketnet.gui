@@ -830,26 +830,22 @@ ContentBoost = function(txid){
 		return false;
 	}
 
-	self.opreturn = function(){
-
-		return self.txid;
-	}
 
 	self.serialize = function(){
 
-		return self.txid;
+		return encodeURIComponent(self.txid)
 	}
 
 	self.export = function(alias){
 
 		if(!alias){
 			return {
-				amount : self.amount.v
+				content : self.txid
 			}
 		}
 		else{
 			return {
-				amount : self.amount.v,
+				content : self.txid
 			}
 		}
 
@@ -857,13 +853,22 @@ ContentBoost = function(txid){
 
 	self.import = function(p){
 
-		if (p.amount)
+		if (p.amount && p.txid)
 			self.amount.v = p.amount
+			self.txid = p.txid;
 
 
 	}
 
+
 	self.type = 'contentBoost'
+
+	
+	self.typeop = function(){
+
+        return self.type;
+
+	}
 
 	return self;
 }

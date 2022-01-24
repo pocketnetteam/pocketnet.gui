@@ -15622,16 +15622,25 @@ Platform = function (app, listofnodes) {
                                 opreturnData.push(Buffer.from(obj.opreturn()))
                             }
 
+
                             var embed = bitcoin.payments.embed({ data: opreturnData });
                             var i = 0;
 
                             txb.addOutput(embed.output, 0);
+
+                            if (obj.type !== 'contentBoost'){
+
+
+                                outputs.push({
+                                    amount : 0,
+                                    deleted : true,
+                                    address : address.address
+                                })
+    
+                                
+                            }
                             ///?
-                            outputs.push({
-                                amount : 0,
-                                deleted : true,
-                                address : address.address
-                            })
+
 
                             if(self.sdk.user.reputationBlockedMe()){
 
@@ -15674,7 +15683,8 @@ Platform = function (app, listofnodes) {
                                     !(obj.donate && obj.donate.v.length) && 
                                     
                                 
-                                    unspents.length < 50 && amount > 0.2 * smulti) {
+                                    unspents.length < 50 && amount > 0.2 * smulti && obj.type !== 'contentBoost') {
+
 
                                     var ds = Number((amount / 2).toFixed(0))
 
@@ -15718,7 +15728,7 @@ Platform = function (app, listofnodes) {
                                 if (obj.type === 'contentBoost'){
 
                                     var amountMulti = obj.amount.v * smulti;;
-                                    totalReturn - amountMulti;
+                                    totalReturn -= amountMulti;
 
                                 }
 
@@ -15775,7 +15785,6 @@ Platform = function (app, listofnodes) {
                                             })
 
                                             self.app.platform.sdk.node.transactions.blockUnspents(bids)
-
 
                                             self.app.api.rpc('sendrawtransactionwithmessage', [hex, obj.export(), optstype]).then(d => {
 

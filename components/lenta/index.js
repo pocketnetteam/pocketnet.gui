@@ -1969,7 +1969,6 @@ var lenta = (function(){
 
 			pkoin : function(){
 
-
 				var shareId = $(this).closest('.share').attr('id');
 
 				actions.pkoin(shareId)

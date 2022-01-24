@@ -127,7 +127,9 @@ var pkoin = (function(){
 
 					function (_alias, error) {
 
-						console.log('final booster', _alias, error);
+						globalpreloader(false)
+
+						clbk()
 
 					}
 				)
