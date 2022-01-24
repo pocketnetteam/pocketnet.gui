@@ -34,7 +34,7 @@ var embeding = (function(){
 				placeholder : '0',
 				onType : true,
 				format : {
-					Precision : 3
+					Precision : 2
 				}
 			}),
 
