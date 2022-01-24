@@ -67,6 +67,8 @@ cordova/cert.keystore
 # To force the load use
 # git add --force <file>
 
+css/*.css
+css/*.css.map
 css/*/*.css
 css/*/*.css.map
 components/*/*.css
