@@ -91,7 +91,6 @@
 #recommendedposts .posts .post .infoWrapper .actionsWrapper {
   display: flex;
   justify-content: flex-end;
-  width: 100%;
 }
 #recommendedposts .posts .post .infoWrapper .actionsWrapper > div {
   padding-left: 0.75em;

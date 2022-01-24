@@ -4352,9 +4352,9 @@ var lenta = (function(){
 					if (clear)
 						el.c.find('.shares').html('')
 
-					if (!essenseData.video){
-						renders.recommendedusers();
-					}
+					// if (!essenseData.video){
+					// 	renders.recommendedusers();
+					// }
 
 					renders.shares(shares, function(){
 
@@ -4541,8 +4541,6 @@ var lenta = (function(){
 						self.loadTemplate({
 							name : 'sharevideo'
 						}, function(){
-
-						
 
 							self.loadTemplate({
 								turi : 'share',

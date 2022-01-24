@@ -9,17 +9,21 @@ if(user.address.value)
 console.log('shares', shares);
 _.each(shares, function(u){ 
 
-	console.log('u11', u);
+	console.log('u!!!', u);
 
 	var _class='';
 	var address = u.address;
 	var src =  deep(app, 'platform.sdk.usersl.storage.'+address + '.image');
 
-
-	console.log('address!!!!', deep(app, 'platform.sdk.usersl.storage.' + address));
 	var name = deep(app, 'platform.sdk.usersl.storage.'+address + '.name');
 	var letter = name ? name[0] : ''; 
 	var r = deep(app, 'platform.sdk.usersl.storage.'+address + '.reputation');
+	var message = filterXSS(u.message, {
+		stripIgnoreTag : true,
+		whiteList: {
+			img : []
+		}
+	})	
 
 %>
 	<div class="wrk">
@@ -142,8 +146,6 @@ _.each(shares, function(u){
 					<image src="<%-u.images[0] %>">				
 					</image>
 				</div>
-
-				
 		
 			<% } %>
 
@@ -160,11 +162,11 @@ _.each(shares, function(u){
 				</div>
 			<% } %>
 
-			<% if(u.message){%>
+			<% if(message){%>
 
 			<div class="postcontent">
 				<div class="message">
-					<%- u.message %>							
+					<%= message %>							
 				</div>		
 			</div>
 			<% } %>
