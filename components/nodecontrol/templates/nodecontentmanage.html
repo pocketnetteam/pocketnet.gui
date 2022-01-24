@@ -25,7 +25,7 @@
 
                     <div class="notfound loading">
                         <div class="text">
-                            <%-e('easyNode_e10004')%> <i class="fas fa-spinner fa-spin"></i>
+                            <%-e('easyNode_e10004')%> <div class="preloader5"><img src="./img/three-dots.svg"/></div>
                         </div>
 
                         <div class="installProgressBox">
@@ -36,6 +36,12 @@
                                 </div>
                             <% } %>
                         </div>
+
+                        <% if (nc.state.install.break != -1) { %>
+                            <div class="icon stopInstall">
+                                <i class="far fa-stop-circle"></i>
+                            </div>
+                        <% } %>
 
                     </div>
 
@@ -198,9 +204,8 @@
                         </div>
                     </div>
 
-                    <% if (nodestate.status == 'stopped' && !system.node.enabled) { %>
                         <% if(!nc.lock && (proxy.direct || showdirect)) {%>
-                            <div class="setting systempath">
+                            <!-- <div class="setting systempath">
                                 <div class="settingTable table">
                                         <div class="label">
                                             <span><%-e('easyNode_e10011')%></span>
@@ -218,7 +223,7 @@
 
                                     <% } %>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <div class="setting systempath">
                                 <div class="settingTable table">
@@ -226,15 +231,15 @@
                                         <span><%-e('easyNode_e10012')%></span>
                                     </div>
 
-                                    <div class="value" <% if(!nc.hasbin || !system.node.enabled) {%> sys="ndataPath" <% } %> path="<%-system.node.ndataPath%>" >
-                                        <span><%- system.node.ndataPath || 'Default' %></span>
+                                    <div class="value" <% if(!system.node.enabled) {%> sys="ndataPath" <% } %> path="<%-system.node.ndataPath%>" >
+                                        <span><%- nc.node.dataPath %></span>
                                     </div>
 
-                                    <% if(nc.hasbin && system.node.enabled) {%>
+                                    <% if(system.node.enabled) {%>
 
-                                    <div class="icon">
-                                        <i class="fas fa-lock"></i>
-                                    </div>
+                                        <div class="icon">
+                                            <i class="fas fa-lock"></i>
+                                        </div>
 
                                     <% } %>
                                 </div>
@@ -284,7 +289,8 @@
                                 </div>
                             </div>
 
-                            <% if(!system.node.binPath && !system.node.ndataPath) {%>
+                            <% if(!system.node.enabled) {%>
+
                                 <div class="setting">
                                     <div class="settingTable table">
                                         <div class="label">
@@ -297,19 +303,18 @@
                                             </button>
                                         </div>
 
-                                        <div class="value">
+                                        <!-- <div class="value">
                                             <button elementsid="buttonsmallghostremovenodeall" class="button small ghost orange removenodeall">
                                                 <%-e('easyNode_e10019')%>
                                             </button>
-                                        </div>
+                                        </div> -->
 
                                     </div>
                                 </div>
 
                             <% } %>
-                        <% } %>
-                    <% } %>
 
+                        <% } %>
                 </div>
             </div>
             </div>

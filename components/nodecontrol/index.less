@@ -212,33 +212,42 @@
         
     }
 
-    .settingTable{
-        .label{
-            span{
-                font-size: 0.9em;
+    .setting {
+        .settingTable{
+            .label{
+                span{
+                    font-size: 0.9em;
+                }
             }
-        }
-        .value{
-            
-            color : @color-gray;
-
-            &[fss],
-            &[sys]{
-                text-decoration: underline;
+            .value{
+                
                 color : @color-gray;
+
+                &[fss],
+                &[sys]{
+                    text-decoration: underline;
+                    color : @color-gray;
+                    cursor: pointer;
+                }
+                
+
+                span{
+                    font-size: 0.9em;
+                }
+            }
+
+            .clearfirebase{
                 cursor: pointer;
             }
-            
+        }
 
-            span{
-                font-size: 0.9em;
+        &.systempath {
+            .value {
+                color : #e4ddde;
             }
         }
-
-        .clearfirebase{
-            cursor: pointer;
-        }
     }
+
     .manage{
         border-radius: 10px;
         background: fade(@color-gray-mlight, 12);
@@ -307,29 +316,34 @@
     .notfound{
         text-align: center;
         padding : 4 * @rhythm 0;
-        cursor: pointer;
         color : @color-gray-mlight;
+        
+        &.install {
+            cursor: pointer;
 
-        &:not(.loading){
             .transition(0.3s);
 
             &:hover{
                 color : @color-bright;
             }
         }
-        
-        
+
+        &.loading {
+            .stopInstall {
+                display: inline-block;
+                cursor: pointer;
+                color : @color-bright;
+            }
+
+            .preloader5 {
+                margin: 1em;
+            }
+        }
 
         .text{
             padding : @rhythm 0;
             font-size: 0.9em;
-        }
-
-        i{
-            font-size: 0.9em;
-            color : @color-bright;
-        }
-        
+        }        
     }
 
     .nodecontentmanage{
@@ -376,7 +390,10 @@
         }
 
         .installProgressBox {
-            margin: 2em 1em 0em 1em;
+            display: inline-block;
+            width: 90%;
+            margin: 0em 0.5em;
+            vertical-align: bottom;
                 
             .title {
                 font-size: 13px;
@@ -388,7 +405,7 @@
                 height: 3px;
                 background-color: #dcdcdc;
                 border-radius: 2px;
-                margin: 0.3em 0em 1.5em 0em;
+                margin: 0.3em 0.5em 0em 0em;
 
                 .installProgressInner {
                     height: 3px;
@@ -399,12 +416,14 @@
         }
         
         .toDefaultPath{
-            opacity: 0.5;
-            .transition(0.3s);
             cursor: pointer;
 
             &:hover{
                 color : @color-bad;
+            }
+
+            i {
+                font-size: 0.8em;
             }
         }
     }

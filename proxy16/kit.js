@@ -910,6 +910,13 @@ var kit = {
 					return Promise.resolve(r)
 				})
 			},
+			breakInstall : function(message){
+				return kit.proxy().then(proxy => {
+					return proxy.nodeControl.kit.breakInstall()
+				}).then(r => {
+					return Promise.resolve(r)
+				})
+			},
 			delete : function({all}){
 				return kit.proxy().then(proxy => {
 					return proxy.nodeControl.kit.delete(all)

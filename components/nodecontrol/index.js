@@ -109,7 +109,6 @@ var nodecontrol = (function(){
 		}
 
 		var actions = {
-
 			refreshsystem : function(){
 				return proxy.system.api.get.settings().then(s => {
 					system = s
@@ -117,7 +116,6 @@ var nodecontrol = (function(){
 					renders.all()
 				})
 			},
-
 			refresh : function(){
 				return proxy.get.info().then(r => {
 
@@ -128,11 +126,9 @@ var nodecontrol = (function(){
 					return Promise.resolve()
 				})
 			},
-
 			allsettings: function(){
 				renders.all()
 			},
-
 			tick : function(state){
 
 				//var laststate = info
@@ -144,9 +140,6 @@ var nodecontrol = (function(){
 				//}
 				
 			},
-
-			
-
 			ticksettings : function(settings, s, changed){
 
 				if (changed){
@@ -178,7 +171,6 @@ var nodecontrol = (function(){
 					}
 				})
 			},
-
 			updateNode : function(){
 
 				proxy.fetchauth('manage', {
@@ -198,7 +190,6 @@ var nodecontrol = (function(){
 
 					sitemessage(self.app.localization.e('e13293'))
 
-
 					actions.refresh().then(r => {
 						renders.allsettings()
 					})
@@ -207,14 +198,14 @@ var nodecontrol = (function(){
 
 				})
 			},
-			installNode : function(){
+			installNode : function() {
 
 				proxy.fetchauth('manage', {
 					action : 'node.install',
 					data : {}
 				}).then(r => {
 
-                    proxy.system.request('set.node.enabled', {enabled : true}).then(r => {
+                    proxy.system.request('set.node.enbled', {enabled : true}).then(r => {
 
                         actions.refresh().then(r => {
                             renders.allsettings()
@@ -264,7 +255,6 @@ var nodecontrol = (function(){
 
 				})
 			},
-
 		}
 
 		var events = {
@@ -291,8 +281,7 @@ var nodecontrol = (function(){
 					
 				}
 			},
-		
-			nodecontentmanagestacking : function(elc, clbk) {
+		    nodecontentmanagestacking : function(elc, clbk) {
 				if (actions.admin() && info.nodeControl.state.staking){
 
 					self.shell({
@@ -527,8 +516,6 @@ var nodecontrol = (function(){
 					},
 					function(p){
 
-						
-
 						actions.settings(p.el)
 
 						p.el.find('.updatenode').on('click', function(){
@@ -592,6 +579,13 @@ var nodecontrol = (function(){
 								}
 							})
 
+						})
+
+                        p.el.find('.stopInstall').on('click', () => {
+                            proxy.fetchauth('manage', {
+                                action : 'node.breakInstall',
+                                data : {}
+                            })
 						})
 
 						p.el.find('.toDefaultPath').on('click', function(){
@@ -690,7 +684,6 @@ var nodecontrol = (function(){
 
 				}
 			},
-
 			electronfornode : function(clbk){
 				if(!actions.admin() && !(typeof _Electron != 'undefined' && _Electron)) {
 

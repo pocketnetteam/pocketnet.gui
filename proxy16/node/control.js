@@ -35,7 +35,8 @@ var Control = function(settings) {
             title: '',
             progress: {
                 percent: 0
-            }
+            },
+            break: false,
         },
         status: 'stopped'
     }
@@ -318,6 +319,10 @@ var Control = function(settings) {
             instance : node.instance ? true : false,
             hasbin : self.kit.hasbin(),
             state : state,
+            node : {
+                binPath : node.binPath,
+                dataPath : node.dataPath
+            },
             hasupdates : hasupdates,
             lock : lock,
             other : node.other,
@@ -387,6 +392,7 @@ var Control = function(settings) {
 
             self.autorun.destroy()
 
+            state.install.break = false
             lock = 'installing'
             let snapshotFile = Path.resolve(node.dataPath, applications.getMeta()['snapshot_latest'].name)
 
@@ -413,23 +419,20 @@ var Control = function(settings) {
                         + ` - ${f.unitFormatter(st.size.transferred, 2)} / ${f.unitFormatter(st.size.total, 2)}`
                         + ` - ${f.unitFormatter(st.speed, 2)}/s`
                         + ` - ${Math.round(st.time.remaining / 60)} min. remaining`
+                    
+                    return { break : state.install.break }
                 })
-
             }).then(() => {
+
+                state.install.break = -1
 
                 if (!fs.existsSync(snapshotFile))
                     return Promise.resolve()
 
-                return applications.decompress(snapshotFile, node.dataPath, function(st) {
-                    state.install.progress = {
-                        percent: st.pending / st.size
-                    }
+                state.install.progress = { percent: 1 }
+                state.install.title = 'Decompressing snapshot database...'
 
-                    if (state.install.progress.percent < 0.99)
-                        state.install.title = 'Decompressing snapshot database...'
-                    else
-                        state.install.title = 'Processing snapshot database...'
-                })
+                return applications.decompress(snapshotFile, node.dataPath)
 
             }).then(() => {
                 
@@ -441,7 +444,7 @@ var Control = function(settings) {
 
             }).then(() => {
                 
-                state.install.progress = { percent: 100 }
+                state.install.progress = { percent: 1 }
                 state.install.title = 'Installing binary files...'
                 return applications.install('bin', self.helpers.complete_bin_path(), true)
                 
@@ -452,7 +455,7 @@ var Control = function(settings) {
 
             }).then(() => {
                 
-                state.install.progress = { percent: 100 }
+                state.install.progress = { percent: 1 }
                 state.install.title = 'Installing checkpoints database...'
                 return applications.install('checkpoint_main', self.helpers.data_checkpoints_path(true), false)
 
@@ -479,6 +482,10 @@ var Control = function(settings) {
                 return Promise.reject(e)
             })
            
+        },
+
+        breakInstall : function() {
+            state.install.break = true;
         },
 
         delete : function(all){
@@ -581,10 +588,12 @@ var Control = function(settings) {
 
                 if (e.code == 408) {
                     if (!node.instance) {
-                        state.status = 'stopped'
+                        if (!enabled)
+                            state.status = 'stopped'
+                            
+                        delete state.error
                         return Promise.resolve(false)
                     } else {
-                        state.status = 'starting'
                         return Promise.resolve(true)
                     }
                 }
@@ -753,16 +762,18 @@ var Control = function(settings) {
             if(lock) return Promise.resolve(false)
 
             return self.kit.rpc('stop').then(r => {
-
-                state.status = 'stopped'
                 state.timestamp = new Date()
-
                 return Promise.resolve()
 
             }).catch(e => {
-                node.instance = null
-                state.status = 'detached'
+                if (node.instance) {
+                    state.status = 'stopping'
+                } else {
+                    state.status = 'stopped'
+                }
+
                 state.timestamp = new Date()
+
                 return Promise.resolve()
             })
             .then(r => {
@@ -798,6 +809,7 @@ var Control = function(settings) {
                 c(enabled, state)
             })
 
+            state.status = v ? 'starting' : 'stopping'
             state.timestamp = new Date()
 
         },

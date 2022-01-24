@@ -104,7 +104,7 @@
         "standard": "^11.0.1",
         "svg-captcha": "^1.4.0",
         "swagger-ui-express": "^4.1.4",
-        "tar.gz2": "^1.0.0",
+        "targz": "^1.0.1",
         "tcp-port-used": "^1.0.1",
         "twilio": "^3.48.1",
         "uglify-js": "",
