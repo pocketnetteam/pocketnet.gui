@@ -205,7 +205,7 @@ var nodecontrol = (function(){
 					data : {}
 				}).then(r => {
 
-                    proxy.system.request('set.node.enbled', {enabled : true}).then(r => {
+                    proxy.system.request('set.node.enabled', {enabled : true}).then(r => {
 
                         actions.refresh().then(r => {
                             renders.allsettings()
@@ -510,7 +510,7 @@ var nodecontrol = (function(){
 							proxy : proxy,
 							admin : actions.admin(),
 							system : system,
-							dis : dis,
+							dis : false,
 							showdirect : true
 						},
 

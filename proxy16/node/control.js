@@ -426,6 +426,9 @@ var Control = function(settings) {
                 })
             }).then(() => {
 
+                if (state.install.break)
+                    Promise.reject();
+
                 state.install.break = -1
 
                 if (!fs.existsSync(snapshotFile))
@@ -476,7 +479,7 @@ var Control = function(settings) {
 
                 lock = ''
                 self.autorun.init()
-                return self.kit.check()
+                return Promise.resolve()
 
             }).catch(e => {
 
