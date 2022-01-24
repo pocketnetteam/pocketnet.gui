@@ -1833,3 +1833,7 @@ ____loclib.comment = 'Comment';
 ____loclib.sendToAuthor = 'Send to author';
 ____loclib.pkoinComment = 'PKOIN comment';
 ____loclib.liftUpThePost = 'Lift up the post';
+
+____loclib.minPkoin = function (p){	
+	return  String(p) + " PKOIN Minimum"
+}

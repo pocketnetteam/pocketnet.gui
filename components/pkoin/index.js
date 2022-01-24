@@ -60,6 +60,7 @@ var pkoin = (function(){
 					el.inputSum = _p.el.find('#inputSum');
 					el.textareaComment = _p.el.find('#textareaComment');
 
+
 					
 				})
 
@@ -203,8 +204,6 @@ var pkoin = (function(){
 						closeContainer();
 					}
 
-
-
 				}
 
 				self.app.platform.sdk.node.transactions.get.balance(function(amount){
@@ -214,7 +213,12 @@ var pkoin = (function(){
 
 					if (valSum){
 
-						if (valSum < Number(balance)){
+
+						if (valSum && valSum < 0.05){
+
+							sitemessage(self.app.localization.e('minPkoin', 0.05))
+
+						} else if (valSum < Number(balance)){
 
 							if (optionsValue === 'pkoinComment'){
 

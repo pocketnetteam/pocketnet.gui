@@ -1609,3 +1609,7 @@ ____loclib.comment = 'Комментарий';
 ____loclib.sendToAuthor = 'Поощрить автора';
 ____loclib.pkoinComment = 'PKOIN комментарий';
 ____loclib.liftUpThePost = 'Поднять пост';
+
+____loclib.minPkoin = function (p){	
+	return `Минимум ${String(p)} PKOIN`
+}
