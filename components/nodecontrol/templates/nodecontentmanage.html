@@ -234,14 +234,6 @@
                                     <div class="value" <% if(!system.node.enabled) {%> sys="ndataPath" <% } %> path="<%-system.node.ndataPath%>" >
                                         <span><%- nc.node.dataPath %></span>
                                     </div>
-
-                                    <% if(system.node.enabled) {%>
-
-                                        <div class="icon">
-                                            <i class="fas fa-lock"></i>
-                                        </div>
-
-                                    <% } %>
                                 </div>
                             </div>
                             
@@ -268,7 +260,7 @@
                         <% } %>
 
                         <% if(nc.hasbin && !nc.lock) {%>
-                            <div class="setting ">
+                            <div class="setting update">
                                 <div class="settingTable table">
                                     <div class="label">
                                         <span><%-e('easyNode_e10015')%></span>
@@ -281,7 +273,7 @@
                                             </button>
                                         <% } else { %> 
 
-                                            <span><%-e('easyNode_e10016')%></span>
+                                            <span class="noupdatenode"><%-e('easyNode_e10016')%></span>
                                             
                                         <% }%>
                                     </div>

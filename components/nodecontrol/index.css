@@ -146,7 +146,7 @@
 #nodecontrol .staterowTable .icon,
 #nodecontrol .settingTable .icon {
   padding-left: 0.5em;
-  color: #e4ddde;
+  color: #b3b3b3;
 }
 #nodecontrol .staterowTable .icon i,
 #nodecontrol .settingTable .icon i {
@@ -193,7 +193,7 @@
   cursor: pointer;
 }
 #nodecontrol .setting.systempath .value {
-  color: #e4ddde;
+  color: #b3b3b3;
 }
 #nodecontrol .manage {
   border-radius: 10px;
@@ -335,6 +335,9 @@
 }
 #nodecontrol .nodecontentmanage .toDefaultPath i {
   font-size: 0.8em;
+}
+#nodecontrol .nodecontentmanage .update .noupdatenode {
+  color: #b3b3b3;
 }
 .addressdialog input {
   width: 100%;
