@@ -6409,38 +6409,18 @@ Platform = function (app, listofnodes) {
         
                                                                 file.file(function(fileDetails) {
 
-        
-                                                                    if (!videoFile && (!fileDetails.type || fileDetails.type == 'video/mp4')) {
-        
-                                                                        videoFile = file;
-        
-                                                                        if (fileDetails.size)
-                                                                            to.videos[videoFolder.name].size = fileDetails.size;
-                                                                        // Resolve internal URL
-        
-                                                                        window.resolveLocalFileSystemURL(videoFile.nativeURL, function(entry) {
-        
-                                                                            videoFile.internalURL =  entry.toInternalURL()
-                                                                            
-                                                                            to.videos[videoFolder.name].video = videoFile;
 
+                                                                    if (file.name == 'info.json') {
 
-                                                                            _p.success()
-                                                                        });
-
-                                                                        return
-                                                                    }
-        
-                                                                    if (!infoFile && file.name == 'info.json') {
-        
                                                                         infoFile = file;
-                                            
+
+
                                                                         var reader = new FileReader();
         
                                                                         reader.onloadend = function() {
-        
+
+
                                                                             try {
-        
                                                                                 to.videos[videoFolder.name].infos = JSON.parse(this.result);
         
                                                                             } catch(err){ 
@@ -6456,6 +6436,30 @@ Platform = function (app, listofnodes) {
 
                                                                         return
                                                                     }
+
+        
+                                                                    if (!videoFile && (!fileDetails.type || fileDetails.type == 'video/mp4')) {
+        
+                                                                        videoFile = file;
+
+                                                                        if (fileDetails.size)
+                                                                            to.videos[videoFolder.name].size = fileDetails.size;
+                                                                        // Resolve internal URL
+
+                                                                        window.resolveLocalFileSystemURL(videoFile.nativeURL, function(entry) {
+        
+                                                                            videoFile.internalURL =  entry.toInternalURL()
+                                                                            
+                                                                            to.videos[videoFolder.name].video = videoFile;
+
+
+                                                                            _p.success()
+                                                                        });
+
+                                                                        return
+                                                                    }
+
+                                                                    
 
 
                                                                     _p.success()
