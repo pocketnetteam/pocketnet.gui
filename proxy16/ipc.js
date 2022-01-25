@@ -236,11 +236,8 @@ var IPC = function(ipc, wc){
 			if(!kaction) return Promise.reject('unknownAction')
 
 			return middle(message).then(r => { 
-				
 				return kaction(message.data)
-
 			}).then(data => {
-
 				send(message.id, null, data)
 			})
 		},

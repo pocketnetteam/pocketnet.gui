@@ -717,6 +717,41 @@ var userpage = (function(){
 						_p.el.find('.changelang').on('click', function(){
 							self.app.platform.ui.changeloc(self.closeContainer)
 						})
+
+						_p.el.find('.applicaitonversion').swipe({
+							longTap : function(){
+							
+								if(self.app.mobile.update.needmanageinfo){
+
+									dialog({
+										class : 'zindex one',
+										html : self.app.mobile.update.needmanageinfo || 'empty',
+										btn1text : self.app.localization.e('dyes'),
+										btn2text : self.app.localization.e('dno'),
+										success : function(){	
+
+										}
+									})
+
+								}
+							}
+						})
+						
+						_p.el.find('.hasupdate').on('click', function(){
+
+							if(!self.app.mobile.update.updating){
+
+								_p.el.find('.applicationupdatemodule').addClass('updating')
+
+								self.app.mobile.update.downloadAndInstall().catch(e => {
+									sitemessage(self.app.localization.e(e.text) || e)
+								}).then(r => {
+									_p.el.find('.applicationupdatemodule').removeClass('updating')
+								})
+
+							}	
+							
+						})
 	
 						ParametersLive([s], _p.el)
 

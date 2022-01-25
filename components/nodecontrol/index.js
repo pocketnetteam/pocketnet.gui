@@ -282,6 +282,7 @@ var nodecontrol = (function(){
 							renders.nodecontentmanagewallet(el.c)
 						})
 
+
 					
 					
 				}

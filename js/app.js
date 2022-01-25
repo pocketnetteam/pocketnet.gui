@@ -870,7 +870,17 @@ Application = function(p)
 				if(!_OpenApi)
 					self.showuikeysfirstloading()
 
+
+			
+				self.mobile.update.needmanagecheck().then(r => {
+					if (r){
+						self.mobile.update.hasupdatecheck()
+					}
+						
+				})
+
 			})
+
 		})
 		
 
@@ -1018,6 +1028,10 @@ Application = function(p)
 						cordova.plugins.backgroundMode.disableWebViewOptimizations(); 
 					});
 
+				console.log('needmanagecheck')
+
+				
+
 				self.init(p)
 
 			}, false);
@@ -1025,10 +1039,14 @@ Application = function(p)
 		else
 		{
 
+			
+
 			self.init(p);
 
 			setTimeout(function(){
 				self.appready = true
+
+			
 			}, 2000)
 		}
 
@@ -1938,6 +1956,124 @@ Application = function(p)
 			},
 
 			clbks : {}
+		},
+
+		update : {
+			needmanage : false,
+			hasupdate : false,
+
+			downloadAndInstall : function(){
+
+				if(!self.mobile.update.hasupdate){
+					return Promise.reject({text : 'hasnotupdates'})
+				}
+
+				if(!self.mobile.update.needmanage){
+					return Promise.reject({text : 'cantmanageupdate'})
+				}
+
+				self.mobile.update.updating = true
+
+				return self.mobile.update.download(self.mobile.update.hasupdate).then(r => {
+
+					return window.ApkUpdater.install()
+
+				}).then( r => {
+					self.mobile.update.updating = false
+
+					return Promise.resolve()
+				}).catch(e => {
+
+					self.mobile.update.updating = false
+
+					return Promise.reject(e)
+				})
+
+			},
+		
+			download : function(l){
+
+				return window.ApkUpdater.download(l, {
+					onDownloadProgress: function(e){
+						topPreloader2(e.progress, self.localization.e('downloadingUpdate'))
+					}
+				}).then(r => {
+					topPreloader2(100)
+
+					return Promise.resolve()
+				}).catch(e => {
+					topPreloader2(100)
+
+					return Promise.reject(e)
+				})
+				
+
+			},
+			hasupdatecheck : function(){
+
+				if(!self.platform) return Promise.resolve()
+
+				var os = self.platform.__applications().ui.android
+
+				return new Promise((resolve, reject) => {
+
+					$.get(os.github.url, {}, function(d){
+
+						if(!d.prerelease && numfromreleasestring(d.name) > numfromreleasestring(window.packageversion)) {
+							var assets = deep(d, 'assets') || [];
+	
+							var l = _.find(assets, function(a){
+								return a.name == os.github.name
+							})
+
+							if(l){
+								self.mobile.update.hasupdate = l.browser_download_url
+							}
+						}
+	
+					})
+
+				})
+	
+				
+	
+			},
+			needmanagecheck : function(){
+
+				if(window.plugins && window.plugins.packagemanager && window.ApkUpdater){
+
+					return new Promise((resolve, reject) => {
+
+						window.plugins.packagemanager.getInstallerPackageName(function(d){
+
+							console.log("D", d)
+
+							self.mobile.update.needmanage = d && d.indexOf('com.android.vending') > -1 ? false : true
+							self.mobile.update.needmanageinfo = d
+
+							resolve(self.mobile.update.needmanage)
+
+						}, function(e){
+
+							
+							console.log("E", e)
+
+							self.mobile.update.needmanage = false
+							self.mobile.update.needmanageinfo = e
+
+							resolve(self.mobile.update.needmanage)
+						});
+
+					})
+
+				}
+				else{
+
+					return Promise.resolve(self.mobile.update.needmanage)
+				}
+				
+			}
+
 		}
 	}
 

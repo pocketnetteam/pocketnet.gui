@@ -45,9 +45,6 @@ public class packagemanager extends CordovaPlugin {
         
         switch (action) {
 
-            case "getInstallerPackageName":
-                getInstallerPackageName(pm, context)
-
             case "getInstalledPackages":
                 resultList.addAll(getInstalledPackages(pm));
                 break;

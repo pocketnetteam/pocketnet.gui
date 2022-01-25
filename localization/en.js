@@ -2015,4 +2015,15 @@ ____loclib.art_wordscount = "Number of words"
 ____loclib.art_volumepercent = "Article size limit"
 ____loclib.art_goback = "Come back"
 
+____loclib.downloadingUpdate = "Downloading the update"
+____loclib.hasnotupdates = "No updates available"
+____loclib.cantmanageupdate = "Unable to manage update"
+
+____loclib.updateapplication = "Update Application"
+____loclib.applicationversion = "Application version"
+____loclib.installedusinggps = "The application was not installed using Google Play."
+
+____loclib.downloadplaystore = "Google Play Download"
+____loclib.downloadgithub = "Download APK"
+
 ____loclib.empty = "Empty"

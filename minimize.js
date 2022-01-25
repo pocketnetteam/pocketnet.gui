@@ -733,6 +733,10 @@ fs.exists(mapJsPath, function (exists) {
 							if(VARS.project){
 								JSENV += '<script>window.pocketnetproject = "' + VARS.project + '";</script>';
 							}
+
+							JSENV += '<script>window.packageversion = "' + package.version + '";</script>';
+
+							
 	
 							if(args.prodaction)
 							{

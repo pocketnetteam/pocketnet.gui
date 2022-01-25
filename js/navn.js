@@ -1500,7 +1500,7 @@ Nav = function(app)
 						}
 					}
 
-					if(electronDontOpen) return
+					if (electronDontOpen) return
 
 					var electronHrefs = JSON.parse(localStorage['electron_hrefs'] || "[]");
 				
