@@ -63,7 +63,7 @@
                         <span><%-e('easyNode_e10035')%></span>
                     </div>
                     <div class="value">
-                        <% fork = (nodestate.info.lastblock.height - manager.chain.commonHeight) > 15 %>
+                        <% fork = (nodestate.info.lastblock.height - manager.chain.bestHeight) > 15 %>
                         <div>
                             <span class="<%- fork ? 'bad' : '' %>">
                                 <%- nodestate.info.lastblock.height.toLocaleString() %>
