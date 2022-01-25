@@ -49,20 +49,19 @@ var testnodes = [
 		stable : true
 	},
 	{
-		host : '188.187.45.218',
-		port : 39091,
-		ws : 6067,
-		name : 'v0.20.0 (dev)',
-		stable : false
-	},
-	{
 		host : '137.135.25.73',
 		port : 39091,
 		ws : 6067,
 		name : 'tawmaz',
 		stable : false
-	}
-    
+	},
+	{
+		host : '109.173.41.29',
+		port : 39091,
+		ws : 6067,
+		name : 'lostystyg',
+		stable : false
+	}    
 ]
 
 
@@ -899,26 +898,29 @@ var kit = {
 					return Promise.resolve(r)
 				})
 			},
-
+			breakInstall : function(message){
+				return kit.proxy().then(proxy => {
+					return proxy.nodeControl.kit.breakInstall()
+				}).then(r => {
+					return Promise.resolve(r)
+				})
+			},
 			delete : function({all}){
 				return kit.proxy().then(proxy => {
 					return proxy.nodeControl.kit.delete(all)
 				}).then(r => {
-
 					return Promise.resolve(r)
 				})
 			},
-
-
-			//// ?
+            // TODO (brangr): проверить
 			update : function(message){
 				return kit.proxy().then(proxy => {
 					return proxy.nodeControl.kit.update()
 				}).then(r => {
-
 					return Promise.resolve(r)
 				})
 			},
+            // TODO (brangr): почему коммент?
 			/*checkupdate : function(message){
 				return kit.proxy().then(proxy => {
 					return proxy.nodeControl.kit.checkupdate().then(update => {
@@ -941,7 +943,14 @@ var kit = {
 				}).then(data => {
 					send(message.id, null, data)
 				})
-			}
+			},
+			stop : function(message){
+				return kit.proxy().then(proxy => {
+					return proxy.nodeControl.kit.safeStop()
+				}).then(r => {
+					return Promise.resolve(r)
+				})
+			},
 		},
 
 		proxy : {
@@ -1156,7 +1165,7 @@ var kit = {
 
 	destroyhard : function(){
 
-		return kit.manage.proxy.detach().then(r => {
+		return kit.destroy().then(r => {
 			return this.destroy()
 		})
 		

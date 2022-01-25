@@ -6,9 +6,9 @@ var userpage = (function(){
 
 	var Essense = function(p){
 
-		var primary = deep(p, 'history');
+		var primary = (p.history && !p.inWnd) || p.primary;
 
-		var el, ed;
+		var el = {}, ed = {};
 
 		var currentExternalEssense = null;
 
@@ -38,6 +38,7 @@ var userpage = (function(){
 					mobile : true,
 					rh : true
 				})
+
 			}
 			else{
 				
@@ -54,8 +55,6 @@ var userpage = (function(){
 						id : 'test',
 						report : 'fillUser',
 						mobile : true,
-
-						//openReportPageMobile : true
 					})
 		
 				}
@@ -207,6 +206,15 @@ var userpage = (function(){
 				openReportPageMobileInWindow : true
 			})
 
+            if (typeof _Electron != 'undefined' ? _Electron : false) {
+                reports.push({
+                    name : self.app.localization.e('easyNode_e10000'),
+                    id : 'easynode',
+                    report : 'nodecontrol',
+                    openReportPageMobile : false,
+                    mobile : false
+                })
+            }
 
 			reports.push({
 				name : self.app.localization.e('rsystem'),
@@ -668,7 +676,6 @@ var userpage = (function(){
 						},
 	
 					}, function(_p){
-						console.log(_p.el)
 						_p.el.find('.copyaddress').on(clickAction(), function(){
 							copyText($(this))
 
@@ -683,8 +690,6 @@ var userpage = (function(){
 		
 			},
 			contents : function(clbk, id){
-
-				console.log("render contents", id, el)
 
 				if(!el.contents) return
 
@@ -711,6 +716,41 @@ var userpage = (function(){
 
 						_p.el.find('.changelang').on('click', function(){
 							self.app.platform.ui.changeloc(self.closeContainer)
+						})
+
+						_p.el.find('.applicaitonversion').swipe({
+							longTap : function(){
+							
+								if(self.app.mobile.update.needmanageinfo){
+
+									dialog({
+										class : 'zindex one',
+										html : self.app.mobile.update.needmanageinfo || 'empty',
+										btn1text : self.app.localization.e('dyes'),
+										btn2text : self.app.localization.e('dno'),
+										success : function(){	
+
+										}
+									})
+
+								}
+							}
+						})
+						
+						_p.el.find('.hasupdate').on('click', function(){
+
+							if(!self.app.mobile.update.updating){
+
+								_p.el.find('.applicationupdatemodule').addClass('updating')
+
+								self.app.mobile.update.downloadAndInstall().catch(e => {
+									sitemessage(self.app.localization.e(e.text) || e)
+								}).then(r => {
+									_p.el.find('.applicationupdatemodule').removeClass('updating')
+								})
+
+							}	
+							
 						})
 	
 						ParametersLive([s], _p.el)
@@ -836,6 +876,7 @@ var userpage = (function(){
 			},
 
 			fillUser : function(el, clbk){
+
 				self.shell({
 
 					name :  'fillUser',
@@ -851,9 +892,26 @@ var userpage = (function(){
 					}
 
 				})
+
+				
+				/*if(!self.app.errors.connection()){
+					if(!self.app.user.validate()){
+
+
+
+						return
+					}
+				}*/
+
+			
+
+				
 			},
 
 			authorization : function(el, clbk){
+
+				self.closeContainer()
+
 				self.nav.api.go({
 					href : 'authorization',
 					history : true,
@@ -862,6 +920,9 @@ var userpage = (function(){
 			},
 
 			registration : function(el, clbk){
+
+				self.closeContainer()
+				
 				self.nav.api.go({
 					href : 'registration',
 					history : true,
@@ -870,8 +931,6 @@ var userpage = (function(){
 			},
 
 			report : function(id, clbk){
-
-				
 
 				if (currentExternalEssense)
 					currentExternalEssense.destroy();
@@ -890,8 +949,6 @@ var userpage = (function(){
 						self.app.actions.scroll(0)
 	
 					currentExternalEssense = p;
-
-					
 
 					if (clbk)
 						clbk();
@@ -979,7 +1036,10 @@ var userpage = (function(){
 
 		var makerep = function(clbk){
 			
-			var id = parameters().id;
+			var id = null;
+			
+
+			if (primary) id = parameters().id;
 
 			self.app.user.isState(function (state) { 
 
@@ -1081,14 +1141,11 @@ var userpage = (function(){
 
 				self.app.platform.sdk.ustate.me(function(_mestate){					
 
-
 					mestate = _mestate
 
 					clbk(data);
 
 				})
-
-					
 
 			},
 
@@ -1103,10 +1160,12 @@ var userpage = (function(){
 
 				currentExternalEssense = null;
 
-
 				$('#menu').removeClass('abs')
 
+				if(el.c) el.c.empty()
+
 				el = {};
+				ed = {}
 			},
 			
 			init : function(p){
@@ -1120,16 +1179,8 @@ var userpage = (function(){
 			
 				el.bgcaption = el.c.find('.bgCaptionWrapper')
 
-				$('#menu').addClass('abs')
-
-				
-
-				/*self.app.platform.sdk.keys.init().then(r => {
-					console.log("RESULT", r)
-				})*/
-
-				//self.app.platform.ui.keygeneration()
-
+				if(!p.inWnd)
+					$('#menu').addClass('abs')
 
 				initEvents();
 

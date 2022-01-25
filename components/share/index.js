@@ -6,8 +6,6 @@ var share = (function(){
 
 	var Essense = function(p){
 
-		console.log("P", p)
-
 		var wordsRegExp = /[,.!?;:() \n\r]/g
 
 		var displayTimes = false
@@ -354,28 +352,50 @@ var share = (function(){
 				} 
 
 				if(type == 'article'){
-					self.nav.api.load({
-						open : true,
-						id : 'articles',
-						inWnd : true,
 
-						history : true,
 
-						essenseData : {
-							storage : storage,
-							value : value,
-							on : {
-								added : function(value){
-
-									
-								}
+					if(self.app.test){
+						self.nav.api.load({
+							open : true,
+							id : 'articlev',
+							inWnd : true,
+							history : true,
+	
+							essenseData : {
+								
+							},
+	
+							clbk : function(p){
+								external = p
 							}
-						},
+						})
+					}
+					else{
+						self.nav.api.load({
+							open : true,
+							id : 'articles',
+							inWnd : true,
+	
+							history : true,
+	
+							essenseData : {
+								storage : storage,
+								value : value,
+								on : {
+									added : function(value){
+	
+										
+									}
+								}
+							},
+	
+							clbk : function(p){
+								external = p
+							}
+						})
+					}
 
-						clbk : function(p){
-							external = p
-						}
-					})
+					
 
 					return
 				}
@@ -773,16 +793,12 @@ var share = (function(){
 
 						w = w.replace(/[^a-zA-Z0-9а-яА-Я?]*/g, '').replace(/[# ?]*/g, '')
 
-						console.log("W"+ w + 'W')
-
 						if(!w) return false
 
 						return !currentShare.tags.have(w)
 
 					}
 				})
-
-				console.log('newtags', newtags)
 
 				if(newtags.length){
 
@@ -2578,6 +2594,10 @@ var share = (function(){
 
 			auto : function(){
 				var _p = parameters();
+
+				if (_p.marticlev && !self.app.nav.wnds['articlev']){
+					actions.embeding('article', null)
+				}
 
 				if (_p.marticles && !self.app.nav.wnds['articles']){
 					actions.embeding('article', null)

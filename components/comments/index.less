@@ -488,13 +488,14 @@
 			}
 
 			.metatable{
-				>div{
-					&.panelWrapper{
-						.temppanel{
-							display: none;
-							text-align: right;
-						}
-					}
+				
+				.temppanel{
+					display: none;
+					text-align: right;
+				}
+
+				.adr{
+					font-weight: 700;
 				}
 			}
 
@@ -658,10 +659,8 @@
 
 				.commentmessage{
 
-					div{
-						padding-top : @rhythm;
-						word-wrap:break-word;
-					}
+					padding-top : @rhythm;
+					word-wrap:break-word;
 
 					a{
 						color : @color-main;
@@ -748,13 +747,11 @@
 		
 
 		.commentcontenttable{
-			>div{
-				vertical-align: bottom;
+			
 
-				&.commentpanel{
-					margin-top: 0;
-					width: 170px;
-				}
+			.commentpanel{
+				margin-top: 0;
+				width: 170px;
 			}
 		}
 
@@ -1582,6 +1579,32 @@ html.stblack{
 		}
 	
 		.list{
+
+			.comments-operations{
+				.operations-wrapper {
+					.refresh-comments {
+	
+						.icon-wrapper {
+							color : @color-gray-mlight;
+	
+							&:hover{
+								color : @color-main;
+							}
+						}
+	
+						
+						
+						background: @color-black4;
+						
+					}
+	
+					.vc_valuecustom{
+						color : @color-gray-mlight;
+						background: @color-black4;
+					
+					}
+				}
+			}
 	
 			.comment{
 				border-bottom : 1px solid @color-black2;

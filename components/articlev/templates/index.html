@@ -2,20 +2,21 @@
 	
 
 		<div class="bgwrapper">
+			<div class="blackmatte"></div>
+
+			
 			<div class="aheaderWrapper">
 				<div class="mwork">
 					<div class="rightchatspacer">
 						<div class="aheader top">
-							<div>
+							<div class="myarticleswrapper">
 								<button class="button medium ghost nopadding myarticles ">
-									My articles <i class="fas fa-chevron-down"></i>
+									<%= e('art_myarticles') %> <i class="fas fa-chevron-down"></i>
 								</button>
 							</div>
-
 							<div class="truestatuswrapper">
 								
 							</div>
-							
 						</div>
 					</div>
 				</div>
@@ -82,21 +83,35 @@
 								<div class="lst">
 									
 									<div class="uploadcover">
-										<button class="button medium ghost nopadding ">
-											Change Cover
+										<button class="button medium ghost nopadding">
+											<%= e('art_changecover') %>
+											
 										</button>
 									</div>
 								</div>
 
-								<div class="settingsWrapper ">
+								<div class="settingsWrapper">
 								</div>
 
+								<div class="showpreviewwrapper">
+									<button class="button ghost preview">
+										<%= e('art_preview') %>
+									</button>
+								</div>
+
+
 								<div class="publish">
-									<button class="publish action button medium orange ">Publish<i class="fas fa-arrow-right"></i></button>
+									
 								</div>
 							</div>
 						</div>
 					</div>
+				</div>
+			</div>
+
+			<div class="forbackmain">
+				<div class="mwork">
+					<i class="fas fa-chevron-circle-left"></i> <span>Вернуться назад</span>
 				</div>
 			</div>
 
@@ -109,27 +124,25 @@
 				<div class="editorSection">
 
 					<div class="abody">
-				
-						<div class="captionWrapper">
-							<textarea rows="2" placeholder="Caption of new article"></textarea>
-						</div>		
 
-						<div class="editorWrapper">
-							<div id="editorjs"></div>
+						<div class="abodywrp">
+				
+							<div class="captionWrapper">
+								<textarea rows="2" placeholder="<%= e('art_caption') %>"></textarea>
+							</div>		
+
+							<div class="editorWrapper">
+								<div id="editorjs"></div>
+							</div>
+
 						</div>
 					</div>
 
 				</div>
 
-				<div class="showpreview">
-					<button class="button ghost">
-						<i class="far fa-eye"></i> Preview
-					</button>
-				</div>
-
 			</div>
 		</div>
 
-
+		<div class="sizeinfoWrapper"></div>
 
 </div>

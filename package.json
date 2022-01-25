@@ -1,8 +1,8 @@
 {
     "name": "pocketnet",
-    "version": "0.4.118",
-    "cordovaversion": "1.1.174",
-    "cordovaversioncode": "10174",
+    "version": "0.5.1",
+    "cordovaversion": "1.5.1",
+    "cordovaversioncode": "15001",
     "description": "Pocketnet desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
     "company": "Pocketnet Community",
@@ -104,7 +104,7 @@
         "standard": "^11.0.1",
         "svg-captcha": "^1.4.0",
         "swagger-ui-express": "^4.1.4",
-        "tar.gz2": "^1.0.0",
+        "targz": "^1.0.1",
         "tcp-port-used": "^1.0.1",
         "twilio": "^3.48.1",
         "uglify-js": "",
@@ -114,7 +114,9 @@
         "yuicompressor": "^2.4.8"
     },
     "build": {
-        "productName": "Pocketnet",
+        "productName": "Bastyon",
+        "afterSign": "build/notarize.js",
+        "appId": "app.pocketnet.gui",
         "files": [
             "**/*",
             "!cordova${/*}",
@@ -165,29 +167,31 @@
             ],
             "artifactName": "${productName}_${platform}_${arch}.${ext}",
             "category": "Network",
-            "executableName": "Pocketnet",
-            "description": "Pocketnet Desktop Browser"
+            "executableName": "${productName}",
+            "description": "${productName} Desktop Browser"
         },
         "win": {
-            "target": "nsis",
+            "target": [
+                {
+                    "target": "nsis"
+                }
+            ],
             "icon": "assets/icons/win/icon.ico"
         },
         "nsis": {
             "artifactName": "${productName}Setup.${ext}",
-            "oneClick": false,
+            "oneClick": true,
             "perMachine": false,
-            "allowToChangeInstallationDirectory": true,
+            "allowToChangeInstallationDirectory": false,
             "createDesktopShortcut": true,
             "displayLanguageSelector": true,
             "menuCategory": true,
             "installerIcon": "assets/icons/win/icon.ico",
             "uninstallerIcon": "assets/icons/win/icon.ico",
             "uninstallDisplayName": "${productName}, v${version}",
-            "deleteAppDataOnUninstall": true,
+            "deleteAppDataOnUninstall": false,
             "license": "LICENSE",
             "include": "build/installer.nsh"
-        },
-        "afterSign": "build/notarize.js",
-        "appId": "app.pocketnet.gui"
+        }
     }
 }

@@ -100,9 +100,6 @@ var IPC = function(ipc, wc){
 		promise.then(data => {
 			send(message.id, null, data)
 		}).catch(e => {
-
-			
-
 			send(message.id, e)
 		})
 
@@ -210,7 +207,11 @@ var IPC = function(ipc, wc){
 						}
 
 						return Promise.resolve()
-					})
+					}).catch(e => {
+                        return Promise.reject({
+							cancel : true
+						})
+                    })
 				},
 			}
 		}
@@ -235,11 +236,8 @@ var IPC = function(ipc, wc){
 			if(!kaction) return Promise.reject('unknownAction')
 
 			return middle(message).then(r => { 
-				
 				return kaction(message.data)
-
 			}).then(data => {
-
 				send(message.id, null, data)
 			})
 		},
@@ -276,6 +274,14 @@ var IPC = function(ipc, wc){
 
 		return kit.destroyhard()
 	}
+
+    self.candestroy = function() {
+        return kit.candestroy()
+    }
+    
+    self.nodeStop = function() {
+        return kit.manage.node.stop()
+    }
 
 	//var isDevelopment = process.argv.find(function(el) { return el == '--development'; })
 

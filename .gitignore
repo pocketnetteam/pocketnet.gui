@@ -23,6 +23,7 @@ publish.py
 manifest.json
 **/settings
 data/
+heapdump/
 downloads/
 pocketcoin/
 pocketcoind*/

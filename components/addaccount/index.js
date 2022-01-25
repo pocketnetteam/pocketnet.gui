@@ -46,14 +46,62 @@ var addaccount = (function(){
 			
 			el.enter.on('click', events.add);
 
-			el.login.on('focus', function(){
-		    	el.c.find('.inputTable').addClass('typeactive')
-		    })
+			el.login.on('focus', function() {
+				el.c.find('.uploadFile').addClass('hidden');
+				el.c.find('.showPassword').removeClass('hidden');
+			});
 
-		    el.login.on('blur', function(){
-		    	el.c.find('.inputTable').removeClass('typeactive')
-		    })
-	        
+			el.login.on('blur', function(e) {
+				const focusOnShowPassword = $(e.relatedTarget).is('.showPassword');
+				const val = el.login.val();
+
+				if (focusOnShowPassword) {
+					/**
+					 * If new focus target is ShowPassword button,
+					 * returning focus to the input, so user can
+					 * proceed typing.
+					 */
+					el.login.focus();
+
+					return;
+				}
+
+				if (val.length) {
+					return;
+				}
+
+				el.c.find('.uploadFile').removeClass('hidden');
+				el.c.find('.showPassword').addClass('hidden');
+		    });
+
+			el.c.find('.showPassword').on('click', (e) => {
+				const btnIcon = $(e.currentTarget).find('.icon i');
+				const passwordVal = el.login.val();
+
+				if (btnIcon.is('.fa-eye')) {
+					btnIcon.removeClass('fa-eye');
+					btnIcon.addClass('fa-eye-slash');
+
+					el.login.attr('type', 'text');
+				} else {
+					btnIcon.addClass('fa-eye');
+					btnIcon.removeClass('fa-eye-slash');
+
+					el.login.attr('type', 'password');
+				}
+
+				/**
+				 * When input type is changed, the caret will be
+				 * automatically moved to the start. This
+				 * code returns to the end of input.
+				 *
+				 * Type change is async action, so giving 10ms
+				 * to the DOM to get done the change.
+				 */
+				setTimeout(() => {
+					el.login[0].setSelectionRange(passwordVal.length, passwordVal.length);
+				}, 10);
+			});
 
 	        initUpload({
 				el : el.c.find('.uploadFile'),

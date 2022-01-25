@@ -24,6 +24,7 @@ var Control = function(settings) {
     var lock = ''
 
     var state = {
+        status: 'stopped',
         info: {},
         sync: {
             left: 0,
@@ -35,9 +36,10 @@ var Control = function(settings) {
             title: '',
             progress: {
                 percent: 0
-            }
+            },
+            break: false,
         },
-        status: 'stopped'
+        hasUpdate: false
     }
 
     var node = {
@@ -48,10 +50,7 @@ var Control = function(settings) {
         proxy : null
     }
 
-    var hasupdates = false
-
     var config = {}
-
     var enabled = false 
 
     self.helpers = {
@@ -216,12 +215,17 @@ var Control = function(settings) {
         }
 
         return applications.checkupdate().then(r => {
-            hasupdates = r
+            state.hasUpdate = r
             return Promise.resolve()
         })
     }
 
     self.init = function(){
+
+        if (self.proxy.test){
+            return Promise.resolve()
+        } 
+
         // change global settings
 
         node.proxy = null
@@ -318,7 +322,10 @@ var Control = function(settings) {
             instance : node.instance ? true : false,
             hasbin : self.kit.hasbin(),
             state : state,
-            hasupdates : hasupdates,
+            node : {
+                binPath : node.binPath,
+                dataPath : node.dataPath
+            },
             lock : lock,
             other : node.other,
             hasapplication : applications.hasapplication()
@@ -377,16 +384,17 @@ var Control = function(settings) {
 
     self.kit = {
 
-        checkupdate : function(){
+        checkupdate : function() {
             return applications.checkupdate()
         },
 
-        install : function(){
+        install : function() {
 
             if(lock) return Promise.resolve(false)
 
             self.autorun.destroy()
 
+            state.install.break = false
             lock = 'installing'
             let snapshotFile = Path.resolve(node.dataPath, applications.getMeta()['snapshot_latest'].name)
 
@@ -413,23 +421,23 @@ var Control = function(settings) {
                         + ` - ${f.unitFormatter(st.size.transferred, 2)} / ${f.unitFormatter(st.size.total, 2)}`
                         + ` - ${f.unitFormatter(st.speed, 2)}/s`
                         + ` - ${Math.round(st.time.remaining / 60)} min. remaining`
+                    
+                    return { break : state.install.break }
                 })
-
             }).then(() => {
+
+                if (state.install.break)
+                    Promise.reject();
+
+                state.install.break = -1
 
                 if (!fs.existsSync(snapshotFile))
                     return Promise.resolve()
 
-                return applications.decompress(snapshotFile, node.dataPath, function(st) {
-                    state.install.progress = {
-                        percent: st.pending / st.size
-                    }
+                state.install.progress = { percent: 1 }
+                state.install.title = 'Decompressing snapshot database...'
 
-                    if (state.install.progress.percent < 0.99)
-                        state.install.title = 'Decompressing snapshot database...'
-                    else
-                        state.install.title = 'Processing snapshot database...'
-                })
+                return applications.decompress(snapshotFile, node.dataPath)
 
             }).then(() => {
                 
@@ -441,25 +449,25 @@ var Control = function(settings) {
 
             }).then(() => {
                 
-                // state.install.progress = { percent: 100 }
-                // state.install.title = 'Installing binary files...'
-                // return applications.install('bin', self.helpers.complete_bin_path(), true)
+                state.install.progress = { percent: 1 }
+                state.install.title = 'Installing binary files...'
+                return applications.install('bin', self.helpers.complete_bin_path(), true)
                 
-                return applications.downloadPermanent('bin_permanent', node.binPath, function(st) {
-                    state.install.progress = st
-                    state.install.title = `Installing binary files...`
-                })
+                // return applications.downloadPermanent('bin_permanent', node.binPath, function(st) {
+                //     state.install.progress = st
+                //     state.install.title = `Installing binary files...`
+                // })
 
             }).then(() => {
                 
-                // state.install.progress = { percent: 100 }
-                // state.install.title = 'Installing checkpoints database...'
-                // return applications.install('checkpoint_main', self.helpers.data_checkpoints_path(true), false)
+                state.install.progress = { percent: 1 }
+                state.install.title = 'Installing checkpoints database...'
+                return applications.install('checkpoint_main', self.helpers.data_checkpoints_path(true), false)
 
-                return applications.downloadPermanent('checkpoint_main_permanent', self.helpers.data_checkpoints_path(false), function(st) {
-                    state.install.progress = st
-                    state.install.title = `Installing checkpoints database...`
-                })
+                // return applications.downloadPermanent('checkpoint_main_permanent', self.helpers.data_checkpoints_path(false), function(st) {
+                //     state.install.progress = st
+                //     state.install.title = `Installing checkpoints database...`
+                // })
 
             }).then(() => {
 
@@ -471,7 +479,7 @@ var Control = function(settings) {
 
                 lock = ''
                 self.autorun.init()
-                return self.kit.check()
+                return Promise.resolve()
 
             }).catch(e => {
 
@@ -481,7 +489,11 @@ var Control = function(settings) {
            
         },
 
-        delete : function(all){
+        breakInstall : function() {
+            state.install.break = true;
+        },
+
+        delete : function(all) {
 
             if(lock) return Promise.resolve(false)
 
@@ -506,24 +518,21 @@ var Control = function(settings) {
 
         update : function(){
 
-
             if(lock) return Promise.resolve(false)
 
             self.autorun.destroy()
 
-
-            return this.stop().then(r => {
+            return self.kit.safeStop().then(r => {
 
                 return self.kit.install()
 
             }).then(r => {
 
-                hasupdates = false
-
-
+                state.hasUpdate = false
                 self.autorun.init()
 
                 return self.kit.check()
+
             }).catch(e => { 
 
                 self.logger.w('nodecontrol', 'error', 'Node Update', e)
@@ -579,16 +588,6 @@ var Control = function(settings) {
                     return Promise.resolve(true)
                 }
 
-                if (e.code == 408) {
-                    if (!node.instance) {
-                        state.status = 'stopped'
-                        return Promise.resolve(false)
-                    } else {
-                        state.status = 'starting'
-                        return Promise.resolve(true)
-                    }
-                }
-
                 if(e.code == -28){
                     state.status = 'running'
 
@@ -599,16 +598,22 @@ var Control = function(settings) {
 
                     return Promise.resolve(true)
                 }
+                
+                if (!node.instance) {
 
-        
-                state.status = 'error'
-                state.error = {
-                    code : e.code,
-                    message : e.message
+                    if (!enabled)
+                        state.status = 'stopped'
+                        
+                    delete state.error
+                    return Promise.resolve(false)
+
+                } else {
+
+                    state.status = 'checking'
+
+                    return Promise.resolve(true)
+
                 }
-        
-                return Promise.resolve(true)
-
             })
         
         },
@@ -688,7 +693,7 @@ var Control = function(settings) {
                         `-datadir=${node.dataPath}`,
                         `-silent`,
                         `-blocksonly=0`,
-                    ], { stdio: ['ignore'], detached : true, shell : false})
+                    ], { stdio: ['ignore'], detached : false, shell : false})
 
                     node.instance.unref()
 
@@ -711,15 +716,19 @@ var Control = function(settings) {
                             self.kit.enable(false)
                         }
 
+                        self.logger.w('nodecontrol', 'error', 'on.close', state)
+
                     });
 
                     node.instance.on('error', function(code) {
 
-
+                        node.instance = null
                         state.status = 'error'
                         state.error = {
                             code : code
                         }
+
+                        self.logger.w('nodecontrol', 'error', 'on.error', state)
 
                     });
 
@@ -748,31 +757,39 @@ var Control = function(settings) {
             state.status = 'stopping'
             state.info = {}
 
-            //self.nodeManager.remove(self.config)
-
             if(lock) return Promise.resolve(false)
 
             return self.kit.rpc('stop').then(r => {
-
-                state.status = 'stopped'
                 state.timestamp = new Date()
-
                 return Promise.resolve()
 
             }).catch(e => {
-                state.status = 'stopped'
+                if (node.instance) {
+                    state.status = 'stopping'
+                } else {
+                    state.status = 'stopped'
+                }
+
                 state.timestamp = new Date()
+
                 return Promise.resolve()
             })
             .then(r => {
-
-                if (node.instance){
-                    node.instance = null
-                }
-
                 return Promise.resolve()
             })
                
+        },
+
+        safeStop: function() {
+            return self.destroy().then(e => {
+                return self.kit.stop().then(e => {
+                    return f.pretry(function() {
+                        return !node.instance || state.status == 'detached'
+                    }, 60, 1000).then(e => {
+                        return Promise.resolve()
+                    })
+                })
+            })
         },
 
         restart : function(){
@@ -790,6 +807,7 @@ var Control = function(settings) {
                 c(enabled, state)
             })
 
+            state.status = v ? 'starting' : 'stopping'
             state.timestamp = new Date()
 
         },

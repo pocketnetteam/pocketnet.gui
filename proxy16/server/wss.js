@@ -383,7 +383,6 @@ var WSS = function(admins, manage){
     
                 if (user.admin){
                     user.ticks[ws.id] = setInterval(() => {tick(ws)}, 30000)
-                    
                 }
     
                 connectNode(user, user.nodes[node.key]);

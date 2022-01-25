@@ -16,7 +16,9 @@
 							
 							
 							<% if(os() && self.app.platform.applications.ui[os()] && typeof _Electron == 'undefined' && !window.cordova) {%>
-								<div elementsid="help_tipitem_applications" class="tipitem bright" page="applications">Download Applications</div>
+								<a href="applications">
+									<div elementsid="help_tipitem_applications" class="tipitem bright" ><%- e('e13120') %></div>
+								</a>
 							<% } %>
 
 							<div elementsid="help_tipitem_faq" class="tipitem" page="faq"><%=e('e14102')%></div>

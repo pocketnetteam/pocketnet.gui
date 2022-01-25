@@ -117,6 +117,7 @@ const publics = {
     getstatisticcontent: true,
     getstatisticbyhours: true,
     getstatisticbydays: true,
+    getrecomendedcontentsbyscoresfromaddress : true
 }
 
 const keepAliveAgent = new http.Agent({ keepAlive: true });
@@ -190,13 +191,11 @@ function rpc(request, callback, obj) {
         path: pst ? '/post/' : (pbl ? '/public/' : '/'),
         method: 'POST',
         port: prv ? self.portPrivate : self.port,
-        //rejectUnauthorized: self.rejectUnauthorized,
-        agent: keepAliveAgent,//self.disableAgent ? false : undefined,
-        //timeout: 5000,
-        signal : signal
+        agent: keepAliveAgent,
+        signal : signal,
     };
 
-    var lg = self.host == '135.181.196.243' || self.host == '65.21.56.203' || self.host == '51.174.99.18'
+    var lg = false //self.host == '135.181.196.243' || self.host == '65.21.56.203' || self.host == '51.174.99.18'
 
     if (self.httpOptions) {
         for (var k in self.httpOptions) {
@@ -320,7 +319,7 @@ function rpc(request, callback, obj) {
     req.setHeader('Content-Length', request.length);
     req.setHeader('Content-Type', 'application/json');
 
-    if(prv) {
+    if (prv) {
         req.setHeader('Authorization', 'Basic ' + Base64Helper.encode(self.user + ':' + self.pass));
     }
 
@@ -410,7 +409,7 @@ RpcClient.callspec = {
     setGenerate: 'bool int',
     getreputations: '',
     getrandomcontents : 'str',
-
+    getrecomendedcontentsbyscoresfromaddress : 'str obj int int int',
 
     getcontents: 'str',
     getlastcomments: 'str str str',

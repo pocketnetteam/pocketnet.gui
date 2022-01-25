@@ -11,10 +11,9 @@ var post = (function () {
 
 	var Essense = function (p) {
 
-		var primary = (deep(p, 'history')  && !p.inWnd) || deep(p, 'primary');
+		var primary = (p.history && !p.inWnd) || p.primary;
 
-
-		var el, share, ed, inicomments, eid = '', _repost = null, level = 0, external = null;
+		var el = {}, share, ed = {}, inicomments, eid = '', _repost = null, level = 0, external = null;
 
 		var player = null
 
@@ -347,8 +346,6 @@ var post = (function () {
 
 			position: function () {
 
-				console.log("??? position", share.txid, primary)
-
 				if (isMobile()) return
 
 				if (primary) return
@@ -372,6 +369,9 @@ var post = (function () {
 			},
 
 			initVideo: function (clbk) {
+
+				if(!el.c) return
+
 				if (self.app.platform.sdk.usersettings.meta.embedvideo && !
 					self.app.platform.sdk.usersettings.meta.embedvideo.value) return
 
@@ -419,8 +419,8 @@ var post = (function () {
 						play : function(){
 							self.app.actions.playingvideo(player)
 
-							if(isMobile() && !ed.repost && !el.c.closest('.wndcontent').length){
-								
+							if(isMobile() && !ed.repost && !el.c.closest('.wndcontent').length && !ed.openapi){
+								console.log("HHE", ed)
 								self.app.actions.scroll(125)
 							}
 						},
@@ -442,7 +442,19 @@ var post = (function () {
 								})
 
 							}
-						}
+						},
+
+						hlsError : function(error){
+							/*if(!window.cordova)
+								self.app.Logger.error({
+									err: 'hlsError',
+									payload: JSON.stringify(error.data),
+									code: 401,
+								});*/
+								
+						},
+
+						useP2P : self.app.platform.sdk.usersettings.meta.videop2p.value 
 					};
 
 					$.each(pels, function (key, el2) {
@@ -451,8 +463,9 @@ var post = (function () {
 
 						PlyrEx(el2, options, (_player) => {
 
+							if(!el.c) return
+
 							player = _player
-						
 
 							if (wa) {
 
@@ -682,6 +695,10 @@ var post = (function () {
 
 				return sitemessage(self.app.localization.e('videoCopied'));
 			},
+
+			closeWindow: function() {
+				self.closeContainer();
+			},
 		}
 
 		var events = {
@@ -878,6 +895,17 @@ var post = (function () {
 				actions.donate()
 			},
 
+			clickOut: function(e) {
+				const clickedElem = $(e.target);
+
+				const isClickOut = (clickedElem.hasClass('wndcontent'));
+
+				if (!isClickOut) {
+					return;
+				}
+
+				actions.closeWindow();
+			}
 		}
 
 		var renders = {
@@ -922,9 +950,10 @@ var post = (function () {
 
 									caption: ed.nocommentcaption ? null : rendered,
 									send: function () {
-										var c = el.c.find('.commentsAction .count span');
 
-										c.html(Number(c.html() || '0') + 1);
+										var c = el.c.find('.commentsAction .count span');
+											c.html(Number(c.html() || '0') + 1);
+											
 									},
 									txid: ed.commentsid || share.txid,
 
@@ -1208,7 +1237,11 @@ var post = (function () {
 								renders.urlContent(function () {
 
 									actions.position();
-									actions.initVideo();
+
+									setTimeout(function(){
+										actions.initVideo();
+									}, 250)
+									
 
 									renders.images(function () {
 
@@ -1267,6 +1300,8 @@ var post = (function () {
 												history : true
 											})
 										})
+
+										el.share.closest('.wndcontent').on('click', events.clickOut);
 
 										if (clbk) clbk();
 									});
@@ -1766,9 +1801,7 @@ var post = (function () {
 			},
 
 			destroy: function (key) {
-				el = {};
-
-				console.log("DESTROY POST")
+				
 
 				if (external){
 
@@ -1812,6 +1845,12 @@ var post = (function () {
 					_repost.destroy();
 					_repost = null;
 				}
+
+
+				if(el.c) el.c.empty()
+
+				el = {};
+				ed = {}
 
 			},
 

@@ -87,6 +87,8 @@
 
     </div>
 
+
+
     <% if(state) {%>
         <div class="additional addmenu">
             <div elementsid="showprivatekey" class="reportCaption showprivatekey">
@@ -94,23 +96,39 @@
                 <%=e('privatekey')%>
                 </div>
             </div>
+
+            <div class="reportCaption">
+                <div class="label">
+                    <a elementsid="https://<%-app.options.url%>/blockexplorer/" href="https://<%-app.options.url%>/blockexplorer/" cordovalink="_system" external="external">Block Explorer</a>
+                </div>
+            </div>
+
         </div>
 
     <% } %>
 
+    
+
     <% if(isTablet()) {%>
     <div class="additional addmenu">
+
+        <% if(!window.cordova) {%>
+
+            <div class="reportCaption">
+                <div class="label">
+                    <a elementsid="hrefabout" href="applications"><%=e('e13120')%> <i class="fas fa-long-arrow-alt-down"></i></a>
+                </div>
+            </div>
+            
+        <% } else { %> 
+
+
+        <% } %>
+
 
         <div class="reportCaption">
             <div class="label">
                 <a elementsid="hrefabout" href="about"><%=e('aboutus')%></a>
-            </div>
-        </div>
-
-        
-        <div class="reportCaption">
-            <div class="label">
-                <a elementsid="https://<%-app.options.url%>/blockexplorer/" href="https://<%-app.options.url%>/blockexplorer/" cordovalink="_system" external="external">Block Explorer</a>
             </div>
         </div>
 
@@ -136,7 +154,59 @@
 
         <% } %>
 
+      
+
     </div>
+
+    <% } %>
+
+
+    <% if(isTablet()) {%>
+
+
+        <div class="additional addmenu applicationupdatemodule <% if(app.mobile.update.updating) {%> updating <% } %>">
+
+            <div class="reportCaption">
+                <div class="label">
+                    <% if(app.mobile.update.hasupdate) {%>
+
+                        <button class="orange small hasupdate">
+                            <%=e('updateapplication')%>
+                        </button>
+
+                        
+                    <% } else { %> 
+
+                        <span class="applicaitonversion">
+                            <%=e('applicationversion')%> &middot; <%- window.packageversion %>
+                        </span>
+                        
+                    <% } %>
+                    
+                </div>
+
+                <% if(app.mobile.update.needmanage) {%>
+                    <div class="label">
+                        <span>
+                            <%=e('installedusinggps')%>
+                        </span>
+                    </div>
+                <% } %>
+            </div>
+
+
+            <div class="updatingprogress">
+
+                <div class="text">Updating</div>
+
+                <div class="preloaderWrapper">
+                    <div class="preloader5"><img src="./img/three-dots.svg"/></div>
+                </div>
+
+            </div>
+
+        </div>
+
 
     <% } %>
 

@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="">
+<html class="no-js electronapp" lang="">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -108,6 +108,9 @@
                 </div>
                
             </div>
+        </div>
+
+        <div class="electronnav">
         </div>
 
         <!--<div class="updatingFrontend">

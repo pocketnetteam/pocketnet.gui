@@ -226,6 +226,8 @@ var notifications = (function(){
 
 			loadingAndEmpty : function(){
 
+				if(!el.c) return
+
 				if(self.app.errors.connection()){
 
 					el.loader.addClass('hidden')

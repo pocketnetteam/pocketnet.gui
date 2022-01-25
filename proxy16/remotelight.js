@@ -167,8 +167,6 @@ var Remote = function(app){
 				try{
 					d = JSON.parse(body || "{}")
 
-					console.log("REOVE", d)
-
 					_.each(d, function(v, k){
 						
 						if (k.split(':').length > 1)

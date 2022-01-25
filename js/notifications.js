@@ -24,7 +24,6 @@ Notifications = function(app) {
         if (window.client) {
             self.subscribeTimestamp = Date.now();
             window.client.on("Room.timeline", (message) => {
-                console.log(message);
                 // Ignore all the events for the first 3 seconds
                 if (Math.floor((Date.now() - self.subscribeTimestamp) / 1000) <= 3) return;
                 // Check we have an event

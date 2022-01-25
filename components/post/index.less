@@ -1373,6 +1373,10 @@
 			}
 		}
 
+		.statswrapperExtended{
+			display: none;
+		}
+
 		&.squareVideo{
 			.forurl{
 				.videoWrapper{
@@ -1681,6 +1685,10 @@
 		.articlecontent{
 			padding-top : 8 * @rhythm;
 			padding-bottom : 8 * @rhythm;
+
+			.articlerenderError{
+				text-align: center;
+			}
 			
 			.cntswrk{
 				margin-left: 0;
@@ -1698,6 +1706,35 @@
 
 			.forcomments{
 				margin-top : 4 * @rhythm;
+			}
+		}
+
+		.removeDescription{
+			display: none;
+			padding: @rhythm * 3;
+			color: #7c7c7c;
+			text-align: center;
+		}
+
+		&.deleted{
+
+			.forcomments,
+			.starstoppanel,
+			.socialsharewrapper,
+			.textscnts {
+				display: none!important;
+			}
+
+			.acticletext{
+				display: none;
+			}
+
+			.removeDescription{
+				display: block!important;
+			}
+
+			.articleCover{
+				filter : blur(10px);
 			}
 		}
 	}
@@ -1754,6 +1791,9 @@
 						z-index: 1;
 						color : #fff;
 						text-align: center;
+						position: relative;
+						border-bottom : 1px dashed fade(@color-gray-mlight, 50);
+						color : @color-black2;
 		
 						.tags{
 							justify-content: center;
@@ -1790,13 +1830,6 @@
 						display: none;
 					}
 
-					.captioncnt{
-						position: relative;
-						border-bottom : 1px dashed fade(@color-gray-mlight, 50);
-						color : @color-black2;
-					}
-
-		
 					
 				}
 				
@@ -1815,6 +1848,7 @@
 						right : 0;
 						top : 0;
 						bottom : 0;
+						padding-bottom: 8 * @rhythm;
 
 						.sharecaption{
 							font-size: 2em;
@@ -1889,6 +1923,96 @@ html.mobile.fullscreen{
 html.stblack{
 	#post{
 		background: transparent;
+	}
+
+	#post{
+		.sharearticle{
+			
+	
+			.shareBgCaption,
+			.articleend{
+	
+	
+	
+				.divider{
+					background: @color-gray-mlight;
+				}
+	
+			}
+	
+			.shareBgCaption{
+	
+				.tags{
+					div span {
+						color : #FFF;
+					}
+				}
+	
+		
+	
+				.captioncnt{
+					color : #fff;
+
+					
+				}
+	
+			
+				.starstoppanel,
+				.socialsharewrapper{
+	
+					.iconwrapper{
+						color : #fff;
+
+					}
+				}
+	
+				&.smallimage{
+					.articleCover{
+						background-color: @color-black2;
+					}
+				}
+	
+				&.verticalcover{
+	
+					&.showtext{
+						border-bottom : 1px dashed fade(@color-gray-mlight, 50);
+					}
+					
+				
+					.captioncnt{
+						color : rgb(226, 226, 226);
+					}
+	
+					.divider{
+						background:rgb(226, 226, 226);
+					}
+	
+					.tags{
+						div span {
+							color : rgb(226, 226, 226);
+						}
+					}
+	
+					.starstoppanel,
+					.socialsharewrapper{
+						.iconwrapper{
+							color : rgb(226, 226, 226);
+						}
+					}
+				}
+	
+			}
+	
+			.articlecontent{
+			
+			}
+	
+			.removeDescription{
+				color: #b8b8b8;
+			}
+	
+		
+		}
 	}
 }
 

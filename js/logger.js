@@ -17,12 +17,12 @@ class FrontendLogger {
   }
 
   get loggerActive() {
-    return this.app.platform.sdk.usersettings.meta.sendUserStatistics.value;
+    return this.app.platform.sdk.usersettings.meta.sendUserStatistics.value && !this.app.test;
   }
 
   _createErrorBody({
-    level = '',
-    date = new Date(),
+    level = 'error',
+    date = moment().format('YYYY-MM-DD hh:mm:ss'),
     moduleVersion = '',
     code = 400,
     payload = '',

@@ -6,9 +6,7 @@ var categories = (function(){
 
 	var Essense = function(p){
 
-		var primary = deep(p, 'history');
-
-		var el, showed = false, essenseData, taginput;
+		var el = {}, showed = false, essenseData, taginput;
 
 		var actions = {
 			showhideclear : function(){
@@ -347,10 +345,10 @@ var categories = (function(){
 		}
 
 		return {
-			primary : primary,
 
 			getdata : function(clbk, p){
 				essenseData = p.settings.essenseData || {};
+
 				var data = {};
 
 				data.video = parameters().video ? true  :false
@@ -368,6 +366,10 @@ var categories = (function(){
 				}
 
 				removeEvents()
+
+				essenseData = {}
+
+				if(el.c) el.c.empty()
 
 				el = {};
 			},

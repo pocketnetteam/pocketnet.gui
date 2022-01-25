@@ -14,6 +14,10 @@
 		}
 	}
 
+	.video-js{
+		contain: strict;
+	}
+
 
 	&.rebuilding{
 		.transition(0.3s);
@@ -1576,6 +1580,10 @@
 				background: fade(@color-black2, 90);
 				padding-top: 0;
 
+				.video-js{
+					contain: unset;
+				}
+
 				.shareTable{
 					padding-top : 0;
 				}
@@ -2535,11 +2543,12 @@
 				}
 
 				.buttonOpenWrapper{
-					margin-bottom: @rhythm;
+					padding-bottom: 2 * @rhythm;
+					padding-top: 2 * @rhythm;
 					
 					button{
 						width: 130px;
-						border-radius: 0;
+						border-radius: 2px;
 						background: fade(@color-black2, 10);
 						backdrop-filter: blur(14px);
         				-webkit-backdrop-filter: blur(14px); 
@@ -2571,7 +2580,7 @@
 			
 	
 			.shareBgCaption{
-				height: 380px;
+				height: 425px;
 				position: relative;
 				
 	
@@ -2780,6 +2789,29 @@
 	
 				.forcomments{
 					margin-top : 12 * @rhythm;
+				}
+			}
+
+			.removeDescription{
+				display: none;
+				padding: @rhythm * 3;
+				color: #7c7c7c;
+			}
+
+			&.deleted{
+
+				.starstoppanel,
+				.socialsharewrapper,
+				.textscnts {
+					display: none!important;
+				}
+
+				.removeDescription{
+					display: block;
+				}
+
+				.articleCover{
+					filter : blur(10px);
 				}
 			}
 		}
@@ -3499,6 +3531,140 @@ html.stblack{
 			}
 		}
 	
+	}
+
+	#lenta{
+		.shares .share{
+
+			.sys{
+				span{
+					color : @color-gray-mlight;
+				}
+				
+			}
+			
+			
+			.sharearticle{
+			
+		
+				.shareBgCaption,
+				.articleend{
+				
+					.buttonOpenWrapper{
+						padding-bottom: 2 * @rhythm;
+						padding-top: 2 * @rhythm;
+						
+						button{
+							color : #FFF;
+							background: fade(@color-black2, 50);
+							border : 1px solid transparent!important; 
+	
+							&:hover{
+								background: fade(@color-black2, 10);
+							}
+						}
+					}
+		
+					.divider{
+						background: rgb(15, 16, 26);
+					}
+		
+					.tags{
+						div span {
+							color : #FFF;
+						}
+					}
+				}
+				
+		
+				.shareBgCaption{
+		
+					.blackmatte{
+						background: rgb(0,0,0);
+						background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(255,255,255,0) 100%);
+					}
+		
+					.captioncnt{
+						color : #fff;
+		
+						.sharecaption{
+							color : #fff;
+						}
+						
+					}
+		
+					.starstoppanel,
+					.socialsharewrapper{
+		
+						.iconwrapper{
+							color : #fff;
+		
+						}
+					}
+	
+		
+					&.smallimage{
+						.articleCover{
+							background-color: @color-black2;
+						}
+					}
+		
+				
+					&.verticalcover{
+						.captioncnt{
+							.sharecaption{
+								color : rgb(226, 226, 226);
+							}
+						}
+		
+					
+		
+						.captioncnt{
+							color : rgb(226, 226, 226);
+						}
+		
+						.divider{
+							background: rgb(226, 226, 226);
+						}
+	
+						.buttonOpenWrapper{
+							margin-bottom: @rhythm;
+							
+							button{
+								background: fade(@color-add, 100);
+								color : #FFF;
+								&:hover{
+									background: fade(@color-add, 90);
+								}
+							}
+						}
+	
+						.tags{
+							div span {
+								color : rgb(226, 226, 226);
+							}
+						}
+	
+						.starstoppanel,
+						.socialsharewrapper{
+							.iconwrapper{
+								color : rgb(226, 226, 226);
+							}
+						}
+					}
+		
+				}
+		
+			
+				.removeDescription{
+					color: #7c7c7c;
+				}
+	
+				&.deleted{
+				}
+			}
+		}
+		
 	}
 }
 

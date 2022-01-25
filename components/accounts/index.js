@@ -16,13 +16,7 @@ var accounts = (function(){
 
 			signin : function(address){
 
-				console.log('address', address)
-				
-				
 				self.app.platform.sdk.pool.expand(pack, function(expandedPack){
-
-					console.log('expandedPack', expandedPack)
-
 					var index = _.indexOf(expandedPack.addresses, address);
 
 					if (index > -1){
@@ -149,7 +143,7 @@ var accounts = (function(){
 
 										dialog({
 											html : self.app.localization.e('acc' + error),
-											class : "one zIndex"
+											class : "one zindex"
 										})
 
 									}

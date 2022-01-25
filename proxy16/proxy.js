@@ -636,6 +636,11 @@ var Proxy = function (settings, manage, test, logger) {
 					'pocketnetpeertube12.nohost.me',
 					'pocketnetpeertube13.nohost.me'
 				],
+
+				15: [
+					'peertube14.pocketnet.app',
+					'peertube15.pocketnet.app',
+				],
       		};
 
 			if (test){
@@ -701,7 +706,8 @@ var Proxy = function (settings, manage, test, logger) {
 
 			return {
 				status: status,
-
+				test : self.test,
+				
 				nodeManager: self.nodeManager.info(compact),
 				nodeControl: self.nodeControl.info(compact),
 				firebase: self.firebase.info(compact),
@@ -1450,10 +1456,7 @@ var Proxy = function (settings, manage, test, logger) {
 
 						remote.nmake(url, function (err, data) {
 
-							console.log('err', err)
 							if (!err) {
-
-								console.log('data', data)
 
 								resolve({
 
@@ -1837,7 +1840,7 @@ var Proxy = function (settings, manage, test, logger) {
 						data: {
 							id: captcha.id,
 							img: captcha.data,
-							//result: captcha.text, ///
+							result: self.test ? captcha.text : null, ///
 							done: false,
 						},
 					});
