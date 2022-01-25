@@ -644,7 +644,7 @@ var Proxy = function (settings, manage, test, logger) {
       		};
 
 			if (test){
-				ins = {0 : ['test.peertube.pocketnet.app']}
+				ins = {0 : ['test.peertube.pocketnet.app', 'test.peertube2.pocketnet.app']}
 			}
 
 			return peertube.init({
