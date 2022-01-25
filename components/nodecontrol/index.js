@@ -100,10 +100,12 @@ var nodecontrol = (function(){
                     sitemessage(`${self.app.localization.e('easyNode_e10042')}`, null, 5000) // self.app.localization.e('successcopied')
 
 				}).catch(e => {
-                    if (e.code && e.message)
-                        sitemessage(`(${self.app.localization.e('dcode')} ${e.code}): ${e.message}`, null, 5000)
-                    else
-                        sitemessage(`Unknown error`)
+                    if (!e.cancel) {
+                        if (e.code && e.message)
+                            sitemessage(`(${self.app.localization.e('dcode')} ${e.code}): ${e.message}`, null, 5000)
+                        else
+                            sitemessage(`Unknown error`)
+                    }
 				})
 			},
 		}
