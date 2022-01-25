@@ -309,7 +309,7 @@ var easynode = (function(){
 			
 
 			self.app.platform.papi.post(
-				"9eb62387e3ae5fa7c257b58799a4619014b98824a6ca466caef739d939f2832a",
+				"18399921cc5455b3283322a488f553d0169d00e3501246fc60d2e0c67c98bfc6",
 				el.lenta,
 				function (e, p) {
 					ext = p
