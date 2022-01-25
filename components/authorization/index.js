@@ -289,7 +289,7 @@ var authorization = (function(){
 				}
 			})
 
-			el.login.on('keyup', function() {
+			var v = function(){
 				if(!$(this).val()){
 					el.c.find('.uploadFile').removeClass('hidden');
 					el.c.find('.showPassword').addClass('hidden');
@@ -298,8 +298,10 @@ var authorization = (function(){
 					el.c.find('.uploadFile').addClass('hidden');
 					el.c.find('.showPassword').removeClass('hidden');
 				}
-			
-			});
+			}
+
+			el.login.on('keyup', v);
+			el.login.on('change', v);
 
 		    el.login.on('blur', function(e) {
 				const focusOnShowPassword = $(e.relatedTarget).is('.showPassword');
