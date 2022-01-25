@@ -26,14 +26,19 @@
                 </div>
 
                 <div class="buttonWrapper">
+
                     <% if(os.href) {%>
-                        
-                        <a href="<%-os.href%>">
-                            <button elementsid="download<%- os.text.name %>" class="downloadOsStyle"><%- e('download') %></button>
-                        </a>
+                        <div>
+                            <a href="<%-os.href%>">
+                                <button elementsid="download<%- os.text.name %>" class="downloadOsStyle"><%- e(os.hreflabel || 'download') %></button>
+                            </a>
+                        </div>
+                    <% } %>
                        
-                    <% } else { %> 
-                        <button elementsid="download<%- os.text.name %>" class=" downloadOs downloadOsStyle"><%- e('download') %></button>
+                    <% if(os.github) {%>
+                        <div>
+                            <button elementsid="download<%- os.text.name %>" class=" downloadOs downloadOsStyle"><%- e(os.githublabel || 'download') %></button>
+                        </div>
                     <% } %>
                     
                 </div>

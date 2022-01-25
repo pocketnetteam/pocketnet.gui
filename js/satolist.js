@@ -289,13 +289,21 @@ Platform = function (app, listofnodes) {
                         download: self.app.localization.e('e132221'),
                         label: self.app.localization.e('e132233')
                     },
+
+                    github: {
+                        name: 'Pocketnet' + ".apk",
+                        url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
+                        page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
+                    },
         
                     icon: '<i class="fab fa-android"></i>',
         
                     modile : true,
                     image : 'applications_android.png',
 
-                    href: 'https://play.google.com/store/apps/details?id=pocketnet.app'
+                    href: 'https://play.google.com/store/apps/details?id=pocketnet.app',
+                    hreflabel : 'downloadplaystore',
+                    githublabel : 'downloadgithub'
                 },
 
                 windows: {
@@ -311,7 +319,7 @@ Platform = function (app, listofnodes) {
                     icon: '<i class="fab fa-windows"></i>',
         
                     github: {
-                        name: 'Pocketnet' + "Setup.exe",// app.meta.fullname + "Setup.exe",
+                        name: 'Pocketnet' + "Setup.exe",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
                         page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
                     },
@@ -399,7 +407,6 @@ Platform = function (app, listofnodes) {
             }
         }
     }
-
 
     self.errorHandler = function (key, action, akey) {
 
@@ -4169,7 +4176,6 @@ Platform = function (app, listofnodes) {
         }
     }
 
-
     self.sdk = {
 
         faqLangs : {
@@ -6661,8 +6667,6 @@ Platform = function (app, listofnodes) {
            
         },
 
-       
-
         registrations: {
             storage: {},
             clbks: {},
@@ -6744,6 +6748,7 @@ Platform = function (app, listofnodes) {
                 localStorage['registrations'] = JSON.stringify(self.sdk.registrations.storage || {});
             }
         },
+
         relayTransactions: {
             storage: {},
 
@@ -24949,8 +24954,6 @@ Platform = function (app, listofnodes) {
 
     }
 
-   
-
     self.nodes = listofnodes || null
 
     self.clearStorageFast = function () {
@@ -26346,11 +26349,14 @@ Platform = function (app, listofnodes) {
 
         }
 
+       
         self.sdk.localshares.initclbk()
 
         if(window.cordova){
             setupOpenwith()
         }
+
+        
 
     }
 

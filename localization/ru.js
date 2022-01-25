@@ -1795,7 +1795,13 @@ ____loclib.art_wordscount = "Количество слов"
 ____loclib.art_volumepercent = "Ограничение объёма статьи"
 ____loclib.art_goback = "Вернуться назад"
 
+____loclib.downloadingUpdate = "Скачивание обновления"
+____loclib.hasnotupdates = "Нет доступных обновлений"
+____loclib.cantmanageupdate = "Невозможно управлять обновлением"
 
+____loclib.updateapplication = "Обновить приложение"
+____loclib.applicationversion = "Версия приложения"
+____loclib.installedusinggps = "Приложение было установлено не через Google Play."
 
 ____loclib.empty = "Пусто"
 
