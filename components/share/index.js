@@ -6,8 +6,6 @@ var share = (function(){
 
 	var Essense = function(p){
 
-		console.log("P", p)
-
 		var wordsRegExp = /[,.!?;:() \n\r]/g
 
 		var displayTimes = false
@@ -795,16 +793,12 @@ var share = (function(){
 
 						w = w.replace(/[^a-zA-Z0-9а-яА-Я?]*/g, '').replace(/[# ?]*/g, '')
 
-						console.log("W"+ w + 'W')
-
 						if(!w) return false
 
 						return !currentShare.tags.have(w)
 
 					}
 				})
-
-				console.log('newtags', newtags)
 
 				if(newtags.length){
 

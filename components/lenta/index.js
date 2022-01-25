@@ -1921,6 +1921,8 @@ var lenta = (function(){
 
 			loadmorescroll : function(){
 
+				//console.log('loadmorescroll', cachedHeight, loadedcachedHeight)
+
 				if(!essenseData.horizontal){
 					if (
 						!loading && !ended && (recommended != 'recommended' || isMobile()) &&
@@ -1934,6 +1936,10 @@ var lenta = (function(){
 							loadedcachedHeight = cachedHeight
 	
 							actions.loadmore()
+
+							setTimeout(function(){
+								loadedcachedHeight = 0
+							}, 5000)
 	
 					}
 				}
@@ -1945,7 +1951,7 @@ var lenta = (function(){
 	
 						) {
 
-						
+							
 
 						actions.loadmore()
 	

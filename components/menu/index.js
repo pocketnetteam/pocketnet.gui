@@ -123,20 +123,9 @@ var menu = (function(){
 
 					if(!el.nav.hasClass('active')){
 						el.nav.addClass('active')
-						el.c.addClass('menupanelactive') //// ??????
+						el.c.addClass('menupanelactive')
 
 						el.nav.find('.pcenterLabel').removeClass('active')
-
-
-						console.log("HERE")
-			
-						/*el.postssearch.find('input').blur()
-
-
-						
-
-						if (menusearch)
-							menusearch.blur()*/
 
 						var r = parameters(self.app.nav.current.completeHref, true).r || 'empty'
 
