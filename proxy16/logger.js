@@ -108,6 +108,10 @@ var Logger = function(_loggers){
                 writelogs = false
             }
         }
+
+        if (global.LOG_LEVEL) {
+            self.setlevel(global.LOG_LEVEL);
+        }
         
     }
 

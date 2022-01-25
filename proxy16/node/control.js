@@ -384,11 +384,11 @@ var Control = function(settings) {
 
     self.kit = {
 
-        checkupdate : function(){
+        checkupdate : function() {
             return applications.checkupdate()
         },
 
-        install : function(){
+        install : function() {
 
             if(lock) return Promise.resolve(false)
 
@@ -493,7 +493,7 @@ var Control = function(settings) {
             state.install.break = true;
         },
 
-        delete : function(all){
+        delete : function(all) {
 
             if(lock) return Promise.resolve(false)
 
@@ -518,13 +518,11 @@ var Control = function(settings) {
 
         update : function(){
 
-
             if(lock) return Promise.resolve(false)
 
             self.autorun.destroy()
 
-
-            return this.stop().then(r => {
+            return self.kit.safeStop().then(r => {
 
                 return self.kit.install()
 
@@ -534,6 +532,7 @@ var Control = function(settings) {
                 self.autorun.init()
 
                 return self.kit.check()
+
             }).catch(e => { 
 
                 self.logger.w('nodecontrol', 'error', 'Node Update', e)
@@ -589,18 +588,6 @@ var Control = function(settings) {
                     return Promise.resolve(true)
                 }
 
-                if (e.code == 408) {
-                    if (!node.instance) {
-                        if (!enabled)
-                            state.status = 'stopped'
-                            
-                        delete state.error
-                        return Promise.resolve(false)
-                    } else {
-                        return Promise.resolve(true)
-                    }
-                }
-
                 if(e.code == -28){
                     state.status = 'running'
 
@@ -611,16 +598,22 @@ var Control = function(settings) {
 
                     return Promise.resolve(true)
                 }
+                
+                if (!node.instance) {
 
-        
-                state.status = 'error'
-                state.error = {
-                    code : e.code,
-                    message : e.message
+                    if (!enabled)
+                        state.status = 'stopped'
+                        
+                    delete state.error
+                    return Promise.resolve(false)
+
+                } else {
+
+                    state.status = 'checking'
+
+                    return Promise.resolve(true)
+
                 }
-        
-                return Promise.resolve(true)
-
             })
         
         },
@@ -723,15 +716,19 @@ var Control = function(settings) {
                             self.kit.enable(false)
                         }
 
+                        self.logger.w('nodecontrol', 'error', 'on.close', state)
+
                     });
 
                     node.instance.on('error', function(code) {
 
-
+                        node.instance = null
                         state.status = 'error'
                         state.error = {
                             code : code
                         }
+
+                        self.logger.w('nodecontrol', 'error', 'on.error', state)
 
                     });
 
@@ -759,8 +756,6 @@ var Control = function(settings) {
         stop: function() {
             state.status = 'stopping'
             state.info = {}
-
-            //self.nodeManager.remove(self.config)
 
             if(lock) return Promise.resolve(false)
 

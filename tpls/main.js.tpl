@@ -1,3 +1,8 @@
+global.WRITE_LOGS = process.argv.find(function(el) { return el.startsWith('--log'); })
+if (global.WRITE_LOGS) {
+    global.LOG_LEVEL = global.WRITE_LOGS.split("=").pop()
+}
+
 var open = require("open");
 /*const setupEvents = require('./installers/setupEvents')
 if (setupEvents.handleSquirrelEvent()) {

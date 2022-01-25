@@ -67,9 +67,9 @@
                         <div>
                             <span class="<%- fork ? 'bad' : '' %>">
                                 <%- nodestate.info.lastblock.height.toLocaleString() %>
-                                <%- manager.chain && Math.abs(nodestate.info.lastblock.height - manager.chain.commonHeight) > 15
+                                <%- manager.chain && Math.abs(nodestate.info.lastblock.height - manager.chain.bestHeight) > 15
                                     ?
-                                    ` / ${Number(manager.chain.commonHeight).toLocaleString()}`
+                                    ` / ${Number(manager.chain.bestHeight).toLocaleString()}`
                                     :
                                     ''
                                 %>

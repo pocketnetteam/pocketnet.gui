@@ -1,37 +1,9 @@
-#nodecontrol {
-  /*.collapsepart{
-        .collapsingpart{
-            display: none;
-        }
-
-        .subcaption{
-            cursor: pointer;
-            i{
-                width: 40px;
-                text-align: center;
-                .transition(0.3s)
-            }
-
-            &:hover{
-                i{
-                    transform: rotate(180deg);
-                }
-                
-            }
-        }
-
-        &.expanded{
-            .subcaption{
-                i{
-                    transform: rotate(180deg);
-                }
-            }
-            
-            .collapsingpart{
-                display: block;
-            }
-        }
-    }*/
+#nodecontrol .testnetwork {
+  padding: 2em;
+  text-align: center;
+}
+#nodecontrol .testnetwork span {
+  font-size: 0.9em;
 }
 #nodecontrol .maincaption {
   display: none;
@@ -329,6 +301,7 @@
 }
 #nodecontrol .nodecontentmanage .toDefaultPath {
   cursor: pointer;
+  text-decoration: underline;
 }
 #nodecontrol .nodecontentmanage .toDefaultPath:hover {
   color: #F41A4D;

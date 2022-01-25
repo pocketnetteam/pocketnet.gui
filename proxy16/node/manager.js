@@ -663,7 +663,7 @@ var Nodemanager = function(p){
         })
 
         commonchainArray = _.sortBy(commonchainArray, function(v){
-            return v.height
+            return Number(v.height)
         })
 
         if(!commonchainArray.length){
@@ -671,7 +671,6 @@ var Nodemanager = function(p){
         }
 
         var lastchain = commonchainArray[commonchainArray.length - 1]
-
         var maxHeight = lastchain.height
 
         var commonBlockHash = null
@@ -689,6 +688,13 @@ var Nodemanager = function(p){
             }
         }
 
+        var bestHeight = 0
+        for (let key in commonchainArray) {
+            let h = Number(commonchainArray[key].height)
+            if (h > bestHeight)
+                bestHeight = h
+        }
+
         var result = {
             commonHeight,
             maxHeight,
@@ -697,7 +703,8 @@ var Nodemanager = function(p){
             commonchain : commonchainArray,
             chainmap,
             hashmap,
-            chains
+            chains,
+            bestHeight
         }
 
         cachedchain = {
@@ -799,6 +806,7 @@ var Nodemanager = function(p){
             var _ch = {
                 commonHeight : chaininfo.commonHeight,
                 maxHeight : chaininfo.maxHeight,
+                bestHeight : chaininfo.bestHeight,
                 commonBlockHash : chaininfo.commonBlockHash,
                 lasttrustblocks : chaininfo.lasttrustblocks,
             }
