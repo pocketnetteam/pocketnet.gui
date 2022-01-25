@@ -415,8 +415,8 @@ var panel = (function(){
 			/*if (self.app.platform.sdk.usersettings.meta.vidgettags.value)
 				renders.tags()*/
 
-			if (self.app.platform.sdk.usersettings.meta.vidgetlastcomments.value)
-				renders.lastcomments()
+			// if (self.app.platform.sdk.usersettings.meta.vidgetlastcomments.value)
+			// 	renders.lastcomments()
 
 
 		

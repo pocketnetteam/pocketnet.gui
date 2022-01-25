@@ -742,6 +742,9 @@
   font-size: 0.8em;
   text-decoration: none;
 }
+#post .share .url .urlcnt {
+  margin-top: 1em;
+}
 #post .share .url .urlcnt .linkcnt {
   white-space: nowrap;
   text-overflow: ellipsis;
