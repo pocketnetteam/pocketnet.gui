@@ -144,7 +144,7 @@
   display: none;
 }
 html.stblack #topusers {
-  background: transparent;
+  background: #0a0c17;
 }
 html.stblack #topusers .users .user .addressTable {
   cursor: pointer;

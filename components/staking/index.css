@@ -154,6 +154,7 @@
 #staking .tcaptionwrapper {
   display: flex;
   align-items: center;
+  border-bottom: 1px solid rgba(229, 229, 229, 0.5);
 }
 #staking .tcaptionwrapper .vc_valuecustom {
   width: 75px;
@@ -315,10 +316,13 @@ html.stblack #staking .rcptwrp {
   background: #0a0c17;
   border-radius: 5px;
 }
-html.stblack #staking .tcaption .pkoin {
+html.stblack #staking .tcaptionwrapper {
+  border-bottom: 1px solid rgba(229, 229, 229, 0.5);
+}
+html.stblack #staking .tcaptionwrapper .tcaption .pkoin {
   background: #00a4ff;
 }
-html.stblack #staking .tcaption .pkoin span {
+html.stblack #staking .tcaptionwrapper .tcaption .pkoin span {
   color: #FFFFFF;
 }
 /*t*/

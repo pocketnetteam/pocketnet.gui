@@ -104,7 +104,17 @@
 
 			.postcontent{
 				margin-top: @rhythm;
-				word-break: break-word
+				word-break: break-word;
+
+				.message{
+					overflow-wrap: break-word;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					display: -webkit-box;
+					-webkit-line-clamp: 15;
+					line-clamp: 15;
+					-webkit-box-orient: vertical;
+				}
 
 			}
 
@@ -241,40 +251,11 @@
 }
 
 html.stblack{
-	#topusers{
-		background: transparent;
+
 	
-	
-		.users{
-			.user{
-			
-				.addressTable{
-					cursor: pointer;
-					
-					>div{
-		
-						&.label{
-		
-							.cur{
-								color : @color-main;
-							}
-	
-							.light{
-								color : @color-gray;
-							}
-						}
-		
-					}
-		
-				}
-	
-				&.blocking{
-					background: rgb(41, 3, 24);	
-				}
-		
-			}
-			
-		}
+	#recommendedposts{
+		background: #0a0c17;
+
 	}	
 }
 

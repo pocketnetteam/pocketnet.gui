@@ -81,6 +81,15 @@
   margin-top: 0.5em;
   word-break: break-word;
 }
+#recommendedposts .posts .post .postcontent .message {
+  overflow-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 15;
+  line-clamp: 15;
+  -webkit-box-orient: vertical;
+}
 #recommendedposts .posts .post .infoWrapper {
   display: flex;
   justify-content: space-between;
@@ -168,20 +177,8 @@
 #recommendedposts .posts .post .subscribebuttonstop.following .subscribe {
   display: none;
 }
-html.stblack #topusers {
-  background: transparent;
-}
-html.stblack #topusers .users .user .addressTable {
-  cursor: pointer;
-}
-html.stblack #topusers .users .user .addressTable > div.label .cur {
-  color: #00a4ff;
-}
-html.stblack #topusers .users .user .addressTable > div.label .light {
-  color: #3c4146;
-}
-html.stblack #topusers .users .user.blocking {
-  background: #290318;
+html.stblack #recommendedposts {
+  background: #0a0c17;
 }
 /*t*/
 @media only screen and (max-width: 768px) {
