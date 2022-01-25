@@ -11234,6 +11234,26 @@ edjsHTML = function() {
 
         return {
 
+			words : function(_e){
+
+				var r = 0
+
+				var add = function(str){
+
+					r += (str || "").split(/\s+/).length
+				}
+
+				_e.blocks.map((function(e) {
+
+					if(encdec[e.type]){
+						encdec[e.type](e.data, add)
+					}
+
+                }))
+
+				return r
+			},
+
 			apply : function(_e, fu){
 
 				if(!fu) fu = encodeURIComponent

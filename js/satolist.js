@@ -6099,6 +6099,7 @@ Platform = function (app, listofnodes) {
 
                     })
                 }).then(r => {
+
                     self.sdk.localshares.storage = {}
 
                     self.sdk.localshares.saving[share.txid] = false
@@ -6108,11 +6109,15 @@ Platform = function (app, listofnodes) {
                     //self.sdk.localshares.addtostorage(shareInfo.share)
 
                     //return Promise.resolve()
+
                 }).then(r => {
 
                     if (p.after) p.after(share)
 
                 }).catch(e => {
+
+                    console.log("ERROR", e)
+
                     self.sdk.localshares.saving[share.txid] = false
 
                     if (p.after) p.after(share)
@@ -6247,6 +6252,7 @@ Platform = function (app, listofnodes) {
                                                 }, reject, function(pr) {
 
                                                     if(p.progress) p.progress('video', 100* pr.bytesReceived / pr.totalBytesToReceive)
+
                                                 });
                                                 
                                             }, reject);
@@ -23230,6 +23236,7 @@ Platform = function (app, listofnodes) {
                         if (jm.type == 'proxy-message-tick'){
 
                             return wss.proxy.system.tick(jm.data)
+                            
                         }
 
                         if (jm.type == 'changenode'){
