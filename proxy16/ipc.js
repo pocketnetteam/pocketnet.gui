@@ -242,9 +242,7 @@ var IPC = function(ipc, wc){
 			}).then(data => {
 
 				send(message.id, null, data)
-			}).catch(e => {
-                return Promise.reject(e)
-            })
+			})
 		},
 
 		electron : {
