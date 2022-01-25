@@ -15,11 +15,11 @@ html.stblack{
     }
 
     ::-moz-selection {
-        background: @color-main;
+        background: @color-yellow;
     }
     
     ::selection {
-        background: @color-main;
+        background: @color-yellow;
     }
 
     
@@ -34,7 +34,6 @@ html.stblack{
 
     textarea{
         background: transparent;
-        border: 1px solid @color-bright !important;
         color : @color-gray-mlight;
     }
 
@@ -42,7 +41,6 @@ html.stblack{
         .userPanel{
             .parameter{
                 textarea {
-                    border: 1px solid @color-bright !important;
                 }
             }
         }
@@ -422,16 +420,6 @@ html.stblack{
             background:  @color-black3;
         }
     
-        ._close{
-            color : @color-main;
-    
-        }
-    
-        &.noheader {
-            ._close{
-                color : @color-main;
-            }
-        }
         
         .wndok,
         .wndclose{
@@ -511,9 +499,6 @@ html.stblack{
                 background: transparent;
             }
     
-            ._close{
-                color : @color-main;
-            }
         }
     
         &.transparent{

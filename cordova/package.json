@@ -38,6 +38,7 @@
     "cordova-android": "^9.1.0",
     "cordova-ios": "^6.2.0",
     "cordova-plugin-add-swift-support": "^2.0.2",
+    "cordova-plugin-android-packagemanager": "file:cordova-plugin-android-packagemanager",
     "cordova-plugin-androidx-adapter": "^1.1.3",
     "cordova-plugin-background-download": "0.0.2",
     "cordova-plugin-background-mode": "^0.7.3",
@@ -133,7 +134,8 @@
       "cordova-plugin-network-information": {},
       "cordova-plugin-vibration": {},
       "cordova-plugin-androidx-adapter": {},
-      "cordova-plugin-whitelist": {}
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-android-packagemanager": {}
     },
     "platforms": [
       "ios",

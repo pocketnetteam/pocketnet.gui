@@ -636,6 +636,11 @@ var Proxy = function (settings, manage, test, logger) {
 					'pocketnetpeertube12.nohost.me',
 					'pocketnetpeertube13.nohost.me'
 				],
+
+				15: [
+					'peertube14.pocketnet.app',
+					'peertube15.pocketnet.app',
+				],
       		};
 
 			if (test){
@@ -1451,7 +1456,6 @@ var Proxy = function (settings, manage, test, logger) {
 
 						remote.nmake(url, function (err, data) {
 
-							console.log('err', err)
 							if (!err) {
 
 								resolve({

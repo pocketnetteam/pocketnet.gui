@@ -1790,5 +1790,11 @@ ____loclib.art_newarticlecreation = "Создание новой статьи"
 ____loclib.art_editingsh = "Редактирование опубликованной статьи"
 ____loclib.art_saveedited = "Сохранить"
 
+____loclib.art_wordscount = "Количество слов"
+____loclib.art_volumepercent = "Ограничение объёма статьи"
+____loclib.art_goback = "Вернуться назад"
+
+
+
 ____loclib.empty = "Пусто"
 

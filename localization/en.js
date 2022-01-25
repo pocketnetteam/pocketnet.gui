@@ -2011,5 +2011,8 @@ ____loclib.art_newarticlecreation = "Create a new Longread"
 ____loclib.art_editingsh = "Editing a published Longread"
 ____loclib.art_saveedited = "Save"
 
+____loclib.art_wordscount = "Number of words"
+____loclib.art_volumepercent = "Article size limit"
+____loclib.art_goback = "Come back"
 
 ____loclib.empty = "Empty"
