@@ -9,8 +9,6 @@ if(user.address.value)
 console.log('shares', shares);
 _.each(shares, function(u){ 
 
-	console.log('u!!!', u);
-
 	var _class='';
 	var address = u.address;
 	var src =  deep(app, 'platform.sdk.usersl.storage.'+address + '.image');

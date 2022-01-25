@@ -57,6 +57,9 @@ var topusers = (function(){
 						self.app.platform.api.actions.unsubscribe(address, function(tx, err){
 
 							if(tx){
+
+								el.c.find('.user[address="'+address+'"] .subscribebuttonstop').removeClass('following')
+								el.c.find('.user[address="'+address+'"] .notificationturn').removeClass('turnon')
 								
 							}
 							else
@@ -75,6 +78,9 @@ var topusers = (function(){
 				self.app.platform.api.actions.subscribeWithDialog(address, function(tx, err){
 
 					if(tx){
+								
+						el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('following')	
+						el.c.find('.user[address="'+address+'"] .notificationturn').addClass('turnon')	
 					}
 					else
 					{
@@ -96,6 +102,10 @@ var topusers = (function(){
 				self.app.platform.api.actions[f](address, function(tx, err){
 
 					if(tx){
+			
+						el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('following')	
+						el.c.find('.user[address="'+address+'"] .notificationturn').addClass('turnoff')	
+
 					}
 					else
 					{
@@ -115,6 +125,7 @@ var topusers = (function(){
 				actions.unsubscribe(address)
 			},
 			subscribe : function(){
+
 				var address = $(this).closest('.user').attr('address')
 
 				actions.subscribe(address)
@@ -205,7 +216,7 @@ var topusers = (function(){
 		}
 
 		var initEvents = function(){
-			
+
 			self.app.platform.clbks.api.actions.subscribe.userlist = function(address){
 
 				el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('following')

@@ -72,9 +72,13 @@ var recommendedusers = (function(){
 				
 			},
 			subscribe : function(address){
+
 				self.app.platform.api.actions.subscribeWithDialog(address, function(tx, err){
 
 					if(tx){
+
+						el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('following')
+						el.c.find('.user[address="'+address+'"] .notificationturn').removeClass('turnon')	
 					}
 					else
 					{
@@ -96,6 +100,9 @@ var recommendedusers = (function(){
 				self.app.platform.api.actions[f](address, function(tx, err){
 
 					if(tx){
+						
+						el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('following')
+						el.c.find('.user[address="'+address+'"] .notificationturn').removeClass('turnon')	
 					}
 					else
 					{
@@ -205,7 +212,14 @@ var recommendedusers = (function(){
 		}
 
 		var initEvents = function(){
-			
+
+			self.app.platform.clbks.api.actions.unsubscribe.userlist = function(address){
+
+				el.c.find('.user[address="'+address+'"] .subscribebuttonstop').removeClass('following')
+				el.c.find('.user[address="'+address+'"] .notificationturn').removeClass('turnon')
+			}
+
+						
 			self.app.platform.clbks.api.actions.subscribe.userlist = function(address){
 
 				el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('following')
@@ -218,22 +232,6 @@ var recommendedusers = (function(){
 				el.c.find('.user[address="'+address+'"] .notificationturn').addClass('turnon')	
 			}
 
-			self.app.platform.clbks.api.actions.unsubscribe.userlist = function(address){
-
-				el.c.find('.user[address="'+address+'"] .subscribebuttonstop').removeClass('following')
-				el.c.find('.user[address="'+address+'"] .notificationturn').removeClass('turnon')
-			}
-
-			self.app.platform.clbks.api.actions.blocking.userlist = function(address){
-				el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('blocking')		
-				el.c.find('.user[address="'+address+'"] .notificationturn').removeClass('turnon')			
-			}
-
-			self.app.platform.clbks.api.actions.unblocking.userlist = function(address){
-
-				el.c.find('.user[address="'+address+'"] .subscribebuttonstop').removeClass('blocking')				
-				el.c.find('.user[address="'+address+'"]').removeClass('userblocking')	
-			}
 
 			el.c.on('click', '.subscribe', events.subscribe)
 			el.c.on('click', '.unsubscribe', events.unsubscribe)
