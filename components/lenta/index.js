@@ -119,7 +119,7 @@ var lenta = (function(){
 
 			changeSavingStatusLight : function(share){
 
-				if (el.share[share.txid]){
+				if (el && el.share && el.share[share.txid]){
 					el.share[share.txid].find('.shareSave').attr('status', self.app.platform.sdk.localshares.status(share.txid))
 				}
 

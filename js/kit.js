@@ -1511,6 +1511,16 @@ Share = function(lang){
 		return self.type
 	}
 
+	self.size = function(){
+
+		var obj = JSON.stringify(self.export());
+
+		return obj.length
+
+	}
+
+	self.sizelimit = 60000
+
 	if(lang) self.language.set(lang)
 
 	self.type = 'share'

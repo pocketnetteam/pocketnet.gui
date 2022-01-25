@@ -68,6 +68,27 @@ var articlev = (function(){
 				action : function(){}
 			},
 		}
+
+		var helpers = {
+			size : function(){
+				var share = self.app.platform.sdk.articles.share(art)
+
+				var size = share.size()
+
+				var percent = size / share.sizelimit
+
+				var edjs = new edjsHTML(null, app)
+
+				var words = edjs.words(art.content)
+
+				var minutes = words / 150
+
+				return {
+					size, percent, words, minutes
+				}
+				
+			}
+		}
 		
 		var actions = {
 
@@ -277,7 +298,7 @@ var articlev = (function(){
 				var inp = el.tagsinputwrapper.find('input')
 
 				if(show){
-					el.head.addClass('tagsinput')
+					el.cover.addClass('tagsinput')
 
 					setTimeout(function(){
 						inp.focus()
@@ -286,7 +307,7 @@ var articlev = (function(){
 				}	
 				else{
 					inp.blur()
-					el.head.removeClass('tagsinput')
+					el.cover.removeClass('tagsinput')
 				}
 			},
 
@@ -358,7 +379,10 @@ var articlev = (function(){
 			apply : function(){
 
 				art.time = new Date();
+
 				renders.status()
+				renders.sizeinfo()
+
 			},
 
 			save : function(){
@@ -455,6 +479,27 @@ var articlev = (function(){
 
 		var renders = {
 
+			sizeinfo : function(){
+
+				var size = helpers.size()
+
+				console.log('sizeinfo', size)
+
+				self.shell({
+					animation : false,
+					name : 'sizeinfo',
+					data : {
+						size
+					},
+					el : el.sizeinfo
+
+				},
+				function(p){
+					
+				})
+
+			},
+
 			preview : function(share){
 				if (share){
 
@@ -532,11 +577,13 @@ var articlev = (function(){
 					bgImages(el.c)
 
 					el.head.addClass('hascover')
+					el.blackmatte.addClass('hascover')
 				}
 
 				else{
 					bgImagesClear(el.cover)
 					el.head.removeClass('hascover')
+					el.blackmatte.removeClass('hascover')
 				}
 			},
 
@@ -714,8 +761,6 @@ var articlev = (function(){
 
 		var initEvents = function(){
 
-			
-
 			el.showpreview.on('click', function(){
 				actions.preview()
 			})
@@ -730,6 +775,10 @@ var articlev = (function(){
 			})
 
 			el.backfromedittags.on('click', function(){
+				actions.edittags(false)
+			})
+
+			el.c.find('.forbackmain').on('click', function(){
 				actions.edittags(false)
 			})
 			
@@ -869,8 +918,6 @@ var articlev = (function(){
 
 			editor = new EditorJS({
 
-				
-
 				holderId : 'editorjs',
 				placeholder: self.app.localization.e('art_placeholder'),
 				data: art.content || {},
@@ -973,6 +1020,7 @@ var articlev = (function(){
 					delay = slowMade(function(){
 
 						actions.saveEditor()
+
 					}, delay,  1000)
 
 				}
@@ -982,6 +1030,8 @@ var articlev = (function(){
 			editor.isReady.then(() => {
 				console.log('Editor.js is ready to work!')
 				/** Do anything you need after editor initialization */
+
+				renders.sizeinfo()
 			})
 
 			.catch((reason) => {
@@ -1059,6 +1109,7 @@ var articlev = (function(){
 				el.caption = el.c.find('.captionWrapper textarea')
 				el.cover = el.c.find('.bgwrapper')
 				el.head = el.c.find('.aheadermain')
+				el.blackmatte = el.c.find('.blackmatte')
 				el.backfromedittags = el.c.find('.backfromedittags')
 				el.removeCover = el.c.find('.removeCover')
 			
@@ -1067,12 +1118,12 @@ var articlev = (function(){
 				el.myarticles = el.c.find('.myarticles')
 				el.showpreview = el.c.find('.preview')
 				el.publishWrapper = el.c.find('.publish')
+				el.sizeinfo = el.c.find('.sizeinfoWrapper')
 
 				if(art.editing){
 					el.c.addClass('editing')
 				}
-				
-
+			
 				initEvents();
 				make()
 
