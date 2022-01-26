@@ -7601,11 +7601,7 @@ Platform = function (app, listofnodes) {
             listenKeys: function() {
                 const keysPressed = {};
 
-                $(document).keydown(function(e) {
-                    keysPressed[e.which] = true;
-                });
-
-                $(document).keyup(function(e) {
+                function zoomShortcuts(e) {
                     /**
                      * Ctrl - 17,
                      * Command (Mac OS) - 91
@@ -7617,9 +7613,34 @@ Platform = function (app, listofnodes) {
                      * Plus Numpad - 107
                      */
 
+                    Object.keys(keysPressed).forEach((key) => {
+                        if(key == 17) {
+                            return;
+                        }
+
+                        if (key === 'forward_scroll' || key === 'backward_scroll') {
+                            return;
+                        }
+
+                        const keyState = keysPressed[key];
+                        const isTimeout = (keyState + 1000 < Date.now());
+
+                        if(isTimeout) {
+                            if (key == 91) {
+                                $('html').removeClass('scroll-lock');
+                            }
+
+                            delete keysPressed[key];
+                        }
+                    });
+
                     const isCtrlPressed = (_.has(keysPressed, 17) || _.has(keysPressed, 91));
                     const isMinusPressed = (_.has(keysPressed, 189) || _.has(keysPressed, 109));
                     const isPlusPressed = (_.has(keysPressed, 187) || _.has(keysPressed, 107));
+
+                    if (isCtrlPressed) {
+                        $('html').addClass('scroll-lock');
+                    }
 
                     const currentZoom = self.app.platform.sdk.uiScale.current;
 
@@ -7631,20 +7652,54 @@ Platform = function (app, listofnodes) {
                     const isPlusOutOfRange = (zoomCurrentIndex == zoomKeys.length - 1);
                     const isMinusOutOfRange = (zoomCurrentIndex == 0);
 
-                    if ((isCtrlPressed && isMinusPressed) && !isMinusOutOfRange) {
-                        const zoomNewIndex = zoomCurrentIndex - 1;
-                        const zoomNewName = zoomKeys[zoomNewIndex];
+                    const isKeyZoomIn = (isCtrlPressed && isPlusPressed);
+                    const isKeyZoomOut = (isCtrlPressed && isMinusPressed);
 
-                        self.app.platform.sdk.uiScale.set(zoomNewName);
-                    } else if ((isCtrlPressed && isPlusPressed) && !isPlusOutOfRange) {
+                    const isScrollZoomIn = (isCtrlPressed && keysPressed.forward_scroll === true);
+                    const isScrollZoomOut = (isCtrlPressed && keysPressed.backward_scroll === true);
+
+                    const isZoomIn = (isKeyZoomIn || isScrollZoomIn);
+                    const isZoomOut = (isKeyZoomOut || isScrollZoomOut);
+
+                    if (isZoomIn && !isPlusOutOfRange) {
                         const zoomNewIndex = zoomCurrentIndex + 1;
                         const zoomNewName = zoomKeys[zoomNewIndex];
 
                         self.app.platform.sdk.uiScale.set(zoomNewName);
+                    } else if (isZoomOut && !isMinusOutOfRange) {
+                        const zoomNewIndex = zoomCurrentIndex - 1;
+                        const zoomNewName = zoomKeys[zoomNewIndex];
+
+                        self.app.platform.sdk.uiScale.set(zoomNewName);
+                    }
+                }
+
+                $(document).keydown(function(e) {
+                    keysPressed[e.which] = Date.now();
+                });
+
+                $(document).keyup(function(e) {
+                    delete keysPressed[e.which];
+
+                    if (e.which == 17 || e.which == 91) {
+                        $('html').removeClass('scroll-lock');
+                    }
+                });
+
+                $(window).on('wheel', (e) => {
+                    if(e.originalEvent.deltaY < 0) {
+                        keysPressed.forward_scroll = true;
+                    } else {
+                        keysPressed.backward_scroll = true;
                     }
 
-                    delete keysPressed[e.which];
+                    zoomShortcuts(e);
+
+                    delete keysPressed.forward_scroll;
+                    delete keysPressed.backward_scroll;
                 });
+
+                $(document).keydown(zoomShortcuts);
             },
         },
 
