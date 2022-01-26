@@ -718,16 +718,7 @@ function createWindow() {
     return win
 }
 
-
-var openlink = function(argv, ini){
-
-    var l = null
-
-    if (argv && argv.length && argv[argv.length - 1] && argv[argv.length - 1]){
-        l = argv && argv.length && argv[argv.length - 1] && argv[argv.length - 1]
-    }
-
-
+var _openlink = function(l, ini){
     if(_.find(protocols, function(p){
         if(l && l.indexOf(p + "://") > -1) return true
     })){
@@ -743,14 +734,24 @@ var openlink = function(argv, ini){
 
         if(!href) href = 'index'
 
-        console.log("href", href)
-
         setTimeout(function(){
 
             win.webContents.send('nav-message', { msg: href, type: 'action'})
 
         }, ini ? 3000 : 5)
     }
+}
+
+var openlink = function(argv, ini){
+
+    var l = null
+
+    if (argv && argv.length && argv[argv.length - 1] && argv[argv.length - 1]){
+        l = argv && argv.length && argv[argv.length - 1] && argv[argv.length - 1]
+    }
+
+
+    _openlink(l, ini)
     
 }
 
@@ -801,6 +802,23 @@ if(!r) {
             createWindow()
         }
     })
+    
+    if (is.macOS()){
+        app.on('open-url', (event, url) => {
+
+            _openlink(url, false)
+    
+            if (win) {
+    
+                if (win.isMinimized()) win.restore();
+    
+                win.show()
+                win.focus();
+            }
+        })
+    }
+
+    
 
 
 
