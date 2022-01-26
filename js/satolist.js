@@ -293,7 +293,7 @@ Platform = function (app, listofnodes) {
                     },
 
                     github: {
-                        name: 'Pocketnet' + ".apk",
+                        name: 'Bastyon' + ".apk",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
                         page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
                     },
@@ -321,7 +321,7 @@ Platform = function (app, listofnodes) {
                     icon: '<i class="fab fa-windows"></i>',
 
                     github: {
-                        name: 'Pocketnet' + "Setup.exe",
+                        name: 'Bastyon' + "Setup.exe",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
                         page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
                     },
@@ -343,7 +343,7 @@ Platform = function (app, listofnodes) {
                     icon: '<i class="fab fa-apple"></i>',
                     image : 'applications_macos.png',
                     github: {
-                        name: 'Pocketnet'+ "Setup.dmg", //app.meta.fullname + "Setup.dmg",
+                        name: 'Bastyon'+ "Setup.dmg", //app.meta.fullname + "Setup.dmg",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
                         page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
                     },
@@ -362,7 +362,7 @@ Platform = function (app, listofnodes) {
                     icon: '<i class="fab fa-linux"></i>',
 
                     github: {
-                        name: 'Pocketnet' + "Setup.deb",//  self.app.meta.fullname + "Setup.deb",
+                        name: 'Bastyon' + "Setup.deb",//  self.app.meta.fullname + "Setup.deb",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
                         page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
                     },

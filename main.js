@@ -390,7 +390,7 @@ function notification(nhtml, p) {
 
 
     setTimeout(function() {
-        if (nwin)
+        if (nwin){  
             nwin.show()
 
             nwin.on('hide', function(){
@@ -404,6 +404,8 @@ function notification(nhtml, p) {
             nwin.on('restore', function(){
                 win.webContents.send('win-restore')
             })
+        }
+           
 
 
        // nwin.webContents.toggleDevTools()
