@@ -150,11 +150,16 @@
                 "repo": "pocketnet.gui"
             }
         ],
+        "protocols" : {
+            "name" : "bastyon",
+            "schemes" : ["bastyon", "pocketnet"] 
+        },
         "mac": {
             "target": "dmg",
             "artifactName": "${productName}Setup.${ext}",
             "icon": "assets/icons/mac/icon.icns",
-            "entitlements": "build/entitlements.mac.plist"
+            "entitlements": "build/entitlements.mac.plist",
+            "extendInfo" : "bastyon"
         },
         "linux": {
             "target": [
