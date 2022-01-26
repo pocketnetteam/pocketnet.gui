@@ -9326,9 +9326,10 @@ Platform = function (app, listofnodes) {
                         return -Number(n.time || n.nTime)
                     })
 
-                    e.notifications = firstEls(e.notifications, 75)
+                    e.notifications = firstEls(e.notifications, 75) 
 
-                    localStorage[self.sdk.address.pnet().address + 'notificationsv14'] = JSON.stringify(e)
+                    if (self.sdk.address.pnet())
+                        localStorage[self.sdk.address.pnet().address + 'notificationsv14'] = JSON.stringify(e)
                 }
 
 

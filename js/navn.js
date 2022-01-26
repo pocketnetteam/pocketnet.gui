@@ -1478,8 +1478,8 @@ Nav = function(app)
 
 				//////
 
-				if (!electron && !window.cordova && !electronopen && !app.platform.sdk.usersettings.meta.openlinksinelectron.value && !isMobile() && !isTablet()){
 
+				if (!electron && !window.cordova && !electronopen && !app.platform.sdk.usersettings.meta.openlinksinelectron.value && !isMobile() && !isTablet()){
 
 					var currentHref = self.get.href();
 					var pathname = self.get.pathname();
@@ -1500,30 +1500,34 @@ Nav = function(app)
 						}
 					}
 
-					if (electronDontOpen) return
-
-					var electronHrefs = JSON.parse(localStorage['electron_hrefs'] || "[]");
+					if (!electronDontOpen) {
+						var electronHrefs = JSON.parse(localStorage['electron_hrefs'] || "[]");
 				
-					if (electronHrefs.indexOf(currentHref) == -1 ){
+						if (electronHrefs.indexOf(currentHref) == -1 ){
 
-						electronHrefs.push(currentHref)
+							electronHrefs.push(currentHref)
 
-						try{
+							try{
 
-							window.location = app.meta.protocol + '://electron/' + currentHref;
-							localStorage['electron_hrefs'] = JSON.stringify(electronHrefs.slice(electronHrefs.length - 100))
-							
-						}
-						catch(e){
+								window.location = app.meta.protocol + '://electron/' + currentHref;
+								localStorage['electron_hrefs'] = JSON.stringify(electronHrefs.slice(electronHrefs.length - 100))
+								
+							}
+							catch(e){
 
-							localStorage['electron_hrefs'] = '[]'
-						}
+								localStorage['electron_hrefs'] = '[]'
+							}
+						
+						} 
+					}
+
 					
-					} 
 
 				}
 
+
 				electronopen = true
+				
 
 			});
 

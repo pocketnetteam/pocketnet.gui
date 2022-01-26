@@ -512,7 +512,7 @@ var main = (function(){
 					el : el.lenta,
 					animation : false,
 
-					mid : makeid(),
+					mid : 'main',
 
 					essenseData : {
 						hr : 'index?',
