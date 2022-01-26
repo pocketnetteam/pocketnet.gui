@@ -7,7 +7,7 @@
   "scripts": {
     "android-add": "cordova platform add android@9.1.0",
     "ios-add": "cordova platform add ios",
-    "android-build": "cordova build android --prod --release --buildConfig build.json --verbose",
+    "android-build": "cordova build android --buildConfig build.json --verbose",
     "android-run": "cordova run android --buildConfig build.json  --packageType=bundle",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
