@@ -276,6 +276,12 @@ var es_string_trim = __webpack_require__("498a");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.slice.js
 var es_array_slice = __webpack_require__("fb6a");
 
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.regexp.constructor.js
+var es_regexp_constructor = __webpack_require__("4d63");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.regexp.to-string.js
+var es_regexp_to_string = __webpack_require__("25f0");
+
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.includes.js
 var es_array_includes = __webpack_require__("caad");
 
@@ -830,6 +836,8 @@ var preview = __webpack_require__("92a6");
 
 
 
+
+
 /* harmony default export */ var input_vue_type_script_lang_js_ = ({
   name: 'chatInput',
   props: {
@@ -1203,7 +1211,7 @@ var preview = __webpack_require__("92a6");
     },
     replaceMentions: function replaceMentions(text) {
       index_all["default"].each(this.userlist, function (user) {
-        text = text.replaceAll('@' + user.name, '@' + user.id + ':' + user.name);
+        text = text.replace(new RegExp('@' + user.name, 'g'), '@' + user.id + ':' + user.name);
       });
 
       return text;
@@ -1226,7 +1234,7 @@ var preview = __webpack_require__("92a6");
       }).then(function (r) {
         _this5.$emit('sent');
 
-        text = _this5.replaceMentions(text); /// text
+        text = _this5.replaceMentions(text);
 
         if (_this5.relationEvent) {
           if (_this5.relationEvent.type == 'm.replace' && _this5.relationEvent.event) {
@@ -1259,7 +1267,11 @@ var preview = __webpack_require__("92a6");
         return _this5.core.mtrx.sendtext(_this5.chat, text, {
           relation: _this5.relationEvent
         });
-      }).catch(function (e) {});
+      }).catch(function (e) {
+        _this5.$emit('sentMessageError', {
+          error: e
+        });
+      });
     },
     pasteImage: function pasteImage(data) {
       this.sendImage({
@@ -1294,7 +1306,8 @@ var preview = __webpack_require__("92a6");
         return Promise.resolve();
       }).catch(function (e) {
         _this6.$emit('sentError', {
-          id: id
+          id: id,
+          error: e
         });
 
         return Promise.resolve();
@@ -1350,7 +1363,8 @@ var preview = __webpack_require__("92a6");
         return Promise.resolve();
       }).catch(function (e) {
         _this7.$emit('sentError', {
-          id: id
+          id: id,
+          error: e
         });
       });
     },

@@ -202,7 +202,6 @@ var test = (function(){
 							var pn = el.c.find('[parameter="name"] input')
 
 							pn.focus()
-
 							_scrollTo(pn)
 						}
 						else{
@@ -634,7 +633,13 @@ var test = (function(){
 				id : 'name',
 				type : "NICKNAME",
 				onType : true,
-				require : true
+				require : true,
+
+				onFocus : function(pn){
+					console.log('onFocus')
+					if (isTablet())
+						_scrollTo(pn)
+				}
 			}),
 
 			email : new Parameter({
@@ -643,6 +648,11 @@ var test = (function(){
 				id : 'email',
 				type : "STRINGANY",
 				onType : true,
+
+				onFocus : function(pn){
+					if (isTablet())
+						_scrollTo(pn)
+				}
 			}),
 
 			language : new Parameter({

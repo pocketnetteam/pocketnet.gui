@@ -243,6 +243,11 @@ var filluserfast = (function(){
 						}
 					})
 
+					input.on('focus', function(){
+						if (isTablet())
+							_scrollTo(input)
+					})
+
 					save.on('click', function(){
 
 						var text = input.val()

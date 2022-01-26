@@ -6406,6 +6406,34 @@ Platform = function (app, listofnodes) {
 
                                                                 file.file(function(fileDetails) {
 
+
+                                                                    if (file.name == 'info.json') {
+
+                                                                        infoFile = file;
+
+
+                                                                        var reader = new FileReader();
+
+                                                                        reader.onloadend = function() {
+
+
+                                                                            try {
+                                                                                to.videos[videoFolder.name].infos = JSON.parse(this.result);
+
+                                                                            } catch(err){
+
+                                                                                console.error('e', err)
+
+                                                                            }
+
+                                                                            _p.success()
+                                                                        };
+
+                                                                        reader.readAsText(fileDetails);
+
+                                                                        return
+                                                                    }
+
         
                                                                     if (!videoFile && (!fileDetails.type || fileDetails.type == 'video/mp4')) {
         
@@ -6428,31 +6456,7 @@ Platform = function (app, listofnodes) {
                                                                         return
                                                                     }
 
-                                                                    if (!infoFile && file.name == 'info.json') {
-
-                                                                        infoFile = file;
-
-                                                                        var reader = new FileReader();
-
-                                                                        reader.onloadend = function() {
-
-                                                                            try {
-
-                                                                                to.videos[videoFolder.name].infos = JSON.parse(this.result);
-
-                                                                            } catch(err){
-
-                                                                                console.error('e', err)
-
-                                                                            }
-
-                                                                            _p.success()
-                                                                        };
-
-                                                                        reader.readAsText(fileDetails);
-
-                                                                        return
-                                                                    }
+                                                                    
 
 
                                                                     _p.success()

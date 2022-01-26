@@ -4251,6 +4251,10 @@
  
 				_el.on('change', _change)
 
+				if (parameter.onFocus) _el.on('focus', function(){
+					parameter.onFocus(_el, parameter)
+				})
+
 				if (parameter.onType){
 					_el.on('keyup', _change)
 				}
@@ -4381,6 +4385,7 @@
 
 			self._onChange = p._onChange || null;
 			self.onType = p.onType || null;
+			self.onFocus = p.onFocus || null;
 
 			self.description = p.description || ''
 
@@ -6308,7 +6313,7 @@
 
 		var offset = (to.height() - $(window).height()) / 2;
 
-		if(ofssetObj)
+		if (ofssetObj)
 		{
 			var scrollTop = ofssetObj.top + offset;
 

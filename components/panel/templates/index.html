@@ -35,14 +35,10 @@
 
 			<div class="copyright">
 				<img class="copy_logo" src="img/logogray.png" alt="logo">
-				<span class="copyright_text"><%-app.meta.fullname%>, 2019&mdash;<%-year%></span>
+				<span class="copyright_text"><%-app.meta.fullname%> <% if(window.packageversion) {%> <%-window.packageversion%><% } %>, 2019&mdash;<%-year%></span>
 			</div>
 
-			<% if(window.packageversion) {%>
-				<div class="version">
-					<span><%-window.packageversion%></span>
-				</div>
-			<% } %>
+		
 		</div>
 
 	</div>
