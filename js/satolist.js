@@ -25319,10 +25319,8 @@ Platform = function (app, listofnodes) {
         self.applications = self.__applications()
         self.sdk.theme.load()
 
-        if (typeof _Electron == 'undefined' && _Electron){
-            self.sdk.uiScale.load();
-            self.sdk.uiScale.listenKeys();
-        }
+        self.sdk.uiScale.load();
+        self.sdk.uiScale.listenKeys();
         
         self.sdk.system16.init()
 
