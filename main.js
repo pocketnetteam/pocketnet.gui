@@ -419,8 +419,13 @@ function createWindow() {
     win = new BrowserWindow({
         width: mainScreen.size.width,
         height: mainScreen.size.height,
+        // electronnav
+
         /*titleBarStyle: 'hidden',
-        titleBarOverlay: true,*/
+        titleBarOverlay: {
+            color : "#FFFFFF",
+            symbolColor : "#333333"
+        },*/
         title: "Bastyon", ///
         webSecurity: false,
 

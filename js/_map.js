@@ -863,11 +863,11 @@ __map =  {
 		reload : true
 	},
 
-	/*
+	
 	
 	// electronnav
 	
-	electronnav : {
+	/*electronnav : {
 		uri : "electronnav",
 		href : "electronnav",
 		add : {
