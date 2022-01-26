@@ -48,7 +48,7 @@ var mapJsPath = './js/_map.js';
 console.log("run")
 console.log(args)
 
-var tpls = ['embedVideo.php', 'index_el.html', 'index.html', 'index.php', 'indexcordova.html', 'config.xml', 'openapi.html', /*'.htaccess',*/ 'service-worker.js', 'manifest.json', 'main.js']
+var tpls = ['embedVideo.php', 'index_el.html', 'index.html', 'index.php', 'indexcordova.html', 'config.xml', 'openapi.html', /*'.htaccess',*/ 'service-worker.js', 'manifest.json'/*, 'main.js'*/]
 
 var tplspath = {
 

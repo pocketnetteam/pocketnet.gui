@@ -100,6 +100,8 @@ Platform = function (app, listofnodes) {
         'TSisNge5kisi7cwGRwmUBuZQWZFD8cRoG8'
     ];
 
+    if (window.IpcBridge)
+        self.ipcbridge = new window.IpcBridge().listen()
 
     /*self.testchataddresses = ['PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PQvcVW7ZV4YPKC1QhxXdT8ppUakCejWYTA']*/
     self.testchataddresses = ['P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m', 'PFnN8SExxLsUjMKzs2avdvBdcA3ZKXPPkF', 'PVgqi72Qba4aQETKNURS8Ro7gHUdJvju78', 'P9tRnx73Sw1Ms9XteoxYyYjvqR88Qdb8MK', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz', 'PEHrffuK9Qiqs5ksqeFKHgkk9kwQN2NeuS', 'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz','PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PK6Kydq5prNj13nm5uLqNXNLFuePFGVvzf', 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s', 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc', 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8', 'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd']
@@ -6649,7 +6651,10 @@ Platform = function (app, listofnodes) {
                     
                     return new Promise((resolve, reject) => {
 
+                        return Promise.reject('deprecated')
+
                         const userDataPath = (window.electron.app || window.electron.remote.app).getPath('userData');
+
                         fs.rmdir(userDataPath + '/posts/' + shareId, { recursive: true }, (err) => {
                             
                             if (!err){
@@ -8028,22 +8033,9 @@ Platform = function (app, listofnodes) {
 
                         if (electron && i == 'autostart') {
 
-                            const is = require('electron-is')
-
-                            if(!is.macOS()){
-
-                                const AutoLaunch = require('auto-launch');
-
-                                let autoLaunch = new AutoLaunch({
-                                    name: app.meta.fullname, // app name
-                                    path: electron.remote.app.getPath('exe'),
-                                    isHidden: true
-                                });
-
-                                if (m[i].value) autoLaunch.enable();
-                                else autoLaunch.disable();
-                            }
-
+                            electron.ipcRenderer.send('electron-autoLaunchManage', {
+                                enable : m[i].value
+                            });
 
                         }
 
@@ -8222,45 +8214,26 @@ Platform = function (app, listofnodes) {
 
                 if (electron) {
 
-                    const is = require('electron-is')
+                    if (m.autostart.value === undefined) {
+                        m.autostart.value = true;
 
-                    if(!is.macOS()){
-
-                        const AutoLaunch = require('auto-launch');
-                        let autoLaunch = new AutoLaunch({
-                            name: app.meta.fullname, // app name
-                            path: electron.remote.app.getPath('exe'),
-                            isHidden: true
+                        electron.ipcRenderer.send('electron-autoLaunchManage', {
+                            enable : m.autostart.value
                         });
 
-                        // First launch
-                        if (m.autostart.value === undefined) {
-                            autoLaunch.enable();
-                            m.autostart.value = true;
-                            self.sdk.usersettings.save();
-                        }
-
-                        // Check autostart
-                        autoLaunch.isEnabled().then((isEnabled) => {
-                            m.autostart.value = isEnabled;
-
-                            if (clbk) {
-                                clbk()
-                            }
-                        }).catch(e =>{
-                            m.autostart.value = isEnabled;
-                            if (clbk) {
-                                clbk()
-                            }
-                        });
-
+                        self.sdk.usersettings.save();
                     }
-                    else
-                    {
+
+                    self.ipcbridge.request('autoLaunchIsEnabled', {}).then(r => {
+
+                        console.log('autoLaunchIsEnabled', r)
+
+                        m.autostart.value = r
+
                         if (clbk) {
                             clbk()
                         }
-                    }
+                    })
                 }
                 else {
                     if (clbk) {
@@ -26185,11 +26158,9 @@ Platform = function (app, listofnodes) {
 
             if (electron) {
 
-                var w = electron.remote.getCurrentWindow();
-
-                w.on('hide', uf)
-                w.on('minimize', uf)
-                w.on('restore', f)
+                electron.ipcRenderer.on('win-hide', uf)
+                electron.ipcRenderer.on('win-minimize', uf)
+                electron.ipcRenderer.on('win-restore', f)
 
                 electron.ipcRenderer.on('pause-message', ufel)
                 electron.ipcRenderer.on('resume-message', f)
@@ -26217,11 +26188,9 @@ Platform = function (app, listofnodes) {
 
             if (electron) {
 
-                var w = electron.remote.getCurrentWindow();
-
-                w.off('hide', uf)
-                w.off('minimize', uf)
-                w.off('restore', f)
+                electron.ipcRenderer.off('win-hide', uf)
+                electron.ipcRenderer.off('win-minimize', uf)
+                electron.ipcRenderer.off('win-restore', f)
 
                 electron.ipcRenderer.off('pause-message', ufel)
                 electron.ipcRenderer.off('resume-message', fpauseel)

@@ -863,6 +863,22 @@ __map =  {
 		reload : true
 	},
 
+	/*
+	
+	// electronnav
+	
+	electronnav : {
+		uri : "electronnav",
+		href : "electronnav",
+		add : {
+			el : 'electronnav'
+		},
+		now : typeof _Electron != 'undefined' && _Electron,
+		anonimus : true,
+		renew : true,
+		reload : true
+	},*/
+
 	toppanel : {
 		uri : "toppanel",
 		href : "toppanel",

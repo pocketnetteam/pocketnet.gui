@@ -35,14 +35,8 @@ if(typeof _Electron != 'undefined' && _Electron){
 	emojionearea = require('./js/vendor/emojionearea.js')
 	filterXss = require('./js/vendor/xss.min.js')
 
-	const contextMenu = require('electron-context-menu');
-
-	contextMenu({
-		showSearchWithGoogle : false,
-		showCopyImageAddress : true,
-		showSaveImageAs : true
-	})
-
+	
+	
 
 
 }
@@ -979,7 +973,8 @@ Application = function(p)
 			chats : 		$('.chats'),
 			html : 			$('html'),
 			window : 		$(window),
-			windows : 		$('#windowsContainer')
+			windows : 		$('#windowsContainer'),
+			electronnav : 	$('#electronnavContainer')
 		};
 
 
@@ -2046,17 +2041,12 @@ Application = function(p)
 
 						window.plugins.packagemanager.getInstallerPackageName(function(d){
 
-							console.log("D", d)
-
 							self.mobile.update.needmanage = d && d.indexOf('com.android.vending') > -1 ? false : true
 							self.mobile.update.needmanageinfo = d
 
 							resolve(self.mobile.update.needmanage)
 
 						}, function(e){
-
-							
-							console.log("E", e)
 
 							self.mobile.update.needmanage = false
 							self.mobile.update.needmanageinfo = e

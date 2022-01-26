@@ -4,7 +4,6 @@ if (typeof _Electron != 'undefined') {
     electron = require('electron');
 }
 
-
 var WssDummy = function(system16){
 	var self = this
 
@@ -207,9 +206,6 @@ var System16 = function(app, proxy, direct){
         }
 
         else{
-
-            console.log("FETCH AUTH")
-
             return proxy.fetchauth('manage', rdata)
         } 
             
@@ -254,8 +250,6 @@ var System16 = function(app, proxy, direct){
             data : data
         }
 
-        console.log("SEND PACK", pack)
-
         return request(pack)
     }
 
@@ -280,5 +274,81 @@ var System16 = function(app, proxy, direct){
     return self
 }
 
-if(typeof module != "undefined"){ module.exports = {System16}; } 
-else { window.System16 }
+var IpcBridge = function(){
+    var self = this
+
+    var requestes = {}
+
+    var response = function(e, message){
+
+        var request = requestes[message.id]
+
+        if (request) {
+
+            if (request.clbk) 
+                request.clbk(message.error, message.data)
+
+            delete requestes[message.id]
+        }
+    }
+
+    var request = function(pack){
+
+        pack.id = makeid()
+        pack.data || (pack.data = {})
+
+        electron.ipcRenderer.send('ipc-bridge', pack);
+
+        return new Promise((resolve, reject) => {
+
+            requestes[pack.id] = {
+                id: pack.id,
+                clbk: function (error, data) {
+
+                    if(error){
+                        reject(error)
+                    }
+                    else{
+                        resolve(data)
+                    }
+
+                }
+                
+            }
+
+        })
+    }
+
+    self.request = function(action, data){
+
+        var rdata = {
+            action: action,
+            data: data || {}
+        }
+
+        if (electron){
+            return request(rdata)
+        }
+    }
+
+    self.listen = function(){
+
+        if (electron) {
+            electron.ipcRenderer.on('ipc-bridge', response)
+        }
+
+        return self
+
+    }
+
+    self.stop = function(){
+        if (electron) {
+            electron.ipcRenderer.off('ipc-bridge', response)
+        }
+    }
+
+    return self
+}
+
+if(typeof module != "undefined"){ module.exports = {System16, IpcBridge}; } 
+else { window.System16 = System16; window.IpcBridge = IpcBridge }

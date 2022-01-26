@@ -4,20 +4,15 @@ if (global.WRITE_LOGS) {
 }
 
 var open = require("open");
-/*const setupEvents = require('./installers/setupEvents')
-if (setupEvents.handleSquirrelEvent()) {
-  
-  return;
-}*/
 
 const {protocol} = require('electron');
-//const ProxyInterface = require('./proxy/mainserver.js')
 
 const ProxyInterface = require('./proxy16/ipc.js')
+const IpcBridge =require('./js/electron/ipcbridge.js')
 
 const electronLocalshortcut = require('electron-localshortcut');
 
-var win, nwin, badge, tray, proxyInterface;
+var win, nwin, badge, tray, proxyInterface, ipcbridge;
 var willquit = false;
 
 const { app, BrowserWindow, Menu, MenuItem, Tray, ipcMain, Notification, nativeImage, dialog, globalShortcut, OSBrowser } = require('electron')
@@ -29,7 +24,16 @@ const Badge = require('./js/vendor/electron-windows-badge.js');
 const { autoUpdater } = require("electron-updater");
 const log = require('electron-log');
 const is = require('electron-is');
+const AutoLaunch = require('auto-launch');
 
+const contextMenu = require('electron-context-menu');
+
+contextMenu({
+    showSearchWithGoogle : false,
+    showCopyImageAddress : true,
+    showSaveImageAs : true,
+    showInspectElement : false
+})
 
 var updatesLoading = false;
 
@@ -92,8 +96,10 @@ var protocols = ['pocketnet', 'bastyon']
 function showHideWindow(show) {
 
     if (win === null) {
+
         createWindow()
         createBadge()
+
     } else {
         if (win.isVisible() && !show) {
 
@@ -107,6 +113,24 @@ function showHideWindow(show) {
 
         }
     }
+}
+
+function autoLaunchManage(enable){
+
+    if (!is.macOS()){
+        let autoLaunch = new AutoLaunch({
+            name: 'Bastyon', // app name
+            path: app.getPath('exe'),
+            isHidden: true
+        });
+    
+        if (enable)
+            autoLaunch.enable();
+    
+        else 
+            autoLaunch.disable();
+    }
+    
 }
 
 
@@ -151,7 +175,7 @@ function createTray() {
     tray = new Tray(defaultImage)
 
     tray.setImage(defaultImage)
-    tray.setToolTip('__VAR__.project'); ///
+    tray.setToolTip('Bastyon'); ///
 
     var contextMenu = Menu.buildFromTemplate([{
         label: 'Open',
@@ -162,27 +186,31 @@ function createTray() {
         label: 'Quit',
         click: function() {
 
-            // Check safe destroy
-            proxyInterface.candestroy().then(e => {
-                if (!e.includes('nodeControl')) { // Destroy all
-                    destroyApp()
-                } else { // Need first stop node
-                    dialog.showMessageBox(null, {
-                        type: 'question',
-                        buttons: ['Cancel', 'Yes, close'],
-                        defaultId: 1,
-                        title: 'Warning',
-                        message: 'Your node is running. Close the app anyway?',
-                    }).then(r => {
-                        if (r.response == 1) {
-                            proxyInterface.nodeStop().then(e => {
-                                destroyApp()
-                            })
-                        }
-            })
-                }
+            if (ipcbridge)
+                ipcbridge.destroy()
 
-            })
+            // Check safe destroy
+            if (proxyInterface)
+                proxyInterface.candestroy().then(e => {
+                    if (!e.includes('nodeControl')) { // Destroy all
+                        destroyApp()
+                    } else { // Need first stop node
+                        dialog.showMessageBox(null, {
+                            type: 'question',
+                            buttons: ['Cancel', 'Yes, close'],
+                            defaultId: 1,
+                            title: 'Warning',
+                            message: 'Your node is running. Close the app anyway?',
+                        }).then(r => {
+                            if (r.response == 1) {
+                                proxyInterface.nodeStop().then(e => {
+                                    destroyApp()
+                                })
+                            }
+                        })
+                    }
+
+                })
         }
     }]);
 
@@ -349,6 +377,7 @@ function notification(nhtml, p) {
         focusable: false,
         parent : win,
         webPreferences: {
+            contextIsolation: false,
             nodeIntegration: true,
             enableRemoteModule: true
         }
@@ -359,9 +388,23 @@ function notification(nhtml, p) {
     })
 
 
+
     setTimeout(function() {
         if (nwin)
             nwin.show()
+
+            nwin.on('hide', function(){
+                win.webContents.send('win-hide')
+            })
+
+            nwin.on('minimize', function(){
+                win.webContents.send('win-minimize')
+            })
+
+            nwin.on('restore', function(){
+                win.webContents.send('win-restore')
+            })
+
 
        // nwin.webContents.toggleDevTools()
     }, 300)
@@ -376,13 +419,15 @@ function createWindow() {
     win = new BrowserWindow({
         width: mainScreen.size.width,
         height: mainScreen.size.height,
-
-        title: "__VAR__.project", ///
+        /*titleBarStyle: 'hidden',
+        titleBarOverlay: true,*/
+        title: "Bastyon", ///
         webSecurity: false,
 
         icon: defaultIcon,
 
         webPreferences: {
+            contextIsolation: false,
             nodeIntegration: true,
             enableRemoteModule: true,
             allowRendererProcessReuse: false,
@@ -612,21 +657,55 @@ function createWindow() {
 
         willquit = true
 
-        proxyInterface.destroy().then(r => {
-            autoUpdater.quitAndInstall(true, true)
-        })
+        if (proxyInterface)
+            proxyInterface.destroy().then(r => {
+                autoUpdater.quitAndInstall(true, true)
+            })
+
+        if (ipcbridge)
+            ipcbridge.destroy()
 
     })
 
     ipcMain.on('electron-checkForUpdates', function(e) {
-
         autoUpdater.checkForUpdates();
+    })
 
+
+    ipcMain.on('electron-autoLaunchManage', function(e, p) {
+
+        console.log('autoLaunchManage', p)
+
+        autoLaunchManage(p.enable)
     })
 
 
     proxyInterface = new ProxyInterface(ipcMain, win.webContents)
     proxyInterface.init()
+
+
+    ipcbridge = new IpcBridge(ipcMain, win.webContents)
+
+    ipcbridge.actions.autoLaunchIsEnabled = function(d){
+
+        console.log('autoLaunchIsEnabled', d)
+
+        if (is.macOS()){
+            return Promise.resolve(false)
+        }
+
+        let autoLaunch = new AutoLaunch({
+            name: 'Bastyon', // app name
+            path: app.getPath('exe'),
+            isHidden: true
+        });
+
+        return autoLaunch.isEnabled().catch(e =>{
+            return Promise.resolve(false)
+        })
+    }
+
+    ipcbridge.init()
 
     // Вызывается, когда окно будет закрыто.
     return win

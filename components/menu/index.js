@@ -998,7 +998,7 @@ var menu = (function(){
 
 			////
 
-			if(typeof _Electron != 'undefined'){
+			/*if(typeof _Electron != 'undefined'){
 				var electron = require('electron');
 				var remote = electron.remote; 
 
@@ -1031,7 +1031,7 @@ var menu = (function(){
 				})
 
 				full()
-			}
+			}*/
 
 			
 		}

@@ -283,10 +283,6 @@ var IPC = function(ipc, wc){
         return kit.manage.node.stop()
     }
 
-	//var isDevelopment = process.argv.find(function(el) { return el == '--development'; })
-
-	//isDevelopment ? f.path('pocketcoin') : Path.join(electron.app.getPath('userData'), 'pocketcoin')
-	
     kit.init({}, { wssdummy, userDataPath : electron.app.getPath('userData')})
 
 	return self
