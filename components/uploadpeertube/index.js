@@ -592,7 +592,7 @@ var uploadpeertube = (function () {
            *       future. Must be tested...
            */
 
-          if (window.cordova) {
+          if (window.cordova || isDeviceMobile()) {
             /** Mobile slow 3G chunking */
             return 256 * 1024;
           }
