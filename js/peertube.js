@@ -270,9 +270,6 @@ PeerTubePocketnet = function (app) {
 
     cancelResumableUploadVideo: {
       path: 'api/v1/videos/upload-resumable',
-      headers: {
-        "Content-Length": "0",
-      },
       renew: true,
       method: 'DELETE',
       authorization: true,
@@ -704,9 +701,9 @@ PeerTubePocketnet = function (app) {
               .then((r) => {
                 if (!r.video) return Promise.reject(error('uploaderror'));
 
-                return Promise.resolve(
-                  self.composeLink(options.host, r.video.uuid),
-                );
+                return Promise.resolve({
+                  videoLink: self.composeLink(options.host, r.video.uuid),
+                });
               })
               .catch((e) => {
                 e.cancel = axios.isCancel(e);
@@ -795,7 +792,6 @@ PeerTubePocketnet = function (app) {
             upload_id: params.uploadId,
           },
           headers: {
-            "Content-Length": params.chunkData.size,
             "Content-Range": rangeStr,
           },
           ...options,
@@ -847,11 +843,11 @@ PeerTubePocketnet = function (app) {
           },
         };
 
-        return request('cancelResumableUploadVideo', {}, optionsPrepared)
+        return request('cancelResumableUploadVideo', '', optionsPrepared)
           .then((r) => {
             console.log('CANCEL RESUMABLE UPLOAD VIDEO', r);
 
-            const handleSuccess = () => Promise.resolve({ responseType: 'cancel_success' });
+            const handleSuccess = () => Promise.resolve({ responseType: 'success' });
             const handleNotFound = () => Promise.resolve({ responseType: 'not_found' });
 
             switch (r.status) {
