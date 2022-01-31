@@ -79,7 +79,8 @@ Platform = function (app, listofnodes) {
         'PU6LDxDqNBDipG4usCqhebgJWeA4fQR5R4' : true,
         'P8rnj1gSaAQJ1YkAAthSgmLKiDfspb98GP' : true,
         'PUXG7rfX19Xoco1FXjXBW8qt6NEZpp8maL' : true,
-        'PSanUFKb1vd5ua4U3BXMmsSZ2zm3sN2nyj' : true
+        'PSanUFKb1vd5ua4U3BXMmsSZ2zm3sN2nyj' : true,
+        'PERF5kDM32ebkq8SeSj8ZaLqfCoqz8FRgh' : true
     }
 
     self.nvadr = {

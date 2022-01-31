@@ -683,6 +683,7 @@ var Control = function(settings) {
             return self.kit.check().then(r => {
 
                 if(!r && !node.instance){
+                    
 
                     state.status = 'starting'
                 
@@ -694,6 +695,8 @@ var Control = function(settings) {
                         `-silent`,
                         `-blocksonly=0`,
                     ], { stdio: ['ignore'], detached : false, shell : false})
+
+
 
                     node.instance.unref()
 
