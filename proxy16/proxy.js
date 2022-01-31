@@ -674,20 +674,23 @@ var Proxy = function (settings, manage, test, logger) {
 				  { host: 'pocketnetpeertube12.nohost.me', ip: '104.168.248.113' },
 				  { host: 'pocketnetpeertube13.nohost.me', ip: '62.84.115.93' },
 				],
-			  };
-		
-			  if (test) {
-				ins = {
-					0: [
-						{ host: 'test.peertube.pocketnet.app', ip: '65.108.83.132' },
-						{ host: 'test.peertube2.pocketnet.app', ip: '95.216.212.153' },
-					]
-				};
-			  }
-		
-			  return peertube.init({
-				roys: ins,
-			  });
+
+				15: [
+					'peertube14.pocketnet.app',
+					'peertube15.pocketnet.app',
+				],
+      		};
+
+			if (test){
+				ins = {0 : [
+					{ host: 'test.peertube.pocketnet.app', ip: '65.108.83.132' },
+					{ host: 'test.peertube2.pocketnet.app', ip: '95.216.212.153' },
+				]}
+			}
+
+			return peertube.init({
+				roys : ins
+			})
 		},
 
 		destroy: function () {
@@ -744,7 +747,8 @@ var Proxy = function (settings, manage, test, logger) {
 
 			return {
 				status: status,
-
+				test : self.test,
+				
 				nodeManager: self.nodeManager.info(compact),
 				nodeControl: self.nodeControl.info(compact),
 				firebase: self.firebase.info(compact),
@@ -1493,10 +1497,7 @@ var Proxy = function (settings, manage, test, logger) {
 
 						remote.nmake(url, function (err, data) {
 
-							console.log('err', err)
 							if (!err) {
-
-								console.log('data', data)
 
 								resolve({
 
@@ -1880,7 +1881,7 @@ var Proxy = function (settings, manage, test, logger) {
 						data: {
 							id: captcha.id,
 							img: captcha.data,
-							//result: captcha.text, ///
+							result: self.test ? captcha.text : null, ///
 							done: false,
 						},
 					});

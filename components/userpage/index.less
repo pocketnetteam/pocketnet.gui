@@ -190,6 +190,12 @@
 		}
 	}
 
+	#nodecontrol{
+		.maincaption{
+			display: block;
+		}
+	}
+
 	.maketsWrapper{
 
 		overflow: hidden;
@@ -266,6 +272,57 @@
 			.addmenu{
 				.reportCaption{
 					font-weight: 400;
+				}
+			}
+
+			.applicationupdatemodule{
+				position: relative;
+				text-align: center;
+
+				.applicaitonversion{
+					cursor: pointer;
+				}
+
+				.updatingprogress{
+					display: none;
+					position: absolute;
+					left : 0;
+					top : 0;
+					bottom : 0;
+					right : 0;
+					backdrop-filter: blur(5px);
+        			-webkit-backdrop-filter: blur(5px);  
+					background: fade(#fff, 10);
+					text-align: center;
+					padding : 2 * @rhythm;
+
+					.text{
+						padding-top : 1.5 * @rhythm;
+						color : #FFF;
+						font-weight: 700;
+						font-size: 0.9em;
+					}
+				}
+
+				span{
+					opacity: 0.5;
+				}
+
+				button{
+					margin-top: 2 * @rhythm;
+					margin-bottom: 2 * @rhythm;
+
+					&:hover{
+						background: @color-orange;
+						color : #FFF;
+					}
+				}
+
+				&.updating{
+					.updatingprogress{
+						display: block;
+					}
+					
 				}
 			}
 
@@ -398,6 +455,8 @@
 			.preloaderWrapper{
 				padding : 4 * @rhythm;
 			}
+
+			
 
 		    #test{
 

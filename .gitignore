@@ -23,6 +23,7 @@ publish.py
 manifest.json
 **/settings
 data/
+heapdump/
 downloads/
 pocketcoin/
 pocketcoind*/
@@ -32,7 +33,6 @@ pocketcoind*/
 /index_el.html
 /openapi.html
 /embedVideo.php
-/main.js
 /config.xml
 .htaccess
 service-worker.js

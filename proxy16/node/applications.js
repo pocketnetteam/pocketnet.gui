@@ -9,7 +9,7 @@ var Datastore = require('nedb');
 
 var request = require('request');
 var progress = require('request-progress');
-var targz = require('tar.gz2');
+var targz = require('targz');
 
 var Applications = function(settings) {
 
@@ -116,12 +116,11 @@ var Applications = function(settings) {
         })
 
         .then(asset => {
-
-            if(asset && gitasset){
+            if(asset && gitasset) {
                 return Promise.resolve(asset.name != gitasset.name)
+            } else {
+                return Promise.resolve(true)
             }
-
-            return Promise.resolve(false)
         })
     }
 
@@ -245,15 +244,14 @@ var Applications = function(settings) {
         let endFile = path.resolve(dest, meta[key].name)
 
         return new Promise(function(resolve, reject) {
-
-            // The options argument is optional so you can omit it
-            progress(request(meta[key].url), {
-                // throttle: 2000,                    // Throttle the progress event to 2000ms, defaults to 1000ms
+            let req = request(meta[key].url)
+            
+            progress(req, {
+                throttle: 500,                    // Throttle the progress event to 2000ms, defaults to 1000ms
                 // delay: 1000,                       // Only start to emit after 1000ms delay, defaults to 0ms
                 // lengthHeader: 'x-transfer-length'  // Length header to use, defaults to content-length
             })
-            .on('progress', progressState)
-            // function (state) {
+            .on('progress', function (state) {
                 // The state is an object that looks like this:
                 // {
                 //     percent: 0.5,               // Overall percent (between 0 to 1)
@@ -268,8 +266,12 @@ var Applications = function(settings) {
                 //     }
                 // }
                 // console.log('progress', state);
-                // if (progressState) progressState(state);
-            // })
+                if (progressState) {
+                    let st = progressState(state);
+                    if (st && st.break)
+                        req.abort();
+                }
+            })
             .on('error', function (err) {
                 return reject(err)
             })
@@ -283,58 +285,22 @@ var Applications = function(settings) {
     }
 
     self.decompress = function(source, destination, progressState) {
-        // return new Promise(function(resolve, reject) {
-        //     targz.decompress({
-        //         src: source,
-        //         dest: destination
-        //     }, function(err){
-        //         if(err) {
-        //             reject()
-        //         } else {
-        //             resolve()
-        //         }
-        //     })
-        // }).then(r => {
-        //     return Promise.resolve()
-        // }).catch(e => {
-        //     return Promise.reject(e)
-        // })
-
-        return new Promise((resolve, reject) => {
-            try {
-              let stat = fs.statSync(source)
-              let read = fs.createReadStream(source)
-              let write = targz().createWriteStream(destination)
-              let pendingBytes = 0
-              let callback = (err, result) => {
-                if (err) {
-                  reject(err)
+        return new Promise(function(resolve, reject) {
+            targz.decompress({
+                src: source,
+                dest: destination
+            }, function(err){
+                if(err) {
+                    reject()
                 } else {
-                  resolve(result)
+                    resolve()
                 }
-              }
-        
-              // bind events
-              write.on('error', err => {
-                callback(err)
-              })
-              write.on('finish', () => {
-                callback()
-              })
-              read.on('error', err => {
-                callback(err)
-              })
-              read.on('data', chunk => {
-                pendingBytes += chunk.length
-                if (progressState)
-                    progressState({ size: stat.size, pending: pendingBytes })
-              })
-        
-              read.pipe(write)
-            } catch (err) {
-              reject(err)
-            }
-          })
+            })
+        }).then(r => {
+            return Promise.resolve()
+        }).catch(e => {
+            return Promise.reject(e)
+        })
     }
 
     self.removeAll = function(){

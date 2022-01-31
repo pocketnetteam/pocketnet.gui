@@ -135,8 +135,6 @@ nModule = function(){
 						{
 							var options = p[insert.storageKey] || {};
 
-						
-
 								options.content = html;
 								options.el = p.el;
 								options.app = self.app
@@ -189,10 +187,8 @@ nModule = function(){
 								return;
 							}
 
-							var el = deep(self, 'container.el')
-
-							if (el){
-								p.el = el;
+							if (self.container && self.container.el ){
+								p.el = self.container.el;
 							}
 
 							inserted = true;
@@ -200,10 +196,7 @@ nModule = function(){
 						}
 						else
 						{
-							var el = self.app.el[p.el];
-
-							if (el)
-								p.el = el;
+							if (self.app.el[p.el]) p.el = self.app.el[p.el];
 						}
 
 					}
@@ -233,261 +226,16 @@ nModule = function(){
 
 	self.insertTemplate = function(p, _html){
 
-		var animationElHtml = "<div class='animation'></div>";
-
-		var clbk = function(){
-			if (p.completeClbk)
-				p.completeClbk(p);
-		}
-
-		var prepareEl = function(){
-
-			var position = p.el.css('position');
-			var overflow = p.el.css('overflow');
-			var cssheight = p.el.css('height');
-			var csswidth = p.el.css('width');
-			var height = p.el.height();
-			var width = p.el.width();
-
-			p.el.height(height);
-			p.el.width(width);
-			p.el.wrapInner(animationElHtml)
-			p.el.find(".animation").height(height + "px");
-			p.el.find(".animation").width(width + "px");
-
-			p.el.css('overflow', 'hidden')
-
-			if(position != 'absolute' && position != 'fixed')
-			{
-				p.el.css('position', 'relative');
-			}
-
-			return {
-				height : height,
-				width : width,
-				position : position,
-				overflow : overflow,
-				cssheight : cssheight,
-				csswidth : csswidth
-			}
-
-		}
-
-		var restoreEl = function(properties){
-			p.el.find('.animation').contents().unwrap();
-			p.el.css('position', properties.position);
-			p.el.height('');
-			p.el.width('');
-			/*p.el.css('height', properties.cssheight);
-			p.el.css('height', properties.csswidth);*/
-			p.el.css('overflow', properties.overflow);
-			
-		}
-
 		p.inner || (p.inner = html);	
 
-		delete p.animation
+		p.inner(p.el, _html);
 
-		if(p.animation)
-		{
-
-			if(!p.animation.timeouts)
-				p.animation.timeouts = 100;
-
-			if(p.animation == 'fadeIn')
-			{
-				p.el.fadeOut(100);
-
-				setTimeout(function(){
-
-					p.inner(p.el, _html);
-					p.el.fadeIn(200);
-
-					clbk();
-
-					setTimeout(function(){
-
-						if (p.postAnimation)
-							p.postAnimation(p);
-
-					}, 200)
-
-				}, 100)
-
-				return;
-			}
-
-			if(_.isObject(p.animation))
-			{
-
-				if (p.animation.hideOnAnimationPeriod)
-				{
-					p.animation.hideOnAnimationPeriod.fadeOut(p.animation.timeouts);
-				}
-
-				setTimeout(function(){
-
-					var properties = prepareEl()
-
-					var animationEl = p.el.find('.animation')
-
-					if (p.animation.id == 'slide'){
-
-						p.inner = html;
-
-						p.animation.direction || (p.animation.direction = 'onright')
-
-						animationEl.addClass([p.animation.direction, p.animation.id, 'leave'].join(" "))
-
-						animationEl.on('transitionend', function() {
-
-							p.el.html(animationElHtml)
-
-							animationEl = p.el.find('.animation')
-
-							animationEl.addClass([p.animation.direction, p.animation.id, 'enter'].join(" "))
-
-							///
-					    	p.inner(animationEl, _html);
-					    	clbk();
-					    	///
-
-							p.el.height(animationEl.height() + "px");
-							p.el.width(animationEl.width() + "px");
-
-							setTimeout(function(){
-
-								animationEl.addClass('original')
-
-						    	animationEl[0].addEventListener('transitionend', function() {
-						    		
-						    		restoreEl(properties);
-
-						    		if (p.animation.hideOnAnimationPeriod)
-									{
-										p.animation.hideOnAnimationPeriod.fadeIn(2 * p.animation.timeouts);
-									}
-
-						    		if (p.postAnimation)
-										p.postAnimation();
-
-						    	})
-
-					    	}, p.animation.timeouts)
-
-					  	});
-
-					}
-
-					if (p.animation.id == 'fadeInByElement'){
-
-						p.inner = html;
-
-						p.animation.selector || (p.animation.selector = ".fadeInByElement");
-
-						var _els = [];
-
-							animationEl.find(p.animation.selector).each(function(){
-								_els.unshift($(this));
-							})
-
-						var i = 1;
-
-						lazyEach({
-							array : _els,
-							sync : true,
-							action : function(_p){
-								var el = _p.item;
-
-									el.fadeOut(p.animation.timeouts / i);
-
-									i = i + 0.333;
-
-								setTimeout(function(){
-
-									_p.success();
-
-								}, p.animation.timeouts / i)
-							},
-							all : {
-								success : function(){
-									p.el.html(animationElHtml)
-
-									animationEl = p.el.find('.animation')
-
-									animationEl.addClass([p.animation.direction, p.animation.id, 'enter'].join(" "))
-
-									///
-							    	p.inner(animationEl, _html);
-							    	animationEl.find(p.animation.selector).fadeOut(1);
-							    	clbk();
-							    	///
-
-									p.el.height(animationEl.height() + "px");
-									p.el.width(animationEl.width() + "px");
-
-									var _els = [];
-
-										animationEl.find(p.animation.selector).each(function(){
-											_els.push($(this));
-										})
-
-									var i = 0;
-
-									lazyEach({
-										array : _els,
-										sync : true,
-										action : function(_p){
-											var el = _p.item;
-
-												el.fadeIn(p.animation.timeouts / i)
-
-												i = i + 0.333;
-
-											setTimeout(function(){
-
-												_p.success();
-
-											}, p.animation.timeouts / i)
-										},
-										all : {
-											success : function(){
-
-												animationEl.addClass('original')
-
-												restoreEl(properties);
-
-												if (p.postAnimation)
-													p.postAnimation();
-
-											}
-										}
-									})
-								}
-							}
-						})
-
-					}
-
-				}, p.animation.timeouts)
-			}
+		if (p.display){
+			p.el.css("display", p.display)
 		}
-		else
-		{
 
-			p.inner(p.el, _html);
-
-			if (p.display){
-				p.el.css("display", p.display)
-			}
-			
-				
-			
-
-
-			if (p.postAnimation)
-				p.postAnimation();
-		}	
+		if (p.postAnimation)
+			p.postAnimation();
 	}
 
 	self.renderTemplate = function(template, clbk, p){
@@ -545,7 +293,8 @@ nModule = function(){
 			if (self.map && self.map.id){
 				var pretemplate = deep(window, 'pocketnetTemplates.' + (p.turi || self.map.uri) + '.' + p.name)
 
-				if(pretemplate){
+				if (pretemplate){
+
 					self.storage.templates[p.name] = _.template(pretemplate);
 	
 					if (clbk)
@@ -772,13 +521,13 @@ nModule = function(){
 					clearTimeout(p.globalpreloaderTimer)
 				}
 
-				if(p.el) p.el.html('')
+				if (p.el) p.el.html('')
 
 				if (p.clbk)
 					p.clbk('anonimus')
 			}
 
-			
+			p = null
 
 		}, p)
 	}
@@ -836,6 +585,10 @@ nModule = function(){
 		}
 
 		essenses[id].destroyed = false;
+
+		p.clearessense = essense.clearessense = function(){
+			self.removeEssense(essenses, id)
+		}
 
 		return essenses[id];
 	}

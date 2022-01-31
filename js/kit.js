@@ -972,7 +972,6 @@ Share = function(lang){
 			}
 			
 			_.each(self.on.change || {}, function(f){
-				console.log('poll', f);
 				f('poll', this.v)
 			})
 
@@ -1004,6 +1003,10 @@ Share = function(lang){
 
 		if(self.itisvideo()){
 			return 'video'
+		}
+
+		if(self.itisarticle()){
+			return 'article'
 		}
 
 		return 'post'
@@ -1315,11 +1318,7 @@ Share = function(lang){
 			return 'pkoin_commerce_tag'
 		}
 
-		/*if(!self.tags.v.length && self.settings.v != 'a'){
-
-			return 'tags'
-		}*/
-
+	
 		return false
 	}
 
@@ -1330,9 +1329,8 @@ Share = function(lang){
 		var articleversion2 = self.settings.v == 'a' && self.settings.version && self.settings.version >= 2
 
 		if (articleversion2){
-			textvalue = Base64Helper.encode(JSON.stringify(textvalue))
+			textvalue = JSON.stringify(textvalue) //  Base64Helper.encode(JSON.stringify(textvalue))
 		}
-
 		
 		return encodeURIComponent(self.url.v) 
 		
@@ -1363,6 +1361,10 @@ Share = function(lang){
 		if(meta.type == 'peertube') return true
 	}
 
+	self.itisarticle = function(){
+		return self.settings.v == 'a' && self.settings.version && self.settings.version >= 2
+	}
+
 	self.hasexchangetag = function(){
 		return self.tags.have('pkoin_commerce')
 	}
@@ -1374,7 +1376,7 @@ Share = function(lang){
 		var articleversion2 = self.settings.v == 'a' && self.settings.version && self.settings.version >= 2
 
 		if (articleversion2){
-			textvalue = Base64Helper.encode(JSON.stringify(textvalue))
+			textvalue = textvalue //Base64Helper.encode(JSON.stringify(textvalue))
 		}
 
 		if (extend){
@@ -1429,15 +1431,6 @@ Share = function(lang){
 		var articleversion2 = self.settings.v == 'a' && self.settings.version && self.settings.version >= 2
 		var textvalue = v.m || v.message
 
-		if (articleversion2){
-			try{
-				textvalue = JSON.parse(Base64Helper.decode(textvalue))
-			}
-			catch(e) {
-				textvalue = ''
-			}
-		}
-
 		self.caption.set(v.c || v.caption)
 		self.url.set(v.u || v.url)
 		self.tags.set(v.t || v.tags)
@@ -1456,6 +1449,8 @@ Share = function(lang){
 
 			share.time = new Date();
 
+			console.log('self.export()', self.export())
+
 			share._import(self.export())
 
 			share.txid = txid || self.aliasid
@@ -1466,6 +1461,7 @@ Share = function(lang){
 	self.optstype = function(platform){
 
 		if(self.itisvideo()) return 'video'
+		if(self.itisarticle()) return 'article'
 
 		return self.type	
 	}
@@ -1473,6 +1469,7 @@ Share = function(lang){
 	self.typeop = function(platform){
 
 		if (self.itisvideo()) return 'video'
+		if (self.itisarticle()) return 'article'
 
 		if (self.aliasid){
 			return 'share'
@@ -1480,6 +1477,16 @@ Share = function(lang){
 
 		return self.type
 	}
+
+	self.size = function(){
+
+		var obj = JSON.stringify(self.export());
+
+		return obj.length
+
+	}
+
+	self.sizelimit = 60000
 
 	if(lang) self.language.set(lang)
 
@@ -1933,7 +1940,7 @@ pUserInfo = function(){
 		if(!key) key = 'subscribes'
 
 		return _.find(self[key], function(o){
-			return o.adddress == address || o.address == address || o == address
+			return (o.adddress || o.address || o) == address 
 		})
 	}
 
@@ -2056,14 +2063,15 @@ pShare = function(){
 		var articleversion2 = self.settings.v == 'a' && self.settings.version && self.settings.version >= 2
 
 
-		if (articleversion2){
+		if(articleversion2){
 			try{
-				textvalue = JSON.parse(Base64Helper.decode(textvalue))
+				textvalue = JSON.parse(textvalue)
 			}
-			catch(e) {
-				textvalue = ''
+			catch(e){
+				textvalue = textvalue
 			}
 		}
+
 
 		if (notdecode){
 			self.message = textvalue

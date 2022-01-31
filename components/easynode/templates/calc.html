@@ -1,0 +1,38 @@
+
+<div class="calc">
+    <div class="calcCaption">
+					
+        <span><%-e('stakingCalculator') %></span>
+    </div>
+    
+    
+    <div class="numbers">
+        <div class="inputWrapper ihave">
+            <div>
+                <span><%-e('IHave') %></span>
+                <span class="amredits" contenteditable="true"><%= app.platform.mp.coin(amount) %></span> 
+                <span>PKOIN</span>
+                <span class="errWrapper"></span>
+            </div>
+        </div>
+    
+    
+        <div class="totalNumbers inputWrapper">
+    
+        
+            <div class="totalRow">
+                <div class="label"><span>6 <%-e('months') %></span></div>
+                <div class="value"><span class="blv" item="6m">0</span></div>
+                <div class="value"><span class="cur">PKOIN</span></div>
+            </div>
+    
+            <div class="totalRow">
+                <div class="label"><span>1 <%-e('year') %></span></div>
+                <div class="value"><span class="blv" item="1y">0</span></div>
+                <div class="value"><span class="cur">PKOIN</span></div>
+            </div>
+        </div>
+    
+    
+    </div>
+</div>

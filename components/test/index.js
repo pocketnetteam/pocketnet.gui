@@ -10,7 +10,7 @@ var test = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, lastTransaction, ed, ref, plissing; 
+		var el = {}, ed, ref, plissing; 
 
 		var firstTime = false;
 		var termsaccepted = false;
@@ -202,7 +202,6 @@ var test = (function(){
 							var pn = el.c.find('[parameter="name"] input')
 
 							pn.focus()
-
 							_scrollTo(pn)
 						}
 						else{
@@ -615,12 +614,6 @@ var test = (function(){
 							}
 						}
 					}
-
-					//if(id == 'ref'){
-
-						//self.app.platform.api.inputs.user(parameter)
-
-					//}
 				})
 			},
 
@@ -640,7 +633,13 @@ var test = (function(){
 				id : 'name',
 				type : "NICKNAME",
 				onType : true,
-				require : true
+				require : true,
+
+				onFocus : function(pn){
+					console.log('onFocus')
+					if (isTablet())
+						_scrollTo(pn)
+				}
 			}),
 
 			email : new Parameter({
@@ -649,6 +648,11 @@ var test = (function(){
 				id : 'email',
 				type : "STRINGANY",
 				onType : true,
+
+				onFocus : function(pn){
+					if (isTablet())
+						_scrollTo(pn)
+				}
 			}),
 
 			language : new Parameter({
@@ -1219,14 +1223,18 @@ var test = (function(){
 			},
 
 			destroy : function(){
+
+				if (el.c) el.c.empty()
+
+
 				el = {};
+				ed = {};
 
 				saving = false
 
 				tempInfo = {
 					language : self.app.localization.key || 'en'
 				}
-
 
 				return null;
 			},

@@ -62,8 +62,6 @@ var main = (function(){
 						el.panel.hcSticky('refresh');
 						el.leftpanel.hcSticky('refresh');
 
-						console.log("REFRESH STICKY")
-
 						/*setTimeout(function(){
 							if(el.panel) el.panel.hcSticky('refresh');
 							if(el.leftpanel) el.leftpanel.hcSticky('refresh');
@@ -280,18 +278,19 @@ var main = (function(){
 
 			topvideos: function (show) {
 				
-				var showmoreby = el.topvideos
-
-				//showmoreby.removeClass('hasshares')
-
 				if (show){
 
-					showmoreby.removeClass('hidden')
+					el.topvideos.removeClass('hidden')
+
+					if (external) {
+						external.clearessense()
+					}
 					
-					self.app.platform.papi.horizontalLenta(showmoreby, function (e,p) {
+					self.app.platform.papi.horizontalLenta(el.topvideos, function (e,p) {
 
 						external = p
 						actions.refreshSticky()
+
 					}, {
 						caption : self.app.localization.e("Top videos") ,
 						video: true,
@@ -315,8 +314,8 @@ var main = (function(){
 						},
 						hasshares : function(shares){
 
-							if (shares.length <= 2){
-								showmoreby.addClass('hidden')
+							if (shares.length <= 2 && el.topvideos){
+								el.topvideos.addClass('hidden')
 							}
 							
 						},
@@ -329,28 +328,6 @@ var main = (function(){
 								history : true,
 								handler : true
 							})
-
-							return
-
-							if(isMobile() && share){
-
-								self.nav.api.load({
-									open : true,
-									href : 'post?&s=' + id,
-									history : true,
-									handler : true
-								})
-
-							}
-							else{
-								self.nav.api.load({
-									open : true,
-									href : 'index?video=1&v=' + id,
-									history : true,
-									handler : true
-								})
-							}
-
 							
 						},
 
@@ -361,15 +338,15 @@ var main = (function(){
 
 				else{
 
-					if(external){
+					if (external){
 						external.destroy()
 						external = null
 					}
 
-					showmoreby.html('')
+					el.topvideos.html('')
 					//showmoreby.removeClass('hasshares')
 
-					showmoreby.addClass('hidden')
+					el.topvideos.addClass('hidden')
 				}
 
 				
@@ -421,7 +398,6 @@ var main = (function(){
 					essenseData : {
 					
 						renderclbk : function(){
-							console.log("renderclbk")
 							actions.refreshSticky(true)
 	
 						}
@@ -497,7 +473,7 @@ var main = (function(){
 				var fp = false
 
 				if (lenta) {
-					lenta.destroy()
+					lenta.clearessense()
 				}
 
 				renders.addpanel();
@@ -727,8 +703,6 @@ var main = (function(){
 				var t1 = 64
 				var t2 = 76
 
-				console.log("INITSTICKER!!!")
-
 				if (el.leftpanel)
 					el.leftpanel.hcSticky({
 						stickTo: '#main',
@@ -909,12 +883,16 @@ var main = (function(){
 				}
 
 				if (changes){
+
+					if (external) {
+						external.clearessense()
+						external = null
+					}
+
 					renders.topvideos(currentMode == 'common' && !videomain && !searchvalue && !searchtags)
 
-					
-
 					if (lenta) {
-						lenta.destroy()
+						lenta.clearessense()
 						lenta = null
 					}
 	
@@ -1001,11 +979,11 @@ var main = (function(){
 					return
 				}
 
-				if(_s.v && (isMobile() || window.cordova)){
+				if((_s.v || _s.s) && (isMobile() || window.cordova)){
 
 					self.nav.api.load({
 						open : true,
-						href : 'post?s=' + _s.v,
+						href : 'post?s=' + (_s.v || _s.s),
 						history : true,
 						replaceState : true
 					})
@@ -1037,13 +1015,10 @@ var main = (function(){
 
 			destroy : function(){
 
-				//if(el.c && !isMobile()) el.c.html('')
-
 				showCategories(false)
 
 				delete self.app.events.scroll.main
 				delete self.app.events.resize.mainpage
-					
 
 				renders.post(null)
 
@@ -1080,17 +1055,22 @@ var main = (function(){
 					panel.destroy()
 				}
 
+				if (openedpost){
+					openedpost.clearessense()
+					openedpost = null
+				}
+
 				if (external){
-					external.destroy()
+					external.clearessense()
 					external = null
 				}
 
 				if (leftpanel){
 					leftpanel.destroy()
+					leftpanel = null
 				}
 
 				lastscroll = 0
-				//mobilemode = 'mainshow'
 				leftpanel = null
 				panel = null
 				roller = null
@@ -1100,7 +1080,7 @@ var main = (function(){
 				fixeddirection = null
 				addbuttonShowed = false
 
-				//self.app.el.footer.removeClass('workstation')
+				if(el.c) el.c.empty()
 
 				el = {}
 				

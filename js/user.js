@@ -309,8 +309,6 @@ User = function(app, p) {
 
 	self.validateVay = function(){
 
-		console.log('self', self)
-
 		if(!self.address.value) return 'fu';
 
 		var me = deep(app, 'platform.sdk.user.storage.me');
@@ -330,7 +328,6 @@ User = function(app, p) {
 
 	self.validate = function(){
 
-
 		if(!self.address.value) return false;
 
 		var me = deep(app, 'platform.sdk.user.storage.me');
@@ -340,6 +337,8 @@ User = function(app, p) {
 			var regs = app.platform.sdk.registrations.storage[self.address.value];
 
 			if (regs && (regs === true || regs < 3)){
+
+				
 				return false
 			}
 
@@ -412,8 +411,6 @@ User = function(app, p) {
 					keyPair = bitcoin.ECPair.fromWIF(private)
 				}
 				catch (e){
-					console.log("E2", e)
-	
 				}
 			} 
 		}
@@ -443,9 +440,6 @@ User = function(app, p) {
 				keyPair = bitcoin.ECPair.fromWIF(private)
 			}
 			catch (e){
-
-				console.log('er2', e, private)
-				
 			}
 		} 
 
@@ -462,9 +456,6 @@ User = function(app, p) {
 	}
 
 	self.setKeys = function(mnemonic, clbk){
-
-
-		console.log("self.setKeys", mnemonic)
 
 		var keyPair =  self.keysFromMnemo(mnemonic)  
 		

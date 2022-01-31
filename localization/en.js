@@ -10,22 +10,22 @@ var ____loclib = loclib.en;
 
 //time
 
-____loclib.fewseconds = "Few seconds ago";	
-____loclib.oneminute = "One minute ago";	
+____loclib.fewseconds = "Few seconds ago";
+____loclib.oneminute = "One minute ago";
 
 ____loclib.minutes = function(v){
 return v + " minutes ago"
 }
 
-____loclib.tenminutes = "Ten minutes ago";	
-____loclib.halfanhour = "An hour ago";	
-____loclib.anhour = "An hour ago";	
-____loclib.today = "Today at";	
+____loclib.tenminutes = "Ten minutes ago";
+____loclib.halfanhour = "An hour ago";
+____loclib.anhour = "An hour ago";
+____loclib.today = "Today at";
 
 //authorization
 
-____loclib.id0 = "Login to an existing account";	
-____loclib.id1 = "If you are already registered, please sign in";	
+____loclib.id0 = "Login to an existing account";
+____loclib.id1 = "If you are already registered, please sign in";
 ____loclib.loadqrcode = "Upload QR Code";
 ____loclib.stay = "Stay Signed In";
 ____loclib.signin = "Sign In";
@@ -40,18 +40,18 @@ ____loclib.id72 = "Already a Member? Sign In";
 
 ____loclib.rtip1 = "Take Note of Your Private Login Key!";
 ____loclib.rtip2 = function(mobile){
-var h = "Below is your Private Key passphrase. Write it down and make sure to save your QR code" 
+var h = "Below is your Private Key passphrase. Write it down and make sure to save your QR code"
 
 if(mobile){ h += "device" } else { h+="PC" }
 
 h+=" and be sure not to lose it. We do not store your personal data. Private Key cannot be recovered if lost!"
 
-return h 
+return h
 }
 
 ____loclib.generatepkey = "Generate Private Key";
 ____loclib.rtip3 = "Write this login key down. We do not store your personal data. It cannot be recovered if lost! ";
-____loclib.saveqrcode = "Save Qr Code" 
+____loclib.saveqrcode = "Save Qr Code"
 ____loclib.copyprivkey = "Copy Private Key"
 ____loclib.rcontinue = "Continue"
 ____loclib.idle = "Idle for some time"
@@ -72,8 +72,8 @@ ____loclib.confirmcreate = "Create Account"
 
 //user activation
 
-____loclib.useractivation = "User activation";	
-____loclib.wesentmoney = "We sent you a few coins for registration";	
+____loclib.useractivation = "User activation";
+____loclib.wesentmoney = "We sent you a few coins for registration";
 ____loclib.wesentmoneym = "We have already sent you a few coins for registration";
 
 
@@ -81,88 +81,88 @@ ____loclib.wesentmoneydelay = "The process is taking more time than usual, pleas
 
 ____loclib.funetworkproblems = "There are some problems with the connection. Please try later";
 
-____loclib.pleasewait = "Please Wait";	
-____loclib.next = "Next";	
-____loclib.welcome = "Welcome";	
-____loclib.welcometopocketnet = "Welcome to "+appname+"";	
-____loclib.continue = "continue";	
+____loclib.pleasewait = "Please Wait";
+____loclib.next = "Next";
+____loclib.welcome = "Welcome";
+____loclib.welcometopocketnet = "Welcome to "+appname+"";
+____loclib.continue = "continue";
 
 ____loclib.chooseThemes = "Choose interesting themes";
 //user page
 
-____loclib.rstate = "Reputation";	
-____loclib.rprofile = "Profile";	
-____loclib.rsettings = "Settings";	
-____loclib.rwallet = "Wallet";	
-____loclib.raccounts = "Accounts";	
+____loclib.rstate = "Reputation";
+____loclib.rprofile = "Profile";
+____loclib.rsettings = "Settings";
+____loclib.rwallet = "Wallet";
+____loclib.raccounts = "Accounts";
 ____loclib.rsystem = "System";
 ____loclib.rconnection = "Connection";
-____loclib.pnetAddress = ""+appname+" Address";	
-____loclib.profile = "Profile";	
+____loclib.pnetAddress = ""+appname+" Address";
+____loclib.profile = "Profile";
 ____loclib.signout = "Sign out";
 
 //send
 
-____loclib.postlabel = "Donation for post";	
-____loclib.donationlabel = "Donation";	
+____loclib.postlabel = "Donation for post";
+____loclib.donationlabel = "Donation";
 ____loclib.donationwel = "If you want to thank the author you can use a "+appname+" transaction";
-____loclib.donationwela = ""+appname+" transaction";	
-____loclib.donationwelan = "Or you can use another crypto payment system";	
-____loclib.successfullycopiedaddress = "Address was successfully copied";	
+____loclib.donationwela = ""+appname+" transaction";
+____loclib.donationwelan = "Or you can use another crypto payment system";
+____loclib.successfullycopiedaddress = "Address was successfully copied";
 
 //wallet
 
-____loclib.wrecieve = "Receive Coins By Sharing Address";	
-____loclib.wcopyshare = "Copy & Share Address:";	
-____loclib.wqrcode = "Qr code";		
-____loclib.wcopeaddress = "Copy Address";	
-____loclib.wcreatelink = "Or Create Link For Your Payment";	
-____loclib.required = "Required";	
-____loclib.wgetlink = "Get Link";	
-____loclib.waddresses = "Addresses";	
-____loclib.waddress = "Address";	
-____loclib.wbalance = "Balance";	
-____loclib.wpercente = "Percente";	
-____loclib.waddaddress = "Explore a new Wallet address";	
-____loclib.wrecieve = "Receive";	
-____loclib.wrecieveon = "Receive on";	
+____loclib.wrecieve = "Receive Coins By Sharing Address";
+____loclib.wcopyshare = "Copy & Share Address:";
+____loclib.wqrcode = "Qr code";
+____loclib.wcopeaddress = "Copy Address";
+____loclib.wcreatelink = "Or Create Link For Your Payment";
+____loclib.required = "Required";
+____loclib.wgetlink = "Get Link";
+____loclib.waddresses = "Addresses";
+____loclib.waddress = "Address";
+____loclib.wbalance = "Balance";
+____loclib.wpercente = "Percente";
+____loclib.waddaddress = "Explore a new Wallet address";
+____loclib.wrecieve = "Receive";
+____loclib.wrecieveon = "Receive on";
 ____loclib.wcopyshareorcreate = "Copy & Share Address or Create Payment Link";
-____loclib.wdgetlink = "Get Link";	
+____loclib.wdgetlink = "Get Link";
 ____loclib.wdqrcode = "Qr code";
-____loclib.wdcopyaddress = "Copy Address";	
+____loclib.wdcopyaddress = "Copy Address";
 ____loclib.wdpleasefill = "Please fill in these fields";
-____loclib.wduseqr = "Use this QR code to receive funds";	
+____loclib.wduseqr = "Use this QR code to receive funds";
 ____loclib.wdaddress = "Address";
-____loclib.wdamount = "Amount";	
-____loclib.wdlabel = "Label";	
-____loclib.wdmessage = "Message";	
+____loclib.wdamount = "Amount";
+____loclib.wdlabel = "Label";
+____loclib.wdmessage = "Message";
 ____loclib.wsend = "Send";
-____loclib.calcfeesandsend = "Calculate Fees And Send";	
-____loclib.wstrfees = "Transaction Fees";	
-____loclib.wsfees = "Fees";	
+____loclib.calcfeesandsend = "Calculate Fees And Send";
+____loclib.wstrfees = "Transaction Fees";
+____loclib.wsfees = "Fees";
 
-____loclib.wssendto = "SEND COINS TO";	
-____loclib.wssendb = "SEND";	
+____loclib.wssendto = "SEND COINS TO";
+____loclib.wssendb = "SEND";
 
-____loclib.tacaddress = "Account Address";	
-____loclib.twallet = "Wallet";	
-____loclib.twalletaddresses = "Wallet addresses";	
-____loclib.tTotal = "Total";	
-____loclib.wsselect = "Select Source From Menu";	
-____loclib.wsenter = "Enter Address Or Select From Menu";	
-____loclib.wsreciever = "Receiver address";	
-____loclib.wsamount = "Amount";	
-____loclib.wsamountof = "Amount of your transaction";	
-____loclib.wsincludefees = "Include Fees in Amount";	
-____loclib.wsrecieverpay = "To be paid by Receiver";	
-____loclib.wssenderpay = "To be paid by Sender";	
-____loclib.wdselectfrom = "Select From menu";	
+____loclib.tacaddress = "Account Address";
+____loclib.twallet = "Wallet";
+____loclib.twalletaddresses = "Wallet addresses";
+____loclib.tTotal = "Total";
+____loclib.wsselect = "Select Source From Menu";
+____loclib.wsenter = "Enter Address Or Select From Menu";
+____loclib.wsreciever = "Receiver address";
+____loclib.wsamount = "Amount";
+____loclib.wsamountof = "Amount of your transaction";
+____loclib.wsincludefees = "Include Fees in Amount";
+____loclib.wsrecieverpay = "To be paid by Receiver";
+____loclib.wssenderpay = "To be paid by Sender";
+____loclib.wdselectfrom = "Select From menu";
 
-____loclib.wdenteramount = "Enter Amount";	
+____loclib.wdenteramount = "Enter Amount";
 ____loclib.wdmessageplaceholder = "What is this transaction for?";
 ____loclib.wrenteraddress = "Enter Address";
 ____loclib.wrenteraddressselect = "Enter Address Or Select From menu";
-____loclib.wreturntoeallet = "RETURN TO WALLET";	
+____loclib.wreturntoeallet = "RETURN TO WALLET";
 ____loclib.linkCreated = "LINK CREATED";
 ____loclib.waddresswascop = "Address was successfully copied";
 ____loclib.wqrcodecreated = "QR CODE CREATED";
@@ -232,13 +232,14 @@ ____loclib.acchasinanotherpack = "This address is already use in another address
 
 //author
 ____loclib.sub = "Follow";
+____loclib.subi = "Following";
 ____loclib.unsub = "Unfollow";
 ____loclib.joined = "Joined";
 ____loclib.shares = "SHARES";
 ____loclib.uposts = "POSTS";
 ____loclib.myuposts = "MY POSTS";
 ____loclib.followers = "FOLLOWERS";
-____loclib.following = "Following";
+____loclib.following = "FOLLOWING";
 ____loclib.settings = "MANAGE";
 ____loclib.anofollowers = "This user has no followers";
 ____loclib.aynofollowers = "You have no followers";
@@ -326,6 +327,10 @@ ____loclib.dcancel = "Cancel";
 ____loclib.dyes = "Yes";
 ____loclib.dno = "No";
 ____loclib.dsa = "Do not Show Anymore";
+____loclib.dcode = "Code"
+____loclib.dcopyToClipboard = "Copy to ClipBoard"
+____loclib.dwarning = "Warning"
+____loclib.dyesclose = "Yes, close"
 
 
 // Messages
@@ -369,8 +374,8 @@ ____loclib.checkScoreErrorLight = "Account is not activated";
 ____loclib.timestamperror = "Time in application and in node do not match";
 
 // Error Page 404
-____loclib.e404 = "ERROR 404";	
-____loclib.e404e = "Page not Found. Return to Main Page";	
+____loclib.e404 = "ERROR 404";
+____loclib.e404e = "Page not Found. Return to Main Page";
 ____loclib.postLimitLight = function(v){
 return "You have reached your limit of " + (v || 15) + " posts in a 24 hour period";
 }
@@ -378,7 +383,7 @@ ____loclib.postLimitLight = function(v){
 return "You have reached your limit of " + (v || 15) + " grading in a 24 hour period";
 }
 
-____loclib.doubleLimitLight = "You have already rated this";	
+____loclib.doubleLimitLight = "You have already rated this";
 
 ____loclib.SelfSubscribeError = "Cannot subscribe to yourself";
 ____loclib.DoubleSubscribeError = "You already follow this user";
@@ -597,7 +602,7 @@ ____loclib.joinnow = "Join Now"
 ____loclib.loading = "Loading"
 ____loclib.e13118 = "Words doesn't match"
 ____loclib.e13119 = "Add email and continue"
-____loclib.e13120 = "Applications"
+____loclib.e13120 = "Download Application"
 ____loclib.e13121 = "There aren't Images Here"
 ____loclib.e13122 = "Latest Comments"
 
@@ -715,6 +720,8 @@ ____loclib.e13188 = "Please save your private cryptographic key which replaces l
 ____loclib.e13189 = "Leave and lose my key forever!"
 ____loclib.e13190 = ""+appname+" theme"
 ____loclib.e13191 = "Set Theme"
+____loclib.uiScaleSetting = "Interface scaling"
+____loclib.uiScaleSettingTitle = "Set scaling"
 ____loclib.e13192 = "Level"
 ____loclib.e13193 = "BONUS"
 ____loclib.e13194 = "Reputation and Status"
@@ -760,9 +767,16 @@ ____loclib.e13220 = "Pocketcoins delivered"
 ____loclib.errorreload = "Something went wrong. Please reload page and try again"
 ____loclib.e13221 = "Do you really want to delete information about this deal? Deal can't be stop"
 ____loclib.e13222 = "Download Desktop App - this is the most censorship resistant way to use "+appname+". Even if websites are shut down, desktop application will still run directly through the nodes."
+
+
+
 ____loclib.e13223 = "Download "+appname+" for Windows"
 ____loclib.e132232 = "Download "+appname+" for macOs"
 ____loclib.e13224 = "Download "+appname+" for Linux"
+
+____loclib.e132233 = "Download "+appname+" for Android"
+____loclib.e132221 = "Download Mobile App - this is the most usefull way to use "+appname+"."
+
 ____loclib.e13225 = ""+appname+" Node"
 ____loclib.e13226 = "Download Node"
 ____loclib.e13227 = "Download "+appname+" Node for Windows"
@@ -1156,7 +1170,7 @@ ____loclib.e133453 = "invite you in chat"
 ____loclib.createnewcontinue = "Continue creating account";
 
 
-____loclib.transactionnotfound = "Transaction not found";	
+____loclib.transactionnotfound = "Transaction not found";
 
 ____loclib.donateself = "You can't donate yourself";
 ____loclib.donated = "commented your post and donated"
@@ -1180,7 +1194,7 @@ ____loclib.linkStreamKey = "Stream Key"
 
 
 
-____loclib.videoCabinet = "My Videos";	
+____loclib.videoCabinet = "My Videos";
 ____loclib.uploadQuota = "Daily Uploading Quota";
 ____loclib.attachVideoToPost = "Create Post With This Video";
 
@@ -1373,6 +1387,7 @@ ____loclib.aboutOpen2 = 'Official Website';
 ____loclib.aboutOpen3 = 'Contact us';
 ____loclib.aboutOpen4 = 'Send us a message if you need help or if you are a content creator, blogger, influencer and would like to unlock your bonus and verify your profile!';
 ____loclib.aboutOpen5 = 'Source Code';
+____loclib.aboutOpen5_1 = 'Email us at:';
 
 /////////////aboutYoutube
 ____loclib.aboutMainBoard = 'Bastyon - the best alternative to YouTube';
@@ -1681,12 +1696,12 @@ ____loclib.aboutFbMainBoard34 = 'Each time someone joins Bastyon with your refer
 ____loclib.aboutFbMainBoard35 = 'Contact us to learn more and to activate your account as “CREATOR” so that you can post unlimited videos and get paid!';
 
 
-____loclib.aboutFbOpen = 'Discover Bastyon'; 
-____loclib.aboutFbOpen1 = 'You can use Bastyon from your browser or dowload the mobile and desktop app.'; 
-____loclib.aboutFbOpen2 = 'Official Website'; 
-____loclib.aboutFbOpen3 = 'Source Code'; 
-____loclib.aboutFbOpen4 = 'Contact us'; 
-____loclib.aboutFbOpen5 = 'Send us a message if you need help or if you are a content creator, blogger, influencer and would like to unlock your bonus and verify your profile!'; 
+____loclib.aboutFbOpen = 'Discover Bastyon';
+____loclib.aboutFbOpen1 = 'You can use Bastyon from your browser or dowload the mobile and desktop app.';
+____loclib.aboutFbOpen2 = 'Official Website';
+____loclib.aboutFbOpen3 = 'Source Code';
+____loclib.aboutFbOpen4 = 'Contact us';
+____loclib.aboutFbOpen5 = 'Send us a message if you need help or if you are a content creator, blogger, influencer and would like to unlock your bonus and verify your profile!';
 
 
 /////aboutHIW
@@ -1867,7 +1882,7 @@ ____loclib.reachedlimits = 'You reached your daily limit of actions. To increase
 ____loclib.closestreachedlimits = 'You are close to hitting your daily action limit. To increase your limit you need to have at least 50 PKOIN in your account or have a valid reputation.'
 
 
-____loclib.sendUserStatistics = 'Send anonimous logs of user activity to Bastyon Team'
+____loclib.sendUserStatistics = 'Send anonimous report of errors to Bastyon Team'
 ____loclib.captionUserStats = 'Statistics'
 
 ____loclib.editarticledraft = 'Edit article Draft'
@@ -1877,7 +1892,7 @@ ____loclib.deletedraftquestion = 'Are you sure you want to delete the draft arti
 ____loclib.publishquestion = 'Are you sure you want to public this article?'
 
 ____loclib.etc = 'And so on...'
-
+____loclib.openlinkssettings = 'Do not open links in the desktop application'
 ____loclib.nametaken = 'This username is taken in Bastyon'
 
 ____loclib.accountnotfound = 'We could not find your account on the blockchain. Perhaps the registration process was not completed, or there is no Internet connection'
@@ -1894,3 +1909,123 @@ ____loclib.invalidformat = "Invalid format of picture. Only png and jpeg are all
 ____loclib.downloadDesctApp = "Download Bastyon for desktop"
 ____loclib.downloadMobileApp = "Install Mobile Application"
 
+
+____loclib.easyNode_e10000 = "Node"
+____loclib.easyNode_e10001 = "Download and install node"
+____loclib.easyNode_e10002 = "Bastyon Node"
+____loclib.easyNode_e10003 = "Loading"
+____loclib.easyNode_e10004 = "Node Installing"
+____loclib.easyNode_e10005 = "Node Removing"
+____loclib.easyNode_e10006 = "System Requirements"
+____loclib.easyNode_e10007 = "Node control is not yet available for your operating system"
+____loclib.easyNode_e10008 = "Synchronization"
+____loclib.easyNode_e10009 = "Configuration"
+____loclib.easyNode_e10010 = "Enabled"
+____loclib.easyNode_e10011 = "Daemon Path"
+____loclib.easyNode_e10012 = "Data Path"
+____loclib.easyNode_e10013 = "Set Paths to Default"
+____loclib.easyNode_e10014 = "To Default"
+____loclib.easyNode_e10015 = "Update Node"
+____loclib.easyNode_e10016 = "No Updates Available"
+____loclib.easyNode_e10017 = "Delete"
+____loclib.easyNode_e10018 = "Delete Daemon"
+____loclib.easyNode_e10019 = "Delete Daemon and Data"
+____loclib.easyNode_e10020 = "Wallet"
+____loclib.easyNode_e10021 = "Status"
+____loclib.easyNode_e10022 = "Requesting..."
+____loclib.easyNode_e10023 = "Staking"
+____loclib.easyNode_e10024 = "Node can't stake now. Add at least 50 PKOIN or wait for 60 minutes to activate coins"
+____loclib.easyNode_e10025 = "Balance"
+____loclib.easyNode_e10026 = "Control"
+____loclib.easyNode_e10027 = "Deposit"
+____loclib.easyNode_e10028 = "Withdraw"
+____loclib.easyNode_e10029 = "Export Wallet"
+____loclib.easyNode_e10030 = "Import Wallet"
+____loclib.easyNode_e10031 = "Active"
+____loclib.easyNode_e10032 = "Version"
+____loclib.easyNode_e10033 = "Chain"
+____loclib.easyNode_e10034 = "Description"
+____loclib.easyNode_e10035 = "Height"
+____loclib.easyNode_e10036 = "Less than an hour left"
+____loclib.easyNode_e10037 = function(v) { return `${v} hour(s) remaining` }
+____loclib.easyNode_e10038 = "Block Hash"
+____loclib.easyNode_e10039 = "Disable Node"
+____loclib.easyNode_e10040 = "Enable Node"
+____loclib.easyNode_e10041 = "Your wallet saved to"
+____loclib.easyNode_e10042 = "Your wallet imported"
+____loclib.easyNode_e10043 = "Your new node address"
+____loclib.easyNode_e10044 = "Input Address and Amount for transfer PKOIN"
+____loclib.easyNode_e10045 = "Destination Address"
+____loclib.easyNode_e10046 = "Amount"
+____loclib.easyNode_e10047 = "Invalid arguments"
+____loclib.easyNode_e10048 = 'Invalid destination address'
+____loclib.easyNode_e10049 = "Invalid amount"
+____loclib.easyNode_e10050 = "Created transaction"
+____loclib.easyNode_e10051 = "Do you really want to Stop Node and Update It?"
+____loclib.easyNode_e10052 = "Make sure that you have made a backup of the wallet. Do you really want to delete the node and data directory?"
+____loclib.easyNode_e10053 = "Do you really want to remove Node Daemon?"
+____loclib.easyNode_e10054 = "Do you really want to install the node?"
+____loclib.easyNode_e10055 = "Do you really want to set Data Path to Default?"
+____loclib.easyNode_e10056 = "Gb free RAM"
+____loclib.easyNode_e10058 = "Gb free disk space"
+____loclib.easyNode_e10059 = "Mb/s internet speed"
+____loclib.easyNode_e10060 = "SSD drive"
+____loclib.easyNode_e10061 = "Your node is running. Close the app anyway?"
+
+____loclib.IHave = "I have";
+____loclib.downloadNode = "Download Windows Desktop Node";
+____loclib.months = "Months";
+____loclib.year = "Year";
+____loclib.stakingCalculator = "Staking Calculator - calculate how much you earn by putting Pocketcoin (PKOIN) into a node."
+____loclib.easyNode_e2000 = "Defend Freedom of Speech & "
+____loclib.easyNode_e2000_1 = "Earn"
+____loclib.easyNode_e2000_2 = " Cryptocurrency"
+____loclib.easyNode_e2001 = "What is Pocketcoin? Pocketcoin is a cryptocurrency that powers the decentralized social platform Bastyon. It is used to reward content creators, to boost posts and comments, to pay for ads and to unlock special features on Bastyon."
+____loclib.easyNode_e2002 = "What is a  node?  A node is a computer owned by any user of Bastyon that supports the network and"
+____loclib.easyNode_e2002_1 = " earns "
+____loclib.easyNode_e2002_2 = "Pocketcoin. Your computer can be one of those nodes, assuming you have at least 50 GB of free SSD space and a decent internet connection.  Node has to lock some Pocketcoin in it to"
+____loclib.easyNode_e2002_2_1 = " earn "
+____loclib.easyNode_e2002_2_2 = "more Pocketcoin. That is called staking in cryptocurency."
+____loclib.minPkoin = function (p){	
+	return  String(p) + " PKOIN Minimum"
+}
+
+____loclib.videop2psettings = "Use p2p when watching videos"
+
+____loclib.art_validatetags = "Please add Tags For Your Longread"
+____loclib.art_validatecover = "Please add Cover For Your Longread"
+____loclib.art_validatecaption = "Please add Caption For Your Longread"
+____loclib.art_validatecontent = "Please add Content of Your Longread"
+____loclib.art_nothingchange = "No changes"
+____loclib.art_newarticle = "New Longread"
+____loclib.art_myarticles = "My Longreads"
+____loclib.art_changecover = "Change Cover"
+____loclib.art_publish = "Publish"
+____loclib.art_editing = "Editing"
+____loclib.art_draftsaved = "Draft saved"
+____loclib.art_gotolastdraft = "go to last draft"
+____loclib.art_categoriestags = "Categories and tags"
+____loclib.art_preview = "Preview"
+____loclib.art_caption = "Caption of new Longread"
+____loclib.art_placeholder = "Let`s write an awesome story!"
+
+____loclib.art_newarticlecreation = "Create a new Longread"
+____loclib.art_editingsh = "Editing a published Longread"
+____loclib.art_saveedited = "Save"
+
+____loclib.art_wordscount = "Number of words"
+____loclib.art_volumepercent = "Article size limit"
+____loclib.art_goback = "Come back"
+
+____loclib.downloadingUpdate = "Downloading the update"
+____loclib.hasnotupdates = "No updates available"
+____loclib.cantmanageupdate = "Unable to manage update"
+
+____loclib.updateapplication = "Update Application"
+____loclib.applicationversion = "Application version"
+____loclib.installedusinggps = "The application was not installed using Google Play."
+
+____loclib.downloadplaystore = "Google Play Download"
+____loclib.downloadgithub = "Download APK"
+
+____loclib.empty = "Empty"

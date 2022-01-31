@@ -108,6 +108,10 @@ var Logger = function(_loggers){
                 writelogs = false
             }
         }
+
+        if (global.LOG_LEVEL) {
+            self.setlevel(global.LOG_LEVEL);
+        }
         
     }
 
@@ -117,7 +121,7 @@ var Logger = function(_loggers){
 
         self.prepare()
 
-        console.log('writelogs', writelogs)
+        console.log('writelogs', writelogs, global.WRITE_LOGS)
 
         _.each(loggers, function(key){
 

@@ -49,7 +49,7 @@ var letter = name ? name[0] : ''
 			%>
                 <div class="reportCaption openReport" rid="<%-id%>">
 
-                    <div class="reportCaptionTable table">
+                    <div class="reportCaptionTable ">
 
                         <div class="reportCaptionCell">
                             <%= report.name %>
@@ -65,9 +65,11 @@ var letter = name ? name[0] : ''
 
 	    %>
 
+        
+
         <div class="reportCaption alternativeTo">
 
-            <div class="reportCaptionTable table">
+            <div class="reportCaptionTable ">
 
                 <div class="reportCaptionCell">
                     <%=e('alternativeTo')%>
@@ -88,7 +90,7 @@ var letter = name ? name[0] : ''
                     %>
                         <div class="reportCaption openReport" rid="<%-id%>">
         
-                            <div class="reportCaptionTable table">
+                            <div class="reportCaptionTable ">
         
                                 <div class="dropdownReportCaptionCell">
                                     <%= report.name %>
@@ -180,7 +182,7 @@ var letter = name ? name[0] : ''
         
                     if(report.if && !report.if()) return
         
-                %>
+            %>
                     <div class="reportCaption openReport" rid="<%-id%>">
         
                         <div class="reportCaptionTable table">
@@ -196,8 +198,11 @@ var letter = name ? name[0] : ''
                 }
         
             })
-        
+
             %>
+
+
+
             <div elementsid="eventslang" class="label eventslang">
                 <div elementsid="menu_localization" class="lang localization">
                     

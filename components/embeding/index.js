@@ -27,16 +27,6 @@ var embeding = (function(){
 				value : []
 			},
 
-			donate : new Parameter({
-				name : self.app.localization.e('wsamountof'),
-				type : "NUMBER",
-				id : 'amount',
-				placeholder : '0',
-				onType : true,
-				format : {
-					Precision : 3
-				}
-			}),
 
 		}
 
@@ -104,14 +94,27 @@ var embeding = (function(){
 				
 				donate : function(){
 
-					if (actions.check('donate')){
+					if (el.inputDonate){
 
+						var donateVal = Number(el.inputDonate.val());
 
-						if(on.added(Number(options.donate.value)))
-						
-
-							self.closeContainer()
+						if (donateVal >= 0.05 ){
+	
+	
+							if(on.added(donateVal)){
+	
+								self.closeContainer()
+								
+							}
+							
+								
+						} else {
+	
+							sitemessage(self.app.localization.e('minPkoin', 0.05));
+							
+						}
 					}
+
 				},
 
 				
@@ -210,7 +213,7 @@ var embeding = (function(){
 
 		var events = {
 			action : function(){
-				var _type = $(this).attr('action') || type
+				var _type = $(this).attr('action') || type;
 
 				actions.add[_type]()
 			},
@@ -280,7 +283,11 @@ var embeding = (function(){
 			}, 300)
 			
 			
-			el.c.find('input').on('change', events.action)
+			if (type !== 'donate'){
+
+				el.c.find('input').on('change', events.action)
+
+			}
 
 			el.action.on('click', events.action)
 
@@ -391,6 +398,7 @@ var embeding = (function(){
 				el.action = el.c.find('.action');
 				el.upload = el.c.find('.upload');
 				el.images = el.c.find('.imagesMi')
+				el.inputDonate = el.c.find('#inputDonate');
 
 
 				initEvents();

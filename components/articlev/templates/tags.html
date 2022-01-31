@@ -2,7 +2,7 @@
     <% if(!tags.length) {%>
 
         <div>
-            <button class="button medium ghost nopadding ">Категории и тэги <i class="fas fa-plus"></i></button>
+            <button class="button medium ghost nopadding "><%= e('art_categoriestags') %> <i class="fas fa-plus"></i></button>
         </div>
         
     <% } else { 
@@ -13,14 +13,10 @@
 
         <div class="tags unselectablemobile fadeoverflow">
 
-            <!--<div class="editicon">
-                <i class="fas fa-pencil-alt"></i>
-            </div>-->
-
             <% _.each(bycategories.categories, function(category){ %>
 
                 <div class="category">
-                    <span>@<%-category.name%></span><% if(category.new) {%>&nbsp;<span class="newlabel">New!</span><% } %> 
+                    <span>@<%-category.name%></span>
                 </div>
 
             <% }) %>
@@ -32,7 +28,7 @@
                 %>
 
                 <div class="tag">
-                    <span>#<%-tag%></span><% if(additional && additional.new) {%>&nbsp;<span class="newlabel">New!</span><% } %>
+                    <span>#<%-tag%></span>
                 </div>
 
             <% }) %>

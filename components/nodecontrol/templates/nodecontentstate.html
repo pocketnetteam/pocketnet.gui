@@ -5,11 +5,11 @@
         <div class="setting">
             <div class="settingTable table">
                 <div class="label">
-                    <span>Status</span>
+                    <span><%-e('easyNode_e10021')%></span>
                 </div>
                 <div class="value">
                     <% if(nodestate.status == 'launched') { %>
-                        <i class="fas fa-check-circle good"></i> <span class="good">Active</span>
+                        <i class="fas fa-check-circle good"></i> <span class="good"><%-e('easyNode_e10031')%></span>
                     <% } else { %> 
                         <span class="bad"><%-flb(nodestate.status)%></span>
                     <% } %>
@@ -21,7 +21,7 @@
             <div class="setting">
                 <div class="settingTable table">
                     <div class="label">
-                        <span>Version</span>
+                        <span><%-e('easyNode_e10032')%></span>
                     </div>
                     <div class="value">
                         <%- nodestate.info.version %>
@@ -34,7 +34,7 @@
             <div class="setting">
                 <div class="settingTable table">
                     <div class="label">
-                        <span>Chain</span>
+                        <span><%-e('easyNode_e10033')%></span>
                     </div>
                     <div class="value">
                         <%- nodestate.info.chain %>
@@ -47,7 +47,7 @@
             <div class="setting">
                 <div class="settingTable table">
                     <div class="label">
-                        <span>Description</span>
+                        <span><%-e('easyNode_e10034')%></span>
                     </div>
                     <div class="value">
                         <span><b><%-nodestate.error.code || '0'%></b>: <%-deep(nodestate, 'error.message') || "Undefined Error"%></span>
@@ -60,16 +60,16 @@
             <div class="setting">
                 <div class="settingTable table">
                     <div class="label">
-                        <span>Height</span>
+                        <span><%-e('easyNode_e10035')%></span>
                     </div>
                     <div class="value">
-                        <% fork = (nodestate.info.lastblock.height - manager.chain.commonHeight) > 15 %>
+                        <% fork = (nodestate.info.lastblock.height - manager.chain.bestHeight) > 15 %>
                         <div>
                             <span class="<%- fork ? 'bad' : '' %>">
                                 <%- nodestate.info.lastblock.height.toLocaleString() %>
-                                <%- manager.chain && Math.abs(nodestate.info.lastblock.height - manager.chain.commonHeight) > 15
+                                <%- manager.chain && Math.abs(nodestate.info.lastblock.height - manager.chain.bestHeight) > 15
                                     ?
-                                    ` / ${Number(manager.chain.commonHeight).toLocaleString()}`
+                                    ` / ${Number(manager.chain.bestHeight).toLocaleString()}`
                                     :
                                     ''
                                 %>
@@ -79,12 +79,12 @@
                     
                                 <% if(nodestate.sync.left < 1) { %>
                                     <span class="syncLeft">
-                                        Less than an hour left
+                                        <%-e('easyNode_e10036')%>
                                     </span>
                                 
                                 <% } else if(nodestate.sync.left >= 1) { %>
                                     <span class="syncLeft">
-                                        <%-nodestate.sync.left%> hour(s) remaining
+                                        <%-e('easyNode_e10037', nodestate.sync.left)%>
                                     </span>
                                 <% }%>
 
@@ -108,7 +108,7 @@
             <div class="setting">
                 <div class="settingTable table">
                     <div class="label">
-                        <span>Block Hash</span>
+                        <span><%-e('easyNode_e10038')%></span>
                     </div>
                     <div class="value">
                         <span><%-nodestate.info.lastblock.hash%></span>

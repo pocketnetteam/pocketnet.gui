@@ -9,13 +9,11 @@ var comments = (function(){
 
 	var essenses = {};
 
-	
+	var Essense = function(){
 
-	var Essense = function(p){
+		var primary = false;
 
-		var primary = deep(p, 'history');
-
-		var el, txid, ed, currents = {}, caption, _in, top, eid, preview = false, listpreview = false, showedall = false, receiver, balance = 0;
+		var el = {}, txid, ed, currents = {}, caption, _in, top, eid, preview = false, listpreview = false, showedall = false, receiver, balance = 0;
 
 		var authblock = false;
 
@@ -35,6 +33,7 @@ var comments = (function(){
 		var wordsRegExp = /[,.!?;:() \n\r]/g
 		var sortby = 'interesting' 
 
+		var isotopes = {}
 		
 
 		var clbks = {
@@ -1413,13 +1412,11 @@ var comments = (function(){
 
 		var postEvents = function(p, _p, clbk){
 
-			var textarea = _p.el.find('.leaveComment');
-
 			var c = _p.el.find('.postbody');
 
 			actions.process(p.id || '0')
 
-			textarea.emojioneArea({
+			_p.el.find('.leaveComment').emojioneArea({
 				pickerPosition : 'top',
 				
 				search : false,
@@ -1564,7 +1561,6 @@ var comments = (function(){
 				}
 			});
 
-
 			_p.el.find('.emojionearea-editor').on('focus', function(){
 				actions.process(p.id || '0')	
 
@@ -1573,19 +1569,17 @@ var comments = (function(){
 			})
 
 			_p.el.find('.emojionearea-editor').on('blur', function(){
+
 				setTimeout(function(){
 					_p.el.removeClass('active')
 				}, 150)
 				
 			})
 
-				
-
 			_p.el.find('.postaction').on('click', function(){
 
-				if(c.hasClass('sending')) return
-
-				c.addClass('sending')
+				if (c.hasClass('sending')) return
+					c.addClass('sending')
 
 				actions.post(p.id || '0', p.pid, p.aid, p.editid)
 
@@ -1646,6 +1640,27 @@ var comments = (function(){
 			})
 
 
+		}
+
+		var clears = {
+			isotope : function(){
+
+				try{
+
+					_.each(isotopes, function(i){
+						
+							i.isotope('destroy')
+						
+						
+					})
+
+					isotopes = {}
+
+				}
+				catch(e){
+
+				}
+			}
 		}
 
 		var renders = {
@@ -1739,41 +1754,31 @@ var comments = (function(){
 
 					_p.el.find('.image').imagesLoadedPN({ imageAttr: true }, function(image) {
 
-						if(!isMobile()){
-							var elimages = _p.el.find('.imagesEmbWr')
+						if(!el.c) return
 
+						var elimages = _p.el.find('.imagesEmbWr')
 
-						  	elimages.isotope({
+						elimages.isotope({
 
-								layoutMode: 'packery',
-								itemSelector: '.imageContainer',
-								packery: {
-									gutter: 10
-								},
-								initLayout: false
-							});
+							layoutMode: 'packery',
+							itemSelector: '.imageContainer',
+							packery: {
+								gutter: 10
+							},
+							initLayout: false
+						});
 
+						elimages.on('arrangeComplete', function(){
 
-							elimages.on('arrangeComplete', function(){
-
-								if (clbk)
-									clbk();
-			
-									p.el.find('.newcommentimages').addClass('active')
-
-							});
-
-							elimages.isotope()
-						}
-						else
-						{
 							if (clbk)
 								clbk();
-			
-							p.el.find('.newcommentimages').addClass('active')
-						}
+		
+								p.el.find('.newcommentimages').addClass('active')
 
+						});
 
+						elimages.isotope()
+						
 					}, self.app);
 
 					
@@ -2044,7 +2049,6 @@ var comments = (function(){
 
 							return
 						} else {
-
 							_p.el.find('.txt').on('click', function(){
 
 								$(this).blur();
@@ -2074,15 +2078,19 @@ var comments = (function(){
 				
 			},
 
+
+
 			commentimages : function(s, clbk){
 				if(!el.c) return
 
 				var sel = el.c.find('#' + s.id)
 
 				var _el = sel.find(".commentimages .image");
+
 				var images = sel.find(".commentimages");
 
-				if(images.hasClass('active') || !_el.length || !images.length){
+
+				if (images.hasClass('active') || !_el.length || !images.length){
 
 					if (clbk)
 						clbk()
@@ -2094,7 +2102,6 @@ var comments = (function(){
 				var h = sel.height()
 
 				_el.imagesLoadedPN({ imageAttr: true }, function(image) {
-		
 
 					_.each(image.images, function(img, n){
 
@@ -2134,7 +2141,6 @@ var comments = (function(){
 						
 					})
 
-
 					var gutter = 10;
 
 					images.isotope({
@@ -2162,7 +2168,7 @@ var comments = (function(){
 
 					images.isotope()
 					
-				
+					isotopes[s.id] = images
 
 				}, self.app);
 				
@@ -2175,6 +2181,8 @@ var comments = (function(){
 				var commentslength
 				var comments = p.comments
 				var sort = new sortParameter()
+
+				clears.isotope()
 
 				if(!p.replace){
 
@@ -2224,7 +2232,7 @@ var comments = (function(){
 
 				p.el || (p.el = el.list)
 				
-				if(!preview)
+				if(!preview && p.el)
 					p.el.addClass('listloading')
 
 				self.sdk.comments.users(comments, function (i, e) {
@@ -2333,27 +2341,9 @@ var comments = (function(){
 		}
 
 		var initEvents = function(){
-
-			/*self.app.platform.ws.messages['newblocks'].clbks['comments'] =
-			self.app.platform.ws.messages['new block'].clbks['comments'] = function(){
-
-				load.level(null, function(comments){
-					var p = {}
-					p.comments = self.app.platform.sdk.comments.storage[txid]['0']
-					p.class = "firstcomment"
-
-					renders.list(p, function(){
-					})	
-				})
-
-			}*/
-
 				
 			el.c.find('.showall').on('click', function(){
-
 				actions.showall()
-
-				
 			})
 
 			self.app.platform.sdk.comments.sendclbks[eid] = clbks.post
@@ -2676,7 +2666,6 @@ var comments = (function(){
 				eid = p.settings.eid
 
 				rendered = {}
-
 				currents = {}
 
 				currentstate = {
@@ -2719,7 +2708,7 @@ var comments = (function(){
 
 			authclbk : function(){
 				
-				if(el && el.c){
+				if (el.c){
 
 					authblock = true
 
@@ -2729,25 +2718,18 @@ var comments = (function(){
 
 						authblock = false;
 
-						/*reloadCurrents(function(){
-
-							actions.myscores()
-
-							authblock = false;
-
-						})*/
-
 						renders.post(function(area){
 							areas["0"] = area
 						})
 
 					})
-
 				
 				}
 			},
 
 			destroy : function(){
+
+				clears.isotope()
 
 				delete self.app.platform.sdk.comments.sendclbks[eid]
 				delete self.app.platform.ws.messages.comment.clbks[eid]
@@ -2757,13 +2739,25 @@ var comments = (function(){
 
 				authblock = false
 
+				/*_.each(areas, function(a){
+				})*/
+
+				areas = {}; ///
+				currents = {};
+
 				if (external) 
 					external.destroy()
 
 				if (caption)
 					caption.destroy()
 
+				if (el.c) el.c.empty()
+
 				el = {};
+				ed = {};
+				
+
+				_in = null
 			},
 			
 			init : function(p){
@@ -2807,9 +2801,6 @@ var comments = (function(){
 				
 
 				if(preview){
-
-					
-
 					makePreview()
 				}
 				else{
