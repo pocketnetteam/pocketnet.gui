@@ -113,6 +113,10 @@ PeerTubePocketnet = function (app) {
   var proxyRequest = new PeertubeRequest(app);
   var ffmpeg = null;
 
+  var serversIps = {};
+  // Time needed before we will request the proxy to update the server's IP
+  var INTERVAL_CHECK_SERVER_IP = 10000;
+
   self.checklink = function (link) {
     return link.includes(PEERTUBE_ID);
   };
@@ -545,6 +549,8 @@ PeerTubePocketnet = function (app) {
       roys: ({ type, special }) => app.api.fetch('peertube/roys', { type, special}),
 
       allServers: () => app.api.fetch('peertube/allservers'),
+
+      getHostIp: (hostname) => app.api.fetch('peertube/getHostIp?host=' + hostname),
     },
 
     videos: {
@@ -932,6 +938,14 @@ PeerTubePocketnet = function (app) {
   };
 
   self.init = function () {
+    // Request the proxy server to get all the IPs
+    app.peertubeHandler.api.proxy.allServers().then((servers) => {
+      for (var i in servers) {
+        for (var j = 0; j < servers[i].length; j++) {
+          self.helpers.checkHostIp(servers[i][j]);
+        }
+      }
+    });
     return self.api.proxy.bestChange({ type: 'upload' });
   };
 
@@ -1058,6 +1072,72 @@ PeerTubePocketnet = function (app) {
         return buffer.readUIntBE(0, outputArray.length);
       },
     },
+
+    // Request the proxy server to get the IP address of the server passed in parameter
+    checkHostIp: async function(hostname) {
+      var now = new Date();
+      // If server has not been checked yet OR
+      // If time has passed and it is time to update the server's IP
+      if (!serversIps[hostname] || !serversIps[hostname].timestamp || 
+        (serversIps[hostname] && (now.getTime() > (serversIps[hostname].timestamp.getTime() + INTERVAL_CHECK_SERVER_IP)))) {
+        try {
+          if (!serversIps[hostname]) serversIps[hostname] = {};
+          serversIps[hostname].timestamp = new Date();
+          var newHostname = await app.peertubeHandler.api.proxy.getHostIp(hostname);
+          // Save the server's IP for the next times
+          serversIps[hostname].hostname = newHostname;
+        } catch(err) {
+          
+        }
+      }
+    },
+
+    // Try to convert an URL with the server's IP address (if possible)
+    // If no IP can be found or URL already using IP address, return the URL untouched
+    convertUrlWithIp: async function(serverUrl) {
+      // Check we have what we need
+			if (!(URL && serverUrl && app && app.options && app.options.peertubeUseIp == true &&
+          app.peertubeHandler && app.peertubeHandler.api &&
+          app.peertubeHandler.api.proxy && app.peertubeHandler.api.proxy.getHostIp))
+        return serverUrl;
+      var url, newHostname;
+      try {
+        url = new URL(serverUrl);
+      } catch(err) {
+        console.log(err);
+        console.log(serverUrl);
+        return serverUrl;
+      }
+      // Check if URL is not already using IP address
+      // If so, returns the URL untouched
+      const ipRegex = new RegExp(/\d+\.\d+\.\d+\.\d+/);
+      if (ipRegex.test(url.hostname) == true) return serverUrl;
+      // Still check if we need to update the server's IP
+      if (self.helpers)
+        self.helpers.checkHostIp(url.hostname);
+      // Check if we can return instantly with a saved IP
+      if (serversIps[url.hostname] && serversIps[url.hostname].hostname) {
+        // Return the URL now
+        url.hostname = serversIps[url.hostname].hostname;
+        url.protocol = 'http:';
+        return url.toString();
+      }
+      // Request the proxy server to get the server's IP address
+      try {
+        newHostname = await app.peertubeHandler.api.proxy.getHostIp(url.hostname);
+        // Save the server's IP for the next times
+        serversIps[url.hostname] = { hostname: newHostname, timestamp: new Date() };
+      } catch(err) {
+        return serverUrl;
+      }
+      // If can't get IP address from proxy server, stop there
+      if (!newHostname) return serverUrl;
+      // Update the URL with IP address and change it to HTTP
+      url.hostname = newHostname;
+      url.protocol = 'http:';
+      return url.toString();
+    },
+
   };
 
   return self;

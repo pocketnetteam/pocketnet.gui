@@ -2345,7 +2345,7 @@ Platform = function (app, listofnodes) {
                     caption.addClass('verticalcover')
                 }
 
-            })
+            }, self.app)
         },
 
         changeloc : function(_clbk){
@@ -2424,7 +2424,7 @@ Platform = function (app, listofnodes) {
                 if (clbk)
                     clbk()
                 
-            })
+            }, self.app)
 
 
         },

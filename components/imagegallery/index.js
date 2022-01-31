@@ -491,7 +491,7 @@ var imagegallery = (function(){
 								self.closeContainer();
 							});
 
-					});
+					}, self.app);
 
 				})
 
@@ -523,16 +523,18 @@ var imagegallery = (function(){
 				num : num.toString()
 			})
 
+			
+			self.app.peertubeHandler.helpers.convertUrlWithIp(image.src).then((newUrl) => {
 
-			actions.prepareImage(image, function(image){
-
-				renders.image({
-					image : image
+			 	image.src = newUrl;
+				
+				actions.prepareImage(image, function(image){
+					renders.image({
+						image : image
+					})
 				})
 
-			})
-
-			
+			});
 
 		}
 

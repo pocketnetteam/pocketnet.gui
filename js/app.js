@@ -19,6 +19,7 @@ if(typeof _Electron != 'undefined' && _Electron){
 	animateNumber = require('./js/vendor/jquery.animate-number.js')
 	touchSwipe = require('./js/vendor/jquery.touchSwipe.js')
 	
+	ImageUploader = require('./js/image-uploader.js');
 
 	MessageStorage = require('./js/vendor/rtc/db.js')
 	RTCMultiConnection = require('./js/vendor/rtc/RTCMultiConnection.js')
@@ -114,6 +115,11 @@ Application = function(p)
 		//////////////
 		
 		firebase : p.firebase || 'https://'+url+':8888', /// will be removed
+
+		//////////////
+
+		peertubeServer : 'https://test.peertube2.pocketnet.app/api/v1/',
+		peertubeUseIp : true,
 
 		//////////////
 
@@ -700,6 +706,8 @@ Application = function(p)
 		self.ajax.set.user(self.user);
 
 		self.platform = new Platform(self, self.options.listofnodes);
+
+		self.imageUploader = new ImageUploader(self);
 
 		self.options.platform = self.platform
 

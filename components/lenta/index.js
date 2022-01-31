@@ -3006,7 +3006,7 @@ var lenta = (function(){
 						}
 					
 
-					});
+					}, self.app);
 
 					
 
@@ -3137,7 +3137,7 @@ var lenta = (function(){
 
 						essenserenderclbk()
 						  
-					});
+					}, self.app);
 
 					if (clbk)
 						clbk()

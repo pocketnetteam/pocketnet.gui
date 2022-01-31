@@ -463,54 +463,38 @@ Comment = function(txid){
 
 					var r = image.split(',');
 
-				if (r[1]){
+					if (r[1]){
 
-						app.ajax.run({
-							type : "POST",
-							imgur : true,
-							data : {
-								Action : "image",
-								image : r[1]
-							},
+						app.imageUploader.uploadImage({
+							image : r[1],
+							base64: image
+						}, 'peertube').then((data) => {
 
-							success : function(data){
+							self.images.v[index] = deep(data, 'image.url');
+							p.success();
 
-								self.images.v[index] = deep(data, 'data.link');
-								
+						}, (err) => {
+
+							app.imageUploader.uploadImage({
+								file : r[1]
+							}, 'up1').then((data) => {
+	
+								self.images.v[index] = 'https://'+app.options.url+':8092/i/' + deep(data, 'data.ident');
+
+								console.log('self.images.v[index]', self.images.v[index])
+								p.success();
+	
+							}, (err) => {
+
+								//self.images.v[index] = ''
+
+								//index++;
+
 								p.success();
 
-							},
+							})
 
-							fail : function(d){
-
-								app.ajax.run({
-									type : "POST",
-									up1 : true,
-									data : {
-										file : r[1]
-									},
-		
-									success : function(data){
-		
-										self.images.v[index] = 'https://'+app.options.url+':8092/i/' + deep(data, 'data.ident');
-
-										console.log('self.images.v[index]', self.images.v[index])
-										p.success();
-		
-									},
-		
-									fail : function(d){
-		
-										//self.images.v[index] = ''
-		
-										//index++;
-		
-										p.success();
-									}
-								})
-							}
-						})
-
+						});
 
 					}
 				}
@@ -1233,56 +1217,38 @@ Share = function(lang){
 
 					var r = image.split(',');
 
-				if (r[1]){
+					if (r[1]){
 
-						app.ajax.run({
-							type : "POST",
-							imgur : true,
-							data : {
-								Action : "image",
-								image : r[1]
-							},
+						app.imageUploader.uploadImage({
+							image : r[1],
+							base64: image
+						}, 'peertube').then((data) => {
 
-							success : function(data){
+							var url = (self.images.v.length >= 3) ? deep(data, 'image.thumbnailUrl') : deep(data, 'image.url');
+							self.images.v[index] = url;
+							p.success();
 
-								self.images.v[index] = deep(data, 'data.link');
-								
+						}, (err) => {
+
+							app.imageUploader.uploadImage({
+								file : r[1]
+							}, 'up1').then((data) => {
+	
+								self.images.v[index] = 'https://'+app.options.url+':8092/i/' + deep(data, 'data.ident');
+
+								p.success();
+	
+							}, (err) => {
+
+								//self.images.v[index] = ''
+
+								//index++;
+
 								p.success();
 
-							},
+							})
 
-							fail : function(d){
-
-
-								app.ajax.run({
-									type : "POST",
-									up1 : true,
-									data : {
-										file : r[1]
-									},
-		
-									success : function(data){
-		
-										self.images.v[index] = 'https://'+app.options.url+':8092/i/' + deep(data, 'data.ident');
-
-										p.success();
-		
-									},
-		
-									fail : function(d){
-		
-										//self.images.v[index] = ''
-		
-										//index++;
-		
-										p.success();
-									}
-								})
-								
-
-								
-							}
-						})
+						});
 
 
 					}
@@ -1713,51 +1679,36 @@ UserInfo = function(){
 
 			if (r[1]){
 
-				app.ajax.run({
-					type : "POST",
-					imgur : true,
-					data : {
-						Action : "image",
-						image : r[1]
-					},
+				app.imageUploader.uploadImage({
+					image : r[1],
+					base64: image,
+					type: 'avatar'
+				}, 'peertube').then((data) => {
 
-					success : function(data){
+					self.image.v = deep(data, 'image.url');
+					if (clbk)
+						clbk();
 
-						self.image.v = deep(data, 'data.link');
-						
+				}, (err) => {
+
+					app.imageUploader.uploadImage({
+						file : r[1]
+					}, 'up1').then((data) => {
+
+						self.image.v = 'https://pocketnet.app:8092/i/' + deep(data, 'data.ident');
+						//self.image.v = 'https://'+app.options.url+':8092/i/' + deep(data, 'data.ident');
+
 						if (clbk)
 							clbk();
 
-					},
-					fail : function(d){
+					}, (err) => {
 
+						if (clbk)
+							clbk(err);
 
-						app.ajax.run({
-							type : "POST",
-							up1 : true,
-							data : {
-								file : r[1]
-							},
+					})
 
-							success : function(data){
-								self.image.v = 'https://pocketnet.app:8092/i/' + deep(data, 'data.ident');
-								//self.image.v = 'https://'+app.options.url+':8092/i/' + deep(data, 'data.ident');
-
-								if (clbk)
-									clbk();
-
-							},
-
-							fail : function(d){
-												
-								if (clbk)
-									clbk(d);
-							}
-						})
-
-		
-					}
-				})
+				});
 
 
 			}

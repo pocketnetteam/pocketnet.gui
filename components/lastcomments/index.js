@@ -64,7 +64,7 @@ var lastcomments = (function(){
 
 						if(ed.renderclbk) ed.renderclbk()
 
-					});*/
+					}, self.app);*/
 
 
 					if(ed.renderclbk) ed.renderclbk()

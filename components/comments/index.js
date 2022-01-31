@@ -1774,7 +1774,7 @@ var comments = (function(){
 						}
 
 
-					});
+					}, self.app);
 
 					
 				})
@@ -2164,7 +2164,7 @@ var comments = (function(){
 					
 				
 
-				});
+				}, self.app);
 				
 			},
 

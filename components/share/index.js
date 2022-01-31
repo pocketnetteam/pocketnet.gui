@@ -2019,7 +2019,7 @@ var share = (function(){
 										}
 									})
 									
-								});
+								}, self.app);
 
 								p.el.find('.removeImage').on('click', function(){
 
@@ -2150,7 +2150,7 @@ var share = (function(){
 						
 
 
-					});
+					}, self.app);
 
 					
 				})

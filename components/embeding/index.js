@@ -174,35 +174,29 @@ var embeding = (function(){
 
 							renders.images()
 
-							self.ajax.run({
-								type : "POST",
-								imgur : true,
-								data : {
-									Action : "image",
-									image : r[1]
-								},
+							app.imageUploader.uploadImage({
+								Action : "image",
+								image : r[1]
+							}, 'imgur').then((data) => {
+		
+								file.loading = false;
 
-								success : function(data){
+								file.src = deep(data, 'data.link') || 'https://'+self.app.options.url+'/img/imagenotuploaded.jpg';
+								
+								renders.images()
+								
+								if (clbk)
+									clbk()
+		
+							}, (err) => {
+		
+								file.src = 'https://'+self.app.options.url+'/img/imagenotuploaded.jpg';
 
-									file.loading = false;
-
-									file.src = deep(data, 'data.link') || 'https://'+self.app.options.url+'/img/imagenotuploaded.jpg';
-									
-									renders.images()
-									
-									if (clbk)
-										clbk()
-
-								},
-
-								fail : function(){
-									file.src = 'https://'+self.app.options.url+'/img/imagenotuploaded.jpg';
-
-									renders.images()
-									
-									if (clbk)
-										clbk()
-								}
+								renders.images()
+								
+								if (clbk)
+									clbk()
+		
 							})
 
 						}
