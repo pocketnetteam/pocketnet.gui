@@ -8508,7 +8508,7 @@ Platform = function (app, listofnodes) {
                 .catch(function(e){
 
                     if (clbk){
-                        clbk(null)
+                        clbk(null, e);
                     }
                 })
             },

@@ -336,18 +336,27 @@ var recommendedposts = (function(){
 
 					self.app.platform.sdk.posts.getRecommendedPosts(function(c, error){
 
-						var postIds = c.map(function(post){
-							return post.contentid;
-						})
 
-						self.app.platform.sdk.node.shares.getbyid(postIds, function(c, error){
-		
-							shares = c
-							
-							if (clbk){
-								clbk(shuffle(shares).slice(0, 5))
-							}
-						})
+						if (!error && c.length){
+
+							el.c.removeClass('invisible');
+
+							var postIds = c.map(function(post){
+								return post.contentid;
+							})
+	
+							self.app.platform.sdk.node.shares.getbyid(postIds, function(c, error){
+			
+								shares = c
+								
+								if (clbk){
+									clbk(shuffle(shares).slice(0, 5))
+								}
+							})
+
+						}
+
+
 
 
 					})
@@ -436,6 +445,7 @@ var recommendedposts = (function(){
 				el.c = p.el.find('#' + self.map.id);
 				el.posts = el.c.find('.posts');
 				el.loader = el.c.find('.loader');
+
 
 				state.load(renders.page);
 
