@@ -338,11 +338,17 @@ var bestposts = (function(){
 
 					self.sdk.node.shares.get(parameters, function (c, error) {
 
-						shares = c
+						if (!error && c.length){
+
+							el.c.show();
 							
-						if (clbk){
-							clbk(shuffle(shares).slice(0, 5))
+							shares = c
+								
+							if (clbk){
+								clbk(shuffle(shares).slice(0, 5))
+							}
 						}
+
 
 					}, 'gethotposts')
 
@@ -431,7 +437,6 @@ var bestposts = (function(){
 				el.loader = el.c.find('.loader');
 
 				state.load(renders.page);
-
 
 				initEvents();
 

@@ -207,10 +207,16 @@ var topusers = (function(){
 
 							self.app.platform.sdk.users.getRecommendedAccountsByTags(function(c, error){
 
-								addresses = c;
+								if (!error && c.length){
+
+									el.c.show();
+
+									addresses = c;
 	
-								if (clbk){
-									clbk(shuffle(addresses).slice(0, 5))
+									if (clbk){
+										clbk(shuffle(addresses).slice(0, 5))
+									}
+
 								}
 
 							})
@@ -224,8 +230,6 @@ var topusers = (function(){
 							}
 
 						}
-
-
 
 					})
 

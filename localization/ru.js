@@ -1613,3 +1613,5 @@ ____loclib.liftUpThePost = 'Поднять пост';
 ____loclib.minPkoin = function (p){	
 	return `Минимум ${String(p)} PKOIN`
 }
+
+____loclib.topPosts = "Популярные посты";

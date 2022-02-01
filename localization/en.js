@@ -1837,3 +1837,5 @@ ____loclib.liftUpThePost = 'Lift up the post';
 ____loclib.minPkoin = function (p){	
 	return  String(p) + " PKOIN Minimum"
 }
+
+____loclib.topPosts = "Top posts";

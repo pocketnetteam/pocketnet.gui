@@ -339,7 +339,7 @@ var recommendedposts = (function(){
 
 						if (!error && c.length){
 
-							el.c.removeClass('invisible');
+							el.c.show();
 
 							var postIds = c.map(function(post){
 								return post.contentid;
