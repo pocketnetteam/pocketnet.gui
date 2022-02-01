@@ -8450,6 +8450,26 @@ Platform = function (app, listofnodes) {
 
             },
 
+            getRecommendedAccountsByTags : function(clbk){
+
+                var selectedTags = self.app.platform.sdk.categories.gettags();
+
+                self.app.api.rpc('getrecomendedaccountsbytags', [selectedTags, 10])
+                .then(function(d){
+
+                    if (clbk){
+                        clbk(d)
+                    }
+
+                })
+                .catch(function(e){
+
+                    if (clbk){
+                        clbk(null)
+                    }
+                })
+            },
+
             getBestUsers : function(clbk){
 
                 var my = self.app.user.address.value;
