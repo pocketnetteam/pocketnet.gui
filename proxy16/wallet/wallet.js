@@ -124,7 +124,7 @@ var Wallet = function(p){
 
                 self.lastprocess = (new Date()).toString()
 
-            }, 1000)
+            }, 100)
 
         if(!unspentsInterval)
             unspentsInterval = setInterval(function(){
