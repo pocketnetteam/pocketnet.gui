@@ -661,6 +661,8 @@ var test = (function(){
 				id : 'language',
 				type : "VALUES",
 				defaultValue : self.app.localization.key || 'en',
+				
+				
 				possibleValues : ['en', 'ru'],
 				possibleValuesLabels : ['English', 'Русский'],
 			}),
