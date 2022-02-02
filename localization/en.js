@@ -1893,6 +1893,7 @@ ____loclib.publishquestion = 'Are you sure you want to public this article?'
 
 ____loclib.etc = 'And so on...'
 ____loclib.openlinkssettings = 'Do not open links in the desktop application'
+____loclib.onlysecureconnection = "Use a secure connection only"
 ____loclib.nametaken = 'This username is taken in Bastyon'
 
 ____loclib.accountnotfound = 'We could not find your account on the blockchain. Perhaps the registration process was not completed, or there is no Internet connection'

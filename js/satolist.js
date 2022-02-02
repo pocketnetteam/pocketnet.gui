@@ -7926,6 +7926,13 @@ Platform = function (app, listofnodes) {
 					value : false,
 				},
 
+                onlysecureconnection : {
+                    name: self.app.localization.e('onlysecureconnection'),
+                    id : 'onlysecureconnection',
+                    type : "BOOLEAN",
+                    value : false,
+                },
+
                 sendUserStatistics : {
                     name: self.app.localization.e('sendUserStatistics'),
 					id : 'sendUserStatistics',
@@ -8044,7 +8051,8 @@ Platform = function (app, listofnodes) {
                     c.system = {
                         name: self.app.localization.e('system'),
                         options: {
-                            autostart: options.autostart
+                            autostart: options.autostart,
+                            onlysecureconnection: options.onlysecureconnection,
                         }
                     }
                 }
