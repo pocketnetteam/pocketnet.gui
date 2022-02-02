@@ -26,50 +26,7 @@
 				<%=e('poll')%>
 			</div>
 
-			<div class="linkWrapper table">
-				<div class="inputWrapper">
-					<%= options.url.input() %>
-				</div>
-
-				<!-- <div class="buttonWrapper">
-					<div class="action url" action="url">
-						<i class="fas fa-chevron-circle-right"></i>
-					</div>
-				</div> -->
-			</div>
-			<div class="linkWrapper table">
-				<div class="inputWrapper">
-					<%= options.url.input() %>
-				</div>
-
-				<!-- <div class="buttonWrapper">
-					<div class="action url" action="url">
-						<i class="fas fa-chevron-circle-right"></i>
-					</div>
-				</div> -->
-			</div>
-			<div class="linkWrapper table">
-				<div class="inputWrapper">
-					<%= options.url.input() %>
-				</div>
-
-				<!-- <div class="buttonWrapper">
-					<div class="action url" action="url">
-						<i class="fas fa-chevron-circle-right"></i>
-					</div>
-				</div> -->
-			</div>
-			<div class="linkWrapper table">
-				<div class="inputWrapper">
-					<%= options.url.input() %>
-				</div>
-
-				<!-- <div class="buttonWrapper">
-					<div class="action url" action="url">
-						<i class="fas fa-chevron-circle-right"></i>
-					</div>
-				</div> -->
-			</div>
+			
 			<div class="linkWrapper table">
 				<div class="inputWrapper">
 					<%= options.url.input() %>
@@ -127,7 +84,7 @@
 				<div class="transaction">
 					<div class="user">
 						<div class="iconWrapper">
-							<div class="usericon" image="<%-senderImg || ''%>">
+							<div class="usericon" image="<%-senderImg || '*'%>">
 								
 								<% if(!senderImg && senderLetter) { %>
 
@@ -144,13 +101,13 @@
 					<div class="coinsWrapper">
 						<div class="chevron-right right"></div>
 						<div class="receiver">
-							<%= options.donate.input() %> 
+							<input type="number" id="inputDonate" placeholder="0">
 							<span class="text">PKOIN</span>
 						</div>
 					</div>
 					<div class="user">
 						<div class="iconWrapper">
-							<div class="usericon" image="<%-receiverImg || ''%>">
+							<div class="usericon" image="<%-receiverImg || '*'%>">
 								<% if(!receiverImg && receiverLetter) { %>
 
 									<span 

@@ -10,6 +10,8 @@
 		
 	}
 
+	
+
 	.fillUserWrapper{
 		height: 400px;
 		background: #F1F1F1;
@@ -188,6 +190,12 @@
 		}
 	}
 
+	#nodecontrol{
+		.maincaption{
+			display: block;
+		}
+	}
+
 	.maketsWrapper{
 
 		overflow: hidden;
@@ -254,11 +262,67 @@
 						font-weight: 700!important;
 					}
 				}
+
+				.addtoname{
+					opacity: 0.5;
+					font-weight: 500;
+				}
 			}
 
 			.addmenu{
 				.reportCaption{
 					font-weight: 400;
+				}
+			}
+
+			.applicationupdatemodule{
+				position: relative;
+				text-align: center;
+
+				.applicaitonversion{
+					cursor: pointer;
+				}
+
+				.updatingprogress{
+					display: none;
+					position: absolute;
+					left : 0;
+					top : 0;
+					bottom : 0;
+					right : 0;
+					backdrop-filter: blur(5px);
+        			-webkit-backdrop-filter: blur(5px);  
+					background: fade(#fff, 10);
+					text-align: center;
+					padding : 2 * @rhythm;
+
+					.text{
+						padding-top : 1.5 * @rhythm;
+						color : #FFF;
+						font-weight: 700;
+						font-size: 0.9em;
+					}
+				}
+
+				span{
+					opacity: 0.5;
+				}
+
+				button{
+					margin-top: 2 * @rhythm;
+					margin-bottom: 2 * @rhythm;
+
+					&:hover{
+						background: @color-orange;
+						color : #FFF;
+					}
+				}
+
+				&.updating{
+					.updatingprogress{
+						display: block;
+					}
+					
 				}
 			}
 
@@ -392,6 +456,8 @@
 				padding : 4 * @rhythm;
 			}
 
+			
+
 		    #test{
 
 		    	.work{
@@ -408,15 +474,7 @@
 		    	}
 		    }
 
-		    #messenger{
-		    	padding : 3 * @rhythm 0;
-		    	padding-left: @rhythm;
-
-		    	&.toChat{
-		    		padding-top : 2 * @rhythm;
-		    	}
-		    }
-
+		  
 		    #notifications{
 				background: #F7F7F7;
 				min-height: 600px;
@@ -612,10 +670,31 @@ html.stblack{
 	}
 }
 
+.wnd.wnduserpage{
+	.wndcontent{
+		padding-top : 0;
+		.work{
+			width: 100%!important;
+			padding : 0!important;
+		}
+	}
+
+	#userpage{
+		.bgCaptionWrapper{
+			display: none;
+		}
+	}
+	
+}
 
 /*t*/ @media only screen and (max-width: 768px){
 
 #userpage{
+
+	.preloaderWrapper{
+		padding : 4 * @rhythm;
+		text-align: center;
+	}
 
 	.profile{
 		display: none;
@@ -713,6 +792,11 @@ html.stblack{
 	}
 
 }
+html.tablet{
+	#userpage{
+		padding-top : 55px;
+	}
+}
 }
 
 @media only screen and (max-width: 640px){
@@ -807,11 +891,7 @@ html.stblack{
 		}
 	}
 
-	html.tablet{
-		#userpage{
-			padding-top : 55px;
-		}
-	}
+	
 }
 
 html.tablet{

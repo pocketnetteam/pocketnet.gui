@@ -29,7 +29,7 @@ var postline = function(){ %>
 			<span><%=e('editpost')%></span>
 		<% } %>
 	</div>
-	<div class="absolutetxwrapper">
+	<div class="absolutetxwrapper customscroll">
 
 			<div class="iconWrapper">
 
@@ -46,7 +46,7 @@ var postline = function(){ %>
 				%>
 		
 				<div class="icon">
-					<div class="usericon" image="<%-src%>">
+					<div class="usericon" image="<%-src || '*'%>">
 						<% if(!src && letter) {%>
 
 							<span class="letter">
@@ -117,7 +117,7 @@ var postline = function(){ %>
 								<% postline() %>
 
 								<div class="paddingmobilewrapper">
-									<div class="error"></div>
+									<div class="error" elementsid="errorLinewrapper"></div>
 								</div>
 
 							<% } %>
@@ -141,7 +141,7 @@ var postline = function(){ %>
 	<% if(essenseData.absolute) {%>
 		<% postline() %>
 
-			<div class="error"></div>
+			<div class="error" elementsid="errorSLoader"></div>
 
 	<% } %>
 </div>

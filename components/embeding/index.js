@@ -27,15 +27,6 @@ var embeding = (function(){
 				value : []
 			},
 
-			donate : new Parameter({
-				name : self.app.localization.e('wsamountof'),
-				type : "NUMBER",
-				id : 'amount',
-				placeholder : '0',
-				format : {
-					Precision : 3
-				}
-			}),
 
 		}
 
@@ -47,7 +38,10 @@ var embeding = (function(){
 		var actions = {
 			
 			check : function(type){
-				if(options[type].isValid(options[type].value)){
+
+				if(!el.error) return
+
+				if (options[type].isValid(options[type].value)){
 
 					el.error.html('')
 
@@ -97,12 +91,27 @@ var embeding = (function(){
 				
 				donate : function(){
 
-					if(actions.check('donate')){
+					if (el.inputDonate){
 
-						on.added(options.donate.value)
+						var donateVal = Number(el.inputDonate.val());
 
-						self.closeContainer()
+						if (donateVal >= 0.05 ){
+	
+	
+							if(on.added(donateVal)){
+	
+								self.closeContainer()
+								
+							}
+							
+								
+						} else {
+	
+							sitemessage(self.app.localization.e('minPkoin', 0.05));
+							
+						}
 					}
+
 				},
 
 				
@@ -207,7 +216,7 @@ var embeding = (function(){
 
 		var events = {
 			action : function(){
-				var _type = $(this).attr('action') || type
+				var _type = $(this).attr('action') || type;
 
 				actions.add[_type]()
 			},
@@ -270,7 +279,19 @@ var embeding = (function(){
 		}
 
 		var initEvents = function(){
-			el.c.find('input').focus().on('change', events.action)
+
+
+			setTimeout(function(){
+				el.c.find('input').focus()
+			}, 300)
+			
+			
+			if (type !== 'donate'){
+
+				el.c.find('input').on('change', events.action)
+
+			}
+
 			el.action.on('click', events.action)
 
 			if(type == 'images'){
@@ -380,6 +401,7 @@ var embeding = (function(){
 				el.action = el.c.find('.action');
 				el.upload = el.c.find('.upload');
 				el.images = el.c.find('.imagesMi')
+				el.inputDonate = el.c.find('#inputDonate');
 
 
 				initEvents();
@@ -395,7 +417,7 @@ var embeding = (function(){
 						class : "save",
 						html : '<i class="fa fa-check"></i> ' + self.app.localization.e('add'),
 						fn : function(wnd, wndObj){
-
+							console.log("save")
 							actions.add[type]()
 
 						}

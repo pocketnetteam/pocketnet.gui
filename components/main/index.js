@@ -62,8 +62,6 @@ var main = (function(){
 						el.panel.hcSticky('refresh');
 						el.leftpanel.hcSticky('refresh');
 
-						console.log("REFRESH STICKY")
-
 						/*setTimeout(function(){
 							if(el.panel) el.panel.hcSticky('refresh');
 							if(el.leftpanel) el.leftpanel.hcSticky('refresh');
@@ -280,18 +278,19 @@ var main = (function(){
 
 			topvideos: function (show) {
 				
-				var showmoreby = el.topvideos
-
-				//showmoreby.removeClass('hasshares')
-
 				if (show){
 
-					showmoreby.removeClass('hidden')
+					el.topvideos.removeClass('hidden')
+
+					if (external) {
+						external.clearessense()
+					}
 					
-					self.app.platform.papi.horizontalLenta(showmoreby, function (e,p) {
+					self.app.platform.papi.horizontalLenta(el.topvideos, function (e,p) {
 
 						external = p
 						actions.refreshSticky()
+
 					}, {
 						caption : self.app.localization.e("Top videos") ,
 						video: true,
@@ -300,6 +299,7 @@ var main = (function(){
 						shuffle : true,
 						period : '4320',
 						page : 0,
+						openPostInWindowMobile : true,
 						afterload : function(ed, s, e){
 
 							if(e || !s.length) return
@@ -314,31 +314,20 @@ var main = (function(){
 						},
 						hasshares : function(shares){
 
-							if (shares.length <= 2){
-								showmoreby.addClass('hidden')
+							if (shares.length <= 2 && el.topvideos){
+								el.topvideos.addClass('hidden')
 							}
 							
 						},
 	
-						opensvi : function(id, share){
+						opensvi : isMobile() ? null : function(id, share){
 
-							if(isMobile() && share){
-								self.nav.api.load({
-									open : true,
-									href : 'post?&s=' + id,
-									history : true,
-									handler : true
-								})
-							}
-							else{
-								self.nav.api.load({
-									open : true,
-									href : 'index?video=1&v=' + id,
-									history : true,
-									handler : true
-								})
-							}
-
+							self.nav.api.load({
+								open : true,
+								href : 'index?video=1&v=' + id,
+								history : true,
+								handler : true
+							})
 							
 						},
 
@@ -349,15 +338,15 @@ var main = (function(){
 
 				else{
 
-					if(external){
+					if (external){
 						external.destroy()
 						external = null
 					}
 
-					showmoreby.html('')
+					el.topvideos.html('')
 					//showmoreby.removeClass('hasshares')
 
-					showmoreby.addClass('hidden')
+					el.topvideos.addClass('hidden')
 				}
 
 				
@@ -409,7 +398,6 @@ var main = (function(){
 					essenseData : {
 					
 						renderclbk : function(){
-							console.log("renderclbk")
 							actions.refreshSticky(true)
 	
 						}
@@ -432,6 +420,7 @@ var main = (function(){
 					var c = deep(self, 'app.modules.menu.module.showsearch')
 
 					if (c)
+
 						c(value)
 
 					self.app.platform.sdk.search.get(searchvalue, 'posts', 0, 10, null, function(r, block){
@@ -459,10 +448,10 @@ var main = (function(){
 					if (c){
 
 						if(searchtags){
+
 							var val = _.map(searchtags, function(w){return '#' + w}).join(' ')
 
 							c(val)
-
 
 							self.app.platform.sdk.activity.addtagsearch(val)
 
@@ -472,7 +461,6 @@ var main = (function(){
 						}
 
 					}
-					
 
 					renders.lenta(clbk, p)
 				}
@@ -485,7 +473,7 @@ var main = (function(){
 				var fp = false
 
 				if (lenta) {
-					lenta.destroy()
+					lenta.clearessense()
 				}
 
 				renders.addpanel();
@@ -715,8 +703,6 @@ var main = (function(){
 				var t1 = 64
 				var t2 = 76
 
-				console.log("INITSTICKER!!!")
-
 				if (el.leftpanel)
 					el.leftpanel.hcSticky({
 						stickTo: '#main',
@@ -752,35 +738,13 @@ var main = (function(){
 
 			if(!isMobile() && !isTablet()){
 
-				if(!videomain)
-					initstick()
+				if(!videomain) initstick()
 
 			}
 			else{
 
 
-				if (self.app.scrolling){
-	
-					el.lentacell.on('scroll', function(){
-
-						if (el.lentacell){
-
-							var st = el.lentacell.scrollTop()
-
-							if (st < 200){
-								self.app.el.html.removeClass('scrollmodedown')
-							}
-	
-							_.each(self.app.scrolling.clbks, function(c){
-								c(st)
-							})
-						}
-
-
-						
-					})
-	
-				}
+				
 			}
 			
 
@@ -919,12 +883,16 @@ var main = (function(){
 				}
 
 				if (changes){
+
+					if (external) {
+						external.clearessense()
+						external = null
+					}
+
 					renders.topvideos(currentMode == 'common' && !videomain && !searchvalue && !searchtags)
 
-					
-
 					if (lenta) {
-						lenta.destroy()
+						lenta.clearessense()
 						lenta = null
 					}
 	
@@ -1011,11 +979,11 @@ var main = (function(){
 					return
 				}
 
-				if(_s.v && (isMobile() || window.cordova)){
+				if((_s.v || _s.s) && (isMobile() || window.cordova)){
 
 					self.nav.api.load({
 						open : true,
-						href : 'post?s=' + _s.v,
+						href : 'post?s=' + (_s.v || _s.s),
 						history : true,
 						replaceState : true
 					})
@@ -1047,20 +1015,14 @@ var main = (function(){
 
 			destroy : function(){
 
-				if(el.c) el.c.html('')
-
 				showCategories(false)
 
 				delete self.app.events.scroll.main
 				delete self.app.events.resize.mainpage
-					
-				self.app.el.html.removeClass('scrollmodedown')
 
 				renders.post(null)
 
 				hsready = false
-
-
 
 				//searchvalue = '', searchtags = null
 
@@ -1093,17 +1055,22 @@ var main = (function(){
 					panel.destroy()
 				}
 
+				if (openedpost){
+					openedpost.clearessense()
+					openedpost = null
+				}
+
 				if (external){
-					external.destroy()
+					external.clearessense()
 					external = null
 				}
 
 				if (leftpanel){
 					leftpanel.destroy()
+					leftpanel = null
 				}
 
 				lastscroll = 0
-				//mobilemode = 'mainshow'
 				leftpanel = null
 				panel = null
 				roller = null
@@ -1113,7 +1080,7 @@ var main = (function(){
 				fixeddirection = null
 				addbuttonShowed = false
 
-				self.app.el.footer.removeClass('workstation')
+				if(el.c) el.c.empty()
 
 				el = {}
 				
@@ -1154,8 +1121,7 @@ var main = (function(){
 				el.slwork = el.c.find('.maincntwrapper >div.work')
 				el.topvideos = el.c.find('.topvideosWrapper')
 
-
-				self.app.el.footer.addClass('workstation')
+				//self.app.el.footer.addClass('workstation')
 
 				initEvents();
 

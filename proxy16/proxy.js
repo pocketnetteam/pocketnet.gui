@@ -622,14 +622,29 @@ var Proxy = function (settings, manage, test, logger) {
 					
 				],
 
-				12: ['bastyonmma.pocketnet.app', 'bastyonmma.nohost.me'],
+				12: [
+					{host : 'bastyonmma.pocketnet.app', cantuploading : true}, 
+					{host : 'bastyonmma.nohost.me', cantuploading : true}, 
+				],
+	
+				13: [
+					'01rus.nohost.me',
+					'02rus.pocketnet.app'
+				],
 
-				//server of gf110
-				13: ['01rus.nohost.me'],
+				14: [
+					'pocketnetpeertube12.nohost.me',
+					'pocketnetpeertube13.nohost.me'
+				],
+
+				15: [
+					'peertube14.pocketnet.app',
+					'peertube15.pocketnet.app',
+				],
       		};
 
 			if (test){
-				ins = {0 : ['test.peertube.pocketnet.app']}
+				ins = {0 : ['test.peertube.pocketnet.app', 'test.peertube2.pocketnet.app']}
 			}
 
 			return peertube.init({
@@ -691,7 +706,8 @@ var Proxy = function (settings, manage, test, logger) {
 
 			return {
 				status: status,
-
+				test : self.test,
+				
 				nodeManager: self.nodeManager.info(compact),
 				nodeControl: self.nodeControl.info(compact),
 				firebase: self.firebase.info(compact),
@@ -1430,6 +1446,41 @@ var Proxy = function (settings, manage, test, logger) {
 					});
 				},
 			},
+
+			urlPreviewFormatted: {
+				path: '/urlPreviewFormatted',
+				
+				action: function ({ url }) {
+
+					return new Promise((resolve, reject) => {
+
+						remote.nmake(url, function (err, data) {
+
+							if (!err) {
+
+								resolve({
+
+									data : {
+										"success" : 1,
+										"meta": {
+											"title" : data.title || data.site_name,
+											"description" : data.description,
+											"image" : {
+												"url" : data.image
+											}
+										}
+									}
+
+								});
+
+							} else {
+								reject(err);
+							}
+						});
+					});
+
+				},
+			}
 		},
 
 		common: {
@@ -1789,7 +1840,7 @@ var Proxy = function (settings, manage, test, logger) {
 						data: {
 							id: captcha.id,
 							img: captcha.data,
-							//result: captcha.text, ///
+							result: self.test ? captcha.text : null, ///
 							done: false,
 						},
 					});
@@ -1971,32 +2022,6 @@ var Proxy = function (settings, manage, test, logger) {
 
 	self.wallet.events()
 
-
-	/////////tests
-
-	/*var ids = []
-
-	var c = 3000000
-
-	for(var i = 0 ; i < c; i++){
-		ids.push(f.makeid())
-	}
-
-	var time = performance.now()
-	
-	for(var i = 0 ; i < c; i++){
-		f.rot13(ids[i])
-	}
-
-	var difference = performance.now() - time;
-	
-
-	var time = performance.now()
-
-	for(var i = 0 ; i < c; i++){
-		f.hash(ids[i])
-	}
-	var difference = performance.now() - time;*/
 	
 		
 	return self

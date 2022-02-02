@@ -1,10 +1,13 @@
+
+
+
 var kit = require('./kit.js');
 var f = require('./functions');
 var readline = require('readline'); 
 
 //process.env.NODE_ENV = 'production'
 
-global.MIN_NODES_COUNT = 10
+global.MIN_NODES_COUNT = 50
 global.WRITE_LOGS = true
 
 var destroy = function(repeat){
@@ -31,7 +34,7 @@ var destroy = function(repeat){
 var cli = {
     command : function(input){
 
-        if(!input){
+        if(!input || input === 'help'){
 
             input = 'help.commands'
 
@@ -52,7 +55,7 @@ var cli = {
 
         var kaction = f.deep(kit, 'manage.' + action)
 
-		if(!kaction) return Promise.reject('unknownAction')
+		if(!kaction || typeof kaction !== 'function') return Promise.reject('unknownAction')
 
         return kaction(data)
         

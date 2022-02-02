@@ -8,7 +8,7 @@ if (typeof _OpenApi == 'undefined') _OpenApi = false;
 
 if(typeof _Electron != 'undefined' && _Electron){
 
-	imagesLoaded = require('imagesloaded');
+	imagesLoaded = require('./js/vendor/imagesloaded.pkgd.min.js');
 
 	emojione = require('emojione')
 
@@ -35,14 +35,8 @@ if(typeof _Electron != 'undefined' && _Electron){
 	emojionearea = require('./js/vendor/emojionearea.js')
 	filterXss = require('./js/vendor/xss.min.js')
 
-	const contextMenu = require('electron-context-menu');
-
-	contextMenu({
-		showSearchWithGoogle : false,
-		showCopyImageAddress : true,
-		showSaveImageAs : true
-	})
-
+	
+	
 
 
 }
@@ -864,6 +858,9 @@ Application = function(p)
 				else{
 					$('#splashScreen').remove()
 				}
+
+                // TODO (brangr): DEBUG!
+                //p.nav.href = "userpage?id=system16"
 				
 				self.nav.init(p.nav);
 
@@ -873,7 +870,17 @@ Application = function(p)
 				if(!_OpenApi)
 					self.showuikeysfirstloading()
 
+
+			
+				self.mobile.update.needmanagecheck().then(r => {
+					if (r){
+						self.mobile.update.hasupdatecheck()
+					}
+						
+				})
+
 			})
+
 		})
 		
 
@@ -954,6 +961,12 @@ Application = function(p)
 
 	}
 
+	self.chatposition = function(ab){
+		var attr = ab ? 'above' : 'under'
+
+		self.el.html.attr('chatposition', attr)
+	}
+
 	self.deviceReadyInit = function(p){
 
 		self.el = {
@@ -966,7 +979,9 @@ Application = function(p)
 			footer : 		$('#footerWrapper'),
 			chats : 		$('.chats'),
 			html : 			$('html'),
-			window : 		$(window)
+			window : 		$(window),
+			windows : 		$('#windowsContainer'),
+			electronnav : 	$('#electronnavContainer')
 		};
 
 
@@ -999,6 +1014,9 @@ Application = function(p)
 				p || (p = {});
 
 				p.clbk = function(){
+
+					self.appready = true
+
 					if (navigator.splashscreen)
 						navigator.splashscreen.hide();
 				}
@@ -1012,13 +1030,26 @@ Application = function(p)
 						cordova.plugins.backgroundMode.disableWebViewOptimizations(); 
 					});
 
+				console.log('needmanagecheck')
+
+				
+
 				self.init(p)
 
 			}, false);
 		}
 		else
 		{
+
+			
+
 			self.init(p);
+
+			setTimeout(function(){
+				self.appready = true
+
+			
+			}, 2000)
 		}
 
 
@@ -1436,11 +1467,22 @@ Application = function(p)
 
 	self.reltime = function(time){
 
+		var value = time || new Date()
+
 		moment.locale(self.localization.key)
 
-		return moment(moment.utc((time || new Date())).toDate()).local().fromNow();
+		if ((moment().diff(value, 'days')) === 0) {
 
+			if((moment().diff(value, 'hours') < 12 )) 
+				return moment(moment.utc(value).toDate()).local().fromNow();
 
+			return new Date(value).toLocaleTimeString([], {hour: '2-digit', minute: "2-digit", hour12: false})
+		} 
+
+		if (moment().year() === moment(value).year()) 
+			return moment(value).local().format('D MMMM')
+
+		return moment(value).local().format('D MMMM YYYY')
 	}
 
 	self.realtime = function(){
@@ -1475,7 +1517,11 @@ Application = function(p)
 
 				el.html(ctime)
 
+				el = null
+
 			})
+
+			realtimeelements = null
 		}, 30000)
 
 	}
@@ -1483,22 +1529,16 @@ Application = function(p)
 	self.storage = {
 
 		getStorageLocation: function() {
+
 			if (!device || !device.platform || !cordova || !cordova.file)
 				return undefined;
-			var storageLocation = "";
-			switch (device.platform) {
-				case "Android":
-					storageLocation = 'file:///storage/emulated/0/';
-					break;
-				case "iOS":
-					storageLocation = cordova.file.cacheDirectory;
-					break;
-			}
-			return storageLocation;
+
+			return (window.cordova.file.externalDataDirectory) ? window.cordova.file.externalDataDirectory : window.cordova.file.dataDirectory;
+			
 		},
 	
 		getStorageDirectory: function() {
-			return 'Pocketnet';
+			return 'internal';
 		},
 	
 		saveFile: function(url, blob) {
@@ -1764,7 +1804,7 @@ Application = function(p)
 			}
 		},
 		vibration : {
-            small : function(time){
+            small : function(android){
 
 				if(!window.cordova) return
 
@@ -1778,9 +1818,9 @@ Application = function(p)
                     return
                 }
 
-                /*if (navigator.vibrate){
-                    navigator.vibrate(time || 50)
-                }*/
+                if (navigator.vibrate && android){
+                    navigator.vibrate(50)
+                }
             }
         },
 		statusbar : {
@@ -1918,7 +1958,149 @@ Application = function(p)
 			},
 
 			clbks : {}
+		},
+
+		update : {
+			needmanage : false,
+			hasupdate : false,
+
+			downloadAndInstall : function(){
+
+				if(!self.mobile.update.hasupdate){
+					return Promise.reject({text : 'hasnotupdates'})
+				}
+
+				if(!self.mobile.update.needmanage){
+					return Promise.reject({text : 'cantmanageupdate'})
+				}
+
+				self.mobile.update.updating = true
+
+				return self.mobile.update.download(self.mobile.update.hasupdate).then(r => {
+
+					return window.ApkUpdater.install()
+
+				}).then( r => {
+					self.mobile.update.updating = false
+
+					return Promise.resolve()
+				}).catch(e => {
+
+					self.mobile.update.updating = false
+
+					return Promise.reject(e)
+				})
+
+			},
+		
+			download : function(l){
+
+				return window.ApkUpdater.download(l, {
+					onDownloadProgress: function(e){
+						topPreloader2(e.progress, self.localization.e('downloadingUpdate'))
+					}
+				}).then(r => {
+					topPreloader2(100)
+
+					return Promise.resolve()
+				}).catch(e => {
+					topPreloader2(100)
+
+					return Promise.reject(e)
+				})
+				
+
+			},
+			hasupdatecheck : function(){
+
+				if(!self.platform) return Promise.resolve()
+
+				var os = self.platform.__applications().ui.android
+
+				return new Promise((resolve, reject) => {
+
+					$.get(os.github.url, {}, function(d){
+
+						if(!d.prerelease && numfromreleasestring(d.name) > numfromreleasestring(window.packageversion)) {
+							var assets = deep(d, 'assets') || [];
+	
+							var l = _.find(assets, function(a){
+								return a.name == os.github.name
+							})
+
+							if(l){
+								self.mobile.update.hasupdate = l.browser_download_url
+							}
+						}
+	
+					})
+
+				})
+	
+				
+	
+			},
+			needmanagecheck : function(){
+
+				if(window.plugins && window.plugins.packagemanager && window.ApkUpdater){
+
+					return new Promise((resolve, reject) => {
+
+						window.plugins.packagemanager.getInstallerPackageName(function(d){
+
+							self.mobile.update.needmanage = d && d.indexOf('com.android.vending') > -1 ? false : true
+							self.mobile.update.needmanageinfo = d
+
+							resolve(self.mobile.update.needmanage)
+
+						}, function(e){
+
+							self.mobile.update.needmanage = false
+							self.mobile.update.needmanageinfo = e
+
+							resolve(self.mobile.update.needmanage)
+						});
+
+					})
+
+				}
+				else{
+
+					return Promise.resolve(self.mobile.update.needmanage)
+				}
+				
+			}
+
 		}
+	}
+
+	self.thislink = function(_url){
+
+		var url = {}
+
+		try{
+			url = new URL(_url)
+		}
+		catch(e){
+			url.host = ''
+		}
+
+		var groups = {
+			p : ['pocketnet.app', 'bastyon.com'],
+			pt : ['test.pocketnet.app', 'test.bastyon.com']
+		}
+
+		if (_url.indexOf('bastyon://') > -1) return true
+		if (_url.indexOf('pocketnet://') > -1) return true
+
+		var domain = self.options.url
+
+		var m = _.find(groups, function(g){
+			return _.indexOf(g, url.host) > -1 &&  _.indexOf(g, domain) > -1
+		})
+
+		if(m) return true
+
 	}
 
 	self.setref = function(r, na){
@@ -1927,9 +2109,6 @@ Application = function(p)
 
 		self.ref = r;
 		localStorage['ref'] = self.ref
-
-
-		console.log('self.ref', self.ref)
 
 	}
 

@@ -4,6 +4,27 @@
     position: relative;
     padding-bottom: 8 * @rhythm;
 
+    .maincolor{
+        color : @color-main;
+    }
+
+    #nodecontrol{
+        .maincaption{
+            display: none;
+        }
+
+        .manage{
+            border-radius: 10px;
+            background: fade(@color-gray-mlight, 12);
+        }
+
+        .managepanel{
+            padding : 2 * @rhythm 0;
+        }
+
+        
+    }
+
     .collapsepart{
         .collapsingpart{
             display: none;
@@ -158,13 +179,6 @@
 
     .stacking{
         .canstacking{
-            padding : 3 * @rhythm 0;
-
-            i{
-                width : 20px;
-                font-size: 0.9em;
-               
-            }
 
             .good{
                 color : @color-good;
@@ -186,34 +200,9 @@
                 color : @color-bright;
             }
         }
-        .adresses{
+        
+        .balance {
 
-            .address{
-                width: auto;
-
-                >div{
-                    &.balance{
-                        padding : 0 2 * @rhythm;
-                        padding-left: @rhythm;
-                        font-weight: 400;
-                        font-size: 0.9em;
-                    }
-    
-                    &.namewrapper{
-                        width: 270px;
-                    }
-                    &.iconWrapper{
-                        width: 44px;
-                        text-align: right;
-
-                        i{
-                            font-size: 0.8em;
-                        }
-                    }
-                }
-
-                
-            }
         }
     }
 
@@ -260,7 +249,6 @@
     }
 
     .staterowTable,
-
     .settingTable{
         width : auto;
 
@@ -312,7 +300,7 @@
         }
         .value{
             
-            color : @color-gray-mlight;
+            color : @color-gray;
 
             &[fss],
             &[sys]{
@@ -677,93 +665,7 @@
         }
     }
 
-    .nodecontent{
-        .nodecontentstate{
-            span{
-                font-size: 0.8em;
-            }
-        }
-        
-        .notfound{
-            text-align: center;
-            padding : 4 * @rhythm 0;
-            cursor: pointer;
-            color : @color-gray-mlight;
-            
-            .transition(0.3s);
-
-            &:hover{
-                color : @color-bright;
-            }
-
-            .text{
-                padding : @rhythm 0;
-                font-size: 0.9em;
-            }
-
-            i{
-                font-size: 0.9em;
-                color : @color-bright;
-            }
-            
-        }
-
-        .addresses{
-            padding-top : 2 * @rhythm;
-            margin-top : 2 * @rhythm;
-            margin-bottom : 2 * @rhythm;
-            padding-bottom : 2 * @rhythm;
-            border-top : 1px solid @color-gray-slight;
-            border-bottom : 1px solid @color-gray-slight;
-        }
-
-        .deletenodeWrapper{
-            padding-top : 2 * @rhythm;
-            margin-top : 2 * @rhythm;
-            padding-bottom : 2 * @rhythm;
-            border-top : 1px solid @color-gray-slight;
-        }
-    }
-
-    .nodecontentmanage{
-
-        position: relative;
-
-        &.lock{
-            .felock{
-                display: block;
-            }
-        }
-
-        .felock{
-            position: absolute;
-            left : 0;
-            right : 0;
-            top : 0;
-            bottom : 0;
-            padding : 2 * @rhythm;
-            background: fade(@color-white, 80);
-            display: none;
-        }
-
-        .felockcnt{
-            text-align: center;
-            padding : 4 * @rhythm 0;
-            cursor: pointer;
-            color : @color-gray-mlight;
-            
-
-            .text{
-                padding : @rhythm 0;
-                font-size: 0.9em;
-            }
-
-            i{
-                font-size: 0.9em;
-                color : @color-bright;
-            }
-        }
-    }
+    
 
     .empty{
         padding-top : 2 * @rhythm;
@@ -863,6 +765,13 @@
                         }
                     }
                 }
+            }
+
+            .hasserviceconnection{
+                color : @color-good;
+                font-size: 0.3em;
+                width: 25px;
+                text-align: center;
             }
 
             .testing{

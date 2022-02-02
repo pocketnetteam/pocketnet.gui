@@ -76,6 +76,12 @@ var videoCabinet = (function () {
       },
 
       parseVideoServerError(error = {}) {
+        self.app.Logger.error({
+          err: error.text || 'videoCabinetError',
+          payload: JSON.stringify(error),
+          code: 502,
+        });
+
         return error.text || findResponseError(error) || JSON.stringify(error);
       },
     };
@@ -153,14 +159,17 @@ var videoCabinet = (function () {
       getBlockchainPostByVideos: (videoArray = []) =>
         self.app.api
           .rpc('searchlinks', [videoArray, 'video', 0, videoArray.length])
-          .then((res = {}) => {
-            if (!res.contents) return;
 
-            res.contents.forEach((post) => {
+          .then((res = []) => {
+            console.log('RESULT ', res);
+
+            res.forEach((post) => {
               const postUrl = decodeURIComponent(post.u);
 
               blockChainInfo[postUrl] = { ...post };
             });
+
+            console.log('blockChainInfo', blockChainInfo);
           })
           .catch((err) => {}),
 
@@ -394,7 +403,9 @@ var videoCabinet = (function () {
                 .update(`peertube://${backupHost}/${urlMeta.id}`, parameters, {
                   host,
                 })
+
                 .then(() => img)
+
                 .catch((e = {}) =>
                   sitemessage(helpers.parseVideoServerError(e)),
                 );
@@ -504,8 +515,8 @@ var videoCabinet = (function () {
 
       onSearchVideo() {
         const searchString = el.searchInput.val();
-        
-        if((ed.search || '') == (searchString || '')) return
+
+        if ((ed.search || '') == (searchString || '')) return;
 
         ed.search = searchString;
 
@@ -644,9 +655,14 @@ var videoCabinet = (function () {
               );
             });
 
-            const blockchainStrings = videos.map(
-              (video) => `peertube://${video.account.host}/${video.uuid}`,
+            const blockchainStrings = videos.map((video) =>
+              encodeURIComponent(
+                `peertube://${video.account.host}/${video.uuid}`,
+              ),
             );
+
+            console.log('blockchainStrings', blockchainStrings);
+
             //get information about videos being published to blockchain
             actions.getBlockchainPostByVideos(blockchainStrings).then(() => {
               p.el.find('.singleVideoSection').each(function () {
@@ -957,7 +973,7 @@ var videoCabinet = (function () {
             self.app.platform.api.tooltip(
               _el,
               () => template(data),
-              (element) => {
+              (element, v, close) => {
                 //remove user video (popup menu)
                 element.find('.remove').on('click', function () {
                   const { host } = meta;
@@ -1004,7 +1020,7 @@ var videoCabinet = (function () {
                     },
                   });
 
-                  if (_el.tooltipster) _el.tooltipster('hide');
+                  close();
                 });
 
                 //edit wallpaper in menu
@@ -1027,13 +1043,14 @@ var videoCabinet = (function () {
                         const previewContainer = el.videoContainer.find(
                           `.singleVideoSection[uuid="${meta.id}"] .videoAvatar`,
                         );
+
                         previewContainer.attr(
                           'style',
                           `background-image: url("${img}")`,
                         );
                       });
 
-                    if (_el.tooltipster) _el.tooltipster('hide');
+                    close();
                   },
 
                   onError: function (er, file, text) {
@@ -1126,7 +1143,7 @@ var videoCabinet = (function () {
                       );
                     });
 
-                  if (_el.tooltipster) _el.tooltipster('hide');
+                  close();
                 });
               },
             );
@@ -1253,7 +1270,7 @@ var videoCabinet = (function () {
 
       el.searchInput.on('change', function (e) {
         //if (e.key === 'Enter' || e.keyCode === 13) {
-          events.onSearchVideo(e)
+        events.onSearchVideo(e);
         //}
       });
 
@@ -1265,7 +1282,7 @@ var videoCabinet = (function () {
       primary: primary,
 
       getdata: function (clbk, p) {
-        ed = p.settings.essenseData;
+        ed = p.settings.essenseData || {};
 
         externalActions = ed.actions || {};
 
@@ -1297,15 +1314,23 @@ var videoCabinet = (function () {
             clbk(data);
           })
           .catch((err) => {
+
             ed = {
               ...ed,
               hasAccess: false,
             };
-            clbk({
-              hasAccess: false,
-              inLentaWindow: ed.inLentaWindow,
-              scrollElementName: ed.scrollElementName || '',
-            });
+
+            self.app.platform.sdk.ustate.canincrease(
+              { template: 'video' },
+              function (r) {
+                clbk({
+                  hasAccess: false,
+                  inLentaWindow: ed.inLentaWindow,
+                  scrollElementName: ed.scrollElementName || '',
+                  increase: r,
+                });
+              },
+            );
           });
       },
 
@@ -1333,6 +1358,23 @@ var videoCabinet = (function () {
         el.scrollElement = ed.scrollElementName
           ? el.c.find('.userVideos')
           : el.c;
+
+        el.c.find('.buypkoins').on('click', function () {
+          self.closeContainer();
+
+          self.nav.api.load({
+            open: true,
+            href: 'wallet',
+            history: true,
+            inWnd: true,
+
+            essenseData: {
+              simple: true,
+              action: 'buy',
+            },
+          });
+        });
+
 
         //do nothing if user has no access to videos
         if (!ed.hasAccess) return p.clbk(null, p);

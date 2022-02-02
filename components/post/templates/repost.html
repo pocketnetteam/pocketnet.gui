@@ -1,0 +1,25 @@
+<% if(repost) {%>
+
+    <div class="repostShareWrapper">
+
+        <% if(typeof level != 'undefined' && level > 3) {%>
+
+            <div class="repostsecond">
+                <div>
+                    <div class="openetc" share="<%-share.txid%>">
+                        <span><%=e('etc')%></span> <i class="fas fa-link"></i>
+                    </div>
+                </div>
+            </div>
+
+        <% } else { %> 
+            
+            <div class="repostShare">
+
+            </div>
+
+        <% } %>
+
+    </div>
+
+<% } %>

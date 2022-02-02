@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="">
+<html class="no-js electronapp" lang="">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -108,6 +108,9 @@
                 </div>
                
             </div>
+        </div>
+
+        <div class="electronnav" id="electronnavContainer">
         </div>
 
         <!--<div class="updatingFrontend">
@@ -232,10 +235,10 @@
         <script join src="js/_map.js?v=147657511756"></script>
         <script join src="js/localization.js?v=439731354592"></script>
         <script join src="js/satolist.js?v=439731354592"></script>
-        <script join src="js/messenger2/clientrtc.js?v=413927449417"></script>
         <script join src="peertube/video-embed.bundle.js"></script>
         <script join src="js/peertube.js"></script>
         <script join src="js/app.js?v=322676503798"></script>
+        <script join src="js/logger.js"></script>
         <script join src="js/main.js?v=723212304292"></script>       
         <script join src="chat/matrix-element.min.js"></script>    
     

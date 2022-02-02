@@ -1,0 +1,66 @@
+<div class="faq">
+	<div class="container">
+		<div class="faqcnt  roller" roller="faqcnt">
+
+			<div class="cnt">
+				<div class="faqcntContent">
+					<% _.each(groups, function(gr){
+						
+						console.log('group', gr)
+						
+						if(gr.if && !gr.if()) return
+						%>
+
+						<div class="group" group="<%-gr.id%>">
+							<div class="groupCaption">
+								<%= gr.name %>
+							</div>
+
+
+							<div class="groupCnt">
+
+								<% _.each(gr.group, function(fq){ 
+									
+									if(fq.if && !fq.if()) return
+									
+									%>
+
+									<div class="question" question="<%- fq.id %>">
+										<div class="questiontop">
+											<div elementsid="questionName_<%- fq.id %>" class="questionName">
+												<%= fq.q %> 
+											</div>
+		
+											<!-- <div elementsid="share-<%- fq.id %>" class="share">
+												<span><%=e('share')%></span>	 
+												<i class="fas fa-share-alt"></i> 
+											</div> -->
+										</div>
+
+										<div class="answer">
+											<%= fq.a %>
+										</div>
+
+										<div class="image">
+											<%= fq.img %>
+										</div>
+
+			
+
+										
+									</div>
+
+								<% }) %>
+								
+							</div>
+							
+						</div>
+
+					<% }) %>
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+</div>

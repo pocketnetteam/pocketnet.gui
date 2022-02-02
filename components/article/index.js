@@ -61,8 +61,6 @@ var article = (function(){
 					share.aliasid = ed.share.aliasid
 				}
 
-				console.log('share', share)
-				
 
 				self.sdk.node.transactions.create.commonFromUnspent(
 

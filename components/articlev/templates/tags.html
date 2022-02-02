@@ -1,0 +1,41 @@
+<div class="arttags">
+    <% if(!tags.length) {%>
+
+        <div>
+            <button class="button medium ghost nopadding "><%= e('art_categoriestags') %> <i class="fas fa-plus"></i></button>
+        </div>
+        
+    <% } else { 
+        
+        var bycategories = app.platform.sdk.categories.fromTags(tags, language)
+        
+        %>
+
+        <div class="tags unselectablemobile fadeoverflow">
+
+            <% _.each(bycategories.categories, function(category){ %>
+
+                <div class="category">
+                    <span>@<%-category.name%></span>
+                </div>
+
+            <% }) %>
+
+            <% _.each(bycategories.tags, function(tag){ 
+                
+                var additional = app.platform.sdk.tags.findadditional(tag)
+                
+                %>
+
+                <div class="tag">
+                    <span>#<%-tag%></span>
+                </div>
+
+            <% }) %>
+
+           
+        </div>
+            
+
+    <% } %>
+</div>

@@ -1,0 +1,49 @@
+    <% _.each(oss, function(os){ %> 
+        
+        <div osid="<%-os.id%>" class="os">
+
+            <% if(os.image) {%> 
+                <div class="osimage">
+                    <img src="img/<%- os.image %>">
+                </div>
+            <% } %>
+
+            <div class="icon">
+                <%= os.icon %>
+            </div>
+
+            <div class="data">
+                <div class="subcaption">
+                    <span><%- os.text.name %></span>
+                </div>
+
+                <div class="label">
+                    <span><%- os.text.label %></span>
+                </div>
+
+                <div class="downloadcaption">
+                    <span><%- os.text.download %></span>
+                </div>
+
+                <div class="buttonWrapper">
+
+                    <% if(os.href) {%>
+                        <div>
+                            <a href="<%-os.href%>">
+                                <button elementsid="download<%- os.text.name %>" class="downloadOsStyle"><%- e(os.hreflabel || 'download') %></button>
+                            </a>
+                        </div>
+                    <% } %>
+                       
+                    <% if(os.github) {%>
+                        <div>
+                            <button elementsid="download<%- os.text.name %>" class=" downloadOs downloadOsStyle"><%- e(os.githublabel || 'download') %></button>
+                        </div>
+                    <% } %>
+                    
+                </div>
+            </div>
+            
+        </div>
+        
+    <% }) %>

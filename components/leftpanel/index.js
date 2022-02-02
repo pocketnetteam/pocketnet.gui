@@ -6,15 +6,9 @@ var leftpanel = (function(){
 
 	var Essense = function(p){
 
-		var primary = deep(p, 'history');
-
-		var el, categories = null, tags = null, cats = null;
+		var el, tags = null, cats = null;
 
 		var ed = null;
-
-		var events = {
-			
-		}
 
 		var renders = {
 			currentsearch : function(value, clbk){
@@ -118,6 +112,7 @@ var leftpanel = (function(){
 					animation : false,
 					
 					clbk : function(e, p){
+
 						tags = p
 					}
 
@@ -279,8 +274,6 @@ var leftpanel = (function(){
 		}
 
 		return {
-			primary : primary,
-
 			getdata : function(clbk, p){
 
 				ed = p.settings.essenseData || {}
@@ -303,7 +296,11 @@ var leftpanel = (function(){
 					cats = null;
 				}
 
+				if(el.c) el.c.empty()
+
 				el = {};
+
+				ed = {}
 			},
 
 			authclbk : function(){

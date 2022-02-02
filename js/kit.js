@@ -1047,7 +1047,6 @@ Share = function(lang){
 			}
 			
 			_.each(self.on.change || {}, function(f){
-				console.log('poll', f);
 				f('poll', this.v)
 			})
 
@@ -1079,6 +1078,10 @@ Share = function(lang){
 
 		if(self.itisvideo()){
 			return 'video'
+		}
+
+		if(self.itisarticle()){
+			return 'article'
 		}
 
 		return 'post'
@@ -1396,20 +1399,24 @@ Share = function(lang){
 			return 'pkoin_commerce_tag'
 		}
 
-		/*if(!self.tags.v.length && self.settings.v != 'a'){
-
-			return 'tags'
-		}*/
-
+	
 		return false
 	}
 
 	self.serialize = function(){
+
+		var textvalue = self.message.v
+
+		var articleversion2 = self.settings.v == 'a' && self.settings.version && self.settings.version >= 2
+
+		if (articleversion2){
+			textvalue = JSON.stringify(textvalue) //  Base64Helper.encode(JSON.stringify(textvalue))
+		}
 		
 		return encodeURIComponent(self.url.v) 
 		
 		+ encodeURIComponent(self.caption.v) 
-		+ encodeURIComponent(self.message.v) 
+		+ (articleversion2 ? textvalue : encodeURIComponent(textvalue))
 
 		+ _.map(self.tags.v, function(t){ return encodeURIComponent(t) }).join(',')
 		+ self.images.v.join(',')
@@ -1435,16 +1442,29 @@ Share = function(lang){
 		if(meta.type == 'peertube') return true
 	}
 
+	self.itisarticle = function(){
+		return self.settings.v == 'a' && self.settings.version && self.settings.version >= 2
+	}
+
 	self.hasexchangetag = function(){
 		return self.tags.have('pkoin_commerce')
 	}
 
 	self.export = function(extend){
 
-		if(extend){
+		var textvalue = self.message.v
+
+		var articleversion2 = self.settings.v == 'a' && self.settings.version && self.settings.version >= 2
+
+		if (articleversion2){
+			textvalue = textvalue //Base64Helper.encode(JSON.stringify(textvalue))
+		}
+
+		if (extend){
+
 			return {
 				caption : self.caption.v,
-				message : self.message.v,
+				message : textvalue,
 				url : self.url.v,
 				tags : self.tags.v,
 				images : self.images.v,
@@ -1458,7 +1478,7 @@ Share = function(lang){
 
 		return {
 			c : encodeURIComponent(self.caption.v),
-			m : encodeURIComponent(self.message.v),
+			m : articleversion2 ? textvalue : encodeURIComponent(textvalue),
 			u : encodeURIComponent(self.url.v),
 			p : _.clone(self.poll.v),
 			t : _.map(self.tags.v, function(t){ return encodeURIComponent(t) }),
@@ -1472,16 +1492,6 @@ Share = function(lang){
 	}
 
 	self.import = function(v){
-		self.caption.set(v.c || v.caption)
-		self.url.set(v.u || v.url)
-		self.tags.set(v.t || v.tags)
-		self.message.set(v.m || v.message)
-		self.images.set(v.i || v.images)
-		self.repost.set(v.r || v.txidRepost || v.repost)
-		self.language.set(v.l|| v.language || 'en')
-		self.poll.set(v.p || v.poll || {})
-
-		if (v.txidEdit) self.aliasid = v.txidEdit
 
 		if (v.s){
 			
@@ -1499,6 +1509,19 @@ Share = function(lang){
 			}
 		}
 
+		var articleversion2 = self.settings.v == 'a' && self.settings.version && self.settings.version >= 2
+		var textvalue = v.m || v.message
+
+		self.caption.set(v.c || v.caption)
+		self.url.set(v.u || v.url)
+		self.tags.set(v.t || v.tags)
+		self.message.set(textvalue)
+		self.images.set(v.i || v.images)
+		self.repost.set(v.r || v.txidRepost || v.repost)
+		self.language.set(v.l|| v.language || 'en')
+		self.poll.set(v.p || v.poll || {})
+
+		if (v.txidEdit) self.aliasid = v.txidEdit
 		
 	}
 
@@ -1506,6 +1529,8 @@ Share = function(lang){
 		var share = new pShare();
 
 			share.time = new Date();
+
+			console.log('self.export()', self.export())
 
 			share._import(self.export())
 
@@ -1517,6 +1542,7 @@ Share = function(lang){
 	self.optstype = function(platform){
 
 		if(self.itisvideo()) return 'video'
+		if(self.itisarticle()) return 'article'
 
 		return self.type	
 	}
@@ -1524,6 +1550,7 @@ Share = function(lang){
 	self.typeop = function(platform){
 
 		if (self.itisvideo()) return 'video'
+		if (self.itisarticle()) return 'article'
 
 		if (self.aliasid){
 			return 'share'
@@ -1531,6 +1558,16 @@ Share = function(lang){
 
 		return self.type
 	}
+
+	self.size = function(){
+
+		var obj = JSON.stringify(self.export());
+
+		return obj.length
+
+	}
+
+	self.sizelimit = 60000
 
 	if(lang) self.language.set(lang)
 
@@ -1893,11 +1930,11 @@ pUserInfo = function(){
 	self._import = function(v){
 
 
-		self.name = decodeURIComponent(v.n || v.name || '');
-		self.image = v.i || v.image;
-		self.about = decodeURIComponent(v.a || v.about || '');
-		self.language = v.l || v.language;
-		self.site = decodeURIComponent(v.s || v.site || '');
+		self.name = clearStringXss(decodeURIComponent(v.n || v.name || ''));
+		self.image = clearStringXss(v.i || v.image);
+		self.about = clearStringXss(decodeURIComponent(v.a || v.about || ''));
+		self.language = clearStringXss(v.l || v.language);
+		self.site = clearStringXss(decodeURIComponent(v.s || v.site || ''));
 
 		self.ref = v.r || v.ref;
 		self.rc = v.rc || 0;
@@ -1989,7 +2026,7 @@ pUserInfo = function(){
 		if(!key) key = 'subscribes'
 
 		return _.find(self[key], function(o){
-			return o.adddress == address || o.address == address || o == address
+			return (o.adddress || o.address || o) == address 
 		})
 	}
 
@@ -2081,14 +2118,49 @@ pShare = function(){
 		return self.tags.indexOf('pkoin_commerce') > -1
 	}
 
+	self.itisarticle = function(){
+		return self.settings.v == 'a' && self.settings.version && self.settings.version >= 2
+	}
+
 	self._import = function(v, notdecode){
+
+		if (v.s){
+
+			try{
+				self.settings = v.s 
+			}
+			catch(e){
+
+			}
+		}
+		else
+		{
+			if(v.settings){
+				self.settings = v.settings
+			}
+		}
 
 		
 		if(v.i && !_.isArray(v.i)) v.i = [v.i]
 		if(v.t && !_.isArray(v.t)) v.t = [v.t]
+		
+		var textvalue = v.m || v.message || ""
 
-		if(notdecode){
-			self.message = v.m || v.message || ""
+		var articleversion2 = self.settings.v == 'a' && self.settings.version && self.settings.version >= 2
+
+
+		if(articleversion2){
+			try{
+				textvalue = JSON.parse(textvalue)
+			}
+			catch(e){
+				textvalue = textvalue
+			}
+		}
+
+
+		if (notdecode){
+			self.message = textvalue
 			self.caption = v.c || v.caption || ""
 			self.tags = v.t || v.tags || []
 			self.url = v.u || v.url || '';
@@ -2097,30 +2169,29 @@ pShare = function(){
 		}
 		else
 		{	
-			self.url = decodeURIComponent(v.u || v.url || '');
-			self.message = decodeURIComponent((v.m || v.message || "").replace(/\+/g, " "))
-			self.caption = decodeURIComponent((v.c || v.caption || "").replace(/\+/g, " "))
+			self.url = clearStringXss(decodeURIComponent(v.u || v.url || ''));
+			self.message = articleversion2 ? textvalue : (decodeURIComponent((textvalue).replace(/\+/g, " ")))
+			self.caption = (decodeURIComponent((v.c || v.caption || "").replace(/\+/g, " ")))
 
 			self.tags = _.map(v.t || v.tags || [], function(t){ 
-				return clearTagString(decodeURIComponent(t))
+				return clearStringXss(clearTagString(decodeURIComponent(t)))
 			})
 			
 			self.poll = v.p || v.poll || {}
 
 		}
 
-		if (self.message){
+		if (!articleversion2 && self.message){
 			self.message = self.message.replace(/\n{2,}/g, '\n\n');
 		}
 
 		if(v.myVal) self.myVal = Number(v.myVal)
 
 		self.language = v.l || v.language || 'en'
-		self.images = v.i || v.images || [];
+		self.images = _.map(v.i || v.images || [], function(i){return clearStringXss(i)});
 		self.repost = v.r || v.repost || v.txidRepost || ''
 
 		if (v.deleted) self.deleted = true
-
 
 		if (v.txid)
 			self.txid = v.txid;
@@ -2143,21 +2214,6 @@ pShare = function(){
 		if(v.lastComment)
 			self.lastComment = v.lastComment
 
-		if (v.s){
-
-			try{
-				self.settings = v.s 
-			}
-			catch(e){
-
-			}
-		}
-		else
-		{
-			if(v.settings){
-				self.settings = v.settings
-			}
-		}
 
 	}
 
@@ -2236,8 +2292,6 @@ pShare = function(){
 
 			var m = trimrn(self.caption);
 
-			//if(self.url) m = m.replace(self.url, '')
-
 			return m;
 		},
 
@@ -2293,12 +2347,6 @@ pShare = function(){
 			{
 
 				var whiteclass = {'js-player' : true, 'plyr' : true, 'medium-insert-images' : true, 'medium-insert-images-grid' : true, 'medium-insert-embeds' : true}
-
-				/*nm = nm.replace(/sharecaption/g, '')
-				.replace(/canmark/g, '')
-				.replace(/paddingWrapper/g, '')
-				.replace(/message/g, '')
-				.replace(/showMorePW/g, '')*/
 
 				nm = filterXSS(nm, {
 					stripIgnoreTag : true,
@@ -2431,6 +2479,8 @@ pComment = function(){
 	self.myScore = 0;
 	self.deleted = false;
 
+	self.reputation = 0;
+
 	self.my = function(app){
 
 		var ao = app.platform.sdk.address.pnet();
@@ -2446,11 +2496,11 @@ pComment = function(){
 		if (v.msgparsed){
 
 			try {	
-				self.url = decodeURIComponent(v.msgparsed.url || "");
-				self.message = decodeURIComponent((v.msgparsed.message || "").replace(/\+/g, " ")).replace(/\n{2,}/g, '\n\n')
+				self.url = clearStringXss(decodeURIComponent(v.msgparsed.url || ""));
+				self.message = clearStringXss(decodeURIComponent((v.msgparsed.message || "").replace(/\+/g, " ")).replace(/\n{2,}/g, '\n\n'))
 				self.images = _.map(v.msgparsed.images || [], function(i){
 
-					return decodeURIComponent(i)
+					return clearStringXss(decodeURIComponent(i))
 				});
 			}
 

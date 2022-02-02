@@ -146,11 +146,14 @@ var socialshare2 = (function(){
 
 		var events = {
 
-			repost : function(){
+			repost : function(e){
 
+				e.target.blur();
 				self.app.mobile.vibration.small()
 
 				actions.repost(postId);
+
+				
 			},
 
 			

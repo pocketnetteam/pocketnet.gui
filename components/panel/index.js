@@ -303,55 +303,7 @@ var panel = (function(){
 				
 			},
 
-			discussions : function(clbk){
-
-				self.shell({
-					name :  'discussiondummy',
-					el : el.cnt,
-					data : {
-					}
-
-				}, function(p){
-
-					if (clbk)
-						clbk()
-
-				})
-
-				/*var d = ed.discussions || {};
-
-					d.view = 'fixedin'
-
-				self.nav.api.load({
-
-					open : true,
-					id : 'discussions',
-					el : el.cnt,
-					animation : false,
-
-					essenseData : d,
-					
-					clbk : function(e, p){
-						discussions = p
-					}
-
-				})*/
-			},
-
-			_discussions : function(){
-				self.user.isState(function(state){
-
-					if(state){
-	
-						var me = self.app.platform.sdk.users.storage[self.app.platform.sdk.address.pnet().address];
-						
-						if(!me.relay && !me.temp)
-							renders.discussions()
-	
-					}	
-					
-				})
-			}
+		
 		}
 
 		var load = {
@@ -417,15 +369,10 @@ var panel = (function(){
 				})
 			}
 
-			self.app.platform.ws.messages.event.clbks.panel = function(d){
-				if(d.mesType == 'userInfo'){
-					renders._discussions()
-				}
-			}
+			
 		}
 
 		var make = function(){
-
 		
 
 			if (self.app.platform.sdk.usersettings.meta.vidgetchat.value)
@@ -476,11 +423,6 @@ var panel = (function(){
 				delete self.app.platform.clbks.api.actions.subscribe.panelrec
 				delete self.app.platform.ws.messages.event.clbks.panel
 
-				if (discussions){
-					discussions.destroy()
-					discussions = null;
-				}
-
 				if (tags){
 					tags.destroy()
 					tags = null;
@@ -517,13 +459,7 @@ var panel = (function(){
 
 			authclbk : function(){
 
-				return
-
-				if(typeof el != 'undefined' && el.c){
-					if (self.app.platform.sdk.usersettings.meta.vidgetchat.value)
-						renders._discussions()
-				}
-				
+			
 			},
 			
 			init : function(p){

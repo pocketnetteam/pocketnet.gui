@@ -71,15 +71,6 @@ Nav = function(app)
 		},
 		run : function(p){
 
-			/*p.clbk = addToFunction(p.clbk, function(){
-
-				console.log(p, p.el)
-
-				if (p.el)
-					core.links(null, p.el);
-
-			})*/
-
 			p.module.nav = self;
 			p.module.app = app;
 			p.module.sdk = app.platform.sdk;
@@ -195,7 +186,6 @@ Nav = function(app)
 							href : href
 						})
 
-						//if (riobj && riobj.index == 0) return
 	
 						if (riobj && riobj.index == 1 && backManager.chain.length > 1){
 							backManager.chain.splice(0, 1);
@@ -385,12 +375,11 @@ Nav = function(app)
 					return
 				}
 
-
 				if (self.addParameters){
 					href = self.addParameters(href)
 				}
 
-				if(p.replaceState){
+				if (p.replaceState){
 					
 					history.replaceState({
 
@@ -399,8 +388,10 @@ Nav = function(app)
 						lfox : true
 	
 					}, null, href);
+					
 				}
 				else{
+
 					history.pushState({
 
 						href : href,
@@ -408,11 +399,8 @@ Nav = function(app)
 						lfox : true
 	
 					}, null, href);
+
 				}
-
-				
-
-				
 				
 			}
 
@@ -427,42 +415,31 @@ Nav = function(app)
 			if (history.state && history.state.lfox) { 
 
 				core.removeWindows(history.state.href)
+				core.removeChat(history.state.href)
 
-				var chh = core.removeChat(history.state.href)
+				if(!_.isEmpty(self.wnds)){
+					_.each(self.wnds, function(w){
+						if (w.module.parametersHandler){
+							w.module.parametersHandler()
+						}
+					})
+				}
 
-				if(history.state.href.split('?')[0] != current.href){
+
+				if(history.state.href.split('?')[0] != current.href || current.map.exhandler){
 
 					self.api.load({
 		        		href : history.state.href,
 		        		open : true,
-			   			//history : true,
 						loadDefault : true,
-						back : true
-						//removefromback : firsttime
+						replaceState : true
 		        	}); 
 
 				}
 				else
 				{
-					///core.removeWindows(history.state.href)
-
-					if(chh) return
-
-					if(!_.isEmpty(self.wnds)){
-						_.each(self.wnds, function(w){
-							if (w.module.parametersHandler){
-								w.module.parametersHandler()
-							}
-						})
-					}
-					else{
-	
-						if (current.module && current.module.parametersHandler){
-	
-							current.module.parametersHandler(function(){	
-	
-							})
-						}
+					if (current.module && current.module.parametersHandler){
+						current.module.parametersHandler(function(){})
 					}
 					
 				}
@@ -526,14 +503,12 @@ Nav = function(app)
 
 				p.clbk || (p.clbk = emptyFunction);
 
-			var lastHref = current.href;
-
 			var run = true;
 
 			if((p.history || p.loadDefault) && options.history)
 			{
 
-				if(p.href == current.href){
+				if(p.href == current.href && !p.map.exhandler){
 
 					if (current.module && current.module.parametersHandler && p.handler){
 						
@@ -542,6 +517,7 @@ Nav = function(app)
 						historyManager.add(p.completeHref, p);
 
 						current.completeHref = p.completeHref;
+						
 
 						if(!p.goback){
 							app.actions.scrollToTop()
@@ -554,6 +530,8 @@ Nav = function(app)
 
 							core.removeWindows(p.completeHref)
 							core.removeChat(p.completeHref)
+
+							p = {}
 
 						})
 
@@ -597,6 +575,8 @@ Nav = function(app)
 								if (stop.action){
 									stop.action(function(){
 										core.open(p)
+
+										p = {}
 									})
 								}
 
@@ -607,17 +587,21 @@ Nav = function(app)
 								p.preshell = stop;
 							}
 
+							app.actions.scrollToTop()
+
 						}
 						catch(e){
 							console.error(e)
 						}
 					}
+					
 
 					if (p.href && !p.inWnd){
 
 						current.href = p.href;
 						current.completeHref = p.completeHref;
 						current.module = p.module;		
+						current.map = p.map
 
 						var c = p.clbk;
 
@@ -631,11 +615,8 @@ Nav = function(app)
 
 							c(a, b, d)
 						}
-
 						
 					}	
-
-
 
 					p.module.active = true;
 
@@ -667,6 +648,9 @@ Nav = function(app)
 
 				p.clbk(null, p);
 			}
+
+			p = {}
+
 		},
 		
 		loadSource : function(map, clbk){
@@ -894,8 +878,6 @@ Nav = function(app)
 		load : function(p){
 			if(!p) p = {};
 
-
-
 			if(!p.href && !p.id) {
 				p.clbk("href and id aren't exist");
 
@@ -952,11 +934,21 @@ Nav = function(app)
 
 					}
 
+					p = {}
+
 				})
 
 				
 				
 				return
+			}
+
+			if(p.inWnd){
+
+				p.globalpreloaderTimer = setTimeout(function(){
+					globalpreloader(true)
+				}, 100)
+				
 			}
 
 			core.loadSource(p.map, function(module){
@@ -985,6 +977,8 @@ Nav = function(app)
 							core.open(p)
 						}
 
+						p = {}
+
 					})
 					
 
@@ -992,6 +986,7 @@ Nav = function(app)
 				}
 				
 			})
+
 		},
 		externalLink : function(link){
 
@@ -1034,7 +1029,7 @@ Nav = function(app)
 
 			var e = href && (href.indexOf('/') > -1 || href.indexOf('.') > -1) || _OpenApi
 
-			if (href.indexOf('http') == -1){
+			if (href.indexOf('http') == -1 && href.indexOf('mailto:') == -1){
 
 				if(_OpenApi) {
 					href = app.options.url + '/' + href
@@ -1108,9 +1103,7 @@ Nav = function(app)
 
 			var _links = null;
 
-			if(_el) _links = _el.find('a');
-
-			else _links = $('a');		
+			if(_el) _links = _el.find('a'); else _links = $('a');		
 
 			if(!_links.length) return
 
@@ -1162,9 +1155,10 @@ Nav = function(app)
 
 						if(blockclick) return false
 
-						var href = core.thisSiteLink($(this).attr('href'));
+						var href = core.thisSiteLink( $(this).attr('href') );
 
 						var handler = $(this).attr('handler') || null
+						var replace = $(this).attr('replace') || false
 
 						if (additionalActions){
 							additionalActions(e);
@@ -1177,7 +1171,8 @@ Nav = function(app)
 							href : href,
 							history : true,
 							open : true,
-							handler : handler
+							handler : handler,
+							replaceState : replace
 						})
 
 						blockclick = true
@@ -1195,6 +1190,8 @@ Nav = function(app)
 				}
 
 			})
+
+			_links = null
 
 		},
 		go : function(p){
@@ -1233,16 +1230,33 @@ Nav = function(app)
 				if (window.cordova)
 				{
 
-					if(pathname == '/indexcordova.html'){
-						options.navPrefix = '/'
-					}
-					else{
-						var arr = pathname.split("/");
-						arr.splice(arr.length-1, 1);
-
-						options.navPrefix = arr.join("/") + "/";
+					
+					switch (device.platform) {
+						case "Android":
+							storageLocation = 'file:///storage/emulated/0/';
+							break;
+						case "iOS":
+							storageLocation = cordova.file.dataDirectory;
+							break;
 					}
 					
+					if(device.platform == 'iOS'){
+						var arr = pathname.split('/');
+						arr.splice(arr.length-1, 1);
+						options.navPrefix = arr.join('/') + '/';
+					}
+					else{
+
+						if(pathname == '/indexcordova.html'){
+							options.navPrefix = '/'
+						}
+						else{
+							var arr = pathname.split("/");
+							arr.splice(arr.length-1, 1);
+							options.navPrefix = arr.join("/") + "/";
+						}
+
+					}
 
 				}
 				else {
@@ -1341,7 +1355,14 @@ Nav = function(app)
 
 			}
 
-			core.load(p)
+			if (p.timeout){
+				setTimeout(function(){
+					core.load(p)
+				}, p.timeout)
+			}
+			else
+
+				core.load(p)
 		},
 		
 		loadDefault : function(p){
@@ -1363,6 +1384,8 @@ Nav = function(app)
 			}
 
 			backManager.add(p.href)
+
+			historyManager.add(p.href, { replaceState : true })
 
 			self.api.load(p);
 		},
@@ -1455,32 +1478,56 @@ Nav = function(app)
 
 				//////
 
-				if (1 == 2 && !electron && !window.cordova && !electronopen && !app.platform.sdk.usersettings.meta.openlinksinelectron.value && !isMobile() && !isTablet()){
+
+				if (!electron && !window.cordova && !electronopen && !app.platform.sdk.usersettings.meta.openlinksinelectron.value && !isMobile() && !isTablet()){
 
 					var currentHref = self.get.href();
+					var pathname = self.get.pathname();
 
-					var electronHrefs = JSON.parse(localStorage['electron_hrefs'] || "[]");
+					var mpobj = app.map[pathname] || _.find(app.map, function(mp){
+						return mp.href == pathname
+					}) || {};
+
+					var electronDontOpen = false
+
+					if (mpobj.electronDontOpen) {
+
+						if(typeof mpobj.electronDontOpen == 'function'){
+							electronDontOpen = mpobj.electronDontOpen()
+						}
+						else{
+							electronDontOpen = mpobj.electronDontOpen
+						}
+					}
+
+					if (!electronDontOpen) {
+						var electronHrefs = JSON.parse(localStorage['electron_hrefs'] || "[]");
 				
-					if (electronHrefs.indexOf(currentHref) == -1 ){
+						if (electronHrefs.indexOf(currentHref) == -1 ){
 
-						electronHrefs.push(currentHref)
+							electronHrefs.push(currentHref)
 
-						try{
+							try{
 
-							window.location = app.meta.protocol + '://electron/' + currentHref;
-							localStorage['electron_hrefs'] = JSON.stringify(electronHrefs.slice(electronHrefs.length - 100))
-							
-						}
-						catch(e){
+								window.location = app.meta.protocol + '://electron/' + currentHref;
+								localStorage['electron_hrefs'] = JSON.stringify(electronHrefs.slice(electronHrefs.length - 100))
+								
+							}
+							catch(e){
 
-							localStorage['electron_hrefs'] = '[]'
-						}
+								localStorage['electron_hrefs'] = '[]'
+							}
+						
+						} 
+					}
+
 					
-					} 
 
 				}
 
+
 				electronopen = true
+				
 
 			});
 

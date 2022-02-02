@@ -11,6 +11,7 @@
 	padding-bottom : 30px;
 	height: 90px;
 	z-index: 200;
+	contain: strict;
 
 
 	.fakem{
@@ -68,20 +69,17 @@
 				font-weight: 500;
 			}
 
-
+			&.reg,
 			&.shr{
 				font-size: 1.7em;
-				color : @color-bright;
+				color : #0026ff;
 
-				&.active{
-					color : @color-gray-light;
+				&.disabled{
+					color : fade(@color-gray-slight, 50);
 				}
 			}
 
-			&.reg{
-				color : @color-bright;
-			}
-
+		
 		}
 	}
 
@@ -178,6 +176,8 @@ html.stblack{
 		}
 	}
 }
+
+
 
 html.stblack{
 	#navigation{

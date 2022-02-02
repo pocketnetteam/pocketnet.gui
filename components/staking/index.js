@@ -75,8 +75,7 @@ var staking = (function(){
 				var r = amount / calc.netstakeweight()
 				var n = 1
 
-
-				return amount * Math.pow( (1 + 1440 * 2.5 / calc.netstakeweight() ),  t)
+				return amount * Math.pow( (1 + 1440 * 4.75 / calc.netstakeweight() ),  t)
 
 			},
 
@@ -617,6 +616,10 @@ var staking = (function(){
 				make()
 
 				p.clbk(null, p);
+			},
+
+			wnd : {
+				class : 'normalizedmobile'
 			}
 		}
 	};

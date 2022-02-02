@@ -21,6 +21,17 @@
 		}
 	}
 
+	.reputationtip{
+		padding : 3 * @rhythm 0;
+		span{
+			font-size: 0.8em;
+		}
+
+		.buttonWrapper{
+			margin-top : 2 * @rhythm;
+		}
+	}
+
 	.mwork{
 		padding : 0 8 * @rhythm;
 		padding-bottom: 4 * @rhythm;
@@ -34,6 +45,33 @@
 		}
 	}
 
+	.lowlimitstr{
+		margin-bottom : 3 * @rhythm;
+		padding-top : 0;
+		border-radius: 20px;
+		border : 1px dashed fade(@color-gray-mlight, 50);
+		background: fade(#fff, 25);
+		padding : 4 * @rhythm;
+		text-align: center;
+		.shadowSmaller();
+
+		.buttonrow,
+		.textbox{
+			max-width: 640px;
+			margin : 0 auto;
+			padding : @rhythm 0;
+		}
+
+		.textbox{
+			font-size: 0.9em;
+		}
+
+		button{
+			padding-left: 4 * @rhythm;
+			padding-right: 4 * @rhythm;
+		}
+	}
+
 	.preloaderWrapper{
 		padding : 2 * @rhythm 3 * @rhythm;
 	}
@@ -41,6 +79,11 @@
 	.connectionFailed{
 		padding : 4 * @rhythm 0;
 		color : @color-gray-mlight;
+	}
+
+	.value.bad{
+		font-weight: 700;
+		color : @color-orange;
 	}
 
 	.blockswrapper{
@@ -77,10 +120,10 @@
 		}
 
 		.metricablockwrapper{
-			width: 100%;	
+			width: 33%;	
 			float: left;
-			padding-bottom: @rhythm;
-			padding-right: @rhythm;
+			padding-bottom: 0.1em;
+			padding-right: 0.1em;
 		}
 
 		.metricablock{
@@ -108,7 +151,8 @@
 					background: transparent;
 				}
 			}
-			
+
+		
 	
 			.blockContent{
 				position: relative;
@@ -122,7 +166,7 @@
 				top : 0.2em;
 	
 				span{
-					font-size : 0.8em;
+					font-size : 0.9em;
 				}
 			}
 
@@ -179,6 +223,10 @@
 						font-size: 0.75em;
 					}
 
+					.repd{
+						font-size: 0.8em;
+					}
+
 					.repv{
 						font-size: 1.3em;
 					}
@@ -231,7 +279,7 @@
 
 			>div{
 				float: left;
-				width : 25%;
+				width : 75%;
 
 				&.connectionFailed{
 					width : 100%;
@@ -520,7 +568,6 @@ html.stblack{
 				
 		
 				.blockContentWrapper {
-					background: @color-black3;
 	
 					&.forchart{
 						background: transparent;
@@ -695,7 +742,7 @@ html.stblack{
 			.reputation{
 
 				>div{
-					width : 50%;
+					width : 75%;
 
 					&.levelsblock{
 						width: 50%;
@@ -723,6 +770,17 @@ html.stblack{
 				width: 50%;
 			}		
 		}
+
+		.preloaderWrapper{
+			padding : 10  * @rhythm;
+			text-align: center;
+		}
+
+		.reputation{
+			.metricablockwrapper{
+				width: 100%;
+			}	
+		}
 	
 		.ustatecontentrep{
 	
@@ -744,6 +802,7 @@ html.stblack{
 					float: right;
 					width: 100%;	
 				}
+				
 			}
 		}
 	

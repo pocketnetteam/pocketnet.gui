@@ -32,6 +32,7 @@ performance/changes.txt
 nodeserver
 **/settings
 data
+pocketcoin
 pocketcoind*
 dvma.p12
 .env

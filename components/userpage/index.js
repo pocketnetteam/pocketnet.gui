@@ -6,9 +6,9 @@ var userpage = (function(){
 
 	var Essense = function(p){
 
-		var primary = deep(p, 'history');
+		var primary = (p.history && !p.inWnd) || p.primary;
 
-		var el, ed;
+		var el = {}, ed = {};
 
 		var currentExternalEssense = null;
 
@@ -22,7 +22,6 @@ var userpage = (function(){
 			reports = []
 
 			if(!self.app.user.getstate()){
-
 
 				reports.push({
 					name : self.app.localization.e('createnew'),
@@ -40,11 +39,9 @@ var userpage = (function(){
 					rh : true
 				})
 
-				
-		
-
 			}
 			else{
+				
 				if(!self.app.user.validate()){
 
 					var h = self.app.localization.e('e13184');
@@ -57,7 +54,7 @@ var userpage = (function(){
 						name : h,
 						id : 'test',
 						report : 'fillUser',
-						mobile : true
+						mobile : true,
 					})
 		
 				}
@@ -70,8 +67,12 @@ var userpage = (function(){
 				id : 'notifications',
 				report : 'notifications',
 				mobile : true,
+				openReportPageMobileInWindow : true,
 				if : function(){
+
 					return true
+
+					return !isMobile()
 				}
 			})
 
@@ -81,6 +82,7 @@ var userpage = (function(){
 				report : 'ustate',
 				mobile : true,
 
+			
 				if : function(){
 					if(!self.app.curation()) return true
 				},
@@ -91,7 +93,15 @@ var userpage = (function(){
 						return mestate.reputation.toFixed(1)
 					}
 
-				}
+				},
+
+				addtoname : function(){
+
+					if (isMobile() && deep(mestate, 'trial')){
+						return self.app.localization.e('stp')
+					}
+
+				},
 			})
 
 		
@@ -101,7 +111,7 @@ var userpage = (function(){
 				id : 'wallet',
 				report : 'wallet',
 				mobile : true,
-
+				openReportPageMobileInWindow : true,
 				add : function(){
 
 					if (isMobile() && allbalance && !self.app.curation()){
@@ -173,7 +183,8 @@ var userpage = (function(){
 					name : self.app.localization.e('e13186'),
 					id : 'test',
 					report : 'test',
-					mobile : true
+					mobile : true,
+					openReportPageMobile : true,
 				})
 
 			}
@@ -191,14 +202,25 @@ var userpage = (function(){
 				name : self.app.localization.e('raccounts'),
 				id : 'accounts',
 				report : 'accounts',
-				mobile : true
+				mobile : true,
+				openReportPageMobileInWindow : true
 			})
 
+            if (typeof _Electron != 'undefined' ? _Electron : false) {
+                reports.push({
+                    name : self.app.localization.e('easyNode_e10000'),
+                    id : 'easynode',
+                    report : 'nodecontrol',
+                    openReportPageMobile : false,
+                    mobile : false
+                })
+            }
 
 			reports.push({
 				name : self.app.localization.e('rsystem'),
 				id : 'system16',
 				report : 'system16',
+				openReportPageMobile : true,
 				mobile : false
 			})
 
@@ -210,6 +232,7 @@ var userpage = (function(){
 				if : function(){
 					return isMobile()
 				},
+				openReportPageMobileInWindow : true
 			})
 
 			if(self.app.user.validate()) {
@@ -219,12 +242,14 @@ var userpage = (function(){
 					id : 'videoCabinet',
 					report : 'videoCabinet',
 					mobile : true,
-
+					openReportPageMobile : true,
 					if : function(){
 
 						if (self.app.curation()) return false
 
 						if (window.testpocketnet) return true
+
+						return true
 
 						if (typeof mestate != 'undefined' && mestate && (
 					
@@ -465,33 +490,64 @@ var userpage = (function(){
 
 			openReport : function(id, addToHistory){
 
+				var report = helpers.findReport(id)
+
+				if(report && isMobile() && report.openReportPageMobile){
+
+					self.closeContainer()
+
+					self.nav.api.go({
+						open : true,
+						href : id,
+						history : true
+					})
+
+					return
+				}
+
+				if(report && isMobile() && report.openReportPageMobileInWindow){
+
+					self.closeContainer()
+
+					self.nav.api.go({
+						open : true,
+						href : id,
+						inWnd : true,
+						history : true
+					})
+
+					return
+				}
+
+				
+
 				el.c.find('.openReport').removeClass('active')
 
 				el.c.find('[rid="'+id+'"]').addClass('active')
 
-				actions.openTree(id);
-
 				el.c.addClass('reportshowed')
 
+				actions.openTree(id);
 				renders.report(id);
-
-
-				var report = helpers.findReport(id)
 
 				if (report && report.rh) return
 
-
 				if (addToHistory){
 
-					self.nav.api.history.addParameters({
-						id : id
-					}, {
-						removefromback : false
-					})
+
+					if(!ed.rmhistory){
+
+						self.nav.api.history.addParameters({
+							id : id
+						}, {
+							removefromback : false
+						})
 
 
-					if (self.app.nav.clbks.history.navigation)
-						self.app.nav.clbks.history.navigation()
+						if (self.app.nav.clbks.history.navigation)
+							self.app.nav.clbks.history.navigation()
+
+					}
 
 
 				}
@@ -620,7 +676,6 @@ var userpage = (function(){
 						},
 	
 					}, function(_p){
-						console.log(_p.el)
 						_p.el.find('.copyaddress').on(clickAction(), function(){
 							copyText($(this))
 
@@ -658,10 +713,50 @@ var userpage = (function(){
 						_p.el.find('.groupNamePanelWrapper').on('click', events.closeGroup);
 						//_p.el.find('.groupName').on(clickAction(), events.closeGroup);
 						_p.el.find('.openReport').on('click', events.openReport);
+
+						_p.el.find('.changelang').on('click', function(){
+							self.app.platform.ui.changeloc(self.closeContainer)
+						})
+
+						_p.el.find('.applicaitonversion').swipe({
+							longTap : function(){
+							
+								if(self.app.mobile.update.needmanageinfo){
+
+									dialog({
+										class : 'zindex one',
+										html : self.app.mobile.update.needmanageinfo || 'empty',
+										btn1text : self.app.localization.e('dyes'),
+										btn2text : self.app.localization.e('dno'),
+										success : function(){	
+
+										}
+									})
+
+								}
+							}
+						})
+						
+						_p.el.find('.hasupdate').on('click', function(){
+
+							if(!self.app.mobile.update.updating){
+
+								_p.el.find('.applicationupdatemodule').addClass('updating')
+
+								self.app.mobile.update.downloadAndInstall().catch(e => {
+									sitemessage(self.app.localization.e(e.text) || e)
+								}).then(r => {
+									_p.el.find('.applicationupdatemodule').removeClass('updating')
+								})
+
+							}	
+							
+						})
 	
 						ParametersLive([s], _p.el)
 
-						self.app.actions.scroll(0)
+						if(!isMobile())
+							self.app.actions.scroll(0)
 
 						_p.el.find('.showprivatekey').on('click', function(){
 							self.app.platform.ui.showmykey({
@@ -678,8 +773,6 @@ var userpage = (function(){
 							clbk();
 					})
 				}
-
-				
 
 				self.app.user.isState(function (state) { 
 
@@ -699,14 +792,6 @@ var userpage = (function(){
 					}
 
 				})
-					
-
-					
-
-					
-
-
-				
 		
 			},
 
@@ -721,7 +806,9 @@ var userpage = (function(){
 					essenseData : {
 						addresses : users,
 						empty : empty,
-						caption : caption
+						caption : caption,
+
+						sort : 'commonuserrelation'
 					},
 					
 					clbk : function(e, p){
@@ -737,6 +824,7 @@ var userpage = (function(){
 				var address = deep(self, 'app.user.address.value')
 
 				if (address){
+
 					var author = deep(self, 'sdk.users.storage.'+address)
 
 					var u = _.map(deep(author, 'subscribers') || [], function(a){
@@ -757,7 +845,6 @@ var userpage = (function(){
 
 					renders.userslist(_el, u, e, self.app.localization.e('followers'), clbk)
 				}
-
 				
 			},
 
@@ -789,6 +876,7 @@ var userpage = (function(){
 			},
 
 			fillUser : function(el, clbk){
+
 				self.shell({
 
 					name :  'fillUser',
@@ -804,9 +892,26 @@ var userpage = (function(){
 					}
 
 				})
+
+				
+				/*if(!self.app.errors.connection()){
+					if(!self.app.user.validate()){
+
+
+
+						return
+					}
+				}*/
+
+			
+
+				
 			},
 
 			authorization : function(el, clbk){
+
+				self.closeContainer()
+
 				self.nav.api.go({
 					href : 'authorization',
 					history : true,
@@ -815,6 +920,9 @@ var userpage = (function(){
 			},
 
 			registration : function(el, clbk){
+
+				self.closeContainer()
+				
 				self.nav.api.go({
 					href : 'registration',
 					history : true,
@@ -823,8 +931,6 @@ var userpage = (function(){
 			},
 
 			report : function(id, clbk){
-
-				
 
 				if (currentExternalEssense)
 					currentExternalEssense.destroy();
@@ -839,11 +945,10 @@ var userpage = (function(){
 				}
 
 				var _clbk = function(e, p){
-					self.app.actions.scroll(0)
+					if(!isMobile())
+						self.app.actions.scroll(0)
 	
 					currentExternalEssense = p;
-
-					
 
 					if (clbk)
 						clbk();
@@ -930,8 +1035,13 @@ var userpage = (function(){
 		}
 
 		var makerep = function(clbk){
-			var id = parameters().id;
+			
+			var id = null;
+			
 
+			if (primary) id = parameters().id;
+
+			self.app.user.isState(function (state) { 
 
 				if(!isMobile() && state){
 					if(!id) {
@@ -967,10 +1077,8 @@ var userpage = (function(){
 
 				}, id);
 
+			})
 
-			
-
-			
 
 		}
 
@@ -982,7 +1090,6 @@ var userpage = (function(){
 
 			if(!self.app.user.validate()){
 				el.c.addClass("validate")
-
 
 				if(self.app.errors.connectionRs()){
 
@@ -1034,14 +1141,11 @@ var userpage = (function(){
 
 				self.app.platform.sdk.ustate.me(function(_mestate){					
 
-
 					mestate = _mestate
 
 					clbk(data);
 
 				})
-
-					
 
 			},
 
@@ -1056,10 +1160,12 @@ var userpage = (function(){
 
 				currentExternalEssense = null;
 
-
 				$('#menu').removeClass('abs')
 
+				if(el.c) el.c.empty()
+
 				el = {};
+				ed = {}
 			},
 			
 			init : function(p){
@@ -1073,16 +1179,8 @@ var userpage = (function(){
 			
 				el.bgcaption = el.c.find('.bgCaptionWrapper')
 
-				$('#menu').addClass('abs')
-
-				
-
-				/*self.app.platform.sdk.keys.init().then(r => {
-					console.log("RESULT", r)
-				})*/
-
-				//self.app.platform.ui.keygeneration()
-
+				if(!p.inWnd)
+					$('#menu').addClass('abs')
 
 				initEvents();
 
@@ -1091,7 +1189,12 @@ var userpage = (function(){
 				})
 
 				
+			},
+
+			wnd : {
+				class : 'wnduserpage normalizedmobile',
 			}
+
 		}
 	};
 

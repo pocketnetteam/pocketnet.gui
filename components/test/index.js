@@ -10,7 +10,7 @@ var test = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, lastTransaction, ed, ref, plissing; 
+		var el = {}, ed, ref, plissing; 
 
 		var firstTime = false;
 		var termsaccepted = false;
@@ -202,7 +202,6 @@ var test = (function(){
 							var pn = el.c.find('[parameter="name"] input')
 
 							pn.focus()
-
 							_scrollTo(pn)
 						}
 						else{
@@ -239,20 +238,21 @@ var test = (function(){
 						el.c.find('.errorname').fadeIn();
 
 						if(err == 'namelength'){
+
 							
-							el.c.find('.errorname span').html("The name length can't be more than 20 symbols");
+							el.c.find('.errorname span').html(self.app.localization.e('name20symbols'));
 							
 						}
 
 						if(err == 'pocketnet'){
 
-							el.c.find('.errorname span').html('To avoid user confusion using Pocketnet in name is reserved');
+							el.c.find('.errorname span').html(self.app.localization.e('namereservedpn'));
 							
 						}
 
 						if(err == 'bastyon'){
 
-							el.c.find('.errorname span').html('To avoid user confusion using Bastyon in name is reserved');
+							el.c.find('.errorname span').html(self.app.localization.e('namereservedbn'));
 							
 						}
 
@@ -412,7 +412,7 @@ var test = (function(){
 
 								topPreloader(100)
 
-								var txt = 'This username is taken in ' + self.app.meta.fullname
+								var txt = self.app.localization.e('nametaken')
 
 								el.c.find('.errorname').fadeIn();
 								el.c.find('.errorname span').html(txt);
@@ -572,7 +572,7 @@ var test = (function(){
 							if (hash.indexOf('pocketnet') > -1) {
 
 								el.c.find('.errorname').fadeIn();
-								el.c.find('.errorname span').html('To avoid user confusion using Pocketnet in name is reserved');	
+								el.c.find('.errorname span').html(self.app.localization.e('namereservedpn'));	
 
 								return
 							}
@@ -580,14 +580,14 @@ var test = (function(){
 							if (hash.indexOf('bastyon') > -1) {
 
 								el.c.find('.errorname').fadeIn();
-								el.c.find('.errorname span').html('To avoid user confusion using Bastyon in name is reserved');	
+								el.c.find('.errorname span').html(self.app.localization.e('namereservedbn'));	
 
 								return
 							}
 							
 							if (tempInfo[parameter.id].length > 20){
 								el.c.find('.errorname').fadeIn();
-								el.c.find('.errorname span').html("The name length can't be more than 20 symbols");	
+								el.c.find('.errorname span').html(self.app.localization.e('name20symbols'));	
 							}
 							else
 							{
@@ -604,7 +604,7 @@ var test = (function(){
 										else
 										{
 											el.c.find('.errorname').fadeIn();
-											el.c.find('.errorname span').html('This username is taken in ' + self.app.meta.fullname);									
+											el.c.find('.errorname span').html(self.app.localization.e('nametaken'));									
 										}
 									})	
 
@@ -614,12 +614,6 @@ var test = (function(){
 							}
 						}
 					}
-
-					//if(id == 'ref'){
-
-						//self.app.platform.api.inputs.user(parameter)
-
-					//}
 				})
 			},
 
@@ -639,7 +633,13 @@ var test = (function(){
 				id : 'name',
 				type : "NICKNAME",
 				onType : true,
-				require : true
+				require : true,
+
+				onFocus : function(pn){
+					console.log('onFocus')
+					if (isTablet())
+						_scrollTo(pn)
+				}
 			}),
 
 			email : new Parameter({
@@ -648,6 +648,11 @@ var test = (function(){
 				id : 'email',
 				type : "STRINGANY",
 				onType : true,
+
+				onFocus : function(pn){
+					if (isTablet())
+						_scrollTo(pn)
+				}
 			}),
 
 			language : new Parameter({
@@ -973,6 +978,8 @@ var test = (function(){
 
 						multiple : false,
 
+						app : self.app,
+
 						action : function(file, clbk){
 
 							actions.upload(file, function(){		
@@ -994,12 +1001,6 @@ var test = (function(){
 						}
 					})
 
-					/*if (ed.wizard && !tempInfo.image)
-
-						plissing = self.app.platform.api.plissing({
-							el : _p.el.find('.iconWrapper'),
-							text : "Upload Profile Image"
-						})*/
 
 					if (clbk)
 						clbk();
@@ -1222,14 +1223,18 @@ var test = (function(){
 			},
 
 			destroy : function(){
+
+				if (el.c) el.c.empty()
+
+
 				el = {};
+				ed = {};
 
 				saving = false
 
 				tempInfo = {
 					language : self.app.localization.key || 'en'
 				}
-
 
 				return null;
 			},

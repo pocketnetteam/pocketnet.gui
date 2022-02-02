@@ -18,8 +18,8 @@ var authorization = (function(){
 
 		//////////////////////////////
 
-		var el,
-			essenseData,
+		var el = {},
+			essenseData = {},
 			initialParameters;
 
 		//var codeReader = new ZXing.BrowserQRCodeReader();
@@ -89,12 +89,17 @@ var authorization = (function(){
 
 				self.user.stay = stay.value
 
+				globalpreloader(true)
 
 				self.user.signin(mnemonicKey, function(state){
+
+					globalpreloader(false)
 				
 					if(!state){
 
 						sitemessage(self.app.localization.e('e13028'))
+
+						
 
 						return;
 					}
@@ -104,7 +109,6 @@ var authorization = (function(){
 					var _p = {};
 
 					_p.href = essenseData.successHref;
-					
 
 					if(!_p.href && primary)
 
@@ -115,8 +119,6 @@ var authorization = (function(){
 								if (app.curation()){
 									return 'index';
 								}
-
-								console.log('self.app.platform.sdk.registrations.redirect', self.app.platform.sdk.registrations.redirect)
 
 								return self.app.platform.sdk.registrations.redirect || undefined
 							
@@ -174,7 +176,7 @@ var authorization = (function(){
 							{
 								self.nav.api.loadSameThis('filluser', p)
 							}
-								
+
 							
 						});
 
@@ -198,8 +200,18 @@ var authorization = (function(){
 
 		var initEvents = function(p){
 			
-			el.enter.on('click', events.login);
-	        
+			//el.enter.on('click', events.login);
+			
+			el.hiddenform.on('submit', function(event) {
+
+				console.log("SUBMIT")
+
+				event.preventDefault();
+				event.stopPropagation();
+				events.login()
+
+				return false
+			})
 
 	        el.toRegistration.on('click', function(){
 	        	self.nav.api.loadSameThis('registration', p)
@@ -238,7 +250,7 @@ var authorization = (function(){
 								{
 									el.login.val(trim(data))
 
-									events.login();
+									el.hiddenform.submit()
 								}
 							}
 
@@ -277,14 +289,70 @@ var authorization = (function(){
 				}
 			})
 
-			el.c.find('.loginValue').on('focus', function(){
-		    	el.c.find('.inputTable').addClass('typeactive')
-		    })
+			var v = function(){
+				if(!$(this).val()){
+					el.c.find('.uploadFile').removeClass('hidden');
+					el.c.find('.showPassword').addClass('hidden');
+				}
+				else{
+					el.c.find('.uploadFile').addClass('hidden');
+					el.c.find('.showPassword').removeClass('hidden');
+				}
+			}
 
-		    el.c.find('.loginValue').on('blur', function(){
-		    	el.c.find('.inputTable').removeClass('typeactive')
-		    })
-	       
+			el.login.on('keyup', v);
+			el.login.on('change', v);
+
+		    el.login.on('blur', function(e) {
+				const focusOnShowPassword = $(e.relatedTarget).is('.showPassword');
+				const val = el.login.val();
+
+				if (focusOnShowPassword) {
+					/**
+					 * If new focus target is ShowPassword button,
+					 * returning focus to the input, so user can
+					 * proceed typing.
+					 */
+					el.login.focus();
+
+					return;
+				}
+
+				if (val.length) {
+					return;
+				}
+
+			
+			});
+
+			el.c.find('.showPassword').on('click', (e) => {
+				const btnIcon = $(e.currentTarget).find('.icon i');
+				const passwordVal = el.login.val();
+
+				if (btnIcon.is('.fa-eye')) {
+					btnIcon.removeClass('fa-eye');
+					btnIcon.addClass('fa-eye-slash');
+
+					el.login.attr('type', 'text');
+				} else {
+					btnIcon.addClass('fa-eye');
+					btnIcon.removeClass('fa-eye-slash');
+
+					el.login.attr('type', 'password');
+				}
+
+				/**
+				 * When input type is changed, the caret will be
+				 * automatically moved to the start. This
+				 * code returns to the end of input.
+				 *
+				 * Type change is async action, so giving 10ms
+				 * to the DOM to get done the change.
+				 */
+				setTimeout(() => {
+					el.login[0].setSelectionRange(passwordVal.length, passwordVal.length);
+				}, 10);
+			});
 		}
 
 		var renders = {
@@ -312,17 +380,15 @@ var authorization = (function(){
 
 							essenseData.signInClbk()
 
+						},
+
+						close : function(){
+							self.closeContainer()
 						}
 					},
 					
 					clbk : function(e, p){
-
-						/*setTimeout(function(){
-							_scrollToTop(el.c.find('.userpart'), el.c.find('.scrollmaketpart'))
-						}, 400)		*/				
-
 						ext = p
-
 					}
 
 				})
@@ -334,7 +400,7 @@ var authorization = (function(){
 
 			ParametersLive([stay], el.c)
 
-			if(p.restore){
+			if (p.restore){
 				events.forgotPassword();
 			}
 
@@ -353,8 +419,6 @@ var authorization = (function(){
 
 				if(p.state && primary)
 				{
-
-					console.log("IM HRER")
 
 					self.nav.api.load({
 						open : true,
@@ -378,19 +442,20 @@ var authorization = (function(){
 						mnemonic : mnemonic,
 						fast : deep(p, 'settings.essenseData.fast') || false
 					};
-
 					
 					clbk(data);
-
 					
 				}
 
 			},
 
 			destroy : function(){
+
+				if(el.c) el.c.empty()
+
 				el = {};
 
-				if(ext) {
+				if (ext) {
 					ext.destroy(); 
 					ext = null;
 				}
@@ -406,6 +471,8 @@ var authorization = (function(){
 				el.enter = el.c.find('.enter');
 				el.toRegistration = el.c.find('.toRegistration');
 				el.forgotPassword = el.c.find('.forgotPassword');
+
+				el.hiddenform = el.c.find('#loginform')
 
 				essenseData = p.essenseData || {};
 				initialParameters = p;
@@ -433,7 +500,7 @@ var authorization = (function(){
 			},
 
 			wnd : {
-				class : 'withoutButtons allscreen authwindow'
+				class : 'withoutButtons authwindow normalizedmobile'
 			}
 		}
 	};

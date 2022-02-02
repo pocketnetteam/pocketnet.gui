@@ -143,6 +143,7 @@ class Html5Hlsjs {
         this.player.textTracks().removeEventListener('change', this.handlers.textTracksChange);
         this.uiTextTrackHandled = false;
         this.hls.destroy();
+        this.handlers = null;
     }
     static addHook(type, callback) {
         Html5Hlsjs.hooks[type] = this.hooks[type] || [];
@@ -167,7 +168,6 @@ class Html5Hlsjs {
         }
     }
     _handleMediaError(error) {
-        console.log('this.errorCounts', this.errorCounts);
         if (this.errorCounts[hls_js__WEBPACK_IMPORTED_MODULE_0__["ErrorTypes"].MEDIA_ERROR] === 1) {
             console.info('trying to recover media error');
             this.hls.recoverMediaError();
@@ -187,6 +187,9 @@ class Html5Hlsjs {
             //this.tech.trigger('error')
             return;
         }
+    }
+    _handleNotFatalError(error) {
+        this.tech.trigger('error');
     }
     _handleNetworkError(error) {
         setTimeout(() => this.hls.startLoad(), 1000);
@@ -209,9 +212,10 @@ class Html5Hlsjs {
         const error = {
             message: `HLS.js error: ${data.type} - fatal: ${data.fatal} - ${data.details}`
         };
-        console.error(error);
-        if (!data.fatal)
+        console.log('d', data);
+        if (!data.fatal) {
             return;
+        }
         // increment/set error count
         if (this.errorCounts[data.type])
             this.errorCounts[data.type] += 1;
@@ -499,7 +503,6 @@ class Html5Hlsjs {
         ///// liveSyncPosition
         /* @ts-ignore */
         this.hlsjsConfig.capLevelController = _peertube_cap_level_controller__WEBPACK_IMPORTED_MODULE_1__["default"];
-        console.log("INITHLS");
         this.hls = new hls_js__WEBPACK_IMPORTED_MODULE_0___default.a(this.hlsjsConfig);
         this._executeHooksFor('beforeinitialize');
         this.hls.on(hls_js__WEBPACK_IMPORTED_MODULE_0__["Events"].ERROR, (event, data) => this._onError(event, data));
@@ -521,8 +524,6 @@ class Html5Hlsjs {
             // Emit custom 'loadedmetadata' event for parity with `videojs-contrib-hls`
             // Ref: https://github.com/videojs/videojs-contrib-hls#loadedmetadata
             this.tech.trigger('loadedmetadata');
-        });
-        this.hls.once(hls_js__WEBPACK_IMPORTED_MODULE_0__["Events"].FRAG_BUFFERED, (e) => {
         });
         this.hls.attachMedia(this.videoElement);
         this.hls.loadSource(this.source.src);
@@ -642,7 +643,6 @@ class P2pMediaLoaderPlugin extends Plugin {
         const options = this.player.tech(true).options_;
         this.p2pEngine = options.hlsjsConfig.loader.getEngine();
         this.hlsjs.on(hls_js__WEBPACK_IMPORTED_MODULE_5__["Events"].LEVEL_SWITCHING, (_, data) => {
-            console.log("LEVEL_SWITCHING");
             this.trigger('resolutionChange', { auto: this.hlsjs.autoLevelEnabled, resolutionId: data.height });
         });
         this.p2pEngine.on(_core_p2p_media_loader_master_p2p_media_loader_core_lib__WEBPACK_IMPORTED_MODULE_2__["Events"].SegmentError, (segment, err) => {
@@ -886,7 +886,7 @@ class CapLevelController {
         catch (e) {
             /* no-op */
         }
-        pixelRatio = 1;
+        pixelRatio = 0.5;
         //if (pixelRatio > 1.5) pixelRatio = 1.5
         return pixelRatio;
     }

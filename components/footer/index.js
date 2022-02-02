@@ -60,30 +60,7 @@ var footer = (function(){
 
 			el.c.find('.localization').on('click', function(){
 
-				var items = []
-
-				_.each(self.app.localization.available, function(a){
-					items.push({
-						text : a.name,
-						action : function (clbk) {
-
-							var na = app.localization.findByName(a.name);
-
-
-							if (na && na.key != self.app.localization.key){
-
-								self.app.localization.set(na.key);
-							}
-
-							clbk()
-
-						}
-					})
-				})
-
-				menuDialog({
-                    items: items
-				})
+				self.app.platform.ui.changeloc()
 				
 			})
 
@@ -98,7 +75,6 @@ var footer = (function(){
 
 					data._SEO = _SEO;
 					data.loc = loc;
-
 					data.lkey = app.localization.current()
 
 				clbk(data);

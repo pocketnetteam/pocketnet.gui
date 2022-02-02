@@ -94,6 +94,51 @@ var toppanel = (function(){
 				}
 
 				
+			},
+			menu : function(pathname){
+
+				var selector = actions.selector()
+
+				self.app.user.isState(function(state){
+
+					if(isMobile() && pathname != 'index'){
+						el.c.addClass('hidden')
+					}
+					else{
+						el.c.removeClass('hidden')
+
+						self.shell({
+
+							name :  'menu',
+							el :   el.menu,
+							data : {
+								pathname : pathname,
+								state : state,
+								mobile : isMobile(),
+								tagsSelected : self.app.platform.sdk.categories.gettags().length,
+								selector : selector
+							},
+	
+						}, function(_p){
+
+							updateNew()
+	
+							ParametersLive([selector], _p.el)
+
+							el.menu.find('.showcategories').on(clickAction(), function(){
+
+								var mainmoduleAction = deep(self.app, 'modules.main.module.showCategories')
+				
+								if (mainmoduleAction) mainmoduleAction(true)
+							})
+	
+						})
+					}
+
+					
+				})
+
+				
 			}
 
 		}

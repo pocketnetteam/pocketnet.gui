@@ -9,13 +9,15 @@ var ncp = require('ncp').ncp;
 const _path = require('path');
 ncp.limit = 16;
 
+
 var args = {
 	test : false,
 	prodaction : true,
 	vendor : 89,
     path : '/',
     makewebnode: false,
-	project : "Pocketnet"
+	project : "Pocketnet",
+	composetemplates : false
 }
 
 var uglify = true
@@ -46,7 +48,7 @@ var mapJsPath = './js/_map.js';
 console.log("run")
 console.log(args)
 
-var tpls = ['embedVideo.php', 'index_el.html', 'index.html', 'index.php', 'indexcordova.html', 'config.xml', 'openapi.html', /*'.htaccess',*/ 'service-worker.js', 'manifest.json', 'main.js']
+var tpls = ['embedVideo.php', 'index_el.html', 'index.html', 'index.php', 'indexcordova.html', 'config.xml', 'openapi.html', /*'.htaccess',*/ 'service-worker.js', 'manifest.json'/*, 'main.js'*/]
 
 var tplspath = {
 
@@ -497,8 +499,9 @@ fs.exists(mapJsPath, function (exists) {
 				throw "Access not permitted (JS) " +  join.path
 		}
 
-		var joinTemplates = function(clbk){
-			if(m.__templates){
+		var __joinTemplates = function(__templates, clbk){
+			if(__templates){
+
 
 				tempates.data = ''
 
@@ -506,7 +509,7 @@ fs.exists(mapJsPath, function (exists) {
 
 				lazyEach({
 					sync : true,
-					array : m.__templates,
+					array : __templates,
 					action : function(p){
 
 						var i = p.item
@@ -518,14 +521,9 @@ fs.exists(mapJsPath, function (exists) {
 						if(filepath.indexOf("..") == -1) path = './'+ filepath;
 						else path = filepath.replace("..", '.');		
 						
-						
-						console.log('path', path, i)
-
 						fs.exists(path, function (exists) {
 							//
 							if(exists){
-
-								console.log(path)
 
 								fs.readFile(path, function read(err, data) {
 									if (err) {
@@ -558,7 +556,65 @@ fs.exists(mapJsPath, function (exists) {
 					}
 				})
 			}
+			else{
+				clbk()
+			}
 		}
+
+		var joinTemplates = function(clbk){
+
+
+			if(args.composetemplates){
+				var __templates = []
+
+				var path = './components/'
+
+				fs.readdir(path, function(err, items) {
+
+					console.log('items', items)
+
+					lazyEach({
+						array : items,
+						action : function(p){
+	
+							fs.readdir(path + p.item + '/templates/', function(err, items2) {
+
+								console.log('items2', items2)
+
+								_.each(items2, function(i){
+									__templates.push({
+										c : p.item,
+										n : i.replace('.html','')
+									})
+								})
+
+								p.success()
+
+							})
+	
+						},
+						
+						all : {
+							success : function(){
+
+								console.log('__templates', __templates)
+
+								__joinTemplates(__templates, clbk)
+								
+							}
+						}
+					})
+
+				});
+
+			}
+			else{
+				__joinTemplates(m.__templates, clbk)
+			}
+
+			
+		}
+
 
 		var joinVendor = function(ar, clbk){
 			if(m.__vendor)
@@ -677,6 +733,10 @@ fs.exists(mapJsPath, function (exists) {
 							if(VARS.project){
 								JSENV += '<script>window.pocketnetproject = "' + VARS.project + '";</script>';
 							}
+
+							JSENV += '<script>window.packageversion = "' + package.version + '";</script>';
+
+							
 	
 							if(args.prodaction)
 							{

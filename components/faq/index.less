@@ -47,19 +47,34 @@
 					padding-bottom: 6 * @rhythm;
 					max-width: 700px;
 
+					.questiontop{
+						display: flex;
+						justify-content: space-between;
+					}
+
 					.questionName{
 						padding-bottom: 2 * @rhythm;
 						font-weight: 700;
 						color : @color-gray;
 						font-size: 1.5em;
+						max-width: 85%;
 					}
 
 					.answer{
 						font-size : 0.8em;
+						padding-bottom: 20px !important;
 
 						a{
 							text-decoration: underline;
 							color : @color-main;
+						}
+						.image{
+							width:100% !important;
+							max-width: 700px;
+							position: relative;
+							img{
+								width:100% !important;
+							}
 						}
 
 						div{
@@ -69,13 +84,15 @@
 
 					.share{
 						margin-top: @rhythm;
-						text-decoration: underline;
-						color : @color-gray-light;
+						color : #ff6e84;
 						font-size: 0.7em;
 						cursor: pointer;
 						&:hover{
 
 							color : @color-main;
+						}
+						span{
+							padding-right: 2px;
 						}
 					}
 
@@ -139,11 +156,18 @@
 					.answer{
 						font-size : 1em;
 						font-weight: 400;
-
+						//padding-bottom: 20px;
 						display: none;	
-						padding : 2 * @rhythm 0;
+						padding : 2 * @rhythm 0 !important;
 						text-align: left;
 
+					}
+					.image{
+						width:100% !important;
+						position: relative;
+						img{
+							width:100% !important;
+						}
 					}
 
 					.share{

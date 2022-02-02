@@ -2,32 +2,19 @@
 
 #author{
 
+	.rightchatspacer{
+		height: 100%;
+	}
+
 	.curationWrapper{
 		padding : 12 * @rhythm;
 		text-align: center;
 	}
 
-	#lenta{
-		.shares{
-			.share{					
-				#post{
-					.share{
-						.work{
-							border-left : @rhythm solid @color-black3;
-						}
-					}
-
-					#post{
-						.share{
-							.work{
-								border-left : 0;
-							}
-						}
-					}
-				}
-			}
-		}
+	.authorlentawrapper{
+		padding-top : @rhythm;
 	}
+
 
 	.mobileinfo{
 		display: none;
@@ -311,6 +298,12 @@
 			text-decoration: underline;
 			color : @color-main;
 		}
+
+		.showmoreinabout{
+			display: none;
+			color : @color-main;
+			text-decoration: underline;
+		}
 	}
 
 	.lentaWrapper{
@@ -448,9 +441,9 @@
 				display : none;
 			}
 
-			/*.startchat{
-				display : none;
-			}*/
+			.startchat{
+				white-space: nowrap;
+			}
 
 			.fa-comments{
 				font-size: 0.35em;
@@ -1019,6 +1012,7 @@ html.stblack{
 html.mobile,
 html.cordova,
 html.tablet{
+
 	#author{
 
 		.leftpanelcell{
@@ -1149,32 +1143,54 @@ html.tablet{
 				overflow: hidden;
 			}
 		}
-	}
-}
-/*t*/ @media only screen and (max-width: 768px){
-	#content{
+		.authorinfo{
 
-		#lenta{
-			.shares{
-				.share{					
-					#post{
-						.share{
-							.work{
-								border-left : 0.5 * @rhythm solid @color-black3;
-							}
-						}
-	
-						#post{
-							.share{
-								.work{
-									border-left : 0;
-								}
-							}
-						}
-					}
+			.showmoreinabout{
+				display: inline;
+			}
+
+			.additionalinfo.hasabout{
+				display: none;
+			}
+
+			&.displayedall{
+				.showmoreinabout{
+					display: none;
+				}	
+
+				.additionalinfo.hasabout{
+					display: block;
 				}
 			}
 		}
+		
+	}
+}
+
+html.tablet{
+	#author{
+		.bgCaption{
+			padding-top : 45px;
+
+			.caption{
+				justify-content: center;
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 768px){
+	#author{
+		.bgCaption{
+			padding-top : 0;
+		}
+	}
+}
+
+/*t*/ @media only screen and (max-width: 768px){
+	#content{
+
+	
 
 		#author{
 
@@ -1328,6 +1344,10 @@ html.tablet{
 					}
 				}
 
+				.foraddress{
+					opacity: 0.3;
+				}
+
 				.work{
 					padding-right: 0;
 				}
@@ -1382,6 +1402,11 @@ html.tablet{
 						font-size: 1.4em;
 						border-bottom : 1px solid @color-orange;
 						opacity: 1;
+					}
+
+					.notificationturn i, 
+					.unsubscribe{
+						font-size: 1.4em;
 					}
 
 					.startchat{
@@ -1456,7 +1481,6 @@ html.tablet{
 				.authorinfo{
 					padding : @rhythm;
 					margin-bottom: 0;
-
 					.postcnt,
 					.name{
 						display: none;
@@ -1505,6 +1529,6 @@ html.tablet{
 @media only screen and (max-width: 640px){
 	#content #author .bgCaption .caption{
 		text-align: left;
-		padding-left: 4.5 * @rhythm;
+		padding-left: @rhythm;
 	}
 }

@@ -1,0 +1,465 @@
+@import "../../css/__cssvar";
+
+#nodecontrol{
+
+    .testnetwork{
+        padding : 4 * @rhythm;
+        text-align: center;
+
+        span{
+            font-size: 0.9em;
+        }
+    }
+
+    .maincaption{
+        display: none;
+    }
+
+    .nodelanding{
+        margin-bottom: 3 * @rhythm;
+        border-radius: 10px;
+        background: @color-black2;
+        color : #fff;
+        text-align: center;
+        padding : 5 * @rhythm;
+
+        .buttonWrapper{
+            padding : 2 * @rhythm 0;
+        }
+
+        
+    }
+
+    .electronfornode{
+        padding-top: 4 * @rhythm;
+        padding-bottom: 4 * @rhythm;
+        .title{
+            text-align: center;
+            max-width: 450px;
+            margin : 0 auto;
+            
+            span{
+                font-size: 2em;
+            }
+        }
+    }
+
+    .caption{
+        padding : 4 * @rhythm 0 ;
+        padding-top : 3 * @rhythm;
+        span{
+            font-weight: 100;
+            font-size: 2.5em;
+        }
+
+    }
+
+    .nodedummy{
+        text-align: center;
+        padding : 4 * @rhythm 0;
+        cursor: pointer;
+        color : @color-gray-mlight;
+        background: fade(@color-gray-mlight, 10);
+
+        .text{
+            padding : @rhythm 0;
+            font-size: 0.9em;
+        }
+
+        i{
+            font-size: 0.9em;
+        }
+    }
+
+    .fsubcaption{
+        
+        padding : 4 * @rhythm;
+        padding-top : 5 * @rhythm;
+
+        span{
+            font-weight: 100;
+            font-size: 1.7em;
+            color : @color-gray;
+        }
+    }
+
+    .ssubcaption{
+        padding : @rhythm 0;
+
+        span{
+            font-weight: 700;
+            color : @color-gray;
+        }
+    }
+
+    .stacking{
+        .canstacking{
+
+            .good{
+                color : @color-good;
+            }
+
+            .bad{
+                color : @color-bad;
+            }
+
+            .gray{
+                color : @color-gray-mlight;
+            }
+        }
+
+        .copyaddress{
+            cursor: pointer;
+
+            &:hover{
+                color : @color-bright;
+            }
+        }
+        
+        .balance {
+
+        }
+    }
+
+    .systemreq{
+        padding : @rhythm;
+        padding-top : 0;
+        border-radius: 5px;
+        border : 1px solid @color-gray-slight;
+
+        .scaption{
+            padding : @rhythm 0;
+            span{
+                font-size: 0.9em;
+                font-weight:700;
+            }
+        }
+
+        .req{
+            padding : 2 * @rhythm 0;
+            div{
+                font-size: 0.8em;
+            }
+        }
+    }
+
+    .staterowTable,
+    .settingTable{
+        width : auto;
+
+        >div{
+            padding : @rhythm 0;
+        }
+
+        .label{
+            width : 160px;
+        }
+
+
+        .icon{
+            padding-left: @rhythm;
+            color : #b3b3b3;
+
+            i{
+                font-size: 0.8em;
+            }
+
+            i.good{
+                color : @color-good;
+            }
+        }
+
+        .todefaultcert{
+
+            padding-left: 2 * @rhythm;
+            cursor: pointer;
+            .transition(0.3s);
+            color : @color-gray-mlight;
+            span{
+                font-size: 0.8em;
+            }
+
+            &:hover{
+                color : @color-main;
+            }
+        }
+     
+        
+    }
+
+    .setting {
+        .settingTable{
+            .label{
+                span{
+                    font-size: 0.9em;
+                }
+            }
+            .value{
+                
+                color : @color-gray;
+
+                &[fss],
+                &[sys]{
+                    text-decoration: underline;
+                    color : @color-gray;
+                    cursor: pointer;
+                }
+                
+
+                span{
+                    font-size: 0.9em;
+                }
+            }
+
+            .clearfirebase{
+                cursor: pointer;
+            }
+        }
+
+        &.systempath {
+            .value {
+                color : #b3b3b3;
+            }
+        }
+    }
+
+    .manage{
+        border-radius: 10px;
+        background: fade(@color-gray-mlight, 12);
+    }
+
+    .managepanel{
+        padding : 4 * @rhythm;
+    }
+
+    .nodecontentstate{
+        i{
+            font-size: 0.9em;
+        }
+
+        .good{
+            color : @color-good;
+        }
+
+        .bad{
+            color : @color-bad;
+        }
+
+        .gray{
+            color : @color-gray-mlight;
+        }
+
+        .nodestateheightprogress{
+            width: 30em;
+            height: 0.1em;
+            background: #bdbdbd;
+            
+            .nodestateheightprogressinner {
+                background: #00A3F7;
+                display: block;
+                height: 100%;
+
+                &.fork {
+                    background: #f70000;
+                }
+            }
+        }
+        i{
+            width : 20px;
+            font-size: 0.9em;
+        }
+
+        .good{
+            color : @color-good;
+        }
+
+        .bad{
+            color : @color-bad;
+        }
+
+        .gray{
+            color : @color-gray-mlight;
+        }
+
+        .syncLeft {
+            float: right;
+            font-size: 0.8em;
+            color: #7d7d7d;
+        }
+    }
+    
+    .notfound{
+        text-align: center;
+        padding : 4 * @rhythm 0;
+        color : @color-gray-mlight;
+        
+        &.install {
+            cursor: pointer;
+
+            .transition(0.3s);
+
+            &:hover{
+                color : @color-bright;
+            }
+        }
+
+        &.loading {
+            .stopInstall {
+                display: inline-block;
+                cursor: pointer;
+                color : @color-bright;
+            }
+
+            .preloader5 {
+                margin: 1em;
+            }
+        }
+
+        .text{
+            padding : @rhythm 0;
+            font-size: 0.9em;
+        }        
+    }
+
+    .nodecontentmanage{
+
+        position: relative;
+
+        &.lock{
+            .felock{
+                display: block;
+            }
+        }
+
+        .felock{
+            position: absolute;
+            left : 0;
+            right : 0;
+            top : 0;
+            bottom : 0;
+            padding : 2 * @rhythm;
+            background: fade(@color-white, 80);
+            display: none;
+        }
+
+        .felockcnt{
+            text-align: center;
+            padding : 4 * @rhythm 0;
+            cursor: pointer;
+            color : @color-gray-mlight;
+            
+
+            .text{
+                padding : @rhythm 0;
+                font-size: 0.9em;
+            }
+
+            i{
+                font-size: 0.9em;
+                color : @color-bright;
+            }
+        }
+
+        .value.balance {
+            font-weight: 400;
+        }
+
+        .installProgressBox {
+            display: inline-block;
+            width: 90%;
+            margin: 0em 0.5em;
+            vertical-align: bottom;
+                
+            .title {
+                font-size: 13px;
+                text-align: right;
+            }
+
+            .installProgress {
+                width: 100%;
+                height: 3px;
+                background-color: #dcdcdc;
+                border-radius: 2px;
+                margin: 0.3em 0.5em 0em 0em;
+
+                .installProgressInner {
+                    height: 3px;
+                    background-color: #00A3F7;
+                    border-radius: 2px;
+                }
+            }
+        }
+        
+        .toDefaultPath{
+            cursor: pointer;
+            text-decoration: underline;
+
+            &:hover{
+                color : @color-bad;
+            }
+
+            i {
+                font-size: 0.8em;
+            }
+        }
+
+        .update {
+            .noupdatenode {
+                color : #b3b3b3;
+            }
+        }
+    }
+
+}
+
+.addressdialog{
+    input{
+        width: 100%;
+    }
+
+    textarea{
+        width : 100%;
+        height: 120px;
+        max-height: 230px;
+    }
+}
+
+html.stblack{
+    #nodecontrol{
+        
+        .settingTable .value[fss], 
+        .settingTable .value[sys]{
+            color : @color-gray-mlight;
+        }
+    
+        .subcaption{
+            span{
+                color : @color-bright;
+            }
+        }
+    
+        .ssubcaption{
+            background: @color-block;
+            span{
+                color : @color-gray-mlight;
+            }
+        }
+    
+        .managepanel{
+            background: fade(@color-black2, 80);
+        }
+    
+       
+    }   
+    
+  
+}
+
+/*t*/ @media only screen and (max-width: 768px){
+    #nodecontrol{
+        
+
+ 
+    }
+
+}

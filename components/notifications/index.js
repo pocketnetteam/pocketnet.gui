@@ -59,6 +59,23 @@ var notifications = (function(){
 
 					}, seenTimer, 50)
 				}
+			},
+
+			getnotifications : function(p){
+				var _notifications = self.app.platform.sdk.notifications.storage.notifications || [];
+
+				_notifications = _.filter(_notifications, function(notification){
+					var m = null;
+
+					if (notification.mesType) m = self.app.platform.ws.messages[notification.mesType]
+					if (notification.msg && !m) m = self.app.platform.ws.messages[notification.msg]
+
+					if(!m) return false
+					
+					return true
+				})
+
+				return _notifications
 			}
 		}
 
@@ -90,10 +107,10 @@ var notifications = (function(){
 			
 			notifications : function(p, clbk){
 
-
+				renders.loadingAndEmpty()
 				if(!p) p = {};
 
-				var _notifications = p.notifications || self.app.platform.sdk.notifications.storage.notifications || [];
+				
 				var rnow = false;
 				
 				p.el = el.new;
@@ -104,12 +121,11 @@ var notifications = (function(){
 				var timedif = 286400
 				var inr = html
 
-
 				if(p.notifications) inr = prepend
-			
+
+				var _notifications = p.notifications || self.app.platform.sdk.notifications.storage.notifications || [];
 
 				var watched = - _notifications.length + (p.notifications || self.app.platform.sdk.notifications.storage.notifications || []).length
-					
 				
 				_notifications = _.sortBy(_notifications, function(n){
 					return -Number(n.time || n.nTime)
@@ -123,15 +139,7 @@ var notifications = (function(){
 					if (notification.mesType) m = self.app.platform.ws.messages[notification.mesType]
 					if (notification.msg && !m) m = self.app.platform.ws.messages[notification.msg]
 
-
 					if(!m) return false
-					
-					var tpl = m.fastMessage(notification)
-
-					if(!tpl) {
-						console.log('empty', notification)
-						return false
-					}
 
 					return true
 				})
@@ -218,6 +226,8 @@ var notifications = (function(){
 
 			loadingAndEmpty : function(){
 
+				if(!el.c) return
+
 				if(self.app.errors.connection()){
 
 					el.loader.addClass('hidden')
@@ -236,13 +246,11 @@ var notifications = (function(){
 				else{
 					el.loader.addClass('hidden')
 
-					if(el.c.find('.notification').length){
+					if (actions.getnotifications().length){
 						el.empty.addClass('hidden')
 					}
 					else{
 						el.empty.removeClass('hidden')
-						el.loader.addClass('hidden')
-
 					}
 				}
 			}
@@ -298,7 +306,7 @@ var notifications = (function(){
 
 				var trueshold = 90
 
-				var w = $(window)
+				var w = el.c.closest('.customscroll')
 
 				var parallax = new SwipeParallaxNew({
 
@@ -340,7 +348,17 @@ var notifications = (function(){
 							trueshold : trueshold,
 							clbk : function(){
 
-								self.app.platform.sdk.notifications.getNotifications(function(){
+								el.loader.removeClass('hidden')
+
+								self.app.platform.sdk.notifications.getNotifications(100).catch(e=>{
+									return Promise.resolve()
+								}).then(r => {
+
+									if(!el.c) return
+
+									el.loader.addClass('hidden')
+
+									renders.notifications()
 								})
 	
 							}
@@ -355,9 +373,14 @@ var notifications = (function(){
 		}
 
 		var make = function(){
-			renders.notifications({
-				seenFilter : p.inTooltip
-			});
+
+			setTimeout(function(){
+				renders.notifications({
+					seenFilter : p.inTooltip
+				});
+			}, 200)
+
+			
 		}
 
 		var addWSClbk = function(){
@@ -371,7 +394,6 @@ var notifications = (function(){
 			}
 
 			self.app.platform.sdk.notifications.clbks.inited['notifications' + t] = function(notifications, now){
-					console.log('renders.notifications()')
 				renders.notifications()
 
 			}
@@ -485,6 +507,11 @@ var notifications = (function(){
 					}
 				},
 				//event : 'click'
+			},
+
+			wnd : {
+				header : "notifications",
+				class : 'wndnotifications normalizedmobile',
 			}
 
 		}

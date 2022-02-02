@@ -107,6 +107,8 @@ var ProxyRequest = function(app = {}, proxy){
                 time = time * 2
             }
 
+            if(data && data.method == 'sendrawtransactionwithmessage') time = time * 4
+
             //if(!isonline()) time = 3000
     
             return timeout(time, directclear(url, data, controller.signal, p), controller)
@@ -218,7 +220,7 @@ var ProxyRequest = function(app = {}, proxy){
     return self
 }
 
-var Node = function(meta, app/*, proxy ??*/){
+var ProxyNode = function(meta, app){
     var self = this
 
     self.host = meta.host || ""
@@ -262,7 +264,7 @@ var Proxy16 = function(meta, app, api){
                     _.each(metas, meta => { this.add(meta) })
                 },
                 add : function(meta){
-                    var node = new Node(meta, app)
+                    var node = new ProxyNode(meta, app)
                     nodes.push(node)
                 }
             }
@@ -392,8 +394,6 @@ var Proxy16 = function(meta, app, api){
             canchange : function(node){
                 return self.fetch('nodes/canchange', {node}, 'wait').then(r => {
 
-                    //console.log(node, r.node)
-
                     return Promise.resolve(self.changeNode(r.node))
                 }).catch(e => {
                     return Promise.resolve(false)
@@ -427,7 +427,7 @@ var Proxy16 = function(meta, app, api){
             },
 
             add : function(meta){
-                var node = new Node(meta, app)
+                var node = new ProxyNode(meta, app)
 
                 if(!this.find(node.id)){
                     nodes.push(node)
@@ -473,6 +473,8 @@ var Proxy16 = function(meta, app, api){
         return promise.then(r => {
             return Promise.resolve(r)
         }).catch(e => {
+
+            
 
             if (options.fnode && e) e.code = 700
 
@@ -876,8 +878,6 @@ var Api = function(app){
                     return current.api.actualping().catch(e => {return Promise.resolve()}).then(() => {
 
 
-                        console.log('self.ready.use()', self.ready.use())
-
                         if(self.ready.use()) return Promise.resolve()
 
                         proxies = _.filter(proxies, function(p){
@@ -885,7 +885,6 @@ var Api = function(app){
                         })
 
                         return internal.proxy.api.softping(proxies).then(r => {
-                            console.log("ADD DONE")
 
                             return Promise.resolve()
                         })
@@ -917,6 +916,7 @@ var Api = function(app){
             return Promise.resolve(r)
 
         }).catch(e => {
+
 
             if(!e) e = 'TypeError: Failed to fetch'
 
@@ -1278,7 +1278,6 @@ var Api = function(app){
         return internal.proxy.manage.init().then(r => { 
             //softping
             internal.proxy.api.mixedping(proxies).catch(e => {
-                console.log("ERROR", e)
             })
 
             return Promise.resolve()
@@ -1300,5 +1299,5 @@ var Api = function(app){
     return self
 }   
 
-if(typeof module != "undefined"){ module.exports = {Api, ProxyRequest, Proxy16, Node}; } 
+if(typeof module != "undefined"){ module.exports = {Api, ProxyRequest, Proxy16, ProxyNode}; } 
 else { window.Api = Api; window.ProxyRequest = ProxyRequest; window.Proxy16 = Proxy16 }

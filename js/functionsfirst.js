@@ -4,13 +4,10 @@ deep = function(obj, key){
     var _key = []
 
     if (key[0] == "'"){
-
         key = key.substr(1)
         _key = key.split("'")
         tkey = _key[0]
-
         if(_key[1]) _key[1] =  _key[1].substr(1)
-
 
     }
     else{	
@@ -145,6 +142,14 @@ MD5 = function(d){result = M(V(Y(X(d),8*d.length)));return result.toLowerCase()}
 /* TIMEOUT, INTERVALS */
 
 retry = function(_function, clbk, time, totaltime){
+
+    if (_function()){
+
+        if (clbk) clbk();
+
+        return
+    }
+
     if(!time) time = 20;
 
     var totalTimeCounter = 0 
@@ -171,40 +176,6 @@ pretry = function(_function, time, totaltime){
 
     })
 }
-
-
-/*
-var ____setInterval = setInterval
-
-setInterval = function(f, t){
-    var i = ____setInterval(function(){
-        console.log('f', f)
-
-        f()
-    }, t)
-
-    return i
-}*/
-/*
-var ___requestAnimationFrame = window.requestAnimationFrame
-window.requestAnimationFrame = function(c){
-    console.log("C", c)
-    ___requestAnimationFrame(c)
-}*/
-
-/*
-var ____setTimeout = setTimeout
-
-setTimeout = function(f, t){
-    var i = ____setTimeout(function(){
-        console.log('f2', f)
-
-        f()
-    }, t)
-
-    return i
-}*/
-
 
 
 retryLazy = function(_function, clbk, time){

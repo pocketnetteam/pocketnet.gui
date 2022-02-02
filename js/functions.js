@@ -1,5 +1,6 @@
 /* PDF */
 
+
 	var tableAlignmentCenter = function(obj){
 
 		obj.width = 'auto';
@@ -465,7 +466,7 @@
 
 			var h = '<div class="successCheckWrapper table"><div><div class="chw">\
 				<svg viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">\
-					<path d="M 18 32.34 l -8.34 -8.34 -2.83 2.83 11.17 11.17 24 -24 -2.83 -2.83 z" stroke="#4AC6F9" fill="transparent"/>\
+					<path d="M 18 32.34 l -8.34 -8.34 -2.83 2.83 11.17 11.17 24 -24 -2.83 -2.83 z" stroke="#a4a4a4" fill="transparent"/>\
 				</svg>\
 			</div><div class="text">SUCCESS</div></div></div>'
 
@@ -513,15 +514,23 @@
 
 			id = 'w' + makeid().split('-')[0],
 			nooverflow = p.nooverflow || app.scrollRemoved,
-			el = p.el || $('#windowsContainer');
+			el = p.el || p.app.el.windows;
+
+
+		var parallax = null
 
 		//var _w = $(window);
 
 		var wnd;
 
 		var find = function(s){
-			if (wnd)
-				return wnd.find(s);
+			if (wnd) return wnd.find(s);
+		}
+
+		var hasonewindow = function(){
+			if(p.app.el.windows.find('.wnd').length) p.app.el.html.addClass('haswindow')
+
+			else p.app.el.html.removeClass('haswindow')
 		}
 
 		self.redraw = function(){
@@ -555,8 +564,9 @@
 
 		var render = function(tpl){
 
+			if(!p.type) p. type = ''
 
-			var h = p.allowHide ? '<div class="wndback" id='+id+'></div><div class="wndinner">' : '<div class="wndback" id='+id+'></div><div class="_close roundclosebutton '+closedbtnclass+'"><i class="fa fa-times" aria-hidden="true"></i></div><div class="wndinner ' + p.type + '">\
+			var h = p.allowHide ? '<div class="wndback" id='+id+'></div><div class="wndinner">' : '<div class="wndback" id='+id+'></div><div class="_close roundclosebutton '+closedbtnclass+'"><i class="fa fa-times" aria-hidden="true"></i></div><div class="closeline"></div><div class="wndinner ' + p.type + '">\
 			';
 
 			var closedbtnclass = ''
@@ -568,7 +578,7 @@
 
 				if(p.header) 
 				{
-					h+='<div class="wndheader">'+p.header+'</div>';
+					h+='<div class="wndheader">'+ (app.localization.e(p.header) || p.header)+'</div>';
 				}
 				else
 				{	
@@ -588,7 +598,8 @@
 				/*wnd.css('top', app.lastScrollTop)
 			   	wnd.css('height', app.height)*/
 
-		   	if(!p.header) wnd.addClass('noheader')
+		   	if(!p.header) 
+			   	wnd.addClass('noheader')
 
 			el.append(wnd);		
 
@@ -599,7 +610,13 @@
 			_.each(p.buttons, function(button){
 				button.el = $("<div>",{
 				   "class" 	: "button " + (button.class || ""),
-				   "html"	: "<div>" + button.html + "</div>"
+				   "html"	: "<div>" + 
+				   
+				   (button.html ? button.html : 
+						(app ? ( app.localization.e(button.text) || button.text || '') : 
+						(button.text || '')) ) + 
+				   
+				   "</div>"
 			    });
 
 				wnd.find(".wndinner>div.buttons").append(button.el);
@@ -616,6 +633,18 @@
 			}
 
 			wnd.css("display", "block");
+			wnd.addClass('asette')
+
+
+			hasonewindow()
+
+			setTimeout(function(){
+				wnd.addClass('sette')
+			}, 20)
+
+			setTimeout(function(){
+				wnd.removeClass('asette')
+			}, 320)
 
 			app.actions.playingvideo(null);
 		}
@@ -638,6 +667,49 @@
 				wnd.find('.expandButton').on('click', actions.show);
 			}
 
+			
+
+			/*wnd.find('.wndback,.wndheader').swipe({
+				swipeDown : function(e, phase, direction, distance){
+					actions.close(true)
+				},
+			})*/
+
+			if(isTablet() && wnd.hasClass('normalizedmobile')){
+
+				var trueshold = 20
+
+				parallax = new SwipeParallaxNew({
+
+					el : wnd.find('.wndback,.wndheader'),
+					transformel : wnd.find('.wndinner'),
+
+					allowPageScroll : 'vertical',
+	
+					directions : {
+						down : {
+							cancellable : true,						
+
+							positionclbk : function(px){
+								var percent = Math.abs(px) / trueshold;
+							},
+
+							constraints : function(){
+								return true;
+							},
+
+							restrict : true,
+							trueshold : trueshold,
+							clbk : function(){
+								actions.close(true)
+							}
+	
+						}
+					}
+					
+	
+				}).init()
+			}
 
 			app.events.resize[id] = resize
 			app.events.scroll[id] = wndfixed
@@ -645,8 +717,32 @@
 			
 		}
 
+		var clearmem = function(){
+			wnd = null;
+
+			self.el = null
+			self.close = null
+
+			_.each(p.buttons, function(button){
+				delete button.el
+			})
+
+			el = null
+			app = null
+
+			self.essenseDestroy = null
+
+			p = {}
+		}
+
 		var actions = {
 			close : function(cl, key){
+
+				if (parallax) {
+					parallax.clear()
+					parallax.destroy()
+					parallax = null
+				}
 
 				if(cl) if(p.closecross) p.closecross(wnd, self);
 
@@ -658,15 +754,34 @@
 				if (self.essenseDestroy)
 					self.essenseDestroy(key)
 				
-				wnd.remove();
-
 				delete app.events.resize[id]
 				delete app.events.scroll[id]
+
+				
+
+				wnd.addClass('asette')
+				wnd.removeClass('sette')
+
+				setTimeout(function(){
+
+					if(wnd){
+						wnd.remove();
+
+						hasonewindow()
+
+						clearmem()
+					}
+					
+
+				}, 100)
+				
 
 			},
 
 			hide : function(cl, key) {
 				// wnd.find('.wndback').css('display', 'none');
+
+				if(!wnd) return
 
 				wnd.find('.buttons').addClass('hidden');
 				wnd.addClass('hiddenState');
@@ -683,6 +798,9 @@
 			},
 
 			show : function(cl, key) {
+
+				if(!wnd) return
+
 				// wnd.find('.wndback').css('display', 'none');
 				wnd.find('.buttons').removeClass('hidden');
 				wnd.removeClass('hiddenState');
@@ -750,6 +868,8 @@
 				} 
 			}
 
+			if (app.chatposition)
+				app.chatposition(false)
 
 			if(content) success();
 			
@@ -773,15 +893,20 @@
 
 		p.class = 'tooltipMobileDialog';
 
-		p.html = '<div class="mobiledialogcontent">'+(p.html || '')+'</div><div class="closeButton"><button class="button ghost"><i class="far fa-times-circle"></i></button></div>'
+		p.html = '<div class="mobiledialogcontent">'+(p.html || '')+'</div><div class="closeButton"><button class="button ghost"><i class="far fa-times-circle"></i> '+app.localization.e('close')+'</button></div>'
 
 		var c = p.clbk || function(){}
 
 		p.clbk = function(el){
 			
-			el.on('click', function(){
+			el.find('.closeButton').on('click', function(){
 				self.destroy()
 			})
+
+			setTimeout(function(){
+				el.addClass('animend')
+			}, 20)
+			
 
 			c(el)
 		}
@@ -1387,13 +1512,15 @@
 
 			destroyed = true;
 
-			$el.fadeOut(200);
+			$el.remove();
+
+			/*$el.fadeOut(200);
 
 			setTimeout(function(){
 
 				$el.remove();
 
-			},200);
+			},200);*/
 
 			if(removescroll)
 			{
@@ -1520,7 +1647,7 @@
 		return self;
 	}
 
-	sitemessage = function (message, func) {
+	sitemessage = function (message, func, delay = 2200) {
 		$("<div/>", {
 			"class": "sitemessage remove_now",
 			"style": "opacity:0",
@@ -1542,11 +1669,19 @@
 				
 			}, 500)
 
-		}, 2200)
+		}, delay)
 	}
 /* ______________________________ */
 
 /* IMAGES */
+	bgImagesClear = function(el){
+		el.css({
+			'background-image': '',
+			'background-size': 'cover',
+			'background-position': 'center center',
+			'background-repeat':'no-repeat'
+		});
+	}
 
 	bgImages = function(el, p){
 
@@ -1554,48 +1689,70 @@
 
 		var els = el.find('[image]')
 
-		els.each(function(){
+		if(!els.length){
 
-			var _el = $(this);
-			var image = _el.attr('image')
-			//var save = _el.attr('save')
+			if(typeof p.clbk === 'function') p.clbk();
 
-			if (image)
-			{
-				image = image.replace('bastyon.com:8092', 'pocketnet.app:8092')
+			return
+		}
+
+		try{
+
+			els.imagesLoadedPN({ imageAttr: true }, function(image) {
+
+				if(typeof p.clbk === 'function') p.clbk(image);
 				
+			});
 
-				_el.css({
-					'background-image': 'url('+image+')',
-					'background-size': p.size || 'cover',
-					'background-position': p.position || 'center center',
-					'background-repeat': p.repeat || 'no-repeat'
-				});
+		}
 
-				_el.attr('image', '')
+		catch(e){
 
-				/*if(save){
-					_el.swipe({
-						longTap : function(){
+			console.error(e)
 
-						}
-					})
-				}*/
-			}
+			/*els.each(function(){
 
+				var _el = $(this);
+				var image = _el.attr('image')
+	
+				if (image && image != '*'){
+	
+						
+						image = image.replace('bastyon.com:8092', 'pocketnet.app:8092')
+	
+						_el.css({
+							'background-image': 'url('+image+')',
+							'background-size': p.size || 'cover',
+							'background-position': p.position || 'center center',
+							'background-repeat': p.repeat || 'no-repeat'
+						});
+		
+						_el.attr('image', '*')
+		
+				}
+				
+			})
+	
 			if(p.clbk)
 			{
-				_el.imagesLoaded({ background: true }, function(image) {
+				if (els.imagesLoaded)
+					els.imagesLoaded({ background: true }, function(image) {
+		
+						if(typeof p.clbk === 'function') p.clbk(image);
+						
+					});
 
-					el.fadeIn({queue: false, duration: 'fast'});
+				else{
+					if(typeof p.clbk === 'function') p.clbk(image);
+				}
+			}*/
+		}
 
-				  	if(typeof p.clbk === 'function')
-				  		p.clbk(image);
-				});
-			}
-		})
+		
 
-			
+		return
+
+		
 	}
 
 	pathFromMD5Name = function(name){
@@ -1820,7 +1977,7 @@
             u8arr[n] = bstr.charCodeAt(n);
         }
         
-        return new File([u8arr], filename, {type:mime});
+        return new (window.wFile || window.File)([u8arr], filename, {type:mime});
     }
 
 	toDataURL = file => new Promise((resolve, reject) => {
@@ -2925,6 +3082,12 @@
 	        }
 	        reader.readAsArrayBuffer(fileData);
 	    }
+	}
+
+	dround = function (n, d){
+		var digits = + "1".padEnd(d + 1, "0");
+
+		return Math.round(n * digits) / digits;
 	}
 
 	ParametersLive = function(parameters, el, p){
@@ -4063,6 +4226,18 @@
 						$(this).val(value); 	
 					}
 
+					if (parameter.type == 'number'){
+
+						if(!isNaN(Number(value))){
+							value = dround(value, deep(parameter, 'format.Precision') || 0)
+						}
+						else{
+							value = ''	
+						}
+
+						$(this).val(value); 
+					}
+
 					if (parameter.isValid(value))
 					{
 						_el.removeClass('error')
@@ -4078,8 +4253,44 @@
  
 				_el.on('change', _change)
 
+				if (parameter.onFocus) _el.on('focus', function(){
+					parameter.onFocus(_el, parameter)
+				})
+
 				if (parameter.onType){
 					_el.on('keyup', _change)
+				}
+
+				if (parameter.type == 'number'){
+					_el.on('keyup', function(){
+
+						var value = $(this).val(); 	
+
+						if(!value) {
+
+							return false
+						}
+
+						if(value.length > 1) {
+							if (value[0] == '0')
+								value = value.substr(1)
+
+							var l = value[value.length - 1]
+
+							if(l == '.' || l == '0' || l == ',') return
+						}
+
+						if(!isNaN(Number(value))){
+
+							value = dround(value, deep(parameter, 'format.Precision') || 0)
+
+							$(this).val(value); 
+						}
+
+
+
+								
+					})
 				}
 			}
 
@@ -4176,6 +4387,7 @@
 
 			self._onChange = p._onChange || null;
 			self.onType = p.onType || null;
+			self.onFocus = p.onFocus || null;
 
 			self.description = p.description || ''
 
@@ -4191,6 +4403,7 @@
             self.if = p.if || null;
             
             self.text = p.text || null;
+
 
 		if(self.type.indexOf('range') > -1) self.dbFunc = 'fromto'
 
@@ -4428,6 +4641,10 @@
 
 			if(self.type == 'number' || self.type == 'cash')
 			{
+
+
+				return null
+
 				mask.alias = 'numeric';
 				mask.groupSeparator = typeof f.groupSeparator != 'undefined' ? f.groupSeparator : ',';
 				mask.radixPoint =  '.';
@@ -5169,7 +5386,11 @@
 				return `<button elementsid="button_${self.id}" ${__disabled} ${m} pid="${self.id}" class="simpleColor inpButton" value="${self.value}">${self.text}</button>`
 			}
 
-			var input = `<input elementsid="button_${self.id}_2" ${__disabled} ${m} pid="${self.id}" class="${self.type} input" placeholder="${(self.placeholder || "")}" value="${self.render(true)}" type="text">`
+			if(self.type == 'number'){
+				return `<input elementsid="button_${self.id}_2" ${__disabled} step="${deep(self, 'format.Step') || ''}" min="${deep(self, 'format.Min') || ''}" max="${deep(self, 'format.Max') || ''}" pid="${self.id}" class="${self.type} input" placeholder="${(self.placeholder || "")}" value="${self.render(true)}" type="number">`
+			}
+
+			var input = `<input elementsid="button_${self.id}_2" ${__disabled} ${m ? m : ''} pid="${self.id}" class="${self.type} input" placeholder="${(self.placeholder || "")}" value="${self.render(true)}" type="text">`
 
 			return input; 
 		}
@@ -5714,11 +5935,14 @@
 
 	os = function() {
 		var os = null;
+		
 
 		if (navigator.appVersion.indexOf("Win")!=-1) os = "windows";
 		if (navigator.appVersion.indexOf("Mac")!=-1) os = "macos";
+		if (navigator.appVersion.indexOf("iPhone")!=-1) os = "ios";
 		if (navigator.appVersion.indexOf("X11")!=-1) os = "unix";
 		if (navigator.appVersion.indexOf("Linux")!=-1) os = "linux";
+		if (navigator.appVersion.indexOf("Android")!=-1) os = "android";
 
 		return os
     }
@@ -5763,7 +5987,6 @@
 
 	trim = function(s)
 	{
-
 	  return rtrim(ltrim(s));
 	}
 
@@ -6092,7 +6315,7 @@
 
 		var offset = (to.height() - $(window).height()) / 2;
 
-		if(ofssetObj)
+		if (ofssetObj)
 		{
 			var scrollTop = ofssetObj.top + offset;
 
@@ -6316,10 +6539,6 @@
 				d.i = i
 			})
 
-			/*p.direction || (p.direction = 'up');
-			p.trueshold || (p.trueshold = 90);
-			p.iniMargin || (p.iniMargin = 0);*/
-
 		var self = this;
 
 		var animationInterval = null;
@@ -6473,71 +6692,15 @@
 
 				var v = (ap.x || ap.y || 0);
 
-				/*p.el.css({transition: "transform " + animatedurations + " ease"});*/
-
-				/*if (ap.y){
-					p.el.css("transform","translate3d(0, "+ap.y+", 0)");
-				}
-				else{
-					p.el.css("transform","translate3d("+ap.x+", 0, 0)");
-				}*/
-
 				p.el.css({transform: ""});
 				p.el.css({transition: ""});
 				
-
-				/*var td = 16;
-				var stepd = 16 / animateduration;
-				var step = 0;
-
-				self.animation = {
-
-					interval : setInterval(function(){
-
-						var z = (v || '0').replace('px', '')
-
-						if (options.step){
-
-							var s = z //ease.inOutCubic(step * stepd * z / p.directions[direction].trueshold)
-
-							//s = s * p.directions[direction].trueshold
-
-							options.step(s)	
-						}
-
-						step++
-
-					}, td),
-
-					stop : function(){
-
-						if(!options.dontstop){
-							p.el.css({transform: ""});
-							p.el.css({transition: ""});
-						}
-
-						if(self.animation.interval){
-							clearInterval(self.animation.interval)
-							self.animation.interval = null;
-						}
-						
-					}
-				}*/
-
-
-					/*if (self.animation)
-						self.animation.stop()*/;
 
 					if (options.complete)
 						options.complete()
 
 
 			}
-
-
-			/*else{
-				self.animation = p.el.animate(ap, options);	
-			}*/
 		}
 
 		var parseStart = function(direction){
@@ -6564,9 +6727,7 @@
 
 			var prop = directiontoprop(direction);
 
-			var value = _value// ease.inOutCubic(_value / p.directions[direction].trueshold)
-
-			//value = value * p.directions[direction].trueshold
+			var value = _value
 
 			if (p.prop != 'translate'){
 				p.el.css(prop, value + 'px');	
@@ -6615,7 +6776,6 @@
 			self.lastDirection = direction;
 
 			var css = directiontoprop(direction)
-			//var upborder = Number(p.el.css(directiontoprop(direction) || '0px').replace('px', ''))
 
 			var ap = {}
 				ap[css] =  '0px'
@@ -6669,13 +6829,6 @@
 
 				allowPageScroll : p.allowPageScroll,
 					
-				/*swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
-
-					if(direction == 'up' && distance - startMargin > p.trueshold){
-						actions.close(true)	
-					}
-				},*/
-
 				swipeStatus:function(event, phase, _direction, distance, duration, fingers, fingerData, currentDirection){
 
 
@@ -6690,15 +6843,6 @@
 						startMargin = 0;
 
 						self.renew()
-
-						/*console.log('self.lastDirection', self.lastDirection)
-						if (self.lastDirection){
-							startMargin = parseStart(self.lastDirection) 
-
-							self.animation.stop();
-							self.renew()
-						}*/
-
 						
 						return true
 					}
@@ -6769,22 +6913,6 @@
 							}
 
 							mintruesholdGone = true;
-
-							/*if (Math.abs(dp) >= (direction.trueshold || 1)){
-
-								self.ended = true
-
-								if(!direction.restrict)
-									self.goup(mainDirection.i)
-								else{
-									self.backup(mainDirection.i)
-								}
-								
-
-								mainDirection = null;
-
-								return false;
-							}*/
 
 							if (direction.positionclbk){
 								direction.positionclbk(dp)
@@ -6867,21 +6995,22 @@
 		
 		var set = function(direction, value){
 
+			var __el = p.transformel || p.el
+
 			var prop = directiontoprop(direction);
 
 			if(direction == 'up' || direction == 'left') value = -value
 
 			if (prop == 'x'){
-				p.el[0].style["transform"] = "scale(0.9) translate3d("+(value || 0)+"px, 0, 0)"
-				p.el[0].style['transform-origin'] = 'left center'
+				__el[0].style["transform"] = "scale(0.9) translate3d("+(value || 0)+"px, 0, 0)"
+				__el[0].style['transform-origin'] = 'left center'
 			}
 
 			if (prop == 'y'){
-				p.el[0].style["transform"] = "scale(0.9) translate3d(0, "+(value || 0)+"px, 0)"
-				p.el[0].style['transform-origin'] = 'center top'
+				__el[0].style["transform"] = "scale(0.9) translate3d(0, "+(value || 0)+"px, 0)"
+				__el[0].style['transform-origin'] = 'center top'
 			}
 		}
-
 
 		var applyDirection = function(direction, v){
 			if (direction.positionclbk){
@@ -6894,8 +7023,10 @@
 
 			if (needclear){
 
-				p.el.css({transform: ""});
-				p.el.css({transition: ""});
+				var __el = p.transformel || p.el
+
+				__el.css({transform: ""});
+				__el.css({transition: ""});
 				
 				_.each(p.directions, function(d){
 					applyDirection(d, 0)
@@ -6905,14 +7036,6 @@
 
 			needclear = false
 		}
-
-		/*self.backfast = function(){
-
-			_.each(p.directions, function(d){
-				if (d.positionclbk)
-					d.positionclbk(0)
-			})
-		}*/
 
 		self.init = function(){
 
@@ -6985,6 +7108,10 @@
 
 		self.destroy = function(){
 			p.el.swipe('destroy')
+
+			p = {}
+
+			needclear = false
 		}
 
 		return self;
@@ -7668,6 +7795,7 @@
 					beforeSend: p.beforeSend,
 
 					success: function(data){
+
 						if (p.preloader) preloader(false);
 
 						checkTime(function(){
@@ -7762,8 +7890,6 @@
 				if (p.up1){
 
 					ap.url = 'https://pocketnet.app:8092/up'
-
-
 					//ap.url = app.imageServerup1;
 					delete data.Action;
 
@@ -8546,8 +8672,6 @@
 			}
 		}
 
-		
-
 		var events = {
 			clear : function(el){
 
@@ -8775,6 +8899,16 @@
 				p.clbk(searchEl)
 		}
 
+		self.destroy = function(){
+			searchEl = null;
+			fastResult = null;
+	
+			bsActive = null;
+			fsActive = null;
+			
+			el = null
+			p = {}
+		}	
 
 		init();
 
@@ -9198,6 +9332,14 @@
 						var et = {
 							filesize : "Your photo has size greater than "+fs+"MB. Please upload a photo under "+fs+"MB in size.",
 							fileext : "Invalid format of picture. Only png and jpeg are allowed"
+						}
+
+						if(p.app){
+
+							et = {
+								filesize : self.app.localization.e('photohassizegreater', fs),
+								fileext : self.app.localization.e('invalidformat')
+							}
 						}
 
 						if(error){
@@ -9839,6 +9981,14 @@
 
 	}
 
+	numfromreleasestring = function(v){
+		v = v.replace(/[^0-9]/g, '')
+
+		var vs = Number(v.substr(0, 1) + '.' + v.substr(1))
+
+		return vs
+	}
+
 /* ______________________________ */
 
 /* TEXT */
@@ -9848,6 +9998,19 @@
 
 		return w[1];
 	}
+
+	truncateString = function(str, n, useWordBoundary ){
+
+		if(!str) return str
+
+		if(!useWordBoundary) useWordBoundary = true
+
+		if (str.length <= n) { return str; }
+		var subString = str.substr(0, n-1);
+		return (useWordBoundary 
+		   ? subString.substr(0, subString.lastIndexOf(' ')) 
+		   : subString) + "...";
+	};
 	
 	videoImage = function(url){
 		var v = url;
@@ -9904,7 +10067,6 @@
 
 		if(_url && _url.indexOf('peertube://') > -1){
 			var ch = _url.replace('peertube://', '').split('/');
-
 			id = ch[1]
 			type = 'peertube'
 			host_name = ch[0]
@@ -10255,7 +10417,139 @@
 
 	}
 
-	findAndReplaceLink = function (inputText, nottrust) {
+	oldfindAndReplaceLink = function(inputText, nottrust){
+		function indexOf(arr, value, from) {
+			for (var i = from || 0, l = (arr || []).length; i < l; i++) {
+				if (arr[i] == value) return i;
+			}
+			return -1;
+		}
+
+		function clean(str) {
+			return str ? str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;') : '';
+		}
+
+		function replaceEntities(str) {
+			return se('<textarea>' + ((str || '').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')) + '</textarea>').value;
+		}
+		function se(html) {return ce('div', {innerHTML: html}).firstChild;}
+		function ce(tagName, attr, style) {
+			var el = document.createElement(tagName);
+			if (attr) extend(el, attr);
+			if (style) setStyle(el, style);
+			return el;
+		}
+
+
+		function setStyle(elem, name, value){
+			elem = ge(elem);
+			if (!elem) return;
+			if (typeof name == 'object') return each(name, function(k, v) { setStyle(elem,k,v); });
+			if (name == 'opacity') {
+				if (browser.msie) {
+					if ((value + '').length) {
+						if (value !== 1) {
+							elem.style.filter = 'alpha(opacity=' + value * 100 + ')';
+						} else {
+							elem.style.filter = '';
+						}
+					} else {
+						elem.style.cssText = elem.style.cssText.replace(/filter\s*:[^;]*/gi, '');
+					}
+					elem.style.zoom = 1;
+				};
+				elem.style.opacity = value;
+			} else {
+				try{
+					var isN = typeof(value) == 'number';
+					if (isN && (/height|width/i).test(name)) value = Math.abs(value);
+					elem.style[name] = isN && !(/z-?index|font-?weight|opacity|zoom|line-?height/i).test(name) ? value + 'px' : value;
+				} catch(e){debugLog('setStyle error: ', [name, value], e);}
+			}
+		}
+		function extend() {
+			var a = arguments, target = a[0] || {}, i = 1, l = a.length, deep = false, options;
+
+			if (typeof target === 'boolean') {
+				deep = target;
+				target = a[1] || {};
+				i = 2;
+			}
+
+			if (typeof target !== 'object' && !isFunction(target)) target = {};
+
+			for (; i < l; ++i) {
+				if ((options = a[i]) != null) {
+					for (var name in options) {
+						var src = target[name], copy = options[name];
+
+						if (target === copy) continue;
+
+						if (deep && copy && typeof copy === 'object' && !copy.nodeType) {
+							target[name] = extend(deep, src || (copy.length != null ? [] : {}), copy);
+						} else if (copy !== undefined) {
+							target[name] = copy;
+						}
+					}
+				}
+			}
+
+			return target;
+		}
+
+		var replacedText = (inputText || '').replace(/(^|[^A-Za-z0-9А-Яа-яёЁ\-\_])(https?:\/\/)?((?:[A-Za-z\$0-9А-Яа-яёЁ](?:[A-Za-z\$0-9\-\_А-Яа-яёЁ]*[A-Za-z\$0-9А-Яа-яёЁ])?\.){1,5}[A-Za-z\$рфуконлайнстРФУКОНЛАЙНСТ\-\d]{2,22}(?::\d{2,5})?)((?:\/(?:(?:\&amp;|\&#33;|,[_%]|[A-Za-z0-9А-Яа-яёЁ\-\_#%\@&\?+\/\$.~=;:]+|\[[A-Za-z0-9А-Яа-яёЁ\-\_#\@%&\?+\/\$.,~=;:]*\]|\([A-Za-z0-9А-Яа-яёЁ\-\_#\@%&\?+\/\$.,~=;:]*\))*(?:,[_%]|[A-Za-z0-9А-Яа-яёЁ\-\_#\@%&\?+\/\$.~=;:]*[A-Za-z0-9А-Яа-яёЁ\_#\@%&\?+\/\$~=]|\[[A-Za-z0-9А-Яа-яёЁ\-\_#\@%&\?+\/\$.,~=;:]*\]|\([A-Za-z0-9А-Яа-яёЁ\-\_#\@%&\?+\/\$.,~=;:]*\)))?)?)/ig,
+		function () { // copied to notifier.js:3401
+			var matches = Array.prototype.slice.apply(arguments),
+				prefix = matches[1] || '',
+				protocol = matches[2] || 'http://',
+				domain = matches[3] || '',
+				url = domain + (matches[4] || ''),
+				full = (matches[2] || '') + matches[3] + matches[4];
+
+			if (domain.indexOf('.') == -1 || domain.indexOf('..') != -1) return matches[0];
+			var topDomain = domain.split('.').pop();
+			if (topDomain.length > 6 || indexOf('info,name,aero,arpa,coop,museum,mobi,travel,xxx,asia,biz,com,net,org,gov,mil,edu,int,tel,ac,ad,ae,af,ag,ai,al,am,an,ao,aq,ar,as,at,au,aw,ax,az,ba,bb,bd,be,bf,bg,bh,bi,bj,bm,bn,bo,br,bs,bt,bv,bw,by,bz,ca,cc,cd,cf,cg,ch,ci,ck,cl,cm,cn,co,cr,cu,cv,cx,cy,cz,de,dj,dk,dm,do,dz,ec,ee,eg,eh,er,es,et,eu,fi,fj,fk,fm,fo,fr,ga,gd,ge,gf,gg,gh,gi,gl,gm,gn,gp,gq,gr,gs,gt,gu,gw,gy,hk,hm,hn,hr,ht,hu,id,ie,il,im,in,io,iq,ir,is,it,je,jm,jo,jp,ke,kg,kh,ki,km,kn,kp,kr,kw,ky,kz,la,lb,lc,li,lk,lr,ls,lt,lu,lv,ly,ma,mc,md,me,mg,mh,mk,ml,mm,mn,mo,mp,mq,mr,ms,mt,mu,mv,mw,mx,my,mz,na,nc,ne,nf,ng,ni,nl,no,np,nr,nu,nz,om,pa,pe,pf,pg,ph,pk,pl,pm,pn,pr,ps,pt,pw,py,qa,re,ro,ru,rs,rw,sa,sb,sc,sd,se,sg,sh,si,sj,sk,sl,sm,sn,so,sr,ss,st,su,sv,sx,sy,sz,tc,td,tf,tg,th,tj,tk,tl,tm,tn,to,tp,tr,tt,tv,tw,tz,ua,ug,uk,um,us,uy,uz,va,vc,ve,vg,vi,vn,vu,wf,ws,ye,yt,yu,za,zm,zw,рф,укр,сайт,онлайн,срб,cat,pro,local'.split(','), topDomain) == -1) {
+				if (!/^[a-zA-Z]+$/.test(topDomain) || !matches[2]) {
+					return matches[0];
+				}
+			}
+
+			if (matches[0].indexOf('@') != -1) {
+
+				//return matches[0];
+			}
+			
+			try {
+				full = decodeURIComponent(full);
+			} catch (e){}
+
+			if (full.length > 55) {
+				full = full.substr(0, 53) + '..';
+			}
+			full = clean(full).replace(/&amp;/g, '&');
+
+				url = replaceEntities(url).replace(/([^a-zA-Z0-9#\@%;_\-.\/?&=\[\]])/g, encodeURIComponent);
+				
+				var tryUrl = url, hashPos = url.indexOf('#/');
+				
+				if (hashPos >= 0) {
+					tryUrl = url.substr(hashPos + 1);
+				} else {
+					hashPos = url.indexOf('#!');
+					if (hashPos >= 0) {
+						tryUrl = '/' + url.substr(hashPos + 2).replace(/^\//, '');
+					}
+				}
+
+				
+
+				return prefix + '<a elementsid="href_cordovalink_systel" cordovalink="_system" href="'+ (protocol + url).replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '" target="_blank">' + full + '</a>';
+		});
+
+	    return replacedText;
+	}
+
+	findAndReplaceLink = function(inputText, nottrust) {
 
 		if(typeof linkifyHtml != 'undefined'){
 
@@ -10279,140 +10573,11 @@
 			catch(e){
 				
 			}
-
 			
 		}
 
-	
-	    function indexOf(arr, value, from) {
-	        for (var i = from || 0, l = (arr || []).length; i < l; i++) {
-	            if (arr[i] == value) return i;
-	        }
-	        return -1;
-	    }
-
-	    function clean(str) {
-	        return str ? str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;') : '';
-	    }
-
-	    function replaceEntities(str) {
-	        return se('<textarea>' + ((str || '').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')) + '</textarea>').value;
-	    }
-	    function se(html) {return ce('div', {innerHTML: html}).firstChild;}
-	    function ce(tagName, attr, style) {
-	        var el = document.createElement(tagName);
-	        if (attr) extend(el, attr);
-	        if (style) setStyle(el, style);
-	        return el;
-	    }
-	    function setStyle(elem, name, value){
-	        elem = ge(elem);
-	        if (!elem) return;
-	        if (typeof name == 'object') return each(name, function(k, v) { setStyle(elem,k,v); });
-	        if (name == 'opacity') {
-	            if (browser.msie) {
-	                if ((value + '').length) {
-	                    if (value !== 1) {
-	                        elem.style.filter = 'alpha(opacity=' + value * 100 + ')';
-	                    } else {
-	                        elem.style.filter = '';
-	                    }
-	                } else {
-	                    elem.style.cssText = elem.style.cssText.replace(/filter\s*:[^;]*/gi, '');
-	                }
-	                elem.style.zoom = 1;
-	            };
-	            elem.style.opacity = value;
-	        } else {
-	            try{
-	                var isN = typeof(value) == 'number';
-	                if (isN && (/height|width/i).test(name)) value = Math.abs(value);
-	                elem.style[name] = isN && !(/z-?index|font-?weight|opacity|zoom|line-?height/i).test(name) ? value + 'px' : value;
-	            } catch(e){debugLog('setStyle error: ', [name, value], e);}
-	        }
-	    }
-	    function extend() {
-	        var a = arguments, target = a[0] || {}, i = 1, l = a.length, deep = false, options;
-
-	        if (typeof target === 'boolean') {
-	            deep = target;
-	            target = a[1] || {};
-	            i = 2;
-	        }
-
-	        if (typeof target !== 'object' && !isFunction(target)) target = {};
-
-	        for (; i < l; ++i) {
-	            if ((options = a[i]) != null) {
-	                for (var name in options) {
-	                    var src = target[name], copy = options[name];
-
-	                    if (target === copy) continue;
-
-	                    if (deep && copy && typeof copy === 'object' && !copy.nodeType) {
-	                        target[name] = extend(deep, src || (copy.length != null ? [] : {}), copy);
-	                    } else if (copy !== undefined) {
-	                        target[name] = copy;
-	                    }
-	                }
-	            }
-	        }
-
-	        return target;
-		}
-
-
-
-	    var replacedText = (inputText || '').replace(/(^|[^A-Za-z0-9А-Яа-яёЁ\-\_])(https?:\/\/)?((?:[A-Za-z\$0-9А-Яа-яёЁ](?:[A-Za-z\$0-9\-\_А-Яа-яёЁ]*[A-Za-z\$0-9А-Яа-яёЁ])?\.){1,5}[A-Za-z\$рфуконлайнстРФУКОНЛАЙНСТ\-\d]{2,22}(?::\d{2,5})?)((?:\/(?:(?:\&amp;|\&#33;|,[_%]|[A-Za-z0-9А-Яа-яёЁ\-\_#%\@&\?+\/\$.~=;:]+|\[[A-Za-z0-9А-Яа-яёЁ\-\_#\@%&\?+\/\$.,~=;:]*\]|\([A-Za-z0-9А-Яа-яёЁ\-\_#\@%&\?+\/\$.,~=;:]*\))*(?:,[_%]|[A-Za-z0-9А-Яа-яёЁ\-\_#\@%&\?+\/\$.~=;:]*[A-Za-z0-9А-Яа-яёЁ\_#\@%&\?+\/\$~=]|\[[A-Za-z0-9А-Яа-яёЁ\-\_#\@%&\?+\/\$.,~=;:]*\]|\([A-Za-z0-9А-Яа-яёЁ\-\_#\@%&\?+\/\$.,~=;:]*\)))?)?)/ig,
-	            function () { // copied to notifier.js:3401
-	                var matches = Array.prototype.slice.apply(arguments),
-	                    prefix = matches[1] || '',
-	                    protocol = matches[2] || 'http://',
-	                    domain = matches[3] || '',
-	                    url = domain + (matches[4] || ''),
-	                    full = (matches[2] || '') + matches[3] + matches[4];
-
-	                if (domain.indexOf('.') == -1 || domain.indexOf('..') != -1) return matches[0];
-	                var topDomain = domain.split('.').pop();
-	                if (topDomain.length > 6 || indexOf('info,name,aero,arpa,coop,museum,mobi,travel,xxx,asia,biz,com,net,org,gov,mil,edu,int,tel,ac,ad,ae,af,ag,ai,al,am,an,ao,aq,ar,as,at,au,aw,ax,az,ba,bb,bd,be,bf,bg,bh,bi,bj,bm,bn,bo,br,bs,bt,bv,bw,by,bz,ca,cc,cd,cf,cg,ch,ci,ck,cl,cm,cn,co,cr,cu,cv,cx,cy,cz,de,dj,dk,dm,do,dz,ec,ee,eg,eh,er,es,et,eu,fi,fj,fk,fm,fo,fr,ga,gd,ge,gf,gg,gh,gi,gl,gm,gn,gp,gq,gr,gs,gt,gu,gw,gy,hk,hm,hn,hr,ht,hu,id,ie,il,im,in,io,iq,ir,is,it,je,jm,jo,jp,ke,kg,kh,ki,km,kn,kp,kr,kw,ky,kz,la,lb,lc,li,lk,lr,ls,lt,lu,lv,ly,ma,mc,md,me,mg,mh,mk,ml,mm,mn,mo,mp,mq,mr,ms,mt,mu,mv,mw,mx,my,mz,na,nc,ne,nf,ng,ni,nl,no,np,nr,nu,nz,om,pa,pe,pf,pg,ph,pk,pl,pm,pn,pr,ps,pt,pw,py,qa,re,ro,ru,rs,rw,sa,sb,sc,sd,se,sg,sh,si,sj,sk,sl,sm,sn,so,sr,ss,st,su,sv,sx,sy,sz,tc,td,tf,tg,th,tj,tk,tl,tm,tn,to,tp,tr,tt,tv,tw,tz,ua,ug,uk,um,us,uy,uz,va,vc,ve,vg,vi,vn,vu,wf,ws,ye,yt,yu,za,zm,zw,рф,укр,сайт,онлайн,срб,cat,pro,local'.split(','), topDomain) == -1) {
-	                    if (!/^[a-zA-Z]+$/.test(topDomain) || !matches[2]) {
-	                        return matches[0];
-	                    }
-	                }
-
-	                if (matches[0].indexOf('@') != -1) {
-
-	                    //return matches[0];
-					}
-					
-	                try {
-	                    full = decodeURIComponent(full);
-	                } catch (e){}
-
-	                if (full.length > 55) {
-	                    full = full.substr(0, 53) + '..';
-	                }
-	                full = clean(full).replace(/&amp;/g, '&');
-
-						url = replaceEntities(url).replace(/([^a-zA-Z0-9#\@%;_\-.\/?&=\[\]])/g, encodeURIComponent);
-						
-						var tryUrl = url, hashPos = url.indexOf('#/');
-						
-	                    if (hashPos >= 0) {
-	                        tryUrl = url.substr(hashPos + 1);
-	                    } else {
-	                        hashPos = url.indexOf('#!');
-	                        if (hashPos >= 0) {
-	                            tryUrl = '/' + url.substr(hashPos + 2).replace(/^\//, '');
-	                        }
-	                    }
-
-	                   
-
-	                    return prefix + '<a elementsid="href_cordovalink_systel" cordovalink="_system" href="'+ (protocol + url).replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '" target="_blank">' + full + '</a>';
-	            });
-
-	    return replacedText;
+		return oldfindAndReplaceLink(inputText, nottrust)
+	   
 	}
 
 
@@ -10531,6 +10696,183 @@ checkAddress = function(address){
 	return check(address)
 }
 
+
+Base64Helper = {
+    // private property
+    _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+
+    // public method for encoding
+    encode: function (input) {
+        var output = "";
+        var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
+        var i = 0;
+
+        input = Base64Helper._utf8_encode(input);
+
+        while (i < input.length) {
+
+            chr1 = input.charCodeAt(i++);
+            chr2 = input.charCodeAt(i++);
+            chr3 = input.charCodeAt(i++);
+
+            enc1 = chr1 >> 2;
+            enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+            enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+            enc4 = chr3 & 63;
+
+            if (isNaN(chr2)) {
+                enc3 = enc4 = 64;
+            } else if (isNaN(chr3)) {
+                enc4 = 64;
+            }
+
+            output = output +
+				Base64Helper._keyStr.charAt(enc1) + Base64Helper._keyStr.charAt(enc2) +
+				Base64Helper._keyStr.charAt(enc3) + Base64Helper._keyStr.charAt(enc4);
+
+        }
+
+        return output;
+    },
+
+    // public method for decoding
+    decode: function (input) {
+        var output = "";
+        var chr1, chr2, chr3;
+        var enc1, enc2, enc3, enc4;
+        var i = 0;
+
+        input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+
+        while (i < input.length) {
+
+            enc1 = Base64Helper._keyStr.indexOf(input.charAt(i++));
+            enc2 = Base64Helper._keyStr.indexOf(input.charAt(i++));
+            enc3 = Base64Helper._keyStr.indexOf(input.charAt(i++));
+            enc4 = Base64Helper._keyStr.indexOf(input.charAt(i++));
+
+            chr1 = (enc1 << 2) | (enc2 >> 4);
+            chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
+            chr3 = ((enc3 & 3) << 6) | enc4;
+
+            output = output + String.fromCharCode(chr1);
+
+            if (enc3 != 64) {
+                output = output + String.fromCharCode(chr2);
+            }
+            if (enc4 != 64) {
+                output = output + String.fromCharCode(chr3);
+            }
+
+        }
+
+        output = Base64Helper._utf8_decode(output);
+
+        return output;
+
+    },
+
+    // private method for UTF-8 encoding
+    _utf8_encode: function (string) {
+        string = string.replace(/\r\n/g, "\n");
+        var utftext = "";
+
+        for (var n = 0; n < string.length; n++) {
+
+            var c = string.charCodeAt(n);
+
+            if (c < 128) {
+                utftext += String.fromCharCode(c);
+            }
+            else if ((c > 127) && (c < 2048)) {
+                utftext += String.fromCharCode((c >> 6) | 192);
+                utftext += String.fromCharCode((c & 63) | 128);
+            }
+            else {
+                utftext += String.fromCharCode((c >> 12) | 224);
+                utftext += String.fromCharCode(((c >> 6) & 63) | 128);
+                utftext += String.fromCharCode((c & 63) | 128);
+            }
+
+        }
+
+        return utftext;
+    },
+
+    // private method for UTF-8 decoding
+    _utf8_decode: function (utftext) {
+        var string = "";
+        var i = 0;
+        var c = 0, c1 = 0, c2 = 0;
+
+        while (i < utftext.length) {
+
+            c = utftext.charCodeAt(i);
+
+            if (c < 128) {
+                string += String.fromCharCode(c);
+                i++;
+            }
+            else if ((c > 191) && (c < 224)) {
+                c2 = utftext.charCodeAt(i + 1);
+                string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
+                i += 2;
+            }
+            else {
+                c2 = utftext.charCodeAt(i + 1);
+                c3 = utftext.charCodeAt(i + 2);
+                string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
+                i += 3;
+            }
+
+        }
+        return string;
+    },
+
+    fromFile: file => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.readAsDataURL(file);
+        reader.onloadend = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    }),
+
+    toFileFetch: function (base64) {
+        return fetch(base64).then(res => {
+            return res.blob()
+        }).then(blob => {
+            return new (window.wFile || window.File)([blob], "File name", { type: "image/png" })
+        })
+    },
+
+    toFile: function (base64) {
+
+        try {
+            var arr = base64.split(','),
+                mime = arr[0].match(/:(.*?);/)[1],
+                bstr = atob(arr[1]),
+                n = bstr.length,
+                u8arr = new Uint8Array(n);
+
+            while (n--) {
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+
+            var file = new (window.wFile || window.File)([u8arr], "Filename", { type: mime });
+
+            return Promise.resolve(file)
+        }
+        catch (e) {
+            return Promise.reject(e)
+        }
+
+
+
+    }
+
+
+
+}
 
 /* ______________________________ */
 
@@ -10685,6 +11027,346 @@ stringEqTrig = function(s1, s2){
 
 }
 
+edjsHTML = function() {
+    "use strict";
+
+    var e = {
+        delimiter: function() {
+            return '<div class="article_delimiter"><i class="fas fa-asterisk"></i><i class="fas fa-asterisk"></i><i class="fas fa-asterisk"></i></div>'
+        },
+
+        header: function(e) {
+            var t = e.data;
+            return "<h" + _.escape(t.level) + ">" + (t.text) + "</h" + _.escape(t.level) + ">"
+        },
+
+        paragraph: function(e) {
+            return "<p>" + (e.data.text) + "</p>"
+        },
+
+        list: function(e) {
+            var t = e.data,
+                r = "unordered" === t.style ? "ul" : "ol",
+
+                n = function(e, t) {
+					
+                    var r = e.map((function(e) {
+                        if (!e.content && !e.items) return "<li>" + (e) + "</li>";
+                        var r = "";
+                        return e.items && (r = n(e.items, t)), e.content ? "<li> " + e.content + " </li>" + r : void 0
+                    }));
+
+                    return "<" + t + ">" + r.join("") + "</" + t + ">"
+                };
+            return '<div class="article_list">' + n(t.items, r) + '</div>'
+        },
+
+        image: function(e) {
+            var t = e.data,
+
+                r = _.escape(t.caption ? t.caption : "Image");
+
+
+			var cl = []
+
+			if(t.withBackground) cl.push('withBackground')
+			if(t.withBorder) cl.push('withBorder')
+			if(t.stretched) cl.push('stretched')
+
+			var src = t.file && t.file.url ? t.file.url : t.file
+
+			return '<div class="article_image '+ cl.join(' ') +'"><img src="' + src + '" alt="' + _.escape(r) + '" /><div class="article_image_caption">'+_.escape(t.caption || '')+'</div></div>'
+
+        },
+
+        quote: function(e) {
+
+            var t = e.data;
+
+            return '<div class="article_quote"><div class="article_quote_text">' + (t.text) + '</div><div class="article_quote_author">' + (t.caption) +' </div></div>'
+        },
+
+        code: function(e) {
+            return "<pre><code>" + _.escape(e.data.code) + "</code></pre>"
+        },
+
+        embed: function(e) {
+            var t = e.data;
+			console.log("T", t)
+            switch (t.service) {
+
+				case "vimeo":
+                    return '<div class="js-player" data-plyr-provider="vimeo" data-plyr-embed-id="'+t.embed+'"></div>';
+
+				case "youtube":
+					return '<div class="js-player" data-plyr-provider="youtube" data-plyr-embed-id="'+t.embed+'"></div>';
+
+				default:
+                    throw new Error("Only Youtube and Vime Embeds are supported right now.")
+
+				/*
+                case "vimeo":
+                    return '<iframe src="' + t.embed + '" height="' + t.height + '" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>';
+                case "youtube":
+                    return '<iframe width="' + t.width + '" height="' + t.height + '" src="' + t.embed + '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+                default:
+                    throw new Error("Only Youtube and Vime Embeds are supported right now.")*/
+            }
+        },
+
+		warning : function(e){
+
+			var t = e.data;
+
+			if (!t.title || !t.message){
+				return this.error('warning', e)
+			}
+
+			return '<div class="article_warning"><div class="article_warning_icon"><i class="fas fa-exclamation-triangle"></i></div><div class="article_warning_content"><div class="article_warning_title">' + _.escape(t.title || '') + '</div><div class="article_warning_message">' + _.escape(t.message || '') + '</div></div></div>'
+		},
+
+		carousel: function(e){
+
+
+			var imageshtml = _.map(e.data, function(i){
+				return '<div class="img" image="' + _.escape(i.url) + '" i="' + _.escape(i.url) + '" save="' + _.escape(i.url) + '"></div>'
+			}).join('')
+
+			
+			return '<div class="article_carousel">'+imageshtml+'</div>'
+		},
+
+		linkTool : function(e){
+			var t = e.data;
+
+			if (!t.link){
+				return this.error('link', e)
+			}
+
+			var url = {}
+
+			try{
+				url = new URL(t.link)
+			}
+			catch(e){
+				url.host = ''
+			}
+
+			if (app.thislink(t.link)){
+				return '<div class="article_this_embed" href="'+_.escape(t.link)+'"></div>'
+			}
+			else{
+
+				var img = ''
+
+				if (deep(t, 'meta.image.url'))
+					img = '<div class="article_link_custom_image"><div class="img" image="' + _.escape(deep(t, 'meta.image.url'))+'"></div></div>'
+
+				return '<a href="'+t.link+'" donottrust="true"><div class="article_link_custom">'+img+'<div class="article_link_custom_content"><div class="article_link_custom_title">' + _.escape(deep(t, 'meta.title') || url.host || 'Undefined Link') + '</div><div class="article_link_custom_description">' + _.escape(deep(t, 'meta.description') || '') + '</div><div class="article_link_custom_href">' + _.escape(t.link) + '</div></div></div></a>'
+			}
+
+
+		},
+
+		error : function(type, e){
+			return '<div class="article_error">' + 'Error:' + _.escape(type) + '</div>'
+		}
+    };
+
+	var encdec = {
+		header: function(data, fu) {
+
+			return {
+				level : data.level,
+				text : fu(data.text)
+			}
+            
+        },
+
+        paragraph: function(data, fu) {
+
+			return {
+				text : fu(data.text)
+			}
+
+        },
+
+        list: function(data, fu) {
+
+			var n = function(e){
+
+
+				if(!e.content && !e.items) return fu(e)
+
+				var nd = {...e}
+
+				if (nd.content)
+					nd.content = fu(nd.content)
+
+				if (nd.items){
+					nd.items = _.map(nd.items, function(i){
+						return n(i)
+					})
+				}
+
+				return nd
+			}
+
+			return n(data)
+
+        },
+
+        image: function(data, fu) {
+
+			var nd = {...data}
+
+			if (nd.caption) nd.caption = fu(nd.caption)
+
+			if (data.file){
+				nd.file = {...data.file}
+				nd.file.url = fu(nd.file.url)
+			}
+
+			return nd
+
+        },
+
+        quote: function(data, fu) {
+
+			return {
+				caption : fu(data.caption),
+				text : fu(data.text)
+			}
+
+        },
+
+        code: function(data, fu) {
+			return {
+				code : fu(data.code)
+			}
+        },
+
+		warning : function(data, fu) {
+
+			return {
+				title : fu(data.title),
+				message : fu(data.message),
+			}
+
+		},
+
+		linkTool : function(data, fu) {
+
+			var nd = {...data}
+
+			nd.link = fu(nd.link)
+
+			if (data.meta){
+				nd.meta = {...data.meta}
+				nd.meta.title = fu(nd.meta.title)
+				nd.meta.description = fu(nd.meta.description)
+
+				if (data.meta.image){
+					nd.meta.image = {...data.meta.image}
+					nd.meta.image.url = fu(nd.meta.image.url)
+				}
+			}
+
+			return nd
+
+		}
+	}
+
+    function t(e) {
+        return new Error('[31m The Parser function of type "' + _.escape(e) + '" is not defined. \n\n  Define your custom parser functions as: [34mhttps://github.com/pavittarx/editorjs-html#extend-for-custom-blocks [0m')
+    }
+	
+    var r = function(n, app) {
+
+        void 0 === n && (n = {});
+
+        var i = Object.assign({}, e, n);
+
+        return {
+
+			words : function(_e){
+
+				var r = 0
+
+				var add = function(str){
+
+					r += (str || "").split(/\s+/).length
+				}
+
+				_e.blocks.map((function(e) {
+
+					if(encdec[e.type]){
+						encdec[e.type](e.data, add)
+					}
+
+                }))
+
+				return r
+			},
+
+			apply : function(_e, fu){
+
+				if(!fu) fu = encodeURIComponent
+
+				var e = {..._e};
+
+				e.blocks = e.blocks.map((function(e) {
+
+					return {
+						type : e.type,
+						id : e.id,
+						data : encdec[e.type] ? encdec[e.type](e.data, fu) : _.clone(e.data)
+					}
+
+                }))
+
+				return e
+			},
+
+            parse: function(e) {
+                return '<div class="article_body">' + e.blocks.map((function(e) {
+                    return i[e.type] ? i[e.type](e) : t(e.type)
+                })).join('') + '</div>'
+            },
+			
+            parseBlock: function(e) {
+                return i[e.type] ? i[e.type](e) : t(e.type)
+            },
+
+            parseStrict: function(e) {
+                var n = e.blocks,
+                    o = r(i).validate({
+                        blocks: n
+                    });
+                if (o.length) throw new Error("Parser Functions missing for blocks: " + o.toString());
+                for (var a = [], u = 0; u < n.length; u++) {
+                    if (!i[n[u].type]) throw t(n[u].type);
+                    a.push(i[n[u].type](n[u]))
+                }
+                return a
+            },
+
+            validate: function(e) {
+                var t = e.blocks.map((function(e) {
+                        return e.type
+                    })).filter((function(e, t, r) {
+                        return r.indexOf(e) === t
+                    })),
+                    r = Object.keys(i);
+                return t.filter((function(e) {
+                    return !r.includes(e)
+                }))
+            }
+        }
+    };
+    return r
+}();
+
 function formatBytes(bytes, decimals = 2) {
     if (bytes === 0) return '0 Bytes';
 
@@ -10765,12 +11447,14 @@ if(typeof window != 'undefined'){
 					}
 					// Completely remove the splashscreen
 					splashScreen.remove();
+					splashScreenImg = null
 				}, zoomOutDuration * 2);
 			}
 			// Wait until half the rotation is done
 			setTimeout(() => {
 				// Change the logo image
-				splashScreenImg.src = logos[nextLogoIndex];
+				if (splashScreenImg)
+					splashScreenImg.src = logos[nextLogoIndex];
 				// Increase index
 				nextLogoIndex = (nextLogoIndex >= (logos.length - 1)) ? 0 : nextLogoIndex + 1;
 			}, rotatingDuration * 0.5);
@@ -10790,5 +11474,25 @@ if(typeof window != 'undefined'){
 
 	}
 		
+
+}
+
+
+errortostring = function(error){
+	try{
+		if(error.toString) {
+
+			var s = error.toString()
+
+			if (s != '[object Object]')
+				return s
+		}
+
+		if(_.isObject(error)) return JSON.stringify(error)
+	}
+
+	catch(e){
+		return ''
+	}
 
 }

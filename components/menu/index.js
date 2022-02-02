@@ -6,7 +6,7 @@ var menu = (function(){
 
 	var Essense = function(){
 
-		var el,
+		var el = {},
 			searchBlurTimer = null,
 			sitenameToNav = null,
 			plissing = null,
@@ -123,20 +123,9 @@ var menu = (function(){
 
 					if(!el.nav.hasClass('active')){
 						el.nav.addClass('active')
-						el.c.addClass('menupanelactive') //// ??????
+						el.c.addClass('menupanelactive')
 
 						el.nav.find('.pcenterLabel').removeClass('active')
-
-
-						console.log("HERE")
-			
-						/*el.postssearch.find('input').blur()
-
-
-						
-
-						if (menusearch)
-							menusearch.blur()*/
 
 						var r = parameters(self.app.nav.current.completeHref, true).r || 'empty'
 
@@ -349,9 +338,6 @@ var menu = (function(){
 					}
 
 					setTimeout(function(){
-						/*self.app.platform.sdk.notifications.init(function(){
-							actions.ahnotify(el, unseen().length, 'notifications')
-						})*/
 
 						if(!isTablet()){
 							self.nav.api.load({
@@ -363,70 +349,41 @@ var menu = (function(){
 							})
 						}
 						
-						
-					},3000)
+					},2000)
 
 					
 				},
 
 				click : function(el){
-					self.app.mobile.vibration.small()
-					if(isTablet())
+					self.app.mobile.vibration.small(true)
+
+					if(isTablet()){
+
+						console.log("click")
+
 						self.nav.api.go({
+							open : true,
+							href : 'notifications',
+							inWnd : true,
+							history : true,
+							essenseData : {
+							}
+						})
+
+						/*self.nav.api.go({
 							href : 'userpage?id=notifications&report=notifications',
 							history : true,
 							open : true
-						})
+						})*/
+
+					}
+
+						
 
 				}
 			},
 
-			messenger : {
-				init : function(el){
-
-					var rtchttp = self.app.platform.clientrtc.rtchttp;
-
-					var unread = function(){
-
-						var c = 0;
-
-
-						_.each(rtchttp.storage.chat, function(info, id){
-
-							c = c + info.messages.unreaded 
-						})
-
-						return c;
-					}
-
-					self.app.platform.clientrtc.rtchttp.info.allchats(function(){
-						actions.ahnotify(el, unread(), 'chat')
-					})	
-
-					self.app.platform.sdk.messenger.clbks.menu = function(){
-						actions.ahnotify(el, unread(), 'chat')
-					}
-
-				},
-
-				click : function(el){
-
-					if(!isMobile())
-						self.nav.api.go({
-							href : 'userpage?id=messenger&report=messenger',
-							history : true,
-							open : true
-						})
-					else
-						self.nav.api.load({
-							href : 'messenger',
-							history : true,
-							open : true
-						})
-
-				}
-			},
-
+			
 			savecross : {
 				init : function(el){
 
@@ -531,8 +488,10 @@ var menu = (function(){
 								bgImages(el)
 
 								self.app.nav.api.links(null, el, function(){
+
 									helpers.closeResults()
 									clearex()
+
 								});
 
 
@@ -551,11 +510,17 @@ var menu = (function(){
 									close()
 									clearex()
 
+									if (name){
+										close(true)
+									}
+
 								})
 							})
 
 						}, p)
 					}
+
+					if(menusearch) menusearch.destroy()
 
 					menusearch = new search(el.postssearch, {
 						placeholder : self.app.localization.e('e13139'),
@@ -567,8 +532,6 @@ var menu = (function(){
 						clbk : function(_el){
 
 							_el.find('input').on('blur', function(){
-
-								console.log('blur')
 
 								searchBlurTimer = slowMade(function(){
 
@@ -582,8 +545,6 @@ var menu = (function(){
 
 						last : {
 							get : function(){
-
-								var result = {};
 
 								var getresults = function(){
 									
@@ -796,9 +757,9 @@ var menu = (function(){
 						open : true,
 						href : 'accounts',
 						inWnd : true,
-
+						
 						essenseData : {
-							href : deep(self, 'app.nav.current.href') || 'index'
+							href : history.state.href || 'index'
 						}
 					})
 					
@@ -810,8 +771,9 @@ var menu = (function(){
 					
 					self.nav.api.go({
 						open : true,
-						href : 'userpage?id=wallet',
-						history : true
+						href : isMobile() ? 'wallet' : 'userpage?id=wallet',
+						history : true,
+						inWnd : isMobile()
 					})
 					
 				},
@@ -828,8 +790,6 @@ var menu = (function(){
 
 						el.removeClass('hidden')
 
-						//if(add < 0) c = 'bad'
-
 						if(add == 0){
 							al.text(self.app.platform.mp.coin(value))
 
@@ -841,10 +801,6 @@ var menu = (function(){
 						    	number: add,
 
 						    	numberStep: function(now, tween) {
-
-						    		//actions.elswidth()
-
-						    		//el.addClass(c)
 
 						        	var number = Number(value + now).toFixed(8),
 						            	target = $(tween.elem);
@@ -1042,7 +998,7 @@ var menu = (function(){
 
 			////
 
-			if(typeof _Electron != 'undefined'){
+			/*if(typeof _Electron != 'undefined'){
 				var electron = require('electron');
 				var remote = electron.remote; 
 
@@ -1075,7 +1031,7 @@ var menu = (function(){
 				})
 
 				full()
-			}
+			}*/
 
 			
 		}
@@ -1192,6 +1148,9 @@ var menu = (function(){
 
 				destroyauthorsearch()
 				actions.ahnotifyclear()
+
+				if(menusearch) menusearch.destroy()
+
 				menusearch = null
 
 
@@ -1205,11 +1164,8 @@ var menu = (function(){
 				delete self.app.platform.sdk.notifications.clbks.seen.menu
 				delete self.app.platform.sdk.notifications.clbks.added.menu
 
-				delete self.app.platform.sdk.messenger.clbks.menu
 				delete self.app.errors.clbks.menu
-
 				delete self.app.platform.sdk.registrations.clbks.menu
-
 
 				delete self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu
 				delete self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu2
@@ -1222,6 +1178,8 @@ var menu = (function(){
 						e.destroy()
 				})
 
+				if (el.c) el.c.empty()
+
 				el = {};
 			},
 
@@ -1233,12 +1191,14 @@ var menu = (function(){
 
 			showsearch : function(v, _searchBackAction){
 
-
 				if(v){
 					el.c.addClass('searchactive')
 					el.postssearch.find('.search').addClass('searchFilled')
 				}
 				else{
+					if(isMobile())
+						el.c.removeClass('searchactive')
+						
 					el.postssearch.find('.search').removeClass('searchFilled')
 				}
 				

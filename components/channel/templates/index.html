@@ -16,7 +16,7 @@
 
 					<% var src = deep(author, 'data.image')  %>
 
-					<div class="usericon" image="<%-src || ''%>">
+					<div class="usericon" image="<%-src || '*'%>">
 
 						<% if(!src && letter) {%>
 
@@ -39,54 +39,35 @@
 			</div>
 
 			<% if(typeof reports != 'undefined') {%>
-			<div class="panel">
-				<% _.each(reports, function(report){ %> 
-				
-				
-					<div class="usermenuitem" menuitem="<%-report.id%>">
+				<div class="panel">
+					<% _.each(reports, function(report){ %> 
 					
-				
-						<% if(report.href) {
-							
-							var h = report.href; if(typeof h == 'function') h = h() %>
-							<a elementsid="<%-h%>" href="https://<%-domain%>/<%-h%>">
-						<% } %>
-				
-							<%=report.icon%> 
-							<span class="name"><%-report.name%></span>
-							<span class="count">
-								<% if(report.count && report.count() > 0) {%>
-									<%-report.count()%>
-								<% } %>
-							</span>
-				
-						<% if(report.href) {%>
-							</a>
-						<% } %>
-				
-					</div>
 					
-				<% }) %>
-			</div>
-			<% } %>
-			<% if(typeof ed == 'undefined' || !ed.openapi) {%>
-				<div class="action">
-					<% if(!connect) {%>
-						<a elementsid="<%-domain%>/<%-name%>" href="https://<%-domain%>/<%-name%>">
-							<button class="button medium">
-								Follow <%-name || author.address%> on <%-app.meta.fullname%>
-							</button>
-						</a>
-
-					<% } else { %> 
-						<a elementsid="<%-author.address%>" href="https://<%-domain%>/welcome?connect=<%-author.address%>">
-							<button class="button medium">
-								Connect with <%-name || author.address%>
-							</button>
-						</a>
-					<% } %>
+						<div class="usermenuitem" menuitem="<%-report.id%>">
+						
+					
+							<% if(report.href) {
+								
+								var h = report.href; if(typeof h == 'function') h = h() %>
+							<% } %>
+					
+								<%=report.icon%> 
+								<span class="name"><%-report.name%></span>
+								<span class="count">
+									<% if(report.count && report.count() > 0) {%>
+										<%-report.count()%>
+									<% } %>
+								</span>
+					
+							<% if(report.href) {%>
+							<% } %>
+					
+						</div>
+						
+					<% }) %>
 				</div>
 			<% } %>
+		
 		</div>
 
 		<% } else { %> 
