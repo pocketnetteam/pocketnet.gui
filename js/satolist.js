@@ -7529,7 +7529,7 @@ Platform = function (app, listofnodes) {
         
         lentaMethod: {
             all: {
-                hierarchical: 'gethierarchicalstrip',
+                hierarchical: 'gethotposts',
                 historical: 'gethistoricalstrip'
             },
             default: "hierarchical",
