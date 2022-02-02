@@ -522,6 +522,10 @@ PeerTubePocketnet = function (app) {
             if (!data.host) return Promise.reject(error('host'));
 
             activehost = data.host;
+
+            if (app && app.options)
+              app.options.peertubeServer = data.host + '/api/v1/';
+
             return Promise.resolve(data.host);
           })
 
