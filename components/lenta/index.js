@@ -3717,6 +3717,8 @@ var lenta = (function(){
 
 							var page = essenseData.page || parameters().page || 0
 
+							debugger;
+
 							self.app.platform.sdk.node.shares[loader]({
 
 								author : author,

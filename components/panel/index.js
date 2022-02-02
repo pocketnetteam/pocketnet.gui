@@ -375,9 +375,6 @@ var panel = (function(){
 		var make = function(){
 		
 
-			if (self.app.platform.sdk.usersettings.meta.vidgetchat.value)
-				renders._discussions()
-
 			/*if (self.app.platform.sdk.usersettings.meta.vidgettags.value)
 				renders.tags()*/
 

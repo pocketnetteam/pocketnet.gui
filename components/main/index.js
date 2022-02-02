@@ -801,6 +801,7 @@ var main = (function(){
 
 			makePanel()
 
+
 			if (currentMode == 'common' && !videomain && !searchvalue && !searchtags)
 				renders.topvideos(true)
 			else{
