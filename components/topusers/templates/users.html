@@ -46,6 +46,69 @@ _.each(addresses, function(u){
 	<div class="wrk">
 
 		<div class="user <%-_class%>" address="<%-address%>">
+			<div class="modal">
+				<div class="addressTable table" address="<%-address%>">
+					<div class="iconWrapper">
+						<a href="<%-app.platform.api.authorlink(address)%>">
+							<div class="icon">
+	
+								<% 
+	
+									var src = u.avatar;
+									var name = deep(app, 'platform.sdk.users.storage.'+address+'.name');
+									var letter = name ? name[0] : ''; 
+	
+								%>
+	
+								<div class="usericon" image="<%-src || ''%>">
+	
+									<% if(!src && letter) {%>
+	
+										<span class="letter">
+											<%-letter.toUpperCase()%>
+										</span>
+				
+									<% } else if (!src) { %>
+				
+										<svg width="30" height="30" data-jdenticon-value="<%-address%>"></svg>
+				
+									<% } %>
+								</div>
+							</div>
+						</a>
+					</div>
+					<div class="label">
+						<a href="<%-app.platform.api.authorlink(address)%>">
+	
+							<div class="top">
+								<div class="name">
+									<%- u.name %>							
+								</div>		
+								<% var r = u.reputation %>
+	
+								<% if (r) {%>
+									<div class="reputation">
+										<%- Number(r).toFixed(0)  %>
+									</div>
+								<% } %>
+	
+							</div>
+	
+							<% var subscribers = u.subscribers_count   %>
+	
+				
+							<div class="light">						
+								<%- subscribers %> <%=e('subscribers3') %>
+	
+							</div>
+	
+	
+						</a>			
+	
+					</div>
+				</div>
+
+			</div>
 			<div class="addressTable table" address="<%-address%>">
 				<div class="iconWrapper">
 					
@@ -77,7 +140,6 @@ _.each(addresses, function(u){
 						</div>
 					</a>
 				</div>
-
 				<div class="label">
 					<a href="<%-app.platform.api.authorlink(address)%>">
 

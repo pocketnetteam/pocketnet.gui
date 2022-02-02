@@ -143,6 +143,23 @@
 #topusers .users .user .subscribebuttonstop.following .subscribe {
   display: none;
 }
+#topusers .users .user .modal {
+  display: none;
+  width: 308px;
+  height: 340px;
+  position: absolute;
+  z-index: 9999;
+  right: 230px;
+  background: #FFFFFF;
+  border-radius: 12px;
+  box-shadow: 32px 32px 32px 32px #00000014;
+}
+#topusers .users .user .modal .addressTable .name {
+  max-width: 300px!important;
+}
+#topusers .users .user:hover .modal {
+  display: block;
+}
 html.stblack #topusers {
   background: #0a0c17;
 }

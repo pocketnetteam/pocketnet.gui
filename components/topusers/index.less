@@ -98,7 +98,9 @@
 
 			.addressTable{
 				cursor: pointer;
-				
+
+
+
 				>div{
 
 					vertical-align: middle;
@@ -193,6 +195,34 @@
 					.subscribe{
 						display : none;
 					}
+				}
+			}
+
+			.modal{
+				display: none;
+				width: 308px;
+				height: 340px;
+				position: absolute;
+				z-index: 9999;
+				right: 230px;
+				background: #FFFFFF;
+				border-radius: 12px;
+				box-shadow: 32px 32px 32px 32px #00000014;
+
+
+				.addressTable{
+					.name{
+						max-width: 300px!important;
+					}
+				}
+
+
+
+			}
+
+			&:hover{
+				.modal{
+					display: block;
 				}
 			}
 		}
