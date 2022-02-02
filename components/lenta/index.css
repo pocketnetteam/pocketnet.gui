@@ -1373,12 +1373,23 @@
 #lenta .shares .share.fullScreenVideo .shareTable {
   display: flex;
   flex-direction: column;
+  margin-top: 0;
 }
 #lenta .shares .share.fullScreenVideo .shareTable .postcontent {
   order: -2;
 }
 #lenta .shares .share.fullScreenVideo .shareTable .formeta {
   order: -1;
+}
+#lenta .shares .share.fullScreenVideo .shareTable .postmessage {
+  border-top: 0;
+  padding-right: 0;
+}
+#lenta .shares .share.fullScreenVideo .shareTable .postcontent {
+  padding-top: 0;
+}
+#lenta .shares .share.fullScreenVideo .shareTable .cntswrkcontent {
+  padding-left: 0;
 }
 #lenta .shares .share.fullScreenVideo .cntscontent.postcontent {
   display: flex;
