@@ -1963,9 +1963,10 @@ var Proxy = function (settings, manage, test, logger) {
 			},
 			freeregistration: {
 				path: '/free/registration',
-				authorization: 'signature',
+				authorization: self.test ? false : 'signature',
 				action: function ({ captcha, key, address, ip }) {
-					if (settings.server.captcha) {
+
+					if (settings.server.captcha && !self.test) {
 						if (!captcha || !captchas[captcha] || !captchas[captcha].done) {
 							return Promise.reject('captcha');
 						}
