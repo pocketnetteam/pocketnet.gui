@@ -395,13 +395,13 @@ var help = (function () {
       getdata: function (clbk) {
         state.load();
 
-        var version = null;
+        var version = window.packageversion;
 
-        if (typeof _Electron != 'undefined') {
+        /*if (typeof _Electron != 'undefined') {
           var electron = require('electron');
 
           version = electron.remote.app.getVersion();
-        }
+        }*/
 
         var data = {
           version: version,

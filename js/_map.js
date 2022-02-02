@@ -117,8 +117,6 @@ __map =  {
 		"js/vendor/emojionearea.min.css",
 		"js/vendor/owl/assets/owl.carousel.min.css",
 		"js/vendor/owl/assets/owl.theme.default.min.css",
-		
-		
 	],
 
 	

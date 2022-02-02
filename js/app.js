@@ -1287,15 +1287,9 @@ Application = function(p)
 		self.height = self.el.window.height()
 		self.width = self.el.window.width()
 
-		var showPanel = '1' // 2 // 3
+		var showPanel = '1'
 
 		var cr = self.curation()
-
-		/*window.removeEventListener('scroll')
-		window.removeEventListener('resize')*/
-
-
-		//self.el.content.css('width', self.width + 'px')
 
 		var scrolling = _.throttle(function(){
 			window.requestAnimationFrame(function(){

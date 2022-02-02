@@ -89,6 +89,8 @@ const publics = {
     getrecomendedaccountsbysubscriptions : true,
     getrecomendedaccountsbyscoresonsimilaraccounts : true,
     getrecomendedaccountsbyscoresfromaddress : true,
+    getrecomendedcontentsbyscoresfromaddress : true,
+    getrecomendedaccountsbytags : true,
 
 
     // BlockExplorer
@@ -117,7 +119,6 @@ const publics = {
     getstatisticcontent: true,
     getstatisticbyhours: true,
     getstatisticbydays: true,
-    getrecomendedcontentsbyscoresfromaddress : true
 }
 
 const keepAliveAgent = new http.Agent({ keepAlive: true });
@@ -410,7 +411,7 @@ RpcClient.callspec = {
     getreputations: '',
     getrandomcontents : 'str',
     getrecomendedcontentsbyscoresfromaddress : 'str obj int int int',
-
+    getrecomendedaccountsbytags : 'obj int',
     getcontents: 'str',
     getlastcomments: 'str str str',
     gettags: 'str',
