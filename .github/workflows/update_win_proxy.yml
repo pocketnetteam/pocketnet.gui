@@ -4,7 +4,6 @@ name: Update Win Proxies
 
 on:
   push:
-    branches: [ master ]
     tags: v*.*.*-proxy
 
 jobs:
