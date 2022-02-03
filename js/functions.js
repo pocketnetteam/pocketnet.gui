@@ -7046,20 +7046,32 @@
 			var __el = p.transformel || p.el
 
 			var prop = directiontoprop(direction);
+			var pd = 'left'
+			var pb = 'top'
 
-			if(direction == 'up' || direction == 'left') value = -value
+			if(direction == 'up' || direction == 'left') {
+				value = -value
+				pd = 'right'
+				pb = 'bottom'
+			}
 
 			if(p.directions[direction] && p.directions[direction].basevalue) value = value + p.directions[direction].basevalue
 
 			if (prop == 'x'){
 				__el[0].style["transform"] = "scale(0.9) translate3d("+(value || 0)+"px, 0, 0)"
-				__el[0].style['transform-origin'] = 'left center'
+				__el[0].style['transform-origin'] = pd + ' center'
 			}
 
 			if (prop == 'y'){
 				__el[0].style["transform"] = "scale(0.9) translate3d(0, "+(value || 0)+"px, 0)"
-				__el[0].style['transform-origin'] = 'center top'
+				__el[0].style['transform-origin'] = 'center ' + pb
 			}
+
+			__el[0].style["-moz-transition"] = 'none'
+			__el[0].style["-o-transition"] = 'none'
+			__el[0].style["-webkit-transition"] = 'none'
+			__el[0].style["transition"] = 'none'
+
 		}
 
 		var applyDirection = function(direction, v){
@@ -7075,8 +7087,12 @@
 
 				var __el = p.transformel || p.el
 
-				__el.css({transform: ""});
-				__el.css({transition: ""});
+				__el.css({"transform": ""});
+				__el.css({"transform-origin": ""});
+				__el.css({"-moz-transition": ""});
+				__el.css({"-o-transition": ""});
+				__el.css({"-webkit-transition": ""});
+				__el.css({"transition": ""});
 				
 				_.each(p.directions, function(d){
 					applyDirection(d, 0)
