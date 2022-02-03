@@ -5091,10 +5091,14 @@ html.tablet{
     }
     
     &.nooverflow{
-        touch-action: none;
-        -webkit-overflow-scrolling: none;
-        /* Other browsers */
-        overscroll-behavior: none;
+        body{
+            overflow: hidden!important;
+            touch-action: none;
+            -webkit-overflow-scrolling: none;
+            /* Other browsers */
+            overscroll-behavior: none;
+        }
+
     }
 }
 
