@@ -19,6 +19,7 @@ if(typeof _Electron != 'undefined' && _Electron){
 	animateNumber = require('./js/vendor/jquery.animate-number.js')
 	touchSwipe = require('./js/vendor/jquery.touchSwipe.js')
 	
+	ImageUploader = require('./js/image-uploader.js');
 
 	MessageStorage = require('./js/vendor/rtc/db.js')
 	RTCMultiConnection = require('./js/vendor/rtc/RTCMultiConnection.js')
