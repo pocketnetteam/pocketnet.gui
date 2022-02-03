@@ -2336,7 +2336,28 @@ Platform = function (app, listofnodes) {
 
     self.ui = {
 
-        
+        popup : function(key, always, data){
+
+			var showed = localStorage['popup_' + key] || false;
+
+			if(!showed || always){
+
+				app.nav.api.load({
+					open : true,
+					id : 'popup',
+
+					key : key,
+					inWnd : true,
+
+					essenseData : {
+						key : key,
+						always : always,
+						data : data
+					}
+				})
+			}
+
+        },
 
         articledecoration : function(wr, share, extend){
             var caption = wr.find('.shareBgCaption')
@@ -25488,6 +25509,8 @@ Platform = function (app, listofnodes) {
 
             if (state) {
 
+
+                /*self.ui.popup('test', false, {});*/
 
 
                 lazyActions([

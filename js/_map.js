@@ -403,6 +403,13 @@ __map =  {
 		
 		},
 
+		popup : {
+			uri : "popup",
+			href : "popup",
+			add : insertingfunc,
+			anonimus : true
+		},
+
 		test : {
 			uri : "test",
 			href : "test",

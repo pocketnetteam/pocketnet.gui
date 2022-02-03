@@ -2031,3 +2031,6 @@ ____loclib.downloadgithub = "Download APK"
 ____loclib.empty = "Empty"
 ____loclib.tothetop = "To the top"
 ____loclib.menu = "Menu"
+
+____loclib.donotshowagain = "Do not show again"
+

@@ -1808,3 +1808,6 @@ ____loclib.empty = "Пусто"
 
 ____loclib.tothetop = "Наверх"
 ____loclib.menu = "Меню"
+
+
+____loclib.donotshowagain = "Не показывать больше"
