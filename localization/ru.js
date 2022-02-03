@@ -1806,3 +1806,5 @@ ____loclib.installedusinggps = "Приложение было установле
 
 ____loclib.empty = "Пусто"
 
+____loclib.tothetop = "Наверх"
+____loclib.menu = "Меню"

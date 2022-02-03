@@ -321,6 +321,8 @@ var Control = function(settings) {
             enabled : enabled,
             instance : node.instance ? true : false,
             hasbin : self.kit.hasbin(),
+
+            
             state : state,
             node : {
                 binPath : node.binPath,

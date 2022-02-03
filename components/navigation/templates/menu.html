@@ -14,6 +14,7 @@
 					<a elementsid="<% if(state) {%>userpage<% } else { %>welcome<% } %>" href="<% if(state) {%>userpage<% } else { %>welcome<% } %>" fast="fast" handler="true">
 						<div class="iconWrapper">
 							<i class="fas fa-chevron-left"></i>
+							<div class="label"><%-e('back')%></div>
 						</div>
 					</a>
 				</div>
@@ -23,6 +24,7 @@
 			<div class="upbuttonWrapper">
 				<div elementsid="iconWrapperToup" class="iconWrapper toup">
 					<i class="fas fa-chevron-up"></i>
+					<div class="label"><%-e('tothetop')%></div>
 				</div>
 			</div>
 	
@@ -55,6 +57,7 @@
 							<% } else { %> 
 								<i class="fas fa-chevron-left"></i>
 							<% } %>
+							<div class="label"><%-e('back')%></div>
 							
 						</div>
 					</a>
@@ -74,6 +77,7 @@
 								<a elementsid="userpage?id=wallet" href="userpage?id=wallet" fast="fast">
 									<div class="iconWrapper">
 										<i class="fas fa-wallet"></i>
+										<div class="label"><%-e('rwallet')%></div>
 									</div>
 								</a>
 
@@ -86,6 +90,7 @@
 										<a href="index" fast="fast">
 											<div class="iconWrapper">
 												<i class="fas fa-chevron-left"></i>
+												<div class="label"><%-e('back')%></div>
 											</div>
 										</a>
 
@@ -94,6 +99,7 @@
 										<a elementsid="hrefindex" href="index" fast="fast">
 											<div class="iconWrapper">
 												<i class="fas fa-rss"></i>
+												<div class="label"><%-e('e13136')%></div>
 											</div>
 										</a>
 										
@@ -107,6 +113,7 @@
 									<a elementsid="index?video=1" href="index?video=1" fast="fast">
 										<div class="iconWrapper">
 											<i class="fas fa-play-circle"></i>
+											<div class="label"><%-e('video')%></div>
 										</div>
 									</a>
 	
@@ -129,6 +136,7 @@
 								<a elementsid="hrefindex" href="index" fast="fast">
 									<div class="iconWrapper">
 										<i class="fas fa-rss"></i>
+										<div class="label"><%-e('e13136')%></div>
 									</div>
 								</a>
 
@@ -138,6 +146,7 @@
 								<a elementsid="index?video=1" href="index?video=1" fast="fast">
 									<div class="iconWrapper">
 										<i class="fas fa-play-circle"></i>
+										<div class="label"><%-e('video')%></div>
 									</div>
 								</a>
 
@@ -157,6 +166,7 @@
 							<a elementsid="userpage?id=wallet" href="userpage?id=wallet" fast="fast">
 								<div class="iconWrapper">
 									<i class="fas fa-wallet"></i>
+									<div class="label"><%-e('rwallet')%></div>
 								</div>
 							</a>
 
@@ -165,6 +175,7 @@
 							<a elementsid="<%- lentakey %>" href="<%- lentakey %>" fast="fast">
 								<div class="iconWrapper">
 									<i class="fas fa-home"></i>
+									<div class="label"><%-e('back')%></div>
 								</div>
 							</a>
 							
@@ -182,6 +193,7 @@
 		<div class="upbuttonWrapper">
 			<div elementsid="upbuttontoup" class="iconWrapper toup">
 				<i class="fas fa-chevron-up"></i>
+				<div class="label"><%-e('tothetop')%></div>
 			</div>
 		</div>
 
@@ -219,6 +231,7 @@
 				<% if(!(!state && window.cordova)) {%>
 				<div elementsid="hrefregistration" class="iconWrapper reg toregistration" >
 					<i class="fas fa-user-plus"></i>
+					<div class="label"><%-e('signin')%></div>
 				</div>
 				<% } %>
 				
@@ -236,6 +249,7 @@
 		<!--<a elementsid="hrefuserpage" href="userpage" fast="fast" handler="true">-->
 			<div class="iconWrapper showmenu">
 				<i class="fas fa-bars"></i>
+				<div class="label"><%-e('menu')%></div>
 			</div>
 		<!--</a>-->
 
