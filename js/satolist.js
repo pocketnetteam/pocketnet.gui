@@ -25321,12 +25321,15 @@ Platform = function (app, listofnodes) {
             self.app.errors.clbks.platform = self.appstate
         }
 
+        ///
+
         initOnlineListener() // /remove for test
 
         self.app.api.wait.ready('use', 10000).then(r => {
 
             return new Promise((resolve, reject) => {
                 setTimeout(function(){
+
                     self.app.api.changeProxyIfNeed().then(l => {
 
                         if(!l){
@@ -25344,10 +25347,21 @@ Platform = function (app, listofnodes) {
                         resolve()
 
                     }).catch(reject)
+
                 }, 50)
             })
 
         }).then(r => {
+
+
+            var directproxy = self.app.api.get.direct()
+
+            if (directproxy){
+                directproxy.system.clbks.tick.globalclbk = function(data){
+                    console.log("GLOBAL DATA", data)
+                }
+            }
+
 
             self.ws = new self.WSn(self);
 
