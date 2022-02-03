@@ -25609,6 +25609,7 @@ Platform = function (app, listofnodes) {
 
         import : function(clbk){
 
+
             if (self.matrixchat.imported){
                 if(clbk) clbk()
             }

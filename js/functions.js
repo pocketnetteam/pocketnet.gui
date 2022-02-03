@@ -1446,6 +1446,8 @@
 			$el.find('.btn2').on('click', function(){ response(p.fail, true)});
 			$el.find('._close').on('click', function(){ response(p.close, true)});
 
+			$el.on('click', clickOutsideOfWindow)
+
 			
 			var title = $el.find('.poll .title');
 				
@@ -1512,23 +1514,29 @@
 
 			$el.remove();
 
-			/*$el.fadeOut(200);
-
-			setTimeout(function(){
-
-				$el.remove();
-
-			},200);*/
-
 			if(removescroll)
 			{
 		    	app.actions.onScroll();
 			}
 		}
 
+		var clickOutsideOfWindow = function(e){
+			const clickedElem = e.target;
 
+			const isElem1Clicked = clickedElem.classList.contains('secondwrapper');
+
+			const isClickOutside = (isElem1Clicked);
+
+			if (!isClickOutside) {
+				return;
+			}
+
+			destroy()
+
+		}
 
 		init();
+
 		self.el = $el;
 		self.destroy = destroy;
 		return self;
