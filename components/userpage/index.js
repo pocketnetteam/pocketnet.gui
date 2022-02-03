@@ -232,7 +232,7 @@ var userpage = (function(){
 				if : function(){
 					return isMobile()
 				},
-				openReportPageMobileInWindow : true
+				//openReportPageMobileInWindow : true
 			})
 
 			if(self.app.user.validate()) {
@@ -251,13 +251,7 @@ var userpage = (function(){
 
 						return true
 
-						if (typeof mestate != 'undefined' && mestate && (
 					
-							(mestate.reputation > 50 || !mestate.trial || mestate.balance > 500000000)
-
-						)){
-							return true
-						}
 					}
 				})
 
@@ -1026,6 +1020,11 @@ var userpage = (function(){
 				self.app.mobile.vibration.small()
 				actions.signout()
 
+			})
+
+			el.c.find('.backtabletmenu').on('click', function(){
+				
+				makerep()
 			})
 
 		}

@@ -384,7 +384,8 @@ var post = (function () {
 
 				//var downloadPanel = el[shareId];
 
-				var wa =  !share.repost && !ed.repost && ((share.itisvideo() && isMobile() || (ed.autoplay && pels.length <= 1))) ? true : false
+
+				var wa =  !share.repost && !ed.repost && (((share.itisvideo() && isMobile() && !ed.openapi) || (ed.autoplay && pels.length <= 1))) ? true : false
 
 				if (pels.length) {
 

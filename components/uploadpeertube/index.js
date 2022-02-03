@@ -449,10 +449,9 @@ var uploadpeertube = (function () {
         offScroll: true,
         noInnerScroll: true,
         class: 'uploadpeertube normalizedmobile',
-        allowHide: true,
-        noCloseButton: true,
+        allowHide: !isTablet(),
+        noCloseButton: !isTablet(),
         noButtons: true,
-
         swipeClose: true,
         swipeCloseDir: 'right',
         swipeMintrueshold: 30,

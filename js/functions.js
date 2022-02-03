@@ -1914,6 +1914,48 @@
 		
 	}
 
+	imagetojpegifneed = function ({base64, name}) {
+
+		var nm = name.split('.')
+
+		var _name = nm[0],
+			_format = nm[1]
+
+		if (_format == 'png' || _format == 'jpg' || _format == 'jpeg'){
+			return resolve({base64, name});
+		}
+
+		return new Promise((resolve, reject) => {
+
+			var imageObj = new Image(),
+			  canvas = document.createElement('canvas'),
+			  ctx = canvas.getContext('2d'),
+			  newWidth,
+			  newHeight;
+	  
+			imageObj.src = base64;
+	  
+			imageObj.onload = function () {
+			  newHeight = imageObj.height;
+			  newWidth = imageObj.width;
+	  
+			  canvas.width = newWidth;
+			  canvas.height = newHeight;
+	  
+			  ctx.drawImage(imageObj, 0, 0, newWidth, newHeight);
+	  
+			  var url = canvas.toDataURL('image/jpeg', 1);
+
+			  console.log('url', url)
+	  
+			  $(canvas).remove();
+	  
+			  return resolve({base64 : url, name : _name + '.jpg'});
+			};
+
+		});
+	}
+
 	resizeNew = function (srcData, width, height, format) {
 		return new Promise((resolve, reject) => {
 			var imageObj = new Image(),
@@ -1953,7 +1995,7 @@
 	  
 			  ctx.drawImage(imageObj, 0, 0, newWidth, newHeight);
 	  
-			  var url = canvas.toDataURL('image/' + format, 0.75);
+			  var url = canvas.toDataURL('image/' + format, 0.85);
 	  
 			  $(canvas).remove();
 	  
@@ -6190,8 +6232,6 @@
 				storageLocation = cordova.file.cacheDirectory;
 				break;
 		}
-	
-
 
 		window.resolveLocalFileSystemURL(storageLocation, function (fileSystem) {
 			
@@ -6209,9 +6249,8 @@
 
 					entry.createWriter(function (writer) {
 
-
 						writer.onwriteend = function (evt) {
-							sitemessage("File " + name + " successfully downloaded");
+							//sitemessage("File " + name + " successfully downloaded");
 
 							if (window.galleryRefresh){
 
@@ -6223,33 +6262,42 @@
 								})
 
 							}
-							else
-							{
-							}
-
 
 							if (clbk)
-								clbk(myFileUrl)
+								clbk({
+									name,
+									url : myFileUrl
+								})
 						};
+
+						writer.onerror = function (e) {
+
+							if (clbk)
+								clbk(null, e)
+
+						};
+
 						// Write to the file
 						writer.seek(0);
+
 						writer.write(file);
+
 					}, function (error) {
 						
-						dialog({
+						/*dialog({
 							html : "Error: Could not create file writer, " + error.code,
 							class : "one"
-						})
+						})*/
 
 						if(clbk) clbk(null, error)
 
 					});
 				}, function (error) {
 
-					dialog({
+					/*dialog({
 						html : "Error: Could not create file, " + error.code,
 						class : "one"
-					})
+					})*/
 
 					if(clbk) clbk(null, error)
 
@@ -6257,10 +6305,10 @@
 
 			}, function (error) {
 
-				dialog({
+				/*dialog({
 					html : "Error: access to download folder, " + error.code,
 					class : "one"
-				})
+				})*/
 
 				if(clbk) clbk(null, error)
 
@@ -6270,10 +6318,12 @@
 			
 		}, function (evt) {
 
-			dialog({
+			/*dialog({
 				html : "Error: Could not create file, " + evt.target.error.code,
 				class : "one"
-			})
+			})*/
+
+			if(clbk) clbk(null, evt.target.error)
 
 		});
 	
@@ -6999,6 +7049,8 @@
 
 			if(direction == 'up' || direction == 'left') value = -value
 
+			if(p.directions[direction] && p.directions[direction].basevalue) value = value + p.directions[direction].basevalue
+
 			if (prop == 'x'){
 				__el[0].style["transform"] = "scale(0.9) translate3d("+(value || 0)+"px, 0, 0)"
 				__el[0].style['transform-origin'] = 'left center'
@@ -7072,7 +7124,7 @@
 
 					var dir = p.directions[direction]
 
-					if (dir.constraints && !dir.constraints()) {
+					if (dir.constraints && !dir.constraints(e)) {
 
 						if (mainDirection){
 							mainDirection = null;

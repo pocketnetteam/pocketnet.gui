@@ -21740,29 +21740,24 @@ Platform = function (app, listofnodes) {
 
                     message.el.find('.commentprev').on('click', function () {
 
+                        platform.app.nav.api.load({
+                            open: true,
+                            href: 'post?s=' + data.comment.txid,
+                            inWnd: true,
+                            history: true,
+                            clbk: function (d, p) {
+                                app.nav.wnds['post'] = p
+                            },
 
-                        platform.sdk.node.shares.getbyid(data.comment.txid, function (s, err, p, fromcashe) {
+                            essenseData: {
+                                share: data.comment.txid,
 
-                            platform.app.nav.api.load({
-                                open: true,
-                                href: 'post?s=' + data.comment.txid,
-                                inWnd: true,
-                                history: true,
-                                clbk: function (d, p) {
-                                    app.nav.wnds['post'] = p
-                                },
-
-                                essenseData: {
-                                    share: data.comment.txid,
-
-                                    reply: {
-                                        answerid: data.comment.id,
-                                        parentid: data.comment.parentid || "",
-                                        noaction: true
-                                    }
+                                reply: {
+                                    answerid: data.comment.id,
+                                    parentid: data.comment.parentid || "",
+                                    noaction: true
                                 }
-                            })
-
+                            }
                         })
 
                     })
@@ -21959,7 +21954,6 @@ Platform = function (app, listofnodes) {
 
                     message.el.find('.sharepreview').on('click', function () {
 
-                        platform.sdk.node.shares.getbyid(data.txid, function (s, err, p, fromcashe) {
 
                             platform.app.nav.api.load({
                                 open: true,
@@ -21975,7 +21969,6 @@ Platform = function (app, listofnodes) {
                                 }
                             })
 
-                        })
 
                     })
 
@@ -22080,7 +22073,6 @@ Platform = function (app, listofnodes) {
 
                     message.el.find('.sharepreview').on('click', function () {
 
-                        platform.sdk.node.shares.getbyid(data.txid, function (s, err, p, fromcashe) {
 
                             platform.app.nav.api.load({
                                 open: true,
@@ -22096,7 +22088,6 @@ Platform = function (app, listofnodes) {
                                 }
                             })
 
-                        })
 
                     })
 
@@ -22190,7 +22181,6 @@ Platform = function (app, listofnodes) {
 
                     message.el.find('.sharepreview').on('click', function () {
 
-                        platform.sdk.node.shares.getbyid(data.txid, function (s, err, p, fromcashe) {
 
                             platform.app.nav.api.load({
                                 open: true,
@@ -22206,7 +22196,6 @@ Platform = function (app, listofnodes) {
                                 }
                             })
 
-                        })
 
                     })
 
@@ -22706,7 +22695,6 @@ Platform = function (app, listofnodes) {
 
                     message.el.find('.commentprev').on('click', function () {
 
-                        platform.sdk.node.shares.getbyid(data.posttxid, function (s, fromcashe) {
 
                             platform.app.nav.api.load({
                                 open: true,
@@ -22728,7 +22716,6 @@ Platform = function (app, listofnodes) {
                                 }
                             })
 
-                        })
 
                     })
 
@@ -23123,7 +23110,6 @@ Platform = function (app, listofnodes) {
                     if (data.mesType == 'upvoteShare' && data.share) {
                         message.el.find('.sharepreview').on('click', function () {
 
-                            platform.sdk.node.shares.getbyid(data.posttxid, function (s, err, p, fromcashe) {
 
                                 platform.app.nav.api.load({
                                     open: true,
@@ -23139,7 +23125,6 @@ Platform = function (app, listofnodes) {
                                     }
                                 })
 
-                            })
 
                         })
 
@@ -25740,7 +25725,49 @@ Platform = function (app, listofnodes) {
 
                 if(isTablet() || isMobile() || window.cordova){
 
-					self.matrixchat.el.swipe({
+                    var chatparallax = new SwipeParallaxNew({
+
+                        el : self.matrixchat.el,
+                        transformel : self.matrixchat.el,
+    
+                        allowPageScroll : 'vertical',
+        
+                        directions : {
+                            left : {
+                                cancellable : true,				
+                                
+                                basevalue : self.app.width,
+    
+                                positionclbk : function(px){
+                                },
+    
+                                constraints : function(e){
+                                    if(_.find(e.path, function(el){
+                                        return el.className && el.className.indexOf('noswipepnt') > -1
+                                    })) return false
+
+
+                                    return true
+                                },
+    
+                                restrict : true,
+                                trueshold : 30,
+                                clbk : function(){
+
+                                    if (self.matrixchat.core && (!self.matrixchat.core.canback || self.matrixchat.core.canback()))
+                                        self.matrixchat.core.backtoapp()
+
+                                }
+        
+                            }
+                        }
+                        
+        
+                    }).init()
+
+
+
+					/*self.matrixchat.el.swipe({
 						swipeLeft : function(e, phase, direction, distance){
                             if(_.find(e.path, function(el){
                                 return el.className && el.className.indexOf('noswipepnt') > -1
@@ -25751,7 +25778,7 @@ Platform = function (app, listofnodes) {
                                 self.matrixchat.core.backtoapp()
 
 						},
-					})
+					})*/
 
 				}
 

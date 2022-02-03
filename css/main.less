@@ -4918,9 +4918,15 @@ html.tablet{
         .shadowSmall();
         -webkit-overflow-scrolling: touch;
         visibility: hidden;
+        transform-origin : 'left center';
+        -webkit-transform: scale(0.9);
+        transform: scale(0.9);
+        overflow: hidden;
+        border-radius: 5px;
+
         &.active{
-            -webkit-transform: translateX(100%);
-            transform: translateX(100%);
+            -webkit-transform: scale(1) translateX(100%);
+            transform: scale(1) translateX(100%);
             visibility: visible;
         }
     }

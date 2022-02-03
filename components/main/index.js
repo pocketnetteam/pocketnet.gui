@@ -271,6 +271,7 @@ var main = (function(){
 						}
 
 					})
+					
 				}else{
 					el.c.addClass('wshar')
 				}

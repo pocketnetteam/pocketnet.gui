@@ -2,15 +2,26 @@
 
 #userpage{
 
+	.backtabletmenu{
+		display: none;
+		padding : 2 * @rhythm;
+
+		span{
+			font-size: 0.9em;
+		}
+
+		i{
+			font-size: 0.9em;
+			width: 22px;
+			
+		}
+	}
+
 	.bgCaptionSpacer{
 		padding-bottom : 4 * @rhythm;
 		padding-top : 2 * @rhythm;
 		height: 1px;
-
-		
 	}
-
-	
 
 	.fillUserWrapper{
 		height: 400px;
@@ -671,6 +682,9 @@ html.stblack{
 }
 
 .wnd.wnduserpage{
+
+	
+
 	.wndcontent{
 		padding-top : 0;
 		.work{
@@ -683,6 +697,13 @@ html.stblack{
 		.bgCaptionWrapper{
 			display: none;
 		}
+
+		&.reportshowed{
+			.backtabletmenu{
+				display: block;
+			}
+		}
+		
 	}
 	
 }
