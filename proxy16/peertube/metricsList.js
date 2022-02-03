@@ -9,10 +9,6 @@ module.exports = {
         weight: 0.4,
         calculate() {
 
-
-          /*console.log('(instance.availability() || 1) / (1 + ((serverData.performance || {}).waitTranscodingJobs || 0))',
-          (instance.availability() || 1), (1 + ((serverData.performance || {}).waitTranscodingJobs || 0)))*/
-
           const { weight, value } = this;
 
           return value;

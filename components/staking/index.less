@@ -222,6 +222,7 @@
     .tcaptionwrapper{
         display: flex;
         align-items: center;    
+        border-bottom: 1px solid rgba(229, 229, 229, 0.5);
 
         .vc_valuecustom{
             width: 75px;
@@ -449,22 +450,27 @@ html.stblack{
 
 
         .rcptwrp{
-            border: 1px solid fade(#E5E5E5, 50);
-            background: transparent;
+            background: @color-black;
             border-radius: 5px;
         }
     
-        .tcaption{
+        .tcaptionwrapper{
+            border-bottom: 1px solid rgba(229, 229, 229, 0.5);
 
-            .pkoin{
-                background: @color-main;
+            .tcaption{
 
-                span{
-                    color: #FFFFFF;;
-                }
-            }
+                .pkoin{
+                    background: @color-main;
     
+                    span{
+                        color: #FFFFFF;;
+                    }
+                }
+        
+            }
+
         }
+
     
     
     }    

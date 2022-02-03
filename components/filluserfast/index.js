@@ -8,7 +8,7 @@ var filluserfast = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, k = {}, needcaptcha = false, gliperror = false, essenseData, initialParameters, ext = null;
+		var el = {}, k = {}, needcaptcha = false, gliperror = false, essenseData, initialParameters, ext = null;
 		
 		var categoryIcons = [
 			{
@@ -144,10 +144,14 @@ var filluserfast = (function(){
 
 					var requested = self.app.settings.get(address, 'request') || "";
 
-
-					console.log("requested")
-
 					if (requested){
+
+						var regs = app.platform.sdk.registrations.storage[address];
+
+						if (regs && (regs == 2)) {
+							self.sdk.registrations.add(address, 3)
+						}
+						
 						actions.next()
 
 						return
@@ -157,6 +161,13 @@ var filluserfast = (function(){
 					balance.check(function(result){
 
 						if (result){
+
+							var regs = app.platform.sdk.registrations.storage[address];
+
+							if (regs && (regs == 2)) {
+								self.sdk.registrations.add(address, 3)
+							}
+							
 							actions.next()
 						}
 						else
@@ -230,6 +241,11 @@ var filluserfast = (function(){
 						{
 							save.addClass('disabled')
 						}
+					})
+
+					input.on('focus', function(){
+						if (isTablet())
+							_scrollTo(input)
 					})
 
 					save.on('click', function(){
@@ -324,7 +340,7 @@ var filluserfast = (function(){
 							self.app.platform.sdk.registrations.redirect
 
 							self.nav.api.go({
-								href : self.app.platform.sdk.registrations.redirect || 'index?r=recommended',
+								href : self.app.platform.sdk.registrations.redirect || 'index',
 								history : true,
 								open : true
 							})	
@@ -794,7 +810,6 @@ var filluserfast = (function(){
 
 			testqrcodeandkey : function(hm, clbk){
 
-
 				var keyPair =  self.app.user.keysFromMnemo(trim(hm))  
 
 				var mk = keyPair.privateKey.toString('hex');
@@ -838,27 +853,17 @@ var filluserfast = (function(){
 				else{
 					var key = bitcoin.bip39.generateMnemonic();
 
-					actions.testqrcodeandkey(key, function(result){
+					k.mnemonicKey = key;
 
-						if(!result){
-							actions.generate()
-						}
-						else
-						{
+					var keys = self.app.user.keysFromMnemo(k.mnemonicKey)
 
-							k.mnemonicKey = key;
+					k.mainAddress = app.platform.sdk.address.pnetsimple(keys.publicKey).address;
 
-							var keys = self.app.user.keysFromMnemo(k.mnemonicKey)
+					k.mk = keys.privateKey.toString('hex');
 
-							k.mainAddress = app.platform.sdk.address.pnetsimple(keys.publicKey).address;
-
-							k.mk = keys.privateKey.toString('hex');
-
-
-							if (clbk)
-								clbk()
-						}
-					})
+					if (clbk)
+						clbk()
+				
 				}
 				
 				
@@ -1102,7 +1107,7 @@ var filluserfast = (function(){
 
 			
 
-			settings : function(_el, clbk, pel){
+			settings : function(_el, clbk){
 
 
 				self.nav.api.load({
@@ -1118,8 +1123,6 @@ var filluserfast = (function(){
 
 						},
 						presave : function(clbk){
-
-							
 
 								actions.waitgeneration(function(){
 
@@ -1162,9 +1165,6 @@ var filluserfast = (function(){
 
 							state.save()
 
-
-							console.log('actions.next()', userInfo)
-
 							actions.next()
 						}
 					},
@@ -1196,6 +1196,18 @@ var filluserfast = (function(){
 		var initEvents = function(){
 			
 			window.addEventListener('resize', events.width)
+
+			el.c.find('.gotohasaccount').on('click', function(){
+
+				if (essenseData.close) essenseData.close()
+
+				self.nav.api.go({
+					href : 'authorization',
+					history : true,
+					open : true
+				})
+			})
+
 		}
 
 		var make = function(){
@@ -1257,18 +1269,13 @@ var filluserfast = (function(){
 					inauth : deep(p, 'settings.essenseData.inauth') || false
 				};
 
-
-					regproxy = self.app.api.get.byid('pocketnet.app:8899:8099')
-
-				
+				regproxy = self.app.api.get.byid('pocketnet.app:8899:8099')
 
 				/*if (localStorage['regproxy']){
 					regproxy = self.app.api.get.byid(localStorage['regproxy'])
 				}*/
 
 				self.app.api.get.proxywithwallet().then(r => {
-
-					console.log("R", r)
 
 					if(r && !regproxy) regproxy = r
 
@@ -1290,7 +1297,8 @@ var filluserfast = (function(){
 				delete self.app.errors.clbks.filluserfast
 				delete self.app.platform.sdk.node.transactions.clbks.filluser
 
-				if(ext) ext.destroy()
+				if (ext) 
+					ext.destroy()
 
 				ext = null
 
@@ -1299,7 +1307,11 @@ var filluserfast = (function(){
 
 				k = {}
 
+				if(el.c) el.c.empty()
+
 				el = {};
+
+				essenseData = {}
 			},
 			
 			init : function(p){

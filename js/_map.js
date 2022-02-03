@@ -1,3 +1,25 @@
+var insertingfunc = function(settings, p){
+
+	if(p.inWnd)
+	{
+		return {
+			insert : 'wnd'
+		}
+	}
+
+	if(p.inTooltip)
+	{
+		return {
+			insert : 'tooltip'
+		}
+	}
+	
+	return {
+		el : 'content'
+	}
+
+}
+
 __map =  { 
 
 	__vendor : [
@@ -76,9 +98,9 @@ __map =  {
 		"js/validation.js",
 		"js/kit.js",
 		"js/satolist.js",
-		"js/messenger2/clientrtc.js",
 		"js/peertube.js",
-		"js/widgets.js"
+		"js/widgets.js",
+		"js/logger.js"
 	],
 
 	__css : [
@@ -88,6 +110,7 @@ __map =  {
 		"css/main.css",
 		"css/stblack.css",
 		"css/plyr.css",
+		"css/pniframe.css",
 		"js/vendor/DateTimePicker.min.css",
 		/*"css/swiper-bundle.min.css",*/
 		"peertube/video-embed.css",
@@ -95,9 +118,10 @@ __map =  {
 		"js/vendor/owl/assets/owl.carousel.min.css",
 		"js/vendor/owl/assets/owl.theme.default.min.css",
 		
+		
 	],
 
-
+	
 	__templates : [
 		{ c : 'navigation', n : 'menu' },
 		{ c : 'menu', n : 'index' },
@@ -109,7 +133,6 @@ __map =  {
 		{ c : 'main', n : 'index' },
 		{ c : 'panel', n : 'index' },
 		{ c : 'leftpanel', n : 'index' },
-		{ c : 'panel', n : 'discussiondummy' },
 		{ c : 'lastcomments', n : 'index' },
 		{ c : 'tagcloud', n : 'index' },
 		{ c : 'userpage', n : 'index' },
@@ -128,39 +151,15 @@ __map =  {
 		{ c : 'comments', n : 'index' },
 		{ c : 'lastcomments', n : 'lastcommentslist'},
 		{ c : 'author', n : 'preshell'},
+		{ c : 'author', n : 'authorcaption'},
 		{ c : 'post', n : 'preshell'}
-		/*,
-		{ c : '', n : '' },
-		{ c : '', n : '' },
-		{ c : '', n : '' },
-		{ c : '', n : '' },
-		{ c : '', n : '' },
-		{ c : '', n : '' },
-		{ c : '', n : '' },
-		{ c : '', n : '' },
-		{ c : '', n : '' },*/
-		
+
 	],
 
     pkview  : {
 		uri : "pkview",
 		href : "pkview",
-		add : function(settings, p){
-
-			if(p.inWnd)
-
-				return {
-					insert : 'wnd'
-				}
-
-			else
-			{
-				return {
-					el : 'content'
-				}
-			}
-
-		},
+		add : insertingfunc,
 
 		relations : [
 			{src : 'js/vendor/qrscanner.js',			   f : 'js'},
@@ -171,26 +170,21 @@ __map =  {
 		],
 	},      
 
+	
+	easynode : {
+		uri : "easynode",
+		href : "easynode",
+		add : insertingfunc,
+		anonimus : true,
+		electronDontOpen : true
+	},
+
 	about : {
 		uri : "about",
 		href : "about",
-		add : function(settings, p){
-
-			if(p.inWnd)
-
-				return {
-					insert : 'wnd'
-				}
-
-			else
-			{
-				return {
-					el : 'content'
-				}
-			}
-
-		},
+		add : insertingfunc,
 		anonimus : true,
+		electronDontOpen : true
 	},
 
 	aboutHome : {
@@ -271,46 +265,18 @@ __map =  {
 	applications : {
 		uri : "applications",
 		href : "applications",
-		add : function(settings, p){
-
-			if(p.inWnd)
-
-				return {
-					insert : 'wnd'
-				}
-
-			else
-			{
-				return {
-					el : 'content'
-				}
-			}
-
-		},
+		add : insertingfunc,
 		anonimus : true,
+		electronDontOpen : true
 	},
 
 
 	terms : {
 		uri : "terms",
 		href : "terms",
-		add : function(settings, p){
-
-			if(p.inWnd)
-
-				return {
-					insert : 'wnd'
-				}
-
-			else
-			{
-				return {
-					el : 'content'
-				}
-			}
-
-		},
+		add : insertingfunc,
 		anonimus : true,
+		electronDontOpen : true
 	},
 
 	
@@ -322,6 +288,7 @@ __map =  {
 		},
 		anonimus : true,
 		relationsSunc : true,
+		electronDontOpen : true
 	},
 
 	welcome : {
@@ -339,7 +306,7 @@ __map =  {
 			if(p.inTooltip)
 			{
 				return {
-					insert : 'tooltip'
+					insert : 'bstntooltip'
 				}
 			}
 			else
@@ -357,29 +324,7 @@ __map =  {
 	registration : {
 		uri : "registration",
 		href : "registration",
-		add : function(settings, p){
-
-			if(p.inWnd)
-			{
-				return {
-					insert : 'wnd'
-				}
-			}
-			else
-			if(p.inTooltip)
-			{
-				return {
-					insert : 'tooltip'
-				}
-			}
-			else
-			{
-				return {
-					el : 'content'
-				}
-			}
-
-		},
+		add : insertingfunc,
 		anonimus : true,
 
 		relations : [
@@ -390,34 +335,13 @@ __map =  {
 			}},	
 
 		],
+		electronDontOpen : true
 	},
 
 	anothersite : {
 		uri : "anothersite",
 		href : "anothersite",
-		add : function(settings, p){
-
-			if(p.inWnd)
-			{
-				return {
-					insert : 'wnd'
-				}
-			}
-			else
-			if(p.inTooltip)
-			{
-				return {
-					insert : 'tooltip'
-				}
-			}
-			else
-			{
-				return {
-					el : 'content'
-				}
-			}
-
-		},
+		add : insertingfunc,
 		anonimus : true,
 		relationsSunc : true,
 
@@ -440,29 +364,7 @@ __map =  {
 		filluserfast : {
 			uri : "filluserfast",
 			href : "filluserfast",
-			add : function(settings, p){
-
-				if(p.inWnd)
-				{
-					return {
-						insert : 'wnd'
-					}
-				}
-				else
-				if(p.inTooltip)
-				{
-					return {
-						insert : 'tooltip'
-					}
-				}
-				else
-				{
-					return {
-						el : 'content'
-					}
-				}
-
-			},
+			add : insertingfunc,
 
 			
 
@@ -482,29 +384,7 @@ __map =  {
 		filluser : {
 			uri : "filluser",
 			href : "filluser",
-			add : function(settings, p){
-
-				if(p.inWnd)
-				{
-					return {
-						insert : 'wnd'
-					}
-				}
-				else
-				if(p.inTooltip)
-				{
-					return {
-						insert : 'tooltip'
-					}
-				}
-				else
-				{
-					return {
-						el : 'content'
-					}
-				}
-
-			},
+			add : insertingfunc,
 			redirect : {
 				auth : 'welcome'
 			},
@@ -529,35 +409,13 @@ __map =  {
 		test : {
 			uri : "test",
 			href : "test",
-			add : function(settings, p){
-
-				if(p.inWnd)
-				{
-					return {
-						insert : 'wnd'
-					}
-				}
-				else
-				if(p.inTooltip)
-				{
-					return {
-						insert : 'tooltip'
-					}
-				}
-				else
-				{
-					return {
-						el : 'content'
-					}
-				}
-
-			},
+			add : insertingfunc,
 			anonimus : true,
 			/*redirect : {
 				auth : 'authorization'
 			},*/
 			relationsSunc : true,
-
+			electronDontOpen : true,
 			relations : [
 
 				{src : 'js/vendor/exif.js', f : 'js', 
@@ -578,29 +436,7 @@ __map =  {
 		accounts : {
 			uri : "accounts",
 			href : "accounts",
-			add : function(settings, p){
-
-				if(p.inWnd)
-				{
-					return {
-						insert : 'wnd'
-					}
-				}
-				else
-				if(p.inTooltip)
-				{
-					return {
-						insert : 'tooltip'
-					}
-				}
-				else
-				{
-					return {
-						el : 'content'
-					}
-				}
-
-			},
+			add : insertingfunc,
 
 			redirect : {
 				auth : 'authorization',
@@ -621,29 +457,7 @@ __map =  {
 		uploadpeertube : {
 			uri : "uploadpeertube",
 			href : "uploadpeertube",
-			add : function(settings, p){
-
-				if(p.inWnd)
-				{
-					return {
-						insert : 'wnd'
-					}
-				}
-				else
-				if(p.inTooltip)
-				{
-					return {
-						insert : 'tooltip'
-					}
-				}
-				else
-				{
-					return {
-						el : 'content'
-					}
-				}
-
-			},
+			add : insertingfunc,
 
 			/*relations : [
 				{src : 'js/vendor/ffmpeg.min.js',			   f : 'js'},	
@@ -655,122 +469,47 @@ __map =  {
 		streampeertube : {
 			uri : "streampeertube",
 			href : "streampeertube",
-			add : function(settings, p){
-
-				if(p.inWnd)
-				{
-					return {
-						insert : 'wnd'
-					}
-				}
-				else
-				if(p.inTooltip)
-				{
-					return {
-						insert : 'tooltip'
-					}
-				}
-				else
-				{
-					return {
-						el : 'content'
-					}
-				}
-
-			},
+			add : insertingfunc,
 		},
 
 		
 		tagcloud : {
 			uri : "tagcloud",
 			href : "tagcloud",
-			add : function(settings, p){
-
-				if(p.inWnd)
-				{
-					return {
-						insert : 'wnd'
-					}
-				}
-				else
-				if(p.inTooltip)
-				{
-					return {
-						insert : 'tooltip'
-					}
-				}
-				else
-				{
-					return {
-						el : 'content'
-					}
-				}
-
-			},
+			add : insertingfunc,
 			anonimus : true,
 		},
 		
 		taginput : {
 			uri : "taginput",
 			href : "taginput",
-			add : function(settings, p){
-
-				if(p.inWnd)
-				{
-					return {
-						insert : 'wnd'
-					}
-				}
-				else
-				if(p.inTooltip)
-				{
-					return {
-						insert : 'tooltip'
-					}
-				}
-				else
-				{
-					return {
-						el : 'content'
-					}
-				}
-
-			},
+			add : insertingfunc,
 			anonimus : true,
 		},
 		
 		categories : {
 			uri : "categories",
 			href : "categories",
-			add : function(settings, p){
-
-				if(p.inWnd)
-				{
-					return {
-						insert : 'wnd'
-					}
-				}
-				else
-				if(p.inTooltip)
-				{
-					return {
-						insert : 'tooltip'
-					}
-				}
-				else
-				{
-					return {
-						el : 'content'
-					}
-				}
-
-			},
+			add : insertingfunc,
 			anonimus : true,
 		},	
 
 		staking : {
 			uri : "staking",
 			href : "staking",
+			relations : [
+		
+				{src : 'js/vendor/highcharts.js', 		f : 'js', require : function(){
+					Highcharts = require('./js/vendor/highcharts.js')
+				}},
+			],
+			add : insertingfunc,
+			anonimus : true,
+		},	
+
+		recommendedusers : {
+			uri : "recommendedusers",
+			href : "recommendedusers",
 			relations : [
 		
 				{src : 'js/vendor/highcharts.js', 		f : 'js', require : function(){
@@ -801,8 +540,7 @@ __map =  {
 
 			},
 			anonimus : true,
-		},	
-
+		},
 		
 		topusers : {
 			uri : "topusers",
@@ -839,9 +577,15 @@ __map =  {
 			anonimus : true,
 		},
 
-		lastcomments : {
-			uri : "lastcomments",
-			href : "lastcomments",
+		bestposts : {
+			uri : "bestposts",
+			href : "bestposts",
+			relations : [
+		
+				{src : 'js/vendor/highcharts.js', 		f : 'js', require : function(){
+					Highcharts = require('./js/vendor/highcharts.js')
+				}},
+			],
 			add : function(settings, p){
 
 				if(p.inWnd)
@@ -868,9 +612,15 @@ __map =  {
 			anonimus : true,
 		},
 
-		articles : {
-			uri : "articles",
-			href : "articles",
+		recommendedposts : {
+			uri : "recommendedposts",
+			href : "recommendedposts",
+			relations : [
+		
+				{src : 'js/vendor/highcharts.js', 		f : 'js', require : function(){
+					Highcharts = require('./js/vendor/highcharts.js')
+				}},
+			],
 			add : function(settings, p){
 
 				if(p.inWnd)
@@ -894,33 +644,27 @@ __map =  {
 				}
 
 			},
+			anonimus : true,
+		},
+
+		lastcomments : {
+			uri : "lastcomments",
+			href : "lastcomments",
+			add : insertingfunc,
+			anonimus : true,
+		},
+
+		articles : {
+			uri : "articles",
+			href : "articles",
+			add : insertingfunc,
+
+			electronDontOpen : true
 		},	
 		article : {
 			uri : "article",
 			href : "article",
-			add : function(settings, p){
-
-				if(p.inWnd)
-				{
-					return {
-						insert : 'wnd'
-					}
-				}
-				else
-				if(p.inTooltip)
-				{
-					return {
-						insert : 'tooltip'
-					}
-				}
-				else
-				{
-					return {
-						el : 'content'
-					}
-				}
-
-			},
+			add : insertingfunc,
 			relations : [
 				{src : 'js/vendor/medium-editor.js',			   f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},
 
@@ -953,67 +697,39 @@ __map =  {
 
 				
 			],
-			relationsSunc : true
+			relationsSunc : true,
+
+			electronDontOpen : true
 		},	
 
 		articlesv : {
 			uri : "articlesv",
 			href : "articlesv",
-			add : function(settings, p){
+			add : insertingfunc,
 
-				if(p.inWnd)
-				{
-					return {
-						insert : 'wnd'
-					}
-				}
-				else
-				if(p.inTooltip)
-				{
-					return {
-						insert : 'tooltip'
-					}
-				}
-				else
-				{
-					return {
-						el : 'content'
-					}
-				}
-
-			},
+			electronDontOpen : true
 		},	
 		articlev : {
 			uri : "articlev",
 			href : "articlev",
-			add : function(settings, p){
-
-				if(p.inWnd)
-				{
-					return {
-						insert : 'wnd'
-					}
-				}
-				else
-				if(p.inTooltip)
-				{
-					return {
-						insert : 'tooltip'
-					}
-				}
-				else
-				{
-					return {
-						el : 'content'
-					}
-				}
-
-			},
+			add : insertingfunc,
+			
 			relations : [
-				{src : 'js/vendor/editor/editor.js',			   f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},
-				
+				{src : 'js/vendor/editor/editor.js',			   f : 'js'},
+				{src : 'js/vendor/editor/embed.js',			   f : 'js'},
+				{src : 'js/vendor/editor/carousel.js',			   f : 'js'},
+				{src : 'js/vendor/editor/paragraph.js',			   f : 'js'},
+				{src : 'js/vendor/editor/header.js',			   f : 'js'},
+				{src : 'js/vendor/editor/imageloader.js',			   f : 'js'},
+				{src : 'js/vendor/editor/delimiter.js',			   f : 'js'},
+				{src : 'js/vendor/editor/link.js',			   f : 'js'},
+				{src : 'js/vendor/editor/list.js',			   f : 'js'},
+				{src : 'js/vendor/editor/quote.js',			   f : 'js'},
+				{src : 'js/vendor/editor/warning.js',			   f : 'js'},
+				{src : 'js/vendor/editor/inlinecode.js',			   f : 'js'}
 			],
-			relationsSunc : true
+
+			electronDontOpen : true
 		},
 
 		video : {
@@ -1107,86 +823,27 @@ __map =  {
 		embeding : {
 			uri : "embeding",
 			href : "embeding",
-			add : function(settings, p){
-
-				if(p.inWnd)
-				{
-					return {
-						insert : 'wnd'
-					}
-				}
-				else
-				if(p.inTooltip)
-				{
-					return {
-						insert : 'tooltip'
-					}
-				}
-				else
-				{
-					return {
-						el : 'content'
-					}
-				}
-
-			}
+			add : insertingfunc
 		},
 
 		userpage : {
 			uri : "userpage",
 			href : "userpage",
 			preshell : true,
-			add : {
-				el : 'content'
-			},
+			add : insertingfunc,
 			anonimus : true,
 			redirect : {
 				auth : 'welcome'
-			}
+			},
+			electronDontOpen : true
 			
 		},
-		oldchat : {
-			uri : "oldchat",
-			href : "oldchat",
-			add : {
-				el : 'content'
-			},
-			anonimus : true,
-
-			relations : [
-				{src : 'js/vendor/emojionearea.min.js',			   f : 'js'},	
-				{src : 'js/vendor/emojionearea.min.css',			   f : 'css'},	
-			]
-		},
-
 	
 
 		wallet : {
 			uri : "wallet",
 			href : "wallet",
-			add : function(settings, p){
-
-				if(p.inWnd)
-				{
-					return {
-						insert : 'wnd'
-					}
-				}
-				else
-				if(p.inTooltip)
-				{
-					return {
-						insert : 'tooltip'
-					}
-				}
-				else
-				{
-					return {
-						el : 'content'
-					}
-				}
-
-			},
+			add : insertingfunc,
 
 			relations : [
 				{src : 'js/vendor/chart.min.js',			   f : 'js', require : function(){
@@ -1196,28 +853,13 @@ __map =  {
 
 			relationsSunc : true,
 
-			
+			electronDontOpen : true
 		},
 
 		share : {
 			uri : "share",
 			href : "share",
-			add : function(settings, p){
-
-				if(p.inWnd)
-
-					return {
-						insert : 'wnd'
-					}
-
-				else
-				{
-					return {
-						el : 'content'
-					}
-				}
-
-			},
+			add : insertingfunc,
 
 			relations : [
 				{src : 'js/vendor/exif.js', f : 'js', 
@@ -1241,6 +883,7 @@ __map =  {
 
 		
 			],
+			electronDontOpen : true
 		},
 
 		comments : {
@@ -1323,43 +966,13 @@ __map =  {
 		imageGalleryEdit : {
 			uri : "imageGalleryEdit",
 			href : "imagesEdit",
-			add : function(settings, p){
-
-				if(p.inWnd)
-
-					return {
-						insert : 'wnd'
-					}
-
-				else
-				{
-					return {
-						el : 'content'
-					}
-				}
-
-			},
+			add : insertingfunc,
 			anonimus : true,
 		},
 		imagegallery : {
 			uri : "imagegallery",
 			href : "imagegallery",
-			add : function(settings, p){
-
-				if(p.inWnd)
-
-					return {
-						insert : 'wnd'
-					}
-
-				else
-				{
-					return {
-						el : 'content'
-					}
-				}
-
-			},
+			add : insertingfunc,
 			anonimus : true,
 			relationsSunc : true,
 		},
@@ -1390,6 +1003,22 @@ __map =  {
 		renew : true,
 		reload : true
 	},
+
+	
+	
+	// electronnav
+	
+	/*electronnav : {
+		uri : "electronnav",
+		href : "electronnav",
+		add : {
+			el : 'electronnav'
+		},
+		now : typeof _Electron != 'undefined' && _Electron,
+		anonimus : true,
+		renew : true,
+		reload : true
+	},*/
 
 	toppanel : {
 		uri : "toppanel",
@@ -1446,22 +1075,7 @@ __map =  {
 	notifications : {
 		uri : "notifications",
 		href : "notifications",
-		add : function(settings, p){
-
-			if(p.inTooltip)
-
-				return {
-					insert : 'tooltip'
-				}
-
-			else
-			{
-				return {
-					el : 'content'
-				}
-			}
-
-		},
+		add : insertingfunc,
 
 		
 	},
@@ -1489,129 +1103,29 @@ __map =  {
 	panel : {
 		uri : "panel",
 		href : "panel",
-		add : function(settings, p){
-
-			if(p.inWnd)
-			{
-				return {
-					insert : 'wnd'
-				}
-			}
-			else
-			if(p.inTooltip)
-			{
-				return {
-					insert : 'tooltip'
-				}
-			}
-			else
-			{
-				return {
-					el : 'content'
-				}
-			}
-
-		},
+		add : insertingfunc,
 		anonimus : true,
 	},
 
 	leftpanel : {
 		uri : "leftpanel",
 		href : "leftpanel",
-		add : function(settings, p){
-
-			if(p.inWnd)
-			{
-				return {
-					insert : 'wnd'
-				}
-			}
-			else
-			if(p.inTooltip)
-			{
-				return {
-					insert : 'tooltip'
-				}
-			}
-			else
-			{
-				return {
-					el : 'content'
-				}
-			}
-
-		},
+		add : insertingfunc,
 		anonimus : true,
 	},
 
-	discussions : {
-		uri : "discussions",
-		href : "discussions",
-		add : function(settings, p){
-
-			if(p.inWnd)
-			{
-				return {
-					insert : 'wnd'
-				}
-			}
-			else
-			if(p.inTooltip)
-			{
-				return {
-					insert : 'tooltip'
-				}
-			}
-			else
-			{
-				return {
-					el : 'content'
-				}
-			}
-
-		},
-		/*redirect : {
-			auth : 'authorization',
-			validate : 'filluser'
-		},*/
-		//anonimus : true,
-		/*relationsSunc : true,
-		relations : [
-
-			
-			{src : 'js/vendor/rtc/RTCMultiConnection.min.js',			   f : 'js'},	
-			{src : 'js/vendor/rtc/socket.io.js',			   f : 'js'}	
-
-			
-		]*/
+	nodecontrol : {
+		uri : "nodecontrol",
+		href : "nodecontrol",
+		add : insertingfunc,
+		
+		anonimus : true,
 	},
 
 	bastyonhelper : {
 		uri : "bastyonhelper",
 		href : "bastyonhelper",
-		add : function(settings, p){
-
-			if(p.inWnd)
-			{
-				return {
-					insert : 'wnd'
-				}
-			}
-			else
-			if(p.inTooltip)
-			{
-				return {
-					insert : 'tooltip'
-				}
-			}
-			else
-			{
-				return {
-					el : 'content'
-				}
-			}
-
-		},
+		add : insertingfunc,
 		
 		anonimus : true,
 	},
@@ -1619,29 +1133,7 @@ __map =  {
 	authorization : {
 		uri : "authorization",
 		href : "authorization",
-		add : function(settings, p){
-
-			if(p.inWnd)
-			{
-				return {
-					insert : 'wnd'
-				}
-			}
-			else
-			if(p.inTooltip)
-			{
-				return {
-					insert : 'tooltip'
-				}
-			}
-			else
-			{
-				return {
-					el : 'content'
-				}
-			}
-
-		},
+		add : insertingfunc,
 		relations : [
 
 			
@@ -1650,34 +1142,13 @@ __map =  {
 			
 		],
 		anonimus : true,
+		electronDontOpen : true
 	},
 
 	addaccount : {
 		uri : "addaccount",
 		href : "addaccount",
-		add : function(settings, p){
-
-			if(p.inWnd)
-			{
-				return {
-					insert : 'wnd'
-				}
-			}
-			else
-			if(p.inTooltip)
-			{
-				return {
-					insert : 'tooltip'
-				}
-			}
-			else
-			{
-				return {
-					el : 'content'
-				}
-			}
-
-		},
+		add : insertingfunc,
 		relations : [
 
 		
@@ -1690,134 +1161,31 @@ __map =  {
 	complain : {
 		uri : "complain",
 		href : "complain",
-		add : function(settings, p){
-
-			if(p.inWnd)
-			{
-				return {
-					insert : 'wnd'
-				}
-			}
-			else
-			{
-				return {
-					el : 'content'
-				}
-			}
-
-		}
+		add : insertingfunc
 	},
 
 	postscores : {
 		uri : "postscores",
 		href : "postscores",
-		add : function(settings, p){
-
-			if(p.inWnd)
-			{
-				return {
-					insert : 'wnd'
-				}
-			}
-			else
-			if(p.inTooltip)
-			{
-				return {
-					insert : 'tooltip'
-				}
-			}
-			else
-			{
-				return {
-					el : 'content'
-				}
-			}
-
-		}
+		add : insertingfunc
 	},
 
 	scheduler : {
 		uri : "scheduler",
 		href : "scheduler",
-		add : function(settings, p){
-
-			if(p.inWnd)
-			{
-				return {
-					insert : 'wnd'
-				}
-			}
-			else
-			if(p.inTooltip)
-			{
-				return {
-					insert : 'tooltip'
-				}
-			}
-			else
-			{
-				return {
-					el : 'content'
-				}
-			}
-
-		}
+		add : insertingfunc
 	},
 
 	surveyiframe : {
 		uri : "surveyiframe",
 		href : "surveyiframe",
-		add : function(settings, p){
-
-			if(p.inWnd)
-			{
-				return {
-					insert : 'wnd'
-				}
-			}
-			else
-			if(p.inTooltip)
-			{
-				return {
-					insert : 'tooltip'
-				}
-			}
-			else
-			{
-				return {
-					el : 'content'
-				}
-			}
-
-		}
+		add : insertingfunc
 	},
 
 	socialshare : {
 		uri : "socialshare",
 		href : "socialshare",
-		add : function(settings, p){
-
-			if(p.inWnd)
-			{
-				return {
-					insert : 'wnd'
-				}
-			}
-			else
-			if(p.inTooltip)
-			{
-				return {
-					insert : 'tooltip'
-				}
-			}
-			else
-			{
-				return {
-					el : 'content'
-				}
-			}
-
-		},
+		add : insertingfunc,
 
 		anonimus : true,
 
@@ -1829,29 +1197,7 @@ __map =  {
 	socialshare2 : {
 		uri : "socialshare2",
 		href : "socialshare2",
-		add : function(settings, p){
-
-			if(p.inWnd)
-			{
-				return {
-					insert : 'wnd'
-				}
-			}
-			else
-			if(p.inTooltip)
-			{
-				return {
-					insert : 'tooltip'
-				}
-			}
-			else
-			{
-				return {
-					el : 'content'
-				}
-			}
-
-		},
+		add : insertingfunc,
 
 		anonimus : true,
 
@@ -1898,7 +1244,13 @@ __map =  {
 		add : {
 			el : 'content'
 		},
-		anonimus : true
+		anonimus : true,
+
+		electronDontOpen : function(){
+			var _p = parameters()
+
+			if(!_p.s && !_p.v) return true
+		}
 	},
 
 	author : {
@@ -1908,7 +1260,8 @@ __map =  {
 			el : 'content'
 		},
 		anonimus : true,
-		preshell : true
+		preshell : true,
+		//exhandler : true
 		
 	},
 
@@ -1926,78 +1279,20 @@ __map =  {
 		uri : "post",
 		href : "post",
 		preshell : true,
-		add : function(settings, p){
-
-			if(p.inWnd)
-			{
-				return {
-					insert : 'wnd'
-				}
-			}
-			else
-			if(p.inTooltip)
-			{
-				return {
-					insert : 'tooltip'
-				}
-			}
-			else
-			{
-				return {
-					el : 'content'
-				}
-			}
-
-		},
+		add : insertingfunc,
 		anonimus : true,
+		//exhandler : true
 	},
 	userslist : {
 		uri : "userslist",
 		href : "userslist",
-		add : function(settings, p){
-
-			if(p.inWnd)
-			{
-				return {
-					insert : 'wnd'
-				}
-			}
-			else
-			if(p.inTooltip)
-			{
-				return {
-					insert : 'tooltip'
-				}
-			}
-			else
-			{
-				return {
-					el : 'content'
-				}
-			}
-
-		},
+		add : insertingfunc,
 		anonimus : true,
 	},
 	ustate : {
 		uri : "ustate",
 		href : "ustate",
-		add : function(settings, p){
-
-			if(p.inTooltip)
-
-				return {
-					insert : 'tooltip'
-				}
-
-			else
-			{
-				return {
-					el : 'content'
-				}
-			}
-
-		},
+		add : insertingfunc,
 
 		relations : [
 			{src : 'js/vendor/chart.min.js',			   f : 'js', require : function(){
@@ -2010,57 +1305,13 @@ __map =  {
 	videoCabinet : {
 		uri : "videoCabinet",
 		href : "videoCabinet",
-		add : function(settings, p){
-
-			if(p.inWnd)
-			{
-				return {
-					insert : 'wnd'
-				}
-			}
-			else
-			if(p.inTooltip)
-			{
-				return {
-					insert : 'tooltip'
-				}
-			}
-			else
-			{
-				return {
-					el : 'content'
-				}
-			}
-
-		},
+		add : insertingfunc,
 	},
 
 	dust : {
 		uri : "dust",
 		href : "dust",
-		add : function(settings, p){
-
-			if(p.inWnd)
-			{
-				return {
-					insert : 'wnd'
-				}
-			}
-			else
-			if(p.inTooltip)
-			{
-				return {
-					insert : 'tooltip'
-				}
-			}
-			else
-			{
-				return {
-					el : 'content'
-				}
-			}
-
-		},
+		add : insertingfunc,
 
 		relations : [
 			{src : 'js/validation.js',			   f : 'js'},	
@@ -2070,29 +1321,7 @@ __map =  {
 	testApi : {
 		uri : "testApi",
 		href : "testApi",
-		add : function(settings, p){
-
-			if(p.inWnd)
-			{
-				return {
-					insert : 'wnd'
-				}
-			}
-			else
-			if(p.inTooltip)
-			{
-				return {
-					insert : 'tooltip'
-				}
-			}
-			else
-			{
-				return {
-					el : 'content'
-				}
-			}
-
-		},
+		add : insertingfunc,
 
 		relations : [
 			{src : 'js/validation.js',			   f : 'js'},	

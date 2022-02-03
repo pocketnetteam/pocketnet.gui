@@ -1,0 +1,194 @@
+#recommendedposts {
+  background: #fff;
+  border-radius: 12px;
+}
+#recommendedposts.invisible {
+  opacity: 0;
+}
+#recommendedposts .rcptwrp {
+  background: #fff;
+  border-radius: 12px;
+  position: relative;
+}
+#recommendedposts .tcaptionwrapper {
+  display: flex;
+  align-items: center;
+}
+#recommendedposts .tcaptionwrapper .vc_valuecustom {
+  width: 75px;
+  font-size: 0.8em;
+  font-weight: 500;
+}
+#recommendedposts .tcaptionwrapper .vc_valuecustom .vc_textInput .vc_iconWrapper,
+#recommendedposts .tcaptionwrapper .vc_valuecustom .vc_textInput .vc_inputWrapper {
+  border: 0;
+}
+#recommendedposts .tcaption {
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 2;
+  font-weight: 100;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(229, 229, 229, 0.5);
+}
+#recommendedposts .tcaption .authors {
+  font-weight: 700;
+}
+#recommendedposts .tcaption .rating {
+  color: #555770;
+}
+#recommendedposts .caption {
+  font-weight: 100;
+  font-size: 2em;
+  margin-bottom: 1em;
+}
+#recommendedposts .loaderWrapper {
+  display: none;
+  padding: 1em;
+  text-align: center;
+}
+#recommendedposts.loading .loaderWrapper {
+  display: block;
+}
+#recommendedposts .subscribe,
+#recommendedposts .unsubscribe {
+  position: relative;
+}
+#recommendedposts .subscribe .fa-plus,
+#recommendedposts .unsubscribe .fa-plus {
+  position: absolute;
+  top: 3px;
+  left: 14px;
+  font-size: 0.5em;
+}
+#recommendedposts .subscribe {
+  color: #b2abac;
+}
+#recommendedposts .unsubscribe {
+  color: #076C34;
+}
+#recommendedposts .posts {
+  padding-bottom: 0.5em;
+}
+#recommendedposts .posts .post {
+  padding: 1em;
+}
+#recommendedposts .posts .post .imageWrapper {
+  margin-top: 0.5em;
+}
+#recommendedposts .posts .post .imageWrapper img {
+  border-radius: 8px;
+  max-width: 100%;
+}
+#recommendedposts .posts .post .postcontent {
+  margin-top: 0.5em;
+  word-break: break-word;
+}
+#recommendedposts .posts .post .postcontent .message {
+  overflow-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 15;
+  line-clamp: 15;
+  -webkit-box-orient: vertical;
+}
+#recommendedposts .posts .post .infoWrapper {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8em;
+  color: #C7C8D9;
+  margin-top: 1em;
+}
+#recommendedposts .posts .post .infoWrapper .actionsWrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+#recommendedposts .posts .post .infoWrapper .actionsWrapper > div {
+  padding-left: 0.75em;
+}
+#recommendedposts .posts .post .addressTable {
+  cursor: pointer;
+}
+#recommendedposts .posts .post .addressTable > div {
+  vertical-align: middle;
+}
+#recommendedposts .posts .post .addressTable > div.iconWrapper {
+  width: 24px;
+  text-align: center;
+}
+#recommendedposts .posts .post .addressTable > div.iconWrapper .usericon {
+  height: 24px;
+  width: 100%;
+}
+#recommendedposts .posts .post .addressTable > div.iconWrapper .usericon .letter {
+  position: relative;
+  font-size: 1em;
+  top: -10px;
+}
+#recommendedposts .posts .post .addressTable > div.label {
+  padding-left: 0.5em;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+#recommendedposts .posts .post .addressTable > div.label .cur {
+  color: #00a4ff;
+}
+#recommendedposts .posts .post .addressTable > div.label .top {
+  display: flex;
+}
+#recommendedposts .posts .post .addressTable > div.label .top .name {
+  font-weight: 700;
+  font-size: 0.9em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+#recommendedposts .posts .post .addressTable > div.label .top .reputation {
+  font-size: 0.9em;
+  margin-left: 0.5em;
+  font-weight: 700;
+  color: #00a4ff;
+}
+#recommendedposts .posts .post .addressTable > div.label .light {
+  font-size: 0.7em;
+  color: #3c4146;
+}
+#recommendedposts .posts .post .addressTable > div.extra {
+  width: 20px;
+  text-align: right;
+}
+#recommendedposts .posts .post .blockingWrapper {
+  display: none;
+}
+#recommendedposts .posts .post.userblocking .subscribebuttonstop {
+  display: none;
+}
+#recommendedposts .posts .post.userblocking .blockingWrapper {
+  display: inline;
+}
+#recommendedposts .posts .post .subscribebuttonstop .unsubscribe {
+  display: none;
+}
+#recommendedposts .posts .post .subscribebuttonstop.following .unsubscribe {
+  display: inline;
+}
+#recommendedposts .posts .post .subscribebuttonstop.following .notificationturn {
+  display: inline;
+}
+#recommendedposts .posts .post .subscribebuttonstop.following .subscribe {
+  display: none;
+}
+html.stblack #recommendedposts {
+  background: #0a0c17;
+}
+/*t*/
+@media only screen and (max-width: 768px) {
+  #userslist {
+    padding: 1em;
+  }
+  #userslist .users .addressTable > div.extra {
+    width: 60px;
+  }
+}

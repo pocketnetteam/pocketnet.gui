@@ -20,8 +20,8 @@ var pkoin = (function(){
 					name : "Localization",
 					id : 'localization',
 					defaultValue : optionsValue,
-					possibleValues : ['pkoinComment', 'donateToTheAuthor'],
-					possibleValuesLabels : [self.app.localization.e('pkoinComment'), self.app.localization.e('donateToTheAuthor')],
+					possibleValues : ['pkoinComment', 'sendToAuthor', 'liftUpThePost'],
+					possibleValuesLabels : [self.app.localization.e('pkoinComment'), self.app.localization.e('sendToAuthor'), self.app.localization.e('liftUpThePost')],
 
 		
 					_onChange : function(value){
@@ -60,6 +60,7 @@ var pkoin = (function(){
 					el.inputSum = _p.el.find('#inputSum');
 					el.textareaComment = _p.el.find('#textareaComment');
 
+
 					
 				})
 
@@ -89,9 +90,13 @@ var pkoin = (function(){
 					}
 				
 			},
-			send : function(comment, clbk){	
+			donate : function(comment, clbk){	
+
+				globalpreloader(true);
 
 				self.app.platform.sdk.comments.send(shareId, comment, null, null, function(err, alias){
+
+					globalpreloader(false)
 
 					if(!err){
 						if (clbk)
@@ -112,6 +117,23 @@ var pkoin = (function(){
 					}
 
 				}, null, "0");
+			},
+			liftUp : function(booster, clbk){	
+
+				globalpreloader(true);
+
+				self.sdk.node.transactions.create.commonFromUnspent(
+
+					booster,
+
+					function (_alias, error) {
+
+						globalpreloader(false)
+
+						clbk()
+
+					}
+				)
 			}
 
 		}
@@ -122,7 +144,6 @@ var pkoin = (function(){
 				
 				var comment = new Comment(shareId);
 				comment.message.set(valComment);
-				actions.links(comment, valComment);
 
 				comment.donate.set({
 					address: receiver,
@@ -130,7 +151,18 @@ var pkoin = (function(){
 				})
 				
 
-				actions.send(comment, clbk);
+				actions.donate(comment, clbk);
+
+			},
+
+			liftUp : function(clbk){
+
+				
+				var contentBoost = new ContentBoost(shareId);
+
+				contentBoost.amount.set(valSum);
+
+				actions.liftUp(contentBoost, clbk);
 
 			}
 		}
@@ -172,8 +204,6 @@ var pkoin = (function(){
 						closeContainer();
 					}
 
-
-
 				}
 
 				self.app.platform.sdk.node.transactions.get.balance(function(amount){
@@ -183,7 +213,12 @@ var pkoin = (function(){
 
 					if (valSum){
 
-						if (valSum < Number(balance)){
+
+						if (valSum && valSum < 0.05){
+
+							sitemessage(self.app.localization.e('minPkoin', 0.05))
+
+						} else if (valSum < Number(balance)){
 
 							if (optionsValue === 'pkoinComment'){
 
@@ -201,8 +236,17 @@ var pkoin = (function(){
 								}
 	
 							}
+
+							
+							if (optionsValue === 'liftUpThePost'){
+
+
+								events.liftUp(final);
+		
 	
-							if (optionsValue === 'donateToTheAuthor'){
+							}
+	
+							if (optionsValue === 'sendToAuthor'){
 	
 						
 								self.app.platform.ui.wallet.send({
@@ -226,11 +270,6 @@ var pkoin = (function(){
 					
 				
 				})
-
-
-
-
-
 
 				
 			})

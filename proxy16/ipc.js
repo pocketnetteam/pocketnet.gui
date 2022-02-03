@@ -100,9 +100,6 @@ var IPC = function(ipc, wc){
 		promise.then(data => {
 			send(message.id, null, data)
 		}).catch(e => {
-
-			
-
 			send(message.id, e)
 		})
 
@@ -128,8 +125,24 @@ var IPC = function(ipc, wc){
 
 				return Promise.reject()
 			})
+        },
+		saveFileDialog : function(options){
+			return dialog.showSaveDialog(options).then(res => {
+				if (!res.canceled && (res.filePath && res.filePath.length > 0)) {
+					return Promise.resolve(res.filePath)
+				}
 
-          
+				return Promise.reject()
+			})
+        },
+		openFileDialog : function(options){
+			return dialog.showOpenDialog(options).then(res => {
+				if (!res.canceled && (res.filePaths && res.filePaths.length > 0)) {
+					return Promise.resolve(res.filePaths)
+				}
+
+				return Promise.reject()
+			})
         }
 	}
 
@@ -138,7 +151,8 @@ var IPC = function(ipc, wc){
 			node : {
 				ndataPath : function(message){
 					return helpers.dialog({
-						properties: ['openDirectory']
+						properties: ['openDirectory'],
+                        defaultPath: message.data.defaultPath || ''
 					}).then(res => {
 	
 						message.data = {
@@ -153,6 +167,7 @@ var IPC = function(ipc, wc){
 				binPath : function(message){
 					return helpers.dialog({
 						properties: ['openDirectory'],
+                        defaultPath: message.data.defaultPath || ''
 						/*filters: [
 							{ name: 'Pocketcoin Executable', extensions: ['exe'] },
 							{ name: 'All Files', extensions: ['*'] }
@@ -167,7 +182,37 @@ var IPC = function(ipc, wc){
 						return Promise.resolve()
 	
 					}) 
-				}
+				},
+                dumpWallet : function(message) {
+					return helpers.saveFileDialog({
+						properties: ['dontAddToRecent'],
+                        defaultPath: message.data.defaultPath || ''
+					}).then(res => {
+	
+                        message.data = {
+							path : res
+						}
+
+						return Promise.resolve()
+					})
+				},
+                importWallet : function(message) {
+					return helpers.openFileDialog({
+						properties: ['openFile'],
+                        defaultPath: message.data.defaultPath || ''
+					}).then(res => {
+	
+                        message.data = {
+							path : res[0]
+						}
+
+						return Promise.resolve()
+					}).catch(e => {
+                        return Promise.reject({
+							cancel : true
+						})
+                    })
+				},
 			}
 		}
 		
@@ -191,11 +236,8 @@ var IPC = function(ipc, wc){
 			if(!kaction) return Promise.reject('unknownAction')
 
 			return middle(message).then(r => { 
-				
 				return kaction(message.data)
-
 			}).then(data => {
-
 				send(message.id, null, data)
 			})
 		},
@@ -233,10 +275,14 @@ var IPC = function(ipc, wc){
 		return kit.destroyhard()
 	}
 
-	//var isDevelopment = process.argv.find(function(el) { return el == '--development'; })
+    self.candestroy = function() {
+        return kit.candestroy()
+    }
+    
+    self.nodeStop = function() {
+        return kit.manage.node.stop()
+    }
 
-	//isDevelopment ? f.path('pocketcoin') : Path.join(electron.app.getPath('userData'), 'pocketcoin')
-	
     kit.init({}, { wssdummy, userDataPath : electron.app.getPath('userData')})
 
 	return self

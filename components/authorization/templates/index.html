@@ -18,33 +18,43 @@
 
 							<div class="formh">
 
-								<div class="item">
-									
+								<form id="loginform" autocomplete="on">
 
-									<div class="inputTable table keytable">
+									<div class="item">
 
-										<div>
-											<div class="inputWrapperKey">
-												<input elementsid="inputloginkey" type="text" class="loginValue" value="<%- (mnemonic) %>" placeholder="<%=e('e13024')%>" autocomplete="on"/>
+										<div class="inputTable table keytable">
+
+											<div>
+												<div class="inputWrapperKey">
+													
+													<input elementsid="hiddenname" autocomplete="username" value="user" type="text" name='username' class="hidden"/>
+													<input elementsid="inputloginkey" autocomplete="current-password" type="password" name='password' class="loginValue" placeholder="<%=e('e13024')%>" />
+
+												</div>
+											</div>
+
+											<div class="actionButtonsWrapper">
+												<div
+													elementsid="uploadqrcode"
+													class="uploadFile"
+												>
+													<div class="icon"><i class="fas fa-qrcode"></i></div>
+													<div class="label"></div>
+												</div>
+												<div elementsid="showpassword" class="showPassword hidden" tabindex="1000">
+													<div class="icon"><i class="fas fa-eye"></i></div>
+												</div>
 											</div>
 										</div>
-										<div class="fileUploaderWrapper">
-											<div 
-												elementsid="uploadqrcode"
-												class="uploadFile"
-											>
-												<div class="icon"><i class="fas fa-qrcode"></i></div>
-												<div class="label"><%=e('loadqrcode')%></div>
-											</div>
-										</div>
+										
+										
 									</div>
-									
-									
-								</div>
 
-								<div class="item e buttons">
-									<button elementsid="buttonsignin" class="enter"><%=e('signin')%></button>
-								</div>
+									<div class="item e buttons">
+										<button type="submit" elementsid="buttonsignin" class="enter"><%=e('signin')%></button>
+									</div>
+
+								</form>
 
 								<% if(fast) {%>
 									<div class="item e buttons ">

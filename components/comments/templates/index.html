@@ -1,26 +1,32 @@
-<div id="<%-module.map.id%>" class="<% if(ed.fromtop) {%> fromtop <% } %> <% if(ed.openapi) {%> fromopenapi <% } %>">
-
+<div id="<%-module.map.id%>" class="<% if(ed.fromtop) {%> fromtop <% } %> <% if(ed.openapi) {%> fromopenapi <% } %> <% if(preview) {%> preview <% } %> <% if(listpreview) {%> listpreview <% } %>">
 
 	<div class="captionfwrapper">
 		<div class="captionCnt">
 		</div>
 	</div>
 
-	<div class="loaderWrapper">
+	<div class="loaderWrapper <% if(preview) {%> hidden <% } %>">
 		<div class="preloader5"><img src="./img/three-dots.svg"/></div>
 	</div>
 
 	<div elementsid="comments_showall" class="showall hidden">
-		<span><%=e('e13036').toUpperCase()%></span> <span class="ccounts"></span>
+		<div class="text">
+			<span><%=e('e13036')%></span> <span class="ccounts"></span>
+		</div>
+		<div class="icon">
+			<i class="fa fa-chevron-down"></i>
+		</div>
 	</div>
 
 	<% if(ed.fromtop) {%>
+		
 		<div class="post">
 		</div>
 		
 	<% } %>
 
 	<div class="list">
+
 	</div>
 
 	<% if(!ed.fromtop) {%>

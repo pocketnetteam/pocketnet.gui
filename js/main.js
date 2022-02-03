@@ -6,7 +6,7 @@ if(!_Node)
 {	
 
 	var _listofproxies =  [
-		
+	
 			
 		{
 			host : 'pocketnet.app',
@@ -73,8 +73,6 @@ if(!_Node)
 	});
 
 	app.preapi()
-
-	console.log('ini')
 
 	// Prepare notifications
 	//app.notifications = new Notifications(app);

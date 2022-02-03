@@ -30,10 +30,11 @@
   display: flex;
   padding-right: 0.5em;
   font-size: 0.8em;
-  padding: 0.5em 1em;
+  padding: 0 1em;
 }
 #categories .tcaptiontable .buttons > div {
   display: inline-block;
+  font-size: 1.2em;
 }
 #categories .tcaptiontable .buttons > div.ticon {
   cursor: pointer;
@@ -69,7 +70,6 @@
 #categories .tcaptionwrapper {
   padding-top: 1em;
   margin-bottom: 0.5em;
-  border-top: 1px solid #E3E4EB;
 }
 #categories .tcaptionwrapper span {
   font-size: 0.8em;

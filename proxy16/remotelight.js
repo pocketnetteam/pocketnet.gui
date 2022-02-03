@@ -168,7 +168,8 @@ var Remote = function(app){
 					d = JSON.parse(body || "{}")
 
 					_.each(d, function(v, k){
-						if (k.split(':').length)
+						
+						if (k.split(':').length > 1)
 							dn[k.split(':')[1]] = v
 
 						else

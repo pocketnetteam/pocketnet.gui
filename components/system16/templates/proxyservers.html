@@ -1,0 +1,46 @@
+<div class="proxyconnect collapsepart expanded">
+
+    <div class="work">
+        <div class="subcaption">
+            <span>Proxy servers</span> <i class="fas fa-angle-down"></i>
+        </div>
+    </div>
+
+    <div class="collapsingpart">
+        <div class="work">
+
+            <div class="setting">
+                <div class="settingTable table">
+                    <div class="label">
+                        <span>Use Proxy:</span>
+                    </div>
+
+                    <div elementsid="valueselectusing" class="value selectusing" fss="fss">
+
+                        <span><% if(using) {%> <%-using.get.name()%> <% } else {%> Not selected <% }%></span>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="setting">
+                <div class="settingTable table">
+                    <div class="label">
+                        <span>Watch:</span>
+                    </div>
+
+                    <div elementsid="valuecurrent" class="value current" fss="fss">
+
+                        <span>
+                            <%- current ? current.get.name() : "Not Selected" %>
+                        </span>
+
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+
+</div>

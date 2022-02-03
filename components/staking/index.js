@@ -75,8 +75,7 @@ var staking = (function(){
 				var r = amount / calc.netstakeweight()
 				var n = 1
 
-
-				return amount * Math.pow( (1 + 1440 * 2.5 / calc.netstakeweight() ),  t)
+				return amount * Math.pow( (1 + 1440 * 4.75 / calc.netstakeweight() ),  t)
 
 			},
 
@@ -221,66 +220,56 @@ var staking = (function(){
 				return graph
 			},
 			graph : function(_el, clbk){
-				if (graph){
 
-					graph.chart.update({
-						series: helpers.series()
-					});
+				graph = chart.prepare(_el)
 
-			
-					if(clbk) clbk(graph, _el)
-				}
-				else{
-					graph = chart.prepare(_el)
-
-					graph.render({
-						maxPointsCount : 10,
-						prepareOptions : function(p){
-							p.plotOptions.series = {
-								states : {
-									inactive: {
-										opacity: 1
-									},
-									enableMouseTracking: false,
-									hover : {
-										halo: {
-											size: 0,
-										},
-										enabled : false
-									}
-								}
-							}
-
-							p.plotOptions.spline = {
-								animation: false,
-								lineWidth: 1,
-								marker: {
-									enabled: false
+				graph.render({
+					maxPointsCount : 10,
+					prepareOptions : function(p){
+						p.plotOptions.series = {
+							states : {
+								inactive: {
+									opacity: 1
 								},
-								states: {
-									hover: {
-										lineWidth: 1,
-										lineWidthPlus: 0,
-										marker: {
-											fillColor: "#000",
-											lineColor: "#000"
-										},
-										halo: {
-											opacity: 0
-										}
+								enableMouseTracking: false,
+								hover : {
+									halo: {
+										size: 0,
 									},
-	
+									enabled : false
 								}
 							}
-							
 						}
-					}, function(){
 
-						if (clbk)
-							clbk(graph, _el);
+						p.plotOptions.spline = {
+							animation: false,
+							lineWidth: 1,
+							marker: {
+								enabled: false
+							},
+							states: {
+								hover: {
+									lineWidth: 1,
+									lineWidthPlus: 0,
+									marker: {
+										fillColor: "#000",
+										lineColor: "#000"
+									},
+									halo: {
+										opacity: 0
+									}
+								},
 
-					});
-				}
+							}
+						}
+						
+					}
+				}, function(){
+
+					if (clbk)
+						clbk(graph, _el);
+
+				});
 				
 				
 			},
@@ -405,6 +394,8 @@ var staking = (function(){
 
 				console.log('el.c', el.c)
 				var _el = el.c.find('.chart')
+
+				_el.empty();
 
 				var d = $('<div></div>', {
 					class : 'chartWrapper'
@@ -625,6 +616,10 @@ var staking = (function(){
 				make()
 
 				p.clbk(null, p);
+			},
+
+			wnd : {
+				class : 'normalizedmobile'
 			}
 		}
 	};

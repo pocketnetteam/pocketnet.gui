@@ -21,10 +21,13 @@ var Node = function(options, manager){
 
     var pending = 0
 
+    var wssconnected = false
+
     self.updating = ['rpcuser', 'rpcpass', 'ws', 'name']
 
     self.host = options.host
     self.port = options.port
+    self.portPrivate = options.portPrivate
     self.rpcuser = options.rpcuser || ""
     self.rpcpass = options.rpcpass || ""
     self.ws = options.ws
@@ -124,8 +127,17 @@ var Node = function(options, manager){
      
             wss.service = (new Wss(self, manager.proxy.kit.service())).connect()
 
+            wss.service.on('open', function(){
+                wssconnected = true
+            })
+
+            wss.service.on('close', function(){
+                wssconnected = false
+            })
+
             wss.service.on('disconnected', function(){
                 wss.service = null
+                wssconnected = false
                 serviceConnection()
             })
 
@@ -257,6 +269,7 @@ var Node = function(options, manager){
         pass: self.rpcpass,
         host: self.host,
         port: self.port,
+        portPrivate: self.portPrivate,
     })
 
     self.rpcs = function(method, parsed){
@@ -293,6 +306,8 @@ var Node = function(options, manager){
                     if(!err.code || err.code == -28){
                         code = 521
                     }
+
+                    if(err.code == -5) code = 200 // not found
 
                     if(err.code == 521) penalty.set(0.8, 220000, '521')
                     if(err.code == 408) penalty.set(0.5, 60000, '408')
@@ -735,7 +750,7 @@ var Node = function(options, manager){
             if(!statisticInterval){
 
 
-                self.info().catch(e => {console.log(e)})
+                self.info().catch(e => { /*console.log(e)*/ })
 
                 statisticInterval = setInterval(function(){
 
@@ -1006,7 +1021,8 @@ var Node = function(options, manager){
             peer : self.peer,
             wssusers : _.toArray(wss.users).length,
             bchain : self.bchain,
-            version : self.version
+            version : self.version,
+            service : wssconnected ? true : false
             
         }
     }

@@ -312,7 +312,7 @@ typeof navigator === "object" && (function (global, factory) {
         var max = parseFloat(input.getAttribute('max')) || 100;
         var step = parseFloat(input.getAttribute('step')) || 1;
         var delta = max - min; // Calculate percentage
-        console.log("HERE")
+
         var percent;
         var clientRect = input.getBoundingClientRect();
         var thumbWidth = 100 / clientRect.width * (this.config.thumbWidth / 2) / 100; // Determine left percentage
@@ -2279,7 +2279,6 @@ typeof navigator === "object" && (function (global, factory) {
         return;
       } // Calculate percentage
 
-      console.log("HERE")
       var percent = 0;
       var clientRect = this.elements.progress.getBoundingClientRect();
       var visible = "".concat(this.config.classNames.tooltip, "--visible");
@@ -4429,7 +4428,7 @@ typeof navigator === "object" && (function (global, factory) {
 
         var title = !is$1.empty(this.config.title) ? this.config.title : 'video';
         var format = i18n.get('frameTitle', this.config);
-        iframe.setAttribute('title', format.replace('{title}', title));
+        //iframe.setAttribute('title', format.replace('{title}', title));
       }
     },
     // Toggle poster
@@ -4846,7 +4845,6 @@ typeof navigator === "object" && (function (global, factory) {
           if (!measure) {
             return setAspectRatio.call(player);
           }
-          console.log("HERE")
           var rect = elements.container.getBoundingClientRect();
           var width = rect.width,
               height = rect.height;
@@ -5126,7 +5124,6 @@ typeof navigator === "object" && (function (global, factory) {
             controls.toggleMenu.call(player, event);
           }
         }); // Set range input alternative "value", which matches the tooltip time (#954)
-        console.log("HERE")
         this.bind(elements.inputs.seek, 'mousedown mousemove', function (event) {
           var rect = elements.progress.getBoundingClientRect();
           var percent = 100 / rect.width * (event.pageX - rect.left);
@@ -6000,8 +5997,6 @@ typeof navigator === "object" && (function (global, factory) {
         youtube.ready.call(this);
       } else {
         // Load the API
-
-        console.log("LOADING YOUTUBE")
         loadScript(this.config.urls.youtube.sdk).catch(function (error) {
           _this.debug.warn('YouTube API failed to load', error);
         }); // Setup callback for the API
@@ -6412,6 +6407,7 @@ typeof navigator === "object" && (function (global, factory) {
 
     instance.elements.container.remove();
   };
+
 
   var Ads =
   /*#__PURE__*/
@@ -7232,7 +7228,6 @@ typeof navigator === "object" && (function (global, factory) {
           this.seekTime = this.player.media.duration * (this.player.elements.inputs.seek.value / 100);
         } else {
           // Calculate seek hover position as approx video seconds
-          console.log("HERE")
           var clientRect = this.player.elements.progress.getBoundingClientRect();
           var percentage = 100 / clientRect.width * (event.pageX - clientRect.left);
           this.seekTime = this.player.media.duration * (percentage / 100);
@@ -7613,7 +7608,6 @@ typeof navigator === "object" && (function (global, factory) {
     }, {
       key: "setThumbContainerPos",
       value: function setThumbContainerPos() {
-        console.log("HERE")
         var seekbarRect = this.player.elements.progress.getBoundingClientRect();
         var plyrRect = this.player.elements.container.getBoundingClientRect();
         var container = this.elements.thumb.container; // Find the lowest and highest desired left-position, so we don't slide out the side of the video container
@@ -9158,7 +9152,14 @@ typeof navigator === "object" && (function (global, factory) {
 
 var PlyrEx = function(target, options, clbk, readyCallback) {
     var self = this;
+    var clear = function(){
+      video_options = {}
+      target = null
+      options = {}
+    }
+    
     if (!clbk) clbk = function() {};
+
     var video_options = options;
 
     var provider = target.getAttribute('data-plyr-provider');
@@ -9170,8 +9171,9 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
     var newPlyr = function(target, video_options) {
       var newPlayer = new Plyr(target, video_options);
       // Set the mandatory/missing functions
-      newPlayer.mute = () => newPlayer.muted = true;
-      newPlayer.unmute = () => newPlayer.muted = false;
+        newPlayer.mute = () => newPlayer.muted = true;
+        newPlayer.unmute = () => newPlayer.muted = false;
+
       return newPlayer;
     }
 
@@ -9186,31 +9188,37 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
 
       if (localVideo != undefined && !localVideo.infos.videoDetails) {
 
-        console.log('localVideo', localVideo)
+        //// old remove later
 
         var new_target = document.createElement('video');
-        target.parentNode.replaceChild(new_target, target);
-        target = new_target
+          target.parentNode.replaceChild(new_target, target);
+          target = new_target
 
         var plyrPlayer = newPlyr(target, video_options);
-        plyrPlayer.source = {
-          type: 'video',
-          sources: [
-            {
-              src: localVideo.video.internalURL,
-              type: 'video/mp4',
-              size: parseInt(localVideo.video.name)
-            }
-          ]
-        };
-        plyrPlayer.poster = localVideo.infos.thumbnail;
-        plyrPlayer.on('ready', readyCallback)
-        plyrPlayer.on('play', video_options.play)
-        plyrPlayer.on('pause', video_options.pause)
 
-        plyrPlayer.localVideoId = clear_peertube_id;
+          plyrPlayer.source = {
+            type: 'video',
+            sources: [
+              {
+                src: localVideo.video.internalURL,
+                type: 'video/mp4',
+                size: parseInt(localVideo.video.name)
+              }
+            ]
+          };
+
+          plyrPlayer.poster = localVideo.infos.thumbnail;
+          plyrPlayer.on('ready', readyCallback)
+          plyrPlayer.on('play', video_options.play)
+          plyrPlayer.on('pause', video_options.pause)
+          //plyrPlayer.on('hlsError', video_options.hlsError)
+          
+
+          plyrPlayer.localVideoId = clear_peertube_id;
 
         if (clbk) clbk(plyrPlayer);
+
+        clear()
 
       }
       else {
@@ -9219,16 +9227,15 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
           return typeof PeerTubeEmbeding != 'undefined'
         }, function(){
   
-          console.log('localVideo', localVideo)
-  
           PeerTubeEmbeding.main(target, clear_peertube_id, {
             host : host,
             wautoplay : options.wautoplay,
+            useP2P : options.useP2P,
             logoType : options.logoType,
             localVideo : localVideo,
             start : options.startTime || 0
           },{
-    
+            hlsError : options.hlsError,
             playbackStatusChange : function(status){
               
             },
@@ -9251,6 +9258,8 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
     
             if (clbk) clbk(api);
             if (readyCallback) readyCallback(api);
+
+            clear()
           })
   
         })
@@ -9259,59 +9268,6 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
 
       return self
     }
-
-    /*if (provider == 'youtube') {
-
-      
-
-      PeerTubeEmbeding.main(target, clear_peertube_id, {
-        contributor : 'youtube',
-        wautoplay : options.wautoplay
-      },{
-
-        playbackStatusChange : function(status){
-        },
-        volumechange : options.volumeChange,
-        fullscreenchange : options.fullscreenchange,
-        play : options.play,
-        pause : options.pause
-
-      }).then(embed => {
-
-        var api = embed.api
-          api.mute()
-
-        if (clbk) clbk(api);
-        if (readyCallback) readyCallback(api);
-      })
-
-      return
-    }*/
-
-    /*if (provider == 'vimeo') {
-
-
-      PeerTubeEmbeding.main(target, clear_peertube_id, {
-        contributor : 'vimeo',
-        wautoplay : options.wautoplay
-      },{
-
-        playbackStatusChange : function(status){
-        },
-        volumechange : function(volume){
-        },
-
-      }).then(embed => {
-
-        var api = embed.api
-          api.mute()
-
-        if (clbk) clbk(api);
-        if (readyCallback) readyCallback(api);
-      })
-
-      return
-    }*/
 
 
     var _plyr = function(video_url, preview_url, title) {
@@ -9351,21 +9307,23 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
 
                     _plyr(response.data.video.as, response.data.video.preview || '', response.data.video.title || '');
 
-
                     var plyrPlayer = newPlyr(target, video_options);
 
-                    plyrPlayer.on('ready', readyCallback)
+                      plyrPlayer.on('ready', readyCallback)
 
-                    plyrPlayer.on('volumechange', function(v){
-
-                      if(video_options.volumeChange)
-                        video_options.volumeChange(plyrPlayer.muted ? 0 : plyrPlayer.volume)
-                    })
+                      plyrPlayer.on('volumechange', function(v){
+                        if(video_options.volumeChange) video_options.volumeChange(plyrPlayer.muted ? 0 : plyrPlayer.volume)
+                      })
 
                     if (clbk) clbk(plyrPlayer);
+
                 } else {
-                    _error();
+
+                  _error();
+
                 }
+
+                clear()
             },
 
             error : function(){
@@ -9377,13 +9335,19 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
 
       var plyrPlayer = newPlyr(target, video_options);
 
-      plyrPlayer.on('ready', readyCallback)
-      plyrPlayer.on('play', video_options.play)
-      plyrPlayer.on('pause', video_options.pause)
+          plyrPlayer.on('ready', readyCallback)
+          plyrPlayer.on('play', video_options.play)
+          plyrPlayer.on('pause', video_options.pause)
+
+        
 
       if (clbk) clbk(plyrPlayer);
 
+      clear()
+
     }
+
+    
 
     return self;
 }

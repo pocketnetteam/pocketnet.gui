@@ -73,7 +73,8 @@ var imageGalleryEdit = (function(){
 			},*/			
 		}
 
-		var applyFilters = {}
+		var applyFilters = {},
+			applyedFilters = {}
 
 		var actions = {
 			back : function(){
@@ -131,18 +132,22 @@ var imageGalleryEdit = (function(){
 				}
 				else
 				{
-
-
-
-					Caman(img, function(){
-
-						if(!_img)
-
-							currentCaman = this;
-
+					if(img.pixelData){
 						if (clbk)
-							clbk(this);
-					})
+							clbk(img);
+					}
+					else{
+						Caman(img, function(){
+
+							if(!_img)
+								currentCaman = this;
+	
+							if (clbk)
+								clbk(this);
+						})
+					}
+				
+					
 				}				
 			},
 
@@ -170,9 +175,9 @@ var imageGalleryEdit = (function(){
 							aspectRatio : essenseData.crop.aspectRatio || null,
 							autoCropArea : essenseData.crop.autoCropArea || 0.9,
 							checkOrientation : false,
+							zoomable : false,
+							zoomOnWheel : false,
 						  	crop: function(e) {
-
-								console.log("E", e)
 
 						  		var W = currentCaman.width,
 						  			H = currentCaman.height;
@@ -189,18 +194,22 @@ var imageGalleryEdit = (function(){
 							},
 							ready: function () {
 
-								parent.find(".cropper-container").addClass(essenseData.crop.style || '')
+								if(!essenseData.apply){
 
-								parent.find(".cropper-crop-box").append('<div elementsid="applyCrop" class="applyCrop center" action="apply">\
-									<span class="fa fa-check" aria-hidden="true"></span>\
-								</div>')
+									parent.find(".cropper-container").addClass(essenseData.crop.style || '')
 
-								parent.find('.applyCrop').on('click', function(){
+									parent.find(".cropper-crop-box").append('<div elementsid="applyCrop" class="applyCrop center" action="apply">\
+										<span class="fa fa-check" aria-hidden="true"></span>\
+									</div>')
 
-									actions.apply('crop');
-									renders.savePanel();
+									parent.find('.applyCrop').on('click', function(){
 
-								})
+										actions.apply('crop');
+										renders.savePanel();
+
+									})
+
+								}
 							}
 						});
 					})
@@ -252,6 +261,7 @@ var imageGalleryEdit = (function(){
 							currentImage = currentCaman;
 
 							applyFilters.filter = filter;
+							applyedFilters.filter = filter
 
 							renders.savePanel()
 
@@ -269,8 +279,8 @@ var imageGalleryEdit = (function(){
 
 					actions.caman(function(img){
 
-						var W = img.canvas.width,
-							H = img.canvas.height;
+						var W = img.originalWidth,//canvas.width,
+							H = img.originalHeight;
 
 						var absolute = {
 							x : filter.x * W,
@@ -279,6 +289,7 @@ var imageGalleryEdit = (function(){
 							height : filter.h * H
 						}
 
+						applyedFilters.crop = filter
 
 						img.crop(absolute.width, absolute.height, absolute.x, absolute.y);	
 
@@ -308,7 +319,7 @@ var imageGalleryEdit = (function(){
 					        	helpers.resize();
 
 							if (clbk)
-								clbk();
+								clbk(img);
 						})
 
 					}, _img)
@@ -320,10 +331,10 @@ var imageGalleryEdit = (function(){
 				if (id == 'filter'){
 					actions.caman(function(img){
 
-						actions.camanFilter(img, filter, function(){						
+						actions.camanFilter(img, filter, function(){
 							
 							if (clbk)
-								clbk();
+								clbk(img);
 
 						})
 
@@ -334,9 +345,9 @@ var imageGalleryEdit = (function(){
 
 			apply : function(mode, clbk){
 
-				if(mode && applyFilters[mode]){
+				if (mode && applyFilters[mode]){
 
-					actions.applyFilters(applyFilters[mode], mode, clbk)
+					actions.applyFilters(applyFilters[mode], mode, null, clbk)
 
 					actions[mode]();
 
@@ -363,20 +374,81 @@ var imageGalleryEdit = (function(){
 					self.closeContainer()
 			},
 
+			createunvisibleImage : function(src, clbk){
+				el.invisibleimagewrapper.html('<img id="invisibleimage" src="'+src+'">')
+
+				el.invisibleimagewrapper.imagesLoadedPN(function(image){
+					if(clbk) clbk('#invisibleimage')
+				})
+			},
+
+			applyfiltertobigimage: function(b64, f, k, clbk){
+				actions.createunvisibleImage(b64, function(img){
+					actions.applyFilters(f, k, img, function(img){
+						clbk(img.toBase64())
+					})
+				})
+			},
+
+			applyfilterstooriginal : function(clbk){
+
+				if(_.isEmpty(applyedFilters)){
+
+					clbk(currentOriginal.original)
+
+					return
+				}
+
+				globalpreloader(true, true)
+
+				var ks = ['crop', 'filter']
+				var img = currentOriginal.original
+
+				lazyEach({
+					array: ks,
+					action: function (p) {
+
+						if(applyedFilters[p.item]){
+							actions.applyfiltertobigimage(img, applyedFilters[p.item], p.item, function(b64){
+								img = b64
+	
+								p.success()
+							})
+						}
+						else{
+							p.success()
+						}
+						
+					},
+
+					all: {
+						success: function () {
+
+							clbk(img)
+
+							globalpreloader(false)
+
+						}
+					}
+				})
+				
+			},	
+
 			exit : function(){
 
 				if(essenseData.apply){
-					actions.apply('crop');
 
-					actions.save(true);
+					actions.apply('crop', function(){
+						actions.save(true, function(){
+							actions.close();
+						});	
+					});
 
-					actions.close();
 				}
 				else
 				{
 					actions.close();
 				}
-
 				
 			},
 
@@ -388,21 +460,27 @@ var imageGalleryEdit = (function(){
 				})
 			},
 
-			save : function(norender){
+			save : function(norender, clbk){
 				if(actions.checkUpdates()){
 
-					currentOriginal.original = currentCaman.toBase64()
+					actions.applyfilterstooriginal(function(b64){
+						currentOriginal.original = b64
 
-					applyFilters = {};
+						//currentOriginal.original = currentCaman.toBase64()
 
-					if(!norender){
-						renders.savePanel()
+						applyFilters = {};
+						applyedFilters = {};
 
-						renders.image({
-							image : currentOriginal
-						})
-					}
+						if(!norender){
+							renders.savePanel()
 
+							renders.image({
+								image : currentOriginal
+							})
+						}
+
+						if(clbk) clbk()
+					})
 					
 				}
 			},
@@ -432,6 +510,8 @@ var imageGalleryEdit = (function(){
 				var w = image.naturalWidth || image.width;
 				var h = image.naturalHeight || image.height;
 
+				var __w = w, __h = h
+
 				var c = h / w;
 
 				el.css('padding-top',"0px");
@@ -460,9 +540,10 @@ var imageGalleryEdit = (function(){
 					w = h / c
 				}
 
-			//	debugger;	
-
 				var ptop = (H - h) / 2;
+
+				/*el.css('transform', 'scale(0.1)')
+				el.css('transform-origin', 'top center')*/
 
 				el.css('padding-top', ptop + "px");
 
@@ -598,7 +679,7 @@ var imageGalleryEdit = (function(){
 
 				}, function(_p){
 					
-					_p.el.find('img').imagesLoaded(function(image){
+					_p.el.find('img').imagesLoadedPN(function(image){
 
 						currentImage = deep(image, 'images.0.img');
 						currentOriginal = p.image;
@@ -687,12 +768,13 @@ var imageGalleryEdit = (function(){
 
 		var make = function(){
 
+		
 			renders.image({
 				image : essenseData.images[num],
 
 				clbk : function(){
 
-					if(essenseData.apply){	
+					if (essenseData.apply){	
 						actions.filters()				
 						actions.crop()					
 					}
@@ -793,6 +875,7 @@ var imageGalleryEdit = (function(){
 				el.savePanel = el.c.find('.panel .savePanel');
 				el.exitPanel = el.c.find('.panel .exitPanel');
 				el.filters = el.c.find('.filters');
+				el.invisibleimagewrapper = el.c.find('.invisibleimagewrapper')
 
 				load.editRelations(function(){
 

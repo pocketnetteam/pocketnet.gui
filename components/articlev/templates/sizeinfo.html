@@ -1,0 +1,19 @@
+<% if(size && size.words) {%>
+
+    <div class="sizeinfo">
+        <div class="info">
+            <div class="item">
+                <%= e('art_wordscount') %>: <%- size.words %>
+            </div>
+
+            <!--<div class="item">
+                Приблизительное время чтения: <%- size.minutes.toFixed(0) %> минута
+            </div>-->
+
+            <div class="item <% if(size.percent > 1) {%>bad<% } %>">
+                <%= e('art_volumepercent') %>: <span><%- (size.percent * 100).toFixed(0) %></span>/100%
+            </div>
+        </div>
+    </div>
+
+<% } %>

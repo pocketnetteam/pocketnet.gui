@@ -1,0 +1,39 @@
+<% if(nodestate.wallet) { %>
+    
+    <div class="nodecontent">
+        <div class="work walletBox">
+            <!-- <div elementsid="walletBox" class="ssubcaption">
+                <span>Wallet</span>
+            </div> -->
+
+            <div class="setting wallet">
+                
+                <div class="settingTable table">
+                    <div class="label">
+                        <span><%-e('easyNode_e10025')%></span>
+                    </div>
+                    <div class="value balance">
+                        <%- (Number.isFinite(nodestate.wallet.total) ? (nodestate.wallet.total/100000000.0) : 0).toLocaleString(undefined, {minimumFractionDigits:8}) %> PKOIN
+                    </div>
+                </div>
+                
+                <div class="settingTable table">
+                    <div class="label">
+                        <span><%-e('easyNode_e10026')%></span>
+                    </div>
+                    <div class="value control">
+                        <div class="buttons">
+                            <button elementsid="nodebalancedeposit" class="nodebalancedeposit button small"><i class="fas fa-plus"></i> <%-e('easyNode_e10027')%></button>
+                            <button elementsid="nodebalancewithdraw" class="nodebalancewithdraw button yellow small"><i class="fas fa-sign-in-alt"></i> <%-e('easyNode_e10028')%></button>
+                            <button elementsid="nodedumpwallet" sys="dumpWallet" class="nodedumpwallet button orange small"><i class="fas fa-save"></i> <%-e('easyNode_e10029')%></button>
+                            <button elementsid="nodeimportwallet" sys="importWallet" class="nodeimportwallet button orange small"><i class="fas fa-file-upload"></i> <%-e('easyNode_e10030')%></button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+<% } %>

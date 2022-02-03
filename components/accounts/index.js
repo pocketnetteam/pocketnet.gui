@@ -16,9 +16,6 @@ var accounts = (function(){
 
 			signin : function(address){
 
-				console.log('address', address)
-				
-				
 				self.app.platform.sdk.pool.expand(pack, function(expandedPack){
 					var index = _.indexOf(expandedPack.addresses, address);
 
@@ -37,8 +34,17 @@ var accounts = (function(){
 
 							self.user.signin(private, function(state){
 
+
+
 								var h = ed.href || 'userpage?id=accounts&s=' + makeid()
 								var history = false;
+
+								if(isMobile()){
+
+									h = window.history.state.href || 'index'
+									
+								}
+								
 
 								if (ed.toaccpage) {
 									h = 'author?address=' + address
@@ -46,9 +52,11 @@ var accounts = (function(){
 								}
 
 								if(!self.app.user.validate()){
-									h = 'filluser'
+									h = 'filluserfast'
 									history = true
 								}
+
+								
 
 								globalpreloader(false)
 
@@ -64,19 +72,6 @@ var accounts = (function(){
 									}
 									
 								})
-
-								/*self.app.reloadLight(function(){
-
-									
-
-									self.app.nav.api.load({
-										open : true,
-										href : h,
-										history : history
-									})
-
-									
-								});*/
 
 							})
 						});
@@ -148,7 +143,7 @@ var accounts = (function(){
 
 										dialog({
 											html : self.app.localization.e('acc' + error),
-											class : "one zIndex"
+											class : "one zindex"
 										})
 
 									}

@@ -4,6 +4,26 @@
 #leftpanel > div .wrp {
   padding-bottom: 10px;
 }
+#leftpanel .menu {
+  margin-top: 1em;
+}
+#leftpanel .menu .menupanel .tabs .tab {
+  position: relative;
+  right: 16px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+#leftpanel .menu .menupanel .tabs .tab .pcenterLabel {
+  padding-left: 13px;
+  border-left: 3px solid transparent;
+}
+#leftpanel .menu .menupanel .tabs .tab .pcenterLabel.active {
+  border-left: 3px solid #00A4FF;
+  color: #00A4FF;
+}
+#leftpanel .menu .menupanel .tabs .tab .pcenterLabel .text {
+  padding-left: 0.5em;
+}
 #leftpanel .closecategoriesContainer {
   text-align: right;
   font-size: 1em;
@@ -16,7 +36,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 0.5em;
+  padding-bottom: 0.75em;
+  padding-top: 0.75em;
+  border-top: 1px solid #E3E4EB;
+  border-bottom: 1px solid #E3E4EB;
   margin-top: 1em;
 }
 #leftpanel .best.on .fire {
@@ -38,7 +61,6 @@
 }
 #leftpanel .best .text {
   margin-left: 0.5em;
-  font-weight: 600;
 }
 #leftpanel .best .toggle {
   margin-left: 0.5em;
@@ -225,4 +247,8 @@
   #leftpanel .vc_valuecustom .vc_selectInput {
     background: transparent;
   }
+}
+html.stblack #leftpanel .best {
+  border-top: 1px solid rgba(227, 228, 235, 0.1);
+  border-bottom: 1px solid rgba(227, 228, 235, 0.1);
 }

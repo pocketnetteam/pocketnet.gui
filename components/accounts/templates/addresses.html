@@ -17,13 +17,13 @@
 
 					<% 
 
-						var src = deep(app, 'platform.sdk.users.storage.'+address+'.image');  
-						var name = deep(app, 'platform.sdk.users.storage.'+address+'.name'); 
+						var src = deep(app, 'platform.sdk.usersl.storage.'+address+'.image');  
+						var name = deep(app, 'platform.sdk.usersl.storage.'+address+'.name'); 
 						var letter = name ? name[0] : '';
 						
 					%>
 
-					<div class="usericon" image="<%-src || ''%>">
+					<div class="usericon" ban=".gif" image="<%-src || '*'%>">
 
 						<% if(!src && letter) { %>
 
@@ -45,7 +45,7 @@
 
 			<div class="label">
 
-				<%- deep(app, 'platform.sdk.users.storage.'+address+'.name') || address %>
+				<%- deep(app, 'platform.sdk.usersl.storage.'+address+'.name') || address %>
 
 				<% if(cur) { %> 
 

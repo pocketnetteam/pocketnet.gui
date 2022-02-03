@@ -9,6 +9,32 @@
 }
 #post {
   background: #f6f6f6;
+  /*.repostsecond{
+		padding-top : 2 * @rhythm;
+
+		div{
+			font-size: 0.8em;
+			color : @color-main;
+			text-decoration: underline;
+		}
+	}*/
+}
+#post .spsp {
+  color: #00A4FF;
+}
+#post .videoWrapper {
+  max-width: 650px;
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+}
+#post .videoWrapper .js-player {
+  border-radius: 10px;
+  overflow: hidden;
+}
+#post .videoWrapper .js-player .vjs-control-bar {
+  border-radius: 10px;
+  overflow: hidden;
 }
 #post .lockedaccount,
 #post .empty {
@@ -19,6 +45,32 @@
 #post .empty span {
   font-size: 2em;
   font-weight: 100;
+}
+#post .lockedaccount.allb,
+#post .empty.allb {
+  background: #f6f6f6;
+  margin: 0 auto;
+  margin-top: 5em;
+  max-width: 400px;
+  border-radius: 10px;
+}
+#post .cntswrkcontent {
+  padding-left: 1.5em;
+}
+#post .postcontent {
+  padding-top: 1em;
+}
+#post .postmessage {
+  border-top: 1px solid #F5F5F9;
+  padding-right: 0.5em;
+}
+#post .cntswrk.formeta {
+  margin-left: 4.5em;
+  padding-left: 0;
+}
+#post .cntswrk .paddingWrapper {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
 }
 #post .hiddenpost {
   padding: 7em 5em;
@@ -111,6 +163,35 @@
 #post #comments .answer {
   padding: 0;
 }
+#post .repostShareWrapper .openetc {
+  cursor: pointer;
+  padding: 1em;
+  text-align: center;
+}
+#post .repostShareWrapper .openetc i,
+#post .repostShareWrapper .openetc span {
+  color: rgba(178, 171, 172, 0.8);
+  font-size: 0.9em;
+}
+#post .repostShareWrapper .openetc i {
+  font-size: 0.8em;
+}
+#post .repostShare {
+  border-radius: 5px;
+  border: 1px solid rgba(228, 221, 222, 0.5);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.75);
+  border-right: 1px solid rgba(255, 255, 255, 0.75);
+  box-shadow: 0 5px 7px -5px rgba(0, 0, 0, 0.4);
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  margin-bottom: 0.5em;
+}
+#post .repostShare .share {
+  margin-bottom: 0;
+}
+#post .repostShare .share .videoTips {
+  display: none!important;
+}
 #post .postWrapper {
   margin: 0 auto;
   max-width: 930px;
@@ -140,6 +221,7 @@
   display: block;
 }
 #post .shareTable {
+  margin-top: 0.5em;
   overflow: hidden;
 }
 #post .shareTable .sbtnxs .subscribedLabel {
@@ -199,16 +281,15 @@
   font-size: 0.8em;
 }
 #post .iconWrapper {
-  width: 6.5em;
+  width: 4em;
   padding-top: 0.5em;
-  padding-left: 3.5em;
+  padding-left: 1.5em;
   padding-right: 0;
   float: left;
 }
 #post .cntswrk {
-  margin-left: 6.5em;
-  padding-left: 1em;
-  padding-right: 5em;
+  margin-left: 3.5em;
+  padding-right: 1em;
 }
 #post .cntswrk.forcomments {
   padding-left: 0;
@@ -216,13 +297,13 @@
   margin-left: 0;
   margin-right: 0;
 }
-#post .repostsecond {
-  padding-top: 1em;
+#post .cntswrk .meta {
+  padding-top: 0.7em;
+  padding-left: 1em;
 }
-#post .repostsecond div {
-  font-size: 0.8em;
-  color: #00a4ff;
-  text-decoration: underline;
+#post .cntswrk .lenta_opensviurl,
+#post .cntswrk .message {
+  padding-left: 1.5em;
 }
 #post .share {
   overflow: hidden;
@@ -302,8 +383,11 @@
   border-left: 0.5em solid #00a4ff;
 }
 #post .share #post .shareTable.truerepost .iconWrapper {
-  width: 6em;
-  padding-left: 3em;
+  width: 4em;
+  padding-left: 3.5em;
+  padding-top: 0.5em;
+  padding-right: 0;
+  float: left;
 }
 #post .share #post .shareTable.truerepost .iconWrapper .usericon {
   width: 2.5em;
@@ -349,7 +433,7 @@
   display: block;
 }
 #post .share .work {
-  padding: 2em 0;
+  padding: 1em 0;
   padding-right: 0;
   margin: 0;
   padding-bottom: 0;
@@ -363,14 +447,14 @@
 #post .share .exitFull {
   display: none;
 }
-#post .share .showMore {
-  display: none;
-}
 #post .share img {
   max-width: 100%;
 }
 #post .share .article .message p img {
   max-width: 100%;
+}
+#post .share .article .message b {
+  font-size: 1em!important;
 }
 #post .share .article .message figure img {
   max-width: 100%;
@@ -492,55 +576,23 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-#post .share .metatable > div {
-  vertical-align: middle;
+#post .share .metatable {
+  display: flex;
+  justify-content: space-between;
+  align-items: top;
 }
 #post .share .metatable > div.metapanel {
-  width: 50%;
+  width: 40px;
+  vertical-align: top;
 }
 #post .share .metatable > div.metapanel .metapanelitem {
-  opacity: 0.6;
-  margin-left: auto;
   cursor: pointer;
-  float: right;
+  margin-left: auto;
   font-size: 0.8em;
-  color: #fff;
-  width: 22px;
-  height: 22px;
-  line-height: 22px;
+  margin-right: auto;
   text-align: center;
   border-radius: 50%;
-  color: #1e2328;
-}
-#post .share .metatable > div.metapanel .metapanelitem:hover {
-  color: #0e1c2b;
-}
-#post .share .metatable > div.metapanel .downloadMetapanel.canDownload .downloadingBtn,
-#post .share .metatable > div.metapanel .downloadMetapanel.canDownload .downloadedBtn {
-  display: none;
-}
-#post .share .metatable > div.metapanel .downloadMetapanel.downloading .canDownloadBtn,
-#post .share .metatable > div.metapanel .downloadMetapanel.downloading .downloadedBtn {
-  display: none;
-}
-#post .share .metatable > div.metapanel .downloadMetapanel.downloaded .canDownloadBtn,
-#post .share .metatable > div.metapanel .downloadMetapanel.downloaded .downloadingBtn {
-  display: none;
-}
-#post .share .metatable > div.metapanel .downloadMetapanel.downloaded .deleteBtn {
-  color: #ff6d6d;
-}
-#post .share .metatable > div.metapanel .downloadMetapanel.downloaded .downloadDone {
-  color: green;
-}
-#post .share .metatable > div.metapanel .downloadMetapanel.invisible .canDownloadBtn,
-#post .share .metatable > div.metapanel .downloadMetapanel.invisible .downloadingBtn,
-#post .share .metatable > div.metapanel .downloadMetapanel.invisible .downloadedBtn {
-  display: none;
-}
-#post .share .meta {
-  padding-top: 0.75em;
-  margin-bottom: 0.5em;
+  color: rgba(30, 35, 40, 0.6);
 }
 #post .share .meta > div {
   margin-right: 1em;
@@ -648,9 +700,7 @@
 }
 #post .share .sharecaption {
   font-size: 1.6em;
-  color: #0e1c2b;
   margin-bottom: 0.5em;
-  cursor: pointer;
 }
 #post .share .sharecaption a {
   text-decoration: underline;
@@ -662,6 +712,8 @@
 #post .share .message a {
   text-decoration: underline;
   color: #00a4ff;
+  text-overflow: ellipsis;
+  word-break: break-all;
 }
 #post .share .urlhtmlcontent {
   font-size: 0.8em;
@@ -712,6 +764,9 @@
   color: #00a4ff;
   font-size: 0.8em;
   text-decoration: none;
+}
+#post .share .url .urlcnt {
+  margin-top: 1em;
 }
 #post .share .url .urlcnt .linkcnt {
   white-space: nowrap;
@@ -769,14 +824,15 @@
 }
 #post .share .tags {
   margin-bottom: 1em;
+  padding-left: 1.5em;
   overflow: hidden;
+  display: flex;
 }
 #post .share .tags .newlabel {
   background: #ff0565;
   color: #fff;
 }
 #post .share .tags > div {
-  float: left;
   margin-right: 0.5em;
 }
 #post .share .tags > div span {
@@ -792,7 +848,16 @@
   color: #b2abac;
 }
 #post .share .panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 1.5em;
+  padding-left: 1.5em;
+  padding-top: 1em;
   overflow: hidden;
+}
+#post .share .panel .stars_repost {
+  display: flex;
 }
 #post .share .panel .itemwr {
   width: auto;
@@ -822,7 +887,6 @@
 }
 #post .share .panel > div {
   float: left;
-  margin-right: 1em;
 }
 #post .share .panel > div .stars {
   height: 40px;
@@ -868,12 +932,6 @@
   color: #00a4ff;
   font-weight: 700;
   font-size: 0.8em;
-}
-#post .share .panel > div:hover .icon {
-  border-radius: 50%;
-  box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.4);
-  color: #fff;
-  background: #00A3F7;
 }
 #post .share .panel > div.sharesocial .label,
 #post .share .panel > div.sharesocial .icon {
@@ -973,7 +1031,7 @@
 }
 #post.videomainpost .share .anothercntswrk {
   background: #fff;
-  padding-left: 1em;
+  padding-left: 0.5em;
   padding-right: 1em;
 }
 #post.videomainpost .share .work {
@@ -1003,7 +1061,7 @@
   height: 48px;
 }
 #post.videomainpost .shareTable .authorTable > div.authorCell {
-  padding-left: 0.5em;
+  padding-left: 1em;
   padding-right: 0;
 }
 #post.videomainpost .shareTable .authorTable > div.datetime {
@@ -1011,7 +1069,6 @@
   opacity: 0.5;
 }
 #post.videomainpost .shareTable .metatable > div.metapanel {
-  width: 20px;
   color: #b2abac;
 }
 #post.videomainpost .shareTable .metatable > div.metapanel .metapanelitem {
@@ -1031,6 +1088,8 @@
 #post.videomainpost .videoWrapper {
   overflow: hidden;
   border-radius: 5px;
+  max-width: none;
+  position: static;
 }
 #post.videomainpost .forurl .url {
   border-radius: 5px;
@@ -1053,6 +1112,9 @@
 #post.videomainpost.verticalVideo .forurl .videoWrapper {
   margin: 0 auto;
   max-width: 350px;
+}
+#post.videomainpost .statswrapperExtended {
+  display: none;
 }
 #post.videomainpost.squareVideo .forurl .videoWrapper {
   max-width: 450px;
@@ -1083,6 +1145,399 @@
 					}
 				}*/
 }
+#post .sharearticle {
+  opacity: 0;
+  -moz-transition: opacity 0.1s;
+  -o-transition: opacity 0.1s;
+  -webkit-transition: opacity 0.1s;
+  transition: opacity 0.1s;
+}
+#post .sharearticle.ready {
+  opacity: 1;
+}
+#post .sharearticle .shareBgCaption .author,
+#post .sharearticle .articleend .author {
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+#post .sharearticle .shareBgCaption .author i,
+#post .sharearticle .articleend .author i {
+  display: none;
+}
+#post .sharearticle .shareBgCaption .author .notificationturn,
+#post .sharearticle .articleend .author .notificationturn {
+  display: none!important;
+}
+#post .sharearticle .shareBgCaption .forstars,
+#post .sharearticle .articleend .forstars {
+  margin-bottom: 1em;
+}
+#post .sharearticle .shareBgCaption .forstars .itemwr,
+#post .sharearticle .articleend .forstars .itemwr {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+}
+#post .sharearticle .shareBgCaption .forstars .itemwr i,
+#post .sharearticle .articleend .forstars .itemwr i {
+  text-align: center;
+}
+#post .sharearticle .shareBgCaption .forstars .starWrapper,
+#post .sharearticle .articleend .forstars .starWrapper {
+  text-align: center;
+}
+#post .sharearticle .shareBgCaption .forstars .count span,
+#post .sharearticle .articleend .forstars .count span {
+  font-size: 2em;
+  font-weight: 700;
+  font-family: Nunito Sans;
+}
+#post .sharearticle .shareBgCaption .sys,
+#post .sharearticle .articleend .sys {
+  text-align: center;
+}
+#post .sharearticle .shareBgCaption .buttonOpenWrapper,
+#post .sharearticle .articleend .buttonOpenWrapper {
+  margin-bottom: 0.5em;
+}
+#post .sharearticle .shareBgCaption .buttonOpenWrapper button,
+#post .sharearticle .articleend .buttonOpenWrapper button {
+  width: 130px;
+  border-radius: 0;
+  background: rgba(14, 28, 43, 0.1);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid transparent!important;
+}
+#post .sharearticle .nextpost .loader,
+#post .sharearticle .nextpost .ended {
+  background: #00091b;
+}
+#post .sharearticle .nextpost .loader,
+#post .sharearticle .nextpost .ended {
+  background: #00091b;
+}
+#post .sharearticle .postWrapper {
+  background: #0a0c17;
+}
+#post .sharearticle .postmessage {
+  border-top: 1px solid rgba(245, 245, 249, 0.1);
+}
+#post .sharearticle .shareTable .sbtnxs span i {
+  color: #076C34;
+}
+#post .sharearticle .postWrapper {
+  background: #0a0c17;
+}
+#post .sharearticle .postmessage {
+  border-top: 1px solid rgba(245, 245, 249, 0.1);
+}
+#post .sharearticle .shareTable .sbtnxs span i {
+  color: #076C34;
+}
+#post .sharearticle .shareTable .sbtnxs span:hover {
+  background: rgba(14, 28, 43, 0.01);
+}
+#post .sharearticle .shareTable .divider {
+  margin: 0 auto;
+  margin-bottom: 0.5em;
+  height: 1px;
+  width: 110px;
+  background: #fff;
+}
+#post .sharearticle .shareTable .tags {
+  justify-content: center;
+}
+#post .sharearticle .shareBgCaption {
+  height: 640px;
+  position: relative;
+}
+#post .sharearticle .shareBgCaption .tags div span {
+  color: #fff;
+}
+#post .sharearticle .shareBgCaption .blackmatte {
+  background: #000000;
+  background: linear-gradient(0deg, #000000 0%, rgba(255, 255, 255, 0) 100%);
+}
+#post .sharearticle .shareBgCaption .captioncnt {
+  padding-bottom: 2em;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  z-index: 1;
+  color: #fff;
+  text-align: center;
+}
+#post .sharearticle .shareBgCaption .captioncnt .sharecaption {
+  font-size: 4em;
+  font-family: Georgia, serif;
+}
+#post .sharearticle .shareBgCaption .icon .usericon {
+  margin: 0 auto;
+  position: relative;
+}
+#post .sharearticle .shareBgCaption.showtext .icon {
+  position: absolute;
+  bottom: -22px;
+  left: 0;
+  right: 0;
+}
+#post .sharearticle .shareBgCaption .starstoppanel,
+#post .sharearticle .shareBgCaption .socialsharewrapper {
+  position: absolute;
+  bottom: 0.75em;
+  right: 1.25em;
+}
+#post .sharearticle .shareBgCaption .starstoppanel .iconwrapper,
+#post .sharearticle .shareBgCaption .socialsharewrapper .iconwrapper {
+  width: 3.5em;
+  height: 3.5em;
+  line-height: 3.5em;
+  border-radius: 3.5em;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-family: Nunito Sans;
+}
+#post .sharearticle .shareBgCaption .starstoppanel .iconwrapper:hover,
+#post .sharearticle .shareBgCaption .socialsharewrapper .iconwrapper:hover {
+  opacity: 0.6;
+}
+#post .sharearticle .shareBgCaption .starstoppanel .iconwrapper i,
+#post .sharearticle .shareBgCaption .socialsharewrapper .iconwrapper i {
+  width: 30px;
+  text-align: center;
+  font-size: 0.7em;
+}
+#post .sharearticle .shareBgCaption .socialsharewrapper .iconwrapper {
+  justify-content: flex-end;
+}
+#post .sharearticle .shareBgCaption .starstoppanel {
+  bottom: 0.75em;
+  left: 1.5em;
+  right: auto;
+  display: flex;
+}
+#post .sharearticle .shareBgCaption .articleCover,
+#post .sharearticle .shareBgCaption .captioncnt,
+#post .sharearticle .shareBgCaption .blackmatte {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+#post .sharearticle .shareBgCaption.smallimage .articleCover {
+  background-color: #0e1c2b;
+  background-size: 100px auto!important;
+}
+#post .sharearticle .shareBgCaption.caption_small .captionmult {
+  font-size: 1.5em;
+}
+#post .sharearticle .shareBgCaption.caption_long .captionmult {
+  font-size: 0.5em;
+}
+#post .sharearticle .shareBgCaption.verticalcover {
+  height: 720px;
+}
+#post .sharearticle .shareBgCaption.verticalcover.showtext {
+  border-bottom: 1px dashed rgba(178, 171, 172, 0.5);
+}
+#post .sharearticle .shareBgCaption.verticalcover .articleCover {
+  left: 0.5em;
+  top: 0.5em;
+  bottom: 0.5em;
+  right: 56%;
+}
+#post .sharearticle .shareBgCaption.verticalcover .captioncnt {
+  left: 44%;
+  right: 0.5em;
+  top: 0.5em;
+  bottom: 0.5em;
+}
+#post .sharearticle .shareBgCaption.verticalcover .blackmatte {
+  display: none;
+}
+#post .sharearticle .shareBgCaption.verticalcover .icon {
+  position: static;
+}
+#post .sharearticle .shareBgCaption.verticalcover .captioncnt {
+  justify-content: center;
+  color: #030f1b;
+}
+#post .sharearticle .shareBgCaption.verticalcover .divider {
+  background: #030f1b;
+}
+#post .sharearticle .shareBgCaption.verticalcover .tags div span {
+  color: #030f1b;
+}
+#post .sharearticle .shareBgCaption.verticalcover .starstoppanel .iconwrapper,
+#post .sharearticle .shareBgCaption.verticalcover .socialsharewrapper .iconwrapper {
+  color: #030f1b;
+}
+#post .sharearticle .articlecontent {
+  padding-top: 4em;
+  padding-bottom: 4em;
+}
+#post .sharearticle .articlecontent .articlerenderError {
+  text-align: center;
+}
+#post .sharearticle .articlecontent .cntswrk {
+  margin-left: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+#post .sharearticle .articlecontent .articleend {
+  margin-top: 3em;
+}
+#post .sharearticle .articlecontent .commentsWrapper {
+  border-radius: 15px;
+}
+#post .sharearticle .articlecontent .forcomments {
+  margin-top: 2em;
+}
+#post .sharearticle .removeDescription {
+  display: none;
+  padding: 1.5em;
+  color: #7c7c7c;
+  text-align: center;
+}
+#post .sharearticle.deleted .forcomments,
+#post .sharearticle.deleted .starstoppanel,
+#post .sharearticle.deleted .socialsharewrapper,
+#post .sharearticle.deleted .textscnts {
+  display: none!important;
+}
+#post .sharearticle.deleted .acticletext {
+  display: none;
+}
+#post .sharearticle.deleted .removeDescription {
+  display: block!important;
+}
+#post .sharearticle.deleted .articleCover {
+  filter: blur(10px);
+}
+#content > div#post.sharec .postWrapper {
+  max-width: none;
+}
+#content > div#post.sharec .widthcontainer {
+  width: 80%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+@media only screen and (max-width: 768px) {
+  #content > div#post.sharec .widthcontainer {
+    width: 100%;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+  #post .videoWrapper {
+    border-radius: 0;
+  }
+  #post .videoWrapper .js-player {
+    border-radius: 0;
+    overflow: visible;
+  }
+  #post .videoWrapper .js-player .vjs-control-bar {
+    border-radius: 0;
+    overflow: visible;
+  }
+  #post .sharearticle .shareBgCaption:not(.verticalcover) {
+    height: auto;
+  }
+  #post .sharearticle .shareBgCaption:not(.verticalcover) .captioncnt {
+    padding-bottom: 2em;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    z-index: 1;
+    color: #fff;
+    text-align: center;
+    position: relative;
+    border-bottom: 1px dashed rgba(178, 171, 172, 0.5);
+    color: #0e1c2b;
+  }
+  #post .sharearticle .shareBgCaption:not(.verticalcover) .captioncnt .tags {
+    justify-content: center;
+  }
+  #post .sharearticle .shareBgCaption:not(.verticalcover) .captioncnt .tags div span {
+    color: #0e1c2b;
+  }
+  #post .sharearticle .shareBgCaption:not(.verticalcover) .captioncnt .sharecaption {
+    font-size: 3em;
+    font-family: Georgia, serif;
+  }
+  #post .sharearticle .shareBgCaption:not(.verticalcover) .icon {
+    position: absolute;
+    bottom: -22px;
+    left: 0;
+    right: 0;
+  }
+  #post .sharearticle .shareBgCaption:not(.verticalcover) .icon .usericon {
+    margin: 0 auto;
+  }
+  #post .sharearticle .shareBgCaption:not(.verticalcover) .articleCover {
+    height: 300px;
+    position: relative;
+  }
+  #post .sharearticle .shareBgCaption:not(.verticalcover) .blackmatte {
+    display: none;
+  }
+  #post .sharearticle .shareBgCaption.verticalcover {
+    height: 720px;
+    border-bottom: 0;
+  }
+  #post .sharearticle .shareBgCaption.verticalcover .articleCover {
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+  }
+  #post .sharearticle .shareBgCaption.verticalcover .captioncnt {
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    padding-bottom: 4em;
+  }
+  #post .sharearticle .shareBgCaption.verticalcover .captioncnt .sharecaption {
+    font-size: 2em;
+  }
+  #post .sharearticle .shareBgCaption.verticalcover .blackmatte {
+    display: block;
+  }
+  #post .sharearticle .shareBgCaption.verticalcover .icon {
+    position: absolute;
+  }
+  #post .sharearticle .shareBgCaption.verticalcover .captioncnt {
+    justify-content: flex-end;
+    color: #fff;
+  }
+  #post .sharearticle .shareBgCaption.verticalcover .divider {
+    background: #fff;
+  }
+  #post .sharearticle .shareBgCaption.verticalcover .tags div span {
+    color: #fff;
+  }
+  #post .sharearticle .shareBgCaption.verticalcover .starstoppanel .iconwrapper,
+  #post .sharearticle .shareBgCaption.verticalcover .socialsharewrapper .iconwrapper {
+    color: #fff;
+  }
+  #post .sharearticle .articlecontent {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+  #post .sharearticle .articlecontent .article_quote,
+  #post .sharearticle .articlecontent .article_link_custom {
+    width: 96%;
+    max-width: none;
+  }
+  #post .sharearticle .articlecontent .article_this_embed {
+    padding: 0;
+    border: 0;
+  }
+}
 html.tablet.fullscreen #post #comments,
 html.mobile.fullscreen #post #comments {
   display: none;
@@ -1090,8 +1545,44 @@ html.mobile.fullscreen #post #comments {
 html.stblack #post {
   background: transparent;
 }
+html.stblack #post .sharearticle .shareBgCaption .divider,
+html.stblack #post .sharearticle .articleend .divider {
+  background: #b2abac;
+}
+html.stblack #post .sharearticle .shareBgCaption .tags div span {
+  color: #FFF;
+}
+html.stblack #post .sharearticle .shareBgCaption .captioncnt {
+  color: #fff;
+}
+html.stblack #post .sharearticle .shareBgCaption .starstoppanel .iconwrapper,
+html.stblack #post .sharearticle .shareBgCaption .socialsharewrapper .iconwrapper {
+  color: #fff;
+}
+html.stblack #post .sharearticle .shareBgCaption.smallimage .articleCover {
+  background-color: #0e1c2b;
+}
+html.stblack #post .sharearticle .shareBgCaption.verticalcover.showtext {
+  border-bottom: 1px dashed rgba(178, 171, 172, 0.5);
+}
+html.stblack #post .sharearticle .shareBgCaption.verticalcover .captioncnt {
+  color: #e2e2e2;
+}
+html.stblack #post .sharearticle .shareBgCaption.verticalcover .divider {
+  background: #e2e2e2;
+}
+html.stblack #post .sharearticle .shareBgCaption.verticalcover .tags div span {
+  color: #e2e2e2;
+}
+html.stblack #post .sharearticle .shareBgCaption.verticalcover .starstoppanel .iconwrapper,
+html.stblack #post .sharearticle .shareBgCaption.verticalcover .socialsharewrapper .iconwrapper {
+  color: #e2e2e2;
+}
+html.stblack #post .sharearticle .removeDescription {
+  color: #b8b8b8;
+}
 .wnd.postwindow {
-  z-index: 1000;
+  z-index: 1005;
 }
 .wnd.postwindow .wndcontent {
   top: 0;
@@ -1099,8 +1590,8 @@ html.stblack #post {
   height: 100%;
   width: 100%;
   padding-top: 0;
-  padding-bottom: 0;
-  overflow-y: scroll;
+  margin: 0 auto;
+  padding-bottom: 10em;
 }
 .wnd.postwindow .wndinner {
   height: 100%;
@@ -1108,14 +1599,30 @@ html.stblack #post {
   max-height: none;
   background: transparent;
 }
-.wnd.postwindow ._close {
+.wnd.postwindow.articlewindow .wndcontent {
+  padding: 0;
+  border-radius: 0;
+}
+.wnd.postwindow.articlewindow #post .postWrapper {
+  max-width: none;
+}
+.wnd.postwindow.articlewindow ._close {
+  backdrop-filter: blur(7px) grayscale(30%);
+  -webkit-backdrop-filter: blur(7px) grayscale(30%);
   color: #fff;
   box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.4);
 }
+.wnd.postwindow .widthcontainer {
+  width: 80%;
+  max-width: 800px;
+  margin: 0 auto;
+}
 .wnd.postwindow #post {
+  margin: 0 auto;
   background: transparent;
 }
 .wnd.postwindow #post .postWrapper {
+  overflow: hidden;
   border-radius: 3px;
 }
 .wnd.postwindow #post .nextpost {
@@ -1145,15 +1652,6 @@ html.stblack #post .repostsecond div {
 }
 html.stblack #post .share {
   background: #0a0c17;
-}
-html.stblack #post .share #post .postWrapper {
-  background: transparent;
-}
-html.stblack #post .share #post .share {
-  background: transparent;
-}
-html.stblack #post .share #post .share .work {
-  border-left: 0.5em solid #00a4ff;
 }
 html.stblack #post .share .statswrapperExtended {
   background: #0a0c17;
@@ -1238,8 +1736,9 @@ html.stblack #post .share .tags > div span {
 html.stblack #post .share .sys span {
   color: #b2abac;
 }
-html.stblack #post .share .panel .itemwr > div.count span {
-  color: #00a4ff;
+html.stblack #post .share .panel .itemwr > div.count .circle {
+  border: 1px solid rgba(199, 200, 217, 0.1);
+  color: #e4ddde;
 }
 html.stblack #post .share .panel > div .stars {
   color: #00A3F7;
@@ -1248,11 +1747,10 @@ html.stblack #post .share .panel > div .count {
   cursor: pointer;
 }
 html.stblack #post .share .panel > div .icon {
-  color: #00A3F7;
+  color: #C7C8D9;
 }
 html.stblack #post .share .panel > div:hover .icon {
-  color: #fff;
-  background: #00A3F7;
+  color: #00A3F7;
 }
 html.stblack #post .share .panel > div.sharesocial .label,
 html.stblack #post .share .panel > div.sharesocial .icon {
@@ -1286,222 +1784,4 @@ html.stblack .wnd.postwindow .wndcontent {
 }
 html.stblack .wnd.postwindow ._close {
   color: #d0c9ca;
-}
-@media only screen and (max-width: 768px) {
-  #post {
-    border-top: 1px solid rgba(228, 221, 222, 0.003);
-    /*.shareTable{
-		display: block;
-		overflow-y: hidden;
-		>div{
-			display: block;
-			float: left;
-			width: 100%;
-
-			&.iconWrapper{
-				width: 60px;
-				padding-top: @rhythm;
-				padding-left: @rhythm;
-			}
-
-			&.metawrapper{
-				padding : 0;
-				padding-top : @rhythm;
-				width: 75%;
-			}
-
-		}
-	}
-*/
-  }
-  #post .statswrapperExtended {
-    padding: 0.5em;
-  }
-  #post .showmorelenta .horizontalLentaWrapper {
-    padding: 0.5em 0;
-  }
-  #post .showmorelenta .horizontalLentacaption {
-    padding: 0.5em;
-  }
-  #post .nextpost {
-    display: none;
-  }
-  #post .iconWrapper {
-    width: 4em;
-    padding-top: 0.5em;
-    padding-left: 0.5em;
-    padding-right: 0;
-  }
-  #post .cntswrk {
-    margin-left: 0;
-    padding-left: 0;
-    padding-right: 0;
-  }
-  #post .cntswrk.formeta {
-    margin-left: 4em;
-    padding-left: 0;
-  }
-  #post .cntswrk .paddingWrapper {
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-  }
-  #post .share .meta {
-    padding-right: 0.5em;
-  }
-  #post .share .metatable > div {
-    vertical-align: top;
-  }
-  #post .share .metatable > div.metapanel {
-    width: 90px;
-  }
-  #post #comments .answer,
-  #post #comments .post {
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-  }
-  #post #comments .answer {
-    padding: 0;
-  }
-  #post #comments .caption {
-    padding-left: 0.25em;
-    padding-right: 3.5em;
-  }
-  #post #comments .list .comment .commentPaddingWrapper {
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-  }
-  #post #comments .list .answer .postbody {
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-  }
-  #post #comments .answers .comment .commentPaddingWrapper {
-    padding-left: 0;
-    padding-right: 0;
-  }
-  #post.videomainpost .cntswrk.formeta {
-    margin-left: 0;
-    padding-left: 0;
-  }
-  #post.videomainpost.squareVideo .forurl .videoWrapper,
-  #post.videomainpost.verticalVideo .forurl .videoWrapper {
-    max-width: none;
-  }
-  #post.videomainpost .share .anothercntswrk {
-    padding-right: 0.5em;
-  }
-  #post.videomainpost .share .paddingWrapper {
-    margin-left: 0;
-    padding-left: 0;
-  }
-  #post.videomainpost #comments .post {
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-  }
-  #post .share #post #comments .caption {
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-  }
-  #post .share #post #comments .commentPaddingWrapper,
-  #post .share #post #comments .post {
-    padding-left: 0;
-    padding-right: 0.5em;
-  }
-  #post .share #post #comments .commentPaddingWrapper {
-    padding-right: 0.5em;
-  }
-  #post .share #post #comments .list .answer .postbody {
-    padding-left: 0;
-    padding-right: 0.5em;
-  }
-  #post .share #post #comments .answers .commentPaddingWrapper {
-    padding-right: 0;
-    padding-left: 0;
-  }
-  #post .share #post #comments .answer .posttable > div.postCellWrapper .postaction,
-  #post .share #post #comments .edit .posttable > div.postCellWrapper .postaction,
-  #post .share #post #comments .post .posttable > div.postCellWrapper .postaction {
-    text-align: center;
-  }
-  #post .share #post .share .work {
-    border-left: 0.25em solid #00a4ff;
-  }
-  #post .share #post .share .sharecaption {
-    font-size: 1em;
-  }
-  #post .share #post .shareTable.truerepost .iconWrapper {
-    width: 3em;
-    padding-left: 0.5em;
-  }
-  #post .share #post .iconWrapper {
-    width: 3em;
-    padding-left: 0.5em;
-  }
-  #post .share #post .iconWrapper .usericon {
-    width: 2.5em;
-    height: 2.5em;
-  }
-  #post .share #post .cntswrk {
-    margin-left: 0em;
-    margin-right: 0em;
-    padding-right: 0.5em;
-    padding-left: 0.5em;
-  }
-  #post .share #post .cntswrk.formeta {
-    margin-left: 3em;
-    padding-left: 0.25em;
-  }
-  #post .share #post .meta {
-    padding-top: 1.15em;
-  }
-  #post .share #post #post .cntswrk {
-    margin-left: 0em;
-    padding-right: 0;
-    padding-left: 0;
-  }
-  #post .share #post #post .cntswrk.formeta {
-    margin-left: 3.5em;
-    padding-left: 0.25em;
-  }
-  #post .share .work {
-    padding: 0;
-    width: 100%;
-  }
-  #post .share .shareContent {
-    position: relative;
-  }
-  #post .share .shareContent .tempPreloader {
-    padding: 1em 0;
-  }
-  #post .share .shareContent .tempPreloader .label {
-    padding-top: 0.5em;
-    color: #00a4ff;
-    font-size: 0.8em;
-  }
-  #post .share .article .images .imagesWrapper {
-    width: 60px;
-    height: 60px;
-    border-radius: 30px;
-    margin-right: 0.5em;
-    overflow: hidden;
-    float: left;
-  }
-  #post .share .article figure {
-    width: 100%!important;
-    display: block;
-    margin-bottom: 0.5em;
-  }
-  #post .share .article figure img {
-    margin: 0;
-  }
-  #post .share .medium-insert-images img {
-    width: 100%;
-  }
-  #post .share .jsPlayerLoading {
-    width: 100%;
-    height: 210px;
-  }
-  .wnd.postwindow ._close {
-    color: #000;
-    right: 0.5em;
-  }
 }

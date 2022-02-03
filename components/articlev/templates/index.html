@@ -1,7 +1,148 @@
 <div id="<%-module.map.id%>">
-	<div class="work">
-		<div class="rightchatspacer">
-			<div id="editorjs"></div>
+	
+
+		<div class="bgwrapper">
+			<div class="blackmatte"></div>
+
+			
+			<div class="aheaderWrapper">
+				<div class="mwork">
+					<div class="rightchatspacer">
+						<div class="aheader top">
+							<div class="myarticleswrapper">
+								<button class="button medium ghost nopadding myarticles ">
+									<%= e('art_myarticles') %> <i class="fas fa-chevron-down"></i>
+								</button>
+							</div>
+							<div class="truestatuswrapper">
+								
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="mwork dst">
+					<div class="rightchatspacer">
+						<div class="aheader bottom aheadermain">
+
+							<div class="leftpart part">
+								<div class="iconWrapper">
+
+									<% 
+														
+										var src = deep(app, 'platform.sdk.user.storage.me.image')  
+
+										var name = app.platform.api.clearname(deep(app, 'platform.sdk.user.storage.me.name') || (user.address.value && user.address.value.toString('hex')) )
+										var letter = name ? name[0] : ''
+
+									%>
+
+									<div class="usericon" ban=".gif" image="<%-src || '*'%>">
+
+										<% if(!src && letter) {%>
+											<span class="letter">
+												<%-letter.toUpperCase()%>
+											</span>
+										<% } else if (!src) { %>
+											<i class="far fa-user"></i>
+										<% } %>
+
+										<% if(app.platform.ui.markUser) {%>
+											<%= app.platform.ui.markUser(user.address.value && user.address.value.toString('hex'))%>
+										<% } %>
+									
+									</div>
+								</div>
+
+								<div class="forback">
+									<button class="button ghost backfromedittags"><i class="fas fa-chevron-left"></i></button>
+								</div>
+
+								<div class="statusWrapper">
+									<div class="articlecaptiondouble">
+										
+									</div>
+									<div class="tagswrapper">
+										<div class=""></div>
+									</div>
+									<div class="tagsinputwrapper">
+										
+										<div class="forinput ">
+
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="rightpart part ">
+
+								<div class="removeCover">
+									<i class="far fa-times-circle"></i>
+								</div>
+
+								<div class="lst">
+									
+									<div class="uploadcover">
+										<button class="button medium ghost nopadding">
+											<%= e('art_changecover') %>
+											
+										</button>
+									</div>
+								</div>
+
+								<div class="settingsWrapper">
+								</div>
+
+								<div class="showpreviewwrapper">
+									<button class="button ghost preview">
+										<%= e('art_preview') %>
+									</button>
+								</div>
+
+
+								<div class="publish">
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="forbackmain">
+				<div class="mwork">
+					<i class="fas fa-chevron-circle-left"></i> <span>Вернуться назад</span>
+				</div>
+			</div>
+
+		
 		</div>
-	</div>
+
+		<div class="work">
+			<div class="rightchatspacer">
+
+				<div class="editorSection">
+
+					<div class="abody">
+
+						<div class="abodywrp">
+				
+							<div class="captionWrapper">
+								<textarea rows="2" placeholder="<%= e('art_caption') %>"></textarea>
+							</div>		
+
+							<div class="editorWrapper">
+								<div id="editorjs"></div>
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+
+		<div class="sizeinfoWrapper"></div>
+
 </div>

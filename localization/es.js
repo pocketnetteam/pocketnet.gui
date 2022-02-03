@@ -2,14 +2,14 @@ if(typeof loclib == "undefined" || !loclib)
 	loclib = {};
 
 	loclib.es = {};
-	
+
 	var appname = window.pocketnetproject || "Pocketnet"
 
 var ____loclib = loclib.es;
 
 //time
 
-____loclib.fewseconds = "Hace unos segundos"	
+____loclib.fewseconds = "Hace unos segundos"
 ____loclib.oneminute = "Hace un minuto"
 
 ____loclib.minutes = function(v){
@@ -39,8 +39,8 @@ ____loclib.id72 = "¿Ya tienes cuenta?, Entrar"
 
 ____loclib.rtip1 = "Nesesariamente escribe su clave privada"
 ____loclib.rtip2 = function(){
-	var h = "A continuación, se generará su clave privada. Grabarlo y guardar el código QR en su dispositivo. Y no los pierdas. No almacenamos sus datos personales. ¡La clave privada no se puede recuperar!" 
-	return h 
+	var h = "A continuación, se generará su clave privada. Grabarlo y guardar el código QR en su dispositivo. Y no los pierdas. No almacenamos sus datos personales. ¡La clave privada no se puede recuperar!"
+	return h
 }
 
 ____loclib.generatepkey = "Crear clave privada"
@@ -55,7 +55,7 @@ ____loclib.removepaste = "Hemos eliminado la posibilidad de insertar en este for
 ____loclib.filedamaged = "El archivo está corrupto"
 ____loclib.keysnotmatch = "La clave generada y la que ingresó no coinciden"
 ____loclib.confirmkey = "Imprima su clave privada aquí"
-____loclib.successfullycopied = "La clave fue copiado en el portapapeles" 
+____loclib.successfullycopied = "La clave fue copiado en el portapapeles"
 ____loclib.urlsuccesscopied = "Enlace se copió correctamente"
 ____loclib.confirmkeyLabel = "Confirme su clave privada. Escriba la clave en el campo o <b> cargue el código QR </b>"
 ____loclib.repeatetocreate = "Volver a crear la clave"
@@ -64,7 +64,7 @@ ____loclib.confirmcreate = "Crear cuenta"
 //user activation
 
 ____loclib.useractivation = "Activación del usuario"
-____loclib.wesentmoney = "Le hemos enviado unas criptomonedas para continuar con registración, espere hasta que sean acreditados"	
+____loclib.wesentmoney = "Le hemos enviado unas criptomonedas para continuar con registración, espere hasta que sean acreditados"
 ____loclib.wesentmoneym = "Ya hemos enviado unas criptomonedas para registración"
 
 
@@ -97,7 +97,7 @@ ____loclib.signout = "Cerrar sesión";
 
 //send
 
-____loclib.postlabel = "Donación por vuestra publicacion" 
+____loclib.postlabel = "Donación por vuestra publicacion"
 ____loclib.donationlabel = "Donación"
 ____loclib.donationwel = "Si desea agradecer al autor de la publicación, puede utilizar la transacción "+appname+"";
 ____loclib.donationwela = "Enviar por "+appname+"";
@@ -603,6 +603,8 @@ ____loclib.e13188 = "Guarde su clave criptográfica privada, que reemplaza el no
 ____loclib.e13189 = "¡Cerrar sesión y perder mi clave para siempre!"
 ____loclib.e13190 = "Tema de "+appname+""
 ____loclib.e13191 = "Seleccionar tema"
+____loclib.uiScaleSetting = "Escala de la interfaz"
+____loclib.uiScaleSettingTitle = "Seleccionar escala"
 ____loclib.e13192 = "Nivel"
 ____loclib.e13193 = "Bono"
 ____loclib.e13194 = "Reputación y recompensas"

@@ -129,8 +129,6 @@ var toppanel = (function(){
 
 								var mainmoduleAction = deep(self.app, 'modules.main.module.showCategories')
 				
-								console.log(self.app.modules)
-				
 								if (mainmoduleAction) mainmoduleAction(true)
 							})
 	
@@ -142,6 +140,7 @@ var toppanel = (function(){
 
 				
 			}
+
 		}
 
 		var state = {
@@ -176,7 +175,6 @@ var toppanel = (function(){
 		var initEvents = function(){
 
 			self.app.nav.clbks.history.toppanel = function(href){
-				renders.menu(app.nav.current.href)
 			}
 
 			self.app.platform.sdk.categories.clbks.excluded.toppanel =
@@ -221,8 +219,6 @@ var toppanel = (function(){
 				el.menu = el.c.find('.panelitems')
 
 				initEvents();
-
-				renders.menu(self.app.nav.current.href)
 
 				p.clbk(null, p);
 			}

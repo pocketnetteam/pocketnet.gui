@@ -1,0 +1,45 @@
+@import "../../css/__cssvar";
+
+#electronnav{
+    position: absolute;
+    left : 0;
+    top : 0;
+    bottom : 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding : 2 * @rhythm 0;
+
+    >div{
+        display: flex;
+        flex-direction: column;
+
+        &.top{
+            justify-content: flex-start;
+        }
+        &.medium{
+            justify-content: center;
+        }
+        &.bottom{
+            justify-content: flex-end;
+        }
+
+    }
+
+    .item{
+        width: 100%;
+        text-align: center;
+        padding : @rhythm 0;
+        color : fade(@color-black5, 75);
+        cursor: pointer;
+
+        i{
+            font-size: 0.8em;
+        }
+
+        &:hover{
+            color : fade(@color-black5, 100);
+        }
+    }
+}

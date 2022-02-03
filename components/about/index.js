@@ -29,21 +29,8 @@ var about = (function(){
 				name :  self.app.localization.e('aboutus'),
 				id : 'about-home',
 				report : 'aboutHome',
-				mobile : true,
-
-				if : function(){
-					if(!self.app.curation()) return true
-				},
-
-				add : function(){
-
-					if (isMobile() && deep(mestate, 'reputation')){
-						return mestate.reputation.toFixed(1)
-					}
-
-				}
+				mobile : true
 			})
-		
 
 			reports.push({
 				name : self.app.localization.e('contentCreators'),
@@ -51,8 +38,6 @@ var about = (function(){
 				report : 'aboutContentCreators',
 				mobile : true
 			})
-
-
 			
 			reports.push({
 				name : self.app.localization.e('howItWorks'),
@@ -66,6 +51,22 @@ var about = (function(){
 				name : 'FAQ',
 				id : 'about-faq',
 				report : 'faq',
+				mobile : true
+			})
+			
+			
+
+			reports.push({
+				name :  self.app.localization.e('download'),
+				id : 'about-download',
+				report : 'applications',
+				mobile : true
+			})
+
+			reports.push({
+				name :  'Easynode',
+				id : 'about-easynode',
+				report : 'easynode',
 				mobile : true
 			})
 
@@ -307,7 +308,6 @@ var about = (function(){
 
 			closeReport : function(){
 				el.report.html('')
-				el.c.removeClass('reportshowed')
 			},
 
 			openReport : function(id, addToHistory){
@@ -316,17 +316,11 @@ var about = (function(){
 
 				el.c.find('[rid="'+id+'"]').addClass('active')
 
-				actions.openTree(id);
-
-				el.c.addClass('reportshowed')
-
 				renders.report(id);
-
 
 				var report = helpers.findReport(id)
 
 				if (report && report.rh) return
-
 
 				if (addToHistory){
 
@@ -336,10 +330,8 @@ var about = (function(){
 						removefromback : false
 					})
 
-
 					if (self.app.nav.clbks.history.navigation)
 						self.app.nav.clbks.history.navigation()
-
 
 				}
 			}
@@ -453,10 +445,6 @@ var about = (function(){
 	
 							self.app.actions.scroll(0)
 	
-	
-							if (hcready)
-								el.contents.hcSticky('refresh');
-		
 							if (clbk)
 								clbk();
 	
@@ -594,11 +582,8 @@ var about = (function(){
 
 			report : function(id, clbk){
 
-				
-
 				if (currentExternalEssense)
 					currentExternalEssense.destroy();
-
 
 				var report = helpers.findReport(id)
 
@@ -637,11 +622,9 @@ var about = (function(){
 
 					if (renders[report.report]){
 						renders[report.report](_p.el.find('.reportCnt'), _clbk)
-
-						if (hcready)
-							el.contents.hcSticky('refresh');
 					}
 					else{
+
 						self.nav.api.load({
 
 							open : true,
@@ -652,16 +635,12 @@ var about = (function(){
 	
 							essenseData : {
 								sub : report.sub,
-
 								dumpkey : ed.dumpkey
 							},
 							
 							clbk : function(e, p){
 	
 								_clbk(e, p)
-
-								if (hcready)
-									el.contents.hcSticky('refresh');
 								
 							}
 	
@@ -695,36 +674,11 @@ var about = (function(){
 
 		var makerep = function(clbk){
 			var id = parameters().id || 'about-home';
-
-
-			if(!isMobile() && state){
-				if(!id) {
-
-					if(self.app.user.validate()){
-
-						if(self.app.curation()){
-							id = 'wallet'	
-						}
-						else{
-							id = 'ustate'	
-						}
-					}
-					else{
-						id = 'test'
-					}
-				}
-			}
 			
 			renders.contents(function(){
 
-				//self.app.actions.scrollBMenu()
-
-				if(id){
-					actions.openReport(id)
-				}
-				else{
-					actions.closeReport()
-				}
+				actions.openReport(id)
+			
 
 				if (clbk)
 					clbk();
@@ -791,7 +745,7 @@ var about = (function(){
 				currentExternalEssense = null;
 
 
-				$('#menu').removeClass('abs')
+				//$('#menu').removeClass('abs')
 
 				el = {};
 			},
@@ -805,14 +759,12 @@ var about = (function(){
 				el.contents = el.c.find('.contents');
 				el.report = el.c.find(".report");
 
-			
-				el.bgcaption = el.c.find('.bgCaptionWrapper')
-
-				$('#menu').addClass('abs')
+				//$('#menu').addClass('abs')
 
 				initEvents();
 
-				make(function(){					
+				make(function(){	
+									
 					p.clbk(null, p);
 
 					$('#panelWrapper').hide();

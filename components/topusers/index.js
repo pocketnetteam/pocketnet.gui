@@ -57,6 +57,9 @@ var topusers = (function(){
 						self.app.platform.api.actions.unsubscribe(address, function(tx, err){
 
 							if(tx){
+
+								el.c.find('.user[address="'+address+'"] .subscribebuttonstop').removeClass('following')
+								el.c.find('.user[address="'+address+'"] .notificationturn').removeClass('turnon')
 								
 							}
 							else
@@ -75,6 +78,9 @@ var topusers = (function(){
 				self.app.platform.api.actions.subscribeWithDialog(address, function(tx, err){
 
 					if(tx){
+								
+						el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('following')	
+						el.c.find('.user[address="'+address+'"] .notificationturn').addClass('turnon')	
 					}
 					else
 					{
@@ -96,6 +102,10 @@ var topusers = (function(){
 				self.app.platform.api.actions[f](address, function(tx, err){
 
 					if(tx){
+			
+						el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('following')	
+						el.c.find('.user[address="'+address+'"] .notificationturn').addClass('turnoff')	
+
 					}
 					else
 					{
@@ -107,18 +117,7 @@ var topusers = (function(){
 		}
 
 		var events = {
-			loadmorescroll : function(){
 
-				if (
-
-					($(window).scrollTop() + $(window).height() > $(document).height() - 400) 
-
-					&& !loading && !end) {
-
-					makepage()
-
-				}
-			},
 			unsubscribe : function(){
 
 				var address = $(this).closest('.user').attr('address')
@@ -126,6 +125,7 @@ var topusers = (function(){
 				actions.unsubscribe(address)
 			},
 			subscribe : function(){
+
 				var address = $(this).closest('.user').attr('address')
 
 				actions.subscribe(address)
@@ -144,6 +144,8 @@ var topusers = (function(){
 		var renders = {
 			page : function(addresses, clbk){
 
+				el.loader.fadeOut();
+				
 				self.shell({
 
 					name :  'users',
@@ -163,70 +165,81 @@ var topusers = (function(){
 		}
 
 		var load = {
-			info : function(addresses, clbk){
-				if(loading) return
-
-				loading = true;
-
-				topPreloader(80);
-
-				el.c.addClass('loading')
-
-				self.sdk.users.get(addresses, function(){
-
-					el.c.removeClass('loading')
-
-					loading = false;
-
-					topPreloader(100);
-
-					if (clbk)
-						clbk()
-				})
-			}
-		}
-
-		var makepage = function(clbk){
-
-			var newadresses = _.filter(addresses, function(a, i){
-				if(i >= (page * cnt) && i < ((page + 1) * cnt)){
-					return true;
-				}
-			})	
-
-			if(newadresses.length){
-
-				load.info(newadresses, function(){
-					renders.page(newadresses, clbk)
-				})
-
-				page++
-			}
-			else
-			{
-				end = true;
-			}
-
-			
 
 		}
+
 
 		var state = {
 			save : function(){
 
 			},
-			load : function(){
+			load : function(clbk){
 
-				self.app.platform.sdk.users.getBestUsers(function(c, error){
+				console.log('addresses', addresses)
 
-					console.log('c!!', c, error);
-				})
 				
+				var shuffle = function(array) {
+					let currentIndex = array.length,  randomIndex;
+				  
+					while (currentIndex != 0) {
+				  
+					  randomIndex = Math.floor(Math.random() * currentIndex);
+					  currentIndex--;
+				  
+					  [array[currentIndex], array[randomIndex]] = [
+						array[randomIndex], array[currentIndex]];
+					}
+				  
+					return array;
+				}
+
+				if (addresses.length){
+
+					if (clbk){
+						clbk(shuffle(addresses).slice(0, 5));
+					}
+
+				} else {
+
+					self.app.platform.sdk.users.getBestUsers(function(c, error){
+
+						if (!c.length){
+
+							self.app.platform.sdk.users.getRecommendedAccountsByTags(function(c, error){
+
+								if (!error && c.length){
+
+									el.c.show();
+
+									addresses = c;
+	
+									if (clbk){
+										clbk(shuffle(addresses).slice(0, 5))
+									}
+
+								}
+
+							})
+
+						} else {
+
+							addresses = c;
+	
+							if (clbk){
+								clbk(shuffle(addresses).slice(0, 5))
+							}
+
+						}
+
+					})
+
+				}
+
 			}
 		}
 
 		var initEvents = function(){
-			
+
 			self.app.platform.clbks.api.actions.subscribe.userlist = function(address){
 
 				el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('following')
@@ -263,9 +276,7 @@ var topusers = (function(){
 		}
 
 		var make = function(){
-			makepage(function(){
-				window.addEventListener('scroll', events.loadmorescroll)
-			})
+
 		}
 
 		return {
@@ -278,12 +289,6 @@ var topusers = (function(){
 				loading = false;
 
 				var data = {};
-
-				addresses = deep(p.settings, 'essenseData.addresses') || []
-
-				data.addresses = addresses
-
-				extra = deep(p.settings, 'essenseData.extra');
 
 				clbk(data);
 
@@ -305,11 +310,14 @@ var topusers = (function(){
 			
 			init : function(p){
 
-				state.load();
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
-				el.users = el.c.find('.users')
+				el.users = el.c.find('.users');
+				el.loader = el.c.find('.loader');
+
+				state.load(renders.page);
+
 
 				initEvents();
 

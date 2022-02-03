@@ -3,7 +3,6 @@ require_once('php/rpc.php');
 require_once('php/api.php');
 
 
-
 class OG {
 
     private $rpc = NULL;
@@ -16,8 +15,6 @@ class OG {
 
     private $domain = NULL;
     private $project = NULL;
-    
-
     
 
     private $maphrefs = array("pkview","about","applications","terms","page404","welcome","registration","anothersite","token","filluserfast","filluser","usersettings","test","accounts","uploadpeertube","streampeertube","tagcloud","taginput","categories","staking","lastcomments","articles","article","video","system16","connection","proxylogs","help","donations","faq","embeding","userpage","oldchat","wallet","share","comments","tube","lenta","transactionview","s","send","imageGalleryEdit","imagegallery","aboutus","menu","toppanel","navigation","footer","support","notifications","panel","leftpanel","discussions","authorization","addaccount","complain","postscores","scheduler","surveyiframe","socialshare","socialshare2","main","author","channel","post","userslist","ustate","dust","testApi", "index");
@@ -64,8 +61,10 @@ class OG {
 
         if (isset($get['s'])) $this->txid = $this->clean($get['s']);
         if (isset($get['v'])) $this->txid = $this->clean($get['v']);
-        if (isset($get['i'])) $this->txid = $this->clean($get['i']);
-        //if ($this->author == NULL && isset($get['v'])) $this->txid = $this->clean($get['v']);
+
+        if ($this->author == NULL && isset($get['i'])) $this->txid = $this->clean($get['i']);
+
+        if ($this->author == NULL && isset($get['v'])) $this->txid = $this->clean($get['v']);
 
         if (isset($get['num'])) $this->imageNum = $this->clean($get['num']);
 
@@ -77,12 +76,9 @@ class OG {
 
     public function is_bot() {
 
-        return true;
-
         if (isset($_SERVER['HTTP_USER_AGENT'])){
-            
             if(preg_match('/mozila|gekko|safari|chrome|khtml|webkit/i', $_SERVER['HTTP_USER_AGENT'])){
-                if(preg_match('/vkshare|whatsapp/i', $_SERVER['HTTP_USER_AGENT'])){
+                if(preg_match('/vkshare|whatsapp|viber|instagram/i', $_SERVER['HTTP_USER_AGENT'])){
                     return true;
                 }
 
@@ -146,6 +142,7 @@ class OG {
     public function ogFromVideo($url, $txid){
 
         $v = $this->parseVideo($url);
+
 
 
 		if ($v['type'] == 'youtube' || $v['type'] == 'vimeo' || $v['type'] == 'peertube'){
@@ -243,8 +240,7 @@ class OG {
                 }
             }
         }
-
-        
+       
 
         $r = array(
             'type' => $type,
@@ -312,7 +308,7 @@ class OG {
                     }
 
                     if(isset($a->a) && $a->a != ''){
-                        $this->currentOg['description'] .= "\n". substr(strip_tags(urldecode($a->a)), 0, 130).'...';
+                        $this->currentOg['description'] .= "\n". strip_tags(urldecode($a->a));
                     }
 
                     if(!$image){
@@ -322,7 +318,6 @@ class OG {
                 }
             }
 
-
             if($this->txid != NULL){
 
                 $r = $this->rpc->share($this->txid);
@@ -330,8 +325,6 @@ class OG {
                 if($r != false){
 
                     $r = $r[0];
-
-                    echo 
 
                     $pca = 'p';
 
@@ -346,8 +339,6 @@ class OG {
                     $description = true;
 
                     $this->currentOg['type'] = 'article';
-
-                    
 
                     if (isset($r->u) && $r->u != ''){
                         $this->ogFromVideo(urldecode($r->u), $this->txid);

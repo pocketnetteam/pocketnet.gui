@@ -30,7 +30,7 @@
 	
 	.works {
 		padding: 30px;
-		background: url(../../img/about/bg-bastion-section1.jpg) no-repeat fixed;
+		background: url(../../img/about/bg-bastion-section1.jpg) no-repeat;
 		background-size: cover;
 		position: relative;
 		
@@ -85,7 +85,6 @@
 			
 		}
 		h2 {
-			color: #000;
 			>span {
 				font-weight: 400;
 			}
@@ -174,7 +173,6 @@
 								align-items: center;
 								justify-content:center;
 								text-decoration: none;
-								color: #000;
 								>img{
 									width: 25px;
 									height: 25px;
@@ -211,7 +209,6 @@
 	
 	.darkbg {
 		padding: 30px 0;
-		background: #000;
 		//background-size: cover;
 		position: relative;
 		>.main-wrapper {
@@ -364,8 +361,8 @@
 		}
 	}
 	.main-board {
-		height: 600px;
-		background: url(../../img/about/bastyon-vs-youtube.jpg) no-repeat fixed;
+		//height: 600px;
+		// background: url(../../img/about/bastyon-vs-youtube.jpg) no-repeat;
 		background-position: 0 0;
 		background-repeat: no-repeat;
 		background-size: cover;
@@ -375,7 +372,7 @@
 		//position: relative;	 	
 		//height: 100%;
 		//position: reletive;
-		padding: 50px 0 ;
+		//padding: 50px 0 ;
 		
 		>.main-wrapper {
 			display: flex;
@@ -383,6 +380,7 @@
 			height: 100%;
 			position: relative;
 			z-index: 2;
+			flex-wrap: wrap;
 			}
 
 			h1 {
@@ -407,10 +405,14 @@
 			}
 	}
 	.main-board__left-block {
-		width: 100%;
+		width: 50%;
 		display: flex;
+		justify-content: center;
+		align-items: center;
+		h1{
+			width: 100%;
+		}
 		>div {
-			
 				color: #FFFFFF;
 				font-weight: 600;
 				font-size: 16px;
@@ -421,6 +423,13 @@
 			&:last-of-type {
 				display: flex;
 			}
+		}
+	}
+	.img-main-block{
+		width: 50%;
+		img{
+			position: relative;
+			width: 500px;
 		}
 	}
 	.main-board__left-block_2 {
@@ -512,7 +521,10 @@
 				.text{
 					width: 450px;				
 					font-size: 1.5em;
-					margin-top: 40px;				
+					margin-top: 40px;
+					&:first-child{
+						
+					}				
 					.extra-text{
 						font-size:2.1em;
 						font-weight: 700;
@@ -526,13 +538,18 @@
 					.one-text-point{
 						text-transform:uppercase;
 						margin-bottom: 20px;
+						display: flex;
+						i{
+							margin-right: 10px;
+							margin-top: 4px;
+						}
 					}
 				}
 	
 			}
 		}
 	}
-	@media (max-width: 380px){
+	@media (max-width: 450px){
 		.main-description{
 			padding: 0;
 			width:100%;
@@ -566,17 +583,18 @@
 		background: #cfcfcf;
 		.main-wrapper{
 			padding: 60px 0;		
-			color: #000;
 			font-weight: 600;
 			display: flex;
 			flex-wrap: wrap;
 			justify-content: space-around;
 			.one-column{
 				width: 250px;
-				margin-bottom: 40px;
+				//margin-bottom: 40px;
 				padding: 0 15px;
 				p{
 					margin-bottom: 20px;
+					margin-top: 0;
+					
 				}
 			}
 		}
@@ -584,14 +602,13 @@
 	.h3-section{
 		.main-wrapper{
 			h3{
-				color:#000;
 				font-size: 2.2em;
 				padding: 50px;
 			}
 		}
 	}
 	
-	@media (max-width: 380px){
+	@media (max-width: 450px){
 		.h3-section{
 			width: 100%;
 			.main-wrapper{
@@ -611,7 +628,6 @@
 				padding: 40px 0;
 				display:flex;
 				flex-wrap:wrap;
-				color: #000 !important;
 				justify-content: space-around;
 				align-items:center;
 				&:nth-child(even){
@@ -623,7 +639,6 @@
 						margin-bottom:30px;
 						text-align: left;
 						font-weight: 800;
-						color: #000;
 					}
 					p{
 						margin-bottom: 15px;
@@ -640,7 +655,7 @@
 			}
 		}
 	}
-	@media (max-width: 380px){
+	@media (max-width: 450px){
 		.img-and-text{
 			width: 100%;
 			.main-wrapper{
@@ -660,7 +675,7 @@
 	}
 	.main-board-2 {
 		//height: 500px;
-		background: url(../../img/about/Unlike-YouTube.jpg) no-repeat fixed;
+		background: url(../../img/about/Unlike-YouTube.jpg) no-repeat;
 		background-position: center center;
 		background-size: cover;
 		position: relative;	 	
@@ -699,9 +714,9 @@
 			
 			
 	}
-	@media (max-width: 380px){
+	@media (max-width: 450px){
 		.main-board-2{
-			background: url(../../img/about/bastyon-alternative.jpg) no-repeat fixed;
+			background: url(../../img/about/bastyon-alternative.jpg) no-repeat;
 			background-position: center center;
 			background-size: cover;
 			position: relative;	 	
@@ -727,7 +742,6 @@
 		}
 	}
 	.table{
-		background-color: rgb(246, 246, 246);
 		padding: 50px 0;
 		.main-wrapper{
 			padding: 40px 0;
@@ -777,7 +791,7 @@
 	
 	.main-board-3 {
 		//height: 500px;
-		background: url(../../img/about/money-block.jpg) no-repeat fixed;
+		background: url(../../img/about/money-block.jpg) no-repeat;
 		background-position: center center;
 		background-size: cover;
 		position: relative;	 	
@@ -797,7 +811,6 @@
 				width: 40%;
 	
 				h2 {
-					color: #000;
 					//padding: 25px 0 0 30px;
 					//position: relative;
 					margin-bottom: 35px !important;
@@ -807,7 +820,6 @@
 					text-align: left;		
 					}
 				h3{
-					color: #000;				
 					margin-bottom: 35px !important;
 					margin: auto 0;
 					font-weight: 600;					
@@ -823,9 +835,9 @@
 			
 			
 	}
-	@media (max-width: 380px){
+	@media (max-width: 450px){
 		.main-board-3{
-			background: url(../../img/about/dark-bg-bastyon-pais.jpg) no-repeat fixed;
+			background: url(../../img/about/dark-bg-bastyon-pais.jpg) no-repeat;
 			background-position: center center;
 			background-size: cover;
 			position: relative;	 	
@@ -1095,7 +1107,7 @@
 	}
 	.form {
 		height: 200px;
-		background: url(../../img/about/bg.jpg) no-repeat fixed;
+		background: url(../../img/about/bg.jpg) no-repeat;
 		background-position: 50% -50px;
 		background-size: cover;
 		position: relative;
@@ -1452,17 +1464,8 @@
 		justify-content: center;
 		}
 	}
-	@media (max-width: 412px) {
-		.main-board__image {
-			width: 100%;
-		}
-		.works {
-			img {
-				width: 100%;
-			}
-		}
-	}
-	@media (max-width: 380px) {
+	
+	@media (max-width: 450px) {
 		
 		.main-board{
 	
@@ -1483,6 +1486,12 @@
 							}
 						}
 					}	
+				.img-main-block{
+					width: 100%;
+					img{
+						width: 100%;
+					}
+				}
 				.main-board__left-block_2 {
 					width: 100%;
 					>div{
@@ -1492,9 +1501,7 @@
 					}
 					
 				}
-				.grey{
-					background: #000;
-					}
+
 				.main-board__button-link {
 					&:first-of-type {
 						margin-right: 0;
@@ -1503,15 +1510,9 @@
 				}
 			}
 			&:first-child{
-				background: url(../../img/about/bastyon-youtube-main1.jpg) no-repeat fixed ;
+				background: url(../../img/about/bastyon-youtube-main1.jpg) no-repeat ;
 				background-size: cover;
-				.main-wrapper{
-					.main-board__left-block{
-						h1{
-							color: #000;
-						}
-					}
-				}
+
 			}
 		}
 	
@@ -1607,7 +1608,7 @@
 		
 	}
 	
-	@media (max-width: 380px){
+	@media (max-width: 450px){
 		.viseos{
 			width:100%;
 			.main-wrapper{

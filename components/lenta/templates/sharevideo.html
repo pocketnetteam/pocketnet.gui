@@ -72,12 +72,11 @@ var metadisplay = function(){ %>
                                 <% 
 									var src = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image');
 									var letter = name ? name[0] : '';
-									var dev = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.dev');
 
 								%>
         
                                 <div class="icon">
-                                    <div class="usericon usericonsbsa another" elementsid="<%-src || 'userimg'%>" image="<%-src || ''%>">
+                                    <div class="usericon usericonsbsa another"  ban=".gif" elementsid="<%-src || 'userimg'%>" image="<%-src || '*'%>">
                                      
 			
 										<% if (!src && letter) {%>
@@ -114,7 +113,7 @@ var metadisplay = function(){ %>
 							<% if((!state || !my) && (typeof repost == 'undefined' || !repost)) { %> 
 
 								<span class="sbtnxs">
-									&middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><i class="far fa-check-circle"></i>  <%=e('following')%></span>
+									&middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><i class="far fa-check-circle"></i>  <%=e('subi')%></span>
 						
 									
 									<% if(state && !my && user.address.value) {
@@ -420,27 +419,27 @@ var metadisplay = function(){ %>
 
 							<% if(!share.temp &&  (typeof repost == 'undefined' || !repost || fromempty)) {%>
 								<div class="panel">
-									<div class="item forstars">
+									<div class="stars_repost">
+										<div class="item forstars">
 
 										
-									</div>
-
-									
-									<% if(app.platform.repost && !my && !checkvisibility) {%>
-										<div elementsid="item-forrepost" class="item <% if(!my){ %> forrepost <% } else { %> nact <% } %>">
-
-											<div class="itemwr table">
-												<div class="iconwr">											
-													<div class="icon">
-														<i class="fas fa-share"></i>
+										</div>
+	
+										
+										<% if(app.platform.repost && !my && !checkvisibility) {%>
+											<div elementsid="item-forrepost" class="item <% if(!my){ %> forrepost <% } else { %> nact <% } %>">
+	
+												<div class="itemwr table">
+													<div class="iconwr">											
+														<div class="icon">
+															<i class="fas fa-share"></i>
+														</div>
 													</div>
 												</div>
+	
 											</div>
-
-										</div>
-									<% } %>
-
-									
+										<% } %>
+									</div>									
 
 									<div elementsid="lenta_sharesocial" class="item sharesocial right unselectable">
 

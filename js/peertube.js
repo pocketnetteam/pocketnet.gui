@@ -479,11 +479,12 @@ PeerTubePocketnet = function (app) {
 
         var special = false
 
-        /*if( app.user.address.value == 'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m' || app.user.address.value == 'PDgbAvsrS4VGKkW5rivcJaiCp7fnBoZRgM'){
-            special = true
-        }*/
-
-
+           /*if( app.user.address.value == 'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m' || app.user.address.value == 'PDgbAvsrS4VGKkW5rivcJaiCp7fnBoZRgM' || app.user.address.value == 'PU6LDxDqNBDipG4usCqhebgJWeA4fQR5R4' || 
+            app.user.address.value == 'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM'
+            
+            ){
+                special = true
+            }*/
 
         return this.roys({ type: type, special : special })
           .then((data = {}) => {
@@ -493,17 +494,18 @@ PeerTubePocketnet = function (app) {
             var royId;
 
             if (app.user.address.value) {
-              royId = self.helpers.base58.decode('PBvkW9txHLiKtQMX642DG1SmJC2UbBX5wy') % roysAmount;
+              royId = self.helpers.base58.decode(app.user.address.value) % roysAmount;
             }
 
-            console.log('royId', royId)
+         
 
-            /*if (special){
+            if (special){
               var spc = _.find(data, function(i){
-                if(i == 'bastyonmma.pocketnet.app' || i == 'bastyonmma.nohost.me') return true
+                if(i == '01rus.nohost.me') return true
               })
+
               if(spc) return spc
-            }*/
+            }
 
             if (!royId) royId = rand(0, roysAmount - 1);
 
@@ -705,7 +707,7 @@ PeerTubePocketnet = function (app) {
           .catch((e = {}) => {
             const errorBody = e.response ? e.response.data : {};
 
-            if (errorBody.code !== 3) {
+            if (errorBody.code !== 3 && errorBody.code !== 'max_user_lives_limit_reached' ) {
               e.cancel = axios.isCancel(e);
 
               return Promise.reject(e);

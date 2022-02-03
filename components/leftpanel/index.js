@@ -6,15 +6,9 @@ var leftpanel = (function(){
 
 	var Essense = function(p){
 
-		var primary = deep(p, 'history');
-
-		var el, categories = null, tags = null, cats = null;
+		var el, tags = null, cats = null;
 
 		var ed = null;
-
-		var events = {
-			
-		}
 
 		var renders = {
 			currentsearch : function(value, clbk){
@@ -72,6 +66,40 @@ var leftpanel = (function(){
 
 			},
 
+			menu : function(value, clbk){
+
+				if(!el.c) return
+
+				var pathname = self.app.nav.current.href;
+
+				self.app.user.isState(function(state){
+
+					if(isMobile() && pathname != 'index'){
+						el.c.addClass('hidden')
+					}
+					else{
+						el.c.removeClass('hidden')
+
+						self.shell({
+
+							name :  'menu',
+							el :   el.menu,
+							data : {
+								pathname : pathname,
+								state : state,
+								mobile : isMobile(),
+							},
+	
+						}, function(_p){
+
+	
+						})
+					}
+
+					
+				})
+			},
+
 			tags : function(){
 
 				if(!el.c) return
@@ -84,6 +112,7 @@ var leftpanel = (function(){
 					animation : false,
 					
 					clbk : function(e, p){
+
 						tags = p
 					}
 
@@ -203,6 +232,7 @@ var leftpanel = (function(){
 			},
 
 			main : function(){
+				renders.menu()
 				renders.tags()
 				renders.cats()
 				renders.best()
@@ -211,10 +241,12 @@ var leftpanel = (function(){
 			},
 
 			sub : function(){
+				renders.menu()
 				renders.sub()
 			},
 
 			top : function(){
+				renders.menu()
 				renders.top()
 			}
 		}
@@ -242,8 +274,6 @@ var leftpanel = (function(){
 		}
 
 		return {
-			primary : primary,
-
 			getdata : function(clbk, p){
 
 				ed = p.settings.essenseData || {}
@@ -266,7 +296,11 @@ var leftpanel = (function(){
 					cats = null;
 				}
 
+				if(el.c) el.c.empty()
+
 				el = {};
+
+				ed = {}
 			},
 
 			authclbk : function(){
@@ -283,6 +317,7 @@ var leftpanel = (function(){
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
 				el.cnt = el.c.find('.leftpanelcnt')
+				el.menu = el.c.find('.menu');
 				el.tags = el.c.find('.tagscnt')
 				el.cats = el.c.find('.catscnt')
 				el.bestfirst = el.c.find('.bestfirst');

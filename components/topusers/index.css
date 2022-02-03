@@ -32,8 +32,7 @@
   font-weight: 700;
 }
 #topusers .tcaption .rating {
-  color: #00a4ff;
-  cursor: pointer;
+  color: #555770;
 }
 #topusers .caption {
   font-weight: 100;
@@ -88,6 +87,11 @@
 #topusers .users .user .addressTable > div.iconWrapper .usericon {
   height: 40px;
   width: 40px;
+}
+#topusers .users .user .addressTable > div.iconWrapper .usericon .letter {
+  position: relative;
+  bottom: 4px;
+  left: 1px;
 }
 #topusers .users .user .addressTable > div.label {
   text-overflow: ellipsis;
@@ -144,8 +148,25 @@
 #topusers .users .user .subscribebuttonstop.following .subscribe {
   display: none;
 }
+#topusers .users .user .modal {
+  display: none;
+  width: 308px;
+  height: 340px;
+  position: absolute;
+  z-index: 9999;
+  right: 230px;
+  background: #FFFFFF;
+  border-radius: 12px;
+  box-shadow: 32px 32px 32px 32px #00000014;
+}
+#topusers .users .user .modal .addressTable .name {
+  max-width: 300px!important;
+}
+#topusers .users .user:hover .modal {
+  display: block;
+}
 html.stblack #topusers {
-  background: transparent;
+  background: #0a0c17;
 }
 html.stblack #topusers .users .user .addressTable {
   cursor: pointer;

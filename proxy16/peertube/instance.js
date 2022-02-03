@@ -13,7 +13,7 @@ var instance = function (host, Roy) {
 	var inited = false;
 	var statistic = new Statistic()
 
-	const FREE_SPACE_PERC = 0.05;
+	const FREE_SPACE_PERC = 0.95;
 
 	var lastStat = null;
 	
@@ -119,13 +119,13 @@ var instance = function (host, Roy) {
 			var { free, size } = v.space;
             var occupiedPerc = (size - free) / size;
 
-            if (occupiedPerc < FREE_SPACE_PERC) canuploading = false
+            if (occupiedPerc < FREE_SPACE_PERC) canuploading = true
 
 		}
 
 		return {
 			last : v,
-			canuploading : !self.cantuploading
+			canuploading : canuploading
 		}
 	}
 

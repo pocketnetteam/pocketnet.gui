@@ -25,34 +25,17 @@
 
             <% 
 
-            if(!share.hasexchangetag()){
+            if(!share.hasexchangetag() && !share.repost.v){
 
                     
-                if (typeof u != 'undefined' && u  && !share.repost.v && (
-                        
-                    (u.reputation > 50 || !u.trial || u.balance > 500000000)
-                
-                
-                        || window.testpocketnet) && !share.itisvideo() && !share.aliasid) { %>
+                if (!share.repost.v && !share.itisvideo() && !share.aliasid) { %>
                     <div elementsid="peertubeAddVideo" class="item peertube tooltip nowidth" embeding="addVideo" title="<%=e('peertubeAddVideo')%>">
                         <i class="fas fa-video"></i> <span><%- e('peertubeAddVideo') %></span>
                     </div>
 
-                    <% if(
-                        (
-                            (u.reputation > 100 || !u.trial || u.balance > 5000000000) || 
-                            deep(app, 'platform.real.'+user.address.value.toString('hex')) || window.testpocketnet
+                  
+                <% }
 
-                        ) && !isMobile()) {%>
-
-                    <div elementsid="goLive" class="item peertubeLiveStream tooltip nowidth" embeding="addStream" title="<%=e('peertubeAddStream')%>">
-                        <i class="fas fa-dot-circle"></i> <span><%- e('goLive') %></span>
-                    </div>
-
-                    <% } %>
-                <%
-                }
-        
             } %>
            
 

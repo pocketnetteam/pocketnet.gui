@@ -1,0 +1,123 @@
+<div class="nodecontentstate">
+
+    <% if(nc.hasbin && !nc.lock) {%>
+
+        <div class="setting">
+            <div class="settingTable table">
+                <div class="label">
+                    <span><%-e('easyNode_e10021')%></span>
+                </div>
+                <div class="value">
+                    <% if(nodestate.status == 'launched') { %>
+                        <i class="fas fa-check-circle good"></i> <span class="good"><%-e('easyNode_e10031')%></span>
+                    <% } else { %> 
+                        <span class="bad"><%-flb(nodestate.status)%></span>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+
+        <% if(nodestate.status == 'launched') { %>
+            <div class="setting">
+                <div class="settingTable table">
+                    <div class="label">
+                        <span><%-e('easyNode_e10032')%></span>
+                    </div>
+                    <div class="value">
+                        <%- nodestate.info.version %>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+
+        <% if(nodestate.status == 'launched') { %>
+            <div class="setting">
+                <div class="settingTable table">
+                    <div class="label">
+                        <span><%-e('easyNode_e10033')%></span>
+                    </div>
+                    <div class="value">
+                        <%- nodestate.info.chain %>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+
+        <% if(nodestate.error && !_.isEmpty(nodestate.error)) {%>
+            <div class="setting">
+                <div class="settingTable table">
+                    <div class="label">
+                        <span><%-e('easyNode_e10034')%></span>
+                    </div>
+                    <div class="value">
+                        <span><b><%-nodestate.error.code || '0'%></b>: <%-deep(nodestate, 'error.message') || "Undefined Error"%></span>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+
+        <% if(nodestate.info.lastblock) {%>
+            <div class="setting">
+                <div class="settingTable table">
+                    <div class="label">
+                        <span><%-e('easyNode_e10035')%></span>
+                    </div>
+                    <div class="value">
+                        <% fork = (nodestate.info.lastblock.height - manager.chain.bestHeight) > 15 %>
+                        <div>
+                            <span class="<%- fork ? 'bad' : '' %>">
+                                <%- nodestate.info.lastblock.height.toLocaleString() %>
+                                <%- manager.chain && Math.abs(nodestate.info.lastblock.height - manager.chain.bestHeight) > 15
+                                    ?
+                                    ` / ${Number(manager.chain.bestHeight).toLocaleString()}`
+                                    :
+                                    ''
+                                %>
+                            </span>
+
+                            <% if (Number.isFinite(nodestate.sync.left) && nodestate.sync.left > 0) { %>
+                    
+                                <% if(nodestate.sync.left < 1) { %>
+                                    <span class="syncLeft">
+                                        <%-e('easyNode_e10036')%>
+                                    </span>
+                                
+                                <% } else if(nodestate.sync.left >= 1) { %>
+                                    <span class="syncLeft">
+                                        <%-e('easyNode_e10037', nodestate.sync.left)%>
+                                    </span>
+                                <% }%>
+
+                            <% } else { %>
+                                <% if (fork) { %>
+                                    <span class="syncLeft">
+                                        <i class="fas fa-code-branch bad"></i>
+                                    </span>
+                                <% } %>
+                            <% } %>
+                        </div>
+
+                        <% percent = nodestate.info.lastblock.height * 100 / manager.chain.commonHeight %>
+                        <div elementsid="nodestateheightprogress" class="nodestateheightprogress">
+                            <div elementsid="nodestateheightprogressinner" class="nodestateheightprogressinner <%- fork ? 'fork' : '' %>" style="width:<%-percent%>%" ></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="setting">
+                <div class="settingTable table">
+                    <div class="label">
+                        <span><%-e('easyNode_e10038')%></span>
+                    </div>
+                    <div class="value">
+                        <span><%-nodestate.info.lastblock.hash%></span>
+                    </div>
+                </div>
+            </div>
+
+        <% } %>
+
+    <% } %>
+
+</div>

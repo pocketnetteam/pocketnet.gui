@@ -197,22 +197,22 @@ var Middle = function(){
     self.extend = function(request, result, next){
         var start = new Date()
 
-        result._success = function(data, code, s){
+        result._success = function(data, code, s, formatdata){
 
             if(!code) code = 200
 
-                var jsonp = {
-                    result : 'success',
-                    data : data
-                }
-    
-                if (s && s.node && s.node.key){
-                    jsonp.node = s.node.key
-                }
+            var jsonp = formatdata ? formatdata(data) : {
+                result : 'success',
+                data : data
+            }
 
-                if (s && s.time){
-                    jsonp.time = s.time
-                }
+            if (s && s.node && s.node.key){
+                jsonp.node = s.node.key
+            }
+
+            if (s && s.time){
+                jsonp.time = s.time
+            }
            
             try{
                 result.status(code).jsonp(jsonp)

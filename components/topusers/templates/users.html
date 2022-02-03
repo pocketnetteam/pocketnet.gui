@@ -37,12 +37,10 @@ var telements = function(address){ %>
 	<% } %>
 	
 <% }
+_.each(addresses, function(u){ 
 
-_.each(addresses, function(address){ 
-
-	var _class=''
-
-	if (me && me.relation(address, 'blocking')){ _class="userblocking" }
+	var _class='';
+	var address = u.address;
 
 %>
 	<div class="wrk">
@@ -56,15 +54,13 @@ _.each(addresses, function(address){
 
 							<% 
 
-							console.log('usericon', deep(app, 'platform.sdk.users.storage.'+address))
-
-								var src = deep(app, 'platform.sdk.users.storage.'+address+'.image');  
-								var name = deep(app, 'platform.sdk.users.storage.'+address+'.name');
+								var src = u.avatar;
+								var name = u.name;
 								var letter = name ? name[0] : ''; 
 
 							%>
 
-							<div class="usericon" image="<%-src || ''%>">
+							<div class="usericon" image="<%-src || '*'%>">
 
 								<% if(!src && letter) {%>
 
@@ -81,15 +77,14 @@ _.each(addresses, function(address){
 						</div>
 					</a>
 				</div>
-
 				<div class="label">
 					<a href="<%-app.platform.api.authorlink(address)%>">
 
 						<div class="top">
 							<div class="name">
-								<%- app.platform.api.name(address) || address %>							
+								<%- u.name %>							
 							</div>		
-							<% var r = deep(app, 'platform.sdk.users.storage.'+address+'.reputation'); %>
+							<% var r = u.reputation %>
 
 							<% if (r) {%>
 								<div class="reputation">
@@ -99,18 +94,13 @@ _.each(addresses, function(address){
 
 						</div>
 
-						<% var subscribers = deep(app, 'platform.sdk.users.storage.'+address+'.subscribers');   %>
+						<% var subscribers = u.subscribers_count   %>
 
-						<% if (subscribers) {%>
+			
+						<div class="light">						
+							<%- subscribers %> <%=e('subscribers3') %>
 
-							<div class="light">						
-								<%- subscribers.length  %>	<%=e('subscribers') %>
-
-							</div>
-
-						<% } %>
-
-				
+						</div>
 
 
 					</a>			

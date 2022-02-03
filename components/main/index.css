@@ -115,8 +115,8 @@
 }
 #main .bastyonhelper .wndredirect ._close {
   position: absolute;
-  right: .75em;
-  top: .5em;
+  right: 0.75em;
+  top: 0.5em;
   cursor: pointer;
   color: #fff;
   z-index: 150;
@@ -145,9 +145,17 @@
   padding-top: 0;
 }
 #main .topvideosWrapper .horizontalLentacaption {
-  padding: 1em 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5em 0;
   padding-bottom: 0.5em;
   font-size: 18px;
+}
+#main .topvideosWrapper .horizontalLentacaption .controlhors {
+  display: flex;
+  width: 75px;
+  justify-content: space-between;
 }
 #main .topvideosWrapper .horizontalLentacaption span {
   font-weight: 700;
@@ -158,7 +166,7 @@
 }
 #main .topvideosWrapper .durationWrapper,
 #main .topvideosWrapper .statswrapper {
-  top: 0;
+  top: 6px;
   bottom: auto!important;
 }
 #main.videomain {
@@ -177,7 +185,7 @@
   position: fixed;
   bottom: 20%;
   padding: 0.5em;
-  background: #ffffff;
+  background: #fff;
   box-shadow: 0 5px 7px -5px rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(60, 65, 70, 0.3);
   color: #3c4146;
@@ -250,8 +258,8 @@
   float: right;
 }
 #main .lentacell {
-  margin-right: 256px;
-  margin-left: 242px;
+  margin-right: 286px;
+  margin-left: 272px;
   padding-top: 0.5em;
   min-height: 3000px;
   padding-bottom: 1000px;
@@ -259,11 +267,6 @@
 #main .lentacell .cf_spacer,
 #main .lentacell .bgCaption {
   margin-bottom: 0.5em;
-}
-#main .lentacell .bgCaption,
-#main .lentacell .topvideosWrapper,
-#main .lentacell .authorgroup .share {
-  box-shadow: 0px 10px 14px rgba(0, 0, 0, 0.08);
 }
 #main .lentacellsvi {
   margin-right: 0;
@@ -290,7 +293,7 @@
 }
 #main.videomain .lentacell {
   margin-right: 0;
-  margin-left: 212px;
+  margin-left: 232px;
 }
 #main.videomain .bgCaption {
   display: none;
@@ -389,7 +392,6 @@
 }
 #main .caption {
   font-size: 3.3em;
-  color: #00a4ff;
 }
 #main #comments .caption {
   font-size: 1em;
@@ -710,6 +712,9 @@ html.testpocketnet #main.testpocketnetbg {
 }
 /*t*/
 @media only screen and (max-width: 768px) {
+  .video-js {
+    contain: strict;
+  }
   #main .topvideosWrapper {
     border-radius: 0px;
   }
@@ -756,6 +761,7 @@ html.testpocketnet #main.testpocketnetbg {
     height: 195px;
     content-visibility: auto;
     contain-intrinsic-size: 195px;
+    contain: strict;
   }
   #main .topvideosWrapper.hasshares {
     display: block;
@@ -831,7 +837,7 @@ html.tablet #main .bgCaption {
   display: none;
 }
 html.tablet #main {
-  padding-top: 55px;
+  padding-top: 50px;
 }
 @media only screen and (max-width: 768px) {
   html.toppanelshowed #main {
@@ -851,122 +857,6 @@ html.tablet #main {
   }
   html.scrollmodedown #main .maincntwrapper {
     top: 0;
-  }
-  #main {
-    /*	
-		.maincntwrapper{
-			width : 300%;
-			transform: translateX(-33.3333333%);
-			.transition(0.3s);
-			background: #011621;
-			position: absolute;
-			left : 0;
-			top : 0;
-			bottom : 0;
-			
-
-			
-			>div{
-				&.work{
-					width: 100%;
-					height: 100%;
-					position: absolute;
-					left : 0;
-					bottom: 0;
-					right : 0;
-					top : 0;
-	
-					.transition(0.3s);
-					
-					>div{
-						padding-top : 65px;
-					}
-				}
-			}
-			
-
-			.lentacell,
-			.mainpanelcell,
-			.leftpanelcell{
-				height: 100%;
-				overflow: auto;
-				padding-bottom: 12 * @rhythm;
-			}
-		}
-
-		.mainpanelcell{
-			display: block!important;
-		}
-
-		.leftpanelcell{
-			float: left!important;
-		}
-
-
-		.lentacell{
-			margin-left: 33.333%!important;
-			margin-right: 33.333%;
-			padding-top : 0;
-			width : 33.333%;
-			min-height: 0;
-			padding-bottom: 0;
-		}
-
-		.leftpanelcell{
-			margin-left: 0;
-			margin-right: 0;
-			width : 33.333%;
-			display: block;
-		}
-
-		.mainpanelcell{
-			margin-left: 0;
-			margin-right: 0;
-			width : 33.333%;
-		}
-
-		&[mobilemode='leftshow']{
-			.maincntwrapper{
-				transform: translateX(0);
-			}
-		}
-
-		&[mobilemode='rightshow']{
-			.maincntwrapper{
-				transform: translateX(-66.66666%);
-			}
-		}
-
-		&.videomain{
-		
-			.columnnavigation{
-				display: none!important;
-			}
-
-			.lentacell{
-				margin-left: 33.333%;
-				margin-right: 33.333%;
-				padding-top : 0;
-				width : 33.333%;
-				padding-bottom: 0;
-			}
-			
-			.leftpanelcell{
-				margin-left: 0;
-				margin-right: 0;
-				width : 33.333%;
-			}
-	
-			.leftpanelsvicell{
-				display: none;
-			}
-
-			.lentacellsvi{
-				padding-top : 0;
-			}
-
-		
-		}*/
   }
   #main .fxdsmall {
     width: 100%;

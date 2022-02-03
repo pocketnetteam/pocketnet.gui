@@ -1,0 +1,46 @@
+<% if(nodestate.staking) { %>
+    
+    <div class="nodecontent">
+        <div class="work stakingBox">
+            <div elementsid="stakingBox" class="ssubcaption">
+                <span><%-e('easyNode_e10020')%></span>
+            </div>
+            
+
+            <div class="setting stacking">
+                <div class="settingTable table">
+                    <div class="label">
+                        <span><%-e('easyNode_e10021')%></span>
+                    </div>
+                    <div class="value canstacking">
+                        <% if (_.isEmpty(nodestate.staking)) { %>
+                            
+                            <i class="fas fa-spinner fa-spin"></i> <span class=""><%-e('easyNode_e10022')%></span>
+
+                        <% } else if (nodestate.staking.staking && nodestate.staking.enabled) { %>
+                            
+                            <i class="fas fa-check-circle good"></i> <span class="good"><%-e('easyNode_e10023')%></span>
+                        
+                        <% } else { %>
+
+                            <i class="far fa-times-circle bad"></i> <span class="bad"><%-e('easyNode_e10024')%></span>
+
+                        <% } %>
+                    </div>
+                </div>
+                
+                <!-- <div class="settingTable table">
+                    <div class="label">
+                        <span>Available balance</span>
+                    </div>
+                    <div class="value balance">
+                        <%= (nodestate.staking.weight/100000000.0).toLocaleString(undefined, {minimumFractionDigits:8}) %> PKOIN
+                    </div>
+                </div> -->
+
+            </div>
+            
+        </div>
+    </div>
+
+<% } %>

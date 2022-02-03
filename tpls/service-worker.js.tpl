@@ -26,6 +26,7 @@ routing.registerRoute(
       request.destination === 'worker'},
 
     new strategies.CacheFirst({
+      cacheName: 'cache' + '__VAR__.domain' + 'v__PACKAGE-VERSION__',
       plugins: [
         new cacheableResponse.CacheableResponsePlugin({
           statuses: [200],

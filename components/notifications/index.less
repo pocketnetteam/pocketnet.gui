@@ -9,9 +9,7 @@
 		display: none;
 	}
 
-	.ntf{
-		.transition(0.1s, transform);
-	}
+
 
 	._wrp{
 		.commenttext,
@@ -132,8 +130,8 @@
 			.caption{
 				text-overflow: ellipsis;
 				overflow: hidden;
+				white-space: nowrap;
 			}
-
 
 
 			.date{
@@ -144,6 +142,10 @@
 			.emojione{
 				width : 16px;
 				height : 16px;
+			}
+
+			.cwrapper>div{
+				vertical-align: top;
 			}
 		}
 	}
@@ -177,6 +179,12 @@
 	}
 
 		
+}
+
+.wndnotifications{
+	.ncaption{
+		display: none;
+	}
 }
 
 .notificationTolltip{

@@ -58,6 +58,12 @@
     if (options.radius) this.radius(options.radius);
   };
 
+  // Specify a new `radius` for the circle
+  CircularProgress.prototype.destroy = function (value) {
+    this.el.remove()
+    this.options = null
+  };
+
   // Update with a new `percent` value and redraw the canvas
   CircularProgress.prototype.update = function (value) {
     this._percent = value;

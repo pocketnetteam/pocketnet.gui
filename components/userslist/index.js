@@ -11,8 +11,10 @@ var userslist = (function(){
 		var el;
 		var addresses = [],
 			cnt = 50,
+			scnt = null,
 			end = false,
 			extra = null,
+			sort = null,
 			page = 0;
 
 		var loading;
@@ -109,9 +111,11 @@ var userslist = (function(){
 		var events = {
 			loadmorescroll : function(){
 
+				console.log('el.c.height() - scnt.scrollTop()', el.c.height(), scnt.scrollTop())
+
 				if (
 
-					($('#userslist').height()- $('#fordetailsusers').scrollTop() < 400) 
+					(el.c.height() - scnt.scrollTop() < 1000) 
 
 					&& !loading && !end) {
 
@@ -177,6 +181,7 @@ var userslist = (function(){
 
 				el.c.addClass('loading')
 
+
 				self.sdk.users.get(addresses, function(){
 
 					el.c.removeClass('loading')
@@ -187,7 +192,7 @@ var userslist = (function(){
 
 					if (clbk)
 						clbk()
-				})
+				}, true)
 			}
 		}
 
@@ -265,8 +270,26 @@ var userslist = (function(){
 
 		var make = function(){
 			makepage(function(){
-				document.getElementById('fordetailsusers').addEventListener('scroll', events.loadmorescroll)
+				scnt.on('scroll', events.loadmorescroll)
 			})
+		}
+
+		var sorting = function(addresses, type){
+
+			if(!type) return addresses
+
+			if (type == 'commonuserrelation'){
+
+				var me = deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value)
+
+				return _.sortBy(addresses, function(address){
+
+					return -self.app.platform.sdk.users.commonuserpoint(address, me)
+				})
+
+			}	
+
+			return addresses
 		}
 
 		return {
@@ -280,13 +303,18 @@ var userslist = (function(){
 
 				var data = {};
 
-				addresses = deep(p.settings, 'essenseData.addresses') || [];
+				sort = deep(p.settings, 'essenseData.sort') || null;
+
+				addresses = sorting(deep(p.settings, 'essenseData.addresses') || [], sort)
 
 				data.addresses = addresses
+
 				data.empty = deep(p.settings, 'essenseData.empty');
 				data.caption = deep(p.settings, 'essenseData.caption');
 
 				extra = deep(p.settings, 'essenseData.extra');
+
+				//scnt = deep(p.settings, 'essenseData.cnt') || $(window);
 
 				clbk(data);
 
@@ -294,7 +322,8 @@ var userslist = (function(){
 
 			destroy : function(){
 
-				window.removeEventListener('scroll', events.loadmorescroll)
+				scnt.off('scroll', events.loadmorescroll)
+				//scnt.removeEventListener('scroll', events.loadmorescroll)
 
 				delete self.app.platform.clbks.api.actions.subscribe.userlist
 				delete self.app.platform.clbks.api.actions.subscribePrivate.userlist
@@ -313,6 +342,10 @@ var userslist = (function(){
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
 				el.users = el.c.find('.users')
+
+
+				scnt = el.c.closest('.customscroll:not(body)') 
+				if(!scnt.length) scnt = $(window);
 
 				initEvents();
 

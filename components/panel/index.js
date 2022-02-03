@@ -8,7 +8,7 @@ var panel = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, discussions = null, tags = null, comments = null, stacking = null, topusers = null;
+		var el, discussions = null, tags = null, comments = null, stacking = null, topusers = null, bestposts = null, recommendedposts = null;
 
 		var ed = null;
 
@@ -56,7 +56,6 @@ var panel = (function(){
 
 			topusers : function(){
 				
-				console.log('topusers!!!', el.topusers)
 
 				self.nav.api.load({
 
@@ -66,11 +65,50 @@ var panel = (function(){
 					animation : false,
 
 					essenseData : {
-						addresses : ['PEJhUMmCwkngRQELKacxWiJHBEdAsYRZoB', 'PH6ovi9jUVF4GZ4oGUeKLqcUYV1aSPTj8B', 'PJFSiYQtPQNwWJrKXyzBuvWoqc11RkWRRd', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd']
 					},
 					
 					clbk : function(e, p){
 						topusers = p;
+					}
+
+				})
+			},
+
+			bestposts : function(){
+				
+
+				self.nav.api.load({
+
+					open : true,
+					id : 'bestposts',
+					el : el.bestposts,
+					animation : false,
+
+					essenseData : {
+					},
+					
+					clbk : function(e, p){
+						bestposts = p;
+					}
+
+				})
+			},
+
+			recommendedposts : function(){
+				
+
+				self.nav.api.load({
+
+					open : true,
+					id : 'recommendedposts',
+					el : el.recommendedposts,
+					animation : false,
+
+					essenseData : {
+					},
+					
+					clbk : function(e, p){
+						recommendedposts = p;
 					}
 
 				})
@@ -265,55 +303,7 @@ var panel = (function(){
 				
 			},
 
-			discussions : function(clbk){
-
-				self.shell({
-					name :  'discussiondummy',
-					el : el.cnt,
-					data : {
-					}
-
-				}, function(p){
-
-					if (clbk)
-						clbk()
-
-				})
-
-				/*var d = ed.discussions || {};
-
-					d.view = 'fixedin'
-
-				self.nav.api.load({
-
-					open : true,
-					id : 'discussions',
-					el : el.cnt,
-					animation : false,
-
-					essenseData : d,
-					
-					clbk : function(e, p){
-						discussions = p
-					}
-
-				})*/
-			},
-
-			_discussions : function(){
-				self.user.isState(function(state){
-
-					if(state){
-	
-						var me = self.app.platform.sdk.users.storage[self.app.platform.sdk.address.pnet().address];
-						
-						if(!me.relay && !me.temp)
-							renders.discussions()
-	
-					}	
-					
-				})
-			}
+		
 		}
 
 		var load = {
@@ -379,25 +369,17 @@ var panel = (function(){
 				})
 			}
 
-			self.app.platform.ws.messages.event.clbks.panel = function(d){
-				if(d.mesType == 'userInfo'){
-					renders._discussions()
-				}
-			}
+			
 		}
 
 		var make = function(){
-
 		
-
-			if (self.app.platform.sdk.usersettings.meta.vidgetchat.value)
-				renders._discussions()
 
 			/*if (self.app.platform.sdk.usersettings.meta.vidgettags.value)
 				renders.tags()*/
 
-			if (self.app.platform.sdk.usersettings.meta.vidgetlastcomments.value)
-				renders.lastcomments()
+			// if (self.app.platform.sdk.usersettings.meta.vidgetlastcomments.value)
+			// 	renders.lastcomments()
 
 
 		
@@ -413,7 +395,9 @@ var panel = (function(){
 				})
 			*/
 			
-			renders.topusers()
+			renders.topusers();
+			renders.bestposts();
+			renders.recommendedposts();
 
 
 		}
@@ -436,11 +420,6 @@ var panel = (function(){
 				delete self.app.platform.clbks.api.actions.subscribe.panelrec
 				delete self.app.platform.ws.messages.event.clbks.panel
 
-				if (discussions){
-					discussions.destroy()
-					discussions = null;
-				}
-
 				if (tags){
 					tags.destroy()
 					tags = null;
@@ -461,19 +440,23 @@ var panel = (function(){
 					topusers = null
 				}
 
+				if(bestposts){
+					bestposts.destroy()
+					bestposts = null
+				}
+
+				if(recommendedposts){
+					recommendedposts.destroy()
+					recommendedposts = null
+				}
+
 
 				el = {};
 			},
 
 			authclbk : function(){
 
-				return
-
-				if(typeof el != 'undefined' && el.c){
-					if (self.app.platform.sdk.usersettings.meta.vidgetchat.value)
-						renders._discussions()
-				}
-				
+			
 			},
 			
 			init : function(p){
@@ -487,6 +470,8 @@ var panel = (function(){
 				el.comments = el.c.find('.lastcommentscnt')
 				el.stacking = el.c.find('.stackingcnt')
 				el.topusers = el.c.find('.topuserscnt')
+				el.bestposts = el.c.find('.bestpostscnt')
+				el.recommendedposts = el.c.find('.recommendedpostscnt')
 				el.r = el.c.find(".recommendationscnt")
 
 				initEvents();
