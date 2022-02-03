@@ -88,6 +88,11 @@
   height: 40px;
   width: 40px;
 }
+#topusers .users .user .addressTable > div.iconWrapper .usericon .letter {
+  position: relative;
+  bottom: 4px;
+  left: 1px;
+}
 #topusers .users .user .addressTable > div.label {
   text-overflow: ellipsis;
   overflow: hidden;

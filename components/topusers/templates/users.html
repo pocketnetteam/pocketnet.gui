@@ -55,12 +55,12 @@ _.each(addresses, function(u){
 							<% 
 
 								var src = u.avatar;
-								var name = deep(app, 'platform.sdk.users.storage.'+address+'.name');
+								var name = u.name;
 								var letter = name ? name[0] : ''; 
 
 							%>
 
-							<div class="usericon" image="<%-src || ''%>">
+							<div class="usericon" image="<%-src || '*'%>">
 
 								<% if(!src && letter) {%>
 
