@@ -25357,8 +25357,8 @@ Platform = function (app, listofnodes) {
             var directproxy = self.app.api.get.direct()
 
             if (directproxy){
-                directproxy.system.clbks.tick.globalclbk = function(data){
-                    console.log("GLOBAL DATA", data)
+                directproxy.clbks.tick.globalclbk = function(data){
+                    console.log(data)
                 }
             }
 
