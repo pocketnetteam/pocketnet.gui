@@ -9,7 +9,7 @@ on:
     branches:
       - 'htlc'
     tags:
-      - 'v*'
+      - v*
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
