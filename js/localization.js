@@ -201,7 +201,7 @@ Localization = function(app){
 				return
 			}
 
-			var src = 'localization/' + (__k) + '.js?v=21'
+			var src = 'localization/' + (__k) + '.js?v=' + numfromreleasestring(window.packageversion)
 
 			self.loading[__k] = true
 
