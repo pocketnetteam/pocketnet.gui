@@ -1971,6 +1971,8 @@ ____loclib.easyNode_e10058 = "Gb free disk space"
 ____loclib.easyNode_e10059 = "Mb/s internet speed"
 ____loclib.easyNode_e10060 = "SSD drive"
 ____loclib.easyNode_e10061 = "Your node is running. Close the app anyway?"
+____loclib.easyNode_e10062 = "Node update is available. Download a new version?"
+____loclib.easyNode_e10063 = "Node has been successfully updated"
 
 ____loclib.IHave = "I have";
 ____loclib.downloadNode = "Download Windows Desktop Node";
