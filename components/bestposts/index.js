@@ -328,6 +328,8 @@ var bestposts = (function(){
 
 				if (shares.length){
 
+					el.c.show();
+					
 					if (clbk){
 						clbk(shuffle(shares).slice(0, 5));
 					}

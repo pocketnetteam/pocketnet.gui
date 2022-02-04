@@ -158,6 +158,41 @@ var topusers = (function(){
 					inner : append
 
 				}, function(_p){
+
+					self.app.platform.clbks.api.actions.subscribe.userlist = function(address){
+
+						el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('following')
+						el.c.find('.user[address="'+address+'"] .notificationturn').removeClass('turnon')		
+					}
+		
+					self.app.platform.clbks.api.actions.subscribePrivate.userlist = function(address){
+		
+						el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('following')	
+						el.c.find('.user[address="'+address+'"] .notificationturn').addClass('turnon')	
+					}
+		
+					self.app.platform.clbks.api.actions.unsubscribe.userlist = function(address){
+		
+						el.c.find('.user[address="'+address+'"] .subscribebuttonstop').removeClass('following')
+						el.c.find('.user[address="'+address+'"] .notificationturn').removeClass('turnon')
+					}
+		
+					self.app.platform.clbks.api.actions.blocking.userlist = function(address){
+						el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('blocking')		
+						el.c.find('.user[address="'+address+'"] .notificationturn').removeClass('turnon')			
+					}
+		
+					self.app.platform.clbks.api.actions.unblocking.userlist = function(address){
+		
+						el.c.find('.user[address="'+address+'"] .subscribebuttonstop').removeClass('blocking')				
+						el.c.find('.user[address="'+address+'"]').removeClass('userblocking')	
+					}
+		
+					el.c.on('click', '.subscribe', events.subscribe)
+					el.c.on('click', '.unsubscribe', events.unsubscribe)
+					el.c.on('click', '.notificationturn', events.subscribePrivate)
+
+					
 					if (clbk)
 						clbk()
 				})
@@ -195,6 +230,8 @@ var topusers = (function(){
 
 				if (addresses.length){
 
+					el.c.show();
+
 					if (clbk){
 						clbk(shuffle(addresses).slice(0, 5));
 					}
@@ -223,6 +260,8 @@ var topusers = (function(){
 
 						} else {
 
+							el.c.show();
+
 							addresses = c;
 	
 							if (clbk){
@@ -240,38 +279,7 @@ var topusers = (function(){
 
 		var initEvents = function(){
 
-			self.app.platform.clbks.api.actions.subscribe.userlist = function(address){
 
-				el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('following')
-				el.c.find('.user[address="'+address+'"] .notificationturn').removeClass('turnon')		
-			}
-
-			self.app.platform.clbks.api.actions.subscribePrivate.userlist = function(address){
-
-				el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('following')	
-				el.c.find('.user[address="'+address+'"] .notificationturn').addClass('turnon')	
-			}
-
-			self.app.platform.clbks.api.actions.unsubscribe.userlist = function(address){
-
-				el.c.find('.user[address="'+address+'"] .subscribebuttonstop').removeClass('following')
-				el.c.find('.user[address="'+address+'"] .notificationturn').removeClass('turnon')
-			}
-
-			self.app.platform.clbks.api.actions.blocking.userlist = function(address){
-				el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('blocking')		
-				el.c.find('.user[address="'+address+'"] .notificationturn').removeClass('turnon')			
-			}
-
-			self.app.platform.clbks.api.actions.unblocking.userlist = function(address){
-
-				el.c.find('.user[address="'+address+'"] .subscribebuttonstop').removeClass('blocking')				
-				el.c.find('.user[address="'+address+'"]').removeClass('userblocking')	
-			}
-
-			el.c.on('click', '.subscribe', events.subscribe)
-			el.c.on('click', '.unsubscribe', events.unsubscribe)
-			el.c.on('click', '.notificationturn', events.subscribePrivate)
 			
 		}
 

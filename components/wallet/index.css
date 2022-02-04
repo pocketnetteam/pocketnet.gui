@@ -12,12 +12,6 @@
   color: #010E30;
   font-weight: 100;
 }
-#wallet .ntf {
-  -moz-transition: transform 0.1s;
-  -o-transition: transform 0.1s;
-  -webkit-transition: transform 0.1s;
-  transition: transform 0.1s;
-}
 #wallet .copyaddress {
   cursor: pointer;
 }
@@ -702,6 +696,30 @@
   flex-wrap: wrap;
   padding: 0 1em;
 }
+#wallet .buypkoin .row.one {
+  display: block;
+  padding: 1em;
+  margin-bottom: 1.5em;
+}
+#wallet .buypkoin .row.one .wrp {
+  padding: 2em 1em;
+  text-align: left;
+  border-radius: 5px;
+  border: 1px dashed rgba(178, 171, 172, 0.5);
+  background: #001b37;
+}
+#wallet .buypkoin .row.one .flxbtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#wallet .buypkoin .row.one .flxbtn div {
+  margin-right: 1em;
+}
+#wallet .buypkoin .row.one .flxbtn span {
+  color: #fff;
+  font-size: 0.8em;
+}
 #wallet .buypkoin .row .button {
   min-width: 220px;
 }
@@ -946,6 +964,9 @@
   height: 28px;
   border-radius: 50%;
 }
+#wallet.simple ._stepback {
+  display: none!important;
+}
 html.stblack #wallet .caption span {
   color: #00a4ff;
 }
@@ -1144,7 +1165,11 @@ html.stblack #wallet .actionstep .animation .deposit {
   max-height: 640px;
 }
 .walletwindow #wallet {
+  padding-bottom: 0;
   min-height: none;
+}
+.walletwindow #wallet ._stepbackBuy {
+  display: none;
 }
 .walletwindow #wallet .workstation {
   display: none;
@@ -1354,6 +1379,69 @@ html.stblack #wallet .actionstep .animation .deposit {
 .walletwindow #wallet .deposit .row > div.label,
 .walletwindow #wallet .send .row > div.label {
   width: 100%;
+}
+.walletwindow #wallet .buypkoin {
+  padding: 0.5em;
+}
+.walletwindow #wallet .buypkoin .ways {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.walletwindow #wallet .buypkoin .ways > div {
+  flex-shrink: 1;
+  flex-basis: content;
+  flex-grow: 1;
+  padding-bottom: 3em;
+}
+.walletwindow #wallet .buypkoin .row {
+  padding: 0;
+}
+.walletwindow #wallet .buypkoin .row .button {
+  min-width: 310px;
+}
+.walletwindow #wallet .buypkoin .row.flx {
+  justify-content: center;
+}
+.walletwindow #wallet .buypkoin .row.flx > div {
+  width: 12.5%;
+  padding: 0.5em 0.5em;
+  text-align: center;
+}
+.walletwindow #wallet .buypkoin .row.forfiats {
+  justify-content: center;
+}
+.walletwindow #wallet .buypkoin .row.forfiats > div {
+  width: 25%;
+}
+.walletwindow #wallet .buypkoin .row.one {
+  display: block;
+  padding: 0.5em 0;
+  margin-bottom: 1.5em;
+}
+.walletwindow #wallet .buypkoin .row.one .wrp {
+  padding: 2em 1em;
+}
+.walletwindow #wallet .buypkoin .row.one .flxbtn {
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+}
+.walletwindow #wallet .buypkoin .row.one .flxbtn div {
+  margin-right: 0;
+}
+.walletwindow #wallet .buypkoin .row.one .flxbtnlbk {
+  margin-top: 1em;
+}
+.walletwindow #wallet .buypkoin .row.table {
+  display: block;
+  text-align: center;
+}
+.walletwindow #wallet .buypkoin .row.table > div {
+  display: block;
+}
+.walletwindow #wallet .buypkoin .row.table .reciever {
+  margin: 0 auto;
 }
 .walletwindow #wallet .crowdfunding {
   border: 0;
@@ -1632,10 +1720,48 @@ html.stblack #wallet .actionstep .animation .deposit {
   #wallet .buypkoin .row .button {
     min-width: 310px;
   }
+  #wallet .buypkoin .row.flx {
+    justify-content: center;
+  }
   #wallet .buypkoin .row.flx > div {
     width: 12.5%;
     padding: 0.5em 0.5em;
     text-align: center;
+  }
+  #wallet .buypkoin .row.forfiats {
+    justify-content: center;
+  }
+  #wallet .buypkoin .row.forfiats > div {
+    width: 25%;
+  }
+  #wallet .buypkoin .row.one {
+    display: block;
+    padding: 0.5em 0;
+    margin-bottom: 1.5em;
+  }
+  #wallet .buypkoin .row.one .wrp {
+    padding: 2em 1em;
+  }
+  #wallet .buypkoin .row.one .flxbtn {
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+  }
+  #wallet .buypkoin .row.one .flxbtn div {
+    margin-right: 0;
+  }
+  #wallet .buypkoin .row.one .flxbtnlbk {
+    margin-top: 1em;
+  }
+  #wallet .buypkoin .row.table {
+    display: block;
+    text-align: center;
+  }
+  #wallet .buypkoin .row.table > div {
+    display: block;
+  }
+  #wallet .buypkoin .row.table .reciever {
+    margin: 0 auto;
   }
   #wallet .htls,
   #wallet .crowdfunding,
@@ -1683,6 +1809,7 @@ html.stblack #wallet .actionstep .animation .deposit {
   #wallet .send button {
     min-width: 0;
     width: 100%;
+    max-width: none!important;
   }
   #wallet .htls .row,
   #wallet .crowdfunding .row,
@@ -1855,7 +1982,7 @@ html.stblack #wallet .actionstep .animation .deposit {
     padding-top: 0;
     padding: 0;
   }
-  .walletwindow #wallet {
+  .walletwindow #wallet .caption {
     padding-left: 0.5em;
     padding-right: 0.5em;
   }

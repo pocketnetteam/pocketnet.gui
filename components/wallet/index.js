@@ -2774,22 +2774,11 @@ var wallet = (function(){
 						
 						if (_p.action){
 
-							
-							if(_p.action == 'buy'){
-
-								actions.sendParameters();
-
-								renders.buy(null, null, true);
-
-
-							}
-
-
 							if(_p.action == 'send'){
 
 								actions.sendParameters();
 
-								send.parameters.amount.value = String(_p.amount || '0').replace(/,/g,'')
+								send.parameters.amount.value = Number((_p.amount || '0').replace(/,/g,''))
 								send.parameters.reciever.value = _p.address || ""
 								send.parameters.message.value = _p.message || ""
 
