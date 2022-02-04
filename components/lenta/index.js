@@ -829,7 +829,7 @@ var lenta = (function(){
 						
 	
 						essenseData : {
-							url : 'hr',
+							url : url,
 							caption : "Share comment",
 							sharing : '',
 							embedding : {
