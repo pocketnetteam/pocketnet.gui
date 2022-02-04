@@ -1369,6 +1369,8 @@
 
 		if(!p.success) p.success = false;
 		if(!p.fail) p.fail = false;
+		if(!p.close) p.close = false;
+		if(!p.destroy) p.destroy = false;
 
 
 		if(!p.btn1text) p.btn1text = app.localization.e('daccept');
@@ -1509,6 +1511,9 @@
 		var destroy = function(){
 
 			if(destroyed) return;
+
+			if(typeof p.destroy === 'function')
+				p.destroy(self);
 
 			destroyed = true;
 
@@ -1653,7 +1658,7 @@
 		return self;
 	}
 
-	sitemessage = function (message, func, delay = 2200) {
+	sitemessage = function (message, func, delay = 5000) {
 		$("<div/>", {
 			"class": "sitemessage remove_now",
 			"style": "opacity:0",

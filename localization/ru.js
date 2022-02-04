@@ -1743,6 +1743,8 @@ ____loclib.easyNode_e10058 = "ГБ свободного пространства
 ____loclib.easyNode_e10059 = "Мбит/с скорость интернет"
 ____loclib.easyNode_e10060 = "SSD диск"
 ____loclib.easyNode_e10061 = "Ваша нода запущена. Все равно закрыть приложение?"
+____loclib.easyNode_e10062 = "Доступно обновление Ноды. Загрузить новую версию?"
+____loclib.easyNode_e10063 = "Нода успешно обновлена"
 
 ____loclib.IHave = "У меня";
 ____loclib.downloadNode = "Скачать ноду для Windows";

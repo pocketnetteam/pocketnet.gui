@@ -526,7 +526,11 @@ var Control = function(settings) {
 
             return self.kit.safeStop().then(r => {
 
-                return self.kit.install()
+                return f.pretry(function() {
+                    return false
+                }, 5, 1000).then(e => {
+                    return self.kit.install()
+                })
 
             }).then(r => {
 
@@ -814,6 +818,9 @@ var Control = function(settings) {
 
             state.status = v ? 'starting' : 'stopping'
             state.timestamp = new Date()
+
+            if (enabled)
+                self.autorun.init()
 
         },
 

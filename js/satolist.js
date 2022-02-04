@@ -25321,6 +25321,8 @@ Platform = function (app, listofnodes) {
 
     self.prepare = function (clbk) {
 
+        self.nodeControlUpdateNodeLast = new Date()
+        self.nodeControlUpdateNodePopup = false
         self.preparing = true;
         self.sdk.registrations.load();
         self.sdk.relayTransactions.load();
@@ -25378,8 +25380,41 @@ Platform = function (app, listofnodes) {
             var directproxy = self.app.api.get.direct()
 
             if (directproxy){
-                directproxy.clbks.tick.globalclbk = function(data){
-                    console.log(data)
+                directproxy.clbks.tick.globalclbk = function(data) {
+
+                    if (data.nodeControl.state.hasUpdate) {
+                        if (!self.nodeControlUpdateNodePopup && (new Date(self.nodeControlUpdateNodeLast)).addSeconds(60 * 60) < new Date())
+                        {
+                            self.nodeControlUpdateNodeLast = new Date()
+                            self.nodeControlUpdateNodePopup = true
+
+                            dialog({
+                                html: self.app.localization.e('easyNode_e10062'),
+                                btn1text: self.app.localization.e('easyNode_e10015'),
+                                btn2text: self.app.localization.e('skip'),
+                                class : 'zindex',
+
+                                success: function () {
+                                   
+                                    directproxy.fetchauth('manage', {
+                                        action : 'node.update',
+                                        data : {
+                                            all : 'all'
+                                        }
+                                    }).then(r => {
+                                        sitemessage(self.app.localization.e('easyNode_e10063'), null, 5000)
+                                    }).catch(e => {
+                                        sitemessage(JSON.stringify(e), null, 5000)
+                                    })
+
+                                },
+                                destroy: function() {
+                                    self.nodeControlUpdateNodeLast = new Date()
+                                    self.nodeControlUpdateNodePopup = false
+                                }
+                            })
+                        }
+                    }
                 }
             }
 
