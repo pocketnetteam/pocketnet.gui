@@ -25815,10 +25815,10 @@ Platform = function (app, listofnodes) {
                                 },
     
                                 constraints : function(e){
+                                    
                                     if(_.find(e.path, function(el){
                                         return el.className && el.className.indexOf('noswipepnt') > -1
                                     })) return false
-
 
                                     return true
                                 },

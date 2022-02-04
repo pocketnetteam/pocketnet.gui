@@ -4923,6 +4923,8 @@ html.tablet{
         transform: scale(0.9);
         overflow: hidden;
         border-radius: 5px;
+        backface-visibility: hidden;
+        will-change: transform;
 
         &.active{
             -webkit-transform: scale(1) translateX(100%);

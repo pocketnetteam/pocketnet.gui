@@ -7044,6 +7044,9 @@
 
 		var self = this;
 		var needclear = false
+
+		var throttle = 50
+		var transitionstr = 'transform 0.05s linear'
 		
 		var directiontoprop = function(direction, value){
 
@@ -7064,7 +7067,7 @@
 
 			var scaledifmax = 0.1
 			var scaledif = scaledifmax * Math.min(Math.abs(value), 100) / 100 
-			var scale = 1 - scaledif
+			var scale = (1 - scaledif).toFixed(3)
 
 			if(direction == 'up' || direction == 'left') {
 				value = -value
@@ -7074,20 +7077,29 @@
 
 			if(p.directions[direction] && p.directions[direction].basevalue) value = value + p.directions[direction].basevalue
 
-			if (prop == 'x'){
-				__el[0].style["transform"] = "scale("+scale+") translate3d("+(value || 0)+"px, 0, 0)"
-				__el[0].style['transform-origin'] = pd + ' center'
-			}
+			if(!value) value = 0
 
-			if (prop == 'y'){
-				__el[0].style["transform"] = "scale("+scale+") translate3d(0, "+(value || 0)+"px, 0)"
-				__el[0].style['transform-origin'] = 'center ' + pb
-			}
+			value = value.toFixed(0)
 
-			__el[0].style["-moz-transition"] = 'none'
-			__el[0].style["-o-transition"] = 'none'
-			__el[0].style["-webkit-transition"] = 'none'
-			__el[0].style["transition"] = 'none'
+
+			window.requestAnimationFrame(function(){
+				if (prop == 'x'){
+					__el[0].style["transform"] = "scale("+scale+") translate3d("+value+"px, 0, 0)"
+					__el[0].style['transform-origin'] = pd + ' center'
+				}
+	
+				if (prop == 'y'){
+					__el[0].style["transform"] = "scale("+scale+") translate3d(0, "+value+"px, 0)"
+					__el[0].style['transform-origin'] = 'center ' + pb
+				}
+	
+				__el[0].style["-moz-transition"] = transitionstr
+				__el[0].style["-o-transition"] = transitionstr
+				__el[0].style["-webkit-transition"] = transitionstr
+				__el[0].style["transition"] = transitionstr
+			})
+
+
 
 		}
 
@@ -7104,15 +7116,19 @@
 
 				var __el = p.transformel || p.el
 
-				__el.css({"transform": ""});
-				__el.css({"transform-origin": ""});
-				__el.css({"-moz-transition": ""});
-				__el.css({"-o-transition": ""});
-				__el.css({"-webkit-transition": ""});
-				__el.css({"transition": ""});
-				
-				_.each(p.directions, function(d){
-					applyDirection(d, 0)
+				window.requestAnimationFrame(function(){
+
+					__el.css({"transform": ""});
+					__el.css({"transform-origin": ""});
+					__el.css({"-moz-transition": ""});
+					__el.css({"-o-transition": ""});
+					__el.css({"-webkit-transition": ""});
+					__el.css({"transition": ""});
+					
+					_.each(p.directions, function(d){
+						applyDirection(d, 0)
+					})
+
 				})
 			}
 			
@@ -7126,7 +7142,7 @@
 			
 			p.el.swipe({
 				allowPageScroll : p.allowPageScroll,
-				swipeStatus : function(e, phase, direction, distance){
+				swipeStatus : _.throttle(function(e, phase, direction, distance){
 
 					if (mainDirection && mainDirection.i != direction){
 						phase = 'cancel'
@@ -7183,7 +7199,7 @@
 					
 					
 
-				},
+				}, throttle),
 			})
 
 			return self
