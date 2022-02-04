@@ -890,7 +890,6 @@ Application = function(p)
 	}
 
 	self.reload = function(p){
-		console.log('reload', p.nav.href)
 		if(!p) p = {};
 
 			p.nav || (p.nav = {})

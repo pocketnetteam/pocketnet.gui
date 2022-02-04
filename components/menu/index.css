@@ -25,6 +25,15 @@
   z-index: 20;
   background: #fff;
   color: #0e1c2b;
+  /*
+		.sections{
+			-webkit-user-select: none;
+  			-webkit-app-region: drag;
+
+			  .section{
+				-webkit-app-region: none;
+			  }
+		}*/
 }
 #menu .usericon {
   position: relative;
@@ -111,25 +120,9 @@
 #menu.fullscreen .titleBar .restoreApp {
   display: none;
 }
-#menu.menupanelactive .sections .items .item.navWrapperItem {
-  display: block;
-}
 #menu.searchactive .additionalbar {
   top: 65px;
   box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.4);
-}
-#menu.searchactive .sections .items {
-  /*&.walletsWrapper,
-				&.notificationsWrapper,
-				&.saveCrossWrapper,
-				&.gethotpostsWrapper{
-					display: none;
-				}*/
-  /*&.sitenames{
-					.label{
-						display: none;
-					}
-				}*/
 }
 #menu.searchactive .sections .items.searchWrapper {
   display: block;
@@ -232,9 +225,6 @@
   padding-right: 0;
   padding-left: 0;
   vertical-align: middle;
-}
-#menu .sections .items.messengerWrapper {
-  margin-right: 0.5em;
 }
 #menu .sections .items.keyexportWrapper {
   margin-left: 0.5em;
@@ -618,11 +608,14 @@
   padding: 0;
   left: 0;
   max-height: 540px;
-  overflow-y: auto;
-  scrollbar-width: none;
-}
-#menu .searchFastResultWrapper::-webkit-scrollbar {
-  width: 0 !important;
+  overflow-y: overlay;
+  border-radius: 0.5em;
+  border: 1px solid rgba(228, 221, 222, 0.2);
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  padding: 0.5em;
+  margin-top: 0.5em;
 }
 #menu .searchFastResultWrapper .table > div {
   padding: 0;
@@ -752,6 +745,7 @@
   border: 0;
   padding-left: 0;
   padding: 0;
+  min-height: 33px;
 }
 #menu .postssearch .searchIconLabel,
 #menu .postssearch .searchPanel {
@@ -761,40 +755,13 @@
 }
 #menu .postssearch .searchIconLabel {
   width: 38px;
+  -webkit-transition: none;
+  transition: none;
 }
 #menu .postssearch .searchPanel {
   width: 2em;
   font-size: 0.8em;
   text-align: center;
-}
-#menu .postssearch .searchPanel .searchPanelWrapper {
-  /*>div{
-					&[event=clear]{
-						display: none!important;
-					}
-				}*/
-}
-#menu.menupanelactive:not(.searchactive) .postssearch {
-  /*.searchPanel,*/
-}
-#menu.menupanelactive:not(.searchactive) .postssearch .searchInputWrapper {
-  display: none;
-}
-#menu.menupanelactive:not(.searchactive) .postssearch .searchInput {
-  background: transparent;
-  border: 1px solid transparent;
-}
-#menu.menupanelactive:not(.searchactive) .postssearch input {
-  color: #0e1c2b;
-  background: transparent;
-}
-#menu.menupanelactive:not(.searchactive) .postssearch .searchIconLabel,
-#menu.menupanelactive:not(.searchactive) .postssearch .searchPanel {
-  color: #0e1c2b;
-  background: transparent;
-}
-#menu.menupanelactive:not(.searchactive) .sections .items.searchWrapper {
-  max-width: 40px;
 }
 #menu .signup,
 #menu .signout,
@@ -866,6 +833,10 @@ html.stblack #menu .postssearch .searchIconLabel,
 html.stblack #menu .postssearch .searchPanel {
   color: #b2abac;
   background: #030f1b;
+}
+html.stblack #menu .searchFastResultWrapper {
+  border: 1px solid rgba(228, 221, 222, 0.2);
+  background-color: rgba(14, 28, 43, 0.95);
 }
 html.stblack #menu .searchFastResultWrapper .searchbywrapper .searchby .swrp > div {
   color: rgba(178, 171, 172, 0.7);
@@ -1032,6 +1003,28 @@ html.stblack #menu .searchFastResultWrapper .searchbywrapper .searchby .swrp:hov
   #menu .sections .items.localizationWrapper {
     display: none;
   }
+  html.allcontent #menu .menuWrapper {
+    background: transparent;
+  }
+  html.allcontent #menu .menuWrapper .searchIconLabel i,
+  html.allcontent #menu .menuWrapper .icon i {
+    color: #2672ff;
+  }
+  html.allcontent #menu .menuWrapper .sitename .label {
+    display: none;
+  }
+  html.allcontent #menu .centerpart,
+  html.allcontent #menu .walletsWrapper,
+  html.allcontent #menu .keyexportWrapper,
+  html.allcontent #menu .notificationsWrapper {
+    display: none!important;
+  }
+  html.allcontent #menu .usericon {
+    box-shadow: 0 5px 7px -5px rgba(0, 0, 0, 0.4);
+  }
+  html.allcontent #menu .far.fa-comment {
+    font-weight: 700;
+  }
 }
 /*t*/
 @media only screen and (max-width: 768px) {
@@ -1067,41 +1060,6 @@ html.stblack #menu .searchFastResultWrapper .searchbywrapper .searchby .swrp:hov
   #menu .postssearch input {
     padding: 0;
   }
-  #menu.searchactive .postssearch {
-    font-size: 1.2em;
-  }
-  #menu.searchactive .sections {
-    padding: 0;
-  }
-  #menu.searchactive .sections .section {
-    width: 100%;
-  }
-  #menu.searchactive .sections .section.right {
-    width: 100%;
-  }
-  #menu.searchactive .sections .section .items.searchWrapper {
-    width: 100%;
-  }
-  #menu.searchactive .sections .section .items.searchWrapper .item {
-    width: 100%;
-  }
-  #menu.searchactive .sections .section .items.searchWrapper .postssearch {
-    width: 100%;
-  }
-  #menu.searchactive .sections .section.leftpart {
-    display: none;
-  }
-  #menu.searchactive .sections .section.right {
-    display: none;
-  }
-  #menu.searchactive .sections .items.searchWrapper {
-    width: 100%;
-    max-width: none;
-    padding-right: 0;
-  }
-  #menu.searchactive .sections .items.searchWrapper .postssearchwrapper {
-    padding: 0.75em 0.5em;
-  }
   #menu .sections .items .item.user {
     margin-right: 0;
   }
@@ -1131,5 +1089,40 @@ html.stblack #menu .searchFastResultWrapper .searchbywrapper .searchby .swrp:hov
   }
   #menu .sections .items.gethotpostsWrapper .label {
     display: none;
+  }
+  html:not(.allcontent) #menu.searchactive .postssearch {
+    font-size: 1.2em;
+  }
+  html:not(.allcontent) #menu.searchactive .sections {
+    padding: 0;
+  }
+  html:not(.allcontent) #menu.searchactive .sections .section {
+    width: 100%;
+  }
+  html:not(.allcontent) #menu.searchactive .sections .section.right {
+    width: 100%;
+  }
+  html:not(.allcontent) #menu.searchactive .sections .section .items.searchWrapper {
+    width: 100%;
+  }
+  html:not(.allcontent) #menu.searchactive .sections .section .items.searchWrapper .item {
+    width: 100%;
+  }
+  html:not(.allcontent) #menu.searchactive .sections .section .items.searchWrapper .postssearch {
+    width: 100%;
+  }
+  html:not(.allcontent) #menu.searchactive .sections .section.leftpart {
+    display: none;
+  }
+  html:not(.allcontent) #menu.searchactive .sections .section.right {
+    display: none;
+  }
+  html:not(.allcontent) #menu.searchactive .sections .items.searchWrapper {
+    width: 100%;
+    max-width: none;
+    padding-right: 0;
+  }
+  html:not(.allcontent) #menu.searchactive .sections .items.searchWrapper .postssearchwrapper {
+    padding: 0.75em 0.5em;
   }
 }

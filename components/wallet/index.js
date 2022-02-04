@@ -2253,6 +2253,12 @@ var wallet = (function(){
 
 				}, function(_p){
 
+					_p.el.find('.button_commerce').on('click', function(){
+						
+
+						if(essenseData.sendclbk) essenseData.sendclbk({})
+					})
+
 					
 					if (clbk)
 						clbk(_p.el)
