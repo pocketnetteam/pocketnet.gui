@@ -1813,3 +1813,7 @@ ____loclib.menu = "Меню"
 
 
 ____loclib.donotshowagain = "Не показывать больше"
+
+____loclib.postby = "Публикация от"
+____loclib.continueon = "Продолжить на"
+____loclib.bestwishes = "С наилучшеми пожеланиями"

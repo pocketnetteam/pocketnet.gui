@@ -1279,6 +1279,8 @@ Application = function(p)
 		self.height = self.el.window.height()
 		self.width = self.el.window.width()
 
+		console.log("initeventsApp")
+
 		var showPanel = '1'
 
 		var cr = self.curation()

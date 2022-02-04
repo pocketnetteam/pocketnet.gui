@@ -2036,3 +2036,9 @@ ____loclib.menu = "Menu"
 
 ____loclib.donotshowagain = "Do not show again"
 
+
+____loclib.postby = "Post by"
+____loclib.continueon = "Сontinue on"
+____loclib.bestwishes = "Best,"
+
+

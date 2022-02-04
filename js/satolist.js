@@ -21319,7 +21319,7 @@ Platform = function (app, listofnodes) {
                 }*/
 
 
-               /* var nm = filterXSS(trimHtml(m, symbols), {
+                /* var nm = filterXSS(trimHtml(m, symbols), {
                     stripIgnoreTag: true
                 });*/
 
@@ -23552,10 +23552,6 @@ Platform = function (app, listofnodes) {
                 }*/
 			}
 
-
-
-
-
 			var remove = self.fastMessages.length - maxCount;
 
 			var s = false;
@@ -23667,7 +23663,7 @@ Platform = function (app, listofnodes) {
         self.fastMessage = function (html, destroyclbk) {
             var id = makeid(true);
 
-            html = '<div class="fastMessage" id="' + id + '">\
+            html = '<div class="fastMessage" elementsid="notificationmessage" id="' + id + '">\
             <div class="fmCnt">' + html + '</div>\
             <div class="close">\
                 <i class="fa fa-times" aria-hidden="true"></i>\
@@ -25809,18 +25805,20 @@ Platform = function (app, listofnodes) {
                             left : {
                                 cancellable : true,				
                                 
-                                basevalue : self.app.width,
+                                basevalue : self.app.width || $(window).width(),
     
                                 positionclbk : function(px){
                                 },
     
                                 constraints : function(e){
-                                    
+
                                     if(_.find(e.path, function(el){
                                         return el.className && el.className.indexOf('noswipepnt') > -1
                                     })) return false
 
-                                    return true
+                                    if (self.matrixchat.core && (!self.matrixchat.core.canback || self.matrixchat.core.canback()))
+
+                                        return true
                                 },
     
                                 restrict : true,
