@@ -474,8 +474,6 @@ var Proxy16 = function(meta, app, api){
             return Promise.resolve(r)
         }).catch(e => {
 
-            
-
             if (options.fnode && e) e.code = 700
 
             if ((e.code == 408 || e.code == 429 || e.code == -28) && options.node && trying < 2 && !options.fnode){

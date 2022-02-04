@@ -7062,6 +7062,10 @@
 			var pd = 'left'
 			var pb = 'top'
 
+			var scaledifmax = 0.1
+			var scaledif = scaledifmax * Math.min(Math.abs(value), 100) / 100 
+			var scale = 1 - scaledif
+
 			if(direction == 'up' || direction == 'left') {
 				value = -value
 				pd = 'right'
@@ -7071,12 +7075,12 @@
 			if(p.directions[direction] && p.directions[direction].basevalue) value = value + p.directions[direction].basevalue
 
 			if (prop == 'x'){
-				__el[0].style["transform"] = "scale(0.9) translate3d("+(value || 0)+"px, 0, 0)"
+				__el[0].style["transform"] = "scale("+scale+") translate3d("+(value || 0)+"px, 0, 0)"
 				__el[0].style['transform-origin'] = pd + ' center'
 			}
 
 			if (prop == 'y'){
-				__el[0].style["transform"] = "scale(0.9) translate3d(0, "+(value || 0)+"px, 0)"
+				__el[0].style["transform"] = "scale("+scale+") translate3d(0, "+(value || 0)+"px, 0)"
 				__el[0].style['transform-origin'] = 'center ' + pb
 			}
 

@@ -7653,6 +7653,9 @@ html.tablet,
 html.mobile{
     .wnd{
         &.normalizedmobile{
+
+            
+
             .wndinner{
                 width: 65%;
             }
@@ -7661,6 +7664,7 @@ html.mobile{
                 will-change: transform;
                 backdrop-filter: none!important;
                 -webkit-backdrop-filter: none!important;  
+                
                 .transition(0.3s);
             }
             .hideButton{
@@ -7687,6 +7691,8 @@ html.mobile{
                 -webkit-transform: translateY(100%);
                 transform: translateY(100%);
                 backface-visibility: hidden;
+                will-change: transform;
+                contain: strict;
     
                 .wndcontent{
                     border-top-left-radius: 10px;
@@ -7695,7 +7701,6 @@ html.mobile{
                     border-bottom-left-radius: 0;
                     bottom : 0;
                     backface-visibility: hidden;
-                    contain: strict;
                     .shadowSmaller();
 
                     
