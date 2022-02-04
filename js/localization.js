@@ -201,7 +201,14 @@ Localization = function(app){
 				return
 			}
 
-			var src = 'localization/' + (__k) + '.js?v=' + numfromreleasestring(window.packageversion)
+			var vs = '23'
+
+			if(typeof numfromreleasestring != 'undefined'){
+				vs = numfromreleasestring(window.packageversion)
+			}
+
+
+			var src = 'localization/' + (__k) + '.js?v=' + vs
 
 			self.loading[__k] = true
 

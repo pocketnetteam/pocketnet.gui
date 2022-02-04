@@ -39,7 +39,11 @@ deep = function(obj, key){
 }
 
 
-
+numfromreleasestring = function(v){
+    v = v.replace(/[^0-9]/g, '')
+    var vs = Number(v.substr(0, 1) + '.' + v.substr(1))
+    return vs
+}
 
 topPreloader2 = function(percent, text){
     if(!window.jQuery) return

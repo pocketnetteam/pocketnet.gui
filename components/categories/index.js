@@ -38,6 +38,7 @@ var categories = (function(){
 				}
 
 				self.fastTemplate('addcategory', function(rendered){
+
 					var d = dialog({
 						html : rendered,
 						class : "addcategorydialog",
@@ -45,6 +46,7 @@ var categories = (function(){
 						btn1text : self.app.localization.e('dcancel'),
 						btn2text : self.app.localization.e('save'),
 						wrap : true,
+						
 						clbk : function(el, d){
 							renders.tagsinput(el, category)
 
