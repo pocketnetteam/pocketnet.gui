@@ -7,11 +7,9 @@ var menu = (function(){
 	var Essense = function(){
 
 		var el = {},
-			searchBlurTimer = null,
 			sitenameToNav = null,
 			plissing = null,
 			authorForSearch = null,
-			searchBackAction = null,
 			menusearch = null;
 
 		var loc = new Parameter({
@@ -62,11 +60,6 @@ var menu = (function(){
 
 		var actions = {
 			
-
-			elswidth : function(){
-
-			},
-
 		
 			ahnotifyclear : function(){
 				notifications = {}
@@ -113,15 +106,20 @@ var menu = (function(){
 
 			sitenameToNav : function(){
 
-				if(!events.navinit.el) 
-				
-				if (menusearch && menusearch.active || parameters().ss) return
+				if(!events.navinit.el) return
 
+				console.log('menusearch' , menusearch, el.nav.hasClass('active'))
+				
 				var pn = self.app.nav.current.href
 				
-				if ((pn == 'index' || pn == 'author') && self.app.lastScrollTop > 45){
+				if ( 
+					!((menusearch && menusearch.active) || parameters().ss) && 
+					(pn == 'index' || pn == 'author') && self.app.lastScrollTop > 45)
+					
+					{
 
 					if(!el.nav.hasClass('active')){
+
 						el.nav.addClass('active')
 						el.c.addClass('menupanelactive')
 
@@ -136,9 +134,8 @@ var menu = (function(){
 						if (pn == 'index'){
 							el.nav.find('.pcenterLabel[r="'+r+'"]').addClass('active')
 						}
-					}
 
-					
+					}
 						
 				}
 				else
@@ -150,9 +147,6 @@ var menu = (function(){
 					}
 					
 				}
-
-				actions.elswidth()
-
 				
 			}
 		}
@@ -166,12 +160,8 @@ var menu = (function(){
 
 						self.app.events.scroll.menu = actions.sitenameToNav
 
-						//$(window).on('scroll', actions.sitenameToNav)
-
 						self.app.nav.clbks.history.menu = function(href){
-
 							actions.sitenameToNav()
-
 						}
 					}
 
@@ -426,18 +416,15 @@ var menu = (function(){
 				click : function(){
 
 					self.app.mobile.vibration.small()
-					el.c.addClass('searchactive')
 
-					searchBackAction = null;
+					//el.c.addClass('searchactive')
 
-					el.postssearch.find('input').focus();
-					el.postssearch.addClass('active')
-
-					if (searchBlurTimer) {
-						clearTimeout(searchBlurTimer)
-						searchBlurTimer = null
+					if (menusearch) {
+						menusearch.setactive(true)
+						menusearch.focus()
 					}
 
+					
 
 				}
 			},
@@ -448,38 +435,16 @@ var menu = (function(){
 
 						var pn = self.app.nav.current.href
 
-						if (pn != 'index' || cl){
-
-							_el.find('input').val('')
-							
+						if (cl){
+							menusearch.setvalue('')
 							closesearch()
-							clearex()
 
 						}
-
-						else{
-
-							if (searchBackAction){
-								searchBackAction()
-								searchBackAction = null;
-							}
-
-						}
-
-
 						
 					}
 
-					var clearex = function(){
-						if(searchBlurTimer)
-						{
-							clearTimeout(searchBlurTimer)
-							searchBlurTimer = null;
-						}
-					}
-
+				
 					var render = function(results, value, clbk, p){
-
 
 						renders.results(results, value, function(tpl){
 
@@ -490,7 +455,6 @@ var menu = (function(){
 								self.app.nav.api.links(null, el, function(){
 
 									helpers.closeResults()
-									clearex()
 
 								});
 
@@ -507,8 +471,8 @@ var menu = (function(){
 									})
 
 									helpers.closeResults()
+
 									close()
-									clearex()
 
 									if (name){
 										close(true)
@@ -520,7 +484,8 @@ var menu = (function(){
 						}, p)
 					}
 
-					if(menusearch) menusearch.destroy()
+					if (menusearch) 
+						menusearch.destroy()
 
 					menusearch = new search(el.postssearch, {
 						placeholder : self.app.localization.e('e13139'),
@@ -531,15 +496,6 @@ var menu = (function(){
 
 						clbk : function(_el){
 
-							_el.find('input').on('blur', function(){
-
-								searchBlurTimer = slowMade(function(){
-
-									close(true)
-
-								}, searchBlurTimer, 200)
-								
-							})
 
 						},
 
@@ -627,19 +583,36 @@ var menu = (function(){
 
 								//authorForSearch
 
-								self.app.platform.sdk.search.get(value, 'users', null, null, null, function(r){
+								self.app.platform.sdk.search.get(value, 'users', null, 7, 0, function(r){
+
+									console.log("D", r)
+
 									composeresult('user', r.data, r.count)
 
 									render(getresults(), value, clbk, {
 										counts : counts
+
 									})
-								})
+								}, 'pocketnet', true)
 
 								
 
 							},
 
 							search : function(value, clbk, e, helpers){
+
+								console.log('menusearch.active', menusearch.active)
+
+								if(!menusearch.active){
+
+									if (clbk) clbk(true)
+
+									menusearch.setactive(true)
+									
+									menusearch.focus()
+
+									return
+								}
 
 								var href = '';
 
@@ -669,25 +642,18 @@ var menu = (function(){
 
 								helpers.closeResults()
 
-								clearex()
-
 								if (clbk)
 									clbk(true)
 								
 							},
 
-							clear : function(fs){
-
-								if(fs) return
-
-								_el.find('input').blur();
+							clear : function(value){
 								
-								setTimeout(function(){
+								//menusearch.blur()
 
-									close(true)
-									clearex()
-
-								}, 100)
+								if(isTablet()){
+									menusearch.setactive(false)
+								}
 
 								if(parameters().sst || parameters().ss){
 									self.nav.api.go({
@@ -701,6 +667,29 @@ var menu = (function(){
 
 							blank : function(){
 								events.search.click()
+							},
+
+							active : function(a){
+
+								console.log('activeactiveactive', a)
+
+								if (a || (parameters().ss || parameters().sst)){
+									el.c.addClass('searchactive')
+								}
+								else{
+									el.c.removeClass('searchactive')
+								}
+
+								actions.sitenameToNav()
+							},
+
+							blur : function(value){
+
+								setTimeout(function(){
+									if(!isTablet()){
+										menusearch.setactive(false)
+									}
+								}, 300)
 							}
 						}
 						
@@ -790,10 +779,8 @@ var menu = (function(){
 
 						el.removeClass('hidden')
 
-						if(add == 0){
+						if (add == 0){
 							al.text(self.app.platform.mp.coin(value))
-
-							actions.elswidth()
 						}
 						else
 						{
@@ -813,7 +800,6 @@ var menu = (function(){
 						    }, rand(400, 1200), function(){
 
 						    	el.removeClass(c)
-								actions.elswidth()
 						    });
 						}
 					
@@ -988,7 +974,6 @@ var menu = (function(){
 
 			})
 
-			self.app.events.resize.menu = actions.elswidth
 
 
 			ParametersLive([loc], el.c);
@@ -1061,14 +1046,12 @@ var menu = (function(){
 
 			self.app.user.isState(function(state){
 
-				if((parameters().ss || parameters().sst) && (isMobile() || self.app.nav.get.pathname() == 'index')){
+				if((parameters().ss || parameters().sst) && (self.app.nav.get.pathname() == 'index')){
 
-					el.c.addClass('searchactive')
-					el.c.find('.postssearch').addClass('active')					
-
-					actions.elswidth()
-					el.postssearch.find('input').val((parameters().ss || parameters().sst).replace('tag:', "#"));
-					el.postssearch.find('.search').addClass('searchFilled')
+					if (menusearch) {
+						menusearch.setvalue((parameters().ss || parameters().sst).replace('tag:', "#"))
+						menusearch.setactive(true)
+					}
 
 				}
 				
@@ -1076,27 +1059,13 @@ var menu = (function(){
 
 		}
 
-		var initauthorsearch = function(author){
-			if (menusearch)
-				menusearch.placeholder(self.app.localization.e('e13140') + " " + author.data.name.toUpperCase())
-
-			authorForSearch = author
-		} 
-
-		var destroyauthorsearch = function(){
-			if (menusearch)
-				menusearch.placeholder(self.app.localization.e('e13139'))
-
-			authorForSearch = null
-		}
 
 		var closesearch = function(){
-			if (el.c)
-				el.c.removeClass('searchactive')
-				
-			if (el.postssearch){
-				el.postssearch.find('.search').removeClass('fastSearchShow')
-				el.postssearch.find('.search').removeClass('searchFilled')
+			if (el.c) el.c.removeClass('searchactive')
+
+			if (menusearch){
+				menusearch.blur()
+				menusearch.hide()
 			}
 				
 		}
@@ -1146,12 +1115,12 @@ var menu = (function(){
 
 			destroy : function(){
 
-				destroyauthorsearch()
 				actions.ahnotifyclear()
 
-				if(menusearch) menusearch.destroy()
+				if (menusearch) 
+					menusearch.destroy()
 
-				menusearch = null
+					menusearch = null
 
 
 				delete self.app.events.resize.menu
@@ -1189,46 +1158,34 @@ var menu = (function(){
 					
 			},
 
-			showsearch : function(v, _searchBackAction){
+			blursearch : function(){
 
-				if(v){
+				if(menusearch) {
+					menusearch.blur()
+
+					if(!menusearch.getvalue() && isTablet()){
+
+						menusearch.setactive(false)
+					}
+				}
+					
+			},
+
+			showsearch : function(v){
+
+
+				if (v && !isMobile()){
 					el.c.addClass('searchactive')
-					el.postssearch.find('.search').addClass('searchFilled')
 				}
 				else{
-					if(isMobile())
-						el.c.removeClass('searchactive')
-						
-					el.postssearch.find('.search').removeClass('searchFilled')
-				}
-				
-				el.postssearch.find('input').val(v.replace('tag:', "#"));
-
-				searchBackAction = _searchBackAction || null
-
-				actions.elswidth()
-
-				setTimeout(function(){
-					actions.elswidth()
-				}, 2)
-
-				
-			},
-
-			initauthorsearch : function(author){
-
-				if (!author.data){
-					return
+					el.c.removeClass('searchactive')
 				}
 
-				initauthorsearch(author)
+				if(menusearch) menusearch.setvalue(v.replace('tag:', "#"))
+
 				
 			},
 
-			destroyauthorsearch : function(){
-				destroyauthorsearch()
-			},
-			
 			init : function(p){
 
 				el = {};
@@ -1277,19 +1234,9 @@ var menu = (function(){
 
 	}
 
-	self.initauthorsearch = function(author){
+	self.blursearch = function(){
 		_.each(essenses, function(essense){
-
-			essense.initauthorsearch(author);
-
-		})
-	}
-
-	self.destroyauthorsearch = function(){
-		_.each(essenses, function(essense){
-
-			essense.destroyauthorsearch();
-
+			essense.blursearch();
 		})
 	}
 

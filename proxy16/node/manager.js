@@ -449,11 +449,9 @@ var Nodemanager = function(p){
 
         var workingNodes = getWorkingNodes()
 
-        console.log('workingNodes.length', workingNodes.length)
 
         if (workingNodes.length < minnodescount || !usersfornode || self.proxy.users() / usersfornode >= workingNodes.length){
 
-            console.log("NODE INIT")
 
             node.init()
         }

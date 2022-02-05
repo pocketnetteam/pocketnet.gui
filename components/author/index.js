@@ -933,13 +933,13 @@ var author = (function(){
 							if (acsearch){
 								acsearch.destroy()
 							}
+							
 
 
 							acsearch = new search(p.el.find('.authorsearch'), {
-								placeholder : 'Search on ' + author.data.name,
+								placeholder : self.app.localization.e('e13140') + ' ' + author.data.name,
 		
 								clbk : function(_el){
-									
 		
 								},
 		
@@ -954,13 +954,13 @@ var author = (function(){
 										
 									}
 								},
+
+								right : isTablet(),
 		
 								events : {							
-		
 									search : function(value, clbk, e, helpers){
 		
 										var href = '?report=shares&ssa=' + value.replace("#", 'tag:')
-		
 										clearsearch(true)
 		
 										var p = {

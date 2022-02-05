@@ -9474,6 +9474,8 @@ Platform = function (app, listofnodes) {
                 if (imported.length)
                     this.storage.notifications = imported
 
+                    console.log('exported.block set', this.storage.block, exported.block)
+
                 if (exported.block)
                     this.storage.block = exported.block
 
@@ -9524,6 +9526,8 @@ Platform = function (app, listofnodes) {
 
                 this.load();
 
+                console.log('this.storage.block', this.storage.block, self.currentBlock)
+
                 this.storage.block || (this.storage.block = self.currentBlock)
                 this.storage.notifications || (this.storage.notifications = [])
 
@@ -9541,10 +9545,14 @@ Platform = function (app, listofnodes) {
 
             wsBlock: function (block) {
 
-                if (block > this.storage.block)
+                if (block > this.storage.block) {
+                    console.log('ws.block',  this.storage.block, block)
+
                     this.storage.block = block;
+                }
 
                 this.save()
+
             },
 
             addFromWs: function (data) {
@@ -9682,8 +9690,10 @@ Platform = function (app, listofnodes) {
 
                             n.getNotificationsInfo(notifications || [], function () {
 
-                                if (block.block > n.storage.block)
+                                if (block.block > n.storage.block) {
+                                    console.log('set block', n.storage.block, block.block)
                                     n.storage.block = block.block
+                                }
 
                                 n.inited = true;
                                 n.save();
@@ -13507,28 +13517,57 @@ Platform = function (app, listofnodes) {
                 }
             },
 
-            add: function (fixedBlock, type, result, start, count, address) {
+            getcached : function(value, fixedBlock, type, start, count, address){
+                var s = this.storage;
+                var result = []
+
+                if(!start) start = 0
+
+                console.log('value, fixedBlock, type, start, count, address', value, fixedBlock, type, start, count, address)
+
+                if (s[type][value] && s[type][value][address] && s[type][value][address][fixedBlock] && s[type][value][address][fixedBlock].data){
+
+                    for (var i = 0; i < count; i++) {
+                        if (s[type][value][address][fixedBlock].data[start + i])
+                            result.push(s[type][value][address][fixedBlock].data[start + i])
+                    }
+
+                }
+
+
+                if(result.length) return {
+                    data : result
+                }
+
+                return null
+            },
+
+            add: function (value, fixedBlock, type, result, start, count, address) {
                 var s = this.storage;
 
-                if (!s[type][address]) s[type][address] = {}
+                if(!start) start = 0
 
-                if (!s[type][address][fixedBlock]) {
-                    s[type][address][fixedBlock] = result;
+                if (!s[type][value]) s[type][value] = {}
+                if (!s[type][value][address]) s[type][value][address] = {}
+
+                if (!s[type][value][address][fixedBlock]) {
+                     s[type][value][address][fixedBlock] = result;
                 }
 
                 else {
                     for (var i = 0; i < count; i++) {
 
                         if (result.data[i])
-
-                            s[type][address][fixedBlock].data[start + i] = result.data[i]
+                            s[type][value][address][fixedBlock].data[start + i] = result.data[i]
                     }
                 }
 
             },
 
-            preview: function (fixedBlock, type, start, count, address) {
+            preview: function (value, fixedBlock, type, start, count, address) {
                 var s = this.storage;
+
+                if(!start) start = 0
 
                 if (type != 'fs' && type != 'all') {
 
@@ -13552,20 +13591,31 @@ Platform = function (app, listofnodes) {
                 }
             },
 
-            get: function (value, type, start, count, fixedBlock, clbk, address) {
+            get: function (value, type, start, count, fixedBlock, clbk, address, cached) {
 
                 if (!address) address = 'pocketnet'
 
                 var s = self.sdk.search;
 
-
-                fixedBlock || (fixedBlock = self.currentBlock);
+                if(typeof fixedBlock == 'undefined') fixedBlock = self.currentBlock
 
                 type || (type = 'fs')
 
                 s.preview(fixedBlock, type, start, count, address)
 
                 value = trim(value.replace(/[^а-яА-Яa-zA-Z0-9\# _]+/g, ''))
+
+                if(cached && type && type != 'fs') {
+
+                    var g =  self.sdk.search.getcached(value, fixedBlock, type, start, count, address)
+
+                    if (g){
+                        if (clbk)
+                            clbk(g, fixedBlock)
+
+                        return
+                    }
+                }
 
                 var np = [encodeURIComponent(value), type, fixedBlock, (start || 0).toString(), (count || 10).toString()]
 
@@ -13579,7 +13629,7 @@ Platform = function (app, listofnodes) {
 
                             if (type == 'all') {
                                 _.each(d, function (d, k) {
-                                    s.add(fixedBlock, k, d, start, count, address)
+                                    s.add(value, fixedBlock, k, d, start, count, address)
                                 })
                             }
                             else {
@@ -13587,10 +13637,11 @@ Platform = function (app, listofnodes) {
                                     data: []
                                 }
 
-                                s.add(fixedBlock, type, d, start, count, address)
+                                s.add(value, fixedBlock, type, d, start, count, address)
                             }
 
                         }
+                      
 
                         if (clbk)
                             clbk(d, fixedBlock)
@@ -25650,6 +25701,7 @@ Platform = function (app, listofnodes) {
         el : null,
         inited : false,
         initing : false,
+        chatparallax : null,
 
         clbks : {
             ALL_NOTIFICATIONS_COUNT : {},
@@ -25658,6 +25710,11 @@ Platform = function (app, listofnodes) {
         },
 
         destroy : function(){
+
+            if (self.matrixchat.chatparallax){
+                self.matrixchat.chatparallax.destroy()
+            }
+
             if (window.matrixchat){
                 window.matrixchat.destroy()
             }
@@ -25794,7 +25851,9 @@ Platform = function (app, listofnodes) {
 
                 if(isTablet() || isMobile() || window.cordova){
 
-                    var chatparallax = new SwipeParallaxNew({
+                    console.log('self.app.width', self.app.width)
+
+                    self.matrixchat.chatparallax = new SwipeParallaxNew({
 
                         el : self.matrixchat.el,
                         transformel : self.matrixchat.el,
@@ -25805,7 +25864,9 @@ Platform = function (app, listofnodes) {
                             left : {
                                 cancellable : true,				
                                 
-                                basevalue : self.app.width || $(window).width(),
+                                basevalue : function(){
+                                    return self.app.width || $(window).width()
+                                },
     
                                 positionclbk : function(px){
                                 },

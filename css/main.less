@@ -4646,6 +4646,10 @@ html.nav{
         }
     }
 
+    .vc_selectInput_bg_mobile{
+        display: none;
+        z-index: 1000;
+    }
     .vc_selectInput{
         position: absolute;
         left : 0;
@@ -4677,6 +4681,9 @@ html.nav{
     }
 
     &.opened{
+        .vc_selectInput_bg_mobile{
+            display: block;
+        }
         .vc_selectInput{
             display: block;
         }
@@ -7469,6 +7476,8 @@ html{
 
             .roundclosebutton{
                 top : 2 * @rhythm;
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
             }
 
             .closeline{
@@ -7481,6 +7490,8 @@ html{
                 opacity: 0;
                 position: absolute;
             }
+
+            
 
             .wndinner{
                 max-height: none!important;
@@ -7656,8 +7667,6 @@ html.mobile{
     .wnd{
         &.normalizedmobile{
 
-            
-
             .wndinner{
                 width: 65%;
             }
@@ -7669,12 +7678,13 @@ html.mobile{
                 
                 .transition(0.3s);
             }
+
             .hideButton{
                 display: none!important;
             }
     
             .closeline{
-                top : 15%;
+                top : 120px;
                 height: 2px;
                 background: fade(#fff, 80);
                 border-radius: 2px;
@@ -7682,11 +7692,12 @@ html.mobile{
                 left: 28%;
                 opacity: 0;
                 position: absolute;
+                .transition(0.3s, top);
             }
     
             .wndinner{
                 max-height: none!important;
-                top : 17%!important;
+                top : 0%!important;
                 bottom : 0;
                 height: auto!important;
                 max-width: none!important;
@@ -7695,6 +7706,8 @@ html.mobile{
                 backface-visibility: hidden;
                 will-change: transform;
                 contain: strict;
+                padding-bottom: 130px;
+                .transition(0.3s, top);
     
                 .wndcontent{
                     border-top-left-radius: 10px;
@@ -7720,6 +7733,7 @@ html.mobile{
                     display: none;
                 }
             }
+
             &.asette{
                 .wndback{
                     .transition(0.3s);
@@ -7731,11 +7745,13 @@ html.mobile{
                     .transition(0.3s);
                 }   
             }
+
             &.sette{
-      
+
                 .wndinner{
-                    -webkit-transform: translateY(0);
-                    transform: translateY(0);
+                    -webkit-transform: translateY(130px);
+                    transform: translateY(130px);
+                    .transition(0.3s, transform);
                 }   
                 
                 .closeline,
@@ -7743,6 +7759,27 @@ html.mobile{
                     opacity: 1;
                 }
                 
+            }
+
+            &.showbetter{
+
+                &.sette{
+      
+                    .wndinner{
+                        -webkit-transform: translateY(45px);
+                        transform: translateY(45px);
+                    }   
+                    
+                  
+                }
+
+                .closeline{
+                    opacity: 0;
+                }
+
+                .roundclosebutton{
+                    backdrop-filter : none;
+                }
             }
         }
     }

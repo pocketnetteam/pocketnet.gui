@@ -516,10 +516,13 @@
 
 
 		var parallax = null
+		var showmoremobile = false
+		var showmoremobilevalue = 75;
 
 		//var _w = $(window);
 
 		var wnd;
+		var cnt = null
 
 		var find = function(s){
 			if (wnd) return wnd.find(s);
@@ -547,7 +550,6 @@
 			if(p.scrollers)
 			{
 				$.each(find(p.scrollers), function(index){
-				
 					$(this).scrollTop(scrollers[index])
 				})
 			}
@@ -648,8 +650,23 @@
 		}
 
 		var resize = function(){
-			/*wnd.css('top', app.lastScrollTop)
-			wnd.css('height', app.height)*/
+		
+		}
+
+		var wndcontentscrollmobile = function(e){
+
+			var cc = cnt.scrollTop()
+
+			if(cc > showmoremobilevalue && !showmoremobile){
+				wnd.addClass('showbetter')
+				showmoremobile = true
+			}
+
+			if(cc < showmoremobilevalue && showmoremobile) {
+				showmoremobile = false
+				wnd.removeClass('showbetter')
+			}
+			
 		}
 
 		var initevents = function(){
@@ -665,14 +682,6 @@
 				wnd.find('.expandButton').on('click', actions.show);
 			}
 
-			
-
-			/*wnd.find('.wndback,.wndheader').swipe({
-				swipeDown : function(e, phase, direction, distance){
-					actions.close(true)
-				},
-			})*/
-
 			if(isTablet() && wnd.hasClass('normalizedmobile')){
 
 				var trueshold = 20
@@ -687,7 +696,14 @@
 					directions : {
 						down : {
 							cancellable : true,						
+							basevalue : function(){
 
+								if(wnd.hasClass('showbetter')){
+									return 45
+								}
+
+								return 130
+							},
 							positionclbk : function(px){
 								var percent = Math.abs(px) / trueshold;
 							},
@@ -707,6 +723,11 @@
 					
 	
 				}).init()
+
+				cnt = wnd.find('.wndcontent')
+
+				cnt.on('scroll', _.throttle(wndcontentscrollmobile, 50))
+
 			}
 
 			app.events.resize[id] = resize
@@ -717,6 +738,7 @@
 
 		var clearmem = function(){
 			wnd = null;
+			cnt = null
 
 			self.el = null
 			self.close = null
@@ -4946,6 +4968,8 @@
 
 					input += 	'</div>';
 
+					//input += 	'<div class="vc_selectInput_bg_mobile"></div>';
+
 					input += 	'<div class="vc_selectInput">';
 
 					if (self.defaultValuesTemplate)
@@ -7047,6 +7071,8 @@
 
 		var throttle = 50
 		var transitionstr = 'transform 0.05s linear'
+
+		let ticking = false;
 		
 		var directiontoprop = function(direction, value){
 
@@ -7059,46 +7085,51 @@
 		
 		var set = function(direction, value){
 
-			var __el = p.transformel || p.el
+			if (!ticking) {
 
-			var prop = directiontoprop(direction);
-			var pd = 'left'
-			var pb = 'top'
+				var __el = p.transformel || p.el
 
-			var scaledifmax = 0.1
-			var scaledif = scaledifmax * Math.min(Math.abs(value), 100) / 100 
-			var scale = (1 - scaledif).toFixed(3)
+				var prop = directiontoprop(direction);
+				var pd = 'left'
+				var pb = 'top'
 
-			if(direction == 'up' || direction == 'left') {
-				value = -value
-				pd = 'right'
-				pb = 'bottom'
+				var scaledifmax = 0.1
+				var scaledif = scaledifmax * Math.min(Math.abs(value), 100) / 100 
+				var scale = (1 - scaledif).toFixed(3)
+
+				if(direction == 'up' || direction == 'left') {
+					value = -value
+					pd = 'right'
+					pb = 'bottom'
+				}
+
+				if(p.directions[direction] && p.directions[direction].basevalue) value = value + p.directions[direction].basevalue()
+
+				if(!value) value = 0
+
+				value = value.toFixed(0)
+
+				window.requestAnimationFrame(function(){
+					if (prop == 'x'){
+						__el[0].style["transform"] = "scale("+scale+") translate3d("+value+"px, 0, 0)"
+						__el[0].style['transform-origin'] = pd + ' center'
+					}
+		
+					if (prop == 'y'){
+						__el[0].style["transform"] = "scale("+scale+") translate3d(0, "+value+"px, 0)"
+						__el[0].style['transform-origin'] = 'center ' + pb
+					}
+		
+					__el[0].style["-moz-transition"] = transitionstr
+					__el[0].style["-o-transition"] = transitionstr
+					__el[0].style["-webkit-transition"] = transitionstr
+					__el[0].style["transition"] = transitionstr
+
+					ticking = false;
+				})
+				
+				ticking = true;
 			}
-
-			if(p.directions[direction] && p.directions[direction].basevalue) value = value + p.directions[direction].basevalue
-
-			if(!value) value = 0
-
-			value = value.toFixed(0)
-
-
-			window.requestAnimationFrame(function(){
-				if (prop == 'x'){
-					__el[0].style["transform"] = "scale("+scale+") translate3d("+value+"px, 0, 0)"
-					__el[0].style['transform-origin'] = pd + ' center'
-				}
-	
-				if (prop == 'y'){
-					__el[0].style["transform"] = "scale("+scale+") translate3d(0, "+value+"px, 0)"
-					__el[0].style['transform-origin'] = 'center ' + pb
-				}
-	
-				__el[0].style["-moz-transition"] = transitionstr
-				__el[0].style["-o-transition"] = transitionstr
-				__el[0].style["-webkit-transition"] = transitionstr
-				__el[0].style["transition"] = transitionstr
-			})
-
 
 
 		}
@@ -7824,8 +7855,6 @@
 			if(_Node) {
 
 				//data.node = "NODE";
-
-				
 
 				var _d = {
 					method: type, 
@@ -8655,6 +8684,15 @@
 			el.find('input').attr('placeholder', placeholder)
 		}
 
+		self.setvalue = function(value){
+			el.find('input').val(value)
+
+			if (value)
+				searchEl.addClass('searchFilled')
+			else
+				searchEl.removeClass('searchFilled')
+		}
+
 		var template = function(){
 
 			p.class || (p.class = "")
@@ -8700,7 +8738,7 @@
 								elements.join(" ") + 
 							'</div>' +
 						'</div>' +
-						'<div class="searchFastResultWrapper">'
+						'<div class="searchFastResultWrapper customscroll">'
 						'</div>' +			
 					'</div>'
 
@@ -8720,13 +8758,12 @@
 			},
 			closeResults : function(){
 				$('html').off(clickAction(), helpers.closeclickResults);
-				searchEl.removeClass('fastSearchShow');
+
+					searchEl.removeClass('fastSearchShow');
 			},
 			closeclickResults : function(e){
 				if (searchEl.has(e.target).length === 0 && searchEl.hasClass('fastSearchShow')) {
-							
 					helpers.closeResults();
-
 				}
 			},
 			clear : function(){
@@ -8738,7 +8775,12 @@
 		}
 
 		var events = {
+			active : function(){
+				if (p.events.active) p.events.active(self.active);
+			},
 			clear : function(el){
+
+				var value = searchEl.find('.sminput').val()
 
 				searchEl.find('.sminput').val('');
 
@@ -8747,8 +8789,7 @@
 
 				helpers.closeResults();
 
-				if (p.events.clear)
-					p.events.clear();
+				if (p.events.clear) p.events.clear(value);
 
 			},
 			search : function(el){
@@ -8767,6 +8808,8 @@
 					searchEl.addClass('searchActive')
 
 					p.events.search(value, function(r){
+
+						if(!searchEl) return
 
 						currentFastId = 0;
 
@@ -8803,7 +8846,7 @@
 			fastsearch : function(el, e, _currentFastId){
 				var value = el.val();
 
-				if (value && p.events.fastsearch &&!bsActive){
+				if (value && p.events && p.events.fastsearch &&!bsActive){
 
 					searchEl.addClass('searchActive')
 					fsActive = true;
@@ -8858,32 +8901,47 @@
 		}
 
 		self.clear = events.clear
+
+		self.setactive = function(a){
+			self.active = a
+
+			events.active()
+		}
+
+		self.hide = function(){
+			searchEl.removeClass('searchActive');
+			searchEl.removeClass('searchFilled');
+
+			helpers.closeResults();
+		}
+
 		self.blur = function(){
 			el.find('input').blur()
 		}
 
+		self.focus = function(){
+			el.find('input').focus()
+		}
+
+		self.getvalue = function(){
+			return searchEl.find('.sminput').val()
+		}
+
 		var initEvents = function(){
 
-			var searchInput = searchEl.find('.sminput')
+			var searchInput = el.find('input')
 
 			var slowMadeTimer;
 
-
-
-			//searchInput.on('change', function(){events.search(searchInput)});
 			searchInput.on('keyup', function(e){
 
 				if ((e.keyCode || e.which) != 13) {		
 
 					if(typeof p.time == 'undefined'){
-
-						p.time = 100;
-
+						p.time = 250;
 					}	
 
-
 					if(!p.time){
-
 						events.fastsearch(searchInput, e)
 					}
 					else
@@ -8894,6 +8952,7 @@
 						slowMadeTimer = slowMade(function(){
 							events.fastsearch(searchInput, e, id)
 						}, slowMadeTimer, p.time)	
+
 					}
 				}
 				
@@ -8901,23 +8960,23 @@
 
 			searchInput.on('focus', function(){
 
-				self.active = true
+				self.setactive(true)
 
-				if($(this).val()){
-					events.fastsearch(searchInput)
-				}
+				if($(this).val()){ events.fastsearch(searchInput) }
 
 				else
-
 					if(p.last){
 						events.showlast(searchInput)
 					}
-
 			})
 
 			searchInput.on('blur', function(){
-				self.active = false
 
+				if(p.events.blur) p.events.blur($(this).val())
+
+				/*setTimeout(function(){
+					self.setactive(false)
+				}, 300)*/
 			})
 
 			searchInput.on('keypress', function(e) {
@@ -8928,17 +8987,16 @@
 
 	        });
 
-	        searchEl.find('.searchIconLabel')
-	        	.on('click', function(){
+	        searchEl.find('.searchIconLabel').on('click', function(){
 
-	        		if(!searchInput.val() && p.events.blank){
-	        			p.events.blank()
-	        		}
-	        		else
+				if(!searchInput.val() && p.events.blank){
+					p.events.blank()
+				}
+				else
 
-	        			events.search(searchInput)
+					events.search(searchInput)
 
-	        	})
+			})
 
 	        searchEl.find('.searchPanelItem').on(clickAction(), function(){
 
