@@ -537,13 +537,35 @@ var comments = (function(){
 					var e = current.validation();
 
 					if (e){
+
 						el.c.find('.sending').removeClass('sending')
 						sitemessage(errors[e])
+
 					}
 					else
 					{
 
+						if (self.app.platform.sdk.user.scamcriteria()){
+
+							el.c.find('.sending').removeClass('sending')
+	
+							dialog({
+								html : self.app.localization.e('ratings123'),
+								btn1text :  self.app.localization.e('daccept'),
+								btn2text : self.app.localization.e('ucancel'),
+			
+								class : 'zindex one',
+			
+								success : function(){
+								}
+							})
+	
+							return
+						}
+						
+
 						if(current.loading) return;
+						
 
 						current.loading = true;
 
@@ -1036,11 +1058,25 @@ var comments = (function(){
 
 					var comment = deep(self.app.platform.sdk, 'comments.storage.all.' + id)
 
-
 					if(!comment) return
-
 					
 					if (comment.address == self.app.platform.sdk.address.pnet().address){
+						return
+					}
+
+					if (value < 0 && self.app.platform.sdk.user.scamcriteria()){
+
+						dialog({
+							html : self.app.localization.e('ratings123'),
+							btn1text :  self.app.localization.e('daccept'),
+							btn2text : self.app.localization.e('ucancel'),
+		
+							class : 'zindex one',
+		
+							success : function(){
+							}
+						})
+
 						return
 					}
 

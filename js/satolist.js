@@ -8848,6 +8848,7 @@ Platform = function (app, listofnodes) {
 
             scamcriteria : function(address){
 
+
                 if(!address) address = (self.app.platform.sdk.address.pnet() || {}).address
 
                 var info = deep(self, 'sdk.users.storage.' + address);
