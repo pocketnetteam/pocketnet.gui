@@ -496,13 +496,35 @@ var post = (function () {
 			like: function (value, clbk) {
 
 				var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share);
+				var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0
 
-				if(checkvisibility) return
+				if (checkvisibility && reputation >= 50) return
+
+
+				if(value <= 3){
+					if(self.app.platform.sdk.user.scamcriteria()){
+
+						if(clbk)
+							clbk(false)
+
+							dialog({
+								html : self.app.localization.e('ratings123'),
+								btn1text :  self.app.localization.e('daccept'),
+								btn2text : self.app.localization.e('ucancel'),
+			
+								class : 'zindex one',
+			
+								success : function(){
+								}
+							})
+
+						return
+					}
+				}
 
 				var upvoteShare = share.upvote(value);
 
-
-				if (!upvoteShare) {
+				if(!upvoteShare) {
 					self.app.platform.errorHandler('4', true)
 
 					if (clbk)

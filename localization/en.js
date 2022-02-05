@@ -2042,3 +2042,4 @@ ____loclib.continueon = "Сontinue on"
 ____loclib.bestwishes = "Best,"
 
 
+____loclib.ratings123 = "Only users with high reputation can give 1, 2, 3 star ratings. This is done to protect authors, because Bastyon does NOT require any personal information for registration."

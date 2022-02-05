@@ -7105,6 +7105,8 @@
 
 				if(p.directions[direction] && p.directions[direction].basevalue) value = value + p.directions[direction].basevalue()
 
+				if(p.directions[direction] && p.directions[direction].scale100) scale = 1
+
 				if(!value) value = 0
 
 				value = value.toFixed(0)

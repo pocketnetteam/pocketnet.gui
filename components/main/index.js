@@ -751,7 +751,7 @@ var main = (function(){
 					directions : {
 						right : {
 							cancellable : true,				
-							
+							scale100 : true,
 							basevalue : function(){
 								return -(self.app.width || $(window).width())
 							},

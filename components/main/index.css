@@ -736,6 +736,8 @@ html.testpocketnet #main.testpocketnetbg {
     box-shadow: 0 5px 7px -5px rgba(0, 0, 0, 0.4);
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
+    contain: strict;
+    will-change: transform;
   }
   #main .leftpanelcell #tagcloud,
   #main .leftpanelcell #categories {
