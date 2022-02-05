@@ -7706,7 +7706,7 @@ html.mobile{
                 backface-visibility: hidden;
                 will-change: transform;
                 contain: strict;
-                padding-bottom: 130px;
+                
                 .transition(0.3s, top);
     
                 .wndcontent{
@@ -7716,9 +7716,25 @@ html.mobile{
                     border-bottom-left-radius: 0;
                     bottom : 0;
                     backface-visibility: hidden;
+                    padding-bottom: 130px;
+                    
                     .shadowSmaller();
 
-                    
+                    /*&:after{
+                        height: 130px;
+                        position: relative;
+                        left : 0;
+                        bottom : 0;
+                        right : 0;
+                        padding-bottom : 30px;
+                        text-align: center;
+                        content : "\f111";
+                        font-family: "Font Awesome 5 Free";
+                        font-weight: 900;
+                        z-index: 1;
+                        font-size: 0.5em;
+                        opacity: 0.3;
+                    }*/
     
                     &::-webkit-scrollbar{
                         width: 0;

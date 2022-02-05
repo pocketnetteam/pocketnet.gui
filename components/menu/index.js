@@ -108,7 +108,6 @@ var menu = (function(){
 
 				if(!events.navinit.el) return
 
-				console.log('menusearch' , menusearch, el.nav.hasClass('active'))
 				
 				var pn = self.app.nav.current.href
 				
@@ -349,7 +348,6 @@ var menu = (function(){
 
 					if(isTablet()){
 
-						console.log("click")
 
 						self.nav.api.go({
 							open : true,
@@ -360,15 +358,7 @@ var menu = (function(){
 							}
 						})
 
-						/*self.nav.api.go({
-							href : 'userpage?id=notifications&report=notifications',
-							history : true,
-							open : true
-						})*/
-
 					}
-
-						
 
 				}
 			},
@@ -559,9 +549,13 @@ var menu = (function(){
 											data : r
 										}
 
-										if(type == 'user'){
-											vi.id = r.address,
+										if (type == 'user'){
+
+											vi.id = r.address
 											vi.index = r.name
+
+											self.app.platform.sdk.users.nameaddressstorage[r.name.toLowerCase()] = r.address
+
 										}
 
 										return vi
@@ -585,8 +579,6 @@ var menu = (function(){
 
 								self.app.platform.sdk.search.get(value, 'users', null, 7, 0, function(r){
 
-									console.log("D", r)
-
 									composeresult('user', r.data, r.count)
 
 									render(getresults(), value, clbk, {
@@ -600,8 +592,6 @@ var menu = (function(){
 							},
 
 							search : function(value, clbk, e, helpers){
-
-								console.log('menusearch.active', menusearch.active)
 
 								if(!menusearch.active){
 
@@ -670,8 +660,6 @@ var menu = (function(){
 							},
 
 							active : function(a){
-
-								console.log('activeactiveactive', a)
 
 								if (a || (parameters().ss || parameters().sst)){
 									el.c.addClass('searchactive')

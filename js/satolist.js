@@ -9923,6 +9923,8 @@ Platform = function (app, listofnodes) {
             loading: {},
             storage: {},
 
+            nameaddressstorage : {},
+
             extend: function (u, state) {
 
                 var ext = function (temp) {
@@ -10555,6 +10557,13 @@ Platform = function (app, listofnodes) {
                         lf = _.find(self.sdk.users.storage, function (s) {
                             if (s && s.name && s.name.toLowerCase() == name.toLowerCase()) return true
                         })
+                    }
+
+                    if(self.sdk.users.nameaddressstorage[name]){
+                        if (clbk)
+                            clbk(self.sdk.users.nameaddressstorage[name])
+
+                        return
                     }
 
                     if (lf) {
@@ -12025,7 +12034,23 @@ Platform = function (app, listofnodes) {
 
                 self.sdk.activity.latest = p.activity
 
+                self.sdk.activity.filladdressstorage()
+
+
                 if(clbk) clbk()
+            },
+
+            filladdressstorage : function(){
+
+                var stor = self.app.platform.sdk.users.nameaddressstorage
+
+                _.each(self.sdk.activity.latest, function(l){
+                    _.each(l, function(a){
+
+                        if (a.type == 'user') stor[a.index] = a.id
+                    })
+                })
+
             }
         },
         categories : {

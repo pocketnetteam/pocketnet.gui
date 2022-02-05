@@ -8751,13 +8751,13 @@
 				if(!searchEl.hasClass('fastSearchShow')){
 					searchEl.addClass('fastSearchShow');
 
-					$('html').on(clickAction(), helpers.closeclickResults)
+					$('html').on('click', helpers.closeclickResults)
 				}
 
 				
 			},
 			closeResults : function(){
-				$('html').off(clickAction(), helpers.closeclickResults);
+				$('html').off('click', helpers.closeclickResults);
 
 					searchEl.removeClass('fastSearchShow');
 			},
@@ -8998,7 +8998,7 @@
 
 			})
 
-	        searchEl.find('.searchPanelItem').on(clickAction(), function(){
+	        searchEl.find('.searchPanelItem').on('click', function(){
 
 	        	var panelItem = $(this)
 
