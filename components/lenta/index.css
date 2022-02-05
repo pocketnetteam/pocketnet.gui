@@ -112,7 +112,7 @@
   display: none;
 }
 #lenta .shares .share .sharecnt .shareTable {
-  margin-top: 0.5em;
+  padding-top: 1em;
 }
 #lenta .shares .share .sharecnt .removeDescription {
   display: none;
@@ -320,7 +320,6 @@
   font-size: 2em;
 }
 #lenta .shares .share {
-  padding: 0.5em 0;
   background: #fff;
   margin-bottom: 0.5em;
   padding-bottom: 0;
@@ -1981,6 +1980,7 @@
 }
 #lenta .shares .share .sharearticle .shareTable {
   padding-top: 0;
+  margin-top: 0;
 }
 #lenta .shares .share .sharearticle .shareBgCaption .author,
 #lenta .shares .share .sharearticle .articleend .author {
