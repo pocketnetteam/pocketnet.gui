@@ -269,7 +269,7 @@ var lenta = (function(){
 
 					actions.loadprev()
 
-				}, delay, 600)	
+				}, delay, isMobile() ? 1200 : 600)	
 
 					
 			},

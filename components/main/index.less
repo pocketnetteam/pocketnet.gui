@@ -976,19 +976,29 @@ html {
 
 		.leftpanelcell{
 			float: none;
-			width: 100%;
+			width: 90%;
 			position: fixed;
 			left : 100%;
-			top : 0;
-			bottom : 0;
-			right : -100%;
+			border-radius: 10px;
+			top : 4 * @rhythm;
+			bottom : 4 * @rhythm;
+			right : -90%;
 			z-index: 201;
 			background: #fff;
 			color : #011621;
-			padding-top : 75px;
+			padding-top : 42px;
 			overflow-y: scroll;
 			padding-bottom: 90px;
 			.transition(0.3s, transform);
+			border: 1px solid fade(@color-gray-light, 30);
+			.shadowSmaller();
+			border-top-right-radius: 0;
+			border-bottom-right-radius: 0;
+
+			#tagcloud,
+			#categories{
+				color : #011621;
+			}
 		}
 
 		&.leftshowed{
@@ -1123,6 +1133,11 @@ html {
 			.leftpanelcell{
 				background: @color-black2;
 				color : @color-gray-slight;
+		
+				#tagcloud,
+				#categories{
+					color : @color-gray-slight;
+				}
 			}
 		}
 	}
