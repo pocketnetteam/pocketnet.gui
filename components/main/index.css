@@ -738,13 +738,14 @@ html.testpocketnet #main.testpocketnetbg {
     border-bottom-right-radius: 0;
     contain: strict;
     will-change: transform;
+    transform: scale(0.9);
   }
   #main .leftpanelcell #tagcloud,
   #main .leftpanelcell #categories {
     color: #011621;
   }
   #main.leftshowed .leftpanelcell {
-    transform: translateX(-100%);
+    transform: scale(1) translateX(-100%);
   }
   #main .lentacell {
     margin-right: 0;

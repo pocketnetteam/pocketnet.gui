@@ -751,9 +751,8 @@ var main = (function(){
 					directions : {
 						right : {
 							cancellable : true,				
-							scale100 : true,
 							basevalue : function(){
-								return -(self.app.width || $(window).width())
+								return - 0.9 * (self.app.width || $(window).width())
 							},
 
 							positionclbk : function(px){
