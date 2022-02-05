@@ -303,7 +303,7 @@ var categories = (function(){
 			el.c.find('.clearcategories').on('click', function(){
 				dialog({
 					class : 'zindex',
-					html : 'Do you really want to clear category filters?',
+					html :  self.app.localization.e('clearcategories'),
 					btn1text : self.app.localization.e('dyes'),
 					btn2text : self.app.localization.e('dno'),
 					success : function(){	
