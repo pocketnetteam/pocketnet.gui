@@ -13,15 +13,44 @@ var postscores = (function(){
 		var actions = {
 			like : function(value, clbk){
 
-				if(share.address == self.user.address.value) return
+				if (share.address == self.user.address.value) return
+
+				if (value <= 3){
+					if(self.app.platform.sdk.user.scamcriteria()){
+
+						if (clbk)
+							clbk(false)
+
+							dialog({
+								html : self.app.localization.e('ratings123'),
+								btn1text :  self.app.localization.e('daccept'),
+								btn2text : self.app.localization.e('ucancel'),
+			
+								class : 'zindex one',
+			
+								success : function(){
+								}
+							})
+
+						return
+					}
+
+					if(self.app.platform.sdk.user.upvotevalueblockcriteria(value)){
+						if (clbk)
+							clbk(false)
+
+						sitemessage(self.app.localization.e('ratingss3'))
+
+						return
+					}
+				}
 
 				var upvoteShare = share.upvote(value);
-
 
 				if(!upvoteShare){
 					self.app.platform.errorHandler('4', true)	
 
-					if(clbk)
+					if (clbk)
 						clbk(false)
 
 					return
@@ -32,7 +61,6 @@ var postscores = (function(){
 					upvoteShare,
 
 					function(tx, error){
-
 
 						topPreloader(100)
 
@@ -109,7 +137,6 @@ var postscores = (function(){
 								if (ed.like)
 									ed.like(share)
 
-								//_scrollTo(p)
 							}
 							else
 							{
@@ -129,26 +156,22 @@ var postscores = (function(){
 			userlist : function(clbk){
 
 				scores = _.filter(scores, function(s){
-					return s.value >= 1
+					return s.value >= Number(1)
 				})
 
 				var addresses = _.map(scores, function(s){
 					return s.address
-				})
-				.filter(function(value, index, self){
+				}).filter(function(value, index, self){
 					return self.indexOf(value) === index;
 				})
+
+				console.log('scores', scores, addresses)
 
 				var map = {};
 
 				_.each(scores, function(s){
 					map[s.address] = s.value
 				})
-
-				/*addresses = _.filter(addresses, function(a){
-					if(!self.user.address.value || self.user.address.value != a) return true
-				})*/
-				
 
 				self.nav.api.load({
 

@@ -11,7 +11,7 @@ var main = (function(){
 		var el = {};
 
 
-		var roller = null, lenta = null, share = null, panel,leftpanel, uptimer = null;
+		var roller = null, lenta = null, share = null, panel,leftpanel, uptimer = null, leftparallax = null;
 
 		var videomain = false
 
@@ -726,12 +726,6 @@ var main = (function(){
 
 			self.app.events.scroll.main = actions.addbuttonscroll
 
-			/*self.app.events.resize.mainpage = function(){
-				setTimeout(function(){
-					actions.refreshSticky(true)
-				}, 500)
-			}*/
-
 
 			el.c.find('.backtolenta').on('click', actions.backtolenta)
 
@@ -745,6 +739,38 @@ var main = (function(){
 			else{
 
 
+				if(leftparallax) leftparallax.destroy()
+				
+
+				leftparallax = new SwipeParallaxNew({
+
+					el : el.c.find('.leftpanelcell'),
+
+					allowPageScroll : 'vertical',
+	
+					directions : {
+						right : {
+							cancellable : true,				
+							basevalue : function(){
+								return - 0.9 * (self.app.width || $(window).width())
+							},
+
+							positionclbk : function(px){
+							},
+
+							restrict : true,
+							trueshold : 30,
+							clbk : function(){
+
+								showCategories(false)
+
+							}
+	
+						}
+					}
+					
+	
+				}).init()
 				
 			}
 			
@@ -911,15 +937,6 @@ var main = (function(){
 				if (lenta) {
 					lenta.hideshowedvideo()
 				}
-				
-				
-				
-
-				//renders.leftpanel() ?
-
-				
-
-				
 
 			},
 
@@ -1026,6 +1043,11 @@ var main = (function(){
 				hsready = false
 
 				//searchvalue = '', searchtags = null
+
+				if (leftparallax) {
+					leftparallax.destroy()
+					leftparallax = null
+				}
 
 				if (plissing)
 					plissing.destroy()

@@ -1310,8 +1310,11 @@ Application = function(p)
 
 						showPanel = '1'
 
-						if (self.el.html.hasClass('scrollmodedown') )
+						if (self.el.html.hasClass('scrollmodedown')){
 							self.el.html.removeClass('scrollmodedown')
+							
+							
+						}
 
 						return
 					}
@@ -1320,8 +1323,11 @@ Application = function(p)
 						if(lastScrollTop + 40 < scrollTop){
 							showPanel = '2'
 
-							if(!self.el.html.hasClass('scrollmodedown'))
+							if(!self.el.html.hasClass('scrollmodedown')){
 								self.el.html.addClass('scrollmodedown')
+								if(self.modules.menu.module) self.modules.menu.module.blursearch()
+							}
+								
 
 							
 						}

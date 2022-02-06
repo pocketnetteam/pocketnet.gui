@@ -745,7 +745,8 @@ var about = (function(){
 				currentExternalEssense = null;
 
 
-				//$('#menu').removeClass('abs')
+				$('#panelWrapper').show();
+				$('#menu').show();
 
 				el = {};
 			},
@@ -763,17 +764,15 @@ var about = (function(){
 
 				initEvents();
 
+				$('#panelWrapper').hide();
+				$('#menu').hide();
+
 				make(function(){	
 									
 					p.clbk(null, p);
 
-					$('#panelWrapper').hide();
 					
-					setTimeout(function(){
-
-						$('#menu').hide();
 						
-					}, 500)
 				})
 
 				

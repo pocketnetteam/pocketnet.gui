@@ -2036,3 +2036,14 @@ ____loclib.menu = "Menu"
 
 ____loclib.donotshowagain = "Do not show again"
 
+
+____loclib.postby = "Post by"
+____loclib.continueon = "Сontinue on"
+____loclib.bestwishes = "Best,"
+
+____loclib.ratings123 = "Only users with high reputation at least 10 publications in the feed can give 1, 2, 3 star ratings, make comments, give negative ratings on comments. This is done to protect authors, because Bastyon does NOT require any personal information for registration."
+
+____loclib.ratingss3 = "Only users with high reputation can give 1, 2, 3 star ratings. This is done to protect authors, because Bastyon does NOT require any personal information for registration."
+
+____loclib.clearcategories = "Do you really want to clear category filters?"
+____loclib.cleartags = "Do you really want to clear tags filters?"
