@@ -7113,7 +7113,7 @@
 
 				value = value.toFixed(0)
 
-				window.requestAnimationFrame(function(){
+				//window.requestAnimationFrame(function(){
 					if (prop == 'x'){
 						__el[0].style["transform"] = "scale("+scale+") translate3d("+value+"px, 0, 0)"
 						__el[0].style['transform-origin'] = pd + ' center'
@@ -7130,10 +7130,10 @@
 					__el[0].style["transition"] = transitionstr
 					__el[0].style["pointer-events"] = 'none'
 
-					ticking = false;
-				})
+				//	ticking = false;
+				//})
 				
-				ticking = true;
+				//ticking = true;
 			}
 
 
@@ -7161,7 +7161,7 @@
 					__el.css({"-webkit-transition": ""});
 					__el.css({"transition": ""});
 					__el.css({"pointer-events": ""});
-					
+
 					_.each(p.directions, function(d){
 						applyDirection(d, 0)
 					})
