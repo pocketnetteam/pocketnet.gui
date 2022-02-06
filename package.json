@@ -1,9 +1,9 @@
 {
     "name": "pocketnet",
-    "version": "0.5.3",
+    "version": "0.5.1-beta3",
     "cordovaversion": "1.5.3",
     "cordovaversioncode": "15003",
-    "description": "Pocketnet desktop application",
+    "description": "Bastyon desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
     "company": "Pocketnet Community",
     "license": "Apache-2.0",
@@ -150,16 +150,19 @@
                 "repo": "pocketnet.gui"
             }
         ],
-        "protocols" : {
-            "name" : "bastyon",
-            "schemes" : ["bastyon", "pocketnet"] 
+        "protocols": {
+            "name": "bastyon",
+            "schemes": [
+                "bastyon",
+                "pocketnet"
+            ]
         },
         "mac": {
             "target": "dmg",
             "artifactName": "${productName}Setup.${ext}",
             "icon": "assets/icons/mac/icon.icns",
             "entitlements": "build/entitlements.mac.plist",
-            "extendInfo" : "bastyon"
+            "extendInfo": "bastyon"
         },
         "linux": {
             "target": [
@@ -197,6 +200,95 @@
             "deleteAppDataOnUninstall": false,
             "license": "LICENSE",
             "include": "build/installer.nsh"
+        }
+    },
+    "buildTest": {
+        "productName": "BastyonTest",
+        "afterSign": "build/notarize.js",
+        "appId": "app.pocketnettest.gui",
+        "files": [
+            "**/*",
+            "!cordova${/*}",
+            "!external${/*}",
+            "!proxy16/data${/*}",
+            "!proxy16/pocketcoin${/*}",
+            "!proxy16/pocketcoind${/*}",
+            "!proxy16/downloads${/*}"
+        ],
+        "extraFiles": [
+            {
+                "from": "proxy16/cert",
+                "to": "cert",
+                "filter": [
+                    "**/cert.pem",
+                    "**/key.pem"
+                ]
+            },
+            {
+                "from": "proxy16/static",
+                "to": "static",
+                "filter": [
+                    "**/"
+                ]
+            }
+        ],
+        "publish": [
+            {
+                "provider": "github",
+                "owner": "pocketnetapp",
+                "repo": "pocketnet.gui"
+            }
+        ],
+        "protocols": {
+            "name": "bastyon",
+            "schemes": [
+                "bastyon",
+                "pocketnet"
+            ]
+        },
+        "mac": {
+            "target": "dmg",
+            "artifactName": "${productName}Setup.${ext}",
+            "icon": "assets/icons/mac/icon.icns",
+            "entitlements": "build/entitlements.mac.plist",
+            "extendInfo": "bastyon"
+        },
+        "linux": {
+            "target": [
+                {
+                    "target": "AppImage"
+                },
+                {
+                    "target": "deb"
+                }
+            ],
+            "artifactName": "${productName}_${platform}_${arch}.${ext}",
+            "category": "Network",
+            "executableName": "${productName}",
+            "description": "${productName} Desktop Browser"
+        },
+        "win": {
+            "target": [
+                {
+                    "target": "nsis"
+                }
+            ],
+            "icon": "assets/icons/win/icon.ico"
+        },
+        "nsis": {
+            "artifactName": "${productName}Setup.${ext}",
+            "oneClick": true,
+            "perMachine": false,
+            "allowToChangeInstallationDirectory": false,
+            "createDesktopShortcut": true,
+            "displayLanguageSelector": true,
+            "menuCategory": true,
+            "installerIcon": "assets/icons/win/icon.ico",
+            "uninstallerIcon": "assets/icons/win/icon.ico",
+            "uninstallDisplayName": "${productName}, v${version}",
+            "deleteAppDataOnUninstall": false,
+            "license": "LICENSE",
+            "include": "build/installerTest.nsh"
         }
     }
 }

@@ -1,4 +1,4 @@
-InstallDir "$LocalAppData\Programs\Pocketnet"
+InstallDir "$LocalAppData\Programs\PocketnetTest"
 
 !macro customRemoveFiles
     # RMDir /r "$INSTDIR"
@@ -25,6 +25,6 @@ InstallDir "$LocalAppData\Programs\Pocketnet"
     Delete "$INSTDIR\LICENSE.electron.txt"
     Delete "$INSTDIR\vk_swiftshader_icd.json"
 
-    Delete "$SMSTARTUP\Bastyon.lnk"
+    Delete "$SMSTARTUP\BastyonTest.lnk"
 
 !macroend
