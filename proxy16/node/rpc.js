@@ -459,7 +459,7 @@ RpcClient.callspec = {
     getstatisticcontent: '',
     getstatisticbyhours: 'int int',
     getstatisticbydays: 'int int',
-    
+    getstatisticcontentbydays : 'int int',
     // Control
     stop: '',
     dumpwallet: 'str',
