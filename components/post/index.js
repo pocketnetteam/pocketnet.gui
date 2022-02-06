@@ -504,7 +504,7 @@ var post = (function () {
 				if(value <= 3){
 					if(self.app.platform.sdk.user.scamcriteria()){
 
-						if(clbk)
+						if (clbk)
 							clbk(false)
 
 							dialog({
@@ -517,6 +517,15 @@ var post = (function () {
 								success : function(){
 								}
 							})
+
+						return
+					}
+
+					if(self.app.platform.sdk.user.upvotevalueblockcriteria(value)){
+						if (clbk)
+							clbk(false)
+
+						sitemessage(self.app.localization.e('ratingss3'))
 
 						return
 					}

@@ -8848,7 +8848,6 @@ Platform = function (app, listofnodes) {
 
             scamcriteria : function(address){
 
-
                 if(!address) address = (self.app.platform.sdk.address.pnet() || {}).address
 
                 var info = deep(self, 'sdk.users.storage.' + address);
@@ -8856,7 +8855,20 @@ Platform = function (app, listofnodes) {
                 if (info.reputation > 100 && info.postcnt < 10) return true
 
                 return false
+
             },
+
+            upvotevalueblockcriteria : function(value, address){
+
+                if(!address) address = (self.app.platform.sdk.address.pnet() || {}).address
+
+                var info = deep(self, 'sdk.users.storage.' + address);
+
+                if (value <= 3 && info.reputation < 100) return true
+
+                return false
+
+            }, 
 
             reputationBlockedRedirect : function(address){
                 if(self.sdk.user.reputationBlocked(address)){

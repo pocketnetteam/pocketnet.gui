@@ -1232,6 +1232,15 @@ var lenta = (function(){
 
 						return
 					}
+
+					if(self.app.platform.sdk.user.upvotevalueblockcriteria(value)){
+						if (clbk)
+							clbk(false)
+
+						sitemessage(self.app.localization.e('ratingss3'))
+
+						return
+					}
 				}
 
 				

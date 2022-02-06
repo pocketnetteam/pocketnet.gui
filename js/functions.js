@@ -653,6 +653,8 @@
 		
 		}
 
+		////TODO
+
 		var wndcontentscrollmobile = function(e){
 
 			var cc = cnt.scrollTop()
@@ -7070,7 +7072,7 @@
 		var needclear = false
 
 		var throttle = 50
-		var transitionstr = 'transform 0.05s linear'
+		var transitionstr = 'transform 50ms linear'
 
 		let ticking = false;
 		
@@ -7126,6 +7128,7 @@
 					__el[0].style["-o-transition"] = transitionstr
 					__el[0].style["-webkit-transition"] = transitionstr
 					__el[0].style["transition"] = transitionstr
+					__el[0].style["pointer-events"] = 'none'
 
 					ticking = false;
 				})
@@ -7157,6 +7160,7 @@
 					__el.css({"-o-transition": ""});
 					__el.css({"-webkit-transition": ""});
 					__el.css({"transition": ""});
+					__el.css({"pointer-events": ""});
 					
 					_.each(p.directions, function(d){
 						applyDirection(d, 0)
