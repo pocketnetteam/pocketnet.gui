@@ -116,9 +116,10 @@ const publics = {
     getcontentstatistic : true,
     getuserstatistic : true,
     searchbyhash: true,
-    getstatisticcontent: true,
     getstatisticbyhours: true,
     getstatisticbydays: true,
+    getstatisticcontentbyhours: true,
+    getstatisticcontentbydays: true,
 }
 
 const keepAliveAgent = new http.Agent({ keepAlive: true });
