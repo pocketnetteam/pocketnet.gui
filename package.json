@@ -1,6 +1,6 @@
 {
     "name": "pocketnet",
-    "version": "0.5.1-beta3",
+    "version": "0.5.3",
     "cordovaversion": "1.5.3",
     "cordovaversioncode": "15003",
     "description": "Bastyon desktop application",
@@ -273,7 +273,7 @@
                     "target": "nsis"
                 }
             ],
-            "icon": "res/electron/icons/win/icon.ico"
+            "icon": "res/electron/icons/win/test_icon.ico"
         },
         "nsis": {
             "artifactName": "${productName}Setup.${ext}",
@@ -283,8 +283,8 @@
             "createDesktopShortcut": true,
             "displayLanguageSelector": true,
             "menuCategory": true,
-            "installerIcon": "res/electron/icons/win/icon.ico",
-            "uninstallerIcon": "res/electron/icons/win/icon.ico",
+            "installerIcon": "res/electron/icons/win/test_icon.ico",
+            "uninstallerIcon": "res/electron/icons/win/test_icon.ico",
             "uninstallDisplayName": "${productName}, v${version}",
             "deleteAppDataOnUninstall": false,
             "license": "LICENSE",
