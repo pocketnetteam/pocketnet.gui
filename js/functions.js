@@ -7115,13 +7115,15 @@
 						__el[0].style["transform"] = "scale("+scale+") translate3d(0, "+value+"px, 0)"
 						__el[0].style['transform-origin'] = 'center ' + pb
 					}
-		
-					__el[0].style["-moz-transition"] = transitionstr
-					__el[0].style["-o-transition"] = transitionstr
-					__el[0].style["-webkit-transition"] = transitionstr
-					__el[0].style["transition"] = transitionstr
-					__el[0].style["pointer-events"] = 'none'
 
+					if(!isios()){	
+						__el[0].style["-moz-transition"] = transitionstr
+						__el[0].style["-o-transition"] = transitionstr
+						__el[0].style["-webkit-transition"] = transitionstr
+						__el[0].style["transition"] = transitionstr
+						__el[0].style["pointer-events"] = 'none'
+					}
+		
 					ticking = false;
 				})
 				
@@ -7148,11 +7150,14 @@
 
 					__el.css({"transform": ""});
 					__el.css({"transform-origin": ""});
-					__el.css({"-moz-transition": ""});
-					__el.css({"-o-transition": ""});
-					__el.css({"-webkit-transition": ""});
-					__el.css({"transition": ""});
-					__el.css({"pointer-events": ""});
+
+					if(!isios()){
+						__el.css({"-moz-transition": ""});
+						__el.css({"-o-transition": ""});
+						__el.css({"-webkit-transition": ""});
+						__el.css({"transition": ""});
+						__el.css({"pointer-events": ""});
+					}
 
 					_.each(p.directions, function(d){
 						applyDirection(d, 0)
@@ -7168,67 +7173,69 @@
 		self.init = function(){
 
 			var mainDirection = null;
+
+			var statusf = function(e, phase, direction, distance){
+
+				if (mainDirection && mainDirection.i != direction){
+					phase = 'cancel'
+					direction = mainDirection.i
+				}
+
+				if(phase == 'cancel' || phase == 'end'){
+
+					if (mainDirection){
+
+						if(phase == 'end' && mainDirection.clbk && direction == mainDirection.i){
+							mainDirection.clbk()
+						}
+					}
+
+					self.clear()
+						
+
+					return
+
+				}
+
+				if(!direction) return
+
+				if(!p.directions[direction]){
+					return
+				}
+
+				var dir = p.directions[direction]
+
+				if (dir.constraints && !dir.constraints(e)) {
+
+					if (mainDirection){
+						mainDirection = null;
+					}
+
+					return false
+				}
+
+				if (phase == 'start'){
+					mainDirection = null
+				}
+				
+				if (phase == 'move'){
+					if (distance > 20){
+						mainDirection = dir
+
+						applyDirection(mainDirection, distance)
+
+						set(mainDirection.i, distance)
+					}
+				}
+
+				
+				
+
+			}
 			
 			p.el.swipe({
 				allowPageScroll : p.allowPageScroll,
-				swipeStatus : _.throttle(function(e, phase, direction, distance){
-
-					if (mainDirection && mainDirection.i != direction){
-						phase = 'cancel'
-						direction = mainDirection.i
-					}
-
-					if(phase == 'cancel' || phase == 'end'){
-
-						if (mainDirection){
-
-							if(phase == 'end' && mainDirection.clbk && direction == mainDirection.i){
-								mainDirection.clbk()
-							}
-						}
-
-						self.clear()
-							
-
-						return
-
-					}
-
-					if(!direction) return
-
-					if(!p.directions[direction]){
-						return
-					}
-
-					var dir = p.directions[direction]
-
-					if (dir.constraints && !dir.constraints(e)) {
-
-						if (mainDirection){
-							mainDirection = null;
-						}
-
-						return false
-					}
-
-					if (phase == 'start'){
-						mainDirection = null
-					}
-					
-					if (phase == 'move'){
-						if (distance > 20){
-							mainDirection = dir
-
-							applyDirection(mainDirection, distance)
-
-							set(mainDirection.i, distance)
-						}
-					}
-
-					
-					
-
-				}, throttle),
+				swipeStatus : isios() ? statusf : _.throttle(statusf, throttle),
 			})
 
 			return self
