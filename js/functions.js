@@ -528,11 +528,7 @@
 			if (wnd) return wnd.find(s);
 		}
 
-		var hasonewindow = function(){
-			if(p.app.el.windows.find('.wnd').length) p.app.el.html.addClass('haswindow')
-
-			else p.app.el.html.removeClass('haswindow')
-		}
+		
 
 		self.redraw = function(){
 
@@ -636,7 +632,6 @@
 			wnd.addClass('asette')
 
 
-			hasonewindow()
 
 			setTimeout(function(){
 				wnd.addClass('sette')
@@ -788,9 +783,6 @@
 
 					if(wnd){
 						wnd.remove();
-
-						hasonewindow()
-
 						clearmem()
 					}
 					

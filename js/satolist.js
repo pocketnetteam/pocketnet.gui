@@ -26141,8 +26141,7 @@ Platform = function (app, listofnodes) {
                 if (self.matrixchat.el){
 
                     if(!self.matrixchat.el.hasClass('active')) return
-
-                    self.matrixchat.el.removeClass('active')
+                        self.matrixchat.el.removeClass('active')
                 }
                 else{
                     return
@@ -26151,12 +26150,12 @@ Platform = function (app, listofnodes) {
                 if (app.chatposition)
                     app.chatposition(false)
 
+
                 self.app.actions.playingvideo()
 
-                if (isTablet() ||isMobile() || window.cordova)
-                    self.app.actions.restore()
+                if (isTablet() ||isMobile() || window.cordova) self.app.actions.restore()
 
-                app.el.html.removeClass('chatshowed')
+                //app.el.html.removeClass('chatshowed')
 
                 if(document.activeElement) document.activeElement.blur()
 
@@ -26166,8 +26165,11 @@ Platform = function (app, listofnodes) {
                     self.matrixchat.core.hideInParent(isTablet() ||isMobile() || window.cordova ? true : false )
                 }
 
-                if (isTablet() ||isMobile() || window.cordova){
-                    self.app.actions.onScroll()
+                if (isTablet() || isMobile() || window.cordova){
+                    setTimeout(function(){
+                        self.app.actions.onScroll()
+                    }, 300)
+                    
                 }
 
                 _.each(self.matrixchat.clbks.SHOWING, function(c){
@@ -26177,7 +26179,6 @@ Platform = function (app, listofnodes) {
             }
 
             core.apptochat = function(link){
-
 
                 if (document.activeElement) document.activeElement.blur()
 
@@ -26189,9 +26190,8 @@ Platform = function (app, listofnodes) {
 
                 if (self.matrixchat.el){
 
-                    if(self.matrixchat.el.hasClass('active')) return
-
-                    self.matrixchat.el.addClass('active')
+                    if (self.matrixchat.el.hasClass('active')) return
+                        self.matrixchat.el.addClass('active')
 
                 }
                 else{

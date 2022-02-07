@@ -4911,10 +4911,10 @@ html.nav{
 html.cordova,
 html.mobile,
 html.tablet{
-    
+
     .matrixchatwrapper{
         position: fixed;
-        contain: strict;
+        contain: strict style;
         left : -100%;
         top : 0;
         right: 100%;
@@ -4922,9 +4922,7 @@ html.tablet{
         background: #fff;
         .transition(0.3s);
         z-index: 1004;
-        .shadowSmall();
         -webkit-overflow-scrolling: touch;
-        /*visibility: hidden;*/
         transform-origin : 'right center';
         -webkit-transform: scale(0.9);
         transform: scale(0.9);
@@ -4936,7 +4934,6 @@ html.tablet{
         &.active{
             -webkit-transform: scale(1) translateX(100%);
             transform: scale(1) translateX(100%);
-            /*visibility: visible;*/
         }
     }
 
