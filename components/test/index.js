@@ -1270,7 +1270,7 @@ var test = (function(){
 			},
 
 			wnd : {
-				class : 'withoutButtons allscreen testwindow'
+				class : 'withoutButtons allscreen testwindow normalizedmobile'
 			}
 		}
 	};

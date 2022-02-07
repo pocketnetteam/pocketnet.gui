@@ -392,9 +392,7 @@ __map =  {
 		usersettings : {
 			uri : "usersettings",
 			href : "usersettings",
-			add : {
-				el : 'content'
-			},
+			add : insertingfunc,
 			anonimus : true,
 			/*redirect : {
 				auth : 'authorization',
@@ -610,9 +608,7 @@ __map =  {
 		system16: {
 			uri : "system16",
 			href : "system16",
-			add : {
-				el : 'content'
-			},
+			add : insertingfunc,
 			anonimus : true,
 
 			relations : [
