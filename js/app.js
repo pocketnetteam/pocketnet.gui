@@ -992,7 +992,7 @@ Application = function(p)
 				self.el.html.addClass('cordova')
 
 				if(self.curation()){
-					
+					self.el.html.addClass('curation')
 				}
 
 				if (window.cordova && !isMobile()){

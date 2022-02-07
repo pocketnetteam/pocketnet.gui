@@ -8304,8 +8304,6 @@ Platform = function (app, listofnodes) {
 
                     self.ipcbridge.request('autoLaunchIsEnabled', {}).then(r => {
 
-                        console.log('autoLaunchIsEnabled', r)
-
                         m.autostart.value = r
 
                         if (clbk) {
@@ -9498,7 +9496,6 @@ Platform = function (app, listofnodes) {
                 if (imported.length)
                     this.storage.notifications = imported
 
-                    console.log('exported.block set', this.storage.block, exported.block)
 
                 if (exported.block)
                     this.storage.block = exported.block
@@ -9550,7 +9547,6 @@ Platform = function (app, listofnodes) {
 
                 this.load();
 
-                console.log('this.storage.block', this.storage.block, self.currentBlock)
 
                 this.storage.block || (this.storage.block = self.currentBlock)
                 this.storage.notifications || (this.storage.notifications = [])
@@ -9570,7 +9566,6 @@ Platform = function (app, listofnodes) {
             wsBlock: function (block) {
 
                 if (block > this.storage.block) {
-                    console.log('ws.block',  this.storage.block, block)
 
                     this.storage.block = block;
                 }
@@ -9715,7 +9710,6 @@ Platform = function (app, listofnodes) {
                             n.getNotificationsInfo(notifications || [], function () {
 
                                 if (block.block > n.storage.block) {
-                                    console.log('set block', n.storage.block, block.block)
                                     n.storage.block = block.block
                                 }
 
@@ -13571,8 +13565,6 @@ Platform = function (app, listofnodes) {
                 var result = []
 
                 if(!start) start = 0
-
-                console.log('value, fixedBlock, type, start, count, address', value, fixedBlock, type, start, count, address)
 
                 if (s[type][value] && s[type][value][address] && s[type][value][address][fixedBlock] && s[type][value][address][fixedBlock].data){
 
@@ -25680,8 +25672,6 @@ Platform = function (app, listofnodes) {
 
                     self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
 
-
-
                     self.app.peertubeHandler.init()
 
                     if (clbk)
@@ -25701,28 +25691,20 @@ Platform = function (app, listofnodes) {
                             //app.notifications.subscribe()
                         })
 
-
-
-
-
                         if (app.curation()){
                             if(app.user.validate()){
-
                                 if(app.nav.get.href() == 'userpage?pc=1'){
                                     self.matrixchat.core.apptochat()
                                 }
-
-
                             }
                         }
 
                         self.sdk.notifications.init().catch(e => {})
 
                         if (self.sdk.address.pnet()){
-
-
                             if(self.nvadr[self.sdk.address.pnet().address]) $('html').addClass('testaddress')
                             else{
+                                if($('html').hasClass('testaddress'))
                                 $('html').removeClass('testaddress')
                             }
                         }
@@ -25760,24 +25742,33 @@ Platform = function (app, listofnodes) {
 
         destroy : function(){
 
+
             if (self.matrixchat.chatparallax){
+
+
                 self.matrixchat.chatparallax.destroy()
+                self.matrixchat.chatparallax = null
             }
+
 
             if (window.matrixchat){
                 window.matrixchat.destroy()
             }
 
+
             $('#matrix').html('');
+
 
             self.matrixchat.el = null
             self.matrixchat.inited = false
+
 
             self.matrixchat.clbks = {
                 ALL_NOTIFICATIONS_COUNT : {},
                 NOTIFICATION : {},
                 SHOWING : {}
             }
+
         },
 
 
@@ -25899,8 +25890,6 @@ Platform = function (app, listofnodes) {
             if (self.matrixchat.el){
 
                 if(isTablet() || isMobile() || window.cordova){
-
-                    console.log('self.app.width', self.app.width)
 
                     self.matrixchat.chatparallax = new SwipeParallaxNew({
 

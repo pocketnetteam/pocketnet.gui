@@ -2763,9 +2763,7 @@
 
 				p.item(function(){
 
-
 					p.success()
-
 				})
 			},
 
@@ -7243,9 +7241,7 @@
 
 		self.destroy = function(){
 			p.el.swipe('destroy')
-
 			p = {}
-
 			needclear = false
 		}
 
@@ -11207,7 +11203,6 @@ edjsHTML = function() {
 
         embed: function(e) {
             var t = e.data;
-			console.log("T", t)
             switch (t.service) {
 
 				case "vimeo":

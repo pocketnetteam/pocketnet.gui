@@ -103,10 +103,12 @@ User = function(app, p) {
 
 	self.prepare = function(clbk){
 
+
 		self.tokenExpired();
 
 		app.platform.clear(true);
 		app.platform.prepareUser(function(){
+
 
 			if (clbk)
 				clbk(state)	
@@ -133,10 +135,12 @@ User = function(app, p) {
 
 			self.isState(function(state){
 
+
 				if(state){
 
 					localStorage['waslogged'] = true
 					localStorage['popupsignup'] = 'showed'
+
 
 					self.prepare(clbk)
 				}
@@ -174,12 +178,8 @@ User = function(app, p) {
 		}
 		else
 		{
-
-			
 			self.setKeys(mnemonic, function(){
-
 				setKeysClbk()
-				
 			})
 		}
 
