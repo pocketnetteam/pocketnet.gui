@@ -1,10 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-<<<<<<< HEAD:.github/workflows/test.htlc.pocketnet.app.yml
 name: Deploy test.htlc.pocketnet.app
-=======
-name: Deploy to test.pocketnet.app
->>>>>>> master:.github/workflows/test.pocketnet.app.yml
 
 # Controls when the action will run. 
 on:
@@ -36,8 +32,4 @@ jobs:
           npm run minimize:test
 
       - name: Copy to dest dir
-<<<<<<< HEAD:.github/workflows/test.htlc.pocketnet.app.yml
         run: rsync -ah --exclude={'.git/','.github/','node_modules/'} ./ /docker/htlc/
-=======
-        run: rsync -ah --exclude={'.git/','.github/','node_modules'} ./ /docker/gui/
->>>>>>> master:.github/workflows/test.pocketnet.app.yml
