@@ -43,50 +43,51 @@
 
 		<div class="ways">
 
-				<!--
-			<div class="wayf">
+			<% if(!app.curation()) {%>
+				<div class="wayf">
 
-				<div class="row flx forfiats">
+					<div class="row flx forfiats">
 
-					<div class="fiat">
-						<div class="clogo">
-							<img class="wh2" src="./img/mc_symbol.svg">
+						<div class="fiat">
+							<div class="clogo">
+								<img class="wh2" src="./img/mc_symbol.svg">
+							</div>
+							<div class="label">
+								Mastercard
+							</div>
 						</div>
-						<div class="label">
-							Mastercard
+
+						<div class="fiat">
+							<div class="clogo">
+								<img class="wh3" src="./img/visa.svg">
+							</div>
+							<div class="label">
+								Visa
+							</div>
+						</div>
+
+						<div class="fiat">
+							<div class="clogo">
+								<img class="wh" src="./img/6ff9233688ba95fe3e02f381443539fc.svg">
+							</div>
+							<div class="label">
+								Indacoin
+							</div>
+						</div>
+						
+						
+					</div>
+
+					<div class="row table">
+						<div class="reciever">
+							<a elementsid="https://buy.pkoin.indacoin.io" href="https://buy.pkoin.indacoin.io/index?address=<%-a.address || ''%>">
+								<button class="button medium black"><i class="fas fa-chevron-circle-right"></i> <%=e('buywithcreditcard')%></button>
+							</a>
 						</div>
 					</div>
 
-					<div class="fiat">
-						<div class="clogo">
-							<img class="wh3" src="./img/visa.svg">
-						</div>
-						<div class="label">
-							Visa
-						</div>
-					</div>
-
-					<div class="fiat">
-						<div class="clogo">
-							<img class="wh" src="./img/6ff9233688ba95fe3e02f381443539fc.svg">
-						</div>
-						<div class="label">
-							Indacoin
-						</div>
-					</div>
-					
-					
 				</div>
-
-				<div class="row table">
-					<div class="reciever">
-						<a elementsid="https://buy.pkoin.indacoin.io" href="https://buy.pkoin.indacoin.io/index?address=<%-a.address || ''%>">
-							<button class="button medium black"><i class="fas fa-chevron-circle-right"></i> <%=e('buywithcreditcard')%></button>
-						</a>
-					</div>
-				</div>
-
-			</div>-->
+			<% } %>
 
 			<div class="wayf">
 
