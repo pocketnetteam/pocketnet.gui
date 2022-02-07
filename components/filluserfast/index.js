@@ -250,7 +250,9 @@ var filluserfast = (function(){
 					})
 
 					input.on('focus', function(){
-						if (isTablet()) _scrollTo(input)
+
+						if (isTablet()) setTimeout(function(){_scrollTo(input, el.c.closest('.customscroll')), 200})
+
 					})
 
 					save.on('click', function(){
