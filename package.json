@@ -1,6 +1,6 @@
 {
     "name": "pocketnet",
-    "version": "0.5.1-beta3",
+    "version": "0.5.3",
     "cordovaversion": "1.5.3",
     "cordovaversioncode": "15003",
     "description": "Bastyon desktop application",
@@ -160,7 +160,7 @@
         "mac": {
             "target": "dmg",
             "artifactName": "${productName}Setup.${ext}",
-            "icon": "assets/icons/mac/icon.icns",
+            "icon": "res/electron/icons/mac/icon.icns",
             "entitlements": "build/entitlements.mac.plist",
             "extendInfo": "bastyon"
         },
@@ -184,7 +184,7 @@
                     "target": "nsis"
                 }
             ],
-            "icon": "assets/icons/win/icon.ico"
+            "icon": "res/electron/icons/win/icon.ico"
         },
         "nsis": {
             "artifactName": "${productName}Setup.${ext}",
@@ -194,8 +194,8 @@
             "createDesktopShortcut": true,
             "displayLanguageSelector": true,
             "menuCategory": true,
-            "installerIcon": "assets/icons/win/icon.ico",
-            "uninstallerIcon": "assets/icons/win/icon.ico",
+            "installerIcon": "res/electron/icons/win/icon.ico",
+            "uninstallerIcon": "res/electron/icons/win/icon.ico",
             "uninstallDisplayName": "${productName}, v${version}",
             "deleteAppDataOnUninstall": false,
             "license": "LICENSE",
@@ -249,7 +249,7 @@
         "mac": {
             "target": "dmg",
             "artifactName": "${productName}Setup.${ext}",
-            "icon": "assets/icons/mac/icon.icns",
+            "icon": "res/electron/icons/mac/icon.icns",
             "entitlements": "build/entitlements.mac.plist",
             "extendInfo": "bastyon"
         },
@@ -273,7 +273,7 @@
                     "target": "nsis"
                 }
             ],
-            "icon": "assets/icons/win/icon.ico"
+            "icon": "res/electron/icons/win/test_icon.ico"
         },
         "nsis": {
             "artifactName": "${productName}Setup.${ext}",
@@ -283,8 +283,8 @@
             "createDesktopShortcut": true,
             "displayLanguageSelector": true,
             "menuCategory": true,
-            "installerIcon": "assets/icons/win/icon.ico",
-            "uninstallerIcon": "assets/icons/win/icon.ico",
+            "installerIcon": "res/electron/icons/win/test_icon.ico",
+            "uninstallerIcon": "res/electron/icons/win/test_icon.ico",
             "uninstallDisplayName": "${productName}, v${version}",
             "deleteAppDataOnUninstall": false,
             "license": "LICENSE",

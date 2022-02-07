@@ -22,7 +22,7 @@ var settingsPath = 'data/settings'
 var settings = {};
 
 var pocketnet = new Pocketnet()
-var test = _.indexOf(process.argv, '--test') > -1
+var test = _.indexOf(process.argv, '--test') > -1 || global.TESTPOCKETNET
 
 var logger = new Logger(['general', 'rpc', 'system', 'remote', 'firebase', 'nodecontrol']).init()
 

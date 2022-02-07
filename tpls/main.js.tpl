@@ -3,7 +3,7 @@ if (global.WRITE_LOGS) {
     global.LOG_LEVEL = global.WRITE_LOGS.split("=").pop()
 }
 
-
+__VAR__.globaltest
 
 var open = require("open");
 

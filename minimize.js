@@ -48,7 +48,7 @@ var mapJsPath = './js/_map.js';
 console.log("run")
 console.log(args)
 
-var tpls = ['embedVideo.php', 'index_el.html', 'index.html', 'index.php', 'indexcordova.html', 'config.xml', 'openapi.html', /*'.htaccess',*/ 'service-worker.js', 'manifest.json'/*, 'main.js'*/]
+var tpls = ['embedVideo.php', 'index_el.html', 'index.html', 'index.php', 'indexcordova.html', 'config.xml', 'openapi.html', /*'.htaccess',*/ 'service-worker.js', 'manifest.json', 'main.js']
 
 var tplspath = {
 
@@ -71,6 +71,7 @@ var vars = {
 		proxypath : '"https://test.pocketnet.app:8899/"',
 		domain : _meta[args.project].turl,
 		test : '<script>window.testpocketnet = true;</script>',
+		globaltest : 'global.TESTPOCKETNET = true;',
 		path : args.path,
 		project : args.project
 	},
@@ -78,6 +79,7 @@ var vars = {
 		proxypath : '"https://pocketnet.app:8899/"',
 		domain : _meta[args.project].url,
 		test : '',
+		globaltest : '',
 		path : args.path,
 		project : args.project
 	}
