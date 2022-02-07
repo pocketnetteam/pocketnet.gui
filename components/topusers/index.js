@@ -58,14 +58,10 @@ var topusers = (function(){
 
 							if(tx){
 
-								el.c.find('.user[address="'+address+'"] .subscribebuttonstop').removeClass('following')
-								el.c.find('.user[address="'+address+'"] .notificationturn').removeClass('turnon')
-								
-							}
-							else
-							{
 								self.app.platform.errorHandler(err, true)	
+							
 							}
+
 		
 						})
 
@@ -77,14 +73,10 @@ var topusers = (function(){
 			subscribe : function(address){
 				self.app.platform.api.actions.subscribeWithDialog(address, function(tx, err){
 
-					if(tx){
+					if(!tx){
 								
-						el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('following')	
-						el.c.find('.user[address="'+address+'"] .notificationturn').addClass('turnon')	
-					}
-					else
-					{
 						self.app.platform.errorHandler(err, true)
+
 					}
 
 				})
@@ -101,16 +93,12 @@ var topusers = (function(){
 
 				self.app.platform.api.actions[f](address, function(tx, err){
 
-					if(tx){
+					if(!tx){
 			
-						el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('following')	
-						el.c.find('.user[address="'+address+'"] .notificationturn').addClass('turnoff')	
-
-					}
-					else
-					{
 						self.app.platform.errorHandler(err, true)
+						
 					}
+
 
 				})
 			}
@@ -159,34 +147,27 @@ var topusers = (function(){
 
 				}, function(_p){
 
-					self.app.platform.clbks.api.actions.subscribe.userlist = function(address){
+					self.app.platform.clbks.api.actions.subscribe.topusers = function(address){
 
 						el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('following')
+						el.c.find('.user[address="'+address+'"] .modal .subscribeWrapper').addClass('following')	
 						el.c.find('.user[address="'+address+'"] .notificationturn').removeClass('turnon')		
 					}
 		
-					self.app.platform.clbks.api.actions.subscribePrivate.userlist = function(address){
+					self.app.platform.clbks.api.actions.subscribePrivate.topusers = function(address){
 		
-						el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('following')	
+						el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('following')
+						el.c.find('.user[address="'+address+'"] .modal .subscribeWrapper').addClass('following')		
 						el.c.find('.user[address="'+address+'"] .notificationturn').addClass('turnon')	
 					}
 		
-					self.app.platform.clbks.api.actions.unsubscribe.userlist = function(address){
+					self.app.platform.clbks.api.actions.unsubscribe.topusers = function(address){
 		
 						el.c.find('.user[address="'+address+'"] .subscribebuttonstop').removeClass('following')
+						el.c.find('.user[address="'+address+'"] .modal .subscribeWrapper').removeClass('following')	
 						el.c.find('.user[address="'+address+'"] .notificationturn').removeClass('turnon')
 					}
 		
-					self.app.platform.clbks.api.actions.blocking.userlist = function(address){
-						el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('blocking')		
-						el.c.find('.user[address="'+address+'"] .notificationturn').removeClass('turnon')			
-					}
-		
-					self.app.platform.clbks.api.actions.unblocking.userlist = function(address){
-		
-						el.c.find('.user[address="'+address+'"] .subscribebuttonstop').removeClass('blocking')				
-						el.c.find('.user[address="'+address+'"]').removeClass('userblocking')	
-					}
 		
 					el.c.on('click', '.subscribe', events.subscribe)
 					el.c.on('click', '.unsubscribe', events.unsubscribe)
@@ -306,12 +287,12 @@ var topusers = (function(){
 
 				window.removeEventListener('scroll', events.loadmorescroll)
 
-				delete self.app.platform.clbks.api.actions.subscribe.userlist
-				delete self.app.platform.clbks.api.actions.subscribePrivate.userlist
+				delete self.app.platform.clbks.api.actions.subscribe.topusers
+				delete self.app.platform.clbks.api.actions.subscribePrivate.topusers
 	
-				delete self.app.platform.clbks.api.actions.unsubscribe.userlist
+				delete self.app.platform.clbks.api.actions.unsubscribe.topusers
 	
-				delete self.app.platform.clbks.api.actions.blocking.userlist
+				delete self.app.platform.clbks.api.actions.blocking.topusers
 
 				el = {};
 			},

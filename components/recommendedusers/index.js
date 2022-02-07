@@ -213,20 +213,20 @@ var recommendedusers = (function(){
 
 		var initEvents = function(){
 
-			self.app.platform.clbks.api.actions.unsubscribe.userlist = function(address){
+			self.app.platform.clbks.api.actions.unsubscribe.topusers = function(address){
 
 				el.c.find('.user[address="'+address+'"] .subscribebuttonstop').removeClass('following')
 				el.c.find('.user[address="'+address+'"] .notificationturn').removeClass('turnon')
 			}
 
 						
-			self.app.platform.clbks.api.actions.subscribe.userlist = function(address){
+			self.app.platform.clbks.api.actions.subscribe.topusers = function(address){
 
 				el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('following')
 				el.c.find('.user[address="'+address+'"] .notificationturn').removeClass('turnon')		
 			}
 
-			self.app.platform.clbks.api.actions.subscribePrivate.userlist = function(address){
+			self.app.platform.clbks.api.actions.subscribePrivate.topusers = function(address){
 
 				el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('following')	
 				el.c.find('.user[address="'+address+'"] .notificationturn').addClass('turnon')	
@@ -262,13 +262,11 @@ var recommendedusers = (function(){
 
 				window.removeEventListener('scroll', events.loadmorescroll)
 
-				delete self.app.platform.clbks.api.actions.subscribe.userlist
-				delete self.app.platform.clbks.api.actions.subscribePrivate.userlist
+				delete self.app.platform.clbks.api.actions.subscribe.topusers
+				delete self.app.platform.clbks.api.actions.subscribePrivate.topusers
 	
-				delete self.app.platform.clbks.api.actions.unsubscribe.userlist
+				delete self.app.platform.clbks.api.actions.unsubscribe.topusers
 	
-				delete self.app.platform.clbks.api.actions.blocking.userlist
-
 				el = {};
 			},
 			
