@@ -7714,6 +7714,7 @@ html.mobile{
 
             .wndinner{
                 width: 65%;
+                background: transparent!important;
             }
             .wndback{
                 backface-visibility: hidden;
@@ -7762,6 +7763,7 @@ html.mobile{
                     bottom : 0;
                     backface-visibility: hidden;
                     padding-bottom: 130px;
+                    background: #fff!important;
                     
                     .shadowSmaller();
 
@@ -7840,6 +7842,20 @@ html.mobile{
 
                 .roundclosebutton{
                     backdrop-filter : none;
+                }
+            }
+        }
+    }
+
+    &.stblack{
+        .wnd{
+            &.normalizedmobile{
+    
+        
+                .wndinner{
+                    .wndcontent{
+                        background: @color-black!important;
+                    }
                 }
             }
         }

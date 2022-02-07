@@ -613,6 +613,7 @@ var staking = (function(){
 			},
 
 			wnd : {
+				header : "currency",
 				class : 'normalizedmobile'
 			}
 		}

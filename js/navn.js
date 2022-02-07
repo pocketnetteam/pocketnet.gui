@@ -444,6 +444,8 @@ Nav = function(app)
 					
 				}
 
+				
+
 	    	}
 		}
 		
@@ -484,8 +486,6 @@ Nav = function(app)
 					if (c){
 
 						deleted.push(id)
-
-
 						c('auto')
 					}
 
@@ -495,6 +495,8 @@ Nav = function(app)
 			_.each(deleted, function(id){
 				delete self.wnds[id]
 			})
+
+			
 		},
 		
 		open : function(p){
@@ -536,9 +538,7 @@ Nav = function(app)
 						})
 
 						_.each(self.clbks.history, function(c){
-								
 							c(p.href);
-							
 						})
 
 						return;
@@ -621,9 +621,7 @@ Nav = function(app)
 					p.module.active = true;
 
 					_.each(self.clbks.history, function(c){
-						
 						c(p.href);
-						
 					})
 				}
 
@@ -1324,6 +1322,11 @@ Nav = function(app)
 	}
 
 	self.api = {
+		changedclbks : function(){
+			_.each(self.clbks.history, function(c){
+				c(history.state.href);
+			})
+		},
 		history : historyManager,
 		links : core.links,
 		go : core.go,

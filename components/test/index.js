@@ -636,9 +636,8 @@ var test = (function(){
 				require : true,
 
 				onFocus : function(pn){
-					console.log('onFocus')
-					if (isTablet())
-						_scrollTo(pn)
+				
+					if (isTablet()) setTimeout(function(){_scrollTo(pn, el.c.closest('.customscroll')), 200})
 				}
 			}),
 
@@ -650,8 +649,7 @@ var test = (function(){
 				onType : true,
 
 				onFocus : function(pn){
-					if (isTablet())
-						_scrollTo(pn)
+					if (isTablet()) setTimeout(function(){_scrollTo(pn, el.c.closest('.customscroll')), 200})
 				}
 			}),
 
@@ -1270,7 +1268,7 @@ var test = (function(){
 			},
 
 			wnd : {
-				class : 'withoutButtons allscreen testwindow'
+				class : 'withoutButtons allscreen testwindow normalizedmobile'
 			}
 		}
 	};

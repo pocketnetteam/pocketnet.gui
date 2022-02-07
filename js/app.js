@@ -439,6 +439,7 @@ Application = function(p)
 	self.modules = {};
 
 	self.curation = function(){
+
 		if(typeof isios != 'undefined' && isios() && window.cordova) return true
 		return false
 	}

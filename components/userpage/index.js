@@ -188,7 +188,6 @@ var userpage = (function(){
 				})
 
 			}
-		
 
 			reports.push({
 				name : self.app.localization.e('rsettings'),
@@ -486,7 +485,7 @@ var userpage = (function(){
 
 				var report = helpers.findReport(id)
 
-				if(report && isMobile() && report.openReportPageMobile){
+				if(report && isMobile() && (report.openReportPageMobile && !self.app.curation())){
 
 					self.closeContainer()
 
@@ -499,7 +498,7 @@ var userpage = (function(){
 					return
 				}
 
-				if(report && isMobile() && report.openReportPageMobileInWindow){
+				if(report && isMobile() && (report.openReportPageMobileInWindow || self.app.curation())){
 
 					self.closeContainer()
 
