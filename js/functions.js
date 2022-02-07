@@ -631,7 +631,7 @@
 			wnd.css("display", "block");
 			wnd.addClass('asette')
 
-
+			if(p.showbetter) wnd.addClass('showbetter')
 
 			setTimeout(function(){
 				wnd.addClass('sette')
@@ -723,7 +723,8 @@
 
 				cnt = wnd.find('.wndcontent')
 
-				cnt.on('scroll', _.throttle(wndcontentscrollmobile, 50))
+				if(!p.showbetter)
+					cnt.on('scroll', _.throttle(wndcontentscrollmobile, 50))
 
 			}
 

@@ -319,6 +319,7 @@ var pkview = (function(){
 				p.clbk(null, p);
 			},
 			wnd : {			
+				showbetter : true,
 				class : 'withoutButtons pkviewwnd normalizedmobile',
 			}
 		}
