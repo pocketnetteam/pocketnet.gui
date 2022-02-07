@@ -235,17 +235,22 @@ var Cache = function(p){
                 block : 0,
             },
 
-            getstatisticcontent : {
-                time : 560,
-                block : 0,
-            },
-
             getstatisticbyhours : {
                 time : 560,
                 block : 0,
             },
 
             getstatisticbydays : {
+                time : 5600,
+                block : 0,
+            },
+
+            getstatisticcontentbyhours : {
+                time : 560,
+                block : 0,
+            },
+
+            getstatisticcontentbydays : {
                 time : 5600,
                 block : 0,
             },

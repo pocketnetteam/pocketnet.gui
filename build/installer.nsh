@@ -25,7 +25,6 @@ InstallDir "$LocalAppData\Programs\Pocketnet"
     Delete "$INSTDIR\LICENSE.electron.txt"
     Delete "$INSTDIR\vk_swiftshader_icd.json"
 
-    Delete "$SMSTARTUP\Pocketnet.lnk"
     Delete "$SMSTARTUP\Bastyon.lnk"
 
 !macroend

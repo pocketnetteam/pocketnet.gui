@@ -10,11 +10,12 @@
         padding : 2 * @rhythm;
         padding-top : 2 * @rhythm;
         padding-left: 0;
-        border-top: 1px solid #E3E4EB;
+       
+        margin-bottom: @rhythm;
 
         span{
             font-size : 0.8em;
-            font-weight: 600;
+            font-weight: 700;
         }
 
         i{
@@ -35,7 +36,6 @@
                 cursor: pointer;
                 width: 33px;
                 text-align: center;
-                .transition(0.3s);
 
                 &:hover{
                     i{
@@ -49,7 +49,6 @@
                 opacity: 0.5;
                 width: 33px;
                 cursor: pointer;
-                .transition(0.3s);
 
                 span{
                     font-weight: 100;
@@ -59,10 +58,6 @@
                 &:hover{
                     opacity: 1;
                     color : @color-bad;
-                    
-                    .tagvalue{
-                        border: 1px solid @color-bad;
-                    }
                 }
             }
 
@@ -77,85 +72,70 @@
     }
 
     .tag{
-        font-size: .9em;
-        
-        .transition(0.3s);
-        >div{
-            vertical-align: middle;
-            padding-left: 0;
+        .tagtable{
+            width: auto;
+            >div{
+                vertical-align: middle;
+                padding : @rhythm 2 * @rhythm;
+                padding-left: 0;
 
-            &.tagvalue{
-                padding: 4px 8px;
-                padding-top : 2px;
-                width: auto;
-                border: 1px solid #C7C8D9;
-                margin: 4px 4px 0 0;
-                border-radius: 100px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                max-width: 120px;
-                white-space: nowrap;
-
-                span, i{
-                    font-size: 0.8em;
-                }
-            }
-
-            &.iconWrapper{
-
-                i{
-                    font-size: 0.6em;
-                }
-            }
-
-            
-            &.tagvalue{
-                .transition(0.3s);
-                cursor: pointer;
-                &:hover{
-                    color : @color-main;
-                    border: 1px solid @color-main!important;
-                }
-            }
-
-            &.tagcount{
-                width : 90px;
-                text-align: right;
-                font-weight: 700;
-            }
-
-            &.tagsearch,
-            &.tagcheck{
-                .transition(0.3s);
-                padding : 0;
-                text-align: center;
-                width : 44px;
-                cursor: pointer;
-                opacity: 0.2;
-                i{
-                    font-size: 0.8em;
-                }
-
-                
-                &:hover{
-                    color : @color-main;
-
-                    .tagvalue{
-                        border : 1px solid @color-main;
-
+                &.tagvalue{
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    max-width: 130px;
+                    padding-right: 0;
+                    span{
+                        font-size: 0.8em;
                     }
                 }
-            }
 
-            &.tagsearch{
-                width : 33px;
-                opacity: 0;
+                &.iconWrapper{
+                    width : 2 * @rhythm;
+
+                    i{
+                        font-size: 0.6em;
+                    }
+                }
+
+                &.tagvalue{
+                    cursor: pointer;
+                    &:hover{
+                        color : @color-main;
+                    }
+                }
+
+                &.tagcount{
+                    width : 90px;
+                    text-align: right;
+                    font-weight: 700;
+                }
+
+                &.tagsearch,
+                &.tagcheck{
+                    padding : 0;
+                    text-align: center;
+                    width : 44px;
+                    cursor: pointer;
+                    opacity: 0.2;
+                    i{
+                        font-size: 0.8em;
+                    }
+
+                    
+                    &:hover{
+                        color : @color-main;
+                    }
+                }
+
+                &.tagsearch{
+                    width : 33px;
+                    opacity: 0;
+                }
             }
         }
-    
 
         &:hover{
-            .tagvalue{
+            .tagtable{
                 >div{
                     &.tagcheck,
                     &.tagsearch{
@@ -165,11 +145,12 @@
             }
         }
 
+       
     }
 
     .ta{
         .tg{
-            display: inline-block;
+            display: block;
 
             &.hdn{
                 display: none;
@@ -188,12 +169,11 @@
         }
 
         .ta{
-
             .tg{
-                display: inline-block;
+                display: block;
     
                 &.hdn{
-                    display: inline-block;
+                    display: block;
                 }
             }
         }
@@ -216,52 +196,76 @@
             }
 
             .tag{
-
-                >div{
-                    border: 1px solid @color-orange;
-
-                    &.tagcheck{
-                        opacity: 1;
+                .tagtable{
+                    >div{
+                        &.tagcheck{
+                            opacity: 1;
+                        }
                     }
                 }
-            
             }
         }
 
-
         &.fixed{
-            opacity: 0.5;
-            pointer-events: none;
+            color : fade(@color-gray-mlight, 20);
 
+            .tag{
+                .tagtable{
+                    >div{
+                        &.tagvalue,
+                        &.tagcheck{
+                            cursor: default;
 
+                            i{
+                                font-weight: 700;
+                            }
+                        }
 
+                        
+        
+                    }
+                }
 
+                &:hover{
+                    .tagtable{
+                        >div{
+                            &.tagcheck{
+                                color : fade(#fff, 20);
+                                opacity: 1;
+                            }
+
+                            &.tagvalue{
+                                color : fade(#fff, 20);
+                                cursor: default;
+                               
+                            }
+                        }
+                    }
+                }
+            }
         }
+    }
 
-
+    .newlabel{
+        background: crimson;
+        color : #fff;
     }
 
     .hidealltags,
     .showalltags{
         padding : 2 * @rhythm;
-        padding-bottom : 4 * @rhythm;
         padding-left: 0;
         cursor: pointer;
-        color: #8E90A6;
-        border-bottom: 1px solid #E3E4EB;
-        .transition(0.3s);
+        opacity: 0.5;
 
         &:hover{
             opacity: 1;
             color : @color-main;
         }
 
-        span, i{
+        span{
+            font-weight: 700;
             font-size: 0.8em;
-        }
-
-        .text{
-            margin-left: @rhythm;
         }
     }
 
@@ -283,28 +287,16 @@ html.stblack{
             
             &:hover{
                 color : @color-main;
-
-                .tagvalue{
-                    border: 1px solid @color-main;
-                }
             }
         }
     
-        
-        .tcaptionwrapper{
-            border-top: 1px solid fade(#E3E4EB, 10);
-        }
+    
     
         .hidealltags,
         .showalltags{
-            border-bottom: 1px solid fade(#E3E4EB, 10);
     
             &:hover{
                 color : @color-main;
-
-                .tagvalue{
-                    border : 1px solid @color-main;
-                }
             }
         }
     

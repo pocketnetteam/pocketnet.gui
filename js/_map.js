@@ -117,8 +117,6 @@ __map =  {
 		"js/vendor/emojionearea.min.css",
 		"js/vendor/owl/assets/owl.carousel.min.css",
 		"js/vendor/owl/assets/owl.theme.default.min.css",
-		
-		
 	],
 
 	
@@ -404,6 +402,13 @@ __map =  {
 				//validate : 'filluser'
 			},*/
 		
+		},
+
+		popup : {
+			uri : "popup",
+			href : "popup",
+			add : insertingfunc,
+			anonimus : true
 		},
 
 		test : {

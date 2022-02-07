@@ -11,7 +11,7 @@ var author = (function(){
 		var el = {};
 		var upbutton;
 
-		var panel = null, uptimer = null, contentsready = false, fixedBlock = null, acsearch;
+		var panel = null, uptimer = null, contentsready = false, fixedBlock = null, acsearch, share = null;
 
 		var actions = {
 			subscribeLabel : function(){
@@ -834,15 +834,45 @@ var author = (function(){
 
 			},
 
+		
+			share : function(_el){
 
+				self.nav.api.load({
 
+					open : true,
+					id : 'share',
+					el : _el.find('.newsharewrapper'),
+					animation : false,
+
+					mid : 'shareauthor',
+					
+					clbk : function(e, p){
+
+						share = p
+
+						if (contentsready)
+							el.c.find('.contentswrapper').hcSticky('refresh');
+
+					},
+					essenseData : {
+						minimized : true,
+						post : function(){
+							
+						}
+					}
+				})
+			
+			},
 
 			lenta : function(_el, report){
 
 				if(self.app.curation() && !self.user.isItMe(author.address)){
-
-
 					return
+				}
+
+				if (share){
+					share.destroy()
+					share = null
 				}
 
 				var load = function(){			
@@ -858,8 +888,10 @@ var author = (function(){
 					}
 	
 					self.shell(pp, function(p){
+
+						
+						if(self.user.isItMe(author.address) && !params.search) renders.share(_el)
 					
-	
 						self.nav.api.load({
 	
 							open : true,
@@ -901,13 +933,13 @@ var author = (function(){
 							if (acsearch){
 								acsearch.destroy()
 							}
+							
 
 
 							acsearch = new search(p.el.find('.authorsearch'), {
-								placeholder : 'Search on ' + author.data.name,
+								placeholder : self.app.localization.e('e13140') + ' ' + author.data.name,
 		
 								clbk : function(_el){
-									
 		
 								},
 		
@@ -922,13 +954,13 @@ var author = (function(){
 										
 									}
 								},
+
+								right : isTablet(),
 		
 								events : {							
-		
 									search : function(value, clbk, e, helpers){
 		
 										var href = '?report=shares&ssa=' + value.replace("#", 'tag:')
-		
 										clearsearch(true)
 		
 										var p = {
@@ -1440,6 +1472,11 @@ var author = (function(){
 				if(el.c) el.c.empty()
 
 				self.app.el.html.removeClass('allcontent')
+
+				if(share){
+					share.destroy()
+					share = null
+				}
 
 				if (upbutton)
 					upbutton.destroy()

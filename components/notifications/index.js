@@ -414,21 +414,6 @@ var notifications = (function(){
 
 				clbk(data);
 
-				return
-
-				if(!_notifications){
-					console.log("IM HERE1")
-					self.app.platform.sdk.notifications.init(function(){
-						console.log("IM HERE2")
-						clbk(data);
-					})
-				}
-				else{
-					clbk(data);
-				}
-
-			
-
 			},
 
 			destroy : function(){

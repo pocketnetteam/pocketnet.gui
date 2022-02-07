@@ -29,22 +29,23 @@ var accounts = (function(){
 
 						//bitcoin.ECPair.fromPrivateKey(Buffer.from(private, 'hex'))
 
+						console.log("I")
+
 						self.app.user.signout(function(){
 							self.app.user.stay = stay;
 
+							console.log("I2", private)
+
 							self.user.signin(private, function(state){
 
-
+								console.log("I3")
 
 								var h = ed.href || 'userpage?id=accounts&s=' + makeid()
 								var history = false;
 
 								if(isMobile()){
-
 									h = window.history.state.href || 'index'
-									
 								}
-								
 
 								if (ed.toaccpage) {
 									h = 'author?address=' + address
@@ -55,8 +56,6 @@ var accounts = (function(){
 									h = 'filluserfast'
 									history = true
 								}
-
-								
 
 								globalpreloader(false)
 

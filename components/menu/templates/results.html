@@ -4,7 +4,12 @@
 
 		<div class="results">
 
-			<% _.each(results, function(r){ %> 
+			<% _.each(results, function(r, i){
+				
+				
+				if(i > 6) return
+				
+				%> 
 
 				<div class="result">
 

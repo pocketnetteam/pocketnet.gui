@@ -25,6 +25,24 @@
 		text-overflow: ellipsis;
 	}
 
+	.newsharewrapper{
+		padding-bottom: 0;
+		border-radius: 3px;
+		color : @color-black;
+		background: #FAFAFA;
+		margin-top : @rhythm;
+	}
+
+	#lenta{
+		.shares{
+			.showmorebyauthor,
+			.share{
+				border-radius: 3px;
+			}
+		}
+
+	}
+
 	.authorlentawrappermain{
 		position: relative;
 
@@ -35,7 +53,7 @@
 			padding-top : @rhythm;
 
 			.icon{
-				padding : 4 * @rhythm;
+				padding : 2 * @rhythm;
 				cursor: pointer;
 				.transition(0.3s);
 
@@ -47,10 +65,12 @@
 		}
 
 		.authorsearchwrapper{
-			background: #F8F8F8;
-			padding : 3 * @rhythm 2 * @rhythm;
+			background: #FAFAFA;
+			padding : 0.5 * @rhythm 1 * @rhythm;
 			padding-right: 0;
 			display: none;
+			border-right: 3px;
+			margin-top : @rhythm;
 
 			.search{
 				.searchPanel{
@@ -74,6 +94,10 @@
 		&.searchactive{
 			.authorsearchwrapper{
 				display: block;
+			}
+
+			.newsharewrapper{
+				display: none;
 			}
 
 			.authorsearchicon{
@@ -752,12 +776,16 @@
 			}
 		}
 	}
-
-	
 }
 
 html.stblack{
 	#author{
+
+		
+		.newsharewrapper{
+			color : @color-gray-light;
+			background: @color-black4;
+		}
 
 		#lenta{
 			.shares{
@@ -1015,6 +1043,10 @@ html.tablet{
 
 	#author{
 
+		.newsharewrapper{
+			display: none;
+		}
+
 		.leftpanelcell{
 			display: none;
 		}
@@ -1184,7 +1216,13 @@ html.tablet{
 		.bgCaption{
 			padding-top : 0;
 		}
+
+		.newsharewrapper{
+			display: none;
+		}
 	}
+
+	
 }
 
 /*t*/ @media only screen and (max-width: 768px){

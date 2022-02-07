@@ -269,7 +269,7 @@ var lenta = (function(){
 
 					actions.loadprev()
 
-				}, delay, 600)	
+				}, delay, isMobile() ? 1200 : 600)	
 
 					
 			},
@@ -301,6 +301,26 @@ var lenta = (function(){
 
 			clear : function(){
 
+				countshares = 0;
+				lastscroll = 0;
+				fullscreenvideoShowed = null
+				authblock = false;
+				loading = false
+				scrolling = false
+				rendering = false
+				prevscroll = 0
+				ascroll = 0
+				ascrollel = null
+				beginmaterial = null
+				beginmaterialloaded = false
+				ended = false;
+				loaded = false;
+				making = false;
+				newmaterials = 0;
+				fixedblock = 0;
+				loadedcachedHeight = 0;
+				cachedHeight = 0;
+
 				_.each(shareInitedMap, function(s, id){
 					delete self.app.platform.sdk.node.shares.storage.trx[id]
 				})
@@ -322,43 +342,13 @@ var lenta = (function(){
 				})
 
 				_reposts = {};
-
-				countshares = 0;
-				lastscroll = 0;
-
 				recomended = []
-
-				authblock = false;
-
 				shareInitedMap = {}
 				shareInitingMap = {}
-
-				cachedHeight = 0
-
 				initedcommentes = {}
-
-				fullscreenvideoShowed = null
-
-				loading = false
 				players = {}
 				sharesInview = []
-				scrolling = false
-				rendering = false
-				prevscroll = 0
-
-				ascroll = 0
-				ascrollel = null
-				beginmaterial = null
-				beginmaterialloaded = false
-				ended = false;
-				loaded = false;
-
-				making = false;
-
-				newmaterials = 0;
-				fixedblock = 0;
-
-				loadedcachedHeight = 0
+				
 			},
 
 			next : function(txid, clbk){
@@ -1266,6 +1256,39 @@ var lenta = (function(){
 
 				if (checkvisibility && reputation >= 50) return
 
+				console.log('value', value)
+
+				if(value <= 3){
+					if(self.app.platform.sdk.user.scamcriteria()){
+						if(clbk)
+							clbk(false)
+
+						dialog({
+							html : self.app.localization.e('ratings123'),
+							btn1text :  self.app.localization.e('daccept'),
+							btn2text : self.app.localization.e('ucancel'),
+		
+							class : 'zindex one',
+		
+							success : function(){
+							}
+						})
+
+						return
+					}
+
+					if(self.app.platform.sdk.user.upvotevalueblockcriteria(value)){
+						if (clbk)
+							clbk(false)
+
+						sitemessage(self.app.localization.e('ratingss3'))
+
+						return
+					}
+				}
+
+				
+
 				var upvoteShare = obj.upvote(value);
 
 				if(!upvoteShare){
@@ -1286,7 +1309,6 @@ var lenta = (function(){
 						topPreloader(100)
 
 						if(!tx){				
-
 
 							upvoteShare.myVal = null;	
 							obj.myVal = 0;	
@@ -4178,11 +4200,6 @@ var lenta = (function(){
 
 				self.app.platform.clbks.api.actions.anysubscribe.lenta = actions.subscribeunsubscribeclbk
 
-				/*self.app.platform.clbks.api.actions.subscribe.lenta =
-				self.app.platform.clbks.api.actions.subscribePrivate.lenta = *
-				self.app.platform.clbks.api.actions.unsubscribe.lenta = actions.subscribeunsubscribeclbk*/
-
-
 				self.app.platform.clbks.api.actions.blocking.lenta = function(address){
 					var addressEl = el.c.find('.shareTable[address="'+address+'"]').closest('.share')
 						addressEl.addClass('blocking');
@@ -4194,9 +4211,6 @@ var lenta = (function(){
 						addressEl.removeClass('blocking');
 						actions.stopPlayers()
 				}
-
-
-			
 
 			}	
 			
@@ -4634,6 +4648,9 @@ var lenta = (function(){
 			},
 			
 			init : function(p){
+
+				
+
 				w = self.app.el.window
 				state.load();
 

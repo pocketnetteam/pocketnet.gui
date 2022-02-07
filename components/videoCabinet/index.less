@@ -949,6 +949,24 @@ html.stblack {
     }
 }
 
+.wndcontent {
+    #videoCabinet {
+        position: relative;
+
+        .cabinetHeaderWrapper {
+            position: absolute;
+
+            top: 0;
+        }
+
+        .videoContainer {
+            position: absolute;
+            top: 120px;
+            width: 100%;
+        }
+    }
+}
+
 @media only screen and (max-width: 768px) {
     #videoCabinet {
         background: #fff;
@@ -1139,9 +1157,6 @@ html.stblack {
         }
     }
 
-
-
-
     .editVideoDialog {
 
         .videoNameInput,
@@ -1175,24 +1190,67 @@ html.stblack {
 
         }
     }
-}
 
-.wndcontent {
-    #videoCabinet {
-        position: relative;
+    .wnd.videoCabinet{
+        .wndcontent {
+            padding-top : 0;
+            #videoCabinet {
+                position: relative;
+        
+                .cabinetHeaderWrapper {
+                    position: relative;
+                    top: 0;
+                }
+        
+                .videoContainer {
+                    position: relative;
+                    top: 0px;
+                    width: 100%;
+                }
 
-        .cabinetHeaderWrapper {
-            position: absolute;
+                .videoControlsWrapper{
+                    position: sticky;
+                    top : 0;
+                    z-index: 2;
+                    background: #fff;
+                }
 
-            top: 0;
-        }
+                .videoControls{
+                    padding-bottom: 0.5 * @rhythm;
+                    padding-top: 0.5 * @rhythm;
 
-        .videoContainer {
-            position: absolute;
+                    .videoSearchWrapper{
+                        margin-top : 0;
+                    }
+                    .videoSortWrapper{
+                        flex-direction: row;
+                        margin-top : 0;
+                    }
 
-            top: 120px;
-
-            width: 100%;
+                    .sortSelectWrapper{
+                        margin-top : @rhythm;
+                    }
+                }
+            }
         }
     }
+
+    html.stblack {
+        .wnd.videoCabinet{
+            .wndcontent {
+                #videoCabinet {
+                  
+                    .videoControlsWrapper{
+                        color : @color-gray-light;
+                        background: @color-black;
+                    }
+    
+                   
+                }
+            }
+        }
+    }
+
+    
 }
+

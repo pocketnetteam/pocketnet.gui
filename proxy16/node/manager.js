@@ -449,15 +449,16 @@ var Nodemanager = function(p){
 
         var workingNodes = getWorkingNodes()
 
+
         if (workingNodes.length < minnodescount || !usersfornode || self.proxy.users() / usersfornode >= workingNodes.length){
+
+
             node.init()
         }
         
     }
 
     var forgetIfNotUsing = function(){
-
-        
 
         var workingNodes = getWorkingNodes()
 
@@ -472,7 +473,7 @@ var Nodemanager = function(p){
 
                     if(!n.wss.count()){
 
-                        if(f.date.addseconds(n.initedTime, 300) > new Date()){
+                        if(f.date.addseconds(n.initedTime, 60) > new Date()){
                         }
                         else{
                             n.forget()
@@ -859,6 +860,7 @@ var Nodemanager = function(p){
                     var haslocal = self.nodeControl.kit.hasbin()
 
                     var c = []
+
 
                     if (haslocal) c = [{
                         host : '127.0.0.1',
