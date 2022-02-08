@@ -244,7 +244,9 @@ ____loclib.shares = "ПУБЛИКАЦИИ";
 ____loclib.uposts = "ПУБЛИКАЦИИ";
 ____loclib.myuposts = "МОИ ПУБЛИКАЦИИ";
 ____loclib.followers = "ПОДПИСЧИКИ";
+____loclib.followers2 = "Подписчики";
 ____loclib.following = "ПОДПИСКИ";
+____loclib.following2 = "Подписки";
 ____loclib.settings = "УПРАВЛЕНИЕ";
 ____loclib.anofollowers = "Этот пользователь еще не имеет подписчиков";
 ____loclib.aynofollowers = "У вас еще нет подписчиков";
@@ -1819,8 +1821,10 @@ ____loclib.updateapplication = "Обновить приложение"
 ____loclib.applicationversion = "Версия приложения"
 ____loclib.installedusinggps = "Приложение было установлено не через Google Play."
 
-____loclib.empty = "Пусто"
+____loclib.empty = "Пусто";
 
+____loclib.reputation = "Репутация";
+____loclib.subscriptions = "Подписки";
 ____loclib.tothetop = "Наверх"
 ____loclib.menu = "Меню"
 

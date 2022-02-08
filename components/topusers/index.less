@@ -65,26 +65,33 @@
 		}
 	}
 
-	.subscribe, .unsubscribe{
-		position: relative;
+	.subscribebuttonstop{
 
 
-		.fa-plus{
-			position: absolute;
-			top: 3px;
-			left: 14px;
-			font-size: @rhythm;
+		.subscribe, .unsubscribe{
+			position: relative;
+	
+	
+			.fa-plus{
+				position: absolute;
+				top: 3px;
+				left: 14px;
+				font-size: @rhythm;
+			}
+	
+		}
+	
+		.subscribe{
+			color : @color-gray-mlight;
 		}
 
+		.unsubscribe{
+			color: @color-good;
+		}
 	}
 
-	.subscribe{
-		color : @color-gray-mlight;
-	}
 
-	.unsubscribe{
-		color: @color-good;
-	}
+
 
 	.users{
 		padding-bottom: @rhythm;
@@ -148,6 +155,8 @@
 								left: 3px;
 								font-size: .6em;
 								color: @color-main;
+
+
 							}
 
 						}
@@ -206,22 +215,106 @@
 
 			.modal{
 				display: none;
+				cursor: default;
 				width: 308px;
-				height: 340px;
 				position: absolute;
 				z-index: 9999;
-				right: 230px;
+				right: 180px;
+				margin-top: 15px;
 				background: #FFFFFF;
 				border-radius: 12px;
 				box-shadow: 32px 32px 32px 32px #00000014;
+				padding: @rhythm * 2 @rhythm;
+
+				.topInfo{
+
+					.addressTable{
+						padding: @rhythm @rhythm * 2;
+
+						.iconWrapper{
+							padding-right: @rhythm * 2;
+
+							.usericon{
+								height: 45px;
+								width: 45px;
+							}
+						}
+
+						.label{
+							padding-left: 7px;
+
+							.name{
+								max-width: 300px!important;
+							}
+		
+							.reputation{
+								font-size: .8em;
+								color : #8E90A6;
+
+		
+								.value{
+									color: @color-main;
+									font-weight: 700;
+								}
+							}
+						}
 
 
-				.addressTable{
-					.name{
-						max-width: 300px!important;
 					}
 				}
 
+
+
+				.follow{
+					display: flex;
+					padding : @rhythm @rhythm * 2;
+
+					.followers{
+						padding-right: @rhythm * 3;
+					}
+
+					.value{
+						font-weight: 700;
+					}
+				}
+
+				.subscribeWrapper{
+					padding : @rhythm;
+
+					button{
+						width: 100%;
+						border-radius: 8px;
+						padding: 8px 16px;
+
+					}
+
+					.unsubscribe{
+						display : none;
+						background : @color-good;
+						border : 1px solid @color-good;
+
+						&:hover{
+							color: @color-good;
+							border : 1px solid @color-good;
+							background: #fff;
+						}
+					}
+	
+		
+					&.following{
+						.unsubscribe{
+							display : block;
+						}
+						
+						.subscribe{
+							display : none;
+						}
+					}
+				}
+
+				.aboutWrapper{
+					padding : @rhythm @rhythm * 2;
+				}
 
 
 			}

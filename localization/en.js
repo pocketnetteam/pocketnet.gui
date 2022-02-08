@@ -239,7 +239,9 @@ ____loclib.shares = "SHARES";
 ____loclib.uposts = "POSTS";
 ____loclib.myuposts = "MY POSTS";
 ____loclib.followers = "FOLLOWERS";
+____loclib.followers2 = "Followers";
 ____loclib.following = "FOLLOWING";
+____loclib.following2 = "Following";
 ____loclib.settings = "MANAGE";
 ____loclib.anofollowers = "This user has no followers";
 ____loclib.aynofollowers = "You have no followers";
@@ -2045,6 +2047,9 @@ ____loclib.downloadplaystore = "Google Play Download"
 ____loclib.downloadgithub = "Download APK"
 
 ____loclib.empty = "Empty"
+
+____loclib.reputation = "Reputation";
+____loclib.subscriptions = "Subscriptions";
 ____loclib.tothetop = "To the top"
 ____loclib.menu = "Menu"
 
