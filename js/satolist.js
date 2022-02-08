@@ -7502,12 +7502,14 @@ Platform = function (app, listofnodes) {
             all: {
                 white: {
                     name: self.app.localization.e('e13266'), ////ch
-                    class: "stwhite"
+                    class: "stwhite",
+                    color : "#ffffff"
                 },
 
                 black: {
                     name: self.app.localization.e('e13267'),
-                    class: "stblack"
+                    class: "stblack",
+                    color : "#1e2235"
                 }
             },
             default: "white",
@@ -7543,9 +7545,7 @@ Platform = function (app, listofnodes) {
 
                 if (value && t.all[value]) {
                     _.each(t.all, function (c) {
-
                         h.removeClass(c.class)
-
                     })
 
                     h.addClass(t.all[value].class)
@@ -7557,10 +7557,16 @@ Platform = function (app, listofnodes) {
                     t.save()
 
                     var cm = deep(app, 'modules.menu.module.restart')
-                     if (cm) cm()
+                    
+                    if (cm) cm()
+
+                    $('meta[name="theme-color"]').attr('content', t.all[value].color)
+                    $('meta[name="msapplication-navbutton-color"]').attr('content', t.all[value].color)
+                    $('meta[name="apple-mobile-web-app-status-bar-style"]').attr('content', t.all[value].color)
                 }
 
                 app.mobile.statusbar.background()
+
             }
         },
 
