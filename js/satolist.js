@@ -7503,13 +7503,15 @@ Platform = function (app, listofnodes) {
                 white: {
                     name: self.app.localization.e('e13266'), ////ch
                     class: "stwhite",
-                    color : "#ffffff"
+                    color : "#ffffff",
+                    media : '(prefers-color-scheme: light)'
                 },
 
                 black: {
                     name: self.app.localization.e('e13267'),
                     class: "stblack",
-                    color : "#1e2235"
+                    color : "#1e2235",
+                    media : '(prefers-color-scheme: dark)'
                 }
             },
             default: "white",
@@ -7561,6 +7563,8 @@ Platform = function (app, listofnodes) {
                     if (cm) cm()
 
                     $('meta[name="theme-color"]').attr('content', t.all[value].color)
+                        .attr('media',  t.all[value].media)
+                        
                     $('meta[name="msapplication-navbutton-color"]').attr('content', t.all[value].color)
                     $('meta[name="apple-mobile-web-app-status-bar-style"]').attr('content', t.all[value].color)
                 }
