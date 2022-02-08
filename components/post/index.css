@@ -1443,6 +1443,25 @@
     border-radius: 0;
     overflow: visible;
   }
+  #post .cntswrk {
+    padding-right: 0;
+  }
+  #post .share .iconWrapper {
+    padding-left: 0.5em;
+  }
+  #post .share .cntswrk .meta {
+    padding-left: 0;
+  }
+  #post .share .cntswrkcontent {
+    padding-left: 0.5em;
+  }
+  #post .share .tags {
+    padding-left: 0.5em;
+  }
+  #post .share .panel {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
   #post .sharearticle .shareBgCaption:not(.verticalcover) {
     height: auto;
   }

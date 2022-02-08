@@ -135,7 +135,6 @@
 #lenta .shares .sharecnt .cntswrk {
   margin-left: 4.5em;
   padding-left: 1em;
-  padding-right: 2em;
   padding-right: 1em;
 }
 #lenta .shares .hiddenpost {
@@ -2240,11 +2239,6 @@
   #lenta.horizontal.compact.mainvideo .shares .cntswrk.formeta {
     margin-left: 0.25em;
   }
-  #lenta .panel.unselectablemobile {
-    padding-left: 0;
-    padding-right: 0;
-    flex-wrap: wrap;
-  }
   #lenta .loadprev.fxdp {
     position: fixed;
     left: 0;
@@ -2262,16 +2256,25 @@
   #lenta .loadprev.fxdp button {
     width: 260px;
   }
-  #lenta .share .cntswrkcontent,
-  #lenta .share .tags,
-  #lenta .share .actions {
-    padding-left: 0.5em;
+  #lenta .shares .share .cntswrkcontent,
+  #lenta .shares .share .tags,
+  #lenta .shares .share .actions {
+    padding-left: 0;
+    padding-right: 0;
   }
-  #lenta .share .sharecnt .iconWrapper {
+  #lenta .shares .share .sharecnt .iconWrapper {
     margin-left: 0.5em;
   }
-  #lenta .share .sharecnt .cntswrk {
+  #lenta .shares .share .sharecnt .cntswrk {
     margin-left: 3.5em;
+  }
+  #lenta .shares .share .panel.unselectablemobile {
+    padding-left: 0!important;
+    padding-right: 0!important;
+    flex-wrap: wrap;
+  }
+  #lenta .shares .share .panel .stars_repost {
+    margin-right: 0;
   }
   html.scrollmodedown #lenta .loadprev.fxdp {
     transform: translateY(-220px);
@@ -2663,9 +2666,9 @@ html.stblack #lenta.horizontal .shares .share {
     width: 4em;
   }
   #lenta .shares .cntswrk {
-    margin-left: 0;
-    padding-left: 0;
-    padding-right: 0;
+    margin-left: 0!important;
+    padding-left: 0!important;
+    padding-right: 0!important;
   }
   #lenta .shares .work {
     padding-left: 0;
@@ -2894,10 +2897,6 @@ html.stblack #lenta.horizontal .shares .share {
   }
   #lenta .shares .share .meta .metatable > div {
     margin-right: 0;
-  }
-  #lenta .shares .share .meta .metatable > div.metapanel {
-    width: 47px;
-    padding-right: 0.5em;
   }
   #lenta .shares .share .meta .metatable > div.metapanel .metapanelitem {
     opacity: 1;
