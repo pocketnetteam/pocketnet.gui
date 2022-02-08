@@ -593,6 +593,8 @@ var menu = (function(){
 
 							search : function(value, clbk, e, helpers){
 
+								console.log('menusearch.active', menusearch.active)
+
 								if(!menusearch.active){
 
 									if (clbk) clbk(true)
@@ -660,6 +662,8 @@ var menu = (function(){
 							},
 
 							active : function(a){
+
+								console.log("setactive", a)
 
 								if (a || (parameters().ss || parameters().sst)){
 									el.c.addClass('searchactive')
@@ -1037,8 +1041,14 @@ var menu = (function(){
 				if((parameters().ss || parameters().sst) && (self.app.nav.get.pathname() == 'index')){
 
 					if (menusearch) {
-						menusearch.setvalue((parameters().ss || parameters().sst).replace('tag:', "#"))
+
+						var sr = ''
+
+						if(!parameters().ss && parameters().sst) sr = '#'
+
+						menusearch.setvalue(sr + (parameters().ss || parameters().sst).replace('tag:', "#"))
 						menusearch.setactive(true)
+						
 					}
 
 				}
@@ -1162,7 +1172,9 @@ var menu = (function(){
 			showsearch : function(v){
 
 
-				if (v && !isMobile()){
+				console.log('showsearch showsearch', v)
+
+				if (v /*&& !isMobile()*/){
 					el.c.addClass('searchactive')
 				}
 				else{
