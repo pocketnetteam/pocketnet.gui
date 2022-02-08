@@ -175,6 +175,7 @@ var toppanel = (function(){
 		var initEvents = function(){
 
 			self.app.nav.clbks.history.toppanel = function(href){
+				renders.menu(app.nav.current.href)
 			}
 
 			self.app.platform.sdk.categories.clbks.excluded.toppanel =
@@ -219,6 +220,8 @@ var toppanel = (function(){
 				el.menu = el.c.find('.panelitems')
 
 				initEvents();
+
+				renders.menu(self.app.nav.current.href)
 
 				p.clbk(null, p);
 			}
