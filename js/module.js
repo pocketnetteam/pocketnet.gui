@@ -257,7 +257,15 @@ nModule = function(){
 			p.data.user	= self.user;
 			p.data.essenseData = p.essenseData || {};
 
-			p.rendered = template(p.data);
+			try{
+				p.rendered = template(p.data);
+			}
+			catch(e){
+				console.log(p)
+				console.error(e)
+				p.rendered = ''
+			}
+			
 
 			if (p.clear)
 				p.rendered = "";
@@ -300,10 +308,16 @@ nModule = function(){
 
 				if (pretemplate){
 
-					self.storage.templates[p.name] = _.template(pretemplate);
+					try{
+						self.storage.templates[p.name] = _.template(pretemplate);
+					}
+					catch(e){
+						console.error(e)
+					}
+					
 	
 					if (clbk)
-						clbk(self.storage.templates[p.name]);
+						clbk(self.storage.templates[p.name] || '');
 		
 					return
 				}

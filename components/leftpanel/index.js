@@ -33,6 +33,73 @@ var leftpanel = (function(){
 				})
 			},
 
+			best : function(){
+
+				if(!el.c) return;
+
+				self.shell({
+					name :  'best',
+					data : {},
+					el : el.bestfirst
+
+
+				}, function(_p){
+
+					_p.el.find('.toggle').on('click', function(){
+
+						var best = $(this).closest('.best');
+						var method = 'historical'
+		
+						best.toggleClass('on');
+		
+						if (best.hasClass('on')){
+		
+							method = 'hierarchical';
+		
+						}
+		
+						self.sdk.lentaMethod.set(method)
+		
+					})
+
+				})
+
+			},
+
+			menu : function(value, clbk){
+
+				if(!el.c) return
+
+				var pathname = self.app.nav.current.href;
+
+				self.app.user.isState(function(state){
+
+					if(isMobile() && pathname != 'index'){
+						el.c.addClass('hidden')
+					}
+					else{
+						el.c.removeClass('hidden')
+
+						self.shell({
+
+							name :  'menu',
+							el :   el.menu,
+							data : {
+								pathname : pathname,
+								state : state,
+								mobile : isMobile(),
+							},
+	
+						}, function(_p){
+
+	
+						})
+					}
+
+					
+				})
+			},
+
 			tags : function(){
 
 				if(!el.c) return
@@ -141,9 +208,12 @@ var leftpanel = (function(){
 
 		var initEvents = function(){
 			
+
 			el.c.find('.closecategories').on('click', function(){
 				if(ed.close) ed.close()
 			})
+
+
 		}
 
 		var makers = {
@@ -162,21 +232,26 @@ var leftpanel = (function(){
 			},
 
 			main : function(){
+				renders.menu()
 				renders.tags()
 				renders.cats()
+				renders.best()
+
+
 			},
 
 			sub : function(){
+				renders.menu()
 				renders.sub()
 			},
 
 			top : function(){
+				renders.menu()
 				renders.top()
 			}
 		}
 
 		var make = function(){
-
 			var pps = parameters()
 
 			if (pps.sst || pps.ss){
@@ -236,13 +311,16 @@ var leftpanel = (function(){
 			
 			init : function(p){
 
+				console.log('self.app.settings', self.app.settings);
 				state.load();
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
 				el.cnt = el.c.find('.leftpanelcnt')
+				el.menu = el.c.find('.menu');
 				el.tags = el.c.find('.tagscnt')
 				el.cats = el.c.find('.catscnt')
+				el.bestfirst = el.c.find('.bestfirst');
 
 				el.currentsearch = el.c.find('.currentsearchcnt')
 				el.subtop = el.c.find('.subtop')

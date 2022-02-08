@@ -8,7 +8,7 @@ var panel = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el = {}, tags = null, comments = null, stacking = null;
+		var el, discussions = null, tags = null, comments = null, stacking = null, topusers = null, bestposts = null, recommendedposts = null;
 
 		var ed = null;
 
@@ -19,7 +19,7 @@ var panel = (function(){
 		var renders = {
 
 			tags : function(){
-
+				
 				self.nav.api.load({
 
 					open : true,
@@ -37,6 +37,8 @@ var panel = (function(){
 
 			stacking : function(){
 
+				console.log('stacking!!!')
+
 				self.nav.api.load({
 
 					open : true,
@@ -45,11 +47,72 @@ var panel = (function(){
 					animation : false,
 					
 					clbk : function(e, p){
+						
 						stacking = p
 					}
 
 				})
 
+			},
+
+			topusers : function(){
+				
+
+				self.nav.api.load({
+
+					open : true,
+					id : 'topusers',
+					el : el.topusers,
+					animation : false,
+
+					essenseData : {
+					},
+					
+					clbk : function(e, p){
+						topusers = p;
+					}
+
+				})
+			},
+
+			bestposts : function(){
+				
+
+				self.nav.api.load({
+
+					open : true,
+					id : 'bestposts',
+					el : el.bestposts,
+					animation : false,
+
+					essenseData : {
+					},
+					
+					clbk : function(e, p){
+						bestposts = p;
+					}
+
+				})
+			},
+
+			recommendedposts : function(){
+				
+
+				self.nav.api.load({
+
+					open : true,
+					id : 'recommendedposts',
+					el : el.recommendedposts,
+					animation : false,
+
+					essenseData : {
+					},
+					
+					clbk : function(e, p){
+						recommendedposts = p;
+					}
+
+				})
 			},
 
 			recommendationslist : function(users, clbk){
@@ -313,16 +376,30 @@ var panel = (function(){
 		var make = function(){
 		
 
+			/*if (self.app.platform.sdk.usersettings.meta.vidgettags.value)
+				renders.tags()*/
+
 			if (self.app.platform.sdk.usersettings.meta.vidgetlastcomments.value)
 				renders.lastcomments()
-		
+
+
+			//renders.recommendedposts();
+
 			if (
 				deep(self.app.platform, 'released.vidgets.staking') && 
 				deep(self.app.platform.sdk, 'usersettings.meta.vidgetstaking.value')
 			)
 				renders.stacking()
 
-		
+			/*
+				load.recomendation(function(users){
+					renders.recommendations(users)
+				})
+			*/
+			
+			//renders.topusers();
+			//renders.bestposts();
+
 
 		}
 
@@ -359,10 +436,22 @@ var panel = (function(){
 					stacking = null
 				}
 
-				ed = null
+				if(topusers){
+					topusers.destroy()
+					topusers = null
+				}
+
+				if (bestposts){
+					bestposts.destroy()
+					bestposts = null
+				}
+
+				if(recommendedposts){
+					recommendedposts.destroy()
+					recommendedposts = null
+				}
 
 				if(el.c) el.c.empty()
-
 				el = {};
 			},
 
@@ -381,7 +470,9 @@ var panel = (function(){
 				el.tags = el.c.find('.tagscnt')
 				el.comments = el.c.find('.lastcommentscnt')
 				el.stacking = el.c.find('.stackingcnt')
-
+				el.topusers = el.c.find('.topuserscnt')
+				el.bestposts = el.c.find('.bestpostscnt')
+				el.recommendedposts = el.c.find('.recommendedpostscnt')
 				el.r = el.c.find(".recommendationscnt")
 
 				initEvents();

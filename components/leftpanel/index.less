@@ -1,7 +1,8 @@
 @import "../../css/__cssvar";
 
 #leftpanel{
-
+	padding-right: 16px;
+	
 	>div{
 
 		.wrp{
@@ -10,15 +11,116 @@
 	
 	}
 
+	.menu{
+		margin-top: @rhythm * 2;
+
+		.menupanel{
+			.tabs{
+				.tab{
+					position: relative;
+					padding-top: @rhythm;
+					padding-bottom: @rhythm;
+					
+					.pcenterLabel{
+						position: relative;
+
+						&.active{
+
+							&:after{
+								position: absolute;
+								content: '';
+								left : -1em;
+								top : 0;
+								bottom : 0;
+								border-left: 3px solid #00A4FF;
+							}
+							
+							color: #00A4FF;
+
+						}
+						
+						.text{
+							font-size: 0.9em;
+						}
+
+						i{
+							width: 30px;
+							text-align: left;
+						}
+
+
+					}
+				}
+			}
+		}
+	}
+	
 	.closecategoriesContainer{
 		text-align: right;
-		font-size: 0.8em;
+		font-size: 1em;
 
 		button{
-			padding-right: 2 * @rhythm;
+			padding: 0;
 			text-decoration: none;
 		}
 	}
+
+	.best{
+		display : flex;
+		align-items : center;
+		justify-content: space-between;
+		padding-bottom : @rhythm * 1.5;
+		padding-top: @rhythm * 1.5;
+		border-top: 1px solid #E3E4EB;
+		border-bottom: 1px solid #E3E4EB;
+		margin-top: @rhythm * 2;
+
+
+		&.on{
+
+			.fire{
+				color: @color-bad;
+			}
+
+			.toggle{
+
+				color: @color-good;
+				i{
+					transform : none;
+				}
+			}
+
+		}
+
+		.bestLabel{
+			display: flex;
+			align-items: center;
+		}
+
+		.toggle{
+			font-size : 1.3em;
+		}
+
+		.fire{
+			i{
+				width: 30px;
+			}
+		}
+
+		.text{
+		}
+
+		.toggle{
+			margin-right : 0.5 * @rhythm;
+			cursor: pointer;
+			i{
+				transform : scaleX(-1);
+			}
+			
+		}
+
+	}
+
 
 	.sections{
 		background: fade(#F0F0F0, 30);
@@ -41,6 +143,14 @@
 				color : #fff;
 			}
 		}
+	}
+
+	.tcaption{
+		color : #8E90A6;
+		font-size: 16px;
+		font-weight: 600;
+		line-height: 21px;
+
 	}
 
 	.currentsearch{
@@ -127,6 +237,47 @@
 		}
 	}
 
+
+	.rightbottomnav {
+
+		a,
+		span{
+			font-size: 0.8em;
+		}
+
+		a{
+			.transition(0.3s);
+
+			&:hover{
+				color : @color-main;
+			}
+		}
+
+		.rightbottomlinks {
+			padding-top: @rhythm;
+		}
+
+		.copyright {
+			display: flex;
+			justify-content: flex-start;
+			align-items: center;
+			margin-top: 4 * @rhythm;
+
+			.copy_logo {
+				width: 14px;
+				height: 14px;
+			}
+
+			img{
+				opacity: 0.5;
+			}
+
+			.copyright_text {
+				margin-left: @rhythm;
+			}
+		}
+	}
+
 	.vc_valuecustom{
 		font-size: 1.5em;
 		font-weight: 100;
@@ -180,10 +331,16 @@
 /*t*/ @media only screen and (max-width: 768px){
 	#leftpanel{
 		padding-left: 2 * @rhythm;
+		padding-bottom: 6 * @rhythm;
 
 		>div{
-			font-size: 1.3em;
+			font-size: 1em;
 		}
+
+		.rightbottomnav{
+			margin-bottom: 7em;
+		}
+
 
 		.subtop{
 			.topnavigation{
@@ -207,4 +364,14 @@
 		}
 	}
 
+}
+
+html.stblack{
+	#leftpanel{
+		.best{
+			border-top: 1px solid fade(#E3E4EB, 10);
+			border-bottom: 1px solid fade(#E3E4EB, 10);
+		}
+
+	}
 }

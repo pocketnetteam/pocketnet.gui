@@ -116,6 +116,7 @@ var categories = (function(){
 				})
 			},
 
+
 			addtag : function(tag, category){
 
 				tag = tag.toLowerCase()
@@ -218,11 +219,62 @@ var categories = (function(){
 
 					el.c.removeClass('hidden')
 
-					cats = _.sortBy(cats, function(c){
-						if(c.added) return - 1
-						return c.selected ? 0 : 1
-					})
 
+					cats = cats.sort(function(a, b){
+
+
+						if (a.selected){
+
+							if (b.selected && b.added){
+
+								return 1;
+
+							} else {
+
+								return -1;
+
+							}
+						}
+
+						if (a.excluded){
+
+							if (a.added && !b.selected && b.excluded){
+								
+								return -1;
+
+							} else {
+
+								return 1;
+
+							}
+
+
+						}
+
+						if (!a.excluded){
+
+							if (a.added && !b.selected){
+								return -1;
+							}
+
+							if (b.added || b.selected){
+								return 1;
+							}
+
+							if (b.excluded && !b.added){
+
+								return -1;
+
+							} else {
+
+								return 1;
+							}
+
+						}
+
+						return 0;
+
+					})
 					
 
 					self.shell({
@@ -245,7 +297,7 @@ var categories = (function(){
 						})
 
 						p.el.find('.catcheckgl').on('click', function(){
-							var id = $(this).closest('.tg').attr('category')
+							var id = $(this).closest('.tg').attr('category');
 
 							var r = self.app.platform.sdk.categories.select(id)
 
@@ -257,6 +309,14 @@ var categories = (function(){
 							var category = self.app.platform.sdk.categories.getbyid(id)
 
 							actions.addcategory(category)
+
+						})
+
+						p.el.find('.minus').on('click', function(){
+							var id = $(this).closest('.tg').attr('category');
+
+							var r = self.app.platform.sdk.categories.exclude(id)
+
 
 						})
 
@@ -281,10 +341,20 @@ var categories = (function(){
 		}
 
 		var initEvents = function(){
-			
+			self.app.platform.sdk.categories.clbks.excluded.mainmodule = function(id, value, l){
+
+				if(!id) return
+
+				var e = el.c.find('.tg[category="'+id+'"]')
+
+				if(value) e.addClass('excluded')
+				else e.removeClass('excluded')
+
+				actions.showhideclear()
+			}	
+
 			self.app.platform.sdk.categories.clbks.tags.mainmodule =
 			self.app.platform.sdk.categories.clbks.selected.mainmodule = function(id, value, l){
-
 
 				if(!id) return
 
@@ -317,6 +387,7 @@ var categories = (function(){
 
 		var removeEvents = function(){
 			delete self.app.platform.sdk.categories.clbks.selected.mainmodule
+			delete self.app.platform.sdk.categories.clbks.excluded.mainmodule
 		}
 
 		var load = function(clbk){

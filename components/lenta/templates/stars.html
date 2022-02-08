@@ -94,16 +94,10 @@
 	<% if(typeof hideCount === 'undefined' || !hideCount) {%>
 
 		<div elementsid="conutdetails" class="count">
-			<span class="v"><%-value.toFixed(1)%></span> 
-
+			<div class="v"><%-value.toFixed(1)%></div> 
 			<% if(value) {%>
-				<% if(Number(share.scnt)) {%> <i class="fas fa-user"></i> <span class="c"><%-Number(share.scnt)%></span> <% } %>
+			<% if(Number(share.scnt)) {%> <div class="countusers"><span class="circle"><i class="far fa-user"></i><span class="c"><%-Number(share.scnt)%></span></span></div> <% } %>
 			<% } %>
-			<!--
-			<% if(share.itisarticle()) {%>
-				<i class="fas fa-comment"></i> <span class="c"><%-Number(share.comments)%></span>
-			<% } %>
-			-->
 		</div>
 		
 	<% } %>

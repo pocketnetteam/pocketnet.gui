@@ -1,5 +1,5 @@
 #main {
-  background: #011621;
+  background: #f2f2f5;
   min-height: 1200px;
   /*.mainpanelcell,
 	.leftpanelcell{
@@ -11,7 +11,7 @@
 }
 #main #lenta .shares .showmorebyauthor,
 #main #lenta .shares .share {
-  border-radius: 3px;
+  border-radius: 12px;
 }
 #main .bastyonhelper .layout {
   display: flex;
@@ -133,7 +133,7 @@
   margin-bottom: 0.5em;
   min-height: 160px;
   position: relative;
-  border-radius: 3px;
+  border-radius: 12px;
 }
 #main .topvideosWrapper.hasshares {
   display: block;
@@ -205,13 +205,13 @@
 #main .seemore,
 #main .loadprev,
 #main .loadmore {
-  border-radius: 3px;
+  border-radius: 12px;
 }
 #main .addbutton {
   position: fixed;
   left: 0;
   bottom: 0;
-  background: #011621;
+  background: #f2f2f5;
   color: #fff;
   padding: 1em;
   text-align: center;
@@ -374,7 +374,7 @@
   top: 75px;
 }
 #main .panel {
-  border-radius: 3px;
+  border-radius: 12px;
 }
 #main .work.mwork {
   padding: 0!important;
@@ -391,11 +391,11 @@
 #main .bgCaption {
   height: auto;
   padding-bottom: 0;
-  border-radius: 3px;
+  border-radius: 12px;
 }
 #main .bgCaption.sec {
   color: #0a0c17;
-  background: #FAFAFA;
+  background: #FFF;
 }
 #main .bgCaption.cf_caption {
   padding: 0;
@@ -883,6 +883,6 @@ html.tablet #main {
     padding-top: 0;
   }
   #main .panel {
-    border-radius: 3px;
+    border-radius: 12px;
   }
 }

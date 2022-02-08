@@ -3,51 +3,57 @@
 		<div class="rcptwrp">
 			<div class="tcaptionwrapper">
 				<div class="tcaption">
-					<span>Pocketcoin</span>
+					<img class="logo" src="img/logo20.svg">
+					<span class="label">Pkoin</span>
+					<span class="pkoin">
+						<span>
+							PKOIN
+						</span>
+					</span>
 				</div>
-				<div class="currency">
-					<%= parameters.currency.input()%>
+
+				<div class="caret caret-up">
+					<i class="fa fa-caret-up"></i>
 				</div>
+
 			</div>
 
-			<% if(!app.test) {%>
 
 			<div class="calculator">
 
 				
 				<div class="lastpriceCnt">
+					<div class="loaderWrapper">
+						<div class="loader">
+							<div class="preloader5"><img src="./img/three-dots.svg"/></div>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="lastpriceCnts">
+					<div class="lastpriceCntSmall lastpriceCntUSDT">
 				
+					</div>
+	
+					<div class="lastpriceCntSmall lastpriceCntBTC">
+					
+					</div>	
 				</div>
 
 				<div class="buycoin">
-
-					<!--<a elementsid="https://bilaxy.com/trade/PKOIN_USDT" href="https://bilaxy.com/trade/PKOIN_USDT" cordovalink="_system" target="_blank">
-						<button class="button small yellow bright">
-							Bilaxy
+					<div class="buyButtonWrapper">
+						<button class="button buyButton">
+							<%- e('buy') %> 
 						</button>
-					</a>-->
-
-					
-
-					<a elementsid="https://www.digifinex.com/en-ww/trade/USDT/PKOIN" href="https://www.digifinex.com/en-ww/trade/USDT/PKOIN" cordovalink="_system" target="_blank">
 						
-							Digifinex
-					</a>
-				
-					<!--<a elementsid="https://btcpop.co/Exchange/PKOIN" href="https://btcpop.co/Exchange/PKOIN" cordovalink="_system" target="_blank">
-							BTCPOP
-					</a>-->
-
-					<a elementsid="https://www.bitforex.com/en/spot/pkoin_usdt" href="https://www.bitforex.com/en/spot/pkoin_usdt" cordovalink="_system" target="_blank">
-							Bitforex
-					</a>
-					<!-- <a href="https://mercatox.com/exchange/PKOIN/USDT" cordovalink="_system" target="_blank">
-						<button class="button small yellow">
-							Mercatox
-						</button>
-					</a> -->
-
+					</div>
 				</div>
+
+				<div elementsid="earnlabel" class="earnlabel">
+					<span>How do I earn more Pocketcoin?</span>
+				</div>
+
 
 				<!--
 
@@ -90,24 +96,6 @@
 				
 			</div>	
 
-			<% } else { %> 
-
-				<div class="calculatordummy">
-					<div class="calculatordummytext">
-						<span>Test Network: Test coin price is Zero</span>
-					</div>
-					
-				</div>
-				
-			<% } %>
-
-			<div elementsid="earnlabel" class="earnlabel">
-				<span>How do I earn more Pocketcoin?</span>
-			</div>
-
-			<div class="pcoin">
-				<span>¤</span>
-			</div>
 		</div>
 	</div>
 </div>

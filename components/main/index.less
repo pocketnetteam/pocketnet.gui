@@ -1,7 +1,7 @@
 @import "../../css/__cssvar";
 
 #main{
-	background: #011621;
+	background: @color-main-light;
 	min-height: 1200px;
 
 	&.wshar{
@@ -10,11 +10,12 @@
 		}
 	}
 
+	
 	#lenta{
 		.shares{
 			.showmorebyauthor,
 			.share{
-				border-radius: 3px;
+				border-radius: 12px;
 			}
 		}
 
@@ -168,7 +169,7 @@
 		margin-bottom : @rhythm;
 		min-height: 160px;
 		position: relative;
-		border-radius: 3px;
+		border-radius: 12px;
 		
 
 		&.hasshares{
@@ -259,7 +260,7 @@
 	.seemore,
 	.loadprev,
 	.loadmore{
-		border-radius: 3px;
+		border-radius: 12px;
 	}
 	
 
@@ -267,7 +268,7 @@
 		position: fixed;
 		left :  0;
 		bottom : 0;
-		background: #011621;
+		background: @color-main-light;
 		color : #fff;
 		padding : 2 * @rhythm;
 		text-align: center;
@@ -479,7 +480,7 @@
 	}
 
 	.panel{
-		border-radius:3px;
+		border-radius:12px;
 	}
 	.work{
 		&.mwork{
@@ -504,10 +505,10 @@
 	.bgCaption{
 		height: auto;
 		padding-bottom: 0;
-		border-radius: 3px;
+		border-radius: 12px;
 		&.sec{
 			color : @color-black;
-			background: #FAFAFA;
+			background: #FFF;
 			
 		}
 
@@ -1226,7 +1227,7 @@ html.tablet{
 		}
 
 		.panel{
-			border-radius:3px;
+			border-radius:12px;
 		}
 		
 	}

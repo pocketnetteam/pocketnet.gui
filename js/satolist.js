@@ -1966,8 +1966,7 @@ Platform = function (app, listofnodes) {
 
             p.horizontal = true
 
-            var tpl = `<div class="horizontalLentaWrapper"><div class="horizontalLentacaption"><span>`+(p.caption || '')+`</span></div><div class="showmorebywrapper"><div class="showmoreby"></div></div>
-            <div class="controlleft controlhor" dir="left"><i class="fas fa-chevron-left"></i></div><div class="controlright controlhor"><i class="fas fa-chevron-right"></i></div>
+            var tpl = `<div class="horizontalLentaWrapper"><div class="horizontalLentacaption"><span>`+(p.caption || '')+`</span><div class="controlhors"><div class="controlleft controlhor" dir="left"><i class="fas fa-arrow-left"></i></div><div class="controlright controlhor"><i class="fas fa-arrow-right"></i></div></div></div><div class="showmorebywrapper"><div class="showmoreby"></div></div>
             </div>`
 
             el.html(tpl)
@@ -2782,8 +2781,61 @@ Platform = function (app, listofnodes) {
 
                 })
 
+                
+                
+            },
 
+            buy : function(p, clbk, el){
 
+                if(!p) p = {}
+
+                var id = 'papiwalletbuy'
+
+                globalpreloader(true, true)
+
+                p.action = p.htls ? 'htls' : 'buy'
+                p.class = 'api'
+                p.api = true
+                
+
+                var es = null
+
+                return new Promise((resolve, reject) => {
+                    
+                    p.sendclbk = function(d){
+
+                        if (p.roomid && d.txid){
+                            self.matrixchat.shareInChat.url(p.roomid, app.meta.protocol + '://i?stx=' + d.txid) /// change protocol
+                        }
+
+                        resolve(d)
+
+                        if(es && es.container) es.container.close()
+                    }
+
+                    app.nav.api.load({
+                        open : true,
+                        id : 'wallet',
+                        inWnd : el ? false : true,
+                        el : el ? el : null,
+                        eid : id,
+                        mid : id,
+                        animation : false,
+                        essenseData : p,
+                        clbk : function(e, _p){
+
+                            es = _p
+    
+                            globalpreloader(false)
+    
+                            if(clbk) clbk(e, _p)
+                        }
+                    })
+
+                })
+
+                
+                
             }
         },
 
@@ -7497,6 +7549,62 @@ Platform = function (app, listofnodes) {
 
             }
         },
+        
+        lentaMethod: {
+            all: {
+                hierarchical: 'gethotposts',
+                historical: 'gethistoricalstrip'
+            },
+            default: "hierarchical",
+            current: null,
+
+            save: function () {
+
+                var c = self.sdk.lentaMethod.current
+
+                localStorage['lentaMethod'] = c;
+
+            },
+
+            load: function (clbk) {
+
+                var t = self.sdk.lentaMethod
+
+                t.current = localStorage['lentaMethod'] || t.default;
+
+                t.set()
+
+                if (clbk) clbk()
+            },
+
+            get: function(){
+                var t = self.sdk.lentaMethod;
+
+                console.log('t.all[t.current]',  t.all[t.current])
+
+                return t.all[t.current];
+            },
+
+            set: function (value) {
+
+                var t = self.sdk.lentaMethod
+
+                if (!value) {
+                    value = t.current || t.default
+                }
+
+                if (value && t.all[value]) {
+
+                    t.current = value;
+
+                    self.app.platform.sdk.categories.clbks.selected.lenta && self.app.platform.sdk.categories.clbks.selected.lenta();
+
+                    t.save()
+
+                }
+
+            }
+        },
 
         theme: {
             all: {
@@ -10669,6 +10777,45 @@ Platform = function (app, listofnodes) {
 
             },
 
+            getRecommendedAccountsByTags : function(clbk){
+
+                var selectedTags = self.app.platform.sdk.categories.gettags();
+
+                self.app.api.rpc('getrecomendedaccountsbytags', [selectedTags, 15])
+                .then(function(d){
+
+                    if (clbk){
+                        clbk(d)
+                    }
+
+                })
+                .catch(function(e){
+
+                    if (clbk){
+                        clbk(null, e);
+                    }
+                })
+            },
+
+            getBestUsers : function(clbk){
+
+                var my = self.app.user.address.value;
+
+                self.app.api.rpc('getrecomendedaccountsbyscoresfromaddress', [my, ['share', 'video'], 0, 300000, 15])
+                .then(function(d){
+
+                    if (clbk){
+                        clbk(d)
+                    }
+
+                })
+                .catch(function(e){
+
+                    if (clbk){
+                        clbk(null)
+                    }
+                })
+            },
 
             commonuserpoint : function(address, me){
                 var point = 1;
@@ -10697,7 +10844,48 @@ Platform = function (app, listofnodes) {
 
                 return point
 
+            }
+        },
 
+
+
+        posts: {
+            
+            getRecommendedPosts : function(clbk){
+
+                var my = self.app.user.address.value;
+
+                self.app.api.rpc('getrecomendedcontentsbyscoresfromaddress', [my, ['share', 'video'], 0, 300000, 15])
+                .then(function(d){
+
+                    if (clbk){
+                        clbk(d)
+                    }
+
+                })
+                .catch(function(e){
+
+                    if (clbk){
+                        clbk(null, e);
+                    }
+                })
+            },
+
+            getRecommendedPostsContents : function(parameters, clbk){
+
+                self.app.api.rpc('getrawtransactionwithmessagebyid', parameters)
+                .then(function(d){
+
+                    if (clbk){
+                        clbk(d)
+                    }
+                })
+                .catch(function(e){
+
+                    if (clbk){
+                        clbk(null)
+                    }
+                })
             }
         },
 
@@ -12988,19 +13176,104 @@ Platform = function (app, listofnodes) {
                         }
                     ]
                 },
+
+                categoryIcons : [
+                    {
+                        "id": "c2",
+                        "icon": "far fa-smile"
+                    },
+                    {
+                        "id": "c3",
+                        "icon": "fas fa-landmark"
+                    },
+                    {
+                        "id": "c4",
+                        "icon": "fab fa-bitcoin"
+                    },
+                    {
+                        "id": "c5",
+                        "icon": "fas fa-microscope"
+                    },
+                    {
+                        "id": "c55",
+                        "icon": "fas fa-book"
+                    },
+                    {
+                        "id": "c6",
+                        "icon": "fas fa-dollar-sign"
+                    },
+                    {
+                        "id": "c73",
+                        "icon": "fas fa-fist-raised"
+                    },
+                    {
+                        "id": "c72",
+                        "icon": "fas fa-thermometer"
+                    },
+                    {
+                        "id": "c7",
+                        "icon": "fas fa-flag-checkered"
+                    },
+                    {
+                        "id": "c8",
+                        "icon": "fas fa-running"
+                    },
+                    {
+                        "id": "c9",
+                        "icon": "fas fa-gamepad"
+                    },
+                    {
+                        "id": "c10",
+                        "icon": "fas fa-space-shuttle"
+                    },
+                    {
+                        "id": "c11",
+                        "icon": "fas fa-music"
+                    },
+                    {
+                        "id": "c12",
+                        "icon": "fas fa-newspaper"
+                    },
+                    {
+                        "id": "c13",
+                        "icon": "fas fa-history"
+                    },
+                    {
+                        "id": "c14",
+                        "icon": "fas fa-bookmark"
+                    },
+                    {
+                        "id": "c15",
+                        "icon": "fas fa-film"
+                    },
+                    {
+                        "id": "c16",
+                        "icon": "fas fa-paw"
+                    },
+                    {
+                        "id": "c17",
+                        "icon": "fas fa-route"
+                    },
+                    {
+                        "id": "c18",
+                        "icon": "fas fa-pencil-ruler"
+                    }
+                ]
             },
 
             settings : {
                 tags : {},
                 selected : {},
-                added : {}
+                added : {},
+                excluded : {}
             },
 
             clbks : {
                 selected : {},
                 added : {},
-                tags  :{},
-                removed : {}
+                tags  : {},
+                removed : {},
+                excluded : {}
             },
 
             fromTags : function(tags, _k){
@@ -13047,6 +13320,29 @@ Platform = function (app, listofnodes) {
 
                 return addedtags
             },
+
+            gettagsexcluded : function(_k, onlycategories){
+                var tags = []
+
+                var k = _k || self.app.localization.key
+
+                if(!self.sdk.categories.data.all[k]) k = 'en'
+
+                var excluded = self.sdk.categories.settings.excluded[k] || {};
+
+
+
+                var all = self.sdk.categories.get(k)
+
+                _.each(all, function(c){
+                    if(excluded[c.id]) tags = tags.concat(c.tags)
+                })
+
+
+                if(onlycategories === 'onlytags') tags = excludedtags
+
+                return tags
+            },  
 
             gettags : function(_k, onlycategories){
                 var tags = []
@@ -13224,6 +13520,7 @@ Platform = function (app, listofnodes) {
 
             select : function(id, _k){
 
+
                 if(!id) return 'emptyid'
 
                 var allcats = self.sdk.categories.get(_k)
@@ -13247,7 +13544,7 @@ Platform = function (app, listofnodes) {
 
                 else s.selected[k][id] = true
 
-                self.sdk.categories.save()
+                self.sdk.categories.save();
 
                 _.each(self.sdk.categories.clbks.selected, function(f){
                     f(id, s.selected[k][id], k)
@@ -13256,19 +13553,84 @@ Platform = function (app, listofnodes) {
                 return false
             },
 
-            get : function(_k){
+            exclude : function(id, _k){
+
+
+                if(!id) return 'emptyid'
+
+                var allcats = self.sdk.categories.get(_k)
+
+                var cat = _.find(allcats, function(c){
+                    return c.id == id
+                })
+
+                if(!cat) return 'cantonfound'
+
+                var s = self.sdk.categories.settings
                 var k = _k || self.app.localization.key
 
-                var added = _.map(self.sdk.categories.settings.added[k]|| {},
+                if(!self.sdk.categories.data.all[k]) k = 'en'
+
+                s.excluded[k] || (s.excluded[k] = {})
+
+
+                if (s.excluded[k][id]){
+
+                    delete s.excluded[k][id];
+
+                } else {
+                    s.excluded[k][id] = true;
+
+                        
+                    s.selected[k] || (s.selected[k] = {})
+
+                    if (s.selected[k][id]){
+                        delete s.selected[k][id]
+                    }
+                } 
+
+
+                self.sdk.categories.save()
+
+                _.each(self.sdk.categories.clbks.excluded, function(f){
+                    f(id, s.excluded[k][id], k)
+                })
+
+                return false
+            },
+
+            get : function(_k){
+                var k = _k || self.app.localization.key;
+
+                var added = _.map(self.sdk.categories.settings.added[k]|| {}, 
                 function(c){
-                    var cc = _.clone(c)
+                    var cc = _.clone(c);
 
-                    cc.added = true
+                    cc.added = true;
 
+                    
                     return cc
                 })
 
-                return (self.sdk.categories.data.all[k] || self.sdk.categories.data.all['en']).concat(added)
+                var categories = self.sdk.categories.data.all[k] || self.sdk.categories.data.all['en'];
+
+                var categoryIcons = self.sdk.categories.data.categoryIcons;
+
+				categories = _.map(categories, function(k){
+					var withIcon = categoryIcons.find(function(ki){
+						return ki.id === k.id;
+					})
+
+					if (withIcon){
+						k.icon = withIcon.icon;
+					} else {
+                        k.icon = 'fa fa-mouse-pointer'
+                    }
+
+					return k;
+				})
+
+                return (categories).concat(added)
             },
 
             getbyid : function(id, _k){
@@ -13299,6 +13661,7 @@ Platform = function (app, listofnodes) {
                 if(!self.sdk.categories.data.all[k]) k = 'en'
 
                 var selected = self.sdk.categories.settings.selected[k] || {}
+                var excluded = self.sdk.categories.settings.excluded[k] || {}
 
                 var all = self.sdk.categories.get()
 
@@ -13306,6 +13669,7 @@ Platform = function (app, listofnodes) {
                     var cs = _.clone(c)
 
                     cs.selected = selected[c.id] ? true : false
+                    cs.excluded = excluded[c.id] ? true : false
 
                     return cs
                 })
@@ -13324,6 +13688,7 @@ Platform = function (app, listofnodes) {
                 self.sdk.categories.clbks.removed = {}
                 self.sdk.categories.clbks.added = {}
                 self.sdk.categories.clbks.tags = {}
+                self.sdk.categories.clbks.excluded = {}
 
 
 
@@ -13340,6 +13705,7 @@ Platform = function (app, listofnodes) {
                 self.sdk.categories.settings.tags || (self.sdk.categories.settings.tags = {})
                 self.sdk.categories.settings.selected || (self.sdk.categories.settings.selected = {})
                 self.sdk.categories.settings.added || (self.sdk.categories.settings.added = {})
+                self.sdk.categories.settings.excluded || (self.sdk.categories.settings.excluded = {})
 
                 if(clbk) clbk()
             }
@@ -15604,8 +15970,9 @@ Platform = function (app, listofnodes) {
                     })
                 },
 
-                recommended: function (p, clbk, cache) {
+                recommended: function (p, clbk, cache, methodparams) {
 
+                    if(!methodparams) methodparams = {}
 
                     if (!p) p = {};
 
@@ -15689,7 +16056,9 @@ Platform = function (app, listofnodes) {
                                         clbk(shares, error, p)
                                 }
 
-                            }, 'gethotposts')
+                            }, methodparams.method || self.sdk.lentaMethod.get())
+
+
                         }
 
                     })
@@ -15883,6 +16252,7 @@ Platform = function (app, listofnodes) {
                         p.lang || (p.lang = self.app.localization.key)
                         p.height || (p.height = 0)
                         p.tagsfilter || (p.tagsfilter = [])
+                        p.tagsexcluded || (p.tagsexcluded = [])
                         p.begin || (p.begin = '')
 
                         if (state) {
@@ -15946,6 +16316,10 @@ Platform = function (app, listofnodes) {
                                 return encodeURIComponent(t)
                             })
 
+                            p.tagsexcluded = _.map(p.tagsexcluded, function(t){
+                                return encodeURIComponent(t)
+                            })
+
                             /////temp
 
                             if (p.video && !self.videoenabled){
@@ -15955,7 +16329,7 @@ Platform = function (app, listofnodes) {
 
                             ////
 
-                            var parameters = [Number(p.height), p.txid, p.count, p.lang, p.tagsfilter, p.video && self.videoenabled ? 'video' : ''];
+                            var parameters = [Number(p.height), p.txid, p.count, p.lang, p.tagsfilter, p.video && self.videoenabled ? 'video' : '', '', '', p.tagsexcluded];
 
                             if(p.author) parameters.unshift(p.author)
 
@@ -17460,7 +17834,7 @@ Platform = function (app, listofnodes) {
 
                             var inputs = [];
 
-                            if(!(obj.donate && obj.donate.v.length)){
+                            if(!(obj.donate && obj.donate.v.length) && obj.type !== 'contentBoost'){
                                 inputs = self.sdk.node.transactions.create.selectBestInputs(unspent)
                             }
 
@@ -17517,6 +17891,45 @@ Platform = function (app, listofnodes) {
                                 }
 
                                 feerate = Number((feerate * smulti).toFixed(0));
+                            }
+
+                            if (obj.type === 'contentBoost' && obj.amount.v){
+
+                                feerate = 0;
+
+                                var lastUnspent = _.clone(unspent).reverse();
+
+                                for (var u of lastUnspent){
+
+                                    if (obj.amount.v >= totalInputs){
+
+                                        totalInputs += u.amount;
+
+                                        inputs.push({
+                                            txId: u.txid,
+                                            vout: u.vout,
+                                            amount: u.amount,
+                                            scriptPubKey: u.scriptPubKey,
+                                        })
+
+                                    } else {
+
+                                        break;
+                                    }
+
+                                }  
+
+                                if (obj.amount.v > totalInputs){
+
+                                    sitemessage(self.app.localization.e('e13117'))
+
+                                    if (clbk){
+                                        clbk(null, self.app.localization.e('e13117'));
+                                    }
+
+                                    return;
+
+                                }
                             }
 
                             self.sdk.node.transactions.create[obj.type](inputs, obj, /*feerate,*/ function (a, er, data) {
@@ -17700,7 +18113,21 @@ Platform = function (app, listofnodes) {
                             var embed = bitcoin.payments.embed({ data: opreturnData });
                             var i = 0;
 
+                            if (obj.type !== 'contentBoost'){
+
+
+                                outputs.push({
+                                    amount : 0,
+                                    deleted : true,
+                                    address : address.address
+                                })
+    
+                                
+                            }
+
                             txb.addOutput(embed.output, 0);
+
+                            
                             ///?
                             outputs.push({
                                 amount : 0,
@@ -17749,7 +18176,7 @@ Platform = function (app, listofnodes) {
                                     !(obj.donate && obj.donate.v.length) &&
 
 
-                                    unspents.length < 50 && amount > 0.2 * smulti) {
+                                    unspents.length < 50 && amount > 0.2 * smulti && obj.type !== 'contentBoost') {
 
                                     var ds = Number((amount / 2).toFixed(0))
 
@@ -17790,6 +18217,13 @@ Platform = function (app, listofnodes) {
 
                                 var totalReturn = Number((amount - totalDonate - (fees || 0)).toFixed(0));
 
+
+                                if (obj.type === 'contentBoost'){
+
+                                    var amountMulti = obj.amount.v * smulti;;
+                                    totalReturn -= amountMulti;
+
+                                }
 
                                 if (obj.donate && obj.donate.v.length && (totalReturn < 0 || totalDonate <= fees)){
 
@@ -18119,8 +18553,12 @@ Platform = function (app, listofnodes) {
                     commentShare: function (inputs, commentShare, clbk, p) {
                         this.common(inputs, commentShare, TXFEE, clbk, p)
 
-
                     },
+
+                    contentBoost: function (inputs, comment, /*fees, */clbk, p) {
+                        this.common(inputs, comment, 0, clbk, p)
+                    },
+
 
                     cScore: function (inputs, cScore, clbk, p) {
                         this.common(inputs, cScore, TXFEE, clbk, p)
@@ -25426,6 +25864,7 @@ Platform = function (app, listofnodes) {
         self.sdk.relayTransactions.load();
         self.applications = self.__applications()
         self.sdk.theme.load()
+        self.sdk.lentaMethod.load()
 
         self.sdk.uiScale.load();
         self.sdk.uiScale.listenKeys();

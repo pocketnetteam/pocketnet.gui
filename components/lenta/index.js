@@ -919,6 +919,49 @@ var lenta = (function(){
 				}
 			},
 
+			pkoin : function(id){
+
+				var share = self.app.platform.sdk.node.shares.storage.trx[id];
+
+				if (share){
+
+
+					self.app.platform.sdk.node.transactions.get.balance(function(amount){
+
+						var balance = amount.toFixed(3);
+
+						var userinfo = deep(app, 'platform.sdk.usersl.storage.' + share.address) || {
+							address : share.address,
+							addresses : [],
+						}
+	
+						self.nav.api.load({
+							open : true,
+							href : 'pkoin',
+							history : true,
+							inWnd : true,
+		
+							essenseData : {
+								userinfo: userinfo,
+								balance : balance,
+								id : id,
+								embedding : {
+									type : 'pkoin',
+									id : share.address,
+									close : function(){
+										renders.articles();
+									},
+								},	
+							}
+						})
+
+					})
+				
+
+				}
+
+			},
+
 			videoPosition : function(id){
 
 				if (essenseData.openapi){return}
@@ -1927,6 +1970,14 @@ var lenta = (function(){
 				var share = self.app.platform.sdk.node.shares.storage.trx[shareId] || {};
 
 				actions.repost(share.repost || shareId);
+			},
+
+			pkoin : function(){
+
+				var shareId = $(this).closest('.share').attr('id');
+
+				actions.pkoin(shareId)
+
 			},
 
 			showmorebyauthor : function(){
@@ -3682,6 +3733,7 @@ var lenta = (function(){
 							if (essenseData.from) _beginmaterial = essenseData.from
 
 							var tagsfilter = self.app.platform.sdk.categories.gettags()
+							var tagsexcluded = self.app.platform.sdk.categories.gettagsexcluded()
 
 							if (essenseData.tags) tagsfilter = essenseData.tags
 
@@ -3697,7 +3749,8 @@ var lenta = (function(){
 								video : video || essenseData.videomobile,
 								count : video ? 20 : 10,
 								page : page,
-								period : essenseData.period
+								period : essenseData.period,
+								tagsexcluded : tagsexcluded
 
 							}, function(shares, error, pr){
 
@@ -3810,6 +3863,7 @@ var lenta = (function(){
 			el.c.on('click', '.showMore,.showmoreRep', events.openPost)
 			el.c.on('click', '.showMoreArticle', events.openArticle)
 			el.c.on('click', '.forrepost', events.repost)
+			el.c.on('click', '.panel .pkoin', events.pkoin)
 			el.c.on('click', '.unblockbutton', events.unblock)
 			el.c.on('click', '.videoTips', events.fullScreenVideo)
 			el.c.on('click', '.videoOpen', events.fullScreenVideo)
@@ -4120,6 +4174,7 @@ var lenta = (function(){
 					self.app.platform.ws.messages["newblocks"].clbks.newsharesLenta = 
 					self.app.platform.ws.messages["new block"].clbks.newsharesLenta = actions.newmaterials
 
+					self.app.platform.sdk.categories.clbks.excluded.lenta =
 					self.app.platform.sdk.categories.clbks.tags.lenta =
 					self.app.platform.sdk.categories.clbks.selected.lenta = function(data){
 
@@ -4529,6 +4584,7 @@ var lenta = (function(){
 
 				if(!essenseData.openapi && !essenseData.second && !essenseData.txids){
 
+					delete self.app.platform.sdk.categories.clbks.excluded.lenta
 					delete self.app.platform.sdk.categories.clbks.tags.lenta
 					delete self.app.platform.sdk.categories.clbks.selected.lenta
 
@@ -4545,11 +4601,8 @@ var lenta = (function(){
 					delete self.app.platform.clbks.api.actions.unblocking.lenta
 
 					delete self.app.platform.clbks._focus.lenta
-
-
 					delete self.app.platform.matrixchat.clbks.SHOWING.lenta
 				}
-
 			
 
 				_.each(players, function(p){

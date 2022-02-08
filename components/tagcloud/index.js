@@ -189,12 +189,11 @@ var tagcloud = (function(){
 				e = null
 			}	
 
-			
 
 			el.cleartags.on('click', function(){
 				dialog({
 					class : 'zindex',
-					html : self.app.localization.e('cleartags'),
+					html : 'Do you really want to clear tags filters?',
 					btn1text : self.app.localization.e('dyes'),
 					btn2text : self.app.localization.e('dno'),
 					success : function(){	

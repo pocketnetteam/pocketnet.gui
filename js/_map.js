@@ -509,6 +509,38 @@ __map =  {
 			anonimus : true,
 		},	
 
+		recommendedusers : {
+			uri : "recommendedusers",
+			href : "recommendedusers",
+		
+			add : insertingfunc,
+			anonimus : true,
+		},
+		
+		topusers : {
+			uri : "topusers",
+			href : "topusers",
+		
+			add : insertingfunc,
+			anonimus : true,
+		},
+
+		bestposts : {
+			uri : "bestposts",
+			href : "bestposts",
+			
+			add : insertingfunc,
+			anonimus : true,
+		},
+
+		recommendedposts : {
+			uri : "recommendedposts",
+			href : "recommendedposts",
+		
+			add : insertingfunc,
+			anonimus : true,
+		},
+
 		lastcomments : {
 			uri : "lastcomments",
 			href : "lastcomments",
@@ -516,6 +548,12 @@ __map =  {
 			anonimus : true,
 		},
 
+		pkoin : {
+			uri : "pkoin",
+			href : "pkoin",
+			add : insertingfunc,
+			anonimus : true,
+		},
 		articles : {
 			uri : "articles",
 			href : "articles",
