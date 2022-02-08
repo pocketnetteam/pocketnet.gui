@@ -333,6 +333,7 @@ var pkview = (function(){
 			},
 			wnd : {			
 				showbetter : true,
+				//header : isMobile() ? 'privatekey' : '',
 				class : 'withoutButtons pkviewwnd normalizedmobile',
 			}
 		}
