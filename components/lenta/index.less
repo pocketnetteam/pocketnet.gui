@@ -139,7 +139,7 @@
 		.share .sharecnt{
 
 			.shareTable{
-				margin-top: @rhythm;
+				padding-top: @rhythm * 2;
 			}
 
 			.removeDescription{
@@ -169,7 +169,6 @@
 			.cntswrk{
 				margin-left: 9 * @rhythm;
 				padding-left : 2 * @rhythm;
-				padding-right : 4 * @rhythm;
 				padding-right: 2 * @rhythm;
 	
 			}
@@ -399,7 +398,6 @@
 		}
 		
 		.share{
-			padding : @rhythm 0;
 			background: #fff;
 			margin-bottom: @rhythm;
 			padding-bottom : 0;
@@ -2696,9 +2694,13 @@
 			&.ready{
 				opacity: 1;
 			}
+
+
+			
 	
 			.shareTable{
 				padding-top : 0;
+				margin-top : 0;
 			}
 
 			
@@ -3042,15 +3044,6 @@
 			}
 		}
 
-		.panel{
-			&.unselectablemobile{
-				padding-left: 0;
-				padding-right: 0;
-				flex-wrap: wrap;
-			}
-
-		}
-
 		.loadprev{
 			&.fxdp{
 				position: fixed;
@@ -3070,23 +3063,43 @@
 			
 		}
 
-		.share{
+		.shares{
 
-			.cntswrkcontent, .tags, .actions{
-				padding-left: @rhythm;
-			}
+			.share{
 
-			.sharecnt{
-				.iconWrapper{
-					margin-left: @rhythm;
+				.cntswrkcontent, .tags, .actions{
+					padding-left: 0;
+					padding-right: 0;
 				}
-				.cntswrk{
-					margin-left: @rhythm * 7;
-				}				
+	
+				.sharecnt{
+					.iconWrapper{
+						margin-left: @rhythm;
+					}
+					.cntswrk{
+						margin-left: @rhythm * 7;
+					}				
+				}
+	
+				.panel{
+					&.unselectablemobile{
+						padding-left: 0!important;
+						padding-right: 0!important;
+						flex-wrap: wrap;
+					}
+		
+					.stars_repost{
+						margin-right: 0;
+					}
+		
+				}
+	
+	
 			}
-
 
 		}
+
+
 	}
 
 	html.scrollmodedown{
@@ -3790,9 +3803,9 @@ html.stblack{
 			}
 
 			.cntswrk{
-				margin-left: 0;
-				padding-left : 0;
-				padding-right : 0;
+				margin-left: 0!important;
+				padding-left : 0!important;
+				padding-right : 0!important;
 			}
 
 			.work{
@@ -4139,8 +4152,7 @@ html.stblack{
 							margin-right: 0;
 						
 							&.metapanel{
-								width: 47px;
-								padding-right: @rhythm;
+
 		
 								.metapanelitem{
 									opacity: 1;

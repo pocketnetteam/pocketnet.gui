@@ -120,8 +120,7 @@ var menu = (function(){
 					if(!el.nav.hasClass('active')){
 
 						el.nav.addClass('active')
-						el.c.addClass('menupanelactive')
-
+											
 						el.nav.find('.pcenterLabel').removeClass('active')
 
 						var r = parameters(self.app.nav.current.completeHref, true).r || 'empty'
@@ -141,7 +140,6 @@ var menu = (function(){
 				{	
 
 					if (el.nav.hasClass('active')){
-						el.c.removeClass('menupanelactive')
 						el.nav.removeClass('active')
 					}
 					

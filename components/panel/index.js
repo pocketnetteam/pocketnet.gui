@@ -37,7 +37,7 @@ var panel = (function(){
 
 			stacking : function(){
 
-				console.log('staking!!!')
+				console.log('stacking!!!')
 
 				self.nav.api.load({
 
@@ -47,6 +47,7 @@ var panel = (function(){
 					animation : false,
 					
 					clbk : function(e, p){
+						
 						stacking = p
 					}
 
@@ -382,7 +383,8 @@ var panel = (function(){
 			// 	renders.lastcomments()
 
 
-		
+			renders.recommendedposts();
+
 			if (
 				deep(self.app.platform, 'released.vidgets.staking') && 
 				deep(self.app.platform.sdk, 'usersettings.meta.vidgetstaking.value')
@@ -397,7 +399,6 @@ var panel = (function(){
 			
 			renders.topusers();
 			renders.bestposts();
-			renders.recommendedposts();
 
 
 		}

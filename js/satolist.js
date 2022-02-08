@@ -10781,7 +10781,7 @@ Platform = function (app, listofnodes) {
 
                 var selectedTags = self.app.platform.sdk.categories.gettags();
 
-                self.app.api.rpc('getrecomendedaccountsbytags', [selectedTags, 10])
+                self.app.api.rpc('getrecomendedaccountsbytags', [selectedTags, 15])
                 .then(function(d){
 
                     if (clbk){
@@ -10792,7 +10792,7 @@ Platform = function (app, listofnodes) {
                 .catch(function(e){
 
                     if (clbk){
-                        clbk(null)
+                        clbk(null, e);
                     }
                 })
             },

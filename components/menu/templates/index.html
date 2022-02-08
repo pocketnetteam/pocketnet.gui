@@ -7,61 +7,7 @@
 				<div class="sections">
 					<div class="section right">
 
-							<div class="items navWrapper unselectable">
-
-								<div class="item navWrapperItem" events="navinit">
-
-									<div class="menutoppanel ">
-										<div class="panelitemCenter">
-											<div class="centerTable table">
-
-												<div class="pcenterCell">
-													<div class="pcenterLabel fresh" r="empty">
-														<a elementsid="href_index" href="index" handler="true"><%=e('e13136')%> <span class="lentaunseen" key="common"></span></a>
-													</div>
-												</div>
-
-
-												<% if(state) { %> 
-												<div class="pcenterCell">
-													<div class="pcenterLabel " r="sub">
-														<a elementsid="href_index?r=sub" href="index?r=sub"  handler="true"><%=e('e13137')%> <span class="lentaunseen " key="sub"></span></a>
-													</div>
-												</div>
-												<% } %>
-												
-												<% if(app.platform.videoenabled) {%>
-													<div class="pcenterCell">
-														<div class="pcenterLabel " r="video">
-															<a elementsid="href_index?video=1" href="index?video=1"  handler="true"><%=e('video')%> <span class="lentaunseen" key="video"></span></a>
-														</div>
-													</div>
-												<% } %>
-
-												<!--<% if(typeof _Electron != 'undefined' && window.electron) {%>
-													<div class="pcenterCell">
-														<div class="pcenterLabel toppost " r="saved">
-															<a elementsid="href_index?r=saved" href="index?r=saved"  handler="true"><%=e('downloaded')%></a>
-														</div>
-													</div>
-												<% } %>-->
-												
-												<div class="pcenterCell">
-													<div class="pcenterLabel toppost " r="recommended">
-														<a elementsid="href_index?r=recommended" href="index?r=recommended"  handler="true"><%=e('e13138')%></a>
-													</div>
-												</div>
-												
-												
-											</div>
-										</div>
-									</div>
-
-								</div>
-
-							</div>
 							
-
 							<% if(state) { %>
 
 								
