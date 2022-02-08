@@ -205,6 +205,61 @@
 		}
 		
 	}
+	
+	&.menupanelactive{
+        &:not(.searchactive){
+
+            .sections{
+                .items{             
+                    .item{
+                        &.navWrapperItem{
+                            display: block;
+                        }
+                    }
+                }
+            }
+
+            .postssearch{
+        
+                .searchPanel,
+                .searchInputWrapper{
+                    display: none;
+                }
+    
+                .searchInput{
+                    background: transparent;
+                    border : 1px solid transparent;
+                }
+        
+        
+                input{
+                    color : @color-black2;
+                    background: transparent;
+                }
+        
+                .searchIconLabel,
+                .searchPanel{
+                    color : @color-black2;
+                    background: transparent;
+                }
+        
+                
+            }
+
+            .sections{
+                .items.searchWrapper{
+                    max-width: 40px;
+                }
+            }
+
+            .postssearch{
+                .searchFastResultWrapper{
+                    display: none!important;
+                }
+            }
+        }
+    }
+
 
 	.additionalbar{
 		width: 100%;

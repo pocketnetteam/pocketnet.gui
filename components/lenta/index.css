@@ -2070,6 +2070,7 @@
   z-index: 1;
   color: #fff;
   text-align: center;
+  overflow: hidden;
 }
 #lenta .shares .share .sharearticle .shareBgCaption .captioncnt .sharecaption {
   font-size: 3em;
@@ -2077,6 +2078,11 @@
   max-width: 85%;
   margin: 0 auto;
   color: #fff;
+  max-height: 150px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  text-overflow: ellipsis;
+  overscroll-behavior: auto;
 }
 #lenta .shares .share .sharearticle .shareBgCaption .icon .usericon {
   margin: 0 auto;

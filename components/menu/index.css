@@ -143,6 +143,32 @@
 #menu.searchactive .sections .items .item.navWrapperItem {
   display: none;
 }
+#menu.menupanelactive:not(.searchactive) .sections .items .item.navWrapperItem {
+  display: block;
+}
+#menu.menupanelactive:not(.searchactive) .postssearch .searchPanel,
+#menu.menupanelactive:not(.searchactive) .postssearch .searchInputWrapper {
+  display: none;
+}
+#menu.menupanelactive:not(.searchactive) .postssearch .searchInput {
+  background: transparent;
+  border: 1px solid transparent;
+}
+#menu.menupanelactive:not(.searchactive) .postssearch input {
+  color: #0e1c2b;
+  background: transparent;
+}
+#menu.menupanelactive:not(.searchactive) .postssearch .searchIconLabel,
+#menu.menupanelactive:not(.searchactive) .postssearch .searchPanel {
+  color: #0e1c2b;
+  background: transparent;
+}
+#menu.menupanelactive:not(.searchactive) .sections .items.searchWrapper {
+  max-width: 40px;
+}
+#menu.menupanelactive:not(.searchactive) .postssearch .searchFastResultWrapper {
+  display: none!important;
+}
 #menu .additionalbar {
   width: 100%;
   position: fixed;
