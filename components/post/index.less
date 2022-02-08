@@ -689,10 +689,12 @@
 		}
 
 		.images{
+			max-width: 620px;
 			padding : 2 * @rhythm 0;
 			opacity: 0;
 			.transition(0.3s);
 			overflow : hidden;
+
 
 			&.active{
 				opacity: 1;
@@ -809,6 +811,7 @@
 		.sharecaption{
 			font-size: 1.6em;
 			margin-bottom: @rhythm;
+			max-width: 620px;
 
 			a{
 				text-decoration: underline;
@@ -818,7 +821,7 @@
 
 		.message{
 			margin-bottom: 2 * @rhythm;
-
+			max-width: 620px;
 			a{
 				text-decoration: underline;
 				color : @color-main;
