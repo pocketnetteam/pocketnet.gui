@@ -582,7 +582,7 @@
 				}
 
 				if (!p.noButtons) {
-					h+=	 ' <div class="buttons"></div>';
+					h+=	 ' <div class="buttons windowmainbuttons"></div>';
 					h+=	 '</div>';
 				}
 
