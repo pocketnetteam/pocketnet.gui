@@ -584,7 +584,7 @@
 				}
 
 				if (!p.noButtons) {
-					h+=	 ' <div class="buttons"></div>';
+					h+=	 ' <div class="buttons windowmainbuttons"></div>';
 					h+=	 '</div>';
 				}
 
@@ -779,7 +779,9 @@
 				wnd.addClass('asette')
 				wnd.removeClass('sette')
 
-				wnd.one('transitionend webkitTransitionEnd oTransitionEnd', function () {
+				//wnd.one('transitionend webkitTransitionEnd oTransitionEnd', function () {
+
+				setTimeout(function(){
 					wnd.remove();
 					
 
@@ -792,9 +794,11 @@
 
 						clearmem();
 					})
+				}, 220)	
+					
 
 				
-				});
+				//});
 				
 
 			},
