@@ -1537,6 +1537,10 @@ var author = (function(){
 				init()
 
 				p.clbk(null, p);
+			},
+
+			wnd : {			
+				class : 'normalizedmobile',
 			}
 		}
 	};

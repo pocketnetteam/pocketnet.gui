@@ -1917,6 +1917,7 @@ var post = (function () {
 			},
 
 			wnd: {
+				showbetter : true,
 				class: 'withoutButtons postwindow normalizedmobile',
 			}
 		}
