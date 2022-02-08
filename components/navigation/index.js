@@ -174,15 +174,12 @@ var navigation = (function(){
 		var initEvents = function(){
 			
 			self.app.nav.clbks.history.navigation = function(href){
-				console.log("RENDER", self.app.nav.get.pathname())
 				el.c.removeClass('scrolled')
 				renders.menu(self.app.nav.get.pathname())
 
 			}
 
 			self.app.platform.sdk.registrations.clbks.navigation = function(){
-
-				console.log("RENDER", self.app.nav.get.pathname())
 
 				renders.menu(self.app.nav.get.pathname())
 			}
