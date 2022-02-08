@@ -4,10 +4,16 @@
 
 		<div class="results">
 
-			<% _.each(results, function(r, i){
+			<% 
+			
+			var c = 6
+
+			if(isMobile()) c = 4
+
+			_.each(results, function(r, i){
 				
 				
-				if(i > 4) return
+				if(i > c) return
 				
 				%> 
 
