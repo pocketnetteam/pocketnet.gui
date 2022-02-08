@@ -846,11 +846,11 @@ var main = (function(){
 
 				if (t){
 					el.c.addClass('leftshowed')
-					self.app.actions.offScroll()
+					setTimeout(self.app.actions.offScroll, 300)
 				}
 				else{
 					el.c.removeClass('leftshowed')
-					self.app.actions.onScroll()
+					setTimeout(self.app.actions.onScroll, 300)
 				}
 				
 			}

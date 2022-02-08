@@ -626,14 +626,12 @@
 
 			if(p.class) wnd.addClass(p.class);
 
-		    if(!nooverflow){
-				nooverflow = !app.actions.offScroll();
-			}
+		    
 
 			wnd.css("display", "block");
 			wnd.addClass('asette')
 
-
+			if(p.showbetter) wnd.addClass('showbetter')
 
 			setTimeout(function(){
 				wnd.addClass('sette')
@@ -641,7 +639,12 @@
 
 			setTimeout(function(){
 				wnd.removeClass('asette')
-			}, 320)
+
+				if(!nooverflow){
+					nooverflow = !app.actions.offScroll();
+				}
+
+			}, 220)
 
 			app.actions.playingvideo(null);
 		}
@@ -725,7 +728,8 @@
 
 				cnt = wnd.find('.wndcontent')
 
-				cnt.on('scroll', _.throttle(wndcontentscrollmobile, 50))
+				if(!p.showbetter)
+					cnt.on('scroll', _.throttle(wndcontentscrollmobile, 50))
 
 			}
 
@@ -767,29 +771,30 @@
 
 				if(p.close) p.close(wnd, self);
 
-				if(!nooverflow)
-					app.actions.onScroll();
-
-				if (self.essenseDestroy)
-					self.essenseDestroy(key)
 				
+
 				delete app.events.resize[id]
 				delete app.events.scroll[id]
-
-				
 
 				wnd.addClass('asette')
 				wnd.removeClass('sette')
 
-				setTimeout(function(){
-
-					if(wnd){
-						wnd.remove();
-						clearmem()
-					}
+				wnd.one('transitionend webkitTransitionEnd oTransitionEnd', function () {
+					wnd.remove();
 					
 
-				}, 100)
+					window.requestAnimationFrame(function(){
+
+						if(!nooverflow)
+							app.actions.onScroll();
+	
+						if (self.essenseDestroy) self.essenseDestroy(key)
+
+						clearmem();
+					})
+
+				
+				});
 				
 
 			},

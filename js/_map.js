@@ -1257,9 +1257,7 @@ __map =  {
 	author : {
 		uri : "author",
 		href : "author",
-		add : {
-			el : 'content'
-		},
+		add : insertingfunc,
 		anonimus : true,
 		preshell : true,
 		//exhandler : true

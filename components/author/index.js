@@ -1440,6 +1440,7 @@ var author = (function(){
 			},
 
 			getdata : function(clbk, settings){
+				
 				self.app.el.html.addClass('allcontent')
 
 				self.app.platform.sdk.search.clear()
@@ -1469,9 +1470,7 @@ var author = (function(){
 					}, function(){
 
 						self.sdk.users.addressByName(p.address, function(address){
-
 							preinit(address, clbk)
-							
 						})
 
 					})
@@ -1484,8 +1483,6 @@ var author = (function(){
 			destroy : function(){
 
 				if(el.c) el.c.empty()
-
-				self.app.el.html.removeClass('allcontent')
 
 				if(share){
 					share.destroy()
@@ -1513,11 +1510,12 @@ var author = (function(){
 				actions.destroy();
 
 				el = {};
+
+				self.app.el.html.removeClass('allcontent')
+
 			},
 			
 			init : function(p){
-
-				self.app.el.html.addClass('allcontent')
 
 				state.load();
 
@@ -1537,6 +1535,10 @@ var author = (function(){
 				init()
 
 				p.clbk(null, p);
+			},
+
+			wnd : {			
+				class : 'normalizedmobile',
 			}
 		}
 	};

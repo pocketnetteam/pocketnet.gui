@@ -634,9 +634,7 @@ var test = (function(){
 				type : "NICKNAME",
 				onType : true,
 				require : true,
-
 				onFocus : function(pn){
-				
 					if (isTablet()) setTimeout(function(){_scrollTo(pn, el.c.closest('.customscroll')), 200})
 				}
 			}),

@@ -79,6 +79,21 @@ var lenta = (function(){
 
 		var actions = {
 
+			openauthorwindow : function(address){
+
+				self.nav.api.load({
+					open : true,
+					href : 'author',
+					inWnd : true,
+					history : true,
+
+					essenseData : {
+						address
+					}
+				})
+
+			},
+
 			subscribeunsubscribeclbk : function(address){
 
 				var addressEl = el.c.find('.shareTable[address="'+address+'"]')
@@ -1756,6 +1771,14 @@ var lenta = (function(){
 		}
 
 		var events = {
+			openauthorwindow: function(){
+
+				var shareId = $(this).closest('.share').attr('id');
+
+				var share = self.app.platform.sdk.node.shares.storage.trx[shareId];
+
+				actions.openauthorwindow(share.address)
+			},
 			toregistration: function(){
 
 				var shareId = $(this).closest('.share').attr('id');
@@ -1768,7 +1791,6 @@ var lenta = (function(){
 				else{
 					self.sdk.registrations.redirect = 'author?address='+share.address+'&s=' + shareId
 				}
-
 
 				self.nav.api.go({
 					href : 'authorization',
@@ -3884,6 +3906,8 @@ var lenta = (function(){
 			el.c.on('click', '.toregistration', events.toregistration)
 			el.c.find('.loadmore button').on('click', events.loadmore)
 			el.c.find('.loadprev button').on('click', events.loadprev)
+
+			el.c.on('click','.openauthorwindow', events.openauthorwindow)
 
 
 			//////////////////////

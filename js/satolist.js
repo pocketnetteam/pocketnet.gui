@@ -26593,10 +26593,17 @@ Platform = function (app, listofnodes) {
                     self.matrixchat.core.hideInParent(isTablet() ||isMobile() || window.cordova ? true : false )
                 }
 
+                
+
                 if (isTablet() || isMobile() || window.cordova){
+
+                    /*self.matrixchat.el.one('transitionend webkitTransitionEnd oTransitionEnd', function () {
+                        self.app.actions.onScroll()
+                    });*/
+
                     setTimeout(function(){
                         self.app.actions.onScroll()
-                    }, 300)
+                    }, 300) 
                     
                 }
 
@@ -26632,8 +26639,10 @@ Platform = function (app, listofnodes) {
                 self.app.actions.playingvideo()
 
                 if (isTablet() ||isMobile() || window.cordova){
-                    self.app.actions.offScroll()
-                    self.app.actions.optimize()
+                    setTimeout(function(){
+                        self.app.actions.offScroll()
+                        self.app.actions.optimize()
+                    })
                 }
 
                 if (isTablet() || isMobile() || window.cordova)
