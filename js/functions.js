@@ -777,7 +777,9 @@
 				wnd.addClass('asette')
 				wnd.removeClass('sette')
 
-				wnd.one('transitionend webkitTransitionEnd oTransitionEnd', function () {
+				//wnd.one('transitionend webkitTransitionEnd oTransitionEnd', function () {
+
+				setTimeout(function(){
 					wnd.remove();
 					
 
@@ -790,9 +792,11 @@
 
 						clearmem();
 					})
+				}, 220)	
+					
 
 				
-				});
+				//});
 				
 
 			},
