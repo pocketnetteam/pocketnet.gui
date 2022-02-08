@@ -1986,6 +1986,8 @@ ____loclib.easyNode_e10058 = "Gb free disk space"
 ____loclib.easyNode_e10059 = "Mb/s internet speed"
 ____loclib.easyNode_e10060 = "SSD drive"
 ____loclib.easyNode_e10061 = "Your node is running. Close the app anyway?"
+____loclib.easyNode_e10062 = "Node update is available. Download a new version?"
+____loclib.easyNode_e10063 = "Node has been successfully updated"
 
 ____loclib.IHave = "I have";
 ____loclib.downloadNode = "Download Windows Desktop Node";
@@ -2048,3 +2050,19 @@ ____loclib.empty = "Empty"
 
 ____loclib.reputation = "Reputation";
 ____loclib.subscriptions = "Subscriptions";
+____loclib.tothetop = "To the top"
+____loclib.menu = "Menu"
+
+____loclib.donotshowagain = "Do not show again"
+
+
+____loclib.postby = "Post by"
+____loclib.continueon = "Сontinue on"
+____loclib.bestwishes = "Best,"
+
+____loclib.ratings123 = "Only users with high reputation at least 10 publications in the feed can give 1, 2, 3 star ratings, make comments, give negative ratings on comments. This is done to protect authors, because Bastyon does NOT require any personal information for registration."
+
+____loclib.ratingss3 = "Only users with high reputation can give 1, 2, 3 star ratings. This is done to protect authors, because Bastyon does NOT require any personal information for registration."
+
+____loclib.clearcategories = "Do you really want to clear category filters?"
+____loclib.cleartags = "Do you really want to clear tags filters?"

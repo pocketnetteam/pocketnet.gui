@@ -1,6 +1,6 @@
 <% var hasabout = false %>
 
-<div class="authorinfo">
+<div class="authorinfo <% if(app.curation()) {%> displayedall <% } %>">
 <% if(deep(author, 'data.name')) {%>
 
 	<div class="item name">

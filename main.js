@@ -3,6 +3,8 @@ if (global.WRITE_LOGS) {
     global.LOG_LEVEL = global.WRITE_LOGS.split("=").pop()
 }
 
+
+
 var open = require("open");
 
 const {protocol} = require('electron');
@@ -72,12 +74,19 @@ autoUpdater.on('update-downloaded', (ev) => {
 });
 //---------------------------------------------------
 
+var appName = global.TESTPOCKETNET ? 'BastyonTest' : 'Bastyon';
+
 let url = require('url')
 let path = require('path')
 
 var defaultIcon = require('path').join(__dirname, 'res/electron/icons/win/icon.ico')
 var defaultTrayIcon = require('path').join(__dirname, 'res/electron/icons/win/icon.ico')
 var badgeTrayIcon = require('path').join(__dirname, 'res/electron/icons/win/iconbadge.ico')
+if (global.TESTPOCKETNET) {
+    defaultIcon = require('path').join(__dirname, 'res/electron/icons/win/test_icon.ico')
+    defaultTrayIcon = require('path').join(__dirname, 'res/electron/icons/win/test_icon.ico')
+    badgeTrayIcon = require('path').join(__dirname, 'res/electron/icons/win/test_iconbadge.ico')
+}
 
 if (is.linux()) {
     defaultIcon = require('path').join(__dirname, 'res/electron/icons/png/64x64.png')
@@ -86,9 +95,9 @@ if (is.linux()) {
 }
 
 if (is.macOS()) {
-    defaultIcon = require('path').join(__dirname, 'assets/icons/mac/trayTemplate.png')
-    defaultTrayIcon = require('path').join(__dirname, 'assets/icons/mac/trayTemplate.png')
-    badgeTrayIcon = require('path').join(__dirname, 'assets/icons/mac/traybadgeTemplate.png')
+    defaultIcon = require('path').join(__dirname, 'res/electron/icons/mac/trayTemplate.png')
+    defaultTrayIcon = require('path').join(__dirname, 'res/electron/icons/mac/trayTemplate.png')
+    badgeTrayIcon = require('path').join(__dirname, 'res/electron/icons/mac/traybadgeTemplate.png')
 }
 
 var protocols = ['pocketnet', 'bastyon']
@@ -119,7 +128,7 @@ function autoLaunchManage(enable){
 
     if (!is.macOS()){
         let autoLaunch = new AutoLaunch({
-            name: 'Bastyon', // app name
+            name: appName,
             path: app.getPath('exe'),
             isHidden: true
         });
@@ -175,7 +184,7 @@ function createTray() {
     tray = new Tray(defaultImage)
 
     tray.setImage(defaultImage)
-    tray.setToolTip('Bastyon'); ///
+    tray.setToolTip(appName);
 
     var contextMenu = Menu.buildFromTemplate([{
         label: 'Open',
@@ -428,7 +437,7 @@ function createWindow() {
             color : "#FFFFFF",
             symbolColor : "#333333"
         },*/
-        title: "Bastyon", ///
+        title: appName,
         webSecurity: false,
 
         icon: defaultIcon,
@@ -702,7 +711,7 @@ function createWindow() {
         }
 
         let autoLaunch = new AutoLaunch({
-            name: 'Bastyon', // app name
+            name: appName,
             path: app.getPath('exe'),
             isHidden: true
         });

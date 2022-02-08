@@ -3900,6 +3900,10 @@ var system16 = (function(){
 					}
 				
 				}
+			},
+			wnd : {			
+				header : "rsystem",
+				class : 'normalizedmobile',
 			}
 		}
 	};

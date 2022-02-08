@@ -2249,7 +2249,7 @@ pShare = function(){
 		var s = {
 			image : '',
 			images : self.images || [],
-			title : "Post by " + name,
+			title : app.localization.e('postby') + " " + name,
 			html : {
 				body : self.renders.xssmessagec(),
 				preview : trimHtml(self.renders.xssmessagec(), 160).replace(/ &hellip;/g, '...').replace(/&hellip;/g, '...')
