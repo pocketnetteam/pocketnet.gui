@@ -20,13 +20,10 @@ var post = (function () {
 		var authblock = false;
 
 		var actions = {
-
+			
 			pkoin : function(id){
 
-				var share = self.app.platform.sdk.node.shares.storage.trx[id];
-
 				if (share){
-
 
 					self.app.platform.sdk.node.transactions.get.balance(function(amount){
 
