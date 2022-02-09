@@ -268,45 +268,7 @@
 		}
 	}
 
-	.additionalbar{
-		width: 100%;
-		position: fixed;
-		left: 0;
-		right: 0;
-		top : 0;
-		height: 65px;
-		z-index: 19;
-		background: #fff;
-		.transition(0.3s);
-
-		
-
-		.sections{
-			.section{
-				margin : 0;
-				width: 100%;
-
-				.items{
-
-					margin : 0;
-					width: 100%;
-
-					.item{
-						margin : 0 auto;
-
-						>div{
-							font-size: 0.7em;
-							padding : 0 8 * @rhythm;
-							text-transform: uppercase;
-							font-weight: 700;
-						}
-					}
-				}
-			}
-		}
-	}
 	
-
 	.mobilemenu{
 		display: none;
 
@@ -315,8 +277,6 @@
 		}
 	}
 
-	
-
 	.sections{
 		width: 95%;
 		height: 100%;
@@ -324,26 +284,25 @@
 		margin : 0 auto;
 		padding : 0 2 * @rhythm;
         padding-right : 0;
+		display: flex;
+		flex-wrap: nowrap;
+		justify-content: space-between;
 
 		.section{
 
 			height: 100%;
-			float: left;
 			padding: 0 2 * @rhythm;
 
 			&.right{
-				float: right;
 				padding-right: 0;
 			}
 
 			&.centerpart{
-				float: right;
 				padding-right: 0;
 				padding-left: 0;
 			}
 
 			&.leftpart{
-				float: left;
 				padding-left: 0;
 			}
 
@@ -395,7 +354,7 @@
 				}
 			}
 			&.searchWrapper{
-				max-width: 280px;
+				max-width: 340px;
 				float: none;
 				font-size: 0.9em;
 
@@ -1003,8 +962,8 @@
 		.searchInput{
 			border-radius: 30px;
 			overflow: hidden;
-			background: #F1F1F1;
-			border : 1px solid fade(@color-black2, 2);
+			background: @color-main-light;
+			border : 0;
 		}
 
 		.search {
@@ -1028,7 +987,7 @@
 
 		input{
 			color : fade(@color-black2, 40);
-			background: #fafafa;
+			background: @color-main-light;
 			height: 100%;
 			border : 0;
 			padding-left: 0;
@@ -1039,7 +998,7 @@
 		.searchIconLabel,
 		.searchPanel{
 			color : fade(@color-black2, 20);
-			background: #fafafa;
+			background: @color-main-light;
 			border : 0;
 		}
 

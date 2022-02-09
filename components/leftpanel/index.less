@@ -2,7 +2,7 @@
 
 #leftpanel{
 	padding-right: 16px;
-	
+	color : @color-dark-mlight;
 	>div{
 
 		.wrp{
@@ -12,7 +12,6 @@
 	}
 
 	.menu{
-		margin-top: @rhythm * 2;
 
 		.menupanel{
 			.tabs{
@@ -32,20 +31,23 @@
 								left : -1em;
 								top : 0;
 								bottom : 0;
-								border-left: 3px solid #00A4FF;
+								width: 3px;
+								background: @color-main;
+								border-radius: 3px;
 							}
 							
-							color: #00A4FF;
+							color: @color-main;
 
 						}
 						
 						.text{
 							font-size: 0.9em;
+							font-weight: 500;
 						}
 
 						i{
 							width: 30px;
-							text-align: left;
+							text-align: center;
 						}
 
 
@@ -103,6 +105,7 @@
 
 		.fire{
 			i{
+				text-align: center;
 				width: 30px;
 			}
 		}
@@ -183,15 +186,13 @@
 	}
 
 	.subtop{
-		color : @color-gray-mlight;
+		padding : 2 * @rhythm 0;
+		margin-top : 4 * @rhythm;
+		margin-bottom: 4 * @rhythm;
+		border-top: 1px solid #E3E4EB;
+		border-bottom: 1px solid #E3E4EB;
     
 		.tcaption{
-		   
-			padding : 2 * @rhythm;
-			padding-top : 2 * @rhythm;
-			padding-left: 0;
-			margin-bottom: @rhythm;
-	
 			span{
 				font-size : 0.8em;
 				font-weight: 700;
@@ -206,18 +207,20 @@
 		}
 
 		.topnavigation{
-			padding : 2 * @rhythm 0;
 
 			button{
-				width: 110px;
+				width: 100%;
+				white-space: nowrap;
 			}
 		}
 
 		.toplabel{
-			padding-top : 2 * @rhythm;
+			
 
 			.topactualback{
+				text-align: center;
 				a{
+					padding : @rhythm;
 					font-size: 0.8em;
 					text-decoration: underline;
 				}
@@ -302,7 +305,8 @@
 		
 
 		.vc_selectInput{
-			background : #011621;
+			background: @color-main-light;
+			
 			max-height: 500px;
 
 			.vc_value{

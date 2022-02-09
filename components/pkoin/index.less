@@ -193,26 +193,17 @@
 
 }
 
-
-.wnd.sharingwindow2{
-	
-	z-index: 5000;
-	&.textshowedwnd{
-		.wndinner{
-			max-height: 600px;
-		}	
-	}
-
+.wnd.pkoinwindow{
 	.wndinner{
 		
 		&.pkoin{
             max-width: 370px;
-			max-height: 480px;
+			max-height: 500px;
 			box-shadow: none;
 
-            .wndcontent{
+			/*.wndcontent{
                 height: fit-content;
-            }
+            }*/
         }
 		.wndheader{
 			display: none;
@@ -234,15 +225,14 @@
 	.roundclosebutton{
 		color : #FFF;
 	}
+
+	#pkoin{
+		.sendButtonWrapper{
+			position: absolute;
+			bottom : 0;
+			left : 0;
+			right: 0;
+		}
+	}
 }
 
-/*t*/ @media only screen and (max-width: 768px){
-#pkoin{
-
-}
-
-.wnd.sharingwindow2{
-
-
-}	
-}

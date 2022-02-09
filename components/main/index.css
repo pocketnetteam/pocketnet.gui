@@ -1,6 +1,15 @@
 #main {
-  background: #f2f2f5;
+  background: #f0f2f5;
   min-height: 1200px;
+  /*#lenta{
+		.shares{
+			.showmorebyauthor,
+			.share{
+				border-radius: 12px;
+			}
+		}
+
+	}*/
   /*.mainpanelcell,
 	.leftpanelcell{
 		min-height: 1024px;
@@ -8,10 +17,6 @@
 }
 #main.wshar .bgCaption {
   display: none;
-}
-#main #lenta .shares .showmorebyauthor,
-#main #lenta .shares .share {
-  border-radius: 12px;
 }
 #main .bastyonhelper .layout {
   display: flex;
@@ -211,7 +216,7 @@
   position: fixed;
   left: 0;
   bottom: 0;
-  background: #f2f2f5;
+  background: #f0f2f5;
   color: #fff;
   padding: 1em;
   text-align: center;
@@ -252,13 +257,17 @@
 #main .lentacell {
   margin-right: 256px;
   margin-left: 242px;
-  padding-top: 0.5em;
+  padding-top: 10px;
   min-height: 3000px;
   padding-bottom: 1000px;
 }
 #main .lentacell .cf_spacer,
 #main .lentacell .bgCaption {
   margin-bottom: 0.5em;
+}
+#main .lentacell .cnt {
+  max-width: 720px;
+  margin: 0 auto;
 }
 #main .lentacellsvi {
   margin-right: 0;
@@ -286,6 +295,9 @@
 #main.videomain .lentacell {
   margin-right: 0;
   margin-left: 212px;
+}
+#main.videomain .lentacell .cnt {
+  max-width: none;
 }
 #main.videomain .bgCaption {
   display: none;
@@ -368,7 +380,7 @@
   margin-right: 0;
 }
 #main .fxd {
-  padding-top: 0.5em;
+  padding-top: 10px;
 }
 #main .fxdsmall {
   top: 75px;

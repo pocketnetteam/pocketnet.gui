@@ -324,7 +324,7 @@ var pkoin = (function(){
 				swipeClose : true,
 				trueshold : 1,
 				swipeCloseDir : 'down',
-				class : 'sharingwindow2 normalizedmobile',
+				class : 'pkoinwindow normalizedmobile',
 				type : 'pkoin'
 			}
 		}

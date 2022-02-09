@@ -11,7 +11,7 @@
 	}
 
 	
-	#lenta{
+	/*#lenta{
 		.shares{
 			.showmorebyauthor,
 			.share{
@@ -19,7 +19,7 @@
 			}
 		}
 
-	}
+	}*/
 
 	.bastyonhelper{
 
@@ -323,7 +323,7 @@
 	.lentacell{
 		margin-right : 256px;
 		margin-left : 242px;
-		padding-top : @rhythm;
+		padding-top : 10px;
 		min-height: 3000px;
 		padding-bottom : 1000px;
 
@@ -331,12 +331,16 @@
 		.bgCaption {
 			margin-bottom : @rhythm;
 		}
+
+		.cnt{
+			max-width: 720px;
+			margin : 0 auto;
+		}
 	}
 
 	.lentacellsvi{
 		margin-right : 0;
 		padding-top : @rhythm;
-		
 	}
 
 	&.videomain{
@@ -365,6 +369,10 @@
 		.lentacell{
 			margin-right: 0;
 			margin-left : 212px;
+
+			.cnt{
+				max-width: none;
+			}
 		}
 
 		.lentacellsvi{
@@ -472,7 +480,7 @@
 	}
 
 	.fxd{
-		padding-top : @rhythm;
+		padding-top : 10px;
 	}
 
 	.fxdsmall{
@@ -1203,8 +1211,6 @@ html.tablet{
 	}
 
 	#main{
-
-		
 
 		.fxdsmall{
 			width: 100%;

@@ -1,14 +1,18 @@
 @import "../../css/__cssvar";
 
 #lastcomments{
-    
+    color : @color-dark-mlight;
 
     padding-left: 2 * @rhythm;
-    opacity: 0.55;
-    .transition(0.3s);
+    
+    
 
     &:hover{
-        opacity: 1;
+        .comment{
+            .commentmessage{
+                opacity: 1;
+            }
+        }
     }
     
     .commentgroup{
@@ -49,7 +53,8 @@
 
         .commentmessage{
             font-size: 0.8em;
-           
+            opacity: 0.85;
+            .transition(0.3s, opacity);
             >div{
                 overflow: hidden;
                 text-overflow: ellipsis;

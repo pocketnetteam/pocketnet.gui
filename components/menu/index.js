@@ -106,8 +106,9 @@ var menu = (function(){
 
 			sitenameToNav : function(){
 
+				return
+				
 				if(!events.navinit.el) return
-
 				
 				var pn = self.app.nav.current.href
 				
@@ -152,7 +153,7 @@ var menu = (function(){
 
 		var events = {
 
-			navinit : {
+			/*navinit : {
 				init : function(el){
 
 					if(!isTablet()){
@@ -173,7 +174,7 @@ var menu = (function(){
 					delete self.app.nav.clbks.history.menu
 
 				}
-			},
+			},*/
 
 			chats : {
 				click : function(){
@@ -1190,7 +1191,6 @@ var menu = (function(){
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
-				el.a = p.el.find('.additionalbar');
 				el.cart = el.c.find('.cart');
 				el.likes = el.c.find('.favorites');
 

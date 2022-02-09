@@ -5,6 +5,147 @@
 		<div class="menuWrapper">
 			<div class="rightchatspacer">
 				<div class="sections">
+
+					<div class="section leftpart">
+
+						<% if(haschat && state && (isMobile() || isTablet() || window.cordova) /*&& window.testpocketnet*/) {%>
+
+							<div class="items chat">
+
+								<div elementsid="eventschats" class="item table chatwr" events="chats">
+									<div class="icon">
+										<div class="icn">
+
+											<i class="far fa-comment"></i>
+
+											
+										</div>
+										<div class="amount">
+										</div>
+									</div>
+									
+								</div>
+							</div>
+
+
+						<% } else { %> 
+
+							<% if(state && (isMobile() || isTablet() || window.cordova)) {%>
+
+							<% } else { %>
+
+								<div class="items sitenames">
+
+									<% if(typeof theme != 'undefined') {%>
+
+									<div class="item table sitename" >
+										<div elementsid="eventssitename" class="icon" events="sitename">
+											<img class="header_logo all" src="img/logotypes/<%-app.meta.fullname.toLowerCase()%>_logo_<%-theme%>.svg">
+										</div>
+										<div elementsid="eventslang" class="label">
+											<!--<div class="sitenamelabel"><% if(app.test){%>TESTNET<%} else {%><%-app.meta.fullname%><% }%></div>-->
+											<div elementsid="menu_localization" class="lang localization">
+												
+												<% if(isMobile()) {%>
+													<%-(lkey.key || '').toUpperCase()%> 
+												<% } else { %>
+													<%-(lkey.name || '').toLowerCase()%> 
+												<% } %>
+												
+												<i class="fas fa-caret-down"></i>
+											</div>
+										</div>						
+
+									</div>
+
+									<% } else { %> 
+									
+										<div class="item table sitename" >
+											<div elementsid="eventssitename" class="icon" events="sitename">
+												<img class="header_logo" src="img/logo20.svg">
+											</div>
+											<div elementsid="eventslang" class="label">
+												<div class="sitenamelabel"><% if(app.test){%>TESTNET<%} else {%><%-app.meta.fullname%><% }%></div>
+												<div class="lang localization">
+													
+													<% if(isMobile()) {%>
+														<%-(lkey.key || '').toLowerCase()%> 
+													<% } else { %>
+														<%-(lkey.name || '').toLowerCase()%> 
+													<% } %>
+													
+													<i class="fas fa-caret-down"></i>
+												</div>
+											</div>						
+				
+										</div>
+										
+									<% } %>
+								</div>
+
+							<% } %>
+
+						<% } %>
+
+						<% if(typeof _Electron == 'undefined' && !window.cordova){ %> 
+
+							<!--<div class="items mdl workstation">
+
+								<div class="item table">
+									
+									<div class="label">
+										<div><a elementsid="hrefabout" href="about"><%=e('aboutmenu')%></a></div>
+									</div>
+
+								</div>
+							</div>-->
+
+						<% } %>
+
+						<!--<% if(!state){ %>  
+
+							<div class="items gethotpostsWrapper">
+								<a elementsid="index?r=recommended" href="index?r=recommended">
+									<div class="item table right onlyicon gethotposts">
+										
+											
+											<div class="icon">
+												<div class="icn">
+													<i class="fas fa-fire"></i>
+												</div>
+											</div>
+
+											<div class="label">
+												Top posts
+											</div>
+										
+
+									</div>
+								</a>
+							</div>
+
+						<% } %>-->
+
+					</div>
+
+					
+					<div class="section centerpart">
+						<% if(!app.curation()) {%>
+							<div class="items searchWrapper">
+
+								<div class="item table right" events="searchinit">
+									<div class="postssearchwrapper">
+										<div class="postssearch">
+										</div>
+									</div>
+
+								</div>
+
+							</div>
+
+						<% } %>
+					</div>
+
 					<div class="section right">
 
 							<div class="items navWrapper unselectable">
@@ -222,144 +363,8 @@
 
 				
 
-					<div class="section leftpart">
+					
 
-						<% if(haschat && state && (isMobile() || isTablet() || window.cordova) /*&& window.testpocketnet*/) {%>
-
-							<div class="items chat">
-
-								<div elementsid="eventschats" class="item table chatwr" events="chats">
-									<div class="icon">
-										<div class="icn">
-
-											<i class="far fa-comment"></i>
-
-											
-										</div>
-										<div class="amount">
-										</div>
-									</div>
-									
-								</div>
-							</div>
-
-
-						<% } else { %> 
-
-							<% if(state && (isMobile() || isTablet() || window.cordova)) {%>
-
-							<% } else { %>
-
-								<div class="items sitenames">
-
-									<% if(typeof theme != 'undefined') {%>
-
-									<div class="item table sitename" >
-										<div elementsid="eventssitename" class="icon" events="sitename">
-											<img class="header_logo all" src="img/logotypes/<%-app.meta.fullname.toLowerCase()%>_logo_<%-theme%>.svg">
-										</div>
-										<div elementsid="eventslang" class="label">
-											<!--<div class="sitenamelabel"><% if(app.test){%>TESTNET<%} else {%><%-app.meta.fullname%><% }%></div>-->
-											<div elementsid="menu_localization" class="lang localization">
-												
-												<% if(isMobile()) {%>
-													<%-(lkey.key || '').toUpperCase()%> 
-												<% } else { %>
-													<%-(lkey.name || '').toLowerCase()%> 
-												<% } %>
-												
-												<i class="fas fa-caret-down"></i>
-											</div>
-										</div>						
-
-									</div>
-
-									<% } else { %> 
-									
-										<div class="item table sitename" >
-											<div elementsid="eventssitename" class="icon" events="sitename">
-												<img class="header_logo" src="img/logo20.svg">
-											</div>
-											<div elementsid="eventslang" class="label">
-												<div class="sitenamelabel"><% if(app.test){%>TESTNET<%} else {%><%-app.meta.fullname%><% }%></div>
-												<div class="lang localization">
-													
-													<% if(isMobile()) {%>
-														<%-(lkey.key || '').toLowerCase()%> 
-													<% } else { %>
-														<%-(lkey.name || '').toLowerCase()%> 
-													<% } %>
-													
-													<i class="fas fa-caret-down"></i>
-												</div>
-											</div>						
-				
-										</div>
-										
-									<% } %>
-								</div>
-
-							<% } %>
-
-						<% } %>
-
-						<% if(typeof _Electron == 'undefined' && !window.cordova){ %> 
-
-							<!--<div class="items mdl workstation">
-
-								<div class="item table">
-									
-									<div class="label">
-										<div><a elementsid="hrefabout" href="about"><%=e('aboutmenu')%></a></div>
-									</div>
-
-								</div>
-							</div>-->
-
-						<% } %>
-
-						<!--<% if(!state){ %>  
-
-							<div class="items gethotpostsWrapper">
-								<a elementsid="index?r=recommended" href="index?r=recommended">
-									<div class="item table right onlyicon gethotposts">
-										
-											
-											<div class="icon">
-												<div class="icn">
-													<i class="fas fa-fire"></i>
-												</div>
-											</div>
-
-											<div class="label">
-												Top posts
-											</div>
-										
-
-									</div>
-								</a>
-							</div>
-
-						<% } %>-->
-
-					</div>
-
-					<div class="section centerpart">
-						<% if(!app.curation()) {%>
-							<div class="items searchWrapper">
-
-								<div class="item table right" events="searchinit">
-									<div class="postssearchwrapper">
-										<div class="postssearch">
-										</div>
-									</div>
-
-								</div>
-
-							</div>
-
-						<% } %>
-					</div>
 					
 				</div>
 			</div>

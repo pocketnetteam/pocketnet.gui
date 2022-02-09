@@ -701,8 +701,8 @@ var main = (function(){
 		var initstick = function(){
 			if(!isMobile() && !isTablet() && !hsready){
 
-				var t1 = 64
-				var t2 = 76
+				var t1 = 75
+				var t2 = 75
 
 				if (el.leftpanel)
 					el.leftpanel.hcSticky({
