@@ -2068,3 +2068,5 @@ ____loclib.clearcategories = "Do you really want to clear category filters?"
 ____loclib.cleartags = "Do you really want to clear tags filters?"
 ____loclib.fromsh = "From"
 
+____loclib.hodoiearnmore = "How do I earn more Pocketcoin?"
+
