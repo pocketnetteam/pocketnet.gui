@@ -7612,14 +7612,16 @@ Platform = function (app, listofnodes) {
                     name: self.app.localization.e('e13266'), ////ch
                     class: "stwhite",
                     color : "#ffffff",
-                    media : '(prefers-color-scheme: light)'
+                    media : '(prefers-color-scheme: light)',
+                    rootid : ''
                 },
 
                 black: {
                     name: self.app.localization.e('e13267'),
                     class: "stblack",
                     color : "#1e2235",
-                    media : '(prefers-color-scheme: dark)'
+                    media : '(prefers-color-scheme: dark)',
+                    rootid : 'black'
                 }
             },
             default: "white",
@@ -7654,11 +7656,11 @@ Platform = function (app, listofnodes) {
                 }
 
                 if (value && t.all[value]) {
-                    _.each(t.all, function (c) {
+                    /*_.each(t.all, function (c) {
                         h.removeClass(c.class)
                     })
 
-                    h.addClass(t.all[value].class)
+                    h.addClass(t.all[value].class)*/
 
                     t.current = value
 
@@ -7670,14 +7672,23 @@ Platform = function (app, listofnodes) {
                     
                     if (cm) cm()
 
-                    $('meta[name="theme-color"]').attr('content', t.all[value].color)
-                        .attr('media',  t.all[value].media)
+                    if (document.documentElement.hasAttribute('theme')){
+                        document.documentElement.removeAttribute('theme');
+                    }
+                    else{
+                        console.log('t.all[value].rootid', t.all[value].rootid)
+                        document.documentElement.setAttribute('theme', t.all[value].rootid);
+                    }
+
+                    $('meta[name="theme-color"]').attr('content', t.all[value].color).attr('media',  t.all[value].media)
                         
                     $('meta[name="msapplication-navbutton-color"]').attr('content', t.all[value].color)
                     $('meta[name="apple-mobile-web-app-status-bar-style"]').attr('content', t.all[value].color)
                 }
 
                 app.mobile.statusbar.background()
+
+                
 
             }
         },
