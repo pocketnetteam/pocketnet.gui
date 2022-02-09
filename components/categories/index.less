@@ -2,19 +2,15 @@
 
 #categories{
     font-weight: 500;
-    color : @color-dark-mlight;
+    color : rgb(var(--text-on-main-bg-color));
 
     .pocketcaption{
-        /*.transition(0.3s);*/
         span{
             margin-right: 0;
-            /*.transition(0.3s);*/
         }
 
         &:hover{
-
-            color : @color-bright;
-            
+            color : rgb(var(--color-txt-ac));
             span{
                 
                 margin-right: 20px;
@@ -76,7 +72,7 @@
 
                 &.addcategory{
                     &:hover{
-                        color: @color-main;
+                        color: rgb(var(--color-txt-ac));
                     }
                 }
     
@@ -110,11 +106,8 @@
     }
 
     .cat{
-        /*.transition(0.3s);*/
         .cattable{
             width: 100%;
-            
-
 
             >div{
                 padding : @rhythm 2 * @rhythm;
@@ -130,7 +123,7 @@
                         text-align: center;
 
                         &.fa-star{
-                            color:#FFAE00
+                            color: rgb(var(--color-star-yellow))
                         }
                     }
 
@@ -159,7 +152,7 @@
                     cursor: pointer;
                     width: 80%;
                     &:hover{
-                        color : @color-main;
+                        color : rgb(var(--color-txt-ac));
                     }
                 }
 
@@ -177,7 +170,7 @@
 
                     
                     &:hover{
-                        color : @color-main;
+                        color : rgb(var(--color-txt-ac));
                     }
                 }
                 
@@ -195,7 +188,7 @@
                     align-items: center;
                     position: relative;
                     cursor: pointer;
-                    color: #555770;
+                    color: rgb(var(--color-txt-gray));
     
                     i{
                         top: 0;
@@ -244,7 +237,7 @@
         &.selected{
 
             .cat{
-                color : @color-blue-mlight;
+                color : rgb(var(--color-bg-ac-1));
             }
 
             &.added{
@@ -286,7 +279,7 @@
             &.excluded{
                 
                 .catvalue{
-                    color : #555770;
+                    color : rgb(var(--color-txt-gray));
                     opacity: 0.5;
                     pointer-events: none;
 
@@ -327,7 +320,7 @@
         padding : 2 * @rhythm;
         padding-left: 0;
         cursor: pointer;
-        color : #8E90A6;
+        color : rgb(var(--neutral-grad-2));
 
         /*.transition(0.3s);*/
 
@@ -373,7 +366,7 @@
     .btn1{
             background: transparent;
             border-color: transparent;
-            color : @color-gray;
+            color : rgb(var(--color-txt-gray));
             text-decoration: underline;
     
             &:hover{
@@ -408,64 +401,6 @@
         }
     }
 }
-
-html.stblack{
-    #categories{
-       
-        .cat{
-            color : #b2abac;
-            &:hover{
-                color : @color-main;
-            }
-        }
-    
-    
-    
-        .hideallcats,
-        .showallcats{
-    
-            &:hover{
-                color : @color-main;
-            }
-        }
-    
-    }   
-    
-    .addcategorydialog{
-
-     
-        .btn1{
-            color : @color-gray-mlight;
-    
-            &:hover{
-                color : @color-main;
-            }
-        }
-    
-        .fieldwrapper,
-        .namewrapper{
-            padding : @rhythm 0;
-    
-            .label{
-                padding : 0.5 * @rhythm 0;
-                padding-left: @rhythm;
-                span{
-                    font-size: 0.8em;
-                }
-            }
-    
-            .inputWrapper{
-               
-            }
-        }
-    
-        input{
-            background: @color-black3;
-        }
-    }
-
-}
-
 
 @media only screen and (max-width: 768px){
 

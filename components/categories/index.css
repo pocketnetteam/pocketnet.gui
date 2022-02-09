@@ -1,1 +1,290 @@
-#categories{font-weight:500;color:#555770}#categories .pocketcaption span{margin-right:0}#categories .pocketcaption:hover{color:#00a3f7}#categories .pocketcaption:hover span{margin-right:20px}#categories .newlabel{background:#dc143c;color:#fff}#categories .tcaptiontable{display:flex;justify-content:space-between;width:auto}#categories .tcaptiontable .tcaption{padding-right:1em}#categories .tcaptiontable .buttons{display:flex;font-size:.8em;padding:0 1em}#categories .tcaptiontable .buttons>div{display:inline-block;font-size:1.2em}#categories .tcaptiontable .buttons>div.ticon{cursor:pointer;text-align:center}#categories .tcaptiontable .buttons>div.ticon i{font-size:1em}#categories .tcaptiontable .buttons>div.mlab{opacity:.5;padding-left:1em;cursor:pointer}#categories .tcaptiontable .buttons>div.mlab span{font-weight:100;font-size:.8em}#categories .tcaptiontable .buttons>div.mlab:hover{opacity:1;color:#f41a4d}#categories .tcaptiontable .buttons>div.addcategory:hover{color:#00a4ff}#categories .tcaptiontable .buttons>div.clearcategories{display:none}#categories .tcaptiontable .buttons>div.clearcategories.showed{display:table-cell}#categories .tcaptionwrapper{padding-top:1em;margin-bottom:.5em}#categories .tcaptionwrapper span{font-size:.8em;font-weight:600}#categories .tcaptionwrapper i{font-size:.8em}#categories .cat .cattable{width:100%}#categories .cat .cattable>div{padding:.5em 1em;padding-left:0}#categories .cat .cattable>div.catvalue{padding-right:0;white-space:nowrap;text-overflow:ellipsis}#categories .cat .cattable>div.catvalue i{width:30px;text-align:center}#categories .cat .cattable>div.catvalue i.fa-star{color:#ffae00}#categories .cat .cattable>div.catvalue .catname{font-size:.8em}#categories .cat .cattable>div.iconWrapper{width:1em}#categories .cat .cattable>div.iconWrapper i{font-size:.6em}#categories .cat .cattable>div.catcount{width:90px;text-align:right;font-weight:700}#categories .cat .cattable>div.catvalue{cursor:pointer;width:80%}#categories .cat .cattable>div.catvalue:hover{color:#00a4ff}#categories .cat .cattable>div.catcheck,#categories .cat .cattable>div.catedit{padding:0;text-align:center;width:33px;cursor:pointer;opacity:.2}#categories .cat .cattable>div.catcheck i,#categories .cat .cattable>div.catedit i{font-size:.8em}#categories .cat .cattable>div.catcheck:hover,#categories .cat .cattable>div.catedit:hover{color:#00a4ff}#categories .cat .cattable>div.catedit{width:33px;opacity:0}#categories .cat .cattable>div.minus{opacity:0;font-size:.8em;display:flex;justify-content:flex-end;align-items:center;position:relative;cursor:pointer;color:#555770}#categories .cat .cattable>div.minus i{top:0;left:0}#categories .cat .cattable>div.catedit{position:relative;right:10px}#categories .cat .cattable>div.catedit:hover,#categories .cat:hover .cattable>div.catcheck,#categories .cat:hover .cattable>div.catedit{opacity:1}#categories .cat:hover .cattable>div.catedit,#categories .cat:hover .cattable>div.minus{opacity:.5}#categories .cat:hover .cattable>div.catedit:hover,#categories .cat:hover .cattable>div.minus:hover{opacity:1}#categories .tg .selected{display:none}#categories .tg.selected .cat{color:#0992df}#categories .tg.selected.added{font-weight:700}#categories .tg.selected .unselected{display:none}#categories .tg.selected .selected{display:inline-block}#categories .tg.selected .cat .cattable>div.catcheck{opacity:1}#categories .ta .tg{display:block}#categories .ta .tg.hdn{display:none}#categories .ta .tg.excluded .catvalue{color:#555770;opacity:.5;pointer-events:none}#categories .ta .tg.excluded .minus{color:#f41a4d;opacity:1!important}#categories.showedallcats .showallcats{display:none}#categories.showedallcats .hideallcats,#categories.showedallcats .ta .tg,#categories.showedallcats .ta .tg.hdn{display:block}#categories .hideallcats,#categories .showallcats{padding:1em;padding-left:0;cursor:pointer;color:#8E90A6}#categories .hideallcats:hover,#categories .showallcats:hover{opacity:1;color:#00a4ff}#categories .hideallcats span,#categories .showallcats span{font-size:.8em}#categories .hideallcats i,#categories .showallcats i{font-weight:600;font-size:.8em}#categories .hideallcats .text,#categories .showallcats .text{margin-left:.5em}#categories .showallcats{display:block}#categories .hideallcats{display:none}.addcategorydialog .removeWrapper{position:absolute;bottom:1em;right:0}.addcategorydialog .header{padding-left:.5em}.addcategorydialog .btn1{background:0 0;border-color:transparent;color:#3c4146;text-decoration:underline}.addcategorydialog .btn1:hover{color:#00a4ff}.addcategorydialog .fieldwrapper,.addcategorydialog .namewrapper{padding:.5em 0}.addcategorydialog .fieldwrapper .label,.addcategorydialog .namewrapper .label{padding:.25em 0 .25em .5em}.addcategorydialog .fieldwrapper .label span,.addcategorydialog .namewrapper .label span{font-size:.8em}.addcategorydialog .namewrapper .inputWrapper input{width:100%;border:0;box-shadow:0 5px 10px -5px rgba(0,0,0,.4)}html.stblack #categories .cat{color:#b2abac}html.stblack #categories .cat:hover,html.stblack #categories .hideallcats:hover,html.stblack #categories .showallcats:hover{color:#00a4ff}html.stblack .addcategorydialog .btn1{color:#b2abac}html.stblack .addcategorydialog .btn1:hover{color:#00a4ff}html.stblack .addcategorydialog .fieldwrapper,html.stblack .addcategorydialog .namewrapper{padding:.5em 0}html.stblack .addcategorydialog .fieldwrapper .label,html.stblack .addcategorydialog .namewrapper .label{padding:.25em 0 .25em .5em}html.stblack .addcategorydialog .fieldwrapper .label span,html.stblack .addcategorydialog .namewrapper .label span{font-size:.8em}html.stblack .addcategorydialog input{background:#112035}@media only screen and (max-width:768px){#categories .cat .cattable .catedit,#categories .cat .cattable .minus{opacity:1!important}}
+#categories {
+  font-weight: 500;
+  color: rgb(var(--text-on-main-bg-color));
+}
+#categories .pocketcaption span {
+  margin-right: 0;
+}
+#categories .pocketcaption:hover {
+  color: rgb(var(--color-txt-ac));
+}
+#categories .pocketcaption:hover span {
+  margin-right: 20px;
+}
+#categories .newlabel {
+  background: crimson;
+  color: #fff;
+}
+#categories .tcaptiontable {
+  display: flex;
+  justify-content: space-between;
+  width: auto;
+}
+#categories .tcaptiontable .tcaption {
+  padding-right: 1em;
+}
+#categories .tcaptiontable .buttons {
+  display: flex;
+  padding-right: 0.5em;
+  font-size: 0.8em;
+  padding: 0 1em;
+}
+#categories .tcaptiontable .buttons > div {
+  display: inline-block;
+  font-size: 1.2em;
+}
+#categories .tcaptiontable .buttons > div.ticon {
+  cursor: pointer;
+  text-align: center;
+  /*.transition(0.3s);*/
+}
+#categories .tcaptiontable .buttons > div.ticon i {
+  font-size: 1em;
+}
+#categories .tcaptiontable .buttons > div.mlab {
+  opacity: 0.5;
+  padding-left: 1em;
+  cursor: pointer;
+  /*.transition(0.3s);*/
+}
+#categories .tcaptiontable .buttons > div.mlab span {
+  font-weight: 100;
+  font-size: 0.8em;
+}
+#categories .tcaptiontable .buttons > div.mlab:hover {
+  opacity: 1;
+  color: #F41A4D;
+}
+#categories .tcaptiontable .buttons > div.addcategory:hover {
+  color: rgb(var(--color-txt-ac));
+}
+#categories .tcaptiontable .buttons > div.clearcategories {
+  display: none;
+}
+#categories .tcaptiontable .buttons > div.clearcategories.showed {
+  display: table-cell;
+}
+#categories .tcaptionwrapper {
+  padding-top: 1em;
+  margin-bottom: 0.5em;
+}
+#categories .tcaptionwrapper span {
+  font-size: 0.8em;
+  font-weight: 600;
+}
+#categories .tcaptionwrapper i {
+  font-size: 0.8em;
+}
+#categories .cat .cattable {
+  width: 100%;
+}
+#categories .cat .cattable > div {
+  padding: 0.5em 1em;
+  padding-left: 0;
+}
+#categories .cat .cattable > div.catvalue {
+  padding-right: 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+#categories .cat .cattable > div.catvalue i {
+  width: 30px;
+  text-align: center;
+}
+#categories .cat .cattable > div.catvalue i.fa-star {
+  color: rgb(var(--color-star-yellow));
+}
+#categories .cat .cattable > div.catvalue .catname {
+  font-size: 0.8em;
+}
+#categories .cat .cattable > div.iconWrapper {
+  width: 1em;
+}
+#categories .cat .cattable > div.iconWrapper i {
+  font-size: 0.6em;
+}
+#categories .cat .cattable > div.catcount {
+  width: 90px;
+  text-align: right;
+  font-weight: 700;
+}
+#categories .cat .cattable > div.catvalue {
+  /*.transition(0.3s);*/
+  cursor: pointer;
+  width: 80%;
+}
+#categories .cat .cattable > div.catvalue:hover {
+  color: rgb(var(--color-txt-ac));
+}
+#categories .cat .cattable > div.catedit,
+#categories .cat .cattable > div.catcheck {
+  /*.transition(0.3s);*/
+  padding: 0;
+  text-align: center;
+  width: 33px;
+  cursor: pointer;
+  opacity: 0.2;
+}
+#categories .cat .cattable > div.catedit i,
+#categories .cat .cattable > div.catcheck i {
+  font-size: 0.8em;
+}
+#categories .cat .cattable > div.catedit:hover,
+#categories .cat .cattable > div.catcheck:hover {
+  color: rgb(var(--color-txt-ac));
+}
+#categories .cat .cattable > div.catedit {
+  width: 33px;
+  opacity: 0;
+}
+#categories .cat .cattable > div.minus {
+  opacity: 0;
+  font-size: 0.8em;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  color: rgb(var(--color-txt-gray));
+}
+#categories .cat .cattable > div.minus i {
+  top: 0;
+  left: 0;
+}
+#categories .cat .cattable > div.catedit {
+  position: relative;
+  right: 10px;
+}
+#categories .cat .cattable > div.catedit:hover {
+  opacity: 1;
+}
+#categories .cat:hover .cattable > div.catedit,
+#categories .cat:hover .cattable > div.catcheck {
+  opacity: 1;
+}
+#categories .cat:hover .cattable > div.catedit,
+#categories .cat:hover .cattable > div.minus {
+  opacity: 0.5;
+}
+#categories .cat:hover .cattable > div.catedit:hover,
+#categories .cat:hover .cattable > div.minus:hover {
+  opacity: 1;
+}
+#categories .tg .selected {
+  display: none;
+}
+#categories .tg.selected .cat {
+  color: rgb(var(--color-bg-ac-1));
+}
+#categories .tg.selected.added {
+  font-weight: 700;
+}
+#categories .tg.selected .unselected {
+  display: none;
+}
+#categories .tg.selected .selected {
+  display: inline-block;
+}
+#categories .tg.selected .cat .cattable > div.catcheck {
+  opacity: 1;
+}
+#categories .ta .tg {
+  display: block;
+}
+#categories .ta .tg.hdn {
+  display: none;
+}
+#categories .ta .tg.excluded .catvalue {
+  color: rgb(var(--color-txt-gray));
+  opacity: 0.5;
+  pointer-events: none;
+}
+#categories .ta .tg.excluded .minus {
+  color: #F41A4D;
+  opacity: 1!important;
+}
+#categories.showedallcats .showallcats {
+  display: none;
+}
+#categories.showedallcats .hideallcats {
+  display: block;
+}
+#categories.showedallcats .ta .tg {
+  display: block;
+}
+#categories.showedallcats .ta .tg.hdn {
+  display: block;
+}
+#categories .hideallcats,
+#categories .showallcats {
+  padding: 1em;
+  padding-left: 0;
+  cursor: pointer;
+  color: rgb(var(--neutral-grad-2));
+  /*.transition(0.3s);*/
+}
+#categories .hideallcats:hover,
+#categories .showallcats:hover {
+  opacity: 1;
+  color: #00a4ff;
+}
+#categories .hideallcats span,
+#categories .showallcats span {
+  font-size: 0.8em;
+}
+#categories .hideallcats i,
+#categories .showallcats i {
+  font-weight: 600;
+  font-size: 0.8em;
+}
+#categories .hideallcats .text,
+#categories .showallcats .text {
+  margin-left: 0.5em;
+}
+#categories .showallcats {
+  display: block;
+}
+#categories .hideallcats {
+  display: none;
+}
+.addcategorydialog .removeWrapper {
+  position: absolute;
+  bottom: 1em;
+  right: 0;
+}
+.addcategorydialog .header {
+  padding-left: 0.5em;
+}
+.addcategorydialog .btn1 {
+  background: transparent;
+  border-color: transparent;
+  color: rgb(var(--color-txt-gray));
+  text-decoration: underline;
+}
+.addcategorydialog .btn1:hover {
+  color: #00a4ff;
+}
+.addcategorydialog .fieldwrapper,
+.addcategorydialog .namewrapper {
+  padding: 0.5em 0;
+}
+.addcategorydialog .fieldwrapper .label,
+.addcategorydialog .namewrapper .label {
+  padding: 0.25em 0;
+  padding-left: 0.5em;
+}
+.addcategorydialog .fieldwrapper .label span,
+.addcategorydialog .namewrapper .label span {
+  font-size: 0.8em;
+}
+.addcategorydialog .namewrapper .inputWrapper input {
+  width: 100%;
+  border: 0;
+  box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.4);
+}
+@media only screen and (max-width: 768px) {
+  #categories .cat .cattable .catedit,
+  #categories .cat .cattable .minus {
+    opacity: 1!important;
+  }
+}

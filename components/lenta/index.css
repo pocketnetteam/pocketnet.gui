@@ -21,7 +21,7 @@
   position: relative;
 }
 #lenta .loader {
-  background: #fff;
+  background: rgb(var(--background-total-theme));
   padding: 3em 0;
   display: none;
   border-radius: 12px;
@@ -75,7 +75,7 @@
 #lenta .shares .share .sharecnt .removeDescription {
   display: none;
   padding-bottom: 1.5em;
-  color: #b2abac;
+  color: rgb(var(--neutral-grad-1));
 }
 #lenta .shares .share .sharecnt.deleted .cntscontent,
 #lenta .shares .share .sharecnt.deleted .repostWrapper,
@@ -92,7 +92,7 @@
   font-size: 0.9em;
   text-align: center;
   border-radius: 6px;
-  background: rgba(228, 221, 222, 0.05);
+  background: rgba(var(--neutral-grad-1), 0.05);
   margin-bottom: 2em;
   margin-top: 0.5em;
 }
@@ -144,7 +144,7 @@
   bottom: 0;
   padding: 0;
   text-align: center;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(var(--background-total-theme), 0.9);
 }
 #lenta .shares .usericon .sbs .preloader5,
 #lenta .shares .usericon .uloader .preloader5 {
@@ -210,7 +210,7 @@
 }
 #lenta .shares .repostShareWrapper .openetc i,
 #lenta .shares .repostShareWrapper .openetc span {
-  color: rgba(178, 171, 172, 0.8);
+  color: rgba(var(--neutral-grad-2), 0.8);
   font-size: 0.9em;
 }
 #lenta .shares .repostShareWrapper .openetc i {
@@ -218,9 +218,9 @@
 }
 #lenta .shares .repostShare {
   border-radius: 6px;
-  border: 1px solid rgba(228, 221, 222, 0.5);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.75);
-  border-right: 1px solid rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(var(--neutral-grad-1), 0.5);
+  border-bottom: 1px solid rgba(var(--background-total-theme), 0.75);
+  border-right: 1px solid rgba(var(--background-total-theme), 0.75);
   box-shadow: 0 5px 7px -5px rgba(0, 0, 0, 0.4);
   margin-left: 0.5em;
   margin-right: 0.5em;
@@ -255,7 +255,7 @@
   cursor: pointer;
   background: #000000;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.95281863) 0%, rgba(0, 0, 0, 0.94721639) 6%, rgba(0, 0, 0, 0.21612395) 76%, rgba(0, 0, 0, 0.09007353) 82%, rgba(0, 0, 0, 0) 100%);
-  color: #fff;
+  color: rgb(var(--text-on-bg-shadow-color));
   opacity: 0;
   -moz-transition: 0.3s;
   -o-transition: 0.3s;
@@ -272,7 +272,7 @@
 }
 #lenta .shares .videoWrapper .videoTips .videoTip span {
   font-size: 0.8em;
-  color: #fff;
+  color: rgb(var(--text-on-bg-shadow-color));
 }
 #lenta .shares .videoWrapper:hover .videoTips {
   opacity: 1;
@@ -292,7 +292,7 @@
   max-width: 450px;
 }
 #lenta .shares .commentsWrapper {
-  background: #FAFAFA;
+  background: rgb(var(--background-secondary-theme));
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
 }
@@ -303,10 +303,21 @@
   font-size: 2em;
 }
 #lenta .shares .share {
-  background: #fff;
+  background: rgb(var(--background-total-theme));
   margin-bottom: 0.5em;
   padding-bottom: 0;
   border-radius: 12px;
+  /*&:hover{
+				.metatable{
+					>div{
+						&.metapanel{
+							.metapanelitem{
+								opacity: 1;
+							}
+						}
+					}
+				}
+			}*/
 }
 #lenta .shares .share .commentsWrapperHb {
   min-height: 1em;
@@ -383,7 +394,7 @@
   right: 0;
   top: 0;
   bottom: 0;
-  background: rgba(255, 255, 255, 0.96);
+  background: rgba(var(--background-total-theme), 0.96);
   padding: 2em 1em;
   display: none;
 }
@@ -407,7 +418,7 @@
   background: transparent;
   border-color: transparent;
   text-decoration: underline;
-  color: #000;
+  color: rgb(var(--text-color));
 }
 #lenta .shares .share .subscribeWrapper .unsubscribeevent > div button:hover,
 #lenta .shares .share .subscribeWrapper .subscribeevent > div button:hover {
@@ -449,7 +460,7 @@
 }
 #lenta .shares .share .tempPreloader .label {
   padding-top: 0.5em;
-  color: #00a4ff;
+  color: rgb(var(--color-bg-ac));
   font-size: 0.8em;
 }
 #lenta .shares .share .tempPreloader .iconwr {
@@ -468,7 +479,7 @@
   margin: 0 auto;
   border-radius: 50%;
   margin-top: 1em;
-  color: #d0c9ca;
+  color: rgb(var(--neutral-grad-3));
   cursor: pointer;
   box-shadow: 0 5px 7px -5px rgba(0, 0, 0, 0.4);
   width: 30px;
@@ -480,17 +491,15 @@
 #lenta .shares .share .iconWrapper .aitem:hover,
 #lenta .shares .share .iconWrapper .additional:hover,
 #lenta .shares .share .iconWrapper .subscribe:hover {
-  box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.4);
-  border-color: #1e2328;
-  color: #1e2328;
+  color: rgb(var(--neutral-grad-4));
 }
 #lenta .shares .share .iconWrapper .notificationturn {
   display: none;
-  color: #d0c9ca;
+  color: rgb(var(--neutral-grad-3));
 }
 #lenta .shares .share .iconWrapper .aunsubscribe {
   display: none;
-  color: #00a4ff;
+  color: rgb(var(--neutral-grad-4));
 }
 #lenta .shares .share .shareTable {
   padding-top: 1em;
@@ -501,11 +510,8 @@
 #lenta .shares .share .shareTable .sbtnxs span {
   cursor: pointer;
 }
-#lenta .shares .share .shareTable .sbtnxs span i {
-  color: #076C34;
-}
 #lenta .shares .share .shareTable .sbtnxs span:hover {
-  color: #00a4ff;
+  color: rgb(var(--color-txt-ac));
 }
 #lenta .shares .share .shareTable .sbtnxs .notificationturn {
   display: none;
@@ -556,34 +562,11 @@
 }
 #lenta .shares .share .shareTable.emptywithrepost .meta .repostCaption i {
   font-size: 0.8em;
-  color: #00a4ff;
+  color: rgb(var(--color-txt-ac));
   width: 20px;
 }
 #lenta .shares .share .shareTable.emptywithrepost .meta .repostCaption span {
   font-size: 0.8em;
-}
-#lenta .shares .share:hover .iconWrapper .aitem {
-  color: #d0c9ca;
-  border: 1px solid #d0c9ca;
-}
-#lenta .shares .share:hover .iconWrapper .aitem:hover {
-  border-color: #00a4ff;
-  color: #00a4ff;
-}
-#lenta .shares .share:hover .iconWrapper .additional,
-#lenta .shares .share:hover .iconWrapper .subscribe {
-  color: #d0c9ca;
-  border: 1px solid #d0c9ca;
-}
-#lenta .shares .share:hover .iconWrapper .additional:hover,
-#lenta .shares .share:hover .iconWrapper .subscribe:hover {
-  border-color: #00a4ff;
-  color: #00a4ff;
-}
-#lenta .shares .share:hover .iconWrapper .additional:hover i,
-#lenta .shares .share:hover .iconWrapper .subscribe:hover i {
-  transform: rotate(90deg);
-  -webkit-transform: rotate(90deg);
 }
 #lenta .shares .share .jsPlayerPreview {
   height: 100%;
@@ -596,7 +579,6 @@
   width: 100%;
   height: 100%;
   cursor: pointer;
-  /*.transition(0.3s);*/
 }
 #lenta .shares .share .jsPlayerPreview .wpl:hover {
   opacity: 0.9;
@@ -607,17 +589,15 @@
   bottom: 6px;
   right: 6px;
   border-radius: 6px;
-  background: rgba(10, 12, 23, 0.008);
-  color: #e4ddde;
+  background: rgba(var(--color-shadow-base), 0.8);
+  color: rgb(var(--text-on-bg-shadow-color));
   padding: 0.25em 0.5em;
   padding-top: 0.25em;
   font-size: 0.8em;
-  text-shadow: 1px 1px 3px #323232;
-  background: rgba(10, 12, 23, 0.75);
 }
 #lenta .shares .share .jsPlayerPreview .statswrapper.live,
 #lenta .shares .share .jsPlayerPreview .durationWrapper.live {
-  background: rgba(255, 17, 0, 0.8);
+  background: rgba(--color-bg-orange, 0.8);
 }
 #lenta .shares .share .jsPlayerPreview .statswrapper i,
 #lenta .shares .share .jsPlayerPreview .durationWrapper i,
@@ -664,7 +644,7 @@
   padding-right: 0;
 }
 #lenta .shares .share .authorTable > div.authorCell .pinnedIcon {
-  color: #d0c9ca;
+  color: rgba(var(--neutral-grad-3), 0.8);
 }
 #lenta .shares .share .metatable {
   display: flex;
@@ -676,6 +656,35 @@
 }
 #lenta .shares .share .metatable > div.metapanel {
   vertical-align: top;
+  /*.downloadMetapanel {
+
+							&.canDownload {
+								.downloadingBtn, .downloadedBtn {
+									display: none;
+								}
+							}
+							&.downloading {
+								.canDownloadBtn, .downloadedBtn {
+									display: none;
+								}
+							}
+							&.downloaded {
+								.canDownloadBtn, .downloadingBtn {
+									display: none;
+								}
+								.deleteBtn {
+									color:  #ff6d6d;
+								}
+								.downloadDone {
+									color: green;
+								}
+							}
+							&.invisible {
+								.canDownloadBtn, .downloadingBtn, .downloadedBtn {
+									display: none;
+								}
+							}
+						}*/
 }
 #lenta .shares .share .metatable > div.metapanel .metapanelitem {
   cursor: pointer;
@@ -684,33 +693,7 @@
   margin-right: auto;
   text-align: center;
   border-radius: 50%;
-  color: rgba(30, 35, 40, 0.6);
-}
-#lenta .shares .share .metatable > div.metapanel .downloadMetapanel.canDownload .downloadingBtn,
-#lenta .shares .share .metatable > div.metapanel .downloadMetapanel.canDownload .downloadedBtn {
-  display: none;
-}
-#lenta .shares .share .metatable > div.metapanel .downloadMetapanel.downloading .canDownloadBtn,
-#lenta .shares .share .metatable > div.metapanel .downloadMetapanel.downloading .downloadedBtn {
-  display: none;
-}
-#lenta .shares .share .metatable > div.metapanel .downloadMetapanel.downloaded .canDownloadBtn,
-#lenta .shares .share .metatable > div.metapanel .downloadMetapanel.downloaded .downloadingBtn {
-  display: none;
-}
-#lenta .shares .share .metatable > div.metapanel .downloadMetapanel.downloaded .deleteBtn {
-  color: #ff6d6d;
-}
-#lenta .shares .share .metatable > div.metapanel .downloadMetapanel.downloaded .downloadDone {
-  color: green;
-}
-#lenta .shares .share .metatable > div.metapanel .downloadMetapanel.invisible .canDownloadBtn,
-#lenta .shares .share .metatable > div.metapanel .downloadMetapanel.invisible .downloadingBtn,
-#lenta .shares .share .metatable > div.metapanel .downloadMetapanel.invisible .downloadedBtn {
-  display: none;
-}
-#lenta .shares .share:hover .metatable > div.metapanel .metapanelitem {
-  opacity: 1;
+  color: rgba(var(--neutral-grad-3), 0.8);
 }
 #lenta .shares .share .meta {
   padding-top: 0.75em;
@@ -725,10 +708,9 @@
 #lenta .shares .share .meta .authorCell a {
   font-weight: 700;
   cursor: pointer;
-  /*.transition(0.3s);*/
-}
-#lenta .shares .share .meta .authorCell a:hover {
-  color: #00a4ff;
+  /*&:hover{
+							color : @color-main;
+						}*/
 }
 #lenta .shares .share .imagecaption {
   font-weight: 700;
@@ -751,7 +733,7 @@
   width: 140px;
   height: 140px;
   float: left;
-  background: #e4ddde;
+  background: rgb(var(--background-secondary-theme));
   border-radius: 6px;
 }
 #lenta .shares .share .images .imagesWrapper .image {
@@ -820,8 +802,8 @@
   position: relative;
 }
 #lenta .shares .share .images .videoOpen .playicon {
-  background: rgba(0, 0, 0, 0.5);
-  color: #fff;
+  background: rgba(var(--color-shadow-base), 0.5);
+  color: rgb(var(--text-on-bg-shadow-color));
   position: absolute;
   right: 0.5em;
   bottom: 0.5em;
@@ -834,7 +816,7 @@
   font-size: 0.8em;
 }
 #lenta .shares .share .sharecaption {
-  color: #0e1c2b;
+  /*color : @color-black2;*/
   margin-bottom: 0.5em;
   max-width: 590px;
   cursor: pointer;
@@ -847,7 +829,7 @@
 }
 #lenta .shares .share .sharecaption a {
   text-decoration: underline;
-  color: #00a4ff;
+  color: rgb(var(--color-bg-ac));
 }
 #lenta .shares .share .message {
   margin-bottom: 1em;
@@ -855,7 +837,7 @@
 }
 #lenta .shares .share .message a {
   text-decoration: underline;
-  color: #00a4ff;
+  color: rgb(var(--color-txt-ac));
   text-overflow: ellipsis;
   word-break: break-all;
 }
@@ -870,7 +852,7 @@
   padding-left: 0;
   padding-right: 0;
   text-decoration: none;
-  color: #00a4ff;
+  color: rgb(var(--color-txt-ac));
 }
 #lenta .shares .share .shareContent {
   cursor: pointer;
@@ -902,7 +884,7 @@
 #lenta .shares .share .urlhtmlcontent .ogtable > div.cnt .title {
   max-width: 400px;
   font-weight: 700;
-  color: #030f1b;
+  color: rgb(var(--color-txt-gray-dark));
 }
 #lenta .shares .share .urlhtmlcontent .ogtable > div.cnt .description {
   max-width: 400px;
@@ -916,12 +898,12 @@
 }
 #lenta .shares .share .url span.linkedstyle {
   font-size: 0.8em;
-  color: #00a4ff;
+  color: rgb(var(--color-txt-ac));
   text-decoration: underline;
 }
 #lenta .shares .share .url .videoviews span {
   font-size: 0.8em;
-  color: #00a4ff;
+  color: rgb(var(--color-txt-ac));
 }
 #lenta .shares .share .url .urlcnt {
   overflow: hidden;
@@ -993,7 +975,7 @@
 }
 #lenta .shares .share .tags > div span {
   font-size: 0.8em;
-  color: #b2abac;
+  color: rgb(var(--neutral-grad-4));
 }
 #lenta .shares .share .tags .newlabel {
   background: #ff0565;
@@ -1005,10 +987,9 @@
 #lenta .shares .share .sys span {
   cursor: pointer;
   font-size: 0.9em;
-  color: #b2abac;
+  color: rgb(var(--neutral-grad-4));
 }
 #lenta .shares .share .panel {
-  /*margin-bottom : 2 * @rhythm;*/
   border-radius: 0;
 }
 #lenta .shares .share .panel .itemwr {
@@ -1017,16 +998,6 @@
 #lenta .shares .share .panel .itemwr > div {
   vertical-align: middle;
   padding-bottom: 0.5em;
-  /*&.count{
-							padding-left : @rhythm;
-
-							span{
-								font-weight: 700;
-								font-size: 0.8em;
-								color : @color-gray;
-							}
-							
-						}*/
 }
 #lenta .shares .share .panel .itemwr > div.iconwr {
   width: 40px;
@@ -1041,6 +1012,34 @@
 }
 #lenta .shares .share .panel > div {
   float: left;
+  /*&.donate,
+					&.promote{
+						color : rgb(var(--color-bg-ac));
+
+						.count{
+							span{
+								color : rgb(var(--color-bg-ac));
+								font-weight: 700;
+								font-size : 0.8em;
+							}
+							
+						}
+					}*/
+  /*&.nact{
+						cursor: default;
+						
+						.icon{
+							cursor: default;
+						}
+						&:hover{
+							.icon{
+								border-radius : 0%;
+								box-shadow: none;
+								color : @color-bright;
+								background: transparent;
+							}
+						}
+					}*/
 }
 #lenta .shares .share .panel > div:nth-last-child(1) {
   margin-right: 0;
@@ -1049,7 +1048,7 @@
   height: 40px;
   line-height: 40px;
   text-align: center;
-  color: #00A3F7;
+  /*color : @color-bright;*/
   cursor: pointer;
 }
 #lenta .shares .share .panel > div .count {
@@ -1060,9 +1059,8 @@
   line-height: 40px;
   text-align: center;
   font-size: 1em;
-  color: #00A3F7;
+  color: rgb(var(--color-bg-ac));
   cursor: pointer;
-  /*.transition(0.3s);*/
   border-radius: 40%;
 }
 #lenta .shares .share .panel > div.right {
@@ -1073,25 +1071,6 @@
   text-align: center;
   width: 40px;
 }
-#lenta .shares .share .panel > div.donate,
-#lenta .shares .share .panel > div.promote {
-  color: #00a4ff;
-}
-#lenta .shares .share .panel > div.donate .count span,
-#lenta .shares .share .panel > div.promote .count span {
-  color: #00a4ff;
-  font-weight: 700;
-  font-size: 0.8em;
-}
-#lenta .shares .share .panel > div.discussion .count {
-  padding-right: 0.5em / 2;
-}
-#lenta .shares .share .panel > div.discussion .count b {
-  color: #ff6e84;
-}
-#lenta .shares .share .panel > div.discussion .count span {
-  font-weight: 300;
-}
 #lenta .shares .share .panel > div:hover .icon {
   opacity: 0.7;
 }
@@ -1099,8 +1078,8 @@
   margin-top: 0.5em;
   display: flex;
   align-items: center;
-  background: #00a4ff;
-  color: #ffff;
+  background: rgb(var(--color-bg-ac-bright));
+  color: rgb(var(--text-on-bg-ac-color));
   border-radius: 8px;
   padding: 4px 8px;
   cursor: pointer;
@@ -1113,61 +1092,16 @@
 }
 #lenta .shares .share .panel > div.sharesocial .label,
 #lenta .shares .share .panel > div.sharesocial .icon {
-  color: #ff4800;
+  color: rgb(var(--color-txt-orange));
 }
 #lenta .shares .share .panel > div.sharesocial:hover .label {
-  color: #ff4800;
+  color: rgb(var(--color-txt-orange));
 }
 #lenta .shares .share .panel > div.sharesocial:hover .icon {
   border-radius: 0;
   box-shadow: none;
-  color: #ff4800;
+  color: rgb(var(--color-txt-orange));
   background: transparent;
-}
-#lenta .shares .share .panel > div.nact {
-  cursor: default;
-}
-#lenta .shares .share .panel > div.nact .icon {
-  cursor: default;
-}
-#lenta .shares .share .panel > div.nact:hover .icon {
-  border-radius: 0%;
-  box-shadow: none;
-  color: #00A3F7;
-  background: transparent;
-}
-#lenta .shares .share .pollWrapper {
-  margin-top: 1.5em;
-  margin-bottom: 1em;
-}
-#lenta .shares .share .pollWrapper .list {
-  margin-top: 0.5em;
-}
-#lenta .shares .share .pollWrapper .list .item-progress {
-  min-height: 40px;
-  margin-bottom: 10px;
-}
-#lenta .shares .share .pollWrapper .list .item-progress .top,
-#lenta .shares .share .pollWrapper .list .item-progress .bottom {
-  display: flex;
-  align-items: center;
-}
-#lenta .shares .share .pollWrapper .list .item-progress .percent {
-  width: 45px;
-  text-align: right;
-  padding-right: 15px;
-}
-#lenta .shares .share .pollWrapper .list .item-progress .check {
-  color: #00a4ff;
-  display: flex;
-  justify-content: flex-end;
-  width: 45px;
-  padding-right: 15px;
-}
-#lenta .shares .share .pollWrapper .list .item-progress progress {
-  width: 100%;
-  max-width: 350px;
-  color: #00a4ff;
 }
 #lenta .shares .share .exitFull {
   display: none;
@@ -1184,7 +1118,7 @@
   right: 0;
   bottom: 0;
   top: 0;
-  background: rgba(14, 28, 43, 0.9);
+  background: rgba(var(--color-shadow-base), 0.9);
   padding-top: 0;
   border-radius: 0;
 }
@@ -1225,14 +1159,6 @@
 #lenta .shares .share.fullScreenVideo .videoviews {
   padding-left: 1em;
 }
-#lenta .shares .share.fullScreenVideo #comments {
-  /*.list{
-						.comment{
-							content-visibility: auto;
-							contain-intrinsic-size: 200px;
-						}
-					}*/
-}
 #lenta .shares .share.fullScreenVideo #comments .caption {
   padding-left: 1em;
   padding-right: 1.5em;
@@ -1255,12 +1181,6 @@
 }
 #lenta .shares .share.fullScreenVideo .exitFull {
   display: block;
-}
-#lenta .shares .share.fullScreenVideo .medium-insert-embeds {
-  position: relative;
-}
-#lenta .shares .share.fullScreenVideo .medium-insert-embeds:after {
-  display: none;
 }
 #lenta .shares .share.fullScreenVideo .showMore {
   display: none;
@@ -1325,12 +1245,12 @@
   display: none;
 }
 #lenta .shares .share.fullScreenVideo .statswrapperExtended {
-  background: #fff;
+  background: rgb(var(--background-total-theme));
 }
 #lenta .shares .share.fullScreenVideo .work {
   margin: 0 auto;
   max-width: 960px;
-  background: #fff;
+  background: rgb(var(--background-total-theme));
   padding: 0;
 }
 #lenta .shares .share.fullScreenVideo .work .iconWrapper {
@@ -1408,32 +1328,6 @@
   -webkit-transition: 0s;
   transition: 0s;
 }
-#lenta .shares .share.vstars .stars:not(.liked) .starWrapper {
-  /*&:nth-child(1){
-								
-								animation: vstars 0.9s ease  0.1s infinite ;
-							}
-
-							&:nth-child(2){
-								
-								animation: vstars 0.9s ease  0.3s infinite ;
-							}
-
-							&:nth-child(3){
-								
-								animation: vstars 0.9s ease  0.5s infinite ;
-							}
-
-							&:nth-child(4){
-								
-								animation: vstars 0.9s ease  0.6s infinite ;
-							}
-
-							&:nth-child(5){
-								
-								animation: vstars 0.9s ease  0.9s infinite ;
-							}*/
-}
 #lenta .shares .showmorebyauthor {
   text-align: center;
   padding: 1em;
@@ -1449,7 +1343,7 @@
   right: 0;
   top: 0;
   bottom: 0;
-  background: rgba(255, 255, 255, 0.98);
+  background: rgba(var(--background-total-theme), 0.98);
   z-index: 10;
   align-items: center;
 }
@@ -1482,19 +1376,19 @@
   display: none;
   padding: 4em 0;
   padding-bottom: 4em;
-  color: #d0c9ca;
+  color: rgb(var(--neutral-grad-4));
   text-align: center;
-  background: #fff;
+  background: rgb(var(--background-total-theme));
 }
 #lenta .zero .tou,
 #lenta .ended .tou {
   padding: 2em 0;
-  color: #00a4ff;
+  color: rgb(var(--color-txt-ac));
 }
 #lenta .seemore,
 #lenta .loadprev,
 #lenta .loadmore {
-  background: #FFF;
+  background: rgb(var(--background-total-theme));
   padding: 1em 0;
   text-align: center;
 }
@@ -1534,7 +1428,7 @@
 }
 #lenta .networkErrorMessage i {
   font-size: 2em;
-  color: rgba(0, 164, 255, 0.15);
+  color: rgba(var(--color-txt-ac), 0.15);
 }
 #lenta.networkError .networkErrorMessage {
   display: block;
@@ -1569,7 +1463,6 @@
 }
 #lenta.mainvideo .shares .share {
   background: transparent;
-  color: #b2abac;
   padding: 0;
   margin-bottom: 0;
   overflow: hidden;
@@ -1594,7 +1487,6 @@
   display: block!important;
 }
 #lenta.mainvideo .shares .share .sharecaption {
-  color: #3c4146;
   white-space: inherit;
   padding-right: 1em;
 }
@@ -1662,7 +1554,6 @@
   display: none;
 }
 #lenta.mainvideo .shares .share .tags > div span {
-  color: #b2abac;
   opacity: 0.7;
   text-decoration: none;
 }
@@ -1701,7 +1592,6 @@
 #lenta.mainvideo .shares .shareTable .authorTable > div.authorCell {
   padding-left: 0.5em;
   padding-right: 0;
-  color: #3c4146;
 }
 #lenta.mainvideo .shares .shareTable .authorTable > div a {
   font-size: 0.9em;
@@ -1713,7 +1603,7 @@
   text-overflow: ellipsis;
 }
 #lenta.mainvideo .shares .shareTable .authorTable > div.datetime span {
-  color: #000;
+  color: rgb(var(--text-color));
 }
 #lenta.mainvideo .shares .shareTable .authorTable > div span {
   font-size: 0.9em;
@@ -1721,7 +1611,7 @@
 }
 #lenta.mainvideo .shares .shareTable .metatable > div.metapanel {
   width: 40px;
-  color: #b2abac;
+  color: rgb(var(--text-color));
 }
 #lenta.mainvideo .shares .shareTable .metatable > div.metapanel .metapanelitem {
   opacity: 1;
@@ -1799,11 +1689,6 @@
   flex-direction: row;
   align-items: center;
   width: 100%;
-}
-#lenta.horizontal.compact .shares .shareTable .anothercntswrk > div {
-  /*&:nth-last-child(1){
-								display: none;
-							}*/
 }
 #lenta.horizontal.compact .shares .shareTable .anothercntswrk > div.formeta {
   width: 32px;
@@ -1904,14 +1789,14 @@
 #lenta .shares .share .sharearticle .articleend .buttonOpenWrapper button {
   width: 130px;
   border-radius: 2px;
-  background: rgba(14, 28, 43, 0.1);
+  background: rgba(var(--color-shadow-base), 0.1);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border: 1px solid transparent!important;
 }
 #lenta .shares .share .sharearticle .shareBgCaption .buttonOpenWrapper button:hover,
 #lenta .shares .share .sharearticle .articleend .buttonOpenWrapper button:hover {
-  background: rgba(14, 28, 43, 0.01);
+  background: rgba(var(--color-shadow-base), 0.01);
 }
 #lenta .shares .share .sharearticle .shareBgCaption .divider,
 #lenta .shares .share .sharearticle .articleend .divider {
@@ -1919,7 +1804,7 @@
   margin-bottom: 0.5em;
   height: 1px;
   width: 110px;
-  background: #fff;
+  background: rgb(var(--background-total-theme));
 }
 #lenta .shares .share .sharearticle .shareBgCaption .tags,
 #lenta .shares .share .sharearticle .articleend .tags {
@@ -1928,7 +1813,7 @@
 }
 #lenta .shares .share .sharearticle .shareBgCaption .tags div span,
 #lenta .shares .share .sharearticle .articleend .tags div span {
-  color: #fff;
+  color: rgb(var(--text-on-bg-ac-color));
 }
 #lenta .shares .share .sharearticle .shareBgCaption {
   height: 425px;
@@ -1944,7 +1829,7 @@
   flex-direction: column;
   justify-content: flex-end;
   z-index: 1;
-  color: #fff;
+  color: rgb(var(--text-on-bg-ac-color));
   text-align: center;
   overflow: hidden;
 }
@@ -1953,7 +1838,7 @@
   font-family: Georgia, serif;
   max-width: 85%;
   margin: 0 auto;
-  color: #fff;
+  color: rgb(var(--text-on-bg-ac-color));
   max-height: 150px;
   overflow-x: hidden;
   overflow-y: auto;
@@ -1982,7 +1867,7 @@
   height: 3.5em;
   line-height: 3.5em;
   border-radius: 3.5em;
-  color: #fff;
+  color: rgb(var(--text-on-bg-ac-color));
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -2025,7 +1910,7 @@
   bottom: 0;
 }
 #lenta .shares .share .sharearticle .shareBgCaption.smallimage .articleCover {
-  background-color: #0e1c2b;
+  background-color: rgb(var(--color-shadow-base));
   background-size: 100px auto!important;
 }
 #lenta .shares .share .sharearticle .shareBgCaption.caption_small .captionmult {
@@ -2052,7 +1937,7 @@
   bottom: 0.5em;
 }
 #lenta .shares .share .sharearticle .shareBgCaption.verticalcover .captioncnt .sharecaption {
-  color: #030f1b;
+  color: rgb(var(--text-color));
 }
 #lenta .shares .share .sharearticle .shareBgCaption.verticalcover .blackmatte {
   display: none;
@@ -2062,26 +1947,26 @@
 }
 #lenta .shares .share .sharearticle .shareBgCaption.verticalcover .captioncnt {
   justify-content: center;
-  color: #030f1b;
+  color: rgb(var(--text-color));
 }
 #lenta .shares .share .sharearticle .shareBgCaption.verticalcover .divider {
-  background: #030f1b;
+  background: rgb(var(--text-color));
 }
 #lenta .shares .share .sharearticle .shareBgCaption.verticalcover .buttonOpenWrapper {
   margin-bottom: 0.5em;
 }
 #lenta .shares .share .sharearticle .shareBgCaption.verticalcover .buttonOpenWrapper button {
-  background: #0e1c2b;
+  background: rgb(var(--color-shadow-base));
 }
 #lenta .shares .share .sharearticle .shareBgCaption.verticalcover .buttonOpenWrapper button:hover {
-  background: rgba(14, 28, 43, 0.9);
+  background: rgba(var(--color-shadow-base), 0.9);
 }
 #lenta .shares .share .sharearticle .shareBgCaption.verticalcover .tags div span {
-  color: #030f1b;
+  color: rgb(var(--text-color));
 }
 #lenta .shares .share .sharearticle .shareBgCaption.verticalcover .starstoppanel .iconwrapper,
 #lenta .shares .share .sharearticle .shareBgCaption.verticalcover .socialsharewrapper .iconwrapper {
-  color: #030f1b;
+  color: rgb(var(--text-color));
 }
 #lenta .shares .share .sharearticle .articlecontent {
   padding-top: 4em;
@@ -2104,7 +1989,7 @@
 #lenta .shares .share .sharearticle .removeDescription {
   display: none;
   padding: 1.5em;
-  color: #7c7c7c;
+  color: rgb(var(--neutral-grad-2));
 }
 #lenta .shares .share .sharearticle.deleted .starstoppanel,
 #lenta .shares .share .sharearticle.deleted .socialsharewrapper,
@@ -2143,7 +2028,7 @@
   }
   #lenta .shares .share .sharearticle .shareBgCaption.verticalcover .captioncnt .sharecaption {
     font-size: 2em;
-    color: #fff;
+    color: rgb(var(--text-on-bg-ac-color));
   }
   #lenta .shares .share .sharearticle .shareBgCaption.verticalcover .blackmatte {
     display: block;
@@ -2153,17 +2038,17 @@
   }
   #lenta .shares .share .sharearticle .shareBgCaption.verticalcover .captioncnt {
     justify-content: flex-end;
-    color: #fff;
+    color: rgb(var(--text-on-bg-ac-color));
   }
   #lenta .shares .share .sharearticle .shareBgCaption.verticalcover .divider {
-    background: #fff;
+    background: rgb(var(--text-on-bg-ac-color));
   }
   #lenta .shares .share .sharearticle .shareBgCaption.verticalcover .tags div span {
-    color: #fff;
+    color: rgb(var(--text-on-bg-ac-color));
   }
   #lenta .shares .share .sharearticle .shareBgCaption.verticalcover .starstoppanel .iconwrapper,
   #lenta .shares .share .sharearticle .shareBgCaption.verticalcover .socialsharewrapper .iconwrapper {
-    color: #fff;
+    color: rgb(var(--text-on-bg-ac-color));
   }
   #lenta .shares .share .sharearticle .articlecontent {
     padding-left: 0.5em;
@@ -2211,65 +2096,89 @@
     transform: translateY(-220px);
   }
 }
-.dialog.donation {
-  z-index: 1300;
-}
-.dialog.donation .addresses {
-  max-height: 200px;
-  overflow-y: auto;
-  background: #EFEFEF;
-  border-radius: 12px;
-}
-.dialog.donation .buttons {
-  display: none;
-}
-.dialog.donation .donations .part {
-  margin-top: 0.5em;
-}
-.dialog.donation .donations .part:nth-child(1) {
-  margin-top: 0;
-}
-.dialog.donation .donations .part .label {
-  text-align: center;
-  color: #1e2328;
-  padding: 1.5em;
-}
-.dialog.donation .donations .part .buttonwrapper {
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-  text-align: center;
-}
-.dialog.donation .donations .anotherdonation .addressWrapper {
-  padding: 0.5em / 2;
-  border-bottom: 1px solid #e4ddde;
-}
-.dialog.donation .donations .anotherdonation .addressWrapper:nth-last-child(1) {
-  border: 0;
-}
-.dialog.donation .donations .anotherdonation .address {
-  width: auto;
-  margin: 0 auto;
-}
-.dialog.donation .donations .anotherdonation .address > div {
-  vertical-align: middle;
-  padding: 0.5em;
-}
-.dialog.donation .donations .anotherdonation .address > div.copywr {
-  width: 40px;
-}
-.dialog.donation .donations .anotherdonation .address > div .copy {
-  cursor: pointer;
-  text-align: center;
-  color: #d0c9ca;
-  /*.transition(0.3s);*/
-}
-.dialog.donation .donations .anotherdonation .address > div .copy:hover {
-  color: #00a4ff;
-}
-.dialog.donation .donations .anotherdonation .address > div.system {
-  width: 100px;
-  text-align: center;
-}
+/*
+	.dialog{
+		&.donation{
+			z-index: 1300;
+
+			.addresses{
+				max-height: 200px;
+				overflow-y: auto;
+				background: #EFEFEF;
+				border-radius: 12px;
+			}
+
+			.buttons{
+				display: none;
+			}
+
+			.donations{
+				.part{
+
+					margin-top : @rhythm;
+
+					&:nth-child(1){
+						margin-top : 0;
+					}
+
+					.label{
+						text-align: center;
+						color : @color-gray2;
+						padding : 3 * @rhythm;
+					}
+
+					.buttonwrapper{
+						margin-top : @rhythm;
+						margin-bottom : @rhythm;
+						text-align: center;
+					}
+				}
+
+				.anotherdonation{
+
+					.addressWrapper{
+						padding : @rhythm / 2;
+						border-bottom: 1px solid @color-gray-slight;
+
+						&:nth-last-child(1){
+							border: 0;
+						}
+					}
+					.address{
+						width: auto;
+						margin : 0 auto;
+						>div{
+							vertical-align: middle;
+							padding : @rhythm;
+
+							&.copywr{
+								width: 40px;
+							}
+
+							.copy{
+
+								cursor: pointer;
+								text-align: center;
+								color : @color-gray-light;
+						
+
+								&:hover{
+									color : @color-main;
+								}
+							}
+
+							&.system{
+								width: 100px;
+								text-align: center;
+							}
+						}
+				
+					}
+				}
+			}
+		}
+	}
+*/
 @keyframes vstars {
   0% {
     opacity: 0.8;
@@ -2279,357 +2188,6 @@
   }
   100% {
     opacity: 0.8;
-  }
-}
-html.stblack #lenta .loader {
-  background: #0e1c2b;
-}
-html.stblack #lenta .shares .usericon .sbs,
-html.stblack #lenta .shares .usericon .uloader {
-  background: rgba(14, 28, 43, 0.9);
-}
-html.stblack #lenta .shares .videoWrapper .videoTips {
-  background: #000000;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.95281863) 0%, rgba(0, 0, 0, 0.94721639) 6%, rgba(0, 0, 0, 0.21612395) 76%, rgba(0, 0, 0, 0.09007353) 82%, rgba(0, 0, 0, 0) 100%);
-  color: #e4ddde;
-}
-html.stblack #lenta .shares .commentsWrapper {
-  background: #0a0c17;
-}
-html.stblack #lenta .shares .share {
-  background: #0a0c17;
-}
-html.stblack #lenta .shares .share .subscribeWrapper {
-  background: rgba(14, 28, 43, 0.96);
-}
-html.stblack #lenta .shares .share .shareContent .tempPreloader .label {
-  color: #00a4ff;
-}
-html.stblack #lenta .shares .share .iconWrapper .aitem,
-html.stblack #lenta .shares .share .iconWrapper .additional,
-html.stblack #lenta .shares .share .iconWrapper .subscribe {
-  color: #b2abac;
-}
-html.stblack #lenta .shares .share .iconWrapper .aitem:hover,
-html.stblack #lenta .shares .share .iconWrapper .additional:hover,
-html.stblack #lenta .shares .share .iconWrapper .subscribe:hover {
-  box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.4);
-  border-color: #00a4ff;
-  color: #00a4ff;
-}
-html.stblack #lenta .shares .share .iconWrapper .aunsubscribe {
-  color: #00a4ff;
-}
-html.stblack #lenta .shares .share .shareTable .sbtnxs span i {
-  color: #076C34;
-}
-html.stblack #lenta .shares .share .shareTable .sbtnxs span:hover {
-  color: #00a4ff;
-}
-html.stblack #lenta .shares .share .shareTable.emptywithrepost .meta .repostCaption i {
-  color: #00a4ff;
-}
-html.stblack #lenta .shares .share:hover .iconWrapper .aitem {
-  color: #d0c9ca;
-  border: 1px solid #d0c9ca;
-}
-html.stblack #lenta .shares .share:hover .iconWrapper .aitem:hover {
-  border-color: #00a4ff;
-  color: #00a4ff;
-}
-html.stblack #lenta .shares .share:hover .iconWrapper .additional,
-html.stblack #lenta .shares .share:hover .iconWrapper .subscribe {
-  color: #d0c9ca;
-  border: 1px solid #d0c9ca;
-}
-html.stblack #lenta .shares .share:hover .iconWrapper .additional:hover,
-html.stblack #lenta .shares .share:hover .iconWrapper .subscribe:hover {
-  border-color: #00a4ff;
-  color: #00a4ff;
-}
-html.stblack #lenta .shares .share .jsPlayerLoading {
-  background: #000000;
-}
-html.stblack #lenta .shares .share .metatable > div.metapanel .metapanelitem {
-  color: #e4ddde;
-}
-html.stblack #lenta .shares .share .metatable > div.metapanel .metapanelitem:hover {
-  color: #0a0c17;
-}
-html.stblack #lenta .shares .share .images .imagesWrapper {
-  background: #030f1b;
-}
-html.stblack #lenta .shares .share .images .videoOpen {
-  position: relative;
-}
-html.stblack #lenta .shares .share .images .videoOpen .playicon {
-  background: rgba(0, 0, 0, 0.5);
-  color: #00a4ff;
-}
-html.stblack #lenta .shares .share .sharecaption {
-  color: #e4ddde;
-}
-html.stblack #lenta .shares .share .sharecaption a {
-  color: #00A3F7;
-}
-html.stblack #lenta .shares .share .message a {
-  color: #00A3F7;
-}
-html.stblack #lenta .shares .share .showmoretable > div .line {
-  background: #00A3F7;
-}
-html.stblack #lenta .shares .share .showMore {
-  color: #00A3F7;
-}
-html.stblack #lenta .shares .share .urlhtmlcontent .ogtable > div.cnt .title {
-  color: #00A3F7;
-}
-html.stblack #lenta .shares .share .url span.linkedstyle {
-  color: #00A3F7;
-}
-html.stblack #lenta .shares .share .tags > div span {
-  color: #b2abac;
-}
-html.stblack #lenta .shares .share .sys span {
-  color: #076C34;
-}
-html.stblack #lenta .shares .share .panel .itemwr > div.count span {
-  color: #e4ddde;
-}
-html.stblack #lenta .shares .share .panel > div .icon {
-  color: #00A3F7;
-}
-html.stblack #lenta .shares .share .panel > div.donate,
-html.stblack #lenta .shares .share .panel > div.promote {
-  color: #00A3F7;
-}
-html.stblack #lenta .shares .share .panel > div.donate .count span,
-html.stblack #lenta .shares .share .panel > div.promote .count span {
-  color: #00A3F7;
-}
-html.stblack #lenta .shares .share .panel > div:hover .icon {
-  border-radius: 50%;
-  box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.4);
-  color: #0a0c17;
-  background: #00a4ff;
-}
-html.stblack #lenta .shares .share .panel > div.sharesocial .label,
-html.stblack #lenta .shares .share .panel > div.sharesocial .icon {
-  color: #ff6e84;
-}
-html.stblack #lenta .shares .share .panel > div.sharesocial:hover .label {
-  color: #00A3F7;
-}
-html.stblack #lenta .shares .share .panel > div.sharesocial:hover .icon {
-  color: #00A3F7;
-  border-radius: 0;
-  box-shadow: none;
-  color: #00a4ff;
-  background: transparent;
-}
-html.stblack #lenta .shares .share .panel > div.nact:hover .icon {
-  color: #030f1b;
-}
-html.stblack #lenta .shares .share.fullScreenVideo .work {
-  background: #0a0c17;
-}
-html.stblack #lenta .shares .share.fullScreenVideo .statswrapperExtended {
-  background: #0a0c17;
-}
-html.stblack #lenta .shares .showmorebyauthor {
-  background: rgba(1, 128, 255, 0.1);
-  color: #00A3F7;
-}
-html.stblack #lenta .shares .showmorebyauthor:hover {
-  color: rgba(255, 255, 255, 0.7);
-  background: rgba(0, 163, 247, 0.3);
-}
-html.stblack #lenta .shares .share .blockAuthor {
-  background: rgba(10, 12, 23, 0.9);
-}
-html.stblack #lenta .zero {
-  color: #b2abac;
-  background: #112035;
-}
-html.stblack #lenta .ended {
-  color: #b2abac;
-  background: #00091b;
-}
-html.stblack #lenta .ended .tou {
-  color: #00a4ff;
-}
-html.stblack #lenta .seemore,
-html.stblack #lenta .loadprev,
-html.stblack #lenta .loadmore {
-  background: #00091b;
-}
-html.stblack #lenta .networkErrorMessage i {
-  color: rgba(0, 164, 255, 0.15);
-}
-html.stblack #lenta.mainvideo .loader,
-html.stblack #lenta.mainvideo .zero,
-html.stblack #lenta.mainvideo .ended,
-html.stblack #lenta.mainvideo .seemore,
-html.stblack #lenta.mainvideo .loadprev,
-html.stblack #lenta.mainvideo .loadmore {
-  background: transparent;
-}
-html.stblack #lenta.mainvideo .shares .authorgroup .share {
-  background: transparent;
-}
-html.stblack #lenta.mainvideo .shares .authorgroup .url span {
-  color: #d0c9ca;
-}
-html.stblack #lenta.mainvideo .shares .shareTable .authorTable > div.authorCell {
-  color: #d0c9ca;
-}
-html.stblack #lenta .shares .share {
-  border-radius: 12px;
-}
-html.stblack #lenta.horizontal .shares .share {
-  background: transparent;
-  border-radius: 0;
-}
-html.stblack #lenta .shares .share .sys span {
-  color: #b2abac;
-}
-html.stblack #lenta .shares .share .sharearticle .shareBgCaption .buttonOpenWrapper,
-html.stblack #lenta .shares .share .sharearticle .articleend .buttonOpenWrapper {
-  padding-bottom: 1em;
-  padding-top: 1em;
-}
-html.stblack #lenta .shares .share .sharearticle .shareBgCaption .buttonOpenWrapper button,
-html.stblack #lenta .shares .share .sharearticle .articleend .buttonOpenWrapper button {
-  color: #FFF;
-  background: rgba(14, 28, 43, 0.5);
-  border: 1px solid transparent!important;
-}
-html.stblack #lenta .shares .share .sharearticle .shareBgCaption .buttonOpenWrapper button:hover,
-html.stblack #lenta .shares .share .sharearticle .articleend .buttonOpenWrapper button:hover {
-  background: rgba(14, 28, 43, 0.1);
-}
-html.stblack #lenta .shares .share .sharearticle .shareBgCaption .divider,
-html.stblack #lenta .shares .share .sharearticle .articleend .divider {
-  background: #0f101a;
-}
-html.stblack #lenta .shares .share .sharearticle .shareBgCaption .tags div span,
-html.stblack #lenta .shares .share .sharearticle .articleend .tags div span {
-  color: #FFF;
-}
-html.stblack #lenta .shares .share .sharearticle .shareBgCaption .blackmatte {
-  background: #000000;
-  background: linear-gradient(0deg, #000000 0%, rgba(255, 255, 255, 0) 100%);
-}
-html.stblack #lenta .shares .share .sharearticle .shareBgCaption .captioncnt {
-  color: #fff;
-}
-html.stblack #lenta .shares .share .sharearticle .shareBgCaption .captioncnt .sharecaption {
-  color: #fff;
-}
-html.stblack #lenta .shares .share .sharearticle .shareBgCaption .starstoppanel .iconwrapper,
-html.stblack #lenta .shares .share .sharearticle .shareBgCaption .socialsharewrapper .iconwrapper {
-  color: #fff;
-}
-html.stblack #lenta .shares .share .sharearticle .shareBgCaption.smallimage .articleCover {
-  background-color: #0e1c2b;
-}
-html.stblack #lenta .shares .share .sharearticle .shareBgCaption.verticalcover .captioncnt .sharecaption {
-  color: #e2e2e2;
-}
-html.stblack #lenta .shares .share .sharearticle .shareBgCaption.verticalcover .captioncnt {
-  color: #e2e2e2;
-}
-html.stblack #lenta .shares .share .sharearticle .shareBgCaption.verticalcover .divider {
-  background: #e2e2e2;
-}
-html.stblack #lenta .shares .share .sharearticle .shareBgCaption.verticalcover .buttonOpenWrapper {
-  margin-bottom: 0.5em;
-}
-html.stblack #lenta .shares .share .sharearticle .shareBgCaption.verticalcover .buttonOpenWrapper button {
-  background: #00a4ff;
-  color: #FFF;
-}
-html.stblack #lenta .shares .share .sharearticle .shareBgCaption.verticalcover .buttonOpenWrapper button:hover {
-  background: rgba(0, 164, 255, 0.9);
-}
-html.stblack #lenta .shares .share .sharearticle .shareBgCaption.verticalcover .tags div span {
-  color: #e2e2e2;
-}
-html.stblack #lenta .shares .share .sharearticle .shareBgCaption.verticalcover .starstoppanel .iconwrapper,
-html.stblack #lenta .shares .share .sharearticle .shareBgCaption.verticalcover .socialsharewrapper .iconwrapper {
-  color: #e2e2e2;
-}
-html.stblack #lenta .shares .share .sharearticle .removeDescription {
-  color: #7c7c7c;
-}
-.downloadLoader {
-  color: #00A3F7;
-  font-size: 3px;
-  margin-left: 10px;
-  margin-top: 9px;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  position: relative;
-  text-indent: -9999em;
-  -webkit-animation: download4 1.3s infinite linear;
-  animation: download4 1.3s infinite linear;
-  -webkit-transform: translateZ(0);
-  -ms-transform: translateZ(0);
-  transform: translateZ(0);
-}
-@-webkit-keyframes download4 {
-  0%,
-  100% {
-    box-shadow: 0 -3em 0 0.2em, 2em -2em 0 0em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 0;
-  }
-  12.5% {
-    box-shadow: 0 -3em 0 0, 2em -2em 0 0.2em, 3em 0 0 0, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 -1em;
-  }
-  25% {
-    box-shadow: 0 -3em 0 -0.5em, 2em -2em 0 0, 3em 0 0 0.2em, 2em 2em 0 0, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 -1em;
-  }
-  37.5% {
-    box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0em 0 0, 2em 2em 0 0.2em, 0 3em 0 0em, -2em 2em 0 -1em, -3em 0em 0 -1em, -2em -2em 0 -1em;
-  }
-  50% {
-    box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 0em, 0 3em 0 0.2em, -2em 2em 0 0, -3em 0em 0 -1em, -2em -2em 0 -1em;
-  }
-  62.5% {
-    box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 0, -2em 2em 0 0.2em, -3em 0 0 0, -2em -2em 0 -1em;
-  }
-  75% {
-    box-shadow: 0em -3em 0 -1em, 2em -2em 0 -1em, 3em 0em 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 0, -3em 0em 0 0.2em, -2em -2em 0 0;
-  }
-  87.5% {
-    box-shadow: 0em -3em 0 0, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 0, -3em 0em 0 0, -2em -2em 0 0.2em;
-  }
-}
-@keyframes download4 {
-  0%,
-  100% {
-    box-shadow: 0 -3em 0 0.2em, 2em -2em 0 0em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 0;
-  }
-  12.5% {
-    box-shadow: 0 -3em 0 0, 2em -2em 0 0.2em, 3em 0 0 0, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 -1em;
-  }
-  25% {
-    box-shadow: 0 -3em 0 -0.5em, 2em -2em 0 0, 3em 0 0 0.2em, 2em 2em 0 0, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 -1em;
-  }
-  37.5% {
-    box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0em 0 0, 2em 2em 0 0.2em, 0 3em 0 0em, -2em 2em 0 -1em, -3em 0em 0 -1em, -2em -2em 0 -1em;
-  }
-  50% {
-    box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 0em, 0 3em 0 0.2em, -2em 2em 0 0, -3em 0em 0 -1em, -2em -2em 0 -1em;
-  }
-  62.5% {
-    box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 0, -2em 2em 0 0.2em, -3em 0 0 0, -2em -2em 0 -1em;
-  }
-  75% {
-    box-shadow: 0em -3em 0 -1em, 2em -2em 0 -1em, 3em 0em 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 0, -3em 0em 0 0.2em, -2em -2em 0 0;
-  }
-  87.5% {
-    box-shadow: 0em -3em 0 0, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 0, -3em 0em 0 0, -2em -2em 0 0.2em;
   }
 }
 @media only screen and (max-width: 1024px) {
@@ -2645,9 +2203,6 @@ html.stblack #lenta .shares .share .sharearticle .removeDescription {
   }
   #lenta .shares {
     overflow: hidden;
-    /*.videoTips{
-				display: none;
-			}*/
   }
   #lenta .shares .work {
     padding: 0;
@@ -2697,32 +2252,7 @@ html.stblack #lenta .shares .share .sharearticle .removeDescription {
     overflow: visible;
   }
   #lenta .shares .videoWrapper .videoTips {
-    cursor: default;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    cursor: pointer;
-    background: #000000;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.95281863) 0%, rgba(0, 0, 0, 0.94721639) 6%, rgba(0, 0, 0, 0.21612395) 76%, rgba(0, 0, 0, 0.09007353) 82%, rgba(0, 0, 0, 0) 100%);
-    color: #fff;
     opacity: 1;
-    -moz-transition: 0.3s;
-    -o-transition: 0.3s;
-    -webkit-transition: 0.3s;
-    transition: 0.3s;
-  }
-  #lenta .shares .videoWrapper .videoTips .videoTip {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    text-align: center;
-    padding: 1em;
-  }
-  #lenta .shares .videoWrapper .videoTips .videoTip span {
-    font-size: 0.8em;
-    color: #fff;
   }
   #lenta .shares .videoWrapper:hover .videoTips {
     opacity: 1;
@@ -2739,7 +2269,7 @@ html.stblack #lenta .shares .share .sharearticle .removeDescription {
   }
   #lenta .shares .share {
     padding: 0;
-    background: #fff;
+    background: rgb(var(--background-total-theme));
     margin-bottom: 0.5em;
     cursor: default;
     padding-bottom: 0;
@@ -2846,20 +2376,11 @@ html.stblack #lenta .shares .share .sharearticle .removeDescription {
     padding-left: 1em;
   }
   #lenta .shares .share.fullScreenVideo {
-    background: #0a0c17;
+    background: rgb(var(--color-shadow-base));
   }
   #lenta .shares .share .jsPlayerLoading {
     width: 100%;
     height: 300px;
-    background: #000000;
-  }
-  #lenta .shares .share .jsPlayerLoading .jsPlayerLoadingD {
-    width: 100%;
-    height: 100%;
-  }
-  #lenta .shares .share .jsPlayerLoading .jsPlayerLoadingD > div {
-    vertical-align: middle;
-    text-align: center;
   }
   #lenta .shares .share .meta .metatable > div {
     margin-right: 0;
@@ -2966,37 +2487,6 @@ html.stblack #lenta .shares .share .sharearticle .removeDescription {
   #lenta .shares .share .url .urlcnt {
     padding: 0 0.5em;
   }
-  #lenta .shares .share .panel > div.donate .count,
-  #lenta .shares .share .panel > div.promote .count {
-    display: none;
-  }
-  #lenta .shares .share .panel > div.donate {
-    float: left;
-    margin-right: 1em;
-  }
-  #lenta .shares .share .panel > div.discussion {
-    margin-right: 0;
-    position: relative;
-    display: block;
-  }
-  #lenta .shares .share .panel > div.discussion > div {
-    display: block;
-  }
-  #lenta .shares .share .panel > div.discussion .count {
-    position: absolute;
-    right: 5px;
-    bottom: 5px;
-    padding: 0;
-  }
-  #lenta .shares .share .panel > div.discussion .count b {
-    display: block;
-    font-size: 0.7em;
-    color: #ff6e84;
-    background: rgba(255, 255, 255, 0.9);
-  }
-  #lenta .shares .share .panel > div.discussion .count span {
-    display: none;
-  }
   #lenta .shares .share .exitFull {
     right: 1em;
   }
@@ -3082,11 +2572,13 @@ html.tablet.fullscreen #lenta .fullScreenVideo #comments,
 html.mobile.fullscreen #lenta .fullScreenVideo #comments {
   display: none;
 }
+/*
 .dialog.deleteDownloadVideoDialog .buttons .btn1 {
-  background-color: #F41A4D;
-  border-color: #F41A4D;
-}
-.dialog.deleteDownloadVideoDialog .buttons .btn1:hover {
-  background-color: initial;
-  color: #F41A4D;
-}
+	background-color: @color-bad;
+	border-color: @color-bad;
+
+	&:hover {
+		background-color: initial;
+		color: @color-bad;
+	}
+}*/
