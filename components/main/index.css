@@ -273,6 +273,7 @@
   margin-right: 0;
   padding-top: 0.5em;
 }
+#main.videomain .mainpanelsvicell,
 #main.videomain .mainpanelcell {
   display: none;
 }
