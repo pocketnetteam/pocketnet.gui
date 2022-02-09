@@ -21,6 +21,50 @@ var post = (function () {
 
 		var actions = {
 
+			pkoin : function(id){
+
+				var share = self.app.platform.sdk.node.shares.storage.trx[id];
+
+				if (share){
+
+
+					self.app.platform.sdk.node.transactions.get.balance(function(amount){
+
+						var balance = amount.toFixed(3);
+
+						var userinfo = deep(app, 'platform.sdk.usersl.storage.' + share.address) || {
+							address : share.address,
+							addresses : [],
+						}
+	
+						self.nav.api.load({
+							open : true,
+							href : 'pkoin',
+							history : true,
+							inWnd : true,
+		
+							essenseData : {
+								userinfo: userinfo,
+								balance : balance,
+								id : id,
+								embedding : {
+									type : 'pkoin',
+									id : share.address,
+									close : function(){
+										renders.articles();
+									},
+								},	
+							}
+						})
+
+					})
+				
+
+				}
+
+			},
+
+
 			openPost : function(id, clbk){
 
 				self.closeContainer()
@@ -735,6 +779,14 @@ var post = (function () {
 
 		var events = {
 
+			pkoin : function(){
+
+				var shareId = $(this).closest('.share').attr('id');
+
+				actions.pkoin(shareId)
+
+			},
+
 			toregistration: function(){
 
 				self.sdk.registrations.redirect = 'post?s=' + share.txid
@@ -1243,7 +1295,9 @@ var post = (function () {
 
 						if(!el.share) return
 
-						el.stars = el.share.find('.forstars');	
+						el.stars = el.share.find('.forstars');
+						
+						_p.el.find('.panel .pkoin').on('click', events.pkoin)
 
 						if (ed.repost)
 							_p.el.find('.showMoreArticle, .openoriginal').on('click', function(){
@@ -1592,6 +1646,7 @@ var post = (function () {
 		}
 
 		var initEvents = function () {
+
 
 			self.app.platform.matrixchat.clbks.SHOWING.post = function(v){
 				if(v && player){
