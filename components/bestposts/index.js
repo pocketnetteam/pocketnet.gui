@@ -219,7 +219,6 @@ var bestposts = (function(){
 					return array;
 				}
 
-				
 				if (essenseData.type === 'recommended'){
 
 					if (sharesRecommended.length){
@@ -315,8 +314,7 @@ var bestposts = (function(){
 
 				var data = {};
 
-				essenseData = deep(p, 'settings.essenseData') || {};
-				data.header = essenseData.header || ''
+				data.header = p.settings.essenseData.header || ''
 
 				clbk(data);
 
@@ -335,6 +333,8 @@ var bestposts = (function(){
 				el.c = p.el.find('#' + self.map.id);
 				el.posts = el.c.find('.posts');
 				el.loader = el.c.find('.loader');
+
+				essenseData = p.essenseData;
 
 				state.load(renders.page);
 
