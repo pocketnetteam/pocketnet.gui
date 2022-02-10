@@ -1,0 +1,14 @@
+name: Launch Tests
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: autotest
+
+    steps:
+      - name: Start
+        run: C:\actions-runner\autotest\AutomaticTesting.exe -all
+
