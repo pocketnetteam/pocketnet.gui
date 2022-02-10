@@ -3317,6 +3317,12 @@ Platform = function (app, listofnodes) {
             return _el
         },
 
+        switchProtocol: function() {
+            /** Restarting chat UI */
+            app.platform.matrixchat.destroy();
+            app.platform.matrixchat.init();
+        },
+
         electron: {
             storage: {},
 
@@ -8102,6 +8108,12 @@ Platform = function (app, listofnodes) {
                                 enable : m[i].value
                             });
 
+                        }
+
+                        if (i == 'onlysecureconnection') {
+                            console.log('Switching protocols');
+
+                            self.api.switchProtocol();
                         }
 
 
