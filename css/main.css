@@ -13,6 +13,7 @@
   --background-secondary-theme: 250, 250, 250;
   --background-main: 240, 242, 245;
   --background-main-contrast: 10, 12, 23;
+  --color-medium-theme: 199, 200, 217;
   --neutral-grad-0: 235,235,240;
   --neutral-grad-1: 227,228,235;
   --neutral-grad-2: 142,144,166;
@@ -35,6 +36,7 @@
   --color-txt-orange: 255, 72, 0;
   --color-star-yellow: 255,174, 0;
   --color-shadow-base: 2, 18, 24;
+  --color-shadow-var: 32, 35, 42;
   --text-on-bg-shadow-color: 255, 255, 255;
 }
 :root[theme='black'] {
@@ -43,6 +45,7 @@
   --background-secondary-theme: 24, 36, 52;
   --background-main: 14, 28, 43;
   --background-main-contrast: 240, 242, 245;
+  --color-medium-theme: 99, 100, 117;
   --neutral-grad-0: 16,16,17;
   --neutral-grad-1: 34,34,37;
   --neutral-grad-2: 43,43,49;
@@ -63,6 +66,7 @@
   --color-bg-orange: 255, 72, 0;
   --text-txt-orange: 255, 72, 0;
   --color-shadow-base: 12, 14, 53;
+  --color-shadow-var: 18, 18, 26;
   --text-on-bg-shadow-color: 214, 219, 230;
 }
 .disable-hover,
@@ -422,6 +426,25 @@ input[type="number"] {
   border-radius: 1px;
   padding: 0.5em;
   border: 1px solid rgb(var(--neutral-grad-2));
+}
+textarea {
+  background: rgb(var(--background-hidden-layer));
+  color: rgb(var(--text-color));
+  border: 1px solid rgb(var(--neutral-grad-2));
+}
+#application .emojionearea,
+#application .emojionearea.form-control {
+  background: rgb(var(--background-hidden-layer));
+  color: rgb(var(--text-color));
+  border: 1px solid rgb(var(--neutral-grad-2));
+}
+#application .emojionearea .emojionearea-editor,
+#application .emojionearea.form-control .emojionearea-editor {
+  color: rgb(var(--text-color));
+}
+#application .emojionearea :placeholder-shown,
+#application .emojionearea.form-control :placeholder-shown {
+  color: rgb(var(--neutral-grad-4));
 }
 .image,
 img {
@@ -865,6 +888,7 @@ pie {
   white-space: nowrap;
   position: relative;
   font-size: 1.1em;
+  color: rgb(var(--neutral-grad-3));
 }
 .stars .starsWrapper {
   overflow: hidden;
@@ -4292,6 +4316,7 @@ html.mobile.fullscreen #navigationWrapper {
 }
 .usericon .letter {
   font-size: 1.5em;
+  color: rgb(var(--color-txt-gray-dark));
 }
 .usericon:hover .realperson {
   opacity: 0.7;

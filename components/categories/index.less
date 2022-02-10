@@ -27,6 +27,7 @@
         display : flex;
         justify-content: space-between;
         width : auto;
+        align-items: center;
 
         .tcaption{
             padding-right: 2 * @rhythm;
@@ -320,13 +321,11 @@
         padding : 2 * @rhythm;
         padding-left: 0;
         cursor: pointer;
-        color : rgb(var(--neutral-grad-2));
-
-        /*.transition(0.3s);*/
+        color : rgba(var(--color-txt-gray), 0.7);
+        .transition(0.3s);
 
         &:hover{
-            opacity: 1;
-            color : @color-main;
+            color : rgb(var(--color-txt-ac));
         }
         span{
             font-size: 0.8em;
@@ -370,7 +369,7 @@
             text-decoration: underline;
     
             &:hover{
-                color : @color-main;
+                color : rgb(var(--color-txt-ac));
             }
     }
 

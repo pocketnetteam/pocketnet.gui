@@ -371,7 +371,7 @@ var staking = (function(){
 
 					} else {
 
-						self.shell({
+						/*self.shell({
 							inner : html,
 							name : 'lastpricesmall',
 							data : {
@@ -382,7 +382,7 @@ var staking = (function(){
 		
 							el : el.c.find('.lastpriceCnt' + currency)
 		
-						})
+						})*/
 
 					}
 	

@@ -48,8 +48,8 @@
   justify-content: space-between;
   padding-bottom: 0.75em;
   padding-top: 0.75em;
-  border-top: 1px solid rgb(var(--background-secondary-theme));
-  border-bottom: 1px solid rgb(var(--background-secondary-theme));
+  border-top: 1px solid rgba(var(--color-medium-theme), 0.5);
+  border-bottom: 1px solid rgba(var(--color-medium-theme), 0.5);
   margin-top: 1em;
 }
 #leftpanel .best.on .fire {
@@ -102,8 +102,8 @@
   padding: 1em 0;
   margin-top: 2em;
   margin-bottom: 2em;
-  border-top: 1px solid rgb(var(--background-secondary-theme));
-  border-bottom: 1px solid rgb(var(--background-secondary-theme));
+  border-top: 1px solid rgba(var(--color-medium-theme), 0.5);
+  border-bottom: 1px solid rgba(var(--color-medium-theme), 0.5);
 }
 #leftpanel .subtop .tcaption span {
   font-size: 0.8em;

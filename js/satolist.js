@@ -7675,10 +7675,9 @@ Platform = function (app, listofnodes) {
                     if (document.documentElement.hasAttribute('theme')){
                         document.documentElement.removeAttribute('theme');
                     }
-                    else{
-                        console.log('t.all[value].rootid', t.all[value].rootid)
-                        document.documentElement.setAttribute('theme', t.all[value].rootid);
-                    }
+
+                    document.documentElement.setAttribute('theme', t.all[value].rootid);
+                    
 
                     $('meta[name="theme-color"]').attr('content', t.all[value].color).attr('media',  t.all[value].media)
                         

@@ -691,7 +691,7 @@ var menu = (function(){
 					
 				}
 			},
-			newaccount: {
+			/*newaccount: {
 				
 				click : function(){
 					self.app.mobile.vibration.small()
@@ -702,7 +702,7 @@ var menu = (function(){
 					})	
 				}
 
-			},
+			},*/
 
 			state : {
 				init : function(el){
