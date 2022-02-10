@@ -212,6 +212,7 @@
   #leftpanel {
     padding-left: 1em;
     padding-bottom: 3em;
+    color: rgb(var(--text-color));
   }
   #leftpanel > div {
     font-size: 1em;

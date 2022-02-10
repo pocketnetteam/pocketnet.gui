@@ -259,6 +259,11 @@
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
 }
+#comments .list .comments-operations .operations-wrapper .vc_valuecustom .vc_textInput {
+  border: 0;
+  background: transparent;
+  border-radius: 0;
+}
 #comments .list .comments-operations .operations-wrapper .vc_valuecustom .vc_inputWrapper {
   border: 0;
   text-align: center;

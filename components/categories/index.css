@@ -96,7 +96,7 @@
   color: rgb(var(--color-star-yellow));
 }
 #categories .cat .cattable > div.catvalue .catname {
-  font-size: 0.8em;
+  font-size: 0.9em;
 }
 #categories .cat .cattable > div.iconWrapper {
   width: 1em;
