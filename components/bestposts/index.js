@@ -9,11 +9,13 @@ var bestposts = (function(){
 		var primary = deep(p, 'history');
 
 		var el;
-		var shares = [],
+		var sharesRecommended = [], 
+			sharesTop = [],
 			cnt = 50,
 			end = false,
 			extra = null,
-			page = 0;
+			page = 0,
+			essenseData;
 
 		var loading;
 
@@ -175,7 +177,7 @@ var bestposts = (function(){
 					el :   el.posts,
 					data : {
 						shares : shares,
-						extra : extra
+						extra : extra,
 					},
 
 					inner : append
@@ -217,33 +219,78 @@ var bestposts = (function(){
 					return array;
 				}
 
-				if (shares.length){
+				
+				if (essenseData.type === 'recommended'){
 
-					el.c.show();
-					
-					if (clbk){
-						clbk(shuffle(shares).slice(0, 5));
+					if (sharesRecommended.length){
+
+						el.c.show();
+						
+						if (clbk){
+							clbk(shuffle(sharesRecommended).slice(0, 5));
+						}
+
+					} else {
+
+						self.app.platform.sdk.posts.getRecommendedPosts(function(c, error){
+
+
+							if (!error && c.length){
+	
+								el.c.show();
+	
+								var postIds = c.map(function(post){
+									return post.contentid;
+								})
+		
+								self.app.platform.sdk.node.shares.getbyid(postIds, function(c, error){
+				
+									sharesRecommended = c
+									
+									if (clbk){
+										clbk(shuffle(sharesRecommended).slice(0, 5))
+									}
+								})
+	
+							}
+	
+						})
+
 					}
+
 
 				} else {
 
-					var parameters = ['15', '4320', '', self.app.localization.key]
+					if (sharesTop.length){
 
-					self.sdk.node.shares.get(parameters, function (c, error) {
-
-						if (!error && c.length){
-
-							el.c.show();
-							
-							shares = c
-								
-							if (clbk){
-								clbk(shuffle(shares).slice(0, 5))
-							}
+						el.c.show();
+						
+						if (clbk){
+							clbk(shuffle(sharesTop).slice(0, 5));
 						}
 
+					} else {
 
-					}, 'gethotposts')
+						var parameters = ['15', '4320', '', self.app.localization.key]
+
+						self.sdk.node.shares.get(parameters, function (c, error) {
+	
+							if (!error && c.length){
+	
+								el.c.show();
+								
+								sharesTop = c
+									
+								if (clbk){
+									clbk(shuffle(sharesTop).slice(0, 5))
+								}
+							}
+	
+	
+						}, 'gethotposts')
+
+					}
+
 
 
 				}
@@ -268,6 +315,9 @@ var bestposts = (function(){
 
 				var data = {};
 
+				essenseData = deep(p, 'settings.essenseData') || {};
+				data.header = essenseData.header || ''
+
 				clbk(data);
 
 			},
@@ -280,7 +330,6 @@ var bestposts = (function(){
 			},
 			
 			init : function(p){
-
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id);

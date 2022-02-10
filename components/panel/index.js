@@ -55,9 +55,8 @@ var panel = (function(){
 
 			},
 
-			topusers : function(){
+			topusers : function(){		
 				
-
 				self.nav.api.load({
 
 					open : true,
@@ -75,9 +74,8 @@ var panel = (function(){
 				})
 			},
 
-			bestposts : function(){
+			topposts : function(){		
 				
-
 				self.nav.api.load({
 
 					open : true,
@@ -86,6 +84,8 @@ var panel = (function(){
 					animation : false,
 
 					essenseData : {
+						type: 'best',
+						header: self.app.localization.e('topPosts')
 					},
 					
 					clbk : function(e, p){
@@ -101,11 +101,13 @@ var panel = (function(){
 				self.nav.api.load({
 
 					open : true,
-					id : 'recommendedposts',
+					id : 'bestposts',
 					el : el.recommendedposts,
 					animation : false,
 
 					essenseData : {
+						type: 'recommended',
+						header: self.app.localization.e('recommendedPosts')
 					},
 					
 					clbk : function(e, p){
@@ -133,9 +135,6 @@ var panel = (function(){
 						}
 	
 					}, function(p){
-
-						
-
 
 						if (clbk)
 							clbk()
@@ -383,7 +382,6 @@ var panel = (function(){
 				renders.lastcomments()
 
 
-			//renders.recommendedposts();
 
 			if (
 				deep(self.app.platform, 'released.vidgets.staking') && 
@@ -397,8 +395,11 @@ var panel = (function(){
 				})
 			*/
 			
-			//renders.topusers();
-			//renders.bestposts();
+			renders.topusers();
+
+			renders.topposts();
+
+			renders.recommendedposts();
 
 
 		}

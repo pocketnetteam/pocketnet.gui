@@ -1,309 +1,207 @@
 @import "../../css/__cssvar";
 
 #topusers{
-	background: #fff;
-	border-radius: 12px;
 
+	.wrp{
 	    
-    .rcptwrp{
-        background: #fff;
-        border-radius: 12px;
-        position : relative;
-    }   
+		.rcptwrp{
+			background: #fff;
+			border-radius: 12px;
+			position : relative;
+		}   
 
-    
+		
 
-    .tcaptionwrapper{
-        display: flex;
-        align-items: center;    
+		.tcaptionwrapper{
+			display: flex;
+			align-items: center;    
 
-        .vc_valuecustom{
-            width: 75px;
-            font-size: 0.8em;
-            font-weight: 500;
-            .vc_textInput .vc_iconWrapper,
-            .vc_textInput .vc_inputWrapper{
-                border : 0;
-            }
-        }
-    }
-    .tcaption{
-        display: flex;
-        justify-content: space-between;
-        flex-grow: 2;
-        font-weight: 100;
-        padding: 12px 16px;
-        border-bottom: 1px solid rgba(229,229,229,.5);
+			.vc_valuecustom{
+				width: 75px;
+				font-size: 0.8em;
+				font-weight: 500;
+				.vc_textInput .vc_iconWrapper,
+				.vc_textInput .vc_inputWrapper{
+					border : 0;
+				}
+			}
+		}
+		.tcaption{
+			display: flex;
+			justify-content: space-between;
+			flex-grow: 2;
+			font-weight: 100;
+			padding: 12px 16px;
+			border-bottom: 1px solid rgba(229,229,229,.5);
 
-        .authors{
-            font-weight : 700;
-        }
+			.authors{
+				font-weight : 700;
+			}
 
-        .rating{
-            color : #555770;
-        }
+			.rating{
+				color : #555770;
+			}
 
-       
-        
-    }
+		
+			
+		}
 
-	.caption{
-		font-weight: 100;
-		font-size: 2em;
-		margin-bottom: 2 * @rhythm;
-	}
+		.caption{
+			font-weight: 100;
+			font-size: 2em;
+			margin-bottom: 2 * @rhythm;
+		}
 
-	.loaderWrapper{
-		display : none;
-		padding : 2 * @rhythm;
-		text-align: center;
-	}
-
-	&.loading{
 		.loaderWrapper{
-			display: block;
-		}
-	}
-
-	.subscribebuttonstop{
-
-
-		.subscribe, .unsubscribe{
-			position: relative;
-	
-	
-			.fa-plus{
-				position: absolute;
-				top: 3px;
-				left: 14px;
-				font-size: @rhythm;
-			}
-	
-		}
-	
-		.subscribe{
-			color : @color-gray-mlight;
+			display : none;
+			padding : 2 * @rhythm;
+			text-align: center;
 		}
 
-		.unsubscribe{
-			color: @color-good;
+		&.loading{
+			.loaderWrapper{
+				display: block;
+			}
 		}
-	}
+
+		.subscribebuttonstop{
 
 
-
-
-	.users{
-		padding-bottom: @rhythm;
-
-		.user{
-			padding : @rhythm 0;
-			margin-top: @rhythm;
-			margin-bottom: @rhythm;
-			padding-left: @rhythm * 2;
-			padding-right: @rhythm * 3;
-
-			.addressTable{
-				cursor: pointer;
-
-
-
-				>div{
-
-					vertical-align: middle;
-	
-					&.iconWrapper{
-						width: 50px;
-						text-align: center;
-
-						.usericon{
-							height: 40px;
-							width: 40px;
-
-							.letter{
-								position: relative;
-								bottom: 4px;
-								left: 1px;
-							}
-						}
-					}
-	
-					&.label{
-						text-overflow: ellipsis;
-						overflow: hidden;
-						white-space: nowrap;
-	
-						.cur{
-							color : @color-main;
-
-						}
-
-						.top{
-							display: flex;
-							.name{
-								font-weight: 600;
-								font-size: .9em;
-								max-width: 120px;
-								text-overflow: ellipsis;
-								white-space: nowrap;
-								overflow: hidden;
-							}
-
-							.reputation{
-								position: relative;
-								bottom: 2px;
-								left: 3px;
-								font-size: .6em;
-								color: @color-main;
-
-
-							}
-
-						}
-
-						.light{
-							font-size : 0.7em;
-							color : @color-gray;
-						}
-					}
-	
-					&.extra{
-						width: 20px;
-						text-align: right;
-					}
+			.subscribe, .unsubscribe{
+				position: relative;
+		
+		
+				.fa-plus{
+					position: absolute;
+					top: 3px;
+					left: 14px;
+					font-size: @rhythm;
 				}
-	
+		
+			}
+		
+			.subscribe{
+				color : @color-gray-mlight;
 			}
 
-			.blockingWrapper{
-				display : none;
+			.unsubscribe{
+				color: @color-good;
 			}
+		}
 
-			&.userblocking{
-	
-				.subscribebuttonstop{
-					display: none;
-				}
-	
-				.blockingWrapper{
-					display: inline;
-				}
 
-				
-			}
-	
-			.subscribebuttonstop{
-				.unsubscribe{
-					display : none;
-				}
+		.users{
+			padding-bottom: @rhythm;
 
-	
-				&.following{
-					.unsubscribe{
-						display : inline;
-					}
+			.user{
+				padding : @rhythm 0;
+				margin-top: @rhythm;
+				margin-bottom: @rhythm;
+				padding-left: @rhythm * 2;
+				padding-right: @rhythm * 3;
 
-					.notificationturn{
-						display: inline;
-					}
-					
-					.subscribe{
-						display : none;
-					}
-				}
-			}
+				.addressTable{
+					cursor: pointer;
 
-			.modal{
-				display: none;
-				cursor: default;
-				width: 308px;
-				position: absolute;
-				z-index: 9999;
-				right: 180px;
-				margin-top: 15px;
-				background: #FFFFFF;
-				border-radius: 12px;
-				box-shadow: 32px 32px 32px 32px #00000014;
-				padding: @rhythm * 2 @rhythm;
 
-				.topInfo{
 
-					.addressTable{
-						padding: @rhythm @rhythm * 2;
+					>div{
 
-						.iconWrapper{
-							padding-right: @rhythm * 2;
+						vertical-align: middle;
+		
+						&.iconWrapper{
+							width: 50px;
+							text-align: center;
 
 							.usericon{
-								height: 45px;
-								width: 45px;
-							}
-						}
+								height: 40px;
+								width: 40px;
 
-						.label{
-							padding-left: 7px;
-
-							.name{
-								max-width: 300px!important;
-							}
-		
-							.reputation{
-								font-size: .8em;
-								color : #8E90A6;
-
-		
-								.value{
-									color: @color-main;
-									font-weight: 700;
+								.letter{
+									position: relative;
+									bottom: 4px;
+									left: 1px;
 								}
 							}
 						}
+		
+						&.label{
+							text-overflow: ellipsis;
+							overflow: hidden;
+							white-space: nowrap;
+		
+							.cur{
+								color : @color-main;
+
+							}
+
+							.top{
+								display: flex;
+								.name{
+									font-weight: 600;
+									font-size: .9em;
+									max-width: 120px;
+									text-overflow: ellipsis;
+									white-space: nowrap;
+									overflow: hidden;
+								}
+
+								.reputation{
+									position: relative;
+									bottom: 2px;
+									left: 3px;
+									font-size: .6em;
+									color: @color-main;
 
 
-					}
-				}
+								}
 
+							}
 
-
-				.follow{
-					display: flex;
-					padding : @rhythm @rhythm * 2;
-
-					.followers{
-						padding-right: @rhythm * 3;
-					}
-
-					.value{
-						font-weight: 700;
-					}
-				}
-
-				.subscribeWrapper{
-					padding : @rhythm;
-
-					button{
-						width: 100%;
-						border-radius: 8px;
-						padding: 8px 16px;
-
-					}
-
-					.unsubscribe{
-						display : none;
-						background : @color-good;
-						border : 1px solid @color-good;
-
-						&:hover{
-							color: @color-good;
-							border : 1px solid @color-good;
-							background: #fff;
+							.light{
+								font-size : 0.7em;
+								color : @color-gray;
+							}
+						}
+		
+						&.extra{
+							width: 20px;
+							text-align: right;
 						}
 					}
-	
+		
+				}
+
+				.blockingWrapper{
+					display : none;
+				}
+
+				&.userblocking{
+		
+					.subscribebuttonstop{
+						display: none;
+					}
+		
+					.blockingWrapper{
+						display: inline;
+					}
+
+					
+				}
+		
+				.subscribebuttonstop{
+					.unsubscribe{
+						display : none;
+					}
+
 		
 					&.following{
 						.unsubscribe{
-							display : block;
+							display : inline;
+						}
+
+						.notificationturn{
+							display: inline;
 						}
 						
 						.subscribe{
@@ -312,79 +210,160 @@
 					}
 				}
 
-				.aboutWrapper{
-					padding : @rhythm @rhythm * 2;
-				}
-
-
-			}
-
-			&:hover{
 				.modal{
-					display: block;
+					display: none;
+					cursor: default;
+					width: 308px;
+					position: absolute;
+					z-index: 9999;
+					right: 180px;
+					margin-top: 15px;
+					background: #FFFFFF;
+					border-radius: 12px;
+					box-shadow: 32px 32px 32px 32px #00000014;
+					padding: @rhythm * 2 @rhythm;
+
+					.topInfo{
+
+						.addressTable{
+							padding: @rhythm @rhythm * 2;
+
+							.iconWrapper{
+								padding-right: @rhythm * 2;
+
+								.usericon{
+									height: 45px;
+									width: 45px;
+								}
+							}
+
+							.label{
+								padding-left: 7px;
+
+								.name{
+									max-width: 300px!important;
+								}
+			
+								.reputation{
+									font-size: .8em;
+									color : #8E90A6;
+
+			
+									.value{
+										color: @color-main;
+										font-weight: 700;
+									}
+								}
+							}
+
+
+						}
+					}
+
+
+
+					.follow{
+						display: flex;
+						padding : @rhythm @rhythm * 2;
+
+						.followers{
+							padding-right: @rhythm * 3;
+						}
+
+						.value{
+							font-weight: 700;
+						}
+					}
+
+					.subscribeWrapper{
+						padding : @rhythm;
+
+						button{
+							width: 100%;
+							border-radius: 8px;
+							padding: 8px 16px;
+
+						}
+
+						.unsubscribe{
+							display : none;
+							background : @color-good;
+							border : 1px solid @color-good;
+
+							&:hover{
+								color: @color-good;
+								border : 1px solid @color-good;
+								background: #fff;
+							}
+						}
+		
+			
+						&.following{
+							.unsubscribe{
+								display : block;
+							}
+							
+							.subscribe{
+								display : none;
+							}
+						}
+					}
+
+					.aboutWrapper{
+						padding : @rhythm @rhythm * 2;
+					}
+
+
+				}
+
+				&:hover{
+					.modal{
+						display: block;
+					}
 				}
 			}
+			
 		}
-		
+
 	}
 }
 
 html.stblack{
 	#topusers{
-		background: #0a0c17;
+
+		.rcptwrp{
+			background: #0a0c17;
 	
-	
-		.users{
-			.user{
+			.users{
+				.user{
+				
+					.addressTable{
+						cursor: pointer;
+						
+						>div{
 			
-				.addressTable{
-					cursor: pointer;
-					
-					>div{
+							&.label{
+			
+								.cur{
+									color : @color-main;
+								}
 		
-						&.label{
-		
-							.cur{
-								color : @color-main;
+								.light{
+									color : @color-gray;
+								}
 							}
-	
-							.light{
-								color : @color-gray;
-							}
+			
 						}
-		
+			
 					}
 		
-				}
-	
-				&.blocking{
-					background: rgb(41, 3, 24);	
-				}
-		
-			}
+					&.blocking{
+						background: rgb(41, 3, 24);	
+					}
 			
-		}
-	}	
-}
-
-/*t*/ @media only screen and (max-width: 768px){
-#userslist{
-	padding : 2 * @rhythm;
-
-	.caption{
-	}
-
-	.users{
-		.addressTable{
-			>div{
-
-
-				&.extra{
-					width: 60px;
 				}
+				
 			}
-
-		}
+		}	
 	}
-}
 }

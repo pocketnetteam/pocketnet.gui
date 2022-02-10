@@ -533,14 +533,6 @@ __map =  {
 			anonimus : true,
 		},
 
-		recommendedposts : {
-			uri : "recommendedposts",
-			href : "recommendedposts",
-		
-			add : insertingfunc,
-			anonimus : true,
-		},
-
 		lastcomments : {
 			uri : "lastcomments",
 			href : "lastcomments",

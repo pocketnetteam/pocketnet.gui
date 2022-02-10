@@ -191,8 +191,6 @@ var topusers = (function(){
 			},
 			load : function(clbk){
 
-				console.log('addresses', addresses)
-
 				
 				var shuffle = function(array) {
 					let currentIndex = array.length,  randomIndex;
@@ -298,7 +296,6 @@ var topusers = (function(){
 			},
 			
 			init : function(p){
-
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
