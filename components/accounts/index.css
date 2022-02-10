@@ -86,6 +86,9 @@
   bottom: 0;
   top: 0;
 }
+.wnd.accountswnd #accounts {
+  background: transparent;
+}
 .wnd.accountswnd #accounts .addressAddTable > div.panel,
 .wnd.accountswnd #accounts .addressTable > div.panel {
   display: none;

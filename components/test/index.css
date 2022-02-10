@@ -171,7 +171,7 @@
   font-weight: 700;
 }
 #test .userPanel .parameter .pInput .vm_valuesmulti {
-  padding-top: 0.5em / 2;
+  padding-top: 0.25em;
 }
 #test .userPanel .parameter .panel {
   vertical-align: top;
