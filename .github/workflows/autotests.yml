@@ -1,8 +1,9 @@
-name: Launch Tests
+name: Tests
 
 on:
   push:
     branches: [ master ]
+    tags: *
 
 jobs:
   build:
