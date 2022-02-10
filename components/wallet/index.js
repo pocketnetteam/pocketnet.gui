@@ -2358,9 +2358,9 @@ var wallet = (function(){
 				var t = [];
 				var bw = [];
 
-				var n = '#F1F1F1'
+				console.log("self.app.platform.sdk.theme.getstyle('--background-secondary-theme')", self.app.platform.sdk.theme.getstyle('--background-secondary-theme'))
 
-				if($('html').hasClass('stblack')) n = '#112035'
+				var n = 'rgb(' + self.app.platform.sdk.theme.getstyle('--background-secondary-theme') || '241,241,241' + ')'
 
 				_.each(item.move, function(m){
 					_.each(m.items, function(i){
@@ -2487,7 +2487,7 @@ var wallet = (function(){
 					lineCap: 'round',
 					lineWidth: 1,
 					font: "100 14px 'Segoe UI',SegoeUI,'Helvetica Neue',Helvetica,Arial,sans-serif",
-					fillStyle : "#00A3F7",
+					fillStyle : "#00000000",
 					text : {						
 						value : ""
 					},

@@ -9,29 +9,22 @@
 		display: none;
 	}
 
-
-
 	._wrp{
 		.commenttext,
 		.data{
 			
 			overflow: hidden;
 		}
-		
-		/*.commenttext{
-			word-break: break-all;
-		}*/
 	}
 
 	.error,
 	.loader{
 		padding : 6 * @rhythm;
 		text-align: center;
-		
 	}
 
 	.error{
-		color : @color-gray-mlight;
+		color : rgb(var(--neutral-grad-3));
 		font-size: 2em;
 		opacity: 0.5;
 	}
@@ -84,20 +77,20 @@
 
 	.ncaptionWrapper{
 		>div{
-			padding : @rhythm;
+			padding: @rhythm;
 			vertical-align: middle;
 
 			&.showAll{
 
 				text-align: right;
-				color : @color-main;
+				color : rgb(var(--color-bg-ac));
 				display : none;
 				font-size: 0.8em;
 				.transition(0.3s);
 				cursor: pointer;
 
 				&:hover{
-					color : @color-gray;
+					color: rgb(var(--color-txt-gray));
 				}
 			}
 		}
@@ -106,22 +99,15 @@
 	.nwrapper{
 
 		.notification{
-			border-bottom: 1px solid @color-gray-slight;
+			border-bottom: 1px solid rgba(var(--color-txt-gray), 0.3);
 			padding: 2 * @rhythm;
 			cursor: pointer;
 			.transition(0.1s);
-			background: fade(@color-gray2, 5);
-
+			background: rgba(var(--color-txt-gray), 0.0.5);
 			
-
 			&:nth-last-child(1){
 				border-bottom : 0;
 			}
-
-			&:hover{
-				color : @color-gray;
-			}
-
 
 			&.seen{
 				background: transparent;
@@ -133,10 +119,9 @@
 				white-space: nowrap;
 			}
 
-
 			.date{
 				font-size: 0.8em;
-				color : @color-main;
+				color : rgb(var(--color-txt-gray));
 			}
 
 			.emojione{
@@ -152,7 +137,7 @@
 
 	.emptyNew,
 	.empty{
-		color : @color-gray-light;
+		color : rgb(var(--neutral-grad-4));
 		font-size: 0.9em;
 		text-align: center;
 		margin : 3 * @rhythm 0;
@@ -205,8 +190,7 @@
 	.tooltipster-box{
 		background: transparent;
 		border : 0;
-		box-shadow: 0 0 5000px 3000px fade(@color-black, 70);
-		
+		box-shadow: 0 0 5000px 3000px rgba(var(--color-shadow-base), 0.7);
 	}
 }
 #content{
@@ -256,7 +240,7 @@
 			right : 0;
 			top : 0;
 			bottom : 0;
-			background: fade(@color-black2, 20);
+			background: rgba(var(--color-shadow-base), 0.2);
 			display: block;
 		}
 	
@@ -265,9 +249,9 @@
 			position: absolute;
 			right : 0;
 			top : 0;
-			background: fade(@color-black2, 20);
+			background: rgba(var(--color-shadow-base), 0.2);
 			display: block;
-			color : @color-gray-mlight;
+			color : rgba(var(--neutral-grad-4));
 			height: 65px;
 			width : 65px;
 			line-height : 65px;
@@ -276,10 +260,8 @@
 			z-index: 2;
 			.transition(0.3s);
 			&:hover{
-				color : @color-gray-light;
-				background: fade(@color-black2, 25);
-
-				
+				color : rgba(var(--neutral-grad-3));
+				background: rgba(var(--color-shadow-base), 0.25);
 			}
 		}
 
@@ -290,15 +272,14 @@
 			top: 0;
 			bottom: 0;
 			padding : 0;
-			/*background: fade(@color-black, 50);*/
 			display: block;
-			color : @color-gray-mlight;
+			color : rgba(var(--neutral-grad-4));
 			cursor: pointer;
 			.transition(0.3s);
 			z-index: 2;
 
 			&:hover{
-				color : @color-gray-light;
+				color : rgba(var(--neutral-grad-3));
 
 				.closecsscross{
 					opacity: 0.6;
@@ -320,8 +301,8 @@
 			top: 0;
 			bottom: 0;
 			padding : 0;
-			background: #fff;
-			box-shadow: 0 0 5000px 3000px fade(@color-black, 70);
+			background: rgb(var(--background-total-theme));
+			box-shadow: 0 0 5000px 3000px rgba(var(--color-shadow-base), 0.7);
 			z-index: 1;
 		}
 
@@ -347,10 +328,6 @@
 			right: 0;
 			bottom: 0;
 			top: 0;
-		}
-
-		.ncaption{
-			
 		}
 
 		.ncaptionAbsWrapper{
@@ -382,113 +359,6 @@
 	}
 }
 
-html.stblack{
-	#notifications{
-		
-		.nabsWrapper{
-			background: @color-block;
-		}
-		.error{
-			color : @color-main;
-		}
-		
-		.group{
-			.groupCaption{
-	
-				.caption{
-					color : @color-main;
-				}
-			}
-	
-			
-		}
-	
-	
-		.ncaptionWrapper{
-			>div{
-	
-				&.showAll{
-					color : @color-bright;
-					&:hover{
-						color : @color-contrast;
-					}
-				}
-			}
-		}
-	
-		.nwrapper{
-	
-			.notification{
-				border-bottom: 1px solid fade(@color-main, 20);
-				color : @color-gray-mlight;
-	
-				&:hover{
-					color : @color-main;
-				}
-	
-	
-				.date{
-					color : @color-bright;
-				}
-			}
-		}
-	
-		.emptyNew,
-		.empty{
-			color : @color-black4;
-		}
-	
-	}
-	
-	.notificationTolltip{
-	
-	
-		.tooltipster-box{
-			box-shadow: 0 0 5000px 3000px fade(@color-black, 70);
-			background: transpanent;
-			border : 0;
-		}
-
-	}
-	
-	.tooltipster-content{
-		#notifications{
-			
-			
-			.closentooltipth{
-				background: fade(@color-black, 20);
-			}
-		
-	
-			.closentooltipsecond{
-				background: fade(@color-black, 20);
-				color : @color-main;
-			
-				&:hover{
-					color : @color-bright;
-					background: fade(@color-black, 50);
-				}
-			}
-	
-			.closentooltip{
-				background: fade(@color-black, 20);
-				color : @color-main;
-				
-				&:hover{
-					color : @color-bright;
-				}
-	
-			}
-	
-			.wrk{
-				background: @color-black;
-				box-shadow: 0 0 5000px 3000px fade(@color-black, 70);
-			}
-	
-		}
-	}	
-}
-
 /*t*/ @media only screen and (max-width: 768px){
 #notifications{
 	
@@ -512,9 +382,9 @@ html.stblack{
 	.group{
 		.groupCaption{
 			padding : 2 * @rhythm 0;
-			border-bottom : 1px solid fade(@color-black2, 8);
-			border-top : 1px solid fade(@color-black2, 8);
-			background: fade(@color-black2, 5);
+			border-bottom : 1px solid rgb(var(--neutral-grad-0));
+			border-top : 1px solid rgb(var(--neutral-grad-0));
+			background: rgb(var(--background-secondary-theme));
 			
 
 			.caption{
@@ -522,23 +392,17 @@ html.stblack{
 				font-weight: 700;
 			}
 		}
-
-		&:nth-child(1){
-			
-		}
-		
 	}
 
 	.subcaption{
 		padding-top : 0!important;
 		margin-bottom: @rhythm;
 	}
+
 	.nwrapper {
 		.notification{
 			padding-left: 0; 
 			padding-right: 0;
-
-			 
 		}
 	}
 }

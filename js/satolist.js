@@ -7580,8 +7580,6 @@ Platform = function (app, listofnodes) {
             get: function(){
                 var t = self.sdk.lentaMethod;
 
-                console.log('t.all[t.current]',  t.all[t.current])
-
                 return t.all[t.current];
             },
 
@@ -7627,6 +7625,8 @@ Platform = function (app, listofnodes) {
             default: "white",
             current: null,
 
+            currentStyles : {},
+
             save: function () {
 
                 var c = self.sdk.theme.current
@@ -7644,6 +7644,25 @@ Platform = function (app, listofnodes) {
                 t.set()
 
                 if (clbk) clbk()
+            },
+
+            setstyles : function(){
+                var root = document.querySelector(':root');
+
+                var rootStyles = getComputedStyle(root);
+ 
+                self.sdk.theme.currentStyles = rootStyles
+
+            },
+
+            getstyle : function(v){
+
+                if (self.sdk.theme.currentStyles){
+                    return self.sdk.theme.currentStyles.getPropertyValue(v)
+                }
+
+                return ''
+               
             },
 
             set: function (value) {
@@ -7677,10 +7696,10 @@ Platform = function (app, listofnodes) {
                     }
 
                     document.documentElement.setAttribute('theme', t.all[value].rootid);
-                    
+
+                    self.sdk.theme.setstyles()
 
                     $('meta[name="theme-color"]').attr('content', t.all[value].color).attr('media',  t.all[value].media)
-                        
                     $('meta[name="msapplication-navbutton-color"]').attr('content', t.all[value].color)
                     $('meta[name="apple-mobile-web-app-status-bar-style"]').attr('content', t.all[value].color)
                 }

@@ -409,7 +409,7 @@
 #menu .sections .items .item.wallets {
   font-size: 0.8em;
   font-weight: 700;
-  color: rgb(var(--neutral-grad-4));
+  color: rgb(var(--color-txt-gray));
   margin-right: 1.5em;
   cursor: pointer;
   -moz-transition: 0.3s;
@@ -420,7 +420,7 @@
 #menu .sections .items .item.wallets .icon {
   width: 30px;
   opacity: 0;
-  color: rgb(var(--neutral-grad-4));
+  color: rgb(var(--color-txt-gray));
 }
 #menu .sections .items .item.wallets.good .number {
   color: #076C34;

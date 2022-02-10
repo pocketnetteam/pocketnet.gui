@@ -48,7 +48,7 @@
   --color-medium-theme: 99, 100, 117;
   --neutral-grad-0: 16,16,17;
   --neutral-grad-1: 34,34,37;
-  --neutral-grad-2: 43,43,49;
+  --neutral-grad-2: 53,53,59;
   --neutral-grad-3: 77,78,92;
   --neutral-grad-4: 85,87,112;
   --text-color: 178, 171, 172;
@@ -65,7 +65,7 @@
   --color-txt-gray-dark: 113, 113, 134;
   --color-bg-orange: 255, 72, 0;
   --text-txt-orange: 255, 72, 0;
-  --color-shadow-base: 12, 14, 53;
+  --color-shadow-base: 12, 14, 33;
   --color-shadow-var: 18, 18, 26;
   --text-on-bg-shadow-color: 214, 219, 230;
 }
@@ -2570,7 +2570,7 @@ input[type=radio].radio:checked + label {
   padding-top: 0.75em;
 }
 .bgCaption .tips {
-  color: rgb(var(--text-on-bg-ac-color));
+  color: rgb(var(--text-on-bg-shadow-color));
 }
 .bgCaption .work {
   height: 100%;
@@ -2628,7 +2628,7 @@ input[type=radio].radio:checked + label {
   -webkit-transition: 0.6s;
   transition: 0.6s;
   color: rgb(var(--text-on-bg-ac-color));
-  background: rgb(var(--color-shadow-base));
+  background: rgb(var(--color-shadow-var));
 }
 .topPreloader {
   position: fixed;
@@ -3737,7 +3737,7 @@ input[type=radio].radio:checked + label {
   border-top-right-radius: 0;
 }
 .vc_valuecustom .vc_selectInput .vc_value {
-  padding: 0.5em / 2 0.5em;
+  padding: 0.25em 0.5em;
   cursor: pointer;
 }
 .vc_valuecustom .vc_selectInput .vc_value:hover {
@@ -4282,7 +4282,7 @@ html.mobile.fullscreen #navigationWrapper {
 }
 .usericon {
   background: rgb(var(--neutral-grad-0));
-  color: rgb(var(--color-txt-ac-1));
+  color: rgb(var(--color-txt-gray-dark));
   box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.4);
   border-radius: 50%;
   height: 3em;
@@ -4316,7 +4316,6 @@ html.mobile.fullscreen #navigationWrapper {
 }
 .usericon .letter {
   font-size: 1.5em;
-  color: rgb(var(--color-txt-gray-dark));
 }
 .usericon:hover .realperson {
   opacity: 0.7;
