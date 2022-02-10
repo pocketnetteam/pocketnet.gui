@@ -37,11 +37,11 @@
 		padding-bottom: 4 * @rhythm;
 
 		&.gk{
-			border-bottom: 1px solid @color-gray-light;
+			border-bottom: 1px solid rgb(var(--neutral-grad-1));
 		}
 
 		&.wh{
-			background: #FAFAFA;
+			background: rgb(var(--background-secondary-theme));
 		}
 	}
 
@@ -49,8 +49,8 @@
 		margin-bottom : 3 * @rhythm;
 		padding-top : 0;
 		border-radius: 20px;
-		border : 1px dashed fade(@color-gray-mlight, 50);
-		background: fade(#fff, 25);
+		border : 1px dashed rgba(var(--neutral-grad-1), 0.5);
+		background: rgb(var(--background-total-theme));
 		padding : 4 * @rhythm;
 		text-align: center;
 		.shadowSmaller();
@@ -78,12 +78,12 @@
 
 	.connectionFailed{
 		padding : 4 * @rhythm 0;
-		color : @color-gray-mlight;
+		color : rgb(var(--neutral-grad-4));
 	}
 
 	.value.bad{
 		font-weight: 700;
-		color : @color-orange;
+		color : rgb(var(--color-txt-orange));
 	}
 
 	.blockswrapper{
@@ -94,8 +94,8 @@
 			padding-bottom: @rhythm;
 
 			.waitCnt{
-				background: fade(@color-gray-light, 15);
-				color : @color-gray;
+				background: rgba(var(--neutral-grad-4), 0.2);
+				color : rgb(var(--color-txt-gray-dark));
 				height: 250px;
 
 				.table{
@@ -143,9 +143,10 @@
 				width: 100%;
 				height: 100%;
 				padding : 0.5em;
-				background: fade(@color-gray-light, 15);
+				background: rgba(var(--neutral-grad-4), 0.2);
+				color : rgb(var(--color-txt-gray-dark));
+				border-radius: 3px;
 				.transition(0.3s);
-
 
 				&.forchart{
 					background: transparent;
@@ -207,7 +208,7 @@
 					height : 100%;
 					border-radius: 50%;
 					text-align: center;
-					color : fade(@color-gray, 95);
+					color : rgb(var(--color-txt-gray-dark)); 
 					font-size: 1.5em;
 					font-weight: 100;
 					.transition(0.3s);
@@ -236,7 +237,7 @@
 			&.bad{
 				.vidgetIconWrapper{
 					.vidgetIcon{
-						color : fade(@color-bad, 95);
+						color : @color-bad;
 					}
 				}	
 			}
@@ -246,7 +247,7 @@
 				left : 215px;
 				height : 210px;
 				top : 0;
-				color : fade(@color-gray, 95);
+				color : rgba(var(--neutral-grad-2), 0.95); 
 				padding : 1em;
 				width : 2000px;
 				z-index: 10;
@@ -285,31 +286,6 @@
 					width : 100%;
 				}
 
-				&.reputationblock{
-					.metricablock{
-			
-						/*.blockContentWrapper {
-							background: @color-black2;
-							color : #fff;
-						}
-
-						.vidgetIconWrapper{
-				
-							.vidgetIcon{
-								color : #fff;
-							}
-						}
-			
-				
-						.vidgetAboutWrapper{
-							color : #fff;
-						}*/
-				
-					}
-				}
-
-				
-
 				&.levelsblock{
 					width: 75%;
 				}
@@ -326,13 +302,12 @@
 
 		.level{
 
-				.chart{
-					position: absolute;
-					left : @rhythm;
-					right : @rhythm;
-					bottom : 2 * @rhythm;
-				}
-			
+			.chart{
+				position: absolute;
+				left : @rhythm;
+				right : @rhythm;
+				bottom : 2 * @rhythm;
+			}
 
 			.repchart{
 				.repchartTable{
@@ -342,12 +317,6 @@
 
 						&.pointCell{
 							width : 10px;
-
-							
-						}
-
-						&.lineCell{
-
 						}
 					}
 				}
@@ -356,16 +325,16 @@
 					width: 10px;
 					height: 10px;
 					border-radius: 50%;
-					border : 3px solid @color-gray-light;
+					border : 3px solid rgb(var(--neutral-grad-2));
 				}
 
 				.lineBg{
 					position: relative;
-					background: @color-gray-light;
+					background: rgb(var(--neutral-grad-1));
 					height: 1px;
 
 					.line{
-						background: @color-main;
+						background: rgb(var(--color-bg-ac));
 						position: absolute;
 						left : 0;
 						top : 0;
@@ -383,7 +352,7 @@
 				.repchart{
 					.point{
 						&.start{
-							border-color : @color-main;
+							border-color : rgb(var(--color-bg-ac));
 						}
 					}
 				}
@@ -393,14 +362,14 @@
 
 				.repchart{
 					.point{
-						border-color : @color-main;
+						border-color : rgb(var(--color-bg-ac));
 					}
 
 					.lineBg{
 	
 						.line{
 							width: 100%;
-							background:  @color-main;
+							background:  rgb(var(--color-bg-ac));
 						}
 					}
 				}
@@ -408,23 +377,23 @@
 				.metricablock{
 			
 					.blockContentWrapper {
-						background: @color-bright;
-						color: #fff;
+						background: rgb(var(--color-bg-ac));
+						color: rgb(var(--text-on-bg-ac-color));
 					}
 
 					.vidgetIconWrapper{			
 						.vidgetIcon{
-							color: fade(#fff, 70);
+							color: rgb(var(--text-on-bg-ac-color));
 						}
 					}
 
 					.reputationCount{
-						color: #fff;
+						color: rgb(var(--text-on-bg-ac-color));
 					}
 		
 			
 					.vidgetAboutWrapper{
-						color: #fff;
+						color: rgb(var(--text-on-bg-ac-color));
 					}
 			
 				}
@@ -478,7 +447,7 @@
 
 #content{
 	#ustate{
-		background: #F7F7F7;
+		background: rgb(var(--background-main));
 	}
 }
 
@@ -530,201 +499,6 @@
 	.tooltipster-content{
 		padding : 0;
 	}
-}
-
-html.stblack{
-	#ustate{
-	
-		.mwork{
-	
-			&.gk{
-				border-bottom: 1px solid @color-black4;
-			}
-	
-			&.wh{
-				background: @color-gray3;
-			}
-		}
-	
-	
-		.connectionFailed{
-			color : @color-gray-mlight;
-		}
-	
-		.blockswrapper{
-	
-	
-			.wait{
-	
-				.waitCnt{
-					background: fade(@color-black, 15);
-					color : @color-main;
-				}
-			}
-	
-			
-			.metricablock{
-				color : @color-gray-mlight;
-				
-		
-				.blockContentWrapper {
-	
-					&.forchart{
-						background: transparent;
-					}
-				}
-				
-		
-				.vidgetIconWrapper{
-		
-					.vidgetIcon{
-						color : fade(@color-gray-mlight, 95);
-					}
-				}
-	
-				&.bad{
-					.vidgetIconWrapper{
-						.vidgetIcon{
-							color : fade(@color-bad, 95);
-						}
-					}	
-				}
-		
-				.vidgetAboutWrapper{
-					color : fade(@color-black2, 95);
-					color : @color-gray-mlight;
-				}
-		
-			}
-	
-		}
-	
-	
-		.ustatecontentrep{
-	
-	
-			.level{
-				
-	
-				.repchart{
-	
-					.point{
-						border : 3px solid @color-black3;
-					}
-	
-					.lineBg{
-						background: @color-black3;
-	
-						.line{
-							background: @color-bright;
-						}
-					}
-				}
-	
-	
-	
-				&[state="completed"]{
-	
-					.repchart{
-						.point{
-							border-color : @color-main;
-						}
-	
-						.lineBg{
-		
-							.line{
-								background:  @color-main;
-							}
-						}
-					}
-					
-					.metricablock{
-				
-						.blockContentWrapper {
-							background: fade(@color-bright, 70);
-							color: @color-gray-mlight;
-						}
-	
-						.vidgetIconWrapper{			
-							.vidgetIcon{
-								color: fade(#fff, 70);
-							}
-						}
-	
-						.reputationCount{
-							color: @color-gray-mlight;
-						}
-			
-				
-						.vidgetAboutWrapper{
-							color: @color-gray-mlight;
-						}
-				
-					}
-	
-				}
-	
-			
-			}
-	
-		}
-	}
-	
-	#content{
-		#ustate{
-			background: transparent;
-		}
-	}
-	
-	.tooltipster-content{
-		
-		#ustate{
-	
-			.mwork{
-				padding : 2 * @rhythm;
-	
-				
-			}
-	
-			.caption{
-				font-size: 1em;
-			}
-	
-			.metrica{
-	
-				>div{
-					&.label{
-						padding-left: 0;
-					}
-				}
-	
-				&.profileInfo{
-					>div{
-						&:nth-last-child(1){
-							padding-right: 3 * @rhythm;
-	
-							button{
-								width: 100%;
-							}
-						}
-					}
-				}
-			}
-	
-			.totalerror{
-				padding : 2 * @rhythm 3 * @rhythm;
-			}
-		}
-	}
-	
-	.ustatetooltip{
-		height: auto!important;
-		max-height: none;
-	
-		.tooltipster-content{
-			padding : 0;
-		}
-	}	
 }
 
 /*t*/ @media only screen and (max-width: 1024px){
