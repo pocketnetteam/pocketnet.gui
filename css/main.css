@@ -469,6 +469,11 @@ img {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-tap-highlight-color: transparent;
 }
+select.error,
+textarea.error,
+input.error {
+  border-color: #F41A4D;
+}
 input[disabled] {
   color: rgb(var(--neutral-grad-2));
 }

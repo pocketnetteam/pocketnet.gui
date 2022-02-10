@@ -525,6 +525,8 @@ textarea{
     color: rgb(var(--text-color));
     border: 1px solid rgb(var(--neutral-grad-2));
     border-radius: 6px;
+
+    
 }
 #application{
     .emojionearea, .emojionearea.form-control{
@@ -564,6 +566,14 @@ img{
     user-drag: none;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
     -webkit-tap-highlight-color: transparent;
+}
+
+select,
+textarea,
+input{
+    &.error{
+        border-color: @color-bad;
+    }
 }
 
 

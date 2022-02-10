@@ -196,11 +196,6 @@
   width: 100%;
   padding: 0.5em;
 }
-#test .userPanel .parameter select.error,
-#test .userPanel .parameter textarea.error,
-#test .userPanel .parameter input.error {
-  border: 1px solid #F41A4D;
-}
 #test .userPanel .parameter textarea {
   min-height: 105px;
 }

@@ -2,7 +2,7 @@
 
 #accounts{
 	min-height: 600px;
-	background: #F7F7F7;
+	background: rgb(var(--background-secondary-theme));
 	padding : 4 * @rhythm 0;
 
 	.wrk{
@@ -15,51 +15,12 @@
 		font-weight: 100;
 	}
 
-	.subcaptionTable{
-		>div{
-			vertical-align: middle;
-			&.backWrapper{
-				width : 50px;
-			}
-
-			.back{
-				border-radius: 50%;
-				width: 50px;
-				height: 50px;
-				border: 1px solid @color-gray;
-				line-height: 48px;
-				text-align: center;
-				cursor: pointer;
-				.transition(0.3s);
-
-				&:hover{
-					color : @color-main;
-					border: 1px solid @color-main;
-				}
-			}
-
-			&.subcaption{
-				padding-left: @rhythm;
-			}
-		}
-	}
+	
 
 	.dumpaddresspart{
 		display: none;
 	}
-	&.privatedump{
-		.alladdressespart{
-			display: none;
-		}
-
-		.dumpaddresspart{
-			display: block;
-		}
-	}
-
-	.addresses{
-
-	}
+	
 
 	.addressTable{
 		margin-bottom: @rhythm;
@@ -71,7 +32,6 @@
 		}
 	}
 
-	.addressAddTable,
 	.addressTable{
 		>div{
 
@@ -87,7 +47,7 @@
 
 				.cur{
 					margin-left: 2 * @rhythm;
-					color : @color-main;
+					color : rgb(var(--color-txt-ac));
 				}
 			}
 
@@ -101,7 +61,7 @@
 					text-align: center;
 					cursor: pointer;
 					.transition(0.3s);
-					color : @color-gray-light;
+					color : rgb(var(--neutral-grad-3));
 
 					a{
 						width: 100%;
@@ -109,13 +69,13 @@
 
 					&.dumpkey{
 						&:hover{
-							color : @color-main;
+							color : rgb(var(--color-txt-ac));
 						}
 					}
 
 					&.remove{
 						&:hover{
-							color : @color-contrast;
+							color : @color-bad;
 						}
 					}
 					
@@ -138,7 +98,7 @@
 					.transition(0.3s);
 
 					&:hover{
-						color : @color-main;
+						color : rgb(var(--color-txt-ac));
 					}
 				}
 			}
@@ -146,67 +106,11 @@
 	}
 
 	.addNewWrapper{
-		border-top : 1px solid @color-gray-light;
-		margin-top : 4 * @rhythm;
-		padding-top : 4 * @rhythm;
-
-		.addressAddTable{
-			cursor: pointer;
-			.transition(0.3s);
-
-			&:hover{
-				color : @color-add;
-			}
-		}
+		margin-top : 2 * @rhythm;
+		padding-top : 2 * @rhythm;
 	}
 
-	.toScheduler{
-		margin-top : 4 * @rhythm;
-		font-size: 0.8em;
-		color : @color-main;
-		text-decoration: underline;
-		text-align: center;
-	}
 
-	.wrk.dmp{
-		margin-top : 4 * @rhythm;
-		padding-top : 4 * @rhythm;
-		padding-bottom : 4 * @rhythm;
-		background: #fff;
-	}
-
-	.dumpedinfo{
-		
-		.infotable{
-			>div{
-				vertical-align: top;
-				padding : 2 * @rhythm;
-
-				&.label{
-					width: 130px;
-				}
-
-				&.value{
-					font-weight: 500;
-				}
-
-				&.forcopy{
-					text-align: center;
-					width : 40px;
-
-					.copyvalue{
-						cursor: pointer;
-						color : @color-gray-light;
-						.transition(0.3s);
-
-						&:hover{
-							color : @color-main;
-						}
-					}
-				}
-			}
-		}
-	}
 }
 
 .wnd.accountswnd{
@@ -232,8 +136,6 @@
 					display: none;
 				}
 			}
-
-
 			
 		}
 
@@ -244,115 +146,37 @@
 	}
 }
 
-html.stblack{
-	#accounts{
-		background: @color-block;
-	
-		.subcaptionTable{
-			>div{
-	
-				.back{
-					border: 1px solid fade(@color-main, 50);
-					
-					&:hover{
-						color : @color-main;
-						border: 1px solid @color-main;
-					}
-				}
-			}
-		}
-	
-	
-		.addressAddTable,
-		.addressTable{
-			>div{
-			
-				&.label{
-	
-					.cur{
-						color : @color-main;
-					}
-				}
-	
-				&.panel{
-	
-					>div{
-					
-						color : fade(@color-main, 50);
-	
-						&.dumpkey{
-							&:hover{
-								color : @color-main;
-							}
-						}
-	
-						&.remove{
-							&:hover{
-								color : @color-contrast;
-							}
-						}
-						
-					}
-				}
-			}
-	
-			&.ncurrent{
-				>div{
-					&.label{
-	
-						&:hover{
-							color : @color-main;
-						}
-					}
-				}
-			}
-		}
-	
-		.addNewWrapper{
-			border-top : 1px solid fade(@color-main, 50);
-	
-			.addressAddTable{
-	
-				&:hover{
-					color : @color-add;
-				}
-			}
-		}
-	
-		.toScheduler{
-			color : @color-main;
-		}
-	
-		.wrk.dmp{
-			background: transparent;
-			border-top: 1px solid @color-bright;
-		}
-	
-		.dumpedinfo{
-			
-			.infotable{
-				>div{
-	
-					&.forcopy{
-						.copyvalue{
-							color : fade(@color-main, 50);
-	
-							&:hover{
-								color : @color-main;
-							}
-						}
-					}
-				}
-			}
-		}
-	}	
-}
+.dumpedkeydialog{
+	.dumpedinfo{
+		.infotable{
+			margin-bottom : 2 * @rhythm;
+			.toprow{
+				display: flex;
 
+				>div{
+					margin-right: 2 * @rhythm;
+				}
+
+			}
+			.label{
+				font-weight: 700;
+			}
+
+			.value{
+				padding: @rhythm 0;
+			}
+
+			.copyvalue{
+				cursor: pointer;
+			}
+		}
+	}
+}
 
 
 /*t*/ @media only screen and (max-width: 768px){
 	#accounts{
-		background: #fff;
+		background: rgb(var(--background-total-theme));
 
 		.wrk{
 			padding : 0 2 * @rhythm;

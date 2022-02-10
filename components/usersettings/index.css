@@ -1,17 +1,13 @@
 #usersettings {
   min-height: 600px;
-  background: #F7F7F7;
+  background: rgb(var(--background-secondary-theme));
   padding-bottom: 4em;
 }
 #usersettings .mwork {
   padding: 0 4em;
 }
-#usersettings .mwork.gk {
-  border-top: 1px solid #d0c9ca;
-  border-bottom: 1px solid #d0c9ca;
-}
 #usersettings .mwork.wh {
-  background: #FAFAFA;
+  background: rgb(var(--background-secondary-theme));
 }
 #usersettings .tokenResult {
   display: inline-block;
@@ -29,14 +25,13 @@
   font-size: 0.8em;
 }
 #usersettings .downloadedvideos {
-  border-top: 0.5em solid #fff;
+  border-top: 0.5em solid rgb(var(--color-medium-theme));
   margin-top: 1em;
 }
 #usersettings .downloadedvideos .cntpart {
   padding: 2em 0;
 }
 #usersettings .cacheContent {
-  border-top: 0.5em solid #fff;
   margin-top: 1em;
 }
 #usersettings .cacheContent .panel {
@@ -68,8 +63,9 @@
 #usersettings .pInputsTable > div {
   vertical-align: middle;
 }
-#usersettings .settingsGroup:nth-child(1) .mwork.gk {
-  border-top: 0;
+#usersettings .settingsGroup {
+  border-bottom: 1px solid rgb(var(--neutral-grad-1));
+  padding-bottom: 2em;
 }
 #usersettings .groupHeader .parameter > div {
   vertical-align: middle;
@@ -119,7 +115,7 @@
 }
 #usersettings .parameter .pName .unit {
   font-weight: 700;
-  color: #00A3F7;
+  color: rgb(var(--color-txt-ac));
 }
 #usersettings .parameter .pName .require {
   color: #F41A4D;
@@ -130,7 +126,7 @@
 }
 #usersettings .parameter .pInput .echo {
   padding: 0.5em;
-  color: #ff6e84;
+  color: rgb(var(--color-txt-ac));
   font-weight: 700;
 }
 #usersettings .parameter .pInput .vm_valuesmulti {
@@ -144,27 +140,20 @@
 #usersettings .parameter .panel .clear {
   text-align: right;
   cursor: pointer;
-  color: #e4ddde;
+  color: rgb(var(--neutral-grad-1));
   -moz-transition: 0.3s;
   -o-transition: 0.3s;
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
 #usersettings .parameter .panel .clear:hover {
-  color: #00a4ff;
+  color: rgb(var(--color-txt-ac));
 }
 #usersettings .parameter select,
 #usersettings .parameter textarea,
 #usersettings .parameter input {
   width: 100%;
-  padding: 0.5em;
-  border: 1px solid #d0c9ca;
-  border-radius: 2px;
-}
-#usersettings .parameter select.error,
-#usersettings .parameter textarea.error,
-#usersettings .parameter input.error {
-  border: 1px solid #F41A4D;
+  /*padding: @rhythm;*/
 }
 #usersettings .parameter .error select,
 #usersettings .parameter .error textarea,
@@ -182,26 +171,13 @@
 #usersettings .parameter .vc_valuecustom input {
   border: 0;
 }
-#usersettings .parameter .vc_valuecustom .vc_textInput,
-#usersettings .parameter .vc_valuecustom_multibig .vc_textInput {
-  background: #fff;
-}
-#usersettings .parameter .vmt_valuesmultitree,
-#usersettings .parameter .vm_value {
-  padding: 0;
-}
-#usersettings .parameter .vmt_valuesmultitree .checkbox + label:before,
-#usersettings .parameter .vm_value .checkbox + label:before {
-  font-size: 1.6em;
-  line-height: 19px;
-}
 #usersettings .settingsGroup {
   margin-bottom: 2 0.5em;
 }
 #usersettings .settingsGroup .groupCaption {
   padding: 1.5em 0;
   font-size: 1.2em;
-  color: #00a4ff;
+  color: rgb(var(--color-txt-gray-dark));
 }
 #usersettings .theme .pInput {
   overflow: hidden;
@@ -214,7 +190,7 @@
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  border: 2px solid #3c4146;
+  border: 2px solid rgb(var(--neutral-grad-2));
   box-shadow: 0 5px 7px -5px rgba(0, 0, 0, 0.4);
   position: relative;
   cursor: pointer;
@@ -224,7 +200,7 @@
   transition: 0.3s;
 }
 #usersettings .theme .pInput > div .themeicon:hover {
-  border: 2px solid #00a4ff;
+  border: 2px solid rgb(var(--color-txt-gray-dark));
   box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.4);
 }
 #usersettings .theme .pInput > div .thbadge {
@@ -235,7 +211,7 @@
   position: absolute;
 }
 #usersettings .theme .pInput > div.active .themeicon {
-  border: 2px solid #00a4ff;
+  border: 2px solid rgb(var(--color-txt-ac));
 }
 #usersettings .theme .pInput > div.active .thbadge {
   display: block;
@@ -244,7 +220,7 @@
   background: #fafafa;
 }
 #usersettings .theme .pInput > div[theme="black"] .themeicon {
-  background: #030f1b;
+  background: #141523;
 }
 #usersettings .uiscale .pInput {
   display: flex;
@@ -261,13 +237,13 @@
   border-style: solid;
   cursor: pointer;
   /** White theme */
-  background: #e4ddde;
-  color: #b2abac;
-  border-color: #d0c9ca;
+  background: rgb(var(--neutral-grad-1));
+  color: rgb(var(--neutral-grad-4));
+  border-color: rgb(var(--neutral-grad-3));
 }
 #usersettings .uiscale .pInput .uiscalewrapper.active {
-  background: #00A3F7;
-  color: #fff;
+  background: rgb(var(--color-bg-ac));
+  color: rgb(var(--text-on-bg-ac-color));
 }
 #usersettings .uiscale .pInput .uiscalewrapper:first-child {
   border-radius: 5px 0 0 5px;
@@ -282,89 +258,16 @@
 #usersettings.unathorized .settingsGroup.notifications {
   display: none;
 }
-html.stblack #usersettings {
-  background: transparent;
-}
-html.stblack #usersettings .cacheContent {
-  border-top: 0.5em solid #0e1c2b;
-  background: #0e1c2b;
-}
-html.stblack #usersettings .downloadedvideos {
-  border-top: 0.5em solid #0e1c2b;
-}
-html.stblack #usersettings .mwork.gk {
-  border-top: 1px solid rgba(0, 164, 255, 0.5);
-  border-bottom: 1px solid rgba(0, 164, 255, 0.5);
-  background: #0e1c2b;
-}
-html.stblack #usersettings .mwork.wh {
-  background: transparent;
-}
-html.stblack #usersettings .groupHeader .parameter > div {
-  color: #00a4ff;
-}
-html.stblack #usersettings .parameter .pName .unit {
-  color: #00A3F7;
-}
-html.stblack #usersettings .parameter .pName .require {
-  color: #F41A4D;
-}
-html.stblack #usersettings .parameter .pInput .echo {
-  color: #ff6e84;
-}
-html.stblack #usersettings .parameter .panel .clear {
-  color: rgba(0, 164, 255, 0.5);
-}
-html.stblack #usersettings .parameter .panel .clear:hover {
-  color: #00a4ff;
-}
-html.stblack #usersettings .parameter select,
-html.stblack #usersettings .parameter textarea,
-html.stblack #usersettings .parameter input {
-  border: 1px solid rgba(0, 164, 255, 0.5);
-  border-radius: 2px;
-}
-html.stblack #usersettings .parameter select.error,
-html.stblack #usersettings .parameter textarea.error,
-html.stblack #usersettings .parameter input.error {
-  border: 1px solid #F41A4D;
-}
-html.stblack #usersettings .parameter .error select,
-html.stblack #usersettings .parameter .error textarea,
-html.stblack #usersettings .parameter .error input {
-  border: 1px solid #F41A4D;
-}
-html.stblack #usersettings .parameter .vc_valuecustom .vc_textInput,
-html.stblack #usersettings .parameter .vc_valuecustom_multibig .vc_textInput {
-  background: #0a0c17;
-}
-html.stblack #usersettings .settingsGroup .groupCaption {
-  color: #00a4ff;
-}
-html.stblack #usersettings .uiscale .pInput .uiscalewrapper {
-  /** Black theme */
-  background: #008EBF;
-  color: #fff;
-  border-color: #00a4ff;
-}
-html.stblack #usersettings .uiscale .pInput .uiscalewrapper.active {
-  background: #e4ddde;
-  color: #112035;
-}
 /*t*/
 @media only screen and (max-width: 768px) {
   #usersettings {
-    background: #fff;
-  }
-  #usersettings .caption span {
-    color: #010E30;
-    font-weight: 100;
+    background: rgb(var(--background-total-theme));
   }
   #usersettings .mwork {
     padding: 0 1em;
   }
   #usersettings .mwork.wh {
-    background: #FAFAFA;
+    background: rgb(var(--background-secondary-theme));
   }
   #usersettings .parameter {
     max-width: none;
@@ -392,15 +295,5 @@ html.stblack #usersettings .uiscale .pInput .uiscalewrapper.active {
   }
   #usersettings .checkbox:checked + label:before {
     content: '\f00c';
-  }
-  html.stblack #usersettings {
-    background: #0a0c17;
-  }
-  html.stblack #usersettings .caption span {
-    color: #00A3F7;
-    font-weight: 100;
-  }
-  html.stblack #usersettings .mwork.wh {
-    background: #0a0c17;
   }
 }

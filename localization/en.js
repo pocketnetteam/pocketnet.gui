@@ -2070,3 +2070,8 @@ ____loclib.fromsh = "From"
 
 ____loclib.hodoiearnmore = "How do I earn more Pocketcoin?"
 
+
+____loclib.removeaddress = "Do you really want to remove this address from this device?"
+____loclib.wanttoseekey = "Do you really want to see your private key?"
+____loclib.seeprivatekey = "See Private Key"
+____loclib.max5acc = "You have reached a maximum of 5 accounts. No more can be added"
