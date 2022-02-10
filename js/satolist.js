@@ -3338,6 +3338,12 @@ Platform = function (app, listofnodes) {
             return _el
         },
 
+        switchProtocol: function() {
+            /** Restarting chat UI */
+            app.platform.matrixchat.destroy();
+            app.platform.matrixchat.init();
+        },
+
         electron: {
             storage: {},
 
@@ -7957,6 +7963,13 @@ Platform = function (app, listofnodes) {
 					value : false,
 				},
 
+                onlysecureconnection : {
+                    name: self.app.localization.e('onlysecureconnection'),
+                    id : 'onlysecureconnection',
+                    type : "BOOLEAN",
+                    value : false,
+                },
+
                 sendUserStatistics : {
                     name: self.app.localization.e('sendUserStatistics'),
 					id : 'sendUserStatistics',
@@ -8075,7 +8088,8 @@ Platform = function (app, listofnodes) {
                     c.system = {
                         name: self.app.localization.e('system'),
                         options: {
-                            autostart: options.autostart
+                            autostart: options.autostart,
+                            onlysecureconnection: options.onlysecureconnection,
                         }
                     }
                 }
@@ -8125,6 +8139,12 @@ Platform = function (app, listofnodes) {
                                 enable : m[i].value
                             });
 
+                        }
+
+                        if (i == 'onlysecureconnection') {
+                            console.log('Switching protocols');
+
+                            self.api.switchProtocol();
                         }
 
 
