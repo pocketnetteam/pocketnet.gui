@@ -1,0 +1,1131 @@
+.share_common {
+  background: rgb(var(--background-total-theme));
+}
+.share_common .commentsWrapperHb {
+  min-height: 1em;
+}
+.share_common img {
+  max-width: 100%;
+}
+.share_common .work {
+  width: 100%;
+}
+.share_common .article .message b {
+  font-size: 1em!important;
+}
+.share_common .article .message p img {
+  max-width: 95%;
+  border-radius: 6px;
+  margin: 0 auto;
+}
+.share_common .article .message figure img {
+  max-width: 95%;
+  border-radius: 6px;
+  margin: 0 auto;
+}
+.share_common .article .message span {
+  font-size: 1em!important;
+}
+.share_common .medium-insert-embeds {
+  position: relative;
+}
+.share_common .medium-insert-embeds:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 150;
+  cursor: pointer;
+  background: transparent;
+}
+.share_common .work {
+  overflow: hidden;
+  position: relative;
+}
+.share_common .shareWrapper {
+  position: relative;
+}
+.share_common .subscribeWrapper {
+  z-index: 19;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(var(--background-total-theme), 0.96);
+  padding: 2em 1em;
+  display: none;
+}
+.share_common .subscribeWrapper .name {
+  padding-top: 0.5em / 4;
+}
+.share_common .subscribeWrapper .unsubscribeevent,
+.share_common .subscribeWrapper .subscribeevent {
+  margin-top: 18px;
+  overflow-y: hidden;
+}
+.share_common .subscribeWrapper .unsubscribeevent > div,
+.share_common .subscribeWrapper .subscribeevent > div {
+  float: left;
+  margin-right: 0.5em;
+}
+.share_common .subscribeWrapper .unsubscribeevent > div button,
+.share_common .subscribeWrapper .subscribeevent > div button {
+  padding-left: 0;
+  padding-right: 0;
+  background: transparent;
+  border-color: transparent;
+  text-decoration: underline;
+  color: rgb(var(--text-color));
+}
+.share_common .subscribeWrapper .unsubscribeevent > div button:hover,
+.share_common .subscribeWrapper .subscribeevent > div button:hover {
+  background: transparent;
+  border-color: transparent;
+}
+.share_common .subscribeWrapper .unsubscribeevent {
+  display: none;
+}
+.share_common .shareSave i {
+  display: none;
+}
+.share_common .shareSave[status="cansave"] .cansave {
+  display: inline-block;
+}
+.share_common .shareSave[status="saving"] .saving {
+  display: inline-block;
+}
+.share_common .shareSave[status="saved"] .saved {
+  display: inline-block;
+}
+.share_common .shareSpacer {
+  height: 400px;
+  padding: 0 2em;
+}
+.share_common .shareContent {
+  position: relative;
+}
+.share_common .tempPreloader {
+  padding: 1em 0;
+  margin-bottom: 1em;
+}
+.share_common .tempPreloader .label {
+  padding-top: 0.5em;
+  color: rgb(var(--color-bg-ac));
+  font-size: 0.8em;
+}
+.share_common .tempPreloader .iconwr {
+  padding-bottom: 1em;
+}
+.share_common .tempPreloader .count {
+  padding-right: 0;
+}
+.share_common .shareTable {
+  padding-top: 1em;
+}
+.share_common .shareTable .sbtnxs .subscribedLabel {
+  display: none;
+}
+.share_common .shareTable .sbtnxs span {
+  cursor: pointer;
+}
+.share_common .shareTable .sbtnxs span:hover {
+  color: rgb(var(--color-txt-ac));
+}
+.share_common .shareTable .sbtnxs .notificationturn {
+  display: none;
+}
+.share_common .shareTable .sbtnxs .notificationturn i {
+  text-align: center;
+  color: rgba(7, 108, 52, 0.8);
+  /*.transition(0.3s);*/
+}
+.share_common .shareTable .sbtnxs .notificationturn.turnon i:before {
+  content: '\f0f3';
+}
+.share_common .shareTable .sbtnxs .notificationturn:hover i {
+  color: #076c34;
+}
+.share_common .shareTable.subscribed .sbtnxs .subscribedLabel {
+  display: inline;
+}
+.share_common .shareTable.subscribed .sbtnxs .notificationturn {
+  display: inline;
+}
+.share_common .shareTable.subscribed .sbtnxs .subscribeLabel {
+  display: none;
+}
+.share_common .shareTable.subscribed .iconWrapper .aunsubscribe {
+  display: block;
+}
+.share_common .shareTable.subscribed .iconWrapper .asubscribe {
+  display: none;
+}
+.share_common .shareTable.subscribed .iconWrapper .notificationturn {
+  display: block;
+}
+.share_common .shareTable.subscribed .iconWrapper .additional i:before {
+  content: '\f068';
+}
+.share_common .shareTable.subscribed .subscribeWrapper .subscribeevent {
+  display: none;
+}
+.share_common .shareTable.subscribed .subscribeWrapper .unsubscribeevent {
+  display: block;
+}
+.share_common .shareTable.emptywithrepost .cntswrk {
+  margin-left: 0;
+}
+.share_common .shareTable.emptywithrepost .meta {
+  padding-top: 0;
+}
+.share_common .shareTable.emptywithrepost .meta .repostCaption i {
+  font-size: 0.8em;
+  color: rgb(var(--color-txt-ac));
+  width: 20px;
+}
+.share_common .shareTable.emptywithrepost .meta .repostCaption span {
+  font-size: 0.8em;
+}
+.share_common .jsPlayerPreview {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px;
+}
+.share_common .jsPlayerPreview .wpl {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+.share_common .jsPlayerPreview .wpl:hover {
+  opacity: 0.9;
+}
+.share_common .jsPlayerPreview .statswrapper,
+.share_common .jsPlayerPreview .durationWrapper {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  border-radius: 6px;
+  background: rgba(var(--color-shadow-base), 0.8);
+  color: rgb(var(--text-on-bg-shadow-color));
+  padding: 0.25em 0.5em;
+  padding-top: 0.25em;
+  font-size: 0.8em;
+}
+.share_common .jsPlayerPreview .statswrapper.live,
+.share_common .jsPlayerPreview .durationWrapper.live {
+  background: rgba(--color-bg-orange, 0.8);
+}
+.share_common .jsPlayerPreview .statswrapper i,
+.share_common .jsPlayerPreview .durationWrapper i,
+.share_common .jsPlayerPreview .statswrapper span,
+.share_common .jsPlayerPreview .durationWrapper span {
+  font-size: 1em;
+}
+.share_common .jsPlayerPreview .statswrapper {
+  right: auto;
+  left: 6px;
+}
+.share_common .jsPlayerPreview .statswrapper > div {
+  float: left;
+  margin-right: 0.5em;
+}
+.share_common .jsPlayerPreview .statswrapper > div:nth-last-child(1) {
+  margin-right: 0;
+}
+.share_common .jsPlayerLoading {
+  width: auto;
+  height: auto;
+  background: #000000;
+  position: relative;
+}
+.share_common .jsPlayerLoading .jsPlayerLoadingD {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.share_common .jsPlayerLoading .jsPlayerLoadingD > div {
+  vertical-align: middle;
+  text-align: center;
+}
+.share_common .authorTable {
+  width: auto;
+}
+.share_common .authorTable > div {
+  vertical-align: middle;
+}
+.share_common .authorTable > div.authorCell {
+  padding-right: 0;
+}
+.share_common .authorTable > div.authorCell .pinnedIcon {
+  color: rgba(var(--neutral-grad-3), 0.8);
+}
+.share_common .metatable {
+  display: flex;
+  justify-content: space-between;
+  align-items: top;
+}
+.share_common .metatable > div.metadata {
+  overflow: hidden;
+}
+.share_common .metatable > div.metapanel {
+  vertical-align: top;
+}
+.share_common .metatable > div.metapanel .metapanelitem {
+  cursor: pointer;
+  margin-left: auto;
+  font-size: 0.8em;
+  margin-right: auto;
+  text-align: center;
+  border-radius: 50%;
+  color: rgba(var(--neutral-grad-3), 0.8);
+}
+.share_common .meta {
+  padding-top: 0.75em;
+  margin-bottom: 0.5em;
+}
+.share_common .meta > div {
+  margin-right: 1em;
+}
+.share_common .meta .authorCell {
+  white-space: nowrap;
+}
+.share_common .meta .authorCell a {
+  font-weight: 700;
+  cursor: pointer;
+}
+.share_common .imagecaption {
+  font-weight: 700;
+  font-size: 0.8em;
+}
+.share_common .images {
+  max-width: 590px;
+  padding: 1em 0;
+  opacity: 0;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  overflow: hidden;
+}
+.share_common .images.active {
+  opacity: 1;
+}
+.share_common .images .imagesWrapper {
+  width: 140px;
+  height: 140px;
+  float: left;
+  background: rgb(var(--background-secondary-theme));
+  border-radius: 6px;
+}
+.share_common .images .imagesWrapper .image {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  border-radius: 6px;
+}
+.share_common .images .imagesWrapper .image.active {
+  opacity: 1;
+}
+.share_common .images .imagesContainer.one .imagesWrapper {
+  width: 400px;
+  height: 400px;
+}
+.share_common .images .imagesContainer.one .imagesWrapper.w2 {
+  width: 600px;
+}
+.share_common .images .imagesContainer.one .imagesWrapper.h2 {
+  width: 400px;
+}
+.share_common .images .imagesContainer.two .imagesWrapper {
+  width: 200px;
+  height: 200px;
+}
+.share_common .images .imagesContainer.two .imagesWrapper.w2 {
+  width: 400px;
+}
+.share_common .images .imagesContainer.two .imagesWrapper.h2 {
+  width: 200px;
+}
+.share_common .images .imagesContainer.four .imagesWrapper {
+  width: 200px;
+  height: 200px;
+}
+.share_common .images .imagesContainer.four .imagesWrapper.w2 {
+  width: 400px;
+}
+.share_common .images .imagesContainer.four .imagesWrapper.h2 {
+  width: 200px;
+}
+.share_common .images .imagesContainer.articleImages .imagesWrapper {
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  overflow: hidden;
+  margin-right: 0.5em;
+  margin-bottom: 0.5em;
+}
+.share_common .images .imagesContainer.owlcar {
+  height: auto;
+  width: 100%;
+  max-width: 400px;
+}
+.share_common .images .imagesContainer.owlcar .imagesWrapper {
+  height: 500px;
+  float: none;
+  width: 100%;
+  background: transparent;
+}
+.share_common .images .imagesContainer.owlcar .imagesWrapper .image {
+  background-size: contain!important;
+}
+.share_common .images .videoOpen {
+  position: relative;
+}
+.share_common .images .videoOpen .playicon {
+  background: rgba(var(--color-shadow-base), 0.5);
+  color: rgb(var(--text-on-bg-shadow-color));
+  position: absolute;
+  right: 0.5em;
+  bottom: 0.5em;
+  padding: 0.5em 1em;
+  padding-top: 0.3em;
+  padding-right: 0.8em;
+  border-radius: 3px;
+}
+.share_common .images .videoOpen .playicon i {
+  font-size: 0.8em;
+}
+.share_common .sharecaption {
+  margin-bottom: 0.5em;
+  max-width: 590px;
+  cursor: pointer;
+}
+.share_common .sharecaption span {
+  font-size: 1.2em;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.share_common .sharecaption a {
+  text-decoration: underline;
+  color: rgb(var(--color-bg-ac));
+}
+.share_common .message {
+  margin-bottom: 1em;
+  max-width: 590px;
+}
+.share_common .message a {
+  text-decoration: underline;
+  color: rgb(var(--color-txt-ac));
+  text-overflow: ellipsis;
+  word-break: break-all;
+}
+.share_common .showMore {
+  padding: 1.5em 0;
+  padding-top: 0.5em;
+  text-align: left;
+  max-width: 700px;
+}
+.share_common .showMore button {
+  max-width: none;
+  padding-left: 0;
+  padding-right: 0;
+  text-decoration: none;
+  color: rgb(var(--color-txt-ac));
+}
+.share_common .shareContent {
+  cursor: pointer;
+}
+.share_common .urlhtmlcontent {
+  font-size: 0.85em;
+}
+.share_common .urlhtmlcontent .ogtable > div {
+  vertical-align: top;
+  padding: 0.5em 0;
+}
+.share_common .urlhtmlcontent .ogtable > div.image {
+  width: 200px;
+  padding-right: 1em;
+  border-radius: 6px;
+}
+.share_common .urlhtmlcontent .ogtable > div.image .removeImage {
+  display: none;
+}
+.share_common .urlhtmlcontent .ogtable > div.image img {
+  width: 100%;
+  border-radius: 6px;
+  box-shadow: 0 5px 7px -5px rgba(0, 0, 0, 0.4);
+  /*.transition(0.3s);*/
+}
+.share_common .urlhtmlcontent .ogtable > div.image img.active {
+  opacity: 1;
+}
+.share_common .urlhtmlcontent .ogtable > div.cnt .title {
+  max-width: 400px;
+  font-weight: 700;
+  color: rgb(var(--color-txt-gray-dark));
+}
+.share_common .urlhtmlcontent .ogtable > div.cnt .description {
+  max-width: 400px;
+  margin-top: 0.5em;
+}
+.share_common .url {
+  margin-bottom: 1em;
+}
+.share_common .url.hiddenurl .videoWrapper {
+  display: none;
+}
+.share_common .url span.linkedstyle {
+  font-size: 0.8em;
+  color: rgb(var(--color-txt-ac));
+  text-decoration: underline;
+}
+.share_common .url .videoviews span {
+  font-size: 0.8em;
+  color: rgb(var(--color-txt-ac));
+}
+.share_common .url .urlcnt {
+  overflow: hidden;
+}
+.share_common .url .urlcnt .linkcnt {
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 640px;
+  text-overflow: ellipsis;
+}
+.share_common .url .urlcnt .urlcnttable {
+  width: auto;
+  height: auto;
+}
+.share_common .url .urlcnt .urlcnttable > div {
+  vertical-align: middle;
+}
+.share_common .url .urlcnt .urlcnttable > div.removeWrapper {
+  padding-left: 1em;
+}
+.share_common .url.bigimageinlink .urlhtmlcontent .ogtable {
+  max-width: 600px;
+  border-radius: 6px;
+  display: block;
+}
+.share_common .url.bigimageinlink .urlhtmlcontent .ogtable > div {
+  display: block;
+}
+.share_common .url.bigimageinlink .urlhtmlcontent .ogtable > div.image {
+  width: auto;
+}
+.share_common .url.bigimageinlink .urlhtmlcontent .ogtable > div.image img {
+  width: 100%;
+}
+.share_common .url.bigimageinlink .urlhtmlcontent .ogtable > div.cnt .title {
+  max-width: none;
+}
+.share_common .url.bigimageinlink .urlhtmlcontent .ogtable > div.cnt .description {
+  max-width: none;
+}
+.share_common .pkoin_commerce_info {
+  padding: 1em 0;
+  max-width: 350px;
+  padding-top: 0.5em;
+  position: relative;
+}
+.share_common .pkoin_commerce_info:before {
+  content: '';
+  width: 70px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 1px;
+  background: #ff0033;
+}
+.share_common .pkoin_commerce_info span {
+  font-size: 0.8em;
+  opacity: 0.8;
+}
+.share_common .tags {
+  margin-bottom: 1em;
+  overflow: hidden;
+  max-width: 650px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.share_common .tags > div {
+  margin-right: 0.5em;
+}
+.share_common .tags > div span {
+  font-size: 0.8em;
+  color: rgb(var(--neutral-grad-4));
+}
+.share_common .tags .newlabel {
+  background: #ff0565;
+  color: #fff;
+}
+.share_common .sys {
+  margin-bottom: 1em;
+}
+.share_common .sys span {
+  cursor: pointer;
+  font-size: 0.9em;
+  color: rgb(var(--neutral-grad-4));
+}
+.share_common .panel {
+  border-radius: 0;
+}
+.share_common .panel .itemwr {
+  width: auto;
+}
+.share_common .panel .itemwr > div {
+  vertical-align: middle;
+  padding-bottom: 0.5em;
+}
+.share_common .panel .itemwr > div.iconwr {
+  width: 40px;
+}
+.share_common .panel .itemwr > div.labelwr {
+  padding-left: 0.5em;
+  cursor: pointer;
+}
+.share_common .panel .itemwr > div.labelwr span {
+  font-weight: 700;
+  font-size: 0.8em;
+}
+.share_common .panel > div {
+  float: left;
+}
+.share_common .panel > div:nth-last-child(1) {
+  margin-right: 0;
+}
+.share_common .panel > div .stars {
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  cursor: pointer;
+}
+.share_common .panel > div .count {
+  cursor: pointer;
+}
+.share_common .panel > div .icon {
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  font-size: 1em;
+  color: rgb(var(--color-bg-ac));
+  cursor: pointer;
+  border-radius: 40%;
+}
+.share_common .panel > div.right {
+  float: right;
+  margin-left: 0;
+}
+.share_common .panel > div.right .itemwr > div.iconwr {
+  text-align: center;
+  width: 40px;
+}
+.share_common .panel > div:hover .icon {
+  opacity: 0.7;
+}
+.share_common .panel > div.pkoin {
+  margin-top: 0.5em;
+  display: flex;
+  align-items: center;
+  background: rgb(var(--color-bg-ac-bright));
+  color: rgb(var(--text-on-bg-ac-color));
+  border-radius: 8px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+.share_common .panel > div.pkoin img {
+  width: 1em;
+}
+.share_common .panel > div.pkoin span {
+  margin-left: 0.5em;
+}
+.share_common .panel > div.sharesocial .label,
+.share_common .panel > div.sharesocial .icon {
+  color: rgb(var(--color-txt-orange));
+}
+.share_common .panel > div.sharesocial:hover .label {
+  color: rgb(var(--color-txt-orange));
+}
+.share_common .panel > div.sharesocial:hover .icon {
+  border-radius: 0;
+  box-shadow: none;
+  color: rgb(var(--color-txt-orange));
+  background: transparent;
+}
+.share_common .exitFull {
+  display: none;
+  position: fixed;
+  right: 2em;
+  top: 1em;
+}
+.share_common .blockAuthor {
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(var(--background-total-theme), 0.98);
+  z-index: 10;
+  align-items: center;
+}
+.share_common .blockAuthor .blockCell {
+  text-align: center;
+  width: 100%;
+}
+.share_common .blockAuthor .blockCell .label {
+  margin-bottom: 1.5em;
+}
+.share_common .blockAuthor .blockCell button {
+  width: 180px;
+  border-radius: 30px;
+  font-size: 0.8em;
+}
+.share_common.blocking .commentsWrapperHb {
+  display: none;
+}
+.share_common.blocking .blockAuthor {
+  display: flex;
+}
+.share_common.fullScreenVideo {
+  padding: 0;
+  margin: 0;
+  z-index: 1004;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background: rgba(var(--color-shadow-base), 0.9);
+  padding-top: 0;
+  border-radius: 0;
+}
+.share_common.fullScreenVideo .video-js {
+  contain: unset;
+}
+.share_common.fullScreenVideo .shareTable {
+  padding-top: 0;
+}
+.share_common.fullScreenVideo .sharecnt {
+  position: absolute;
+  overflow-y: scroll;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  scrollbar-width: none;
+  overscroll-behavior: none;
+  transform: translate3d(0, 0, 0);
+}
+.share_common.fullScreenVideo .sharecnt .videoWrapper {
+  border-radius: 0;
+}
+.share_common.fullScreenVideo .sharecnt .videoWrapper .js-player {
+  border-radius: 0;
+  overflow: visible;
+}
+.share_common.fullScreenVideo .sharecnt .videoWrapper .js-player .vjs-control-bar {
+  border-radius: 0;
+  overflow: visible;
+}
+.share_common.fullScreenVideo .sharecnt::-webkit-scrollbar {
+  width: 0 !important;
+}
+.share_common.fullScreenVideo .statswrapperExtended {
+  padding-left: 1em;
+}
+.share_common.fullScreenVideo .videoviews {
+  padding-left: 1em;
+}
+.share_common.fullScreenVideo #comments .caption {
+  padding-left: 1em;
+  padding-right: 1.5em;
+}
+.share_common.fullScreenVideo #comments .commentPaddingWrapper,
+.share_common.fullScreenVideo #comments .post {
+  padding-left: 1em;
+  padding-right: 1.5em;
+}
+.share_common.fullScreenVideo #comments .commentPaddingWrapper {
+  padding-right: 2em;
+}
+.share_common.fullScreenVideo #comments .list .answer .postbody {
+  padding-left: 1em;
+  padding-right: 1.5em;
+}
+.share_common.fullScreenVideo #comments .answers .commentPaddingWrapper {
+  padding-right: 0;
+  padding-left: 0;
+}
+.share_common.fullScreenVideo .exitFull {
+  display: block;
+}
+.share_common.fullScreenVideo .showMore {
+  display: none;
+}
+.share_common.fullScreenVideo .commentsWrapper {
+  margin: 0 auto;
+  max-width: 960px;
+  border-radius: 0;
+}
+.share_common.fullScreenVideo .url.hiddenurl .videoWrapper {
+  display: block;
+}
+.share_common.fullScreenVideo .commentsWrapperHb {
+  padding-bottom: 20%;
+}
+.share_common.fullScreenVideo .cntswrk {
+  margin-left: 0;
+  padding: 0;
+}
+.share_common.fullScreenVideo .shareTable {
+  display: flex;
+  flex-direction: column;
+}
+.share_common.fullScreenVideo .shareTable .postcontent {
+  order: -2;
+}
+.share_common.fullScreenVideo .shareTable .formeta {
+  order: -1;
+}
+.share_common.fullScreenVideo .cntscontent.postcontent {
+  display: flex;
+  flex-direction: column;
+}
+.share_common.fullScreenVideo .cntscontent.postcontent .url {
+  order: -1;
+}
+.share_common.fullScreenVideo .sharecaption {
+  padding-left: 1em;
+  max-width: 450px;
+}
+.share_common.fullScreenVideo .sharecaption span {
+  font-size: 0.9em;
+}
+.share_common.fullScreenVideo .formeta {
+  padding-left: 1em;
+}
+.share_common.fullScreenVideo .formeta .sys {
+  display: none;
+}
+.share_common.fullScreenVideo .formeta .sbtnxs {
+  display: none;
+}
+.share_common.fullScreenVideo .formeta .meta {
+  padding-top: 0;
+  margin-bottom: 0;
+}
+.share_common.fullScreenVideo .metapanel,
+.share_common.fullScreenVideo .hideOnFullVideo {
+  display: none;
+}
+.share_common.fullScreenVideo .repostWrapper {
+  display: none;
+}
+.share_common.fullScreenVideo .statswrapperExtended {
+  background: rgb(var(--background-total-theme));
+}
+.share_common.fullScreenVideo .work {
+  margin: 0 auto;
+  max-width: 960px;
+  background: rgb(var(--background-total-theme));
+  padding: 0;
+}
+.share_common.fullScreenVideo .work .iconWrapper {
+  display: none;
+}
+.share_common.fullScreenVideo .work .shareWrapper {
+  padding: 0;
+}
+.share_common.fullScreenVideo .work .shareWrapper .meta {
+  display: none;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 1em;
+}
+.share_common.fullScreenVideo .work .shareWrapper .meta .metapanel {
+  display: none;
+}
+.share_common.fullScreenVideo .work .shareContent {
+  padding: 0;
+}
+.share_common.fullScreenVideo .work .shareContent .sharecaption {
+  display: none;
+  padding: 1em;
+  padding-top: 0;
+}
+.share_common.fullScreenVideo .work .shareContent .message {
+  display: none;
+}
+.share_common.fullScreenVideo .work .shareContent .images {
+  display: none;
+}
+.share_common.fullScreenVideo .work .videoWrapper {
+  max-width: none;
+  background: #000;
+}
+.share_common.fullScreenVideo .work .videoWrapper.squareVideo,
+.share_common.fullScreenVideo .work .videoWrapper.verticalVideo {
+  background: #000;
+  position: relative;
+  overflow: hidden;
+}
+.share_common.fullScreenVideo .work .videoWrapper.squareVideo .js-player,
+.share_common.fullScreenVideo .work .videoWrapper.verticalVideo .js-player {
+  margin: 0 auto;
+  max-width: 450px;
+  position: static;
+}
+.share_common.fullScreenVideo .work .videoWrapper.squareVideo .video-js,
+.share_common.fullScreenVideo .work .videoWrapper.verticalVideo .video-js {
+  position: static;
+}
+.share_common.fullScreenVideo .work .videoWrapper.squareVideo .js-player {
+  max-width: 500px;
+}
+.share_common.fullScreenVideo .work .videoWrapper .videoTips {
+  display: none;
+}
+.share_common.fullScreenVideo .work .urlcnt {
+  display: none;
+}
+.share_common.fullScreenVideo .work .sys,
+.share_common.fullScreenVideo .work .tags {
+  padding: 0 1em;
+}
+.share_common.fullScreenVideo .work .panel {
+  overflow: hidden;
+  padding: 1em;
+  padding-bottom: 1em;
+  padding-top: 0.5em;
+}
+.share_common.fullScreenVideoShowing {
+  opacity: 0;
+  -moz-transition: 0s;
+  -o-transition: 0s;
+  -webkit-transition: 0s;
+  transition: 0s;
+}
+#content .share_common .work {
+  width: 100%;
+}
+/*t*/
+@media only screen and (max-width: 768px) {
+  .share {
+    padding: 0;
+    background: rgb(var(--background-total-theme));
+    cursor: default;
+    padding-bottom: 0;
+    border-radius: 0;
+  }
+  .share .work {
+    width: 100%;
+  }
+  .share .shareTable {
+    padding-top: 0.5em;
+  }
+  .share.fullScreenVideo {
+    contain: strict;
+  }
+  .share.fullScreenVideo #comments .caption {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+  .share.fullScreenVideo #comments .commentPaddingWrapper,
+  .share.fullScreenVideo #comments .post {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+  .share.fullScreenVideo #comments .commentPaddingWrapper {
+    padding-right: 0;
+  }
+  .share.fullScreenVideo #comments .list .answer .postbody {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+  .share .medium-insert-embeds {
+    position: relative;
+  }
+  .share .medium-insert-embeds:after {
+    display: none;
+  }
+  .share .medium-insert-embeds figure {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .share .shareWrapper,
+  .share .shareContent {
+    cursor: default;
+  }
+  .share .paddingWrapper {
+    padding: 0 0.5em;
+  }
+  .share .work {
+    overflow: hidden;
+  }
+  .share .shareWrapper {
+    position: relative;
+  }
+  .share .shareTable.subscribed .iconWrapper .aunsubscribe {
+    display: block;
+  }
+  .share .shareTable.subscribed .iconWrapper .asubscribe {
+    display: none;
+  }
+  .share .shareTable.subscribed .iconWrapper .notificationturn {
+    display: block;
+  }
+  .share .shareTable.subscribed .iconWrapper .additional i:before {
+    content: '\f068';
+  }
+  .share .shareTable.subscribed .subscribeWrapper .subscribeevent {
+    display: none;
+  }
+  .share .shareTable.subscribed .subscribeWrapper .unsubscribeevent {
+    display: block;
+  }
+  .share .shareTable.emptywithrepost .meta .repostCaption {
+    padding-left: 1em;
+  }
+  .share.fullScreenVideo {
+    background: rgb(var(--color-shadow-base));
+  }
+  .share .jsPlayerLoading {
+    width: 100%;
+    height: 300px;
+  }
+  .share .meta .metatable > div {
+    margin-right: 0;
+  }
+  .share .meta .metatable > div.metapanel {
+    width: 47px;
+    padding-right: 0.5em;
+  }
+  .share .meta .metatable > div.metapanel .metapanelitem {
+    opacity: 1;
+  }
+  .share .meta .metatable > div.metapanel .metapanelitem.complain:hover {
+    color: #F41A4D;
+  }
+  .share .meta {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .share .meta > div {
+    margin-right: 0;
+  }
+  .share .imagecaption {
+    padding: 0.5em;
+  }
+  .share .images .imagesWrapper {
+    width: 100%;
+    height: auto;
+    border-radius: 0;
+  }
+  .share .images .imagesWrapper .image {
+    border-radius: 0;
+  }
+  .share .images .imagesContainer.one .imagesWrapper {
+    width: 100%;
+    height: auto;
+  }
+  .share .images .imagesContainer.one .imagesWrapper.w2 {
+    width: 100%;
+  }
+  .share .images .imagesContainer.one .imagesWrapper.h2 {
+    width: 100%;
+  }
+  .share .images .imagesContainer.two .imagesWrapper,
+  .share .images .imagesContainer.three .imagesWrapper,
+  .share .images .imagesContainer.more .imagesWrapper,
+  .share .images .imagesContainer.four .imagesWrapper {
+    width: 50%;
+    height: auto;
+  }
+  .share .images .imagesContainer.two .imagesWrapper.w2,
+  .share .images .imagesContainer.three .imagesWrapper.w2,
+  .share .images .imagesContainer.more .imagesWrapper.w2,
+  .share .images .imagesContainer.four .imagesWrapper.w2 {
+    width: 50%;
+  }
+  .share .images .imagesContainer.two .imagesWrapper.h2,
+  .share .images .imagesContainer.three .imagesWrapper.h2,
+  .share .images .imagesContainer.more .imagesWrapper.h2,
+  .share .images .imagesContainer.four .imagesWrapper.h2 {
+    width: 50%;
+  }
+  .share .images .imagesContainer.articleImages {
+    padding: 0.5em;
+  }
+  .share .images .imagesContainer.articleImages .imagesWrapper {
+    float: left;
+    width: 30px;
+    height: 30px;
+  }
+  .share .sharecaption {
+    margin-bottom: 0.5em;
+  }
+  .share .sharecaption div {
+    font-size: 1.5em;
+    font-weight: 100;
+  }
+  .share .urlhtmlcontent {
+    font-size: 0.8em;
+  }
+  .share .urlhtmlcontent .ogtable {
+    display: block;
+  }
+  .share .urlhtmlcontent .ogtable > div {
+    display: block;
+    padding: 0.5em 0;
+  }
+  .share .urlhtmlcontent .ogtable > div.image {
+    width: 100%;
+    padding-right: 0;
+  }
+  .share .urlhtmlcontent .ogtable > div.cnt {
+    padding: 0 0.5em;
+  }
+  .share .urlhtmlcontent .ogtable > div.cnt .title {
+    max-width: none;
+  }
+  .share .urlhtmlcontent .ogtable > div.cnt .description {
+    max-width: none;
+    margin-top: 0.5em;
+  }
+  .share .url .urlcnt {
+    padding: 0 0.5em;
+  }
+  .share .exitFull {
+    right: 1em;
+  }
+  .share.fullScreenVideo .sharecaption {
+    padding-left: 0.5em;
+  }
+  .share.fullScreenVideo .work .metawrapper {
+    margin-left: 0;
+  }
+  .share.fullScreenVideo .work .iconWrapper {
+    display: none;
+  }
+  .share.fullScreenVideo .work .shareWrapper {
+    margin-top: 0;
+  }
+  .share.fullScreenVideo .work .sys,
+  .share.fullScreenVideo .work .tags {
+    padding: 0 0.5em;
+  }
+  .share.fullScreenVideo .work .panel {
+    padding: 0.5em;
+  }
+}

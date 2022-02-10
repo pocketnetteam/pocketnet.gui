@@ -1,7 +1,7 @@
 @import "../../css/__cssvar";
 
 #main{
-	background: @color-main-light;
+	background: rgb(var(--background-main));
 	min-height: 1200px;
 
 	&.wshar{
@@ -10,162 +10,9 @@
 		}
 	}
 
-	
-	/*#lenta{
-		.shares{
-			.showmorebyauthor,
-			.share{
-				border-radius: 12px;
-			}
-		}
-
-	}*/
-
-	.bastyonhelper{
-
-		
-		.layout{
-			display: flex;
-			height: 100%;
-			width: 100%;
-			align-items: center;
-	
-			.imagepart{
-				width: 50%;
-				height: 100%;
-	
-				.img{
-					height: 442px;
-					width: 100%;
-				}
-			}
-	
-		   
-	
-			.contentpart{
-				flex-grow: 1;
-				padding : 4 * @rhythm;
-				padding-left: 7 * @rhythm;
-				position: relative;
-	
-				.invitationcontent{
-					padding : 2 * @rhythm 0;
-	
-					.cancelinvite{
-						opacity: 0.4;
-						cursor: pointer;
-	
-						&:hover{
-							opacity: 0.7;
-						}
-					}
-				}
-	
-				.logowrapper{
-					padding : 3 * @rhythm 0;
-					padding-top: 4 * @rhythm;
-					img{
-						width: 30px;
-						height: 30px;
-					}
-				}
-	
-				.features{
-					margin-top: 1em;
-					.feature{
-						font-size: 1.2em;
-					}
-				}
-	
-				.caption{
-					font-size: 2em;
-					font-weight: 700;
-					line-height: 1em;
-					padding-bottom: @rhythm;
-				}
-	
-	
-				.signinpart{
-					padding : 3 * @rhythm 0;
-					padding-top : 5 * @rhythm;
-					.sin{
-						width: 250px;
-						border-radius: 30px;
-					}
-				}
-	
-				.existing{
-					color : @color-main;
-					text-decoration: underline;
-					cursor: pointer;
-					font-size: 0.9em;
-				}
-			}
-		}
-
-		.wndredirect{
-	
-			position: fixed;
-			left: 0;
-			top: 0;
-			bottom: 0;
-			right: 0;
-			height: 100vh;
-			width: 100%;
-			z-index: 9999;
-		
-			.wndback{
-				background: rgba(0,17,44,.75);
-				backdrop-filter: blur(14px);
-		
-				width: 100%;
-				height: 100%;
-				position: absolute;
-				left: 0;
-				top: 0;
-				right: 0;
-				bottom: 0;
-				margin: auto;
-			}
-		
-			.wndinner{
-				display: table;
-				background: #fff;
-				// color: #00a4ff;
-				height: 250px;
-				max-width: 900px;
-				width: 100%;
-				position: absolute;
-				left: 0;
-				top: 0;
-				right: 0;
-				bottom: 0;
-				margin: auto;
-				.shadowSmaller();
-			}
-
-			._close{
-				position: absolute;
-				right: .75em;
-				top: .5em;
-				cursor: pointer;
-				color: #fff;
-				z-index: 150;
-			}
-		
-		}
-		
-		.iframe{
-			position: absolute;
-			width:0;
-			height:0;
-			border:0;
-		}
-	}
-
 	.topvideosWrapper{
 		display: block;
-		background: #fff;
+		background: rgb(var(--background-total-theme));
 		margin-bottom : @rhythm;
 		min-height: 160px;
 		position: relative;
@@ -196,8 +43,6 @@
 
 		#lenta.mainvideo .shares .authorgroup .share{
 			padding : 0;
-
-			
 		}
 
 		.durationWrapper,
@@ -208,68 +53,26 @@
 	}
 
 	&.videomain{
-		background: #fcfcfc;
-
-		#categories{
-			color : @color-gray;
-		}
+		background: rgb(var(--background-main));
 
 		.addbutton{
 			display: none!important;
 		}
 
-		.columnnavigation{
-			display: none;
-		}
 	}
-
-	.columnnavigation{
-		position: fixed;
-		bottom : 20%;
-		padding : @rhythm;
-		background: @color-white;
-		.shadowSmaller();
-		border : 1px solid fade(@color-gray, 30);
-		color : @color-gray;
-		border-radius: 50px;
-		text-align: center;
-		line-height: 0.7em;
-		min-width: 25px;
-		i{
-			font-size: 0.7em;
-		}
-	}
-
-	.columnnavigationleft{
-		left : 0;
-		border-left: 0;
-		border-top-left-radius: 0;
-		border-bottom-left-radius: 0;
-		padding-left: 0;
-	}
-
-	.columnnavigationright{
-		right : 0;
-		border-right: 0;
-		border-top-right-radius: 0;
-		border-bottom-right-radius: 0;
-		padding-right: 0;
-	}
-
 	
 	.seemore,
 	.loadprev,
 	.loadmore{
 		border-radius: 12px;
 	}
-	
 
 	.addbutton{
 		position: fixed;
 		left :  0;
 		bottom : 0;
-		background: @color-main-light;
-		color : @color-gray;
+		background: rgb(var(--background-main));
+		color : rgb(var(--neutral-grad-1));
 		padding : 2 * @rhythm;
 		text-align: center;
 		cursor: pointer;
@@ -283,8 +86,6 @@
 			font-size: 0.8em;
 		}
 
-		
-
 		&.scrollactive{
 			display: block;
 			opacity: 0.5;
@@ -293,19 +94,12 @@
 		&:hover{
 			opacity: 0.8;
 		}
-
 		
 	}
-
 
 	#share{
 		min-height: 130px;
 	}
-
-	/*.mainpanelcell,
-	.leftpanelcell{
-		min-height: 1024px;
-	}*/
 
 	.leftpanelsvicell,
 	.leftpanelcell{
@@ -344,25 +138,27 @@
 	}
 
 	&.videomain{
+		
 		.mainpanelsvicell,
 		.mainpanelcell{
 			display: none;
 		}
+
 		.loadprev{
 			display: none!important;
 			width: 100%;
 			padding-left : 2 * @rhythm;
 
 			button{
-				background: @color-gray-slight;
-				border-color: @color-gray-slight;
-				color : @color-black2;
+				background: rgb(var(--neutral-grad-1));
+				border-color: rgb(var(--neutral-grad-1));
+				color : rgb(var(--text-color));
 				width: 450px;
 
 				&:hover{
-					background: @color-gray-slight;
-					border-color: @color-gray-slight;
-					color : @color-main;
+					background: rgb(var(--neutral-grad-1));
+					border-color: rgb(var(--neutral-grad-1));
+					color : rgb(var(--color-txt-ac));
 				}
 			}
 		}
@@ -467,12 +263,8 @@
 			.postWrapper{
 				margin: 0;
 			}
-
-			
 		}
 	}
-
-	
 
 	&.onepost{
 		.lentacell{
@@ -515,10 +307,10 @@
 		height: auto;
 		padding-bottom: 0;
 		border-radius: 12px;
+		
 		&.sec{
-			color : @color-black;
-			background: #FFF;
-			
+			color : rgb(var(--text-color));
+			background: rgb(var(--background-total-theme));
 		}
 
 		&.cf_caption{
@@ -558,7 +350,7 @@
 						margin-bottom : 0;
 						.emojionearea{
 							border-radius: 50px;	
-							border : 1px solid @color-gray-slight;				
+							border : 1px solid rgb(var(--neutral-grad-1));				
 	
 							.emojionearea-button{
 								top : 8px;
@@ -619,9 +411,9 @@
 
 		.iconWrapper{
 			
-			border : 1px solid @color-gray-slight;
-			background: #fff;
-			color : @color-gray;
+			border : 1px solid rgb(var(--neutral-grad-1));
+			background: rgb(var(--background-total-theme));
+			color : rgb(var(--neutral-grad-4));
 			cursor: pointer;
 			height: 44px;
 			width: 44px;
@@ -639,7 +431,7 @@
 			display: none;
 			height: 44px;
 			line-height: 42px;
-			background: #fff;
+			background: rgb(var(--background-total-theme));
 			border-radius: 22px;
 			padding : 0 2 * @rhythm;
 			opacity: 0;
@@ -656,8 +448,8 @@
 			&.active,
 			&:hover{
 				.iconWrapper{
-					color : @color-main;
-					border-color : @color-main;
+					color : rgb(var(--color-txt-ac));
+					border-color : rgb(var(--color-txt-ac));
 				}
 			}
 
@@ -674,7 +466,7 @@
 		&:hover{
 			
 			.itemName{
-				border : 1px solid @color-main;
+				border : 1px solid rgb(var(--color-txt-ac));
 				opacity: 1;
 				display: block;
 				padding-left: 54px; 
@@ -992,13 +784,13 @@ html {
 			bottom : 4 * @rhythm;
 			right : -90%;
 			z-index: 201;
-			background: #fff;
-			color : #011621;
+			background: rgb(var(--background-total-theme));
+			color : rgb(var(--text-color));
 			padding-top : 42px;
 			overflow-y: scroll;
 			padding-bottom: 90px;
-			.transition(0.3s, transform);
-			border: 1px solid fade(@color-gray-light, 30);
+			.transition(0.3s);
+			border: 1px solid rgba(--neutral-grad-1, 0.3);
 			.shadowSmaller();
 			border-top-right-radius: 0;
 			border-bottom-right-radius: 0;
@@ -1008,13 +800,14 @@ html {
 
 			#tagcloud,
 			#categories{
-				color : #011621;
+				color : rgb(var(--text-color));
 			}
 		}
 
 		&.leftshowed{
 			.leftpanelcell{
 				transform: scale(1) translateX(-100%);
+				/*box-shadow: 0 0 5000px 3000px rgba(var(--color-shadow-base), 30);*/
 			}
 		}
 
@@ -1077,8 +870,6 @@ html {
 			display: none;
 		}
 
-		
-
 		.work{
 			&.mwork{
 				padding : 0!important;
@@ -1100,7 +891,7 @@ html {
 			}
 		}
 
-		.smallpanell{
+		/*.smallpanell{
 			overflow: hidden;
 			background: #EFEFED;
 			padding : @rhythm 0;
@@ -1135,11 +926,11 @@ html {
 					display: none;
 				}
 			}
-		}
+		}*/
 
 	}
 
-	html.stblack{
+	/*html.stblack{
 		#main{
 			.leftpanelcell{
 				background: @color-black2;
@@ -1151,13 +942,12 @@ html {
 				}
 			}
 		}
-	}
+	}*/
 }
 
 html.mobile{
 	#main{
 		padding-top : 55px;
-		
 	}
 }
 
@@ -1179,26 +969,7 @@ html.tablet{
 
 @media only screen and (max-width: 768px){
 
-	html.toppanelshowed{
-		#main{
-	
-			/*.maincntwrapper{
-	
-				
-				>div{
-					&.work{
-						max-width: none;
-						padding: 0;
-						>div{
-							padding-top : 120px;
-						}
-					}
-				}
-			}*/
-		}
-	}
-
-	html{
+	/*html{
 		&.scrollmodedown{
 			#main{
 				.maincntwrapper{
@@ -1207,7 +978,7 @@ html.tablet{
 			}
 		}
 		
-	}
+	}*/
 
 	#main{
 

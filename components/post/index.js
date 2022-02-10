@@ -245,50 +245,7 @@ var post = (function () {
 
 			},
 
-			next: function () {
-
-				var nextel = el.c.find('.nextpost');
-
-				nextel.html('<div class="loader"><div class="preloader5"><img src="./img/three-dots.svg"/></div></div>')
-
-				ed.next(share.txid, function (txid) {
-
-
-
-					if (txid) {
-
-						self.nav.api.load({
-							open: true,
-							href: 'post?s=' + txid,
-
-							eid: 'nextpost' + txid,
-							el: nextel,
-
-							clbk: function () {
-
-							},
-
-							essenseData: {
-								share: txid,
-								hr: ed.hr,
-								like: ed.like,
-								next: ed.next,
-								removemargin: true
-							}
-						})
-
-					}
-					else {
-						nextel.html('<div class="ended">' + self.app.localization.e('e13146') + '</div>')
-					}
-
-
-
-				})
-
-
-
-			},
+			
 
 			sharesocial: function (clbk) {
 				var url = 'https://' + self.app.options.url + '/' + (ed.hr || 'index?') + 's=' + share.txid + '&mpost=true'
@@ -401,10 +358,10 @@ var post = (function () {
 				var d = Math.min((h - wh) / 2, h / 6)
 
 				if (d > 0) {
-					el.wr.css('margin-top', d + 'px')
+					el.wr.css('padding-top', d + 'px')
 				}
 				else {
-					el.wr.css('margin-top', 0 + 'px')
+					el.wr.css('padding-top', 0 + 'px')
 				}
 
 			},
@@ -824,14 +781,7 @@ var post = (function () {
 
 			},
 
-			next: function () {
-
-				if (el.wnd.scrollTop() + el.wnd.height() > el.wnd.find('>div#post').height() - 400) {
-					actions.next()
-				}
-
-
-			},
+			
 
 			unsubscribe: function (clbk) {
 				actions.unsubscribe(function () {

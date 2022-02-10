@@ -2,22 +2,23 @@
 
 #test{
 	min-height: 600px;
-	background: #F7F7F7;
+	background: rgb(var(--background-secondary-theme));
+
 	.caption{
 		max-width: 700px;
 		padding-top: @rhythm;
 		font-size : 3em;
 		font-weight: 100;
-		color : @color-main;
+		color : rgb(var(--color-txt-ac));
 
 		.sub{
-			color : @color-gray2;
+			color : rgb(var(--color-txt-gray-dark));
 			font-size: 0.4em;
 		}
 	}
 
 	.errorname{
-		color : @color-main;
+		color : rgb(var(--color-txt-ac));
 		padding: 2 * @rhythm;
 		text-align: center;
 		display: none;
@@ -50,7 +51,7 @@
 			top: 65px;
 			bottom: 0;
 			padding :  4 * @rhythm 4 * @rhythm;
-			background: fade(#F7F7F7, 90);
+			background: rgb(var(--background-secondary-theme));
 
 			.table{
 				>div{
@@ -86,10 +87,6 @@
 			height: 60px;
 		}
 
-		/*.inputWrapper{
-			z-index: 1000;
-		}*/
-
 		.uploadTable{
 
 			>div{
@@ -108,13 +105,11 @@
 				&.label{
 					font-weight: 700;
 					font-size: 0.9em;
-					color : @color-main;
+					color : rgb(var(--color-txt-ac));
 				}
 			}
 		}
-		.parameter{
-		}
-
+	
 		.referalMaketWrapper{
 			margin-top : @rhythm;
 			>div{
@@ -126,7 +121,7 @@
 					width: 190px;
 
 					.span{
-						color : @color-main;
+						color : rgb(var(--color-txt-ac));
 						font-weight: 700;
 					}
 				}
@@ -156,7 +151,7 @@
 							cursor: pointer;
 
 							&:hover{
-								color : @color-contrast;
+								color : rgb(var(--color-txt-ac));
 							}
 						}
 
@@ -197,12 +192,12 @@
 				
 				.unit{
 					font-weight: 700;
-					color : @color-bright;
+					color : rgb(var(--color-txt-ac));
 				}
 
 				.note{
 					font-weight: 400;
-					color : @color-main;
+					color : rgb(var(--color-txt-ac));
 				}
 				
 			}
@@ -215,12 +210,12 @@
 
 				.echo{
 					padding: @rhythm;
-					color : @color-contrast;
+					color : rgb(var(--color-txt-ac-2));
 					font-weight: 700;
 				}
 
 				.vm_valuesmulti{
-					padding-top: @rhythm / 2;
+					padding-top: 0.5 * @rhythm;
 				}
 
 
@@ -234,10 +229,10 @@
 				.clear{
 					text-align: right;
 					cursor: pointer;
-					color : @color-gray-slight;
+					color : rgb(var(--neutral-grad-1));
 					.transition(0.3s);
 					&:hover{
-						color : @color-main;
+						color : rgb(var(--color-txt-ac));
 					}
 				}
 				
@@ -248,17 +243,10 @@
 			input{
 				width: 100%;
 				padding: @rhythm;
-				// border : 1px solid @color-gray-light;
-				border-radius: 2px;
-
-				&.error{
-					border : 1px solid @color-bad;
-				}
 			}
 
 			textarea{
 				min-height: 105px;
-				border: 1px solid @color-gray-border;
 			}
 
 			.error{
@@ -267,7 +255,6 @@
 				input{
 					border : 1px solid @color-bad;
 				}
-				
 			}
 
 			select{
@@ -276,18 +263,16 @@
 				width: auto;
 			}
 
-			
-
 			.vc_valuecustom{
 				width: 100%;
 			}
 
-			.vc_valuecustom,
+			/*.vc_valuecustom,
 			.vc_valuecustom_multibig{
 				.vc_textInput{
 					background: #fff;
 				}
-			}
+			}*/
 
 			.vmt_valuesmultitree,
 			.vm_value{
@@ -343,8 +328,8 @@
 
 				.save{
 					cursor: default;
-					background: @color-gray;
-					border-color : @color-gray;
+					background: rgb(var(--neutral-grad-2));
+					border-color : rgb(var(--neutral-grad-2));
 					color: #fff;
 				}
 
@@ -355,7 +340,7 @@
 					.label{
 						font-weight: 500;
 						font-size: 0.85em;
-						color : @color-main;
+						color : rgb(var(--color-bg-ac));
 						padding-top : @rhythm;
 					}
 				}
@@ -375,11 +360,11 @@
 
 					.save{
 						cursor: pointer;
-						background: @color-main;
-						border-color : @color-main;
+						background: rgb(var(--color-bg-ac));
+						border-color : rgb(var(--color-bg-ac));
 
 						&:hover{
-							background : @color-add;
+							background : rgb(var(--color-txt-gray-dark));
 						}
 					}
 
@@ -448,8 +433,8 @@
 			height: 40px;
 			line-height: 38px;
 			text-align: center;
-			border : 1px solid @color-gray-light;
-			color : @color-gray-light;
+			border : 1px solid rgb(var(--neutral-grad-2));
+			color : rgb(var(--neutral-grad-2));
 			cursor: pointer;
 			border-radius: 50%;
 			font-size: 0.8em;
@@ -457,15 +442,15 @@
 			.transition(0.3s);
 
 			&:hover{
-				color : @color-main;
-				border-color: @color-main;
+				color : rgb(var(--color-txt-ac));
+				border-color: rgb(var(--color-txt-ac));
 			}
 		}
 
 		.addedAddressesWrapper{
 			.addedAddressWrapper{
 				margin-top: @rhythm;
-				background: #fff;
+				background: rgb(var(--background-total-theme));
 				border-radius: 30px;
 				padding : 0 @rhythm;
 				.shadowSmaller();
@@ -481,7 +466,7 @@
 						&.currencyWrapper{
 							width: 80px;
 							font-weight: 700;
-							color : @color-main;
+							color : rgb(var(--color-txt-ac));
 						}
 
 						&.panelWrapper{
@@ -491,7 +476,7 @@
 								width: 100%;
 								text-align: center;
 								cursor : pointer;
-								color : @color-gray-light;
+								color : rgb(var(--neutral-grad-2));
 								.transition(0.3s);
 
 								&:hover{
@@ -513,18 +498,6 @@
 		
 	}
 
-	.signout{
-		margin-top : 2 * @rhythm;
-		margin-bottom : 2 * @rhythm;
-		font-size: 0.8em;
-		color : @color-contrast;
-		cursor: pointer;
-		text-decoration: underline;
-
-		&:hover{
-			color : @color-gray;
-		}
-	}
 
 	.iwrapper{
 		padding: @rhythm 0;
@@ -537,80 +510,11 @@
 	.mwr{
 		padding-top : 2 * @rhythm;
 	}
-
-	.optionInput{
-		width: auto;
-
-		>div{
-			vertical-align: middle;
-			padding : @rhythm;
-
-			&.label{
-				width: 200px;
-			}
-
-			.vc_valuecustom{
-				width: 400px;
-			}
-
-			&:nth-child(1){
-				padding-left : 0;
-			}
-		}
-	}
-
-	.unspentlist{
-		padding : 4 * @rhythm 0;
-
-		.caption{
-			font-weight: 700;
-			padding : 2 * @rhythm 0;
-		}
-
-		.unspentData{
-			>div{
-				vertical-align: top;
-				width: 50%;
-				padding-right : 2 * @rhythm;
-			}
-
-			.cpt{
-				margin-bottom: 2 * @rhythm;
-				color : @color-main;
-			}
-		}
-	}
-
-	.transactionInfo{
-		margin-top: 2 * @rhythm;
-		max-width: 900px;
-
-		.tratable{
-			.table{
-				>div{
-					vertical-align: top;
-					padding : @rhythm;
-					overflow: hidden;
-					text-overflow: ellipsis;
-					&.label{
-						padding-left: 0;
-						width: 30%;
-					}
-				}
-			}
-		}
-
-		.panel{
-			margin-top: 2 * @rhythm;
-		}
-
-	}
 }
 
 .addaddressDialog{
-
-	background: fade(#151722, 95);
-	color : #fff;
+	background: rgba(var(--color-shadow-base), 0.95);
+	color : rgb(var(--text-on-bg-ac-color));
 
 	.thwrapper{
 		background: transparent;
@@ -620,7 +524,7 @@
 	}
 
 	._close{
-		color : fade(#fff, 90);
+		color : rgb(var(--text-on-bg-shadow-color));
 	}
 
 	.buttons{
@@ -637,10 +541,9 @@
 
 	.addaddress{
 		
-		
 		.caption{
 			text-align: center;
-			color : @color-contrast;
+			color : rgb(var(--color-txt-ac));
 		}
 
 		.inputsWrapper{
@@ -655,10 +558,10 @@
 						select{
 							border : 0;
 							background: transparent;
-							border-bottom : 2px solid @color-contrast;
+							border-bottom : 2px solid rgb(var(--color-txt-ac));
 							width : 100%;
 							height: 60px;
-							color : @color-main;
+							color : rgb(var(--color-txt-ac));
 							-webkit-appearance: none;
 						    background-image: url(../../img/arrow_wh.png);
 						    background-position: right 10px center;
@@ -671,17 +574,14 @@
 							width : 100%;
 							border : 0;
 							background: transparent;
-							border-bottom : 2px solid @color-contrast;
-							color : #fff;
+							border-bottom : 2px solid rgb(var(--color-txt-ac));
+							color : rgb(var(--text-on-bg-ac-color));
 							height: 60px;
+							border-radius: 0;
 						}
 					}
 				}
 			}
-
-
-
-			
 		}
 	}
 }
@@ -691,7 +591,7 @@
 		width : 550px;
 		height: 80%;
 		max-height: 750px;
-		background: #fff;
+		background: rgb(var(--background-total-theme));
 		
 		.wndcontent{
 			padding : 0;
@@ -700,15 +600,15 @@
 	}
 
 	.wndback{
-		background: fade(@color-black, 90);
+		background: rgba(var(--color-shadow-base), 0.95)
 	}
 
 	._close{
-		color : #fff;
+		color : rgb(var(--text-on-bg-shadow-color));
 	}
 
 	#test{
-		background: #fff;
+		background: transparent;
 		width: 500px;
 		margin : 0 auto;
 
@@ -720,7 +620,7 @@
 			text-align: center;
 			font-size : 1.3em;
 			font-weight: 700;
-			color : @color-orange;
+			color : rgb(var(--color-txt-orange));
 			margin-top : @rhythm;
 		}
 
@@ -750,9 +650,7 @@
 		.userPanel{
 
 			.upanelloader{
-				background: fade(#FFF, 90);
-
-				
+				background: rgba(var(--background-total-theme), 0.9);
 			}
 		}
 
@@ -771,315 +669,13 @@
 	
 }
 
-html.stblack{
-	#test{
-		background: transparent;
-		.caption{
-			color : @color-main;
-	
-			.sub{
-				color : @color-gray-mlight;
-			}
-		}
-	
-		.errorname{
-			color : @color-main;
-		}
-	
-		.userPanel{
-			
-			.require{
-				color : @color-bad;
-			}
-	
-			.upanelloader{
-				background: fade(@color-black, 90);
-	
-			}
-	
-			
-			.uploadTable{
-	
-				>div{
-	
-					&.label{
-						color : @color-main;
-					}
-				}
-			}
-			
-			.referalMaketWrapper{
-				>div{
-	
-					&.refLabel{
-	
-						.span{
-							color : @color-main;
-						}
-					}
-	
-					.refNameTable{
-	
-						>div{
-							
-	
-							&.refRemove{
-	
-								&:hover{
-									color : @color-contrast;
-								}
-							}
-	
-	
-						}					
-					}
-				}
-			}
-	
-			.parameter{
-	
-				
-				.pName{
-	
-					.unit{
-						color : @color-bright;
-					}
-					
-				}
-	
-				
-				.pInput{
-	
-					.echo{
-						color : @color-contrast;
-					}
-				}
-	
-				.panel{
-	
-					.clear{
-						color : @color-main;
-						.transition(0.3s);
-						&:hover{
-							color : @color-bright;
-						}
-					}
-					
-				}
-	
-				select,
-				textarea,
-				input{
-					// border: 1px solid @color-bright;
-	
-					&.error{
-						border : 1px solid @color-bad;
-					}
-				}
-	
-	
-				.error{
-					select,
-					textarea,
-					input{
-						border : 1px solid @color-bad;
-					}
-					
-				}
-	
-	
-				.vc_valuecustom,
-				.vc_valuecustom_multibig{
-					.vc_textInput{
-						background: transparent;
-						color : @color-gray-mlight;
-					}
-				}
-	
-				
-			}
-			
-			.upanel{
-				>div{
-	
-					.save{
-						background: @color-bright;
-						border-color : @color-bright;
-						color: @color-white;
-					}
-	
-					&.loadingToB{
-	
-	
-						.label{
-							color : @color-main;
-						}
-					}
-				}
-	
-	
-	
-				&.changes{
-					>div{
-	
-						.save{
-							background: @color-main;
-							border-color : @color-main;
-	
-							&:hover{
-								background : @color-add;
-							}
-						}
-					}
-					
-				}
-	
-				
-			
-			}
-	
-		}
-	
-	
-		
-		.testPanel{
-			.showhidetestpanel{
-	
-				color : @color-main;
-			}
-	
-		
-		}
-	
-		.adressesInput{
-	
-			.addaddress{
-				border : 1px solid @color-bright;
-				color : @color-bright;
-				
-	
-				&:hover{
-					color : @color-main;
-					border-color: @color-main;
-				}
-			}
-	
-			.addedAddressesWrapper{
-				.addedAddressWrapper{
-					
-					background: @color-black4;
-					
-					.addedAddress{
-	
-						
-						
-						>div{
-							
-							&.currencyWrapper{
-								color : @color-main;
-							}
-	
-							&.panelWrapper{
-	
-								.item{
-									color : @color-gray-mlight;
-									
-	
-									&:hover{
-										color : @color-bad;
-									}
-								}
-							}
-	
-						}
-					}
-				}
-			}
-		}
-	
-		.signout{
-			color : @color-contrast;
-			&:hover{
-				color : @color-main;
-			}
-		}
-	
-	
-	
-		.unspentlist{
-			.unspentData{
-	
-				.cpt{
-					color : @color-main;
-				}
-			}
-		}
-	
-	
-	}
-	
-	.addaddressDialog{
-	
-		background: fade(#151722, 95);
-		color : @color-gray-mlight;
-	
-		.thwrapper{
-			background: transparent;
-			
-		}
-	
-		._close{
-			color : fade(@color-gray-mlight, 90);
-		}
-	
-		
-	
-		.addaddress{
-			
-			.caption{
-				color : @color-contrast;
-			}
-	
-			.inputsWrapper{
-	
-				.inputsWrapperTable{
-					>div{
-						&.curWrapper{
-	
-							select{
-								border-bottom : 2px solid @color-contrast;
-								color : @color-main;
-								background-image: url(../../img/arrow_wh.png);
-							}
-						}
-	
-						&.addressWrapper{
-							input{
-								border : 0;
-								background: transparent;
-								border-bottom : 2px solid @color-contrast;
-								color : @color-gray-mlight;
-							}
-						}
-					}
-				}
-	
-	
-	
-				
-			}
-		}
-	}	
-}
 
 /*t*/ @media only screen and (max-width: 768px){
+
 	#test{
 
-		background: #fff;
+		background: rgb(var(--background-total-theme));
 		padding : 0 2 * @rhythm;
-		.work{
-			
-		}
 
 		.caption{
 			padding-top: 2 * @rhythm;
@@ -1090,12 +686,10 @@ html.stblack{
 		.userPanel{
 
 			.upanelloader{
-				background: fade(#FFF, 90);
+				background: rgba(var(--background-total-theme), 0.9);
 			}
-
 			
 			.parameter{
-
 				max-width: none;
 				display: block;
 
@@ -1108,19 +702,10 @@ html.stblack{
 					width: 100%;
 					padding-bottom : @rhythm;
 				}
-
 				
 				.pInput{
 					width: 100%;
-
-					
-
-
 				}
-
-				
-
-				
 			}
 
 			.upanel{
@@ -1137,14 +722,9 @@ html.stblack{
 				&.changes{
 					>div{
 						margin-right: 0;
-
-						
 					}
-					
 				}
 			}
-			
-
 		}
 
 		.adressesInput{
@@ -1153,25 +733,18 @@ html.stblack{
 				width: 100%;
 				border-radius: 20px;
 				height: 35px;
-				background: #fff;
+				background: rgb(var(--background-total-theme));
 				line-height: 33px;
 			}
-
-			
 		}
 	}
 
 	.addaddressDialog{
-
 		.thwrapper{
 			position: static;
 		}
-
 		.addaddress{
-			
-
 			.inputsWrapper{
-
 				.inputsWrapperTable{
 					display: block;
 					>div{
@@ -1187,44 +760,9 @@ html.stblack{
 
 					}
 				}
-
-
-
-				
 			}
 		}
 	}
-
-	html.stblack{
-		#test{
-
-			background: @color-black;
-			.userPanel{
-	
-				.upanelloader{
-					background: fade(@color-black, 90);
-				}
-	
-			}
-	
-			.adressesInput{
-	
-				.addaddress{
-					background: @color-main;
-					color :#fff;
-				}
-				
-			}
-		}
-
-		.wnd.testwindow{
-			#test{
-				background: @color-black;
-			}
-		}
-		
-	}
-
 
 	.wnd.testwindow{
 		#test{

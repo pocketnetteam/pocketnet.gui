@@ -2,7 +2,8 @@
 
 #tagcloud{
 
-    color : @color-dark-mlight;
+    font-weight: 500;
+    color : rgb(var(--text-on-main-bg-color));
     overflow: hidden;
     
     .tcaptionwrapper{
@@ -10,7 +11,7 @@
         padding : 2 * @rhythm;
         padding-top : 2 * @rhythm;
         padding-left: 0;
-        border-top: 1px solid #E3E4EB;
+        border-top: 1px solid rgb(var(--color-medium-theme));
 
         span{
             font-size : 0.8em;
@@ -39,7 +40,7 @@
 
                 &:hover{
                     i{
-                        color : @color-main;
+                        color : rgb(var(--color-txt-ac));
                     }
                     
                 }
@@ -88,7 +89,7 @@
                 padding: 4px 8px;
                 padding-top : 2px;
                 width: auto;
-                border: 1px solid #C7C8D9;
+                border: 1px solid rgb(var(--color-medium-theme));
                 margin: 4px 4px 0 0;
                 border-radius: 100px;
                 overflow: hidden;
@@ -113,8 +114,8 @@
                 .transition(0.3s);
                 cursor: pointer;
                 &:hover{
-                    color : @color-main;
-                    border: 1px solid @color-main!important;
+                    color : rgb(var(--color-txt-ac));
+                    border: 1px solid rgb(var(--color-txt-ac));
                 }
             }
 
@@ -138,10 +139,10 @@
 
                 
                 &:hover{
-                    color : @color-main;
+                    color : rgb(var(--color-txt-ac));
 
                     .tagvalue{
-                        border : 1px solid @color-main;
+                        border : 1px solid rgb(var(--color-txt-ac));
 
                     }
                 }
@@ -206,7 +207,7 @@
             display: none;
         }
         &.selected{
-            color : @color-orange;
+            color : rgb(var(--text-txt-orange));
             .unselected{
                 display: none;
             }
@@ -218,7 +219,7 @@
             .tag{
 
                 >div{
-                    border: 1px solid @color-orange;
+                    border: 1px solid rgb(var(--text-txt-orange));
 
                     &.tagcheck{
                         opacity: 1;
@@ -247,13 +248,12 @@
         padding-bottom : 4 * @rhythm;
         padding-left: 0;
         cursor: pointer;
-        color: #8E90A6;
-        border-bottom: 1px solid #E3E4EB;
+        color: rgba(var(--color-txt-gray), 0.7);
+        border-bottom: 1px solid rgba(var(--color-medium-theme), 0.5);
         .transition(0.3s);
 
         &:hover{
-            opacity: 1;
-            color : @color-main;
+            color : rgb(var(--color-txt-ac));
         }
 
         span, i{
@@ -273,40 +273,4 @@
         display: none;
     }
 
-}
-
-html.stblack{
-    #tagcloud{
-       
-    
-        .tag{
-            
-            &:hover{
-                color : @color-main;
-
-                .tagvalue{
-                    border: 1px solid @color-main;
-                }
-            }
-        }
-    
-        
-        .tcaptionwrapper{
-            border-top: 1px solid fade(#E3E4EB, 10);
-        }
-    
-        .hidealltags,
-        .showalltags{
-            border-bottom: 1px solid fade(#E3E4EB, 10);
-    
-            &:hover{
-                color : @color-main;
-
-                .tagvalue{
-                    border : 1px solid @color-main;
-                }
-            }
-        }
-    
-    }    
 }

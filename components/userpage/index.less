@@ -23,10 +23,13 @@
 		height: 1px;
 	}
 
+	.report .reportCnt>div{
+		border-radius: 6px;
+	}
+
 	.fillUserWrapper{
 		height: 400px;
-		background: #F1F1F1;
-
+		background: rgb(var(--background-secondary-theme));
 
 		.caption{
 			
@@ -58,8 +61,8 @@
 
 
 	.bgCaption{
-		background: #F1F1F1;
-		color : @color-black2;
+		background: rgb(var(--background-secondary-theme));
+		color : rgb(var(--text-color));
 		height: 160px;
 		position: relative;
 		margin-bottom : 4 * @rhythm;
@@ -95,7 +98,6 @@
 				width: 75px;
 				height: 75px;
 				line-height: 73px;
-				color : @color-gray-light;
 				font-size: 1.5em;
 
 				.letter{
@@ -186,19 +188,12 @@
 			}
 		}
 
-		
-
-		.infoWrapper{
-			.name{
-				font-family: @color-main;
-			}
+		/*.infoWrapper{
 			.email{
 				color: @color-gray;
 				font-size: 0.8em;
 			}
-
-			
-		}
+		}*/
 	}
 
 	#nodecontrol{
@@ -208,7 +203,6 @@
 	}
 
 	.maketsWrapper{
-
 		overflow: hidden;
 
 		.maket{
@@ -223,10 +217,7 @@
 			}
 		}
 
-
 		.contents{
-
-			
 			padding-top: 4 * @rhythm; 
 
 			.added{
@@ -235,7 +226,7 @@
 
 			.add{
 				margin-left: 2 * @rhythm;
-				color : @color-bright;
+				color : rgb(var(--color-bg-ac-bright));
 			}
 
 			.additional{
@@ -244,10 +235,10 @@
 
 			.captionContents{
 				font-size: 0.7em;
-				padding-left: @rhythm / 2;
-				border-bottom: 1px solid @color-main;
-				padding-top: @rhythm / 2;
-				padding-bottom: @rhythm / 2;
+				padding-left: 0.5 * @rhythm;
+				border-bottom: 1px solid rgb(var(--color-bg-ac-bright));
+				padding-top: 0.5 * @rhythm;
+				padding-bottom: 0.5 * @rhythm;
 			}
 			
 
@@ -255,11 +246,11 @@
 				font-weight: 700;
 				cursor: pointer;
 				line-height: 26px;
-				padding-top: @rhythm / 2;
-				padding-bottom: @rhythm / 2;
-				padding-left: @rhythm / 2;
-				margin-top: @rhythm / 2;
-				color : #3A373F;
+				padding-top: 0.5 * @rhythm;
+				padding-bottom: 0.5 * @rhythm;
+				padding-left: 0.5 * @rhythm;
+				margin-top: 0.5 * @rhythm;
+				color : rgb(var(--color-txt-gray-dark));
 				.transition(0.3s);
 
 				&:nth-child(1){
@@ -268,9 +259,7 @@
 
 				&.openReport{
 					&.active{
-
-						color : @color-raspberry;
-						font-weight: 700!important;
+						color : rgb(var(--color-bg-ac-bright));
 					}
 				}
 
@@ -303,13 +292,13 @@
 					right : 0;
 					backdrop-filter: blur(5px);
         			-webkit-backdrop-filter: blur(5px);  
-					background: fade(#fff, 10);
+					background: rgba(var(--background-total-theme), 0.1);
 					text-align: center;
 					padding : 2 * @rhythm;
 
 					.text{
 						padding-top : 1.5 * @rhythm;
-						color : #FFF;
+						color : rgb(var(--text-on-bg-ac-color));
 						font-weight: 700;
 						font-size: 0.9em;
 					}
@@ -324,8 +313,8 @@
 					margin-bottom: 2 * @rhythm;
 
 					&:hover{
-						background: @color-orange;
-						color : #FFF;
+						background: rgb(var(--color-bg-orange));
+						color : rgb(var(--text-on-bg-ac-color));
 					}
 				}
 
@@ -358,13 +347,11 @@
 
 		            >div.groupNameTable{
 		            	.reportCaption{
-		            		color : @color-contrast;
+		            		color : rgb(var(--color-bg-ac-bright));
 		            	}
 		                .groupNamePanelWrapper{
 		                    transform: rotate(180deg);
 		                    -webkit-transform: rotate(180deg);
-
-		                 
 		                }
 		            }
 		        }
@@ -391,31 +378,14 @@
 		        }
 
 		        &[level='1']{
-		        	
 	            	.groupContent{
 	            		.reportCaption{
 			                padding-left:  4 * @rhythm;
 			            }
 	            	}
-		           
-		            
 		        }
-
-		        &[levelid='filings']{
-		        	font-size: 0.8em;
-		        	width : 80%;
-
-		        	margin-top: 4 * @rhythm;
-
-		        	[level="1"]{
-		        		font-size: 1.2em;
-		        	}
-		        }
-
 
 			}
-
-
 
 			.groupNameTable{
 
@@ -452,11 +422,7 @@
 		            }
 		        }
 		    }
-
-
 		}
-
-
 		
 		.report{
 			.work{
@@ -466,8 +432,6 @@
 			.preloaderWrapper{
 				padding : 4 * @rhythm;
 			}
-
-			
 
 		    #test{
 
@@ -487,7 +451,7 @@
 
 		  
 		    #notifications{
-				background: #F7F7F7;
+				background: rgb(var(--background-secondary-theme));
 				min-height: 600px;
 
 				.notification {
@@ -553,123 +517,14 @@
 			}
 		}
 	}
-}
-html.stblack{
-	#userpage{
 
-		.fillUserWrapper{
-			background: @color-black2;
-	
-		}
-	
-	
-		.bgCaption{
-			background: fade(@color-bright, 20);
-			color : fade(@color-gray-slight, 60);
-			
-			margin-top: 0;
-			.cellforimage{
-	
-				.usericon{
-					color : @color-gray-light;
-					
-				}
-			}
-	
-		
-		}
-	
-	
-	
-		.profile{
-	
-			.infoWrapper{
-
-				.name{
-					font-family: @color-main;
-				}
-
-				.email{
-					color: @color-gray-light;
-				}
-	
-				
-			}
-		}
-	
-		.maketsWrapper{
-	
-	
-	
-			.contents{
-	
-	
-				.add{
-					color : @color-bright;
-				}
-	
-				
-	
-				.captionContents{
-					border-bottom: 1px solid @color-main;
-				}
-	
-				.reportCaption{
-					color : @color-gray-light;
-					&.openReport{
-						&.active{
-	
-							color : @color-contrast;
-						}
-					}
-
-					&[rid="registration"]{
-						color : @color-orange;
-					}
-				}
-	
-				.group{
-	
-	
-					&.active{
-						>div.groupNameTable{
-							.reportCaption{
-								color : @color-contrast;
-							}
-						}
-					}
-	
-	
-	
-				}
-	
-	
-	
-	
-			}
-	
-	
-			
-			.report{
-	
-				#notifications{
-					background: @color-block;
-					
-				}
-			}
-		}
-	
-	}
-}
-
-#userpage{
 	.maketsWrapper{
 		.contents{
 			.reportCaption {
 
 				&[rid="registration"]{
 					margin-top : @rhythm;
-					color : @color-orange;
+					color : rgb(var(--color-txt-orange));
 				}
 
 				&[rid="authorization"]{
@@ -679,11 +534,11 @@ html.stblack{
 		
 		}
 	}
+
 }
 
-.wnd.wnduserpage{
 
-	
+.wnd.wnduserpage{
 
 	.wndcontent{
 		padding-top : 0;
@@ -735,12 +590,7 @@ html.stblack{
 
 		
 	}
-}
-}
-/*t*/ @media only screen and (max-width: 768px){
-#userpage{
 	
-		
 	.bgCaption{
 		display: none;
 	}
@@ -753,7 +603,6 @@ html.stblack{
 	
 	.maketsWrapper{
 		overflow: inherit;
-		
 
 		.maket{
 			&.left{
@@ -769,7 +618,6 @@ html.stblack{
 		}	
 
 		.report{
-			/*min-height: 100vh;*/
 		
 			#test{
 				padding-top : 2 * @rhythm;
@@ -813,11 +661,13 @@ html.stblack{
 	}
 
 }
+
 html.tablet{
 	#userpage{
 		padding-top : 55px;
 	}
 }
+
 }
 
 @media only screen and (max-width: 640px){
@@ -843,18 +693,18 @@ html.tablet{
 					&[rid="followers"]{
 						margin-top : @rhythm;
 						padding-top : 2 * @rhythm;
-						border-top : 1px solid @color-gray-light;
+						border-top : 1px solid rgb(var(--color-medium-theme));
 					}
 	
 					&[rid="following"]{
 						margin-bottom : @rhythm;
 						padding-bottom : 2 * @rhythm;
-						border-bottom : 1px solid @color-gray-light;
+						border-bottom : 1px solid rgb(var(--color-medium-theme));
 					}
 	
 					&[rid="registration"]{
 						margin-top : @rhythm;
-						color : @color-orange;
+						color : rgb(var(--color-txt-orange));
 					}
 	
 					&[rid="authorization"]{
@@ -896,7 +746,7 @@ html.tablet{
 
 				#notifications{
 					padding : 2 * @rhythm 0;
-					background: #F7F7F7;
+					background: rgb(var(--background-secondary-theme));
 				}
 			}
 		}

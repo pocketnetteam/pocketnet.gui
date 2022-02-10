@@ -4969,9 +4969,8 @@
 
 					input += 	'</div>';
 
-					//input += 	'<div class="vc_selectInput_bg_mobile"></div>';
 
-					input += 	'<div class="vc_selectInput">';
+					input += 	'<div class="vc_selectInput customscroll">';
 
 					if (self.defaultValuesTemplate)
 					{

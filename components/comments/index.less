@@ -7,7 +7,7 @@
 		width : 38px;
 
 		.letter{
-			color: #647CA7;
+			/*color: #647CA7;*/
 			font-size: 1.5em;
 		}
 	}
@@ -45,7 +45,7 @@
 				color : @color-bad;
 
 				&:hover{
-					background : @color-gray-slight;
+					background : rgb(var(--neutral-grad-2));
 				}
 			}
 
@@ -82,7 +82,7 @@
 
 	.loadnewcomments{
 		text-align: center;
-		color : @color-gray-mlight;
+		color : rgb(var(--color-txt-gray-dark));
 		cursor: pointer;
 		span{
 			font-weight: 100;
@@ -130,7 +130,7 @@
 	.caption{
 		padding-left:  2.5 * @rhythm;
 		padding-right: 6 * @rhythm;
-		background: #fff;
+		background: rgb(var(--background-total-theme));
 
 		.captionTable{
 			>div{
@@ -153,7 +153,7 @@
 								.transition(0.3s);
 
 								&:hover{
-									color : @color-main;
+									color : rgb(var(--color-bg-ac));
 								}
 							}
 
@@ -203,7 +203,7 @@
 				display: none;
 	            >div{
 	                vertical-align: middle;
-	                padding : @rhythm / 2;
+	                padding : 0.5 * @rhythm;
 
 	                &.forimage{
 	                    width: 25px;
@@ -244,7 +244,7 @@
 	                    left: 20px;
 	                    top: 14px;
 	                    font-size: 0.6em;
-	                    color : @color-gray-slight;
+	                    color : rgb(var(--neutral-grad-1));
 	                }
 	            }
 	        }
@@ -282,11 +282,11 @@
 					.icon-wrapper {
 						text-align: center;
 						vertical-align: middle;
-						color : @color-gray-light;
+						color : rgb(var(--neutral-grad-3));
 						.transition(0.3s);
 
 						&:hover{
-							color : @color-black;
+							color : rgb(var(--neutral-grad-4));
 						}
 					}
 
@@ -297,7 +297,7 @@
 					width: 38px;
 					height: 38px;
 					
-					background: #fff;
+					background: rgb(var(--background-total-theme));
 					border-radius: 30px;
 					overflow: hidden;
 
@@ -313,7 +313,7 @@
 				.vc_valuecustom{
 					padding-left: 30px;
 					border-radius: 30px;
-					background: #fff;
+					background: rgb(var(--background-total-theme));
 					width: 300px;
 					cursor: pointer;
 					.transition(0.3s);
@@ -336,6 +336,11 @@
 						text-align: center;
 						border-bottom-left-radius: 20px;
 						border-bottom-right-radius: 20px;
+					}
+					.vc_textInput{
+						border : 0;
+						background: transparent;
+						border-radius: 0;
 					}
 					.vc_inputWrapper{
 						border : 0;
@@ -368,7 +373,7 @@
 		}
 				
 		.comment{
-			border-top : 1px solid @color-gray-slight;
+			border-top : 1px solid rgb(var(--neutral-grad-0));
 			.transition(0.9s, color);
 			position : relative;
 
@@ -377,16 +382,15 @@
 			}
 
 			&.mycomment,
-			&.dev,
 			&.rated{
 				>div.commentPaddingWrapper>div.commentWrapper>div.commentBody>div.cbodyWrapper{
 					.commentpanel{
 						.upvoteComment{
 							cursor: default;
-							color : @color-gray-mlight;
+							color : rgb(var(--neutral-grad-1));
 	
 							&.ratedScore{
-								color : @color-bright;	
+								color : rgb(var(--color-bg-ac-bright));	
 							}	
 						}
 					}
@@ -395,13 +399,13 @@
 
 			&.deleted{
 				.commentmessage{
-					color : @color-gray-mlight;
+					color : rgb(var(--neutral-grad-1));
 				}
 			}
 
 			&.newcommentsn,
 			&.newcomments{
-				color : @color-bright;
+				color : rgb(var(--color-txt-ac-1));	
 			}
 
 	
@@ -424,7 +428,7 @@
 			.tocommentno,
 			.tocomment{
 				cursor : pointer;
-				color : @color-main;
+				color : rgb(var(--color-txt-ac));	
 			}
 
 			.commentPaddingWrapper{
@@ -434,7 +438,7 @@
 			
 			.answer{
 				.postbody{
-					border-top : 1px solid @color-gray-slight;
+					border-top : 1px solid rgb(var(--neutral-grad-0));
 					padding-left:  3 * @rhythm;
 					padding-right: 5 * @rhythm;
 
@@ -451,7 +455,7 @@
 					}
 				}
 				
-				background: #fff;
+				background: rgb(var(--background-total-theme));
 			}
 
 			.answers{
@@ -534,6 +538,7 @@
 						top : -2px;
 						right: -2px;
 						z-index: 1;
+						color:  rgb(var(--text-on-bg-ac-color));
 						background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
 						background-size: 400% 400%;
 						border-radius: 50%;
@@ -545,105 +550,15 @@
 						top : 0;
 						right: 0;
 						z-index: 2;
-						
-						&.donated{
-							
-							/*&:before{
-								z-index: 1;
-								position: absolute;
-								left : -1px;
-								top : -1px;
-								right: -1px;
-								bottom : -1px;
-								border : 0;
-								content : "";
-								background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-								background-size: 400% 400%;
-							}*/
-						}
 					}
 
 					.donater{
 						position: absolute;
-						/*animation: rotation 3s infinite linear;*/
 						top: -2px;
 						left: -2px;
 						width: 41px;
 						height: 41px;
 						max-width: none;
-					}
-
-					@keyframes rotation {
-						from {
-							transform: rotate(0deg);
-						}
-						to {
-							transform: rotate(359deg);
-						}
-					}
-
-					.followers_arc_outer{
-						position: absolute;
-						border-radius: 100%;
-						border: 2px solid;
-					}
-					.followers_arc_start {
-						border-color:transparent #00a4ff #00a4ff #00a4ff;
-						-webkit-transform: rotate(45deg);
-						-moz-transform: rotate(45deg);
-						-ms-transform: rotate(45deg);
-						-o-transform: rotate(45deg);
-						transform: rotate(45deg);
-					}
-					.followers_arc_inner{
-						position:absolute;
-						top:18px;
-						left: 18px;
-						width: 280px;
-						height:280px;
-						border-radius:100%;
-						border:2px solid;
-						border-color:transparent #ecd201 #ecd201 #ecd201;
-					}
-					.o_circle {
-						animation-name: rotation;
-						animation-iteration-count:  infinite;
-						animation-timing-function: linear;
-						animation-duration: 3s; 
-
-					}
-
-					@-webkit-keyframes rotation {
-						0% {
-							-webkit-transform:rotate(0deg)
-						}
-						20% {
-							-webkit-transform:rotate(360deg)
-						}
-						100% {
-							-webkit-transform:rotate(360deg)
-						}
-						/*  100% { -webkit-transform:rotate(0deg) } */
-					}
-
-					@-webkit-keyframes rotation{
-						from {-webkit-transform: rotate(0deg);transform: rotate(0deg);}
-						to   {-webkit-transform: rotate(359deg);transform: rotate(359deg);}
-					}@keyframes rotation{
-						from {-webkit-transform: rotate(0deg);transform: rotate(0deg);}
-						to   {-webkit-transform: rotate(359deg);transform: rotate(359deg);}
-					}
-					.i_circle {
-						-webkit-animation: rotation2 2s infinite linear;
-					   animation: rotation2 2s infinite linear;
-					}
-					@-webkit-keyframes rotation2 {
-						from {-webkit-transform: rotate(359deg);transform: rotate(359deg);}
-						to   {-webkit-transform: rotate(0deg);transform: rotate(0deg);}
-					}@keyframes rotation2 {
-						from {-webkit-transform: rotate(359deg);transform: rotate(359deg);}
-						to   {-webkit-transform: rotate(0deg);transform: rotate(0deg);}
-					
 					}
 					
 				}
@@ -660,10 +575,10 @@
 				.commentmessage{
 
 					padding-top : @rhythm;
-					word-wrap:break-word;
+					word-wrap :break-word;
 
 					a{
-						color : @color-main;
+						color : rgb(var(--color-txt-ac));
 						text-decoration: underline;
 					}
 				}
@@ -673,7 +588,7 @@
 
 					i,
 					span{
-						color : @color-gray-light;
+						color : rgb(var(--color-txt-gray));
 						font-size: 0.8em;
 					}
 				}
@@ -693,7 +608,7 @@
 				}
 
 				&.author{
-					color : @color-gray;
+					color : rgb(var(--color-txt-gray-dark));
 				}
 
 				.donateSum{
@@ -702,7 +617,7 @@
 					padding: @rhythm;
 					padding-left: @rhythm * 2;
 					padding-right: @rhythm * 2;
-					color: white;
+					color:  rgb(var(--text-on-bg-ac-color));
 					margin-left: @rhythm;
 					font-size: .8em;
 					font-weight: 500;
@@ -712,11 +627,11 @@
 				}
 
 				.date{	
-					color : @color-gray-mlight;
+					color : rgb(var(--neutral-grad-3));
 				}
 
 				.edited{
-					color : @color-gray-mlight;
+					color :rgb(var(--neutral-grad-3));
 				
 				}
 
@@ -726,36 +641,27 @@
 					.panel{
 						width: 100%;
 						text-align: right;
-						color : @color-gray-light;
+						color : rgb(var(--neutral-grad-1));
 						cursor: pointer;
 						.transition(0.3s);
 						opacity: 0;
 						&:hover{
-							color : @color-main;
+							color : rgb(var(--neutral-grad-4));
 						}
 					}
-
 					
 				}
-
 				
 			}
 
-
 		}
 
-		
-
 		.commentcontenttable{
-			
-
 			.commentpanel{
 				margin-top: 0;
 				width: 170px;
 			}
 		}
-
-		
 
 		.commentpanel{
 			overflow: hidden;
@@ -767,7 +673,6 @@
 				>div{
 					float: right;
 					padding-left: 2 * @rhythm;
-					
 
 					&:nth-last-child(1){
 						padding-left : 0;
@@ -777,19 +682,17 @@
 						float: left;
 						padding-left: 0;
 						padding-right: 2 * @rhythm;
-						
 					}
 
 					.cact{
 						cursor: pointer;
-						color : @color-main;
+						color : rgb(var(--color-txt-ac));
 						.transition(0.3s);
 
 						&:hover{
-							color : @color-gray-light;
+							color : rgb(var(--color-txt-gray-dark));
 						}
 					}
-
 				}	
 			}
 
@@ -812,19 +715,17 @@
 
 			.upvoteComment{
 				cursor: pointer;
-				color : @color-gray-mlight;
+				color : rgb(var(--neutral-grad-3));
 				.transition(0.3s);
 
 				&.ratedScore,
 				&:hover{
-					color : @color-main;	
+					color : rgb(var(--color-bg-ac-bright));
 				}
 			}
 
 			.upvoteCommentTable{
 				width: auto;
-
-				
 
 				>div{
 					vertical-align: middle;
@@ -840,10 +741,6 @@
 					font-weight: 200;
 				}
 			}
-
-			
-
-			
 					
 		}
 
@@ -855,17 +752,12 @@
 		}
 
 		.list{
-		
 			.comment{
-
 				&.firstcomment{
-
 					display: block;
-
 				}
 			}
 		}
-
 	}
 
 	.showall{
@@ -875,7 +767,7 @@
 		.transition(0.3s);
 		cursor : pointer;
 		position: sticky;
-		color: #555770;
+		color: rgb(var(--color-txt-gray-dark));
 		padding-top: @rhythm;
 		padding-bottom: @rhythm;
 		padding-left: @rhythm * 3;
@@ -888,7 +780,7 @@
 		}
 
 		&:hover{
-			color : @color-gray-light;
+			color : rgb(var(--color-txt-gray));
 		}
 	}
 
@@ -907,7 +799,7 @@
 			width: 140px;
 			height: 140px;
 			float: left;
-			background: @color-gray-slight;
+			background: rgb(var(--neutral-grad-1));
 			border-radius: 5px;
 
 			.image{
@@ -983,8 +875,8 @@
 			position: relative;
 
 			.playicon{
-				background: fade(#000, 50);
-				color : #fff;
+				background: rgba(var(--neutral-grad-4), 0.7);
+				color : var(--text-on-bg-ac-color);
 				position: absolute;
 				right : @rhythm;
 				bottom : @rhythm;
@@ -1001,22 +893,16 @@
 	}
 
 	.newcommentimages{
-		
 
 		.imagesEmbWr{
 			margin-top : 2 * @rhythm;
 			overflow: hidden;
-			/*opacity: 0;*/
 			&.active{
 				opacity: 1;
 			}
 		}
 
-		
-
 		.imageContainer{
-			/*padding-right : @rhythm;
-			padding-bottom:  @rhythm;*/
 			float: left;
 			width: 130px;
 
@@ -1036,7 +922,7 @@
 				position: absolute;
 				left: 50%;
 				bottom : 20%;
-				background: fade(@color-black, 80);
+				background: rgba(var(--color-shadow-base), 0.8);
 				border-radius : 20px;
 				padding : 5px;
 				margin-left: -34px;
@@ -1049,12 +935,12 @@
 					height: 30px;
 					line-height: 30px;
 					text-align: center;
-					color : fade(@color-gray-slight, 90);
+					color : rgba(var(--text-on-bg-shadow-color), 0.8);
 					cursor: pointer;
 					.transition(0.3s);
 
 					&:hover{
-						background : fade(@color-gray, 60);
+						background : rgba(var(--color-txt-gray-dark), 0.6);
 					}
 
 					&:nth-last-child(1){
@@ -1076,7 +962,7 @@
 				right: 0;
 				top: 0;
 				bottom: 0;
-				background: fade(#fff, 30);
+				background: rgba(var(--background-total-theme));
 
 				.spinnerWrapper{
 					width: 100%;
@@ -1098,22 +984,19 @@
 		padding-left:  3 * @rhythm;
 		padding-right: 5 * @rhythm;
 
-		
-
 		.postbody{
-			/*padding : 2 * @rhythm 0;*/
 			position: relative;
-
 			.closeAnswer{
 				right: 0;
 				top : 0;
 				padding : @rhythm;
-				color : @color-gray-light;
+				color : rgba(var(--neutral-grad-1));
 				position: absolute;
 				cursor: pointer;
 				.transition(0.3s);
+
 				&:hover{
-					color : @color-main;
+					color : rgba(var(--color-txt-ac));
 				}
 			}
 		}
@@ -1126,20 +1009,13 @@
 				&.iconWrapper{	
 					width: 45px;
 					font-size: 0.8em;
-					
 					padding-top: 2.3 * @rhythm;
 					padding-left: 0;
 					padding-right: 0;
 					float: none;
+
 					.usericon{
 						position: relative;
-
-						.letter{
-							color: #647CA7;
-						}
-												
-
-						/*margin : 0 auto;*/
 					}
 				}
 
@@ -1150,7 +1026,7 @@
 				&.reputationFailCell{
 					vertical-align: middle;
 					font-size: 0.9em;
-					color : @color-main;
+					color : rgb(var(--color-txt-ac));
 					padding-top : @rhythm;
 				}
 
@@ -1182,10 +1058,10 @@
 						.icon{
 							cursor: pointer;
 							.transition(0.3s);
-							color : @color-gray-light;
+							color : rgb(var(--color-txt-gray-dark));
 
 							&:hover{
-								color : @color-main;
+								color : rgb(var(--color-txt-ac));
 							}
 
 						}
@@ -1198,14 +1074,10 @@
 					}
 				}
 
-				.usericon{
-					color : #fff;
-				}
-
 				.limits {
 					padding : @rhythm;
 					font-size: 0.8em;
-					color : @color-gray;
+					color : rgb(var(--neutral-grad-4));
 
 					display : none;
 
@@ -1223,10 +1095,11 @@
 
 		.txt{
 			position: relative;
+
 			textarea{
 				display: none;
 				border-radius: 20px;
-				border : 1px solid @color-gray-light;
+				border : 1px solid rgb(var(--neutral-grad-0));
 				box-shadow: none;
 				padding : 0;
 				padding-left : 2 * @rhythm;
@@ -1265,23 +1138,11 @@
 			}
 		}
 
-			
-		/*.leaveCommentPreview{
-			border-radius: 20px;
-			border : 1px solid @color-gray-light;
-			box-shadow: none;
-			padding : 8px;
-			padding-left : 2 * @rhythm;
-			padding-right : 2 * @rhythm;
-			outline: none;
-			min-height: 36px;
-		}*/
 		.emojionearea,
 		.emojionearea.form-control{
 			border-radius: 20px;
-			border : 1px solid @color-gray-light;
+			border : 1px solid rgb(var(--neutral-grad-0));
 			box-shadow: none;
-			//overflow: hidden;
 
 			.emojionearea-editor{
 				margin-right: 0;
@@ -1290,7 +1151,7 @@
 
 		.emojionearea{
 			&.focused{
-				border : 1px solid @color-gray-light;
+				border : 1px solid rgb(var(--neutral-grad-1));
 				box-shadow: none;
 			}
 		}
@@ -1331,11 +1192,11 @@
 			top : 3.5px;
 			padding : 6px;
 			cursor: pointer;
-			color : @color-gray-light;
+			color : rgb(var(--neutral-grad-1));
 			.transition(0.3s);
 
 			&:hover{
-				color : @color-black2;
+				color : rgb(var(--neutral-grad-4));
 			}
 
 			i{
@@ -1349,7 +1210,7 @@
 			top : 1px;
 			padding : 6px;
 			cursor: pointer;
-			color : @color-gray-light;
+			color : rgb(var(--neutral-grad-3));
 			.transition(0.3s);
 
 			img{
@@ -1359,16 +1220,14 @@
 			.donate-hover{
 				display: none;
 			}
-		
 
 			&:hover{
-				color : @color-black2;
+				color : rgb(var(--neutral-grad-4));
 			}
 		}
 
 
 		.commentPanel{
-
 			display: none;
 
 			>div{
@@ -1381,10 +1240,6 @@
 						width: 160px;
 						font-size: 0.8em;
 					}
-
-					.postWrapper{
-
-					}
 				}
 
 				&.panelWrapper{
@@ -1394,7 +1249,7 @@
 						overflow: none;
 						>div{
 							float: left;
-							color : @color-main;
+							color : rgb(var(--color-txt-ac));
 							font-size: 0.8em;
 							padding-top : @rhythm;
 							margin-right : 3*  @rhythm;
@@ -1402,35 +1257,19 @@
 							.transition(0.3s);
 
 							&:hover{
-								color : @color-add;
+								color : rgb(var(--color-txt-gray));
 							}
 						}
 					}
 				}
 			}
 		}
-
 	}
 
 	.edit,
 	.answer{
 		padding : 0;
-
-		.postbody{
-			.posttable{
-				>div{
-					&.postCellWrapper{
-						
-						
-					}
-				}
-			}
-			
-		}
 	}
-
-
-
 
 	.edit{
 		.postbody{
@@ -1438,7 +1277,6 @@
 		}
 		.posttable{
 			>div{
-
 				.embeddonate{
 					display: none;
 				}
@@ -1454,11 +1292,8 @@
 				&.postCellWrapper{
 					padding-right: 0;
 				}
-
 			}
 		}
-
-
 	}
 
 	.answers{		
@@ -1469,7 +1304,7 @@
 			}
 
 			&:nth-child(1){
-				border-top : 1px solid @color-gray-slight;
+				border-top : 1px solid rgb(var(--neutral-grad-0));
 			}
 			
 		}
@@ -1489,7 +1324,7 @@
 		cursor: pointer;
 		>div{
 			padding : @rhythm;
-			border-bottom: 1px solid @color-gray-slight;
+			border-bottom: 1px solid rgb(var(--neutral-grad-0));
 			.transition(0.3s);
 
 			span{
@@ -1510,16 +1345,14 @@
 
 		&:hover{
 			>div{
-				color : @color-main;
-				border-color: @color-main;
+				color : rgb(var(--color-txt-ac));
 			}
 		}
 
 		&.complain{
 			&:hover{
 				>div{
-					color : @color-contrast;
-					border-color: @color-contrast;
+					color : @color-bad;
 				}
 			}
 		}
@@ -1528,387 +1361,6 @@
 	}
 }
 
-html.stblack{
-	#comments{
-
-	
-	
-		.caption{
-			background: @color-black;
-	
-			.captionTable{
-				>div{
-	
-					&.captionPanel{
-	
-						.items{
-	
-							>div{
-	
-								.cact{
-	
-									&:hover{
-										color : @color-main;
-									}
-								}
-	
-							}
-						}
-	
-					}
-				}
-			}
-	
-			.csharetable{
-				
-	
-				.shareprwrapper{
-					
-	
-					.img{
-	
-						.vstyle{
-							color : @color-main;
-						}
-					}
-				}
-			}
-		}
-		
-		&.fromtop{
-			.list{
-				border-top : 1px solid @color-black2;
-			}
-		}
-	
-		.list{
-
-			.comments-operations{
-				.operations-wrapper {
-					.refresh-comments {
-	
-						.icon-wrapper {
-							color : @color-gray-mlight;
-	
-							&:hover{
-								color : @color-main;
-							}
-						}
-	
-						
-						
-						background: @color-black4;
-						
-					}
-	
-					.vc_valuecustom{
-						color : @color-gray-mlight;
-						background: @color-black4;
-					
-					}
-				}
-			}
-	
-			.comment{
-				border-bottom : 1px solid @color-black2;
-				
-	
-				&.mycomment,
-				&.dev,
-				&.rated{
-					>div.commentPaddingWrapper>div.commentWrapper>div.commentBody>div.cbodyWrapper{
-						.commentpanel{
-							.upvoteComment{
-								color : @color-gray-mlight;
-		
-								&.ratedScore{
-									color : @color-bright;	
-								}	
-							}
-						}
-					}
-				}
-	
-				&.deleted{
-					.commentmessage{
-						color : @color-black;
-					}
-				}
-	
-				
-	
-				.tocommentno,
-				.tocomment{
-					color : @color-main;
-				}
-	
-				.answer{
-					.postbody{
-						border-top : 1px solid @color-black4;
-					}
-					
-					background: @color-black2;
-				}
-	
-			}
-			.commentWrapper{
-				>div{
-	
-					
-					.commentmessage{
-						a{
-							color : @color-bright;
-							text-decoration: underline;
-						}
-					}
-	
-					.edited{
-	
-						i,
-						span{
-							color : @color-gray-mlight;
-						}
-					}
-	
-				}
-			}
-	
-			.metatable{
-				>div{
-	
-					&.author{
-						color : @color-main;
-					}
-	
-					.date{	
-						color : @color-gray-mlight;
-					}
-	
-					.edited{
-						color : @color-gray-mlight;
-					}
-	
-					&.panelWrapper{
-	
-						.panel{
-							&:hover{
-								color : @color-black;
-								background: @color-main;
-							}
-						}
-	
-						
-					}
-	
-					
-				}
-	
-	
-			}
-	
-			
-	
-	
-			.commentpanel{
-			
-				.items{
-	
-					>div{
-					
-	
-						.cact{
-							color : @color-main;
-	
-							&:hover{
-								color : @color-gray-slight;
-							}
-						}
-	
-					}	
-				}
-	
-				.upvoteComment{
-					color : @color-gray-slight;
-	
-					&.ratedScore,
-					&:hover{
-						color : @color-main;	
-					}
-				}
-	
-						
-			}
-	
-		}
-	
-		.showall{
-			color : @color-main;
-	
-			&:hover{
-				color : @color-bright;
-			}
-		}
-	
-		.commentimages{
-			
-	
-			.imagesWrapper{
-				background: @color-gray2;
-				
-	
-			}
-	
-			
-			.videoOpen{
-	
-				.playicon{
-					background: fade(#000, 50);
-					color : @color-main;
-				}
-			}
-			
-		}
-	
-		.newcommentimages{
-			
-	
-			.imageContainer{
-				
-				.spinnerWrapperCnt{
-					background: fade(@color-gray2, 30);
-	
-				}
-	
-			}
-		}
-	
-		.edit,
-		.answer,
-		.post{
-			
-	
-			.postbody{
-	
-				.closeAnswer{
-					color : @color-gray-slight;
-					&:hover{
-						color : @color-main;
-					}
-				}
-			}
-	
-			.posttable{
-				>div{
-					
-	
-					&.reputationFailCell{
-						color : @color-main;
-					}
-	
-					&.closeWrapper,
-					&.postCellWrapper{
-	
-						
-						.closeEdit,
-						.postaction{
-							
-	
-							.icon{
-								color : @color-bright;
-	
-								&:hover{
-									color : @color-main;
-								}
-	
-							}
-						}
-					}
-	
-					.usericon{
-						color : @color-black;
-					}
-	
-					.limits {
-						color : @color-gray-slight;
-					}
-	
-				}
-			}
-	
-			.txt{
-				textarea{
-					border : 1px solid @color-black4;
-					background:  @color-black3
-				}
-			}
-	
-			.emojionearea,
-			.emojionearea.form-control{
-				border : 1px solid @color-black4;
-				background:  @color-black3
-			}
-	
-			.emojionearea{
-				&.focused{
-					border : 1px solid @color-black;
-				}
-			}
-	
-			.embedEmojiPrivew{
-				background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAABuCAYAAADMB4ipAAABN2lDQ1BBZG9iZSBSR0IgKDE5OTgpAAAokZWPv0rDUBSHvxtFxaFWCOLgcCdRUGzVwYxJW4ogWKtDkq1JQ5ViEm6uf/oQjm4dXNx9AidHwUHxCXwDxamDQ4QMBYvf9J3fORzOAaNi152GUYbzWKt205Gu58vZF2aYAoBOmKV2q3UAECdxxBjf7wiA10277jTG+38yH6ZKAyNguxtlIYgK0L/SqQYxBMygn2oQD4CpTto1EE9AqZf7G1AKcv8ASsr1fBBfgNlzPR+MOcAMcl8BTB1da4Bakg7UWe9Uy6plWdLuJkEkjweZjs4zuR+HiUoT1dFRF8jvA2AxH2w3HblWtay99X/+PRHX82Vun0cIQCw9F1lBeKEuf1UYO5PrYsdwGQ7vYXpUZLs3cLcBC7dFtlqF8hY8Dn8AwMZP/fNTP8gAAAAJcEhZcwAACxMAAAsTAQCanBgAAAXRaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjYtYzE0NSA3OS4xNjM0OTksIDIwMTgvMDgvMTMtMTY6NDA6MjIgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIiB4bWxuczpwaG90b3Nob3A9Imh0dHA6Ly9ucy5hZG9iZS5jb20vcGhvdG9zaG9wLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdEV2dD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlRXZlbnQjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDQyAyMDE5IChXaW5kb3dzKSIgeG1wOkNyZWF0ZURhdGU9IjIwMTktMTEtMjVUMTc6Mzg6NDYrMDM6MDAiIHhtcDpNb2RpZnlEYXRlPSIyMDE5LTExLTI1VDE3OjQwOjE4KzAzOjAwIiB4bXA6TWV0YWRhdGFEYXRlPSIyMDE5LTExLTI1VDE3OjQwOjE4KzAzOjAwIiBkYzpmb3JtYXQ9ImltYWdlL3BuZyIgcGhvdG9zaG9wOkNvbG9yTW9kZT0iMyIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo3MGQ0MzIzNS00MjhlLWVlNGItYmFkMC1mYTQ3MjdhYjQ5NTMiIHhtcE1NOkRvY3VtZW50SUQ9ImFkb2JlOmRvY2lkOnBob3Rvc2hvcDo4MTVlZmU5My05M2IwLTU0NDYtOGZmYS02ZmNlNmQ5MzYxNzciIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo2N2Q3ZDIwMy05N2JjLTgzNDgtOTYxMS1mYWE4MThhY2Y4NTMiPiA8eG1wTU06SGlzdG9yeT4gPHJkZjpTZXE+IDxyZGY6bGkgc3RFdnQ6YWN0aW9uPSJjcmVhdGVkIiBzdEV2dDppbnN0YW5jZUlEPSJ4bXAuaWlkOjY3ZDdkMjAzLTk3YmMtODM0OC05NjExLWZhYTgxOGFjZjg1MyIgc3RFdnQ6d2hlbj0iMjAxOS0xMS0yNVQxNzozODo0NiswMzowMCIgc3RFdnQ6c29mdHdhcmVBZ2VudD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKFdpbmRvd3MpIi8+IDxyZGY6bGkgc3RFdnQ6YWN0aW9uPSJzYXZlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDo3MGQ0MzIzNS00MjhlLWVlNGItYmFkMC1mYTQ3MjdhYjQ5NTMiIHN0RXZ0OndoZW49IjIwMTktMTEtMjVUMTc6NDA6MTgrMDM6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCBDQyAyMDE5IChXaW5kb3dzKSIgc3RFdnQ6Y2hhbmdlZD0iLyIvPiA8L3JkZjpTZXE+IDwveG1w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)!important
-			}
-	
-	
-	
-			.embedimages{
-				color : @color-bright;
-	
-				&:hover{
-					color : @color-main;
-				}
-			}
-	
-			
-	
-			.commentPanel{
-	
-	
-				>div{
-	
-					
-	
-					&.panelWrapper{
-	
-						.panel{
-							>div{
-								color : @color-main;
-	
-								&:hover{
-									color : @color-add;
-								}
-							}
-						}
-					}
-				}
-			}
-	
-		}
-	
-	
-		.answers{		
-			.comment{
-				.commentPaddingWrapper{
-				}
-	
-				&:nth-child(1){
-					border-top : 1px solid @color-black4;
-				}
-				
-			}
-		}
-	
-	}
-}
 
 html.tablet,
 html.mobile{
@@ -1951,14 +1403,9 @@ html.mobile{
 			padding : @rhythm;
 		}
 
-		.captionfwrapper{
-			
-		}
-
 		.caption{
 			padding-left:  @rhythm;
 			padding-right: 2 * @rhythm;
-			background: #fff;
 
 			.csharetable{
 				>div{
@@ -1970,8 +1417,6 @@ html.mobile{
 	
 				.shareprwrapper{
 					>div{
-						
-	
 						&.fortext{
 							padding-left: 0;
 						}
@@ -1987,10 +1432,7 @@ html.mobile{
 		
 
 		.list{
-			
 			.comment{
-				
-
 				.commentPaddingWrapper{
 					padding-left:  @rhythm;
 					padding-right: @rhythm;
@@ -2001,11 +1443,7 @@ html.mobile{
 						padding-left: @rhythm;
 						padding-right: 0;
 					}
-
-					
 				}
-
-				
 			}
 			.commentWrapper{
 				>div{
@@ -2040,8 +1478,7 @@ html.mobile{
 						bottom: 0;
 						z-index: 1;
 					}
-	
-	
+
 					.vc_valuecustom{
 						width: 100%;
 					}
@@ -2103,11 +1540,8 @@ html.mobile{
 			}
 
 			.metatable{
-				
-			
 				>div{
 					padding-top: 1.5 * @rhythm!important;
-
 					span{
 						font-size: 1em;
 					}
@@ -2126,9 +1560,7 @@ html.mobile{
 						.panel{
 							text-align: center;
 							opacity: 1;
-							&:hover{
-								color : @color-gray-light;
-							}
+							color : rgb(var(--color-txt-gray));
 						}
 
 						
@@ -2137,9 +1569,6 @@ html.mobile{
 
 			}
 		}
-
-
-
 	
 		.showall{
 			padding : 3 * @rhythm;
@@ -2156,8 +1585,6 @@ html.mobile{
 		.post{
 			padding-left:  @rhythm;
 			padding-right: 0;
-
-
 
 			.postbody{
 				padding : 0;
@@ -2213,8 +1640,6 @@ html.mobile{
 			}
 
 			&.active{
-
-
 				.newcommentimages.active {
 					display: none!important;
 				}
@@ -2229,27 +1654,14 @@ html.mobile{
 							&.postCellWrapper{
 								padding-left : 0;
 							}
-
-							&.iconWrapper{
-								.icon{
-									
-								}
-							}
 						}
 					}
 				}
-
-				
 			}
 		}
 
 		.answer{
-
-
-			
-
 			.postbody{
-
 				.closeAnswer{
 					position: absolute;
 					left : 0;
@@ -2285,69 +1697,4 @@ html.mobile{
 		
 	}
 
-	html.stblack{
-		#comments{
-	
-			.caption{
-				background: @color-black4;
-	
-			}
-			
-	
-			.list{
-				
-	
-				.metatable{
-					
-				
-					>div{
-						
-						&.panelWrapper{
-	
-							.panel{
-								&:hover{
-									color : @color-main;
-								}
-							}
-	
-							
-						}
-					}
-	
-				}
-			}
-	
-			.edit,
-			.answer,
-			.post{
-	
-	
-				&.active{
-	
-					.postbody{
-					
-						background: @color-black4;
-						
-						
-	
-						.posttable{
-							>div{
-	
-								&.iconWrapper{
-									.icon{
-										&:before{
-											color : @color-main;
-											
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-	
-			
-		}
-	}
 }

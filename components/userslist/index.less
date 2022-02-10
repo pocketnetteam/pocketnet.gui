@@ -2,7 +2,7 @@
 
 #userslist{
 	padding : 5 * @rhythm;
-	background: #fff;
+	background: rgb(var(--background-total-theme));
 
 	.caption{
 		font-weight: 100;
@@ -45,23 +45,22 @@
 						text-overflow: ellipsis;
 						overflow: hidden;
 						white-space: nowrap;
-	
-						.cur{
-							color : @color-main;
-						}
 
+						.cur{
+							color : rgb(var(--color-txt-ac));
+						}
+	
 						.name{
-							font-weight: 100;
 							font-size : 1.2em;
 						}
 
 						.light{
 							font-size : 0.8em;
-							color : #8E90A6;
+							color : rgb(var(--color-txt-gray-dark));
 
 							.reputation{
 								font-weight: bold;
-								color : #00A4FF;
+								color : rgb(var(--color-txt-ac));
 							}
 						}
 					}
@@ -91,7 +90,7 @@
 				}
 
 				.unsubscribe{
-					color : @color-gray-mlight;
+					color : rgb(var(--neutral-grad-4));
 				}
 
 				.notificationturn{
@@ -150,55 +149,6 @@
 	}
 }
 
-html.stblack{
-	#userslist{
-		background: transparent;
-	
-	
-		.users{
-			.user{
-			
-				.addressTable{
-					cursor: pointer;
-					
-					>div{
-		
-						&.label{
-		
-							.cur{
-								color : @color-main;
-							}
-	
-							.light{
-								color : @color-gray;
-							}
-						}
-		
-					}
-		
-				}
-	
-				.subscribebuttonstop{
-					i{
-						color : @color-good;
-					}
-	
-					.unsubscribe{
-						color : @color-gray-mlight;
-					}
-	
-					
-				}
-	
-				&.blocking{
-					background: rgb(41, 3, 24);	
-				}
-		
-			}
-			
-		}
-	}	
-}
 
 /*t*/ @media only screen and (max-width: 768px){
 	#userslist{

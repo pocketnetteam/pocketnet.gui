@@ -107,7 +107,7 @@ __map =  {
 		"css/tooltipster.core.min.css",
 		"css/tooltipster.bundle.min.css",
 		"css/main.css",
-		"css/stblack.css",
+		"css/common.css",
 		"css/plyr.css",
 		"css/pniframe.css",
 		"js/vendor/DateTimePicker.min.css",

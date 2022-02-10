@@ -3390,6 +3390,8 @@ Platform = function (app, listofnodes) {
             return _el
         },
 
+        
+
         electron: {
             storage: {},
 
@@ -7580,8 +7582,6 @@ Platform = function (app, listofnodes) {
             get: function(){
                 var t = self.sdk.lentaMethod;
 
-                console.log('t.all[t.current]',  t.all[t.current])
-
                 return t.all[t.current];
             },
 
@@ -7612,18 +7612,22 @@ Platform = function (app, listofnodes) {
                     name: self.app.localization.e('e13266'), ////ch
                     class: "stwhite",
                     color : "#ffffff",
-                    media : '(prefers-color-scheme: light)'
+                    media : '(prefers-color-scheme: light)',
+                    rootid : ''
                 },
 
                 black: {
                     name: self.app.localization.e('e13267'),
                     class: "stblack",
                     color : "#1e2235",
-                    media : '(prefers-color-scheme: dark)'
+                    media : '(prefers-color-scheme: dark)',
+                    rootid : 'black'
                 }
             },
             default: "white",
             current: null,
+
+            currentStyles : {},
 
             save: function () {
 
@@ -7644,6 +7648,25 @@ Platform = function (app, listofnodes) {
                 if (clbk) clbk()
             },
 
+            setstyles : function(){
+                var root = document.querySelector(':root');
+
+                var rootStyles = getComputedStyle(root);
+ 
+                self.sdk.theme.currentStyles = rootStyles
+
+            },
+
+            getstyle : function(v){
+
+                if (self.sdk.theme.currentStyles){
+                    return self.sdk.theme.currentStyles.getPropertyValue(v)
+                }
+
+                return ''
+               
+            },
+
             set: function (value) {
 
                 var t = self.sdk.theme
@@ -7654,11 +7677,11 @@ Platform = function (app, listofnodes) {
                 }
 
                 if (value && t.all[value]) {
-                    _.each(t.all, function (c) {
+                    /*_.each(t.all, function (c) {
                         h.removeClass(c.class)
                     })
 
-                    h.addClass(t.all[value].class)
+                    h.addClass(t.all[value].class)*/
 
                     t.current = value
 
@@ -7670,14 +7693,22 @@ Platform = function (app, listofnodes) {
                     
                     if (cm) cm()
 
-                    $('meta[name="theme-color"]').attr('content', t.all[value].color)
-                        .attr('media',  t.all[value].media)
-                        
+                    if (document.documentElement.hasAttribute('theme')){
+                        document.documentElement.removeAttribute('theme');
+                    }
+
+                    document.documentElement.setAttribute('theme', t.all[value].rootid);
+
+                    self.sdk.theme.setstyles()
+
+                    $('meta[name="theme-color"]').attr('content', t.all[value].color).attr('media',  t.all[value].media)
                     $('meta[name="msapplication-navbutton-color"]').attr('content', t.all[value].color)
                     $('meta[name="apple-mobile-web-app-status-bar-style"]').attr('content', t.all[value].color)
                 }
 
                 app.mobile.statusbar.background()
+
+                
 
             }
         },
