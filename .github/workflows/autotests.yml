@@ -3,7 +3,7 @@ name: Tests
 on:
   push:
     branches: [ master ]
-    tags: *
+    tags: v*
 
 jobs:
   build:
