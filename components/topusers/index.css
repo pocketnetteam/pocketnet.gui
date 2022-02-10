@@ -144,81 +144,14 @@
 #topusers .wrp .users .user .subscribebuttonstop.following .subscribe {
   display: none;
 }
-#topusers .wrp .users .user .modal {
+#topusers .wrp .users .user .modalWrapper {
   display: none;
-  cursor: default;
-  width: 308px;
+  margin-top: 15px;
+  right: 180px;
   position: absolute;
   z-index: 9999;
-  right: 180px;
-  margin-top: 15px;
-  background: #FFFFFF;
-  border-radius: 12px;
-  box-shadow: 32px 32px 32px 32px #00000014;
-  padding: 1em 0.5em;
 }
-#topusers .wrp .users .user .modal .topInfo .addressTable {
-  padding: 0.5em 1em;
-}
-#topusers .wrp .users .user .modal .topInfo .addressTable .iconWrapper {
-  padding-right: 1em;
-}
-#topusers .wrp .users .user .modal .topInfo .addressTable .iconWrapper .usericon {
-  height: 45px;
-  width: 45px;
-}
-#topusers .wrp .users .user .modal .topInfo .addressTable .label {
-  padding-left: 7px;
-}
-#topusers .wrp .users .user .modal .topInfo .addressTable .label .name {
-  max-width: 300px!important;
-}
-#topusers .wrp .users .user .modal .topInfo .addressTable .label .reputation {
-  font-size: 0.8em;
-  color: #8E90A6;
-}
-#topusers .wrp .users .user .modal .topInfo .addressTable .label .reputation .value {
-  color: #00a4ff;
-  font-weight: 700;
-}
-#topusers .wrp .users .user .modal .follow {
-  display: flex;
-  padding: 0.5em 1em;
-}
-#topusers .wrp .users .user .modal .follow .followers {
-  padding-right: 1.5em;
-}
-#topusers .wrp .users .user .modal .follow .value {
-  font-weight: 700;
-}
-#topusers .wrp .users .user .modal .subscribeWrapper {
-  padding: 0.5em;
-}
-#topusers .wrp .users .user .modal .subscribeWrapper button {
-  width: 100%;
-  border-radius: 8px;
-  padding: 8px 16px;
-}
-#topusers .wrp .users .user .modal .subscribeWrapper .unsubscribe {
-  display: none;
-  background: #076C34;
-  border: 1px solid #076C34;
-}
-#topusers .wrp .users .user .modal .subscribeWrapper .unsubscribe:hover {
-  color: #076C34;
-  border: 1px solid #076C34;
-  background: #fff;
-}
-#topusers .wrp .users .user .modal .subscribeWrapper.following .unsubscribe {
-  display: block;
-}
-#topusers .wrp .users .user .modal .subscribeWrapper.following .subscribe {
-  display: none;
-}
-#topusers .wrp .users .user .modal .aboutWrapper {
-  padding: 0.5em 1em;
-}
-#topusers .wrp .users .user:hover .modal {
+#topusers .wrp .users .user:hover .modalWrapper {
   display: block;
 }
 html.stblack #topusers .rcptwrp {

@@ -210,114 +210,17 @@
 					}
 				}
 
-				.modal{
+				.modalWrapper{
 					display: none;
-					cursor: default;
-					width: 308px;
+					margin-top: 15px;
+					right: 180px;
 					position: absolute;
 					z-index: 9999;
-					right: 180px;
-					margin-top: 15px;
-					background: #FFFFFF;
-					border-radius: 12px;
-					box-shadow: 32px 32px 32px 32px #00000014;
-					padding: @rhythm * 2 @rhythm;
-
-					.topInfo{
-
-						.addressTable{
-							padding: @rhythm @rhythm * 2;
-
-							.iconWrapper{
-								padding-right: @rhythm * 2;
-
-								.usericon{
-									height: 45px;
-									width: 45px;
-								}
-							}
-
-							.label{
-								padding-left: 7px;
-
-								.name{
-									max-width: 300px!important;
-								}
-			
-								.reputation{
-									font-size: .8em;
-									color : #8E90A6;
-
-			
-									.value{
-										color: @color-main;
-										font-weight: 700;
-									}
-								}
-							}
-
-
-						}
-					}
-
-
-
-					.follow{
-						display: flex;
-						padding : @rhythm @rhythm * 2;
-
-						.followers{
-							padding-right: @rhythm * 3;
-						}
-
-						.value{
-							font-weight: 700;
-						}
-					}
-
-					.subscribeWrapper{
-						padding : @rhythm;
-
-						button{
-							width: 100%;
-							border-radius: 8px;
-							padding: 8px 16px;
-
-						}
-
-						.unsubscribe{
-							display : none;
-							background : @color-good;
-							border : 1px solid @color-good;
-
-							&:hover{
-								color: @color-good;
-								border : 1px solid @color-good;
-								background: #fff;
-							}
-						}
-		
-			
-						&.following{
-							.unsubscribe{
-								display : block;
-							}
-							
-							.subscribe{
-								display : none;
-							}
-						}
-					}
-
-					.aboutWrapper{
-						padding : @rhythm @rhythm * 2;
-					}
-
 
 				}
 
 				&:hover{
-					.modal{
+					.modalWrapper{
 						display: block;
 					}
 				}
