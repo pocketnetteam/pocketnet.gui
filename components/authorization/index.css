@@ -1,19 +1,19 @@
-#authorization #filluserfast .caption {
+#authorization #registration .caption {
   display: none;
 }
-#authorization #filluserfast .work {
+#authorization #registration .work {
   width: 100%;
   padding-left: 0;
   padding-right: 0;
   padding-top: 0;
 }
-#authorization #filluserfast .mWrapper {
+#authorization #registration .mWrapper {
   margin-top: 0;
 }
-#authorization #filluserfast .mWrapper #test {
+#authorization #registration .mWrapper #test {
   width: 100%;
 }
-#authorization #filluserfast .mWrapper #test .userPanel {
+#authorization #registration .mWrapper #test .userPanel {
   padding-top: 0;
 }
 #authorization .work {
@@ -181,7 +181,7 @@
 .wnd.authwindow #authorization .leftPart {
   display: none;
 }
-.wnd.authwindow #authorization #filluserfast .mWrapper .panelWrapper {
+.wnd.authwindow #authorization #registration .mWrapper .panelWrapper {
   padding-bottom: 1em;
 }
 /*t*/
@@ -253,7 +253,7 @@
     margin-top: 0;
     padding-right: 1em;
   }
-  .wnd.authwindow #authorization #filluserfast {
+  .wnd.authwindow #authorization #registration {
     padding-top: 1.5em;
   }
   .wnd.authwindow #authorization .work {
