@@ -6240,6 +6240,101 @@ html.mobile.stblack .wnd.normalizedmobile .wndinner .wndcontent {
   -webkit-transform: translateY(-24px) rotate(0);
   transform: translateY(-24px) rotate(0);
 }
+#application .parameter {
+  width: auto;
+}
+#application .parameter .picker select {
+  height: auto;
+}
+#application .parameter > div {
+  vertical-align: middle;
+}
+#application .parameter .pName {
+  padding-right: 0.5em;
+  width: 120px;
+}
+#application .parameter .pName .downloads {
+  padding-bottom: 1em;
+}
+#application .parameter .pName .pNameW {
+  font-size: 0.8em;
+  line-height: 1.4em;
+}
+#application .parameter .pName .unit {
+  font-weight: 700;
+  color: rgb(var(--color-txt-ac));
+}
+#application .parameter .pName .require {
+  color: #F41A4D;
+}
+#application .parameter .pInput {
+  position: relative;
+  vertical-align: top;
+}
+#application .parameter .pInput .echo {
+  padding: 0.5em;
+  color: #ff6e84;
+  font-weight: 700;
+}
+#application .parameter .pInput .vm_valuesmulti {
+  padding-top: 0.25em;
+}
+#application .parameter .panel {
+  vertical-align: top;
+  padding-top: 1em;
+  width: 20px;
+}
+#application .parameter .panel .clear {
+  text-align: right;
+  cursor: pointer;
+  color: rgb(var(--neutral-grad-2));
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+#application .parameter .panel .clear:hover {
+  color: rgb(var(--color-txt-ac));
+}
+#application .parameter select,
+#application .parameter textarea,
+#application .parameter input {
+  width: 100%;
+  padding: 0.5em;
+  border-radius: 2px;
+}
+#application .parameter select.error,
+#application .parameter textarea.error,
+#application .parameter input.error {
+  border: 1px solid #F41A4D;
+}
+#application .parameter .error select,
+#application .parameter .error textarea,
+#application .parameter .error input {
+  border: 1px solid #F41A4D;
+}
+#application .parameter select {
+  height: 38px;
+  padding-right: 25px;
+  width: auto;
+}
+#application .parameter .vc_valuecustom {
+  width: 100%;
+  font-size: 0.8em;
+}
+#application .parameter .vc_valuecustom .vc_textInput,
+#application .parameter .vc_valuecustom_multibig .vc_textInput {
+  background: #fff;
+}
+#application .parameter .vmt_valuesmultitree,
+#application .parameter .vm_value {
+  padding: 0;
+}
+#application .parameter .vmt_valuesmultitree .checkbox + label:before,
+#application .parameter .vm_value .checkbox + label:before {
+  font-size: 1.6em;
+  line-height: 19px;
+}
 .fadeTr-enter-active {
   -webkit-transition: opacity 0.3s ease-in;
   transition: opacity 0.3s ease-in;

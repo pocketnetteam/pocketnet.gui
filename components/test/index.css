@@ -127,99 +127,6 @@
 }
 #test .userPanel .parameter {
   max-width: 600px;
-  /*.vc_valuecustom,
-			.vc_valuecustom_multibig{
-				.vc_textInput{
-					background: #fff;
-				}
-			}*/
-}
-#test .userPanel .parameter .picker select {
-  height: auto;
-}
-#test .userPanel .parameter > div {
-  padding: 0.5em 0;
-  vertical-align: top;
-}
-#test .userPanel .parameter .pName {
-  vertical-align: top;
-  padding-top: 1em;
-  padding-right: 0.5em;
-  width: 190px;
-}
-#test .userPanel .parameter .pName .pNameW {
-  padding-top: 0.5em / 3;
-  font-weight: 700;
-  font-size: 0.8em;
-  line-height: 1.4em;
-}
-#test .userPanel .parameter .pName .unit {
-  font-weight: 700;
-  color: rgb(var(--color-txt-ac));
-}
-#test .userPanel .parameter .pName .note {
-  font-weight: 400;
-  color: rgb(var(--color-txt-ac));
-}
-#test .userPanel .parameter .pInput {
-  position: relative;
-  vertical-align: top;
-}
-#test .userPanel .parameter .pInput .echo {
-  padding: 0.5em;
-  color: rgb(var(--color-txt-ac-2));
-  font-weight: 700;
-}
-#test .userPanel .parameter .pInput .vm_valuesmulti {
-  padding-top: 0.25em;
-}
-#test .userPanel .parameter .panel {
-  vertical-align: top;
-  padding-top: 1em;
-  width: 20px;
-}
-#test .userPanel .parameter .panel .clear {
-  text-align: right;
-  cursor: pointer;
-  color: rgb(var(--neutral-grad-1));
-  -moz-transition: 0.3s;
-  -o-transition: 0.3s;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
-}
-#test .userPanel .parameter .panel .clear:hover {
-  color: rgb(var(--color-txt-ac));
-}
-#test .userPanel .parameter select,
-#test .userPanel .parameter textarea,
-#test .userPanel .parameter input {
-  width: 100%;
-  padding: 0.5em;
-}
-#test .userPanel .parameter textarea {
-  min-height: 105px;
-}
-#test .userPanel .parameter .error select,
-#test .userPanel .parameter .error textarea,
-#test .userPanel .parameter .error input {
-  border: 1px solid #F41A4D;
-}
-#test .userPanel .parameter select {
-  height: 38px;
-  padding-right: 25px;
-  width: auto;
-}
-#test .userPanel .parameter .vc_valuecustom {
-  width: 100%;
-}
-#test .userPanel .parameter .vmt_valuesmultitree,
-#test .userPanel .parameter .vm_value {
-  padding: 0;
-}
-#test .userPanel .parameter .vmt_valuesmultitree .checkbox + label:before,
-#test .userPanel .parameter .vm_value .checkbox + label:before {
-  font-size: 1.6em;
-  line-height: 19px;
 }
 #test .userPanel .parameterMaketWrapper[parameter="addresses"] .parameter {
   max-width: 800px;
@@ -332,7 +239,7 @@
   background: rgb(var(--background-total-theme));
   border-radius: 30px;
   padding: 0 0.5em;
-  box-shadow: 0 5px 7px -5px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
 }
 #test .adressesInput .addedAddressesWrapper .addedAddressWrapper .addedAddress > div {
   padding: 0.5em;

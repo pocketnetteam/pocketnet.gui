@@ -7506,6 +7506,132 @@ html.mobile{
         -webkit-transform: translateY(-24px) rotate(0);
         transform: translateY(-24px) rotate(0);
     }
+
+    .parameter{
+		width: auto;
+
+		.picker{
+			select{
+				height: auto;
+			}
+		}
+
+		>div{
+			vertical-align: middle;
+		}
+
+		.pName{
+			padding-right : @rhythm;
+			width: 120px;
+
+			.downloads {
+				padding-bottom: 2 * @rhythm;
+			}
+
+			.pNameW{
+				font-size: 0.8em;
+				line-height: 1.4em;
+
+			}
+
+			.unit{
+				font-weight: 700;
+				color : rgb(var(--color-txt-ac));
+			}
+
+			.require{
+				color : @color-bad;
+			}
+		}
+
+		
+		.pInput{
+			position: relative;
+			vertical-align: top;
+
+			.echo{
+				padding: @rhythm;
+				color : @color-contrast;
+				font-weight: 700;
+			}
+
+			.vm_valuesmulti{
+				padding-top: 0.5 * @rhythm;
+			}
+
+
+		}
+
+		.panel{
+			vertical-align: top;
+			padding-top: 2 * @rhythm;
+			width: 20px;
+
+			.clear{
+				text-align: right;
+				cursor: pointer;
+				color : rgb(var(--neutral-grad-2));
+				.transition(0.3s);
+				&:hover{
+					color : rgb(var(--color-txt-ac));
+				}
+			}
+			
+		}
+
+		select,
+		textarea,
+		input{
+			width: 100%;
+			padding: @rhythm;
+			border-radius: 2px;
+
+			&.error{
+				border : 1px solid @color-bad;
+			}
+		}
+
+		.error{
+			select,
+			textarea,
+			input{
+				border : 1px solid @color-bad;
+			}
+			
+		}
+
+		select{
+			height: 38px;
+			padding-right: 25px;
+			width: auto;
+		}
+
+		.vc_valuecustom{
+			width: 100%;
+			font-size: 0.8em;
+		}
+
+		.vc_valuecustom,
+		.vc_valuecustom_multibig{
+			.vc_textInput{
+				background: #fff;
+			}
+		}
+
+		.vmt_valuesmultitree,
+		.vm_value{
+			padding : 0;
+			.checkbox{
+				&+label {
+			        &:before {
+			        	font-size : 1.6em;
+			        	line-height: 19px;
+			        }
+			    }
+			}
+		}
+		
+	}
 }
 
 

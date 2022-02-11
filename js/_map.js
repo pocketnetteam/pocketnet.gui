@@ -738,17 +738,8 @@ __map =  {
 
 		//search
 
-		s : {
-			uri : "s",
-			href : "s",
-			add : {
-				el : 'content'
-			},
 
-			anonimus : true,
-		},
-
-		send : {
+		/*send : {
 			uri : "send",
 			href : "send",
 			add : {
@@ -757,7 +748,7 @@ __map =  {
 
 		
 			anonimus : true,
-		},
+		},*/
 
 		imageGalleryEdit : {
 			uri : "imageGalleryEdit",
@@ -960,29 +951,6 @@ __map =  {
 		add : insertingfunc
 	},
 
-	scheduler : {
-		uri : "scheduler",
-		href : "scheduler",
-		add : insertingfunc
-	},
-
-	surveyiframe : {
-		uri : "surveyiframe",
-		href : "surveyiframe",
-		add : insertingfunc
-	},
-
-	socialshare : {
-		uri : "socialshare",
-		href : "socialshare",
-		add : insertingfunc,
-
-		anonimus : true,
-
-		relations : [
-			{src : 'js/vendor/SocialShare.min.js',			   f : 'js'},
-		],
-	},
 
 	socialshare2 : {
 		uri : "socialshare2",

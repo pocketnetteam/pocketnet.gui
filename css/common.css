@@ -419,6 +419,9 @@
   text-decoration: underline;
   color: rgb(var(--color-bg-ac));
 }
+.share_common .sharecaption img {
+  vertical-align: baseline;
+}
 .share_common .message {
   margin-bottom: 1em;
   max-width: 590px;
@@ -428,6 +431,9 @@
   color: rgb(var(--color-txt-ac));
   text-overflow: ellipsis;
   word-break: break-all;
+}
+.share_common .message img {
+  vertical-align: baseline;
 }
 .share_common .showMore {
   padding: 1.5em 0;
@@ -463,7 +469,7 @@
 .share_common .urlhtmlcontent .ogtable > div.image img {
   width: 100%;
   border-radius: 6px;
-  box-shadow: 0 5px 7px -5px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
   /*.transition(0.3s);*/
 }
 .share_common .urlhtmlcontent .ogtable > div.image img.active {
