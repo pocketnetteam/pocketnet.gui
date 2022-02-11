@@ -130,7 +130,12 @@
 
                     .catname{
                         font-size: 0.9em;
-                        
+                    }
+
+                    .forchecked{
+                        width: 20px;
+                        font-size: 0.7em;
+                        display: none;
                     }
                 }
 
@@ -205,6 +210,10 @@
                         opacity: 1;
                     }
                 }
+
+                &.checked{
+                    display: none;
+                }
             }
         }
 
@@ -224,6 +233,8 @@
                             opacity: 1;
                         }
                     }
+
+                 
                 }
             }
         }
@@ -235,14 +246,11 @@
         .selected{
             display: none;
         }
+
         &.selected{
 
             .cat{
-                color : rgb(var(--color-bg-ac-1));
-            }
-
-            &.added{
-                font-weight: 700;
+                color : rgb(var(--color-txt-orange));
             }
 
             .unselected{
@@ -259,6 +267,14 @@
                         &.catcheck{
                             opacity: 1;
                         }
+
+                        &.catvalue{
+                           
+        
+                            .forchecked{
+                                display: inline-block;
+                            }
+                        }
                     }
 
                 }
@@ -274,8 +290,6 @@
             &.hdn{
                 display: none;
             }
-
-                   
         
             &.excluded{
                 

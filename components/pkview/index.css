@@ -1,30 +1,3 @@
-#pkview .panel {
-  margin-top: 2em;
-  overflow: hidden;
-}
-#pkview .panel .item {
-  float: left;
-  margin-right: 1em;
-}
-#pkview .panel .item.right {
-  float: right;
-  margin-left: 1em;
-  margin-right: 0;
-}
-#pkview .panel .prtable {
-  width: auto;
-  height: 100%;
-}
-#pkview .panel .prtable > div {
-  padding: 0 0.25em;
-  vertical-align: middle;
-}
-#pkview .panel .prtable > div.preloaderlabel {
-  padding-top: 0.5em;
-}
-#pkview .panel .prtable > div span {
-  font-size: 0.8em;
-}
 #pkview .buttonWrapper {
   padding: 1em;
   text-align: center;
@@ -44,23 +17,23 @@
   background: transparent;
 }
 #pkview .key .number {
-  border: 1px solid #3c4146;
+  border: 1px solid rgb(var(--neutral-grad-2));
 }
 #pkview .key .subcaption {
   font-size: 1em;
-  color: #3c4146;
+  color: rgb(var(--neutral-grad-4));
   text-align: center;
   font-weight: 400;
   padding-top: 2em;
 }
 #pkview .key .subcaption .bad {
   font-weight: 700;
-  color: #ff4800;
+  color: rgb(var(--color-txt-orange));
 }
 #pkview .key .pklabel {
   text-align: center;
   font-size: 0.8em;
-  color: #00a4ff;
+  color: rgb(var(--color-txt-ac));
   margin-bottom: 0.5em;
 }
 #pkview .key .mnemonicKey {
@@ -111,8 +84,8 @@
   text-align: center;
   padding: 1em;
   border-radius: 50px;
-  background: #00A3F7;
-  color: #fff;
+  background: rgb(var(--color-bg-ac-bright));
+  color: rgb(var(--text-on-bg-ac-color));
   box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.4);
   z-index: 5000;
   opacity: 0;
@@ -164,33 +137,12 @@
 }
 .wnd.pkviewwnd #pkview .key {
   padding: 2em;
-  background: #FAFAFA;
-  color: #000;
-  border-radius: 10px;
+  background: rgb(var(--background-secondary-theme));
+  color: rgb(var(--text-color));
+  border-radius: 12px;
 }
 .wnd.pkviewwnd #pkview .work {
   max-width: 1024px;
-}
-html.stblack #pkview .key .number {
-  border: 1px solid #00a4ff;
-}
-html.stblack #pkview .key .subcaption {
-  color: #00a4ff;
-}
-html.stblack #pkview .key .pklabel {
-  color: #ff4800;
-}
-html.stblack #pkview .dontshowagain {
-  background: #00A3F7;
-  color: #fff;
-}
-html.stblack .wnd.pkviewwnd .wndinner {
-  width: 100%;
-  height: 100%;
-}
-html.stblack .wnd.pkviewwnd #pkview .key {
-  background: #0e1c2b;
-  color: #d0c9ca;
 }
 /*t*/
 @media only screen and (max-width: 768px) {
@@ -215,24 +167,6 @@ html.stblack .wnd.pkviewwnd #pkview .key {
   #pkview .key .panel .item {
     width: 100%;
   }
-  #pkview .panel {
-    margin-top: 2em;
-    overflow: hidden;
-  }
-  #pkview .panel .item {
-    padding-top: 0.5em;
-    float: none;
-    width: 100%;
-    margin-right: 0;
-  }
-  #pkview .panel .item.right {
-    float: none;
-    margin-left: 0;
-    margin-right: 0;
-  }
-  #pkview .panel .prtable {
-    margin: 0 auto;
-  }
   #pkview .dontshowagain {
     margin-left: 0;
     bottom: -10%;
@@ -248,12 +182,17 @@ html.stblack .wnd.pkviewwnd #pkview .key {
   #pkview .dontshowagain.active:hover {
     opacity: 0.8;
   }
+  .wnd.pkviewwnd {
+    /*._close {
+            background: fade(#000, 50);
+        }*/
+  }
   .wnd.pkviewwnd .wndinner {
     width: 100%;
     height: 100%;
   }
   .wnd.pkviewwnd .wndinner .wndcontent {
-    background: #fff;
+    background: rgb(var(--background-total-theme));
   }
   .wnd.pkviewwnd .table {
     display: block;
@@ -262,9 +201,6 @@ html.stblack .wnd.pkviewwnd #pkview .key {
   .wnd.pkviewwnd .tablecell {
     display: block;
     height: 100%;
-  }
-  .wnd.pkviewwnd ._close {
-    background: rgba(0, 0, 0, 0.5);
   }
   .wnd.pkviewwnd .keywrapper {
     height: 100%;

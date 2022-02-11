@@ -3,7 +3,7 @@
 }
 #taginput .tgs .search .searchFastResultWrapper {
   left: 0;
-  background: #fff;
+  background: rgb(var(--background-total-theme));
   overflow-y: auto;
   max-height: 350px;
 }
@@ -11,7 +11,7 @@
   padding: 0.5em 0;
 }
 #taginput .tgs .search .searchFastResultWrapper .requiredlabel span {
-  color: #ff4800;
+  color: rgb(var(--color-txt-orange));
   font-size: 0.8em;
 }
 #taginput .tgs .search .searchFastResultWrapper .result {
@@ -24,7 +24,7 @@
   transition: 0.3s;
 }
 #taginput .tgs .search .searchFastResultWrapper .result:hover {
-  color: #00A3F7;
+  color: rgb(var(--color-txt-ac));
 }
 #taginput .tgs .search .searchFastResultWrapper .result.bright {
   font-weight: 700;
@@ -38,7 +38,7 @@
 #taginput .tgs .search input {
   border-radius: 3px;
   border: 0;
-  background: #fff;
+  background: transparent;
   border-bottom-right-radius: 0;
   border-top-right-radius: 0;
 }
@@ -47,7 +47,7 @@
   border: 0;
   border-bottom-left-radius: 0;
   border-top-left-radius: 0;
-  background: #fff;
+  background: transparent;
 }
 #taginput .tgs .search .searchInput .searchInputIcon > div.searchIconLabel {
   display: none;
@@ -57,7 +57,7 @@
 }
 #taginput .tgs .tagsWrapper > div.label {
   padding-left: 0;
-  color: #00a4ff;
+  color: rgb(var(--color-txt-ac));
   font-weight: 700;
 }
 #taginput .tgs .tagsWrapper > div.tagsCont {
@@ -80,7 +80,8 @@
 }
 #taginput .tgs .tagsWrapper > div.tagsInputWrapper > div.inputWrapper {
   padding: 0;
-  box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.4);
+  border-radius: 6px;
+  box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
 }
 #taginput .tgs .tag {
   padding-top: 0;
@@ -89,7 +90,7 @@
   margin-bottom: 0.25em;
   margin-right: 1em;
   border-radius: 20px;
-  background: #fff;
+  background: rgb(var(--background-secondary-theme));
 }
 #taginput .tgs .tag .tagInner {
   height: auto;
@@ -100,15 +101,15 @@
   padding: 0.25em 0.5em;
 }
 #taginput .tgs .tag .tagInner > div.label {
-  color: #00a4ff;
+  color: rgb(var(--color-txt-ac));
 }
 #taginput .tgs .tag .tagInner > div.remove {
   cursor: pointer;
   text-align: center;
-  color: #d0c9ca;
+  color: rgb(var(--neutral-grad-2));
 }
 #taginput .tgs .tag .tagInner > div.remove:hover {
-  color: #00a4ff;
+  color: rgb(var(--color-txt-ac));
 }
 #taginput .tgs .tag .tagInner > div span,
 #taginput .tgs .tag .tagInner > div i {
@@ -121,7 +122,7 @@
   margin-bottom: 0.25em;
   margin-right: 1em;
   border-radius: 20px;
-  background: #fff;
+  background: rgb(var(--background-secondary-theme));
 }
 #taginput .tgs .category .categoryInner {
   height: auto;
@@ -132,15 +133,15 @@
   padding: 0.25em 0.5em;
 }
 #taginput .tgs .category .categoryInner > div.label {
-  color: #00a4ff;
+  color: rgb(var(--color-txt-ac));
 }
 #taginput .tgs .category .categoryInner > div.remove {
   cursor: pointer;
   text-align: center;
-  color: #d0c9ca;
+  color: rgb(var(--neutral-grad-2));
 }
 #taginput .tgs .category .categoryInner > div.remove:hover {
-  color: #00a4ff;
+  color: rgb(var(--color-txt-ac));
 }
 #taginput .tgs .category .categoryInner > div span,
 #taginput .tgs .category .categoryInner > div i {
@@ -148,48 +149,6 @@
 }
 #taginput .tgs .empty {
   cursor: pointer;
-}
-html.stblack #taginput .tgs .search .searchFastResultWrapper {
-  background: #112035;
-}
-html.stblack #taginput .tgs .search .searchFastResultWrapper .result {
-  color: #00a4ff;
-}
-html.stblack #taginput .tgs .search .searchFastResultWrapper .result:hover {
-  color: #00A3F7;
-}
-html.stblack #taginput .tgs .search input {
-  background: #112035;
-}
-html.stblack #taginput .tgs .search .searchPanel {
-  background: #112035;
-}
-html.stblack #taginput .tgs .tagsWrapper > div.label {
-  color: #00a4ff;
-}
-html.stblack #taginput .tgs .tag {
-  background: #112035;
-}
-html.stblack #taginput .tgs .tag .tagInner > div.label {
-  color: #00A3F7;
-}
-html.stblack #taginput .tgs .tag .tagInner > div.remove {
-  color: #00a4ff;
-}
-html.stblack #taginput .tgs .tag .tagInner > div.remove:hover {
-  color: #00A3F7;
-}
-html.stblack #taginput .tgs .category {
-  background: #112035;
-}
-html.stblack #taginput .tgs .category .categoryInner > div.label {
-  color: #00a4ff;
-}
-html.stblack #taginput .tgs .category .categoryInner > div.remove {
-  color: #d0c9ca;
-}
-html.stblack #taginput .tgs .category .categoryInner > div.remove:hover {
-  color: #00a4ff;
 }
 /*t*/
 @media only screen and (max-width: 768px) {

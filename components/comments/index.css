@@ -472,12 +472,13 @@
 #comments .list .metatable > div.panelWrapper .panel {
   width: 100%;
   text-align: right;
-  color: rgb(var(--neutral-grad-1));
+  color: rgb(var(--neutral-grad-2));
   cursor: pointer;
   -moz-transition: 0.3s;
   -o-transition: 0.3s;
   -webkit-transition: 0.3s;
   transition: 0.3s;
+  font-size: 0.8em;
   opacity: 0;
 }
 #comments .list .metatable > div.panelWrapper .panel:hover {
@@ -534,7 +535,7 @@
 }
 #comments .list .commentpanel .upvoteComment {
   cursor: pointer;
-  color: rgb(var(--neutral-grad-3));
+  color: rgb(var(--neutral-grad-2));
   -moz-transition: 0.3s;
   -o-transition: 0.3s;
   -webkit-transition: 0.3s;
@@ -1303,7 +1304,6 @@ html.mobile #comments .list .metatable > div.panelWrapper .panel {
   #comments .list .metatable > div.panelWrapper .panel {
     text-align: center;
     opacity: 1;
-    color: rgb(var(--color-txt-gray));
   }
   #comments .showall {
     padding: 1.5em;

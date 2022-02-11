@@ -233,6 +233,7 @@
   font-size: 16px;
   font-weight: 500;
   color: rgb(var(--text-on-bg-ac-color));
+  opacity: 0.5;
 }
 #staking .lastpriceCnt .change.bad .percent {
   background: #F41A4D;

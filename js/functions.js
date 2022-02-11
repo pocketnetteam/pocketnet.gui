@@ -582,17 +582,27 @@
 				}
 
 				if (!p.noButtons) {
-					h+=	 ' <div class="buttons windowmainbuttons"></div>';
+					h +=	 '<div class="buttons windowmainbuttons">';
+
+					_.each(p.buttons, function(button, i){
+
+						var txt = (button.html ? button.html : 
+							(app ? ( app.localization.e(button.text) || button.text || '') : 
+							(button.text || '')) )
+
+						var hb = '<div><div class="button '+(button.class || "")+'" bi="'+i+'">'+txt+'</div></div>'
+
+						h += hb
+		
+					})
+
 					h+=	 '</div>';
 				}
 
-				wnd = $("<div>",{
+				wnd = $("<div>", {
 					"class" 	: "wnd",
 					"html"	: h
 				});
-
-				/*wnd.css('top', app.lastScrollTop)
-			   	wnd.css('height', app.height)*/
 
 		   	if(!p.header) 
 			   	wnd.addClass('noheader')
@@ -603,7 +613,19 @@
 				actions["close"](true);
 			});
 
-			_.each(p.buttons, function(button){
+			////TODO
+
+			if (!p.noButtons) {
+				_.each(p.buttons, function(button, i){
+					var _el = wnd.find('.wndinner>div.buttons .button[bi="'+i+'"]')
+
+					var fn = button.fn || actions[button.action] || actions["close"];
+
+					_el.on('click', function(){fn(wnd, self)});
+				})
+			}
+
+			/*_.each(p.buttons, function(button){
 				button.el = $("<div>",{
 				   "class" 	: "button " + (button.class || ""),
 				   "html"	: "<div>" + 
@@ -620,11 +642,9 @@
 				var fn = button.fn || actions[button.action] || actions["close"];
 				button.el.on('click', function(){fn(wnd, self)});
 
-			})
+			})*/
 
 			if(p.class) wnd.addClass(p.class);
-
-		    
 
 			wnd.css("display", "block");
 			wnd.addClass('asette')
@@ -8714,7 +8734,7 @@
 				'</div>',
 
 				'<div class="searchInputWrapper">' +
-					'<input elementsid="sminputsearch_' + (p.id || p.placeholder) + '" class="sminput" tabindex="2" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" maxlength="400" type="text" placeholder="' + (p.placeholder || "Search") + '">' +
+					'<input elementsid="sminputsearch_' + (p.id || p.placeholder) + '" class="sminput" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" maxlength="400" type="text" placeholder="' + (p.placeholder || "Search") + '">' +
 				'</div>',
 
 				'<div class="searchPanel">' +
@@ -8736,7 +8756,7 @@
 
 			if(p.collectresults){
 				elements[1] = '<div class="searchInputWrapper">' +
-					'<div class="sminput" contenteditable="true" tabindex="2" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" maxlength="400" type="text" placeholder="' + (p.placeholder || "Search") + '"></div>' +
+					'<div class="sminput" contenteditable="true"  autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" maxlength="400" type="text" placeholder="' + (p.placeholder || "Search") + '"></div>' +
 				'</div>'
 			}
 

@@ -554,53 +554,6 @@ __map =  {
 			add : insertingfunc,
 			anonimus : true,
 		},
-		articles : {
-			uri : "articles",
-			href : "articles",
-			add : insertingfunc,
-
-			electronDontOpen : true
-		},	
-		article : {
-			uri : "article",
-			href : "article",
-			add : insertingfunc,
-			relations : [
-				{src : 'js/vendor/medium-editor.js',			   f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},
-
-				{src : 'js/vendor/mediuminsert/handlebars.runtime.min.js',			   f : 'js', require : function(){
-					
-				}},
-				{
-					src : 'js/vendor/mediuminsert/jquery-sortable-min.js',			   f : 'js', require : function(){
-					
-				}},
-				{src : 'js/vendor/mediuminsert/jquery.ui.widget.js',			   f : 'js'},
-				{src : 'js/vendor/mediuminsert/jquery.iframe-transport.js',			   f : 'js'},
-				{src : 'js/vendor/mediuminsert/jquery.fileupload.js',			   f : 'js'},
-				{src : 'js/vendor/mediuminsert/medium-editor-insert-plugin.js',			   f : 'js', require : function(){
-					
-					var i = require('./js/vendor/mediuminsert/medium-editor-insert-plugin.js')
-
-					var h = require('./js/vendor/mediuminsert/handlebars.runtime.min.js')
-
-					require('./js/vendor/mediuminsert/jquery-sortable-min.js')
-
-
-					i($, h)
-
-				}},	
-
-				{src : 'css/medium/medium-editor.css',			   f : 'css'},	
-				{src : 'css/medium/medium-editor-insert-plugin.css',			   f : 'css'},	
-				{src : 'css/medium/beagle.cs',			   f : 'css'},	
-
-				
-			],
-			relationsSunc : true,
-
-			electronDontOpen : true
-		},	
 
 		articlesv : {
 			uri : "articlesv",
@@ -609,6 +562,7 @@ __map =  {
 
 			electronDontOpen : true
 		},	
+		
 		articlev : {
 			uri : "articlev",
 			href : "articlev",

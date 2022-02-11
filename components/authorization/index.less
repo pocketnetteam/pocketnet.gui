@@ -35,7 +35,7 @@
 	.maket{
 
 		&.leftPart{
-			background: #F7F7F9;
+			background: rgb(var(--background-secondary-theme));
 		}
 	}
 	.caption{
@@ -77,7 +77,7 @@
 				}
 
 				>div{
-					color : @color-main;
+					color : rgb(var(--color-txt-ac));
 					font-size: 0.8em;
 				}
 			}
@@ -109,7 +109,7 @@
 				.label{
 					width: 100%;
 					font-size: 0.9em;
-					color: @color-main;
+					color: rgb(var(--color-txt-ac));
 					font-weight: 700;
 				}
 
@@ -119,21 +119,20 @@
 					width: 100%;
 					font-size: 1.5em;
 					font-weight: 100;
-					background: #fff;
-					color : @color-main;
+					background: rgb(var(--background-total-theme));
+					color : rgb(var(--color-txt-ac));
 					border : 1px solid transparent;
 					.transition(0.4s);
 					
 
 					&:focus{
-						border : 1px solid @color-gray-light;
-						background: #fff;
-						color : @color-black2;
+						border : 1px solid rgb(var(--neutral-grad-1));
+						background: rgb(var(--background-total-theme));
+						color : rgb(var(--text-color));
 					}
 				}
 
 				.validationFail{
-
 					color: @color-bad;
 					margin-left: @rhythm;
 					padding: 1.5 * @rhythm @rhythm;
@@ -177,24 +176,6 @@
 				display: none;
 			}
 
-			/*.leftPart .work,
-			.leftPart{
-				position: absolute;
-				left : 0;
-				right : 0;
-				top : 0;
-				bottom : 0;
-				width: 100%;
-			}
-
-			.sitelogin {
-				position: static;
-			}
-
-			.lptable{
-				height: 100%;
-			}*/
-
 			.sitelogin{
 				.item{
 
@@ -218,7 +199,7 @@
 		.showformh{
 			background: transparent;
 			border : 0;
-			color : @color-main;
+			color : rgb(var(--color-txt-ac));
 		}
 	}
 
@@ -246,8 +227,8 @@
 		width : 400px;
 		height: 90%;
 		max-height: 600px;
-		background: #fff;
-		border-radius: 5px;
+		background: rgb(var(--background-total-theme));
+		border-radius: 6px;
 
 		.wndcontent{
 			padding : 0;
@@ -279,433 +260,6 @@
 		}
 	}
 }
-/*
-.wnd.authwindow{
-	.wndinner{
-		width : 400px;
-		height: 90%;
-		max-height: 600px;
-		background: #fff;
-		border-radius: 30px;
-
-		.wndcontent{
-			padding : 0;
-		}
-	}
-
-	.wndback{
-		background: fade(@color-black, 90);
-	}
-
-	._close{
-		color : #fff;
-	}
-
-	#authorization{	
-
-		position: absolute;
-		left : 0;
-		right : 0;
-		top : 0;
-		bottom : 0;
-
-		#filluserfast{
-			.welcome{
-				.subcaption{
-					font-size: 2em;
-					padding-top : 18 * @rhythm;
-				}
-			}	
-		}
-
-		.topCaption{
-			position: absolute;
-			left : 0;
-			right : 0;
-			top : 0;
-			height : 57px;
-			background: #F7F7F9;
-
-			.caption{
-				color : @color-black;
-				font-size: 1.5em;
-			}
-		}
-
-		.scrollmaketpart{
-			position: absolute;
-			left : 0;
-			right : 0;
-			bottom : 0;
-			top : 57px;
-			overflow-y: auto;
-
-			.userpart {
-				padding-top : @rhythm;
-			}
-		}
-
-		.scrollmaketpart{
-			.leftPart {
-				display: none;
-			}
-		}
-
-		&.welcomepnet{
-			.topCaption{
-				display: none;
-			}
-
-			.scrollmaketpart{
-				top : 0;
-				overflow: hidden;
-			}
-
-			.leftPart {
-				display: none;
-			}	
-
-			.cpt2{
-				display: none;
-			}
-
-			#filluserfast,
-			.filluserform,
-			.createAccount ,
-			.userpart>div,
-			.userpart,
-			.rightPart{
-				position: absolute;
-				left : 0;
-				right : 0;
-				top : 0;
-				bottom : 0;
-				min-height: 0;
-			}
-		}
-
-		.work{
-			padding-top: 2 * @rhythm!important;
-			padding-bottom : 2 * @rhythm!important;
-		}
-	
-		.caption{
-			font-size: 1.3em;
-			margin-bottom : 0!important;
-			text-align: center;
-			font-weight: 100;
-			color : @color-bright;
-		}
-
-		.label{
-			text-align: center;
-		}
-	
-		button{
-			width : 100%;
-	
-			&.toRegistration{
-				min-width: 190px;
-			}
-		}
-	
-		.inputTable{
-	
-			>div{
-				vertical-align: middle;
-	
-				.upload .fileUploader, .upload .fileUploader .elContent{
-					position: relative;
-				}
-
-				&.actionButtonsWrapper{
-					width: 190px;
-	
-					text-align: center;
-	
-					.fileUploader{
-						
-					}
-	
-					>div{
-						color : @color-main;
-						font-size: 0.8em;
-					}
-				}
-	
-	
-			}
-	
-			&.stay{
-				width: auto;
-			}
-	
-			.staylabel{
-				font-size: 0.8em;
-			}
-		}
-		
-		.sitelogin{
-			.form{
-				margin-top: 2 * @rhythm;
-				.item{
-					margin-bottom: @rhythm;
-	
-					&.e{
-						margin-top: 2 * @rhythm;
-					}
-	
-					
-					input{
-						background: transparent;
-						color : @color-main;
-						border : 1px solid transparent;
-						border-right: 1px solid @color-gray-slight;
-						&:focus{
-							border :1px solid @color-gray-slight;
-							background: transparent;
-							color : @color-black2;
-						}
-					}
-	
-					.validationFail{
-	
-						color: @color-bad;
-						margin-left: @rhythm;
-						padding: 1.5 * @rhythm @rhythm;
-					}
-				}
-			}
-
-			.keytable {
-				>div{
-					background: #fff;
-				}
-			}
-	
-			
-		}
-
-		&.fastregistration{
-			.rightPart {
-				.work{
-					padding-top : 0!important;
-				}
-			}
-
-			.mWrapper{
-				position: static;
-			}
-			
-			
-			.leftPart{
-				.work{
-					padding-top : 0!important;;
-					padding-bottom : 0!important;;
-				}
-	
-				.sitelogin .form .item.e{
-					margin-top : 0;
-				}
-			}
-
-			.panelWrapper{
-				margin-top : 0!important;
-				position: absolute;
-				text-align: center;
-				padding : 0;
-				left: 3 * @rhythm;
-				right: 3 * @rhythm;
-				bottom : 6 * @rhythm;
-			}
-
-			#test{
-				padding-top : 2 * @rhythm;
-				min-height: 350px;
-
-			
-
-				.parameter textarea {
-					min-height: 85px;
-				}
-
-
-				.pgroup{
-					margin-bottom : @rhythm;
-				}
-
-				
-			}
-		}
-	
-		
-	
-	}
-}*/
-
-html.stblack{
-	#authorization{	
-		
-		.maket{
-	
-			&.leftPart{
-				background: @color-black4;
-			}
-		}
-		
-	
-		.inputTable{
-	
-			>div{
-
-				&.actionButtonsWrapper{
-
-					>div{
-						color : @color-main;
-					}
-
-					.showPassword {
-						cursor: pointer;
-					}
-				}
-	
-	
-			}
-	
-		}
-		
-		.sitelogin{
-			.form{
-				.item{
-					
-					.label{
-						color: @color-main;
-					}
-	
-					input{
-					
-						background: @color-gray;
-						color : @color-main;
-						border : 1px solid transparent;
-						
-	
-						&:focus{
-							border : 1px solid @color-main;
-							background: @color-black;
-							color : @color-main;
-						}
-					}
-	
-					.validationFail{
-						color: @color-bad;
-					}
-				}
-			}
-	
-			
-		}
-	
-		
-	
-	}
-	
-	.wnd.authwindow{
-		.wndinner{
-			background: @color-black;
-	
-			.wndcontent{
-				padding : 0;
-			}
-		}
-	
-		.wndback{
-			background: fade(@color-black2, 90);
-		}
-	
-		._close{
-			color : @color-main;
-		}
-	
-		#authorization{	
-	
-	
-			.topCaption{
-				background: @color-main;
-	
-				.caption{
-					color :#fff;
-				}
-			}
-	
-
-		
-			#test{
-				background: @color-black3;		
-				.userPanel{
-	
-					.upanelloader{
-						background: fade(@color-black3, 90);
-					}
-				}
-			}
-		
-			.caption{
-				color : @color-bright;
-			}
-	
-		
-			.inputTable{
-
-				>div{
-
-					&.actionButtonsWrapper{
-
-						>div{
-							color : @color-main;
-						}
-					}
-		
-				}
-		
-			}
-			
-			.sitelogin{
-				.form{
-					.item{						
-						
-						input{
-							background: transparent;
-							color : @color-main;
-							border : 1px solid transparent;
-							border-right: 1px solid @color-black2;
-							&:focus{
-								border :1px solid @color-black2;
-								background: transparent;
-								color : @color-black2;
-							}
-						}
-		
-						.validationFail{
-		
-							color: @color-bad;
-						}
-					}
-				}
-	
-				.keytable {
-					>div{
-						background: @color-black2;
-					}
-				}
-		
-				
-			}
-		
-			
-			
-		}
-	}
-}
 
 /*t*/ @media only screen and (max-width: 768px){
 	#authorization{	
@@ -716,12 +270,12 @@ html.stblack{
 			padding-left : 2 * @rhythm;
 			padding-right: 2 * @rhythm;
 		}
-		.maket{
+		/*.maket{
 
 			&.leftPart{
 				background: #F7F7F9;
 			}
-		}
+		}*/
 		.caption{
 			margin-top: .5em;
 			font-size: 2em;
@@ -819,96 +373,7 @@ html.stblack{
 					min-width: 190px;
 				}
 			}
-		
-			.inputTable{
-		
-				>div{
-					vertical-align: middle;
-		
-					.upload .fileUploader, .upload .fileUploader .elContent{
-						position: relative;
-					}
-
-					&.actionButtonsWrapper{
-						width: 190px;
-		
-						text-align: center;
-		
-						.fileUploader{
-							
-						}
-		
-						>div{
-							color : @color-main;
-							font-size: 0.8em;
-						}
-					}
-		
-		
-				}
-		
-				&.stay{
-					width: auto;
-				}
-		
-				.staylabel{
-					font-size: 0.8em;
-				}
-			}
-			
-			.sitelogin{
-				.form{
-					margin-top: 0;
-
-					.item{
-						margin-bottom: @rhythm;
-		
-						&.e{
-							margin-top: 2 * @rhythm;
-						}
-		
-						
-						input{
-							background: transparent;
-							color : @color-main;
-							border : 1px solid transparent;
-							border-right: 1px solid @color-gray-slight;
-							&:focus{
-								border :1px solid @color-gray-slight;
-								background: transparent;
-								color : @color-black2;
-							}
-						}
-		
-						.validationFail{
-		
-							color: @color-bad;
-							margin-left: @rhythm;
-							padding: 1.5 * @rhythm @rhythm;
-						}
-					}
-				}
-	
-				.keytable {
-					>div{
-						background: #fff;
-					}
-				}
-		
-				
-			}
-		
-			
-		
 		}
 	}
 
-	html.stblack{
-		.wnd.authwindow{
-			
-			._close{
-				color : #fff;
-			}
-		}
-	}
 }

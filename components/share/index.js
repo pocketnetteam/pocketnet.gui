@@ -1148,8 +1148,6 @@ var share = (function(){
 
 			unfocus : function(e){
 
-				
-
 				if (el.c.hasClass('focus') && !focusfixed && el.c.has(e.target).length === 0){
 					actions.unfocus();
 				}

@@ -8,13 +8,10 @@
 		text-align: center;
 	}
 
-
-
 	.hasaccount{
 		text-align: center;
 		padding-top : 4 * @rhythm;
 		padding-bottom : 4 * @rhythm;
-	
 	}
 
 	.separators {
@@ -50,7 +47,7 @@
 		top : 0;
 		bottom : 0;
 		z-index: 3000;
-		background: fade(#fff, 90);
+		background: rgba(var(--background-total-theme));
 
 		.table{
 			width : 100%;
@@ -58,7 +55,7 @@
 			>div{
 				vertical-align: middle;
 				text-align: center;
-				color : @color-main;
+				color : rgba(var(--color-txt-ac));
 			}
 		}
 	}
@@ -111,16 +108,16 @@
 				margin : 0 auto;
 				text-align: center;
 				width: 200px;
-				color : #fff;
+				color : rgba(var(--text-on-bg-ac-color));
 				cursor : pointer;
-				background: #FF3B00;
+				background: rgba(var(--color-bg-orange));
 				padding : @rhythm 0;
 				border-radius: 2px;
 
 				&.save{
 					border-radius: 30px;
 					cursor: default;
-					background: #FF3B00;
+					background: rgba(var(--color-txt-orange));
 					.transition(0.3s);
 				}
 
@@ -128,15 +125,12 @@
 			}
 
 			&.changes{
-				
-
 				.btn{
 					&.save{
-						background: #FF3B00;
-						color : #fff;
+						background: rgba(var(--color-bg-orange));
+						color : rgba(var(--text-on-bg-ac-color));
 						cursor : pointer;
 					}
-
 				}
 			}
 		}
@@ -160,10 +154,13 @@
 		}
 
 		#test{
-			background: #fff;
+			background: rgb(var(--background-total-theme));
 			width: 450px;
 			margin : 0 auto;
 			min-height: auto;
+			border-radius: 12px;
+			padding-top : 2 * @rhythm;
+			padding-bottom : 2 * @rhythm;
 
 			.reqsnoska{
 				display: none;
@@ -173,13 +170,10 @@
 				display: none;
 			}
 
-			.userPanel .parameter .pName{
-				/*display: none;*/
-			}
-
 			.pgroupIconWrapper{
 				margin-bottom: 0;
 			}
+
 			.elContent{
 				display: flex;
 				flex-direction: column-reverse;
@@ -195,6 +189,7 @@
 				}
 
 			}
+
 			.parameter{
 				display: flex;
 				flex-direction: column-reverse;
@@ -237,8 +232,6 @@
 				}
 			}
 
-		
-
 			.subcaption{
 				text-align: center;
 			}
@@ -280,10 +273,7 @@
 				padding-top : @rhythm;
 
 				.upanelloader{
-					background: fade(#FFF, 90);
-
-					
-
+					background: rgb(var(--background-total-theme));
 				}
 
 				.pgroup{
@@ -338,17 +328,15 @@
 			input{
 				font-size: 1.4em;
 				border : 0;
-				border-bottom: 1px solid @color-gray-light;
+				border-bottom: 1px solid rgb(var(--neutral-grad-2));
 				.transition(0.3s);
 				width: 100%;
 				background: transparent;
 				text-align : center;
-				&:placeholder-shown{
-                	
-                }
+			
 
 				&:focus{
-					border-color : @color-main;
+					border-color : rgb(var(--color-txt-ac));
 				}
 			}
 
@@ -371,15 +359,13 @@
 				.transition(0.3s);
 				
 				&.next{
-					color : @color-main;
+					color : rgb(var(--color-txt-ac));
 				}
 
 			}
 		}
 
 		.uemail{
-
-
 			padding-top: 6 * @rhythm;
 			padding-bottom: 6 * @rhythm;
 
@@ -402,17 +388,14 @@
 			input{
 				font-size: 1.4em;
 				border : 0;
-				border-bottom: 1px solid @color-gray-light;
+				border-bottom: 1px solid rgb(var(--neutral-grad-2));
 				.transition(0.3s);
 				width: 100%;
 				background: transparent;
 				text-align : center;
-				&:placeholder-shown{
-                	
-                }
-
+				
 				&:focus{
-					border-color : @color-main;
+					border-color : rgb(var(--color-txt-ac));
 				}
 			}
 
@@ -435,7 +418,7 @@
 				.transition(0.3s);
 				
 				&.next{
-					color : @color-main;
+					color : rgb(var(--color-txt-ac));
 				}
 
 			}
@@ -443,11 +426,12 @@
 
 		.money{
 			padding-top: 6 * @rhythm;
+
 			.subcaption,
 			.subsubcaption{
 				margin : 0 auto;
 				margin-top: @rhythm;
-				color : @color-bright;
+				color : rgb(var(--color-txt-ac));
 				font-size: 1.7em;
 				font-weight: 300;
 				text-align: center;
@@ -458,7 +442,7 @@
 				text-align: center;
 				font-size: 1em;
 				font-weight: 300;
-				color : @color-gray-light;
+				color : rgb(var(--color-txt-gray));
 			}
 
 			.time{
@@ -476,7 +460,7 @@
 					z-index: 2;
 					font-size: 4em;
 					font-weight: 100;
-					color : #30313A;
+					color : rgb(var(--color-txt-gray));
 
 					.table{
 						width: auto;
@@ -525,7 +509,7 @@
 				padding-top: @rhythm;
 
 				span{
-					color : @color-main;
+					color : rgb(var(--color-txt-ac));
 				}
 			}
 			
@@ -576,7 +560,7 @@
 				font-size: 2em;
 
 				.name{
-					color: @color-main;
+					color: rgb(var(--color-txt-ac));
 				}
 			}
 
@@ -584,30 +568,27 @@
 				display: flex;
 				flex-wrap: wrap;
 				justify-content: center;
-				margin-top: 30px;
-				padding-bottom: 1em;
+				margin-top: 4 * @rhythm;
+				padding-bottom: 2 * @rhythm;
 				font-size: .9em;
 
 				.cat{
 					font-size: 0.9em;
 					cursor: pointer;
-					padding: 8px 16px 8px 16px;
-					margin: 4px 8px;
-					border-radius: 100px;
+					padding: @rhythm 2 * @rhythm;
+					margin: 0.5 * @rhythm @rhythm;
+					border-radius: 30px;
 					font-weight: 600;
-					border: 1px solid #E3E4EB;
+					border: 1px solid rgb(var(--neutral-grad-1));
 
-					// .icon{
-					// 	color: #575570;
-					// }
-
+				
 					&.active{
-						background: @color-main;
-						border: 1px solid @color-main;
-						color: @color-white;
+						background: rgb(var(--color-bg-ac-bright));
+						border: 1px solid rgb(var(--color-bg-ac-bright));
+						color: rgb(var(--text-on-bg-ac-color));
 
 						.icon{
-							color: @color-white;
+							color: rgb(var(--text-on-bg-ac-color));
 						}
 					}
 				}
@@ -617,20 +598,20 @@
 				width: 240px;
 				padding: 12px, 24px, 12px, 24px;
 				border-radius: 12px;
-				background: #FF3B00;
+				background: rgb(var(--color-bg-orange));
 				opacity: .3;
-				color: @color-white;
+				color: rgb(var(--text-on-bg-ac-color));
 				border: none;
 				cursor: default;
 
 				&.active{
-					background: #FF3B00;
+					background: rgb(var(--color-bg-orange));
 					cursor: pointer;
 					opacity: 1;
 				}
 
 				&:hover{
-					color: @color-white 
+					color: rgb(var(--text-on-bg-ac-color));
 				}
 			}
 
@@ -643,7 +624,7 @@
 			.choosethemes_text{
 				margin-top: 0.5em;
 				font-size: 1.5em;
-				color: #555770;
+				color: rgb(var(--neutral-grad-3));
 			}
 
 			.subcaption{
@@ -669,12 +650,11 @@
 				font-weight: 100;
 				padding-top: 1em;
 				font-size : 2em;
-				color : @color-gray-mlight;
-
+				color : rgb(var(--neutral-grad-4));
 			}
 
 			.subc{
-				color : @color-gray-mlight;
+				color : rgb(var(--neutral-grad-4));
 				margin-top : 2 * @rhythm;
 				text-align: center;
 				font-size: 1.1em;
@@ -688,171 +668,6 @@
 		}
     }
     
-}
-
-html.stblack{
-	#filluserfast{
-		
-		.upanelloader{
-			background: fade(@color-black, 90);
-		}
-
-		.captchaImage{
-			-webkit-filter: invert(100%);
-    		filter: invert(100%);
-		}
-
-		.mWrapper{
-
-	
-			.panelWrapper{
-				
-	
-				.btn{
-				
-					color : #fff;
-					background: #FF3B00;
-	
-					&.save{
-						
-						background: #FF3B00;
-					}
-	
-					
-				}
-	
-				&.changes{
-					
-					.btn{
-						&.save{
-							background: #FF3B00;
-							color : #fff;
-						}
-	
-					}
-				}
-			}
-	
-	
-			#test{
-				background: transparent;
-			
-	
-				.userPanel{
-	
-					.upanelloader{
-						background: fade(@color-black, 90);
-	
-						
-					}
-				}
-			}
-	
-			.ucaptcha{
-				
-				.subcaption,
-				.subsubcaption{
-					color : @color-bright;
-				}
-	
-				
-				input{
-					
-					border-bottom: 1px solid @color-main;
-					
-					&:focus{
-						border-color : @color-main;
-					}
-				}
-	
-				button{
-					
-					&.next{
-						color : @color-main;
-					}
-	
-				}
-			}
-	
-			.uemail{
-	
-				.subcaption,
-				.subsubcaption{
-					color : @color-bright;
-				}
-	
-	
-				input{
-					border-bottom: 1px solid @color-main;
-					
-	
-					&:focus{
-						border-color : @color-main;
-					}
-				}
-	
-				button{
-					
-					&.next{
-						color : @color-main;
-					}
-	
-				}
-			}
-	
-			.money{
-				.subcaption,
-				.subsubcaption{
-					color : @color-bright;
-				}
-	
-				.subsubcaption{
-					color : @color-gray-light;
-				}
-	
-				.time{
-				
-					.t{
-						color : #30313A;
-	
-					}
-	
-				
-					
-				}
-			}
-	
-			.moneyfail{
-				
-				.balanceWrapper{
-	
-					span{
-						color : @color-main;
-					}
-				}
-				
-			}	
-	
-			.welcome{
-			
-			}
-	
-			.network{
-				
-	
-				.subcaption{
-					color : @color-gray-mlight;
-	
-				}
-	
-				.subc{
-					color : @color-gray-mlight;
-				}
-			}
-		}
-	
-		
-	}
 }
 
 .wndcontent{
@@ -869,12 +684,8 @@ html.stblack{
 				left: 0;
 				right: 0;
 			}
-
-		
 		}
 	}
-	
-
 }
 
 @media only screen and (max-width: 768px){
@@ -913,10 +724,8 @@ html.stblack{
 				.nextStepButtons{
 					position: static;
 				}
-	
 			
 			}
-
 			
 		}
 		

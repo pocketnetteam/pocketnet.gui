@@ -222,7 +222,6 @@ var categories = (function(){
 
 					cats = cats.sort(function(a, b){
 
-
 						if (a.selected){
 
 							if (b.selected && b.added){
@@ -239,16 +238,10 @@ var categories = (function(){
 						if (a.excluded){
 
 							if (a.added && !b.selected && b.excluded){
-								
 								return -1;
-
 							} else {
-
 								return 1;
-
 							}
-
-
 						}
 
 						if (!a.excluded){

@@ -13611,12 +13611,16 @@ Platform = function (app, listofnodes) {
 
                 } else {
                     s.excluded[k][id] = true;
-
                         
                     s.selected[k] || (s.selected[k] = {})
 
                     if (s.selected[k][id]){
                         delete s.selected[k][id]
+
+
+                        _.each(self.sdk.categories.clbks.selected, function(f){
+                            f(id, s.selected[k][id], k)
+                        })
                     }
                 } 
 

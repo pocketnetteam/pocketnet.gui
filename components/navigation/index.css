@@ -54,7 +54,7 @@
   line-height: 60px;
   margin: 0 auto;
   position: relative;
-  color: rgb(var(--text-on-bg-shadow-color), 0.7);
+  color: rgb(var(--color-txt-gray-dark), 0.7);
   text-align: center;
 }
 #navigation .items .iconWrapper .label {
