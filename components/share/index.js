@@ -353,8 +353,6 @@ var share = (function(){
 
 				if(type == 'article'){
 
-
-					if(self.app.test){
 						self.nav.api.load({
 							open : true,
 							id : 'articlev',
@@ -369,33 +367,6 @@ var share = (function(){
 								external = p
 							}
 						})
-					}
-					else{
-						self.nav.api.load({
-							open : true,
-							id : 'articles',
-							inWnd : true,
-	
-							history : true,
-	
-							essenseData : {
-								storage : storage,
-								value : value,
-								on : {
-									added : function(value){
-	
-										
-									}
-								}
-							},
-	
-							clbk : function(p){
-								external = p
-							}
-						})
-					}
-
-					
 
 					return
 				}
@@ -430,6 +401,8 @@ var share = (function(){
 
 				}
 				
+
+				return
 				
 				if(type == 'url' || type == 'images'){
 					focusfixed = true;
@@ -1585,7 +1558,6 @@ var share = (function(){
 						el.peertube = el.c.find('.peertube');
 						el.peertubeLiveStream = el.c.find('.peertubeLiveStream');
 
-						
 						var tstorage = []
 
 						initUpload({

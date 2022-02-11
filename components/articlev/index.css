@@ -505,6 +505,10 @@
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
+#articlev .aheader .vc_valuecustom .vc_textInput {
+  border: 0;
+  background: transparent;
+}
 #articlev .aheader .vc_valuecustom input {
   font-weight: 500;
 }
@@ -527,8 +531,8 @@
 }
 #articlev .aheader .vc_valuecustom .vc_selectInput {
   border: 0;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
+  border-radius: 6px;
+  background: rgb(var(--background-main));
   overflow: hidden;
   text-overflow: ellipsis;
   right: auto;

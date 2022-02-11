@@ -515,25 +515,7 @@ textarea{
 
     
 }
-#application{
-    .emojionearea, .emojionearea.form-control{
-        background: rgb(var(--background-hidden-layer));
-        color: rgb(var(--text-color));
-        border: 1px solid rgb(var(--neutral-grad-2));
 
-        .emojionearea-editor{
-            color: rgb(var(--text-color));
-        }
-
-        :placeholder-shown { 
-            color: rgb(var(--neutral-grad-4));
-        }
-    }
-
-    .emojionearea .emojionearea-editor:empty:before{
-        color: rgb(var(--neutral-grad-4));
-    }
-}
 
 
 input[type="text"],
@@ -2318,6 +2300,7 @@ input[type=radio].radio:checked + label {
                 display: flex;
                 justify-content: flex-end;
                 align-items: center;
+                padding-right : @rhythm;
 
                 .button{
                     display: block;
@@ -7438,6 +7421,95 @@ html.mobile{
 }   
 
 
+///////////
+
+
+#application{
+
+    .emojionearea, .emojionearea.form-control{
+        background: rgb(var(--background-hidden-layer));
+        color: rgb(var(--text-color));
+        border: 1px solid rgb(var(--neutral-grad-2));
+
+        .emojionearea-editor{
+            color: rgb(var(--text-color));
+        }
+
+        :placeholder-shown { 
+            color: rgb(var(--neutral-grad-4));
+        }
+    }
+
+    .emojionearea .emojionearea-editor:empty:before{
+        color: rgb(var(--neutral-grad-4));
+    }
+
+    .emojionearea.focused{
+        box-shadow: none;
+    }
+
+    .embedEmojiPrivew,
+    .emojionearea .emojionearea-button > div.emojionearea-button-open{
+        position: relative;
+        background-image: none!important; 
+        
+        &:after{
+            position: absolute;
+            left : 0;
+            top : 0;
+            right: 0;
+            bottom : 0;
+            font-weight: 700;
+            content: '\f118';
+            text-align: center;
+            line-height: 24px;
+            font-family: "Font Awesome 5 Free";
+        }
+    }
+
+    .embedEmojiPrivew,
+    .emojionearea .emojionearea-button > div{
+        -webkit-font-smoothing: antialiased;
+        font-style: normal;
+        font-variant: normal;
+        text-rendering: auto;
+        line-height: 1;
+        font-size: 15px;
+        
+    }
+
+    .emojionearea .emojionearea-button > div.emojionearea-button-close{
+        position: relative;
+        background-image: none!important; 
+
+        &:after{
+            position: absolute;
+            left : 0;
+            top : 0;
+            right: 0;
+            bottom : 0;
+            font-family: "Font Awesome 5 Free";
+            font-weight: 700;
+            text-align: center;
+            line-height: 24px;
+            content: '\f057';
+            
+        }
+    }
+
+    .emojionearea .emojionearea-button{
+        opacity: 1;
+        color : rgb(var(--neutral-grad-2));
+    }
+
+    .emojionearea .emojionearea-button.active > div.emojionearea-button-close{
+        -webkit-transform: translateY(-24px) rotate(0);
+        transform: translateY(-24px) rotate(0);
+    }
+}
+
+
+
 //////////////extra
 
 .fadeTr-enter-active {
@@ -7939,3 +8011,6 @@ html.mobile{
   .scroll-lock {
       overflow-y: hidden !important;
   }
+
+
+

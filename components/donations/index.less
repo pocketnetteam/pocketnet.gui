@@ -8,11 +8,6 @@
 		font-size : 2em;
 		padding-top : 2 * @rhythm;
 		position: relative;
-
-		&.bright{
-
-		}
-
 	}
 
 	.text{
@@ -25,9 +20,10 @@
 			&.textsplit{
 				padding-right: 4 * @rhythm;
 			}
+
 			&.dsplit{
 				padding: 4 * @rhythm;
-				background: #fafafa;
+				background: rgb(var(--background-secondary-theme));
 				vertical-align: middle;
 			}
 		}
@@ -49,12 +45,10 @@
 
 	.supporting{
 		margin-top: 3 * @rhythm;
-		background: #fafafa;
+		background: rgb(var(--background-secondary-theme));
 		padding : 6 * @rhythm 0;
 		padding-bottom: 33 * @rhythm;
-		.caption{
-		}
-
+	
 		.users{
 			margin-top: 8 * @rhythm;
 			overflow: hidden;
@@ -88,7 +82,7 @@
 	.ways{
 		max-width: 640px;
 		margin : 0 auto;
-		background: #fafafa;
+		background: rgb(var(--background-secondary-theme));
 		padding : 4 * @rhythm 8 * @rhythm;
 
 		.waystable{
@@ -102,8 +96,8 @@
 			.transition(0.3s);
 
 			&:hover{
-				color : #FF4800;
-				border-bottom : 1px solid #FF4800;
+				color : rgb(var(--color-txt-orange));
+				border-bottom : 1px solid --color-txt-orange;
 			}
 
 			>div{
@@ -124,12 +118,12 @@
 			margin-top : 4 * @rhythm;
 
 			span{
-				color : @color-gray-light;
+				color : rgb(var(--neutral-grad-2));
 				cursor: pointer;
 				.transition(0.3s);
 
 				&:hover{
-					color : @color-main;
+					color : rgb(var(--color-txt-ac));
 				}
 			}
 		}
@@ -138,7 +132,7 @@
 	.thankyou{
 		max-width: 640px;
 		margin : 0 auto;
-		background: #fafafa;
+		background: rgb(var(--background-secondary-theme));
 		padding : 4 * @rhythm 8 * @rhythm;
 
 		.text{
@@ -152,18 +146,18 @@
 		}
 
 		a{
-			color : @color-main;
+			color : rgb(var(--color-txt-ac));
 		}
 		.back{
 			margin-top : 4 * @rhythm;
 
 			span{
-				color : #FF4800;
+				color : rgb(var(--color-txt-orange));
 				cursor: pointer;
 				.transition(0.3s);
 
 				&:hover{
-					color : @color-main;
+					color : rgb(var(--color-txt-ac));
 				}
 			}
 		}
@@ -177,7 +171,7 @@
 					width: 100%;
 					background: transparent;
 					border : 0;
-					border-bottom: 2px solid @color-main;
+					border-bottom: 2px solid rgb(var(--color-bg-ac));
 				}
 
 				button{
@@ -215,12 +209,12 @@
 
 		.next{
 			span{
-				color : #FF4800;
+				color : rgb(var(--color-txt-orange));
 				cursor: pointer;
 				.transition(0.3s);
 
 				&:hover{
-					color : @color-main;
+					color : rgb(var(--color-txt-ac));
 				}
 			}
 		}
@@ -236,18 +230,18 @@
 
 		max-width: 640px;
 		margin : 0 auto;
-		background: #fafafa;
+		background: rgb(var(--background-secondary-theme));
 		padding : 4 * @rhythm 8 * @rhythm;
 
 		.back{
 
 			span{
-				color : @color-gray-light;
+				color : rgb(var(--neutral-grad-2));
 				cursor: pointer;
 				.transition(0.3s);
 
 				&:hover{
-					color : @color-main;
+					color : rgb(var(--color-txt-ac));
 				}
 			}
 		}
@@ -256,7 +250,7 @@
 			padding : @rhythm 0;
 			span{
 				font-size: 0.8em;
-				color : @color-main;
+				color : rgb(var(--color-txt-ac));
 			}
 		}
 
@@ -270,18 +264,18 @@
 			margin : 0 auto;
 			margin-top : 2 * @rhythm;
 			width: 150px;
-			background: @color-main;
-			color : #fff;
+			background: rgb(var(--color-bg-ac));
+			color : rgb(var(--text-on-bg-ac-color));
 			text-align: center;
 			padding : @rhythm;
 			cursor: pointer;
 			.transition(0.3s);
-			border : 1px solid @color-main;
+			border : 1px solid rgb(var(--color-bg-ac));
 			font-size : 0.8em;
 
 			&:hover{
-				background : #fff;
-				color : @color-main;
+				background : rgb(var(--text-on-bg-ac-color));
+				color : rgb(var(--color-bg-ac));
 			}
 		}
 
@@ -291,20 +285,16 @@
 
 		.status{
 			padding : 2 * @rhythm 0;
-			// border-top : 1px solid #FF4800;
-			// border-bottom : 1px solid #FF4800;
 			margin-bottom: 2 * @rhythm;
 			margin-top: 2 * @rhythm;
 			text-align: center;
 		}
 
 		.addressline{
-			background: #fff;
+			background: rgb(var(--background-total-theme));
 			padding : 6 * @rhythm 0;
 			text-align: center;
 		}
-
-		
 
 		.qrcode{
 			margin-top: 2 * @rhythm;
@@ -314,155 +304,6 @@
 	}
 }	
 
-html.stblack{
-	#donations{
-		
-		.caption{
-	
-			&.bright{
-				&:before{
-					background: #FF4800;
-				}
-			}
-	
-		}
-	
-		
-	
-		.splits{
-			>div{
-			
-				&.dsplit{
-					background: @color-black3;
-				}
-			}
-		}
-	
-		.donate{
-			
-			.label{
-				color : @color-main;
-			}
-		}
-	
-		.supporting{
-			background: @color-black3;
-			
-		}
-	
-		.ways{
-			background: @color-block;
-		
-			.way{
-			
-				border-bottom : 1px solid transparent;
-	
-				&:hover{
-					color : @color-main;
-					border-bottom : 1px solid @color-main;
-				}
-	
-			}
-	
-			.back{
-	
-				span{
-					color : @color-main;
-	
-					&:hover{
-						color : @color-bright;
-					}
-				}
-			}
-		}
-	
-		.thankyou{
-			background: @color-block;
-	
-	
-			a{
-				color : @color-main;
-			}
-			.back{
-	
-				span{
-					color : #FF4800;
-					&:hover{
-						color : @color-main;
-					}
-				}
-			}
-	
-			.sendinfo{
-				>div{
-	
-					input{
-						border-bottom: 2px solid @color-main;
-					}
-	
-				
-				}
-			}
-		}
-	
-		.backnext{
-		
-	
-			.next{
-				span{
-					color : @color-main;
-				}
-			}
-		}
-	
-		.address{
-	
-			background: @color-block;
-	
-			.back{
-	
-				span{
-					color : @color-main;
-	
-					&:hover{
-						color : @color-main;
-					}
-				}
-			}
-	
-			.subcaption{
-				span{
-					color : @color-main;
-				}
-			}
-	
-	
-			.reactivate{
-				
-				background: @color-main;
-				color : @color-black;
-				border : 1px solid @color-main;
-	
-				&:hover{
-					background : @color-black3;
-					color : @color-main;
-				}
-			}
-	
-		
-	
-			.status{
-				// border-top : 1px solid #FF4800;
-				// border-bottom : 1px solid #FF4800;
-			}
-	
-			.addressline{
-				background: @color-black2;
-			}
-	
-		}
-	}	
-}
 
 /*t*/ @media only screen and (max-width: 768px){
 #donations{
@@ -498,11 +339,9 @@ html.stblack{
 
 	.supporting{
 		margin-top: 2 * @rhythm;
-		background: #fafafa;
 		padding : @rhythm;
 		padding-bottom: 14 * @rhythm;
-		.caption{
-		}
+	
 
 		.users{
 			margin-top: 8 * @rhythm;
@@ -515,35 +354,19 @@ html.stblack{
 	}
 
 	.ways{
-		max-width: 640px;
-		margin : 0 auto;
-		background: #fafafa;
 		padding : 2 * @rhythm 2 * @rhythm;
 
 		.waystable{
 			padding : 4 * @rhythm 0;
 		}
-
 		
 		.back{
 			margin-top : 4 * @rhythm;
 
-			span{
-				color : @color-gray-light;
-				cursor: pointer;
-				.transition(0.3s);
-
-				&:hover{
-					color : @color-main;
-				}
-			}
 		}
 	}
 
 	.thankyou{
-		max-width: 640px;
-		margin : 0 auto;
-		background: #fafafa;
 		padding : 2 * @rhythm 2 * @rhythm;
 
 		.text{
@@ -601,17 +424,6 @@ html.stblack{
 			}
 		}
 
-		.next{
-			span{
-				color : #FF4800;
-				cursor: pointer;
-				.transition(0.3s);
-
-				&:hover{
-					color : @color-main;
-				}
-			}
-		}
 	}
 
 	.xmraddress{
@@ -626,14 +438,7 @@ html.stblack{
 		}
 	}
 
-	.btcltc{
-	}
-
 	.address{
-
-		max-width: 640px;
-		margin : 0 auto;
-		background: #fafafa;
 		padding : 2 * @rhythm 2 * @rhythm;
 
 		.reactivate{
@@ -645,13 +450,6 @@ html.stblack{
 			span{
 				font-size: 0.8em;
 			}
-		}
-
-		
-
-		.qrcode{
-			margin-top: 2 * @rhythm;
-			text-align: center;
 		}
 
 	}

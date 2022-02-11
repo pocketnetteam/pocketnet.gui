@@ -113,7 +113,7 @@ __map =  {
 		"js/vendor/DateTimePicker.min.css",
 		/*"css/swiper-bundle.min.css",*/
 		"peertube/video-embed.css",
-		"js/vendor/emojionearea.min.css",
+		/*"js/vendor/emojionearea.min.css",*/
 		"js/vendor/owl/assets/owl.carousel.min.css",
 		"js/vendor/owl/assets/owl.theme.default.min.css",
 	],
@@ -362,43 +362,21 @@ __map =  {
 			uri : "filluserfast",
 			href : "filluserfast",
 			add : insertingfunc,
-
-			
-
 			anonimus : true,
-
 			relations : [
 				{src : 'js/vendor/qrscanner.js',			   f : 'js'},
 				{src : 'js/validation.js',			   f : 'js'},		
 				{src : 'js/vendor/qrcode.min.js',			   f : 'js', require : function(){
 					QRCode = require('./js/vendor/qrcode.min.js')
 				}},	
-
 			],
-			
-		},
-
-		filluser : {
-			uri : "filluser",
-			href : "filluser",
-			add : insertingfunc,
-			redirect : {
-				auth : 'welcome'
-			},
-			
-			
 		},
 
 		usersettings : {
 			uri : "usersettings",
 			href : "usersettings",
 			add : insertingfunc,
-			anonimus : true,
-			/*redirect : {
-				auth : 'authorization',
-				//validate : 'filluser'
-			},*/
-		
+			anonimus : true
 		},
 
 		popup : {
@@ -413,9 +391,6 @@ __map =  {
 			href : "test",
 			add : insertingfunc,
 			anonimus : true,
-			/*redirect : {
-				auth : 'authorization'
-			},*/
 			relationsSunc : true,
 			electronDontOpen : true,
 			relations : [
@@ -442,7 +417,6 @@ __map =  {
 
 			redirect : {
 				auth : 'authorization',
-				//validate : 'filluser'
 			},
 
 			relations : [
@@ -612,15 +586,6 @@ __map =  {
 
 			relationsSunc : true,
 			
-		},
-
-		connection : {
-			uri : "connection",
-			href : "connection",
-			add : {
-				el : 'content'
-			},
-			anonimus : true
 		},
 
 		proxylogs : {
@@ -974,13 +939,7 @@ __map =  {
 		anonimus : true,
 	},
 
-	bastyonhelper : {
-		uri : "bastyonhelper",
-		href : "bastyonhelper",
-		add : insertingfunc,
-		
-		anonimus : true,
-	},
+
 
 	authorization : {
 		uri : "authorization",
