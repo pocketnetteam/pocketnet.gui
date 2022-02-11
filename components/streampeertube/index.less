@@ -57,8 +57,7 @@
 
     .stream-warning-section {
         text-align: center;
-
-        color: @color-gray-mlight;
+        color: rgb(var(--neutral-grad-3));
         font-size: 0.8em;
 
         cursor: pointer;
@@ -76,7 +75,7 @@
     }
 
     .type-error-field {
-        color: #0a0c17;
+        color: rgb(var(--color-txt-gray-dark));
     }
 
     .error-message {
@@ -93,10 +92,8 @@
     }
 
     .upload-field-container {
-        color: black;
-
+        color: rgb(var(--color-txt-gray-dark));
         position: relative;
-
 
         .upload-peertube-label {
             text-decoration: underline;
@@ -113,12 +110,9 @@
         display: flex;
         align-items: center;
         justify-content: center;
-
-        background: fade(@color-gray-slight, 20);
+        background: rgb(var(--background-secondary-theme));
         border-radius: 5px;
-
         width: 80%;
-
         padding: 2em 0;
     }
 
@@ -143,7 +137,7 @@
                 position: absolute;
                 font-weight: bold;
                 font-size: 0.8em;
-                background-color: white;
+                background-color: rgb(var(--background-total-theme));
                 top: -10px;
                 left: 10px;
                 padding: 2px;
@@ -162,40 +156,27 @@
     .upload-video-field {
         border-width: 1px;
         width: 80%;
-        /*border-color: @color-orange;*/
     }
 
-    /*.on-border-label {
-        position: absolute;
-        top: -10px;
-        left: 15px;
-        font-size: .9em;
-        font-weight: 700;
-        background-color: #fff;
-        padding: 0 2px;
-    }*/
 
     .upload-progress-container {
         display: flex;
         flex-direction: column;
         justify-content: space-around;
         align-items: flex-start;
-
         margin-top: @rhythm * 4;
     }
 
     .upload-progress-bar {
         height: 1px;
         width: 100%;
-
-        background-color: green;
+        background-color: @color-good;
     }
 
     .verticalFieldsWrapper {
         display: flex;
         align-items: center;
         justify-content: space-between;
-
         width: 100%;
         height: 100%;
 
@@ -210,7 +191,7 @@
         }
 
         .liveButtonWrapper {
-            background: fade(@color-gray-slight, 20);
+            background: rgb(var(--background-secondary-theme));
         }
     }
 
@@ -220,13 +201,12 @@
         align-items: center;
 
         box-sizing: border-box;
-        border-left: 1px solid @color-gray-slight;
+        border-left: 1px solid rgb(var(--neutral-grad-0));
     }
 
     .verticalSection {
         width: 50%;
     }
-
   
     .preloader-section {
         display: flex;

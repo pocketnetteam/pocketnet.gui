@@ -349,14 +349,7 @@ __map =  {
 	},
 
 	/****/
-		token : {
-			uri : "token",
-			href : "token",
-			add : {
-				el : 'content'
-			},
-			anonimus : true,
-		},
+
 
 		registration : {
 			uri : "registration",
@@ -707,15 +700,7 @@ __map =  {
 			anonimus : true,
 		},
 
-		tube : {
-			uri : "tube",
-			href : "tube",
-			add : {
-				el : 'content'
-			},
-		
-		},
-
+	
 		lenta : {
 			uri : "lenta",
 			href : "lenta",
