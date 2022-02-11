@@ -57,7 +57,7 @@
   float: left;
 }
 #lastcomments .comment .icons .donate {
-  color: #076C34;
+  color: rgb(var(--color-good));
   margin-left: 0.5em;
   font-size: 0.7em;
   font-weight: 500;

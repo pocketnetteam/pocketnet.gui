@@ -198,7 +198,7 @@
   font-size: 1.3em;
 }
 #ustate .blockswrapper .metricablock.bad .vidgetIconWrapper .vidgetIcon {
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
 }
 #ustate .blockswrapper .metricablock .vidgetAboutWrapper {
   position: absolute;

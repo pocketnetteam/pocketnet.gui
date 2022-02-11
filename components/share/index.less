@@ -531,7 +531,7 @@
 				text-align: center;
 				cursor: pointer;
 				.transition(0.3s);
-				color : @color-bad;
+				color : rgb(var(--color-bad));
 
 				&:hover{
 					background : rgb(var(--neutral-grad-2));
@@ -759,7 +759,7 @@
 					background: rgba(var(--color-shadow-base), 0.5);
 
 					&.removepeertube{
-						background: fade(@color-bad, 50);
+						background: rgba(var(--color-bad), 0.5);
 					}
 				}
 
@@ -858,7 +858,7 @@
 
 	.error{
 		text-align : right;
-		color : @color-bad;
+		color : rgb(var(--color-bad));
 		font-weight: 400;
 		font-size: 0.8em;
 		margin-top: @rhythm;
@@ -1619,7 +1619,7 @@
 					text-align: center;
 					cursor: pointer;
 					.transition(0.3s);
-					color : @color-bad;
+					color : rgb(var(--color-bad));
 
 					&:hover{
 						background : rgb(var(--neutral-grad-3));

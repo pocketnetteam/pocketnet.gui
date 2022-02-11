@@ -21,11 +21,11 @@
 		margin-left: @rhythm;
 
 		&.success{
-			color: @color-good;
+			color: rgb(var(--color-good));
 		}
 
 		&.failed{
-			color: @color-bad
+			color: rgb(var(--color-bad))
 		}
 
 		i {
@@ -165,7 +165,7 @@
 			}
 
 			.require{
-				color : @color-bad;
+				color : rgb(var(--color-bad));
 			}
 		}
 
@@ -215,7 +215,7 @@
 			select,
 			textarea,
 			input{
-				border : 1px solid @color-bad;
+				border : 1px solid rgb(var(--color-bad));
 			}
 		}
 
@@ -268,7 +268,7 @@
 				}
 
 				.thbadge{
-					color : @color-good;
+					color : rgb(var(--color-good));
 					display: none;
 					bottom : -4px;
 					right : -2px;

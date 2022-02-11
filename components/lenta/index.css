@@ -221,7 +221,7 @@
   border: 1px solid rgba(var(--neutral-grad-1), 0.5);
   border-bottom: 1px solid rgba(var(--background-total-theme), 0.75);
   border-right: 1px solid rgba(var(--background-total-theme), 0.75);
-  box-shadow: 0 5px 7px -5px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
   margin-left: 0.5em;
   margin-right: 0.5em;
   margin-bottom: 0.5em;

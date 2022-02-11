@@ -62,7 +62,7 @@
   padding: 1em;
 }
 #easynode .calcWrapper .numbers .amredits {
-  background: #ffee00;
+  background: rgb(var(--color-yellow));
   padding: 0.25em 0.5em;
   border: 1px solid #ff6e84;
   border-radius: 10px;
@@ -71,7 +71,7 @@
 #easynode .calcWrapper .numbers .errWrapper {
   margin-left: 0.5em;
   font-size: 0.6em;
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
 }
 #easynode .calcWrapper .numbers .ihave {
   font-weight: 700;

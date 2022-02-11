@@ -75,7 +75,7 @@
   transition: 0.3s;
 }
 #imagegallery .panel .imageNavigation > div.arrow:hover {
-  color: #076C34;
+  color: rgb(var(--color-good));
 }
 #imagegallery .panel .imageNavigation > div:nth-last-child(1) {
   padding-right: 0;

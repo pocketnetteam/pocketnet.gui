@@ -86,7 +86,7 @@
   border-radius: 50px;
   background: rgb(var(--color-bg-ac-bright));
   color: rgb(var(--text-on-bg-ac-color));
-  box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
   z-index: 5000;
   opacity: 0;
   -moz-transition: 0.3s;

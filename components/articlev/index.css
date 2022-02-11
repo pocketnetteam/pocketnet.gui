@@ -18,7 +18,7 @@
 }
 #articlev .sizeinfo .info .item.bad span {
   font-weight: 700;
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
 }
 #articlev .blackmatte {
   position: absolute;

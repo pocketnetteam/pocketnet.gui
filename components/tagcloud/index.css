@@ -49,10 +49,10 @@
 }
 #tagcloud .tcaptiontable > div.mlab:hover {
   opacity: 1;
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
 }
 #tagcloud .tcaptiontable > div.mlab:hover .tagvalue {
-  border: 1px solid #F41A4D;
+  border: 1px solid rgb(var(--color-bad));
 }
 #tagcloud .tcaptiontable > div.cleartags {
   display: none;

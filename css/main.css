@@ -38,6 +38,10 @@
   --color-shadow-base: 2, 18, 24;
   --color-shadow-var: 32, 35, 42;
   --text-on-bg-shadow-color: 255, 255, 255;
+  --color-bad: 244, 26, 77;
+  --color-nrml: 0, 0, 0;
+  --color-good: 7, 108, 52;
+  --color-yellow: 255, 238, 0;
 }
 :root[theme='black'] {
   --background-hidden-layer: 10, 12, 23;
@@ -69,6 +73,10 @@
   --color-shadow-base: 12, 14, 33;
   --color-shadow-var: 18, 18, 26;
   --text-on-bg-shadow-color: 214, 219, 230;
+  --color-bad: 244, 26, 77;
+  --color-nrml: 0, 0, 0;
+  --color-good: 7, 108, 52;
+  --color-yellow: 255, 238, 0;
 }
 .disable-hover,
 .disable-hover * {

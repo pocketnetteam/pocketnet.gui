@@ -54,7 +54,7 @@
 }
 #categories .tcaptiontable .buttons > div.mlab:hover {
   opacity: 1;
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
 }
 #categories .tcaptiontable .buttons > div.addcategory:hover {
   color: rgb(var(--color-txt-ac));
@@ -209,7 +209,7 @@
   pointer-events: none;
 }
 #categories .ta .tg.excluded .minus {
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
   opacity: 1!important;
 }
 #categories.showedallcats .showallcats {

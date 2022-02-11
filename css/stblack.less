@@ -11,10 +11,10 @@ html.stblack{
         background-image : url(img/iconsemojbl.png)!important;
     }
     ::-moz-selection {
-        background: @color-yellow;
+        background: rgb(var(--color-yellow));
     }
     ::selection {
-        background: @color-yellow;
+        background: rgb(var(--color-yellow));
     }
     .emojionearea .emojionearea-editor{
         color : @color-gray-slight;
@@ -105,8 +105,8 @@ html.stblack{
         }
     
         &.good{
-            background: @color-good;
-            border: 1px solid @color-good;
+            background: rgb(var(--color-good));
+            border: 1px solid rgb(var(--color-good));
             color : #fff;
     
             &:hover{
@@ -374,7 +374,7 @@ html.stblack{
                         }
     
                         &:hover{
-                            background: @color-good;
+                            background: rgb(var(--color-good));
                         }
     
                         &.disabled{
@@ -427,7 +427,7 @@ html.stblack{
     
         .wndok{
             &:hover{
-                background: fade(@color-good, 50%);
+                background: fade(rgb(var(--color-good)), 50%);
             }
             
         }
@@ -745,7 +745,7 @@ html.stblack{
                 }
     
                 .vc_iconWrapper{
-                    border : 1px solid  @color-bad;
+                    border : 1px solid  rgb(var(--color-bad));
                     border-left: 0;
                 }
             }
@@ -880,7 +880,7 @@ html.stblack{
             }
 
             &[count='1']{
-                color : @color-bad; 
+                color : rgb(var(--color-bad)); 
             }
         }
 
@@ -888,7 +888,7 @@ html.stblack{
             >div{
 
                 &.foramount{
-                    color : @color-good;
+                    color : rgb(var(--color-good));
                 }
             }
         }
@@ -901,7 +901,7 @@ html.stblack{
             button{
 
                 &.disabled{
-                    color : @color-good;
+                    color : rgb(var(--color-good));
                 }
             }
         }
@@ -957,7 +957,7 @@ html.stblack{
                     button{
 
                         &.disabled{
-                            color : @color-good;
+                            color : rgb(var(--color-good));
                         }
                     }
                 }
@@ -1060,7 +1060,7 @@ html.stblack{
                   
 
                     &.good{
-                        color : @color-good;
+                        color : rgb(var(--color-good));
                     }
 
                 }
@@ -1088,7 +1088,7 @@ html.stblack{
         }
     
         .line{
-            background: @color-good;
+            background: rgb(var(--color-good));
         }
     }
 

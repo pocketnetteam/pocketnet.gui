@@ -551,7 +551,7 @@
 				}
 
 				&.state{
-					color : @color-bad;
+					color : rgb(var(--color-bad));
 					cursor : pointer;
 					.transition(0.3s);
 				}
@@ -572,12 +572,12 @@
 
 					&.good{
 						.number{
-							color : @color-good;
+							color : rgb(var(--color-good));
 						}
 
 						.icon{
 							opacity: 1;
-							color : @color-good;
+							color : rgb(var(--color-good));
 
 							i{
 								&:before{
@@ -588,11 +588,11 @@
 					}
 					&.bad{
 						.number{
-							color : @color-bad;
+							color : rgb(var(--color-bad));
 						}
 
 						.icon{
-							color : @color-bad;
+							color : rgb(var(--color-bad));
 							opacity: 1;
 
 							i{

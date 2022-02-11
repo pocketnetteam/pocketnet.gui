@@ -29,7 +29,7 @@
   position: relative;
 }
 #test .userPanel .require {
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
 }
 #test .userPanel .reqsnoska {
   font-size: 0.7em;
@@ -264,7 +264,7 @@
   transition: 0.3s;
 }
 #test .adressesInput .addedAddressesWrapper .addedAddressWrapper .addedAddress > div.panelWrapper .item:hover {
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
 }
 #test .adressesInput .addedAddressesWrapper .addedAddressWrapper .addedAddress > div.addressWrapper {
   text-overflow: ellipsis;

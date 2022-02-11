@@ -112,7 +112,7 @@
         cursor: pointer;
 
         &:hover{
-            color : @color-bad;
+            color : rgb(var(--color-bad));
         }
     }
     
@@ -166,7 +166,7 @@
                 color : rgba(var(--neutral-grad-3), 0.7);
 
                 &:hover{
-                    color : @color-good;
+                    color : rgb(var(--color-good));
                 }
             }
             
@@ -240,7 +240,7 @@
             }
 
             i.good{
-                color : @color-good;
+                color : rgb(var(--color-good));
             }
         }
 
@@ -483,7 +483,7 @@
                     cursor: pointer;
 
                     &:hover{
-                        color : @color-bad;
+                        color : rgb(var(--color-bad));
                     }
                 }
 
@@ -491,7 +491,7 @@
                     cursor: pointer;
 
                     &:hover{
-                        color : @color-good;
+                        color : rgb(var(--color-good));
                     }
                 }
 
@@ -508,15 +508,15 @@
                     .transition(0.3s);
 
                     &.remove{
-                        color : @color-bad;
+                        color : rgb(var(--color-bad));
                     }
 
                     &.good{
-                        color : @color-good;
+                        color : rgb(var(--color-good));
                     }
 
                     &.bad{
-                        color : @color-bad;
+                        color : rgb(var(--color-bad));
                     }
 
                     &.normal{
@@ -606,7 +606,7 @@
                         }
 
                         &.stable{
-                            color : @color-good;
+                            color : rgb(var(--color-good));
                         }
                        
                     }
@@ -687,11 +687,11 @@
             border-bottom: 1px solid rgb(var(--neutral-grad-2));
         }
         .good{
-            color : @color-good;
+            color : rgb(var(--color-good));
         }
 
         .fixednotinlist{
-            background: fade(@color-good, 5);
+            background: rgba(var(--color-good), 0.05);
             text-align: center;
             padding : 3 * @rhythm;
 
@@ -720,12 +720,12 @@
         .node{
 			   
             &.active{
-                color : @color-good;
+                color : rgb(var(--color-good));
 
                 >div{
                     
                     &.use{
-                        color : @color-good;
+                        color : rgb(var(--color-good));
 
                         i{
                             &:before{
@@ -737,14 +737,14 @@
             }
 
             .hasserviceconnection{
-                color : @color-good;
+                color : rgb(var(--color-good));
                 font-size: 0.3em;
                 width: 25px;
                 text-align: center;
             }
 
             .testing{
-                color : @color-bad;
+                color : rgb(var(--color-bad));
             }
 
             .name{
@@ -827,7 +827,7 @@
                 &.connectnode{
                     cursor: pointer;
 
-                    color : @color-good;
+                    color : rgb(var(--color-good));
                 }
 
                 &.panelWrapper{
@@ -851,7 +851,7 @@
                         }
 
                         &.stable{
-                            color : @color-good;
+                            color : rgb(var(--color-good));
                         }
                        
                     }
@@ -871,7 +871,7 @@
             border-bottom: 1px solid rgb(var(--neutral-grad-2));
         }
         .good{
-            color : @color-good;
+            color : rgb(var(--color-good));
         }
         .instance{
 
@@ -888,12 +888,12 @@
             }
 			   
             &.active{
-                color : @color-good;
+                color : rgb(var(--color-good));
 
                 >div{
                     
                     &.use{
-                        color : @color-good;
+                        color : rgb(var(--color-good));
 
                         i{
                             &:before{
@@ -992,7 +992,7 @@
                         }
 
                         &.stable{
-                            color : @color-good;
+                            color : rgb(var(--color-good));
                         }
                        
                     }
@@ -1076,7 +1076,7 @@
         }
 
         .failedStat {
-            color: @color-bad;
+            color: rgb(var(--color-bad));
         }
 
         .iconStat {
@@ -1207,7 +1207,7 @@
                     &.delete{
                         cursor: pointer;
 						&:hover{
-							color : @color-bad;
+							color : rgb(var(--color-bad));
 						}
                     }
 
@@ -1332,7 +1332,7 @@
 			select,
 			textarea,
 			input{
-				border : 1px solid @color-bad;
+				border : 1px solid rgb(var(--color-bad));
 			}
 			
 		}

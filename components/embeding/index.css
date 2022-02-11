@@ -1,5 +1,5 @@
 #embeding .error {
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
   text-align: center;
 }
 #embeding .pg {

@@ -146,7 +146,7 @@
 }
 #videoCabinet .videoPostLinkinWindow:hover,
 #videoCabinet .videoPostLink:hover {
-  color: #076C34;
+  color: rgb(var(--color-good));
   text-decoration: underline;
 }
 #videoCabinet .videoAvatar {
@@ -191,7 +191,7 @@
   color: rgb(var(--color-txt-gray-dark));
 }
 #videoCabinet .removeVideo {
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
 }
 #videoCabinet .reputation {
   overflow: hidden;
@@ -294,7 +294,7 @@
   vertical-align: bottom;
 }
 #videoCabinet .blockswrapper .metricablock.bad .vidgetIconWrapper .vidgetIcon {
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
 }
 #videoCabinet .blockswrapper .metricablock .vidgetAboutWrapper {
   position: absolute;
@@ -310,12 +310,12 @@
   z-index: 100;
 }
 #videoCabinet .blockswrapper .metricablock:hover .vidgetIconWrapper .vidgetIcon {
-  box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
 }
 #videoCabinet .videoErrorContainer .videoErrorHeading {
   font-size: 1.5em;
   font-weight: 200;
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
 }
 #videoCabinet .videoErrorContainer .videoErrorBody {
   font-weight: 200;
@@ -449,7 +449,7 @@
   border-radius: 3px;
   width: 80%;
   border: none;
-  box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
 }
 .editVideoDialog .videoDescriptionInput {
   padding-top: 0.5em;

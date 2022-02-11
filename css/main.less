@@ -51,6 +51,11 @@
     --color-shadow-base: 2, 18, 24;
     --color-shadow-var: 32, 35, 42;
     --text-on-bg-shadow-color: 255, 255, 255;
+
+    --color-bad : 244, 26, 77;
+    --color-nrml : 0, 0, 0;
+    --color-good : 7, 108, 52;
+    --color-yellow : 255, 238, 0;
 }
 
 
@@ -91,6 +96,11 @@
     --color-shadow-base: 12, 14, 33;
     --color-shadow-var: 18, 18, 26;
     --text-on-bg-shadow-color: 214, 219, 230;
+
+    --color-bad : 244, 26, 77;
+    --color-nrml : 0, 0, 0;
+    --color-good : 7, 108, 52;
+    --color-yellow : 255, 238, 0;
 }
    
 .disable-hover,
@@ -544,7 +554,7 @@ select,
 textarea,
 input{
     &.error{
-        border-color: @color-bad;
+        border-color: rgb(var(--color-bad));
     }
 }
 
@@ -638,12 +648,12 @@ button{
     }
 
     &.good{
-        background: @color-good;
-        border: 1px solid @color-good;
+        background: rgb(var(--color-good));
+        border: 1px solid rgb(var(--color-good));
 
         &:hover{
             background : transparent;
-            color : @color-good;
+            color : rgb(var(--color-good));
         }
     }
 
@@ -798,8 +808,8 @@ pie {
     height: 5em;
     display: block;
     border-radius: 50%;
-    background-color: @color-good;
-    border: 2px solid @color-good;
+    background-color: rgb(var(--color-good));
+    border: 2px solid rgb(var(--color-good));
     float: left;
 }
 
@@ -841,11 +851,11 @@ pie {
 }
 
 .cbad{
-    color : @color-bad;
+    color : rgb(var(--color-bad));
 }
 
 .cgood{
-    color : @color-good;
+    color : rgb(var(--color-good));
 }
 
 .abbr
@@ -1546,7 +1556,7 @@ pie {
         left: 0;
         bottom : 0;
         top : 0;
-        background: @color-good;
+        background: rgb(var(--color-good));
         .transition(0.3s, width)
     }
 }
@@ -1892,7 +1902,7 @@ input[type=radio].radio + label {
 
 input[type=radio].radio:checked + label {
     background-position: 0 -25px;
-    color: @color-good;
+    color: rgb(var(--color-good));
 }
 
 .m-message-container{position:fixed;z-index:1010;pointer-events:none;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-box-sizing:border-box;box-sizing:border-box;padding:15px}.m-message-container.is-top-center,.m-message-container.is-top-left,.m-message-container.is-top-right{width:100%;top:0;left:0}.m-message-container.is-top-left{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.m-message-container.is-top-center{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.m-message-container.is-top-right{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.m-message-container.is-center{width:100%;height:100%;left:0;top:0;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center}.m-message-container.is-bottom-center,.m-message-container.is-bottom-left,.m-message-container.is-bottom-right{bottom:0;left:0;width:100%;-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end}.m-message-container.is-bottom-left{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.m-message-container.is-bottom-center{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.m-message-container.is-bottom-right{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.m-message-container.has-mask{background-color:hsla(0,0%,100%,.5);width:100%;height:100%;pointer-events:all}.m-message-wrapper{display:inline-block;max-width:500px}.m-message-wrapper+.m-message-wrapper{margin-top:15px}.m-message-wrapper:after,.m-message-wrapper:before{content:"";clear:both;display:table}.m-message{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;padding:10px 16px;overflow:hidden;border-radius:4px;-webkit-box-shadow:0 1px 8px rgba(0,0,0,.15);box-shadow:0 1px 8px rgba(0,0,0,.15);color:rgba(0,0,0,.65);background:hsla(0,0%,100%,.95);pointer-events:all;position:relative}.m-message,.m-message-icons{-webkit-box-sizing:border-box;box-sizing:border-box}.m-message-icons{float:left;margin-right:10px}.m-message--title{font-size:14px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.m-message-content{-webkit-box-sizing:border-box;box-sizing:border-box;overflow:auto;width:100%}.m-message--description{line-height:1.6;color:#777}.m-message--title+.m-message--description{margin-top:5px}.m-message--icon{width:25px;height:25px;vertical-align:middle;display:inline-block;border-radius:50%}.m-message--control{position:relative;height:100%;-ms-flex-item-align:start;align-self:flex-start;white-space:nowrap;margin-right:-5px;margin-left:10px}.m-message--button{border:none;outline:none;background:none;cursor:pointer;color:#646464;font-weight:600;padding:0;width:20px;height:20px;line-height:20px;text-align:center;vertical-align:middle}.m-message--button:hover{color:#f56c6c}.m-message--arrow-down.is-collapsed{-webkit-transform:rotate(90deg);transform:rotate(90deg)}.m-message-fade-enter-active{-webkit-animation:m-message-fade-in-down .3s;animation:m-message-fade-in-down .3s}.m-message-fade-leave-active{-webkit-animation:m-message-fade-out .3s;animation:m-message-fade-out .3s}@-webkit-keyframes m-message-fade-in-down{0%{opacity:0;-webkit-transform:translateY(-20px);transform:translateY(-20px)}to{opacity:1;-webkit-transform:translateY(0);transform:translateY(0)}}@keyframes m-message-fade-in-down{0%{opacity:0;-webkit-transform:translateY(-20px);transform:translateY(-20px)}to{opacity:1;-webkit-transform:translateY(0);transform:translateY(0)}}@-webkit-keyframes m-message-fade-out{0%{opacity:1;margin-top:0}to{opacity:0;margin-top:-45px}}@keyframes m-message-fade-out{0%{opacity:1;margin-top:0}to{opacity:0;margin-top:-45px}}
@@ -2081,11 +2091,11 @@ input[type=radio].radio:checked + label {
             display: none;
 
             &:hover{
-                color : @color-bad;
+                color : rgb(var(--color-bad));
             }
         }
         &:hover{
-            color : @color-good;
+            color : rgb(var(--color-good));
         }
     }
     &.editNow{
@@ -2333,15 +2343,15 @@ input[type=radio].radio:checked + label {
                     }
 
                     &.successButton {
-                        color: @color-good;
+                        color: rgb(var(--color-good));
 
                         &:hover {
-                            color: @color-good;
+                            color: rgb(var(--color-good));
                         }
                     }
 
                     &:hover{
-                        background: @color-good;
+                        background: rgb(var(--color-good));
                     }
 
                     &.disabled{
@@ -3151,7 +3161,7 @@ input[type=radio].radio:checked + label {
             cursor: pointer;
 
             &:hover{
-                color: @color-bad;
+                color: rgb(var(--color-bad));
             }
         }
 
@@ -4267,7 +4277,7 @@ input[type=radio].radio:checked + label {
         .checkbox{
             &+label {
                 &:before {
-                    border-color : @color-bad;
+                    border-color : rgb(var(--color-bad));
                  
                 }
             }
@@ -4419,12 +4429,12 @@ input[type=radio].radio:checked + label {
            
             .vc_inputWrapper{
 
-                border : 1px solid  @color-bad;
+                border : 1px solid  rgb(var(--color-bad));
                 border-right: 0;
             }
 
             .vc_iconWrapper{
-                border : 1px solid  @color-bad;
+                border : 1px solid  rgb(var(--color-bad));
                 border-left: 0;
             }
         }
@@ -5195,8 +5205,8 @@ html.mobile.fullscreen{
         }
 
         &[count='1']{
-            color : @color-bad; 
-            border : 1px solid @color-bad; 
+            color : rgb(var(--color-bad)); 
+            border : 1px solid rgb(var(--color-bad)); 
         }
     }
 
@@ -5207,7 +5217,7 @@ html.mobile.fullscreen{
             &.foramount{
                 font-weight: 700;
                 text-align: right;
-                color : @color-good;
+                color : rgb(var(--color-good));
                 font-size : 0.8em;
             }
         }
@@ -5232,7 +5242,7 @@ html.mobile.fullscreen{
             }
 
             &.disabled{
-                color : @color-good;
+                color : rgb(var(--color-good));
                 background: transparent;
                 i{
                     display : inline;
@@ -5403,7 +5413,7 @@ html.mobile.fullscreen{
                     }
 
                     &.disabled{
-                        color : @color-good;
+                        color : rgb(var(--color-good));
                         background: transparent;
                         i{
                             display : inline;
@@ -5438,7 +5448,7 @@ html.mobile.fullscreen{
                 }
 
                 .donate{
-                    color: @color-good;
+                    color: rgb(var(--color-good));
                 }
 
                 .tips{
@@ -5759,7 +5769,7 @@ html.mobile.fullscreen{
                 font-weight: 700;
 
                 &.good{
-                    color : @color-good;
+                    color : rgb(var(--color-good));
                 }
 
             }
@@ -5906,7 +5916,7 @@ html.mobile.fullscreen{
                 margin : 0;
                 background: transparent;
                 border : 0;
-                color : @color-good;
+                color : rgb(var(--color-good));
                 
             }
         }
@@ -6010,7 +6020,7 @@ html.mobile.fullscreen{
             text-align: center;
             padding-top : @rhythm;
             i{
-                color : @color-yellow;
+                color : rgb(var(--color-yellow));
                 font-size: 1.5em;
             }
         }
@@ -7539,7 +7549,7 @@ html.mobile{
 			}
 
 			.require{
-				color : @color-bad;
+				color : rgb(var(--color-bad));
 			}
 		}
 
@@ -7586,7 +7596,7 @@ html.mobile{
 			border-radius: 2px;
 
 			&.error{
-				border : 1px solid @color-bad;
+				border : 1px solid rgb(var(--color-bad));
 			}
 		}
 
@@ -7594,7 +7604,7 @@ html.mobile{
 			select,
 			textarea,
 			input{
-				border : 1px solid @color-bad;
+				border : 1px solid rgb(var(--color-bad));
 			}
 			
 		}

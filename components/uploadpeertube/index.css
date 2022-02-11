@@ -13,7 +13,7 @@
 #uploadpeertube .errorWrapper .videoErrorHeading {
   font-size: 1.5em;
   font-weight: 200;
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
 }
 #uploadpeertube .errorWrapper .videoErrorBody {
   font-weight: 200;
@@ -41,7 +41,7 @@
   color: rgb(var(--color-txt-gray-dark));
 }
 #uploadpeertube .error-message {
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
   font-size: 0.8em;
 }
 #uploadpeertube .logo-container {
@@ -239,7 +239,7 @@
 }
 #uploadpeertube .cancelButton {
   margin-left: 1em;
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
   -moz-transition: 0.3s;
   -o-transition: 0.3s;
   -webkit-transition: 0.3s;

@@ -61,7 +61,7 @@
   color: rgb(var(--color-txt-gray-dark));
 }
 #streampeertube .error-message {
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
 }
 #streampeertube .logo-container {
   margin-right: 0.5em;
@@ -133,7 +133,7 @@
 #streampeertube .upload-progress-bar {
   height: 1px;
   width: 100%;
-  background-color: #076C34;
+  background-color: rgb(var(--color-good));
 }
 #streampeertube .verticalFieldsWrapper {
   display: flex;

@@ -48,7 +48,7 @@
   font-size: 0.8em;
 }
 #transactionview .amount {
-  color: #076C34;
+  color: rgb(var(--color-good));
 }
 #transactionview .input .amount {
   color: rgb(var(--color-txt-orange));

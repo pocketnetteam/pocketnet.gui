@@ -139,14 +139,14 @@
 }
 .share_common .shareTable .sbtnxs .notificationturn i {
   text-align: center;
-  color: rgba(7, 108, 52, 0.8);
+  color: rgba(var(--color-good), 0.8);
   /*.transition(0.3s);*/
 }
 .share_common .shareTable .sbtnxs .notificationturn.turnon i:before {
   content: '\f0f3';
 }
 .share_common .shareTable .sbtnxs .notificationturn:hover i {
-  color: #076c34;
+  color: rgb(var(--color-good));
 }
 .share_common .shareTable.subscribed .sbtnxs .subscribedLabel {
   display: inline;
@@ -1021,7 +1021,7 @@
     opacity: 1;
   }
   .share .meta .metatable > div.metapanel .metapanelitem.complain:hover {
-    color: #F41A4D;
+    color: rgb(var(--color-bad));
   }
   .share .meta {
     margin-top: 0;

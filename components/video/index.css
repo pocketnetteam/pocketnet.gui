@@ -35,8 +35,8 @@
 }
 #video .buttonWrapper button:hover {
   color: rgb(var(--text-on-bg-ac-color));
-  background: #076C34;
-  border-color: #076C34;
+  background: rgb(var(--color-good));
+  border-color: rgb(var(--color-good));
 }
 #video .fixedbtn {
   padding-top: 0.5em;
@@ -59,8 +59,8 @@
 }
 #video .fixedbtn button:hover {
   color: rgb(var(--text-on-bg-ac-color));
-  background: #076C34;
-  border-color: #076C34;
+  background: rgb(var(--color-good));
+  border-color: rgb(var(--color-good));
 }
 #video .fixedbtn.active {
   display: block;

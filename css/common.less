@@ -187,7 +187,7 @@
 
                 i{
                     text-align: center;
-                    color: fade(@color-good, 80);
+                    color: rgba(var(--color-good), 0.8);
                     /*.transition(0.3s);*/
                 }
 
@@ -201,7 +201,7 @@
 
                 &:hover{
                     i{
-                        color : fade(@color-good, 100);
+                        color : rgb(var(--color-good));
                     }
                     
                 }
@@ -1413,7 +1413,7 @@
 
                             &.complain{
                                 &:hover{
-                                    color : @color-bad;
+                                    color : rgb(var(--color-bad));
                                 }
                             }
                         }

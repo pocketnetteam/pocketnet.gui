@@ -70,10 +70,10 @@
   color: rgb(var(--neutral-grad-3));
 }
 #nodecontrol .stacking .canstacking .good {
-  color: #076C34;
+  color: rgb(var(--color-good));
 }
 #nodecontrol .stacking .canstacking .bad {
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
 }
 #nodecontrol .stacking .canstacking .gray {
   color: rgb(var(--neutral-grad-3));
@@ -126,7 +126,7 @@
 }
 #nodecontrol .staterowTable .icon i.good,
 #nodecontrol .settingTable .icon i.good {
-  color: #076C34;
+  color: rgb(var(--color-good));
 }
 #nodecontrol .staterowTable .todefaultcert,
 #nodecontrol .settingTable .todefaultcert {
@@ -179,10 +179,10 @@
   font-size: 0.9em;
 }
 #nodecontrol .nodecontentstate .good {
-  color: #076C34;
+  color: rgb(var(--color-good));
 }
 #nodecontrol .nodecontentstate .bad {
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
 }
 #nodecontrol .nodecontentstate .gray {
   color: rgb(var(--neutral-grad-3));
@@ -292,7 +292,7 @@
   text-decoration: underline;
 }
 #nodecontrol .nodecontentmanage .toDefaultPath:hover {
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
 }
 #nodecontrol .nodecontentmanage .toDefaultPath i {
   font-size: 0.8em;

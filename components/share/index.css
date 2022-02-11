@@ -411,7 +411,7 @@
   -o-transition: 0.3s;
   -webkit-transition: 0.3s;
   transition: 0.3s;
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
 }
 #share .attachements .urlcnt .removelink:hover {
   background: rgb(var(--neutral-grad-2));
@@ -585,7 +585,7 @@
   background: rgba(var(--color-shadow-base), 0.5);
 }
 #share .attachements .peertubepanel .item:hover.removepeertube {
-  background: rgba(244, 26, 77, 0.5);
+  background: rgba(var(--color-bad), 0.5);
 }
 #share .attachements .peertubepanel .item.streaminfo {
   background: rgba(var(--color-bg-ac), 0.7);
@@ -656,7 +656,7 @@
 }
 #share .error {
   text-align: right;
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
   font-weight: 400;
   font-size: 0.8em;
   margin-top: 0.5em;
@@ -1237,7 +1237,7 @@
     -o-transition: 0.3s;
     -webkit-transition: 0.3s;
     transition: 0.3s;
-    color: #F41A4D;
+    color: rgb(var(--color-bad));
   }
   #share .attachements .urlcnt .removelink:hover {
     background: rgb(var(--neutral-grad-3));

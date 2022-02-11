@@ -99,7 +99,7 @@
   width: 140px;
 }
 #help .page .roadmap .road > div.released {
-  color: #076C34;
+  color: rgb(var(--color-good));
   font-weight: 500;
   width: 50px;
   text-align: center;

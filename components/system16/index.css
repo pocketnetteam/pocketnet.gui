@@ -82,7 +82,7 @@
   cursor: pointer;
 }
 #system16 .toDefaultPath:hover {
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
 }
 #system16 .chartWrapper {
   padding: 1em 0;
@@ -127,7 +127,7 @@
   color: rgba(var(--neutral-grad-3), 0.7);
 }
 #system16 .botsWrapper .botinlist .removefromlist:hover {
-  color: #076C34;
+  color: rgb(var(--color-good));
 }
 #system16 .proxyselecttable {
   width: auto;
@@ -187,7 +187,7 @@
 }
 #system16 .staterowTable .icon i.good,
 #system16 .settingTable .icon i.good {
-  color: #076C34;
+  color: rgb(var(--color-good));
 }
 #system16 .staterowTable .todefaultcert,
 #system16 .settingTable .todefaultcert {
@@ -368,13 +368,13 @@
   cursor: pointer;
 }
 #system16 .webdistributioncontent .wallet > div .remove:hover {
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
 }
 #system16 .webdistributioncontent .wallet > div .coins {
   cursor: pointer;
 }
 #system16 .webdistributioncontent .wallet > div .coins:hover {
-  color: #076C34;
+  color: rgb(var(--color-good));
 }
 #system16 .webdistributioncontent .wallet > div .apply {
   cursor: pointer;
@@ -390,13 +390,13 @@
   transition: 0.3s;
 }
 #system16 .webdistributioncontent .wallet > div i.remove {
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
 }
 #system16 .webdistributioncontent .wallet > div i.good {
-  color: #076C34;
+  color: rgb(var(--color-good));
 }
 #system16 .webdistributioncontent .wallet > div i.bad {
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
 }
 #system16 .webdistributioncontent .wallet > div i.normal {
   color: #ff4800;
@@ -462,7 +462,7 @@
   color: rgb(var(--color-bg-ac));
 }
 #system16 .webadminscontent .admin > div.panelWrapper .item.stable {
-  color: #076C34;
+  color: rgb(var(--color-good));
 }
 #system16 .nodedummy {
   text-align: center;
@@ -517,10 +517,10 @@
   border-bottom: 1px solid rgb(var(--neutral-grad-2));
 }
 #system16 .nodescontent .good {
-  color: #076C34;
+  color: rgb(var(--color-good));
 }
 #system16 .nodescontent .fixednotinlist {
-  background: rgba(7, 108, 52, 0.05);
+  background: rgba(var(--color-good), 0.05);
   text-align: center;
   padding: 1.5em;
 }
@@ -542,22 +542,22 @@
   opacity: 0.5;
 }
 #system16 .nodescontent .node.active {
-  color: #076C34;
+  color: rgb(var(--color-good));
 }
 #system16 .nodescontent .node.active > div.use {
-  color: #076C34;
+  color: rgb(var(--color-good));
 }
 #system16 .nodescontent .node.active > div.use i:before {
   content: '\f058';
 }
 #system16 .nodescontent .node .hasserviceconnection {
-  color: #076C34;
+  color: rgb(var(--color-good));
   font-size: 0.3em;
   width: 25px;
   text-align: center;
 }
 #system16 .nodescontent .node .testing {
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
 }
 #system16 .nodescontent .node .name {
   cursor: pointer;
@@ -617,7 +617,7 @@
 }
 #system16 .nodescontent .node > div.connectnode {
   cursor: pointer;
-  color: #076C34;
+  color: rgb(var(--color-good));
 }
 #system16 .nodescontent .node > div.panelWrapper {
   width: 50px;
@@ -639,7 +639,7 @@
   color: rgb(var(--color-txt-ac));
 }
 #system16 .nodescontent .node > div.panelWrapper .item.stable {
-  color: #076C34;
+  color: rgb(var(--color-good));
 }
 #system16 .nodescontent .node > div span {
   font-size: 0.9em;
@@ -648,7 +648,7 @@
   border-bottom: 1px solid rgb(var(--neutral-grad-2));
 }
 #system16 .peertubecontent .good {
-  color: #076C34;
+  color: rgb(var(--color-good));
 }
 #system16 .peertubecontent .instance .statistic i {
   font-size: 0.5em;
@@ -657,10 +657,10 @@
   color: rgb(var(--neutral-grad-2));
 }
 #system16 .peertubecontent .instance.active {
-  color: #076C34;
+  color: rgb(var(--color-good));
 }
 #system16 .peertubecontent .instance.active > div.use {
-  color: #076C34;
+  color: rgb(var(--color-good));
 }
 #system16 .peertubecontent .instance.active > div.use i:before {
   content: '\f058';
@@ -728,7 +728,7 @@
   color: rgb(var(--color-txt-ac));
 }
 #system16 .peertubecontent .instance > div.panelWrapper .item.stable {
-  color: #076C34;
+  color: rgb(var(--color-good));
 }
 #system16 .peertubecontent .instance > div span {
   font-size: 0.9em;
@@ -784,7 +784,7 @@
   color: #016452;
 }
 #system16 .peertubecontent .failedStat {
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
 }
 #system16 .peertubecontent .iconStat {
   display: flex;
@@ -886,7 +886,7 @@
   cursor: pointer;
 }
 .proxieslist .proxy > div.panel .item.delete:hover {
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
 }
 .proxieslist .proxy.active {
   cursor: default;
@@ -991,7 +991,7 @@
 .addnode .parameter .error textarea,
 .addproxy .parameter .error input,
 .addnode .parameter .error input {
-  border: 1px solid #F41A4D;
+  border: 1px solid rgb(var(--color-bad));
 }
 .addproxy .parameter select,
 .addnode .parameter select {

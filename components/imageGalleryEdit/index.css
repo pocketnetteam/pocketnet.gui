@@ -90,7 +90,7 @@
   padding: 0 0.5em;
 }
 #imageGalleryEdit .panel .editPanel > div.save:hover {
-  color: #076C34;
+  color: rgb(var(--color-good));
 }
 #imageGalleryEdit .panel .sitem {
   cursor: pointer;
