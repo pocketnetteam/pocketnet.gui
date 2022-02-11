@@ -1,8 +1,3 @@
-#nodecontrol {
-  /*.setting{
-        overflow: hidden;
-    }*/
-}
 #nodecontrol .testnetwork {
   padding: 2em;
   text-align: center;
@@ -16,8 +11,8 @@
 #nodecontrol .nodelanding {
   margin-bottom: 1.5em;
   border-radius: 10px;
-  background: #0e1c2b;
-  color: #fff;
+  background: rgb(var(--color-shadow-base));
+  color: rgb(var(--text-on-bg-shadow-color));
   text-align: center;
   padding: 2.5em;
 }
@@ -48,8 +43,8 @@
   text-align: center;
   padding: 2em 0;
   cursor: pointer;
-  color: #b2abac;
-  background: rgba(178, 171, 172, 0.1);
+  color: rgb(var(--neutral-grad-3));
+  background: rgb(var(--neutral-grad-1), 0.2);
 }
 #nodecontrol .nodedummy .text {
   padding: 0.5em 0;
@@ -65,14 +60,14 @@
 #nodecontrol .fsubcaption span {
   font-weight: 100;
   font-size: 1.7em;
-  color: #3c4146;
+  color: rgb(var(--neutral-grad-3));
 }
 #nodecontrol .ssubcaption {
   padding: 0.5em 0;
 }
 #nodecontrol .ssubcaption span {
   font-weight: 700;
-  color: #3c4146;
+  color: rgb(var(--neutral-grad-3));
 }
 #nodecontrol .stacking .canstacking .good {
   color: #076C34;
@@ -81,19 +76,19 @@
   color: #F41A4D;
 }
 #nodecontrol .stacking .canstacking .gray {
-  color: #b2abac;
+  color: rgb(var(--neutral-grad-3));
 }
 #nodecontrol .stacking .copyaddress {
   cursor: pointer;
 }
 #nodecontrol .stacking .copyaddress:hover {
-  color: #00A3F7;
+  color: rgb(var(--color-txt-ac));
 }
 #nodecontrol .systemreq {
   padding: 0.5em;
   padding-top: 0;
   border-radius: 5px;
-  border: 1px solid #e4ddde;
+  border: 1px solid rgb(var(--neutral-grad-1));
 }
 #nodecontrol .systemreq .scaption {
   padding: 0.5em 0;
@@ -123,7 +118,7 @@
 #nodecontrol .staterowTable .icon,
 #nodecontrol .settingTable .icon {
   padding-left: 0.5em;
-  color: #b3b3b3;
+  color: rgb(var(--neutral-grad-2));
 }
 #nodecontrol .staterowTable .icon i,
 #nodecontrol .settingTable .icon i {
@@ -141,7 +136,7 @@
   -o-transition: 0.3s;
   -webkit-transition: 0.3s;
   transition: 0.3s;
-  color: #b2abac;
+  color: rgb(var(--neutral-grad-3));
 }
 #nodecontrol .staterowTable .todefaultcert span,
 #nodecontrol .settingTable .todefaultcert span {
@@ -149,18 +144,18 @@
 }
 #nodecontrol .staterowTable .todefaultcert:hover,
 #nodecontrol .settingTable .todefaultcert:hover {
-  color: #00a4ff;
+  color: rgb(var(--color-txt-ac));
 }
 #nodecontrol .setting .settingTable .label span {
   font-size: 0.9em;
 }
 #nodecontrol .setting .settingTable .value {
-  color: #3c4146;
+  color: rgb(var(--neutral-grad-3));
 }
 #nodecontrol .setting .settingTable .value[fss],
 #nodecontrol .setting .settingTable .value[sys] {
   text-decoration: underline;
-  color: #3c4146;
+  color: rgb(var(--neutral-grad-3));
   cursor: pointer;
 }
 #nodecontrol .setting .settingTable .value span {
@@ -170,39 +165,14 @@
   cursor: pointer;
 }
 #nodecontrol .setting.systempath .value {
-  color: #b3b3b3;
+  color: rgb(var(--neutral-grad-2));
 }
 #nodecontrol .manage {
   border-radius: 10px;
-  background: rgba(178, 171, 172, 0.12);
+  background: rgb(var(--neutral-grad-1), 0.2);
 }
 #nodecontrol .managepanel {
   padding: 2em;
-}
-#nodecontrol .nodecontentstate i {
-  font-size: 0.9em;
-}
-#nodecontrol .nodecontentstate .good {
-  color: #076C34;
-}
-#nodecontrol .nodecontentstate .bad {
-  color: #F41A4D;
-}
-#nodecontrol .nodecontentstate .gray {
-  color: #b2abac;
-}
-#nodecontrol .nodecontentstate .nodestateheightprogress {
-  width: 30em;
-  height: 0.1em;
-  background: #bdbdbd;
-}
-#nodecontrol .nodecontentstate .nodestateheightprogress .nodestateheightprogressinner {
-  background: #00A3F7;
-  display: block;
-  height: 100%;
-}
-#nodecontrol .nodecontentstate .nodestateheightprogress .nodestateheightprogressinner.fork {
-  background: #f70000;
 }
 #nodecontrol .nodecontentstate i {
   width: 20px;
@@ -215,17 +185,30 @@
   color: #F41A4D;
 }
 #nodecontrol .nodecontentstate .gray {
-  color: #b2abac;
+  color: rgb(var(--neutral-grad-3));
+}
+#nodecontrol .nodecontentstate .nodestateheightprogress {
+  width: 30em;
+  height: 0.1em;
+  background: rgb(var(--neutral-grad-3));
+}
+#nodecontrol .nodecontentstate .nodestateheightprogress .nodestateheightprogressinner {
+  background: rgb(var(--color-bg-ac));
+  display: block;
+  height: 100%;
+}
+#nodecontrol .nodecontentstate .nodestateheightprogress .nodestateheightprogressinner.fork {
+  background: rgb(var(--color-bg-orange));
 }
 #nodecontrol .nodecontentstate .syncLeft {
   float: right;
   font-size: 0.8em;
-  color: #7d7d7d;
+  color: rgb(var(--neutral-grad-3));
 }
 #nodecontrol .notfound {
   text-align: center;
   padding: 2em 0;
-  color: #b2abac;
+  color: rgb(var(--neutral-grad-3));
 }
 #nodecontrol .notfound.install {
   cursor: pointer;
@@ -235,12 +218,12 @@
   transition: 0.3s;
 }
 #nodecontrol .notfound.install:hover {
-  color: #00A3F7;
+  color: rgb(var(--neutral-grad-3));
 }
 #nodecontrol .notfound.loading .stopInstall {
   display: inline-block;
   cursor: pointer;
-  color: #00A3F7;
+  color: rgb(var(--color-txt-ac));
 }
 #nodecontrol .notfound.loading .preloader5 {
   margin: 1em;
@@ -262,14 +245,14 @@
   top: 0;
   bottom: 0;
   padding: 1em;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgb(var(--background-total-theme));
   display: none;
 }
 #nodecontrol .nodecontentmanage .felockcnt {
   text-align: center;
   padding: 2em 0;
   cursor: pointer;
-  color: #b2abac;
+  color: rgb(var(--neutral-grad-3));
 }
 #nodecontrol .nodecontentmanage .felockcnt .text {
   padding: 0.5em 0;
@@ -277,7 +260,7 @@
 }
 #nodecontrol .nodecontentmanage .felockcnt i {
   font-size: 0.9em;
-  color: #00A3F7;
+  color: rgb(var(--color-txt-ac));
 }
 #nodecontrol .nodecontentmanage .value.balance {
   font-weight: 400;
@@ -295,13 +278,13 @@
 #nodecontrol .nodecontentmanage .installProgressBox .installProgress {
   width: 100%;
   height: 3px;
-  background-color: #dcdcdc;
+  background-color: rgb(var(--neutral-grad-1));
   border-radius: 2px;
   margin: 0.3em 0.5em 0em 0em;
 }
 #nodecontrol .nodecontentmanage .installProgressBox .installProgress .installProgressInner {
   height: 3px;
-  background-color: #00A3F7;
+  background-color: rgb(var(--color-bg-ac));
   border-radius: 2px;
 }
 #nodecontrol .nodecontentmanage .toDefaultPath {
@@ -315,7 +298,7 @@
   font-size: 0.8em;
 }
 #nodecontrol .nodecontentmanage .update .noupdatenode {
-  color: #b3b3b3;
+  color: rgb(var(--neutral-grad-2));
 }
 .addressdialog input {
   width: 100%;
@@ -325,20 +308,3 @@
   height: 120px;
   max-height: 230px;
 }
-html.stblack #nodecontrol .settingTable .value[fss],
-html.stblack #nodecontrol .settingTable .value[sys] {
-  color: #b2abac;
-}
-html.stblack #nodecontrol .subcaption span {
-  color: #00A3F7;
-}
-html.stblack #nodecontrol .ssubcaption {
-  background: #112035;
-}
-html.stblack #nodecontrol .ssubcaption span {
-  color: #b2abac;
-}
-html.stblack #nodecontrol .managepanel {
-  background: rgba(14, 28, 43, 0.8);
-}
-/*t*/

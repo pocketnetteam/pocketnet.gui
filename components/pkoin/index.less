@@ -3,7 +3,6 @@
 #pkoin{
 	.content{
 
-
 		.top, .fieldsWrapper, .sendButtonWrapper{
 			padding : @rhythm * 2;
 		}
@@ -12,7 +11,7 @@
 			display: flex;
 			justify-content: space-between;
 			padding-bottom: @rhythm * 2;
-			border-bottom : 1px solid rgba(229,229,229,.5);
+			border-bottom : 1px solid rgba(var(--neutral-grad-1), 0.5);
 
 			.profile{
 				display: flex;
@@ -35,7 +34,7 @@
 
 					.label{
 						font-size: 12px;
-						color: @color-gray;
+						color: rgb(var(--neutral-grad-3));
 					}
 				}
 			}
@@ -45,7 +44,7 @@
 				align-items: center;
 
 				.buyButton{
-					border: 1px solid #E3E4EB;
+					border: 1px solid rgb(var(--neutral-grad-0));
 					box-sizing: border-box;
 					border-radius: 100px;
 					padding: 8px 16px;
@@ -85,8 +84,8 @@
 
 					.inputSum, .textareaComment{
 						padding: 12px 16px;
-						border-radius: 10px;
-						border: 1px solid #EBEBEB;
+						border-radius: 12px;
+						border: 1px solid rgb(var(--neutral-grad-0));
 						width: 100%;
 					}
 
@@ -94,10 +93,9 @@
 						width: 100%;
 
 						&.opened{
-
 	
 							.vc_inputWrapper, .vc_iconWrapper{
-								border: 1px solid #00A4FF;
+								border: 1px solid rgb(var(--color-bg-ac));
 							}
 
 							.vc_iconWrapper{
@@ -111,36 +109,34 @@
 					}
 
 					.vc_inputWrapper{
-						border-radius: 10px 0px 0px 10px;
-						border: 1px solid #EBEBEB;
+						border-radius: 12px 0px 0px 12px;
+						border: 1px solid rgb(var(--neutral-grad-0));
 						border-right: none;
 
 						input{
 							padding: 12px 16px;
-							
-
 						}
 					}
 
 					.vc_iconWrapper{
-						border-radius: 0px 10px 10px 0px;
-						border: 1px solid #EBEBEB;
+						border-radius: 0px 12px 12px 0px;
+						border: 1px solid rgb(var(--neutral-grad-0));
 						border-left: none;
 					}
 
 					.vc_selectInput{
 						top: 100%;
-						box-shadow: 0px 8px 24px -6px rgba(0, 0, 0, 0.16), 0px 0px 1px rgba(0, 0, 0, 0.4);
+						.shadowSmaller();
 						border-radius: 12px;
 						border: none;
 
 
 						.vc_value{
 							padding: 12px;
-							color: #555770;
+							color: rgb(var(--color-txt-gray-dark));
 
 							&:hover{
-								background: #F5F5F5;
+								background: rgb(var(--neutral-grad-1));
 								color: default;
 							}
 
@@ -159,7 +155,7 @@
 						position: relative;
 
 						.pkoinLabel{
-							color: #00A4FF;
+							color: rgb(var(--color-txt-ac));
 							position: absolute;
 							right: 12px;
 							top: 12px;
@@ -170,7 +166,7 @@
 
 					.text{
 						line-height: 24px;
-						color: #555770;
+						color: rgb(var(--color-txt-gray-dark));
 					}
 				}
 			}
@@ -178,14 +174,14 @@
 
 		.sendButtonWrapper{
 			padding: @rhythm * 3 @rhythm * 2;
-			border-top: 1px solid rgba(229,229,229,.5);
+			border-top: 1px solid rgba(var(--neutral-grad-1), 0.5);
 
 			.sendButton{
 				padding: 12px 16px;
 				text-align: center;
-				background: #00A4FF;
-				color : #ffff;
-				border-radius: 8px;
+				background: rgb(var(--color-bg-ac));
+				color : rgb(var(--text-on-bg-ac-color));
+				border-radius: 12px;
 				cursor: pointer;
 			}
 		}
@@ -202,9 +198,6 @@
 			max-height: 500px;
 			box-shadow: none;
 
-			/*.wndcontent{
-                height: fit-content;
-            }*/
         }
 		.wndheader{
 			display: none;
@@ -221,10 +214,6 @@
 				display: none;
 			}
 		}
-	}
-
-	.roundclosebutton{
-		color : #FFF;
 	}
 
 	#pkoin{
