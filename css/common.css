@@ -4,11 +4,123 @@
 .share_common .commentsWrapperHb {
   min-height: 1em;
 }
+.share_common .commentsWrapper {
+  background: rgb(var(--background-secondary-theme));
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
 .share_common img {
   max-width: 100%;
 }
 .share_common .work {
   width: 100%;
+}
+.share_common .statswrapperExtended {
+  display: flex;
+  padding: 0.5em 0;
+}
+.share_common .statswrapperExtended span {
+  font-weight: 500;
+  font-size: 0.9em;
+}
+.share_common .repostWrapper {
+  position: relative;
+}
+.share_common .wholikesTable {
+  margin-bottom: 1em;
+  cursor: pointer;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+.share_common .wholikesTable:hover {
+  opacity: 0.8;
+}
+.share_common .wholikesTable .wholikeAuthorTable {
+  display: inline-table;
+  width: auto;
+  font-size: 0.8em;
+}
+.share_common .wholikesTable .wholikeAuthorTable > diV {
+  vertical-align: middle;
+}
+.share_common .wholikesTable .wholikeAuthorTable > diV.unamecell {
+  padding-left: 0.25em;
+}
+.share_common .wholikesTable .usericon {
+  position: relative;
+  display: inline-block;
+  width: 21px;
+  height: 21px;
+  vertical-align: baseline;
+}
+.share_common .debuginfo {
+  padding: 0.5em 1.5em;
+  font-size: 0.7em;
+  z-index: 5;
+}
+.share_common .debuginfo .info {
+  display: none;
+}
+.share_common .debuginfo .icon {
+  cursor: pointer;
+}
+.share_common .debuginfo.showed .info {
+  display: block;
+}
+.share_common .debuginfo.showed .icon {
+  display: none;
+}
+.share_common .repostShareWrapper .openetc {
+  cursor: pointer;
+  padding: 1em;
+  text-align: center;
+}
+.share_common .repostShareWrapper .openetc i,
+.share_common .repostShareWrapper .openetc span {
+  color: rgba(var(--neutral-grad-2), 0.8);
+  font-size: 0.9em;
+}
+.share_common .repostShareWrapper .openetc i {
+  font-size: 0.8em;
+}
+.share_common .js-player .warning-overlay {
+  opacity: 0;
+}
+.share_common .hiddenpost {
+  padding: 7em 5em;
+  font-size: 0.9em;
+  text-align: center;
+  border-radius: 6px;
+  background: rgba(var(--neutral-grad-1), 0.05);
+  margin-bottom: 2em;
+  margin-top: 0.5em;
+}
+.share_common .hiddenpost .hiddenlabelaction {
+  margin-top: 1em;
+}
+.share_common .hiddenpost .hiddenlabeltext {
+  opacity: 0.6;
+}
+.share_common .hiddenpost .captionpreview {
+  font-weight: 700;
+}
+.share_common .repostShare {
+  border-radius: 6px;
+  border: 1px solid rgba(var(--neutral-grad-1), 0.5);
+  border-bottom: 1px solid rgba(var(--background-total-theme), 0.75);
+  border-right: 1px solid rgba(var(--background-total-theme), 0.75);
+  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  margin-bottom: 0.5em;
+}
+.share_common .repostShare .share {
+  margin-bottom: 0;
+}
+.share_common .repostShare .share .videoTips {
+  display: none!important;
 }
 .share_common .article .message b {
   font-size: 1em!important;
@@ -107,6 +219,51 @@
 .share_common .shareContent {
   position: relative;
 }
+.share_common .videoWrapper {
+  max-width: 600px;
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.share_common .videoWrapper .videoTips {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 60px;
+  cursor: pointer;
+  background: #000000;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.95281863) 0%, rgba(0, 0, 0, 0.94721639) 6%, rgba(0, 0, 0, 0.21612395) 76%, rgba(0, 0, 0, 0.09007353) 82%, rgba(0, 0, 0, 0) 100%);
+  color: rgb(var(--text-on-bg-shadow-color));
+  opacity: 0;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+.share_common .videoWrapper .videoTips .videoTip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  padding: 1em;
+}
+.share_common .videoWrapper .videoTips .videoTip span {
+  font-size: 0.8em;
+  color: rgb(var(--text-on-bg-shadow-color));
+}
+.share_common .videoWrapper:hover .videoTips {
+  opacity: 1;
+}
+.share_common .videoWrapper .js-player {
+  border-radius: 10px;
+  overflow: hidden;
+}
+.share_common .videoWrapper .js-player .vjs-control-bar {
+  border-radius: 10px;
+  overflow: hidden;
+}
 .share_common .tempPreloader {
   padding: 1em 0;
   margin-bottom: 1em;
@@ -122,8 +279,27 @@
 .share_common .tempPreloader .count {
   padding-right: 0;
 }
+.share_common .iconWrapper {
+  width: 4em;
+  padding-top: 0.5em;
+  padding-left: 1em;
+  padding-right: 0;
+  float: left;
+}
+.share_common .cntswrk {
+  margin-left: 4em;
+  padding-left: 1em;
+  padding-right: 1.5em;
+}
+.share_common .cntswrk.forcomments {
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: 0;
+  margin-right: 0;
+}
 .share_common .shareTable {
   padding-top: 1em;
+  padding-bottom: 1em;
 }
 .share_common .shareTable .sbtnxs .subscribedLabel {
   display: none;
@@ -272,9 +448,6 @@
   justify-content: space-between;
   align-items: top;
 }
-.share_common .metatable > div.metadata {
-  overflow: hidden;
-}
 .share_common .metatable > div.metapanel {
   vertical-align: top;
 }
@@ -290,9 +463,6 @@
 .share_common .meta {
   padding-top: 0.75em;
   margin-bottom: 0.5em;
-}
-.share_common .meta > div {
-  margin-right: 1em;
 }
 .share_common .meta .authorCell {
   white-space: nowrap;
@@ -583,43 +753,42 @@
   font-size: 0.9em;
   color: rgb(var(--neutral-grad-4));
 }
-.share_common .panel {
+.share_common .sharepanel {
   border-radius: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-.share_common .panel .itemwr {
+.share_common .sharepanel .itemwr {
   width: auto;
 }
-.share_common .panel .itemwr > div {
+.share_common .sharepanel .itemwr > div {
   vertical-align: middle;
-  padding-bottom: 0.5em;
 }
-.share_common .panel .itemwr > div.iconwr {
+.share_common .sharepanel .itemwr > div.iconwr {
   width: 40px;
 }
-.share_common .panel .itemwr > div.labelwr {
+.share_common .sharepanel .itemwr > div.labelwr {
   padding-left: 0.5em;
   cursor: pointer;
 }
-.share_common .panel .itemwr > div.labelwr span {
+.share_common .sharepanel .itemwr > div.labelwr span {
   font-weight: 700;
   font-size: 0.8em;
 }
-.share_common .panel > div {
-  float: left;
-}
-.share_common .panel > div:nth-last-child(1) {
+.share_common .sharepanel > div:nth-last-child(1) {
   margin-right: 0;
 }
-.share_common .panel > div .stars {
+.share_common .sharepanel > div .stars {
   height: 40px;
   line-height: 40px;
   text-align: center;
   cursor: pointer;
 }
-.share_common .panel > div .count {
+.share_common .sharepanel > div .count {
   cursor: pointer;
 }
-.share_common .panel > div .icon {
+.share_common .sharepanel > div .icon {
   height: 40px;
   line-height: 40px;
   text-align: center;
@@ -628,19 +797,17 @@
   cursor: pointer;
   border-radius: 40%;
 }
-.share_common .panel > div.right {
-  float: right;
-  margin-left: 0;
+.share_common .sharepanel > div.right {
+  margin-left: auto;
 }
-.share_common .panel > div.right .itemwr > div.iconwr {
+.share_common .sharepanel > div.right .itemwr > div.iconwr {
   text-align: center;
   width: 40px;
 }
-.share_common .panel > div:hover .icon {
+.share_common .sharepanel > div:hover .icon {
   opacity: 0.7;
 }
-.share_common .panel > div.pkoin {
-  margin-top: 0.5em;
+.share_common .sharepanel > div.pkoin {
   display: flex;
   align-items: center;
   background: rgb(var(--color-bg-ac-bright));
@@ -649,20 +816,20 @@
   padding: 4px 8px;
   cursor: pointer;
 }
-.share_common .panel > div.pkoin img {
+.share_common .sharepanel > div.pkoin img {
   width: 1em;
 }
-.share_common .panel > div.pkoin span {
+.share_common .sharepanel > div.pkoin span {
   margin-left: 0.5em;
 }
-.share_common .panel > div.sharesocial .label,
-.share_common .panel > div.sharesocial .icon {
+.share_common .sharepanel > div.sharesocial .label,
+.share_common .sharepanel > div.sharesocial .icon {
   color: rgb(var(--color-txt-orange));
 }
-.share_common .panel > div.sharesocial:hover .label {
+.share_common .sharepanel > div.sharesocial:hover .label {
   color: rgb(var(--color-txt-orange));
 }
-.share_common .panel > div.sharesocial:hover .icon {
+.share_common .sharepanel > div.sharesocial:hover .icon {
   border-radius: 0;
   box-shadow: none;
   color: rgb(var(--color-txt-orange));
@@ -673,6 +840,21 @@
   position: fixed;
   right: 2em;
   top: 1em;
+}
+.share_common .sharecnt .removeDescription {
+  display: none;
+  padding-bottom: 1.5em;
+  color: rgb(var(--neutral-grad-2));
+}
+.share_common .sharecnt.deleted .cntscontent,
+.share_common .sharecnt.deleted .repostWrapper,
+.share_common .sharecnt.deleted .commentsWrapperHb,
+.share_common .sharecnt.deleted .metapanel,
+.share_common .sharecnt.deleted .sys {
+  display: none!important;
+}
+.share_common .sharecnt.deleted .removeDescription {
+  display: block;
 }
 .share_common .blockAuthor {
   display: none;
@@ -712,9 +894,39 @@
   right: 0;
   bottom: 0;
   top: 0;
-  background: rgba(var(--color-shadow-base), 0.9);
+  background: rgb(var(--color-shadow-base));
   padding-top: 0;
-  border-radius: 0;
+  border-radius: 0!important;
+  margin-bottom: 0!important;
+  /*#comments{
+            .caption{
+                padding-left: 2 * @rhythm;
+                padding-right: 3 * @rhythm;
+            }
+            
+            .commentPaddingWrapper,
+            .post{
+                padding-left: 2 * @rhythm;
+                padding-right: 3 * @rhythm;
+            }
+
+            .commentPaddingWrapper{
+                padding-right: 4 * @rhythm;
+            }
+
+            .list .answer .postbody{
+                padding-left: 2 * @rhythm;
+                padding-right: 3 * @rhythm;
+            }
+
+            .answers{
+                .commentPaddingWrapper{
+                    padding-right: 0;
+                    padding-left: 0;
+                }
+            }	
+
+        }*/
 }
 .share_common.fullScreenVideo .video-js {
   contain: unset;
@@ -752,26 +964,6 @@
 }
 .share_common.fullScreenVideo .videoviews {
   padding-left: 1em;
-}
-.share_common.fullScreenVideo #comments .caption {
-  padding-left: 1em;
-  padding-right: 1.5em;
-}
-.share_common.fullScreenVideo #comments .commentPaddingWrapper,
-.share_common.fullScreenVideo #comments .post {
-  padding-left: 1em;
-  padding-right: 1.5em;
-}
-.share_common.fullScreenVideo #comments .commentPaddingWrapper {
-  padding-right: 2em;
-}
-.share_common.fullScreenVideo #comments .list .answer .postbody {
-  padding-left: 1em;
-  padding-right: 1.5em;
-}
-.share_common.fullScreenVideo #comments .answers .commentPaddingWrapper {
-  padding-right: 0;
-  padding-left: 0;
 }
 .share_common.fullScreenVideo .exitFull {
   display: block;
@@ -909,7 +1101,7 @@
 .share_common.fullScreenVideo .work .tags {
   padding: 0 1em;
 }
-.share_common.fullScreenVideo .work .panel {
+.share_common.fullScreenVideo .work .sharepanel {
   overflow: hidden;
   padding: 1em;
   padding-bottom: 1em;
@@ -922,216 +1114,289 @@
   -webkit-transition: 0s;
   transition: 0s;
 }
-#content .share_common .work {
+.share_common .work {
   width: 100%;
 }
 /*t*/
 @media only screen and (max-width: 768px) {
-  .share {
+  .share_common {
     padding: 0;
     background: rgb(var(--background-total-theme));
     cursor: default;
     padding-bottom: 0;
     border-radius: 0;
+    /* #comments{			
+				
+            .caption{
+                padding-left: 1 * @rhythm;
+                padding-right: 2 * @rhythm;
+            }
+
+            .commentPaddingWrapper,
+            .post{
+                padding-left: 1 * @rhythm;
+                padding-right:  @rhythm;
+            }
+
+            .commentPaddingWrapper{
+                padding-right:  @rhythm;
+            }
+
+            .list .answer .postbody{
+                padding-left: 1 * @rhythm;
+                padding-right: @rhythm;
+            }
+
+            .answers{
+                .commentPaddingWrapper{
+                    padding-right: 0;
+                    padding-left: 0;
+                }
+            }				
+
+            .answer .posttable>div.postCellWrapper .postaction, 
+            .edit .posttable>div.postCellWrapper .postaction, 
+            .post .posttable>div.postCellWrapper .postaction{
+                text-align: center;
+            }
+        }*/
   }
-  .share .work {
-    width: 100%;
-  }
-  .share .shareTable {
+  .share_common .iconWrapper {
+    width: 4em;
     padding-top: 0.5em;
-  }
-  .share.fullScreenVideo {
-    contain: strict;
-  }
-  .share.fullScreenVideo #comments .caption {
     padding-left: 0.5em;
-    padding-right: 0.5em;
   }
-  .share.fullScreenVideo #comments .commentPaddingWrapper,
-  .share.fullScreenVideo #comments .post {
-    padding-left: 0.5em;
-    padding-right: 0.5em;
+  .share_common .repostShare {
+    margin-left: 0.25em;
+    margin-right: 0.25em;
+    margin-bottom: 0.25em;
   }
-  .share.fullScreenVideo #comments .commentPaddingWrapper {
+  .share_common .cntswrk {
+    margin-left: 0;
+    padding-left: 0;
     padding-right: 0;
   }
-  .share.fullScreenVideo #comments .list .answer .postbody {
+  .share_common .formeta {
+    margin-left: 4em;
+  }
+  .share_common .work {
+    width: 100%;
+    padding-left: 0;
+  }
+  .share_common .shareTable {
+    padding-top: 0.5em;
+  }
+  .share_common.fullScreenVideo {
+    contain: strict;
+    background: rgb(var(--color-shadow-base));
+  }
+  .share_common.fullScreenVideo .sharecaption {
+    padding-left: 0.5em;
+  }
+  .share_common.fullScreenVideo .work .metawrapper {
+    margin-left: 0;
+  }
+  .share_common.fullScreenVideo .work .iconWrapper {
+    display: none;
+  }
+  .share_common.fullScreenVideo .work .shareWrapper {
+    margin-top: 0;
+  }
+  .share_common.fullScreenVideo .work .sys,
+  .share_common.fullScreenVideo .work .tags {
+    padding: 0 0.5em;
+  }
+  .share_common.fullScreenVideo .work .sharepanel {
+    padding: 0.5em;
+  }
+  .share_common.fullScreenVideo #comments .caption {
     padding-left: 0.5em;
     padding-right: 0.5em;
   }
-  .share .medium-insert-embeds {
+  .share_common.fullScreenVideo #comments .commentPaddingWrapper,
+  .share_common.fullScreenVideo #comments .post {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+  .share_common.fullScreenVideo #comments .list .answer .postbody {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+  .share_common .medium-insert-embeds {
     position: relative;
   }
-  .share .medium-insert-embeds:after {
+  .share_common .medium-insert-embeds:after {
     display: none;
   }
-  .share .medium-insert-embeds figure {
+  .share_common .medium-insert-embeds figure {
     margin-left: 0;
     margin-right: 0;
   }
-  .share .shareWrapper,
-  .share .shareContent {
+  .share_common .shareWrapper,
+  .share_common .shareContent {
     cursor: default;
   }
-  .share .paddingWrapper {
+  .share_common .paddingWrapper {
     padding: 0 0.5em;
   }
-  .share .work {
+  .share_common .work {
     overflow: hidden;
   }
-  .share .shareWrapper {
+  .share_common .shareWrapper {
     position: relative;
   }
-  .share .shareTable.subscribed .iconWrapper .aunsubscribe {
+  .share_common .shareTable .authorTable > div span {
+    font-size: 1em;
+  }
+  .share_common .shareTable .authorTable > div span.adr {
+    font-size: 1.2em;
+  }
+  .share_common .shareTable.subscribed .iconWrapper .aunsubscribe {
     display: block;
   }
-  .share .shareTable.subscribed .iconWrapper .asubscribe {
+  .share_common .shareTable.subscribed .iconWrapper .asubscribe {
     display: none;
   }
-  .share .shareTable.subscribed .iconWrapper .notificationturn {
+  .share_common .shareTable.subscribed .iconWrapper .notificationturn {
     display: block;
   }
-  .share .shareTable.subscribed .iconWrapper .additional i:before {
+  .share_common .shareTable.subscribed .iconWrapper .additional i:before {
     content: '\f068';
   }
-  .share .shareTable.subscribed .subscribeWrapper .subscribeevent {
+  .share_common .shareTable.subscribed .subscribeWrapper .subscribeevent {
     display: none;
   }
-  .share .shareTable.subscribed .subscribeWrapper .unsubscribeevent {
+  .share_common .shareTable.subscribed .subscribeWrapper .unsubscribeevent {
     display: block;
   }
-  .share .shareTable.emptywithrepost .meta .repostCaption {
+  .share_common .shareTable.emptywithrepost .meta .repostCaption {
     padding-left: 1em;
   }
-  .share.fullScreenVideo {
-    background: rgb(var(--color-shadow-base));
+  .share_common .videoWrapper {
+    max-width: 768px;
+    position: relative;
+    border-radius: 0;
   }
-  .share .jsPlayerLoading {
+  .share_common .videoWrapper .js-player {
+    border-radius: 0;
+    overflow: visible;
+  }
+  .share_common .videoWrapper .js-player .vjs-control-bar {
+    border-radius: 0;
+    overflow: visible;
+  }
+  .share_common .videoWrapper .videoTips {
+    opacity: 1;
+  }
+  .share_common .videoWrapper:hover .videoTips {
+    opacity: 1;
+  }
+  .share_common .jsPlayerLoading {
     width: 100%;
     height: 300px;
   }
-  .share .meta .metatable > div {
-    margin-right: 0;
-  }
-  .share .meta .metatable > div.metapanel {
-    width: 47px;
-    padding-right: 0.5em;
-  }
-  .share .meta .metatable > div.metapanel .metapanelitem {
-    opacity: 1;
-  }
-  .share .meta .metatable > div.metapanel .metapanelitem.complain:hover {
-    color: rgb(var(--color-bad));
-  }
-  .share .meta {
+  .share_common .meta {
     margin-top: 0;
     margin-bottom: 0;
   }
-  .share .meta > div {
+  .share_common .meta > div {
     margin-right: 0;
   }
-  .share .imagecaption {
+  .share_common .meta .metatable > div {
+    margin-right: 0;
+  }
+  .share_common .meta .metatable > div.metapanel {
+    width: 47px;
+  }
+  .share_common .meta .metatable > div.metapanel .metapanelitem {
+    opacity: 1;
+  }
+  .share_common .meta .metatable > div.metapanel .metapanelitem.complain:hover {
+    color: rgb(var(--color-bad));
+  }
+  .share_common .imagecaption {
     padding: 0.5em;
   }
-  .share .images .imagesWrapper {
+  .share_common .images .imagesWrapper {
     width: 100%;
     height: auto;
     border-radius: 0;
   }
-  .share .images .imagesWrapper .image {
+  .share_common .images .imagesWrapper .image {
     border-radius: 0;
   }
-  .share .images .imagesContainer.one .imagesWrapper {
+  .share_common .images .imagesContainer.one .imagesWrapper {
     width: 100%;
     height: auto;
   }
-  .share .images .imagesContainer.one .imagesWrapper.w2 {
+  .share_common .images .imagesContainer.one .imagesWrapper.w2 {
     width: 100%;
   }
-  .share .images .imagesContainer.one .imagesWrapper.h2 {
+  .share_common .images .imagesContainer.one .imagesWrapper.h2 {
     width: 100%;
   }
-  .share .images .imagesContainer.two .imagesWrapper,
-  .share .images .imagesContainer.three .imagesWrapper,
-  .share .images .imagesContainer.more .imagesWrapper,
-  .share .images .imagesContainer.four .imagesWrapper {
+  .share_common .images .imagesContainer.two .imagesWrapper,
+  .share_common .images .imagesContainer.three .imagesWrapper,
+  .share_common .images .imagesContainer.more .imagesWrapper,
+  .share_common .images .imagesContainer.four .imagesWrapper {
     width: 50%;
     height: auto;
   }
-  .share .images .imagesContainer.two .imagesWrapper.w2,
-  .share .images .imagesContainer.three .imagesWrapper.w2,
-  .share .images .imagesContainer.more .imagesWrapper.w2,
-  .share .images .imagesContainer.four .imagesWrapper.w2 {
+  .share_common .images .imagesContainer.two .imagesWrapper.w2,
+  .share_common .images .imagesContainer.three .imagesWrapper.w2,
+  .share_common .images .imagesContainer.more .imagesWrapper.w2,
+  .share_common .images .imagesContainer.four .imagesWrapper.w2 {
     width: 50%;
   }
-  .share .images .imagesContainer.two .imagesWrapper.h2,
-  .share .images .imagesContainer.three .imagesWrapper.h2,
-  .share .images .imagesContainer.more .imagesWrapper.h2,
-  .share .images .imagesContainer.four .imagesWrapper.h2 {
+  .share_common .images .imagesContainer.two .imagesWrapper.h2,
+  .share_common .images .imagesContainer.three .imagesWrapper.h2,
+  .share_common .images .imagesContainer.more .imagesWrapper.h2,
+  .share_common .images .imagesContainer.four .imagesWrapper.h2 {
     width: 50%;
   }
-  .share .images .imagesContainer.articleImages {
+  .share_common .images .imagesContainer.articleImages {
     padding: 0.5em;
   }
-  .share .images .imagesContainer.articleImages .imagesWrapper {
+  .share_common .images .imagesContainer.articleImages .imagesWrapper {
     float: left;
     width: 30px;
     height: 30px;
   }
-  .share .sharecaption {
+  .share_common .sharecaption {
     margin-bottom: 0.5em;
   }
-  .share .sharecaption div {
+  .share_common .sharecaption div {
     font-size: 1.5em;
     font-weight: 100;
   }
-  .share .urlhtmlcontent {
+  .share_common .urlhtmlcontent {
     font-size: 0.8em;
   }
-  .share .urlhtmlcontent .ogtable {
+  .share_common .urlhtmlcontent .ogtable {
     display: block;
   }
-  .share .urlhtmlcontent .ogtable > div {
+  .share_common .urlhtmlcontent .ogtable > div {
     display: block;
     padding: 0.5em 0;
   }
-  .share .urlhtmlcontent .ogtable > div.image {
+  .share_common .urlhtmlcontent .ogtable > div.image {
     width: 100%;
     padding-right: 0;
   }
-  .share .urlhtmlcontent .ogtable > div.cnt {
+  .share_common .urlhtmlcontent .ogtable > div.cnt {
     padding: 0 0.5em;
   }
-  .share .urlhtmlcontent .ogtable > div.cnt .title {
+  .share_common .urlhtmlcontent .ogtable > div.cnt .title {
     max-width: none;
   }
-  .share .urlhtmlcontent .ogtable > div.cnt .description {
+  .share_common .urlhtmlcontent .ogtable > div.cnt .description {
     max-width: none;
     margin-top: 0.5em;
   }
-  .share .url .urlcnt {
+  .share_common .url .urlcnt {
     padding: 0 0.5em;
   }
-  .share .exitFull {
+  .share_common .exitFull {
     right: 1em;
-  }
-  .share.fullScreenVideo .sharecaption {
-    padding-left: 0.5em;
-  }
-  .share.fullScreenVideo .work .metawrapper {
-    margin-left: 0;
-  }
-  .share.fullScreenVideo .work .iconWrapper {
-    display: none;
-  }
-  .share.fullScreenVideo .work .shareWrapper {
-    margin-top: 0;
-  }
-  .share.fullScreenVideo .work .sys,
-  .share.fullScreenVideo .work .tags {
-    padding: 0 0.5em;
-  }
-  .share.fullScreenVideo .work .panel {
-    padding: 0.5em;
   }
 }

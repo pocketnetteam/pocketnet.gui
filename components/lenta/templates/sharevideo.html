@@ -54,7 +54,7 @@ var makecaptionclear = function(){
 var metadisplay = function(){ %>
 
 <div class="meta">
-	<div class="metatable table">
+	<div class="metatable">
 		<div class="metadata">
 
 			<% if(!emptywithrepost) {%>
@@ -418,7 +418,7 @@ var metadisplay = function(){ %>
 						
 
 							<% if(!share.temp &&  (typeof repost == 'undefined' || !repost || fromempty)) {%>
-								<div class="panel">
+								<div class="panel sharepanel">
 									<div class="item forstars">
 
 										
@@ -464,7 +464,7 @@ var metadisplay = function(){ %>
 
 							<% if(share.temp) {%>
 
-								<div class="panel">
+								<div class="panel sharepanel">
 									<div class="item right">
 
 										<div class="itemwr table tempPreloader">

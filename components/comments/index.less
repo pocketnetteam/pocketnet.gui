@@ -433,7 +433,7 @@
 
 			.commentPaddingWrapper{
 				padding-left:  3 * @rhythm;
-				padding-right: 6 * @rhythm;
+				padding-right: 5 * @rhythm;
 			}
 			
 			.answer{
@@ -669,49 +669,37 @@
 			margin-top : @rhythm;
 
 			.items{
-				overflow: hidden; 
+				display: flex;
+				align-items: center;
 
 				>div{
-					float: right;
-					padding-left: 2 * @rhythm;
-
-					&:nth-last-child(1){
-						padding-left : 0;
-					}
-
-					&.upvoteCommentWrapper{
-						float: left;
-						padding-left: 0;
-						padding-right: 2 * @rhythm;
-					}
+					margin-right: 2 * @rhythm;
 
 					.cact{
 						cursor: pointer;
-						color : rgb(var(--color-txt-ac));
+						color : rgb(var(--neutral-grad-2));
 						.transition(0.3s);
 
 						&:hover{
-							color : rgb(var(--color-txt-gray-dark));
+							color : rgb(var(--color-bg-ac-bright));
 						}
 					}
 				}	
 			}
 
 			.iconlabelWrapper{
-				width: auto;
-				>div{
-					vertical-align: middle;
-					&.icon{
-						width: 30px;
-						text-align: center;
-						cursor: pointer;
-					}
-				}				
+				display: flex;
+				align-items: center;
+				.icon{
+					width: 20px;
+					text-align: center;
+					cursor: pointer;
+				}
 			}
 
 			span{
-				font-weight: 700;
-				font-size : 0.8em;
+				font-weight: 500;
+				font-size : 0.9em;
 			}
 
 			.upvoteComment{
@@ -727,9 +715,11 @@
 
 			.upvoteCommentTable{
 				width: auto;
+				display: flex;
+				align-items: center;
 
 				>div{
-					vertical-align: middle;
+					
 					padding : 0 @rhythm;
 
 					&:nth-child(1){
@@ -739,7 +729,6 @@
 
 				.commentScore{
 					font-size: 0.8em;
-					font-weight: 200;
 				}
 			}
 					
@@ -773,7 +762,6 @@
 		padding-bottom: @rhythm;
 		padding-left: @rhythm * 3;
 		padding-right: @rhythm * 5;
-		font-size: .9em;
 
 		span, i{
 			font-size : 0.8em;
@@ -1070,11 +1058,11 @@
 					}
 				}
 
-				&.postCellWrapper{
+				/*&.postCellWrapper{
 					.postaction{
 						text-align: right;
 					}
-				}
+				}*/
 
 				.limits {
 					padding : @rhythm;
@@ -1514,7 +1502,6 @@ html.mobile{
 				.items{
 					padding-top : @rhythm;
 					>div{
-						float: left;
 						padding-left: 0;
 						padding-right: 0;
 						margin-right: 2 * @rhythm;
@@ -1572,7 +1559,7 @@ html.mobile{
 		.showall{
 			padding : 3 * @rhythm;
 			padding-left:  @rhythm;
-			padding-right: @rhythm;
+			padding-right: 3 * @rhythm;
 			padding-bottom: 2 * @rhythm;;
 			
 			span{

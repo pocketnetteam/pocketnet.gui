@@ -328,7 +328,7 @@
 }
 #comments .list .comment .commentPaddingWrapper {
   padding-left: 1.5em;
-  padding-right: 3em;
+  padding-right: 2.5em;
 }
 #comments .list .comment .answer {
   background: rgb(var(--background-total-theme));
@@ -493,45 +493,35 @@
   margin-top: 0.5em;
 }
 #comments .list .commentpanel .items {
-  overflow: hidden;
+  display: flex;
+  align-items: center;
 }
 #comments .list .commentpanel .items > div {
-  float: right;
-  padding-left: 1em;
-}
-#comments .list .commentpanel .items > div:nth-last-child(1) {
-  padding-left: 0;
-}
-#comments .list .commentpanel .items > div.upvoteCommentWrapper {
-  float: left;
-  padding-left: 0;
-  padding-right: 1em;
+  margin-right: 1em;
 }
 #comments .list .commentpanel .items > div .cact {
   cursor: pointer;
-  color: rgb(var(--color-txt-ac));
+  color: rgb(var(--neutral-grad-2));
   -moz-transition: 0.3s;
   -o-transition: 0.3s;
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
 #comments .list .commentpanel .items > div .cact:hover {
-  color: rgb(var(--color-txt-gray-dark));
+  color: rgb(var(--color-bg-ac-bright));
 }
 #comments .list .commentpanel .iconlabelWrapper {
-  width: auto;
+  display: flex;
+  align-items: center;
 }
-#comments .list .commentpanel .iconlabelWrapper > div {
-  vertical-align: middle;
-}
-#comments .list .commentpanel .iconlabelWrapper > div.icon {
-  width: 30px;
+#comments .list .commentpanel .iconlabelWrapper .icon {
+  width: 20px;
   text-align: center;
   cursor: pointer;
 }
 #comments .list .commentpanel span {
-  font-weight: 700;
-  font-size: 0.8em;
+  font-weight: 500;
+  font-size: 0.9em;
 }
 #comments .list .commentpanel .upvoteComment {
   cursor: pointer;
@@ -547,9 +537,10 @@
 }
 #comments .list .commentpanel .upvoteCommentTable {
   width: auto;
+  display: flex;
+  align-items: center;
 }
 #comments .list .commentpanel .upvoteCommentTable > div {
-  vertical-align: middle;
   padding: 0 0.5em;
 }
 #comments .list .commentpanel .upvoteCommentTable > div:nth-child(1) {
@@ -557,7 +548,6 @@
 }
 #comments .list .commentpanel .upvoteCommentTable .commentScore {
   font-size: 0.8em;
-  font-weight: 200;
 }
 #comments.showedall .showall {
   display: none;
@@ -579,7 +569,6 @@
   padding-bottom: 0.5em;
   padding-left: 1.5em;
   padding-right: 2.5em;
-  font-size: 0.9em;
 }
 #comments .showall span,
 #comments .showall i {
@@ -782,6 +771,11 @@
 #comments .post .posttable > div {
   vertical-align: top;
   padding: 1em 0.5em;
+  /*&.postCellWrapper{
+					.postaction{
+						text-align: right;
+					}
+				}*/
 }
 #comments .edit .posttable > div.iconWrapper,
 #comments .answer .posttable > div.iconWrapper,
@@ -900,11 +894,6 @@
 #comments .answer .posttable > div.postCellWrapper .postaction .icon:hover,
 #comments .post .posttable > div.postCellWrapper .postaction .icon:hover {
   color: rgb(var(--color-txt-ac));
-}
-#comments .edit .posttable > div.postCellWrapper .postaction,
-#comments .answer .posttable > div.postCellWrapper .postaction,
-#comments .post .posttable > div.postCellWrapper .postaction {
-  text-align: right;
 }
 #comments .edit .posttable > div .limits,
 #comments .answer .posttable > div .limits,
@@ -1268,7 +1257,6 @@ html.mobile #comments .list .metatable > div.panelWrapper .panel {
     padding-top: 0.5em;
   }
   #comments .list .commentpanel .items > div {
-    float: left;
     padding-left: 0;
     padding-right: 0;
     margin-right: 1em;
@@ -1307,7 +1295,7 @@ html.mobile #comments .list .metatable > div.panelWrapper .panel {
   #comments .showall {
     padding: 1.5em;
     padding-left: 0.5em;
-    padding-right: 0.5em;
+    padding-right: 1.5em;
     padding-bottom: 1em;
   }
   #comments .showall span {

@@ -19,25 +19,24 @@
 
 #post{
 	background: rgb(var(--background-main));
-	padding : 2 * @rhythm 0;
+	
 
 	.videoWrapper {
 		max-width: 650px;
 		position: relative;
-		border-radius: 10px;
+		border-radius: 12px;
 		overflow: hidden;
 
 		.js-player{
-			border-radius: 10px;
+			border-radius: 12px;
 			overflow: hidden;
 
 			.vjs-control-bar{
-				border-radius: 10px;
+				border-radius: 12px;
 				overflow: hidden;
 			}
 		}
 	}
-	
 
 	.lockedaccount,
 	.empty{
@@ -55,43 +54,11 @@
 			margin-top : 10 * @rhythm;
 			max-width: 400px;
 			
-			border-radius: 10px;
+			border-radius: 12px;
 		}
 	}
+	
 
-	.hiddenpost{
-		padding : 14 * @rhythm 10 * @rhythm;
-		font-size: 0.9em;
-		text-align: center;
-		border-radius: 5px;
-		background: rgba(var(--neutral-grad-1), 0.1);
-		margin-bottom : 4 * @rhythm;
-		margin-top : @rhythm;
-
-		.sharecaption{
-			max-width: none!important;
-		}
-
-		.hiddenlabelaction{
-			margin-top : 2 * @rhythm;
-		}
-
-		.hiddenlabeltext{
-			opacity: 0.6;
-		}
-	}
-
-	.js-player .warning-overlay{
-		opacity: 0;
-	}
-
-	.statswrapperExtended{
-		display: flex;
-		padding : @rhythm 0;
-		span{
-			font-weight: 500;
-		}
-	}
 
 	.showmorelenta{
 		display: none;
@@ -131,98 +98,20 @@
 		display: none!important;
 	}
 
-	.repostShareWrapper{
-		.openetc{
-			cursor: pointer;
-			padding : 2 * @rhythm;
-			text-align: center;
-
-			i,
-			span{
-				color : rgba(var(--neutral-grad-3), 0.8);
-				font-size: 0.9em;
-			}
-
-			i{
-				font-size: 0.8em;
-			}
-		}
-	}
-
-	.repostShare{
-		border-radius: 5px;
-		border : 1px solid rgba(var(--neutral-grad-1), 0.5);
-		border-bottom: 1px solid rgba(var(--background-total-theme), 0.75);
-		border-right: 1px solid rgba(var(--background-total-theme), 0.75);
-		.shadowSmaller();
-		margin-left: @rhythm;
-		margin-right: @rhythm;
-		margin-bottom: @rhythm;
-
-		.share{
-			margin-bottom: 0;
-
-			.videoTips{
-				display: none!important;
-			}
-		}
-	}
-
 	.postWrapper{
 		margin : 0 auto;
 		max-width: 930px;
 		background: rgb(var(--background-total-theme));
 		opacity: 0;
 		border-radius: 6px;
-		
 		.transition(0.3s, opacity);
 
 		&.active{
 			opacity: 1;
 		}
 
-		.share .sharecnt{
-
-			.removeDescription{
-				display: none;
-				padding-bottom: @rhythm * 3;
-				color: rgb(var(--neutral-grad-2));
-			}
-				
-			&.deleted{
-				.cntscontent, .repostWrapper, .commentsWrapperHb, .metapanel, .sys{
-					display: none!important;
-				}
-
-				.removeDescription{
-					display: block;
-				}
-			}
-
-		}
 	}
 
-	.iconWrapper{
-		width: 8 * @rhythm;
-		padding-top: @rhythm;
-		padding-left: 2 * @rhythm;
-		padding-right: 0;
-		float: left;
-	}
-
-	.cntswrk{
-		margin-left: 8 * @rhythm;
-		padding-left : 2 * @rhythm;
-		padding-right : 3 * @rhythm;
-
-		&.forcomments{
-			padding-left: 0;
-			padding-right: 0;
-			margin-left: 0;
-			margin-right: 0;
-		}
-
-	}
 
 	.share{
 		border-radius: 6px;
@@ -231,12 +120,6 @@
 			padding-right: 0;
 			margin : 0;
 			padding-bottom: 0;
-		}
-
-		.commentsWrapper{			
-			background: rgb(var(--background-secondary-theme));
-			border-bottom-left-radius: 6px;
-			border-bottom-right-radius: 6px;
 		}
 
 		.videoTips{
@@ -255,10 +138,85 @@
 				height: 180px;
 			}
 
+			.imagesContainer{
+				&.owlcar{
+					height: auto;
+					width: 100%;
+					max-width: 400px;
+					
+
+					.imagesWrapper{
+						height: 500px;
+						float: none;
+						width: 100%;
+						background: transparent;
+
+						.image{
+							background-size: contain!important;
+						}
+					}
+				}
+
+				&.one{
+					.imagesWrapper{
+						width: 400px;
+						height: 400px;
+
+						&.w2{
+							width: 600px
+						}
+
+						&.h2{
+							width: 400px;
+						}
+					}
+				}
+
+				&.two{
+					.imagesWrapper{
+						width: 200px;
+						height: 200px;
+
+						&.w2{
+							width: 400px
+						}
+
+						&.h2{
+							width: 200px; 
+						}
+					}
+				}
+
+				&.four{
+					.imagesWrapper{
+						width: 200px;
+						height: 200px;
+						&.w2{
+							width: 400px
+						}
+
+						&.h2{
+							width: 200px; 
+						}
+					}
+				}
+				
+
+				&.articleImages{
+					.imagesWrapper{
+						width: 60px;
+						height: 60px;
+						border-radius: 30px;
+						overflow: hidden;
+						margin-right: @rhythm;
+						margin-bottom: @rhythm;
+					}
+				}
+			}
+
 		}
 
 		.sharecaption{
-			font-size: 1.6em;
 			max-width: 620px;
 		}
 
@@ -279,6 +237,14 @@
 		}
 
 		.share{
+
+			background: transparent;
+			.shareTable{
+				background: rgb(var(--background-total-theme));
+				padding-top : 0;
+				border-top-left-radius: 12px;
+				border-top-right-radius: 12px;
+			}
 			.message,
 			.sharecaption{
 				max-width: 650px;
@@ -294,7 +260,7 @@
 				width: 100%;
 			}
 
-			background: transparent;
+			
 
 			.statswrapperExtended{
 				background: rgb(var(--background-total-theme));
@@ -384,14 +350,14 @@
 
 		.videoWrapper{
 			overflow: hidden;
-			border-radius: 5px;
+			border-radius: 12px;
 			max-width: none;
 			position: static;
 		}
 
 		.forurl{
 			.url{
-				border-radius: 10px;
+				border-radius: 12px;
 				background: #000;
 			}
 		}
@@ -402,7 +368,7 @@
 				.url{
 					background: #000;
 					overflow: hidden;
-					border-radius: 10px;
+					border-radius: 12px;
 					position: relative;
 
 					.video-js,
@@ -718,7 +684,7 @@
 			}
 
 			.commentsWrapper{
-				border-radius: 15px;
+				border-radius: 12px;
 			}
 
 			.forcomments{
@@ -768,6 +734,8 @@
 	}
 }
 
+
+
 @media only screen and (max-width: 768px) {
 	#content>div#post.sharec{
 		
@@ -778,7 +746,7 @@
 		}
 	}
 	#post{
-
+		padding : 0;
 		.videoWrapper{
 			border-radius: 0;
 
@@ -925,7 +893,7 @@
 		}
 	}
 
-	
+
 }
 
 html.tablet.fullscreen,
@@ -939,9 +907,6 @@ html.mobile.fullscreen{
 
 .wnd.postwindow{
 	z-index: 1005;
-
-	
-
 	.wndcontent{
 		top : 0;
 		background: transparent;
@@ -1042,94 +1007,13 @@ html.mobile.fullscreen{
 			display: none;
 		}
 
-		.repostShare{
-			margin-left: 0.5 * @rhythm;
-			margin-right: 0.5 * @rhythm;
-			margin-bottom: 0.5 * @rhythm;
-		}
-
-		.cntswrk{
-			margin-left: 0;
-			padding-left : 0;
-			padding-right : 0;
-
-			&.cntscontent{
-				padding-right: 0;
-			}
-
-			&.formeta{
-				margin-left: 8 * @rhythm;
-				padding-left : 0;
-			}
-
-			.paddingWrapper{
-				padding-left:  @rhythm;
-				padding-right: @rhythm;
-			}
-		}
-
-		.share{
-			.meta{
-				padding-right: @rhythm;
-			}
-			
-		}
-
-		#comments{
-			.answer,
-			.post{
-				padding-left:  @rhythm;
-				padding-right: @rhythm;
-			}
-			.answer{
-				padding : 0;
-			}
-
-			.caption{
-				padding-left:  0.5 * @rhythm;
-				padding-right: 7 * @rhythm;
-			}
-
-			.list{
-				.comment{
-
-					.commentPaddingWrapper{
-						padding-left:  @rhythm;
-						padding-right: @rhythm;
-					}
-				}
-
-				
-
-				.answer{
-					.postbody{
-						padding-left:  @rhythm;
-						padding-right: @rhythm;
-					}
-					
-				}
-			}
-
-			.answers{		
-				.comment{
-					.commentPaddingWrapper{
-						padding-left:  0;
-						padding-right: 0;
-					}
-					
-				}
-			}
-		}
-
 		&.videomainpost{
 
-			.cntswrk{
-				&.formeta{
-					margin-left: 0;
-					padding-left: 0;
-				}
-
+			.formeta{
+				margin-left: 0;
+				padding-left: 0;
 			}
+
 
 			&.squareVideo,
 			&.verticalVideo {

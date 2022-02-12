@@ -111,13 +111,18 @@ __map =  {
 		"css/plyr.css",
 		"css/pniframe.css",
 		"js/vendor/DateTimePicker.min.css",
-		/*"css/swiper-bundle.min.css",*/
 		"peertube/video-embed.css",
-		/*"js/vendor/emojionearea.min.css",*/
 		"js/vendor/owl/assets/owl.carousel.min.css",
 		"js/vendor/owl/assets/owl.theme.default.min.css",
 	],
 
+	__exportcss : {
+		"css/main.css" : true,
+		"css/common.css" : true,
+		"css/plyr.css" : true,
+		"js/vendor/owl/assets/owl.carousel.min.css" : true,
+		"js/vendor/owl/assets/owl.theme.default.min.css" : true
+	},
 	
 	__templates : [
 		{ c : 'navigation', n : 'menu' },
@@ -696,7 +701,7 @@ __map =  {
 
 		
 			],
-
+			exportcss : true,
 			anonimus : true,
 		},
 
@@ -707,7 +712,7 @@ __map =  {
 			add : {
 				el : 'content'
 			},
-		
+			exportcss : true,
 			anonimus : true,
 		},	
 
@@ -717,30 +722,18 @@ __map =  {
 			add : {
 				el : 'content'
 			},
-		
+			exportcss : true,
 			anonimus : true,
 		},	
 
-		//search
-
-
-		/*send : {
-			uri : "send",
-			href : "send",
-			add : {
-				el : 'content'
-			},
-
-		
-			anonimus : true,
-		},*/
-
+	
 		imageGalleryEdit : {
 			uri : "imageGalleryEdit",
 			href : "imagesEdit",
 			add : insertingfunc,
 			anonimus : true,
 		},
+
 		imagegallery : {
 			uri : "imagegallery",
 			href : "imagegallery",
@@ -748,8 +741,6 @@ __map =  {
 			anonimus : true,
 			relationsSunc : true,
 		},
-
-		
 
 		aboutus : {
 			uri : "aboutus",
@@ -759,8 +750,6 @@ __map =  {
 			},
 			anonimus : true,
 		},
-
-
 
 	/****/
 
@@ -827,23 +816,6 @@ __map =  {
 		reload : true
 	},
 
-	/*support : {
-		uri : "support",
-		href : "support",
-		add : {
-			el : 'content'
-		},
-		relations : [
-			
-			{src : 'js/validation.js',			   f : 'js'},				
-			
-		],
-		anonimus : true,
-		reload : true
-	},*/
-
-	
-
 	notifications : {
 		uri : "notifications",
 		href : "notifications",
@@ -851,26 +823,6 @@ __map =  {
 
 		
 	},
-	/*dialogs : {
-		uri : "dialogs",
-		href : "dialogs",
-		add : function(settings, p){
-
-			if(p.inTooltip)
-
-				return {
-					insert : 'tooltip'
-				}
-
-			else
-			{
-				return {
-					el : 'content'
-				}
-			}
-
-		}
-	},*/
 
 	panel : {
 		uri : "panel",
@@ -893,8 +845,6 @@ __map =  {
 		
 		anonimus : true,
 	},
-
-
 
 	authorization : {
 		uri : "authorization",
@@ -936,7 +886,6 @@ __map =  {
 		add : insertingfunc
 	},
 
-
 	socialshare2 : {
 		uri : "socialshare2",
 		href : "socialshare2",
@@ -970,7 +919,7 @@ __map =  {
 		add : insertingfunc,
 		anonimus : true,
 		preshell : true,
-		//exhandler : true
+		exportcss : true,
 		
 	},
 
@@ -981,7 +930,7 @@ __map =  {
 			el : 'content'
 		},
 		anonimus : true,
-		
+		exportcss : true,
 	},
 	
 	post : {
@@ -990,7 +939,7 @@ __map =  {
 		preshell : true,
 		add : insertingfunc,
 		anonimus : true,
-		//exhandler : true
+		exportcss : true,
 	},
 	userslist : {
 		uri : "userslist",

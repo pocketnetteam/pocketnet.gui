@@ -2589,13 +2589,13 @@ input[type=radio].radio:checked + label {
   border: 1px solid rgb(var(--background-total-theme));
   background: rgba(var(--background-total-theme), 0.1);
 }
-#content .work {
+.work {
   width: 95%;
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 1em;
 }
-#content .work.adj {
+.work.adj {
   padding-right: 0;
 }
 .chats {

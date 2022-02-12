@@ -37,7 +37,6 @@
 		border-radius: 12px;
 	}
 
-
 	&.loading{
 		.loader{
 			display: block;
@@ -82,6 +81,58 @@
 		}		
 	}
 
+	.share {
+		.sharecnt{
+
+			.removeDescription{
+				display: none;
+				padding-bottom: @rhythm * 3;
+				color: rgb(var(--neutral-grad-1));
+			}
+				
+			&.deleted{
+				.cntscontent, .repostWrapper, .commentsWrapperHb, .metapanel, .sys{
+					display: none!important;
+				}
+	
+				.removeDescription{
+					display: block;
+				}
+			}
+	
+		}
+	}
+
+	.share{
+		margin-bottom: @rhythm;
+		padding-bottom : 0;
+		border-radius: 12px;
+
+		
+
+		.shareSpacer{
+			height: 400px;
+			padding : 0 4 * @rhythm;
+		}
+
+		.images{
+			max-width: 590px;
+		}
+
+		.sharecaption{
+			max-width: 590px;
+		}
+
+		.message{
+			max-width: 590px;
+		}
+
+		.debuginfo{
+			display: none!important;
+		}
+
+	}
+
 	.shares{
 		overflow: hidden; 
 		display: flex;
@@ -95,268 +146,8 @@
 			}
 		}
 
-		.share .sharecnt{
-
-			.removeDescription{
-				display: none;
-				padding-bottom: @rhythm * 3;
-				color: rgb(var(--neutral-grad-1));
-			}
-				
-			&.deleted{
-				.cntscontent, .repostWrapper, .commentsWrapperHb, .metapanel, .sys{
-					display: none!important;
-				}
-
-				.removeDescription{
-					display: block;
-				}
-			}
-
-		}
-
-		.hiddenpost{
-			padding : 14 * @rhythm 10 * @rhythm;
-			font-size: 0.9em;
-			text-align: center;
-			border-radius: 6px;
-			background: rgba(var(--neutral-grad-1), 0.05);
-			margin-bottom : 4 * @rhythm;
-			margin-top : @rhythm;
-
-		
-			.hiddenlabelaction{
-				margin-top : 2 * @rhythm;
-			}
-
-			.hiddenlabeltext{
-				opacity: 0.6;
-			}
-
-			.captionpreview{
-				font-weight: 700;
-			}
-		}
-
-		.statswrapperExtended{
-			display: flex;
-			padding : @rhythm 0;
-
-			span{
-				font-weight: 500;
-				font-size: 0.9em;
-			}
-		}
-
-		.debuginfo{
-	
-			padding : @rhythm 3* @rhythm;
-			font-size: 0.7em;
-			z-index: 5;
-
-			.info{
-				display: none;
-			}
-
-			.icon{
-				cursor: pointer;
-			}
-
-			&.showed{
-				.info{
-					display: block;
-				}
-	
-				.icon{
-					display: none;
-				}
-			}
-		}
-
-		
-		.usericon{	
-			position: absolute;
-			cursor: default;	
-
-			.sbs,
-			.uloader{
-				display: none;
-				position: absolute;
-				left: 0;
-				right: 0;
-				top: -5px;
-				bottom: 0;
-				padding : 0;
-				text-align: center;
-				background: rgba(var(--background-total-theme), 0.9);
-
-				.preloader5{
-					margin : 0 auto;
-				}
-			}
-
-			.sbs{
-				background: transparent;;
-				top : 0;
-			}
-
-			&.loading{
-				box-shadow: none;
-				.uloader{
-					display: block;
-				}
-			}		
-
-			&.another{
-
-				/*.transition(0.3s);*/
-				cursor: pointer;
-			}
-
-			
-		}
-
-		.wholikesTable{
-			margin-bottom : 2 * @rhythm;
-			cursor: pointer;
-			.transition(0.3s);
-
-			&:hover{
-				opacity: 0.8;
-			}
-
-			.wholikeAuthorTable{
-				display: inline-table;
-				width: auto;
-				font-size: 0.8em;
-
-				>diV{
-					vertical-align: middle;
-
-					&.unamecell{
-						padding-left: 0.5 * @rhythm;
-					}
-				}
-			}
-
-			.usericon{
-				position: relative;
-				display: inline-block;
-				width: 21px;
-				height: 21px;
-				vertical-align: baseline;
-			}
-		}
-
-		.repostWrapper{
-			position: relative;
-		}
-	
-		.iconWrapper{
-			width: 8 * @rhythm;
-			padding-top: @rhythm;
-			padding-left: 2 * @rhythm;
-			padding-right: 0;
-			float: left;
-		}	
-
-		.repostShareWrapper{
-			.openetc{
-				cursor: pointer;
-				padding : 2 * @rhythm;
-				text-align: center;
-				i,
-				span{
-					color : rgba(var(--neutral-grad-2), 0.8);
-					font-size: 0.9em;
-				}
-
-				i{
-					font-size: 0.8em;
-				}
-			}
-		}
-
-		.repostShare{
-			border-radius: 6px;
-			border : 1px solid rgba(var(--neutral-grad-1), 0.5); 
-			border-bottom: 1px solid rgba(var(--background-total-theme), 0.75);
-			border-right: 1px solid rgba(var(--background-total-theme), 0.75);
-
-			.shadowSmaller();
-
-			margin-left: @rhythm;
-			margin-right: @rhythm;
-			margin-bottom: @rhythm;
-
-			.share{
-				margin-bottom: 0;
-
-				.videoTips{
-					display: none!important;
-				}
-			}
-		}
-
-		.cntswrk{
-			margin-left: 8 * @rhythm;
-			padding-left : 2 * @rhythm;
-			padding-right : 4 * @rhythm;
-		}
-
 		.work{
 			padding-left: 0;
-		}
-
-		.videoWrapper{
-			max-width: 600px;
-			position : relative;
-			border-radius: 10px;
-			overflow: hidden;
-
-			.videoTips{
-				position : absolute;
-				left: 0;
-				right: 0;
-				top: 0;
-				bottom: 60px;
-				cursor: pointer;
-				background: rgb(0,0,0);
-				background: linear-gradient(180deg, rgba(0,0,0,0.9528186274509804) 0%, rgba(0,0,0,0.9472163865546218) 6%, rgba(0,0,0,0.21612394957983194) 76%, rgba(0,0,0,0.09007352941176472) 82%, rgba(0,0,0,0) 100%);
-				color : rgb(var(--text-on-bg-shadow-color));
-				opacity: 0;
-				.transition(0.3s);
-
-				.videoTip{
-					position : absolute;
-					top: 0;
-					left: 0;
-					right: 0;
-					text-align: center;
-					padding : 2 * @rhythm;
-
-					span{
-						font-size: 0.8em;
-						color : rgb(var(--text-on-bg-shadow-color));
-					}
-				}
-			}
-
-			&:hover{
-				.videoTips{
-					opacity: 1;
-				}
-			}
-
-			.js-player{
-				border-radius: 10px;
-				overflow: hidden;
-
-				.vjs-control-bar{
-					border-radius: 10px;
-					overflow: hidden;
-				}
-			}
 		}
 
 		.verticalVideo {
@@ -367,77 +158,12 @@
 			max-width: 450px;
 		}
 
-		.commentsWrapper{			
-			background: rgb(var(--background-secondary-theme));
-			border-bottom-left-radius: 12px;
-			border-bottom-right-radius: 12px;
-		}
-
 		.ss{
 			padding : 2 * @rhythm;
 
 			span{
 				font-size: 2em;
 			}
-		}
-		
-		.share{
-			margin-bottom: @rhythm;
-			padding-bottom : 0;
-			border-radius: 12px;
-
-			#comments{
-				.caption{
-					padding-left: 3 * @rhythm;
-					padding-right: 6 * @rhythm;
-				}
-					
-				.commentPaddingWrapper,
-				.post{
-					padding-left: 3 * @rhythm;
-					padding-right: 4 * @rhythm;
-				}
-
-				.commentPaddingWrapper{
-					padding-right: 6 * @rhythm;
-				}
-
-				.list .answer .postbody{
-					padding-left: 3 * @rhythm;
-					padding-right: 4 * @rhythm;
-				}
-
-				.answers{
-					.commentPaddingWrapper{
-						padding-right: 0;
-						padding-left: 0;
-					}
-				}				
-
-				.answer .posttable>div.postCellWrapper .postaction, 
-				.edit .posttable>div.postCellWrapper .postaction, 
-				.post .posttable>div.postCellWrapper .postaction{
-					text-align: center;
-				}
-			}
-
-			.shareSpacer{
-				height: 400px;
-				padding : 0 4 * @rhythm;
-			}
-
-			.images{
-				max-width: 590px;
-			}
-
-			.sharecaption{
-				max-width: 590px;
-			}
-
-			.message{
-				max-width: 590px;
-			}
-
 		}
 
 		.showmorebyauthor{
@@ -448,11 +174,8 @@
 			margin-bottom :  1.2 * @rhythm;
 			border-radius: 12px;
 		}
-
 		
 	}
-
-	
 
 	.subc{
 		margin-top : 2 * @rhythm;
@@ -587,174 +310,130 @@
 			background: transparent;
 		}
 
-		
+		.share{
+			background: transparent;
+			padding : 0;
+			margin-bottom: 0;
+			overflow : hidden;
+			border-radius: 6px;
 
-
-		.shares{
-			.share{
-				background: transparent;
-				padding : 0;
+			.sharecaption{
 				margin-bottom: 0;
-				overflow : hidden;
-				border-radius: 6px;
+				white-space: nowrap;
+				text-overflow: ellipsis;
 
-				.sharecaption{
-					margin-bottom: 0;
-					white-space: nowrap;
-					text-overflow: ellipsis;
+			}
 
-				}
-
-				.tags{
-					white-space: nowrap;
-					text-overflow: ellipsis;
-					display: block;
-					.tag{
-						float: none;
-						display: inline;
-						margin-right: 0;
-					}
-				}
-
-				&.hidden{
-					display: block!important;
-				}
-
-				.sharecaption{
-					white-space: inherit;
-					padding-right: 2 * @rhythm;
-					div{
-						font-size: 1em;
-						font-weight: 500;
-						text-transform: capitalize;
-						
-					}
-				}
-
-				.meta{
-					padding-top : @rhythm;
-					margin-bottom: 0;
-				}
-
-				.commentsWrapperHb{
-					display: none;
-				}
-
-				.hideOnFullVideo{
-					display: none;
-				}
-
-				.videoviews{
-					display: none;
-				}
-
-				.showMore{
-					display: none;
-				}
-
-				.iconWrapper{
-					padding : 0;
-					z-index: 12;
-					width: 32px!important;
-
-					.icon{
-						width: auto;
-						height: 32px!important;
-						.usericon{
-							width: 32px!important;
-							height: 32px!important;
-							line-height: 32px!important;
-							font-size: 1.5em;
-						}
-					}
-				}
-
-				.forurl{
-					height: 200px;
-					position: relative;
-
-					&.verticalVideo{
-						height: 530px;
-					}
-
-				
-				}
-
-				.url{
-					margin-bottom: 0;
-					height: 100%;
-					width: 100%;
-					position: absolute;
-					left : 0;
-					top : 0;
-
-					.videoWrapper{
-						height: 100%;
-
-						.js-player{
-							height: 100%;
-						}
-					}
-				}
-
-				.urlcnt{
-					display: none;
-				}
-
-				.panel{
-					display: none;
-				}
-
-				.tags{
-					>div{
-						span{
-							opacity: 0.7;
-							text-decoration: none;
-						}
-					}
+			.tags{
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				display: block;
+				.tag{
+					float: none;
+					display: inline;
+					margin-right: 0;
 				}
 			}
 
-			.spsp{
-				font-weight: 400;
+			&.hidden{
+				display: block!important;
 			}
 
-			.authorgroup{
-				float: left;
-				width: 33.3333%;
-				.share{
-					padding : 15px;
+			.sharecaption{
+				white-space: inherit;
+				padding-right: 2 * @rhythm;
+				div{
+					font-size: 1em;
+					font-weight: 500;
+					text-transform: capitalize;
+					
 				}
-
-				.anothercntswrk{
-					height: 100px;
-					overflow: hidden;
-				}
-				
-				&:nth-child(3n + 1){
-					clear: left;
-				}
-
-				
 			}
 
-			.cntswrk{
-				margin-left: 0;
-				padding-left: 0;
-				padding-right: 0;
+			.meta{
+				padding-top : @rhythm;
+				margin-bottom: 0;
 			}
 
-			.paddingWrapper{
-				margin-left: 32px;
-				padding-left: @rhythm;
-			}
-
-			.showmorebyauthor{
+			.commentsWrapperHb{
 				display: none;
 			}
 
+			.hideOnFullVideo{
+				display: none;
+			}
+
+			.videoviews{
+				display: none;
+			}
+
+			.showMore{
+				display: none;
+			}
+
+			.iconWrapper{
+				padding : 0;
+				z-index: 12;
+				width: 32px!important;
+
+				.icon{
+					width: auto;
+					height: 32px!important;
+					.usericon{
+						width: 32px!important;
+						height: 32px!important;
+						line-height: 32px!important;
+						font-size: 1.5em;
+					}
+				}
+			}
+
+			.forurl{
+				height: 200px;
+				position: relative;
+
+				&.verticalVideo{
+					height: 530px;
+				}
+
+			
+			}
+
+			.url{
+				margin-bottom: 0;
+				height: 100%;
+				width: 100%;
+				position: absolute;
+				left : 0;
+				top : 0;
+
+				.videoWrapper{
+					height: 100%;
+
+					.js-player{
+						height: 100%;
+					}
+				}
+			}
+
+			.urlcnt{
+				display: none;
+			}
+
+			.panel{
+				display: none;
+			}
+
+			.tags{
+				>div{
+					span{
+						opacity: 0.7;
+						text-decoration: none;
+					}
+				}
+			}
+
 			.shareTable{
-				padding-top : 0;
 				.authorTable{
 					
 					>div{
@@ -804,14 +483,55 @@
 					}
 				}
 			}
+
+			.cntswrk{
+				margin-left: 0;
+				padding-left: 0;
+				padding-right: 0;
+			}
+
+			.paddingWrapper{
+				margin-left: 32px;
+				padding-left: @rhythm;
+			}
+		}
+
+
+		.shares{
+
+			.spsp{
+				font-weight: 400;
+			}
+
+			.authorgroup{
+				float: left;
+				width: 33.3333%;
+				.share{
+					padding : 15px;
+				}
+
+				.anothercntswrk{
+					height: 100px;
+					overflow: hidden;
+				}
+				
+				&:nth-child(3n + 1){
+					clear: left;
+				}
+				
+			}
+
+			.showmorebyauthor{
+				display: none;
+			}
+
+			
 		}
 	}
 }
 
 #lenta{
-	.js-player .warning-overlay{
-		opacity: 0;
-	}
+	
 	&.horizontal{
 		display: flex;
 		flex-grow: 1;
@@ -824,25 +544,25 @@
 				padding : @rhythm;
 			}
 		}
+
+		.share{
+			flex-grow: 1;
+			width : 300px;
+			margin : 0;
+			margin-right: @rhythm;
+			margin-bottom : @rhythm;
+			//content-visibility:visible;
+			
+			&:nth-last-child(1){
+				margin-right: 0;
+			}
+		}
+
 		.shares{
 			display: flex!important;
 			flex-wrap: nowrap;
 			flex-grow: 1;
 			flex-direction: row;
-			.share{
-				flex-grow: 1;
-				width : 300px;
-				margin : 0;
-				margin-right: @rhythm;
-				margin-bottom : @rhythm;
-				//content-visibility:visible;
-				
-				&:nth-last-child(1){
-					margin-right: 0;
-				}
-
-			
-			}
 		}
 
 		.loader,
@@ -852,12 +572,12 @@
 		
 
 		&.mainvideo{
-			.shares .share .forurl.verticalVideo{
+			.share .forurl.verticalVideo{
 				height: 200px;
 				
 			}
 
-			.shares .cntswrk.formeta{
+			.share .formeta{
 				padding-top : 0;
 			}
 		}
@@ -867,13 +587,12 @@
 			.shareSpacer{
 				height: 180px;
 			}
-			.shares{
-				.share{
-					width : 230px;
 
-					.tags{
-						display: none;
-					}
+			.share{
+				width : 230px;
+
+				.tags{
+					display: none;
 				}
 
 				.shareTable{
@@ -904,11 +623,9 @@
 						align-items: center;
 						width: 100%;
 					
-						>div{
-							&.formeta{
-								width: 32px;
-								min-width: 32px;
-							}
+						.formeta{
+							width: 32px;
+							min-width: 32px;
 						}
 
 						.meta{
@@ -943,19 +660,22 @@
 						}
 					}
 				}
-
 			}
 
 			&.mainvideo{
-				.shareTable{
-					height: 180px;
-					padding-top : 0;
-				}
-				.shares .share .forurl{
-					height: 140px;
 
-					&.verticalVideo{
+				.share{
+					.shareTable{
+						height: 180px;
+						padding-top : 0;
+					}
+
+					.forurl{
 						height: 140px;
+	
+						&.verticalVideo{
+							height: 140px;
+						}
 					}
 				}
 			}
@@ -966,7 +686,7 @@
 }
 
 #lenta{
-	.shares .share{
+	.share{
 		
 		.sharearticle{
 			opacity: 0;
@@ -1308,7 +1028,7 @@
 
 @media only screen and (max-width: 768px) {
 	#lenta{
-		.shares .share{
+		.share{
 
 			.sharearticle{
 				
@@ -1426,7 +1146,7 @@
 		&.horizontal{
 			&.compact{
 				&.mainvideo{
-					.shares .cntswrk.formeta{
+					.shares .formeta{
 						margin-left: 0.5 * @rhythm;
 					}
 				}
@@ -1485,7 +1205,7 @@
 			padding : 2 * @rhythm;
 			text-align: center;
 		}
-		
+
 		.shares{
 			overflow: hidden; 
 			.work{
@@ -1504,66 +1224,6 @@
 			.statswrapperExtended{
 				padding : @rhythm;
 			}
-			
-			
-
-			.iconWrapper{
-				width: 8 * @rhythm;
-				padding-top: @rhythm;
-				padding-left: @rhythm;
-			}
-			
-			.repostShare{
-				margin-left: 0.5 * @rhythm;
-				margin-right: 0.5 * @rhythm;
-				margin-bottom: 0.5 * @rhythm;
-			}
-
-			.cntswrk{
-				margin-left: 0;
-				padding-left : 0;
-				padding-right : 0;
-		
-			
-
-				&.formeta{
-					margin-left: 8 * @rhythm;
-				}
-			}
-
-			.work{
-				padding-left: 0;
-			}
-
-
-			.videoWrapper{
-				max-width: 768px;
-				position : relative;
-				border-radius: 0;
-
-				.js-player{
-					border-radius: 0;
-					overflow: visible;
-
-					.vjs-control-bar{
-						border-radius: 0;
-						overflow: visible;
-					}
-				}
-
-				.videoTips{
-					opacity: 1;
-
-				
-				}
-
-				&:hover{
-					.videoTips{
-						opacity: 1;
-					}
-				}
-			}
-
 			.squareVideo,
 			.verticalVideo {
 				max-width: none;
@@ -1577,51 +1237,24 @@
 				}
 			}
 			
-			.share{
-				margin-bottom: @rhythm;
-
-
-				#comments{			
-					
-					.caption{
-						padding-left: 1 * @rhythm;
-						padding-right: 2 * @rhythm;
-					}
-
-					.commentPaddingWrapper,
-					.post{
-						padding-left: 1 * @rhythm;
-						padding-right:  @rhythm;
-					}
-
-					.commentPaddingWrapper{
-						padding-right:  @rhythm;
-					}
-
-					.list .answer .postbody{
-						padding-left: 1 * @rhythm;
-						padding-right: @rhythm;
-					}
-
-					.answers{
-						.commentPaddingWrapper{
-							padding-right: 0;
-							padding-left: 0;
-						}
-					}				
-
-					.answer .posttable>div.postCellWrapper .postaction, 
-					.edit .posttable>div.postCellWrapper .postaction, 
-					.post .posttable>div.postCellWrapper .postaction{
-						text-align: center;
-					}
-				}
-
-			}
-			
 		}
 
+		
+
 		&.mainvideo{
+
+			.share{
+				.cntswrk{
+					margin-left: 0;
+					padding-left : 0;
+					padding-right : 0;
+				}
+
+				.formeta{
+					padding-top : 2 * @rhythm;
+					margin-left: 2 * @rhythm;
+				}
+			}
 				
 			.shares{
 
@@ -1629,17 +1262,7 @@
 					width: 50%;
 				}
 
-				.shareTable{
-					padding-top : 0;
-				}
-
-				.shareTable .authorTable>div span{
-					font-size: 1em;
-					&.adr{
-						font-size: 1.2em;
-					}
-					
-				}
+				
 				
 				.authorgroup{
 					width: 100%;
@@ -1659,16 +1282,7 @@
 					
 				}
 
-				.cntswrk{
-					margin-left: 0;
-					padding-left : 0;
-					padding-right : 0;
-		
-					&.formeta{
-						padding-top : 2 * @rhythm;
-						margin-left: 2 * @rhythm;
-					}
-				}
+				
 			}
 
 		}
@@ -1692,6 +1306,10 @@
 						}
 					}
 
+					
+				}
+
+				.share{
 					.paddingWrapper{
 						margin-left: 46px;
 					}

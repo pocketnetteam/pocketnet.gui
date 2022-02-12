@@ -8,12 +8,152 @@
         min-height: 2 * @rhythm;
     }
 
+    .commentsWrapper{			
+        background: rgb(var(--background-secondary-theme));
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+    }
+
     img{
         max-width: 100%;
     }
 
     .work{
         width: 100%;
+    }
+
+    .statswrapperExtended{
+        display: flex;
+        padding : @rhythm 0;
+
+        span{
+            font-weight: 500;
+            font-size: 0.9em;
+        }
+    }
+    .repostWrapper{
+        position: relative;
+    }
+    .wholikesTable{
+        margin-bottom : 2 * @rhythm;
+        cursor: pointer;
+        .transition(0.3s);
+
+        &:hover{
+            opacity: 0.8;
+        }
+
+        .wholikeAuthorTable{
+            display: inline-table;
+            width: auto;
+            font-size: 0.8em;
+
+            >diV{
+                vertical-align: middle;
+
+                &.unamecell{
+                    padding-left: 0.5 * @rhythm;
+                }
+            }
+        }
+
+        .usericon{
+            position: relative;
+            display: inline-block;
+            width: 21px;
+            height: 21px;
+            vertical-align: baseline;
+        }
+    }
+    
+    .debuginfo{
+
+        padding : @rhythm 3* @rhythm;
+        font-size: 0.7em;
+        z-index: 5;
+
+        .info{
+            display: none;
+        }
+
+        .icon{
+            cursor: pointer;
+        }
+
+        &.showed{
+            .info{
+                display: block;
+            }
+
+            .icon{
+                display: none;
+            }
+        }
+    }
+
+    .repostShareWrapper{
+        .openetc{
+            cursor: pointer;
+            padding : 2 * @rhythm;
+            text-align: center;
+            i,
+            span{
+                color : rgba(var(--neutral-grad-2), 0.8);
+                font-size: 0.9em;
+            }
+
+            i{
+                font-size: 0.8em;
+            }
+        }
+    }
+
+    .js-player .warning-overlay{
+        opacity: 0;
+    }
+
+    .hiddenpost{
+        padding : 14 * @rhythm 10 * @rhythm;
+        font-size: 0.9em;
+        text-align: center;
+        border-radius: 6px;
+        background: rgba(var(--neutral-grad-1), 0.05);
+        margin-bottom : 4 * @rhythm;
+        margin-top : @rhythm;
+
+    
+        .hiddenlabelaction{
+            margin-top : 2 * @rhythm;
+        }
+
+        .hiddenlabeltext{
+            opacity: 0.6;
+        }
+
+        .captionpreview{
+            font-weight: 700;
+        }
+    }
+
+    .repostShare{
+        border-radius: 6px;
+        border : 1px solid rgba(var(--neutral-grad-1), 0.5); 
+        border-bottom: 1px solid rgba(var(--background-total-theme), 0.75);
+        border-right: 1px solid rgba(var(--background-total-theme), 0.75);
+
+        .shadowSmaller();
+
+        margin-left: @rhythm;
+        margin-right: @rhythm;
+        margin-bottom: @rhythm;
+
+        .share{
+            margin-bottom: 0;
+
+            .videoTips{
+                display: none!important;
+            }
+        }
     }
 
     .article{
@@ -140,6 +280,57 @@
         position: relative;
     }
 
+    .videoWrapper{
+        max-width: 600px;
+        position : relative;
+        border-radius: 10px;
+        overflow: hidden;
+
+        .videoTips{
+            position : absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 60px;
+            cursor: pointer;
+            background: rgb(0,0,0);
+            background: linear-gradient(180deg, rgba(0,0,0,0.9528186274509804) 0%, rgba(0,0,0,0.9472163865546218) 6%, rgba(0,0,0,0.21612394957983194) 76%, rgba(0,0,0,0.09007352941176472) 82%, rgba(0,0,0,0) 100%);
+            color : rgb(var(--text-on-bg-shadow-color));
+            opacity: 0;
+            .transition(0.3s);
+
+            .videoTip{
+                position : absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                text-align: center;
+                padding : 2 * @rhythm;
+
+                span{
+                    font-size: 0.8em;
+                    color : rgb(var(--text-on-bg-shadow-color));
+                }
+            }
+        }
+
+        &:hover{
+            .videoTips{
+                opacity: 1;
+            }
+        }
+
+        .js-player{
+            border-radius: 10px;
+            overflow: hidden;
+
+            .vjs-control-bar{
+                border-radius: 10px;
+                overflow: hidden;
+            }
+        }
+    }
+
     .tempPreloader{
         padding : 2 * @rhythm 0;
         margin-bottom : 2 * @rhythm;
@@ -160,13 +351,30 @@
     }
 
     .iconWrapper{
+        width: 8 * @rhythm;
+        padding-top: @rhythm;
+        padding-left: 2 * @rhythm;
+        padding-right: 0;
+        float: left;
+    }	
 
-        
+    .cntswrk{
+        margin-left: 8 * @rhythm;
+        padding-left : 2 * @rhythm;
+        padding-right : 3 * @rhythm; //// /4 lenta ?
+
+        &.forcomments{
+            padding-left: 0;
+            padding-right: 0;
+            margin-left: 0;
+            margin-right: 0;
+        }
 
     }
 
     .shareTable{
         padding-top : 2 * @rhythm;
+        padding-bottom : 2 * @rhythm;
 
         .sbtnxs{
             .subscribedLabel{
@@ -380,10 +588,6 @@
         align-items: top;
         >div{
 
-            &.metadata{
-                overflow: hidden;
-            }
-
             &.metapanel{
                 vertical-align: top;
 
@@ -407,10 +611,6 @@
     .meta{
         padding-top: 1.5 * @rhythm;
         margin-bottom: @rhythm;
-
-        >div{
-            margin-right: 2 * @rhythm;
-        }
 
         .authorCell{
             white-space: nowrap;
@@ -786,7 +986,7 @@
 
         .newlabel{
             background: rgb(255, 5, 101);
-               color : #fff;
+            color : #fff;
         }
     }
 
@@ -803,16 +1003,18 @@
         }
     }
 
-    .panel{
+    .sharepanel{
 
         border-radius: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         
         .itemwr{
             width: auto;
 
             >div{
                 vertical-align: middle;
-                padding-bottom: @rhythm;
 
                 &.iconwr{
                     width: 40px;
@@ -832,8 +1034,9 @@
 
             
         }
+
+
         >div{
-            float: left;
 
             &:nth-last-child(1){
                 margin-right: 0;
@@ -862,8 +1065,7 @@
             }
 
             &.right{
-                float: right;
-                margin-left: 0;
+                margin-left: auto;
 
                 .itemwr{
 
@@ -884,7 +1086,6 @@
             }
 
             &.pkoin{
-                margin-top : @rhythm;
                 display: flex;
                 align-items: center;
                 background: rgb(var(--color-bg-ac-bright));
@@ -931,6 +1132,26 @@
         top: 2 * @rhythm;
     }
 
+    .sharecnt{
+
+        .removeDescription{
+            display: none;
+            padding-bottom: @rhythm * 3;
+            color: rgb(var(--neutral-grad-2));
+        }
+            
+        &.deleted{
+            .cntscontent, .repostWrapper, .commentsWrapperHb, .metapanel, .sys{
+                display: none!important;
+            }
+
+            .removeDescription{
+                display: block;
+            }
+        }
+
+    }
+
     .blockAuthor{
         display: none;
         position: absolute;
@@ -972,6 +1193,7 @@
 
     }
 
+
     &.fullScreenVideo{
         padding : 0;
         margin : 0;
@@ -981,9 +1203,11 @@
         right: 0;
         bottom: 0;
         top: 0;
-        background: rgba(var(--color-shadow-base), 0.9);
+        background: rgb(var(--color-shadow-base));
         padding-top: 0;
-        border-radius: 0;
+        border-radius: 0!important;
+        margin-bottom: 0!important;
+    
 
         .video-js{
             contain: unset;
@@ -1034,7 +1258,7 @@
             padding-left: 2 * @rhythm;
         }
         
-        #comments{
+        /*#comments{
             .caption{
                 padding-left: 2 * @rhythm;
                 padding-right: 3 * @rhythm;
@@ -1062,7 +1286,7 @@
                 }
             }	
 
-        }
+        }*/
 
         .exitFull{
             display: block;
@@ -1093,6 +1317,8 @@
         .cntswrk{
             margin-left: 0;
             padding : 0;
+
+            
         }
 
         .shareTable{
@@ -1241,7 +1467,7 @@
                 padding : 0 2 * @rhythm;
             }
 
-            .panel{
+            .sharepanel{
                 overflow: hidden;
                 padding : 2 * @rhythm;
                 padding-bottom : 2 * @rhythm;
@@ -1258,25 +1484,46 @@
 
 }
 
-#content{
-    .share_common{
-        .work{
-            width: 100%;
-        }
+.share_common{
+    .work{
+        width: 100%;
     }
 }
 
 /*t*/ @media only screen and (max-width: 768px){
 
-    .share{
+    .share_common{
         padding : 0;
         background: rgb(var(--background-total-theme));
         cursor: default;
         padding-bottom : 0;
         border-radius: 0;
 
+        .iconWrapper{
+            width: 8 * @rhythm;
+            padding-top: @rhythm;
+            padding-left: @rhythm;
+        }
+        
+        .repostShare{
+            margin-left: 0.5 * @rhythm;
+            margin-right: 0.5 * @rhythm;
+            margin-bottom: 0.5 * @rhythm;
+        }
+
+        .cntswrk{
+            margin-left: 0;
+            padding-left : 0;
+            padding-right : 0;
+        }
+
+        .formeta{
+            margin-left: 8 * @rhythm;
+        }
+
+
         .work{
-            width: 100%;
+            width: 100%;padding-left: 0;
         }
 
         .shareTable{
@@ -1285,6 +1532,36 @@
 
         &.fullScreenVideo{
             contain: strict;
+            background: rgb(var(--color-shadow-base));
+
+            .sharecaption{
+                padding-left: @rhythm;
+            }
+
+            .work{
+                .metawrapper{
+                    margin-left : 0;
+                }
+
+                .iconWrapper{
+                    display: none;
+                }
+
+                .shareWrapper{
+                    margin-top : 0;
+                }
+
+                
+                .sys,
+                .tags{
+                    padding : 0 @rhythm;
+                }
+
+                .sharepanel{
+                    padding : @rhythm;
+                }
+            }
+            
             #comments{
                 .caption{
                     padding-left: 1 * @rhythm;
@@ -1297,9 +1574,6 @@
                     padding-right:  @rhythm;
                 }
 
-                .commentPaddingWrapper{
-                    padding-right:  0;
-                }
 
                 .list .answer .postbody{
                     padding-left: 1 * @rhythm;
@@ -1308,6 +1582,7 @@
             }
         }
 
+      
         .medium-insert-embeds{
             position: relative;
 
@@ -1339,6 +1614,16 @@
         }
 
         .shareTable{
+
+
+            .authorTable>div span{
+				font-size: 1em;
+				&.adr{
+					font-size: 1.2em;
+				}
+				
+			}
+
             &.subscribed{
                 .iconWrapper{
 
@@ -1389,24 +1674,53 @@
             }
         }
 
-        &.fullScreenVideo{
-            background: rgb(var(--color-shadow-base));
+        .videoWrapper{
+            max-width: 768px;
+            position : relative;
+            border-radius: 0;
+
+            .js-player{
+                border-radius: 0;
+                overflow: visible;
+
+                .vjs-control-bar{
+                    border-radius: 0;
+                    overflow: visible;
+                }
+            }
+
+            .videoTips{
+                opacity: 1;
+
+            
+            }
+
+            &:hover{
+                .videoTips{
+                    opacity: 1;
+                }
+            }
         }
 
         .jsPlayerLoading{
-            
             width: 100%;
             height: 300px;
         }
 
         .meta{
+
+            margin-top: 0;
+            margin-bottom: 0;
+            >div{
+                margin-right : 0;
+            }
+
             .metatable{
                 >div{
                     margin-right: 0;
                 
                     &.metapanel{
                         width: 47px;
-                        padding-right: @rhythm;
 
                         .metapanelitem{
                             opacity: 1;
@@ -1419,14 +1733,6 @@
                         }
                     }
                 }
-            }
-        }
-        
-        .meta{
-            margin-top: 0;
-            margin-bottom: 0;
-            >div{
-                margin-right : 0;
             }
         }
 
@@ -1504,6 +1810,7 @@
 
 
         }
+
         .urlhtmlcontent{
             font-size: 0.8em;
             .ogtable{
@@ -1544,34 +1851,42 @@
             right: 2 * @rhythm;
         }
 
-        &.fullScreenVideo{
-
-            .sharecaption{
-                padding-left: @rhythm;
+        /* #comments{			
+				
+            .caption{
+                padding-left: 1 * @rhythm;
+                padding-right: 2 * @rhythm;
             }
-            .work{
-                .metawrapper{
-                    margin-left : 0;
-                }
 
-                .iconWrapper{
-                    display: none;
-                }
-
-                .shareWrapper{
-                    margin-top : 0;
-                }
-
-                
-                .sys,
-                .tags{
-                    padding : 0 @rhythm;
-                }
-
-                .panel{
-                    padding : @rhythm;
-                }
+            .commentPaddingWrapper,
+            .post{
+                padding-left: 1 * @rhythm;
+                padding-right:  @rhythm;
             }
-        }
+
+            .commentPaddingWrapper{
+                padding-right:  @rhythm;
+            }
+
+            .list .answer .postbody{
+                padding-left: 1 * @rhythm;
+                padding-right: @rhythm;
+            }
+
+            .answers{
+                .commentPaddingWrapper{
+                    padding-right: 0;
+                    padding-left: 0;
+                }
+            }				
+
+            .answer .posttable>div.postCellWrapper .postaction, 
+            .edit .posttable>div.postCellWrapper .postaction, 
+            .post .posttable>div.postCellWrapper .postaction{
+                text-align: center;
+            }
+        }*/
+
+        
     }
 }
