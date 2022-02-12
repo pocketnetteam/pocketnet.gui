@@ -455,7 +455,7 @@ img {
 select.error,
 textarea.error,
 input.error {
-  border-color: #F41A4D;
+  border-color: rgb(var(--color-bad));
 }
 input[disabled] {
   color: rgb(var(--neutral-grad-2));
@@ -535,12 +535,12 @@ button.black:hover {
   color: rgb(var(--text-on-bg-ac-color));
 }
 button.good {
-  background: #076C34;
-  border: 1px solid #076C34;
+  background: rgb(var(--color-good));
+  border: 1px solid rgb(var(--color-good));
 }
 button.good:hover {
   background: transparent;
-  color: #076C34;
+  color: rgb(var(--color-good));
 }
 button.contrast {
   background: rgb(var(--color-bg-ac-2));
@@ -667,8 +667,8 @@ pie {
   height: 5em;
   display: block;
   border-radius: 50%;
-  background-color: #076C34;
-  border: 2px solid #076C34;
+  background-color: rgb(var(--color-good));
+  border: 2px solid rgb(var(--color-good));
   float: left;
 }
 .ten {
@@ -701,10 +701,10 @@ pie {
   color: #00a4ff;
 }
 .cbad {
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
 }
 .cgood {
-  color: #076C34;
+  color: rgb(var(--color-good));
 }
 .abbr {
   display: none;
@@ -751,7 +751,7 @@ pie {
 .upbutton .full {
   padding: 1em 0;
   padding-left: 0;
-  color: rgba(var(--neutral-grad-1), 0.8);
+  color: rgba(var(--neutral-grad-2), 0.5);
   height: 100%;
   width: 100%;
   -moz-transition: 0.3s;
@@ -779,7 +779,7 @@ pie {
 }
 .upbutton:hover .full {
   background: rgba(var(--background-hidden-layer), 0.2);
-  color: rgba(var(--neutral-grad-1), 0.8);
+  color: rgba(var(--neutral-grad-2), 0.7);
 }
 .upbutton:hover .mini {
   color: rgb(var(--color-bg-ac));
@@ -1244,7 +1244,7 @@ pie {
   left: 0;
   bottom: 0;
   top: 0;
-  background: #076C34;
+  background: rgb(var(--color-good));
   -moz-transition: width 0.3s;
   -o-transition: width 0.3s;
   -webkit-transition: width 0.3s;
@@ -1510,7 +1510,7 @@ input[type=radio].radio + label {
 }
 input[type=radio].radio:checked + label {
   background-position: 0 -25px;
-  color: #076C34;
+  color: rgb(var(--color-good));
 }
 .m-message-container {
   position: fixed;
@@ -1895,10 +1895,10 @@ input[type=radio].radio:checked + label {
   display: none;
 }
 .editable .editButton.fail:hover {
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
 }
 .editable .editButton:hover {
-  color: #076C34;
+  color: rgb(var(--color-good));
 }
 .editable.editNow .editForm {
   display: table-cell;
@@ -2118,13 +2118,13 @@ input[type=radio].radio:checked + label {
   color: rgb(var(--neutral-grad-1));
 }
 .wnd .wndinner > div.buttons .button.successButton {
-  color: #076C34;
+  color: rgb(var(--color-good));
 }
 .wnd .wndinner > div.buttons .button.successButton:hover {
-  color: #076C34;
+  color: rgb(var(--color-good));
 }
 .wnd .wndinner > div.buttons .button:hover {
-  background: #076C34;
+  background: rgb(var(--color-good));
 }
 .wnd .wndinner > div.buttons .button.disabled {
   cursor: default;
@@ -2767,7 +2767,7 @@ input[type=radio].radio:checked + label {
   cursor: pointer;
 }
 .dialog .poll i:hover {
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
 }
 .dialog .header {
   font-weight: 700;
@@ -3618,7 +3618,7 @@ input[type=radio].radio:checked + label {
   display: block;
 }
 .vm_valuesmulti.error .checkbox + label:before {
-  border-color: #F41A4D;
+  border-color: rgb(var(--color-bad));
 }
 .vm_valuesmulti .checkbox + label {
   display: block;
@@ -3736,11 +3736,11 @@ input[type=radio].radio:checked + label {
   -webkit-transform: rotate(180deg);
 }
 .vc_valuecustom.error .vc_textInput .vc_inputWrapper {
-  border: 1px solid #F41A4D;
+  border: 1px solid rgb(var(--color-bad));
   border-right: 0;
 }
 .vc_valuecustom.error .vc_textInput .vc_iconWrapper {
-  border: 1px solid #F41A4D;
+  border: 1px solid rgb(var(--color-bad));
   border-left: 0;
 }
 .vc_valuecustom .paymentMethods,
@@ -4370,8 +4370,8 @@ html.mobile.fullscreen #navigationWrapper {
 }
 .fastMessage .messagestar[count='1'],
 .notification .messagestar[count='1'] {
-  color: #F41A4D;
-  border: 1px solid #F41A4D;
+  color: rgb(var(--color-bad));
+  border: 1px solid rgb(var(--color-bad));
 }
 .fastMessage .transactionmessagewrapper > div,
 .notification .transactionmessagewrapper > div {
@@ -4381,7 +4381,7 @@ html.mobile.fullscreen #navigationWrapper {
 .notification .transactionmessagewrapper > div.foramount {
   font-weight: 700;
   text-align: right;
-  color: #076C34;
+  color: rgb(var(--color-good));
   font-size: 0.8em;
 }
 .fastMessage .repostshare,
@@ -4406,7 +4406,7 @@ html.mobile.fullscreen #navigationWrapper {
 }
 .fastMessage .foranswer button.disabled,
 .notification .foranswer button.disabled {
-  color: #076C34;
+  color: rgb(var(--color-good));
   background: transparent;
 }
 .fastMessage .foranswer button.disabled i,
@@ -4574,7 +4574,7 @@ html.mobile.fullscreen #navigationWrapper {
 }
 .fastMessage .subscribeWrapper > div.forsubscribe button.disabled,
 .notification .subscribeWrapper > div.forsubscribe button.disabled {
-  color: #076C34;
+  color: rgb(var(--color-good));
   background: transparent;
 }
 .fastMessage .subscribeWrapper > div.forsubscribe button.disabled i,
@@ -4608,7 +4608,7 @@ html.mobile.fullscreen #navigationWrapper {
 }
 .fastMessage .cwrapper > div .infomain .donate,
 .notification .cwrapper > div .infomain .donate {
-  color: #076C34;
+  color: rgb(var(--color-good));
 }
 .fastMessage .gotoprofileWrapper,
 .notification .gotoprofileWrapper {
@@ -4843,7 +4843,7 @@ html.mobile.fullscreen #navigationWrapper {
   font-weight: 700;
 }
 .fastMessage .progressWrapperTable > div.label.good {
-  color: #076C34;
+  color: rgb(var(--color-good));
 }
 .fastMessage .progressWrapperTable > div .progressCnt {
   float: left;
@@ -4951,7 +4951,7 @@ html.mobile.fullscreen #navigationWrapper {
   margin: 0;
   background: transparent;
   border: 0;
-  color: #076C34;
+  color: rgb(var(--color-good));
 }
 .trumbowyg-button-pane,
 .trumbowyg-modal {
@@ -5026,7 +5026,7 @@ html.mobile.fullscreen #navigationWrapper {
   padding-top: 0.5em;
 }
 .article_body .article_warning .article_warning_icon i {
-  color: #ffee00;
+  color: rgb(var(--color-yellow));
   font-size: 1.5em;
 }
 .article_body .article_warning .article_warning_content {
@@ -6273,7 +6273,7 @@ html.mobile.stblack .wnd.normalizedmobile .wndinner .wndcontent {
   color: rgb(var(--color-txt-ac));
 }
 #application .parameter .pName .require {
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
 }
 #application .parameter .pInput {
   position: relative;
@@ -6314,12 +6314,12 @@ html.mobile.stblack .wnd.normalizedmobile .wndinner .wndcontent {
 #application .parameter select.error,
 #application .parameter textarea.error,
 #application .parameter input.error {
-  border: 1px solid #F41A4D;
+  border: 1px solid rgb(var(--color-bad));
 }
 #application .parameter .error select,
 #application .parameter .error textarea,
 #application .parameter .error input {
-  border: 1px solid #F41A4D;
+  border: 1px solid rgb(var(--color-bad));
 }
 #application .parameter select {
   height: 38px;
