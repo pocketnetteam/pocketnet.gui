@@ -171,11 +171,16 @@
 #categories .cat:hover .cattable > div.minus:hover {
   opacity: 1;
 }
+#categories .tg {
+  margin-top: 8px;
+}
 #categories .tg .selected {
   display: none;
 }
 #categories .tg.selected .cat {
   color: rgb(var(--color-bg-ac-1));
+  background: rgba(0, 164, 255, 0.08);
+  border-radius: 12px;
 }
 #categories .tg.selected.added {
   font-weight: 700;
@@ -194,6 +199,9 @@
 }
 #categories .ta .tg.hdn {
   display: none;
+}
+#categories .ta .tg.excluded .cat {
+  background: transparent;
 }
 #categories .ta .tg.excluded .catvalue {
   color: rgb(var(--color-txt-gray));

@@ -1,7 +1,3 @@
-#bestposts {
-  background: #fff;
-  border-radius: 12px;
-}
 #bestposts .rcptwrp {
   background: #fff;
   border-radius: 12px;
@@ -86,8 +82,8 @@
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 15;
-  line-clamp: 15;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
 }
 #bestposts .posts .post .infoWrapper {
@@ -177,7 +173,7 @@
 #bestposts .posts .post .subscribebuttonstop.following .subscribe {
   display: none;
 }
-html.stblack #bestposts {
+html.stblack #bestposts .rcptwrp {
   background: #0a0c17;
 }
 /*t*/

@@ -173,50 +173,46 @@ var topusers = (function(){
 					el.c.on('click', '.unsubscribe', events.unsubscribe)
 					el.c.on('click', '.notificationturn', events.subscribePrivate)
 
-					setTimeout(() => {
+					// setTimeout(() => {
 
 
 						_.each(addresses, function(share, idx){
 
-						
-
-
-							if (idx === 0){
-								// self.nav.api.load({
-	
-								// 	open : true,
-								// 	id : 'usermodal',
-								// 	el : el.c.find('.user[address="' + share.address + '"] .modalWrapper'),
-								// 	animation : false,
 				
-								// 	essenseData : {
-								// 		share: share
-								// 	},
-									
-								// 	clbk : function(e, p){
-								// 		// recommendedposts = p;
-								// 	}
-				
-								// })
-								
-								self.shell({
-									name :  'usermodal',
-									el : el.c.find('.user[address="' + share.address + '"] .usermodal'),
-									data : {
-										u : share,
-									},
-									animation : false,				
+							// self.nav.api.load({
+
+							// 	open : true,
+							// 	id : 'usermodal',
+							// 	el : el.c.find('.user[address="' + share.address + '"] .modalWrapper'),
+							// 	animation : false,
 			
-								}, function(p){
-									debugger;
+							// 	essenseData : {
+							// 		share: share
+							// 	},
+								
+							// 	clbk : function(e, p){
+							// 		// recommendedposts = p;
+							// 	}
+			
+							// })
+							
+							self.shell({
+								name :  'usermodal',
+								el : el.c.find('.user[address="' + share.address + '"] .usermodal'),
+								data : {
+									u : share,
+								},
+								animation : false,				
 		
-								})
+							}, function(p){
 	
-							}
+							})
+
+							
 	
 						})
 
-					}, 8000)
+					// }, 8000)
 
 
 

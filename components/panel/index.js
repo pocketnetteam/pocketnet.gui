@@ -399,7 +399,12 @@ var panel = (function(){
 
 			renders.topposts();
 
-			renders.recommendedposts();
+			setTimeout(() => {
+
+				renders.recommendedposts();
+
+			}, 5000)
+
 
 
 		}

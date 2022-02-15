@@ -221,6 +221,7 @@ var lenta = (function(){
 				})
 
 				self.app.platform.sdk.node.shares.getbyid(allids, function(shares){
+					
 
 					_.each(shares, function(share){
 						delete share.myVal
@@ -2535,6 +2536,8 @@ var lenta = (function(){
 			},
 			
 			share : function(share, clbk, all, p){
+
+				console.log('share', share, video, share.itisarticle())
 
 				if(!p) p = {}
 

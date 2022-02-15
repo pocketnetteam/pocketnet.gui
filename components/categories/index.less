@@ -231,6 +231,7 @@
     }
 
     .tg{
+        margin-top: 8px;
 
         .selected{
             display: none;
@@ -239,6 +240,8 @@
 
             .cat{
                 color : rgb(var(--color-bg-ac-1));
+                background : rgba(0, 164, 255, 0.08);
+                border-radius : 12px;
             }
 
             &.added{
@@ -278,6 +281,10 @@
                    
         
             &.excluded{
+
+                .cat{
+                    background: transparent
+                }
                 
                 .catvalue{
                     color : rgb(var(--color-txt-gray));
