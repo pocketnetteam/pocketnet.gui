@@ -114,6 +114,7 @@ PeerTubePocketnet = function (app) {
   var ffmpeg = null;
 
   var serversIps = {};
+  var serversDomains = {};
   // Time needed before we will request the proxy to update the server's IP
   var INTERVAL_CHECK_SERVER_IP = 10000;
 
@@ -1090,6 +1091,7 @@ PeerTubePocketnet = function (app) {
           var newHostname = await app.peertubeHandler.api.proxy.getHostIp(hostname);
           // Save the server's IP for the next times
           serversIps[hostname].hostname = newHostname;
+          serversDomains[newHostname] = hostname;
         } catch(err) {
           
         }
@@ -1141,6 +1143,35 @@ PeerTubePocketnet = function (app) {
       url.protocol = 'http:';
       return url.toString();
     },
+    
+    // Try to convert an IP with the server's domain name (if possible)
+    // If no domain name can be found or URL already using domain name, return the URL untouched
+    convertIpWithUrl: async function(serverUrl) {
+      // Check we have what we need
+			if (!(URL && serverUrl && app && app.options && app.options.peertubeUseIp == true))
+        return serverUrl;
+      var url;
+      try {
+        url = new URL(serverUrl);
+      } catch(err) {
+        console.log(err);
+        console.log(serverUrl);
+        return serverUrl;
+      }
+      // Check if URL is not already using domain name
+      // If so, returns the URL untouched
+      const ipRegex = new RegExp(/\d+\.\d+\.\d+\.\d+/);
+      if (ipRegex.test(url.hostname) != true) return serverUrl;
+      // Check if we can return with a saved domain name
+      if (serversDomains[url.hostname]) {
+        // Return the URL now
+        url.hostname = serversDomains[url.hostname];
+        url.protocol = 'https:';
+        return url.toString();
+      }
+      // Can't get domain name, stop there
+      return serverUrl;
+    }
 
   };
 

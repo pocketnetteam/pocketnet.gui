@@ -539,18 +539,30 @@ var imagegallery = (function(){
 				num : num.toString()
 			})
 
-			
-			self.app.peertubeHandler.helpers.convertUrlWithIp(image.src).then((newUrl) => {
+			if (typeof _Electron != 'undefined' && _Electron) {
+				self.app.peertubeHandler.helpers.convertUrlWithIp(image.src).then((newUrl) => {
 
-			 	image.src = newUrl;
-				
-				actions.prepareImage(image, function(image){
-					renders.image({
-						image : image
+					image.src = newUrl;
+					
+					actions.prepareImage(image, function(image){
+						renders.image({
+							image : image
+						})
 					})
-				})
 
-			});
+				});
+			}
+			else {
+				self.app.peertubeHandler.helpers.convertIpWithUrl(image.src).then((newUrl) => {
+					image.src = newUrl;
+					
+					actions.prepareImage(image, function(image){
+						renders.image({
+							image : image
+						})
+					})
+				});
+			}
 
 		}
 

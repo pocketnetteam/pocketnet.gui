@@ -30,7 +30,8 @@ ImageUploader = function(app) {
             if (app.options &&
                 app.options.peertubeUseIp == true &&
                 app.options.peertubeServer &&
-                data.peertubeImage) {
+                data.peertubeImage &&
+                typeof _Electron != 'undefined' && _Electron) {
                 var url = new URL(app.options.peertubeServer);
                 try {
                     app.peertubeHandler.api.proxy.getHostIp(url.hostname).then((ipAddress) => {
