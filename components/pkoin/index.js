@@ -175,7 +175,7 @@ var pkoin = (function(){
 				comment.message.set(valComment);
 
 				comment.donate.set({
-					address: receiver,
+					// address: receiver,
 					amount: valSum
 				})
 				
@@ -235,7 +235,7 @@ var pkoin = (function(){
 
 				}
 
-				if (!disable){
+				if (!disabled){
 
 					self.app.platform.sdk.node.transactions.get.balance(function(amount){
 
@@ -335,6 +335,9 @@ var pkoin = (function(){
 			},
 
 			destroy : function(){
+
+				valSum = null;
+				valComment = null;
 				el = {};
 			},
 			

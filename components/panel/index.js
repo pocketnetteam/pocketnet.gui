@@ -127,8 +127,8 @@ var panel = (function(){
 
 		
 			
-			//renders.topusers();
-			//renders.bestposts();
+			renders.topusers();
+			renders.bestposts();
 
 
 		}
