@@ -502,53 +502,28 @@ button.medium {
   padding: 0.5em 3em;
   font-size: 0.8em;
 }
-button:hover {
-  background: transparent;
-  color: rgb(var(--color-bg-ac-bright));
-}
 button.disabled {
   cursor: default;
   background: rgb(var(--neutral-grad-2));
   border-color: rgb(var(--neutral-grad-2));
   color: rgb(var(--text-on-bg-ac-color));
 }
-button.disabled:hover {
-  color: rgb(var(--text-on-bg-ac-color));
-  background: rgb(var(--neutral-grad-2));
-}
 button.shadowWhite {
   background: transparent;
   color: #fff;
   border: 1px solid #fff;
 }
-button.shadowWhite:hover {
-  background: #fff;
-  color: rgb(var(--color-bg-ac-bright));
-}
 button.black {
   background: rgb(var(--neutral-grad-4));
   border: 1px solid rgb(var(--neutral-grad-4));
-}
-button.black:hover {
-  background: rgba(var(--background-main-contrast), 0.3);
-  border: 1px solid rgba(var(--background-main-contrast), 0.3);
-  color: rgb(var(--text-on-bg-ac-color));
 }
 button.good {
   background: rgb(var(--color-good));
   border: 1px solid rgb(var(--color-good));
 }
-button.good:hover {
-  background: transparent;
-  color: rgb(var(--color-good));
-}
 button.contrast {
   background: rgb(var(--color-bg-ac-2));
   border: 1px solid rgb(var(--color-bg-ac-2));
-  color: rgb(var(--text-on-bg-ac-color));
-}
-button.contrast:hover {
-  opacity: 0.8;
   color: rgb(var(--text-on-bg-ac-color));
 }
 button.orange {
@@ -556,26 +531,19 @@ button.orange {
   border: 1px solid rgb(var(--color-bg-orange));
   color: rgb(var(--text-on-bg-ac-color));
 }
-button.orange:hover {
-  background: rgb(var(--text-on-bg-ac-color));
-  color: rgb(var(--color-txt-orange));
-}
 button.yellow {
   background: #ffa600;
   border: 1px solid #ffa600;
   color: #fff;
 }
-button.yellow:hover {
-  background: #fff;
-  color: #FF4800;
-}
 button.gray {
   background: rgb(var(--neutral-grad-3));
   border: 1px solid rgb(var(--neutral-grad-3));
 }
-button.gray:hover {
-  opacity: 0.8;
-  color: rgb(var(--text-on-bg-ac-color));
+button.bordered {
+  background: transparent;
+  border: 1px solid rgb(var(--neutral-grad-2));
+  color: rgb(var(--neutral-grad-2));
 }
 button.ghost {
   background: transparent;
@@ -583,15 +551,76 @@ button.ghost {
   color: rgb(var(--neutral-grad-3));
   text-decoration: underline;
 }
-button.ghost:hover {
-  color: rgb(var(--color-bg-ac-bright));
-}
 button.orange.ghost {
   color: rgb(var(--color-txt-orange));
 }
 button.nopadding {
   padding-left: 0;
   padding-right: 0;
+}
+@media (pointer: fine) {
+  button:hover {
+    background: transparent;
+    color: rgb(var(--color-bg-ac-bright));
+  }
+  button.disabled:hover {
+    color: rgb(var(--text-on-bg-ac-color));
+    background: rgb(var(--neutral-grad-2));
+  }
+  button.shadowWhite:hover {
+    background: #fff;
+    color: rgb(var(--color-bg-ac-bright));
+  }
+  button.black:hover {
+    background: rgba(var(--background-main-contrast), 0.3);
+    border: 1px solid rgba(var(--background-main-contrast), 0.3);
+    color: rgb(var(--text-on-bg-ac-color));
+  }
+  button.good:hover {
+    background: transparent;
+    color: rgb(var(--color-good));
+  }
+  button.contrast:hover {
+    opacity: 0.8;
+    color: rgb(var(--text-on-bg-ac-color));
+  }
+  button.orange:hover {
+    background: rgb(var(--text-on-bg-ac-color));
+    color: rgb(var(--color-txt-orange));
+  }
+  button.yellow:hover {
+    background: #fff;
+    color: #FF4800;
+  }
+  button.gray:hover {
+    opacity: 0.8;
+    color: rgb(var(--text-on-bg-ac-color));
+  }
+  button.bordered {
+    background: transparent;
+    border: 1px solid rgb(var(--neutral-grad-2));
+    color: rgb(var(--neutral-grad-2));
+  }
+  button.bordered:hover {
+    background: rgb(var(--color-bg-ac-bright));
+    color: rgb(var(--text-on-bg-ac-color));
+  }
+  button.ghost {
+    background: transparent;
+    border-color: transparent;
+    color: rgb(var(--neutral-grad-3));
+    text-decoration: underline;
+  }
+  button.ghost:hover {
+    color: rgb(var(--color-bg-ac-bright));
+  }
+  button.orange.ghost {
+    color: rgb(var(--color-txt-orange));
+  }
+  button.nopadding {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 .psselect,
 select {
@@ -5150,6 +5179,36 @@ html.mobile.fullscreen #navigationWrapper {
   height: 3px;
   border-radius: 1px;
   background: rgb(var(--neutral-grad-3));
+}
+.standartMobileCaption {
+  display: flex;
+  height: 66px;
+  align-items: center;
+  border-bottom: 1px solid rgb(var(--neutral-grad-1));
+  background: rgb(var(--background-total-theme));
+  position: sticky;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: none;
+  z-index: 1;
+}
+.standartMobileCaption .additionalWrapper,
+.standartMobileCaption .backWrapper {
+  width: 55px;
+  text-align: center;
+}
+.standartMobileCaption .captinWrapper {
+  flex-grow: 2;
+  text-align: center;
+}
+.standartMobileCaption .captinWrapper span {
+  font-weight: 500;
+}
+html.mobile .standartMobileCaption,
+html.tablet .standartMobileCaption,
+html.cordova .standartMobileCaption {
+  display: flex;
 }
 /* ==========================================================================
    Splash screen

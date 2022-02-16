@@ -427,10 +427,36 @@
 
         .cat{
             .cattable{
+
+                >div{
+                    &.catvalue{
+                        .catname{
+                            font-size: 1em;
+                        }
+                    }
+                }
+
                 .catedit, .minus{
                     opacity: 1!important;
                 }
             }
+        }
+
+        .hideallcats,
+        .showallcats{
+
+            span{
+                font-size: 1em;
+            }
+            i{
+                font-weight: 600;
+                font-size: 1em;
+            }
+        }
+
+        .tg{
+            margin-top : @rhythm;
+            margin-bottom: @rhythm;
         }
     
     }

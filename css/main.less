@@ -609,21 +609,11 @@ button{
         font-size: 0.8em;
     }
 
-    &:hover{
-        background: transparent;
-        color: rgb(var(--color-bg-ac-bright));
-    }
-
     &.disabled{
         cursor: default;
         background: rgb(var(--neutral-grad-2));
         border-color : rgb(var(--neutral-grad-2));
         color: rgb(var(--text-on-bg-ac-color));
-        
-        &:hover{
-            color: rgb(var(--text-on-bg-ac-color));
-            background: rgb(var(--neutral-grad-2));
-        }
     }
 
 
@@ -631,32 +621,16 @@ button{
         background: transparent;
         color : #fff;
         border : 1px solid #fff;
-
-        &:hover{
-            background : #fff;
-            color : rgb(var(--color-bg-ac-bright));
-        }
     }
 
     &.black{
         background: rgb(var(--neutral-grad-4));
         border: 1px solid rgb(var(--neutral-grad-4));
-        
-        &:hover{
-            background: rgba(var(--background-main-contrast), 0.3);
-            border: 1px solid rgba(var(--background-main-contrast), 0.3);
-            color : rgb(var(--text-on-bg-ac-color));
-        }
     }
 
     &.good{
         background: rgb(var(--color-good));
         border: 1px solid rgb(var(--color-good));
-
-        &:hover{
-            background : transparent;
-            color : rgb(var(--color-good));
-        }
     }
 
 
@@ -664,43 +638,29 @@ button{
         background: rgb(var(--color-bg-ac-2));
         border: 1px solid rgb(var(--color-bg-ac-2));
         color: rgb(var(--text-on-bg-ac-color));
-
-        &:hover{
-            opacity : 0.8;
-            color: rgb(var(--text-on-bg-ac-color));
-        }
     }
 
     &.orange{
         background: rgb(var(--color-bg-orange));
         border: 1px solid rgb(var(--color-bg-orange));
         color: rgb(var(--text-on-bg-ac-color));
-
-        &:hover{
-            background : rgb(var(--text-on-bg-ac-color));
-            color: rgb(var(--color-txt-orange));
-        }
     }
 
     &.yellow{
         background: #ffa600;
         border: 1px solid #ffa600;
         color: #fff;
-
-        &:hover{
-            background : #fff;
-            color: #FF4800;
-        }
     }
 
     &.gray{
         background: rgb(var(--neutral-grad-3));
         border: 1px solid rgb(var(--neutral-grad-3));
+    }
 
-        &:hover{
-            opacity : 0.8;
-            color: rgb(var(--text-on-bg-ac-color));
-        }
+    &.bordered{
+        background: transparent;
+        border: 1px solid rgb(var(--neutral-grad-2));
+        color : rgb(var(--neutral-grad-2));
     }
 
     &.ghost{
@@ -708,10 +668,6 @@ button{
         border-color: transparent;
         color :  rgb(var(--neutral-grad-3));
         text-decoration: underline;
-
-        &:hover{
-            color :  rgb(var(--color-bg-ac-bright));
-        }
     }
 
     &.orange.ghost{
@@ -723,7 +679,108 @@ button{
         padding-right: 0;
     }
 }
+///// HOVER REFACTORING
+@media (pointer:fine) {
+    button{
 
+        &:hover{
+            background: transparent;
+            color: rgb(var(--color-bg-ac-bright));
+        }
+    
+        &.disabled{
+            
+            &:hover{
+                color: rgb(var(--text-on-bg-ac-color));
+                background: rgb(var(--neutral-grad-2));
+            }
+        }
+    
+    
+        &.shadowWhite{
+    
+            &:hover{
+                background : #fff;
+                color : rgb(var(--color-bg-ac-bright));
+            }
+        }
+    
+        &.black{
+            &:hover{
+                background: rgba(var(--background-main-contrast), 0.3);
+                border: 1px solid rgba(var(--background-main-contrast), 0.3);
+                color : rgb(var(--text-on-bg-ac-color));
+            }
+        }
+    
+        &.good{
+            &:hover{
+                background : transparent;
+                color : rgb(var(--color-good));
+            }
+        }
+    
+    
+        &.contrast{
+            &:hover{
+                opacity : 0.8;
+                color: rgb(var(--text-on-bg-ac-color));
+            }
+        }
+    
+        &.orange{
+            &:hover{
+                background : rgb(var(--text-on-bg-ac-color));
+                color: rgb(var(--color-txt-orange));
+            }
+        }
+    
+        &.yellow{
+            &:hover{
+                background : #fff;
+                color: #FF4800;
+            }
+        }
+    
+        &.gray{
+            &:hover{
+                opacity : 0.8;
+                color: rgb(var(--text-on-bg-ac-color));
+            }
+        }
+    
+        &.bordered{
+            background: transparent;
+            border: 1px solid rgb(var(--neutral-grad-2));
+            color : rgb(var(--neutral-grad-2));
+    
+            &:hover{
+                background : rgb(var(--color-bg-ac-bright));
+                color: rgb(var(--text-on-bg-ac-color));
+            }
+        }
+    
+        &.ghost{
+            background: transparent;
+            border-color: transparent;
+            color :  rgb(var(--neutral-grad-3));
+            text-decoration: underline;
+    
+            &:hover{
+                color :  rgb(var(--color-bg-ac-bright));
+            }
+        }
+    
+        &.orange.ghost{
+            color: rgb(var(--color-txt-orange));
+        }
+    
+        &.nopadding{
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+}
 
 .psselect,
 select {
@@ -6168,6 +6225,45 @@ html.mobile.fullscreen{
                 border-radius: 1px;
                 background : rgb(var(--neutral-grad-3));
             }
+        }
+    }
+}
+
+.standartMobileCaption{
+    display: flex;
+    height: 66px;
+    align-items: center;
+    border-bottom: 1px solid  rgb(var(--neutral-grad-1));
+    background: rgb(var(--background-total-theme));
+    position: sticky;
+    top : 0;
+    right: 0;
+    left: 0;
+    display: none;
+    z-index: 1;
+
+    .additionalWrapper,
+    .backWrapper{
+        width: 55px;
+        text-align: center;
+    }
+
+    .captinWrapper{
+        flex-grow: 2;
+        text-align: center;
+        span{
+            font-weight: 500;
+        }
+    }
+}
+
+html{
+
+    &.mobile,
+    &.tablet,
+    &.cordova{
+        .standartMobileCaption{
+            display: flex;
         }
     }
 }

@@ -20,6 +20,13 @@
 		<% if(state || (pathname == 'index' && mobile)) {%>
 
 			<% if(pathname == 'index' && mobile) {%>
+
+				<!--<div class="filtersbuttonwrapper">
+					<button class="bordered showcategories">
+						Filters
+					</button>
+				</div>-->
+
 				<div elementsid="showcategories" class="panelitem icon showcategories <% if(tagsSelected) {%> active <% } %>">
 					<i class="fas fa-filter"></i>
 				</div>
@@ -28,10 +35,9 @@
 				</div>
 
 			<% } else { %>
-				<div class="panelitem dnt">
+				<!--<div class="panelitem dnt">
 					<a elementsid="hrefdonations" href="donations"><i class="fas fa-money-bill-wave"></i> <%=e('donate')%></a>
-					<!--<i class="fas fa-sync"></i> Exchange-->
-				</div>
+				</div>-->
 			<% } %>
 
 		<% } %>

@@ -2,6 +2,15 @@
   padding-right: 16px;
   color: rgb(var(--text-on-main-bg-color));
   padding-top: 15px;
+  /*.closecategoriesContainer{
+		text-align: right;
+		font-size: 1em;
+
+		button{
+			padding: 0;
+			text-decoration: none;
+		}
+	}*/
 }
 #leftpanel > div .wrp {
   padding-bottom: 10px;
@@ -49,14 +58,6 @@
 }
 #leftpanel .menu .menupanel .tabs .tab .pcenterLabel .lentaunseen.hasunseen {
   display: inline-block;
-}
-#leftpanel .closecategoriesContainer {
-  text-align: right;
-  font-size: 1em;
-}
-#leftpanel .closecategoriesContainer button {
-  padding: 0;
-  text-decoration: none;
 }
 #leftpanel .best {
   display: flex;
@@ -230,20 +231,45 @@
 /*t*/
 @media only screen and (max-width: 768px) {
   #leftpanel {
-    padding-left: 1em;
-    padding-bottom: 3em;
+    padding: 0;
     color: rgb(var(--text-color));
+    /*.innerc{
+			padding-left: 2 * @rhythm;
+			padding-right: 2 * @rhythm;
+		}*/
   }
-  #leftpanel > div {
-    font-size: 1em;
+  #leftpanel .wrpmobclass > div {
+    padding: 1em;
+    margin-bottom: 1em;
+  }
+  #leftpanel .best {
+    border-top: 0;
+    border-bottom: 0;
   }
   #leftpanel .rightbottomnav {
-    margin-bottom: 7em;
+    margin-bottom: 2em;
+  }
+  #leftpanel .rightbottomnav a,
+  #leftpanel .rightbottomnav span {
+    font-size: 1em;
   }
   #leftpanel .subtop .topnavigation button {
     width: 135px;
   }
+  #leftpanel .menu .menupanel .tabs .tab .pcenterLabel .text {
+    font-size: 1em;
+  }
+  #leftpanel .menu .menupanel .tabs .tab .pcenterLabel i {
+    width: 30px;
+    text-align: center;
+  }
+  #leftpanel .menu .menupanel .tabs .tab .pcenterLabel .lentaunseen {
+    font-size: 0.7em;
+  }
   #leftpanel .vc_valuecustom .vc_selectInput {
     background: transparent;
+  }
+  #leftpanel .menu {
+    display: none;
   }
 }
