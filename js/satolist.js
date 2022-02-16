@@ -6296,8 +6296,19 @@ Platform = function (app, listofnodes) {
 
                     },
 
-                    electron : function(){
-                        return Promise.reject('todo')
+                    electron : async function(folder, shareInfo, p = {}){
+                        if(!shareInfo.video || !shareInfo.video.original) {
+                            return Promise.reject('originalinfo')
+                        }
+
+                        const id = shareInfo.video.original.uuid;
+                        const videoResolution = p.resolutionId;
+                        const videoDetails = shareInfo.video.original;
+
+                        const videoData = await electron.ipcRenderer
+                            .invoke('saveShareVideo', videoDetails, videoResolution);
+
+                        return videoData;
                     },
 
                     localstorage : function(){
@@ -6344,8 +6355,11 @@ Platform = function (app, listofnodes) {
 
                     },
 
-                    electron : function(){
-                        return Promise.reject('todo')
+                    electron : async function(share) {
+                        const shareDir = await electron.ipcRenderer
+                            .invoke('saveShareData', share);
+
+                        return shareDir;
                     },
 
                     localstorage : function(){
@@ -6356,8 +6370,14 @@ Platform = function (app, listofnodes) {
 
             read : {
                 share : {
-                    electron : function(to, from){
-                        return Promise.reject('todo')
+                    electron : async function(shareId) {
+                        alert('Read video data');
+                        console.log('SHARE DIR', shareId);
+
+                        const shareData = await electron.ipcRenderer
+                            .invoke('getShareData', shareId);
+
+                        return shareData;
                     },
 
                     cordova : function(to, from){
@@ -6519,8 +6539,25 @@ Platform = function (app, listofnodes) {
                         })
                     },
 
-                    electron : function(to, from){
-                        return Promise.reject('todo')
+                    electron : async function(shareId) {
+                        alert('Read video data');
+                        console.log('from', shareId);
+
+                        // TODO: PROCEED HERE 16 FEB 2022
+
+                        const videosList = await electron.ipcRenderer
+                            .invoke('getVideosList');
+
+                        const videosDataList = {};
+
+                        for(const videoIndex in videosList) {
+                            const videoId = videosList[videoIndex];
+
+                            videosDataList[videoId] = await electron.ipcRenderer
+                                .invoke('getVideoData', videoId);
+                        }
+
+                        return videosDataList;
                     },
 
                     localstorage : function(to, from){
@@ -6530,8 +6567,20 @@ Platform = function (app, listofnodes) {
             },
 
             get : {
-                electron : function(){
-                    return Promise.reject('todo')
+                electron : async function(shareFolder) {
+                    const shareDataList = { id: shareFolder };
+
+                    console.log('SHARE FOLDER', shareFolder);
+
+                    shareDataList.share = await self.sdk.localshares.read.share.electron(shareFolder);
+
+                    console.log('SHARE DATA INFOS', shareDataList.share);
+
+                    shareDataList.videos = await self.sdk.localshares.read.video.electron(shareFolder);
+
+                    console.log('SHARE DATA VIDEOS', shareDataList.videos);
+
+                    return shareDataList;
                 },
 
                 cordova : function(shareFolder){
@@ -6572,8 +6621,23 @@ Platform = function (app, listofnodes) {
             },
 
             getall : {
-                electron : function(){
-                    return Promise.reject('todo')
+                electron : async function() {
+                    alert('getall video info');
+
+                    const shareList = await electron.ipcRenderer
+                        .invoke('getShareList');
+
+                    const shareDataList = {};
+
+                    console.log('SHARE LIST', shareList);
+
+                    for(const shareIndex in shareList) {
+                        const shareId = shareList[shareIndex];
+
+                        shareDataList[shareId] = await self.sdk.localshares.get.electron(shareId);
+                    }
+
+                    return shareDataList;
                 },
 
                 cordova : function(){

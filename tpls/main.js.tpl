@@ -78,6 +78,10 @@ var appName = global.TESTPOCKETNET ? 'BastyonTest' : 'Bastyon';
 
 let url = require('url')
 let path = require('path')
+const fs = require('fs');
+const asyncFs = require('fs/promises');
+const http = require('http');
+const https = require('https');
 
 var defaultIcon = require('path').join(__dirname, 'res/electron/icons/win/icon.ico')
 var defaultTrayIcon = require('path').join(__dirname, 'res/electron/icons/win/icon.ico')
@@ -695,6 +699,172 @@ function createWindow() {
         autoLaunchManage(p.enable)
     })
 
+    ipcMain.handle('saveShareData', async (event, shareData) => {
+        const storage = app.getAppPath();
+
+        const shareDir = `${storage}/posts/${shareData.id}`;
+        const jsonDir = `${shareDir}/share.json`;
+
+        if (!fs.existsSync(shareDir)) {
+            fs.mkdirSync(shareDir, { recursive: true });
+        }
+
+        const jsonData = JSON.stringify(shareData);
+
+        await asyncFs.writeFile(jsonDir, jsonData, { overwrite: false });
+
+        return shareDir;
+    });
+
+    ipcMain.handle('saveShareVideo', async (event, videoData, videoResolution) => {
+        function downloadVideo(stream, url) {
+            return new Promise((resolve, reject) => {
+                let isHttps = /^https:/;
+                let isHttp = /^http:/;
+
+                const handler = (response) => {
+                    stream.on('close', resolve);
+
+                    response.pipe(stream);
+                };
+
+                if (isHttp.test(url)) {
+                    return http.get(url, handler);
+                }
+
+                if (isHttps.test(url)) {
+                    return https.get(url, handler);
+                }
+
+                reject('Unsupported protocol');
+            });
+        }
+
+        const storage = app.getAppPath();
+
+        const videoDir = `${storage}/videos/${videoData.uuid}`;
+        const jsonDir = `${videoDir}/info.json`;
+        const videoPath = `${videoDir}/${videoResolution}.mp4`;
+
+        // TODO: Optimize this shit...
+
+        const playlist = videoData.streamingPlaylists[0].files;
+
+        const videoUrls = playlist.find(file => file.resolution.id === videoResolution);
+
+        if(!videoUrls) {
+            return Promise.reject('fileDownloadUrl');
+        }
+
+        if (!fs.existsSync(videoDir)) {
+            fs.mkdirSync(videoDir, { recursive: true });
+        }
+
+        const jsonData = JSON.stringify(videoData);
+
+        await asyncFs.writeFile(jsonDir, jsonData, { overwrite: false });
+
+        const fileStream = fs.createWriteStream(videoPath);
+
+        await downloadVideo(fileStream, videoUrls.fileDownloadUrl);
+
+        const fileStats = fs.statSync(videoPath);
+
+        const videoInfo = {
+            thumbnail: 'https://' + videoData.from + videoData.thumbnailPath,
+            videoDetails : videoUrls,
+        };
+
+        const result = {
+            video: {
+                internalURL: `file://${videoPath}`,
+            },
+            infos: videoInfo,
+            size: fileStats.size,
+            id: videoData.uuid,
+        };
+
+        return result;
+    });
+
+    ipcMain.handle('getShareList', async (event) => {
+        const storage = app.getAppPath();
+
+        const postsDir = `${storage}/posts`;
+
+        if (!fs.existsSync(postsDir)) {
+            fs.mkdirSync(postsDir);
+        }
+
+        const postsList = fs.readdirSync(postsDir);
+
+        return postsList;
+    });
+
+    ipcMain.handle('getShareData', async (event, shareId) => {
+        const storage = app.getAppPath();
+
+        const shareDir = `${storage}/posts/${shareId}`;
+        const jsonPath = `${shareDir}/share.json`;
+
+        const jsonData = fs.readFileSync(jsonPath, { encoding:'utf8', flag:'r' });
+
+        return JSON.parse(jsonData);
+    });
+
+    ipcMain.handle('getVideosList', async (event) => {
+        const isUuid4 = /[a-f0-9]{8}-?[a-f0-9]{4}-?4[a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12}/;
+
+        const storage = app.getAppPath();
+
+        const videoDir = `${storage}/videos`;
+
+        if (!fs.existsSync(videoDir)) {
+            fs.mkdirSync(videoDir);
+        }
+
+        const videosList = fs.readdirSync(videoDir)
+            .filter((fN) => (
+                isUuid4.test(fN)
+            ));
+
+        return videosList;
+    });
+
+    ipcMain.handle('getVideoData', async (event, videoId) => {
+        const isJsonFile = /\.json$/;
+
+        const storage = app.getAppPath();
+
+        const videoDir = `${storage}/videos/${videoId}`;
+
+        const jsonPath = `${videoDir}/info.json`;
+
+        const videosList = fs.readdirSync(videoDir);
+
+        const videoData = {};
+
+        videoData.id = videoId;
+
+        const jsonData = fs.readFileSync(jsonPath, { encoding:'utf8', flag:'r' });
+
+        videoData.infos = JSON.parse(jsonData);
+
+        const videoName = videosList.filter(fN => (
+            fN.endsWith('.mp4')
+        ))[0];
+
+        const videoPath = `${videoDir}/${videoName}`;
+
+        const videoStats = fs.statSync(videoPath);
+
+        videoData.size = videoStats.size;
+        videoData.video = {
+            internalURL: `file://${videoPath}`,
+        };
+
+        return videoData;
+    });
 
     proxyInterface = new ProxyInterface(ipcMain, win.webContents)
     proxyInterface.init()

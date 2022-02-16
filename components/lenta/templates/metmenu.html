@@ -112,7 +112,12 @@ if(share){
 
 	m.push('share')
 
-	if (share.itisvideo() && window.cordova) {
+	const isElectron = (typeof _Electron !== 'undefined');
+	const isSaveSupported = (window.cordova || isElectron);
+
+	console.log('IS SAVE SUPPORTED', isSaveSupported);
+
+	if (share.itisvideo() && isSaveSupported) {
 
 		m.push('shareBareVideoLink');
 

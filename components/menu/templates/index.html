@@ -38,14 +38,17 @@
 													</div>
 												<% } %>
 
-												<!--<% if(typeof _Electron != 'undefined' && window.electron) {%>
-													<div class="pcenterCell">
-														<div class="pcenterLabel toppost " r="saved">
-															<a elementsid="href_index?r=saved" href="index?r=saved"  handler="true"><%=e('downloaded')%></a>
-														</div>
-													</div>
-												<% } %>-->
-												
+												<% const isElectron = (typeof _Electron !== 'undefined' && !!window.electron); %>
+												<% const isSaveSupported = (window.cordova || isElectron); %>
+
+												<% if(isSaveSupported) {%>
+												<div class="pcenterCell">
+													<span class="pcenterLabel ">
+														<a elementsid="href_index?r=saved" href="index?r=saved"  handler="true"><%=e('downloaded')%></a>
+													</span>
+												</div>
+												<% } %>
+
 												<div class="pcenterCell">
 													<div class="pcenterLabel toppost " r="recommended">
 														<a elementsid="href_index?r=recommended" href="index?r=recommended"  handler="true"><%=e('e13138')%></a>
