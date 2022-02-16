@@ -3,6 +3,7 @@
 #leftpanel{
 	padding-right: 16px;
 	color : rgb(var(--text-on-main-bg-color));
+	padding-top: 15px;
 
 	>div{
 		.wrp{
@@ -17,6 +18,8 @@
 					position: relative;
 					padding-top: @rhythm;
 					padding-bottom: @rhythm;
+
+					line-height: 20px;
 					
 					.pcenterLabel{
 						position: relative;
@@ -46,6 +49,22 @@
 						i{
 							width: 30px;
 							text-align: center;
+						}
+
+						.lentaunseen{
+							display: none;
+							width: 20px;
+							height: 20px;
+							font-size: 0.7em;
+							line-height: 20px;
+							text-align: center;
+							border-radius: 10px;
+							background: rgb(var(--color-txt-gray-dark));
+							color: rgb(var(--text-on-bg-ac-color));
+
+							&.hasunseen{
+								display: inline-block;
+							}
 						}
 
 
@@ -207,6 +226,11 @@
 			.vc_iconSpinWrapper{
 				width: 22px;
 			}
+		}
+
+		.vc_textInput{
+			border: 0;
+			background: transparent;
 		}
 	}
 

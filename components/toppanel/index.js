@@ -180,9 +180,7 @@ var toppanel = (function(){
 
 			self.app.platform.sdk.categories.clbks.tags.toppanel =
 			self.app.platform.sdk.categories.clbks.selected.toppanel = function(data){
-
 				renders.categoriesChanged()
-				
 			}
 
 			if (self.app.platform.sdk.newmaterials.clbks)

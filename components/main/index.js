@@ -387,29 +387,29 @@ var main = (function(){
 
 			panel : function(){
 
-				if(videomain && !isMobile()) return
+				if (videomain && !isMobile() || panel) return
 
-				self.nav.api.load({
+					self.nav.api.load({
 
-					open : true,
-					id : 'panel',
-					el : el.panel,
-					animation : false,
+						open : true,
+						id : 'panel',
+						el : el.panel,
+						animation : false,
 
-					essenseData : {
-					
-						renderclbk : function(){
-							actions.refreshSticky(true)
-	
-						}
-					},
-					clbk : function(e, p){
-
-						panel = p;
+						essenseData : {
 						
-					}
+							renderclbk : function(){
+								actions.refreshSticky(true)
+		
+							}
+						},
+						clbk : function(e, p){
 
-				})
+							panel = p;
+							
+						}
+
+					})
 			},
 			lentawithsearch : function(clbk, p){
 
@@ -779,9 +779,7 @@ var main = (function(){
 
 		var makePanel = function(){
 
-			if(!isMobile()){
-				renders.panel();
-			}
+			if(!isMobile()){ renders.panel(); }
 				
 			renders.leftpanel();
 
@@ -924,6 +922,7 @@ var main = (function(){
 					}
 	
 					renders.lentawithsearch()
+
 					makePanel()
 					makeShare()
 
@@ -949,8 +948,6 @@ var main = (function(){
 					el.c.find('.bgCaption').removeClass('hidden')
 
 					makeShare()
-
-					
 
 					actions.refreshSticky()
 				}

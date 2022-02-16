@@ -10,6 +10,26 @@ var leftpanel = (function(){
 
 		var ed = null;
 
+		var updateNew = function(){
+
+			var s = self.app.platform.sdk.newmaterials.storage
+
+			if(!el.c) return
+
+			_.each(s, function(v, k){
+
+				var _el = el.c.find('.lentaunseen[key="'+k+'"]')
+
+				if(v > 99) v = '99'
+
+				_el.html(v)
+
+				if(v) _el.addClass('hasunseen')
+				else _el.removeClass('hasunseen')
+
+			})
+		}
+
 		var renders = {
 			currentsearch : function(value, clbk){
 
@@ -213,6 +233,8 @@ var leftpanel = (function(){
 				if(ed.close) ed.close()
 			})
 
+			self.app.platform.sdk.newmaterials.clbks.update.leftpanel = updateNew
+
 
 		}
 
@@ -285,6 +307,8 @@ var leftpanel = (function(){
 			},
 
 			destroy : function(){
+
+				delete self.app.platform.sdk.newmaterials.clbks.update.leftpanel
 
 				if (tags){
 					tags.destroy()

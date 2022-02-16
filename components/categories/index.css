@@ -179,11 +179,19 @@
 #categories .cat:hover .cattable > div.minus:hover {
   opacity: 1;
 }
+#categories .tg {
+  border-radius: 12px;
+  margin-top: 1px;
+  margin-bottom: 1px;
+}
 #categories .tg .selected {
   display: none;
 }
+#categories .tg.selected {
+  background: rgba(var(--color-bg-ac-bright), 0.1);
+}
 #categories .tg.selected .cat {
-  color: rgb(var(--color-txt-orange));
+  color: rgb(var(--color-bg-ac-bright));
 }
 #categories .tg.selected .unselected {
   display: none;
