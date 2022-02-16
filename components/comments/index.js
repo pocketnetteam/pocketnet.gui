@@ -375,99 +375,6 @@ var comments = (function(){
 
 			},
 
-
-			removeDonate : function(id, p){
-
-				var comment = currents[id]
-
-				comment.donate.remove()
-
-				renders.donate(id, p);
-
-			},
-
-			embeddonate : function(id, p){
-
-				id || (id = '0')
-
-				actions.process(id)
-
-				if (areas[id])
-					areas[id].___inited = true
-
-				var storage = currents[id].export(true)
-
-				var sender = self.sdk.address.pnet().address;
-
-				if (sender === receiver){
-
-					sitemessage(self.app.localization.e('donateself'));
-
-				} else {
-
-					self.nav.api.load({
-						open : true,
-						id : 'embeding',
-						inWnd : true,
-	
-						essenseData : {
-							type : 'donate',
-							storage : storage,
-							sender: sender, 
-							receiver: receiver,
-							balance: balance,
-							on : {
-	
-								added : function(value){
-	
-									var result = Boolean(value);
-	
-	
-									if (Number(value) < balance){
-	
-										if(!_.isArray(value)) value = [value]
-	
-										currents[id].donate.remove();
-	
-										currents[id].donate.set({
-											address: receiver,
-											amount: Number(value)
-										})
-	
-										if(!result && errors[type]){
-	
-											sitemessage(errors[type])
-	
-										}
-
-	
-										if (result){
-
-											new Audio('sounds/donate.mp3').play();
-
-											renders.donate(id, p)
-
-										}	
-
-										return true
-	
-									} else {
-										sitemessage(self.app.localization.e('incoins'))
-									}
-	
-								}
-							}
-						},
-	
-						clbk : function(s, p){
-							external = p
-						}
-					})
-	
-				}
-
-			}, 
-
 			embedimages : function(id, p){
 				id || (id = '0')
 
@@ -2001,43 +1908,18 @@ var comments = (function(){
 							postEvents(p, _p, __clbk)
 						}
 
-						_p.el.find('.embeddonate').off('click').on('click', function(){
-
-							self.app.platform.sdk.node.transactions.get.balance(function(amount){
-
-								balance = amount.toFixed(3);
-								
-								var id = actions.getid(_p.el.find('.postbody'))
-
-								if(state){
-									actions.embeddonate(id, p)
-									if(!p.answer && !p.editid){
-		
-										ini()
-		
-									}	
-								}
-								else{
-									actions.stateAction(function(){
-									})
-								}
-
-
-							})
-
-
-						})
+						
 
 						_p.el.find('.embedimages').off('click').on('click', function(){
 
 							var id = actions.getid(_p.el.find('.postbody'))
 
 							if(state){
+
 								actions.embedimages(id, p)
+
 								if(!p.answer && !p.editid){
-
 									ini()
-
 								}	
 							}
 							else if (_preview){

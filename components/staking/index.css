@@ -5,10 +5,10 @@
   background: transparent!important;
 }
 #staking .wrp.hide .change.bad .percent {
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
 }
 #staking .wrp.hide .change.good .percent {
-  color: #076C34;
+  color: rgb(var(--color-good));
 }
 #staking .wrp.hide .lastpriceCnt .logo,
 #staking .wrp.hide .lastpriceCnt .caret {
@@ -43,7 +43,7 @@
   padding: 1em;
 }
 #staking .numbers .amredits {
-  background: #ffee00;
+  background: rgb(var(--color-yellow));
   padding: 0.25em 0.5em;
   border: 1px solid #ff6e84;
   border-radius: 10px;
@@ -233,12 +233,13 @@
   font-size: 16px;
   font-weight: 500;
   color: rgb(var(--text-on-bg-ac-color));
+  opacity: 0.5;
 }
 #staking .lastpriceCnt .change.bad .percent {
-  background: #F41A4D;
+  background: rgb(var(--color-bad));
 }
 #staking .lastpriceCnt .change.good .percent {
-  background: #076C34;
+  background: rgb(var(--color-good));
 }
 #staking .lastpriceCnts {
   padding-top: 1em;
@@ -278,10 +279,10 @@
   font-weight: 500;
 }
 #staking .lastpriceCnts .lastpriceCntSmall .change.bad .percent {
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
 }
 #staking .lastpriceCnts .lastpriceCntSmall .change.good .percent {
-  color: #076C34;
+  color: rgb(var(--color-good));
 }
 /*t*/
 @media only screen and (max-width: 768px) {

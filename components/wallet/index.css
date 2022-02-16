@@ -76,7 +76,7 @@
   color: rgb(var(--text-color));
 }
 #wallet .slide .required {
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
 }
 #wallet .slide .subcaptionWrapperTable {
   width: auto;
@@ -234,10 +234,10 @@
   height: 100%;
 }
 #wallet .total .summary .line .positive {
-  background: #076C34;
+  background: rgb(var(--color-good));
 }
 #wallet .total .summary .line .negative {
-  background: #F41A4D;
+  background: rgb(var(--color-bad));
 }
 #wallet .total .summary .numbers > div {
   width: 50%;
@@ -248,10 +248,10 @@
   font-size: 0.8em;
 }
 #wallet .total .summary .numbers .positive {
-  color: #076C34;
+  color: rgb(var(--color-good));
 }
 #wallet .total .summary .numbers .negative {
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
   text-align: right;
 }
 #wallet .total .label {
@@ -299,7 +299,7 @@
 #wallet .crowdfunding .info b,
 #wallet .deposit .info b,
 #wallet .send .info b {
-  color: #076C34;
+  color: rgb(var(--color-good));
 }
 #wallet .htls .info .infotable > div,
 #wallet .crowdfunding .info .infotable > div,
@@ -442,7 +442,7 @@
 #wallet .crowdfunding .notvalidaddress,
 #wallet .deposit .notvalidaddress,
 #wallet .send .notvalidaddress {
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
 }
 #wallet .crowdfunding {
   border-radius: 0;
@@ -508,7 +508,7 @@
   color: rgb(var(--color-txt-ac));
 }
 #wallet .crowdfunding .listcr .item > div .removecr:hover {
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
 }
 #wallet .crowdfunding .listcr .header .item {
   font-weight: 700;
@@ -524,7 +524,7 @@
   transition: 0.3s;
 }
 #wallet .crowdfunding .statustable .todeal:hover {
-  color: #076C34;
+  color: rgb(var(--color-good));
 }
 #wallet .crowdfunding .statustable .segment.ended .segmenttable > div.iconWrapper .iended {
   display: block;
@@ -533,7 +533,7 @@
   display: none;
 }
 #wallet .crowdfunding .statustable .segment.bad .segmenttable .linebg .line {
-  background: #F41A4D;
+  background: rgb(var(--color-bad));
 }
 #wallet .crowdfunding .statustable .segmenttable > div {
   vertical-align: middle;
@@ -555,10 +555,10 @@
   display: none;
 }
 #wallet .crowdfunding .statustable .segmenttable > div.iconWrapper .finish {
-  color: #076C34;
+  color: rgb(var(--color-good));
 }
 #wallet .crowdfunding .statustable .segmenttable > div.iconWrapper .finishbad {
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
 }
 #wallet .crowdfunding .statustable .segmenttable .linebg {
   width: 100%;
@@ -675,7 +675,7 @@
   border-radius: 6px;
   border-top: 1px solid rgba(var(--color-medium-theme), 0.3);
   border-right: 1px solid rgba(var(--color-medium-theme), 0.3);
-  box-shadow: 0 5px 7px -5px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
 }
 #wallet .buypkoin .ways {
   display: flex;

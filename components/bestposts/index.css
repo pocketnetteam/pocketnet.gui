@@ -1,3 +1,8 @@
+#bestposts {
+  background: #fff;
+  border-radius: 12px;
+  margin-top: 1em;
+}
 #bestposts .rcptwrp {
   background: #fff;
   border-radius: 12px;
@@ -58,7 +63,7 @@
   color: #b2abac;
 }
 #bestposts .unsubscribe {
-  color: #076C34;
+  color: rgb(var(--color-good));
 }
 #bestposts .posts {
   padding-bottom: 0.5em;
@@ -82,8 +87,8 @@
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
+  -webkit-line-clamp: 15;
+  line-clamp: 15;
   -webkit-box-orient: vertical;
 }
 #bestposts .posts .post .infoWrapper {
@@ -173,7 +178,7 @@
 #bestposts .posts .post .subscribebuttonstop.following .subscribe {
   display: none;
 }
-html.stblack #bestposts .rcptwrp {
+html.stblack #bestposts {
   background: #0a0c17;
 }
 /*t*/

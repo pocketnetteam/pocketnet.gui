@@ -8,286 +8,813 @@ var registration = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el,
-			essenseData,
-			initialParameters,
-			validation;
+		var el = {}, k = {}, needcaptcha = false, gliperror = false, essenseData, initialParameters, ext = null;
+		
+		var categoryIcons = [
+			{
+				"id": "c2",
+				"icon": "far fa-smile"
+			},
+			{
+				"id": "c3",
+				"icon": "fas fa-landmark"
+			},
+			{
+				"id": "c4",
+				"icon": "fab fa-bitcoin"
+			},
+			{
+				"id": "c5",
+				"icon": "fas fa-microscope"
+			},
+			{
+				"id": "c55",
+				"icon": "fas fa-book"
+			},
+			{
+				"id": "c6",
+				"icon": "fas fa-dollar-sign"
+			},
+			{
+				"id": "c73",
+				"icon": "fas fa-fist-raised"
+			},
+			{
+				"id": "c72",
+				"icon": "fas fa-thermometer"
+			},
+			{
+				"id": "c7",
+				"icon": "fas fa-flag-checkered"
+			},
+			{
+				"id": "c8",
+				"icon": "fas fa-running"
+			},
+			{
+				"id": "c9",
+				"icon": "fas fa-gamepad"
+			},
+			{
+				"id": "c10",
+				"icon": "fas fa-space-shuttle"
+			},
+			{
+				"id": "c11",
+				"icon": "fas fa-music"
+			},
+			{
+				"id": "c12",
+				"icon": "fas fa-newspaper"
+			},
+			{
+				"id": "c13",
+				"icon": "fas fa-history"
+			},
+			{
+				"id": "c14",
+				"icon": "fas fa-bookmark"
+			},
+			{
+				"id": "c15",
+				"icon": "fas fa-film"
+			},
+			{
+				"id": "c16",
+				"icon": "fas fa-paw"
+			},
+			{
+				"id": "c17",
+				"icon": "fas fa-route"
+			},
+			{
+				"id": "c18",
+				"icon": "fas fa-pencil-ruler"
+			}
+		]
 
-		var current = {
-			last : false,
-			end : false
+		
+		var current = null;
+		var regproxy = null;
+
+		var termsaccepted = false
+
+		var getproxyoptions = function(){
+
+			console.log('regproxy', regproxy)
+
+			if(regproxy){
+				return {
+					proxy : regproxy.id
+				}
+			}
+
+			return {}
 		}
 
-		var scrollel = null
+		var steps = {
+			settings : {
+				id : 'settings',
+				nextindex : 'captcha',
 
-		var kup = {
+				prev : function(clbk){
 
-			type : "STRING",
-			name : "keyInput",
-			id : 'keyInput',
-			placeholder : self.app.localization.e('confirmkey'),
+					clbk()
+			
+				},
 
-			autoSearch : function(v, p, clbk){
+				render : 'settings',
 
-				if(current.mnemonicKey.indexOf(v) == 0){
+				after : function(el, pel){
+
+					
+				},
+
+				next : true				
+			},
+
+			captcha : {
+				id : 'captcha',
+				render : 'captcha',
+				nextindex : function(){
+					if(self.app.curation()){
+						return 'welcome'
+					}
+					
+					return 'categories'
+				},  
+
+				prev : function(clbk){
+
+					var address = self.sdk.address.pnet().address;
+
+					var requested = self.app.settings.get(address, 'request') || "";
+
+					if (requested){
+
+						var regs = app.platform.sdk.registrations.storage[address];
+
+						if (regs && (regs == 2)) {
+							self.sdk.registrations.add(address, 3)
+						}
+						
+						actions.next()
+
+						return
+					}
 
 
-					if(v[v.length - 1] != ' '){
-						var vs = v.split(" ");
+					balance.check(function(result){
 
-						var index = vs.length - 1
+						if (result){
 
-						var l = vs[index];
+							var regs = app.platform.sdk.registrations.storage[address];
 
-						var phrase = _.filter(current.mnemonicContent, function(w, i){
-
-							if(i <= index){
-								return true;
-
+							if (regs && (regs == 2)) {
+								self.sdk.registrations.add(address, 3)
 							}
+							
+							actions.next()
+						}
+						else
+						{
+							self.sdk.captcha.get(function(captcha, error){
 
+								if (error){
+
+									actions.to('network')
+
+									return
+								}
+
+								
+								if (captcha.done){
+
+									actions.preloader(true)
+
+									balance.request(function(r){
+
+										actions.preloader(false)
+
+										if(r){
+											actions.next()
+										}
+
+									})
+
+								}
+								else{
+
+									steps.captcha.current = captcha
+
+									clbk()
+								}
+
+							}, true, getproxyoptions())
+						}
+
+					}, true)
+
+				},
+
+				after : function(el, pel){
+
+					var input = el.find('.ucaptchainput');
+					var redo = el.find('.redo')
+					var save = el.find('.addCaptcha')
+					var text = '';
+
+						input.focus()
+
+					var validate = function(v){
+
+						if(/^[a-zA-Z0-9]{4,}$/.test(v)){
+							return true;
+						}
+						else
+						{
+							return false;
+						}
+					}
+
+					input.on('keyup', function(){
+						text = $(this).val()
+
+						if(validate(text)){
+							save.removeClass('disabled')
+						}
+						else
+						{
+							save.addClass('disabled')
+						}
+					})
+
+					input.on('focus', function(){
+
+						if (isTablet()) setTimeout(function(){_scrollTo(input, el.c.closest('.customscroll')), 200})
+
+					})
+
+					save.on('click', function(){
+
+						var text = input.val()
+
+						if (validate(text)){
+							
+							self.sdk.captcha.make(text, function(error, captcha){
+
+								if (error == 'captchashots'){
+
+									sitemessage(self.app.localization.e('e13118'))
+
+									actions.redo()
+
+									return
+								}
+
+								if (error){
+									sitemessage(self.app.localization.e('e13118'))
+
+									return 
+								}
+							
+								if (captcha.done){
+									
+									actions.preloader(true)
+									
+									balance.request(function(r){
+
+										actions.preloader(false)
+
+										if(r){
+											actions.next()
+										}
+
+									})
+								}
+						
+							}, getproxyoptions())
+
+						}
+					})
+
+					redo.one('click', function(){
+
+						actions.redo()
+					})
+				}
+			},	
+
+			welcome : {
+
+				id : 'welcome',
+
+				prev : function(clbk){
+
+					//self.app.platform.sdk.theme.set('black')
+
+					if (essenseData.welcomepart)
+						essenseData.welcomepart()
+
+					clbk()
+				},
+
+				render : 'welcome',
+
+				after : function(el){
+
+					var c = false
+
+					var clbk = function(){
+
+						if(c) return
+
+						c = true
+
+						if (deep(essenseData, 'successHref') == '_this'){
+
+							var close = deep(initialParameters, 'container.close')
+
+							if (close)
+								close();
+
+							if (essenseData.signInClbk)
+								essenseData.signInClbk();
+
+						}
+						else
+						{
+							self.app.platform.sdk.registrations.redirect
+
+							self.nav.api.go({
+								href : self.app.platform.sdk.registrations.redirect || 'index',
+								history : true,
+								open : true
+							})	
+
+						}
+
+						localStorage['regproxy'] = ''
+
+						self.app.platform.sdk.registrations.redirect = null
+
+						if (isMobile()){
+							self.app.platform.ui.showmykey({
+								afterregistration : true
+							})
+						}
+						else{
+							self.app.platform.ui.showmykeyfast({
+								showsavelabel : true
+							})
+						}
+						
+					}
+
+					setTimeout(function(){
+
+						clbk()
+
+					}, 1500)
+
+					el.find('.welcome').on('click', function(){
+
+						clbk()
+						
+					})
+				}
+
+
+			},
+
+			
+			categories : {
+
+				id : 'categories',
+				nextindex : 'welcome',
+
+				prev : function(clbk){
+
+					//self.app.platform.sdk.theme.set('black')
+
+					if (essenseData.welcomepart)
+						essenseData.welcomepart()
+
+					clbk()
+				},
+
+				render : 'categories',
+
+				after : function(el){
+
+					var elCategories = el.find('.cat');
+					var next = el.find('.next');
+					var skip = el.find('.skip');
+
+					self.app.platform.sdk.categories.clear()
+					
+					var activeCategories = [];
+
+					elCategories.on('click', function(){
+
+						var cat = $(this);
+						var id = cat.attr('cat');
+
+						var activeIdx = activeCategories.findIndex(function(c){
+							return c === id;
 						})
 
-						clbk(phrase.join(" "))
+						if (cat.hasClass('active')){
+
+							cat.removeClass('active')
+							if (activeIdx > -1){
+								activeCategories.splice(activeIdx, 1);
+							}
+
+						} else {
+
+							cat.addClass('active')
+							if (activeIdx === -1){
+								activeCategories.push(id);
+							}
+						}
+
+						if (activeCategories.length){
+
+							next.addClass('active')
+
+						} else {
+
+							next.removeClass('active')
+						}
+
+					})
+
+					var c = false
+
+					var clbk = function(activeCategories){
+
+						if(c) return
+
+						c = true
+
+						for (var catId of activeCategories){
+							self.app.platform.sdk.categories.select(catId);
+
+						}
+
+						actions.next()
+						
+					}
+
+					next.on('click', function(){
+
+						if (activeCategories.length){
+							clbk(activeCategories)
+						}	
+						
+					})
+
+					
+					skip.on('click', function(){
+
+						clbk([])
+						
+					})
+				}
+
+
+			},
+
+			network : {
+
+				id : 'network',
+
+				prev : function(clbk){
+
+					clbk()
+				},
+
+				render : 'network',
+
+				after : function(el){
+
+
+					self.app.errors.clbks.registration = function(){
+
+						if(app.errors.state.proxy || app.errors.state.proxymain)  return
+
+						if (current == 'network' && !self.app.platform.loadingWithErrors){
+							actions.to('captcha')
+						}
+
+						delete self.app.errors.clbks.registration
 					}
 				}
 
-				
-			}
+
+			},
+
+			moneyfail : {
+
+				id : 'moneyfail',
 	
+				prev : function(clbk){
+	
+					clbk()
+				},
+	
+				render : 'moneyfail',
+	
+				after : function(el){
+
+					var address = self.sdk.address.pnet().address;
+
+					var b = function(){
+						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
+							
+							el.find('.balance').html('Balance: ' + self.app.platform.mp.coin(amount) + " PKOIN")
+						
+							if(amount > 0){
+
+								var regs = app.platform.sdk.registrations.storage[address];
+
+                                if (regs && (regs == 2)) {
+                                    self.sdk.registrations.add(address, 3)
+                                }
+	
+								if (current == 'moneyfail'){
+									setTimeout(function(){
+										actions.to('welcome');	
+									}, 100)
+									
+
+								}
+									
+	
+								delete self.app.platform.sdk.node.transactions.clbks.moneyfail
+							}
+						})
+					}
+
+					var ch = function(){
+
+						console.log('allBalanceCheck')
+
+						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
+							
+							topPreloader(100);
+
+
+							console.log('allBalance', amount)
+	
+							b()
+							
+	
+						}, true)
+					}
+					
+					b()
+
+					el.find('.tryagain').on('click', function(){
+						balance.request(function(r){
+
+							if(r){
+								actions.next()
+							}
+
+						})
+					})
+	
+					el.find('.check').on('click', function(){
+						ch()
+					})
+
+					self.app.platform.sdk.node.transactions.clbks.moneyfail = b
+				}
+	
+			}
+
 		}
 
-		if(isMobile()) delete kup.autoSearch
+		var arrange = _.map(steps, function(s, i){
+			return i;
+		})
 
-		var keyInput = new Parameter(kup)
+		var getindex = function(current){
+			return _.findIndex(arrange, function(s){
+				return s == current
+			})
+		}
+
+		var balance = {
+
+			request : function(clbk){
+
+
+				self.sdk.users.requestFreeMoney(function(res, err){
+
+					//console.log('res, err', res, err)
+
+					var address = self.sdk.address.pnet().address;
+
+					var requested = self.app.settings.get(address, 'request') || "";
+				
+
+					if(!res && !requested){
+
+						if (err == 'captcha'){
+
+							needcaptcha = true;
+
+							if (current == 'money' || current == 'captcha'){
+								actions.to('captcha')
+							}
+
+						}
+
+						console.log('err', err)
+
+						if (err == 'error' || err == 'iplimit'){
+
+							gliperror = true
+
+							if (current == 'money' || current == 'captcha'){
+								actions.to('moneyfail')
+							}
+
+						}
+
+						if(_.isEmpty(err)){
+							actions.to('moneyfail')
+						}
+
+						if (clbk)
+							clbk(false, 'err')
+						
+					}	
+					
+					else{
+
+						self.app.settings.set(address, 'request', 'true')
+
+						self.sdk.registrations.add(address, 3)
+
+						//balance.follow()
+
+						if (clbk)
+							clbk(true)
+					}
+					
+				}, getproxyoptions())	
+			},
+
+			check : function(clbk, update){
+
+				self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
+
+					if (clbk)
+						clbk(amount > 0)
+					
+				}, update)
+
+			},
+
+			follow : function(){
+				self.app.platform.sdk.node.transactions.clbks.filluser || (
+				self.app.platform.sdk.node.transactions.clbks.filluser = function(){
+
+					delete self.app.platform.sdk.node.transactions.clbks.filluser
+
+					balance.check(function(result){
+
+						if (result){							
+
+							if(current == 'money'){				
+								actions.next()
+							}
+
+						}	
+						
+						else{
+
+							balance.follow()
+
+						}
+
+					})
+					
+				})
+			}
+
+		}
 
 		var actions = {
-			download : function(clbk){
-				if (current.os){
 
-					if(current.os.github){
+			preloader : function(sh){
+				if(sh){
+					el.c.addClass('loading')
+				}
+				else{
+					el.c.removeClass('loading')
+				}
+			},
 
-						$.get(current.os.github.url, {}, function(d){
-
-							var assets = deep(d, 'assets') || [];
-
-							var l = _.find(assets, function(a){
-								return a.name == current.os.github.name
-							})
-
-							if (l){
+			signin : function(clbk){
+				self.user.signin(k.mnemonicKey, function(state){
 
 
-								var link = document.createElement('a');
-							        link.setAttribute('href', l.browser_download_url);
-							        link.setAttribute('download','download');
-							        link.click();
+					if (clbk)
+						clbk()
 
-							    if (clbk)
-									clbk(l.browser_download_url)
-							}
+				})		
 
+			},
+
+			to : function(step, clbk){
+				current = step;
+				actions.makeStep(clbk)
+			},
+
+			redo : function(clbk){
+				actions.makeStep(function(){
+
+				})
+			},
+
+			next : function(clbk){
+
+				if (current) {
+					current = steps[current].nextindex
+
+					if(typeof current == 'function') current = current()
+				}
+				else{
+
+					var me = deep(app, 'platform.sdk.user.storage.me');
+
+					if (me && me.relay){
+						current = steps.captcha.id
+					}
+					else{
+						current = steps.settings.id
+					}
+
+					
+				}
+
+
+
+				if(!current) return
+
+				actions.makeStep(function(){
+
+				})
+			},
+
+			makeStep : function(clbk){
+
+				var step = steps[current];
+
+
+				if (step){			
+
+					actions.preloader(true)
+
+					step.prev(function(){
+
+						if(!el.c){
+
+							return
+						}
+
+						
+
+						el.c.attr('step', step.id)
+
+						renders.panel(step, function(pel){
+							renders.step(step, function(el){
+
+								actions.preloader(false)
+
+								_scrollTop(el, scrollel)
+
+								pel.find('.elpanel').addClass('active')
 							
+								step.after(el, pel)
+
+							})
 
 						})
 
-					}
+					})
 
-				}
-			},
-			validation : function(){
-
-				var v  = trim(keyInput.value)
-
-				if(v != current.mnemonicKey && v != current.mk){
-
-					el.c.find('.note').html(self.app.localization.e('keysnotmatch'))
-					el.c.addClass('error')
-
-					return false
 				}
 				else
 				{
-					el.c.removeClass('error')
-
-					el.c.find('.note').html('')
-
-					return true
 				}
 
-			},
-
-			registration : function(){
-			
-				if(actions.validation())
-				{
-
-					localStorage['stay'] = '1';
-					self.app.user.stay = 1;
-
-					self.user.signin(current.mnemonicKey, function(state){
-
-						if(!state){
-
-							el.c.find.note.html(self.app.localization.e('id98'))
-							el.c.addClass('error')
-
-							return;
-						}
-
-						current.end = true;
-
-						renders.confirm(function(){
-
-							renders.success(function(){
-
-								setTimeout(function(){
-
-									if(deep(essenseData, 'successHref') == '_this'){
-
-										if(self.app.user.validate()){
-											var close = deep(initialParameters, 'container.close')
-
-											if (close)
-												close();
-												
-											if (essenseData.signInClbk)
-												essenseData.signInClbk();
-										}
-										else
-										{
-											self.nav.api.loadSameThis('filluser', p)
-										}
-										
-									}
-									else
-									{
-
-										console.log('essenseData.nav', essenseData.nav)
-
-										essenseData.nav || (essenseData.nav = {})
-										essenseData.nav.history = true
-										essenseData.nav.reload = false
-
-										self.app.reload({
-											href : essenseData.successHref || 'filluser',
-											nav : essenseData.nav
-										});
-
-										
-									}
-
-									
-
-								}, 2000)
-
-									
-
-							})
-
-							
-
-						})
-
-						
-
-						
-
-					})		
-
-				}
-			},
-
-			generate : function(){
-				el.c.removeClass('begin');
-
-				var key = bitcoin.bip39.generateMnemonic();
-
-				console.log("key", key)
-
-				/*actions.testqrcodeandkey(key, function(result){
-
-
-					if(!result){
-						actions.generate()
-					}
-					else
-					{*/
-
-						current.mnemonicKey = key;
-
-						current.mnemonicMask = _.shuffle(indexArray(current.mnemonicKey.length));
-
-						current.mnemonicContent = current.mnemonicKey.split(' ')
-
-						var keys = self.app.user.keysFromMnemo(current.mnemonicKey)
-
-						current.mainAddress = app.platform.sdk.address.pnet(keys.publicKey).address;
-
-						current.mk = keys.privateKey.toString('hex');
-
-						renders.key()
-					/*}
-				})*/
-				
-			},
-
-			repeat : function(){
-				current.last = false;
-
-				renders.confirm(function(){
-					renders.tips(function(){
-
-						setTimeout(function(){
-
-							el.c.removeClass('last')
-
-							setTimeout(function(){
-
-								actions.generate()
-
-							}, 300)
-						}, 300)
-
-					});
-				});
-			},
-
-			continue : function(){
-				var m = el.c.find('.mnemonicKey')
-
-
-				var ks = el.c.find('.keyStep');
-
-					ks.removeClass("showedPanel");
-
-				renders.mnemonicEffect(m, true, function(){
-					current.last = true;					
 					
-					renders.key(function(){
-						setTimeout(function(){
-
-							renders.tips()
-
-							el.c.addClass('last')
-
-							setTimeout(function(){
-								renders.confirm();
-							}, 300)
-
-						}, 300)
-
-					})
-				});
-			},
-
-			removeDisabled : function(el){
-				el.find('.continue').removeClass('disabled')
-
-				el.find('.preloader').remove();
-
-				el.find('.save').addClass('black')
-				el.find('.copy').addClass('black')
 			},
 
 			testqrcodeandkey : function(hm, clbk){
@@ -322,240 +849,75 @@ var registration = (function(){
 					
 				})
 
+			},
+
+			generate : function(clbk){
+
+				if(k.mnemonicKey){
+
+					if (clbk)
+						clbk()
+
+				}
+				else{
+					var key = bitcoin.bip39.generateMnemonic();
+
+					k.mnemonicKey = key;
+
+					var keys = self.app.user.keysFromMnemo(k.mnemonicKey)
+
+					k.mainAddress = app.platform.sdk.address.pnetsimple(keys.publicKey).address;
+
+					k.mk = keys.privateKey.toString('hex');
+
+					if (clbk)
+						clbk()
+				
+				}
+				
+				
+			},
+
+			waitgeneration : function(clbk){				
+
+				retry(function(){
+
+					if(k.mnemonicKey || k.mk) return true;
+
+				}, clbk, 40)
+
+				
 			}
+
 		}
 
 		var events = {
+			width : function(){
+
+
+				if(!current) return
+
+				var activestep = steps[current]
+
+				var _el = el.c.find('.step[step="'+activestep.id+'"] .stepBody');
+				var s = _el.closest('.step');
+				var line = el.c.find('.stepsWrapperLine');
+
+				var w = s.closest('.stepsWrapper').width()
+
+				el.c.find('.step').width(w)
+
+
+
+
+				line.css('margin-left', '-' + ((getindex(current)) * w) + 'px')
+
+				line.width(w * _.toArray(steps).length)
 			
-			registration : function(){
-				actions.registration();
-			},
-
-			generate : function(){
-				actions.generate();
-			},
-
-			continue : function(){
-
-				if($(this).hasClass('disabled')) return
-
-				actions.continue();
-			},
-
-			repeat : function(){
-				actions.repeat()
-			},
-
-			download : function(){
-				actions.download(function(link){
-					el.c.find('.osStep').addClass('rundownloading')
-					el.c.find('.skipositem').html('<div class="downloadstart">'+self.app.localization.e('e13011')+'</div>'+
-						'<div><a elementsid="'+link+'" href="'+link+'"><b>'+self.app.localization.e('e13012')+'</b></a></div>')
-				})
 			}
-
-			 
-			
-		}
-
-		var state = {
-			
 		}
 
 		var renders = {
-
-			os : function(clbk){
-				var _os = os();
-
-
-				if (_os && self.app.platform.applications[_os] && typeof _Electron == 'undefined' && !window.cordova){
-
-					current.os = self.app.platform.applications[_os]
-
-					renders.step('os', function(p){
-						p.el.find('.downloadOs').on('click', events.download)
-
-						p.el.find('.skip').on('click', function(){
-							if (clbk)
-								clbk()
-						})
-
-						
-					})
-
-				}
-
-				else
-				{
-					clbk();
-				}
-			},
-
-			step : function(name, clbk){
-
-				self.shell({
-					name :  name,
-					el : el.c.find("." + name + "Step"),
-					data : current,
-					animation : {
-						id : 'slide'
-					},
-
-				}, function(p){
-
-					if (clbk)
-						clbk(p);
-				})
-
-			},
-
-			success : function(clbk){
-
-				renders.step('success', function(p){
-
-
-					if (clbk)
-						clbk()
-				})
-
-			},
-
-			tips : function(clbk){
-
-
-				renders.step('tips', function(p){
-					p.el.find('.generate').on('click', events.generate)
-
-					if (clbk)
-						clbk()
-				})
-
-			},
-
-			confirm : function(clbk){
-
-				keyInput.value = ''
-				current.keyInput = keyInput
-
-				renders.step('confirm', function(p){
-
-					
-					
-
-					p.el.find('.repeat').on('click', events.repeat)
-					p.el.find('.registrationButton').on('click', events.registration)
-					
-
-					if (clbk)
-						clbk()
-
-					else
-					{
-						ParametersLive([keyInput], p.el)
-
-						_scrollTo(p.el, scrollel)
-
-						initUpload({
-							el : p.el.find('.uploadFile'),
-				
-							ext : ['txt', 'png', 'jpeg', 'jpg'],
-
-							notexif : true,
-
-							dropZone : el.c.find('.confirm'),
-
-							action : function(file, clbk){
-
-								if(file.ext == 'png' || file.ext == 'jpeg' || file.ext == 'jpg'){
-
-
-									grayscaleImage(file.base64, function(image){
-
-										qrscanner.q.callback = function(data){
-
-
-											if(data == 'error decoding QR Code'){
-
-
-												el.c.find('.note').html(self.app.localization.e('filedamaged'))
-											}
-											else
-											{
-
-
-												keyInput.value = trim(data)
-
-												keyInput.el.val(keyInput.value);
-
-												actions.registration();
-											}
-										}
-
-										qrscanner.q.decode(image)
-										
-									})
-								
-									
-								}
-								else
-								{
-
-									var b = file.base64.split(",")[1]
-
-									var data = b64_to_utf8(b)
-
-									var ds = data.split("/")
-
-									if (ds[1]) {
-
-										keyInput.value = trim(ds[1]);
-
-										keyInput.el.val(keyInput.value);
-
-										actions.registration();
-									}
-									else
-									{
-										el.c.find('.note').html(self.app.localization.e('filedamaged'))
-									}
-								}
-							}
-						})
-
-						/*plissing = self.app.platform.api.plissing({
-							el : p.el.find('.elContent .label'),
-							text : ""
-						})*/
-
-						setTimeout(function(){
-
-							/*p.el.find('input').bind('paste', function (e) {
-
-								p.el.find('.note').html(self.app.localization.e('removepaste'))
-
-						       	e.preventDefault();
-						    });*/
-
-						    p.el.find('input[type="text"]').on('focus', function(){
-						    	p.el.find('.inputTable').addClass('typeactive')
-						    })
-
-						    p.el.find('input[type="text"]').on('blur', function(){
-						    	p.el.find('.inputTable').removeClass('typeactive')
-						    })
-
-						    if(!isMobile()){
-						    	p.el.find('.autosearchInputCnt input').focus()
-						    }
-
-
-						}, 600)
-						
-					}
-				})
-
-			},
-
 			qrcode : function(el, m){
 
 				var qrcode = new QRCode(el[0], {
@@ -568,185 +930,331 @@ var registration = (function(){
 
 			},
 
-			key : function(clbk){
+			step : function(step, clbk){
 
-				renders.step('key', function(p){
+				el.c.find('.step').removeClass('active');
 
+				var _el = el.c.find('.step[step="'+step.id+'"] .stepBody');
+				var s = _el.closest('.step');
+				var line = el.c.find('.stepsWrapperLine');
 
-					var m = p.el.find('.mnemonicKey')
+				renders[step.render](_el, function(_el){
 
-					var ks = el.c.find('.keyStep');
+					var w = s.closest('.stepsWrapper').width()
 
-						ks.removeClass("showedPanel")
-						
-					var hm = p.el.find('.hiddenMnemonicKey').html();
-
-					if (hm){
-
-						var keyPair =  self.app.user.keysFromMnemo(trim(hm))  
-
-						var mk = keyPair.privateKey.toString('hex');
-
-						var qr = renders.qrcode(p.el.find('.qrcode'), mk)
-
-					}
-
-
-					renders.mnemonicEffect(m, false, function(){
-						ks.addClass("showedPanel")
-					});
-
-					p.el.find('.continue').on('click', events.continue)		
-
-					setTimeout(function(){
-
-						actions.removeDisabled(p.el)
-
-					}, 2000)
-
-					self.app.platform.clbks._focus.registration = function(){
-						actions.removeDisabled(p.el)
-					}
-
-					p.el.find('.copy').on('click', function(){
-						copyText(p.el.find('.hiddenMnemonicKey'))
-
-						sitemessage(self.app.localization.e('successfullycopied'))
-
-						actions.removeDisabled(p.el)
-					})
-
-					p.el.find('.save').on('click', function(){
-
-						var text = p.el.find('.qrcode img').attr('src')
-
-						p_saveAs({
-							file : text,
-							format : 'png',
-							name : 'pocketnetkey'
-						})
-
-					})
-
-					if(window.cordova){
-
-						p.el.find('.qrcode').on('click', function(){
-
-							menuDialog({
-								items : [
-	
-									{
-										text : "Save key on device",
-										class : 'itemmain',
-										action : function(clbk){
-
-
-											var image = b64toBlob(qr._oDrawing._elImage.currentSrc.split(',')[1], 'image/png', 512);		
-											
-
-											p_saveAsWithCordova(image, 'pkey'+self.app.platform.currentTime()+'.png', function(){
-												clbk()
-											})
-
-											
-										}
-									}
-	
-								]
-							})
-	
-						})
-
-					}
+					el.c.find('.step').width(w)
 
 					
+					line.width(w * _.toArray(steps).length)
+
+
+					var m = '-' + (getindex(current) * w) + 'px'
+
+					line.css('margin-left', m)
+					
+
+					s.closest('.step').addClass('active')
+
 
 					if (clbk)
-						clbk();	
-
-					else 
-						_scrollTo(p.el, scrollel)	
-
+						clbk(_el)
 				})
 
 			},
 
-			mnemonicEffect : function(el, reverse, clbk){
+			panel : function(step, clbk){
+				self.shell({
 
-				var a = indexArray(101);
-
-				if(reverse) a.reverse()
-
-				var h = el.height();
-				el.css('min-height', h + 'px');
-					
-				lazyEach({
-					array : a,
-					sync : true, 
-					action : function(p){
-						var percent = p.item;
-
-						el.html(renders.mnemonic(percent))
-
-						h = el.height();
-						el.css('min-height', h + 'px');
-						setTimeout(p.success, rand(1, 5));
+					name :  'panel',
+					el :   el.panel,
+					data : {
+						step : step
 					},
 
-					all : {
-						success : function(){
+				}, function(_p){
 
-							el.css('min-height', 0 + 'px');
+					if (clbk)
+						clbk(_p.el);
 
-							if (clbk)
-								clbk()
-						}
-					}
 				})
 			},
 
-			mnemonic : function(percent){
+			captcha : function(el, clbk){
+				self.shell({
 
-				var s = '';
+					name :  'captcha',
+					el :   el,
+					data : {
+						captcha : steps.captcha.current
+					},
 
-				var index = (current.mnemonicMask.length * percent / 100).toFixed(0)
+				}, function(_p){
 
-				_.each(current.mnemonicKey, function(l, curlindex){
+					if (clbk)
+						clbk(_p.el);
 
-					var a = _.indexOf(current.mnemonicMask, curlindex);
+				})
+			},
 
-					if(a < index || l == ' '){
-						s = s + l;
-					}
+			email : function(el, clbk){
+				self.shell({
 
-					else
-					{
-						s = s + self.app.platform.values.alph[rand(0, self.app.platform.values.alph.length - 1)]
-					}
+					name :  'email',
+					el :   el,
+					data : {
+						
+					},
 
-					
+				}, function(_p){
+
+					if (clbk)
+						clbk(_p.el);
+
+				})
+			},
+
+			welcome : function(el, clbk){
+				self.shell({
+
+					name :  'welcome',
+					el :   el,
+					data : {
+						
+					},
+
+				}, function(_p){
+
+					if (clbk)
+						clbk(_p.el);
+
+				})
+			},
+
+			categories : function(el, clbk){
+
+				var k =  self.app.localization.key;
+
+				if(!self.sdk.categories.data.all[k]) k = 'en';
+
+				var categories = self.sdk.categories.data.all[k].filter(function(k){
+					return k.id !== 'c71'
 				})
 
-				return s
+				categories = _.map(categories, function(k){
+					var withIcon = categoryIcons.find(function(ki){
+						return ki.id === k.id;
+					})
+
+					if (withIcon){
+						k.icon = withIcon.icon;
+					}
+
+					return k;
+				})
+
+				var username = deep(app, 'platform.sdk.user.storage.me.name');
+
+				self.shell({
+
+					name :  'categories',
+					el :   el,
+					data : {
+						categories: categories,
+						username : username
+					},
+
+				}, function(_p){
+
+					if (clbk)
+						clbk(_p.el);
+
+				})
+			},
+
+			moneyfail : function(el, clbk){
+				self.shell({
+
+					name :  'moneyfail',
+					el :   el,
+					data : {
+						
+					},
+
+				}, function(_p){
+
+					if (clbk)
+						clbk(_p.el);
+
+				})
+			},
+
+			network : function(el, clbk){
+
+				self.shell({
+
+					name :  'network',
+					el :   el,
+					data : {
+						
+					},
+
+				}, function(_p){
+
+					if (clbk)
+						clbk(_p.el);
+
+				})
+			},
+
+			money : function(el, clbk){
+
+
+				self.shell({
+
+					name :  'money',
+					el :   el,
+					data : {
+						
+					},
+
+				}, function(_p){
+
+					if (clbk)
+						clbk(_p.el);
+
+				})
+			},
+
+			
+
+			settings : function(_el, clbk){
+
+
+				self.nav.api.load({
+
+					open : true,
+					id : 'test',
+					el : _el,
+
+					essenseData : {
+						wizard : true,
+						panel : el.panel,
+						prepresave : function(){
+
+						},
+						presave : function(clbk){
+
+								actions.waitgeneration(function(){
+
+
+									self.app.user.isState(function(state){
+	
+										self.sdk.registrations.add(k.mainAddress, 1)
+	
+	
+										if(!state){
+	
+											actions.signin(function(){
+												if(clbk) clbk()
+											})	
+	
+										}
+										else{
+											self.sdk.registrations.add(k.mainAddress, 1)
+	
+											if(clbk) clbk()
+										}
+									})
+									
+								})
+								
+							
+
+
+						},
+
+						relay : function(){
+							return k.mainAddress
+						},
+
+						success : function(userInfo){
+
+							k.info = userInfo
+
+							self.sdk.registrations.add(k.mainAddress, 2)
+
+							state.save()
+
+							actions.next()
+						}
+					},
+					
+					clbk : function(e, p){
+
+						ext = p
+
+						if (clbk)
+							clbk(_el);
+
+					}
+
+				})
+
 			}
 		}
 
-		var initEvents = function(p){
 
-	
-
-			el.toAuthorization.on('click', function(){
+		var state = {
+			save : function(){
 				
-				self.nav.api.loadSameThis('authorization', p)
+			},
+			load : function(){
+				
+			}
+		}
 
+		var initEvents = function(){
+			
+			window.addEventListener('resize', events.width)
+
+			el.c.find('.gotohasaccount').on('click', function(){
+
+				if (essenseData.close) essenseData.close()
+
+				self.nav.api.go({
+					href : 'authorization',
+					history : true,
+					open : true
+				})
 			})
+
 		}
 
 		var make = function(){
+			self.app.user.isState(function(state){
 
-			renders.os(function(){
-				renders.tips()
+				if(!state){
+					setTimeout(function(){
+						actions.generate(function(){
+						})
+					}, 1000)	
+					
+
+				}
+				else{
+
+					k = {};
+
+					k.mainAddress = self.app.user.address.value
+					k.mk = self.app.user.private.value.toString('hex');
+
+
+					console.log(k.mainAddress)
+				}
+
+				actions.next();
 			})
+			
 
 			
 		}
@@ -756,77 +1264,97 @@ var registration = (function(){
 
 			getdata : function(clbk, p){
 
-				self.nav.api.load({
-					open : true,
-					href : 'filluserfast'
-				})
-
-				return
-
-				if(p.state && primary)
-				{
-
-					self.nav.api.load({
+				if (p.state && !self.user.validateVay()){
+					
+					self.app.nav.api.load({
 						open : true,
 						href : 'index',
 						history : true
 					})
-					
-				}
-				else
-				{
-					
-					current = {
-						last : false,
-						end : false
-					};
 
-					var data = {
-						
-					};
+					return
+				}
+
+				needcaptcha = false;
+				gliperror = false;
+
+				k = {}
+
+				essenseData = deep(p, 'settings.essenseData') || {}
+
+				current = null;
+
+				var data = {
+					steps : steps,
+					inauth : deep(p, 'settings.essenseData.inauth') || false
+				};
+
+				regproxy = self.app.api.get.byid('pocketnet.app:8899:8099')
+
+				/*if (localStorage['regproxy']){
+					regproxy = self.app.api.get.byid(localStorage['regproxy'])
+				}*/
+
+				self.app.api.get.proxywithwallet().then(r => {
+
+					if(r && !regproxy) regproxy = r
+
+					if (regproxy){
+						localStorage['regproxy'] = regproxy.id
+					}
+
+					console.log('regproxy', regproxy)
 
 					clbk(data);
-
-					
-				}
+				})
 
 			},
 
 			destroy : function(){
-				delete self.app.platform.clbks._focus.registration;
+				window.removeEventListener('resize', events.width)
+
+				delete self.app.platform.sdk.node.transactions.clbks.moneyfail
+				delete self.app.errors.clbks.registration
+				delete self.app.platform.sdk.node.transactions.clbks.filluser
+
+				if (ext) 
+					ext.destroy()
+
+				ext = null
+
+				needcaptcha = false;
+				gliperror = false;
+
+				k = {}
+
+				if(el.c) el.c.empty()
+
 				el = {};
+
+				essenseData = {}
 			},
 			
-			init : function(p){	
+			init : function(p){
+
+				state.load();
 
 				el = {};
-				el.c = p.el.find('#' + self.map.id)
+				el.c = p.el.find('#' + self.map.id);
+				el.panel = el.c.find('.panelWrapper')
 
-				el.registrationButton = el.c.find('.registrationButton');		
-				el.toAuthorization = el.c.find('.toAuthorization');
-				el.login = el.c.find('.loginValue');
-				el.ler = el.c.find('.ler');
-				el.key = el.c.find('.key')
-
-				essenseData = p.essenseData || {};
 				initialParameters = p;
 
 				scrollel = el.c.closest('.wndcontent')
 
-				if(!scrollel.length) scrollel = null
+				if(!scrollel.length) scrollel = null;
 
+				initEvents();
 
 				make()
 
-				initEvents(p)
-
-					
 				p.clbk(null, p);
 
-				
-			},
-			wnd : {
-				class : 'withoutButtons allscreen'
+			
 			}
 		}
 	};

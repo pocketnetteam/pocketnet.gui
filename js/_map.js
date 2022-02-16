@@ -111,13 +111,18 @@ __map =  {
 		"css/plyr.css",
 		"css/pniframe.css",
 		"js/vendor/DateTimePicker.min.css",
-		/*"css/swiper-bundle.min.css",*/
 		"peertube/video-embed.css",
-		"js/vendor/emojionearea.min.css",
 		"js/vendor/owl/assets/owl.carousel.min.css",
 		"js/vendor/owl/assets/owl.theme.default.min.css",
 	],
 
+	__exportcss : {
+		"css/main.css" : true,
+		"css/common.css" : true,
+		"css/plyr.css" : true,
+		"js/vendor/owl/assets/owl.carousel.min.css" : true,
+		"js/vendor/owl/assets/owl.theme.default.min.css" : true
+	},
 	
 	__templates : [
 		{ c : 'navigation', n : 'menu' },
@@ -350,56 +355,27 @@ __map =  {
 	},
 
 	/****/
-		token : {
-			uri : "token",
-			href : "token",
-			add : {
-				el : 'content'
-			},
-			anonimus : true,
-		},
 
-		filluserfast : {
-			uri : "filluserfast",
-			href : "filluserfast",
+
+		registration : {
+			uri : "registration",
+			href : "registration",
 			add : insertingfunc,
-
-			
-
 			anonimus : true,
-
 			relations : [
 				{src : 'js/vendor/qrscanner.js',			   f : 'js'},
 				{src : 'js/validation.js',			   f : 'js'},		
 				{src : 'js/vendor/qrcode.min.js',			   f : 'js', require : function(){
 					QRCode = require('./js/vendor/qrcode.min.js')
 				}},	
-
 			],
-			
-		},
-
-		filluser : {
-			uri : "filluser",
-			href : "filluser",
-			add : insertingfunc,
-			redirect : {
-				auth : 'welcome'
-			},
-			
-			
 		},
 
 		usersettings : {
 			uri : "usersettings",
 			href : "usersettings",
 			add : insertingfunc,
-			anonimus : true,
-			/*redirect : {
-				auth : 'authorization',
-				//validate : 'filluser'
-			},*/
-		
+			anonimus : true
 		},
 
 		popup : {
@@ -414,9 +390,6 @@ __map =  {
 			href : "test",
 			add : insertingfunc,
 			anonimus : true,
-			/*redirect : {
-				auth : 'authorization'
-			},*/
 			relationsSunc : true,
 			electronDontOpen : true,
 			relations : [
@@ -443,7 +416,6 @@ __map =  {
 
 			redirect : {
 				auth : 'authorization',
-				//validate : 'filluser'
 			},
 
 			relations : [
@@ -555,53 +527,6 @@ __map =  {
 			add : insertingfunc,
 			anonimus : true,
 		},
-		articles : {
-			uri : "articles",
-			href : "articles",
-			add : insertingfunc,
-
-			electronDontOpen : true
-		},	
-		article : {
-			uri : "article",
-			href : "article",
-			add : insertingfunc,
-			relations : [
-				{src : 'js/vendor/medium-editor.js',			   f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},
-
-				{src : 'js/vendor/mediuminsert/handlebars.runtime.min.js',			   f : 'js', require : function(){
-					
-				}},
-				{
-					src : 'js/vendor/mediuminsert/jquery-sortable-min.js',			   f : 'js', require : function(){
-					
-				}},
-				{src : 'js/vendor/mediuminsert/jquery.ui.widget.js',			   f : 'js'},
-				{src : 'js/vendor/mediuminsert/jquery.iframe-transport.js',			   f : 'js'},
-				{src : 'js/vendor/mediuminsert/jquery.fileupload.js',			   f : 'js'},
-				{src : 'js/vendor/mediuminsert/medium-editor-insert-plugin.js',			   f : 'js', require : function(){
-					
-					var i = require('./js/vendor/mediuminsert/medium-editor-insert-plugin.js')
-
-					var h = require('./js/vendor/mediuminsert/handlebars.runtime.min.js')
-
-					require('./js/vendor/mediuminsert/jquery-sortable-min.js')
-
-
-					i($, h)
-
-				}},	
-
-				{src : 'css/medium/medium-editor.css',			   f : 'css'},	
-				{src : 'css/medium/medium-editor-insert-plugin.css',			   f : 'css'},	
-				{src : 'css/medium/beagle.cs',			   f : 'css'},	
-
-				
-			],
-			relationsSunc : true,
-
-			electronDontOpen : true
-		},	
 
 		articlesv : {
 			uri : "articlesv",
@@ -610,6 +535,7 @@ __map =  {
 
 			electronDontOpen : true
 		},	
+		
 		articlev : {
 			uri : "articlev",
 			href : "articlev",
@@ -659,36 +585,6 @@ __map =  {
 
 			relationsSunc : true,
 			
-		},
-
-		connection : {
-			uri : "connection",
-			href : "connection",
-			add : {
-				el : 'content'
-			},
-			anonimus : true
-		},
-
-		proxylogs : {
-			uri : "proxylogs",
-			href : "proxylogs",
-			add : {
-				el : 'content'
-			},
-
-			relationsSunc : true,
-			relations : [
-				{src : 'js/vendor/highcharts.js', 		f : 'js', require : function(){
-					Highcharts = require('./js/vendor/highcharts.js')
-				}},
-				{src : 'js/vendor/highcharts-more.js', 		f : 'js'}
-
-			],
-
-			redirect : {
-				auth : 'authorization'
-			}
 		},
 
 		help : {
@@ -806,26 +702,18 @@ __map =  {
 
 		
 			],
-
+			exportcss : true,
 			anonimus : true,
 		},
 
-		tube : {
-			uri : "tube",
-			href : "tube",
-			add : {
-				el : 'content'
-			},
-		
-		},
-
+	
 		lenta : {
 			uri : "lenta",
 			href : "lenta",
 			add : {
 				el : 'content'
 			},
-		
+			exportcss : true,
 			anonimus : true,
 		},	
 
@@ -835,39 +723,18 @@ __map =  {
 			add : {
 				el : 'content'
 			},
-		
+			exportcss : true,
 			anonimus : true,
 		},	
 
-		//search
-
-		s : {
-			uri : "s",
-			href : "s",
-			add : {
-				el : 'content'
-			},
-
-			anonimus : true,
-		},
-
-		send : {
-			uri : "send",
-			href : "send",
-			add : {
-				el : 'content'
-			},
-
-		
-			anonimus : true,
-		},
-
+	
 		imageGalleryEdit : {
 			uri : "imageGalleryEdit",
 			href : "imagesEdit",
 			add : insertingfunc,
 			anonimus : true,
 		},
+
 		imagegallery : {
 			uri : "imagegallery",
 			href : "imagegallery",
@@ -875,8 +742,6 @@ __map =  {
 			anonimus : true,
 			relationsSunc : true,
 		},
-
-		
 
 		aboutus : {
 			uri : "aboutus",
@@ -886,8 +751,6 @@ __map =  {
 			},
 			anonimus : true,
 		},
-
-
 
 	/****/
 
@@ -954,23 +817,6 @@ __map =  {
 		reload : true
 	},
 
-	/*support : {
-		uri : "support",
-		href : "support",
-		add : {
-			el : 'content'
-		},
-		relations : [
-			
-			{src : 'js/validation.js',			   f : 'js'},				
-			
-		],
-		anonimus : true,
-		reload : true
-	},*/
-
-	
-
 	notifications : {
 		uri : "notifications",
 		href : "notifications",
@@ -978,26 +824,6 @@ __map =  {
 
 		
 	},
-	/*dialogs : {
-		uri : "dialogs",
-		href : "dialogs",
-		add : function(settings, p){
-
-			if(p.inTooltip)
-
-				return {
-					insert : 'tooltip'
-				}
-
-			else
-			{
-				return {
-					el : 'content'
-				}
-			}
-
-		}
-	},*/
 
 	panel : {
 		uri : "panel",
@@ -1016,14 +842,6 @@ __map =  {
 	nodecontrol : {
 		uri : "nodecontrol",
 		href : "nodecontrol",
-		add : insertingfunc,
-		
-		anonimus : true,
-	},
-
-	bastyonhelper : {
-		uri : "bastyonhelper",
-		href : "bastyonhelper",
 		add : insertingfunc,
 		
 		anonimus : true,
@@ -1069,30 +887,6 @@ __map =  {
 		add : insertingfunc
 	},
 
-	scheduler : {
-		uri : "scheduler",
-		href : "scheduler",
-		add : insertingfunc
-	},
-
-	surveyiframe : {
-		uri : "surveyiframe",
-		href : "surveyiframe",
-		add : insertingfunc
-	},
-
-	socialshare : {
-		uri : "socialshare",
-		href : "socialshare",
-		add : insertingfunc,
-
-		anonimus : true,
-
-		relations : [
-			{src : 'js/vendor/SocialShare.min.js',			   f : 'js'},
-		],
-	},
-
 	socialshare2 : {
 		uri : "socialshare2",
 		href : "socialshare2",
@@ -1126,7 +920,7 @@ __map =  {
 		add : insertingfunc,
 		anonimus : true,
 		preshell : true,
-		//exhandler : true
+		exportcss : true,
 		
 	},
 
@@ -1137,7 +931,7 @@ __map =  {
 			el : 'content'
 		},
 		anonimus : true,
-		
+		exportcss : true,
 	},
 	
 	post : {
@@ -1146,7 +940,7 @@ __map =  {
 		preshell : true,
 		add : insertingfunc,
 		anonimus : true,
-		//exhandler : true
+		exportcss : true,
 	},
 	userslist : {
 		uri : "userslist",

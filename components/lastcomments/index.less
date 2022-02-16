@@ -1,12 +1,9 @@
 @import "../../css/__cssvar";
 
 #lastcomments{
-    color : @color-dark-mlight;
-
+    color : rgb(var(--color-txt-gray-dark));
     padding-left: 2 * @rhythm;
     
-    
-
     &:hover{
         .comment{
             .commentmessage{
@@ -74,7 +71,7 @@
             }
 
             .donate{
-                color: @color-good;
+                color: rgb(var(--color-good));
                 margin-left: @rhythm;
                 font-size: .7em;
                 font-weight: 500;
@@ -116,7 +113,7 @@
 
         &.newcommentsn,
         &.newcomments{
-            color : @color-main;
+            color : rgb(var(--color-txt-ac));
         }
 
         &.firstcomment{
@@ -149,7 +146,7 @@
         .tocommentno,
         .tocomment{
             cursor : pointer;
-            color : @color-main;
+            color : rgb(var(--color-txt-ac));
         }
 
         .author{
@@ -175,15 +172,11 @@
 
                     span{
                         font-size: 0.8em;
-                        color : @color-gray-light;
+                        color : rgb(var(--neutral-grad-3));
                     }
                 }
             }
         }
-
-        /*&:nth-last-child(1){
-            border-bottom : 0;
-        }*/
 
         &.showedreplies{
             .replies{
@@ -200,9 +193,7 @@
         &:hover{
             .metatable{
                 >div{
-
                     &.panelWrapper{
-
                         .panel{
                             opacity: 1;
                         }
@@ -231,8 +222,11 @@
             }
         }
     }
+
+
     .commentWrapper{
         padding-bottom:@rhythm;
+
         >div{
             vertical-align: top;
 
@@ -250,9 +244,7 @@
             }
 
             &.commentBody{
-
                 .cbodyWrapper{
-
                     padding-bottom:@rhythm;
                 }
             }
@@ -260,7 +252,7 @@
             .commentmessage{
 
                 a{
-                    color : @color-main;
+                    color : rgb(var(--color-txt-ac));
                     text-decoration: underline;
                     white-space: nowrap;
                 }
@@ -275,7 +267,7 @@
 
                 i,
                 span{
-                    color : @color-gray-light;
+                    color : rgb(var(--neutral-grad-2));
                     font-size: 0.8em;
                 }
             }
@@ -328,7 +320,7 @@
                     left: 20px;
                     top: 14px;
                     font-size: 0.6em;
-                    color : @color-gray-slight;
+                    color : rgb(var(--neutral-grad-1));
                 }
             }
         }
@@ -355,7 +347,7 @@
                     .transition(0.3s);
 
                     &:hover{
-                        color : @color-main;
+                        color : rgb(var(--neutral-grad-1));
                     }
 
                     &.active{
@@ -375,105 +367,6 @@
     }
 }
 
-html.stblack{
-    #lastcomments{
-        
-
-    
-    
-        .comment{
-           
-
-            &:nth-last-child(1){
-                border-bottom : 0;
-            }
-           
-            .transition(0.9s, color);
-    
-            &.newcommentsn,
-            &.newcomments{
-                color : @color-bright;
-            }
-    
-         
-    
-    
-            .tocommentno,
-            .tocomment{
-                color : @color-bright;
-            }
-    
-            .metatable {
-    
-                >div{
-    
-                    
-                    &.datecell{
-    
-                        span{
-                            color : @color-bright;
-                        }
-                    }
-                }
-            }
-        }
-        .commentWrapper{
-            padding-bottom:@rhythm;
-            >div{
-    
-                .commentmessage{
-    
-                    a{
-                        color : @color-bright;
-                    }
-    
-                }
-    
-                .edited{
-    
-                    i,
-                    span{
-                        color : @color-main;
-                        font-size: 0.8em;
-                    }
-                }
-    
-            }
-        }
-    
-        .sharepreview{
-            
-            .shareprwrapper{
-    
-                .img{
-    
-                    .vstyle{
-                        color : @color-main;
-                    }
-                }
-            }
-        }
-    
-        .rcaptiontable{
-            >div{
-                &.rpanelWrapper{
-                    .arrow{
-    
-                        &:hover{
-                            color : @color-main;
-                        }
-    
-                    }
-                }
-            }
-        }
-    
-        .rcaption{
-            border-bottom : 1px solid fade(@color-main, 40);
-           
-        }
-    } 
-}
 /*t*/ @media only screen and (max-width: 768px){
     #lastcomments{
         >div{

@@ -360,10 +360,10 @@
   border-color: rgb(var(--color-txt-ac));
 }
 #main .smallpanell .item:hover .iconWrapper {
-  box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
 }
 #main .smallpanell .item:hover .itemName {
-  box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
 }
 #main .smallpanell:hover .itemName {
   border: 1px solid rgb(var(--color-txt-ac));
@@ -513,10 +513,10 @@ html.stblack #main .smallpanell .item:hover .iconWrapper {
   border-color: #00a4ff;
 }
 html.stblack #main .smallpanell .item:hover .iconWrapper {
-  box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
 }
 html.stblack #main .smallpanell .item:hover .itemName {
-  box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
 }
 html.stblack #main .smallpanell:hover .itemName {
   border: 1px solid #00a4ff;
@@ -583,7 +583,7 @@ html.testpocketnet #main.testpocketnetbg {
     -webkit-transition: 0.3s;
     transition: 0.3s;
     border: 1px solid rgba(--neutral-grad-1, 0.3);
-    box-shadow: 0 5px 7px -5px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     contain: strict;

@@ -169,7 +169,7 @@ html.mobile #toppanel .vc_valuecustom.opened .vc_selectInput {
 html.mobile #toppanel .vc_valuecustom .vc_selectInput {
   border: 0;
   max-height: 400px;
-  box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
 }
 html.mobile #toppanel .vc_valuecustom .vc_selectInput .vc_value {
   text-align: center;

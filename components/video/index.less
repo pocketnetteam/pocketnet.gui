@@ -5,13 +5,11 @@
     max-width: 1024px;
     width: 100%;
     margin: 0 auto;
-    background: #fff;
+    background: rgb(var(--background-total-theme));
 
     .caption{
         font-size: 2em;
     }
-
-    
 
     .container{
         margin-top: 4 * @rhythm;
@@ -33,15 +31,15 @@
         text-align: center;
 
         button{
-            background: #FF4200;
-            border-color: #FF4200;
+            background: rgb(var(--color-bg-orange));
+            border-color: rgb(var(--color-bg-orange));
             min-width: 220px;
             .transition(0.3s);
 
             &:hover{
-                color : #fff;
-                background: @color-good;
-                border-color: @color-good;
+                color : rgb(var(--text-on-bg-ac-color));
+                background: rgb(var(--color-good));
+                border-color: rgb(var(--color-good));
             }
         }
     }
@@ -58,15 +56,15 @@
 
         button{
             min-width: 220px;
-            background: #FF4200;
-            border-color: #FF4200;
+            background: rgb(var(--color-bg-orange));
+            border-color: rgb(var(--color-bg-orange));
             
             .transition(0.3s);
 
             &:hover{
-                color : #fff;
-                background: @color-good;
-                border-color: @color-good;
+                color : rgb(var(--text-on-bg-ac-color));
+                background: rgb(var(--color-good));
+                border-color: rgb(var(--color-good));
             }
         }
 
@@ -77,8 +75,8 @@
 }
 .joinbeta{
 
-    background: fade(#151722, 95);
-    color : #fff;
+    background: rgba(var(--color-shadow-base), 0.95);
+    color : rgb(var(--text-on-bg-shadow-color));
 
     .thwrapper{
         background: transparent;
@@ -90,11 +88,6 @@
             font-size: 2em;
         }
     }
-
-    ._close{
-        color : fade(#fff, 90);
-    }
-
 
     .buttons{
         >div{
@@ -108,7 +101,6 @@
         }
     }
 
-
     .joinbetawrapper{
         text-align: center;
         .text{
@@ -119,7 +111,7 @@
         }
 
         .caption{
-            color : @color-contrast;
+            color : rgb(var(--color-txt-ac-2));
         }
 
         .inputWrapper{
@@ -127,8 +119,8 @@
                 width : 100%;
                 border : 0;
                 background: transparent;
-                border-bottom : 2px solid @color-contrast;
-                color : #fff;
+                border-bottom : 2px solid rgb(var(--color-txt-ac-2));
+                color : rgb(var(--text-on-bg-ac-color));
 
                 &:placeholder-shown{
                     text-align : center;
@@ -138,67 +130,6 @@
     }
 }
 
-html.stblack{
-    #video{
-        
-        background: @color-black4;
-    
-    
-        .buttonWrapper{
-    
-            button{
-                background: #FF4200;
-                border-color: #FF4200;
-    
-                &:hover{
-                    color : #fff;
-                    background: @color-good;
-                    border-color: @color-good;
-                }
-            }
-        }
-        
-        .fixedbtn{
-            
-            button{
-                background: #FF4200;
-                border-color: #FF4200;
-    
-                &:hover{
-                    color : #fff;
-                    background: @color-good;
-                    border-color: @color-good;
-                }
-            }
-        }
-    }
-    .joinbeta{
-    
-        background: fade(#151722, 95);
-        color : @color-gray-slight;
-    
-        ._close{
-            color : fade(@color-main, 90);
-        }
-    
-    
-    
-        .joinbetawrapper{
-    
-            .caption{
-                color : @color-contrast;
-            }
-    
-            .inputWrapper{
-                input{
-                    border-bottom : 2px solid @color-contrast;
-                    color : #fff;
-    
-                }
-            }
-        }
-    }    
-}
 /*t*/ @media only screen and (max-width: 768px){
     #video{
         .fixedbtn{
@@ -218,11 +149,11 @@ html.stblack{
 
     .joinbeta{
 
-       .inputs{
-        display: block;
-        >div{
+        .inputs{
             display: block;
+            >div{
+                display: block;
+            }
         }
-       }
     }
 }

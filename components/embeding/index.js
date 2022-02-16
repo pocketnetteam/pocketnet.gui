@@ -87,37 +87,7 @@ var embeding = (function(){
 						
 						self.closeContainer()
 					}
-				},
-
-
-
-				
-				donate : function(){
-
-					if (el.inputDonate){
-
-						var donateVal = Number(el.inputDonate.val());
-
-						if (donateVal >= 0.05 ){
-	
-	
-							if(on.added(donateVal)){
-	
-								self.closeContainer()
-								
-							}
-							
-								
-						} else {
-	
-							sitemessage(self.app.localization.e('minPkoin', 0.05));
-							
-						}
-					}
-
-				},
-
-				
+				}
 			},
 			
 			slowUploadGif : function(file, clbk){
@@ -238,10 +208,6 @@ var embeding = (function(){
 
 				if (images.length){
 
-					/*if(type == 'images'){
-						el.c.closest('.wnd').addClass('loadimages')
-					}*/
-
 					self.shell({
 						name :  'images',
 						el : el.images,
@@ -258,8 +224,6 @@ var embeding = (function(){
 
 
 						})
-
-						
 						
 						if (clbk)
 							clbk()
@@ -283,17 +247,11 @@ var embeding = (function(){
 
 		var initEvents = function(){
 
-
 			setTimeout(function(){
 				el.c.find('input').focus()
 			}, 300)
 			
-			
-			if (type !== 'donate'){
-
-				el.c.find('input').on('change', events.action)
-
-			}
+			el.c.find('input').on('change', events.action)
 
 			el.action.on('click', events.action)
 
@@ -338,12 +296,7 @@ var embeding = (function(){
 						actions.add.images()
 					}
 				})
-
-				/*if (window.cordova){
-
-					el.upload.find('input').click()
-					
-				}*/
+			
 			}
 			else
 			{
@@ -404,7 +357,6 @@ var embeding = (function(){
 				el.action = el.c.find('.action');
 				el.upload = el.c.find('.upload');
 				el.images = el.c.find('.imagesMi')
-				el.inputDonate = el.c.find('#inputDonate');
 
 
 				initEvents();
@@ -415,14 +367,11 @@ var embeding = (function(){
 			wnd : {
 				header : "",
 				buttons : {
-
 					close : {
 						class : "save",
 						html : '<i class="fa fa-check"></i> ' + self.app.localization.e('add'),
 						fn : function(wnd, wndObj){
-							console.log("save")
 							actions.add[type]()
-
 						}
 					},
 
@@ -430,7 +379,6 @@ var embeding = (function(){
 						class : "close",
 						html : '<i class="fa fa-times"></i> ' + self.app.localization.e('close'),
 					},
-
 				},
 				close : function(){
 

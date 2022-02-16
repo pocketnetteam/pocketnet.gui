@@ -53,7 +53,7 @@ var accounts = (function(){
 								}
 
 								if(!self.app.user.validate()){
-									h = 'filluserfast'
+									h = 'registration'
 									history = true
 								}
 

@@ -49,10 +49,10 @@
 }
 #tagcloud .tcaptiontable > div.mlab:hover {
   opacity: 1;
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
 }
 #tagcloud .tcaptiontable > div.mlab:hover .tagvalue {
-  border: 1px solid #F41A4D;
+  border: 1px solid rgb(var(--color-bad));
 }
 #tagcloud .tcaptiontable > div.cleartags {
   display: none;
@@ -160,7 +160,7 @@
   display: none;
 }
 #tagcloud .tg.selected {
-  color: rgb(var(--text-txt-orange));
+  color: rgb(var(--color-txt-orange));
 }
 #tagcloud .tg.selected .unselected {
   display: none;
@@ -169,7 +169,7 @@
   display: inline-block;
 }
 #tagcloud .tg.selected .tag > div {
-  border: 1px solid rgb(var(--text-txt-orange));
+  border: 1px solid rgb(var(--color-txt-orange));
 }
 #tagcloud .tg.selected .tag > div.tagcheck {
   opacity: 1;

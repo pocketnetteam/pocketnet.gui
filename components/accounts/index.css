@@ -56,7 +56,7 @@
   color: rgb(var(--color-txt-ac));
 }
 #accounts .addressTable > div.panel > div.remove:hover {
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
 }
 #accounts .addressTable.current > div.label {
   font-weight: 700;

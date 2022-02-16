@@ -15,7 +15,7 @@
 
 			&.active,
 			&:hover{	
-				color : @color-main;
+				color : rgb(var(--color-txt-ac));
 				text-decoration: underline;
 			}
 		}
@@ -36,7 +36,7 @@
 				font-size: 2.5em;
 				font-weight: 700;
 				padding-bottom: @rhythm;
-				color : @color-orange;
+				color : rgb(var(--color-txt-orange));
 			}
 
 			
@@ -55,7 +55,7 @@
 					.questionName{
 						padding-bottom: 2 * @rhythm;
 						font-weight: 700;
-						color : @color-gray;
+						color : rgb(var(--color-txt-gray-dark));
 						font-size: 1.5em;
 						max-width: 85%;
 					}
@@ -66,7 +66,7 @@
 
 						a{
 							text-decoration: underline;
-							color : @color-main;
+							color : rgb(var(--color-txt-ac));
 						}
 						.image{
 							width:100% !important;
@@ -84,12 +84,12 @@
 
 					.share{
 						margin-top: @rhythm;
-						color : #ff6e84;
+						color : rgb(var(--color-bg-ac-2));
 						font-size: 0.7em;
 						cursor: pointer;
 						&:hover{
 
-							color : @color-main;
+							color : rgb(var(--color-txt-ac));
 						}
 						span{
 							padding-right: 2px;
@@ -97,8 +97,8 @@
 					}
 
 					.icon{
-						background: @color-main;
-						color : #fff;
+						background: rgb(var(--color-bg-ac));
+						color : rgb(var(--text-on-bg-ac-color));
 						cursor: pointer;
 						.transition(0.3s);
 						width: 44px;
@@ -109,12 +109,8 @@
 						font-size: 0.6em;
 
 						&:hover{
-							background : @color-contrast;
-						}						
-
-						i{
-							
-						}
+							background : rgb(var(--neutral-grad-2));
+						}	
 					}
 				}
 			}
@@ -150,7 +146,7 @@
 					.questionName{
 						padding-bottom: 2 * @rhythm;
 						font-weight: 700;
-						color : @color-gray;
+						color :rgb(var(--color-txt-gray-dark));
 					}
 
 					.answer{

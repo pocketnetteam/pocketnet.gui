@@ -42,7 +42,7 @@
 				text-align: center;
 				cursor: pointer;
 				.transition(0.3s);
-				color : @color-bad;
+				color : rgb(var(--color-bad));
 
 				&:hover{
 					background : rgb(var(--neutral-grad-2));
@@ -433,7 +433,7 @@
 
 			.commentPaddingWrapper{
 				padding-left:  3 * @rhythm;
-				padding-right: 6 * @rhythm;
+				padding-right: 5 * @rhythm;
 			}
 			
 			.answer{
@@ -641,9 +641,10 @@
 					.panel{
 						width: 100%;
 						text-align: right;
-						color : rgb(var(--neutral-grad-1));
+						color : rgb(var(--neutral-grad-2));
 						cursor: pointer;
 						.transition(0.3s);
+						font-size: 0.8em;
 						opacity: 0;
 						&:hover{
 							color : rgb(var(--neutral-grad-4));
@@ -668,54 +669,42 @@
 			margin-top : @rhythm;
 
 			.items{
-				overflow: hidden; 
+				display: flex;
+				align-items: center;
 
 				>div{
-					float: right;
-					padding-left: 2 * @rhythm;
-
-					&:nth-last-child(1){
-						padding-left : 0;
-					}
-
-					&.upvoteCommentWrapper{
-						float: left;
-						padding-left: 0;
-						padding-right: 2 * @rhythm;
-					}
+					margin-right: 2 * @rhythm;
 
 					.cact{
 						cursor: pointer;
-						color : rgb(var(--color-txt-ac));
+						color : rgb(var(--neutral-grad-2));
 						.transition(0.3s);
 
 						&:hover{
-							color : rgb(var(--color-txt-gray-dark));
+							color : rgb(var(--color-bg-ac-bright));
 						}
 					}
 				}	
 			}
 
 			.iconlabelWrapper{
-				width: auto;
-				>div{
-					vertical-align: middle;
-					&.icon{
-						width: 30px;
-						text-align: center;
-						cursor: pointer;
-					}
-				}				
+				display: flex;
+				align-items: center;
+				.icon{
+					width: 20px;
+					text-align: center;
+					cursor: pointer;
+				}
 			}
 
 			span{
-				font-weight: 700;
-				font-size : 0.8em;
+				font-weight: 500;
+				font-size : 0.9em;
 			}
 
 			.upvoteComment{
 				cursor: pointer;
-				color : rgb(var(--neutral-grad-3));
+				color : rgb(var(--neutral-grad-2));
 				.transition(0.3s);
 
 				&.ratedScore,
@@ -726,9 +715,11 @@
 
 			.upvoteCommentTable{
 				width: auto;
+				display: flex;
+				align-items: center;
 
 				>div{
-					vertical-align: middle;
+					
 					padding : 0 @rhythm;
 
 					&:nth-child(1){
@@ -738,7 +729,6 @@
 
 				.commentScore{
 					font-size: 0.8em;
-					font-weight: 200;
 				}
 			}
 					
@@ -772,7 +762,6 @@
 		padding-bottom: @rhythm;
 		padding-left: @rhythm * 3;
 		padding-right: @rhythm * 5;
-		font-size: .9em;
 
 		span, i{
 			font-size : 0.8em;
@@ -915,6 +904,7 @@
 			}
 			img{
 				width: 100%;
+				border-radius: 6px;
 			}
 
 			.imgpanel{
@@ -1058,7 +1048,7 @@
 						.icon{
 							cursor: pointer;
 							.transition(0.3s);
-							color : rgb(var(--color-txt-gray-dark));
+							color : rgb(var(--neutral-grad-2));
 
 							&:hover{
 								color : rgb(var(--color-txt-ac));
@@ -1068,11 +1058,11 @@
 					}
 				}
 
-				&.postCellWrapper{
+				/*&.postCellWrapper{
 					.postaction{
 						text-align: right;
 					}
-				}
+				}*/
 
 				.limits {
 					padding : @rhythm;
@@ -1086,7 +1076,7 @@
 					}
 
 					&.bad{
-						color : @color-bad;
+						color : rgb(var(--color-bad));
 					}
 				}
 
@@ -1157,15 +1147,13 @@
 		}
 
 		.embedEmojiPrivew{
-			opacity: 0.5;
 			display: none;
 			width: 24px;
 			height: 24px;
 			position: absolute;
-			top: 7px;
-			right: 12px;
-			background-position: 0 -24px;
-			background-image: url(data:image/png;base64,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)!important
+			top : 7px;
+			right : 7px;
+			color : rgb(var(--neutral-grad-2));
 		}
 
 
@@ -1183,7 +1171,7 @@
 
 		.emojionearea-button{
 			top : 6px;
-			right : 12px;
+			right : 6px;
 		}
 
 		.embedimages{
@@ -1192,7 +1180,7 @@
 			top : 3.5px;
 			padding : 6px;
 			cursor: pointer;
-			color : rgb(var(--neutral-grad-1));
+			color : rgb(var(--neutral-grad-2));
 			.transition(0.3s);
 
 			&:hover{
@@ -1352,7 +1340,7 @@
 		&.complain{
 			&:hover{
 				>div{
-					color : @color-bad;
+					color : rgb(var(--color-bad));
 				}
 			}
 		}
@@ -1514,7 +1502,6 @@ html.mobile{
 				.items{
 					padding-top : @rhythm;
 					>div{
-						float: left;
 						padding-left: 0;
 						padding-right: 0;
 						margin-right: 2 * @rhythm;
@@ -1560,7 +1547,6 @@ html.mobile{
 						.panel{
 							text-align: center;
 							opacity: 1;
-							color : rgb(var(--color-txt-gray));
 						}
 
 						
@@ -1573,7 +1559,7 @@ html.mobile{
 		.showall{
 			padding : 3 * @rhythm;
 			padding-left:  @rhythm;
-			padding-right: @rhythm;
+			padding-right: 3 * @rhythm;
 			padding-bottom: 2 * @rhythm;;
 			
 			span{

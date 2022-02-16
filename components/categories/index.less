@@ -67,7 +67,7 @@
     
                     &:hover{
                         opacity: 1;
-                        color : @color-bad;
+                        color : rgb(var(--color-bad));
                     }
                 }
 
@@ -130,7 +130,12 @@
 
                     .catname{
                         font-size: 0.9em;
-                        
+                    }
+
+                    .forchecked{
+                        width: 20px;
+                        font-size: 0.7em;
+                        display: none;
                     }
                 }
 
@@ -205,6 +210,10 @@
                         opacity: 1;
                     }
                 }
+
+                &.checked{
+                    display: none;
+                }
             }
         }
 
@@ -224,6 +233,8 @@
                             opacity: 1;
                         }
                     }
+
+                 
                 }
             }
         }
@@ -231,21 +242,15 @@
     }
 
     .tg{
-        margin-top: 8px;
 
         .selected{
             display: none;
         }
+
         &.selected{
 
             .cat{
-                color : rgb(var(--color-bg-ac-1));
-                background : rgba(0, 164, 255, 0.08);
-                border-radius : 12px;
-            }
-
-            &.added{
-                font-weight: 700;
+                color : rgb(var(--color-txt-orange));
             }
 
             .unselected{
@@ -262,6 +267,14 @@
                         &.catcheck{
                             opacity: 1;
                         }
+
+                        &.catvalue{
+                           
+        
+                            .forchecked{
+                                display: inline-block;
+                            }
+                        }
                     }
 
                 }
@@ -277,14 +290,8 @@
             &.hdn{
                 display: none;
             }
-
-                   
         
             &.excluded{
-
-                .cat{
-                    background: transparent
-                }
                 
                 .catvalue{
                     color : rgb(var(--color-txt-gray));
@@ -294,7 +301,7 @@
                 }
 
                 .minus {
-                    color: @color-bad;
+                    color: rgb(var(--color-bad));
                     opacity: 1!important;
                 }
             }

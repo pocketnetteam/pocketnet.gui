@@ -12,7 +12,7 @@
 }
 #navigation .fakem {
   color: rgb(var(--text-on-bg-ac-color));
-  text-shadow: 0px 0px 2px rgba(0, 11, 58, 0.714), 0 0 3px rgba(0, 8, 43, 0.519);
+  text-shadow: 0px 0px 2px rgba(var(--color-shadow-base), 0.714), 0 0 3px rgba(var(--color-shadow-base), 0.519);
   text-align: center;
   padding-top: 30px;
 }
@@ -54,7 +54,7 @@
   line-height: 60px;
   margin: 0 auto;
   position: relative;
-  color: rgb(var(--text-on-bg-shadow-color), 0.7);
+  color: rgb(var(--color-txt-gray-dark), 0.7);
   text-align: center;
 }
 #navigation .items .iconWrapper .label {
@@ -118,7 +118,7 @@
   border-radius: 50%;
   background: rgba(var(--background-total-theme), 0.95) rgba(255, 255, 255, 0.95);
   border: 1px solid rgb(var(--background-total-theme));
-  box-shadow: 0 5px 7px -5px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
 }
 #navigation.curationmode .nmenu .item .label {
   display: none!important;

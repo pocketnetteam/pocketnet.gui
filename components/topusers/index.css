@@ -1,22 +1,26 @@
-#topusers .wrp .rcptwrp {
+#topusers {
+  background: #fff;
+  border-radius: 12px;
+}
+#topusers .rcptwrp {
   background: #fff;
   border-radius: 12px;
   position: relative;
 }
-#topusers .wrp .tcaptionwrapper {
+#topusers .tcaptionwrapper {
   display: flex;
   align-items: center;
 }
-#topusers .wrp .tcaptionwrapper .vc_valuecustom {
+#topusers .tcaptionwrapper .vc_valuecustom {
   width: 75px;
   font-size: 0.8em;
   font-weight: 500;
 }
-#topusers .wrp .tcaptionwrapper .vc_valuecustom .vc_textInput .vc_iconWrapper,
-#topusers .wrp .tcaptionwrapper .vc_valuecustom .vc_textInput .vc_inputWrapper {
+#topusers .tcaptionwrapper .vc_valuecustom .vc_textInput .vc_iconWrapper,
+#topusers .tcaptionwrapper .vc_valuecustom .vc_textInput .vc_inputWrapper {
   border: 0;
 }
-#topusers .wrp .tcaption {
+#topusers .tcaption {
   display: flex;
   justify-content: space-between;
   flex-grow: 2;
@@ -24,83 +28,83 @@
   padding: 12px 16px;
   border-bottom: 1px solid rgba(229, 229, 229, 0.5);
 }
-#topusers .wrp .tcaption .authors {
+#topusers .tcaption .authors {
   font-weight: 700;
 }
-#topusers .wrp .tcaption .rating {
+#topusers .tcaption .rating {
   color: #555770;
 }
-#topusers .wrp .caption {
+#topusers .caption {
   font-weight: 100;
   font-size: 2em;
   margin-bottom: 1em;
 }
-#topusers .wrp .loaderWrapper {
+#topusers .loaderWrapper {
   display: none;
   padding: 1em;
   text-align: center;
 }
-#topusers .wrp.loading .loaderWrapper {
+#topusers.loading .loaderWrapper {
   display: block;
 }
-#topusers .wrp .subscribebuttonstop .subscribe,
-#topusers .wrp .subscribebuttonstop .unsubscribe {
+#topusers .subscribebuttonstop .subscribe,
+#topusers .subscribebuttonstop .unsubscribe {
   position: relative;
 }
-#topusers .wrp .subscribebuttonstop .subscribe .fa-plus,
-#topusers .wrp .subscribebuttonstop .unsubscribe .fa-plus {
+#topusers .subscribebuttonstop .subscribe .fa-plus,
+#topusers .subscribebuttonstop .unsubscribe .fa-plus {
   position: absolute;
   top: 3px;
   left: 14px;
   font-size: 0.5em;
 }
-#topusers .wrp .subscribebuttonstop .subscribe {
+#topusers .subscribebuttonstop .subscribe {
   color: #b2abac;
 }
-#topusers .wrp .subscribebuttonstop .unsubscribe {
-  color: #076C34;
+#topusers .subscribebuttonstop .unsubscribe {
+  color: rgb(var(--color-good));
 }
-#topusers .wrp .users {
+#topusers .users {
   padding-bottom: 0.5em;
 }
-#topusers .wrp .users .user {
+#topusers .users .user {
   padding: 0.5em 0;
   margin-top: 0.5em;
   margin-bottom: 0.5em;
   padding-left: 1em;
   padding-right: 1.5em;
 }
-#topusers .wrp .users .user .addressTable {
+#topusers .users .user .addressTable {
   cursor: pointer;
 }
-#topusers .wrp .users .user .addressTable > div {
+#topusers .users .user .addressTable > div {
   vertical-align: middle;
 }
-#topusers .wrp .users .user .addressTable > div.iconWrapper {
+#topusers .users .user .addressTable > div.iconWrapper {
   width: 50px;
   text-align: center;
 }
-#topusers .wrp .users .user .addressTable > div.iconWrapper .usericon {
+#topusers .users .user .addressTable > div.iconWrapper .usericon {
   height: 40px;
   width: 40px;
 }
-#topusers .wrp .users .user .addressTable > div.iconWrapper .usericon .letter {
+#topusers .users .user .addressTable > div.iconWrapper .usericon .letter {
   position: relative;
   bottom: 4px;
   left: 1px;
 }
-#topusers .wrp .users .user .addressTable > div.label {
+#topusers .users .user .addressTable > div.label {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 }
-#topusers .wrp .users .user .addressTable > div.label .cur {
+#topusers .users .user .addressTable > div.label .cur {
   color: #00a4ff;
 }
-#topusers .wrp .users .user .addressTable > div.label .top {
+#topusers .users .user .addressTable > div.label .top {
   display: flex;
 }
-#topusers .wrp .users .user .addressTable > div.label .top .name {
+#topusers .users .user .addressTable > div.label .top .name {
   font-weight: 600;
   font-size: 0.9em;
   max-width: 120px;
@@ -108,64 +112,140 @@
   white-space: nowrap;
   overflow: hidden;
 }
-#topusers .wrp .users .user .addressTable > div.label .top .reputation {
+#topusers .users .user .addressTable > div.label .top .reputation {
   position: relative;
   bottom: 2px;
   left: 3px;
   font-size: 0.6em;
   color: #00a4ff;
 }
-#topusers .wrp .users .user .addressTable > div.label .light {
+#topusers .users .user .addressTable > div.label .light {
   font-size: 0.7em;
   color: #3c4146;
 }
-#topusers .wrp .users .user .addressTable > div.extra {
+#topusers .users .user .addressTable > div.extra {
   width: 20px;
   text-align: right;
 }
-#topusers .wrp .users .user .blockingWrapper {
+#topusers .users .user .blockingWrapper {
   display: none;
 }
-#topusers .wrp .users .user.userblocking .subscribebuttonstop {
+#topusers .users .user.userblocking .subscribebuttonstop {
   display: none;
 }
-#topusers .wrp .users .user.userblocking .blockingWrapper {
+#topusers .users .user.userblocking .blockingWrapper {
   display: inline;
 }
-#topusers .wrp .users .user .subscribebuttonstop .unsubscribe {
+#topusers .users .user .subscribebuttonstop .unsubscribe {
   display: none;
 }
-#topusers .wrp .users .user .subscribebuttonstop.following .unsubscribe {
+#topusers .users .user .subscribebuttonstop.following .unsubscribe {
   display: inline;
 }
-#topusers .wrp .users .user .subscribebuttonstop.following .notificationturn {
+#topusers .users .user .subscribebuttonstop.following .notificationturn {
   display: inline;
 }
-#topusers .wrp .users .user .subscribebuttonstop.following .subscribe {
+#topusers .users .user .subscribebuttonstop.following .subscribe {
   display: none;
 }
-#topusers .wrp .users .user .modalWrapper {
+#topusers .users .user .modal {
   display: none;
-  margin-top: 15px;
-  right: 180px;
+  cursor: default;
+  width: 308px;
   position: absolute;
   z-index: 9999;
+  right: 180px;
+  margin-top: 15px;
+  background: #FFFFFF;
+  border-radius: 12px;
+  box-shadow: 32px 32px 32px 32px #00000014;
+  padding: 1em 0.5em;
 }
-#topusers .wrp .users .user:hover .modalWrapper {
+#topusers .users .user .modal .topInfo .addressTable {
+  padding: 0.5em 1em;
+}
+#topusers .users .user .modal .topInfo .addressTable .iconWrapper {
+  padding-right: 1em;
+}
+#topusers .users .user .modal .topInfo .addressTable .iconWrapper .usericon {
+  height: 45px;
+  width: 45px;
+}
+#topusers .users .user .modal .topInfo .addressTable .label {
+  padding-left: 7px;
+}
+#topusers .users .user .modal .topInfo .addressTable .label .name {
+  max-width: 300px!important;
+}
+#topusers .users .user .modal .topInfo .addressTable .label .reputation {
+  font-size: 0.8em;
+  color: #8E90A6;
+}
+#topusers .users .user .modal .topInfo .addressTable .label .reputation .value {
+  color: #00a4ff;
+  font-weight: 700;
+}
+#topusers .users .user .modal .follow {
+  display: flex;
+  padding: 0.5em 1em;
+}
+#topusers .users .user .modal .follow .followers {
+  padding-right: 1.5em;
+}
+#topusers .users .user .modal .follow .value {
+  font-weight: 700;
+}
+#topusers .users .user .modal .subscribeWrapper {
+  padding: 0.5em;
+}
+#topusers .users .user .modal .subscribeWrapper button {
+  width: 100%;
+  border-radius: 8px;
+  padding: 8px 16px;
+}
+#topusers .users .user .modal .subscribeWrapper .unsubscribe {
+  display: none;
+  background: rgb(var(--color-good));
+  border: 1px solid rgb(var(--color-good));
+}
+#topusers .users .user .modal .subscribeWrapper .unsubscribe:hover {
+  color: rgb(var(--color-good));
+  border: 1px solid rgb(var(--color-good));
+  background: #fff;
+}
+#topusers .users .user .modal .subscribeWrapper.following .unsubscribe {
   display: block;
 }
-html.stblack #topusers .rcptwrp {
+#topusers .users .user .modal .subscribeWrapper.following .subscribe {
+  display: none;
+}
+#topusers .users .user .modal .aboutWrapper {
+  padding: 0.5em 1em;
+}
+#topusers .users .user:hover .modal {
+  display: block;
+}
+html.stblack #topusers {
   background: #0a0c17;
 }
-html.stblack #topusers .rcptwrp .users .user .addressTable {
+html.stblack #topusers .users .user .addressTable {
   cursor: pointer;
 }
-html.stblack #topusers .rcptwrp .users .user .addressTable > div.label .cur {
+html.stblack #topusers .users .user .addressTable > div.label .cur {
   color: #00a4ff;
 }
-html.stblack #topusers .rcptwrp .users .user .addressTable > div.label .light {
+html.stblack #topusers .users .user .addressTable > div.label .light {
   color: #3c4146;
 }
-html.stblack #topusers .rcptwrp .users .user.blocking {
+html.stblack #topusers .users .user.blocking {
   background: #290318;
+}
+/*t*/
+@media only screen and (max-width: 768px) {
+  #userslist {
+    padding: 1em;
+  }
+  #userslist .users .addressTable > div.extra {
+    width: 60px;
+  }
 }

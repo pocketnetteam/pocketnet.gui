@@ -2,10 +2,11 @@
 
 #terms{
 	padding-left: 15%;
+	
 	.caption{
 		margin-top: 6 * @rhythm;
 		font-size: 1.9em;
-		color : @color-gray;
+		color : rgb(var(--neutral-grad-3));
 	}
 
 	.captionWrapper,
@@ -29,25 +30,23 @@
 	}
 
 	.text{
-		color : @color-black2;
+		color : rgb(var(--color-txt-gray-dark));
 		max-width: 700px;
 		margin-top: 4 * @rhythm;
 		margin-bottom: 8 * @rhythm;
-		
 
 		p{
 			margin-top : 4 * @rhythm;
 			margin-bottom : 4 * @rhythm;
 
-
 			a{
-				color : @color-main;
+				color : rgb(var(--color-txt-ac));
 			}
 
 			&.subcaption{
 				text-transform: uppercase;
 				margin-bottom : 2 * @rhythm;
-				color: @color-bright;
+				color: rgb(var(--color-txt-ac));
 				font-size: 1.1em;
 			}
 
@@ -55,13 +54,13 @@
 				text-transform: uppercase;
 				margin-bottom : 2 * @rhythm;
 				margin-top: 6 * @rhythm;
-				color: @color-main;
+				color: rgb(var(--color-txt-ac));
 				font-size: 1.1em;
 				font-weight: 500;
 			}
 
 			&.bright{
-				color : @color-contrast;
+				color : rgb(var(--color-txt-ac-2));
 			}
 
 
@@ -71,12 +70,13 @@
 .wnd{
 	#terms{
 		padding-top : 8 * @rhythm;
+
 		.text{
-			color : @color-gray-slight;
+			color : rgb(var(--neutral-grad-1));
 		}
 
 		.caption{
-			color : @color-gray-light;
+			color :  rgb(var(--neutral-grad-0));
 		}
 	}
 }

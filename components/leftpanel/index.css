@@ -53,10 +53,10 @@
   margin-top: 1em;
 }
 #leftpanel .best.on .fire {
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
 }
 #leftpanel .best.on .toggle {
-  color: #076C34;
+  color: rgb(var(--color-good));
 }
 #leftpanel .best.on .toggle i {
   transform: none;

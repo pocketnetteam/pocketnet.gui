@@ -59,10 +59,10 @@
 
                 &:hover{
                     opacity: 1;
-                    color : @color-bad;
+                    color : rgb(var(--color-bad));
                     
                     .tagvalue{
-                        border: 1px solid @color-bad;
+                        border: 1px solid rgb(var(--color-bad));
                     }
                 }
             }
@@ -207,7 +207,8 @@
             display: none;
         }
         &.selected{
-            color : rgb(var(--text-txt-orange));
+            color : rgb(var(--color-txt-orange));
+
             .unselected{
                 display: none;
             }
@@ -219,7 +220,7 @@
             .tag{
 
                 >div{
-                    border: 1px solid rgb(var(--text-txt-orange));
+                    border: 1px solid rgb(var(--color-txt-orange));
 
                     &.tagcheck{
                         opacity: 1;

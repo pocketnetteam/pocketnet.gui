@@ -59,7 +59,7 @@
   display: none;
 }
 #userslist .users .user .subscribebuttonstop i {
-  color: #076C34;
+  color: rgb(var(--color-good));
 }
 #userslist .users .user .subscribebuttonstop button {
   font-size: 0.9em;

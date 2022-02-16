@@ -54,7 +54,7 @@
 }
 #categories .tcaptiontable .buttons > div.mlab:hover {
   opacity: 1;
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
 }
 #categories .tcaptiontable .buttons > div.addcategory:hover {
   color: rgb(var(--color-txt-ac));
@@ -97,6 +97,11 @@
 }
 #categories .cat .cattable > div.catvalue .catname {
   font-size: 0.9em;
+}
+#categories .cat .cattable > div.catvalue .forchecked {
+  width: 20px;
+  font-size: 0.7em;
+  display: none;
 }
 #categories .cat .cattable > div.iconWrapper {
   width: 1em;
@@ -159,6 +164,9 @@
 #categories .cat .cattable > div.catedit:hover {
   opacity: 1;
 }
+#categories .cat .cattable > div.checked {
+  display: none;
+}
 #categories .cat:hover .cattable > div.catedit,
 #categories .cat:hover .cattable > div.catcheck {
   opacity: 1;
@@ -171,19 +179,11 @@
 #categories .cat:hover .cattable > div.minus:hover {
   opacity: 1;
 }
-#categories .tg {
-  margin-top: 8px;
-}
 #categories .tg .selected {
   display: none;
 }
 #categories .tg.selected .cat {
-  color: rgb(var(--color-bg-ac-1));
-  background: rgba(0, 164, 255, 0.08);
-  border-radius: 12px;
-}
-#categories .tg.selected.added {
-  font-weight: 700;
+  color: rgb(var(--color-txt-orange));
 }
 #categories .tg.selected .unselected {
   display: none;
@@ -194,14 +194,14 @@
 #categories .tg.selected .cat .cattable > div.catcheck {
   opacity: 1;
 }
+#categories .tg.selected .cat .cattable > div.catvalue .forchecked {
+  display: inline-block;
+}
 #categories .ta .tg {
   display: block;
 }
 #categories .ta .tg.hdn {
   display: none;
-}
-#categories .ta .tg.excluded .cat {
-  background: transparent;
 }
 #categories .ta .tg.excluded .catvalue {
   color: rgb(var(--color-txt-gray));
@@ -209,7 +209,7 @@
   pointer-events: none;
 }
 #categories .ta .tg.excluded .minus {
-  color: #F41A4D;
+  color: rgb(var(--color-bad));
   opacity: 1!important;
 }
 #categories.showedallcats .showallcats {
@@ -291,7 +291,7 @@
 .addcategorydialog .namewrapper .inputWrapper input {
   width: 100%;
   border: 0;
-  box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
 }
 @media only screen and (max-width: 768px) {
   #categories .cat .cattable .catedit,
