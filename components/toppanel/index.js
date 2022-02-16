@@ -28,7 +28,7 @@ var toppanel = (function(){
 					links.video = "index?video=1"
 				}
 
-				if ((isMobile() && window.cordova)/* || (typeof _Electron != 'undefined' && window.electron)*/) {
+				if (window.cordova/* || (typeof _Electron != 'undefined' && window.electron)*/) {
 					links.saved = "index?r=saved"
 				}
 
@@ -45,7 +45,7 @@ var toppanel = (function(){
 					labels.push(self.app.localization.e('video'))
 				}
 
-				if ((isMobile() && window.cordova) || (typeof _Electron != 'undefined' && window.electron)) {
+				if ((window.cordova) || (typeof _Electron != 'undefined' && window.electron)) {
 					labels.push(self.app.localization.e('downloaded'));
 				}
 
@@ -101,43 +101,34 @@ var toppanel = (function(){
 
 				self.app.user.isState(function(state){
 
-					if(isMobile() && pathname != 'index'){
-						el.c.addClass('hidden')
-					}
-					else{
-						el.c.removeClass('hidden')
+					self.shell({
 
-						self.shell({
+						name :  'menu',
+						el :   el.menu,
+						data : {
+							pathname : pathname,
+							state : state,
+							mobile : isMobile(),
+							tagsSelected : self.app.platform.sdk.categories.gettags().length,
+							selector : selector
+						},
 
-							name :  'menu',
-							el :   el.menu,
-							data : {
-								pathname : pathname,
-								state : state,
-								mobile : isMobile(),
-								tagsSelected : self.app.platform.sdk.categories.gettags().length,
-								selector : selector
-							},
-	
-						}, function(_p){
+					}, function(_p){
 
-							updateNew()
-	
-							ParametersLive([selector], _p.el)
+						updateNew()
 
-							el.menu.find('.showcategories').on(clickAction(), function(){
+						ParametersLive([selector], _p.el)
 
-								var mainmoduleAction = deep(self.app, 'modules.main.module.showCategories')
-				
-								if (mainmoduleAction) mainmoduleAction(true)
-							})
-	
+						el.menu.find('.showcategories').on(clickAction(), function(){
+
+							var mainmoduleAction = deep(self.app, 'modules.main.module.showCategories')
+			
+							if (mainmoduleAction) mainmoduleAction(true)
 						})
-					}
 
+					})
 					
 				})
-
 				
 			}
 		}

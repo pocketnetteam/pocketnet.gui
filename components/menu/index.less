@@ -206,9 +206,13 @@
 		justify-content: space-between;
 
 		.section{
-
+			
 			height: 100%;
 			padding: 0 2 * @rhythm;
+			display: flex;
+			flex-wrap: nowrap;
+			justify-content: space-between;
+			align-items: center;
 
 			&.right{
 				padding-right: 0;
@@ -221,6 +225,7 @@
 
 			&.leftpart{
 				padding-left: 0;
+				min-width: 200px;
 			}
 
 		}
@@ -230,7 +235,6 @@
 		}
 
 		.items{
-			float: left;
 			height: 100%;
 
 			.table{
@@ -294,6 +298,7 @@
 			.item{
 				width: auto;
 				height: 100%;
+				white-space: nowrap;
 
 				.icon{
 					padding: 0;
@@ -863,6 +868,10 @@
 			.section{
 				padding: 0;
 				width: auto;
+
+				&.leftpart{
+					min-width: 0;
+				}
 
 				&.right{
 					padding-right: 0;

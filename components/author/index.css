@@ -14,6 +14,9 @@
 #author .mobileinfo {
   display: none;
 }
+#author .mobileinfo .item.name {
+  display: none;
+}
 #author .copyaddress {
   cursor: pointer;
   text-overflow: ellipsis;
@@ -509,6 +512,22 @@
   background: rgba(var(--background-secondary-theme), 0.3);
 }
 @media only screen and (max-width: 1024px) {
+  #author .bgCaption .caption {
+    justify-content: center;
+  }
+  #author .mobileinfo {
+    display: block;
+  }
+  #author .leftpanelcell {
+    display: none;
+  }
+  #author .lentacell {
+    margin-right: 44px;
+    margin-left: 0;
+  }
+  #author .newsharewrapper {
+    display: none;
+  }
   #author .leftpanelcell {
     display: none;
   }
@@ -519,296 +538,41 @@
   #author .work.mwork {
     width: 90%;
   }
-}
-html.mobile #author .newsharewrapper,
-html.cordova #author .newsharewrapper,
-html.tablet #author .newsharewrapper {
-  display: none;
-}
-html.mobile #author .leftpanelcell,
-html.cordova #author .leftpanelcell,
-html.tablet #author .leftpanelcell {
-  display: none;
-}
-html.mobile #author .lentacell,
-html.cordova #author .lentacell,
-html.tablet #author .lentacell {
-  margin-right: 44px;
-  margin-left: 0;
-}
-html.mobile #author .work.mwork,
-html.cordova #author .work.mwork,
-html.tablet #author .work.mwork {
-  width: 90%;
-}
-html.mobile #author .bgCaption,
-html.cordova #author .bgCaption,
-html.tablet #author .bgCaption {
-  margin-bottom: 0;
-  margin-top: 0;
-  height: auto;
-  padding-bottom: 2em;
-  background: #263045;
-}
-html.mobile #author .bgCaption .cwrapper,
-html.cordova #author .bgCaption .cwrapper,
-html.tablet #author .bgCaption .cwrapper {
-  display: block;
-}
-html.mobile #author .bgCaption .cwrapper > div,
-html.cordova #author .bgCaption .cwrapper > div,
-html.tablet #author .bgCaption .cwrapper > div {
-  display: block;
-}
-html.mobile #author .bgCaption .cwrapper .cellforimage,
-html.cordova #author .bgCaption .cwrapper .cellforimage,
-html.tablet #author .bgCaption .cwrapper .cellforimage {
-  margin: 0 auto;
-}
-html.mobile #author .bgCaption .work,
-html.cordova #author .bgCaption .work,
-html.tablet #author .bgCaption .work {
-  padding-right: 0;
-}
-html.mobile #author .bgCaption .telements .telement,
-html.cordova #author .bgCaption .telements .telement,
-html.tablet #author .bgCaption .telements .telement {
-  width: 100%;
-  margin-right: 0;
-}
-html.mobile #author .bgCaption .telements .telement.sbscr,
-html.cordova #author .bgCaption .telements .telement.sbscr,
-html.tablet #author .bgCaption .telements .telement.sbscr {
-  display: none;
-  padding-left: 1em;
-  padding-right: 0;
-}
-html.mobile #author .bgCaption .tips,
-html.cordova #author .bgCaption .tips,
-html.tablet #author .bgCaption .tips {
-  margin-top: 0.5em;
-}
-html.mobile #author .bgCaption .caption,
-html.cordova #author .bgCaption .caption,
-html.tablet #author .bgCaption .caption {
-  font-size: 1.1em;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-align: center;
-  padding-left: 0;
-  padding-right: 0;
-  white-space: nowrap;
-  margin-top: 0;
-  margin-bottom: 1em;
-}
-html.mobile #author .bgCaption .caption .adr,
-html.cordova #author .bgCaption .caption .adr,
-html.tablet #author .bgCaption .caption .adr {
-  font-size: 1em;
-}
-html.mobile #author .bgCaption .usermenu,
-html.cordova #author .bgCaption .usermenu,
-html.tablet #author .bgCaption .usermenu {
-  width: 100%;
-  display: flex!important;
-  flex-wrap: nowrap;
-}
-html.mobile #author .bgCaption .usermenu .usermenuitem,
-html.cordova #author .bgCaption .usermenu .usermenuitem,
-html.tablet #author .bgCaption .usermenu .usermenuitem {
-  flex-grow: 1;
-  width: auto;
-  float: none;
-  margin-right: 0;
-  padding-left: 0;
-  padding-right: 0;
-  text-align: center;
-  padding-bottom: 1em;
-  font-size: 0.8em;
-  border-bottom: 2px solid rgba(var(--color-txt-gray), 0.5);
-}
-html.mobile #author .bgCaption .usermenu .usermenuitem.active,
-html.cordova #author .bgCaption .usermenu .usermenuitem.active,
-html.tablet #author .bgCaption .usermenu .usermenuitem.active {
-  border-bottom: 2px solid rgba(var(--color-txt-gray), 0.8);
-}
-html.mobile #author .bgCaption .cellforimage,
-html.cordova #author .bgCaption .cellforimage,
-html.tablet #author .bgCaption .cellforimage {
-  width: 100px;
-  padding-top: 2em;
-}
-html.mobile #author .bgCaption .cellforimage .usericon,
-html.cordova #author .bgCaption .cellforimage .usericon,
-html.tablet #author .bgCaption .cellforimage .usericon {
-  width: 100px;
-  height: 100px;
-  line-height: 98px;
-}
-html.mobile #author .bgCaption .infoWrapper,
-html.cordova #author .bgCaption .infoWrapper,
-html.tablet #author .bgCaption .infoWrapper {
-  position: static;
-  left: 0;
-  right: 0;
-  top: 20px;
-  bottom: 0;
-  z-index: 1;
-}
-html.mobile #author .bgCaption .infoWrapper .work,
-html.cordova #author .bgCaption .infoWrapper .work,
-html.tablet #author .bgCaption .infoWrapper .work {
-  padding: 0 0.5em;
-}
-html.mobile #author .bgCaption .work,
-html.cordova #author .bgCaption .work,
-html.tablet #author .bgCaption .work {
-  position: relative;
-  overflow: hidden;
-}
-html.mobile #author .authorinfo .showmoreinabout,
-html.cordova #author .authorinfo .showmoreinabout,
-html.tablet #author .authorinfo .showmoreinabout {
-  display: inline;
-}
-html.mobile #author .authorinfo .additionalinfo.hasabout,
-html.cordova #author .authorinfo .additionalinfo.hasabout,
-html.tablet #author .authorinfo .additionalinfo.hasabout {
-  display: none;
-}
-html.mobile #author .authorinfo.displayedall .showmoreinabout,
-html.cordova #author .authorinfo.displayedall .showmoreinabout,
-html.tablet #author .authorinfo.displayedall .showmoreinabout {
-  display: none;
-}
-html.mobile #author .authorinfo.displayedall .additionalinfo.hasabout,
-html.cordova #author .authorinfo.displayedall .additionalinfo.hasabout,
-html.tablet #author .authorinfo.displayedall .additionalinfo.hasabout {
-  display: block;
-}
-html.tablet #author .bgCaption {
-  padding-top: 45px;
-}
-html.tablet #author .bgCaption .caption {
-  justify-content: center;
-}
-@media only screen and (max-width: 768px) {
   #author .bgCaption {
-    padding-top: 0;
-  }
-  #author .newsharewrapper {
-    display: none;
-  }
-}
-/*t*/
-@media only screen and (max-width: 768px) {
-  #content #author .lentacell {
-    margin-right: 0;
-  }
-  #content #author .work.mwork {
-    width: 100%;
-  }
-  #content #author .authorlentawrappermain {
-    position: relative;
-  }
-  #content #author .authorlentawrappermain .authorsearchicon {
-    display: none;
-  }
-  #content #author .authorlentawrappermain .authorsearchwrapper {
-    padding: 0 0.5em;
-  }
-  #content #author .authorlentawrappermain .authorsearchwrapper .search .searchPanel {
-    display: table-cell;
-  }
-  #content #author .authorlentawrappermain .authorsearchwrapper .search .searchPanel .searchPanelWrapper > div[event=clear] {
-    display: block;
-  }
-  #content #author .authorlentawrappermain .authorsearchwrapper .search .searchInput .searchInputIcon .sminput {
-    background: transparent;
-    padding-left: 0.5em;
-  }
-  #content #author .lentaWrapper .authorinfo {
-    padding: 1em;
-  }
-  #content #author .copyaddress {
-    font-size: 1em;
-    font-weight: 700;
-  }
-  #content #author .subscribewrapperphones .subscribebuttons button {
-    padding-bottom: 0.5em;
-    padding-top: 0.5em;
-  }
-  #content #author .bgCaption .cwrapper > div {
-    vertical-align: top;
-    padding-top: 1em;
-  }
-  #content #author .lentaWrapper {
-    min-height: 0;
-  }
-  #content #author .lentacell {
-    margin-right: 0;
-    margin-left: 0;
-  }
-  #content #author .leftpanelcell {
-    float: none;
-    display: none;
-    width: 100%;
-    padding: 1em;
-  }
-  #content #author .leftpanelcell .authorinfo .itemtable > div {
-    vertical-align: middle;
-  }
-  #content #author .leftpanelcell .authorinfo .itemtable > div.icon {
-    width: 30px;
-  }
-  #content #author .leftpanelcell .authorinfo .item:nth-last-child(1) {
-    margin-bottom: 0;
-  }
-  #content #author .mainpanelcell {
-    display: none;
-  }
-  #content #author .work.mwork {
-    padding: 0!important;
-    overflow: hidden;
-  }
-  #content #author .work .work {
-    width: 100%!important;
-  }
-  #content #author .bgCaption {
     margin-bottom: 0;
     margin-top: 0;
     height: auto;
     padding-bottom: 2em;
     background: #263045;
   }
-  #content #author .bgCaption .cwrapper {
+  #author .bgCaption .changeaccount {
+    font-size: 0.5em;
+  }
+  #author .bgCaption .cwrapper {
     display: block;
   }
-  #content #author .bgCaption .cwrapper > div {
+  #author .bgCaption .cwrapper > div {
     display: block;
   }
-  #content #author .bgCaption .cwrapper .cellforimage {
+  #author .bgCaption .cwrapper .cellforimage {
     margin: 0 auto;
   }
-  #content #author .bgCaption .foraddress {
-    opacity: 0.3;
-  }
-  #content #author .bgCaption .work {
+  #author .bgCaption .work {
     padding-right: 0;
   }
-  #content #author .bgCaption .telements .telement {
+  #author .bgCaption .telements .telement {
     width: 100%;
     margin-right: 0;
   }
-  #content #author .bgCaption .telements .telement.sbscr {
+  #author .bgCaption .telements .telement.sbscr {
     display: none;
     padding-left: 1em;
     padding-right: 0;
   }
-  #content #author .bgCaption .tips {
+  #author .bgCaption .tips {
     margin-top: 0.5em;
   }
-  #content #author .bgCaption .caption {
+  #author .bgCaption .caption {
     font-size: 1.1em;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -818,65 +582,40 @@ html.tablet #author .bgCaption .caption {
     white-space: nowrap;
     margin-top: 0;
     margin-bottom: 1em;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
   }
-  #content #author .bgCaption .caption .adr {
-    font-size: 2em;
+  #author .bgCaption .caption .adr {
+    font-size: 1em;
   }
-  #content #author .bgCaption .caption .subscribebuttonstop {
-    flex-grow: 1;
-    min-width: 100%;
-  }
-  #content #author .bgCaption .caption .middotwrapper {
-    display: none;
-  }
-  #content #author .bgCaption .caption .subscribe {
-    font-size: 1.4em;
-    border-bottom: 1px solid rgb(var(--color-txt-orange));
-    opacity: 1;
-  }
-  #content #author .bgCaption .caption .notificationturn i,
-  #content #author .bgCaption .caption .unsubscribe {
-    font-size: 1.4em;
-  }
-  #content #author .bgCaption .caption .startchat {
-    font-size: 1.4em;
-  }
-  #content #author .bgCaption .caption .blockingWrapper {
-    flex-grow: 1;
-    min-width: 100%;
-  }
-  #content #author .bgCaption .usermenu {
+  #author .bgCaption .usermenu {
     width: 100%;
     display: flex!important;
     flex-wrap: nowrap;
   }
-  #content #author .bgCaption .usermenu .usermenuitem {
+  #author .bgCaption .usermenu .usermenuitem {
+    flex-grow: 1;
     width: auto;
     float: none;
-    flex-grow: 1;
     margin-right: 0;
     padding-left: 0;
     padding-right: 0;
-    padding-bottom: 1em;
     text-align: center;
+    padding-bottom: 1em;
     font-size: 0.8em;
     border-bottom: 2px solid rgba(var(--color-txt-gray), 0.5);
   }
-  #content #author .bgCaption .usermenu .usermenuitem.active {
+  #author .bgCaption .usermenu .usermenuitem.active {
     border-bottom: 2px solid rgba(var(--color-txt-gray), 0.8);
   }
-  #content #author .bgCaption .cellforimage {
+  #author .bgCaption .cellforimage {
     width: 100px;
+    padding-top: 2em;
   }
-  #content #author .bgCaption .cellforimage .usericon {
+  #author .bgCaption .cellforimage .usericon {
     width: 100px;
     height: 100px;
     line-height: 98px;
   }
-  #content #author .bgCaption .infoWrapper {
+  #author .bgCaption .infoWrapper {
     position: static;
     left: 0;
     right: 0;
@@ -884,31 +623,113 @@ html.tablet #author .bgCaption .caption {
     bottom: 0;
     z-index: 1;
   }
-  #content #author .bgCaption .infoWrapper .work {
+  #author .bgCaption .infoWrapper .work {
     padding: 0 0.5em;
   }
-  #content #author .bgCaption .infoWrapper .mobileinfo {
-    display: block;
-  }
-  #content #author .bgCaption .authorinfo {
-    padding: 0.5em;
-    margin-bottom: 0;
-  }
-  #content #author .bgCaption .authorinfo .postcnt,
-  #content #author .bgCaption .authorinfo .name {
-    display: none;
-  }
-  #content #author .bgCaption .work {
+  #author .bgCaption .work {
     position: relative;
     overflow: hidden;
   }
-  #content #author .fxd {
-    position: fixed;
+  #author .authorinfo .showmoreinabout {
+    display: inline;
+  }
+  #author .authorinfo .additionalinfo.hasabout {
+    display: none;
+  }
+  #author .authorinfo.displayedall .showmoreinabout {
+    display: none;
+  }
+  #author .authorinfo.displayedall .additionalinfo.hasabout {
+    display: block;
   }
 }
-@media only screen and (max-width: 640px) {
-  #content #author .bgCaption .caption {
-    text-align: left;
+@media only screen and (max-width: 768px) {
+  #author .bgCaption {
+    padding-top: 0;
+  }
+  #author .bgCaption .caption {
+    text-align: left!important;
     padding-left: 0.5em;
+  }
+  #author .newsharewrapper {
+    display: none;
+  }
+  html.allcontent #author .bgCaption {
+    padding-top: 44px;
+  }
+  #author .lentacell {
+    margin-right: 0;
+  }
+  #author .work.mwork {
+    width: 100%;
+  }
+  #author .authorlentawrappermain {
+    position: relative;
+  }
+  #author .authorlentawrappermain .authorsearchicon {
+    display: none;
+  }
+  #author .authorlentawrappermain .authorsearchwrapper {
+    padding: 0 0.5em;
+  }
+  #author .authorlentawrappermain .authorsearchwrapper .search .searchPanel {
+    display: table-cell;
+  }
+  #author .authorlentawrappermain .authorsearchwrapper .search .searchPanel .searchPanelWrapper > div[event=clear] {
+    display: block;
+  }
+  #author .authorlentawrappermain .authorsearchwrapper .search .searchInput .searchInputIcon .sminput {
+    background: transparent;
+    padding-left: 0.5em;
+  }
+  #author .lentaWrapper .authorinfo {
+    padding: 1em;
+  }
+  #author .copyaddress {
+    font-size: 1em;
+    font-weight: 700;
+  }
+  #author .subscribewrapperphones .subscribebuttons button {
+    padding-bottom: 0.5em;
+    padding-top: 0.5em;
+  }
+  #author .bgCaption .cwrapper > div {
+    vertical-align: top;
+    padding-top: 1em;
+  }
+  #author .lentaWrapper {
+    min-height: 0;
+  }
+  #author .lentacell {
+    margin-right: 0;
+    margin-left: 0;
+  }
+  #author .leftpanelcell {
+    float: none;
+    display: none;
+    width: 100%;
+    padding: 1em;
+  }
+  #author .leftpanelcell .authorinfo .itemtable > div {
+    vertical-align: middle;
+  }
+  #author .leftpanelcell .authorinfo .itemtable > div.icon {
+    width: 30px;
+  }
+  #author .leftpanelcell .authorinfo .item:nth-last-child(1) {
+    margin-bottom: 0;
+  }
+  #author .mainpanelcell {
+    display: none;
+  }
+  #author .work.mwork {
+    padding: 0!important;
+    overflow: hidden;
+  }
+  #author .work .work {
+    width: 100%!important;
+  }
+  #author .fxd {
+    position: fixed;
   }
 }

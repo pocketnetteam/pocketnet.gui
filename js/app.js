@@ -257,6 +257,18 @@ Application = function(p)
 	
 		return true
 	}
+	
+
+	var istouchstyle = function(){
+		self.mobileview = (self.el.html.hasClass('mobile') || self.el.html.hasClass('tablet') || window.cordova || self.width < 768)
+
+		if(self.mobileview){
+			self.el.html.addClass('mobileview')
+		}
+		else{
+			self.el.html.removeClass('mobileview')
+		}
+	}
 
 	self.isonline = isonline
 
@@ -1279,6 +1291,10 @@ Application = function(p)
 
 		self.height = self.el.window.height()
 		self.width = self.el.window.width()
+
+		istouchstyle()
+
+		console.log('self.mobileview', self.mobileview)
 
 		var showPanel = '1'
 

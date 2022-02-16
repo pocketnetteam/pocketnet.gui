@@ -153,28 +153,6 @@ var menu = (function(){
 
 		var events = {
 
-			/*navinit : {
-				init : function(el){
-
-					if(!isTablet()){
-
-						self.app.events.scroll.menu = actions.sitenameToNav
-
-						self.app.nav.clbks.history.menu = function(href){
-							actions.sitenameToNav()
-						}
-					}
-
-					
-				},
-
-				destroy : function(){
-
-					delete self.app.events.scroll.menu
-					delete self.app.nav.clbks.history.menu
-
-				}
-			},*/
 
 			chats : {
 				click : function(){
@@ -723,7 +701,7 @@ var menu = (function(){
 						action()
 					}
 
-					if(!isMobile())
+					if(!self.app.mobileview)
 						el.tooltipster({
 							theme: 'tooltipster-light',
 							maxWidth : 300,
@@ -753,9 +731,9 @@ var menu = (function(){
 					
 					self.nav.api.go({
 						open : true,
-						href : isMobile() ? 'wallet' : 'userpage?id=wallet',
+						href : self.app.mobileview ? 'wallet' : 'userpage?id=wallet',
 						history : true,
-						inWnd : isMobile()
+						inWnd : self.app.mobileview
 					})
 					
 				},
@@ -1085,7 +1063,7 @@ var menu = (function(){
 
 					var userinfo = deep(app, 'platform.sdk.user.storage.me')
 
-					data.haschat = self.app.platform.matrixchat.core// && (userinfo && !(userinfo.temp || userinfo.relay || userinfo.fromstorage))
+					data.haschat = self.app.platform.matrixchat.core
 
 				if(p.state){
 
@@ -1175,7 +1153,7 @@ var menu = (function(){
 
 				console.log('showsearch showsearch', v)
 
-				if (v /*&& !isMobile()*/){
+				if (v){
 					el.c.addClass('searchactive')
 				}
 				else{

@@ -303,11 +303,11 @@ var post = (function () {
 
 			position: function () {
 
-				if (isMobile()) return
+				if (self.app.mobileview) return
 
 				if (primary) return
 
-				if (ed.removemargin || isMobile()) return
+				if (ed.removemargin) return
 
 
 				var h = $(window).height();
@@ -1860,7 +1860,7 @@ var post = (function () {
 
 				make()
 
-				if (ed.video && !window.cordova && !isTablet() && !isMobile())
+				if (ed.video && p.inWnd && !self.app.mobileview)
 					self.app.el.menu.find('#menu').addClass('static')
 
 				initEvents();

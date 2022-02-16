@@ -2699,7 +2699,7 @@ var share = (function(){
 						essenseData.close()
 					}
 				},
-				class : "smallWnd withoutButtons wndsharepost normalizedmobile"
+				class : "smallWnd withoutButtons wndsharepost normalizedmobile showbetter"
 			},
 
 			id : p._id,

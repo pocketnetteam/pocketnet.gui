@@ -323,6 +323,14 @@
   opacity: 0.7;
   text-decoration: none;
 }
+#lenta.mainvideo .share .shareTable {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+#lenta.mainvideo .share .shareTable .authorTable {
+  align-items: center;
+  display: flex;
+}
 #lenta.mainvideo .share .shareTable .authorTable > div.authorCell {
   padding-left: 0.5em;
   padding-right: 0;

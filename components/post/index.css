@@ -554,6 +554,9 @@
   max-width: 800px;
   margin: 0 auto;
 }
+html.mobileview #post .videoWrapper {
+  max-width: none;
+}
 @media only screen and (max-width: 768px) {
   #content > div#post.sharec .widthcontainer {
     width: 100%;
@@ -669,8 +672,7 @@
     border: 0;
   }
 }
-html.tablet.fullscreen #post #comments,
-html.mobile.fullscreen #post #comments {
+html.mobileview.fullscreen #post #comments {
   display: none;
 }
 .wnd.postwindow {
@@ -779,39 +781,25 @@ html.mobile.fullscreen #post #comments {
   .wnd.postwindow #post .share .commentsWrapper {
     padding-bottom: 5em;
   }
-  html.cordova .wnd.postwindow,
-  html.tablet .wnd.postwindow,
-  html.mobile .wnd.postwindow {
+  html.mobileview .wnd.postwindow {
     z-index: 1005;
   }
-  html.cordova .wnd.postwindow .widthcontainer,
-  html.tablet .wnd.postwindow .widthcontainer,
-  html.mobile .wnd.postwindow .widthcontainer {
+  html.mobileview .wnd.postwindow .widthcontainer {
     width: 100%;
   }
-  html.cordova .wnd.postwindow.normalizedmobile .wndcontent,
-  html.tablet .wnd.postwindow.normalizedmobile .wndcontent,
-  html.mobile .wnd.postwindow.normalizedmobile .wndcontent {
+  html.mobileview .wnd.postwindow.normalizedmobile .wndcontent {
     background: rgb(var(--background-total-theme));
   }
-  html.cordova .wnd.postwindow.normalizedmobile #post .postWrapper,
-  html.tablet .wnd.postwindow.normalizedmobile #post .postWrapper,
-  html.mobile .wnd.postwindow.normalizedmobile #post .postWrapper {
+  html.mobileview .wnd.postwindow.normalizedmobile #post .postWrapper {
     padding-top: 0.5em;
   }
-  html.cordova .wnd.postwindow.normalizedmobile #post,
-  html.tablet .wnd.postwindow.normalizedmobile #post,
-  html.mobile .wnd.postwindow.normalizedmobile #post {
+  html.mobileview .wnd.postwindow.normalizedmobile #post {
     border-top: 0;
   }
-  html.cordova .wnd.postwindow.normalizedmobile #post .cntswrk.forcomments .paddingWrapper,
-  html.tablet .wnd.postwindow.normalizedmobile #post .cntswrk.forcomments .paddingWrapper,
-  html.mobile .wnd.postwindow.normalizedmobile #post .cntswrk.forcomments .paddingWrapper {
+  html.mobileview .wnd.postwindow.normalizedmobile #post .cntswrk.forcomments .paddingWrapper {
     padding: 0;
   }
-  html.cordova .wnd.articlewindow.normalizedmobile #post .postWrapper,
-  html.tablet .wnd.articlewindow.normalizedmobile #post .postWrapper,
-  html.mobile .wnd.articlewindow.normalizedmobile #post .postWrapper {
+  html.mobileview .wnd.articlewindow.normalizedmobile #post .postWrapper {
     padding-top: 0;
   }
 }

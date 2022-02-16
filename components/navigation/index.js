@@ -16,18 +16,8 @@ var navigation = (function(){
 
 
 		var events = {
-			/*scrollman : function(scroll){
-
-				if (scroll >= 250){
-					el.c.addClass('scrolled')
-				}
-				else{
-					el.c.removeClass('scrolled')
-				}
-			},*/
 
 			scroll : function(){
-
 
 				if (self.app.lastScrollTop >= 250){
 
@@ -89,6 +79,7 @@ var navigation = (function(){
 							search,
 							haschat : self.app.platform.matrixchat.core,
 							thref : self.app.nav.get.href(),
+							ps : parameters()
 							//mestate : _mestate
 						}
 
@@ -110,7 +101,7 @@ var navigation = (function(){
 							self.nav.api.go({
 								open : true,
 								href : 'share',
-								inWnd : isTablet(),
+								inWnd : true,
 								history : true,
 								
 								essenseData : {
@@ -125,7 +116,7 @@ var navigation = (function(){
 							self.nav.api.go({
 								open : true,
 								href : 'userpage',
-								inWnd : isMobile(),
+								inWnd : true,
 								history : true,
 								
 								essenseData : {
@@ -174,9 +165,7 @@ var navigation = (function(){
 		var initEvents = function(){
 			
 			self.app.nav.clbks.history.navigation = function(href){
-				el.c.removeClass('scrolled')
 				renders.menu(self.app.nav.get.pathname())
-
 			}
 
 			self.app.platform.sdk.registrations.clbks.navigation = function(){

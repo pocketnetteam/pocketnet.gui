@@ -446,7 +446,7 @@
 .share_common .metatable {
   display: flex;
   justify-content: space-between;
-  align-items: top;
+  align-items: flex-start;
 }
 .share_common .metatable > div.metapanel {
   vertical-align: top;

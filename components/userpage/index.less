@@ -563,119 +563,114 @@
 	
 }
 
-/*t*/ @media only screen and (max-width: 768px){
+html.mobileview{
 
-#userpage{
+	#userpage{
 
-	.preloaderWrapper{
-		padding : 4 * @rhythm;
-		text-align: center;
-	}
+		&.reportshowed{
+			.contents{
+				display: none;
+			}
+		}
 
-	.profile{
-		display: none;
-	}
+		.preloaderWrapper{
+			padding : 4 * @rhythm;
+			text-align: center;
+		}
 	
-	.activitiesWrapper{
-		margin-top: 2 * @rhythm;
-
-		.usermenu{
+		.profile{
 			display: none;
 		}
-
-		.usercnt{
-			padding-left: 0;
-			margin-left: 0;
-		}
-
 		
-	}
+		.activitiesWrapper{
+			margin-top: 2 * @rhythm;
 	
-	.bgCaption{
-		display: none;
-	}
-
-	>div{
-		&.work{
-			padding : 0;
+			.usermenu{
+				display: none;
+			}
+	
+			.usercnt{
+				padding-left: 0;
+				margin-left: 0;
+			}
+	
+			
 		}
-	}
-	
-	.maketsWrapper{
-		overflow: inherit;
-
-		.maket{
-			&.left{
-				width: 100%;
-				float: none;
-				padding : 0 2 * @rhythm;
-
-			}
-
-			.contents{
-				padding-top : 0;
-			}
-		}	
-
-		.report{
 		
-			#test{
-				padding-top : 2 * @rhythm;
-				padding-bottom : 6 * @rhythm;
-
-				.work{
-					padding : 0
-				}
-
-				.userPanel{
-					padding: 0;
-				}
-
-				.caption{
-					padding-left: 0;
-					padding-bottom : 2 * @rhythm;
-				}
-			}
-
-			#accounts{
-				padding-top : 2 * @rhythm;
-
-				.subcaption{
-					font-size: 2em;
-				}
-			}
-
-			#notifications{
-				padding-top : 1 * @rhythm;
-			}
-
-			#wallet{
-				.mobiledevice{
-					.caption{
-						display: none!important;
-					}
-				}
+		.bgCaption{
+			display: none;
+		}
+	
+		>div{
+			&.work{
+				padding : 0;
 			}
 		}
-
-	}
-
-}
-
-html.tablet{
-	#userpage{
-		padding-top : 55px;
-	}
-}
-
-}
-
-@media only screen and (max-width: 640px){
-	#userpage{
-		min-height: 0;
 		
 		.maketsWrapper{
 			overflow: inherit;
+	
+			.maket{
+				&.left{
+					width: 100%;
+					float: none;
+					padding : 0 2 * @rhythm;
+				}
+
+				&.right{
+					padding-left: 0;
+					margin-left: 0;
+					border : 0;
+				}
+	
+				.contents{
+					padding-top : 0;
+				}
+			}	
+	
+			.report{
+			
+				#test{
+					padding-top : 2 * @rhythm;
+					padding-bottom : 6 * @rhythm;
+	
+					.work{
+						padding : 0
+					}
+	
+					.userPanel{
+						padding: 0;
+					}
+	
+					.caption{
+						padding-left: 0;
+						padding-bottom : 2 * @rhythm;
+					}
+				}
+	
+				#accounts{
+					padding-top : 2 * @rhythm;
+	
+					.subcaption{
+						font-size: 2em;
+					}
+				}
+	
+				
+				#notifications{
+					padding : 2 * @rhythm 0;
+					background: rgb(var(--background-secondary-theme));
+				}
+	
+				#wallet{
+					.mobiledevice{
+						.caption{
+							display: none!important;
+						}
+					}
+				}
+			}
+
 			.contents{
 				padding-top : 0;
 	
@@ -714,64 +709,11 @@ html.tablet{
 			
 			}
 	
-			.maket{
-				
-				
-				&.right{
-					padding-left: 0;
-					margin-left: 0;
-					border : 0;
-				}
 	
-				
-			}	
-	
-			.report{
-				
-				#test{
-				
-					.work{
-						padding : 0 @rhythm;
-					}
-	
-				}
-
-				#wallet{
-					.mobiledevice{
-						.caption{
-							display: inherit!important;
-						}
-					}
-				}
-
-				#notifications{
-					padding : 2 * @rhythm 0;
-					background: rgb(var(--background-secondary-theme));
-				}
-			}
 		}
+	
 	}
-
-	html:not(.tablet){
-		#userpage{
-			&.reportshowed{
-				.contents{
-					display: none!important;
-				}
-			}
-		}
-	}
-
 	
 }
-
-html.tablet{
-	#userpage .maketsWrapper .maket.right{
-		margin-left: 150px;
-	}
-
-	#userpage .maketsWrapper .maket.left{
-		width: 150px;
-		float: left;
-	}
-}
+	
+	

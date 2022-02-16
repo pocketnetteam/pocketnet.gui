@@ -604,8 +604,7 @@
 					"html"	: h
 				});
 
-		   	if(!p.header) 
-			   	wnd.addClass('noheader')
+		   	if(!p.header) wnd.addClass('noheader')
 
 			el.append(wnd);		
 

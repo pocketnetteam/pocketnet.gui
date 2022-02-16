@@ -5,6 +5,124 @@
 #main.wshar .bgCaption {
   display: none;
 }
+#main .menuwrapper {
+  margin-bottom: 0.5em;
+  display: none;
+}
+#main .menuwrapper .panelitems {
+  height: 100%;
+  padding-right: 0.5em;
+}
+#main .menuwrapper .panelitems .panelItemsWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#main .menuwrapper .panelitems .panelitem {
+  width: 120px;
+  font-size: 0.8em;
+  line-height: 45px;
+  float: left;
+  color: rgb(var(--neutral-grad-3));
+}
+#main .menuwrapper .panelitems .panelitem.icon {
+  width: 44px;
+  text-align: center;
+}
+#main .menuwrapper .panelitems .panelitem.right {
+  margin-right: 0;
+  float: right;
+  text-align: right;
+}
+#main .menuwrapper .panelitems .panelitem .vc_textInput.table {
+  line-height: 36px;
+}
+#main .menuwrapper .filtersbuttonwrapper {
+  width: 100%;
+  height: 100%;
+  padding: 0.5em;
+  display: flex;
+  align-items: center;
+}
+#main .menuwrapper .filtersbuttonwrapper button {
+  width: 100%;
+}
+#main .menuwrapper .vc_valuecustom {
+  width: 100%;
+  height: 55px;
+}
+#main .menuwrapper .vc_valuecustom .vc_inputWrapper {
+  padding-left: 1em;
+}
+#main .menuwrapper .vc_valuecustom .vc_iconWrapper {
+  width: 48px;
+  padding-right: 0;
+}
+#main .menuwrapper .vc_valuecustom .vc_textInput {
+  border: 0;
+  background: transparent;
+  border-radius: 0;
+}
+#main .menuwrapper .vc_valuecustom .vc_textInput .vc_inputWrapper {
+  border: 0;
+}
+#main .menuwrapper .vc_valuecustom .vc_textInput .vc_inputWrapper input {
+  opacity: 1!important;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  height: 55px;
+  font-weight: 700;
+  font-size: 1.2em;
+  padding-left: 0.5em;
+}
+#main .menuwrapper .vc_valuecustom .vc_textInput .vc_inputWrapper input[disabled="disabled"] {
+  opacity: 1;
+}
+#main .menuwrapper .vc_valuecustom .vc_textInput .vc_iconWrapper {
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border: 0;
+  color: rgb(var(--text-color));
+}
+#main .menuwrapper .vc_valuecustom.opened .vc_textInput .vc_inputWrapper {
+  border: 0;
+}
+#main .menuwrapper .vc_valuecustom.opened .vc_textInput .vc_inputWrapper input {
+  border-bottom-left-radius: 0;
+}
+#main .menuwrapper .vc_valuecustom.opened .vc_textInput .vc_iconWrapper {
+  border-bottom-right-radius: 0;
+}
+#main .menuwrapper .vc_valuecustom.opened .vc_selectInput_bg_mobile {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(var(--color-shadow-base), 0.1);
+}
+#main .menuwrapper .vc_valuecustom.opened .vc_selectInput {
+  position: fixed;
+  top: 125px;
+}
+#main .menuwrapper .vc_valuecustom .vc_selectInput {
+  border: 0;
+  max-height: 400px;
+  box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
+}
+#main .menuwrapper .vc_valuecustom .vc_selectInput .vc_value {
+  text-align: center;
+  font-size: 1.5em;
+  padding: 0.5em 0.5em;
+}
 #main .topvideosWrapper {
   display: block;
   background: rgb(var(--background-total-theme));
@@ -378,6 +496,9 @@ html.testpocketnet #main.testpocketnetbg {
   background-image: url(../../img/testbg.png);
   background-position: center center;
 }
+html.mobileview #main .lentacell .cnt {
+  max-width: none;
+}
 @media only screen and (max-width: 1440px) {
   #main .opensvi .leftpanelsvicell {
     display: block;
@@ -406,6 +527,9 @@ html.testpocketnet #main.testpocketnetbg {
 @media only screen and (max-width: 768px) {
   .video-js {
     contain: strict;
+  }
+  #main .menuwrapper {
+    display: block;
   }
   #main .topvideosWrapper {
     border-radius: 0px;
@@ -445,6 +569,7 @@ html.testpocketnet #main.testpocketnetbg {
     will-change: transform;
     transform: scale(0.9);
     padding-right: 0;
+    overscroll-behavior: contain;
   }
   #main .leftpanelcell #tagcloud,
   #main .leftpanelcell #categories {
@@ -497,42 +622,6 @@ html.testpocketnet #main.testpocketnetbg {
   }
   #main {
     min-height: 0;
-    /*.smallpanell{
-			overflow: hidden;
-			background: #EFEFED;
-			padding : @rhythm 0;
-
-			.iconWrapper{
-				position: static;
-				margin : 0 auto;
-			}
-
-			.itemName{
-				display: none;
-			}
-
-			.item{
-				float: left;
-				position: relative;
-				margin : 0;
-				height: auto;
-				width: 33%;
-
-				&.active,
-				&:hover{
-					.iconWrapper{
-						color : @color-main;
-						border-color : @color-main;
-					}
-				}
-			}
-			&:hover{
-				
-				.itemName{
-					display: none;
-				}
-			}
-		}*/
   }
   #main .bgCaption {
     display: none;
@@ -546,41 +635,8 @@ html.testpocketnet #main.testpocketnetbg {
   #main #share {
     max-width: 750px;
   }
-  /*html.stblack{
-		#main{
-			.leftpanelcell{
-				background: @color-black2;
-				color : @color-gray-slight;
-		
-				#tagcloud,
-				#categories{
-					color : @color-gray-slight;
-				}
-			}
-		}
-	}*/
-}
-html.mobile #main {
-  padding-top: 55px;
-}
-html.mobile #main .bgCaption,
-html.tablet #main .bgCaption {
-  display: none;
-}
-html.tablet #main {
-  padding-top: 50px;
 }
 @media only screen and (max-width: 768px) {
-  /*html{
-		&.scrollmodedown{
-			#main{
-				.maincntwrapper{
-					top : 0;
-				}
-			}
-		}
-		
-	}*/
   #main .fxdsmall {
     width: 100%;
     position: static;
@@ -600,4 +656,7 @@ html.tablet #main {
   #main .panel {
     border-radius: 12px;
   }
+}
+html.mobileview #main .opensvi .leftpanelsvicell {
+  display: none;
 }

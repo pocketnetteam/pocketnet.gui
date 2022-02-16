@@ -131,6 +131,10 @@
 #menu .sections .section {
   height: 100%;
   padding: 0 1em;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
 }
 #menu .sections .section.right {
   padding-right: 0;
@@ -141,12 +145,12 @@
 }
 #menu .sections .section.leftpart {
   padding-left: 0;
+  min-width: 200px;
 }
 #menu .sections .userpic {
   box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
 }
 #menu .sections .items {
-  float: left;
   height: 100%;
 }
 #menu .sections .items .table {
@@ -201,6 +205,7 @@
 #menu .sections .items .item {
   width: auto;
   height: 100%;
+  white-space: nowrap;
 }
 #menu .sections .items .item .icon {
   padding: 0;
@@ -644,6 +649,9 @@
   #menu .sections .section {
     padding: 0;
     width: auto;
+  }
+  #menu .sections .section.leftpart {
+    min-width: 0;
   }
   #menu .sections .section.right {
     padding-right: 0;

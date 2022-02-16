@@ -10,6 +10,150 @@
 		}
 	}
 
+	.menuwrapper{
+		margin-bottom: @rhythm;
+		display: none;
+
+		.panelitems{
+			height: 100%;
+			padding-right: @rhythm;
+	
+			.panelItemsWrapper{
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+	
+			.panelitem{
+				width: 120px;
+				font-size: 0.8em;
+				line-height: 45px;
+				float: left;
+				color : rgb(var(--neutral-grad-3));
+	
+				&.icon{
+					width: 44px;
+					text-align: center;
+				}
+	
+				&.right{
+					margin-right : 0;
+					// margin-left : 2 * @rhythm;
+					float: right;
+					text-align: right;
+				}
+	
+				.vc_textInput.table {
+					line-height: 36px;
+				}
+			} 
+		}
+	
+		.filtersbuttonwrapper{
+			width: 100%;
+			height: 100%;
+			padding: @rhythm;
+			display: flex;
+			align-items: center;
+	
+			button{
+				width: 100%;
+			}
+		}
+	
+		.vc_valuecustom{
+			width: 100%;
+			height: 55px;
+	
+			.vc_inputWrapper{
+				padding-left: 2 * @rhythm;
+			}
+	
+			.vc_iconWrapper{
+				width : 48px;
+				padding-right: 0;
+			}
+			
+			.vc_textInput{
+				border : 0;
+				background: transparent;
+				border-radius: 0;
+			}
+	
+			.vc_textInput {
+				.vc_inputWrapper{
+					border: 0;
+	
+					input{
+						opacity: 1!important;
+						.transition(0.3s);
+						border-top-left-radius: 0px;
+						border-bottom-left-radius: 0px;
+						height: 55px;
+						font-weight: 700;
+						font-size: 1.2em;
+						padding-left: @rhythm;
+	
+						&[disabled="disabled"]{
+							opacity: 1;
+						}
+					}
+				}
+	
+				.vc_iconWrapper{
+					.transition(0.3s);
+					border-top-right-radius: 0px;
+					border-bottom-right-radius: 0px;
+					border : 0;
+					color : rgb(var(--text-color));
+				}
+			}
+	
+			&.opened{
+				.vc_textInput {
+					.vc_inputWrapper{
+						border: 0;
+	
+						input{
+							border-bottom-left-radius: 0;
+						}
+					}
+	
+					.vc_iconWrapper{
+						
+						border-bottom-right-radius: 0;
+						
+					}
+				}
+	
+				.vc_selectInput_bg_mobile{
+					position: fixed;
+					left : 0;
+					top : 0;
+					bottom : 0;
+					right: 0;
+					background: rgba(var(--color-shadow-base), 0.1);
+				}
+	
+				.vc_selectInput{
+					position: fixed;
+					top : 125px;
+				}
+			}
+	
+			.vc_selectInput {
+				border : 0;
+				max-height: 400px;
+				.shadowSmall();
+				.vc_value{
+					text-align: center;
+					font-size: 1.5em;
+					padding :  @rhythm @rhythm;
+				}
+			}
+		}
+	}
+
 	.topvideosWrapper{
 		display: block;
 		background: rgb(var(--background-total-theme));
@@ -490,6 +634,12 @@ html {
     }
 }
 
+html.mobileview{
+	#main .lentacell .cnt{
+		max-width: none;
+	}
+}
+
 @media only screen and (max-width: 1440px) {
 	#main{
 		.opensvi{
@@ -507,7 +657,6 @@ html {
 @media only screen and (max-width: 1280px) {
 #main{
 	.addbutton{
-		
 		display : none!important;
 		
 		&.active{
@@ -541,6 +690,10 @@ html {
 	}
 	
 	#main{
+
+		.menuwrapper{
+			display: block;
+		}
 
 		.topvideosWrapper{
 			border-radius: 0px;
@@ -580,6 +733,7 @@ html {
 			will-change: transform;
 			transform:scale(0.9);
 			padding-right: 0;
+			overscroll-behavior: contain;
 
 			#tagcloud,
 			#categories{
@@ -676,94 +830,13 @@ html {
 			}
 		}
 
-		/*.smallpanell{
-			overflow: hidden;
-			background: #EFEFED;
-			padding : @rhythm 0;
-
-			.iconWrapper{
-				position: static;
-				margin : 0 auto;
-			}
-
-			.itemName{
-				display: none;
-			}
-
-			.item{
-				float: left;
-				position: relative;
-				margin : 0;
-				height: auto;
-				width: 33%;
-
-				&.active,
-				&:hover{
-					.iconWrapper{
-						color : @color-main;
-						border-color : @color-main;
-					}
-				}
-			}
-			&:hover{
-				
-				.itemName{
-					display: none;
-				}
-			}
-		}*/
+	
 
 	}
 
-	/*html.stblack{
-		#main{
-			.leftpanelcell{
-				background: @color-black2;
-				color : @color-gray-slight;
-		
-				#tagcloud,
-				#categories{
-					color : @color-gray-slight;
-				}
-			}
-		}
-	}*/
-}
-
-html.mobile{
-	#main{
-		padding-top : 55px;
-	}
-}
-
-html.mobile,
-html.tablet{
-	#main{
-		.bgCaption{
-			display: none;
-		}
-	}
-}
-
-
-html.tablet{
-	#main{
-		padding-top : 50px;
-	}
 }
 
 @media only screen and (max-width: 768px){
-
-	/*html{
-		&.scrollmodedown{
-			#main{
-				.maincntwrapper{
-					top : 0;
-				}
-			}
-		}
-		
-	}*/
 
 	#main{
 
@@ -797,3 +870,13 @@ html.tablet{
 }
 
 
+html.mobileview{
+	#main {
+		.opensvi{
+	
+			.leftpanelsvicell{
+				display: none;
+			}
+		}
+	}
+}

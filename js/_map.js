@@ -128,10 +128,10 @@ __map =  {
 		{ c : 'navigation', n : 'menu' },
 		{ c : 'menu', n : 'index' },
 		{ c : 'share', n : 'body' },
-		{ c : 'toppanel', n : 'index' },
+		//{ c : 'toppanel', n : 'index' },
 		{ c : 'navigation', n : 'index' },
 		{ c : 'footer', n : 'index' },
-		{ c : 'toppanel', n : 'menu' },
+		{ c : 'main', n : 'menu' },
 		{ c : 'main', n : 'index' },
 		{ c : 'panel', n : 'index' },
 		{ c : 'leftpanel', n : 'index' },
@@ -781,7 +781,7 @@ __map =  {
 		reload : true
 	},*/
 
-	toppanel : {
+	/*toppanel : {
 		uri : "toppanel",
 		href : "toppanel",
 		add : {
@@ -791,7 +791,7 @@ __map =  {
 		anonimus : true,
 		renew : true,
 		reload : true
-	},
+	},*/
 
 	navigation : {
 		uri : "navigation",

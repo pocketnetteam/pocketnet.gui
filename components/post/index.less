@@ -734,7 +734,14 @@
 	}
 }
 
+html.mobileview{
+	#post{
 
+		.videoWrapper {
+			max-width: none;
+		}
+	}
+}
 
 @media only screen and (max-width: 768px) {
 	#content>div#post.sharec{
@@ -896,8 +903,7 @@
 
 }
 
-html.tablet.fullscreen,
-html.mobile.fullscreen{
+html.mobileview.fullscreen{
 	#post{
 		#comments{
 			display: none;
@@ -1042,6 +1048,7 @@ html.mobile.fullscreen{
 			
 		}
 	}
+
 	.wnd.postwindow{
 		.widthcontainer{
 			width: 100%;
@@ -1062,10 +1069,7 @@ html.mobile.fullscreen{
 	}
 
 
-	html.cordova,
-	html.tablet,
-	html.mobile{
-
+	html.mobileview{
 		
 		.wnd.postwindow{
 

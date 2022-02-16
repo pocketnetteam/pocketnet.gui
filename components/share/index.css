@@ -876,7 +876,7 @@
   }
   .wnd.wndsharepost .wndcontent #share .mobilecaption {
     display: block;
-    padding: 1em 0;
+    padding: 1em;
     position: static;
     left: 1em;
     right: 0;
@@ -1449,14 +1449,21 @@
     padding: 0;
   }
 }
-html.tablet #content #share {
-  padding: 2em;
-}
-html.tablet #content #share .panel > div {
-  font-size: 1em;
-  height: 66px;
-  margin-right: 1em;
-}
-html.tablet #content #share .txt .emojionearea-editor {
-  min-height: 190px;
-}
+/*
+html.tablet{
+	#content{
+		#share{
+			padding : 4 * @rhythm;
+			.panel>div{
+				font-size: 1em;
+				height: 66px;
+				margin-right: 2 * @rhythm;
+			}
+			.txt .emojionearea-editor{
+				min-height: 190px;
+			}
+		}
+
+	}
+	
+}*/

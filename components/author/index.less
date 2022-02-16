@@ -24,6 +24,10 @@
 
 	.mobileinfo{
 		display: none;
+
+		.item.name{
+			display: none;
+		}
 	}
 
 	.copyaddress{
@@ -735,6 +739,17 @@
 
 @media only screen and (max-width: 1024px) {
 	#author{
+		.bgCaption{
+			.caption{
+				justify-content: center;
+			}
+		}
+
+		.mobileinfo{
+			display: block;
+
+			
+		}
 
 		.leftpanelcell{
 			display: none;
@@ -743,19 +758,6 @@
 			margin-right: 44px;
 			margin-left: 0;
 		}
-
-		.work.mwork{
-			width: 90%;
-		}
-	}
-}
-
-html.mobile,
-html.cordova,
-html.tablet{
-
-	#author{
-
 		.newsharewrapper{
 			display: none;
 		}
@@ -763,6 +765,7 @@ html.tablet{
 		.leftpanelcell{
 			display: none;
 		}
+
 		.lentacell{
 			margin-right: 44px;
 			margin-left: 0;
@@ -778,6 +781,10 @@ html.tablet{
 			height: auto;
 			padding-bottom: 4 * @rhythm;
 			background: #263045;
+
+			.changeaccount{
+				font-size: 0.5em;
+			}
 			
 			.cwrapper{
 				display: block;
@@ -827,6 +834,8 @@ html.tablet{
 				.adr{
 					font-size: 1em;
 				}
+
+			
 
 			}
 			
@@ -878,6 +887,11 @@ html.tablet{
 					padding :  0 @rhythm;
 				}
 			}
+
+			.infoWrapper{
+				
+				
+			}
 			
 			.work{
 				position: relative;
@@ -905,351 +919,175 @@ html.tablet{
 				}
 			}
 		}
-		
-	}
-}
-
-html.tablet{
-	#author{
-		.bgCaption{
-			padding-top : 45px;
-
-			.caption{
-				justify-content: center;
-			}
-		}
 	}
 }
 
 @media only screen and (max-width: 768px){
+
 	#author{
 		.bgCaption{
 			padding-top : 0;
+
+			.caption{
+				text-align: left!important;
+				padding-left: @rhythm;
+			}
 		}
 
 		.newsharewrapper{
 			display: none;
 		}
 	}
-}
 
-/*t*/ @media only screen and (max-width: 768px){
-	#content{
-
-	
-
+	html.allcontent{
 		#author{
-
-			.lentacell{
-				margin-right: 0;
-			}
-	
-			.work.mwork{
-				width: 100%;
-			}
-
-			.authorlentawrappermain{
-				position: relative;
-		
-				.authorsearchicon{
-					display: none;
-				}
-		
-			}
-
-			.authorlentawrappermain{
-				
-		
-
-				.authorsearchwrapper{
-					padding : 0 @rhythm;
-					.search{
-						.searchPanel{
-							display: table-cell;
-	
-							.searchPanelWrapper>div[event=clear]{
-								display: block;
-							}
-						}
-						.searchInput{
-							.searchInputIcon{
-								.sminput{
-									background: transparent; 
-									padding-left: @rhythm;
-								}
-							}
-						}
-
-					}
-				}
-		
-				
-			}
-
-			.lentaWrapper{
-				.authorinfo{
-					padding: 2 * @rhythm;
-				}
-			}
-
-			.copyaddress{
-				font-size: 1em;
-				font-weight: 700;
-			}
-
-			.subscribewrapperphones{
-				
-				.subscribebuttons{
-					
-					button{
-						padding-bottom : @rhythm;
-						padding-top : @rhythm;
-						
-					}
-				}
-			}
-
-			.bgCaption .cwrapper>div {
-			    vertical-align: top;
-			    padding-top : 2 * @rhythm;
-			}
-
-			.lentaWrapper{
-				min-height: 0;
-			}
-		
-		
-			.lentacell{
-				margin-right: 0;
-				margin-left: 0;
-			}
-
-			.leftpanelcell{
-				float: none;
-				display : none;
-				width : 100%;
-				padding : 2 * @rhythm;
-
-				.authorinfo{
-					
-					.itemtable{
-						>div{
-							vertical-align: middle;
-
-							&.icon{
-								width : 30px;
-							}
-						}
-					}
-
-					.item{
-						&:nth-last-child(1){
-							margin-bottom: 0;
-						}
-					}
-
-					
-				}
-			}
-
-			.mainpanelcell{
-				display: none;
-			}
-
-		
-			.work{
-				&.mwork{
-					padding : 0!important;
-					overflow: hidden;
-				}
-
-				.work{
-					width: 100%!important;
-				}
-			}
-			
-
 			.bgCaption{
-				margin-bottom : 0;
-				margin-top : 0;
-				height: auto;
-				padding-bottom: 4 * @rhythm;
-				background: #263045;
-				
-				.cwrapper{
-					display: block;
-
-					>div{
-						display: block;
-					}
-
-					.cellforimage{
-						margin : 0 auto;
-					}
-				}
-
-				.foraddress{
-					opacity: 0.3;
-				}
-
-				.work{
-					padding-right: 0;
-				}
-
-				.telements{
-					.telement{
-
-						width: 100%;
-						margin-right: 0;
-
-						&.sbscr{
-							display: none;
-							padding-left : 2 * @rhythm;
-							padding-right: 0;
-						}
-					}
-				}
-
-				.tips{
-					margin-top : @rhythm;
-				}
-
-				.caption{
-					font-size: 1.1em;
-					overflow: hidden;
-					text-overflow: ellipsis;
-					text-align: center;
-					padding-left :  0;
-					padding-right: 0;
-					white-space: nowrap;
-					margin-top : 0;	
-					margin-bottom: 2 * @rhythm;
-					display: flex;
-					flex-wrap: wrap;
-					align-items: center;
-					.adr{
-						font-size: 2em;
-						
-					}
-
-					.subscribebuttonstop{
-						flex-grow: 1;
-						min-width: 100%;
-					}
-
-					.middotwrapper{
-						display: none;
-					}
-
-					.subscribe{
-						font-size: 1.4em;
-						border-bottom : 1px solid rgb(var(--color-txt-orange));
-						opacity: 1;
-					}
-
-					.notificationturn i, 
-					.unsubscribe{
-						font-size: 1.4em;
-					}
-
-					.startchat{
-						font-size: 1.4em;
-					}
-
-					.blockingWrapper{
-						flex-grow: 1;
-						min-width: 100%;
-					}
-
-				}
-				
-
-				.usermenu{
-					width: 100%;
-					display: flex!important;
-					flex-wrap: nowrap;
-					.usermenuitem{
-						width: auto;
-						float: none;
-						flex-grow: 1;
-						margin-right : 0;
-						padding-left: 0;
-						padding-right : 0;
-						padding-bottom: 2 * @rhythm;
-						text-align: center;
-						font-size: 0.8em;
-
-						border-bottom: 2px solid rgba(var(--color-txt-gray), 0.5);
-	
-						&.active{
-							border-bottom: 2px solid rgba(var(--color-txt-gray), 0.8);
-						}
-					}
-				}
-
-				.cellforimage{
-					width: 100px;
-
-					.usericon{
-						width: 100px;
-						height: 100px;
-						line-height: 98px;
-					}
-				}
-
-
-				.infoWrapper{
-					position: static;
-					left: 0;
-					right: 0;
-					top: 20px;
-					bottom: 0;
-					z-index: 1;
-					.work{
-						padding :  0 @rhythm;
-					}
-				}
-
-				.infoWrapper{
-					
-					.mobileinfo{
-						display: block;
-					}
-				}
-
-				.authorinfo{
-					padding : @rhythm;
-					margin-bottom: 0;
-					.postcnt,
-					.name{
-						display: none;
-					}
-				}
-
-				
-				.work{
-					position: relative;
-					overflow: hidden;
-				}
+				padding-top : 44px;
 			}
-
-			.share{
-				.work{
-					
-				}
-			}
-
-			.fxd{
-				position: fixed;
-			}
-
 		}
 	}
-}
 
-@media only screen and (max-width: 640px){
-	#content #author .bgCaption .caption{
-		text-align: left;
-		padding-left: @rhythm;
+
+	#author{
+
+		.lentacell{
+			margin-right: 0;
+		}
+
+		.work.mwork{
+			width: 100%;
+		}
+
+		.authorlentawrappermain{
+			position: relative;
+	
+			.authorsearchicon{
+				display: none;
+			}
+	
+		}
+
+		.authorlentawrappermain{
+			
+	
+
+			.authorsearchwrapper{
+				padding : 0 @rhythm;
+				.search{
+					.searchPanel{
+						display: table-cell;
+
+						.searchPanelWrapper>div[event=clear]{
+							display: block;
+						}
+					}
+					.searchInput{
+						.searchInputIcon{
+							.sminput{
+								background: transparent; 
+								padding-left: @rhythm;
+							}
+						}
+					}
+
+				}
+			}
+	
+			
+		}
+
+		.lentaWrapper{
+			.authorinfo{
+				padding: 2 * @rhythm;
+			}
+		}
+
+		.copyaddress{
+			font-size: 1em;
+			font-weight: 700;
+		}
+
+		.subscribewrapperphones{
+			
+			.subscribebuttons{
+				
+				button{
+					padding-bottom : @rhythm;
+					padding-top : @rhythm;
+					
+				}
+			}
+		}
+
+		.bgCaption .cwrapper>div {
+			vertical-align: top;
+			padding-top : 2 * @rhythm;
+		}
+
+		.lentaWrapper{
+			min-height: 0;
+		}
+	
+	
+		.lentacell{
+			margin-right: 0;
+			margin-left: 0;
+		}
+
+		.leftpanelcell{
+			float: none;
+			display : none;
+			width : 100%;
+			padding : 2 * @rhythm;
+
+			.authorinfo{
+				
+				.itemtable{
+					>div{
+						vertical-align: middle;
+
+						&.icon{
+							width : 30px;
+						}
+					}
+				}
+
+				.item{
+					&:nth-last-child(1){
+						margin-bottom: 0;
+					}
+				}
+
+				
+			}
+		}
+
+		.mainpanelcell{
+			display: none;
+		}
+
+	
+		.work{
+			&.mwork{
+				padding : 0!important;
+				overflow: hidden;
+			}
+
+			.work{
+				width: 100%!important;
+			}
+		}
+		
+
+		.share{
+			.work{
+				
+			}
+		}
+
+		.fxd{
+			position: fixed;
+		}
+
 	}
 }
