@@ -469,15 +469,9 @@ var staking = (function(){
 
 				self.nav.api.load({
 					open : true,
-					href : 'socialshare',
+					href : 'easynode',
 					history : true,
-					inWnd : true,
-
-					essenseData : {
-						url : url, 
-						style : 'smallcaption',
-						caption : 'The best way to earn Pocketcoin (PKOIN) is to invite people to the platform. You will get 20% of their PKOIN earnings for the first three months. Send the link below to anyone via email, social media, messenger.'
-					}
+					inWnd : true
 				})
 			})
 
@@ -582,6 +576,7 @@ var staking = (function(){
 			},
 
 			wnd : {
+				header : "currency",
 				class : 'normalizedmobile'
 			}
 		}

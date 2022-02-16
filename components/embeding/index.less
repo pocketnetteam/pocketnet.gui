@@ -330,86 +330,90 @@
 	}
 }
 
-.wnd{
-	&.embeding{
-		.wndcontent{
-			overflow-y: hidden;
-		}
-		.wndinner{
-
-			width: 600px;
-			height: 200px;
-
-			&.donate{
-				
-				.wndcontent{
-					background: @color-main;
-					color: white;
-				}
-
-				height: 250px;
-				width: 450px;
-
-				.buttons{
-					display: block!important;
-				}
-
-				
-				.caption{
-					margin-bottom: 0!important;
-					font-size: 1.2em;
-				}
-				.subcaption{
-					text-align: center;
-					font-size: .8em;
-				}
-
-				.buttons{
-					background: inherit;
-				}
-
-				.buttons{
-					.close{
+#windowsContainer{
+	.wnd{
+		&.embeding{
+	
+			.wndcontent{
+				overflow-y: hidden;
+			}
+	
+			.wndinner{
+	
+				width: 600px;
+				height: 200px;
+	
+				&.donate{
+					
+					.wndcontent{
+						background: @color-main!important;
 						color: white;
-
-						&:hover{
+					}
+	
+					height: 250px;
+					width: 450px;
+	
+					.buttons{
+						display: block!important;
+					}
+					
+					.caption{
+						margin-bottom: 0!important;
+						font-size: 1.2em;
+					}
+					.subcaption{
+						text-align: center;
+						font-size: .8em;
+					}
+	
+					.buttons{
+						background: inherit;
+					}
+	
+					.buttons{
+						.close{
 							color: white;
+	
+							&:hover{
+								color: white;
+							}
+						}
+						.save{
+							background: white;
+							color: #00a4ffd6;
+							border-radius: 3px;
 						}
 					}
-					.save{
-						background: white;
-						color: #00a4ffd6;
-						border-radius: 3px;
+					input{
+						background: inherit;
+						color: white;
 					}
-				}
-				input{
-					background: inherit;
-					color: white;
 				}
 			}
 		}
+	
+		&.loadimages{
+	
+			._close{
+				right: 40px;
+			}
+	
+			.wndinner{
+				width: 100%;
+				height: 100%;
+				max-height: none;
+				
+			}
+	
+			.wndcontent{
+				bottom: 66px;
+				top: 0;
+				overflow-y: scroll;
+				padding: 0; 
+			}
+		}
 	}
-
-	&.loadimages{
-
-		._close{
-			right: 40px;
-		}
-
-		.wndinner{
-			width: 100%;
-			height: 100%;
-			max-height: none;
-			
-		}
-
-		.wndcontent{
-			bottom: 66px;
-			top: 0;
-			overflow-y: scroll;
-			padding: 0; 
-		}
-	}
+	
 }
 
 /*t*/ @media only screen and (max-width: 768px){

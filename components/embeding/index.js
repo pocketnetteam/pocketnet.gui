@@ -436,14 +436,8 @@ var embeding = (function(){
 					wndObj = _wndObj;
 					wnd = _wnd;
 				},
-				offScroll : true,
-				noInnerScroll : true,
 				class : 'embeding normalizedmobile',
-
-
-				swipeClose : true,
-				swipeCloseDir : 'right',
-				swipeMintrueshold : 30,
+				//showbetter : true
 			}
 		}
 	};

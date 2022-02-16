@@ -4646,6 +4646,10 @@ html.nav{
         }
     }
 
+    .vc_selectInput_bg_mobile{
+        display: none;
+        z-index: 1000;
+    }
     .vc_selectInput{
         position: absolute;
         left : 0;
@@ -4677,6 +4681,9 @@ html.nav{
     }
 
     &.opened{
+        .vc_selectInput_bg_mobile{
+            display: block;
+        }
         .vc_selectInput{
             display: block;
         }
@@ -4904,10 +4911,10 @@ html.nav{
 html.cordova,
 html.mobile,
 html.tablet{
-    
+
     .matrixchatwrapper{
         position: fixed;
-        contain: strict;
+        contain: strict style;
         left : -100%;
         top : 0;
         right: 100%;
@@ -4915,13 +4922,18 @@ html.tablet{
         background: #fff;
         .transition(0.3s);
         z-index: 1004;
-        .shadowSmall();
         -webkit-overflow-scrolling: touch;
-        visibility: hidden;
+        transform-origin : 'right center';
+        -webkit-transform: scale(0.9);
+        transform: scale(0.9);
+        overflow: hidden;
+        border-radius: 5px;
+        backface-visibility: hidden;
+        will-change: transform;
+
         &.active{
-            -webkit-transform: translateX(100%);
-            transform: translateX(100%);
-            visibility: visible;
+            -webkit-transform: scale(1) translateX(100%);
+            transform: scale(1) translateX(100%);
         }
     }
 
@@ -5084,7 +5096,16 @@ html.tablet{
         }
     }
     
+    &.nooverflow{
+        body{
+            overflow: hidden!important;
+            touch-action: none;
+            -webkit-overflow-scrolling: none;
+            /* Other browsers */
+            overscroll-behavior: none;
+        }
 
+    }
 }
 
 html.cordova.fullscreen,
@@ -7452,6 +7473,8 @@ html{
 
             .roundclosebutton{
                 top : 2 * @rhythm;
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
             }
 
             .closeline{
@@ -7464,6 +7487,8 @@ html{
                 opacity: 0;
                 position: absolute;
             }
+
+            
 
             .wndinner{
                 max-height: none!important;
@@ -7499,13 +7524,13 @@ html{
             }
             &.asette{
                 .wndback{
-                    .transition(0.3s);
+                    .transition(0.2s);
                 }
                 .closeline{
-                    .transition(0.3s);
+                    .transition(0.2s);
                 }
                 .wndinner{
-                    .transition(0.3s);
+                    .transition(0.2s);
                 }   
             }
             &.sette{
@@ -7638,22 +7663,26 @@ html.tablet,
 html.mobile{
     .wnd{
         &.normalizedmobile{
+
             .wndinner{
                 width: 65%;
+                background: transparent!important;
             }
             .wndback{
                 backface-visibility: hidden;
                 will-change: transform;
                 backdrop-filter: none!important;
                 -webkit-backdrop-filter: none!important;  
+                
                 .transition(0.3s);
             }
+
             .hideButton{
                 display: none!important;
             }
     
             .closeline{
-                top : 15%;
+                top : 120px;
                 height: 2px;
                 background: fade(#fff, 80);
                 border-radius: 2px;
@@ -7661,17 +7690,22 @@ html.mobile{
                 left: 28%;
                 opacity: 0;
                 position: absolute;
+                .transition(0.3s, top);
             }
     
             .wndinner{
                 max-height: none!important;
-                top : 17%!important;
+                top : 0%!important;
                 bottom : 0;
                 height: auto!important;
                 max-width: none!important;
                 -webkit-transform: translateY(100%);
                 transform: translateY(100%);
                 backface-visibility: hidden;
+                will-change: transform;
+                contain: strict;
+                
+                .transition(0.3s, top);
     
                 .wndcontent{
                     border-top-left-radius: 10px;
@@ -7680,10 +7714,26 @@ html.mobile{
                     border-bottom-left-radius: 0;
                     bottom : 0;
                     backface-visibility: hidden;
-                    contain: strict;
+                    padding-bottom: 130px;
+                    background: #fff!important;
+                    
                     .shadowSmaller();
 
-                    
+                    /*&:after{
+                        height: 130px;
+                        position: relative;
+                        left : 0;
+                        bottom : 0;
+                        right : 0;
+                        padding-bottom : 30px;
+                        text-align: center;
+                        content : "\f111";
+                        font-family: "Font Awesome 5 Free";
+                        font-weight: 900;
+                        z-index: 1;
+                        font-size: 0.5em;
+                        opacity: 0.3;
+                    }*/
     
                     &::-webkit-scrollbar{
                         width: 0;
@@ -7698,29 +7748,76 @@ html.mobile{
                     display: none;
                 }
             }
+
             &.asette{
                 .wndback{
-                    .transition(0.3s);
+                    .transition(0.2s);
                 }
                 .closeline{
-                    .transition(0.3s);
+                    .transition(0.2s);
                 }
                 .wndinner{
-                    .transition(0.3s);
+                    .transition(0.2s);
                 }   
             }
+
             &.sette{
-      
+
                 .wndinner{
-                    -webkit-transform: translateY(0);
-                    transform: translateY(0);
+                    -webkit-transform: translateY(130px);
+                    transform: translateY(130px);
+                    .transition(0.3s, transform);
                 }   
+
+                .windowmainbuttons{
+                    -webkit-transform: translateY(-130px);
+                    transform: translateY(-130px);
+                    .transition(0.3s, transform);
+                }
                 
                 .closeline,
                 .wndback{
                     opacity: 1;
                 }
                 
+            }
+
+            &.showbetter{
+
+                &.sette{
+      
+                    .wndinner{
+                        -webkit-transform: translateY(45px);
+                        transform: translateY(45px);
+                    }   
+                    
+                    .windowmainbuttons{
+                        -webkit-transform: translateY(-45px);
+                        transform: translateY(-45px);
+                    }
+                }
+
+                .closeline{
+                    opacity: 0;
+                }
+
+                .roundclosebutton{
+                    backdrop-filter : none;
+                }
+            }
+        }
+    }
+
+    &.stblack{
+        .wnd{
+            &.normalizedmobile{
+    
+        
+                .wndinner{
+                    .wndcontent{
+                        background: @color-black!important;
+                    }
+                }
             }
         }
     }

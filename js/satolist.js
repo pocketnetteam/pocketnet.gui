@@ -2336,7 +2336,28 @@ Platform = function (app, listofnodes) {
 
     self.ui = {
 
-        
+        popup : function(key, always, data){
+
+			var showed = localStorage['popup_' + key] || false;
+
+			if(!showed || always){
+
+				app.nav.api.load({
+					open : true,
+					id : 'popup',
+
+					key : key,
+					inWnd : true,
+
+					essenseData : {
+						key : key,
+						always : always,
+						data : data
+					}
+				})
+			}
+
+        },
 
         articledecoration : function(wr, share, extend){
             var caption = wr.find('.shareBgCaption')
@@ -7481,12 +7502,16 @@ Platform = function (app, listofnodes) {
             all: {
                 white: {
                     name: self.app.localization.e('e13266'), ////ch
-                    class: "stwhite"
+                    class: "stwhite",
+                    color : "#ffffff",
+                    media : '(prefers-color-scheme: light)'
                 },
 
                 black: {
                     name: self.app.localization.e('e13267'),
-                    class: "stblack"
+                    class: "stblack",
+                    color : "#1e2235",
+                    media : '(prefers-color-scheme: dark)'
                 }
             },
             default: "white",
@@ -7522,9 +7547,7 @@ Platform = function (app, listofnodes) {
 
                 if (value && t.all[value]) {
                     _.each(t.all, function (c) {
-
                         h.removeClass(c.class)
-
                     })
 
                     h.addClass(t.all[value].class)
@@ -7536,10 +7559,18 @@ Platform = function (app, listofnodes) {
                     t.save()
 
                     var cm = deep(app, 'modules.menu.module.restart')
-                     if (cm) cm()
+                    
+                    if (cm) cm()
+
+                    $('meta[name="theme-color"]').attr('content', t.all[value].color)
+                        .attr('media',  t.all[value].media)
+                        
+                    $('meta[name="msapplication-navbutton-color"]').attr('content', t.all[value].color)
+                    $('meta[name="apple-mobile-web-app-status-bar-style"]').attr('content', t.all[value].color)
                 }
 
                 app.mobile.statusbar.background()
+
             }
         },
 
@@ -8283,8 +8314,6 @@ Platform = function (app, listofnodes) {
 
                     self.ipcbridge.request('autoLaunchIsEnabled', {}).then(r => {
 
-                        console.log('autoLaunchIsEnabled', r)
-
                         m.autostart.value = r
 
                         if (clbk) {
@@ -8824,6 +8853,30 @@ Platform = function (app, listofnodes) {
                     return true
                 }
             },
+
+            scamcriteria : function(address){
+
+                if(!address) address = (self.app.platform.sdk.address.pnet() || {}).address
+
+                var info = deep(self, 'sdk.users.storage.' + address);
+
+                if (info.reputation > 100 && info.postcnt < 10) return true
+
+                return false
+
+            },
+
+            upvotevalueblockcriteria : function(value, address){
+
+                if(!address) address = (self.app.platform.sdk.address.pnet() || {}).address
+
+                var info = deep(self, 'sdk.users.storage.' + address);
+
+                if (value <= 3 && info.reputation < 100) return true
+
+                return false
+
+            }, 
 
             reputationBlockedRedirect : function(address){
                 if(self.sdk.user.reputationBlocked(address)){
@@ -9453,6 +9506,7 @@ Platform = function (app, listofnodes) {
                 if (imported.length)
                     this.storage.notifications = imported
 
+
                 if (exported.block)
                     this.storage.block = exported.block
 
@@ -9503,6 +9557,7 @@ Platform = function (app, listofnodes) {
 
                 this.load();
 
+
                 this.storage.block || (this.storage.block = self.currentBlock)
                 this.storage.notifications || (this.storage.notifications = [])
 
@@ -9520,10 +9575,13 @@ Platform = function (app, listofnodes) {
 
             wsBlock: function (block) {
 
-                if (block > this.storage.block)
+                if (block > this.storage.block) {
+
                     this.storage.block = block;
+                }
 
                 this.save()
+
             },
 
             addFromWs: function (data) {
@@ -9661,8 +9719,9 @@ Platform = function (app, listofnodes) {
 
                             n.getNotificationsInfo(notifications || [], function () {
 
-                                if (block.block > n.storage.block)
+                                if (block.block > n.storage.block) {
                                     n.storage.block = block.block
+                                }
 
                                 n.inited = true;
                                 n.save();
@@ -9891,6 +9950,8 @@ Platform = function (app, listofnodes) {
         users: {
             loading: {},
             storage: {},
+
+            nameaddressstorage : {},
 
             extend: function (u, state) {
 
@@ -10524,6 +10585,13 @@ Platform = function (app, listofnodes) {
                         lf = _.find(self.sdk.users.storage, function (s) {
                             if (s && s.name && s.name.toLowerCase() == name.toLowerCase()) return true
                         })
+                    }
+
+                    if(self.sdk.users.nameaddressstorage[name]){
+                        if (clbk)
+                            clbk(self.sdk.users.nameaddressstorage[name])
+
+                        return
                     }
 
                     if (lf) {
@@ -11994,7 +12062,23 @@ Platform = function (app, listofnodes) {
 
                 self.sdk.activity.latest = p.activity
 
+                self.sdk.activity.filladdressstorage()
+
+
                 if(clbk) clbk()
+            },
+
+            filladdressstorage : function(){
+
+                var stor = self.app.platform.sdk.users.nameaddressstorage
+
+                _.each(self.sdk.activity.latest, function(l){
+                    _.each(l, function(a){
+
+                        if (a.type == 'user') stor[a.index] = a.id
+                    })
+                })
+
             }
         },
         categories : {
@@ -13486,28 +13570,55 @@ Platform = function (app, listofnodes) {
                 }
             },
 
-            add: function (fixedBlock, type, result, start, count, address) {
+            getcached : function(value, fixedBlock, type, start, count, address){
+                var s = this.storage;
+                var result = []
+
+                if(!start) start = 0
+
+                if (s[type][value] && s[type][value][address] && s[type][value][address][fixedBlock] && s[type][value][address][fixedBlock].data){
+
+                    for (var i = 0; i < count; i++) {
+                        if (s[type][value][address][fixedBlock].data[start + i])
+                            result.push(s[type][value][address][fixedBlock].data[start + i])
+                    }
+
+                }
+
+
+                if(result.length) return {
+                    data : result
+                }
+
+                return null
+            },
+
+            add: function (value, fixedBlock, type, result, start, count, address) {
                 var s = this.storage;
 
-                if (!s[type][address]) s[type][address] = {}
+                if(!start) start = 0
 
-                if (!s[type][address][fixedBlock]) {
-                    s[type][address][fixedBlock] = result;
+                if (!s[type][value]) s[type][value] = {}
+                if (!s[type][value][address]) s[type][value][address] = {}
+
+                if (!s[type][value][address][fixedBlock]) {
+                     s[type][value][address][fixedBlock] = result;
                 }
 
                 else {
                     for (var i = 0; i < count; i++) {
 
                         if (result.data[i])
-
-                            s[type][address][fixedBlock].data[start + i] = result.data[i]
+                            s[type][value][address][fixedBlock].data[start + i] = result.data[i]
                     }
                 }
 
             },
 
-            preview: function (fixedBlock, type, start, count, address) {
+            preview: function (value, fixedBlock, type, start, count, address) {
                 var s = this.storage;
+
+                if(!start) start = 0
 
                 if (type != 'fs' && type != 'all') {
 
@@ -13531,20 +13642,31 @@ Platform = function (app, listofnodes) {
                 }
             },
 
-            get: function (value, type, start, count, fixedBlock, clbk, address) {
+            get: function (value, type, start, count, fixedBlock, clbk, address, cached) {
 
                 if (!address) address = 'pocketnet'
 
                 var s = self.sdk.search;
 
-
-                fixedBlock || (fixedBlock = self.currentBlock);
+                if(typeof fixedBlock == 'undefined') fixedBlock = self.currentBlock
 
                 type || (type = 'fs')
 
                 s.preview(fixedBlock, type, start, count, address)
 
                 value = trim(value.replace(/[^а-яА-Яa-zA-Z0-9\# _]+/g, ''))
+
+                if(cached && type && type != 'fs') {
+
+                    var g =  self.sdk.search.getcached(value, fixedBlock, type, start, count, address)
+
+                    if (g){
+                        if (clbk)
+                            clbk(g, fixedBlock)
+
+                        return
+                    }
+                }
 
                 var np = [encodeURIComponent(value), type, fixedBlock, (start || 0).toString(), (count || 10).toString()]
 
@@ -13558,7 +13680,7 @@ Platform = function (app, listofnodes) {
 
                             if (type == 'all') {
                                 _.each(d, function (d, k) {
-                                    s.add(fixedBlock, k, d, start, count, address)
+                                    s.add(value, fixedBlock, k, d, start, count, address)
                                 })
                             }
                             else {
@@ -13566,10 +13688,11 @@ Platform = function (app, listofnodes) {
                                     data: []
                                 }
 
-                                s.add(fixedBlock, type, d, start, count, address)
+                                s.add(value, fixedBlock, type, d, start, count, address)
                             }
 
                         }
+                      
 
                         if (clbk)
                             clbk(d, fixedBlock)
@@ -21298,7 +21421,7 @@ Platform = function (app, listofnodes) {
                 }*/
 
 
-               /* var nm = filterXSS(trimHtml(m, symbols), {
+                /* var nm = filterXSS(trimHtml(m, symbols), {
                     stripIgnoreTag: true
                 });*/
 
@@ -21740,29 +21863,24 @@ Platform = function (app, listofnodes) {
 
                     message.el.find('.commentprev').on('click', function () {
 
+                        platform.app.nav.api.load({
+                            open: true,
+                            href: 'post?s=' + data.comment.txid,
+                            inWnd: true,
+                            history: true,
+                            clbk: function (d, p) {
+                                app.nav.wnds['post'] = p
+                            },
 
-                        platform.sdk.node.shares.getbyid(data.comment.txid, function (s, err, p, fromcashe) {
+                            essenseData: {
+                                share: data.comment.txid,
 
-                            platform.app.nav.api.load({
-                                open: true,
-                                href: 'post?s=' + data.comment.txid,
-                                inWnd: true,
-                                history: true,
-                                clbk: function (d, p) {
-                                    app.nav.wnds['post'] = p
-                                },
-
-                                essenseData: {
-                                    share: data.comment.txid,
-
-                                    reply: {
-                                        answerid: data.comment.id,
-                                        parentid: data.comment.parentid || "",
-                                        noaction: true
-                                    }
+                                reply: {
+                                    answerid: data.comment.id,
+                                    parentid: data.comment.parentid || "",
+                                    noaction: true
                                 }
-                            })
-
+                            }
                         })
 
                     })
@@ -21959,7 +22077,6 @@ Platform = function (app, listofnodes) {
 
                     message.el.find('.sharepreview').on('click', function () {
 
-                        platform.sdk.node.shares.getbyid(data.txid, function (s, err, p, fromcashe) {
 
                             platform.app.nav.api.load({
                                 open: true,
@@ -21975,7 +22092,6 @@ Platform = function (app, listofnodes) {
                                 }
                             })
 
-                        })
 
                     })
 
@@ -22080,7 +22196,6 @@ Platform = function (app, listofnodes) {
 
                     message.el.find('.sharepreview').on('click', function () {
 
-                        platform.sdk.node.shares.getbyid(data.txid, function (s, err, p, fromcashe) {
 
                             platform.app.nav.api.load({
                                 open: true,
@@ -22096,7 +22211,6 @@ Platform = function (app, listofnodes) {
                                 }
                             })
 
-                        })
 
                     })
 
@@ -22190,7 +22304,6 @@ Platform = function (app, listofnodes) {
 
                     message.el.find('.sharepreview').on('click', function () {
 
-                        platform.sdk.node.shares.getbyid(data.txid, function (s, err, p, fromcashe) {
 
                             platform.app.nav.api.load({
                                 open: true,
@@ -22206,7 +22319,6 @@ Platform = function (app, listofnodes) {
                                 }
                             })
 
-                        })
 
                     })
 
@@ -22706,7 +22818,6 @@ Platform = function (app, listofnodes) {
 
                     message.el.find('.commentprev').on('click', function () {
 
-                        platform.sdk.node.shares.getbyid(data.posttxid, function (s, fromcashe) {
 
                             platform.app.nav.api.load({
                                 open: true,
@@ -22728,7 +22839,6 @@ Platform = function (app, listofnodes) {
                                 }
                             })
 
-                        })
 
                     })
 
@@ -23123,7 +23233,6 @@ Platform = function (app, listofnodes) {
                     if (data.mesType == 'upvoteShare' && data.share) {
                         message.el.find('.sharepreview').on('click', function () {
 
-                            platform.sdk.node.shares.getbyid(data.posttxid, function (s, err, p, fromcashe) {
 
                                 platform.app.nav.api.load({
                                     open: true,
@@ -23139,7 +23248,6 @@ Platform = function (app, listofnodes) {
                                     }
                                 })
 
-                            })
 
                         })
 
@@ -23546,10 +23654,6 @@ Platform = function (app, listofnodes) {
                 }*/
 			}
 
-
-
-
-
 			var remove = self.fastMessages.length - maxCount;
 
 			var s = false;
@@ -23661,7 +23765,7 @@ Platform = function (app, listofnodes) {
         self.fastMessage = function (html, destroyclbk) {
             var id = makeid(true);
 
-            html = '<div class="fastMessage" id="' + id + '">\
+            html = '<div class="fastMessage" elementsid="notificationmessage" id="' + id + '">\
             <div class="fmCnt">' + html + '</div>\
             <div class="close">\
                 <i class="fa fa-times" aria-hidden="true"></i>\
@@ -25315,6 +25419,8 @@ Platform = function (app, listofnodes) {
 
     self.prepare = function (clbk) {
 
+        self.nodeControlUpdateNodeLast = new Date()
+        self.nodeControlUpdateNodePopup = false
         self.preparing = true;
         self.sdk.registrations.load();
         self.sdk.relayTransactions.load();
@@ -25336,12 +25442,15 @@ Platform = function (app, listofnodes) {
             self.app.errors.clbks.platform = self.appstate
         }
 
+        ///
+
         initOnlineListener() // /remove for test
 
         self.app.api.wait.ready('use', 10000).then(r => {
 
             return new Promise((resolve, reject) => {
                 setTimeout(function(){
+
                     self.app.api.changeProxyIfNeed().then(l => {
 
                         if(!l){
@@ -25359,10 +25468,54 @@ Platform = function (app, listofnodes) {
                         resolve()
 
                     }).catch(reject)
+
                 }, 50)
             })
 
         }).then(r => {
+
+
+            var directproxy = self.app.api.get.direct()
+
+            if (directproxy){
+                directproxy.clbks.tick.globalclbk = function(data) {
+
+                    if (data.nodeControl.state.hasUpdate) {
+                        if (!self.nodeControlUpdateNodePopup && (new Date(self.nodeControlUpdateNodeLast)).addSeconds(60 * 60) < new Date())
+                        {
+                            self.nodeControlUpdateNodeLast = new Date()
+                            self.nodeControlUpdateNodePopup = true
+
+                            dialog({
+                                html: self.app.localization.e('easyNode_e10062'),
+                                btn1text: self.app.localization.e('easyNode_e10015'),
+                                btn2text: self.app.localization.e('skip'),
+                                class : 'zindex',
+
+                                success: function () {
+                                   
+                                    directproxy.fetchauth('manage', {
+                                        action : 'node.update',
+                                        data : {
+                                            all : 'all'
+                                        }
+                                    }).then(r => {
+                                        sitemessage(self.app.localization.e('easyNode_e10063'), null, 5000)
+                                    }).catch(e => {
+                                        sitemessage(JSON.stringify(e), null, 5000)
+                                    })
+
+                                },
+                                destroy: function() {
+                                    self.nodeControlUpdateNodeLast = new Date()
+                                    self.nodeControlUpdateNodePopup = false
+                                }
+                            })
+                        }
+                    }
+                }
+            }
+
 
             self.ws = new self.WSn(self);
 
@@ -25490,6 +25643,8 @@ Platform = function (app, listofnodes) {
             if (state) {
 
 
+                /*self.ui.popup('test', false, {});*/
+
 
                 lazyActions([
 
@@ -25527,8 +25682,6 @@ Platform = function (app, listofnodes) {
 
                     self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
 
-
-
                     self.app.peertubeHandler.init()
 
                     if (clbk)
@@ -25548,28 +25701,20 @@ Platform = function (app, listofnodes) {
                             //app.notifications.subscribe()
                         })
 
-
-
-
-
                         if (app.curation()){
                             if(app.user.validate()){
-
                                 if(app.nav.get.href() == 'userpage?pc=1'){
                                     self.matrixchat.core.apptochat()
                                 }
-
-
                             }
                         }
 
                         self.sdk.notifications.init().catch(e => {})
 
                         if (self.sdk.address.pnet()){
-
-
                             if(self.nvadr[self.sdk.address.pnet().address]) $('html').addClass('testaddress')
                             else{
+                                if($('html').hasClass('testaddress'))
                                 $('html').removeClass('testaddress')
                             }
                         }
@@ -25597,6 +25742,7 @@ Platform = function (app, listofnodes) {
         el : null,
         inited : false,
         initing : false,
+        chatparallax : null,
 
         clbks : {
             ALL_NOTIFICATIONS_COUNT : {},
@@ -25605,24 +25751,39 @@ Platform = function (app, listofnodes) {
         },
 
         destroy : function(){
+
+
+            if (self.matrixchat.chatparallax){
+
+
+                self.matrixchat.chatparallax.destroy()
+                self.matrixchat.chatparallax = null
+            }
+
+
             if (window.matrixchat){
                 window.matrixchat.destroy()
             }
 
+
             $('#matrix').html('');
+
 
             self.matrixchat.el = null
             self.matrixchat.inited = false
+
 
             self.matrixchat.clbks = {
                 ALL_NOTIFICATIONS_COUNT : {},
                 NOTIFICATION : {},
                 SHOWING : {}
             }
+
         },
 
 
         import : function(clbk){
+
 
             if (self.matrixchat.imported){
                 if(clbk) clbk()
@@ -25740,7 +25901,53 @@ Platform = function (app, listofnodes) {
 
                 if(isTablet() || isMobile() || window.cordova){
 
-					self.matrixchat.el.swipe({
+                    self.matrixchat.chatparallax = new SwipeParallaxNew({
+
+                        el : self.matrixchat.el,
+                        transformel : self.matrixchat.el,
+    
+                        allowPageScroll : 'vertical',
+        
+                        directions : {
+                            left : {
+                                cancellable : true,				
+                                
+                                basevalue : function(){
+                                    return self.app.width || $(window).width()
+                                },
+    
+                                positionclbk : function(px){
+                                },
+    
+                                constraints : function(e){
+
+                                    if(_.find(e.path, function(el){
+                                        return el.className && el.className.indexOf('noswipepnt') > -1
+                                    })) return false
+
+                                    if (self.matrixchat.core && (!self.matrixchat.core.canback || self.matrixchat.core.canback()))
+
+                                        return true
+                                },
+    
+                                restrict : true,
+                                trueshold : 30,
+                                clbk : function(){
+
+                                    if (self.matrixchat.core && (!self.matrixchat.core.canback || self.matrixchat.core.canback()))
+                                        self.matrixchat.core.backtoapp()
+
+                                }
+        
+                            }
+                        }
+                        
+        
+                    }).init()
+
+
+
+					/*self.matrixchat.el.swipe({
 						swipeLeft : function(e, phase, direction, distance){
                             if(_.find(e.path, function(el){
                                 return el.className && el.className.indexOf('noswipepnt') > -1
@@ -25751,7 +25958,7 @@ Platform = function (app, listofnodes) {
                                 self.matrixchat.core.backtoapp()
 
 						},
-					})
+					})*/
 
 				}
 
@@ -25933,8 +26140,7 @@ Platform = function (app, listofnodes) {
                 if (self.matrixchat.el){
 
                     if(!self.matrixchat.el.hasClass('active')) return
-
-                    self.matrixchat.el.removeClass('active')
+                        self.matrixchat.el.removeClass('active')
                 }
                 else{
                     return
@@ -25943,12 +26149,12 @@ Platform = function (app, listofnodes) {
                 if (app.chatposition)
                     app.chatposition(false)
 
+
                 self.app.actions.playingvideo()
 
-                if (isTablet() ||isMobile() || window.cordova)
-                    self.app.actions.restore()
+                if (isTablet() ||isMobile() || window.cordova) self.app.actions.restore()
 
-                app.el.html.removeClass('chatshowed')
+                //app.el.html.removeClass('chatshowed')
 
                 if(document.activeElement) document.activeElement.blur()
 
@@ -25958,8 +26164,18 @@ Platform = function (app, listofnodes) {
                     self.matrixchat.core.hideInParent(isTablet() ||isMobile() || window.cordova ? true : false )
                 }
 
-                if (isTablet() ||isMobile() || window.cordova){
-                    self.app.actions.onScroll()
+                
+
+                if (isTablet() || isMobile() || window.cordova){
+
+                    /*self.matrixchat.el.one('transitionend webkitTransitionEnd oTransitionEnd', function () {
+                        self.app.actions.onScroll()
+                    });*/
+
+                    setTimeout(function(){
+                        self.app.actions.onScroll()
+                    }, 300) 
+                    
                 }
 
                 _.each(self.matrixchat.clbks.SHOWING, function(c){
@@ -25969,7 +26185,6 @@ Platform = function (app, listofnodes) {
             }
 
             core.apptochat = function(link){
-
 
                 if (document.activeElement) document.activeElement.blur()
 
@@ -25981,9 +26196,8 @@ Platform = function (app, listofnodes) {
 
                 if (self.matrixchat.el){
 
-                    if(self.matrixchat.el.hasClass('active')) return
-
-                    self.matrixchat.el.addClass('active')
+                    if (self.matrixchat.el.hasClass('active')) return
+                        self.matrixchat.el.addClass('active')
 
                 }
                 else{
@@ -25996,8 +26210,10 @@ Platform = function (app, listofnodes) {
                 self.app.actions.playingvideo()
 
                 if (isTablet() ||isMobile() || window.cordova){
-                    self.app.actions.offScroll()
-                    self.app.actions.optimize()
+                    setTimeout(function(){
+                        self.app.actions.offScroll()
+                        self.app.actions.optimize()
+                    })
                 }
 
                 if (isTablet() || isMobile() || window.cordova)

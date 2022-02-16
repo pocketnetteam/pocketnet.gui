@@ -440,6 +440,7 @@ Application = function(p)
 	self.modules = {};
 
 	self.curation = function(){
+
 		if(typeof isios != 'undefined' && isios() && window.cordova) return true
 		return false
 	}
@@ -1000,7 +1001,7 @@ Application = function(p)
 				self.el.html.addClass('cordova')
 
 				if(self.curation()){
-					
+					self.el.html.addClass('curation')
 				}
 
 				if (window.cordova && !isMobile()){
@@ -1118,7 +1119,7 @@ Application = function(p)
 			//window.requestAnimationFrame(function(){
 				self.el.content.css('width', 'auto')
 				self.el.content.css('height', 'auto')
-				self.el.content.removeClass('optimized')
+				//self.el.content.removeClass('optimized')
 			//})
 		},
 
@@ -1135,7 +1136,7 @@ Application = function(p)
 					window.requestAnimationFrame(function(){
 						self.el.content.width(w + 'px')
 						self.el.content.height(h + 'px')
-						self.el.content.addClass('optimized')
+						//self.el.content.addClass('optimized')
 					})
 				}, 300)
 
@@ -1318,8 +1319,11 @@ Application = function(p)
 
 						showPanel = '1'
 
-						if (self.el.html.hasClass('scrollmodedown') )
+						if (self.el.html.hasClass('scrollmodedown')){
 							self.el.html.removeClass('scrollmodedown')
+							
+							
+						}
 
 						return
 					}
@@ -1328,8 +1332,11 @@ Application = function(p)
 						if(lastScrollTop + 40 < scrollTop){
 							showPanel = '2'
 
-							if(!self.el.html.hasClass('scrollmodedown'))
+							if(!self.el.html.hasClass('scrollmodedown')){
 								self.el.html.addClass('scrollmodedown')
+								if(self.modules.menu.module) self.modules.menu.module.blursearch()
+							}
+								
 
 							
 						}
@@ -1688,7 +1695,7 @@ Application = function(p)
 
 	self.mobile = {
 		saveImages : {
-			save : function(base64, nms){
+			save : function(base64, nms, clbk){
 				var nm = nms.split('.')
 
 				var name = nm[0],
@@ -1703,11 +1710,11 @@ Application = function(p)
 
 				if (window.cordova){
 
-
 					var image = b64toBlob(base64.split(',')[1], 'image/' + ms);	
 
-					p_saveAsWithCordova(image, name + '.' + format, function(){
-						clbk()
+					p_saveAsWithCordova(image, name + '.' + format, function(d,e){
+						if (clbk)
+							clbk(d,e)
 					})
 
 				}
@@ -1718,6 +1725,9 @@ Application = function(p)
 						format : format,
 						name : name
 					})
+
+					if (clbk)
+						clbk({name})
 				}
 			},
 			dialog : function(name, src){
@@ -1733,11 +1743,25 @@ Application = function(p)
 
 							srcToData(src, function(base64){
 
-								self.mobile.saveImages.save(base64, name)
+								imagetojpegifneed({base64, name}).then(({base64, name})=> {
 
-								successCheck()
+									self.mobile.saveImages.save(base64, name, function(d, err){
 
-								globalpreloader(false)
+										globalpreloader(false)
+	
+										if (d){
+											successCheck()
+										}
+										else{
+											sitemessage( self.localization.e('e13230')  )
+										}
+	
+										
+									})
+
+								})
+
+								
 
 							})
 						}

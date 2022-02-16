@@ -46,7 +46,10 @@ cordova/build.json
 cordova/google-services.json
 cordova/GoogleService-Info.plist
 indexcordova.html
-.DS_Store
+**/.DS_Store
+**/.pgbomit
 external/chat
 external/peertube
 web/
+main.js
+docs/

@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI Test Build to test.pocketnet.app
+name: Deploy to test.pocketnet.app
 
 # Controls when the action will run. 
 on:
@@ -32,4 +32,4 @@ jobs:
           npm run minimize:test
 
       - name: Copy to dest dir
-        run: rsync -ah ./ /docker/gui/ --exclude .git
+        run: rsync -ah --exclude={'.git/','.github/','node_modules'} ./ /docker/gui/

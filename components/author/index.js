@@ -11,7 +11,7 @@ var author = (function(){
 		var el = {};
 		var upbutton;
 
-		var panel = null, uptimer = null, contentsready = false, fixedBlock = null, acsearch;
+		var panel = null, uptimer = null, contentsready = false, fixedBlock = null, acsearch, share = null;
 
 		var actions = {
 			subscribeLabel : function(){
@@ -185,7 +185,7 @@ var author = (function(){
 						render : 'lenta',
 						history : true,
 						if : function(){
-							return !self.app.curation() || self.user.isItMe(author.address)
+							return !self.app.curation()
 						},
 						count : function(){
 							return 0
@@ -209,6 +209,9 @@ var author = (function(){
 						id : 'followers',
 						render : 'followers',
 						history : true,
+						if : function(){
+							return !self.app.curation()
+						},
 						count : function(){
 		
 							var u = _.map(deep(author, 'data.subscribers') || [], function(a){
@@ -244,6 +247,9 @@ var author = (function(){
 						mobile : '<i class="fas fa-user-plus"></i>',
 						render : 'following',
 						history : true,
+						if : function(){
+							return !self.app.curation()
+						},
 						count : function(){
 		
 							var u = _.map(deep(author, 'data.subscribes') || [], function(a){
@@ -383,6 +389,8 @@ var author = (function(){
 					},
 					
 				}
+
+		
 
 		}
 		
@@ -563,7 +571,11 @@ var author = (function(){
 
 			report : function(report, cl, npsh){
 
+				
+
 				actions.destroy();
+
+				if(!report) return
 
 				if(!report.active && report.history){
 
@@ -577,7 +589,6 @@ var author = (function(){
 							report : report.id
 						})
 
-
 					}
 						
 				}
@@ -586,13 +597,7 @@ var author = (function(){
 
 				if (renders[report.render]){
 					renders[report.render](el.lenta, report)
-
 					renders.menulight()
-
-					/*if(!isTablet())
-						self.app.platform.sdk.contents.get(author.address, function(contents){
-							renders.contents(contents)	
-						})*/
 				}
 				
 			},
@@ -834,15 +839,49 @@ var author = (function(){
 
 			},
 
+		
+			share : function(_el){
 
+				if(!self.app.curation()){
+					self.nav.api.load({
 
+						open : true,
+						id : 'share',
+						el : _el.find('.newsharewrapper'),
+						animation : false,
+	
+						mid : 'shareauthor',
+						
+						clbk : function(e, p){
+	
+							share = p
+	
+							if (contentsready)
+								el.c.find('.contentswrapper').hcSticky('refresh');
+	
+						},
+						essenseData : {
+							minimized : true,
+							post : function(){
+								
+							}
+						}
+					})
+				}
+
+				
+			
+			},
 
 			lenta : function(_el, report){
 
-				if(self.app.curation() && !self.user.isItMe(author.address)){
-
-
+				/*if (self.app.curation() && !self.user.isItMe(author.address)){
 					return
+				}*/
+
+				if (share){
+					share.destroy()
+					share = null
 				}
 
 				var load = function(){			
@@ -858,110 +897,115 @@ var author = (function(){
 					}
 	
 					self.shell(pp, function(p){
-					
-	
-						self.nav.api.load({
-	
-							open : true,
-							id : 'lenta',
-							el : _el.find('.authorlentawrapper'),
-							animation : false,
+
+						if(!self.app.curation()){
+							if(self.user.isItMe(author.address) && !params.search) renders.share(_el)
+
+						
+							self.nav.api.load({
 		
-							mid : author.address,
+								open : true,
+								id : 'lenta',
+								el : _el.find('.authorlentawrapper'),
+								animation : false,
+			
+								mid : author.address,
+			
+								essenseData : params,
+								
+								clbk : function(e, p){
+								
+									report.module = p;
 		
-							essenseData : params,
-							
-							clbk : function(e, p){
-							
-								report.module = p;
-	
-								if (contentsready)
-									el.c.find('.contentswrapper').hcSticky('refresh');
-							}
-		
-						})
-
-						if(author.data && author.data.name){
-							var c = p.el.find('.authorlentawrappermain');
-
-							p.el.find('.authorsearchicon .icon').on('click', function(){
-
-								c.toggleClass('searchactive')
-
-								if (c.hasClass('searchactive')){
-									c.find('.search input').focus()
+									if (contentsready)
+										el.c.find('.contentswrapper').hcSticky('refresh');
 								}
-								else
-								{
-									c.find('.search input').val('')
-									clearsearch()
-								}
+			
 							})
 
-							if (acsearch){
-								acsearch.destroy()
-							}
+							if(author.data && author.data.name){
+								var c = p.el.find('.authorlentawrappermain');
 
+								p.el.find('.authorsearchicon .icon').on('click', function(){
 
-							acsearch = new search(p.el.find('.authorsearch'), {
-								placeholder : 'Search on ' + author.data.name,
-		
-								clbk : function(_el){
-									
-		
-								},
-		
-								last : {
-									get : function(){
-		
-										return [];
-		
-									},
-		
-									tpl : function(result, clbk){
-										
+									c.toggleClass('searchactive')
+
+									if (c.hasClass('searchactive')){
+										c.find('.search input').focus()
 									}
-								},
-		
-								events : {							
-		
-									search : function(value, clbk, e, helpers){
-		
-										var href = '?report=shares&ssa=' + value.replace("#", 'tag:')
-		
-										clearsearch(true)
-		
-										var p = {
-											href : href,
-											history : true,
-											open : true,
-											handler : true
-										}	
-		
-										self.nav.api.go(p)
-		
-										if (clbk)
-											clbk(true)
-										
-									},
-		
-									clear : function(fs){
-										
+									else
+									{
+										c.find('.search input').val('')
 										clearsearch()
 									}
+								})
+
+								if (acsearch){
+									acsearch.destroy()
 								}
 								
-							})
 
 
-							if (parameters().ssa){
-								c.addClass('searchactive')
-								c.find('.search input').val(parameters().ssa)
+								acsearch = new search(p.el.find('.authorsearch'), {
+									placeholder : self.app.localization.e('e13140') + ' ' + author.data.name,
+			
+									clbk : function(_el){
+			
+									},
+			
+									last : {
+										get : function(){
+			
+											return [];
+			
+										},
+			
+										tpl : function(result, clbk){
+											
+										}
+									},
+
+									right : isTablet(),
+			
+									events : {							
+										search : function(value, clbk, e, helpers){
+			
+											var href = '?report=shares&ssa=' + value.replace("#", 'tag:')
+											clearsearch(true)
+			
+											var p = {
+												href : href,
+												history : true,
+												open : true,
+												handler : true
+											}	
+			
+											self.nav.api.go(p)
+			
+											if (clbk)
+												clbk(true)
+											
+										},
+			
+										clear : function(fs){
+											
+											clearsearch()
+										}
+									}
+									
+								})
+
+
+								if (parameters().ssa){
+									c.addClass('searchactive')
+									c.find('.search input').val(parameters().ssa)
+								}
+
+								if(isTablet()){
+									c.addClass('searchactive')
+								}
 							}
 
-							if(isTablet()){
-								c.addClass('searchactive')
-							}
 						}
 
 						
@@ -1224,8 +1268,9 @@ var author = (function(){
 
 		var make = function(ini){
 
-			var r = parameters().report || 'shares'
+			var r = parameters().report || (self.app.curation() ? '' : 'shares')
 
+			if (reports[r])
 				reports[r].active = true;
 
 			if (isTablet()){
@@ -1353,10 +1398,11 @@ var author = (function(){
 
 			parametersHandler : function(){
 
-				var r = parameters().report || 'shares'
+				var r = parameters().report || (self.app.curation() ? '' : 'shares')
+
 				var address = parameters().address
 
-				if(address && author.address != address){
+				if (address && author.address != address){
 
 					preinit(address, function(){
 						init()
@@ -1394,6 +1440,7 @@ var author = (function(){
 			},
 
 			getdata : function(clbk, settings){
+				
 				self.app.el.html.addClass('allcontent')
 
 				self.app.platform.sdk.search.clear()
@@ -1404,7 +1451,7 @@ var author = (function(){
 
 				_state = settings.state
 
-				p.address || (p.address = ed.address)
+				p.address || (p.address = ed.address || self.app.user.address.value || '')
 
 				contentsready = false
 
@@ -1423,9 +1470,7 @@ var author = (function(){
 					}, function(){
 
 						self.sdk.users.addressByName(p.address, function(address){
-
 							preinit(address, clbk)
-							
 						})
 
 					})
@@ -1439,7 +1484,10 @@ var author = (function(){
 
 				if(el.c) el.c.empty()
 
-				self.app.el.html.removeClass('allcontent')
+				if(share){
+					share.destroy()
+					share = null
+				}
 
 				if (upbutton)
 					upbutton.destroy()
@@ -1462,11 +1510,12 @@ var author = (function(){
 				actions.destroy();
 
 				el = {};
+
+				self.app.el.html.removeClass('allcontent')
+
 			},
 			
 			init : function(p){
-
-				self.app.el.html.addClass('allcontent')
 
 				state.load();
 
@@ -1486,6 +1535,10 @@ var author = (function(){
 				init()
 
 				p.clbk(null, p);
+			},
+
+			wnd : {			
+				class : 'normalizedmobile',
 			}
 		}
 	};

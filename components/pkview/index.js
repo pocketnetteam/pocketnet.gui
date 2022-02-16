@@ -205,6 +205,19 @@ var pkview = (function(){
 		}
 
 		var initEvents = function(){
+
+			el.c.find('.nextaction').on('click', function(){
+				self.closeContainer()
+
+				if(isMobile() || window.cordova){
+					self.app.nav.api.load({
+						open : true,
+						href : 'index',
+						history : true,
+					})
+
+				}
+			})
 			
 			el.c.find('.dontshowagain').on('click', function(){
 
@@ -319,6 +332,8 @@ var pkview = (function(){
 				p.clbk(null, p);
 			},
 			wnd : {			
+				showbetter : true,
+				//header : isMobile() ? 'privatekey' : '',
 				class : 'withoutButtons pkviewwnd normalizedmobile',
 			}
 		}

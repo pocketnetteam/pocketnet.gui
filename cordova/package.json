@@ -49,6 +49,7 @@
     "cordova-plugin-device": "^1.1.7",
     "cordova-plugin-file": "^6.0.2",
     "cordova-plugin-file-opener2": "^3.0.5",
+    "cordova-plugin-file-transfer": "^1.7.1",
     "cordova-plugin-firebasex": "^13.0.1",
     "cordova-plugin-insomnia": "git+https://github.com/EddyVerbruggen/Insomnia-PhoneGap-Plugin.git",
     "cordova-plugin-ionic-keyboard": "^2.2.0",
@@ -138,7 +139,8 @@
       "cordova-plugin-androidx-adapter": {},
       "cordova-plugin-whitelist": {},
       "cordova-plugin-android-packagemanager": {},
-      "cordova-plugin-apkupdater": {}
+      "cordova-plugin-apkupdater": {},
+      "cordova-plugin-file-transfer": {}
     },
     "platforms": [
       "ios",

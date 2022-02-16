@@ -184,11 +184,10 @@ var userpage = (function(){
 					id : 'test',
 					report : 'test',
 					mobile : true,
-					openReportPageMobile : true,
+					//openReportPageMobile : true,
 				})
 
 			}
-		
 
 			reports.push({
 				name : self.app.localization.e('rsettings'),
@@ -203,7 +202,7 @@ var userpage = (function(){
 				id : 'accounts',
 				report : 'accounts',
 				mobile : true,
-				openReportPageMobileInWindow : true
+				//openReportPageMobileInWindow : true
 			})
 
             if (typeof _Electron != 'undefined' ? _Electron : false) {
@@ -211,7 +210,7 @@ var userpage = (function(){
                     name : self.app.localization.e('easyNode_e10000'),
                     id : 'easynode',
                     report : 'nodecontrol',
-                    openReportPageMobile : false,
+                    //openReportPageMobile : false,
                     mobile : false
                 })
             }
@@ -220,7 +219,7 @@ var userpage = (function(){
 				name : self.app.localization.e('rsystem'),
 				id : 'system16',
 				report : 'system16',
-				openReportPageMobile : true,
+				//openReportPageMobile : true,
 				mobile : false
 			})
 
@@ -232,7 +231,7 @@ var userpage = (function(){
 				if : function(){
 					return isMobile()
 				},
-				openReportPageMobileInWindow : true
+				//openReportPageMobileInWindow : true
 			})
 
 			if(self.app.user.validate()) {
@@ -242,7 +241,7 @@ var userpage = (function(){
 					id : 'videoCabinet',
 					report : 'videoCabinet',
 					mobile : true,
-					openReportPageMobile : true,
+					openReportPageMobileInWindow : true,
 					if : function(){
 
 						if (self.app.curation()) return false
@@ -251,13 +250,7 @@ var userpage = (function(){
 
 						return true
 
-						if (typeof mestate != 'undefined' && mestate && (
 					
-							(mestate.reputation > 50 || !mestate.trial || mestate.balance > 500000000)
-
-						)){
-							return true
-						}
 					}
 				})
 
@@ -492,7 +485,7 @@ var userpage = (function(){
 
 				var report = helpers.findReport(id)
 
-				if(report && isMobile() && report.openReportPageMobile){
+				if(report && isMobile() && (report.openReportPageMobile && !self.app.curation())){
 
 					self.closeContainer()
 
@@ -505,7 +498,7 @@ var userpage = (function(){
 					return
 				}
 
-				if(report && isMobile() && report.openReportPageMobileInWindow){
+				if(report && isMobile() && (report.openReportPageMobileInWindow || self.app.curation())){
 
 					self.closeContainer()
 
@@ -1026,6 +1019,11 @@ var userpage = (function(){
 				self.app.mobile.vibration.small()
 				actions.signout()
 
+			})
+
+			el.c.find('.backtabletmenu').on('click', function(){
+				
+				makerep()
 			})
 
 		}

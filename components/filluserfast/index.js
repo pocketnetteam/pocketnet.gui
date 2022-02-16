@@ -136,7 +136,13 @@ var filluserfast = (function(){
 			captcha : {
 				id : 'captcha',
 				render : 'captcha',
-				nextindex : 'categories',
+				nextindex : function(){
+					if(self.app.curation()){
+						return 'welcome'
+					}
+					
+					return 'categories'
+				},  
 
 				prev : function(clbk){
 
@@ -244,8 +250,9 @@ var filluserfast = (function(){
 					})
 
 					input.on('focus', function(){
-						if (isTablet())
-							_scrollTo(input)
+
+						if (isTablet()) setTimeout(function(){_scrollTo(input, el.c.closest('.customscroll')), 200})
+
 					})
 
 					save.on('click', function(){
@@ -739,6 +746,8 @@ var filluserfast = (function(){
 
 				if (current) {
 					current = steps[current].nextindex
+
+					if(typeof current == 'function') current = current()
 				}
 				else{
 
