@@ -692,9 +692,7 @@
 
 					el : wnd.find('.wndback,.wndheader,.wndinner'),
 					transformel : wnd.find('.wndinner'),
-
 					allowPageScroll : 'vertical',
-	
 					directions : {
 						down : {
 							cancellable : true,						

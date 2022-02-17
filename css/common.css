@@ -26,6 +26,10 @@
 .share_common .repostWrapper {
   position: relative;
 }
+.share_common .repostWrapper .shareTable {
+  padding-top: 0;
+  padding-bottom: 0;
+}
 .share_common .wholikesTable {
   margin-bottom: 1em;
   cursor: pointer;
