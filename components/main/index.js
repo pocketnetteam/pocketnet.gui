@@ -319,7 +319,7 @@ var main = (function(){
 			
 			share : function(){
 
-				if(!isMobile() && !videomain && !searchvalue && !searchtags){
+				if (!isMobile() && !videomain && !searchvalue && !searchtags){
 
 					el.c.removeClass('wshar')
 

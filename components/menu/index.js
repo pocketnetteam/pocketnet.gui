@@ -669,19 +669,7 @@ var menu = (function(){
 					
 				}
 			},
-			/*newaccount: {
-				
-				click : function(){
-					self.app.mobile.vibration.small()
-					self.nav.api.go({
-						href : 'registration',
-						history : true,
-						open : true
-					})	
-				}
-
-			},*/
-
+	
 			state : {
 				init : function(el){
 					

@@ -799,8 +799,6 @@
 				//wnd.one('transitionend webkitTransitionEnd oTransitionEnd', function () {
 
 				setTimeout(function(){
-					wnd.remove();
-					
 
 					window.requestAnimationFrame(function(){
 
@@ -809,10 +807,11 @@
 	
 						if (self.essenseDestroy) self.essenseDestroy(key)
 
+						wnd.remove();
 						clearmem();
 					})
+
 				}, 220)	
-					
 
 				
 				//});

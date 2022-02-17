@@ -842,7 +842,7 @@ var author = (function(){
 		
 			share : function(_el){
 
-				if(!self.app.curation()){
+				if(!self.app.mobileview && !self.app.curation()){
 					self.nav.api.load({
 
 						open : true,
@@ -1475,7 +1475,7 @@ var author = (function(){
 
 				if(el.c) el.c.empty()
 
-				if(share){
+				if (share){
 					share.destroy()
 					share = null
 				}

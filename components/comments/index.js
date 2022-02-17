@@ -2059,6 +2059,16 @@ var comments = (function(){
 						
 					})
 
+					if(ed.renderClbk) ed.renderClbk()
+
+					if (clbk)
+						clbk()
+
+
+
+
+					return
+
 					var gutter = 10;
 
 					images.isotope({
