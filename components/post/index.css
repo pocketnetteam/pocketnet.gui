@@ -278,6 +278,15 @@
   -webkit-transition: opacity 0.1s;
   transition: opacity 0.1s;
 }
+#post .sharearticle .shareTable {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+#post .sharearticle .sharecaption,
+#post .sharearticle .tags,
+#post .sharearticle .sharecaption {
+  max-width: none;
+}
 #post .sharearticle.ready {
   opacity: 1;
 }
@@ -315,6 +324,9 @@
 #post .sharearticle .shareBgCaption .forstars .count span,
 #post .sharearticle .articleend .forstars .count span {
   font-size: 2em;
+}
+#post .sharearticle .shareBgCaption .forstars .count span,
+#post .sharearticle .articleend .forstars .count span {
   font-weight: 700;
   font-family: Nunito Sans;
 }
@@ -358,6 +370,9 @@
 #post .sharearticle .shareBgCaption .tags div span {
   color: rgb(var(--text-on-bg-ac-color));
 }
+#post .sharearticle .shareBgCaption .sys span {
+  color: rgb(var(--text-on-bg-shadow-color));
+}
 #post .sharearticle .shareBgCaption .blackmatte {
   background: #000000;
   background: linear-gradient(0deg, #000000 0%, rgba(255, 255, 255, 0) 100%);
@@ -379,6 +394,7 @@
   overflow-y: auto;
   text-overflow: ellipsis;
   overscroll-behavior: auto;
+  max-width: none;
 }
 #post .sharearticle .shareBgCaption .icon .usericon {
   margin: 0 auto;
@@ -480,6 +496,9 @@
 #post .sharearticle .shareBgCaption.verticalcover .tags div span {
   color: rgb(var(--text-color));
 }
+#post .sharearticle .shareBgCaption.verticalcover .sys span {
+  color: rgb(var(--text-color));
+}
 #post .sharearticle .shareBgCaption.verticalcover .starstoppanel .iconwrapper,
 #post .sharearticle .shareBgCaption.verticalcover .socialsharewrapper .iconwrapper {
   color: rgb(var(--text-color));
@@ -578,6 +597,9 @@ html.mobileview #post .videoWrapper {
   #post .sharearticle .shareBgCaption:not(.verticalcover) .captioncnt .tags div span {
     color: rgb(var(--text-color));
   }
+  #post .sharearticle .shareBgCaption:not(.verticalcover) .captioncnt .sys span {
+    color: rgb(var(--text-color));
+  }
   #post .sharearticle .shareBgCaption:not(.verticalcover) .captioncnt .sharecaption {
     font-size: 3em;
     font-family: Georgia, serif;
@@ -632,6 +654,9 @@ html.mobileview #post .videoWrapper {
     background: rgb(var(--text-on-bg-ac-color));
   }
   #post .sharearticle .shareBgCaption.verticalcover .tags div span {
+    color: rgb(var(--text-on-bg-ac-color));
+  }
+  #post .sharearticle .shareBgCaption.verticalcover .sys span {
     color: rgb(var(--text-on-bg-ac-color));
   }
   #post .sharearticle .shareBgCaption.verticalcover .starstoppanel .iconwrapper,

@@ -1094,13 +1094,17 @@ pie {
 }
 
 .forstars{
+
+
+    .itemwr{
+        display: flex;
+        align-items: center;
+    }
     .count{
         display: flex;
         align-items: center;
-        padding-bottom: 0;
-        line-height: 40px;
 
-        >div{
+        span,i{
             font-size: 0.8em;
             color : rgb(var(--neutral-grad-3));
         }
@@ -1119,16 +1123,19 @@ pie {
         .countusers{
             margin-left: @rhythm * 2;
             white-space: nowrap;
+            padding: 0.75 * @rhythm 1.5 * @rhythm;
+            border-radius: 4 * @rhythm;
+            border: 1px solid rgb(var(--neutral-grad-3));
+            color: rgb(var(--neutral-grad-3));
+            display: flex;
+            align-items: center;
+
+            .c{
+                padding-left: 0.5 * @rhythm;
+            }
 
             .circle{
-                padding: 2px 12px;
-                border-radius: 12px;
-                border: 1px solid rgb(var(--neutral-grad-3));
-                color: rgb(var(--neutral-grad-3));
-
-                .c{
-                    padding-left: 3px;
-                }
+                
             }
 
         }

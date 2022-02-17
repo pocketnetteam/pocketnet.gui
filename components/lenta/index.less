@@ -709,6 +709,7 @@
 	
 			.shareTable{
 				padding-top : 0;
+				padding-bottom : 0;
 			}
 	
 			.shareBgCaption,
@@ -738,9 +739,14 @@
 					.starWrapper{
 						text-align: center;
 					}
+					
 					.count{
+					
 						span{
 							font-size: 2em;
+						}
+	
+						span{
 							font-weight: 700;
 							font-family: Nunito Sans;
 						}
@@ -823,6 +829,12 @@
 						overscroll-behavior:auto;
 					}
 					
+				}
+
+				.sys{
+					span{
+						color : rgb(var(--text-on-bg-shadow-color))
+					}
 				}
 	
 				.icon{
@@ -978,6 +990,12 @@
 						}
 					}
 
+					.sys{
+						span{
+							color : rgb(var(--text-color));
+						}
+					}
+
 					.starstoppanel,
 					.socialsharewrapper{
 						.iconwrapper{
@@ -1112,6 +1130,14 @@
 								color : rgb(var(--text-on-bg-ac-color));
 							}
 						}
+
+
+						.sys{
+							span{
+								color : rgb(var(--text-on-bg-ac-color));
+							}
+						}
+	
 
 						.starstoppanel,
 						.socialsharewrapper{

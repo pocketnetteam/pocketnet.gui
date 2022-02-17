@@ -390,6 +390,17 @@
 		opacity: 0;
 		.transition(0.1s, opacity);
 
+		.shareTable{
+			padding-top : 0;
+			padding-bottom : 0;
+		}
+
+		.sharecaption,
+		.tags,
+		.sharecaption{
+			max-width: none;
+		}
+
 		&.ready{
 			opacity: 1;
 		}
@@ -424,9 +435,14 @@
 				.starWrapper{
 					text-align: center;
 				}
+
 				.count{
+					
 					span{
 						font-size: 2em;
+					}
+
+					span{
 						font-weight: 700;
 						font-family: Nunito Sans;
 					}
@@ -463,6 +479,7 @@
 			}
 
 			.tags{
+				
 				justify-content: center;
 			}
 		}
@@ -474,6 +491,12 @@
 			.tags{
 				div span {
 					color : rgb(var(--text-on-bg-ac-color));
+				}
+			}
+
+			.sys{
+				span{
+					color : rgb(var(--text-on-bg-shadow-color))
 				}
 			}
 
@@ -499,6 +522,7 @@
 					overflow-y: auto;
 					text-overflow: ellipsis;
 					overscroll-behavior:auto;
+					max-width: none;
 				}
 				
 			}
@@ -627,6 +651,12 @@
 
 				.tags{
 					div span {
+						color : rgb(var(--text-color));
+					}
+				}
+
+				.sys{
+					span{
 						color : rgb(var(--text-color));
 					}
 				}
@@ -770,6 +800,12 @@ html.mobileview{
 								color : rgb(var(--text-color));
 							}
 						}
+
+						.sys{
+							span{
+								color : rgb(var(--text-color));
+							}
+						}
 		
 						.sharecaption{
 							font-size: 3em;
@@ -842,6 +878,12 @@ html.mobileview{
 
 					.tags{
 						div span{
+							color : rgb(var(--text-on-bg-ac-color));
+						}
+					}
+
+					.sys{
+						span{
 							color : rgb(var(--text-on-bg-ac-color));
 						}
 					}

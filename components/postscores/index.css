@@ -40,25 +40,6 @@
   width: 60%;
 }
 #postscores .itemwr {
-  width: auto;
-  margin-left: auto;
-  margin-right: auto;
-}
-#postscores .itemwr > diV {
-  vertical-align: middle;
-}
-#postscores .itemwr > diV.starswr {
-  width: 150px;
-}
-#postscores .itemwr .stars {
-  height: 40px;
-  line-height: 40px;
-  text-align: center;
-  color: #00A3F7;
-  cursor: pointer;
-}
-#postscores .itemwr .stars .starWrapper {
-  display: flex;
   justify-content: center;
 }
 #postscores .authorTable {

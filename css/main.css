@@ -865,13 +865,16 @@ pie {
 .sort:hover i {
   color: rgb(var(--color-txt-ac));
 }
+.forstars .itemwr {
+  display: flex;
+  align-items: center;
+}
 .forstars .count {
   display: flex;
   align-items: center;
-  padding-bottom: 0;
-  line-height: 40px;
 }
-.forstars .count > div {
+.forstars .count span,
+.forstars .count i {
   font-size: 0.8em;
   color: rgb(var(--neutral-grad-3));
 }
@@ -887,15 +890,15 @@ pie {
 .forstars .count .countusers {
   margin-left: 1em;
   white-space: nowrap;
-}
-.forstars .count .countusers .circle {
-  padding: 2px 12px;
-  border-radius: 12px;
+  padding: 0.375em 0.75em;
+  border-radius: 2em;
   border: 1px solid rgb(var(--neutral-grad-3));
   color: rgb(var(--neutral-grad-3));
+  display: flex;
+  align-items: center;
 }
-.forstars .count .countusers .circle .c {
-  padding-left: 3px;
+.forstars .count .countusers .c {
+  padding-left: 0.25em;
 }
 .stars {
   white-space: nowrap;

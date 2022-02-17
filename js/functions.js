@@ -624,24 +624,6 @@
 				})
 			}
 
-			/*_.each(p.buttons, function(button){
-				button.el = $("<div>",{
-				   "class" 	: "button " + (button.class || ""),
-				   "html"	: "<div>" + 
-				   
-				   (button.html ? button.html : 
-						(app ? ( app.localization.e(button.text) || button.text || '') : 
-						(button.text || '')) ) + 
-				   
-				   "</div>"
-			    });
-
-				wnd.find(".wndinner>div.buttons").append(button.el);
-
-				var fn = button.fn || actions[button.action] || actions["close"];
-				button.el.on('click', function(){fn(wnd, self)});
-
-			})*/
 
 			if(p.class) wnd.addClass(p.class);
 
@@ -704,10 +686,11 @@
 			if(isTablet() && wnd.hasClass('normalizedmobile')){
 
 				var trueshold = 20
+				
 
 				parallax = new SwipeParallaxNew({
 
-					el : wnd.find('.wndback,.wndheader'),
+					el : wnd.find('.wndback,.wndheader,.wndinner'),
 					transformel : wnd.find('.wndinner'),
 
 					allowPageScroll : 'vertical',
@@ -727,8 +710,29 @@
 								var percent = Math.abs(px) / trueshold;
 							},
 
-							constraints : function(){
-								return true;
+							constraints : function(e){
+
+								var i = false
+
+								var sel = _.find(e.path, function(p){
+
+									if (p.id == 'windowsContainer'){
+										i = true
+									}
+
+									if (i) return null
+
+									return p.classList.contains('customscroll');
+								})
+
+								if(!sel){
+									return true;
+								}
+
+								console.log('sel.scrollTop', sel.scrollTop)
+
+
+								return sel.scrollTop == 0
 							},
 
 							restrict : true,
@@ -742,6 +746,7 @@
 					
 	
 				}).init()
+				
 
 				cnt = wnd.find('.wndcontent')
 

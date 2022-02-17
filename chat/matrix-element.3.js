@@ -110,7 +110,7 @@ module.exports = exports;
 /***/ "3af8":
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "img/logoBastyon.9f6c12f2.svg";
+module.exports = __webpack_require__.p + "img/logoBastyon.653ff2df.svg";
 
 /***/ }),
 
