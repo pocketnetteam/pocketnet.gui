@@ -149,9 +149,9 @@ html {
     overflow-x: hidden;
     overflow-y: overlay;
     
-    &.mobileview{
+    /*&.mobileview{
         scroll-behavior: smooth;
-    }
+    }*/
 
     &.nooverflow{
         overflow:hidden;
@@ -5206,7 +5206,7 @@ html.mobileview.fullscreen{
         color : rgb(var(--color-txt-ac));
         margin-left : auto;
         font-size: 0.8em;
-        background: rgba(var(--color-shadow-base), 0.3);
+        background: rgba(var(--background-total-theme), 0.3);
         .shadowSmall(); 
     }
 
@@ -5220,7 +5220,8 @@ html.mobileview.fullscreen{
         text-align: center;
         margin-left : auto;
         font-size: 0.8em;
-        background: rgba(var(--color-shadow-base), 0.3);
+        background: rgba(var(--background-total-theme), 0.3);
+        
         .shadowSmall(); 
 
         &[count='3']{
@@ -6300,15 +6301,11 @@ html.mobileview.fullscreen{
     }
 
 }
-
-
-
-
-/*t*/ @media only screen and (max-width: 768px){
-
    
 
-    html{
+html{
+
+    &.mobileview{
 
         #panelWrapper{
             position: fixed;
@@ -6394,7 +6391,6 @@ html.mobileview.fullscreen{
     }
 
 }
-
 
 html{
 
@@ -6815,7 +6811,7 @@ html.mobileview{
     }
 
     #content .work{
-        width: 100%;
+        /*width: 100%;*/
     }
 }
 
@@ -7281,6 +7277,8 @@ html.mobileview{
                 .transition(0.3s, top);
 
                 .wndheader{
+                    max-width: 768px;
+                    margin : 0 auto;
                 }
     
                 .wndcontent{

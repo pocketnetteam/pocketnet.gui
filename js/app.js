@@ -1109,7 +1109,7 @@ Application = function(p)
 	self.actions = {
 
 		emoji : function(text){
-			if(isMobile()) return text
+			if(self.mobileview) return text
 
 			return joypixels.toImage(text)
 		},
@@ -1170,8 +1170,7 @@ Application = function(p)
 	
 					if (self.playingvideo && self.playingvideo.playing){
 
-						if (scrollTop >= 65)
-							self.el.html.addClass('scrollmodedown')
+						if (scrollTop >= 65) self.el.html.addClass('scrollmodedown')
 						
 					}
 	
@@ -1294,7 +1293,6 @@ Application = function(p)
 
 		istouchstyle()
 
-		console.log('self.mobileview', self.mobileview)
 
 		var showPanel = '1'
 
@@ -1315,7 +1313,7 @@ Application = function(p)
 				})
 
 
-				if(isMobile() && !cr){
+				if(self.mobileview && !cr){
 
 					var cs = (lastScrollTop + 40 < scrollTop || lastScrollTop - 40 < scrollTop)
 
@@ -1329,8 +1327,6 @@ Application = function(p)
 
 						if (self.el.html.hasClass('scrollmodedown')){
 							self.el.html.removeClass('scrollmodedown')
-							
-							
 						}
 
 						return
@@ -1387,7 +1383,7 @@ Application = function(p)
 						s(self.lastScrollTop, blockScroll)
 					})
 
-					if(!t && isMobile()){
+					if(!t && self.mobileview){
 
 						if (showPanel == '2' && !self.el.html.hasClass('scrollmodedown')){
 							self.el.html.addClass('scrollmodedown')
@@ -1416,6 +1412,10 @@ Application = function(p)
 
 					if(!self.el.window) return
 					if (self.fullscreenmode) return
+
+					if (self.el.html.hasClass('scrollmodedown')){
+						self.el.html.removeClass('scrollmodedown')
+					}
 
 					var scrollTop = self.actions.getScroll(),
 						height = self.el.window.height(),
@@ -1806,7 +1806,7 @@ Application = function(p)
 			},
 			init : function(_el){
 
-				if(isMobile()){
+				if(self.mobileview){
 					_el.swipe({
 						longTap : function(){
 

@@ -245,10 +245,14 @@
 		min-height: 130px;
 	}
 
-	.leftpanelsvicell,
 	.leftpanelcell{
-		width: 242px;
 		float: left;
+		width: 242px;
+		padding-right: @rhythm;
+	}
+
+	.leftpanelsvicell{
+		width: 242px;
 		padding-right: @rhythm;
 	}
 
@@ -644,13 +648,13 @@ html.mobileview{
 	#main{
 		.opensvi{
 	
-			.leftpanelsvicell{
+			/*.leftpanelsvicell{
 				display: block;
 			}
 	
 			.upbackbuttonwrapper{
 				display: none;
-			}
+			}*/
 		}
 	}
 }
@@ -685,9 +689,6 @@ html.mobileview{
 
 /*t*/ @media only screen and (max-width: 768px){
 
-	.video-js{
-		contain: strict;
-	}
 	
 	#main{
 

@@ -243,10 +243,6 @@
   padding: 0;
   margin: 0;
 }
-#post.videomainpost #comments .post {
-  padding-left: 1.75em;
-  padding-right: 1.75em;
-}
 #post.videomainpost .share .metatable > div.metapanel {
   padding-right: 0.5em;
 }
@@ -256,36 +252,16 @@
   max-width: none;
   position: static;
 }
+#post.videomainpost .jsPlayerLoading,
+#post.videomainpost .video-js {
+  max-height: 80vh;
+}
 #post.videomainpost .forurl .url {
   border-radius: 12px;
   background: #000;
 }
-#post.videomainpost.squareVideo .forurl .url,
-#post.videomainpost.verticalVideo .forurl .url {
-  background: #000;
-  overflow: hidden;
-  border-radius: 12px;
-  position: relative;
-}
-#post.videomainpost.squareVideo .forurl .url .video-js,
-#post.videomainpost.verticalVideo .forurl .url .video-js,
-#post.videomainpost.squareVideo .forurl .url .js-player,
-#post.videomainpost.verticalVideo .forurl .url .js-player {
-  position: static;
-}
-#post.videomainpost.squareVideo .forurl .videoWrapper,
-#post.videomainpost.verticalVideo .forurl .videoWrapper {
-  margin: 0 auto;
-  max-width: 350px;
-}
 #post.videomainpost .statswrapperExtended {
   display: none;
-}
-#post.videomainpost.squareVideo .forurl .videoWrapper {
-  max-width: 450px;
-}
-#post.videomainpost #comments.fromtop .list {
-  border-top: 0;
 }
 #post.videomainpost .share {
   margin: 0 auto;
@@ -722,6 +698,10 @@ html.mobileview.fullscreen #post #comments {
 .wnd.postwindow #post .nextpost {
   display: block;
 }
+html.mobileview .wnd.postwindow .widthcontainer {
+  width: 100%;
+  max-width: none;
+}
 @media only screen and (max-width: 768px) {
   #post {
     border-top: 1px solid rgba(var(--neutral-grad-1), 0.3);
@@ -764,10 +744,6 @@ html.mobileview.fullscreen #post #comments {
   #post.videomainpost .share .paddingWrapper {
     margin-left: 0;
     padding-left: 0;
-  }
-  #post.videomainpost #comments .post {
-    padding-left: 0.5em;
-    padding-right: 0.5em;
   }
   .wnd.postwindow .widthcontainer {
     width: 100%;

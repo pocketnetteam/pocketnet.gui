@@ -4,9 +4,6 @@
 #lenta.openapi .loadmore {
   display: none!important;
 }
-#lenta .video-js {
-  contain: strict;
-}
 #lenta.rebuilding {
   -moz-transition: 0.3s;
   -o-transition: 0.3s;
@@ -93,8 +90,18 @@
 #lenta .share .message {
   max-width: 590px;
 }
+#lenta .share .verticalVideo {
+  max-width: 350px;
+}
+#lenta .share .squareVideo {
+  max-width: 450px;
+}
 #lenta .share .debuginfo {
   display: none!important;
+}
+#lenta .share.fullScreenVideo .squareVideo,
+#lenta .share.fullScreenVideo .verticalVideo {
+  max-width: none;
 }
 #lenta .shares {
   overflow: hidden;
@@ -110,12 +117,6 @@
 }
 #lenta .shares .work {
   padding-left: 0;
-}
-#lenta .shares .verticalVideo {
-  max-width: 350px;
-}
-#lenta .shares .squareVideo {
-  max-width: 450px;
 }
 #lenta .shares .ss {
   padding: 1em;
@@ -771,6 +772,9 @@
   filter: blur(10px);
 }
 @media only screen and (max-width: 768px) {
+  #lenta .share .images {
+    max-width: none;
+  }
   #lenta .share .sharearticle .shareBgCaption:not(.verticalcover) .captioncnt .sharecaption {
     font-size: 2em;
     font-family: Georgia, serif;
@@ -891,15 +895,15 @@
   #lenta .shares .statswrapperExtended {
     padding: 0.5em;
   }
-  #lenta .shares .squareVideo,
-  #lenta .shares .verticalVideo {
-    max-width: none;
-  }
   #lenta .shares .ss {
     padding: 1em;
   }
   #lenta .shares .ss span {
     font-size: 2em;
+  }
+  #lenta .share .squareVideo,
+  #lenta .share .verticalVideo {
+    max-width: none;
   }
   #lenta.mainvideo .share .cntswrk {
     margin-left: 0;

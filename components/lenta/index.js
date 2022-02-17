@@ -3043,7 +3043,7 @@ var lenta = (function(){
 									var _w = el.width();
 									var _h = el.height()
 
-									if(_img.width > _img.height && (!self.app.mobileview && !essenseData.openapi)){
+									if(_img.width > _img.height && (/*!self.app.mobileview &&*/ !essenseData.openapi)){
 										ac = 'w2'
 
 										var w = _w * (_img.width / _img.height);
@@ -3059,7 +3059,7 @@ var lenta = (function(){
 										el.width(w);
 									}
 
-									if(_img.height > _img.width || (self.app.mobileview || essenseData.openapi)){
+									if(_img.height > _img.width || (/*self.app.mobileview || */essenseData.openapi)){
 										ac = 'h2'
 
 										el.height(_w * (_img.height / _img.width))
@@ -3203,24 +3203,28 @@ var lenta = (function(){
 
 				var rndr = function(){
 
-					self.shell({
-						animation : false,
-						turi : 'share',
-						name :  'url',
-						el : el,
-						mid : 'sharelenta',
-						data : {
-							url : url,
-							og : og,
-							share : share,
-							video : video,
-							preview : video ? true : false
-						},
-						notdisplay : video ? true: false,
-						bgImages : {
-							clbk : video ? true: false
-						}
-	
+					self.app.platform.sdk.videos.paddingplaceholder(url, function (next) {
+
+						self.shell({
+							animation : false,
+							turi : 'share',
+							name :  'url',
+							el : el,
+							mid : 'sharelenta',
+							data : {
+								url : url,
+								og : og,
+								share : share,
+								video : video,
+								preview : video ? true : false
+							},
+							notdisplay : video ? true: false,
+							bgImages : {
+								clbk : video ? true: false
+							}
+		
+						}, next)
+
 					}, function(_p){
 
 						var images = _p.el.find('img');
@@ -3228,22 +3232,6 @@ var lenta = (function(){
 						self.app.nav.api.links(null, _p.el, function(event){
 							event.stopPropagation()
 						})
-
-						/*var aspectRatio = deep(self, 'app.platform.sdk.videos.storage.' + url + '.data.aspectRatio') || 0
-
-
-						var info = self.app.platform.sdk.videos.storage[url]
-
-						if (info && info.data){
-							aspectRatio = info.data.aspectRatio || 0
-						}
-
-						if (aspectRatio && !essenseData.horizontal) {
-							var playerContainer = _p.el.find('.jsPlayerLoading');
-							var paddingvalue = 100 / (2 * aspectRatio);
-							playerContainer.css('padding-top', `${paddingvalue}%`);
-							playerContainer.css('padding-bottom', `${paddingvalue}%`);
-						}*/
 	
 						essenserenderclbk()
 						
@@ -3266,7 +3254,7 @@ var lenta = (function(){
 					})
 				}
 
-				meta.type === 'peertube' ? self.app.platform.sdk.videos.info([url]).then(rndr) : rndr()
+				rndr()
 
 			
 			},

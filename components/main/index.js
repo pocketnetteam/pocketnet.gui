@@ -167,8 +167,9 @@ var main = (function(){
 			backtolenta : function(){
 				actions.backtolentaClear()
 
+				console.log('lastscroll', lastscroll)
 
-				self.app.actions.scroll(lastscroll)
+				self.app.actions.scroll(lastscroll || 0)
 				//_scrollTop(lastscroll, null, 5)
 				
 

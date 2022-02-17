@@ -13,9 +13,6 @@
 		}
 	}
 
-	.video-js{
-		contain: strict;
-	}
 
 	&.rebuilding{
 		.transition(0.3s);
@@ -127,8 +124,23 @@
 			max-width: 590px;
 		}
 
+		.verticalVideo {
+			max-width: 350px;
+		}
+
+		.squareVideo {
+			max-width: 450px;
+		}
+
 		.debuginfo{
 			display: none!important;
+		}
+
+		&.fullScreenVideo{
+			.squareVideo,
+			.verticalVideo {
+				max-width: none;
+			}
 		}
 
 	}
@@ -150,13 +162,7 @@
 			padding-left: 0;
 		}
 
-		.verticalVideo {
-			max-width: 350px;
-		}
-
-		.squareVideo {
-			max-width: 450px;
-		}
+		
 
 		.ss{
 			padding : 2 * @rhythm;
@@ -398,8 +404,6 @@
 				&.verticalVideo{
 					height: 530px;
 				}
-
-			
 			}
 
 			.url{
@@ -1038,6 +1042,10 @@
 	#lenta{
 		.share{
 
+			.images{
+				max-width: none;
+			}
+
 			.sharearticle{
 				
 				.shareBgCaption{
@@ -1230,10 +1238,8 @@
 			.statswrapperExtended{
 				padding : @rhythm;
 			}
-			.squareVideo,
-			.verticalVideo {
-				max-width: none;
-			}
+			
+			
 
 			.ss{
 				padding : 2 * @rhythm;
@@ -1243,6 +1249,13 @@
 				}
 			}
 			
+		}
+
+		.share{
+			.squareVideo,
+			.verticalVideo {
+				max-width: none;
+			}
 		}
 
 		

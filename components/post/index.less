@@ -339,10 +339,7 @@
 			margin : 0;
 		}
 
-		#comments .post{
-			padding-left: 3.5 * @rhythm;
-    		padding-right: 3.5 * @rhythm;
-		}
+	
 
 		.share .metatable>div.metapanel{
 			padding-right:  @rhythm;
@@ -353,6 +350,13 @@
 			border-radius: 12px;
 			max-width: none;
 			position: static;
+
+			
+		}
+
+		.jsPlayerLoading,
+		.video-js{
+			max-height: 80vh;
 		}
 
 		.forurl{
@@ -362,43 +366,10 @@
 			}
 		}
 
-		&.squareVideo,
-		&.verticalVideo{
-			.forurl{
-				.url{
-					background: #000;
-					overflow: hidden;
-					border-radius: 12px;
-					position: relative;
-
-					.video-js,
-					.js-player{
-						position : static;
-
-					}
-				}
-				.videoWrapper{
-					margin : 0 auto;
-					max-width: 350px;
-				}
-			}
-		}
-
 		.statswrapperExtended{
 			display: none;
 		}
 
-		&.squareVideo{
-			.forurl{
-				.videoWrapper{
-					max-width: 450px;
-				}
-			}
-		}
-
-		#comments.fromtop .list{
-			border-top: 0;
-		}
 
 		padding-bottom : 12 * @rhythm;
 
@@ -974,6 +945,15 @@ html.mobileview.fullscreen{
 	}
 }
 
+html.mobileview{
+	.wnd.postwindow{
+		.widthcontainer{
+			width: 100%;
+			max-width: none;
+		}
+	}
+}
+
 @media only screen and (max-width: 768px) {
 	#post{
 		border-top: 1px solid rgba(var(--neutral-grad-1), 0.3);
@@ -1041,10 +1021,6 @@ html.mobileview.fullscreen{
 				}
 			}
 
-			#comments .post{
-				padding-left: @rhythm;
-				padding-right: @rhythm;
-			}
 			
 		}
 	}

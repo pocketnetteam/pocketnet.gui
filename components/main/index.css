@@ -198,10 +198,13 @@
 #main #share {
   min-height: 130px;
 }
-#main .leftpanelsvicell,
 #main .leftpanelcell {
-  width: 242px;
   float: left;
+  width: 242px;
+  padding-right: 0.5em;
+}
+#main .leftpanelsvicell {
+  width: 242px;
   padding-right: 0.5em;
 }
 #main .mainpanelsvicell,
@@ -500,11 +503,14 @@ html.mobileview #main .lentacell .cnt {
   max-width: none;
 }
 @media only screen and (max-width: 1440px) {
-  #main .opensvi .leftpanelsvicell {
-    display: block;
-  }
-  #main .opensvi .upbackbuttonwrapper {
-    display: none;
+  #main .opensvi {
+    /*.leftpanelsvicell{
+				display: block;
+			}
+	
+			.upbackbuttonwrapper{
+				display: none;
+			}*/
   }
 }
 @media only screen and (max-width: 1280px) {
@@ -525,9 +531,6 @@ html.mobileview #main .lentacell .cnt {
 }
 /*t*/
 @media only screen and (max-width: 768px) {
-  .video-js {
-    contain: strict;
-  }
   #main .menuwrapper {
     display: block;
   }

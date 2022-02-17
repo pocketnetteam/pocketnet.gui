@@ -16243,6 +16243,7 @@ Platform = function (app, listofnodes) {
                     self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
                         method : 'getusercontents'
                     })
+
                 },
 
                 hierarchical: function (p, clbk, cache, methodparams) {
@@ -16307,8 +16308,6 @@ Platform = function (app, listofnodes) {
                         else {
                             if (!storage[key] || cache == 'clear') storage[key] = [];
 
-
-
                             if (!p.txid) {
                                 if (storage[key].length) {
 
@@ -16341,7 +16340,6 @@ Platform = function (app, listofnodes) {
                             if (p.video && !self.videoenabled){
                                 p.tagsfilter = ['video']
                             }
-
 
                             ////
 
@@ -21194,7 +21192,7 @@ Platform = function (app, listofnodes) {
                         if(self.sdk.videos.storage[url] && self.sdk.videos.storage[url].data){
                             var info = self.sdk.videos.storage[url].data;
 
-                            var loadingPlayer = elf ? elf() : p.el.find('.jsPlayerLoading');
+                            var loadingPlayer = elf ? elf() : p.el.find('.jsPlayerLoading-matte');
 
                             var width = loadingPlayer.width();
 
