@@ -77,8 +77,7 @@ var recommendedusers = (function(){
 
 					if(tx){
 
-						el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('following')
-						el.c.find('.user[address="'+address+'"] .notificationturn').removeClass('turnon')	
+						el.c.find('.user[address="'+address+'"] .subscribeWrapper').addClass('following')
 					}
 					else
 					{
@@ -101,8 +100,7 @@ var recommendedusers = (function(){
 
 					if(tx){
 						
-						el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('following')
-						el.c.find('.user[address="'+address+'"] .notificationturn').removeClass('turnon')	
+						el.c.find('.user[address="'+address+'"] .subscribeWrapper').addClass('following')
 					}
 					else
 					{
@@ -213,29 +211,31 @@ var recommendedusers = (function(){
 
 		var initEvents = function(){
 
-			self.app.platform.clbks.api.actions.unsubscribe.topusers = function(address){
 
-				el.c.find('.user[address="'+address+'"] .subscribebuttonstop').removeClass('following')
-				el.c.find('.user[address="'+address+'"] .notificationturn').removeClass('turnon')
+			self.app.platform.clbks.api.actions.unsubscribe.recommendedusers = function(address){
+
+				el.c.find('.user[address="'+address+'"] .subscribeWrapper').removeClass('following')
 			}
 
 						
-			self.app.platform.clbks.api.actions.subscribe.topusers = function(address){
+			self.app.platform.clbks.api.actions.subscribe.recommendedusers = function(address){
 
-				el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('following')
-				el.c.find('.user[address="'+address+'"] .notificationturn').removeClass('turnon')		
+				el.c.find('.user[address="'+address+'"] .subscribeWrapper').addClass('following')
 			}
 
-			self.app.platform.clbks.api.actions.subscribePrivate.topusers = function(address){
+			self.app.platform.clbks.api.actions.subscribePrivate.recommendedusers = function(address){
 
-				el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('following')	
-				el.c.find('.user[address="'+address+'"] .notificationturn').addClass('turnon')	
+				el.c.find('.user[address="'+address+'"] .subscribeWrapper').addClass('following')	
 			}
 
 
-			el.c.on('click', '.subscribe', events.subscribe)
-			el.c.on('click', '.unsubscribe', events.unsubscribe)
-			el.c.on('click', '.notificationturn', events.subscribePrivate)
+			el.c.on('click', '.subscribeButton', events.subscribe);
+			el.c.on('click', '.unsubscribeButton', events.unsubscribe);
+			el.c.on('click', '.subscribeButton', events.subscribePrivate);
+			el.hide.on('click', function(){
+				el.c.hide();
+			})
+
 			
 		}
 
@@ -262,10 +262,10 @@ var recommendedusers = (function(){
 
 				window.removeEventListener('scroll', events.loadmorescroll)
 
-				delete self.app.platform.clbks.api.actions.subscribe.topusers
-				delete self.app.platform.clbks.api.actions.subscribePrivate.topusers
+				delete self.app.platform.clbks.api.actions.subscribe.recommendedusers
+				delete self.app.platform.clbks.api.actions.subscribePrivate.recommendedusers
 	
-				delete self.app.platform.clbks.api.actions.unsubscribe.topusers
+				delete self.app.platform.clbks.api.actions.unsubscribe.recommendedusers
 	
 				el = {};
 			},
@@ -277,6 +277,7 @@ var recommendedusers = (function(){
 				el.c = p.el.find('#' + self.map.id);
 				el.users = el.c.find('.usersWrapper');
 				el.loader = el.c.find('.loader');
+				el.hide = el.c.find('.hide');
 
 				state.load(renders.page);
 

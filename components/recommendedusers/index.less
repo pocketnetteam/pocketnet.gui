@@ -1,16 +1,9 @@
 @import "../../css/__cssvar";
 
 #recommendedusers{
-	background: #fff;
+	background: rgb(var(--background-total-theme));
 	border-radius: 12px;
-
-	    
-    .rcptwrp{
-        background: #fff;
-        border-radius: 12px;
-        position : relative;
-    }   
-
+	margin-bottom: @rhythm;
     
 
     .tcaptionwrapper{
@@ -26,6 +19,11 @@
                 border : 0;
             }
         }
+
+
+		.hide{
+			cursor: pointer;
+		}
     }
     .tcaption{
         display: flex;
@@ -33,7 +31,6 @@
         flex-grow: 2;
         font-weight: 100;
         padding: 12px 16px;
-        border-bottom: 1px solid rgba(229,229,229,.5);
 
         .authors{
             font-weight : 700;
@@ -94,7 +91,7 @@
 		padding-right: @rhythm * 2;
 
 		.wrk{
-			max-width: 188px;
+			max-width: 212px;
 			width: 100%;
 
 			&:nth-child(2n) {
@@ -105,9 +102,10 @@
 		}
 
 		.user{
-			padding : @rhythm 0;
-			margin-top: @rhythm;
-			margin-bottom: @rhythm;
+			padding : @rhythm * 2;
+			border: 1px solid rgb(var(--neutral-grad-0));
+			border-radius: 12px;
+			
 
 			.addressWrapper{
 				cursor: pointer;
@@ -116,24 +114,34 @@
 					display: flex;
 					align-items: center;
 					justify-content: center;
-					height: 218px;
+					height: 100px;
 
-					a{
-						width: 100%;
-					}
 
 					.icon{
 						display: flex;
 						justify-content: center;
 						align-items: center;
+						width: 100px;
+						
 	
+						img{
+							border-radius: 12px;
+						}
+
 						img, .letter{
 							width: 100%;
 						}
-	
-						.letter{
-							font-size: @rhythm * 7;
-							text-align: center;
+
+						.usericon{
+							width: 100px;
+							height: 100px;
+
+							.letter{
+								position: relative;
+								top: @rhythm;
+								font-size: @rhythm * 7;
+								text-align: center;
+							}
 						}
 						
 					}
@@ -141,49 +149,76 @@
 				}
 			
 
+				.userbody{
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					margin-top: 12px;
+
+					.name{
+						font-weight: 600;
+						font-size: .9em;
+						max-width: 120px;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+						overflow: hidden;
+					}
+	
+					.reputation{
+						
+						.value{
+							color: rgb(var(--color-bg-ac-bright));
+
+						}
+					}
+	
+	
+					.subscribeWrapper{
+						margin-top: 16px; 
+
+						.unsubscribeButton{
+							display: none;
+							font-size: 14px;
+							width: 155px;
+							background: rgb(var(--color-good));
+							border: 1px solid rgb(var(--color-good));
+
+							&:hover{
+								background: rgb(var(--background-total-theme));
+								color: rgb(var(--color-good));
+							}
+						}
+
+						.subscribeButton{
+							font-size: 14px;
+							width: 155px;
+						}
+
+						&.following{
+							.subscribeButton{
+								display: none;
+							}
+
+							.unsubscribeButton{
+								display: block;
+							}
+						}
+
+
+
+
+					}
+				}
+
+
 			
 
-				&.label{
-					text-overflow: ellipsis;
-					overflow: hidden;
-					white-space: nowrap;
-
-					.cur{
-						color : @color-main;
-
-					}
-
-					.top{
-						display: flex;
-						.name{
-							font-weight: 600;
-							font-size: .9em;
-							max-width: 120px;
-							text-overflow: ellipsis;
-							white-space: nowrap;
-							overflow: hidden;
-						}
-
-						.reputation{
-							position: relative;
-							bottom: 2px;
-							left: 3px;
-							font-size: .6em;
-							color: @color-main;
-						}
-
-					}
-
-					.light{
-						font-size : 0.7em;
-						color : @color-gray;
-					}
+				.light{
+					font-size : 0.7em;
+					color : @color-gray;
 				}
+				
 
-				&.extra{
-					width: 20px;
-					text-align: right;
-				}
 
 	
 			}

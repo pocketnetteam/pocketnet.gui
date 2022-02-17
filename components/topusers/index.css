@@ -1,9 +1,5 @@
-#topusers {
-  background: #fff;
-  border-radius: 12px;
-}
 #topusers .rcptwrp {
-  background: #fff;
+  background: rgb(var(--background-total-theme));
   border-radius: 12px;
   position: relative;
 }
@@ -90,8 +86,7 @@
 }
 #topusers .users .user .addressTable > div.iconWrapper .usericon .letter {
   position: relative;
-  bottom: 4px;
-  left: 1px;
+  bottom: 3px;
 }
 #topusers .users .user .addressTable > div.label {
   text-overflow: ellipsis;
@@ -156,7 +151,7 @@
   z-index: 9999;
   right: 180px;
   margin-top: 15px;
-  background: #FFFFFF;
+  background: rgb(var(--background-total-theme));
   border-radius: 12px;
   box-shadow: 32px 32px 32px 32px #00000014;
   padding: 1em 0.5em;
@@ -224,9 +219,6 @@
 }
 #topusers .users .user:hover .modal {
   display: block;
-}
-html.stblack #topusers {
-  background: #0a0c17;
 }
 html.stblack #topusers .users .user .addressTable {
   cursor: pointer;
