@@ -167,7 +167,7 @@ nModule = function(){
 											self.app.nav.api.changedclbks()
 										}
 										catch(e){
-
+											console.error(e)
 										}
 
 									}
@@ -594,8 +594,8 @@ nModule = function(){
 	}
 
 	self.addEssense = function(essenses, Essense, p){
-
-		//self.essenses = essenses
+		////// ??
+		self.essenses = essenses
 
 		var essense = new Essense(p);
 

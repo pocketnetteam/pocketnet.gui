@@ -909,6 +909,8 @@ var main = (function(){
 
 			parametersHandler : function(clbk){
 
+				console.log('parametersHandler')
+
 				var tgsi = decodeURI(parameters().sst || '')
 
 				var words = _.uniq(_.filter(tgsi.split(wordsRegExp), function(r){
