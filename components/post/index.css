@@ -10,6 +10,10 @@
 #post {
   background: rgb(var(--background-main));
 }
+#post .jsPlayerLoading,
+#post .video-js {
+  max-height: 80vh;
+}
 #post .videoWrapper {
   max-width: 650px;
   position: relative;
