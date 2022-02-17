@@ -743,8 +743,10 @@
   #menu .sections .items.navWrapper {
     display: none!important;
   }
-  #menu .postssearch {
-    font-size: 1.2em;
+  #menu {
+    /*.postssearch{
+			font-size: 1.2em;
+		}*/
   }
   #menu.searchactive .sections {
     padding: 0;

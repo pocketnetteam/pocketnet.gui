@@ -4913,6 +4913,9 @@ html.mobileview.fullscreen #navigationWrapper {
   border: 0;
   color: rgb(var(--color-good));
 }
+.video-js .vjs-control-bar {
+  contain: strict;
+}
 .trumbowyg-button-pane,
 .trumbowyg-modal {
   z-index: 0!important;

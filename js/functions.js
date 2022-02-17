@@ -690,7 +690,7 @@
 
 				parallax = new SwipeParallaxNew({
 
-					el : wnd.find('.wndback,.wndheader,.wndinner'),
+					el : wnd.find(p.parallaxselector || '.wndback,.wndheader,.wndinner'),
 					transformel : wnd.find('.wndinner'),
 					allowPageScroll : 'vertical',
 					directions : {
@@ -726,9 +726,6 @@
 								if(!sel){
 									return true;
 								}
-
-								console.log('sel.scrollTop', sel.scrollTop)
-
 
 								return sel.scrollTop == 0
 							},
@@ -6396,7 +6393,7 @@
 
 	_scrollTop = function(scrollTop, el, time){
 
-		if(!el) {
+		if(!el || el.attr('id') == 'application') {
 			el = $("body,html");
 		}
 
