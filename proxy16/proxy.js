@@ -683,8 +683,8 @@ var Proxy = function (settings, manage, test, logger) {
 
 			if (test){
 				ins = {0 : [
-					{ host: 'test.peertube.pocketnet.app', ip: '65.108.83.132' },
-					{ host: 'test.peertube2.pocketnet.app', ip: '95.216.212.153' },
+					{ host: 'test.peertube.pocketnet.app', ip: '65.108.83.132', canuploadimage: true },
+					{ host: 'test.peertube2.pocketnet.app', ip: '95.216.212.153', canuploadimage: true },
 				]}
 			}
 

@@ -289,6 +289,12 @@ var Peertube = function (settings) {
           return r.canupload();
         });
 
+      if (type == 'uploadimage') {
+        _roys = _.filter(_roys, function (r) {
+          return r.canuploadimage();
+        });
+      }
+
       Object.keys(_roys).map((roy) => {
         _roys[roy].best() ? (output[roy] = _roys[roy].best().host) : null;
       });

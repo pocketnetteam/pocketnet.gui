@@ -39,6 +39,16 @@ var Roy = function (parent) {
     return can && instances.length;
   };
 
+  self.canuploadimage = function () {
+    var can = true;
+
+    _.each(instances, function (instance) {
+      if (!instance.canuploadimage || instance.canuploadimage != true) can = false;
+    });
+
+    return can && instances.length;
+  };
+
   self.hasspecial = function () {
 
     return _.find(instances, function (instance) {
@@ -56,6 +66,7 @@ var Roy = function (parent) {
     var instance = new Instance(url, options.ip, self);
 
     if (options.cantuploading) instance.cantuploading = true;
+    if (options.canuploadimage) instance.canuploadimage = true;
     if (options.special) instance.special = true;
 
     instance.init();
@@ -99,6 +110,7 @@ var Roy = function (parent) {
 
       if (splittedUrl.length != 3 && splittedUrl[0] !== 'test') return;
 
+      console.log(s);
       self.addInstance(host, s);
     });
   };

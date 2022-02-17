@@ -951,6 +951,13 @@ PeerTubePocketnet = function (app) {
         }
       }
     });
+    self.api.proxy.best('uploadimage').then((peertubeServer) => {
+      if (peertubeServer && app && app.options) {
+        app.options.peertubeServer = peertubeServer + '/api/v1/';
+        console.log("Using Peertube server: " + peertubeServer);
+      }
+    });
+    // Fetch the best peertube server that can upload images
     return self.api.proxy.bestChange({ type: 'upload' });
   };
 

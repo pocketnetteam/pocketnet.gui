@@ -10,6 +10,7 @@ var instance = function (host, ip, Roy) {
 	self.host = host;
 	self.ip = ip;
 	self.cantuploading = false
+	self.canuploadimage = false
 
 	var inited = false;
 	var statistic = new Statistic()
