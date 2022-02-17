@@ -27,13 +27,10 @@ ImageUploader = function(app) {
             }
 
             // If we need to use the IP address instead of the domain name
-            if (app.options &&
-                app.options.peertubeUseIp == true &&
-                app.options.peertubeServer &&
-                data.peertubeImage &&
-                typeof _Electron != 'undefined' && _Electron) {
-                var url = new URL(app.options.peertubeServer);
+            if (URL && app && app.options && app.options.peertubeUseIp() == true &&
+                app.options.peertubeServer && data.peertubeImage && typeof _Electron != 'undefined' && _Electron) {
                 try {
+                    var url = new URL(app.options.peertubeServer);
                     app.peertubeHandler.api.proxy.getHostIp(url.hostname).then((ipAddress) => {
                         data.data.ipAddress = ipAddress;
                         app.ajax.run(data);

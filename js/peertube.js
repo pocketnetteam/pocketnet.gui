@@ -525,7 +525,7 @@ PeerTubePocketnet = function (app) {
             activehost = data.host;
 
             if (app && app.options)
-              app.options.peertubeServer = data.host + '/api/v1/';
+              app.options.peertubeServer = 'https://' + data.host + '/api/v1/';
 
             return Promise.resolve(data.host);
           })
@@ -1109,8 +1109,7 @@ PeerTubePocketnet = function (app) {
     // If no IP can be found or URL already using IP address, return the URL untouched
     convertUrlWithIp: async function(serverUrl) {
       // Check we have what we need
-			if (!(URL && serverUrl && app && app.options && app.options.peertubeUseIp == true &&
-          app.peertubeHandler && app.peertubeHandler.api &&
+			if (!(URL && serverUrl && app && app.peertubeHandler && app.peertubeHandler.api &&
           app.peertubeHandler.api.proxy && app.peertubeHandler.api.proxy.getHostIp))
         return serverUrl;
       var url, newHostname;
@@ -1155,7 +1154,7 @@ PeerTubePocketnet = function (app) {
     // If no domain name can be found or URL already using domain name, return the URL untouched
     convertIpWithUrl: async function(serverUrl) {
       // Check we have what we need
-			if (!(URL && serverUrl && app && app.options && app.options.peertubeUseIp == true))
+			if (!(URL && serverUrl))
         return serverUrl;
       var url;
       try {

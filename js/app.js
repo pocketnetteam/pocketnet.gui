@@ -112,8 +112,8 @@ Application = function(p)
 
 		//////////////
 
-		peertubeServer : 'https://test.peertube2.pocketnet.app/api/v1/',
-		peertubeUseIp : true,
+		peertubeServer : null,
+		peertubeUseIp : () => { return true; },
 
 		//////////////
 
