@@ -16,7 +16,7 @@ var lenta = (function(){
 		var mid = p.mid;
 		var making = false, ovf = false;
 		var w, essenseData, recomended = [], recommended, mestate, initedcommentes = {}, canloadprev = false,
-		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null, loadedcachedHeight,
+		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null, loadedcachedHeight, showRecommendedUsers = {show: true},
 		recommendedusers = null;
 
 		var progress, parallax;
@@ -2900,7 +2900,8 @@ var lenta = (function(){
 					data : {
 						shares : shares || [],
 						index : p.index || 0,
-						video : video || essenseData.videomobile
+						video : video || essenseData.videomobile,
+						showRecommendedUsers : showRecommendedUsers
 					},
 					animation : false,
 					delayRender : isotopeinited,
@@ -2909,6 +2910,14 @@ var lenta = (function(){
 				}, function(_p){
 
 					
+					if (tpl ==='groupshares'){
+
+						el.recommendedusers = _p.el.find('.recommendeduserscnt');
+
+						if (!essenseData.video){
+							renders.recommendedusers();
+						}
+					}
 
 					if (_p.inner == append){
 						sharesInview = sharesInview.concat(shares)	
@@ -4308,10 +4317,6 @@ var lenta = (function(){
 				{
 					if (clear) el.c.find('.shares').empty()
 
-					if (!essenseData.video){
-						renders.recommendedusers();
-					}
-
 					renders.shares(shares, function(){
 
 						renders.sharesInview(shares, function(){
@@ -4531,7 +4536,6 @@ var lenta = (function(){
 
 			destroy : function(){
 
-
 				delete self.app.events.delayedscroll['videos' + mid]
 				delete self.app.events.delayedscroll['videosinit' + mid]
 				delete self.app.events.scroll['loadmore' + mid]
@@ -4684,9 +4688,11 @@ var lenta = (function(){
 				el.loader = el.c.find('.loader');
 				el.lentacnt = el.c.find('.lentacell .cnt');
 				el.w = essenseData.window || w;
-				el.recommendedusers = el.c.find('.recommendeduserscnt')
+				
 
 				el.share = {};
+
+				showRecommendedUsers.show = true;
 
 				if (essenseData.horizontal){
 
