@@ -10,7 +10,6 @@ var staking = (function(){
 
 		var el, info = null, amount = 1000, graph = null, history;
 
-		var currency = 'USD',
 			// exchange = 'mercatox'
 			exchange = 'digifinex'
 
@@ -22,6 +21,7 @@ var staking = (function(){
 		var charts = {}
 
 		var currencies = {
+
 			USD : {
 				id : 'USD',
 				key : 'USD',
@@ -45,6 +45,7 @@ var staking = (function(){
 					return self.app.platform.mp.acoin(v)
 				}
 			}
+
 		}
 
 		var blocktime = [{
@@ -65,21 +66,6 @@ var staking = (function(){
 			id : '1y'
 		}]
 
-
-		var parameters = {
-			currency : new Parameter({
-				name : self.app.localization.e('source'),
-				type : "VALUES",
-				id : 'source',
-				defaultValue : "USD",
-				possibleValuesLabels : ['USD', 'USDT', 'BTC'],
-				possibleValues : ['USD', 'USDT', 'BTC'],
-				format : {
-					right : true
-				},
-			})
-		}
-
 		var calc = {
 			netstakeweight : function(){
 				return (deep(info, 'netstakeweight') || 189015830589274) / 100000000
@@ -93,7 +79,7 @@ var staking = (function(){
 
 			},
 
-			price : function(c){ //00
+			price : function(c, currency){ //00
 				if(!c) c = 0
 
 				if(history && history[exchange] && history[exchange].length > c){
@@ -130,13 +116,13 @@ var staking = (function(){
 				return 0
 			},
 
-			prevprice : function(){
+			prevprice : function(c, currency){
 				var i = -1
 				var prevprice = 0
-				var price = this.price()
+				var price = this.price(null, currency)
 
 				do{
-					prevprice = this.price(i)
+					prevprice = this.price(i, currency)
 					i--
 				}
 				while(prevprice > 0 && (prevprice - price == 0))
@@ -155,10 +141,11 @@ var staking = (function(){
 
 					p = _.map(p, function(pn){
 
-						if(pn.prices[currency]) {
+
+						if(pn.prices['USD']) {
 							return {
 								x : fromutc(new Date(pn.date)),
-								y : Number(pn.prices[currency].data[market_keys[exchange]])
+								y : Number(pn.prices['USD'].data[market_keys[exchange]])
 							}
 						}
 
@@ -233,65 +220,56 @@ var staking = (function(){
 				return graph
 			},
 			graph : function(_el, clbk){
-				if (graph){
 
-					graph.chart.update({
-						series: helpers.series()
-					});
+				graph = chart.prepare(_el)
 
-					if(clbk) clbk(graph, _el)
-				}
-				else{
-					graph = chart.prepare(_el)
-
-					graph.render({
-						maxPointsCount : 10,
-						prepareOptions : function(p){
-							p.plotOptions.series = {
-								states : {
-									inactive: {
-										opacity: 1
-									},
-									enableMouseTracking: false,
-									hover : {
-										halo: {
-											size: 0,
-										},
-										enabled : false
-									}
-								}
-							}
-
-							p.plotOptions.spline = {
-								animation: false,
-								lineWidth: 1,
-								marker: {
-									enabled: false
+				graph.render({
+					maxPointsCount : 10,
+					prepareOptions : function(p){
+						p.plotOptions.series = {
+							states : {
+								inactive: {
+									opacity: 1
 								},
-								states: {
-									hover: {
-										lineWidth: 1,
-										lineWidthPlus: 0,
-										marker: {
-											fillColor: "#000",
-											lineColor: "#000"
-										},
-										halo: {
-											opacity: 0
-										}
+								enableMouseTracking: false,
+								hover : {
+									halo: {
+										size: 0,
 									},
-	
+									enabled : false
 								}
 							}
-							
 						}
-					}, function(){
 
-						if (clbk)
-							clbk(graph, _el);
+						p.plotOptions.spline = {
+							animation: false,
+							lineWidth: 1,
+							marker: {
+								enabled: false
+							},
+							states: {
+								hover: {
+									lineWidth: 1,
+									lineWidthPlus: 0,
+									marker: {
+										fillColor: "#000",
+										lineColor: "#000"
+									},
+									halo: {
+										opacity: 0
+									}
+								},
 
-					});
-				}
+							}
+						}
+						
+					}
+				}, function(){
+
+					if (clbk)
+						clbk(graph, _el);
+
+				});
 				
 				
 			},
@@ -336,52 +314,88 @@ var staking = (function(){
 				});
 			},
 			lastPrice : function(){
-				graph = null
-				var text = ''
+
+				for (var currency in currencies){
+
+					var text = ''
+					
+					var price = calc.price(0, currency)
+					var prevprice = calc.prevprice(0, currency)
+	
+	
+					var change = {
+						value : 0,
+						percent : 0
+					}
+	
+					if (price){
+	
+	
+						text = currencies[currency].view(price)
+	
+					}
+	
+					if (prevprice && price){
+						var v = price - prevprice
+	
+						change.value = v
+						change.percent = v / price
+					}
+	
+					if (currency === 'USD'){
+
+						self.shell({
+							inner : html,
+							name : 'lastprice',
+							data : {
+								price : text,
+								currency : currencies[currency],
+								change : change,
+							},
+		
+							el : el.c.find('.lastpriceCnt')
+		
+						},
+						function(p){
+
+							renders.pricechart()
+
+							p.el.find('.caret-down').on('click', function(){
+
+								el.c.find('.wrp').removeClass('hide');
 				
-				var price = calc.price(0)
-				var prevprice = calc.prevprice(0)
+						
+							})
+							
+						})
 
+					} else {
 
-				var change = {
-					value : 0,
-					percent : 0
+						/*self.shell({
+							inner : html,
+							name : 'lastpricesmall',
+							data : {
+								price : text,
+								currency : currencies[currency],
+								change : change,
+							},
+		
+							el : el.c.find('.lastpriceCnt' + currency)
+		
+						})*/
+
+					}
+	
 				}
-
-				if (price){
-
-
-					text = currencies[currency].view(price)
-
-				}
-
-				if (prevprice && price){
-					var v = price - prevprice
-
-					change.value = v
-					change.percent = v / price
-				}
-
-				self.shell({
-					inner : html,
-					name : 'lastprice',
-					data : {
-						price : text,
-						currency : currencies[currency],
-						change : change,
-					},
-
-					el : el.c.find('.lastpriceCnt')
-
-				},
-				function(p){
-					renders.pricechart()
-				})
 
 				
 			},
 			pricechart : function(){
+
+				console.log('el.c', el.c)
 				var _el = el.c.find('.chart')
+
+				_el.empty();
 
 				var d = $('<div></div>', {
 					class : 'chartWrapper'
@@ -416,7 +430,18 @@ var staking = (function(){
 		}
 
 		var initEvents = function(){
+
+			el.buyButton.on('click', function(){
+
+				self.app.platform.ui.wallet.buy();
+
+			})
 			
+			el.c.find('.caret-up').on('click', function(){
+
+				el.c.find('.wrp').addClass('hide');
+				
+			})
 			
 			el.am.on('keyup', function(){
 				var v = $(this).val() || ''
@@ -447,14 +472,6 @@ var staking = (function(){
 
 			ParametersLive(_.toArray(parameters), el.c)
 
-			parameters.currency._onChange = function(v){
-				currency = v
-
-				actions.loadhistory(function(){
-					renders.lastPrice()
-				})
-			}
-
 			el.c.find('.earnlabel').on('click', function(){
 
 				var url = 'https://'+self.app.options.url+''
@@ -474,6 +491,25 @@ var staking = (function(){
 					inWnd : true
 				})
 			})
+
+			// el.buyButton.on('click', function(){
+			// 	self.nav.api.load({
+			// 		open : true,
+			// 		id : 'buy',
+			// 		inWnd : true,
+
+			// 		essenseData : {
+
+			// 			success : function(){
+							
+			// 			}
+			// 		},
+
+			// 		clbk : function(){
+						
+			// 		}
+			// 	})
+			// })
 
 			amountmask()
 		}
@@ -568,6 +604,7 @@ var staking = (function(){
 				el.c = p.el.find('#' + self.map.id);
 				el.calculator = el.c.find('.calculator');
 				el.am = el.c.find('.amredits');
+				el.buyButton = el.c.find('.buyButton')
 				initEvents();
 
 				make()

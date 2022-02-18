@@ -12,7 +12,7 @@ var share = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, currentShare = null, essenseData, taginput, eblock;
+		var el, currentShare = null, essenseData, taginput, eblock, sortable;
 
 		var focusfixed = false, external = null, pliss;
 
@@ -353,8 +353,6 @@ var share = (function(){
 
 				if(type == 'article'){
 
-
-					if(self.app.test){
 						self.nav.api.load({
 							open : true,
 							id : 'articlev',
@@ -369,33 +367,6 @@ var share = (function(){
 								external = p
 							}
 						})
-					}
-					else{
-						self.nav.api.load({
-							open : true,
-							id : 'articles',
-							inWnd : true,
-	
-							history : true,
-	
-							essenseData : {
-								storage : storage,
-								value : value,
-								on : {
-									added : function(value){
-	
-										
-									}
-								}
-							},
-	
-							clbk : function(p){
-								external = p
-							}
-						})
-					}
-
-					
 
 					return
 				}
@@ -430,6 +401,8 @@ var share = (function(){
 
 				}
 				
+
+				return
 				
 				if(type == 'url' || type == 'images'){
 					focusfixed = true;
@@ -1148,8 +1121,6 @@ var share = (function(){
 
 			unfocus : function(e){
 
-				
-
 				if (el.c.hasClass('focus') && !focusfixed && el.c.has(e.target).length === 0){
 					actions.unfocus();
 				}
@@ -1587,7 +1558,6 @@ var share = (function(){
 						el.peertube = el.c.find('.peertube');
 						el.peertubeLiveStream = el.c.find('.peertubeLiveStream');
 
-						
 						var tstorage = []
 
 						initUpload({
@@ -2319,6 +2289,41 @@ var share = (function(){
 				// })
 			},
 
+			makesortable : function(){
+				var ps = {
+					animation: 150,
+					swapThreshold : 0.5,
+					draggable : '.draggablepart',
+					onUpdate: function (evt){
+	
+						var na = [];
+					   
+						var ps = el.c.find('.draggablepart');
+	
+						$.each(ps, function(){
+							na.push($(this).attr('part'))
+						})
+
+						currentShare.settings.a = na
+	
+						if (essenseData.changeArrange){
+							essenseData.changeArrange()
+						}
+
+						if(!essenseData.share){
+							state.save()
+						}
+					},
+
+					forceFallback : true,
+					handle : '.marker'
+				}
+				
+				sortable = Sortable.create(el.c.find('#sortableBody')[0], ps); 
+
+				
+			},
+
 			body : function(clbk){				
 				self.shell({
 					name :  'body',
@@ -2461,40 +2466,7 @@ var share = (function(){
 					
 					el.caption.on('keyup', events.caption)
 
-					var ps = {
-						animation: 150,
-						swapThreshold : 0.5,
-						draggable : '.draggablepart',
-						onUpdate: function (evt){
-		
-							var na = [];
-						   
-							var ps = $(list).find('.draggablepart');
-		
-							$.each(ps, function(){
-								na.push($(this).attr('part'))
-							})
-
-							currentShare.settings.a = na
-		
-							if (essenseData.changeArrange){
-								essenseData.changeArrange()
-							}
-
-							if(!essenseData.share){
-								state.save()
-							}
-						},
-						forceFallback : true
-					}
-				
-					ps.handle = '.marker'
-					
-					var list = document.getElementById("sortableBody");
-		
-					if (list && !isMobile()){
-						Sortable.create(list, ps); 
-					}
+					renders.makesortable()
 					
 					actions.autoFilled()
 
@@ -2640,6 +2612,11 @@ var share = (function(){
 
 			destroy : function(){
 
+				console.log('destroydestroydestroy', el.eMessage)
+
+				if (el.eMessage)
+					el.eMessage[0].emojioneArea.destroy();
+
 				if (external){
 					external.module.closeContainer()
 				}
@@ -2655,14 +2632,19 @@ var share = (function(){
 
 				delete self.app.platform.ws.messages.transaction.clbks.share;
 
-				if (el.c)
+				if (sortable){
+					sortable.destroy()
+					sortable = null
+				}
 
+
+				if (el.c)
 					el.c.find('.emojionearea-editor').off('pasteImage')
 
 				el = {};
 
-				if (Sortable && Sortable.destroy)
-					Sortable.destroy()
+				essenseData = {}
+					
 			},
 			
 			init : function(p){
@@ -2729,7 +2711,7 @@ var share = (function(){
 						essenseData.close()
 					}
 				},
-				class : "smallWnd withoutButtons wndsharepost normalizedmobile"
+				class : "smallWnd withoutButtons wndsharepost normalizedmobile showbetter"
 			},
 
 			id : p._id,

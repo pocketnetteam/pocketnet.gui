@@ -204,50 +204,7 @@ var post = (function () {
 
 			},
 
-			next: function () {
-
-				var nextel = el.c.find('.nextpost');
-
-				nextel.html('<div class="loader"><div class="preloader5"><img src="./img/three-dots.svg"/></div></div>')
-
-				ed.next(share.txid, function (txid) {
-
-
-
-					if (txid) {
-
-						self.nav.api.load({
-							open: true,
-							href: 'post?s=' + txid,
-
-							eid: 'nextpost' + txid,
-							el: nextel,
-
-							clbk: function () {
-
-							},
-
-							essenseData: {
-								share: txid,
-								hr: ed.hr,
-								like: ed.like,
-								next: ed.next,
-								removemargin: true
-							}
-						})
-
-					}
-					else {
-						nextel.html('<div class="ended">' + self.app.localization.e('e13146') + '</div>')
-					}
-
-
-
-				})
-
-
-
-			},
+			
 
 			sharesocial: function (clbk) {
 				var url = 'https://' + self.app.options.url + '/' + (ed.hr || 'index?') + 's=' + share.txid + '&mpost=true'
@@ -346,11 +303,11 @@ var post = (function () {
 
 			position: function () {
 
-				if (isMobile()) return
+				if (self.app.mobileview) return
 
 				if (primary) return
 
-				if (ed.removemargin || isMobile()) return
+				if (ed.removemargin) return
 
 
 				var h = $(window).height();
@@ -360,10 +317,10 @@ var post = (function () {
 				var d = Math.min((h - wh) / 2, h / 6)
 
 				if (d > 0) {
-					el.wr.css('margin-top', d + 'px')
+					el.wr.css('padding-top', d + 'px')
 				}
 				else {
-					el.wr.css('margin-top', 0 + 'px')
+					el.wr.css('padding-top', 0 + 'px')
 				}
 
 			},
@@ -775,14 +732,7 @@ var post = (function () {
 
 			},
 
-			next: function () {
-
-				if (el.wnd.scrollTop() + el.wnd.height() > el.wnd.find('>div#post').height() - 400) {
-					actions.next()
-				}
-
-
-			},
+			
 
 			unsubscribe: function (clbk) {
 				actions.unsubscribe(function () {
@@ -1194,28 +1144,6 @@ var post = (function () {
 			},
 			share: function (clbk) {
 
-
-				var verticalVideo = false
-				var squareVideo = false
-
-				var info = {}
-				var aspectRatio = 0
-
-				if (typeof share != 'undefined') {
-					info = self.app.platform.sdk.videos.storage[share.url || "undefined"] || {}
-					aspectRatio = deep(info, 'data.aspectRatio') || 0
-				}
-
-				if (aspectRatio < 0.9 && aspectRatio != 0) {
-					verticalVideo = true
-				}
-
-				if (aspectRatio > 0.9 && aspectRatio < 1.25) {
-					squareVideo = true
-				}
-
-				
-
 				self.shell(
 					{
 						turi: 'lenta',
@@ -1232,8 +1160,6 @@ var post = (function () {
 							mestate: {},
 							repost: ed.repost,
 							fromempty: ed.fromempty,
-							verticalVideo: verticalVideo,
-							squareVideo: squareVideo,
 							preview : ed.preview
 						},
 
@@ -1380,7 +1306,6 @@ var post = (function () {
 						if (shares.length > 2){
 							showmoreby.addClass('hasshares')
 						}
-						
 					},
 
 					opensvi : function(id){
@@ -1395,9 +1320,6 @@ var post = (function () {
 								history : true
 							})
 						}
-
-						
-
 						
 					},
 
@@ -1910,7 +1832,7 @@ var post = (function () {
 
 				make()
 
-				if (ed.video && !window.cordova && !isTablet() && !isMobile())
+				if (ed.video && p.inWnd && !self.app.mobileview)
 					self.app.el.menu.find('#menu').addClass('static')
 
 				initEvents();

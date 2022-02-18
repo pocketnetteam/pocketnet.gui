@@ -40,9 +40,8 @@
 				line-height: 40px;
 				text-align: center;
 				font-size: 0.9em;
-				color : @color-bright;
+				color : rgb(var(--color-txt-ac));
 				cursor: pointer;
-				/*.transition(0.3s);*/
 				border-radius : 40%;
 			}
 
@@ -79,7 +78,7 @@
 	}
 
 	.embeddingWrapperCnt{
-		background: fade(@color-gray-mlight, 5);
+		background: rgb(var(--background-secondary-theme));
 		padding-bottom: 2 * @rhythm;
 
 		.preview{
@@ -100,139 +99,9 @@
 			font-weight: 700;
 		}
 	}
+
 	.embeddingSettings{
 		padding : @rhythm 0;
-	}
-
-	.parameter{
-		width: auto;
-
-		.picker{
-			select{
-				height: auto;
-			}
-		}
-
-		>div{
-			vertical-align: middle;
-		}
-
-		.pName{
-			padding-right : @rhythm;
-			width: 120px;
-
-			.downloads {
-				padding-bottom: 2*@rhythm;
-			}
-
-			.pNameW{
-				font-size: 0.8em;
-				line-height: 1.4em;
-
-			}
-
-			.unit{
-				font-weight: 700;
-				color : @color-bright;
-			}
-
-			.require{
-				color : @color-bad;
-			}
-		}
-
-		
-		.pInput{
-			position: relative;
-			vertical-align: top;
-
-			.echo{
-				padding: @rhythm;
-				color : @color-contrast;
-				font-weight: 700;
-			}
-
-			.vm_valuesmulti{
-				padding-top: @rhythm / 2;
-			}
-
-
-		}
-
-		.panel{
-			vertical-align: top;
-			padding-top: 2 * @rhythm;
-			width: 20px;
-
-			.clear{
-				text-align: right;
-				cursor: pointer;
-				color : @color-gray-slight;
-				.transition(0.3s);
-				&:hover{
-					color : @color-main;
-				}
-			}
-			
-		}
-
-		
-
-		select,
-		textarea,
-		input{
-			width: 100%;
-			padding: @rhythm;
-			border-radius: 2px;
-
-			&.error{
-				border : 1px solid @color-bad;
-			}
-		}
-
-		.error{
-			select,
-			textarea,
-			input{
-				border : 1px solid @color-bad;
-			}
-			
-		}
-
-		select{
-			height: 38px;
-			padding-right: 25px;
-			width: auto;
-		}
-
-		
-
-		.vc_valuecustom{
-			width: 100%;
-			font-size: 0.8em;
-		}
-
-		.vc_valuecustom,
-		.vc_valuecustom_multibig{
-			.vc_textInput{
-				background: #fff;
-			}
-		}
-
-		.vmt_valuesmultitree,
-		.vm_value{
-			padding : 0;
-			.checkbox{
-				&+label {
-			        &:before {
-			        	font-size : 1.6em;
-			        	line-height: 19px;
-			        }
-			    }
-			}
-		}
-
-		
 	}
 
 	.preview{
@@ -251,7 +120,7 @@
 	.previewWrapper{
 		padding : @rhythm;
 		border-radius: 10px;
-		border : 1px solid @color-gray-slight;
+		border : 1px solid rgb(var(--neutral-grad-0));
 	}
 
 	.embedding{
@@ -259,7 +128,7 @@
 		display: none;
 		.code{
 			
-			background: fade(@color-gray-slight,10);
+			background: rgb(var(--background-secondary-theme));
 			width: 100%;
 			border : 0;
 			outline: o;
@@ -285,55 +154,12 @@
 		}
 	}
 
-	.captionearn{
-		font-weight: 700;
-		color : @color-pink;
-	}
-
-	.requestwhocaption{
-		font-size: 0.8em;
-		margin-top: @rhythm;
-	}
-
-	.calltoActionUserTextWrapper{
-		display : none;
-		background: fade(#000, 10);
-		border-radius: 0;
-		margin-top : 2 * @rhythm;
-
-		textarea{
-			width: 100%;
-			background: transparent;
-			border : 0;
-			padding : 3 * @rhythm 0;
-		}
-	}
 
 	.hidemore{
 		display: none;
 	}
 
-	&.textshowed{
-		.calltoActionUserTextWrapper{
-			display: block;
-		}
-
-		.hidemore{
-			display: inline-block;
-		}
-		.showmore{
-			display: none;
-		}
 	
-	}
-
-
-	.sharecaption{
-		font-weight: 700;
-		margin-bottom: @rhythm;
-		margin-top : 6 * @rhythm;
-	}
-
 	.socialsharebtn{
 		width: 38px;
 		height: 38px;
@@ -398,48 +224,8 @@
 			}
 		}
 	}
-
-	.additionalwrapper{
-		margin-top : 6 * @rhythm;
-
-		.additionaltable{
-			width : auto;
-			cursor: pointer;
-
-			>div{
-				padding: 0 2 * @rhythm;
-
-				&.checkcell{
-					padding-left : 0;
-				}
-
-				&.checkcell,
-				&.labelcell{
-					padding-left : 0;
-
-					
-				}
-
-				&.morecell{
-					color : @color-main;
-
-					&:hover{
-						color : @color-gray-light;
-					}
-				}
-			}
-		}
-
-		&.checked{
-			i{
-				&:before{
-					content: '\f058'
-				}
-			}
-		}
-	}
+	
 }
-
 
 .wnd.sharingwindow2{
 	
@@ -471,50 +257,34 @@
 		}
 	}
 
-	.roundclosebutton{
-		color : #FFF;
-	}
 }
 
 /*t*/ @media only screen and (max-width: 768px){
-#socialshare2{
+	#socialshare2{
 
-	.flexWrapper{
-		display: block;	
-		overflow: hidden;
+		.flexWrapper{
+			display: block;	
+			overflow: hidden;
 
-		button{
-			font-size: 0.8em;
-			padding-left: 0;
-			padding-right: 0;
-		}
-
-		>div{
-
-			&.includeRefWrapper{
-				padding : 2 * @rhythm 0;
+			button{
+				font-size: 0.8em;
+				padding-left: 0;
+				padding-right: 0;
 			}
+
+			>div{
+
+				&.includeRefWrapper{
+					padding : 2 * @rhythm 0;
+				}
+			}
+
 		}
 
-
-	}
-
-	.button.medium{
-		width: 100%;
-	}
-
-	.calltoActionUserTextWrapper{
-
-		textarea{
-			padding : 2 * @rhythm;
-			height : 140px;
+		.button.medium{
+			width: 100%;
 		}
+
 	}
 
-
-}
-.wnd.sharingwindow2{
-
-
-}	
 }

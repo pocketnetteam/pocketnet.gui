@@ -635,7 +635,8 @@ var test = (function(){
 				onType : true,
 				require : true,
 				onFocus : function(pn){
-					if (isTablet()) setTimeout(function(){_scrollTo(pn, el.c.closest('.customscroll')), 200})
+		
+					if (self.app.mobileview) setTimeout(function(){_scrollTo(pn, el.c.closest('.customscroll')), 200})
 				}
 			}),
 
@@ -647,7 +648,7 @@ var test = (function(){
 				onType : true,
 
 				onFocus : function(pn){
-					if (isTablet()) setTimeout(function(){_scrollTo(pn, el.c.closest('.customscroll')), 200})
+					if (self.app.mobileview) setTimeout(function(){_scrollTo(pn, el.c.closest('.customscroll')), 200})
 				}
 			}),
 

@@ -16,7 +16,6 @@ var all = {
 		class : 'opennewwindow'
 	},
 
-	
 	pin : {
 		icon : '<i class="fas fa-thumbtack"></i>',
 		text : e('pin'),
@@ -112,16 +111,20 @@ if(share){
 
 	m.push('share')
 
-	if (share.itisvideo() && window.cordova) {
+	if (share.itisvideo()) {
 
 		m.push('shareBareVideoLink');
 
-		if(app.platform.sdk.localshares.getShare(share.txid)){
-			m.unshift('deleteSavedVideo');
+		if(window.cordova){
+			if(app.platform.sdk.localshares.getShare(share.txid)){
+				m.unshift('deleteSavedVideo');
+			}
+			else{
+				m.unshift('downloadVideo');
+			}
 		}
-		else{
-			m.unshift('downloadVideo');
-		}
+
+	
 
 		
 	}
@@ -166,7 +169,7 @@ if(share){
 				m.push('startchat')
 			}
 
-			m.push('donation')
+			/*m.push('donation')*/
 			/*m.push('htls')*/
 
 			if(isMobile()){

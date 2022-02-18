@@ -155,21 +155,31 @@ nModule = function(){
 
 							options.destroy = function(key){
 
-								if(p){
+								var r = null
 
-									if(!key != 'auto'){
+								if (p){
+
+									if (key != 'auto'){
+										
 										self.app.nav.api.history.removeParameters(['m' + p.id].concat(p.clearparameters || []))
+										
 										try{
 											self.app.nav.api.changedclbks()
-										}catch(e){}
+										}
+										catch(e){
+											console.error(e)
+										}
 
 									}
 									
-									if (p.destroy)
-										return p.destroy(key)
+									if (p.destroy) {
+										r = p.destroy(key)
+									}
 								}
 
-								
+								p = null
+
+								return r
 
 							};
 
@@ -257,7 +267,15 @@ nModule = function(){
 			p.data.user	= self.user;
 			p.data.essenseData = p.essenseData || {};
 
-			p.rendered = template(p.data);
+			try{
+				p.rendered = template(p.data);
+			}
+			catch(e){
+				console.log(p)
+				console.error(e)
+				p.rendered = ''
+			}
+			
 
 			if (p.clear)
 				p.rendered = "";
@@ -300,10 +318,16 @@ nModule = function(){
 
 				if (pretemplate){
 
-					self.storage.templates[p.name] = _.template(pretemplate);
+					try{
+						self.storage.templates[p.name] = _.template(pretemplate);
+					}
+					catch(e){
+						console.error(e)
+					}
+					
 	
 					if (clbk)
-						clbk(self.storage.templates[p.name]);
+						clbk(self.storage.templates[p.name] || '');
 		
 					return
 				}
@@ -485,6 +509,8 @@ nModule = function(){
 								settings.auto(p)
 							}
 
+							p = null
+
 						})				
 
 
@@ -568,7 +594,7 @@ nModule = function(){
 	}
 
 	self.addEssense = function(essenses, Essense, p){
-
+		////// ??
 		self.essenses = essenses
 
 		var essense = new Essense(p);

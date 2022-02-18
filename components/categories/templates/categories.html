@@ -1,37 +1,32 @@
 <div class="ta">
     <% _.each(cats, function(cat, i){ 
-        
+                
         var title = _.map(cat.tags, function(w){return "#" + w}).join(', ')
         
         %>
 
-        <div category="<%-cat.id%>" class="tg <% if(cat.added) {%> added <% } %> <% if(cat.selected) {%> selected <% } %> <% if(i > 7) {%> hdn <% } %>">
+        <div category="<%-cat.id%>" class="tg <% if(cat.added) {%> added <% } %> <% if(cat.selected) {%> selected <% } %> <% if(cat.excluded) {%> excluded <% } %> <% if(i > 7) {%> hdn <% } %>">
 
             
                 <div class="cat">
                     <div class="cattable table">
 
-                        <div elementsid="catchekgl_<%-title%>" class="catvalue catcheckgl" title="<%-title%>">
-                            <span><%- cat.name %></span><% if(cat.new) {%>&nbsp;<span class="newlabel">New!</span><% } %>
+                        <div class="catvalue catcheckgl" title="<%-title%>">
+                            <i class="<%- cat.icon ||  'far fa-star'%>"></i>
+                            <span class="catname"><%- cat.name %></span>
                         </div>
 
-                        <div elementsid="catcheckgl2" class="catcheck catcheckgl">
-                            
-                            <i class="far fa-circle unselected"></i>
-                            <i class="far fa-check-circle selected"></i>
-                        </div>
-
-                        <div class="catsearch">
-                            <a elementsid="?sst=<%-cat.tags.join(' ')%>" href="?sst=<%-cat.tags.join(' ')%>">
-                                <i class="fas fa-search"></i>
-                            </a>
-                        </div>
                         <% if(cat.added) {%>
                             <div elementsid="categories_catedit" class="catedit">
                                 <i class="fas fa-pencil-alt"></i>
                             </div>
                         <% } %>
 
+                        <div class="minus">
+                            <i class="fa fa-minus-circle"></i>
+                        </div>
+
+                        
                     </div>
                 </div>
         </div>
@@ -40,12 +35,14 @@
 
     <% if(cats.length > 7) {%>
 
-        <div elementsid="categories_showallcats" class="showallcats showhideallcats">
-            <span><%=e('e13021')%></span>
+        <div class="showallcats showhideallcats">
+            <i class="fa fa-chevron-down"></i>
+            <span class="text"><%=e('e13021')%> (<%= cats.length - 7 %>) </span>
         </div>
 
-        <div elementsid="categories_hideallcats" class="hideallcats showhideallcats">
-            <span><%=e('hide')%></span>
+        <div class="hideallcats showhideallcats">
+            <i class="fa fa-chevron-up"></i>
+            <span class="text"><%=e('hide')%></span>
         </div>
 
     <% } %>

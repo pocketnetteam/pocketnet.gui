@@ -2,7 +2,8 @@
 
 #tagcloud{
 
-    color : @color-gray-mlight;
+    font-weight: 500;
+    color : rgb(var(--text-on-main-bg-color));
     overflow: hidden;
     
     .tcaptionwrapper{
@@ -10,12 +11,11 @@
         padding : 2 * @rhythm;
         padding-top : 2 * @rhythm;
         padding-left: 0;
-       
-        margin-bottom: @rhythm;
+        border-top: 1px solid rgb(var(--color-medium-theme));
 
         span{
             font-size : 0.8em;
-            font-weight: 700;
+            font-weight: 600;
         }
 
         i{
@@ -36,10 +36,11 @@
                 cursor: pointer;
                 width: 33px;
                 text-align: center;
+                .transition(0.3s);
 
                 &:hover{
                     i{
-                        color : @color-main;
+                        color : rgb(var(--color-txt-ac));
                     }
                     
                 }
@@ -49,6 +50,7 @@
                 opacity: 0.5;
                 width: 33px;
                 cursor: pointer;
+                .transition(0.3s);
 
                 span{
                     font-weight: 100;
@@ -57,7 +59,11 @@
 
                 &:hover{
                     opacity: 1;
-                    color : @color-bad;
+                    color : rgb(var(--color-bad));
+                    
+                    .tagvalue{
+                        border: 1px solid rgb(var(--color-bad));
+                    }
                 }
             }
 
@@ -72,70 +78,85 @@
     }
 
     .tag{
-        .tagtable{
-            width: auto;
-            >div{
-                vertical-align: middle;
-                padding : @rhythm 2 * @rhythm;
-                padding-left: 0;
+        font-size: .9em;
+        
+        .transition(0.3s);
+        >div{
+            vertical-align: middle;
+            padding-left: 0;
 
-                &.tagvalue{
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    max-width: 130px;
-                    padding-right: 0;
-                    span{
-                        font-size: 0.8em;
-                    }
-                }
+            &.tagvalue{
+                padding: 4px 8px;
+                padding-top : 2px;
+                width: auto;
+                border: 1px solid rgb(var(--color-medium-theme));
+                margin: 4px 4px 0 0;
+                border-radius: 100px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 120px;
+                white-space: nowrap;
 
-                &.iconWrapper{
-                    width : 2 * @rhythm;
-
-                    i{
-                        font-size: 0.6em;
-                    }
-                }
-
-                &.tagvalue{
-                    cursor: pointer;
-                    &:hover{
-                        color : @color-main;
-                    }
-                }
-
-                &.tagcount{
-                    width : 90px;
-                    text-align: right;
-                    font-weight: 700;
-                }
-
-                &.tagsearch,
-                &.tagcheck{
-                    padding : 0;
-                    text-align: center;
-                    width : 44px;
-                    cursor: pointer;
-                    opacity: 0.2;
-                    i{
-                        font-size: 0.8em;
-                    }
-
-                    
-                    &:hover{
-                        color : @color-main;
-                    }
-                }
-
-                &.tagsearch{
-                    width : 33px;
-                    opacity: 0;
+                span, i{
+                    font-size: 0.8em;
                 }
             }
+
+            &.iconWrapper{
+
+                i{
+                    font-size: 0.6em;
+                }
+            }
+
+            
+            &.tagvalue{
+                .transition(0.3s);
+                cursor: pointer;
+                &:hover{
+                    color : rgb(var(--color-txt-ac));
+                    border: 1px solid rgb(var(--color-txt-ac));
+                }
+            }
+
+            &.tagcount{
+                width : 90px;
+                text-align: right;
+                font-weight: 700;
+            }
+
+            &.tagsearch,
+            &.tagcheck{
+                .transition(0.3s);
+                padding : 0;
+                text-align: center;
+                width : 44px;
+                cursor: pointer;
+                opacity: 0.2;
+                i{
+                    font-size: 0.8em;
+                }
+
+                
+                &:hover{
+                    color : rgb(var(--color-txt-ac));
+
+                    .tagvalue{
+                        border : 1px solid rgb(var(--color-txt-ac));
+
+                    }
+                }
+            }
+
+            &.tagsearch{
+                width : 33px;
+                opacity: 0;
+            }
         }
+    
 
         &:hover{
-            .tagtable{
+            .tagvalue{
                 >div{
                     &.tagcheck,
                     &.tagsearch{
@@ -145,12 +166,11 @@
             }
         }
 
-       
     }
 
     .ta{
         .tg{
-            display: block;
+            display: inline-block;
 
             &.hdn{
                 display: none;
@@ -169,11 +189,12 @@
         }
 
         .ta{
+
             .tg{
-                display: block;
+                display: inline-block;
     
                 &.hdn{
-                    display: block;
+                    display: inline-block;
                 }
             }
         }
@@ -186,7 +207,8 @@
             display: none;
         }
         &.selected{
-            color : @color-orange;
+            color : rgb(var(--color-txt-orange));
+
             .unselected{
                 display: none;
             }
@@ -196,76 +218,51 @@
             }
 
             .tag{
-                .tagtable{
-                    >div{
-                        &.tagcheck{
-                            opacity: 1;
-                        }
+
+                >div{
+                    border: 1px solid rgb(var(--color-txt-orange));
+
+                    &.tagcheck{
+                        opacity: 1;
                     }
                 }
+            
             }
         }
+
 
         &.fixed{
-            color : fade(@color-gray-mlight, 20);
+            opacity: 0.5;
+            pointer-events: none;
 
-            .tag{
-                .tagtable{
-                    >div{
-                        &.tagvalue,
-                        &.tagcheck{
-                            cursor: default;
 
-                            i{
-                                font-weight: 700;
-                            }
-                        }
 
-                        
-        
-                    }
-                }
 
-                &:hover{
-                    .tagtable{
-                        >div{
-                            &.tagcheck{
-                                color : fade(#fff, 20);
-                                opacity: 1;
-                            }
-
-                            &.tagvalue{
-                                color : fade(#fff, 20);
-                                cursor: default;
-                               
-                            }
-                        }
-                    }
-                }
-            }
         }
-    }
 
-    .newlabel{
-        background: crimson;
-        color : #fff;
+
     }
 
     .hidealltags,
     .showalltags{
         padding : 2 * @rhythm;
+        padding-bottom : 4 * @rhythm;
         padding-left: 0;
         cursor: pointer;
-        opacity: 0.5;
+        color: rgba(var(--color-txt-gray), 0.7);
+        border-bottom: 1px solid rgba(var(--color-medium-theme), 0.5);
+        .transition(0.3s);
 
         &:hover{
-            opacity: 1;
-            color : @color-main;
+            color : rgb(var(--color-txt-ac));
         }
 
-        span{
-            font-weight: 700;
+        span, i{
             font-size: 0.8em;
+        }
+
+        .text{
+            margin-left: @rhythm;
         }
     }
 
@@ -279,26 +276,78 @@
 
 }
 
-html.stblack{
+
+@media only screen and (max-width: 768px){
     #tagcloud{
+
+        
+        .tcaptionwrapper{
+    
+            border-top: 0;
+    
+        }
+    
+        .tcaptiontable{
+    
+            >div{
+    
        
+                &.mlab{
+                 
+    
+                    span{
+                        font-size: 1em;
+                    }
+    
+               
+                }
+    
+            }
+        }
     
         .tag{
+            font-size: 1em;
             
-            &:hover{
-                color : @color-main;
+            >div{
+              
+                &.tagvalue{
+                    padding-top : 4px;
+                    margin: 4px 4px 0 0;
+    
+                    span, i{
+                        font-size: 1em;
+                    }
+                }
+    
+                &.iconWrapper{
+    
+                    i{
+                        font-size: 0.8em;
+                    }
+                }
+    
+           
+    
+                &.tagsearch,
+                &.tagcheck{
+                    i{
+                        font-size: 1em;
+                    }
+                }
             }
         }
     
-    
-    
+      
         .hidealltags,
         .showalltags{
+            border-bottom: 0;
     
-            &:hover{
-                color : @color-main;
+            span, i{
+                font-size: 1em;
             }
+    
         }
     
-    }    
+      
+    }
 }

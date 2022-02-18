@@ -1,0 +1,247 @@
+@import "../../css/__cssvar";
+
+#pkoin{
+	.content{
+
+		.vc_valuecustom .vc_textInput{
+			border: 0;
+			background: transparent;
+		}
+
+		.top, .fieldsWrapper, .sendButtonWrapper{
+			padding : @rhythm * 2;
+		}
+
+		.top{
+			display: flex;
+			justify-content: space-between;
+			padding-bottom: @rhythm * 2;
+			border-bottom : 1px solid rgba(var(--neutral-grad-1), 0.5);
+
+			.profile{
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				width: 90px;
+
+				.balance{
+					padding-left: @rhythm;
+					display: flex;
+					flex-direction: column;
+
+					.amount, .label{
+						line-height: 14px;
+					}
+					.amount{
+						font-size: 14px;
+						font-weight: 600;
+					}
+
+					.label{
+						font-size: 12px;
+						color: rgb(var(--neutral-grad-3));
+					}
+				}
+			}
+
+			.buyButtonWrapper{
+				display: flex;
+				align-items: center;
+
+				.buyButton{
+					border: 1px solid rgb(var(--neutral-grad-0));
+					box-sizing: border-box;
+					border-radius: 100px;
+					padding: 8px 16px;
+					cursor: pointer;
+
+
+					display: flex;
+					.text{
+						margin-right: @rhythm * 2;
+						font-weight: 600;
+
+					}
+				}
+			}
+
+
+		}
+
+		.fieldsWrapper{
+			margin-top: @rhythm * 2;
+			padding-bottom: 0;
+
+			.fields{
+				.inputWrapper{
+					margin-bottom: @rhythm * 4;
+
+					input::-webkit-outer-spin-button,
+					input::-webkit-inner-spin-button {
+						-webkit-appearance: none;
+						margin: 0;
+					}
+
+					/* Firefox */
+					input[type=number] {
+						-moz-appearance: textfield;
+					}
+
+					.inputSum, .textareaComment{
+						padding: 12px 16px;
+						border-radius: 12px;
+						border: 1px solid rgb(var(--neutral-grad-0));
+						width: 100%;
+					}
+
+					.vc_valuecustom{
+						width: 100%;
+
+						&.opened{
+	
+							.vc_inputWrapper, .vc_iconWrapper{
+								border: 1px solid rgb(var(--color-bg-ac));
+							}
+
+							.vc_iconWrapper{
+								border-left: none;
+							}
+							.vc_inputWrapper{
+								border-right: none;
+							}
+
+						}
+					}
+
+					.vc_inputWrapper{
+						border-radius: 12px 0px 0px 12px;
+						border: 1px solid rgb(var(--neutral-grad-0));
+						border-right: none;
+
+						input{
+							padding: 12px 16px;
+						}
+					}
+
+					.vc_iconWrapper{
+						border-radius: 0px 12px 12px 0px;
+						border: 1px solid rgb(var(--neutral-grad-0));
+						border-left: none;
+					}
+
+					.vc_selectInput{
+						top: 100%;
+						.shadowSmaller();
+						border-radius: 12px;
+						border: none;
+
+
+						.vc_value{
+							padding: 12px;
+							color: rgb(var(--color-txt-gray-dark));
+
+							&:hover{
+								background: rgb(var(--neutral-grad-1));
+								color: default;
+							}
+
+						}
+					}
+					
+
+					>textarea{
+						min-height: 100px;
+					}
+				}
+
+				.sum{
+
+					.inputWrapper{
+						position: relative;
+
+						.pkoinLabel{
+							color: rgb(var(--color-txt-ac));
+							position: absolute;
+							right: 12px;
+							top: 12px;
+						}
+					}
+				}
+				.comment{
+
+					.text{
+						line-height: 24px;
+						color: rgb(var(--color-txt-gray-dark));
+					}
+				}
+			}
+		}
+
+		.sendButtonWrapper{
+			padding: @rhythm * 3 @rhythm * 2;
+			border-top: 1px solid rgba(var(--neutral-grad-1), 0.5);
+
+			.sendButton{
+				padding: 12px 16px;
+				text-align: center;
+				background: rgb(var(--color-bg-ac));
+				color : rgb(var(--text-on-bg-ac-color));
+				border-radius: 12px;
+				cursor: pointer;
+			}
+		}
+
+	}
+
+}
+
+.wnd.pkoinwindow{
+	.wndinner{
+		
+		&.pkoin{
+            max-width: 370px;
+			max-height: 500px;
+			box-shadow: none;
+
+        }
+		.wndheader{
+			display: none;
+		}
+
+		.wndcontent{
+			top : 0;
+			bottom: 0;
+			padding : 0;
+		}
+
+		>div{
+			&.buttons{
+				display: none;
+			}
+		}
+	}
+
+	#pkoin{
+		.sendButtonWrapper{
+			position: absolute;
+			bottom : 0;
+			left : 0;
+			right: 0;
+		}
+	}
+}
+
+
+@media only screen and (max-width: 768px) {
+	.wnd.pkoinwindow{
+	
+		#pkoin{
+			.sendButtonWrapper{
+				position: static;
+				bottom : 0;
+				left : 0;
+				right: 0;
+			}
+		}
+	}
+}

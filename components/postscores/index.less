@@ -16,7 +16,6 @@
         text-align: left;
         color : @color-gray2;
         margin-bottom: @rhythm;
-        background: #FAFAFC;
 
         span{
             font-style: normal;
@@ -57,45 +56,8 @@
     }
 
     .itemwr{
-        width : auto;
-        margin-left: auto;
-        margin-right: auto;
+        justify-content: center;
 
-        >diV{
-            vertical-align: middle;
-
-            &.starswr{
-                width: 150px;
-
-                
-            }
-        }
-
-        
-
-        .stars{
-            height: 40px;
-            line-height: 40px;
-            text-align: center;
-            color : @color-bright;
-            cursor: pointer;
-
-            .starWrapper{
-                display: flex;
-                justify-content: center;
-            }
-
-
-            i{
-
-            }
-            
-
-            &.active,
-            &:hover{
-                
-            }
-        }
     }
 
     .authorTable{
@@ -127,12 +89,12 @@
         .bystars{
             margin-top: 2em;
             padding-bottom: 1em;
-            border-top: 1px solid @color-background-light;
+            border-top: 1px solid rgb(var(--background-main));
             margin: 0 1em;
             
             
             i{
-                color : #FFAE00;
+                color : rgb(var(--color-star-yellow));
             }
             .ratingrow{
                 >div{
@@ -141,7 +103,7 @@
 
                     &.label{
                         width : 20PX;
-                        color: @color-border-light;
+                        color: rgb(var(--neutral-grad-4));
 
                     }
 
@@ -168,19 +130,18 @@
             }
 
             .line-filled{
-                background: #ff7800;
-
+                background: rgb(var(--color-bg-orange));
             }
 
             .line-empty{
-                background: @color-background-light;
+                background: rgb(var(--background-main));
             }
         }
     }
 
     #userslist{
         padding : 0;
-        background: #fafafa;
+        background: rgb(var(--background-total-theme));
 
         .users .user{
             margin-bottom: 0;
@@ -193,16 +154,13 @@
         .caption{
             padding : @rhythm 2 * @rhythm;
             font-size: 1em;
-            border-bottom : 1px solid @color-gray-slight;
+            border-bottom : 1px solid rgb(var(--neutral-grad-1));
             margin-bottom: 0;
-            font-family: Segoe UI;
-
 
             span{
                 font-style: default;
                 font-size: 0.9em;
-                color : @color-border-light;
-
+                color : rgb(var(--neutral-grad-4));
             }
         }
 
@@ -211,11 +169,27 @@
         }
 
         .empty{
-            color : @color-gray-mlight;
+            color : rgb(var(--neutral-grad-3));
             text-align: center;
-            background: #fafafa;
+            background: rgb(var(--background-secondary-theme));
             padding : 4 * @rhythm;
             padding-bottom : 6 * @rhythm;
+        }
+    }
+
+    .fordetailsusers{
+
+        .rating{
+            font-size: 64px;
+            font-weight: bold;
+            text-align: center;
+            font-family: Nunito Sans;
+        }
+
+        .totalLikes{
+            font-size: 14px;
+            text-align: center;
+            color: rgb(var(--neutral-grad-4));
         }
     }
 }
@@ -248,19 +222,7 @@
             overflow-y: scroll;
             top: 54px;
 
-            .rating{
-                font-size: 64px;
-                font-weight: bold;
-                text-align: center;
-                font-family: Nunito Sans;
-
-            }
-
-            .totalLikes{
-                font-size: 14px;
-                text-align: center;
-                color: @color-border-light;
-            }
+            
         }
 
         .youstars{
@@ -269,63 +231,13 @@
             right : 0;
             top: 0;
             height: 54px;
-            background : #FAFAFC;
-            border-bottom: 1px solid #ff7800;
+            background : rgb(var(--neutral-grad-0));
+            border-bottom: 1px solid rgb(var(--color-bg-orange));
         }
     }
     
 }
 
-html.stblack{
-    #postscores{
-
-       
-    
-        .caption{
-            color : @color-bright;
-            background: @color-black4!important;
-        }
-    
-        .subcaption{
-            color : @color-main;
-        }
-    
-        .youstars{
-            background: @color-black4!important;
-        }
-    
-        .itemwr{
-           
-            .stars{
-                color : @color-bright;
-            }
-        }
-    
-    
-        .details{
-            .detailsWrapper{
-                border-bottom : 1px solid @color-gray2;
-            }
-        
-        }
-    
-        #userslist{
-            background: @color-black4;
-    
-            .caption{
-                color : @color-main;
-            }
-    
-    
-            .empty{
-                color : @color-gray-mlight;
-                background: @color-black4;
-            }
-        }
-    }
-    
-   
-}
 
 @media only screen and (max-width: 768px) {
     #postscores{

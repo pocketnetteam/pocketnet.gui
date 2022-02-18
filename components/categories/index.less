@@ -1,20 +1,16 @@
 @import "../../css/__cssvar";
 
 #categories{
-
-    color : @color-gray-mlight;
+    font-weight: 500;
+    color : rgb(var(--text-on-main-bg-color));
 
     .pocketcaption{
-        /*.transition(0.3s);*/
         span{
             margin-right: 0;
-            /*.transition(0.3s);*/
         }
 
         &:hover{
-
-            color : @color-bright;
-            
+            color : rgb(var(--color-txt-ac));
             span{
                 
                 margin-right: 20px;
@@ -28,88 +24,118 @@
     }
 
     .tcaptiontable{
+        display : flex;
+        justify-content: space-between;
         width : auto;
+        align-items: center;
 
-        >div{
+        .tcaption{
+            padding-right: 2 * @rhythm;
+        }
 
-            &.tcaption{
-                padding-right: 2 * @rhythm;
-            }
-           
-            &.ticon{
-                cursor: pointer;
-                width: 33px;
-                text-align: center;
-                /*.transition(0.3s);*/
+        .buttons{
+            display: flex;
+            padding-right: @rhythm;
+            font-size: 0.8em;
+            padding: 0 @rhythm * 2;
 
-                &:hover{
+            >div{
+                display: inline-block;
+                font-size: 1.2em;
+
+                &.ticon{
+                    cursor: pointer;
+                    text-align: center;
+                    /*.transition(0.3s);*/
+
                     i{
-                        color : @color-main;
+                        font-size: 1em;
                     }
-                    
+    
+                }
+    
+                &.mlab{
+                    opacity: 0.5;
+                    padding-left: @rhythm * 2;
+                    cursor: pointer;
+                    /*.transition(0.3s);*/
+    
+                    span{
+                        font-weight: 100;
+                        font-size: 0.8em;
+                    }
+    
+                    &:hover{
+                        opacity: 1;
+                        color : rgb(var(--color-bad));
+                    }
+                }
+
+                &.addcategory{
+                    &:hover{
+                        color: rgb(var(--color-txt-ac));
+                    }
+                }
+    
+                &.clearcategories{
+                    display: none;
+    
+                    &.showed{
+                        display: table-cell;
+                    }
                 }
             }
 
-            &.mlab{
-                opacity: 0.5;
-                width: 33px;
-                cursor: pointer;
-                /*.transition(0.3s);*/
-
-                span{
-                    font-weight: 100;
-                    font-size: 0.8em;
-                }
-
-                &:hover{
-                    opacity: 1;
-                    color : @color-bad;
-                }
-            }
-
-            &.clearcategories{
-                display: none;
-
-                &.showed{
-                    display: table-cell;
-                }
-            }
+            
         }
     }
     
     .tcaptionwrapper{
        
-        padding : 2 * @rhythm;
         padding-top : 2 * @rhythm;
-        padding-left: 0;
-       
         margin-bottom: @rhythm;
+
 
         span{
             font-size : 0.8em;
-            font-weight: 700;
+            font-weight: 600;
         }
 
         i{
-            font-size : 0.6em;
+            font-size : 0.8em;
         }
     }
 
     .cat{
-        /*.transition(0.3s);*/
         .cattable{
-            width: auto;
+            width: 100%;
+
             >div{
-                vertical-align: middle;
                 padding : @rhythm 2 * @rhythm;
                 padding-left: 0;
 
-                
-
                 &.catvalue{
                     padding-right: 0;
-                    span{
-                        font-size: 0.8em;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+
+                    i{
+                        width: 30px;
+                        text-align: center;
+
+                        &.fa-star{
+                            color: rgb(var(--color-star-yellow))
+                        }
+                    }
+
+                    .catname{
+                        font-size: 0.9em;
+                    }
+
+                    .forchecked{
+                        width: 20px;
+                        font-size: 0.7em;
+                        display: none;
                     }
                 }
 
@@ -130,13 +156,13 @@
                 &.catvalue{
                     /*.transition(0.3s);*/
                     cursor: pointer;
+                    width: 80%;
                     &:hover{
-                        color : @color-main;
+                        color : rgb(var(--color-txt-ac));
                     }
                 }
 
                 &.catedit,
-                &.catsearch,
                 &.catcheck{
                     /*.transition(0.3s);*/
                     padding : 0;
@@ -150,20 +176,43 @@
 
                     
                     &:hover{
-                        color : @color-main;
+                        color : rgb(var(--color-txt-ac));
                     }
                 }
+                
 
-                &.catedit,
-                &.catsearch{
+                &.catedit{
                     width : 33px;
                     opacity: 0;
                 }
 
+                &.minus{
+                    opacity: 0;
+                    font-size: 0.8em;
+                    display: flex;
+                    justify-content: flex-end;
+                    align-items: center;
+                    position: relative;
+                    cursor: pointer;
+                    color: rgb(var(--color-txt-gray));
+    
+                    i{
+                        top: 0;
+                        left: 0;
+                    }
+                }
+
                 &.catedit{
+                    position: relative;
+                    right: 10px;
+
                     &:hover{
                         opacity: 1;
                     }
+                }
+
+                &.checked{
+                    display: none;
                 }
             }
         }
@@ -172,18 +221,20 @@
             .cattable{
                 >div{
                     &.catedit,
-                    &.catcheck,
-                    &.catsearch{
+                    &.catcheck{
                         opacity: 1;
                     }
 
-                    &.catedit{
+                    &.catedit,
+                    &.minus{
                         opacity: 0.5;
 
                         &:hover{
                             opacity: 1;
                         }
                     }
+
+                 
                 }
             }
         }
@@ -191,15 +242,21 @@
     }
 
     .tg{
-       
+        border-radius: 12px;
+        margin-top : 1px;
+        margin-bottom: 1px;
+
         .selected{
             display: none;
+            
         }
-        &.selected{
-            color : @color-orange;
 
-            &.added{
-                color : @color-contrast;
+        &.selected{
+
+            background: rgba(var(--color-bg-ac-bright), 0.1);
+
+            .cat{
+                color : rgb(var(--color-bg-ac-bright));
             }
 
             .unselected{
@@ -216,10 +273,20 @@
                         &.catcheck{
                             opacity: 1;
                         }
+
+                        &.catvalue{
+                           
+        
+                            .forchecked{
+                                display: inline-block;
+                            }
+                        }
                     }
+
                 }
             }
         }
+
     }
 
     .ta{
@@ -228,6 +295,21 @@
 
             &.hdn{
                 display: none;
+            }
+        
+            &.excluded{
+                
+                .catvalue{
+                    color : rgb(var(--color-txt-gray));
+                    opacity: 0.5;
+                    pointer-events: none;
+
+                }
+
+                .minus {
+                    color: rgb(var(--color-bad));
+                    opacity: 1!important;
+                }
             }
         }
     }
@@ -259,17 +341,22 @@
         padding : 2 * @rhythm;
         padding-left: 0;
         cursor: pointer;
-        opacity: 0.5;
-        /*.transition(0.3s);*/
+        color : rgba(var(--color-txt-gray), 0.7);
+        .transition(0.3s);
 
         &:hover{
-            opacity: 1;
-            color : @color-main;
+            color : rgb(var(--color-txt-ac));
+        }
+        span{
+            font-size: 0.8em;
+        }
+        i{
+            font-weight: 600;
+            font-size: 0.8em;
         }
 
-        span{
-            font-weight: 700;
-            font-size: 0.8em;
+        .text{
+            margin-left: @rhythm;
         }
     }
 
@@ -298,11 +385,11 @@
     .btn1{
             background: transparent;
             border-color: transparent;
-            color : @color-gray;
+            color : rgb(var(--color-txt-gray));
             text-decoration: underline;
     
             &:hover{
-                color : @color-main;
+                color : rgb(var(--color-txt-ac));
             }
     }
 
@@ -334,58 +421,44 @@
     }
 }
 
-html.stblack{
-    #categories{
-       
-        .cat{
-            
-            &:hover{
-                color : @color-main;
-            }
-        }
-    
-    
-    
-        .hideallcats,
-        .showallcats{
-    
-            &:hover{
-                color : @color-main;
-            }
-        }
-    
-    }   
-    
-    .addcategorydialog{
+@media only screen and (max-width: 768px){
 
-     
-        .btn1{
-            color : @color-gray-mlight;
-    
-            &:hover{
-                color : @color-main;
-            }
-        }
-    
-        .fieldwrapper,
-        .namewrapper{
-            padding : @rhythm 0;
-    
-            .label{
-                padding : 0.5 * @rhythm 0;
-                padding-left: @rhythm;
-                span{
-                    font-size: 0.8em;
+    #categories{
+
+        .cat{
+            .cattable{
+
+                >div{
+                    &.catvalue{
+                        .catname{
+                            font-size: 1em;
+                        }
+                    }
+                }
+
+                .catedit, .minus{
+                    opacity: 1!important;
                 }
             }
-    
-            .inputWrapper{
-               
+        }
+
+        .hideallcats,
+        .showallcats{
+
+            span{
+                font-size: 1em;
+            }
+            i{
+                font-weight: 600;
+                font-size: 1em;
             }
         }
-    
-        input{
-            background: @color-black3;
+
+        .tg{
+            margin-top : @rhythm;
+            margin-bottom: @rhythm;
         }
+    
     }
+
 }

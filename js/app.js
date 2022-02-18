@@ -257,6 +257,18 @@ Application = function(p)
 	
 		return true
 	}
+	
+
+	var istouchstyle = function(){
+		self.mobileview = (self.el.html.hasClass('mobile') || self.el.html.hasClass('tablet') || window.cordova || self.width < 768)
+
+		if(self.mobileview){
+			self.el.html.addClass('mobileview')
+		}
+		else{
+			self.el.html.removeClass('mobileview')
+		}
+	}
 
 	self.isonline = isonline
 
@@ -1097,7 +1109,7 @@ Application = function(p)
 	self.actions = {
 
 		emoji : function(text){
-			if(isMobile()) return text
+			if(self.mobileview) return text
 
 			return joypixels.toImage(text)
 		},
@@ -1158,8 +1170,7 @@ Application = function(p)
 	
 					if (self.playingvideo && self.playingvideo.playing){
 
-						if (scrollTop >= 65)
-							self.el.html.addClass('scrollmodedown')
+						if (scrollTop >= 65) self.el.html.addClass('scrollmodedown')
 						
 					}
 	
@@ -1280,6 +1291,9 @@ Application = function(p)
 		self.height = self.el.window.height()
 		self.width = self.el.window.width()
 
+		istouchstyle()
+
+
 		var showPanel = '1'
 
 		var cr = self.curation()
@@ -1299,7 +1313,7 @@ Application = function(p)
 				})
 
 
-				if(isMobile() && !cr){
+				if(self.mobileview && !cr){
 
 					var cs = (lastScrollTop + 40 < scrollTop || lastScrollTop - 40 < scrollTop)
 
@@ -1313,8 +1327,6 @@ Application = function(p)
 
 						if (self.el.html.hasClass('scrollmodedown')){
 							self.el.html.removeClass('scrollmodedown')
-							
-							
 						}
 
 						return
@@ -1371,7 +1383,7 @@ Application = function(p)
 						s(self.lastScrollTop, blockScroll)
 					})
 
-					if(!t && isMobile()){
+					if(!t && self.mobileview){
 
 						if (showPanel == '2' && !self.el.html.hasClass('scrollmodedown')){
 							self.el.html.addClass('scrollmodedown')
@@ -1400,6 +1412,10 @@ Application = function(p)
 
 					if(!self.el.window) return
 					if (self.fullscreenmode) return
+
+					if (self.el.html.hasClass('scrollmodedown')){
+						self.el.html.removeClass('scrollmodedown')
+					}
 
 					var scrollTop = self.actions.getScroll(),
 						height = self.el.window.height(),
@@ -1790,7 +1806,7 @@ Application = function(p)
 			},
 			init : function(_el){
 
-				if(isMobile()){
+				if(self.mobileview){
 					_el.swipe({
 						longTap : function(){
 

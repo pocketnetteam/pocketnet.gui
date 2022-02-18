@@ -26,29 +26,74 @@ var main = (function(){
 		var wordsRegExp = /[,.!?;:() \n\r]/g
 
 		var lastStickyRefresh = 0
-
-		/*var mobilemodes = [{
-			mode : 'leftshow',
-			icon : 'fas fa-hashtag'
-		},{
-			mode : 'mainshow',
-			icon : 'fas fa-home'
-		},{
-			mode : 'rightshow',
-			icon : 'fas fa-arrow-right'
-		}]
-
-		var mobilemode = 'mainshow'*/
-
-		var helpers = {
-			
-		}
 		
 		var actions = {
+
+			selector : function(){
+
+				var links = {
+
+					index : "index",
+		
+					sub : "index?r=sub",
+		
+					recommended : 	"index?r=recommended"
+		
+				}
+
+				if (self.app.platform.videoenabled ){
+					links.video = "index?video=1"
+				}
+
+				if (window.cordova) {
+					links.saved = "index?r=saved"
+				}
+
+				var vs = _.toArray(links)
+
+				var r = parameters(self.app.nav.current.completeHref, true).r || 'index'
+				var video = parameters(self.app.nav.current.completeHref, true).video || false
+				var value = links[r]
+
+				var labels = [self.app.localization.e('e13136'), self.app.localization.e('e13137'), self.app.localization.e('e13138')]
+
+				if (self.app.platform.videoenabled ){
+					value = links[video ? 'video' : r]
+					labels.push(self.app.localization.e('video'))
+				}
+
+				if ((window.cordova) || (typeof _Electron != 'undefined' && window.electron)) {
+					labels.push(self.app.localization.e('downloaded'));
+				}
+
+				var contents = new Parameter({
+					type : "VALUES",
+					name : "Contents",
+					id : 'contents',
+					possibleValues : vs, 
+					possibleValuesLabels : labels,
+					defaultValue : value
+				
+				})
+
+				contents.value = value
+
+				contents._onChange = function(v){
+
+					var href = v;
+
+					self.nav.api.load({
+						open : true,
+						href : href,
+						history : true,
+					})
+				}
+
+				return contents;
+
+			},
 			
 			refreshSticky : function(alv){
-
-				
 
 				var ns = self.app.lastScrollTop
 
@@ -61,14 +106,7 @@ var main = (function(){
 					if(alv){
 						el.panel.hcSticky('refresh');
 						el.leftpanel.hcSticky('refresh');
-
-						/*setTimeout(function(){
-							if(el.panel) el.panel.hcSticky('refresh');
-							if(el.leftpanel) el.leftpanel.hcSticky('refresh');
-						}, 300)*/
 					}
-
-					
 				}
 					
 			},
@@ -118,6 +156,8 @@ var main = (function(){
 					}
 				}
 
+				self.nav.api.changedclbks()
+
 				renders.lentawithsearch()
 
 				makeShare()
@@ -127,8 +167,9 @@ var main = (function(){
 			backtolenta : function(){
 				actions.backtolentaClear()
 
+				console.log('lastscroll', lastscroll)
 
-				self.app.actions.scroll(lastscroll)
+				self.app.actions.scroll(lastscroll || 0)
 				//_scrollTop(lastscroll, null, 5)
 				
 
@@ -150,6 +191,8 @@ var main = (function(){
 
 				}, 350)
 
+				self.nav.api.changedclbks()
+
 				if(lenta && lenta.update) lenta.update()
 			}	
 		}
@@ -163,7 +206,6 @@ var main = (function(){
 				actions.currentMode()
 			},
 			panelPosition : function(){
-
 				actions.panelPosition()
 			},
 
@@ -222,6 +264,41 @@ var main = (function(){
 
 		var renders = {
 
+			menu : function(pathname){
+
+				var selector = actions.selector()
+
+				self.app.user.isState(function(state){
+
+					self.shell({
+
+						name :  'menu',
+						el :   el.menu,
+						data : {
+							pathname : pathname,
+							state : state,
+							mobile : isMobile(),
+							tagsSelected : self.app.platform.sdk.categories.gettags().length,
+							selector : selector
+						},
+
+					}, function(_p){
+
+						ParametersLive([selector], _p.el)
+
+						el.menu.find('.showcategories').on(clickAction(), function(){
+
+							var mainmoduleAction = deep(self.app, 'modules.main.module.showCategories')
+			
+							if (mainmoduleAction) mainmoduleAction(true)
+						})
+
+					})
+					
+				})
+				
+			},
+
 			addpanel : function(){
 
 				self.app.user.isState(function(state){
@@ -242,7 +319,7 @@ var main = (function(){
 			
 			share : function(){
 
-				if(!isMobile() && !videomain && !searchvalue && !searchtags){
+				if (!isMobile() && !videomain && !searchvalue && !searchtags){
 
 					el.c.removeClass('wshar')
 
@@ -321,7 +398,7 @@ var main = (function(){
 							
 						},
 	
-						opensvi : isMobile() ? null : function(id, share){
+						opensvi : self.app.mobileview ? null : function(id, share){
 
 							self.nav.api.load({
 								open : true,
@@ -387,30 +464,31 @@ var main = (function(){
 
 			panel : function(){
 
-				if(videomain && !isMobile()) return
+				if (videomain && !isMobile() || panel) return
 
-				self.nav.api.load({
+					self.nav.api.load({
 
-					open : true,
-					id : 'panel',
-					el : el.panel,
-					animation : false,
+						open : true,
+						id : 'panel',
+						el : el.panel,
+						animation : false,
 
-					essenseData : {
-					
-						renderclbk : function(){
-							actions.refreshSticky(true)
-	
-						}
-					},
-					clbk : function(e, p){
-
-						panel = p;
+						essenseData : {
 						
-					}
+							renderclbk : function(){
+								actions.refreshSticky(true)
+		
+							}
+						},
+						clbk : function(e, p){
 
-				})
+							panel = p;
+							
+						}
+
+					})
 			},
+
 			lentawithsearch : function(clbk, p){
 
 				
@@ -466,6 +544,7 @@ var main = (function(){
 					renders.lenta(clbk, p)
 				}
 			},
+
 			lenta : function(clbk, p){
 
 				if(!p) p = {};
@@ -506,6 +585,7 @@ var main = (function(){
 						}
 					}
 				}
+
 				
 				self.nav.api.load({
 					open : true,
@@ -535,7 +615,6 @@ var main = (function(){
 						},
 						opensvi : function(id){
 
-
 							lastscroll = self.app.lastScrollTop
 
 							el.c.addClass('opensvishowed')
@@ -547,9 +626,6 @@ var main = (function(){
 							setTimeout(function(){
 								upbackbutton = self.app.platform.api.upbutton(el.upbackbutton, {
 									top : function(){
-										/*if(isMobile() || isTablet() || window.cordova){
-											return '135px'
-										}*/
 										return '65px'
 									},
 									rightEl : el.c.find('.lentacellsvi'),
@@ -573,6 +649,8 @@ var main = (function(){
 							self.nav.api.history.addParameters({
 								v : id
 							})
+
+							self.nav.api.changedclbks()
 
 							events.up()
 						},
@@ -660,32 +738,6 @@ var main = (function(){
 
 				
 			},
-
-			/*mobilemode : function(mode){
-
-				if (mode){
-
-					if (mobilemode == 'mainshow'){
-						lastscroll = self.app.lastScrollTop
-						self.app.actions.scroll(0)
-					}
-
-					mobilemode = mode
-				}
-
-				el.c.attr('mobilemode', mobilemode)
-
-
-				setTimeout(function(){
-					self.app.el.html.removeClass('scrollmodedown')
-				}, 300)
-				
-
-				if (mobilemode == 'mainshow' && lastscroll){
-					_scrollTop(lastscroll, null, 0)
-				}
-			},*/
-
 			
 		}
 
@@ -699,10 +751,10 @@ var main = (function(){
 		}
 
 		var initstick = function(){
-			if(!isMobile() && !isTablet() && !hsready){
+			if(!self.app.mobileview && !hsready){
 
-				var t1 = 64
-				var t2 = 76
+				var t1 = 75
+				var t2 = 75
 
 				if (el.leftpanel)
 					el.leftpanel.hcSticky({
@@ -726,15 +778,13 @@ var main = (function(){
 
 			self.app.events.scroll.main = actions.addbuttonscroll
 
-
 			el.c.find('.backtolenta').on('click', actions.backtolenta)
 
 			el.addbutton.on('click', actions.addbutton)
 
-			if(!isMobile() && !isTablet()){
+			if(!self.app.mobileview){
 
 				if(!videomain) initstick()
-
 			}
 			else{
 
@@ -779,9 +829,7 @@ var main = (function(){
 
 		var makePanel = function(){
 
-			if(!isMobile()){
-				renders.panel();
-			}
+			if(!isMobile()){ renders.panel(); }
 				
 			renders.leftpanel();
 
@@ -828,6 +876,8 @@ var main = (function(){
 
 			makePanel()
 
+			renders.menu()
+
 			if (currentMode == 'common' && !videomain && !searchvalue && !searchtags)
 				renders.topvideos(true)
 			else{
@@ -839,17 +889,16 @@ var main = (function(){
 		}
 
 		var showCategories = function(t){
-			if (el.c && isMobile()){
-
+			if (el.c){
 				self.app.mobile.vibration.small()
 
 				if (t){
 					el.c.addClass('leftshowed')
-					setTimeout(self.app.actions.offScroll, 300)
+					//setTimeout(self.app.actions.offScroll, 300)
 				}
 				else{
 					el.c.removeClass('leftshowed')
-					setTimeout(self.app.actions.onScroll, 300)
+					//setTimeout(self.app.actions.onScroll, 300)
 				}
 				
 			}
@@ -859,6 +908,8 @@ var main = (function(){
 			primary : primary,
 
 			parametersHandler : function(clbk){
+
+				console.log('parametersHandler')
 
 				var tgsi = decodeURI(parameters().sst || '')
 
@@ -924,8 +975,11 @@ var main = (function(){
 					}
 	
 					renders.lentawithsearch()
+
 					makePanel()
 					makeShare()
+
+					renders.menu()
 
 					actions.refreshSticky()
 
@@ -949,8 +1003,6 @@ var main = (function(){
 					el.c.find('.bgCaption').removeClass('hidden')
 
 					makeShare()
-
-					
 
 					actions.refreshSticky()
 				}
@@ -997,7 +1049,7 @@ var main = (function(){
 					return
 				}
 
-				if((_s.v || _s.s) && (isMobile() || window.cordova)){
+				if((_s.v || _s.s) && (isMobile())){
 
 					self.nav.api.load({
 						open : true,
@@ -1143,6 +1195,7 @@ var main = (function(){
 				el.addbutton = el.c.find('.addbutton')
 				el.slwork = el.c.find('.maincntwrapper >div.work')
 				el.topvideos = el.c.find('.topvideosWrapper')
+				el.menu = el.c.find('.menuwrapper')
 
 				//self.app.el.footer.addClass('workstation')
 

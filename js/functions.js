@@ -582,20 +582,29 @@
 				}
 
 				if (!p.noButtons) {
-					h+=	 ' <div class="buttons windowmainbuttons"></div>';
+					h +=	 '<div class="buttons windowmainbuttons">';
+
+					_.each(p.buttons, function(button, i){
+
+						var txt = (button.html ? button.html : 
+							(app ? ( app.localization.e(button.text) || button.text || '') : 
+							(button.text || '')) )
+
+						var hb = '<div><div class="button '+(button.class || "")+'" bi="'+i+'">'+txt+'</div></div>'
+
+						h += hb
+		
+					})
+
 					h+=	 '</div>';
 				}
 
-				wnd = $("<div>",{
+				wnd = $("<div>", {
 					"class" 	: "wnd",
 					"html"	: h
 				});
 
-				/*wnd.css('top', app.lastScrollTop)
-			   	wnd.css('height', app.height)*/
-
-		   	if(!p.header) 
-			   	wnd.addClass('noheader')
+		   	if(!p.header) wnd.addClass('noheader')
 
 			el.append(wnd);		
 
@@ -603,28 +612,20 @@
 				actions["close"](true);
 			});
 
-			_.each(p.buttons, function(button){
-				button.el = $("<div>",{
-				   "class" 	: "button " + (button.class || ""),
-				   "html"	: "<div>" + 
-				   
-				   (button.html ? button.html : 
-						(app ? ( app.localization.e(button.text) || button.text || '') : 
-						(button.text || '')) ) + 
-				   
-				   "</div>"
-			    });
+			////TODO
 
-				wnd.find(".wndinner>div.buttons").append(button.el);
+			if (!p.noButtons) {
+				_.each(p.buttons, function(button, i){
+					var _el = wnd.find('.wndinner>div.buttons .button[bi="'+i+'"]')
 
-				var fn = button.fn || actions[button.action] || actions["close"];
-				button.el.on('click', function(){fn(wnd, self)});
+					var fn = button.fn || actions[button.action] || actions["close"];
 
-			})
+					_el.on('click', function(){fn(wnd, self)});
+				})
+			}
+
 
 			if(p.class) wnd.addClass(p.class);
-
-		    
 
 			wnd.css("display", "block");
 			wnd.addClass('asette')
@@ -685,14 +686,13 @@
 			if(isTablet() && wnd.hasClass('normalizedmobile')){
 
 				var trueshold = 20
+				
 
 				parallax = new SwipeParallaxNew({
 
-					el : wnd.find('.wndback,.wndheader'),
+					el : wnd.find(p.parallaxselector || '.wndback,.wndheader,.wndinner'),
 					transformel : wnd.find('.wndinner'),
-
 					allowPageScroll : 'vertical',
-	
 					directions : {
 						down : {
 							cancellable : true,						
@@ -708,8 +708,26 @@
 								var percent = Math.abs(px) / trueshold;
 							},
 
-							constraints : function(){
-								return true;
+							constraints : function(e){
+
+								var i = false
+
+								var sel = _.find(e.path, function(p){
+
+									if (p.id == 'windowsContainer'){
+										i = true
+									}
+
+									if (i) return null
+
+									return p.classList.contains('customscroll');
+								})
+
+								if(!sel){
+									return true;
+								}
+
+								return sel.scrollTop == 0
 							},
 
 							restrict : true,
@@ -723,6 +741,7 @@
 					
 	
 				}).init()
+				
 
 				cnt = wnd.find('.wndcontent')
 
@@ -780,8 +799,6 @@
 				//wnd.one('transitionend webkitTransitionEnd oTransitionEnd', function () {
 
 				setTimeout(function(){
-					wnd.remove();
-					
 
 					window.requestAnimationFrame(function(){
 
@@ -790,10 +807,11 @@
 	
 						if (self.essenseDestroy) self.essenseDestroy(key)
 
+						wnd.remove();
 						clearmem();
 					})
+
 				}, 220)	
-					
 
 				
 				//});
@@ -4969,9 +4987,8 @@
 
 					input += 	'</div>';
 
-					//input += 	'<div class="vc_selectInput_bg_mobile"></div>';
 
-					input += 	'<div class="vc_selectInput">';
+					input += 	'<div class="vc_selectInput customscroll">';
 
 					if (self.defaultValuesTemplate)
 					{
@@ -6375,7 +6392,7 @@
 
 	_scrollTop = function(scrollTop, el, time){
 
-		if(!el) {
+		if(!el || el.attr('id') == 'application') {
 			el = $("body,html");
 		}
 
@@ -8715,7 +8732,7 @@
 				'</div>',
 
 				'<div class="searchInputWrapper">' +
-					'<input elementsid="sminputsearch_' + (p.id || p.placeholder) + '" class="sminput" tabindex="2" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" maxlength="400" type="text" placeholder="' + (p.placeholder || "Search") + '">' +
+					'<input elementsid="sminputsearch_' + (p.id || p.placeholder) + '" class="sminput" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" maxlength="400" type="text" placeholder="' + (p.placeholder || "Search") + '">' +
 				'</div>',
 
 				'<div class="searchPanel">' +
@@ -8737,7 +8754,7 @@
 
 			if(p.collectresults){
 				elements[1] = '<div class="searchInputWrapper">' +
-					'<div class="sminput" contenteditable="true" tabindex="2" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" maxlength="400" type="text" placeholder="' + (p.placeholder || "Search") + '"></div>' +
+					'<div class="sminput" contenteditable="true"  autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" maxlength="400" type="text" placeholder="' + (p.placeholder || "Search") + '"></div>' +
 				'</div>'
 			}
 

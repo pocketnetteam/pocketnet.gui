@@ -16,18 +16,8 @@ var navigation = (function(){
 
 
 		var events = {
-			/*scrollman : function(scroll){
-
-				if (scroll >= 250){
-					el.c.addClass('scrolled')
-				}
-				else{
-					el.c.removeClass('scrolled')
-				}
-			},*/
 
 			scroll : function(){
-
 
 				if (self.app.lastScrollTop >= 250){
 
@@ -72,81 +62,78 @@ var navigation = (function(){
 
 				var back = self.app.nav.api.backChainGet()
 
+				self.shell({
+					name :  'menu',
+					inner : html,
+					el : el.menu,
 
-				//self.app.platform.sdk.ustate.me(function(_mestate){
+					data : {
+						back : back,
+						href : href,
+						lentakey : k,
+						indexkey : indexkey,
+						shw : shw,
+						search,
+						haschat : self.app.platform.matrixchat.core,
+						thref : self.app.nav.get.href(),
+						ps : parameters()
+						//mestate : _mestate
+					}
 
-					self.shell({
-						name :  'menu',
-						inner : html,
-						el : el.menu,
+				}, function(p){
 
-						data : {
-							back : back,
-							href : href,
-							lentakey : k,
-							indexkey : indexkey,
-							shw : shw,
-							search,
-							haschat : self.app.platform.matrixchat.core,
-							thref : self.app.nav.get.href(),
-							//mestate : _mestate
-						}
+					p.el.find('.toup').on('click', events.toup)
 
-					}, function(p){
-
-						p.el.find('.toup').on('click', events.toup)
-
-						p.el.find('.toregistration').on('click', function(){
-							self.app.platform.sdk.registrations.getredirectFromCurrentPage()
-							self.nav.api.go({
-								href : 'authorization',
-								history : true,
-								open : true
-							})	
-						})
-
-						p.el.find('.addshare').on('click', function(){
-
-							self.nav.api.go({
-								open : true,
-								href : 'share',
-								inWnd : isTablet(),
-								history : true,
-								
-								essenseData : {
-									rmhistory : true
-								}
-							})
-
-						})
-
-						p.el.find('.showmenu').on('click', function(){
-
-							self.nav.api.go({
-								open : true,
-								href : 'userpage',
-								inWnd : isMobile(),
-								history : true,
-								
-								essenseData : {
-									rmhistory : true
-								}
-							})
-
-						})
-
-
-						p.el.find('.matrixchat').on('click', function(){
-
-							var show = deep(self, 'app.platform.matrixchat.core.apptochat')
-
-							if (show) show()
-
-						})
-						
+					p.el.find('.toregistration').on('click', function(){
+						self.app.platform.sdk.registrations.getredirectFromCurrentPage()
+						self.nav.api.go({
+							href : 'authorization',
+							history : true,
+							open : true
+						})	
 					})
 
-				//})
+					p.el.find('.addshare').on('click', function(){
+
+						self.nav.api.go({
+							open : true,
+							href : 'share',
+							inWnd : true,
+							history : true,
+							
+							essenseData : {
+								rmhistory : true
+							}
+						})
+
+					})
+
+					p.el.find('.showmenu').on('click', function(){
+
+						self.nav.api.go({
+							open : true,
+							href : 'userpage',
+							inWnd : true,
+							history : true,
+							
+							essenseData : {
+								rmhistory : true
+							}
+						})
+
+					})
+
+
+					p.el.find('.matrixchat').on('click', function(){
+
+						var show = deep(self, 'app.platform.matrixchat.core.apptochat')
+
+						if (show) show()
+
+					})
+					
+				})
+
 			},
 
 			hide : function(){
@@ -174,9 +161,7 @@ var navigation = (function(){
 		var initEvents = function(){
 			
 			self.app.nav.clbks.history.navigation = function(href){
-				el.c.removeClass('scrolled')
 				renders.menu(self.app.nav.get.pathname())
-
 			}
 
 			self.app.platform.sdk.registrations.clbks.navigation = function(){

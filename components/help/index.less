@@ -19,7 +19,7 @@
 
 
 			&.bright {
-				background: @color-orange;
+				background: rgb(var(--color-bg-orange));
 				border-radius: 33px;
 				padding-left: 2 * @rhythm;
 				padding-right: 2 * @rhythm;
@@ -27,18 +27,17 @@
 
 			&:hover,
 			&.active {
-				border-bottom: 1px solid #fff;
+				border-bottom: 1px solid rgb(var(--text-on-bg-shadow-color));
 
 				&.bright {
-					border-bottom: 1px solid @color-orange;
+					border-bottom: 1px solid rgb(var(--color-bg-orange));
 				}
 			}
 		}
 	}
 
-
 	.bgCaption {
-		background: fade(@color-black2, 100);
+		background: rgb(var(--color-shadow-base));
 
 		.cell {
 			padding-top: 5 * @rhythm;
@@ -57,7 +56,7 @@
 					cursor: pointer;
 
 					&:hover {
-						color: @color-gray-light;
+						color: rgb(var(--neutral-grad-4));
 					}
 				}
 
@@ -80,7 +79,7 @@
 		padding-bottom: 6 * @rhythm;
 		margin-top: 6 * @rhythm;
 		overflow: hidden;
-		border-bottom: 1px solid @color-gray-slight;
+		border-bottom: 1px solid rgb(var(--neutral-grad-2));
 
 		&:nth-last-child(1) {
 			border-bottom: 0;
@@ -131,7 +130,7 @@
 					}
 
 					&.released {
-						color: @color-good;
+						color: rgb(var(--color-good));
 						font-weight: 500;
 						width: 50px;
 						text-align: center;
@@ -151,7 +150,7 @@
 			font-size: 1em;
 
 			a {
-				color: @color-main;
+				color: rgb(var(--color-txt-ac));
 				text-decoration: underline;
 			}
 		}
@@ -177,9 +176,7 @@
 			.postGuideButton {
 				width: 100%;
 
-				// margin-bottom: @rhythm * 2;
-
-				color: @color-black2;
+				color: rgb(var(--color-txt-gray-dark));
 				background-color: transparent;
 				border: none;
 				text-align: start;
@@ -190,7 +187,7 @@
 			}
 
 			.share {
-				background-color: #fafafa;
+				background-color: rgb(var(--background-secondary-theme));
 			}
 
 			>div {
@@ -212,7 +209,6 @@
 						.share {
 							padding: 0;
 							padding: 3 * @rhythm;
-							// border : 1px solid @color-gray-slight;
 							border-radius: @rhythm;
 						}
 					}
@@ -290,22 +286,22 @@
 
 		.toblockexplorer {
 			font-size: 0.8em;
-			color: @color-gray-slight;
+			color: rgb(var(--neutral-grad-2));
 			.transition(0.3s);
 			cursor: pointer;
 			width: 30px;
 			text-align: center;
 
 			&:hover {
-				color: @color-main;
+				color: rgb(var(--color-txt-ac));
 			}
 		}
 
 		.addressesGroup {
-			border-bottom: 1px solid #D9D9D9;
+			border-bottom: 1px solid rgb(var(--neutral-grad-1));
 
 			&.hdr {
-				border-bottom: 1px solid @color-main;
+				border-bottom: 1px solid rgb(var(--color-bg-ac));
 
 				th {
 					padding-top: 4 * @rhythm;
@@ -338,23 +334,6 @@
 
 }
 
-html.stblack {
-	#help {
-		.page {
-
-			.lentasection {
-
-				.postGuideButton {
-					color: @color-gray-mlight;
-				}
-
-				.share {
-					background-color: rgb(0, 9, 27);
-				}
-			}
-		}
-	}
-}
 
 /*t*/
 @media only screen and (max-width: 768px) {
@@ -411,7 +390,6 @@ html.stblack {
 				padding: @rhythm;
 				text-align: left;
 
-
 			}
 		}
 
@@ -421,7 +399,7 @@ html.stblack {
 			padding-bottom: 2 * @rhythm;
 			margin-top: 2 * @rhythm;
 			overflow: hidden;
-			border-bottom: 1px solid @color-gray-slight;
+			border-bottom: 1px solid rgb(var(--neutral-grad-1));
 
 			&:nth-last-child(1) {
 				border-bottom: 0;
@@ -439,9 +417,7 @@ html.stblack {
 				}
 			}
 
-
 		}
-
 
 		.page {
 			padding: 2 * @rhythm 0;
@@ -465,11 +441,9 @@ html.stblack {
 				}
 			}
 
-
 			.lentasection {
 				.guidesSection {
 					position: relative;
-
 					margin-bottom: @rhythm * 2;
 				}
 
@@ -483,7 +457,6 @@ html.stblack {
 				}
 
 			}
-
 		}
 	}
 }

@@ -1966,8 +1966,7 @@ Platform = function (app, listofnodes) {
 
             p.horizontal = true
 
-            var tpl = `<div class="horizontalLentaWrapper"><div class="horizontalLentacaption"><span>`+(p.caption || '')+`</span></div><div class="showmorebywrapper"><div class="showmoreby"></div></div>
-            <div class="controlleft controlhor" dir="left"><i class="fas fa-chevron-left"></i></div><div class="controlright controlhor"><i class="fas fa-chevron-right"></i></div>
+            var tpl = `<div class="horizontalLentaWrapper"><div class="horizontalLentacaption"><span>`+(p.caption || '')+`</span><div class="controlhors"><div class="controlleft controlhor" dir="left"><i class="fas fa-arrow-left"></i></div><div class="controlright controlhor"><i class="fas fa-arrow-right"></i></div></div></div><div class="showmorebywrapper"><div class="showmoreby"></div></div>
             </div>`
 
             el.html(tpl)
@@ -2472,7 +2471,7 @@ Platform = function (app, listofnodes) {
                 el.owlCarousel({
                     items: 1,
                     dots: true,
-                    nav: !isMobile(),
+                    nav: !self.app.mobileview,
                     navText: [
                         '<i class="fas fa-chevron-left"></i> ',
                         '<i class="fas fa-chevron-right"></i>'
@@ -2677,26 +2676,7 @@ Platform = function (app, listofnodes) {
 
                 success: function () {
 
-                   /* if (!isMobile()) {
-
-                        app.nav.api.load({
-
-                            open: true,
-                            href: 'userpage?id=accounts',
-                            history: true,
-                            handler: true,
-
-                            essenseData: {
-                                dumpkey: !isMobile()
-                            },
-
-                            clbk: function (p, s) {
-
-                            }
-                        })
-
-                    }*/
-
+             
                     app.nav.api.load({
 
                         open: true,
@@ -2782,8 +2762,61 @@ Platform = function (app, listofnodes) {
 
                 })
 
+                
+                
+            },
 
+            buy : function(p, clbk, el){
 
+                if(!p) p = {}
+
+                var id = 'papiwalletbuy'
+
+                globalpreloader(true, true)
+
+                p.action = p.htls ? 'htls' : 'buy'
+                p.class = 'api'
+                p.api = true
+                
+
+                var es = null
+
+                return new Promise((resolve, reject) => {
+                    
+                    p.sendclbk = function(d){
+
+                        if (p.roomid && d.txid){
+                            self.matrixchat.shareInChat.url(p.roomid, app.meta.protocol + '://i?stx=' + d.txid) /// change protocol
+                        }
+
+                        resolve(d)
+
+                        if(es && es.container) es.container.close()
+                    }
+
+                    app.nav.api.load({
+                        open : true,
+                        id : 'wallet',
+                        inWnd : el ? false : true,
+                        el : el ? el : null,
+                        eid : id,
+                        mid : id,
+                        animation : false,
+                        essenseData : p,
+                        clbk : function(e, _p){
+
+                            es = _p
+    
+                            globalpreloader(false)
+    
+                            if(clbk) clbk(e, _p)
+                        }
+                    })
+
+                })
+
+                
+                
             }
         },
 
@@ -2966,7 +2999,7 @@ Platform = function (app, listofnodes) {
         authorlink: function (address, namelink) {
             var name = deep(self.sdk.usersl.storage, address + '.name');
 
-            if (name && (!isMobile() || namelink)) return encodeURIComponent(name.toLowerCase());
+            if (name && (!self.app.mobileview || namelink)) return encodeURIComponent(name.toLowerCase());
 
             else return 'author?address=' + address
         },
@@ -3282,7 +3315,7 @@ Platform = function (app, listofnodes) {
 
             if(!p) p = {}
 
-            if (isTablet() || isMobile() || window.cordova || p.dlg){
+            if (self.app.mobileview || p.dlg){
                 return self.api.mobiletooltip(_el, content, clbk, p)
             }
 
@@ -3337,6 +3370,8 @@ Platform = function (app, listofnodes) {
 
             return _el
         },
+
+        
 
         electron: {
             storage: {},
@@ -7497,6 +7532,60 @@ Platform = function (app, listofnodes) {
 
             }
         },
+        
+        lentaMethod: {
+            all: {
+                hierarchical: 'gethotposts',
+                historical: 'gethistoricalstrip'
+            },
+            default: "hierarchical",
+            current: null,
+
+            save: function () {
+
+                var c = self.sdk.lentaMethod.current
+
+                localStorage['lentaMethod'] = c;
+
+            },
+
+            load: function (clbk) {
+
+                var t = self.sdk.lentaMethod
+
+                t.current = localStorage['lentaMethod'] || t.default;
+
+                t.set()
+
+                if (clbk) clbk()
+            },
+
+            get: function(){
+                var t = self.sdk.lentaMethod;
+
+                return t.all[t.current];
+            },
+
+            set: function (value) {
+
+                var t = self.sdk.lentaMethod
+
+                if (!value) {
+                    value = t.current || t.default
+                }
+
+                if (value && t.all[value]) {
+
+                    t.current = value;
+
+                    self.app.platform.sdk.categories.clbks.selected.lenta && self.app.platform.sdk.categories.clbks.selected.lenta();
+
+                    t.save()
+
+                }
+
+            }
+        },
 
         theme: {
             all: {
@@ -7504,18 +7593,22 @@ Platform = function (app, listofnodes) {
                     name: self.app.localization.e('e13266'), ////ch
                     class: "stwhite",
                     color : "#ffffff",
-                    media : '(prefers-color-scheme: light)'
+                    media : '(prefers-color-scheme: light)',
+                    rootid : ''
                 },
 
                 black: {
                     name: self.app.localization.e('e13267'),
                     class: "stblack",
                     color : "#1e2235",
-                    media : '(prefers-color-scheme: dark)'
+                    media : '(prefers-color-scheme: dark)',
+                    rootid : 'black'
                 }
             },
             default: "white",
             current: null,
+
+            currentStyles : {},
 
             save: function () {
 
@@ -7536,6 +7629,25 @@ Platform = function (app, listofnodes) {
                 if (clbk) clbk()
             },
 
+            setstyles : function(){
+                var root = document.querySelector(':root');
+
+                var rootStyles = getComputedStyle(root);
+ 
+                self.sdk.theme.currentStyles = rootStyles
+
+            },
+
+            getstyle : function(v){
+
+                if (self.sdk.theme.currentStyles){
+                    return self.sdk.theme.currentStyles.getPropertyValue(v)
+                }
+
+                return ''
+               
+            },
+
             set: function (value) {
 
                 var t = self.sdk.theme
@@ -7546,11 +7658,11 @@ Platform = function (app, listofnodes) {
                 }
 
                 if (value && t.all[value]) {
-                    _.each(t.all, function (c) {
+                    /*_.each(t.all, function (c) {
                         h.removeClass(c.class)
                     })
 
-                    h.addClass(t.all[value].class)
+                    h.addClass(t.all[value].class)*/
 
                     t.current = value
 
@@ -7562,14 +7674,22 @@ Platform = function (app, listofnodes) {
                     
                     if (cm) cm()
 
-                    $('meta[name="theme-color"]').attr('content', t.all[value].color)
-                        .attr('media',  t.all[value].media)
-                        
+                    if (document.documentElement.hasAttribute('theme')){
+                        document.documentElement.removeAttribute('theme');
+                    }
+
+                    document.documentElement.setAttribute('theme', t.all[value].rootid);
+
+                    self.sdk.theme.setstyles()
+
+                    $('meta[name="theme-color"]').attr('content', t.all[value].color).attr('media',  t.all[value].media)
                     $('meta[name="msapplication-navbutton-color"]').attr('content', t.all[value].color)
                     $('meta[name="apple-mobile-web-app-status-bar-style"]').attr('content', t.all[value].color)
                 }
 
                 app.mobile.statusbar.background()
+
+                
 
             }
         },
@@ -10669,6 +10789,45 @@ Platform = function (app, listofnodes) {
 
             },
 
+            getRecommendedAccountsByTags : function(clbk){
+
+                var selectedTags = self.app.platform.sdk.categories.gettags();
+
+                self.app.api.rpc('getrecomendedaccountsbytags', [selectedTags, 15])
+                .then(function(d){
+
+                    if (clbk){
+                        clbk(d)
+                    }
+
+                })
+                .catch(function(e){
+
+                    if (clbk){
+                        clbk(null, e);
+                    }
+                })
+            },
+
+            getBestUsers : function(clbk){
+
+                var my = self.app.user.address.value;
+
+                self.app.api.rpc('getrecomendedaccountsbyscoresfromaddress', [my, ['share', 'video'], 0, 300000, 15])
+                .then(function(d){
+
+                    if (clbk){
+                        clbk(d)
+                    }
+
+                })
+                .catch(function(e){
+
+                    if (clbk){
+                        clbk(null)
+                    }
+                })
+            },
 
             commonuserpoint : function(address, me){
                 var point = 1;
@@ -10697,7 +10856,48 @@ Platform = function (app, listofnodes) {
 
                 return point
 
+            }
+        },
 
+
+
+        posts: {
+            
+            getRecommendedPosts : function(clbk){
+
+                var my = self.app.user.address.value;
+
+                self.app.api.rpc('getrecomendedcontentsbyscoresfromaddress', [my, ['share', 'video'], 0, 300000, 15])
+                .then(function(d){
+
+                    if (clbk){
+                        clbk(d)
+                    }
+
+                })
+                .catch(function(e){
+
+                    if (clbk){
+                        clbk(null, e);
+                    }
+                })
+            },
+
+            getRecommendedPostsContents : function(parameters, clbk){
+
+                self.app.api.rpc('getrawtransactionwithmessagebyid', parameters)
+                .then(function(d){
+
+                    if (clbk){
+                        clbk(d)
+                    }
+                })
+                .catch(function(e){
+
+                    if (clbk){
+                        clbk(null)
+                    }
+                })
             }
         },
 
@@ -12988,19 +13188,104 @@ Platform = function (app, listofnodes) {
                         }
                     ]
                 },
+
+                categoryIcons : [
+                    {
+                        "id": "c2",
+                        "icon": "far fa-smile"
+                    },
+                    {
+                        "id": "c3",
+                        "icon": "fas fa-landmark"
+                    },
+                    {
+                        "id": "c4",
+                        "icon": "fab fa-bitcoin"
+                    },
+                    {
+                        "id": "c5",
+                        "icon": "fas fa-microscope"
+                    },
+                    {
+                        "id": "c55",
+                        "icon": "fas fa-book"
+                    },
+                    {
+                        "id": "c6",
+                        "icon": "fas fa-dollar-sign"
+                    },
+                    {
+                        "id": "c73",
+                        "icon": "fas fa-fist-raised"
+                    },
+                    {
+                        "id": "c72",
+                        "icon": "fas fa-thermometer"
+                    },
+                    {
+                        "id": "c7",
+                        "icon": "fas fa-flag-checkered"
+                    },
+                    {
+                        "id": "c8",
+                        "icon": "fas fa-running"
+                    },
+                    {
+                        "id": "c9",
+                        "icon": "fas fa-gamepad"
+                    },
+                    {
+                        "id": "c10",
+                        "icon": "fas fa-space-shuttle"
+                    },
+                    {
+                        "id": "c11",
+                        "icon": "fas fa-music"
+                    },
+                    {
+                        "id": "c12",
+                        "icon": "fas fa-newspaper"
+                    },
+                    {
+                        "id": "c13",
+                        "icon": "fas fa-history"
+                    },
+                    {
+                        "id": "c14",
+                        "icon": "fas fa-bookmark"
+                    },
+                    {
+                        "id": "c15",
+                        "icon": "fas fa-film"
+                    },
+                    {
+                        "id": "c16",
+                        "icon": "fas fa-paw"
+                    },
+                    {
+                        "id": "c17",
+                        "icon": "fas fa-route"
+                    },
+                    {
+                        "id": "c18",
+                        "icon": "fas fa-pencil-ruler"
+                    }
+                ]
             },
 
             settings : {
                 tags : {},
                 selected : {},
-                added : {}
+                added : {},
+                excluded : {}
             },
 
             clbks : {
                 selected : {},
                 added : {},
-                tags  :{},
-                removed : {}
+                tags  : {},
+                removed : {},
+                excluded : {}
             },
 
             fromTags : function(tags, _k){
@@ -13047,6 +13332,29 @@ Platform = function (app, listofnodes) {
 
                 return addedtags
             },
+
+            gettagsexcluded : function(_k, onlycategories){
+                var tags = []
+
+                var k = _k || self.app.localization.key
+
+                if(!self.sdk.categories.data.all[k]) k = 'en'
+
+                var excluded = self.sdk.categories.settings.excluded[k] || {};
+
+
+
+                var all = self.sdk.categories.get(k)
+
+                _.each(all, function(c){
+                    if(excluded[c.id]) tags = tags.concat(c.tags)
+                })
+
+
+                if(onlycategories === 'onlytags') tags = excludedtags
+
+                return tags
+            },  
 
             gettags : function(_k, onlycategories){
                 var tags = []
@@ -13224,6 +13532,7 @@ Platform = function (app, listofnodes) {
 
             select : function(id, _k){
 
+
                 if(!id) return 'emptyid'
 
                 var allcats = self.sdk.categories.get(_k)
@@ -13247,7 +13556,7 @@ Platform = function (app, listofnodes) {
 
                 else s.selected[k][id] = true
 
-                self.sdk.categories.save()
+                self.sdk.categories.save();
 
                 _.each(self.sdk.categories.clbks.selected, function(f){
                     f(id, s.selected[k][id], k)
@@ -13256,19 +13565,88 @@ Platform = function (app, listofnodes) {
                 return false
             },
 
-            get : function(_k){
+            exclude : function(id, _k){
+
+
+                if(!id) return 'emptyid'
+
+                var allcats = self.sdk.categories.get(_k)
+
+                var cat = _.find(allcats, function(c){
+                    return c.id == id
+                })
+
+                if(!cat) return 'cantonfound'
+
+                var s = self.sdk.categories.settings
                 var k = _k || self.app.localization.key
 
-                var added = _.map(self.sdk.categories.settings.added[k]|| {},
+                if(!self.sdk.categories.data.all[k]) k = 'en'
+
+                s.excluded[k] || (s.excluded[k] = {})
+
+
+                if (s.excluded[k][id]){
+
+                    delete s.excluded[k][id];
+
+                } else {
+                    s.excluded[k][id] = true;
+                        
+                    s.selected[k] || (s.selected[k] = {})
+
+                    if (s.selected[k][id]){
+                        delete s.selected[k][id]
+
+
+                        _.each(self.sdk.categories.clbks.selected, function(f){
+                            f(id, s.selected[k][id], k)
+                        })
+                    }
+                } 
+
+
+                self.sdk.categories.save()
+
+                _.each(self.sdk.categories.clbks.excluded, function(f){
+                    f(id, s.excluded[k][id], k)
+                })
+
+                return false
+            },
+
+            get : function(_k){
+                var k = _k || self.app.localization.key;
+
+                var added = _.map(self.sdk.categories.settings.added[k]|| {}, 
                 function(c){
-                    var cc = _.clone(c)
+                    var cc = _.clone(c);
 
-                    cc.added = true
+                    cc.added = true;
 
+                    
                     return cc
                 })
 
-                return (self.sdk.categories.data.all[k] || self.sdk.categories.data.all['en']).concat(added)
+                var categories = self.sdk.categories.data.all[k] || self.sdk.categories.data.all['en'];
+
+                var categoryIcons = self.sdk.categories.data.categoryIcons;
+
+				categories = _.map(categories, function(k){
+					var withIcon = categoryIcons.find(function(ki){
+						return ki.id === k.id;
+					})
+
+					if (withIcon){
+						k.icon = withIcon.icon;
+					} else {
+                        k.icon = 'fa fa-mouse-pointer'
+                    }
+
+					return k;
+				})
+
+                return (categories).concat(added)
             },
 
             getbyid : function(id, _k){
@@ -13299,6 +13677,7 @@ Platform = function (app, listofnodes) {
                 if(!self.sdk.categories.data.all[k]) k = 'en'
 
                 var selected = self.sdk.categories.settings.selected[k] || {}
+                var excluded = self.sdk.categories.settings.excluded[k] || {}
 
                 var all = self.sdk.categories.get()
 
@@ -13306,6 +13685,7 @@ Platform = function (app, listofnodes) {
                     var cs = _.clone(c)
 
                     cs.selected = selected[c.id] ? true : false
+                    cs.excluded = excluded[c.id] ? true : false
 
                     return cs
                 })
@@ -13324,6 +13704,7 @@ Platform = function (app, listofnodes) {
                 self.sdk.categories.clbks.removed = {}
                 self.sdk.categories.clbks.added = {}
                 self.sdk.categories.clbks.tags = {}
+                self.sdk.categories.clbks.excluded = {}
 
 
 
@@ -13340,6 +13721,7 @@ Platform = function (app, listofnodes) {
                 self.sdk.categories.settings.tags || (self.sdk.categories.settings.tags = {})
                 self.sdk.categories.settings.selected || (self.sdk.categories.settings.selected = {})
                 self.sdk.categories.settings.added || (self.sdk.categories.settings.added = {})
+                self.sdk.categories.settings.excluded || (self.sdk.categories.settings.excluded = {})
 
                 if(clbk) clbk()
             }
@@ -15604,8 +15986,9 @@ Platform = function (app, listofnodes) {
                     })
                 },
 
-                recommended: function (p, clbk, cache) {
+                recommended: function (p, clbk, cache, methodparams) {
 
+                    if(!methodparams) methodparams = {}
 
                     if (!p) p = {};
 
@@ -15689,7 +16072,9 @@ Platform = function (app, listofnodes) {
                                         clbk(shares, error, p)
                                 }
 
-                            }, 'gethotposts')
+                            }, methodparams.method || self.sdk.lentaMethod.get())
+
+
                         }
 
                     })
@@ -15858,6 +16243,7 @@ Platform = function (app, listofnodes) {
                     self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
                         method : 'getusercontents'
                     })
+
                 },
 
                 hierarchical: function (p, clbk, cache, methodparams) {
@@ -15883,6 +16269,7 @@ Platform = function (app, listofnodes) {
                         p.lang || (p.lang = self.app.localization.key)
                         p.height || (p.height = 0)
                         p.tagsfilter || (p.tagsfilter = [])
+                        p.tagsexcluded || (p.tagsexcluded = [])
                         p.begin || (p.begin = '')
 
                         if (state) {
@@ -15921,8 +16308,6 @@ Platform = function (app, listofnodes) {
                         else {
                             if (!storage[key] || cache == 'clear') storage[key] = [];
 
-
-
                             if (!p.txid) {
                                 if (storage[key].length) {
 
@@ -15946,16 +16331,19 @@ Platform = function (app, listofnodes) {
                                 return encodeURIComponent(t)
                             })
 
+                            p.tagsexcluded = _.map(p.tagsexcluded, function(t){
+                                return encodeURIComponent(t)
+                            })
+
                             /////temp
 
                             if (p.video && !self.videoenabled){
                                 p.tagsfilter = ['video']
                             }
 
-
                             ////
 
-                            var parameters = [Number(p.height), p.txid, p.count, p.lang, p.tagsfilter, p.video && self.videoenabled ? 'video' : ''];
+                            var parameters = [Number(p.height), p.txid, p.count, p.lang, p.tagsfilter, p.video && self.videoenabled ? 'video' : '', '', '', p.tagsexcluded];
 
                             if(p.author) parameters.unshift(p.author)
 
@@ -17460,7 +17848,7 @@ Platform = function (app, listofnodes) {
 
                             var inputs = [];
 
-                            if(!(obj.donate && obj.donate.v.length)){
+                            if(!(obj.donate && obj.donate.v.length) && obj.type !== 'contentBoost'){
                                 inputs = self.sdk.node.transactions.create.selectBestInputs(unspent)
                             }
 
@@ -17517,6 +17905,45 @@ Platform = function (app, listofnodes) {
                                 }
 
                                 feerate = Number((feerate * smulti).toFixed(0));
+                            }
+
+                            if (obj.type === 'contentBoost' && obj.amount.v){
+
+                                feerate = 0;
+
+                                var lastUnspent = _.clone(unspent).reverse();
+
+                                for (var u of lastUnspent){
+
+                                    if (obj.amount.v >= totalInputs){
+
+                                        totalInputs += u.amount;
+
+                                        inputs.push({
+                                            txId: u.txid,
+                                            vout: u.vout,
+                                            amount: u.amount,
+                                            scriptPubKey: u.scriptPubKey,
+                                        })
+
+                                    } else {
+
+                                        break;
+                                    }
+
+                                }  
+
+                                if (obj.amount.v > totalInputs){
+
+                                    sitemessage(self.app.localization.e('e13117'))
+
+                                    if (clbk){
+                                        clbk(null, self.app.localization.e('e13117'));
+                                    }
+
+                                    return;
+
+                                }
                             }
 
                             self.sdk.node.transactions.create[obj.type](inputs, obj, /*feerate,*/ function (a, er, data) {
@@ -17700,7 +18127,21 @@ Platform = function (app, listofnodes) {
                             var embed = bitcoin.payments.embed({ data: opreturnData });
                             var i = 0;
 
+                            if (obj.type !== 'contentBoost'){
+
+
+                                outputs.push({
+                                    amount : 0,
+                                    deleted : true,
+                                    address : address.address
+                                })
+    
+                                
+                            }
+
                             txb.addOutput(embed.output, 0);
+
+                            
                             ///?
                             outputs.push({
                                 amount : 0,
@@ -17749,7 +18190,7 @@ Platform = function (app, listofnodes) {
                                     !(obj.donate && obj.donate.v.length) &&
 
 
-                                    unspents.length < 50 && amount > 0.2 * smulti) {
+                                    unspents.length < 50 && amount > 0.2 * smulti && obj.type !== 'contentBoost') {
 
                                     var ds = Number((amount / 2).toFixed(0))
 
@@ -17790,6 +18231,13 @@ Platform = function (app, listofnodes) {
 
                                 var totalReturn = Number((amount - totalDonate - (fees || 0)).toFixed(0));
 
+
+                                if (obj.type === 'contentBoost'){
+
+                                    var amountMulti = obj.amount.v * smulti;;
+                                    totalReturn -= amountMulti;
+
+                                }
 
                                 if (obj.donate && obj.donate.v.length && (totalReturn < 0 || totalDonate <= fees)){
 
@@ -18119,8 +18567,12 @@ Platform = function (app, listofnodes) {
                     commentShare: function (inputs, commentShare, clbk, p) {
                         this.common(inputs, commentShare, TXFEE, clbk, p)
 
-
                     },
+
+                    contentBoost: function (inputs, comment, /*fees, */clbk, p) {
+                        this.common(inputs, comment, 0, clbk, p)
+                    },
+
 
                     cScore: function (inputs, cScore, clbk, p) {
                         this.common(inputs, cScore, TXFEE, clbk, p)
@@ -20740,7 +21192,7 @@ Platform = function (app, listofnodes) {
                         if(self.sdk.videos.storage[url] && self.sdk.videos.storage[url].data){
                             var info = self.sdk.videos.storage[url].data;
 
-                            var loadingPlayer = elf ? elf() : p.el.find('.jsPlayerLoading');
+                            var loadingPlayer = elf ? elf() : p.el.find('.jsPlayerLoading-matte');
 
                             var width = loadingPlayer.width();
 
@@ -20872,7 +21324,7 @@ Platform = function (app, listofnodes) {
                 var _v = localStorage['pn_videovolume_2']
 
                 if(typeof _v == 'undefined') {
-                    if(window.cordova || isMobile())
+                    if(self.app.mobileview)
                         _v = '0'
                     else
                         _v = '1'
@@ -21560,7 +22012,7 @@ Platform = function (app, listofnodes) {
 
                 h += "+" + platform.mp.coin(clearStringXss(data.amountall || data.tx.amount));
 
-                if(!isMobile())
+                
                     h+= " PKOIN"
 
 
@@ -23641,17 +24093,11 @@ Platform = function (app, listofnodes) {
 
 			var boffset = 0;
 
-            var mtbl = (isMobile() || (isTablet() && platform.app.width <= 768))
+            var mtbl = platform.app.width <= 1024
 
 			if (mtbl){
 				maxCount = 1;
                 showremove = 0;
-			}
-			else
-			{
-				/*if (typeof _Electron == 'undefined') {
-                    boffset = 60;
-                }*/
 			}
 
 			var remove = self.fastMessages.length - maxCount;
@@ -23754,9 +24200,11 @@ Platform = function (app, listofnodes) {
         }
 
         self.destroyMessages = function () {
+
             _.each(self.fastMessages, function (message, i) {
                 destroyMessage(message, 1, true)
             })
+
             setTimeout(function(){
                 arrangeMessages()
             }, 301)
@@ -23806,12 +24254,6 @@ Platform = function (app, listofnodes) {
                         essenseData : {
                         }
                     })
-
-                    /*platform.app.nav.api.load({
-                        open : true,
-                        href : 'userpage?id=notifications&report=notifications',
-                        history : true,
-                    })*/
 
                 }
                 else{
@@ -23871,8 +24313,6 @@ Platform = function (app, listofnodes) {
             }
 
             arrangeMessages();
-
-
 
             return message
         }
@@ -25426,6 +25866,7 @@ Platform = function (app, listofnodes) {
         self.sdk.relayTransactions.load();
         self.applications = self.__applications()
         self.sdk.theme.load()
+        self.sdk.lentaMethod.load()
 
         self.sdk.uiScale.load();
         self.sdk.uiScale.listenKeys();
@@ -25811,7 +26252,7 @@ Platform = function (app, listofnodes) {
 
                 var link = 'contact?id=' + hexEncode(address)
 
-                if(isMobile() || window.cordova){
+                if (self.app.mobileview){
                     self.matrixchat.core.apptochat(link)
                 }
                 else{
@@ -25855,8 +26296,8 @@ Platform = function (app, listofnodes) {
                                 <matrix-element
                                     address="${a}"
                                     privatekey="${privatekey}"
-                                    pocketnet="`+( (isMobile() || isTablet() || window.cordova) ? '' : 'true')+`"
-                                    mobile="`+( (isMobile() || isTablet() || window.cordova) ? 'true' : '')+`" 
+                                    pocketnet="`+( self.app.mobileview ? '' : 'true')+`"
+                                    mobile="`+( self.app.mobileview ? 'true' : '')+`" 
                                     ctheme="`+self.sdk.theme.current+`"
                                     localization="`+self.app.localization.key+`"
                                     fcmtoken="`+(self.fcmtoken || "")+`"
@@ -25899,7 +26340,7 @@ Platform = function (app, listofnodes) {
         initevents : function(){
             if (self.matrixchat.el){
 
-                if(isTablet() || isMobile() || window.cordova){
+                if(self.app.mobileview){
 
                     self.matrixchat.chatparallax = new SwipeParallaxNew({
 
@@ -25945,20 +26386,6 @@ Platform = function (app, listofnodes) {
         
                     }).init()
 
-
-
-					/*self.matrixchat.el.swipe({
-						swipeLeft : function(e, phase, direction, distance){
-                            if(_.find(e.path, function(el){
-                                return el.className && el.className.indexOf('noswipepnt') > -1
-                            })) return
-
-
-                            if (self.matrixchat.core && (!self.matrixchat.core.canback || self.matrixchat.core.canback()))
-                                self.matrixchat.core.backtoapp()
-
-						},
-					})*/
 
 				}
 
@@ -26101,7 +26528,7 @@ Platform = function (app, listofnodes) {
         showed : function(){
             if(!self.matrixchat.core){ return false }
 
-            if(isTablet() || isMobile() || window.cordova){
+            if (self.app.mobileview){
                 return !self.matrixchat.core.hiddenInParent
             }
 
@@ -26119,7 +26546,7 @@ Platform = function (app, listofnodes) {
 
             core.backtoapp = function(link){
 
-                if (isTablet() ||isMobile() || window.cordova)
+                if (self.app.mobileview)
                     app.nav.api.history.removeParameters(['pc'], null, {replaceState : true})
 
                 if (link){
@@ -26152,25 +26579,19 @@ Platform = function (app, listofnodes) {
 
                 self.app.actions.playingvideo()
 
-                if (isTablet() ||isMobile() || window.cordova) self.app.actions.restore()
+                if (self.app.mobileview) self.app.actions.restore()
 
-                //app.el.html.removeClass('chatshowed')
-
-                if(document.activeElement) document.activeElement.blur()
+                if (document.activeElement) document.activeElement.blur()
 
                 if (self.matrixchat.core){
                     self.matrixchat.core.cancelshare ? self.matrixchat.core.cancelshare() : '' ;
 
-                    self.matrixchat.core.hideInParent(isTablet() ||isMobile() || window.cordova ? true : false )
+                    self.matrixchat.core.hideInParent(self.app.mobileview ? true : false )
                 }
 
                 
 
-                if (isTablet() || isMobile() || window.cordova){
-
-                    /*self.matrixchat.el.one('transitionend webkitTransitionEnd oTransitionEnd', function () {
-                        self.app.actions.onScroll()
-                    });*/
+                if (self.app.mobileview){
 
                     setTimeout(function(){
                         self.app.actions.onScroll()
@@ -26209,14 +26630,14 @@ Platform = function (app, listofnodes) {
 
                 self.app.actions.playingvideo()
 
-                if (isTablet() ||isMobile() || window.cordova){
+                if (self.app.mobileview){
                     setTimeout(function(){
                         self.app.actions.offScroll()
                         self.app.actions.optimize()
                     })
                 }
 
-                if (isTablet() || isMobile() || window.cordova)
+                if (self.app.mobileview)
                     app.nav.api.history.addParameters({
                         'pc' : '1'
                     })
@@ -26235,8 +26656,8 @@ Platform = function (app, listofnodes) {
 
             self.matrixchat.core = core
 
-            core.hideOptimization(isTablet() || isMobile() || window.cordova ? true : false)
-            core.hideInParent(isTablet() || isMobile() || window.cordova ? true : false)
+            core.hideOptimization(self.app.mobileview ? true : false)
+            core.hideInParent(self.app.mobileview ? true : false)
             core.externalLink(self.matrixchat)
 
             self.app.platform.ws.messages["newblocks"].clbks.newsharesLenta =
