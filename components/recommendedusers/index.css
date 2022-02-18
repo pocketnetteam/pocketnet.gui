@@ -55,7 +55,7 @@
 }
 #recommendedusers .users {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   padding-bottom: 0.5em;
   padding-left: 1em;
   padding-right: 1em;

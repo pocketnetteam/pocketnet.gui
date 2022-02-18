@@ -138,6 +138,8 @@ var recommendedusers = (function(){
 		var renders = {
 			page : function(addresses, clbk){
 
+				el.c.show();
+
 				el.loader.fadeOut();
 				
 				self.shell({
@@ -197,11 +199,37 @@ var recommendedusers = (function(){
 
 					self.app.platform.sdk.users.getBestUsers(function(c, error){
 
-						addresses = c;
+						if (!c.length){
+
+							self.app.platform.sdk.users.getRecommendedAccountsByTags(function(c, error){
+
+								if (!error && c.length){
+
+									el.c.show();
+
+									addresses = c;
 	
-						if (clbk){
-							clbk(shuffle(addresses).slice(0, 3))
+									if (clbk){
+										clbk(shuffle(addresses).slice(0, 3))
+									}
+
+								}
+
+							})
+
+						} else {
+
+							el.c.show();
+
+							addresses = c;
+
+							if (clbk){
+								clbk(shuffle(addresses).slice(0, 3))
+							}
+
 						}
+						
+
 					})
 
 				}
