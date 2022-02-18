@@ -785,11 +785,13 @@ html.mobileview .wnd.postwindow .widthcontainer {
   html.mobileview .wnd.postwindow .widthcontainer {
     width: 100%;
   }
+  html.mobileview .wnd.postwindow.normalizedmobile {
+    /*#post .postWrapper{
+					padding-top : @rhythm;
+				}*/
+  }
   html.mobileview .wnd.postwindow.normalizedmobile .wndcontent {
     background: rgb(var(--background-total-theme));
-  }
-  html.mobileview .wnd.postwindow.normalizedmobile #post .postWrapper {
-    padding-top: 0.5em;
   }
   html.mobileview .wnd.postwindow.normalizedmobile #post {
     border-top: 0;
