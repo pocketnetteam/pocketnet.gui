@@ -690,7 +690,9 @@
 
 				parallax = new SwipeParallaxNew({
 
-					el : wnd.find(p.parallaxselector || '.wndback,.wndheader,.wndinner'),
+					///,.wndinner
+
+					el : wnd.find(p.parallaxselector || '.wndback,.wndheader'),
 					transformel : wnd.find('.wndinner'),
 					allowPageScroll : 'vertical',
 					directions : {
