@@ -113,7 +113,17 @@ Application = function(p)
 		//////////////
 
 		peertubeServer : null,
-		peertubeUseIp : () => { return true; },
+		peertubeUseIp : () => {
+			var allowedUsers = [
+				'PEJGSc5NuDUQz7LppQDJ19V6vJuxgzJZvN',
+				'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM',
+				'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m',
+				'TX6GF3cEKed1WDGztiYbv7QjUZE34DYRW2'
+			];
+			if (allowedUsers.indexOf(self.user.address.value) != -1)
+				return true;
+			return false;
+		},
 
 		//////////////
 
