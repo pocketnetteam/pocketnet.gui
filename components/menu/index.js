@@ -187,11 +187,20 @@ var menu = (function(){
 							if (parameters().r == k) k = 'index'
 
 							if (k != 'index') {
+
 								if (k == 'video'){
 									k = 'index?video=1'
 								}
 								else{
-									k = 'index?r=' + k
+
+									if (k == 'read'){
+										k = 'index?read=1'
+									}
+									else{
+										k = 'index?r=' + k
+									}
+
+								
 								}
 								
 							}

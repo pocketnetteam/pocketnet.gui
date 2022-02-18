@@ -102,9 +102,7 @@ nModule = function(){
 
 			if(p.el)
 			{
-
 				self.nav.api.links(null, p.el, p.additionalActions || null);
-
 				bgImages(p.el, p.bgImages)
 				
 			}

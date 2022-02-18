@@ -37,7 +37,8 @@ var leftpanel = (function(){
 
 				var backlink = 'index'
 
-				if(parameters().video) backlink = 'index?video=1'
+				if (parameters().video) backlink = 'index?video=1'
+				if (parameters().read) backlink = 'index?read=1'
 
 				self.shell({
 					name :  'currentsearch',

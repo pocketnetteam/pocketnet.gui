@@ -2602,7 +2602,7 @@ var lenta = (function(){
 
 					if (video) return
 
-					renders.images(p.el, share, function(){})
+					renders.images(p.el.find('.postcontent'), share, function(){})
 					
 					if (share.itisarticle()){
 						renders.articlespart(p.el.find('.sharearticle'), share)
@@ -2883,7 +2883,7 @@ var lenta = (function(){
 					},
 					animation : false,
 					delayRender : isotopeinited,
-					display : 'flex'
+					//display : 'flex'
 
 				}, function(_p){
 
@@ -2988,7 +2988,7 @@ var lenta = (function(){
 
 				if (video) { return }
 
-				var sel =  el
+				var sel = el
 
 				var _el = sel.find(".shareImages .image");
 
@@ -3004,6 +3004,8 @@ var lenta = (function(){
 				}
 
 				window.requestAnimationFrame(function(){
+
+					var ch = 0
 
 					_el.imagesLoadedPN({ imageAttr: true }, function(image) {
 
@@ -3025,7 +3027,9 @@ var lenta = (function(){
 
 									if(aspectRatio > 1.66) aspectRatio = 1.66
 
-									sel.find('.imagesWrapper').height(Math.min(400, isMobile() ? self.app.width : images.width() ) * aspectRatio)
+									ch = Math.min(400, isMobile() ? self.app.width : images.width() ) * aspectRatio
+
+									sel.find('.imagesWrapper').height(ch)
 								}
 								
 							}
@@ -3100,12 +3104,11 @@ var lenta = (function(){
 
 							var gutter = self.app.width <= 768 ? 0 : 5;
 
-
 							if (isMobile() || essenseData.openapi) {
 
 								if(carousels[s.txid]) carousels[s.txid].owlCarousel('destroy')
 
-								carousels[s.txid] = sel.find('.imagesContainer').owlCarousel({
+								carousels[s.txid] = sel.find('.imagesContainer').height(ch + 50).owlCarousel({
 									items: 1,
 									dots: true,
 									nav: !isMobile(),
@@ -3206,7 +3209,7 @@ var lenta = (function(){
 
 				var rndr = function(){
 
-					self.app.platform.sdk.videos.paddingplaceholder(url, function (next) {
+					self.app.platform.sdk.videos.paddingplaceholder(isMobile() || essenseData.horizontal ? null : url, function (next) {
 
 						self.shell({
 							animation : false,
@@ -3731,6 +3734,11 @@ var lenta = (function(){
 
 							var page = essenseData.page || parameters().page || 0
 
+							var type = null
+
+							if(video || essenseData.videomobile){ type = 'video'}
+							if(essenseData.read){ type = 'article'}
+
 							self.app.platform.sdk.node.shares[loader]({
 
 								author : author,
@@ -3738,7 +3746,9 @@ var lenta = (function(){
 								txids : essenseData.txids,
 								height : fixedblock,
 								tagsfilter : tagsfilter,
-								video : video || essenseData.videomobile,
+
+								type : type,
+
 								count : video ? 20 : 10,
 								page : page,
 								period : essenseData.period,

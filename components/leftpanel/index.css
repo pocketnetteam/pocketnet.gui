@@ -233,10 +233,6 @@
   #leftpanel {
     padding: 0;
     color: rgb(var(--text-color));
-    /*.innerc{
-			padding-left: 2 * @rhythm;
-			padding-right: 2 * @rhythm;
-		}*/
   }
   #leftpanel .wrpmobclass > div {
     padding: 1em;

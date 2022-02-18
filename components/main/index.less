@@ -20,19 +20,21 @@
 	
 			.panelItemsWrapper{
 				display: flex;
-				justify-content: space-between;
 				align-items: center;
 			}
 	
 			.panelitem{
-				width: 120px;
+				flex-grow: 2;
 				font-size: 0.8em;
-				line-height: 45px;
-				float: left;
+				line-height: 77px;
 				color : rgb(var(--neutral-grad-3));
+
+				.vc_value{
+					line-height: 44px;
+				}
 	
 				&.icon{
-					width: 44px;
+					min-width: 44px;
 					text-align: center;
 				}
 	
@@ -63,10 +65,10 @@
 	
 		.vc_valuecustom{
 			width: 100%;
-			height: 55px;
+			height: 77px;
 	
 			.vc_inputWrapper{
-				padding-left: 2 * @rhythm;
+				padding-left: @rhythm;
 			}
 	
 			.vc_iconWrapper{
@@ -89,10 +91,12 @@
 						.transition(0.3s);
 						border-top-left-radius: 0px;
 						border-bottom-left-radius: 0px;
-						height: 55px;
+						height: 77px;
 						font-weight: 700;
-						font-size: 1.2em;
+						font-size: 2.5em;
 						padding-left: @rhythm;
+						padding-top : 0;
+						padding-bottom: 0;
 	
 						&[disabled="disabled"]{
 							opacity: 1;
@@ -648,13 +652,7 @@ html.mobileview{
 	#main{
 		.opensvi{
 	
-			/*.leftpanelsvicell{
-				display: block;
-			}
-	
-			.upbackbuttonwrapper{
-				display: none;
-			}*/
+			
 		}
 	}
 }
@@ -692,9 +690,13 @@ html.mobileview{
 	
 	#main{
 
+		
+
 		.menuwrapper{
+			background: rgb(var(--background-total-theme));
 			display: block;
 		}
+		
 
 		.topvideosWrapper{
 			border-radius: 0px;
@@ -705,6 +707,7 @@ html.mobileview{
 		}
 
 		.leftpanelcell{
+			font-size: 1.1em;
 			float: none;
 			width: 100%;
 			position: fixed;

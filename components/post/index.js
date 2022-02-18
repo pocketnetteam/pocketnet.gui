@@ -309,14 +309,13 @@ var post = (function () {
 
 				if (ed.removemargin) return
 
+				if (share.itisarticle()) return
 
 				var h = $(window).height();
 
 				var wh = el.wr.height();
 
 				var d = Math.max(Math.min((h - wh) / 2, h / 6), 20)
-
-				console.log('positionpositionposition')
 
 				if (d > 0) {
 					el.wr.css('padding-top', d + 'px')

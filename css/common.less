@@ -1507,6 +1507,14 @@
         padding-bottom : 0;
         border-radius: 0;
 
+        .showMore{
+          
+            button{
+                font-size: 1.2em;
+            }
+    
+        }
+
         .iconWrapper{
             width: 8 * @rhythm;
             padding-top: @rhythm;
@@ -1760,6 +1768,12 @@
             }
 
             .imagesContainer{
+
+                &.owlcar{
+                    max-width: none;
+                    contain: strict;
+                }
+
                 &.one{
                     .imagesWrapper{
                         width: 100%;

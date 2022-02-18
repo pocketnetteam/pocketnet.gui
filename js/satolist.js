@@ -16257,7 +16257,7 @@ Platform = function (app, listofnodes) {
                     p.count 10
                     p.lang lang
                     p.tagsfilter tagsfilter
-                    p.video
+                    p.type
 
                     */
 
@@ -16276,7 +16276,7 @@ Platform = function (app, listofnodes) {
                             p.address = self.sdk.address.pnet().address;
                         }
 
-                        var key = p.count + (p.address || "") + "_" + (p.lang || "") + "_" + /*(p.height || "")  +*/ "_" + (p.tagsfilter.join(',')) + "_" + (p.begin || "") + (p.video ? "video" : '')
+                        var key = p.count + (p.address || "") + "_" + (p.lang || "") + "_" + /*(p.height || "")  +*/ "_" + (p.tagsfilter.join(',')) + "_" + (p.begin || "") + (p.type ? p.type : '')
 
                         if(p.author) key = key + p.author
 
@@ -16337,13 +16337,11 @@ Platform = function (app, listofnodes) {
 
                             /////temp
 
-                            if (p.video && !self.videoenabled){
-                                p.tagsfilter = ['video']
-                            }
+                            
 
                             ////
 
-                            var parameters = [Number(p.height), p.txid, p.count, p.lang, p.tagsfilter, p.video && self.videoenabled ? 'video' : '', '', '', p.tagsexcluded];
+                            var parameters = [Number(p.height), p.txid, p.count, p.lang, p.tagsfilter, p.type ? p.type : '', '', '', p.tagsexcluded];
 
                             if(p.author) parameters.unshift(p.author)
 
@@ -21183,6 +21181,12 @@ Platform = function (app, listofnodes) {
             },
 
             paddingplaceholder : function(url, middle, clbk, elf){
+
+                if(!url){
+                    middle(clbk)
+                    return
+                }
+
                 return self.sdk.videos.info([url]).catch((e)=>{
                     return Promise.resolve()
                 }).then(() => {

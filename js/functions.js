@@ -7124,13 +7124,13 @@
 						__el[0].style['transform-origin'] = 'center ' + pb
 					}
 
-					if(!isios()){	
+					//if(!isios()){	
 						__el[0].style["-moz-transition"] = transitionstr
 						__el[0].style["-o-transition"] = transitionstr
 						__el[0].style["-webkit-transition"] = transitionstr
 						__el[0].style["transition"] = transitionstr
 						__el[0].style["pointer-events"] = 'none'
-					}
+					//}
 		
 					ticking = false;
 				})
@@ -7159,13 +7159,13 @@
 					__el.css({"transform": ""});
 					__el.css({"transform-origin": ""});
 
-					if(!isios()){
+					//if(!isios()){
 						__el.css({"-moz-transition": ""});
 						__el.css({"-o-transition": ""});
 						__el.css({"-webkit-transition": ""});
 						__el.css({"transition": ""});
 						__el.css({"pointer-events": ""});
-					}
+					//}
 
 					_.each(p.directions, function(d){
 						applyDirection(d, 0)
@@ -7250,7 +7250,7 @@
 			
 			p.el.swipe({
 				allowPageScroll : p.allowPageScroll,
-				swipeStatus : statusf// isios() ? statusf : _.throttle(statusf, throttle),
+				swipeStatus : _.throttle(statusf, throttle),
 			})
 
 			return self

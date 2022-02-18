@@ -18,6 +18,7 @@
 }
 #navigation .nmenu {
   background: rgb(var(--background-total-theme));
+  border-top: 1px solid rgb(var(--background-secondary-theme));
   height: 100%;
   position: absolute;
   left: 0;

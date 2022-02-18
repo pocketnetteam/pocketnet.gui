@@ -1171,6 +1171,9 @@
             }
         }*/
   }
+  .share_common .showMore button {
+    font-size: 1.2em;
+  }
   .share_common .iconWrapper {
     width: 4em;
     padding-top: 0.5em;
@@ -1334,6 +1337,10 @@
   }
   .share_common .images .imagesWrapper .image {
     border-radius: 0;
+  }
+  .share_common .images .imagesContainer.owlcar {
+    max-width: none;
+    contain: strict;
   }
   .share_common .images .imagesContainer.one .imagesWrapper {
     width: 100%;
