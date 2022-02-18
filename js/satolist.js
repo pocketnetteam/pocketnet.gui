@@ -13196,11 +13196,11 @@ Platform = function (app, listofnodes) {
                     },
                     {
                         "id": "c3",
-                        "icon": "fas fa-landmark"
+                        "icon": "fas fa-award"
                     },
                     {
                         "id": "c4",
-                        "icon": "fab fa-bitcoin"
+                        "icon": "fab fa-btc"
                     },
                     {
                         "id": "c5",
@@ -16022,15 +16022,15 @@ Platform = function (app, listofnodes) {
 
                             //parameters = ['30', '259200', '', self.app.localization.key];
 
-                            if(p.video){
-                                parameters.push('video')
+                            if (p.type){
+                                parameters.push(p.type)
                             }
 
                             self.sdk.node.shares.get(parameters, function (shares, error) {
 
                                 if (shares) {
 
-                                    self.sdk.node.shares.loadvideoinfoifneed(shares, p.video, function(){
+                                    self.sdk.node.shares.loadvideoinfoifneed(shares, p.type == 'video', function(){
 
                                         if (state) {
                                             _.each(self.sdk.relayTransactions.withtemp('blocking'), function (block) {
@@ -16042,7 +16042,7 @@ Platform = function (app, listofnodes) {
 
 
 
-                                        if(p.video){
+                                        if(p.type == 'video'){
                                             shares = _.filter(shares, function(share){
 
                                                 if(!share.url) return

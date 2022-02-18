@@ -396,18 +396,6 @@ var main = (function(){
 						},
 	
 						opensvi : null,
-						
-						/*? null : function(id, share){
-
-							self.nav.api.load({
-								open : true,
-								href : 'index?video=1&v=' + id,
-								history : true,
-								handler : true
-							})
-							
-						},*/
-
 						compact : true
 	
 					})
@@ -490,7 +478,6 @@ var main = (function(){
 
 			lentawithsearch : function(clbk, p){
 
-				
 				if(searchvalue){
 
 					var value = searchvalue.replace('tag:', "#");

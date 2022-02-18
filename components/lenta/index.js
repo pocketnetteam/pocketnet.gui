@@ -3197,17 +3197,20 @@ var lenta = (function(){
 
 			url : function(el, url, share, clbk){
 
-				if(essenseData.nourlload){
+				if (essenseData.nourlload){
+
 					if (clbk)
 						clbk()
+
 					return
 				}
 
-				var og = self.app.platform.sdk.remote.storage[url];				
-
-				var meta = self.app.platform.parseUrl(url);
+				var og = self.app.platform.sdk.remote.storage[url];	
+				var meta = self.app.platform.parseUrl(url);			
 
 				var rndr = function(){
+
+					console.log("RENDER URLs", el, url, share)
 
 					self.app.platform.sdk.videos.paddingplaceholder(isMobile() || essenseData.horizontal ? null : url, function (next) {
 
@@ -3260,7 +3263,7 @@ var lenta = (function(){
 					})
 				}
 
-				rndr()
+				meta.type === 'peertube' ? self.app.platform.sdk.videos.info([url]).then(rndr) : rndr()
 
 			
 			},

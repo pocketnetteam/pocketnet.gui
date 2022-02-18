@@ -66,7 +66,7 @@
   display: table-cell;
 }
 #categories .tcaptionwrapper {
-  padding-top: 1em;
+  padding-top: 2em;
   margin-bottom: 0.5em;
 }
 #categories .tcaptionwrapper span {
@@ -89,8 +89,10 @@
   text-overflow: ellipsis;
 }
 #categories .cat .cattable > div.catvalue i {
-  width: 30px;
+  width: 20px;
   text-align: center;
+  margin-right: 10px;
+  font-size: 0.8em;
 }
 #categories .cat .cattable > div.catvalue i.fa-star {
   color: rgb(var(--color-star-yellow));

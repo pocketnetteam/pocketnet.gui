@@ -30,7 +30,7 @@
 #leftpanel .menu .menupanel .tabs .tab .pcenterLabel.active:after {
   position: absolute;
   content: '';
-  left: -1em;
+  left: 0;
   top: 0;
   bottom: 0;
   width: 3px;
@@ -42,7 +42,7 @@
   font-weight: 500;
 }
 #leftpanel .menu .menupanel .tabs .tab .pcenterLabel i {
-  width: 30px;
+  width: 55px;
   text-align: center;
 }
 #leftpanel .menu .menupanel .tabs .tab .pcenterLabel .lentaunseen {
@@ -55,6 +55,7 @@
   border-radius: 10px;
   background: rgb(var(--color-txt-gray-dark));
   color: rgb(var(--text-on-bg-ac-color));
+  margin-left: 1em;
 }
 #leftpanel .menu .menupanel .tabs .tab .pcenterLabel .lentaunseen.hasunseen {
   display: inline-block;
@@ -87,7 +88,7 @@
 }
 #leftpanel .best .fire i {
   text-align: center;
-  width: 30px;
+  width: 44px;
 }
 #leftpanel .best .toggle {
   margin-right: 0.25em;
