@@ -2078,3 +2078,5 @@ ____loclib.max5acc = "You have reached a maximum of 5 accounts. No more can be a
 
 
 ____loclib.longreads = "Long Reads"
+
+____loclib.filters = "Filters"

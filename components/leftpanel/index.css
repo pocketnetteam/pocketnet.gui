@@ -236,8 +236,20 @@
     color: rgb(var(--text-color));
   }
   #leftpanel .wrpmobclass > div {
-    padding: 1em;
+    padding: 0 1em;
     margin-bottom: 1em;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+    background: rgb(var(--background-secondary-theme));
+    border-radius: 12px;
+  }
+  #leftpanel .wrpmobclass > div.best {
+    padding: 1em;
+    padding-left: 0;
+    background: transparent;
+  }
+  #leftpanel .wrpmobclass > div.rightbottomlinks {
+    background: transparent;
   }
   #leftpanel .best {
     border-top: 0;

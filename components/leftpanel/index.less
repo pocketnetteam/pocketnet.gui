@@ -329,8 +329,22 @@
 		color : rgb(var(--text-color));
 
 		.wrpmobclass>div{
-			padding : 2 * @rhythm;
+			padding : 0 2 * @rhythm;
 			margin-bottom: 2 * @rhythm;
+			margin-left: @rhythm;
+			margin-right: @rhythm;
+			background: rgb(var(--background-secondary-theme));
+			border-radius: 12px;
+
+			&.best{
+				padding : 2 * @rhythm;
+				padding-left: 0;
+				background: transparent;
+			}
+
+			&.rightbottomlinks{
+				background: transparent;
+			}
 		}
 
 		.best{
