@@ -7603,7 +7603,15 @@ Platform = function (app, listofnodes) {
                     color : "#1e2235",
                     media : '(prefers-color-scheme: dark)',
                     rootid : 'black'
-                }
+                },
+
+                gray: {
+                    name: self.app.localization.e('gray'),
+                    class: "stgray",
+                    color : "#1e1d1a",
+                    media : '(prefers-color-scheme: dark)',
+                    rootid : 'gray'
+                },
             },
             default: "white",
             current: null,

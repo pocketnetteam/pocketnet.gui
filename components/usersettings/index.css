@@ -222,6 +222,9 @@
 #usersettings .theme .pInput > div[theme="black"] .themeicon {
   background: #141523;
 }
+#usersettings .theme .pInput > div[theme="gray"] .themeicon {
+  background: #1e1d1a;
+}
 #usersettings .uiscale .pInput {
   display: flex;
 }

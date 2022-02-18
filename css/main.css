@@ -74,9 +74,44 @@
   --color-shadow-var: 18, 18, 26;
   --text-on-bg-shadow-color: 214, 219, 230;
   --color-bad: 244, 26, 77;
-  --color-nrml: 0, 0, 0;
+  --color-nrml: 180, 180, 180;
   --color-good: 7, 108, 52;
   --color-yellow: 255, 238, 0;
+}
+:root[theme='gray'] {
+  --background-hidden-layer: 12, 12, 12;
+  --background-total-theme: 20, 20, 20;
+  --background-secondary-theme: 36, 36, 36;
+  --background-main: 28, 28, 28;
+  --background-main-contrast: 242, 242, 242;
+  --color-medium-theme: 104, 104, 104;
+  --neutral-grad-0: 16,16,16;
+  --neutral-grad-1: 37,37,37;
+  --neutral-grad-2: 88,88,88;
+  --neutral-grad-3: 95,95,95;
+  --neutral-grad-4: 105,105,105;
+  --text-color: 190, 190, 190;
+  --text-on-main-bg-color: 130,130,130;
+  --text-on-bg-ac-color: 255, 255, 255;
+  --color-bg-ac-bright: 55, 120, 160;
+  --color-bg-ac: 50, 110, 150;
+  --color-bg-ac-1: 0, 142, 191;
+  --color-bg-ac-2: 255, 216, 0;
+  --color-bg-selection: 255, 216, 0;
+  --color-txt-ac: 50, 110, 150;
+  --color-txt-ac-1: 0, 142, 191;
+  --color-txt-ac-2: 255, 216, 0;
+  --color-txt-gray: 110, 110, 110;
+  --color-txt-gray-dark: 120, 120, 120;
+  --color-bg-orange: 255, 72, 0;
+  --text-txt-orange: 255, 72, 0;
+  --color-shadow-base: 22, 22, 22;
+  --color-shadow-var: 25, 25, 25;
+  --text-on-bg-shadow-color: 214, 214, 214;
+  --color-bad: 210, 0, 20;
+  --color-nrml: 180, 180, 0180;
+  --color-good: 0, 140, 40;
+  --color-yellow: 250, 230, 10;
 }
 .disable-hover,
 .disable-hover * {

@@ -1053,7 +1053,7 @@ var menu = (function(){
 					data.loc = loc;
 					data._SEO = _SEO;
 					data.lkey = app.localization.current()
-					data.theme = self.app.platform.sdk.theme.current
+					data.theme = self.app.platform.sdk.theme.current == "white" ? 'white' : 'black'
 
 
 					var userinfo = deep(app, 'platform.sdk.user.storage.me')
