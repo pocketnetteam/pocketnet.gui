@@ -211,3 +211,39 @@
 #tagcloud .hidealltags {
   display: none;
 }
+@media only screen and (max-width: 768px) {
+  #tagcloud .tcaptionwrapper {
+    border-top: 0;
+  }
+  #tagcloud .tcaptiontable > div.mlab span {
+    font-size: 1em;
+  }
+  #tagcloud .tag {
+    font-size: 1em;
+  }
+  #tagcloud .tag > div.tagvalue {
+    padding-top: 4px;
+    margin: 4px 4px 0 0;
+  }
+  #tagcloud .tag > div.tagvalue span,
+  #tagcloud .tag > div.tagvalue i {
+    font-size: 1em;
+  }
+  #tagcloud .tag > div.iconWrapper i {
+    font-size: 0.8em;
+  }
+  #tagcloud .tag > div.tagsearch i,
+  #tagcloud .tag > div.tagcheck i {
+    font-size: 1em;
+  }
+  #tagcloud .hidealltags,
+  #tagcloud .showalltags {
+    border-bottom: 0;
+  }
+  #tagcloud .hidealltags span,
+  #tagcloud .showalltags span,
+  #tagcloud .hidealltags i,
+  #tagcloud .showalltags i {
+    font-size: 1em;
+  }
+}

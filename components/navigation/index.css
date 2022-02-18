@@ -123,13 +123,6 @@
 #navigation.curationmode .nmenu .item .label {
   display: none!important;
 }
-/*t*/
-@media only screen and (max-width: 768px) {
-  #navigation {
-    display: block;
-  }
-}
-html.tablet #navigation,
-html.mobile #navigation {
+html.mobileview #navigation {
   display: block;
 }

@@ -206,9 +206,13 @@
 		justify-content: space-between;
 
 		.section{
-
+			
 			height: 100%;
 			padding: 0 2 * @rhythm;
+			display: flex;
+			flex-wrap: nowrap;
+			justify-content: space-between;
+			align-items: center;
 
 			&.right{
 				padding-right: 0;
@@ -221,6 +225,7 @@
 
 			&.leftpart{
 				padding-left: 0;
+				min-width: 200px;
 			}
 
 		}
@@ -230,7 +235,6 @@
 		}
 
 		.items{
-			float: left;
 			height: 100%;
 
 			.table{
@@ -294,6 +298,7 @@
 			.item{
 				width: auto;
 				height: 100%;
+				white-space: nowrap;
 
 				.icon{
 					padding: 0;
@@ -864,6 +869,10 @@
 				padding: 0;
 				width: auto;
 
+				&.leftpart{
+					min-width: 0;
+				}
+
 				&.right{
 					padding-right: 0;
 				}
@@ -1019,12 +1028,12 @@
 	}
 
 	#menu{
+
+		/*.postssearch{
+			font-size: 1.2em;
+		}*/
+
 		&.searchactive{
-
-			.postssearch{
-				font-size: 1.2em;
-
-			}
 
 			.sections{
 				padding : 0;
@@ -1064,7 +1073,7 @@
 						padding-right: 0;
 
 						.postssearchwrapper{
-							padding : 1.5 * @rhythm @rhythm;
+							padding : 1.5 * @rhythm 1.5 * @rhythm;
 						}
 					}
 				}
@@ -1104,9 +1113,13 @@
 				font-weight: 700;
 			}
 
-			.sections .items.searchWrapper{
-				padding-right: 0;
+			.sitenames{
+				overflow: hidden;
+				width: 24px!important;
 			}
+
+			
+
 		}
 	} 
 

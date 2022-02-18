@@ -371,131 +371,101 @@
 .wnd.wnduserpage #userpage.reportshowed .backtabletmenu {
   display: block;
 }
-/*t*/
-@media only screen and (max-width: 768px) {
-  #userpage .preloaderWrapper {
-    padding: 2em;
-    text-align: center;
-  }
-  #userpage .profile {
-    display: none;
-  }
-  #userpage .activitiesWrapper {
-    margin-top: 1em;
-  }
-  #userpage .activitiesWrapper .usermenu {
-    display: none;
-  }
-  #userpage .activitiesWrapper .usercnt {
-    padding-left: 0;
-    margin-left: 0;
-  }
-  #userpage .bgCaption {
-    display: none;
-  }
-  #userpage > div.work {
-    padding: 0;
-  }
-  #userpage .maketsWrapper {
-    overflow: inherit;
-  }
-  #userpage .maketsWrapper .maket.left {
-    width: 100%;
-    float: none;
-    padding: 0 1em;
-  }
-  #userpage .maketsWrapper .maket .contents {
-    padding-top: 0;
-  }
-  #userpage .maketsWrapper .report #test {
-    padding-top: 1em;
-    padding-bottom: 3em;
-  }
-  #userpage .maketsWrapper .report #test .work {
-    padding: 0;
-  }
-  #userpage .maketsWrapper .report #test .userPanel {
-    padding: 0;
-  }
-  #userpage .maketsWrapper .report #test .caption {
-    padding-left: 0;
-    padding-bottom: 1em;
-  }
-  #userpage .maketsWrapper .report #accounts {
-    padding-top: 1em;
-  }
-  #userpage .maketsWrapper .report #accounts .subcaption {
-    font-size: 2em;
-  }
-  #userpage .maketsWrapper .report #notifications {
-    padding-top: 0.5em;
-  }
-  #userpage .maketsWrapper .report #wallet .mobiledevice .caption {
-    display: none!important;
-  }
-  html.tablet #userpage {
-    padding-top: 55px;
-  }
+html.mobileview #userpage.reportshowed .contents {
+  display: none;
 }
-@media only screen and (max-width: 640px) {
-  #userpage {
-    min-height: 0;
-  }
-  #userpage .maketsWrapper {
-    overflow: inherit;
-  }
-  #userpage .maketsWrapper .contents {
-    padding-top: 0;
-  }
-  #userpage .maketsWrapper .contents .contentsInner {
-    padding-bottom: 3em;
-  }
-  #userpage .maketsWrapper .contents .contentmenu {
-    padding-top: 2em;
-  }
-  #userpage .maketsWrapper .contents .reportCaption {
-    padding-bottom: 0.5em;
-  }
-  #userpage .maketsWrapper .contents .reportCaption[rid="followers"] {
-    margin-top: 0.5em;
-    padding-top: 1em;
-    border-top: 1px solid rgb(var(--color-medium-theme));
-  }
-  #userpage .maketsWrapper .contents .reportCaption[rid="following"] {
-    margin-bottom: 0.5em;
-    padding-bottom: 1em;
-    border-bottom: 1px solid rgb(var(--color-medium-theme));
-  }
-  #userpage .maketsWrapper .contents .reportCaption[rid="registration"] {
-    margin-top: 0.5em;
-    color: rgb(var(--color-txt-orange));
-  }
-  #userpage .maketsWrapper .contents .reportCaption[rid="authorization"] {
-    margin-bottom: 2em;
-  }
-  #userpage .maketsWrapper .maket.right {
-    padding-left: 0;
-    margin-left: 0;
-    border: 0;
-  }
-  #userpage .maketsWrapper .report #test .work {
-    padding: 0 0.5em;
-  }
-  #userpage .maketsWrapper .report #wallet .mobiledevice .caption {
-    display: inherit!important;
-  }
-  #userpage .maketsWrapper .report #notifications {
-    padding: 1em 0;
-    background: rgb(var(--background-secondary-theme));
-  }
-  html:not(.tablet) #userpage.reportshowed .contents {
-    display: none!important;
-  }
+html.mobileview #userpage .preloaderWrapper {
+  padding: 2em;
+  text-align: center;
 }
-html.tablet #userpage .maketsWrapper .maket.right {
-  margin-left: 150px;
+html.mobileview #userpage .profile {
+  display: none;
 }
-html.tablet #userpage .maketsWrapper .maket.left {
-  width: 150px;
-  float: left;
+html.mobileview #userpage .activitiesWrapper {
+  margin-top: 1em;
+}
+html.mobileview #userpage .activitiesWrapper .usermenu {
+  display: none;
+}
+html.mobileview #userpage .activitiesWrapper .usercnt {
+  padding-left: 0;
+  margin-left: 0;
+}
+html.mobileview #userpage .bgCaption {
+  display: none;
+}
+html.mobileview #userpage > div.work {
+  padding: 0;
+}
+html.mobileview #userpage .maketsWrapper {
+  overflow: inherit;
+}
+html.mobileview #userpage .maketsWrapper .maket.left {
+  width: 100%;
+  float: none;
+  padding: 0 1em;
+}
+html.mobileview #userpage .maketsWrapper .maket.right {
+  padding-left: 0;
+  margin-left: 0;
+  border: 0;
+}
+html.mobileview #userpage .maketsWrapper .maket .contents {
+  padding-top: 0;
+}
+html.mobileview #userpage .maketsWrapper .report #test {
+  padding-top: 1em;
+  padding-bottom: 3em;
+}
+html.mobileview #userpage .maketsWrapper .report #test .work {
+  padding: 0;
+}
+html.mobileview #userpage .maketsWrapper .report #test .userPanel {
+  padding: 0;
+}
+html.mobileview #userpage .maketsWrapper .report #test .caption {
+  padding-left: 0;
+  padding-bottom: 1em;
+}
+html.mobileview #userpage .maketsWrapper .report #accounts {
+  padding-top: 1em;
+}
+html.mobileview #userpage .maketsWrapper .report #accounts .subcaption {
+  font-size: 2em;
+}
+html.mobileview #userpage .maketsWrapper .report #notifications {
+  padding: 1em 0;
+  background: rgb(var(--background-secondary-theme));
+}
+html.mobileview #userpage .maketsWrapper .report #wallet .mobiledevice .caption {
+  display: none!important;
+}
+html.mobileview #userpage .maketsWrapper .contents {
+  padding-top: 0;
+}
+html.mobileview #userpage .maketsWrapper .contents .contentsInner {
+  padding-bottom: 3em;
+}
+html.mobileview #userpage .maketsWrapper .contents .contentmenu {
+  padding-top: 2em;
+}
+html.mobileview #userpage .maketsWrapper .contents .reportCaption {
+  padding-bottom: 0.5em;
+}
+html.mobileview #userpage .maketsWrapper .contents .reportCaption[rid="followers"] {
+  margin-top: 0.5em;
+  padding-top: 1em;
+  border-top: 1px solid rgb(var(--color-medium-theme));
+}
+html.mobileview #userpage .maketsWrapper .contents .reportCaption[rid="following"] {
+  margin-bottom: 0.5em;
+  padding-bottom: 1em;
+  border-bottom: 1px solid rgb(var(--color-medium-theme));
+}
+html.mobileview #userpage .maketsWrapper .contents .reportCaption[rid="registration"] {
+  margin-top: 0.5em;
+  color: rgb(var(--color-txt-orange));
+}
+html.mobileview #userpage .maketsWrapper .contents .reportCaption[rid="authorization"] {
+  margin-bottom: 2em;
 }

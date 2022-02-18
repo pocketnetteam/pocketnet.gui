@@ -1,3 +1,7 @@
+#pkoin .content .vc_valuecustom .vc_textInput {
+  border: 0;
+  background: transparent;
+}
 #pkoin .content .top,
 #pkoin .content .fieldsWrapper,
 #pkoin .content .sendButtonWrapper {

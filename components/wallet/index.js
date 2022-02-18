@@ -2823,7 +2823,8 @@ var wallet = (function(){
 
 			wnd : {
 				//header : 'rwallet',
-				class : 'withoutButtons walletwindow normalizedmobile'
+				class : 'withoutButtons walletwindow normalizedmobile',
+				parallaxselector : '.wndback,.wndheader'
 			}
 		}
 	};

@@ -251,7 +251,7 @@ var registration = (function(){
 
 					input.on('focus', function(){
 
-						if (isTablet()) setTimeout(function(){_scrollTo(input, el.c.closest('.customscroll')), 200})
+						if (self.app.mobileview) setTimeout(function(){_scrollTo(input, el.c.closest('.customscroll')), 200})
 
 					})
 

@@ -344,11 +344,11 @@ var post = (function () {
 
 			position: function () {
 
-				if (isMobile()) return
+				if (self.app.mobileview) return
 
 				if (primary) return
 
-				if (ed.removemargin || isMobile()) return
+				if (ed.removemargin) return
 
 
 				var h = $(window).height();
@@ -1193,28 +1193,6 @@ var post = (function () {
 			},
 			share: function (clbk) {
 
-
-				var verticalVideo = false
-				var squareVideo = false
-
-				var info = {}
-				var aspectRatio = 0
-
-				if (typeof share != 'undefined') {
-					info = self.app.platform.sdk.videos.storage[share.url || "undefined"] || {}
-					aspectRatio = deep(info, 'data.aspectRatio') || 0
-				}
-
-				if (aspectRatio < 0.9 && aspectRatio != 0) {
-					verticalVideo = true
-				}
-
-				if (aspectRatio > 0.9 && aspectRatio < 1.25) {
-					squareVideo = true
-				}
-
-				
-
 				self.shell(
 					{
 						turi: 'lenta',
@@ -1231,8 +1209,6 @@ var post = (function () {
 							mestate: {},
 							repost: ed.repost,
 							fromempty: ed.fromempty,
-							verticalVideo: verticalVideo,
-							squareVideo: squareVideo,
 							preview : ed.preview
 						},
 
@@ -1381,7 +1357,6 @@ var post = (function () {
 						if (shares.length > 2){
 							showmoreby.addClass('hasshares')
 						}
-						
 					},
 
 					opensvi : function(id){
@@ -1396,9 +1371,6 @@ var post = (function () {
 								history : true
 							})
 						}
-
-						
-
 						
 					},
 
@@ -1912,7 +1884,7 @@ var post = (function () {
 
 				make()
 
-				if (ed.video && !window.cordova && !isTablet() && !isMobile())
+				if (ed.video && p.inWnd && !self.app.mobileview)
 					self.app.el.menu.find('#menu').addClass('static')
 
 				initEvents();

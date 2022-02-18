@@ -776,18 +776,15 @@
 	.commentimages{
 		max-width: 700px;
 		padding : 2 * @rhythm 0;
-		opacity: 0;
+		//opacity: 0;
 		.transition(0.3s);
 		overflow : hidden;
+		
 
-		&.active{
-			opacity: 1;
-		}
 
 		.imagesWrapper{
 			width: 140px;
 			height: 140px;
-			float: left;
 			background: rgb(var(--neutral-grad-1));
 			border-radius: 5px;
 
@@ -797,14 +794,14 @@
 				.transition(0.3s);
 				cursor: pointer;
 				border-radius: 5px;
-				&.active{
 					opacity: 1;
-				}
 			}
 
 		}
 
 		.imagesContainer{
+			display: flex;
+			gap: 0.5 *  @rhythm;
 			&.one{
 				.imagesWrapper{
 					width: 100px;
@@ -857,24 +854,6 @@
 					border-radius: 30px;
 					overflow: hidden;
 					margin-right: @rhythm;
-				}
-			}
-		}
-		.videoOpen{
-			position: relative;
-
-			.playicon{
-				background: rgba(var(--neutral-grad-4), 0.7);
-				color : var(--text-on-bg-ac-color);
-				position: absolute;
-				right : @rhythm;
-				bottom : @rhythm;
-				padding : @rhythm 2 * @rhythm;
-				padding-top: 0.3em;
-				padding-right: 0.8em;
-				border-radius: 3px;
-				i{
-					font-size: 0.8em;
 				}
 			}
 		}
@@ -972,7 +951,7 @@
 	.answer,
 	.post{
 		padding-left:  3 * @rhythm;
-		padding-right: 5 * @rhythm;
+		padding-right: 4.5 * @rhythm;
 
 		.postbody{
 			position: relative;

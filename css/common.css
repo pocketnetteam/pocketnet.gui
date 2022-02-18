@@ -26,6 +26,10 @@
 .share_common .repostWrapper {
   position: relative;
 }
+.share_common .repostWrapper .shareTable {
+  padding-top: 0;
+  padding-bottom: 0;
+}
 .share_common .wholikesTable {
   margin-bottom: 1em;
   cursor: pointer;
@@ -446,7 +450,7 @@
 .share_common .metatable {
   display: flex;
   justify-content: space-between;
-  align-items: top;
+  align-items: flex-start;
 }
 .share_common .metatable > div.metapanel {
   vertical-align: top;
@@ -793,7 +797,7 @@
   line-height: 40px;
   text-align: center;
   font-size: 1em;
-  color: rgb(var(--color-bg-ac));
+  color: rgb(var(--neutral-grad-3));
   cursor: pointer;
   border-radius: 40%;
 }
@@ -929,7 +933,7 @@
         }*/
 }
 .share_common.fullScreenVideo .video-js {
-  contain: unset;
+  max-height: 80vh;
 }
 .share_common.fullScreenVideo .shareTable {
   padding-top: 0;
@@ -1070,26 +1074,32 @@
 }
 .share_common.fullScreenVideo .work .videoWrapper {
   max-width: none;
-  background: #000;
-}
-.share_common.fullScreenVideo .work .videoWrapper.squareVideo,
-.share_common.fullScreenVideo .work .videoWrapper.verticalVideo {
-  background: #000;
-  position: relative;
-  overflow: hidden;
-}
-.share_common.fullScreenVideo .work .videoWrapper.squareVideo .js-player,
-.share_common.fullScreenVideo .work .videoWrapper.verticalVideo .js-player {
-  margin: 0 auto;
-  max-width: 450px;
-  position: static;
-}
-.share_common.fullScreenVideo .work .videoWrapper.squareVideo .video-js,
-.share_common.fullScreenVideo .work .videoWrapper.verticalVideo .video-js {
-  position: static;
-}
-.share_common.fullScreenVideo .work .videoWrapper.squareVideo .js-player {
-  max-width: 500px;
+  /*background: #000;
+            
+                &.squareVideo,
+                &.verticalVideo {
+                    background: #000;
+                    position: relative;
+                    overflow: hidden;
+
+                    .js-player{
+                        margin : 0 auto;
+                        max-width: 450px;
+                        position : static;
+                    }
+
+
+                    .video-js{
+                        position : static;
+
+                    }
+                }
+
+                &.squareVideo{
+                    .js-player{
+                        max-width: 500px;
+                    }
+                }*/
 }
 .share_common.fullScreenVideo .work .videoWrapper .videoTips {
   display: none;

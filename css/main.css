@@ -110,10 +110,9 @@ html {
   position: relative;
   overflow-x: hidden;
   overflow-y: overlay;
-}
-html.tablet,
-html.mobile {
-  scroll-behavior: smooth;
+  /*&.mobileview{
+        scroll-behavior: smooth;
+    }*/
 }
 html.nooverflow {
   overflow: hidden;
@@ -502,53 +501,28 @@ button.medium {
   padding: 0.5em 3em;
   font-size: 0.8em;
 }
-button:hover {
-  background: transparent;
-  color: rgb(var(--color-bg-ac-bright));
-}
 button.disabled {
   cursor: default;
   background: rgb(var(--neutral-grad-2));
   border-color: rgb(var(--neutral-grad-2));
   color: rgb(var(--text-on-bg-ac-color));
 }
-button.disabled:hover {
-  color: rgb(var(--text-on-bg-ac-color));
-  background: rgb(var(--neutral-grad-2));
-}
 button.shadowWhite {
   background: transparent;
   color: #fff;
   border: 1px solid #fff;
 }
-button.shadowWhite:hover {
-  background: #fff;
-  color: rgb(var(--color-bg-ac-bright));
-}
 button.black {
   background: rgb(var(--neutral-grad-4));
   border: 1px solid rgb(var(--neutral-grad-4));
-}
-button.black:hover {
-  background: rgba(var(--background-main-contrast), 0.3);
-  border: 1px solid rgba(var(--background-main-contrast), 0.3);
-  color: rgb(var(--text-on-bg-ac-color));
 }
 button.good {
   background: rgb(var(--color-good));
   border: 1px solid rgb(var(--color-good));
 }
-button.good:hover {
-  background: transparent;
-  color: rgb(var(--color-good));
-}
 button.contrast {
   background: rgb(var(--color-bg-ac-2));
   border: 1px solid rgb(var(--color-bg-ac-2));
-  color: rgb(var(--text-on-bg-ac-color));
-}
-button.contrast:hover {
-  opacity: 0.8;
   color: rgb(var(--text-on-bg-ac-color));
 }
 button.orange {
@@ -556,26 +530,19 @@ button.orange {
   border: 1px solid rgb(var(--color-bg-orange));
   color: rgb(var(--text-on-bg-ac-color));
 }
-button.orange:hover {
-  background: rgb(var(--text-on-bg-ac-color));
-  color: rgb(var(--color-txt-orange));
-}
 button.yellow {
   background: #ffa600;
   border: 1px solid #ffa600;
   color: #fff;
 }
-button.yellow:hover {
-  background: #fff;
-  color: #FF4800;
-}
 button.gray {
   background: rgb(var(--neutral-grad-3));
   border: 1px solid rgb(var(--neutral-grad-3));
 }
-button.gray:hover {
-  opacity: 0.8;
-  color: rgb(var(--text-on-bg-ac-color));
+button.bordered {
+  background: transparent;
+  border: 1px solid rgb(var(--neutral-grad-2));
+  color: rgb(var(--neutral-grad-2));
 }
 button.ghost {
   background: transparent;
@@ -583,15 +550,76 @@ button.ghost {
   color: rgb(var(--neutral-grad-3));
   text-decoration: underline;
 }
-button.ghost:hover {
-  color: rgb(var(--color-bg-ac-bright));
-}
 button.orange.ghost {
   color: rgb(var(--color-txt-orange));
 }
 button.nopadding {
   padding-left: 0;
   padding-right: 0;
+}
+@media (pointer: fine) {
+  button:hover {
+    background: transparent;
+    color: rgb(var(--color-bg-ac-bright));
+  }
+  button.disabled:hover {
+    color: rgb(var(--text-on-bg-ac-color));
+    background: rgb(var(--neutral-grad-2));
+  }
+  button.shadowWhite:hover {
+    background: #fff;
+    color: rgb(var(--color-bg-ac-bright));
+  }
+  button.black:hover {
+    background: rgba(var(--background-main-contrast), 0.3);
+    border: 1px solid rgba(var(--background-main-contrast), 0.3);
+    color: rgb(var(--text-on-bg-ac-color));
+  }
+  button.good:hover {
+    background: transparent;
+    color: rgb(var(--color-good));
+  }
+  button.contrast:hover {
+    opacity: 0.8;
+    color: rgb(var(--text-on-bg-ac-color));
+  }
+  button.orange:hover {
+    background: rgb(var(--text-on-bg-ac-color));
+    color: rgb(var(--color-txt-orange));
+  }
+  button.yellow:hover {
+    background: #fff;
+    color: #FF4800;
+  }
+  button.gray:hover {
+    opacity: 0.8;
+    color: rgb(var(--text-on-bg-ac-color));
+  }
+  button.bordered {
+    background: transparent;
+    border: 1px solid rgb(var(--neutral-grad-2));
+    color: rgb(var(--neutral-grad-2));
+  }
+  button.bordered:hover {
+    background: rgb(var(--color-bg-ac-bright));
+    color: rgb(var(--text-on-bg-ac-color));
+  }
+  button.ghost {
+    background: transparent;
+    border-color: transparent;
+    color: rgb(var(--neutral-grad-3));
+    text-decoration: underline;
+  }
+  button.ghost:hover {
+    color: rgb(var(--color-bg-ac-bright));
+  }
+  button.orange.ghost {
+    color: rgb(var(--color-txt-orange));
+  }
+  button.nopadding {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 .psselect,
 select {
@@ -837,13 +865,16 @@ pie {
 .sort:hover i {
   color: rgb(var(--color-txt-ac));
 }
+.forstars .itemwr {
+  display: flex;
+  align-items: center;
+}
 .forstars .count {
   display: flex;
   align-items: center;
-  padding-bottom: 0;
-  line-height: 40px;
 }
-.forstars .count > div {
+.forstars .count span,
+.forstars .count i {
   font-size: 0.8em;
   color: rgb(var(--neutral-grad-3));
 }
@@ -859,15 +890,15 @@ pie {
 .forstars .count .countusers {
   margin-left: 1em;
   white-space: nowrap;
-}
-.forstars .count .countusers .circle {
-  padding: 2px 12px;
-  border-radius: 12px;
+  padding: 0.375em 0.75em;
+  border-radius: 2em;
   border: 1px solid rgb(var(--neutral-grad-3));
   color: rgb(var(--neutral-grad-3));
+  display: flex;
+  align-items: center;
 }
-.forstars .count .countusers .circle .c {
-  padding-left: 3px;
+.forstars .count .countusers .c {
+  padding-left: 0.25em;
 }
 .stars {
   white-space: nowrap;
@@ -2018,6 +2049,9 @@ input[type=radio].radio:checked + label {
     transform: translateY(-10px);
   }
 }
+#windowsContainer .rightchatspacer {
+  margin-right: 0;
+}
 #windowsContainer .wnd:nth-last-child(1) .wndback {
   background: rgba(var(--color-shadow-base), 0.75);
   backdrop-filter: blur(14px);
@@ -2475,26 +2509,6 @@ input[type=radio].radio:checked + label {
   width: 100%;
   margin: 0 auto;
   padding: 0;
-  /*.up{
-            display: none;
-            position: fixed;
-            right: 2 * @rhythm;
-            bottom: 2 * @rhythm;
-            border-radius: 8px;
-            padding : 1.3 * @rhythm;
-            font-size: 0.9em;
-            border : 1px solid @color-bright;
-            color :  @color-bright;
-            .shadowSmall();
-            text-align: center;
-            background: #fff;
-            min-height: 40px;
-            z-index: 140;
-
-            .countUnread{
-                font-weight: 700;
-            }
-        }*/
 }
 .contentWrapper #content.full {
   max-width: none;
@@ -3902,9 +3916,7 @@ input[type=radio].radio:checked + label {
 .matrixchatwrapper {
   font-size: 16px;
 }
-html.cordova .matrixchatwrapper,
-html.mobile .matrixchatwrapper,
-html.tablet .matrixchatwrapper {
+html.mobileview .matrixchatwrapper {
   position: fixed;
   contain: strict style;
   left: -100%;
@@ -3926,28 +3938,20 @@ html.tablet .matrixchatwrapper {
   backface-visibility: hidden;
   will-change: transform;
 }
-html.cordova .matrixchatwrapper.active,
-html.mobile .matrixchatwrapper.active,
-html.tablet .matrixchatwrapper.active {
+html.mobileview .matrixchatwrapper.active {
   -webkit-transform: scale(1) translateX(100%);
   transform: scale(1) translateX(100%);
 }
-html.cordova[chatposition='above'] .matrixchatwrapper,
-html.mobile[chatposition='above'] .matrixchatwrapper,
-html.tablet[chatposition='above'] .matrixchatwrapper {
+html.mobileview[chatposition='above'] .matrixchatwrapper {
   z-index: 1006;
 }
-html.cordova .tooltipMobileDialog,
-html.mobile .tooltipMobileDialog,
-html.tablet .tooltipMobileDialog {
+html.mobileview .tooltipMobileDialog {
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
 }
-html.cordova .tooltipMobileDialog .mobiledialogcontent,
-html.mobile .tooltipMobileDialog .mobiledialogcontent,
-html.tablet .tooltipMobileDialog .mobiledialogcontent {
+html.mobileview .tooltipMobileDialog .mobiledialogcontent {
   -webkit-transform: translateY(100%);
   transform: translateY(100%);
   -moz-transition: 0.15s;
@@ -3955,15 +3959,11 @@ html.tablet .tooltipMobileDialog .mobiledialogcontent {
   -webkit-transition: 0.15s;
   transition: 0.15s;
 }
-html.cordova .tooltipMobileDialog.animend .mobiledialogcontent,
-html.mobile .tooltipMobileDialog.animend .mobiledialogcontent,
-html.tablet .tooltipMobileDialog.animend .mobiledialogcontent {
+html.mobileview .tooltipMobileDialog.animend .mobiledialogcontent {
   -webkit-transform: translateY(0);
   transform: translateY(0);
 }
-html.cordova .tooltipMobileDialog .thwrapper,
-html.mobile .tooltipMobileDialog .thwrapper,
-html.tablet .tooltipMobileDialog .thwrapper {
+html.mobileview .tooltipMobileDialog .thwrapper {
   padding: 0;
   max-width: 450px;
   background: transparent;
@@ -3974,53 +3974,33 @@ html.tablet .tooltipMobileDialog .thwrapper {
   padding-bottom: 1em;
   box-shadow: none;
 }
-html.cordova .tooltipMobileDialog ._close,
-html.mobile .tooltipMobileDialog ._close,
-html.tablet .tooltipMobileDialog ._close {
+html.mobileview .tooltipMobileDialog ._close {
   display: none;
 }
-html.cordova .tooltipMobileDialog .mobiledialogcontent,
-html.mobile .tooltipMobileDialog .mobiledialogcontent,
-html.tablet .tooltipMobileDialog .mobiledialogcontent {
+html.mobileview .tooltipMobileDialog .mobiledialogcontent {
   max-height: 60vh;
 }
-html.cordova .tooltipMobileDialog .secondwrapper,
-html.mobile .tooltipMobileDialog .secondwrapper,
-html.tablet .tooltipMobileDialog .secondwrapper {
+html.mobileview .tooltipMobileDialog .secondwrapper {
   vertical-align: bottom;
 }
-html.cordova .tooltipMobileDialog .buttons,
-html.mobile .tooltipMobileDialog .buttons,
-html.tablet .tooltipMobileDialog .buttons {
+html.mobileview .tooltipMobileDialog .buttons {
   display: none;
 }
-html.cordova .tooltipMobileDialog .body,
-html.mobile .tooltipMobileDialog .body,
-html.tablet .tooltipMobileDialog .body {
+html.mobileview .tooltipMobileDialog .body {
   margin: 0;
 }
-html.cordova .tooltipMobileDialog .label,
-html.mobile .tooltipMobileDialog .label,
-html.tablet .tooltipMobileDialog .label {
+html.mobileview .tooltipMobileDialog .label {
   padding-right: 30px!important;
 }
-html.cordova .tooltipMobileDialog .header,
-html.mobile .tooltipMobileDialog .header,
-html.tablet .tooltipMobileDialog .header {
+html.mobileview .tooltipMobileDialog .header {
   color: rgb(var(--neutral-grad-3));
   text-align: center;
 }
-html.cordova .tooltipMobileDialog .header .text,
-html.mobile .tooltipMobileDialog .header .text,
-html.tablet .tooltipMobileDialog .header .text {
+html.mobileview .tooltipMobileDialog .header .text {
   padding-bottom: 1em;
 }
-html.cordova .tooltipMobileDialog .closeButton,
-html.mobile .tooltipMobileDialog .closeButton,
-html.tablet .tooltipMobileDialog .closeButton,
-html.cordova .tooltipMobileDialog .menuitem,
-html.mobile .tooltipMobileDialog .menuitem,
-html.tablet .tooltipMobileDialog .menuitem {
+html.mobileview .tooltipMobileDialog .closeButton,
+html.mobileview .tooltipMobileDialog .menuitem {
   padding: 2em 1em;
   text-align: center;
   background: rgb(var(--background-total-theme));
@@ -4029,45 +4009,31 @@ html.tablet .tooltipMobileDialog .menuitem {
   margin-top: 0.25em;
   text-align: left;
 }
-html.cordova .tooltipMobileDialog .closeButton > div,
-html.mobile .tooltipMobileDialog .closeButton > div,
-html.tablet .tooltipMobileDialog .closeButton > div,
-html.cordova .tooltipMobileDialog .menuitem > div,
-html.mobile .tooltipMobileDialog .menuitem > div,
-html.tablet .tooltipMobileDialog .menuitem > div {
+html.mobileview .tooltipMobileDialog .closeButton > div,
+html.mobileview .tooltipMobileDialog .menuitem > div {
   padding: 0;
   border-bottom: 0;
 }
-html.cordova .tooltipMobileDialog .mobiledialogcontent,
-html.mobile .tooltipMobileDialog .mobiledialogcontent,
-html.tablet .tooltipMobileDialog .mobiledialogcontent {
+html.mobileview .tooltipMobileDialog .mobiledialogcontent {
   border-radius: 3px;
 }
-html.cordova .tooltipMobileDialog .closeButton,
-html.mobile .tooltipMobileDialog .closeButton,
-html.tablet .tooltipMobileDialog .closeButton {
+html.mobileview .tooltipMobileDialog .closeButton {
   margin-top: 1em;
   background: rgba(var(--neutral-grad-4), 0.1);
   color: rgb(var(--text-on-bg-ac-color));
 }
-html.cordova .tooltipMobileDialog .closeButton button,
-html.mobile .tooltipMobileDialog .closeButton button,
-html.tablet .tooltipMobileDialog .closeButton button {
+html.mobileview .tooltipMobileDialog .closeButton button {
   padding: 0;
   color: rgb(var(--text-on-bg-ac-color));
   text-decoration: none;
 }
-html.cordova.nooverflow body,
-html.mobile.nooverflow body,
-html.tablet.nooverflow body {
+html.mobileview.nooverflow body {
   overflow: hidden!important;
   touch-action: none;
   -webkit-overflow-scrolling: none;
   overscroll-behavior: none;
 }
-html.cordova.fullscreen,
-html.tablet.fullscreen,
-html.mobile.fullscreen {
+html.mobileview.fullscreen {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -4075,19 +4041,13 @@ html.mobile.fullscreen {
   -ms-user-select: none;
   user-select: none;
 }
-html.cordova.fullscreen .matrixchatwrapper,
-html.tablet.fullscreen .matrixchatwrapper,
-html.mobile.fullscreen .matrixchatwrapper {
+html.mobileview.fullscreen .matrixchatwrapper {
   display: none!important;
 }
-html.cordova.fullscreen #menuWrapper,
-html.tablet.fullscreen #menuWrapper,
-html.mobile.fullscreen #menuWrapper {
+html.mobileview.fullscreen #menuWrapper {
   display: none!important;
 }
-html.cordova.fullscreen #navigationWrapper,
-html.tablet.fullscreen #navigationWrapper,
-html.mobile.fullscreen #navigationWrapper {
+html.mobileview.fullscreen #navigationWrapper {
   display: none!important;
 }
 .windowsContainer {
@@ -4341,7 +4301,7 @@ html.mobile.fullscreen #navigationWrapper {
   color: rgb(var(--color-txt-ac));
   margin-left: auto;
   font-size: 0.8em;
-  background: rgba(var(--color-shadow-base), 0.3);
+  background: rgba(var(--background-total-theme), 0.3);
   box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
 }
 .fastMessage .messagestar,
@@ -4355,7 +4315,7 @@ html.mobile.fullscreen #navigationWrapper {
   text-align: center;
   margin-left: auto;
   font-size: 0.8em;
-  background: rgba(var(--color-shadow-base), 0.3);
+  background: rgba(var(--background-total-theme), 0.3);
   box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
 }
 .fastMessage .messagestar[count='3'],
@@ -4953,6 +4913,9 @@ html.mobile.fullscreen #navigationWrapper {
   border: 0;
   color: rgb(var(--color-good));
 }
+.video-js .vjs-control-bar {
+  contain: strict;
+}
 .trumbowyg-button-pane,
 .trumbowyg-modal {
   z-index: 0!important;
@@ -5151,6 +5114,36 @@ html.mobile.fullscreen #navigationWrapper {
   border-radius: 1px;
   background: rgb(var(--neutral-grad-3));
 }
+.standartMobileCaption {
+  display: flex;
+  height: 66px;
+  align-items: center;
+  border-bottom: 1px solid rgb(var(--neutral-grad-1));
+  background: rgb(var(--background-total-theme));
+  position: sticky;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: none;
+  z-index: 1;
+}
+.standartMobileCaption .additionalWrapper,
+.standartMobileCaption .backWrapper {
+  width: 55px;
+  text-align: center;
+}
+.standartMobileCaption .captinWrapper {
+  flex-grow: 2;
+  text-align: center;
+}
+.standartMobileCaption .captinWrapper span {
+  font-weight: 500;
+}
+@media only screen and (max-width: 768px) {
+  .standartMobileCaption {
+    display: flex;
+  }
+}
 /* ==========================================================================
    Splash screen
    ========================================================================== */
@@ -5202,77 +5195,7 @@ html.mobile.fullscreen #navigationWrapper {
   -webkit-animation: zoom-out-rotate 0.5s ease-in both;
   animation: zoom-out-rotate 0.5s ease-in both;
 }
-/*t*/
-@media only screen and (max-width: 768px) {
-  html #panelWrapper {
-    position: fixed;
-    top: 65px;
-    left: 0;
-    right: 0;
-    padding-top: 0;
-    z-index: 11;
-  }
-  html .contentWrapper {
-    padding-top: 65px;
-  }
-  html.toppanelshowed .contentWrapper {
-    padding-top: 120px;
-  }
-  html #menu .menuWrapper {
-    will-change: transform;
-    -moz-transition: transform 0.3s;
-    -o-transition: transform 0.3s;
-    -webkit-transition: transform 0.3s;
-    transition: transform 0.3s;
-    -webkit-backface-visibility: hidden;
-  }
-  html #comments .captionfwrapper {
-    will-change: transform;
-    -moz-transition: transform 0.3s;
-    -o-transition: transform 0.3s;
-    -webkit-transition: transform 0.3s;
-    transition: transform 0.3s;
-    -webkit-backface-visibility: hidden;
-  }
-  html #panelWrapper {
-    will-change: transform;
-    -moz-transition: transform 0.3s;
-    -o-transition: transform 0.3s;
-    -webkit-transition: transform 0.3s;
-    transition: transform 0.3s;
-    -webkit-backface-visibility: hidden;
-  }
-  html #navigation {
-    will-change: transform;
-    -webkit-backface-visibility: hidden;
-  }
-  html.scrollmodedown #menu .menuWrapper {
-    transform: translateY(-65px);
-  }
-  html.scrollmodedown #panelWrapper {
-    transform: translateY(-165px);
-  }
-  html.scrollmodedown #comments .captionfwrapper {
-    transform: translateY(-65px);
-  }
-  html.scrollmodedown #navigation .nmenu {
-    transform: translateY(90px);
-  }
-  html.scrollmodedown #navigation .fakem {
-    display: block;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    height: 90px;
-  }
-  html #navigation .fakem {
-    display: none;
-  }
-}
-html.mobile #panelWrapper,
-html.tablet #panelWrapper,
-html.cordova #panelWrapper {
+html.mobileview #panelWrapper {
   position: fixed;
   top: 65px;
   left: 0;
@@ -5280,19 +5203,13 @@ html.cordova #panelWrapper {
   padding-top: 0;
   z-index: 11;
 }
-html.mobile .contentWrapper,
-html.tablet .contentWrapper,
-html.cordova .contentWrapper {
+html.mobileview .contentWrapper {
   padding-top: 65px;
 }
-html.mobile.toppanelshowed .contentWrapper,
-html.tablet.toppanelshowed .contentWrapper,
-html.cordova.toppanelshowed .contentWrapper {
+html.mobileview.toppanelshowed .contentWrapper {
   padding-top: 120px;
 }
-html.mobile #menu .menuWrapper,
-html.tablet #menu .menuWrapper,
-html.cordova #menu .menuWrapper {
+html.mobileview #menu .menuWrapper {
   will-change: transform;
   -moz-transition: transform 0.3s;
   -o-transition: transform 0.3s;
@@ -5300,9 +5217,7 @@ html.cordova #menu .menuWrapper {
   transition: transform 0.3s;
   -webkit-backface-visibility: hidden;
 }
-html.mobile #panelWrapper,
-html.tablet #panelWrapper,
-html.cordova #panelWrapper {
+html.mobileview #comments .captionfwrapper {
   will-change: transform;
   -moz-transition: transform 0.3s;
   -o-transition: transform 0.3s;
@@ -5310,30 +5225,31 @@ html.cordova #panelWrapper {
   transition: transform 0.3s;
   -webkit-backface-visibility: hidden;
 }
-html.mobile #navigation,
-html.tablet #navigation,
-html.cordova #navigation {
+html.mobileview #panelWrapper {
+  will-change: transform;
+  -moz-transition: transform 0.3s;
+  -o-transition: transform 0.3s;
+  -webkit-transition: transform 0.3s;
+  transition: transform 0.3s;
+  -webkit-backface-visibility: hidden;
+}
+html.mobileview #navigation {
   will-change: transform;
   -webkit-backface-visibility: hidden;
 }
-html.mobile.scrollmodedown #menu .menuWrapper,
-html.tablet.scrollmodedown #menu .menuWrapper,
-html.cordova.scrollmodedown #menu .menuWrapper {
+html.mobileview.scrollmodedown #menu .menuWrapper {
   transform: translateY(-65px);
 }
-html.mobile.scrollmodedown #panelWrapper,
-html.tablet.scrollmodedown #panelWrapper,
-html.cordova.scrollmodedown #panelWrapper {
+html.mobileview.scrollmodedown #panelWrapper {
   transform: translateY(-165px);
 }
-html.mobile.scrollmodedown #navigation .nmenu,
-html.tablet.scrollmodedown #navigation .nmenu,
-html.cordova.scrollmodedown #navigation .nmenu {
+html.mobileview.scrollmodedown #comments .captionfwrapper {
+  transform: translateY(-65px);
+}
+html.mobileview.scrollmodedown #navigation .nmenu {
   transform: translateY(90px);
 }
-html.mobile.scrollmodedown #navigation .fakem,
-html.tablet.scrollmodedown #navigation .fakem,
-html.cordova.scrollmodedown #navigation .fakem {
+html.mobileview.scrollmodedown #navigation .fakem {
   display: block;
   position: absolute;
   left: 0;
@@ -5341,9 +5257,61 @@ html.cordova.scrollmodedown #navigation .fakem {
   right: 0;
   height: 90px;
 }
-html.mobile #navigation .fakem,
-html.tablet #navigation .fakem,
-html.cordova #navigation .fakem {
+html.mobileview #navigation .fakem {
+  display: none;
+}
+html.mobileview #panelWrapper {
+  position: fixed;
+  top: 65px;
+  left: 0;
+  right: 0;
+  padding-top: 0;
+  z-index: 11;
+}
+html.mobileview .contentWrapper {
+  padding-top: 65px;
+}
+html.mobileview.toppanelshowed .contentWrapper {
+  padding-top: 120px;
+}
+html.mobileview #menu .menuWrapper {
+  will-change: transform;
+  -moz-transition: transform 0.3s;
+  -o-transition: transform 0.3s;
+  -webkit-transition: transform 0.3s;
+  transition: transform 0.3s;
+  -webkit-backface-visibility: hidden;
+}
+html.mobileview #panelWrapper {
+  will-change: transform;
+  -moz-transition: transform 0.3s;
+  -o-transition: transform 0.3s;
+  -webkit-transition: transform 0.3s;
+  transition: transform 0.3s;
+  -webkit-backface-visibility: hidden;
+}
+html.mobileview #navigation {
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+}
+html.mobileview.scrollmodedown #menu .menuWrapper {
+  transform: translateY(-65px);
+}
+html.mobileview.scrollmodedown #panelWrapper {
+  transform: translateY(-165px);
+}
+html.mobileview.scrollmodedown #navigation .nmenu {
+  transform: translateY(90px);
+}
+html.mobileview.scrollmodedown #navigation .fakem {
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 90px;
+}
+html.mobileview #navigation .fakem {
   display: none;
 }
 /*t*/
@@ -5351,8 +5319,7 @@ html.cordova #navigation .fakem {
   #splashScreen {
     display: flex;
   }
-  html.mobile #content.optimized > div,
-  html.tablet #content.optimized > div {
+  html.mobileview #content.optimized > div {
     display: none!important;
   }
   .menudialog .secondwrapper {
@@ -5623,17 +5590,17 @@ html.cordova #navigation .fakem {
     width: 40px;
   }
 }
-.tablet #content {
-  padding-bottom: 2em;
-}
-.tablet .upbutton {
-  display: none!important;
-}
 @media only screen and (max-width: 1280px) {
   #content .work {
     width: 95%;
     margin-right: auto;
   }
+}
+html.mobileview .rightchatspacer {
+  margin-right: 0;
+}
+html.mobileview #content .work {
+  /*width: 100%;*/
 }
 @media only screen and (min-width: 35em) {
   /* Style adjustments for viewports that meet the condition */
@@ -5707,38 +5674,11 @@ html.cordova #navigation .fakem {
 }
 /*t*/
 @media only screen and (max-width: 768px) {
-  .contentWrapper #content .work {
-    width: 100%;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-  }
-}
-/*t*/
-@media only screen and (max-width: 768px) {
   button.medium {
     font-size: 1em;
   }
-  .upbutton .mini {
-    display: none;
-  }
-  .upbutton .full {
-    display: none;
-  }
   .subscribedLabel i {
     display: none;
-  }
-  .sitemessage {
-    position: fixed;
-    width: auto;
-    left: 0.5em;
-    right: 0.5em;
-    bottom: 25px;
-    padding: 2em;
-    z-index: 20100;
-    min-height: 50px;
-    border-radius: 5px;
-    text-align: center;
-    border: 1px solid rgb(var(--neutral-grad-1));
   }
   .workstation {
     display: none!important;
@@ -5819,6 +5759,13 @@ html.cordova #navigation .fakem {
   .fixedbtn .all {
     padding-top: 0.2em !important;
   }
+  .wnd {
+    /*.wndcontent{
+            top: 0;
+            padding : 0;
+            padding-top : 55px;
+        }*/
+  }
   .wnd .wndinner {
     position: absolute;
     left: 0;
@@ -5829,11 +5776,6 @@ html.cordova #navigation .fakem {
     width: 100%!important;
     height: 100%!important;
     max-height: none;
-  }
-  .wnd .wndcontent {
-    top: 0;
-    padding: 0;
-    padding-top: 55px;
   }
   .wnd.small .wndinner {
     position: absolute;
@@ -5851,131 +5793,6 @@ html.cordova #navigation .fakem {
   }
   .wnd.allscreen .wndcontent {
     overflow-y: auto;
-  }
-  .wnd.normalizedmobile .wndback {
-    backface-visibility: hidden;
-    will-change: transform;
-    backdrop-filter: none!important;
-    -webkit-backdrop-filter: none!important;
-    -moz-transition: 0.3s;
-    -o-transition: 0.3s;
-    -webkit-transition: 0.3s;
-    transition: 0.3s;
-  }
-  .wnd.normalizedmobile .hideButton {
-    display: none!important;
-  }
-  .wnd.normalizedmobile .roundclosebutton {
-    top: 1em;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
-  .wnd.normalizedmobile .closeline {
-    top: 15%;
-    height: 2px;
-    background: rgba(var(--background-total-theme), 0.8);
-    border-radius: 2px;
-    width: 44%;
-    left: 28%;
-    opacity: 0;
-    position: absolute;
-  }
-  .wnd.normalizedmobile .wndinner {
-    max-height: none!important;
-    top: 17%!important;
-    bottom: 0;
-    height: auto!important;
-    max-width: none!important;
-    -webkit-transform: translateY(100%);
-    transform: translateY(100%);
-    backface-visibility: hidden;
-  }
-  .wnd.normalizedmobile .wndinner .wndcontent {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-    bottom: 0;
-    backface-visibility: hidden;
-    box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
-  }
-  .wnd.normalizedmobile .wndinner .wndcontent::-webkit-scrollbar {
-    width: 0;
-  }
-  .wnd.normalizedmobile .wndinner .wndcontent::-webkit-scrollbar {
-    display: none!important;
-  }
-  .wnd.normalizedmobile .wndinner > div.buttons {
-    display: none;
-  }
-  .wnd.normalizedmobile.asette .wndback {
-    -moz-transition: 0.2s;
-    -o-transition: 0.2s;
-    -webkit-transition: 0.2s;
-    transition: 0.2s;
-  }
-  .wnd.normalizedmobile.asette .closeline {
-    -moz-transition: 0.2s;
-    -o-transition: 0.2s;
-    -webkit-transition: 0.2s;
-    transition: 0.2s;
-  }
-  .wnd.normalizedmobile.asette .wndinner {
-    -moz-transition: 0.2s;
-    -o-transition: 0.2s;
-    -webkit-transition: 0.2s;
-    transition: 0.2s;
-  }
-  .wnd.normalizedmobile.sette .wndinner {
-    -webkit-transform: translateY(0);
-    transform: translateY(0);
-  }
-  .wnd.normalizedmobile.sette .closeline,
-  .wnd.normalizedmobile.sette .wndback {
-    opacity: 1;
-  }
-  .fastMessage {
-    position: fixed;
-    left: 0.25em;
-    right: 0.25em;
-    top: 0.25em;
-    max-height: 210px;
-    width: auto;
-    min-width: 0;
-    max-width: none;
-    border-radius: 6px;
-    bottom: auto;
-  }
-  .fastMessage .fmCnt {
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-    text-overflow: ellipsis;
-    padding-right: 1em;
-  }
-  .fastMessage .close {
-    padding: 1em;
-  }
-  .fastMessage .time {
-    display: none;
-  }
-  .fastMessage .tips {
-    display: none;
-  }
-  .fastMessage .cwrapper.table > div {
-    vertical-align: middle;
-  }
-  .fastMessage .commentmessagewrapper > div,
-  .fastMessage .notification .commentmessagewrapper > div {
-    vertical-align: bottom;
-  }
-  .fastMessage .subscribeWrapper > div.forsubscribe,
-  .fastMessage .notification .subscribeWrapper > div.forsubscribe {
-    width: 80px;
-    vertical-align: bottom;
-  }
-  .fastMessage .foramount {
-    width: auto!important;
   }
   .popupsignup .ppheader {
     text-align: center;
@@ -6013,15 +5830,73 @@ html.cordova #navigation .fakem {
     padding-top: 0;
   }
 }
-html.cordova .wnd.normalizedmobile .wndinner,
-html.tablet .wnd.normalizedmobile .wndinner,
-html.mobile .wnd.normalizedmobile .wndinner {
-  width: 65%;
+html.mobileview .sitemessage {
+  position: fixed;
+  width: auto;
+  left: 0.5em;
+  right: 0.5em;
+  bottom: 25px;
+  padding: 2em;
+  z-index: 20100;
+  min-height: 50px;
+  border-radius: 5px;
+  text-align: center;
+  border: 1px solid rgb(var(--neutral-grad-1));
+}
+html.mobileview .fastMessage {
+  position: fixed;
+  left: 0.25em;
+  right: 0.25em;
+  top: 0.25em;
+  max-height: 210px;
+  width: auto;
+  min-width: 0;
+  max-width: none;
+  border-radius: 6px;
+  bottom: auto;
+}
+html.mobileview .fastMessage .fmCnt {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  text-overflow: ellipsis;
+  padding-right: 1em;
+}
+html.mobileview .fastMessage .close {
+  padding: 1em;
+}
+html.mobileview .fastMessage .time {
+  display: none;
+}
+html.mobileview .fastMessage .tips {
+  display: none;
+}
+html.mobileview .fastMessage .cwrapper.table > div {
+  vertical-align: middle;
+}
+html.mobileview .fastMessage .commentmessagewrapper > div,
+html.mobileview .fastMessage .notification .commentmessagewrapper > div {
+  vertical-align: bottom;
+}
+html.mobileview .fastMessage .subscribeWrapper > div.forsubscribe,
+html.mobileview .fastMessage .notification .subscribeWrapper > div.forsubscribe {
+  width: 80px;
+  vertical-align: bottom;
+}
+html.mobileview .fastMessage .foramount {
+  width: auto!important;
+}
+html.mobileview .upbutton .mini {
+  display: none;
+}
+html.mobileview .upbutton .full {
+  display: none;
+}
+html.mobileview .wnd.normalizedmobile .wndinner {
+  width: 100%;
   background: transparent!important;
 }
-html.cordova .wnd.normalizedmobile .wndback,
-html.tablet .wnd.normalizedmobile .wndback,
-html.mobile .wnd.normalizedmobile .wndback {
+html.mobileview .wnd.normalizedmobile .wndback {
   backface-visibility: hidden;
   will-change: transform;
   backdrop-filter: none!important;
@@ -6031,14 +5906,10 @@ html.mobile .wnd.normalizedmobile .wndback {
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
-html.cordova .wnd.normalizedmobile .hideButton,
-html.tablet .wnd.normalizedmobile .hideButton,
-html.mobile .wnd.normalizedmobile .hideButton {
+html.mobileview .wnd.normalizedmobile .hideButton {
   display: none!important;
 }
-html.cordova .wnd.normalizedmobile .closeline,
-html.tablet .wnd.normalizedmobile .closeline,
-html.mobile .wnd.normalizedmobile .closeline {
+html.mobileview .wnd.normalizedmobile .closeline {
   top: 120px;
   height: 2px;
   background: rgba(var(--background-total-theme), 0.8);
@@ -6052,9 +5923,7 @@ html.mobile .wnd.normalizedmobile .closeline {
   -webkit-transition: top 0.3s;
   transition: top 0.3s;
 }
-html.cordova .wnd.normalizedmobile .wndinner,
-html.tablet .wnd.normalizedmobile .wndinner,
-html.mobile .wnd.normalizedmobile .wndinner {
+html.mobileview .wnd.normalizedmobile .wndinner {
   max-height: none!important;
   top: 0%!important;
   bottom: 0;
@@ -6070,61 +5939,51 @@ html.mobile .wnd.normalizedmobile .wndinner {
   -webkit-transition: top 0.3s;
   transition: top 0.3s;
 }
-html.cordova .wnd.normalizedmobile .wndinner .wndcontent,
-html.tablet .wnd.normalizedmobile .wndinner .wndcontent,
-html.mobile .wnd.normalizedmobile .wndinner .wndcontent {
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+html.mobileview .wnd.normalizedmobile .wndinner .wndheader {
+  max-width: 768px;
+  margin: 0 auto;
+}
+html.mobileview .wnd.normalizedmobile .wndinner .wndcontent {
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
   bottom: 0;
   backface-visibility: hidden;
   padding-bottom: 130px;
   background: rgb(var(--background-total-theme));
+  max-width: 768px;
+  margin: 0 auto;
+  padding-left: 0;
+  padding-right: 0;
   box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
 }
-html.cordova .wnd.normalizedmobile .wndinner .wndcontent::-webkit-scrollbar,
-html.tablet .wnd.normalizedmobile .wndinner .wndcontent::-webkit-scrollbar,
-html.mobile .wnd.normalizedmobile .wndinner .wndcontent::-webkit-scrollbar {
+html.mobileview .wnd.normalizedmobile .wndinner .wndcontent::-webkit-scrollbar {
   width: 0;
 }
-html.cordova .wnd.normalizedmobile .wndinner .wndcontent::-webkit-scrollbar,
-html.tablet .wnd.normalizedmobile .wndinner .wndcontent::-webkit-scrollbar,
-html.mobile .wnd.normalizedmobile .wndinner .wndcontent::-webkit-scrollbar {
+html.mobileview .wnd.normalizedmobile .wndinner .wndcontent::-webkit-scrollbar {
   display: none!important;
 }
-html.cordova .wnd.normalizedmobile .wndinner > div.buttons,
-html.tablet .wnd.normalizedmobile .wndinner > div.buttons,
-html.mobile .wnd.normalizedmobile .wndinner > div.buttons {
+html.mobileview .wnd.normalizedmobile .wndinner > div.buttons {
   display: none;
 }
-html.cordova .wnd.normalizedmobile.asette .wndback,
-html.tablet .wnd.normalizedmobile.asette .wndback,
-html.mobile .wnd.normalizedmobile.asette .wndback {
+html.mobileview .wnd.normalizedmobile.asette .wndback {
   -moz-transition: 0.2s;
   -o-transition: 0.2s;
   -webkit-transition: 0.2s;
   transition: 0.2s;
 }
-html.cordova .wnd.normalizedmobile.asette .closeline,
-html.tablet .wnd.normalizedmobile.asette .closeline,
-html.mobile .wnd.normalizedmobile.asette .closeline {
+html.mobileview .wnd.normalizedmobile.asette .closeline {
   -moz-transition: 0.2s;
   -o-transition: 0.2s;
   -webkit-transition: 0.2s;
   transition: 0.2s;
 }
-html.cordova .wnd.normalizedmobile.asette .wndinner,
-html.tablet .wnd.normalizedmobile.asette .wndinner,
-html.mobile .wnd.normalizedmobile.asette .wndinner {
+html.mobileview .wnd.normalizedmobile.asette .wndinner {
   -moz-transition: 0.2s;
   -o-transition: 0.2s;
   -webkit-transition: 0.2s;
   transition: 0.2s;
 }
-html.cordova .wnd.normalizedmobile.sette .wndinner,
-html.tablet .wnd.normalizedmobile.sette .wndinner,
-html.mobile .wnd.normalizedmobile.sette .wndinner {
+html.mobileview .wnd.normalizedmobile.sette .wndinner {
   -webkit-transform: translateY(130px);
   transform: translateY(130px);
   -moz-transition: transform 0.3s;
@@ -6132,9 +5991,7 @@ html.mobile .wnd.normalizedmobile.sette .wndinner {
   -webkit-transition: transform 0.3s;
   transition: transform 0.3s;
 }
-html.cordova .wnd.normalizedmobile.sette .windowmainbuttons,
-html.tablet .wnd.normalizedmobile.sette .windowmainbuttons,
-html.mobile .wnd.normalizedmobile.sette .windowmainbuttons {
+html.mobileview .wnd.normalizedmobile.sette .windowmainbuttons {
   -webkit-transform: translateY(-130px);
   transform: translateY(-130px);
   -moz-transition: transform 0.3s;
@@ -6142,40 +5999,27 @@ html.mobile .wnd.normalizedmobile.sette .windowmainbuttons {
   -webkit-transition: transform 0.3s;
   transition: transform 0.3s;
 }
-html.cordova .wnd.normalizedmobile.sette .closeline,
-html.tablet .wnd.normalizedmobile.sette .closeline,
-html.mobile .wnd.normalizedmobile.sette .closeline,
-html.cordova .wnd.normalizedmobile.sette .wndback,
-html.tablet .wnd.normalizedmobile.sette .wndback,
-html.mobile .wnd.normalizedmobile.sette .wndback {
+html.mobileview .wnd.normalizedmobile.sette .closeline,
+html.mobileview .wnd.normalizedmobile.sette .wndback {
   opacity: 1;
 }
-html.cordova .wnd.normalizedmobile.showbetter.sette .wndinner,
-html.tablet .wnd.normalizedmobile.showbetter.sette .wndinner,
-html.mobile .wnd.normalizedmobile.showbetter.sette .wndinner {
+html.mobileview .wnd.normalizedmobile.showbetter.sette .wndinner {
   -webkit-transform: translateY(45px);
   transform: translateY(45px);
 }
-html.cordova .wnd.normalizedmobile.showbetter.sette .windowmainbuttons,
-html.tablet .wnd.normalizedmobile.showbetter.sette .windowmainbuttons,
-html.mobile .wnd.normalizedmobile.showbetter.sette .windowmainbuttons {
+html.mobileview .wnd.normalizedmobile.showbetter.sette .windowmainbuttons {
   -webkit-transform: translateY(-45px);
   transform: translateY(-45px);
 }
-html.cordova .wnd.normalizedmobile.showbetter .closeline,
-html.tablet .wnd.normalizedmobile.showbetter .closeline,
-html.mobile .wnd.normalizedmobile.showbetter .closeline {
+html.mobileview .wnd.normalizedmobile.showbetter .closeline {
   opacity: 0;
 }
-html.cordova .wnd.normalizedmobile.showbetter .roundclosebutton,
-html.tablet .wnd.normalizedmobile.showbetter .roundclosebutton,
-html.mobile .wnd.normalizedmobile.showbetter .roundclosebutton {
+html.mobileview .wnd.normalizedmobile.showbetter .roundclosebutton {
   backdrop-filter: none;
 }
-html.cordova.stblack .wnd.normalizedmobile .wndinner .wndcontent,
-html.tablet.stblack .wnd.normalizedmobile .wndinner .wndcontent,
-html.mobile.stblack .wnd.normalizedmobile .wndinner .wndcontent {
-  background: #0a0c17 !important;
+html.mobileview .wnd.normalizedmobile.noheader .wndinner .wndcontent {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 #application .emojionearea,
 #application .emojionearea.form-control {

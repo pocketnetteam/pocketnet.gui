@@ -155,21 +155,31 @@ nModule = function(){
 
 							options.destroy = function(key){
 
-								if(p){
+								var r = null
 
-									if(!key != 'auto'){
+								if (p){
+
+									if (key != 'auto'){
+										
 										self.app.nav.api.history.removeParameters(['m' + p.id].concat(p.clearparameters || []))
+										
 										try{
 											self.app.nav.api.changedclbks()
-										}catch(e){}
+										}
+										catch(e){
+											console.error(e)
+										}
 
 									}
 									
-									if (p.destroy)
-										return p.destroy(key)
+									if (p.destroy) {
+										r = p.destroy(key)
+									}
 								}
 
-								
+								p = null
+
+								return r
 
 							};
 
@@ -499,6 +509,8 @@ nModule = function(){
 								settings.auto(p)
 							}
 
+							p = null
+
 						})				
 
 
@@ -582,7 +594,7 @@ nModule = function(){
 	}
 
 	self.addEssense = function(essenses, Essense, p){
-
+		////// ??
 		self.essenses = essenses
 
 		var essense = new Essense(p);

@@ -2471,7 +2471,7 @@ Platform = function (app, listofnodes) {
                 el.owlCarousel({
                     items: 1,
                     dots: true,
-                    nav: !isMobile(),
+                    nav: !self.app.mobileview,
                     navText: [
                         '<i class="fas fa-chevron-left"></i> ',
                         '<i class="fas fa-chevron-right"></i>'
@@ -2676,26 +2676,7 @@ Platform = function (app, listofnodes) {
 
                 success: function () {
 
-                   /* if (!isMobile()) {
-
-                        app.nav.api.load({
-
-                            open: true,
-                            href: 'userpage?id=accounts',
-                            history: true,
-                            handler: true,
-
-                            essenseData: {
-                                dumpkey: !isMobile()
-                            },
-
-                            clbk: function (p, s) {
-
-                            }
-                        })
-
-                    }*/
-
+             
                     app.nav.api.load({
 
                         open: true,
@@ -3018,7 +2999,7 @@ Platform = function (app, listofnodes) {
         authorlink: function (address, namelink) {
             var name = deep(self.sdk.usersl.storage, address + '.name');
 
-            if (name && (!isMobile() || namelink)) return encodeURIComponent(name.toLowerCase());
+            if (name && (!self.app.mobileview || namelink)) return encodeURIComponent(name.toLowerCase());
 
             else return 'author?address=' + address
         },
@@ -3334,7 +3315,7 @@ Platform = function (app, listofnodes) {
 
             if(!p) p = {}
 
-            if (isTablet() || isMobile() || window.cordova || p.dlg){
+            if (self.app.mobileview || p.dlg){
                 return self.api.mobiletooltip(_el, content, clbk, p)
             }
 
@@ -16262,6 +16243,7 @@ Platform = function (app, listofnodes) {
                     self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
                         method : 'getusercontents'
                     })
+
                 },
 
                 hierarchical: function (p, clbk, cache, methodparams) {
@@ -16326,8 +16308,6 @@ Platform = function (app, listofnodes) {
                         else {
                             if (!storage[key] || cache == 'clear') storage[key] = [];
 
-
-
                             if (!p.txid) {
                                 if (storage[key].length) {
 
@@ -16360,7 +16340,6 @@ Platform = function (app, listofnodes) {
                             if (p.video && !self.videoenabled){
                                 p.tagsfilter = ['video']
                             }
-
 
                             ////
 
@@ -21213,7 +21192,7 @@ Platform = function (app, listofnodes) {
                         if(self.sdk.videos.storage[url] && self.sdk.videos.storage[url].data){
                             var info = self.sdk.videos.storage[url].data;
 
-                            var loadingPlayer = elf ? elf() : p.el.find('.jsPlayerLoading');
+                            var loadingPlayer = elf ? elf() : p.el.find('.jsPlayerLoading-matte');
 
                             var width = loadingPlayer.width();
 
@@ -21345,7 +21324,7 @@ Platform = function (app, listofnodes) {
                 var _v = localStorage['pn_videovolume_2']
 
                 if(typeof _v == 'undefined') {
-                    if(window.cordova || isMobile())
+                    if(self.app.mobileview)
                         _v = '0'
                     else
                         _v = '1'
@@ -22033,7 +22012,7 @@ Platform = function (app, listofnodes) {
 
                 h += "+" + platform.mp.coin(clearStringXss(data.amountall || data.tx.amount));
 
-                if(!isMobile())
+                
                     h+= " PKOIN"
 
 
@@ -24114,17 +24093,11 @@ Platform = function (app, listofnodes) {
 
 			var boffset = 0;
 
-            var mtbl = (isMobile() || (isTablet() && platform.app.width <= 768))
+            var mtbl = platform.app.width <= 1024
 
 			if (mtbl){
 				maxCount = 1;
                 showremove = 0;
-			}
-			else
-			{
-				/*if (typeof _Electron == 'undefined') {
-                    boffset = 60;
-                }*/
 			}
 
 			var remove = self.fastMessages.length - maxCount;
@@ -24227,9 +24200,11 @@ Platform = function (app, listofnodes) {
         }
 
         self.destroyMessages = function () {
+
             _.each(self.fastMessages, function (message, i) {
                 destroyMessage(message, 1, true)
             })
+
             setTimeout(function(){
                 arrangeMessages()
             }, 301)
@@ -24279,12 +24254,6 @@ Platform = function (app, listofnodes) {
                         essenseData : {
                         }
                     })
-
-                    /*platform.app.nav.api.load({
-                        open : true,
-                        href : 'userpage?id=notifications&report=notifications',
-                        history : true,
-                    })*/
 
                 }
                 else{
@@ -24344,8 +24313,6 @@ Platform = function (app, listofnodes) {
             }
 
             arrangeMessages();
-
-
 
             return message
         }
@@ -26285,7 +26252,7 @@ Platform = function (app, listofnodes) {
 
                 var link = 'contact?id=' + hexEncode(address)
 
-                if(isMobile() || window.cordova){
+                if (self.app.mobileview){
                     self.matrixchat.core.apptochat(link)
                 }
                 else{
@@ -26329,8 +26296,8 @@ Platform = function (app, listofnodes) {
                                 <matrix-element
                                     address="${a}"
                                     privatekey="${privatekey}"
-                                    pocketnet="`+( (isMobile() || isTablet() || window.cordova) ? '' : 'true')+`"
-                                    mobile="`+( (isMobile() || isTablet() || window.cordova) ? 'true' : '')+`" 
+                                    pocketnet="`+( self.app.mobileview ? '' : 'true')+`"
+                                    mobile="`+( self.app.mobileview ? 'true' : '')+`" 
                                     ctheme="`+self.sdk.theme.current+`"
                                     localization="`+self.app.localization.key+`"
                                     fcmtoken="`+(self.fcmtoken || "")+`"
@@ -26373,7 +26340,7 @@ Platform = function (app, listofnodes) {
         initevents : function(){
             if (self.matrixchat.el){
 
-                if(isTablet() || isMobile() || window.cordova){
+                if(self.app.mobileview){
 
                     self.matrixchat.chatparallax = new SwipeParallaxNew({
 
@@ -26419,20 +26386,6 @@ Platform = function (app, listofnodes) {
         
                     }).init()
 
-
-
-					/*self.matrixchat.el.swipe({
-						swipeLeft : function(e, phase, direction, distance){
-                            if(_.find(e.path, function(el){
-                                return el.className && el.className.indexOf('noswipepnt') > -1
-                            })) return
-
-
-                            if (self.matrixchat.core && (!self.matrixchat.core.canback || self.matrixchat.core.canback()))
-                                self.matrixchat.core.backtoapp()
-
-						},
-					})*/
 
 				}
 
@@ -26575,7 +26528,7 @@ Platform = function (app, listofnodes) {
         showed : function(){
             if(!self.matrixchat.core){ return false }
 
-            if(isTablet() || isMobile() || window.cordova){
+            if (self.app.mobileview){
                 return !self.matrixchat.core.hiddenInParent
             }
 
@@ -26593,7 +26546,7 @@ Platform = function (app, listofnodes) {
 
             core.backtoapp = function(link){
 
-                if (isTablet() ||isMobile() || window.cordova)
+                if (self.app.mobileview)
                     app.nav.api.history.removeParameters(['pc'], null, {replaceState : true})
 
                 if (link){
@@ -26626,25 +26579,19 @@ Platform = function (app, listofnodes) {
 
                 self.app.actions.playingvideo()
 
-                if (isTablet() ||isMobile() || window.cordova) self.app.actions.restore()
+                if (self.app.mobileview) self.app.actions.restore()
 
-                //app.el.html.removeClass('chatshowed')
-
-                if(document.activeElement) document.activeElement.blur()
+                if (document.activeElement) document.activeElement.blur()
 
                 if (self.matrixchat.core){
                     self.matrixchat.core.cancelshare ? self.matrixchat.core.cancelshare() : '' ;
 
-                    self.matrixchat.core.hideInParent(isTablet() ||isMobile() || window.cordova ? true : false )
+                    self.matrixchat.core.hideInParent(self.app.mobileview ? true : false )
                 }
 
                 
 
-                if (isTablet() || isMobile() || window.cordova){
-
-                    /*self.matrixchat.el.one('transitionend webkitTransitionEnd oTransitionEnd', function () {
-                        self.app.actions.onScroll()
-                    });*/
+                if (self.app.mobileview){
 
                     setTimeout(function(){
                         self.app.actions.onScroll()
@@ -26683,14 +26630,14 @@ Platform = function (app, listofnodes) {
 
                 self.app.actions.playingvideo()
 
-                if (isTablet() ||isMobile() || window.cordova){
+                if (self.app.mobileview){
                     setTimeout(function(){
                         self.app.actions.offScroll()
                         self.app.actions.optimize()
                     })
                 }
 
-                if (isTablet() || isMobile() || window.cordova)
+                if (self.app.mobileview)
                     app.nav.api.history.addParameters({
                         'pc' : '1'
                     })
@@ -26709,8 +26656,8 @@ Platform = function (app, listofnodes) {
 
             self.matrixchat.core = core
 
-            core.hideOptimization(isTablet() || isMobile() || window.cordova ? true : false)
-            core.hideInParent(isTablet() || isMobile() || window.cordova ? true : false)
+            core.hideOptimization(self.app.mobileview ? true : false)
+            core.hideInParent(self.app.mobileview ? true : false)
             core.externalLink(self.matrixchat)
 
             self.app.platform.ws.messages["newblocks"].clbks.newsharesLenta =

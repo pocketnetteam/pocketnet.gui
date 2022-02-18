@@ -38,9 +38,6 @@
 #notifications .ncaption {
   font-weight: 700;
 }
-#notifications .wrk {
-  padding: 0 4em;
-}
 #notifications .subcaption {
   margin-bottom: 1em;
   font-size: 2em;
@@ -115,6 +112,9 @@
   margin-top: 0.5em;
   font-size: 0.8em;
   text-align: center;
+}
+#content #notifications .wrk {
+  padding: 0 4em;
 }
 #content #notifications .ncaption {
   padding-bottom: 1.5em;

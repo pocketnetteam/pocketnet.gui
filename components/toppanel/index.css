@@ -43,83 +43,36 @@
 #toppanel .panelitems .panelitem .vc_textInput.table {
   line-height: 36px;
 }
-@media only screen and (max-width: 768px) {
-  #toppanel .work {
-    width: 100%;
-    padding-right: 1.5em;
-  }
-  #toppanel .panelitems .panelitemCenter {
-    margin-left: 0;
-    margin-right: 0;
-  }
-  html.allcontent #toppanel {
-    display: none;
-  }
-}
-html.mobile #toppanel {
-  display: block;
-  height: 55px;
-}
-html.mobile #toppanel .work {
+#toppanel .filtersbuttonwrapper {
   width: 100%;
-  padding-left: 0;
-  padding-right: 0;
-}
-html.mobile #toppanel .panelitems {
   height: 100%;
-  display: block;
+  padding: 0.5em;
+  display: flex;
+  align-items: center;
 }
-html.mobile #toppanel .panelitems .panelItemsWrapper {
-  display: block;
-}
-html.mobile #toppanel .panelitems .panelitemCenter {
-  margin-left: 0;
-  margin-right: 0;
-}
-html.mobile #toppanel .panelitems .panelitem {
+#toppanel .filtersbuttonwrapper button {
   width: 100%;
-  margin-right: 0;
-  line-height: 55px;
 }
-html.mobile #toppanel .panelitems .panelitem.icon {
-  width: 60px;
-  float: right;
-}
-html.mobile #toppanel .panelitems .panelitem.nfl {
-  margin-right: 60px;
-  float: none;
-  width: auto;
-}
-html.mobile #toppanel .panelitems .panelitem.right {
-  margin-left: 0;
-  display: none;
-}
-html.mobile #toppanel .panelitems .panelitem.blexpl {
-  padding-left: 1.5em;
-}
-html.mobile #toppanel .panelitems .panelitem.active {
-  color: rgb(var(--color-txt-orange));
-}
-html.mobile #toppanel .vc_valuecustom {
+#toppanel .vc_valuecustom {
   width: 100%;
   height: 55px;
 }
-html.mobile #toppanel .vc_valuecustom .vc_inputWrapper {
+#toppanel .vc_valuecustom .vc_inputWrapper {
   padding-left: 1em;
 }
-html.mobile #toppanel .vc_valuecustom .vc_iconWrapper {
+#toppanel .vc_valuecustom .vc_iconWrapper {
   width: 48px;
   padding-right: 0;
 }
-html.mobile #toppanel .vc_valuecustom .vc_textInput {
+#toppanel .vc_valuecustom .vc_textInput {
   border: 0;
   background: transparent;
   border-radius: 0;
 }
-html.mobile #toppanel .vc_valuecustom .vc_textInput .vc_inputWrapper {
+#toppanel .vc_valuecustom .vc_textInput .vc_inputWrapper {
   border: 0;
 }
-html.mobile #toppanel .vc_valuecustom .vc_textInput .vc_inputWrapper input {
+#toppanel .vc_valuecustom .vc_textInput .vc_inputWrapper input {
   opacity: 1!important;
   -moz-transition: 0.3s;
   -o-transition: 0.3s;
@@ -132,10 +85,10 @@ html.mobile #toppanel .vc_valuecustom .vc_textInput .vc_inputWrapper input {
   font-size: 1.2em;
   padding-left: 0.5em;
 }
-html.mobile #toppanel .vc_valuecustom .vc_textInput .vc_inputWrapper input[disabled="disabled"] {
+#toppanel .vc_valuecustom .vc_textInput .vc_inputWrapper input[disabled="disabled"] {
   opacity: 1;
 }
-html.mobile #toppanel .vc_valuecustom .vc_textInput .vc_iconWrapper {
+#toppanel .vc_valuecustom .vc_textInput .vc_iconWrapper {
   -moz-transition: 0.3s;
   -o-transition: 0.3s;
   -webkit-transition: 0.3s;
@@ -145,16 +98,16 @@ html.mobile #toppanel .vc_valuecustom .vc_textInput .vc_iconWrapper {
   border: 0;
   color: rgb(var(--text-color));
 }
-html.mobile #toppanel .vc_valuecustom.opened .vc_textInput .vc_inputWrapper {
+#toppanel .vc_valuecustom.opened .vc_textInput .vc_inputWrapper {
   border: 0;
 }
-html.mobile #toppanel .vc_valuecustom.opened .vc_textInput .vc_inputWrapper input {
+#toppanel .vc_valuecustom.opened .vc_textInput .vc_inputWrapper input {
   border-bottom-left-radius: 0;
 }
-html.mobile #toppanel .vc_valuecustom.opened .vc_textInput .vc_iconWrapper {
+#toppanel .vc_valuecustom.opened .vc_textInput .vc_iconWrapper {
   border-bottom-right-radius: 0;
 }
-html.mobile #toppanel .vc_valuecustom.opened .vc_selectInput_bg_mobile {
+#toppanel .vc_valuecustom.opened .vc_selectInput_bg_mobile {
   position: fixed;
   left: 0;
   top: 0;
@@ -162,43 +115,39 @@ html.mobile #toppanel .vc_valuecustom.opened .vc_selectInput_bg_mobile {
   right: 0;
   background: rgba(var(--color-shadow-base), 0.1);
 }
-html.mobile #toppanel .vc_valuecustom.opened .vc_selectInput {
+#toppanel .vc_valuecustom.opened .vc_selectInput {
   position: fixed;
   top: 55px;
 }
-html.mobile #toppanel .vc_valuecustom .vc_selectInput {
+#toppanel .vc_valuecustom .vc_selectInput {
   border: 0;
   max-height: 400px;
   box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
 }
-html.mobile #toppanel .vc_valuecustom .vc_selectInput .vc_value {
+#toppanel .vc_valuecustom .vc_selectInput .vc_value {
   text-align: center;
   font-size: 1.5em;
   padding: 0.5em 0.5em;
 }
-@media only screen and (max-width: 648px) {
+@media only screen and (max-width: 768px) {
   #toppanel .work {
     width: 100%;
     padding-right: 1.5em;
   }
-  #toppanel .panelitems .panelItemsWrapper {
-    height: 100%;
-  }
-  #toppanel .panelitems .panelitem.right {
-    display: none;
-  }
-  #toppanel .panelitems .panelitem.dnt,
-  #toppanel .panelitems .panelitem.right,
-  #toppanel .panelitems .panelitem.blexpl {
-    display: none;
-  }
   #toppanel .panelitems .panelitemCenter {
-    margin: auto;
+    margin-left: 0;
+    margin-right: 0;
   }
-}
-@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation: landscape) {
-  #toppanel .vc_valuecustom .vc_inputWrapper {
-    padding-left: 3em;
-    padding-right: 3em;
+  html.allcontent #toppanel {
+    display: none;
+  }
+  #toppanel {
+    display: block;
+    height: 55px;
+  }
+  #toppanel .work {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
   }
 }

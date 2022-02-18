@@ -1,47 +1,12 @@
 <div class="panelItemsWrapper">
-	<% 
-
-	var r = parameters(app.nav.current.completeHref, true).r;
-	var video = parameters(app.nav.current.completeHref, true).video;
-
-	%>
-
-	<% if(!app.curation()) {%> 
-
-		<% if(!state && !(pathname == 'index' && mobile)) {%>
-
-		<div class="panelitem blexpl">
-			<a elementsid="e13182" href="https://<%-app.options.url%>/blockexplorer/"><i class="fas fa-th"></i> <%=e('e13182')%></a>
+	<% if(pathname == 'index') {%>
+		<div class="panelitem nfl">
+			<%= selector.input() %>
 		</div>
-
-		<% } %>
-
-
-		<% if(state || (pathname == 'index' && mobile)) {%>
-
-			<% if(pathname == 'index' && mobile) {%>
-				<div elementsid="showcategories" class="panelitem icon showcategories <% if(tagsSelected) {%> active <% } %>">
-					<i class="fas fa-filter"></i>
-				</div>
-				<div class="panelitem nfl">
-					<%= selector.input() %>
-				</div>
-
-			<% } else { %>
-				<div class="panelitem dnt">
-					<a elementsid="hrefdonations" href="donations"><i class="fas fa-money-bill-wave"></i> <%=e('donate')%></a>
-					<!--<i class="fas fa-sync"></i> Exchange-->
-				</div>
-			<% } %>
-
-		<% } %>
-
-	<% } %>
-
-
-	<% if(!app.curation()) {%> 
-		<div class="panelitem right">
-			<a elementsid="hrefhelp" href="help"><i class="fas fa-question-circle"></i> <%=e('e13183')%></a>
+		<div elementsid="showcategories" class="panelitem icon showcategories <% if(tagsSelected) {%> active <% } %>">
+			<i class="fas fa-filter"></i>
 		</div>
+	<% } else { %>
+	
 	<% } %>
 </div>

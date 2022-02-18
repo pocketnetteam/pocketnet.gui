@@ -179,11 +179,19 @@
 #categories .cat:hover .cattable > div.minus:hover {
   opacity: 1;
 }
+#categories .tg {
+  border-radius: 12px;
+  margin-top: 1px;
+  margin-bottom: 1px;
+}
 #categories .tg .selected {
   display: none;
 }
+#categories .tg.selected {
+  background: rgba(var(--color-bg-ac-bright), 0.1);
+}
 #categories .tg.selected .cat {
-  color: rgb(var(--color-txt-orange));
+  color: rgb(var(--color-bg-ac-bright));
 }
 #categories .tg.selected .unselected {
   display: none;
@@ -294,8 +302,24 @@
   box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
 }
 @media only screen and (max-width: 768px) {
+  #categories .cat .cattable > div.catvalue .catname {
+    font-size: 1em;
+  }
   #categories .cat .cattable .catedit,
   #categories .cat .cattable .minus {
     opacity: 1!important;
+  }
+  #categories .hideallcats span,
+  #categories .showallcats span {
+    font-size: 1em;
+  }
+  #categories .hideallcats i,
+  #categories .showallcats i {
+    font-weight: 600;
+    font-size: 1em;
+  }
+  #categories .tg {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
   }
 }

@@ -4,9 +4,6 @@
 #lenta.openapi .loadmore {
   display: none!important;
 }
-#lenta .video-js {
-  contain: strict;
-}
 #lenta.rebuilding {
   -moz-transition: 0.3s;
   -o-transition: 0.3s;
@@ -93,8 +90,18 @@
 #lenta .share .message {
   max-width: 590px;
 }
+#lenta .share .verticalVideo {
+  max-width: 350px;
+}
+#lenta .share .squareVideo {
+  max-width: 450px;
+}
 #lenta .share .debuginfo {
   display: none!important;
+}
+#lenta .share.fullScreenVideo .squareVideo,
+#lenta .share.fullScreenVideo .verticalVideo {
+  max-width: none;
 }
 #lenta .shares {
   overflow: hidden;
@@ -110,12 +117,6 @@
 }
 #lenta .shares .work {
   padding-left: 0;
-}
-#lenta .shares .verticalVideo {
-  max-width: 350px;
-}
-#lenta .shares .squareVideo {
-  max-width: 450px;
 }
 #lenta .shares .ss {
   padding: 1em;
@@ -323,6 +324,14 @@
   opacity: 0.7;
   text-decoration: none;
 }
+#lenta.mainvideo .share .shareTable {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+#lenta.mainvideo .share .shareTable .authorTable {
+  align-items: center;
+  display: flex;
+}
 #lenta.mainvideo .share .shareTable .authorTable > div.authorCell {
   padding-left: 0.5em;
   padding-right: 0;
@@ -502,6 +511,7 @@
 }
 #lenta .share .sharearticle .shareTable {
   padding-top: 0;
+  padding-bottom: 0;
 }
 #lenta .share .sharearticle .shareBgCaption .author,
 #lenta .share .sharearticle .articleend .author {
@@ -533,6 +543,9 @@
 #lenta .share .sharearticle .shareBgCaption .forstars .count span,
 #lenta .share .sharearticle .articleend .forstars .count span {
   font-size: 2em;
+}
+#lenta .share .sharearticle .shareBgCaption .forstars .count span,
+#lenta .share .sharearticle .articleend .forstars .count span {
   font-weight: 700;
   font-family: Nunito Sans;
 }
@@ -604,6 +617,9 @@
   overflow-y: auto;
   text-overflow: ellipsis;
   overscroll-behavior: auto;
+}
+#lenta .share .sharearticle .shareBgCaption .sys span {
+  color: rgb(var(--text-on-bg-shadow-color));
 }
 #lenta .share .sharearticle .shareBgCaption .icon .usericon {
   margin: 0 auto;
@@ -724,6 +740,9 @@
 #lenta .share .sharearticle .shareBgCaption.verticalcover .tags div span {
   color: rgb(var(--text-color));
 }
+#lenta .share .sharearticle .shareBgCaption.verticalcover .sys span {
+  color: rgb(var(--text-color));
+}
 #lenta .share .sharearticle .shareBgCaption.verticalcover .starstoppanel .iconwrapper,
 #lenta .share .sharearticle .shareBgCaption.verticalcover .socialsharewrapper .iconwrapper {
   color: rgb(var(--text-color));
@@ -763,6 +782,9 @@
   filter: blur(10px);
 }
 @media only screen and (max-width: 768px) {
+  #lenta .share .images {
+    max-width: none;
+  }
   #lenta .share .sharearticle .shareBgCaption:not(.verticalcover) .captioncnt .sharecaption {
     font-size: 2em;
     font-family: Georgia, serif;
@@ -804,6 +826,9 @@
     background: rgb(var(--text-on-bg-ac-color));
   }
   #lenta .share .sharearticle .shareBgCaption.verticalcover .tags div span {
+    color: rgb(var(--text-on-bg-ac-color));
+  }
+  #lenta .share .sharearticle .shareBgCaption.verticalcover .sys span {
     color: rgb(var(--text-on-bg-ac-color));
   }
   #lenta .share .sharearticle .shareBgCaption.verticalcover .starstoppanel .iconwrapper,
@@ -883,15 +908,15 @@
   #lenta .shares .statswrapperExtended {
     padding: 0.5em;
   }
-  #lenta .shares .squareVideo,
-  #lenta .shares .verticalVideo {
-    max-width: none;
-  }
   #lenta .shares .ss {
     padding: 1em;
   }
   #lenta .shares .ss span {
     font-size: 2em;
+  }
+  #lenta .share .squareVideo,
+  #lenta .share .verticalVideo {
+    max-width: none;
   }
   #lenta.mainvideo .share .cntswrk {
     margin-left: 0;

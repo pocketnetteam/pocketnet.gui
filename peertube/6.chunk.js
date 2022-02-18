@@ -886,8 +886,8 @@ class CapLevelController {
         catch (e) {
             /* no-op */
         }
-        pixelRatio = 0.5;
-        //if (pixelRatio > 1.5) pixelRatio = 1.5
+        if (pixelRatio > 1.5)
+            pixelRatio = 1.5;
         return pixelRatio;
     }
     static isLevelAllowed(level, restrictedLevels = []) {

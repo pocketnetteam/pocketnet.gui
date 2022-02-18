@@ -13,9 +13,6 @@
 		}
 	}
 
-	.video-js{
-		contain: strict;
-	}
 
 	&.rebuilding{
 		.transition(0.3s);
@@ -127,8 +124,23 @@
 			max-width: 590px;
 		}
 
+		.verticalVideo {
+			max-width: 350px;
+		}
+
+		.squareVideo {
+			max-width: 450px;
+		}
+
 		.debuginfo{
 			display: none!important;
+		}
+
+		&.fullScreenVideo{
+			.squareVideo,
+			.verticalVideo {
+				max-width: none;
+			}
 		}
 
 	}
@@ -150,13 +162,7 @@
 			padding-left: 0;
 		}
 
-		.verticalVideo {
-			max-width: 350px;
-		}
-
-		.squareVideo {
-			max-width: 450px;
-		}
+		
 
 		.ss{
 			padding : 2 * @rhythm;
@@ -295,8 +301,11 @@
 	}
 
 	
-	&.mainvideo{
+	
+}
 
+#lenta{
+	&.mainvideo{
 		.zero,
 		.seemore,
 		.loadprev,
@@ -395,8 +404,6 @@
 				&.verticalVideo{
 					height: 530px;
 				}
-
-			
 			}
 
 			.url{
@@ -434,9 +441,14 @@
 			}
 
 			.shareTable{
+				padding-top : 0;
+				padding-bottom: 0;
 				.authorTable{
+					align-items: center;
+					display: flex;
 					
 					>div{
+						
 	
 						&.authorCell{
 							padding-left: @rhythm;
@@ -697,6 +709,7 @@
 	
 			.shareTable{
 				padding-top : 0;
+				padding-bottom : 0;
 			}
 	
 			.shareBgCaption,
@@ -726,9 +739,14 @@
 					.starWrapper{
 						text-align: center;
 					}
+					
 					.count{
+					
 						span{
 							font-size: 2em;
+						}
+	
+						span{
 							font-weight: 700;
 							font-family: Nunito Sans;
 						}
@@ -811,6 +829,12 @@
 						overscroll-behavior:auto;
 					}
 					
+				}
+
+				.sys{
+					span{
+						color : rgb(var(--text-on-bg-shadow-color))
+					}
 				}
 	
 				.icon{
@@ -966,6 +990,12 @@
 						}
 					}
 
+					.sys{
+						span{
+							color : rgb(var(--text-color));
+						}
+					}
+
 					.starstoppanel,
 					.socialsharewrapper{
 						.iconwrapper{
@@ -1029,6 +1059,10 @@
 @media only screen and (max-width: 768px) {
 	#lenta{
 		.share{
+
+			.images{
+				max-width: none;
+			}
 
 			.sharearticle{
 				
@@ -1097,6 +1131,14 @@
 							}
 						}
 
+
+						.sys{
+							span{
+								color : rgb(var(--text-on-bg-ac-color));
+							}
+						}
+	
+
 						.starstoppanel,
 						.socialsharewrapper{
 							.iconwrapper{
@@ -1134,10 +1176,8 @@
 		.openoriginallabel{
 			display: none;
 		}
-
 		
 	}
-
 	
 }
 
@@ -1224,10 +1264,8 @@
 			.statswrapperExtended{
 				padding : @rhythm;
 			}
-			.squareVideo,
-			.verticalVideo {
-				max-width: none;
-			}
+			
+			
 
 			.ss{
 				padding : 2 * @rhythm;
@@ -1237,6 +1275,13 @@
 				}
 			}
 			
+		}
+
+		.share{
+			.squareVideo,
+			.verticalVideo {
+				max-width: none;
+			}
 		}
 
 		
