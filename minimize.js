@@ -931,7 +931,11 @@ var copycontent = function(options, clbk, nac) {
 			sync : true,
 			array : options.copy,
 			action : function(p){
-				ncp(p.item, options.path + '/' + p.item, function (err) {
+				ncp(p.item, options.path + '/' + p.item, {
+					filter : function(name){
+						return name.indexOf('.map') == -1
+					},
+				}, function (err) {
 					if (err) {
 					  console.error(err);
 					}

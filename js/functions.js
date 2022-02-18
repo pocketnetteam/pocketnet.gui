@@ -6750,7 +6750,6 @@
 
 			var statusf = function(e, phase, direction, distance){
 
-				console.log('phase', phase)
 
 				if (mainDirection && mainDirection.i != direction){
 					phase = 'cancel'

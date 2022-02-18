@@ -108,33 +108,45 @@
   pointer-events: none !important;
 }
 
-.customscroll{
+.customscrollclass(){
     overflow-y: overlay!important;
     overflow-x: hidden;
     scrollbar-width: 7px;
     scrollbar-color: rgba(var(--background-main-contrast), .15) rgba(var(--background-main-contrast), .05);
     overscroll-behavior: contain;
+
+    &::-webkit-scrollbar {
+        width: 7px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background:rgba(var(--background-main-contrast), .05);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba(var(--background-main-contrast), .25);
+        border: 0 solid rgba(var(--background-main-contrast), 0.05);
+        background-image: linear-gradient(
+          180deg,
+          rgba(var(--background-main-contrast), .25) 0%,
+          rgba(var(--background-hidden-layer), 0) 90%
+        );
+    }
 }
 
-.customscroll::-webkit-scrollbar {
-    width: 7px;
+/*
+.html:not(.mobileview).customscroll{
+    .customscrollclass()
+}
+*/
 
-   
+
+@media only screen and (min-width: 768px){
+    .customscroll{
+        .customscrollclass()
+    }
 }
 
-.customscroll::-webkit-scrollbar-track {
-    background:rgba(var(--background-main-contrast), .05);
-}
-
-.customscroll::-webkit-scrollbar-thumb {
-    background-color: rgba(var(--background-main-contrast), .25);
-    border: 0 solid rgba(var(--background-main-contrast), 0.05);
-    background-image: linear-gradient(
-      180deg,
-      rgba(var(--background-main-contrast), .25) 0%,
-      rgba(var(--background-hidden-layer), 0) 90%
-    );
-}
 
 
 body{
@@ -1100,6 +1112,7 @@ pie {
         display: flex;
         align-items: center;
     }
+    
     .count{
         display: flex;
         align-items: center;
@@ -1121,7 +1134,8 @@ pie {
         }
 
         .countusers{
-            margin-left: @rhythm * 2;
+            max-width: 12 * @rhythm;
+            margin-left: @rhythm;
             white-space: nowrap;
             padding: 0.75 * @rhythm 1.5 * @rhythm;
             border-radius: 4 * @rhythm;
@@ -1129,6 +1143,7 @@ pie {
             color: rgb(var(--neutral-grad-3));
             display: flex;
             align-items: center;
+            text-overflow: ellipsis;
 
             .c{
                 padding-left: 0.5 * @rhythm;
@@ -1397,12 +1412,6 @@ pie {
     
 }
 
-// .starsWrapperM{
-//     img{
-//         filter: grayscale(100%) brightness(110%) contrast(0.9);
-//     }
-// }
-
 .subscribebuttons{
     width : auto;
 
@@ -1467,6 +1476,7 @@ pie {
         }
     }
 }
+
 .search{
     position: relative;
     background: transparent;

@@ -263,10 +263,10 @@ Application = function(p)
 		self.mobileview = (self.el.html.hasClass('mobile') || self.el.html.hasClass('tablet') || window.cordova || self.width < 768)
 
 		if(self.mobileview){
-			self.el.html.addClass('mobileview')
+			self.el.html.addClass('mobileview').removeClass('wsview')
 		}
 		else{
-			self.el.html.removeClass('mobileview')
+			self.el.html.removeClass('mobileview').addClass('wsview')
 		}
 	}
 

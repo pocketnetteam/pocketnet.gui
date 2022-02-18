@@ -167,10 +167,25 @@
   font-family: "Font Awesome 5 Free";
   color: rgb(var(--neutral-grad-3));
 }
+#articlev .editorWrapper .ce-toolbar__settings-btn {
+  background: rgb(var(--background-secondary-theme));
+  color: rgb(var(--color-medium-theme));
+}
+#articlev .editorWrapper .cdx-button {
+  background: rgb(var(--background-secondary-theme));
+  color: rgb(var(--color-medium-theme));
+}
+#articlev .editorWrapper .ce-toolbar {
+  background-color: rgb(var(--background-total-theme)) !important;
+  border: 1px solid rgb(var(--background-secondary-theme)) !important;
+  color: rgb(var(--text-color)) !important;
+  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
+}
 #articlev .editorWrapper .cdxcarousel-wrapper {
   padding: 1em;
   border-radius: 3px;
-  background: rgba(var(--neutral-grad-1), 0.15);
+  background: rgb(var(--background-secondary-theme));
+  color: rgb(var(--color-medium-theme));
   position: relative;
 }
 #articlev .editorWrapper .cdxcarousel-wrapper:before {
@@ -200,14 +215,20 @@
 #articlev .editorWrapper .cdxcarousel-wrapper .cdxcarousel-list .cdxcarousel-removeBtn {
   top: 1.5em;
   right: 23px;
+  background: rgb(var(--background-secondary-theme));
+  color: rgb(var(--color-medium-theme));
 }
 #articlev .editorWrapper .cdxcarousel-wrapper .cdxcarousel-list .cdxcarousel-rightBtn {
   top: 1.5em;
   right: 62px;
+  background: rgb(var(--background-secondary-theme));
+  color: rgb(var(--color-medium-theme));
 }
 #articlev .editorWrapper .cdxcarousel-wrapper .cdxcarousel-list .cdxcarousel-leftBtn {
   top: 1.5em;
   right: 101px;
+  background: rgb(var(--background-secondary-theme));
+  color: rgb(var(--color-medium-theme));
 }
 #articlev .editorWrapper .cdxcarousel-wrapper .cdxcarousel-list .cdxcarousel-block {
   width: 33.33%;
@@ -615,7 +636,7 @@
     max-width: 90%;
   }
   #articlev .editorWrapper .cdxcarousel-wrapper .cdxcarousel-list .cdxcarousel-block {
-    width: 50%;
+    width: 100%;
   }
   #articlev .dst {
     backdrop-filter: blur(7px);
