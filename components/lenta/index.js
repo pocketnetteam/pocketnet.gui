@@ -2911,11 +2911,11 @@ var lenta = (function(){
 					
 					if (tpl ==='groupshares'){
 
-						el.recommendedusers = _p.el.find('.recommendeduserscnt');
+						// el.recommendedusers = _p.el.find('.recommendeduserscnt');
 
-						if (!essenseData.video){
-							renders.recommendedusers();
-						}
+						// if (!essenseData.video){
+						// 	renders.recommendedusers();
+						// }
 					}
 
 					if (_p.inner == append){
