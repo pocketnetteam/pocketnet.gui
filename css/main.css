@@ -45,9 +45,9 @@
 }
 :root[theme='black'] {
   --background-hidden-layer: 10, 12, 23;
-  --background-total-theme: 18, 22, 33;
+  --background-total-theme: 1812, 22, 33;
   --background-secondary-theme: 24, 36, 52;
-  --background-main: 14, 28, 43;
+  --background-main: 12, 14, 18;
   --background-main-contrast: 240, 242, 245;
   --color-medium-theme: 99, 100, 117;
   --neutral-grad-0: 16,16,17;
