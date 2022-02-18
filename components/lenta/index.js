@@ -732,7 +732,7 @@ var lenta = (function(){
 				}
 			},
 
-			openPost : function(id, clbk){
+			openPost : function(id, clbk, video){
 
 				var share = self.app.platform.sdk.node.shares.storage.trx[id];
 
@@ -754,7 +754,8 @@ var lenta = (function(){
 							close : function(){
 								openedPost = null
 								essenserenderclbk()
-							}
+							},
+							video
 						}
 
 						var c = function(e, es){		
@@ -1018,7 +1019,9 @@ var lenta = (function(){
 				}
 
 				else{
-					actions.openPost(id)
+
+					actions.openPost(id, null, true)
+
 				}
 				
 			},

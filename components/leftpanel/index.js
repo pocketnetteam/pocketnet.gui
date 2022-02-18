@@ -112,7 +112,7 @@ var leftpanel = (function(){
 	
 						}, function(_p){
 
-	
+							updateNew()
 						})
 					}
 

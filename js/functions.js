@@ -796,8 +796,6 @@
 				wnd.addClass('asette')
 				wnd.removeClass('sette')
 
-				//wnd.one('transitionend webkitTransitionEnd oTransitionEnd', function () {
-
 				setTimeout(function(){
 
 					window.requestAnimationFrame(function(){
@@ -808,19 +806,15 @@
 						if (self.essenseDestroy) self.essenseDestroy(key)
 
 						wnd.remove();
+
 						clearmem();
 					})
 
 				}, 220)	
 
-				
-				//});
-				
-
 			},
 
 			hide : function(cl, key) {
-				// wnd.find('.wndback').css('display', 'none');
 
 				if(!wnd) return
 
@@ -831,7 +825,6 @@
 				wnd.find('.expandButton').removeClass('hidden');
 				wnd.find('.closeButton').addClass('hidden');
 				wnd.find('.hideButton').addClass('hidden');
-				// setTimeout(() => wnd.find('.wndinner').one('click', actions.show), 500);
 
 				if(!nooverflow) {
 					app.actions.onScroll();
@@ -842,7 +835,6 @@
 
 				if(!wnd) return
 
-				// wnd.find('.wndback').css('display', 'none');
 				wnd.find('.buttons').removeClass('hidden');
 				wnd.removeClass('hiddenState');
 				wnd.find('.wndcontent > div').removeClass('rolledUp');
@@ -6644,10 +6636,7 @@
 
 		var self = this;
 
-		var animationInterval = null;
-
 		var animateduration = 400;
-		var animatedurations = (animateduration / 1000) + 's'
 
 		var directiontoprop = function(direction, value){
 
@@ -6934,10 +6923,7 @@
 					
 				swipeStatus:function(event, phase, _direction, distance, duration, fingers, fingerData, currentDirection){
 
-
 					if (self.ended) return false	
-
-
 
 					if (phase == 'start'){
 
@@ -6949,7 +6935,6 @@
 						
 						return true
 					}
-
 
 					if(phase != 'cancel' && phase != 'end'){
 
@@ -7027,23 +7012,22 @@
 
 							set(mainDirection.i, dp)
 
+							console.log('preventDefault')
+
+							
+
 						}
 						else{
-
 							mainDirection = null;
 						}
 
 					}
 
 					if(phase == 'cancel' || phase == 'end'){
-
 						
 						if (mainDirection){
 
-
 							if(phase == 'end' && mainDirection.clbk && _direction == mainDirection.i){
-
-								
 								mainDirection.clbk()
 							}
 								
@@ -7200,12 +7184,14 @@
 
 			var statusf = function(e, phase, direction, distance){
 
+				console.log('phase', phase)
+
 				if (mainDirection && mainDirection.i != direction){
 					phase = 'cancel'
 					direction = mainDirection.i
 				}
 
-				if(phase == 'cancel' || phase == 'end'){
+				if (phase == 'cancel' || phase == 'end'){
 
 					if (mainDirection){
 
@@ -7249,7 +7235,12 @@
 						applyDirection(mainDirection, distance)
 
 						set(mainDirection.i, distance)
+
+						
 					}
+
+					e.preventDefault();
+					return true
 				}
 
 				
@@ -7259,7 +7250,7 @@
 			
 			p.el.swipe({
 				allowPageScroll : p.allowPageScroll,
-				swipeStatus : isios() ? statusf : _.throttle(statusf, throttle),
+				swipeStatus : statusf// isios() ? statusf : _.throttle(statusf, throttle),
 			})
 
 			return self

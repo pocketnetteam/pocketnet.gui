@@ -398,7 +398,9 @@ var main = (function(){
 							
 						},
 	
-						opensvi : self.app.mobileview ? null : function(id, share){
+						opensvi : null,
+						
+						/*? null : function(id, share){
 
 							self.nav.api.load({
 								open : true,
@@ -407,7 +409,7 @@ var main = (function(){
 								handler : true
 							})
 							
-						},
+						},*/
 
 						compact : true
 	

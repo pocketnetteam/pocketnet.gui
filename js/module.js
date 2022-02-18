@@ -177,7 +177,7 @@ nModule = function(){
 									}
 								}
 
-								p = null
+								//p = null
 
 								return r
 
@@ -509,7 +509,7 @@ nModule = function(){
 								settings.auto(p)
 							}
 
-							p = null
+							//p = null
 
 						})				
 

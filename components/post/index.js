@@ -314,7 +314,9 @@ var post = (function () {
 
 				var wh = el.wr.height();
 
-				var d = Math.min((h - wh) / 2, h / 6)
+				var d = Math.max(Math.min((h - wh) / 2, h / 6), 20)
+
+				console.log('positionpositionposition')
 
 				if (d > 0) {
 					el.wr.css('padding-top', d + 'px')

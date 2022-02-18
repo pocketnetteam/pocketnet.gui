@@ -17,16 +17,10 @@
 #post .videoWrapper {
   max-width: 650px;
   position: relative;
-  border-radius: 12px;
   overflow: hidden;
 }
 #post .videoWrapper .js-player {
-  border-radius: 12px;
-  overflow: hidden;
-}
-#post .videoWrapper .js-player .vjs-control-bar {
-  border-radius: 12px;
-  overflow: hidden;
+  border-radius: 0;
 }
 #post .lockedaccount,
 #post .empty {
@@ -79,7 +73,7 @@
   max-width: 930px;
   background: rgb(var(--background-total-theme));
   opacity: 0;
-  border-radius: 6px;
+  /*border-radius: 6px;*/
   -moz-transition: opacity 0.3s;
   -o-transition: opacity 0.3s;
   -webkit-transition: opacity 0.3s;
@@ -89,7 +83,7 @@
   opacity: 1;
 }
 #post .share {
-  border-radius: 6px;
+  /*border-radius: 6px;*/
 }
 #post .share .work {
   padding: 0;
@@ -169,7 +163,7 @@
   max-width: 620px;
 }
 #post.videomainpost {
-  padding-bottom: 6em;
+  padding-bottom: 2em;
 }
 #post.videomainpost .hiddenpost {
   background: rgb(var(--background-total-theme));
@@ -252,7 +246,6 @@
 }
 #post.videomainpost .videoWrapper {
   overflow: hidden;
-  border-radius: 12px;
   max-width: none;
   position: static;
 }

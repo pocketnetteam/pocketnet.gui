@@ -29,17 +29,10 @@
 	.videoWrapper {
 		max-width: 650px;
 		position: relative;
-		border-radius: 12px;
 		overflow: hidden;
 
 		.js-player{
-			border-radius: 12px;
-			overflow: hidden;
-
-			.vjs-control-bar{
-				border-radius: 12px;
-				overflow: hidden;
-			}
+			border-radius: 0;
 		}
 	}
 
@@ -108,7 +101,7 @@
 		max-width: 930px;
 		background: rgb(var(--background-total-theme));
 		opacity: 0;
-		border-radius: 6px;
+		/*border-radius: 6px;*/
 		.transition(0.3s, opacity);
 
 		&.active{
@@ -119,7 +112,7 @@
 
 
 	.share{
-		border-radius: 6px;
+		/*border-radius: 6px;*/
 		.work{
 			padding : 0;
 			padding-right: 0;
@@ -231,6 +224,8 @@
 	}
 
 	&.videomainpost{
+
+		padding-bottom : 4 * @rhythm;
 
 		.hiddenpost{
 			background: rgb(var(--background-total-theme));
@@ -352,11 +347,8 @@
 
 		.videoWrapper{
 			overflow: hidden;
-			border-radius: 12px;
 			max-width: none;
 			position: static;
-
-			
 		}
 
 		.jsPlayerLoading,
@@ -376,7 +368,7 @@
 		}
 
 
-		padding-bottom : 12 * @rhythm;
+		
 
 		.share{
 			margin : 0 auto;

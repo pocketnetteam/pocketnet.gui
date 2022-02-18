@@ -538,7 +538,6 @@ var arranges = {
 
 								<% if(window.cordova && share.itisvideo() ) {
 									
-									
 									var status = app.platform.sdk.localshares.status(share.txid)
 									
 									%>
@@ -565,26 +564,6 @@ var arranges = {
 
 								<% } else { %> 
 									
-									
-									
-								
-									<!--<% if(app.platform.repost && !my && !app.curation()) {%>
-										<% if(!checkvisibility && !share.visibility()) {%>
-											<div elementsid="lenta_forreport" class="item <% if(!my){ %> forrepost <% } else { %> nact <% } %>">
-
-												<div class="itemwr table">
-													<div class="iconwr">											
-														<div class="icon">
-															<i class="fas fa-share"></i>
-														</div>
-													</div>
-												
-												</div>
-
-											</div>
-										<% } %>
-									<% } %>-->
-
 								<% } %>
 
 								<% if((typeof preview == 'undefined' || !preview) ) {%>			
@@ -592,9 +571,7 @@ var arranges = {
 									<div class="item sharesocial unselectable">
 
 										<div class="itemwr table">
-											<!--<div class="labelwr workstation"><span class="label"><%=e('share').toUpperCase()%></span></div>-->
 											<div class="iconwr">
-												
 												<div class="icon">
 													<i class="fas fa-share-alt"></i>
 												</div>
@@ -616,9 +593,7 @@ var arranges = {
 								
 							</div>
 
-							<div class="wholikes">
-								
-							</div>
+							
 						<% } %>
 
 						<% if(share.temp) {%>
