@@ -35,14 +35,11 @@
         <link rel="stylesheet" href="css/tooltipster.core.min.css?v=487681635664">
         <link rel="stylesheet" href="css/tooltipster.bundle.min.css?v=748159927557">
         <link rel="stylesheet" href="css/main.css?v=503197461855">
-        <link rel="stylesheet" href="css/stblack.css?v=276199619365">
+        <link rel="stylesheet" href="css/common.css?v=503197461855">
         <link rel="stylesheet" href="css/plyr_el.css?v=1">        
         <link rel="stylesheet" href="css/jquery-ui.min.css?v=136">
 
-        <link rel="stylesheet" href="css/medium/medium-editor.css">
-        <link rel="stylesheet" href="css/medium/medium-editor-insert-plugin.css?v=136">
         <link rel="stylesheet" href="js/vendor/DateTimePicker.min.css?v=514508004319">
-        <link rel="stylesheet" href="css/medium/beagle.css?v=136">
 
         <link rel="stylesheet" href="css/datetime.css?v=136">        
 
