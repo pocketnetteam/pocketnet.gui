@@ -857,6 +857,10 @@ var main = (function(){
 				localStorage['lentakey'] = 'video'
 			}
 
+			if (parameters().read){
+				localStorage['lentakey'] = 'read'
+			}
+
 			renders.lentawithsearch(clbk, p)
 
 			makeShare()
@@ -915,6 +919,8 @@ var main = (function(){
 				var page = parameters().page
 
 				var changes = false
+
+				console.log('nlentakeynlentakeynlentakey', nlentakey)
 
 				localStorage['lentakey'] = nlentakey
 

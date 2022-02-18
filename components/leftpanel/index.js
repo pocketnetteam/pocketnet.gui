@@ -336,7 +336,6 @@ var leftpanel = (function(){
 			
 			init : function(p){
 
-				console.log('self.app.settings', self.app.settings);
 				state.load();
 
 				el = {};

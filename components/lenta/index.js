@@ -1272,8 +1272,6 @@ var lenta = (function(){
 
 				if (checkvisibility && reputation >= 50) return
 
-				console.log('value', value)
-
 				if(value <= 3){
 					if(self.app.platform.sdk.user.scamcriteria()){
 						if(clbk)
@@ -2018,7 +2016,6 @@ var lenta = (function(){
 
 			loadmorescroll : function(){
 
-				//console.log('loadmorescroll', cachedHeight, loadedcachedHeight)
 
 				if(!essenseData.horizontal){
 					if (
@@ -3209,8 +3206,6 @@ var lenta = (function(){
 				var meta = self.app.platform.parseUrl(url);			
 
 				var rndr = function(){
-
-					console.log("RENDER URLs", el, url, share)
 
 					self.app.platform.sdk.videos.paddingplaceholder(isMobile() || essenseData.horizontal ? null : url, function (next) {
 

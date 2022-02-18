@@ -581,7 +581,6 @@ var menu = (function(){
 
 							search : function(value, clbk, e, helpers){
 
-								console.log('menusearch.active', menusearch.active)
 
 								if(!menusearch.active){
 
@@ -651,7 +650,6 @@ var menu = (function(){
 
 							active : function(a){
 
-								console.log("setactive", a)
 
 								if (a || (parameters().ss || parameters().sst)){
 									el.c.addClass('searchactive')
@@ -1148,7 +1146,6 @@ var menu = (function(){
 			showsearch : function(v){
 
 
-				console.log('showsearch showsearch', v)
 
 				if (v){
 					el.c.addClass('searchactive')

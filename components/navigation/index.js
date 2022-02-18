@@ -48,11 +48,17 @@ var navigation = (function(){
 				if (k == indexkey) k = indexkey + '?b=true'
 
 				if (k.indexOf('?') == -1) {
+
 					if (k == 'video'){
 						k = indexkey + '?video=1'
 					}
 					else{
-						k = indexkey + '?r=' + k
+						if (k == 'read'){
+							k = indexkey + '?read=1'
+						}
+						else{
+							k = indexkey + '?r=' + k
+						}
 					}
 				}
 
@@ -61,6 +67,7 @@ var navigation = (function(){
 				var search = parameters().ss || parameters().sst
 
 				var back = self.app.nav.api.backChainGet()
+
 
 				self.shell({
 					name :  'menu',
