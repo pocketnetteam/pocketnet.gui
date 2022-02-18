@@ -176,7 +176,7 @@ var topusers = (function(){
 					// setTimeout(() => {
 
 
-						_.each(addresses, function(share, idx){
+						// _.each(addresses, function(share, idx){
 
 				
 							// self.nav.api.load({
@@ -196,21 +196,21 @@ var topusers = (function(){
 			
 							// })
 							
-							self.shell({
-								name :  'usermodal',
-								el : el.c.find('.user[address="' + share.address + '"] .usermodal'),
-								data : {
-									u : share,
-								},
-								animation : false,				
+							// self.shell({
+							// 	name :  'usermodal',
+							// 	el : el.c.find('.user[address="' + share.address + '"] .usermodal'),
+							// 	data : {
+							// 		u : share,
+							// 	},
+							// 	animation : false,				
 		
-							}, function(p){
+							// }, function(p){
 	
-							})
+							// })
 
 							
 	
-						})
+						// })
 
 					// }, 8000)
 
