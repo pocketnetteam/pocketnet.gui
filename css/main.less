@@ -4084,7 +4084,36 @@ input[type=radio].radio:checked + label {
         opacity: .5;
     }
 
-   
+    .emojionearea {
+
+        .emojionearea-picker{
+            background: rgb(var(--background-total-theme));
+            color : rgb(var(--text-color));
+            .shadowSmaller();
+
+            .emojionearea-filters{
+                background: rgb(var(--background-main));
+
+                .emojionearea-filter{
+                    &.active{
+                        background: rgb(var(--neutral-grad-1));
+                    }
+                }
+            }
+
+            .emojionearea-scroll-area{
+                .emojionearea-category-title{
+                    background: rgb(var(--background-total-theme));
+                    color : rgb(var(--text-color));
+                }
+
+            }
+
+        }
+
+
+    } 
+
 }
 
 

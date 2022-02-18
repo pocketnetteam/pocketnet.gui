@@ -3469,6 +3469,21 @@ input[type=radio].radio:checked + label {
 #application .owl-carousel .owl-nav button.disabled {
   opacity: 0.5;
 }
+#application .emojionearea .emojionearea-picker {
+  background: rgb(var(--background-total-theme));
+  color: rgb(var(--text-color));
+  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
+}
+#application .emojionearea .emojionearea-picker .emojionearea-filters {
+  background: rgb(var(--background-main));
+}
+#application .emojionearea .emojionearea-picker .emojionearea-filters .emojionearea-filter.active {
+  background: rgb(var(--neutral-grad-1));
+}
+#application .emojionearea .emojionearea-picker .emojionearea-scroll-area .emojionearea-category-title {
+  background: rgb(var(--background-total-theme));
+  color: rgb(var(--text-color));
+}
 .errorcntplyrex {
   width: 100%;
   padding-bottom: 56%;
