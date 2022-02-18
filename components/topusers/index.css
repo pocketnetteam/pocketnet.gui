@@ -22,13 +22,10 @@
   flex-grow: 2;
   font-weight: 100;
   padding: 12px 16px;
-  border-bottom: 1px solid rgba(229, 229, 229, 0.5);
+  border-bottom: 1px solid rgba(var(--neutral-grad-1), 0.5);
 }
 #topusers .tcaption .authors {
   font-weight: 700;
-}
-#topusers .tcaption .rating {
-  color: #555770;
 }
 #topusers .caption {
   font-weight: 100;
@@ -55,7 +52,7 @@
   font-size: 0.5em;
 }
 #topusers .subscribebuttonstop .subscribe {
-  color: #b2abac;
+  color: rgba(var(--neutral-grad-3), 0.4);
 }
 #topusers .subscribebuttonstop .unsubscribe {
   color: rgb(var(--color-good));
@@ -94,7 +91,7 @@
   white-space: nowrap;
 }
 #topusers .users .user .addressTable > div.label .cur {
-  color: #00a4ff;
+  color: rgb(var(--color-bg-ac-bright));
 }
 #topusers .users .user .addressTable > div.label .top {
   display: flex;
@@ -112,11 +109,11 @@
   bottom: 2px;
   left: 3px;
   font-size: 0.6em;
-  color: #00a4ff;
+  color: rgb(var(--color-bg-ac-bright));
 }
 #topusers .users .user .addressTable > div.label .light {
   font-size: 0.7em;
-  color: #3c4146;
+  color: rgba(var(--neutral-grad-3), 0.5);
 }
 #topusers .users .user .addressTable > div.extra {
   width: 20px;
@@ -153,7 +150,7 @@
   margin-top: 15px;
   background: rgb(var(--background-total-theme));
   border-radius: 12px;
-  box-shadow: 32px 32px 32px 32px #00000014;
+  box-shadow: 32px 32px 32px 32px rgb(var(--background-total-theme));
   padding: 1em 0.5em;
 }
 #topusers .users .user .modal .topInfo .addressTable {
@@ -177,7 +174,7 @@
   color: #8E90A6;
 }
 #topusers .users .user .modal .topInfo .addressTable .label .reputation .value {
-  color: #00a4ff;
+  color: rgb(var(--color-bg-ac-bright));
   font-weight: 700;
 }
 #topusers .users .user .modal .follow {
@@ -219,25 +216,4 @@
 }
 #topusers .users .user:hover .modal {
   display: block;
-}
-html.stblack #topusers .users .user .addressTable {
-  cursor: pointer;
-}
-html.stblack #topusers .users .user .addressTable > div.label .cur {
-  color: #00a4ff;
-}
-html.stblack #topusers .users .user .addressTable > div.label .light {
-  color: #3c4146;
-}
-html.stblack #topusers .users .user.blocking {
-  background: #290318;
-}
-/*t*/
-@media only screen and (max-width: 768px) {
-  #userslist {
-    padding: 1em;
-  }
-  #userslist .users .addressTable > div.extra {
-    width: 60px;
-  }
 }

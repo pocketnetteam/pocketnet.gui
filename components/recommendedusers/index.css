@@ -29,9 +29,6 @@
 #recommendedusers .tcaption .authors {
   font-weight: 700;
 }
-#recommendedusers .tcaption .rating {
-  color: #555770;
-}
 #recommendedusers .caption {
   font-weight: 100;
   font-size: 2em;
@@ -55,12 +52,6 @@
   top: 3px;
   left: 14px;
   font-size: 0.5em;
-}
-#recommendedusers .subscribe {
-  color: #b2abac;
-}
-#recommendedusers .unsubscribe {
-  color: rgb(var(--color-good));
 }
 #recommendedusers .users {
   display: flex;
@@ -179,28 +170,4 @@
 }
 #recommendedusers .users .user .subscribebuttonstop.following .subscribe {
   display: none;
-}
-html.stblack #recommendedusers {
-  background: transparent;
-}
-html.stblack #recommendedusers .users .user .addressWrapper {
-  cursor: pointer;
-}
-html.stblack #recommendedusers .users .user .addressWrapper > div.label .cur {
-  color: #00a4ff;
-}
-html.stblack #recommendedusers .users .user .addressWrapper > div.label .light {
-  color: #3c4146;
-}
-html.stblack #recommendedusers .users .user.blocking {
-  background: #290318;
-}
-/*t*/
-@media only screen and (max-width: 768px) {
-  #userslist {
-    padding: 1em;
-  }
-  #userslist .users .addressWrapper > div.extra {
-    width: 60px;
-  }
 }

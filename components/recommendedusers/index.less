@@ -36,12 +36,7 @@
             font-weight : 700;
         }
 
-        .rating{
-            color : #555770;
-        }
-
-       
-        
+      
     }
 
 	.caption{
@@ -73,14 +68,6 @@
 			font-size: @rhythm;
 		}
 
-	}
-
-	.subscribe{
-		color : @color-gray-mlight;
-	}
-
-	.unsubscribe{
-		color: rgb(var(--color-good));
 	}
 
 	.users{
@@ -204,9 +191,6 @@
 							}
 						}
 
-
-
-
 					}
 				}
 
@@ -263,64 +247,4 @@
 		}
 		
 	}
-}
-
-html.stblack{
-	#recommendedusers{
-		background: transparent;
-	
-	
-		.users{
-			.user{
-			
-				.addressWrapper{
-					cursor: pointer;
-					
-					>div{
-		
-						&.label{
-		
-							.cur{
-								color : @color-main;
-							}
-	
-							.light{
-								color : @color-gray;
-							}
-						}
-		
-					}
-		
-				}
-	
-				&.blocking{
-					background: rgb(41, 3, 24);	
-				}
-		
-			}
-			
-		}
-	}	
-}
-
-/*t*/ @media only screen and (max-width: 768px){
-#userslist{
-	padding : 2 * @rhythm;
-
-	.caption{
-	}
-
-	.users{
-		.addressWrapper{
-			>div{
-
-
-				&.extra{
-					width: 60px;
-				}
-			}
-
-		}
-	}
-}
 }
