@@ -5,11 +5,13 @@
 #categories .pocketcaption span {
   margin-right: 0;
 }
-#categories .pocketcaption:hover {
-  color: rgb(var(--color-txt-ac));
-}
-#categories .pocketcaption:hover span {
-  margin-right: 20px;
+@media (pointer: fine) {
+  #categories .pocketcaption:hover {
+    color: rgb(var(--color-txt-ac));
+  }
+  #categories .pocketcaption:hover span {
+    margin-right: 20px;
+  }
 }
 #categories .newlabel {
   background: crimson;
@@ -121,9 +123,6 @@
   cursor: pointer;
   width: 80%;
 }
-#categories .cat .cattable > div.catvalue:hover {
-  color: rgb(var(--color-txt-ac));
-}
 #categories .cat .cattable > div.catedit,
 #categories .cat .cattable > div.catcheck {
   /*.transition(0.3s);*/
@@ -136,10 +135,6 @@
 #categories .cat .cattable > div.catedit i,
 #categories .cat .cattable > div.catcheck i {
   font-size: 0.8em;
-}
-#categories .cat .cattable > div.catedit:hover,
-#categories .cat .cattable > div.catcheck:hover {
-  color: rgb(var(--color-txt-ac));
 }
 #categories .cat .cattable > div.catedit {
   width: 33px;
@@ -163,23 +158,32 @@
   position: relative;
   right: 10px;
 }
-#categories .cat .cattable > div.catedit:hover {
-  opacity: 1;
-}
 #categories .cat .cattable > div.checked {
   display: none;
 }
-#categories .cat:hover .cattable > div.catedit,
-#categories .cat:hover .cattable > div.catcheck {
-  opacity: 1;
-}
-#categories .cat:hover .cattable > div.catedit,
-#categories .cat:hover .cattable > div.minus {
-  opacity: 0.5;
-}
-#categories .cat:hover .cattable > div.catedit:hover,
-#categories .cat:hover .cattable > div.minus:hover {
-  opacity: 1;
+@media (pointer: fine) {
+  #categories .cat .cattable > div.catvalue:hover {
+    color: rgb(var(--color-txt-ac));
+  }
+  #categories .cat .cattable > div.catedit:hover,
+  #categories .cat .cattable > div.catcheck:hover {
+    color: rgb(var(--color-txt-ac));
+  }
+  #categories .cat .cattable > div.catedit:hover {
+    opacity: 1;
+  }
+  #categories .cat:hover .cattable > div.catedit,
+  #categories .cat:hover .cattable > div.catcheck {
+    opacity: 1;
+  }
+  #categories .cat:hover .cattable > div.catedit,
+  #categories .cat:hover .cattable > div.minus {
+    opacity: 0.5;
+  }
+  #categories .cat:hover .cattable > div.catedit:hover,
+  #categories .cat:hover .cattable > div.minus:hover {
+    opacity: 1;
+  }
 }
 #categories .tg {
   border-radius: 12px;

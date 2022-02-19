@@ -302,14 +302,14 @@
 #comments .list .comment.mycomment > div.commentPaddingWrapper > div.commentWrapper > div.commentBody > div.cbodyWrapper .commentpanel .upvoteComment,
 #comments .list .comment.rated > div.commentPaddingWrapper > div.commentWrapper > div.commentBody > div.cbodyWrapper .commentpanel .upvoteComment {
   cursor: default;
-  color: rgb(var(--neutral-grad-1));
+  color: rgb(var(--neutral-grad-2));
 }
 #comments .list .comment.mycomment > div.commentPaddingWrapper > div.commentWrapper > div.commentBody > div.cbodyWrapper .commentpanel .upvoteComment.ratedScore,
 #comments .list .comment.rated > div.commentPaddingWrapper > div.commentWrapper > div.commentBody > div.cbodyWrapper .commentpanel .upvoteComment.ratedScore {
   color: rgb(var(--color-bg-ac-bright));
 }
 #comments .list .comment.deleted .commentmessage {
-  color: rgb(var(--neutral-grad-1));
+  color: rgb(var(--neutral-grad-2));
 }
 #comments .list .comment.newcommentsn,
 #comments .list .comment.newcomments {

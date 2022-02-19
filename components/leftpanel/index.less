@@ -241,9 +241,14 @@
 
 		a{
 			.transition(0.3s);
+			
+		}
 
-			&:hover{
-				color : rgb(var(--color-txt-ac));
+		@media (pointer:fine) {
+			a{
+				&:hover{
+					color : rgb(var(--color-txt-ac));
+				}
 			}
 		}
 
@@ -304,10 +309,15 @@
 				padding-left: 0;
 				.transition(0.3s);
 				font-size: 0.8em;
+			}
 
-				&:hover{
-					color : rgb(var(--color-txt-ac));
-					background: transparent;
+			@media (pointer:fine) {
+				.vc_value{
+					
+					&:hover{
+						color : rgb(var(--color-txt-ac));
+						background: transparent;
+					}
 				}
 			}
 		}

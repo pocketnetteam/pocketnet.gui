@@ -166,8 +166,10 @@
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
-#leftpanel .rightbottomnav a:hover {
-  color: rgb(var(--color-txt-ac));
+@media (pointer: fine) {
+  #leftpanel .rightbottomnav a:hover {
+    color: rgb(var(--color-txt-ac));
+  }
 }
 #leftpanel .rightbottomnav .rightbottomlinks {
   padding-top: 0.5em;
@@ -218,9 +220,11 @@
   transition: 0.3s;
   font-size: 0.8em;
 }
-#leftpanel .vc_valuecustom .vc_selectInput .vc_value:hover {
-  color: rgb(var(--color-txt-ac));
-  background: transparent;
+@media (pointer: fine) {
+  #leftpanel .vc_valuecustom .vc_selectInput .vc_value:hover {
+    color: rgb(var(--color-txt-ac));
+    background: transparent;
+  }
 }
 #leftpanel .vc_valuecustom input[disabled] {
   cursor: pointer;

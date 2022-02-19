@@ -37,13 +37,6 @@
                 width: 33px;
                 text-align: center;
                 .transition(0.3s);
-
-                &:hover{
-                    i{
-                        color : rgb(var(--color-txt-ac));
-                    }
-                    
-                }
             }
 
             &.mlab{
@@ -55,15 +48,6 @@
                 span{
                     font-weight: 100;
                     font-size: 0.8em;
-                }
-
-                &:hover{
-                    opacity: 1;
-                    color : rgb(var(--color-bad));
-                    
-                    .tagvalue{
-                        border: 1px solid rgb(var(--color-bad));
-                    }
                 }
             }
 
@@ -113,10 +97,6 @@
             &.tagvalue{
                 .transition(0.3s);
                 cursor: pointer;
-                &:hover{
-                    color : rgb(var(--color-txt-ac));
-                    border: 1px solid rgb(var(--color-txt-ac));
-                }
             }
 
             &.tagcount{
@@ -136,33 +116,11 @@
                 i{
                     font-size: 0.8em;
                 }
-
-                
-                &:hover{
-                    color : rgb(var(--color-txt-ac));
-
-                    .tagvalue{
-                        border : 1px solid rgb(var(--color-txt-ac));
-
-                    }
-                }
             }
 
             &.tagsearch{
                 width : 33px;
                 opacity: 0;
-            }
-        }
-    
-
-        &:hover{
-            .tagvalue{
-                >div{
-                    &.tagcheck,
-                    &.tagsearch{
-                        opacity: 1;
-                    }
-                }
             }
         }
 
@@ -253,10 +211,6 @@
         border-bottom: 1px solid rgba(var(--color-medium-theme), 0.5);
         .transition(0.3s);
 
-        &:hover{
-            color : rgb(var(--color-txt-ac));
-        }
-
         span, i{
             font-size: 0.8em;
         }
@@ -272,6 +226,79 @@
 
     .hidealltags{
         display: none;
+    }
+
+    @media (pointer:fine) {
+        .tcaptiontable{
+            >div{
+                &.ticon{
+                    &:hover{
+                        i{
+                            color : rgb(var(--color-txt-ac));
+                        }
+                        
+                    }
+                }
+    
+                &.mlab{
+    
+                    &:hover{
+                        opacity: 1;
+                        color : rgb(var(--color-bad));
+                        
+                        .tagvalue{
+                            border: 1px solid rgb(var(--color-bad));
+                        }
+                    }
+                }
+            }
+        }
+    
+        .tag{
+            
+            >div{
+                
+                &.tagvalue{
+                    &:hover{
+                        color : rgb(var(--color-txt-ac));
+                        border: 1px solid rgb(var(--color-txt-ac));
+                    }
+                }
+                &.tagsearch,
+                &.tagcheck{
+                    
+                    &:hover{
+                        color : rgb(var(--color-txt-ac));
+    
+                        .tagvalue{
+                            border : 1px solid rgb(var(--color-txt-ac));
+    
+                        }
+                    }
+                }
+            }
+        
+    
+            &:hover{
+                .tagvalue{
+                    >div{
+                        &.tagcheck,
+                        &.tagsearch{
+                            opacity: 1;
+                        }
+                    }
+                }
+            }
+    
+        }
+    
+        .hidealltags,
+        .showalltags{
+    
+            &:hover{
+                color : rgb(var(--color-txt-ac));
+            }
+        }
     }
 
 }
