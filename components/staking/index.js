@@ -8,7 +8,7 @@ var staking = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, info = null, amount = 1000, graph = null, history;
+		var el, info = null, amount = 1000, graph = null, history, stakingClose = null;
 
 			// exchange = 'mercatox'
 			exchange = 'digifinex'
@@ -362,6 +362,9 @@ var staking = (function(){
 
 							p.el.find('.caret-down').on('click', function(){
 
+								stakingClose = null;
+								localStorage.removeItem('stakingClose');
+
 								el.c.find('.wrp').removeClass('hide');
 				
 						
@@ -438,6 +441,9 @@ var staking = (function(){
 			})
 			
 			el.c.find('.caret-up').on('click', function(){
+
+				stakingClose = 1;
+				localStorage.setItem('stakingClose', '1');
 
 				el.c.find('.wrp').addClass('hide');
 				
@@ -580,9 +586,12 @@ var staking = (function(){
 
 			getdata : function(clbk){
 
+				stakingClose = localStorage.getItem('stakingClose');
+
 				var data = {
 					amount : amount,
-					parameters : parameters
+					parameters : parameters,
+					stakingClose : stakingClose
 				};
 
 				clbk(data);

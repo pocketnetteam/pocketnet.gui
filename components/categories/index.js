@@ -296,6 +296,13 @@ var categories = (function(){
 
 						})
 
+						p.el.find('.cat .times').on('click', function(){
+							var id = $(this).closest('.tg').attr('category');
+
+							var r = self.app.platform.sdk.categories.select(id)
+
+						})
+
 						p.el.find('.catedit').on('click', function(){
 							var id = $(this).closest('.tg').attr('category')
 

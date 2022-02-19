@@ -1,11 +1,12 @@
 <div id="<%-module.map.id%>">
 
 	<% 
-	var src = deep(app, 'platform.sdk.usersl.storage.'+address+'.image');
-	deep(app, 'platform.sdk.user.storage.me.image'); 
-	var name = deep(app, 'platform.sdk.usersl.storage.'+address+'.name');
-	var letter = name ? name[0] : '';  
-	var dev = deep(app, 'platform.sdk.usersl.storage.'+address+'.dev');
+		var address = self.app.user.address.value;
+		var src = deep(app, 'platform.sdk.usersl.storage.'+address+'.image');
+		deep(app, 'platform.sdk.user.storage.me.image'); 
+		var name = deep(app, 'platform.sdk.usersl.storage.'+address+'.name');
+		var letter = name ? name[0] : '';  
+		var dev = deep(app, 'platform.sdk.usersl.storage.'+address+'.dev');
 %>
 	<div class="content">
 		<div class="top">
@@ -55,7 +56,7 @@
 		<div id="fieldsWrapper" class="fieldsWrapper">
 		</div>
 		<div class="sendButtonWrapper">
-			<div class="sendButton">
+			<div class="sendButton disabled">
 				<%-e('send')%>
 			</div>
 		</div>

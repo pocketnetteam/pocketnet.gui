@@ -7,47 +7,24 @@
 	if(user.address.value)
 		me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
 
-	var telements = function(address){ %>
-
-		<% if(me && !user.isItMe(address)) {
-			
-			var _class=''
-			
-			%>
-
-			<% if (me && me.relation(address, 'subscribes')){ _class="following" } %>
-
-			<% if (me && me.relation(address, 'blocking')){ _class="blocking" }	%>
-
-			
-			<span class="subscribebuttonstop <%-_class%>">
-
-				<span class="subscribe funf">
-					<i class="fa fa-user"></i>
-					<i class="fa fa-plus"></i>
-				</span>	
-
-				<span class="unsubscribe funf">
-					<i class="fa fa-user"></i>
-					<i class="fa fa-plus"></i>
-				</span>	
-
-			</span>
-
-						
-					
-		<% } %>
-		
-	<% }
 	_.each(addresses, function(u){ 
 
 		var _class='';
 		var address = u.address;
 
+		var _class=''
+		
+		
+
+		if (me && me.relation(address, 'subscribes')){ _class="following" };
+
+		if (me && me.relation(address, 'blocking')){ _class="blocking" };
+
+
 	%>
 		<div class="wrk">
 
-			<div class="user <%-_class%>" address="<%-address%>">
+			<div class="user" address="<%-address%>">
 				<div class="addressWrapper" address="<%-address%>">
 					<div class="iconWrapper">
 						
@@ -68,11 +45,12 @@
 									<img class="usericonQ" src="<%-src || '*'%>">
 
 									<% } else if(!src && letter) {%>
+										<div class="usericon">
+											<span class="letter">
+												<%-letter.toUpperCase()%>
+											</span>
+										</div>
 
-										<span class="letter">
-											<%-letter.toUpperCase()%>
-										</span>
-				
 									<% } else if (!src) { %>
 				
 										<svg width="30" height="30" data-jdenticon-value="<%-address%>"></svg>
@@ -82,49 +60,26 @@
 						</a>
 					</div>
 
-					<div class="label">
-						<a href="<%-app.platform.api.authorlink(address)%>">
-
-							<div class="top">
-								<div class="name">
-									<%- u.name %>							
-								</div>		
-								<% var r = u.reputation %>
-
-								<% if (r) {%>
-									<div class="reputation">
-										<%- Number(r).toFixed(0)  %>
-									</div>
-								<% } %>
-
-							</div>
-
-							<% var subscribers = u.subscribers_count   %>
-
-				
-							<div class="light">						
-								<%- subscribers %> <%=e('subscribers3') %>
-
-							</div>
-
-
-						</a>			
-
+					<div class="userbody">
+						<div class="name">
+							<%- u.name %>							
+						</div>		
+						<% var r = u.reputation || 0 %>
+	
+						<div class="reputation">
+							<%=e('reputation') %> <span class="value"> <%- Number(r).toFixed(0) %></span>
+						</div>
+	
+						<div class="subscribeWrapper <%-_class%>">
+							<button class="subscribeButton">
+								<%=e('follow') %>
+							</button>
+							<button class="unsubscribeButton">
+								<%=e('unfollow') %>
+							</button>
+						</div>
 					</div>
 
-					<div class="extra">
-
-						<% if(typeof extra != 'undefined' && extra) {%>
-							<%= extra(address) %>
-						<% } else { %> 
-
-							<% telements(address) %>	
-
-						<% } %>
-
-						
-
-					</div>
 				</div>
 			</div>
 		</div>

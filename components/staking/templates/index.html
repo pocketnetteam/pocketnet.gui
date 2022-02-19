@@ -1,5 +1,5 @@
 <div id="<%-module.map.id%>">
-	<div class="wrp">
+	<div class="wrp <% if(stakingClose) {%> hide <% } %>">
 		<div class="rcptwrp">
 			<div class="tcaptionwrapper">
 				<div class="tcaption">
@@ -12,7 +12,7 @@
 					</span>
 				</div>
 
-				<div class="caret caret-up">
+				<div class="caret <% if(stakingClose) {%> caret-down <% } else { %> caret-up <% } %>">
 					<i class="fa fa-caret-up"></i>
 				</div>
 

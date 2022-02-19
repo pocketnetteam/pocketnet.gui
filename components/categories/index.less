@@ -186,6 +186,15 @@
                     opacity: 0;
                 }
 
+                &.times{
+                    display: none;
+                    font-size: 0.8;
+                    color: rgb(var(--color-bad));
+                    justify-content: flex-end;
+                    cursor: pointer;
+                    align-items: center;
+                }
+
                 &.minus{
                     opacity: 0;
                     font-size: 0.8em;
@@ -283,6 +292,16 @@
                         }
                     }
 
+                }
+
+                .minus{
+                    display: none;
+                }
+
+                &:hover{
+                    .times{
+                        display: flex;
+                    }
                 }
             }
         }

@@ -173,6 +173,49 @@ var topusers = (function(){
 					el.c.on('click', '.unsubscribe', events.unsubscribe)
 					el.c.on('click', '.notificationturn', events.subscribePrivate)
 
+					// setTimeout(() => {
+
+
+						// _.each(addresses, function(share, idx){
+
+				
+							// self.nav.api.load({
+
+							// 	open : true,
+							// 	id : 'usermodal',
+							// 	el : el.c.find('.user[address="' + share.address + '"] .modalWrapper'),
+							// 	animation : false,
+			
+							// 	essenseData : {
+							// 		share: share
+							// 	},
+								
+							// 	clbk : function(e, p){
+							// 		// recommendedposts = p;
+							// 	}
+			
+							// })
+							
+							// self.shell({
+							// 	name :  'usermodal',
+							// 	el : el.c.find('.user[address="' + share.address + '"] .usermodal'),
+							// 	data : {
+							// 		u : share,
+							// 	},
+							// 	animation : false,				
+		
+							// }, function(p){
+	
+							// })
+
+							
+	
+						// })
+
+					// }, 8000)
+
+
+
 					
 					if (clbk)
 						clbk()
@@ -190,8 +233,6 @@ var topusers = (function(){
 
 			},
 			load : function(clbk){
-
-				console.log('addresses', addresses)
 
 				
 				var shuffle = function(array) {
@@ -298,7 +339,6 @@ var topusers = (function(){
 			},
 			
 			init : function(p){
-
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
