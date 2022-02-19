@@ -60,6 +60,9 @@
   margin-bottom: 2em;
   /* Firefox */
 }
+#pkoin .content .fieldsWrapper .fields .inputWrapper.inputSumWrapper {
+  margin-bottom: 1em;
+}
 #pkoin .content .fieldsWrapper .fields .inputWrapper input::-webkit-outer-spin-button,
 #pkoin .content .fieldsWrapper .fields .inputWrapper input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -77,6 +80,9 @@
 }
 #pkoin .content .fieldsWrapper .fields .inputWrapper .vc_valuecustom {
   width: 100%;
+}
+#pkoin .content .fieldsWrapper .fields .inputWrapper .vc_valuecustom .vc_textInput {
+  border: 0;
 }
 #pkoin .content .fieldsWrapper .fields .inputWrapper .vc_valuecustom.opened .vc_inputWrapper,
 #pkoin .content .fieldsWrapper .fields .inputWrapper .vc_valuecustom.opened .vc_iconWrapper {
@@ -127,6 +133,12 @@
   right: 12px;
   top: 12px;
 }
+#pkoin .content .fieldsWrapper .fields .sum .inputWrapper .errorWrapper {
+  margin-top: 0.5em;
+  font-size: 0.9em;
+  color: rgb(var(--color-bad));
+  height: 19px;
+}
 #pkoin .content .fieldsWrapper .fields .comment .text {
   line-height: 24px;
   color: rgb(var(--color-txt-gray-dark));
@@ -142,6 +154,10 @@
   color: rgb(var(--text-on-bg-ac-color));
   border-radius: 12px;
   cursor: pointer;
+}
+#pkoin .content .sendButtonWrapper .sendButton.disabled {
+  cursor: default;
+  background: rgb(var(--color-bg-ac-1));
 }
 .wnd.pkoinwindow .wndinner.pkoin {
   max-width: 370px;

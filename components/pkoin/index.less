@@ -76,6 +76,10 @@
 				.inputWrapper{
 					margin-bottom: @rhythm * 4;
 
+					&.inputSumWrapper{
+						margin-bottom: @rhythm * 2;
+					}
+
 					input::-webkit-outer-spin-button,
 					input::-webkit-inner-spin-button {
 						-webkit-appearance: none;
@@ -96,6 +100,10 @@
 
 					.vc_valuecustom{
 						width: 100%;
+
+						.vc_textInput{
+							border: 0;
+						}
 
 						&.opened{
 	
@@ -165,6 +173,13 @@
 							right: 12px;
 							top: 12px;
 						}
+
+						.errorWrapper{
+							margin-top: @rhythm;
+							font-size: 0.9em;
+							color: rgb(var(--color-bad));
+							height: 19px;
+						}
 					}
 				}
 				.comment{
@@ -188,6 +203,11 @@
 				color : rgb(var(--text-on-bg-ac-color));
 				border-radius: 12px;
 				cursor: pointer;
+
+				&.disabled{
+					cursor: default;
+					background: rgb(var(--color-bg-ac-1));
+				}
 			}
 		}
 

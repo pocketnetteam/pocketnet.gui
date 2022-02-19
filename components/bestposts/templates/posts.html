@@ -5,8 +5,6 @@ var me = null;
 if(user.address.value)
 	me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
 
-
-console.log('shares', shares);
 _.each(shares, function(u){ 
 
 	var _class='';

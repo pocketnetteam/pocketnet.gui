@@ -7,7 +7,7 @@ var pkoin = (function(){
 	var Essense = function(p){
 
 		var primary = deep(p, 'history');
-		var el, optionsValue = 'pkoinComment', shareId, receiver, valSum, valComment;
+		var el, optionsValue = 'pkoinComment', shareId, receiver, valSum, valComment, disabled;
 
 		var renders = {
 
@@ -33,10 +33,6 @@ var pkoin = (function(){
 		
 				})
 
-				if (el.inputSum){
-					valSum = el.inputSum.val();
-
-				}
 
 				if (el.textareaComment){
 					valComment = el.textareaComment.val();
@@ -55,11 +51,44 @@ var pkoin = (function(){
 
 				}, function(_p){
 
-					ParametersLive([options], _p.el);
+					self.app.platform.sdk.node.transactions.get.balance(function(balance){
 
-					el.inputSum = _p.el.find('#inputSum');
-					el.textareaComment = _p.el.find('#textareaComment');
+						ParametersLive([options], _p.el);
 
+						el.inputSum = _p.el.find('#inputSum');
+	
+						var errorWrapper = _p.el.find('#errorWrapper');
+						
+						el.inputSum.on('keyup', function(e){
+							valSum = Number(e.target.value);
+							
+							if (valSum >= Number(balance)){
+
+								errorWrapper.text(self.app.localization.e('maxPkoin', balance.toFixed(3)));
+								disabled = true;
+								el.send.addClass('disabled');
+
+							} else if (valSum < 0.05){
+
+								errorWrapper.text(self.app.localization.e('minPkoin', 0.05));
+								disabled = true;
+								el.send.addClass('disabled');
+
+
+							} else {
+
+								errorWrapper.text('');
+								disabled = false;
+								el.send.removeClass('disabled');
+
+							}
+							
+						});
+	
+						el.textareaComment = _p.el.find('#textareaComment');
+
+
+					})
 
 					
 				})
@@ -146,7 +175,7 @@ var pkoin = (function(){
 				comment.message.set(valComment);
 
 				comment.donate.set({
-					address: receiver,
+					// address: receiver,
 					amount: valSum
 				})
 				
@@ -206,70 +235,74 @@ var pkoin = (function(){
 
 				}
 
-				self.app.platform.sdk.node.transactions.get.balance(function(amount){
+				if (!disabled){
 
-					balance = amount.toFixed(3);
-					valSum = Number(el.inputSum.val());
+					self.app.platform.sdk.node.transactions.get.balance(function(amount){
 
-					if (valSum){
-
-
-						if (valSum && valSum < 0.05){
-
-							sitemessage(self.app.localization.e('minPkoin', 0.05))
-
-						} else if (valSum < Number(balance)){
-
-							if (optionsValue === 'pkoinComment'){
-
-								if (el.textareaComment){
-									valComment = el.textareaComment.val();
-								}
-
-								if (valComment){
-
-									events.donate(final);
-
-								} else {
-
-									sitemessage(self.app.localization.e('e13057'))
+						balance = amount.toFixed(3);
+						valSum = Number(el.inputSum.val());
+	
+						if (valSum){
+	
+	
+							if (valSum && valSum < 0.05){
+	
+								sitemessage(self.app.localization.e('minPkoin', 0.05))
+	
+							} else if (valSum < Number(balance)){
+	
+								if (optionsValue === 'pkoinComment'){
+	
+									if (el.textareaComment){
+										valComment = el.textareaComment.val();
+									}
+	
+									if (valComment){
+	
+										events.donate(final);
+	
+									} else {
+	
+										sitemessage(self.app.localization.e('e13057'))
+									}
+		
 								}
 	
-							}
-
+								
+								if (optionsValue === 'liftUpThePost'){
+	
+	
+									events.liftUp(final);
+			
+		
+								}
+		
+								if (optionsValue === 'sendToAuthor'){
+		
 							
-							if (optionsValue === 'liftUpThePost'){
-
-
-								events.liftUp(final);
+									self.app.platform.ui.wallet.send({
+										address : receiver,
+										amount: valSum
+									})
 		
-	
-							}
-	
-							if (optionsValue === 'sendToAuthor'){
-	
-						
-								self.app.platform.ui.wallet.send({
-									address : receiver,
-									amount: valSum
-								})
-	
-								closeContainer();
+									closeContainer();
+			
+								}
 		
+							} else {
+		
+								sitemessage(self.app.localization.e('incoins'))
 							}
-	
 						} else {
 	
-							sitemessage(self.app.localization.e('incoins'))
+							sitemessage(self.app.localization.e('e13057'))
+	
 						}
-					} else {
-
-						sitemessage(self.app.localization.e('e13057'))
-
-					}
+						
 					
-				
-				})
+					})
+
+				}
 
 				
 			})
@@ -302,6 +335,9 @@ var pkoin = (function(){
 			},
 
 			destroy : function(){
+
+				valSum = null;
+				valComment = null;
 				el = {};
 			},
 			

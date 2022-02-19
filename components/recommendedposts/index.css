@@ -1,7 +1,3 @@
-#recommendedposts {
-  background: #fff;
-  border-radius: 12px;
-}
 #recommendedposts.invisible {
   opacity: 0;
 }

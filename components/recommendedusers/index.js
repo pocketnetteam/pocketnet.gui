@@ -13,7 +13,9 @@ var recommendedusers = (function(){
 			cnt = 50,
 			end = false,
 			extra = null,
-			page = 0;
+			page = 0,
+			parallax,
+			progress;
 
 		var loading;
 
@@ -77,8 +79,7 @@ var recommendedusers = (function(){
 
 					if(tx){
 
-						el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('following')
-						el.c.find('.user[address="'+address+'"] .notificationturn').removeClass('turnon')	
+						el.c.find('.user[address="'+address+'"] .subscribeWrapper').addClass('following')
 					}
 					else
 					{
@@ -101,8 +102,7 @@ var recommendedusers = (function(){
 
 					if(tx){
 						
-						el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('following')
-						el.c.find('.user[address="'+address+'"] .notificationturn').removeClass('turnon')	
+						el.c.find('.user[address="'+address+'"] .subscribeWrapper').addClass('following')
 					}
 					else
 					{
@@ -140,6 +140,8 @@ var recommendedusers = (function(){
 		var renders = {
 			page : function(addresses, clbk){
 
+				el.c.show();
+
 				el.loader.fadeOut();
 				
 				self.shell({
@@ -154,6 +156,102 @@ var recommendedusers = (function(){
 					inner : append
 
 				}, function(_p){
+
+					var cc = el.c.find('.circularprogress');
+					var maxheight = 220;
+	
+					progress = new CircularProgress({
+						radius: 30,
+						strokeStyle: '#00A3F7',
+						lineCap: 'round',
+						lineWidth: 1,
+						font: "100 14px 'Segoe UI',SegoeUI,'Helvetica Neue',Helvetica,Arial,sans-serif",
+						fillStyle : "#00A3F7",
+						text : {						
+							value : ""
+						},
+						initial: {
+							strokeStyle: '#fff',
+							lineWidth: 1
+						}
+					});
+	
+					progress.update(70);
+	
+					el.c.find('.circularprogressWrapper').html(progress.el);
+	
+					var tp = el.c.find('.loadprev')
+	
+					var trueshold = 80;
+
+					parallax = new SwipeParallaxNew({
+
+						el : _p.el.find('.users'),
+	
+						allowPageScroll : 'horizontal',
+	
+						//prop : 'padding',
+		
+						directions : {
+							down : {
+								cancellable : true,
+	
+								positionclbk : function(px){
+									var percent = Math.abs(px) / trueshold;
+	
+									if (px >= 0){
+	
+										progress.options.text = {
+											value: ''
+										};
+	
+										progress.update(percent * 100);
+										cc.fadeIn(1)
+										cc.height((maxheight * percent)+ 'px')
+
+	
+										//el.shares.css('opacity', 1 - percent) 
+										tp.css('opacity', 1 -  (4 * percent))
+	
+									}
+									else{
+										progress.renew()
+										cc.fadeOut(1)
+									}
+	
+								},
+	
+								constraints : function(){
+
+									// if (fullScreenVideoParallax) return false
+
+									if (self.app.lastScrollTop <= 0 && !self.app.fullscreenmode && self.app.el.window.scrollTop() == 0){
+										return true;
+									}
+								},
+	
+								restrict : true,
+								dontstop : true,
+								trueshold : trueshold,
+								clbk : function(){
+	
+									progress.update(0);
+									cc.fadeOut(1)
+									self.app.platform.sdk.notifications.getNotifications()
+		
+									actions.loadprev(function(){
+	
+										
+									})
+									
+								}
+		
+							}
+						}
+		
+					}).init()
+
+
 					if (clbk)
 						clbk()
 				})
@@ -199,11 +297,37 @@ var recommendedusers = (function(){
 
 					self.app.platform.sdk.users.getBestUsers(function(c, error){
 
-						addresses = c;
+						if (!c.length){
+
+							self.app.platform.sdk.users.getRecommendedAccountsByTags(function(c, error){
+
+								if (!error && c.length){
+
+									el.c.show();
+
+									addresses = c;
 	
-						if (clbk){
-							clbk(shuffle(addresses).slice(0, 3))
+									if (clbk){
+										clbk(shuffle(addresses).slice(0, 3))
+									}
+
+								}
+
+							})
+
+						} else {
+
+							el.c.show();
+
+							addresses = c;
+
+							if (clbk){
+								clbk(shuffle(addresses).slice(0, 3))
+							}
+
 						}
+						
+
 					})
 
 				}
@@ -213,29 +337,31 @@ var recommendedusers = (function(){
 
 		var initEvents = function(){
 
-			self.app.platform.clbks.api.actions.unsubscribe.topusers = function(address){
 
-				el.c.find('.user[address="'+address+'"] .subscribebuttonstop').removeClass('following')
-				el.c.find('.user[address="'+address+'"] .notificationturn').removeClass('turnon')
+			self.app.platform.clbks.api.actions.unsubscribe.recommendedusers = function(address){
+
+				el.c.find('.user[address="'+address+'"] .subscribeWrapper').removeClass('following')
 			}
 
 						
-			self.app.platform.clbks.api.actions.subscribe.topusers = function(address){
+			self.app.platform.clbks.api.actions.subscribe.recommendedusers = function(address){
 
-				el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('following')
-				el.c.find('.user[address="'+address+'"] .notificationturn').removeClass('turnon')		
+				el.c.find('.user[address="'+address+'"] .subscribeWrapper').addClass('following')
 			}
 
-			self.app.platform.clbks.api.actions.subscribePrivate.topusers = function(address){
+			self.app.platform.clbks.api.actions.subscribePrivate.recommendedusers = function(address){
 
-				el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('following')	
-				el.c.find('.user[address="'+address+'"] .notificationturn').addClass('turnon')	
+				el.c.find('.user[address="'+address+'"] .subscribeWrapper').addClass('following')	
 			}
 
 
-			el.c.on('click', '.subscribe', events.subscribe)
-			el.c.on('click', '.unsubscribe', events.unsubscribe)
-			el.c.on('click', '.notificationturn', events.subscribePrivate)
+			el.c.on('click', '.subscribeButton', events.subscribe);
+			el.c.on('click', '.unsubscribeButton', events.unsubscribe);
+			el.c.on('click', '.subscribeButton', events.subscribePrivate);
+			el.hide.on('click', function(){
+				el.c.hide();
+			})
+
 			
 		}
 
@@ -262,10 +388,10 @@ var recommendedusers = (function(){
 
 				window.removeEventListener('scroll', events.loadmorescroll)
 
-				delete self.app.platform.clbks.api.actions.subscribe.topusers
-				delete self.app.platform.clbks.api.actions.subscribePrivate.topusers
+				delete self.app.platform.clbks.api.actions.subscribe.recommendedusers
+				delete self.app.platform.clbks.api.actions.subscribePrivate.recommendedusers
 	
-				delete self.app.platform.clbks.api.actions.unsubscribe.topusers
+				delete self.app.platform.clbks.api.actions.unsubscribe.recommendedusers
 	
 				el = {};
 			},
@@ -277,6 +403,7 @@ var recommendedusers = (function(){
 				el.c = p.el.find('#' + self.map.id);
 				el.users = el.c.find('.usersWrapper');
 				el.loader = el.c.find('.loader');
+				el.hide = el.c.find('.hide');
 
 				state.load(renders.page);
 
