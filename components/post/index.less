@@ -99,7 +99,7 @@
 	.postWrapper{
 		margin : 0 auto;
 		max-width: 930px;
-		background: rgb(var(--background-total-theme));
+		
 		opacity: 0;
 		/*border-radius: 6px;*/
 		.transition(0.3s, opacity);
@@ -112,6 +112,8 @@
 
 
 	.share{
+		background: rgb(var(--background-total-theme));
+		border-radius: 6px;
 		/*border-radius: 6px;*/
 		.work{
 			padding : 0;
@@ -316,8 +318,7 @@
 						padding-right: 0;
 					}
 
-					&.datetime{
-						padding-left: 2 * @rhythm;
+					.datetime{
 						opacity: 0.5;
 					}
 				}

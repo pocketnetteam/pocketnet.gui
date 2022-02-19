@@ -75,9 +75,20 @@ var metadisplay = function(){ %>
 
 						<div class="authorCell">
 							<% if(!ed.horizontal) {%>
-							<span class="adr"><%-name || share.address %></span><% if(reputation > 1 || reputation < -1) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
+								<span class="adr"><%-name || share.address %></span><% if(reputation > 1 || reputation < -1) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
+
+								
 							<% } %>
-						</div>			
+						</div>		
+						<% if(!ed.horizontal) {%>
+							<div class="datetime">
+								<% if(share.time) {%>
+									<span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span>
+								<% } else { %> 
+									<span><%=e('e13019')%></span>
+								<% } %>
+							</div>
+						<% } %>
 						
 					</div>
 				</div>
