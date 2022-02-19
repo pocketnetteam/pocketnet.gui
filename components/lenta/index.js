@@ -2556,8 +2556,6 @@ var lenta = (function(){
 			
 			share : function(share, clbk, all, p){
 
-				console.log('share', share, video, share.itisarticle())
-
 				if(!p) p = {}
 
 				if(!share) return

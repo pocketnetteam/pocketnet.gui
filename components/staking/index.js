@@ -360,13 +360,14 @@ var staking = (function(){
 
 							renders.pricechart()
 
-							p.el.find('.caret-down').on('click', function(){
+							var caretDown= p.el.find('.caret-down');
+
+							caretDown.on('click', function(){
 
 								stakingClose = null;
 								localStorage.removeItem('stakingClose');
 
-								el.c.find('.wrp').removeClass('hide');
-				
+								el.c.find('.wrp').removeClass('hide');				
 						
 							})
 							
@@ -440,7 +441,9 @@ var staking = (function(){
 
 			})
 			
-			el.c.find('.caret-up').on('click', function(){
+			var caretUp = el.c.find('.caret-up');
+
+			caretUp.on('click', function(){
 
 				stakingClose = 1;
 				localStorage.setItem('stakingClose', '1');
