@@ -275,7 +275,10 @@ var main = (function(){
 							pathname : pathname,
 							state : state,
 							mobile : isMobile(),
+							tagsExcluded : self.app.platform.sdk.categories.gettagsexcluded().length,
+
 							tagsSelected : self.app.platform.sdk.categories.gettags().length,
+							tags : self.app.platform.sdk.categories.gettags(),
 							selector : selector
 						},
 
@@ -763,6 +766,11 @@ var main = (function(){
 
 		var initEvents = function(){
 
+			
+			self.app.platform.sdk.categories.clbks.excluded.topmenumobile =
+			self.app.platform.sdk.categories.clbks.tags.topmenumobile =
+			self.app.platform.sdk.categories.clbks.selected.topmenumobile =renders.menu
+
 			self.app.events.scroll.main = actions.addbuttonscroll
 
 			el.c.find('.backtolenta').on('click', actions.backtolenta)
@@ -1153,6 +1161,10 @@ var main = (function(){
 				videomain = false
 				fixeddirection = null
 				addbuttonShowed = false
+
+				delete self.app.platform.sdk.categories.clbks.tags.topmenumobile
+				delete self.app.platform.sdk.categories.clbks.selected.topmenumobile
+				delete self.app.platform.sdk.categories.clbks.excluded.topmenumobile
 
 				if(el.c) el.c.empty()
 

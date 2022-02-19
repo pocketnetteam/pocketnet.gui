@@ -17,25 +17,44 @@
   display: flex;
   align-items: center;
 }
-#main .menuwrapper .panelitems .panelitem {
+#main .menuwrapper .panelitems .panelitem.icon {
+  min-width: 44px;
+  text-align: center;
+}
+#main .menuwrapper .panelitems .panelitem.btn {
+  margin-left: 1em;
+  white-space: nowrap;
+  padding: 0.5em 1em;
+  border: 1px solid rgb(var(--neutral-grad-1));
+  background: rgb(var(--neutral-grad-1));
+  color: rgb(var(--neutral-grad-3));
+  border-radius: 20px;
+}
+#main .menuwrapper .panelitems .panelitem.btn.active {
+  background: rgb(var(--color-txt-orange));
+  color: rgb(var(--text-on-bg-ac-color));
+  border: 1px solid rgb(var(--color-txt-orange));
+}
+#main .menuwrapper .panelitems .panelitem.btn span {
+  display: inline-block;
+  max-width: 120px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  vertical-align: middle;
+}
+#main .menuwrapper .panelitems .panelitem.btn i {
+  vertical-align: middle;
+}
+#main .menuwrapper .panelitems .panelitem.nfl {
   flex-grow: 2;
   font-size: 0.8em;
   line-height: 77px;
   color: rgb(var(--neutral-grad-3));
 }
-#main .menuwrapper .panelitems .panelitem .vc_value {
+#main .menuwrapper .panelitems .panelitem.nfl .vc_value {
   line-height: 44px;
 }
-#main .menuwrapper .panelitems .panelitem.icon {
-  min-width: 44px;
-  text-align: center;
-}
-#main .menuwrapper .panelitems .panelitem.right {
-  margin-right: 0;
-  float: right;
-  text-align: right;
-}
-#main .menuwrapper .panelitems .panelitem .vc_textInput.table {
+#main .menuwrapper .panelitems .panelitem.nfl .vc_textInput.table {
   line-height: 36px;
 }
 #main .menuwrapper .filtersbuttonwrapper {

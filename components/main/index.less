@@ -24,29 +24,54 @@
 			}
 	
 			.panelitem{
-				flex-grow: 2;
-				font-size: 0.8em;
-				line-height: 77px;
-				color : rgb(var(--neutral-grad-3));
 
-				.vc_value{
-					line-height: 44px;
-				}
-	
 				&.icon{
 					min-width: 44px;
 					text-align: center;
 				}
-	
-				&.right{
-					margin-right : 0;
-					// margin-left : 2 * @rhythm;
-					float: right;
-					text-align: right;
+
+				&.btn{
+					margin-left:2 *  @rhythm;
+					white-space: nowrap;
+					padding : @rhythm  2 * @rhythm;
+					border : 1px solid rgb(var(--neutral-grad-1));
+					background : rgb(var(--neutral-grad-1));
+					color : rgb(var(--neutral-grad-3));
+					border-radius: 20px;
+
+					&.active{
+						background : rgb(var(--color-txt-orange));
+						color : rgb(var(--text-on-bg-ac-color));
+						border : 1px solid rgb(var(--color-txt-orange));
+					}
+
+					span{
+						display: inline-block;
+						max-width: 120px;
+						text-overflow: ellipsis;
+						overflow: hidden;
+						vertical-align: middle;
+					}
+
+					i{
+						vertical-align: middle;
+					}
 				}
+				
+				&.nfl{
+					flex-grow: 2;
+					font-size: 0.8em;
+					line-height: 77px;
+					color : rgb(var(--neutral-grad-3));
 	
-				.vc_textInput.table {
-					line-height: 36px;
+					.vc_value{
+						line-height: 44px;
+					}
+		
+					.vc_textInput.table {
+						line-height: 36px;
+					}
+	
 				}
 			} 
 		}
