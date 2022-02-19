@@ -5,7 +5,7 @@
 }
 #tagcloud .tcaptionwrapper {
   padding: 1em;
-  padding-top: 1em;
+  padding-top: 2em;
   padding-left: 0;
   border-top: 1px solid rgb(var(--color-medium-theme));
 }

@@ -13,7 +13,8 @@ var main = (function(){
 
 		var roller = null, lenta = null, share = null, panel,leftpanel, uptimer = null, leftparallax = null;
 
-		var videomain = false
+		var videomain = false,
+			readmain = false
 
 		var upbutton = null, upbackbutton = null, plissing = null, searchvalue = '', searchtags = null, result, fixedBlock, openedpost = null;
 
@@ -37,12 +38,11 @@ var main = (function(){
 		
 					sub : "index?r=sub",
 		
-					recommended : 	"index?r=recommended"
-		
-				}
+					recommended : "index?r=recommended",
 
-				if (self.app.platform.videoenabled ){
-					links.video = "index?video=1"
+					video : "index?video=1",
+
+					read : "index?read=1"
 				}
 
 				if (window.cordova) {
@@ -53,16 +53,13 @@ var main = (function(){
 
 				var r = parameters(self.app.nav.current.completeHref, true).r || 'index'
 				var video = parameters(self.app.nav.current.completeHref, true).video || false
-				var value = links[r]
+				var read = parameters(self.app.nav.current.completeHref, true).read || false
 
-				var labels = [self.app.localization.e('e13136'), self.app.localization.e('e13137'), self.app.localization.e('e13138')]
+				var value = links[video ? 'video' : read ? 'read' : r]
 
-				if (self.app.platform.videoenabled ){
-					value = links[video ? 'video' : r]
-					labels.push(self.app.localization.e('video'))
-				}
+				var labels = [self.app.localization.e('e13136'), self.app.localization.e('e13137'), self.app.localization.e('e13138'), self.app.localization.e('video'), self.app.localization.e('longreads')]
 
-				if ((window.cordova) || (typeof _Electron != 'undefined' && window.electron)) {
+				if ((window.cordova)) {
 					labels.push(self.app.localization.e('downloaded'));
 				}
 
@@ -319,7 +316,7 @@ var main = (function(){
 			
 			share : function(){
 
-				if (!isMobile() && !videomain && !searchvalue && !searchtags){
+				if (!isMobile() && !videomain && !readmain && !searchvalue && !searchtags){
 
 					el.c.removeClass('wshar')
 
@@ -398,17 +395,7 @@ var main = (function(){
 							
 						},
 	
-						opensvi : self.app.mobileview ? null : function(id, share){
-
-							self.nav.api.load({
-								open : true,
-								href : 'index?video=1&v=' + id,
-								history : true,
-								handler : true
-							})
-							
-						},
-
+						opensvi : null,
 						compact : true
 	
 					})
@@ -491,7 +478,6 @@ var main = (function(){
 
 			lentawithsearch : function(clbk, p){
 
-				
 				if(searchvalue){
 
 					var value = searchvalue.replace('tag:', "#");
@@ -601,7 +587,8 @@ var main = (function(){
 						searchValue : searchvalue || null,
 						search : searchvalue ? true : false,
 						tags : searchtags,
-						video : videomain && !isMobile(),
+						read : readmain,
+						video :  videomain && !isMobile(),
 						videomobile : videomain && isMobile(),
 						//window : isMobile() ? el.c.find('.lentacell') : el.w,
 						page : 0,
@@ -870,6 +857,10 @@ var main = (function(){
 				localStorage['lentakey'] = 'video'
 			}
 
+			if (parameters().read){
+				localStorage['lentakey'] = 'read'
+			}
+
 			renders.lentawithsearch(clbk, p)
 
 			makeShare()
@@ -878,7 +869,7 @@ var main = (function(){
 
 			renders.menu()
 
-			if (currentMode == 'common' && !videomain && !searchvalue && !searchtags)
+			if (currentMode == 'common' && !videomain && !readmain && !searchvalue && !searchtags)
 				renders.topvideos(true)
 			else{
 				renders.topvideos(false)
@@ -920,12 +911,16 @@ var main = (function(){
 				var nsearchtags = words.length ? words : null
 				var nsearchvalue = parameters().ss || ''
 				var ncurrentMode = parameters().r || 'common';
-				var nlentakey = parameters().video ? 'video' : (parameters().r || 'index')
+
+				var nlentakey = parameters().video ? 'video' : parameters().read ? 'read' : (parameters().r || 'index')
+
 				var nvideomain = nlentakey == 'video'
+				var nreadmain = nlentakey == 'read'
 				var page = parameters().page
 
 				var changes = false
 
+				console.log('nlentakeynlentakeynlentakey', nlentakey)
 
 				localStorage['lentakey'] = nlentakey
 
@@ -935,6 +930,10 @@ var main = (function(){
 
 				if (videomain != nvideomain){
 					videomain = nvideomain; changes = true
+				}
+
+				if (readmain != nreadmain){
+					readmain = nreadmain; changes = true
 				}
 
 				if (searchvalue != nsearchvalue){
@@ -967,7 +966,7 @@ var main = (function(){
 						external = null
 					}
 
-					renders.topvideos(currentMode == 'common' && !videomain && !searchvalue && !searchtags)
+					renders.topvideos(currentMode == 'common' && !videomain && !readmain && !searchvalue && !searchtags)
 
 					if (lenta) {
 						lenta.clearessense()
@@ -1217,6 +1216,10 @@ var main = (function(){
 				}
 
 				videomain = parameters().video ? true : false
+				
+				readmain = parameters().read ? true : false
+
+				if(readmain) videomain = false
 
 				if(videomain && !isMobile()){
 					el.c.addClass('videomain')

@@ -37,7 +37,8 @@ var leftpanel = (function(){
 
 				var backlink = 'index'
 
-				if(parameters().video) backlink = 'index?video=1'
+				if (parameters().video) backlink = 'index?video=1'
+				if (parameters().read) backlink = 'index?read=1'
 
 				self.shell({
 					name :  'currentsearch',
@@ -112,7 +113,7 @@ var leftpanel = (function(){
 	
 						}, function(_p){
 
-	
+							updateNew()
 						})
 					}
 
@@ -335,7 +336,6 @@ var leftpanel = (function(){
 			
 			init : function(p){
 
-				console.log('self.app.settings', self.app.settings);
 				state.load();
 
 				el = {};

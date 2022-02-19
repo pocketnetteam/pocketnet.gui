@@ -690,7 +690,9 @@
 
 				parallax = new SwipeParallaxNew({
 
-					el : wnd.find(p.parallaxselector || '.wndback,.wndheader,.wndinner'),
+					///,.wndinner
+
+					el : wnd.find(p.parallaxselector || '.wndback,.wndheader'),
 					transformel : wnd.find('.wndinner'),
 					allowPageScroll : 'vertical',
 					directions : {
@@ -796,8 +798,6 @@
 				wnd.addClass('asette')
 				wnd.removeClass('sette')
 
-				//wnd.one('transitionend webkitTransitionEnd oTransitionEnd', function () {
-
 				setTimeout(function(){
 
 					window.requestAnimationFrame(function(){
@@ -808,19 +808,15 @@
 						if (self.essenseDestroy) self.essenseDestroy(key)
 
 						wnd.remove();
+
 						clearmem();
 					})
 
 				}, 220)	
 
-				
-				//});
-				
-
 			},
 
 			hide : function(cl, key) {
-				// wnd.find('.wndback').css('display', 'none');
 
 				if(!wnd) return
 
@@ -831,7 +827,6 @@
 				wnd.find('.expandButton').removeClass('hidden');
 				wnd.find('.closeButton').addClass('hidden');
 				wnd.find('.hideButton').addClass('hidden');
-				// setTimeout(() => wnd.find('.wndinner').one('click', actions.show), 500);
 
 				if(!nooverflow) {
 					app.actions.onScroll();
@@ -842,7 +837,6 @@
 
 				if(!wnd) return
 
-				// wnd.find('.wndback').css('display', 'none');
 				wnd.find('.buttons').removeClass('hidden');
 				wnd.removeClass('hiddenState');
 				wnd.find('.wndcontent > div').removeClass('rolledUp');
@@ -6631,450 +6625,6 @@
 	}
 
 
-	SwipeParallax = function(p){
-		if(!p) p = {};
-
-			p.directions || (p.directions = {})
-
-			p.prop || (p.prop = 'translate')
-
-			_.each(p.directions, function(d,i){
-				d.i = i
-			})
-
-		var self = this;
-
-		var animationInterval = null;
-
-		var animateduration = 400;
-		var animatedurations = (animateduration / 1000) + 's'
-
-		var directiontoprop = function(direction, value){
-
-			if (p.prop == 'translate'){
-				if(direction == 'up') return 'y'
-				if(direction == 'down') return 'y'
-				if(direction == 'left') return 'x'
-				if(direction == 'right') return 'x'
-			}
-
-			if (p.prop == 'margin'){
-				if(direction == 'up') return 'margin-bottom'
-				if(direction == 'down') return 'margin-top'
-				if(direction == 'left') return 'margin-left'
-				if(direction == 'right') return 'margin-right'
-			}
-
-			if (p.prop == 'padding'){
-				if(direction == 'up') return 'padding-bottom'
-				if(direction == 'down') return 'padding-top'
-				if(direction == 'left') return 'padding-left'
-				if(direction == 'right') return 'padding-right'
-			}
-
-			if (p.prop == 'position'){
-				if(direction == 'up') return direction.position || 'top'
-				if(direction == 'down') return direction.position || 'top'
-				if(direction == 'left') return direction.position || 'left'
-				if(direction == 'right') return direction.position || 'left'
-			}
-			
-		}
-
-		var medium = function(fingerData){
-			var n = {
-				end : {
-					x : 0,
-					y : 0
-				},
-				start : {
-					x : 0,
-					y : 0
-				},
-				last : {
-					x : 0,
-					y : 0
-				}
-			}
-
-			var l = _.toArray(fingerData).length
-
-			_.each(fingerData, function(f){
-				_.each(f, function(fd, i){
-					n[i].x += fd.x / l
-					n[i].y += fd.y / l
-				})
-			})
-
-			return n;
-		}
-
-		var nullbydirection = function(_d, direction){
-			var d = _.clone(_d)
-
-
-			if(direction == 'up') {
-				if(d.y > 0) d.y = 0
-				
-				if (p.prop == 'margin' || p.prop == 'padding')
-					d.y = Math.abs(d.y)
-
-				d.x = 0
-			}
-
-			if(direction == 'down') {
-				if(d.y < 0) d.y = 0
-
-				if (p.prop == 'margin' || p.prop == 'padding')
-					d.y = Math.abs(d.y)
-
-				d.x = 0
-			}
-
-			if(direction == 'left') {
-				if(d.x > 0) d.x = 0
-
-				if (p.prop == 'margin' || p.prop == 'padding')
-					d.x = Math.abs(d.x)
-
-				d.y = 0
-			}
-
-			if(direction == 'right') {
-				if(d.x < 0) d.x = 0
-
-				if (p.prop == 'margin' || p.prop == 'padding')
-					d.x = Math.abs(d.x)
-
-				d.y = 0
-			}
-
-			return d;
-			
-		}
-
-		var findDirection = function(_d){
-
-			return _.max(p.directions, function(direction, i){
-				var d = nullbydirection(_d, i)	
-
-				return Math.abs((d.x || d.y))
-			})
-		}
-
-		var gettransform = function(obj){
-			
-			var transformMatrix = obj.css("-webkit-transform") ||
-			  obj.css("-moz-transform")    ||
-			  obj.css("-ms-transform")     ||
-			  obj.css("-o-transform")      ||
-			  obj.css("transform");
-			var matrix = transformMatrix.replace(/[^0-9\-.,]/g, '').split(',');
-
-			var x = matrix[12] || matrix[4];
-			var y = matrix[13] || matrix[5];
-
-
-			return {
-				x : x,
-				y : y
-			}
-
-		}
-
-		var animation = function(ap, options, direction){
-
-			if(!options) options = {}
-
-			
-			if (self.animation){
-				self.animation.stop()
-			}
-			
-			if(p.prop == 'translate'){
-
-				var v = (ap.x || ap.y || 0);
-
-				p.el.css({transform: ""});
-				p.el.css({transition: ""});
-				
-
-					if (options.complete)
-						options.complete()
-
-
-			}
-		}
-
-		var parseStart = function(direction){
-			if(p.prop != 'translate'){
-				v = p.el.css(directiontoprop(direction)) || '0px'
-			}
-			else
-			{
-				var tr = gettransform(p.el)
-
-				var prop = directiontoprop(direction)
-
-				v = tr[prop]
-			}
-
-			if(!v) v = '0'
-
-			v = Number(v.replace('px', '').replace('%', ''))
-
-			return v
-		}
-
-		var set = function(direction, _value){
-
-			var prop = directiontoprop(direction);
-
-			var value = _value
-
-			if (p.prop != 'translate'){
-				p.el.css(prop, value + 'px');	
-			}
-			else{
-
-				if(prop == 'x'){
-					p.el.css("transform","translate3d("+(value || 0)+"px, 0, 0)");
-				}
-
-				if(prop == 'y'){
-					p.el.css("transform","translate3d(0, "+(value || 0)+"px, 0)");
-				}
-			}
-		}
-
-		self.goup = function(direction){			
-
-			var css = directiontoprop(direction)
-			var upborder = (p.directions[direction].trueshold || 90) * 5
-
-			if((css == 'top' || (direction == 'up' && css=='y')) && (p.prop == 'position' || p.prop == 'translate')) upborder = -upborder
-			if(css == 'left' && (p.prop == 'position' || p.prop == 'translate')) upborder = -upborder
-
-			var ap = {}
-				ap[css] =  upborder + 'px'
-
-			animation(ap, {
-				dontstop : true,
-				compele : function(){
-					self.renew()
-				}
-			}, direction)
-		}
-
-		self.backfast = function(){
-
-			_.each(p.directions, function(d){
-				if (d.positionclbk)
-					d.positionclbk(0)
-			})
-		}
-
-		self.backup = function(direction){
-
-			self.lastDirection = direction;
-
-			var css = directiontoprop(direction)
-
-			var ap = {}
-				ap[css] =  '0px'
-
-			var d = p.directions[direction]	
-
-
-			animation(ap, {
-				step : function(now, fx){
-
-					if (d && d.positionclbk){
-						d.positionclbk(now)
-					}
-				},
-				compele : function(){
-					self.renew()
-				}
-			}, direction)
-		}
-
-		self.lastDirection = null;
-		self.animation = null;
-
-		self.ended = false;
-
-		self.renew = function(){
-			self.lastDirection = null;
-			self.animation = null;
-
-			self.ended = false;
-
-			if (self.animation)
-				self.animation.stop();
-		}
-
-		self.opposite = function(dir, dir2){
-			if(dir == 'up' && dir2 == 'down') return true;
-			if(dir == 'down' && dir2 == 'up') return true;
-
-			if(dir == 'left' && dir2 == 'right') return true;
-			if(dir == 'right' && dir2 == 'left') return true;
-		}
-
-		self.init = function(){
-
-			var startMargin = 0;
-			var mainDirection = null;
-
-			var mintruesholdGone = false;
-			p.el.swipe({
-
-				allowPageScroll : p.allowPageScroll,
-					
-				swipeStatus:function(event, phase, _direction, distance, duration, fingers, fingerData, currentDirection){
-
-
-					if (self.ended) return false	
-
-
-
-					if (phase == 'start'){
-
-						mintruesholdGone = false
-
-						startMargin = 0;
-
-						self.renew()
-						
-						return true
-					}
-
-
-					if(phase != 'cancel' && phase != 'end'){
-
-						var m = medium(fingerData)
-
-						var _d = {
-							x : m.last.x - m.start.x + startMargin,
-							y : m.last.y - m.start.y + startMargin
-						}
-
-						if(!_d.x && !_d.y) return true
-
-						var direction = findDirection(_d)
-
-						if (direction){
-
-							if (direction.constraints && !direction.constraints()) {
-
-								if (mainDirection){
-									self.backup(mainDirection.i)	
-									mainDirection = null;
-								}
-
-								return false
-							}
-
-							if (mainDirection && (mainDirection.i != direction.i)){
-
-								th = false;
-
-								if (direction.mintrueshold){
-									var dcur = nullbydirection(_d, direction.i)
-									var dprev = nullbydirection(_d, mainDirection.i)
-
-									var dth = Math.abs((dcur.x || dcur.y || 0) - (dprev.x || dprev.y || 0))
-
-									if(dth < direction.mintrueshold){
-										th = true
-									}
-								}
-
-								if(!th){
-									self.backup(mainDirection.i)
-
-									if(direction.cancellable) {
-										mainDirection = null;
-										return false
-									}
-								}
-								else{
-									direction = mainDirection
-								}
-
-								
-							}
-
-							mainDirection = direction
-							var d = nullbydirection(_d, direction.i)	
-
-							var dp = (d.x || d.y || 0);
-
-							if (!mintruesholdGone && Math.abs(dp + startMargin) < (direction.mintrueshold || 0)){
-								return true
-							}
-
-							mintruesholdGone = true;
-
-							if (direction.positionclbk){
-								direction.positionclbk(dp)
-							}
-
-							if(direction.reverse){
-								dp = -dp
-							}
-
-							set(mainDirection.i, dp)
-
-						}
-						else{
-
-							mainDirection = null;
-						}
-
-					}
-
-					if(phase == 'cancel' || phase == 'end'){
-
-						
-						if (mainDirection){
-
-
-							if(phase == 'end' && mainDirection.clbk && _direction == mainDirection.i){
-
-								
-								mainDirection.clbk()
-							}
-								
-							if (mainDirection.positionclbk)
-								mainDirection.positionclbk(0)
-
-							self.backup(mainDirection.i)	
-							
-						}
-
-						else{
-							self.backfast()
-						}
-
-						mainDirection = null
-
-					}
-
-					
-					
-				},
-
-			});
-
-			return self
-		}
-
-		return self;
-	}
-
-
 	SwipeParallaxNew = function(p){
 		if(!p) p = {};
 
@@ -7140,13 +6690,13 @@
 						__el[0].style['transform-origin'] = 'center ' + pb
 					}
 
-					if(!isios()){	
+					//if(!isios()){	
 						__el[0].style["-moz-transition"] = transitionstr
 						__el[0].style["-o-transition"] = transitionstr
 						__el[0].style["-webkit-transition"] = transitionstr
 						__el[0].style["transition"] = transitionstr
 						__el[0].style["pointer-events"] = 'none'
-					}
+					//}
 		
 					ticking = false;
 				})
@@ -7175,13 +6725,13 @@
 					__el.css({"transform": ""});
 					__el.css({"transform-origin": ""});
 
-					if(!isios()){
+					//if(!isios()){
 						__el.css({"-moz-transition": ""});
 						__el.css({"-o-transition": ""});
 						__el.css({"-webkit-transition": ""});
 						__el.css({"transition": ""});
 						__el.css({"pointer-events": ""});
-					}
+					//}
 
 					_.each(p.directions, function(d){
 						applyDirection(d, 0)
@@ -7200,12 +6750,13 @@
 
 			var statusf = function(e, phase, direction, distance){
 
+
 				if (mainDirection && mainDirection.i != direction){
 					phase = 'cancel'
 					direction = mainDirection.i
 				}
 
-				if(phase == 'cancel' || phase == 'end'){
+				if (phase == 'cancel' || phase == 'end'){
 
 					if (mainDirection){
 
@@ -7243,23 +6794,26 @@
 				}
 				
 				if (phase == 'move'){
+
 					if (distance > 20){
+
 						mainDirection = dir
 
 						applyDirection(mainDirection, distance)
 
 						set(mainDirection.i, distance)
+						
 					}
-				}
 
-				
-				
+					e.preventDefault();
+					return true
+				}
 
 			}
 			
 			p.el.swipe({
 				allowPageScroll : p.allowPageScroll,
-				swipeStatus : isios() ? statusf : _.throttle(statusf, throttle),
+				swipeStatus : _.throttle(statusf, throttle),
 			})
 
 			return self

@@ -7603,7 +7603,15 @@ Platform = function (app, listofnodes) {
                     color : "#1e2235",
                     media : '(prefers-color-scheme: dark)',
                     rootid : 'black'
-                }
+                },
+
+                gray: {
+                    name: self.app.localization.e('gray'),
+                    class: "stgray",
+                    color : "#1e1d1a",
+                    media : '(prefers-color-scheme: dark)',
+                    rootid : 'gray'
+                },
             },
             default: "white",
             current: null,
@@ -13196,11 +13204,11 @@ Platform = function (app, listofnodes) {
                     },
                     {
                         "id": "c3",
-                        "icon": "fas fa-landmark"
+                        "icon": "fas fa-award"
                     },
                     {
                         "id": "c4",
-                        "icon": "fab fa-bitcoin"
+                        "icon": "fab fa-btc"
                     },
                     {
                         "id": "c5",
@@ -16022,15 +16030,15 @@ Platform = function (app, listofnodes) {
 
                             //parameters = ['30', '259200', '', self.app.localization.key];
 
-                            if(p.video){
-                                parameters.push('video')
+                            if (p.type){
+                                parameters.push(p.type)
                             }
 
                             self.sdk.node.shares.get(parameters, function (shares, error) {
 
                                 if (shares) {
 
-                                    self.sdk.node.shares.loadvideoinfoifneed(shares, p.video, function(){
+                                    self.sdk.node.shares.loadvideoinfoifneed(shares, p.type == 'video', function(){
 
                                         if (state) {
                                             _.each(self.sdk.relayTransactions.withtemp('blocking'), function (block) {
@@ -16042,7 +16050,7 @@ Platform = function (app, listofnodes) {
 
 
 
-                                        if(p.video){
+                                        if(p.type == 'video'){
                                             shares = _.filter(shares, function(share){
 
                                                 if(!share.url) return
@@ -16257,7 +16265,7 @@ Platform = function (app, listofnodes) {
                     p.count 10
                     p.lang lang
                     p.tagsfilter tagsfilter
-                    p.video
+                    p.type
 
                     */
 
@@ -16276,7 +16284,7 @@ Platform = function (app, listofnodes) {
                             p.address = self.sdk.address.pnet().address;
                         }
 
-                        var key = p.count + (p.address || "") + "_" + (p.lang || "") + "_" + /*(p.height || "")  +*/ "_" + (p.tagsfilter.join(',')) + "_" + (p.begin || "") + (p.video ? "video" : '')
+                        var key = p.count + (p.address || "") + "_" + (p.lang || "") + "_" + /*(p.height || "")  +*/ "_" + (p.tagsfilter.join(',')) + "_" + (p.begin || "") + (p.type ? p.type : '')
 
                         if(p.author) key = key + p.author
 
@@ -16337,13 +16345,11 @@ Platform = function (app, listofnodes) {
 
                             /////temp
 
-                            if (p.video && !self.videoenabled){
-                                p.tagsfilter = ['video']
-                            }
+                            
 
                             ////
 
-                            var parameters = [Number(p.height), p.txid, p.count, p.lang, p.tagsfilter, p.video && self.videoenabled ? 'video' : '', '', '', p.tagsexcluded];
+                            var parameters = [Number(p.height), p.txid, p.count, p.lang, p.tagsfilter, p.type ? p.type : '', '', '', p.tagsexcluded];
 
                             if(p.author) parameters.unshift(p.author)
 
@@ -21183,6 +21189,12 @@ Platform = function (app, listofnodes) {
             },
 
             paddingplaceholder : function(url, middle, clbk, elf){
+
+                if(!url){
+                    middle(clbk)
+                    return
+                }
+
                 return self.sdk.videos.info([url]).catch((e)=>{
                     return Promise.resolve()
                 }).then(() => {

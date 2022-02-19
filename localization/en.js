@@ -2078,3 +2078,8 @@ ____loclib.removeaddress = "Do you really want to remove this address from this 
 ____loclib.wanttoseekey = "Do you really want to see your private key?"
 ____loclib.seeprivatekey = "See Private Key"
 ____loclib.max5acc = "You have reached a maximum of 5 accounts. No more can be added"
+
+
+____loclib.longreads = "Long Reads"
+
+____loclib.filters = "Filters"

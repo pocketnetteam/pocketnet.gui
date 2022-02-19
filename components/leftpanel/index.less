@@ -29,7 +29,7 @@
 							&:after{
 								position: absolute;
 								content: '';
-								left : -1em;
+								left : 0;
 								top : 0;
 								bottom : 0;
 								width: 3px;
@@ -47,7 +47,7 @@
 						}
 
 						i{
-							width: 30px;
+							width: 55px;
 							text-align: center;
 						}
 
@@ -59,8 +59,9 @@
 							line-height: 20px;
 							text-align: center;
 							border-radius: 10px;
-							background: rgb(var(--color-txt-gray-dark));
-							color: rgb(var(--text-on-bg-ac-color));
+							background: rgb(var(--neutral-grad-1));
+							color: rgb(var(--color-txt-ac));
+							margin-left: 2 * @rhythm;
 
 							&.hasunseen{
 								display: inline-block;
@@ -122,7 +123,7 @@
 		.fire{
 			i{
 				text-align: center;
-				width: 30px;
+				width: 44px;
 			}
 		}
 
@@ -328,15 +329,23 @@
 		color : rgb(var(--text-color));
 
 		.wrpmobclass>div{
-			padding : 2 * @rhythm;
+			padding : 0 2 * @rhythm;
 			margin-bottom: 2 * @rhythm;
-		}
-		
+			margin-left: @rhythm;
+			margin-right: @rhythm;
+			background: rgb(var(--background-secondary-theme));
+			border-radius: 12px;
 
-		/*.innerc{
-			padding-left: 2 * @rhythm;
-			padding-right: 2 * @rhythm;
-		}*/
+			&.best{
+				padding : 2 * @rhythm;
+				padding-left: 0;
+				background: transparent;
+			}
+
+			&.rightbottomlinks{
+				background: transparent;
+			}
+		}
 
 		.best{
 			border-top: 0;

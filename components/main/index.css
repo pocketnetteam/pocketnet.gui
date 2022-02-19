@@ -15,18 +15,19 @@
 }
 #main .menuwrapper .panelitems .panelItemsWrapper {
   display: flex;
-  justify-content: space-between;
   align-items: center;
 }
 #main .menuwrapper .panelitems .panelitem {
-  width: 120px;
+  flex-grow: 2;
   font-size: 0.8em;
-  line-height: 45px;
-  float: left;
+  line-height: 77px;
   color: rgb(var(--neutral-grad-3));
 }
+#main .menuwrapper .panelitems .panelitem .vc_value {
+  line-height: 44px;
+}
 #main .menuwrapper .panelitems .panelitem.icon {
-  width: 44px;
+  min-width: 44px;
   text-align: center;
 }
 #main .menuwrapper .panelitems .panelitem.right {
@@ -49,10 +50,10 @@
 }
 #main .menuwrapper .vc_valuecustom {
   width: 100%;
-  height: 55px;
+  height: 77px;
 }
 #main .menuwrapper .vc_valuecustom .vc_inputWrapper {
-  padding-left: 1em;
+  padding-left: 0.5em;
 }
 #main .menuwrapper .vc_valuecustom .vc_iconWrapper {
   width: 48px;
@@ -74,10 +75,12 @@
   transition: 0.3s;
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
-  height: 55px;
+  height: 77px;
   font-weight: 700;
-  font-size: 1.2em;
+  font-size: 2.5em;
   padding-left: 0.5em;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 #main .menuwrapper .vc_valuecustom .vc_textInput .vc_inputWrapper input[disabled="disabled"] {
   opacity: 1;
@@ -502,17 +505,6 @@ html.testpocketnet #main.testpocketnetbg {
 html.mobileview #main .lentacell .cnt {
   max-width: none;
 }
-@media only screen and (max-width: 1440px) {
-  #main .opensvi {
-    /*.leftpanelsvicell{
-				display: block;
-			}
-	
-			.upbackbuttonwrapper{
-				display: none;
-			}*/
-  }
-}
 @media only screen and (max-width: 1280px) {
   #main .addbutton {
     display: none!important;
@@ -532,6 +524,7 @@ html.mobileview #main .lentacell .cnt {
 /*t*/
 @media only screen and (max-width: 768px) {
   #main .menuwrapper {
+    background: rgb(var(--background-total-theme));
     display: block;
   }
   #main .topvideosWrapper {
@@ -541,6 +534,7 @@ html.mobileview #main .lentacell .cnt {
     display: block;
   }
   #main .leftpanelcell {
+    font-size: 1.1em;
     float: none;
     width: 100%;
     position: fixed;

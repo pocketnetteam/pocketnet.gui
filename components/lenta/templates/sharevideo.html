@@ -425,41 +425,64 @@ var metadisplay = function(){ %>
 									</div>
 
 									
-									<% if(app.platform.repost && !my && !checkvisibility) {%>
-										<div elementsid="item-forrepost" class="item <% if(!my){ %> forrepost <% } else { %> nact <% } %>">
-
+									<% if(window.cordova && share.itisvideo() ) {
+									
+										var status = app.platform.sdk.localshares.status(share.txid)
+										
+										%>
+	
+										<% if(!checkvisibility) {%>
+	
+										<div elementsid="lenta_shareSave" class="item shareSave" status="<%-status%>">
+	
 											<div class="itemwr table">
+	
 												<div class="iconwr">											
 													<div class="icon">
-														<i class="fas fa-share"></i>
+														<i class="fas fa-cloud-download-alt cansave"></i>
+														<i class="fas fa-spinner fa-spin saving"></i>
+														<i class="fas fa-trash saved"></i>
+													</div>
+												</div>
+											
+											</div>
+	
+										</div>
+	
+										<% } %>
+	
+									<% } else { %> 
+										
+									<% } %>
+	
+									<% if((typeof preview == 'undefined' || !preview) ) {%>			
+	
+										<div class="item sharesocial unselectable">
+	
+											<div class="itemwr table">
+												<div class="iconwr">
+													<div class="icon">
+														<i class="fas fa-share-alt"></i>
 													</div>
 												</div>
 											</div>
-
+											
+										</div>
+	
+									<% } %>
+	
+									<% if(!my) {%>
+										<div class="item pkoin right unselectedtable">
+											<img src="img/pocketnet_logo_white.svg" alt="">
+											<span class='workstation'>
+												PKOIN
+											</span>
 										</div>
 									<% } %>
-
-									
-
-									<div elementsid="lenta_sharesocial" class="item sharesocial right unselectable">
-
-										<div class="itemwr table">
-											<div class="labelwr workstation"><span class="label"><%=e('share').toUpperCase()%></span></div>
-											<div class="iconwr">
-												
-												<div class="icon">
-													<i class="fas fa-share-alt"></i>
-												</div>
-											</div>
-										</div>
-										
-									</div>
 									
 								</div>
 
-								<div class="wholikes">
-									
-								</div>
+							
 							<% } %>
 
 							<% if(share.temp) {%>
@@ -481,7 +504,6 @@ var metadisplay = function(){ %>
 											</div>	
 										</div>
 									</div>
-									<div class="clearfix"></div>
 								</div>
 
 							<% } %>

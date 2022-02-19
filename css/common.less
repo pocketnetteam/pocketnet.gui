@@ -1498,6 +1498,7 @@
     }
 }
 
+
 /*t*/ @media only screen and (max-width: 768px){
 
     .share_common{
@@ -1506,6 +1507,14 @@
         cursor: default;
         padding-bottom : 0;
         border-radius: 0;
+
+        .showMore{
+          
+            button{
+                font-size: 1.2em;
+            }
+    
+        }
 
         .iconWrapper{
             width: 8 * @rhythm;
@@ -1760,6 +1769,12 @@
             }
 
             .imagesContainer{
+
+                &.owlcar{
+                    max-width: none;
+                    contain: strict;
+                }
+
                 &.one{
                     .imagesWrapper{
                         width: 100%;

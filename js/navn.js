@@ -170,6 +170,8 @@ Nav = function(app)
 			else{	
 
 				if (khref == indexpage){
+
+					//// 
 					backManager.clearAll()
 				}
 				else{

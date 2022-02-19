@@ -28,7 +28,6 @@ __map =  {
 		"js/vendor/jquery-1.11.3.min.js",//
         "js/vendor/tooltipster.core.js",//
         "js/vendor/tooltipster.bundle.js",//
-        /*"js/vendor/jquery-ui.min.js",*/
         "js/vendor/imagesloaded.pkgd.min.js",///
         "js/vendor/timer.js",//
         
@@ -52,19 +51,16 @@ __map =  {
         "js/vendor/joypixels.min.js", //
         "js/vendor/plyr.js", // later
         "js/vendor/reconnectingwebsocket.js", //
-        "js/vendor/rtc/db.js", // later
         "js/vendor/xss.min.js", //
 		"js/vendor/jquery.mark.js", //?
 		"js/vendor/hc-sticky.js", //
 
-		/*"js/vendor/DateTimePicker.min.js",*/
 		"js/vendor/moment.min.js", //?
 		"js/vendor/moment.locale.js", //?
 		"js/vendor/jquery.inputmask.bundle.js",
 		"js/vendor/axios.js", //
 		"js/vendor/isotope.pkgd.js", //
 		"js/vendor/circular-progress.js", //
-		/*"js/vendor/swiper-bundle.min.js",*/ // very hard
 		"js/vendor/workbox-v6.1.5/workbox-sw.js",
 		"js/vendor/ion.sound/ion.sound.js",
 		"js/vendor/hammer.min.js",
@@ -110,7 +106,6 @@ __map =  {
 		"css/common.css",
 		"css/plyr.css",
 		"css/pniframe.css",
-		"js/vendor/DateTimePicker.min.css",
 		"peertube/video-embed.css",
 		"js/vendor/owl/assets/owl.carousel.min.css",
 		"js/vendor/owl/assets/owl.theme.default.min.css",
@@ -164,13 +159,13 @@ __map =  {
 		href : "pkview",
 		add : insertingfunc,
 
-		relations : [
+		/*relations : [
 			{src : 'js/vendor/qrscanner.js',			   f : 'js'},
 			{src : 'js/vendor/qrcode.min.js',			   f : 'js', require : function(){
 				QRCode = require('./js/vendor/qrcode.min.js')
 			}},	
 
-		],
+		],*/
 	},      
 
 	
@@ -331,11 +326,11 @@ __map =  {
 		anonimus : true,
 
 		relations : [
-			{src : 'js/vendor/qrscanner.js',			   f : 'js'},
+			/*{src : 'js/vendor/qr/qrscanner.js',			   f : 'js'},*/
 			{src : 'js/validation.js',			   f : 'js'},		
-			{src : 'js/vendor/qrcode.min.js',			   f : 'js', require : function(){
-				QRCode = require('./js/vendor/qrcode.min.js')
-			}},	
+			/*{src : 'js/vendor/qr/qrcode.min.js',			   f : 'js', require : function(){
+				QRCode = require('./js/vendor/qr/qrcode.min.js')
+			}},	*/
 
 		],
 		electronDontOpen : true
@@ -357,19 +352,6 @@ __map =  {
 	/****/
 
 
-		registration : {
-			uri : "registration",
-			href : "registration",
-			add : insertingfunc,
-			anonimus : true,
-			relations : [
-				{src : 'js/vendor/qrscanner.js',			   f : 'js'},
-				{src : 'js/validation.js',			   f : 'js'},		
-				{src : 'js/vendor/qrcode.min.js',			   f : 'js', require : function(){
-					QRCode = require('./js/vendor/qrcode.min.js')
-				}},	
-			],
-		},
 
 		usersettings : {
 			uri : "usersettings",
@@ -400,10 +382,7 @@ __map =  {
 
 						EXIF = require('./js/vendor/exif.js')
 
-				}},
-
-				{src : 'js/vendor/picker.js',			   f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},	
-				{src : 'js/vendor/picker.date.js', 		f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},
+				}}
 			],
 
 			
@@ -418,13 +397,13 @@ __map =  {
 				auth : 'authorization',
 			},
 
-			relations : [
+			/*relations : [
 
-				{src : 'js/vendor/qrcode.min.js',			   f : 'js', require : function(){
-					QRCode = require('./js/vendor/qrcode.min.js')
+				{src : 'js/vendor/qr/qrcode.min.js',			   f : 'js', require : function(){
+					QRCode = require('./js/vendor/qr/qrcode.min.js')
 				}},
 
-			],
+			],*/
 
 		},
 
@@ -855,7 +834,7 @@ __map =  {
 
 			
 			{src : 'js/validation.js',			   f : 'js'},
-			{src : 'js/vendor/qrscanner.js',			   f : 'js'},				
+			{src : 'js/vendor/qr/qrscanner.js',			   f : 'js'},				
 			
 		],
 		anonimus : true,
@@ -870,7 +849,7 @@ __map =  {
 
 		
 			{src : 'js/validation.js',			   f : 'js'},				
-			{src : 'js/vendor/qrscanner.js',			   f : 'js'},	
+			{src : 'js/vendor/qr/qrscanner.js',			   f : 'js'},	
 			
 		]
 	},

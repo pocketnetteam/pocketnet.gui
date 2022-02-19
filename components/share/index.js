@@ -2614,8 +2614,16 @@ var share = (function(){
 
 				console.log('destroydestroydestroy', el.eMessage)
 
-				if (el.eMessage)
-					el.eMessage[0].emojioneArea.destroy();
+				if (el.c)
+					el.c.find('.emojionearea-editor').off('pasteImage')
+
+				try{
+					if (el.eMessage) el.eMessage[0].emojioneArea.destroy();
+				}
+				catch(e){
+
+				}
+				
 
 				if (external){
 					external.module.closeContainer()
@@ -2638,11 +2646,7 @@ var share = (function(){
 				}
 
 
-				if (el.c)
-					el.c.find('.emojionearea-editor').off('pasteImage')
-
 				el = {};
-
 				essenseData = {}
 					
 			},

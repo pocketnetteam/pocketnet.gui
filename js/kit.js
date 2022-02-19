@@ -1513,7 +1513,10 @@ Share = function(lang){
 
 	self.size = function(){
 
-		var obj = JSON.stringify(self.export());
+
+		////// base64
+
+		var obj = JSON.stringify(self.export().replace(/base64,[^ ]/g, 'fileinb64'));
 
 		return obj.length
 

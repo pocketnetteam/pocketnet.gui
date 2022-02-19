@@ -187,11 +187,20 @@ var menu = (function(){
 							if (parameters().r == k) k = 'index'
 
 							if (k != 'index') {
+
 								if (k == 'video'){
 									k = 'index?video=1'
 								}
 								else{
-									k = 'index?r=' + k
+
+									if (k == 'read'){
+										k = 'index?read=1'
+									}
+									else{
+										k = 'index?r=' + k
+									}
+
+								
 								}
 								
 							}
@@ -572,7 +581,6 @@ var menu = (function(){
 
 							search : function(value, clbk, e, helpers){
 
-								console.log('menusearch.active', menusearch.active)
 
 								if(!menusearch.active){
 
@@ -642,7 +650,6 @@ var menu = (function(){
 
 							active : function(a){
 
-								console.log("setactive", a)
 
 								if (a || (parameters().ss || parameters().sst)){
 									el.c.addClass('searchactive')
@@ -1046,7 +1053,7 @@ var menu = (function(){
 					data.loc = loc;
 					data._SEO = _SEO;
 					data.lkey = app.localization.current()
-					data.theme = self.app.platform.sdk.theme.current
+					data.theme = self.app.platform.sdk.theme.current == "white" ? 'white' : 'black'
 
 
 					var userinfo = deep(app, 'platform.sdk.user.storage.me')
@@ -1139,7 +1146,6 @@ var menu = (function(){
 			showsearch : function(v){
 
 
-				console.log('showsearch showsearch', v)
 
 				if (v){
 					el.c.addClass('searchactive')
