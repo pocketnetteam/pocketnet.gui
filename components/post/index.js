@@ -454,7 +454,8 @@ var post = (function () {
 								
 						},
 
-						useP2P : self.app.platform.sdk.usersettings.meta.videop2p.value 
+						useP2P : self.app.platform.sdk.usersettings.meta.videop2p.value,
+						enableHotkeys : true
 					};
 
 					$.each(pels, function (key, el2) {
@@ -476,8 +477,11 @@ var post = (function () {
 								else{
 									player.muted = false
 								}
+
 								//
 							}
+
+							if (player.enableHotKeys) player.enableHotKeys()
 
 							//// autoplay
 							if (clbk)

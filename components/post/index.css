@@ -71,7 +71,6 @@
 #post .postWrapper {
   margin: 0 auto;
   max-width: 930px;
-  background: rgb(var(--background-total-theme));
   opacity: 0;
   /*border-radius: 6px;*/
   -moz-transition: opacity 0.3s;
@@ -83,6 +82,8 @@
   opacity: 1;
 }
 #post .share {
+  background: rgb(var(--background-total-theme));
+  border-radius: 6px;
   /*border-radius: 6px;*/
 }
 #post .share .work {
@@ -230,8 +231,7 @@
   padding-left: 0.5em;
   padding-right: 0;
 }
-#post.videomainpost .shareTable .authorTable > div.datetime {
-  padding-left: 1em;
+#post.videomainpost .shareTable .authorTable > div .datetime {
   opacity: 0.5;
 }
 #post.videomainpost .shareTable .metatable > div.metapanel .metapanelitem {

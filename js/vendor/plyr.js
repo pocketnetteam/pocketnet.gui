@@ -9231,6 +9231,7 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
             host : host,
             wautoplay : options.wautoplay,
             useP2P : options.useP2P,
+            enableHotkeys : options.enableHotkeys,
             logoType : options.logoType,
             localVideo : localVideo,
             start : options.startTime || 0

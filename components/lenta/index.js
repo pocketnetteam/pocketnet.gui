@@ -715,7 +715,9 @@ var lenta = (function(){
 							
 						},
 
-						useP2P : self.app.platform.sdk.usersettings.meta.videop2p.value 
+						useP2P : self.app.platform.sdk.usersettings.meta.videop2p.value,
+						enableHotkeys : true
+						
 					}
 
 					if(share.settings.v == 'a'){
@@ -757,7 +759,9 @@ var lenta = (function(){
 								openedPost = null
 								essenserenderclbk()
 							},
-							video
+							video,
+
+							autoplay : video
 						}
 
 						var c = function(e, es){		
@@ -1138,6 +1142,9 @@ var lenta = (function(){
 						if(!player.p.playing && !auto){
 							player.p.play()
 						}
+
+
+						if (player.p.enableHotKeys) player.p.enableHotKeys()
 						
 					}
 
@@ -1188,6 +1195,10 @@ var lenta = (function(){
 
 				if ((isMobile() || window.cordova || isTablet() || _el.find('.hiddenurl').length) && player && player.p.playing){
 					player.p.pause()
+				}
+
+				if(player){
+					if (player.p.disableHotKeys) player.p.disableHotKeys()
 				}
 
 				//player.p.muted = true;
