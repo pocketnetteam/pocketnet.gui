@@ -224,7 +224,7 @@
   line-height: 16px;
   text-align: center;
   font-size: 0.5em;
-  background: rgba(var(--color-txt-ac-2), 0.8);
+  background: rgba(var(--color-bg-ac-bright), 0.95);
   color: rgb(var(--text-on-bg-ac-color));
   box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
   z-index: 20;
