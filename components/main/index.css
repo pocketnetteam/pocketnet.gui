@@ -75,7 +75,7 @@
   padding-left: 0.5em;
 }
 #main .menuwrapper .vc_valuecustom .vc_iconWrapper {
-  width: 48px;
+  width: 18px;
   padding-right: 0;
 }
 #main .menuwrapper .vc_valuecustom .vc_textInput {
@@ -96,9 +96,10 @@
   border-bottom-left-radius: 0px;
   height: 77px;
   font-weight: 700;
-  font-size: 2.5em;
+  font-size: 2em;
   padding-left: 0.5em;
   padding-top: 0;
+  padding-right: 0;
   padding-bottom: 0;
 }
 #main .menuwrapper .vc_valuecustom .vc_textInput .vc_inputWrapper input[disabled="disabled"] {
