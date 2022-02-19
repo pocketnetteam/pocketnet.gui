@@ -1855,7 +1855,8 @@ Application = function(p)
 
 				var colors = {
 					white : "#FFF",
-					black : "#030F1B"
+					black : "#030F1B",
+					gray : '#1e1d1a'
 				}
 
 				if (window.StatusBar) {
@@ -1864,7 +1865,7 @@ Application = function(p)
 				}
 
 				if (window.NavigationBar)
-					window.NavigationBar.backgroundColorByHexString(colors[self.platform.sdk.theme.current] || "#FFF", self.platform.sdk.theme.current == 'black');
+					window.NavigationBar.backgroundColorByHexString(colors[self.platform.sdk.theme.current] || "#FFF", self.platform.sdk.theme.current != 'white');
 			},
 
 			gallerybackground : function(){
