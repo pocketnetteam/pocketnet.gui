@@ -260,7 +260,10 @@ Application = function(p)
 	
 
 	var istouchstyle = function(){
-		self.mobileview = (self.el.html.hasClass('mobile') || self.el.html.hasClass('ipad') || self.el.html.hasClass('tablet') || window.cordova || self.width < 768)
+
+		let isIpad = /Macintosh/i.test(navigator.userAgent) && navigator.maxTouchPoints && navigator.maxTouchPoints > 1;
+
+		self.mobileview = (isIpad || self.el.html.hasClass('mobile') || self.el.html.hasClass('ipad') || self.el.html.hasClass('tablet') || window.cordova || self.width < 768)
 
 		if(self.mobileview){
 			self.el.html.addClass('mobileview').removeClass('wsview')
