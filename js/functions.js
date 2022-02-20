@@ -6695,7 +6695,7 @@
 						__el[0].style["-o-transition"] = transitionstr
 						__el[0].style["-webkit-transition"] = transitionstr
 						__el[0].style["transition"] = transitionstr
-						__el[0].style["pointer-events"] = 'none'
+						//__el[0].style["pointer-events"] = 'none'
 					//}
 		
 					ticking = false;
@@ -6730,7 +6730,7 @@
 						__el.css({"-o-transition": ""});
 						__el.css({"-webkit-transition": ""});
 						__el.css({"transition": ""});
-						__el.css({"pointer-events": ""});
+						//__el.css({"pointer-events": ""});
 					//}
 
 					_.each(p.directions, function(d){

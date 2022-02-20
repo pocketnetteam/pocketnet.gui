@@ -1123,18 +1123,17 @@ Application = function(p)
 
 				optimizeTimeout = null
 			
-			//window.requestAnimationFrame(function(){
+			/*window.requestAnimationFrame(function(){
 				self.el.content.css('width', 'auto')
 				self.el.content.css('height', 'auto')
-				//self.el.content.removeClass('optimized')
-			//})
+			})*/
 		},
 
 		optimize : function(){
 
 			if(isios()) return
 
-			if (optimizeTimeout) clearTimeout(optimizeTimeout)
+			/*if (optimizeTimeout) clearTimeout(optimizeTimeout)
 
 				optimizeTimeout = setTimeout(function(){
 					var w = self.el.content.width()
@@ -1143,9 +1142,8 @@ Application = function(p)
 					window.requestAnimationFrame(function(){
 						self.el.content.width(w + 'px')
 						self.el.content.height(h + 'px')
-						//self.el.content.addClass('optimized')
 					})
-				}, 300)
+				}, 300)*/
 
 			
 		},
@@ -1247,7 +1245,9 @@ Application = function(p)
 
 			blockScroll = true
 
-			self.el.html.addClass('nooverflow')
+			self.el.html.css('overflow', 'hidden')
+
+			//self.el.html.addClass('nooverflow')
 
 			if (window.Keyboard && window.Keyboard.disableScroll){
 				window.Keyboard.disableScroll(true)
@@ -1270,8 +1270,10 @@ Application = function(p)
 			}
 
 			if(!self.scrollRemoved){
+				self.el.html.css('overflow', '')
+
 				///
-				self.el.html.removeClass('nooverflow')
+				//self.el.html.removeClass('nooverflow')
 				///
 
 				if (window.Keyboard && window.Keyboard.disableScroll){
@@ -1295,7 +1297,6 @@ Application = function(p)
 		self.width = self.el.window.width()
 
 		istouchstyle()
-
 
 		var showPanel = '1'
 
