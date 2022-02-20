@@ -414,11 +414,9 @@ html.mobileview #userpage .maketsWrapper .maket .contents {
   padding-top: 0;
 }
 html.mobileview #userpage .maketsWrapper .report #test {
+  padding: 0 1em;
   padding-top: 1em;
   padding-bottom: 3em;
-}
-html.mobileview #userpage .maketsWrapper .report #test .work {
-  padding: 0;
 }
 html.mobileview #userpage .maketsWrapper .report #test .userPanel {
   padding: 0;

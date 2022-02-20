@@ -163,6 +163,37 @@
 
 		.parameter{
 			max-width: 600px;
+			width: 100%;
+
+			>div{
+				padding: @rhythm 0;
+				vertical-align: top;
+			}
+
+			.pName{
+				vertical-align: top;
+				padding-top: 2 * @rhythm;
+				padding-right : @rhythm;
+				width: 190px;
+
+				.pNameW{
+					padding-top : @rhythm  / 3;
+					font-weight: 700;
+					font-size: 0.8em;
+					line-height: 1.4em;
+				}
+				
+			}
+
+			.pInput{
+				position: relative;
+				vertical-align: top;
+
+				.vm_valuesmulti{
+					padding-top: @rhythm / 2;
+				}
+			}
+
 		}
 		
 		.parameterMaketWrapper {
@@ -551,7 +582,7 @@
 	#test{
 
 		background: rgb(var(--background-total-theme));
-		padding : 0 2 * @rhythm;
+		/*padding : 0 2 * @rhythm;*/
 
 		.caption{
 			padding-top: 2 * @rhythm;

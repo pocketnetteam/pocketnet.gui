@@ -6209,7 +6209,7 @@ html.mobileview .wnd.normalizedmobile.noheader .wndinner .wndcontent {
 #application .parameter input {
   width: 100%;
   padding: 0.5em;
-  border-radius: 2px;
+  border-radius: 6px;
 }
 #application .parameter select.error,
 #application .parameter textarea.error,
@@ -6232,7 +6232,7 @@ html.mobileview .wnd.normalizedmobile.noheader .wndinner .wndcontent {
 }
 #application .parameter .vc_valuecustom .vc_textInput,
 #application .parameter .vc_valuecustom_multibig .vc_textInput {
-  background: #fff;
+  background: rgb(var(--background-hidden-layer));
 }
 #application .parameter .vmt_valuesmultitree,
 #application .parameter .vm_value {
