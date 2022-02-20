@@ -146,9 +146,14 @@
   box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
 }
 #main .menuwrapper .vc_valuecustom .vc_selectInput .vc_value {
-  text-align: center;
+  text-align: left;
   font-size: 1.5em;
-  padding: 0.5em 0.5em;
+  font-weight: 700;
+  padding: 0.5em 1em;
+  border-top: 1px solid rgb(var(--neutral-grad-1));
+}
+#main .menuwrapper .vc_valuecustom .vc_selectInput .vc_value:nth-child(1) {
+  border-top: 0;
 }
 #main .topvideosWrapper {
   display: block;
