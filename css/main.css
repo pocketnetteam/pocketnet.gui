@@ -383,10 +383,12 @@ input.ie[type="range"]::-ms-thumb {
   -o-transition: transform 0.3s;
   -webkit-transition: transform 0.3s;
   transition: transform 0.3s;
+  display: none;
 }
 #globalpreloader.show,
 .updatingFrontend.show {
   transform: translateY(100%);
+  display: block;
 }
 #globalpreloader .table,
 .updatingFrontend .table {
@@ -418,6 +420,12 @@ input.ie[type="range"]::-ms-thumb {
 #globalpreloader .table .icon i,
 .updatingFrontend .table .icon i {
   font-size: 1.3em;
+}
+.js-player .video-js {
+  display: none;
+}
+.js-player.player-ready .video-js {
+  display: block;
 }
 .unselectable {
   -webkit-touch-callout: none;
@@ -5951,10 +5959,10 @@ html.mobileview .upbutton .full {
 html.mobileview .wnd.normalizedmobile .wndinner {
   width: 100%;
   background: transparent!important;
+  will-change: transform;
 }
 html.mobileview .wnd.normalizedmobile .wndback {
   backface-visibility: hidden;
-  will-change: transform;
   backdrop-filter: none!important;
   -webkit-backdrop-filter: none!important;
   -moz-transition: 0.3s;
@@ -6040,16 +6048,16 @@ html.mobileview .wnd.normalizedmobile.asette .wndinner {
   transition: 0.2s;
 }
 html.mobileview .wnd.normalizedmobile.sette .wndinner {
-  -webkit-transform: translateY(130px);
-  transform: translateY(130px);
+  -webkit-transform: translate3d(0, 130px, 0);
+  transform: translate3d(0, 130px, 0);
   -moz-transition: transform 0.3s;
   -o-transition: transform 0.3s;
   -webkit-transition: transform 0.3s;
   transition: transform 0.3s;
 }
 html.mobileview .wnd.normalizedmobile.sette .windowmainbuttons {
-  -webkit-transform: translateY(-130px);
-  transform: translateY(-130px);
+  -webkit-transform: translate3d(0, -130px, 0);
+  transform: translate3d(0, -130px, 0);
   -moz-transition: transform 0.3s;
   -o-transition: transform 0.3s;
   -webkit-transition: transform 0.3s;
@@ -6060,12 +6068,12 @@ html.mobileview .wnd.normalizedmobile.sette .wndback {
   opacity: 1;
 }
 html.mobileview .wnd.normalizedmobile.showbetter.sette .wndinner {
-  -webkit-transform: translateY(45px);
-  transform: translateY(45px);
+  -webkit-transform: translate3d(0, 45px, 0);
+  transform: translate3d(0, 45px, 0);
 }
 html.mobileview .wnd.normalizedmobile.showbetter.sette .windowmainbuttons {
-  -webkit-transform: translateY(-45px);
-  transform: translateY(-45px);
+  -webkit-transform: translate3d(0, -45px, 0);
+  transform: translate3d(0, -45px, 0);
 }
 html.mobileview .wnd.normalizedmobile.showbetter .closeline {
   opacity: 0;

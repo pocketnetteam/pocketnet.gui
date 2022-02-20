@@ -474,9 +474,11 @@ hr {
     right : 0;
     z-index: 2000000;
     .transition(0.3s, transform);
+    display: none;
 
     &.show{
         transform:  translateY(100%);
+        display: block;
     }
 
     .table{
@@ -507,6 +509,18 @@ hr {
                 font-size: 1.3em;
             }
             
+        }
+    }
+}
+
+.js-player{
+    .video-js{
+        display: none;
+    }
+
+    &.player-ready{
+        .video-js{
+            display: block;
         }
     }
 }
@@ -7332,10 +7346,10 @@ html.mobileview{
             .wndinner{
                 width: 100%;
                 background: transparent!important;
+                will-change: transform;
             }
             .wndback{
                 backface-visibility: hidden;
-                will-change: transform;
                 backdrop-filter: none!important;
                 -webkit-backdrop-filter: none!important;  
                 
@@ -7419,14 +7433,14 @@ html.mobileview{
             &.sette{
 
                 .wndinner{
-                    -webkit-transform: translateY(130px);
-                    transform: translateY(130px);
+                    -webkit-transform: translate3d(0, 130px, 0);
+                    transform: translate3d(0, 130px, 0);
                     .transition(0.3s, transform);
                 }   
 
                 .windowmainbuttons{
-                    -webkit-transform: translateY(-130px);
-                    transform: translateY(-130px);
+                    -webkit-transform: translate3d(0,-130px,0);
+                    transform: translate3d(0,-130px,0);
                     .transition(0.3s, transform);
                 }
                 
@@ -7442,13 +7456,13 @@ html.mobileview{
                 &.sette{
       
                     .wndinner{
-                        -webkit-transform: translateY(45px);
-                        transform: translateY(45px);
+                        -webkit-transform: translate3d(0,45px,0);
+                        transform: translate3d(0,45px,0);
                     }   
                     
                     .windowmainbuttons{
-                        -webkit-transform: translateY(-45px);
-                        transform: translateY(-45px);
+                        -webkit-transform: translate3d(0,-45px,0);
+                        transform: translate3d(0,-45px,0);
                     }
                 }
 

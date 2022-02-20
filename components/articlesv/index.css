@@ -109,6 +109,9 @@
   max-width: 400px;
   max-height: 650px;
 }
+.wnd.wndarticles .wndinner > div.buttons {
+  display: flex!important;
+}
 .wnd.wndarticles .wndcontent {
   overflow-y: scroll;
   padding: 0;
