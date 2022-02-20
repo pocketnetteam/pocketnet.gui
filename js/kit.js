@@ -1516,7 +1516,9 @@ Share = function(lang){
 
 		////// base64
 
-		var obj = JSON.stringify(self.export().replace(/base64,[^ ]/g, 'fileinb64'));
+		var obj = JSON.stringify(self.export()).replace(/base64,[^ ",]*/g, 'fileinb64');
+
+		console.log(JSON.stringify(self.export()), obj)
 
 		return obj.length
 

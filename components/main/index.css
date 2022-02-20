@@ -21,8 +21,11 @@
   min-width: 44px;
   text-align: center;
 }
+#main .menuwrapper .panelitems .panelitem.btnlight {
+  color: rgb(var(--neutral-grad-3));
+  padding: 0.5em 1em;
+}
 #main .menuwrapper .panelitems .panelitem.btn {
-  margin-left: 1em;
   white-space: nowrap;
   padding: 0.5em 1em;
   border: 1px solid rgb(var(--neutral-grad-1));
@@ -50,6 +53,7 @@
   font-size: 0.8em;
   line-height: 77px;
   color: rgb(var(--neutral-grad-3));
+  margin-right: 1em;
 }
 #main .menuwrapper .panelitems .panelitem.nfl .vc_value {
   line-height: 44px;

@@ -117,7 +117,7 @@
   padding: 1em 0;
 }
 #leftpanel .subtop .sub {
-  padding: 1em 0;
+  padding: 1em;
   margin-top: 2em;
   margin-bottom: 2em;
   border-top: 1px solid rgba(var(--color-medium-theme), 0.5);
@@ -210,7 +210,10 @@
 }
 #leftpanel .vc_valuecustom .vc_selectInput {
   background: rgb(var(--background-main));
+  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
+  border-radius: 6px;
   max-height: 500px;
+  padding: 0.5em;
 }
 #leftpanel .vc_valuecustom .vc_selectInput .vc_value {
   padding-left: 0;
@@ -278,9 +281,6 @@
   }
   #leftpanel .menu .menupanel .tabs .tab .pcenterLabel .lentaunseen {
     font-size: 0.7em;
-  }
-  #leftpanel .vc_valuecustom .vc_selectInput {
-    background: transparent;
   }
   #leftpanel .menu {
     display: none;

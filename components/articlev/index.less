@@ -2,6 +2,8 @@
 
 #articlev{
 
+    
+
     .sizeinfo{
         position: fixed;
         left : 0;
@@ -191,16 +193,22 @@
         }
     }
 
-    
+    .editorSection{
+        textarea{
+            background: rgb(var(--background-total-theme));
+        }
+    }
 
     .editorWrapper{
         padding : 2 * @rhythm 0;
 
+        
         .ce-paragraph{
             &:placeholder-shown{
                 color : rgb(var(--neutral-grad-3))!important;
             }
         }
+
 
         .ce-toolbar__content,
         .ce-block__content{

@@ -3,30 +3,40 @@
         <div class="panelitem nfl">
             <%= selector.input() %>
         </div>
-        <div elementsid="showcategories" class="panelitem btn showcategories <% if(tagsSelected || tagsExcluded) {%> active <% } %>">
-            <span>
-                <% if(!tagsSelected) {%><%= e('filters') %><% } else { 
-                    
-                    var bycategories = app.platform.sdk.categories.fromTags(tags)
-                    
-                    %> 
+        <% if(fmode == 'filters') {%>
+            <div elementsid="showcategories" class="panelitem btn showcategories <% if(tagsSelected || tagsExcluded) {%> active <% } %>">
+                <span>
+                    <% if(!tagsSelected) {%><%= e('filters') %><% } else { 
+                        
+                        var bycategories = app.platform.sdk.categories.fromTags(tags)
+                        
+                        %> 
 
-                    <% _.each(bycategories.categories, function(category){ %>
-                        @<%-category.name%>
-                    <% }) %>
+                        <% _.each(bycategories.categories, function(category){ %>
+                            @<%-category.name%>
+                        <% }) %>
 
-                    <% _.each(bycategories.tags, function(tag){   %>
-                        #<%-tag%>
-                    <% }) %>
-                    
+                        <% _.each(bycategories.tags, function(tag){   %>
+                            #<%-tag%>
+                        <% }) %>
+                        
+                    <% } %>
+                </span> 
+                <% if(tagsExcluded && !tagsSelected) {%>
+                    <i class="fas fa-times"></i>
+                <% } else { %> 
+                    <i class="fas fa-filter"></i>
                 <% } %>
-            </span> 
-            <% if(tagsExcluded && !tagsSelected) {%>
-                <i class="fas fa-times"></i>
-            <% } else { %> 
-                <i class="fas fa-filter"></i>
-            <% } %>
-        </div>
+            </div>
+        <% } %>
+
+        <% if(fmode == 'settings') {%>
+
+            <div elementsid="showcategories" class="panelitem btnlight showcategories">
+                <i class="fas fa-cog"></i>
+            </div>
+
+        <% } %>
 
     </div>
 </div>

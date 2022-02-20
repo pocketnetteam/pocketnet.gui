@@ -267,6 +267,17 @@ var main = (function(){
 
 				self.app.user.isState(function(state){
 
+					//videomain && !readmain && !searchvalue && !searchtags
+
+					console.log('currentMode', currentMode)
+
+					var fmode = 'filters'
+
+					if(searchvalue || searchtags) fmode = 'search'
+
+					if(currentMode != 'common') fmode = 'settings'
+					if(currentMode == 'sub') fmode = 'none'
+
 					self.shell({
 
 						name :  'menu',
@@ -279,7 +290,8 @@ var main = (function(){
 
 							tagsSelected : self.app.platform.sdk.categories.gettags().length,
 							tags : self.app.platform.sdk.categories.gettags(),
-							selector : selector
+							selector : selector,
+							fmode 
 						},
 
 					}, function(_p){

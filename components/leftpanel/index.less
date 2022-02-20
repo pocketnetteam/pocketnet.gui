@@ -171,7 +171,7 @@
 	.subtop{
 
 		.sub{
-			padding : 2 * @rhythm 0;
+			padding : 2 * @rhythm ;
 			margin-top : 4 * @rhythm;
 			margin-bottom: 4 * @rhythm;
 			border-top: 1px solid rgba(var(--color-medium-theme), 0.5);
@@ -298,12 +298,12 @@
 			border: 0;
 		}
 
-		
-
 		.vc_selectInput{
 			background: rgb(var(--background-main));
-			
+			.shadowSmaller();
+			border-radius: 6px;
 			max-height: 500px;
+			padding : @rhythm;
 
 			.vc_value{
 				padding-left: 0;
@@ -412,12 +412,7 @@
 			}
 		}
 
-		.vc_valuecustom{
 	
-			.vc_selectInput{
-				background : transparent;
-			}
-		}
 
 		.menu{
 			display: none;

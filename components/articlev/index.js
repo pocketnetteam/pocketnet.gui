@@ -161,7 +161,6 @@ var articlev = (function(){
 								}
 
 								catch (e){
-									console.log(e)
 
 									actions.complete();
 								}
@@ -177,7 +176,6 @@ var articlev = (function(){
 
 
 			error : function(e){
-				console.log(e)
 
 				if(e && e.text){
 
@@ -483,8 +481,6 @@ var articlev = (function(){
 
 				var size = helpers.size()
 
-				console.log('sizeinfo', size)
-
 				self.shell({
 					animation : false,
 					name : 'sizeinfo',
@@ -710,8 +706,6 @@ var articlev = (function(){
 			},
 
 			status : function(){
-
-				//console.log('self.app.platform.sdk.articles.findlastdraft()', self.app.platform.sdk.articles.findlastdraft())
 				
 				self.shell({
 
@@ -787,8 +781,6 @@ var articlev = (function(){
 
 				art.caption.value = text || ''
 
-				console.log('text', text, art)
-
 				renders.captiondouble()
 				
 				actions.save()
@@ -806,8 +798,6 @@ var articlev = (function(){
 						current : art.id,	
 
 						create : function(){
-
-							console.log("create")
 
 							changeArticle()
 							return true
@@ -1030,14 +1020,12 @@ var articlev = (function(){
 			});
 
 			editor.isReady.then(() => {
-				console.log('Editor.js is ready to work!')
 				/** Do anything you need after editor initialization */
 
 				renders.sizeinfo()
 			})
 
 			.catch((reason) => {
-				console.log(`Editor.js initialization failed because of ${reason}`)
 			});
 
 			

@@ -142,6 +142,9 @@
 #articlev.showpreview .previewSection {
   display: block;
 }
+#articlev .editorSection textarea {
+  background: rgb(var(--background-total-theme));
+}
 #articlev .editorWrapper {
   padding: 1em 0;
 }

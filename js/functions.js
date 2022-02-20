@@ -10988,13 +10988,16 @@ edjsHTML = function() {
 					r += (str || "").split(/\s+/).length
 				}
 
-				_e.blocks.map((function(e) {
 
-					if(encdec[e.type]){
-						encdec[e.type](e.data, add)
-					}
+				if (_e && _e.blocks){
+					_e.blocks.map((function(e) {
 
-                }))
+						if(encdec[e.type]){
+							encdec[e.type](e.data, add)
+						}
+
+					}))
+				}
 
 				return r
 			},
@@ -11005,15 +11008,19 @@ edjsHTML = function() {
 
 				var e = {..._e};
 
-				e.blocks = e.blocks.map((function(e) {
+				if (e.blocks){
+					e.blocks = e.blocks.map((function(e) {
 
-					return {
-						type : e.type,
-						id : e.id,
-						data : encdec[e.type] ? encdec[e.type](e.data, fu) : _.clone(e.data)
-					}
+						return {
+							type : e.type,
+							id : e.id,
+							data : encdec[e.type] ? encdec[e.type](e.data, fu) : _.clone(e.data)
+						}
+	
+					}))
+				}
 
-                }))
+				
 
 				return e
 			},
