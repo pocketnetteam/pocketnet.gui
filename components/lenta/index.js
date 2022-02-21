@@ -16,7 +16,8 @@ var lenta = (function(){
 		var mid = p.mid;
 		var making = false, ovf = false;
 		var w, essenseData, recomended = [], recommended, mestate, initedcommentes = {}, canloadprev = false,
-		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null, loadedcachedHeight;
+		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null, loadedcachedHeight, showRecommendedUsers = {show: true},
+		recommendedusers = null;
 
 		var progress, parallax;
 
@@ -221,6 +222,7 @@ var lenta = (function(){
 				})
 
 				self.app.platform.sdk.node.shares.getbyid(allids, function(shares){
+					
 
 					_.each(shares, function(share){
 						delete share.myVal
@@ -2403,6 +2405,25 @@ var lenta = (function(){
 		}	
 
 		var renders = {
+			recommendedusers : function(){
+				
+
+				self.nav.api.load({
+
+					open : true,
+					id : 'recommendedusers',
+					el : el.recommendedusers,
+					animation : false,
+
+					essenseData : {
+					},
+					
+					clbk : function(e, p){
+						recommendedusers = p;
+					}
+
+				})
+			},
 			debugusers : function(el){
 				var _cn = el.find('.testusersprofiles')
 
@@ -2882,7 +2903,8 @@ var lenta = (function(){
 					data : {
 						shares : shares || [],
 						index : p.index || 0,
-						video : video || essenseData.videomobile
+						video : video || essenseData.videomobile,
+						showRecommendedUsers : showRecommendedUsers
 					},
 					animation : false,
 					delayRender : isotopeinited,
@@ -2891,6 +2913,14 @@ var lenta = (function(){
 				}, function(_p){
 
 					
+					if (tpl ==='groupshares'){
+
+						// el.recommendedusers = _p.el.find('.recommendeduserscnt');
+
+						// if (!essenseData.video){
+						// 	renders.recommendedusers();
+						// }
+					}
 
 					if (_p.inner == append){
 						sharesInview = sharesInview.concat(shares)	
@@ -4505,7 +4535,6 @@ var lenta = (function(){
 
 			destroy : function(){
 
-
 				delete self.app.events.delayedscroll['videos' + mid]
 				delete self.app.events.delayedscroll['videosinit' + mid]
 				delete self.app.events.scroll['loadmore' + mid]
@@ -4656,10 +4685,13 @@ var lenta = (function(){
 				el.c = p.el.find('#' + self.map.id);
 				el.shares = el.c.find('.shares');
 				el.loader = el.c.find('.loader');
-				el.lentacnt = el.c.find('.lentacell .cnt')
-				el.w = essenseData.window || w
+				el.lentacnt = el.c.find('.lentacell .cnt');
+				el.w = essenseData.window || w;
+				
 
 				el.share = {};
+
+				showRecommendedUsers.show = true;
 
 				if (essenseData.horizontal){
 

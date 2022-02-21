@@ -140,6 +140,14 @@
   width: 33px;
   opacity: 0;
 }
+#categories .cat .cattable > div.times {
+  display: none;
+  font-size: 0.8;
+  color: rgb(var(--color-bad));
+  justify-content: flex-end;
+  cursor: pointer;
+  align-items: center;
+}
 #categories .cat .cattable > div.minus {
   opacity: 0;
   font-size: 0.8em;
@@ -210,6 +218,12 @@
 }
 #categories .tg.selected .cat .cattable > div.catvalue .forchecked {
   display: inline-block;
+}
+#categories .tg.selected .cat .minus {
+  display: none;
+}
+#categories .tg.selected .cat:hover .times {
+  display: flex;
 }
 #categories .ta .tg {
   display: block;

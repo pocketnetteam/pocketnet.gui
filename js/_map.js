@@ -121,6 +121,7 @@ __map =  {
 	
 	__templates : [
 		{ c : 'navigation', n : 'menu' },
+		{ c : 'topusers', n : 'usermodal' },
 		{ c : 'menu', n : 'index' },
 		{ c : 'share', n : 'body' },
 		//{ c : 'toppanel', n : 'index' },
@@ -478,18 +479,18 @@ __map =  {
 			anonimus : true,
 		},
 
+		// usermodal : {
+		// 	uri : "usermodal",
+		// 	href : "usermodal",
+		
+		// 	anonimus : true,
+		// },
+
+
 		bestposts : {
 			uri : "bestposts",
 			href : "bestposts",
 			
-			add : insertingfunc,
-			anonimus : true,
-		},
-
-		recommendedposts : {
-			uri : "recommendedposts",
-			href : "recommendedposts",
-		
 			add : insertingfunc,
 			anonimus : true,
 		},

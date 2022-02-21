@@ -1782,6 +1782,10 @@ ____loclib.minPkoin = function (p){
 	return `Минимум ${String(p)} PKOIN`
 }
 
+____loclib.minPkoin = function (p){	
+	return `Максимум ${String(p)} PKOIN`
+}
+
 ____loclib.topPosts = "Популярные посты";
 ____loclib.videop2psettings = "Использовать p2p при просмотре видео"
 
