@@ -474,11 +474,17 @@ hr {
     right : 0;
     z-index: 2000000;
     .transition(0.3s, transform);
-    display: none;
 
     &.show{
         transform:  translateY(100%);
-        display: block;
+        .table{
+            .icon{
+                i{
+                    display: inline-block;
+                }
+                
+            }
+        }
     }
 
     .table{
@@ -506,6 +512,7 @@ hr {
         .icon{
             padding : 4 * @rhythm;
             i{
+                display: none;
                 font-size: 1.3em;
             }
             

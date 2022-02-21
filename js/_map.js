@@ -146,6 +146,8 @@ __map =  {
 		{ c : 'lenta', n : 'groupshares' },
 		{ c : 'lenta', n : 'commentspreview' },
 		{ c : 'comments', n : 'index' },
+		{ c : 'comments', n : 'post' },
+		{ c : 'comments', n : 'lsit' },
 		{ c : 'lastcomments', n : 'lastcommentslist'},
 		{ c : 'author', n : 'preshell'},
 		{ c : 'author', n : 'authorcaption'},

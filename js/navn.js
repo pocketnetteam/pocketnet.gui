@@ -22,6 +22,7 @@ Nav = function(app)
 		links : true,
 	}
 
+	var hostname = window.location.hostname
 
 	var electronopen = false
 	var blockclick = false
@@ -1443,7 +1444,7 @@ Nav = function(app)
 			return decodeSeoLinks(pathnameSearch).replace("#!", "");
 		},
 		hostname : function(){
-			return window.location.hostname + '/'
+			return hostname + '/'
 		}
 	}
 

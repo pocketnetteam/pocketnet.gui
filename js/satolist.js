@@ -21870,30 +21870,7 @@ Platform = function (app, listofnodes) {
 
                 var nm = trimHtml(m, symbols)
 
-                //share.message;
-
-                /*var symbols = 20;
-
-                if (extendedpreview) {
-                    m = '';
-
-                    if (share.caption) m = m + '' + share.caption + ' '
-
-                    if (share.message) m = m + '' + share.message + ''
-
-                    symbols = 180;
-                }*/
-
-
-                /* var nm = filterXSS(trimHtml(m, symbols), {
-                    stripIgnoreTag: true
-                });*/
-
                 var links = _.isObject(share.message) ? [] : linkify.find(share.message);
-
-                /*_.each(links, function(l){
-                    nm = nm.replace(l.href, "")
-                })*/
 
                 var images = _.map(share.images, function (i) {
                     return {
@@ -21979,11 +21956,8 @@ Platform = function (app, listofnodes) {
 
                         else
                         {
-                                h += '<b>' + flb(self.app.localization.e('video')) + '</b> <i class="fas fa-play"></i> '
+                            h += '<b>' + flb(self.app.localization.e('video')) + '</b> <i class="fas fa-play"></i> '
                         }
-
-
-
 
                     h += '</div>'
                 }
@@ -25889,7 +25863,7 @@ Platform = function (app, listofnodes) {
 
         setTimeout(function(){
             self.initSounds();
-        }, 3000)
+        }, 35000)
 
         if (self.app.errors.clbks) {
             self.app.errors.clbks.platform = self.appstate

@@ -423,17 +423,15 @@
   background: #000000;
   position: relative;
 }
-.share_common .jsPlayerLoading .jsPlayerLoadingD {
-  width: 100%;
-  height: 100%;
+.share_common .jsPlayerLoading .preloader5 {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
-}
-.share_common .jsPlayerLoading .jsPlayerLoadingD > div {
-  vertical-align: middle;
-  text-align: center;
+  margin-left: -15px;
+  margin-top: -3px;
+  width: 30px;
+  height: 15px;
+  contain: strict;
 }
 .share_common .authorTable {
   width: auto;
@@ -1170,6 +1168,9 @@
                 text-align: center;
             }
         }*/
+  }
+  .share_common .jsPlayerLoading .preloader5 {
+    display: none;
   }
   .share_common .showMore button {
     font-size: 1.2em;

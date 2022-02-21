@@ -556,20 +556,17 @@
         height: auto;
         background: #000000;
         position: relative;
+        
 
-        .jsPlayerLoadingD{
-            width: 100%;
-            height: 100%;
-
+        .preloader5{
             position: absolute;
             left: 50%;
             top: 50%;
-            transform: translate(-50%, -50%);
-
-            >div{
-                vertical-align: middle;
-                text-align: center;
-            }
+            margin-left: -15px;
+            margin-top: -3px;
+            width: 30px;
+            height: 15px;
+            contain: strict;
         }
     }
 
@@ -1507,6 +1504,12 @@
         cursor: default;
         padding-bottom : 0;
         border-radius: 0;
+
+        .jsPlayerLoading{
+            .preloader5{
+                display: none;
+            }
+        }
 
         .showMore{
           

@@ -728,7 +728,6 @@ var lenta = (function(){
 					}	
 
 					s.logoType = self.app.meta.fullname
-
 					PlyrEx(pels[0], s, callback, readyCallback)
 
 				}
@@ -1856,7 +1855,6 @@ var lenta = (function(){
 							var value = 3500
 
 							offsetTop = window.cordova ? (_el.data('offsetTop') || _el.offset().top) : _el.offset().top
-							//_el.data('offsetTop', offsetTop)
 
 							if(self.app.mobileview) value = 1500
 
@@ -2587,11 +2585,8 @@ var lenta = (function(){
 						renders.urlContent(share, function(){
 
 							if(essenseData.searchValue){
-
 								p.el.find('.canmark').mark(essenseData.searchValue);
-
 							}
-							
 
 							if(!video)
 								actions.initVideo(p.el, share, null, !essenseData.openapi)
@@ -3239,6 +3234,8 @@ var lenta = (function(){
 						}, next)
 
 					}, function(_p){
+
+						console.log("RENDER", url)
 
 						var images = _p.el.find('img');
 	
