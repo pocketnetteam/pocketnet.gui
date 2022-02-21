@@ -461,17 +461,26 @@
 .editVideoDialog .videoDescriptionWrapper {
   margin-bottom: 1em;
 }
-.wndcontent #videoCabinet {
-  position: relative;
-}
-.wndcontent #videoCabinet .cabinetHeaderWrapper {
-  position: absolute;
-  top: 0;
-}
-.wndcontent #videoCabinet .videoContainer {
-  position: absolute;
-  top: 120px;
-  width: 100%;
+/*
+.wndcontent {
+    #videoCabinet {
+        position: relative;
+
+        .cabinetHeaderWrapper {
+            position: absolute;
+
+            top: 0;
+        }
+
+        .videoContainer {
+            position: absolute;
+            top: 120px;
+            width: 100%;
+        }
+    }
+}*/
+html.mobileview #videoCabinet .videoSearchWrapper {
+  max-width: none;
 }
 @media only screen and (max-width: 768px) {
   #videoCabinet {
