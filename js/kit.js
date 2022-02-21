@@ -1518,13 +1518,17 @@ Share = function(lang){
 
 		var obj = JSON.stringify(self.export()).replace(/base64,[^ ",]*/g, 'fileinb64');
 
-		console.log(JSON.stringify(self.export()), obj)
-
 		return obj.length
 
 	}
 
-	self.sizelimit = 60000
+	self.sizelimit = function(){
+		if(self.itisarticle() && !window.testpocketnet){
+			return 120000
+		}
+
+		return 60000
+	}
 
 	if(lang) self.language.set(lang)
 

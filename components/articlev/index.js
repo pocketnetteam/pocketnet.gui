@@ -75,7 +75,7 @@ var articlev = (function(){
 
 				var size = share.size()
 
-				var percent = size / share.sizelimit
+				var percent = size / share.sizelimit()
 
 				var edjs = new edjsHTML(null, app)
 
@@ -115,11 +115,6 @@ var articlev = (function(){
 				successCheck()
 				self.closeContainer()
 
-				/*self.nav.api.load({
-					open : true,
-					href : 'author?address=' + self.app.user.address.value.toString('hex'),
-					history : true,
-				})*/
 			},
 
 			trx : function(share){
@@ -135,11 +130,7 @@ var articlev = (function(){
 
 							if(!_alias){
 
-								var t = self.app.platform.errorHandler(error, true);
-
-								if (t){
-									sitemessage(t)
-								}
+								
 
 								return reject(error)
 							}
@@ -179,6 +170,7 @@ var articlev = (function(){
 
 				if(e && e.text){
 
+					
 					if (errors[e.text]){
 
 						sitemessage(self.app.localization.e(errors[e.text].message ? errors[e.text].message : 'e13293'))
@@ -188,7 +180,18 @@ var articlev = (function(){
 						return
 
 					}
+
+					
 				}
+
+				console.log("E", e)
+
+				if (e.toString && self.app.platform.errors[e.toString()]){
+					sitemessage(self.app.platform.errors[e.toString()].message())
+
+					return
+				}
+
 
 				sitemessage(e)
 			},
