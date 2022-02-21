@@ -433,6 +433,17 @@
   height: 15px;
   contain: strict;
 }
+.share_common .jsPlayerLoading .jsPlayerLoadingD {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+}
+.share_common .jsPlayerLoading .jsPlayerLoadingD > div {
+  vertical-align: middle;
+  text-align: center;
+}
 .share_common .authorTable {
   width: auto;
 }

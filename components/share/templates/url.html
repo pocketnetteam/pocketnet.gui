@@ -12,13 +12,18 @@
 	%>
 		<div class="videoWrapper fullscreenActive <%- (aspectRatio < 1.25) && (aspectRatio >= 0.9) ? 'squareVideo' : ''%> <%- (aspectRatio < 0.9) && (aspectRatio != 0) ? 'verticalVideo' : ''%>" pid="<%- makeid() %>">
 
-			<% if(meta.type == 'youtube' && window.cordova) {%>
+			<% if(meta.type == 'youtube') {%>
 
 				<div class="js-player-dummy">
 					<div class="jsPlayerLoading">
 						<div class="jsPlayerLoadingD table watchonyoutube">
 							<div>
-								<a elementsid="jsplayerhref" href="<%- url %>" cordovalink="_system" target="_blank">Watch on Youtube</a>
+								<a elementsid="jsplayerhref" href="<%- url %>" cordovalink="_system" target="_blank">
+									<button class="black">
+										<i class="fab fa-youtube"></i> Watch on Youtube
+									</button>
+									
+								</a>
 							</div>
 						</div>
 					</div>

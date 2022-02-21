@@ -572,13 +572,13 @@ var articlev = (function(){
 					el.cover.attr('image', art.cover)
 					bgImages(el.c)
 
-					el.head.addClass('hascover')
+					el.cover.addClass('hascover')
 					el.blackmatte.addClass('hascover')
 				}
 
 				else{
 					bgImagesClear(el.cover)
-					el.head.removeClass('hascover')
+					el.cover.removeClass('hascover')
 					el.blackmatte.removeClass('hascover')
 				}
 			},

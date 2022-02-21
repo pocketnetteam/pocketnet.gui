@@ -89,6 +89,8 @@
         background: rgb(var(--color-shadow-var));
         z-index: 2;
 
+        
+
         .myarticles{
             i{
                 width: 30px;
@@ -411,12 +413,72 @@
             min-height: 36px;
         }
 
+        .coverelements{
+            position: absolute;
+            left : 0;
+            width: 100%;
+            top : 40%;
+            padding :  @rhythm;
+            text-align: center;
+            color : rgb(var(--text-on-bg-shadow-color));
+            padding: 0 2 * @rhythm;
+
+            .coverelementsinner{
+                padding: 2 * @rhythm;
+                border-radius: 12px;
+                border : 1px dashed rgb(var(--text-on-bg-shadow-color));
+                background: rgba(var(--color-shadow-base), 0.1);
+                max-width: 300px;
+                margin : 0 auto;
+                align-items: center;
+
+                .uploadcover{
+                    .fileUploader,
+                    .fileUploader .elContent{
+                        position: relative;
+                    }
+                }
+
+               
+
+                .removeCover{
+                    cursor: pointer;
+                    i{
+                        font-size: 0.8em;
+                    }
+                    display: none;
+                }
+                
+            }
+        }
+
+    
+        &.hascover{
+            .coverelements{
+                background: transparent;
+                opacity: 0.5;
+
+                .coverelementsinner{
+                    .removeCover{
+                        display: block;
+                    }
+                    .uploadcover{
+                        display: none;
+                    }
+                }
+
+                &:hover{
+                    opacity: 1;
+                }
+            }
+            
+        }
+
         .forbackmain{
             position: absolute;
             left : 0;
             display: none;
             width: 100%;
-            /*top : 2 * @rhythm;*/
             top : 40%;
             padding :  @rhythm;
             text-align: center;
@@ -639,21 +701,7 @@
             }
         }
 
-        .removeCover{
-            display: none;
-            max-width: 33px;
-            cursor: pointer;
-
-            i{
-                font-size: 0.8em;
-            }
-        }
-    
-        &.hascover{
-            .removeCover{
-                display: block;
-            }
-        }
+        
 
         .maxtext{
             max-width: 150px;
@@ -761,6 +809,11 @@
                 font-size: 0.9em;
             }
         }
+
+        .work{
+            width: 100%;
+            padding : 0;
+        }
     
         .bgwrapper{
             height: 650px;
@@ -786,6 +839,8 @@
                 left: @rhythm;
                 top : @rhythm;
             }
+
+            
         }
     
         .mwork{
@@ -812,6 +867,8 @@
         .editorSection{
             margin-top : 4 * @rhythm;
         }
+
+        
     
         .editorWrapper{
             
@@ -929,7 +986,8 @@
             }
 
         }
-    
+
+       
         .aheader{
             display: flex;
             align-items:flex-end;
@@ -938,12 +996,22 @@
             padding : @rhythm @rhythm;
             padding-right: @rhythm;
             border-radius: 0;
+
+            button{
+
+                &.publish{
+                    font-size: 1em;
+                    text-align: center;
+                }
+            }
+        
     
             .truestatuswrapper{
                 padding-left: @rhythm;
             }
     
             .statusWrapper{
+                padding-left: @rhythm;
                 width: 100%;
             }
     
