@@ -353,21 +353,24 @@ var share = (function(){
 
 				if(type == 'article'){
 
-						self.nav.api.load({
-							open : true,
-							id : 'articlev',
-							inWnd : true,
-							history : true,
-	
-							essenseData : {
-								
-							},
-	
-							clbk : function(p){
-								external = p
-							}
-						})
+					self.nav.api.load({
+						open : true,
+						id : 'articlev',
+						inWnd : true,
+						history : true,
 
+						essenseData : {
+							
+						},
+
+						clbk : function(p){
+							external = p
+						}
+					})
+					
+
+					self.closeContainer()
+					
 					return
 				}
 
