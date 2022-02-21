@@ -296,6 +296,8 @@
 #lenta.mainvideo .share .forurl {
   height: 200px;
   position: relative;
+  max-width: 350px;
+  margin: 0 auto;
 }
 #lenta.mainvideo .share .forurl.verticalVideo {
   height: 530px;
@@ -561,15 +563,16 @@
 #lenta .share .sharearticle .shareBgCaption .buttonOpenWrapper button,
 #lenta .share .sharearticle .articleend .buttonOpenWrapper button {
   width: 130px;
-  border-radius: 2px;
-  background: rgba(var(--color-shadow-base), 0.1);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  border-radius: 30px;
+  background: rgba(var(--color-bg-ac-bright), 0.3);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
   border: 1px solid transparent!important;
+  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
 }
 #lenta .share .sharearticle .shareBgCaption .buttonOpenWrapper button:hover,
 #lenta .share .sharearticle .articleend .buttonOpenWrapper button:hover {
-  background: rgba(var(--color-shadow-base), 0.01);
+  background: rgba(var(--color-shadow-base), 0.25);
 }
 #lenta .share .sharearticle .shareBgCaption .divider,
 #lenta .share .sharearticle .articleend .divider {
@@ -881,7 +884,7 @@
     transform: translateY(-220px);
   }
 }
-@media only screen and (max-width: 1024px) {
+@media only screen and (max-width: 1180px) {
   #lenta.mainvideo .shares .authorgroup {
     width: 50%;
   }
@@ -963,12 +966,22 @@
     font-size: 0.9em;
   }
 }
-html.tablet #lenta .fullScreenVideo,
-html.mobile #lenta .fullScreenVideo {
+html.mobileview #lenta .jsPlayerLoading,
+html.mobileview #lenta .video-js {
+  max-height: 80vh;
+}
+html.mobileview #lenta .share .jsPlayerLoading,
+html.mobileview #lenta .share .video-js {
+  max-height: 80vh;
+}
+html.mobileview #lenta .share.fullScreenVideo .jsPlayerLoading,
+html.mobileview #lenta .share.fullScreenVideo .video-js {
+  max-height: none;
+}
+html.mobileview #lenta .fullScreenVideo {
   will-change: transform;
   -webkit-backface-visibility: hidden;
 }
-html.tablet.fullscreen #lenta .fullScreenVideo #comments,
-html.mobile.fullscreen #lenta .fullScreenVideo #comments {
+html.mobileview.fullscreen #lenta .fullScreenVideo #comments {
   display: none;
 }

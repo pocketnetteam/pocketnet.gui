@@ -400,9 +400,12 @@
 			.forurl{
 				height: 200px;
 				position: relative;
+				max-width: 350px;
+				margin : 0 auto;
 
 				&.verticalVideo{
 					height: 530px;
+					
 				}
 			}
 
@@ -765,14 +768,15 @@
 					
 					button{
 						width: 130px;
-						border-radius: 2px;
-						background: rgba(var(--color-shadow-base), 0.1);
-						backdrop-filter: blur(14px);
-        				-webkit-backdrop-filter: blur(14px); 
+						border-radius: 30px;
+						background: rgba(var(--color-bg-ac-bright), 0.3);
+						backdrop-filter: blur(7px);
+        				-webkit-backdrop-filter: blur(7px); 
 						border : 1px solid transparent!important; 
+						.shadowSmaller();
 
 						&:hover{
-							background: rgba(var(--color-shadow-base), 0.01);
+							background: rgba(var(--color-shadow-base), 0.25);
 						}
 					}
 				}
@@ -1226,7 +1230,7 @@
 }
 
 
-@media only screen and (max-width: 1024px) {
+@media only screen and (max-width: 1180px) {
 	#lenta{
 		&.mainvideo{
 			.shares{
@@ -1378,8 +1382,31 @@
 	}
 }
 
-html.tablet,
-html.mobile{
+html.mobileview{
+	#lenta{
+		.jsPlayerLoading,
+		.video-js{
+			max-height: 80vh;
+		}
+
+		.share{
+
+			.jsPlayerLoading,
+			.video-js{
+				max-height: 80vh;
+			}
+			
+			&.fullScreenVideo{
+				.jsPlayerLoading,
+				.video-js{
+					max-height: none;
+				}
+			}
+		}
+	}
+}
+
+html.mobileview{
 	#lenta{
 		.fullScreenVideo{
 			will-change: transform;
@@ -1388,8 +1415,7 @@ html.mobile{
 	}
 }
 
-html.tablet.fullscreen,
-html.mobile.fullscreen{
+html.mobileview.fullscreen{
 	#lenta{
 		.fullScreenVideo{
 			#comments{

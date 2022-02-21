@@ -26351,9 +26351,7 @@ Platform = function (app, listofnodes) {
                                         return el.className && el.className.indexOf('noswipepnt') > -1
                                     })) return false
 
-                                    if (self.matrixchat.core && (!self.matrixchat.core.canback || self.matrixchat.core.canback()))
-
-                                        return true
+                                    if (self.matrixchat.core && (!self.matrixchat.core.canback || self.matrixchat.core.canback())) return true
                                 },
     
                                 restrict : true,

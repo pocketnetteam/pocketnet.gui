@@ -3045,7 +3045,7 @@ var lenta = (function(){
 
 					if(s.settings.v != "a"){
 
-						if(isMobile() && image.images.length > 1){
+						if((isMobile()|| essenseData.openapi) && image.images.length > 1 ){
 
 							var aspectRatio = 0
 							
@@ -3084,7 +3084,7 @@ var lenta = (function(){
 								var _w = el.width();
 								var _h = el.height()
 
-								if(_img.width > _img.height && (/*!self.app.mobileview &&*/ !essenseData.openapi)){
+								if(_img.width > _img.height && (/*!self.app.mobileview && */!essenseData.openapi || image.images.length == 1)){
 									ac = 'w2'
 
 									var w = _w * (_img.width / _img.height);
@@ -3100,7 +3100,7 @@ var lenta = (function(){
 									el.width(w);
 								}
 
-								if(_img.height > _img.width || (/*self.app.mobileview || */essenseData.openapi)){
+								if(_img.height > _img.width || (/*self.app.mobileview || */essenseData.openapi|| image.images.length == 1)){
 									ac = 'h2'
 
 									el.height(_w * (_img.height / _img.width))

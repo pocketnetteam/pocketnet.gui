@@ -1869,5 +1869,7 @@ ____loclib.e14107 = "Проверка обновления"
 ____loclib.e14108 = "Поделиться ответом"
 
 ____loclib.longreads = "Статьи"
+____loclib.readarticle = "Читать статью"
+
 ____loclib.filters = "Фильтры"
 ____loclib.dataenteredincorrectly = "Данные введены неверно"
