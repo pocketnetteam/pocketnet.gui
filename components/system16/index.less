@@ -292,7 +292,7 @@
 
     .managepanel{
         padding : 2 * @rhythm 0;
-        background: rgba(var(--neutral-grad-3), 0.15);
+        background: rgb(var(--background-secondary-theme));
         margin-bottom: 2 * @rhythm;
     }
 
@@ -304,7 +304,7 @@
         
         .grwr{
             display: none;
-            background: rgba(var(--neutral-grad-3), 0.15);
+            background: rgb(var(--background-secondary-theme));
             border-radius: 12px;
         }
 
@@ -1365,7 +1365,13 @@
 	}
 }
 
-
+html.mobileview{
+    #system16{
+        .work{
+            padding: 0 2 * @rhythm!important;
+        }
+    }
+}
 
 /*t*/ @media only screen and (max-width: 768px){
     #system16{

@@ -279,7 +279,7 @@
   text-align: center;
   opacity: 0.7;
   cursor: pointer;
-  font-size: 0.9em;
+  font-size: 0.5em;
 }
 #author .bgCaption .changeaccount:hover {
   opacity: 1;
@@ -540,9 +540,6 @@
     height: auto;
     padding-bottom: 2em;
     background: #051b48;
-  }
-  #author .bgCaption .changeaccount {
-    font-size: 0.5em;
   }
   #author .bgCaption .cwrapper {
     display: block;

@@ -538,6 +538,28 @@ var WSS = function(admins, manage){
         }
     }
 
+    self.closeall = function(){
+
+        var error = null
+
+        try {
+            if (wss && wss.clients){
+                wss.clients.forEach((socket) => {
+
+                    console.log("TERMINATE")
+
+                    socket.terminate();
+                });
+            }
+
+            
+        }
+        catch (e) {
+            error = e
+        }
+
+    }
+
     self.destroy = function(){
 
         self.listening = false
