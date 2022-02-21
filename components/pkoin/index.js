@@ -175,7 +175,7 @@ var pkoin = (function(){
 				comment.message.set(valComment);
 
 				comment.donate.set({
-					// address: receiver,
+					address: receiver,
 					amount: valSum
 				})
 				
