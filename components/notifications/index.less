@@ -362,25 +362,26 @@
 	}
 }
 
-/*t*/ @media only screen and (max-width: 768px){
-#notifications{
+html.mobileview{
+	#notifications{
+		.wrk{
+			padding : 0 ;
+		}
 	
-	.wrk{
-		padding : 0 ;
-	}
-
-	._wrp{
-		padding : 0 2 * @rhythm;
-		
-
-		.data{
-			overflow: hidden;
+		._wrp{
+			padding : 0 2 * @rhythm;
+			
+	
+			.data{
+				overflow: hidden;
+			}
 		}
 	}
+}
 
-	.notification{
-		
-	}
+/*t*/ @media only screen and (max-width: 768px){
+	
+#notifications{
 
 	.group{
 		.groupCaption{
