@@ -55,8 +55,7 @@ Application = function(p)
 
 	var self = this;
 	var realtimeInterval = null;
-	var baseorientation = 'portrait'
-
+	var baseorientation = typeof getbaseorientation != undefined ? getbaseorientation() : 'portrait'
 
 	self._meta = {
 		Pocketnet : {

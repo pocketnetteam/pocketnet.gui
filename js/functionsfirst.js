@@ -38,6 +38,30 @@ deep = function(obj, key){
     }
 }
 
+getbaseorientation = function(){
+	
+	var angle90 = {
+		portrait : 'landscape',
+		landscape : 'portrait'
+	}
+
+	var orientation = _.clone(deep(window, 'screen.orientation') || {
+		angle: 0,
+		type: "portrait-primary"
+	})
+
+	orientation.type = orientation.type.split('-')[0]
+
+    var type = orientation.type
+
+	if( ((orientation.angle / 90).toFixed(0)) % 2 ){
+		type = angle90[type]
+	}
+
+	if(!angle90[type]) type = 'portrait' 
+
+	return type
+}
 
 numfromreleasestring = function(v){
     v = v.replace(/[^0-9]/g, '')
