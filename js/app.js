@@ -12,32 +12,22 @@ if(typeof _Electron != 'undefined' && _Electron){
 
 	emojione = require('emojione')
 
-	var Isotope = require('isotope-layout'); require('isotope-packery')
+	var Isotope = require('isotope-layout'); require('isotope-packery');
 
 	var jquerytextcomplete = require('jquery-textcomplete')
 
 	animateNumber = require('./js/vendor/jquery.animate-number.js')
 	touchSwipe = require('./js/vendor/jquery.touchSwipe.js')
-	
 
-	MessageStorage = require('./js/vendor/rtc/db.js')
-	RTCMultiConnection = require('./js/vendor/rtc/RTCMultiConnection.js')
 
-	io = require('./js/vendor/rtc/socket.io.js')
-
-	MediumEditor = require('medium-editor').MediumEditor
 	jQueryBridget = require('jquery-bridget');
 	jQueryBridget( 'isotope', Isotope, $ );
 	jQueryBridget( 'textcomplete', jquerytextcomplete, $ );
 
 	Mark = require('./js/vendor/jquery.mark.js');
 
-	emojionearea = require('./js/vendor/emojionearea.js')
+	EmojioneArea = require('./js/vendor/emojionearea.js')
 	filterXss = require('./js/vendor/xss.min.js')
-
-	
-	
-
 
 }
 

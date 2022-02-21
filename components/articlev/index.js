@@ -906,9 +906,8 @@ var articlev = (function(){
 			renders.captionvalue()
 			renders.publish()
 
-			editor = new EditorJS({
 
-				
+			editor = new EditorJS({
 
 				holderId : 'editorjs',
 				placeholder: self.app.localization.e('art_placeholder'),
@@ -925,8 +924,7 @@ var articlev = (function(){
 					},
 
 					paragraph: {
-						class: window.Paragraph,
-						inlineToolbar: true,
+						class: window.Paragraph
 					},
 
 					header: {
@@ -964,13 +962,6 @@ var articlev = (function(){
 						}
 					},
 
-
-					/*inlineCode: {
-						class: window.InlineCode,
-						inlineToolbar: true,
-						shortcut: 'CMD+SHIFT+M',
-					},*/
-
 					warning: {
 						class: window.Warning,
 						shortcut: 'CMD+SHIFT+W'
@@ -1004,8 +995,6 @@ var articlev = (function(){
 
 					
 				},
-
-				///https://www.youtube.com/watch?v=cGYyOY4XaFs
 
 				onChange : function(){
 

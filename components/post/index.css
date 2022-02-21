@@ -283,6 +283,9 @@
 #post .sharearticle.ready {
   opacity: 1;
 }
+#post .sharearticle .sharepanel {
+  padding-right: 0.5em;
+}
 #post .sharearticle .shareBgCaption .author,
 #post .sharearticle .articleend .author {
   margin-top: 1em;
@@ -548,6 +551,10 @@
 }
 html.mobileview #post .videoWrapper {
   max-width: none;
+}
+html.mobileview #post .sharearticle .articlecontent {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
 }
 @media only screen and (max-width: 768px) {
   #content > div#post.sharec .widthcontainer {

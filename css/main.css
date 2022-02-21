@@ -918,6 +918,21 @@ pie {
 .sort:hover i {
   color: rgb(var(--color-txt-ac));
 }
+.pkoin {
+  display: flex;
+  align-items: center;
+  background: rgb(var(--color-bg-ac-bright));
+  color: rgb(var(--text-on-bg-ac-color));
+  border-radius: 8px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+.pkoin img {
+  width: 1em;
+}
+.pkoin span {
+  margin-left: 0.5em;
+}
 .forstars .itemwr {
   display: flex;
   align-items: center;

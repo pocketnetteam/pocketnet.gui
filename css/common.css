@@ -820,21 +820,6 @@
 .share_common .sharepanel > div:hover .icon {
   opacity: 0.7;
 }
-.share_common .sharepanel > div.pkoin {
-  display: flex;
-  align-items: center;
-  background: rgb(var(--color-bg-ac-bright));
-  color: rgb(var(--text-on-bg-ac-color));
-  border-radius: 8px;
-  padding: 4px 8px;
-  cursor: pointer;
-}
-.share_common .sharepanel > div.pkoin img {
-  width: 1em;
-}
-.share_common .sharepanel > div.pkoin span {
-  margin-left: 0.5em;
-}
 .share_common .sharepanel > div.sharesocial .label,
 .share_common .sharepanel > div.sharesocial .icon {
   color: rgb(var(--color-txt-orange));

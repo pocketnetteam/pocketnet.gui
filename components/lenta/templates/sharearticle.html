@@ -73,6 +73,38 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
     
 <%} %>
 
+<% var displaypkoin = function(){ %> 
+
+    <div class="panel sharepanel unselectablemobile">
+
+        <% if((typeof preview == 'undefined' || !preview) ) {%>			
+            <div class="item sharesocial unselectable">
+                <div class="itemwr table">
+                    <div class="iconwr">
+                        
+                        <div class="icon">
+                            <i class="fas fa-share-alt"></i>
+                        </div>
+                    </div>
+                    
+                   
+                </div>
+                
+            </div>
+
+        <% } %>
+
+            <div class="item pkoin right unselectedtable">
+                <img src="img/pocketnet_logo_white.svg" alt="">
+                <span class=''>
+                    PKOIN
+                </span>
+            </div>
+        
+    </div>
+    
+<% } %>
+ 
 <% var displaysys = function(){ %> 
 
     <% if((typeof repost == 'undefined' || !repost || fromempty)) {%>
@@ -100,8 +132,6 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
         <% } else { %> 
             
         <% } %>
-
-        
 
     <% } %>
     
@@ -421,6 +451,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
                             <div class="divider"></div>
                             <% displaysys() %>
                             <div class="divider"></div>
+                            <% displaypkoin() %>
                         </div>
 
                         <div class="cntswrk forcomments">

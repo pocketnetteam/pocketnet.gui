@@ -472,22 +472,22 @@ var post = (function () {
 
 							player = _player
 
-							if (wa) {
+							if(player){
+								if (wa) {
 
-								player.play()
-
-								if (player.setVolume)
-									player.setVolume(self.sdk.videos.volume)
-								else{
-									player.muted = false
+									player.play()
+	
+									if (player.setVolume)
+										player.setVolume(self.sdk.videos.volume)
+									else{
+										player.muted = false
+									}
+	
 								}
-
-								//
+	
+								if (player.enableHotKeys) player.enableHotKeys()
 							}
 
-							if (player.enableHotKeys) player.enableHotKeys()
-
-							//// autoplay
 							if (clbk)
 								clbk()
 						});

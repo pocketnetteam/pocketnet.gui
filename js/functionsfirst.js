@@ -514,11 +514,9 @@ importScript = function(src, callback, appendTo, app, module, _require) {
 
         var pref = '../';
 
-
         if(typeof _Electron != 'undefined' && _Electron == true) pref = './'
 
-
-        if(module) {
+        if (module) {
             delete require.cache[require.resolve(pref + src)]
             
             var script = require(pref + src);
@@ -533,7 +531,13 @@ importScript = function(src, callback, appendTo, app, module, _require) {
         {
 
             if (_require){
-                _require()
+                if(typeof _require == 'function'){
+                    _require()
+                }
+                else{
+                    window[_require] = require(pref + src)
+                }
+                
             }
             else
             {
