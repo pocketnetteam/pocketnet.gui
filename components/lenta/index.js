@@ -3011,158 +3011,156 @@ var lenta = (function(){
 
 				}
 
-				window.requestAnimationFrame(function(){
 
-					var ch = 0
+				var ch = 0
 
-					_el.imagesLoadedPN({ imageAttr: true }, function(image) {
+				_el.imagesLoadedPN({ imageAttr: true }, function(image) {
 
-						if(s.settings.v != "a"){
+					if(s.settings.v != "a"){
 
-							if(isMobile() && image.images.length > 1){
+						if(isMobile() && image.images.length > 1){
 
-								var aspectRatio = 0
-								
-								_.each(image.images, function(img){
-									var _img = img.img;
+							var aspectRatio = 0
+							
+							_.each(image.images, function(img){
+								var _img = img.img;
 
-									var _aspectRatio = _img.naturalHeight / _img.naturalWidth
+								var _aspectRatio = _img.naturalHeight / _img.naturalWidth
 
-									if(_aspectRatio > aspectRatio) aspectRatio = _aspectRatio
-								})
+								if(_aspectRatio > aspectRatio) aspectRatio = _aspectRatio
+							})
 
-								if (aspectRatio){
+							if (aspectRatio){
 
-									if(aspectRatio > 1.66) aspectRatio = 1.66
+								if(aspectRatio > 1.66) aspectRatio = 1.66
 
-									ch = Math.min(400, isMobile() ? self.app.width : images.width() ) * aspectRatio
+								ch = Math.min(400, isMobile() ? self.app.width : images.width() ) * aspectRatio
 
-									sel.find('.imagesWrapper').height(ch)
+								sel.find('.imagesWrapper').height(ch)
+							}
+							
+						}
+						else{
+
+							var imageswidth = images.width()
+
+							_.each(image.images, function(img, n){
+
+								var _img = img.img;
+								var el = $(image.elements[n]).closest('.imagesWrapper');
+
+								var ac = '';
+
+								/*var _w = imagesWrapperWidth;
+								var _h = imagesWrapperHeight*/
+
+								var _w = el.width();
+								var _h = el.height()
+
+								if(_img.width > _img.height && (/*!self.app.mobileview &&*/ !essenseData.openapi)){
+									ac = 'w2'
+
+									var w = _w * (_img.width / _img.height);
+
+									if (w > imageswidth){
+										w = imageswidth
+
+										h = w * ( _img.height / _img.width) 
+
+										el.height(h);
+									}
+
+									el.width(w);
+								}
+
+								if(_img.height > _img.width || (/*self.app.mobileview || */essenseData.openapi)){
+									ac = 'h2'
+
+									el.height(_w * (_img.height / _img.width))
+								}
+
+								if(ac){
+									el.addClass(ac)
 								}
 								
-							}
-							else{
-
-								var imageswidth = images.width()
-
-								_.each(image.images, function(img, n){
-
-									var _img = img.img;
-									var el = $(image.elements[n]).closest('.imagesWrapper');
-
-									var ac = '';
-
-									/*var _w = imagesWrapperWidth;
-									var _h = imagesWrapperHeight*/
-
-									var _w = el.width();
-									var _h = el.height()
-
-									if(_img.width > _img.height && (/*!self.app.mobileview &&*/ !essenseData.openapi)){
-										ac = 'w2'
-
-										var w = _w * (_img.width / _img.height);
-
-										if (w > imageswidth){
-											w = imageswidth
-
-											h = w * ( _img.height / _img.width) 
-
-											el.height(h);
-										}
-
-										el.width(w);
-									}
-
-									if(_img.height > _img.width || (/*self.app.mobileview || */essenseData.openapi)){
-										ac = 'h2'
-
-										el.height(_w * (_img.height / _img.width))
-									}
-
-									if(ac){
-										el.addClass(ac)
-									}
-									
-								})
-
-
-							}
+							})
 
 
 						}
 
-						var isclbk = function(){
 
-							images.addClass('active')
+					}
 
-							_el.addClass('active')
+					var isclbk = function(){
 
-							essenserenderclbk()
+						images.addClass('active')
 
-							images = null,
-							_el = null,
-							sel = null;
+						_el.addClass('active')
 
-							if (clbk)
-								clbk()
-						}
+						essenserenderclbk()
 
-						if(s.settings.v != 'a' && image.images.length > 1){
+						images = null,
+						_el = null,
+						sel = null;
 
-							var gutter = self.app.width <= 768 ? 0 : 5;
+						if (clbk)
+							clbk()
+					}
 
-							if (isMobile() || essenseData.openapi) {
+					if(s.settings.v != 'a' && image.images.length > 1){
 
-								if(carousels[s.txid]) carousels[s.txid].owlCarousel('destroy')
+						var gutter = self.app.width <= 768 ? 0 : 5;
 
-								carousels[s.txid] = sel.find('.imagesContainer').height(ch + 50).owlCarousel({
-									items: 1,
-									dots: true,
-									nav: !isMobile(),
-									navText: [
-										'<i class="fas fa-chevron-circle-left"></i> ',
-										'<i class="fas fa-chevron-circle-right"></i>'
-									]
-								  
-								});
+						if (isMobile() || essenseData.openapi) {
+
+							if(carousels[s.txid]) carousels[s.txid].owlCarousel('destroy')
+
+							carousels[s.txid] = sel.find('.imagesContainer').height(ch + 50).owlCarousel({
+								items: 1,
+								dots: true,
+								nav: !isMobile(),
+								navText: [
+									'<i class="fas fa-chevron-circle-left"></i> ',
+									'<i class="fas fa-chevron-circle-right"></i>'
+								]
+								
+							});
 
 
-								isclbk()
-
-							}
-							else{
-								images.isotope({
-									layoutMode: 'packery',
-									itemSelector: '.imagesWrapper',
-									packery: {
-										gutter: gutter
-									},
-									initLayout: false
-								});
-	
-								images.on('arrangeComplete', function(){
-									isclbk()
-								});
-	
-								images.isotope()
-							}
-
-							
-
-							
-						}
-						else
-						{
 							isclbk()
+
 						}
-					
+						else{
+							images.isotope({
+								layoutMode: 'packery',
+								itemSelector: '.imagesWrapper',
+								packery: {
+									gutter: gutter
+								},
+								initLayout: false
+							});
 
-					});
+							images.on('arrangeComplete', function(){
+								isclbk()
+							});
 
-					
+							images.isotope()
+						}
 
-				})
+						
+
+						
+					}
+					else
+					{
+						isclbk()
+					}
+				
+
+				});
+
+				
+
 				
 			},
 

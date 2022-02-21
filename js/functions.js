@@ -802,17 +802,14 @@
 
 				setTimeout(function(){
 
-					window.requestAnimationFrame(function(){
+					if(!nooverflow)
+						app.actions.onScroll();
 
-						if(!nooverflow)
-							app.actions.onScroll();
-	
-						if (self.essenseDestroy) self.essenseDestroy(key)
+					if (self.essenseDestroy) self.essenseDestroy(key)
 
-						wnd.remove();
+					wnd.remove();
 
-						clearmem();
-					})
+					clearmem();
 
 				}, 220)	
 
@@ -6652,60 +6649,57 @@
 			if(direction == 'right') return 'x'
 			
 		}
+
+		var ms = false
 		
 		var set = function(direction, value){
 
-			if (!ticking) {
+			var __el = (p.transformel || p.el)[0]
 
-				var __el = p.transformel || p.el
+			var prop = directiontoprop(direction);
+			var pd = 'left'
+			var pb = 'top'
 
-				var prop = directiontoprop(direction);
-				var pd = 'left'
-				var pb = 'top'
+			var scaledifmax = 0.1
+			var scaledif = scaledifmax * Math.min(Math.abs(value), 100) / 100 
+			var scale = (1 - scaledif).toFixed(3)
 
-				var scaledifmax = 0.1
-				var scaledif = scaledifmax * Math.min(Math.abs(value), 100) / 100 
-				var scale = (1 - scaledif).toFixed(3)
-
-				if(direction == 'up' || direction == 'left') {
-					value = -value
-					pd = 'right'
-					pb = 'bottom'
-				}
-
-				if(p.directions[direction] && p.directions[direction].basevalue) value = value + p.directions[direction].basevalue()
-
-				if(p.directions[direction] && p.directions[direction].scale100) scale = 1
-
-				if(!value) value = 0
-
-				value = value.toFixed(0)
-
-				window.requestAnimationFrame(function(){
-					if (prop == 'x'){
-						__el[0].style["transform"] = "scale("+scale+") translate3d("+value+"px, 0, 0)"
-						__el[0].style['transform-origin'] = pd + ' center'
-					}
-		
-					if (prop == 'y'){
-						__el[0].style["transform"] = "scale("+scale+") translate3d(0, "+value+"px, 0)"
-						__el[0].style['transform-origin'] = 'center ' + pb
-					}
-
-					//if(!isios()){	
-						__el[0].style["-moz-transition"] = transitionstr
-						__el[0].style["-o-transition"] = transitionstr
-						__el[0].style["-webkit-transition"] = transitionstr
-						__el[0].style["transition"] = transitionstr
-						//__el[0].style["pointer-events"] = 'none'
-					//}
-		
-					ticking = false;
-				})
-				
-				ticking = true;
+			if(direction == 'up' || direction == 'left') {
+				value = -value
+				pd = 'right'
+				pb = 'bottom'
 			}
 
+			if(p.directions[direction] && p.directions[direction].basevalue) value = value + p.directions[direction].basevalue()
+
+			if(p.directions[direction] && p.directions[direction].scale100) scale = 1
+
+			if(!value) value = 0
+
+			value = value.toFixed(0)
+
+			if (prop == 'x'){
+				__el.style["transform"] = "scale("+scale+") translate3d("+value+"px, 0, 0)"
+
+				if(!ms)
+					__el.style['transform-origin'] = pd + ' center'
+			}
+
+			if (prop == 'y'){
+				__el.style["transform"] = "scale("+scale+") translate3d(0, "+value+"px, 0)"
+
+				if(!ms)
+					__el.style['transform-origin'] = 'center ' + pb
+			}
+
+			if(!ms){	
+				__el.style["-moz-transition"] = transitionstr
+				__el.style["-o-transition"] = transitionstr
+				__el.style["-webkit-transition"] = transitionstr
+				__el.style["transition"] = transitionstr
+			}
+
+			ms = true
 
 		}
 
@@ -6722,27 +6716,21 @@
 
 				var __el = p.transformel || p.el
 
-				window.requestAnimationFrame(function(){
 
-					__el.css({"transform": ""});
-					__el.css({"transform-origin": ""});
+				__el.css({"transform": ""});
+				__el.css({"transform-origin": ""});
+				__el.css({"-moz-transition": ""});
+				__el.css({"-o-transition": ""});
+				__el.css({"-webkit-transition": ""});
+				__el.css({"transition": ""});
 
-					//if(!isios()){
-						__el.css({"-moz-transition": ""});
-						__el.css({"-o-transition": ""});
-						__el.css({"-webkit-transition": ""});
-						__el.css({"transition": ""});
-						//__el.css({"pointer-events": ""});
-					//}
-
-					_.each(p.directions, function(d){
-						applyDirection(d, 0)
-					})
-
+				_.each(p.directions, function(d){
+					applyDirection(d, 0)
 				})
+
 			}
 			
-
+			ms = false
 			needclear = false
 		}
 

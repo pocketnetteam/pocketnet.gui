@@ -1,2 +1,931 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[6],{517:function(t,e,i){var s;s=i(0),t.exports=function(t){"use strict";var e=t.browser.IS_IOS||t.browser.IS_NATIVE_ANDROID,i=t.getTech("Tech"),s=t.extend(i,{constructor:function(t,o){i.call(this,t,o),this.setPoster(t.poster),this.setSrc(this.options_.source,!0),this.setTimeout(function(){this.el_&&(this.el_.parentNode.className+=" vjs-youtube",e&&(this.el_.parentNode.className+=" vjs-youtube-mobile"),s.isApiReady?this.initYTPlayer():s.apiReadyQueue.push(this))}.bind(this))},dispose:function(){if(this.ytPlayer)this.ytPlayer.stopVideo&&this.ytPlayer.stopVideo(),this.ytPlayer.destroy&&this.ytPlayer.destroy();else{var t=s.apiReadyQueue.indexOf(this);-1!==t&&s.apiReadyQueue.splice(t,1)}this.ytPlayer=null,this.el_.parentNode.className=this.el_.parentNode.className.replace(" vjs-youtube","").replace(" vjs-youtube-mobile",""),this.el_.parentNode.removeChild(this.el_),i.prototype.dispose.call(this)},createEl:function(){var t=document.createElement("div");t.setAttribute("id",this.options_.techId),t.setAttribute("style","width:100%;height:100%;top:0;left:0;position:absolute"),t.setAttribute("class","vjs-tech");var i=document.createElement("div");if(i.appendChild(t),!e&&!this.options_.ytControls){var s=document.createElement("div");s.setAttribute("class","vjs-iframe-blocker"),s.setAttribute("style","position:absolute;top:0;left:0;width:100%;height:100%"),s.onclick=function(){this.pause()}.bind(this),i.appendChild(s)}return i},initYTPlayer:function(){var t={controls:0,modestbranding:1,rel:0,showinfo:0,loop:this.options_.loop?1:0};if(void 0!==this.options_.autohide&&(t.autohide=this.options_.autohide),void 0!==this.options_.cc_load_policy&&(t.cc_load_policy=this.options_.cc_load_policy),void 0!==this.options_.ytControls&&(t.controls=this.options_.ytControls),void 0!==this.options_.disablekb&&(t.disablekb=this.options_.disablekb),void 0!==this.options_.color&&(t.color=this.options_.color),t.controls?void 0!==this.options_.fs&&(t.fs=this.options_.fs):t.fs=0,-1!==this.options_.source.src.indexOf("end=")){var e=this.options_.source.src.match(/end=([0-9]*)/);this.options_.end=parseInt(e[1])}if(void 0!==this.options_.end&&(t.end=this.options_.end),void 0!==this.options_.hl?t.hl=this.options_.hl:void 0!==this.options_.language&&(t.hl=this.options_.language.substr(0,2)),void 0!==this.options_.iv_load_policy&&(t.iv_load_policy=this.options_.iv_load_policy),void 0!==this.options_.list?t.list=this.options_.list:this.url&&void 0!==this.url.listId&&(t.list=this.url.listId),void 0!==this.options_.listType&&(t.listType=this.options_.listType),void 0!==this.options_.modestbranding&&(t.modestbranding=this.options_.modestbranding),void 0!==this.options_.playlist&&(t.playlist=this.options_.playlist),void 0!==this.options_.playsinline&&(t.playsinline=this.options_.playsinline),void 0!==this.options_.rel&&(t.rel=this.options_.rel),void 0!==this.options_.showinfo&&(t.showinfo=this.options_.showinfo),-1!==this.options_.source.src.indexOf("start=")){var i=this.options_.source.src.match(/start=([0-9]*)/);this.options_.start=parseInt(i[1])}if(void 0!==this.options_.start&&(t.start=this.options_.start),void 0!==this.options_.theme&&(t.theme=this.options_.theme),void 0!==this.options_.customVars){var s=this.options_.customVars;Object.keys(s).forEach((function(e){t[e]=s[e]}))}this.activeVideoId=this.url?this.url.videoId:null,this.activeList=t.list;var o={videoId:this.activeVideoId,playerVars:t,events:{onReady:this.onPlayerReady.bind(this),onPlaybackQualityChange:this.onPlayerPlaybackQualityChange.bind(this),onPlaybackRateChange:this.onPlayerPlaybackRateChange.bind(this),onStateChange:this.onPlayerStateChange.bind(this),onVolumeChange:this.onPlayerVolumeChange.bind(this),onError:this.onPlayerError.bind(this)}};void 0!==this.options_.enablePrivacyEnhancedMode&&this.options_.enablePrivacyEnhancedMode&&(o.host="https://www.youtube-nocookie.com"),this.ytPlayer=new YT.Player(this.options_.techId,o)},onPlayerReady:function(){this.options_.muted&&this.ytPlayer.mute(),this.ytPlayer.getAvailablePlaybackRates().length>1&&(this.featuresPlaybackRate=!0),this.playerReady_=!0,this.triggerReady(),this.playOnReady?this.play():this.cueOnReady&&(this.cueVideoById_(this.url.videoId),this.activeVideoId=this.url.videoId)},onPlayerPlaybackQualityChange:function(){},onPlayerPlaybackRateChange:function(){this.trigger("ratechange")},onPlayerStateChange:function(t){var e=t.data;if(e!==this.lastState&&!this.errorNumber)switch(this.lastState=e,e){case-1:this.trigger("loadstart"),this.trigger("loadedmetadata"),this.trigger("durationchange"),this.trigger("ratechange");break;case YT.PlayerState.ENDED:this.trigger("ended");break;case YT.PlayerState.PLAYING:this.trigger("timeupdate"),this.trigger("durationchange"),this.trigger("playing"),this.trigger("play"),this.isSeeking&&this.onSeeked();break;case YT.PlayerState.PAUSED:this.trigger("canplay"),this.isSeeking?this.onSeeked():this.trigger("pause");break;case YT.PlayerState.BUFFERING:this.player_.trigger("timeupdate"),this.player_.trigger("waiting")}},onPlayerVolumeChange:function(){this.trigger("volumechange")},onPlayerError:function(t){this.errorNumber=t.data,this.trigger("pause"),this.trigger("error")},error:function(){var t=1e3+this.errorNumber;switch(this.errorNumber){case 5:return{code:t,message:"Error while trying to play the video"};case 2:case 100:return{code:t,message:"Unable to find the video"};case 101:case 150:return{code:t,message:"Playback on other Websites has been disabled by the video owner."}}return{code:t,message:"YouTube unknown error ("+this.errorNumber+")"}},loadVideoById_:function(t){var e={videoId:t};this.options_.start&&(e.startSeconds=this.options_.start),this.options_.end&&(e.endSeconds=this.options_.end),this.ytPlayer.loadVideoById(e)},cueVideoById_:function(t){var e={videoId:t};this.options_.start&&(e.startSeconds=this.options_.start),this.options_.end&&(e.endSeconds=this.options_.end),this.ytPlayer.cueVideoById(e)},src:function(t){return t&&this.setSrc({src:t}),this.source},poster:function(){return e?null:this.poster_},setPoster:function(t){this.poster_=t},setSrc:function(t){t&&t.src&&(delete this.errorNumber,this.source=t,this.url=s.parseUrl(t.src),this.options_.poster||this.url.videoId&&(this.poster_="https://img.youtube.com/vi/"+this.url.videoId+"/0.jpg",this.trigger("posterchange"),this.checkHighResPoster()),this.options_.autoplay&&!e?this.isReady_?this.play():this.playOnReady=!0:this.activeVideoId!==this.url.videoId&&(this.isReady_?(this.cueVideoById_(this.url.videoId),this.activeVideoId=this.url.videoId):this.cueOnReady=!0))},autoplay:function(){return this.options_.autoplay},setAutoplay:function(t){this.options_.autoplay=t},loop:function(){return this.options_.loop},setLoop:function(t){this.options_.loop=t},play:function(){this.url&&this.url.videoId&&(this.wasPausedBeforeSeek=!1,this.isReady_?(this.url.listId&&(this.activeList===this.url.listId?this.ytPlayer.playVideo():(this.ytPlayer.loadPlaylist(this.url.listId),this.activeList=this.url.listId)),this.activeVideoId===this.url.videoId?this.ytPlayer.playVideo():(this.loadVideoById_(this.url.videoId),this.activeVideoId=this.url.videoId)):(this.trigger("waiting"),this.playOnReady=!0))},pause:function(){this.ytPlayer&&this.ytPlayer.pauseVideo()},paused:function(){return!this.ytPlayer||this.lastState!==YT.PlayerState.PLAYING&&this.lastState!==YT.PlayerState.BUFFERING},currentTime:function(){return this.ytPlayer?this.ytPlayer.getCurrentTime():0},setCurrentTime:function(t){this.lastState===YT.PlayerState.PAUSED&&(this.timeBeforeSeek=this.currentTime()),this.isSeeking||(this.wasPausedBeforeSeek=this.paused()),this.ytPlayer.seekTo(t,!0),this.trigger("timeupdate"),this.trigger("seeking"),this.isSeeking=!0,this.lastState===YT.PlayerState.PAUSED&&this.timeBeforeSeek!==t&&(clearInterval(this.checkSeekedInPauseInterval),this.checkSeekedInPauseInterval=setInterval(function(){this.lastState===YT.PlayerState.PAUSED&&this.isSeeking?this.currentTime()!==this.timeBeforeSeek&&(this.trigger("timeupdate"),this.onSeeked()):clearInterval(this.checkSeekedInPauseInterval)}.bind(this),250))},seeking:function(){return this.isSeeking},seekable:function(){return this.ytPlayer?t.createTimeRange(0,this.ytPlayer.getDuration()):t.createTimeRange()},onSeeked:function(){clearInterval(this.checkSeekedInPauseInterval),this.isSeeking=!1,this.wasPausedBeforeSeek&&this.pause(),this.trigger("seeked")},playbackRate:function(){return this.ytPlayer?this.ytPlayer.getPlaybackRate():1},setPlaybackRate:function(t){this.ytPlayer&&this.ytPlayer.setPlaybackRate(t)},duration:function(){return this.ytPlayer?this.ytPlayer.getDuration():0},currentSrc:function(){return this.source&&this.source.src},ended:function(){return!!this.ytPlayer&&this.lastState===YT.PlayerState.ENDED},volume:function(){return this.ytPlayer?this.ytPlayer.getVolume()/100:1},setVolume:function(t){this.ytPlayer&&this.ytPlayer.setVolume(100*t)},muted:function(){return!!this.ytPlayer&&this.ytPlayer.isMuted()},setMuted:function(t){this.ytPlayer&&(this.muted(!0),t?this.ytPlayer.mute():this.ytPlayer.unMute(),this.setTimeout((function(){this.trigger("volumechange")}),50))},buffered:function(){if(!this.ytPlayer||!this.ytPlayer.getVideoLoadedFraction)return t.createTimeRange();var e=this.ytPlayer.getVideoLoadedFraction()*this.ytPlayer.getDuration();return t.createTimeRange(0,e)},preload:function(){},load:function(){},reset:function(){},networkState:function(){if(!this.ytPlayer)return 0;switch(this.ytPlayer.getPlayerState()){case-1:return 0;case 3:return 2;default:return 1}},readyState:function(){if(!this.ytPlayer)return 0;switch(this.ytPlayer.getPlayerState()){case-1:return 0;case 5:return 1;case 3:return 2;default:return 4}},supportsFullScreen:function(){return document.fullscreenEnabled||document.webkitFullscreenEnabled||document.mozFullScreenEnabled||document.msFullscreenEnabled},checkHighResPoster:function(){var t="https://img.youtube.com/vi/"+this.url.videoId+"/maxresdefault.jpg";try{var e=new Image;e.onload=function(){if("naturalHeight"in e){if(e.naturalHeight<=90||e.naturalWidth<=120)return}else if(e.height<=90||e.width<=120)return;this.poster_=t,this.trigger("posterchange")}.bind(this),e.onerror=function(){},e.src=t}catch(t){}}});function o(){YT.ready((function(){s.isApiReady=!0;for(var t=0;t<s.apiReadyQueue.length;++t)s.apiReadyQueue[t].initYTPlayer()}))}function r(t,e){var i=!1,s=document.createElement("script"),o=document.getElementsByTagName("script")[0];o&&(o.parentNode.insertBefore(s,o),s.onload=function(){i||(i=!0,e())},s.onreadystatechange=function(){i||"complete"!==this.readyState&&"loaded"!==this.readyState||(i=!0,e())},s.src=t)}function a(){var t=".vjs-youtube .vjs-iframe-blocker { display: none; }.vjs-youtube.vjs-user-inactive .vjs-iframe-blocker { display: block; }.vjs-youtube .vjs-poster { background-size: cover; }.vjs-youtube-mobile .vjs-big-play-button { display: none; }",e=document.head||document.getElementsByTagName("head")[0],i=document.createElement("style");i.type="text/css",i.styleSheet?i.styleSheet.cssText=t:i.appendChild(document.createTextNode(t)),e.appendChild(i)}s.isSupported=function(){return!0},s.canPlaySource=function(t){return s.canPlayType(t.type)},s.canPlayType=function(t){return"video/youtube"===t},s.parseUrl=function(t){var e={videoId:null},i=/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/,s=t.match(i);s&&11===s[2].length&&(e.videoId=s[2]);var o=/[?&]list=([^#\&\?]+)/;return(s=t.match(o))&&s[1]&&(e.listId=s[1]),e},s.apiReadyQueue=[],"undefined"!=typeof document&&(r("https://www.youtube.com/iframe_api",o),a()),void 0!==t.registerTech?t.registerTech("Youtube",s):t.registerComponent("Youtube",s)}(s.default||s)}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[6],{
+
+/***/ "./src/assets/player/p2p-media-loader/hls-plugin.ts":
+/*!**********************************************************!*\
+  !*** ./src/assets/player/p2p-media-loader/hls-plugin.ts ***!
+  \**********************************************************/
+/*! exports provided: Html5Hlsjs, registerSourceHandler, registerConfigPlugin */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Html5Hlsjs", function() { return Html5Hlsjs; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "registerSourceHandler", function() { return registerSourceHandler; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "registerConfigPlugin", function() { return registerConfigPlugin; });
+/* harmony import */ var hls_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! hls.js */ "./node_modules/hls.js/dist/hls.js");
+/* harmony import */ var hls_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(hls_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _peertube_cap_level_controller__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../peertube-cap-level-controller */ "./src/assets/player/peertube-cap-level-controller.ts");
+// Thanks https://github.com/streamroot/videojs-hlsjs-plugin
+// We duplicated this plugin to choose the hls.js version we want, because streamroot only provide a bundled file
+//import * as HlsjsLigt from 'hls.js/dist/hls.light.js'
+
+
+const registerSourceHandler = function (vjs) {
+    if (!hls_js__WEBPACK_IMPORTED_MODULE_0___default.a.isSupported()) {
+        console.warn('Hls.js is not supported in this browser!');
+        return;
+    }
+    const html5 = vjs.getTech('Html5');
+    if (!html5) {
+        console.error('Not supported version if video.js');
+        return;
+    }
+    // FIXME: typings
+    html5.registerSourceHandler({
+        canHandleSource: function (source) {
+            const hlsTypeRE = /^application\/x-mpegURL|application\/vnd\.apple\.mpegurl$/i;
+            const hlsExtRE = /\.m3u8/i;
+            if (hlsTypeRE.test(source.type))
+                return 'probably';
+            if (hlsExtRE.test(source.src))
+                return 'maybe';
+            return '';
+        },
+        handleSource: function (source, tech) {
+            if (tech.hlsProvider) {
+                tech.hlsProvider.dispose();
+            }
+            tech.hlsProvider = new Html5Hlsjs(vjs, source, tech);
+            return tech.hlsProvider;
+        }
+    }, 0);
+    // FIXME: typings
+    vjs.Html5Hlsjs = Html5Hlsjs;
+};
+function hlsjsConfigHandler(options) {
+    const player = this;
+    if (!options)
+        return;
+    if (!player.srOptions_) {
+        player.srOptions_ = {};
+    }
+    if (!player.srOptions_.hlsjsConfig) {
+        player.srOptions_.hlsjsConfig = options.hlsjsConfig;
+    }
+    if (!player.srOptions_.captionConfig) {
+        player.srOptions_.captionConfig = options.captionConfig;
+    }
+    if (options.levelLabelHandler && !player.srOptions_.levelLabelHandler) {
+        player.srOptions_.levelLabelHandler = options.levelLabelHandler;
+    }
+}
+const registerConfigPlugin = function (vjs) {
+    // Used in Brightcove since we don't pass options directly there
+    const registerVjsPlugin = vjs.registerPlugin || vjs.plugin;
+    registerVjsPlugin('hlsjs', hlsjsConfigHandler);
+};
+class Html5Hlsjs {
+    constructor(vjs, source, tech) {
+        this.errorCounts = {};
+        this.hlsjsConfig = null;
+        this._duration = null;
+        this.metadata = null;
+        this.isLive = null;
+        this.dvrDuration = null;
+        this.edgeMargin = null;
+        this.handlers = {
+            play: null,
+            playing: null,
+            textTracksChange: null,
+            audioTracksChange: null
+        };
+        this.uiTextTrackHandled = false;
+        this.vjs = vjs;
+        this.source = source;
+        this.tech = tech;
+        this.tech.name_ = 'Hlsjs';
+        this.videoElement = tech.el();
+        this.player = vjs(tech.options_.playerId);
+        this.videoElement.addEventListener('error', event => {
+            let errorTxt;
+            const mediaError = (event.currentTarget || event.target).error;
+            if (!mediaError)
+                return;
+            switch (mediaError.code) {
+                case mediaError.MEDIA_ERR_ABORTED:
+                    errorTxt = 'You aborted the video playback';
+                    break;
+                case mediaError.MEDIA_ERR_DECODE:
+                    errorTxt = 'The video playback was aborted due to a corruption problem or because the video used features your browser did not support';
+                    this._handleMediaError(mediaError);
+                    break;
+                case mediaError.MEDIA_ERR_NETWORK:
+                    errorTxt = 'A network error caused the video download to fail part-way';
+                    break;
+                case mediaError.MEDIA_ERR_SRC_NOT_SUPPORTED:
+                    errorTxt = 'The video could not be loaded, either because the server or network failed or because the format is not supported';
+                    break;
+                default:
+                    errorTxt = mediaError.message;
+            }
+        });
+        this.initialize();
+    }
+    duration() {
+        return this._duration || this.videoElement.duration || 0;
+    }
+    seekable() {
+        if (this.hls.media) {
+            if (!this.isLive) {
+                return this.vjs.createTimeRanges(0, this.hls.media.duration);
+            }
+            // Video.js doesn't seem to like floating point timeranges
+            const startTime = Math.round(this.hls.media.duration - this.dvrDuration);
+            const endTime = Math.round(this.hls.media.duration - this.edgeMargin);
+            return this.vjs.createTimeRanges(startTime, endTime);
+        }
+        return this.vjs.createTimeRanges();
+    }
+    // See comment for `initialize` method.
+    dispose() {
+        this.videoElement.removeEventListener('play', this.handlers.play);
+        this.videoElement.removeEventListener('playing', this.handlers.playing);
+        this.player.textTracks().removeEventListener('change', this.handlers.textTracksChange);
+        this.uiTextTrackHandled = false;
+        this.hls.destroy();
+        this.handlers = null;
+    }
+    static addHook(type, callback) {
+        Html5Hlsjs.hooks[type] = this.hooks[type] || [];
+        Html5Hlsjs.hooks[type].push(callback);
+    }
+    static removeHook(type, callback) {
+        if (Html5Hlsjs.hooks[type] === undefined)
+            return false;
+        const index = Html5Hlsjs.hooks[type].indexOf(callback);
+        if (index === -1)
+            return false;
+        Html5Hlsjs.hooks[type].splice(index, 1);
+        return true;
+    }
+    _executeHooksFor(type) {
+        if (Html5Hlsjs.hooks[type] === undefined) {
+            return;
+        }
+        // ES3 and IE < 9
+        for (let i = 0; i < Html5Hlsjs.hooks[type].length; i++) {
+            Html5Hlsjs.hooks[type][i](this.player, this.hls);
+        }
+    }
+    _handleMediaError(error) {
+        if (this.errorCounts[hls_js__WEBPACK_IMPORTED_MODULE_0__["ErrorTypes"].MEDIA_ERROR] === 1) {
+            console.info('trying to recover media error');
+            this.hls.recoverMediaError();
+            return;
+        }
+        if (this.errorCounts[hls_js__WEBPACK_IMPORTED_MODULE_0__["ErrorTypes"].MEDIA_ERROR] === 2) {
+            console.info('2nd try to recover media error (by swapping audio codec');
+            this.hls.swapAudioCodec();
+            this.hls.recoverMediaError();
+            return;
+        }
+        if (this.errorCounts[hls_js__WEBPACK_IMPORTED_MODULE_0__["ErrorTypes"].MEDIA_ERROR] > 2) {
+            console.info('bubbling media error up to VIDEOJS');
+            this.hls.recoverMediaError();
+            //this.hls.destroy()
+            //this.tech.error = () => error
+            //this.tech.trigger('error')
+            return;
+        }
+    }
+    _handleNotFatalError(error) {
+        this.tech.trigger('error');
+    }
+    _handleNetworkError(error) {
+        setTimeout(() => this.hls.startLoad(), 1000);
+        if (this.errorCounts[hls_js__WEBPACK_IMPORTED_MODULE_0__["ErrorTypes"].NETWORK_ERROR] <= 1) {
+            console.info('trying to recover network error', error);
+            // Wait 1 second and retry
+            setTimeout(() => this.hls.startLoad(), 1000);
+            // Reset error count on success
+            this.hls.once(hls_js__WEBPACK_IMPORTED_MODULE_0__["Events"].FRAG_LOADED, () => {
+                this.errorCounts[hls_js__WEBPACK_IMPORTED_MODULE_0__["ErrorTypes"].NETWORK_ERROR] = 0;
+            });
+            return;
+        }
+        console.info('bubbling network error up to VIDEOJS');
+        // this.hls.destroy()
+        this.tech.error = () => error;
+        this.tech.trigger('error');
+    }
+    _onError(_event, data) {
+        const error = {
+            message: `HLS.js error: ${data.type} - fatal: ${data.fatal} - ${data.details}`
+        };
+        console.log('d', data);
+        if (!data.fatal) {
+            return;
+        }
+        // increment/set error count
+        if (this.errorCounts[data.type])
+            this.errorCounts[data.type] += 1;
+        else
+            this.errorCounts[data.type] = 1;
+        if (data.type === hls_js__WEBPACK_IMPORTED_MODULE_0__["ErrorTypes"].NETWORK_ERROR) {
+            error.code = 2;
+            this._handleNetworkError(error);
+        }
+        else if (data.type === hls_js__WEBPACK_IMPORTED_MODULE_0__["ErrorTypes"].MEDIA_ERROR && data.details !== 'manifestIncompatibleCodecsError') {
+            error.code = 3;
+            this._handleMediaError(error);
+        }
+        else {
+            // this.hls.destroy()
+            this.tech.error = () => error;
+            this.tech.trigger('error');
+        }
+    }
+    switchQuality(qualityId) {
+        this.hls.nextLevel = qualityId;
+    }
+    _levelLabel(level) {
+        if (this.player.srOptions_.levelLabelHandler) {
+            return this.player.srOptions_.levelLabelHandler(level);
+        }
+        if (level.height)
+            return level.height + 'p';
+        if (level.width)
+            return Math.round(level.width * 9 / 16) + 'p';
+        if (level.bitrate)
+            return (level.bitrate / 1000) + 'kbps';
+        return 0;
+    }
+    _relayQualityChange(qualityLevels) {
+        // Determine if it is "Auto" (all tracks enabled)
+        let isAuto = true;
+        for (let i = 0; i < qualityLevels.length; i++) {
+            if (!qualityLevels[i]._enabled) {
+                isAuto = false;
+                break;
+            }
+        }
+        // Interact with ME
+        if (isAuto) {
+            this.hls.currentLevel = -1;
+            return;
+        }
+        // Find ID of highest enabled track
+        let selectedTrack;
+        for (selectedTrack = qualityLevels.length - 1; selectedTrack >= 0; selectedTrack--) {
+            if (qualityLevels[selectedTrack]._enabled) {
+                break;
+            }
+        }
+        this.hls.currentLevel = selectedTrack;
+    }
+    _handleQualityLevels() {
+        if (!this.metadata)
+            return;
+        const qualityLevels = this.player.qualityLevels && this.player.qualityLevels();
+        if (!qualityLevels)
+            return;
+        for (let i = 0; i < this.metadata.levels.length; i++) {
+            const details = this.metadata.levels[i];
+            const representation = {
+                id: i,
+                width: details.width,
+                height: details.height,
+                bandwidth: details.bitrate,
+                bitrate: details.bitrate,
+                _enabled: true
+            };
+            const self = this;
+            representation.enabled = function (level, toggle) {
+                // Brightcove switcher works TextTracks-style (enable tracks that it wants to ABR on)
+                if (typeof toggle === 'boolean') {
+                    this[level]._enabled = toggle;
+                    self._relayQualityChange(this);
+                }
+                return this[level]._enabled;
+            };
+            qualityLevels.addQualityLevel(representation);
+        }
+    }
+    _notifyVideoQualities() {
+        if (!this.metadata)
+            return;
+        const cleanTracklist = [];
+        if (this.metadata.levels.length > 1) {
+            const autoLevel = {
+                id: -1,
+                label: 'auto',
+                selected: this.hls.manualLevel === -1
+            };
+            cleanTracklist.push(autoLevel);
+        }
+        this.metadata.levels.forEach((level, index) => {
+            // Don't write in level (shared reference with Hls.js)
+            const quality = {
+                id: index,
+                selected: index === this.hls.manualLevel,
+                label: this._levelLabel(level)
+            };
+            cleanTracklist.push(quality);
+        });
+        const payload = {
+            qualityData: { video: cleanTracklist },
+            qualitySwitchCallback: this.switchQuality.bind(this)
+        };
+        this.tech.trigger('loadedqualitydata', payload);
+        // Self-de-register so we don't raise the payload multiple times
+        this.videoElement.removeEventListener('playing', this.handlers.playing);
+    }
+    _updateSelectedAudioTrack() {
+        const playerAudioTracks = this.tech.audioTracks();
+        for (let j = 0; j < playerAudioTracks.length; j++) {
+            // FIXME: typings
+            if (playerAudioTracks[j].enabled) {
+                this.hls.audioTrack = j;
+                break;
+            }
+        }
+    }
+    _onAudioTracks() {
+        const hlsAudioTracks = this.hls.audioTracks;
+        const playerAudioTracks = this.tech.audioTracks();
+        if (hlsAudioTracks.length > 1 && playerAudioTracks.length === 0) {
+            // Add Hls.js audio tracks if not added yet
+            for (let i = 0; i < hlsAudioTracks.length; i++) {
+                playerAudioTracks.addTrack(new this.vjs.AudioTrack({
+                    id: i.toString(),
+                    kind: 'alternative',
+                    label: hlsAudioTracks[i].name || hlsAudioTracks[i].lang,
+                    language: hlsAudioTracks[i].lang,
+                    enabled: i === this.hls.audioTrack
+                }));
+            }
+            // Handle audio track change event
+            this.handlers.audioTracksChange = this._updateSelectedAudioTrack.bind(this);
+            playerAudioTracks.addEventListener('change', this.handlers.audioTracksChange);
+        }
+    }
+    _getTextTrackLabel(textTrack) {
+        // Label here is readable label and is optional (used in the UI so if it is there it should be different)
+        return textTrack.label ? textTrack.label : textTrack.language;
+    }
+    _isSameTextTrack(track1, track2) {
+        return this._getTextTrackLabel(track1) === this._getTextTrackLabel(track2)
+            && track1.kind === track2.kind;
+    }
+    _updateSelectedTextTrack() {
+        const playerTextTracks = this.player.textTracks();
+        let activeTrack = null;
+        for (let j = 0; j < playerTextTracks.length; j++) {
+            if (playerTextTracks[j].mode === 'showing') {
+                activeTrack = playerTextTracks[j];
+                break;
+            }
+        }
+        const hlsjsTracks = this.videoElement.textTracks;
+        for (let k = 0; k < hlsjsTracks.length; k++) {
+            if (hlsjsTracks[k].kind === 'subtitles' || hlsjsTracks[k].kind === 'captions') {
+                hlsjsTracks[k].mode = activeTrack && this._isSameTextTrack(hlsjsTracks[k], activeTrack)
+                    ? 'showing'
+                    : 'disabled';
+            }
+        }
+    }
+    _startLoad() {
+        this.hls.startLoad(-1);
+        this.videoElement.removeEventListener('play', this.handlers.play);
+    }
+    _oneLevelObjClone(obj) {
+        const result = {};
+        const objKeys = Object.keys(obj);
+        for (let i = 0; i < objKeys.length; i++) {
+            result[objKeys[i]] = obj[objKeys[i]];
+        }
+        return result;
+    }
+    _filterDisplayableTextTracks(textTracks) {
+        const displayableTracks = [];
+        // Filter out tracks that is displayable (captions or subtitles)
+        for (let idx = 0; idx < textTracks.length; idx++) {
+            if (textTracks[idx].kind === 'subtitles' || textTracks[idx].kind === 'captions') {
+                displayableTracks.push(textTracks[idx]);
+            }
+        }
+        return displayableTracks;
+    }
+    _updateTextTrackList() {
+        const displayableTracks = this._filterDisplayableTextTracks(this.videoElement.textTracks);
+        const playerTextTracks = this.player.textTracks();
+        // Add stubs to make the caption switcher shows up
+        // Adding the Hls.js text track in will make us have double captions
+        for (let idx = 0; idx < displayableTracks.length; idx++) {
+            let isAdded = false;
+            for (let jdx = 0; jdx < playerTextTracks.length; jdx++) {
+                if (this._isSameTextTrack(displayableTracks[idx], playerTextTracks[jdx])) {
+                    isAdded = true;
+                    break;
+                }
+            }
+            if (!isAdded) {
+                const hlsjsTextTrack = displayableTracks[idx];
+                this.player.addRemoteTextTrack({
+                    kind: hlsjsTextTrack.kind,
+                    label: this._getTextTrackLabel(hlsjsTextTrack),
+                    language: hlsjsTextTrack.language,
+                    srclang: hlsjsTextTrack.language
+                }, false);
+            }
+        }
+        // Handle UI switching
+        this._updateSelectedTextTrack();
+        if (!this.uiTextTrackHandled) {
+            this.handlers.textTracksChange = this._updateSelectedTextTrack.bind(this);
+            playerTextTracks.addEventListener('change', this.handlers.textTracksChange);
+            this.uiTextTrackHandled = true;
+        }
+    }
+    _onMetaData(_event, data) {
+        // This could arrive before 'loadedqualitydata' handlers is registered, remember it so we can raise it later
+        this.metadata = data;
+        this._handleQualityLevels();
+    }
+    _createCueHandler(captionConfig) {
+        return {
+            newCue: (track, startTime, endTime, captionScreen) => {
+                let row;
+                let cue;
+                let text;
+                const VTTCue = window.VTTCue || window.TextTrackCue;
+                for (let r = 0; r < captionScreen.rows.length; r++) {
+                    row = captionScreen.rows[r];
+                    text = '';
+                    if (!row.isEmpty()) {
+                        for (let c = 0; c < row.chars.length; c++) {
+                            text += row.chars[c].ucharj;
+                        }
+                        cue = new VTTCue(startTime, endTime, text.trim());
+                        // typeof null === 'object'
+                        if (captionConfig != null && typeof captionConfig === 'object') {
+                            // Copy client overridden property into the cue object
+                            const configKeys = Object.keys(captionConfig);
+                            for (let k = 0; k < configKeys.length; k++) {
+                                cue[configKeys[k]] = captionConfig[configKeys[k]];
+                            }
+                        }
+                        track.addCue(cue);
+                        if (endTime === startTime)
+                            track.addCue(new VTTCue(endTime + 5, ''));
+                    }
+                }
+            }
+        };
+    }
+    _initHlsjs() {
+        const techOptions = this.tech.options_;
+        const srOptions_ = this.player.srOptions_;
+        const hlsjsConfigRef = srOptions_ && srOptions_.hlsjsConfig || techOptions.hlsjsConfig;
+        // Hls.js will write to the reference thus change the object for later streams
+        this.hlsjsConfig = hlsjsConfigRef ? this._oneLevelObjClone(hlsjsConfigRef) : {};
+        if (['', 'auto'].includes(this.videoElement.preload) && !this.videoElement.autoplay && this.hlsjsConfig.autoStartLoad === undefined) {
+            this.hlsjsConfig.autoStartLoad = false;
+        }
+        const captionConfig = srOptions_ && srOptions_.captionConfig || techOptions.captionConfig;
+        if (captionConfig) {
+            this.hlsjsConfig.cueHandler = this._createCueHandler(captionConfig);
+        }
+        // If the user explicitly sets autoStartLoad to false, we're not going to enter the if block above
+        // That's why we have a separate if block here to set the 'play' listener
+        if (this.hlsjsConfig.autoStartLoad === false) {
+            this.handlers.play = this._startLoad.bind(this);
+            this.videoElement.addEventListener('play', this.handlers.play);
+        }
+        // _notifyVideoQualities sometimes runs before the quality picker event handler is registered -> no video switcher
+        this.handlers.playing = this._notifyVideoQualities.bind(this);
+        this.videoElement.addEventListener('playing', this.handlers.playing);
+        //this.hlsjsConfig.debug = true
+        //this.hlsjsConfig.liveSyncDurationCount = 4
+        //this.hlsjsConfig.maxMaxBufferLength = 55
+        //this.hlsjsConfig.backBufferLength = 90
+        ///// liveSyncPosition
+        /* @ts-ignore */
+        this.hlsjsConfig.capLevelController = _peertube_cap_level_controller__WEBPACK_IMPORTED_MODULE_1__["default"];
+        this.hls = new hls_js__WEBPACK_IMPORTED_MODULE_0___default.a(this.hlsjsConfig);
+        this._executeHooksFor('beforeinitialize');
+        this.hls.on(hls_js__WEBPACK_IMPORTED_MODULE_0__["Events"].ERROR, (event, data) => this._onError(event, data));
+        this.hls.on(hls_js__WEBPACK_IMPORTED_MODULE_0__["Events"].AUDIO_TRACKS_UPDATED, () => this._onAudioTracks());
+        this.hls.on(hls_js__WEBPACK_IMPORTED_MODULE_0__["Events"].MANIFEST_PARSED, (event, data) => this._onMetaData(event, data)); // FIXME: typings
+        this.hls.on(hls_js__WEBPACK_IMPORTED_MODULE_0__["Events"].LEVEL_LOADED, (event, data) => {
+            // The DVR plugin will auto seek to "live edge" on start up
+            if (this.hlsjsConfig.liveSyncDuration) {
+                this.edgeMargin = this.hlsjsConfig.liveSyncDuration;
+            }
+            else if (this.hlsjsConfig.liveSyncDurationCount) {
+                this.edgeMargin = this.hlsjsConfig.liveSyncDurationCount * data.details.targetduration;
+            }
+            this.isLive = data.details.live;
+            this.dvrDuration = data.details.totalduration;
+            this._duration = this.isLive ? Infinity : data.details.totalduration;
+        });
+        this.hls.once(hls_js__WEBPACK_IMPORTED_MODULE_0__["Events"].FRAG_LOADED, () => {
+            // Emit custom 'loadedmetadata' event for parity with `videojs-contrib-hls`
+            // Ref: https://github.com/videojs/videojs-contrib-hls#loadedmetadata
+            this.tech.trigger('loadedmetadata');
+        });
+        this.hls.attachMedia(this.videoElement);
+        this.hls.loadSource(this.source.src);
+    }
+    initialize() {
+        this._initHlsjs();
+    }
+}
+Html5Hlsjs.hooks = {};
+
+
+
+/***/ }),
+
+/***/ "./src/assets/player/p2p-media-loader/p2p-media-loader-plugin.ts":
+/*!***********************************************************************!*\
+  !*** ./src/assets/player/p2p-media-loader/p2p-media-loader-plugin.ts ***!
+  \***********************************************************************/
+/*! exports provided: P2pMediaLoaderPlugin */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "P2pMediaLoaderPlugin", function() { return P2pMediaLoaderPlugin; });
+/* harmony import */ var video_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! video.js */ "./node_modules/video.js/core.js");
+/* harmony import */ var video_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(video_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _core_p2p_media_loader_master_p2p_media_loader_hlsjs_lib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./core/p2p-media-loader-master/p2p-media-loader-hlsjs/lib */ "./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-hlsjs/lib/index.ts");
+/* harmony import */ var _core_p2p_media_loader_master_p2p_media_loader_core_lib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./core/p2p-media-loader-master/p2p-media-loader-core/lib */ "./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/index.ts");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils */ "./src/assets/player/utils.ts");
+/* harmony import */ var _hls_plugin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./hls-plugin */ "./src/assets/player/p2p-media-loader/hls-plugin.ts");
+/* harmony import */ var hls_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! hls.js */ "./node_modules/hls.js/dist/hls.js");
+/* harmony import */ var hls_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(hls_js__WEBPACK_IMPORTED_MODULE_5__);
+
+
+
+
+
+
+Object(_hls_plugin__WEBPACK_IMPORTED_MODULE_4__["registerConfigPlugin"])(video_js__WEBPACK_IMPORTED_MODULE_0___default.a);
+Object(_hls_plugin__WEBPACK_IMPORTED_MODULE_4__["registerSourceHandler"])(video_js__WEBPACK_IMPORTED_MODULE_0___default.a);
+const Plugin = video_js__WEBPACK_IMPORTED_MODULE_0___default.a.getPlugin('plugin');
+class P2pMediaLoaderPlugin extends Plugin {
+    constructor(player, options) {
+        super(player);
+        this.CONSTANTS = {
+            INFO_SCHEDULER: 1000 // Don't change this
+        };
+        this.statsP2PBytes = {
+            pendingDownload: [],
+            pendingUpload: [],
+            numPeers: 0,
+            totalDownload: 0,
+            totalUpload: 0
+        };
+        this.statsHTTPBytes = {
+            pendingDownload: [],
+            pendingUpload: [],
+            totalDownload: 0,
+            totalUpload: 0
+        };
+        this.options = options;
+        // FIXME: typings https://github.com/Microsoft/TypeScript/issues/14080
+        if (!video_js__WEBPACK_IMPORTED_MODULE_0___default.a.Html5Hlsjs) {
+            console.warn('HLS.js does not seem to be supported. Try to fallback to built in HLS.');
+            if (!player.canPlayType('application/vnd.apple.mpegurl')) {
+                const message = 'Cannot fallback to built-in HLS';
+                console.warn(message);
+                player.ready(() => player.trigger('error', new Error(message)));
+                return;
+            }
+        }
+        else {
+            // FIXME: typings https://github.com/Microsoft/TypeScript/issues/14080
+            video_js__WEBPACK_IMPORTED_MODULE_0___default.a.Html5Hlsjs.addHook('beforeinitialize', (videojsPlayer, hlsjs) => {
+                this.hlsjs = hlsjs;
+            });
+            Object(_core_p2p_media_loader_master_p2p_media_loader_hlsjs_lib__WEBPACK_IMPORTED_MODULE_1__["initVideoJsContribHlsJsPlayer"])(player);
+        }
+        if (options) {
+            this.startTime = Object(_utils__WEBPACK_IMPORTED_MODULE_3__["timeToInt"])(options.startTime);
+            player.src({
+                type: options.type,
+                src: options.src
+            });
+        }
+        player.ready(() => {
+            this.initializeCore();
+            if (video_js__WEBPACK_IMPORTED_MODULE_0___default.a.Html5Hlsjs) {
+                if (options)
+                    this.initializePlugin();
+            }
+        });
+    }
+    dispose() {
+        if (this.hlsjs)
+            this.hlsjs.destroy();
+        if (this.p2pEngine)
+            this.p2pEngine.destroy();
+        clearInterval(this.networkInfoInterval);
+    }
+    getHLSJS() {
+        return this.hlsjs;
+    }
+    initializeCore() {
+        this.player.one('play', () => {
+            this.player.addClass('vjs-has-big-play-button-clicked');
+        });
+        this.player.one('canplay', () => {
+            if (this.startTime) {
+                this.player.currentTime(this.startTime);
+            }
+        });
+    }
+    initializePlugin() {
+        Object(_core_p2p_media_loader_master_p2p_media_loader_hlsjs_lib__WEBPACK_IMPORTED_MODULE_1__["initHlsJsPlayer"])(this.hlsjs);
+        // FIXME: typings
+        const options = this.player.tech(true).options_;
+        this.p2pEngine = options.hlsjsConfig.loader.getEngine();
+        this.hlsjs.on(hls_js__WEBPACK_IMPORTED_MODULE_5__["Events"].LEVEL_SWITCHING, (_, data) => {
+            this.trigger('resolutionChange', { auto: this.hlsjs.autoLevelEnabled, resolutionId: data.height });
+        });
+        this.p2pEngine.on(_core_p2p_media_loader_master_p2p_media_loader_core_lib__WEBPACK_IMPORTED_MODULE_2__["Events"].SegmentError, (segment, err) => {
+            this.options.redundancyUrlManager.removeBySegmentUrl(segment.requestUrl);
+        });
+        this.statsP2PBytes.numPeers = 1 + this.options.redundancyUrlManager.countBaseUrls();
+        this.runStats();
+    }
+    runStats() {
+        this.p2pEngine.on(_core_p2p_media_loader_master_p2p_media_loader_core_lib__WEBPACK_IMPORTED_MODULE_2__["Events"].PieceBytesDownloaded, (method, segment, size) => {
+            const elem = method === 'p2p' ? this.statsP2PBytes : this.statsHTTPBytes;
+            elem.pendingDownload.push(size);
+            elem.totalDownload += size;
+        });
+        this.p2pEngine.on(_core_p2p_media_loader_master_p2p_media_loader_core_lib__WEBPACK_IMPORTED_MODULE_2__["Events"].PieceBytesUploaded, (method, segment, size) => {
+            const elem = method === 'p2p' ? this.statsP2PBytes : this.statsHTTPBytes;
+            elem.pendingUpload.push(size);
+            elem.totalUpload += size;
+        });
+        this.p2pEngine.on(_core_p2p_media_loader_master_p2p_media_loader_core_lib__WEBPACK_IMPORTED_MODULE_2__["Events"].PeerConnect, () => this.statsP2PBytes.numPeers++);
+        this.p2pEngine.on(_core_p2p_media_loader_master_p2p_media_loader_core_lib__WEBPACK_IMPORTED_MODULE_2__["Events"].PeerClose, () => this.statsP2PBytes.numPeers--);
+        this.networkInfoInterval = setInterval(() => {
+            const p2pDownloadSpeed = this.arraySum(this.statsP2PBytes.pendingDownload);
+            const p2pUploadSpeed = this.arraySum(this.statsP2PBytes.pendingUpload);
+            const httpDownloadSpeed = this.arraySum(this.statsHTTPBytes.pendingDownload);
+            const httpUploadSpeed = this.arraySum(this.statsHTTPBytes.pendingUpload);
+            this.statsP2PBytes.pendingDownload = [];
+            this.statsP2PBytes.pendingUpload = [];
+            this.statsHTTPBytes.pendingDownload = [];
+            this.statsHTTPBytes.pendingUpload = [];
+            /*return this.player.trigger('p2pInfo', {
+              source: 'p2p-media-loader',
+              http: {
+                downloadSpeed: httpDownloadSpeed,
+                uploadSpeed: httpUploadSpeed,
+                downloaded: this.statsHTTPBytes.totalDownload,
+                uploaded: this.statsHTTPBytes.totalUpload
+              },
+              p2p: {
+                downloadSpeed: p2pDownloadSpeed,
+                uploadSpeed: p2pUploadSpeed,
+                numPeers: this.statsP2PBytes.numPeers,
+                downloaded: this.statsP2PBytes.totalDownload,
+                uploaded: this.statsP2PBytes.totalUpload
+              }
+      
+      
+            } as PlayerNetworkInfo)*/
+        }, this.CONSTANTS.INFO_SCHEDULER);
+    }
+    arraySum(data) {
+        return data.reduce((a, b) => a + b, 0);
+    }
+}
+video_js__WEBPACK_IMPORTED_MODULE_0___default.a.registerPlugin('p2pMediaLoader', P2pMediaLoaderPlugin);
+
+
+
+/***/ }),
+
+/***/ "./src/assets/player/peertube-cap-level-controller.ts":
+/*!************************************************************!*\
+  !*** ./src/assets/player/peertube-cap-level-controller.ts ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var hls_js_src_events__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! hls.js/src/events */ "./node_modules/hls.js/src/events.ts");
+//@ts-nocheck
+
+class CapLevelController {
+    constructor(hls) {
+        this.hls = hls;
+        this.autoLevelCapping = Number.POSITIVE_INFINITY;
+        this.firstLevel = -1;
+        this.media = null;
+        this.restrictedLevels = [];
+        this.timer = undefined;
+        this.clientRect = null;
+        this.paused = true;
+        this.hls.pauseCapping = () => {
+            this.paused = true;
+        };
+        this.hls.resumeCapping = () => {
+            this.paused = false;
+        };
+        this.registerListeners();
+    }
+    setStreamController(streamController) {
+        this.streamController = streamController;
+    }
+    destroy() {
+        this.unregisterListener();
+        if (this.hls.config.capLevelToPlayerSize) {
+            this.stopCapping();
+        }
+        this.media = null;
+        this.clientRect = null;
+        // @ts-ignore
+        this.hls = this.streamController = null;
+    }
+    registerListeners() {
+        const { hls } = this;
+        hls.on(hls_js_src_events__WEBPACK_IMPORTED_MODULE_0__["Events"].FPS_DROP_LEVEL_CAPPING, this.onFpsDropLevelCapping, this);
+        hls.on(hls_js_src_events__WEBPACK_IMPORTED_MODULE_0__["Events"].MEDIA_ATTACHING, this.onMediaAttaching, this);
+        hls.on(hls_js_src_events__WEBPACK_IMPORTED_MODULE_0__["Events"].MANIFEST_PARSED, this.onManifestParsed, this);
+        hls.on(hls_js_src_events__WEBPACK_IMPORTED_MODULE_0__["Events"].BUFFER_CODECS, this.onBufferCodecs, this);
+        hls.on(hls_js_src_events__WEBPACK_IMPORTED_MODULE_0__["Events"].MEDIA_DETACHING, this.onMediaDetaching, this);
+    }
+    unregisterListener() {
+        const { hls } = this;
+        hls.off(hls_js_src_events__WEBPACK_IMPORTED_MODULE_0__["Events"].FPS_DROP_LEVEL_CAPPING, this.onFpsDropLevelCapping, this);
+        hls.off(hls_js_src_events__WEBPACK_IMPORTED_MODULE_0__["Events"].MEDIA_ATTACHING, this.onMediaAttaching, this);
+        hls.off(hls_js_src_events__WEBPACK_IMPORTED_MODULE_0__["Events"].MANIFEST_PARSED, this.onManifestParsed, this);
+        hls.off(hls_js_src_events__WEBPACK_IMPORTED_MODULE_0__["Events"].BUFFER_CODECS, this.onBufferCodecs, this);
+        hls.off(hls_js_src_events__WEBPACK_IMPORTED_MODULE_0__["Events"].MEDIA_DETACHING, this.onMediaDetaching, this);
+    }
+    onFpsDropLevelCapping(event, data) {
+        // Don't add a restricted level more than once
+        if (CapLevelController.isLevelAllowed(data.droppedLevel, this.restrictedLevels)) {
+            this.restrictedLevels.push(data.droppedLevel);
+        }
+    }
+    onMediaAttaching(event, data) {
+        this.media = data.media instanceof HTMLVideoElement ? data.media : null;
+    }
+    onManifestParsed(event, data) {
+        const hls = this.hls;
+        this.restrictedLevels = [];
+        this.firstLevel = data.firstLevel;
+        if (hls.config.capLevelToPlayerSize && data.video) {
+            // Start capping immediately if the manifest has signaled video codecs
+            this.startCapping();
+        }
+    }
+    // Only activate capping when playing a video stream; otherwise, multi-bitrate audio-only streams will be restricted
+    // to the first level
+    onBufferCodecs(event, data) {
+        const hls = this.hls;
+        if (hls.config.capLevelToPlayerSize && data.video) {
+            // If the manifest did not signal a video codec capping has been deferred until we're certain video is present
+            this.startCapping();
+        }
+    }
+    onMediaDetaching() {
+        this.stopCapping();
+    }
+    detectPlayerSize() {
+        if (this.media && this.mediaHeight > 0 && this.mediaWidth > 0) {
+            const levels = this.hls.levels;
+            if (levels.length) {
+                const hls = this.hls;
+                hls.autoLevelCapping = this.getMaxLevel(levels.length - 1);
+                if (hls.autoLevelCapping > this.autoLevelCapping &&
+                    this.streamController) {
+                    // if auto level capping has a higher value for the previous one, flush the buffer using nextLevelSwitch
+                    // usually happen when the user go to the fullscreen mode.
+                    this.streamController.nextLevelSwitch();
+                }
+                this.autoLevelCapping = hls.autoLevelCapping;
+            }
+        }
+    }
+    /*
+     * returns level should be the one with the dimensions equal or greater than the media (player) dimensions (so the video will be downscaled)
+     */
+    getMaxLevel(capLevelIndex) {
+        const levels = this.hls.levels;
+        if (!levels.length) {
+            return -1;
+        }
+        const validLevels = levels.filter((level, index) => CapLevelController.isLevelAllowed(index, this.restrictedLevels) &&
+            index <= capLevelIndex);
+        this.clientRect = null;
+        return CapLevelController.getMaxLevelByMediaSize(validLevels, this.mediaWidth, this.mediaHeight);
+    }
+    capp() {
+        this.autoLevelCapping = Number.POSITIVE_INFINITY;
+        this.hls.firstLevel = this.getMaxLevel(this.firstLevel);
+        this.detectPlayerSize();
+    }
+    startCapping() {
+        if (this.timer) {
+            // Don't reset capping if started twice; this can happen if the manifest signals a video codec
+            return;
+        }
+        this.autoLevelCapping = Number.POSITIVE_INFINITY;
+        this.hls.firstLevel = this.getMaxLevel(this.firstLevel);
+        self.clearInterval(this.timer);
+        this.timer = self.setInterval(this.detectPlayerSize.bind(this), 10000);
+        this.detectPlayerSize();
+    }
+    stopCapping() {
+        this.restrictedLevels = [];
+        this.firstLevel = -1;
+        //this.autoLevelCapping = Number.POSITIVE_INFINITY;
+        if (this.timer) {
+            self.clearInterval(this.timer);
+            this.timer = undefined;
+        }
+    }
+    getDimensions() {
+        if (this.paused && this.clientRectLast) {
+            return this.clientRectLast;
+        }
+        if (this.clientRect) {
+            return this.clientRect;
+        }
+        const media = this.media;
+        const boundsRect = {
+            width: 0,
+            height: 0,
+        };
+        if (media) {
+            const clientRect = media.getBoundingClientRect();
+            boundsRect.width = clientRect.width;
+            boundsRect.height = clientRect.height;
+            if (!boundsRect.width && !boundsRect.height) {
+                // When the media element has no width or height (equivalent to not being in the DOM),
+                // then use its width and height attributes (media.width, media.height)
+                boundsRect.width =
+                    clientRect.right - clientRect.left || media.width || 0;
+                boundsRect.height =
+                    clientRect.bottom - clientRect.top || media.height || 0;
+            }
+        }
+        this.clientRectLast = this.clientRect = boundsRect;
+        return boundsRect;
+    }
+    get mediaWidth() {
+        return this.getDimensions().width * CapLevelController.contentScaleFactor;
+    }
+    get mediaHeight() {
+        return this.getDimensions().height * CapLevelController.contentScaleFactor;
+    }
+    static get contentScaleFactor() {
+        let pixelRatio = 1;
+        try {
+            pixelRatio = self.devicePixelRatio;
+        }
+        catch (e) {
+            /* no-op */
+        }
+        if (pixelRatio > 1.5)
+            pixelRatio = 1.5;
+        return pixelRatio;
+    }
+    static isLevelAllowed(level, restrictedLevels = []) {
+        return restrictedLevels.indexOf(level) === -1;
+    }
+    static getMaxLevelByMediaSize(levels, width, height) {
+        if (!levels || !levels.length) {
+            return -1;
+        }
+        // Levels can have the same dimensions but differing bandwidths - since levels are ordered, we can look to the next
+        // to determine whether we've chosen the greatest bandwidth for the media's dimensions
+        const atGreatestBandiwdth = (curLevel, nextLevel) => {
+            if (!nextLevel) {
+                return true;
+            }
+            return (curLevel.width !== nextLevel.width ||
+                curLevel.height !== nextLevel.height);
+        };
+        // If we run through the loop without breaking, the media's dimensions are greater than every level, so default to
+        // the max level
+        let maxLevelIndex = levels.length - 1;
+        for (let i = 0; i < levels.length; i += 1) {
+            const level = levels[i];
+            if ((level.width >= width || level.height >= height) &&
+                atGreatestBandiwdth(level, levels[i + 1])) {
+                maxLevelIndex = i;
+                break;
+            }
+        }
+        return maxLevelIndex;
+    }
+}
+/* harmony default export */ __webpack_exports__["default"] = (CapLevelController);
+
+
+/***/ })
+
+}]);
 //# sourceMappingURL=6.chunk.js.map
