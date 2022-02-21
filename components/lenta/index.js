@@ -3265,8 +3265,6 @@ var lenta = (function(){
 
 					}, function(_p){
 
-						console.log("RENDER", url)
-
 						var images = _p.el.find('img');
 	
 						self.app.nav.api.links(null, _p.el, function(event){
