@@ -400,6 +400,9 @@
 #articlev .bgwrapper.tagsinput .aheader.top {
   display: none;
 }
+#articlev .bgwrapper.tagsinput .coverelements {
+  display: none;
+}
 #articlev .bgwrapper.tagsinput .tagsinputwrapper {
   display: flex;
   align-items: center;
