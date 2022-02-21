@@ -25,37 +25,41 @@ var post = (function () {
 
 				if (share){
 
-					self.app.platform.sdk.node.transactions.get.balance(function(amount){
+					actions.stateAction(function(){
 
-						var balance = amount.toFixed(3);
+						self.app.platform.sdk.node.transactions.get.balance(function(amount){
 
-						var userinfo = deep(app, 'platform.sdk.usersl.storage.' + share.address) || {
-							address : share.address,
-							addresses : [],
-						}
+							var balance = amount.toFixed(3);
 	
-						self.nav.api.load({
-							open : true,
-							href : 'pkoin',
-							history : true,
-							inWnd : true,
-		
-							essenseData : {
-								userinfo: userinfo,
-								balance : balance,
-								id : id,
-								embedding : {
-									type : 'pkoin',
-									id : share.address,
-									close : function(){
-										renders.articles();
-									},
-								},	
+							var userinfo = deep(app, 'platform.sdk.usersl.storage.' + share.address) || {
+								address : share.address,
+								addresses : [],
 							}
+		
+							self.nav.api.load({
+								open : true,
+								href : 'pkoin',
+								history : true,
+								inWnd : true,
+			
+								essenseData : {
+									userinfo: userinfo,
+									balance : balance,
+									id : id,
+									embedding : {
+										type : 'pkoin',
+										id : share.address,
+										close : function(){
+											renders.articles();
+										},
+									},	
+								}
+							})
+	
 						})
+	
+					}, share.txid)
 
-					})
-				
 
 				}
 

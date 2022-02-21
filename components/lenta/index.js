@@ -930,39 +930,41 @@ var lenta = (function(){
 				var share = self.app.platform.sdk.node.shares.storage.trx[id];
 
 				if (share){
+					
+					actions.stateAction('_this', function(){
 
+						self.app.platform.sdk.node.transactions.get.balance(function(amount){
 
-					self.app.platform.sdk.node.transactions.get.balance(function(amount){
-
-						var balance = amount.toFixed(3);
-
-						var userinfo = deep(app, 'platform.sdk.usersl.storage.' + share.address) || {
-							address : share.address,
-							addresses : [],
-						}
+							var balance = amount.toFixed(3);
 	
-						self.nav.api.load({
-							open : true,
-							href : 'pkoin',
-							history : true,
-							inWnd : true,
-		
-							essenseData : {
-								userinfo: userinfo,
-								balance : balance,
-								id : id,
-								embedding : {
-									type : 'pkoin',
-									id : share.address,
-									close : function(){
-										renders.articles();
-									},
-								},	
+							var userinfo = deep(app, 'platform.sdk.usersl.storage.' + share.address) || {
+								address : share.address,
+								addresses : [],
 							}
+		
+							self.nav.api.load({
+								open : true,
+								href : 'pkoin',
+								history : true,
+								inWnd : true,
+			
+								essenseData : {
+									userinfo: userinfo,
+									balance : balance,
+									id : id,
+									embedding : {
+										type : 'pkoin',
+										id : share.address,
+										close : function(){
+											renders.articles();
+										},
+									},	
+								}
+							})
+	
 						})
-
-					})
-				
+	
+					}, share.txid)	
 
 				}
 
