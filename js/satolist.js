@@ -18267,7 +18267,6 @@ Platform = function (app, listofnodes) {
 
                                     var tx = txb.build()
 
-
                                     if (obj.donate && obj.donate.v.length && !obj.fees.v){
 
                                         var totalFees = Math.min(tx.virtualSize() * fees / smulti, 0.0999);
