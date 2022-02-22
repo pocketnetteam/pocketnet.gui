@@ -24071,6 +24071,7 @@ Platform = function (app, listofnodes) {
 
         var arrangeMessages = function(){
 
+
 			var offset = 0;
 
 			var maxCount = 4;
@@ -24078,7 +24079,7 @@ Platform = function (app, listofnodes) {
 
 			var boffset = 0;
 
-            var mtbl = platform.app.width <= 1024
+            var mtbl = platform.app.mobileview
 
 			if (mtbl){
 				maxCount = 1;
@@ -24776,7 +24777,7 @@ Platform = function (app, listofnodes) {
                 txid: "6119caaadaef37be8f3716be8280e88206adf043f38fc1665d7e42bdcf90128a"
             })*/
 
-			/**self.messageHandler({
+			/*self.messageHandler({
                 addr: "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82",
                 addrFrom: "PTcArXMkhsKMUrzQKn2SXmaVZv4Q7sEpBt",
                 mesType: "postfromprivate",
