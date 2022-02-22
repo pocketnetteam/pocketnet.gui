@@ -414,7 +414,7 @@ var about = (function(){
 								reports : reports,
 								each : helpers.eachReport,
 								lkey : app.localization.current(),
-								theme : self.app.platform.sdk.theme.current,
+								theme : self.app.platform.sdk.theme.current == "white" ? 'white' : 'black',
 		
 								selector : s
 							},

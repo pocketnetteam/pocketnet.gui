@@ -10,7 +10,7 @@
   font-size: 30px;
   font-weight: 600;
   line-height: 40px;
-  color: #444444;
+  color: rgb(var(--color-h2-aboutcc));
   text-align: center;
   text-transform: uppercase;
 }
@@ -50,7 +50,7 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  color: #FFFFFF;
+  color: rgb(var(--color-cc-white));
 }
 #aboutFacebook .works > .main-wrapper > div .works__container > .text {
   display: flex;
@@ -61,7 +61,7 @@
 }
 #aboutFacebook .works > .main-wrapper > div .works__container > .text > p {
   margin: 20px 0;
-  color: black;
+  color: rgb(var(--color-black));
   width: 250px;
 }
 #aboutFacebook .works > .main-wrapper > div > .image {
@@ -80,7 +80,7 @@
   font-weight: 400;
 }
 #aboutFacebook .videos {
-  background: #262626;
+  background: rgb(var(--color-cc-videos));
   padding: 80px 0;
 }
 #aboutFacebook .videos .main-wrapper {
@@ -170,7 +170,7 @@
   font-size: 0.6em;
 }
 #aboutFacebook .open > .main-wrapper .content .discover .one-item > div > a > i {
-  color: #00a6ff;
+  color: rgb(var(--color-cc-blue));
   font-size: 2em;
   width: 25px;
   height: 25px;
@@ -190,7 +190,7 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  color: #FFFFFF;
+  color: rgb(var(--color-cc-white));
 }
 #aboutFacebook .darkbg > .main-wrapper > .dark__container > img {
   width: 500px;
@@ -210,7 +210,7 @@
 }
 #aboutFacebook .darkbg > .main-wrapper > .dark__container > .text > h2 {
   text-align: left;
-  color: #fff;
+  color: rgb(var(--color-cc-white));
 }
 #aboutFacebook .darkbg > .main-wrapper > .dark__container > .text ol {
   margin: 10px 0;
@@ -235,7 +235,7 @@
   right: 0;
   top: 0;
   bottom: 0;
-  background-color: rgba(33, 42, 73, 0.6);
+  background-color: rgba(var(--color-cc-form));
   z-index: 1;
 }
 #aboutFacebook .blog > .main-wrapper {
@@ -244,10 +244,10 @@
   text-align: center;
 }
 #aboutFacebook .blog h2 {
-  color: #FFFFFF;
+  color: rgb(var(--color-cc-white));
 }
 #aboutFacebook .blog h2 > span::after {
-  background: #FFFFFF;
+  background: rgb(var(--color-cc-white));
 }
 #aboutFacebook .blog .button {
   margin-top: 30px;
@@ -272,7 +272,7 @@
   max-width: 1170px;
 }
 #aboutFacebook header {
-  background-color: #dddddd;
+  background-color: rgb(var(--color-cc-grey));
   height: 65px;
   position: sticky;
   top: 0;
@@ -291,7 +291,7 @@
   font-size: 15px;
   font-weight: 400;
   letter-spacing: 1px;
-  color: black;
+  color: rgb(var(--color-black));
   margin-right: 15px;
   cursor: pointer;
   position: relative;
@@ -307,7 +307,7 @@
   content: '';
   width: 10%;
   height: 3px;
-  background: #00D5C3;
+  background: rgb(var(--color-cc-menu));
   position: absolute;
   left: 0;
   right: 0;
@@ -334,7 +334,7 @@
   z-index: 2;
 }
 #aboutFacebook .main-board h1 {
-  color: #0a2347;
+  color: rgb(var(--color-fb));
   padding: 0;
   position: relative;
   margin-bottom: 35px;
@@ -344,7 +344,7 @@
 }
 #aboutFacebook .main-board h2 {
   position: relative;
-  color: #fff;
+  color: rgb(var(--color-cc-white));
   font-size: 30px;
   text-align: left;
   text-transform: capitalize;
@@ -363,13 +363,13 @@
 }
 #aboutFacebook .main-board__left-block h3 {
   margin-top: 30px;
-  color: #3b3b3b;
+  color: rgb(var(--color-cc-dark));
 }
 #aboutFacebook .main-board__left-block h1 {
   width: 90%;
 }
 #aboutFacebook .main-board__left-block > div {
-  color: #FFFFFF;
+  color: rgb(var(--color-cc-white));
   font-weight: 600;
   font-size: 16px;
   margin-bottom: 15px;
@@ -385,7 +385,7 @@
   justify-content: space-around;
 }
 #aboutFacebook .main-board__left-block_2 > div {
-  color: black;
+  color: rgb(var(--color-black));
   font-weight: 600;
   font-size: 16px;
   margin: 10px 0;
@@ -398,13 +398,13 @@
   margin-top: 60px;
 }
 #aboutFacebook .main-board__left-block_2 > div:last-child > a {
-  color: black;
+  color: rgb(var(--color-black));
 }
 #aboutFacebook .main-board__left-block_2 > div:last-child > a:hover {
-  color: #fff;
+  color: rgb(var(--color-cc-white));
 }
 #aboutFacebook .grey {
-  background: #dddddd;
+  background: rgb(var(--color-cc-grey));
   padding: 70px 0;
 }
 #aboutFacebook .main-board__image {
@@ -417,11 +417,11 @@
   align-items: center;
   width: 165px;
   height: 50px;
-  border: 1px solid #00a6ff;
+  border: 1px solid rgb(var(--color-cc-blue));
   font-size: 18px;
   border-radius: 0 5px 0 5px;
   text-decoration: none;
-  color: #FFFFFF;
+  color: rgb(var(--color-cc-white));
   font-size: 12px;
   transition-duration: 0.3s;
 }
@@ -432,23 +432,23 @@
   margin-left: 20px;
   margin-right: 15px;
   font-size: 30px;
-  color: #00a6ff;
+  color: rgb(var(--color-cc-blue));
   width: 26px;
   transition-duration: 0.3s;
 }
 #aboutFacebook .main-board__button-link:hover {
-  background: #00a6ff;
+  background: rgb(var(--color-cc-blue));
 }
 #aboutFacebook .main-board__button-link:hover > i {
-  color: #FFFFFF;
+  color: rgb(var(--color-cc-white));
 }
 #aboutFacebook .main-board__button-link_bold {
   font-size: 14px;
   font-weight: 600;
 }
 #aboutFacebook .main-description {
-  background: #262626;
-  color: #fff;
+  background: rgb(var(--color-cc-videos));
+  color: rgb(var(--color-cc-white));
   padding: 50px 15px;
 }
 #aboutFacebook .main-description .main-wrapper {
@@ -510,7 +510,7 @@
   }
 }
 #aboutFacebook .description-three-column {
-  background: #cfcfcf;
+  background: rgb(var(--color-txt-gray));
 }
 #aboutFacebook .description-three-column .main-wrapper {
   padding: 60px 0;
@@ -643,7 +643,7 @@
   width: 40%;
 }
 #aboutFacebook .main-board-2 > .main-wrapper .main-board__left-block h2 {
-  color: #3b3b3b;
+  color: rgb(var(--color-cc-dark));
   margin-bottom: 35px !important;
   margin: auto 0;
   font-weight: 600;
@@ -662,17 +662,17 @@
     position: relative;
     position: reletive;
     padding: 50px 0;
-    color: #fff;
+    color: rgb(var(--color-cc-white));
   }
   #aboutFacebook .main-board-2 .main-wrapper .main-board__left-block {
     width: 100%;
     padding: 15px;
   }
   #aboutFacebook .main-board-2 .main-wrapper .main-board__left-block h2 {
-    color: #fff;
+    color: rgb(var(--color-cc-white));
   }
   #aboutFacebook .main-board-2 .main-wrapper .main-board__left-block h3 {
-    color: #fff;
+    color: rgb(var(--color-cc-white));
   }
 }
 #aboutFacebook .table {
@@ -689,13 +689,13 @@
   width: 70%;
 }
 #aboutFacebook .table .main-wrapper table tr {
-  border: 1px solid #cfcfcf;
+  border: 1px solid rgb(var(--color-txt-gray));
   text-align: left;
   padding: 8px;
 }
 #aboutFacebook .table .main-wrapper table tr td {
   width: 30%;
-  border: 1px solid #cfcfcf;
+  border: 1px solid rgb(var(--color-txt-gray));
   padding: 30px;
   font-size: 0.9em;
   font-weight: 500;
@@ -713,7 +713,7 @@
   font-weight: 700;
 }
 #aboutFacebook .table .main-wrapper table th {
-  border: 1px solid #cfcfcf;
+  border: 1px solid rgb(var(--color-txt-gray));
   text-align: center;
   padding: 30px;
 }
@@ -722,13 +722,13 @@
     width: 90%;
   }
   #aboutFacebook .table .main-wrapper table tr {
-    border: 1px solid #cfcfcf;
+    border: 1px solid rgb(var(--color-txt-gray));
     text-align: left;
     padding: 8px;
   }
   #aboutFacebook .table .main-wrapper table tr td {
     width: 30%;
-    border: 1px solid #cfcfcf;
+    border: 1px solid rgb(var(--color-txt-gray));
     padding: 10px;
     font-size: 0.8em;
     font-weight: 500;
@@ -743,7 +743,7 @@
     text-align: right;
   }
   #aboutFacebook .table .main-wrapper table th {
-    border: 1px solid #cfcfcf;
+    border: 1px solid rgb(var(--color-txt-gray));
     text-align: center;
     padding: 10px;
     font-size: 0.8em;
@@ -795,17 +795,17 @@
     position: relative;
     position: reletive;
     padding: 50px 0;
-    color: #fff;
+    color: rgb(var(--color-cc-white));
   }
   #aboutFacebook .main-board-3 .main-wrapper .main-board__left-block {
     width: 100%;
     padding: 15px;
   }
   #aboutFacebook .main-board-3 .main-wrapper .main-board__left-block h2 {
-    color: #fff;
+    color: rgb(var(--color-cc-white));
   }
   #aboutFacebook .main-board-3 .main-wrapper .main-board__left-block h3 {
-    color: #fff;
+    color: rgb(var(--color-cc-white));
   }
 }
 #aboutFacebook .services__block-item {
@@ -822,11 +822,11 @@
   border-radius: 5px;
 }
 #aboutFacebook .services__item:hover {
-  box-shadow: 0 5px 25px 0 rgba(5, 5, 5, 0.2);
+  box-shadow: 0 5px 25px 0 rgba(var(--color-services-item));
 }
 #aboutFacebook .services__item > h3 {
   margin: 23px 0;
-  color: #161C35;
+  color: rgb(var(--color-cc-dark-blue-cc));
   text-align: center;
 }
 #aboutFacebook .services__item > p {
@@ -834,7 +834,7 @@
   font-weight: 400;
   line-height: 24px;
   margin-bottom: 20px;
-  color: #666666;
+  color: rgb(var(--color-cc-dark-grey));
   text-align: left;
 }
 #aboutFacebook .services__item > a {
@@ -842,16 +842,16 @@
   width: 150px;
   height: 50px;
   line-height: 50px;
-  color: #161C35;
+  color: rgb(var(--color-cc-dark-blue-cc));
   font-size: 18px;
   border-radius: 0 5px 0 5px;
-  border: 1px solid #161C35;
+  border: 1px solid rgb(var(--color-cc-dark-blue-cc));
   text-decoration: none;
   transition-duration: 0.3s;
 }
 #aboutFacebook .services__item > a:hover {
-  background: #161C35;
-  color: #FFFFFF;
+  background: rgb(var(--color-cc-dark-blue-cc));
+  color: rgb(var(--color-cc-white));
 }
 #aboutFacebook .services__item .box-icon {
   text-align: center;
@@ -887,7 +887,7 @@
   right: 0;
   top: 0;
   bottom: 0;
-  background: rgba(22, 28, 53, 0);
+  background: rgba(var(--color-cc-dark-blue-ccc));
   display: flex;
   justify-content: center;
   transition-duration: 0.1s;
@@ -896,11 +896,11 @@
   text-decoration: none;
   width: 30px;
   height: 30px;
-  border: 1px solid #FFFFFF;
+  border: 1px solid rgb(var(--color-cc-white));
   margin: 10px;
   margin-top: auto;
   margin-bottom: 20px;
-  color: white;
+  color: rgb(var(--color-cc-white));
   line-height: 30px;
   text-align: center;
   transition-duration: 0.5s;
@@ -915,8 +915,8 @@
   transform: translateY(130px);
 }
 #aboutFacebook .team-container__item > figure > figcaption > a:hover {
-  color: #00D5C3;
-  background: white;
+  color: rgb(var(--color-cc-menu));
+  background: rgb(var(--color-cc-white));
 }
 #aboutFacebook .team-container__item > figure > img {
   transition-duration: 1s;
@@ -925,24 +925,24 @@
   transform: scale3d(1.1, 1.1, 1);
 }
 #aboutFacebook .team-container__item > figure:hover > figcaption {
-  background: rgba(22, 28, 53, 0.7);
+  background: rgba(var(--color-cc-dark-blue-ccc));
 }
 #aboutFacebook .team-container__item > figure:hover > figcaption > a {
   transform: translateY(0px);
 }
 #aboutFacebook .team-container__item-footer {
-  box-shadow: 4px 4px 18px 0px #cccccc;
+  box-shadow: 4px 4px 18px 0px rgba(var(--color-cc-team-container));
   padding: 20px;
 }
 #aboutFacebook .team-container__item-footer > span {
   display: block;
   font-size: 12px;
-  color: #666666;
+  color: rgb(var(--color-cc-dark-grey));
   font-weight: 300;
 }
 #aboutFacebook .team-container__item-footer > h3 {
   display: block;
-  color: #666666;
+  color: rgb(var(--color-cc-dark-grey));
 }
 #aboutFacebook .blog-container {
   margin-top: 30px;
@@ -954,7 +954,7 @@
   height: 275px;
   flex: 0 0 49%;
   display: flex;
-  background: #FFFFFF;
+  background: rgb(var(--color-cc-white));
   margin-bottom: 22px;
   text-decoration: none;
 }
@@ -989,9 +989,9 @@
   position: absolute;
   display: inline-block;
   border-top: 15px solid transparent;
-  border-right: 15px solid #eee;
+  border-right: 15px solid rgb(var(--color-cc-bc));
   border-bottom: 15px solid transparent;
-  border-right-color: #fff;
+  border-right-color: rgb(var(--color-cc-white));
   right: 0;
   margin-top: -15px;
   top: 50%;
@@ -1010,13 +1010,13 @@
   letter-spacing: 2px;
   line-height: 20px;
   text-transform: uppercase;
-  color: #333;
+  color: rgb(var(--color-cc-bc-span));
   text-align: center;
 }
 #aboutFacebook .blog-container__item-text-container > p {
   font-size: 18px;
   letter-spacing: 1px;
-  color: #161C35;
+  color: rgb(var(--color-cc-bc-p));
   text-align: center;
   text-transform: uppercase;
   font-weight: 600;
@@ -1024,17 +1024,17 @@
 }
 #aboutFacebook .button {
   padding: 10px 30px;
-  border: 1px solid #00D5C3;
+  border: 1px solid rgb(var(--color-cc-menu));
   font-size: 18px;
   border-radius: 0 5px 0 5px;
   display: inline-block;
-  color: #00D5C3;
+  color: rgb(var(--color-cc-menu));
   text-decoration: none;
   transition-duration: 0.3s;
 }
 #aboutFacebook .button:hover {
-  background: #00D5C3;
-  color: #FFFFFF;
+  background: rgb(var(--color-cc-menu));
+  color: rgb(var(--color-cc-white));
 }
 #aboutFacebook .form {
   height: 200px;
@@ -1050,7 +1050,7 @@
   right: 0;
   top: 0;
   bottom: 0;
-  background-color: rgba(33, 42, 73, 0.6);
+  background-color: rgba(var(--color-cc-form));
   z-index: 1;
 }
 #aboutFacebook .form > .main-wrapper {
@@ -1064,29 +1064,29 @@
 }
 #aboutFacebook .form input[type="email"] {
   background: transparent;
-  border: 1px solid #00D5C3;
-  color: #FFFFFF;
+  border: 1px solid rgb(var(--color-cc-menu));
+  color: rgb(var(--color-cc-white));
   font-size: 18px;
   font-weight: 300;
   padding: 10px;
   width: 450px;
 }
 #aboutFacebook .form input[type="email"]:focus {
-  border: 1px solid #64ffed;
+  border: 1px solid rgb(var(--color-menu-2));
   outline: none;
 }
 #aboutFacebook .form button {
-  background: #00D5C3;
-  border: 1px solid #00D5C3;
-  color: #FFFFFF;
+  background: rgb(var(--color-cc-menu));
+  border: 1px solid rgb(var(--color-cc-menu));
+  color: rgb(var(--color-cc-white));
   font-size: 22px;
   width: 100px;
   transition-duration: 0.3s;
 }
 #aboutFacebook .form button:hover {
-  background: #FFFFFF;
-  border: 1px solid #FFFFFF;
-  color: #00D5C3;
+  background: rgb(var(--color-cc-white));
+  border: 1px solid rgb(var(--color-cc-white));
+  color: rgb(var(--color-cc-menu));
   cursor: pointer;
 }
 #aboutFacebook .form form {
@@ -1094,23 +1094,23 @@
   justify-content: center;
 }
 #aboutFacebook .form input::-webkit-input-placeholder {
-  color: #cccccc;
+  color: rgb(var(--color-cc-team-container));
 }
 #aboutFacebook .form__main-text {
-  color: #00D5C3;
+  color: rgb(var(--color-cc-menu));
   font-weight: 300;
   margin-bottom: 20px;
   font-size: 20px;
 }
 #aboutFacebook .form__main-text > span {
-  color: white;
+  color: rgb(var(--color-cc-white));
   font-weight: 600;
 }
 #aboutFacebook .social-cont {
   margin: 20px 0;
 }
 #aboutFacebook .social-cont > a {
-  color: #161C35;
+  color: rgb(var(--color-cc-bc-p));
   font-size: 16px;
   margin: 10px;
   text-decoration: none;
@@ -1124,7 +1124,7 @@
   content: '';
   width: 25px;
   height: 25px;
-  border: 1px solid #161C35;
+  border: 1px solid rgb(var(--color-cc-bc-p));
   transform: rotate(45deg);
   position: absolute;
   left: -3px;
@@ -1136,7 +1136,7 @@
   color: #FFFFFF;
 }
 #aboutFacebook .social-cont > a:hover::before {
-  background: #161C35;
+  background: rgb(var(--color-cc-bc-p));
 }
 @media (max-width: 1100px) {
   #aboutFacebook .team-container {
@@ -1158,7 +1158,7 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  color: #FFFFFF;
+  color: rgb(var(--color-cc-white));
 }
 #aboutFacebook .dark__container > img {
   width: 60%;
@@ -1201,7 +1201,7 @@
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;
-    color: #FFFFFF;
+    color: rgb(var(--color-cc-white));
   }
   #aboutFacebook .dark__container > img {
     width: 70%;
@@ -1242,7 +1242,7 @@
   #aboutFacebook .main-board {
     height: auto;
     padding: 30px 0;
-    background: #fff;
+    background: rgb(var(--color-cc-white));
   }
   #aboutFacebook .main-board > .main-wrapper {
     flex-wrap: wrap;
@@ -1301,7 +1301,7 @@
     flex-direction: column;
   }
   #aboutFacebook .grey {
-    background: #ddd;
+    background: rgb(var(--color-cc-grey));
   }
 }
 @media (max-width: 720px) {
@@ -1375,7 +1375,7 @@
   }
   #aboutFacebook .main-board .main-wrapper .main-board__left-block h1 {
     width: 100%;
-    color: #fff;
+    color: rgb(var(--color-cc-white));
     font-weight: 600;
   }
   #aboutFacebook .main-board .main-wrapper .main-board__left-block h3 {

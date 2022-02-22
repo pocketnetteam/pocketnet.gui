@@ -10,7 +10,7 @@
   font-size: 30px;
   font-weight: 600;
   line-height: 40px;
-  color: #444444;
+  color: rgb(var(--color-h2-aboutcc));
   text-align: center;
   text-transform: uppercase;
 }
@@ -25,7 +25,7 @@
   padding: 60px 0;
 }
 #aboutHIW .videos {
-  background: #262626;
+  background: rgb(var(--background-total-theme));
   padding: 80px 0;
 }
 #aboutHIW .videos .main-wrapper {
@@ -41,7 +41,6 @@
 }
 #aboutHIW .open {
   width: 100%;
-  background-color: #fbf0c3;
 }
 #aboutHIW .open > .main-wrapper {
   padding: 50px 30px;
@@ -117,7 +116,7 @@
   font-size: 0.6em;
 }
 #aboutHIW .open > .main-wrapper .content .discover .one-item > div > a > i {
-  color: #00a6ff;
+  color: rgb(var(--color-cc-blue));
   font-size: 2em;
   width: 25px;
   height: 25px;
@@ -138,7 +137,6 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  color: #FFFFFF;
 }
 #aboutHIW .darkbg > .main-wrapper > .dark__container > img {
   width: 500px;
@@ -158,7 +156,6 @@
 }
 #aboutHIW .darkbg > .main-wrapper > .dark__container > .text > h2 {
   text-align: left;
-  color: #fff;
 }
 #aboutHIW .team {
   padding: 60px 0;
@@ -183,7 +180,6 @@
   max-width: 1170px;
 }
 #aboutHIW header {
-  background-color: #dddddd;
   height: 65px;
   position: sticky;
   top: 0;
@@ -218,7 +214,7 @@
   content: '';
   width: 10%;
   height: 3px;
-  background: #00D5C3;
+  background: #00d5c3;
   position: absolute;
   left: 0;
   right: 0;
@@ -233,7 +229,7 @@
 }
 #aboutHIW .main-board {
   height: 500px;
-  position: reletive;
+  position: relative;
   padding: 0px 0 ;
 }
 #aboutHIW .main-board > .main-wrapper {
@@ -282,8 +278,6 @@
   padding-right: 50px;
 }
 #aboutHIW .main-description {
-  background: #262626;
-  color: #fff;
   padding: 50px 15px;
 }
 #aboutHIW .main-description .main-wrapper {
@@ -357,7 +351,6 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  color: #FFFFFF;
 }
 #aboutHIW .img-and-text .main-wrapper > div .works__container > .text {
   display: flex;
@@ -368,7 +361,6 @@
 }
 #aboutHIW .img-and-text .main-wrapper > div .works__container > .text > p {
   margin: 20px 0;
-  color: #fff;
   width: 30%;
   text-align: left;
   font-weight: 200;
@@ -385,9 +377,6 @@
 #aboutHIW .img-and-text .main-wrapper > div .works__container > .image > img {
   border-radius: 10px;
   width: 100%;
-}
-#aboutHIW .img-and-text .main-wrapper > div h2 {
-  color: #fff;
 }
 #aboutHIW .img-and-text .main-wrapper > div h2 > span {
   font-weight: 700;
@@ -546,7 +535,7 @@
   border: 0;
 }
 #aboutHIW .table {
-  background-color: #f6f6f6;
+  background-color: rgb(var(--background-secondary-theme));
   padding: 50px 0;
 }
 #aboutHIW .table .main-wrapper {
@@ -638,7 +627,7 @@
 }
 #aboutHIW .services__item > h3 {
   margin: 23px 0;
-  color: #161C35;
+  color: #161c35;
   text-align: center;
 }
 #aboutHIW .services__item > p {
@@ -654,15 +643,15 @@
   width: 150px;
   height: 50px;
   line-height: 50px;
-  color: #161C35;
+  color: #161c35;
   font-size: 18px;
   border-radius: 0 5px 0 5px;
-  border: 1px solid #161C35;
+  border: 1px solid #161c35;
   text-decoration: none;
   transition-duration: 0.3s;
 }
 #aboutHIW .services__item > a:hover {
-  background: #161C35;
+  background: #161c35;
   color: #FFFFFF;
 }
 #aboutHIW .services__item .box-icon {
@@ -727,7 +716,7 @@
   transform: translateY(130px);
 }
 #aboutHIW .team-container__item > figure > figcaption > a:hover {
-  color: #00D5C3;
+  color: #00d5c3;
   background: white;
 }
 #aboutHIW .team-container__item > figure > img {
@@ -828,7 +817,7 @@
 #aboutHIW .blog-container__item-text-container > p {
   font-size: 18px;
   letter-spacing: 1px;
-  color: #161C35;
+  color: #161c35;
   text-align: center;
   text-transform: uppercase;
   font-weight: 600;
@@ -836,16 +825,16 @@
 }
 #aboutHIW .button {
   padding: 10px 30px;
-  border: 1px solid #00D5C3;
+  border: 1px solid #00d5c3;
   font-size: 18px;
   border-radius: 0 5px 0 5px;
   display: inline-block;
-  color: #00D5C3;
+  color: #00d5c3;
   text-decoration: none;
   transition-duration: 0.3s;
 }
 #aboutHIW .button:hover {
-  background: #00D5C3;
+  background: #00d5c3;
   color: #FFFFFF;
 }
 #aboutHIW .form {
@@ -862,7 +851,7 @@
   right: 0;
   top: 0;
   bottom: 0;
-  background-color: rgba(33, 42, 73, 0.6);
+  background-color: rgba(var(--color-cc-form));
   z-index: 1;
 }
 #aboutHIW .form > .main-wrapper {
@@ -876,7 +865,7 @@
 }
 #aboutHIW .form input[type="email"] {
   background: transparent;
-  border: 1px solid #00D5C3;
+  border: 1px solid #00d5c3;
   color: #FFFFFF;
   font-size: 18px;
   font-weight: 300;
@@ -884,12 +873,12 @@
   width: 450px;
 }
 #aboutHIW .form input[type="email"]:focus {
-  border: 1px solid #64ffed;
+  border: 1px solid rgb(var(--color-menu-2));
   outline: none;
 }
 #aboutHIW .form button {
-  background: #00D5C3;
-  border: 1px solid #00D5C3;
+  background: #00d5c3;
+  border: 1px solid #00d5c3;
   color: #FFFFFF;
   font-size: 22px;
   width: 100px;
@@ -898,7 +887,7 @@
 #aboutHIW .form button:hover {
   background: #FFFFFF;
   border: 1px solid #FFFFFF;
-  color: #00D5C3;
+  color: #00d5c3;
   cursor: pointer;
 }
 #aboutHIW .form form {
@@ -909,7 +898,7 @@
   color: #cccccc;
 }
 #aboutHIW .form__main-text {
-  color: #00D5C3;
+  color: #00d5c3;
   font-weight: 300;
   margin-bottom: 20px;
   font-size: 20px;
@@ -922,7 +911,7 @@
   margin: 20px 0;
 }
 #aboutHIW .social-cont > a {
-  color: #161C35;
+  color: #161c35;
   font-size: 16px;
   margin: 10px;
   text-decoration: none;
@@ -936,7 +925,7 @@
   content: '';
   width: 25px;
   height: 25px;
-  border: 1px solid #161C35;
+  border: 1px solid #161c35;
   transform: rotate(45deg);
   position: absolute;
   left: -3px;
@@ -948,7 +937,7 @@
   color: #FFFFFF;
 }
 #aboutHIW .social-cont > a:hover::before {
-  background: #161C35;
+  background: #161c35;
 }
 @media (max-width: 1100px) {
   #aboutHIW .team-container {
@@ -1113,7 +1102,7 @@
     flex-direction: column;
   }
   #aboutHIW .grey {
-    background: #ddd;
+    background: #dddddd;
   }
 }
 @media (max-width: 720px) {
