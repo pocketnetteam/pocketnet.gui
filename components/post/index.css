@@ -520,6 +520,10 @@
 #post .sharearticle .articlecontent .forcomments {
   margin-top: 2em;
 }
+#post .sharearticle .articlecontent .article {
+  max-width: 640px;
+  margin: 0 auto;
+}
 #post .sharearticle .removeDescription {
   display: none;
   padding: 1.5em;
@@ -555,6 +559,9 @@ html.mobileview #post .videoWrapper {
 html.mobileview #post .sharearticle .articlecontent {
   padding-left: 0.5em;
   padding-right: 0.5em;
+}
+html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent {
+  max-width: none;
 }
 @media only screen and (max-width: 768px) {
   #content > div#post.sharec .widthcontainer {
@@ -667,6 +674,10 @@ html.mobileview #post .sharearticle .articlecontent {
     padding-left: 0.5em;
     padding-right: 0.5em;
   }
+  #post .sharearticle .articlecontent .article {
+    max-width: 640px;
+    margin: 0 auto;
+  }
   #post .sharearticle .articlecontent .article_quote,
   #post .sharearticle .articlecontent .article_link_custom {
     width: 96%;
@@ -727,10 +738,15 @@ html.mobileview.fullscreen #post #comments {
 .wnd.postwindow #post .nextpost {
   display: block;
 }
-html.mobileview .wnd.postwindow .widthcontainer {
-  width: 100%;
-  max-width: none;
-}
+/*
+html.mobileview{
+	.wnd.postwindow{
+		.widthcontainer{
+			width: 100%;
+			max-width: none;
+		}
+	}
+}*/
 @media only screen and (max-width: 768px) {
   #post {
     border-top: 1px solid rgba(var(--neutral-grad-1), 0.3);

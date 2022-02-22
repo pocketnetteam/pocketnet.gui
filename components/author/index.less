@@ -731,6 +731,55 @@
 	}
 }
 
+html.mobileview{
+	#author{
+		.lentacell{
+			margin-right: 0;
+			margin-left: 0;
+		}
+
+		.leftpanelcell{
+			display: none;
+		}
+		
+		.authorlentawrappermain{
+			position: relative;
+	
+			.authorsearchicon{
+				display: none;
+			}
+	
+		}
+
+		.authorlentawrappermain{
+			
+			.authorsearchwrapper{
+				padding : 0 @rhythm;
+				.search{
+					.searchPanel{
+						display: table-cell;
+
+						.searchPanelWrapper>div[event=clear]{
+							display: block;
+						}
+					}
+					.searchInput{
+						.searchInputIcon{
+							.sminput{
+								background: transparent; 
+								padding-left: @rhythm;
+							}
+						}
+					}
+
+				}
+			}
+	
+			
+		}
+	}
+}
+
 @media only screen and (max-width: 1024px) {
 	#author{
 		.bgCaption{
@@ -745,9 +794,7 @@
 			
 		}
 
-		.leftpanelcell{
-			display: none;
-		}
+		
 		.lentacell{
 			margin-right: 44px;
 			margin-left: 0;
@@ -948,51 +995,12 @@
 
 	#author{
 
-		.lentacell{
-			margin-right: 0;
-		}
+		
 
 		.work.mwork{
 			width: 100%;
 		}
-
-		.authorlentawrappermain{
-			position: relative;
-	
-			.authorsearchicon{
-				display: none;
-			}
-	
-		}
-
-		.authorlentawrappermain{
-			
-	
-
-			.authorsearchwrapper{
-				padding : 0 @rhythm;
-				.search{
-					.searchPanel{
-						display: table-cell;
-
-						.searchPanelWrapper>div[event=clear]{
-							display: block;
-						}
-					}
-					.searchInput{
-						.searchInputIcon{
-							.sminput{
-								background: transparent; 
-								padding-left: @rhythm;
-							}
-						}
-					}
-
-				}
-			}
-	
-			
-		}
+		
 
 		.lentaWrapper{
 			.authorinfo{

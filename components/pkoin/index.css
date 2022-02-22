@@ -51,6 +51,11 @@
 #pkoin .content .top .buyButtonWrapper .buyButton .text {
   margin-right: 1em;
   font-weight: 600;
+  color: rgb(var(--text-color));
+}
+#pkoin .content .top .buyButtonWrapper .buyButton img {
+  width: 20px;
+  height: 20px;
 }
 #pkoin .content .fieldsWrapper {
   margin-top: 1em;

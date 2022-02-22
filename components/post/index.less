@@ -693,6 +693,11 @@
 			.forcomments{
 				margin-top : 4 * @rhythm;
 			}
+
+			.article{
+				max-width: 640px;
+				margin : 0 auto;
+			}
 		}
 
 		.removeDescription{
@@ -739,7 +744,6 @@
 
 html.mobileview{
 	#post{
-
 		.videoWrapper {
 			max-width: none;
 		}
@@ -751,6 +755,12 @@ html.mobileview{
 				padding-left: @rhythm;
 				padding-right: @rhythm;
 			}
+		}
+	}
+
+	.wnd.normalizedmobile.articlewindow{
+		.wndinner .wndcontent{
+			max-width: none;
 		}
 	}
 }
@@ -908,6 +918,11 @@ html.mobileview{
 				padding-left: @rhythm;
 				padding-right: @rhythm;
 
+				.article{
+					max-width: 640px;
+					margin : 0 auto;
+				}
+
 				.article_quote,
 				.article_link_custom{
 					width: 96%;
@@ -997,7 +1012,7 @@ html.mobileview.fullscreen{
 		}
 	}
 }
-
+/*
 html.mobileview{
 	.wnd.postwindow{
 		.widthcontainer{
@@ -1005,7 +1020,7 @@ html.mobileview{
 			max-width: none;
 		}
 	}
-}
+}*/
 
 @media only screen and (max-width: 768px) {
 	#post{

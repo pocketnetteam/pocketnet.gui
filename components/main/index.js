@@ -376,7 +376,7 @@ var main = (function(){
 						external.clearessense()
 					}
 					
-					self.app.platform.papi.horizontalLenta(el.topvideos, function (e,p) {
+					self.app.platform.papi.horizontalLenta(el.topvideos.find('.wrpcn'), function (e,p) {
 
 						external = p
 						actions.refreshSticky()
@@ -1217,7 +1217,7 @@ var main = (function(){
 				el.upbackbutton = el.c.find('.upbackbuttonwrapper')
 				el.addbutton = el.c.find('.addbutton')
 				el.slwork = el.c.find('.maincntwrapper >div.work')
-				el.topvideos = el.c.find('.topvideosWrapper .wrpcn')
+				el.topvideos = el.c.find('.topvideosWrapper')
 				el.menu = el.c.find('.menuwrapper')
 
 				//self.app.el.footer.addClass('workstation')
