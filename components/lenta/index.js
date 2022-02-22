@@ -3239,7 +3239,10 @@ var lenta = (function(){
 				}
 
 				var og = self.app.platform.sdk.remote.storage[url];	
-				var meta = self.app.platform.parseUrl(url);			
+				var meta = self.app.platform.parseUrl(url);		
+
+		
+				
 
 				var rndr = function(){
 
@@ -3310,10 +3313,13 @@ var lenta = (function(){
 					var meta = self.app.platform.parseUrl(url);
 					var og = self.app.platform.sdk.remote.storage[url];
 
+
 					if(
 						url && !og && 
+
 						!(meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube') && 
-						!(self.app.platform.sdk.usersettings.meta.preview && self.app.platform.sdk.usersettings.meta.preview.value)
+
+						!self.app.platform.sdk.usersettings.meta.preview.value
 					){
 
 						self.app.platform.sdk.remote.get(url, function(og){

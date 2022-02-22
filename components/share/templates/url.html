@@ -12,7 +12,7 @@
 	%>
 		<div class="videoWrapper fullscreenActive <%- (aspectRatio < 1.25) && (aspectRatio >= 0.9) ? 'squareVideo' : ''%> <%- (aspectRatio < 0.9) && (aspectRatio != 0) ? 'verticalVideo' : ''%>" pid="<%- makeid() %>">
 
-			<% if(meta.type == 'youtube') {%>
+			<% if(meta.type == 'youtube' && window.cordova) {%>
 
 				<div class="js-player-dummy">
 					<div class="jsPlayerLoading">
@@ -156,7 +156,7 @@
 
 	<% } else { %> 
 
-		<% if(og && !_.isEmpty(og)) {%>
+		<% if(og && !_.isEmpty(og) && !app.platform.sdk.usersettings.meta.preview.value) {%>
 
 			<div class="urlhtmlcontent">
 				<div class="ogtable table">
