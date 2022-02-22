@@ -24230,9 +24230,9 @@ Platform = function (app, listofnodes) {
 
             message.el.on('click', function(){
 
-                if (isTablet()){
+                if (platform.app.mobileview){
 
-                    self.nav.api.go({
+                    platform.app.nav.api.go({
                         open : true,
                         href : 'notifications',
                         inWnd : true,
