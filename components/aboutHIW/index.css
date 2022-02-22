@@ -1223,9 +1223,6 @@
     background: url(src/bastyon-youtube-main1.jpg) no-repeat;
     background-size: cover;
   }
-  #aboutHIW .main-board:first-child .main-wrapper .main-board__left-block h1 {
-    color: #000;
-  }
   #aboutHIW .open {
     background-color: #fbf0c3;
   }
