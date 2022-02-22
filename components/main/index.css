@@ -534,6 +534,9 @@ html.testpocketnet #main.testpocketnetbg {
 html.mobileview #main .lentacell .cnt {
   max-width: none;
 }
+html.mobileview #main .bgCaption {
+  display: none;
+}
 @media only screen and (max-width: 1280px) {
   #main .addbutton {
     display: none!important;
