@@ -966,17 +966,9 @@
     font-size: 0.9em;
   }
 }
-html.mobileview #lenta .jsPlayerLoading,
-html.mobileview #lenta .video-js {
-  max-height: 80vh;
-}
 html.mobileview #lenta .share .jsPlayerLoading,
 html.mobileview #lenta .share .video-js {
   max-height: 80vh;
-}
-html.mobileview #lenta .share.fullScreenVideo .jsPlayerLoading,
-html.mobileview #lenta .share.fullScreenVideo .video-js {
-  max-height: none;
 }
 html.mobileview #lenta .fullScreenVideo {
   will-change: transform;

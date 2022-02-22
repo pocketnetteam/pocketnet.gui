@@ -1217,7 +1217,7 @@ var main = (function(){
 				el.upbackbutton = el.c.find('.upbackbuttonwrapper')
 				el.addbutton = el.c.find('.addbutton')
 				el.slwork = el.c.find('.maincntwrapper >div.work')
-				el.topvideos = el.c.find('.topvideosWrapper')
+				el.topvideos = el.c.find('.topvideosWrapper .wrpcn')
 				el.menu = el.c.find('.menuwrapper')
 
 				//self.app.el.footer.addClass('workstation')

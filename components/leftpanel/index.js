@@ -258,7 +258,7 @@ var leftpanel = (function(){
 				renders.menu()
 				renders.tags()
 				renders.cats()
-				renders.best()
+				//renders.best()
 
 
 			},

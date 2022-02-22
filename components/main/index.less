@@ -307,6 +307,10 @@
 	.lentacell{
 		margin-right : 256px;
 		margin-left : 242px;
+		
+	}
+
+	.lentacell{
 		padding-top : 10px;
 		min-height: 3000px;
 		padding-bottom : 1000px;
@@ -711,6 +715,25 @@ html.mobileview{
 		}
 
 	}
+
+	.leftpanelcell{
+		width: 202px;
+	}
+
+	.leftpanelsvicell{
+		width: 202px;
+	}
+
+	.mainpanelsvicell,
+	.mainpanelcell{
+		width: 236px;
+	}
+
+	.lentacell{
+		margin-right : 236px;
+		margin-left : 202px;
+		
+	}
 }
 }
 
@@ -734,8 +757,14 @@ html.mobileview{
 
 	
 	#main{
-
 		
+		.menuwrapper .panelitems,
+		.topvideosWrapper .wrpcn,
+		.lentacell .lentaWrapper{
+			max-width: 640px;
+			margin : 0 auto;
+			position: relative;
+		}
 
 		.menuwrapper{
 			background: rgb(var(--background-total-theme));

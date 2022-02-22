@@ -144,6 +144,7 @@
 }
 body {
   overscroll-behavior: contain;
+  /* scroll-snap-type: y proximity;*/
 }
 html {
   font-size: 15px;

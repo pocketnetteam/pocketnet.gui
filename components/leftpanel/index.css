@@ -15,6 +15,10 @@
 #leftpanel > div .wrp {
   padding-bottom: 10px;
 }
+#leftpanel .menu {
+  padding-bottom: 1em;
+  border-bottom: 1px solid rgba(var(--color-medium-theme), 0.5);
+}
 #leftpanel .menu .menupanel .tabs .tab {
   position: relative;
   padding-top: 0.5em;

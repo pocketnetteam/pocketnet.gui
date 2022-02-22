@@ -247,6 +247,8 @@
 #main .lentacell {
   margin-right: 256px;
   margin-left: 242px;
+}
+#main .lentacell {
   padding-top: 10px;
   min-height: 3000px;
   padding-bottom: 1000px;
@@ -544,6 +546,20 @@ html.mobileview #main .bgCaption {
   #main .addbutton.active {
     display: none!important;
   }
+  #main .leftpanelcell {
+    width: 202px;
+  }
+  #main .leftpanelsvicell {
+    width: 202px;
+  }
+  #main .mainpanelsvicell,
+  #main .mainpanelcell {
+    width: 236px;
+  }
+  #main .lentacell {
+    margin-right: 236px;
+    margin-left: 202px;
+  }
 }
 @media only screen and (max-width: 1024px) {
   #main:not(.videomain) .mainpanelcell {
@@ -555,6 +571,13 @@ html.mobileview #main .bgCaption {
 }
 /*t*/
 @media only screen and (max-width: 768px) {
+  #main .menuwrapper .panelitems,
+  #main .topvideosWrapper .wrpcn,
+  #main .lentacell .lentaWrapper {
+    max-width: 640px;
+    margin: 0 auto;
+    position: relative;
+  }
   #main .menuwrapper {
     background: rgb(var(--background-total-theme));
     display: block;

@@ -216,6 +216,8 @@
         flex-grow: 2;
         font-weight: 100;
         padding: 12px 16px;
+        display: flex;
+        align-items: center;    
 
         .label{
             font-weight: 700;
@@ -299,19 +301,24 @@
             align-items: center;
             display: flex;
             flex-direction: row;
+            
 
             i{
-                font-size: .8em;
-                
+                font-size: .6em;
+               
             }
 
             .percent{
-                padding: 2px 8px;
-                border-radius: 8px;
-                font-size: 16px;
-                font-weight: 500;
+                padding: 0.75 * @rhythm @rhythm;
+                border-radius: 12px;
                 color: rgb(var(--text-on-bg-ac-color));
                 opacity: 0.5;
+                position: relative;
+                font-size: .9em;
+
+                span{
+                    font-size: 0.9em;
+                }
             }
 
             
