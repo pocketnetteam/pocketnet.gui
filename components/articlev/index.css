@@ -298,8 +298,10 @@
 #articlev #taginput .tgs .category .categoryInner > div.label {
   color: rgb(var(--text-on-bg-shadow-color));
 }
-#articlev #taginput .tgs :placeholder-shown {
-  color: rgb(var(--text-on-bg-shadow-color));
+#articlev #taginput .tgs .search ::placeholder {
+  font-size: 0.8em;
+  font-weight: 700;
+  color: rgba(var(--text-on-bg-shadow-color), 0.75);
 }
 #articlev #taginput .tgs .search input {
   padding-left: 0!important;

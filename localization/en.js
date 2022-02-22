@@ -1070,7 +1070,7 @@ ____loclib.anotherSiteCaption = "You follow an external link to a third-party si
 ____loclib.anotherSiteDisc = "We are not responsible for the content of the site and strongly recommend that you do not provide any of your personal data on third-party sites."
 
 ____loclib.Categories = "Categories"
-____loclib.addtagsCategories = "Add Categories/Tags"
+____loclib.addtagsCategories = "Categories and tags"
 ____loclib.addcategory = "Add Category"
 ____loclib.categoryname = "Category name"
 ____loclib.entercategoryname = "Enter category name"

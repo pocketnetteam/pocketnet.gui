@@ -379,10 +379,14 @@
             color : rgb(var(--text-on-bg-shadow-color));
         }
 
-        :placeholder-shown{
-            color :  rgb(var(--text-on-bg-shadow-color));
+        .search{
+            ::placeholder{
+                font-size: 0.8em;
+                font-weight: 700;
+                color :  rgba(var(--text-on-bg-shadow-color), 0.75);
+            }
         }
-
+        
 
         .search input{
             padding-left: 0!important;
