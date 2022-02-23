@@ -776,6 +776,7 @@ html.mobileview .wnd.articlewindow .widthcontainer {
   }
   #post.videomainpost .formeta {
     margin-left: 0;
+    margin-bottom: 1em;
     padding-left: 0;
   }
   #post.videomainpost.squareVideo .forurl .videoWrapper,

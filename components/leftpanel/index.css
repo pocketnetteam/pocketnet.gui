@@ -246,6 +246,9 @@
     padding: 0;
     color: rgb(var(--text-color));
   }
+  #leftpanel .catscnt {
+    margin-top: 1em;
+  }
   #leftpanel .wrpmobclass > div {
     padding: 0 1em;
     margin-bottom: 1em;
