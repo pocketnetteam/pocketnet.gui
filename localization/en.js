@@ -1070,7 +1070,7 @@ ____loclib.anotherSiteCaption = "You follow an external link to a third-party si
 ____loclib.anotherSiteDisc = "We are not responsible for the content of the site and strongly recommend that you do not provide any of your personal data on third-party sites."
 
 ____loclib.Categories = "Categories"
-____loclib.addtagsCategories = "Add Categories/Tags"
+____loclib.addtagsCategories = "Categories and tags"
 ____loclib.addcategory = "Add Category"
 ____loclib.categoryname = "Category name"
 ____loclib.entercategoryname = "Enter category name"
@@ -2020,7 +2020,8 @@ ____loclib.art_validatecontent = "Please add Content of Your Longread"
 ____loclib.art_nothingchange = "No changes"
 ____loclib.art_newarticle = "New Longread"
 ____loclib.art_myarticles = "My Longreads"
-____loclib.art_changecover = "Change Cover"
+____loclib.art_changecover = "Upload Cover"
+____loclib.art_removecover = "Remove Cover"
 ____loclib.art_publish = "Publish"
 ____loclib.art_editing = "Editing"
 ____loclib.art_draftsaved = "Draft saved"
@@ -2081,5 +2082,9 @@ ____loclib.max5acc = "You have reached a maximum of 5 accounts. No more can be a
 
 
 ____loclib.longreads = "Long Reads"
+____loclib.readarticle = "Read"
 
 ____loclib.filters = "Filters"
+____loclib.dataenteredincorrectly = "Data entered incorrectly"
+
+____loclib.lloadprevwithtags = "Refresh Feed"

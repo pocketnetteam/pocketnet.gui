@@ -147,6 +147,8 @@ __map =  {
 		{ c : 'lenta', n : 'groupshares' },
 		{ c : 'lenta', n : 'commentspreview' },
 		{ c : 'comments', n : 'index' },
+		{ c : 'comments', n : 'post' },
+		{ c : 'comments', n : 'list' },
 		{ c : 'lastcomments', n : 'lastcommentslist'},
 		{ c : 'author', n : 'preshell'},
 		{ c : 'author', n : 'authorcaption'},
@@ -521,18 +523,18 @@ __map =  {
 			add : insertingfunc,
 			
 			relations : [
-				{src : 'js/vendor/editor/editor.js',			   f : 'js'},
-				{src : 'js/vendor/editor/embed.js',			   f : 'js'},
-				{src : 'js/vendor/editor/carousel.js',			   f : 'js'},
-				{src : 'js/vendor/editor/paragraph.js',			   f : 'js'},
-				{src : 'js/vendor/editor/header.js',			   f : 'js'},
-				{src : 'js/vendor/editor/imageloader.js',			   f : 'js'},
-				{src : 'js/vendor/editor/delimiter.js',			   f : 'js'},
-				{src : 'js/vendor/editor/link.js',			   f : 'js'},
-				{src : 'js/vendor/editor/list.js',			   f : 'js'},
-				{src : 'js/vendor/editor/quote.js',			   f : 'js'},
-				{src : 'js/vendor/editor/warning.js',			   f : 'js'},
-				{src : 'js/vendor/editor/inlinecode.js',			   f : 'js'}
+				{src : 'js/vendor/editor/editor.js',			   f : 'js', require : "EditorJS"},
+				{src : 'js/vendor/editor/embed.js',			   f : 'js', require : "Embed"},
+				{src : 'js/vendor/editor/carousel.js',			   f : 'js', require : "Carousel"},
+				{src : 'js/vendor/editor/paragraph.js',			   f : 'js', require : "Paragraph"},
+				{src : 'js/vendor/editor/header.js',			   f : 'js', require : "Header"},
+				{src : 'js/vendor/editor/imageloader.js',			   f : 'js', require : "ImageTool"},
+				{src : 'js/vendor/editor/delimiter.js',			   f : 'js', require : "Delimiter"},
+				{src : 'js/vendor/editor/link.js',			   f : 'js', require : "LinkTool"},
+				{src : 'js/vendor/editor/list.js',			   f : 'js', require : "List"},
+				{src : 'js/vendor/editor/quote.js',			   f : 'js', require : "Quote"},
+				{src : 'js/vendor/editor/warning.js',			   f : 'js', require : "Warning"},
+				{src : 'js/vendor/editor/inlinecode.js',			   f : 'js', require : "InlineCode"}
 			],
 
 			electronDontOpen : true
@@ -621,7 +623,7 @@ __map =  {
 
 			relations : [
 				{src : 'js/vendor/chart.min.js',			   f : 'js', require : function(){
-					Chart = require('./js/vendor/Chart.js')
+					Chart = require('./js/vendor/chart.min.js')
 				}}
 			],
 

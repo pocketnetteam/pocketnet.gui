@@ -385,6 +385,7 @@
 		margin-bottom : 0;
 		padding-bottom: 0;
 
+	
 		
 		.adr{
 			max-width: 500px;
@@ -399,7 +400,8 @@
 			text-align: center;
 			opacity: 0.7;
 			cursor: pointer;
-			font-size: 0.9em;
+			font-size: 0.5em;
+			display: none;
 
 			&:hover{
 				opacity: 1;
@@ -730,6 +732,68 @@
 	}
 }
 
+html.mobileview{
+	#author{
+		.lentacell{
+			margin-right: 0;
+			margin-left: 0;
+		}
+
+		.bgCaption{
+			.adr{
+				max-width: none;
+				display: block;
+			}
+
+			.middotwrapper{
+				display: none;
+			}
+
+			
+		}
+
+		.leftpanelcell{
+			display: none;
+		}
+		
+		.authorlentawrappermain{
+			position: relative;
+	
+			.authorsearchicon{
+				display: none;
+			}
+	
+		}
+
+		.authorlentawrappermain{
+			
+			.authorsearchwrapper{
+				padding : 0 @rhythm;
+				.search{
+					.searchPanel{
+						display: table-cell;
+
+						.searchPanelWrapper>div[event=clear]{
+							display: block;
+						}
+					}
+					.searchInput{
+						.searchInputIcon{
+							.sminput{
+								background: transparent; 
+								padding-left: @rhythm;
+							}
+						}
+					}
+
+				}
+			}
+	
+			
+		}
+	}
+}
+
 @media only screen and (max-width: 1024px) {
 	#author{
 		.bgCaption{
@@ -744,9 +808,7 @@
 			
 		}
 
-		.leftpanelcell{
-			display: none;
-		}
+		
 		.lentacell{
 			margin-right: 44px;
 			margin-left: 0;
@@ -775,9 +837,7 @@
 			padding-bottom: 4 * @rhythm;
 			background: #051b48;
 
-			.changeaccount{
-				font-size: 0.5em;
-			}
+			
 			
 			.cwrapper{
 				display: block;
@@ -925,6 +985,16 @@
 				text-align: left!important;
 				padding-left: @rhythm;
 			}
+
+			.changeaccount{
+				display: block;
+			}
+		}
+
+		.bgCaption .infoWrapper,
+		.lentacell .cnt{
+			max-width: 640px;
+			margin : 0 auto;
 		}
 
 		.newsharewrapper{
@@ -943,51 +1013,12 @@
 
 	#author{
 
-		.lentacell{
-			margin-right: 0;
-		}
+		
 
 		.work.mwork{
 			width: 100%;
 		}
-
-		.authorlentawrappermain{
-			position: relative;
-	
-			.authorsearchicon{
-				display: none;
-			}
-	
-		}
-
-		.authorlentawrappermain{
-			
-	
-
-			.authorsearchwrapper{
-				padding : 0 @rhythm;
-				.search{
-					.searchPanel{
-						display: table-cell;
-
-						.searchPanelWrapper>div[event=clear]{
-							display: block;
-						}
-					}
-					.searchInput{
-						.searchInputIcon{
-							.sminput{
-								background: transparent; 
-								padding-left: @rhythm;
-							}
-						}
-					}
-
-				}
-			}
-	
-			
-		}
+		
 
 		.lentaWrapper{
 			.authorinfo{
@@ -1010,6 +1041,17 @@
 					
 				}
 			}
+		}
+
+		.bgCaption{
+			.caption{
+				.subscribe{
+					font-size: 1.4em;
+					border-bottom: 1px solid #ff4800;
+					opacity: 1;
+				}
+			}
+			
 		}
 
 		.bgCaption .cwrapper>div {

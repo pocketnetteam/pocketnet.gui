@@ -71,7 +71,6 @@
 #post .postWrapper {
   margin: 0 auto;
   max-width: 930px;
-  background: rgb(var(--background-total-theme));
   opacity: 0;
   /*border-radius: 6px;*/
   -moz-transition: opacity 0.3s;
@@ -83,6 +82,8 @@
   opacity: 1;
 }
 #post .share {
+  background: rgb(var(--background-total-theme));
+  border-radius: 6px;
   /*border-radius: 6px;*/
 }
 #post .share .work {
@@ -230,8 +231,7 @@
   padding-left: 0.5em;
   padding-right: 0;
 }
-#post.videomainpost .shareTable .authorTable > div.datetime {
-  padding-left: 1em;
+#post.videomainpost .shareTable .authorTable > div .datetime {
   opacity: 0.5;
 }
 #post.videomainpost .shareTable .metatable > div.metapanel .metapanelitem {
@@ -282,6 +282,9 @@
 }
 #post .sharearticle.ready {
   opacity: 1;
+}
+#post .sharearticle .sharepanel {
+  padding-right: 0.5em;
 }
 #post .sharearticle .shareBgCaption .author,
 #post .sharearticle .articleend .author {
@@ -517,6 +520,10 @@
 #post .sharearticle .articlecontent .forcomments {
   margin-top: 2em;
 }
+#post .sharearticle .articlecontent .article {
+  max-width: 640px;
+  margin: 0 auto;
+}
 #post .sharearticle .removeDescription {
   display: none;
   padding: 1.5em;
@@ -547,6 +554,13 @@
   margin: 0 auto;
 }
 html.mobileview #post .videoWrapper {
+  max-width: none;
+}
+html.mobileview #post .sharearticle .articlecontent {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent {
   max-width: none;
 }
 @media only screen and (max-width: 768px) {
@@ -660,6 +674,10 @@ html.mobileview #post .videoWrapper {
     padding-left: 0.5em;
     padding-right: 0.5em;
   }
+  #post .sharearticle .articlecontent .article {
+    max-width: 640px;
+    margin: 0 auto;
+  }
   #post .sharearticle .articlecontent .article_quote,
   #post .sharearticle .articlecontent .article_link_custom {
     width: 96%;
@@ -724,6 +742,10 @@ html.mobileview .wnd.postwindow .widthcontainer {
   width: 100%;
   max-width: none;
 }
+html.mobileview .wnd.articlewindow .widthcontainer {
+  width: 96%;
+  max-width: 768px;
+}
 @media only screen and (max-width: 768px) {
   #post {
     border-top: 1px solid rgba(var(--neutral-grad-1), 0.3);
@@ -754,6 +776,7 @@ html.mobileview .wnd.postwindow .widthcontainer {
   }
   #post.videomainpost .formeta {
     margin-left: 0;
+    margin-bottom: 1em;
     padding-left: 0;
   }
   #post.videomainpost.squareVideo .forurl .videoWrapper,

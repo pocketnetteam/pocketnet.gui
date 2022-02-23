@@ -22,6 +22,16 @@
         width: 100%;
     }
 
+    .sbtnxs,
+    .adr{
+		max-width: 200px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		vertical-align: middle;
+		display: inline-block;
+		white-space: nowrap;
+	}
+
     .statswrapperExtended{
         display: flex;
         padding : @rhythm 0;
@@ -556,15 +566,25 @@
         height: auto;
         background: #000000;
         position: relative;
+        
 
-        .jsPlayerLoadingD{
-            width: 100%;
-            height: 100%;
-
+        .preloader5{
             position: absolute;
             left: 50%;
             top: 50%;
-            transform: translate(-50%, -50%);
+            margin-left: -15px;
+            margin-top: -3px;
+            width: 30px;
+            height: 15px;
+            contain: strict;
+        }
+
+        .jsPlayerLoadingD{
+            position: absolute;
+            left : 0;
+            top : 0;
+            bottom : 0;
+            right: 0;
 
             >div{
                 vertical-align: middle;
@@ -1092,23 +1112,6 @@
                 }
             }
 
-            &.pkoin{
-                display: flex;
-                align-items: center;
-                background: rgb(var(--color-bg-ac-bright));
-                color: rgb(var(--text-on-bg-ac-color));
-                border-radius: 8px;
-                padding: 4px 8px;
-                cursor: pointer;
-
-                img{
-                    width: 2 * @rhythm;
-                }
-
-                span{
-                    margin-left: @rhythm;
-                }
-            }
 
             &.sharesocial{
 
@@ -1507,6 +1510,12 @@
         cursor: default;
         padding-bottom : 0;
         border-radius: 0;
+
+        .jsPlayerLoading{
+            .preloader5{
+                display: none;
+            }
+        }
 
         .showMore{
           

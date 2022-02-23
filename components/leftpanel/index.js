@@ -22,6 +22,12 @@ var leftpanel = (function(){
 
 				if(v > 99) v = '99'
 
+				var s = self.app.platform.sdk.categories.gettagsexcluded().length + self.app.platform.sdk.categories.gettags().length
+
+				if (s && v && k != 'sub'){
+					v = '<i class="fas fa-circle"></i>'
+				}
+
 				_el.html(v)
 
 				if(v) _el.addClass('hasunseen')
@@ -258,7 +264,7 @@ var leftpanel = (function(){
 				renders.menu()
 				renders.tags()
 				renders.cats()
-				renders.best()
+				//renders.best()
 
 
 			},

@@ -15,10 +15,15 @@
 #leftpanel > div .wrp {
   padding-bottom: 10px;
 }
+#leftpanel .menu {
+  padding-bottom: 1em;
+  border-bottom: 1px solid rgba(var(--color-medium-theme), 0.5);
+}
 #leftpanel .menu .menupanel .tabs .tab {
   position: relative;
   padding-top: 0.5em;
   padding-bottom: 0.5em;
+  white-space: nowrap;
   line-height: 20px;
 }
 #leftpanel .menu .menupanel .tabs .tab .pcenterLabel {
@@ -40,8 +45,10 @@
 #leftpanel .menu .menupanel .tabs .tab .pcenterLabel .text {
   font-size: 0.9em;
   font-weight: 500;
+  vertical-align: middle;
 }
 #leftpanel .menu .menupanel .tabs .tab .pcenterLabel i {
+  vertical-align: middle;
   width: 55px;
   text-align: center;
 }
@@ -51,11 +58,17 @@
   height: 20px;
   font-size: 0.7em;
   line-height: 20px;
+  vertical-align: middle;
   text-align: center;
   border-radius: 10px;
   background: rgb(var(--neutral-grad-1));
   color: rgb(var(--color-txt-ac));
   margin-left: 1em;
+}
+#leftpanel .menu .menupanel .tabs .tab .pcenterLabel .lentaunseen i {
+  width: 100%;
+  font-size: 0.5em;
+  vertical-align: middle;
 }
 #leftpanel .menu .menupanel .tabs .tab .pcenterLabel .lentaunseen.hasunseen {
   display: inline-block;
@@ -117,7 +130,7 @@
   padding: 1em 0;
 }
 #leftpanel .subtop .sub {
-  padding: 1em 0;
+  padding: 1em;
   margin-top: 2em;
   margin-bottom: 2em;
   border-top: 1px solid rgba(var(--color-medium-theme), 0.5);
@@ -166,8 +179,10 @@
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
-#leftpanel .rightbottomnav a:hover {
-  color: rgb(var(--color-txt-ac));
+@media (pointer: fine) {
+  #leftpanel .rightbottomnav a:hover {
+    color: rgb(var(--color-txt-ac));
+  }
 }
 #leftpanel .rightbottomnav .rightbottomlinks {
   padding-top: 0.5em;
@@ -208,7 +223,10 @@
 }
 #leftpanel .vc_valuecustom .vc_selectInput {
   background: rgb(var(--background-main));
+  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
+  border-radius: 6px;
   max-height: 500px;
+  padding: 0.5em;
 }
 #leftpanel .vc_valuecustom .vc_selectInput .vc_value {
   padding-left: 0;
@@ -218,9 +236,11 @@
   transition: 0.3s;
   font-size: 0.8em;
 }
-#leftpanel .vc_valuecustom .vc_selectInput .vc_value:hover {
-  color: rgb(var(--color-txt-ac));
-  background: transparent;
+@media (pointer: fine) {
+  #leftpanel .vc_valuecustom .vc_selectInput .vc_value:hover {
+    color: rgb(var(--color-txt-ac));
+    background: transparent;
+  }
 }
 #leftpanel .vc_valuecustom input[disabled] {
   cursor: pointer;
@@ -234,6 +254,9 @@
   #leftpanel {
     padding: 0;
     color: rgb(var(--text-color));
+  }
+  #leftpanel .catscnt {
+    margin-top: 1em;
   }
   #leftpanel .wrpmobclass > div {
     padding: 0 1em;
@@ -274,9 +297,6 @@
   }
   #leftpanel .menu .menupanel .tabs .tab .pcenterLabel .lentaunseen {
     font-size: 0.7em;
-  }
-  #leftpanel .vc_valuecustom .vc_selectInput {
-    background: transparent;
   }
   #leftpanel .menu {
     display: none;

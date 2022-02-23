@@ -12,13 +12,15 @@
 	}
 
 	.menu{
+		padding-bottom: 2 * @rhythm;
+		border-bottom: 1px solid rgba(var(--color-medium-theme), 0.5);
 		.menupanel{
 			.tabs{
 				.tab{
 					position: relative;
 					padding-top: @rhythm;
 					padding-bottom: @rhythm;
-
+					white-space: nowrap;
 					line-height: 20px;
 					
 					.pcenterLabel{
@@ -44,9 +46,11 @@
 						.text{
 							font-size: 0.9em;
 							font-weight: 500;
+							vertical-align: middle;
 						}
 
 						i{
+							vertical-align: middle;
 							width: 55px;
 							text-align: center;
 						}
@@ -57,11 +61,18 @@
 							height: 20px;
 							font-size: 0.7em;
 							line-height: 20px;
+							vertical-align: middle;
 							text-align: center;
 							border-radius: 10px;
 							background: rgb(var(--neutral-grad-1));
 							color: rgb(var(--color-txt-ac));
 							margin-left: 2 * @rhythm;
+
+							i{
+								width: 100%;
+								font-size: 0.5em;
+								vertical-align: middle;
+							}
 
 							&.hasunseen{
 								display: inline-block;
@@ -171,7 +182,7 @@
 	.subtop{
 
 		.sub{
-			padding : 2 * @rhythm 0;
+			padding : 2 * @rhythm ;
 			margin-top : 4 * @rhythm;
 			margin-bottom: 4 * @rhythm;
 			border-top: 1px solid rgba(var(--color-medium-theme), 0.5);
@@ -241,9 +252,14 @@
 
 		a{
 			.transition(0.3s);
+			
+		}
 
-			&:hover{
-				color : rgb(var(--color-txt-ac));
+		@media (pointer:fine) {
+			a{
+				&:hover{
+					color : rgb(var(--color-txt-ac));
+				}
 			}
 		}
 
@@ -293,21 +309,26 @@
 			border: 0;
 		}
 
-		
-
 		.vc_selectInput{
 			background: rgb(var(--background-main));
-			
+			.shadowSmaller();
+			border-radius: 6px;
 			max-height: 500px;
+			padding : @rhythm;
 
 			.vc_value{
 				padding-left: 0;
 				.transition(0.3s);
 				font-size: 0.8em;
+			}
 
-				&:hover{
-					color : rgb(var(--color-txt-ac));
-					background: transparent;
+			@media (pointer:fine) {
+				.vc_value{
+					
+					&:hover{
+						color : rgb(var(--color-txt-ac));
+						background: transparent;
+					}
 				}
 			}
 		}
@@ -326,7 +347,12 @@
 /*t*/ @media only screen and (max-width: 768px){
 	#leftpanel{
 		padding : 0;
+		
 		color : rgb(var(--text-color));
+
+		.catscnt{
+			margin-top: 2 * @rhythm;
+		}
 
 		.wrpmobclass>div{
 			padding : 0 2 * @rhythm;
@@ -345,6 +371,8 @@
 			&.rightbottomlinks{
 				background: transparent;
 			}
+
+		
 		}
 
 		.best{
@@ -402,12 +430,7 @@
 			}
 		}
 
-		.vc_valuecustom{
 	
-			.vc_selectInput{
-				background : transparent;
-			}
-		}
 
 		.menu{
 			display: none;

@@ -279,7 +279,8 @@
   text-align: center;
   opacity: 0.7;
   cursor: pointer;
-  font-size: 0.9em;
+  font-size: 0.5em;
+  display: none;
 }
 #author .bgCaption .changeaccount:hover {
   opacity: 1;
@@ -507,15 +508,45 @@
 #author.preshell .bgCaption .cellforimage .usericon {
   background: rgba(var(--background-secondary-theme), 0.3);
 }
+html.mobileview #author .lentacell {
+  margin-right: 0;
+  margin-left: 0;
+}
+html.mobileview #author .bgCaption .adr {
+  max-width: none;
+  display: block;
+}
+html.mobileview #author .bgCaption .middotwrapper {
+  display: none;
+}
+html.mobileview #author .leftpanelcell {
+  display: none;
+}
+html.mobileview #author .authorlentawrappermain {
+  position: relative;
+}
+html.mobileview #author .authorlentawrappermain .authorsearchicon {
+  display: none;
+}
+html.mobileview #author .authorlentawrappermain .authorsearchwrapper {
+  padding: 0 0.5em;
+}
+html.mobileview #author .authorlentawrappermain .authorsearchwrapper .search .searchPanel {
+  display: table-cell;
+}
+html.mobileview #author .authorlentawrappermain .authorsearchwrapper .search .searchPanel .searchPanelWrapper > div[event=clear] {
+  display: block;
+}
+html.mobileview #author .authorlentawrappermain .authorsearchwrapper .search .searchInput .searchInputIcon .sminput {
+  background: transparent;
+  padding-left: 0.5em;
+}
 @media only screen and (max-width: 1024px) {
   #author .bgCaption .caption {
     justify-content: center;
   }
   #author .mobileinfo {
     display: block;
-  }
-  #author .leftpanelcell {
-    display: none;
   }
   #author .lentacell {
     margin-right: 44px;
@@ -540,9 +571,6 @@
     height: auto;
     padding-bottom: 2em;
     background: #051b48;
-  }
-  #author .bgCaption .changeaccount {
-    font-size: 0.5em;
   }
   #author .bgCaption .cwrapper {
     display: block;
@@ -647,36 +675,22 @@
     text-align: left!important;
     padding-left: 0.5em;
   }
+  #author .bgCaption .changeaccount {
+    display: block;
+  }
+  #author .bgCaption .infoWrapper,
+  #author .lentacell .cnt {
+    max-width: 640px;
+    margin: 0 auto;
+  }
   #author .newsharewrapper {
     display: none;
   }
   html.allcontent #author .bgCaption {
     padding-top: 44px;
   }
-  #author .lentacell {
-    margin-right: 0;
-  }
   #author .work.mwork {
     width: 100%;
-  }
-  #author .authorlentawrappermain {
-    position: relative;
-  }
-  #author .authorlentawrappermain .authorsearchicon {
-    display: none;
-  }
-  #author .authorlentawrappermain .authorsearchwrapper {
-    padding: 0 0.5em;
-  }
-  #author .authorlentawrappermain .authorsearchwrapper .search .searchPanel {
-    display: table-cell;
-  }
-  #author .authorlentawrappermain .authorsearchwrapper .search .searchPanel .searchPanelWrapper > div[event=clear] {
-    display: block;
-  }
-  #author .authorlentawrappermain .authorsearchwrapper .search .searchInput .searchInputIcon .sminput {
-    background: transparent;
-    padding-left: 0.5em;
   }
   #author .lentaWrapper .authorinfo {
     padding: 1em;
@@ -688,6 +702,11 @@
   #author .subscribewrapperphones .subscribebuttons button {
     padding-bottom: 0.5em;
     padding-top: 0.5em;
+  }
+  #author .bgCaption .caption .subscribe {
+    font-size: 1.4em;
+    border-bottom: 1px solid #ff4800;
+    opacity: 1;
   }
   #author .bgCaption .cwrapper > div {
     vertical-align: top;

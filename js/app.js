@@ -12,32 +12,22 @@ if(typeof _Electron != 'undefined' && _Electron){
 
 	emojione = require('emojione')
 
-	var Isotope = require('isotope-layout'); require('isotope-packery')
+	var Isotope = require('isotope-layout'); require('isotope-packery');
 
 	var jquerytextcomplete = require('jquery-textcomplete')
 
 	animateNumber = require('./js/vendor/jquery.animate-number.js')
 	touchSwipe = require('./js/vendor/jquery.touchSwipe.js')
-	
 
-	MessageStorage = require('./js/vendor/rtc/db.js')
-	RTCMultiConnection = require('./js/vendor/rtc/RTCMultiConnection.js')
 
-	io = require('./js/vendor/rtc/socket.io.js')
-
-	MediumEditor = require('medium-editor').MediumEditor
 	jQueryBridget = require('jquery-bridget');
 	jQueryBridget( 'isotope', Isotope, $ );
 	jQueryBridget( 'textcomplete', jquerytextcomplete, $ );
 
 	Mark = require('./js/vendor/jquery.mark.js');
 
-	emojionearea = require('./js/vendor/emojionearea.js')
+	EmojioneArea = require('./js/vendor/emojionearea.js')
 	filterXss = require('./js/vendor/xss.min.js')
-
-	
-	
-
 
 }
 
@@ -55,8 +45,7 @@ Application = function(p)
 
 	var self = this;
 	var realtimeInterval = null;
-	var baseorientation = 'portrait'
-
+	var baseorientation = typeof getbaseorientation != undefined ? getbaseorientation() : 'portrait'
 
 	self._meta = {
 		Pocketnet : {
@@ -260,7 +249,10 @@ Application = function(p)
 	
 
 	var istouchstyle = function(){
-		self.mobileview = (self.el.html.hasClass('mobile') || self.el.html.hasClass('tablet') || window.cordova || self.width < 768)
+
+		let isIpad = /Macintosh/i.test(navigator.userAgent) && navigator.maxTouchPoints && navigator.maxTouchPoints > 1;
+
+		self.mobileview = (isIpad || self.el.html.hasClass('mobile') || self.el.html.hasClass('ipad') || self.el.html.hasClass('tablet') || window.cordova || self.width < 768)
 
 		if(self.mobileview){
 			self.el.html.addClass('mobileview').removeClass('wsview')
@@ -447,7 +439,7 @@ Application = function(p)
 
 	self.curation = function(){
 
-		if(typeof isios != 'undefined' && isios() && window.cordova) return true
+		if(window.cordova && typeof isios != 'undefined' && isios()) return true
 		return false
 	}
 
@@ -1120,18 +1112,17 @@ Application = function(p)
 
 				optimizeTimeout = null
 			
-			//window.requestAnimationFrame(function(){
+			/*window.requestAnimationFrame(function(){
 				self.el.content.css('width', 'auto')
 				self.el.content.css('height', 'auto')
-				//self.el.content.removeClass('optimized')
-			//})
+			})*/
 		},
 
 		optimize : function(){
 
 			if(isios()) return
 
-			if (optimizeTimeout) clearTimeout(optimizeTimeout)
+			/*if (optimizeTimeout) clearTimeout(optimizeTimeout)
 
 				optimizeTimeout = setTimeout(function(){
 					var w = self.el.content.width()
@@ -1140,9 +1131,8 @@ Application = function(p)
 					window.requestAnimationFrame(function(){
 						self.el.content.width(w + 'px')
 						self.el.content.height(h + 'px')
-						//self.el.content.addClass('optimized')
 					})
-				}, 300)
+				}, 300)*/
 
 			
 		},
@@ -1244,7 +1234,9 @@ Application = function(p)
 
 			blockScroll = true
 
-			self.el.html.addClass('nooverflow')
+			self.el.html.css('overflow', 'hidden')
+
+			//self.el.html.addClass('nooverflow')
 
 			if (window.Keyboard && window.Keyboard.disableScroll){
 				window.Keyboard.disableScroll(true)
@@ -1267,8 +1259,10 @@ Application = function(p)
 			}
 
 			if(!self.scrollRemoved){
+				self.el.html.css('overflow', '')
+
 				///
-				self.el.html.removeClass('nooverflow')
+				//self.el.html.removeClass('nooverflow')
 				///
 
 				if (window.Keyboard && window.Keyboard.disableScroll){
@@ -1292,7 +1286,6 @@ Application = function(p)
 		self.width = self.el.window.width()
 
 		istouchstyle()
-
 
 		var showPanel = '1'
 
@@ -1855,7 +1848,8 @@ Application = function(p)
 
 				var colors = {
 					white : "#FFF",
-					black : "#030F1B"
+					black : "#030F1B",
+					gray : '#1e1d1a'
 				}
 
 				if (window.StatusBar) {
@@ -1864,7 +1858,7 @@ Application = function(p)
 				}
 
 				if (window.NavigationBar)
-					window.NavigationBar.backgroundColorByHexString(colors[self.platform.sdk.theme.current] || "#FFF", self.platform.sdk.theme.current == 'black');
+					window.NavigationBar.backgroundColorByHexString(colors[self.platform.sdk.theme.current] || "#FFF", self.platform.sdk.theme.current != 'white');
 			},
 
 			gallerybackground : function(){

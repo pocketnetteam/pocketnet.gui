@@ -715,7 +715,9 @@ var lenta = (function(){
 							
 						},
 
-						useP2P : self.app.platform.sdk.usersettings.meta.videop2p.value 
+						useP2P : self.app.platform.sdk.usersettings.meta.videop2p.value,
+						enableHotkeys : true
+						
 					}
 
 					if(share.settings.v == 'a'){
@@ -728,7 +730,6 @@ var lenta = (function(){
 					}	
 
 					s.logoType = self.app.meta.fullname
-
 					PlyrEx(pels[0], s, callback, readyCallback)
 
 				}
@@ -757,7 +758,9 @@ var lenta = (function(){
 								openedPost = null
 								essenserenderclbk()
 							},
-							video
+							video,
+
+							autoplay : video
 						}
 
 						var c = function(e, es){		
@@ -1140,6 +1143,9 @@ var lenta = (function(){
 						if(!player.p.playing && !auto){
 							player.p.play()
 						}
+
+
+						if (player.p.enableHotKeys) player.p.enableHotKeys()
 						
 					}
 
@@ -1190,6 +1196,10 @@ var lenta = (function(){
 
 				if ((isMobile() || window.cordova || isTablet() || _el.find('.hiddenurl').length) && player && player.p.playing){
 					player.p.pause()
+				}
+
+				if(player){
+					if (player.p.disableHotKeys) player.p.disableHotKeys()
 				}
 
 				//player.p.muted = true;
@@ -1849,7 +1859,6 @@ var lenta = (function(){
 							var value = 3500
 
 							offsetTop = window.cordova ? (_el.data('offsetTop') || _el.offset().top) : _el.offset().top
-							//_el.data('offsetTop', offsetTop)
 
 							if(self.app.mobileview) value = 1500
 
@@ -2398,6 +2407,21 @@ var lenta = (function(){
 		}	
 
 		var renders = {
+
+			loadprev : function(){
+
+				var txt = self.app.localization.e('lloadprev')
+
+				var s = self.app.platform.sdk.categories.gettagsexcluded().length + self.app.platform.sdk.categories.gettags().length
+
+				if (s && recommended != 'sub'){
+					txt = self.app.localization.e('lloadprevwithtags')
+				}
+
+				el.c.find('.loadprev button span').html(txt)
+
+			},
+
 			recommendedusers : function(){
 				
 
@@ -2599,11 +2623,8 @@ var lenta = (function(){
 						renders.urlContent(share, function(){
 
 							if(essenseData.searchValue){
-
 								p.el.find('.canmark').mark(essenseData.searchValue);
-
 							}
-							
 
 							if(!video)
 								actions.initVideo(p.el, share, null, !essenseData.openapi)
@@ -3032,158 +3053,156 @@ var lenta = (function(){
 
 				}
 
-				window.requestAnimationFrame(function(){
 
-					var ch = 0
+				var ch = 0
 
-					_el.imagesLoadedPN({ imageAttr: true }, function(image) {
+				_el.imagesLoadedPN({ imageAttr: true }, function(image) {
 
-						if(s.settings.v != "a"){
+					if(s.settings.v != "a"){
 
-							if(isMobile() && image.images.length > 1){
+						if((isMobile()|| essenseData.openapi) && image.images.length > 1 ){
 
-								var aspectRatio = 0
-								
-								_.each(image.images, function(img){
-									var _img = img.img;
+							var aspectRatio = 0
+							
+							_.each(image.images, function(img){
+								var _img = img.img;
 
-									var _aspectRatio = _img.naturalHeight / _img.naturalWidth
+								var _aspectRatio = _img.naturalHeight / _img.naturalWidth
 
-									if(_aspectRatio > aspectRatio) aspectRatio = _aspectRatio
-								})
+								if(_aspectRatio > aspectRatio) aspectRatio = _aspectRatio
+							})
 
-								if (aspectRatio){
+							if (aspectRatio){
 
-									if(aspectRatio > 1.66) aspectRatio = 1.66
+								if(aspectRatio > 1.66) aspectRatio = 1.66
 
-									ch = Math.min(400, isMobile() ? self.app.width : images.width() ) * aspectRatio
+								ch = Math.min(400, isMobile() ? self.app.width : images.width() ) * aspectRatio
 
-									sel.find('.imagesWrapper').height(ch)
+								sel.find('.imagesWrapper').height(ch)
+							}
+							
+						}
+						else{
+
+							var imageswidth = images.width()
+
+							_.each(image.images, function(img, n){
+
+								var _img = img.img;
+								var el = $(image.elements[n]).closest('.imagesWrapper');
+
+								var ac = '';
+
+								/*var _w = imagesWrapperWidth;
+								var _h = imagesWrapperHeight*/
+
+								var _w = el.width();
+								var _h = el.height()
+
+								if(_img.width > _img.height && (/*!self.app.mobileview && */!essenseData.openapi || image.images.length == 1)){
+									ac = 'w2'
+
+									var w = _w * (_img.width / _img.height);
+
+									if (w > imageswidth){
+										w = imageswidth
+
+										h = w * ( _img.height / _img.width) 
+
+										el.height(h);
+									}
+
+									el.width(w);
+								}
+
+								if(_img.height > _img.width || (/*self.app.mobileview || */essenseData.openapi|| image.images.length == 1)){
+									ac = 'h2'
+
+									el.height(_w * (_img.height / _img.width))
+								}
+
+								if(ac){
+									el.addClass(ac)
 								}
 								
-							}
-							else{
-
-								var imageswidth = images.width()
-
-								_.each(image.images, function(img, n){
-
-									var _img = img.img;
-									var el = $(image.elements[n]).closest('.imagesWrapper');
-
-									var ac = '';
-
-									/*var _w = imagesWrapperWidth;
-									var _h = imagesWrapperHeight*/
-
-									var _w = el.width();
-									var _h = el.height()
-
-									if(_img.width > _img.height && (/*!self.app.mobileview &&*/ !essenseData.openapi)){
-										ac = 'w2'
-
-										var w = _w * (_img.width / _img.height);
-
-										if (w > imageswidth){
-											w = imageswidth
-
-											h = w * ( _img.height / _img.width) 
-
-											el.height(h);
-										}
-
-										el.width(w);
-									}
-
-									if(_img.height > _img.width || (/*self.app.mobileview || */essenseData.openapi)){
-										ac = 'h2'
-
-										el.height(_w * (_img.height / _img.width))
-									}
-
-									if(ac){
-										el.addClass(ac)
-									}
-									
-								})
-
-
-							}
+							})
 
 
 						}
 
-						var isclbk = function(){
 
-							images.addClass('active')
+					}
 
-							_el.addClass('active')
+					var isclbk = function(){
 
-							essenserenderclbk()
+						images.addClass('active')
 
-							images = null,
-							_el = null,
-							sel = null;
+						_el.addClass('active')
 
-							if (clbk)
-								clbk()
-						}
+						essenserenderclbk()
 
-						if(s.settings.v != 'a' && image.images.length > 1){
+						images = null,
+						_el = null,
+						sel = null;
 
-							var gutter = self.app.width <= 768 ? 0 : 5;
+						if (clbk)
+							clbk()
+					}
 
-							if (isMobile() || essenseData.openapi) {
+					if(s.settings.v != 'a' && image.images.length > 1){
 
-								if(carousels[s.txid]) carousels[s.txid].owlCarousel('destroy')
+						var gutter = self.app.width <= 768 ? 0 : 5;
 
-								carousels[s.txid] = sel.find('.imagesContainer').height(ch + 50).owlCarousel({
-									items: 1,
-									dots: true,
-									nav: !isMobile(),
-									navText: [
-										'<i class="fas fa-chevron-circle-left"></i> ',
-										'<i class="fas fa-chevron-circle-right"></i>'
-									]
-								  
-								});
+						if (isMobile() || essenseData.openapi) {
+
+							if(carousels[s.txid]) carousels[s.txid].owlCarousel('destroy')
+
+							carousels[s.txid] = sel.find('.imagesContainer').height(ch + 50).owlCarousel({
+								items: 1,
+								dots: true,
+								nav: !isMobile(),
+								navText: [
+									'<i class="fas fa-chevron-circle-left"></i> ',
+									'<i class="fas fa-chevron-circle-right"></i>'
+								]
+								
+							});
 
 
-								isclbk()
-
-							}
-							else{
-								images.isotope({
-									layoutMode: 'packery',
-									itemSelector: '.imagesWrapper',
-									packery: {
-										gutter: gutter
-									},
-									initLayout: false
-								});
-	
-								images.on('arrangeComplete', function(){
-									isclbk()
-								});
-	
-								images.isotope()
-							}
-
-							
-
-							
-						}
-						else
-						{
 							isclbk()
+
 						}
-					
+						else{
+							images.isotope({
+								layoutMode: 'packery',
+								itemSelector: '.imagesWrapper',
+								packery: {
+									gutter: gutter
+								},
+								initLayout: false
+							});
 
-					});
+							images.on('arrangeComplete', function(){
+								isclbk()
+							});
 
-					
+							images.isotope()
+						}
 
-				})
+						
+
+						
+					}
+					else
+					{
+						isclbk()
+					}
+				
+
+				});
+
+				
+
 				
 			},
 
@@ -3235,7 +3254,10 @@ var lenta = (function(){
 				}
 
 				var og = self.app.platform.sdk.remote.storage[url];	
-				var meta = self.app.platform.parseUrl(url);			
+				var meta = self.app.platform.parseUrl(url);		
+
+		
+				
 
 				var rndr = function(){
 
@@ -3306,10 +3328,13 @@ var lenta = (function(){
 					var meta = self.app.platform.parseUrl(url);
 					var og = self.app.platform.sdk.remote.storage[url];
 
+
 					if(
 						url && !og && 
+
 						!(meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube') && 
-						!(self.app.platform.sdk.usersettings.meta.preview && self.app.platform.sdk.usersettings.meta.preview.value)
+
+						!self.app.platform.sdk.usersettings.meta.preview.value
 					){
 
 						self.app.platform.sdk.remote.get(url, function(og){
@@ -3496,7 +3521,6 @@ var lenta = (function(){
 
 									if(essenseData.ended) {
 										ended = essenseData.ended(shares)
-
 									}
 
 									else
@@ -4211,7 +4235,6 @@ var lenta = (function(){
 					self.app.platform.sdk.categories.clbks.selected.lenta = function(data){
 
 						if(getloader() == 'hierarchical' && !essenseData.second){
-
 							actions.rebuilddelay()
 						}
 						
@@ -4400,7 +4423,7 @@ var lenta = (function(){
 
 			}, cache)
 
-					
+			renders.loadprev()		
 		}
 
 		var clearnewmaterials = function(){

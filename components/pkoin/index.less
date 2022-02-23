@@ -60,7 +60,12 @@
 					.text{
 						margin-right: @rhythm * 2;
 						font-weight: 600;
+						color : rgb(var(--text-color));
+					}	
 
+					img{
+						width: 20px;
+						height: 20px;
 					}
 				}
 			}
@@ -247,6 +252,16 @@
 			bottom : 0;
 			left : 0;
 			right: 0;
+		}
+	}
+}
+
+html.mobileview{
+	.wnd.pkoinwindow{
+		#pkoin{
+			.sendButtonWrapper{
+				position: static;
+			}
 		}
 	}
 }

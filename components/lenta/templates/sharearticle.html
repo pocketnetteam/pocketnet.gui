@@ -73,6 +73,38 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
     
 <%} %>
 
+<% var displaypkoin = function(){ %> 
+
+    <div class="panel sharepanel unselectablemobile">
+
+        <% if((typeof preview == 'undefined' || !preview) ) {%>			
+            <div class="item sharesocial unselectable">
+                <div class="itemwr table">
+                    <div class="iconwr">
+                        
+                        <div class="icon">
+                            <i class="fas fa-share-alt"></i>
+                        </div>
+                    </div>
+                    
+                   
+                </div>
+                
+            </div>
+
+        <% } %>
+
+            <div class="item pkoin right unselectedtable">
+                <img src="img/pocketnet_logo_white.svg" alt="">
+                <span class=''>
+                    PKOIN
+                </span>
+            </div>
+        
+    </div>
+    
+<% } %>
+ 
 <% var displaysys = function(){ %> 
 
     <% if((typeof repost == 'undefined' || !repost || fromempty)) {%>
@@ -95,13 +127,11 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 				
         <% if(!checkvisibility && (typeof openapi == 'undefined' || !openapi)) {%>
             <div class="metapanelitem metmenu">
-                <i class="fas fa-ellipsis-v"></i>
+                <i class="fas fa-ellipsis-h"></i>
             </div>
         <% } else { %> 
             
         <% } %>
-
-        
 
     <% } %>
     
@@ -148,7 +178,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
 	<% if(cc) { %>
         <div class="captionmult">
-            <div class="sharecaption canmark showMoreArticle customscroll">
+            <div class="sharecaption canmark showMoreArticle customscroll showMoreArticle">
                 
                     <%=app.actions.emoji(nl2br(trimrn(findAndReplaceLink(filterXSS(clearScripts(cc)), true))))%>
                 
@@ -205,8 +235,6 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
      
 
     <div class="socialsharewrapper">
-
-       
 
         <div class="iconwrapper ">
             <% threedots() %>
@@ -372,7 +400,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
                             <% if(!all) {%>
                                 <div class="buttonOpenWrapper">
-                                    <button class="black showMoreArticle">Read</button>
+                                    <button class="black showMoreArticle"><%= e('readarticle') %></button>
                                 </div>
                             <% } %>
 
@@ -421,6 +449,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
                             <div class="divider"></div>
                             <% displaysys() %>
                             <div class="divider"></div>
+                            <% displaypkoin() %>
                         </div>
 
                         <div class="cntswrk forcomments">

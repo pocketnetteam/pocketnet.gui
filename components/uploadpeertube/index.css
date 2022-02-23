@@ -426,29 +426,26 @@
 .wnd.uploadpeertube.hiddenState .wndinner .wndcontent {
   padding: 0 20px;
 }
-/*t*/
-@media only screen and (max-width: 768px) {
-  #uploadpeertube .quality-limit-container {
-    display: none;
-  }
-  #uploadpeertube .sectionsWrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  #uploadpeertube .main-upload-fields {
-    width: 100%;
-  }
-  #uploadpeertube .upload-button-section {
-    width: 100%;
-  }
-  #uploadpeertube .challengeoffer {
-    display: none;
-  }
-  #uploadpeertube .uploadRow label {
-    font-size: 1em;
-  }
+html.mobileview #uploadpeertube .quality-limit-container {
+  display: none;
+}
+html.mobileview #uploadpeertube .sectionsWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+html.mobileview #uploadpeertube .main-upload-fields {
+  width: 100%;
+}
+html.mobileview #uploadpeertube .upload-button-section {
+  width: 100%;
+}
+html.mobileview #uploadpeertube .challengeoffer {
+  display: none;
+}
+html.mobileview #uploadpeertube .uploadRow label {
+  font-size: 1em;
 }
 .importVideoDialog {
   z-index: 1006;

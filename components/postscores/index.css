@@ -6,7 +6,7 @@
 }
 #postscores .caption {
   text-align: left;
-  color: #1e2328;
+  color: rgb(var(--neutral-grad-3));
   margin-bottom: 0.5em;
 }
 #postscores .caption span {
@@ -17,11 +17,11 @@
 }
 #postscores .subcaption {
   padding: 1em;
-  border-bottom: 1px solid #e4ddde;
+  border-bottom: 1px solid rgb(var(--neutral-grad-1));
 }
 #postscores .subcaption span {
   font-size: 0.9em;
-  color: #b2abac;
+  color: rgb(var(--neutral-grad-2));
 }
 #postscores .youstars {
   padding: 1em;
@@ -61,7 +61,7 @@
 }
 #postscores .details .detailsWrapper {
   padding-bottom: 0.5em;
-  border-bottom: 1px solid #b2abac;
+  border-bottom: 1px solid rgb(var(--neutral-grad-1));
 }
 #postscores .details .bystars {
   margin-top: 2em;

@@ -1038,8 +1038,6 @@ var comments = (function(){
 
 			ps.value = sortby
 
-			
-
 			return ps
 		}
 
@@ -2108,7 +2106,10 @@ var comments = (function(){
 
 				var commentslength
 				var comments = p.comments
-				var sort = new sortParameter()
+				var sort = null
+				
+				if(!preview || showedall)
+					sort = new sortParameter()
 
 				clears.isotope()
 
@@ -2218,15 +2219,18 @@ var comments = (function(){
 									}, 300);
 								});
 
-								sort._onChange = function(v){
-									sortby = v
+								if (sort){
+									sort._onChange = function(v){
+										sortby = v
 
-									currentstate.pagination = {}
+										currentstate.pagination = {}
 
-									renders.list(p, null, pid)
+										renders.list(p, null, pid)
+									}
+
+									ParametersLive([sort], _p.el)
 								}
-
-								ParametersLive([sort], _p.el)
+									
 							}
 
 							if (el.list){
@@ -2236,12 +2240,6 @@ var comments = (function(){
 
 									renders.list(p, null, pid)
 								})
-							
-								/*setTimeout(function(){
-									if (el.list)
-										el.list.find('.newcomments').removeClass('newcomments')
-								}, 600)*/
-								
 								
 							}
 						}

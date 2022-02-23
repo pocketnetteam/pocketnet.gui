@@ -673,22 +673,24 @@ class P2pMediaLoaderPlugin extends Plugin {
             this.statsP2PBytes.pendingUpload = [];
             this.statsHTTPBytes.pendingDownload = [];
             this.statsHTTPBytes.pendingUpload = [];
-            return this.player.trigger('p2pInfo', {
-                source: 'p2p-media-loader',
-                http: {
-                    downloadSpeed: httpDownloadSpeed,
-                    uploadSpeed: httpUploadSpeed,
-                    downloaded: this.statsHTTPBytes.totalDownload,
-                    uploaded: this.statsHTTPBytes.totalUpload
-                },
-                p2p: {
-                    downloadSpeed: p2pDownloadSpeed,
-                    uploadSpeed: p2pUploadSpeed,
-                    numPeers: this.statsP2PBytes.numPeers,
-                    downloaded: this.statsP2PBytes.totalDownload,
-                    uploaded: this.statsP2PBytes.totalUpload
-                }
-            });
+            /*return this.player.trigger('p2pInfo', {
+              source: 'p2p-media-loader',
+              http: {
+                downloadSpeed: httpDownloadSpeed,
+                uploadSpeed: httpUploadSpeed,
+                downloaded: this.statsHTTPBytes.totalDownload,
+                uploaded: this.statsHTTPBytes.totalUpload
+              },
+              p2p: {
+                downloadSpeed: p2pDownloadSpeed,
+                uploadSpeed: p2pUploadSpeed,
+                numPeers: this.statsP2PBytes.numPeers,
+                downloaded: this.statsP2PBytes.totalDownload,
+                uploaded: this.statsP2PBytes.totalUpload
+              }
+      
+      
+            } as PlayerNetworkInfo)*/
         }, this.CONSTANTS.INFO_SCHEDULER);
     }
     arraySum(data) {

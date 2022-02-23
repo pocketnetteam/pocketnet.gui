@@ -5,7 +5,7 @@
 }
 #tagcloud .tcaptionwrapper {
   padding: 1em;
-  padding-top: 2em;
+  padding-top: 1em;
   padding-left: 0;
   border-top: 1px solid rgb(var(--color-medium-theme));
 }
@@ -31,9 +31,6 @@
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
-#tagcloud .tcaptiontable > div.ticon:hover i {
-  color: rgb(var(--color-txt-ac));
-}
 #tagcloud .tcaptiontable > div.mlab {
   opacity: 0.5;
   width: 33px;
@@ -46,13 +43,6 @@
 #tagcloud .tcaptiontable > div.mlab span {
   font-weight: 100;
   font-size: 0.8em;
-}
-#tagcloud .tcaptiontable > div.mlab:hover {
-  opacity: 1;
-  color: rgb(var(--color-bad));
-}
-#tagcloud .tcaptiontable > div.mlab:hover .tagvalue {
-  border: 1px solid rgb(var(--color-bad));
 }
 #tagcloud .tcaptiontable > div.cleartags {
   display: none;
@@ -97,10 +87,6 @@
   transition: 0.3s;
   cursor: pointer;
 }
-#tagcloud .tag > div.tagvalue:hover {
-  color: rgb(var(--color-txt-ac));
-  border: 1px solid rgb(var(--color-txt-ac));
-}
 #tagcloud .tag > div.tagcount {
   width: 90px;
   text-align: right;
@@ -122,21 +108,9 @@
 #tagcloud .tag > div.tagcheck i {
   font-size: 0.8em;
 }
-#tagcloud .tag > div.tagsearch:hover,
-#tagcloud .tag > div.tagcheck:hover {
-  color: rgb(var(--color-txt-ac));
-}
-#tagcloud .tag > div.tagsearch:hover .tagvalue,
-#tagcloud .tag > div.tagcheck:hover .tagvalue {
-  border: 1px solid rgb(var(--color-txt-ac));
-}
 #tagcloud .tag > div.tagsearch {
   width: 33px;
   opacity: 0;
-}
-#tagcloud .tag:hover .tagvalue > div.tagcheck,
-#tagcloud .tag:hover .tagvalue > div.tagsearch {
-  opacity: 1;
 }
 #tagcloud .ta .tg {
   display: inline-block;
@@ -191,10 +165,6 @@
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
-#tagcloud .hidealltags:hover,
-#tagcloud .showalltags:hover {
-  color: rgb(var(--color-txt-ac));
-}
 #tagcloud .hidealltags span,
 #tagcloud .showalltags span,
 #tagcloud .hidealltags i,
@@ -210,6 +180,38 @@
 }
 #tagcloud .hidealltags {
   display: none;
+}
+@media (pointer: fine) {
+  #tagcloud .tcaptiontable > div.ticon:hover i {
+    color: rgb(var(--color-txt-ac));
+  }
+  #tagcloud .tcaptiontable > div.mlab:hover {
+    opacity: 1;
+    color: rgb(var(--color-bad));
+  }
+  #tagcloud .tcaptiontable > div.mlab:hover .tagvalue {
+    border: 1px solid rgb(var(--color-bad));
+  }
+  #tagcloud .tag > div.tagvalue:hover {
+    color: rgb(var(--color-txt-ac));
+    border: 1px solid rgb(var(--color-txt-ac));
+  }
+  #tagcloud .tag > div.tagsearch:hover,
+  #tagcloud .tag > div.tagcheck:hover {
+    color: rgb(var(--color-txt-ac));
+  }
+  #tagcloud .tag > div.tagsearch:hover .tagvalue,
+  #tagcloud .tag > div.tagcheck:hover .tagvalue {
+    border: 1px solid rgb(var(--color-txt-ac));
+  }
+  #tagcloud .tag:hover .tagvalue > div.tagcheck,
+  #tagcloud .tag:hover .tagvalue > div.tagsearch {
+    opacity: 1;
+  }
+  #tagcloud .hidealltags:hover,
+  #tagcloud .showalltags:hover {
+    color: rgb(var(--color-txt-ac));
+  }
 }
 @media only screen and (max-width: 768px) {
   #tagcloud .tcaptionwrapper {

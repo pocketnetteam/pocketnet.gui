@@ -142,6 +142,9 @@
 #articlev.showpreview .previewSection {
   display: block;
 }
+#articlev .editorSection textarea {
+  background: rgb(var(--background-total-theme));
+}
 #articlev .editorWrapper {
   padding: 1em 0;
 }
@@ -295,8 +298,10 @@
 #articlev #taginput .tgs .category .categoryInner > div.label {
   color: rgb(var(--text-on-bg-shadow-color));
 }
-#articlev #taginput .tgs :placeholder-shown {
-  color: rgb(var(--text-on-bg-shadow-color));
+#articlev #taginput .tgs .search ::placeholder {
+  font-size: 0.8em;
+  font-weight: 700;
+  color: rgba(var(--text-on-bg-shadow-color), 0.75);
 }
 #articlev #taginput .tgs .search input {
   padding-left: 0!important;
@@ -320,12 +325,54 @@
   display: none;
   min-height: 36px;
 }
+#articlev .bgwrapper .coverelements {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  top: 40%;
+  padding: 0.5em;
+  text-align: center;
+  color: rgb(var(--text-on-bg-shadow-color));
+  padding: 0 1em;
+}
+#articlev .bgwrapper .coverelements .coverelementsinner {
+  padding: 1em;
+  border-radius: 12px;
+  border: 1px dashed rgb(var(--text-on-bg-shadow-color));
+  background: rgba(var(--color-shadow-base), 0.1);
+  max-width: 300px;
+  margin: 0 auto;
+  align-items: center;
+}
+#articlev .bgwrapper .coverelements .coverelementsinner .uploadcover .fileUploader,
+#articlev .bgwrapper .coverelements .coverelementsinner .uploadcover .fileUploader .elContent {
+  position: relative;
+}
+#articlev .bgwrapper .coverelements .coverelementsinner .removeCover {
+  cursor: pointer;
+  display: none;
+}
+#articlev .bgwrapper .coverelements .coverelementsinner .removeCover i {
+  font-size: 0.8em;
+}
+#articlev .bgwrapper.hascover .coverelements {
+  background: transparent;
+  opacity: 0.5;
+}
+#articlev .bgwrapper.hascover .coverelements .coverelementsinner .removeCover {
+  display: block;
+}
+#articlev .bgwrapper.hascover .coverelements .coverelementsinner .uploadcover {
+  display: none;
+}
+#articlev .bgwrapper.hascover .coverelements:hover {
+  opacity: 1;
+}
 #articlev .bgwrapper .forbackmain {
   position: absolute;
   left: 0;
   display: none;
   width: 100%;
-  /*top : 2 * @rhythm;*/
   top: 40%;
   padding: 0.5em;
   text-align: center;
@@ -353,6 +400,9 @@
   display: block;
 }
 #articlev .bgwrapper.tagsinput .aheader.top {
+  display: none;
+}
+#articlev .bgwrapper.tagsinput .coverelements {
   display: none;
 }
 #articlev .bgwrapper.tagsinput .tagsinputwrapper {
@@ -498,17 +548,6 @@
   height: 100%;
   width: 100%;
 }
-#articlev .aheader .removeCover {
-  display: none;
-  max-width: 33px;
-  cursor: pointer;
-}
-#articlev .aheader .removeCover i {
-  font-size: 0.8em;
-}
-#articlev .aheader.hascover .removeCover {
-  display: block;
-}
 #articlev .aheader .maxtext {
   max-width: 150px;
   text-overflow: ellipsis;
@@ -590,6 +629,10 @@
 @media only screen and (max-width: 768px) {
   #articlev .showpreviewwrapper button {
     font-size: 0.9em;
+  }
+  #articlev .work {
+    width: 100%;
+    padding: 0;
   }
   #articlev .bgwrapper {
     height: 650px;
@@ -706,10 +749,15 @@
     padding-right: 0.5em;
     border-radius: 0;
   }
+  #articlev .aheader button.publish {
+    font-size: 1em;
+    text-align: center;
+  }
   #articlev .aheader .truestatuswrapper {
     padding-left: 0.5em;
   }
   #articlev .aheader .statusWrapper {
+    padding-left: 0.5em;
     width: 100%;
   }
   #articlev .aheader .forback {

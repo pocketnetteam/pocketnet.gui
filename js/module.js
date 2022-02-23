@@ -120,116 +120,112 @@ nModule = function(){
 
 			self.renderTemplate(template, function(html){
 
-				//window.requestAnimationFrame(function(){
 
-					var inserted = false;
+				var inserted = false;
 
-					if(!_.isObject(p.el) || p.insert)
+				if(!_.isObject(p.el) || p.insert)
+				{
+
+					var insert = self.inserts[p.insert];
+
+					if (insert)
 					{
+						var options = p[insert.storageKey] || {};
 
-						var insert = self.inserts[p.insert];
+							options.content = html;
+							options.el = p.el;
+							options.app = self.app
 
-						if (insert)
+						if (insert.after)
 						{
-							var options = p[insert.storageKey] || {};
+							options.clbk = function(_p){
 
-								options.content = html;
-								options.el = p.el;
-								options.app = self.app
+								if(!_p) _p = {};
 
-							if (insert.after)
-							{
-								options.clbk = function(_p){
+								p = _.extend(p, _p)
 
-									if(!_p) _p = {};
+								completeClbk(p)
 
-									p = _.extend(p, _p)
+							}
+							
+						}
 
-									completeClbk(p)
+						options.destroy = function(key){
+
+							var r = null
+
+							if (p){
+
+								if (key != 'auto'){
+									
+									self.app.nav.api.history.removeParameters(['m' + p.id].concat(p.clearparameters || []))
+									
+									try{
+										self.app.nav.api.changedclbks()
+									}
+									catch(e){
+										console.error(e)
+									}
 
 								}
 								
-							}
-
-							options.destroy = function(key){
-
-								var r = null
-
-								if (p){
-
-									if (key != 'auto'){
-										
-										self.app.nav.api.history.removeParameters(['m' + p.id].concat(p.clearparameters || []))
-										
-										try{
-											self.app.nav.api.changedclbks()
-										}
-										catch(e){
-											console.error(e)
-										}
-
-									}
-									
-									if (p.destroy) {
-										r = p.destroy(key)
-									}
+								if (p.destroy) {
+									r = p.destroy(key)
 								}
-
-								//p = null
-
-								return r
-
-							};
-
-							var type = p.essenseData && p.essenseData.type
-
-							if (type){
-
-								options.type = type;
-
 							}
 
-							self .container = new insert.obj(options);
-								p.container = self.container;
+							//p = null
 
-							self.container.essenseDestroy = options.destroy
+							return r
 
-							if (insert.after) 
-							{
-								topPreloader(100);
-								return;
-							}
+						};
 
-							if (self.container && self.container.el ){
-								p.el = self.container.el;
-							}
+						var type = p.essenseData && p.essenseData.type
 
-							inserted = true;
+						if (type){
+
+							options.type = type;
 
 						}
-						else
+
+						self .container = new insert.obj(options);
+							p.container = self.container;
+
+						self.container.essenseDestroy = options.destroy
+
+						if (insert.after) 
 						{
-							if (self.app.el[p.el]) p.el = self.app.el[p.el];
+							topPreloader(100);
+							return;
 						}
 
-					}
-
-					if(typeof p.el == 'function') p.el = p.el();
-				
-					if(!inserted)
-					{
-						if (p.el) {
-							self.insertTemplate(p, html);
+						if (self.container && self.container.el ){
+							p.el = self.container.el;
 						}
-					}
 
-					if(!p.animation)
+						inserted = true;
+
+					}
+					else
 					{
-						completeClbk(p);
+						if (self.app.el[p.el]) p.el = self.app.el[p.el];
 					}
 
-				//})
-				
+				}
+
+				if(typeof p.el == 'function') p.el = p.el();
+			
+				if(!inserted)
+				{
+					if (p.el) {
+						self.insertTemplate(p, html);
+					}
+				}
+
+				if(!p.animation)
+				{
+					completeClbk(p);
+				}
 
 			} ,p)
 
@@ -291,6 +287,7 @@ nModule = function(){
 		p.name || (p.name = 'index');
 
 		if(loading.templates[p.name]){
+
 			retry(
 				function(){
 					return !loading.templates[p.name];

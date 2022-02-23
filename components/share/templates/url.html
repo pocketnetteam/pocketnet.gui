@@ -18,7 +18,12 @@
 					<div class="jsPlayerLoading">
 						<div class="jsPlayerLoadingD table watchonyoutube">
 							<div>
-								<a elementsid="jsplayerhref" href="<%- url %>" cordovalink="_system" target="_blank">Watch on Youtube</a>
+								<a elementsid="jsplayerhref" href="<%- url %>" cordovalink="_system" target="_blank">
+									<button class="black">
+										<i class="fab fa-youtube"></i> Watch on Youtube
+									</button>
+									
+								</a>
 							</div>
 						</div>
 					</div>
@@ -83,11 +88,7 @@
 
 						<div class="jsPlayerLoading">
 							<div class="jsPlayerLoading-matte"></div>
-							<div class="jsPlayerLoadingD table">
-								<div>
-									<div class="preloader5"><img src="./img/three-dots.svg"/></div>
-								</div>
-							</div>
+							<div class="preloader5"><img src="./img/three-dots.svg"/></div>
 						</div>
 						
 					<% } %>
@@ -155,7 +156,7 @@
 
 	<% } else { %> 
 
-		<% if(og && !_.isEmpty(og)) {%>
+		<% if(og && !_.isEmpty(og) && !app.platform.sdk.usersettings.meta.preview.value) {%>
 
 			<div class="urlhtmlcontent">
 				<div class="ogtable table">

@@ -808,7 +808,7 @@ Platform = function (app, listofnodes) {
 
         "11": {
             message: function () {
-                return self.app.localization.e('unexperror11')
+                return self.app.localization.e('dataenteredincorrectly')
             }
         },
 
@@ -8860,7 +8860,7 @@ Platform = function (app, listofnodes) {
                                         h += '<div class="refaddTable table">'
                                         h += '<div class="imageCell">'
 
-                                        h += '<div class="usericon" ban=".gif" image="' + (src || '') + '">'
+                                        h += '<div class="usericon" ban=".gif" image="' + (src || '*') + '">'
 
                                         if (!src && letter) {
 
@@ -21868,30 +21868,7 @@ Platform = function (app, listofnodes) {
 
                 var nm = trimHtml(m, symbols)
 
-                //share.message;
-
-                /*var symbols = 20;
-
-                if (extendedpreview) {
-                    m = '';
-
-                    if (share.caption) m = m + '' + share.caption + ' '
-
-                    if (share.message) m = m + '' + share.message + ''
-
-                    symbols = 180;
-                }*/
-
-
-                /* var nm = filterXSS(trimHtml(m, symbols), {
-                    stripIgnoreTag: true
-                });*/
-
                 var links = _.isObject(share.message) ? [] : linkify.find(share.message);
-
-                /*_.each(links, function(l){
-                    nm = nm.replace(l.href, "")
-                })*/
 
                 var images = _.map(share.images, function (i) {
                     return {
@@ -21977,11 +21954,8 @@ Platform = function (app, listofnodes) {
 
                         else
                         {
-                                h += '<b>' + flb(self.app.localization.e('video')) + '</b> <i class="fas fa-play"></i> '
+                            h += '<b>' + flb(self.app.localization.e('video')) + '</b> <i class="fas fa-play"></i> '
                         }
-
-
-
 
                     h += '</div>'
                 }
@@ -22185,7 +22159,7 @@ Platform = function (app, listofnodes) {
 
                 if (gotoprofile) h += link
 
-                h += '<div class="usericon" ban=".gif" image="' + clearStringXss(src || '') + '">'
+                h += '<div class="usericon" ban=".gif" image="' + (clearStringXss(src || '') || '*') + '">'
 
                 if (!src && letter){
 
@@ -24096,6 +24070,7 @@ Platform = function (app, listofnodes) {
 
         var arrangeMessages = function(){
 
+
 			var offset = 0;
 
 			var maxCount = 4;
@@ -24103,7 +24078,7 @@ Platform = function (app, listofnodes) {
 
 			var boffset = 0;
 
-            var mtbl = platform.app.width <= 1024
+            var mtbl = platform.app.mobileview
 
 			if (mtbl){
 				maxCount = 1;
@@ -24254,9 +24229,9 @@ Platform = function (app, listofnodes) {
 
             message.el.on('click', function(){
 
-                if (isTablet()){
+                if (platform.app.mobileview){
 
-                    self.nav.api.go({
+                    platform.app.nav.api.go({
                         open : true,
                         href : 'notifications',
                         inWnd : true,
@@ -24801,7 +24776,7 @@ Platform = function (app, listofnodes) {
                 txid: "6119caaadaef37be8f3716be8280e88206adf043f38fc1665d7e42bdcf90128a"
             })*/
 
-			/**self.messageHandler({
+			/*self.messageHandler({
                 addr: "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82",
                 addrFrom: "PTcArXMkhsKMUrzQKn2SXmaVZv4Q7sEpBt",
                 mesType: "postfromprivate",
@@ -25887,7 +25862,7 @@ Platform = function (app, listofnodes) {
 
         setTimeout(function(){
             self.initSounds();
-        }, 3000)
+        }, 35000)
 
         if (self.app.errors.clbks) {
             self.app.errors.clbks.platform = self.appstate
@@ -26376,9 +26351,7 @@ Platform = function (app, listofnodes) {
                                         return el.className && el.className.indexOf('noswipepnt') > -1
                                     })) return false
 
-                                    if (self.matrixchat.core && (!self.matrixchat.core.canback || self.matrixchat.core.canback()))
-
-                                        return true
+                                    if (self.matrixchat.core && (!self.matrixchat.core.canback || self.matrixchat.core.canback())) return true
                                 },
     
                                 restrict : true,

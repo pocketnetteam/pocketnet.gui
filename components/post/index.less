@@ -99,7 +99,7 @@
 	.postWrapper{
 		margin : 0 auto;
 		max-width: 930px;
-		background: rgb(var(--background-total-theme));
+		
 		opacity: 0;
 		/*border-radius: 6px;*/
 		.transition(0.3s, opacity);
@@ -112,6 +112,8 @@
 
 
 	.share{
+		background: rgb(var(--background-total-theme));
+		border-radius: 6px;
 		/*border-radius: 6px;*/
 		.work{
 			padding : 0;
@@ -316,8 +318,7 @@
 						padding-right: 0;
 					}
 
-					&.datetime{
-						padding-left: 2 * @rhythm;
+					.datetime{
 						opacity: 0.5;
 					}
 				}
@@ -395,6 +396,10 @@
 
 		&.ready{
 			opacity: 1;
+		}
+
+		.sharepanel{
+			padding-right: @rhythm;
 		}
 
 		.shareBgCaption,
@@ -688,6 +693,11 @@
 			.forcomments{
 				margin-top : 4 * @rhythm;
 			}
+
+			.article{
+				max-width: 640px;
+				margin : 0 auto;
+			}
 		}
 
 		.removeDescription{
@@ -734,8 +744,22 @@
 
 html.mobileview{
 	#post{
-
 		.videoWrapper {
+			max-width: none;
+		}
+	}
+
+	#post{
+		.sharearticle{
+			.articlecontent{
+				padding-left: @rhythm;
+				padding-right: @rhythm;
+			}
+		}
+	}
+
+	.wnd.normalizedmobile.articlewindow{
+		.wndinner .wndcontent{
 			max-width: none;
 		}
 	}
@@ -894,6 +918,11 @@ html.mobileview{
 				padding-left: @rhythm;
 				padding-right: @rhythm;
 
+				.article{
+					max-width: 640px;
+					margin : 0 auto;
+				}
+
 				.article_quote,
 				.article_link_custom{
 					width: 96%;
@@ -993,6 +1022,15 @@ html.mobileview{
 	}
 }
 
+html.mobileview{
+	.wnd.articlewindow{
+		.widthcontainer{
+			width: 96%;
+			max-width: 768px;
+		}
+	}
+}
+
 @media only screen and (max-width: 768px) {
 	#post{
 		border-top: 1px solid rgba(var(--neutral-grad-1), 0.3);
@@ -1036,6 +1074,7 @@ html.mobileview{
 
 			.formeta{
 				margin-left: 0;
+				margin-bottom: 2 * @rhythm;
 				padding-left: 0;
 			}
 

@@ -134,9 +134,7 @@
         }
     }
 
-    .abswndwrapper{
-        padding : 8 * @rhythm 0;
-    }
+
 }
 
 .wnd.pkviewwnd{
@@ -186,100 +184,19 @@
     }
 }
 
-
-/*t*/ @media only screen and (max-width: 768px){
-	#pkview{
-        padding : 0;
-        padding-top : 0;
-
-        .abswndwrapper{
-            padding : 0;
-        }
-
-        .work{
-            padding : 0;
-        }
-
-
-        .key{			
-
-            .mnemonicKeyTable{
-                >div{
-                    
-
-                    &.mobiledevice{
-                        display: block;
-                        text-align: center;
-                        margin-top: 2 * @rhythm;
-                    }
-
-
-                }
-            }
-
-            .mnemonicKeyCell{
-                margin-top : 2 * @rhythm;
-            }
-            
-
-            .panel{
-                .item{
-                    width: 100%;
-                }
-            }
-        }
-
-        
+.html.mobileview{
+    .wnd.pkviewwnd{
         .dontshowagain{
-            margin-left: 0;
-            bottom : -10%;
-            left : @rhythm;
-            width: auto;
-            right: @rhythm;
-           
-            &.active{
-                bottom : 60px;
-                display: block;
-                opacity: 1;
-                
-    
-                &:hover{
-                    opacity: 0.8;
-                }
-            }
+
         }
     }
+}
+
+/*t*/ @media only screen and (max-width: 768px){
+	
 
     .wnd.pkviewwnd{
-        .wndinner{
-            width : 100%;
-            height: 100%;
-
-            .wndcontent{
-                background: rgb(var(--background-total-theme));
-            }
-        }
-        .table{
-            display: block;
-            height: 100%;
-        }
-        .tablecell{
-            display: block;
-            height: 100%;
-        }
-
-        /*._close {
-            background: fade(#000, 50);
-        }*/
-
-        .keywrapper{
-            height: 100%;
-
-            .key{
-                height: 100%;
-            }
-        }
-        
+       
         #pkview{
 
             .keywrapper{
@@ -289,15 +206,8 @@
           
             .key{
                 padding : @rhythm;
-                border-bottom-left-radius: 0;
-                border-bottom-right-radius: 0;
-               
             }
-    
-            .work{
-                max-width: 1024px;
-            }
-
+           
             .mnemonicKey{
                 height: 90px;
             }

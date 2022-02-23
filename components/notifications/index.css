@@ -276,17 +276,17 @@
   right: 0;
   padding: 1em;
 }
+html.mobileview #notifications .wrk {
+  padding: 0 ;
+}
+html.mobileview #notifications ._wrp {
+  padding: 0 1em;
+}
+html.mobileview #notifications ._wrp .data {
+  overflow: hidden;
+}
 /*t*/
 @media only screen and (max-width: 768px) {
-  #notifications .wrk {
-    padding: 0 ;
-  }
-  #notifications ._wrp {
-    padding: 0 1em;
-  }
-  #notifications ._wrp .data {
-    overflow: hidden;
-  }
   #notifications .group .groupCaption {
     padding: 1em 0;
     border-bottom: 1px solid rgb(var(--neutral-grad-0));

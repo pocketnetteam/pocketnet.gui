@@ -127,6 +127,30 @@
 }
 #test .userPanel .parameter {
   max-width: 600px;
+  width: 100%;
+}
+#test .userPanel .parameter > div {
+  padding: 0.5em 0;
+  vertical-align: top;
+}
+#test .userPanel .parameter .pName {
+  vertical-align: top;
+  padding-top: 1em;
+  padding-right: 0.5em;
+  width: 190px;
+}
+#test .userPanel .parameter .pName .pNameW {
+  padding-top: 0.5em / 3;
+  font-weight: 700;
+  font-size: 0.8em;
+  line-height: 1.4em;
+}
+#test .userPanel .parameter .pInput {
+  position: relative;
+  vertical-align: top;
+}
+#test .userPanel .parameter .pInput .vm_valuesmulti {
+  padding-top: 0.5em / 2;
 }
 #test .userPanel .parameterMaketWrapper[parameter="addresses"] .parameter {
   max-width: 800px;
@@ -397,7 +421,7 @@
 @media only screen and (max-width: 768px) {
   #test {
     background: rgb(var(--background-total-theme));
-    padding: 0 1em;
+    /*padding : 0 2 * @rhythm;*/
   }
   #test .caption {
     padding-top: 1em;

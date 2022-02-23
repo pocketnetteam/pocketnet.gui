@@ -51,9 +51,11 @@ var main = (function(){
 
 				var vs = _.toArray(links)
 
-				var r = parameters(self.app.nav.current.completeHref, true).r || 'index'
-				var video = parameters(self.app.nav.current.completeHref, true).video || false
-				var read = parameters(self.app.nav.current.completeHref, true).read || false
+				var pss = parameters()
+
+				var r = pss.r || 'index'
+				var video = pss.video || false
+				var read = pss.read || false
 
 				var value = links[video ? 'video' : read ? 'read' : r]
 
@@ -267,6 +269,17 @@ var main = (function(){
 
 				self.app.user.isState(function(state){
 
+					//videomain && !readmain && !searchvalue && !searchtags
+
+					console.log('currentMode', currentMode)
+
+					var fmode = 'filters'
+
+					if(searchvalue || searchtags) fmode = 'search'
+
+					if(currentMode != 'common') fmode = 'settings'
+					if(currentMode == 'sub') fmode = 'none'
+
 					self.shell({
 
 						name :  'menu',
@@ -275,8 +288,11 @@ var main = (function(){
 							pathname : pathname,
 							state : state,
 							mobile : isMobile(),
+							tagsExcluded : self.app.platform.sdk.categories.gettagsexcluded().length,
 							tagsSelected : self.app.platform.sdk.categories.gettags().length,
-							selector : selector
+							tags : self.app.platform.sdk.categories.gettags(),
+							selector : selector,
+							fmode 
 						},
 
 					}, function(_p){
@@ -352,6 +368,8 @@ var main = (function(){
 			},
 
 			topvideos: function (show) {
+
+				console.log("show Topvideos", show)
 				
 				if (show){
 
@@ -361,7 +379,7 @@ var main = (function(){
 						external.clearessense()
 					}
 					
-					self.app.platform.papi.horizontalLenta(el.topvideos, function (e,p) {
+					self.app.platform.papi.horizontalLenta(el.topvideos.find('.wrpcn'), function (e,p) {
 
 						external = p
 						actions.refreshSticky()
@@ -384,7 +402,8 @@ var main = (function(){
 						ended : function(s){
 
 							if(!s.length) return true
-							return false
+
+								return false
 
 						},
 						hasshares : function(shares){
@@ -408,7 +427,7 @@ var main = (function(){
 						external = null
 					}
 
-					el.topvideos.html('')
+					el.topvideos.find('.wrpcn').html('')
 					//showmoreby.removeClass('hasshares')
 
 					el.topvideos.addClass('hidden')
@@ -763,6 +782,11 @@ var main = (function(){
 
 		var initEvents = function(){
 
+			
+			self.app.platform.sdk.categories.clbks.excluded.topmenumobile =
+			self.app.platform.sdk.categories.clbks.tags.topmenumobile =
+			self.app.platform.sdk.categories.clbks.selected.topmenumobile =renders.menu
+
 			self.app.events.scroll.main = actions.addbuttonscroll
 
 			el.c.find('.backtolenta').on('click', actions.backtolenta)
@@ -869,6 +893,7 @@ var main = (function(){
 
 			renders.menu()
 
+
 			if (currentMode == 'common' && !videomain && !readmain && !searchvalue && !searchtags)
 				renders.topvideos(true)
 			else{
@@ -959,12 +984,16 @@ var main = (function(){
 					actions.backtolentaClear()
 				}
 
+				console.log('changes', changes)
+
 				if (changes){
 
 					if (external) {
 						external.clearessense()
 						external = null
 					}
+
+					console.log('changescurrentMode', currentMode, currentMode == 'common' && !videomain && !readmain && !searchvalue && !searchtags)
 
 					renders.topvideos(currentMode == 'common' && !videomain && !readmain && !searchvalue && !searchtags)
 
@@ -1153,6 +1182,10 @@ var main = (function(){
 				videomain = false
 				fixeddirection = null
 				addbuttonShowed = false
+
+				delete self.app.platform.sdk.categories.clbks.tags.topmenumobile
+				delete self.app.platform.sdk.categories.clbks.selected.topmenumobile
+				delete self.app.platform.sdk.categories.clbks.excluded.topmenumobile
 
 				if(el.c) el.c.empty()
 

@@ -22,6 +22,7 @@ Nav = function(app)
 		links : true,
 	}
 
+	var hostname = window.location.hostname
 
 	var electronopen = false
 	var blockclick = false
@@ -466,9 +467,11 @@ Nav = function(app)
 		},	
 
 		removeChat : function(href){
-			if(!isMobile()) return
+			if(!app.mobileview) return
  
 			var p = parameters(href, true)
+
+			console.log("p['pc']", p['pc'])
 
 			if(!p['pc']){
 				return app.platform.matrixchat.backtoapp()
@@ -535,7 +538,7 @@ Nav = function(app)
 							core.removeWindows(p.completeHref)
 							core.removeChat(p.completeHref)
 
-							p = {}
+							//p = {}
 
 						})
 
@@ -578,7 +581,7 @@ Nav = function(app)
 									stop.action(function(){
 										core.open(p)
 
-										p = {}
+										//p = {}
 									})
 								}
 
@@ -608,6 +611,9 @@ Nav = function(app)
 						var c = p.clbk;
 
 						p.clbk = function(a, b, d){
+
+							console.log('p.completeHref', p)
+
 							core.removeWindows(p.completeHref)
 							core.removeChat(p.completeHref)
 
@@ -649,7 +655,7 @@ Nav = function(app)
 				p.clbk(null, p);
 			}
 
-			p = {}
+			//p = {}
 
 		},
 		
@@ -1443,7 +1449,7 @@ Nav = function(app)
 			return decodeSeoLinks(pathnameSearch).replace("#!", "");
 		},
 		hostname : function(){
-			return window.location.hostname + '/'
+			return hostname + '/'
 		}
 	}
 

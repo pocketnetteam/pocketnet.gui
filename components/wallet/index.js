@@ -555,8 +555,6 @@ var wallet = (function(){
 
 			sendParameters : function(){
 
-				console.log("sendParameterssendParameterssendParameterssendParameterssendParameters")
-
 				var v = send.parameters.source.value;
 
 				send.parameters.reciever.possibleValues = []
@@ -758,7 +756,6 @@ var wallet = (function(){
 
 			showBuyInStep : function(action, step, name, clbk){
 
-				console.log('showBuyInStep')
 
 				renders.step(function(el){
 					renders.buy(function(_el){
@@ -782,7 +779,6 @@ var wallet = (function(){
 
 					mode = step
 
-					console.log("ACTION", action)
 
 					actions[action](_el)
 	
@@ -823,11 +819,9 @@ var wallet = (function(){
 
 			calculateFeeHtls : function(el){
 
-				console.log('calculateFeeHtls')
 
 				self.app.platform.sdk.node.fee.estimate(function(fees){
 
-					console.log(el, fees)
 
 					renders.htlsFees(el.find('.actionbody'), fees)
 				})
@@ -837,7 +831,6 @@ var wallet = (function(){
 			validHtls : function(){
 				var amount = htls.parameters.amount.value;
 
-				console.log('htls.parameters.amount.value', htls.parameters.amount.value)
 
 				if (amount > 0){
 					return true;
@@ -1795,7 +1788,6 @@ var wallet = (function(){
 
 			htlsFees : function(el, fees, clbk){
 
-				console.log('el, fees', el, fees)
 
 				if(!actions.validHtls()){
 					return;
@@ -1803,11 +1795,9 @@ var wallet = (function(){
 
 				var f = (fees.feerate || 0.000001)
 
-				console.log('htlsFees', f)
 
 				actions.prepareTransactionHlts(f, 0, function(addresses, outputs, inputs, totalFees, feesMode, meta){
 
-					console.log('prepareTransactionHlts', totalFees)
 
 					self.shell({
 
@@ -1845,7 +1835,6 @@ var wallet = (function(){
 
 							actions.prepareTransactionHlts(f, totalFees, function(addresses, outputs, inputs, totalFees, feesMode, meta, tx){
 
-								console.log("TX", tx)
 
 								_.each(inputs, function(t){
 									t.cantspend = true
@@ -1853,7 +1842,6 @@ var wallet = (function(){
 
 							   self.app.platform.sdk.node.transactions.send(tx, function(d, err){
 
-								   console.log("err", err)
 
 								   if(err){
 									   self.app.platform.sdk.node.transactions.releaseCS(inputs)
@@ -1896,7 +1884,6 @@ var wallet = (function(){
 			},
 			htls : function(clbk, _el){
 
-				console.log("el.htls", el.htls)
 
 				actions.htlsParameters();
 
@@ -1930,7 +1917,6 @@ var wallet = (function(){
 
 							ParametersLive([htls.parameters.amount], _p.el)
 
-							console.log("MODE", mode)
 
 							if (mode == 1){
 								actions.showHtlsInStep('calculateFeeHtls', 1, 'htls')
@@ -2029,7 +2015,6 @@ var wallet = (function(){
 
 										self.app.platform.sdk.node.transactions.send(tx, function(d, err){
 
-											console.log("err", err)
 
 											if(err){
 
@@ -2076,10 +2061,8 @@ var wallet = (function(){
 				},
 				send : function(clbk, _el, nsp){
 
-					console.log('_el, nsp', _el, nsp)
 
 					if(!nsp){
-						console.log('actions.sendParameters();')
 						actions.sendParameters();
 					}
 						
@@ -2358,7 +2341,6 @@ var wallet = (function(){
 				var t = [];
 				var bw = [];
 
-				console.log("self.app.platform.sdk.theme.getstyle('--background-secondary-theme')", self.app.platform.sdk.theme.getstyle('--background-secondary-theme'))
 
 				var n = 'rgb(' + self.app.platform.sdk.theme.getstyle('--background-secondary-theme') || '241,241,241' + ')'
 

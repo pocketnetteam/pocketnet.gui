@@ -353,7 +353,7 @@ var author = (function(){
 						class : 'tosettings',
 		
 						if : function(){
-							if(self.user.isItMe(author.address) && !isTablet()) return true
+							if(self.user.isItMe(author.address) && !self.app.mobileview) return true
 						}
 					},
 		

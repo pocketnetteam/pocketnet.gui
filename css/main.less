@@ -112,8 +112,8 @@
 
     --color-medium-theme: 99, 100, 117;
 
-    --neutral-grad-0: 16,16,17;
-    --neutral-grad-1: 34,34,37;
+    --neutral-grad-0: 25,25,29;
+    --neutral-grad-1: 38,38,42;
     --neutral-grad-2: 78,78,99;
     --neutral-grad-3: 85,87,112;
     --neutral-grad-4: 96,103,112;
@@ -156,8 +156,8 @@
 
     --color-medium-theme: 104, 104, 104;
 
-    --neutral-grad-0: 16,16,16;
-    --neutral-grad-1: 37,37,37;
+    --neutral-grad-0: 37,37,37;
+    --neutral-grad-1: 47,47,47;
     --neutral-grad-2: 88,88,88;
     --neutral-grad-3: 95,95,95;
     --neutral-grad-4: 105,105,105;
@@ -241,6 +241,7 @@
 
 body{
     overscroll-behavior: contain;
+    /* scroll-snap-type: y proximity;*/
 }
 
 html {
@@ -250,6 +251,7 @@ html {
     position: relative;
     overflow-x: hidden;
     overflow-y: overlay;
+   
     
     /*&.mobileview{
         scroll-behavior: smooth;
@@ -521,6 +523,14 @@ hr {
 
     &.show{
         transform:  translateY(100%);
+        .table{
+            .icon{
+                i{
+                    display: inline-block;
+                }
+                
+            }
+        }
     }
 
     .table{
@@ -548,9 +558,22 @@ hr {
         .icon{
             padding : 4 * @rhythm;
             i{
+                display: none;
                 font-size: 1.3em;
             }
             
+        }
+    }
+}
+
+.js-player{
+    .video-js{
+        display: none;
+    }
+
+    &.player-ready{
+        .video-js{
+            display: block;
         }
     }
 }
@@ -1192,6 +1215,24 @@ pie {
             color: rgb(var(--color-txt-ac));
         }
         
+    }
+}
+
+.pkoin{
+    display: flex;
+    align-items: center;
+    background: rgb(var(--color-bg-ac-bright));
+    color: rgb(var(--text-on-bg-ac-color));
+    border-radius: 8px;
+    padding: 4px 8px;
+    cursor: pointer;
+
+    img{
+        width: 2 * @rhythm;
+    }
+
+    span{
+        margin-left: @rhythm;
     }
 }
 
@@ -3245,7 +3286,7 @@ input[type=radio].radio:checked + label {
     top: 0;
     bottom: 0;
     right: 0;
-    background: rgba(var(--color-shadow-base), 0.7);
+    background: rgba(var(--color-shadow-var), 0.9);
     z-index: 150;
 
     &.zindex{
@@ -4567,6 +4608,7 @@ input[type=radio].radio:checked + label {
 
         .vc_value{
             padding :  0.5 * @rhythm @rhythm;
+            
             cursor: pointer;
 
             &:hover{
@@ -5438,8 +5480,7 @@ html.mobileview.fullscreen{
             cursor: pointer;
             span{
                 font-size : 1;
-                color : rgb(var(--neutral-grad-4));
-                font-weight: 400;
+                font-weight: 700;
             }
             
         }
@@ -5738,9 +5779,7 @@ html.mobileview.fullscreen{
             padding-top : @rhythm;
             cursor: pointer;
             span{
-                font-size : 1.4em;
-                color : rgb(var(--neutral-grad-4));
-                font-weight: 100;
+                font-weight: 700;
             }
             
         }
@@ -7379,14 +7418,13 @@ html.mobileview{
             .wndinner{
                 width: 100%;
                 background: transparent!important;
+                will-change: transform;
             }
             .wndback{
                 backface-visibility: hidden;
-                will-change: transform;
                 backdrop-filter: none!important;
                 -webkit-backdrop-filter: none!important;  
-                
-                .transition(0.3s);
+                .transition(0s);
             }
 
             .hideButton{
@@ -7466,14 +7504,14 @@ html.mobileview{
             &.sette{
 
                 .wndinner{
-                    -webkit-transform: translateY(130px);
-                    transform: translateY(130px);
+                    -webkit-transform: translate3d(0, 130px, 0);
+                    transform: translate3d(0, 130px, 0);
                     .transition(0.3s, transform);
                 }   
 
                 .windowmainbuttons{
-                    -webkit-transform: translateY(-130px);
-                    transform: translateY(-130px);
+                    -webkit-transform: translate3d(0,-130px,0);
+                    transform: translate3d(0,-130px,0);
                     .transition(0.3s, transform);
                 }
                 
@@ -7489,13 +7527,13 @@ html.mobileview{
                 &.sette{
       
                     .wndinner{
-                        -webkit-transform: translateY(45px);
-                        transform: translateY(45px);
+                        -webkit-transform: translate3d(0,45px,0);
+                        transform: translate3d(0,45px,0);
                     }   
                     
                     .windowmainbuttons{
-                        -webkit-transform: translateY(-45px);
-                        transform: translateY(-45px);
+                        -webkit-transform: translate3d(0,-45px,0);
+                        transform: translate3d(0,-45px,0);
                     }
                 }
 
@@ -7517,8 +7555,22 @@ html.mobileview{
                    
                 }
             }
+
+            &:only-child{
+
+                &.asette{
+                    .wndback{
+                        .transition(0.2s);
+                        opacity: 0;
+                    }
+                }
+            }
         }
+
+       
     }
+
+    
 }
 
 ///////////
@@ -7682,7 +7734,7 @@ html.mobileview{
 		input{
 			width: 100%;
 			padding: @rhythm;
-			border-radius: 2px;
+			border-radius: 6px;
 
 			&.error{
 				border : 1px solid rgb(var(--color-bad));
@@ -7712,7 +7764,7 @@ html.mobileview{
 		.vc_valuecustom,
 		.vc_valuecustom_multibig{
 			.vc_textInput{
-				background: #fff;
+				background: rgb(var(--background-hidden-layer));
 			}
 		}
 
@@ -7731,8 +7783,6 @@ html.mobileview{
 		
 	}
 }
-
-
 
 //////////////extra
 

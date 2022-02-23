@@ -227,7 +227,7 @@
 }
 #system16 .managepanel {
   padding: 1em 0;
-  background: rgba(var(--neutral-grad-3), 0.15);
+  background: rgb(var(--background-secondary-theme));
   margin-bottom: 1em;
 }
 #system16 .graphWrapper {
@@ -235,7 +235,7 @@
 }
 #system16 .graphWrapper .grwr {
   display: none;
-  background: rgba(var(--neutral-grad-3), 0.15);
+  background: rgb(var(--background-secondary-theme));
   border-radius: 12px;
 }
 #system16 .graphWrapper.showed .grwr {
@@ -1011,6 +1011,9 @@
 .addnode .parameter .vm_value .checkbox + label:before {
   font-size: 1.6em;
   line-height: 19px;
+}
+html.mobileview #system16 .work {
+  padding: 0 1em !important;
 }
 /*t*/
 @media only screen and (max-width: 768px) {

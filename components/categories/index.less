@@ -8,12 +8,17 @@
         span{
             margin-right: 0;
         }
+    }
 
-        &:hover{
-            color : rgb(var(--color-txt-ac));
-            span{
-                
-                margin-right: 20px;
+    @media (pointer:fine) {
+        .pocketcaption{
+    
+            &:hover{
+                color : rgb(var(--color-txt-ac));
+                span{
+                    
+                    margin-right: 20px;
+                }
             }
         }
     }
@@ -92,7 +97,7 @@
     
     .tcaptionwrapper{
        
-        padding-top : 4 * @rhythm;
+        padding-top : 2 * @rhythm;
         margin-bottom: @rhythm;
 
 
@@ -159,9 +164,7 @@
                     /*.transition(0.3s);*/
                     cursor: pointer;
                     width: 80%;
-                    &:hover{
-                        color : rgb(var(--color-txt-ac));
-                    }
+                    
                 }
 
                 &.catedit,
@@ -174,11 +177,6 @@
                     opacity: 0.2;
                     i{
                         font-size: 0.8em;
-                    }
-
-                    
-                    &:hover{
-                        color : rgb(var(--color-txt-ac));
                     }
                 }
                 
@@ -216,10 +214,6 @@
                 &.catedit{
                     position: relative;
                     right: 10px;
-
-                    &:hover{
-                        opacity: 1;
-                    }
                 }
 
                 &.checked{
@@ -228,28 +222,61 @@
             }
         }
 
-        &:hover{
+      
+
+    }
+
+    @media (pointer:fine) {
+        .cat{
             .cattable{
                 >div{
+    
+                    &.catvalue{
+                        &:hover{
+                            color : rgb(var(--color-txt-ac));
+                        }
+                    }
+    
                     &.catedit,
                     &.catcheck{
-                        opacity: 1;
+    
+                        
+                        &:hover{
+                            color : rgb(var(--color-txt-ac));
+                        }
                     }
-
-                    &.catedit,
-                    &.minus{
-                        opacity: 0.5;
-
+    
+                    &.catedit{
                         &:hover{
                             opacity: 1;
                         }
                     }
-
-                 
                 }
             }
+    
+            &:hover{
+                .cattable{
+                    >div{
+                        &.catedit,
+                        &.catcheck{
+                            opacity: 1;
+                        }
+    
+                        &.catedit,
+                        &.minus{
+                            opacity: 0.5;
+    
+                            &:hover{
+                                opacity: 1;
+                            }
+                        }
+    
+                     
+                    }
+                }
+            }
+    
         }
-
     }
 
     .tg{
@@ -334,6 +361,8 @@
             }
         }
     }
+
+   
 
     &.showedallcats{
 
@@ -440,6 +469,9 @@
             }
         }
     }
+
+
+    
 }
 
 @media only screen and (max-width: 768px){

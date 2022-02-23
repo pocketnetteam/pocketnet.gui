@@ -50,8 +50,8 @@
   --background-main: 12, 14, 18;
   --background-main-contrast: 240, 242, 245;
   --color-medium-theme: 99, 100, 117;
-  --neutral-grad-0: 16,16,17;
-  --neutral-grad-1: 34,34,37;
+  --neutral-grad-0: 25,25,29;
+  --neutral-grad-1: 38,38,42;
   --neutral-grad-2: 78,78,99;
   --neutral-grad-3: 85,87,112;
   --neutral-grad-4: 96,103,112;
@@ -85,8 +85,8 @@
   --background-main: 28, 28, 28;
   --background-main-contrast: 242, 242, 242;
   --color-medium-theme: 104, 104, 104;
-  --neutral-grad-0: 16,16,16;
-  --neutral-grad-1: 37,37,37;
+  --neutral-grad-0: 37,37,37;
+  --neutral-grad-1: 47,47,47;
   --neutral-grad-2: 88,88,88;
   --neutral-grad-3: 95,95,95;
   --neutral-grad-4: 105,105,105;
@@ -144,6 +144,7 @@
 }
 body {
   overscroll-behavior: contain;
+  /* scroll-snap-type: y proximity;*/
 }
 html {
   font-size: 15px;
@@ -388,6 +389,10 @@ input.ie[type="range"]::-ms-thumb {
 .updatingFrontend.show {
   transform: translateY(100%);
 }
+#globalpreloader.show .table .icon i,
+.updatingFrontend.show .table .icon i {
+  display: inline-block;
+}
 #globalpreloader .table,
 .updatingFrontend .table {
   width: 100%;
@@ -417,7 +422,14 @@ input.ie[type="range"]::-ms-thumb {
 }
 #globalpreloader .table .icon i,
 .updatingFrontend .table .icon i {
+  display: none;
   font-size: 1.3em;
+}
+.js-player .video-js {
+  display: none;
+}
+.js-player.player-ready .video-js {
+  display: block;
 }
 .unselectable {
   -webkit-touch-callout: none;
@@ -906,6 +918,21 @@ pie {
 .sort.active i,
 .sort:hover i {
   color: rgb(var(--color-txt-ac));
+}
+.pkoin {
+  display: flex;
+  align-items: center;
+  background: rgb(var(--color-bg-ac-bright));
+  color: rgb(var(--text-on-bg-ac-color));
+  border-radius: 8px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+.pkoin img {
+  width: 1em;
+}
+.pkoin span {
+  margin-left: 0.5em;
 }
 .forstars .itemwr {
   display: flex;
@@ -2778,7 +2805,7 @@ input[type=radio].radio:checked + label {
   top: 0;
   bottom: 0;
   right: 0;
-  background: rgba(var(--color-shadow-base), 0.7);
+  background: rgba(var(--color-shadow-var), 0.9);
   z-index: 150;
 }
 .dialog.zindex {
@@ -4452,8 +4479,7 @@ html.mobileview.fullscreen #navigationWrapper {
 .fastMessage .commentmessagewrapper .commenttext span,
 .notification .commentmessagewrapper .commenttext span {
   font-size: 1;
-  color: rgb(var(--neutral-grad-4));
-  font-weight: 400;
+  font-weight: 700;
 }
 .fastMessage .commentmessagewrapper .commentimages,
 .notification .commentmessagewrapper .commentimages {
@@ -4722,9 +4748,7 @@ html.mobileview.fullscreen #navigationWrapper {
   cursor: pointer;
 }
 .notification .commentmessagewrapper .commenttext span {
-  font-size: 1.4em;
-  color: rgb(var(--neutral-grad-4));
-  font-weight: 100;
+  font-weight: 700;
 }
 #hideallnotifications .hidenf {
   position: fixed;
@@ -5954,16 +5978,16 @@ html.mobileview .upbutton .full {
 html.mobileview .wnd.normalizedmobile .wndinner {
   width: 100%;
   background: transparent!important;
+  will-change: transform;
 }
 html.mobileview .wnd.normalizedmobile .wndback {
   backface-visibility: hidden;
-  will-change: transform;
   backdrop-filter: none!important;
   -webkit-backdrop-filter: none!important;
-  -moz-transition: 0.3s;
-  -o-transition: 0.3s;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
+  -moz-transition: 0s;
+  -o-transition: 0s;
+  -webkit-transition: 0s;
+  transition: 0s;
 }
 html.mobileview .wnd.normalizedmobile .hideButton {
   display: none!important;
@@ -6043,16 +6067,16 @@ html.mobileview .wnd.normalizedmobile.asette .wndinner {
   transition: 0.2s;
 }
 html.mobileview .wnd.normalizedmobile.sette .wndinner {
-  -webkit-transform: translateY(130px);
-  transform: translateY(130px);
+  -webkit-transform: translate3d(0, 130px, 0);
+  transform: translate3d(0, 130px, 0);
   -moz-transition: transform 0.3s;
   -o-transition: transform 0.3s;
   -webkit-transition: transform 0.3s;
   transition: transform 0.3s;
 }
 html.mobileview .wnd.normalizedmobile.sette .windowmainbuttons {
-  -webkit-transform: translateY(-130px);
-  transform: translateY(-130px);
+  -webkit-transform: translate3d(0, -130px, 0);
+  transform: translate3d(0, -130px, 0);
   -moz-transition: transform 0.3s;
   -o-transition: transform 0.3s;
   -webkit-transition: transform 0.3s;
@@ -6063,12 +6087,12 @@ html.mobileview .wnd.normalizedmobile.sette .wndback {
   opacity: 1;
 }
 html.mobileview .wnd.normalizedmobile.showbetter.sette .wndinner {
-  -webkit-transform: translateY(45px);
-  transform: translateY(45px);
+  -webkit-transform: translate3d(0, 45px, 0);
+  transform: translate3d(0, 45px, 0);
 }
 html.mobileview .wnd.normalizedmobile.showbetter.sette .windowmainbuttons {
-  -webkit-transform: translateY(-45px);
-  transform: translateY(-45px);
+  -webkit-transform: translate3d(0, -45px, 0);
+  transform: translate3d(0, -45px, 0);
 }
 html.mobileview .wnd.normalizedmobile.showbetter .closeline {
   opacity: 0;
@@ -6079,6 +6103,13 @@ html.mobileview .wnd.normalizedmobile.showbetter .roundclosebutton {
 html.mobileview .wnd.normalizedmobile.noheader .wndinner .wndcontent {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+}
+html.mobileview .wnd.normalizedmobile:only-child.asette .wndback {
+  -moz-transition: 0.2s;
+  -o-transition: 0.2s;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+  opacity: 0;
 }
 #application .emojionearea,
 #application .emojionearea.form-control {
@@ -6212,7 +6243,7 @@ html.mobileview .wnd.normalizedmobile.noheader .wndinner .wndcontent {
 #application .parameter input {
   width: 100%;
   padding: 0.5em;
-  border-radius: 2px;
+  border-radius: 6px;
 }
 #application .parameter select.error,
 #application .parameter textarea.error,
@@ -6235,7 +6266,7 @@ html.mobileview .wnd.normalizedmobile.noheader .wndinner .wndcontent {
 }
 #application .parameter .vc_valuecustom .vc_textInput,
 #application .parameter .vc_valuecustom_multibig .vc_textInput {
-  background: #fff;
+  background: rgb(var(--background-hidden-layer));
 }
 #application .parameter .vmt_valuesmultitree,
 #application .parameter .vm_value {
