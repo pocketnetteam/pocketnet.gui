@@ -1,3 +1,10 @@
+#lenta {
+  /*.authorCell a,
+	.sbtnxs,
+	.spsp{
+		display: inline-block;
+	}*/
+}
 #lenta.destroying {
   display: none;
 }
@@ -28,19 +35,6 @@
 }
 #lenta .panel {
   overflow: hidden;
-}
-#lenta .adr {
-  max-width: 230px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  vertical-align: bottom;
-  display: inline-block;
-  white-space: nowrap;
-}
-#lenta .authorCell a,
-#lenta .sbtnxs,
-#lenta .spsp {
-  display: inline-block;
 }
 #lenta .circularprogress {
   overflow: hidden;

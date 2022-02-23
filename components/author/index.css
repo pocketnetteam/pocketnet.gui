@@ -280,6 +280,7 @@
   opacity: 0.7;
   cursor: pointer;
   font-size: 0.5em;
+  display: none;
 }
 #author .bgCaption .changeaccount:hover {
   opacity: 1;
@@ -511,6 +512,13 @@ html.mobileview #author .lentacell {
   margin-right: 0;
   margin-left: 0;
 }
+html.mobileview #author .bgCaption .adr {
+  max-width: none;
+  display: block;
+}
+html.mobileview #author .bgCaption .middotwrapper {
+  display: none;
+}
 html.mobileview #author .leftpanelcell {
   display: none;
 }
@@ -667,6 +675,9 @@ html.mobileview #author .authorlentawrappermain .authorsearchwrapper .search .se
     text-align: left!important;
     padding-left: 0.5em;
   }
+  #author .bgCaption .changeaccount {
+    display: block;
+  }
   #author .bgCaption .infoWrapper,
   #author .lentacell .cnt {
     max-width: 640px;
@@ -691,6 +702,11 @@ html.mobileview #author .authorlentawrappermain .authorsearchwrapper .search .se
   #author .subscribewrapperphones .subscribebuttons button {
     padding-bottom: 0.5em;
     padding-top: 0.5em;
+  }
+  #author .bgCaption .caption .subscribe {
+    font-size: 1.4em;
+    border-bottom: 1px solid #ff4800;
+    opacity: 1;
   }
   #author .bgCaption .cwrapper > div {
     vertical-align: top;

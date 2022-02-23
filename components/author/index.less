@@ -401,6 +401,7 @@
 			opacity: 0.7;
 			cursor: pointer;
 			font-size: 0.5em;
+			display: none;
 
 			&:hover{
 				opacity: 1;
@@ -738,6 +739,19 @@ html.mobileview{
 			margin-left: 0;
 		}
 
+		.bgCaption{
+			.adr{
+				max-width: none;
+				display: block;
+			}
+
+			.middotwrapper{
+				display: none;
+			}
+
+			
+		}
+
 		.leftpanelcell{
 			display: none;
 		}
@@ -971,6 +985,10 @@ html.mobileview{
 				text-align: left!important;
 				padding-left: @rhythm;
 			}
+
+			.changeaccount{
+				display: block;
+			}
 		}
 
 		.bgCaption .infoWrapper,
@@ -1023,6 +1041,17 @@ html.mobileview{
 					
 				}
 			}
+		}
+
+		.bgCaption{
+			.caption{
+				.subscribe{
+					font-size: 1.4em;
+					border-bottom: 1px solid #ff4800;
+					opacity: 1;
+				}
+			}
+			
 		}
 
 		.bgCaption .cwrapper>div {
