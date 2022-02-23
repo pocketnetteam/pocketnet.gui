@@ -782,8 +782,7 @@
 				}
 	
 				.divider{
-					margin : 0 auto;
-					margin-bottom: @rhythm;
+					margin : @rhythm auto;
 					height: 1px;
 					width: 110px;
 					background: rgb(var(--background-total-theme));
@@ -831,13 +830,21 @@
 						overflow-y: auto;
 						text-overflow: ellipsis;
 						overscroll-behavior:auto;
+						.shadowText();
 					}
 					
 				}
 
+				.tags{
+					div span {
+						.shadowText();
+					}
+				}
+
 				.sys{
 					span{
-						color : rgb(var(--text-on-bg-shadow-color))
+						color : rgb(var(--text-on-bg-shadow-color));
+						.shadowText();
 					}
 				}
 	
@@ -884,6 +891,10 @@
 							text-align: center;
 							font-size: 0.7em;
 						}
+					}
+
+					.sharesocial{
+						display: none;
 					}
 				}
 
@@ -954,7 +965,7 @@
 						bottom : @rhythm;
 
 						.sharecaption{
-							
+							text-shadow: none;
 							color : rgb(var(--text-color));
 						}
 					}
@@ -990,12 +1001,14 @@
 
 					.tags{
 						div span {
+							text-shadow: none;
 							color : rgb(var(--text-color));
 						}
 					}
 
 					.sys{
 						span{
+							text-shadow: none;
 							color : rgb(var(--text-color));
 						}
 					}
@@ -1071,13 +1084,14 @@
 			.sharearticle{
 				
 				.shareBgCaption{
+					height: 525px;
 					
 					&:not(.verticalcover){
 
 						.captioncnt{
 			
 							.sharecaption{
-								font-size: 2em;
+								font-size: 2.5em;
 								font-family: Georgia, serif;
 							}
 							
@@ -1107,7 +1121,8 @@
 							bottom : 0;
 
 							.sharecaption{
-								font-size: 2em;
+								.shadowText();
+								font-size: 2.5em;
 								color : rgb(var(--text-on-bg-ac-color));
 							}
 						}
@@ -1131,6 +1146,7 @@
 
 						.tags{
 							div span{
+								.shadowText();
 								color : rgb(var(--text-on-bg-ac-color));
 							}
 						}
@@ -1138,6 +1154,7 @@
 
 						.sys{
 							span{
+								.shadowText();
 								color : rgb(var(--text-on-bg-ac-color));
 							}
 						}

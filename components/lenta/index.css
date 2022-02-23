@@ -576,8 +576,7 @@
 }
 #lenta .share .sharearticle .shareBgCaption .divider,
 #lenta .share .sharearticle .articleend .divider {
-  margin: 0 auto;
-  margin-bottom: 0.5em;
+  margin: 0.5em auto;
   height: 1px;
   width: 110px;
   background: rgb(var(--background-total-theme));
@@ -620,9 +619,14 @@
   overflow-y: auto;
   text-overflow: ellipsis;
   overscroll-behavior: auto;
+  text-shadow: 0px 0px 2px rgba(var(--color-shadow-base), 0.714), 0 0 3px rgba(var(--color-shadow-base), 0.519);
+}
+#lenta .share .sharearticle .shareBgCaption .tags div span {
+  text-shadow: 0px 0px 2px rgba(var(--color-shadow-base), 0.714), 0 0 3px rgba(var(--color-shadow-base), 0.519);
 }
 #lenta .share .sharearticle .shareBgCaption .sys span {
   color: rgb(var(--text-on-bg-shadow-color));
+  text-shadow: 0px 0px 2px rgba(var(--color-shadow-base), 0.714), 0 0 3px rgba(var(--color-shadow-base), 0.519);
 }
 #lenta .share .sharearticle .shareBgCaption .icon .usericon {
   margin: 0 auto;
@@ -661,6 +665,10 @@
   width: 30px;
   text-align: center;
   font-size: 0.7em;
+}
+#lenta .share .sharearticle .shareBgCaption .starstoppanel .sharesocial,
+#lenta .share .sharearticle .shareBgCaption .socialsharewrapper .sharesocial {
+  display: none;
 }
 #lenta .share .sharearticle .shareBgCaption .socialsharewrapper .iconwrapper {
   justify-content: flex-end;
@@ -716,6 +724,7 @@
   bottom: 0.5em;
 }
 #lenta .share .sharearticle .shareBgCaption.verticalcover .captioncnt .sharecaption {
+  text-shadow: none;
   color: rgb(var(--text-color));
 }
 #lenta .share .sharearticle .shareBgCaption.verticalcover .blackmatte {
@@ -741,9 +750,11 @@
   background: rgba(var(--color-shadow-base), 0.9);
 }
 #lenta .share .sharearticle .shareBgCaption.verticalcover .tags div span {
+  text-shadow: none;
   color: rgb(var(--text-color));
 }
 #lenta .share .sharearticle .shareBgCaption.verticalcover .sys span {
+  text-shadow: none;
   color: rgb(var(--text-color));
 }
 #lenta .share .sharearticle .shareBgCaption.verticalcover .starstoppanel .iconwrapper,
@@ -788,8 +799,11 @@
   #lenta .share .images {
     max-width: none;
   }
+  #lenta .share .sharearticle .shareBgCaption {
+    height: 525px;
+  }
   #lenta .share .sharearticle .shareBgCaption:not(.verticalcover) .captioncnt .sharecaption {
-    font-size: 2em;
+    font-size: 2.5em;
     font-family: Georgia, serif;
   }
   #lenta .share .sharearticle .shareBgCaption:not(.verticalcover) .icon {
@@ -812,7 +826,8 @@
     bottom: 0;
   }
   #lenta .share .sharearticle .shareBgCaption.verticalcover .captioncnt .sharecaption {
-    font-size: 2em;
+    text-shadow: 0px 0px 2px rgba(var(--color-shadow-base), 0.714), 0 0 3px rgba(var(--color-shadow-base), 0.519);
+    font-size: 2.5em;
     color: rgb(var(--text-on-bg-ac-color));
   }
   #lenta .share .sharearticle .shareBgCaption.verticalcover .blackmatte {
@@ -829,9 +844,11 @@
     background: rgb(var(--text-on-bg-ac-color));
   }
   #lenta .share .sharearticle .shareBgCaption.verticalcover .tags div span {
+    text-shadow: 0px 0px 2px rgba(var(--color-shadow-base), 0.714), 0 0 3px rgba(var(--color-shadow-base), 0.519);
     color: rgb(var(--text-on-bg-ac-color));
   }
   #lenta .share .sharearticle .shareBgCaption.verticalcover .sys span {
+    text-shadow: 0px 0px 2px rgba(var(--color-shadow-base), 0.714), 0 0 3px rgba(var(--color-shadow-base), 0.519);
     color: rgb(var(--text-on-bg-ac-color));
   }
   #lenta .share .sharearticle .shareBgCaption.verticalcover .starstoppanel .iconwrapper,

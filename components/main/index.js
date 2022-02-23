@@ -51,9 +51,13 @@ var main = (function(){
 
 				var vs = _.toArray(links)
 
-				var r = parameters(self.app.nav.current.completeHref, true).r || 'index'
-				var video = parameters(self.app.nav.current.completeHref, true).video || false
-				var read = parameters(self.app.nav.current.completeHref, true).read || false
+				var pss = parameters()
+
+				var r = pss.r || 'index'
+				var video = pss.video || false
+				var read = pss.read || false
+
+				console.log('r, video, read', r, video, read)
 
 				var value = links[video ? 'video' : read ? 'read' : r]
 
@@ -978,6 +982,8 @@ var main = (function(){
 					el.c.removeClass('videomain')
 					actions.backtolentaClear()
 				}
+
+				console.log('changes')
 
 				if (changes){
 
