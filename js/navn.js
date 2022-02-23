@@ -471,8 +471,6 @@ Nav = function(app)
  
 			var p = parameters(href, true)
 
-			console.log("p['pc']", p['pc'])
-
 			if(!p['pc']){
 				return app.platform.matrixchat.backtoapp()
 			}

@@ -9291,10 +9291,10 @@ Platform = function (app, listofnodes) {
                         var a = self.sdk.address.pnet().address;
 
                         if (!_.isEmpty(info)) {
-                            self.app.settings.set(a, 'last_ustate', JSON.stringify(info))
+                            self.app.settings.set(a, 'last_ustate_2', info)
                         }
                         else {
-                            info = JSON.parse(self.app.settings.get(a, 'last_ustate') || "{}")
+                            info = self.app.settings.get(a, 'last_ustate_2') || {}
 
                             if (!_.isEmpty(info)) {
 
@@ -26572,8 +26572,6 @@ Platform = function (app, listofnodes) {
 
                     self.matrixchat.core.hideInParent(self.app.mobileview ? true : false )
                 }
-
-                
 
                 if (self.app.mobileview){
 
