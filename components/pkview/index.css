@@ -104,9 +104,6 @@
 #pkview .dontshowagain.active:hover {
   opacity: 0.8;
 }
-#pkview .abswndwrapper {
-  padding: 4em 0;
-}
 .wnd.pkviewwnd .wndinner {
   width: 100%;
   height: 100%;
@@ -146,79 +143,12 @@
 }
 /*t*/
 @media only screen and (max-width: 768px) {
-  #pkview {
-    padding: 0;
-    padding-top: 0;
-  }
-  #pkview .abswndwrapper {
-    padding: 0;
-  }
-  #pkview .work {
-    padding: 0;
-  }
-  #pkview .key .mnemonicKeyTable > div.mobiledevice {
-    display: block;
-    text-align: center;
-    margin-top: 1em;
-  }
-  #pkview .key .mnemonicKeyCell {
-    margin-top: 1em;
-  }
-  #pkview .key .panel .item {
-    width: 100%;
-  }
-  #pkview .dontshowagain {
-    margin-left: 0;
-    bottom: -10%;
-    left: 0.5em;
-    width: auto;
-    right: 0.5em;
-  }
-  #pkview .dontshowagain.active {
-    bottom: 60px;
-    display: block;
-    opacity: 1;
-  }
-  #pkview .dontshowagain.active:hover {
-    opacity: 0.8;
-  }
-  .wnd.pkviewwnd {
-    /*._close {
-            background: fade(#000, 50);
-        }*/
-  }
-  .wnd.pkviewwnd .wndinner {
-    width: 100%;
-    height: 100%;
-  }
-  .wnd.pkviewwnd .wndinner .wndcontent {
-    background: rgb(var(--background-total-theme));
-  }
-  .wnd.pkviewwnd .table {
-    display: block;
-    height: 100%;
-  }
-  .wnd.pkviewwnd .tablecell {
-    display: block;
-    height: 100%;
-  }
-  .wnd.pkviewwnd .keywrapper {
-    height: 100%;
-  }
-  .wnd.pkviewwnd .keywrapper .key {
-    height: 100%;
-  }
   .wnd.pkviewwnd #pkview .keywrapper {
     padding-left: 0.5em;
     padding-right: 0.5em;
   }
   .wnd.pkviewwnd #pkview .key {
     padding: 0.5em;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-  .wnd.pkviewwnd #pkview .work {
-    max-width: 1024px;
   }
   .wnd.pkviewwnd #pkview .mnemonicKey {
     height: 90px;

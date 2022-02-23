@@ -201,6 +201,10 @@
     padding-left: 1em;
     padding-right: 1em;
   }
+  #authorization .mpad {
+    padding-left: 1em;
+    padding-right: 1em;
+  }
   #authorization .caption {
     margin-top: 0.5em;
     font-size: 2em;

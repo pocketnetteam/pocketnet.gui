@@ -7379,8 +7379,7 @@ html.mobileview{
                 backface-visibility: hidden;
                 backdrop-filter: none!important;
                 -webkit-backdrop-filter: none!important;  
-                
-                .transition(0.3s);
+                .transition(0s);
             }
 
             .hideButton{
@@ -7511,8 +7510,22 @@ html.mobileview{
                    
                 }
             }
+
+            &:only-child{
+
+                &.asette{
+                    .wndback{
+                        .transition(0.2s);
+                        opacity: 0;
+                    }
+                }
+            }
         }
+
+       
     }
+
+    
 }
 
 ///////////
