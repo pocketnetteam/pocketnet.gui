@@ -140,6 +140,7 @@
   color: rgb(var(--neutral-grad-4));
   text-align: center;
   background: rgb(var(--background-total-theme));
+  border-radius: 12px;
 }
 #lenta .zero .tou,
 #lenta .ended .tou {

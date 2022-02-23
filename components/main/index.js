@@ -57,8 +57,6 @@ var main = (function(){
 				var video = pss.video || false
 				var read = pss.read || false
 
-				console.log('r, video, read', r, video, read)
-
 				var value = links[video ? 'video' : read ? 'read' : r]
 
 				var labels = [self.app.localization.e('e13136'), self.app.localization.e('e13137'), self.app.localization.e('e13138'), self.app.localization.e('video'), self.app.localization.e('longreads')]
@@ -291,7 +289,6 @@ var main = (function(){
 							state : state,
 							mobile : isMobile(),
 							tagsExcluded : self.app.platform.sdk.categories.gettagsexcluded().length,
-
 							tagsSelected : self.app.platform.sdk.categories.gettags().length,
 							tags : self.app.platform.sdk.categories.gettags(),
 							selector : selector,
@@ -371,6 +368,8 @@ var main = (function(){
 			},
 
 			topvideos: function (show) {
+
+				console.log("show Topvideos", show)
 				
 				if (show){
 
@@ -403,7 +402,8 @@ var main = (function(){
 						ended : function(s){
 
 							if(!s.length) return true
-							return false
+
+								return false
 
 						},
 						hasshares : function(shares){
@@ -427,7 +427,7 @@ var main = (function(){
 						external = null
 					}
 
-					el.topvideos.html('')
+					el.topvideos.find('.wrpcn').html('')
 					//showmoreby.removeClass('hasshares')
 
 					el.topvideos.addClass('hidden')
@@ -893,6 +893,7 @@ var main = (function(){
 
 			renders.menu()
 
+
 			if (currentMode == 'common' && !videomain && !readmain && !searchvalue && !searchtags)
 				renders.topvideos(true)
 			else{
@@ -983,7 +984,7 @@ var main = (function(){
 					actions.backtolentaClear()
 				}
 
-				console.log('changes')
+				console.log('changes', changes)
 
 				if (changes){
 
@@ -991,6 +992,8 @@ var main = (function(){
 						external.clearessense()
 						external = null
 					}
+
+					console.log('changescurrentMode', currentMode, currentMode == 'common' && !videomain && !readmain && !searchvalue && !searchtags)
 
 					renders.topvideos(currentMode == 'common' && !videomain && !readmain && !searchvalue && !searchtags)
 

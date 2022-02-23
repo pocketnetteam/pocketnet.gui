@@ -20,7 +20,7 @@
 					position: relative;
 					padding-top: @rhythm;
 					padding-bottom: @rhythm;
-
+					white-space: nowrap;
 					line-height: 20px;
 					
 					.pcenterLabel{
@@ -46,9 +46,11 @@
 						.text{
 							font-size: 0.9em;
 							font-weight: 500;
+							vertical-align: middle;
 						}
 
 						i{
+							vertical-align: middle;
 							width: 55px;
 							text-align: center;
 						}
@@ -59,11 +61,18 @@
 							height: 20px;
 							font-size: 0.7em;
 							line-height: 20px;
+							vertical-align: middle;
 							text-align: center;
 							border-radius: 10px;
 							background: rgb(var(--neutral-grad-1));
 							color: rgb(var(--color-txt-ac));
 							margin-left: 2 * @rhythm;
+
+							i{
+								width: 100%;
+								font-size: 0.5em;
+								vertical-align: middle;
+							}
 
 							&.hasunseen{
 								display: inline-block;

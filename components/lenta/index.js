@@ -2407,6 +2407,21 @@ var lenta = (function(){
 		}	
 
 		var renders = {
+
+			loadprev : function(){
+
+				var txt = self.app.localization.e('lloadprev')
+
+				var s = self.app.platform.sdk.categories.gettagsexcluded().length + self.app.platform.sdk.categories.gettags().length
+
+				if (s && recommended != 'sub'){
+					txt = self.app.localization.e('lloadprevwithtags')
+				}
+
+				el.c.find('.loadprev button span').html(txt)
+
+			},
+
 			recommendedusers : function(){
 				
 
@@ -3506,7 +3521,6 @@ var lenta = (function(){
 
 									if(essenseData.ended) {
 										ended = essenseData.ended(shares)
-
 									}
 
 									else
@@ -4221,7 +4235,6 @@ var lenta = (function(){
 					self.app.platform.sdk.categories.clbks.selected.lenta = function(data){
 
 						if(getloader() == 'hierarchical' && !essenseData.second){
-
 							actions.rebuilddelay()
 						}
 						
@@ -4410,7 +4423,7 @@ var lenta = (function(){
 
 			}, cache)
 
-					
+			renders.loadprev()		
 		}
 
 		var clearnewmaterials = function(){

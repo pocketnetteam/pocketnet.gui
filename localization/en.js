@@ -2086,3 +2086,5 @@ ____loclib.readarticle = "Read"
 
 ____loclib.filters = "Filters"
 ____loclib.dataenteredincorrectly = "Data entered incorrectly"
+
+____loclib.lloadprevwithtags = "Refresh Feed"

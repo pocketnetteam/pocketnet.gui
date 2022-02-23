@@ -23,6 +23,7 @@
   position: relative;
   padding-top: 0.5em;
   padding-bottom: 0.5em;
+  white-space: nowrap;
   line-height: 20px;
 }
 #leftpanel .menu .menupanel .tabs .tab .pcenterLabel {
@@ -44,8 +45,10 @@
 #leftpanel .menu .menupanel .tabs .tab .pcenterLabel .text {
   font-size: 0.9em;
   font-weight: 500;
+  vertical-align: middle;
 }
 #leftpanel .menu .menupanel .tabs .tab .pcenterLabel i {
+  vertical-align: middle;
   width: 55px;
   text-align: center;
 }
@@ -55,11 +58,17 @@
   height: 20px;
   font-size: 0.7em;
   line-height: 20px;
+  vertical-align: middle;
   text-align: center;
   border-radius: 10px;
   background: rgb(var(--neutral-grad-1));
   color: rgb(var(--color-txt-ac));
   margin-left: 1em;
+}
+#leftpanel .menu .menupanel .tabs .tab .pcenterLabel .lentaunseen i {
+  width: 100%;
+  font-size: 0.5em;
+  vertical-align: middle;
 }
 #leftpanel .menu .menupanel .tabs .tab .pcenterLabel .lentaunseen.hasunseen {
   display: inline-block;
