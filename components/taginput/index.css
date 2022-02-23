@@ -81,6 +81,7 @@
 #taginput .tgs .tagsWrapper > div.tagsInputWrapper > div.inputWrapper {
   padding: 0;
   border-radius: 6px;
+  background: rgb(var(--background-hidden-layer));
   box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
 }
 #taginput .tgs .tag {

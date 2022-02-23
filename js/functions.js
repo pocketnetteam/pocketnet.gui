@@ -4999,7 +4999,7 @@
 						_.each(self.possibleValues, function (value, index) {
 
 
-							if(self.value == value) return
+							//if(self.value == value) return
 
 							//if(self.possibleValuesLabels[index]) label = self.possibleValuesLabels[index]
 
