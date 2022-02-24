@@ -14,6 +14,49 @@ if (typeof _Electron != 'undefined') {
 }
 
 
+/*
+
+    {
+        NOT_SUPPORTED = 0,
+
+        TX_DEFAULT = 1,
+        TX_COINBASE = 2,
+        TX_COINSTAKE = 3,
+
+        ACCOUNT_USER = 100,
+        ACCOUNT_VIDEO_SERVER = 101,
+        ACCOUNT_MESSAGE_SERVER = 102,
+        ACCOUNT_SETTING = 103,
+
+        CONTENT_POST = 200,
+        CONTENT_VIDEO = 201,
+        CONTENT_ARTICLE = 202,
+        // CONTENT_SERVERPING = 203,
+
+        CONTENT_COMMENT = 204,
+        CONTENT_COMMENT_EDIT = 205,
+        CONTENT_COMMENT_DELETE = 206,
+
+        CONTENT_DELETE = 207,
+
+        BOOST_CONTENT = 208,
+
+        ACTION_SCORE_CONTENT = 300,
+        ACTION_SCORE_COMMENT = 301,
+
+        ACTION_SUBSCRIBE = 302,
+        ACTION_SUBSCRIBE_PRIVATE = 303,
+        ACTION_SUBSCRIBE_CANCEL = 304,
+
+        ACTION_BLOCKING = 305,
+        ACTION_BLOCKING_CANCEL = 306,
+
+        ACTION_COMPLAIN = 307,
+    };
+
+*/
+
+
 Platform = function (app, listofnodes) {
 
     var self = this;
@@ -16940,10 +16983,14 @@ Platform = function (app, listofnodes) {
 
                 },
                 checkTemp: function (alias, clbk) {
+
+                    console.log('checktemp, ', alias)
+
                     if (alias && alias.txid) {
 
                         self.sdk.node.transactions.get.tx(alias.txid, function (d, _error) {
 
+                            console.log(d)
 
                             if (clbk) {
 
@@ -16951,7 +16998,7 @@ Platform = function (app, listofnodes) {
 
                                 clbk(
                                     (errorcode == -5) || (errorcode == -8) ||
-                                    (deep(d, 'confirmations') > 0)
+                                    (deep(d, 'height') > 0)
                                 )
                             }
                         })
