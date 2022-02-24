@@ -1787,7 +1787,7 @@ ____loclib.minPkoin = function (p){
 	return `Минимум ${String(p)} PKOIN`
 }
 
-____loclib.minPkoin = function (p){	
+____loclib.maxPkoin = function (p){	
 	return `Максимум ${String(p)} PKOIN`
 }
 
