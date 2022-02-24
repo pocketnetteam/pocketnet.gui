@@ -465,7 +465,9 @@ var post = (function () {
 
 						var videoId = el2.getAttribute('data-plyr-video-id');
 
-						if(el2.closest('.share').attr('id') != share.txid) return
+						var elem = $(el2)
+
+						if (elem.closest && elem.closest('.shareTable').attr('stxid') != share.txid) return
 
 						PlyrEx(el2, options, (_player) => {
 
