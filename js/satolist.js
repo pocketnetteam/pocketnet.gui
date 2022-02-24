@@ -17641,6 +17641,16 @@ Platform = function (app, listofnodes) {
 
                                 self.sdk.node.transactions.storage[id] = d
 
+                                if(!d.confirmations) {
+                                    if(d.height){
+                                        if (self.currentBlock)
+                                            d.confirmations = Math.max(self.currentBlock - d.height, 0)
+                                    }
+                                    else{
+                                        d.confirmations = 0
+                                    }
+                                }
+
                                 if (clbk)
                                     clbk(d)
 
