@@ -132,11 +132,6 @@
   color: rgb(var(--text-color));
   border: 1px solid rgb(var(--neutral-grad-1));
 }
-#staking .buycoin .buyButton:hover {
-  background: transparent;
-  color: #0a0c17;
-  border: 1px solid rgb(var(--neutral-grad-1));
-}
 #staking .tcaptionwrapper {
   display: flex;
   align-items: center;

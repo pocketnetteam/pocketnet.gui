@@ -46,7 +46,7 @@
 }
 #about .bottomfooter .discover .items a .oflogo {
   display: inline-block;
-  color: #00a6ff;
+  color: rgb(var(--color-cc-blue));
   font-size: 4em;
   text-align: center;
   line-height: 25px;
@@ -71,7 +71,7 @@
   font-size: 0.6em;
 }
 #about .bottomfooter .discover .items a i {
-  color: #00a6ff;
+  color: rgb(var(--color-cc-blue));
   font-size: 2em;
   width: 25px;
   height: 25px;
@@ -155,7 +155,7 @@
   font-size: 0.6em;
 }
 #about .open > .main-wrapper .content .discover .one-item > div > a > i {
-  color: #00a6ff;
+  color: rgb(var(--color-cc-blue));
   font-size: 2em;
   width: 25px;
   height: 25px;
@@ -163,7 +163,7 @@
 }
 #about .open > .main-wrapper .content .discover .one-item > div .oflogo {
   display: inline-block;
-  color: #00a6ff;
+  color: rgb(var(--color-cc-blue));
   font-size: 4em;
   text-align: center;
   line-height: 25px;
@@ -171,7 +171,7 @@
 #about .maket {
   top: 0;
   position: fixed;
-  background: white;
+  background: rgb(var(--background-total-theme));
   z-index: 300;
   width: 100%;
   height: 65px;
@@ -247,23 +247,19 @@
   cursor: pointer;
 }
 #about .maket .contentsInner .contentmenu .reportCaption.active {
-  color: #0e1c2b;
-}
-#about .maket .contentsInner .contentmenu .reportCaption .reportCaptionTable:hover {
-  color: #00a4ff;
+  color: rgb(var(--color-txt-ac));
 }
 #about .maket .contentsInner .contentmenu .reportCaption.alternativeTo {
   position: relative;
 }
 #about .maket .contentsInner .contentmenu .reportCaption.alternativeTo .dropdown {
   display: none;
+  padding-left: 10px;
+  left: 5px;
   width: 180px;
-  padding-top: 1em;
+  padding-top: 0.5em;
   position: absolute;
-  background: #ffffff;
-}
-#about .maket .contentsInner .contentmenu .reportCaption.alternativeTo .dropdown .reportCaption:hover .dropdownReportCaptionCell {
-  color: #00a4ff;
+  background: rgb(var(--background-secondary-theme));
 }
 #about .maket .contentsInner .contentmenu .reportCaption.alternativeTo:hover .dropdown,
 #about .maket .contentsInner .contentmenu .reportCaption.alternativeTo.active .dropdown {
@@ -314,7 +310,7 @@
   height: 100%;
   background: rgba(10, 12, 23, 0.5);
   cursor: pointer;
-  color: #b2abac;
+  color: rgb(var(--background-secondary-theme));
 }
 #about .mobileMenu .leftSection:hover {
   color: #ffffff;
@@ -375,15 +371,4 @@
   #about .bottomfooter .discover .items.support {
     margin-top: 4.5em;
   }
-}
-html.stblack #about .maket {
-  background: #030f1b;
-  color: #b2abac;
-}
-html.stblack #about .maket .contentmenu .reportCaption.active {
-  color: #fff;
-}
-html.stblack #about .maket .dropdown {
-  background: #030f1b !important;
-  color: #b2abac;
 }

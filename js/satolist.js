@@ -18291,7 +18291,6 @@ Platform = function (app, listofnodes) {
                                     })
                                 }
 
-
                                 var totalReturn = Number((amount - totalDonate - (fees || 0)).toFixed(0));
 
 
