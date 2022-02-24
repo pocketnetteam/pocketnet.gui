@@ -77,6 +77,9 @@
   background-size: cover;
   position: relative;
 }
+#aboutHome .works.theme_black {
+  background: rgb(var(--background-main));
+}
 #aboutHome .works > .main-wrapper {
   position: relative;
   z-index: 2;
