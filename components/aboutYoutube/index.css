@@ -10,7 +10,7 @@
   font-size: 30px;
   font-weight: 600;
   line-height: 40px;
-  color: #444444;
+  color: rgb(var(--color-h2-aboutcc));
   text-align: center;
   text-transform: uppercase;
 }
@@ -48,7 +48,7 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  color: #FFFFFF;
+  color: rgb(var(--text-color));
 }
 #aboutYoutube .works > .main-wrapper > div .works__container > .text {
   display: flex;
@@ -59,7 +59,7 @@
 }
 #aboutYoutube .works > .main-wrapper > div .works__container > .text > p {
   margin: 20px 0;
-  color: black;
+  color: rgb(var(--text-color));
   width: 250px;
 }
 #aboutYoutube .works > .main-wrapper > div > .image {
@@ -168,7 +168,7 @@
   font-size: 0.6em;
 }
 #aboutYoutube .open > .main-wrapper .content .discover .one-item > div > a > i {
-  color: #00a6ff;
+  color: rgb(var(--color-cc-blue));
   font-size: 2em;
   width: 25px;
   height: 25px;
@@ -188,7 +188,7 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  color: #FFFFFF;
+  color: rgb(var(--text-color));
 }
 #aboutYoutube .darkbg > .main-wrapper > .dark__container > img {
   width: 500px;
@@ -208,7 +208,7 @@
 }
 #aboutYoutube .darkbg > .main-wrapper > .dark__container > .text > h2 {
   text-align: left;
-  color: #fff;
+  color: rgb(var(--text-color));
 }
 #aboutYoutube .team {
   padding: 60px 0;
@@ -227,7 +227,7 @@
   right: 0;
   top: 0;
   bottom: 0;
-  background-color: rgba(33, 42, 73, 0.6);
+  background-color: rgba(var(--color-cc-form));
   z-index: 1;
 }
 #aboutYoutube .blog > .main-wrapper {
@@ -236,7 +236,7 @@
   text-align: center;
 }
 #aboutYoutube .blog h2 {
-  color: #FFFFFF;
+  color: rgb(var(--text-color));
 }
 #aboutYoutube .blog h2 > span::after {
   background: #FFFFFF;
@@ -283,7 +283,7 @@
   font-size: 15px;
   font-weight: 400;
   letter-spacing: 1px;
-  color: black;
+  color: rgb(var(--text-color));
   margin-right: 15px;
   cursor: pointer;
   position: relative;
@@ -299,7 +299,7 @@
   content: '';
   width: 10%;
   height: 3px;
-  background: #00D5C3;
+  background: #00d5c3;
   position: absolute;
   left: 0;
   right: 0;
@@ -337,7 +337,7 @@
 }
 #aboutYoutube .main-board h2 {
   position: relative;
-  color: #fff;
+  color: rgb(var(--text-color));
   font-size: 30px;
   text-align: left;
   margin-left: 30px;
@@ -355,7 +355,7 @@
   width: 100%;
 }
 #aboutYoutube .main-board__left-block > div {
-  color: #FFFFFF;
+  color: rgb(var(--text-color));
   font-weight: 600;
   font-size: 16px;
   margin-bottom: 15px;
@@ -394,7 +394,7 @@
   color: black;
 }
 #aboutYoutube .main-board__left-block_2 > div:last-child > a:hover {
-  color: #fff;
+  color: rgb(var(--text-color));
 }
 #aboutYoutube .grey {
   background: #dddddd;
@@ -410,11 +410,11 @@
   align-items: center;
   width: 165px;
   height: 50px;
-  border: 1px solid #00a6ff;
+  border: 1px solid rgb(var(--color-cc-blue));
   font-size: 18px;
   border-radius: 0 5px 0 5px;
   text-decoration: none;
-  color: #FFFFFF;
+  color: rgb(var(--text-color));
   font-size: 12px;
   transition-duration: 0.3s;
 }
@@ -425,12 +425,12 @@
   margin-left: 20px;
   margin-right: 15px;
   font-size: 30px;
-  color: #00a6ff;
+  color: rgb(var(--color-cc-blue));
   width: 26px;
   transition-duration: 0.3s;
 }
 #aboutYoutube .main-board__button-link:hover {
-  background: #00a6ff;
+  background: rgb(var(--color-cc-blue));
 }
 #aboutYoutube .main-board__button-link:hover > i {
   color: #FFFFFF;
@@ -443,13 +443,14 @@
   position: relative;
   z-index: 9;
   background: #262626;
-  color: #fff;
+  color: rgb(var(--text-color));
   padding: 50px 15px;
 }
 #aboutYoutube .main-description .main-wrapper {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+  color: #FFFFFF;
 }
 #aboutYoutube .main-description .main-wrapper .row {
   padding: 0 15px;
@@ -504,7 +505,7 @@
   }
 }
 #aboutYoutube .description-three-column {
-  background: #cfcfcf;
+  background: rgb(var(--color-medium-theme));
 }
 #aboutYoutube .description-three-column .main-wrapper {
   padding: 60px 0;
@@ -613,17 +614,17 @@
     position: relative;
     position: reletive;
     padding: 50px 0;
-    color: #fff;
+    color: rgb(var(--text-color));
   }
   #aboutYoutube .main-board-2 .main-wrapper .main-board__left-block {
     width: 100%;
     padding: 15px;
   }
   #aboutYoutube .main-board-2 .main-wrapper .main-board__left-block h2 {
-    color: #fff;
+    color: rgb(var(--text-color));
   }
   #aboutYoutube .main-board-2 .main-wrapper .main-board__left-block h3 {
-    color: #fff;
+    color: rgb(var(--text-color));
   }
 }
 #aboutYoutube .table {
@@ -721,10 +722,10 @@
     padding: 15px;
   }
   #aboutYoutube .main-board-3 .main-wrapper .main-board__left-block h2 {
-    color: #fff;
+    color: rgb(var(--text-color));
   }
   #aboutYoutube .main-board-3 .main-wrapper .main-board__left-block h3 {
-    color: #fff;
+    color: rgb(var(--text-color));
   }
 }
 #aboutYoutube .services__block-item {
@@ -745,7 +746,7 @@
 }
 #aboutYoutube .services__item > h3 {
   margin: 23px 0;
-  color: #161C35;
+  color: #161c35;
   text-align: center;
 }
 #aboutYoutube .services__item > p {
@@ -761,15 +762,15 @@
   width: 150px;
   height: 50px;
   line-height: 50px;
-  color: #161C35;
+  color: #161c35;
   font-size: 18px;
   border-radius: 0 5px 0 5px;
-  border: 1px solid #161C35;
+  border: 1px solid #161c35;
   text-decoration: none;
   transition-duration: 0.3s;
 }
 #aboutYoutube .services__item > a:hover {
-  background: #161C35;
+  background: #161c35;
   color: #FFFFFF;
 }
 #aboutYoutube .services__item .box-icon {
@@ -819,7 +820,7 @@
   margin: 10px;
   margin-top: auto;
   margin-bottom: 20px;
-  color: white;
+  color: rgb(var(--text-color));
   line-height: 30px;
   text-align: center;
   transition-duration: 0.5s;
@@ -834,7 +835,7 @@
   transform: translateY(130px);
 }
 #aboutYoutube .team-container__item > figure > figcaption > a:hover {
-  color: #00D5C3;
+  color: #00d5c3;
   background: white;
 }
 #aboutYoutube .team-container__item > figure > img {
@@ -908,7 +909,7 @@
   position: absolute;
   display: inline-block;
   border-top: 15px solid transparent;
-  border-right: 15px solid #eee;
+  border-right: 15px solid #eeeeee;
   border-bottom: 15px solid transparent;
   border-right-color: #fff;
   right: 0;
@@ -935,7 +936,7 @@
 #aboutYoutube .blog-container__item-text-container > p {
   font-size: 18px;
   letter-spacing: 1px;
-  color: #161C35;
+  color: #161c35;
   text-align: center;
   text-transform: uppercase;
   font-weight: 600;
@@ -943,16 +944,16 @@
 }
 #aboutYoutube .button {
   padding: 10px 30px;
-  border: 1px solid #00D5C3;
+  border: 1px solid #00d5c3;
   font-size: 18px;
   border-radius: 0 5px 0 5px;
   display: inline-block;
-  color: #00D5C3;
+  color: #00d5c3;
   text-decoration: none;
   transition-duration: 0.3s;
 }
 #aboutYoutube .button:hover {
-  background: #00D5C3;
+  background: #00d5c3;
   color: #FFFFFF;
 }
 #aboutYoutube .form {
@@ -969,7 +970,7 @@
   right: 0;
   top: 0;
   bottom: 0;
-  background-color: rgba(33, 42, 73, 0.6);
+  background-color: rgba(var(--color-cc-form));
   z-index: 1;
 }
 #aboutYoutube .form > .main-wrapper {
@@ -983,7 +984,7 @@
 }
 #aboutYoutube .form input[type="email"] {
   background: transparent;
-  border: 1px solid #00D5C3;
+  border: 1px solid #00d5c3;
   color: #FFFFFF;
   font-size: 18px;
   font-weight: 300;
@@ -991,13 +992,13 @@
   width: 450px;
 }
 #aboutYoutube .form input[type="email"]:focus {
-  border: 1px solid #64ffed;
+  border: 1px solid rgb(var(--color-menu-2));
   outline: none;
 }
 #aboutYoutube .form button {
-  background: #00D5C3;
-  border: 1px solid #00D5C3;
-  color: #FFFFFF;
+  background: #00d5c3;
+  border: 1px solid #00d5c3;
+  color: rgb(var(--text-color));
   font-size: 22px;
   width: 100px;
   transition-duration: 0.3s;
@@ -1005,7 +1006,7 @@
 #aboutYoutube .form button:hover {
   background: #FFFFFF;
   border: 1px solid #FFFFFF;
-  color: #00D5C3;
+  color: #00d5c3;
   cursor: pointer;
 }
 #aboutYoutube .form form {
@@ -1016,7 +1017,7 @@
   color: #cccccc;
 }
 #aboutYoutube .form__main-text {
-  color: #00D5C3;
+  color: #00d5c3;
   font-weight: 300;
   margin-bottom: 20px;
   font-size: 20px;
@@ -1029,7 +1030,7 @@
   margin: 20px 0;
 }
 #aboutYoutube .social-cont > a {
-  color: #161C35;
+  color: #161c35;
   font-size: 16px;
   margin: 10px;
   text-decoration: none;
@@ -1043,7 +1044,7 @@
   content: '';
   width: 25px;
   height: 25px;
-  border: 1px solid #161C35;
+  border: 1px solid #161c35;
   transform: rotate(45deg);
   position: absolute;
   left: -3px;
@@ -1055,7 +1056,7 @@
   color: #FFFFFF;
 }
 #aboutYoutube .social-cont > a:hover::before {
-  background: #161C35;
+  background: #161c35;
 }
 @media (max-width: 1100px) {
   #aboutYoutube .team-container {
@@ -1120,7 +1121,7 @@
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;
-    color: #FFFFFF;
+    color: rgb(var(--text-color));
   }
   #aboutYoutube .dark__container > img {
     width: 70%;
@@ -1220,7 +1221,7 @@
     flex-direction: column;
   }
   #aboutYoutube .grey {
-    background: #ddd;
+    background: #dddddd;
   }
 }
 @media (max-width: 720px) {
@@ -1294,7 +1295,7 @@
   }
   #aboutYoutube .main-board .main-wrapper .main-board__left-block h1 {
     width: 100%;
-    color: #fff;
+    color: rgb(var(--text-color));
     font-weight: 600;
   }
   #aboutYoutube .main-board .main-wrapper .main-board__left-block > div:last-of-type {

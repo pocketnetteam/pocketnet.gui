@@ -7,7 +7,7 @@
   font-size: 30px;
   font-weight: 600;
   line-height: 40px;
-  color: #444444;
+  color: rgb(var(--color-h2-aboutcc));
   text-align: center;
   text-transform: uppercase;
 }
@@ -108,7 +108,6 @@
 }
 #aboutHome .works > .main-wrapper > div .works__container > .text > p {
   margin: 20px 0;
-  color: black;
   width: 250px;
 }
 #aboutHome .works > .main-wrapper > div > .image {
@@ -122,9 +121,6 @@
 }
 #aboutHome .works > .main-wrapper > div > .image > img {
   width: 100%;
-}
-#aboutHome .works h2 {
-  color: #000;
 }
 #aboutHome .works h2 > span {
   font-weight: 400;
@@ -226,7 +222,7 @@
   font-size: 0.6em;
 }
 #aboutHome .open > .main-wrapper .content .discover .one-item > div > a > i {
-  color: #00a6ff;
+  color: rgb(var(--color-cc-blue));
   font-size: 2em;
   width: 25px;
   height: 25px;
@@ -287,7 +283,7 @@
   right: 0;
   top: 0;
   bottom: 0;
-  background-color: rgba(33, 42, 73, 0.6);
+  background-color: rgba(var(--color-cc-form));
   z-index: 1;
 }
 #aboutHome .blog > .main-wrapper {
@@ -389,22 +385,20 @@
 #aboutHome .main-board__left-block_2 > div {
   padding: 30px 15px;
   text-align: left;
-  color: black;
   font-weight: 600;
   font-size: 16px;
   margin: 10px 0;
   width: 200px;
 }
 #aboutHome .grey {
-  background: #dddddd;
+  background: rgb(var(--color-medium-theme));
   padding: 70px 0;
 }
 #aboutHome .new-block {
-  background: #dcdcdf;
+  background: rgb(var(--background-main));
   padding: 30px 0;
 }
 #aboutHome .new-block .main-wrapper h2 {
-  color: black;
   margin-bottom: 30px;
   height: 40px;
 }
@@ -432,7 +426,6 @@
 }
 @media screen and (max-width: 450px) {
   #aboutHome .new-block .main-wrapper h2 {
-    color: black;
     margin-bottom: 30px;
     height: 40px;
     font-size: 1.4em;
@@ -448,11 +441,11 @@
   align-items: center;
   width: 165px;
   height: 50px;
-  border: 1px solid #00a6ff;
+  border: 1px solid rgb(var(--color-cc-blue));
   font-size: 18px;
   border-radius: 0 5px 0 5px;
   text-decoration: none;
-  color: #00a6ff;
+  color: rgb(var(--color-cc-blue));
   font-size: 12px;
   transition-duration: 0.3s;
 }
@@ -463,12 +456,12 @@
   margin-left: 20px;
   margin-right: 15px;
   font-size: 30px;
-  color: #00a6ff;
+  color: rgb(var(--color-cc-blue));
   width: 26px;
   transition-duration: 0.3s;
 }
 #aboutHome .main-board__button-link:hover {
-  background: #00a6ff;
+  background: rgb(var(--color-cc-blue));
   color: #FFFFFF;
 }
 #aboutHome .main-board__button-link:hover > i {
@@ -508,15 +501,15 @@
   width: 150px;
   height: 50px;
   line-height: 50px;
-  color: #161C35;
+  color: #161c35;
   font-size: 18px;
   border-radius: 0 5px 0 5px;
-  border: 1px solid #161C35;
+  border: 1px solid #161c35;
   text-decoration: none;
   transition-duration: 0.3s;
 }
 #aboutHome .services__item > a:hover {
-  background: #161C35;
+  background: #161c35;
   color: #FFFFFF;
 }
 #aboutHome .services__item .box-icon {
@@ -581,7 +574,7 @@
   transform: translateY(130px);
 }
 #aboutHome .team-container__item > figure > figcaption > a:hover {
-  color: #00D5C3;
+  color: #00d5c3;
   background: white;
 }
 #aboutHome .team-container__item > figure > img {
@@ -682,7 +675,7 @@
 #aboutHome .blog-container__item-text-container > p {
   font-size: 18px;
   letter-spacing: 1px;
-  color: #161C35;
+  color: #161c35;
   text-align: center;
   text-transform: uppercase;
   font-weight: 600;
@@ -690,16 +683,16 @@
 }
 #aboutHome .button {
   padding: 10px 30px;
-  border: 1px solid #00D5C3;
+  border: 1px solid #00d5c3;
   font-size: 18px;
   border-radius: 0 5px 0 5px;
   display: inline-block;
-  color: #00D5C3;
+  color: #00d5c3;
   text-decoration: none;
   transition-duration: 0.3s;
 }
 #aboutHome .button:hover {
-  background: #00D5C3;
+  background: #00d5c3;
   color: #FFFFFF;
 }
 #aboutHome .form {
@@ -716,7 +709,7 @@
   right: 0;
   top: 0;
   bottom: 0;
-  background-color: rgba(33, 42, 73, 0.6);
+  background-color: rgba(var(--color-cc-form));
   z-index: 1;
 }
 #aboutHome .form > .main-wrapper {
@@ -730,7 +723,7 @@
 }
 #aboutHome .form input[type="email"] {
   background: transparent;
-  border: 1px solid #00D5C3;
+  border: 1px solid #00d5c3;
   color: #FFFFFF;
   font-size: 18px;
   font-weight: 300;
@@ -738,12 +731,12 @@
   width: 450px;
 }
 #aboutHome .form input[type="email"]:focus {
-  border: 1px solid #64ffed;
+  border: 1px solid rgb(var(--color-menu-2));
   outline: none;
 }
 #aboutHome .form button {
-  background: #00D5C3;
-  border: 1px solid #00D5C3;
+  background: #00d5c3;
+  border: 1px solid #00d5c3;
   color: #FFFFFF;
   font-size: 22px;
   width: 100px;
@@ -752,7 +745,7 @@
 #aboutHome .form button:hover {
   background: #FFFFFF;
   border: 1px solid #FFFFFF;
-  color: #00D5C3;
+  color: #00d5c3;
   cursor: pointer;
 }
 #aboutHome .form form {
@@ -763,7 +756,7 @@
   color: #cccccc;
 }
 #aboutHome .form__main-text {
-  color: #00D5C3;
+  color: #00d5c3;
   font-weight: 300;
   margin-bottom: 20px;
   font-size: 20px;
@@ -776,7 +769,7 @@
   margin: 20px 0;
 }
 #aboutHome .social-cont > a {
-  color: #161C35;
+  color: #161c35;
   font-size: 16px;
   margin: 10px;
   text-decoration: none;
@@ -790,7 +783,7 @@
   content: '';
   width: 25px;
   height: 25px;
-  border: 1px solid #161C35;
+  border: 1px solid #161c35;
   transform: rotate(45deg);
   position: absolute;
   left: -3px;
@@ -802,7 +795,7 @@
   color: #FFFFFF;
 }
 #aboutHome .social-cont > a:hover::before {
-  background: #161C35;
+  background: #161c35;
 }
 @media (max-width: 1100px) {
   #aboutHome .team-container {
@@ -974,7 +967,7 @@
     flex-direction: column;
   }
   #aboutHome .grey {
-    background: #ddd;
+    background: rgb(var(--color-medium-theme));
   }
 }
 @media (max-width: 720px) {
@@ -1035,9 +1028,6 @@
   }
 }
 @media screen and (max-width: 450px) {
-  #aboutHome .main-board .grey {
-    background: #000;
-  }
   #aboutHome .main-board .main-wrapper {
     width: 100%;
     padding: 15px;
