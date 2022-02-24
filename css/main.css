@@ -42,6 +42,31 @@
   --color-nrml: 0, 0, 0;
   --color-good: 7, 108, 52;
   --color-yellow: 255, 238, 0;
+  --color-h2-aboutcc: 68, 68, 68;
+  --color-h2-works__container: 255, 255, 255;
+  --color-black: 0, 0, 0;
+  --color-cc-videos: 38,38,38;
+  --color-cc-open: 251,240,195;
+  --color-cc-blue: 0, 166, 255;
+  --color-cc-white: 255,255,255;
+  --color-cc-grey: 221,221,221;
+  --color-cc-menu: 0,213,195;
+  --color-cc-dark-blue: 49,60,155;
+  --color-cc-dark: 59,59,59;
+  --color-cc-description: 207,207,207;
+  --color-cc-line: 49,60,155;
+  --color-cc-table: 246, 246, 246;
+  --color-services-item: 5, 5, 5, 0.2;
+  --color-cc-dark-grey: 102,102,102;
+  --color-cc-dark-blue-cc: 22,28,53;
+  --color-cc-dark-blue-ccc: 22,28,53, 0.7;
+  --color-cc-team-container: 204,204,204;
+  --color-cc-bc: 238,238,238;
+  --color-cc-bc-span: 51,51,51;
+  --color-cc-bc-p: 22,28,53;
+  --color-cc-form: 33, 42, 73, 0.6;
+  --color-fb: 10, 35, 71;
+  --color-menu-2: 100, 255, 237;
 }
 :root[theme='black'] {
   --background-hidden-layer: 10, 12, 23;
@@ -918,21 +943,6 @@ pie {
 .sort.active i,
 .sort:hover i {
   color: rgb(var(--color-txt-ac));
-}
-.pkoin {
-  display: flex;
-  align-items: center;
-  background: rgb(var(--color-bg-ac-bright));
-  color: rgb(var(--text-on-bg-ac-color));
-  border-radius: 8px;
-  padding: 4px 8px;
-  cursor: pointer;
-}
-.pkoin img {
-  width: 1em;
-}
-.pkoin span {
-  margin-left: 0.5em;
 }
 .forstars .itemwr {
   display: flex;

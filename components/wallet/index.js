@@ -1990,6 +1990,12 @@ var wallet = (function(){
 								
 							}
 
+							setTimeout(function(){
+								_scrollToTop(el.find('.sendtransaction'), w, 200)
+							},200)
+
+							
+
 							_p.el.find('.sendtransaction').on('click', function(){
 
 								if($(this).hasClass('loading')) return
@@ -2196,7 +2202,7 @@ var wallet = (function(){
 						})
 
 						_p.el.find('.calculateFee').on('click', function(){
-
+							
 							if (actions.validSend()){
 								actions.showSendInStep('calculateFee', 1, self.app.localization.e('wscalculatefees'))
 
@@ -2209,7 +2215,8 @@ var wallet = (function(){
 
 							
 						})
-						
+
+					
 
 						changerActive()
 
