@@ -920,35 +920,6 @@
   padding-top: 0;
   border-radius: 0!important;
   margin-bottom: 0!important;
-  /*#comments{
-            .caption{
-                padding-left: 2 * @rhythm;
-                padding-right: 3 * @rhythm;
-            }
-            
-            .commentPaddingWrapper,
-            .post{
-                padding-left: 2 * @rhythm;
-                padding-right: 3 * @rhythm;
-            }
-
-            .commentPaddingWrapper{
-                padding-right: 4 * @rhythm;
-            }
-
-            .list .answer .postbody{
-                padding-left: 2 * @rhythm;
-                padding-right: 3 * @rhythm;
-            }
-
-            .answers{
-                .commentPaddingWrapper{
-                    padding-right: 0;
-                    padding-left: 0;
-                }
-            }	
-
-        }*/
 }
 .share_common.fullScreenVideo .video-js {
   max-height: 80vh;
@@ -1031,6 +1002,9 @@
 }
 .share_common.fullScreenVideo .sharecaption span {
   font-size: 0.9em;
+}
+.share_common.fullScreenVideo .message {
+  padding-left: 1em;
 }
 .share_common.fullScreenVideo .formeta {
   padding-left: 1em;
@@ -1225,6 +1199,9 @@
     background: rgb(var(--color-shadow-base));
   }
   .share_common.fullScreenVideo .sharecaption {
+    padding-left: 0.5em;
+  }
+  .share_common.fullScreenVideo .message {
     padding-left: 0.5em;
   }
   .share_common.fullScreenVideo .work .metawrapper {
