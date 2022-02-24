@@ -3793,6 +3793,15 @@ var lenta = (function(){
 							if(video || essenseData.videomobile){ type = 'video'}
 							if(essenseData.read){ type = 'article'}
 
+
+							var count = 10
+
+							if(essenseData.count) count = essenseData.count
+							else if (recommended == 'recommended') count = 30
+							else if (video) count = 20
+
+							
+
 							self.app.platform.sdk.node.shares[loader]({
 
 								author : author,
@@ -3803,7 +3812,7 @@ var lenta = (function(){
 
 								type : type,
 
-								count : video ? 20 : 10,
+								count : count,
 								page : page,
 								period : essenseData.period,
 								tagsexcluded : tagsexcluded

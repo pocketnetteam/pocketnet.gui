@@ -392,6 +392,7 @@ var main = (function(){
 						shuffle : true,
 						period : '4320',
 						page : 0,
+						count : 10,
 						openPostInWindowMobile : true,
 						afterload : function(ed, s, e){
 

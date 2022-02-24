@@ -2086,7 +2086,8 @@ Platform = function (app, listofnodes) {
                     period : p.period,
                     filter : p.filter,
                     ended : p.ended,
-                    afterload : p.afterload
+                    afterload : p.afterload,
+                    count : p.count
 
                 },
 
@@ -16043,6 +16044,8 @@ Platform = function (app, listofnodes) {
 
                     if (!p) p = {};
 
+                    console.log("P", p)
+
                     self.app.user.isState(function (state) {
 
                         p.count || (p.count = '30')
@@ -16061,7 +16064,6 @@ Platform = function (app, listofnodes) {
 
                         }
                         else {
-                            //var parameters = ['30', '259200', 600000, self.app.localization.key];
 
                             var period = p.period || self.sdk.node.shares.parameters.stor.period || self.sdk.node.shares.parameters.defaults.period || '4320' ///self.sdk.node.shares.parameters.defaults.period
 
@@ -16069,7 +16071,7 @@ Platform = function (app, listofnodes) {
 
                             var parameters = []
 
-                            parameters = ['30', period, (period * page) || '', self.app.localization.key]
+                            parameters = [p.count.toString(), period, (period * page) || '', self.app.localization.key]
 
                             //parameters = ['30', '259200', '', self.app.localization.key];
 
