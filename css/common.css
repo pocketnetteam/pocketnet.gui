@@ -4,6 +4,21 @@
 .share_common .commentsWrapperHb {
   min-height: 1em;
 }
+.share_common .pkoin {
+  display: flex;
+  align-items: center;
+  background: rgb(var(--color-bg-ac-bright));
+  color: rgb(var(--text-on-bg-ac-color));
+  border-radius: 8px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+.share_common .pkoin img {
+  width: 1em;
+}
+.share_common .pkoin span {
+  margin-left: 0.5em;
+}
 .share_common .commentsWrapper {
   background: rgb(var(--background-secondary-theme));
   border-bottom-left-radius: 12px;
