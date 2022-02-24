@@ -86,7 +86,7 @@ var userpage = (function(){
 
 				add : function(){
 
-					if (isMobile() && deep(mestate, 'reputation')){
+					if (self.app.mobileview && deep(mestate, 'reputation')){
 						return mestate.reputation.toFixed(1)
 					}
 
@@ -94,7 +94,7 @@ var userpage = (function(){
 
 				addtoname : function(){
 
-					if (isMobile() && deep(mestate, 'trial')){
+					if (self.app.mobileview && deep(mestate, 'trial')){
 						return self.app.localization.e('stp')
 					}
 
@@ -111,7 +111,7 @@ var userpage = (function(){
 				openReportPageMobileInWindow : true,
 				add : function(){
 
-					if (isMobile() && allbalance && !self.app.curation()){
+					if (self.app.mobileview && allbalance && !self.app.curation()){
 						return  self.app.platform.mp.coin(allbalance)
 					}
 
@@ -126,7 +126,7 @@ var userpage = (function(){
 				mobile : true,
 
 				if : function(){
-					return isMobile() && !self.app.curation()
+					return self.app.mobileview && !self.app.curation()
 				},
 
 				add : function(){
@@ -136,7 +136,7 @@ var userpage = (function(){
 					if (address){
 						var s = deep(self, 'sdk.users.storage.'+address+'.subscribers.length')
 
-						if (isMobile() && s){
+						if (self.app.mobileview && s){
 							return s
 						}
 					}	
@@ -154,7 +154,7 @@ var userpage = (function(){
 				mobile : true,
 
 				if : function(){
-					return isMobile() && !self.app.curation()
+					return self.app.mobileview && !self.app.curation()
 				},
 
 				add : function(){
@@ -164,7 +164,7 @@ var userpage = (function(){
 					if (address){
 						var s = deep(self, 'sdk.users.storage.'+address+'.subscribes.length')
 
-						if (isMobile() && s){
+						if (self.app.mobileview && s){
 							return s
 						}
 					}	
@@ -226,7 +226,7 @@ var userpage = (function(){
 				report : 'staking',
 				mobile : true,
 				if : function(){
-					return isMobile()
+					return self.app.mobileview
 				},
 				//openReportPageMobileInWindow : true
 			})
