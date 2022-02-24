@@ -382,8 +382,7 @@ var post = (function () {
 
 				var shareId = share.txid;
 
-				if (!el[shareId])
-					el[shareId] = el.c.find('.metapanel.' + shareId + ' .downloadMetapanel');
+				if (!el[shareId]) el[shareId] = el.c.find('.metapanel.' + shareId + ' .downloadMetapanel');
 
 				//var downloadPanel = el[shareId];
 
@@ -465,6 +464,8 @@ var post = (function () {
 					$.each(pels, function (key, el2) {
 
 						var videoId = el2.getAttribute('data-plyr-video-id');
+
+						if(el2.closest('.share').attr('id') != share.txid) return
 
 						PlyrEx(el2, options, (_player) => {
 
