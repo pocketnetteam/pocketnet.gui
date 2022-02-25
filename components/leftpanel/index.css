@@ -16,8 +16,8 @@
   padding-bottom: 10px;
 }
 #leftpanel .menu {
-  padding-bottom: 1em;
-  border-bottom: 1px solid rgba(var(--color-medium-theme), 0.5);
+  /*padding-bottom: 2 * @rhythm;
+		border-bottom: 1px solid rgba(var(--color-medium-theme), 0.5);*/
 }
 #leftpanel .menu .menupanel .tabs .tab {
   position: relative;
@@ -94,7 +94,11 @@
 }
 #leftpanel .best .bestLabel {
   display: flex;
+  white-space: nowrap;
   align-items: center;
+}
+#leftpanel .best .bestLabel .text {
+  font-size: 0.9em;
 }
 #leftpanel .best .toggle {
   font-size: 1.3em;
@@ -254,9 +258,9 @@
   #leftpanel {
     padding: 0;
     color: rgb(var(--text-color));
-  }
-  #leftpanel .catscnt {
-    margin-top: 1em;
+    /*.catscnt{
+			margin-top: 2 * @rhythm;
+		}*/
   }
   #leftpanel .wrpmobclass > div {
     padding: 0 1em;

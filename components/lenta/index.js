@@ -3728,7 +3728,12 @@ var lenta = (function(){
 							var _beginmaterial = ''//beginmaterial;
 
 							if(!author){
-								loader = 'hierarchical'
+
+
+								loader = self.app.platform.sdk.lentaMethod.get();
+
+								console.log('loader', loader)
+								//'hierarchical'
 								
 							}
 							else

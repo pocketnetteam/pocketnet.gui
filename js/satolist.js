@@ -7579,8 +7579,8 @@ Platform = function (app, listofnodes) {
         
         lentaMethod: {
             all: {
-                hierarchical: 'gethotposts',
-                historical: 'gethistoricalstrip'
+                hierarchical: 'hierarchical',
+                historical: 'historical'
             },
             default: "hierarchical",
             current: null,
@@ -16079,6 +16079,8 @@ Platform = function (app, listofnodes) {
                                 parameters.push(p.type)
                             }
 
+
+
                             self.sdk.node.shares.get(parameters, function (shares, error) {
 
                                 if (shares) {
@@ -16125,7 +16127,7 @@ Platform = function (app, listofnodes) {
                                         clbk(shares, error, p)
                                 }
 
-                            }, methodparams.method || self.sdk.lentaMethod.get())
+                            }, methodparams.method)
 
 
                         }
@@ -16295,6 +16297,17 @@ Platform = function (app, listofnodes) {
 
                     self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
                         method : 'getusercontents'
+                    })
+
+                },
+
+
+                historical : function(p, clbk, cache){
+
+                    console.log("historicalhistoricalhistoricalhistorical")
+
+                    self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
+                        method : 'gethistoricalstrip'
                     })
 
                 },
