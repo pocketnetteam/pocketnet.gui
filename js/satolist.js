@@ -16079,8 +16079,6 @@ Platform = function (app, listofnodes) {
                                 parameters.push(p.type)
                             }
 
-
-
                             self.sdk.node.shares.get(parameters, function (shares, error) {
 
                                 if (shares) {
@@ -16127,7 +16125,7 @@ Platform = function (app, listofnodes) {
                                         clbk(shares, error, p)
                                 }
 
-                            }, methodparams.method)
+                            }, methodparams.method || 'gethotposts')
 
 
                         }

@@ -19,9 +19,6 @@
   position: relative;
   overflow: hidden;
 }
-#post .videoWrapper .js-player {
-  border-radius: 0;
-}
 #post .lockedaccount,
 #post .empty {
   text-align: center;
@@ -172,6 +169,13 @@
 #post.videomainpost .postWrapper {
   background: transparent;
   max-width: none;
+}
+#post.videomainpost .videoWrapper {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+#post.videomainpost .videoWrapper .js-player {
+  border-radius: 0;
 }
 #post.videomainpost .share {
   background: transparent;
