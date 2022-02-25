@@ -410,6 +410,9 @@
   align-items: center;
   justify-content: start;
 }
+#articlev .bgwrapper.tagsinput #taginput .tgs .tagsWrapper > div.tagsInputWrapper > div.inputWrapper {
+  background: transparent;
+}
 #articlev .bgwrapper.tagsinput .tagswrapper {
   display: none;
 }

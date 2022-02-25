@@ -467,7 +467,9 @@ var post = (function () {
 
 						var elem = $(el2)
 
-						if (elem.closest && elem.closest('.shareTable').attr('stxid') != share.txid) return
+						console.log('elem', elem, share)
+
+						if (elem.closest && elem.closest('.shareTable').attr('stxid') != (share.txid || '')) return
 
 						PlyrEx(el2, options, (_player) => {
 

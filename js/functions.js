@@ -1995,8 +1995,6 @@
 	  
 			  var url = canvas.toDataURL('image/jpeg', 1);
 
-			  console.log('url', url)
-	  
 			  $(canvas).remove();
 	  
 			  return resolve({base64 : url, name : _name + '.jpg'});
@@ -10776,6 +10774,8 @@ edjsHTML = function() {
 
         embed: function(e) {
             var t = e.data;
+
+
             switch (t.service) {
 
 				case "vimeo":
@@ -10786,14 +10786,6 @@ edjsHTML = function() {
 
 				default:
                     throw new Error("Only Youtube and Vime Embeds are supported right now.")
-
-				/*
-                case "vimeo":
-                    return '<iframe src="' + t.embed + '" height="' + t.height + '" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>';
-                case "youtube":
-                    return '<iframe width="' + t.width + '" height="' + t.height + '" src="' + t.embed + '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-                default:
-                    throw new Error("Only Youtube and Vime Embeds are supported right now.")*/
             }
         },
 
@@ -10809,7 +10801,6 @@ edjsHTML = function() {
 		},
 
 		carousel: function(e){
-
 
 			var imageshtml = _.map(e.data, function(i){
 				return '<div class="img" image="' + _.escape(i.url) + '" i="' + _.escape(i.url) + '" save="' + _.escape(i.url) + '"></div>'
@@ -10899,6 +10890,21 @@ edjsHTML = function() {
 
         },
 
+		carousel: function(data, fu) {
+
+
+			return _.map(data, function(i){
+				var nd = {...i}
+
+				nd.url = fu(nd.url)
+
+				if(nd.caption) nd.caption = fu(nd.caption)
+
+				return nd
+			})
+
+        },
+
         image: function(data, fu) {
 
 			var nd = {...data}
@@ -10957,7 +10963,19 @@ edjsHTML = function() {
 
 			return nd
 
-		}
+		},
+
+		embed : function(data, fu) {
+
+			var nd = {...data}
+
+				nd.embed = fu(nd.embed)
+				nd.source = fu(nd.source)
+
+				if(nd.caption) nd.caption = fu(nd.caption)
+
+			return nd
+        },
 	}
 
     function t(e) {

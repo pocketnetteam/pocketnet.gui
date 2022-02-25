@@ -184,7 +184,6 @@ var articlev = (function(){
 					
 				}
 
-				console.log("E", e)
 
 				if (e.toString && self.app.platform.errors[e.toString()]){
 					sitemessage(self.app.platform.errors[e.toString()].message())
@@ -927,7 +926,7 @@ var articlev = (function(){
 					},
 
 					paragraph: {
-						class: window.Paragraph
+						class: window.Paragraph,
 					},
 
 					header: {
@@ -965,10 +964,10 @@ var articlev = (function(){
 						}
 					},
 
-					warning: {
+					/*warning: {
 						class: window.Warning,
 						shortcut: 'CMD+SHIFT+W'
-					},
+					},*/
 
 					list: {
 						class: window.List,
@@ -988,7 +987,6 @@ var articlev = (function(){
 					embed : {
 						class: window.Embed,
 						config: {
-							inlineToolbar: true,
 							services: {
 								youtube: true,
 								vimeo: true
