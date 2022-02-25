@@ -124,7 +124,8 @@ Platform = function (app, listofnodes) {
         'PUXG7rfX19Xoco1FXjXBW8qt6NEZpp8maL' : true,
         'PSanUFKb1vd5ua4U3BXMmsSZ2zm3sN2nyj' : true,
         'PERF5kDM32ebkq8SeSj8ZaLqfCoqz8FRgh' : true,
-        'PGD5jUBQ7qNnHDuW85RRBxY1msywEdCm7r' : true
+        'PGD5jUBQ7qNnHDuW85RRBxY1msywEdCm7r' : true,
+        'PApFYMrbm3kXMV7kjrEG1v6ULv6ZFDHb9j' : true
     }
 
     self.nvadr = {
