@@ -200,9 +200,11 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
         value = 0
     }
     
-    %>
+    
 
     if(!share.temp){
+        %>
+
         <div class="item starstoppanel">
             <div class="iconwrapper">
                 <span><%-compressedNumber(share.comment || 0)%></span> <i class="fas fa-comments"></i>
@@ -212,8 +214,8 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
                 <span><%-Number(value).toFixed(1)%></span> <i class="fas fa-star"></i> 
             </div>		
         </div>
-    }
-
+    <% } %>
+ 
     
 
  
@@ -423,7 +425,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                 <%} %>
                                 
                             <% } %>
