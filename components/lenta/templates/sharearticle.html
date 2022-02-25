@@ -403,13 +403,16 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
                             <% displaysys() %>
 
-                            <% if(!all) {%>
-                                if(!share.temp){
+                            <% if(!all) { %>
+
+                                <% if(!share.temp){%>
+
                                     <div class="buttonOpenWrapper">
                                         <button class="black showMoreArticle"><%= e('readarticle') %></button>
                                     </div>
-                                }
-                                else{
+
+                                <%} else{ %>
+
                                     <div class="waitconfirmations">
                                         <div class="iconwr">
                                             <div class="preloader5"><img src="./img/three-dots.svg"/></div>
@@ -420,7 +423,8 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
                                             </div>
                                         </div>
                                     </div>
-                                }
+                                    
+                                <%} %>
                                 
                             <% } %>
 
