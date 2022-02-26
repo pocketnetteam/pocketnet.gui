@@ -2333,6 +2333,7 @@ var share = (function(){
 					el : el.body,
 					data : {
 						share : currentShare,
+						ed : essenseData
 					},
 
 				}, function(p){
@@ -2587,6 +2588,9 @@ var share = (function(){
 				currentShare = deep(p, 'settings.essenseData.share') || new Share(self.app.localization.key);
 				essenseData = deep(p, 'settings.essenseData') || {};
 
+
+				console.log('essenseData1', essenseData)
+
 				if(!essenseData.share){
 
 					state.load()
@@ -2615,7 +2619,6 @@ var share = (function(){
 
 			destroy : function(){
 
-				console.log('destroydestroydestroy', el.eMessage)
 
 				if (el.c)
 					el.c.find('.emojionearea-editor').off('pasteImage')

@@ -15,7 +15,12 @@ var postline = function(){ %>
 	<div class="mobilecaption">
 		<% if(!share.aliasid) {%>
 
-			<span><%=e('newShare')%></span>
+			<% if(essenseData.repost) {%>
+				<span><%=e('newRepost')%></span>
+			<% } else { %> 
+				<span><%=e('newShare')%></span>
+			<% } %>
+			
 
 			<!--<% if(postcnt === 0) {%>
 				<span><%=e('firstShare')%></span>

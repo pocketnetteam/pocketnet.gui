@@ -460,8 +460,9 @@ var registration = (function(){
 
 						for (var catId of activeCategories){
 							self.app.platform.sdk.categories.select(catId);
-
 						}
+
+						
 
 						actions.next()
 						

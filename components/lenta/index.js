@@ -3060,7 +3060,7 @@ var lenta = (function(){
 
 					if(s.settings.v != "a"){
 
-						if((isMobile()|| essenseData.openapi) && image.images.length > 1 ){
+						if((isMobile() || essenseData.openapi) && image.images.length > 1 ){
 
 							var aspectRatio = 0
 							
@@ -3099,6 +3099,8 @@ var lenta = (function(){
 								var _w = el.width();
 								var _h = el.height()
 
+								console.log('_img.width', _img.width, _img.height)
+
 								if(_img.width > _img.height && (/*!self.app.mobileview && */!essenseData.openapi || image.images.length == 1)){
 									ac = 'w2'
 
@@ -3115,8 +3117,9 @@ var lenta = (function(){
 									el.width(w);
 								}
 
-								if(_img.height > _img.width || (/*self.app.mobileview || */essenseData.openapi|| image.images.length == 1)){
+								if(_img.height > _img.width && (/*self.app.mobileview || */essenseData.openapi|| image.images.length == 1)){
 									ac = 'h2'
+
 
 									el.height(_w * (_img.height / _img.width))
 								}
@@ -3764,6 +3767,9 @@ var lenta = (function(){
 									loader = 'common'
 									author = '1';
 
+
+									//// SUBSCRIBE
+
 									if(!state){
 										load.sstuff([], null, {
 											count : 0
@@ -3805,7 +3811,7 @@ var lenta = (function(){
 							else if (recommended == 'recommended') count = 30
 							else if (video) count = 20
 
-							
+							console.log('loader', loader, type, author)
 
 							self.app.platform.sdk.node.shares[loader]({
 

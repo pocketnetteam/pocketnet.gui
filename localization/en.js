@@ -2088,3 +2088,6 @@ ____loclib.filters = "Filters"
 ____loclib.dataenteredincorrectly = "Data entered incorrectly"
 
 ____loclib.lloadprevwithtags = "Refresh Feed"
+
+____loclib.newRepost = "Make repost"
+____loclib.whatsnewrepost = "Your commentary"

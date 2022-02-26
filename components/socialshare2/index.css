@@ -5,14 +5,17 @@
   overflow: hidden;
 }
 #socialshare2 .flexWrapper button {
-  text-align: left;
+  text-align: center;
   padding-left: 0;
   padding-right: 0;
   width: 100%;
   text-decoration: none;
+  position: relative;
 }
 #socialshare2 .flexWrapper button i {
-  width: 30px;
+  top: 10px;
+  position: absolute;
+  right: 0.5em;
   text-align: center;
 }
 #socialshare2 .flexWrapper > div {

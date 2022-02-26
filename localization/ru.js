@@ -1880,3 +1880,8 @@ ____loclib.filters = "Фильтры"
 ____loclib.dataenteredincorrectly = "Данные введены неверно"
 
 ____loclib.lloadprevwithtags = "Обновить ленту публикаций"
+
+____loclib.newRepost = "Сделать репост"
+
+____loclib.whatsnewrepost = "Ваш комментарий к публикации"
+

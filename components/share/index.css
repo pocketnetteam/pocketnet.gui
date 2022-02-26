@@ -848,6 +848,9 @@
   background: rgba(var(--background-secondary-theme), 0.9);
   padding-top: 2.75em;
 }
+.wnd.wndsharepost .wndcontent #share .repostCaption {
+  display: none;
+}
 /*t*/
 @media only screen and (max-width: 768px) {
   .wnd.wndsharepost .wndinner {
