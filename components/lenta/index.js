@@ -3099,7 +3099,6 @@ var lenta = (function(){
 								var _w = el.width();
 								var _h = el.height()
 
-								console.log('_img.width', _img.width, _img.height)
 
 								if(_img.width > _img.height && (/*!self.app.mobileview && */!essenseData.openapi || image.images.length == 1)){
 									ac = 'w2'
@@ -3730,12 +3729,13 @@ var lenta = (function(){
 
 							var _beginmaterial = ''//beginmaterial;
 
+							
+
 							if(!author){
 
 
 								loader = self.app.platform.sdk.lentaMethod.get();
 
-								console.log('loader', loader)
 								//'hierarchical'
 								
 							}
@@ -3743,6 +3743,8 @@ var lenta = (function(){
 							{
 								_beginmaterial = beginmaterial
 							}
+
+
 
 							if (recommended){
 
@@ -3810,8 +3812,6 @@ var lenta = (function(){
 							if(essenseData.count) count = essenseData.count
 							else if (recommended == 'recommended') count = 30
 							else if (video) count = 20
-
-							console.log('loader', loader, type, author)
 
 							self.app.platform.sdk.node.shares[loader]({
 
@@ -4497,10 +4497,11 @@ var lenta = (function(){
 				if (typeof essenseData.r != 'undefined' && essenseData.r != null) recommended = essenseData.r;
 
 
+				
+
 				if (essenseData.second){
 					beginmaterial = null
 				}
-
 
 				if (essenseData.txids && recommended != 'b'){
 
@@ -4536,8 +4537,6 @@ var lenta = (function(){
 						self.loadTemplate({
 							name : 'sharevideo'
 						}, function(){
-
-						
 
 							self.loadTemplate({
 								turi : 'share',
