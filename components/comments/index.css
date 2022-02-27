@@ -926,6 +926,11 @@
 #comments .post .postbody.sending .posttable > div.postCellWrapper .postaction .preloaderWrapper {
   display: block;
 }
+#comments .edit .postbody.hastext .posttable > div.postCellWrapper .postaction .icon,
+#comments .answer .postbody.hastext .posttable > div.postCellWrapper .postaction .icon,
+#comments .post .postbody.hastext .posttable > div.postCellWrapper .postaction .icon {
+  color: rgb(var(--color-bg-ac-bright));
+}
 #comments .edit .emojionearea,
 #comments .answer .emojionearea,
 #comments .post .emojionearea,

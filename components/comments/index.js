@@ -200,6 +200,18 @@ var comments = (function(){
 
 		var actions = {
 
+			lightarea : function(id, c){
+
+				var comment = currents[id]
+
+				
+				
+				if(comment && (comment.message.v || comment.images.v.length))
+					c.addClass('hastext')
+				else
+					c.removeClass('hastext')
+			},
+
 			myscores : function(){
 				_.each(rendered, function(c, id){
 					var comment = deep(self.app.platform.sdk, 'comments.storage.all.' + id)
@@ -372,6 +384,9 @@ var comments = (function(){
 
 				elimages.isotope()
 
+				actions.lightarea(id, p.el.find('.postbody'))
+
+
 
 			},
 
@@ -416,6 +431,8 @@ var comments = (function(){
 								
 								
 								renders.images(id, p)
+
+								actions.lightarea(id, p.el.find('.postbody'))
 
 							}
 						}
@@ -562,8 +579,8 @@ var comments = (function(){
 
 				id || (id = '0')
 
-				if(currents[id])
-					 currents[id].message.set(v)
+				if (currents[id])
+					currents[id].message.set(v)
 
 				state.save()
 
@@ -1351,11 +1368,13 @@ var comments = (function(){
 
 		}
 
+
 		var postEvents = function(p, _p, clbk){
 
 			var c = _p.el.find('.postbody');
 
 			actions.process(p.id || '0')
+
 
 			_p.el.find('.leaveComment').emojioneArea({
 				pickerPosition : 'top',
@@ -1445,7 +1464,8 @@ var comments = (function(){
 						actions.message(p.id || '0', text)
 
 						renders.limits(c, text)
-						
+
+						actions.lightarea(p.id || '0', c)
 					},
 
 					focus : function() {
@@ -1468,6 +1488,8 @@ var comments = (function(){
 
 						if (p.value) {
 							this.setText(p.value)
+
+							
 						}
 
 						if (p.donation && p.amount && p.editid){
@@ -1489,6 +1511,8 @@ var comments = (function(){
 								
 							}
 						}
+
+						actions.lightarea(p.id || '0', c)
 
 						// Hide the emoji button for mobiles and tablets
 						if (isMobile() || isTablet())
