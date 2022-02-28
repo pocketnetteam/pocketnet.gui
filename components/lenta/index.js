@@ -3111,12 +3111,12 @@ var lenta = (function(){
 								var _h = el.height()
 
 
-								if(_img.width > _img.height && (/*!self.app.mobileview && */!essenseData.openapi || image.images.length == 1)){
+								if(_img.width >= _img.height && (/*!self.app.mobileview && */!essenseData.openapi || image.images.length == 1)){
 									ac = 'w2'
 
 									var w = _w * (_img.width / _img.height);
 
-									if (w > imageswidth){
+									if (w >= imageswidth){
 										w = imageswidth
 
 										h = w * ( _img.height / _img.width) 
@@ -3127,7 +3127,7 @@ var lenta = (function(){
 									el.width(w);
 								}
 
-								if(_img.height > _img.width && (/*self.app.mobileview || */essenseData.openapi|| image.images.length == 1)){
+								if(_img.height >= _img.width && (/*self.app.mobileview || */essenseData.openapi|| image.images.length == 1)){
 									ac = 'h2'
 
 

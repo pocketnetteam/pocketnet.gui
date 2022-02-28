@@ -97,11 +97,7 @@ var registration = (function(){
 		var current = null;
 		var regproxy = null;
 
-		var termsaccepted = false
-
 		var getproxyoptions = function(){
-
-			console.log('regproxy', regproxy)
 
 			if(regproxy){
 				return {

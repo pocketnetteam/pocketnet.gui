@@ -13,7 +13,7 @@ var test = (function(){
 		var el = {}, ed, ref, plissing; 
 
 		var firstTime = false;
-		var termsaccepted = false;
+		//var termsaccepted = false;
 
 		var checkusernameTimer = null
 
@@ -909,7 +909,19 @@ var test = (function(){
 
 		var renders = {
 			termsconditions : function(clbk){
-				if(window.cordova && !termsaccepted && ed.wizard){
+
+				console.log("SADASD", ed.wizard)
+
+				
+
+				if (ed.wizard){
+					self.app.platform.acceptterms(clbk)
+				}
+				else{
+					clbk()
+				}
+
+				/* if(window.cordova && ed.wizard){
 
 					self.nav.api.load({
 						open : true,
@@ -930,7 +942,7 @@ var test = (function(){
 				}
 				else{
 					clbk()
-				}
+				}*/
 			},
 			options : function(clbk){
 

@@ -26128,6 +26128,46 @@ Platform = function (app, listofnodes) {
         }
     }
 
+    self.acceptterms = function(clbk){
+
+        if(window.cordova){
+            var key = 'acceptterms'
+
+            var aterms = localStorage[key]
+
+            if (!aterms){
+                app.nav.api.load({
+                    open : true,
+                    id : 'terms',
+                    inWnd : true,
+                    essenseData : {
+                        success : function(){
+    
+                            localStorage[key] = new Date();
+                            
+                            setTimeout(function(){
+                                if(clbk) clbk()
+                            }, 300)
+                            
+                        }
+                    },
+    
+                    clbk : function(){
+                        
+                    }
+                })
+    
+                return
+            }
+        }
+
+        
+
+
+        if(clbk) clbk()
+        
+    }
+
     self.prepareUser = function (clbk) {
 
         self.preparingUser = true;
@@ -26182,12 +26222,17 @@ Platform = function (app, listofnodes) {
 
                     self.app.peertubeHandler.init()
 
+                    console.log("HERE")
+
+
                     if (clbk)
                         clbk()
 
                     setTimeout(function(){
                         self.matrixchat.init()
                     }, 300)
+
+                    setTimeout(self.acceptterms, 5000)
 
                     setTimeout(function(){
 

@@ -1118,7 +1118,7 @@ var post = (function () {
 									var _w = el.width();
 									var _h = el.height()
 
-									if(_img.width > _img.height && (!isMobile() && self.app.width > 768 && !ed.openapi)){
+									if(_img.width >= _img.height && (!isMobile() && self.app.width > 768 && !ed.openapi)){
 										ac = 'w2'
 
 										var w = _w * (_img.width / _img.height);
@@ -1134,7 +1134,7 @@ var post = (function () {
 										el.width(w);
 									}
 
-									if(_img.height > _img.width || (isMobile() || self.app.width <= 768 || ed.openapi)){
+									if(_img.height >= _img.width || (isMobile() || self.app.width <= 768 || ed.openapi)){
 										ac = 'h2'
 
 										el.height(_w * (_img.height / _img.width))

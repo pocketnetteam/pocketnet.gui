@@ -1,6 +1,3 @@
-#terms {
-  padding-left: 15%;
-}
 #terms .caption {
   margin-top: 3em;
   font-size: 1.9em;
@@ -20,7 +17,7 @@
   font-weight: 700;
 }
 #terms .text {
-  color: rgb(var(--color-txt-gray-dark));
+  color: rgb(var(--text-on-bg-shadow-color));
   max-width: 700px;
   margin-top: 2em;
   margin-bottom: 4em;
@@ -51,12 +48,13 @@
 }
 .wnd #terms {
   padding-top: 4em;
-}
-.wnd #terms .text {
-  color: rgb(var(--neutral-grad-1));
-}
-.wnd #terms .caption {
-  color: rgb(var(--neutral-grad-0));
+  /*.text{
+			color : rgb(var(--neutral-grad-1));
+		}
+
+		.caption{
+			color :  rgb(var(--neutral-grad-0));
+		}*/
 }
 /*t*/
 @media only screen and (max-width: 768px) {
