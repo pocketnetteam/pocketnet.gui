@@ -689,6 +689,7 @@ html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent {
   }
   #post .sharearticle .articlecontent .article_this_embed {
     padding: 0;
+    margin-top: 1em;
     border: 0;
   }
 }

@@ -1713,9 +1713,9 @@ Application = function(p)
 
 					var image = b64toBlob(base64.split(',')[1], 'image/' + ms);	
 
-					p_saveAsWithCordova(image, name + '.' + format, function(d,e){
+					p_saveAsWithCordova(image, name + '.' + format, function(d, e){
 						if (clbk)
-							clbk(d,e)
+							clbk(d, e)
 					})
 
 				}
@@ -1756,6 +1756,8 @@ Application = function(p)
 										else{
 											sitemessage( self.localization.e('e13230')  )
 										}
+
+										clbk()
 	
 										
 									})
@@ -1769,32 +1771,9 @@ Application = function(p)
 					}
 				]
 
-					/*if(!removesharing){
-						if (window.cordova && window.plugins && window.plugins.socialsharing){
-
-							items.push({
-								text : app.localization.e('share'),
-								class : 'itemmain',
-								action : function(clbk){
-	
-									var options = {
-										files : [base64]
-									}
-	
-									window.plugins.socialsharing.shareWithOptions(options);
-		
-								}
-							})
-	
-						}
-					}*/
-					
-
-					
-
-					menuDialog({
-						items : items
-					})
+				menuDialog({
+					items : items
+				})
 				
 			},
 			init : function(_el){

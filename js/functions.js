@@ -779,8 +779,16 @@
 			p = {}
 		}
 
+		var closing = false
+
 		var actions = {
 			close : function(cl, key){
+
+				if(closing) return
+
+				closing = true
+
+				console.log('actions.close')
 
 				if (parallax) {
 					parallax.clear()
@@ -1971,7 +1979,7 @@
 			_format = nm[1]
 
 		if (_format == 'png' || _format == 'jpg' || _format == 'jpeg'){
-			return resolve({base64, name});
+			return Promise.resolve({base64, name});
 		}
 
 		return new Promise((resolve, reject) => {
@@ -6282,6 +6290,8 @@
 				break;
 		}
 
+		console.log('storageLocation', storageLocation)
+
 		window.resolveLocalFileSystemURL(storageLocation, function (fileSystem) {
 			
 			fileSystem.getDirectory('Download', {
@@ -6354,11 +6364,6 @@
 
 			}, function (error) {
 
-				/*dialog({
-					html : "Error: access to download folder, " + error.code,
-					class : "one"
-				})*/
-
 				if(clbk) clbk(null, error)
 
 			})
@@ -6371,8 +6376,10 @@
 				html : "Error: Could not create file, " + evt.target.error.code,
 				class : "one"
 			})*/
+			
+			console.log(evt)
 
-			if(clbk) clbk(null, evt.target.error)
+			if(clbk) clbk(null, evt)
 
 		});
 	
@@ -10715,6 +10722,44 @@ stringEqTrig = function(s1, s2){
 edjsHTML = function() {
     "use strict";
 
+	var c_xss = function(text){
+
+		var ftext = filterXSS(text, {
+			stripIgnoreTag : true,
+			whiteList: {
+				a: ["href", "title", "target", 'cordovalink'],
+				br : ["style"],
+				b : ["style"],
+				span : ["style"],
+				figure : ["style"],
+				figcaption : ["style"/*, "class"*/],
+				i : ["style"],
+				img : ["src"/*, "width", "height"*/],
+				div : [ /*"class",*/"data-plyr-provider", "data-plyr-embed-id"],
+				p : [],
+				ul : [],
+				ol : [],
+				li : [],
+				h2 : [],
+				h1 : [],
+				h3 : [],
+				h4 : [],
+				h5 : [],
+				em : [],
+				u : [],
+				blockquote : [],
+				strong : [],
+				picture : ['img-type'],
+				source : ['srcset', 'type'],
+				strike : []
+			}
+
+		})
+
+		console.log(text,ftext)
+		return ftext
+	}
+
     var e = {
         delimiter: function() {
             return '<div class="article_delimiter"><i class="fas fa-asterisk"></i><i class="fas fa-asterisk"></i><i class="fas fa-asterisk"></i></div>'
@@ -10722,11 +10767,11 @@ edjsHTML = function() {
 
         header: function(e) {
             var t = e.data;
-            return "<h" + _.escape(t.level) + ">" + (t.text) + "</h" + _.escape(t.level) + ">"
+            return "<h" + _.escape(t.level) + ">" + c_xss(t.text) + "</h" + _.escape(t.level) + ">"
         },
 
         paragraph: function(e) {
-            return "<p>" + (e.data.text) + "</p>"
+            return "<p>" + c_xss(e.data.text) + "</p>"
         },
 
         list: function(e) {
@@ -10736,9 +10781,9 @@ edjsHTML = function() {
                 n = function(e, t) {
 					
                     var r = e.map((function(e) {
-                        if (!e.content && !e.items) return "<li>" + (e) + "</li>";
+                        if (!e.content && !e.items) return "<li>" + c_xss(e) + "</li>";
                         var r = "";
-                        return e.items && (r = n(e.items, t)), e.content ? "<li> " + e.content + " </li>" + r : void 0
+                        return e.items && (r = n(e.items, t)), e.content ? "<li> " + c_xss(e.content) + " </li>" + r : void 0
                     }));
 
                     return "<" + t + ">" + r.join("") + "</" + t + ">"
@@ -10760,7 +10805,7 @@ edjsHTML = function() {
 
 			var src = t.file && t.file.url ? t.file.url : t.file
 
-			return '<div class="article_image '+ cl.join(' ') +'"><img src="' + src + '" alt="' + _.escape(r) + '" /><div class="article_image_caption">'+_.escape(t.caption || '')+'</div></div>'
+			return '<div class="article_image '+ cl.join(' ') +'"><img src="' + _.escape(src) + '" alt="' + _.escape(r) + '" /><div class="article_image_caption">'+ _.escape(t.caption || '')+'</div></div>'
 
         },
 
@@ -10768,7 +10813,7 @@ edjsHTML = function() {
 
             var t = e.data;
 
-            return '<div class="article_quote"><div class="article_quote_text">' + (t.text) + '</div><div class="article_quote_author">' + (t.caption) +' </div></div>'
+            return '<div class="article_quote"><div class="article_quote_text">' + _.escape(t.text) + '</div><div class="article_quote_author">' + _.escape(t.caption) +' </div></div>'
         },
 
         code: function(e) {
@@ -10782,10 +10827,10 @@ edjsHTML = function() {
             switch (t.service) {
 
 				case "vimeo":
-                    return '<div class="js-player" data-plyr-provider="vimeo" data-plyr-embed-id="'+t.embed+'"></div>';
+                    return '<div class="js-player" data-plyr-provider="vimeo" data-plyr-embed-id="'+_.escape(t.embed)+'"></div>';
 
 				case "youtube":
-					return '<div class="js-player" data-plyr-provider="youtube" data-plyr-embed-id="'+t.embed+'"></div>';
+					return '<div class="js-player" data-plyr-provider="youtube" data-plyr-embed-id="'+_.escape(t.embed)+'"></div>';
 
 				default:
                     throw new Error("Only Youtube and Vime Embeds are supported right now.")
@@ -10800,7 +10845,7 @@ edjsHTML = function() {
 				return this.error('warning', e)
 			}
 
-			return '<div class="article_warning"><div class="article_warning_icon"><i class="fas fa-exclamation-triangle"></i></div><div class="article_warning_content"><div class="article_warning_title">' + _.escape(t.title || '') + '</div><div class="article_warning_message">' + _.escape(t.message || '') + '</div></div></div>'
+			return '<div class="article_warning"><div class="article_warning_icon"><i class="fas fa-exclamation-triangle"></i></div><div class="article_warning_content"><div class="article_warning_title">' + c_xss(t.title || '') + '</div><div class="article_warning_message">' + c_xss(t.message || '') + '</div></div></div>'
 		},
 
 		carousel: function(e){
