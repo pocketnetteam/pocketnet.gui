@@ -208,12 +208,7 @@ var articlev = (function(){
 
 				var _art = art
 
-				if(!window.testpocketnet){
-					sitemessage('Creation of articles will be available later')
-
-					return
-				}
-
+			
 				globalpreloader(true)
 
 				return actions.saveEditor().then(r => {
