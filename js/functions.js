@@ -10794,7 +10794,7 @@ edjsHTML = function() {
         image: function(e) {
             var t = e.data,
 
-                r = _.escape(t.caption ? t.caption : "Image");
+                r = c_xss(t.caption ? t.caption : "Image");
 
 
 			var cl = []
@@ -10805,7 +10805,7 @@ edjsHTML = function() {
 
 			var src = t.file && t.file.url ? t.file.url : t.file
 
-			return '<div class="article_image '+ cl.join(' ') +'"><img src="' + _.escape(src) + '" alt="' + _.escape(r) + '" /><div class="article_image_caption">'+ _.escape(t.caption || '')+'</div></div>'
+			return '<div class="article_image '+ cl.join(' ') +'"><img src="' + _.escape(src) + '" alt="' + (r) + '" /><div class="article_image_caption">'+ r+'</div></div>'
 
         },
 
@@ -10813,7 +10813,7 @@ edjsHTML = function() {
 
             var t = e.data;
 
-            return '<div class="article_quote"><div class="article_quote_text">' + _.escape(t.text) + '</div><div class="article_quote_author">' + _.escape(t.caption) +' </div></div>'
+            return '<div class="article_quote"><div class="article_quote_text">' + c_xss(t.text) + '</div><div class="article_quote_author">' + c_xss(t.caption) +' </div></div>'
         },
 
         code: function(e) {
