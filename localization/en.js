@@ -2091,3 +2091,5 @@ ____loclib.lloadprevwithtags = "Refresh Feed"
 
 ____loclib.newRepost = "Make repost"
 ____loclib.whatsnewrepost = "Your commentary"
+
+____loclib.art_goback = "Come back"

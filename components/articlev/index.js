@@ -915,20 +915,9 @@ var articlev = (function(){
 				placeholder: self.app.localization.e('art_placeholder'),
 				data: art.content || {},
 				tools: {
-
-					carousel: {
-						class: window.Carousel,
-						config : {
-							uploader : {
-								uploadByFile : uploadImage
-							}
-						}
-					},
-
 					paragraph: {
 						class: window.Paragraph,
 					},
-
 					header: {
 						class: window.Header,
 						levels: [2, 3, 4],
@@ -936,16 +925,21 @@ var articlev = (function(){
 						shortcut: 'CMD+SHIFT+H',
 					},
 
-					quote: {
-						class: window.Quote,
-						inlineToolbar: true,
-						shortcut: 'CMD+SHIFT+O',
-
-						config: {
-						  quotePlaceholder: 'Enter a quote',
-						  captionPlaceholder: 'Quote\'s author',
-						},
-
+					image: {
+						class : window.ImageTool,
+						config : {
+							uploader : {
+								uploadByFile : uploadImage
+							}
+						}
+					},
+					carousel: {
+						class: window.Carousel,
+						config : {
+							uploader : {
+								uploadByFile : uploadImage
+							}
+						}
 					},
 
 					linkTool: {
@@ -964,6 +958,21 @@ var articlev = (function(){
 						}
 					},
 
+					delimiter: window.Delimiter,
+
+					quote: {
+						class: window.Quote,
+						inlineToolbar: true,
+						shortcut: 'CMD+SHIFT+O',
+
+						config: {
+						  quotePlaceholder: 'Enter a quote',
+						  captionPlaceholder: 'Quote\'s author',
+						},
+
+					},
+
+					
 					/*warning: {
 						class: window.Warning,
 						shortcut: 'CMD+SHIFT+W'
@@ -974,16 +983,7 @@ var articlev = (function(){
 						inlineToolbar: true,
 					},
 
-					delimiter: window.Delimiter,
-
-					image: {
-						class : window.ImageTool,
-						config : {
-							uploader : {
-								uploadByFile : uploadImage
-							}
-						}
-					},
+					
 					embed : {
 						class: window.Embed,
 						config: {

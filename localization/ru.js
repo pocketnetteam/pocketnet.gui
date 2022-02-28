@@ -1885,3 +1885,6 @@ ____loclib.newRepost = "Сделать репост"
 
 ____loclib.whatsnewrepost = "Ваш комментарий к публикации"
 
+
+____loclib.art_goback = "Вернуться назад"
+
