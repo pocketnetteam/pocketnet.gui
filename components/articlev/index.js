@@ -186,7 +186,17 @@ var articlev = (function(){
 
 
 				if (e.toString && self.app.platform.errors[e.toString()]){
-					sitemessage(self.app.platform.errors[e.toString()].message())
+
+					var ers = self.app.platform.errors[e.toString()].message
+
+					if (ers){
+						sitemessage(typeof ers == 'function' ? ers() : ers)
+					}
+					else{
+						sitemessage(e.toString())
+					}
+
+					
 
 					return
 				}

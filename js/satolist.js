@@ -7452,8 +7452,13 @@ Platform = function (app, listofnodes) {
             save: function () {
 
                 var address = self.sdk.address.pnet().address;
-
-                localStorage[address + 'articles'] = JSON.stringify(self.sdk.articles.storage || []);
+                try{
+                    localStorage[address + 'articles'] = JSON.stringify(self.sdk.articles.storage || []);
+                }   
+                catch(e){
+                    console.log("e", e)
+                }
+                
 
             },
 
@@ -26338,9 +26343,15 @@ Platform = function (app, listofnodes) {
                     if(clbk) clbk()
                 }
                 else{
-                    importScript('chat/matrix-element.min.js?v=9', clbk)
 
-                    //importScript('chat/matrix-element.js?v=9', clbk)
+                    var vs = '10'
+
+                    if (typeof numfromreleasestring != 'undefined'){
+                        vs = numfromreleasestring(window.packageversion)
+                    }
+
+                    importScript('chat/matrix-element.min.js?v=' + vs, clbk)
+
                 }
 
             }
