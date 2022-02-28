@@ -143,7 +143,7 @@ var lenta = (function(){
 
 			changeSavingStatus : function(shareId, deleted){
 
-				if((self.app.playingvideo || fullscreenvideoShowed) && !deleted ) return
+				if((self.app.playingvideo || fullscreenvideoShowed) && !deleted) return
 
 				delete initedcommentes[shareId];
 				

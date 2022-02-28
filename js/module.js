@@ -349,7 +349,14 @@ nModule = function(){
 				url = appPath + (self.componentsPath || "") + (p.turi || self.map.uri)
 			}
 
-				url += '/templates/' + p.name + '.html?v=130';
+			var vs = '131'
+
+			if (typeof numfromreleasestring != 'undefined'){
+				vs = numfromreleasestring(window.packageversion)
+			}
+
+			url += '/templates/' + p.name + '.html?v=' + vs;
+
 			
 			self.ajax.run({
 				url : url,
