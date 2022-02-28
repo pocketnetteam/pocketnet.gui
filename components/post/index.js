@@ -746,6 +746,16 @@ var post = (function () {
 		}
 
 		var events = {
+			gotouserprofile : function(){
+				var name = $(this).attr('name')
+				var address = $(this).attr('address') 
+
+				self.nav.api.load({
+					open : true,
+					href : name ? name : 'author?address=' + address,
+					history : true
+				})
+			},
 
 			pkoin : function(){
 
@@ -1235,6 +1245,7 @@ var post = (function () {
 						el.stars = el.share.find('.forstars');
 						
 						_p.el.find('.panel .pkoin').on('click', events.pkoin)
+						_p.el.find('.gotouserprofile').on('click', events.gotouserprofile)
 
 						if (ed.repost)
 							_p.el.find('.showMoreArticle, .openoriginal').on('click', function(){

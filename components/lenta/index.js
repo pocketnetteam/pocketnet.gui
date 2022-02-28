@@ -1784,6 +1784,17 @@ var lenta = (function(){
 		}
 
 		var events = {
+
+			gotouserprofile : function(){
+				var name = $(this).attr('name')
+				var address = $(this).attr('address') 
+
+				self.nav.api.load({
+					open : true,
+					href : name ? name : 'author?address=' + address,
+					history : true
+				})
+			},
 			openauthorwindow: function(){
 
 				var shareId = $(this).closest('.share').attr('id');
@@ -3960,6 +3971,7 @@ var lenta = (function(){
 			el.c.on('click', '.toregistration', events.toregistration)
 			el.c.find('.loadmore button').on('click', events.loadmore)
 			el.c.find('.loadprev button').on('click', events.loadprev)
+			el.c.on('click', '.gotouserprofile', events.gotouserprofile)
 
 			el.c.on('click','.openauthorwindow', events.openauthorwindow)
 

@@ -4,6 +4,9 @@
 .share_common .commentsWrapperHb {
   min-height: 1em;
 }
+.share_common .gotouserprofile {
+  cursor: pointer;
+}
 .share_common .pkoin {
   display: flex;
   align-items: center;
