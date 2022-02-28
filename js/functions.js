@@ -10251,15 +10251,18 @@
 					s.donottrust = 'true'
 				}
 
+				
+
 				var l = linkifyHtml(inputText, {
-					attributes : s
+					attributes : s,
+					truncate: 80
 				})
+
 		
 				return l
 			}
 
 			catch(e){
-				
 			}
 			
 		}
