@@ -53,6 +53,7 @@
     "cordova-plugin-insomnia": "git+https://github.com/EddyVerbruggen/Insomnia-PhoneGap-Plugin.git",
     "cordova-plugin-ionic-keyboard": "^2.2.0",
     "cordova-plugin-navigationbar-color": "^0.1.0",
+    "cordova-plugin-pip": "0.0.2",
     "cordova-plugin-statusbar": "git+https://github.com/apache/cordova-plugin-statusbar.git",
     "cordova-plugin-taptic-engine": "^2.2.0",
     "cordova-plugin-whitelist": "^1.3.5",
@@ -134,7 +135,8 @@
       "cordova-plugin-whitelist": {},
       "cordova-plugin-android-packagemanager": {},
       "cordova-plugin-apkupdater": {},
-      "cordova-plugin-file-transfer": {}
+      "cordova-plugin-file-transfer": {},
+      "cordova-plugin-pip": {}
     },
     "platforms": [
       "ios",
