@@ -9215,6 +9215,7 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
           
 
           plyrPlayer.localVideoId = clear_peertube_id;
+          plyrPlayer.el = $(target)
 
         if (clbk) clbk(plyrPlayer);
 
@@ -9256,6 +9257,8 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
     
             var api = embed.api
                 api.mute()
+
+                api.el = $(target)
     
             if (clbk) clbk(api);
             if (readyCallback) readyCallback(api);

@@ -1019,6 +1019,8 @@ Application = function(p)
 						navigator.splashscreen.hide();
 				}
 
+				self.mobile.pip.init()
+
 				if (window.Keyboard && window.Keyboard.disableScroll){
 					window.Keyboard.disableScroll(false)
 				}
@@ -1174,7 +1176,6 @@ Application = function(p)
 				self.mobile.backgroundMode(self.playingvideo && self.playingvideo.playing && (!duration || duration > 60)/* && self.platform.sdk.videos.volume*/)
 
 			}, 1000)
-
 			
 
 		},
@@ -1697,15 +1698,62 @@ Application = function(p)
 	self.mobile = {
 
 		pip : {
+
+			element : null,
+
 			enable : function(htmlElement) {
-				if (!PictureInPicture || !PictureInPicture.enter)
-					return;
+
+				if (!window.PictureInPicture || !window.PictureInPicture.enter) return Promise.resolve();
+
 				var width = 400, height = 600;
-				PictureInPicture.enter(width, height, function(success) {
-					// PIP mode started
-				}, function(error) {
-					// PIP mode failed to start
-				});
+
+				return new Promise((resolve, reject) => {
+
+					PictureInPicture.enter(width, height, function(d) {
+
+						if (self.mobile.pip.element){
+							self.mobile.pip.element.removeClass('pipped')
+						}
+
+						self.mobile.pip.element = htmlElement
+
+						if (self.mobile.pip.element)
+							self.mobile.pip.element.addClass('pipped')
+						// PIP mode started
+						resolve(d)
+					}, function(error) {
+						reject(error)
+					});
+
+				})
+				
+			},
+
+			init : function(){
+
+				if (window.PictureInPicture && window.PictureInPicture.onPipModeChanged){
+					window.PictureInPicture.onPipModeChanged(function(res){
+
+						res = (res == 'true')
+
+						if (res){
+							if(!self.el.html.hasClass('pipmode')) self.el.html.addClass('pipmode')
+						}
+						else{
+
+							if (self.el.html.hasClass('pipmode')) self.el.html.removeClass('pipmode')
+
+							if (self.mobile.pip.element){
+								self.mobile.pip.element.removeClass('pipped')
+								self.mobile.pip.element = null
+							}
+						}
+
+						console.log('changed', res)
+					})
+				}
+
+				
 			}
 		},
 

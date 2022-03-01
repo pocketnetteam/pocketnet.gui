@@ -26943,8 +26943,8 @@ Platform = function (app, listofnodes) {
             unfocustime = platform.currentTime()
 
             // If playing a fullscreen video, enter PIP mode
-            if (self.app.fullscreenmode == true && self.app.playingvideo)
-                self.app.mobile.pip.enable();
+            if (self.app.playingvideo)
+                self.app.mobile.pip.enable(self.app.playingvideo.el ? self.app.playingvideo.el.find('.video-js') : '');
         }
 
 

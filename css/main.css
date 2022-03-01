@@ -6125,6 +6125,24 @@ html.mobileview .wnd.normalizedmobile:only-child.asette .wndback {
   transition: 0.2s;
   opacity: 0;
 }
+html.pipmode .pipped {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 10000;
+  max-height: none!important;
+  max-width: none!important;
+}
+html.pipmode .wnd ._close,
+html.pipmode .wnd .closeline {
+  display: none!important;
+}
+html.pipmode .wnd .wndinner {
+  -webkit-transform: none!important;
+  transform: none!important;
+}
 #application .emojionearea,
 #application .emojionearea.form-control {
   background: rgb(var(--background-hidden-layer));

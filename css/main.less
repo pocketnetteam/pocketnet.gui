@@ -4993,6 +4993,8 @@ html.mobileview.fullscreen{
     }
 }
 
+
+
 .windowsContainer{
     position: relative;
 }
@@ -7537,6 +7539,32 @@ html.mobileview{
     }
 
     
+}
+
+html.pipmode{
+    .pipped{
+        position: fixed;
+        left: 0;
+        right: 0;
+        top : 0;
+        bottom: 0;
+        z-index: 10000;
+        max-height: none!important;
+        max-width: none!important;
+    }
+
+    .wnd{
+            
+        ._close,
+        .closeline{
+            display: none!important;
+        }
+
+        .wndinner{
+            -webkit-transform: none!important;
+            transform: none!important;
+        }
+    }
 }
 
 ///////////
