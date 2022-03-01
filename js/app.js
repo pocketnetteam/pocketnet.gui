@@ -1696,7 +1696,18 @@ Application = function(p)
 
 	self.mobile = {
 
-	
+		pip : {
+			enable : function(htmlElement) {
+				if (!PictureInPicture || !PictureInPicture.enter)
+					return;
+				var width = 400, height = 600;
+				PictureInPicture.enter(width, height, function(success) {
+					// PIP mode started
+				}, function(error) {
+					// PIP mode failed to start
+				});
+			}
+		},
 
 		saveImages : {
 			save : function(base64, nms, clbk){
