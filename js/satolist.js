@@ -25695,6 +25695,8 @@ Platform = function (app, listofnodes) {
 
                 if (data.msg == 'update-available' && (data.linux || data.macos)) {
                     updateAvailable()
+
+                    // TODO APPLICATIONS PAGE
                 }
             }
 

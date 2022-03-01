@@ -774,12 +774,11 @@ fs.exists(mapJsPath, function (exists) {
 							if(args.prodaction)
 							{
 
-								JS += '<script type="text/javascript">'+joinfirst.data+'</script>';
+								//JS += '<script type="text/javascript">'+joinfirst.data+'</script>';
+								JS += '<script join src="js/joinfirst.min.js?v='+rand(1, 999999999999)+'"></script>';
 								JS += '<script async join src="js/join.min.js?v='+rand(1, 999999999999)+'"></script>';
 								JS += '<script async join src="js/joinlast.min.js?v='+rand(1, 999999999999)+'"></script>';
-	
 								VE = '<script async join src="js/vendor.min.js?v='+args.vendor+'"></script>';
-	
 								CSS = '<link rel="stylesheet" href="css/master.css?v='+rand(1, 999999999999)+'">';
 	
 								index = index.replace(new RegExp(/\?v=([0-9]*)/g), '?v=' + rand(1, 999999999999));
