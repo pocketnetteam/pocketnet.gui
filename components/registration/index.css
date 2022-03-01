@@ -558,6 +558,11 @@
   left: 0;
   right: 0;
 }
+html[theme="black"] #registration .ucaptcha .captchaImage,
+html[theme="gray"] #registration .ucaptcha .captchaImage {
+  -webkit-filter: invert(1);
+  filter: invert(1);
+}
 @media only screen and (max-width: 768px) {
   #registration .mWrapper #test {
     width: 100%;

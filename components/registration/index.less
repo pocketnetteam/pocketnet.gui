@@ -688,6 +688,20 @@
 	}
 }
 
+html[theme="black"],
+html[theme="gray"]{
+	#registration{
+		.ucaptcha{
+			.captchaImage{
+				-webkit-filter: invert(1);
+				filter: invert(1);
+			}
+		}
+	}
+}
+
+
+
 @media only screen and (max-width: 768px){
 	#registration .mWrapper #test {
 		width: 100%;
