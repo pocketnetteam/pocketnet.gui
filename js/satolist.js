@@ -7815,108 +7815,42 @@ Platform = function (app, listofnodes) {
                 }
             },
 
-            listenKeys: function() {
-                const keysPressed = {};
+            listenScroll: function() {
+                const zoomArrList = self.app.platform.sdk.uiScale.all;
+                const zoomKeys = Object.keys(zoomArrList);
 
-                function zoomShortcuts(e) {
-                    /**
-                     * Ctrl - 17,
-                     * Command (Mac OS) - 91
-                     *
-                     * Minus - 189
-                     * Minus Numpad - 109
-                     *
-                     * Plus - 187
-                     * Plus Numpad - 107
-                     */
+                let scrollLock = false;
 
-                    Object.keys(keysPressed).forEach((key) => {
-                        if(key == 17) {
-                            return;
+                $(window).on('wheel', (e) => {
+                    if(!e.metaKey && !e.ctrlKey) {
+                        if (scrollLock) {
+                            $('html').removeClass('scroll-lock');
+                            scrollLock = false;
                         }
 
-                        if (key === 'forward_scroll' || key === 'backward_scroll') {
-                            return;
-                        }
+                        return;
+                    }
 
-                        const keyState = keysPressed[key];
-                        const isTimeout = (keyState + 1000 < Date.now());
-
-                        if(isTimeout) {
-                            if (key == 91) {
-                                $('html').removeClass('scroll-lock');
-                            }
-
-                            delete keysPressed[key];
-                        }
-                    });
-
-                    const isCtrlPressed = (_.has(keysPressed, 17) || _.has(keysPressed, 91));
-                    const isMinusPressed = (_.has(keysPressed, 189) || _.has(keysPressed, 109));
-                    const isPlusPressed = (_.has(keysPressed, 187) || _.has(keysPressed, 107));
-
-                    if (isCtrlPressed) {
+                    if (!scrollLock) {
                         $('html').addClass('scroll-lock');
+                        scrollLock = true;
+                    }
+
+                    let zoomDelta = 0;
+
+                    if(e.originalEvent.deltaY < 0) {
+                        zoomDelta = -1;
+                    } else {
+                        zoomDelta = +1;
                     }
 
                     const currentZoom = self.app.platform.sdk.uiScale.current;
-
-                    const zoomArrList = self.app.platform.sdk.uiScale.all;
-                    const zoomKeys = Object.keys(zoomArrList);
-
                     const zoomCurrentIndex = zoomKeys.findIndex(zoom => (zoom === currentZoom));
+                    const zoomNewIndex = zoomCurrentIndex + zoomDelta;
+                    const zoomNewName = zoomKeys[zoomNewIndex];
 
-                    const isPlusOutOfRange = (zoomCurrentIndex == zoomKeys.length - 1);
-                    const isMinusOutOfRange = (zoomCurrentIndex == 0);
-
-                    const isKeyZoomIn = (isCtrlPressed && isPlusPressed);
-                    const isKeyZoomOut = (isCtrlPressed && isMinusPressed);
-
-                    const isScrollZoomIn = (isCtrlPressed && keysPressed.forward_scroll === true);
-                    const isScrollZoomOut = (isCtrlPressed && keysPressed.backward_scroll === true);
-
-                    const isZoomIn = (isKeyZoomIn || isScrollZoomIn);
-                    const isZoomOut = (isKeyZoomOut || isScrollZoomOut);
-
-                    if (isZoomIn && !isPlusOutOfRange) {
-                        const zoomNewIndex = zoomCurrentIndex + 1;
-                        const zoomNewName = zoomKeys[zoomNewIndex];
-
-                        self.app.platform.sdk.uiScale.set(zoomNewName);
-                    } else if (isZoomOut && !isMinusOutOfRange) {
-                        const zoomNewIndex = zoomCurrentIndex - 1;
-                        const zoomNewName = zoomKeys[zoomNewIndex];
-
-                        self.app.platform.sdk.uiScale.set(zoomNewName);
-                    }
-                }
-
-                $(document).keydown(function(e) {
-                    keysPressed[e.which] = Date.now();
+                    self.app.platform.sdk.uiScale.set(zoomNewName);
                 });
-
-                $(document).keyup(function(e) {
-                    delete keysPressed[e.which];
-
-                    if (e.which == 17 || e.which == 91) {
-                        $('html').removeClass('scroll-lock');
-                    }
-                });
-
-                $(window).on('wheel', (e) => {
-                    if(e.originalEvent.deltaY < 0) {
-                        keysPressed.forward_scroll = true;
-                    } else {
-                        keysPressed.backward_scroll = true;
-                    }
-
-                    zoomShortcuts(e);
-
-                    delete keysPressed.forward_scroll;
-                    delete keysPressed.backward_scroll;
-                });
-
-                $(document).keydown(zoomShortcuts);
             },
         },
 
