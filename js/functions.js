@@ -10794,7 +10794,7 @@ edjsHTML = function() {
         image: function(e) {
             var t = e.data,
 
-                r = c_xss(t.caption ? t.caption : "Image");
+                r = c_xss(t.caption || "");
 
 
 			var cl = []
@@ -10805,7 +10805,11 @@ edjsHTML = function() {
 
 			var src = t.file && t.file.url ? t.file.url : t.file
 
-			return '<div class="article_image '+ cl.join(' ') +'"><img src="' + _.escape(src) + '" alt="' + (r) + '" /><div class="article_image_caption">'+ r+'</div></div>'
+			return '<div class="article_image '+ cl.join(' ') +'"><img src="' + _.escape(src) + '" alt="' + (r) + '" />' + 
+			
+			(r ? ('<div class="article_image_caption">' + r + '</div>') : '')
+			
+			+ '</div>'
 
         },
 

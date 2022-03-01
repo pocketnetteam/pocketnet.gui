@@ -125,6 +125,8 @@
   font-size: 0.8em;
   margin-bottom: 0.6em;
   border-radius: 12px;
+  font-weight: 700;
+  text-decoration: underline;
 }
 #lenta .subc {
   margin-top: 1em;

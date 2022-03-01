@@ -5042,6 +5042,9 @@ html.mobileview.fullscreen #navigationWrapper {
   margin-top: 0.5em;
   margin-bottom: 0.5em;
 }
+.article_body .article_image {
+  margin-bottom: 0.5em;
+}
 .article_body .article_image.withBorder {
   border: 1px solid rgba(var(--neutral-grad-1), 0.5);
   padding: 0.5em;
@@ -5058,6 +5061,7 @@ html.mobileview.fullscreen #navigationWrapper {
   display: block;
   margin: 0 auto;
   max-width: 400px!important;
+  width: 100%;
 }
 .article_body .article_image img {
   border-radius: 5px;
