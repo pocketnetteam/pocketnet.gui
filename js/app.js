@@ -1695,6 +1695,9 @@ Application = function(p)
 	}
 
 	self.mobile = {
+
+	
+
 		saveImages : {
 			save : function(base64, nms, clbk){
 				var nm = nms.split('.')
@@ -1963,6 +1966,8 @@ Application = function(p)
 		update : {
 			needmanage : false,
 			hasupdate : false,
+
+			playstore : true,
 
 			downloadAndInstall : function(){
 

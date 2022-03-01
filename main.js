@@ -126,8 +126,7 @@ function showHideWindow(show) {
 
 function autoLaunchManage(enable){
 
-    if (!is.macOS() && !is.linux()){
-        
+    if (!is.macOS()){
         let autoLaunch = new AutoLaunch({
             name: appName,
             path: app.getPath('exe'),

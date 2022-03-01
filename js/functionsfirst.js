@@ -63,9 +63,28 @@ getbaseorientation = function(){
 	return type
 }
 
+var addzeros = function(v){
+    v = v.toString()
+
+    var zs = 5 - v.length
+
+    for(var i = 0; i < zs; i++){
+        v = '0' + v
+    }
+
+    return v
+}
+
 numfromreleasestring = function(v){
-    v = v.replace(/[^0-9]/g, '')
+
+    var vss = v.split('.')
+
+    vss[2] = addzeros(vss[2])
+
+    v = vss.join('.').replace(/[^0-9]/g, '')
+
     var vs = Number(v.substr(0, 1) + '.' + v.substr(1))
+
     return vs
 }
 
