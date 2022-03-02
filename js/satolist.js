@@ -25867,7 +25867,7 @@ Platform = function (app, listofnodes) {
         self.sdk.lentaMethod.load()
 
         self.sdk.uiScale.load();
-        self.sdk.uiScale.listenKeys();
+        self.sdk.uiScale.listenScroll();
         
         self.sdk.system16.init()
 
