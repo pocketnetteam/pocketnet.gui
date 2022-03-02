@@ -4825,33 +4825,32 @@ input[type=radio].radio:checked + label {
 
 .matrixchatwrapper{
     font-size: 16px;
-    
 }
 
 html.mobileview{
 
     .matrixchatwrapper{
         position: fixed;
-        contain: strict style;
-        left : -100%;
+        contain: strict;
+        left : 0;
         top : 0;
-        right: 100%;
+        right: 0;
         bottom : 0;
         background: rgb(var(--background-hidden-layer));
         .transition(0.3s);
         z-index: 1004;
         -webkit-overflow-scrolling: touch;
-        transform-origin : 'right center';
-        -webkit-transform: scale(0.9);
-        transform: scale(0.9);
+        transform-origin : left center;
+        -webkit-transform: scale(0.9) translateX(-100%);
+        transform: scale(0.9) translateX(-100%);
         overflow: hidden;
         border-radius: 5px;
         backface-visibility: hidden;
         will-change: transform;
 
         &.active{
-            -webkit-transform: scale(1) translateX(100%);
-            transform: scale(1) translateX(100%);
+            -webkit-transform: scale(1) translateX(0);
+            transform: scale(1) translateX(0);
         }
     }
 
@@ -7564,6 +7563,10 @@ html.pipmode{
             -webkit-transform: none!important;
             transform: none!important;
         }
+    }
+
+    .matrixchatwrapper{
+        contain: none;
     }
 }
 

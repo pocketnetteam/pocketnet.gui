@@ -1700,12 +1700,18 @@ Application = function(p)
 		pip : {
 
 			element : null,
-
+			enabled : false,
 			enable : function(htmlElement) {
+
+				var aspectratio = 1
 
 				if (!window.PictureInPicture || !window.PictureInPicture.enter) return Promise.resolve();
 
-				var width = 400, height = 600;
+				if (htmlElement){
+					aspectratio = htmlElement.height() / htmlElement.width()
+				}
+
+				var width = 400, height = width * (aspectratio || 1);
 
 				return new Promise((resolve, reject) => {
 
@@ -1749,7 +1755,9 @@ Application = function(p)
 							}
 						}
 
-						console.log('changed', res)
+						self.mobile.pip.enabled = res
+
+						self.platform.matrixchat.changePip()
 					})
 				}
 

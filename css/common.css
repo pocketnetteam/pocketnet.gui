@@ -793,6 +793,12 @@
   font-size: 0.9em;
   color: rgb(var(--neutral-grad-4));
 }
+.share_common .stars {
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  cursor: pointer;
+}
 .share_common .sharepanel {
   border-radius: 0;
   display: flex;
@@ -818,12 +824,6 @@
 }
 .share_common .sharepanel > div:nth-last-child(1) {
   margin-right: 0;
-}
-.share_common .sharepanel > div .stars {
-  height: 40px;
-  line-height: 40px;
-  text-align: center;
-  cursor: pointer;
 }
 .share_common .sharepanel > div .count {
   cursor: pointer;

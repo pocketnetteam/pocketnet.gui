@@ -578,6 +578,7 @@ var lenta = (function(){
 					}
 				
 				if(players[share.txid]){
+					
 					if (players[share.txid].fulliniting) return
 
 					players[share.txid].fulliniting = true
@@ -650,6 +651,7 @@ var lenta = (function(){
 					if (self.app.platform.sdk.videos.historyget && share.itisvideo()){
 
 						var pr = self.app.platform.sdk.videos.historyget(share.txid)
+
 						if (pr.percent < 95)
 							startTime = pr.time
 					}

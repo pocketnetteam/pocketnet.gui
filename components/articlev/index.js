@@ -169,7 +169,6 @@ var articlev = (function(){
 			error : function(e){
 
 				if(e && e.text){
-
 					
 					if (errors[e.text]){
 
@@ -180,14 +179,12 @@ var articlev = (function(){
 						return
 
 					}
-
 					
 				}
 
-
 				if (e.toString && self.app.platform.errors[e.toString()]){
 
-					var ers = self.app.platform.errors[e.toString()].message
+					var ers = self.app.platform.errors[e.toString()].message || self.app.platform.errors[e.toString()].text
 
 					if (ers){
 						sitemessage(typeof ers == 'function' ? ers() : ers)
@@ -195,8 +192,6 @@ var articlev = (function(){
 					else{
 						sitemessage(e.toString())
 					}
-
-					
 
 					return
 				}

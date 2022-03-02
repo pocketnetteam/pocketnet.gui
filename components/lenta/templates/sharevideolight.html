@@ -114,7 +114,7 @@ var metadisplay = function(){ %>
 				<div class="sharecaption canmark opensviurl" title="<%-nl2br(trimrn(c))%>">
 					<div>
 						<% if(ed.horizontal) {%><span class="adr"><%-name || share.address %>:</span><% } %>
-						<%=app.actions.emoji(nl2br(trimrn(c)))%>
+						<span><%=app.actions.emoji(nl2br(trimrn(c)))%></span>
 					</div>
 				</div>
 			</div>
