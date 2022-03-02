@@ -7815,33 +7815,28 @@ Platform = function (app, listofnodes) {
                 }
             },
 
-            listenScroll: function() {
+            listenScalingEvents: function() {
                 const zoomArrList = self.app.platform.sdk.uiScale.all;
                 const zoomKeys = Object.keys(zoomArrList);
 
-                let scrollLock = false;
+                let wheelLock = false;
 
-                $(window).on('wheel', (e) => {
-                    if(!e.metaKey && !e.ctrlKey) {
-                        if (scrollLock) {
+                function scaleUi(e, isScroll, calcDelta) {
+                    const mainKeyDown = e.metaKey || e.ctrlKey;
+
+                    if(!mainKeyDown) {
+                        if (isScroll && wheelLock) {
                             $('html').removeClass('scroll-lock');
-                            scrollLock = false;
+                            wheelLock = false;
                         }
 
                         return;
                     }
 
-                    if (!scrollLock) {
-                        $('html').addClass('scroll-lock');
-                        scrollLock = true;
-                    }
+                    const zoomDelta = calcDelta(e, mainKeyDown);
 
-                    let zoomDelta = 0;
-
-                    if(e.originalEvent.deltaY < 0) {
-                        zoomDelta = -1;
-                    } else {
-                        zoomDelta = +1;
+                    if (zoomDelta === 0) {
+                        return;
                     }
 
                     const currentZoom = self.app.platform.sdk.uiScale.current;
@@ -7850,7 +7845,38 @@ Platform = function (app, listofnodes) {
                     const zoomNewName = zoomKeys[zoomNewIndex];
 
                     self.app.platform.sdk.uiScale.set(zoomNewName);
-                });
+                }
+
+                $(window).on('keydown', (e) => scaleUi(e, false, ({ keyCode }) => {
+                    /**
+                     * Minus - 189
+                     * Minus Numpad - 109
+                     *
+                     * Plus - 187
+                     * Plus Numpad - 107
+                     */
+                    switch (keyCode) {
+                        case 189: case 109:
+                            return -1;
+                        case 187: case 107:
+                            return +1;
+                    }
+
+                    return 0;
+                }));
+
+                $(window).on('wheel', (e) => scaleUi(e, true, (e) => {
+                    if(!wheelLock) {
+                        $('html').addClass('scroll-lock');
+                        wheelLock = true;
+                    }
+
+                    if(e.originalEvent.deltaY < 0) {
+                        return +1;
+                    } else {
+                        return -1;
+                    }
+                }));
             },
         },
 
@@ -25867,8 +25893,8 @@ Platform = function (app, listofnodes) {
         self.sdk.lentaMethod.load()
 
         self.sdk.uiScale.load();
-        self.sdk.uiScale.listenKeys();
-        
+        self.sdk.uiScale.listenScalingEvents();
+
         self.sdk.system16.init()
 
         //self.app.platform.sdk.node.sys.load()
