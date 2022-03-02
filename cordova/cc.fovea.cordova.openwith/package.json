@@ -43,7 +43,7 @@
   "dependencies": {
     "file-system": "^2.2.2",
     "path": "^0.12.7",
-    "plist": "^2.1.0",
+    "plist": "^3.0.4",
     "xcode": "git+https://github.com/apache/cordova-node-xcode.git"
   },
   "# Dependencies required to run tests": "",
