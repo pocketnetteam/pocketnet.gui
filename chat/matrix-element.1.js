@@ -487,8 +487,7 @@ var component = Object(componentNormalizer["a" /* default */])(
     getEvents: function getEvents() {
       var _this = this;
 
-      var events = this.timeline.getEvents(); // if (this.filterType !== 'images') {
-
+      var events = this.timeline.getEvents();
       events = _.filter(events, function (e) {
         var type = e.event.type;
         if (e.localRedactionEvent() || e.getRedactionEvent()) return;
@@ -515,10 +514,30 @@ var component = Object(componentNormalizer["a" /* default */])(
       events = _.sortBy(events, function (e) {
         return e.getDate() || Infinity;
       });
-      events = events.reverse(); // }
-
+      events = events.reverse();
       this.$emit('getEvents', events);
       return events;
+    },
+    getEventsAndEncrypt: function getEventsAndEncrypt() {
+      var _this2 = this;
+
+      var events = this.getEvents();
+      return Promise.all(_.map(events, function (e) {
+        if (!_this2.chat.pcrypto) return Promise.resolve();
+        if (e.event.decrypted) return Promise.resolve();
+        if (functions["a" /* default */].deep(e, 'event.content.msgtype') != 'm.encrypted') return Promise.resolve();
+        return _this2.chat.pcrypto.decryptEvent(e.event).then(function (d) {
+          e.event.decrypted = d;
+          return Promise.resolve();
+        }).catch(function (e) {
+          e.event.decrypted = {
+            msgtype: 'm.bad.encrypted'
+          };
+          return Promise.resolve();
+        });
+      })).then(function () {
+        return Promise.resolve(events);
+      });
     },
     relations: function relations(events) {
       var ts = this.timeline._timelineSet;
@@ -581,30 +600,30 @@ var component = Object(componentNormalizer["a" /* default */])(
       return mediaTimelineSet;
     }(),
     init: function () {
-      var _init = Object(asyncToGenerator["a" /* default */])( /*#__PURE__*/regenerator_default.a.mark(function _callee3() {
-        var _this2 = this;
+      var _init = Object(asyncToGenerator["a" /* default */])( /*#__PURE__*/regenerator_default.a.mark(function _callee2() {
+        var _this3 = this;
 
         var timeline, ts;
-        return regenerator_default.a.wrap(function _callee3$(_context3) {
+        return regenerator_default.a.wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
                 this.loading = true;
                 this.firstPaginate = true;
                 timeline = this.chat.getLiveTimeline();
 
                 if (!(this.filterType === 'images')) {
-                  _context3.next = 10;
+                  _context2.next = 10;
                   break;
                 }
 
                 this.scrollType = 'custom';
-                _context3.next = 7;
+                _context2.next = 7;
                 return this.mediaTimelineSet();
 
               case 7:
-                ts = _context3.sent;
-                _context3.next = 11;
+                ts = _context2.sent;
+                _context2.next = 11;
                 break;
 
               case 10:
@@ -613,40 +632,25 @@ var component = Object(componentNormalizer["a" /* default */])(
               case 11:
                 this.timeline = new this.core.mtrx.sdk.TimelineWindow(this.core.mtrx.client, ts);
                 setTimeout(function () {
-                  _this2.timeline.load().then( /*#__PURE__*/function () {
-                    var _ref3 = Object(asyncToGenerator["a" /* default */])( /*#__PURE__*/regenerator_default.a.mark(function _callee2(r) {
-                      return regenerator_default.a.wrap(function _callee2$(_context2) {
-                        while (1) {
-                          switch (_context2.prev = _context2.next) {
-                            case 0:
-                              _this2.events = _this2.getEvents();
-                              _this2.loading = false;
-                              setTimeout(function () {
-                                _this2.autoPaginateAll();
-                              }, 300);
-
-                            case 3:
-                            case "end":
-                              return _context2.stop();
-                          }
-                        }
-                      }, _callee2);
-                    }));
-
-                    return function (_x) {
-                      return _ref3.apply(this, arguments);
-                    };
-                  }()).catch(function (e) {
-                    _this2.loading = false;
+                  _this3.timeline.load().then(function (r) {
+                    return _this3.getEventsAndEncrypt();
+                  }).then(function (events) {
+                    _this3.events = events;
+                    _this3.loading = false;
+                    setTimeout(function () {
+                      _this3.autoPaginateAll();
+                    }, 300);
+                  }).catch(function (e) {
+                    _this3.loading = false;
                   });
                 }, 30);
 
               case 13:
               case "end":
-                return _context3.stop();
+                return _context2.stop();
             }
           }
-        }, _callee3, this);
+        }, _callee2, this);
       }));
 
       function init() {
@@ -661,7 +665,7 @@ var component = Object(componentNormalizer["a" /* default */])(
       }
     },
     paginate: function paginate(direction, rnd) {
-      var _this3 = this;
+      var _this4 = this;
 
       //$(this.$el).find('.eventsflex')[0]
       if (!this.loading && this.timeline && !this['p_' + direction]) {
@@ -675,14 +679,14 @@ var component = Object(componentNormalizer["a" /* default */])(
           }).catch(function (e) {
             return Promise.resolve();
           }).then(function (r) {
-            setTimeout(function () {
-              _this3.events = _this3.getEvents();
-              _this3.firstPaginate = false;
+            return _this4.getEventsAndEncrypt();
+          }).then(function (events) {
+            _this4.events = events;
+            _this4.firstPaginate = false;
 
-              _this3.readAll();
+            _this4.readAll();
 
-              _this3['p_' + direction] = false;
-            }, 100);
+            _this4['p_' + direction] = false;
           });
         } else {
           this.readAll();
@@ -730,10 +734,10 @@ var component = Object(componentNormalizer["a" /* default */])(
       this.readEvent(events[events.length - 1]);
     },
     readEvents: function readEvents(events) {
-      var _this4 = this;
+      var _this5 = this;
 
       _.each(events, function (e) {
-        _this4.readEvent(e);
+        _this5.readEvent(e);
       });
     },
     readOne: function readOne() {
@@ -742,25 +746,25 @@ var component = Object(componentNormalizer["a" /* default */])(
       });
     },
     readAll: function readAll() {
-      var _this5 = this;
+      var _this6 = this;
 
       if (document.hasFocus() && (!this.pocketnet || this.active) && !this.core.hiddenInParent && this.chat && this.chat.getJoinedMemberCount() > 0 && this.chat.getUnreadNotificationCount() !== 0) setTimeout(function () {
-        if (!_this5.chat) return;
-        var i = _this5.chat.timeline.length - 1;
+        if (!_this6.chat) return;
+        var i = _this6.chat.timeline.length - 1;
         var event = null;
 
         while (i >= 0 && !event) {
-          var e = _this5.chat.timeline[i];
+          var e = _this6.chat.timeline[i];
 
-          if (!_this5.core.mtrx.me(e.sender.userId)) {
+          if (!_this6.core.mtrx.me(e.sender.userId)) {
             event = e;
           }
 
           i--;
         }
 
-        _this5.core.mtrx.client.setRoomReadMarkers(_this5.chat.currentState.roomId, e.eventId, e, {
-          hidden: !_this5.settings_read ? true : false
+        _this6.core.mtrx.client.setRoomReadMarkers(_this6.chat.currentState.roomId, e.eventId, e, {
+          hidden: !_this6.settings_read ? true : false
         }).then(function (r) {
           return r;
         });

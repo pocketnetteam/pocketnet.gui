@@ -206,7 +206,7 @@
   left: 0;
   bottom: 0;
   background: rgb(var(--background-main));
-  color: rgb(var(--neutral-grad-1));
+  color: rgb(var(--neutral-grad-3));
   padding: 1em;
   text-align: center;
   cursor: pointer;
@@ -224,10 +224,10 @@
 }
 #main .addbutton.scrollactive {
   display: block;
-  opacity: 0.5;
+  opacity: 0.8;
 }
 #main .addbutton:hover {
-  opacity: 0.8;
+  opacity: 1;
 }
 #main #share {
   min-height: 130px;

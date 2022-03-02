@@ -26400,6 +26400,12 @@ Platform = function (app, listofnodes) {
             }
         },
 
+        changePip : function(){
+            if (self.matrixchat.el){
+                self.matrixchat.el.find('matrix-element').attr('pip', self.app.mobile.pip.enabled)
+            }
+        },
+
         changeTheme : function(){
             if (self.matrixchat.el){
                 self.matrixchat.el.find('matrix-element').attr('ctheme', self.sdk.theme.current)
@@ -26428,9 +26434,7 @@ Platform = function (app, listofnodes) {
                             left : {
                                 cancellable : true,				
                                 
-                                basevalue : function(){
-                                    return self.app.width || $(window).width()
-                                },
+                              
     
                                 positionclbk : function(px){
                                 },
@@ -26901,6 +26905,10 @@ Platform = function (app, listofnodes) {
             self.focus = false;
 
             unfocustime = platform.currentTime()
+
+            // If playing a fullscreen video, enter PIP mode
+            if (self.app.playingvideo)
+                self.app.mobile.pip.enable(self.app.playingvideo.el ? self.app.playingvideo.el.find('.video-js') : '');
         }
 
 
