@@ -26,7 +26,7 @@ if(typeof _Electron != 'undefined' && _Electron){
 
 	Mark = require('./js/vendor/jquery.mark.js');
 
-	EmojioneArea = require('./js/vendor/emojionearea.min.js')
+	EmojioneArea = require('./js/vendor/emojionearea.js')
 	filterXss = require('./js/vendor/xss.min.js')
 
 }
