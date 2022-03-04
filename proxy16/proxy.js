@@ -651,6 +651,16 @@ var Proxy = function (settings, manage, test, logger) {
 					'peertube14.pocketnet.app',
 					'peertube15.pocketnet.app',
 				],
+
+				16: [
+					'poketnetpeertube.space',
+					'poketnetpeertube.ru',
+				],
+
+				17: [
+					'6031519.xyz',
+					'storemi.ru',
+				],
       		};
 
 			if (test){
