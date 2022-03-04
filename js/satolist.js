@@ -126,7 +126,8 @@ Platform = function (app, listofnodes) {
         'PERF5kDM32ebkq8SeSj8ZaLqfCoqz8FRgh' : true,
         'PGD5jUBQ7qNnHDuW85RRBxY1msywEdCm7r' : true,
         'PApFYMrbm3kXMV7kjrEG1v6ULv6ZFDHb9j' : true,
-        'PUBRMTAUhy51gkbuP1tRJLMMAzEDt9C2X6' : true
+        'PUBRMTAUhy51gkbuP1tRJLMMAzEDt9C2X6' : true,
+        'P9i55BxFWpjMyqgHyCKtazDN1HDiZxTSzJ' : true
     }
 
     self.nvadr = {
@@ -2380,6 +2381,45 @@ Platform = function (app, listofnodes) {
     }
 
     self.ui = {
+
+        pipvideo : function(txid, clbk, d){
+
+            if(!d) d = {}
+        
+            var p = {
+                href : 'post?s=' + txid,
+                clbk : clbk,
+                essenseData : {
+                    share : txid,
+                    video : true,
+                    autoplay : true,
+                    pip : true,
+                    startTime : d.startTime || 0
+                },
+
+                expand : function(d){
+
+                    if(!d) d = {}
+
+                    self.app.nav.api.load({
+                        open : true,
+                        href : 'post?s=' + txid,
+                        inWnd : true,
+                        history : true,
+                        essenseData : {
+                            share : txid,
+                            video : true,
+                            autoplay : true,
+                            startTime : d.startTime || 0
+                        }
+                    })
+
+                }
+            }
+
+            self.app.actions.playingvideo(null)
+            self.app.actions.pipwindow(p)
+        },
 
         popup : function(key, always, data){
 
@@ -16665,6 +16705,8 @@ Platform = function (app, listofnodes) {
 
                     var outs = [];
 
+                    console.log("tx", tx)
+
                     _.each(tx.vout, function (vout) {
                         var a = _.find(vout.scriptPubKey.addresses, function (a) {
                             return a == address
@@ -16859,8 +16901,6 @@ Platform = function (app, listofnodes) {
                     /*return*/
 
                     _.each(t, function (ts, w) {
-
-
                         var _finded = ts[txid]
 
                         if (_finded) {
@@ -18184,14 +18224,6 @@ Platform = function (app, listofnodes) {
 
                             txb.addOutput(embed.output, 0);
 
-                            
-                            ///?
-                            outputs.push({
-                                amount : 0,
-                                deleted : true,
-                                address : address.address
-                            })
-
                             if(self.sdk.user.reputationBlockedMe()){
 
                                 if (clbk) {
@@ -18201,12 +18233,7 @@ Platform = function (app, listofnodes) {
                                 return
                             }
 
-
-
-
                             self.sdk.node.transactions.get.unspent(function (unspents) {
-
-
 
                                 if (p.relay) {
 
@@ -18355,6 +18382,10 @@ Platform = function (app, listofnodes) {
                                                     temp[obj.type][d] = alias;
 
                                                     alias.inputs = inputs
+
+
+                                                    console.log('outputs', outputs)
+
                                                     alias.outputs = _.map(outputs, function(output){
                                                         return {
                                                             address : output.address,
@@ -22868,6 +22899,8 @@ Platform = function (app, listofnodes) {
 
                         var outs = platform.sdk.node.transactions.toUTs(tx, address);
 
+                        console.log('outs', outs, address, tx)
+
                         _.each(outs, function (o) {
 
                             platform.sdk.node.transactions.clearTemp(data.txid, o.vout, true);
@@ -26907,8 +26940,13 @@ Platform = function (app, listofnodes) {
             unfocustime = platform.currentTime()
 
             // If playing a fullscreen video, enter PIP mode
-            if (self.app.playingvideo)
-                self.app.mobile.pip.enable(self.app.playingvideo.el ? self.app.playingvideo.el.find('.video-js') : '');
+            // If (self.app.playingvideo)
+
+            if (self.app.pipwindow){
+                self.app.mobile.pip.enable(self.app.pipwindow.el)
+            }
+
+            // self.app.mobile.pip.enable(self.app.playingvideo.el ? self.app.playingvideo.el.find('.video-js') : '');
         }
 
 

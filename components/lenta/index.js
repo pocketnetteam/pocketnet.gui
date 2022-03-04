@@ -666,7 +666,23 @@ var lenta = (function(){
 							options: [1]
 						},
 
+						pictureInPictureRequest : function(){
+							
+							var player = players[share.txid].p
 
+							self.app.actions.playingvideo(null)
+
+							actions.exitFullScreenVideo(share.txid)
+
+							var startTime = player && player.getPosition ? player.getPosition() : 0
+
+							setTimeout(function(){
+								self.app.platform.ui.pipvideo(share.txid, null, {
+									startTime
+								})
+							}, 300)
+						},	
+						
 						volumeChange : function(v){
 							videosVolume = v
 							self.sdk.videos.volume = videosVolume 
@@ -766,7 +782,7 @@ var lenta = (function(){
 						}
 
 						var c = function(e, es){		
-
+							////// TEPM
 							openedPost = es
 								
 							essenserenderclbk()
@@ -775,15 +791,14 @@ var lenta = (function(){
 								clbk();
 	
 						}
+					
 
 						self.nav.api.load({
 							open : true,
 							href : 'post?s=' + id,
 							inWnd : true,
 							history : true,
-		
 							clbk : c,
-		
 							essenseData : ed
 						})
 

@@ -351,10 +351,7 @@ Nav = function(app)
 		},
 		add : function(href, p){
 
-
 			if(!p) p = {}
-
-			
 
 			if (p.inWnd){
 
@@ -362,6 +359,7 @@ Nav = function(app)
 					pa['m' + p.id] = true
 
 				historyManager.addParameters(pa)
+
 				self.wnds[p.id] = p
 
 				return
@@ -422,6 +420,10 @@ Nav = function(app)
 
 				if(!_.isEmpty(self.wnds)){
 					_.each(self.wnds, function(w){
+
+
+						if (w.independent) return
+
 						if (w.module.parametersHandler){
 							w.module.parametersHandler()
 						}
@@ -483,6 +485,8 @@ Nav = function(app)
 
 			_.each(self.wnds, function(pa, id){
 				if(!p['m' + id]){
+
+					if (pa.independent) return
 
 					var c = deep(pa, 'module.closeContainer');
 

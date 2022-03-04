@@ -2642,20 +2642,24 @@ input[type=radio].radio:checked + label {
         background: rgb(var(--background-total-theme));
     }
 
+  
+    ._expand,
     ._close{
         position: absolute;
-        right: 1.5 * @rhythm;
         top: @rhythm;
         backdrop-filter: blur(2px) grayscale(30%);
         -webkit-backdrop-filter: blur(2px) grayscale(30%);
         cursor: pointer;
         color : rgb(var(--text-on-bg-ac-color));
         z-index: 150;
-
-        &:hover{
-        }
     }
 
+    ._close{
+        right: 1.5 * @rhythm;
+    }
+    ._expand{
+        left: 1.5 * @rhythm;
+    }
 
     
     .wndok,
@@ -2921,6 +2925,68 @@ input[type=radio].radio:checked + label {
                 }
             }
         }
+    }
+
+    &.pipmini{
+        right: 60px;
+        bottom : 2 * @rhythm;
+        top : auto;
+        left: auto;
+        max-width: 25%;
+        width: 250px;
+        height: auto;
+        z-index: 999;
+
+        &:hover{
+            ._expand,
+            ._close{
+                opacity: 1;
+            }
+        }
+        
+        ._expand,
+        ._close{
+            top : 0;
+            background: transparent;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none; 
+            opacity: 0;
+            .transition(0.3s);
+        }
+        ._expand{
+            left : 0;
+        }
+        ._close{
+            right: 0;
+        }
+
+        .wndback{
+            display: none;
+        }   
+
+        .closeline{
+            display: none;
+        }
+
+     
+        .wndinner{
+            position: static;
+        }
+
+        .wndcontent{
+            position: static;
+            padding : 0!important;
+
+            .widthcontainer{
+                max-width: none!important;
+                width: 100%;
+            }
+        }
+
+        .piphidden{
+            display: none!important;
+        }
+
     }
 }
 
@@ -4968,7 +5034,50 @@ html.mobileview{
         }
 
     }
+
+    .wnd{
+        &.pipmini{
+            right: 2 * @rhythm;
+            top : 50%;
+            bottom : auto;
+            left: auto;
+            transform:  translateY(-50%);
+            max-width: 33%;
+            width: 330px;
+
+            ._expand,
+            ._close{
+                opacity: 1;
+            }
+        }
+    }
 }
+
+@media only screen and (max-width: 768px){
+    html.mobileview{
+        .wnd{
+            &.pipmini{
+                transform: none;
+                left : @rhythm;
+                right: @rhythm;
+                width: auto;
+                max-width: none;
+                top : 70px;
+                will-change: transform;
+                .transition(0.3s, transform);
+            }
+        }
+
+        &.scrollmodedown{
+            .wnd{
+                &.pipmini{
+                    transform:  translateY(-65px);
+                }
+            }
+        }
+    }
+}
+
 
 html.mobileview.fullscreen{
 
@@ -7542,14 +7651,19 @@ html.mobileview{
 
 html.pipmode{
     .pipped{
-        position: fixed;
-        left: 0;
-        right: 0;
-        top : 0;
-        bottom: 0;
-        z-index: 10000;
+        position: fixed!important;
+        left: 0!important;
+        right: 0!important;
+        top : 0!important;
+        bottom: 0!important;
+        width: 100%!important;
+        height: 100%!important;
+        max-width: none!important;
+        max-height: none!important;
+        z-index: 10000!important;
         max-height: none!important;
         max-width: none!important;
+        transform: none!important;
     }
 
     .wnd{
@@ -7565,8 +7679,9 @@ html.pipmode{
         }
     }
 
+    #content,
     .matrixchatwrapper{
-        contain: none;
+        display: none;
     }
 }
 

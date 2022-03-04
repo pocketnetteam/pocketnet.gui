@@ -17258,6 +17258,8 @@ var Hls = /*#__PURE__*/function () {
   _proto.destroy = function destroy() {
     _utils_logger__WEBPACK_IMPORTED_MODULE_9__["logger"].log('destroy');
     this.trigger(_events__WEBPACK_IMPORTED_MODULE_12__["Events"].DESTROYING, undefined);
+
+
     this.detachMedia();
     this.removeAllListeners();
     this._autoLevelCapping = -1;

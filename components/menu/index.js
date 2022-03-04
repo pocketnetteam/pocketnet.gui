@@ -1145,14 +1145,16 @@ var menu = (function(){
 
 			showsearch : function(v){
 
-
-
-				if (v){
-					el.c.addClass('searchactive')
+				if (el.c){
+					if (v){
+						el.c.addClass('searchactive')
+					}
+					else{
+						el.c.removeClass('searchactive')
+					}
 				}
-				else{
-					el.c.removeClass('searchactive')
-				}
+
+				
 
 				if(menusearch) menusearch.setvalue(v.replace('tag:', "#"))
 

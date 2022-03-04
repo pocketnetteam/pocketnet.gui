@@ -9244,6 +9244,7 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
             volumeChange : options.volumeChange,
             fullscreenchange : options.fullscreenchange,
             playbackStatusUpdate : options.playbackStatusUpdate,
+            pictureInPictureRequest: options.pictureInPictureRequest,
             play : options.play,
             pause : options.pause
     
