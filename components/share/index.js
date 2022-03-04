@@ -2588,9 +2588,6 @@ var share = (function(){
 				currentShare = deep(p, 'settings.essenseData.share') || new Share(self.app.localization.key);
 				essenseData = deep(p, 'settings.essenseData') || {};
 
-
-				console.log('essenseData1', essenseData)
-
 				if(!essenseData.share){
 
 					state.load()

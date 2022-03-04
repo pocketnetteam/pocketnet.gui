@@ -20,6 +20,15 @@ var post = (function () {
 		var authblock = false;
 
 		var actions = {
+
+			/*pipmini : function(enable){
+				if (p.inWnd && self.container){
+					enable ? self.container.addClass('pipmini') : self.container.removeClass('pipmini')
+				}
+				else{
+
+				}
+			},*/
 			
 			pkoin : function(id){
 
@@ -391,9 +400,9 @@ var post = (function () {
 
 				if (pels.length) {
 
-					var startTime = 0;
+					var startTime = ed.startTime || 0;
 
-					if (self.app.platform.sdk.videos.historyget && share.itisvideo()){
+					if (!startTime && self.app.platform.sdk.videos.historyget && share.itisvideo()){
 
 						var pr = self.app.platform.sdk.videos.historyget(share.txid)
 						if (pr.percent < 95)
@@ -420,16 +429,30 @@ var post = (function () {
 						},
 
 						play : function(){
-							self.app.actions.playingvideo(player)
+
+							if(!p.pip)
+								self.app.actions.playingvideo(player)
 
 							if(isMobile() && !ed.repost && !el.c.closest('.wndcontent').length && !ed.openapi){
-								console.log("HHE", ed)
 								self.app.actions.scroll(125)
 							}
 						},
 
+						pictureInPictureRequest : function(){
+							self.closeContainer()
+
+							var startTime = player && player.getPosition ? player.getPosition() : 0
+
+							setTimeout(function(){
+								self.app.platform.ui.pipvideo(share.txid, null, {
+									startTime
+								})
+							}, 300)
+						},	
+
 						pause : function(){
-							self.app.actions.playingvideo(null)
+							if(!p.pip)	
+								self.app.actions.playingvideo(null)
 						},
 
 						playbackStatusUpdate : function({
@@ -441,7 +464,7 @@ var post = (function () {
 
 								self.app.platform.sdk.videos.historyset(share.txid, {
 									time : position,
-									percent : ((position/duration)* 100).toFixed(0)
+									percent : ((position/duration) * 100).toFixed(0)
 								})
 
 							}
@@ -458,7 +481,7 @@ var post = (function () {
 						},
 
 						useP2P : self.app.platform.sdk.usersettings.meta.videop2p.value,
-						enableHotkeys : true
+						enableHotkeys : !p.pip
 					};
 
 					$.each(pels, function (key, el2) {
@@ -466,8 +489,6 @@ var post = (function () {
 						var videoId = el2.getAttribute('data-plyr-video-id');
 
 						var elem = $(el2)
-
-						console.log('elem', elem, share)
 
 						if (elem.closest && elem.closest('.shareTable').attr('stxid') != (share.txid || '')) return
 
@@ -1220,7 +1241,7 @@ var post = (function () {
 				self.shell(
 					{
 						turi: 'lenta',
-						name: ed.video ? 'sharevideo' : share.itisarticle() ? 'sharearticle' : 'share',
+						name: ed.video ? ('sharevideo' + (ed.pip ? 'pip' : '')) : share.itisarticle() ? 'sharearticle' : 'share',
 						el: el.share,
 
 						additionalActions: function () {
@@ -1294,6 +1315,11 @@ var post = (function () {
 											el.share.on('click', '.forrepost', events.repost);
 
 											el.share.find('.shareSave').on('click', events.shareSave);
+
+											el.share.find('.piptest').on('click', function(){
+												
+												
+											});
 
 											el.share.find('.toregistration').on('click', events.toregistration)
 
@@ -1819,7 +1845,6 @@ var post = (function () {
 
 					}
 				})
-
 				
 			},
 
@@ -1833,7 +1858,6 @@ var post = (function () {
 
 			destroy: function (key) {
 				
-
 				if (external){
 
 					external.destroy()
@@ -1843,7 +1867,7 @@ var post = (function () {
 
 				self.app.actions.playingvideo(null)
 				
-				self.app.el.menu.find('#menu').removeClass('static')
+				//self.app.el.menu.find('#menu').removeClass('static')
 
 				if (ed.close) ed.close()
 
@@ -1909,15 +1933,24 @@ var post = (function () {
 
 				make()
 
-				if (ed.video && p.inWnd && !self.app.mobileview)
-					self.app.el.menu.find('#menu').addClass('static')
+				/*if (ed.video && p.inWnd && !self.app.mobileview)
+					self.app.el.menu.find('#menu').addClass('static')*/
 
 				initEvents();
 			},
 
 			wnd: {
 				showbetter : true,
-				class: 'withoutButtons postwindow normalizedmobile',
+				class: 'withoutButtons postwindow ' + (p.pip ? '' : 'normalizedmobile'),
+				pip : p.pip || false,
+				expand : function(){
+
+					if(p.expand) p.expand({
+						startTime : player && player.getPosition ? player.getPosition() : 0
+					})
+
+				},
+				onclose : p.onclose
 			}
 		}
 	};

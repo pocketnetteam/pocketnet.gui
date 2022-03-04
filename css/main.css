@@ -2330,15 +2330,21 @@ input[type=radio].radio:checked + label {
   white-space: nowrap;
   background: rgb(var(--background-total-theme));
 }
+.wnd ._expand,
 .wnd ._close {
   position: absolute;
-  right: 0.75em;
   top: 0.5em;
   backdrop-filter: blur(2px) grayscale(30%);
   -webkit-backdrop-filter: blur(2px) grayscale(30%);
   cursor: pointer;
   color: rgb(var(--text-on-bg-ac-color));
   z-index: 150;
+}
+.wnd ._close {
+  right: 0.75em;
+}
+.wnd ._expand {
+  left: 0.75em;
 }
 .wnd .wndok,
 .wnd .wndclose {
@@ -2522,6 +2528,58 @@ input[type=radio].radio:checked + label {
 }
 .wnd.article .wndinner > div.buttons {
   display: none;
+}
+.wnd.pipmini {
+  right: 60px;
+  bottom: 1em;
+  top: auto;
+  left: auto;
+  max-width: 25%;
+  width: 250px;
+  height: auto;
+  z-index: 999;
+}
+.wnd.pipmini:hover ._expand,
+.wnd.pipmini:hover ._close {
+  opacity: 1;
+}
+.wnd.pipmini ._expand,
+.wnd.pipmini ._close {
+  top: 0;
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  opacity: 0;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+.wnd.pipmini ._expand {
+  left: 0;
+}
+.wnd.pipmini ._close {
+  right: 0;
+}
+.wnd.pipmini .wndback {
+  display: none;
+}
+.wnd.pipmini .closeline {
+  display: none;
+}
+.wnd.pipmini .wndinner {
+  position: static;
+}
+.wnd.pipmini .wndcontent {
+  position: static;
+  padding: 0!important;
+}
+.wnd.pipmini .wndcontent .widthcontainer {
+  max-width: none!important;
+  width: 100%;
+}
+.wnd.pipmini .piphidden {
+  display: none!important;
 }
 .wnd.hiddenState {
   position: fixed;
@@ -4128,6 +4186,37 @@ html.mobileview.nooverflow body {
   touch-action: none;
   -webkit-overflow-scrolling: none;
   overscroll-behavior: none;
+}
+html.mobileview .wnd.pipmini {
+  right: 1em;
+  top: 50%;
+  bottom: auto;
+  left: auto;
+  transform: translateY(-50%);
+  max-width: 33%;
+  width: 330px;
+}
+html.mobileview .wnd.pipmini ._expand,
+html.mobileview .wnd.pipmini ._close {
+  opacity: 1;
+}
+@media only screen and (max-width: 768px) {
+  html.mobileview .wnd.pipmini {
+    transform: none;
+    left: 0.5em;
+    right: 0.5em;
+    width: auto;
+    max-width: none;
+    top: 70px;
+    will-change: transform;
+    -moz-transition: transform 0.3s;
+    -o-transition: transform 0.3s;
+    -webkit-transition: transform 0.3s;
+    transition: transform 0.3s;
+  }
+  html.mobileview.scrollmodedown .wnd.pipmini {
+    transform: translateY(-65px);
+  }
 }
 html.mobileview.fullscreen {
   -webkit-touch-callout: none;
@@ -6126,14 +6215,17 @@ html.mobileview .wnd.normalizedmobile:only-child.asette .wndback {
   opacity: 0;
 }
 html.pipmode .pipped {
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  z-index: 10000;
+  position: fixed!important;
+  left: 0!important;
+  right: 0!important;
+  top: 0!important;
+  bottom: 0!important;
+  width: 100%!important;
+  height: 100%!important;
+  z-index: 10000!important;
   max-height: none!important;
   max-width: none!important;
+  transform: none!important;
 }
 html.pipmode .wnd ._close,
 html.pipmode .wnd .closeline {
@@ -6143,8 +6235,9 @@ html.pipmode .wnd .wndinner {
   -webkit-transform: none!important;
   transform: none!important;
 }
+html.pipmode #content,
 html.pipmode .matrixchatwrapper {
-  contain: none;
+  display: none;
 }
 #application .emojionearea,
 #application .emojionearea.form-control {

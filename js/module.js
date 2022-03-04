@@ -158,7 +158,8 @@ nModule = function(){
 
 								if (key != 'auto'){
 									
-									self.app.nav.api.history.removeParameters(['m' + p.id].concat(p.clearparameters || []))
+									if(p.history)
+										self.app.nav.api.history.removeParameters(['m' + p.id].concat(p.clearparameters || []))
 									
 									try{
 										self.app.nav.api.changedclbks()
@@ -172,6 +173,12 @@ nModule = function(){
 								if (p.destroy) {
 									r = p.destroy(key)
 								}
+							}
+
+							console.log("CLEAR P", p)
+
+							if (p.inWnd){
+								delete self.app.nav.wnds[p.id]
 							}
 
 							//p = null

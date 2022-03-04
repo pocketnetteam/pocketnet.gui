@@ -624,6 +624,8 @@
   font-weight: 500;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: inline-block;
+  vertical-align: middle;
 }
 .share_common .sharecaption a {
   text-decoration: underline;

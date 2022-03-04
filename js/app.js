@@ -26,7 +26,7 @@ if(typeof _Electron != 'undefined' && _Electron){
 
 	Mark = require('./js/vendor/jquery.mark.js');
 
-	EmojioneArea = require('./js/vendor/emojionearea.js')
+	EmojioneArea = require('./js/vendor/emojionearea.min.js')
 	filterXss = require('./js/vendor/xss.min.js')
 
 }
@@ -1030,10 +1030,6 @@ Application = function(p)
 						cordova.plugins.backgroundMode.disableWebViewOptimizations(); 
 					});
 
-				console.log('needmanagecheck')
-
-				
-
 				self.init(p)
 
 			}, false);
@@ -1096,11 +1092,52 @@ Application = function(p)
 	self.width = 0
 	self.fullscreenmode = false
 	self.playingvideo = null
+	self.pipwindow = null
 
 	var blockScroll = false
 	var optimizeTimeout = null
 
 	self.actions = {
+		
+		pipwindow : function(p){
+			
+			if (self.pipwindow) {
+				self.pipwindow.destroy()
+				self.pipwindow = null
+			}
+
+			if(!p) {
+				return
+			}
+
+			var clbk = p.clbk
+
+			p.open = true
+			p.pip = true
+			p.inWnd = true
+			p.history = false
+			p.open = true
+
+			p.eid = p.mid = makeid()
+
+			if (p.essenseData){
+				p.essenseData.eid = p.eid
+			}
+
+			p.clbk = function(c,b){
+				self.pipwindow = b
+
+				if(clbk) clbk(c,b)
+			}
+
+			p.onclose = function(){
+				self.pipwindow = null
+			}
+
+
+			self.nav.api.load(p)
+
+		},
 
 		emoji : function(text){
 			if(self.mobileview) return text

@@ -166,8 +166,6 @@ var main = (function(){
 			backtolenta : function(){
 				actions.backtolentaClear()
 
-				console.log('lastscroll', lastscroll)
-
 				self.app.actions.scroll(lastscroll || 0)
 				//_scrollTop(lastscroll, null, 5)
 				
@@ -271,8 +269,6 @@ var main = (function(){
 
 					//videomain && !readmain && !searchvalue && !searchtags
 
-					console.log('currentMode', currentMode)
-
 					var fmode = 'filters'
 
 					if(searchvalue || searchtags) fmode = 'search'
@@ -368,8 +364,6 @@ var main = (function(){
 			},
 
 			topvideos: function (show) {
-
-				console.log("show Topvideos", show)
 				
 				if (show){
 
@@ -926,8 +920,6 @@ var main = (function(){
 
 			parametersHandler : function(clbk){
 
-				console.log('parametersHandler')
-
 				var tgsi = decodeURI(parameters().sst || '')
 
 				var words = _.uniq(_.filter(tgsi.split(wordsRegExp), function(r){
@@ -945,8 +937,6 @@ var main = (function(){
 				var page = parameters().page
 
 				var changes = false
-
-				console.log('nlentakeynlentakeynlentakey', nlentakey)
 
 				localStorage['lentakey'] = nlentakey
 
@@ -985,7 +975,6 @@ var main = (function(){
 					actions.backtolentaClear()
 				}
 
-				console.log('changes', changes)
 
 				if (changes){
 
@@ -993,8 +982,6 @@ var main = (function(){
 						external.clearessense()
 						external = null
 					}
-
-					console.log('changescurrentMode', currentMode, currentMode == 'common' && !videomain && !readmain && !searchvalue && !searchtags)
 
 					renders.topvideos(currentMode == 'common' && !videomain && !readmain && !searchvalue && !searchtags)
 

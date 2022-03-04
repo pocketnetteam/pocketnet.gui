@@ -126,7 +126,8 @@ Platform = function (app, listofnodes) {
         'PERF5kDM32ebkq8SeSj8ZaLqfCoqz8FRgh' : true,
         'PGD5jUBQ7qNnHDuW85RRBxY1msywEdCm7r' : true,
         'PApFYMrbm3kXMV7kjrEG1v6ULv6ZFDHb9j' : true,
-        'PUBRMTAUhy51gkbuP1tRJLMMAzEDt9C2X6' : true
+        'PUBRMTAUhy51gkbuP1tRJLMMAzEDt9C2X6' : true,
+        'P9i55BxFWpjMyqgHyCKtazDN1HDiZxTSzJ' : true
     }
 
     self.nvadr = {
@@ -2380,6 +2381,45 @@ Platform = function (app, listofnodes) {
     }
 
     self.ui = {
+
+        pipvideo : function(txid, clbk, d){
+
+            if(!d) d = {}
+        
+            var p = {
+                href : 'post?s=' + txid,
+                clbk : clbk,
+                essenseData : {
+                    share : txid,
+                    video : true,
+                    autoplay : true,
+                    pip : true,
+                    startTime : d.startTime || 0
+                },
+
+                expand : function(d){
+
+                    if(!d) d = {}
+
+                    self.app.nav.api.load({
+                        open : true,
+                        href : 'post?s=' + txid,
+                        inWnd : true,
+                        history : true,
+                        essenseData : {
+                            share : txid,
+                            video : true,
+                            autoplay : true,
+                            startTime : d.startTime || 0
+                        }
+                    })
+
+                }
+            }
+
+            self.app.actions.playingvideo(null)
+            self.app.actions.pipwindow(p)
+        },
 
         popup : function(key, always, data){
 
@@ -7815,108 +7855,68 @@ Platform = function (app, listofnodes) {
                 }
             },
 
-            listenKeys: function() {
-                const keysPressed = {};
+            listenScalingEvents: function() {
+                const zoomArrList = self.app.platform.sdk.uiScale.all;
+                const zoomKeys = Object.keys(zoomArrList);
 
-                function zoomShortcuts(e) {
+                let wheelLock = false;
+
+                function scaleUi(e, isScroll, calcDelta) {
+                    const mainKeyDown = e.metaKey || e.ctrlKey;
+
+                    if(!mainKeyDown) {
+                        if (isScroll && wheelLock) {
+                            $('html').removeClass('scroll-lock');
+                            wheelLock = false;
+                        }
+
+                        return;
+                    }
+
+                    const zoomDelta = calcDelta(e, mainKeyDown);
+
+                    if (zoomDelta === 0) {
+                        return;
+                    }
+
+                    const currentZoom = self.app.platform.sdk.uiScale.current;
+                    const zoomCurrentIndex = zoomKeys.findIndex(zoom => (zoom === currentZoom));
+                    const zoomNewIndex = zoomCurrentIndex + zoomDelta;
+                    const zoomNewName = zoomKeys[zoomNewIndex];
+
+                    self.app.platform.sdk.uiScale.set(zoomNewName);
+                }
+
+                $(window).on('keydown', (e) => scaleUi(e, false, ({ keyCode }) => {
                     /**
-                     * Ctrl - 17,
-                     * Command (Mac OS) - 91
-                     *
                      * Minus - 189
                      * Minus Numpad - 109
                      *
                      * Plus - 187
                      * Plus Numpad - 107
                      */
+                    switch (keyCode) {
+                        case 189: case 109:
+                            return -1;
+                        case 187: case 107:
+                            return +1;
+                    }
 
-                    Object.keys(keysPressed).forEach((key) => {
-                        if(key == 17) {
-                            return;
-                        }
+                    return 0;
+                }));
 
-                        if (key === 'forward_scroll' || key === 'backward_scroll') {
-                            return;
-                        }
-
-                        const keyState = keysPressed[key];
-                        const isTimeout = (keyState + 1000 < Date.now());
-
-                        if(isTimeout) {
-                            if (key == 91) {
-                                $('html').removeClass('scroll-lock');
-                            }
-
-                            delete keysPressed[key];
-                        }
-                    });
-
-                    const isCtrlPressed = (_.has(keysPressed, 17) || _.has(keysPressed, 91));
-                    const isMinusPressed = (_.has(keysPressed, 189) || _.has(keysPressed, 109));
-                    const isPlusPressed = (_.has(keysPressed, 187) || _.has(keysPressed, 107));
-
-                    if (isCtrlPressed) {
+                $(window).on('wheel', (e) => scaleUi(e, true, (e) => {
+                    if(!wheelLock) {
                         $('html').addClass('scroll-lock');
+                        wheelLock = true;
                     }
 
-                    const currentZoom = self.app.platform.sdk.uiScale.current;
-
-                    const zoomArrList = self.app.platform.sdk.uiScale.all;
-                    const zoomKeys = Object.keys(zoomArrList);
-
-                    const zoomCurrentIndex = zoomKeys.findIndex(zoom => (zoom === currentZoom));
-
-                    const isPlusOutOfRange = (zoomCurrentIndex == zoomKeys.length - 1);
-                    const isMinusOutOfRange = (zoomCurrentIndex == 0);
-
-                    const isKeyZoomIn = (isCtrlPressed && isPlusPressed);
-                    const isKeyZoomOut = (isCtrlPressed && isMinusPressed);
-
-                    const isScrollZoomIn = (isCtrlPressed && keysPressed.forward_scroll === true);
-                    const isScrollZoomOut = (isCtrlPressed && keysPressed.backward_scroll === true);
-
-                    const isZoomIn = (isKeyZoomIn || isScrollZoomIn);
-                    const isZoomOut = (isKeyZoomOut || isScrollZoomOut);
-
-                    if (isZoomIn && !isPlusOutOfRange) {
-                        const zoomNewIndex = zoomCurrentIndex + 1;
-                        const zoomNewName = zoomKeys[zoomNewIndex];
-
-                        self.app.platform.sdk.uiScale.set(zoomNewName);
-                    } else if (isZoomOut && !isMinusOutOfRange) {
-                        const zoomNewIndex = zoomCurrentIndex - 1;
-                        const zoomNewName = zoomKeys[zoomNewIndex];
-
-                        self.app.platform.sdk.uiScale.set(zoomNewName);
-                    }
-                }
-
-                $(document).keydown(function(e) {
-                    keysPressed[e.which] = Date.now();
-                });
-
-                $(document).keyup(function(e) {
-                    delete keysPressed[e.which];
-
-                    if (e.which == 17 || e.which == 91) {
-                        $('html').removeClass('scroll-lock');
-                    }
-                });
-
-                $(window).on('wheel', (e) => {
                     if(e.originalEvent.deltaY < 0) {
-                        keysPressed.forward_scroll = true;
+                        return +1;
                     } else {
-                        keysPressed.backward_scroll = true;
+                        return -1;
                     }
-
-                    zoomShortcuts(e);
-
-                    delete keysPressed.forward_scroll;
-                    delete keysPressed.backward_scroll;
-                });
-
-                $(document).keydown(zoomShortcuts);
+                }));
             },
         },
 
@@ -16705,6 +16705,8 @@ Platform = function (app, listofnodes) {
 
                     var outs = [];
 
+                    console.log("tx", tx)
+
                     _.each(tx.vout, function (vout) {
                         var a = _.find(vout.scriptPubKey.addresses, function (a) {
                             return a == address
@@ -16899,8 +16901,6 @@ Platform = function (app, listofnodes) {
                     /*return*/
 
                     _.each(t, function (ts, w) {
-
-
                         var _finded = ts[txid]
 
                         if (_finded) {
@@ -18224,14 +18224,6 @@ Platform = function (app, listofnodes) {
 
                             txb.addOutput(embed.output, 0);
 
-                            
-                            ///?
-                            outputs.push({
-                                amount : 0,
-                                deleted : true,
-                                address : address.address
-                            })
-
                             if(self.sdk.user.reputationBlockedMe()){
 
                                 if (clbk) {
@@ -18241,12 +18233,7 @@ Platform = function (app, listofnodes) {
                                 return
                             }
 
-
-
-
                             self.sdk.node.transactions.get.unspent(function (unspents) {
-
-
 
                                 if (p.relay) {
 
@@ -18395,6 +18382,10 @@ Platform = function (app, listofnodes) {
                                                     temp[obj.type][d] = alias;
 
                                                     alias.inputs = inputs
+
+
+                                                    console.log('outputs', outputs)
+
                                                     alias.outputs = _.map(outputs, function(output){
                                                         return {
                                                             address : output.address,
@@ -22908,6 +22899,8 @@ Platform = function (app, listofnodes) {
 
                         var outs = platform.sdk.node.transactions.toUTs(tx, address);
 
+                        console.log('outs', outs, address, tx)
+
                         _.each(outs, function (o) {
 
                             platform.sdk.node.transactions.clearTemp(data.txid, o.vout, true);
@@ -25933,8 +25926,8 @@ Platform = function (app, listofnodes) {
         self.sdk.lentaMethod.load()
 
         self.sdk.uiScale.load();
-        self.sdk.uiScale.listenKeys();
-        
+        self.sdk.uiScale.listenScalingEvents();
+
         self.sdk.system16.init()
 
         //self.app.platform.sdk.node.sys.load()
@@ -26947,8 +26940,13 @@ Platform = function (app, listofnodes) {
             unfocustime = platform.currentTime()
 
             // If playing a fullscreen video, enter PIP mode
-            if (self.app.playingvideo)
-                self.app.mobile.pip.enable(self.app.playingvideo.el ? self.app.playingvideo.el.find('.video-js') : '');
+            // If (self.app.playingvideo)
+
+            if (self.app.pipwindow){
+                self.app.mobile.pip.enable(self.app.pipwindow.el)
+            }
+
+            // self.app.mobile.pip.enable(self.app.playingvideo.el ? self.app.playingvideo.el.find('.video-js') : '');
         }
 
 

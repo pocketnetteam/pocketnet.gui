@@ -512,8 +512,9 @@
 			content = p.content || null,
 
 			id = 'w' + makeid().split('-')[0],
-			nooverflow = p.nooverflow || app.scrollRemoved,
+			nooverflow = (p.nooverflow || app.scrollRemoved || p.pip),
 			el = p.el || p.app.el.windows;
+
 
 
 		var parallax = null
@@ -529,7 +530,7 @@
 			if (wnd) return wnd.find(s);
 		}
 
-		
+		self.independent = p.pip
 
 		self.redraw = function(){
 
@@ -563,7 +564,7 @@
 
 			if(!p.type) p. type = ''
 
-			var h = p.allowHide ? '<div class="wndback" id='+id+'></div><div class="wndinner">' : '<div class="wndback" id='+id+'></div><div class="_close roundclosebutton '+closedbtnclass+'"><i class="fa fa-times" aria-hidden="true"></i></div><div class="closeline"></div><div class="wndinner ' + p.type + '">\
+			var h = p.allowHide ? '<div class="wndback" id='+id+'></div><div class="wndinner">' : '<div class="wndback" id='+id+'></div>'+ (p.pip ? '<div class="_expand roundclosebutton"><i class="fas fa-expand"></i></div>' : '') +'<div class="_close roundclosebutton '+closedbtnclass+'"><i class="fa fa-times" aria-hidden="true"></i></div><div class="closeline"></div><div class="wndinner ' + p.type + '">\
 			';
 
 			var closedbtnclass = ''
@@ -607,11 +608,18 @@
 
 		   	if(!p.header) wnd.addClass('noheader')
 
+			if(p.pip) wnd.addClass('pipmini')
+
 			el.append(wnd);		
 
 			wnd.find("._close").on('click', function(){
 				actions["close"](true);
 			});
+
+			wnd.find("._expand").on('click', function(){
+				actions["expand"](true);
+			});
+
 
 			////TODO
 
@@ -781,13 +789,26 @@
 		var closing = false
 
 		var actions = {
+
+			expand : function(){
+
+				actions.close()
+
+				setTimeout(function(){
+
+					if (p.expand){
+						p.expand()
+					}
+					
+				}, 200)
+				
+			},
+
 			close : function(cl, key){
 
 				if(closing) return
 
 				closing = true
-
-				console.log('actions.close')
 
 				if (parallax) {
 					parallax.clear()
@@ -798,8 +819,6 @@
 				if(cl) if(p.closecross) p.closecross(wnd, self);
 
 				if(p.close) p.close(wnd, self);
-
-				
 
 				delete app.events.resize[id]
 				delete app.events.scroll[id]
@@ -819,6 +838,8 @@
 					clearmem();
 
 				}, 220)	
+				
+				if(p.onclose) p.onclose()
 
 			},
 
