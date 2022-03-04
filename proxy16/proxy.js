@@ -658,7 +658,7 @@ var Proxy = function (settings, manage, test, logger) {
 				],
 
 				17: [
-					'6031519.xyz',
+					'bastynode.ru',
 					'storemi.ru',
 				],
       		};
