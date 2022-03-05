@@ -105,7 +105,6 @@ var metadisplay = function(){ %>
 
 						<div class="authorCell">
 							<div>
-								<span class="piptest">piptest</span>
 								<a elementsid="<%-app.platform.api.authorlink(share.address)%>" href="<%-app.platform.api.authorlink(share.address)%>">
 								<% var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0; %>
 									<span class="adr"><%-name || share.address %></span><% if(reputation > 1 || reputation < -1) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>

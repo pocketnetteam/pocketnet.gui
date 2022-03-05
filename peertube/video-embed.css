@@ -3650,13 +3650,15 @@ html.mobileview .video-js .vjs-control-bar .vjs-picture-in-picture-control {
 .pipmode .js-player .vjs-control-bar {
   display: none !important;
 }
+.pipmini .js-player #vjs-rewind-button,
+.pipmini .js-player #vjs-forward-button,
 .pipmini .js-player .vjs-overlay,
+.pipmode .js-player #vjs-rewind-button,
+.pipmode .js-player #vjs-forward-button,
 .pipmode .js-player .vjs-overlay {
   display: none !important;
 }
 
-.pipmode .js-player #vjs-rewind-button,
-.pipmode .js-player #vjs-forward-button,
 .pipmode .js-player .vjs-big-play-button {
   display: none !important;
 }

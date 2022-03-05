@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=4758"
+/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=1585"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -42855,11 +42855,11 @@ class PeertubePlayerManager {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             let p2pMediaLoader;
             if (mode === "webtorrent")
-                yield Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ./webtorrent/webtorrent-plugin */ "./src/assets/player/webtorrent/webtorrent-plugin.ts"));
+                yield Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! ./webtorrent/webtorrent-plugin */ "./src/assets/player/webtorrent/webtorrent-plugin.ts"));
             if (mode === "p2p-media-loader") {
                 [p2pMediaLoader] = yield Promise.all([
-                    Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(4), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, /*! ./p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-hlsjs/lib */ "./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-hlsjs/lib/index.ts")),
-                    Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(4), __webpack_require__.e(7), __webpack_require__.e(3), __webpack_require__.e(6)]).then(__webpack_require__.bind(null, /*! ./p2p-media-loader/p2p-media-loader-plugin */ "./src/assets/player/p2p-media-loader/p2p-media-loader-plugin.ts")),
+                    Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(2), __webpack_require__.e(1)]).then(__webpack_require__.bind(null, /*! ./p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-hlsjs/lib */ "./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-hlsjs/lib/index.ts")),
+                    Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(2), __webpack_require__.e(7), __webpack_require__.e(1), __webpack_require__.e(6)]).then(__webpack_require__.bind(null, /*! ./p2p-media-loader/p2p-media-loader-plugin */ "./src/assets/player/p2p-media-loader/p2p-media-loader-plugin.ts")),
                 ]);
             }
             const videojsOptions = this.getVideojsOptions(mode, options, p2pMediaLoader);

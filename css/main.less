@@ -2642,11 +2642,11 @@ input[type=radio].radio:checked + label {
         background: rgb(var(--background-total-theme));
     }
 
-  
+    
+    ._changeplace,
     ._expand,
     ._close{
         position: absolute;
-        top: @rhythm;
         backdrop-filter: blur(2px) grayscale(30%);
         -webkit-backdrop-filter: blur(2px) grayscale(30%);
         cursor: pointer;
@@ -2655,9 +2655,16 @@ input[type=radio].radio:checked + label {
     }
 
     ._close{
+        top: @rhythm;
         right: 1.5 * @rhythm;
     }
     ._expand{
+        top: @rhythm;
+        left: 1.5 * @rhythm;
+    }
+
+    ._changeplace{
+        bottom : @rhythm;
         left: 1.5 * @rhythm;
     }
 
@@ -2932,31 +2939,44 @@ input[type=radio].radio:checked + label {
         bottom : 2 * @rhythm;
         top : auto;
         left: auto;
-        max-width: 25%;
-        width: 250px;
+        max-width: 300px;
+        width: 25%;
         height: auto;
         z-index: 999;
 
+        ._changeplace{
+            display: none;
+        }
+
         &:hover{
+            ._changeplace,
             ._expand,
             ._close{
                 opacity: 1;
             }
         }
         
+        ._changeplace,
         ._expand,
         ._close{
-            top : 0;
+            
             background: transparent;
             backdrop-filter: none;
             -webkit-backdrop-filter: none; 
             opacity: 0;
             .transition(0.3s);
         }
+
+        ._changeplace{
+            bottom : 0;
+            left : 0;
+        }
         ._expand{
+            top : 0;
             left : 0;
         }
         ._close{
+            top : 0;
             right: 0;
         }
 
@@ -5045,10 +5065,13 @@ html.mobileview{
             max-width: 33%;
             width: 330px;
 
+            ._changeplace,
             ._expand,
             ._close{
                 opacity: 1;
             }
+
+            
         }
     }
 }
@@ -5065,6 +5088,20 @@ html.mobileview{
                 top : 70px;
                 will-change: transform;
                 .transition(0.3s, transform);
+
+                ._changeplace{
+                    display: block;
+                    .transition(0.3s, transform);
+                }
+
+                &[position='bottom']{
+                    bottom : 100px;
+                    top : auto;
+
+                    ._changeplace{
+                        transform: rotate(180deg);
+                    }
+                }
             }
         }
 
@@ -5072,6 +5109,10 @@ html.mobileview{
             .wnd{
                 &.pipmini{
                     transform:  translateY(-65px);
+
+                    &[position='bottom']{
+                        transform:  translateY(90px);
+                    }
                 }
             }
         }
@@ -7667,7 +7708,9 @@ html.pipmode{
     }
 
     .wnd{
-            
+
+        ._expand,
+        ._changeplace,
         ._close,
         .closeline{
             display: none!important;

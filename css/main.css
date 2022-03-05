@@ -2330,10 +2330,10 @@ input[type=radio].radio:checked + label {
   white-space: nowrap;
   background: rgb(var(--background-total-theme));
 }
+.wnd ._changeplace,
 .wnd ._expand,
 .wnd ._close {
   position: absolute;
-  top: 0.5em;
   backdrop-filter: blur(2px) grayscale(30%);
   -webkit-backdrop-filter: blur(2px) grayscale(30%);
   cursor: pointer;
@@ -2341,9 +2341,15 @@ input[type=radio].radio:checked + label {
   z-index: 150;
 }
 .wnd ._close {
+  top: 0.5em;
   right: 0.75em;
 }
 .wnd ._expand {
+  top: 0.5em;
+  left: 0.75em;
+}
+.wnd ._changeplace {
+  bottom: 0.5em;
   left: 0.75em;
 }
 .wnd .wndok,
@@ -2534,18 +2540,22 @@ input[type=radio].radio:checked + label {
   bottom: 1em;
   top: auto;
   left: auto;
-  max-width: 25%;
-  width: 250px;
+  max-width: 300px;
+  width: 25%;
   height: auto;
   z-index: 999;
 }
+.wnd.pipmini ._changeplace {
+  display: none;
+}
+.wnd.pipmini:hover ._changeplace,
 .wnd.pipmini:hover ._expand,
 .wnd.pipmini:hover ._close {
   opacity: 1;
 }
+.wnd.pipmini ._changeplace,
 .wnd.pipmini ._expand,
 .wnd.pipmini ._close {
-  top: 0;
   background: transparent;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
@@ -2555,10 +2565,16 @@ input[type=radio].radio:checked + label {
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
+.wnd.pipmini ._changeplace {
+  bottom: 0;
+  left: 0;
+}
 .wnd.pipmini ._expand {
+  top: 0;
   left: 0;
 }
 .wnd.pipmini ._close {
+  top: 0;
   right: 0;
 }
 .wnd.pipmini .wndback {
@@ -4196,6 +4212,7 @@ html.mobileview .wnd.pipmini {
   max-width: 33%;
   width: 330px;
 }
+html.mobileview .wnd.pipmini ._changeplace,
 html.mobileview .wnd.pipmini ._expand,
 html.mobileview .wnd.pipmini ._close {
   opacity: 1;
@@ -4214,8 +4231,25 @@ html.mobileview .wnd.pipmini ._close {
     -webkit-transition: transform 0.3s;
     transition: transform 0.3s;
   }
+  html.mobileview .wnd.pipmini ._changeplace {
+    display: block;
+    -moz-transition: transform 0.3s;
+    -o-transition: transform 0.3s;
+    -webkit-transition: transform 0.3s;
+    transition: transform 0.3s;
+  }
+  html.mobileview .wnd.pipmini[position='bottom'] {
+    bottom: 100px;
+    top: auto;
+  }
+  html.mobileview .wnd.pipmini[position='bottom'] ._changeplace {
+    transform: rotate(180deg);
+  }
   html.mobileview.scrollmodedown .wnd.pipmini {
     transform: translateY(-65px);
+  }
+  html.mobileview.scrollmodedown .wnd.pipmini[position='bottom'] {
+    transform: translateY(90px);
   }
 }
 html.mobileview.fullscreen {
@@ -6227,6 +6261,8 @@ html.pipmode .pipped {
   max-width: none!important;
   transform: none!important;
 }
+html.pipmode .wnd ._expand,
+html.pipmode .wnd ._changeplace,
 html.pipmode .wnd ._close,
 html.pipmode .wnd .closeline {
   display: none!important;

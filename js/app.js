@@ -1738,6 +1738,18 @@ Application = function(p)
 
 			element : null,
 			enabled : false,
+			checkIfHere : function(){
+				if (window.PictureInPicture && window.PictureInPicture.leavePip){
+					window.PictureInPicture.isPip(function(res){
+
+						console.log("IN PIP", res)
+
+						if(res == 'true'){
+							window.PictureInPicture.leavePip()
+						}
+					})
+				}
+			},
 			enable : function(htmlElement) {
 
 				var aspectratio = 1
@@ -1798,6 +1810,7 @@ Application = function(p)
 					})
 				}
 
+				self.mobile.pip.checkIfHere()
 				
 			}
 		},

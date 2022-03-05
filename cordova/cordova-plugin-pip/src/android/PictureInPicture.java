@@ -37,7 +37,14 @@ public class PictureInPicture extends CordovaPlugin {
         } else if(action.equals("isPip")){
             this.isPip(callbackContext);
             return true;
-        } else if(action.equals("onPipModeChanged")){
+        } 
+
+        else if(action.equals("leavePip")){
+            this.leavePip(callbackContext);
+            return true;
+        } 
+        
+        else if(action.equals("onPipModeChanged")){
             if(callback == null){
                 callback = callbackContext; //save global callback for later callbacks
                 PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT); //send no result to execute the callbacks later
@@ -92,6 +99,19 @@ public class PictureInPicture extends CordovaPlugin {
 
                 callbackContext.success("Default picture-in-picture mode started.");
             }
+        } catch(Exception e){
+            String stackTrace = Log.getStackTraceString(e);
+            callbackContext.error(stackTrace);
+        }             
+    }
+
+    private void leavePip(CallbackContext callbackContext) {
+        try{
+
+            this.cordova.getActivity().moveTaskToBack(false);
+
+            callbackContext.success("Picture-in-picture mode exit.");
+
         } catch(Exception e){
             String stackTrace = Log.getStackTraceString(e);
             callbackContext.error(stackTrace);

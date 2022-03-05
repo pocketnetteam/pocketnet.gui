@@ -2419,6 +2419,8 @@ Platform = function (app, listofnodes) {
 
             self.app.actions.playingvideo(null)
             self.app.actions.pipwindow(p)
+
+            //self.matrixchat.core.backtoapp()
         },
 
         popup : function(key, always, data){
@@ -26897,6 +26899,8 @@ Platform = function (app, listofnodes) {
 
         var f = function (e, resume) {
 
+            console.log("FOCUS")
+
             var focustime = platform.currentTime()
             var time = focustime - (unfocustime || focustime)
 
@@ -26937,16 +26941,20 @@ Platform = function (app, listofnodes) {
         var uf = function () {
             self.focus = false;
 
-            unfocustime = platform.currentTime()
+            unfocustime = platform.currentTime()    
 
-            // If playing a fullscreen video, enter PIP mode
-            // If (self.app.playingvideo)
+            setTimeout(function(){
 
-            if (self.app.pipwindow){
-                self.app.mobile.pip.enable(self.app.pipwindow.el)
-            }
+                if (self.focus) return 
 
-            // self.app.mobile.pip.enable(self.app.playingvideo.el ? self.app.playingvideo.el.find('.video-js') : '');
+                if (self.app.pipwindow){
+                    self.app.mobile.pip.enable(self.app.pipwindow.el)
+                }
+            }, 200)
+           
+
+            //if (self.app.playingvideo)
+            //    self.app.mobile.pip.enable(self.app.playingvideo.el ? self.app.playingvideo.el.find('.video-js') : '');
         }
 
 

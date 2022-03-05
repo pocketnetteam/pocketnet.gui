@@ -12,6 +12,10 @@ plugin.prototype.isPip = function(success, error) {
     exec(success, error, "PictureInPicture", "isPip", []);
 }
 
+plugin.prototype.leavePip = function(success, error) {
+    exec(success, error, "PictureInPicture", "leavePip", []);
+}
+
 plugin.prototype.onPipModeChanged = function(success, error) {
     exec(success, error, "PictureInPicture", "onPipModeChanged", []);
 }

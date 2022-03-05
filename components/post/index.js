@@ -1787,6 +1787,9 @@ var post = (function () {
 		return {
 			primary: primary,
 
+			id : p.mid,
+			pip : p.pip,
+
 			getdata: function (clbk, p) {
 
 				_repost = null
@@ -1857,6 +1860,8 @@ var post = (function () {
 			},
 
 			destroy: function (key) {
+
+			
 				
 				if (external){
 
@@ -1952,6 +1957,8 @@ var post = (function () {
 				},
 				onclose : p.onclose
 			}
+
+
 		}
 	};
 
@@ -1974,7 +1981,8 @@ var post = (function () {
 
 		_.each(essenses, function (essense) {
 
-			essense.destroy();
+			if(!essense.pip)
+				essense.destroy();
 
 		})
 

@@ -530,6 +530,8 @@
 			if (wnd) return wnd.find(s);
 		}
 
+		var pippositions = ['default', 'bottom']
+
 		self.independent = p.pip
 
 		self.redraw = function(){
@@ -564,7 +566,7 @@
 
 			if(!p.type) p. type = ''
 
-			var h = p.allowHide ? '<div class="wndback" id='+id+'></div><div class="wndinner">' : '<div class="wndback" id='+id+'></div>'+ (p.pip ? '<div class="_expand roundclosebutton"><i class="fas fa-expand"></i></div>' : '') +'<div class="_close roundclosebutton '+closedbtnclass+'"><i class="fa fa-times" aria-hidden="true"></i></div><div class="closeline"></div><div class="wndinner ' + p.type + '">\
+			var h = p.allowHide ? '<div class="wndback" id='+id+'></div><div class="wndinner">' : '<div class="wndback" id='+id+'></div>'+ (p.pip ? '<div class="_expand roundclosebutton"><i class="fas fa-expand"></i></div><div class="_changeplace roundclosebutton"><i class="fas fa-angle-down"></i></div>' : '') +'<div class="_close roundclosebutton '+closedbtnclass+'"><i class="fa fa-times" aria-hidden="true"></i></div><div class="closeline"></div><div class="wndinner ' + p.type + '">\
 			';
 
 			var closedbtnclass = ''
@@ -602,13 +604,16 @@
 				}
 
 				wnd = $("<div>", {
-					"class" 	: "wnd",
+					"class" : "wnd",
 					"html"	: h
 				});
 
 		   	if(!p.header) wnd.addClass('noheader')
 
-			if(p.pip) wnd.addClass('pipmini')
+			if(p.pip) {
+				wnd.addClass('pipmini')
+				wnd.attr('position', localStorage['pipposition'] || 'default') 
+			}
 
 			el.append(wnd);		
 
@@ -619,6 +624,20 @@
 			wnd.find("._expand").on('click', function(){
 				actions["expand"](true);
 			});
+
+			wnd.find("._changeplace").on('click', function(){
+
+				var cur = localStorage['pipposition'] || 'default'
+
+				cur = nextElCircle(pippositions, cur)
+				
+				localStorage['pipposition'] = cur
+
+				wnd.attr('position', cur) 
+
+			});
+
+			
 
 
 			////TODO
@@ -2885,6 +2904,32 @@
 		else
 		{
 			return array[array.length - 1]
+		}
+	}
+
+	prevElCircle = function(array, el){
+		var index = _.indexOf(array, el);
+
+		if (index > 0){
+			return array[index - 1]
+		}
+
+		else
+		{
+			return array[array.length - 1]
+		}
+	}
+
+	nextElCircle = function(array, el){
+		var index = _.indexOf(array, el);
+
+		if (index > -1 && index < array.length - 1){
+			return array[index + 1]
+		}
+
+		else
+		{
+			return array[0]
 		}
 	}
 
