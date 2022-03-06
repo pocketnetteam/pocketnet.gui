@@ -10426,125 +10426,7 @@ Platform = function (app, listofnodes) {
 
 
             },
-
-            giveFreeMoney: function (toAddress, mnemonic, clbk, amount, update) {
-
-                this.checkFreeMoney(toAddress, function (r) {
-
-                    if (!r) {
-                        if (clbk)
-                            clbk('nofree')
-                    }
-                    else {
-                        var feerate = 0.000001;
-
-                        amount || (amount = 0.00002);
-
-                        var outputs = [{
-                            address: toAddress,
-                            amount: amount
-                        }, {
-                            address: toAddress,
-                            amount: amount
-                        }, {
-                            address: toAddress,
-                            amount: amount
-                        }, {
-                            address: toAddress,
-                            amount: amount
-                        }, {
-                            address: toAddress,
-                            amount: amount
-                        }, {
-                            address: toAddress,
-                            amount: amount
-                        }, {
-                            address: toAddress,
-                            amount: amount
-                        }, {
-                            address: toAddress,
-                            amount: amount
-                        }, {
-                            address: toAddress,
-                            amount: amount
-                        }, {
-                            address: toAddress,
-                            amount: amount
-                        }]
-
-                        const seed = bitcoin.bip39.mnemonicToSeedSync(mnemonic);
-                        const hash = bitcoin.crypto.sha256(Buffer.from(seed));
-                        const keyPair = self.sdk.address.dumpKeys(0, seed);
-                        const { address } = self.sdk.address.pnet(keyPair.publicKey, 'p2pkh');
-
-                        self.sdk.wallet.txbase([address], _.clone(outputs), null, null, function (err, inputs, _outputs) {
-
-                            if (err) {
-                                if (clbk)
-                                    clbk(err)
-                            }
-
-                            else {
-                                var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs, keyPair)
-                                var totalFees = Math.min(tx.virtualSize() * feerate, 0.000006);
-
-
-
-                                self.app.platform.sdk.wallet.txbase([address], _.clone(outputs), totalFees, null, function (err, inputs, _outputs) {
-
-                                    if (err) {
-
-
-
-                                        self.sdk.node.transactions.releaseCS(inputs)
-
-                                        if (clbk)
-                                            clbk(err)
-                                    }
-                                    else {
-                                        var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs, keyPair)
-
-                                        self.app.platform.sdk.node.transactions.send(tx, function (d, err) {
-
-                                            if (err) {
-
-                                                self.sdk.node.transactions.releaseCS(inputs)
-
-                                                if ((err == -26 || err == -25 || err == 16) && !update) {
-
-                                                    self.sdk.users.giveFreeMoney(toAddress, mnemonic, clbk, amount, true)
-
-                                                    return
-                                                }
-
-
-                                                if (clbk)
-                                                    clbk(err)
-                                            }
-
-                                            else {
-                                                var ids = _.map(inputs, function (i) {
-                                                    return {
-                                                        txid: i.txId,
-                                                        vout: i.vout
-                                                    }
-                                                })
-
-                                                self.app.platform.sdk.node.transactions.clearUnspents(ids)
-
-                                                if (clbk)
-                                                    clbk(null, d, amount * outputs.length)
-                                            }
-                                        })
-                                    }
-                                })
-                            }
-                        }, update)
-                    }
-
-                })
-            },
-
+           
             checkFreeMoney: function (address, clbk) {
                 self.sdk.users.get(address, function () {
 
@@ -10584,155 +10466,6 @@ Platform = function (app, listofnodes) {
                     }
 
                 })
-            },
-
-            /////////////// REFERALS
-            giveFreeRef: function (refferal, toAddress, mnemonic, clbk, amount) {
-
-                this.checkFreeRef(refferal, function (r) {
-
-                    if (!r) {
-                        if (clbk)
-                            clbk('nofree')
-                    }
-                    else {
-                        var feerate = 0.000001;
-
-                        amount || (amount = 0.005);
-
-                        var outputs = [{
-                            address: toAddress,
-                            amount: amount
-                        }]
-
-                        const seed = bitcoin.bip39.mnemonicToSeedSync(mnemonic);
-                        const hash = bitcoin.crypto.sha256(Buffer.from(seed));
-                        const keyPair = self.sdk.address.dumpKeys(0, seed);
-                        const address = self.sdk.address.pnet(keyPair.publicKey, 'p2pkh').address;
-
-                        self.sdk.wallet.txbase([address], _.clone(outputs), null, null, function (err, inputs, _outputs) {
-
-                            if (err) {
-                                if (clbk)
-                                    clbk(err)
-                            }
-
-                            else {
-                                var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs, keyPair)
-                                var totalFees = Math.min(tx.virtualSize() * feerate, 0.0005);
-
-
-
-                                self.app.platform.sdk.wallet.txbase([address], _.clone(outputs), totalFees, null, function (err, inputs, _outputs) {
-
-                                    if (err) {
-
-                                        self.sdk.node.transactions.releaseCS(inputs)
-
-                                        if (clbk)
-                                            clbk(err)
-                                    }
-                                    else {
-                                        var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs, keyPair)
-
-                                        self.app.platform.sdk.node.transactions.send(tx, function (d, err) {
-
-                                            if (err) {
-                                                self.sdk.node.transactions.releaseCS(inputs)
-
-                                                if (clbk)
-                                                    clbk(err)
-                                            }
-
-                                            else {
-                                                var ids = _.map(inputs, function (i) {
-                                                    return {
-                                                        txid: i.txId,
-                                                        vout: i.vout
-                                                    }
-                                                })
-
-                                                self.app.platform.sdk.node.transactions.clearUnspents(ids)
-
-                                                if (clbk)
-                                                    clbk(null, d, amount)
-                                            }
-                                        })
-                                    }
-                                })
-                            }
-                        }, true)
-                    }
-
-                })
-            },
-            requestFreeRef: function (address, clbk) {
-
-                var a = self.sdk.address.pnet();
-
-                if (a) {
-                    a = a.address;
-
-                    this.checkFreeRef(a, function (r) {
-                        if (!r) {
-                            if (clbk)
-                                clbk(null)
-                        }
-                        else {
-
-                            self.app.api.fetch('freeRef', {
-                                referal: a,
-                                referrer: address
-                            }).then(d => {
-                                if (clbk)
-                                    clbk(true)
-
-                            }).catch(e => {
-                                if (clbk)
-                                    clbk(null, deep(d, 'data') || {})
-                            })
-
-
-                        }
-                    })
-                }
-                else {
-                    if (clbk)
-                        clbk(null)
-                }
-
-
-            },
-
-            checkFreeRef: function (address, clbk) {
-
-                if (!address) {
-                    if (clbk)
-                        clbk(true)
-
-                    return
-                }
-
-
-                self.sdk.users.get(address, function () {
-
-                    var name = deep(self, 'sdk.users.storage2.' + address + '.name');
-
-                    if (name) {
-
-                        if (clbk)
-                            clbk(false)
-                    }
-
-                    else {
-
-                        if (clbk)
-                            clbk(true)
-
-                    }
-                })
-
-
             },
 
             //////////////// ANOTHER
@@ -11403,6 +11136,8 @@ Platform = function (app, listofnodes) {
                             else {
                                 var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs, keyPair)
 
+                                console.log('txbaseFeesMeta', tx)
+
                                 self.app.platform.sdk.node.transactions.send(tx, function (d, err) {
 
                                     if (err) {
@@ -11413,7 +11148,7 @@ Platform = function (app, listofnodes) {
                                     else {
                                         var ids = _.map(inputs, function (i) {
                                             return {
-                                                txid: i.txId,
+                                                txid: i.txId || i.txid,
                                                 vout: i.vout
                                             }
                                         })
@@ -11720,7 +11455,7 @@ Platform = function (app, listofnodes) {
 
                                 var ids = _.map(inputs, function (i) {
                                     return {
-                                        txid: i.txid,
+                                        txid: i.txId || i.txid,
                                         vout: i.vout
                                     }
                                 })
@@ -18401,7 +18136,7 @@ Platform = function (app, listofnodes) {
                                                     var ids = _.map(inputs, function (i) {
 
                                                         return {
-                                                            txid: i.txId,
+                                                            txid: i.txId || i.txid,
                                                             vout: i.vout
                                                         }
 

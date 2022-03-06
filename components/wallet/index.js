@@ -1852,7 +1852,10 @@ var wallet = (function(){
 								   else
 								   {
 									   var ids = _.map(inputs, function(i){
-										   return i.txid
+											return {
+												txid : i.txId || i.txid,
+												vout : i.vout
+											}
 									   })
 
 									   self.app.platform.sdk.node.transactions.clearUnspents(ids)
@@ -2019,6 +2022,8 @@ var wallet = (function(){
 							 				t.cantspend = true
 							 			})
 
+										 console.log('transactions.send', tx)
+
 										self.app.platform.sdk.node.transactions.send(tx, function(d, err){
 
 
@@ -2031,9 +2036,14 @@ var wallet = (function(){
 
 											else
 											{
+												console.log('inputs', inputs)
 												var ids = _.map(inputs, function(i){
-													return i.txid
+													return {
+														txid : i.txId || i.txid,
+														vout : i.vout
+													}
 												})
+
 
 												self.app.platform.sdk.node.transactions.clearUnspents(ids)
 
@@ -2042,7 +2052,9 @@ var wallet = (function(){
 												renders.mainWithClear()
 
 												self.app.platform.sdk.wallet.saveTempInfoWallet(d, inputs, _outputs)
+
 												sendpreloader(false)
+
 												sitemessage(self.app.localization.e('wssuccessfully'))
 
 
