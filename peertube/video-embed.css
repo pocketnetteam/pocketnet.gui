@@ -3072,9 +3072,14 @@ video[src], .vjs-fullscreen {
   position: relative;
 }
 .video-js.vjs-fullscreen video {
+  max-width: none !important;
   max-height: 100%;
+  /*max-height: 100%;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-50%);*/
+}
+.video-js.vjs-fullscreen .vjs-picture-in-picture-control {
+  display: none !important;
 }
 
 .vjs-peertube {

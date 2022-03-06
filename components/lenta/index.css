@@ -36,6 +36,12 @@
 #lenta .panel {
   overflow: hidden;
 }
+#lenta .video-js .vjs-volume-control {
+  display: none;
+}
+#lenta .fullScreenVideo .video-js .vjs-volume-control {
+  display: block;
+}
 #lenta .circularprogress {
   overflow: hidden;
   height: 0px;
