@@ -97,7 +97,7 @@ var Roy = function (parent) {
 
       const splittedUrl = host.split('.');
 
-      if (splittedUrl.length != 3 && splittedUrl[0] !== 'test') return;
+      if (splittedUrl.length != 3 && splittedUrl[0] !== 'test' && splittedUrl.length != 1 && splittedUrl.length != 2) return;
 
       self.addInstance(host, s);
     });

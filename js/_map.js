@@ -28,7 +28,6 @@ __map =  {
 		"js/vendor/jquery-1.11.3.min.js",//
         "js/vendor/tooltipster.core.js",//
         "js/vendor/tooltipster.bundle.js",//
-        /*"js/vendor/jquery-ui.min.js",*/
         "js/vendor/imagesloaded.pkgd.min.js",///
         "js/vendor/timer.js",//
         
@@ -52,19 +51,16 @@ __map =  {
         "js/vendor/joypixels.min.js", //
         "js/vendor/plyr.js", // later
         "js/vendor/reconnectingwebsocket.js", //
-        "js/vendor/rtc/db.js", // later
         "js/vendor/xss.min.js", //
 		"js/vendor/jquery.mark.js", //?
 		"js/vendor/hc-sticky.js", //
 
-		/*"js/vendor/DateTimePicker.min.js",*/
 		"js/vendor/moment.min.js", //?
 		"js/vendor/moment.locale.js", //?
 		"js/vendor/jquery.inputmask.bundle.js",
 		"js/vendor/axios.js", //
 		"js/vendor/isotope.pkgd.js", //
 		"js/vendor/circular-progress.js", //
-		/*"js/vendor/swiper-bundle.min.js",*/ // very hard
 		"js/vendor/workbox-v6.1.5/workbox-sw.js",
 		"js/vendor/ion.sound/ion.sound.js",
 		"js/vendor/hammer.min.js",
@@ -107,26 +103,31 @@ __map =  {
 		"css/tooltipster.core.min.css",
 		"css/tooltipster.bundle.min.css",
 		"css/main.css",
-		"css/stblack.css",
+		"css/common.css",
 		"css/plyr.css",
 		"css/pniframe.css",
-		"js/vendor/DateTimePicker.min.css",
-		/*"css/swiper-bundle.min.css",*/
 		"peertube/video-embed.css",
-		"js/vendor/emojionearea.min.css",
 		"js/vendor/owl/assets/owl.carousel.min.css",
 		"js/vendor/owl/assets/owl.theme.default.min.css",
 	],
 
+	__exportcss : {
+		"css/main.css" : true,
+		"css/common.css" : true,
+		"css/plyr.css" : true,
+		"js/vendor/owl/assets/owl.carousel.min.css" : true,
+		"js/vendor/owl/assets/owl.theme.default.min.css" : true
+	},
 	
 	__templates : [
 		{ c : 'navigation', n : 'menu' },
+		{ c : 'topusers', n : 'usermodal' },
 		{ c : 'menu', n : 'index' },
 		{ c : 'share', n : 'body' },
-		{ c : 'toppanel', n : 'index' },
+		//{ c : 'toppanel', n : 'index' },
 		{ c : 'navigation', n : 'index' },
 		{ c : 'footer', n : 'index' },
-		{ c : 'toppanel', n : 'menu' },
+		{ c : 'main', n : 'menu' },
 		{ c : 'main', n : 'index' },
 		{ c : 'panel', n : 'index' },
 		{ c : 'leftpanel', n : 'index' },
@@ -140,12 +141,15 @@ __map =  {
 		{ c : 'lenta', n : 'wholike' },
 		{ c : 'lenta', n : 'index' },
 		{ c : 'lenta', n : 'sharevideo' },
+		{ c : 'lenta', n : 'sharevideopip' },
 		{ c : 'lenta', n : 'sharevideolight' },
 		{ c : 'share', n : 'url' },
 		{ c : 'lenta', n : 'stars' },
 		{ c : 'lenta', n : 'groupshares' },
 		{ c : 'lenta', n : 'commentspreview' },
 		{ c : 'comments', n : 'index' },
+		{ c : 'comments', n : 'post' },
+		{ c : 'comments', n : 'list' },
 		{ c : 'lastcomments', n : 'lastcommentslist'},
 		{ c : 'author', n : 'preshell'},
 		{ c : 'author', n : 'authorcaption'},
@@ -158,13 +162,13 @@ __map =  {
 		href : "pkview",
 		add : insertingfunc,
 
-		relations : [
+		/*relations : [
 			{src : 'js/vendor/qrscanner.js',			   f : 'js'},
 			{src : 'js/vendor/qrcode.min.js',			   f : 'js', require : function(){
 				QRCode = require('./js/vendor/qrcode.min.js')
 			}},	
 
-		],
+		],*/
 	},      
 
 	
@@ -325,11 +329,11 @@ __map =  {
 		anonimus : true,
 
 		relations : [
-			{src : 'js/vendor/qrscanner.js',			   f : 'js'},
+			/*{src : 'js/vendor/qr/qrscanner.js',			   f : 'js'},*/
 			{src : 'js/validation.js',			   f : 'js'},		
-			{src : 'js/vendor/qrcode.min.js',			   f : 'js', require : function(){
-				QRCode = require('./js/vendor/qrcode.min.js')
-			}},	
+			/*{src : 'js/vendor/qr/qrcode.min.js',			   f : 'js', require : function(){
+				QRCode = require('./js/vendor/qr/qrcode.min.js')
+			}},	*/
 
 		],
 		electronDontOpen : true
@@ -349,56 +353,14 @@ __map =  {
 	},
 
 	/****/
-		token : {
-			uri : "token",
-			href : "token",
-			add : {
-				el : 'content'
-			},
-			anonimus : true,
-		},
 
-		filluserfast : {
-			uri : "filluserfast",
-			href : "filluserfast",
-			add : insertingfunc,
 
-			
-
-			anonimus : true,
-
-			relations : [
-				{src : 'js/vendor/qrscanner.js',			   f : 'js'},
-				{src : 'js/validation.js',			   f : 'js'},		
-				{src : 'js/vendor/qrcode.min.js',			   f : 'js', require : function(){
-					QRCode = require('./js/vendor/qrcode.min.js')
-				}},	
-
-			],
-			
-		},
-
-		filluser : {
-			uri : "filluser",
-			href : "filluser",
-			add : insertingfunc,
-			redirect : {
-				auth : 'welcome'
-			},
-			
-			
-		},
 
 		usersettings : {
 			uri : "usersettings",
 			href : "usersettings",
 			add : insertingfunc,
-			anonimus : true,
-			/*redirect : {
-				auth : 'authorization',
-				//validate : 'filluser'
-			},*/
-		
+			anonimus : true
 		},
 
 		popup : {
@@ -413,9 +375,6 @@ __map =  {
 			href : "test",
 			add : insertingfunc,
 			anonimus : true,
-			/*redirect : {
-				auth : 'authorization'
-			},*/
 			relationsSunc : true,
 			electronDontOpen : true,
 			relations : [
@@ -426,10 +385,7 @@ __map =  {
 
 						EXIF = require('./js/vendor/exif.js')
 
-				}},
-
-				{src : 'js/vendor/picker.js',			   f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},	
-				{src : 'js/vendor/picker.date.js', 		f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},
+				}}
 			],
 
 			
@@ -442,16 +398,15 @@ __map =  {
 
 			redirect : {
 				auth : 'authorization',
-				//validate : 'filluser'
 			},
 
-			relations : [
+			/*relations : [
 
-				{src : 'js/vendor/qrcode.min.js',			   f : 'js', require : function(){
-					QRCode = require('./js/vendor/qrcode.min.js')
+				{src : 'js/vendor/qr/qrcode.min.js',			   f : 'js', require : function(){
+					QRCode = require('./js/vendor/qr/qrcode.min.js')
 				}},
 
-			],
+			],*/
 
 		},
 
@@ -509,6 +464,38 @@ __map =  {
 			anonimus : true,
 		},	
 
+		recommendedusers : {
+			uri : "recommendedusers",
+			href : "recommendedusers",
+		
+			add : insertingfunc,
+			anonimus : true,
+		},
+		
+		topusers : {
+			uri : "topusers",
+			href : "topusers",
+		
+			add : insertingfunc,
+			anonimus : true,
+		},
+
+		// usermodal : {
+		// 	uri : "usermodal",
+		// 	href : "usermodal",
+		
+		// 	anonimus : true,
+		// },
+
+
+		bestposts : {
+			uri : "bestposts",
+			href : "bestposts",
+			
+			add : insertingfunc,
+			anonimus : true,
+		},
+
 		lastcomments : {
 			uri : "lastcomments",
 			href : "lastcomments",
@@ -516,53 +503,12 @@ __map =  {
 			anonimus : true,
 		},
 
-		articles : {
-			uri : "articles",
-			href : "articles",
+		pkoin : {
+			uri : "pkoin",
+			href : "pkoin",
 			add : insertingfunc,
-
-			electronDontOpen : true
-		},	
-		article : {
-			uri : "article",
-			href : "article",
-			add : insertingfunc,
-			relations : [
-				{src : 'js/vendor/medium-editor.js',			   f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},
-
-				{src : 'js/vendor/mediuminsert/handlebars.runtime.min.js',			   f : 'js', require : function(){
-					
-				}},
-				{
-					src : 'js/vendor/mediuminsert/jquery-sortable-min.js',			   f : 'js', require : function(){
-					
-				}},
-				{src : 'js/vendor/mediuminsert/jquery.ui.widget.js',			   f : 'js'},
-				{src : 'js/vendor/mediuminsert/jquery.iframe-transport.js',			   f : 'js'},
-				{src : 'js/vendor/mediuminsert/jquery.fileupload.js',			   f : 'js'},
-				{src : 'js/vendor/mediuminsert/medium-editor-insert-plugin.js',			   f : 'js', require : function(){
-					
-					var i = require('./js/vendor/mediuminsert/medium-editor-insert-plugin.js')
-
-					var h = require('./js/vendor/mediuminsert/handlebars.runtime.min.js')
-
-					require('./js/vendor/mediuminsert/jquery-sortable-min.js')
-
-
-					i($, h)
-
-				}},	
-
-				{src : 'css/medium/medium-editor.css',			   f : 'css'},	
-				{src : 'css/medium/medium-editor-insert-plugin.css',			   f : 'css'},	
-				{src : 'css/medium/beagle.cs',			   f : 'css'},	
-
-				
-			],
-			relationsSunc : true,
-
-			electronDontOpen : true
-		},	
+			anonimus : true,
+		},
 
 		articlesv : {
 			uri : "articlesv",
@@ -571,24 +517,25 @@ __map =  {
 
 			electronDontOpen : true
 		},	
+		
 		articlev : {
 			uri : "articlev",
 			href : "articlev",
 			add : insertingfunc,
 			
 			relations : [
-				{src : 'js/vendor/editor/editor.js',			   f : 'js'},
-				{src : 'js/vendor/editor/embed.js',			   f : 'js'},
-				{src : 'js/vendor/editor/carousel.js',			   f : 'js'},
-				{src : 'js/vendor/editor/paragraph.js',			   f : 'js'},
-				{src : 'js/vendor/editor/header.js',			   f : 'js'},
-				{src : 'js/vendor/editor/imageloader.js',			   f : 'js'},
-				{src : 'js/vendor/editor/delimiter.js',			   f : 'js'},
-				{src : 'js/vendor/editor/link.js',			   f : 'js'},
-				{src : 'js/vendor/editor/list.js',			   f : 'js'},
-				{src : 'js/vendor/editor/quote.js',			   f : 'js'},
-				{src : 'js/vendor/editor/warning.js',			   f : 'js'},
-				{src : 'js/vendor/editor/inlinecode.js',			   f : 'js'}
+				{src : 'js/vendor/editor/editor.js',			   f : 'js', require : "EditorJS"},
+				{src : 'js/vendor/editor/embed.js',			   f : 'js', require : "Embed"},
+				{src : 'js/vendor/editor/carousel.js',			   f : 'js', require : "Carousel"},
+				{src : 'js/vendor/editor/paragraph.js',			   f : 'js', require : "Paragraph"},
+				{src : 'js/vendor/editor/header.js',			   f : 'js', require : "Header"},
+				{src : 'js/vendor/editor/imageloader.js',			   f : 'js', require : "ImageTool"},
+				{src : 'js/vendor/editor/delimiter.js',			   f : 'js', require : "Delimiter"},
+				{src : 'js/vendor/editor/link.js',			   f : 'js', require : "LinkTool"},
+				{src : 'js/vendor/editor/list.js',			   f : 'js', require : "List"},
+				{src : 'js/vendor/editor/quote.js',			   f : 'js', require : "Quote"},
+				{src : 'js/vendor/editor/warning.js',			   f : 'js', require : "Warning"},
+				{src : 'js/vendor/editor/inlinecode.js',			   f : 'js', require : "InlineCode"}
 			],
 
 			electronDontOpen : true
@@ -620,36 +567,6 @@ __map =  {
 
 			relationsSunc : true,
 			
-		},
-
-		connection : {
-			uri : "connection",
-			href : "connection",
-			add : {
-				el : 'content'
-			},
-			anonimus : true
-		},
-
-		proxylogs : {
-			uri : "proxylogs",
-			href : "proxylogs",
-			add : {
-				el : 'content'
-			},
-
-			relationsSunc : true,
-			relations : [
-				{src : 'js/vendor/highcharts.js', 		f : 'js', require : function(){
-					Highcharts = require('./js/vendor/highcharts.js')
-				}},
-				{src : 'js/vendor/highcharts-more.js', 		f : 'js'}
-
-			],
-
-			redirect : {
-				auth : 'authorization'
-			}
 		},
 
 		help : {
@@ -707,7 +624,7 @@ __map =  {
 
 			relations : [
 				{src : 'js/vendor/chart.min.js',			   f : 'js', require : function(){
-					Chart = require('./js/vendor/Chart.js')
+					Chart = require('./js/vendor/chart.min.js')
 				}}
 			],
 
@@ -767,26 +684,18 @@ __map =  {
 
 		
 			],
-
+			exportcss : true,
 			anonimus : true,
 		},
 
-		tube : {
-			uri : "tube",
-			href : "tube",
-			add : {
-				el : 'content'
-			},
-		
-		},
-
+	
 		lenta : {
 			uri : "lenta",
 			href : "lenta",
 			add : {
 				el : 'content'
 			},
-		
+			exportcss : true,
 			anonimus : true,
 		},	
 
@@ -796,39 +705,18 @@ __map =  {
 			add : {
 				el : 'content'
 			},
-		
+			exportcss : true,
 			anonimus : true,
 		},	
 
-		//search
-
-		s : {
-			uri : "s",
-			href : "s",
-			add : {
-				el : 'content'
-			},
-
-			anonimus : true,
-		},
-
-		send : {
-			uri : "send",
-			href : "send",
-			add : {
-				el : 'content'
-			},
-
-		
-			anonimus : true,
-		},
-
+	
 		imageGalleryEdit : {
 			uri : "imageGalleryEdit",
 			href : "imagesEdit",
 			add : insertingfunc,
 			anonimus : true,
 		},
+
 		imagegallery : {
 			uri : "imagegallery",
 			href : "imagegallery",
@@ -836,8 +724,6 @@ __map =  {
 			anonimus : true,
 			relationsSunc : true,
 		},
-
-		
 
 		aboutus : {
 			uri : "aboutus",
@@ -847,8 +733,6 @@ __map =  {
 			},
 			anonimus : true,
 		},
-
-
 
 	/****/
 
@@ -880,7 +764,7 @@ __map =  {
 		reload : true
 	},*/
 
-	toppanel : {
+	/*toppanel : {
 		uri : "toppanel",
 		href : "toppanel",
 		add : {
@@ -890,7 +774,7 @@ __map =  {
 		anonimus : true,
 		renew : true,
 		reload : true
-	},
+	},*/
 
 	navigation : {
 		uri : "navigation",
@@ -915,23 +799,6 @@ __map =  {
 		reload : true
 	},
 
-	/*support : {
-		uri : "support",
-		href : "support",
-		add : {
-			el : 'content'
-		},
-		relations : [
-			
-			{src : 'js/validation.js',			   f : 'js'},				
-			
-		],
-		anonimus : true,
-		reload : true
-	},*/
-
-	
-
 	notifications : {
 		uri : "notifications",
 		href : "notifications",
@@ -939,26 +806,6 @@ __map =  {
 
 		
 	},
-	/*dialogs : {
-		uri : "dialogs",
-		href : "dialogs",
-		add : function(settings, p){
-
-			if(p.inTooltip)
-
-				return {
-					insert : 'tooltip'
-				}
-
-			else
-			{
-				return {
-					el : 'content'
-				}
-			}
-
-		}
-	},*/
 
 	panel : {
 		uri : "panel",
@@ -982,14 +829,6 @@ __map =  {
 		anonimus : true,
 	},
 
-	bastyonhelper : {
-		uri : "bastyonhelper",
-		href : "bastyonhelper",
-		add : insertingfunc,
-		
-		anonimus : true,
-	},
-
 	authorization : {
 		uri : "authorization",
 		href : "authorization",
@@ -998,7 +837,7 @@ __map =  {
 
 			
 			{src : 'js/validation.js',			   f : 'js'},
-			{src : 'js/vendor/qrscanner.js',			   f : 'js'},				
+			{src : 'js/vendor/qr/qrscanner.js',			   f : 'js'},				
 			
 		],
 		anonimus : true,
@@ -1013,7 +852,7 @@ __map =  {
 
 		
 			{src : 'js/validation.js',			   f : 'js'},				
-			{src : 'js/vendor/qrscanner.js',			   f : 'js'},	
+			{src : 'js/vendor/qr/qrscanner.js',			   f : 'js'},	
 			
 		]
 	},
@@ -1028,30 +867,6 @@ __map =  {
 		uri : "postscores",
 		href : "postscores",
 		add : insertingfunc
-	},
-
-	scheduler : {
-		uri : "scheduler",
-		href : "scheduler",
-		add : insertingfunc
-	},
-
-	surveyiframe : {
-		uri : "surveyiframe",
-		href : "surveyiframe",
-		add : insertingfunc
-	},
-
-	socialshare : {
-		uri : "socialshare",
-		href : "socialshare",
-		add : insertingfunc,
-
-		anonimus : true,
-
-		relations : [
-			{src : 'js/vendor/SocialShare.min.js',			   f : 'js'},
-		],
 	},
 
 	socialshare2 : {
@@ -1087,7 +902,7 @@ __map =  {
 		add : insertingfunc,
 		anonimus : true,
 		preshell : true,
-		//exhandler : true
+		exportcss : true,
 		
 	},
 
@@ -1098,7 +913,7 @@ __map =  {
 			el : 'content'
 		},
 		anonimus : true,
-		
+		exportcss : true,
 	},
 	
 	post : {
@@ -1107,7 +922,7 @@ __map =  {
 		preshell : true,
 		add : insertingfunc,
 		anonimus : true,
-		//exhandler : true
+		exportcss : true,
 	},
 	userslist : {
 		uri : "userslist",

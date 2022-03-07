@@ -1,0 +1,58 @@
+
+<% 
+
+var r = function(){ %> 
+
+<% if(typeof change.value != 'undefined') {%>
+
+    <div class="change <% if(change.value < 0) {%> bad <% } %> <% if(change.value > 0) {%> good <% } %>">
+
+        <span class="percent">
+            <% if(change.value < 0) {%>
+                <i class="fas fa-caret-down"></i>
+            <% } %>
+    
+            <% if(change.value > 0) {%>
+                <i class="fas fa-caret-up"></i>
+            <% } %>
+            <span>
+                <%-change.percent.toFixed(2)%> %
+            </span>
+        </span>
+
+    </div>
+
+    
+
+<% } %>
+
+<% } %>
+
+<div class="lastpriceWrapper <% if(currency.key == 'BTC') {%> bc <% } %>">
+    <span class="lastprice">
+        <span class="currency">
+            <%- currency.key %>
+        </span>
+        <span>
+            <% if(price) { %>
+                <%- price %>
+            <% } else { %> 
+                <!-- &mdash;  -->
+                <span title="Last price / 30.08.2021">1.76</span>
+            <% } %>
+        </span>
+    </span>
+
+    <span class="lastpriceWrapper cb">
+        <% r() %>
+    </span>
+
+</div>
+
+
+
+
+
+
+
+

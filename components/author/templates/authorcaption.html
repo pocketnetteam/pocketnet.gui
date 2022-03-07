@@ -37,7 +37,7 @@ var telements = function(){ %>
 					<% if (me){ 
 						var r = me.relation(author.address, 'subscribes') 
 					%>
-						<span elementsid="author_notificationturn" class="notificationturn <% if(r && (r.private == 'true' || r.private == '1' || r.private === true)) {%> turnon <% } %>">&middot; <i class="far fa-bell-slash"></i></span>
+                     <span elementsid="author_notificationturn" class="notificationturn funf <% if(r && (r.private == 'true' || r.private == '1' || r.private === true)) {%> turnon <% } %>">&middot; <i class="far fa-bell-slash"></i></span>
 					<% } %>
 						
 					<span elementsid="author_subscribe" class="subscribe funf"><%=e('follow')%></span>	
@@ -59,10 +59,8 @@ var telements = function(){ %>
 				
 	<% } else { %> 
 
-		<% if(state && isMobile()) {%>
-
-			<i elementsid="author_changeaccount" class="fas fa-chevron-down changeaccount"></i>
-		
+		<% if(state && app.mobileview) {%>
+			<span class="changeaccount"><%=e('aaddedacc')%> <i elementsid="author_changeaccount" class="fas fa-chevron-down"></i></span>
 		<% } %>
 
 	<% } %>

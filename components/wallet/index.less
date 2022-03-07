@@ -6,17 +6,14 @@
 	position: relative;
 
 	.caption{
-
 		padding : 2 * @rhythm;
 		padding-top: 4 * @rhythm;
-
 		span{
 			font-size: 1.4em;
-			color : #010E30;
+			color : rgb(var(--color-txt-gray-dark));
 			font-weight: 100;
 		}
 	}
-
 
 	.copyaddress{
 		cursor: pointer;
@@ -24,16 +21,15 @@
 
 	.toblockexplorer{
 		font-size: 0.8em;
-		color : @color-gray-slight;
+		color : rgb(var(--neutral-grad-3));
 		.transition(0.3s);
 		cursor: pointer;
 		width: 30px;
 		text-align: center;
 
 		&:hover{
-			color : @color-main;
+			color : rgb(var(--color-txt-ac));
 		}
-
 	}
 
 	.withloading{
@@ -92,11 +88,10 @@
 	.slide{
 		margin-top: 2 * @rhythm;
 		padding-top : 2 * @rhythm;
-
-		color: @color-black2;
+		color: rgb(var(--text-color));
 
 		.required{
-			color : @color-bad;
+			color : rgb(var(--color-bad));
 		}
 
 		.subcaptionWrapperTable{
@@ -113,11 +108,11 @@
 					margin-right : 4 * @rhythm;
 					float: right;
 					cursor: pointer;
-					color : @color-main;
+					color : rgb(var(--color-txt-ac));
 					.transition(0.3s);
 
 					&:hover{
-						color : @color-contrast;
+						color : rgb(var(--color-txt-gray));
 					}
 				}
 			}
@@ -130,14 +125,12 @@
 		.subcaption{
 			span{
 				font-weight : 700;
-				color: @color-black2;
 			}
 		}
 
 		.bottomPanel{
 			margin-top: 4 * @rhythm;
 			padding : 2 * @rhythm 4 * @rhythm;
-
 			overflow : hidden;
 
 			>div{
@@ -160,7 +153,7 @@
 			.transition(0.3s);
 
 			&:hover{
-				color : @color-main;
+				color : rgb(var(--color-txt-ac));
 			}
 
 			span{
@@ -178,7 +171,7 @@
 			padding-left : @rhythm;
 
 			&.res{
-				color : @color-contrast;
+				color : rgb(var(--color-txt-ac));
 			}
 			
 		}
@@ -193,7 +186,7 @@
 
 		._subcaptionlevel{
 			padding-left : @rhythm;
-			color : @color-main;
+			color : rgb(var(--color-txt-ac));
 		}
 
 		&:nth-child(1){
@@ -203,9 +196,10 @@
 	}
 
 
+	/////
+
 	.total{
-		
-		background: #F1F1F1;
+		background: rgb(var(--background-secondary-theme));
 		padding : 2 * @rhythm;
 		padding-bottom : 0;
 		overflow : hidden;
@@ -219,7 +213,7 @@
 			right: 0;
 			top : 0;
 			bottom : 0;
-			background: fade(#F1F1F1, 95);
+			background: rgba(var(--background-secondary-theme), 0.95);
 			display: none;
 
 			&.active{
@@ -230,7 +224,7 @@
 				>div{
 					vertical-align: middle;
 					text-align: center;
-					color : @color-gray-mlight;
+					color : rgb(var(--neutral-grad-4));
 				}
 			}
 		}
@@ -240,8 +234,6 @@
 			padding-bottom: @rhythm;
 			float: left;
 			width: 33%;
-
-
 
 			.canvasWrapper{
 				width: 100%;
@@ -275,7 +267,7 @@
 		.balance{
 			.balanceWrapper{
 				font-size: 1.6em;
-				color : #626262;
+				color : rgb(var(--color-txt-gray));
 
 				.table{
 					margin : 0 auto;
@@ -295,11 +287,11 @@
 				}
 
 				.positive{
-					background: @color-good;
+					background: rgb(var(--color-good));
 				}
 
 				.negative{
-					background: @color-bad;
+					background: rgb(var(--color-bad));
 				}
 			}
 
@@ -315,11 +307,11 @@
 				}
 
 				.positive{
-					color: @color-good;
+					color: rgb(var(--color-good));
 				}
 
 				.negative{
-					color: @color-bad;
+					color: rgb(var(--color-bad));
 					text-align: right;
 				}
 			}
@@ -342,8 +334,8 @@
 	.deposit,
 	.send{
 		display: none;
-		border : 1px solid #CACACA;
-		border-radius: 5px;
+		border : 1px solid rgb(var(--color-medium-theme));
+		border-radius: 6px;
 		padding-bottom: 4 * @rhythm;
 
 		.linkForDepositReady,
@@ -358,7 +350,7 @@
 			padding : 0  @rhythm;
 
 			b{
-				color : @color-good;
+				color : rgb(var(--color-good));
 			}
 
 			.infotable{
@@ -382,7 +374,7 @@
 		.linkForDepositReady,
 		.linkForDeposit{
 			margin-top: 0;
-			border-top : 1px solid #E6E6E6;
+			border-top : 1px solid rgb(var(--color-medium-theme));
 		}
 
 		.linkparams{
@@ -401,7 +393,7 @@
 			font-size: 0.8em;
 			margin-top : @rhythm;
 			margin-bottom : @rhythm;
-			color : @color-main;
+			color : rgb(var(--color-txt-ac));
 
 			&.abs{
 				padding-bottom : 3 * @rhythm;
@@ -439,7 +431,7 @@
 						.transition(0.3s);
 
 						&:hover{
-							color : @color-main;
+							color : rgb(var(--color-txt-ac));
 						}
 					}
 				}
@@ -463,12 +455,13 @@
 		}
 
 		.notvalidaddress{
-			color : @color-bad;
+			color : rgb(var(--color-bad));
 		}
 	}
+
 	.crowdfunding{
 		border-radius: 0;
-		border : 2px solid @color-main;
+		border : 2px solid rgb(var(--color-txt-ac));
 
 		&[view="showListcount"]{
 			.action{
@@ -495,12 +488,12 @@
 			font-size: 0.8em;
 			font-weight: 700;
 			cursor: pointer;
-			color : @color-contrast;
+			color : rgb(var(--color-txt-ac));
 
 			.transition(0.3s);
 
 			&:hover{
-				color : @color-black2;
+				color : rgb(var(--color-txt-gray))
 			}
 		}
 
@@ -536,18 +529,18 @@
 
 					.removecr,
 					.updatecr{
-						color : @color-gray-light;
+						color : rgb(var(--color-txt-gray));
 						cursor: pointer;
 						.transition(0.3s);
 					}
 					.updatecr{
 						&:hover{
-							color : @color-main;
+							color : rgb(var(--color-txt-ac));
 						}
 					}
 					.removecr{
 						&:hover{
-							color : @color-bad;
+							color : rgb(var(--color-bad));
 						}
 					}
 				}	
@@ -570,7 +563,7 @@
 				.transition(0.3s);
 
 				&:hover{
-					color : @color-good;
+					color : rgb(var(--color-good));
 				}
 			}
 
@@ -599,7 +592,7 @@
 						.linebg{
 							
 							.line{
-								background: @color-bad;
+								background: rgb(var(--color-bad));
 							}
 						}
 					}
@@ -620,17 +613,17 @@
 					&.iconWrapper{
 						width: 26px;
 						text-align: center;
-						color : @color-gray-light;
+						color : rgb(var(--neutral-grad-2));
 
 						.iended{
 							display: none;
 						}
 						.finish{
-							color : @color-good;
+							color : rgb(var(--color-good));
 						}
 
 						.finishbad{
-							color : @color-bad;
+							color : rgb(var(--color-bad));
 						}
 					}
 				}
@@ -638,7 +631,7 @@
 				.linebg{
 					width: 100%;
 					height: 2px;
-					background: @color-gray-light;
+					background:  rgb(var(--neutral-grad-2));
 					border-radius: 2px;
 					overflow: hidden;
 					position: relative;
@@ -649,7 +642,7 @@
 						top: 0;
 						height: 100%;
 						.transition(0.3s);
-						background: @color-main;
+						background: rgb(var(--color-txt-ac));
 					}
 				}
 			}
@@ -668,24 +661,12 @@
 			padding : 0 4 * @rhythm;
 
 			.statustable{
-				
-
-				.segment{
-
-					
-				}
-
 				.segmenttable{
 					>div{
-
 						&.labelWrapper{
 							display: none;
 						}
-
-						
 					}
-
-					
 				}
 			}
 
@@ -693,7 +674,7 @@
 				.current{
 					padding : 2 * @rhythm;
 					display: block;
-					color : @color-main;
+					color : rgb(var(--color-txt-ac));
 					text-align: center;
 				}
 			}
@@ -702,18 +683,18 @@
 				margin : 0 auto;
 				margin-top : 2 * @rhythm;
 				width: 150px;
-				background: @color-main;
-				color : #fff;
+				background: rgb(var(--color-bg-ac));
+				color : rgb(var(--text-on-main-bg-color));
 				text-align: center;
 				padding : @rhythm;
 				cursor: pointer;
 				.transition(0.3s);
-				border : 1px solid @color-main;
+				border : 1px solid rgb(var(--color-bg-ac));
 				font-size : 0.8em;
 
 				&:hover{
-					background : #fff;
-					color : @color-main;
+					background : rgb(var(--background-total-theme));
+					color : rgb(var(--color-txt-ac));
 				}
 			}
 
@@ -726,7 +707,7 @@
 				span{
 					font-size: 0.8em;
 					font-weight: 700;
-					color : @color-main;
+					color : rgb(var(--color-txt-ac));
 				}
 			}
 
@@ -745,7 +726,7 @@
 			.label{
 				padding : @rhythm 0;
 				span{
-					color : @color-gray-light;
+					color : rgb(var(--neutral-grad-2));
 					font-size: 0.8em;
 				}
 			}
@@ -782,18 +763,18 @@
 			padding : 2 * @rhythm 0 ;
 			span{
 				font-size: 0.8em;
-				color : @color-contrast;
+				color : rgb(var(--color-txt-ac));
 			}
 			
 		}
 	}
 
 	.buypkoin{
-		background: #fff;
+		background: rgb(var(--background-total-theme));
 		padding : 3 * @rhythm 0;
-		border-radius: 3px;
-		border-top : 1px solid fade(@color-gray-slight, 30);
-		border-right : 1px solid fade(@color-gray-slight, 30);
+		border-radius: 6px;
+		border-top : 1px solid rgba(var(--color-medium-theme), 0.3);
+		border-right : 1px solid rgba(var(--color-medium-theme), 0.3);
 		.shadowSmaller();
 
 		.ways{
@@ -823,8 +804,8 @@
 					padding : 4 * @rhythm 2 * @rhythm;
 					text-align: left;
 					border-radius: 5px;
-					border : 1px dashed fade(@color-gray-mlight, 50);
-					background: #001b37;
+					border : 1px dashed rgba(var(--color-medium-theme), 0.7);
+					background: rgb(var(--color-shadow-var));
 				}
 
 				.flxbtn{
@@ -837,7 +818,7 @@
 					}
 
 					span{
-						color : #fff;
+						color : rgb(var(--text-on-bg-shadow-color));
 						font-size: 0.8em;
 					}
 				}
@@ -895,9 +876,7 @@
 
 	.deposit{
 		border : 0;
-		background: #F8F6F9;
-
-		
+		background: rgb(var(--background-main));
 
 		.qrcoderesult{
 			.imageqr{
@@ -914,7 +893,7 @@
 				.adr{
 					text-align: center;
 					font-size: 2em;
-					color : @color-black2;
+					color : rgb(var(--color-txt-gray-dark));
 					font-weight : 700;
 				}
 			}
@@ -935,32 +914,7 @@
 		}
 	}
 
-	&.loading{
-        .ntf{
-            display: none;
-        }
-    }
-
-	&.api{
-		._stepback{
-			display: none!important;
-		}
-
-		._stepclose {
-			display: none!important;
-		}
-
-		.actionbody{
-			border-bottom: 0!important;
-		}
-
-		.actionstep .send{
-			padding-bottom : 0!important;
-		}
-	}
-
 	.addresses{
-
 
 		.addressesGroupCaption{
 			padding : 2 * @rhythm 4 * @rhythm;
@@ -971,7 +925,7 @@
 		}
 
 		.adressesTable{
-			border-bottom: 1px solid #D9D9D9;
+			border-bottom: 1px solid rgb(var(--neutral-grad-2));
 
 			>div{
 				vertical-align: top;
@@ -984,7 +938,7 @@
 					.alabel{
 						font-weight: 300;
 						font-size: 0.8em;
-						color : @color-main;
+						color : rgb(var(--color-txt-ac));
 					}
 				}
 
@@ -1027,6 +981,8 @@
 		
 	}
 
+	/////
+
 	.actionstep{
 
 		._stepclose{
@@ -1040,29 +996,27 @@
 			padding-right: 0;
 
 			.back{
-				background: #F5F5F5;
+				background: rgb(var(--background-main));
 				border-radius: 50%;
 				width: 44px;
 				height: 44px;
 				cursor: pointer;
-				color : @color-black2;
+				color : rgb(var(--color-txt-gray-dark));
 				.transition(0.3s);
 				text-align: center;
 				line-height: 44px;
 				font-size: 0.8em;
 
 				&:hover{
-					color : @color-main;
+					color : rgb(var(--color-txt-ac));
 				}
 			}
 		}
 
-		
-
 		.deposit{
-			border-radius: 3px;
-			border : 1px solid #D8D8D8;
-			background: #fff;
+			border-radius: 6px;
+			border : 1px solid rgba(var(--color-medium-theme), 0.7);
+			background: rgb(var(--background-total-theme));
 			padding : 3 * @rhythm 0;
 
 			.changer,
@@ -1076,14 +1030,14 @@
 		}
 
 		.send{
-			border-radius: 3px;
-			border : 1px solid #D8D8D8;
-			background: #fff;
+			border-radius: 6px;
+			border : 1px solid rgba(var(--color-medium-theme), 0.7);
+			background:  rgb(var(--background-total-theme));
 			padding : 3 * @rhythm 0;
 
 			.actionbody {
-				background: #F8F8F8;
-				border-bottom : 1px solid #D8D8D8;
+				background: rgb(var(--background-main));
+				border-bottom : 1px solid rgba(var(--color-medium-theme), 0.7);
 
 				button{
 					width: 100%;
@@ -1102,14 +1056,14 @@
 
 
 		.htls{
-			border-radius: 3px;
-			border : 1px solid #D8D8D8;
-			background: #fff;
+			border-radius: 6px;
+			border : 1px solid rgba(var(--color-medium-theme), 0.7);
+			background:  rgb(var(--background-total-theme));
 			padding : 3 * @rhythm 0;
 
 			.actionbody {
-				background: #F8F8F8;
-				border-bottom : 1px solid #D8D8D8;
+				background: rgb(var(--background-main));
+				border-bottom : 1px solid rgba(var(--color-medium-theme), 0.7);
 
 				button{
 					width: 100%;
@@ -1138,6 +1092,8 @@
 		}
 	}
 
+	/////
+
 	.walletempvalue{
 		padding-bottom:  0.5 * @rhythm;
 		padding-top: 0.5 * @rhythm;
@@ -1156,6 +1112,7 @@
 			font-weight: 700;
 		}
 	}
+
 	.walletuservalue{
 		position: relative;
 		padding-bottom: 0.5 * @rhythm;
@@ -1187,387 +1144,32 @@
 			display: none!important;
 		}
 	}
+
+	&.loading{
+        .ntf{
+            display: none;
+        }
+    }
+
+	&.api{
+		._stepback{
+			display: none!important;
+		}
+
+		._stepclose {
+			display: none!important;
+		}
+
+		.actionbody{
+			border-bottom: 0!important;
+		}
+
+		.actionstep .send{
+			padding-bottom : 0!important;
+		}
+	}
 }
 
-html.stblack{
-	#wallet{
-		
-		.caption{
-			span{
-				color : @color-main;
-			}
-		}
-
-		.buypkoin{
-			background: @color-black2;
-			color : @color-gray-slight;
-			border: 0;
-		}
-	
-		.slide{
-	
-			color: @color-gray-mlight;
-	
-			.required{
-				color : @color-bad;
-			}
-	
-			.subcaptionWrapperTable{
-			
-	
-				.panel{
-	
-					.item{
-						color : @color-main;
-	
-						&:hover{
-							color : @color-contrast;
-						}
-					}
-				}
-			}
-	
-			.subcaption{
-				span{
-					color: @color-bright;
-				}
-			}
-	
-			
-			.closeAdditional{
-	
-				&:hover{
-					color : @color-main;
-				}
-			}
-	
-			.linksubcaption{
-	
-				&.res{
-					color : @color-contrast;
-				}
-				
-			}
-	
-		
-			._subcaptionlevel{
-				color : @color-main;
-			}
-	
-		}
-	
-	
-		.total{
-			
-			background: @color-black3;
-	
-			.tttlforerror{
-				background: fade(@color-black, 95);
-	
-				.table{
-					>div{
-						color : @color-gray-mlight;
-					}
-				}
-			}
-	
-			.balance{
-				.balanceWrapper{
-					color : @color-gray-light;
-	
-				}
-			}
-	
-			.summary{
-				.line{
-					
-					.positive{
-						background: @color-good;
-					}
-	
-					.negative{
-						background: @color-bad;
-					}
-				}
-	
-				.numbers{
-					
-					.positive{
-						color: @color-good;
-					}
-	
-					.negative{
-						color: @color-bad;
-					}
-				}
-			}
-	
-	
-		}
-		
-		.htls,
-		.crowdfunding,
-		.deposit,
-		.send{
-	
-			border : 1px solid fade(@color-main, 50);
-	
-	
-			.info{
-	
-				b{
-					color : @color-good;
-				}
-	
-			}
-	
-			.linkForDepositReady,
-			.linkForDeposit{
-				border-top : 1px solid fade(@color-main, 50);
-			}
-	
-	
-			.labelWrapper{
-				color : @color-main;
-			}
-	
-	
-			.row{
-				>div{
-	
-					&.changer{
-						
-						.change{
-	
-							&:hover{
-								color : @color-main;
-							}
-						}
-					}
-	
-				}
-			}
-	
-			.notvalidaddress{
-				color : @color-bad;
-			}
-		}
-		.crowdfunding{
-			border : 2px solid @color-main;
-	
-		
-			
-	
-			.listcountWrapper{
-				color : @color-contrast;
-	
-				&:hover{
-					color : @color-gray-mlight;
-				}
-			}
-	
-			.listcr{
-	
-				.item{
-					>div{
-						
-						.removecr,
-						.updatecr{
-							color : @color-gray-light;
-						}
-						.updatecr{
-							&:hover{
-								color : @color-main;
-							}
-						}
-						.removecr{
-							&:hover{
-								color : @color-bad;
-							}
-						}
-					}	
-				}
-	
-			}
-	
-			.statustable{
-	
-				.todeal{
-	
-					&:hover{
-						color : @color-good;
-					}
-				}
-	
-				.segment{
-	
-					
-					&.bad{
-						.segmenttable{
-							.linebg{
-								
-								.line{
-									background: @color-bad;
-								}
-							}
-						}
-					}
-					
-				}
-	
-				.segmenttable{
-					>div{
-						
-						&.iconWrapper{
-							color : @color-gray-light;
-	
-							.finish{
-								color : @color-good;
-							}
-	
-							.finishbad{
-								color : @color-bad;
-							}
-						}
-					}
-	
-					.linebg{
-						background: fade(@color-main, 50);
-	
-						.line{
-							background: @color-main;
-						}
-					}
-				}
-			}
-	
-			.crdeal{
-				
-				.pocstatus{
-					.current{
-						color : @color-main;
-					}
-				}
-	
-				.reactivate{
-					
-					background: fade(@color-main,30);
-					color : @color-gray-mlight;
-					border : 1px solid @color-main;
-	
-					&:hover{
-						background: fade(@color-main, 50);
-						color : @color-gray-slight;
-					}
-				}
-	
-			}
-	
-			.infosteptable{
-				.infostepcaption{
-					span{
-						color : @color-main;
-					}
-				}
-	
-				
-				.label{
-					span{
-						color : @color-bright;
-					}
-				}
-	
-				
-			}
-	
-	
-			.steptext{
-				span{
-					color : @color-contrast;
-				}
-				
-			}
-		}
-		.deposit{
-			background: transparent;
-	
-	
-			.depositaddress{
-				.adrwrapper{
-	
-					.adr{
-						color : @color-gray-mlight;
-					}
-				}
-			}
-	
-		}
-	
-		.addresses{
-	
-			.adressesTable{
-				border-bottom: 1px solid fade(@color-main, 50);
-
-	
-				>div{
-	
-					&.name{
-	
-						.alabel{
-							color : @color-main;
-						}
-					}
-	
-				}
-			}
-	
-	
-			
-		}
-	
-		.actionstep{
-	
-			._stepback{
-			
-	
-				.back{
-					background: @color-black2;
-					color : @color-main;
-	
-					&:hover{
-						color : @color-bright;
-					}
-				}
-			}
-	
-			.deposit{
-				border : 1px solid fade(@color-main, 50);
-	
-			}
-	
-			.send{
-				border : 1px solid fade(@color-main, 50);
-				background: @color-black;
-	
-				.actionbody {
-					background: @color-black2;
-					border-bottom : 1px solid fade(@color-main, 50);
-	
-				}
-	
-			}
-	
-			.animation{
-	
-				.send,
-				.deposit{
-					border : 1px solid transparent;
-				}
-				
-			}
-		}
-	}	
-}
 
 .walletwindow{
 
@@ -1598,9 +1200,7 @@ html.stblack{
 		.slide{
 			margin-top: 2 * @rhythm;
 			padding-top : 2 * @rhythm;
-	
-			
-	
+
 			.subcaptionWrapperTable{
 				width: auto;
 				margin-bottom: 2 * @rhythm;
@@ -1615,11 +1215,11 @@ html.stblack{
 						margin-right : 4 * @rhythm;
 						float: right;
 						cursor: pointer;
-						color : @color-main;
+						color : rgb(var(--color-txt-ac));
 						.transition(0.3s);
 	
 						&:hover{
-							color : @color-contrast;
+							color : rgb(var(--color-txt-gray));
 						}
 					}
 				}
@@ -1632,7 +1232,7 @@ html.stblack{
 			.subcaption{
 				span{
 					font-weight : 700;
-					color: @color-black2;
+					color: rgb(var(--color-txt-gray-dark));
 				}
 			}
 	
@@ -1662,7 +1262,7 @@ html.stblack{
 				.transition(0.3s);
 	
 				&:hover{
-					color : @color-main;
+					color : rgb(var(--color-txt-gray));
 				}
 	
 				span{
@@ -1680,7 +1280,7 @@ html.stblack{
 				padding-left : @rhythm;
 	
 				&.res{
-					color : @color-contrast;
+					color : rgb(var(--color-txt-gray));
 				}
 				
 			}
@@ -1695,7 +1295,7 @@ html.stblack{
 	
 			._subcaptionlevel{
 				padding-left : @rhythm;
-				color : @color-main;
+				color : rgb(var(--color-txt-ac));
 			}
 	
 			&:nth-child(1){
@@ -1706,8 +1306,6 @@ html.stblack{
 	
 	
 		.total{
-			
-			background: #F1F1F1;
 			padding : 0;
 			overflow : hidden;
 	
@@ -1716,8 +1314,6 @@ html.stblack{
 				padding-bottom: @rhythm;
 				float: left;
 				width: 100%;
-	
-	
 	
 				.canvasWrapper{
 					width: 100%;
@@ -1747,10 +1343,6 @@ html.stblack{
 				}
 	
 			}
-	
-			
-	
-	
 		}
 		
 		.htls,
@@ -1758,7 +1350,7 @@ html.stblack{
 		.deposit,
 		.send{
 	
-			border : 1px solid #CACACA;
+			border : 1px solid rgb(var(--color-medium-theme));
 			border-left : 0;
 			border-right : 0;
 			border-radius: 0;
@@ -1785,8 +1377,6 @@ html.stblack{
 				min-width : 0;
 				width: 100%;
 			}
-	
-			
 	
 			.row{
 				display: block;
@@ -1898,12 +1488,12 @@ html.stblack{
 	
 		.crowdfunding{
 			border : 0;
-			background: #F8F6F9;
+			background: rgb(var(--background-main));
 		}
 	
 		.deposit{
 			border : 0;
-			background: #F8F6F9;
+			background:  rgb(var(--background-main));
 	
 			
 	
@@ -1950,7 +1540,6 @@ html.stblack{
 			}
 	
 			.adressesTable{
-				border-bottom: 1px solid #D9D9D9;
 				padding : 0 @rhythm;
 	
 				>div{
@@ -1993,89 +1582,7 @@ html.stblack{
 			
 		}
 	
-		.actionstep{
-	
-			._stepclose{
-				display: block;
-			}
-	
-			._stepback{
-				display: block;
-				width: 60px;
-				padding-left: 0;
-				padding-right: 0;
-	
-				.back{
-					background: #F5F5F5;
-					border-radius: 50%;
-					width: 44px;
-					height: 44px;
-					cursor: pointer;
-					color : @color-black2;
-					.transition(0.3s);
-					text-align: center;
-					line-height: 44px;
-					font-size: 0.8em;
-	
-					&:hover{
-						color : @color-main;
-					}
-				}
-			}
-	
-			.deposit{
-				border-radius: 3px;
-				border : 1px solid #D8D8D8;
-				background: #fff;
-				padding : 3 * @rhythm 0;
-	
-				.changer,
-				.recievecoins{
-					display: none;
-				}
-	
-				._stepback{
-					display: table-cell;
-				}
-			}
-			
-			.htls,
-			.send{
-				border-radius: 3px;
-				border : 1px solid #D8D8D8;
-				background: #fff;
-				padding : 3 * @rhythm 0;
-	
-				.actionbody {
-					background: #F8F8F8;
-					border-bottom : 1px solid #D8D8D8;
-	
-					button{
-						width: 100%;
-					}
-				}
-	
-				
-				.changerremove,
-				.sendcoins{
-					display: none;
-				}
-	
-				._stepback{
-					display: table-cell;
-				}
-			}
-	
-			.animation{
-				
-				.htls,
-				.send,
-				.deposit{
-					border : 1px solid transparent;
-				}
-				
-			}
-		}
+		
 	}
 }
 
@@ -2104,11 +1611,11 @@ html.stblack{
 					margin-right : 4 * @rhythm;
 					float: right;
 					cursor: pointer;
-					color : @color-main;
+					color : rgb(var(--color-txt-ac));
 					.transition(0.3s);
 
 					&:hover{
-						color : @color-contrast;
+						color :  rgb(var(--color-txt-gray));
 					}
 				}
 			}
@@ -2121,7 +1628,7 @@ html.stblack{
 		.subcaption{
 			span{
 				font-weight : 700;
-				color: @color-black2;
+				color: rgb(var(--text-color));
 			}
 		}
 
@@ -2151,7 +1658,7 @@ html.stblack{
 			.transition(0.3s);
 
 			&:hover{
-				color : @color-main;
+				color : rgb(var(--color-txt-ac));
 			}
 
 			span{
@@ -2169,7 +1676,7 @@ html.stblack{
 			padding-left : @rhythm;
 
 			&.res{
-				color : @color-contrast;
+				color : rgb(var(--color-txt-ac));
 			}
 			
 		}
@@ -2184,7 +1691,7 @@ html.stblack{
 
 		._subcaptionlevel{
 			padding-left : @rhythm;
-			color : @color-main;
+			color : rgb(var(--color-txt-ac));
 		}
 
 		&:nth-child(1){
@@ -2196,7 +1703,7 @@ html.stblack{
 
 	.total{
 		
-		background: #F1F1F1;
+		background: rgb(var(--background-secondary-theme));
 		padding : 0;
 		overflow : hidden;
 
@@ -2236,9 +1743,6 @@ html.stblack{
 			}
 
 		}
-
-		
-
 
 	}
 
@@ -2328,10 +1832,7 @@ html.stblack{
 	.deposit,
 	.send{
 
-		border : 1px solid #CACACA;
-		border-left : 0;
-		border-right : 0;
-		border-radius: 0;
+		border :0;
 
 		.linkForDepositReady,
 		.linkForDeposit,
@@ -2373,16 +1874,8 @@ html.stblack{
 					width: 100%;
 				}
 
-				&.source{
-
-				}
-
 				&.label{
 					width: 100%;
-				}
-
-				&.cell{
-					
 				}
 			}
 		}
@@ -2390,12 +1883,12 @@ html.stblack{
 
 	.crowdfunding{
 		border : 0;
-		background: #F8F6F9;
+		background: rgb(var(--background-secondary-theme));
 	}
 
 	.deposit{
 		border : 0;
-		background: #F8F6F9;
+		background: rgb(var(--background-secondary-theme));
 
 		
 
@@ -2434,15 +1927,12 @@ html.stblack{
 	}
 
 	.addresses{
-
-
 		.addressesGroupCaption{
 			padding : @rhythm;
-		
 		}
 
 		.adressesTable{
-			border-bottom: 1px solid #D9D9D9;
+			border-bottom: 1px solid rgb(var(--color-medium-theme));
 			padding : 0 @rhythm;
 
 			>div{
@@ -2487,89 +1977,7 @@ html.stblack{
 		
 	}
 
-	.actionstep{
-
-		._stepclose{
-			display: block;
-		}
-
-		._stepback{
-			display: block;
-			width: 60px;
-			padding-left: 0;
-			padding-right: 0;
-
-			.back{
-				background: #F5F5F5;
-				border-radius: 50%;
-				width: 44px;
-				height: 44px;
-				cursor: pointer;
-				color : @color-black2;
-				.transition(0.3s);
-				text-align: center;
-				line-height: 44px;
-				font-size: 0.8em;
-
-				&:hover{
-					color : @color-main;
-				}
-			}
-		}
-
-		.deposit{
-			border-radius: 3px;
-			border : 1px solid #D8D8D8;
-			background: #fff;
-			padding : 3 * @rhythm 0;
-
-			.changer,
-			.recievecoins{
-				display: none;
-			}
-
-			._stepback{
-				display: table-cell;
-			}
-		}
-
-		.htls,
-		.send{
-			border-radius: 3px;
-			border : 1px solid #D8D8D8;
-			background: #fff;
-			padding : 3 * @rhythm 0;
-
-			.actionbody {
-				background: #F8F8F8;
-				border-bottom : 1px solid #D8D8D8;
-
-				button{
-					width: 100%;
-				}
-			}
-
-			
-			.changerremove,
-			.sendcoins{
-				display: none;
-			}
-
-			._stepback{
-				display: table-cell;
-			}
-		}
-
-		.animation{
-
-			.htls,
-			.send,
-			.deposit{
-				border : 1px solid transparent;
-			}
-			
-		}
-	}
+	
 }
 
 .walletwindow{

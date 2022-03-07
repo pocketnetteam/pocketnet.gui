@@ -1,0 +1,45 @@
+{
+  "_from": "cordova-plugin-pip@0.0.2",
+  "_id": "cordova-plugin-pip@0.0.2",
+  "_inBundle": false,
+  "_integrity": "sha512-Wy9aK7rQX3kif6+kUl7RwTG/+arixvW5Sphyr0bPxsVrkVIliseW/S/JhO7BVX25/HGU0lGMvQe8a134yvI9iQ==",
+  "_location": "/cordova-plugin-pip",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "cordova-plugin-pip@0.0.2",
+    "name": "cordova-plugin-pip",
+    "escapedName": "cordova-plugin-pip",
+    "rawSpec": "0.0.2",
+    "saveSpec": null,
+    "fetchSpec": "0.0.2"
+  },
+  "_requiredBy": [
+    "#DEV:/",
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-pip/-/cordova-plugin-pip-0.0.2.tgz",
+  "_shasum": "75821567aa6544cb4ad2d800d2464aaee7e5e44a",
+  "_spec": "cordova-plugin-pip@0.0.2",
+  "_where": "C:\\inetpub\\wwwroot\\pocketnet\\cordova",
+  "author": {
+    "name": "MindKind Creative"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova-plugin-pip",
+    "platforms": [
+      "android"
+    ]
+  },
+  "deprecated": false,
+  "description": "Picture-In-Picture support for Android.",
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "license": "ISC",
+  "name": "cordova-plugin-pip",
+  "version": "0.0.2"
+}

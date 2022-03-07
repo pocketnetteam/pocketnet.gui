@@ -130,8 +130,8 @@ fs.exists(mapJsPath, function (exists) {
 
 		var exported = {
 			data : "",
-			path : '../matrix/src/components/events/event/metaMessage/exported.less'
-			// path : './css/exported.less'
+			//path : '../matrix/src/components/events/event/metaMessage/exported.less'
+			path : './css/exported.less'
 		}
 
 		var cordova = {
@@ -151,7 +151,7 @@ fs.exists(mapJsPath, function (exists) {
 
 
 		var _modules = _.filter(m, function(_m, mn){
-			if(mn != "__sources" && mn != "__css" && mn != '__vendor' && mn != '__templates'  && mn != '__sourcesfirst' && mn != '__sourceslast') return true;
+			if(mn != "__sources" && mn != "__css" && mn != '__vendor' && mn != '__templates'  && mn != '__sourcesfirst' && mn != '__sourceslast' && mn != '__exportcss') return true;
 			
 		})
 
@@ -224,9 +224,23 @@ fs.exists(mapJsPath, function (exists) {
 											}
 	
 											data = data.toString().replaceAll("../..", "..");
+
+											var pre2 = data
+
+											try{
+												pre2 = uglifycss.processString(data, {
+													cuteComments : true
+												})
+											}
+											catch(e){
+												console.log('uglifycss error:', path)
+												console.log(e)
+											}
 	
-											cssmaster.data = cssmaster.data + "\n" + "/*" + csspath +"*/\n" + data;
-											exported.data = exported.data + "\n" + "/*" + csspath +"*/\n" + data;
+											cssmaster.data = cssmaster.data + "\n" + "/*" + csspath +"*/\n" + pre2;
+
+											if (module.exportcss)
+												exported.data = exported.data + "\n" + "/*" + csspath +"*/\n" + pre2;
 	
 											p.success();
 										})
@@ -357,7 +371,23 @@ fs.exists(mapJsPath, function (exists) {
 										throw err;
 									}
 
-									currentcssdata = currentcssdata + "\n" + "/*" + path +"*/ \n" + data;
+									var pre2 = data
+
+									try{
+										pre2 = uglifycss.processString(data, {
+											cuteComments : true
+										})
+									}
+									catch(e){
+									}
+
+									currentcssdata = currentcssdata + "\n" + "/*" + path +"*/ \n" + pre2;
+
+
+									if(m.__exportcss[filepath]){
+										exported.data = exported.data + "\n" + "/*" + path +"*/ \n" + pre2;	
+									}
+										
 
 									p.success();
 								});
@@ -376,15 +406,15 @@ fs.exists(mapJsPath, function (exists) {
 						success : function(){
 							cssmaster.data = currentcssdata + '\n' + cssmaster.data;
 
-							exported.data = currentcssdata + '\n' + exported.data;
-							exported.data = '.pocketnet_iframe{' + exported.data + '}'
+
+							exported.data = '.pocketnet_iframe{\n' + exported.data + '\n}'
 							exported.data = exported.data.split('\n')
 
 							exported.data = exported.data.map(item => {
-								return item.replace(/\(max-width:640px\)|\(max-width:768px\)|\(max-width:1024px\)/g, '(max-width:1920px)')
+								return item.replace(/\(max-width:640px\)|\(max-width:768px\)|\(max-width:1024px\)/g, '(max-width:1920px)').replace(/\(max-width: 640px\)|\(max-width: 768px\)|\(max-width: 1024px\)/g, '(max-width:1920px)')
 							})
 
-							exported.data = exported.data.join('\n').replaceAll('html.stblack', '#matrix-root[theme="black"]')
+							exported.data = exported.data.join('\n')
 
 							var pre = uglifycss.processString(cssmaster.data, {
 								cuteComments : true
@@ -399,14 +429,15 @@ fs.exists(mapJsPath, function (exists) {
 								clbk();				
 							});
 
-							/*fs.writeFile(exported.path, exported.data, function(err) {
+
+							fs.writeFile(exported.path, exported.data, function(err) {
 
 								if (err) {
 
 									console.log("Access not permitted (LESS) " +  exported.path) 
 								}
 										
-							});*/
+							});
 						}
 					}
 				})
@@ -743,12 +774,11 @@ fs.exists(mapJsPath, function (exists) {
 							if(args.prodaction)
 							{
 
-								JS += '<script type="text/javascript">'+joinfirst.data+'</script>';
+								//JS += '<script type="text/javascript">'+joinfirst.data+'</script>';
+								JS += '<script join src="js/joinfirst.min.js?v='+rand(1, 999999999999)+'"></script>';
 								JS += '<script async join src="js/join.min.js?v='+rand(1, 999999999999)+'"></script>';
 								JS += '<script async join src="js/joinlast.min.js?v='+rand(1, 999999999999)+'"></script>';
-	
 								VE = '<script async join src="js/vendor.min.js?v='+args.vendor+'"></script>';
-	
 								CSS = '<link rel="stylesheet" href="css/master.css?v='+rand(1, 999999999999)+'">';
 	
 								index = index.replace(new RegExp(/\?v=([0-9]*)/g), '?v=' + rand(1, 999999999999));
@@ -900,7 +930,11 @@ var copycontent = function(options, clbk, nac) {
 			sync : true,
 			array : options.copy,
 			action : function(p){
-				ncp(p.item, options.path + '/' + p.item, function (err) {
+				ncp(p.item, options.path + '/' + p.item, {
+					filter : function(name){
+						return name.indexOf('.map') == -1
+					},
+				}, function (err) {
 					if (err) {
 					  console.error(err);
 					}

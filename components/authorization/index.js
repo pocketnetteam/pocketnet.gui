@@ -131,7 +131,7 @@ var authorization = (function(){
 								}
 
 								else{
-									return 'filluserfast'
+									return 'registration'
 								}
 								
 							}
@@ -360,7 +360,7 @@ var authorization = (function(){
 				self.nav.api.load({
 
 					open : true,
-					id : 'filluserfast',
+					id : 'registration',
 					el : el.c.find('.filluserform'),
 
 					essenseData : {

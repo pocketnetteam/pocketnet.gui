@@ -3,9 +3,12 @@
 **/node_modules
 .vscode
 .vs
+.idea
 dist
 messenger/server/cert/key.pem
 messenger/server/cert/cert.pem
+exported.less
+exported.css
 build/installer2.nsh
 *.zip
 messenger2/server/cert/key.pem

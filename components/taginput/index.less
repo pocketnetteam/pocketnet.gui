@@ -1,24 +1,21 @@
 @import "../../css/__cssvar";
 
-@bg : #fff;
-@placeholder : #838688;
+
 #taginput{
     .tgs{
 		margin-bottom: @rhythm;
 
 		.search{
-
-
 			.searchFastResultWrapper{
 				left : 0;
-				background: @bg;
+				background: rgb(var(--background-total-theme));
 				overflow-y: auto;
 				max-height: 350px;
 
 				.requiredlabel{
 					padding : @rhythm 0;
 					span{
-						color : @color-orange;
+						color : rgb(var(--color-txt-orange));
 						font-size: 0.8em;
 					}
 				}
@@ -30,7 +27,7 @@
 					.transition(0.3s);
 
 					&:hover{
-						color : @color-bright;
+						color : rgb(var(--color-txt-ac));
 					}
 
 					&.bright{
@@ -50,11 +47,9 @@
 			input{
 				border-radius: 3px;
 				border : 0;
-				background: @bg;
+				background: transparent;
 				border-bottom-right-radius: 0;
 				border-top-right-radius: 0;
-
-				
 			}
 
 			.searchPanel{
@@ -62,7 +57,7 @@
 				border : 0;
 				border-bottom-left-radius: 0;
 				border-top-left-radius: 0;
-				background: @bg;
+				background: transparent;
 			}
 
 			.searchInput{
@@ -74,8 +69,9 @@
 					}
 				}
 			}
-
 		}
+
+
 		.tagsWrapper{			
 
 			>div{
@@ -83,7 +79,7 @@
 
 				&.label{
 					padding-left: 0;
-					color : @color-add;
+					color : rgb(var(--color-txt-ac));
 					font-weight: 700;
 				}
 
@@ -110,6 +106,8 @@
 
 						&.inputWrapper{
 							padding : 0;
+							border-radius: 6px;
+							background: rgb(var(--background-hidden-layer));
 							.shadowSmall();
 						}
 					}
@@ -117,14 +115,15 @@
 			}
 		}
 
+		
 		.tag{
 			padding-top : 0;
 			padding-bottom: 0;
-			margin-top: @rhythm / 2;
-			margin-bottom: @rhythm / 2;
+			margin-top: 0.5 * @rhythm;
+			margin-bottom: 0.5 * @rhythm;
 			margin-right : 2 * @rhythm;
 			border-radius : 20px;
-			background: @bg;
+			background: rgb(var(--background-secondary-theme));
 
 			.tagInner{
 				height: auto;
@@ -132,20 +131,20 @@
 
 				>div{
 					vertical-align: middle;
-					padding : @rhythm / 2 @rhythm;
+					padding : 0.5 * @rhythm @rhythm;
 
 					&.label{
-						color : @color-add;
+						color : rgb(var(--color-txt-ac));
 
 					}
 
 					&.remove{
 						cursor: pointer;
 						text-align : center;
-						color : @color-gray-light;
+						color : rgb(var(--neutral-grad-2));
 
 						&:hover{
-							color : @color-add;
+							color : rgb(var(--color-txt-ac));
 						}
 					}
 
@@ -159,11 +158,11 @@
 		.category{
 			padding-top : 0;
 			padding-bottom: 0;
-			margin-top: @rhythm / 2;
-			margin-bottom: @rhythm / 2;
+			margin-top: 0.5 * @rhythm;
+			margin-bottom: 0.5 * @rhythm;
 			margin-right : 2 * @rhythm;
 			border-radius : 20px;
-			background: @bg;
+			background: rgb(var(--background-secondary-theme));
 
 			.categoryInner{
 				height: auto;
@@ -171,20 +170,20 @@
 
 				>div{
 					vertical-align: middle;
-					padding : @rhythm / 2 @rhythm;
+					padding : 0.5 * @rhythm @rhythm;
 
 					&.label{
-						color : @color-add;
+						color : rgb(var(--color-txt-ac));
 
 					}
 
 					&.remove{
 						cursor: pointer;
 						text-align : center;
-						color : @color-gray-light;
+						color : rgb(var(--neutral-grad-2));
 
 						&:hover{
-							color : @color-add;
+							color : rgb(var(--color-txt-ac));
 						}
 					}
 
@@ -201,101 +200,6 @@
 	}
 }
 
-
-html.stblack{
-	@bg : @color-black3;
-	@placeholder : @color-add;
-
-	#taginput{
-		.tgs{
-		
-			.search{
-		
-		
-				.searchFastResultWrapper{
-					background: @bg;
-		
-					.result{
-						color : @color-main;
-		
-						&:hover{
-							color : @color-bright;
-						}
-					}
-				}
-		
-				input{
-					background: @bg;
-				}
-		
-				.searchPanel{
-					background: @bg;
-				}
-		
-			}
-			.tagsWrapper{			
-		
-				>div{
-					
-					&.label{
-						color : @color-add;
-					}
-		
-				}
-			}
-		
-			.tag{
-				background: @bg;
-		
-				.tagInner{
-				
-					>div{
-						
-						&.label{
-							color : @color-bright;
-		
-						}
-		
-						&.remove{
-							color : @color-main;
-		
-							&:hover{
-								color : @color-bright;
-							}
-						}
-					}
-				}
-			}
-
-			.category{
-				
-				background: @bg;
-	
-				.categoryInner{
-					
-					>div{
-					
-						&.label{
-							color : @color-add;
-	
-						}
-	
-						&.remove{
-						
-							color : @color-gray-light;
-	
-							&:hover{
-								color : @color-add;
-							}
-						}
-	
-					
-					}
-				}
-			}
-		}
-	}
-}
 
 /*t*/ @media only screen and (max-width: 768px){
 	#taginput .tgs .search .searchFastResultWrapper .result{

@@ -239,7 +239,9 @@ ____loclib.shares = "SHARES";
 ____loclib.uposts = "POSTS";
 ____loclib.myuposts = "MY POSTS";
 ____loclib.followers = "FOLLOWERS";
+____loclib.followers2 = "Followers";
 ____loclib.following = "FOLLOWING";
+____loclib.following2 = "Following";
 ____loclib.settings = "MANAGE";
 ____loclib.anofollowers = "This user has no followers";
 ____loclib.aynofollowers = "You have no followers";
@@ -374,7 +376,7 @@ ____loclib.checkScoreErrorLight = "Account is not activated";
 ____loclib.timestamperror = "Time in application and in node do not match";
 
 // Error Page 404
-____loclib.e404 = "ERROR 404";
+____loclib.e404 = "404";
 ____loclib.e404e = "Page not Found. Return to Main Page";
 ____loclib.postLimitLight = function(v){
 return "You have reached your limit of " + (v || 15) + " posts in a 24 hour period";
@@ -645,6 +647,7 @@ ____loclib.e13136 = "All Posts"
 ____loclib.e13137 = "My Subscriptions" // This is the equivalent of a ‘News feed’. Don’t change the word ‘Pocket’ however, it’s a feature of "+appname+".
 ____loclib.e13138 = "Top posts"
 ____loclib["Top Posts Over"] = "Top Posts Over"
+____loclib.bestFirst = "The best first"
 ____loclib.topnext = "Next"
 ____loclib.topprevious = "Previous"
 ____loclib.topactual = "Return to the latest"
@@ -1067,7 +1070,7 @@ ____loclib.anotherSiteCaption = "You follow an external link to a third-party si
 ____loclib.anotherSiteDisc = "We are not responsible for the content of the site and strongly recommend that you do not provide any of your personal data on third-party sites."
 
 ____loclib.Categories = "Categories"
-____loclib.addtagsCategories = "Add Categories/Tags"
+____loclib.addtagsCategories = "Categories and tags"
 ____loclib.addcategory = "Add Category"
 ____loclib.categoryname = "Category name"
 ____loclib.entercategoryname = "Enter category name"
@@ -1313,7 +1316,13 @@ ____loclib.sharevisibilitylabel_reg_article = 'Author chose to make this <b>arti
 ____loclib.sharevisibilitylabel_sub_video = 'Author chose to make this <b>video</b> available only for subscribers'
 ____loclib.sharevisibilitylabel_reg_video = 'Author chose to make this <b>video</b> available only for registered Bastyon users'
 
+____loclib.buy = 'Buy';
+
+____loclib.topAuthors = 'Top Authors';
+____loclib.recommendedPosts = 'Recommended Posts';
+____loclib.rating = 'Rating';
 ____loclib.setupVideoNodeGuide = 'Setup Video Node'
+____loclib.subscribers3 = 'Subscribers';
 
 ____loclib.MainBoard = 'Stand up to censorship &';
 ____loclib.MainBoard1 = 'gain financial independence';
@@ -1863,6 +1872,12 @@ ____loclib.pkoin_commerce_info = 'Any peer-to-peer PKOIN transactions are not mo
 ____loclib.buyforcrypto = 'Buy for crypto'
 ____loclib.buywithcreditcard = 'Buy with credit card'
 ____loclib.buylogo = 'Buy Pocketcoin (PKOIN)'
+
+____loclib.comment = 'Comment';
+____loclib.sendToAuthor = 'Send to author';
+____loclib.pkoinComment = 'PKOIN comment';
+____loclib.liftUpThePost = 'Lift up the post';
+
 ____loclib.buypeertopeer = 'Buy Peer-to-Peer'
 
 
@@ -1991,7 +2006,11 @@ ____loclib.easyNode_e2002_2_2 = "more Pocketcoin. That is called staking in cryp
 ____loclib.minPkoin = function (p){	
 	return  String(p) + " PKOIN Minimum"
 }
+____loclib.maxPkoin = function (p){	
+	return  String(p) + " PKOIN Maximum"
+}
 
+____loclib.topPosts = "Top posts";
 ____loclib.videop2psettings = "Use p2p when watching videos"
 
 ____loclib.art_validatetags = "Please add Tags For Your Longread"
@@ -2001,7 +2020,8 @@ ____loclib.art_validatecontent = "Please add Content of Your Longread"
 ____loclib.art_nothingchange = "No changes"
 ____loclib.art_newarticle = "New Longread"
 ____loclib.art_myarticles = "My Longreads"
-____loclib.art_changecover = "Change Cover"
+____loclib.art_changecover = "Upload Cover"
+____loclib.art_removecover = "Remove Cover"
 ____loclib.art_publish = "Publish"
 ____loclib.art_editing = "Editing"
 ____loclib.art_draftsaved = "Draft saved"
@@ -2031,6 +2051,9 @@ ____loclib.downloadplaystore = "Google Play Download"
 ____loclib.downloadgithub = "Download APK"
 
 ____loclib.empty = "Empty"
+
+____loclib.reputation = "Reputation";
+____loclib.subscriptions = "Subscriptions";
 ____loclib.tothetop = "To the top"
 ____loclib.menu = "Menu"
 
@@ -2047,3 +2070,26 @@ ____loclib.ratingss3 = "Only users with high reputation can give 1, 2, 3 star ra
 
 ____loclib.clearcategories = "Do you really want to clear category filters?"
 ____loclib.cleartags = "Do you really want to clear tags filters?"
+____loclib.fromsh = "From"
+
+____loclib.hodoiearnmore = "How do I earn more Pocketcoin?"
+
+
+____loclib.removeaddress = "Do you really want to remove this address from this device?"
+____loclib.wanttoseekey = "Do you really want to see your private key?"
+____loclib.seeprivatekey = "See Private Key"
+____loclib.max5acc = "You have reached a maximum of 5 accounts. No more can be added"
+
+
+____loclib.longreads = "Long Reads"
+____loclib.readarticle = "Read"
+
+____loclib.filters = "Filters"
+____loclib.dataenteredincorrectly = "Data entered incorrectly"
+
+____loclib.lloadprevwithtags = "Refresh Feed"
+
+____loclib.newRepost = "Make repost"
+____loclib.whatsnewrepost = "Your commentary"
+
+____loclib.art_goback = "Come back"

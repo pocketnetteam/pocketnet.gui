@@ -24,6 +24,10 @@
 
 	.mobileinfo{
 		display: none;
+
+		.item.name{
+			display: none;
+		}
 	}
 
 	.copyaddress{
@@ -33,20 +37,9 @@
 
 	.newsharewrapper{
 		padding-bottom: 0;
-		border-radius: 3px;
-		color : @color-black;
-		background: #FAFAFA;
+		border-radius: 12px;
+		background: rgb(var(--background-total-theme));
 		margin-top : @rhythm;
-	}
-
-	#lenta{
-		.shares{
-			.showmorebyauthor,
-			.share{
-				border-radius: 3px;
-			}
-		}
-
 	}
 
 	.authorlentawrappermain{
@@ -62,21 +55,23 @@
 				padding : 2 * @rhythm;
 				cursor: pointer;
 				.transition(0.3s);
+				color : rgb(var(--neutral-grad-3));
 
 				&:hover{
-					color : @color-main;
+					color : rgb(var(--color-txt-ac));
 				}
 
 			}
 		}
 
 		.authorsearchwrapper{
-			background: #FAFAFA;
+			background: rgb(var(--background-total-theme));
 			padding : 0.5 * @rhythm 1 * @rhythm;
 			padding-right: 0;
 			display: none;
 			border-right: 3px;
 			margin-top : @rhythm;
+			border-radius: 12px;
 
 			.search{
 				.searchPanel{
@@ -88,7 +83,7 @@
 					.searchInputIcon{
 						.sminput{
 							padding : 2 * @rhythm;
-							padding-left: 3 * @rhythm;
+							padding-left: 2 * @rhythm;
 							background: transparent; 
 							border : 0;
 						}
@@ -107,32 +102,27 @@
 			}
 
 			.authorsearchicon{
-			
 				.icon{
-					
 					i{
 						&:before{
 							content : '\f00d'
 						}
 					}
-	
 				}
 			}
 		}
 	}	
 
 	.postauwrapper{
-
-		
 		
 		.postauarrows{
-			background: #fff;
+			background: rgb(var(--background-total-theme));
 			padding : 0 6 * @rhythm;
 			padding-right: 5 * @rhythm;
 			
 			
 			&.topwr{
-				border-bottom : 1px solid @color-gray-slight;
+				border-bottom : 1px solid rgb(var(--color-medium-theme));
 				opacity: 1;
 			}
 
@@ -174,17 +164,17 @@
 			height: 100%;
 
 			&:hover{
-				color : @color-main;
+				color : rgb(var(--color-txt-ac));
 			}
 		}
 
 		.backtoshares{
 			cursor : pointer;
 			height: 100%;
-			color : @color-gray-slight;
+			color : rgb(var(--neutral-grad-2));
 
 			&:hover{
-				color : @color-main;
+				color : rgb(var(--color-txt-ac));
 			}
 		}
 
@@ -260,6 +250,11 @@
 
 		.zero{
 		}
+
+		.cnt{
+			margin : 0 auto;
+			max-width: 760px;
+		}
 	}
 
 	.authorinfo{
@@ -282,7 +277,7 @@
 					padding-right: @rhythm;	
 
 					a{
-						color : @color-main;
+						color : rgb(var(--color-txt-ac));
 						text-decoration: underline;
 					}					
 				}
@@ -291,11 +286,11 @@
 					margin-top : 2 * @rhythm;
 					font-size: 0.8em;
 					text-decoration: underline;
-					color : @color-main;
+					color : rgb(var(--color-txt-ac));
 					cursor: pointer;
 
 					&:hover{
-						color : @color-gray;
+						color : rgb(var(--neutral-grad-2));
 					}
 				}
 
@@ -326,12 +321,12 @@
 
 		.site{
 			text-decoration: underline;
-			color : @color-main;
+			color : rgb(var(--color-txt-ac));
 		}
 
 		.showmoreinabout{
 			display: none;
-			color : @color-main;
+			color : rgb(var(--color-txt-ac));
 			text-decoration: underline;
 		}
 	}
@@ -376,40 +371,21 @@
 			width: 100%!important;
 		}
 	}
+	
 	.mworkwrapper{
-		background: #F1F1F1;
+		background: rgb(var(--background-main));
 	}
-	.subscribewrapperphones{
-		background: #20232A;
-		padding : @rhythm;
-		padding-top : 0;
 
-		.subscribebuttons{
-			width: 100%;
-
-			.item{
-				&.prv{
-					width: 47px;
-				}
-			}
-
-			button{
-				padding-bottom : @rhythm / 2;
-				padding-top : @rhythm / 2;
-				width: 100%;
-
-				&.subscribe{
-				}
-			}
-		}
-	}
+	
 	.bgCaption{
-		background: #20232A;
-		color : #fff;
+		background: rgb(var(--color-shadow-var));
+		color : rgb(var(--text-on-bg-shadow-color));
 		height: 180px;
 		position: relative;
 		margin-bottom : 0;
+		padding-bottom: 0;
 
+	
 		
 		.adr{
 			max-width: 500px;
@@ -424,7 +400,8 @@
 			text-align: center;
 			opacity: 0.7;
 			cursor: pointer;
-			font-size: 0.9em;
+			font-size: 0.5em;
+			display: none;
 
 			&:hover{
 				opacity: 1;
@@ -433,10 +410,6 @@
 		
 		.create{
 			min-width: 250px;
-		}
-
-
-		.tips{
 		}
 
 		.funf{
@@ -487,7 +460,6 @@
 					width: 38px;
 					text-align: center;
 					font-size: 0.6em;
-					color : fade(@color-gray-slight, 30);
 					.transition(0.3s);
 				}
 
@@ -499,12 +471,6 @@
 					}
 				}
 
-				&:hover{
-					i{
-						color : fade(@color-gray-slight, 80);
-					}
-					
-				}
 			}
 
 			&.following{
@@ -554,11 +520,11 @@
 				.transition(0.3s);
 
 				&:hover{
-					border-bottom: 2px solid @color-raspberry;
+					border-bottom: 2px solid rgb(var(--text-on-bg-shadow-color));
 				}
 
 				&.active{
-					border-bottom: 2px solid @color-raspberry;
+					border-bottom: 2px solid rgb(var(--text-on-bg-shadow-color));
 				}
 
 				&:nth-child(1){
@@ -574,22 +540,15 @@
 				width: 75px;
 				height: 75px;
 				line-height: 73px;
-				color : #fff;
 				font-size: 1.5em;
 
 				&.active{
 					cursor: pointer;
 				}
 
-				.letter{
-					color: #647CA7;
-				}
-
 				.plissingCnt{
 					left: 45px;
 				}
-
-				
 			}
 		}
 
@@ -645,9 +604,8 @@
 
 	.contents
 	{
-		background: #fff;
+		background: rgb(var(--background-total-theme));
 		padding: 2 * @rhythm 4 * @rhythm;
-		
 
 		.cgroup{
 			padding-top : 2 * @rhythm;
@@ -664,13 +622,7 @@
 		}
 
 		.gcontents{
-
-			
-
-			
 			.citemtable{
-
-				
 				>div{
 					vertical-align: middle;
 					overflow: hidden;
@@ -699,7 +651,7 @@
 			}
 
 			.score{
-				color : @color-gray-light;
+				color : rgb(var(--color-txt-gray));
 			}
 
 			.citem{
@@ -712,15 +664,11 @@
 
 					.score{
 						font-weight: 700;
-						color : #FFAE00;
+						color : rgb(var(--color-star-yellow));
 					}
 				}		
 				
-				&:hover{
-					.score{
-						color : #FFAE00;
-					}
-				}
+				
 			}
 		}
 
@@ -778,277 +726,93 @@
 	.bgCaption{
 		.cellforimage{
 			.usericon{
-				background: fade(#ebebeb, 0.02);
+				background: rgba(var(--background-secondary-theme), 0.3);
 			}
 		}
 	}
 }
 
-html.stblack{
+html.mobileview{
 	#author{
-
-		
-		.newsharewrapper{
-			color : @color-gray-light;
-			background: @color-black4;
+		.lentacell{
+			margin-right: 0;
+			margin-left: 0;
 		}
 
-		#lenta{
-			.shares{
-				.share{					
-					#post{
-						.share{
-							.work{
-								border-left : @rhythm solid @color-black3;
-							}
-						}
-	
-						#post{
-							.share{
-								.work{
-									border-left : 0;
-								}
-							}
-						}
-					}
-				}
+		.bgCaption{
+			.adr{
+				max-width: none;
+				display: block;
 			}
+
+			.middotwrapper{
+				display: none;
+			}
+
+			
 		}
 
-		.contents
-		{
-			background: @color-black2;
+		.leftpanelcell{
+			display: none;
 		}
-	
-	
+		
 		.authorlentawrappermain{
-			
+			position: relative;
 	
 			.authorsearchicon{
-			
-	
-				.icon{
-	
-					&:hover{
-						color : @color-bright;
-					}
-	
-				}
+				display: none;
 			}
 	
+		}
+
+		.authorlentawrappermain{
+			
 			.authorsearchwrapper{
-				background: @color-black3;
-	
+				padding : 0 @rhythm;
 				.search{
 					.searchPanel{
-						background: transparent;
+						display: table-cell;
+
+						.searchPanelWrapper>div[event=clear]{
+							display: block;
+						}
 					}
 					.searchInput{
 						.searchInputIcon{
 							.sminput{
 								background: transparent; 
+								padding-left: @rhythm;
 							}
 						}
 					}
-				}
-			}
-	
-			
-		}	
-	
-		.postauwrapper{
-	
-			
-			.postauarrows{
-				background: @color-black3;
-				
-				
-				&.topwr{
-					border-bottom : 1px solid @color-main;
-				}
-	
-			}
-	
-	
-			.arrowau{
-	
-				&:hover{
-					color : @color-main;
-				}
-			}
-	
-			.backtoshares{
-				color : @color-main;
-	
-				&:hover{
-					color : @color-bright;
-				}
-			}
-	
-			
-	
-		}
-	
-		
-	
-		.authorinfo{
-		
-			.itemtable{
-				>div{
-					
-					
-					
-					&.label{
-	
-						a{
-							color : @color-bright;
-						}					
-					}
-	
-					.showmoreabout{
-						
-						color : @color-main;
-	
-						&:hover{
-							color : @color-bright;
-						}
-					}
-	
-				}
-			}
-	
-	
-			.site{
-				color : @color-bright;
-			}
-		}
-	
-		.mworkwrapper{
-			background: @color-black5;
-		}
-		.subscribewrapperphones{
-			background: #20232A;			
-		}
-		.bgCaption{
-			background: fade(@color-bright, 6);
-			color : fade(@color-gray-slight, 70);
-	
-			&.blocking{
-				background: rgb(41, 3, 24);	
-			}
-	
-			.subscribebuttonstop{
-				
-	
-				.notificationturn{
-				
-	
-					i{
-						color : fade(@color-gray-slight, 30);
-					}
-	
-	
-					&:hover{
-						i{
-							color : fade(@color-gray-slight, 80);
-						}
-						
-					}
-				}
-	
-			}
-	
-			
-	
-			.usermenu{
-				color : @color-gray-mlight;
-				overflow: hidden;
-				
-				.usermenuitem{
-					
-					&:hover{
-						border-bottom: 2px solid @color-contrast;
-					}
-	
-					&.active{
-						border-bottom: 2px solid @color-contrast;
-					}
-	
-					&:nth-child(1){
-						padding-left: 0;
-					}
-				}
-			}
-	
-			.cellforimage{
-	
-				.usericon{
-					color : @color-gray-mlight;
-					
-				}
-			}
-	
-	
-		}
-	
-	
-		.contents
-		{
-			.ccaption{
-				color : @color-contrast;
-			}
-	
-			.gcontents{
-	
-				.score{
-					color : @color-gray;
-				}
-	
-				.citem{
-					&.selected{
-	
-						.score{
-							color : #FFAE00;
-						}
-					}		
-					
-					&:hover{
-						.score{
-							color : #FFAE00;
-						}
-					}
-				}
-			}
-	
-	
-			
-		}
-	
-	}	
-}
-@media only screen and (max-width: 1024px) {
-	#author{
 
-		.leftpanelcell{
-			display: none;
-		}
-		.lentacell{
-			margin-right: 44px;
-			margin-left: 0;
-		}
-
-		.work.mwork{
-			width: 90%;
+				}
+			}
+	
+			
 		}
 	}
 }
 
-html.mobile,
-html.cordova,
-html.tablet{
-
+@media only screen and (max-width: 1024px) {
 	#author{
+		.bgCaption{
+			.caption{
+				justify-content: center;
+			}
+		}
 
+		.mobileinfo{
+			display: block;
+
+			
+		}
+
+		
+		.lentacell{
+			margin-right: 44px;
+			margin-left: 0;
+		}
 		.newsharewrapper{
 			display: none;
 		}
@@ -1056,6 +820,7 @@ html.tablet{
 		.leftpanelcell{
 			display: none;
 		}
+
 		.lentacell{
 			margin-right: 44px;
 			margin-left: 0;
@@ -1070,7 +835,9 @@ html.tablet{
 			margin-top : 0;
 			height: auto;
 			padding-bottom: 4 * @rhythm;
-			background: #263045;
+			background: #051b48;
+
+			
 			
 			.cwrapper{
 				display: block;
@@ -1121,6 +888,8 @@ html.tablet{
 					font-size: 1em;
 				}
 
+			
+
 			}
 			
 
@@ -1128,6 +897,7 @@ html.tablet{
 				width: 100%;
 				display: flex!important;
 				flex-wrap: nowrap;
+
 				.usermenuitem{
 					flex-grow: 1;
 					width: auto;
@@ -1138,14 +908,10 @@ html.tablet{
 					text-align: center;
 					padding-bottom: 2 * @rhythm;
 					font-size: 0.8em;
-					border-bottom: 2px solid @color-gray;
-
-					&:hover{
-						border-bottom: 2px solid @color-raspberry;
-					}
+					border-bottom: 2px solid rgba(var(--color-txt-gray), 0.5);
 	
 					&.active{
-						border-bottom: 2px solid @color-raspberry;
+						border-bottom: 2px solid rgba(var(--color-txt-gray), 0.8);
 					}
 
 				}
@@ -1175,11 +941,16 @@ html.tablet{
 				}
 			}
 
+			.infoWrapper{
+				
+				
+			}
 			
 			.work{
 				position: relative;
 				overflow: hidden;
 			}
+
 		}
 		.authorinfo{
 
@@ -1201,26 +972,29 @@ html.tablet{
 				}
 			}
 		}
-		
-	}
-}
-
-html.tablet{
-	#author{
-		.bgCaption{
-			padding-top : 45px;
-
-			.caption{
-				justify-content: center;
-			}
-		}
 	}
 }
 
 @media only screen and (max-width: 768px){
+
 	#author{
 		.bgCaption{
 			padding-top : 0;
+
+			.caption{
+				text-align: left!important;
+				padding-left: @rhythm;
+			}
+
+			.changeaccount{
+				display: block;
+			}
+		}
+
+		.bgCaption .infoWrapper,
+		.lentacell .cnt{
+			max-width: 640px;
+			margin : 0 auto;
 		}
 
 		.newsharewrapper{
@@ -1228,351 +1002,127 @@ html.tablet{
 		}
 	}
 
-	
-}
-
-/*t*/ @media only screen and (max-width: 768px){
-	#content{
-
-	
-
+	html.allcontent{
 		#author{
-
-			.lentacell{
-				margin-right: 0;
-			}
-	
-			.work.mwork{
-				width: 100%;
-			}
-
-			.authorlentawrappermain{
-				position: relative;
-		
-				.authorsearchicon{
-					display: none;
-				}
-		
-			}
-
-			.authorlentawrappermain{
-				
-		
-
-				.authorsearchwrapper{
-					padding : 0 @rhythm;
-					.search{
-						.searchPanel{
-							display: table-cell;
-	
-							.searchPanelWrapper>div[event=clear]{
-								display: block;
-							}
-						}
-						.searchInput{
-							.searchInputIcon{
-								.sminput{
-									background: transparent; 
-									padding-left: @rhythm;
-								}
-							}
-						}
-
-					}
-				}
-		
-				
-			}
-
-			.lentaWrapper{
-				.authorinfo{
-					padding: 2 * @rhythm;
-				}
-			}
-
-			.copyaddress{
-				font-size: 1em;
-				font-weight: 700;
-			}
-
-			.subscribewrapperphones{
-				
-				.subscribebuttons{
-					
-					button{
-						padding-bottom : @rhythm;
-						padding-top : @rhythm;
-						
-					}
-				}
-			}
-
-			.bgCaption .cwrapper>div {
-			    vertical-align: top;
-			    padding-top : 2 * @rhythm;
-			}
-
-			.lentaWrapper{
-				min-height: 0;
-			}
-		
-		
-			.lentacell{
-				margin-right: 0;
-				margin-left: 0;
-			}
-
-			.leftpanelcell{
-				float: none;
-				display : none;
-				width : 100%;
-				padding : 2 * @rhythm;
-
-				.authorinfo{
-					
-					.itemtable{
-						>div{
-							vertical-align: middle;
-
-							&.icon{
-								width : 30px;
-							}
-						}
-					}
-
-					.item{
-						&:nth-last-child(1){
-							margin-bottom: 0;
-						}
-					}
-
-					
-				}
-			}
-
-			.mainpanelcell{
-				display: none;
-			}
-
-		
-			.work{
-				&.mwork{
-					padding : 0!important;
-					overflow: hidden;
-				}
-
-				.work{
-					width: 100%!important;
-				}
-			}
-			.mworkwrapper{
-				background: #F1F1F1;
-			}
-
 			.bgCaption{
-				margin-bottom : 0;
-				margin-top : 0;
-				height: auto;
-				padding-bottom: 4 * @rhythm;
-				background: #263045;
-				
-				.cwrapper{
-					display: block;
+				padding-top : 44px;
+			}
+		}
+	}
 
+
+	#author{
+
+		
+
+		.work.mwork{
+			width: 100%;
+		}
+		
+
+		.lentaWrapper{
+			.authorinfo{
+				padding: 2 * @rhythm;
+			}
+		}
+
+		.copyaddress{
+			font-size: 1em;
+			font-weight: 700;
+		}
+
+		.subscribewrapperphones{
+			
+			.subscribebuttons{
+				
+				button{
+					padding-bottom : @rhythm;
+					padding-top : @rhythm;
+					
+				}
+			}
+		}
+
+		.bgCaption{
+			.caption{
+				.subscribe{
+					font-size: 1.4em;
+					border-bottom: 1px solid #ff4800;
+					opacity: 1;
+				}
+			}
+			
+		}
+
+		.bgCaption .cwrapper>div {
+			vertical-align: top;
+			padding-top : 2 * @rhythm;
+		}
+
+		.lentaWrapper{
+			min-height: 0;
+		}
+	
+	
+		.lentacell{
+			margin-right: 0;
+			margin-left: 0;
+		}
+
+		.leftpanelcell{
+			float: none;
+			display : none;
+			width : 100%;
+			padding : 2 * @rhythm;
+
+			.authorinfo{
+				
+				.itemtable{
 					>div{
-						display: block;
-					}
+						vertical-align: middle;
 
-					.cellforimage{
-						margin : 0 auto;
-					}
-				}
-
-				.foraddress{
-					opacity: 0.3;
-				}
-
-				.work{
-					padding-right: 0;
-				}
-
-				.telements{
-					.telement{
-
-						width: 100%;
-						margin-right: 0;
-
-						&.sbscr{
-							display: none;
-							padding-left : 2 * @rhythm;
-							padding-right: 0;
+						&.icon{
+							width : 30px;
 						}
 					}
 				}
 
-				.tips{
-					margin-top : @rhythm;
-				}
-
-				.caption{
-					font-size: 1.1em;
-					overflow: hidden;
-					text-overflow: ellipsis;
-					text-align: center;
-					padding-left :  0;
-					padding-right: 0;
-					white-space: nowrap;
-					margin-top : 0;	
-					margin-bottom: 2 * @rhythm;
-					display: flex;
-					flex-wrap: wrap;
-					align-items: center;
-					.adr{
-						font-size: 2em;
-						
-					}
-
-					.subscribebuttonstop{
-						flex-grow: 1;
-						min-width: 100%;
-					}
-
-					.middotwrapper{
-						display: none;
-					}
-
-					.subscribe{
-						
-						font-size: 1.4em;
-						border-bottom : 1px solid @color-orange;
-						opacity: 1;
-					}
-
-					.notificationturn i, 
-					.unsubscribe{
-						font-size: 1.4em;
-					}
-
-					.startchat{
-						font-size: 1.4em;
-					}
-
-					.blockingWrapper{
-						flex-grow: 1;
-						min-width: 100%;
-					}
-
-				}
-				
-
-				.usermenu{
-					width: 100%;
-					display: flex!important;
-					flex-wrap: nowrap;
-					.usermenuitem{
-						width: auto;
-						float: none;
-						flex-grow: 1;
-						margin-right : 0;
-						padding-left: 0;
-						padding-right : 0;
-						padding-bottom: 2 * @rhythm;
-						text-align: center;
-						font-size: 0.8em;
-
-						border-bottom: 2px solid @color-gray;
-
-						&:hover{
-							border-bottom: 2px solid @color-raspberry;
-						}
-		
-						&.active{
-							border-bottom: 2px solid @color-raspberry;
-						}
-					}
-				}
-
-				.cellforimage{
-					width: 100px;
-
-					.usericon{
-						width: 100px;
-						height: 100px;
-						line-height: 98px;
-					}
-				}
-
-
-				.infoWrapper{
-					position: static;
-					left: 0;
-					right: 0;
-					top: 20px;
-					bottom: 0;
-					z-index: 1;
-					.work{
-						padding :  0 @rhythm;
-					}
-				}
-
-				.infoWrapper{
-					
-					.mobileinfo{
-						display: block;
-					}
-				}
-
-				.authorinfo{
-					padding : @rhythm;
-					margin-bottom: 0;
-					.postcnt,
-					.name{
-						display: none;
+				.item{
+					&:nth-last-child(1){
+						margin-bottom: 0;
 					}
 				}
 
 				
-				.work{
-					position: relative;
-					overflow: hidden;
-				}
-			}
-
-			.share{
-				.work{
-					
-				}
-			}
-
-			.fxd{
-				position: fixed;
-			}
-
-		}
-	}
-
-	html.stblack{
-		#content{
-
-			#author{
-
-				.bgCaption{
-					background: #00192a;
-				}
-	
-				.mworkwrapper{
-					background: fade(@color-bright,1);
-				}
-	
 			}
 		}
-	}
+
+		.mainpanelcell{
+			display: none;
+		}
+
+	
+		.work{
+			&.mwork{
+				padding : 0!important;
+				overflow: hidden;
+			}
+
+			.work{
+				width: 100%!important;
+			}
+		}
 		
-}
 
-@media only screen and (max-width: 640px){
-	#content #author .bgCaption .caption{
-		text-align: left;
-		padding-left: @rhythm;
+		.share{
+			.work{
+				
+			}
+		}
+
+		.fxd{
+			position: fixed;
+		}
+
 	}
 }

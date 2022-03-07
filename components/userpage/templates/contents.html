@@ -168,7 +168,7 @@
 
             <div class="reportCaption">
                 <div class="label">
-                    <% if(app.mobile.update.hasupdate) {%>
+                    <% if(app.mobile.update.hasupdate && !app.mobile.update.playstore) {%>
 
                         <button class="orange small hasupdate">
                             <%=e('updateapplication')%>
@@ -185,7 +185,7 @@
                     
                 </div>
 
-                <% if(app.mobile.update.needmanage) {%>
+                <% if(app.mobile.update.needmanage && !app.mobile.update.playstore) {%>
                     <div class="label">
                         <span>
                             <%=e('installedusinggps')%>
@@ -222,9 +222,6 @@
             </div>
 
         </div>
-
-
-
 
     <% } %>
 

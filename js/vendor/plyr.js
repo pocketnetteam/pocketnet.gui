@@ -9157,7 +9157,7 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
       target = null
       options = {}
     }
-    
+
     if (!clbk) clbk = function() {};
 
     var video_options = options;
@@ -9195,10 +9195,10 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
         return typeof PeerTubeEmbeding != 'undefined'
       }, function(){
         PeerTubeEmbeding.main(target, clear_peertube_id, {
-          mode: 'p2p-media-loader',
           host : host,
           wautoplay : options.wautoplay,
           useP2P : options.useP2P,
+          enableHotkeys : options.enableHotkeys,
           logoType : options.logoType,
           localVideo : localVideo,
           start : options.startTime || 0,
@@ -9211,6 +9211,7 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
           volumeChange : options.volumeChange,
           fullscreenchange : options.fullscreenchange,
           playbackStatusUpdate : options.playbackStatusUpdate,
+          pictureInPictureRequest: options.pictureInPictureRequest,
           play : options.play,
           pause : options.pause
 
@@ -9224,6 +9225,8 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
 
           var api = embed.api
               api.mute()
+
+              api.el = $(target)
 
           if (clbk) clbk(api);
           if (readyCallback) readyCallback(api);
@@ -9243,7 +9246,7 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
         new_target.setAttribute('poster', preview_url);
         // new_target.setAttribute('title', title);
         video_options.title = title
-            
+
         target.parentNode.replaceChild(new_target, target);
         target = new_target
     };
@@ -9263,7 +9266,7 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
 
         video_id = video_id.replace('/embed/', '/video/');
 
-        $.ajax({ 
+        $.ajax({
             url : 'https://pocketnet.app:8888/bitchute',
             data : {
                 url : hexEncode(video_id)
@@ -9306,7 +9309,7 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
           plyrPlayer.on('play', video_options.play)
           plyrPlayer.on('pause', video_options.pause)
 
-        
+
 
       if (clbk) clbk(plyrPlayer);
 
@@ -9314,7 +9317,7 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
 
     }
 
-    
+
 
     return self;
 }

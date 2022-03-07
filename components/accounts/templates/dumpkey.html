@@ -1,23 +1,28 @@
 <div class="dumpedinfo">
-    <div class="infotable table">
-        <div class="label">
-            <%=e('address')%>:
+    <div class="infotable">
+        <div class="toprow">
+            <div class="label">
+                <%=e('address')%>:
+            </div>
+            <div class="forcopy">
+                <div elementsid="keycopyaddress" class="copyvalue"><i class="fas fa-copy"></i></div>
+            </div>
         </div>
-        <div class="forcopy">
-            <div elementsid="keycopyaddress" class="copyvalue"><i class="fas fa-copy"></i></div>
-        </div>
+        
         <div class="value">
             <%-address%>
         </div>
     </div>
 
-    <div class="infotable table">
-        <div class="label">
-            <%=e('privatekey')%>:
-        </div>
+    <div class="infotable">
+        <div class="toprow">
+            <div class="label">
+                <%=e('privatekey')%>:
+            </div>
 
-        <div class="forcopy">
-            <div elementsid="copyprivatekey" class="copyvalue"><i class="fas fa-copy"></i></div>
+            <div class="forcopy">
+                <div elementsid="copyprivatekey" class="copyvalue"><i class="fas fa-copy"></i></div>
+            </div>
         </div>
 
         <div class="value">
@@ -27,13 +32,15 @@
 
     <% if(privateWif) {%>
 
-    <div class="infotable table">
-        <div class="label">
-            Wif:
-        </div>
+    <div class="infotable">
+        <div class="toprow">
+            <div class="label">
+                Wif:
+            </div>
 
-        <div class="forcopy">
-            <div elementsid="copywif" class="copyvalue"><i class="fas fa-copy"></i></div>
+            <div class="forcopy">
+                <div elementsid="copywif" class="copyvalue"><i class="fas fa-copy"></i></div>
+            </div>
         </div>
 
         <div class="value">
@@ -43,7 +50,7 @@
 
     <% } %>
 
-    <!--<div class="infotable table">
+    <!--<div class="infotable">
         <div class="label">
             <%=e('qrcode')%>:
         </div>

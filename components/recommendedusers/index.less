@@ -1,0 +1,250 @@
+@import "../../css/__cssvar";
+
+#recommendedusers{
+	background: rgb(var(--background-total-theme));
+	border-radius: 12px;
+	margin-bottom: @rhythm;
+    
+
+    .tcaptionwrapper{
+        display: flex;
+        align-items: center;    
+
+        .vc_valuecustom{
+            width: 75px;
+            font-size: 0.8em;
+            font-weight: 500;
+            .vc_textInput .vc_iconWrapper,
+            .vc_textInput .vc_inputWrapper{
+                border : 0;
+            }
+        }
+
+
+		.hide{
+			cursor: pointer;
+		}
+    }
+    .tcaption{
+        display: flex;
+        justify-content: space-between;
+        flex-grow: 2;
+        font-weight: 100;
+        padding: 12px 16px;
+
+        .authors{
+            font-weight : 700;
+        }
+
+      
+    }
+
+	.caption{
+		font-weight: 100;
+		font-size: 2em;
+		margin-bottom: 2 * @rhythm;
+	}
+
+	.loaderWrapper{
+		display : none;
+		padding : 2 * @rhythm;
+		text-align: center;
+	}
+
+	&.loading{
+		.loaderWrapper{
+			display: block;
+		}
+	}
+
+	.subscribe, .unsubscribe{
+		position: relative;
+
+
+		.fa-plus{
+			position: absolute;
+			top: 3px;
+			left: 14px;
+			font-size: @rhythm;
+		}
+
+	}
+
+	.users{
+		display: flex;
+		justify-content: flex-start;
+		padding-bottom: @rhythm;
+		padding-left: @rhythm * 2;
+		padding-right: @rhythm * 2;
+
+		.wrk{
+			max-width: 212px;
+			width: 100%;
+
+			&:nth-child(2n) {
+				margin-left: @rhythm * 2;
+				margin-right: @rhythm * 2;
+			}
+
+		}
+
+		.user{
+			padding : @rhythm * 2;
+			border: 1px solid rgb(var(--neutral-grad-0));
+			border-radius: 12px;
+			
+
+			.addressWrapper{
+				cursor: pointer;
+
+				.iconWrapper{
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					height: 100px;
+
+
+					.icon{
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						width: 100px;
+						
+	
+						img{
+							border-radius: 12px;
+						}
+
+						img, .letter{
+							width: 100%;
+						}
+
+						.usericon{
+							width: 100px;
+							height: 100px;
+
+							.letter{
+								position: relative;
+								top: @rhythm;
+								font-size: @rhythm * 7;
+								text-align: center;
+							}
+						}
+						
+					}
+
+				}
+			
+
+				.userbody{
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					margin-top: 12px;
+
+					.name{
+						font-weight: 600;
+						font-size: .9em;
+						max-width: 120px;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+						overflow: hidden;
+					}
+	
+					.reputation{
+						
+						.value{
+							color: rgb(var(--color-bg-ac-bright));
+
+						}
+					}
+	
+	
+					.subscribeWrapper{
+						margin-top: 16px; 
+
+						.unsubscribeButton{
+							display: none;
+							font-size: 14px;
+							width: 155px;
+							background: rgb(var(--color-good));
+							border: 1px solid rgb(var(--color-good));
+
+							&:hover{
+								background: rgb(var(--background-total-theme));
+								color: rgb(var(--color-good));
+							}
+						}
+
+						.subscribeButton{
+							font-size: 14px;
+							width: 155px;
+						}
+
+						&.following{
+							.subscribeButton{
+								display: none;
+							}
+
+							.unsubscribeButton{
+								display: block;
+							}
+						}
+
+					}
+				}
+
+
+			
+
+				.light{
+					font-size : 0.7em;
+					color : @color-gray;
+				}
+				
+
+
+	
+			}
+
+			.blockingWrapper{
+				display : none;
+			}
+
+			&.userblocking{
+	
+				.subscribebuttonstop{
+					display: none;
+				}
+	
+				.blockingWrapper{
+					display: inline;
+				}
+
+				
+			}
+	
+			.subscribebuttonstop{
+				.unsubscribe{
+					display : none;
+				}
+
+	
+				&.following{
+					.unsubscribe{
+						display : inline;
+					}
+
+					.notificationturn{
+						display: inline;
+					}
+					
+					.subscribe{
+						display : none;
+					}
+				}
+			}
+		}
+		
+	}
+}

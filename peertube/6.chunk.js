@@ -212,7 +212,6 @@ class Html5Hlsjs {
         const error = {
             message: `HLS.js error: ${data.type} - fatal: ${data.fatal} - ${data.details}`
         };
-        console.log('d', data);
         if (!data.fatal) {
             return;
         }
@@ -504,7 +503,8 @@ class Html5Hlsjs {
         /* @ts-ignore */
         this.hlsjsConfig.capLevelController = _peertube_cap_level_controller__WEBPACK_IMPORTED_MODULE_1__["default"];
         this.hls = new hls_js__WEBPACK_IMPORTED_MODULE_0___default.a(this.hlsjsConfig);
-        this._executeHooksFor('beforeinitialize');
+        this.player.hls = this.hls;
+        //this._executeHooksFor('beforeinitialize')
         this.hls.on(hls_js__WEBPACK_IMPORTED_MODULE_0__["Events"].ERROR, (event, data) => this._onError(event, data));
         this.hls.on(hls_js__WEBPACK_IMPORTED_MODULE_0__["Events"].AUDIO_TRACKS_UPDATED, () => this._onAudioTracks());
         this.hls.on(hls_js__WEBPACK_IMPORTED_MODULE_0__["Events"].MANIFEST_PARSED, (event, data) => this._onMetaData(event, data)); // FIXME: typings
@@ -585,23 +585,7 @@ class P2pMediaLoaderPlugin extends Plugin {
             totalUpload: 0
         };
         this.options = options;
-        // FIXME: typings https://github.com/Microsoft/TypeScript/issues/14080
-        if (!video_js__WEBPACK_IMPORTED_MODULE_0___default.a.Html5Hlsjs) {
-            console.warn('HLS.js does not seem to be supported. Try to fallback to built in HLS.');
-            if (!player.canPlayType('application/vnd.apple.mpegurl')) {
-                const message = 'Cannot fallback to built-in HLS';
-                console.warn(message);
-                player.ready(() => player.trigger('error', new Error(message)));
-                return;
-            }
-        }
-        else {
-            // FIXME: typings https://github.com/Microsoft/TypeScript/issues/14080
-            video_js__WEBPACK_IMPORTED_MODULE_0___default.a.Html5Hlsjs.addHook('beforeinitialize', (videojsPlayer, hlsjs) => {
-                this.hlsjs = hlsjs;
-            });
-            Object(_core_p2p_media_loader_master_p2p_media_loader_hlsjs_lib__WEBPACK_IMPORTED_MODULE_1__["initVideoJsContribHlsJsPlayer"])(player);
-        }
+        Object(_core_p2p_media_loader_master_p2p_media_loader_hlsjs_lib__WEBPACK_IMPORTED_MODULE_1__["initVideoJsContribHlsJsPlayer"])(player);
         if (options) {
             this.startTime = Object(_utils__WEBPACK_IMPORTED_MODULE_3__["timeToInt"])(options.startTime);
             player.src({
@@ -611,6 +595,7 @@ class P2pMediaLoaderPlugin extends Plugin {
         }
         player.ready(() => {
             this.initializeCore();
+            this.hlsjs = player.hls;
             if (video_js__WEBPACK_IMPORTED_MODULE_0___default.a.Html5Hlsjs) {
                 if (options)
                     this.initializePlugin();
@@ -673,22 +658,24 @@ class P2pMediaLoaderPlugin extends Plugin {
             this.statsP2PBytes.pendingUpload = [];
             this.statsHTTPBytes.pendingDownload = [];
             this.statsHTTPBytes.pendingUpload = [];
-            return this.player.trigger('p2pInfo', {
-                source: 'p2p-media-loader',
-                http: {
-                    downloadSpeed: httpDownloadSpeed,
-                    uploadSpeed: httpUploadSpeed,
-                    downloaded: this.statsHTTPBytes.totalDownload,
-                    uploaded: this.statsHTTPBytes.totalUpload
-                },
-                p2p: {
-                    downloadSpeed: p2pDownloadSpeed,
-                    uploadSpeed: p2pUploadSpeed,
-                    numPeers: this.statsP2PBytes.numPeers,
-                    downloaded: this.statsP2PBytes.totalDownload,
-                    uploaded: this.statsP2PBytes.totalUpload
-                }
-            });
+            /*return this.player.trigger('p2pInfo', {
+              source: 'p2p-media-loader',
+              http: {
+                downloadSpeed: httpDownloadSpeed,
+                uploadSpeed: httpUploadSpeed,
+                downloaded: this.statsHTTPBytes.totalDownload,
+                uploaded: this.statsHTTPBytes.totalUpload
+              },
+              p2p: {
+                downloadSpeed: p2pDownloadSpeed,
+                uploadSpeed: p2pUploadSpeed,
+                numPeers: this.statsP2PBytes.numPeers,
+                downloaded: this.statsP2PBytes.totalDownload,
+                uploaded: this.statsP2PBytes.totalUpload
+              }
+      
+      
+            } as PlayerNetworkInfo)*/
         }, this.CONSTANTS.INFO_SCHEDULER);
     }
     arraySum(data) {
@@ -886,8 +873,8 @@ class CapLevelController {
         catch (e) {
             /* no-op */
         }
-        pixelRatio = 0.5;
-        //if (pixelRatio > 1.5) pixelRatio = 1.5
+        if (pixelRatio > 1.5)
+            pixelRatio = 1.5;
         return pixelRatio;
     }
     static isLevelAllowed(level, restrictedLevels = []) {
