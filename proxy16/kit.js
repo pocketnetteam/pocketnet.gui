@@ -78,21 +78,6 @@ var testnodes = [
 
 var activenodes = [
 	{
-		host : '64.235.45.119',
-		port : 38081,
-		ws : 8087,
-		name : '64.235.45.119',
-		stable : true
-	},
-
-	{
-		host : '216.108.231.40',
-		port : 38081,
-		ws : 8087,
-		name : '216.108.231.40',
-		stable : true
-	},
-	{
 		host : '135.181.196.243',
 		port : 38081,
 		ws : 8087,
@@ -112,7 +97,14 @@ var activenodes = [
 		ws : 8087,
 		name : '65.21.57.14',
 		stable : true
-	}	
+	},
+	{
+		host : '216.108.231.40',
+		port : 38081,
+		ws : 8087,
+		name : '216.108.231.40',
+		stable : true
+	},
 ]
 
 var nodes = activenodes

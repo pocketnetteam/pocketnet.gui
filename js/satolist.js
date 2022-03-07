@@ -8142,6 +8142,13 @@ Platform = function (app, listofnodes) {
 					type : "BOOLEAN",
 					value : true,
                 },
+
+                mynodewin: {
+                    name: self.app.localization.e('easyNode_e10065'),
+                    id: 'mynodewin',
+                    type: "BOOLEAN",
+                    value: true
+                },
             },
 
             create: function (id) {
@@ -8200,7 +8207,8 @@ Platform = function (app, listofnodes) {
                             answers: options.answers,
                             followers: options.followers,
                             rescued: options.rescued,
-                            commentScore: options.commentScore
+                            commentScore: options.commentScore,
+                            mynodewin: options.mynodewin,
 
                         }
                     },
@@ -22337,6 +22345,16 @@ Platform = function (app, listofnodes) {
                 return h
             },
 
+            mynodewin: function (height) {
+                var h = '<div class="mynodewinwrapper">'
+                h += '<div class="mynodewinwrapper table">'
+
+                h += self.app.localization.e("easyNode_e10064", height)
+
+                h += '</div>'
+                h += '</div>'
+                return h;
+            },
 
         }
 
@@ -23292,11 +23310,8 @@ Platform = function (app, listofnodes) {
 
                 },
                 fastMessage: function (data) {
-
                     var html = '';
-
                     return html;
-
                 },
 
                 clbks: {
@@ -23937,7 +23952,24 @@ Platform = function (app, listofnodes) {
 
                 clbks: {
                 }
-            }
+            },
+
+            mynodewin: {
+                fastMessage: function (data) {
+                    var html = '';
+                    html += self.tempates.mynodewin(data.height)
+                    return html;
+
+                },
+                loadMore: function (data, clbk) {
+                    clbk()
+                },
+                electronSettings : {
+                    size : 'small'
+                },
+                refs: { },
+                clbks: { }
+            },
         }
 
         var auth = function (clbk, proxy) {
@@ -24448,14 +24480,11 @@ Platform = function (app, listofnodes) {
 
                             if (html) {
 
-                                var txid = data.txid
-
-                                if(!self.showedIds[txid]) {
-                                    self.showedIds[txid] = true
-
+                                if(data.txid && !self.showedIds[data.txid]) {
+                                    self.showedIds[data.txid] = true
 
                                     var message = self.fastMessage(html, function () {
-                                        //platform.sdk.notifications.seen([data.txid])
+                                        //platform.sdk.notifications.seen([data.data.txid])
                                     });
 
                                     if (m.fastMessageEvents) {

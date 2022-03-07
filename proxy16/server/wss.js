@@ -177,23 +177,30 @@ var WSS = function(admins, manage){
             }   
                       
             _.each(node.ini, function(client){
-
-
                 if (client.type == 'firebase'){
-
                     if (data.msg == 'new block') return     
-
-                    if (self.firebase){
+                    if (self.firebase) {
 
                         self.firebase.sendToDevice(fbdata, client.device, client.address).catch(e => {
                             console.error(e)
                         })
-
+                    }
+                }
+                else
+                {
+                    if ((user.admin || client.ws.ipcconnection) && self.nodeControl.checkMe(data)) {
+                        sendMessage({
+                            msg: 'mynodewin',
+                            height: data.height,
+                            blockhash: data.blockhash,
+                            txid: data.blockhash, // TODO : replace blockhash with `data.txid` after release node v0.20.19
+                            time: data.time,
+                            node: data.node,
+                            addr: data.addr,
+                        }, client.ws).catch(e => { })
                     }
 
-                }
-                else{
-                    sendMessage(data, client.ws).catch(e => {})
+                    sendMessage(data, client.ws).catch(e => { })
                 }
 
             })

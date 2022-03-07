@@ -51,6 +51,8 @@ var WssDummy = function(wc){
 		on = {}
 	}
 
+	self.ipcconnection = true;
+
 	return self
 }
 

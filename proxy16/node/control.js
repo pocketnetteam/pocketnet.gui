@@ -321,8 +321,6 @@ var Control = function(settings) {
             enabled : enabled,
             instance : node.instance ? true : false,
             hasbin : self.kit.hasbin(),
-
-            
             state : state,
             node : {
                 binPath : node.binPath,
@@ -332,6 +330,11 @@ var Control = function(settings) {
             other : node.other,
             hasapplication : applications.hasapplication()
         }
+    }
+
+    self.checkMe = function(blockData) {
+        // TODO : for debugging - replace `true` to commented code before releasing
+        return true //state.wallet.addresses.some((el, i, arr) => el.address == blockData.addr)
     }
 
     self.request = {
@@ -663,12 +666,17 @@ var Control = function(settings) {
                 
             return self.request.listAddresses()
                 .then(data => {
-                    state.wallet = data
-                    
-                    let total = 0;
-                    for (let key in state.wallet)
-                        total += state.wallet[key].balance
-                        state.wallet.total = total;
+                    state.wallet.addresses = [];
+                    state.wallet.total = 0;
+
+                    for (let key in data)
+                    {
+                        state.wallet.total += data[key].balance
+
+                        let addr = data[key]
+                        addr.address = key
+                        state.wallet.addresses.push(addr)
+                    }
 
                     return Promise.resolve()
                 })

@@ -1988,6 +1988,9 @@ ____loclib.easyNode_e10060 = "SSD drive"
 ____loclib.easyNode_e10061 = "Your node is running. Close the app anyway?"
 ____loclib.easyNode_e10062 = "Node update is available. Download a new version?"
 ____loclib.easyNode_e10063 = "Node has been successfully updated"
+____loclib.easyNode_e10064 = function(v) { return `Your Node has created a block at a height of ${v}` }
+____loclib.easyNode_e10065 = "Winning Block (Node)"
+
 
 ____loclib.IHave = "I have";
 ____loclib.downloadNode = "Download Windows Desktop Node";
