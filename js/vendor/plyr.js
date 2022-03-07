@@ -9150,7 +9150,7 @@ typeof navigator === "object" && (function (global, factory) {
 //
 // ================================================================
 
-var PlyrEx = function(target, options, clbk, readyCallback) {
+var PlyrEx = async function(target, options, clbk, readyCallback) {
     var self = this;
     var clear = function(){
       video_options = {}
@@ -9185,86 +9185,53 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
       // Check if we have downloaded the video already
       var localVideo = self.app.platform.sdk.localshares.getVideo(clear_peertube_id);
 
+      let localTransport;
 
-      if (localVideo != undefined && !localVideo.infos.videoDetails) {
-
-        //// old remove later
-
-        var new_target = document.createElement('video');
-          target.parentNode.replaceChild(new_target, target);
-          target = new_target
-
-        var plyrPlayer = newPlyr(target, video_options);
-
-          plyrPlayer.source = {
-            type: 'video',
-            sources: [
-              {
-                src: localVideo.video.internalURL,
-                type: 'video/mp4',
-                size: parseInt(localVideo.video.name)
-              }
-            ]
-          };
-
-          plyrPlayer.poster = localVideo.infos.thumbnail;
-          plyrPlayer.on('ready', readyCallback)
-          plyrPlayer.on('play', video_options.play)
-          plyrPlayer.on('pause', video_options.pause)
-          //plyrPlayer.on('hlsError', video_options.hlsError)
-          
-
-          plyrPlayer.localVideoId = clear_peertube_id;
-
-        if (clbk) clbk(plyrPlayer);
-
-        clear()
-
+      if (localVideo) {
+        localTransport = await bastyonFsFetchFactory(electron.ipcRenderer);
       }
-      else {
 
-        retry(function(){
-          return typeof PeerTubeEmbeding != 'undefined'
-        }, function(){
-  
-          PeerTubeEmbeding.main(target, clear_peertube_id, {
-            host : host,
-            wautoplay : options.wautoplay,
-            useP2P : options.useP2P,
-            logoType : options.logoType,
-            localVideo : localVideo,
-            start : options.startTime || 0
-          },{
-            hlsError : options.hlsError,
-            playbackStatusChange : function(status){
-              
-            },
-            volumeChange : options.volumeChange,
-            fullscreenchange : options.fullscreenchange,
-            playbackStatusUpdate : options.playbackStatusUpdate,
-            play : options.play,
-            pause : options.pause
-    
-          }).then(embed => {
-  
-            if(!embed || !embed.api){
-              if (clbk) clbk(null);
-  
-              return
-            }
-    
-            var api = embed.api
-                api.mute()
-    
-            if (clbk) clbk(api);
-            if (readyCallback) readyCallback(api);
+      retry(function(){
+        return typeof PeerTubeEmbeding != 'undefined'
+      }, function(){
+        PeerTubeEmbeding.main(target, clear_peertube_id, {
+          mode: 'p2p-media-loader',
+          host : host,
+          wautoplay : options.wautoplay,
+          useP2P : options.useP2P,
+          logoType : options.logoType,
+          localVideo : localVideo,
+          start : options.startTime || 0,
+          localTransport,
+        },{
+          hlsError : options.hlsError,
+          playbackStatusChange : function(status){
 
-            clear()
-          })
-  
+          },
+          volumeChange : options.volumeChange,
+          fullscreenchange : options.fullscreenchange,
+          playbackStatusUpdate : options.playbackStatusUpdate,
+          play : options.play,
+          pause : options.pause
+
+        }).then(embed => {
+
+          if(!embed || !embed.api){
+            if (clbk) clbk(null);
+
+            return
+          }
+
+          var api = embed.api
+              api.mute()
+
+          if (clbk) clbk(api);
+          if (readyCallback) readyCallback(api);
+
+          clear()
         })
 
-      }
+      })
 
       return self
     }

@@ -3,6 +3,7 @@ if (typeof _OpenApi == 'undefined') _OpenApi = false;
 
 if (typeof _Electron != 'undefined') {
     electron = require('electron');
+    bastyonFsFetchFactory = require('./js/peertube/bastyon-fs-fetch').bastyonFsFetchFactory;
     fs = require('fs');
     url = require('url');
     https = require('https');
@@ -6371,7 +6372,6 @@ Platform = function (app, listofnodes) {
             read : {
                 share : {
                     electron : async function(shareId) {
-                        alert('Read video data');
                         console.log('SHARE DIR', shareId);
 
                         const shareData = await electron.ipcRenderer
@@ -6539,23 +6539,15 @@ Platform = function (app, listofnodes) {
                         })
                     },
 
-                    electron : async function(shareId) {
-                        alert('Read video data');
-                        console.log('from', shareId);
-
-                        // TODO: PROCEED HERE 16 FEB 2022
-
-                        const videosList = await electron.ipcRenderer
-                            .invoke('getVideosList');
+                    electron : async function(videoId) {
+                        console.log('from', videoId);
 
                         const videosDataList = {};
 
-                        for(const videoIndex in videosList) {
-                            const videoId = videosList[videoIndex];
+                        const videoData = await electron.ipcRenderer
+                            .invoke('getVideoData', videoId);
 
-                            videosDataList[videoId] = await electron.ipcRenderer
-                                .invoke('getVideoData', videoId);
-                        }
+                        videosDataList[videoId] = videoData;
 
                         return videosDataList;
                     },
@@ -6574,9 +6566,12 @@ Platform = function (app, listofnodes) {
 
                     shareDataList.share = await self.sdk.localshares.read.share.electron(shareFolder);
 
+                    const shareVideoId = shareDataList.share.share.u
+                        .split('%2F').pop();
+
                     console.log('SHARE DATA INFOS', shareDataList.share);
 
-                    shareDataList.videos = await self.sdk.localshares.read.video.electron(shareFolder);
+                    shareDataList.videos = await self.sdk.localshares.read.video.electron(shareVideoId);
 
                     console.log('SHARE DATA VIDEOS', shareDataList.videos);
 
@@ -6622,8 +6617,6 @@ Platform = function (app, listofnodes) {
 
             getall : {
                 electron : async function() {
-                    alert('getall video info');
-
                     const shareList = await electron.ipcRenderer
                         .invoke('getShareList');
 
@@ -6708,7 +6701,7 @@ Platform = function (app, listofnodes) {
                 localstorage : function(shareId){
                     self.sdk.localshares.clearfromstorage(shareId)
 
-                    return Promise.reject('todo')
+                    return Promise.resolve();
                 },
                 cordova : function(shareId){
                     var storage = self.sdk.localshares.helpers.cordovaStorage()
@@ -6735,25 +6728,9 @@ Platform = function (app, listofnodes) {
 
                 },
                 electron : function(shareId){
-                    
-                    return new Promise((resolve, reject) => {
+                    self.sdk.localshares.clearfromstorage(shareId);
 
-                        return Promise.reject('deprecated')
-
-                        const userDataPath = (window.electron.app || window.electron.remote.app).getPath('userData');
-
-                        fs.rmdir(userDataPath + '/posts/' + shareId, { recursive: true }, (err) => {
-                            
-                            if (!err){
-                                self.sdk.localshares.clearfromstorage(shareId)
-                                return resolve()
-                            }
-
-                            return reject(err)
-                                
-                        });
-                    })
-                    
+                    return electron.ipcRenderer.invoke('deleteShareWithVideo', shareId);
                 }
             }
 
