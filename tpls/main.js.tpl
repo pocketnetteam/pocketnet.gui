@@ -718,7 +718,7 @@ function createWindow() {
         return shareDir;
     });
 
-    ipcMain.handle('saveShareVideo', async (event, videoData, videoResolution) => {
+    ipcMain.handle('saveShareVideo', async (event, folder, videoData, videoResolution) => {
         function downloadFile(url, options = {}) {
             return new Promise((resolve, reject) => {
                 let isHttps = /^https:/;
@@ -762,9 +762,7 @@ function createWindow() {
             });
         }
 
-        const storage = app.getAppPath();
-
-        const videoDir = `${storage}/videos/${videoData.uuid}`;
+        const videoDir = `${folder}/videos/${videoData.uuid}`;
         const jsonDir = `${videoDir}/info.json`;
         const signsDir = `${videoDir}/signatures.json`;
         const playlistDir = `${videoDir}/playlist.m3u8`;
@@ -832,6 +830,9 @@ function createWindow() {
             videoDetails : videoData,
         };
 
+        const urlSplits = videoInfo.videoDetails.streamingPlaylists[0].playlistUrl;
+        const videoId = urlSplits[urlSplits.length - 2];
+
         const result = {
             video: {
                 internalURL: videoInfo.videoDetails.streamingPlaylists[0].playlistUrl,
@@ -846,23 +847,14 @@ function createWindow() {
     ipcMain.handle('deleteShareWithVideo', async (event, shareId) => {
         const storage = app.getAppPath();
 
-        const regexUuid4 = /[a-f0-9]{8}-?[a-f0-9]{4}-?4[a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12}/g
-
         const shareDir = `${storage}/posts/${shareId}`;
-        const jsonPath = `${shareDir}/share.json`;
-
-        let jsonData = fs.readFileSync(jsonPath, { encoding:'utf8', flag:'r' });
-        jsonData = JSON.parse(jsonData);
-
-        const videoId = jsonData.share.u.match(regexUuid4);
-
-        const videoDir = `${storage}/videos/${videoId}`;
 
         fs.rmSync(shareDir, { recursive: true, force: true });
-        fs.rmSync(videoDir, { recursive: true, force: true });
     });
 
     ipcMain.handle('getShareList', async (event) => {
+        const isShaHash = /[a-f0-9]{64}/;
+
         const storage = app.getAppPath();
 
         const postsDir = `${storage}/posts`;
@@ -871,7 +863,8 @@ function createWindow() {
             fs.mkdirSync(postsDir);
         }
 
-        const postsList = fs.readdirSync(postsDir);
+        const postsList = fs.readdirSync(postsDir)
+            .filter(fN => isShaHash.test(fN));
 
         return postsList;
     });
@@ -887,7 +880,7 @@ function createWindow() {
         return JSON.parse(jsonData);
     });
 
-    ipcMain.handle('getVideosList', async (event) => {
+    /* ipcMain.handle('getVideosList', async (event) => {
         const isUuid4 = /[a-f0-9]{8}-?[a-f0-9]{4}-?4[a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12}/;
 
         const storage = app.getAppPath();
@@ -904,14 +897,12 @@ function createWindow() {
             ));
 
         return videosList;
-    });
+    }); */
 
-    ipcMain.handle('getVideoData', async (event, videoId) => {
-        const isJsonFile = /\.json$/;
-
+    ipcMain.handle('getVideoData', async (event, shareId, videoId) => {
         const storage = app.getAppPath();
 
-        const videoDir = `${storage}/videos/${videoId}`;
+        const videoDir = `${storage}/posts/${shareId}/videos/${videoId}`;
 
         const jsonPath = `${videoDir}/info.json`;
 

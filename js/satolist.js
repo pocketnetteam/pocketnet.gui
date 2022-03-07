@@ -6307,7 +6307,7 @@ Platform = function (app, listofnodes) {
                         const videoDetails = shareInfo.video.original;
 
                         const videoData = await electron.ipcRenderer
-                            .invoke('saveShareVideo', videoDetails, videoResolution);
+                            .invoke('saveShareVideo', folder, videoDetails, videoResolution);
 
                         return videoData;
                     },
@@ -6539,13 +6539,13 @@ Platform = function (app, listofnodes) {
                         })
                     },
 
-                    electron : async function(videoId) {
+                    electron : async function(videoId, shareId) {
                         console.log('from', videoId);
 
                         const videosDataList = {};
 
                         const videoData = await electron.ipcRenderer
-                            .invoke('getVideoData', videoId);
+                            .invoke('getVideoData', shareId, videoId);
 
                         videosDataList[videoId] = videoData;
 
@@ -6559,19 +6559,17 @@ Platform = function (app, listofnodes) {
             },
 
             get : {
-                electron : async function(shareFolder) {
-                    const shareDataList = { id: shareFolder };
+                electron : async function(shareId) {
+                    const shareDataList = { id: shareId };
 
-                    console.log('SHARE FOLDER', shareFolder);
+                    console.log('SHARE FOLDER', shareId);
 
-                    shareDataList.share = await self.sdk.localshares.read.share.electron(shareFolder);
+                    shareDataList.share = await self.sdk.localshares.read.share.electron(shareId);
 
-                    const shareVideoId = shareDataList.share.share.u
+                    const videoId = shareDataList.share.share.u
                         .split('%2F').pop();
 
-                    console.log('SHARE DATA INFOS', shareDataList.share);
-
-                    shareDataList.videos = await self.sdk.localshares.read.video.electron(shareVideoId);
+                    shareDataList.videos = await self.sdk.localshares.read.video.electron(videoId, shareId);
 
                     console.log('SHARE DATA VIDEOS', shareDataList.videos);
 

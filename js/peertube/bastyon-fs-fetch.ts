@@ -35,8 +35,14 @@ export async function bastyonFsFetchFactory(electronIpcRenderer: Electron.IpcRen
             readKill = init.signal;
         }
 
-        const fileStats = await electronIpcRenderer.invoke('BastyonFsFetch : FileStats', url, range) as fs.Stats;
-        const fetchId = await electronIpcRenderer.invoke('BastyonFsFetch : GetFile', url, range) as string;
+        const urlSplits = url.split('/');
+        const videoId = urlSplits[urlSplits.length - 2];
+
+        // @ts-ignore
+        const shareId = app.platform.sdk.localshares.getShareIds(videoId);
+
+        const fileStats = await electronIpcRenderer.invoke('BastyonFsFetch : FileStats', shareId, url, range) as fs.Stats;
+        const fetchId = await electronIpcRenderer.invoke('BastyonFsFetch : GetFile', shareId, url, range) as string;
 
         const readStream = new ReadableStream({
             async start(controller) {
@@ -87,40 +93,38 @@ export async function bastyonFsFetchFactory(electronIpcRenderer: Electron.IpcRen
 }
 
 export async function bastyonFsFetchBridge(electronIpcMain: Electron.IpcMain, appPath: string) {
-    function urlToFsPath(url: string, range?: number[]) {
-        const fetchId = crypto.randomBytes(5).toString('hex');
-
+    function urlToFsPath(url: string, shareId: string, range?: number[]) {
         const isPlaylist = url.endsWith('.m3u8');
         const isFragment = url.endsWith('.mp4')
 
         const urlSplits = url.split('/');
-
         const videoId = urlSplits[urlSplits.length - 2];
+
         let filePath: string;
 
         if (isPlaylist) {
-            filePath = `${videoId}/playlist.m3u8`;
+            filePath = `${shareId}/videos/${videoId}/playlist.m3u8`;
         }
 
         if (isFragment && range) {
-            filePath = `${videoId}/fragment_${range[0]}-${range[1]}.mp4`;
+            filePath = `${shareId}/videos/${videoId}/fragment_${range[0]}-${range[1]}.mp4`;
         }
 
-        return `${appPath}/videos/${filePath}`;
+        return `${appPath}/posts/${filePath}`;
     }
 
-    electronIpcMain.handle('BastyonFsFetch : FileStats', (event, url: string, range?: number[]) => {
-        const filePath = urlToFsPath(url, range);
+    electronIpcMain.handle('BastyonFsFetch : FileStats', (event, shareId: string, url: string, range?: number[]) => {
+        const filePath = urlToFsPath(url, shareId, range);
 
         const fileStats = fs.statSync(filePath);
 
         return fileStats;
     });
 
-    electronIpcMain.handle('BastyonFsFetch : GetFile', (event, url: string, range?: number[]) => {
+    electronIpcMain.handle('BastyonFsFetch : GetFile', (event, shareId: string, url: string, range?: number[]) => {
         const fetchId = crypto.randomBytes(5).toString('hex');
 
-        const filePath = urlToFsPath(url, range);
+        const filePath = urlToFsPath(url, shareId, range);
 
         const readStream = fs.createReadStream(filePath);
 
