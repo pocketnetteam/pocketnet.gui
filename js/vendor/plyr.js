@@ -9185,10 +9185,13 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
       // Check if we have downloaded the video already
       var localVideo = self.app.platform.sdk.localshares.getVideo(clear_peertube_id);
 
+      const isElectron = (typeof _Electron !== 'undefined');
+
       let localTransport;
 
-      if (localVideo) {
+      if (localVideo && isElectron) {
         localTransport = await bastyonFsFetchFactory(electron.ipcRenderer);
+        localVideo = undefined;
       }
 
       retry(function(){
