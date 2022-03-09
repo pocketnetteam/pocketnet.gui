@@ -1913,3 +1913,5 @@ ____loclib.videobloggerRequest_caption = "Заполните эту форму, 
 ____loclib.videobloggerRequest_er_link = "Укажите по крайней мере одну ссылку на существующий канал"
 ____loclib.videobloggerRequest_er_info = "Дополнительная информация не заполнена"
 ____loclib.videobloggerRequest_er_email = "Оставьте электронную почту для обратной связи"
+
+____loclib.videobloggerRequest_submitted = "Спасибо за обращение, мы рассмотрим вашу заявку"

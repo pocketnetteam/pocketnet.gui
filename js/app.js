@@ -1044,7 +1044,8 @@ Application = function(p)
 			window : 		$(window),
 			windows : 		$('#windowsContainer'),
 			electronnav : 	$('#electronnavContainer'),
-			preloader : 	$('#globalpreloader')
+			preloader : 	$('#globalpreloader'),
+			topsmallpreloader : 	$('#topsmallpreloader'),
 		};
 
 
@@ -2156,22 +2157,20 @@ Application = function(p)
 								cancellable : true,						
 
 								positionclbk : function(px){
-									var percent = easeOutQuint(Math.abs(px) / (self.height || self.el.window.height()));
+									var percent = easeOutQuint(Math.abs(px) / 200);
 
-									console.log('percent, ', percent, px)
+									if (px >= 5){
 
-									if (px >= 10){
+										if(!self.el.topsmallpreloader.hasClass('show'))
+											self.el.topsmallpreloader.addClass('show')
 
-										if(!self.el.preloader.hasClass('show'))
-											self.el.preloader.addClass('show')
-
-										self.el.preloader.css('transform', 'translateY('+(100 * percent)+'%)')
+								
+										self.el.topsmallpreloader.css('transform', 'translateY('+(100 * percent)+'%)')
 									}
 									else{
 
-										if (self.el.preloader.hasClass('show'))
-											self.el.preloader.removeClass('show')
-										self.el.preloader.css('transform', '')
+										self.el.topsmallpreloader.removeClass('show')
+										self.el.topsmallpreloader.css('transform', '')
 									}
 
 								},
@@ -2187,15 +2186,15 @@ Application = function(p)
 								},
 
 								restrict : true,
-								trueshold : 20,
+								trueshold : 70,
 								clbk : function(){
 
 									self.mobile.reload.reloading = true
+									self.el.topsmallpreloader.css('transform', '')
+									self.el.topsmallpreloader.removeClass('show')
+									globalpreloader(true)
 
 									setTimeout(function(){
-										
-										globalpreloader(true)
-										self.el.preloader.css('transform', '')
 		
 										self.platform.sdk.node.transactions.get.allBalanceUpdate(function(){
 											self.platform.sdk.notifications.getNotifications()
@@ -2207,7 +2206,8 @@ Application = function(p)
 												globalpreloader(false)
 												
 												self.mobile.reload.reloading = false
-											}, 1000)
+											}, 200)
+
 										})
 									}, 100)
 

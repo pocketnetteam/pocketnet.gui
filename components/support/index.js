@@ -42,18 +42,34 @@ var support = (function(){
 
 				console.log('values', values)
 
-				return
+				globalpreloader(true)
 
 				self.app.letters[current.letter](values, function(){
+
+					
 
 					prepare()
 					renders.options()
 
-					self.closeContainer();
+					setTimeout(function(){
+						globalpreloader(false)
 
-					successCheck();
+						self.closeContainer();
 
-					sitemessage(self.app.localization.e(''))
+						successCheck();
+
+						dialog({
+							html: self.app.localization.e('videobloggerRequest_submitted'),
+							btn1text: self.app.localization.e('daccept'),
+							btn2text: "Cancel",
+							class: 'one zindex',
+							success: () => {
+							}
+						});
+						
+					}, 1000)
+
+					
 
 				})
 

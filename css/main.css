@@ -397,6 +397,7 @@ input.ie[type="range"]::-ms-thumb {
   color: rgb(var(--text-color));
   padding: 0.2em 0;
 }
+#topsmallpreloader,
 #globalpreloader,
 .updatingFrontend {
   position: fixed;
@@ -410,14 +411,17 @@ input.ie[type="range"]::-ms-thumb {
   -webkit-transition: transform 0.3s;
   transition: transform 0.3s;
 }
+#topsmallpreloader.show,
 #globalpreloader.show,
 .updatingFrontend.show {
   transform: translateY(100%);
 }
+#topsmallpreloader.show .table .icon i,
 #globalpreloader.show .table .icon i,
 .updatingFrontend.show .table .icon i {
   display: inline-block;
 }
+#topsmallpreloader .table,
 #globalpreloader .table,
 .updatingFrontend .table {
   width: 100%;
@@ -425,30 +429,40 @@ input.ie[type="range"]::-ms-thumb {
   color: rgb(var(--text-on-bg-ac-color));
   text-shadow: 0px 0px 2px rgba(var(--color-shadow-base), 0.714), 0 0 3px rgba(var(--color-shadow-base), 0.519);
 }
+#topsmallpreloader .table > div,
 #globalpreloader .table > div,
 .updatingFrontend .table > div {
   vertical-align: middle;
   text-align: center;
 }
+#topsmallpreloader .table .text,
 #globalpreloader .table .text,
 .updatingFrontend .table .text {
   max-width: 524px;
   margin: 0 auto;
   padding: 1em;
 }
+#topsmallpreloader .table .text span,
 #globalpreloader .table .text span,
 .updatingFrontend .table .text span {
   font-size: 1.5em;
   font-weight: 100;
 }
+#topsmallpreloader .table .icon,
 #globalpreloader .table .icon,
 .updatingFrontend .table .icon {
   padding: 2em;
 }
+#topsmallpreloader .table .icon i,
 #globalpreloader .table .icon i,
 .updatingFrontend .table .icon i {
   display: none;
   font-size: 1.3em;
+}
+#topsmallpreloader {
+  top: -65px;
+  bottom: auto;
+  height: 65px;
 }
 .js-player .video-js {
   display: none;

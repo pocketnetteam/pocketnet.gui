@@ -2123,3 +2123,5 @@ ____loclib.videobloggerRequest_caption = "Fill out this form to receive PKOIN"
 ____loclib.videobloggerRequest_er_link = "Provide at least one link to an existing channel"
 ____loclib.videobloggerRequest_er_info = "Additional information required"
 ____loclib.videobloggerRequest_er_email = "Leave an email for feedback"
+
+____loclib.videobloggerRequest_submitted = "Thank you for contacting us, we will review your application"
