@@ -272,8 +272,6 @@ var socialshare2 = (function(){
 
 			embedding : function(){
 
-				console.log("ED", ed)
-
 				if (!ed.embedding) return
 
 				var emeta = embedding[ed.embedding.type]
@@ -317,7 +315,6 @@ var socialshare2 = (function(){
 
 						_.each(settings, function(s){
 							s._onChange = function(){
-								console.log("CHANGE")
 								renders.embedding()
 							}
 						})
@@ -335,7 +332,6 @@ var socialshare2 = (function(){
 
 						_p.el.find('.showcode').on('click', function(){
 							showcode = !showcode
-							console.log('showcode', showcode)
 							showhidecode()
 						})
 
@@ -721,7 +717,6 @@ var socialshare2 = (function(){
 				var url = self.app.nav.api.history.removeParametersFromHref(ed.url, ['ref'])
 			
 				self.app.platform.matrixchat.share.url(url).catch(r => {
-					console.log("R", r)
 				})
 			
 				if(self.closeContainer) self.closeContainer()
@@ -840,8 +835,6 @@ var socialshare2 = (function(){
 				if (postId){share = self.app.platform.sdk.node.shares.storage.trx[postId];}
 
 				changeRef()
-
-				console.log('ed', ed)
 			
 				var data = {
 					caption : ed.caption,
@@ -887,7 +880,7 @@ var socialshare2 = (function(){
 				trueshold : 1,
 				swipeCloseDir : 'down',
 				header : self.app.localization.e('e13174'),
-				class : 'sharingwindow2 normalizedmobile'
+				class : 'sharingwindow2 normalizedmobile noheader'
 			}
 		}
 	};

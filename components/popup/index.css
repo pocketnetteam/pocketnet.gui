@@ -1,1 +1,76 @@
-#popup .caption{padding:1em 2em}#popup .caption span{font-weight:100;font-size:2em}#popup .download{text-align:center;padding:5em;margin-top:6em}#popup .download a{font-weight:100;font-size:2em}#popup .blur{-webkit-filter:blur(5px);-moz-filter:blur(5px);filter:blur(5px)}#popup .bl{-moz-transition:.6s;-o-transition:.6s;-webkit-transition:.6s;transition:.6s}#popup .pcn{position:relative}#popup .pcontent p{font-size:1.2em}#popup .pcontent .work{padding:0 2em}#popup .pcontent img{width:100%}#popup .forbutton:not(:first-child){margin-top:10px;font-size:1.2em}#popup .marketing-app-button{font-weight:400}.popupwnd .wndcontent{top:0;padding:0}.popupwnd .wndinner{width:450px;height:100%;max-height:350px}.popupwnd .caption{position:absolute;left:0;right:0;top:0;height:100px}.popupwnd .pcontent{position:absolute;overflow-x:auto;left:0;right:0;bottom:0;top:100px;padding:0 2em}@media only screen and (max-width:640px){.popupwnd .wndinner{max-height:none}}
+#popup .caption {
+  padding: 1em 2em;
+}
+#popup .caption span {
+  font-weight: 100;
+  font-size: 2em;
+}
+#popup .download {
+  text-align: center;
+  padding: 5em;
+  margin-top: 6em;
+}
+#popup .download a {
+  font-weight: 100;
+  font-size: 2em;
+}
+#popup .blur {
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  filter: blur(5px);
+}
+#popup .bl {
+  -moz-transition: 0.6s;
+  -o-transition: 0.6s;
+  -webkit-transition: 0.6s;
+  transition: 0.6s;
+}
+#popup .pcn {
+  position: relative;
+}
+#popup .pcontent p {
+  font-size: 1.2em;
+}
+#popup .pcontent .work {
+  padding: 0 2em;
+}
+#popup .pcontent img {
+  width: 100%;
+}
+#popup .forbutton:not(:first-child) {
+  margin-top: 10px;
+  font-size: 1.2em;
+}
+#popup .marketing-app-button {
+  font-weight: normal;
+}
+.popupwnd .wndcontent {
+  top: 0;
+  padding: 0;
+}
+.popupwnd .wndinner {
+  width: 450px;
+  height: 100%;
+  max-height: 350px;
+}
+.popupwnd .caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 100px;
+}
+.popupwnd .pcontent {
+  position: absolute;
+  overflow-x: auto;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 100px;
+  padding: 0 2em;
+}
+@media only screen and (max-width: 640px) {
+  .popupwnd .wndinner {
+    max-height: none;
+  }
+}

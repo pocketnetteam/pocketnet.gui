@@ -1,0 +1,204 @@
+<% 
+
+var me = null;
+
+if(user.address.value)
+	me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
+
+_.each(shares, function(u){ 
+
+	var _class='';
+	var address = u.address;
+	var src =  deep(app, 'platform.sdk.usersl.storage.'+address + '.image');
+
+	var name = deep(app, 'platform.sdk.usersl.storage.'+address + '.name');
+	var letter = name ? name[0] : ''; 
+	var r = deep(app, 'platform.sdk.usersl.storage.'+address + '.reputation');
+	var message = filterXSS(u.message, {
+		stripIgnoreTag : true,
+		whiteList: {
+			img : []
+		}
+	})	
+
+%>
+	<div class="wrk">
+
+		<div class="post <%-_class%>" address="<%-address%>">
+			<div class="addressTable table" address="<%-address%>">
+				<div class="iconWrapper">
+				
+					<a href="<%-app.platform.api.authorlink(address)%>">
+						<div class="icon">
+
+							<div class="usericon" image="<%-src || '*'%>">
+
+								<% if(!src && letter) {%>
+
+									<span class="letter">
+										<%-letter.toUpperCase()%>
+									</span>
+			
+								<% } else if (!src) { %>
+			
+									<svg width="30" height="30" data-jdenticon-value="<%-address%>"></svg>
+			
+								<% } %>
+							</div>
+						</div>
+					</a>
+				</div>
+
+				<div class="label">
+					<a href="<%-app.platform.api.authorlink(address)%>">
+
+						<div class="top">
+							<div class="name">
+								<%- name %>							
+							</div>		
+
+							<% if (r) {%>
+								<div class="reputation">
+									<%- Number(r).toFixed(0)  %>
+								</div>
+							<% } %>
+
+						</div>
+
+
+					</a>			
+
+				</div>
+
+			</div>
+
+			<% if(u.u) { 
+				var url = decodeURIComponent(u.u);
+				var meta = app.platform.parseUrl(url);
+				var info = app.platform.sdk.videos.storage[url] || app.platform.sdk.videos.storage[meta.id] || {}
+				var aspectRatio = (info.data || {}).aspectRatio || 0;
+			%>
+				<div class="js-player" data-plyr-provider="<%-meta.type%>" data-plyr-embed-id="<%-meta.url%>" data-plyr-video-id="<%-meta.id%>" data-plyr-host-name="<%-meta.host_name || ''%>">
+					
+
+						<div class="jsPlayerPreview">
+							<% if(info.data) {%>
+								<div class="wpl opensviurl" image="<%-info.data.thumbnail || ''%>">
+								</div>
+								<% if(info.data.duration) {%>
+									<div class="durationWrapper">
+										<span><%-secInTime(info.data.duration)%></span>
+									</div>
+								<% } %>
+
+								<% if(info.data.isLive) {%>
+									<div class="durationWrapper live">
+										<i class="fas fa-rss"></i> <span>Live</span>
+									</div>
+								<% } %>
+
+								<div class="statswrapper">
+									<% if(info.data.views) {%>
+										<div class="viewsWrapper">
+											<i class="far fa-eye"></i> <span><%-compressedNumber(info.data.views)%></span>
+										</div>
+									<% } %>
+
+		
+									<% if(share) {
+										
+										var value = Number(share.score)
+
+										if (Number(share.scnt) && _.isNumber(Number(share.scnt))) {
+											value = value / Number(share.scnt)
+										}
+										else {
+											value = 0
+										}
+										
+										%>
+										<div class="starsRatingWrapper">
+											<i class="far fa-star"></i> <span><%-Number(value).toFixed(1)%></span>
+										</div>
+										<div class="commentsCountWrapper">
+											<i class="far fa-comment"></i> <span><%-compressedNumber(share.comments || 0)%></span>
+										</div>
+									<% } %>
+								</div>
+
+							<% } %>
+						</div>
+
+
+
+
+				
+				</div>	
+
+			<% } %>
+
+			<% if(u.images && u.images.length){%>
+				<div class="imageWrapper">
+					<image src="<%-u.images[0] %>">				
+					</image>
+				</div>
+		
+			<% } %>
+
+
+			
+			<% if(u.caption){%>
+
+				<div class="postcontent">
+					<div class="cap">
+						<b>
+							<%- u.caption %>							
+						</b>
+					</div>		
+				</div>
+			<% } %>
+
+			<% if(message){%>
+
+			<div class="postcontent">
+				<div class="message">
+					<%= message %>							
+				</div>		
+			</div>
+			<% } %>
+
+			<div class="infoWrapper">
+				<div class="dateWrapper">
+					<div class="date">
+						<%-app.reltime(Number(u.time))%>
+					</div>
+				</div>
+
+				<div class="actionsWrapper">
+					<div class="scoreSum">
+						<i class="far fa-star"></i>
+						<span>
+							<%- u.score %>							
+						</span>
+					</div>
+					<div class="scoreCnt">
+						<i class="far fa-user"></i>
+						<span>
+							<%- u.scnt %>							
+						</span>
+					</div>
+					<div class="comments">
+						<i class="far fa-comment">
+						</i>
+						<span>
+							<%- u.comments %>							
+						</span>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+	
+<% }) %>

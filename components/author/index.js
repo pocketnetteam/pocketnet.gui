@@ -353,7 +353,7 @@ var author = (function(){
 						class : 'tosettings',
 		
 						if : function(){
-							if(self.user.isItMe(author.address) && !isTablet()) return true
+							if(self.user.isItMe(author.address) && !self.app.mobileview) return true
 						}
 					},
 		
@@ -842,7 +842,7 @@ var author = (function(){
 		
 			share : function(_el){
 
-				if(!self.app.curation()){
+				if(!self.app.mobileview && !self.app.curation()){
 					self.nav.api.load({
 
 						open : true,
@@ -1273,9 +1273,7 @@ var author = (function(){
 			if (reports[r])
 				reports[r].active = true;
 
-			if (isTablet()){
 				renders.info(el.c.find('.mobileinfo'))
-			}
 
 			renders.report(reports[r], null, ini)
 			renders.menu()
@@ -1294,21 +1292,14 @@ var author = (function(){
 
 			})
 			
-			if(!isMobile())
-				upbutton = self.app.platform.api.upbutton(el.up, {
-					top : function(){
+			upbutton = self.app.platform.api.upbutton(el.up, {
+				top : function(){
 
-						return '65px'
-					},
-					class : 'light',
-					rightEl : el.c.find('.leftpanelcell')
-				})	
-
-
-			/*self.app.platform.sdk.contents.get(author.address, function(contents){
-				renders.contents(contents)	
-			})*/
-			
+					return '65px'
+				},
+				class : 'light',
+				rightEl : el.c.find('.leftpanelcell')
+			})	
 
 			if(!isTablet())
 				renders.info(el.info)
@@ -1484,7 +1475,7 @@ var author = (function(){
 
 				if(el.c) el.c.empty()
 
-				if(share){
+				if (share){
 					share.destroy()
 					share = null
 				}

@@ -66,21 +66,7 @@ var metadisplay = function(){ %>
 							<% if((!state || !my) && (typeof repost == 'undefined' || !repost)) { %> 
 
 								<span elementsid="sbtnxs-follow" class="sbtnxs">
-									&middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><i class="far fa-check-circle"></i>  <%=e('subi')%></span>
-						
-									
-									<% if(state && !my && user.address.value) {
-										
-										var r = me.relation(share.address, 'subscribes') 
-										
-										%>
-										
-
-										<span elementsid="lenta_notificationturn" class="notificationturn <% if(r && (r.private == 'true' || r.private == '1' || r.private === true)) {%> turnon <% } %>">&middot; <i class="far fa-bell-slash"></i></span>
-									<% } %>
-				
-
-									
+									&middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><%=e('subi')%></span>
 								</span>
 
 							<% } %>
@@ -164,7 +150,7 @@ var makecaptionclear = function(){
 
 		<% if(cc) {
 
-			cc = findAndReplaceLink(filterXSS(clearScripts(findAndReplaceLink(cc))), true)
+			cc = findAndReplaceLink(filterXSS(clearScripts(cc)), true)
 
 
 		%>
@@ -235,7 +221,7 @@ var arranges = {
 			nm = findAndReplaceLink(share.renders.xssmessage(nm), true)
 
 		%>
-			<div class="paddingWrapper hideOnFullVideo">
+			<div class="paddingWrapper ">
 				<div class="message canmark">
 					<%=app.actions.emoji((clearScripts(((nm)))))%>
 				</div>
@@ -244,7 +230,7 @@ var arranges = {
 			<% if(bigmessage) {%>
 
 				<div class="showMore">
-					<button>
+					<button class="ghost">
 						<%=e('showmore')%>
 					</button>
 				</div>
@@ -297,7 +283,7 @@ var arranges = {
 
 
 	
-					<div class="images shareImages hideOnFullVideo unselectable">
+					<div class="images shareImages hideOnFullVideo unselectable noswipepnt">
 						<div class="imagesContainer <%-icClass%>">
 
 							<% if(imageFromVideo) {%>
@@ -531,14 +517,16 @@ var arranges = {
 						
 
 						<% if(!share.temp &&   (typeof repost == 'undefined' || !repost || fromempty)) {%>
-							<div class="panel unselectablemobile">
+							<div class="panel sharepanel unselectablemobile">
 								<div class="item forstars">
 									
 								</div>
 
-								<% if(window.cordova && share.itisvideo() ) {
-									
-									
+								<% const isElectron = (typeof _Electron !== 'undefined' && !!window.electron); %>
+								<% const isSaveSupported = (window.cordova || isElectron); %>
+
+								<% if(isSaveSupported && share.itisvideo()) {
+
 									var status = app.platform.sdk.localshares.status(share.txid)
 									
 									%>
@@ -565,56 +553,41 @@ var arranges = {
 
 								<% } else { %> 
 									
-									
-									
-								
-									<% if(app.platform.repost && !my && !app.curation()) {%>
-										<% if(!checkvisibility && !share.visibility()) {%>
-											<div elementsid="lenta_forreport" class="item <% if(!my){ %> forrepost <% } else { %> nact <% } %>">
-
-												<div class="itemwr table">
-													<div class="iconwr">											
-														<div class="icon">
-															<i class="fas fa-share"></i>
-														</div>
-													</div>
-												
-												</div>
-
-											</div>
-										<% } %>
-									<% } %>
-
 								<% } %>
 
 								<% if((typeof preview == 'undefined' || !preview) ) {%>			
 
-								<div class="item sharesocial right unselectable">
+									<div class="item sharesocial unselectable">
 
-									<div class="itemwr table">
-										<div class="labelwr workstation"><span class="label"><%=e('share').toUpperCase()%></span></div>
-										<div class="iconwr">
-											
-											<div class="icon">
-												<i class="fas fa-share-alt"></i>
+										<div class="itemwr table">
+											<div class="iconwr">
+												<div class="icon">
+													<i class="fas fa-share-alt"></i>
+												</div>
 											</div>
 										</div>
+										
 									</div>
-									
-								</div>
 
+								<% } %>
+
+								<% if(!my) {%>
+									<div class="item pkoin right unselectedtable">
+										<img src="img/pocketnet_logo_white.svg" alt="">
+										<span class='workstation'>
+											PKOIN
+										</span>
+									</div>
 								<% } %>
 								
 							</div>
 
-							<div class="wholikes">
-								
-							</div>
+							
 						<% } %>
 
 						<% if(share.temp) {%>
 
-							<div class="panel unselectablemobile">
+							<div class="panel sharepanel unselectablemobile">
 								<div class="item right">
 
 									<div class="itemwr table tempPreloader">

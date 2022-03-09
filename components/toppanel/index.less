@@ -1,10 +1,10 @@
 @import "../../css/__cssvar";
 
 #toppanel{
-	
+	display: none;
 	width: 100%;
 	height: 45px;
-	background: #F1F1F1;
+	background: rgb(var(--background-secondary-theme));
 	white-space: nowrap;
 
 	.rightchatspacer{
@@ -22,7 +22,6 @@
 
 	.panelitems{
 		height: 100%;
-		
 
 		.panelItemsWrapper{
 			display: flex;
@@ -33,11 +32,9 @@
 		.panelitem{
 			width: 120px;
 			font-size: 0.8em;
-			
 			line-height: 45px;
 			float: left;
-			// margin-right : 2 * @rhythm;
-			color : #6A6A6A;
+			color : rgb(var(--neutral-grad-3));
 
 			&.icon{
 				width: 44px;
@@ -55,133 +52,117 @@
 				line-height: 36px;
 			}
 		} 
+	}
 
-		.panelitemCenter{
-			margin-right : 0;
-			margin-left : 0;
-			height: 100%;
+	.filtersbuttonwrapper{
+		width: 100%;
+		height: 100%;
+		padding: @rhythm;
+		display: flex;
+		align-items: center;
 
-			.centerTable{
-				width: auto;
-				height: 100%;
-				margin : 0 auto;
-				min-width: 360px;
+		button{
+			width: 100%;
+		}
+	}
 
-				>div{
-					vertical-align: middle;
-					padding : 0  3 * @rhythm;
-					background: transparent;
-					color : @color-gray-mlight;
+	.vc_valuecustom{
+		width: 100%;
+		height: 55px;
+
+		.vc_inputWrapper{
+			padding-left: 2 * @rhythm;
+		}
+
+		.vc_iconWrapper{
+			width : 48px;
+			padding-right: 0;
+		}
+		
+		.vc_textInput{
+			border : 0;
+			background: transparent;
+			border-radius: 0;
+		}
+
+		.vc_textInput {
+			.vc_inputWrapper{
+				border: 0;
+
+				input{
+					opacity: 1!important;
 					.transition(0.3s);
-					font-weight: 400;
-					text-align: center;
-					font-size: 0.9em;
+					border-top-left-radius: 0px;
+					border-bottom-left-radius: 0px;
+					height: 55px;
+					font-weight: 700;
+					font-size: 1.2em;
+					padding-left: @rhythm;
 
-					/*&:nth-child(1){
-						border-right : 1px solid @color-gray-mlight;
+					&[disabled="disabled"]{
+						opacity: 1;
 					}
-
-					&:nth-last-child(1){
-						border-left : 1px solid @color-gray-mlight;
-					}*/
-
-					.pcenterLabel{
-						.transition(0.3s);
-						height: 100%;
-						//line-height: 45px;
-
-						&:hover,
-						&.active{
-							color : @color-black2;
-
-							a{
-								span{
-									background: fade(@color-black2, 70);
-								}
-							}
-						}
-					}
-
-					
-					a{
-						position: relative;
-
-						span{
-							position: absolute;
-							display: block;
-							opacity: 0;
-							width: 18px;
-							height: 18px;
-							border-radius: 50%;
-							line-height: 18px;
-							text-align: center;
-							background: fade(@color-gray-mlight, 60);
-							color : #fff;
-							left : 100%;
-							font-size: 0.7em;
-							top : 0;
-							margin-left : @rhythm / 2;
-							.transition(0.3s);
-
-							&.hasunseen{
-								opacity: 1;
-							}
-						}
-
-					
-					}
-					
-
 				}
 			}
 
-
+			.vc_iconWrapper{
+				.transition(0.3s);
+				border-top-right-radius: 0px;
+				border-bottom-right-radius: 0px;
+				border : 0;
+				color : rgb(var(--text-color));
+			}
 		}
-	}
-}
 
-html.stblack{
-	#toppanel{
+		&.opened{
+			.vc_textInput {
+				.vc_inputWrapper{
+					border: 0;
 
-		background: @color-black;
-
-	
-		.panelitems{
-	
-			.panelitem{
-				color : @color-gray-light;
-	
-			} 
-	
-			.panelitemCenter{
-	
-				.centerTable{
-	
-					>div{
-						color : @color-gray-mlight;
-						
-	
-						.pcenterLabel{
-	
-							&:hover,
-							&.active{
-								color : @color-main;
-							}
-						}
-	
+					input{
+						border-bottom-left-radius: 0;
 					}
 				}
-	
-	
+
+				.vc_iconWrapper{
+					
+					border-bottom-right-radius: 0;
+					
+				}
+			}
+
+			.vc_selectInput_bg_mobile{
+				position: fixed;
+				left : 0;
+				top : 0;
+				bottom : 0;
+				right: 0;
+				background: rgba(var(--color-shadow-base), 0.1);
+			}
+
+			.vc_selectInput{
+				position: fixed;
+				top : 55px;
+			}
+		}
+
+		.vc_selectInput {
+			border : 0;
+			max-height: 400px;
+			.shadowSmall();
+			.vc_value{
+				text-align: center;
+				font-size: 1.5em;
+				padding :  @rhythm @rhythm;
 			}
 		}
 	}
 }
+
 
 @media only screen and (max-width: 768px){
 
 	#toppanel{
-
 		.work{
 			width: 100%;
 			padding-right: 3 * @rhythm;
@@ -189,13 +170,10 @@ html.stblack{
 	
 		.panelitems{
 
-			
-
 			.panelitemCenter{
 				margin-left: 0;
 				margin-right: 0;
 			}
-
 		}
 	}
 
@@ -204,214 +182,14 @@ html.stblack{
 			display: none;
 		}
 	}
-}
 
-html.mobile{
 	#toppanel{
+		display: block;
 		height: 55px;
 		.work{
 			width: 100%;
 		    padding-left: 0;
 			padding-right:0;
-		}
-
-		.panelitems{
-			height: 100%;
-			display: block;
-
-			.panelItemsWrapper{
-				display: block;
-			}
-
-			.panelitemCenter{
-				margin-left: 0;
-				margin-right: 0;
-			}
-
-			.panelitem{
-				width: 100%;
-				margin-right: 0;
-				line-height: 55px;
-
-				&.icon{
-					width: 60px;
-					float: right;
-				}
-
-				&.nfl{
-					margin-right: 60px;
-					float: none;
-					width: auto;
-				}
-
-				&.right{
-					margin-left : 0;
-					display: none;
-				}
-
-				&.blexpl{
-					padding-left: 3 * @rhythm;
-				}
-
-				&.active{
-					color : @color-orange;
-				}
-			} 
-		}
-
-		
-
-	
-
-		.vc_valuecustom{
-			width: 100%;
-			height: 55px;
-
-			.vc_inputWrapper{
-				padding-left: 2 * @rhythm;
-			}
-	
-			.vc_iconWrapper{
-				width : 48px;
-				padding-right: 0;
-			}
-
-
-			.vc_textInput {
-				.vc_inputWrapper{
-					border: 0;
-
-					input{
-						opacity: 1!important;
-						.transition(0.3s);
-						border-top-left-radius: 0px;
-						border-bottom-left-radius: 0px;
-						height: 55px;
-						font-weight: 700;
-						font-size: 1.2em;
-						padding-left: @rhythm;
-
-						&[disabled="disabled"]{
-							opacity: 1;
-						}
-					}
-				}
-
-				.vc_iconWrapper{
-					.transition(0.3s);
-					border-top-right-radius: 0px;
-					border-bottom-right-radius: 0px;
-					border : 0;
-					color : @color-black2;
-				}
-			}
-
-			&.opened{
-				.vc_textInput {
-					.vc_inputWrapper{
-						border: 0;
-
-						input{
-							border-bottom-left-radius: 0;
-						}
-					}
-
-					.vc_iconWrapper{
-						
-						border-bottom-right-radius: 0;
-						
-					}
-				}
-
-				.vc_selectInput_bg_mobile{
-					position: fixed;
-					left : 0;
-					top : 0;
-					bottom : 0;
-					right: 0;
-					background: fade(@color-black, 10);
-				}
-
-				.vc_selectInput{
-					position: fixed;
-					top : 55px;
-				}
-			}
-
-			.vc_selectInput {
-				border : 0;
-				max-height: 400px;
-				.shadowSmall();
-				.vc_value{
-					text-align: center;
-					font-size: 1.5em;
-					padding :  @rhythm @rhythm;
-				}
-			}
-		}
-	}	
-
- 	&.stblack{
-		#toppanel{
-			
-		
-	
-			.vc_valuecustom{
-				
-	
-				.vc_textInput {
-					.vc_iconWrapper{
-						color : fade(@color-main, 60);
-					}
-				}
-	
-			}
-		}	
-	}
-	
-}
-
-@media only screen and (max-width: 648px){
-	#toppanel{
-
-		.work{
-			width: 100%;
-			padding-right: 3 * @rhythm;
-		}
-	
-		.panelitems{
-
-			.panelItemsWrapper{
-				height: 100%;
-			}
-
-			.panelitem.right{
-				display: none;
-			}
-			.panelitem.dnt,
-			.panelitem.right,
-			.panelitem.blexpl{
-				display: none;
-			}
-
-			.panelitemCenter{
-				margin : auto;
-			}
-
-		}
-	}
-}
-
-@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape){
-	#toppanel{
-		
-		.vc_valuecustom{
-
-			.vc_inputWrapper{
-				padding-left: 6 * @rhythm;
-				padding-right: 6 * @rhythm;
-			}
-
 		}
 	}
 }

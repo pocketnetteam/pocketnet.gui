@@ -1,99 +1,12 @@
 <div class="panelItemsWrapper">
-	<% 
-
-	var r = parameters(app.nav.current.completeHref, true).r;
-	var video = parameters(app.nav.current.completeHref, true).video;
-
-	%>
-
-	<% if(!app.curation()) {%> 
-
-		<% if(!state && !(pathname == 'index' && mobile)) {%>
-
-		<div class="panelitem blexpl">
-			<a elementsid="e13182" href="https://<%-app.options.url%>/blockexplorer/"><i class="fas fa-th"></i> <%=e('e13182')%></a>
+	<% if(pathname == 'index') {%>
+		<div class="panelitem nfl">
+			<%= selector.input() %>
 		</div>
-
-		<% } %>
-
-
-		<% if(state || (pathname == 'index' && mobile)) {%>
-
-			<% if(pathname == 'index' && mobile) {%>
-				<div elementsid="showcategories" class="panelitem icon showcategories <% if(tagsSelected) {%> active <% } %>">
-					<i class="fas fa-filter"></i>
-				</div>
-				<div class="panelitem nfl">
-					<%= selector.input() %>
-				</div>
-
-			<% } else { %>
-				<div class="panelitem dnt">
-					<a elementsid="hrefdonations" href="donations"><i class="fas fa-money-bill-wave"></i> <%=e('donate')%></a>
-					<!--<i class="fas fa-sync"></i> Exchange-->
-				</div>
-			<% } %>
-
-		<% } %>
-
-	<% } %>
-
-
-	<% if(!mobile) { %>
-
-		<div class="panelitemCenter">
-			<div class="centerTable table">
-
-				<div class="pcenterCell">
-					<span class="pcenterLabel fresh <% if(!r && !video && pathname=='index') {%> active <% } %> ">
-						<a elementsid="hrefindex" href="index" handler="true"><%=e('e13136')%> <span class="lentaunseen" key="common"></span></a>
-					</span>
-					
-				</div>
-				<% if(state) { %> 
-				<div class="pcenterCell">
-					<span class="pcenterLabel <% if(r == 'sub' && pathname=='index') {%> active <% } %>">
-						<a elementsid="hrefindex?r=sub" href="index?r=sub"  handler="true"><%=e('e13137')%> <span class="lentaunseen " key="sub"></span></a>
-					</span>
-					
-				</div>
-				<% } %>
-				<% if(app.platform.videoenabled) {%>
-				<div class="pcenterCell">
-					<span class="pcenterLabel <% if(video && pathname=='index') {%> active <% } %>">
-						<a elementsid="hrefindex?video=1" href="index?video=1"  handler="true"><%=e('video')%> <span class="lentaunseen" key="video"></span></a>
-
-					</span>
-
-				</div>
-				<% } %>
-
-				<% const isElectron = (typeof _Electron !== 'undefined' && !!window.electron); %>
-				<% const isSaveSupported = (window.cordova || isElectron); %>
-
-				<% if(isSaveSupported) {%>
-				<div class="pcenterCell">
-					<span class="pcenterLabel ">
-						<a elementsid="href_index?r=saved" href="index?r=saved"  handler="true"><%=e('downloaded')%></a>
-					</span>
-				</div>
-				<% } %>
-
-				<div class="pcenterCell">
-					<span class="pcenterLabel toppost <% if(!video && r == 'recommended' && pathname=='index') {%> active <% } %>">
-						<a elementsid="hrefindex?r=recommended" href="index?r=recommended"  handler="true"><%=e('e13138')%></a>
-					</span>
-				</div>
-				
-			</div>
+		<div elementsid="showcategories" class="panelitem icon showcategories <% if(tagsSelected) {%> active <% } %>">
+			<i class="fas fa-filter"></i>
 		</div>
-
-	<% } %>
-
-
-	<% if(!app.curation()) {%> 
-		<div class="panelitem right">
-			<a elementsid="hrefhelp" href="help"><i class="fas fa-question-circle"></i> <%=e('e13183')%></a>
-		</div>
+	<% } else { %>
+	
 	<% } %>
 </div>

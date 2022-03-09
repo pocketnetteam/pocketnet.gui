@@ -3,6 +3,7 @@ if (typeof _OpenApi == 'undefined') _OpenApi = false;
 
 if (typeof _Electron != 'undefined') {
     electron = require('electron');
+    bastyonFsFetchFactory = require('./js/peertube/bastyon-fs-fetch').bastyonFsFetchFactory;
     fs = require('fs');
     url = require('url');
     https = require('https');
@@ -12,6 +13,49 @@ if (typeof _Electron != 'undefined') {
 
     $('html').addClass('electron')
 }
+
+
+/*
+
+    {
+        NOT_SUPPORTED = 0,
+
+        TX_DEFAULT = 1,
+        TX_COINBASE = 2,
+        TX_COINSTAKE = 3,
+
+        ACCOUNT_USER = 100,
+        ACCOUNT_VIDEO_SERVER = 101,
+        ACCOUNT_MESSAGE_SERVER = 102,
+        ACCOUNT_SETTING = 103,
+
+        CONTENT_POST = 200,
+        CONTENT_VIDEO = 201,
+        CONTENT_ARTICLE = 202,
+        // CONTENT_SERVERPING = 203,
+
+        CONTENT_COMMENT = 204,
+        CONTENT_COMMENT_EDIT = 205,
+        CONTENT_COMMENT_DELETE = 206,
+
+        CONTENT_DELETE = 207,
+
+        BOOST_CONTENT = 208,
+
+        ACTION_SCORE_CONTENT = 300,
+        ACTION_SCORE_COMMENT = 301,
+
+        ACTION_SUBSCRIBE = 302,
+        ACTION_SUBSCRIBE_PRIVATE = 303,
+        ACTION_SUBSCRIBE_CANCEL = 304,
+
+        ACTION_BLOCKING = 305,
+        ACTION_BLOCKING_CANCEL = 306,
+
+        ACTION_COMPLAIN = 307,
+    };
+
+*/
 
 
 Platform = function (app, listofnodes) {
@@ -81,7 +125,10 @@ Platform = function (app, listofnodes) {
         'PUXG7rfX19Xoco1FXjXBW8qt6NEZpp8maL' : true,
         'PSanUFKb1vd5ua4U3BXMmsSZ2zm3sN2nyj' : true,
         'PERF5kDM32ebkq8SeSj8ZaLqfCoqz8FRgh' : true,
-        'PGD5jUBQ7qNnHDuW85RRBxY1msywEdCm7r' : true
+        'PGD5jUBQ7qNnHDuW85RRBxY1msywEdCm7r' : true,
+        'PApFYMrbm3kXMV7kjrEG1v6ULv6ZFDHb9j' : true,
+        'PUBRMTAUhy51gkbuP1tRJLMMAzEDt9C2X6' : true,
+        'P9i55BxFWpjMyqgHyCKtazDN1HDiZxTSzJ' : true
     }
 
     self.nvadr = {
@@ -808,7 +855,7 @@ Platform = function (app, listofnodes) {
 
         "11": {
             message: function () {
-                return self.app.localization.e('unexperror11')
+                return self.app.localization.e('dataenteredincorrectly')
             }
         },
 
@@ -1966,8 +2013,7 @@ Platform = function (app, listofnodes) {
 
             p.horizontal = true
 
-            var tpl = `<div class="horizontalLentaWrapper"><div class="horizontalLentacaption"><span>`+(p.caption || '')+`</span></div><div class="showmorebywrapper"><div class="showmoreby"></div></div>
-            <div class="controlleft controlhor" dir="left"><i class="fas fa-chevron-left"></i></div><div class="controlright controlhor"><i class="fas fa-chevron-right"></i></div>
+            var tpl = `<div class="horizontalLentaWrapper"><div class="horizontalLentacaption"><span>`+(p.caption || '')+`</span><div class="controlhors"><div class="controlleft controlhor" dir="left"><i class="fas fa-arrow-left"></i></div><div class="controlright controlhor"><i class="fas fa-arrow-right"></i></div></div></div><div class="showmorebywrapper"><div class="showmoreby"></div></div>
             </div>`
 
             el.html(tpl)
@@ -2044,7 +2090,8 @@ Platform = function (app, listofnodes) {
                     period : p.period,
                     filter : p.filter,
                     ended : p.ended,
-                    afterload : p.afterload
+                    afterload : p.afterload,
+                    count : p.count
 
                 },
 
@@ -2336,6 +2383,47 @@ Platform = function (app, listofnodes) {
 
     self.ui = {
 
+        pipvideo : function(txid, clbk, d){
+
+            if(!d) d = {}
+        
+            var p = {
+                href : 'post?s=' + txid,
+                clbk : clbk,
+                essenseData : {
+                    share : txid,
+                    video : true,
+                    autoplay : true,
+                    pip : true,
+                    startTime : d.startTime || 0
+                },
+
+                expand : function(d){
+
+                    if(!d) d = {}
+
+                    self.app.nav.api.load({
+                        open : true,
+                        href : 'post?s=' + txid,
+                        inWnd : true,
+                        history : true,
+                        essenseData : {
+                            share : txid,
+                            video : true,
+                            autoplay : true,
+                            startTime : d.startTime || 0
+                        }
+                    })
+
+                }
+            }
+
+            self.app.actions.playingvideo(null)
+            self.app.actions.pipwindow(p)
+
+            //self.matrixchat.core.backtoapp()
+        },
+
         popup : function(key, always, data){
 
 			var showed = localStorage['popup_' + key] || false;
@@ -2472,7 +2560,7 @@ Platform = function (app, listofnodes) {
                 el.owlCarousel({
                     items: 1,
                     dots: true,
-                    nav: !isMobile(),
+                    nav: !self.app.mobileview,
                     navText: [
                         '<i class="fas fa-chevron-left"></i> ',
                         '<i class="fas fa-chevron-right"></i>'
@@ -2677,26 +2765,7 @@ Platform = function (app, listofnodes) {
 
                 success: function () {
 
-                   /* if (!isMobile()) {
-
-                        app.nav.api.load({
-
-                            open: true,
-                            href: 'userpage?id=accounts',
-                            history: true,
-                            handler: true,
-
-                            essenseData: {
-                                dumpkey: !isMobile()
-                            },
-
-                            clbk: function (p, s) {
-
-                            }
-                        })
-
-                    }*/
-
+             
                     app.nav.api.load({
 
                         open: true,
@@ -2782,8 +2851,61 @@ Platform = function (app, listofnodes) {
 
                 })
 
+                
+                
+            },
 
+            buy : function(p, clbk, el){
 
+                if(!p) p = {}
+
+                var id = 'papiwalletbuy'
+
+                globalpreloader(true, true)
+
+                p.action = p.htls ? 'htls' : 'buy'
+                p.class = 'api'
+                p.api = true
+                
+
+                var es = null
+
+                return new Promise((resolve, reject) => {
+                    
+                    p.sendclbk = function(d){
+
+                        if (p.roomid && d.txid){
+                            self.matrixchat.shareInChat.url(p.roomid, app.meta.protocol + '://i?stx=' + d.txid) /// change protocol
+                        }
+
+                        resolve(d)
+
+                        if(es && es.container) es.container.close()
+                    }
+
+                    app.nav.api.load({
+                        open : true,
+                        id : 'wallet',
+                        inWnd : el ? false : true,
+                        el : el ? el : null,
+                        eid : id,
+                        mid : id,
+                        animation : false,
+                        essenseData : p,
+                        clbk : function(e, _p){
+
+                            es = _p
+    
+                            globalpreloader(false)
+    
+                            if(clbk) clbk(e, _p)
+                        }
+                    })
+
+                })
+
+                
+                
             }
         },
 
@@ -2966,7 +3088,7 @@ Platform = function (app, listofnodes) {
         authorlink: function (address, namelink) {
             var name = deep(self.sdk.usersl.storage, address + '.name');
 
-            if (name && (!isMobile() || namelink)) return encodeURIComponent(name.toLowerCase());
+            if (name && (!self.app.mobileview || namelink)) return encodeURIComponent(name.toLowerCase());
 
             else return 'author?address=' + address
         },
@@ -3282,7 +3404,7 @@ Platform = function (app, listofnodes) {
 
             if(!p) p = {}
 
-            if (isTablet() || isMobile() || window.cordova || p.dlg){
+            if (self.app.mobileview || p.dlg){
                 return self.api.mobiletooltip(_el, content, clbk, p)
             }
 
@@ -3337,6 +3459,8 @@ Platform = function (app, listofnodes) {
 
             return _el
         },
+
+        
 
         electron: {
             storage: {},
@@ -6306,7 +6430,7 @@ Platform = function (app, listofnodes) {
                         const videoDetails = shareInfo.video.original;
 
                         const videoData = await electron.ipcRenderer
-                            .invoke('saveShareVideo', videoDetails, videoResolution);
+                            .invoke('saveShareVideo', folder, videoDetails, videoResolution);
 
                         return videoData;
                     },
@@ -6371,7 +6495,6 @@ Platform = function (app, listofnodes) {
             read : {
                 share : {
                     electron : async function(shareId) {
-                        alert('Read video data');
                         console.log('SHARE DIR', shareId);
 
                         const shareData = await electron.ipcRenderer
@@ -6539,23 +6662,15 @@ Platform = function (app, listofnodes) {
                         })
                     },
 
-                    electron : async function(shareId) {
-                        alert('Read video data');
-                        console.log('from', shareId);
-
-                        // TODO: PROCEED HERE 16 FEB 2022
-
-                        const videosList = await electron.ipcRenderer
-                            .invoke('getVideosList');
+                    electron : async function(videoId, shareId) {
+                        console.log('from', videoId);
 
                         const videosDataList = {};
 
-                        for(const videoIndex in videosList) {
-                            const videoId = videosList[videoIndex];
+                        const videoData = await electron.ipcRenderer
+                            .invoke('getVideoData', shareId, videoId);
 
-                            videosDataList[videoId] = await electron.ipcRenderer
-                                .invoke('getVideoData', videoId);
-                        }
+                        videosDataList[videoId] = videoData;
 
                         return videosDataList;
                     },
@@ -6567,16 +6682,17 @@ Platform = function (app, listofnodes) {
             },
 
             get : {
-                electron : async function(shareFolder) {
-                    const shareDataList = { id: shareFolder };
+                electron : async function(shareId) {
+                    const shareDataList = { id: shareId };
 
-                    console.log('SHARE FOLDER', shareFolder);
+                    console.log('SHARE FOLDER', shareId);
 
-                    shareDataList.share = await self.sdk.localshares.read.share.electron(shareFolder);
+                    shareDataList.share = await self.sdk.localshares.read.share.electron(shareId);
 
-                    console.log('SHARE DATA INFOS', shareDataList.share);
+                    const videoId = shareDataList.share.share.u
+                        .split('%2F').pop();
 
-                    shareDataList.videos = await self.sdk.localshares.read.video.electron(shareFolder);
+                    shareDataList.videos = await self.sdk.localshares.read.video.electron(videoId, shareId);
 
                     console.log('SHARE DATA VIDEOS', shareDataList.videos);
 
@@ -6622,8 +6738,6 @@ Platform = function (app, listofnodes) {
 
             getall : {
                 electron : async function() {
-                    alert('getall video info');
-
                     const shareList = await electron.ipcRenderer
                         .invoke('getShareList');
 
@@ -6708,7 +6822,7 @@ Platform = function (app, listofnodes) {
                 localstorage : function(shareId){
                     self.sdk.localshares.clearfromstorage(shareId)
 
-                    return Promise.reject('todo')
+                    return Promise.resolve();
                 },
                 cordova : function(shareId){
                     var storage = self.sdk.localshares.helpers.cordovaStorage()
@@ -6735,25 +6849,9 @@ Platform = function (app, listofnodes) {
 
                 },
                 electron : function(shareId){
-                    
-                    return new Promise((resolve, reject) => {
+                    self.sdk.localshares.clearfromstorage(shareId);
 
-                        return Promise.reject('deprecated')
-
-                        const userDataPath = (window.electron.app || window.electron.remote.app).getPath('userData');
-
-                        fs.rmdir(userDataPath + '/posts/' + shareId, { recursive: true }, (err) => {
-                            
-                            if (!err){
-                                self.sdk.localshares.clearfromstorage(shareId)
-                                return resolve()
-                            }
-
-                            return reject(err)
-                                
-                        });
-                    })
-                    
+                    return electron.ipcRenderer.invoke('deleteShareWithVideo', shareId);
                 }
             }
 
@@ -7435,8 +7533,13 @@ Platform = function (app, listofnodes) {
             save: function () {
 
                 var address = self.sdk.address.pnet().address;
-
-                localStorage[address + 'articles'] = JSON.stringify(self.sdk.articles.storage || []);
+                try{
+                    localStorage[address + 'articles'] = JSON.stringify(self.sdk.articles.storage || []);
+                }   
+                catch(e){
+                    console.log("e", e)
+                }
+                
 
             },
 
@@ -7561,6 +7664,60 @@ Platform = function (app, listofnodes) {
 
             }
         },
+        
+        lentaMethod: {
+            all: {
+                hierarchical: 'hierarchical',
+                historical: 'historical'
+            },
+            default: "hierarchical",
+            current: null,
+
+            save: function () {
+
+                var c = self.sdk.lentaMethod.current
+
+                localStorage['lentaMethod'] = c;
+
+            },
+
+            load: function (clbk) {
+
+                var t = self.sdk.lentaMethod
+
+                t.current = localStorage['lentaMethod'] || t.default;
+
+                t.set()
+
+                if (clbk) clbk()
+            },
+
+            get: function(){
+                var t = self.sdk.lentaMethod;
+
+                return t.all[t.current];
+            },
+
+            set: function (value) {
+
+                var t = self.sdk.lentaMethod
+
+                if (!value) {
+                    value = t.current || t.default
+                }
+
+                if (value && t.all[value]) {
+
+                    t.current = value;
+
+                    self.app.platform.sdk.categories.clbks.selected.lenta && self.app.platform.sdk.categories.clbks.selected.lenta();
+
+                    t.save()
+
+                }
+
+            }
+        },
 
         theme: {
             all: {
@@ -7568,18 +7725,30 @@ Platform = function (app, listofnodes) {
                     name: self.app.localization.e('e13266'), ////ch
                     class: "stwhite",
                     color : "#ffffff",
-                    media : '(prefers-color-scheme: light)'
+                    media : '(prefers-color-scheme: light)',
+                    rootid : ''
                 },
 
                 black: {
                     name: self.app.localization.e('e13267'),
                     class: "stblack",
                     color : "#1e2235",
-                    media : '(prefers-color-scheme: dark)'
-                }
+                    media : '(prefers-color-scheme: dark)',
+                    rootid : 'black'
+                },
+
+                gray: {
+                    name: self.app.localization.e('gray'),
+                    class: "stgray",
+                    color : "#1e1d1a",
+                    media : '(prefers-color-scheme: dark)',
+                    rootid : 'gray'
+                },
             },
             default: "white",
             current: null,
+
+            currentStyles : {},
 
             save: function () {
 
@@ -7600,6 +7769,25 @@ Platform = function (app, listofnodes) {
                 if (clbk) clbk()
             },
 
+            setstyles : function(){
+                var root = document.querySelector(':root');
+
+                var rootStyles = getComputedStyle(root);
+ 
+                self.sdk.theme.currentStyles = rootStyles
+
+            },
+
+            getstyle : function(v){
+
+                if (self.sdk.theme.currentStyles){
+                    return self.sdk.theme.currentStyles.getPropertyValue(v)
+                }
+
+                return ''
+               
+            },
+
             set: function (value) {
 
                 var t = self.sdk.theme
@@ -7610,11 +7798,11 @@ Platform = function (app, listofnodes) {
                 }
 
                 if (value && t.all[value]) {
-                    _.each(t.all, function (c) {
+                    /*_.each(t.all, function (c) {
                         h.removeClass(c.class)
                     })
 
-                    h.addClass(t.all[value].class)
+                    h.addClass(t.all[value].class)*/
 
                     t.current = value
 
@@ -7626,14 +7814,22 @@ Platform = function (app, listofnodes) {
                     
                     if (cm) cm()
 
-                    $('meta[name="theme-color"]').attr('content', t.all[value].color)
-                        .attr('media',  t.all[value].media)
-                        
+                    if (document.documentElement.hasAttribute('theme')){
+                        document.documentElement.removeAttribute('theme');
+                    }
+
+                    document.documentElement.setAttribute('theme', t.all[value].rootid);
+
+                    self.sdk.theme.setstyles()
+
+                    $('meta[name="theme-color"]').attr('content', t.all[value].color).attr('media',  t.all[value].media)
                     $('meta[name="msapplication-navbutton-color"]').attr('content', t.all[value].color)
                     $('meta[name="apple-mobile-web-app-status-bar-style"]').attr('content', t.all[value].color)
                 }
 
                 app.mobile.statusbar.background()
+
+                
 
             }
         },
@@ -7700,108 +7896,68 @@ Platform = function (app, listofnodes) {
                 }
             },
 
-            listenKeys: function() {
-                const keysPressed = {};
+            listenScalingEvents: function() {
+                const zoomArrList = self.app.platform.sdk.uiScale.all;
+                const zoomKeys = Object.keys(zoomArrList);
 
-                function zoomShortcuts(e) {
+                let wheelLock = false;
+
+                function scaleUi(e, isScroll, calcDelta) {
+                    const mainKeyDown = e.metaKey || e.ctrlKey;
+
+                    if(!mainKeyDown) {
+                        if (isScroll && wheelLock) {
+                            $('html').removeClass('scroll-lock');
+                            wheelLock = false;
+                        }
+
+                        return;
+                    }
+
+                    const zoomDelta = calcDelta(e, mainKeyDown);
+
+                    if (zoomDelta === 0) {
+                        return;
+                    }
+
+                    const currentZoom = self.app.platform.sdk.uiScale.current;
+                    const zoomCurrentIndex = zoomKeys.findIndex(zoom => (zoom === currentZoom));
+                    const zoomNewIndex = zoomCurrentIndex + zoomDelta;
+                    const zoomNewName = zoomKeys[zoomNewIndex];
+
+                    self.app.platform.sdk.uiScale.set(zoomNewName);
+                }
+
+                $(window).on('keydown', (e) => scaleUi(e, false, ({ keyCode }) => {
                     /**
-                     * Ctrl - 17,
-                     * Command (Mac OS) - 91
-                     *
                      * Minus - 189
                      * Minus Numpad - 109
                      *
                      * Plus - 187
                      * Plus Numpad - 107
                      */
+                    switch (keyCode) {
+                        case 189: case 109:
+                            return -1;
+                        case 187: case 107:
+                            return +1;
+                    }
 
-                    Object.keys(keysPressed).forEach((key) => {
-                        if(key == 17) {
-                            return;
-                        }
+                    return 0;
+                }));
 
-                        if (key === 'forward_scroll' || key === 'backward_scroll') {
-                            return;
-                        }
-
-                        const keyState = keysPressed[key];
-                        const isTimeout = (keyState + 1000 < Date.now());
-
-                        if(isTimeout) {
-                            if (key == 91) {
-                                $('html').removeClass('scroll-lock');
-                            }
-
-                            delete keysPressed[key];
-                        }
-                    });
-
-                    const isCtrlPressed = (_.has(keysPressed, 17) || _.has(keysPressed, 91));
-                    const isMinusPressed = (_.has(keysPressed, 189) || _.has(keysPressed, 109));
-                    const isPlusPressed = (_.has(keysPressed, 187) || _.has(keysPressed, 107));
-
-                    if (isCtrlPressed) {
+                $(window).on('wheel', (e) => scaleUi(e, true, (e) => {
+                    if(!wheelLock) {
                         $('html').addClass('scroll-lock');
+                        wheelLock = true;
                     }
 
-                    const currentZoom = self.app.platform.sdk.uiScale.current;
-
-                    const zoomArrList = self.app.platform.sdk.uiScale.all;
-                    const zoomKeys = Object.keys(zoomArrList);
-
-                    const zoomCurrentIndex = zoomKeys.findIndex(zoom => (zoom === currentZoom));
-
-                    const isPlusOutOfRange = (zoomCurrentIndex == zoomKeys.length - 1);
-                    const isMinusOutOfRange = (zoomCurrentIndex == 0);
-
-                    const isKeyZoomIn = (isCtrlPressed && isPlusPressed);
-                    const isKeyZoomOut = (isCtrlPressed && isMinusPressed);
-
-                    const isScrollZoomIn = (isCtrlPressed && keysPressed.forward_scroll === true);
-                    const isScrollZoomOut = (isCtrlPressed && keysPressed.backward_scroll === true);
-
-                    const isZoomIn = (isKeyZoomIn || isScrollZoomIn);
-                    const isZoomOut = (isKeyZoomOut || isScrollZoomOut);
-
-                    if (isZoomIn && !isPlusOutOfRange) {
-                        const zoomNewIndex = zoomCurrentIndex + 1;
-                        const zoomNewName = zoomKeys[zoomNewIndex];
-
-                        self.app.platform.sdk.uiScale.set(zoomNewName);
-                    } else if (isZoomOut && !isMinusOutOfRange) {
-                        const zoomNewIndex = zoomCurrentIndex - 1;
-                        const zoomNewName = zoomKeys[zoomNewIndex];
-
-                        self.app.platform.sdk.uiScale.set(zoomNewName);
-                    }
-                }
-
-                $(document).keydown(function(e) {
-                    keysPressed[e.which] = Date.now();
-                });
-
-                $(document).keyup(function(e) {
-                    delete keysPressed[e.which];
-
-                    if (e.which == 17 || e.which == 91) {
-                        $('html').removeClass('scroll-lock');
-                    }
-                });
-
-                $(window).on('wheel', (e) => {
                     if(e.originalEvent.deltaY < 0) {
-                        keysPressed.forward_scroll = true;
+                        return +1;
                     } else {
-                        keysPressed.backward_scroll = true;
+                        return -1;
                     }
-
-                    zoomShortcuts(e);
-
-                    delete keysPressed.forward_scroll;
-                    delete keysPressed.backward_scroll;
-                });
-
-                $(document).keydown(zoomShortcuts);
+                }));
             },
         },
 
@@ -8796,7 +8952,7 @@ Platform = function (app, listofnodes) {
                                         h += '<div class="refaddTable table">'
                                         h += '<div class="imageCell">'
 
-                                        h += '<div class="usericon" ban=".gif" image="' + (src || '') + '">'
+                                        h += '<div class="usericon" ban=".gif" image="' + (src || '*') + '">'
 
                                         if (!src && letter) {
 
@@ -9227,10 +9383,10 @@ Platform = function (app, listofnodes) {
                         var a = self.sdk.address.pnet().address;
 
                         if (!_.isEmpty(info)) {
-                            self.app.settings.set(a, 'last_ustate', JSON.stringify(info))
+                            self.app.settings.set(a, 'last_ustate_2', info)
                         }
                         else {
-                            info = JSON.parse(self.app.settings.get(a, 'last_ustate') || "{}")
+                            info = self.app.settings.get(a, 'last_ustate_2') || {}
 
                             if (!_.isEmpty(info)) {
 
@@ -10309,125 +10465,7 @@ Platform = function (app, listofnodes) {
 
 
             },
-
-            giveFreeMoney: function (toAddress, mnemonic, clbk, amount, update) {
-
-                this.checkFreeMoney(toAddress, function (r) {
-
-                    if (!r) {
-                        if (clbk)
-                            clbk('nofree')
-                    }
-                    else {
-                        var feerate = 0.000001;
-
-                        amount || (amount = 0.00002);
-
-                        var outputs = [{
-                            address: toAddress,
-                            amount: amount
-                        }, {
-                            address: toAddress,
-                            amount: amount
-                        }, {
-                            address: toAddress,
-                            amount: amount
-                        }, {
-                            address: toAddress,
-                            amount: amount
-                        }, {
-                            address: toAddress,
-                            amount: amount
-                        }, {
-                            address: toAddress,
-                            amount: amount
-                        }, {
-                            address: toAddress,
-                            amount: amount
-                        }, {
-                            address: toAddress,
-                            amount: amount
-                        }, {
-                            address: toAddress,
-                            amount: amount
-                        }, {
-                            address: toAddress,
-                            amount: amount
-                        }]
-
-                        const seed = bitcoin.bip39.mnemonicToSeedSync(mnemonic);
-                        const hash = bitcoin.crypto.sha256(Buffer.from(seed));
-                        const keyPair = self.sdk.address.dumpKeys(0, seed);
-                        const { address } = self.sdk.address.pnet(keyPair.publicKey, 'p2pkh');
-
-                        self.sdk.wallet.txbase([address], _.clone(outputs), null, null, function (err, inputs, _outputs) {
-
-                            if (err) {
-                                if (clbk)
-                                    clbk(err)
-                            }
-
-                            else {
-                                var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs, keyPair)
-                                var totalFees = Math.min(tx.virtualSize() * feerate, 0.000006);
-
-
-
-                                self.app.platform.sdk.wallet.txbase([address], _.clone(outputs), totalFees, null, function (err, inputs, _outputs) {
-
-                                    if (err) {
-
-
-
-                                        self.sdk.node.transactions.releaseCS(inputs)
-
-                                        if (clbk)
-                                            clbk(err)
-                                    }
-                                    else {
-                                        var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs, keyPair)
-
-                                        self.app.platform.sdk.node.transactions.send(tx, function (d, err) {
-
-                                            if (err) {
-
-                                                self.sdk.node.transactions.releaseCS(inputs)
-
-                                                if ((err == -26 || err == -25 || err == 16) && !update) {
-
-                                                    self.sdk.users.giveFreeMoney(toAddress, mnemonic, clbk, amount, true)
-
-                                                    return
-                                                }
-
-
-                                                if (clbk)
-                                                    clbk(err)
-                                            }
-
-                                            else {
-                                                var ids = _.map(inputs, function (i) {
-                                                    return {
-                                                        txid: i.txId,
-                                                        vout: i.vout
-                                                    }
-                                                })
-
-                                                self.app.platform.sdk.node.transactions.clearUnspents(ids)
-
-                                                if (clbk)
-                                                    clbk(null, d, amount * outputs.length)
-                                            }
-                                        })
-                                    }
-                                })
-                            }
-                        }, update)
-                    }
-
-                })
-            },
-
+           
             checkFreeMoney: function (address, clbk) {
                 self.sdk.users.get(address, function () {
 
@@ -10467,155 +10505,6 @@ Platform = function (app, listofnodes) {
                     }
 
                 })
-            },
-
-            /////////////// REFERALS
-            giveFreeRef: function (refferal, toAddress, mnemonic, clbk, amount) {
-
-                this.checkFreeRef(refferal, function (r) {
-
-                    if (!r) {
-                        if (clbk)
-                            clbk('nofree')
-                    }
-                    else {
-                        var feerate = 0.000001;
-
-                        amount || (amount = 0.005);
-
-                        var outputs = [{
-                            address: toAddress,
-                            amount: amount
-                        }]
-
-                        const seed = bitcoin.bip39.mnemonicToSeedSync(mnemonic);
-                        const hash = bitcoin.crypto.sha256(Buffer.from(seed));
-                        const keyPair = self.sdk.address.dumpKeys(0, seed);
-                        const address = self.sdk.address.pnet(keyPair.publicKey, 'p2pkh').address;
-
-                        self.sdk.wallet.txbase([address], _.clone(outputs), null, null, function (err, inputs, _outputs) {
-
-                            if (err) {
-                                if (clbk)
-                                    clbk(err)
-                            }
-
-                            else {
-                                var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs, keyPair)
-                                var totalFees = Math.min(tx.virtualSize() * feerate, 0.0005);
-
-
-
-                                self.app.platform.sdk.wallet.txbase([address], _.clone(outputs), totalFees, null, function (err, inputs, _outputs) {
-
-                                    if (err) {
-
-                                        self.sdk.node.transactions.releaseCS(inputs)
-
-                                        if (clbk)
-                                            clbk(err)
-                                    }
-                                    else {
-                                        var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs, keyPair)
-
-                                        self.app.platform.sdk.node.transactions.send(tx, function (d, err) {
-
-                                            if (err) {
-                                                self.sdk.node.transactions.releaseCS(inputs)
-
-                                                if (clbk)
-                                                    clbk(err)
-                                            }
-
-                                            else {
-                                                var ids = _.map(inputs, function (i) {
-                                                    return {
-                                                        txid: i.txId,
-                                                        vout: i.vout
-                                                    }
-                                                })
-
-                                                self.app.platform.sdk.node.transactions.clearUnspents(ids)
-
-                                                if (clbk)
-                                                    clbk(null, d, amount)
-                                            }
-                                        })
-                                    }
-                                })
-                            }
-                        }, true)
-                    }
-
-                })
-            },
-            requestFreeRef: function (address, clbk) {
-
-                var a = self.sdk.address.pnet();
-
-                if (a) {
-                    a = a.address;
-
-                    this.checkFreeRef(a, function (r) {
-                        if (!r) {
-                            if (clbk)
-                                clbk(null)
-                        }
-                        else {
-
-                            self.app.api.fetch('freeRef', {
-                                referal: a,
-                                referrer: address
-                            }).then(d => {
-                                if (clbk)
-                                    clbk(true)
-
-                            }).catch(e => {
-                                if (clbk)
-                                    clbk(null, deep(d, 'data') || {})
-                            })
-
-
-                        }
-                    })
-                }
-                else {
-                    if (clbk)
-                        clbk(null)
-                }
-
-
-            },
-
-            checkFreeRef: function (address, clbk) {
-
-                if (!address) {
-                    if (clbk)
-                        clbk(true)
-
-                    return
-                }
-
-
-                self.sdk.users.get(address, function () {
-
-                    var name = deep(self, 'sdk.users.storage2.' + address + '.name');
-
-                    if (name) {
-
-                        if (clbk)
-                            clbk(false)
-                    }
-
-                    else {
-
-                        if (clbk)
-                            clbk(true)
-
-                    }
-                })
-
-
             },
 
             //////////////// ANOTHER
@@ -10733,6 +10622,45 @@ Platform = function (app, listofnodes) {
 
             },
 
+            getRecommendedAccountsByTags : function(clbk){
+
+                var selectedTags = self.app.platform.sdk.categories.gettags();
+
+                self.app.api.rpc('getrecomendedaccountsbytags', [selectedTags, 15])
+                .then(function(d){
+
+                    if (clbk){
+                        clbk(d)
+                    }
+
+                })
+                .catch(function(e){
+
+                    if (clbk){
+                        clbk(null, e);
+                    }
+                })
+            },
+
+            getBestUsers : function(clbk){
+
+                var my = self.app.user.address.value;
+
+                self.app.api.rpc('getrecomendedaccountsbyscoresfromaddress', [my, ['share', 'video'], 0, 300000, 15])
+                .then(function(d){
+
+                    if (clbk){
+                        clbk(d)
+                    }
+
+                })
+                .catch(function(e){
+
+                    if (clbk){
+                        clbk(null)
+                    }
+                })
+            },
 
             commonuserpoint : function(address, me){
                 var point = 1;
@@ -10761,7 +10689,48 @@ Platform = function (app, listofnodes) {
 
                 return point
 
+            }
+        },
 
+
+
+        posts: {
+            
+            getRecommendedPosts : function(clbk){
+
+                var my = self.app.user.address.value;
+
+                self.app.api.rpc('getrecomendedcontentsbyscoresfromaddress', [my, ['share', 'video'], 0, 300000, 15])
+                .then(function(d){
+
+                    if (clbk){
+                        clbk(d)
+                    }
+
+                })
+                .catch(function(e){
+
+                    if (clbk){
+                        clbk(null, e);
+                    }
+                })
+            },
+
+            getRecommendedPostsContents : function(parameters, clbk){
+
+                self.app.api.rpc('getrawtransactionwithmessagebyid', parameters)
+                .then(function(d){
+
+                    if (clbk){
+                        clbk(d)
+                    }
+                })
+                .catch(function(e){
+
+                    if (clbk){
+                        clbk(null)
+                    }
+                })
             }
         },
 
@@ -11206,6 +11175,8 @@ Platform = function (app, listofnodes) {
                             else {
                                 var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs, keyPair)
 
+                                console.log('txbaseFeesMeta', tx)
+
                                 self.app.platform.sdk.node.transactions.send(tx, function (d, err) {
 
                                     if (err) {
@@ -11216,7 +11187,7 @@ Platform = function (app, listofnodes) {
                                     else {
                                         var ids = _.map(inputs, function (i) {
                                             return {
-                                                txid: i.txId,
+                                                txid: i.txId || i.txid,
                                                 vout: i.vout
                                             }
                                         })
@@ -11523,7 +11494,7 @@ Platform = function (app, listofnodes) {
 
                                 var ids = _.map(inputs, function (i) {
                                     return {
-                                        txid: i.txid,
+                                        txid: i.txId || i.txid,
                                         vout: i.vout
                                     }
                                 })
@@ -13052,19 +13023,104 @@ Platform = function (app, listofnodes) {
                         }
                     ]
                 },
+
+                categoryIcons : [
+                    {
+                        "id": "c2",
+                        "icon": "far fa-smile"
+                    },
+                    {
+                        "id": "c3",
+                        "icon": "fas fa-award"
+                    },
+                    {
+                        "id": "c4",
+                        "icon": "fab fa-btc"
+                    },
+                    {
+                        "id": "c5",
+                        "icon": "fas fa-microscope"
+                    },
+                    {
+                        "id": "c55",
+                        "icon": "fas fa-book"
+                    },
+                    {
+                        "id": "c6",
+                        "icon": "fas fa-dollar-sign"
+                    },
+                    {
+                        "id": "c73",
+                        "icon": "fas fa-fist-raised"
+                    },
+                    {
+                        "id": "c72",
+                        "icon": "fas fa-thermometer"
+                    },
+                    {
+                        "id": "c7",
+                        "icon": "fas fa-flag-checkered"
+                    },
+                    {
+                        "id": "c8",
+                        "icon": "fas fa-running"
+                    },
+                    {
+                        "id": "c9",
+                        "icon": "fas fa-gamepad"
+                    },
+                    {
+                        "id": "c10",
+                        "icon": "fas fa-space-shuttle"
+                    },
+                    {
+                        "id": "c11",
+                        "icon": "fas fa-music"
+                    },
+                    {
+                        "id": "c12",
+                        "icon": "fas fa-newspaper"
+                    },
+                    {
+                        "id": "c13",
+                        "icon": "fas fa-history"
+                    },
+                    {
+                        "id": "c14",
+                        "icon": "fas fa-bookmark"
+                    },
+                    {
+                        "id": "c15",
+                        "icon": "fas fa-film"
+                    },
+                    {
+                        "id": "c16",
+                        "icon": "fas fa-paw"
+                    },
+                    {
+                        "id": "c17",
+                        "icon": "fas fa-route"
+                    },
+                    {
+                        "id": "c18",
+                        "icon": "fas fa-pencil-ruler"
+                    }
+                ]
             },
 
             settings : {
                 tags : {},
                 selected : {},
-                added : {}
+                added : {},
+                excluded : {}
             },
 
             clbks : {
                 selected : {},
                 added : {},
-                tags  :{},
-                removed : {}
+                tags  : {},
+                removed : {},
+                excluded : {}
             },
 
             fromTags : function(tags, _k){
@@ -13111,6 +13167,29 @@ Platform = function (app, listofnodes) {
 
                 return addedtags
             },
+
+            gettagsexcluded : function(_k, onlycategories){
+                var tags = []
+
+                var k = _k || self.app.localization.key
+
+                if(!self.sdk.categories.data.all[k]) k = 'en'
+
+                var excluded = self.sdk.categories.settings.excluded[k] || {};
+
+
+
+                var all = self.sdk.categories.get(k)
+
+                _.each(all, function(c){
+                    if(excluded[c.id]) tags = tags.concat(c.tags)
+                })
+
+
+                if(onlycategories === 'onlytags') tags = excludedtags
+
+                return tags
+            },  
 
             gettags : function(_k, onlycategories){
                 var tags = []
@@ -13288,6 +13367,7 @@ Platform = function (app, listofnodes) {
 
             select : function(id, _k){
 
+
                 if(!id) return 'emptyid'
 
                 var allcats = self.sdk.categories.get(_k)
@@ -13311,7 +13391,7 @@ Platform = function (app, listofnodes) {
 
                 else s.selected[k][id] = true
 
-                self.sdk.categories.save()
+                self.sdk.categories.save();
 
                 _.each(self.sdk.categories.clbks.selected, function(f){
                     f(id, s.selected[k][id], k)
@@ -13320,19 +13400,88 @@ Platform = function (app, listofnodes) {
                 return false
             },
 
-            get : function(_k){
+            exclude : function(id, _k){
+
+
+                if(!id) return 'emptyid'
+
+                var allcats = self.sdk.categories.get(_k)
+
+                var cat = _.find(allcats, function(c){
+                    return c.id == id
+                })
+
+                if(!cat) return 'cantonfound'
+
+                var s = self.sdk.categories.settings
                 var k = _k || self.app.localization.key
 
-                var added = _.map(self.sdk.categories.settings.added[k]|| {},
+                if(!self.sdk.categories.data.all[k]) k = 'en'
+
+                s.excluded[k] || (s.excluded[k] = {})
+
+
+                if (s.excluded[k][id]){
+
+                    delete s.excluded[k][id];
+
+                } else {
+                    s.excluded[k][id] = true;
+                        
+                    s.selected[k] || (s.selected[k] = {})
+
+                    if (s.selected[k][id]){
+                        delete s.selected[k][id]
+
+
+                        _.each(self.sdk.categories.clbks.selected, function(f){
+                            f(id, s.selected[k][id], k)
+                        })
+                    }
+                } 
+
+
+                self.sdk.categories.save()
+
+                _.each(self.sdk.categories.clbks.excluded, function(f){
+                    f(id, s.excluded[k][id], k)
+                })
+
+                return false
+            },
+
+            get : function(_k){
+                var k = _k || self.app.localization.key;
+
+                var added = _.map(self.sdk.categories.settings.added[k]|| {}, 
                 function(c){
-                    var cc = _.clone(c)
+                    var cc = _.clone(c);
 
-                    cc.added = true
+                    cc.added = true;
 
+                    
                     return cc
                 })
 
-                return (self.sdk.categories.data.all[k] || self.sdk.categories.data.all['en']).concat(added)
+                var categories = self.sdk.categories.data.all[k] || self.sdk.categories.data.all['en'];
+
+                var categoryIcons = self.sdk.categories.data.categoryIcons;
+
+				categories = _.map(categories, function(k){
+					var withIcon = categoryIcons.find(function(ki){
+						return ki.id === k.id;
+					})
+
+					if (withIcon){
+						k.icon = withIcon.icon;
+					} else {
+                        k.icon = 'fa fa-mouse-pointer'
+                    }
+
+					return k;
+				})
+
+                return (categories).concat(added)
             },
 
             getbyid : function(id, _k){
@@ -13363,6 +13512,7 @@ Platform = function (app, listofnodes) {
                 if(!self.sdk.categories.data.all[k]) k = 'en'
 
                 var selected = self.sdk.categories.settings.selected[k] || {}
+                var excluded = self.sdk.categories.settings.excluded[k] || {}
 
                 var all = self.sdk.categories.get()
 
@@ -13370,6 +13520,7 @@ Platform = function (app, listofnodes) {
                     var cs = _.clone(c)
 
                     cs.selected = selected[c.id] ? true : false
+                    cs.excluded = excluded[c.id] ? true : false
 
                     return cs
                 })
@@ -13388,6 +13539,7 @@ Platform = function (app, listofnodes) {
                 self.sdk.categories.clbks.removed = {}
                 self.sdk.categories.clbks.added = {}
                 self.sdk.categories.clbks.tags = {}
+                self.sdk.categories.clbks.excluded = {}
 
 
 
@@ -13404,6 +13556,7 @@ Platform = function (app, listofnodes) {
                 self.sdk.categories.settings.tags || (self.sdk.categories.settings.tags = {})
                 self.sdk.categories.settings.selected || (self.sdk.categories.settings.selected = {})
                 self.sdk.categories.settings.added || (self.sdk.categories.settings.added = {})
+                self.sdk.categories.settings.excluded || (self.sdk.categories.settings.excluded = {})
 
                 if(clbk) clbk()
             }
@@ -15668,10 +15821,13 @@ Platform = function (app, listofnodes) {
                     })
                 },
 
-                recommended: function (p, clbk, cache) {
+                recommended: function (p, clbk, cache, methodparams) {
 
+                    if(!methodparams) methodparams = {}
 
                     if (!p) p = {};
+
+                    console.log("P", p)
 
                     self.app.user.isState(function (state) {
 
@@ -15691,7 +15847,6 @@ Platform = function (app, listofnodes) {
 
                         }
                         else {
-                            //var parameters = ['30', '259200', 600000, self.app.localization.key];
 
                             var period = p.period || self.sdk.node.shares.parameters.stor.period || self.sdk.node.shares.parameters.defaults.period || '4320' ///self.sdk.node.shares.parameters.defaults.period
 
@@ -15699,19 +15854,19 @@ Platform = function (app, listofnodes) {
 
                             var parameters = []
 
-                            parameters = ['30', period, (period * page) || '', self.app.localization.key]
+                            parameters = [p.count.toString(), period, (period * page) || '', self.app.localization.key]
 
                             //parameters = ['30', '259200', '', self.app.localization.key];
 
-                            if(p.video){
-                                parameters.push('video')
+                            if (p.type){
+                                parameters.push(p.type)
                             }
 
                             self.sdk.node.shares.get(parameters, function (shares, error) {
 
                                 if (shares) {
 
-                                    self.sdk.node.shares.loadvideoinfoifneed(shares, p.video, function(){
+                                    self.sdk.node.shares.loadvideoinfoifneed(shares, p.type == 'video', function(){
 
                                         if (state) {
                                             _.each(self.sdk.relayTransactions.withtemp('blocking'), function (block) {
@@ -15723,7 +15878,7 @@ Platform = function (app, listofnodes) {
 
 
 
-                                        if(p.video){
+                                        if(p.type == 'video'){
                                             shares = _.filter(shares, function(share){
 
                                                 if(!share.url) return
@@ -15753,7 +15908,9 @@ Platform = function (app, listofnodes) {
                                         clbk(shares, error, p)
                                 }
 
-                            }, 'gethotposts')
+                            }, methodparams.method || 'gethotposts')
+
+
                         }
 
                     })
@@ -15922,6 +16079,18 @@ Platform = function (app, listofnodes) {
                     self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
                         method : 'getusercontents'
                     })
+
+                },
+
+
+                historical : function(p, clbk, cache){
+
+                    console.log("historicalhistoricalhistoricalhistorical")
+
+                    self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
+                        method : 'gethistoricalstrip'
+                    })
+
                 },
 
                 hierarchical: function (p, clbk, cache, methodparams) {
@@ -15935,7 +16104,7 @@ Platform = function (app, listofnodes) {
                     p.count 10
                     p.lang lang
                     p.tagsfilter tagsfilter
-                    p.video
+                    p.type
 
                     */
 
@@ -15947,13 +16116,14 @@ Platform = function (app, listofnodes) {
                         p.lang || (p.lang = self.app.localization.key)
                         p.height || (p.height = 0)
                         p.tagsfilter || (p.tagsfilter = [])
+                        p.tagsexcluded || (p.tagsexcluded = [])
                         p.begin || (p.begin = '')
 
                         if (state) {
                             p.address = self.sdk.address.pnet().address;
                         }
 
-                        var key = p.count + (p.address || "") + "_" + (p.lang || "") + "_" + /*(p.height || "")  +*/ "_" + (p.tagsfilter.join(',')) + "_" + (p.begin || "") + (p.video ? "video" : '')
+                        var key = (methodparams.method || 'gethierarchicalstrip') + p.count + (p.address || "") + "_" + (p.lang || "") + "_" + /*(p.height || "")  +*/ "_" + (p.tagsfilter.join(',')) + "_" + (p.begin || "") + (p.type ? p.type : '')
 
                         if(p.author) key = key + p.author
 
@@ -15985,8 +16155,6 @@ Platform = function (app, listofnodes) {
                         else {
                             if (!storage[key] || cache == 'clear') storage[key] = [];
 
-
-
                             if (!p.txid) {
                                 if (storage[key].length) {
 
@@ -16010,16 +16178,17 @@ Platform = function (app, listofnodes) {
                                 return encodeURIComponent(t)
                             })
 
+                            p.tagsexcluded = _.map(p.tagsexcluded, function(t){
+                                return encodeURIComponent(t)
+                            })
+
                             /////temp
 
-                            if (p.video && !self.videoenabled){
-                                p.tagsfilter = ['video']
-                            }
-
+                            
 
                             ////
 
-                            var parameters = [Number(p.height), p.txid, p.count, p.lang, p.tagsfilter, p.video && self.videoenabled ? 'video' : ''];
+                            var parameters = [Number(p.height), p.txid, p.count, p.lang, p.tagsfilter, p.type ? p.type : '', '', '', p.tagsexcluded];
 
                             if(p.author) parameters.unshift(p.author)
 
@@ -16312,6 +16481,8 @@ Platform = function (app, listofnodes) {
 
                     var outs = [];
 
+                    console.log("tx", tx)
+
                     _.each(tx.vout, function (vout) {
                         var a = _.find(vout.scriptPubKey.addresses, function (a) {
                             return a == address
@@ -16506,8 +16677,6 @@ Platform = function (app, listofnodes) {
                     /*return*/
 
                     _.each(t, function (ts, w) {
-
-
                         var _finded = ts[txid]
 
                         if (_finded) {
@@ -16610,10 +16779,14 @@ Platform = function (app, listofnodes) {
 
                 },
                 checkTemp: function (alias, clbk) {
+
+                    console.log('checktemp, ', alias)
+
                     if (alias && alias.txid) {
 
                         self.sdk.node.transactions.get.tx(alias.txid, function (d, _error) {
 
+                            console.log(d)
 
                             if (clbk) {
 
@@ -16621,7 +16794,7 @@ Platform = function (app, listofnodes) {
 
                                 clbk(
                                     (errorcode == -5) || (errorcode == -8) ||
-                                    (deep(d, 'confirmations') > 0)
+                                    (deep(d, 'height') > 0)
                                 )
                             }
                         })
@@ -17264,6 +17437,16 @@ Platform = function (app, listofnodes) {
 
                                 self.sdk.node.transactions.storage[id] = d
 
+                                if(!d.confirmations) {
+                                    if(d.height){
+                                        if (self.currentBlock)
+                                            d.confirmations = Math.max(self.currentBlock - d.height, 0)
+                                    }
+                                    else{
+                                        d.confirmations = 0
+                                    }
+                                }
+
                                 if (clbk)
                                     clbk(d)
 
@@ -17524,7 +17707,7 @@ Platform = function (app, listofnodes) {
 
                             var inputs = [];
 
-                            if(!(obj.donate && obj.donate.v.length)){
+                            if(!(obj.donate && obj.donate.v.length) && obj.type !== 'contentBoost'){
                                 inputs = self.sdk.node.transactions.create.selectBestInputs(unspent)
                             }
 
@@ -17581,6 +17764,45 @@ Platform = function (app, listofnodes) {
                                 }
 
                                 feerate = Number((feerate * smulti).toFixed(0));
+                            }
+
+                            if (obj.type === 'contentBoost' && obj.amount.v){
+
+                                feerate = 0;
+
+                                var lastUnspent = _.clone(unspent).reverse();
+
+                                for (var u of lastUnspent){
+
+                                    if (obj.amount.v >= totalInputs){
+
+                                        totalInputs += u.amount;
+
+                                        inputs.push({
+                                            txId: u.txid,
+                                            vout: u.vout,
+                                            amount: u.amount,
+                                            scriptPubKey: u.scriptPubKey,
+                                        })
+
+                                    } else {
+
+                                        break;
+                                    }
+
+                                }  
+
+                                if (obj.amount.v > totalInputs){
+
+                                    sitemessage(self.app.localization.e('e13117'))
+
+                                    if (clbk){
+                                        clbk(null, self.app.localization.e('e13117'));
+                                    }
+
+                                    return;
+
+                                }
                             }
 
                             self.sdk.node.transactions.create[obj.type](inputs, obj, /*feerate,*/ function (a, er, data) {
@@ -17764,13 +17986,19 @@ Platform = function (app, listofnodes) {
                             var embed = bitcoin.payments.embed({ data: opreturnData });
                             var i = 0;
 
+                            if (obj.type !== 'contentBoost'){
+
+
+                                outputs.push({
+                                    amount : 0,
+                                    deleted : true,
+                                    address : address.address
+                                })
+    
+                                
+                            }
+
                             txb.addOutput(embed.output, 0);
-                            ///?
-                            outputs.push({
-                                amount : 0,
-                                deleted : true,
-                                address : address.address
-                            })
 
                             if(self.sdk.user.reputationBlockedMe()){
 
@@ -17781,12 +18009,7 @@ Platform = function (app, listofnodes) {
                                 return
                             }
 
-
-
-
                             self.sdk.node.transactions.get.unspent(function (unspents) {
-
-
 
                                 if (p.relay) {
 
@@ -17813,7 +18036,7 @@ Platform = function (app, listofnodes) {
                                     !(obj.donate && obj.donate.v.length) &&
 
 
-                                    unspents.length < 50 && amount > 0.2 * smulti) {
+                                    unspents.length < 50 && amount > 0.2 * smulti && obj.type !== 'contentBoost') {
 
                                     var ds = Number((amount / 2).toFixed(0))
 
@@ -17851,9 +18074,15 @@ Platform = function (app, listofnodes) {
                                     })
                                 }
 
-
                                 var totalReturn = Number((amount - totalDonate - (fees || 0)).toFixed(0));
 
+
+                                if (obj.type === 'contentBoost'){
+
+                                    var amountMulti = obj.amount.v * smulti;;
+                                    totalReturn -= amountMulti;
+
+                                }
 
                                 if (obj.donate && obj.donate.v.length && (totalReturn < 0 || totalDonate <= fees)){
 
@@ -17876,7 +18105,6 @@ Platform = function (app, listofnodes) {
                                     })
 
                                     var tx = txb.build()
-
 
                                     if (obj.donate && obj.donate.v.length && !obj.fees.v){
 
@@ -17930,6 +18158,10 @@ Platform = function (app, listofnodes) {
                                                     temp[obj.type][d] = alias;
 
                                                     alias.inputs = inputs
+
+
+                                                    console.log('outputs', outputs)
+
                                                     alias.outputs = _.map(outputs, function(output){
                                                         return {
                                                             address : output.address,
@@ -17943,7 +18175,7 @@ Platform = function (app, listofnodes) {
                                                     var ids = _.map(inputs, function (i) {
 
                                                         return {
-                                                            txid: i.txId,
+                                                            txid: i.txId || i.txid,
                                                             vout: i.vout
                                                         }
 
@@ -18183,8 +18415,12 @@ Platform = function (app, listofnodes) {
                     commentShare: function (inputs, commentShare, clbk, p) {
                         this.common(inputs, commentShare, TXFEE, clbk, p)
 
-
                     },
+
+                    contentBoost: function (inputs, comment, /*fees, */clbk, p) {
+                        this.common(inputs, comment, 0, clbk, p)
+                    },
+
 
                     cScore: function (inputs, cScore, clbk, p) {
                         this.common(inputs, cScore, TXFEE, clbk, p)
@@ -20795,6 +21031,12 @@ Platform = function (app, listofnodes) {
             },
 
             paddingplaceholder : function(url, middle, clbk, elf){
+
+                if(!url){
+                    middle(clbk)
+                    return
+                }
+
                 return self.sdk.videos.info([url]).catch((e)=>{
                     return Promise.resolve()
                 }).then(() => {
@@ -20804,7 +21046,7 @@ Platform = function (app, listofnodes) {
                         if(self.sdk.videos.storage[url] && self.sdk.videos.storage[url].data){
                             var info = self.sdk.videos.storage[url].data;
 
-                            var loadingPlayer = elf ? elf() : p.el.find('.jsPlayerLoading');
+                            var loadingPlayer = elf ? elf() : p.el.find('.jsPlayerLoading-matte');
 
                             var width = loadingPlayer.width();
 
@@ -20936,7 +21178,7 @@ Platform = function (app, listofnodes) {
                 var _v = localStorage['pn_videovolume_2']
 
                 if(typeof _v == 'undefined') {
-                    if(window.cordova || isMobile())
+                    if(self.app.mobileview)
                         _v = '0'
                     else
                         _v = '1'
@@ -21470,30 +21712,7 @@ Platform = function (app, listofnodes) {
 
                 var nm = trimHtml(m, symbols)
 
-                //share.message;
-
-                /*var symbols = 20;
-
-                if (extendedpreview) {
-                    m = '';
-
-                    if (share.caption) m = m + '' + share.caption + ' '
-
-                    if (share.message) m = m + '' + share.message + ''
-
-                    symbols = 180;
-                }*/
-
-
-                /* var nm = filterXSS(trimHtml(m, symbols), {
-                    stripIgnoreTag: true
-                });*/
-
                 var links = _.isObject(share.message) ? [] : linkify.find(share.message);
-
-                /*_.each(links, function(l){
-                    nm = nm.replace(l.href, "")
-                })*/
 
                 var images = _.map(share.images, function (i) {
                     return {
@@ -21579,11 +21798,8 @@ Platform = function (app, listofnodes) {
 
                         else
                         {
-                                h += '<b>' + flb(self.app.localization.e('video')) + '</b> <i class="fas fa-play"></i> '
+                            h += '<b>' + flb(self.app.localization.e('video')) + '</b> <i class="fas fa-play"></i> '
                         }
-
-
-
 
                     h += '</div>'
                 }
@@ -21624,7 +21840,7 @@ Platform = function (app, listofnodes) {
 
                 h += "+" + platform.mp.coin(clearStringXss(data.amountall || data.tx.amount));
 
-                if(!isMobile())
+                
                     h+= " PKOIN"
 
 
@@ -21787,7 +22003,7 @@ Platform = function (app, listofnodes) {
 
                 if (gotoprofile) h += link
 
-                h += '<div class="usericon" ban=".gif" image="' + clearStringXss(src || '') + '">'
+                h += '<div class="usericon" ban=".gif" image="' + (clearStringXss(src || '') || '*') + '">'
 
                 if (!src && letter){
 
@@ -22458,6 +22674,8 @@ Platform = function (app, listofnodes) {
                         }
 
                         var outs = platform.sdk.node.transactions.toUTs(tx, address);
+
+                        console.log('outs', outs, address, tx)
 
                         _.each(outs, function (o) {
 
@@ -23698,6 +23916,7 @@ Platform = function (app, listofnodes) {
 
         var arrangeMessages = function(){
 
+
 			var offset = 0;
 
 			var maxCount = 4;
@@ -23705,17 +23924,11 @@ Platform = function (app, listofnodes) {
 
 			var boffset = 0;
 
-            var mtbl = (isMobile() || (isTablet() && platform.app.width <= 768))
+            var mtbl = platform.app.mobileview
 
 			if (mtbl){
 				maxCount = 1;
                 showremove = 0;
-			}
-			else
-			{
-				/*if (typeof _Electron == 'undefined') {
-                    boffset = 60;
-                }*/
 			}
 
 			var remove = self.fastMessages.length - maxCount;
@@ -23818,9 +24031,11 @@ Platform = function (app, listofnodes) {
         }
 
         self.destroyMessages = function () {
+
             _.each(self.fastMessages, function (message, i) {
                 destroyMessage(message, 1, true)
             })
+
             setTimeout(function(){
                 arrangeMessages()
             }, 301)
@@ -23860,9 +24075,9 @@ Platform = function (app, listofnodes) {
 
             message.el.on('click', function(){
 
-                if (isTablet()){
+                if (platform.app.mobileview){
 
-                    self.nav.api.go({
+                    platform.app.nav.api.go({
                         open : true,
                         href : 'notifications',
                         inWnd : true,
@@ -23870,12 +24085,6 @@ Platform = function (app, listofnodes) {
                         essenseData : {
                         }
                     })
-
-                    /*platform.app.nav.api.load({
-                        open : true,
-                        href : 'userpage?id=notifications&report=notifications',
-                        history : true,
-                    })*/
 
                 }
                 else{
@@ -23935,8 +24144,6 @@ Platform = function (app, listofnodes) {
             }
 
             arrangeMessages();
-
-
 
             return message
         }
@@ -24415,7 +24622,7 @@ Platform = function (app, listofnodes) {
                 txid: "6119caaadaef37be8f3716be8280e88206adf043f38fc1665d7e42bdcf90128a"
             })*/
 
-			/**self.messageHandler({
+			/*self.messageHandler({
                 addr: "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82",
                 addrFrom: "PTcArXMkhsKMUrzQKn2SXmaVZv4Q7sEpBt",
                 mesType: "postfromprivate",
@@ -25257,6 +25464,8 @@ Platform = function (app, listofnodes) {
 
                 if (data.msg == 'update-available' && (data.linux || data.macos)) {
                     updateAvailable()
+
+                    // TODO APPLICATIONS PAGE
                 }
             }
 
@@ -25490,17 +25699,18 @@ Platform = function (app, listofnodes) {
         self.sdk.relayTransactions.load();
         self.applications = self.__applications()
         self.sdk.theme.load()
+        self.sdk.lentaMethod.load()
 
         self.sdk.uiScale.load();
-        self.sdk.uiScale.listenKeys();
-        
+        self.sdk.uiScale.listenScalingEvents();
+
         self.sdk.system16.init()
 
         //self.app.platform.sdk.node.sys.load()
 
         setTimeout(function(){
             self.initSounds();
-        }, 3000)
+        }, 35000)
 
         if (self.app.errors.clbks) {
             self.app.errors.clbks.platform = self.appstate
@@ -25694,6 +25904,46 @@ Platform = function (app, listofnodes) {
         }
     }
 
+    self.acceptterms = function(clbk){
+
+        if(window.cordova){
+            var key = 'acceptterms'
+
+            var aterms = localStorage[key]
+
+            if (!aterms){
+                app.nav.api.load({
+                    open : true,
+                    id : 'terms',
+                    inWnd : true,
+                    essenseData : {
+                        success : function(){
+    
+                            localStorage[key] = new Date();
+                            
+                            setTimeout(function(){
+                                if(clbk) clbk()
+                            }, 300)
+                            
+                        }
+                    },
+    
+                    clbk : function(){
+                        
+                    }
+                })
+    
+                return
+            }
+        }
+
+        
+
+
+        if(clbk) clbk()
+        
+    }
+
     self.prepareUser = function (clbk) {
 
         self.preparingUser = true;
@@ -25748,12 +25998,17 @@ Platform = function (app, listofnodes) {
 
                     self.app.peertubeHandler.init()
 
+                    console.log("HERE")
+
+
                     if (clbk)
                         clbk()
 
                     setTimeout(function(){
                         self.matrixchat.init()
                     }, 300)
+
+                    setTimeout(self.acceptterms, 5000)
 
                     setTimeout(function(){
 
@@ -25859,9 +26114,15 @@ Platform = function (app, listofnodes) {
                     if(clbk) clbk()
                 }
                 else{
-                    importScript('chat/matrix-element.min.js?v=9', clbk)
 
-                    //importScript('chat/matrix-element.js?v=9', clbk)
+                    var vs = '10'
+
+                    if (typeof numfromreleasestring != 'undefined'){
+                        vs = numfromreleasestring(window.packageversion)
+                    }
+
+                    importScript('chat/matrix-element.min.js?v=' + vs, clbk)
+
                 }
 
             }
@@ -25875,7 +26136,7 @@ Platform = function (app, listofnodes) {
 
                 var link = 'contact?id=' + hexEncode(address)
 
-                if(isMobile() || window.cordova){
+                if (self.app.mobileview){
                     self.matrixchat.core.apptochat(link)
                 }
                 else{
@@ -25919,8 +26180,8 @@ Platform = function (app, listofnodes) {
                                 <matrix-element
                                     address="${a}"
                                     privatekey="${privatekey}"
-                                    pocketnet="`+( (isMobile() || isTablet() || window.cordova) ? '' : 'true')+`"
-                                    mobile="`+( (isMobile() || isTablet() || window.cordova) ? 'true' : '')+`" 
+                                    pocketnet="`+( self.app.mobileview ? '' : 'true')+`"
+                                    mobile="`+( self.app.mobileview ? 'true' : '')+`" 
                                     ctheme="`+self.sdk.theme.current+`"
                                     localization="`+self.app.localization.key+`"
                                     fcmtoken="`+(self.fcmtoken || "")+`"
@@ -25948,6 +26209,12 @@ Platform = function (app, listofnodes) {
             }
         },
 
+        changePip : function(){
+            if (self.matrixchat.el){
+                self.matrixchat.el.find('matrix-element').attr('pip', self.app.mobile.pip.enabled)
+            }
+        },
+
         changeTheme : function(){
             if (self.matrixchat.el){
                 self.matrixchat.el.find('matrix-element').attr('ctheme', self.sdk.theme.current)
@@ -25963,7 +26230,7 @@ Platform = function (app, listofnodes) {
         initevents : function(){
             if (self.matrixchat.el){
 
-                if(isTablet() || isMobile() || window.cordova){
+                if(self.app.mobileview){
 
                     self.matrixchat.chatparallax = new SwipeParallaxNew({
 
@@ -25976,9 +26243,7 @@ Platform = function (app, listofnodes) {
                             left : {
                                 cancellable : true,				
                                 
-                                basevalue : function(){
-                                    return self.app.width || $(window).width()
-                                },
+                              
     
                                 positionclbk : function(px){
                                 },
@@ -25989,9 +26254,7 @@ Platform = function (app, listofnodes) {
                                         return el.className && el.className.indexOf('noswipepnt') > -1
                                     })) return false
 
-                                    if (self.matrixchat.core && (!self.matrixchat.core.canback || self.matrixchat.core.canback()))
-
-                                        return true
+                                    if (self.matrixchat.core && (!self.matrixchat.core.canback || self.matrixchat.core.canback())) return true
                                 },
     
                                 restrict : true,
@@ -26009,20 +26272,6 @@ Platform = function (app, listofnodes) {
         
                     }).init()
 
-
-
-					/*self.matrixchat.el.swipe({
-						swipeLeft : function(e, phase, direction, distance){
-                            if(_.find(e.path, function(el){
-                                return el.className && el.className.indexOf('noswipepnt') > -1
-                            })) return
-
-
-                            if (self.matrixchat.core && (!self.matrixchat.core.canback || self.matrixchat.core.canback()))
-                                self.matrixchat.core.backtoapp()
-
-						},
-					})*/
 
 				}
 
@@ -26165,7 +26414,7 @@ Platform = function (app, listofnodes) {
         showed : function(){
             if(!self.matrixchat.core){ return false }
 
-            if(isTablet() || isMobile() || window.cordova){
+            if (self.app.mobileview){
                 return !self.matrixchat.core.hiddenInParent
             }
 
@@ -26183,7 +26432,7 @@ Platform = function (app, listofnodes) {
 
             core.backtoapp = function(link){
 
-                if (isTablet() ||isMobile() || window.cordova)
+                if (self.app.mobileview)
                     app.nav.api.history.removeParameters(['pc'], null, {replaceState : true})
 
                 if (link){
@@ -26216,25 +26465,17 @@ Platform = function (app, listofnodes) {
 
                 self.app.actions.playingvideo()
 
-                if (isTablet() ||isMobile() || window.cordova) self.app.actions.restore()
+                if (self.app.mobileview) self.app.actions.restore()
 
-                //app.el.html.removeClass('chatshowed')
-
-                if(document.activeElement) document.activeElement.blur()
+                if (document.activeElement) document.activeElement.blur()
 
                 if (self.matrixchat.core){
                     self.matrixchat.core.cancelshare ? self.matrixchat.core.cancelshare() : '' ;
 
-                    self.matrixchat.core.hideInParent(isTablet() ||isMobile() || window.cordova ? true : false )
+                    self.matrixchat.core.hideInParent(self.app.mobileview ? true : false )
                 }
 
-                
-
-                if (isTablet() || isMobile() || window.cordova){
-
-                    /*self.matrixchat.el.one('transitionend webkitTransitionEnd oTransitionEnd', function () {
-                        self.app.actions.onScroll()
-                    });*/
+                if (self.app.mobileview){
 
                     setTimeout(function(){
                         self.app.actions.onScroll()
@@ -26273,14 +26514,14 @@ Platform = function (app, listofnodes) {
 
                 self.app.actions.playingvideo()
 
-                if (isTablet() ||isMobile() || window.cordova){
+                if (self.app.mobileview){
                     setTimeout(function(){
                         self.app.actions.offScroll()
                         self.app.actions.optimize()
                     })
                 }
 
-                if (isTablet() || isMobile() || window.cordova)
+                if (self.app.mobileview)
                     app.nav.api.history.addParameters({
                         'pc' : '1'
                     })
@@ -26299,8 +26540,8 @@ Platform = function (app, listofnodes) {
 
             self.matrixchat.core = core
 
-            core.hideOptimization(isTablet() || isMobile() || window.cordova ? true : false)
-            core.hideInParent(isTablet() || isMobile() || window.cordova ? true : false)
+            core.hideOptimization(self.app.mobileview ? true : false)
+            core.hideInParent(self.app.mobileview ? true : false)
             core.externalLink(self.matrixchat)
 
             self.app.platform.ws.messages["newblocks"].clbks.newsharesLenta =
@@ -26432,6 +26673,8 @@ Platform = function (app, listofnodes) {
 
         var f = function (e, resume) {
 
+            console.log("FOCUS")
+
             var focustime = platform.currentTime()
             var time = focustime - (unfocustime || focustime)
 
@@ -26472,7 +26715,20 @@ Platform = function (app, listofnodes) {
         var uf = function () {
             self.focus = false;
 
-            unfocustime = platform.currentTime()
+            unfocustime = platform.currentTime()    
+
+            setTimeout(function(){
+
+                if (self.focus) return 
+
+                if (self.app.pipwindow){
+                    self.app.mobile.pip.enable(self.app.pipwindow.el)
+                }
+            }, 200)
+           
+
+            //if (self.app.playingvideo)
+            //    self.app.mobile.pip.enable(self.app.playingvideo.el ? self.app.playingvideo.el.find('.video-js') : '');
         }
 
 

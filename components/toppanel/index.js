@@ -16,24 +16,21 @@ var toppanel = (function(){
 				var links = {
 
 					index : "index",
-		
+
 					sub : "index?r=sub",
-		
+
 					recommended : 	"index?r=recommended"
-		
-		
+
+
 				}
 
 				if (self.app.platform.videoenabled ){
 					links.video = "index?video=1"
 				}
 
-				const isCordova = (isMobile() && window.cordova);
+				const isCordova = (window.cordova);
 				const isElectron = (typeof _Electron !== 'undefined' && !!window.electron);
 				const isSaveSupported = (isCordova || isElectron);
-
-				alert('IS SAVE SUPPORTED ' + isSaveSupported);
-				console.log('IS SAVE SUPPORTED', isCordova, isElectron, isSaveSupported);
 
 				if (isSaveSupported) {
 					links.saved = "index?r=saved"
@@ -52,7 +49,7 @@ var toppanel = (function(){
 					labels.push(self.app.localization.e('video'))
 				}
 
-				if ((isMobile() && window.cordova) || (typeof _Electron != 'undefined' && window.electron)) {
+				if ((window.cordova) || (typeof _Electron != 'undefined' && window.electron)) {
 					labels.push(self.app.localization.e('downloaded'));
 				}
 
@@ -60,10 +57,10 @@ var toppanel = (function(){
 					type : "VALUES",
 					name : "Contents",
 					id : 'contents',
-					possibleValues : vs, 
+					possibleValues : vs,
 					possibleValuesLabels : labels,
 					defaultValue : value
-				
+
 				})
 
 				contents.value = value
@@ -76,9 +73,9 @@ var toppanel = (function(){
 						open : true,
 						href : href,
 						history : true,
-						
+
 					})
-					
+
 				}
 
 				return contents;
@@ -87,7 +84,7 @@ var toppanel = (function(){
 		}
 
 		var events = {
-			
+
 		}
 
 		var renders = {
@@ -100,7 +97,7 @@ var toppanel = (function(){
 					el.menu.find('.showcategories').removeClass('active')
 				}
 
-				
+
 			},
 			menu : function(pathname){
 
@@ -108,44 +105,35 @@ var toppanel = (function(){
 
 				self.app.user.isState(function(state){
 
-					if(isMobile() && pathname != 'index'){
-						el.c.addClass('hidden')
-					}
-					else{
-						el.c.removeClass('hidden')
+					self.shell({
 
-						self.shell({
+						name :  'menu',
+						el :   el.menu,
+						data : {
+							pathname : pathname,
+							state : state,
+							mobile : isMobile(),
+							tagsSelected : self.app.platform.sdk.categories.gettags().length,
+							selector : selector
+						},
 
-							name :  'menu',
-							el :   el.menu,
-							data : {
-								pathname : pathname,
-								state : state,
-								mobile : isMobile(),
-								tagsSelected : self.app.platform.sdk.categories.gettags().length,
-								selector : selector
-							},
-	
-						}, function(_p){
+					}, function(_p){
 
-							updateNew()
-	
-							ParametersLive([selector], _p.el)
+						updateNew()
 
-							el.menu.find('.showcategories').on(clickAction(), function(){
+						ParametersLive([selector], _p.el)
 
-								var mainmoduleAction = deep(self.app, 'modules.main.module.showCategories')
-				
-								if (mainmoduleAction) mainmoduleAction(true)
-							})
-	
+						el.menu.find('.showcategories').on(clickAction(), function(){
+
+							var mainmoduleAction = deep(self.app, 'modules.main.module.showCategories')
+
+							if (mainmoduleAction) mainmoduleAction(true)
 						})
-					}
 
-					
+					})
+
 				})
 
-				
 			}
 		}
 
@@ -154,7 +142,7 @@ var toppanel = (function(){
 
 			},
 			load : function(){
-				
+
 			}
 		}
 
@@ -187,9 +175,7 @@ var toppanel = (function(){
 
 			self.app.platform.sdk.categories.clbks.tags.toppanel =
 			self.app.platform.sdk.categories.clbks.selected.toppanel = function(data){
-
 				renders.categoriesChanged()
-				
 			}
 
 			if (self.app.platform.sdk.newmaterials.clbks)
@@ -212,10 +198,10 @@ var toppanel = (function(){
 
 				delete self.app.platform.sdk.newmaterials.clbks.update.toppanel
 				delete self.app.nav.clbks.history.toppanel
-				
+
 				el = {};
 			},
-			
+
 			init : function(p){
 
 				state.load();

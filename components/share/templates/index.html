@@ -15,7 +15,12 @@ var postline = function(){ %>
 	<div class="mobilecaption">
 		<% if(!share.aliasid) {%>
 
-			<span><%=e('newShare')%></span>
+			<% if(essenseData.repost) {%>
+				<span><%=e('newRepost')%></span>
+			<% } else { %> 
+				<span><%=e('newShare')%></span>
+			<% } %>
+			
 
 			<!--<% if(postcnt === 0) {%>
 				<span><%=e('firstShare')%></span>
@@ -29,7 +34,7 @@ var postline = function(){ %>
 			<span><%=e('editpost')%></span>
 		<% } %>
 	</div>
-	<div class="absolutetxwrapper customscroll">
+	<div class="absolutetxwrapper">
 
 			<div class="iconWrapper">
 
@@ -104,10 +109,10 @@ var postline = function(){ %>
 					<div class="cntwrk linewrapper">
 						<div class="sortablepaddingspacer">
 
-							<div class="tgsWrapperMain">
+							<div class="settingsWrapper">
 							</div>
 
-							<div class="settingsWrapper">
+							<div class="tgsWrapperMain">
 							</div>
 
 							<% 

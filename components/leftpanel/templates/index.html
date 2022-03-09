@@ -1,24 +1,52 @@
 <div id="<%-module.map.id%>">
 
-
-	<div class="mobiledevice">
-		<div class="closecategoriesContainer">
-			<button elementsid="closecategories" class="button closecategories ghost">
-				<%= e('close') %> <i class="fas fa-filter"></i>
-			</button>
+	<div class="standartMobileCaption">
+		<div class="backWrapper closecategories">
+			<i class="fas fa-arrow-left"></i>
+		</div>
+		<div class="captinWrapper">
+			<span>
+				<%= e('filters') %>
+			</span>
+		</div>
+		<div class="additionalWrapper">
 		</div>
 	</div>
 
-	<div class="catscnt">	
-	</div>
-	
-	<div class="tagscnt">	
-	</div>
 
-	<div class="currentsearchcnt">
-	</div>
+		<div class="menu wrpmobclass">
+		</div>
 
-	<div class="subtop">
-	</div>
+		<div class="bestfirst wrpmobclass">
+		</div>
+		<div class="catscnt wrpmobclass">	
+		</div>
+		<div class="tagscnt wrpmobclass">	
+		</div>
+		<div class="currentsearchcnt wrpmobclass">
+		</div>
+		<div class="subtop wrpmobclass">
+		</div>
+		
+		<div class="rightbottomnav wrpmobclass">
+			<div class="rightbottomlinks">
+				<a elementsid="https://<%-app.options.url%>/blockexplorer/" href="https://<%-app.options.url%>/blockexplorer/"><%= e('e13182') %></a>
+				<span>&middot;</span>
+				<a elementsid="aboutlink" href="about"><%= e('aboutus') %></a>
+				<span>&middot;</span>
+				<a elementsid="about?id=about-faq" href="about?id=about-faq">F.A.Q.</a>
+				<span>&middot;</span>
+				<a elementsid="help?page=applications" href="applications"><%= e('e14106') %></a>
+				<span>&middot;</span>
+				<a elementsid="help" href="help"><%= e('e14100') %></a>
+
+				<% var year = new Date().getFullYear() %>
+
+				<div class="copyright">
+					<img class="copy_logo" src="img/logogray.png" alt="logo">
+					<span class="copyright_text"><%-app.meta.fullname%> <% if(window.packageversion) {%> <%-window.packageversion%><% } %>, 2019&mdash;<%-year%></span>
+				</div>
+			</div>
+		</div>
 
 </div>

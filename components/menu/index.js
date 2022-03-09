@@ -106,8 +106,9 @@ var menu = (function(){
 
 			sitenameToNav : function(){
 
+				return
+				
 				if(!events.navinit.el) return
-
 				
 				var pn = self.app.nav.current.href
 				
@@ -152,28 +153,6 @@ var menu = (function(){
 
 		var events = {
 
-			navinit : {
-				init : function(el){
-
-					if(!isTablet()){
-
-						self.app.events.scroll.menu = actions.sitenameToNav
-
-						self.app.nav.clbks.history.menu = function(href){
-							actions.sitenameToNav()
-						}
-					}
-
-					
-				},
-
-				destroy : function(){
-
-					delete self.app.events.scroll.menu
-					delete self.app.nav.clbks.history.menu
-
-				}
-			},
 
 			chats : {
 				click : function(){
@@ -208,11 +187,20 @@ var menu = (function(){
 							if (parameters().r == k) k = 'index'
 
 							if (k != 'index') {
+
 								if (k == 'video'){
 									k = 'index?video=1'
 								}
 								else{
-									k = 'index?r=' + k
+
+									if (k == 'read'){
+										k = 'index?read=1'
+									}
+									else{
+										k = 'index?r=' + k
+									}
+
+								
 								}
 								
 							}
@@ -593,7 +581,6 @@ var menu = (function(){
 
 							search : function(value, clbk, e, helpers){
 
-								console.log('menusearch.active', menusearch.active)
 
 								if(!menusearch.active){
 
@@ -663,7 +650,6 @@ var menu = (function(){
 
 							active : function(a){
 
-								console.log("setactive", a)
 
 								if (a || (parameters().ss || parameters().sst)){
 									el.c.addClass('searchactive')
@@ -690,19 +676,7 @@ var menu = (function(){
 					
 				}
 			},
-			newaccount: {
-				
-				click : function(){
-					self.app.mobile.vibration.small()
-					self.nav.api.go({
-						href : 'registration',
-						history : true,
-						open : true
-					})	
-				}
-
-			},
-
+	
 			state : {
 				init : function(el){
 					
@@ -722,7 +696,7 @@ var menu = (function(){
 						action()
 					}
 
-					if(!isMobile())
+					if(!self.app.mobileview)
 						el.tooltipster({
 							theme: 'tooltipster-light',
 							maxWidth : 300,
@@ -752,9 +726,9 @@ var menu = (function(){
 					
 					self.nav.api.go({
 						open : true,
-						href : isMobile() ? 'wallet' : 'userpage?id=wallet',
+						href : self.app.mobileview ? 'wallet' : 'userpage?id=wallet',
 						history : true,
-						inWnd : isMobile()
+						inWnd : self.app.mobileview
 					})
 					
 				},
@@ -1079,12 +1053,12 @@ var menu = (function(){
 					data.loc = loc;
 					data._SEO = _SEO;
 					data.lkey = app.localization.current()
-					data.theme = self.app.platform.sdk.theme.current
+					data.theme = self.app.platform.sdk.theme.current == "white" ? 'white' : 'black'
 
 
 					var userinfo = deep(app, 'platform.sdk.user.storage.me')
 
-					data.haschat = self.app.platform.matrixchat.core// && (userinfo && !(userinfo.temp || userinfo.relay || userinfo.fromstorage))
+					data.haschat = self.app.platform.matrixchat.core
 
 				if(p.state){
 
@@ -1171,15 +1145,16 @@ var menu = (function(){
 
 			showsearch : function(v){
 
-
-				console.log('showsearch showsearch', v)
-
-				if (v /*&& !isMobile()*/){
-					el.c.addClass('searchactive')
+				if (el.c){
+					if (v){
+						el.c.addClass('searchactive')
+					}
+					else{
+						el.c.removeClass('searchactive')
+					}
 				}
-				else{
-					el.c.removeClass('searchactive')
-				}
+
+				
 
 				if(menusearch) menusearch.setvalue(v.replace('tag:', "#"))
 
@@ -1190,7 +1165,6 @@ var menu = (function(){
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
-				el.a = p.el.find('.additionalbar');
 				el.cart = el.c.find('.cart');
 				el.likes = el.c.find('.favorites');
 

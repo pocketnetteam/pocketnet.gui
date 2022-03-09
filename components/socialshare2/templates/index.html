@@ -15,7 +15,7 @@
 				<div class="flexWrapper">	
 
 					<div class="url">
-						<button elementsid="urlbutton" class="button ghost">
+						<button elementsid="urlbutton" class="button black">
 							<%- e('copyLink') %> <i class="fas fa-link"></i>
 						</button>
 					</div>
@@ -25,7 +25,7 @@
 						<% if(!share || !share.visibility() || share.visibility() == 'reg'){ %>
 
 							<div class="chat">
-								<button elementsid="chatbutton" class="button ghost ">
+								<button elementsid="chatbutton" class="button black ">
 									<%- e('sendMessenger') %> <i class="fas fa-envelope"></i>
 								</button>
 							</div>
@@ -41,7 +41,7 @@
 
 							<div elementsid="itemforrepost" class="item forrepost">
 
-								<button class="button ghost ">
+								<button class="button black ">
 									<%- e('repost') %> <i class="fas fa-reply"></i>
 								</button>
 
@@ -54,7 +54,7 @@
 					<% if(window.cordova) {%>
 					
 						<div class="nativeshare">
-							<button elementsid="nativeshare" class="button ghost">
+							<button elementsid="nativeshare" class="button black">
 								<%- e('shareVia') %> <i class="fas fa-share-alt"></i>
 							</button>
 						</div>

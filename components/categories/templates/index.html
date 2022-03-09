@@ -3,16 +3,19 @@
 	<div class="wrp">
 		<div class="rcptwrp">
 			<div class="tcaptionwrapper">
-				<div class="tcaptiontable table">
+				<div class="tcaptiontable">
 					<div class="tcaption">
-						<span><%=e('Categories')%></span> 
+						<span><%=e('Categories').toUpperCase()%></span> 
 					</div>	
-					<div elementsid="addcategory" class="ticon addcategory">
-						<i class="fas fa-plus"></i>
+					<div class="buttons">
+						<div elementsid="addcategory" class="ticon addcategory">
+							<i class="far fa-plus-square"></i>
+						</div>
+						<div elementsid="clearcategories" class="mlab ticon clearcategories">
+							<i class="fas fa-ban"></i>
+						</div>
 					</div>
-					<div elementsid="clearcategories" class="mlab ticon clearcategories">
-						<i class="fas fa-ban"></i>
-					</div>
+
 				</div>
 			</div>
 			

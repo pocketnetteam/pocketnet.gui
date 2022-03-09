@@ -192,8 +192,6 @@ var lastcomments = (function(){
 			destroy : function(){
 				el = {};
 
-				console.log("DESTROYED")
-
 				delete self.app.platform.ws.messages['newblocks'].clbks['lastcomments'];
 				delete self.app.platform.ws.messages['new block'].clbks['lastcomments'];
 				delete self.app.platform.clbks._focus.lastcomments;

@@ -38,10 +38,53 @@ deep = function(obj, key){
     }
 }
 
+getbaseorientation = function(){
+	
+	var angle90 = {
+		portrait : 'landscape',
+		landscape : 'portrait'
+	}
+
+	var orientation = _.clone(deep(window, 'screen.orientation') || {
+		angle: 0,
+		type: "portrait-primary"
+	})
+
+	orientation.type = orientation.type.split('-')[0]
+
+    var type = orientation.type
+
+	if( ((orientation.angle / 90).toFixed(0)) % 2 ){
+		type = angle90[type]
+	}
+
+	if(!angle90[type]) type = 'portrait' 
+
+	return type
+}
+
+var addzeros = function(v){
+    v = v.toString()
+
+    var zs = 5 - v.length
+
+    for(var i = 0; i < zs; i++){
+        v = '0' + v
+    }
+
+    return v
+}
 
 numfromreleasestring = function(v){
-    v = v.replace(/[^0-9]/g, '')
+
+    var vss = v.split('.')
+
+    vss[2] = addzeros(vss[2])
+
+    v = vss.join('.').replace(/[^0-9]/g, '')
+
     var vs = Number(v.substr(0, 1) + '.' + v.substr(1))
+
     return vs
 }
 
@@ -490,11 +533,9 @@ importScript = function(src, callback, appendTo, app, module, _require) {
 
         var pref = '../';
 
-
         if(typeof _Electron != 'undefined' && _Electron == true) pref = './'
 
-
-        if(module) {
+        if (module) {
             delete require.cache[require.resolve(pref + src)]
             
             var script = require(pref + src);
@@ -509,7 +550,13 @@ importScript = function(src, callback, appendTo, app, module, _require) {
         {
 
             if (_require){
-                _require()
+                if(typeof _require == 'function'){
+                    _require()
+                }
+                else{
+                    window[_require] = require(pref + src)
+                }
+                
             }
             else
             {

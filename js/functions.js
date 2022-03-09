@@ -1,3 +1,5 @@
+//window.onanimationiteration = console.log;
+
 /* PDF */
 
 
@@ -122,7 +124,6 @@
 		}
 
 		return n;
-		
  	}
 
  	dateToStr = function (d) {
@@ -511,8 +512,9 @@
 			content = p.content || null,
 
 			id = 'w' + makeid().split('-')[0],
-			nooverflow = p.nooverflow || app.scrollRemoved,
+			nooverflow = (p.nooverflow || app.scrollRemoved || p.pip),
 			el = p.el || p.app.el.windows;
+
 
 
 		var parallax = null
@@ -528,7 +530,9 @@
 			if (wnd) return wnd.find(s);
 		}
 
-		
+		var pippositions = ['default', 'bottom']
+
+		self.independent = p.pip
 
 		self.redraw = function(){
 
@@ -562,7 +566,7 @@
 
 			if(!p.type) p. type = ''
 
-			var h = p.allowHide ? '<div class="wndback" id='+id+'></div><div class="wndinner">' : '<div class="wndback" id='+id+'></div><div class="_close roundclosebutton '+closedbtnclass+'"><i class="fa fa-times" aria-hidden="true"></i></div><div class="closeline"></div><div class="wndinner ' + p.type + '">\
+			var h = p.allowHide ? '<div class="wndback" id='+id+'></div><div class="wndinner">' : '<div class="wndback" id='+id+'></div>'+ (p.pip ? '<div class="_expand roundclosebutton"><i class="fas fa-expand"></i></div><div class="_changeplace roundclosebutton"><i class="fas fa-angle-down"></i></div>' : '') +'<div class="_close roundclosebutton '+closedbtnclass+'"><i class="fa fa-times" aria-hidden="true"></i></div><div class="closeline"></div><div class="wndinner ' + p.type + '">\
 			';
 
 			var closedbtnclass = ''
@@ -582,20 +586,34 @@
 				}
 
 				if (!p.noButtons) {
-					h+=	 ' <div class="buttons windowmainbuttons"></div>';
+					h +=	 '<div class="buttons windowmainbuttons">';
+
+					_.each(p.buttons, function(button, i){
+
+						var txt = (button.html ? button.html : 
+							(app ? ( app.localization.e(button.text) || button.text || '') : 
+							(button.text || '')) )
+
+						var hb = '<div><div class="button '+(button.class || "")+'" bi="'+i+'">'+txt+'</div></div>'
+
+						h += hb
+		
+					})
+
 					h+=	 '</div>';
 				}
 
-				wnd = $("<div>",{
-					"class" 	: "wnd",
+				wnd = $("<div>", {
+					"class" : "wnd",
 					"html"	: h
 				});
 
-				/*wnd.css('top', app.lastScrollTop)
-			   	wnd.css('height', app.height)*/
+		   	if(!p.header) wnd.addClass('noheader')
 
-		   	if(!p.header) 
-			   	wnd.addClass('noheader')
+			if(p.pip) {
+				wnd.addClass('pipmini')
+				wnd.attr('position', localStorage['pipposition'] || 'default') 
+			}
 
 			el.append(wnd);		
 
@@ -603,28 +621,39 @@
 				actions["close"](true);
 			});
 
-			_.each(p.buttons, function(button){
-				button.el = $("<div>",{
-				   "class" 	: "button " + (button.class || ""),
-				   "html"	: "<div>" + 
-				   
-				   (button.html ? button.html : 
-						(app ? ( app.localization.e(button.text) || button.text || '') : 
-						(button.text || '')) ) + 
-				   
-				   "</div>"
-			    });
+			wnd.find("._expand").on('click', function(){
+				actions["expand"](true);
+			});
 
-				wnd.find(".wndinner>div.buttons").append(button.el);
+			wnd.find("._changeplace").on('click', function(){
 
-				var fn = button.fn || actions[button.action] || actions["close"];
-				button.el.on('click', function(){fn(wnd, self)});
+				var cur = localStorage['pipposition'] || 'default'
 
-			})
+				cur = nextElCircle(pippositions, cur)
+				
+				localStorage['pipposition'] = cur
+
+				wnd.attr('position', cur) 
+
+			});
+
+			
+
+
+			////TODO
+
+			if (!p.noButtons) {
+				_.each(p.buttons, function(button, i){
+					var _el = wnd.find('.wndinner>div.buttons .button[bi="'+i+'"]')
+
+					var fn = button.fn || actions[button.action] || actions["close"];
+
+					_el.on('click', function(){fn(wnd, self)});
+				})
+			}
+
 
 			if(p.class) wnd.addClass(p.class);
-
-		    
 
 			wnd.css("display", "block");
 			wnd.addClass('asette')
@@ -685,14 +714,15 @@
 			if(isTablet() && wnd.hasClass('normalizedmobile')){
 
 				var trueshold = 20
+				
 
 				parallax = new SwipeParallaxNew({
 
-					el : wnd.find('.wndback,.wndheader'),
-					transformel : wnd.find('.wndinner'),
+					///,.wndinner
 
+					el : wnd.find(p.parallaxselector || '.wndback,.wndheader'),
+					transformel : wnd.find('.wndinner'),
 					allowPageScroll : 'vertical',
-	
 					directions : {
 						down : {
 							cancellable : true,						
@@ -708,8 +738,26 @@
 								var percent = Math.abs(px) / trueshold;
 							},
 
-							constraints : function(){
-								return true;
+							constraints : function(e){
+
+								var i = false
+
+								var sel = _.find(e.path, function(p){
+
+									if (p.id == 'windowsContainer'){
+										i = true
+									}
+
+									if (i) return null
+
+									return p.classList.contains('customscroll');
+								})
+
+								if(!sel){
+									return true;
+								}
+
+								return sel.scrollTop == 0
 							},
 
 							restrict : true,
@@ -723,6 +771,7 @@
 					
 	
 				}).init()
+				
 
 				cnt = wnd.find('.wndcontent')
 
@@ -756,8 +805,29 @@
 			p = {}
 		}
 
+		var closing = false
+
 		var actions = {
+
+			expand : function(){
+
+				actions.close()
+
+				setTimeout(function(){
+
+					if (p.expand){
+						p.expand()
+					}
+					
+				}, 200)
+				
+			},
+
 			close : function(cl, key){
+
+				if(closing) return
+
+				closing = true
 
 				if (parallax) {
 					parallax.clear()
@@ -769,40 +839,30 @@
 
 				if(p.close) p.close(wnd, self);
 
-				
-
 				delete app.events.resize[id]
 				delete app.events.scroll[id]
 
 				wnd.addClass('asette')
 				wnd.removeClass('sette')
 
-				//wnd.one('transitionend webkitTransitionEnd oTransitionEnd', function () {
-
 				setTimeout(function(){
+
+					if(!nooverflow)
+						app.actions.onScroll();
+
+					if (self.essenseDestroy) self.essenseDestroy(key)
+
 					wnd.remove();
-					
 
-					window.requestAnimationFrame(function(){
+					clearmem();
 
-						if(!nooverflow)
-							app.actions.onScroll();
-	
-						if (self.essenseDestroy) self.essenseDestroy(key)
-
-						clearmem();
-					})
 				}, 220)	
-					
-
 				
-				//});
-				
+				if(p.onclose) p.onclose()
 
 			},
 
 			hide : function(cl, key) {
-				// wnd.find('.wndback').css('display', 'none');
 
 				if(!wnd) return
 
@@ -813,7 +873,6 @@
 				wnd.find('.expandButton').removeClass('hidden');
 				wnd.find('.closeButton').addClass('hidden');
 				wnd.find('.hideButton').addClass('hidden');
-				// setTimeout(() => wnd.find('.wndinner').one('click', actions.show), 500);
 
 				if(!nooverflow) {
 					app.actions.onScroll();
@@ -824,7 +883,6 @@
 
 				if(!wnd) return
 
-				// wnd.find('.wndback').css('display', 'none');
 				wnd.find('.buttons').removeClass('hidden');
 				wnd.removeClass('hiddenState');
 				wnd.find('.wndcontent > div').removeClass('rolledUp');
@@ -1960,7 +2018,7 @@
 			_format = nm[1]
 
 		if (_format == 'png' || _format == 'jpg' || _format == 'jpeg'){
-			return resolve({base64, name});
+			return Promise.resolve({base64, name});
 		}
 
 		return new Promise((resolve, reject) => {
@@ -1984,8 +2042,6 @@
 	  
 			  var url = canvas.toDataURL('image/jpeg', 1);
 
-			  console.log('url', url)
-	  
 			  $(canvas).remove();
 	  
 			  return resolve({base64 : url, name : _name + '.jpg'});
@@ -2848,6 +2904,32 @@
 		else
 		{
 			return array[array.length - 1]
+		}
+	}
+
+	prevElCircle = function(array, el){
+		var index = _.indexOf(array, el);
+
+		if (index > 0){
+			return array[index - 1]
+		}
+
+		else
+		{
+			return array[array.length - 1]
+		}
+	}
+
+	nextElCircle = function(array, el){
+		var index = _.indexOf(array, el);
+
+		if (index > -1 && index < array.length - 1){
+			return array[index + 1]
+		}
+
+		else
+		{
+			return array[0]
 		}
 	}
 
@@ -4969,9 +5051,8 @@
 
 					input += 	'</div>';
 
-					//input += 	'<div class="vc_selectInput_bg_mobile"></div>';
 
-					input += 	'<div class="vc_selectInput">';
+					input += 	'<div class="vc_selectInput customscroll">';
 
 					if (self.defaultValuesTemplate)
 					{
@@ -4987,6 +5068,9 @@
 						}
 
 						_.each(self.possibleValues, function (value, index) {
+
+
+							//if(self.value == value) return
 
 							//if(self.possibleValuesLabels[index]) label = self.possibleValuesLabels[index]
 
@@ -6271,6 +6355,8 @@
 				break;
 		}
 
+		console.log('storageLocation', storageLocation)
+
 		window.resolveLocalFileSystemURL(storageLocation, function (fileSystem) {
 			
 			fileSystem.getDirectory('Download', {
@@ -6343,11 +6429,6 @@
 
 			}, function (error) {
 
-				/*dialog({
-					html : "Error: access to download folder, " + error.code,
-					class : "one"
-				})*/
-
 				if(clbk) clbk(null, error)
 
 			})
@@ -6360,8 +6441,10 @@
 				html : "Error: Could not create file, " + evt.target.error.code,
 				class : "one"
 			})*/
+			
+			console.log(evt)
 
-			if(clbk) clbk(null, evt.target.error)
+			if(clbk) clbk(null, evt)
 
 		});
 	
@@ -6375,7 +6458,7 @@
 
 	_scrollTop = function(scrollTop, el, time){
 
-		if(!el) {
+		if(!el || el.attr('id') == 'application') {
 			el = $("body,html");
 		}
 
@@ -6614,450 +6697,6 @@
 	}
 
 
-	SwipeParallax = function(p){
-		if(!p) p = {};
-
-			p.directions || (p.directions = {})
-
-			p.prop || (p.prop = 'translate')
-
-			_.each(p.directions, function(d,i){
-				d.i = i
-			})
-
-		var self = this;
-
-		var animationInterval = null;
-
-		var animateduration = 400;
-		var animatedurations = (animateduration / 1000) + 's'
-
-		var directiontoprop = function(direction, value){
-
-			if (p.prop == 'translate'){
-				if(direction == 'up') return 'y'
-				if(direction == 'down') return 'y'
-				if(direction == 'left') return 'x'
-				if(direction == 'right') return 'x'
-			}
-
-			if (p.prop == 'margin'){
-				if(direction == 'up') return 'margin-bottom'
-				if(direction == 'down') return 'margin-top'
-				if(direction == 'left') return 'margin-left'
-				if(direction == 'right') return 'margin-right'
-			}
-
-			if (p.prop == 'padding'){
-				if(direction == 'up') return 'padding-bottom'
-				if(direction == 'down') return 'padding-top'
-				if(direction == 'left') return 'padding-left'
-				if(direction == 'right') return 'padding-right'
-			}
-
-			if (p.prop == 'position'){
-				if(direction == 'up') return direction.position || 'top'
-				if(direction == 'down') return direction.position || 'top'
-				if(direction == 'left') return direction.position || 'left'
-				if(direction == 'right') return direction.position || 'left'
-			}
-			
-		}
-
-		var medium = function(fingerData){
-			var n = {
-				end : {
-					x : 0,
-					y : 0
-				},
-				start : {
-					x : 0,
-					y : 0
-				},
-				last : {
-					x : 0,
-					y : 0
-				}
-			}
-
-			var l = _.toArray(fingerData).length
-
-			_.each(fingerData, function(f){
-				_.each(f, function(fd, i){
-					n[i].x += fd.x / l
-					n[i].y += fd.y / l
-				})
-			})
-
-			return n;
-		}
-
-		var nullbydirection = function(_d, direction){
-			var d = _.clone(_d)
-
-
-			if(direction == 'up') {
-				if(d.y > 0) d.y = 0
-				
-				if (p.prop == 'margin' || p.prop == 'padding')
-					d.y = Math.abs(d.y)
-
-				d.x = 0
-			}
-
-			if(direction == 'down') {
-				if(d.y < 0) d.y = 0
-
-				if (p.prop == 'margin' || p.prop == 'padding')
-					d.y = Math.abs(d.y)
-
-				d.x = 0
-			}
-
-			if(direction == 'left') {
-				if(d.x > 0) d.x = 0
-
-				if (p.prop == 'margin' || p.prop == 'padding')
-					d.x = Math.abs(d.x)
-
-				d.y = 0
-			}
-
-			if(direction == 'right') {
-				if(d.x < 0) d.x = 0
-
-				if (p.prop == 'margin' || p.prop == 'padding')
-					d.x = Math.abs(d.x)
-
-				d.y = 0
-			}
-
-			return d;
-			
-		}
-
-		var findDirection = function(_d){
-
-			return _.max(p.directions, function(direction, i){
-				var d = nullbydirection(_d, i)	
-
-				return Math.abs((d.x || d.y))
-			})
-		}
-
-		var gettransform = function(obj){
-			
-			var transformMatrix = obj.css("-webkit-transform") ||
-			  obj.css("-moz-transform")    ||
-			  obj.css("-ms-transform")     ||
-			  obj.css("-o-transform")      ||
-			  obj.css("transform");
-			var matrix = transformMatrix.replace(/[^0-9\-.,]/g, '').split(',');
-
-			var x = matrix[12] || matrix[4];
-			var y = matrix[13] || matrix[5];
-
-
-			return {
-				x : x,
-				y : y
-			}
-
-		}
-
-		var animation = function(ap, options, direction){
-
-			if(!options) options = {}
-
-			
-			if (self.animation){
-				self.animation.stop()
-			}
-			
-			if(p.prop == 'translate'){
-
-				var v = (ap.x || ap.y || 0);
-
-				p.el.css({transform: ""});
-				p.el.css({transition: ""});
-				
-
-					if (options.complete)
-						options.complete()
-
-
-			}
-		}
-
-		var parseStart = function(direction){
-			if(p.prop != 'translate'){
-				v = p.el.css(directiontoprop(direction)) || '0px'
-			}
-			else
-			{
-				var tr = gettransform(p.el)
-
-				var prop = directiontoprop(direction)
-
-				v = tr[prop]
-			}
-
-			if(!v) v = '0'
-
-			v = Number(v.replace('px', '').replace('%', ''))
-
-			return v
-		}
-
-		var set = function(direction, _value){
-
-			var prop = directiontoprop(direction);
-
-			var value = _value
-
-			if (p.prop != 'translate'){
-				p.el.css(prop, value + 'px');	
-			}
-			else{
-
-				if(prop == 'x'){
-					p.el.css("transform","translate3d("+(value || 0)+"px, 0, 0)");
-				}
-
-				if(prop == 'y'){
-					p.el.css("transform","translate3d(0, "+(value || 0)+"px, 0)");
-				}
-			}
-		}
-
-		self.goup = function(direction){			
-
-			var css = directiontoprop(direction)
-			var upborder = (p.directions[direction].trueshold || 90) * 5
-
-			if((css == 'top' || (direction == 'up' && css=='y')) && (p.prop == 'position' || p.prop == 'translate')) upborder = -upborder
-			if(css == 'left' && (p.prop == 'position' || p.prop == 'translate')) upborder = -upborder
-
-			var ap = {}
-				ap[css] =  upborder + 'px'
-
-			animation(ap, {
-				dontstop : true,
-				compele : function(){
-					self.renew()
-				}
-			}, direction)
-		}
-
-		self.backfast = function(){
-
-			_.each(p.directions, function(d){
-				if (d.positionclbk)
-					d.positionclbk(0)
-			})
-		}
-
-		self.backup = function(direction){
-
-			self.lastDirection = direction;
-
-			var css = directiontoprop(direction)
-
-			var ap = {}
-				ap[css] =  '0px'
-
-			var d = p.directions[direction]	
-
-
-			animation(ap, {
-				step : function(now, fx){
-
-					if (d && d.positionclbk){
-						d.positionclbk(now)
-					}
-				},
-				compele : function(){
-					self.renew()
-				}
-			}, direction)
-		}
-
-		self.lastDirection = null;
-		self.animation = null;
-
-		self.ended = false;
-
-		self.renew = function(){
-			self.lastDirection = null;
-			self.animation = null;
-
-			self.ended = false;
-
-			if (self.animation)
-				self.animation.stop();
-		}
-
-		self.opposite = function(dir, dir2){
-			if(dir == 'up' && dir2 == 'down') return true;
-			if(dir == 'down' && dir2 == 'up') return true;
-
-			if(dir == 'left' && dir2 == 'right') return true;
-			if(dir == 'right' && dir2 == 'left') return true;
-		}
-
-		self.init = function(){
-
-			var startMargin = 0;
-			var mainDirection = null;
-
-			var mintruesholdGone = false;
-			p.el.swipe({
-
-				allowPageScroll : p.allowPageScroll,
-					
-				swipeStatus:function(event, phase, _direction, distance, duration, fingers, fingerData, currentDirection){
-
-
-					if (self.ended) return false	
-
-
-
-					if (phase == 'start'){
-
-						mintruesholdGone = false
-
-						startMargin = 0;
-
-						self.renew()
-						
-						return true
-					}
-
-
-					if(phase != 'cancel' && phase != 'end'){
-
-						var m = medium(fingerData)
-
-						var _d = {
-							x : m.last.x - m.start.x + startMargin,
-							y : m.last.y - m.start.y + startMargin
-						}
-
-						if(!_d.x && !_d.y) return true
-
-						var direction = findDirection(_d)
-
-						if (direction){
-
-							if (direction.constraints && !direction.constraints()) {
-
-								if (mainDirection){
-									self.backup(mainDirection.i)	
-									mainDirection = null;
-								}
-
-								return false
-							}
-
-							if (mainDirection && (mainDirection.i != direction.i)){
-
-								th = false;
-
-								if (direction.mintrueshold){
-									var dcur = nullbydirection(_d, direction.i)
-									var dprev = nullbydirection(_d, mainDirection.i)
-
-									var dth = Math.abs((dcur.x || dcur.y || 0) - (dprev.x || dprev.y || 0))
-
-									if(dth < direction.mintrueshold){
-										th = true
-									}
-								}
-
-								if(!th){
-									self.backup(mainDirection.i)
-
-									if(direction.cancellable) {
-										mainDirection = null;
-										return false
-									}
-								}
-								else{
-									direction = mainDirection
-								}
-
-								
-							}
-
-							mainDirection = direction
-							var d = nullbydirection(_d, direction.i)	
-
-							var dp = (d.x || d.y || 0);
-
-							if (!mintruesholdGone && Math.abs(dp + startMargin) < (direction.mintrueshold || 0)){
-								return true
-							}
-
-							mintruesholdGone = true;
-
-							if (direction.positionclbk){
-								direction.positionclbk(dp)
-							}
-
-							if(direction.reverse){
-								dp = -dp
-							}
-
-							set(mainDirection.i, dp)
-
-						}
-						else{
-
-							mainDirection = null;
-						}
-
-					}
-
-					if(phase == 'cancel' || phase == 'end'){
-
-						
-						if (mainDirection){
-
-
-							if(phase == 'end' && mainDirection.clbk && _direction == mainDirection.i){
-
-								
-								mainDirection.clbk()
-							}
-								
-							if (mainDirection.positionclbk)
-								mainDirection.positionclbk(0)
-
-							self.backup(mainDirection.i)	
-							
-						}
-
-						else{
-							self.backfast()
-						}
-
-						mainDirection = null
-
-					}
-
-					
-					
-				},
-
-			});
-
-			return self
-		}
-
-		return self;
-	}
-
-
 	SwipeParallaxNew = function(p){
 		if(!p) p = {};
 
@@ -7083,60 +6722,57 @@
 			if(direction == 'right') return 'x'
 			
 		}
+
+		var ms = false
 		
 		var set = function(direction, value){
 
-			if (!ticking) {
+			var __el = (p.transformel || p.el)[0]
 
-				var __el = p.transformel || p.el
+			var prop = directiontoprop(direction);
+			var pd = 'left'
+			var pb = 'top'
 
-				var prop = directiontoprop(direction);
-				var pd = 'left'
-				var pb = 'top'
+			var scaledifmax = 0.1
+			var scaledif = scaledifmax * Math.min(Math.abs(value), 100) / 100 
+			var scale = (1 - scaledif).toFixed(3)
 
-				var scaledifmax = 0.1
-				var scaledif = scaledifmax * Math.min(Math.abs(value), 100) / 100 
-				var scale = (1 - scaledif).toFixed(3)
-
-				if(direction == 'up' || direction == 'left') {
-					value = -value
-					pd = 'right'
-					pb = 'bottom'
-				}
-
-				if(p.directions[direction] && p.directions[direction].basevalue) value = value + p.directions[direction].basevalue()
-
-				if(p.directions[direction] && p.directions[direction].scale100) scale = 1
-
-				if(!value) value = 0
-
-				value = value.toFixed(0)
-
-				window.requestAnimationFrame(function(){
-					if (prop == 'x'){
-						__el[0].style["transform"] = "scale("+scale+") translate3d("+value+"px, 0, 0)"
-						__el[0].style['transform-origin'] = pd + ' center'
-					}
-		
-					if (prop == 'y'){
-						__el[0].style["transform"] = "scale("+scale+") translate3d(0, "+value+"px, 0)"
-						__el[0].style['transform-origin'] = 'center ' + pb
-					}
-
-					if(!isios()){	
-						__el[0].style["-moz-transition"] = transitionstr
-						__el[0].style["-o-transition"] = transitionstr
-						__el[0].style["-webkit-transition"] = transitionstr
-						__el[0].style["transition"] = transitionstr
-						__el[0].style["pointer-events"] = 'none'
-					}
-		
-					ticking = false;
-				})
-				
-				ticking = true;
+			if(direction == 'up' || direction == 'left') {
+				value = -value
+				pd = 'right'
+				pb = 'bottom'
 			}
 
+			if(p.directions[direction] && p.directions[direction].basevalue) value = value + p.directions[direction].basevalue()
+
+			if(p.directions[direction] && p.directions[direction].scale100) scale = 1
+
+			if(!value) value = 0
+
+			value = value.toFixed(0)
+
+			if (prop == 'x'){
+				__el.style["transform"] = "scale("+scale+") translate3d("+value+"px, 0, 0)"
+
+				if(!ms)
+					__el.style['transform-origin'] = pd + ' center'
+			}
+
+			if (prop == 'y'){
+				__el.style["transform"] = "scale("+scale+") translate3d(0, "+value+"px, 0)"
+
+				if(!ms)
+					__el.style['transform-origin'] = 'center ' + pb
+			}
+
+			if(!ms){	
+				__el.style["-moz-transition"] = transitionstr
+				__el.style["-o-transition"] = transitionstr
+				__el.style["-webkit-transition"] = transitionstr
+				__el.style["transition"] = transitionstr
+			}
+
+			ms = true
 
 		}
 
@@ -7153,27 +6789,21 @@
 
 				var __el = p.transformel || p.el
 
-				window.requestAnimationFrame(function(){
 
-					__el.css({"transform": ""});
-					__el.css({"transform-origin": ""});
+				__el.css({"transform": ""});
+				__el.css({"transform-origin": ""});
+				__el.css({"-moz-transition": ""});
+				__el.css({"-o-transition": ""});
+				__el.css({"-webkit-transition": ""});
+				__el.css({"transition": ""});
 
-					if(!isios()){
-						__el.css({"-moz-transition": ""});
-						__el.css({"-o-transition": ""});
-						__el.css({"-webkit-transition": ""});
-						__el.css({"transition": ""});
-						__el.css({"pointer-events": ""});
-					}
-
-					_.each(p.directions, function(d){
-						applyDirection(d, 0)
-					})
-
+				_.each(p.directions, function(d){
+					applyDirection(d, 0)
 				})
+
 			}
 			
-
+			ms = false
 			needclear = false
 		}
 
@@ -7183,12 +6813,13 @@
 
 			var statusf = function(e, phase, direction, distance){
 
+
 				if (mainDirection && mainDirection.i != direction){
 					phase = 'cancel'
 					direction = mainDirection.i
 				}
 
-				if(phase == 'cancel' || phase == 'end'){
+				if (phase == 'cancel' || phase == 'end'){
 
 					if (mainDirection){
 
@@ -7226,23 +6857,26 @@
 				}
 				
 				if (phase == 'move'){
+
 					if (distance > 20){
+
 						mainDirection = dir
 
 						applyDirection(mainDirection, distance)
 
 						set(mainDirection.i, distance)
+						
 					}
-				}
 
-				
-				
+					e.preventDefault();
+					return true
+				}
 
 			}
 			
 			p.el.swipe({
 				allowPageScroll : p.allowPageScroll,
-				swipeStatus : isios() ? statusf : _.throttle(statusf, throttle),
+				swipeStatus : _.throttle(statusf, throttle),
 			})
 
 			return self
@@ -8715,7 +8349,7 @@
 				'</div>',
 
 				'<div class="searchInputWrapper">' +
-					'<input elementsid="sminputsearch_' + (p.id || p.placeholder) + '" class="sminput" tabindex="2" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" maxlength="400" type="text" placeholder="' + (p.placeholder || "Search") + '">' +
+					'<input elementsid="sminputsearch_' + (p.id || p.placeholder) + '" class="sminput" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" maxlength="400" type="text" placeholder="' + (p.placeholder || "Search") + '">' +
 				'</div>',
 
 				'<div class="searchPanel">' +
@@ -8737,7 +8371,7 @@
 
 			if(p.collectresults){
 				elements[1] = '<div class="searchInputWrapper">' +
-					'<div class="sminput" contenteditable="true" tabindex="2" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" maxlength="400" type="text" placeholder="' + (p.placeholder || "Search") + '"></div>' +
+					'<div class="sminput" contenteditable="true"  autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" maxlength="400" type="text" placeholder="' + (p.placeholder || "Search") + '"></div>' +
 				'</div>'
 			}
 
@@ -10689,15 +10323,18 @@
 					s.donottrust = 'true'
 				}
 
+				
+
 				var l = linkifyHtml(inputText, {
-					attributes : s
+					attributes : s,
+					truncate: 80
 				})
+
 		
 				return l
 			}
 
 			catch(e){
-				
 			}
 			
 		}
@@ -11150,6 +10787,44 @@ stringEqTrig = function(s1, s2){
 edjsHTML = function() {
     "use strict";
 
+	var c_xss = function(text){
+
+		var ftext = filterXSS(text, {
+			stripIgnoreTag : true,
+			whiteList: {
+				a: ["href", "title", "target", 'cordovalink'],
+				br : ["style"],
+				b : ["style"],
+				span : ["style"],
+				figure : ["style"],
+				figcaption : ["style"/*, "class"*/],
+				i : ["style"],
+				img : ["src"/*, "width", "height"*/],
+				div : [ /*"class",*/"data-plyr-provider", "data-plyr-embed-id"],
+				p : [],
+				ul : [],
+				ol : [],
+				li : [],
+				h2 : [],
+				h1 : [],
+				h3 : [],
+				h4 : [],
+				h5 : [],
+				em : [],
+				u : [],
+				blockquote : [],
+				strong : [],
+				picture : ['img-type'],
+				source : ['srcset', 'type'],
+				strike : []
+			}
+
+		})
+
+		console.log(text,ftext)
+		return ftext
+	}
+
     var e = {
         delimiter: function() {
             return '<div class="article_delimiter"><i class="fas fa-asterisk"></i><i class="fas fa-asterisk"></i><i class="fas fa-asterisk"></i></div>'
@@ -11157,11 +10832,11 @@ edjsHTML = function() {
 
         header: function(e) {
             var t = e.data;
-            return "<h" + _.escape(t.level) + ">" + (t.text) + "</h" + _.escape(t.level) + ">"
+            return "<h" + _.escape(t.level) + ">" + c_xss(t.text) + "</h" + _.escape(t.level) + ">"
         },
 
         paragraph: function(e) {
-            return "<p>" + (e.data.text) + "</p>"
+            return "<p>" + c_xss(e.data.text) + "</p>"
         },
 
         list: function(e) {
@@ -11171,9 +10846,9 @@ edjsHTML = function() {
                 n = function(e, t) {
 					
                     var r = e.map((function(e) {
-                        if (!e.content && !e.items) return "<li>" + (e) + "</li>";
+                        if (!e.content && !e.items) return "<li>" + c_xss(e) + "</li>";
                         var r = "";
-                        return e.items && (r = n(e.items, t)), e.content ? "<li> " + e.content + " </li>" + r : void 0
+                        return e.items && (r = n(e.items, t)), e.content ? "<li> " + c_xss(e.content) + " </li>" + r : void 0
                     }));
 
                     return "<" + t + ">" + r.join("") + "</" + t + ">"
@@ -11184,7 +10859,7 @@ edjsHTML = function() {
         image: function(e) {
             var t = e.data,
 
-                r = _.escape(t.caption ? t.caption : "Image");
+                r = c_xss(t.caption || "");
 
 
 			var cl = []
@@ -11195,7 +10870,11 @@ edjsHTML = function() {
 
 			var src = t.file && t.file.url ? t.file.url : t.file
 
-			return '<div class="article_image '+ cl.join(' ') +'"><img src="' + src + '" alt="' + _.escape(r) + '" /><div class="article_image_caption">'+_.escape(t.caption || '')+'</div></div>'
+			return '<div class="article_image '+ cl.join(' ') +'"><img src="' + _.escape(src) + '" alt="' + (r) + '" />' + 
+			
+			(r ? ('<div class="article_image_caption">' + r + '</div>') : '')
+			
+			+ '</div>'
 
         },
 
@@ -11203,7 +10882,7 @@ edjsHTML = function() {
 
             var t = e.data;
 
-            return '<div class="article_quote"><div class="article_quote_text">' + (t.text) + '</div><div class="article_quote_author">' + (t.caption) +' </div></div>'
+            return '<div class="article_quote"><div class="article_quote_text">' + c_xss(t.text) + '</div><div class="article_quote_author">' + c_xss(t.caption) +' </div></div>'
         },
 
         code: function(e) {
@@ -11212,24 +10891,18 @@ edjsHTML = function() {
 
         embed: function(e) {
             var t = e.data;
+
+
             switch (t.service) {
 
 				case "vimeo":
-                    return '<div class="js-player" data-plyr-provider="vimeo" data-plyr-embed-id="'+t.embed+'"></div>';
+                    return '<div class="js-player" data-plyr-provider="vimeo" data-plyr-embed-id="'+_.escape(t.embed)+'"></div>';
 
 				case "youtube":
-					return '<div class="js-player" data-plyr-provider="youtube" data-plyr-embed-id="'+t.embed+'"></div>';
+					return '<div class="js-player" data-plyr-provider="youtube" data-plyr-embed-id="'+_.escape(t.embed)+'"></div>';
 
 				default:
                     throw new Error("Only Youtube and Vime Embeds are supported right now.")
-
-				/*
-                case "vimeo":
-                    return '<iframe src="' + t.embed + '" height="' + t.height + '" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>';
-                case "youtube":
-                    return '<iframe width="' + t.width + '" height="' + t.height + '" src="' + t.embed + '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-                default:
-                    throw new Error("Only Youtube and Vime Embeds are supported right now.")*/
             }
         },
 
@@ -11241,11 +10914,10 @@ edjsHTML = function() {
 				return this.error('warning', e)
 			}
 
-			return '<div class="article_warning"><div class="article_warning_icon"><i class="fas fa-exclamation-triangle"></i></div><div class="article_warning_content"><div class="article_warning_title">' + _.escape(t.title || '') + '</div><div class="article_warning_message">' + _.escape(t.message || '') + '</div></div></div>'
+			return '<div class="article_warning"><div class="article_warning_icon"><i class="fas fa-exclamation-triangle"></i></div><div class="article_warning_content"><div class="article_warning_title">' + c_xss(t.title || '') + '</div><div class="article_warning_message">' + c_xss(t.message || '') + '</div></div></div>'
 		},
 
 		carousel: function(e){
-
 
 			var imageshtml = _.map(e.data, function(i){
 				return '<div class="img" image="' + _.escape(i.url) + '" i="' + _.escape(i.url) + '" save="' + _.escape(i.url) + '"></div>'
@@ -11335,6 +11007,21 @@ edjsHTML = function() {
 
         },
 
+		carousel: function(data, fu) {
+
+
+			return _.map(data, function(i){
+				var nd = {...i}
+
+				nd.url = fu(nd.url)
+
+				if(nd.caption) nd.caption = fu(nd.caption)
+
+				return nd
+			})
+
+        },
+
         image: function(data, fu) {
 
 			var nd = {...data}
@@ -11393,7 +11080,19 @@ edjsHTML = function() {
 
 			return nd
 
-		}
+		},
+
+		embed : function(data, fu) {
+
+			var nd = {...data}
+
+				nd.embed = fu(nd.embed)
+				nd.source = fu(nd.source)
+
+				if(nd.caption) nd.caption = fu(nd.caption)
+
+			return nd
+        },
 	}
 
     function t(e) {
@@ -11417,13 +11116,16 @@ edjsHTML = function() {
 					r += (str || "").split(/\s+/).length
 				}
 
-				_e.blocks.map((function(e) {
 
-					if(encdec[e.type]){
-						encdec[e.type](e.data, add)
-					}
+				if (_e && _e.blocks){
+					_e.blocks.map((function(e) {
 
-                }))
+						if(encdec[e.type]){
+							encdec[e.type](e.data, add)
+						}
+
+					}))
+				}
 
 				return r
 			},
@@ -11434,15 +11136,19 @@ edjsHTML = function() {
 
 				var e = {..._e};
 
-				e.blocks = e.blocks.map((function(e) {
+				if (e.blocks){
+					e.blocks = e.blocks.map((function(e) {
 
-					return {
-						type : e.type,
-						id : e.id,
-						data : encdec[e.type] ? encdec[e.type](e.data, fu) : _.clone(e.data)
-					}
+						return {
+							type : e.type,
+							id : e.id,
+							data : encdec[e.type] ? encdec[e.type](e.data, fu) : _.clone(e.data)
+						}
+	
+					}))
+				}
 
-                }))
+				
 
 				return e
 			},
@@ -11595,6 +11301,9 @@ if(typeof window != 'undefined'){
 		
 
 }
+
+
+
 
 
 errortostring = function(error){

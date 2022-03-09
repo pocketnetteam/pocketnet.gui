@@ -73,12 +73,13 @@
 		}
 
 		.editPanel{
+
 			>div{
 				float: left;
 				width: 40px;
 				height: 40px;
 				border-radius: 50%;
-				background: fade(#fff, 10);
+				background: rgba(var(--text-on-bg-shadow-color), 0.1);
 				text-align: center;
 				font-size: 1.1em;
 				padding : @rhythm;
@@ -89,13 +90,13 @@
 
 				&.active,
 				&:hover{
-					color : @color-add;
-					background : fade(@color-black, 30);
+					color : rgb(var(--color-txt-ac));
+					background : rgba(var(--color-bg-ac), 0.2);
 				}
 
 				&.active{
 					&:hover{
-						background : fade(@color-black, 10);
+						background : rgba(var(--color-bg-ac), 0.1);
 					}
 				}
 
@@ -107,15 +108,13 @@
 					padding: 0 @rhythm;
 
 					&:hover{
-						color : @color-good;
+						color : rgb(var(--color-good));
 					}
 				}
 
 			}
 		}
-		.centerWrapper{
-
-		}
+		
 
 		.sitem{
 			cursor: pointer;
@@ -126,7 +125,7 @@
 			padding: 0 @rhythm;
 
 			&:hover{
-				color : @color-bright;
+				color : rgb(var(--color-txt-ac));
 			}
 		}
 
@@ -140,15 +139,12 @@
 					height: 100%;
 					padding : @rhythm;
 
-					&.number{
-					}
-
 					&.arrow{
 						cursor: pointer;
 						.transition(0.3s);
 
 						&:hover{
-							color : @color-contrast;
+							color : rgb(var(--color-txt-ac));
 						}
 					}
 
@@ -164,7 +160,7 @@
 	.noImages{
 		text-align: center;
 		font-weight: 700;
-		color : @color-gray;
+		color : rgba(var(--text-on-bg-shadow-color), 0.5);
 	}
 
 	.images{
@@ -243,12 +239,12 @@
 					text-align: center;
 					height: 100%;
 					position: relative;
-					padding : 0 @rhythm / 2;
+					padding : 0 0.5 * @rhythm;
 
 					.label{
 						text-align: center;
 						font-size: 0.8em;
-						margin-bottom: @rhythm / 2;
+						margin-bottom: 0.5 * @rhythm;
 						overflow: hidden;
 						white-space: nowrap;
 					}
@@ -335,12 +331,6 @@
 				border-radius: 50%;
 			}
 		}
-
-		/*&.apply{
-			.applyCrop{
-				display: none;
-			}
-		}*/
 	}
 
 	.cropper-bg{
@@ -381,95 +371,6 @@
 	}
 }
 
-html.stblack{
-	#imageGalleryEdit{
-		
-		.panel{
-			
-			.editPanel{
-				>div{
-					background: fade(@color-main, 10);
-	
-					&.active,
-					&:hover{
-						color : @color-add;
-						background : fade(@color-black, 30);
-					}
-	
-					&.active{
-						&:hover{
-							background : fade(@color-black, 10);
-						}
-					}
-	
-					&.save{
-						background: transparent;
-	
-						&:hover{
-							color : @color-good;
-						}
-					}
-	
-				}
-			}
-			
-	
-			.sitem{
-				background: transparent;
-				color : @color-gray-slight;
-				
-	
-				&:hover{
-					color : @color-bright;
-				}
-			}
-	
-			.imageNavigation{
-				.navigationWrapper{
-	
-					>div{
-	
-						&.arrow{
-	
-							&:hover{
-								color : @color-contrast;
-							}
-						}
-	
-					}
-				}
-				
-			}
-		}
-	
-		.noImages{
-			color : @color-main;
-		}
-	
-		
-	
-	
-		.cropper-container{
-			
-			.applyCrop{
-				background: fade(#000, 60);
-	
-				&.active,
-				&:hover{
-					color : @color-bright;
-					background: fade(#000, 70);
-				}
-			}
-	
-			
-		}
-	
-	
-	}
-	
-		
-}
-
 /*t*/ @media only screen and (max-width: 768px){
 	#imageGalleryEdit{
 		.panel{
@@ -501,7 +402,7 @@ html.stblack{
 				padding: 0 @rhythm;
 
 				&:hover{
-					color : @color-bright;
+					color : rgb(var(--color-txt-ac));
 				}
 			}
 
@@ -523,7 +424,7 @@ html.stblack{
 							.transition(0.3s);
 
 							&:hover{
-								color : @color-contrast;
+								color : rgb(var(--color-txt-ac));
 							}
 						}
 

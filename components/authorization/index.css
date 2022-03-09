@@ -1,1 +1,278 @@
-#authorization #filluserfast .caption{display:none}#authorization #filluserfast .work{width:100%;padding-left:0;padding-right:0;padding-top:0}#authorization #filluserfast .mWrapper{margin-top:0}#authorization #filluserfast .mWrapper #test{width:100%}#authorization #filluserfast .mWrapper #test .userPanel{padding-top:0}#authorization .work{padding-top:2em;padding-bottom:2em}#authorization .maket.leftPart{background:#F7F7F9}#authorization .caption{font-size:4.1em;font-weight:100;margin-bottom:.5em}#authorization button{min-width:350px}#authorization button.toRegistration{min-width:190px}#authorization .inputTable>div{vertical-align:middle}#authorization .inputTable>div .upload .fileUploader,#authorization .inputTable>div .upload .fileUploader .elContent{position:relative}#authorization .inputTable>div.actionButtonsWrapper{width:190px;text-align:center}#authorization .inputTable>div.actionButtonsWrapper .icon{font-size:1.2em;height:100%;line-height:76px}#authorization .inputTable>div.actionButtonsWrapper>div{color:#00a4ff;font-size:.8em}#authorization .inputTable.stay{width:auto}#authorization .inputTable .staylabel{font-size:.8em}#authorization .sitelogin .form{margin-top:1.5em}#authorization .sitelogin .form .item{margin-bottom:1em;width:100%}#authorization .sitelogin .form .item.e{margin-top:2em}#authorization .sitelogin .form .item .label{width:100%;font-size:.9em;color:#00a4ff;font-weight:700}#authorization .sitelogin .form .item input{margin:0 auto;padding:1em;width:100%;font-size:1.5em;font-weight:100;background:#fff;color:#00a4ff;border:1px solid transparent;-moz-transition:.4s;-o-transition:.4s;-webkit-transition:.4s;transition:.4s}#authorization .sitelogin .form .item input:focus{border:1px solid #d0c9ca;background:#fff;color:#0e1c2b}#authorization .sitelogin .form .item .validationFail{color:#f41a4d;margin-left:.5em;padding:.75em .5em}#authorization .lptable{height:auto;-moz-transition:.3s;-o-transition:.3s;-webkit-transition:.3s;transition:.3s}#authorization .lptable>div{vertical-align:middle}#authorization.fastregistration .formv{display:block}#authorization.fastregistration .formh{display:none}#authorization.fastregistration .sitelogin .item{margin-top:0;-moz-transition:.3s;-o-transition:.3s;-webkit-transition:.3s;transition:.3s}#authorization.fastregistration.signinshow .formh{display:block}#authorization.fastregistration.signinshow .formv{display:none}#authorization.fastregistration.signinshow .sitelogin .item{animation:.3s ease-out forwards mpt}#authorization.fastregistration .leftPart .work{padding-top:0!important;padding-bottom:0!important}#authorization.fastregistration .leftPart .sitelogin .form .item.e{margin-top:0}#authorization.fastregistration .showformh{background:0 0;border:0;color:#00a4ff}@keyframes mpt{0%{margin-top:0}100%{margin-top:1.5em}}.betasign .btn1wr{display:none!important}.wnd.authwindow .wndinner{width:400px;height:90%;max-height:600px;background:#fff;border-radius:5px}.wnd.authwindow .wndinner .wndcontent{padding:0}.wnd.authwindow #authorization .topCaption{padding-top:1em;padding-bottom:1em}.wnd.authwindow #authorization .caption{text-align:center;font-size:1.5em;margin-bottom:0}.wnd.authwindow #authorization .work{padding-top:0;padding-bottom:0}.wnd.authwindow #authorization .leftPart{display:none}.wnd.authwindow #authorization #filluserfast .mWrapper .panelWrapper{padding-bottom:1em}html.stblack #authorization .maket.leftPart{background:#030f1b}html.stblack #authorization .inputTable>div.actionButtonsWrapper>div{color:#00a4ff}html.stblack #authorization .inputTable>div.actionButtonsWrapper .showPassword{cursor:pointer}html.stblack #authorization .sitelogin .form .item .label{color:#00a4ff}html.stblack #authorization .sitelogin .form .item input{background:#3c4146;color:#00a4ff;border:1px solid transparent}html.stblack #authorization .sitelogin .form .item input:focus{border:1px solid #00a4ff;background:#0a0c17;color:#00a4ff}html.stblack #authorization .sitelogin .form .item .validationFail{color:#f41a4d}html.stblack .wnd.authwindow .wndinner{background:#0a0c17}html.stblack .wnd.authwindow .wndinner .wndcontent{padding:0}html.stblack .wnd.authwindow .wndback{background:rgba(14,28,43,.9)}html.stblack .wnd.authwindow ._close{color:#00a4ff}html.stblack .wnd.authwindow #authorization .topCaption{background:#00a4ff}html.stblack .wnd.authwindow #authorization .topCaption .caption{color:#fff}html.stblack .wnd.authwindow #authorization #test{background:#112035}html.stblack .wnd.authwindow #authorization #test .userPanel .upanelloader{background:rgba(17,32,53,.9)}html.stblack .wnd.authwindow #authorization .caption{color:#00a3f7}html.stblack .wnd.authwindow #authorization .inputTable>div.actionButtonsWrapper>div{color:#00a4ff}html.stblack .wnd.authwindow #authorization .sitelogin .form .item input{background:0 0;color:#00a4ff;border:1px solid transparent;border-right:1px solid #0e1c2b}html.stblack .wnd.authwindow #authorization .sitelogin .form .item input:focus{border:1px solid #0e1c2b;background:0 0;color:#0e1c2b}html.stblack .wnd.authwindow #authorization .sitelogin .form .item .validationFail{color:#f41a4d}html.stblack .wnd.authwindow #authorization .sitelogin .keytable>div{background:#0e1c2b}@media only screen and (max-width:768px){#authorization{padding-bottom:3em}#authorization .work{padding:1em}#authorization .maket.leftPart{background:#F7F7F9}#authorization .caption{margin-top:.5em;font-size:2em;font-weight:700;text-align:center}#authorization .caption.cpt2{font-size:2em}#authorization button{width:100%;min-width:0}#authorization button.toRegistration{min-width:0}#authorization .formh{text-align:center}#authorization .keytable{display:block;position:relative}#authorization .keytable>div{display:block}#authorization .keytable>div.actionButtonsWrapper{width:80px;text-align:center;display:block;position:absolute;right:0;bottom:0;top:0}#authorization .keytable>div.actionButtonsWrapper .label{display:none}#authorization .keytable>div.actionButtonsWrapper .showPassword,#authorization .keytable>div.actionButtonsWrapper .uploadFile{height:100%}#authorization .keytable>div input{border-radius:3px;padding-right:80px!important}.wnd.authwindow #authorization .topCaption{padding-left:1em;margin-top:0;padding-right:1em}.wnd.authwindow #authorization #filluserfast{padding-top:1.5em}.wnd.authwindow #authorization .work{padding:0}.wnd.authwindow #authorization .label{text-align:center}.wnd.authwindow #authorization button{width:100%}.wnd.authwindow #authorization button.toRegistration{min-width:190px}.wnd.authwindow #authorization .inputTable>div{vertical-align:middle}.wnd.authwindow #authorization .inputTable>div .upload .fileUploader,.wnd.authwindow #authorization .inputTable>div .upload .fileUploader .elContent{position:relative}.wnd.authwindow #authorization .inputTable>div.actionButtonsWrapper{width:190px;text-align:center}.wnd.authwindow #authorization .inputTable>div.actionButtonsWrapper>div{color:#00a4ff;font-size:.8em}.wnd.authwindow #authorization .inputTable.stay{width:auto}.wnd.authwindow #authorization .inputTable .staylabel{font-size:.8em}.wnd.authwindow #authorization .sitelogin .form{margin-top:0}.wnd.authwindow #authorization .sitelogin .form .item{margin-bottom:.5em}.wnd.authwindow #authorization .sitelogin .form .item.e{margin-top:1em}.wnd.authwindow #authorization .sitelogin .form .item input{background:0 0;color:#00a4ff;border:1px solid transparent;border-right:1px solid #e4ddde}.wnd.authwindow #authorization .sitelogin .form .item input:focus{border:1px solid #e4ddde;background:0 0;color:#0e1c2b}.wnd.authwindow #authorization .sitelogin .form .item .validationFail{color:#f41a4d;margin-left:.5em;padding:.75em .5em}.wnd.authwindow #authorization .sitelogin .keytable>div{background:#fff}html.stblack .wnd.authwindow ._close{color:#fff}}
+#authorization #registration .caption {
+  display: none;
+}
+#authorization #registration .work {
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 0;
+}
+#authorization #registration .mWrapper {
+  margin-top: 0;
+}
+#authorization #registration .mWrapper #test {
+  width: 100%;
+}
+#authorization #registration .mWrapper #test .userPanel {
+  padding-top: 0;
+}
+#authorization .work {
+  padding-top: 2em;
+  padding-bottom: 2em;
+}
+#authorization .maket.leftPart {
+  background: rgb(var(--background-secondary-theme));
+}
+#authorization .caption {
+  font-size: 4.1em;
+  font-weight: 100;
+  margin-bottom: 0.5em;
+}
+#authorization button {
+  min-width: 350px;
+}
+#authorization button.toRegistration {
+  min-width: 190px;
+}
+#authorization .inputTable > div {
+  vertical-align: middle;
+}
+#authorization .inputTable > div .upload .fileUploader,
+#authorization .inputTable > div .upload .fileUploader .elContent {
+  position: relative;
+}
+#authorization .inputTable > div.actionButtonsWrapper {
+  width: 190px;
+  text-align: center;
+}
+#authorization .inputTable > div.actionButtonsWrapper .icon {
+  font-size: 1.2em;
+  height: 100%;
+  line-height: 76px;
+}
+#authorization .inputTable > div.actionButtonsWrapper > div {
+  color: rgb(var(--color-txt-ac));
+  font-size: 0.8em;
+}
+#authorization .inputTable.stay {
+  width: auto;
+}
+#authorization .inputTable .staylabel {
+  font-size: 0.8em;
+}
+#authorization .sitelogin .form {
+  margin-top: 1.5em;
+}
+#authorization .sitelogin .form .item {
+  margin-bottom: 1em;
+  width: 100%;
+}
+#authorization .sitelogin .form .item.e {
+  margin-top: 2em;
+}
+#authorization .sitelogin .form .item .label {
+  width: 100%;
+  font-size: 0.9em;
+  color: rgb(var(--color-txt-ac));
+  font-weight: 700;
+}
+#authorization .sitelogin .form .item input {
+  margin: 0 auto;
+  padding: 1em;
+  width: 100%;
+  font-size: 1.5em;
+  font-weight: 100;
+  background: rgb(var(--background-total-theme));
+  color: rgb(var(--color-txt-ac));
+  border: 1px solid transparent;
+  -moz-transition: 0.4s;
+  -o-transition: 0.4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+#authorization .sitelogin .form .item input:focus {
+  border: 1px solid rgb(var(--neutral-grad-1));
+  background: rgb(var(--background-total-theme));
+  color: rgb(var(--text-color));
+}
+#authorization .sitelogin .form .item .validationFail {
+  color: rgb(var(--color-bad));
+  margin-left: 0.5em;
+  padding: 0.75em 0.5em;
+}
+#authorization .lptable {
+  height: auto;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+#authorization .lptable > div {
+  vertical-align: middle;
+}
+#authorization.fastregistration .formv {
+  display: block;
+}
+#authorization.fastregistration .formh {
+  display: none;
+}
+#authorization.fastregistration .sitelogin .item {
+  margin-top: 0;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+#authorization.fastregistration.signinshow .formh {
+  display: block;
+}
+#authorization.fastregistration.signinshow .formv {
+  display: none;
+}
+#authorization.fastregistration.signinshow .sitelogin .item {
+  animation: 0.3s ease-out forwards mpt;
+}
+#authorization.fastregistration .leftPart .work {
+  padding-top: 0!important;
+  padding-bottom: 0!important;
+}
+#authorization.fastregistration .leftPart .sitelogin .form .item.e {
+  margin-top: 0;
+}
+#authorization.fastregistration .showformh {
+  background: transparent;
+  border: 0;
+  color: rgb(var(--color-txt-ac));
+}
+@keyframes mpt {
+  0% {
+    margin-top: 0;
+  }
+  100% {
+    margin-top: 1.5em;
+  }
+}
+.betasign .btn1wr {
+  display: none!important;
+}
+.wnd.authwindow .wndinner {
+  width: 400px;
+  height: 90%;
+  max-height: 600px;
+  background: rgb(var(--background-total-theme));
+  border-radius: 6px;
+}
+.wnd.authwindow .wndinner .wndcontent {
+  padding: 0;
+}
+.wnd.authwindow #authorization .topCaption {
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+.wnd.authwindow #authorization .caption {
+  text-align: center;
+  font-size: 1.5em;
+  margin-bottom: 0;
+}
+.wnd.authwindow #authorization .work {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.wnd.authwindow #authorization .leftPart {
+  display: none;
+}
+.wnd.authwindow #authorization #registration .mWrapper .panelWrapper {
+  padding-bottom: 1em;
+}
+/*t*/
+@media only screen and (max-width: 768px) {
+  #authorization {
+    padding-bottom: 3em;
+    /*.maket{
+
+			&.leftPart{
+				background: #F7F7F9;
+			}
+		}*/
+  }
+  #authorization .work {
+    padding-top: 1em;
+    padding-bottom: 1em;
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+  #authorization .mpad {
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+  #authorization .caption {
+    margin-top: 0.5em;
+    font-size: 2em;
+    font-weight: 700;
+    text-align: center;
+  }
+  #authorization .caption.cpt2 {
+    font-size: 2em;
+  }
+  #authorization button {
+    width: 100%;
+    min-width: 0;
+  }
+  #authorization button.toRegistration {
+    min-width: 0;
+  }
+  #authorization .formh {
+    text-align: center;
+  }
+  #authorization .keytable {
+    display: block;
+    position: relative;
+  }
+  #authorization .keytable > div {
+    display: block;
+  }
+  #authorization .keytable > div.actionButtonsWrapper {
+    /*width: 50%;*/
+    width: 80px;
+    text-align: center;
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    top: 0;
+  }
+  #authorization .keytable > div.actionButtonsWrapper .label {
+    display: none;
+  }
+  #authorization .keytable > div.actionButtonsWrapper .uploadFile,
+  #authorization .keytable > div.actionButtonsWrapper .showPassword {
+    height: 100%;
+  }
+  #authorization .keytable > div input {
+    border-radius: 3px;
+    padding-right: 80px !important;
+  }
+  .wnd.authwindow #authorization .topCaption {
+    padding-left: 1em;
+    margin-top: 0;
+    padding-right: 1em;
+  }
+  .wnd.authwindow #authorization #registration {
+    padding-top: 1.5em;
+  }
+  .wnd.authwindow #authorization .work {
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .wnd.authwindow #authorization .label {
+    text-align: center;
+  }
+  .wnd.authwindow #authorization button {
+    width: 100%;
+  }
+  .wnd.authwindow #authorization button.toRegistration {
+    min-width: 190px;
+  }
+}

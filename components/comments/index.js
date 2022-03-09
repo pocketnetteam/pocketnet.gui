@@ -200,6 +200,18 @@ var comments = (function(){
 
 		var actions = {
 
+			lightarea : function(id, c){
+
+				var comment = currents[id]
+
+				
+				
+				if(comment && (comment.message.v || comment.images.v.length))
+					c.addClass('hastext')
+				else
+					c.removeClass('hastext')
+			},
+
 			myscores : function(){
 				_.each(rendered, function(c, id){
 					var comment = deep(self.app.platform.sdk, 'comments.storage.all.' + id)
@@ -372,101 +384,11 @@ var comments = (function(){
 
 				elimages.isotope()
 
+				actions.lightarea(id, p.el.find('.postbody'))
+
+
 
 			},
-
-
-			removeDonate : function(id, p){
-
-				var comment = currents[id]
-
-				comment.donate.remove()
-
-				renders.donate(id, p);
-
-			},
-
-			embeddonate : function(id, p){
-
-				id || (id = '0')
-
-				actions.process(id)
-
-				if (areas[id])
-					areas[id].___inited = true
-
-				var storage = currents[id].export(true)
-
-				var sender = self.sdk.address.pnet().address;
-
-				if (sender === receiver){
-
-					sitemessage(self.app.localization.e('donateself'));
-
-				} else {
-
-					self.nav.api.load({
-						open : true,
-						id : 'embeding',
-						inWnd : true,
-	
-						essenseData : {
-							type : 'donate',
-							storage : storage,
-							sender: sender, 
-							receiver: receiver,
-							balance: balance,
-							on : {
-	
-								added : function(value){
-	
-									var result = Boolean(value);
-	
-	
-									if (Number(value) < balance){
-	
-										if(!_.isArray(value)) value = [value]
-	
-										currents[id].donate.remove();
-	
-										currents[id].donate.set({
-											address: receiver,
-											amount: Number(value)
-										})
-	
-										if(!result && errors[type]){
-	
-											sitemessage(errors[type])
-	
-										}
-
-	
-										if (result){
-
-											new Audio('sounds/donate.mp3').play();
-
-											renders.donate(id, p)
-
-										}	
-
-										return true
-	
-									} else {
-										sitemessage(self.app.localization.e('incoins'))
-									}
-	
-								}
-							}
-						},
-	
-						clbk : function(s, p){
-							external = p
-						}
-					})
-	
-				}
-
-			}, 
 
 			embedimages : function(id, p){
 				id || (id = '0')
@@ -509,6 +431,8 @@ var comments = (function(){
 								
 								
 								renders.images(id, p)
+
+								actions.lightarea(id, p.el.find('.postbody'))
 
 							}
 						}
@@ -655,8 +579,8 @@ var comments = (function(){
 
 				id || (id = '0')
 
-				if(currents[id])
-					 currents[id].message.set(v)
+				if (currents[id])
+					currents[id].message.set(v)
 
 				state.save()
 
@@ -1131,8 +1055,6 @@ var comments = (function(){
 
 			ps.value = sortby
 
-			
-
 			return ps
 		}
 
@@ -1446,11 +1368,13 @@ var comments = (function(){
 
 		}
 
+
 		var postEvents = function(p, _p, clbk){
 
 			var c = _p.el.find('.postbody');
 
 			actions.process(p.id || '0')
+
 
 			_p.el.find('.leaveComment').emojioneArea({
 				pickerPosition : 'top',
@@ -1540,7 +1464,8 @@ var comments = (function(){
 						actions.message(p.id || '0', text)
 
 						renders.limits(c, text)
-						
+
+						actions.lightarea(p.id || '0', c)
 					},
 
 					focus : function() {
@@ -1563,6 +1488,8 @@ var comments = (function(){
 
 						if (p.value) {
 							this.setText(p.value)
+
+							
 						}
 
 						if (p.donation && p.amount && p.editid){
@@ -1584,6 +1511,8 @@ var comments = (function(){
 								
 							}
 						}
+
+						actions.lightarea(p.id || '0', c)
 
 						// Hide the emoji button for mobiles and tablets
 						if (isMobile() || isTablet())
@@ -2001,43 +1930,18 @@ var comments = (function(){
 							postEvents(p, _p, __clbk)
 						}
 
-						_p.el.find('.embeddonate').off('click').on('click', function(){
-
-							self.app.platform.sdk.node.transactions.get.balance(function(amount){
-
-								balance = amount.toFixed(3);
-								
-								var id = actions.getid(_p.el.find('.postbody'))
-
-								if(state){
-									actions.embeddonate(id, p)
-									if(!p.answer && !p.editid){
-		
-										ini()
-		
-									}	
-								}
-								else{
-									actions.stateAction(function(){
-									})
-								}
-
-
-							})
-
-
-						})
+						
 
 						_p.el.find('.embedimages').off('click').on('click', function(){
 
 							var id = actions.getid(_p.el.find('.postbody'))
 
 							if(state){
+
 								actions.embedimages(id, p)
+
 								if(!p.answer && !p.editid){
-
 									ini()
-
 								}	
 							}
 							else if (_preview){
@@ -2177,6 +2081,16 @@ var comments = (function(){
 						
 					})
 
+					if(ed.renderClbk) ed.renderClbk()
+
+					if (clbk)
+						clbk()
+
+
+
+
+					return
+
 					var gutter = 10;
 
 					images.isotope({
@@ -2216,7 +2130,10 @@ var comments = (function(){
 
 				var commentslength
 				var comments = p.comments
-				var sort = new sortParameter()
+				var sort = null
+				
+				if(!preview || showedall)
+					sort = new sortParameter()
 
 				clears.isotope()
 
@@ -2326,15 +2243,18 @@ var comments = (function(){
 									}, 300);
 								});
 
-								sort._onChange = function(v){
-									sortby = v
+								if (sort){
+									sort._onChange = function(v){
+										sortby = v
 
-									currentstate.pagination = {}
+										currentstate.pagination = {}
 
-									renders.list(p, null, pid)
+										renders.list(p, null, pid)
+									}
+
+									ParametersLive([sort], _p.el)
 								}
-
-								ParametersLive([sort], _p.el)
+									
 							}
 
 							if (el.list){
@@ -2344,12 +2264,6 @@ var comments = (function(){
 
 									renders.list(p, null, pid)
 								})
-							
-								/*setTimeout(function(){
-									if (el.list)
-										el.list.find('.newcomments').removeClass('newcomments')
-								}, 600)*/
-								
 								
 							}
 						}

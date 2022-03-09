@@ -75,7 +75,7 @@ var articlev = (function(){
 
 				var size = share.size()
 
-				var percent = size / share.sizelimit
+				var percent = size / share.sizelimit()
 
 				var edjs = new edjsHTML(null, app)
 
@@ -115,11 +115,6 @@ var articlev = (function(){
 				successCheck()
 				self.closeContainer()
 
-				/*self.nav.api.load({
-					open : true,
-					href : 'author?address=' + self.app.user.address.value.toString('hex'),
-					history : true,
-				})*/
 			},
 
 			trx : function(share){
@@ -135,11 +130,7 @@ var articlev = (function(){
 
 							if(!_alias){
 
-								var t = self.app.platform.errorHandler(error, true);
-
-								if (t){
-									sitemessage(t)
-								}
+								
 
 								return reject(error)
 							}
@@ -161,7 +152,6 @@ var articlev = (function(){
 								}
 
 								catch (e){
-									console.log(e)
 
 									actions.complete();
 								}
@@ -177,10 +167,9 @@ var articlev = (function(){
 
 
 			error : function(e){
-				console.log(e)
 
 				if(e && e.text){
-
+					
 					if (errors[e.text]){
 
 						sitemessage(self.app.localization.e(errors[e.text].message ? errors[e.text].message : 'e13293'))
@@ -190,7 +179,23 @@ var articlev = (function(){
 						return
 
 					}
+					
 				}
+
+				if (e.toString && self.app.platform.errors[e.toString()]){
+
+					var ers = self.app.platform.errors[e.toString()].message || self.app.platform.errors[e.toString()].text
+
+					if (ers){
+						sitemessage(typeof ers == 'function' ? ers() : ers)
+					}
+					else{
+						sitemessage(e.toString())
+					}
+
+					return
+				}
+
 
 				sitemessage(e)
 			},
@@ -208,12 +213,7 @@ var articlev = (function(){
 
 				var _art = art
 
-				if(!window.testpocketnet){
-					sitemessage('Creation of articles will be available later')
-
-					return
-				}
-
+			
 				globalpreloader(true)
 
 				return actions.saveEditor().then(r => {
@@ -483,8 +483,6 @@ var articlev = (function(){
 
 				var size = helpers.size()
 
-				console.log('sizeinfo', size)
-
 				self.shell({
 					animation : false,
 					name : 'sizeinfo',
@@ -576,13 +574,13 @@ var articlev = (function(){
 					el.cover.attr('image', art.cover)
 					bgImages(el.c)
 
-					el.head.addClass('hascover')
+					el.cover.addClass('hascover')
 					el.blackmatte.addClass('hascover')
 				}
 
 				else{
 					bgImagesClear(el.cover)
-					el.head.removeClass('hascover')
+					el.cover.removeClass('hascover')
 					el.blackmatte.removeClass('hascover')
 				}
 			},
@@ -710,8 +708,6 @@ var articlev = (function(){
 			},
 
 			status : function(){
-
-				//console.log('self.app.platform.sdk.articles.findlastdraft()', self.app.platform.sdk.articles.findlastdraft())
 				
 				self.shell({
 
@@ -787,8 +783,6 @@ var articlev = (function(){
 
 				art.caption.value = text || ''
 
-				console.log('text', text, art)
-
 				renders.captiondouble()
 				
 				actions.save()
@@ -806,8 +800,6 @@ var articlev = (function(){
 						current : art.id,	
 
 						create : function(){
-
-							console.log("create")
 
 							changeArticle()
 							return true
@@ -916,29 +908,16 @@ var articlev = (function(){
 			renders.captionvalue()
 			renders.publish()
 
-			editor = new EditorJS({
 
-				
+			editor = new EditorJS({
 
 				holderId : 'editorjs',
 				placeholder: self.app.localization.e('art_placeholder'),
 				data: art.content || {},
 				tools: {
-
-					carousel: {
-						class: window.Carousel,
-						config : {
-							uploader : {
-								uploadByFile : uploadImage
-							}
-						}
-					},
-
 					paragraph: {
 						class: window.Paragraph,
-						inlineToolbar: true,
 					},
-
 					header: {
 						class: window.Header,
 						levels: [2, 3, 4],
@@ -946,16 +925,21 @@ var articlev = (function(){
 						shortcut: 'CMD+SHIFT+H',
 					},
 
-					quote: {
-						class: window.Quote,
-						inlineToolbar: true,
-						shortcut: 'CMD+SHIFT+O',
-
-						config: {
-						  quotePlaceholder: 'Enter a quote',
-						  captionPlaceholder: 'Quote\'s author',
-						},
-
+					image: {
+						class : window.ImageTool,
+						config : {
+							uploader : {
+								uploadByFile : uploadImage
+							}
+						}
+					},
+					carousel: {
+						class: window.Carousel,
+						config : {
+							uploader : {
+								uploadByFile : uploadImage
+							}
+						}
 					},
 
 					linkTool: {
@@ -974,37 +958,35 @@ var articlev = (function(){
 						}
 					},
 
+					delimiter: window.Delimiter,
 
-					/*inlineCode: {
-						class: window.InlineCode,
+					quote: {
+						class: window.Quote,
 						inlineToolbar: true,
-						shortcut: 'CMD+SHIFT+M',
-					},*/
+						shortcut: 'CMD+SHIFT+O',
 
-					warning: {
+						config: {
+						  quotePlaceholder: 'Enter a quote',
+						  captionPlaceholder: 'Quote\'s author',
+						},
+
+					},
+
+					
+					/*warning: {
 						class: window.Warning,
 						shortcut: 'CMD+SHIFT+W'
-					},
+					},*/
 
 					list: {
 						class: window.List,
 						inlineToolbar: true,
 					},
 
-					delimiter: window.Delimiter,
-
-					image: {
-						class : window.ImageTool,
-						config : {
-							uploader : {
-								uploadByFile : uploadImage
-							}
-						}
-					},
+					
 					embed : {
 						class: window.Embed,
 						config: {
-							inlineToolbar: true,
 							services: {
 								youtube: true,
 								vimeo: true
@@ -1014,8 +996,6 @@ var articlev = (function(){
 
 					
 				},
-
-				///https://www.youtube.com/watch?v=cGYyOY4XaFs
 
 				onChange : function(){
 
@@ -1030,14 +1010,12 @@ var articlev = (function(){
 			});
 
 			editor.isReady.then(() => {
-				console.log('Editor.js is ready to work!')
 				/** Do anything you need after editor initialization */
 
 				renders.sizeinfo()
 			})
 
 			.catch((reason) => {
-				console.log(`Editor.js initialization failed because of ${reason}`)
 			});
 
 			
