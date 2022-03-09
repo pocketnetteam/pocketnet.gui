@@ -54,10 +54,9 @@
 	.fullScreenVideo{
 		.video-js{
 			.vjs-volume-control{
-				display: block;
+				display: inherit;
 			}
 		}
-		
 	}
 	
 	/*.authorCell a,
@@ -1426,7 +1425,17 @@ html.mobileview{
 				}
 			}
 		}
+
+		.fullScreenVideo{
+			.video-js{
+				.vjs-volume-control{
+					display: none;
+				}
+			}
+		}
 	}
+
+	
 }
 
 html.mobileview{

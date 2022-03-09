@@ -1,0 +1,41 @@
+@import "../../css/__cssvar";
+
+#support{
+    .windowheader{
+        margin-bottom: 2 * @rhythm;
+
+        span{
+            font-weight: 700;
+        }
+    }
+    .parameter{
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+        margin-bottom: 1.5 * @rhythm;
+
+        >div{
+            width: 100%;
+        }
+
+        .name{
+            margin-bottom: 0.5 * @rhythm;
+
+            span{
+                font-size: 0.8em;
+            }
+        }
+
+        input,
+        textarea{
+            width: 100%;
+        }
+    }
+}
+
+.wnd.supportwnd{
+    .wndinner{
+		max-height: 550px;
+        max-width: 450px;
+    }
+}

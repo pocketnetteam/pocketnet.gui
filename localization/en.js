@@ -1122,21 +1122,29 @@ ____loclib.selectVideoFile = "Select video file"
 ____loclib.uploadVideoProgress = "Progress:"
 
 
-____loclib.pbp_1 = ""+appname+" Bonus Program"
+
+
+
+
+
+
+
+
+____loclib.pbp_1 = "Bastyon Bonus Program"
 ____loclib.pbp_2 = "Criteria for bonus for original content:"
-____loclib.pbp_3 = "Every 15k views + 1250 five star ratings from unique users"
+____loclib.pbp_3 = "Every 15k views + 1500 five star ratings from unique users  + 1500 referral users"
 ____loclib.pbp_4 = "PKOIN Equivalent:"
 ____loclib.pbp_5 = "1,000 USDT"
-____loclib.pbp_6 = "How You Can Increase Your Views?"
-____loclib.pbp_7 = "Embed your "+appname+" video to external websites (click Share and choose Embed)"
+____loclib.pbp_6 = "How You Speed Up Your Bonus?"
+____loclib.pbp_7 = "Embed your Bastyon video to external websites (click Share and choose Embed)"
 ____loclib.pbp_8 = "Share your video to social networks and via email"
-____loclib.pbp_9 = "Share the link to your personal page (go to your profile and click Share)"
-____loclib.pbp_10 = "If you invite a video blogger and can prove it, you get a bonus equal to 25% of their earnings."
+____loclib.pbp_9 = "Share the link to your personal page (go to your profile and click Share). You can create special posts that are exclusive only for your Bastyon subscribers. When creating a post choose an option Visible Only for Subscribers. Exclusive materials will increase the number of referrals."
+____loclib.pbp_10 = "If you invite a video blogger and can prove it, you get a bonus equal to 25% of their earnings from the first 4 bonuses."
 ____loclib.pbp_11 = "For any questions, email"
 
-____loclib.pbp_6_1 = "Referral Users"
-____loclib.pbp_6_2 = "1000"
-____loclib.pbp_6_3 = "Important: Starting November 1 there is an additional requirement for each bonus. You must have 1000 Referral Users for each bonus. To get Referral Users you must Include Referral Link when sharing!"
+____loclib.pbp_6_1 = ""
+____loclib.pbp_6_2 = ""
+____loclib.pbp_6_3 = ""
 
 
 
@@ -2093,3 +2101,25 @@ ____loclib.newRepost = "Make repost"
 ____loclib.whatsnewrepost = "Your commentary"
 
 ____loclib.art_goback = "Come back"
+
+____loclib.writesupport = "Write to support"
+____loclib.submitapplication = "Submit your application"
+
+____loclib.submitapplicationVideo = "Request PKOIN for video"
+____loclib.submitapplicationVideoSmall = "Send & request PKOIN"
+
+____loclib.videobloggerRequest = "If you are a blogger with an established audience, you can get a gift of PKOIN to load video. Click the button below if you are a blogger:"
+    
+
+____loclib.videobloggerRequest_pl1 = "Link to existing channel 1"
+____loclib.videobloggerRequest_pl2 = "Link to existing channel 2"
+____loclib.videobloggerRequest_pl3 = "Link to existing channel 3"
+
+____loclib.videobloggerRequest_pl_notes = "Notes: any additional information"
+____loclib.videobloggerRequest_pl_email = "Contact email"
+
+____loclib.videobloggerRequest_caption = "Fill out this form to receive PKOIN"
+
+____loclib.videobloggerRequest_er_link = "Provide at least one link to an existing channel"
+____loclib.videobloggerRequest_er_info = "Additional information required"
+____loclib.videobloggerRequest_er_email = "Leave an email for feedback"

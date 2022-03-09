@@ -2506,7 +2506,7 @@ var wallet = (function(){
 
 				
 
-				if(!essenseData.api){
+				/*if(!essenseData.api){
 					var parallax = new SwipeParallaxNew({
 
 						el : el.c.find('.ntf'),
@@ -2565,7 +2565,7 @@ var wallet = (function(){
 						
 		
 					}).init()
-				}
+				}*/
 
 				
 			}

@@ -1082,7 +1082,11 @@ var lenta = (function(){
 
 							},
 
-							constraints : function(){
+							constraints : function(e){
+
+								e.constrainted = true
+
+								console.log('constraints1')
 								if (__el.scrollTop() == 0 && !self.app.fullscreenmode){
 									return true;
 								}
@@ -4024,7 +4028,7 @@ var lenta = (function(){
 
 				var trueshold = 80
 
-				if(!essenseData.second && !essenseData.horizontal){
+				/*if(!essenseData.second && !essenseData.horizontal){
 					parallax = new SwipeParallaxNew({
 
 						el : el.c.find('.shares'),
@@ -4091,7 +4095,7 @@ var lenta = (function(){
 						}
 		
 					}).init()
-				}
+				}*/
 				
 				
 			}

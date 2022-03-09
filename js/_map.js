@@ -259,8 +259,23 @@ __map =  {
 			el : 'content'
 		},
 		anonimus : true,
+	},
 
-	
+	abilityincrease : {
+		uri : "abilityincrease",
+		href : "abilityincrease",
+		add : {
+			el : 'content'
+		}
+	},
+
+	support : {
+		uri : "support",
+		href : "support",
+		add : {
+			el : 'content'
+		},
+		add : insertingfunc,
 	},
 
 	applications : {

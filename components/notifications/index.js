@@ -308,7 +308,7 @@ var notifications = (function(){
 
 				var w = el.c.closest('.customscroll')
 
-				var parallax = new SwipeParallaxNew({
+				/*var parallax = new SwipeParallaxNew({
 
 					el : el.c.find('.ntf'),
 
@@ -367,7 +367,7 @@ var notifications = (function(){
 					}
 					
 	
-				}).init()
+				}).init()*/
 			}
 
 		}

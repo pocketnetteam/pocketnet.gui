@@ -1,0 +1,29 @@
+#support .windowheader {
+  margin-bottom: 1em;
+}
+#support .windowheader span {
+  font-weight: 700;
+}
+#support .parameter {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  margin-bottom: 0.75em;
+}
+#support .parameter > div {
+  width: 100%;
+}
+#support .parameter .name {
+  margin-bottom: 0.25em;
+}
+#support .parameter .name span {
+  font-size: 0.8em;
+}
+#support .parameter input,
+#support .parameter textarea {
+  width: 100%;
+}
+.wnd.supportwnd .wndinner {
+  max-height: 550px;
+  max-width: 450px;
+}

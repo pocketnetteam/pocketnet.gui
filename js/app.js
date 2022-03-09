@@ -443,6 +443,68 @@ Application = function(p)
 		return false
 	}
 
+	self.letters = {
+		videoblogger : function({
+			link1 = '',
+			link2 = '',
+			link3 = '',
+			info = '',
+			email = '',
+			address = ''
+		}, clbk){
+
+			var _p = {
+				link1,
+				link2,
+				link3,
+				info,
+				address, 
+				email
+			}
+
+			_p.Action || (_p.Action = 'ADDTOMAILLIST');
+			_p.TemplateID = '2001'
+
+			var body = ''
+
+				body += '<p><a href="https://'+self.options.url+'/author?address='+address+'">User ('+address+') require PKOIN</a></p>'
+
+				if(link1)
+					body += '<p>Link: <a href="'+link1+'">'+link1+'</a></p>'
+
+				if(link2)
+					body += '<p>Link: <a href="'+link2+'">'+link2+'</a></p>'
+
+				if(link3)
+					body += '<p>Link: <a href="'+link2+'">'+link2+'</a></p>'
+
+				body += '<p>Info: '+info+'</p>'
+				body += '<p>Email: '+email+'</p>'
+
+			_p.body = encodeURIComponent(body)
+
+			$.ajax({
+				type: 'POST',
+				url: 'https://pocketnet.app/Shop/AJAXMain.aspx',
+				data: _p,
+				dataType: 'json',
+				success : function(){
+
+					if (clbk)
+						clbk(true);
+
+				},
+
+				error : function(){
+
+					if (clbk)
+						clbk(true);
+				}
+			});
+
+		}
+	}
+
 	self.complainletters = {
 
 		post : function({
@@ -485,7 +547,6 @@ Application = function(p)
 				},
 
 				error : function(){
-					topPreloader(100)
 
 					if (clbk)
 						clbk(true);
@@ -535,7 +596,6 @@ Application = function(p)
 				},
 
 				error : function(){
-					topPreloader(100)
 
 					if (clbk)
 						clbk(true);
@@ -578,7 +638,6 @@ Application = function(p)
 				},
 
 				error : function(){
-					topPreloader(100)
 
 					if (clbk)
 						clbk(true);
@@ -620,7 +679,6 @@ Application = function(p)
 				},
 
 				error : function(){
-					topPreloader(100)
 
 					if (clbk)
 						clbk(true);
@@ -869,7 +927,7 @@ Application = function(p)
 				if(!_OpenApi)
 					self.showuikeysfirstloading()
 
-
+				
 			
 				self.mobile.update.needmanagecheck().then(r => {
 					if (r){
@@ -877,6 +935,12 @@ Application = function(p)
 					}
 						
 				})
+
+				try{
+					self.mobile.reload.initparallax()
+				}catch(e){
+					console.error(e)
+				}
 
 			})
 
@@ -979,7 +1043,8 @@ Application = function(p)
 			html : 			$('html'),
 			window : 		$(window),
 			windows : 		$('#windowsContainer'),
-			electronnav : 	$('#electronnavContainer')
+			electronnav : 	$('#electronnavContainer'),
+			preloader : 	$('#globalpreloader')
 		};
 
 
@@ -1020,6 +1085,8 @@ Application = function(p)
 				}
 
 				self.mobile.pip.init()
+
+				
 
 				if (window.Keyboard && window.Keyboard.disableScroll){
 					window.Keyboard.disableScroll(false)
@@ -1738,6 +1805,7 @@ Application = function(p)
 
 			element : null,
 			enabled : false,
+			loading : false,
 			checkIfHere : function(){
 				if (window.PictureInPicture && window.PictureInPicture.leavePip){
 					window.PictureInPicture.isPip(function(res){
@@ -1752,6 +1820,10 @@ Application = function(p)
 			},
 			enable : function(htmlElement) {
 
+				if(self.mobile.pip.loading){
+					return Promise.resolve()
+				}
+
 				var aspectratio = 1
 
 				if (!window.PictureInPicture || !window.PictureInPicture.enter) return Promise.resolve();
@@ -1761,6 +1833,8 @@ Application = function(p)
 				}
 
 				var width = 400, height = width * (aspectratio || 1);
+
+				self.mobile.pip.loading = true
 
 				return new Promise((resolve, reject) => {
 
@@ -1774,9 +1848,15 @@ Application = function(p)
 
 						if (self.mobile.pip.element)
 							self.mobile.pip.element.addClass('pipped')
+
+						self.mobile.pip.loading = false
+
 						// PIP mode started
 						resolve(d)
 					}, function(error) {
+
+						self.mobile.pip.loading = false
+
 						reject(error)
 					});
 
@@ -2044,6 +2124,103 @@ Application = function(p)
 				self.fullscreenmode = v
 
 				
+			}
+		},
+
+		reload : {
+			parallax : null,
+			reloading : false,
+			destroyparallax : function(){
+
+				if (self.mobile.reload.parallax) {
+					self.mobile.reload.parallax.destroy()
+					self.mobile.reload.parallax = null
+				}
+
+			},
+			initparallax : function(){
+
+				if(isTablet() || isMobile()){
+
+					self.mobile.reload.destroyparallax()
+
+					self.mobile.reload.parallax = new SwipeParallaxNew({
+
+						el : self.el.content,
+
+						allowPageScroll : 'vertical',
+						preventDefaultEvents : false,
+		
+						directions : {
+							down : {
+								cancellable : true,						
+
+								positionclbk : function(px){
+									var percent = easeOutQuint(Math.abs(px) / (self.height || self.el.window.height()));
+
+									console.log('percent, ', percent, px)
+
+									if (px >= 10){
+
+										if(!self.el.preloader.hasClass('show'))
+											self.el.preloader.addClass('show')
+
+										self.el.preloader.css('transform', 'translateY('+(100 * percent)+'%)')
+									}
+									else{
+
+										if (self.el.preloader.hasClass('show'))
+											self.el.preloader.removeClass('show')
+										self.el.preloader.css('transform', '')
+									}
+
+								},
+
+								constraints : function(e){
+
+									if(e.constrainted) return false
+
+									if(self.lastScrollTop <= 0 && !self.mobile.reload.reloading){
+										return true;
+									}
+
+								},
+
+								restrict : true,
+								trueshold : 20,
+								clbk : function(){
+
+									self.mobile.reload.reloading = true
+
+									setTimeout(function(){
+										
+										globalpreloader(true)
+										self.el.preloader.css('transform', '')
+		
+										self.platform.sdk.node.transactions.get.allBalanceUpdate(function(){
+											self.platform.sdk.notifications.getNotifications()
+
+											if (self.nav.current.module)
+												self.nav.current.module.restart()
+
+											setTimeout(function(){
+												globalpreloader(false)
+												
+												self.mobile.reload.reloading = false
+											}, 1000)
+										})
+									}, 100)
+
+									
+								}
+		
+							}
+						}
+						
+		
+					}).init()
+
+				}
 			}
 		},
 

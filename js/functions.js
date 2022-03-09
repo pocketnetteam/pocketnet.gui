@@ -503,6 +503,11 @@
 		successCheck()
 	}, 3000)*/
 
+
+	easeOutQuint= function(x){
+		return 1 - Math.pow(1 - x, 10);
+	}
+	
 	wnd = function(p){
 
 		if(!p) p = {};
@@ -711,11 +716,56 @@
 				wnd.find('.expandButton').on('click', actions.show);
 			}
 
-			if(isTablet() && wnd.hasClass('normalizedmobile')){
+			if(isTablet() && (wnd.hasClass('normalizedmobile'))){
 
 				var trueshold = 20
-				
 
+				var down = {
+					cancellable : true,	
+
+					basevalue : function(){
+
+						if(wnd.hasClass('showbetter')){
+							return 45
+						}
+
+						return 130
+					},
+					
+					positionclbk : function(px){
+						var percent = Math.abs(px) / trueshold;
+					},
+
+					constraints : function(e){
+
+						var i = false
+
+						var sel = _.find(e.path, function(p){
+
+							if (p.id == 'windowsContainer'){
+								i = true
+							}
+
+							if (i) return null
+
+							return p.classList.contains('customscroll');
+						})
+
+						if(!sel){
+							return true;
+						}
+
+						return sel.scrollTop == 0
+					},
+
+					restrict : true,
+					trueshold : trueshold,
+					clbk : function(){
+						actions.close(true)
+					}
+
+				}
+				
 				parallax = new SwipeParallaxNew({
 
 					///,.wndinner
@@ -724,49 +774,7 @@
 					transformel : wnd.find('.wndinner'),
 					allowPageScroll : 'vertical',
 					directions : {
-						down : {
-							cancellable : true,						
-							basevalue : function(){
-
-								if(wnd.hasClass('showbetter')){
-									return 45
-								}
-
-								return 130
-							},
-							positionclbk : function(px){
-								var percent = Math.abs(px) / trueshold;
-							},
-
-							constraints : function(e){
-
-								var i = false
-
-								var sel = _.find(e.path, function(p){
-
-									if (p.id == 'windowsContainer'){
-										i = true
-									}
-
-									if (i) return null
-
-									return p.classList.contains('customscroll');
-								})
-
-								if(!sel){
-									return true;
-								}
-
-								return sel.scrollTop == 0
-							},
-
-							restrict : true,
-							trueshold : trueshold,
-							clbk : function(){
-								actions.close(true)
-							}
-	
-						}
+						down : down
 					}
 					
 	
@@ -6752,17 +6760,17 @@
 			value = value.toFixed(0)
 
 			if (prop == 'x'){
-				__el.style["transform"] = "scale("+scale+") translate3d("+value+"px, 0, 0)"
+				__el.style["transform"] = "translate3d("+value+"px, 0, 0)"
 
-				if(!ms)
-					__el.style['transform-origin'] = pd + ' center'
+				//if(!ms)
+					//__el.style['transform-origin'] = pd + ' center'
 			}
 
 			if (prop == 'y'){
-				__el.style["transform"] = "scale("+scale+") translate3d(0, "+value+"px, 0)"
+				__el.style["transform"] = "translate3d(0, "+value+"px, 0)"
 
-				if(!ms)
-					__el.style['transform-origin'] = 'center ' + pb
+				//if(!ms)
+					//__el.style['transform-origin'] = 'center ' + pb
 			}
 
 			if(!ms){	
@@ -6875,6 +6883,7 @@
 			}
 			
 			p.el.swipe({
+				preventDefaultEvents : p.preventDefaultEvents,
 				allowPageScroll : p.allowPageScroll,
 				swipeStatus : _.throttle(statusf, throttle),
 			})
@@ -7162,7 +7171,7 @@
 			caption.addClass(classes.caption);
 
 			caption.css(pos, offset[0] + 'px');
-			caption.css('z-index', '100');
+			caption.css('z-index', '3');
 
 			caption.width(w);
 

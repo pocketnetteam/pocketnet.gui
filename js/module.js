@@ -598,7 +598,6 @@ nModule = function(){
 			self.stop(p);
 			self.run(p);
 		}	
-
 		
 	}
 
