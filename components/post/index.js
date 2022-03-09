@@ -804,6 +804,7 @@ var post = (function () {
 
 					if (actions.changeSavingStatus)
 						actions.changeSavingStatus(share.txid, deleted)
+						
 				}, {
 					before : actions.changeSavingStatusLight,
 					after : actions.changeSavingStatusLight

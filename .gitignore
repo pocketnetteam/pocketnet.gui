@@ -55,3 +55,4 @@ external/peertube
 web/
 main.js
 docs/
+posts/
