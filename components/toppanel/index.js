@@ -126,7 +126,6 @@ var toppanel = (function(){
 						el.menu.find('.showcategories').on(clickAction(), function(){
 
 							var mainmoduleAction = deep(self.app, 'modules.main.module.showCategories')
-
 							if (mainmoduleAction) mainmoduleAction(true)
 						})
 

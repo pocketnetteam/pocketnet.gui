@@ -40,7 +40,7 @@
   display: none;
 }
 #lenta .fullScreenVideo .video-js .vjs-volume-control {
-  display: block;
+  display: inherit;
 }
 #lenta .circularprogress {
   overflow: hidden;
@@ -992,6 +992,9 @@
 html.mobileview #lenta .share .jsPlayerLoading,
 html.mobileview #lenta .share .video-js {
   max-height: 80vh;
+}
+html.mobileview #lenta .fullScreenVideo .video-js .vjs-volume-control {
+  display: none;
 }
 html.mobileview #lenta .fullScreenVideo {
   will-change: transform;

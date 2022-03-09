@@ -312,14 +312,6 @@
 #videoCabinet .blockswrapper .metricablock:hover .vidgetIconWrapper .vidgetIcon {
   box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
 }
-#videoCabinet .videoErrorContainer .videoErrorHeading {
-  font-size: 1.5em;
-  font-weight: 200;
-  color: rgb(var(--color-bad));
-}
-#videoCabinet .videoErrorContainer .videoErrorBody {
-  font-weight: 200;
-}
 #videoCabinet .videoControls {
   display: flex;
   align-items: center;

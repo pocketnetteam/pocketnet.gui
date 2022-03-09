@@ -128,7 +128,8 @@ Platform = function (app, listofnodes) {
         'PGD5jUBQ7qNnHDuW85RRBxY1msywEdCm7r' : true,
         'PApFYMrbm3kXMV7kjrEG1v6ULv6ZFDHb9j' : true,
         'PUBRMTAUhy51gkbuP1tRJLMMAzEDt9C2X6' : true,
-        'P9i55BxFWpjMyqgHyCKtazDN1HDiZxTSzJ' : true
+        'P9i55BxFWpjMyqgHyCKtazDN1HDiZxTSzJ' : true,
+        'PLLDTFuBhb4FRPt811bTPjgaYgqoj16hVV' : true
     }
 
     self.nvadr = {
@@ -2420,8 +2421,7 @@ Platform = function (app, listofnodes) {
 
             self.app.actions.playingvideo(null)
             self.app.actions.pipwindow(p)
-
-            //self.matrixchat.core.backtoapp()
+            self.matrixchat.core.backtoapp()
         },
 
         popup : function(key, always, data){
@@ -13191,6 +13191,29 @@ Platform = function (app, listofnodes) {
                 return tags
             },  
 
+            gettagsexcluded : function(_k, onlycategories){
+                var tags = []
+
+                var k = _k || self.app.localization.key
+
+                if(!self.sdk.categories.data.all[k]) k = 'en'
+
+                var excluded = self.sdk.categories.settings.excluded[k] || {};
+
+
+
+                var all = self.sdk.categories.get(k)
+
+                _.each(all, function(c){
+                    if(excluded[c.id]) tags = tags.concat(c.tags)
+                })
+
+
+                if(onlycategories === 'onlytags') tags = excludedtags
+
+                return tags
+            },  
+
             gettags : function(_k, onlycategories){
                 var tags = []
 
@@ -13793,6 +13816,8 @@ Platform = function (app, listofnodes) {
 
                 if(!start) start = 0
 
+                if(!s[type]) s[type] = {}
+
                 if (s[type][value] && s[type][value][address] && s[type][value][address][fixedBlock] && s[type][value][address][fixedBlock].data){
 
                     for (var i = 0; i < count; i++) {
@@ -13814,6 +13839,8 @@ Platform = function (app, listofnodes) {
                 var s = this.storage;
 
                 if(!start) start = 0
+
+                if(!s[type]) s[type] = {}
 
                 if (!s[type][value]) s[type][value] = {}
                 if (!s[type][value][address]) s[type][value][address] = {}
@@ -13868,6 +13895,8 @@ Platform = function (app, listofnodes) {
                 if(typeof fixedBlock == 'undefined') fixedBlock = self.currentBlock
 
                 type || (type = 'fs')
+
+                if(!s[type]) s[type] = {}
 
                 s.preview(fixedBlock, type, start, count, address)
 
@@ -25641,9 +25670,9 @@ Platform = function (app, listofnodes) {
         self.updating = false;
     }, 600000)
 
-    self.appstate = function () {
+    self.appstate = function() {
 
-        if (self.loadingWithErrors && _.isEmpty(self.app.errors.state)) {
+        if (reload || (self.loadingWithErrors && _.isEmpty(self.app.errors.state))) {
 
             self.loadingWithErrors = false;
             self.restart(function () {
@@ -25655,6 +25684,7 @@ Platform = function (app, listofnodes) {
             })
         }
     }
+
 
     self.directdialog = function(proxy){
 
@@ -26724,6 +26754,10 @@ Platform = function (app, listofnodes) {
                 if (self.app.pipwindow){
                     self.app.mobile.pip.enable(self.app.pipwindow.el)
                 }
+                
+                console.log('backtoapp')
+
+                
             }, 200)
            
 

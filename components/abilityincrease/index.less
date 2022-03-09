@@ -1,0 +1,44 @@
+@import "../../css/__cssvar";
+
+#abilityincrease{
+    .errorHeading {
+        font-size: 1.5em;
+        color: rgb(var(--color-bad));
+        max-width: 550px;
+    }
+
+    .errorBody {
+        margin-top : 3 * @rhythm;
+        max-width: 550px;
+    }
+
+    .errorAdditional{
+        margin-top : 3 * @rhythm;
+        font-weight: 700;
+        max-width: 600px;
+    }
+
+    .actions{
+        display: flex;
+        margin-top : 3 * @rhythm;
+
+        .buttonwrapper{
+            margin-right: 2 * @rhythm;
+
+            &:nth-child(1){
+
+                button{
+                    background: rgb(var(--color-bg-orange));
+                    color : rgb(var(--text-on-bg-ac-color));
+                    text-decoration: none;
+    
+                    &:hover{
+                        opacity: 0.9;
+                        color : rgb(var(--text-on-bg-ac-color));
+                    }
+                }
+               
+            }
+        }
+    }
+}

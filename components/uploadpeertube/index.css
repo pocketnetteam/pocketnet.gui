@@ -400,14 +400,15 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-around;
+  border-radius: 6px;
   overflow: hidden;
 }
 .wnd.uploadpeertube.witherror .hideButton {
   display: none!important;
 }
 .wnd.uploadpeertube.witherror .wndinner {
-  max-width: 450px;
-  max-height: 385px;
+  max-width: 650px;
+  max-height: 485px;
 }
 .wnd.uploadpeertube.witherror .wndinner #uploadpeertube {
   height: 100%;
