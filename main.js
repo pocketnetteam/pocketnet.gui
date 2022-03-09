@@ -12,6 +12,8 @@ const {protocol} = require('electron');
 const ProxyInterface = require('./proxy16/ipc.js')
 const IpcBridge =require('./js/electron/ipcbridge.js')
 
+const { bastyonFsFetchBridge } = require('./js/peertube/bastyon-fs-fetch.js');
+
 const electronLocalshortcut = require('electron-localshortcut');
 
 var win, nwin, badge, tray, proxyInterface, ipcbridge;
@@ -78,6 +80,10 @@ var appName = global.TESTPOCKETNET ? 'BastyonTest' : 'Bastyon';
 
 let url = require('url')
 let path = require('path')
+const fs = require('fs');
+const asyncFs = require('fs/promises');
+const http = require('http');
+const https = require('https');
 
 var defaultIcon = require('path').join(__dirname, 'res/electron/icons/win/icon.ico')
 var defaultTrayIcon = require('path').join(__dirname, 'res/electron/icons/win/icon.ico')
@@ -695,6 +701,285 @@ function createWindow() {
         autoLaunchManage(p.enable)
     })
 
+    ipcMain.handle('saveShareData', async (event, shareData) => {
+        const storage = app.getAppPath();
+
+        const shareDir = `${storage}/posts/${shareData.id}`;
+        const jsonDir = `${shareDir}/share.json`;
+
+        if (!fs.existsSync(shareDir)) {
+            fs.mkdirSync(shareDir, { recursive: true });
+        }
+
+        const jsonData = JSON.stringify(shareData);
+
+        await asyncFs.writeFile(jsonDir, jsonData, { overwrite: false });
+
+        return shareDir;
+    });
+
+    ipcMain.handle('saveShareVideo', async (event, folder, videoData, videoResolution) => {
+        function downloadFile(url, options = {}) {
+            return new Promise((resolve, reject) => {
+                let isHttps = /^https:/;
+                let isHttp = /^http:/;
+
+                const handler = (response) => {
+                    let data = '';
+
+                    response.on('data', (chunk) => (
+                        data += chunk
+                    ));
+
+                    if (options.stream) {
+                        options.stream.on('close', () => resolve(data));
+
+                        response.pipe(options.stream);
+                    } else {
+                        response.on('end', () => resolve(data));
+                    }
+                };
+
+                const reqOptions = {
+                    headers: options.headers,
+                };
+
+                if (isHttp.test(url)) {
+                    if (options.headers) {
+                        http.get(url, reqOptions, handler);
+                    } else {
+                        http.get(url, handler);
+                    }
+                } else if (isHttps.test(url)) {
+                    if (options.headers) {
+                        https.get(url, reqOptions, handler);
+                    } else {
+                        https.get(url, handler);
+                    }
+                } else {
+                    reject('Unsupported protocol');
+                }
+            });
+        }
+
+        const videoDir = `${folder}/videos/${videoData.uuid}`;
+        const jsonDir = `${videoDir}/info.json`;
+        const signsDir = `${videoDir}/signatures.json`;
+        const playlistDir = `${videoDir}/playlist.m3u8`;
+
+        const streamsRegexp = /^.+\.m3u8/gm;
+        const videoTargetFile = /#EXT-X-MAP:URI="(.+\.mp4)"/m;
+        const bytesRangesSelect = /(?!BYTERANGE)(\d+@\d+)/gm;
+
+        if (!fs.existsSync(videoDir)) {
+            fs.mkdirSync(videoDir, { recursive: true });
+        }
+
+        const jsonData = JSON.stringify(videoData);
+        await asyncFs.writeFile(jsonDir, jsonData, { overwrite: false });
+
+        const playlistUrl = videoData.streamingPlaylists[0].playlistUrl;
+        const signsUrl = videoData.streamingPlaylists[0].segmentsSha256Url;
+
+        const streamsData = await downloadFile(playlistUrl);
+
+        const signsFile = fs.createWriteStream(signsDir);
+        await downloadFile(signsUrl, { stream: signsFile });
+
+        const streamsList = streamsData.match(streamsRegexp);
+
+        const targetStream = streamsList.find((stream) => (
+            stream.endsWith(`${videoResolution}.m3u8`)
+        ));
+
+        const urlLastCut = playlistUrl.lastIndexOf('/');
+        const targetStreamBaseUrl = playlistUrl.substring(0, urlLastCut);
+        const targetStreamUrl = `${targetStreamBaseUrl}/${targetStream}`;
+
+        const fragmentsFile = fs.createWriteStream(playlistDir);
+        const fragmentsData = await downloadFile(targetStreamUrl, { stream: fragmentsFile });
+        const fragmentsList = fragmentsData.match(bytesRangesSelect);
+
+        const targetVideo = fragmentsData.match(videoTargetFile)[1];
+
+        const targetVideoUrl = `${targetStreamBaseUrl}/${targetVideo}`;
+
+        for(let i = 0; i < fragmentsList.length; i++) {
+            let fragRange = fragmentsList[i].split('@');
+            fragRange = fragRange.reverse();
+
+            const fragSize = Number.parseInt(fragRange[1]);
+            const startBytes = Number.parseInt(fragRange[0]);
+            const endBytes = fragSize + startBytes - 1;
+
+            const fragName = `fragment_${startBytes}-${endBytes}`;
+            const fragPath = `${videoDir}/${fragName}.mp4`;
+
+            const fragFile = fs.createWriteStream(fragPath);
+
+            await downloadFile(targetVideoUrl, {
+                stream: fragFile,
+                headers: {
+                    range: `bytes=${startBytes}-${endBytes}`,
+                },
+            });
+        }
+
+        const videoInfo = {
+            thumbnail: 'https://' + videoData.from + videoData.thumbnailPath,
+            videoDetails : videoData,
+        };
+
+        const urlSplits = videoInfo.videoDetails.streamingPlaylists[0].playlistUrl;
+        const videoId = urlSplits[urlSplits.length - 2];
+
+        const result = {
+            video: {
+                internalURL: videoInfo.videoDetails.streamingPlaylists[0].playlistUrl,
+            },
+            infos: videoInfo,
+            id: videoData.uuid,
+        };
+
+        return result;
+    });
+
+    ipcMain.handle('deleteShareWithVideo', async (event, shareId) => {
+        const storage = app.getAppPath();
+
+        const shareDir = `${storage}/posts/${shareId}`;
+
+        fs.rmSync(shareDir, { recursive: true, force: true });
+    });
+
+    ipcMain.handle('getShareList', async (event) => {
+        const isShaHash = /[a-f0-9]{64}/;
+
+        const storage = app.getAppPath();
+
+        const postsDir = `${storage}/posts`;
+
+        if (!fs.existsSync(postsDir)) {
+            fs.mkdirSync(postsDir);
+        }
+
+        const postsList = fs.readdirSync(postsDir)
+            .filter(fN => isShaHash.test(fN));
+
+        return postsList;
+    });
+
+    ipcMain.handle('getShareData', async (event, shareId) => {
+        const storage = app.getAppPath();
+
+        const shareDir = `${storage}/posts/${shareId}`;
+        const jsonPath = `${shareDir}/share.json`;
+
+        const jsonData = fs.readFileSync(jsonPath, { encoding:'utf8', flag:'r' });
+
+        return JSON.parse(jsonData);
+    });
+
+    /* ipcMain.handle('getVideosList', async (event) => {
+        const isUuid4 = /[a-f0-9]{8}-?[a-f0-9]{4}-?4[a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12}/;
+
+        const storage = app.getAppPath();
+
+        const videoDir = `${storage}/videos`;
+
+        if (!fs.existsSync(videoDir)) {
+            fs.mkdirSync(videoDir);
+        }
+
+        const videosList = fs.readdirSync(videoDir)
+            .filter((fN) => (
+                isUuid4.test(fN)
+            ));
+
+        return videosList;
+    }); */
+
+    ipcMain.handle('getVideoData', async (event, shareId, videoId) => {
+        const storage = app.getAppPath();
+
+        const videoDir = `${storage}/posts/${shareId}/videos/${videoId}`;
+
+        const jsonPath = `${videoDir}/info.json`;
+
+        const videosList = fs.readdirSync(videoDir);
+
+        const videoData = {};
+
+        videoData.id = videoId;
+
+        const jsonData = fs.readFileSync(jsonPath, { encoding:'utf8', flag:'r' });
+
+        videoData.infos = JSON.parse(jsonData);
+
+        const videoName = videosList.find(fN => (
+            fN.endsWith('.m3u8')
+        ));
+
+        const videoPath = `${videoDir}/${videoName}`;
+
+        const videoStats = fs.statSync(videoPath);
+
+        videoData.size = videoStats.size;
+        videoData.video = {
+            internalURL: videoData.infos.streamingPlaylists[0].playlistUrl,
+        };
+
+        return videoData;
+    });
+
+    ipcMain.handle('VideoManager : LoadFile', async (event, requestData) => {
+        const { url, responseType, range } = requestData;
+
+        console.log(requestData);
+
+        const isPlaylist = url.endsWith('.m3u8');
+        const isFragment = url.endsWith('.mp4');
+
+        const storage = app.getAppPath();
+
+        const urlSplits = url.split('/');
+        const videoId = urlSplits[urlSplits.length - 2];
+
+        const videoPath = `${storage}/videos/${videoId}`;
+
+        let filePath;
+
+        if (isPlaylist) {
+            filePath = `${videoPath}/playlist.m3u8`;
+        } else if (isFragment) {
+            const rangeBytes = range.match(/\d+/g);
+
+            const fragmentFile = `fragment_${rangeBytes[0]}-${rangeBytes[1]}.mp4`;
+            filePath = `${videoPath}/${fragmentFile}`;
+        }
+
+        if (fs.existsSync(filePath)) {
+            let fileData;
+
+            if (responseType === 'arraybuffer') {
+                fileData = fs.readFileSync(filePath, { flag: 'r' });
+            } else if (responseType === 'text') {
+                fileData = fs.readFileSync(filePath, { encoding: 'utf8', flag: 'r' });
+            }
+
+            return {
+                response: fileData,
+                responseURL: url,
+            };
+        }
+
+        return 'No downloaded file found';
+    });
+
+    /**
+     * Local files requestor bridge
+     */
+    bastyonFsFetchBridge(ipcMain, app.getAppPath());
 
     proxyInterface = new ProxyInterface(ipcMain, win.webContents)
     proxyInterface.init()
@@ -785,28 +1070,19 @@ if(!r) {
         }
     })
 
-    // If we are running a non-packaged version of the app && on windows
-
     _.each(protocols, function(protocol){
         app.setAsDefaultProtocolClient(protocol, process.execPath, [path.resolve(process.argv[1] || '.') ]); 
     })
 
-
     app.on('ready', initApp)
 
-    // Выйти, когда все окна будут закрыты.
     app.on('window-all-closed', () => {
-        // Оставаться активным до тех пор, пока пользователь не выйдет полностью с помощью Cmd + Q,
-        // это обычное дело для приложений и их строки меню на macOS
         if (process.platform !== 'darwin') {
             app.quit()
         }
     })
 
-
     app.on('activate', () => {
-        // На MacOS обычно пересоздают окно в приложении,
-        // после того, как на иконку в доке нажали, и других открытых окон нету.
         if (win === null) {
             createWindow()
         }
