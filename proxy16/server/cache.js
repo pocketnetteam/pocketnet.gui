@@ -254,6 +254,26 @@ var Cache = function(p){
                 time : 5600,
                 block : 0,
             },
+
+            getrecomendedcontentsbyscoresonsimilarcontents : {
+                time : 3600
+            },
+
+            getrecomendedaccountsbysubscriptions : {
+                time : 3600
+            },
+
+            getrecomendedaccountsbyscoresonsimilaraccounts : {
+                time : 3600
+            },
+
+            getrecomendedaccountsbyscoresfromaddress : {
+                time : 3600
+            },
+
+            getrecomendedcontentsbyscoresfromaddress : {
+                time : 3600
+            }
         }
     }
 
