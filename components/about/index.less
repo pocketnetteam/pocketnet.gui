@@ -67,7 +67,7 @@
 
 					.oflogo{
 						display: inline-block;
-						color: #00a6ff;
+						color: rgb(var(--color-cc-blue));
 						font-size: 4em;
 						text-align: center;
 						line-height: 25px;
@@ -96,7 +96,7 @@
 					}
 					
 					i{
-						color: #00a6ff;
+						color: rgb(var(--color-cc-blue));
 						font-size: 2em;
 						width: 25px;
 						height: 25px;
@@ -188,7 +188,7 @@
                                     font-size: 0.6em;
                                     }
                                 >i{
-                                    color: #00a6ff;
+                                    color: rgb(var(--color-cc-blue));
                                     font-size: 2em;
                                     width: 25px;
                                     height: 25px;
@@ -199,7 +199,7 @@
 
 						.oflogo{
 							display: inline-block;
-							color: #00a6ff;
+							color: rgb(var(--color-cc-blue));
 							font-size: 4em;
 							text-align: center;
 							line-height: 25px;
@@ -214,17 +214,12 @@
 
 
         }
-
-
-
-
-
     }
 
 	.maket {
 		top: 0;
 		position: fixed;
-		background: white;
+		background: rgb(var(--background-total-theme));
 		z-index: 300;
 		width: 100%;
 		height: @reportMarginTop;
@@ -332,32 +327,22 @@
 					cursor : pointer;
 
 					&.active{
-						color : #0e1c2b;
+						color : rgb(var(--color-txt-ac))
 					}
 
-					.reportCaptionTable{
-						&:hover{
-							color : @color-main;
-						}
-					}
+
 
 					&.alternativeTo{
 						position : relative;
 			
 						.dropdown{
 							display : none;
+							padding-left: 10px;
+							left: 5px;
 							width: 180px;
-							padding-top: @rhythm * 2;
+							padding-top: @rhythm;
 							position : absolute;
-							background : #ffffff;
-
-							.reportCaption{
-								&:hover{
-									.dropdownReportCaptionCell{
-										color : @color-main;
-									}
-								}
-							}
+							background : rgb(var(--background-secondary-theme));
 						}
 					}
 
@@ -435,7 +420,7 @@
 			height: 100%;
 			background: rgba(10,12,23,.5);
 			cursor: pointer;
-			color: @color-gray-mlight;
+			color: rgb(var(--background-secondary-theme));
 
 			&:hover{
 				color: #ffffff;
@@ -540,29 +525,6 @@
 
 	}
 
-}
-
-html.stblack {
-	#about{
-		.maket{
-			background: #030f1b;
-			color: #b2abac;
-
-			.contentmenu{
-				.reportCaption{
-					&.active{
-						color: #fff;
-					}
-				}
-			}
-			
-
-			.dropdown{
-				background: #030f1b!important;
-				color: #b2abac;
-			}
-		}
-	}
 }
 
 

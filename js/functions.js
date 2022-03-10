@@ -1,3 +1,5 @@
+//window.onanimationiteration = console.log;
+
 /* PDF */
 
 
@@ -122,7 +124,6 @@
 		}
 
 		return n;
-		
  	}
 
  	dateToStr = function (d) {
@@ -502,6 +503,11 @@
 		successCheck()
 	}, 3000)*/
 
+
+	easeOutQuint= function(x){
+		return 1 - Math.pow(1 - x, 10);
+	}
+	
 	wnd = function(p){
 
 		if(!p) p = {};
@@ -511,25 +517,27 @@
 			content = p.content || null,
 
 			id = 'w' + makeid().split('-')[0],
-			nooverflow = p.nooverflow || app.scrollRemoved,
+			nooverflow = (p.nooverflow || app.scrollRemoved || p.pip),
 			el = p.el || p.app.el.windows;
 
 
+
 		var parallax = null
+		var showmoremobile = false
+		var showmoremobilevalue = 75;
 
 		//var _w = $(window);
 
 		var wnd;
+		var cnt = null
 
 		var find = function(s){
 			if (wnd) return wnd.find(s);
 		}
 
-		var hasonewindow = function(){
-			if(p.app.el.windows.find('.wnd').length) p.app.el.html.addClass('haswindow')
+		var pippositions = ['default', 'bottom']
 
-			else p.app.el.html.removeClass('haswindow')
-		}
+		self.independent = p.pip
 
 		self.redraw = function(){
 
@@ -547,7 +555,6 @@
 			if(p.scrollers)
 			{
 				$.each(find(p.scrollers), function(index){
-				
 					$(this).scrollTop(scrollers[index])
 				})
 			}
@@ -564,7 +571,7 @@
 
 			if(!p.type) p. type = ''
 
-			var h = p.allowHide ? '<div class="wndback" id='+id+'></div><div class="wndinner">' : '<div class="wndback" id='+id+'></div><div class="_close roundclosebutton '+closedbtnclass+'"><i class="fa fa-times" aria-hidden="true"></i></div><div class="closeline"></div><div class="wndinner ' + p.type + '">\
+			var h = p.allowHide ? '<div class="wndback" id='+id+'></div><div class="wndinner">' : '<div class="wndback" id='+id+'></div>'+ (p.pip ? '<div class="_expand roundclosebutton"><i class="fas fa-expand"></i></div><div class="_changeplace roundclosebutton"><i class="fas fa-angle-down"></i></div>' : '') +'<div class="_close roundclosebutton '+closedbtnclass+'"><i class="fa fa-times" aria-hidden="true"></i></div><div class="closeline"></div><div class="wndinner ' + p.type + '">\
 			';
 
 			var closedbtnclass = ''
@@ -584,20 +591,34 @@
 				}
 
 				if (!p.noButtons) {
-					h+=	 ' <div class="buttons"></div>';
+					h +=	 '<div class="buttons windowmainbuttons">';
+
+					_.each(p.buttons, function(button, i){
+
+						var txt = (button.html ? button.html : 
+							(app ? ( app.localization.e(button.text) || button.text || '') : 
+							(button.text || '')) )
+
+						var hb = '<div><div class="button '+(button.class || "")+'" bi="'+i+'">'+txt+'</div></div>'
+
+						h += hb
+		
+					})
+
 					h+=	 '</div>';
 				}
 
-				wnd = $("<div>",{
-					"class" 	: "wnd",
+				wnd = $("<div>", {
+					"class" : "wnd",
 					"html"	: h
 				});
 
-				/*wnd.css('top', app.lastScrollTop)
-			   	wnd.css('height', app.height)*/
+		   	if(!p.header) wnd.addClass('noheader')
 
-		   	if(!p.header) 
-			   	wnd.addClass('noheader')
+			if(p.pip) {
+				wnd.addClass('pipmini')
+				wnd.attr('position', localStorage['pipposition'] || 'default') 
+			}
 
 			el.append(wnd);		
 
@@ -605,36 +626,44 @@
 				actions["close"](true);
 			});
 
-			_.each(p.buttons, function(button){
-				button.el = $("<div>",{
-				   "class" 	: "button " + (button.class || ""),
-				   "html"	: "<div>" + 
-				   
-				   (button.html ? button.html : 
-						(app ? ( app.localization.e(button.text) || button.text || '') : 
-						(button.text || '')) ) + 
-				   
-				   "</div>"
-			    });
+			wnd.find("._expand").on('click', function(){
+				actions["expand"](true);
+			});
 
-				wnd.find(".wndinner>div.buttons").append(button.el);
+			wnd.find("._changeplace").on('click', function(){
 
-				var fn = button.fn || actions[button.action] || actions["close"];
-				button.el.on('click', function(){fn(wnd, self)});
+				var cur = localStorage['pipposition'] || 'default'
 
-			})
+				cur = nextElCircle(pippositions, cur)
+				
+				localStorage['pipposition'] = cur
+
+				wnd.attr('position', cur) 
+
+			});
+
+			
+
+
+			////TODO
+
+			if (!p.noButtons) {
+				_.each(p.buttons, function(button, i){
+					var _el = wnd.find('.wndinner>div.buttons .button[bi="'+i+'"]')
+
+					var fn = button.fn || actions[button.action] || actions["close"];
+
+					_el.on('click', function(){fn(wnd, self)});
+				})
+			}
+
 
 			if(p.class) wnd.addClass(p.class);
-
-		    if(!nooverflow){
-				nooverflow = !app.actions.offScroll();
-			}
 
 			wnd.css("display", "block");
 			wnd.addClass('asette')
 
-
-			hasonewindow()
+			if(p.showbetter) wnd.addClass('showbetter')
 
 			setTimeout(function(){
 				wnd.addClass('sette')
@@ -642,14 +671,36 @@
 
 			setTimeout(function(){
 				wnd.removeClass('asette')
-			}, 320)
+
+				if(!nooverflow){
+					nooverflow = !app.actions.offScroll();
+				}
+
+			}, 220)
 
 			app.actions.playingvideo(null);
 		}
 
 		var resize = function(){
-			/*wnd.css('top', app.lastScrollTop)
-			wnd.css('height', app.height)*/
+		
+		}
+
+		////TODO
+
+		var wndcontentscrollmobile = function(e){
+
+			var cc = cnt.scrollTop()
+
+			if(cc > showmoremobilevalue && !showmoremobile){
+				wnd.addClass('showbetter')
+				showmoremobile = true
+			}
+
+			if(cc < showmoremobilevalue && showmoremobile) {
+				showmoremobile = false
+				wnd.removeClass('showbetter')
+			}
+			
 		}
 
 		var initevents = function(){
@@ -665,48 +716,76 @@
 				wnd.find('.expandButton').on('click', actions.show);
 			}
 
-			
-
-			/*wnd.find('.wndback,.wndheader').swipe({
-				swipeDown : function(e, phase, direction, distance){
-					actions.close(true)
-				},
-			})*/
-
-			if(isTablet() && wnd.hasClass('normalizedmobile')){
+			if(isTablet() && (wnd.hasClass('normalizedmobile'))){
 
 				var trueshold = 20
 
+				var down = {
+					cancellable : true,	
+
+					basevalue : function(){
+
+						if(wnd.hasClass('showbetter')){
+							return 45
+						}
+
+						return 130
+					},
+					
+					positionclbk : function(px){
+						var percent = Math.abs(px) / trueshold;
+					},
+
+					constraints : function(e){
+
+						var i = false
+
+						var sel = _.find(e.path, function(p){
+
+							if (p.id == 'windowsContainer'){
+								i = true
+							}
+
+							if (i) return null
+
+							return p.classList.contains('customscroll');
+						})
+
+						if(!sel){
+							return true;
+						}
+
+						return sel.scrollTop == 0
+					},
+
+					restrict : true,
+					trueshold : trueshold,
+					clbk : function(){
+						actions.close(true)
+					}
+
+				}
+				
 				parallax = new SwipeParallaxNew({
 
-					el : wnd.find('.wndback,.wndheader'),
+					///,.wndinner
+
+					el : wnd.find(p.parallaxselector || '.wndback,.wndheader'),
 					transformel : wnd.find('.wndinner'),
-
 					allowPageScroll : 'vertical',
-	
 					directions : {
-						down : {
-							cancellable : true,						
-
-							positionclbk : function(px){
-								var percent = Math.abs(px) / trueshold;
-							},
-
-							constraints : function(){
-								return true;
-							},
-
-							restrict : true,
-							trueshold : trueshold,
-							clbk : function(){
-								actions.close(true)
-							}
-	
-						}
+						down : down
 					}
 					
 	
 				}).init()
+				
+
+				cnt = wnd.find('.wndcontent')
+
+				if(!p.showbetter)
+					cnt.on('scroll', _.throttle(wndcontentscrollmobile, 50))
+
 			}
 
 			app.events.resize[id] = resize
@@ -717,6 +796,7 @@
 
 		var clearmem = function(){
 			wnd = null;
+			cnt = null
 
 			self.el = null
 			self.close = null
@@ -733,8 +813,29 @@
 			p = {}
 		}
 
+		var closing = false
+
 		var actions = {
+
+			expand : function(){
+
+				actions.close()
+
+				setTimeout(function(){
+
+					if (p.expand){
+						p.expand()
+					}
+					
+				}, 200)
+				
+			},
+
 			close : function(cl, key){
+
+				if(closing) return
+
+				closing = true
 
 				if (parallax) {
 					parallax.clear()
@@ -746,38 +847,30 @@
 
 				if(p.close) p.close(wnd, self);
 
-				if(!nooverflow)
-					app.actions.onScroll();
-
-				if (self.essenseDestroy)
-					self.essenseDestroy(key)
-				
 				delete app.events.resize[id]
 				delete app.events.scroll[id]
-
-				
 
 				wnd.addClass('asette')
 				wnd.removeClass('sette')
 
 				setTimeout(function(){
 
-					if(wnd){
-						wnd.remove();
+					if(!nooverflow)
+						app.actions.onScroll();
 
-						hasonewindow()
+					if (self.essenseDestroy) self.essenseDestroy(key)
 
-						clearmem()
-					}
-					
+					wnd.remove();
 
-				}, 100)
+					clearmem();
+
+				}, 220)	
 				
+				if(p.onclose) p.onclose()
 
 			},
 
 			hide : function(cl, key) {
-				// wnd.find('.wndback').css('display', 'none');
 
 				if(!wnd) return
 
@@ -788,7 +881,6 @@
 				wnd.find('.expandButton').removeClass('hidden');
 				wnd.find('.closeButton').addClass('hidden');
 				wnd.find('.hideButton').addClass('hidden');
-				// setTimeout(() => wnd.find('.wndinner').one('click', actions.show), 500);
 
 				if(!nooverflow) {
 					app.actions.onScroll();
@@ -799,7 +891,6 @@
 
 				if(!wnd) return
 
-				// wnd.find('.wndback').css('display', 'none');
 				wnd.find('.buttons').removeClass('hidden');
 				wnd.removeClass('hiddenState');
 				wnd.find('.wndcontent > div').removeClass('rolledUp');
@@ -1369,6 +1460,8 @@
 
 		if(!p.success) p.success = false;
 		if(!p.fail) p.fail = false;
+		if(!p.close) p.close = false;
+		if(!p.destroy) p.destroy = false;
 
 
 		if(!p.btn1text) p.btn1text = app.localization.e('daccept');
@@ -1446,6 +1539,8 @@
 			$el.find('.btn2').on('click', function(){ response(p.fail, true)});
 			$el.find('._close').on('click', function(){ response(p.close, true)});
 
+			$el.on('click', clickOutsideOfWindow)
+
 			
 			var title = $el.find('.poll .title');
 				
@@ -1508,17 +1603,12 @@
 
 			if(destroyed) return;
 
+			if(typeof p.destroy === 'function')
+				p.destroy(self);
+
 			destroyed = true;
 
 			$el.remove();
-
-			/*$el.fadeOut(200);
-
-			setTimeout(function(){
-
-				$el.remove();
-
-			},200);*/
 
 			if(removescroll)
 			{
@@ -1526,9 +1616,23 @@
 			}
 		}
 
+		var clickOutsideOfWindow = function(e){
+			const clickedElem = e.target;
 
+			const isElem1Clicked = clickedElem.classList.contains('secondwrapper');
+
+			const isClickOutside = (isElem1Clicked);
+
+			if (!isClickOutside) {
+				return;
+			}
+
+			destroy()
+
+		}
 
 		init();
+
 		self.el = $el;
 		self.destroy = destroy;
 		return self;
@@ -1645,7 +1749,7 @@
 		return self;
 	}
 
-	sitemessage = function (message, func, delay = 2200) {
+	sitemessage = function (message, func, delay = 5000) {
 		$("<div/>", {
 			"class": "sitemessage remove_now",
 			"style": "opacity:0",
@@ -1914,6 +2018,46 @@
 		
 	}
 
+	imagetojpegifneed = function ({base64, name}) {
+
+		var nm = name.split('.')
+
+		var _name = nm[0],
+			_format = nm[1]
+
+		if (_format == 'png' || _format == 'jpg' || _format == 'jpeg'){
+			return Promise.resolve({base64, name});
+		}
+
+		return new Promise((resolve, reject) => {
+
+			var imageObj = new Image(),
+			  canvas = document.createElement('canvas'),
+			  ctx = canvas.getContext('2d'),
+			  newWidth,
+			  newHeight;
+	  
+			imageObj.src = base64;
+	  
+			imageObj.onload = function () {
+			  newHeight = imageObj.height;
+			  newWidth = imageObj.width;
+	  
+			  canvas.width = newWidth;
+			  canvas.height = newHeight;
+	  
+			  ctx.drawImage(imageObj, 0, 0, newWidth, newHeight);
+	  
+			  var url = canvas.toDataURL('image/jpeg', 1);
+
+			  $(canvas).remove();
+	  
+			  return resolve({base64 : url, name : _name + '.jpg'});
+			};
+
+		});
+	}
+
 	resizeNew = function (srcData, width, height, format) {
 		return new Promise((resolve, reject) => {
 			var imageObj = new Image(),
@@ -1953,7 +2097,7 @@
 	  
 			  ctx.drawImage(imageObj, 0, 0, newWidth, newHeight);
 	  
-			  var url = canvas.toDataURL('image/' + format, 0.75);
+			  var url = canvas.toDataURL('image/' + format, 0.85);
 	  
 			  $(canvas).remove();
 	  
@@ -2692,9 +2836,7 @@
 
 				p.item(function(){
 
-
 					p.success()
-
 				})
 			},
 
@@ -2770,6 +2912,32 @@
 		else
 		{
 			return array[array.length - 1]
+		}
+	}
+
+	prevElCircle = function(array, el){
+		var index = _.indexOf(array, el);
+
+		if (index > 0){
+			return array[index - 1]
+		}
+
+		else
+		{
+			return array[array.length - 1]
+		}
+	}
+
+	nextElCircle = function(array, el){
+		var index = _.indexOf(array, el);
+
+		if (index > -1 && index < array.length - 1){
+			return array[index + 1]
+		}
+
+		else
+		{
+			return array[0]
 		}
 	}
 
@@ -4891,7 +5059,8 @@
 
 					input += 	'</div>';
 
-					input += 	'<div class="vc_selectInput">';
+
+					input += 	'<div class="vc_selectInput customscroll">';
 
 					if (self.defaultValuesTemplate)
 					{
@@ -4907,6 +5076,9 @@
 						}
 
 						_.each(self.possibleValues, function (value, index) {
+
+
+							//if(self.value == value) return
 
 							//if(self.possibleValuesLabels[index]) label = self.possibleValuesLabels[index]
 
@@ -6190,8 +6362,8 @@
 				storageLocation = cordova.file.cacheDirectory;
 				break;
 		}
-	
 
+		console.log('storageLocation', storageLocation)
 
 		window.resolveLocalFileSystemURL(storageLocation, function (fileSystem) {
 			
@@ -6209,9 +6381,8 @@
 
 					entry.createWriter(function (writer) {
 
-
 						writer.onwriteend = function (evt) {
-							sitemessage("File " + name + " successfully downloaded");
+							//sitemessage("File " + name + " successfully downloaded");
 
 							if (window.galleryRefresh){
 
@@ -6223,44 +6394,48 @@
 								})
 
 							}
-							else
-							{
-							}
-
 
 							if (clbk)
-								clbk(myFileUrl)
+								clbk({
+									name,
+									url : myFileUrl
+								})
 						};
+
+						writer.onerror = function (e) {
+
+							if (clbk)
+								clbk(null, e)
+
+						};
+
 						// Write to the file
 						writer.seek(0);
+
 						writer.write(file);
+
 					}, function (error) {
 						
-						dialog({
+						/*dialog({
 							html : "Error: Could not create file writer, " + error.code,
 							class : "one"
-						})
+						})*/
 
 						if(clbk) clbk(null, error)
 
 					});
 				}, function (error) {
 
-					dialog({
+					/*dialog({
 						html : "Error: Could not create file, " + error.code,
 						class : "one"
-					})
+					})*/
 
 					if(clbk) clbk(null, error)
 
 				});
 
 			}, function (error) {
-
-				dialog({
-					html : "Error: access to download folder, " + error.code,
-					class : "one"
-				})
 
 				if(clbk) clbk(null, error)
 
@@ -6270,10 +6445,14 @@
 			
 		}, function (evt) {
 
-			dialog({
+			/*dialog({
 				html : "Error: Could not create file, " + evt.target.error.code,
 				class : "one"
-			})
+			})*/
+			
+			console.log(evt)
+
+			if(clbk) clbk(null, evt)
 
 		});
 	
@@ -6287,7 +6466,7 @@
 
 	_scrollTop = function(scrollTop, el, time){
 
-		if(!el) {
+		if(!el || el.attr('id') == 'application') {
 			el = $("body,html");
 		}
 
@@ -6526,450 +6705,6 @@
 	}
 
 
-	SwipeParallax = function(p){
-		if(!p) p = {};
-
-			p.directions || (p.directions = {})
-
-			p.prop || (p.prop = 'translate')
-
-			_.each(p.directions, function(d,i){
-				d.i = i
-			})
-
-		var self = this;
-
-		var animationInterval = null;
-
-		var animateduration = 400;
-		var animatedurations = (animateduration / 1000) + 's'
-
-		var directiontoprop = function(direction, value){
-
-			if (p.prop == 'translate'){
-				if(direction == 'up') return 'y'
-				if(direction == 'down') return 'y'
-				if(direction == 'left') return 'x'
-				if(direction == 'right') return 'x'
-			}
-
-			if (p.prop == 'margin'){
-				if(direction == 'up') return 'margin-bottom'
-				if(direction == 'down') return 'margin-top'
-				if(direction == 'left') return 'margin-left'
-				if(direction == 'right') return 'margin-right'
-			}
-
-			if (p.prop == 'padding'){
-				if(direction == 'up') return 'padding-bottom'
-				if(direction == 'down') return 'padding-top'
-				if(direction == 'left') return 'padding-left'
-				if(direction == 'right') return 'padding-right'
-			}
-
-			if (p.prop == 'position'){
-				if(direction == 'up') return direction.position || 'top'
-				if(direction == 'down') return direction.position || 'top'
-				if(direction == 'left') return direction.position || 'left'
-				if(direction == 'right') return direction.position || 'left'
-			}
-			
-		}
-
-		var medium = function(fingerData){
-			var n = {
-				end : {
-					x : 0,
-					y : 0
-				},
-				start : {
-					x : 0,
-					y : 0
-				},
-				last : {
-					x : 0,
-					y : 0
-				}
-			}
-
-			var l = _.toArray(fingerData).length
-
-			_.each(fingerData, function(f){
-				_.each(f, function(fd, i){
-					n[i].x += fd.x / l
-					n[i].y += fd.y / l
-				})
-			})
-
-			return n;
-		}
-
-		var nullbydirection = function(_d, direction){
-			var d = _.clone(_d)
-
-
-			if(direction == 'up') {
-				if(d.y > 0) d.y = 0
-				
-				if (p.prop == 'margin' || p.prop == 'padding')
-					d.y = Math.abs(d.y)
-
-				d.x = 0
-			}
-
-			if(direction == 'down') {
-				if(d.y < 0) d.y = 0
-
-				if (p.prop == 'margin' || p.prop == 'padding')
-					d.y = Math.abs(d.y)
-
-				d.x = 0
-			}
-
-			if(direction == 'left') {
-				if(d.x > 0) d.x = 0
-
-				if (p.prop == 'margin' || p.prop == 'padding')
-					d.x = Math.abs(d.x)
-
-				d.y = 0
-			}
-
-			if(direction == 'right') {
-				if(d.x < 0) d.x = 0
-
-				if (p.prop == 'margin' || p.prop == 'padding')
-					d.x = Math.abs(d.x)
-
-				d.y = 0
-			}
-
-			return d;
-			
-		}
-
-		var findDirection = function(_d){
-
-			return _.max(p.directions, function(direction, i){
-				var d = nullbydirection(_d, i)	
-
-				return Math.abs((d.x || d.y))
-			})
-		}
-
-		var gettransform = function(obj){
-			
-			var transformMatrix = obj.css("-webkit-transform") ||
-			  obj.css("-moz-transform")    ||
-			  obj.css("-ms-transform")     ||
-			  obj.css("-o-transform")      ||
-			  obj.css("transform");
-			var matrix = transformMatrix.replace(/[^0-9\-.,]/g, '').split(',');
-
-			var x = matrix[12] || matrix[4];
-			var y = matrix[13] || matrix[5];
-
-
-			return {
-				x : x,
-				y : y
-			}
-
-		}
-
-		var animation = function(ap, options, direction){
-
-			if(!options) options = {}
-
-			
-			if (self.animation){
-				self.animation.stop()
-			}
-			
-			if(p.prop == 'translate'){
-
-				var v = (ap.x || ap.y || 0);
-
-				p.el.css({transform: ""});
-				p.el.css({transition: ""});
-				
-
-					if (options.complete)
-						options.complete()
-
-
-			}
-		}
-
-		var parseStart = function(direction){
-			if(p.prop != 'translate'){
-				v = p.el.css(directiontoprop(direction)) || '0px'
-			}
-			else
-			{
-				var tr = gettransform(p.el)
-
-				var prop = directiontoprop(direction)
-
-				v = tr[prop]
-			}
-
-			if(!v) v = '0'
-
-			v = Number(v.replace('px', '').replace('%', ''))
-
-			return v
-		}
-
-		var set = function(direction, _value){
-
-			var prop = directiontoprop(direction);
-
-			var value = _value
-
-			if (p.prop != 'translate'){
-				p.el.css(prop, value + 'px');	
-			}
-			else{
-
-				if(prop == 'x'){
-					p.el.css("transform","translate3d("+(value || 0)+"px, 0, 0)");
-				}
-
-				if(prop == 'y'){
-					p.el.css("transform","translate3d(0, "+(value || 0)+"px, 0)");
-				}
-			}
-		}
-
-		self.goup = function(direction){			
-
-			var css = directiontoprop(direction)
-			var upborder = (p.directions[direction].trueshold || 90) * 5
-
-			if((css == 'top' || (direction == 'up' && css=='y')) && (p.prop == 'position' || p.prop == 'translate')) upborder = -upborder
-			if(css == 'left' && (p.prop == 'position' || p.prop == 'translate')) upborder = -upborder
-
-			var ap = {}
-				ap[css] =  upborder + 'px'
-
-			animation(ap, {
-				dontstop : true,
-				compele : function(){
-					self.renew()
-				}
-			}, direction)
-		}
-
-		self.backfast = function(){
-
-			_.each(p.directions, function(d){
-				if (d.positionclbk)
-					d.positionclbk(0)
-			})
-		}
-
-		self.backup = function(direction){
-
-			self.lastDirection = direction;
-
-			var css = directiontoprop(direction)
-
-			var ap = {}
-				ap[css] =  '0px'
-
-			var d = p.directions[direction]	
-
-
-			animation(ap, {
-				step : function(now, fx){
-
-					if (d && d.positionclbk){
-						d.positionclbk(now)
-					}
-				},
-				compele : function(){
-					self.renew()
-				}
-			}, direction)
-		}
-
-		self.lastDirection = null;
-		self.animation = null;
-
-		self.ended = false;
-
-		self.renew = function(){
-			self.lastDirection = null;
-			self.animation = null;
-
-			self.ended = false;
-
-			if (self.animation)
-				self.animation.stop();
-		}
-
-		self.opposite = function(dir, dir2){
-			if(dir == 'up' && dir2 == 'down') return true;
-			if(dir == 'down' && dir2 == 'up') return true;
-
-			if(dir == 'left' && dir2 == 'right') return true;
-			if(dir == 'right' && dir2 == 'left') return true;
-		}
-
-		self.init = function(){
-
-			var startMargin = 0;
-			var mainDirection = null;
-
-			var mintruesholdGone = false;
-			p.el.swipe({
-
-				allowPageScroll : p.allowPageScroll,
-					
-				swipeStatus:function(event, phase, _direction, distance, duration, fingers, fingerData, currentDirection){
-
-
-					if (self.ended) return false	
-
-
-
-					if (phase == 'start'){
-
-						mintruesholdGone = false
-
-						startMargin = 0;
-
-						self.renew()
-						
-						return true
-					}
-
-
-					if(phase != 'cancel' && phase != 'end'){
-
-						var m = medium(fingerData)
-
-						var _d = {
-							x : m.last.x - m.start.x + startMargin,
-							y : m.last.y - m.start.y + startMargin
-						}
-
-						if(!_d.x && !_d.y) return true
-
-						var direction = findDirection(_d)
-
-						if (direction){
-
-							if (direction.constraints && !direction.constraints()) {
-
-								if (mainDirection){
-									self.backup(mainDirection.i)	
-									mainDirection = null;
-								}
-
-								return false
-							}
-
-							if (mainDirection && (mainDirection.i != direction.i)){
-
-								th = false;
-
-								if (direction.mintrueshold){
-									var dcur = nullbydirection(_d, direction.i)
-									var dprev = nullbydirection(_d, mainDirection.i)
-
-									var dth = Math.abs((dcur.x || dcur.y || 0) - (dprev.x || dprev.y || 0))
-
-									if(dth < direction.mintrueshold){
-										th = true
-									}
-								}
-
-								if(!th){
-									self.backup(mainDirection.i)
-
-									if(direction.cancellable) {
-										mainDirection = null;
-										return false
-									}
-								}
-								else{
-									direction = mainDirection
-								}
-
-								
-							}
-
-							mainDirection = direction
-							var d = nullbydirection(_d, direction.i)	
-
-							var dp = (d.x || d.y || 0);
-
-							if (!mintruesholdGone && Math.abs(dp + startMargin) < (direction.mintrueshold || 0)){
-								return true
-							}
-
-							mintruesholdGone = true;
-
-							if (direction.positionclbk){
-								direction.positionclbk(dp)
-							}
-
-							if(direction.reverse){
-								dp = -dp
-							}
-
-							set(mainDirection.i, dp)
-
-						}
-						else{
-
-							mainDirection = null;
-						}
-
-					}
-
-					if(phase == 'cancel' || phase == 'end'){
-
-						
-						if (mainDirection){
-
-
-							if(phase == 'end' && mainDirection.clbk && _direction == mainDirection.i){
-
-								
-								mainDirection.clbk()
-							}
-								
-							if (mainDirection.positionclbk)
-								mainDirection.positionclbk(0)
-
-							self.backup(mainDirection.i)	
-							
-						}
-
-						else{
-							self.backfast()
-						}
-
-						mainDirection = null
-
-					}
-
-					
-					
-				},
-
-			});
-
-			return self
-		}
-
-		return self;
-	}
-
-
 	SwipeParallaxNew = function(p){
 		if(!p) p = {};
 
@@ -6981,6 +6716,11 @@
 
 		var self = this;
 		var needclear = false
+
+		var throttle = 50
+		var transitionstr = 'transform 50ms linear'
+
+		let ticking = false;
 		
 		var directiontoprop = function(direction, value){
 
@@ -6990,24 +6730,58 @@
 			if(direction == 'right') return 'x'
 			
 		}
+
+		var ms = false
 		
 		var set = function(direction, value){
 
-			var __el = p.transformel || p.el
+			var __el = (p.transformel || p.el)[0]
 
 			var prop = directiontoprop(direction);
+			var pd = 'left'
+			var pb = 'top'
 
-			if(direction == 'up' || direction == 'left') value = -value
+			var scaledifmax = 0.1
+			var scaledif = scaledifmax * Math.min(Math.abs(value), 100) / 100 
+			var scale = (1 - scaledif).toFixed(3)
+
+			if(direction == 'up' || direction == 'left') {
+				value = -value
+				pd = 'right'
+				pb = 'bottom'
+			}
+
+			if(p.directions[direction] && p.directions[direction].basevalue) value = value + p.directions[direction].basevalue()
+
+			if(p.directions[direction] && p.directions[direction].scale100) scale = 1
+
+			if(!value) value = 0
+
+			value = value.toFixed(0)
 
 			if (prop == 'x'){
-				__el[0].style["transform"] = "scale(0.9) translate3d("+(value || 0)+"px, 0, 0)"
-				__el[0].style['transform-origin'] = 'left center'
+				__el.style["transform"] = "translate3d("+value+"px, 0, 0)"
+
+				//if(!ms)
+					//__el.style['transform-origin'] = pd + ' center'
 			}
 
 			if (prop == 'y'){
-				__el[0].style["transform"] = "scale(0.9) translate3d(0, "+(value || 0)+"px, 0)"
-				__el[0].style['transform-origin'] = 'center top'
+				__el.style["transform"] = "translate3d(0, "+value+"px, 0)"
+
+				//if(!ms)
+					//__el.style['transform-origin'] = 'center ' + pb
 			}
+
+			if(!ms){	
+				__el.style["-moz-transition"] = transitionstr
+				__el.style["-o-transition"] = transitionstr
+				__el.style["-webkit-transition"] = transitionstr
+				__el.style["transition"] = transitionstr
+			}
+
+			ms = true
+
 		}
 
 		var applyDirection = function(direction, v){
@@ -7023,82 +6797,95 @@
 
 				var __el = p.transformel || p.el
 
-				__el.css({transform: ""});
-				__el.css({transition: ""});
-				
+
+				__el.css({"transform": ""});
+				__el.css({"transform-origin": ""});
+				__el.css({"-moz-transition": ""});
+				__el.css({"-o-transition": ""});
+				__el.css({"-webkit-transition": ""});
+				__el.css({"transition": ""});
+
 				_.each(p.directions, function(d){
 					applyDirection(d, 0)
 				})
+
 			}
 			
-
+			ms = false
 			needclear = false
 		}
 
 		self.init = function(){
 
 			var mainDirection = null;
+
+			var statusf = function(e, phase, direction, distance){
+
+
+				if (mainDirection && mainDirection.i != direction){
+					phase = 'cancel'
+					direction = mainDirection.i
+				}
+
+				if (phase == 'cancel' || phase == 'end'){
+
+					if (mainDirection){
+
+						if(phase == 'end' && mainDirection.clbk && direction == mainDirection.i){
+							mainDirection.clbk()
+						}
+					}
+
+					self.clear()
+						
+
+					return
+
+				}
+
+				if(!direction) return
+
+				if(!p.directions[direction]){
+					return
+				}
+
+				var dir = p.directions[direction]
+
+				if (dir.constraints && !dir.constraints(e)) {
+
+					if (mainDirection){
+						mainDirection = null;
+					}
+
+					return false
+				}
+
+				if (phase == 'start'){
+					mainDirection = null
+				}
+				
+				if (phase == 'move'){
+
+					if (distance > 20){
+
+						mainDirection = dir
+
+						applyDirection(mainDirection, distance)
+
+						set(mainDirection.i, distance)
+						
+					}
+
+					e.preventDefault();
+					return true
+				}
+
+			}
 			
 			p.el.swipe({
+				preventDefaultEvents : p.preventDefaultEvents,
 				allowPageScroll : p.allowPageScroll,
-				swipeStatus : function(e, phase, direction, distance){
-
-					if (mainDirection && mainDirection.i != direction){
-						phase = 'cancel'
-						direction = mainDirection.i
-					}
-
-					if(phase == 'cancel' || phase == 'end'){
-
-						if (mainDirection){
-
-							if(phase == 'end' && mainDirection.clbk && direction == mainDirection.i){
-								mainDirection.clbk()
-							}
-						}
-
-						self.clear()
-							
-
-						return
-
-					}
-
-					if(!direction) return
-
-					if(!p.directions[direction]){
-						return
-					}
-
-					var dir = p.directions[direction]
-
-					if (dir.constraints && !dir.constraints()) {
-
-						if (mainDirection){
-							mainDirection = null;
-						}
-
-						return false
-					}
-
-					if (phase == 'start'){
-						mainDirection = null
-					}
-					
-					if (phase == 'move'){
-						if (distance > 20){
-							mainDirection = dir
-
-							applyDirection(mainDirection, distance)
-
-							set(mainDirection.i, distance)
-						}
-					}
-
-					
-					
-
-				},
+				swipeStatus : _.throttle(statusf, throttle),
 			})
 
 			return self
@@ -7106,9 +6893,7 @@
 
 		self.destroy = function(){
 			p.el.swipe('destroy')
-
 			p = {}
-
 			needclear = false
 		}
 
@@ -7386,7 +7171,7 @@
 			caption.addClass(classes.caption);
 
 			caption.css(pos, offset[0] + 'px');
-			caption.css('z-index', '100');
+			caption.css('z-index', '3');
 
 			caption.width(w);
 
@@ -7723,8 +7508,6 @@
 			if(_Node) {
 
 				//data.node = "NODE";
-
-				
 
 				var _d = {
 					method: type, 
@@ -8597,6 +8380,15 @@
 			el.find('input').attr('placeholder', placeholder)
 		}
 
+		self.setvalue = function(value){
+			el.find('input').val(value)
+
+			if (value)
+				searchEl.addClass('searchFilled')
+			else
+				searchEl.removeClass('searchFilled')
+		}
+
 		var template = function(){
 
 			p.class || (p.class = "")
@@ -8609,7 +8401,7 @@
 				'</div>',
 
 				'<div class="searchInputWrapper">' +
-					'<input elementsid="sminputsearch_' + (p.id || p.placeholder) + '" class="sminput" tabindex="2" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" maxlength="400" type="text" placeholder="' + (p.placeholder || "Search") + '">' +
+					'<input elementsid="sminputsearch_' + (p.id || p.placeholder) + '" class="sminput" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" maxlength="400" type="text" placeholder="' + (p.placeholder || "Search") + '">' +
 				'</div>',
 
 				'<div class="searchPanel">' +
@@ -8631,7 +8423,7 @@
 
 			if(p.collectresults){
 				elements[1] = '<div class="searchInputWrapper">' +
-					'<div class="sminput" contenteditable="true" tabindex="2" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" maxlength="400" type="text" placeholder="' + (p.placeholder || "Search") + '"></div>' +
+					'<div class="sminput" contenteditable="true"  autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" maxlength="400" type="text" placeholder="' + (p.placeholder || "Search") + '"></div>' +
 				'</div>'
 			}
 
@@ -8642,7 +8434,7 @@
 								elements.join(" ") + 
 							'</div>' +
 						'</div>' +
-						'<div class="searchFastResultWrapper">'
+						'<div class="searchFastResultWrapper customscroll">'
 						'</div>' +			
 					'</div>'
 
@@ -8655,20 +8447,19 @@
 				if(!searchEl.hasClass('fastSearchShow')){
 					searchEl.addClass('fastSearchShow');
 
-					$('html').on(clickAction(), helpers.closeclickResults)
+					$('html').on('click', helpers.closeclickResults)
 				}
 
 				
 			},
 			closeResults : function(){
-				$('html').off(clickAction(), helpers.closeclickResults);
-				searchEl.removeClass('fastSearchShow');
+				$('html').off('click', helpers.closeclickResults);
+
+					searchEl.removeClass('fastSearchShow');
 			},
 			closeclickResults : function(e){
 				if (searchEl.has(e.target).length === 0 && searchEl.hasClass('fastSearchShow')) {
-							
 					helpers.closeResults();
-
 				}
 			},
 			clear : function(){
@@ -8680,7 +8471,12 @@
 		}
 
 		var events = {
+			active : function(){
+				if (p.events.active) p.events.active(self.active);
+			},
 			clear : function(el){
+
+				var value = searchEl.find('.sminput').val()
 
 				searchEl.find('.sminput').val('');
 
@@ -8689,8 +8485,7 @@
 
 				helpers.closeResults();
 
-				if (p.events.clear)
-					p.events.clear();
+				if (p.events.clear) p.events.clear(value);
 
 			},
 			search : function(el){
@@ -8709,6 +8504,8 @@
 					searchEl.addClass('searchActive')
 
 					p.events.search(value, function(r){
+
+						if(!searchEl) return
 
 						currentFastId = 0;
 
@@ -8745,7 +8542,7 @@
 			fastsearch : function(el, e, _currentFastId){
 				var value = el.val();
 
-				if (value && p.events.fastsearch &&!bsActive){
+				if (value && p.events && p.events.fastsearch &&!bsActive){
 
 					searchEl.addClass('searchActive')
 					fsActive = true;
@@ -8800,32 +8597,47 @@
 		}
 
 		self.clear = events.clear
+
+		self.setactive = function(a){
+			self.active = a
+
+			events.active()
+		}
+
+		self.hide = function(){
+			searchEl.removeClass('searchActive');
+			searchEl.removeClass('searchFilled');
+
+			helpers.closeResults();
+		}
+
 		self.blur = function(){
 			el.find('input').blur()
 		}
 
+		self.focus = function(){
+			el.find('input').focus()
+		}
+
+		self.getvalue = function(){
+			return searchEl.find('.sminput').val()
+		}
+
 		var initEvents = function(){
 
-			var searchInput = searchEl.find('.sminput')
+			var searchInput = el.find('input')
 
 			var slowMadeTimer;
 
-
-
-			//searchInput.on('change', function(){events.search(searchInput)});
 			searchInput.on('keyup', function(e){
 
 				if ((e.keyCode || e.which) != 13) {		
 
 					if(typeof p.time == 'undefined'){
-
-						p.time = 100;
-
+						p.time = 250;
 					}	
 
-
 					if(!p.time){
-
 						events.fastsearch(searchInput, e)
 					}
 					else
@@ -8836,6 +8648,7 @@
 						slowMadeTimer = slowMade(function(){
 							events.fastsearch(searchInput, e, id)
 						}, slowMadeTimer, p.time)	
+
 					}
 				}
 				
@@ -8843,23 +8656,23 @@
 
 			searchInput.on('focus', function(){
 
-				self.active = true
+				self.setactive(true)
 
-				if($(this).val()){
-					events.fastsearch(searchInput)
-				}
+				if($(this).val()){ events.fastsearch(searchInput) }
 
 				else
-
 					if(p.last){
 						events.showlast(searchInput)
 					}
-
 			})
 
 			searchInput.on('blur', function(){
-				self.active = false
 
+				if(p.events.blur) p.events.blur($(this).val())
+
+				/*setTimeout(function(){
+					self.setactive(false)
+				}, 300)*/
 			})
 
 			searchInput.on('keypress', function(e) {
@@ -8870,19 +8683,18 @@
 
 	        });
 
-	        searchEl.find('.searchIconLabel')
-	        	.on('click', function(){
+	        searchEl.find('.searchIconLabel').on('click', function(){
 
-	        		if(!searchInput.val() && p.events.blank){
-	        			p.events.blank()
-	        		}
-	        		else
+				if(!searchInput.val() && p.events.blank){
+					p.events.blank()
+				}
+				else
 
-	        			events.search(searchInput)
+					events.search(searchInput)
 
-	        	})
+			})
 
-	        searchEl.find('.searchPanelItem').on(clickAction(), function(){
+	        searchEl.find('.searchPanelItem').on('click', function(){
 
 	        	var panelItem = $(this)
 
@@ -9988,13 +9800,6 @@
 
 	}
 
-	numfromreleasestring = function(v){
-		v = v.replace(/[^0-9]/g, '')
-
-		var vs = Number(v.substr(0, 1) + '.' + v.substr(1))
-
-		return vs
-	}
 
 /* ______________________________ */
 
@@ -10570,15 +10375,18 @@
 					s.donottrust = 'true'
 				}
 
+				
+
 				var l = linkifyHtml(inputText, {
-					attributes : s
+					attributes : s,
+					truncate: 80
 				})
+
 		
 				return l
 			}
 
 			catch(e){
-				
 			}
 			
 		}
@@ -11037,6 +10845,44 @@ stringEqTrig = function(s1, s2){
 edjsHTML = function() {
     "use strict";
 
+	var c_xss = function(text){
+
+		var ftext = filterXSS(text, {
+			stripIgnoreTag : true,
+			whiteList: {
+				a: ["href", "title", "target", 'cordovalink'],
+				br : ["style"],
+				b : ["style"],
+				span : ["style"],
+				figure : ["style"],
+				figcaption : ["style"/*, "class"*/],
+				i : ["style"],
+				img : ["src"/*, "width", "height"*/],
+				div : [ /*"class",*/"data-plyr-provider", "data-plyr-embed-id"],
+				p : [],
+				ul : [],
+				ol : [],
+				li : [],
+				h2 : [],
+				h1 : [],
+				h3 : [],
+				h4 : [],
+				h5 : [],
+				em : [],
+				u : [],
+				blockquote : [],
+				strong : [],
+				picture : ['img-type'],
+				source : ['srcset', 'type'],
+				strike : []
+			}
+
+		})
+
+		console.log(text,ftext)
+		return ftext
+	}
+
     var e = {
         delimiter: function() {
             return '<div class="article_delimiter"><i class="fas fa-asterisk"></i><i class="fas fa-asterisk"></i><i class="fas fa-asterisk"></i></div>'
@@ -11044,11 +10890,11 @@ edjsHTML = function() {
 
         header: function(e) {
             var t = e.data;
-            return "<h" + _.escape(t.level) + ">" + (t.text) + "</h" + _.escape(t.level) + ">"
+            return "<h" + _.escape(t.level) + ">" + c_xss(t.text) + "</h" + _.escape(t.level) + ">"
         },
 
         paragraph: function(e) {
-            return "<p>" + (e.data.text) + "</p>"
+            return "<p>" + c_xss(e.data.text) + "</p>"
         },
 
         list: function(e) {
@@ -11058,9 +10904,9 @@ edjsHTML = function() {
                 n = function(e, t) {
 					
                     var r = e.map((function(e) {
-                        if (!e.content && !e.items) return "<li>" + (e) + "</li>";
+                        if (!e.content && !e.items) return "<li>" + c_xss(e) + "</li>";
                         var r = "";
-                        return e.items && (r = n(e.items, t)), e.content ? "<li> " + e.content + " </li>" + r : void 0
+                        return e.items && (r = n(e.items, t)), e.content ? "<li> " + c_xss(e.content) + " </li>" + r : void 0
                     }));
 
                     return "<" + t + ">" + r.join("") + "</" + t + ">"
@@ -11071,7 +10917,7 @@ edjsHTML = function() {
         image: function(e) {
             var t = e.data,
 
-                r = _.escape(t.caption ? t.caption : "Image");
+                r = c_xss(t.caption || "");
 
 
 			var cl = []
@@ -11082,7 +10928,11 @@ edjsHTML = function() {
 
 			var src = t.file && t.file.url ? t.file.url : t.file
 
-			return '<div class="article_image '+ cl.join(' ') +'"><img src="' + src + '" alt="' + _.escape(r) + '" /><div class="article_image_caption">'+_.escape(t.caption || '')+'</div></div>'
+			return '<div class="article_image '+ cl.join(' ') +'"><img src="' + _.escape(src) + '" alt="' + (r) + '" />' + 
+			
+			(r ? ('<div class="article_image_caption">' + r + '</div>') : '')
+			
+			+ '</div>'
 
         },
 
@@ -11090,7 +10940,7 @@ edjsHTML = function() {
 
             var t = e.data;
 
-            return '<div class="article_quote"><div class="article_quote_text">' + (t.text) + '</div><div class="article_quote_author">' + (t.caption) +' </div></div>'
+            return '<div class="article_quote"><div class="article_quote_text">' + c_xss(t.text) + '</div><div class="article_quote_author">' + c_xss(t.caption) +' </div></div>'
         },
 
         code: function(e) {
@@ -11099,25 +10949,18 @@ edjsHTML = function() {
 
         embed: function(e) {
             var t = e.data;
-			console.log("T", t)
+
+
             switch (t.service) {
 
 				case "vimeo":
-                    return '<div class="js-player" data-plyr-provider="vimeo" data-plyr-embed-id="'+t.embed+'"></div>';
+                    return '<div class="js-player" data-plyr-provider="vimeo" data-plyr-embed-id="'+_.escape(t.embed)+'"></div>';
 
 				case "youtube":
-					return '<div class="js-player" data-plyr-provider="youtube" data-plyr-embed-id="'+t.embed+'"></div>';
+					return '<div class="js-player" data-plyr-provider="youtube" data-plyr-embed-id="'+_.escape(t.embed)+'"></div>';
 
 				default:
                     throw new Error("Only Youtube and Vime Embeds are supported right now.")
-
-				/*
-                case "vimeo":
-                    return '<iframe src="' + t.embed + '" height="' + t.height + '" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>';
-                case "youtube":
-                    return '<iframe width="' + t.width + '" height="' + t.height + '" src="' + t.embed + '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-                default:
-                    throw new Error("Only Youtube and Vime Embeds are supported right now.")*/
             }
         },
 
@@ -11129,11 +10972,10 @@ edjsHTML = function() {
 				return this.error('warning', e)
 			}
 
-			return '<div class="article_warning"><div class="article_warning_icon"><i class="fas fa-exclamation-triangle"></i></div><div class="article_warning_content"><div class="article_warning_title">' + _.escape(t.title || '') + '</div><div class="article_warning_message">' + _.escape(t.message || '') + '</div></div></div>'
+			return '<div class="article_warning"><div class="article_warning_icon"><i class="fas fa-exclamation-triangle"></i></div><div class="article_warning_content"><div class="article_warning_title">' + c_xss(t.title || '') + '</div><div class="article_warning_message">' + c_xss(t.message || '') + '</div></div></div>'
 		},
 
 		carousel: function(e){
-
 
 			var imageshtml = _.map(e.data, function(i){
 				return '<div class="img" image="' + _.escape(i.url) + '" i="' + _.escape(i.url) + '" save="' + _.escape(i.url) + '"></div>'
@@ -11223,6 +11065,21 @@ edjsHTML = function() {
 
         },
 
+		carousel: function(data, fu) {
+
+
+			return _.map(data, function(i){
+				var nd = {...i}
+
+				nd.url = fu(nd.url)
+
+				if(nd.caption) nd.caption = fu(nd.caption)
+
+				return nd
+			})
+
+        },
+
         image: function(data, fu) {
 
 			var nd = {...data}
@@ -11281,7 +11138,19 @@ edjsHTML = function() {
 
 			return nd
 
-		}
+		},
+
+		embed : function(data, fu) {
+
+			var nd = {...data}
+
+				nd.embed = fu(nd.embed)
+				nd.source = fu(nd.source)
+
+				if(nd.caption) nd.caption = fu(nd.caption)
+
+			return nd
+        },
 	}
 
     function t(e) {
@@ -11305,13 +11174,16 @@ edjsHTML = function() {
 					r += (str || "").split(/\s+/).length
 				}
 
-				_e.blocks.map((function(e) {
 
-					if(encdec[e.type]){
-						encdec[e.type](e.data, add)
-					}
+				if (_e && _e.blocks){
+					_e.blocks.map((function(e) {
 
-                }))
+						if(encdec[e.type]){
+							encdec[e.type](e.data, add)
+						}
+
+					}))
+				}
 
 				return r
 			},
@@ -11322,15 +11194,19 @@ edjsHTML = function() {
 
 				var e = {..._e};
 
-				e.blocks = e.blocks.map((function(e) {
+				if (e.blocks){
+					e.blocks = e.blocks.map((function(e) {
 
-					return {
-						type : e.type,
-						id : e.id,
-						data : encdec[e.type] ? encdec[e.type](e.data, fu) : _.clone(e.data)
-					}
+						return {
+							type : e.type,
+							id : e.id,
+							data : encdec[e.type] ? encdec[e.type](e.data, fu) : _.clone(e.data)
+						}
+	
+					}))
+				}
 
-                }))
+				
 
 				return e
 			},
@@ -11483,6 +11359,9 @@ if(typeof window != 'undefined'){
 		
 
 }
+
+
+
 
 
 errortostring = function(error){

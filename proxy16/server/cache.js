@@ -235,11 +235,6 @@ var Cache = function(p){
                 block : 0,
             },
 
-            getstatisticcontent : {
-                time : 560,
-                block : 0,
-            },
-
             getstatisticbyhours : {
                 time : 560,
                 block : 0,
@@ -249,6 +244,36 @@ var Cache = function(p){
                 time : 5600,
                 block : 0,
             },
+
+            getstatisticcontentbyhours : {
+                time : 560,
+                block : 0,
+            },
+
+            getstatisticcontentbydays : {
+                time : 5600,
+                block : 0,
+            },
+
+            getrecomendedcontentsbyscoresonsimilarcontents : {
+                time : 3600
+            },
+
+            getrecomendedaccountsbysubscriptions : {
+                time : 3600
+            },
+
+            getrecomendedaccountsbyscoresonsimilaraccounts : {
+                time : 3600
+            },
+
+            getrecomendedaccountsbyscoresfromaddress : {
+                time : 3600
+            },
+
+            getrecomendedcontentsbyscoresfromaddress : {
+                time : 3600
+            }
         }
     }
 

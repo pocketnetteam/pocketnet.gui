@@ -1,0 +1,173 @@
+#recommendedusers {
+  background: rgb(var(--background-total-theme));
+  border-radius: 12px;
+  margin-bottom: 0.5em;
+}
+#recommendedusers .tcaptionwrapper {
+  display: flex;
+  align-items: center;
+}
+#recommendedusers .tcaptionwrapper .vc_valuecustom {
+  width: 75px;
+  font-size: 0.8em;
+  font-weight: 500;
+}
+#recommendedusers .tcaptionwrapper .vc_valuecustom .vc_textInput .vc_iconWrapper,
+#recommendedusers .tcaptionwrapper .vc_valuecustom .vc_textInput .vc_inputWrapper {
+  border: 0;
+}
+#recommendedusers .tcaptionwrapper .hide {
+  cursor: pointer;
+}
+#recommendedusers .tcaption {
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 2;
+  font-weight: 100;
+  padding: 12px 16px;
+}
+#recommendedusers .tcaption .authors {
+  font-weight: 700;
+}
+#recommendedusers .caption {
+  font-weight: 100;
+  font-size: 2em;
+  margin-bottom: 1em;
+}
+#recommendedusers .loaderWrapper {
+  display: none;
+  padding: 1em;
+  text-align: center;
+}
+#recommendedusers.loading .loaderWrapper {
+  display: block;
+}
+#recommendedusers .subscribe,
+#recommendedusers .unsubscribe {
+  position: relative;
+}
+#recommendedusers .subscribe .fa-plus,
+#recommendedusers .unsubscribe .fa-plus {
+  position: absolute;
+  top: 3px;
+  left: 14px;
+  font-size: 0.5em;
+}
+#recommendedusers .users {
+  display: flex;
+  justify-content: flex-start;
+  padding-bottom: 0.5em;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+#recommendedusers .users .wrk {
+  max-width: 212px;
+  width: 100%;
+}
+#recommendedusers .users .wrk:nth-child(2n) {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+#recommendedusers .users .user {
+  padding: 1em;
+  border: 1px solid rgb(var(--neutral-grad-0));
+  border-radius: 12px;
+}
+#recommendedusers .users .user .addressWrapper {
+  cursor: pointer;
+}
+#recommendedusers .users .user .addressWrapper .iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+}
+#recommendedusers .users .user .addressWrapper .iconWrapper .icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+}
+#recommendedusers .users .user .addressWrapper .iconWrapper .icon img {
+  border-radius: 12px;
+}
+#recommendedusers .users .user .addressWrapper .iconWrapper .icon img,
+#recommendedusers .users .user .addressWrapper .iconWrapper .icon .letter {
+  width: 100%;
+}
+#recommendedusers .users .user .addressWrapper .iconWrapper .icon .usericon {
+  width: 100px;
+  height: 100px;
+}
+#recommendedusers .users .user .addressWrapper .iconWrapper .icon .usericon .letter {
+  position: relative;
+  top: 0.5em;
+  font-size: 3.5em;
+  text-align: center;
+}
+#recommendedusers .users .user .addressWrapper .userbody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 12px;
+}
+#recommendedusers .users .user .addressWrapper .userbody .name {
+  font-weight: 600;
+  font-size: 0.9em;
+  max-width: 120px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+#recommendedusers .users .user .addressWrapper .userbody .reputation .value {
+  color: rgb(var(--color-bg-ac-bright));
+}
+#recommendedusers .users .user .addressWrapper .userbody .subscribeWrapper {
+  margin-top: 16px;
+}
+#recommendedusers .users .user .addressWrapper .userbody .subscribeWrapper .unsubscribeButton {
+  display: none;
+  font-size: 14px;
+  width: 155px;
+  background: rgb(var(--color-good));
+  border: 1px solid rgb(var(--color-good));
+}
+#recommendedusers .users .user .addressWrapper .userbody .subscribeWrapper .unsubscribeButton:hover {
+  background: rgb(var(--background-total-theme));
+  color: rgb(var(--color-good));
+}
+#recommendedusers .users .user .addressWrapper .userbody .subscribeWrapper .subscribeButton {
+  font-size: 14px;
+  width: 155px;
+}
+#recommendedusers .users .user .addressWrapper .userbody .subscribeWrapper.following .subscribeButton {
+  display: none;
+}
+#recommendedusers .users .user .addressWrapper .userbody .subscribeWrapper.following .unsubscribeButton {
+  display: block;
+}
+#recommendedusers .users .user .addressWrapper .light {
+  font-size: 0.7em;
+  color: #3c4146;
+}
+#recommendedusers .users .user .blockingWrapper {
+  display: none;
+}
+#recommendedusers .users .user.userblocking .subscribebuttonstop {
+  display: none;
+}
+#recommendedusers .users .user.userblocking .blockingWrapper {
+  display: inline;
+}
+#recommendedusers .users .user .subscribebuttonstop .unsubscribe {
+  display: none;
+}
+#recommendedusers .users .user .subscribebuttonstop.following .unsubscribe {
+  display: inline;
+}
+#recommendedusers .users .user .subscribebuttonstop.following .notificationturn {
+  display: inline;
+}
+#recommendedusers .users .user .subscribebuttonstop.following .subscribe {
+  display: none;
+}

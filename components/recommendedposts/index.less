@@ -1,0 +1,285 @@
+@import "../../css/__cssvar";
+
+#recommendedposts{
+
+
+	&.invisible{
+		opacity: 0;
+	}
+
+	    
+    .rcptwrp{
+        background: #fff;
+        border-radius: 12px;
+        position : relative;
+    }   
+
+    
+
+    .tcaptionwrapper{
+        display: flex;
+        align-items: center;    
+
+        .vc_valuecustom{
+            width: 75px;
+            font-size: 0.8em;
+            font-weight: 500;
+            .vc_textInput .vc_iconWrapper,
+            .vc_textInput .vc_inputWrapper{
+                border : 0;
+            }
+        }
+    }
+    .tcaption{
+        display: flex;
+        justify-content: space-between;
+        flex-grow: 2;
+        font-weight: 100;
+        padding: 12px 16px;
+        border-bottom: 1px solid rgba(229,229,229,.5);
+
+        .authors{
+            font-weight : 700;
+        }
+
+        .rating{
+            color : #555770;
+        }
+
+       
+        
+    }
+
+	.caption{
+		font-weight: 100;
+		font-size: 2em;
+		margin-bottom: 2 * @rhythm;
+	}
+
+	.loaderWrapper{
+		display : none;
+		padding : 2 * @rhythm;
+		text-align: center;
+	}
+
+	&.loading{
+		.loaderWrapper{
+			display: block;
+		}
+	}
+
+	.subscribe, .unsubscribe{
+		position: relative;
+
+
+		.fa-plus{
+			position: absolute;
+			top: 3px;
+			left: 14px;
+			font-size: @rhythm;
+		}
+
+	}
+
+	.subscribe{
+		color : @color-gray-mlight;
+	}
+
+	.unsubscribe{
+		color: rgb(var(--color-good));
+	}
+
+	.posts{
+		padding-bottom: @rhythm;
+
+		.post{
+			padding : @rhythm * 2;
+
+			.imageWrapper{
+				margin-top: @rhythm;
+
+				img{
+					border-radius: 8px;
+					max-width: 100%;
+
+				}
+			}
+
+			.postcontent{
+				margin-top: @rhythm;
+				word-break: break-word;
+
+				.message{
+					overflow-wrap: break-word;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					display: -webkit-box;
+					-webkit-line-clamp: 15;
+					line-clamp: 15;
+					-webkit-box-orient: vertical;
+				}
+
+			}
+
+			.infoWrapper{
+				display: flex;
+				justify-content: space-between;
+				font-size: 0.8em;
+				color: #C7C8D9;
+				margin-top: @rhythm * 2;
+
+				.actionsWrapper{
+					display: flex;
+					justify-content: flex-end;
+
+					>div{
+						padding-left: @rhythm * 1.5;
+					}
+				}
+			}
+			
+
+			.addressTable{
+				cursor: pointer;
+
+				
+				
+				>div{
+
+					vertical-align: middle;
+	
+					&.iconWrapper{
+						width: 24px;
+						text-align: center;
+
+						.usericon{
+							height: 24px;
+							width: 100%;
+
+							.letter{
+								position: relative;
+								font-size: @rhythm * 2;
+								top: -10px;
+							}
+						}
+					}
+	
+					&.label{
+						padding-left: @rhythm;
+						text-overflow: ellipsis;
+						overflow: hidden;
+						white-space: nowrap;
+	
+						.cur{
+							color : @color-main;
+
+						}
+
+						.top{
+							display: flex;
+							.name{
+								font-weight: 700;
+								font-size: .9em;
+								text-overflow: ellipsis;
+								white-space: nowrap;
+								overflow: hidden;
+							}
+
+							.reputation{
+								font-size: .9em;
+								margin-left: @rhythm;
+								font-weight: 700;
+								color: @color-main;
+							}
+
+						}
+
+						.light{
+							font-size : 0.7em;
+							color : @color-gray;
+						}
+					}
+	
+					&.extra{
+						width: 20px;
+						text-align: right;
+					}
+				}
+
+
+
+	
+			}
+
+			.blockingWrapper{
+				display : none;
+			}
+
+			&.userblocking{
+	
+				.subscribebuttonstop{
+					display: none;
+				}
+	
+				.blockingWrapper{
+					display: inline;
+				}
+
+				
+			}
+	
+			.subscribebuttonstop{
+				.unsubscribe{
+					display : none;
+				}
+
+	
+				&.following{
+					.unsubscribe{
+						display : inline;
+					}
+
+					.notificationturn{
+						display: inline;
+					}
+					
+					.subscribe{
+						display : none;
+					}
+				}
+			}
+		}
+		
+	}
+}
+
+html.stblack{
+
+	
+	#recommendedposts{
+		background: #0a0c17;
+
+	}	
+}
+
+/*t*/ @media only screen and (max-width: 768px){
+#userslist{
+	padding : 2 * @rhythm;
+
+	.caption{
+	}
+
+	.users{
+		.addressTable{
+			>div{
+
+
+				&.extra{
+					width: 60px;
+				}
+			}
+
+		}
+	}
+}
+}

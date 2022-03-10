@@ -23,18 +23,19 @@ if(typeof video != 'undefined' && video) groupshares = group(shares, function(s)
 
 var me = app.platform.sdk.user.me()
 
-_.each(groupshares, function(gs, address){ %>
+_.each(groupshares, function(gs, address){ 
+	%>
 
 	<div class="authorgroup <% if(me && me.relation(address, 'blocking')) {%>blocking<% } %>">
 
-		<% _.each(gs, function(share, j){ 
+		<% _.each(gs, function(share, j){
 
 			var h = '';
 
 			if (j) h = 'hidden'
 
 		%>
-				<div class="share <%-h%> <% if(me && me.relation(share.address, 'blocking')) {%>blocking<% } %> shareinlenta" id="<%-share.txid%>" style="">
+				<div class="share share_common <%-h%> <% if(me && me.relation(share.address, 'blocking')) {%>blocking<% } %> shareinlenta" id="<%-share.txid%>" style="">
 					<div class="shareSpacer">
 						
 					</div>
@@ -48,12 +49,20 @@ _.each(groupshares, function(gs, address){ %>
 		<% if(gs.length > 1) { %>
 
 			<div elementsid="lenta_showmorebyauthor" class="showmorebyauthor">
-				<%=e('e13123')%> (<%- gs.length - 1 %>) from <span class="adr"><%-deep(app, 'platform.sdk.usersl.storage.'+address+'.name') || address %></span>
+				<%=e('e13123')%> (<%- gs.length - 1 %>) <%=e('fromsh')%> <span class="adr"><%-deep(app, 'platform.sdk.usersl.storage.'+address+'.name') || address %></span>
 			</div>
 
 		<% } %>
 
 	</div>
+
+	<% if(showRecommendedUsers.show) { 
+		showRecommendedUsers.show = false;	
+	%>
+
+		<div class="recommendeduserscnt"></div>
+
+	<% } %>
 	
 <% }) %>
 

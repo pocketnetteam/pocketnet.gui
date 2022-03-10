@@ -10,6 +10,32 @@ var leftpanel = (function(){
 
 		var ed = null;
 
+		var updateNew = function(){
+
+			var s = self.app.platform.sdk.newmaterials.storage
+
+			if(!el.c) return
+
+			_.each(s, function(v, k){
+
+				var _el = el.c.find('.lentaunseen[key="'+k+'"]')
+
+				if(v > 99) v = '99'
+
+				var s = self.app.platform.sdk.categories.gettagsexcluded().length + self.app.platform.sdk.categories.gettags().length
+
+				if (s && v && k != 'sub'){
+					v = '<i class="fas fa-circle"></i>'
+				}
+
+				_el.html(v)
+
+				if(v) _el.addClass('hasunseen')
+				else _el.removeClass('hasunseen')
+
+			})
+		}
+
 		var renders = {
 			currentsearch : function(value, clbk){
 
@@ -17,7 +43,8 @@ var leftpanel = (function(){
 
 				var backlink = 'index'
 
-				if(parameters().video) backlink = 'index?video=1'
+				if (parameters().video) backlink = 'index?video=1'
+				if (parameters().read) backlink = 'index?read=1'
 
 				self.shell({
 					name :  'currentsearch',
@@ -30,6 +57,73 @@ var leftpanel = (function(){
 
 				}, function(_p){
 					if(clbk) clbk()
+				})
+			},
+
+			best : function(){
+
+				if(!el.c) return;
+
+				self.shell({
+					name :  'best',
+					data : {},
+					el : el.bestfirst
+
+
+				}, function(_p){
+
+					_p.el.find('.toggle').on('click', function(){
+
+						var best = $(this).closest('.best');
+						var method = 'historical'
+		
+						best.toggleClass('on');
+		
+						if (best.hasClass('on')){
+		
+							method = 'hierarchical';
+		
+						}
+		
+						self.sdk.lentaMethod.set(method)
+		
+					})
+
+				})
+
+			},
+
+			menu : function(value, clbk){
+
+				if(!el.c) return
+
+				var pathname = self.app.nav.current.href;
+
+				self.app.user.isState(function(state){
+
+					if(isMobile() && pathname != 'index'){
+						el.c.addClass('hidden')
+					}
+					else{
+						el.c.removeClass('hidden')
+
+						self.shell({
+
+							name :  'menu',
+							el :   el.menu,
+							data : {
+								pathname : pathname,
+								state : state,
+								mobile : isMobile(),
+							},
+	
+						}, function(_p){
+
+							updateNew()
+						})
+					}
+
+					
 				})
 			},
 
@@ -141,9 +235,14 @@ var leftpanel = (function(){
 
 		var initEvents = function(){
 			
+
 			el.c.find('.closecategories').on('click', function(){
 				if(ed.close) ed.close()
 			})
+
+			self.app.platform.sdk.newmaterials.clbks.update.leftpanel = updateNew
+
+
 		}
 
 		var makers = {
@@ -162,21 +261,26 @@ var leftpanel = (function(){
 			},
 
 			main : function(){
+				renders.menu()
 				renders.tags()
 				renders.cats()
+				renders.best()
+
+
 			},
 
 			sub : function(){
+				renders.menu()
 				renders.sub()
 			},
 
 			top : function(){
+				renders.menu()
 				renders.top()
 			}
 		}
 
 		var make = function(){
-
 			var pps = parameters()
 
 			if (pps.sst || pps.ss){
@@ -211,6 +315,8 @@ var leftpanel = (function(){
 
 			destroy : function(){
 
+				delete self.app.platform.sdk.newmaterials.clbks.update.leftpanel
+
 				if (tags){
 					tags.destroy()
 					tags = null;
@@ -241,8 +347,10 @@ var leftpanel = (function(){
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
 				el.cnt = el.c.find('.leftpanelcnt')
+				el.menu = el.c.find('.menu');
 				el.tags = el.c.find('.tagscnt')
 				el.cats = el.c.find('.catscnt')
+				el.bestfirst = el.c.find('.bestfirst');
 
 				el.currentsearch = el.c.find('.currentsearchcnt')
 				el.subtop = el.c.find('.subtop')

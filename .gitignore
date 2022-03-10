@@ -6,6 +6,8 @@
 dist
 messenger/server/cert/key.pem
 messenger/server/cert/cert.pem
+exported.less
+exported.css
 build/installer2.nsh
 *.zip
 messenger2/server/cert/key.pem
@@ -46,7 +48,11 @@ cordova/build.json
 cordova/google-services.json
 cordova/GoogleService-Info.plist
 indexcordova.html
-.DS_Store
+**/.DS_Store
+**/.pgbomit
 external/chat
 external/peertube
 web/
+main.js
+docs/
+posts/

@@ -74,6 +74,16 @@
 
         <div id="matrix" class="matrix"></div>
 
+
+        <div id="topsmallpreloader">
+            <div class="table">
+                <div>
+                    <div class="icon">
+                        <i class="fas fa-spinner fa-spin"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div id="globalpreloader">
             <div class="table">
                 <div>

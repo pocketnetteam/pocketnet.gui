@@ -35,20 +35,13 @@
         <link rel="stylesheet" href="css/tooltipster.core.min.css?v=487681635664">
         <link rel="stylesheet" href="css/tooltipster.bundle.min.css?v=748159927557">
         <link rel="stylesheet" href="css/main.css?v=503197461855">
-        <link rel="stylesheet" href="css/stblack.css?v=276199619365">
-        <link rel="stylesheet" href="css/plyr_el.css?v=1">        
-        <link rel="stylesheet" href="css/jquery-ui.min.css?v=136">
-
-        <link rel="stylesheet" href="css/medium/medium-editor.css">
-        <link rel="stylesheet" href="css/medium/medium-editor-insert-plugin.css?v=136">
-        <link rel="stylesheet" href="js/vendor/DateTimePicker.min.css?v=514508004319">
-        <link rel="stylesheet" href="css/medium/beagle.css?v=136">
-
-        <link rel="stylesheet" href="css/datetime.css?v=136">        
+        <link rel="stylesheet" href="css/common.css?v=503197461855">
+        <link rel="stylesheet" href="css/plyr.css?v=1">        
 
         <link rel="stylesheet" href="css/openapi.css?v=815525481864">
         <link rel="stylesheet" href="css/fontawesome/css/all.css">
         <link rel="stylesheet" href="peertube/video-embed.css">
+
         <script src="js/vendor/device.min.js?v=136"></script>
         <script src="js/vendor/modernizr-2.8.3.min.js?v=136"></script>
         <script src="https://__VAR__.domain/js/widgets.js?v=136"></script>
@@ -215,7 +208,7 @@
         <script src="js/vendor/paste.js"></script> 
         <script src="js/vendor/jquery.md5.js?v=136"></script>
         <script src="js/vendor/joypixels.min.js"></script>
-        <script  join src="js/vendor/hammer.min.js?v=89"></script>
+        <script join src="js/vendor/hammer.min.js?v=89"></script>
         <script src="js/vendor/plyr.js?v=1"></script>
         <script src="js/vendor/reconnectingwebsocket.js?v=136"></script>
         <script src="js/vendor/mark.js"></script>

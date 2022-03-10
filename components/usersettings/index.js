@@ -355,6 +355,10 @@ var usersettings = (function(){
 
 
 
+			},
+			wnd : {			
+				header : "rsettings",
+				class : 'normalizedmobile',
 			}
 		}
 	};

@@ -220,7 +220,6 @@ var IPC = function(ipc, wc){
 
 	var middle = function(message){
 
-
 		if(f.deep(middles, message.action)){
 			return f.deep(middles, message.action)(message)
 		}

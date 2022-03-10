@@ -42,6 +42,22 @@ var socialshare2 = (function(){
 
 			},
 
+			nativeshare : function(){
+				plugin.shareWithOptions({
+
+					message: ed.sharing.text.body || '', 
+					subject: ed.sharing.text.title || '',
+					images : ed.sharing.images || [],
+					url: ed.url
+
+				}, function(){
+
+					self.closeContainer()
+
+				}, function(){
+
+				});
+			},
 			
 			stateAction : function(link, clbk, txid){
 
@@ -156,6 +172,14 @@ var socialshare2 = (function(){
 				
 			},
 
+			nativeshare : function(e){
+
+				e.target.blur();
+				self.app.mobile.vibration.small()
+
+				actions.nativeshare()
+			}
+
 			
 		}
 
@@ -248,8 +272,6 @@ var socialshare2 = (function(){
 
 			embedding : function(){
 
-				console.log("ED", ed)
-
 				if (!ed.embedding) return
 
 				var emeta = embedding[ed.embedding.type]
@@ -293,7 +315,6 @@ var socialshare2 = (function(){
 
 						_.each(settings, function(s){
 							s._onChange = function(){
-								console.log("CHANGE")
 								renders.embedding()
 							}
 						})
@@ -311,7 +332,6 @@ var socialshare2 = (function(){
 
 						_p.el.find('.showcode').on('click', function(){
 							showcode = !showcode
-							console.log('showcode', showcode)
 							showhidecode()
 						})
 
@@ -606,10 +626,10 @@ var socialshare2 = (function(){
 					
 					_el.on('click', function(){
 
-						var t = actions.shareText() +  '\r\n\r\n' + trimHtml(ed.sharing.text.body, 500).replace(/ &hellip;/g, '...').replace(/&hellip;/g, '...') + '\r\n\r\n' + htmlhelpers.link(ed.url, 'Сontinue on ' + self.app.meta.fullname);
+						var t = actions.shareText() +  '\r\n\r\n' + trimHtml(ed.sharing.text.body, 500).replace(/ &hellip;/g, '...').replace(/&hellip;/g, '...') + '\r\n\r\n' + htmlhelpers.link(ed.url, self.app.localization.e('continueon') + ' ' + self.app.meta.fullname);
 
 						if (deep(app, 'platform.sdk.user.storage.me.name')){
-							t += '\r\n\r\nBest,\r\n' + deep(app, 'platform.sdk.user.storage.me.name')
+							t += '\r\n\r\n'+self.app.localization.e('bestwishes')+'\r\n' + deep(app, 'platform.sdk.user.storage.me.name')
 						}
 
 						var m = '';
@@ -625,7 +645,7 @@ var socialshare2 = (function(){
 				}
 				else{
 
-					var text = ed.sharing.title + ": " + ed.sharing.text.preview + '\r\n\r\n' + 'Сontinue on ' + self.app.meta.fullname
+					var text = ed.sharing.title + ": " + ed.sharing.text.preview + '\r\n\r\n' + self.app.localization.e('continueon') + ' ' + self.app.meta.fullname
 
 					var type = _el.data('type');
 					var b = findsocial(type)
@@ -657,7 +677,7 @@ var socialshare2 = (function(){
 
 						if (_el.hasClass('s_gmail')){
 
-							text = actions.shareText() +  '\r\n\r\n' +  ed.sharing.text.body + '\r\n\r\n' + htmlhelpers.link(ed.url, 'Сontinue on ' + self.app.meta.fullname);
+							text = actions.shareText() +  '\r\n\r\n' +  ed.sharing.text.body + '\r\n\r\n' + htmlhelpers.link(ed.url, self.app.localization.e('continueon') + ' ' + self.app.meta.fullname);
 
 							
 							if (deep(app, 'platform.sdk.user.storage.me.name')){
@@ -697,13 +717,15 @@ var socialshare2 = (function(){
 				var url = self.app.nav.api.history.removeParametersFromHref(ed.url, ['ref'])
 			
 				self.app.platform.matrixchat.share.url(url).catch(r => {
-					console.log("R", r)
 				})
 			
 				if(self.closeContainer) self.closeContainer()
 			})
 
 			el.c.find('.forrepost').on('click', events.repost)
+
+
+			el.c.find('.nativeshare button').on('click', events.nativeshare)
 
 		}
 
@@ -858,7 +880,7 @@ var socialshare2 = (function(){
 				trueshold : 1,
 				swipeCloseDir : 'down',
 				header : self.app.localization.e('e13174'),
-				class : 'sharingwindow2 normalizedmobile'
+				class : 'sharingwindow2 normalizedmobile noheader'
 			}
 		}
 	};

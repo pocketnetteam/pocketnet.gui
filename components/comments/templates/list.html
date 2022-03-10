@@ -3,15 +3,48 @@ var commentpanel = function(comment, _class){  %>
 	<div class="commentpanel">
 
 		<div class="items">
-			<% if((!state || mestate.reputation >= -50) && !comment.deleted && !ed.cantsend) { %> 
-				<div elementsid="comments_reply" class="item reply">
-					<div class="cact">
-						<div class="label">
-							<span><%=e('reply').toUpperCase()%></span>
+
+			<% if(!comment.deleted) { 
+				
+				
+				%> 
+				<div class="item upvoteCommentWrapper">
+
+					<div elementsid="comments_upvoteComment" class="upvoteComment scoreUp <% if(comment.myScore && comment.myScore > 0) {%> ratedScore <% } %>"  score="scoreUp">
+						<div class="upvoteCommentTable">
+							<div class="upvoteCommentCell">
+								<i class="fas fa-thumbs-up"></i>
+							</div>
+
+							<div class="upvoteCommentCell">
+								<span class="commentScore">
+									<%- comment.scoreUp ? compressedNumber(comment.scoreUp, 1) : '' %>
+								</span>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="item upvoteCommentWrapper">
+
+					<div class="upvoteComment scoreDown <% if(comment.myScore && comment.myScore < 0) {%> ratedScore <% } %>" score="scoreDown">
+						<div class="upvoteCommentTable">
+							<div class="upvoteCommentCell">
+								<i class="fas fa-thumbs-down fa-flip-horizontal"></i>
+							</div>
+
+							<div class="upvoteCommentCell">
+								<span class="commentScore">
+									<%- comment.scoreDown ? compressedNumber(comment.scoreDown, 1) : '' %>
+								</span>
+							</div>
 						</div>
 					</div>
 				</div>
 			<% } %>
+
+			
 
 			<% if(_class == 'firstcomment') {
 
@@ -23,9 +56,9 @@ var commentpanel = function(comment, _class){  %>
 
 				<div elementsid="comments_replies" class="item replies <%-h%>">
 					<div class="cact">
-						<div class="iconlabelWrapper table">
+						<div class="iconlabelWrapper">
 							<div class="label">
-								<span><%=e('e13037').toUpperCase()%> (<b class="repliescount"><%- comment.children %></b>)</span>
+								<span><%=e('e13037')%> (<label class="repliescount"><%- comment.children %></label>)</span>
 							</div>
 							<div class="icon">
 								<i class="fas fa-angle-down"></i>
@@ -36,45 +69,20 @@ var commentpanel = function(comment, _class){  %>
 
 			<% } %> 
 
-			<% if(!comment.deleted) { 
-				
-				
-				%> 
-				<div class="item upvoteCommentWrapper">
 
-					<div elementsid="comments_upvoteComment" class="upvoteComment scoreUp <% if(comment.myScore && comment.myScore > 0) {%> ratedScore <% } %>"  score="scoreUp">
-						<div class="upvoteCommentTable table">
-							<div class="upvoteCommentCell">
-								<i class="fas fa-thumbs-up"></i>
-							</div>
-
-							<div class="upvoteCommentCell">
-								<span class="commentScore">
-									<% if(comment.scoreUp) {%><%- compressedNumber(comment.scoreUp, 1) %> <% } %>
-								</span>
-							</div>
-						</div>
-					</div>
-
-				</div>
-
-				<div class="item upvoteCommentWrapper">
-
-					<div class="upvoteComment scoreDown <% if(comment.myScore && comment.myScore < 0) {%> ratedScore <% } %>" score="scoreDown">
-						<div class="upvoteCommentTable table">
-							<div class="upvoteCommentCell">
-								<i class="fas fa-thumbs-down fa-flip-horizontal"></i>
-							</div>
-
-							<div class="upvoteCommentCell">
-								<span class="commentScore">
-									<% if(comment.scoreDown) {%><%- compressedNumber(comment.scoreDown, 1) %> <% } %>
-								</span>
-							</div>
+			<% if((!state || mestate.reputation >= -50) && !comment.deleted && !ed.cantsend) { %> 
+				<div elementsid="comments_reply" class="item reply">
+					<div class="cact">
+						<div class="label">
+							<span><%=e('reply')%></span>
 						</div>
 					</div>
 				</div>
 			<% } %>
+
+			
+
+			
 		</div>
 
 	</div>
@@ -123,12 +131,6 @@ var commentf = function(comment){
 								<% } %>
 
 							</div>
-
-							<!--<% if(comment.donation === 'true' && comment.amount) {%>
-								<div class="donater followers_arc_outer followers_arc_start o_circle"></div>
-
-							<% } %>-->
-
 							
 						</div>
 					<% if(!app.curation()) {%></a><% } %>
@@ -207,7 +209,7 @@ var commentf = function(comment){
 										l = app.platform.sdk.users.replacePattern(l, replaceNameNoComment)
 									}
 
-									m = app.actions.emoji(l) /*joypixels.toImage(l)*/
+									m = app.actions.emoji(l)
 
 								%>
 
@@ -283,7 +285,7 @@ var commentf = function(comment){
 	
 <% } %>
 
-<% if(!pid && comments.length > 2 && typeof sort != 'undefined') {%>
+<% if(!pid && comments.length > 2 && typeof sort != 'undefined' && sort) {%>
 
 	<div class="comments-operations">
 		<div class="operations-wrapper">

@@ -5,6 +5,7 @@
 			<div class="blackmatte"></div>
 
 			
+			
 			<div class="aheaderWrapper">
 				<div class="mwork">
 					<div class="rightchatspacer">
@@ -76,30 +77,14 @@
 
 							<div class="rightpart part ">
 
-								<div class="removeCover">
-									<i class="far fa-times-circle"></i>
-								</div>
-
-								<div class="lst">
-									
-									<div class="uploadcover">
-										<button class="button medium ghost nopadding">
-											<%= e('art_changecover') %>
-											
-										</button>
-									</div>
-								</div>
-
-								<div class="settingsWrapper">
-								</div>
-
+								
 								<div class="showpreviewwrapper">
 									<button class="button ghost preview">
 										<%= e('art_preview') %>
 									</button>
 								</div>
-
-
+								<div class="settingsWrapper">
+								</div>
 								<div class="publish">
 									
 								</div>
@@ -107,11 +92,24 @@
 						</div>
 					</div>
 				</div>
+
 			</div>
 
 			<div class="forbackmain">
 				<div class="mwork">
-					<i class="fas fa-chevron-circle-left"></i> <span>Вернуться назад</span>
+					<i class="fas fa-chevron-circle-left"></i> <span><%= e('art_goback') %></span>
+				</div>
+			</div>
+
+			<div class="coverelements">
+				<div class="coverelementsinner">
+					<div class="removeCover">
+						<i class="far fa-times-circle"></i> <%= e('art_removecover') %>
+					</div>
+
+					<div class="uploadcover">
+						<%= e('art_changecover') %>
+					</div>
 				</div>
 			</div>
 

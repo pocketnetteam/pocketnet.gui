@@ -4,6 +4,7 @@
     <div class="work cabinetHeaderWrapper">
       <div class="moduleHeader">
         <div class="cabinetName"><%- e('videoCabinet') %></div>
+        <% if (hasAccess) { %>
           <button
             elementsid="videoActiveButton"
             class="uploadVideo videoActiveButton ghostButton"
@@ -11,6 +12,7 @@
           >
             <i class="fas fa-video"></i><%- e('peertubeAddVideo') %>
           </button>
+        <% } %>
       </div>
     </div>
     <% if (hasAccess) { %>
@@ -49,7 +51,7 @@
       </div>
     <% } %>
       <div class="videoContainer" elementsid="videocabinet">
-        <div class="work">
+        <div class="work videoControlsWrapper">
           <div class="videoControls">
             <div class="videoSearchWrapper videoControlItem">
               <input
@@ -98,25 +100,8 @@
         <div class="userVideos"></div>
       </div>
     <% } else { %>
-      <div class="videoContainer videoErrorContainer" elementsid="videocabineterror">
-        
-        <div class="work">
-          <% if(typeof increase == 'undefined' || _.isEmpty(increase)) {%>
-
-              <div class="videoErrorHeading"><i class="fas fa-exclamation-circle"></i> <%- e('unableToAuthorizeConnection') %></div>
-              <div class="videoErrorBody"><%- e('unableToAuthorizeConnectionBody') %></div>
-
-          <% } else { %>
-
-              <div class="videoErrorHeading"><i class="fas fa-exclamation-circle"></i> <%- e('unableToAuthorize') %></div>
-              <div class="videoErrorBody"><%- e('unableToAuthorizeBody') %></div>
-
-              <div class="buttonwrapper">
-                  <button class="buypkoins orange"><%=e('buylogo')%></button>
-              </div>
-
-          <% } %>
-        </div>
+      <div class="work">
+        <div class="videoContainer videoErrorContainer" elementsid="videocabineterror"></div>
       </div>
     <% } %>
   </div>

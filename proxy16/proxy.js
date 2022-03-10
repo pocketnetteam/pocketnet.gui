@@ -460,6 +460,16 @@ var Proxy = function (settings, manage, test, logger) {
 
 		sendlogs: function(d){
 			wss.sendlogs(d)
+		},
+
+		closeall : function(){
+			var e = wss.closeall()
+
+			if (e){
+				return Promise.reject(e)
+			}
+
+			return Promise.resolve('success')
 		}
 	}
 
@@ -678,6 +688,16 @@ var Proxy = function (settings, manage, test, logger) {
 				15: [
 					'peertube14.pocketnet.app',
 					'peertube15.pocketnet.app',
+				],
+
+				16: [
+					'poketnetpeertube.space',
+					'poketnetpeertube.ru',
+				],
+
+				17: [
+					'bastynode.ru',
+					'storemi.ru',
 				],
       		};
 
@@ -1659,6 +1679,19 @@ var Proxy = function (settings, manage, test, logger) {
 						server.middle.clear()
 
 					return Promise.resolve('success');
+					
+				},
+			},
+
+			wsscloseall : {
+				path: '/closeallwss',
+				authorization: 'signature',
+				action: function (message) {
+
+					if (!message.A)
+						return Promise.reject({ error: 'Unauthorized', code: 401 });
+						
+					return self.wss.closeall()
 					
 				},
 			},

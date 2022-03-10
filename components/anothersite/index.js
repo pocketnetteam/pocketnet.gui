@@ -70,7 +70,7 @@ var anothersite = (function(){
 
 			wnd : {
 				header : "Another site",
-				class : 'transparent small anothersite'
+				class : 'transparent small anothersite normalizedmobile'
 			}
 		}
 	};

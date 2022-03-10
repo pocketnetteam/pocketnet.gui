@@ -1,4 +1,4 @@
-<div id="<%-module.map.id%>">
+<div id="<%-module.map.id%>" class="<% if(app.curation()) {%> curation <% } %>">
 
 	<div class="bgCaptionWrapper"></div>
 
@@ -14,18 +14,10 @@
 				
 				<div class="lentacell">
 					<div class="cnt">
-						<% if(!app.curation()) {%>
 
 							<div class="lentaWrapper">
 							</div>
 
-						<% } else { %> 
-
-							<div class="curationWrapper">
-								<span>You can see the posts of this user only on <a elementsid="https://bastyon.com" href="https://bastyon.com">bastyon.com</a></span>
-							</div>
-				
-						<% } %>
 					</div>
 				</div>
 				

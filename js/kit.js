@@ -1480,13 +1480,22 @@ Share = function(lang){
 
 	self.size = function(){
 
-		var obj = JSON.stringify(self.export());
+
+		////// base64
+
+		var obj = JSON.stringify(self.export()).replace(/base64,[^ ",]*/g, 'fileinb64').replace(/base64%2C[^ ",]*/g,'fileinb64');
 
 		return obj.length
 
 	}
 
-	self.sizelimit = 60000
+	self.sizelimit = function(){
+		if(self.itisarticle() && !window.testpocketnet){
+			return 120000
+		}
+
+		return 60000
+	}
 
 	if(lang) self.language.set(lang)
 
@@ -2163,7 +2172,7 @@ pShare = function(){
 		var s = {
 			image : '',
 			images : self.images || [],
-			title : "Post by " + name,
+			title : app.localization.e('postby') + " " + name,
 			html : {
 				body : self.renders.xssmessagec(),
 				preview : trimHtml(self.renders.xssmessagec(), 160).replace(/ &hellip;/g, '...').replace(/&hellip;/g, '...')

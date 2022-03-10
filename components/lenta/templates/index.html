@@ -7,7 +7,7 @@
 		<div class="circularprogress">	
 			<div class="circularprogressWrapper"></div>
 		</div>
-
+	
 		<div class="shares">
 			<div class="bspacer"></div>		
 		</div>
@@ -36,95 +36,9 @@
 
 		<% } %>
 
-			<div class="zero">
-				<%=e('zeron')%>	
-			</div>
-
-
-		<% if(author && state) {%>
-
-			<div class="zero">
-				
-				<% if(!app.platform.sdk.address.pnet() || app.platform.sdk.address.pnet().address != author) {%>
-
-					<%=e('zerop')%>
-
-				<% } else { %>
-
-					<% 
-						var h = 'index';
-
-						if(isMobile()){
-							h = 'share'
-						}
-					%>
-
-					<a elementsid="<%-h%>?newshare=1" href="<%-h%>?newshare=1">
-						<div class="tou">
-							<i class="fas fa-share"></i> <%=e('zeroy')%> 
-						</div>
-					</a>
-				<% } %>		
-					
-			</div>
-
-		<% } %>
-
-
-		<% if(recommended) {%>
-
-			<div class="zero">
-
-			<% if(recommended == 'recommended') {%>	
-
-				<%=e('e13125')%>
-
-			<% } else if(recommended == 'saved') { %>
-
-				<%=e('downloadedEmpty')%>
-				
-			<% } else { %>
-				
-				<% if(state) { 
-					
-					var t = app.platform.sdk.node.transactions.temp || {}
-					var r = app.platform.sdk.relayTransactions.storage[user.address.value] || {}
-
-
-					if(!_.isEmpty(t.subscribe) || !_.isEmpty(t.subscribePrivate) || !_.isEmpty(r.subscribe) || !_.isEmpty(r.subscribePrivate)){ %> 
-
-						<%=e('e13126')%>
-						
-					<% } else { %> 
-
-						<%=e('e13127')%>
-						
-					<% } %>
-
-					
-
-				<% } else { %> 	
-					<% if(state) {%>
-					<div class="zerocaption">
-                        <span>
-							<%=e('e13128')%>
-                        </span>
-                    </div>
-					<% } %>
-                    <div class="subc">
-                        <a elementsid="filluserfast" href="filluserfast">
-                            <button><%=e('registration')%></button>
-                        </a>
-					</div>
-					
-				<% } %>
-
-			<% } %>
-
-			</div>
-
-		<% } %>
-		
+		<div class="zero">
+			<%=e('zeron')%>	
+		</div>
 
 		<div class="networkErrorMessage">
 			<i class="fas fa-wifi"></i>

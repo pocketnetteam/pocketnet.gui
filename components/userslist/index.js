@@ -111,8 +111,6 @@ var userslist = (function(){
 		var events = {
 			loadmorescroll : function(){
 
-				console.log('el.c.height() - scnt.scrollTop()', el.c.height(), scnt.scrollTop())
-
 				if (
 
 					(el.c.height() - scnt.scrollTop() < 1000) 

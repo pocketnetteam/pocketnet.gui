@@ -12,6 +12,10 @@
         <link rel="alternate" href="android-app://pocketnet.app/https/bastyon.com" />
         <link rel="alternate" href="android-app://pocketnet.app/https/bastyon.com" />
 
+        <meta name="theme-color" content="#ffffff">
+        <meta name="msapplication-navbutton-color" content="#ffffff">
+        <meta name="apple-mobile-web-app-status-bar-style" content="#ffffff">
+
         <title>__VAR__.project</title>
         <meta name="description" content="A Revolutionary anti-censorship decentralized publishing and social platform. Based on the blockchain technology, it runs on a set of computers around the world, not controlled by any single entity. Self-policed by users with good reputation where nobody records your keystrokes, viewing habits or searches. ">
         <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1, user-scalable=no">
@@ -96,6 +100,17 @@
 
         <div id="matrix" class="matrix"></div>
         <div id="hideallnotifications"></div>
+
+        <div id="topsmallpreloader">
+            <div class="table">
+                <div>
+                    <div class="icon">
+                        <i class="fas fa-spinner fa-spin"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div id="globalpreloader">
             <div class="table">
                 <div>

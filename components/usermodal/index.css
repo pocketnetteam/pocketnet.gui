@@ -1,0 +1,69 @@
+#usermodal .modal {
+  cursor: default;
+  width: 308px;
+  background: #FFFFFF;
+  border-radius: 12px;
+  box-shadow: 32px 32px 32px 32px #00000014;
+  padding: 1em 0.5em;
+}
+#usermodal .modal .topInfo .addressTable {
+  padding: 0.5em 1em;
+}
+#usermodal .modal .topInfo .addressTable .iconWrapper {
+  padding-right: 1em;
+}
+#usermodal .modal .topInfo .addressTable .iconWrapper .usericon {
+  height: 45px;
+  width: 45px;
+}
+#usermodal .modal .topInfo .addressTable .label {
+  padding-left: 7px;
+}
+#usermodal .modal .topInfo .addressTable .label .name {
+  max-width: 300px!important;
+}
+#usermodal .modal .topInfo .addressTable .label .reputation {
+  font-size: 0.8em;
+  color: #8E90A6;
+}
+#usermodal .modal .topInfo .addressTable .label .reputation .value {
+  color: #00a4ff;
+  font-weight: 700;
+}
+#usermodal .modal .follow {
+  display: flex;
+  padding: 0.5em 1em;
+}
+#usermodal .modal .follow .followers {
+  padding-right: 1.5em;
+}
+#usermodal .modal .follow .value {
+  font-weight: 700;
+}
+#usermodal .modal .subscribeWrapper {
+  padding: 0.5em;
+}
+#usermodal .modal .subscribeWrapper button {
+  width: 100%;
+  border-radius: 8px;
+  padding: 8px 16px;
+}
+#usermodal .modal .subscribeWrapper .unsubscribe {
+  display: none;
+  background: #076C34;
+  border: 1px solid #076C34;
+}
+#usermodal .modal .subscribeWrapper .unsubscribe:hover {
+  color: #076C34;
+  border: 1px solid #076C34;
+  background: #fff;
+}
+#usermodal .modal .subscribeWrapper.following .unsubscribe {
+  display: block;
+}
+#usermodal .modal .subscribeWrapper.following .subscribe {
+  display: none;
+}
+#usermodal .modal .aboutWrapper {
+  padding: 0.5em 1em;
+}

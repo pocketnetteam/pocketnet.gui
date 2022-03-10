@@ -1,41 +1,16 @@
-/*! bittorrent-protocol. MIT License. WebTorrent LLC <https://webtorrent.io/opensource> */
-
-/*! blob-to-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
-
-/*! cache-chunk-store. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
-
-/*! create-torrent. MIT License. WebTorrent LLC <https://webtorrent.io/opensource> */
-
-/*! https://mths.be/punycode v1.4.1 by @mathias */
-
-/*! immediate-chunk-store. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
-
-/*! magnet-uri. MIT License. WebTorrent LLC <https://webtorrent.io/opensource> */
-
-/*! mediasource. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
-
-/*! multistream. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
-
-/*! parse-torrent. MIT License. WebTorrent LLC <https://webtorrent.io/opensource> */
-
-/*! render-media. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
-
-/*! run-parallel-limit. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
-
-/*! simple-concat. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
-
-/*! simple-get. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
-
-/*! stream-to-blob-url. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
-
-/*! stream-to-blob. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
-
-/*! stream-with-known-length-to-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
-
-/*! torrent-discovery. MIT License. WebTorrent LLC <https://webtorrent.io/opensource> */
-
-/*! torrent-piece. MIT License. WebTorrent LLC <https://webtorrent.io/opensource> */
-
-/*! ut_metadata. MIT License. WebTorrent LLC <https://webtorrent.io/opensource> */
-
-/*! webtorrent. MIT License. WebTorrent LLC <https://webtorrent.io/opensource> */
+/**
+ * @license Apache-2.0
+ * Copyright 2018 Novage LLC.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */

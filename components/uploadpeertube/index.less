@@ -16,7 +16,7 @@
         .videoErrorHeading {
             font-size: 1.5em;
             font-weight: 200;
-            color: @color-bad;
+            color: rgb(var(--color-bad));
         }
 
         .videoErrorBody {
@@ -49,11 +49,11 @@
     }
 
     .type-error-field {
-        color: #0a0c17;
+        color: rgb(var(--color-txt-gray-dark));
     }
 
     .error-message {
-        color: @color-orange;
+        color: rgb(var(--color-bad));
         font-size: 0.8em;
     }
 
@@ -69,14 +69,14 @@
     .upload-field-container {
         position: relative;
 
-        color: @color-black;
+        color: rgb(var(--text-color));
 
         .upload-peertube-label {
             text-decoration: underline;
             transition: color 0.1s ease-in 0.1s;
 
             &:hover {
-                color: @color-orange;
+                color: rgb(var(--color-txt-orange));
             }
         }
     }
@@ -89,7 +89,7 @@
         .upload-field-container {
             flex-grow: 1;
             width: 80%;
-            padding: @rhythm / 2;
+            padding: 0.5 * @rhythm;
             position: relative;
 
             &:nth-last-child(1) {
@@ -102,15 +102,15 @@
         }
 
         label {
-            padding: @rhythm / 2;
+            padding: 0.5 * @rhythm;
             display: block;
             font-size: 0.8em;
         }
 
         .inputWrapper {
             height: 120px;
-            background: fade(@color-gray-slight, 20);
-            border-radius: 5px;
+            background: rgb(var(--background-secondary-theme));
+            border-radius: 6px;
             padding: 3 * @rhythm;
             text-align: center;
 
@@ -147,7 +147,7 @@
         left: 15px;
         font-size: 0.9em;
         font-weight: bold;
-        background-color: white;
+        background-color: rgb(var(--background-total-theme));
         padding: 0 2px;
     }
 
@@ -167,16 +167,15 @@
     .upload-progress-bar {
         height: 1px;
         width: 100%;
-
-        background-color: @color-orange;
+        background-color: rgb(var(--color-bg-orange));
     }
 
     .disabledInput {
-        color: @color-gray-mlight;
+        color: rgb(var(--neutral-grad-3));
     }
 
     .upload-type-separator {
-        color: @color-gray-mlight;
+        color: rgb(var(--neutral-grad-3));
         font-weight: bold;
 
         position: relative;
@@ -189,11 +188,10 @@
             position: absolute;
             width: 1px;
             height: 15px;
-
             top: -15px;
             left: 10px;
 
-            background-color: @color-gray-mlight;
+            background-color: rgb(var(--neutral-grad-3));
         }
 
         &::after {
@@ -201,11 +199,9 @@
             position: absolute;
             width: 1px;
             height: 15px;
-
             bottom: -15px;
             left: 10px;
-
-            background-color: @color-gray-mlight;
+            background-color: rgb(var(--neutral-grad-3));
         }
     }
 
@@ -215,7 +211,8 @@
 
     .challengeoffer{
 
-        color : #fff;
+        color : rgb(var(--text-on-bg-shadow-color));
+
         .pbg{
             padding: 2 * @rhythm 4 * @rhythm;
             
@@ -241,7 +238,7 @@
         .offerpart{
             padding: 2 * @rhythm 0;
             overflow: hidden;
-            border-radius: 5px;
+            border-radius: 6px;
             margin-bottom : 3 * @rhythm;
 
             div{
@@ -282,7 +279,7 @@
         }
 
         .textpart{
-            color : #fff;
+            color : rgb(var(--text-on-bg-shadow-color));
 
             ol{
                 margin: 0;
@@ -292,7 +289,7 @@
 
                 li{
                     font-size: 0.9em;
-                    padding: @rhythm / 2 0;
+                    padding: 0.5 * @rhythm 0;
                 }
             }
         }
@@ -302,13 +299,13 @@
         cursor: pointer;
 
         &:hover {
-            color: @color-orange;
+            color: rgb(var(--color-txt-orange));
         }
     }
 
     .cancelButton {
         margin-left: @rhythm * 2;
-        color: @color-bad;
+        color: rgb(var(--color-bad));
         .transition(0.3s);
 
         span {
@@ -326,14 +323,14 @@
     .uploadButton {
 
         &:disabled {
-            background-color: @color-gray-mlight;
-            border-color: @color-gray-mlight;
-            color: white;
+            background-color: rgb(var(--neutral-grad-3));
+            border-color: rgb(var(--neutral-grad-3));
+            color: rgb(var(--text-on-bg-shadow-color));
         }
     }
 
     .upload-input {
-        border-color: @color-orange;
+        border-color: rgb(var(--color-txt-orange));
     }
 
     .sectionsWrapper {
@@ -353,7 +350,7 @@
 
         .uplsection {
             padding: 2 * @rhythm;
-            border-radius: 5px;
+            border-radius: 6px;
 
             .caption {
 
@@ -365,17 +362,16 @@
 
             &.uploading {
                 vertical-align: top;
-                // border-bottom : 1px solid @color-gray-slight;
             }
         }
     }
 
     .upload-button-section {
         box-sizing: border-box;
-        border-left: 1px solid @color-gray-slight;
+        border-left: 1px solid rgb(var(--neutral-grad-1));
         text-align: center;
         padding: 2 * @rhythm;
-        background: fade(@color-gray-slight, 20);
+        background: rgb(var(--background-secondary-theme));
 
         display: flex;
         flex-direction: column;
@@ -422,22 +418,17 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-
         font-weight: bold;
-        color: @color-gray-mlight;
-
-        background-color: rgba(255, 255, 255, 0.9);
+        color: rgb(var(--neutral-grad-3));
+        background-color: rgba(var(--text-on-bg-ac-color), 0.9);
         transform: translate(-50%, -50%);
     }
 
     .caption-container {
         text-align: center;
-
-        color: @color-gray-mlight;
+        color: rgb(var(--neutral-grad-3));
         font-size: 0.8em;
-
         cursor: pointer;
-
         padding-top: 2 * @rhythm;
 
         &:hover {
@@ -527,15 +518,6 @@
     }
 }
 
-html.stblack{
-    #uploadpeertube{
-        .note{
-            color : fade(#fff, 70);
-        }
-    }
-}
-
-
 .wnd.uploadpeertube {
     .wndinner {
         max-width: 900px;
@@ -549,6 +531,7 @@ html.stblack{
             display: flex;
             align-items: flex-start;
             justify-content: space-around;
+            border-radius: 6px;
 
             overflow: hidden;
         }
@@ -560,11 +543,9 @@ html.stblack{
             display: none!important;
         }
         .wndinner {
-            max-width: 450px;
-            max-height: 385px;
+            max-width: 650px;
+            max-height: 485px;
 
-            
-            
             #uploadpeertube{
                 height: 100%;
             }
@@ -593,7 +574,7 @@ html.stblack{
     }
 }
 
-/*t*/ @media only screen and (max-width: 768px){
+html.mobileview{
     #uploadpeertube {
         .quality-limit-container{
             display: none;
@@ -619,6 +600,16 @@ html.stblack{
 
         .uploadRow label{
             font-size: 1em;
+        }
+    }
+
+    .wnd.uploadpeertube {
+        &.witherror{
+            .wndinner {
+                #uploadpeertube{
+                    height: auto;
+                }
+            }
         }
     }
 }

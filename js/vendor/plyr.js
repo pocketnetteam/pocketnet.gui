@@ -9215,6 +9215,7 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
           
 
           plyrPlayer.localVideoId = clear_peertube_id;
+          plyrPlayer.el = $(target)
 
         if (clbk) clbk(plyrPlayer);
 
@@ -9231,6 +9232,7 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
             host : host,
             wautoplay : options.wautoplay,
             useP2P : options.useP2P,
+            enableHotkeys : options.enableHotkeys,
             logoType : options.logoType,
             localVideo : localVideo,
             start : options.startTime || 0
@@ -9242,6 +9244,7 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
             volumeChange : options.volumeChange,
             fullscreenchange : options.fullscreenchange,
             playbackStatusUpdate : options.playbackStatusUpdate,
+            pictureInPictureRequest: options.pictureInPictureRequest,
             play : options.play,
             pause : options.pause
     
@@ -9255,6 +9258,8 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
     
             var api = embed.api
                 api.mute()
+
+                api.el = $(target)
     
             if (clbk) clbk(api);
             if (readyCallback) readyCallback(api);

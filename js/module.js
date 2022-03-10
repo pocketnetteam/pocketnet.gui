@@ -102,9 +102,7 @@ nModule = function(){
 
 			if(p.el)
 			{
-
 				self.nav.api.links(null, p.el, p.additionalActions || null);
-
 				bgImages(p.el, p.bgImages)
 				
 			}
@@ -122,101 +120,119 @@ nModule = function(){
 
 			self.renderTemplate(template, function(html){
 
-				//window.requestAnimationFrame(function(){
 
-					var inserted = false;
+				var inserted = false;
 
-					if(!_.isObject(p.el) || p.insert)
+				if(!_.isObject(p.el) || p.insert)
+				{
+
+					var insert = self.inserts[p.insert];
+
+					if (insert)
 					{
+						var options = p[insert.storageKey] || {};
 
-						var insert = self.inserts[p.insert];
+							options.content = html;
+							options.el = p.el;
+							options.app = self.app
 
-						if (insert)
+						if (insert.after)
 						{
-							var options = p[insert.storageKey] || {};
+							options.clbk = function(_p){
 
-								options.content = html;
-								options.el = p.el;
-								options.app = self.app
+								if(!_p) _p = {};
 
-							if (insert.after)
-							{
-								options.clbk = function(_p){
+								p = _.extend(p, _p)
 
-									if(!_p) _p = {};
+								completeClbk(p)
 
-									p = _.extend(p, _p)
-
-									completeClbk(p)
-
-								}
-								
 							}
+							
+						}
 
-							options.destroy = function(key){
+						options.destroy = function(key){
 
-								if(p){
-									if(!key != 'auto'){
-										self.app.nav.api.history.removeParameters(['m' + p.id].concat(p.clearparameters || []))
-									}
+							var r = null
+
+							if (p){
+
+								if (key != 'auto'){
 									
-									if (p.destroy)
-										return p.destroy(key)
+									if(p.history)
+										self.app.nav.api.history.removeParameters(['m' + p.id].concat(p.clearparameters || []))
+									
+									try{
+										self.app.nav.api.changedclbks()
+									}
+									catch(e){
+										console.error(e)
+									}
+
 								}
-
 								
-
-							};
-
-							var type = p.essenseData && p.essenseData.type
-
-							if (type){
-
-								options.type = type;
-
+								if (p.destroy) {
+									r = p.destroy(key)
+								}
 							}
 
-							self .container = new insert.obj(options);
-								p.container = self.container;
+							console.log("CLEAR P", p)
 
-							self.container.essenseDestroy = options.destroy
-
-							if (insert.after) 
-							{
-								topPreloader(100);
-								return;
+							if (p.inWnd){
+								delete self.app.nav.wnds[p.id]
 							}
 
-							if (self.container && self.container.el ){
-								p.el = self.container.el;
-							}
+							//p = null
 
-							inserted = true;
+							return r
+
+						};
+
+						var type = p.essenseData && p.essenseData.type
+
+						if (type){
+
+							options.type = type;
 
 						}
-						else
+
+						self .container = new insert.obj(options);
+							p.container = self.container;
+
+						self.container.essenseDestroy = options.destroy
+
+						if (insert.after) 
 						{
-							if (self.app.el[p.el]) p.el = self.app.el[p.el];
+							topPreloader(100);
+							return;
 						}
 
-					}
-
-					if(typeof p.el == 'function') p.el = p.el();
-				
-					if(!inserted)
-					{
-						if (p.el) {
-							self.insertTemplate(p, html);
+						if (self.container && self.container.el ){
+							p.el = self.container.el;
 						}
-					}
 
-					if(!p.animation)
+						inserted = true;
+
+					}
+					else
 					{
-						completeClbk(p);
+						if (self.app.el[p.el]) p.el = self.app.el[p.el];
 					}
 
-				//})
-				
+				}
+
+				if(typeof p.el == 'function') p.el = p.el();
+			
+				if(!inserted)
+				{
+					if (p.el) {
+						self.insertTemplate(p, html);
+					}
+				}
+
+				if(!p.animation)
+				{
+					completeClbk(p);
+				}
 
 			} ,p)
 
@@ -252,7 +268,15 @@ nModule = function(){
 			p.data.user	= self.user;
 			p.data.essenseData = p.essenseData || {};
 
-			p.rendered = template(p.data);
+			try{
+				p.rendered = template(p.data);
+			}
+			catch(e){
+				console.log(p)
+				console.error(e)
+				p.rendered = ''
+			}
+			
 
 			if (p.clear)
 				p.rendered = "";
@@ -270,6 +294,7 @@ nModule = function(){
 		p.name || (p.name = 'index');
 
 		if(loading.templates[p.name]){
+
 			retry(
 				function(){
 					return !loading.templates[p.name];
@@ -295,10 +320,16 @@ nModule = function(){
 
 				if (pretemplate){
 
-					self.storage.templates[p.name] = _.template(pretemplate);
+					try{
+						self.storage.templates[p.name] = _.template(pretemplate);
+					}
+					catch(e){
+						console.error(e)
+					}
+					
 	
 					if (clbk)
-						clbk(self.storage.templates[p.name]);
+						clbk(self.storage.templates[p.name] || '');
 		
 					return
 				}
@@ -325,7 +356,14 @@ nModule = function(){
 				url = appPath + (self.componentsPath || "") + (p.turi || self.map.uri)
 			}
 
-				url += '/templates/' + p.name + '.html?v=130';
+			var vs = '131'
+
+			if (typeof numfromreleasestring != 'undefined'){
+				vs = numfromreleasestring(window.packageversion)
+			}
+
+			url += '/templates/' + p.name + '.html?v=' + vs;
+
 			
 			self.ajax.run({
 				url : url,
@@ -480,6 +518,8 @@ nModule = function(){
 								settings.auto(p)
 							}
 
+							//p = null
+
 						})				
 
 
@@ -558,12 +598,11 @@ nModule = function(){
 			self.stop(p);
 			self.run(p);
 		}	
-
 		
 	}
 
 	self.addEssense = function(essenses, Essense, p){
-
+		////// ??
 		self.essenses = essenses
 
 		var essense = new Essense(p);

@@ -1,0 +1,43 @@
+#abilityincrease .errorHeading {
+  font-size: 1.5em;
+  color: rgb(var(--color-bad));
+  max-width: 550px;
+}
+#abilityincrease .errorBody {
+  margin-top: 1.5em;
+  max-width: 550px;
+}
+#abilityincrease .errorAdditional {
+  margin-top: 1.5em;
+  font-weight: 700;
+  max-width: 600px;
+}
+#abilityincrease .actions {
+  display: flex;
+  margin-top: 1.5em;
+}
+#abilityincrease .actions .buttonwrapper {
+  margin-right: 1em;
+}
+#abilityincrease .actions .buttonwrapper:nth-child(1) button {
+  background: rgb(var(--color-bg-orange));
+  color: rgb(var(--text-on-bg-ac-color));
+  text-decoration: none;
+}
+#abilityincrease .actions .buttonwrapper:nth-child(1) button:hover {
+  opacity: 0.9;
+  color: rgb(var(--text-on-bg-ac-color));
+}
+html.mobileview #abilityincrease .actions {
+  flex-direction: column;
+}
+html.mobileview #abilityincrease .actions .buttonwrapper {
+  margin-right: 0;
+  margin-bottom: 1em;
+}
+html.mobileview #abilityincrease .actions .buttonwrapper button.ghost {
+  padding-left: 0;
+}
+html.mobileview #abilityincrease .actions .buttonwrapper:nth-child(1) button.ghost {
+  padding-left: 1em;
+}

@@ -1,0 +1,21 @@
+
+
+<% _.each(options, function(parameter){ %>
+
+    <div class="parameterMaketWrapper <%-parameter.pid%>" parameter="<%-parameter.id%>">
+        <div class="parameter <%-parameter.type%>">
+
+            <div class="name">
+                <span><%= parameter.name %></span>
+            </div>
+
+            <div class="input">
+                <%= parameter.input({
+                    init : true
+                }) %>
+            </div>
+
+        </div>
+    </div>
+
+<% }) %>

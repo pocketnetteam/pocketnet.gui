@@ -116,9 +116,12 @@ const publics = {
     getcontentstatistic : true,
     getuserstatistic : true,
     searchbyhash: true,
-    getstatisticcontent: true,
     getstatisticbyhours: true,
     getstatisticbydays: true,
+    getstatisticcontentbyhours: true,
+    getstatisticcontentbydays: true,
+    getrecomendedcontentsbyscoresonsimilarcontents : true,
+    getrecomendedcontentsbyscoresfromaddress : true,
 }
 
 const keepAliveAgent = new http.Agent({ keepAlive: true });
@@ -436,8 +439,9 @@ RpcClient.callspec = {
     getaccountsetting : 'str',
     getpostscores: 'str',
     getpagescores: 'obj str',
-    gethierarchicalstrip : 'int str int str obj str',
-    gethistoricalstrip : 'int str int str obj str',
+
+    gethierarchicalstrip : 'int str int str obj str str str obj',
+    gethistoricalstrip : 'int str int str obj str str str str obj',
     getusercontents : 'str int str int obj str',
     getcontentsstatistic : 'obj str int int',
     // BlockExplorer
@@ -450,14 +454,19 @@ RpcClient.callspec = {
     checkstringtype: 'str',
     getstatistic: 'int int',
     getuserstatistic : 'obj int int',
+
     getrecomendedaccountsbysubscriptions : 'str',
     getrecomendedaccountsbyscoresonsimilaraccounts : 'str',
     getrecomendedaccountsbyscoresfromaddress : 'str',
+    getrecomendedcontentsbyscoresonsimilarcontents : 'str obj int int',
+    getrecomendedcontentsbyscoresfromaddress : 'str obj int int int',
+    
     getcompactblock: "str int",
     searchbyhash: "str",
-    getstatisticcontent: '',
     getstatisticbyhours: 'int int',
     getstatisticbydays: 'int int',
+    getstatisticcontentbyhours : 'int int',
+    getstatisticcontentbydays : 'int int',
     
     // Control
     stop: '',

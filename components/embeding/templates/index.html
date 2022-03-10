@@ -10,12 +10,6 @@
 				<div class="inputWrapper">
 					<%= options.url.input() %>
 				</div>
-
-				<!--<div class="buttonWrapper">
-					<div class="action url" action="url">
-						<i class="fas fa-chevron-circle-right"></i>
-					</div>
-				</div>-->
 			</div>
 		</div>
 	<% } %>
@@ -25,18 +19,11 @@
 			<div class="caption">
 				<%=e('poll')%>
 			</div>
-
 			
 			<div class="linkWrapper table">
 				<div class="inputWrapper">
 					<%= options.url.input() %>
 				</div>
-
-				<!-- <div class="buttonWrapper">
-					<div elementsid="embedding_action_url" class="action url" action="url">
-						<i class="fas fa-chevron-circle-right"></i>
-					</div>
-				</div> -->
 			</div>
 		</div>
 	<% } %>
@@ -52,9 +39,6 @@
 						<div class="title">
 							<%=e('e13100')%>
 						</div>
-						<!--<div class="subtitle">
-							<%=e('e13101')%>
-						</div>-->
 					</div>
 				</div>
 				<div class="imagesMi">
@@ -62,75 +46,6 @@
 			</div>
 		</div>
 	<% } %>
-	<% if(type == 'donate') {
-		var senderImg = deep(app, 'platform.sdk.usersl.storage.' + sender + '.image');
-		var senderName = deep(app, 'platform.sdk.usersl.storage.' + sender + '.name');
-		var senderLetter = senderName ? senderName[0] : '';
-		var receiverImg = deep(app, 'platform.sdk.usersl.storage.' + receiver + '.image');	
-		var receiverName = deep(app, 'platform.sdk.usersl.storage.' + receiverName + '.image');	
-		var receiverLetter = receiverName ? receiverName[0] : '';
-
-	%>
-		<div class="donate pg">
-			<div class="caption">
-				<%=e('e130961')%>
-			</div>
-			<div class="subcaption">
-				<%=e('e130962')%> <%-balance || 0%> PKOIN
-			</div>
-
-			<div class="donateWrapper">
-
-				<div class="transaction">
-					<div class="user">
-						<div class="iconWrapper">
-							<div class="usericon" image="<%-senderImg || '*'%>">
-								
-								<% if(!senderImg && senderLetter) { %>
-
-									<span 
-										class="letter"
-									>
-										<%-senderLetter.toUpperCase()%>
-									</span>
-				
-								<% } %>
-							</div>
-						</div>					
-					</div>
-					<div class="coinsWrapper">
-						<div class="chevron-right right"></div>
-						<div class="receiver">
-							<input type="number" id="inputDonate" placeholder="0">
-							<span class="text">PKOIN</span>
-						</div>
-					</div>
-					<div class="user">
-						<div class="iconWrapper">
-							<div class="usericon" image="<%-receiverImg || '*'%>">
-								<% if(!receiverImg && receiverLetter) { %>
-
-									<span 
-										class="letter"
-									>
-										<%-receiverLetter.toUpperCase()%>
-									</span>
-				
-								<% } %>
-							</div>
-						</div>					
-					</div>
-				</div>	
-				<div class="subscription">
-					<div class="receiver">
-						<%=e('sumoftransaction')%>
-					</div>
-				</div>
-			</div>
-		</div>
-	<% } %>
-	
-
 	<div class="error">
 	</div>
 </div>

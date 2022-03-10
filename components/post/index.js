@@ -21,6 +21,60 @@ var post = (function () {
 
 		var actions = {
 
+			/*pipmini : function(enable){
+				if (p.inWnd && self.container){
+					enable ? self.container.addClass('pipmini') : self.container.removeClass('pipmini')
+				}
+				else{
+
+				}
+			},*/
+			
+			pkoin : function(id){
+
+				if (share){
+
+					actions.stateAction(function(){
+
+						self.app.platform.sdk.node.transactions.get.balance(function(amount){
+
+							var balance = amount.toFixed(3);
+	
+							var userinfo = deep(app, 'platform.sdk.usersl.storage.' + share.address) || {
+								address : share.address,
+								addresses : [],
+							}
+		
+							self.nav.api.load({
+								open : true,
+								href : 'pkoin',
+								history : true,
+								inWnd : true,
+			
+								essenseData : {
+									userinfo: userinfo,
+									balance : balance,
+									id : id,
+									embedding : {
+										type : 'pkoin',
+										id : share.address,
+										close : function(){
+											renders.articles();
+										},
+									},	
+								}
+							})
+	
+						})
+	
+					}, share.txid)
+
+
+				}
+
+			},
+
+
 			openPost : function(id, clbk){
 
 				self.closeContainer()
@@ -204,50 +258,7 @@ var post = (function () {
 
 			},
 
-			next: function () {
-
-				var nextel = el.c.find('.nextpost');
-
-				nextel.html('<div class="loader"><div class="preloader5"><img src="./img/three-dots.svg"/></div></div>')
-
-				ed.next(share.txid, function (txid) {
-
-
-
-					if (txid) {
-
-						self.nav.api.load({
-							open: true,
-							href: 'post?s=' + txid,
-
-							eid: 'nextpost' + txid,
-							el: nextel,
-
-							clbk: function () {
-
-							},
-
-							essenseData: {
-								share: txid,
-								hr: ed.hr,
-								like: ed.like,
-								next: ed.next,
-								removemargin: true
-							}
-						})
-
-					}
-					else {
-						nextel.html('<div class="ended">' + self.app.localization.e('e13146') + '</div>')
-					}
-
-
-
-				})
-
-
-
-			},
+			
 
 			sharesocial: function (clbk) {
 				var url = 'https://' + self.app.options.url + '/' + (ed.hr || 'index?') + 's=' + share.txid + '&mpost=true'
@@ -346,24 +357,25 @@ var post = (function () {
 
 			position: function () {
 
-				if (isMobile()) return
+				if (self.app.mobileview) return
 
 				if (primary) return
 
-				if (ed.removemargin || isMobile()) return
+				if (ed.removemargin) return
 
+				if (share.itisarticle()) return
 
 				var h = $(window).height();
 
 				var wh = el.wr.height();
 
-				var d = Math.min((h - wh) / 2, h / 6)
+				var d = Math.max(Math.min((h - wh) / 2, h / 6), 20)
 
 				if (d > 0) {
-					el.wr.css('margin-top', d + 'px')
+					el.wr.css('padding-top', d + 'px')
 				}
 				else {
-					el.wr.css('margin-top', 0 + 'px')
+					el.wr.css('padding-top', 0 + 'px')
 				}
 
 			},
@@ -379,18 +391,18 @@ var post = (function () {
 
 				var shareId = share.txid;
 
-				if (!el[shareId])
-					el[shareId] = el.c.find('.metapanel.' + shareId + ' .downloadMetapanel');
+				if (!el[shareId]) el[shareId] = el.c.find('.metapanel.' + shareId + ' .downloadMetapanel');
 
 				//var downloadPanel = el[shareId];
 
-				var wa =  !share.repost && !ed.repost && ((share.itisvideo() && isMobile() || (ed.autoplay && pels.length <= 1))) ? true : false
+
+				var wa =  !share.repost && !ed.repost && (((share.itisvideo() && isMobile() && !ed.openapi) || (ed.autoplay && pels.length <= 1))) ? true : false
 
 				if (pels.length) {
 
-					var startTime = 0;
+					var startTime = ed.startTime || 0;
 
-					if (self.app.platform.sdk.videos.historyget && share.itisvideo()){
+					if (!startTime && self.app.platform.sdk.videos.historyget && share.itisvideo()){
 
 						var pr = self.app.platform.sdk.videos.historyget(share.txid)
 						if (pr.percent < 95)
@@ -417,16 +429,31 @@ var post = (function () {
 						},
 
 						play : function(){
-							self.app.actions.playingvideo(player)
+
+							if(!p.pip)
+								self.app.actions.playingvideo(player)
 
 							if(isMobile() && !ed.repost && !el.c.closest('.wndcontent').length && !ed.openapi){
-								console.log("HHE", ed)
 								self.app.actions.scroll(125)
 							}
 						},
 
+						pictureInPictureRequest : function(){
+							self.closeContainer()
+
+							var startTime = player && player.getPosition ? player.getPosition() : 0
+
+							setTimeout(function(){
+								self.app.platform.ui.pipvideo(share.txid, null, {
+									startTime
+								})
+							}, 300)
+							
+						},	
+
 						pause : function(){
-							self.app.actions.playingvideo(null)
+							if(!p.pip)	
+								self.app.actions.playingvideo(null)
 						},
 
 						playbackStatusUpdate : function({
@@ -438,7 +465,7 @@ var post = (function () {
 
 								self.app.platform.sdk.videos.historyset(share.txid, {
 									time : position,
-									percent : ((position/duration)* 100).toFixed(0)
+									percent : ((position/duration) * 100).toFixed(0)
 								})
 
 							}
@@ -454,12 +481,17 @@ var post = (function () {
 								
 						},
 
-						useP2P : self.app.platform.sdk.usersettings.meta.videop2p.value 
+						useP2P : self.app.platform.sdk.usersettings.meta.videop2p.value,
+						enableHotkeys : !p.pip
 					};
 
 					$.each(pels, function (key, el2) {
 
 						var videoId = el2.getAttribute('data-plyr-video-id');
+
+						var elem = $(el2)
+
+						if (elem.closest && elem.closest('.shareTable').attr('stxid') != (share.txid || '')) return
 
 						PlyrEx(el2, options, (_player) => {
 
@@ -467,19 +499,22 @@ var post = (function () {
 
 							player = _player
 
-							if (wa) {
+							if(player){
+								if (wa) {
 
-								player.play()
-
-								if (player.setVolume)
-									player.setVolume(self.sdk.videos.volume)
-								else{
-									player.muted = false
+									player.play()
+	
+									if (player.setVolume)
+										player.setVolume(self.sdk.videos.volume)
+									else{
+										player.muted = false
+									}
+	
 								}
-								//
+	
+								if (player.enableHotKeys) player.enableHotKeys()
 							}
 
-							//// autoplay
 							if (clbk)
 								clbk()
 						});
@@ -495,13 +530,44 @@ var post = (function () {
 			like: function (value, clbk) {
 
 				var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share);
+				var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0
 
-				if(checkvisibility) return
+				if (checkvisibility && reputation >= 50) return
+
+
+				if(value <= 3){
+					if(self.app.platform.sdk.user.scamcriteria()){
+
+						if (clbk)
+							clbk(false)
+
+							dialog({
+								html : self.app.localization.e('ratings123'),
+								btn1text :  self.app.localization.e('daccept'),
+								btn2text : self.app.localization.e('ucancel'),
+			
+								class : 'zindex one',
+			
+								success : function(){
+								}
+							})
+
+						return
+					}
+
+					if(self.app.platform.sdk.user.upvotevalueblockcriteria(value)){
+						if (clbk)
+							clbk(false)
+
+						sitemessage(self.app.localization.e('ratingss3'))
+
+						return
+					}
+				}
 
 				var upvoteShare = share.upvote(value);
 
-
-				if (!upvoteShare) {
+				if(!upvoteShare) {
 					self.app.platform.errorHandler('4', true)
 
 					if (clbk)
@@ -702,6 +768,24 @@ var post = (function () {
 		}
 
 		var events = {
+			gotouserprofile : function(){
+				var name = $(this).attr('name')
+				var address = $(this).attr('address') 
+
+				self.nav.api.load({
+					open : true,
+					href : name ? name : 'author?address=' + address,
+					history : true
+				})
+			},
+
+			pkoin : function(){
+
+				var shareId = $(this).closest('.share').attr('id');
+
+				actions.pkoin(shareId)
+
+			},
 
 			toregistration: function(){
 
@@ -721,6 +805,7 @@ var post = (function () {
 
 					if (actions.changeSavingStatus)
 						actions.changeSavingStatus(share.txid, deleted)
+						
 				}, {
 					before : actions.changeSavingStatusLight,
 					after : actions.changeSavingStatusLight
@@ -743,14 +828,7 @@ var post = (function () {
 
 			},
 
-			next: function () {
-
-				if (el.wnd.scrollTop() + el.wnd.height() > el.wnd.find('>div#post').height() - 400) {
-					actions.next()
-				}
-
-
-			},
+			
 
 			unsubscribe: function (clbk) {
 				actions.unsubscribe(function () {
@@ -1063,7 +1141,7 @@ var post = (function () {
 									var _w = el.width();
 									var _h = el.height()
 
-									if(_img.width > _img.height && (!isMobile() && self.app.width > 768 && !ed.openapi)){
+									if(_img.width >= _img.height && (!isMobile() && self.app.width > 768 && !ed.openapi)){
 										ac = 'w2'
 
 										var w = _w * (_img.width / _img.height);
@@ -1079,7 +1157,7 @@ var post = (function () {
 										el.width(w);
 									}
 
-									if(_img.height > _img.width || (isMobile() || self.app.width <= 768 || ed.openapi)){
+									if(_img.height >= _img.width || (isMobile() || self.app.width <= 768 || ed.openapi)){
 										ac = 'h2'
 
 										el.height(_w * (_img.height / _img.width))
@@ -1162,32 +1240,10 @@ var post = (function () {
 			},
 			share: function (clbk) {
 
-
-				var verticalVideo = false
-				var squareVideo = false
-
-				var info = {}
-				var aspectRatio = 0
-
-				if (typeof share != 'undefined') {
-					info = self.app.platform.sdk.videos.storage[share.url || "undefined"] || {}
-					aspectRatio = deep(info, 'data.aspectRatio') || 0
-				}
-
-				if (aspectRatio < 0.9 && aspectRatio != 0) {
-					verticalVideo = true
-				}
-
-				if (aspectRatio > 0.9 && aspectRatio < 1.25) {
-					squareVideo = true
-				}
-
-				
-
 				self.shell(
 					{
 						turi: 'lenta',
-						name: ed.video ? 'sharevideo' : share.itisarticle() ? 'sharearticle' : 'share',
+						name: ed.video ? ('sharevideo' + (ed.pip ? 'pip' : '')) : share.itisarticle() ? 'sharearticle' : 'share',
 						el: el.share,
 
 						additionalActions: function () {
@@ -1200,8 +1256,6 @@ var post = (function () {
 							mestate: {},
 							repost: ed.repost,
 							fromempty: ed.fromempty,
-							verticalVideo: verticalVideo,
-							squareVideo: squareVideo,
 							preview : ed.preview
 						},
 
@@ -1211,7 +1265,10 @@ var post = (function () {
 
 						if(!el.share) return
 
-						el.stars = el.share.find('.forstars');	
+						el.stars = el.share.find('.forstars');
+						
+						_p.el.find('.panel .pkoin').on('click', events.pkoin)
+						_p.el.find('.gotouserprofile').on('click', events.gotouserprofile)
 
 						if (ed.repost)
 							_p.el.find('.showMoreArticle, .openoriginal').on('click', function(){
@@ -1260,6 +1317,11 @@ var post = (function () {
 											el.share.on('click', '.forrepost', events.repost);
 
 											el.share.find('.shareSave').on('click', events.shareSave);
+
+											el.share.find('.piptest').on('click', function(){
+												
+												
+											});
 
 											el.share.find('.toregistration').on('click', events.toregistration)
 
@@ -1348,7 +1410,6 @@ var post = (function () {
 						if (shares.length > 2){
 							showmoreby.addClass('hasshares')
 						}
-						
 					},
 
 					opensvi : function(id){
@@ -1363,9 +1424,6 @@ var post = (function () {
 								history : true
 							})
 						}
-
-						
-
 						
 					},
 
@@ -1561,6 +1619,7 @@ var post = (function () {
 
 		var initEvents = function () {
 
+
 			self.app.platform.matrixchat.clbks.SHOWING.post = function(v){
 				if(v && player){
 
@@ -1730,6 +1789,9 @@ var post = (function () {
 		return {
 			primary: primary,
 
+			id : p.mid,
+			pip : p.pip,
+
 			getdata: function (clbk, p) {
 
 				_repost = null
@@ -1788,7 +1850,6 @@ var post = (function () {
 
 					}
 				})
-
 				
 			},
 
@@ -1801,8 +1862,9 @@ var post = (function () {
 			},
 
 			destroy: function (key) {
-				
 
+			
+				
 				if (external){
 
 					external.destroy()
@@ -1812,7 +1874,7 @@ var post = (function () {
 
 				self.app.actions.playingvideo(null)
 				
-				self.app.el.menu.find('#menu').removeClass('static')
+				//self.app.el.menu.find('#menu').removeClass('static')
 
 				if (ed.close) ed.close()
 
@@ -1878,15 +1940,35 @@ var post = (function () {
 
 				make()
 
-				if (ed.video && !window.cordova && !isTablet() && !isMobile())
-					self.app.el.menu.find('#menu').addClass('static')
+				/*if (ed.video && p.inWnd && !self.app.mobileview)
+					self.app.el.menu.find('#menu').addClass('static')*/
 
 				initEvents();
 			},
 
 			wnd: {
-				class: 'withoutButtons postwindow normalizedmobile',
+				showbetter : true,
+				class: 'withoutButtons postwindow ' + (p.pip ? '' : 'normalizedmobile'),
+				pip : p.pip || false,
+				expand : function(){
+
+					if(p.expand) p.expand({
+						startTime : player && player.getPosition ? player.getPosition() : 0
+					})
+
+				},
+				onclose : p.onclose
+			},
+
+			playerstatus : function(){
+
+				if (player){
+					return player.getState()
+				}
+				
 			}
+
+
 		}
 	};
 
@@ -1909,7 +1991,8 @@ var post = (function () {
 
 		_.each(essenses, function (essense) {
 
-			essense.destroy();
+			if(!essense.pip)
+				essense.destroy();
 
 		})
 
