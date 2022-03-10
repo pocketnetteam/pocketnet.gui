@@ -47,9 +47,12 @@ var support = (function(){
 					
 
 					prepare()
-					renders.options()
+					
 
 					setTimeout(function(){
+
+						renders.options()
+						
 						globalpreloader(false)
 
 						self.closeContainer();
