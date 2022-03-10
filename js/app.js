@@ -2186,6 +2186,8 @@ Application = function(p)
 
 									if(e.constrainted) return false
 
+									if(self.platform.preparingUser) return false
+
 									if(_.find(e.path, function(el){
                                         return el.className && el.className.indexOf('noswipepnt') > -1
                                     })) return false
@@ -2193,8 +2195,6 @@ Application = function(p)
 									if(self.lastScrollTop <= 0 && !self.mobile.reload.reloading){
 										return true;
 									}
-
-									
 
 								},
 

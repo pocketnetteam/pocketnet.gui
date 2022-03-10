@@ -25919,6 +25919,7 @@ Platform = function (app, listofnodes) {
         self.matrixchat.destroy()
 
         checkfeatures()
+        
 
         app.user.isState(function(state){
 
