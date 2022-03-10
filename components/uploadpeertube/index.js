@@ -111,7 +111,7 @@ var uploadpeertube = (function () {
 				contentAsHTML: true,
 			});
 
-			el.videoInput.change(function (evt) {
+			el.videoInput.change(async function (evt) {
 				var fileName = evt.target.files[0].name;
 
 				el.videoError.text(
@@ -220,6 +220,10 @@ var uploadpeertube = (function () {
 
 						return new Promise((resolve, reject) => {
 							ipcRenderer.on('transcode-video-response', (event, transcoded, error) => {
+
+
+								console.log('transcoded, error', transcoded, error)
+
 								if (error === 'NO_TRANSCODED') {
 									setTimeout(() => resolve(null));
 									return;
@@ -238,10 +242,13 @@ var uploadpeertube = (function () {
 					el.uploadProgress.find('.bold-font')
 						.text(self.app.localization.e('uploadVideoProgress_processing'));
 
-					options.progress(5);
+					options.progress(0);
 
 					await processTranscoding()
 						.then((transcoded) => {
+
+							console.log("TRANSCODED", transcoded)
+
 							/** Writing transcoded alternatives to target object */
 							/** At this moment for backend reasons, sending only 720p */
 

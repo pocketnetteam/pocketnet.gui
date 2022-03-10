@@ -26,6 +26,16 @@ const Badge = require('./js/vendor/electron-windows-badge.js');
 const { autoUpdater } = require("electron-updater");
 const log = require('electron-log');
 const is = require('electron-is');
+const os = require('os');
+const fs = require('fs');
+const checkDiskSpace = require('check-disk-space').default;
+const ffmpeg = require('fluent-ffmpeg');
+const ffprobe = require('ffprobe-static');
+
+const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path.replace('app.asar', 'app.asar.unpacked');
+
+ffmpeg.setFfmpegPath(ffmpegPath);
+ffmpeg.setFfprobePath(ffprobe.path);
 const AutoLaunch = require('auto-launch');
 
 const contextMenu = require('electron-context-menu');
@@ -645,7 +655,7 @@ function createWindow() {
     });
 
 
-   
+
 
     ipcMain.on('electron-notification', function(e, p) {
 
@@ -695,6 +705,242 @@ function createWindow() {
         autoLaunchManage(p.enable)
     })
 
+    var  getTargetBitrate = function (baseBitrate, fps, fpsTranscodingConstants) {
+        // The maximum bitrate, used when fps === VideoTranscodingFPS.MAX
+        // Based on numbers from Youtube, 60 fps bitrate divided by 30 fps bitrate:
+        //  720p: 2600 / 1750 = 1.49
+        // 1080p: 4400 / 3300 = 1.33
+        const maxBitrate = baseBitrate * 1.4
+        const maxBitrateDifference = maxBitrate - baseBitrate
+        const maxFpsDifference = fpsTranscodingConstants.MAX - fpsTranscodingConstants.AVERAGE
+        // For 1080p video with default settings, this results in the following formula:
+        // 3300 + (x - 30) * (1320/30)
+        // Example outputs:
+        // 1080p10: 2420 kbps, 1080p30: 3300 kbps, 1080p60: 4620 kbps
+        //  720p10: 1283 kbps,  720p30: 1750 kbps,  720p60: 2450 kbps
+        return Math.floor(baseBitrate + (fps - fpsTranscodingConstants.AVERAGE) * (maxBitrateDifference / maxFpsDifference))
+      }
+
+    ipcMain.on('transcode-video-request', async function(e, filePath) {
+        const tempDir = os.tmpdir();
+
+        /**
+         * Enumeration for Resolutions of videos
+         * @type {Object.<string, [string, string]>}
+         */
+        const ResolutionAndBitrate = {
+            p240: [352, 240, 315],
+            p360: [640, 360, 770],
+            p480: [854, 480, 1450],
+            p720: [1280, 720, 2750],
+        };
+
+        const VIDEO_TRANSCODING_FPS = {
+            MIN: 10,
+            STANDARD: [ 24, 25, 30 ],
+            HD_STANDARD: [ 50, 60 ],
+            AVERAGE: 30,
+            MAX: 60,
+            KEEP_ORIGIN_FPS_RESOLUTION_MIN: 720 
+        }
+
+        
+
+        /**
+         * Transcoding progress data
+         * @type {Object.<string, number>}
+         */
+        let progressKeeper = {
+            //p240: 0,
+            //p360: 0,
+            //p480: 0,
+            p720: 0,
+        };
+
+        /**
+         * Overall transcoding progress calculation function
+         * @param {string} key - Transcoding key in object
+         * @param {number} value - Percents to add in processKeeper
+         *
+         * @returns {number} percents
+         */
+        function calcProgress(key, value) {
+            progressKeeper[key] = value;
+
+            const videosElems = Object.values(progressKeeper);
+            const countVideos = videosElems.length;
+
+            const fullPercent = countVideos * 100;
+            const sumPercent = videosElems.reduce((partial_sum, a) => partial_sum + a, 0);
+
+            return 100 / fullPercent * sumPercent;
+        }
+
+        /**
+         * Video transcoder function
+         *
+         * @param {string} filePath
+         * @param {[string, string]} resolution
+         *
+         * @returns {Promise<Buffer>} result
+         */
+        function transcodeVideo(filePath, resolution) {
+            function randomId(length) {
+                var result           = '';
+                var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                var charactersLength = characters.length;
+                for ( var i = 0; i < length; i++ ) {
+                    result += characters.charAt(Math.floor(Math.random() *
+                        charactersLength));
+                }
+                return result;
+            }
+
+            async function executor(resolve, reject) {
+                let triesCount = 0;
+
+                /**
+                 * @typedef {Object} ResolutionObject
+                 * @property {number} width - Video width
+                 * @property {number} height - Video height
+                 */
+
+                /**
+                 * @returns {Promise<ResolutionObject>}
+                 */
+                function getVideoResolution() {
+                    return new Promise((resolve, reject) => {
+                        ffmpeg.ffprobe(filePath, (err, meta) => {
+                            if (err) {
+                                reject('Error accessing video file');
+                            }
+
+                            const { width, height } = meta.streams[0];
+
+                            resolve({ width, height });
+                        });
+                    });
+                }
+
+                function startTranscoding() {
+                    try {
+                        const fileName = `transvideo-${randomId(6)}.temp.mp4`;
+                        const fileLocation = path.join(tempDir, fileName);
+
+                        console.log('Created temporary file', fileLocation);
+                        console.log("TARGET BITRATE", getTargetBitrate(resolution[2], 25, VIDEO_TRANSCODING_FPS))
+                        //fs.writeFileSync(fileLocation, new Array());
+
+                        ffmpeg(filePath)
+                            .withVideoCodec('libx264')
+                            .withAudioCodec('libmp3lame')
+                            .withSize(resolution[0] + 'x' + resolution[1])
+                            .videoBitrate(getTargetBitrate(resolution[2], 25, VIDEO_TRANSCODING_FPS))
+                            .format('mp4')
+                            .on('progress', (progress) => {
+                                console.log('Processing: ' + (progress.percent || 0) + '% done');
+                                e.reply('transcode-video-progress', calcProgress(`p${resolution[1]}`, progress.percent || 0));
+                            })
+                            .on('error', (err) => {
+                                console.error('FFmpeg error occurred:', err);
+                                e.reply('transcode-video-progress', calcProgress(`p${resolution[1]}`, 100));
+                                reject(err);
+                            })
+                            .on('end', () => {
+                                resolve(fs.readFileSync(fileLocation));
+                                /*fs.unlink(fileLocation, () => {
+                                    console.log('Purged temporary file');
+                                });*/
+                            })
+                            .save(fileLocation);
+                    } catch (err) {
+                        console.error('Error occurred:', err);
+
+                        if (triesCount <= 3) {
+                            triesCount++;
+                            startTranscoding();
+                        } else {
+                            reject(err);
+                        }
+                    }
+                }
+
+                const originalResolution = await getVideoResolution(filePath);
+                const isWidthUpscaling = (originalResolution.width < resolution[0]);
+                const isHeightUpscaling = (originalResolution.height < resolution[1]);
+
+                const isUpscaling = (isWidthUpscaling || isHeightUpscaling);
+
+                if (isUpscaling) {
+                    reject('Upscaling is disabled');
+                    return;
+                }
+
+                startTranscoding();
+            }
+
+            return new Promise(executor);
+        }
+
+        const spaceCalc = await checkDiskSpace(tempDir);
+        const fileSize = fs.statSync(filePath).size;
+
+        const isEnoughSpace = (spaceCalc.free > fileSize * 1.5);
+
+        if (!isEnoughSpace) {
+            const err = 'NO_DISK_SPACE';
+            e.reply('transcode-video-response', null, err);
+            return;
+        }
+
+        /** Writing transcoded alternatives to target object */
+        let videos = {
+            //p240: transcodeVideo(filePath, Resolution.p240),
+            //p360: transcodeVideo(filePath, Resolution.p360),
+            //p480: transcodeVideo(filePath, Resolution.p480),
+            p720: transcodeVideo(filePath, ResolutionAndBitrate.p720),
+        };
+
+        /** While all aren't fulfilled, waiting... */
+        await Promise.allSettled(Object.values(videos));
+
+        const resolutions = Object.keys(videos);
+
+        const transcodedResults = {};
+
+        /**
+         * Extracting values of promises as e.reply doesn't
+         * support this type of objects.
+         */
+        for (const size of resolutions) {
+            const promise = videos[size];
+
+            let buffer;
+
+            try {
+                buffer = await promise;
+            } catch (e) {
+                console.log('Rejected promise');
+            }
+
+            if (buffer) {
+                transcodedResults[size] = buffer;
+            }
+        }
+
+        /**
+         * Return error if no transcoding made.
+         * In this case client must use original.
+         */
+        if (!Object.keys(transcodedResults).length) {
+            /** Responding with error if the is one */
+            const err = 'NO_TRANSCODED';
+            e.reply('transcode-video-response', null, err);
+            return;
+        }
+
+        e.reply('transcode-video-response', transcodedResults);
+    })
 
     proxyInterface = new ProxyInterface(ipcMain, win.webContents)
     proxyInterface.init()
