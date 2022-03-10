@@ -2186,9 +2186,15 @@ Application = function(p)
 
 									if(e.constrainted) return false
 
+									if(_.find(e.path, function(el){
+                                        return el.className && el.className.indexOf('noswipepnt') > -1
+                                    })) return false
+
 									if(self.lastScrollTop <= 0 && !self.mobile.reload.reloading){
 										return true;
 									}
+
+									
 
 								},
 
