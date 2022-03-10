@@ -182,253 +182,251 @@ var test = (function(){
 					}
 				}
 
-				self.sdk.users.checkFreeRef(self.app.platform.sdk.address.pnet() ? self.app.platform.sdk.address.pnet().address : "", function(resref, err){				
-
-					if (el.c.find('.userPanel').hasClass('loading')){
-						saving = false
-						return
-					}
-
-					if(actions.equal(tempInfo, self.app.platform.sdk.user.storage.me)){
-						sitemessage(self.app.localization.e('uchanges'))
-						saving = false
-						return
-					}
-
-					if(!actions.valid(tempInfo, self.app.platform.sdk.user.storage.me)){
-						sitemessage(self.app.localization.e('uchangesvalid'))
-
-						if(!trim(tempInfo.name)){	
-							var pn = el.c.find('[parameter="name"] input')
-
-							pn.focus()
-							_scrollTo(pn)
-						}
-						else{
-							if(!tempInfo.image){	
-								var pn = el.c.find('.fileUploader')
-
-								_scrollTo(pn)
-							}	
-
-						}
-
-							
-						saving = false
-						return
-					}
-
-
 				
 
-					var userInfo = new UserInfo();
+				if (el.c.find('.userPanel').hasClass('loading')){
+					saving = false
+					return
+				}
 
-						userInfo.name.set(trim(tempInfo.name));
-						userInfo.language.set(tempInfo.language);
-						userInfo.about.set(trim(tempInfo.about));
-						userInfo.site.set(trim(tempInfo.site));
-						userInfo.image.set(tempInfo.image);
-						userInfo.addresses.set(tempInfo.addresses);
-						userInfo.ref.set(deep(ref, 'address') || '');
+				if(actions.equal(tempInfo, self.app.platform.sdk.user.storage.me)){
+					sitemessage(self.app.localization.e('uchanges'))
+					saving = false
+					return
+				}
 
-					var err  = userInfo.validation()
+				if(!actions.valid(tempInfo, self.app.platform.sdk.user.storage.me)){
+					sitemessage(self.app.localization.e('uchangesvalid'))
 
-					if (err){
-
-						el.c.find('.errorname').fadeIn();
-
-						if(err == 'namelength'){
-
-							
-							el.c.find('.errorname span').html(self.app.localization.e('name20symbols'));
-							
-						}
-
-						if(err == 'pocketnet'){
-
-							el.c.find('.errorname span').html(self.app.localization.e('namereservedpn'));
-							
-						}
-
-						if(err == 'bastyon'){
-
-							el.c.find('.errorname span').html(self.app.localization.e('namereservedbn'));
-							
-						}
-
-
+					if(!trim(tempInfo.name)){	
 						var pn = el.c.find('[parameter="name"] input')
 
-							pn.focus()
+						pn.focus()
+						_scrollTo(pn)
+					}
+					else{
+						if(!tempInfo.image){	
+							var pn = el.c.find('.fileUploader')
 
 							_scrollTo(pn)
-							saving = false
-						return false;
+						}	
+
 					}
-					saving = false
-
-					renders.termsconditions(function(){
-						saving = true
-
-						topPreloader(30)
-
-						el.c.find('.userPanel').addClass('loading')
-
-						el.upanel.addClass('loading')
-
-						self.app.platform.sdk.users.nameExist(userInfo.name.v, function(exist){
-
-							//exist = false
-							
-
-							if(!exist || (self.app.platform.sdk.address.pnet() && exist == self.app.platform.sdk.address.pnet().address)){
-
-								topPreloader(50)
-
-								ed.presave(function(){
-
-									userInfo.keys.set(_.map(self.app.user.cryptoKeys(), function(k){
-										return k.public
-									}))
-								
-									el.c.find('.errorname').fadeOut();
-
-									topPreloader(70)
-									userInfo.uploadImage(self.app, function(err){
-
-										if (err){
-											topPreloader(100)
-											el.upanel.removeClass('loading')
-
-											el.c.find('.userPanel').removeClass('loading')
-
-											sitemessage("An error occurred while loading images")
-											saving = false
-											return 
-										}
-
-										if (ed.makeuser){
-
-											topPreloader(100)
-
-											el.upanel.removeClass('loading')
-
-											el.c.find('.userPanel').removeClass('loading')
-
-											ed.makeuser(userInfo)
-											saving = false
-											return
-
-										}
-
-										var email = tempInfo.email;
-
-										if (email){
-											actions.saveemail(email);
-										}
-
-
-										self.sdk.node.transactions.create.commonFromUnspent(
-
-											userInfo,
-
-											function(tx, error){
-
-												console.log('error', error, tx)
-
-												if(!tx){
-
-													saving = false;
-
-													self.app.platform.errorHandler(error, true)	
-													
-													el.upanel.removeClass('loading')
-
-													el.c.find('.userPanel').removeClass('loading')
-
-													topPreloader(100)
-
-												}
-												else
-												{
-
-													successCheck()
-
-													delete self.sdk.usersl.storage[self.app.platform.sdk.address.pnet().address];
-													delete self.sdk.users.storage[self.app.platform.sdk.address.pnet().address];
-
-
-													self.app.platform.sdk.user.storage.me = tx
-													
-													tempInfo = _.clone(self.app.platform.sdk.user.storage.me)
-													
-													actions.upanel()
-
-													actions.ref(resref)
-
-
-													self.closeContainer()
-													
-
-													self.app.platform.sdk.users.getone(self.app.platform.sdk.address.pnet().address, function(){
-
-														self.app.reloadModules(function(){
-
-															if (ed.presuccess){
-																ed.presuccess(allclbk)
-															}
-															else{
-																allclbk()
-															}
-
-															
-					
-														})
-													})
-
-													
-
-													
-												}
-
-											},
-
-											{
-												relay : ed.relay? ed.relay() : false
-											}
-										
-										)
-									})
-
-								})
-
-							}
-							else
-							{
-								saving = false
-								el.upanel.removeClass('loading')
-
-								el.c.find('.userPanel').removeClass('loading')
-
-								topPreloader(100)
-
-								var txt = self.app.localization.e('nametaken')
-
-								el.c.find('.errorname').fadeIn();
-								el.c.find('.errorname span').html(txt);
-
-								var pn = el.c.find('[parameter="name"] input')
-
-									pn.focus()
-
-									_scrollTo(pn)
-								
-								sitemessage(txt)
-							}
-						})
 
 						
+					saving = false
+					return
+				}
+
+
+			
+
+				var userInfo = new UserInfo();
+
+					userInfo.name.set(trim(tempInfo.name));
+					userInfo.language.set(tempInfo.language);
+					userInfo.about.set(trim(tempInfo.about));
+					userInfo.site.set(trim(tempInfo.site));
+					userInfo.image.set(tempInfo.image);
+					userInfo.addresses.set(tempInfo.addresses);
+					userInfo.ref.set(deep(ref, 'address') || '');
+
+				var err  = userInfo.validation()
+
+				if (err){
+
+					el.c.find('.errorname').fadeIn();
+
+					if(err == 'namelength'){
+
+						
+						el.c.find('.errorname span').html(self.app.localization.e('name20symbols'));
+						
+					}
+
+					if(err == 'pocketnet'){
+
+						el.c.find('.errorname span').html(self.app.localization.e('namereservedpn'));
+						
+					}
+
+					if(err == 'bastyon'){
+
+						el.c.find('.errorname span').html(self.app.localization.e('namereservedbn'));
+						
+					}
+
+
+					var pn = el.c.find('[parameter="name"] input')
+
+						pn.focus()
+
+						_scrollTo(pn)
+						saving = false
+					return false;
+				}
+				saving = false
+
+				renders.termsconditions(function(){
+					saving = true
+
+					topPreloader(30)
+
+					el.c.find('.userPanel').addClass('loading')
+
+					el.upanel.addClass('loading')
+
+					self.app.platform.sdk.users.nameExist(userInfo.name.v, function(exist){
+
+						//exist = false
+						
+
+						if(!exist || (self.app.platform.sdk.address.pnet() && exist == self.app.platform.sdk.address.pnet().address)){
+
+							topPreloader(50)
+
+							ed.presave(function(){
+
+								userInfo.keys.set(_.map(self.app.user.cryptoKeys(), function(k){
+									return k.public
+								}))
+							
+								el.c.find('.errorname').fadeOut();
+
+								topPreloader(70)
+								userInfo.uploadImage(self.app, function(err){
+
+									if (err){
+										topPreloader(100)
+										el.upanel.removeClass('loading')
+
+										el.c.find('.userPanel').removeClass('loading')
+
+										sitemessage("An error occurred while loading images")
+										saving = false
+										return 
+									}
+
+									if (ed.makeuser){
+
+										topPreloader(100)
+
+										el.upanel.removeClass('loading')
+
+										el.c.find('.userPanel').removeClass('loading')
+
+										ed.makeuser(userInfo)
+										saving = false
+										return
+
+									}
+
+									var email = tempInfo.email;
+
+									if (email){
+										actions.saveemail(email);
+									}
+
+
+									self.sdk.node.transactions.create.commonFromUnspent(
+
+										userInfo,
+
+										function(tx, error){
+
+											console.log('error', error, tx)
+
+											if(!tx){
+
+												saving = false;
+
+												self.app.platform.errorHandler(error, true)	
+												
+												el.upanel.removeClass('loading')
+
+												el.c.find('.userPanel').removeClass('loading')
+
+												topPreloader(100)
+
+											}
+											else
+											{
+
+												successCheck()
+
+												delete self.sdk.usersl.storage[self.app.platform.sdk.address.pnet().address];
+												delete self.sdk.users.storage[self.app.platform.sdk.address.pnet().address];
+
+
+												self.app.platform.sdk.user.storage.me = tx
+												
+												tempInfo = _.clone(self.app.platform.sdk.user.storage.me)
+												
+												actions.upanel()
+
+												//actions.ref(resref)
+
+												self.closeContainer()
+												
+
+												self.app.platform.sdk.users.getone(self.app.platform.sdk.address.pnet().address, function(){
+
+													self.app.reloadModules(function(){
+
+														if (ed.presuccess){
+															ed.presuccess(allclbk)
+														}
+														else{
+															allclbk()
+														}
+
+														
+				
+													})
+												})
+
+												
+
+												
+											}
+
+										},
+
+										{
+											relay : ed.relay? ed.relay() : false
+										}
+									
+									)
+								})
+
+							})
+
+						}
+						else
+						{
+							saving = false
+							el.upanel.removeClass('loading')
+
+							el.c.find('.userPanel').removeClass('loading')
+
+							topPreloader(100)
+
+							var txt = self.app.localization.e('nametaken')
+
+							el.c.find('.errorname').fadeIn();
+							el.c.find('.errorname span').html(txt);
+
+							var pn = el.c.find('[parameter="name"] input')
+
+								pn.focus()
+
+								_scrollTo(pn)
+							
+							sitemessage(txt)
+						}
 					})
+
+					
 				})
 				
 		
