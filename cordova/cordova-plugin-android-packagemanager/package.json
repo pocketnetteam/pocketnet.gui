@@ -1,0 +1,55 @@
+{
+  "_from": "git+https://github.com/citadelgroup/cordova-plugin-android-packagemanager.git",
+  "_id": "cordova-plugin-android-packagemanager@0.2.3",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/cordova-plugin-android-packagemanager",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "https://github.com/citadelgroup/cordova-plugin-android-packagemanager",
+    "rawSpec": "https://github.com/citadelgroup/cordova-plugin-android-packagemanager",
+    "saveSpec": "git+https://github.com/citadelgroup/cordova-plugin-android-packagemanager.git",
+    "fetchSpec": "https://github.com/citadelgroup/cordova-plugin-android-packagemanager.git",
+    "gitCommittish": null
+  },
+  "_requiredBy": [
+    "#DEV:/",
+    "#USER"
+  ],
+  "_resolved": "git+https://github.com/citadelgroup/cordova-plugin-android-packagemanager.git#87f04f94d0b8186be2969a618fb91b4f185017ac",
+  "_spec": "https://github.com/citadelgroup/cordova-plugin-android-packagemanager",
+  "_where": "C:\\inetpub\\wwwroot\\pocketnet\\cordova",
+  "author": {
+    "name": "Citadel Group",
+    "url": "based on fork from Fernando Arce"
+  },
+  "bugs": {
+    "url": "https://github.com/citadelgroup/cordova-plugin-android-packagemanager/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova-plugin-android-packagemanager",
+    "platforms": [
+      "android"
+    ]
+  },
+  "deprecated": false,
+  "description": "Cordova plugin that exposes a small subset of the fuctions from the Android Package Manager.",
+  "homepage": "https://github.com/citadelgroup/cordova-plugin-android-packagemanager#readme",
+  "keywords": [
+    "cordova",
+    "packagemanager",
+    "cordova-android",
+    "Installed-package",
+    "package-Info",
+    "Apps-Info"
+  ],
+  "license": "Apache-2.0",
+  "name": "cordova-plugin-android-packagemanager",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/citadelgroup/cordova-plugin-android-packagemanager.git"
+  },
+  "version": "0.2.3"
+}

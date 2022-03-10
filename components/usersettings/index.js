@@ -19,7 +19,7 @@ var usersettings = (function(){
 		}
 
 		var events = {
-			
+
 		}
 
 		var renders = {
@@ -58,7 +58,7 @@ var usersettings = (function(){
 									sitemessage(self.app.localization.e('errorreload'))
 								})
 
-								
+
 							},
 							class : 'deleteAllDownloadVideoDialog'
 						});
@@ -77,8 +77,10 @@ var usersettings = (function(){
 					data : {
 						composed : composed.c,
 						themes : self.app.platform.sdk.theme.all,
-						current : self.app.platform.sdk.theme.current,
-					}					
+						currentTheme : self.app.platform.sdk.theme.current,
+						uiScales: self.app.platform.sdk.uiScale.all,
+						currentUiScale: self.app.platform.sdk.uiScale.current,
+					}
 
 				}, function(p){
 					ParametersLive(composed.o, p.el)
@@ -96,12 +98,29 @@ var usersettings = (function(){
 						e.addClass('active')
 
 						self.app.platform.sdk.theme.set(t)
-						
+
+					})
+
+					p.el.find('.uiscalewrapper').on('click', function(){
+						const elem = $(this);
+
+						if (elem.hasClass('active')) {
+							return;
+						}
+
+						const scaleName = elem.attr('scale');
+
+						p.el.find('.uiscalewrapper').removeClass('active');
+
+						elem.addClass('active');
+
+						self.app.platform.sdk.uiScale.set(scaleName);
+
 					})
 
 					var input = p.el.find('.parameterMaketWrapper[parameter=telegram] input')
 
-					
+
 					input.on('change', function(e){
 
 
@@ -133,9 +152,9 @@ var usersettings = (function(){
 							meta.tgto.possibleValues = [];
 							meta.tgto.possibleValuesLabels = [];
 							meta.tgto.value = '';
-							
+
 						}
-						
+
 						composed = self.app.platform.sdk.usersettings.compose(make)
 
 						self.sdk.usersettings.save();
@@ -152,7 +171,7 @@ var usersettings = (function(){
 					// const bot = (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || "no z"
 					// self.app.platform.sdk.system.get.telegramGetMe(bot);
 				})
-				
+
 			},
 
 			cache : function(){
@@ -172,7 +191,7 @@ var usersettings = (function(){
 					data : {
 						temp : t,
 						checking : checking
-					}					
+					}
 
 				}, function(p){
 					p.el.find('.check').on('click', function(){
@@ -190,7 +209,7 @@ var usersettings = (function(){
 
 								renders.cache()
 							}, 100)
-							
+
 						})
 
 					})
@@ -203,14 +222,14 @@ var usersettings = (function(){
 							html : "Do you really want to clear temporary application information?",
 							btn1text : self.app.localization.e('dyes'),
 							btn2text : self.app.localization.e('dno'),
-							success : function(){	
+							success : function(){
 								self.app.platform.sdk.node.transactions.clearTempHard()
 								renders.cache()
 							}
 						})
 
-						
-					})	
+
+					})
 				})
 			}
 		}
@@ -220,7 +239,7 @@ var usersettings = (function(){
 
 			},
 			load : function(){
-				
+
 			}
 		}
 
@@ -237,10 +256,10 @@ var usersettings = (function(){
 
 			controller = self.app.platform.sdk.system.get.telegramUpdateAbort;
 
-			controller.abort(); 
+			controller.abort();
 			self.app.platform.sdk.system.get.telegramUpdateAbort = new AbortController();
 
-			
+
 			// self.app.platform.sdk.system.get.telegramGetMe(null, rerender);
 
 
@@ -254,8 +273,8 @@ var usersettings = (function(){
 			renders.downloadedvideoscontent()
 
 			self.app.platform.sdk.node.transactions.clbks.settings = renders.cache;
-			
-			
+
+
 		}
 
 		var add = function(check){
@@ -284,7 +303,7 @@ var usersettings = (function(){
 				addIcon("fa-check-circle", "success");
 
 			} else {
-				addIcon("fa-times", "failed");	
+				addIcon("fa-times", "failed");
 			}
 
 
@@ -310,13 +329,13 @@ var usersettings = (function(){
 
 				if (self.app.user.features.telegram){
 
-					controller.abort(); 
+					controller.abort();
 					controller = new AbortController();
 					self.app.platform.sdk.system.get.telegramUpdates();
 
 				}
 			},
-			
+
 			init : function(p){
 
 				state.load();
@@ -331,11 +350,15 @@ var usersettings = (function(){
 
 				make();
 
-				p.clbk(null, p);	
-				
+				p.clbk(null, p);
 
 
 
+
+			},
+			wnd : {			
+				header : "rsettings",
+				class : 'normalizedmobile',
 			}
 		}
 	};

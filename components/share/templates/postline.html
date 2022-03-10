@@ -38,8 +38,7 @@
 
             } %>
            
-
-            <% if(!share.aliasid) {%>
+            <% if(!share.aliasid && !share.repost.v) {%>
                 <div elementsid="stimes" class="item times tooltip <% if(share.itisvideo() || share.hasexchangetag()) {%> nowidth <%} %>" embeding="times" title="<%=e('stimes')%>">
                     <i class="fas fa-times-circle"></i> <span class="<% if(!share.itisvideo() && !share.hasexchangetag()) {%>mobiledevice <% } %>"><%=e('stimes')%></span>
                 </div>
@@ -92,30 +91,15 @@
                         <button elementsid="usave" class="post shadow"><%=e('usave')%></button>
                     </div>
 
-                    <div class="cancelpost element">
-                        <button elementsid="cancelediting" class="cancelediting ghost"><%=e('ucancel')%></button>
-                    </div>
+                   
+
+                        <div class="cancelpost element">
+                            <button elementsid="cancelediting" class="cancelediting ghost"><%=e('ucancel')%></button>
+                        </div>
+
+                
                 <% } %>
-                <!--<div class="waitpost element">
-
-                    <div class="itemwr table tempPreloader">
-                        
-                        <div class="count">
-                            <div class="label">
-
-                                <span><%=e('waitConf')%></span>
-
-                            </div>
-                        </div>
-
-                        <div class="iconwr">
-                            <div class="preloader5"><img src="./img/three-dots.svg"/></div>
-                        </div>
-
-                        
-                    </div>
-
-                </div>-->
+             
             </div>
             
 

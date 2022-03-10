@@ -1,1 +1,124 @@
-#articlesv .empty{padding:1.5em;text-align:center}#articlesv .empty span{opacity:.6;font-size:.8em}#articlesv .menurow{display:flex;justify-content:space-between;align-items:center}#articlesv .menurow>div{padding:1em}#articlesv .article{display:flex;justify-content:space-between;align-items:flex-start;margin-top:1em;margin-bottom:1em}#articlesv .article>div{padding:0 1em}#articlesv .article .openart{cursor:pointer}#articlesv .article .imageWrapper{max-width:55px;padding-left:1em;padding-right:0;padding-top:.25em}#articlesv .article .imageWrapper .img{border-radius:3px;width:33px;height:33px;margin:0 auto;opacity:1!important;background:rgba(178,171,172,.5)}#articlesv .article .menupanel{max-width:33px;opacity:.6;cursor:pointer;color:#b2abac;text-align:right;padding-left:0}#articlesv .article .menupanel.hover{opacity:1}#articlesv .article .menupanel i{font-size:.8em}#articlesv .article .cnt{flex-grow:2}#articlesv .article .name{font-weight:500}#articlesv .article .name i{font-size:.8em}#articlesv .article .time{text-align:right;padding-top:.25em}#articlesv .article .textpreview,#articlesv .article .time{font-size:.8em}#articlesv .article .tags{overflow:hidden;max-width:250px;display:flex;justify-items:start;align-items:center;flex-wrap:wrap;text-overflow:ellipsis}#articlesv .article .tags>div{margin-right:.5em;white-space:nowrap}#articlesv .article .tags>div span{font-size:.8em}#articlesv .article .tags .editicon i{font-size:.7em;opacity:.7}#articlesv .article .tags .newlabel{background:#ff0565;color:#fff}#articlesv .article.current .name{text-decoration:underline;text-decoration-color:#ff0565}#articlesv .article.current .name i{color:#ff0565}.wnd.wndarticles .wndinner{width:100%;height:100%;max-width:400px;max-height:650px}.wnd.wndarticles .wndcontent{overflow-y:scroll;padding:0}
+#articlesv .empty {
+  padding: 1.5em;
+  text-align: center;
+}
+#articlesv .empty span {
+  opacity: 0.6;
+  font-size: 0.8em;
+}
+#articlesv .menurow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#articlesv .menurow > div {
+  padding: 1em;
+}
+#articlesv .article {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+#articlesv .article > div {
+  padding: 0 1em;
+}
+#articlesv .article .openart {
+  cursor: pointer;
+}
+#articlesv .article .imageWrapper {
+  max-width: 55px;
+  padding-left: 1em;
+  padding-right: 0;
+  padding-top: 0.25em;
+}
+#articlesv .article .imageWrapper .img {
+  border-radius: 6px;
+  width: 33px;
+  height: 33px;
+  margin: 0 auto;
+  opacity: 1!important;
+  background: rgba(var(--neutral-grad-1), 0.5);
+}
+#articlesv .article .menupanel {
+  max-width: 33px;
+  opacity: 0.6;
+  cursor: pointer;
+  color: rgb(var(--neutral-grad-3));
+  text-align: right;
+  padding-left: 0;
+}
+#articlesv .article .menupanel.hover {
+  opacity: 1;
+}
+#articlesv .article .menupanel i {
+  font-size: 0.8em;
+}
+#articlesv .article .cnt {
+  flex-grow: 2;
+}
+#articlesv .article .name {
+  font-weight: 500;
+}
+#articlesv .article .name i {
+  font-size: 0.8em;
+}
+#articlesv .article .time {
+  text-align: right;
+  padding-top: 0.25em;
+}
+#articlesv .article .time,
+#articlesv .article .textpreview {
+  font-size: 0.8em;
+}
+#articlesv .article .tags {
+  overflow: hidden;
+  max-width: 250px;
+  display: flex;
+  justify-items: start;
+  align-items: center;
+  flex-wrap: wrap;
+  text-overflow: ellipsis;
+}
+#articlesv .article .tags > div {
+  margin-right: 0.5em;
+  white-space: nowrap;
+}
+#articlesv .article .tags > div span {
+  font-size: 0.8em;
+}
+#articlesv .article .tags .editicon i {
+  font-size: 0.7em;
+  opacity: 0.7;
+}
+#articlesv .article .tags .newlabel {
+  background: #ff0565;
+  color: #fff;
+}
+#articlesv .article.current .name {
+  text-decoration: underline;
+  text-decoration-color: #ff0565;
+}
+#articlesv .article.current .name i {
+  color: #ff0565;
+}
+.wnd.wndarticles .wndinner {
+  width: 100%;
+  height: 100%;
+  max-width: 400px;
+  max-height: 650px;
+}
+.wnd.wndarticles .wndinner > div.buttons {
+  display: flex!important;
+}
+.wnd.wndarticles .wndcontent {
+  overflow-y: scroll;
+  padding: 0;
+}
+@media only screen and (max-width: 768px) {
+  .wnd.wndarticles .wndcontent {
+    top: 55px;
+    border-radius: 0!important;
+  }
+}

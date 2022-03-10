@@ -887,6 +887,12 @@ document = window.document || {};
             self.disable();
         }
 
+        self.cleardm = function(){
+            editor = null, 
+            button = null, picker = null, filters = null, filtersBtns = null, searchPanel = null, emojisList = null, categories = null, categoryBlocks = null, scrollArea = null,
+            tones = null
+        }
+
         var sourceValFunc = source.is("TEXTAREA") || source.is("INPUT") ? "val" : "text",
             editor, button, picker, filters, filtersBtns, searchPanel, emojisList, categories, categoryBlocks, scrollArea,
             tones = div('tones',
@@ -1649,6 +1655,7 @@ document = window.document || {};
     EmojioneArea.prototype.getText = function() {
         return textFromHtml(this.editor.html(), this);
     }
+    
 
     EmojioneArea.prototype.showPicker = function () {
         var self = this;
@@ -1690,18 +1697,48 @@ document = window.document || {};
         return self;
     }
 
+    EmojioneArea.prototype.destroy = function () {
+        var self = this;
+        self.destroyed = true;
+
+        var next = function () {
+
+            self.editor.remove()
+
+            delete self.editor
+            delete self.button
+            delete self.lasyEmoji
+            delete self.picker
+            delete self.recentCategory
+            delete self.recentFilter
+            delete self.scrollArea
+            delete self.source
+
+            self.options = {}
+
+        };
+        self.isReady ? next() : self.on("ready", next);
+        return self;
+    }
+
     EmojioneArea.prototype.disable = function () {
+
         var self = this;
         self.disabled = true;
+
         var next = function () {
+
             self.editor.prop('contenteditable', false);
             self.hidePicker();
             self.button.hide();
             var editor = self[(self.standalone) ? "button" : "editor"];
             editor.parent().addClass('emojionearea-disable');
             trigger(self, 'disabled', [editor]);
+
         };
+
         self.isReady ? next() : self.on("ready", next);
+
         return self;
     }
 

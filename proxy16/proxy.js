@@ -460,6 +460,16 @@ var Proxy = function (settings, manage, test, logger) {
 
 		sendlogs: function(d){
 			wss.sendlogs(d)
+		},
+
+		closeall : function(){
+			var e = wss.closeall()
+
+			if (e){
+				return Promise.reject(e)
+			}
+
+			return Promise.resolve('success')
 		}
 	}
 
@@ -628,17 +638,33 @@ var Proxy = function (settings, manage, test, logger) {
 				],
 	
 				13: [
-					'01rus.nohost.me'
+					'01rus.nohost.me',
+					'02rus.pocketnet.app'
 				],
 
 				14: [
 					'pocketnetpeertube12.nohost.me',
 					'pocketnetpeertube13.nohost.me'
 				],
+
+				15: [
+					'peertube14.pocketnet.app',
+					'peertube15.pocketnet.app',
+				],
+
+				16: [
+					'poketnetpeertube.space',
+					'poketnetpeertube.ru',
+				],
+
+				17: [
+					'bastynode.ru',
+					'storemi.ru',
+				],
       		};
 
 			if (test){
-				ins = {0 : ['test.peertube.pocketnet.app']}
+				ins = {0 : ['test.peertube.pocketnet.app', 'test.peertube2.pocketnet.app']}
 			}
 
 			return peertube.init({
@@ -700,7 +726,8 @@ var Proxy = function (settings, manage, test, logger) {
 
 			return {
 				status: status,
-
+				test : self.test,
+				
 				nodeManager: self.nodeManager.info(compact),
 				nodeControl: self.nodeControl.info(compact),
 				firebase: self.firebase.info(compact),
@@ -1443,25 +1470,13 @@ var Proxy = function (settings, manage, test, logger) {
 			urlPreviewFormatted: {
 				path: '/urlPreviewFormatted',
 				
-				formatdata : function(data){
-
-					console.log('data2', data)
-
-					return data
-				},
-
 				action: function ({ url }) {
-
-					console.log("url", url)
 
 					return new Promise((resolve, reject) => {
 
 						remote.nmake(url, function (err, data) {
 
-							console.log('err', err)
 							if (!err) {
-
-								console.log('data', data)
 
 								resolve({
 
@@ -1623,6 +1638,19 @@ var Proxy = function (settings, manage, test, logger) {
 						server.middle.clear()
 
 					return Promise.resolve('success');
+					
+				},
+			},
+
+			wsscloseall : {
+				path: '/closeallwss',
+				authorization: 'signature',
+				action: function (message) {
+
+					if (!message.A)
+						return Promise.reject({ error: 'Unauthorized', code: 401 });
+						
+					return self.wss.closeall()
 					
 				},
 			},
@@ -1845,7 +1873,7 @@ var Proxy = function (settings, manage, test, logger) {
 						data: {
 							id: captcha.id,
 							img: captcha.data,
-							//result: captcha.text, ///
+							result: self.test ? captcha.text : null, ///
 							done: false,
 						},
 					});
@@ -1927,9 +1955,10 @@ var Proxy = function (settings, manage, test, logger) {
 			},
 			freeregistration: {
 				path: '/free/registration',
-				authorization: 'signature',
+				authorization: self.test ? false : 'signature',
 				action: function ({ captcha, key, address, ip }) {
-					if (settings.server.captcha) {
+
+					if (settings.server.captcha && !self.test) {
 						if (!captcha || !captchas[captcha] || !captchas[captcha].done) {
 							return Promise.reject('captcha');
 						}
@@ -2027,32 +2056,6 @@ var Proxy = function (settings, manage, test, logger) {
 
 	self.wallet.events()
 
-
-	/////////tests
-
-	/*var ids = []
-
-	var c = 3000000
-
-	for(var i = 0 ; i < c; i++){
-		ids.push(f.makeid())
-	}
-
-	var time = performance.now()
-	
-	for(var i = 0 ; i < c; i++){
-		f.rot13(ids[i])
-	}
-
-	var difference = performance.now() - time;
-	
-
-	var time = performance.now()
-
-	for(var i = 0 ; i < c; i++){
-		f.hash(ids[i])
-	}
-	var difference = performance.now() - time;*/
 	
 		
 	return self

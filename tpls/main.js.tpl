@@ -1,18 +1,20 @@
+global.WRITE_LOGS = process.argv.find(function(el) { return el.startsWith('--log'); })
+if (global.WRITE_LOGS) {
+    global.LOG_LEVEL = global.WRITE_LOGS.split("=").pop()
+}
+
+__VAR__.globaltest
+
 var open = require("open");
-/*const setupEvents = require('./installers/setupEvents')
-if (setupEvents.handleSquirrelEvent()) {
-  
-  return;
-}*/
 
 const {protocol} = require('electron');
-//const ProxyInterface = require('./proxy/mainserver.js')
 
 const ProxyInterface = require('./proxy16/ipc.js')
+const IpcBridge =require('./js/electron/ipcbridge.js')
 
 const electronLocalshortcut = require('electron-localshortcut');
 
-var win, nwin, badge, tray, proxyInterface;
+var win, nwin, badge, tray, proxyInterface, ipcbridge;
 var willquit = false;
 
 const { app, BrowserWindow, Menu, MenuItem, Tray, ipcMain, Notification, nativeImage, dialog, globalShortcut, OSBrowser } = require('electron')
@@ -31,6 +33,16 @@ const ffmpeg = require('fluent-ffmpeg');
 const ffprobe = require('ffprobe-static');
 
 ffmpeg.setFfprobePath(ffprobe.path);
+const AutoLaunch = require('auto-launch');
+
+const contextMenu = require('electron-context-menu');
+
+contextMenu({
+    showSearchWithGoogle : false,
+    showCopyImageAddress : true,
+    showSaveImageAs : true,
+    showInspectElement : false
+})
 
 var updatesLoading = false;
 
@@ -69,12 +81,19 @@ autoUpdater.on('update-downloaded', (ev) => {
 });
 //---------------------------------------------------
 
+var appName = global.TESTPOCKETNET ? 'BastyonTest' : 'Bastyon';
+
 let url = require('url')
 let path = require('path')
 
 var defaultIcon = require('path').join(__dirname, 'res/electron/icons/win/icon.ico')
 var defaultTrayIcon = require('path').join(__dirname, 'res/electron/icons/win/icon.ico')
 var badgeTrayIcon = require('path').join(__dirname, 'res/electron/icons/win/iconbadge.ico')
+if (global.TESTPOCKETNET) {
+    defaultIcon = require('path').join(__dirname, 'res/electron/icons/win/test_icon.ico')
+    defaultTrayIcon = require('path').join(__dirname, 'res/electron/icons/win/test_icon.ico')
+    badgeTrayIcon = require('path').join(__dirname, 'res/electron/icons/win/test_iconbadge.ico')
+}
 
 if (is.linux()) {
     defaultIcon = require('path').join(__dirname, 'res/electron/icons/png/64x64.png')
@@ -83,9 +102,9 @@ if (is.linux()) {
 }
 
 if (is.macOS()) {
-    defaultIcon = require('path').join(__dirname, 'assets/icons/mac/trayTemplate.png')
-    defaultTrayIcon = require('path').join(__dirname, 'assets/icons/mac/trayTemplate.png')
-    badgeTrayIcon = require('path').join(__dirname, 'assets/icons/mac/traybadgeTemplate.png')
+    defaultIcon = require('path').join(__dirname, 'res/electron/icons/mac/trayTemplate.png')
+    defaultTrayIcon = require('path').join(__dirname, 'res/electron/icons/mac/trayTemplate.png')
+    badgeTrayIcon = require('path').join(__dirname, 'res/electron/icons/mac/traybadgeTemplate.png')
 }
 
 var protocols = ['pocketnet', 'bastyon']
@@ -93,8 +112,10 @@ var protocols = ['pocketnet', 'bastyon']
 function showHideWindow(show) {
 
     if (win === null) {
+
         createWindow()
         createBadge()
+
     } else {
         if (win.isVisible() && !show) {
 
@@ -108,6 +129,24 @@ function showHideWindow(show) {
 
         }
     }
+}
+
+function autoLaunchManage(enable){
+
+    if (!is.macOS()){
+        let autoLaunch = new AutoLaunch({
+            name: appName,
+            path: app.getPath('exe'),
+            isHidden: true
+        });
+    
+        if (enable)
+            autoLaunch.enable();
+    
+        else 
+            autoLaunch.disable();
+    }
+    
 }
 
 
@@ -136,6 +175,14 @@ function quit(){
     app.quit()
 }
 
+function destroyApp() {
+    proxyInterface.destroy().then(r => {
+        quit()
+    }).catch(e => {
+        quit()
+    })
+}
+
 function createTray() {
 
     var defaultImage = nativeImage.createFromPath(defaultTrayIcon);
@@ -144,7 +191,7 @@ function createTray() {
     tray = new Tray(defaultImage)
 
     tray.setImage(defaultImage)
-    tray.setToolTip('__VAR__.project'); ///
+    tray.setToolTip(appName);
 
     var contextMenu = Menu.buildFromTemplate([{
         label: 'Open',
@@ -155,16 +202,31 @@ function createTray() {
         label: 'Quit',
         click: function() {
 
-            proxyInterface.destroy().then(r => {
+            if (ipcbridge)
+                ipcbridge.destroy()
 
-                quit()
+            // Check safe destroy
+            if (proxyInterface)
+                proxyInterface.candestroy().then(e => {
+                    if (!e.includes('nodeControl')) { // Destroy all
+                        destroyApp()
+                    } else { // Need first stop node
+                        dialog.showMessageBox(null, {
+                            type: 'question',
+                            buttons: ['Cancel', 'Yes, close'],
+                            defaultId: 1,
+                            title: 'Warning',
+                            message: 'Your node is running. Close the app anyway?',
+                        }).then(r => {
+                            if (r.response == 1) {
+                                proxyInterface.nodeStop().then(e => {
+                                    destroyApp()
+                                })
+                            }
+                        })
+                    }
 
-            }).catch(e => {
-
-                quit()
-
-            })
-
+                })
         }
     }]);
 
@@ -331,6 +393,7 @@ function notification(nhtml, p) {
         focusable: false,
         parent : win,
         webPreferences: {
+            contextIsolation: false,
             nodeIntegration: true,
             enableRemoteModule: true
         }
@@ -341,9 +404,25 @@ function notification(nhtml, p) {
     })
 
 
+
     setTimeout(function() {
-        if (nwin)
+        if (nwin){  
             nwin.show()
+
+            nwin.on('hide', function(){
+                win.webContents.send('win-hide')
+            })
+
+            nwin.on('minimize', function(){
+                win.webContents.send('win-minimize')
+            })
+
+            nwin.on('restore', function(){
+                win.webContents.send('win-restore')
+            })
+        }
+           
+
 
        // nwin.webContents.toggleDevTools()
     }, 300)
@@ -358,13 +437,20 @@ function createWindow() {
     win = new BrowserWindow({
         width: mainScreen.size.width,
         height: mainScreen.size.height,
+        // electronnav
 
-        title: "__VAR__.project", ///
+        /*titleBarStyle: 'hidden',
+        titleBarOverlay: {
+            color : "#FFFFFF",
+            symbolColor : "#333333"
+        },*/
+        title: appName,
         webSecurity: false,
 
         icon: defaultIcon,
 
         webPreferences: {
+            contextIsolation: false,
             nodeIntegration: true,
             enableRemoteModule: true,
             allowRendererProcessReuse: false,
@@ -594,16 +680,26 @@ function createWindow() {
 
         willquit = true
 
-        proxyInterface.destroy().then(r => {
-            autoUpdater.quitAndInstall(true, true)
-        })
+        if (proxyInterface)
+            proxyInterface.destroy().then(r => {
+                autoUpdater.quitAndInstall(true, true)
+            })
+
+        if (ipcbridge)
+            ipcbridge.destroy()
 
     })
 
     ipcMain.on('electron-checkForUpdates', function(e) {
-
         autoUpdater.checkForUpdates();
+    })
 
+
+    ipcMain.on('electron-autoLaunchManage', function(e, p) {
+
+        console.log('autoLaunchManage', p)
+
+        autoLaunchManage(p.enable)
     })
 
     ipcMain.on('transcode-video-request', async function(e, filePath) {
@@ -817,20 +913,35 @@ function createWindow() {
     proxyInterface = new ProxyInterface(ipcMain, win.webContents)
     proxyInterface.init()
 
+
+    ipcbridge = new IpcBridge(ipcMain, win.webContents)
+
+    ipcbridge.actions.autoLaunchIsEnabled = function(d){
+
+        console.log('autoLaunchIsEnabled', d)
+
+        if (is.macOS()){
+            return Promise.resolve(false)
+        }
+
+        let autoLaunch = new AutoLaunch({
+            name: appName,
+            path: app.getPath('exe'),
+            isHidden: true
+        });
+
+        return autoLaunch.isEnabled().catch(e =>{
+            return Promise.resolve(false)
+        })
+    }
+
+    ipcbridge.init()
+
     // Вызывается, когда окно будет закрыто.
     return win
 }
 
-
-var openlink = function(argv, ini){
-
-    var l = null
-
-    if (argv && argv.length && argv[argv.length - 1] && argv[argv.length - 1]){
-        l = argv && argv.length && argv[argv.length - 1] && argv[argv.length - 1]
-    }
-
-
+var _openlink = function(l, ini){
     if(_.find(protocols, function(p){
         if(l && l.indexOf(p + "://") > -1) return true
     })){
@@ -846,14 +957,24 @@ var openlink = function(argv, ini){
 
         if(!href) href = 'index'
 
-        console.log("href", href)
-
         setTimeout(function(){
 
             win.webContents.send('nav-message', { msg: href, type: 'action'})
 
         }, ini ? 3000 : 5)
     }
+}
+
+var openlink = function(argv, ini){
+
+    var l = null
+
+    if (argv && argv.length && argv[argv.length - 1] && argv[argv.length - 1]){
+        l = argv && argv.length && argv[argv.length - 1] && argv[argv.length - 1]
+    }
+
+
+    _openlink(l, ini)
     
 }
 
@@ -904,6 +1025,23 @@ if(!r) {
             createWindow()
         }
     })
+    
+    if (is.macOS()){
+        app.on('open-url', (event, url) => {
+
+            _openlink(url, false)
+    
+            if (win) {
+    
+                if (win.isMinimized()) win.restore();
+    
+                win.show()
+                win.focus();
+            }
+        })
+    }
+
+    
 
 
 

@@ -2,13 +2,17 @@
 
 var arranges = {
 
-	cm : function(){ %> 
+	cm : function(){ 
+		
+		console.log('essenseData', essenseData)
+		%> 
 
 		<div class="cpt">
-			<input type='text' value="" class="captionshare" placeholder="<%=e(share.itisvideo() ? 'videotitle' : 'scaption')%>">
+			<input elementsid='videotitle' type='text' value="" class="captionshare" placeholder="<%=e(share.itisvideo() ? 'videotitle' : 'scaption')%>">
 		</div>
+
 		<div class="txt">
-			<div elementsid='emjcontainer' class="message" placeholder="<%=e(share.itisvideo() ? 'videodesc' : 'whatsnew')%>" id='emjcontainer' spellcheck="true"></div>
+			<div elementsid='emjcontainer' class="message" placeholder="<%=e(ed.repost ? 'whatsnewrepost' : (share.itisvideo() ? 'videodesc' : 'whatsnew'))%>" id='emjcontainer' spellcheck="true"></div>
 		</div>
 	
 	<% },

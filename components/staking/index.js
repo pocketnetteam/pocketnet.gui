@@ -8,9 +8,8 @@ var staking = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, info = null, amount = 1000, graph = null, history;
+		var el, info = null, amount = 1000, graph = null, history, stakingClose = null;
 
-		var currency = 'USD',
 			// exchange = 'mercatox'
 			exchange = 'digifinex'
 
@@ -22,6 +21,7 @@ var staking = (function(){
 		var charts = {}
 
 		var currencies = {
+
 			USD : {
 				id : 'USD',
 				key : 'USD',
@@ -45,6 +45,7 @@ var staking = (function(){
 					return self.app.platform.mp.acoin(v)
 				}
 			}
+
 		}
 
 		var blocktime = [{
@@ -65,21 +66,6 @@ var staking = (function(){
 			id : '1y'
 		}]
 
-
-		var parameters = {
-			currency : new Parameter({
-				name : self.app.localization.e('source'),
-				type : "VALUES",
-				id : 'source',
-				defaultValue : "USD",
-				possibleValuesLabels : ['USD', 'USDT', 'BTC'],
-				possibleValues : ['USD', 'USDT', 'BTC'],
-				format : {
-					right : true
-				},
-			})
-		}
-
 		var calc = {
 			netstakeweight : function(){
 				return (deep(info, 'netstakeweight') || 189015830589274) / 100000000
@@ -89,12 +75,11 @@ var staking = (function(){
 				var r = amount / calc.netstakeweight()
 				var n = 1
 
-
-				return amount * Math.pow( (1 + 1440 * 2.5 / calc.netstakeweight() ),  t)
+				return amount * Math.pow( (1 + 1440 * 4.75 / calc.netstakeweight() ),  t)
 
 			},
 
-			price : function(c){ //00
+			price : function(c, currency){ //00
 				if(!c) c = 0
 
 				if(history && history[exchange] && history[exchange].length > c){
@@ -131,13 +116,13 @@ var staking = (function(){
 				return 0
 			},
 
-			prevprice : function(){
+			prevprice : function(c, currency){
 				var i = -1
 				var prevprice = 0
-				var price = this.price()
+				var price = this.price(null, currency)
 
 				do{
-					prevprice = this.price(i)
+					prevprice = this.price(i, currency)
 					i--
 				}
 				while(prevprice > 0 && (prevprice - price == 0))
@@ -156,10 +141,11 @@ var staking = (function(){
 
 					p = _.map(p, function(pn){
 
-						if(pn.prices[currency]) {
+
+						if(pn.prices['USD']) {
 							return {
 								x : fromutc(new Date(pn.date)),
-								y : Number(pn.prices[currency].data[market_keys[exchange]])
+								y : Number(pn.prices['USD'].data[market_keys[exchange]])
 							}
 						}
 
@@ -234,65 +220,56 @@ var staking = (function(){
 				return graph
 			},
 			graph : function(_el, clbk){
-				if (graph){
 
-					graph.chart.update({
-						series: helpers.series()
-					});
+				graph = chart.prepare(_el)
 
-					if(clbk) clbk(graph, _el)
-				}
-				else{
-					graph = chart.prepare(_el)
-
-					graph.render({
-						maxPointsCount : 10,
-						prepareOptions : function(p){
-							p.plotOptions.series = {
-								states : {
-									inactive: {
-										opacity: 1
-									},
-									enableMouseTracking: false,
-									hover : {
-										halo: {
-											size: 0,
-										},
-										enabled : false
-									}
-								}
-							}
-
-							p.plotOptions.spline = {
-								animation: false,
-								lineWidth: 1,
-								marker: {
-									enabled: false
+				graph.render({
+					maxPointsCount : 10,
+					prepareOptions : function(p){
+						p.plotOptions.series = {
+							states : {
+								inactive: {
+									opacity: 1
 								},
-								states: {
-									hover: {
-										lineWidth: 1,
-										lineWidthPlus: 0,
-										marker: {
-											fillColor: "#000",
-											lineColor: "#000"
-										},
-										halo: {
-											opacity: 0
-										}
+								enableMouseTracking: false,
+								hover : {
+									halo: {
+										size: 0,
 									},
-	
+									enabled : false
 								}
 							}
-							
 						}
-					}, function(){
 
-						if (clbk)
-							clbk(graph, _el);
+						p.plotOptions.spline = {
+							animation: false,
+							lineWidth: 1,
+							marker: {
+								enabled: false
+							},
+							states: {
+								hover: {
+									lineWidth: 1,
+									lineWidthPlus: 0,
+									marker: {
+										fillColor: "#000",
+										lineColor: "#000"
+									},
+									halo: {
+										opacity: 0
+									}
+								},
 
-					});
-				}
+							}
+						}
+						
+					}
+				}, function(){
+
+					if (clbk)
+						clbk(graph, _el);
+
+				});
 				
 				
 			},
@@ -337,52 +314,92 @@ var staking = (function(){
 				});
 			},
 			lastPrice : function(){
-				graph = null
-				var text = ''
-				
-				var price = calc.price(0)
-				var prevprice = calc.prevprice(0)
 
+				for (var currency in currencies){
 
-				var change = {
-					value : 0,
-					percent : 0
+					var text = ''
+					
+					var price = calc.price(0, currency)
+					var prevprice = calc.prevprice(0, currency)
+	
+	
+					var change = {
+						value : 0,
+						percent : 0
+					}
+	
+					if (price){
+	
+	
+						text = currencies[currency].view(price)
+	
+					}
+	
+					if (prevprice && price){
+						var v = price - prevprice
+	
+						change.value = v
+						change.percent = v / price
+					}
+	
+					if (currency === 'USD'){
+
+						self.shell({
+							inner : html,
+							name : 'lastprice',
+							data : {
+								price : text,
+								currency : currencies[currency],
+								change : change,
+							},
+		
+							el : el.c.find('.lastpriceCnt')
+		
+						},
+						function(p){
+
+							renders.pricechart()
+
+							var caretDown= p.el.find('.caret-down');
+
+							caretDown.on('click', function(){
+
+								stakingClose = null;
+								localStorage.removeItem('stakingClose');
+
+								el.c.find('.wrp').removeClass('hide');				
+						
+							})
+							
+						})
+
+					} else {
+
+						/*self.shell({
+							inner : html,
+							name : 'lastpricesmall',
+							data : {
+								price : text,
+								currency : currencies[currency],
+								change : change,
+							},
+		
+							el : el.c.find('.lastpriceCnt' + currency)
+		
+						})*/
+
+					}
+	
 				}
-
-				if (price){
-
-
-					text = currencies[currency].view(price)
-
-				}
-
-				if (prevprice && price){
-					var v = price - prevprice
-
-					change.value = v
-					change.percent = v / price
-				}
-
-				self.shell({
-					inner : html,
-					name : 'lastprice',
-					data : {
-						price : text,
-						currency : currencies[currency],
-						change : change,
-					},
-
-					el : el.c.find('.lastpriceCnt')
-
-				},
-				function(p){
-					renders.pricechart()
-				})
 
 				
 			},
 			pricechart : function(){
+
+				console.log('el.c', el.c)
 				var _el = el.c.find('.chart')
+
+				_el.empty();
 
 				var d = $('<div></div>', {
 					class : 'chartWrapper'
@@ -417,7 +434,23 @@ var staking = (function(){
 		}
 
 		var initEvents = function(){
+
+			el.buyButton.on('click', function(){
+
+				self.app.platform.ui.wallet.buy();
+
+			})
 			
+			var caretUp = el.c.find('.caret-up');
+
+			caretUp.on('click', function(){
+
+				stakingClose = 1;
+				localStorage.setItem('stakingClose', '1');
+
+				el.c.find('.wrp').addClass('hide');
+				
+			})
 			
 			el.am.on('keyup', function(){
 				var v = $(this).val() || ''
@@ -448,14 +481,6 @@ var staking = (function(){
 
 			ParametersLive(_.toArray(parameters), el.c)
 
-			parameters.currency._onChange = function(v){
-				currency = v
-
-				actions.loadhistory(function(){
-					renders.lastPrice()
-				})
-			}
-
 			el.c.find('.earnlabel').on('click', function(){
 
 				var url = 'https://'+self.app.options.url+''
@@ -470,17 +495,30 @@ var staking = (function(){
 
 				self.nav.api.load({
 					open : true,
-					href : 'socialshare',
+					href : 'easynode',
 					history : true,
-					inWnd : true,
-
-					essenseData : {
-						url : url, 
-						style : 'smallcaption',
-						caption : 'The best way to earn Pocketcoin (PKOIN) is to invite people to the platform. You will get 20% of their PKOIN earnings for the first three months. Send the link below to anyone via email, social media, messenger.'
-					}
+					inWnd : true
 				})
 			})
+
+			// el.buyButton.on('click', function(){
+			// 	self.nav.api.load({
+			// 		open : true,
+			// 		id : 'buy',
+			// 		inWnd : true,
+
+			// 		essenseData : {
+
+			// 			success : function(){
+							
+			// 			}
+			// 		},
+
+			// 		clbk : function(){
+						
+			// 		}
+			// 	})
+			// })
 
 			amountmask()
 		}
@@ -551,9 +589,12 @@ var staking = (function(){
 
 			getdata : function(clbk){
 
+				stakingClose = localStorage.getItem('stakingClose');
+
 				var data = {
 					amount : amount,
-					parameters : parameters
+					parameters : parameters,
+					stakingClose : stakingClose
 				};
 
 				clbk(data);
@@ -575,6 +616,7 @@ var staking = (function(){
 				el.c = p.el.find('#' + self.map.id);
 				el.calculator = el.c.find('.calculator');
 				el.am = el.c.find('.amredits');
+				el.buyButton = el.c.find('.buyButton')
 				initEvents();
 
 				make()
@@ -583,6 +625,7 @@ var staking = (function(){
 			},
 
 			wnd : {
+				header : "currency",
 				class : 'normalizedmobile'
 			}
 		}

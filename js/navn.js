@@ -22,6 +22,7 @@ Nav = function(app)
 		links : true,
 	}
 
+	var hostname = window.location.hostname
 
 	var electronopen = false
 	var blockclick = false
@@ -70,15 +71,6 @@ Nav = function(app)
 
 		},
 		run : function(p){
-
-			/*p.clbk = addToFunction(p.clbk, function(){
-
-				console.log(p, p.el)
-
-				if (p.el)
-					core.links(null, p.el);
-
-			})*/
 
 			p.module.nav = self;
 			p.module.app = app;
@@ -179,6 +171,8 @@ Nav = function(app)
 			else{	
 
 				if (khref == indexpage){
+
+					//// 
 					backManager.clearAll()
 				}
 				else{
@@ -357,10 +351,7 @@ Nav = function(app)
 		},
 		add : function(href, p){
 
-
 			if(!p) p = {}
-
-			
 
 			if (p.inWnd){
 
@@ -368,6 +359,7 @@ Nav = function(app)
 					pa['m' + p.id] = true
 
 				historyManager.addParameters(pa)
+
 				self.wnds[p.id] = p
 
 				return
@@ -421,17 +413,17 @@ Nav = function(app)
 
 		openCurrent : function(){
 
-			console.log('history.state.href', history.state)
-
 			if (history.state && history.state.lfox) { 
-
-				console.log('history.state.href', history.state.href)
 
 				core.removeWindows(history.state.href)
 				core.removeChat(history.state.href)
 
 				if(!_.isEmpty(self.wnds)){
 					_.each(self.wnds, function(w){
+
+
+						if (w.independent) return
+
 						if (w.module.parametersHandler){
 							w.module.parametersHandler()
 						}
@@ -457,6 +449,8 @@ Nav = function(app)
 					
 				}
 
+				
+
 	    	}
 		}
 		
@@ -475,7 +469,7 @@ Nav = function(app)
 		},	
 
 		removeChat : function(href){
-			if(!isMobile()) return
+			if(!app.mobileview) return
  
 			var p = parameters(href, true)
 
@@ -492,13 +486,13 @@ Nav = function(app)
 			_.each(self.wnds, function(pa, id){
 				if(!p['m' + id]){
 
+					if (pa.independent) return
+
 					var c = deep(pa, 'module.closeContainer');
 
 					if (c){
 
 						deleted.push(id)
-
-
 						c('auto')
 					}
 
@@ -508,6 +502,8 @@ Nav = function(app)
 			_.each(deleted, function(id){
 				delete self.wnds[id]
 			})
+
+			
 		},
 		
 		open : function(p){
@@ -516,10 +512,7 @@ Nav = function(app)
 
 				p.clbk || (p.clbk = emptyFunction);
 
-			var lastHref = current.href;
-
 			var run = true;
-			var nav = false
 
 			if((p.history || p.loadDefault) && options.history)
 			{
@@ -547,12 +540,12 @@ Nav = function(app)
 							core.removeWindows(p.completeHref)
 							core.removeChat(p.completeHref)
 
+							//p = {}
+
 						})
 
 						_.each(self.clbks.history, function(c){
-								
 							c(p.href);
-							
 						})
 
 						return;
@@ -572,15 +565,6 @@ Nav = function(app)
 					if(!p.reload){
 						historyManager.add(p.completeHref, p);
 
-						/*if (current.module && !p.inWnd){
-							nav = true
-
-							window.requestAnimationFrame(function(){
-								app.el.html.addClass('nav')
-							}) 
-
-						}*/
-
 						p.fail = function(){
 							sitemessage('<i class="fas fa-wifi"></i>')
 						}
@@ -598,6 +582,8 @@ Nav = function(app)
 								if (stop.action){
 									stop.action(function(){
 										core.open(p)
+
+										//p = {}
 									})
 								}
 
@@ -627,15 +613,11 @@ Nav = function(app)
 						var c = p.clbk;
 
 						p.clbk = function(a, b, d){
+
+							console.log('p.completeHref', p)
+
 							core.removeWindows(p.completeHref)
 							core.removeChat(p.completeHref)
-
-							/*if (nav) 
-								window.requestAnimationFrame(function(){
-									app.el.html.removeClass('nav')
-								}) 
-
-							nav = false*/
 
 							if (p.goback){
 								app.actions.scroll(p.goback.scroll)
@@ -649,9 +631,7 @@ Nav = function(app)
 					p.module.active = true;
 
 					_.each(self.clbks.history, function(c){
-						
 						c(p.href);
-						
 					})
 				}
 
@@ -676,6 +656,9 @@ Nav = function(app)
 
 				p.clbk(null, p);
 			}
+
+			//p = {}
+
 		},
 		
 		loadSource : function(map, clbk){
@@ -903,8 +886,6 @@ Nav = function(app)
 		load : function(p){
 			if(!p) p = {};
 
-
-
 			if(!p.href && !p.id) {
 				p.clbk("href and id aren't exist");
 
@@ -961,6 +942,8 @@ Nav = function(app)
 
 					}
 
+					p = {}
+
 				})
 
 				
@@ -1001,6 +984,8 @@ Nav = function(app)
 						{
 							core.open(p)
 						}
+
+						p = {}
 
 					})
 					
@@ -1126,9 +1111,7 @@ Nav = function(app)
 
 			var _links = null;
 
-			if(_el) _links = _el.find('a');
-
-			else _links = $('a');		
+			if(_el) _links = _el.find('a'); else _links = $('a');		
 
 			if(!_links.length) return
 
@@ -1216,6 +1199,8 @@ Nav = function(app)
 
 			})
 
+			_links = null
+
 		},
 		go : function(p){
 			if(!p) p = {};
@@ -1253,21 +1238,33 @@ Nav = function(app)
 				if (window.cordova)
 				{
 
-					var arr = pathname.split('/');
-					arr.splice(arr.length-1, 1);
-
-					options.navPrefix = arr.join('/') + '/';
-
-					// if(pathname == '/indexcordova.html'){
-					// 	options.navPrefix = '/'
-					// }
-					// else{
-					// 	var arr = pathname.split("/");
-					// 	arr.splice(arr.length-1, 1);
-
-					// 	options.navPrefix = arr.join("/") + "/";
-					// }
 					
+					switch (device.platform) {
+						case "Android":
+							storageLocation = 'file:///storage/emulated/0/';
+							break;
+						case "iOS":
+							storageLocation = cordova.file.dataDirectory;
+							break;
+					}
+					
+					if(device.platform == 'iOS'){
+						var arr = pathname.split('/');
+						arr.splice(arr.length-1, 1);
+						options.navPrefix = arr.join('/') + '/';
+					}
+					else{
+
+						if(pathname == '/indexcordova.html'){
+							options.navPrefix = '/'
+						}
+						else{
+							var arr = pathname.split("/");
+							arr.splice(arr.length-1, 1);
+							options.navPrefix = arr.join("/") + "/";
+						}
+
+					}
 
 				}
 				else {
@@ -1335,6 +1332,11 @@ Nav = function(app)
 	}
 
 	self.api = {
+		changedclbks : function(){
+			_.each(self.clbks.history, function(c){
+				c(history.state.href);
+			})
+		},
 		history : historyManager,
 		links : core.links,
 		go : core.go,
@@ -1366,7 +1368,14 @@ Nav = function(app)
 
 			}
 
-			core.load(p)
+			if (p.timeout){
+				setTimeout(function(){
+					core.load(p)
+				}, p.timeout)
+			}
+			else
+
+				core.load(p)
 		},
 		
 		loadDefault : function(p){
@@ -1442,7 +1451,7 @@ Nav = function(app)
 			return decodeSeoLinks(pathnameSearch).replace("#!", "");
 		},
 		hostname : function(){
-			return window.location.hostname + '/'
+			return hostname + '/'
 		}
 	}
 
@@ -1482,32 +1491,56 @@ Nav = function(app)
 
 				//////
 
-				if (1 == 2 && !electron && !window.cordova && !electronopen && !app.platform.sdk.usersettings.meta.openlinksinelectron.value && !isMobile() && !isTablet()){
+
+				if (!electron && !window.cordova && !electronopen && !app.platform.sdk.usersettings.meta.openlinksinelectron.value && !isMobile() && !isTablet()){
 
 					var currentHref = self.get.href();
+					var pathname = self.get.pathname();
 
-					var electronHrefs = JSON.parse(localStorage['electron_hrefs'] || "[]");
+					var mpobj = app.map[pathname] || _.find(app.map, function(mp){
+						return mp.href == pathname
+					}) || {};
+
+					var electronDontOpen = false
+
+					if (mpobj.electronDontOpen) {
+
+						if(typeof mpobj.electronDontOpen == 'function'){
+							electronDontOpen = mpobj.electronDontOpen()
+						}
+						else{
+							electronDontOpen = mpobj.electronDontOpen
+						}
+					}
+
+					if (!electronDontOpen) {
+						var electronHrefs = JSON.parse(localStorage['electron_hrefs'] || "[]");
 				
-					if (electronHrefs.indexOf(currentHref) == -1 ){
+						if (electronHrefs.indexOf(currentHref) == -1 ){
 
-						electronHrefs.push(currentHref)
+							electronHrefs.push(currentHref)
 
-						try{
+							try{
 
-							window.location = app.meta.protocol + '://electron/' + currentHref;
-							localStorage['electron_hrefs'] = JSON.stringify(electronHrefs.slice(electronHrefs.length - 100))
-							
-						}
-						catch(e){
+								window.location = app.meta.protocol + '://electron/' + currentHref;
+								localStorage['electron_hrefs'] = JSON.stringify(electronHrefs.slice(electronHrefs.length - 100))
+								
+							}
+							catch(e){
 
-							localStorage['electron_hrefs'] = '[]'
-						}
+								localStorage['electron_hrefs'] = '[]'
+							}
+						
+						} 
+					}
+
 					
-					} 
 
 				}
 
+
 				electronopen = true
+				
 
 			});
 

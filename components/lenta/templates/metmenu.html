@@ -16,9 +16,8 @@ var all = {
 		class : 'opennewwindow'
 	},
 
-	
 	pin : {
-		icon : '<i class="fas fa-link"></i>',
+		icon : '<i class="fas fa-thumbtack"></i>',
 		text : e('pin'),
 		class : 'pin'
 	},
@@ -36,7 +35,7 @@ var all = {
 	},
 
 	downloadVideo : {
-		icon : '<i class="far fa-bookmark"></i>',
+		icon : '<i class="fas fa-cloud-download-alt"></i>',
 		text : e('downloadVideo'),
 		class : 'downloadVideo'
 	},
@@ -112,16 +111,20 @@ if(share){
 
 	m.push('share')
 
-	if (share.itisvideo() && window.cordova) {
+	if (share.itisvideo()) {
 
 		m.push('shareBareVideoLink');
 
-		if(app.platform.sdk.localshares.getShare(share.txid)){
-			m.unshift('deleteSavedVideo');
+		if(window.cordova){
+			if(app.platform.sdk.localshares.getShare(share.txid)){
+				m.unshift('deleteSavedVideo');
+			}
+			else{
+				m.unshift('downloadVideo');
+			}
 		}
-		else{
-			m.unshift('downloadVideo');
-		}
+
+	
 
 		
 	}
@@ -166,7 +169,7 @@ if(share){
 				m.push('startchat')
 			}
 
-			m.push('donation')
+			/*m.push('donation')*/
 			/*m.push('htls')*/
 
 			if(isMobile()){

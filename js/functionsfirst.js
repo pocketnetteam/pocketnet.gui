@@ -4,13 +4,10 @@ deep = function(obj, key){
     var _key = []
 
     if (key[0] == "'"){
-
         key = key.substr(1)
         _key = key.split("'")
         tkey = _key[0]
-
         if(_key[1]) _key[1] =  _key[1].substr(1)
-
 
     }
     else{	
@@ -41,8 +38,55 @@ deep = function(obj, key){
     }
 }
 
+getbaseorientation = function(){
+	
+	var angle90 = {
+		portrait : 'landscape',
+		landscape : 'portrait'
+	}
 
+	var orientation = _.clone(deep(window, 'screen.orientation') || {
+		angle: 0,
+		type: "portrait-primary"
+	})
 
+	orientation.type = orientation.type.split('-')[0]
+
+    var type = orientation.type
+
+	if( ((orientation.angle / 90).toFixed(0)) % 2 ){
+		type = angle90[type]
+	}
+
+	if(!angle90[type]) type = 'portrait' 
+
+	return type
+}
+
+var addzeros = function(v){
+    v = v.toString()
+
+    var zs = 5 - v.length
+
+    for(var i = 0; i < zs; i++){
+        v = '0' + v
+    }
+
+    return v
+}
+
+numfromreleasestring = function(v){
+
+    var vss = v.split('.')
+
+    vss[2] = addzeros(vss[2])
+
+    v = vss.join('.').replace(/[^0-9]/g, '')
+
+    var vs = Number(v.substr(0, 1) + '.' + v.substr(1))
+
+    return vs
+}
 
 topPreloader2 = function(percent, text){
     if(!window.jQuery) return
@@ -179,40 +223,6 @@ pretry = function(_function, time, totaltime){
 
     })
 }
-
-
-/*
-var ____setInterval = setInterval
-
-setInterval = function(f, t){
-    var i = ____setInterval(function(){
-        console.log('f', f)
-
-        f()
-    }, t)
-
-    return i
-}*/
-/*
-var ___requestAnimationFrame = window.requestAnimationFrame
-window.requestAnimationFrame = function(c){
-    console.log("C", c)
-    ___requestAnimationFrame(c)
-}*/
-
-/*
-var ____setTimeout = setTimeout
-
-setTimeout = function(f, t){
-    var i = ____setTimeout(function(){
-        console.log('f2', f)
-
-        f()
-    }, t)
-
-    return i
-}*/
-
 
 
 retryLazy = function(_function, clbk, time){
@@ -523,11 +533,9 @@ importScript = function(src, callback, appendTo, app, module, _require) {
 
         var pref = '../';
 
-
         if(typeof _Electron != 'undefined' && _Electron == true) pref = './'
 
-
-        if(module) {
+        if (module) {
             delete require.cache[require.resolve(pref + src)]
             
             var script = require(pref + src);
@@ -542,7 +550,13 @@ importScript = function(src, callback, appendTo, app, module, _require) {
         {
 
             if (_require){
-                _require()
+                if(typeof _require == 'function'){
+                    _require()
+                }
+                else{
+                    window[_require] = require(pref + src)
+                }
+                
             }
             else
             {
@@ -597,8 +611,6 @@ importCss = function(src, _document) {
     link.setAttribute('href', src);
     
     var appendTo = _document.getElementsByTagName('body')[0];
-
-    console.log("src", src)
 
     appendTo.appendChild(link);
 }

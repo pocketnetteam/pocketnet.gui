@@ -131,7 +131,7 @@ var pkview = (function(){
 					var name = 'pkey_'+self.app.platform.currentTime()
 
 					renders.mnemonicEffect(m, false, function(){
-					
+						hiddenform.find('button').click();
 					});
 
 					/*var container = p.el.find('.qrcode');
@@ -145,7 +145,26 @@ var pkview = (function(){
 
 					self.app.mobile.saveImages.init(container)*/
 
+					var hiddenform = p.el.find('#loginform')
+
+						hiddenform.on('submit', function(event) {
+							console.log("SUBMIT")
+			
+							event.preventDefault();
+							event.stopPropagation();
+			
+							return false
+						})	
+
+						console.log("A", hiddenform)
+
+					if(ed.showsavelabel) setTimeout(function(){
+
+						hiddenform.find('.loginValue').val(current.mnemonicKey)
+
+						p.el.find('.enter').click();
 						
+					}, 30) 
 
 					p.el.find('.copy').on('click', function(){
 						copyText(p.el.find('.hiddenMnemonicKey'))
@@ -186,6 +205,19 @@ var pkview = (function(){
 		}
 
 		var initEvents = function(){
+
+			el.c.find('.nextaction').on('click', function(){
+				self.closeContainer()
+
+				if(isMobile() || window.cordova){
+					self.app.nav.api.load({
+						open : true,
+						href : 'index',
+						history : true,
+					})
+
+				}
+			})
 			
 			el.c.find('.dontshowagain').on('click', function(){
 
@@ -193,7 +225,7 @@ var pkview = (function(){
 
 				self.app.platform.sdk.registrations.donotshowprivate()
 
-				if(isMobile()){
+				/**if(isMobile()){
 
 					self.app.nav.api.load({
 		
@@ -203,7 +235,7 @@ var pkview = (function(){
 		
 					})
 
-				}
+				}*/
 
 			})
 
@@ -213,7 +245,7 @@ var pkview = (function(){
 
 			current = {}
 
-			var mnemonic = localStorage['mnemonic'];
+			var mnemonic = ed.mnemonic || localStorage['mnemonic'];
 
 			if (mnemonic){
 
@@ -290,6 +322,8 @@ var pkview = (function(){
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
+				
+				
 
 				initEvents();
 
@@ -298,7 +332,9 @@ var pkview = (function(){
 				p.clbk(null, p);
 			},
 			wnd : {			
-				class : 'allscreen black withoutButtons pkviewwnd',
+				showbetter : true,
+				//header : isMobile() ? 'privatekey' : '',
+				class : 'withoutButtons pkviewwnd ',
 			}
 		}
 	};

@@ -16,9 +16,6 @@ var accounts = (function(){
 
 			signin : function(address){
 
-				console.log('address', address)
-				
-				
 				self.app.platform.sdk.pool.expand(pack, function(expandedPack){
 					var index = _.indexOf(expandedPack.addresses, address);
 
@@ -32,22 +29,23 @@ var accounts = (function(){
 
 						//bitcoin.ECPair.fromPrivateKey(Buffer.from(private, 'hex'))
 
+						console.log("I")
+
 						self.app.user.signout(function(){
 							self.app.user.stay = stay;
 
+							console.log("I2", private)
+
 							self.user.signin(private, function(state){
 
-
+								console.log("I3")
 
 								var h = ed.href || 'userpage?id=accounts&s=' + makeid()
 								var history = false;
 
 								if(isMobile()){
-
 									h = window.history.state.href || 'index'
-									
 								}
-								
 
 								if (ed.toaccpage) {
 									h = 'author?address=' + address
@@ -55,11 +53,9 @@ var accounts = (function(){
 								}
 
 								if(!self.app.user.validate()){
-									h = 'filluser'
+									h = 'registration'
 									history = true
 								}
-
-								
 
 								globalpreloader(false)
 
@@ -123,7 +119,7 @@ var accounts = (function(){
 
 				if (l >= 5){
 
-					sitemessage('You have reached a maximum of 5 accounts. No more can be added ')
+					sitemessage(self.app.localization.e('max5acc'))
 
 					return
 				}
@@ -146,7 +142,7 @@ var accounts = (function(){
 
 										dialog({
 											html : self.app.localization.e('acc' + error),
-											class : "one zIndex"
+											class : "one zindex"
 										})
 
 									}
@@ -176,14 +172,7 @@ var accounts = (function(){
 
 			},
 
-			back : function(){
-			
-				el.dumpkey.html('')
-
-				el.c.find('.dumpaddress').html('')
-
-				el.c.removeClass('privatedump')
-			}
+		
 		}
 
 		var events = {
@@ -193,9 +182,9 @@ var accounts = (function(){
 				var address = $(this).closest('.addressTable').attr('address')
 
 				dialog({
-					html : "Do you really want to see your private key?",
-					btn1text : "See Private Key",
-					btn2text : "Cancel",
+					html :  self.app.localization.e('wanttoseekey'),
+					btn1text : self.app.localization.e('seeprivatekey'),
+					btn2text : self.app.localization.e('dcancel'),
 
 					class : 'zindex',
 
@@ -211,9 +200,9 @@ var accounts = (function(){
 				var address = $(this).closest('.addressTable').attr('address')
 
 				dialog({
-					html : "Do you really want to remove this address from this device?",
-					btn1text : "Remove",
-					btn2text : "Cancel",
+					html : self.app.localization.e('removeaddress'),
+					btn1text :  self.app.localization.e('remove'),
+					btn2text :  self.app.localization.e('dcancel'),
 
 					class : 'zindex',
 
@@ -223,8 +212,6 @@ var accounts = (function(){
 
 					}
 				})
-
-				
 
 			},
 
@@ -238,61 +225,54 @@ var accounts = (function(){
 
 		var renders = {
 			qrcode : function(el, c){
-				/*var qrcode = new QRCode(el[0], {
-					text: c,
-					width: 256,
-					height: 256
-				});*/
-			},
-			dumpkeyabout : function(){
 				
 			},
+			
 			dumpkey : function(address, private){
 
 
 				var privateWif = '';
 
-				el.c.addClass('privatedump')
-
-				el.c.find('.dumpaddress').html(address)
 
 				try{
 					var keyPair = self.app.user.keysPairFromPrivate(private)
 
-					privateWif = keyPair.toWIF().toString('hex')
+						privateWif = keyPair.toWIF().toString('hex')
 				}
 				catch(e){
-					console.log("ER", e)
+
+					sitemessage(self.app.localization.e('errorreload'))
+
+					return
+
 				}
 
-			
-				
-				self.shell({
+				self.fastTemplate('dumpkey', function(rendered){
 
-					name :  'dumpkey',
-					el :   el.dumpkey,
+					var d = dialog({
+						html : rendered,
+						class : "one dumpedkeydialog",
+						btn1text : self.app.localization.e('close'),
+						
+						clbk : function(el, d){
 
-					data : {
-						private : private,
-						address : address,
-						privateWif : privateWif
-					},
+							el.find('.copyvalue').on('click', function(){
 
-					animation : 'fadeIn',
-
-				}, function(p){
-				
-					renders.qrcode(p.el.find('.code'), private)
-
-					p.el.find('.copyvalue').on('click', function(){
-
-						var el = $(this).closest('.infotable').find('.value')
-
-
-						copyText(el)
-						sitemessage("Value was successfully copied")
+								var el = $(this).closest('.infotable').find('.value')
+		
+								copyText(el)
+		
+								sitemessage(self.app.localization.e('successcopied'))
+							})
+						}
 					})
+				}, {
+					private : private,
+					address : address,
+					privateWif : privateWif
 				})
+
+				
 			},
 			addresses : function(clbk){
 				self.shell({
@@ -331,9 +311,7 @@ var accounts = (function(){
 		}
 
 		var initEvents = function(){
-			
 			el.c.find('.add').on('click', actions.add)
-			el.c.find('.back').on('click', actions.back)
 		}
 
 		var make = function(){

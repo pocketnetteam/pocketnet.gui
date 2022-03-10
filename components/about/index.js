@@ -31,7 +31,6 @@ var about = (function(){
 				report : 'aboutHome',
 				mobile : true
 			})
-		
 
 			reports.push({
 				name : self.app.localization.e('contentCreators'),
@@ -39,8 +38,6 @@ var about = (function(){
 				report : 'aboutContentCreators',
 				mobile : true
 			})
-
-
 			
 			reports.push({
 				name : self.app.localization.e('howItWorks'),
@@ -54,6 +51,22 @@ var about = (function(){
 				name : 'FAQ',
 				id : 'about-faq',
 				report : 'faq',
+				mobile : true
+			})
+			
+			
+
+			reports.push({
+				name :  self.app.localization.e('download'),
+				id : 'about-download',
+				report : 'applications',
+				mobile : true
+			})
+
+			reports.push({
+				name :  'Easynode',
+				id : 'about-easynode',
+				report : 'easynode',
 				mobile : true
 			})
 
@@ -401,7 +414,7 @@ var about = (function(){
 								reports : reports,
 								each : helpers.eachReport,
 								lkey : app.localization.current(),
-								theme : self.app.platform.sdk.theme.current,
+								theme : self.app.platform.sdk.theme.current == "white" ? 'white' : 'black',
 		
 								selector : s
 							},
@@ -732,7 +745,8 @@ var about = (function(){
 				currentExternalEssense = null;
 
 
-				//$('#menu').removeClass('abs')
+				$('#panelWrapper').show();
+				$('#menu').show();
 
 				el = {};
 			},
@@ -750,17 +764,15 @@ var about = (function(){
 
 				initEvents();
 
+				$('#panelWrapper').hide();
+				$('#menu').hide();
+
 				make(function(){	
 									
 					p.clbk(null, p);
 
-					$('#panelWrapper').hide();
 					
-					setTimeout(function(){
-
-						$('#menu').hide();
 						
-					}, 500)
 				})
 
 				

@@ -1,0 +1,453 @@
+@import "../../css/__cssvar";
+
+#easynode{
+  .lenta {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 20px;
+
+    #post{
+      	background: rgb(var(--background-total-theme));
+  
+      .commentsWrapperHb, .iconWrapper{
+        display: none;
+      }
+  
+      .cntswrk{
+        &.formeta{
+          display: none;
+        }
+      }
+  
+      .cntscontent{
+        .paddingWrapper{
+          display: none;
+        }
+      }
+  
+      .statswrapperExtended{
+        display: none;
+      }
+    }
+  } 
+
+  .actionWrapper{
+    padding: 7 * @rhythm 20px;
+    text-align: center;
+    border-top: 1px solid rgb(var(--neutral-grad-1));  
+    border-bottom: 1px solid rgb(var(--neutral-grad-1));  
+
+    .button{
+      text-decoration: underline;
+      color: rgb(var(--color-bg-ac));  
+      font-weight: 700;
+      font-size: 3.6rem;
+      cursor: pointer;
+
+    }
+  }
+  .report{
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+  }
+  .container{
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0px 20px 20px 20px;
+  }
+
+  .faq{
+    .container{
+      max-width: 800px;
+    }
+  }
+
+  .calcWrapper{
+    margin-top: 0;
+    padding-top:@rhythm * 8;
+    border-top: 1px solid rgb(var(--neutral-grad-1));  
+    
+    .calc{
+      max-width: 800px;
+      margin: 0 auto;
+
+    }
+
+
+
+    .numbers{
+      font-size: 1.5em;
+            
+      .inputWrapper{
+        padding : 2 * @rhythm;
+      }
+
+      .amredits{
+          background: rgb(var(--color-yellow));
+          padding: 0.5 * @rhythm @rhythm;
+          border : 1px solid @color-pink;
+          border-radius: 10px;
+          outline: none;
+      }
+
+      .errWrapper{
+        margin-left: @rhythm;
+        font-size: .6em;
+        color: rgb(var(--color-bad));
+      }
+
+      .ihave{
+          font-weight: 700;
+      }
+    }
+
+    .totalNumbers{
+        background: rgba(var(--neutral-grad-4), 0.1);
+        padding : 3 * @rhythm 0;
+        overflow: hidden;
+        .totalRow{
+            float: left;
+            width: 50%;
+            .label{
+                
+                span{
+                    font-size: 0.8em;
+                    font-weight: 700;
+                }
+            }
+
+            .value{
+                
+                span{
+                    font-size: 2.2em;
+                    font-weight: 100;
+
+                    &.cur{
+                        font-weight: 300;
+                        font-size: 0.8em;
+                    }
+                }
+            }
+        }
+    }
+
+    .calculatordummy,
+    .calculator{
+        position: relative;
+    }
+
+    .calculatordummy{
+        min-height: 80px;
+
+        .calculatordummytext{
+            padding : 2 * @rhythm;
+
+            span{
+                font-size: 0.8em;
+                font-weight: 700;
+                color : rgb(var(--color-bg-ac-2));
+            }
+        }
+    }
+    .chwr{
+      position: absolute;
+      right : @rhythm;
+      top : 2 * @rhythm;
+    }
+
+    .rcptwrp{
+      background: rgb(var(--background-total-theme));
+      position : relative;
+      border-radius: 3px;
+    }   
+
+
+    .earnlabel{
+      padding : 1.5 * @rhythm 2 * @rhythm;
+      padding-top : 0;
+      font-weight: 700;
+      color : rgb(var(--color-bg-orange));
+      cursor: pointer;
+
+      span{
+          font-size: 0.8em;
+      }
+    }
+
+    .calcCaption{
+      padding : 1.5 * @rhythm 2 * @rhythm;
+      font-weight: 700;
+
+      span{
+        font-size: 1.5em;
+      }
+    }
+
+ }
+
+
+  .header {
+    font-size: 1.2em; 
+    .header__subtitle{
+      span{
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+    }
+  }
+
+  h2{
+    font-size: 2.5em;
+    color: #f0b811;
+    text-align: center;
+    text-transform: uppercase;
+    margin-top: 0;
+    padding: 10px 0;
+    
+    span{
+      color: #ff4800;
+    }
+  }
+
+  h3{
+    font-size: 2.5em;
+    margin-top: 30px;
+  }
+
+  .video {
+    max-width: 1024px;
+    min-height: 600px;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+
+    &__container {
+      max-width: 800px;
+      //min-height: 600px;
+      height: 100%;
+      width: 100%;
+      text-align: center;    
+
+
+    }
+
+    &__content {
+      min-height: 520px;
+      height: 100%;
+
+      //margin: 10px 0;
+    }
+
+  }
+
+  .faqWrapper{
+    max-width: 1280px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: @rhythm * 4;
+    padding-top: @rhythm * 4;
+
+    img{
+      border-radius: 10px;
+      border: 1px solid rgb(var(--neutral-grad-1));
+      .shadowSmaller();
+    }
+
+    .faq{
+      padding: 0 20px;
+
+      .group{
+        margin-bottom: 4 * @rhythm;
+  
+        .groupCaption{
+          font-size: 2.5em;
+          font-weight: 700;
+          padding-bottom: @rhythm;
+          color : rgb(var(--color-txt-orange));
+        }
+        .groupCnt{
+          .question{
+            font-size: 1.5em;
+            padding-bottom: 6 * @rhythm;
+            max-width: 700px;
+  
+            .questiontop{
+              display: flex;
+              justify-content: space-between;
+            }
+  
+            .questionName{
+              padding-bottom: 2 * @rhythm;
+              font-weight: 700;
+              color : rgb(var(--color-txt-gray));
+              font-size: 1.5em;
+              max-width: 85%;
+            }
+  
+            .answer{
+              font-size : 0.8em;
+              padding-bottom: 20px !important;
+  
+              a{
+                text-decoration: underline;
+                color : rgb(var(--color-txt-ac));
+              }
+              .image{
+                width:100% !important;
+                max-width: 700px;
+                position: relative;
+                img{
+                  width:100% !important;
+                }
+              }
+  
+              div{
+                padding-bottom: @rhythm;
+              }
+            }
+  
+            .share{
+              margin-top: @rhythm;
+              color : #ff6e84;
+              font-size: 0.7em;
+              cursor: pointer;
+              &:hover{
+  
+                color : rgb(var(--color-txt-ac));
+              }
+              span{
+                padding-right: 2px;
+              }
+            }
+  
+            .icon{
+              background: rgb(var(--color-bg-ac));
+              color : rgb(var(--text-on-bg-ac-color));
+              cursor: pointer;
+              .transition(0.3s);
+              width: 44px;
+              height: 44px;
+              line-height: 44px;
+              text-align: center;
+              border-radius: 50%;
+              font-size: 0.6em;
+  
+              &:hover{
+                background : rgb(var(--color-txt-ac));
+              }						
+            }
+          }
+        }
+      }
+    }
+
+
+	}
+
+
+  @media (max-width: 400px){
+
+    h2, h3{
+      font-size: 1.5em;
+    }
+
+    .actionWrapper .button{
+      font-size: 2.4rem;
+    }
+
+    .calcWrapper{
+
+      .inputWrapper{
+        font-size: .9em;
+      }
+
+      .totalNumbers{
+
+
+        .totalRow{
+
+            .value{
+                
+                span{
+                    font-size: 1.2em!important;
+  
+                }
+            }
+        }
+    }
+    }
+
+    .video{ 
+      max-width: 100%;
+      min-height: 100%;
+      .video__content{
+        max-width: 100%;
+        min-height: 100%;
+        margin: 20px 0;
+      }
+    }
+
+    
+  }
+}
+
+@media (max-width: 400px){
+  #easynode{
+    .header{
+      h2{
+        font-size: 1.5em !important;
+      }
+    }
+    
+    .numbers{
+      font-size: 1.2em !important;
+    }
+    .button{
+      font-size: 1.2rem !important;
+    }
+    .calcCaption{
+      span{
+        font-size: 1.3em !important;
+      }
+    }
+  }
+}
+
+.wndeasynode{
+  .wndinner{
+    width: 90%;
+    max-width: 860px;
+    height: 95%;
+  }
+
+  #easynode{
+    .header{
+      margin-top : 0;
+      border-top : 0;
+      
+    }
+
+    .container{
+      padding-top : 0;
+    }
+    
+  }
+}
+
+@media only screen and (max-width: 768px){
+	#easynode{
+		.faqWrapper{
+      img{
+        width: 100%;
+      }
+    }
+	}
+}
+

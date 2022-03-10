@@ -14,12 +14,55 @@ if (typeof _Electron != 'undefined') {
 }
 
 
+/*
+
+    {
+        NOT_SUPPORTED = 0,
+
+        TX_DEFAULT = 1,
+        TX_COINBASE = 2,
+        TX_COINSTAKE = 3,
+
+        ACCOUNT_USER = 100,
+        ACCOUNT_VIDEO_SERVER = 101,
+        ACCOUNT_MESSAGE_SERVER = 102,
+        ACCOUNT_SETTING = 103,
+
+        CONTENT_POST = 200,
+        CONTENT_VIDEO = 201,
+        CONTENT_ARTICLE = 202,
+        // CONTENT_SERVERPING = 203,
+
+        CONTENT_COMMENT = 204,
+        CONTENT_COMMENT_EDIT = 205,
+        CONTENT_COMMENT_DELETE = 206,
+
+        CONTENT_DELETE = 207,
+
+        BOOST_CONTENT = 208,
+
+        ACTION_SCORE_CONTENT = 300,
+        ACTION_SCORE_COMMENT = 301,
+
+        ACTION_SUBSCRIBE = 302,
+        ACTION_SUBSCRIBE_PRIVATE = 303,
+        ACTION_SUBSCRIBE_CANCEL = 304,
+
+        ACTION_BLOCKING = 305,
+        ACTION_BLOCKING_CANCEL = 306,
+
+        ACTION_COMPLAIN = 307,
+    };
+
+*/
+
+
 Platform = function (app, listofnodes) {
 
     var self = this;
 
     self.app = app;
-    
+
     self.lasttimecheck = null
     self.real = {
         'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd' : true,
@@ -79,7 +122,13 @@ Platform = function (app, listofnodes) {
         'PU6LDxDqNBDipG4usCqhebgJWeA4fQR5R4' : true,
         'P8rnj1gSaAQJ1YkAAthSgmLKiDfspb98GP' : true,
         'PUXG7rfX19Xoco1FXjXBW8qt6NEZpp8maL' : true,
-        'PSanUFKb1vd5ua4U3BXMmsSZ2zm3sN2nyj' : true
+        'PSanUFKb1vd5ua4U3BXMmsSZ2zm3sN2nyj' : true,
+        'PERF5kDM32ebkq8SeSj8ZaLqfCoqz8FRgh' : true,
+        'PGD5jUBQ7qNnHDuW85RRBxY1msywEdCm7r' : true,
+        'PApFYMrbm3kXMV7kjrEG1v6ULv6ZFDHb9j' : true,
+        'PUBRMTAUhy51gkbuP1tRJLMMAzEDt9C2X6' : true,
+        'P9i55BxFWpjMyqgHyCKtazDN1HDiZxTSzJ' : true,
+        'PLLDTFuBhb4FRPt811bTPjgaYgqoj16hVV' : true
     }
 
     self.nvadr = {
@@ -90,7 +139,7 @@ Platform = function (app, listofnodes) {
         'PU7D6X5bNUdEiuUGWGLp8C6TjSsB2hzHxL' : true,
         'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz' : true
     }
-    
+
 
     self.testaddresses = [
         'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82',
@@ -100,6 +149,8 @@ Platform = function (app, listofnodes) {
         'TSisNge5kisi7cwGRwmUBuZQWZFD8cRoG8'
     ];
 
+    if (window.IpcBridge)
+        self.ipcbridge = new window.IpcBridge().listen()
 
     /*self.testchataddresses = ['PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PQvcVW7ZV4YPKC1QhxXdT8ppUakCejWYTA']*/
     self.testchataddresses = ['P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m', 'PFnN8SExxLsUjMKzs2avdvBdcA3ZKXPPkF', 'PVgqi72Qba4aQETKNURS8Ro7gHUdJvju78', 'P9tRnx73Sw1Ms9XteoxYyYjvqR88Qdb8MK', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz', 'PEHrffuK9Qiqs5ksqeFKHgkk9kwQN2NeuS', 'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz','PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PK6Kydq5prNj13nm5uLqNXNLFuePFGVvzf', 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s', 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc', 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8', 'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd']
@@ -281,63 +332,94 @@ Platform = function (app, listofnodes) {
         return {
 
             ui: {
-                windows: {
-    
+                android : {
                     appname: app.meta.fullname,
-                    id: "#windows",
+                    id: "android",
+                    text: {
+                        name: "Android",
+                        download: self.app.localization.e('e132221'),
+                        label: self.app.localization.e('e132233')
+                    },
+
+                    github: {
+                        name: 'Bastyon' + ".apk",
+                        url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
+                        page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
+                    },
+        
+                    icon: '<i class="fab fa-android"></i>',
+        
+                    modile : true,
+                    image : 'applications_android.png',
+
+                    href: 'https://play.google.com/store/apps/details?id=pocketnet.app',
+                    hreflabel : 'downloadplaystore',
+                    githublabel : 'downloadgithub'
+                },
+
+                windows: {
+
+                    appname: app.meta.fullname,
+                    id: "windows",
                     text: {
                         name: "Windows",
                         download: self.app.localization.e('e13222'),
                         label: self.app.localization.e('e13223')
                     },
-        
+
                     icon: '<i class="fab fa-windows"></i>',
-        
+
                     github: {
-                        name: 'Pocketnet' + "Setup.exe",// app.meta.fullname + "Setup.exe",
+                        name: 'Bastyon' + "Setup.exe",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
                         page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
                     },
-                    
+                    image : 'applications_windows.png',
+                   
+
+                    node : true
                 },
 
                 macos: {
                     appname: app.meta.fullname,
-                    id: '#macos',
+                    id: 'macos',
                     text: {
                         name: "macOS",
                         download: self.app.localization.e('e13222'),
                         label: self.app.localization.e('e132232')
                     },
-        
+
                     icon: '<i class="fab fa-apple"></i>',
-        
+                    image : 'applications_macos.png',
                     github: {
-                        name: 'Pocketnet'+ "Setup.dmg", //app.meta.fullname + "Setup.dmg",
+                        name: 'Bastyon'+ "Setup.dmg", //app.meta.fullname + "Setup.dmg",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
                         page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
                     },
                 },
         
-                currentos: {
+                linux: {
                     appname: app.meta.fullname,
-                    id: "#linux",
+                    id: "linux",
                     text: {
                         name: "Linux",
                         download: self.app.localization.e('e13222'),
                         label: self.app.localization.e('e13224')
                     },
         
+                    image : 'applications_linux.png',
                     icon: '<i class="fab fa-linux"></i>',
-        
+
                     github: {
-                        name: 'Pocketnet' + "Setup.deb",//  self.app.meta.fullname + "Setup.deb",
+                        name: 'Bastyon' + "Setup.deb",//  self.app.meta.fullname + "Setup.deb",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
                         page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
-                    }
+                    },
+
+                    node : true
                 }
             },
-    
+
             node: {
                 windows: {
                     appname: self.app.localization.e('e13225'),
@@ -346,27 +428,27 @@ Platform = function (app, listofnodes) {
                         download: self.app.localization.e('e13226'),
                         label: self.app.localization.e('e13227')
                     },
-    
+
                     icon: '<i class="fab fa-windows"></i>',
-    
+
                     github: {
                         name: "pocketnetcore_0.18.13_win_x64_setup.exe",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
                         page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
                     }
                 },
-    
+
                 linux: {
                     appname: self.app.localization.e('e13225'),
-    
+
                     text: {
                         name: "Linux",
                         download: self.app.localization.e('e13226'),
                         label: self.app.localization.e('e13228')
                     },
-    
+
                     icon: '<i class="fab fa-linux"></i>',
-    
+
                     github: {
                         name: "Pocketnet_linux_x64.AppImage",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
@@ -376,7 +458,6 @@ Platform = function (app, listofnodes) {
             }
         }
     }
-
 
     self.errorHandler = function (key, action, akey) {
 
@@ -440,7 +521,7 @@ Platform = function (app, listofnodes) {
                                     html: self.app.localization.e('canSpendError'),
                                     btn1text: self.app.localization.e('daccept'),
 
-                                    class: 'one'
+                                    class: 'zindex one'
                                 })
                             }
                             else {
@@ -471,7 +552,7 @@ Platform = function (app, listofnodes) {
                                                 html: self.app.localization.e('noMoneyError'),
                                                 btn1text: self.app.localization.e('daccept'),
 
-                                                class: 'one'
+                                                class: 'zindex one'
                                             })
                                         }
                                     })
@@ -497,7 +578,7 @@ Platform = function (app, listofnodes) {
                                         html: self.app.localization.e('noMoneyError'),
                                         btn1text: self.app.localization.e('daccept'),
 
-                                        class: 'one'
+                                        class: 'zindex one'
                                     })
                                 }
                                 else {
@@ -505,7 +586,7 @@ Platform = function (app, listofnodes) {
                                         html: self.app.localization.e('waitConf'),
                                         btn1text: self.app.localization.e('daccept'),
 
-                                        class: 'one'
+                                        class: 'zindex one'
                                     })
                                 }
 
@@ -577,7 +658,7 @@ Platform = function (app, listofnodes) {
 
         ///// NODE
 
-        
+
         "60": {
             message: function () {
                 return self.app.localization.e('e13257_1')
@@ -774,7 +855,7 @@ Platform = function (app, listofnodes) {
 
         "11": {
             message: function () {
-                return self.app.localization.e('unexperror11')
+                return self.app.localization.e('dataenteredincorrectly')
             }
         },
 
@@ -844,18 +925,23 @@ Platform = function (app, listofnodes) {
             },
             action: function () {
 
+                globalpreloader(true)
+
 
                 self.app.platform.sdk.user.waitActions(function (r) {
 
                     if (!r) {
 
                         self.app.platform.sdk.relayTransactions.send(function(action){
+                            
 
                             if(!action){
 
                                 var a = self.app.platform.sdk.address.pnet().address
 
                                 self.sdk.users.getone(a, function(){
+
+                                    globalpreloader(false)
 
                                     var exist = self.sdk.users.storage[a]
 
@@ -864,7 +950,7 @@ Platform = function (app, listofnodes) {
                                             html: self.app.localization.e('checkScoreError'),
                                             btn1text: self.app.localization.e('dyes'),
                                             btn2text: self.app.localization.e('dno'),
-                
+
                                             success: function () {
                                                 self.app.nav.api.load({
                                                     open: true,
@@ -873,42 +959,74 @@ Platform = function (app, listofnodes) {
                                                 })
                                             },
                                             fail: function () {
-                
-                                            }
+
+                                            },
+
+                                            class : 'zindex'
                                         })
                                     }
                                     else{
 
-
                                         dialog({
                                             html: self.app.localization.e('waitConf'),
                                             btn1text: self.app.localization.e('daccept'),
-                
+
                                             class: 'one'
                                         })
+
+
 
                                     }
 
                                 }, false, true)
-                                
+
+                            }
+                            else{
+                                globalpreloader(false)
                             }
 
                         })
 
                     }
                     else {
-                        dialog({
-                            html: self.app.localization.e('waitConf'),
-                            btn1text: self.app.localization.e('daccept'),
 
-                            class: 'one'
+                        self.sdk.ustate.meUpdate(function(mestate){
+
+                            globalpreloader(false)
+
+                            if(!mestate || _.isEmpty(mestate)){
+
+                                dialog({
+                                    html: self.app.localization.e('accountnotfound'),
+                                    btn1text: self.app.localization.e('daccept'),
+
+                                    class: 'zindex one'
+                                })
+
+                            }
+                            else{
+
+                                dialog({
+                                    html: self.app.localization.e('waitConf'),
+                                    btn1text: self.app.localization.e('daccept'),
+
+                                    class: 'zindex one'
+                                })
+
+                            }
+
                         })
+
+
+
                     }
 
                 })
 
 
-            }
+            },
+
+            relay: true
 
         },
 
@@ -948,15 +1066,15 @@ Platform = function (app, listofnodes) {
 
             },
 
-            
+
         }
     }
 
     self.parseUrl = function (url) {
 
-        
+
         url = url.replace("http:", "https:").replace("http//", "https://")
-        
+
         var meta = parseVideo(url);
 
         var _url = null;
@@ -1011,7 +1129,7 @@ Platform = function (app, listofnodes) {
 
                 var _url = url;
 
-                if (_url.endsWith('/')) 
+                if (_url.endsWith('/'))
                     _url = _url.substr(0, _url.length - 1)
 
                 var s = _url.split("/");
@@ -1895,8 +2013,7 @@ Platform = function (app, listofnodes) {
 
             p.horizontal = true
 
-            var tpl = `<div class="horizontalLentaWrapper"><div class="horizontalLentacaption"><span>`+(p.caption || '')+`</span></div><div class="showmorebywrapper"><div class="showmoreby"></div></div>
-            <div class="controlleft controlhor" dir="left"><i class="fas fa-chevron-left"></i></div><div class="controlright controlhor"><i class="fas fa-chevron-right"></i></div>
+            var tpl = `<div class="horizontalLentaWrapper"><div class="horizontalLentacaption"><span>`+(p.caption || '')+`</span><div class="controlhors"><div class="controlleft controlhor" dir="left"><i class="fas fa-arrow-left"></i></div><div class="controlright controlhor"><i class="fas fa-arrow-right"></i></div></div></div><div class="showmorebywrapper"><div class="showmoreby"></div></div>
             </div>`
 
             el.html(tpl)
@@ -1959,7 +2076,7 @@ Platform = function (app, listofnodes) {
                             setTimeout(function(){
                                 p.hcnt.addClass('hasitems')
                             }, 300)
-                            
+
                         }
 
                         if(p.hasshares) p.hasshares(shares)
@@ -1973,10 +2090,11 @@ Platform = function (app, listofnodes) {
                     period : p.period,
                     filter : p.filter,
                     ended : p.ended,
-                    afterload : p.afterload
+                    afterload : p.afterload,
+                    count : p.count
 
                 },
-                
+
                 clbk : clbk
             })
         },
@@ -1997,7 +2115,7 @@ Platform = function (app, listofnodes) {
                 mid : id,
                 animation : false,
                 essenseData : {
-                    
+
                     notscrollloading : true,
                     txids : ids,
                     comments : p.comments,
@@ -2007,7 +2125,7 @@ Platform = function (app, listofnodes) {
                     ready : p.ready,
                     second : true
                 },
-                
+
                 clbk : clbk
             })
         },
@@ -2029,7 +2147,7 @@ Platform = function (app, listofnodes) {
                     open : true,
                     id : 'imageGalleryEdit',
                     inWnd : true,
-            
+
                     essenseData : {
                         edit : true,
                         initialValue : 0,
@@ -2038,28 +2156,28 @@ Platform = function (app, listofnodes) {
                         crop : {
                             aspectRatio : p.aspectRatio || null,
                             style : 'apply',
-                            autoCropArea : 1,
+                            autoCropArea : p.autoCropArea || 1,
                         },
-                
+
                         success : function(i, editclbk){
 
                             resize(images[0].original, p.w || 1920, p.h || 1080, function(resized){
                                 var r = resized.split(',');
-                
+
                                 if (r[1]){
-                
+
                                     editclbk()
 
                                     resolve(resized)
-                
+
                                 }
                                 else{
                                     reject("error")
                                 }
-                            
+
                             })
 
-            
+
                         }
                     }
 
@@ -2095,7 +2213,9 @@ Platform = function (app, listofnodes) {
                             video : p.video,
                             autoplay : p.autoplay,
                             opensvi : p.opensvi,
-                            minimize : p.minimize
+                            minimize : p.minimize,
+                            postclass : p.postclass,
+                            openapi : true
                         }
                     })
 
@@ -2121,8 +2241,7 @@ Platform = function (app, listofnodes) {
                     shareobj: share,
                     nocommentcaption : true,
                     eid: 'postpreview',
-                    //comments : 'no',
-                    commentsid : 'a73e92e41efb9df2d496db75a6ecad2b5713fb37a858a8e158253d78c7dd89db',
+                    comments : 'no',
                     video : false,
                     autoplay : false,
                     preview : true,
@@ -2181,13 +2300,13 @@ Platform = function (app, listofnodes) {
                         el: el,
                         eid: id + (p.eid || ""),
                         clbk: clbk,
-    
+
                         essenseData: {
                             id : id,
                             openapi : true
                         }
                     })
-    
+
                 })
             }
 
@@ -2211,12 +2330,12 @@ Platform = function (app, listofnodes) {
                     })
                 }
 
-                
+
             }
 
-            
 
-            
+
+
         },
 
         transaction : function(txid, el, clbk, p){
@@ -2252,17 +2371,128 @@ Platform = function (app, listofnodes) {
                     fromtop : true,
                     commentPs : additional.commentPs || p.commentPs,
                     openapi : p.openapi,
-                  
+
                 },
 
                 clbk : clbk
             })
         },
 
-        
+
     }
 
     self.ui = {
+
+        pipvideo : function(txid, clbk, d){
+
+            if(!d) d = {}
+        
+            var p = {
+                href : 'post?s=' + txid,
+                clbk : clbk,
+                essenseData : {
+                    share : txid,
+                    video : true,
+                    autoplay : true,
+                    pip : true,
+                    startTime : d.startTime || 0
+                },
+
+                expand : function(d){
+
+                    if(!d) d = {}
+
+                    self.app.nav.api.load({
+                        open : true,
+                        href : 'post?s=' + txid,
+                        inWnd : true,
+                        history : true,
+                        essenseData : {
+                            share : txid,
+                            video : true,
+                            autoplay : true,
+                            startTime : d.startTime || 0
+                        }
+                    })
+
+                }
+            }
+
+            self.app.actions.playingvideo(null)
+            self.app.actions.pipwindow(p)
+            self.matrixchat.core.backtoapp()
+        },
+
+        popup : function(key, always, data){
+
+			var showed = localStorage['popup_' + key] || false;
+
+			if(!showed || always){
+
+				app.nav.api.load({
+					open : true,
+					id : 'popup',
+
+					key : key,
+					inWnd : true,
+
+					essenseData : {
+						key : key,
+						always : always,
+						data : data
+					}
+				})
+			}
+
+        },
+
+        articledecoration : function(wr, share, extend){
+            var caption = wr.find('.shareBgCaption')
+            var capiontextclass = 'caption_small'
+
+            if(share.caption.length > 10) capiontextclass = 'caption_medium'
+            if(share.caption.length > 60) capiontextclass = 'caption_long'
+
+            caption.addClass(capiontextclass)
+
+            if(extend){
+                wr.find('.article_carousel').each(function(){
+                    self.app.platform.ui.carousel($(this))
+                })
+
+                wr.find('.article_this_embed').each(function(){
+                    self.app.platform.ui.embeding($(this))
+                })
+            }
+
+            wr.find('.articleCover').imagesLoadedPN({imageAttr : true}, function (image) {
+
+                var aspectRatio = 0.6
+                var small = false
+
+                _.each(image.images, function(img){
+
+                    var _img = img.img;
+                    aspectRatio = _img.naturalHeight / _img.naturalWidth
+
+                    if(_img.naturalHeight < 400 || _img.naturalWidth < 400){
+                        small = true
+                    }
+
+                })
+
+                wr.addClass('ready')
+
+                if(small){
+                    caption.addClass('smallimage')
+                }
+
+                if(aspectRatio > 1 && !small){
+                    caption.addClass('verticalcover')
+                }
+
+            })
+        },
 
         changeloc : function(_clbk){
             var items = []
@@ -2294,13 +2524,8 @@ Platform = function (app, listofnodes) {
 
         embeding : function(el){
 
-           
-
             var h = el.attr('href')
             var w = new window.PNWIDGETS()
-
-
-            console.log("E", el[0], w, h)
 
             w.makefromurl(el[0], h, true)
 
@@ -2314,7 +2539,7 @@ Platform = function (app, listofnodes) {
             images.imagesLoadedPN({ imageAttr: true}, function (image) {
 
                 var aspectRatio = 0
-								
+
                 _.each(image.images, function(img){
                     var _img = img.img;
 
@@ -2334,17 +2559,17 @@ Platform = function (app, listofnodes) {
                 el.owlCarousel({
                     items: 1,
                     dots: true,
-                    nav: !isMobile(),
+                    nav: !self.app.mobileview,
                     navText: [
                         '<i class="fas fa-chevron-left"></i> ',
                         '<i class="fas fa-chevron-right"></i>'
                         ]
-                  
+
                 });
 
                 if (clbk)
                     clbk()
-                
+
             })
 
 
@@ -2355,11 +2580,11 @@ Platform = function (app, listofnodes) {
             var dev = self.sdk.usersl.storage[address] && self.sdk.usersl.storage[address].dev
 
             if (dev){
-                
+
                 return 'dev';
 
-            } else 
-            
+            } else
+
             if ( self.real[address]){
 
                 return 'real';
@@ -2401,7 +2626,7 @@ Platform = function (app, listofnodes) {
 
         },
 
-      
+
         images : function(allimages, initialValue, clbk){
 
             if(!_.isArray(allimages)) allimages = [allimages]
@@ -2420,7 +2645,7 @@ Platform = function (app, listofnodes) {
 
             /*var num = findIndex(images, function(image){
 
-                if (image.src == initialValue) return true;						
+                if (image.src == initialValue) return true;
 
             })*/
 
@@ -2482,7 +2707,7 @@ Platform = function (app, listofnodes) {
                     id : 'share',
                     inWnd : true,
                     eid : 'postin',
-                    
+
                     clbk : function(e, p){
                         globalpreloader(false)
                     },
@@ -2491,7 +2716,7 @@ Platform = function (app, listofnodes) {
                         close : function(){
                         },
                         post : function(){
-                        },	
+                        },
                         absolute : true,
                         repost  : p.repost,
                         videoLink: p.videoLink,
@@ -2539,31 +2764,12 @@ Platform = function (app, listofnodes) {
 
                 success: function () {
 
-                   /* if (!isMobile()) {
-
-                        app.nav.api.load({
-
-                            open: true,
-                            href: 'userpage?id=accounts',
-                            history: true,
-                            handler: true,
-
-                            essenseData: {
-                                dumpkey: !isMobile()
-                            },
-
-                            clbk: function (p, s) {
-
-                            }
-                        })
-
-                    }*/
-
+             
                     app.nav.api.load({
 
                         open: true,
-                        inWnd: !isMobile(),
-                        history: isMobile(),
+                        inWnd: true,
+                        history: true,
                         href: 'pkview',
 
                         essenseData: {
@@ -2594,7 +2800,7 @@ Platform = function (app, listofnodes) {
         },
 
         wallet : {
-            
+
             send : function(p, clbk, el){
 
                 if(!p) p = {}
@@ -2604,6 +2810,59 @@ Platform = function (app, listofnodes) {
                 globalpreloader(true, true)
 
                 p.action = p.htls ? 'htls' : 'send'
+                p.class = 'api'
+                p.api = true
+
+
+                var es = null
+
+                return new Promise((resolve, reject) => {
+
+                    p.sendclbk = function(d){
+
+                        if (p.roomid && d.txid){
+                            self.matrixchat.shareInChat.url(p.roomid, app.meta.protocol + '://i?stx=' + d.txid) /// change protocol
+                        }
+
+                        resolve(d)
+
+                        if(es && es.container) es.container.close()
+                    }
+
+                    app.nav.api.load({
+                        open : true,
+                        id : 'wallet',
+                        inWnd : el ? false : true,
+                        el : el ? el : null,
+                        eid : id,
+                        mid : id,
+                        animation : false,
+                        essenseData : p,
+                        clbk : function(e, _p){
+
+                            es = _p
+
+                            globalpreloader(false)
+
+                            if(clbk) clbk(e, _p)
+                        }
+                    })
+
+                })
+
+                
+                
+            },
+
+            buy : function(p, clbk, el){
+
+                if(!p) p = {}
+
+                var id = 'papiwalletbuy'
+
+                globalpreloader(true, true)
+
+                p.action = p.htls ? 'htls' : 'buy'
                 p.class = 'api'
                 p.api = true
                 
@@ -2654,7 +2913,6 @@ Platform = function (app, listofnodes) {
             if(!_p) _p = {}
 
             var error = function(e){
-                console.log(e)
                 sitemessage(e)
 
                 topPreloader2(100)
@@ -2668,12 +2926,12 @@ Platform = function (app, listofnodes) {
 
                 p.progress = function(key, percent){
                     topPreloader2(percent, self.app.localization.e('downloadingVideo'))
-                }   
+                }
 
                 p = _.extend(p, _p)
 
                 self.sdk.localshares.saveShare(share, p).then(r => {
-                    
+
                     sitemessage(self.app.localization.e('successdownloaded'))
 
                     topPreloader2(100)
@@ -2695,8 +2953,8 @@ Platform = function (app, listofnodes) {
                             self.sdk.localshares.deleteShare(share.txid).then(r => {
 
                                 if(clbk) clbk(share.txid, true)
-        
-                            }).catch(error) 
+
+                            }).catch(error)
 
                             _clbk()
 
@@ -2715,56 +2973,56 @@ Platform = function (app, listofnodes) {
                         if (share.itisvideo()){
 
                             var info = share.url ? (app.platform.sdk.videos.storage[share.url] || {}).data || null : null
-            
+
                             if (info){
-            
+
                                 var items = _.map(deep(info, 'original.streamingPlaylists.0.files') || [], function(file){
                                     return {
                                         text: file.resolution.label,
                                         action: function (clbk) {
-            
+
                                             save({resolutionId : file.resolution.id})
-            
+
                                             clbk()
-            
+
                                         }
-                                    }   
+                                    }
                                 })
-            
+
                                 if(info && info.original && info.original.isLive){
-            
+
                                     dialog({
                                         html: "Please wait, you will be able to download the video when the broadcast recording appears",
                                         btn1text: self.app.localization.e('daccept'),
                                         class : 'one',
                                         success: function () {
-                    
+
                                         }
                                     })
-            
+
                                     return
                                 }
-            
+
                                 if(!items.length){
-            
+
                                     dialog({
                                         html: "Please wait, the video hasn't been transcoded yet",
                                         btn1text: self.app.localization.e('daccept'),
                                         class : 'one',
                                         success: function () {
-                    
+
                                         }
                                     })
-            
+
                                     return
-            
+
                                 }
-            
+
                                 menuDialog({
                                     header : self.app.localization.e('selectQuality'),
                                     items: items
                                 })
-            
+
                             }
                             else{
                                 error('noinfo')
@@ -2780,7 +3038,7 @@ Platform = function (app, listofnodes) {
                 }]
             })
 
-            
+
 
         }
     }
@@ -2788,23 +3046,23 @@ Platform = function (app, listofnodes) {
     self.api = {
 
         keypair: function (m) {
-
-            var keyPair = null;
+            let keyPair;
 
             if (bitcoin.bip39.validateMnemonic(m)) {
-                var seed = bitcoin.bip39.mnemonicToSeedSync(m)
+                const seed = bitcoin.bip39.mnemonicToSeedSync(m);
 
-                var d = bitcoin.bip32.fromSeed(seed).derivePath(app.platform.sdk.address.path(0)).toWIF()
-
-                keyPair = bitcoin.ECPair.fromWIF(d)
+                keyPair = self.sdk.address.dumpKeys(0, seed);
             }
             else {
 
-                try { keyPair = bitcoin.ECPair.fromPrivateKey(Buffer.from(m, 'hex')) }
-
-                catch (e) {
-                    try {keyPair = bitcoin.ECPair.fromWIF(m) }
-                    catch (e) {}
+                try {
+                    keyPair = bitcoin.ECPair.fromPrivateKey(Buffer.from(m, 'hex'));
+                } catch (e) {
+                    try {
+                        keyPair = bitcoin.ECPair.fromWIF(m);
+                    } catch (e) {
+                        // TODO: Do something...
+                    }
                 }
 
             }
@@ -2817,7 +3075,7 @@ Platform = function (app, listofnodes) {
         },
 
         name: function (address) {
-            var n = deep(app, 'platform.sdk.usersl.storage.' + address + '.name') || deep(app, 'platform.sdk.users.storage.' + address + '.name');
+            var n = deep(self.sdk.usersl.storage, address + '.name') || deep(self.sdk.users.storage, address + '.name');
 
             if (n) {
                 n = this.clearname(n)
@@ -2827,9 +3085,9 @@ Platform = function (app, listofnodes) {
         },
 
         authorlink: function (address, namelink) {
-            var name = deep(app, 'platform.sdk.usersl.storage.' + address + '.name');
+            var name = deep(self.sdk.usersl.storage, address + '.name');
 
-            if (name && (!isMobile() || namelink)) return encodeURIComponent(name.toLowerCase());
+            if (name && (!self.app.mobileview || namelink)) return encodeURIComponent(name.toLowerCase());
 
             else return 'author?address=' + address
         },
@@ -2869,7 +3127,7 @@ Platform = function (app, listofnodes) {
                 h += '</div>'
 
                 h += '<div class="fullcell label">'
-                h +=  (p.text || 'To the top') 
+                h +=  (p.text || 'To the top')
                 h += '</div>'
 
                 h += '<div class="fullcell label likeicon">'
@@ -2953,7 +3211,7 @@ Platform = function (app, listofnodes) {
                         //_scrollTop(0)
                     }
 
-                   
+
                 }
             }
 
@@ -3050,19 +3308,24 @@ Platform = function (app, listofnodes) {
                     ball()
                 }
 
+                if(p.text || p.textHover){
 
-                h += '            <div class="plissingTipCell">'
-                h += '                <div class="plissingTip all">'
-                h += (p.text || '')
-                h += '                </div>'
+               
 
-                if (p.textHover) {
-                    h += '                <div class="plissingTip hover">'
-                    h += (p.textHover || '')
+                    h += '            <div class="plissingTipCell">'
+                    h += '                <div class="plissingTip all">'
+                    h += (p.text || '')
                     h += '                </div>'
-                }
 
-                h += '            </div>'
+                    if (p.textHover) {
+                        h += '                <div class="plissingTip hover">'
+                        h += (p.textHover || '')
+                        h += '                </div>'
+                    }
+
+                    h += '            </div>'
+
+                }
 
                 if (p.left) {
                     ball()
@@ -3098,6 +3361,10 @@ Platform = function (app, listofnodes) {
 
             self.init()
 
+            if(p.time){
+                setTimeout(self.destroy, p.time)
+            }
+
             return self;
 
         },
@@ -3109,16 +3376,15 @@ Platform = function (app, listofnodes) {
 
                     html : content(),
                     clbk : function(el){
-                        if(clbk) 
-                        
+                        if(clbk)
+
                             clbk(el, null, function(){
-                                console.log('close')
                                 dialog.destroy()
                             })
                     },
 
                     app : app
-                    
+
                 })
             }
 
@@ -3137,10 +3403,10 @@ Platform = function (app, listofnodes) {
 
             if(!p) p = {}
 
-            if (isTablet() || isMobile() || window.cordova || p.dlg){
+            if (self.app.mobileview || p.dlg){
                 return self.api.mobiletooltip(_el, content, clbk, p)
             }
-            
+
             if (_el.hasClass('tooltipstered')) return;
 
             if (!p) p = {};
@@ -3176,7 +3442,7 @@ Platform = function (app, listofnodes) {
                         }catch(e){
 
                         }
-                        
+
 
                     })
                 }
@@ -3192,6 +3458,8 @@ Platform = function (app, listofnodes) {
 
             return _el
         },
+
+        
 
         electron: {
             storage: {},
@@ -3275,7 +3543,7 @@ Platform = function (app, listofnodes) {
 
             if(!me) return
 
-            var r = me.relation(address, type) 
+            var r = me.relation(address, type)
 
             return r
         },
@@ -3294,7 +3562,6 @@ Platform = function (app, listofnodes) {
 
                     function (tx, error) {
 
-                        console.log('tx, error', tx, error)
 
                         if (tx) {
                             var me = deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value.toString('hex'))
@@ -3440,7 +3707,7 @@ Platform = function (app, listofnodes) {
                             else{
                                 self.api.actions.managesubscribelist(address, true, lt.private)
                             }
-                            
+
                         }
 
                         topPreloader(100)
@@ -3535,7 +3802,7 @@ Platform = function (app, listofnodes) {
 
             htls : function(id){
                 self.app.platform.ui.wallet.send({id : id}, function(){
-					
+
 				})
             },
 
@@ -3548,17 +3815,17 @@ Platform = function (app, listofnodes) {
                 var temp = _.find(self.sdk.node.transactions.temp.share, function (s) {
                     return s.txid == id
                 })
-                
+
                 if (temp){
                     share = new pShare();
                     share._import(temp);
                     share.temp = true;
                     share.address = self.app.platform.sdk.address.pnet().address
                 }
-                
+
             }
 
-  
+
             var address = share.address
 
             var d = {};
@@ -3612,8 +3879,8 @@ Platform = function (app, listofnodes) {
                                 {
                                     cordova.InAppBrowser.open(href, '_system');
                                 }
-                                
-                               
+
+
                             }
                             else{
                                 window.open(href, '_blank');
@@ -3627,15 +3894,29 @@ Platform = function (app, listofnodes) {
                             var ct = new Settings();
                             ct.pin.set(unpin ? '' : share.txid);
 
-            
+                            if (!self.sdk.accountsettings.storage[share.address]){
+
+                                self.sdk.accountsettings.storage[share.address] = {};
+                            }
+
+                            if (unpin){
+
+                                self.sdk.accountsettings.storage[share.address].pin = null;
+
+                            } else {
+
+                                self.sdk.accountsettings.storage[share.address].pin = share.txid;
+                            }
+
+
                             self.app.platform.sdk.node.account.accSet(ct, function(err, alias){
 
 
-                                
-            
+
+
                                 if(!err){
 
-                                    
+
 
                                     if (clbk){
 
@@ -3644,11 +3925,11 @@ Platform = function (app, listofnodes) {
 
                                 } else {
                                     self.app.platform.errorHandler(err, true)
-            
+
                                     if (clbk)
                                         clbk(err, null)
                                 }
-            
+
                             })
 
                         }
@@ -3662,7 +3943,7 @@ Platform = function (app, listofnodes) {
                                 html : self.app.localization.e('pinPostDialog'),
                                 btn1text : self.app.localization.e('dyes'),
                                 btn2text : self.app.localization.e('dno'),
-                                success : function(){	
+                                success : function(){
 
                                     pinPost(d.share, function(err, result){
 
@@ -3674,23 +3955,24 @@ Platform = function (app, listofnodes) {
                                                 return share.pin
                                             })
 
+
+
                                             if (alreadyPinned && alreadyPinned.txid){
-                                                
+
                                                 alreadyPinned.pin = false;
                                                 var shareslist = $(`[stxid='${alreadyPinned.txid}']`);
                                                 var pinnedIcon = shareslist.find('.pinnedIcon');
                                                 var pinnedLabel = shareslist.find('.pinnedLabel')
                                                 pinnedIcon.children().remove();
                                                 pinnedLabel.empty()
-                                
+
                                             }
 
                                             d.share.pin = true;
                                             var metatable = _el.closest('.metatable');
-                                            var pinnedIcon = metatable.find('.pinnedIcon');
-                                            var pinnedLabel = metatable.find('.pinnedLabel');
-                                            pinnedIcon.html('<i class="fa fa-map-pin"></i>');
-                                            pinnedLabel.append(', ' + self.app.localization.e('pinned'));
+                                            var sys = metatable.find('.sys');
+
+                                            sys.prepend('<span class="pinnedLabel"><i class="fas fa-thumbtack"></i> ' + self.app.localization.e('pinned').toLowerCase() + ', ' + '</span>');
 
                                         }
 
@@ -3710,7 +3992,7 @@ Platform = function (app, listofnodes) {
                                 html : self.app.localization.e('unpinPostDialog'),
                                 btn1text : self.app.localization.e('dyes'),
                                 btn2text : self.app.localization.e('dno'),
-                                success : function(){	
+                                success : function(){
 
                                     pinPost(d.share, function(err, result){
 
@@ -3719,14 +4001,14 @@ Platform = function (app, listofnodes) {
 
                                             d.share.pin = false;
                                             var metatable = _el.closest('.metatable');
-                                            var pinnedIcon = metatable.find('.pinnedIcon');   
-                                            var pinnedLabel = metatable.find('.pinnedLabel');                 
+                                            var pinnedIcon = metatable.find('.pinnedIcon');
+                                            var pinnedLabel = metatable.find('.pinnedLabel');
                                             pinnedIcon.children().remove();
                                             pinnedLabel.empty()
 
                                         }
 
-										
+
                                     }, true)
 
                                 }
@@ -3806,7 +4088,7 @@ Platform = function (app, listofnodes) {
 
                         el.find('.remove').on('click', function () {
                             self.app.mobile.vibration.small();
-                            
+
                             close()
 
 
@@ -3815,23 +4097,23 @@ Platform = function (app, listofnodes) {
                                 html : self.app.localization.e('removePostDialog'),
                                 btn1text : self.app.localization.e('dyes'),
                                 btn2text : self.app.localization.e('dno'),
-                                success : function(){	
+                                success : function(){
 
                                     var shareslist = _el.closest(`[stxid='${id}']`);
                                     var authorgroup = shareslist.closest('.sharecnt');
-                                                    
+
                                     var removePost = function (share, clbk){
 
                                         share.deleted = true;
                                         var ct = new Remove();
                                         ct.txidEdit = share.txid;
 
-                        
+
                                         self.app.platform.sdk.node.shares.delete(share.txid, ct, function(err, alias){
-                        
+
                                             if(!err){
                                                 if (clbk){
-               
+
                                                     // var l = share.url;
 
 
@@ -3847,14 +4129,14 @@ Platform = function (app, listofnodes) {
 
                                                     clbk(null, alias)
                                                 }
-    
+
                                             } else {
                                                 self.app.platform.errorHandler(err, true)
-                        
+
                                                 if (clbk)
                                                     clbk(err, null)
                                             }
-                        
+
                                         })
 
                                     }
@@ -3864,13 +4146,12 @@ Platform = function (app, listofnodes) {
 										if(!err)
 										{
 
-                                            console.log('result removed post', result)
                                             authorgroup.addClass('deleted');
 
 
                                         }
 
-										
+
                                     })
 
                                 }
@@ -3901,30 +4182,62 @@ Platform = function (app, listofnodes) {
 
                             if (editing.settings.v == 'a') {
 
-                                app.nav.api.load({
-                                    open: true,
-                                    href: 'article',
-                                    inWnd: true,
-                                    history: true,
-                                    
-                                    essenseData: {
-                                        share: editing,
-                                        hash: hash,
+                                if(editing.settings.version >= 2){
+
+                                    app.nav.api.load({
+                                        open: true,
+                                        href: 'articlev',
+                                        history: window.cordova,
+                                        inWnd: true,
                                         
-                                        save: function (art) {
+                                        essenseData: {
 
-                                        },
-                                        close: function () {
-
-                                        },
-                                        complete: function () {
-
-                                        },
-                                        closeContainer: function () {
-
+                                            editing,
+                                            
+                                            save: function (art) {
+    
+                                            },
+                                            close: function () {
+    
+                                            },
+                                            complete: function () {
+    
+                                            },
+                                            closeContainer: function () {
+    
+                                            }
                                         }
-                                    }
-                                })
+                                    })
+
+                                }
+                                else{
+                                    app.nav.api.load({
+                                        open: true,
+                                        href: 'article',
+                                        inWnd: true,
+                                        history: true,
+                                        
+                                        essenseData: {
+                                            share: editing,
+                                            hash: hash,
+                                            
+                                            save: function (art) {
+    
+                                            },
+                                            close: function () {
+    
+                                            },
+                                            complete: function () {
+    
+                                            },
+                                            closeContainer: function () {
+    
+                                            }
+                                        }
+                                    })
+                                }
+
+                                
 
                             }
                             else {
@@ -3936,7 +4249,7 @@ Platform = function (app, listofnodes) {
                                     animation: false,
                                     inWnd: true,
                                     _id: d.share.txid,
-                                    
+
                                     essenseData: {
                                         share: editing,
                                         notClear: true,
@@ -3996,7 +4309,7 @@ Platform = function (app, listofnodes) {
                             close()
 
                         })
-                        
+
 
                         el.find('.videoshare').on('click', function () {
                             self.app.mobile.vibration.small()
@@ -4011,8 +4324,1831 @@ Platform = function (app, listofnodes) {
         }
     }
 
-
     self.sdk = {
+
+        faqLangs : {
+            get : function(){
+                return {
+                    en : [
+                        {
+                    
+                            name : 'How does '+self.app.meta.fullname+' work?',
+                            id : 'how-it-works',
+                    
+                            group : [
+                    
+                                {
+                                    id : 'what-is',
+                                    q : 'What is ' +self.app.meta.fullname+'?',
+                                    a : '<div><p>' +self.app.meta.fullname+' is an innovative social network and video sharing platform. Unlike the mainstream social networks, there is no corporation behind it, it is based on the Bitcoin model. Bastyon is an open source project run by a team of developers and experts, and its goal is to provide a community moderated platform where the freedom of speech is seriously respected.</p><p>The project was originally created by Daniel Satchkov, but now encompasses over 25 developers and many volunteers across the globe. Bastyon is more of a protocol than a platform, since any developer can build its own app on it. The platform does not run on a single server but on a network of <em>user nodes</em> that are located all throughout the world.</p><p>This means that users are always able to get information and communicate, see the content and post as long as they have an internet connection and only a handful of nodes somewhere in the world are operational.</p><p>This overcomes the limitations that censors put in place to block or limit communication and spread of information. Information wants to move freely. While, for example, in China some social networks can be used only behind a VPN, there is no need for that with '+self.app.meta.fullname+'.</p><p>In addition,'+self.app.meta.fullname+' does not collect personal information: users register without any email or phone number and no personal data like the IP or MAC address are stored in any way. Note, that while Bastyon does not collect any IPs (as can be seen in open code), it is not possible to hide your IP completely when using the internet, unless you are using a VPN.</p><p>By doing so,'+self.app.meta.fullname+' enables users to discuss issues freely. Today, anonymity is a requirement for security and privacy and '+self.app.meta.fullname+' is able to guarantee it.</p><p>Furthermore, in order to deliver completely private and anonymous communication, '+self.app.meta.fullname+' provides an encrypted chat system, not associated to any phone number or personal data, protected with peer-to-peer encryption model (note, that group chats are not encrypted, only 1-on-1 chats). No one except the two users involved in the chat session can access the messages. All the claims are easy to verify, since Bastyon app and Pocketnet blockchain are both completely open-source, with code visible to everyone. Moreover, all the chat messages are automatically deleted after 7 day.</p><p>'+self.app.meta.fullname+' is a censorship-resistant pseudonymous social platform where people can chat, communicate and share contents with others transparent rules that are the same for every user and developer.</p></div>',
+                                    
+                                },
+                                
+                                {
+                                    id : 'how-it-words',
+                                    q : 'How do I get started?',
+                                    a : '<div><p>'+self.app.meta.fullname+" is pretty simple to use: you just have to create an account and you can immediately start posting contents, follow other users and chat.</p><p>During the registration you just need to create a username (it must be unique!) and upload a picture or a photo (not necessarily your own photo!). No email (you can leave an email for the mailing list, but it is not connected to your account on Bastyon), no phone number, no verifications. Not even a password: the system will generate a passphrase that you have to use to login, this passprhase is your private key which replaces both the login and password, it is the only thing you need to login. If you lose the private key, nobody can recover it, even developers don't have access to users' accounts.</p></div>",
+                                },
+                                    
+                                {
+                                    id : 'signback',
+                                    q : 'What is the difference between the 12-word passphrase and a private key?',
+                                    a : '<div><p>The first time you use '+self.app.meta.fullname+' you need to create an account, composed only of your unique username.</p><p><strong>There is no password. </strong></p><p>Instead, you will be given a unique 12-words key (passphrase). Alternatively, you can use a private key, which is a long number (those two are equivalent). <strong>Keep this data safe and NEVER reveal it to anyone.</strong></p><p>Then, when you need to log in, you just need to input your passphrase (or scan the QR from the app).</p><p><strong>Remember</strong>: if you lose your passphrase, your account is locked forever. There is no way to restore the password, there is no way for '+self.app.meta.fullname+' to let you log in again. Your passphrase or private key code are the only ways to access your account, plase write it down on a piece of paper somewhere. You can find it in your profile under Accounts (click the symbol of a key).</p></div>',
+                                },
+                                
+                                
+                                {
+                                    id : 'behind-scenes',
+                                    q : 'How does it work behind the scenes? Where are the servers?',
+                                    a : '<div><p>'+self.app.meta.fullname+' is modeled on decentralized a cryptocurrency Bitcoin, because it has no central authority and uses the blockchain to make transactions and ensure security.</p><p>There is no central server: instead, the platform relies on a network of nodes, located all over the world. Every person in the world with a computer can actually run a node (and be rewarded to do so by using coinstaking with Pocketcoin).</p><p>Hash of each post, each comment, each interaction (except chat messages!) is stored on the <a elementsid="https://en.wikipedia.org/wiki/Blockchain" href="https://en.wikipedia.org/wiki/Blockchain">blockchain</a>. The posts and comments themselves are not in the blockchain, but in a companion database tied to a blockchain.</p><p>'+self.app.meta.fullname+' uses a dedicated blockchain, derived directly from the Bitcoin chain.</p></div>',
+                                },
+                                    
+                                {
+                                    id : 'blocks',
+                                    q : 'What would happen if some country (ies) blocks access to Bastyon.com?',
+                                    a : '<div><p>Nothing.</p><p>You would still be able to use Bastyon as if nothing happened if you use a desktop app, because the Bastyon desktop app speaks directly to the nodes and does not use websites.</p><p>This is the power of censorship resistance. <br />You can verify this yourself by simulating a disappearance of the domain name bastyon.com. <br /><br /><strong>On Windows:</strong><br />just open this file:<br />Windows/System32/hosts<br /><br /><strong>On Linux/Ubuntu:</strong><br />Open this file<br />/etc/hosts<br /><br />Then add this row: <br />127.0.0.1 bastyon.com</p><p>This would ensure that bastyon.com is pointing to your local machine, which means that it is not pointing to any outside IP address.<br /><br />Then launch the desktop app and you will be able to continue using Bastyon has if nothing happened. <br />Cool huh?</p></div>',
+                                }
+                        
+                            ]
+                    
+                        
+                        },
+            
+                        {
+                        
+                            name : 'Pocketcoin',
+                            id : 'pocketcoin',
+                        
+                            group : [
+                        
+                                
+                        
+                                 {
+                                    id : 'app-store',
+                                    q : 'What can be expected to purchase with PKOIN?',
+                                    a : '<div>PKOIN has a multitude of uses on Bastyon. First, 50 PKOIN in your account removes all posting limitations and allows you to load video. PKOIN can be used to boost comments, making your comments visible to everyone. The PKOIN from boosted comments goes to the blogger, and bloggers should reply or feature such comments to encourage such boosts. You can boost a post to move it up in the feed. It is used for staking in nodes, you can run a node and earn more PKOIN by staking PKOIN. It will be used in a Decentralized Ad Marketplace with 100% of proceeds going to bloggers. It will also be used to buy special wallpaper profiles, animated profile images etc. </div>',
+                                },
+                        
+                        
+                                {
+                                    id : 'pocketcoinstock',
+                                    q : 'Is Pocketcoin like a share of stock in '+self.app.meta.fullname+'?',
+                                    a : '<div>Definitely no. '+self.app.meta.fullname+' is not even a corporation and does not have any ownership. It is an open source code that anyone can copy and run. Pocketcoin is a token that facilitates value exchange, specifically advertising transactions. In addition, '+self.app.meta.fullname+' will include a marketplace where goods and services will be sold directly for Pocketcoin</div>',
+                                },
+                        
+                                {
+                                    id : 'pocketcoinbuy',
+                                    q : 'Can I buy additional Pocketcoin?',
+                                    a : '<div>Yes, currently you can buy Pocketcoin on the following exchanges: DigiFinex, Bitforex, Mercatox. You can also buy it for 19 different cryptos at <a href="https://pkoin.net/">pkoin.net</a> and there is a Category within Bastyon called PKOIN/Peer-to-Peer where you can buy and sell it with other users. </div>',
+                                },
+                        
+                                {
+                                    id : 'pocketcoinbuyfiat',
+                                    q : 'Can I buy Pocketcoin for US Dollars or other fiat currency?',
+                                    a : '<div>Yes, you can buy it under the category PKOIN/Peer-to-Peer or through a company called Indacoin at <a href="https://buy.pkoin.indacoin.io/">indacoin.io</a>. Indacoin has nothing to do with Bastyon, they are just selling PKOIN for credit cards after buying it on exchanges.</div>',
+                                },
+                                
+                                {
+                                    id : 'pocketcoinbuyfiat',
+                                    q : 'Why do I need to buy Pocketcoin?',
+                                    a : "<div>Bastyon has no backing by bankers or venture capitalists, it is a decentralized social platform that is supported by PKOIN. When you use Bastyon, you are using users' nodes, video nodes, they all have to pay for computers, internet and electricity. Bloggers need to earn for content. The only way Bastyon can function is if users own and support PKOIN. So, buying PKOIN is a way to support decentralization and freedom. However, there is one other important reason to own Pocketcoin. Soon it is very possible that even having a bank account will be tied to submitting your freedom, to some QR code. Pocketcoin is not tied to your name or passport, it is a way to do commerce in a world where financial censorship reigns, it might be the only way to buy food soon without a certain certificate or a QR code. So, buy some PKOIN for freedom. </div>",
+                                }
+                            ]
+                        },
+                        {
+                        
+                            name : 'How can I buy PKOIN?',
+                            id : 'buy-pkoin',
+                        
+                            group : [
+                        
+                                {
+                                    id : 'buy-pkoin1',
+                                    q : '  ',
+                                    a : 'Select PKOIN/Peer-to-Peer Category on the right and look for ads, then connect in chat <br> ',
+                                    img: '<img src="img/per-to-per2.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'buy-pkoin2',
+                                    q : 'You can buy PKOIN in the following ways:',
+                                    a : 'You can buy PKOIN for cryptocurrencies: <br /><a target="_blank" href="https://pkoin.net/">pkoin.net</a><br>	<a target="_blank" href="https://www.bitforex.com/en/spot/pkoin_usdt">www.bitforex.com</a> <br> <a target="_blank" href="www.digifinex.com/en-ww/trade/USDT/PKOIN">www.digifinex.com</a> <br><a target="_blank" href="https://buy.pkoin.indacoin.io/">indacoin.io</a> - you can buy PKOIN for credit cards.',
+                                    img: ''
+                                },
+                                {
+                                    id : 'buy-pkoin23',
+                                    q : 'Pkoin.net  ',
+                                    a : 'Choose a cryptocurrency and enter amount of the crypto into the left field. After that, enter your own PKOIN wallet address.',
+                                    img: '<img src="img/buy-pkoin2.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'buy-pkoin3',
+                                    q : '  ',
+                                    a : 'Your PKOIN wallet address is placed in your account. <br>For looking that Click your avatar icon into the right top corner',
+                                    img: '<img src="img/buy-pkoin3.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'buy-pkoin4',
+                                    q : '  ',
+                                    a : 'Then click to PKOIN address for copy',
+                                    img: '<img src="img/buy-pkoin4.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'buy-pkoin5',
+                                    q : '  ',
+                                    a : 'Then, you should to enter your PKOIN wallet address in the above field and click “Purchase” button.',
+                                    img: '<img src="img/buy-pkoin5.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'buy-pkoin6',
+                                    q : '  ',
+                                    a : 'After that you should to send your BTC (or another crypto which was chosen) to this address',
+                                    img: '<img src="img/buy-pkoin6.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'buy-pkoin7',
+                                    q : ' <a href="Buy.pkoin.indacoin.io">Buy.pkoin.indacoin.io</a>     ',
+                                    a : 'First step – choose currency, enter amount, your email address and PKOIN address.  Then click “Buy PKOIN ” button.',
+                                    img: '<img src="img/buy-pkoin7.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'buy-pkoin8',
+                                    q : '  ',
+                                    a : 'Then you can see “Buy PKOIN with credit or debit card” window. Click “Continue” button',
+                                    img: '<img src="img/buy-pkoin8.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'buy-pkoin9',
+                                    q : '  ',
+                                    a : 'Then, enter your Address, ZIP and your Country',
+                                    img: '<img src="img/buy-pkoin9.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'buy-pkoin10',
+                                    q : '  ',
+                                    a : 'Then enter your Full Name, Country, Date of berth',
+                                    img: '<img src="img/buy-pkoin10.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'buy-pkoin11',
+                                    q : '  ',
+                                    a : 'Then, enter your card data and click “Continue” button',
+                                    img: '<img src="img/buy-pkoin11.jpg" alt="" />'
+                                },
+                                
+                                
+                                
+                                
+                            ]
+                        
+                        },
+                        {
+                        
+                            name : 'Earn PKOIN with EasyNode?',
+                            id : 'earnbastyonen',
+                        
+                            group : [
+                        
+                                {
+                                    id : 'earnbastyon1en',
+                                    q : '',
+                                    a : 'Requirements: <br /> <br />•	Your machine is not running any other Bastyon/Pocketnet node software <br />•	Your hard drive is SSD (not HDD) <br />•	Your computer has at least 50 GB empty space on your SSD<br />•	Your computer has at least 2 GB free RAM <br />•	Your internet speed is at least 10 Mb/sec',
+                                    img: ''
+                                },
+                                {
+                                    id : 'earnbastyon2en',
+                                    q : '',
+                                    a : 'Go to “Node” tab in “Manage” page',
+                                    img: '<img src="img/earnbastyon2en.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'earnbastyon3en',
+                                    q : '',
+                                    a : 'You can change the node and data directory if there is not enough free space on your <b>C drive</b>',
+                                    img: '<img src="img/earnbastyon3en.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'earnbastyon4en',
+                                    q : '',
+                                    a : 'Click “Download and install node”',
+                                    img: '<img src="img/earnbastyon4en.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'earnbastyon5en',
+                                    q : '',
+                                    a : 'You will see the progress bar',
+                                    img: '<img src="img/earnbastyon5en.jpg" alt="" />'
+                                },	
+                                {
+                                    id : 'earnbastyon6en',
+                                    q : '',
+                                    a : 'Wait until the next step and Status Running. First launch of the node can take several hours – DO NOT TURN OFF YOUR COMPUTER',
+                                    img: '<img src="img/earnbastyon6en.jpg" alt="" />'
+                                },	
+                                {
+                                    id : 'earnbastyon7en',
+                                    q : '',
+                                    a : '',
+                                    img: '<img src="img/earnbastyon7en.jpg" alt="" />'
+                                },	
+                                {
+                                    id : 'earnbastyon8en',
+                                    q : '',
+                                    a : '',
+                                    img: '<img src="img/earnbastyon8en.jpg" alt="" />'
+                                },	
+                                {
+                                    id : 'earnbastyon9en',
+                                    q : '',
+                                    a : 'You will need to deposit PKOIN to earn stakes, click Deposit. After clicking Deposit you will see a PKOIN address. You can copy the address and send PKOIN to it. If you did not yet buy PKOIN, you can buy it in the following ways: <br />1.	Buy for cryptocurrency at pkoin.net (or on DigiFinex or Bitforex exchanges) <br />2.	Buy it by selecting PKOIN/Peer-to-Peer tag on the left side of the Bastyon application. Select a seller and write to them in chat (at your own risk)',
+                                    img: '<img src="img/earnbastyon9ru (1).jpg" alt="" />'
+                                },	
+                                {
+                                    id : 'earnbastyon10en',
+                                    q : '',
+                                    a : 'Other functions are available: <br />– Withdraw  - withdraw PKOIN (reduces your chance of winning coins)<br />– Save Wallet  (backup node wallet, very important, saves your private keys if your node crashes)<br />– Import Wallet  (you can import an outside wallet with private keys)',
+                                    img: '<img src="img/earnbastyon10en.jpg" alt="" />'
+                                },	
+                                {
+                                    id : 'earnbastyon11en',
+                                    q : '',
+                                    a : 'In this example you see that 500 PKOIN was deposited. Note, that your node wallet is separate from your default Bastyon wallet, they are not connected. You need to transfer coins to the node from the wallet to win stakes.',
+                                    img: ''
+                                },	
+                                {
+                                    id : 'earnbastyon12en',
+                                    q : '',
+                                    a : 'After you deposit PKOIN, 60 blocks needs to pass (approx. 60 minutes). Once you see the green checkmark that says Staking, you are now ready to start earning PKOIN. You can periodically go in and see how your balance is changing with winning stakes. For any questions, write to support@bastyon.com',
+                                    img: '<img src="img/earnbastyon12ru.jpg" alt="" />'
+                                },	
+                                
+                            ]
+                        
+                        },
+            
+                        {
+                        
+                            name : 'Video',
+                            id : 'video',
+                        
+                            group : [
+                                {
+                                    id : 'savevideo',
+                                    q : 'Where do you save the video content?',
+                                    a : '<div>'+self.app.meta.fullname+' uses a modified open source platform called PeerTube, connected to the Pocketnet blockchain and the Bastyon app. PeerTube is fully integrated with '+self.app.meta.fullname+' authorization, each video server is registered on the blockchain.</div>',
+                                },
+                        
+                                {
+                                    id : 'permissions',
+                                    q : 'Who can load video in Bastyon?',
+                                    a : '<div> Bastyon does not have centralized servers or venture capital financing, all video is stored on servers maintained by users. Therefore, we cannot allow everyone to load video, servers will fill up quickly. To load video you need to have 5 PKOIN (500 MB) or 50 PKOIN (4 GB) in your account. You can buy PKOIN from other users if you select a category PKOIN/Peer-to-Peer. </div>',
+                                },
+                                {
+                                    id : 'stats',
+                                    q : 'Where can I see my video stats?',
+                                    a : '<div> Go to your profile and see My Videos. </div> ',
+                                },
+                                 {
+                                    id : 'technology',
+                                    q : 'What player do you use to play the video?',
+                                    a : '<div> Bastyon has its own player, which is a significantly modified version of PeerTube. Same as PeerTube it uses WebTorrent technology to reduce the load on the server. This means that users watching the video are sharing it. Note, that in some cases it means users can see IP addresses of each other. Bastyon servers do not have any mechanism to record these IP addresses, however, if you really care about exposing your IP address, you should use a reliable VPN provider. If you want to minimize any peer-to-peer sharing, you can use download video function in Bastyon. </div> ',
+                                },
+                                {
+                                    id : 'taking time',
+                                    q : 'Why is the video taking time to upload?',
+                                    a : "<div> Again, Bastyon does not have the resources the Google has. Video needs to be loaded to one of the video nodes and it also needs to be transcoded. Remember, YouTube is not free, it extracts value by using your private information and monetizing it. Bastyon is run by the community and a little bit of a delay is a small price to pay for privace and freedom. Besides, Bastyon devs have made the process of loading super-easy and much more robust than other freedom oriented platforms (they frequently don't even do transcoding for different qualities). </div>",
+                                },
+                        
+                        
+                            ]
+                        
+                        },
+            
+                        
+                        
+                        
+                        
+                        {
+                        
+                            name : 'Uploading videos',
+                            id : 'Uploading',
+                        
+                            group : [
+                        
+                                {
+                                    id : 'Uploading1',
+                                    q : '  ',
+                                    a : 'Important: The uploading video function is available for users who have at least 5 PKOIN, or high enough rating. If you have 50 PKOIN you can upload 4 Gb video per day, with 50 PKOIN you can upload up to 4 GB. Note, you do not spend PKOIN, it just has to be in your account to verify that you are not a bot.',
+                                    img: ''
+                                },
+                                {
+                                    id : 'Uploading2',
+                                    q : 'Click to the “What`s new?” section on the “All Posts” tab.',
+                                    a : '',
+                                    img: '<img src="img/Uploading2.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'Uploading3',
+                                    q : 'Then, click “Upload Video” button and in the popup click “Select video file” button. After that, choose necessary video file from your PC and wait for uploading to be finished.',
+                                    a : '',
+                                    img: '<img src="img/Uploading3.jpg" alt="" />',
+                                    
+                                },
+                                {
+                                    id : 'Uploading4',
+                                    q : '',
+                                    a : '',
+                                    img: '<img src="img/Uploading4.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'Uploading5',
+                                    q : 'Click to the “What`s new?” section on the “All Posts” tab.',
+                                    a : '',
+                                    img: '<img src="img/Uploading5.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'Uploading6',
+                                    q : 'Then, when uploading ends, add title, description, category and choose visibility for your post: <br>			“Visible for everyone”, <br> “Visible only for subscribers”, <br> “Visible only for Bastyon users”, <br> After that, click “Post” button.',
+                                    a : '',
+                                    img: '<img src="img/Uploading6.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'Uploading7',
+                                    q : '',
+                                    a : '',
+                                    img: '<img src="img/Uploading7.jpg" alt="" />'
+                                },
+                                
+                                
+                            ]
+                        
+                        },
+                        
+                        {
+                        
+                            name : 'My Videos',
+                            id : 'Myvideos',
+                        
+                            group : [
+                        
+                                {
+                                    id : 'Myvideos1',
+                                    q : '  ',
+                                    a : 'Click your avatar icon in the top right corner',
+                                    img: '<img src="img/Myvideos1.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'Myvideos2',
+                                    q : ' ',
+                                    a : 'Then, click “Manage” button',
+                                    img: '<img src="img/Myvideos2.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'Myvideos3',
+                                    q : '  ',
+                                    a : 'Then, click “My Videos”',
+                                    img: '<img src="img/Myvideos3.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'Myvideos4',
+                                    q : '  ',
+                                    a : 'Then, you can see your video cabinet, which contain information about your uploaded videos, average rating, video views and video settings.',
+                                    img: '<img src="img/Myvideos4.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'Myvideos5',
+                                    q : '  ',
+                                    a : 'If you want to change the video description, name or a preview image, click the three dots and choose necessary action.',
+                                    img: '<img src="img/Myvideos5.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'Myvideos6',
+                                    q : '  ',
+                                    a : 'On the top of the video cabinet page you can see your Daily Uploading Quota, Total Referral Users, Total Ratings, Total Video Views, Unique Raters, Search Field and also you can sort your videos.',
+                                    img: '<img src="img/Myvideos6.jpg" alt="" />'
+                                },
+            
+                                
+                                
+                            ]
+                        
+                        },
+                        
+                        {
+                        
+                            name : self.app.meta.fullname,
+                            id : 'roadmap',
+                        
+                            group : [
+                        
+                                {
+                                    id : 'walletaddresses',
+                                    q : 'I see a PN address and a wallet address... are both these addresses on the PN blockchain?',
+                                    a : '<div>PN address is the one used for posting content and using social network in general. It also keeps coins that you win for your highly rated posts.</div><div>Wallet addresses are to keep the rest of coins.</div>',
+                                },
+                        
+                                {
+                                    id : 'linktoprofile',
+                                    q : 'Can I link to my profile? or my "page"? So that i can post it into my community to bring members over.',
+                                    a : '<div>In the browser, go to your profile by clicking on avatar in the upper right and click Share, then select Use Referral Link checkmark, everyone who will sign up from the link that is generated will be offered to follow you automatically when signing up. For every referral that signs up through you link, you will get a bonus equal to 20% of the Pocketcoin (PKOIN) they earn through posting and commenting for the first 6 months. To be clear, your referral does not earn less, you get a bonus.</div>',
+                                },
+                                {
+                                    id : 'starsystem',
+                                    q : 'The star system. Is there a limit on how many stars a person has to give people?',
+                                    a : '<div>There are some limits. But as your reputation grows you can upvote more and more. This is done, so bots don&rsquo;t break down our blockchain. Initially you get 100 ratings every 24 hours. As your reputation grows (that happens by posting and getting rated), then you do 200 ratings a day.</div>',
+                                },
+                        
+                        
+                                {
+                                    id : 'updateprofiletime',
+                                    q : 'How often can I update my profile? ',
+                                    a : '<div>You are able to update your profile once every hour.</div>',
+                                },  
+                        
+                                {
+                                    id : 'mobileapp',
+                                    q : 'Is there a mobile app?',
+                                    a : '<div>There is an Android app, you can download it <a href="https://play.google.com/store/apps/details?id=pocketnet.app">here</a>. iPhone app is not available, because Apple required us to censor any content on 24 hour notice. In Bastyon even developers cannot remove content, it is moderated by the users. Batyon is optimized for mobile browsers like Safari on the iPhone.</div>',
+                                },
+                        
+                                {
+                                    id : 'postinglimit',
+                                    q : 'Can you tell me what is the limit for posts and ratings each day or hour?',
+                                    a : '<div>We do have some limitations, but after testing it we have increased our limits. At the outset you can make 5 posts and issue 15 ratings every 24 hours. Once your reputation grows above 100 and there at least 100 high reputation users who upvoted you (or 30 users after 3 months), you will be able to make up to 30 posts and 200 ratings, plus 300 comments every 24 hours.</div>',
+                                },
+                        
+                                {
+                                    id : 'reputation',
+                                    q : 'What is reputation and how is it calculated?',
+                                    a : "<div>Your reputation is the sum of your ratings calculated in the following way. Note, that users with reputation below 50 do not affect anyone's reputation or coin winnings. They can rate the content, but it does not affect reputation.</div>\
+                                    <div>5=2<br>4=1<br>3=0<br>2=-1<br>1=-2</div><div>So, if you have two 5 start ratings and one 1 star rating, the total will be 2+2-2=2</div>",
+                                },
+                        
+                                {
+                                    id : 'deletepostoruser',
+                                    q : 'Is there a way to delete or edit a post?',
+                                    a : '<div>Yes, you can edit and delete posts.</div>',
+                                },
+                        
+                                {
+                                    id : 'usersearch',
+                                    q : 'Is there a way to search for a user?',
+                                    a : '<div>Click the search magnifying glass on the top and search by username or by keywords.</div>',
+                                },
+                                {
+                                    id : 'follow',
+                                    q : 'How do you follow someone?',
+                                    a : '<div>Next to post author (on top of post) there is a Follow link, you can find his posts in Top posts (red flame on top of the page). You will also soon see My Subscriptions feed, which is going to be different from the main feed. The main feed will be everything that anyone posts, but Subscriptions feed will only contain posts from people you follow. So, you will go into general feed in search of good content, though you may not like everything. Then select those you want to keep. Kind of like fishing :)</div>',
+                                },
+                        
+                        
+                                {
+                                    id : 'otherbrowsers',
+                                    q : 'Can it be used on Brave or Duck Duck go browsers?',
+                                    a : '<div>'+self.app.meta.fullname+' should work on those browsers. It is fully functional on Chrome and Firefox. But we strongly encourage everyone to download the desktop app (grab '+self.app.meta.fullname+'Setup.exe <a href="https://bastyon.com/about?id=about-download">here</a>). The desktop app cannot be blocked ever (even if '+ app.meta.url +' is down or blocked for some reason). This is a serious consideration in totalitarian and quasi-totalitarian countries which, if you think about it, is beginning to include more and more of the globe.</div>',
+                                },
+                        
+                                {
+                                    id : 'replypost',
+                                    q : 'Can we reply to our own/and other&rsquo;s posts?',
+                                    a : '<div>Yes, commenting is live below each post..</div>',
+                                },
+                        
+                                {
+                                    id : 'addtags',
+                                    q : 'How to add a tag to a post?',
+                                    a : '<div>Select a category or type in the field tag and press enter. No need to specify #, it will be added automatically.</div>',
+                                },
+                        
+                                {
+                                    id : 'usepublicaddress',
+                                    q : 'How can I use the public address?',
+                                    a : '<div>Your public address is what '+self.app.meta.fullname+' uses to verify your identity. Essentially, your private key is a really large number (that can be represented with a 12 word sequence or a QR code). This number gets multiplied by another that everyone knows (called a base point) and we get a public key. When you enter your private key, we can multiply it by the base point to get your public key and we can match it against public address. If they match, we know it is you. It is impossible to go back i.e. to divide public key by the base point to get your private key. The way multiplication in cryptography works is it is only one way and cannot be reversed, so your key is safe. '+self.app.meta.fullname+' uses the same exact cryptography as Bitcoin.</div>',
+                                },
+                                {
+                                    id : 'desktopmac',
+                                    q : 'Will there be a downloadable executable for Mac?',
+                                    a : '<div>Yes - you can find it here https://bastyon.com/help?page=applications. </div>',
+                                },
+                                {
+                                    id : 'dark-mode',
+                                    q : 'How do I change the theme to Dark Mode?',
+                                    a : "<div>If you're on browser click your profile picture > Manage > Settings. If you're on mobile click the three lines on the bottom right > Settings </div>",
+                                },
+                                {
+                                    id : 'banning',
+                                    q : 'Can people be banned?',
+                                    a : '<div>Yes, Bastyon is a community moderated platform, however, there are only certain topics that community will flag like pornography, narcotics and direct threats of violence. You will never be banned for an opinion or free speech, and even for specific banned topics there has to be a consensus of experienced users without other users defending the content. Currently, users with rep below -30 are losing their account privileges, but this is a temporary system. By the end of 2021, Bastyon is releasing a new moderation system where posts are initially flagged by any high rep user, but account can be blocked only by a certain group of jurors who are selected using a blockchain lottery. Thus, nobody can choose to attack someone for an opinion, jurors will be selected to moderate certain content and they have to all agree. Account cannot be banned until two sets of jurors decided and they cannot be the same. This system protects against any kind of mob rule on Bastyon, while protecting the platform from unsavory content.</div>',
+                                },        
+                                {
+                                    id : 'Apple App',
+                                    q : 'When will Bastyon be added to Apple?',
+                                    a : '<div>Apple decided not to allow Bastyon due to lack of centralized censorship opportunities by Apples, we wear it as a badge of honor. </div>',
+                                },
+                                {
+                                    id : 'Missing PKCOIN',
+                                    q : 'Help! I am missing my PKOIN!',
+                                    a : '<div>If for some reason it seems like your PKOIN has gone missing, please first check the blockexplorer via <a href="https://'+self.app.options.url+'/blockexplorer/">BlockExplorer.</a> to that your coins are still there. Just search your wallet address in the search bar and it will show you the balance of your account. </div>',
+                                },
+                        
+                            ]
+                        
+                        
+                        },
+                        {
+                        
+                            name : 'Privacy',
+                            id : 'privacy',
+                        
+                            group : [
+                                
+                        
+                                {
+                                    id : 'anonymous',
+                                    q : 'Are people who do not enter their real names anonymous?',
+                                    a : '<div>Yes - no names, phones, email is NOT connected to your account in any way, it is just optionally entered to receive newsletter updates.</div>',
+                                },
+                        
+                                {
+                                    id : 'viewoutside',
+                                    q : 'Can someone view a profile (someone&rsquo;s posts) outside the garden? Is it a walled garden?',
+                                    a : '<div>Since the whole blockchain and all the posts are in open-source anyone can have access to your posts and profile. They just know that it is linked to your public address. In practice, you can have multiple accounts and switch between them. You can use some with your real name and others anonymously. Anonymity is a great tool to protect free speech from abuse of power.</div>',
+                                },
+                        
+                        
+                                {
+                                    id : 'walletid',
+                                    q : 'Is my public key like a wallet ID that I enter on my profile and people can send points to?',
+                                    a : '<div>Exactly. And it is safe to reveal. But not a secret phrase - keep it safe!</div>',
+                                },
+                        
+                                {
+                                    id : 'runnode',
+                                    q : 'Can I run a node on my headless server?',
+                                    a : '<div> Instructions are <a href="https://github.com/pocketnetteam/pocketnet.core/blob/master/README.md">here</a>.</div>',
+                                },
+                        
+                                {
+                                    id : 'signback',
+                                    q : 'How can I sign back in?',
+                                    a : '<div>You can use your private 12-word key or a private key that consists of letters and numbers.</div>',
+                                }
+                            ]
+                        },
+                        {
+                        
+                            name : 'Curation of content',
+                            id : 'curation',
+                        
+                            group : [
+                        
+                                {
+                                    id : 'content',
+                                    q : 'Is any content allowed on '+self.app.meta.fullname+'? If some content is not allowed, can the platform still be called free speech?',
+                                    a : '<div>This is a very important question. To begin with, not all types of content are allowed. However, and this is crucial, the enforcement is transparent and up to the community in the way we will explain below. Enforcement is done by the community and is in the open with no hidden shadow bans or selective banning practiced by the Silicon Valley.</div>',
+                                },
+                                {
+                                    id : 'specific',
+                                    q : 'Specifics of curation on '+self.app.meta.fullname+'.',
+                                    a : '<div> Currently the moderation of content is done through 1 star votes by high reputation  users. When reputation reaches -30, the access to the account is restricted. However, there is a completely new moderation algorithm that will be released by the end of 2021. Under the new algorithms, there will be an option to flag a user or a post by any high rep user, but that is not goign to affect the account directly. After certain numbers of flags a lottery on the blockchain will be drawn and a group of juror moderators will be chosen for that account. Jurors have to agree that this user posted pornography, narcotics or a direct threat to violence. Any other opinion or a disagreement is not a grounds for flagging or any sanctions.</div> ',
+                                },
+                                // {
+                                // 	id : 'racism',
+                                // 	q : 'Important Note on Racism.',
+                                // 	a : '<div>Free thought and free speech is under attack on mainstream social platforms and in the media. We need to speak the truth and this platform is non-corporate and decentralized for that very reason. But we ask everyone make your point without attacking people&rsquo;s nationality or race. You can make your point based on evidence. We cannot afford to turn '+self.app.meta.fullname+' into a marginal platform. Speak the truth, but please avoid racism and attacks against specific nationalities on the whole. We know that Silicon Valley and MSM has turned the issue of racism into their playing card and they constantly cry wolf. Even more the reason for us to be measured and evidence based and not let them smear us with that. If we are not, we are not allowing most of the population to weigh the evidence of MSM corruption presented on '+self.app.meta.fullname+'. Please keep that in mind, so that free speech can thrive and we can beat the facebokks of the world.</div><div>Ultimately, it is the community that will determine the direction of the platform. Having a bunch of snowflakes that complain about stuff that offends them is equally as bad as when people want to voice direct violent threats. However, the first indication is that early users of the platform are generally intelligent and evidence based, so the future looks incredibly bright. '+self.app.meta.fullname+' team has noticed after a few days of the beta test, that we stopped reading even alternative news, because there was so much interesting content on '+self.app.meta.fullname+'. Keep it up!</div><div>Please get involved in the discussion on these topics. This is a community platform. We are always eager to improve transparency of the platform and you should let us know how we can improve our content curation and policing. You can make posts on this topic under the tag Bastyon/Pocketnet.</div>',
+                                // },
+                        
+                        
+                            ]
+                        
+                        },
+                        
+                        
+                        {
+                        
+                            name : 'How is '+self.app.meta.fullname+' different from...',
+                            id : 'differents',
+                        
+                            group : [
+                        
+                                {
+                                    id : 'differents1',
+                                    q : 'Twitter, Facebook, Reddit & other centralized platforms?',
+                                    a : '<div>There is no central authority or corporation. Platform is run by equal nodes on a blockchain. All revenue is split between node operators and content creators. Node operators stake Pocketcoin in order to mint blocks with rewards and transactions fees. Half of rewards in each block go to content creators based on ratings their content gathers from users.</div>',
+                                },
+                                {
+                                    id : 'differents2',
+                                    q : 'Decentralized platforms like Minds.com and Sola?',
+                                    a : '<div>Both of those platforms, while great, are not self-contained. Both are highly dependent on the Ethereum platform, because their tokens are based on ERC-20 Ethereum standard. That means that operations with tokens carry Ether gas fees. Also, those entities have corporations behind them and a corporation will always be a point of centralization due to its economic logic of growing profits. In addition, corporations are exceedingly easy to censor.</div>',
+                                },
+                                {
+                                    id : 'differents3',
+                                    q : 'From Steemit?',
+                                    a : '<div>Steemit has its own blockchain, but is a corporate entity with all of the centralization that comes from that.</div>',
+                                },
+                                {
+                                    id : 'differents4',
+                                    q : 'Decentralized platforms like Mastodon and others?',
+                                    a : '<div>While Mastodon is a fully decentralized platform, it requires a great deal of technical knowledge to use. This presents a great hindrance to potential widespread acceptance. '+self.app.meta.fullname+' features a web and desktop applications and users can log in from any device, pull in their personal settings from the blockchain and start using the platform immediately without any technial knowledge.</div>',
+                                }
+                        
+                            ]
+                        
+                        },
+                        
+                        {
+                        
+                            name : ''+self.app.meta.fullname+' ecosystem',
+                            id : 'ecosystem',
+                        
+                            group : [
+                        
+                                {
+                                    id : 'ecosystem1',
+                                    q : 'How is '+self.app.meta.fullname+' development funded?',
+                                    a : '<div>'+self.app.meta.fullname+' is open sourced and is currently run by the group of volunteers experts in programming and math. After launch '+self.app.meta.fullname+' will attract top programming talent based on its promise of creating a decentralized fair social network. Programmers and marketers working for Pocketcoin donated by large owners of PKOIN.</div>',
+                                },
+                                {
+                                    id : 'ecosystem2',
+                                    q : 'What is Pocketcoin?',
+                                    a : '<div>Pocketcoin is a network token. It is used exclusively to buy advertising from '+self.app.meta.fullname+' contributors and to pay transaction fees for such payments. It is also used for boosting comments, posts and to buy privileges for your account. In Pocketent all of the revenue is split between content creators and nodes.</div>',
+                                },
+                                {
+                                    id : 'ecosystem3',
+                                    q : 'How are content creators and node operators rewarded?',
+                                    a : '<div>'+self.app.meta.fullname+' features unique Direct Marketplace where content creators can sell advertising to ad buyers. Content creators set their price and can accept mass-produced ads or can offer highly valued custom placements (creators pitching the product in their own way). Direct Marketplace is essentially an exchange for advertising that allows ad buyers target specific audiences without any intermediaries. All ad buys and ads themselves are linked on the blockchain, therefore ad buying is completely trustless.</div>',
+                                },
+                                {
+                                    id : 'ecosystem4',
+                                    q : 'What if users post illegal content, pornography and SPAM?',
+                                    a : '<div>'+self.app.meta.fullname+' is not a darknet platform or some sort of pornhub. While it is decentralized and censorship resistant, it is moderated by the users. Any illegal content is flagged and removed from the platform. This means that users with highest reputation can moderate the platform. However, there are safeguards in place (within the open source code) from same or very similar group(s) of people repeatedly voting content off the platform. Moderators for content are chosen randomly using a lottery on the blockchain to avoid any kind of mob rule. Also, users are explicitly encouraged to illicit content, NOT simply the content they find offensive. To make sure that '+self.app.meta.fullname+' is a free speech platform, we encourage you to start participate, grow your reputation and police the platform properly without the censorship currently prevalent in centralized social media.</div>',
+                                },
+                                {
+                                    id : 'ecosystem5',
+                                    q : 'Who runs the '+self.app.meta.fullname+'?',
+                                    a : '<div>There is no corporate entity or single individual who owns or controls the '+self.app.meta.fullname+'. Pocketnet blockchain and Bastyon are run by a group of programmers, but this group is growing and changing all the time. If any set of programmers takes a wrong turn and violates the principles on which Bastyon is founded, other programmers can simply fork an open-source code and continue the censorship resistant platform. </div></div>',
+                                    
+                                },
+                                
+                            ]
+                        
+                        },
+                        {
+                        
+                            name : 'How do I find the private key?',
+                            id : 'privatekey',
+                        
+                            group : [
+                        
+                                {
+                                    id : 'privatekey1',
+                                    q : 'Click your avatar icon in the top right corner',
+                                    a : '',
+                                    img: '<img src="img/privatekey1.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'privatekey2',
+                                    q : 'Then, click “Manage” button',
+                                    a : '',
+                                    img: '<img src="img/privatekey2.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'privatekey3',
+                                    q : 'Click “private key” button.',
+                                    a : '',
+                                    img: '<img src="img/privatekey3.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'privatekey4',
+                                    q : 'Then, click “Yes”',
+                                    a : '',
+                                    img: '<img src="img/privatekey4.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'privatekey5',
+                                    q : 'Then, you can see your private key. Keep it in a safe place. This key cannot be restored if it’s lost',
+                                    a : '',
+                                    img: '<img src="img/privatekey5.jpg" alt="" />'
+                                },	
+                                
+                                
+                            ]
+                        
+                        },
+                        
+                        
+                        
+                    ],
+                    ru : [
+                        {
+                    
+                        name : 'Как '+self.app.meta.fullname+' работает?',
+                        id : 'how-it-works',
+                    
+                        group : [
+                    
+                        {
+                        id : 'what-is',
+                        q : 'Что такое ' +self.app.meta.fullname+'?',
+                        a : '<div><p>' +self.app.meta.fullname+' это инновационная социальная сеть и платформа для обмена видео. В отличие от обычных социальных сетей, за ' +self.app.meta.fullname+' нет корпорации и он основан на модели Биткойн. Bastyon - это проект с открытым исходным кодом, которым управляет группа разработчиков и экспертов, и его цель - предоставить модерируемую сообществом платформу, в которой серьезно соблюдается свобода слова.  </p> <p>Автором проекта изначально был  Даниэль Сатчков, но сейчас команда ' +self.app.meta.fullname+' - это более 25 разработчиков и множество волонтеров по всему миру. Bastyon - это скорее протокол, чем платформа, поскольку любой разработчик может создать на нем собственное приложение. Платформа работает не на одном сервере, а в сети из <em> пользовательских узлов </em>, расположенных по всему миру.  </p> <p> Это означает, что пользователи всегда могут получать информацию и общаться, просматривать контент и публиковать сообщения, пока у них есть подключение к Интернету и только несколько узлов где-то в мире работают. </p> <p> Это преодолевает ограничения, которые цензоры устанавливают для блокировки или ограничения коммуникация и распространение информации. Информация должна свободно перемещаться. Хотя, например, в Китае некоторые социальные сети можно использовать только через VPN, в этом нет необходимости с '+ self.app.meta.fullname +'. </p> <p> Кроме того, '+ self.app.meta.fullname +' не собирает личную информацию: пользователи регистрируются без какого-либо адреса электронной почты или номера телефона, и никакие личные данные, такие как IP или MAC-адрес, никоим образом не сохраняются. Обратите внимание: хотя Bastyon не собирает никаких IP-адресов (как видно из открытого кода), невозможно полностью скрыть ваш IP-адрес при использовании Интернета, если только вы не используете VPN. </p> <p> Таким образом, '+ self.app.meta.fullname +' позволяет пользователям свободно обсуждать проблемы. Сегодня анонимность является требованием безопасности и конфиденциальности, и '+ self.app.meta.fullname +' может это гарантировать.  </p> <p> Кроме того, чтобы обеспечить полностью конфиденциальное и анонимное общение, '+ self.app.meta.fullname +' обеспечивает зашифрованную систему чата, не связанную с каким-либо номером телефона или личными данными, защищенную сквозным шифрованием  (обратите внимание, что групповые чаты не шифруются. Шифрование обеспечивается только на одноранговых, персональных чатах ( чатах 1-на-1)). Никто, кроме двух пользователей, участвующих в сеансе чата, не может получить доступ к сообщениям. Все утверждения легко проверить, поскольку приложение Bastyon и блокчейн Pocketnet имеют полностью открытый исходный код, а код виден всем. Более того, все сообщения чата автоматически удаляются через 7 дней. </p> <p> '+ self.app.meta.fullname +' - устойчивая к цензуре социальная платформа, где люди могут общаться и делиться контентом с другими пользователями абсолютно прозрачно, где одни правила для всех пользователей и разработчиков. </p> </div> ', 
+                        },
+                        
+                        {
+                        id : 'как это-слова',
+                        q : 'С чего мне начать?',
+                        a : '<div><p>'+self.app.meta.fullname+' прост в использовании: вам нужно создать учетную запись и вы можете сразу же начать публиковать контент, подписываться на других пользователей и общаться в чате. </p> <p> Во время регистрации вам нужно создать уникальное имя и загрузить картинку или фотографию (не обязательно свою фотографию!). Ни электронной почты (вы можете оставить электронное письмо для списка рассылки, но оно не связано с вашей учетной записью на Bastyon), ни номера телефона, ни проверок. Даже пароль: система сгенерирует парольную фразу, которую вы должны использовать для входа в систему, эта парольная фраза - ваш личный ключ, который заменяет логин и пароль, это единственное, что вам нужно для входа в систему. Если вы потеряете личный ключ ключ, никто не может его восстановить, даже разработчики не имеют доступа к учетным записям пользователей.</p></div>',
+                        },
+                        
+                        {
+                        id : 'подписаться',
+                        q : 'В чем разница между парольной фразой из 12 слов и закрытым ключом?',
+                        a : '<div><p>При первом использовании '+ self.app.meta.fullname +' вам необходимо создать учетную запись, состоящую только из вашего уникального имени пользователя. </p> <p> <strong> Нет пароля. </strong> </p> <p> Вместо этого вам будет предоставлен уникальный ключ из 12 слов (кодовая фраза). В качестве альтернативы вы можете использовать закрытый ключ, представляющий собой длинный набор символов. <strong> Храните эти данные в безопасности и НИКОГДА не раскрывайте их никому. </strong> </p> <p> Затем, когда вам нужно войти в систему, вам просто нужно ввести кодовую фразу (или отсканировать QR из приложения). </p> <p> <strong> Помните </strong>: если вы потеряете кодовую фразу, ваша учетная запись будет заблокирована навсегда. Невозможно восстановить пароль, нет возможности для '+ self.app.meta.fullname +' каким-либо способом войти в систему без кодовой фразы или приватного ключа. Ваша кодовая фраза или приватный ключ - единственный способ получить доступ к вашей учетной записи, пожалуйста, запишите его где-нибудь на листке бумаги или сохраните в надежном месте. Вы можете найти его в своем профиле в разделе «Учетные записи» (щелкните символ ключа). </p> </div> ',
+                        },
+                        
+                        
+                        {
+                        id : 'закулисный',
+                        q : 'Как это работает за кадром? Где находятся серверы?',
+                        a : '<div><p>'+self.app.meta.fullname+' построен на основе децентрализованной криптовалюты Биткойн, не имеет центрального офиса и использует цепочку блоков для совершения транзакций и обеспечения безопасности.  </p> <p> Центрального сервера нет: вместо этого платформа полагается на сеть узлов, расположены по всему миру. Любой человек, имеющий компьютер, может фактически запустить узел (и получить за это вознаграждение в Pocketcoin). </p> <p> Хеш каждого сообщения, каждого комментария, каждого взаимодействия (кроме чата сообщения!) хранится в <a elementsid="https://en.wikipedia.org/wiki/Blockchain" href="https://en.wikipedia.org/wiki/Blockchain"> блокчейне </a>. Сами сообщения и комментарии находятся не в блокчейне, а в сопутствующей базе данных, привязанной к блокчейну. </p> <p> '+ self.app.meta.fullname +' использует выделенный блокчейн, полученный непосредственно из цепочки биткойнов.  </p> </div> ',
+                        },
+                        
+                        {
+                        id : 'блоки',
+                        q : 'Что произойдет, если какая-то страна (страны) заблокирует доступ к Bastyon.com?',
+                        a : '<div><p>Bastyon.com перестанет работать,  но приложение для компьютера будет работать точно также после любых блокировок сайта.</p><p>Вы сможете использовать Bastyon, как будто ничего не произошло, поскольку настольное приложение Bastyon обращается напрямую к узлам и не использует веб-сайты. </p> <p> В этом сила сопротивления цензуре. <br /> Вы можете убедиться в этом сами, смоделировав исчезновение доменного имени bastyon.com. <br /> <br /> <strong> В Windows: </strong> <br /> просто откройте этот файл: <br /> Windows / System32 / hosts <br /> <br /> <strong> В Linux / Ubuntu: </strong> <br /> Откройте этот файл <br /> / etc / hosts <br /> <br /> Затем добавьте эту строку: <br /> 127.0.0.1 bastyon.com </p> <p > Это гарантирует, что bastyon.com указывает на ваш локальный компьютер, а это означает, что он не указывает ни на какой внешний IP-адрес. <br /> <br /> Затем запустите настольное приложение, и вы сможете продолжить использование Bastyon если ничего не произошло. <br /> Круто, да? </p> </div> <br /> <a href="https://github.com/pocketnetteam/pocketnet.gui/releases/">Скачать Приложение Для Компьютера</a> ',
+                        
+                        }
+                        
+                        ]
+                    
+                        
+                        },
+            
+                        {
+                        
+                            name : 'Pocketcoin',
+                            id : 'pocketcoin',
+                            
+                            group : [
+                            
+                            
+                            
+                            {
+                            id : 'магазин приложений',
+                            q : 'Как можно использовать PKOIN?',
+                            a : '<div>PKOIN имеет множество применений на Bastyon. Во-первых, 50 PKOIN в вашем аккаунте снимают все ограничения на публикацию и позволяют загружать ежедневно до 4ГБ видео. PKOIN можно использовать для того, чтобы сделать ваши комментарии более заметными для всех (Комментарии с донатами будут находиться в самом верху ленты комментариев). PKOIN от таких поднятых комментариев достается блоггеру, и блоггеры должны отвечать или размещать такие комментарии, чтобы поощрять подобные "поднятия" комментариев. Вы можете поднять пост, чтобы продвинуть его вверх в ленте. Он используется для стейкинга в узлах, вы можете запустить узел и заработать больше PKOIN, поставив PKOIN. Он будет использоваться на децентрализованной торговой площадке рекламы, при этом 100% доходов будут поступать блоггерам. Также на него можно будет купить специальные "обои" вашего личного профиля, анимированные изображения профиля и т. д. (Релиз с такими возможностями ожидается в марте) </div>',
+                            },
+                            
+                            
+                            {
+                            id : 'pocketcoinstock',
+                            q : 'Pocketcoin похож на долю акций в '+self.app.meta.fullname+' ?',
+                            a : '<div>Нет, это не так. '+self.app.meta.fullname+' даже не корпорация и не имеет никакой собственности. Это открытый код, который может скопировать и запустить каждый. Pocketcoin - это токен, который облегчает обмен ценностями, в частности, рекламные транзакции. Кроме того, '+ self.app.meta.fullname +' будет включать торговую площадку, где товары и услуги будут продаваться напрямую за Pocketcoin.</div>',
+                            },
+                            
+                            // {
+                            // id : 'pocketcoinbuy',
+                            // q : 'Могу ли я купить дополнительный Pocketcoin?',
+                            // a : '<div>Да, в настоящее время вы можете купить Pocketcoin на следующих биржах: DigiFinex, Bitforex, Mercatox. Вы также можете купить его за 19 различных криптовалют на https://pkoin.net/, а в Bastyon есть категория PKOIN / Peer-to-Peer, где вы можете покупать и продавать ее другим пользователям.</div>',
+                            // },
+                            
+                            // {
+                            // id : 'pocketcoinbuyfiat',
+                            // q : 'Могу ли я купить Pocketcoin за доллары США или другую фиатную валюту? ',
+                            // a: '<div> Да, вы можете купить его в категории PKOIN / Peer-to-Peer или через компанию под названием Indacoin по адресу https://buy.pkoin.indacoin.io/ Indacoin не имеет ничего общего с Bastyon, они просто продают PKOIN за кредитные карты после покупки на биржах.</div>',
+                            // },
+                            
+                            {
+                            id : 'pocketcoinbuyfiat',
+                            q : 'Зачем мне покупать Pocketcoin?',
+                            a : '<div>У Bastyon нет поддержки со стороны банкиров или венчурных капиталистов, это децентрализованная социальная платформа, поддерживаемая PKOIN. Когда вы используете Bastyon, вы используете пользовательские узлы, видео узлы, все они должны платить за компьютеры, Интернет и электричество. Блогерам нужно зарабатывать на контенте. Bastyon может работать только в том случае, если пользователи владеют и поддерживают PKOIN. Итак, покупка PKOIN - это способ поддержать децентрализацию и свободу. Однако есть еще одна важная причина для владения Pocketcoin. Вполне возможно, что скоро доступ к вашему банковскому счету будет ограничен без наличия у вас QR-кода.  Pocketcoin не привязан к вашему имени или паспорту и является одним из способ заниматься коммерцией в мире, где царит финансовая цензура. Не исключено, что PKOIN может стать одним из немногих способов покупки еды без определенного сертификата или QR-кода. Покупка PKOIN - отличный способ противостояния цензуре и ограничениям </div>',
+                            },
+                            ]
+                            },
+            
+                            {
+                        
+                                name : 'Как я могу купить PKOIN?',
+                                id : 'buy-pkoin',
+                            
+                                group : [
+                            
+                                    {
+                                        id : 'buy-pkoin1',
+                                        q : '  ',
+                                        a : 'Вы можете купить PKOIN следующими способами: Выберите категорию «PKOIN/Из рук в руки» и посмотрите на предложения о купле/продаже PKOIN, либо сами разместите свое предложение о купле/продаже PKOIN.	',
+                                        img: '<img src="img/per-to-per.jpg" alt="" />'
+                                    },
+                                    {
+                                        id : 'buy-pkoin21',
+                                        q : '',
+                                        a : 'Покупку PKOIN также можно осуществить на следующих сайтах. 	<br> <a target="_blank" href="https://www.bitforex.com/en/spot/pkoin_usdt">https://www.bitforex.com/en/spot/pkoin_usdt</a> <br> <a target="_blank" href="https://www.digifinex.com/en-ww/trade/USDT/PKOIN">https://www.digifinex.com/en-ww/trade/USDT/PKOIN</a>  <br> <a target="_blank" href="https://pkoin.net/">https://pkoin.net/</a> - здесь приобрести  PKOIN можно за другие криптовалюты. <br>		<a target="_blank" href="https://buy.pkoin.indacoin.io/">https://buy.pkoin.indacoin.io/</a> - здесь приобрести PKOIN можно за кредитную карту.',
+                                        img: ''
+                                    },
+                                    {
+                                        id : 'buy-pkoin2',
+                                        q : 'Pkoin.net - для покупки PKOIN за другие криптовалюты ',
+                                        a : 'Выберите криптовалюту, за которую вы хотите приобрести PKOIN, укажите  количество PKOIN, а также введите адрес своего кошелька.',
+                                        img: '<img src="img/buy-pkoin2.jpg" alt="" />'
+                                    },
+                                    {
+                                        id : 'buy-pkoin3',
+                                        q : '  ',
+                                        a : 'Адрес вашего PKOIN-кошелька находится в вашем аккаунте на Бастионе. Чтобы его найти – кликните иконку вашего аватара, которая расположена в правом верхнем углу.',
+                                        img: '<img src="img/upl1.jpg" alt="" />'
+                                    },
+                                    {
+                                        id : 'buy-pkoin4',
+                                        q : '  ',
+                                        a : 'Далее кликните по адресу PKOIN, чтобы его скопировать.',
+                                        img: '<img src="img/upl7.jpg" alt="" />'
+                                    },
+                                    {
+                                        id : 'buy-pkoin5',
+                                        q : '  ',
+                                        a : 'Далее, вам нужно ввести адрес вашего PKOIN-кошелька в соответствующее поле и нажать кнопку “Purchase”.',
+                                        img: '<img src="img/buy-pkoin5.jpg" alt="" />'
+                                    },
+                                    {
+                                        id : 'buy-pkoin6',
+                                        q : '  ',
+                                        a : 'После этого вы должны отправить BTC (или другую криптовалюту, которую вы выбрали) на предоставленный вам адрес. ',
+                                        img: '<img src="img/buy-pkoin6.jpg" alt="" />'
+                                    },
+                                    {
+                                        id : 'buy-pkoin7',
+                                        q : ' Купить PKOIN с помощью кредитной карты на <a href="Buy.pkoin.indacoin.io">indacoin.io</a>     ',
+                                        a : 'Для начала, выберите валюту, введите количество, ваш электронный адрес и адрес кошелька PKOIN. Далее, нажмите «Купить PKOIN»',
+                                        img: '<img src="img/buy-pkoin7.jpg" alt="" />'
+                                    },
+                                    {
+                                        id : 'buy-pkoin8',
+                                        q : '  ',
+                                        a : 'Вы увидите окно «Купить PKOIN с кредитной или дебетовой картой», нажмите  «Далее»',
+                                        img: '<img src="img/buy-pkoin8.jpg" alt="" />'
+                                    },
+                                    {
+                                        id : 'buy-pkoin9',
+                                        q : '  ',
+                                        a : 'Далее, введите ваш адрес, почтовый индекс и укажите вашу страну. ',
+                                        img: '<img src="img/buy-pkoin9.jpg" alt="" />'
+                                    },
+                                    {
+                                        id : 'buy-pkoin10',
+                                        q : '  ',
+                                        a : 'Далее, введите ваше имя, страну, номер телефона, дату рождения',
+                                        img: '<img src="img/buy-pkoin10.jpg" alt="" />'
+                                    },
+                                    {
+                                        id : 'buy-pkoin11',
+                                        q : '  ',
+                                        a : 'Введите номер вашей карты и нажмите «Далее».',
+                                        img: '<img src="img/buy-pkoin11.jpg" alt="" />'
+                                    },
+                                    
+                                    
+                                    
+                                    
+                                ]
+                            
+                            },
+                            {
+                        
+                                name : 'Как заработать PKOIN, используя легкую ноду?',
+                                id : 'earnbastyon',
+                            
+                                group : [
+                            
+                                    {
+                                        id : 'earnbastyon1',
+                                        q : '',
+                                        a : 'Требования: <br />- На вашем компьютере не установлено другое программное обеспечение Bastion/Pocket net node<br />- Ваш жесткий диск - SSD (не жесткий диск)<br />- На твердотельном накопителе вашего компьютера имеется не менее 50 ГБ свободного места<br />- На вашем компьютере имеется не менее 2 ГБ свободной оперативной памяти<br />- Ваша скорость интернета составляет не менее 10 Мбит/сек',
+                                        img: ''
+                                    },
+                                    {
+                                        id : 'earnbastyon2',
+                                        q : '',
+                                        a : 'Перейдите на вкладку “Нода” на странице “Управление”',
+                                        img: '<img src="img/earnbastyon2ru.jpg" alt="" />'
+                                    },
+                                    {
+                                        id : 'earnbastyon3',
+                                        q : '',
+                                        a : 'Вы можете изменить узел и каталог данных, если на вашем диске C недостаточно свободного места',
+                                        img: '<img src="img/earnbastyon3ru.jpg" alt="" />'
+                                    },
+                                    {
+                                        id : 'earnbastyon4',
+                                        q : '',
+                                        a : 'Кликните “Загрузить и установить ноду”',
+                                        img: '<img src="img/earnbastyon4ru.jpg" alt="" />'
+                                    },
+                                    {
+                                        id : 'earnbastyon5',
+                                        q : '',
+                                        a : 'Вы увидите индикатор установки ноды',
+                                        img: '<img src="img/earnbastyon5ru.jpg" alt="" />'
+                                    },	
+                                    {
+                                        id : 'earnbastyon6',
+                                        q : '',
+                                        a : 'Подождите до следующего шага и статуса Запущено. Первый запуск ноды может занять несколько часов – НЕ ВЫКЛЮЧАЙТЕ КОМПЬЮТЕР',
+                                        img: '<img src="img/earnbastyon6ru.jpg" alt="" />'
+                                    },	
+                                    {
+                                        id : 'earnbastyon7',
+                                        q : '',
+                                        a : '',
+                                        img: '<img src="img/earnbastyon7ru.jpg" alt="" />'
+                                    },	
+                                    {
+                                        id : 'earnbastyon8',
+                                        q : '',
+                                        a : '',
+                                        img: '<img src="img/earnbastyon8ru.jpg" alt="" />'
+                                    },	
+                                    {
+                                        id : 'earnbastyon9',
+                                        q : '',
+                                        a : 'Вам нужно будет внести PKOIN, чтобы заработать ставки, нажмите "Внести". После нажатия кнопки Пополнить счет вы увидите адрес пункта. Вы можете скопировать адрес и отправить по нему PKOIN. Если вы еще не купили PKOIN, вы можете купить его следующими способами: <br />1. Покупайте за криптовалюту на pkoin.net (или на биржах DigiFinex Orbit forex)<br />2. Купите его, выбрав тег "PKOIN/Из рук в руки" в левой части приложения Bastyon. Выберите продавца и напишите ему в чат (на свой страх и риск)',
+                                        img: '<img src="img/earnbastyon9ru (1).jpg" alt="" />'
+                                    },	
+                                    {
+                                        id : 'earnbastyon10',
+                                        q : '',
+                                        a : 'Доступны и другие функции: <br />– Вывод средств - вывод PKOIN (уменьшает ваши шансы на выигрыш монет)<br />– Сохранить кошелек (кошелек резервного узла, очень важно, сохраняет ваши личные ключи в случае сбоя вашего узла)<br />– Импорт кошелька (вы можете импортировать внешний кошелек с закрытыми ключами)',
+                                        img: '<img src="img/earnbastyon10ru.jpg" alt="" />'
+                                    },	
+                                    {
+                                        id : 'earnbastyon11',
+                                        q : '',
+                                        a : 'В этом примере вы видите, что было внесено 500 PKOIN . Обратите внимание, что ваш кошелек узла отделен от вашего кошелька Бастиона по умолчанию, они не подключены. Вам нужно перевести монеты на узел из кошелька, чтобы выиграть ставки.',
+                                        img: ''
+                                    },	
+                                    {
+                                        id : 'earnbastyon12',
+                                        q : '',
+                                        a : 'После того, как вы внесете PKOIN, необходимо пройти 60 блоков (около 60 минут). Как только вы увидите зеленую галочку с надписью "Стейкинг", вы готовы начать зарабатывать PKOIN. Вы можете периодически заходить и смотреть, как меняется ваш баланс в зависимости от выигрышных ставок. По любым вопросам пишите на support@bastyon.com',
+                                        img: '<img src="img/earnbastyon12ru.jpg" alt="" />'
+                                    },	
+                                    
+                                ]
+                            
+                            },
+                            
+                        {
+                        
+                        name: self.app.meta.fullname,
+                        id: 'дорожная карта',
+                        
+                        group : [
+                        
+                        {
+                        id : 'адреса кошельков',
+                        q : 'Я вижу адрес аккаунта и адрес кошелька. Связаны ли они между собой?',
+                        a: '<div> Адрес аккаунта - это адрес, который используется для публикации контента и использования '+self.app.meta.fullname + ' в целом. В нем также хранятся монеты, которые вы выигрываете за свои публикации с высоким рейтингом. </div> <div> Адреса кошельков предназначены для хранения остальных монет. Эти два адреса не связаны между собой. </div>',
+                        },
+                        
+                        {
+                        id : 'ссылка на профиль',
+                        q : 'Могу ли я сделать ссылку на свой профиль или на пост, чтобы я мог опубликовать его в других социальных сетях. ',
+                        a: '<div>Чтобы поделиться постом, просто щелкните кнопку "поделиться". <br />В браузере перейдите в свой профиль, щелкнув аватар в правом верхнем углу и нажмите «Поделиться», затем установите флажок «Использовать реферальную ссылку», всем, кто зарегистрируется по созданной ссылке, будет предложено подписаться на вас автоматически при регистрации. За каждого реферала, который зарегистрируется по вашей ссылке, вы получите бонус, равный 20% от Pocketcoin (PKOIN), который они зарабатывают, публикуя сообщения и комментируя в течение первых 6 месяцев. Чтобы было понятно, ваш реферал не зарабатывает меньше, вы получаете бонус.</div><div></div>',
+                        },
+                        // {
+                        // id : 'звездная система',
+                        // q : 'Система оценок. Есть ли ограничение на количество звезд, которые человек должен дать людям?',
+                        // a : '<div>Есть некоторые ограничения. Но по мере роста вашей репутации вы можете голосовать все больше и больше. Это сделано, поэтому боты не ломают нашу цепочку блоков. Первоначально вы получаете 100 оценок каждые 24 часа. По мере роста вашей репутации (это происходит благодаря публикациям и получению оценок) вы делаете 200 оценок в день.</div>',
+                        // },
+                        
+                        
+                        {
+                        id : 'время обновления профиля',
+                        q : 'Как часто я могу обновлять свой профиль? ',
+                        a : '<div>Вы можете обновлять свой профиль один раз в час.</div>',
+                        },  
+                        
+                        {
+                        id : 'мобильное приложение',
+                        q : 'Есть ли мобильное приложение?',
+                        a : '<div>Есть приложение для Android, вы можете скачать его <a href="https://play.google.com/store/apps/details?id=pocketnet.app">здесь</a>.<br />Приложение для iPhone недоступно, потому что Apple требовала от нас цензуры любого контента в круглосуточном режиме. В Bastyon даже разработчики не могут удалять контент, он модерируется пользователями. Bastyon оптимизирован для мобильных браузеров, таких как Safari на iPhone.</div>',
+                        },
+                        
+                        {
+                        id : 'лимит публикации',
+                        q : 'Можете ли вы сказать мне, каков лимит публикаций и оценок каждый день или час?',
+                        a : '<div>Да, у нас действительно есть некоторые ограничения публикации материалов, основанные на математическом алгоритме. <br /> Система регистрации нового аккаунта устроена таким образом, что она не требует ни адреса электронной почты, ни номера мобильного телефона при его регистрации, поскольку Bastyon не нуждается в ваших персональных данных. При этом, описанная система регистрации имеет один недостаток – невозможно исключить «Ботов» на этапе регистрации нового аккаунта. <br />Поэтому мы решили, что целесообразно бороться с ботами не в процессе регистрации аккаунта, а после его регистрации, используя систему внутренней модерации Bastyon. Другими словами, борьба с ботами будет настолько эффективна, насколько активно пользователи Bastyon будут оценивать других пользователей Bastyon и насколько активно будут публиковатся интересные материалы.<br />Вот рекомендации, как зарабатывать рейтинги и перейти из категории «аккаунта-новичка» в категорию «аккаунт с высокой репутацией». <br />В целом, залог постоянного роста репутации и получения рейтингов очень прост – публикуйте интересный контент и получайте высокие оценки от других пользователей.<br /> <b> рейтинг 100  + 100 голосов «репутационных» пользователей <br /> или <br /> рейтинг 100 + 30 голосов «репутационных»  пользователей + 6 первых месяцев после регистрации. </b>  <br />В течение первых 6 месяцев после создания нового аккаунта:<br />вы можете размещать 5 постов и выставлять 15 оценок каждые 24 часа. Как только ваша репутация превысит 100 и будет по крайней мере 100 пользователей с высокой репутацией, которые проголосовали за вас, вы сможете делать до 30 постов и 200 оценок, а также 300 комментариев каждые 24 часа.<br /> При этом, если за 6 месяцев ваша репутация составила 100 и вы получили только 30 (и более) оценок от высокорейтинговых пользователей, то ваш аккаунта автоматически перейдет в категорию высокорейтинговых аккаунтов.<br />Примечание: и в одном и во втором случае появляется возможность публикации видео. Если вы не намерены ожидать, когда ваш рейтинг достигнет более 100 пунктов и когда вы получите более 100 (30) голосов от рейтинговых пользователей, вы можете получить доступ к загрузке видео		путем покупки PKOIN. <br />Квоты на загрузку видео составаят: <br />5PKOIN - до 500Мб видео ежедневно;<br />50PKOIN - до 4Гб видео ежедневно, а также 30 постов и 200 оценок, а также 300 комментариев каждые 24 часа.		</div>',
+                        },
+                        
+                        {
+                        id : 'репутация',
+                        q : 'Что такое репутация и как она рассчитывается?',
+                        a : "<div>Ваша репутация - это сумма ваших рейтингов. Обратите внимание, что пользователи с репутацией ниже 50 не влияют на чью-либо репутацию. Они могут оценивать контент, но это не влияет на репутацию. </div> <br /> <div> Итак, 5 звоздочек -> 2 рейтинга <br> 4 звездочки -> 1 <br> 3 звездочки -> 0 <br> 2 звездочки -> -1 рейтинг <br> 1 звездочка -> -2 рейтинга </div> <div> Приведем пример: если при публикации поста рейтинговые пользователи поставили вам две оценки по 5 звездочек и одну оценку в 1 звездочку, то формула рассчета будет выглядеть так:<br> 2 + 2 - 2 = 2. Таким образом ваш рейтинг повысится на 2 пункта. </div> ",
+                        },
+                        
+                        {
+                        id : 'удалить сообщение или пользователя',
+                        q : 'Есть ли способ удалить или отредактировать сообщение?',
+                        a : '<div>Да, вы можете редактировать и удалять сообщения.</div>',
+                        },
+                        
+                        {
+                        id : 'поиск пользователей',
+                        q : 'Есть ли способ найти пользователя?',
+                        a : '<div>Щелкните значок лупы поиска вверху и выполните поиск по имени пользователя или ключевым словам.</div>',
+                        },
+                        {
+                        id : 'следить',
+                        q : 'Как подписаться, чтобы отслеживать любимых блогеров?',
+                        a : '<div>Чтобы подписаться на автора/блогера (вверху поста) есть ссылка Подписаться, вы можете найти его посты в топ постов (красный огонь вверху страницы). Вы также скоро увидите ленту «Мои подписки», которая будет отличаться от основной ленты. В основной ленте будет все, что кто-либо публикует, но фид подписок будет содержать только сообщения пользователей, на которых вы подписаны. Итак, вы будете заходить в общую ленту в поисках хорошего контента, хотя вам может не все нравиться. Затем выберите те, которые хотите сохранить. </div>',
+                        },
+                        
+                        
+                        {
+                        id : 'другие браузеры',
+                        q : 'Можно ли его использовать в браузерах Brave или Duck Duck go?',
+                        a : '<div>'+self.app.meta.fullname + ' должен работать в этих браузерах. Он полностью функционален в Chrome и Firefox. Но мы настоятельно рекомендуем всем загрузить настольное приложение - загрузите '+ self.app.meta.fullname +' Setup.exe <a href="https://github.com/pocketnetteam/pocketnet.gui/releases"> здесь</a>. Настольное приложение невозможно заблокировать, даже если bastyon.com не работает или заблокирован по какой-либо причине. Подобные ограничения являются новым тоталитарным трендом.</div>',
+                        },
+                        
+                        {
+                        id : 'ответ на сообщение',
+                        q : 'Можем ли мы отвечать на собственные / и другие сообщения?',
+                        a : '<div>Да, комментирование доступно под каждым постом.</div>',
+                        },
+                        
+                        {
+                        id : 'добавить теги',
+                        q : 'Как добавить тег к посту?',
+                        a : '<div>Под постом выберите категорию или введите тег  и нажмите клавишу ВВОД. "#" добавлять не нужно - добавление происходит автоматически.</div>',
+                        },
+                        
+                        {
+                        id : 'использовать публичный адрес',
+                        q : 'Как я могу использовать публичный адрес?',
+                        a : '<div>Ваш публичный адрес - это то, что '+ self.app.meta.fullname +' использует для проверки вашей личности. По сути, ваш закрытый ключ - это большое число (которое может быть представлено последовательностью из 12 слов или приватным ключом, которые конвертируются в большое число). Это число умножается на другое, известное всем (называемое базовой точкой эллиптической кривой), и мы получаем открытый ключ. Когда вы вводите свой закрытый ключ, мы можем умножить его на базовую точку, чтобы получить ваш открытый ключ и сопоставить его с общедоступным адресом. Если они совпадают, мы знаем, что это вы. Невозможно вернуться назад, т.е. разделить открытый ключ на базовую точку, чтобы получить свой закрытый ключ. В криптографии умножение работает только в одну сторону и обратное деление невозможно, поэтому ваш ключ в безопасности. '+ self.app.meta.fullname +' использует ту же самую криптографию, что и Биткойн. </div>',
+                        },
+                        {
+                        id : 'настольный Mac',
+                        q : 'Будет ли загружаемый исполняемый файл для Mac?',
+                        a : '<div>Да, вы можете найти его <a target="_blank" href="https://github.com/pocketnetteam/pocketnet.gui/releases">здесь</a>.</div>',
+                        },
+                        {
+                        id : 'темный режим',
+                        q : 'Как изменить тему на темный режим?',
+                        a : '<div>Переключение режима можно найти в настройках. Если вы находитесь в браузере, щелкните изображение своего профиля> Управление> Настройки. Если вы используете мобильный телефон, щелкните "бургер-меню" в правом нижнем углу> Настройки. </div>',
+                        },
+                        {
+                        id : 'запрет ',
+                        q : 'Можно ли банить людей?',
+                        a : '<div>Да, Bastyon - это платформа, модерируемая сообществом, однако есть только определенные темы, которые будут отмечены сообществом, такие как порнография, наркотики и прямые угрозы насилия. Вас никогда не забанят за свое мнение или свободу слова, и даже по конкретным запрещенным темам должен быть консенсус опытных пользователей, при этом другие пользователи не защищают контент. В настоящее время пользователи с репутацией ниже -30 теряют свои привилегии учетной записи, но это временная система. К концу 2021 года Bastyon выпускает новую систему модерации, в которой сообщения изначально помечаются любым пользователем с высоким уровнем репутации, но учетные записи могут быть заблокированы только определенной группой присяжных, выбранных с помощью лотереи блокчейна. Таким образом, никто не может атаковать кого-то за мнение, присяжные будут выбраны для модерации определенного контента, и все они должны согласиться. Аккаунт не может быть заблокирован до тех пор, пока не будет определено два состава присяжных, и они не могут быть одинаковыми. Эта система защищает от любых правил мафии на Bastyon, одновременно защищая платформу от сомнительного контента.</div>',
+                        },	
+                        {
+                        id : 'Приложение Apple',
+                        q : 'Когда в Apple добавят Bastyon?',
+                        a : '<div>Apple решила не допускать Bastyon из-за отсутствия у Bastyon возможностей централизованной цензуры. Мы гордимся этой оценке Apple.</div>',
+                        },
+                        {
+                        id : 'Отсутствует PKCOIN',
+                        q : 'Помощь! Мне не хватает моего PKOIN!',
+                        a : '<div>Если по какой-то причине кажется, что ваш PKOIN пропал, сначала проверьте обозреватель блоков через <a href="https://'+self.app.options.url+'/blockexplorer/"> BlockExplorer</a> на предмет того, что ваши монеты все еще там. Просто найдите адрес своего кошелька в строке поиска, и он покажет вам баланс вашей учетной записи. </div>',
+                        },
+                        
+                        ]
+                        
+                        
+                        },
+                        {
+                        
+                        name : 'Видео',
+                        id : 'видео',
+                        
+                        group : [
+                        {
+                        id : 'сохранить видео',
+                        q : 'Где вы сохраняете видеоконтент?',
+                        a : '<div>'+self.app.meta.fullname + ' использует модифицированную платформу с открытым исходным кодом под названием PeerTube, подключенную к блокчейну Pocketnet и приложению Bastyon. PeerTube полностью интегрирован с авторизацией '+ self.app.meta.fullname +', каждый видеосервер зарегистрирован в блокчейне.</div>',
+                        },
+                        
+                        {
+                        id : 'разрешения',
+                        q : 'Кто может загружать видео в Bastyon?',
+                        a : '<div> Bastyon не имеет централизованных серверов или венчурного финансирования, все видео хранится на серверах, обслуживаемых пользователями. Поэтому мы не можем позволить всем загружать видео, серверы быстро заполнятся. Для загрузки видео вам необходимо иметь в аккаунте 5 PKOIN (500 МБ) или 50 PKOIN (4 ГБ). Вы можете купить PKOIN у других пользователей, если выберете категорию PKOIN / Peer-to-Peer. </div>',
+                        },
+                        {
+                        id : 'статистика',
+                        q : 'Где я могу посмотреть статистику моих видео?',
+                        a : '<div> Зайдите в свой профиль и посмотрите Мои видео. </div> ',
+                        },
+                        {
+                        id : 'технологии',
+                        q : 'Какой плеер вы используете для воспроизведения видео?',
+                    
+                        a : '<div> В Бастионе есть собственный плеер, который представляет собой значительно модифицированную версию PeerTube. Как и PeerTube, он использует технологию WebTorrent для снижения нагрузки на сервер. Это означает, что пользователи, просматривающие видео, делятся им. Обратите внимание, что в некоторых случаях это означает, что пользователи могут видеть IP-адреса друг друга. Серверы Bastyon не имеют никакого механизма для записи этих IP-адресов, однако, если вы действительно заботитесь о безопасности своего IP-адреса, вам следует использовать надежного поставщика VPN. Если вы хотите минимизировать одноранговое совместное использование, вы можете использовать функцию загрузки видео в Bastyon.</div> ',
+                        },
+                        {
+                        id : 'время',
+                        q : 'Почему для загрузки видео требуется время?',
+                        a : '<div> Опять же, у Bastyon нет ресурсов, которые есть у Google. Видео необходимо загрузить в один из видеоузлов, а также его необходимо перекодировать. Помните, что YouTube не является бесплатным, он извлекает ценность, используя вашу ЛИЧНУЮ информацию и монетизируя ее. Bastyon находится в ведении сообщества, и небольшая задержка - небольшая плата за конфиденциальность и свободу. Кроме того, разработчики Bastyon сделали процесс загрузки сверхлегким и гораздо более надежным, чем на других платформах, и ориентированным на свободу (часто они даже не перекодируют файлы различного качества). </div>',
+                        },
+                        
+                        
+                        ]
+                        
+                        },
+                        {
+                        
+                            name : 'Загрузка видео',
+                            id : 'Uploading',
+                        
+                            group : [
+                        
+                                {
+                                    id : 'Uploading1',
+                                    q : '  ',
+                                    a : 'Важно! Функция загрузки видео доступна для пользователей, которые имеют не менее 5 PKOIN, либо не менее 100 рейтингов. При этом 5 PKOIN позволяют загружать не более 500 Мб в сутки. Если у вас есть 50 PKOIN, ваши лимиты загрузки увеличатся до 4 Гб в сутки. При этом вы должны постоянно иметь не менее 5/50 PKOIN, чтобы вы не были верифицированы как бот.',
+                                    img: ''
+                                },
+                                {
+                                    id : 'Uploading2',
+                                    q : 'Нажмите «Что нового?» во вкладке «Вся лента»',
+                                    a : '',
+                                    img: '<img src="img/upl1.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'Uploading3',
+                                    q : 'Далее, нажмите «Загрузить видео», а затем во всплывающем окне нажмите «Выбрать файл». Выберите на персональном компьютере необходимый файл и ожидайте окончания загрузки и последующего перекодирования видео. ',
+                                    a : '',
+                                    img: '<img src="img/upl2.jpg" alt="" />',
+                                    
+                                },
+                                {
+                                    id : 'Uploading4',
+                                    q : '',
+                                    a : '',
+                                    img: '<img src="img/upl3.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'Uploading5',
+                                    q : '',
+                                    a : '',
+                                    img: '<img src="img/upl4.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'Uploading6',
+                                    q : '',
+                                    a : 'Далее, когда загрузка видео будет окончена, добавьте заголовок и описание, категорию, а так же выберите видимость поста: <br />«Видимо для всех»<br />«Видимо только для подписчиков»<br />«Видно только для пользователей Бастиона»',
+                                    img: '<img src="img/upl5.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'Uploading7',
+                                    q : '',
+                                    a : '',
+                                    img: '<img src="img/upl6.jpg" alt="" />'
+                                },
+                                
+                                
+                                
+                            ]
+                        
+                        },
+                        
+                        {
+                        
+                            name : 'Мои видео',
+                            id : 'Myvideos',
+                        
+                            group : [
+                        
+                                {
+                                    id : 'Myvideos1',
+                                    q : '  ',
+                                    a : 'Нажмите иконку вашего аватара в правом верхнем углу.',
+                                    img: '<img src="img/prkey1.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'Myvideos2',
+                                    q : ' ',
+                                    a : 'Далее, нажмите кнопку «управление»',
+                                    img: '<img src="img/prkey2.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'Myvideos3',
+                                    q : '  ',
+                                    a : 'Далее, нажмите «Мои видео»',
+                                    img: '<img src="img/myvid.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'Myvideos4',
+                                    q : '  ',
+                                    a : 'Вы окажетесь в видео кабинете, в котором содержится информация о размещенных вами видео, среднем рейтинге, общем количестве просмотров видео, а также настройки видео.',
+                                    img: '<img src="img/Myvideos4.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'Myvideos5',
+                                    q : '  ',
+                                    a : 'Если вы хотите изменить описание или заголовок видео, превью видео, нажмите на три точки и выберите необходимое действие.',
+                                    img: '<img src="img/chsec.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'Myvideos6',
+                                    q : '  ',
+                                    a : 'В верхней части видеостраницы вы можете увидеть дневные лимиты на загрузку видео, количество реферальных пользователей, общее количество просмотров видео, количество уникальных посетителей, поле для поиска видео, также вы можете произвести сортировку.',
+                                    img: '<img src="img/chsec2.jpg" alt="" />'
+                                },
+            
+                                
+                                
+                            ]
+                        
+                        },
+                        
+                        
+                    
+                        {
+                        
+                        name : 'Конфиденциальность',
+                        id : 'Конфиденциальность',
+                        
+                        group : [
+                        
+                        
+                        {
+                        id : 'анонимный',
+                        q : 'Анонимны ли люди, которые не вводят свои настоящие имена?',
+                        a : '<div>Да - ни имена, ни телефоны, ни электронная почта НЕ связаны с вашей учетной записью.  Ввод электронной почты необязателен. Вы можете ввести электронную почту для получения рассылок  от разработчиков.</div>',
+                        },
+                        
+                        {
+                        id : 'вид снаружи',
+                        q : 'Насколько Bastyon анонимный?',
+                        a : '<div>Блокчейн открыт для всех, но там видно лишь действия в соцсети вашего анонимного аккаунта, такие как пост или рейтинг другого поста. Никаких личных данных не видно, и все ваши сообщения зашифрованы сквозным шифрованием. Также вы можете иметь несколько учетных записей в Бастионе и переключаться между ними. Вы можете использовать одни со своим настоящим именем, а другие анонимно. Анонимность - отличный инструмент для защиты свободы слова от злоупотребления властью.</div>',
+                        },
+                        
+                        
+                        // {
+                        // id : 'walletid',
+                        // q : 'Похож ли мой открытый ключ на идентификатор кошелька, который я ввожу в моем профиле и на который люди могут отправлять баллы?',
+                        // a : '<div>Exactly. И это безопасно. Но не секретная фраза - береги!</div>',
+                        // },
+                        
+                        {
+                        id : 'узел',
+                        q : 'Могу ли я запустить узел на моем автономном сервере?',
+                        a : '<div> Инструкции <a href="https://github.com/pocketnetteam/pocketnet.core/blob/master/README.md" target="_blank">здесь</a>  </div>',
+                        },
+                        
+                        {
+                        id : 'подписка ',
+                        q : 'Как я могу войти снова? ',
+                        a : '<div>Вы можете использовать свой закрытый ключ из 12 слов или закрытый ключ, состоящий из букв и цифр.</div>',
+                        }
+                        ]
+                        },
+                        {
+                        
+                        name : 'Модерация контента',
+                        id : 'курирование',
+                        
+                        group : [
+                        
+                        {
+                        id : 'содержание',
+                        q : 'Есть ли контент, запрещенный к публикации на  '+ self.app.meta.fullname +'? Если какой-то контент запрещен, можно ли назвать платформу свободой слова?',
+                        a : '<div>Это очень важный вопрос. Начнем с того, что разрешены не все типы контента. Модерация производится непосредственно сообщенством '+self.app.meta.fullname+', о чем мы поясним ниже. Скрытые теневые запреты или выборочных запреты, практикуемые Кремниевой долиной, отсутствуют на '+self.app.meta.fullname+'.</div>',
+                        },
+                        {
+                        id : 'конкретный',
+                        q : 'Особенности модерации на '+self.app.meta.fullname+'.',
+                        a : '<div> В настоящее время модерация контента осуществляется с помощью оценок в 1 звезду пользователями с высокой репутацией. Когда репутация достигает -30, доступ к аккаунту ограничивается. Однако существует совершенно новый алгоритм модерации, который будет выпущен к концу 2021 года. Согласно новым алгоритмам, будет возможность пометить пользователя или сообщение любым высокопоставленным пользователем, но это не повлияет на счет напрямую. После того, как будет установлено определенное количество флагов, на блокчейне будет разыграна лотерея, и для этой учетной записи будет выбрана группа модераторов присяжных заседателей. Присяжные должны согласиться с тем, что этот пользователь разместил порнографию, наркотики или прямую угрозу насилия. Любое иное мнение или несогласие не является основанием для пометки или каких-либо санкций.</div> ',
+                        },
+                        {
+                        id : 'взаимный',
+                        q : 'Разрешено ли взаимное голосование?',
+                        a : '<div> Взаимность - нормальное человеческое поведение, поэтому в этом смысле с этим нет проблем. Однако механизмы курирования во многом зависят от того факта, что как высокие, так и низкие оценки связаны с контентом и не являются взаимными. Таким образом, Бастион ограничит ответные голоса двумя способами. Во-первых, вы не сможете вернуть пять или одну звезду в течение определенного периода времени. Кроме того, те, кто угрожает возмездием за голоса в одну звезду или обещают награду за голоса в пять звезд, считаются участниками запрещенного поведения. Другие пользователи могут отмечать такие случаи, и псевдослучайная лотерея создаст жюри для их рассмотрения. Хотя такое поведение не будет иметь тех же штрафов, что и незаконный контент, пользователям, задействованным в нем, могут быть предоставлены временные блокировки алгоритмом консенсуса узла. </div> ',
+                        },
+                        // {
+                        // id : 'расизм',
+                        // q : 'Важное примечание о расизме.',
+                        // a : '<div>Свобода мысли и свобода слова подвергаются нападкам со стороны основных социальных платформ и средств массовой информации. Мы должны говорить правду, и именно по этой причине эта платформа не является корпоративной и децентрализованной. Но мы просим всех высказывать свою точку зрения, не нападая на национальность или расу людей. Вы можете обосновать свою точку зрения на доказательствах. Мы не можем позволить себе превратить ' + self.app.meta.fullname + ' в маргинальную платформу. Говорите правду, но, пожалуйста, избегайте расизма и нападок на определенные национальности в целом. Мы знаем, что Кремниевая долина и СМИ превратили проблему расизма в свою игральную карту, которую они разыгрывают в необходимый момент. Одна из задач '+ self.app.meta.fullname +' - стать платформаой альтернативного мнения, создать техническую и социальную возможность обличать ложь СМИ, рассказывать о произволе властей, коррупции, не опасаясь потери опубликованных материалов. Пожалуйста, имейте это в виду и рассказывайте о платформе близким людям, чтобы свобода слова могла процветать. </div> <div> В конечном счете, именно сообщество будет определять направление платформы. Иметь кучу снежинок, которые жалуются на то, что их оскорбляет, так же плохо, как и когда люди хотят озвучить прямые насильственные угрозы. Однако первым признаком является то, что первые пользователи платформы, как правило, умны и основаны на доказательствах, поэтому будущее выглядит невероятно светлым. Команда '+ self.app.meta.fullname +' заметила после нескольких дней бета-тестирования, что мы перестали читать даже альтернативные новости, потому что на '+ self.app.meta.fullname +' было так много интересного контента. Так держать! </div> <div> Пожалуйста, примите участие в обсуждении этих тем. Это платформа сообщества. Мы всегда стремимся повысить прозрачность платформы, и вы должны сообщить нам, как мы можем улучшить контроль и контроль контента. Вы можете публиковать сообщения по этой теме в теге Bastyon / Pocketnet.</div>',
+                        // },
+                        
+                        
+                        ]
+                        
+                        },
+                        
+                        
+                        {
+                        
+                        name : 'Чем '+self.app.meta.fullname+' отличается от...',
+                        id : 'разные',
+                        
+                        group : [
+                        
+                        {
+                        id : 'разные1',
+                        q : 'Twitter, Facebook, Reddit и другие централизованные платформы?',
+                        a : '<div>Нет центрального офиса или корпорации. Платформа управляется равными узлами в цепочке блоков. Вся прибыль делится между операторами узлов и создателями контента. Операторы узлов делают ставку на Pocketcoin, чтобы чеканить блоки с вознаграждениями и комиссиями за транзакции. Половина вознаграждений в каждом блоке достается создателям контента на основе оценок, которые их контент собирает от пользователей.</div>',
+                        },
+                        {
+                        id : 'разные2',
+                        q : 'Децентрализованные платформы, такие как Minds.com и Sola?',
+                        a : '<div>Обе эти платформы, хотя и великолепны, но они не являются самодостаточными. Обе сильно зависят от платформы Ethereum, поскольку их токены основаны на стандарте ERC-20 Ethereum. Это означает, что за операции с токенами взимается довольно большая плата. Кроме того, за этими организациями стоят корпорации, и корпорация всегда будет точкой централизации из-за своей экономической логики роста прибыли. Кроме того, корпорации очень легко подвергнуть цензуре.</div>',
+                        },
+                        {
+                        id : 'разные s3',
+                        q : 'От Steemit?',
+                        a : '<div>У Steemit есть собственный блокчейн, но это корпоративная структура со всей вытекающей из этого централизацией.</div>',
+                        },
+                        {
+                        id : 'разные ps4',
+                        q : 'Децентрализованные платформы, такие как Mastodon и другие?',
+                        a : '<div>Хотя Mastodon - полностью децентрализованная платформа, для ее использования требуются большие технические знания. Это является большим препятствием для потенциального широкого признания. '+ self.app.meta.fullname +' включает веб-приложения и настольные приложения, и пользователи могут входить в систему с любого устройства, извлекать свои личные настройки из цепочки блоков и сразу же начинать использовать платформу без каких-либо технических знаний.</div>',
+                        }
+                        
+                        ]
+                        
+                        },
+                        
+                        {
+                        
+                        name : ''+self.app.meta.fullname+' экосистема',
+                        id : 'экосистема',
+                        
+                        group : [
+                        
+                        {
+                        id : 'экосистема 1',
+                        q : 'Как финансируется развитие '+self.app.meta.fullname+' ?',
+                        a : '<div>'+self.app.meta.fullname+' имеет открытый исходный код и в настоящее время управляется группой добровольцев-экспертов по программированию и математике. После запуска '+self.app.meta.fullname+' привлек талантливых программистов, обещая создать децентрализованную социальную сеть. Программисты и маркетологи, работают за Pocketcoin, пожертвованынный крупными владельцами PKOIN.</div>',
+                        },
+                        {
+                        id : 'экосистема 2',
+                        q : 'Что такое Pocketcoin?',
+                        a : '<div>Pocketcoin - это сетевой токен. Он используется исключительно для покупки рекламы на '+self.app.meta.fullname+' вкладчиков и платить комиссию за такие платежи. Он также используется для поднятия комментариев, публикаций и покупки привилегий для вашей учетной записи. В '+self.app.meta.fullname+' весь доход делится между создателями контента и узлами.</div>',
+                        },
+                        {
+                        id : 'экосистема 3',
+                        q : 'Как вознаграждаются создатели контента и операторы узлов?',
+                        a : '<div>'+self.app.meta.fullname+' имеет уникальную прямую торговую площадку, где создатели контента могут продавать рекламу покупателям рекламы. Создатели контента устанавливают свою цену и могут принимать массовую рекламу или могут предлагать высоко ценимые персонализированные места размещения (создатели продвигают продукт по-своему). Прямая торговая площадка - это, по сути, биржа для рекламы, которая позволяет покупателям рекламы нацеливаться на определенную аудиторию без каких-либо посредников. Все покупки рекламы и сама реклама связаны в блокчейне, поэтому покупка рекламы абсолютно надежна.</div>',
+                        },
+                        {
+                        id : 'экосистема 4',
+                        q : 'Что, если пользователи размещают незаконный контент, порнографию и СПАМ?',
+                        a : '<div>'+self.app.meta.fullname+' это не платформа даркнета или какой-то порнхаб. Хотя '+self.app.meta.fullname+' децентрализован и устойчив к цензуре, он модерируется пользователями. Любой незаконный контент помечается и удаляется с платформы. Это означает, что модерировать платформу могут пользователи с наивысшей репутацией. Однако, не существуют гарантии (в рамках открытого исходного кода), что за деструктивный контент не проголосуют пользователи с высокой репутацией. Модераторы контента выбираются случайным образом с помощью лотереи на блокчейне, чтобы избежать каких-либо подтасовок. Модерируется только запрещённый контент (порнография, педофилия, пропаганда нелегальных нарктотиков и прямые угрозы насилия), а НЕ просто к контенту, который они считают оскорбительным. Bastyon является платформой для свободы слова, мы призываем каждого участвовать в модерации контента путем проставления оценок, публиковать интересный авторский контент, повышая таким образом свою репутацию и привнося вклад в развитие платформы.</div>',
+                        },
+                        {
+                        id : 'экосистема 5',
+                        q : 'Кто управляет '+self.app.meta.fullname+'?',
+                        a : '<div>Нет юридического лица или отдельного лица, которое владеет или контролирует '+self.app.meta.fullname+'. Блокчейн Pocketnet и Bastyon управляются группой программистов, но эта группа постоянно растет и меняется. Если какая-то группа программистов ошибется и нарушит принципы, на которых основан Bastyon, другие программисты могут просто разветвить открытый исходный код и продолжить платформу, устойчивую к цензуре. </div>',
+                        },
+                        
+                        ]
+                        
+                        },
+                        {
+                        
+                            name : 'Как мне найти приватный ключ?',
+                            id : 'privatekey',
+                        
+                            group : [
+                        
+                                {
+                                    id : 'privatekey1',
+                                    q : 'Кликните по своей иконке, находящейся в правом верхнем углу',
+                                    a : '',
+                                    img: '<img src="img/prkey1.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'privatekey2',
+                                    q : 'Далее, нажмите кнопку «управление»',
+                                    a : '',
+                                    img: '<img src="img/prkey2.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'privatekey3',
+                                    q : 'Далее, нажмите кнопку «приватный ключ».',
+                                    a : '',
+                                    img: '<img src="img/prkey3.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'privatekey4',
+                                    q : 'Далее, нажмите «Да»',
+                                    a : '',
+                                    img: '<img src="img/prkey4.jpgg" alt="" />'
+                                },
+                                {
+                                    id : 'privatekey5',
+                                    q : 'Вы можете увидеть ваш приватный ключ. Держите его в сохранности (сохраните в надежном месте, запишите на листок). Приватный ключ не может быть восстановлен в случае его утраты.',
+                                    a : '',
+                                    img: '<img src="img/prkey5.jpg" alt="" />'
+                                },	
+                                
+                                
+                            ]
+                        
+                        },
+                        
+                        
+            
+                        
+                        
+                    ],
+                    fr : [
+                        {
+                    
+                            name : "Comment "+self.app.meta.fullname+" fonctionne-t`il?",
+                            id : "how-it-works",
+                    
+                            group : [
+                    
+                                {
+                                    id : "What is it",
+                                    q : "Qu`est-ce que c`est " +self.app.meta.fullname+"?",
+                                    a : "<div><p>" +self.app.meta.fullname+" est un réseau social innovant et une plateforme de partage de vidéos. Contrairement aux réseaux sociaux grand public, il n'y a pas de société derrière cela, il est basé sur le modèle Bitcoin. Bastyon est un projet open source géré par une équipe de développeurs et d'experts, et son objectif est de fournir une plate-forme modérée par la communauté où la liberté d'expression est sérieusement respectée.</p><p>Le projet a été créé à l'origine by Daniel Satchkov, mais englobe désormais plus de 25 développeurs et de nombreux bénévoles à travers le monde. Bastyon est plus un protocole qu'une plate-forme, puisque tout développeur peut y créer sa propre application. La plateforme ne fonctionne pas sur un seul serveur mais sur un réseau de <em>user nodes</em> répartis dans le monde entier.</p><p>Cela signifie que les utilisateurs sont toujours en mesure d'obtenir des informations et communiquer, voir le contenu et publier tant qu'ils ont une connexion Internet et que seule une poignée de nœuds quelque part dans le monde sont opérationnels.</p><p>Cela surmonte les limitations que les censeurs ont mises en place pour bloquer ou limiter la communication et la diffusion de l'information. L'information peut circuler librement. Alors qu'en Chine, par exemple, certains réseaux sociaux ne peuvent être utilisés que derrière un VPN, cela n'est pas nécessaire avec "+self.app.meta.fullname+".</p><p>De plus, "+self.app.meta.fullname+" ne collecte pas d'informations personnelles : les utilisateurs s'enregistrent sans e-mail ni numéro de téléphone et aucune donnée personnelle telle que l'adresse IP ou MAC n'est stockée de quelque manière que ce soit. Notez que même si Bastyon ne collecte aucune IP (comme on peut le voir dans le code ouvert), il n'est pas possible de masquer complètement votre IP lorsque vous utilisez Internet, sauf si vous utilisez un VPN. </p><p> Ce faisant,"+self.app.meta.fullname+" permet aux utilisateurs de discuter librement des problèmes. Aujourd'hui, l'anonymat est une exigence de sécurité et de confidentialité et"+self.app.meta.fullname+" est en mesure de le garantir.</p><p>En outre, afin de fournir une communication totalement privée et anonyme,"+self.app.meta.fullname+" fournit un système de discussion crypté, non associé à un numéro de téléphone ou à des données personnelles, protégé par un modèle de cryptage peer-to-peer (notez que les discussions de groupe ne sont pas cryptées, seulement 1-on -1 tchat). Personne, à l'exception des deux utilisateurs impliqués dans la session de discussion, ne peut accéder aux messages. Toutes les affirmations sont faciles à vérifier, car l'application Bastyon et la blockchain Pocketnet sont toutes deux entièrement open source, avec un code visible par tous. De plus, tous les messages de discussion sont automatiquement supprimés après 7 jours.</p><p>"+self.app.meta.fullname+" est une plate-forme sociale pseudonyme résistante à la censure où les gens peuvent discuter, communiquer et partager du contenu avec d'autres de manière transparente; règles qui sont les mêmes pour chaque utilisateur et développeur.</p></div>",
+                                },
+                                
+                                {
+                                    id : "How does it work",
+                                    q : "Comment puis-je débuter?",
+                                    a : "<div><p>"+self.app.meta.fullname+" est facile à utiliser: vous avez seulement qu'à créer un compte et vous pourrez commencer immédiatement à publier du contenu, suivre d'autres utilisateurs et utiliser le chats.</p><p>Pendant l'enregistrement, vous devez créer un nom d'utilisateur (il doit être unique) et télécharger une image ou une photo (il n'est pas nécessaire que ce soit votre photo!). Aucun courriel (Vous pouvez laisser votre courriel sur la liste d'envoi, mais il ne sera pas connecté à votre compte Bastyon), aucun numéro de téléphone, aucunes vérifications. Même pas de mot de passe: le système génèrera une phrase que vous devrez utiliser pour vous connecter, cette phrase est votre clé secrète qui remplecera votre identifiant et votre mot de passe, la seule choose dont vous avez besoin pour vous connecter. Si vous perdez cette clé secrète. Personne ne peut la retrouvée, même les développeurs n'ont pas accès aux comptes d'utilisateurs.</p></div>",
+                                },
+                                    
+                                {
+                                    id : "signback",
+                                    q : "Quelle est la différence entre une paraphrase de 12 mots et une clé secrète?",
+                                    a : "<div><p>La première fois que vous utilisez "+self.app.meta.fullname+" vous devez vous créer un compte, composé seulement de votre identifiant unique.</p><p><strong>Il n'y a pas de mot de passe. </strong></p><p>Au lieu de cela, vous recevrez une phrase de 12 mots (paraphrase). Alternativement, vous pouvez utiliser une clé secrète, qui est un long numéro(les deux sont équivalents). <strong>Gardez cette donnée SURE et ne la révelez jamais à personne.</strong></p><p>Par la suite, lorsque vous devez vous connecter, vous n'avez qu'à entrer la paraphrase(ou scanner le code QR de l'application).</p><p><strong>Remember</strong>: si vous perdez votre phrase, votre compte sera vérouillé à jamais. Il n'existe aucun moyen de restaurer le mot de passe, il n'existe aucun moyen "+self.app.meta.fullname+" de vous connecter. Votre paraphrase ou votre clé secrète sont les seuls moyens d'accèder à votre compte, veuillez l'inscrire sur un morceau de papier quelque part. Vous pouvez le trouver dans votre profil sous l'onglet Comptes (cliquez sur le symbole de clé).</p></div>",
+                                },
+                                
+                                
+                                {
+                                    id : "behind-scenes",
+                                    q : "Comment cela fonctionne en coulisse? Ou sont les serveurs?",
+                                    a : '<div><p>'+self.app.meta.fullname+' est calqué sur une crypto-monnaie Bitcoin décentralisée, car elle n`a pas d`autorité centrale et utilise la blockchain pour effectuer des transactions et assurer la sécurité.</p><p>Il n`y a pas de serveur central : à la place, la plateforme s`appuie sur un réseau de nœuds , situé partout dans le monde. Chaque personne dans le monde avec un ordinateur peut réellement exécuter un nœud (et être récompensée pour le faire en utilisant des pièces de monnaie avec Pocketcoin).</p><p>Hash de chaque publication, chaque commentaire, chaque interaction (sauf les messages de chat !) est stocké sur la <a elementsid="https://en.wikipedia.org/wiki/Blockchain" href="https://en.wikipedia.org/wiki/Blockchain">blockchain</a>. Les publications et les commentaires eux-mêmes ne sont pas dans la blockchain, mais dans une base de données associée liée à une blockchain.</p><p>'+ self.app.meta.fullname +' utilise une blockchain dédiée, dérivée directement de la chaîne Bitcoin.</p></div>',
+                                },
+                                    
+                                {
+                                    id : "blocks",
+                                    q : "Qu'arriverait-il si certains pays bloquent l'accès à Bastyon.com?",
+                                    a : "<div><p>Nothing.</p><p>Vous seriez toujours en mesure d'utiliser Bastyon comme si de rien n'était si vous utilisiez une application de bureau, car l'application de bureau Bastyon parle directement aux nœuds et n'utilise pas de sites Web.</p><p>C'est le pouvoir de la résistance à la censure. <br />Vous pouvez le vérifier vous-même en simulant une disparition du nom de domaine bastyon.com. <br /><br /><strong>Under Windows :</strong><br />il suffit d'ouvrir ce fichier :<br />Windows/System32/hosts<br /><br /><strong>Sous Linux/ Ubuntu :</strong><br />Ouvrez ce fichier<br />/etc/hosts<br /><br />Ensuite, ajoutez cette ligne : <br />127.0.0.1 bastyon.com</p><p >Cela garantirait que bastyon.com pointe vers votre machine locale, ce qui signifie qu'il ne pointe vers aucune adresse IP extérieure.<br /><br />Ensuite, lancez l'application de bureau et vous pourrez continuer à utiliser Bastyon a si rien ne s'est passé. <br />Cool hein ?</p></div>",
+                                }
+                        
+                            ]
+                    
+                        
+                        },
+            
+                        {
+                        
+                            name : "Pocketcoin",
+                            id : "pocketcoin",
+                        
+                            group : [
+                        
+                                
+                        
+                                 {
+                                    id : "app-store",
+                                    q : "À quoi peut-on s`attendre pour acheter avec PKOIN?",
+                                    a : "<div>PKOIN a une multitude d`utilisations sur Bastyon. Tout d`abord, 50 PKOIN dans votre compte supprime toutes les limitations de publication et vous permet de charger la vidéo. PKOIN peut être utilisé pour booster les commentaires, rendant vos commentaires visibles pour tout le monde. Le PKOIN des commentaires boostés va au blogueur, et les blogueurs doivent répondre ou présenter de tels commentaires pour encourager de tels boosts. Vous pouvez booster une publication pour la déplacer vers le haut dans le fil. Il est utilisé pour le jalonnement dans des nœuds, vous pouvez exécuter un nœud et gagner plus de PKOIN en jalonnant PKOIN. Il sera utilisé dans un marché publicitaire décentralisé et 100 % des bénéfices seront reversés aux blogueurs. Il sera également utilisé pour acheter des profils de papier peint spéciaux, des images de profil animées, etc. </div>",
+                                },
+                        
+                        
+                                {
+                                    id : "pocketcoinstock",
+                                    q : "Est-ce que Pocketcoin est comme une action dans "+self.app.meta.fullname+"?",
+                                    a : "<div>Définitivement non. "+self.app.meta.fullname+" n`est même pas une société et n`a aucun droit de propriété. C`est un code open source que n`importe qui peut copier et exécuter. Pocketcoin est un jeton qui facilite l`échange de valeur, en particulier les transactions publicitaires. De plus, "+self.app.meta.fullname+" inclura un marché où les biens et services seront vendus directement pour Pocketcoin</div>",
+                                },
+                        
+                                {
+                                    id : "pocketcoinbuy",
+                                    q : "Est-ce que je peux acheter des Pocketcoin additionnels?",
+                                    a : "<div>Oui, actuellement, vous pouvez acheter des Pocketcoin sur les bourses suivantes : DigiFinex, Bitforex, Mercatox. Vous pouvez également l`acheter pour 19 cryptos différents sur https://pkoin.net/ et il existe une catégorie au sein de Bastyon appelée PKOIN/Peer-to-Peer où vous pouvez l`acheter et le vendre avec d`autres utilisateurs. </div>",
+                                },
+                        
+                                {
+                                    id : "pocketcoinbuyfiat",
+                                    q : "Est-ce que je peux acheter des Pocketcoin pour des Dollars US ou d`autres devises?",
+                                    a : "<div>Oui, vous pouvez l`acheter dans la catégorie PKOIN/Peer-to-Peer ou via une société appelée Indacoin à l`adresse https://buy.pkoin.indacoin.io/ Indacoin n`a rien à voir avec Bastyon, ils vendent simplement du PKOIN à crédit cartes après l`avoir acheté sur les échanges.</div>",
+                                },
+                                
+                                {
+                                    id : "pocketcoinbuyfiat",
+                                    q : "Pourquoi dois-je acheter des Pocketcoin?",
+                                    a : "<div>Bastyon n`a aucun soutien de banquiers ou de capital-risqueurs, c`est une plate-forme sociale décentralisée qui est soutenue par PKOIN. Lorsque vous utilisez Bastyon, vous utilisez des nœuds d`utilisateurs, des nœuds vidéo, ils doivent tous payer pour les ordinateurs, Internet et l`électricité. Les blogueurs doivent gagner pour le contenu. Bastyon ne peut fonctionner que si les utilisateurs possèdent et prennent en charge PKOIN. Ainsi, acheter PKOIN est un moyen de soutenir la décentralisation et la liberté. Cependant, il existe une autre raison importante de posséder Pocketcoin. Bientôt, il est très possible que même avoir un compte bancaire soit lié à la soumission de votre liberté, à un code QR. Pocketcoin n`est pas lié à votre nom ou à votre passeport, c`est un moyen de faire du commerce dans un monde où règne la censure financière, c`est peut-être le seul moyen d`acheter de la nourriture bientôt sans un certain certificat ou un code QR. Alors, achetez du PKOIN pour la liberté. </div>",
+                                },
+                            ]
+                        },
+                        
+                        {
+                        
+                            name : self.app.meta.fullname,
+                            id : "roadmap",
+                        
+                            group : [
+                        
+                                {
+                                    id : "walletaddresses",
+                                    q : "Je vois une adresse PN et une adresse de porte-feuille... est-ce que ces deux adresses sont sur la blockchain PN?",
+                                    a : "<div>L'adresse PN est celle utilisée pour publier du contenu et utiliser les réseaux sociaux en général. Elle conserve également les pièces que vous gagnez pour vos publications les mieux notées.</div><div>Les adresses de portefeuille doivent conserver le reste des pièces.</div>",
+                                },
+                        
+                                {
+                                    id : "linktoprofile",
+                                    q : 'Est-ce que je peux lier mon profile? ou ma "page"? Pour que je puisse publier dans ma communauté pour apporter plus de gens.',
+                                    a : "<div>Dans le navigateur, accédez à votre profil en cliquant sur l'avatar en haut à droite et cliquez sur Partager, puis cochez la case Utiliser le lien de parrainage, toutes les personnes qui s'inscriront à partir du lien généré se verront proposer de vous suivre automatiquement lors de l'inscription. Pour chaque parrainage qui s'inscrit via votre lien, vous recevrez un bonus égal à 20% du Pocketcoin (PKOIN) qu'ils gagnent en publiant et en commentant pendant les 6 premiers mois. Pour être clair, votre parrainage ne rapporte pas moins, vous bénéficiez d'un bonus.</div>\
+                                        <div>On the desktop, </div>",
+                                },
+                                {
+                                    id : "starsystem",
+                                    q : "Le système Star. Est-ce qu'il y a une limite de combien d'étoiles une personne peut donner aux autres?",
+                                    a : "<div>Il y a des limites. Mais au fur que votre réputation augmente, vous pouvez voter de plus en plus. Cela est fait, pour que les robots don&rsquo;t brisent la blockchain. Initiallement, vous recevez 100 notes par 24 hours. A mesure que votre réputation augement (ce qui arrive en publiant et en recevant des notes), vous pourrez obtenir 200 notes par jour.</div>",
+                                },
+                        
+                        
+                                {
+                                    id : "updateprofiletime",
+                                    q : "À quelle fréquence puis-je mettre mon profil à jour? ",
+                                    a : "<div>Vous êtes en mesure de mettre à jour votre profil à chaque heure.</div>",
+                                },  
+                        
+                                {
+                                    id : "mobileapp",
+                                    q : "Est-ce qu`il y a une application mobile?",
+                                    a : "<div>T=Il y a une application Android, que vous pouvez télécharger ici: https://play.google.com/store/apps/details?id=pocketnet.app  L'application IPhone n'est pas disponible, parce qu'Apple nous demande de censurer du contenu avec un délai de 24 hours. Chez Bastyon, même les développeurs ne peuvent supprimer de contenu, il est modéré par l'utilisateur. Batyon est optimisé pour les navigateurs comme Safari sur le iPhone.</div>",
+                                },
+                        
+                                {
+                                    id : "postinglimit",
+                                    q : "Pouvez-vous me dire quelle est la limite de publications et de notes par jour et heure?",
+                                    a : "<div>Nous avons quelques limitations, mais apres l`avoir testé, nous avons augmenté nos limites. Vous pouvez faire 5 publications et noter 15 fois par 24 heures. Une fois que votre réputation est au-delà de 100, il y a au moins 100 utilisateurs à haute réputation qui peuvent vous notez (or 30 utilisateurs après 3 mois), vous pourrez faire 30 publication et 200 notes, plus 300 commentaires chaque 24 heures.</div>",
+                                },
+                        
+                                {
+                                    id : "reputation",
+                                    q : "Qu`est-ce que la réputation et comment est-elle calculée?",
+                                    a : "<div>Votre réputation est la somme de vos notes calculée de la manière suivante. À noter que les utilisateurs avec une réputation de moins de 50 ne peuvent affecter la réputation des autres ou l'obtention de monnaie. Ils peuvent noter le contenu, mais cela n'affectera pas votre réputation.</div>\
+                                    <div>5=2<br>4=1<br>3=0<br>2=-1<br>1=-2</div><div>Donc, si vous avez des notes de 5 étoiles et une note d'une étoile, le total sera de 2+2-2=2</div>",
+                                },
+                        
+                                {
+                                    id : "deletepostoruser",
+                                    q : "Existe-t`il un moyen de supprimer ou modifier une publication?",
+                                    a : "<div>Oui, vous pouvez modifier et supprimer les publications.</div>",
+                                },
+                        
+                                {
+                                    id : "usersearch",
+                                    q : "Est-ce qu`il existe une manière de rechercher un utilisateur?",
+                                    a : "<div>Cliquez sur la loupe dans le coin en haut et recherchez par nom d`utilisateurs ou par mots-clés.</div>",
+                                },
+                                {
+                                    id : "follow",
+                                    q : "Comment puis-je suivre quelqu`un?",
+                                    a : "<div>À coté de l`auteur de la publication(sur le dessus de la publication) il y a un lieu pour suivre, vous pouvez trouver ses publications sous les publications Hot (flamme rouge en-haut de la page). Vous pouvez aussi voir Mon Fil d'abonnement, qui sera différent du fil principal. Le fil principal sera tout ce que n'importe qui publie, mais le fil d'abbonnement contiendra seulement les publications des personnes que vous suivez. Donc, vous pouvez aller dans le fil général pour trouver du bon contenu, mais vous pourriez ne pas tout aimer. Par la suite, sélectionnez ce que vous aimer. C'est un peu comme la pêche :)</div>",
+                                },
+                        
+                        
+                                {
+                                    id : "otherbrowsers",
+                                    q : "Est-ce que cela fonctionne sur les navigateurs Brave ou Duck Duck?",
+                                    a : "<div>"+self.app.meta.fullname+" devrait fonctionner sur ces navigateurs. Il est pleinement fonctionnel sur Chrome et Firefox. Mais nous vous encourageons fortement à télécharger l'application de bureau (prenez "+self.app.meta.fullname+"Setup.exe ici: https://bastyon.com/help?page=applications). L'application de bureau ne pourra jamais être bloquée (même si <%- app.meta.url %> est à l'arrêt ou bloquée). C'est une considération sérieuse dans les pays totalitaires et quasi-totalitaires qui, si on y pense, commencent à inclure de plus en plus le globe.</div>",
+                                },
+                        
+                                {
+                                    id : "replypost",
+                                    q : "Est-ce que nous pouvons répondre à nos propres/et les autres&rsquo;s publications?",
+                                    a : "<div>Oui, vous pouvez commenter sous chaque publication..</div>",
+                                },
+                        
+                                {
+                                    id : "addtags",
+                                    q : "Comment puis-je identifier une publication?",
+                                    a : "<div>Selectionnz une catégorie ou un type dans la barre de recherche et pressez entrer. Pas besoin de spécifier le #, il sera ajouté automatiquement.</div>",
+                                },
+                        
+                                {
+                                    id : "usepublicaddress",
+                                    q : "Comment puis-je utiliser l`adresse publique?",
+                                    a : "<div>Votre adresse publique est ce "+self.app.meta.fullname+" qui est utilisé pour confirmer votre identité. Essentiellement, votre clé privée est un très grand nombre (qui peut être représenté par une séquence de 12 mots ou un code QR). Ce nombre est multiplié par un autre que tout le monde connaît (appelé point de base) et nous obtenons une clé publique. Lorsque vous entrez votre clé privée, nous pouvons la multiplier par le point de base pour obtenir votre clé publique et nous pouvons la comparer à l`adresse publique. S`ils correspondent, nous savons que c`est vous. Il est impossible de revenir en arrière, c`est-à-dire de diviser la clé publique par le point de base pour obtenir votre clé privée. La façon dont la multiplication fonctionne en cryptographie est à sens unique et ne peut pas être inversée, votre clé est donc en sécurité. "+self.app.meta.fullname+" utilise exactement la même cryptographie que Bitcoin.</div>",
+                                },
+                                {
+                                    id : "desktopmac",
+                                    q : "Y aura-t-il un exécutable téléchargeable pour Mac?",
+                                    a : "<div>Oui, vous pouvez le trouver ici https://bastyon.com/help?page=applications. </div>",
+                                },
+                                {
+                                    id : "dark-mode",
+                                    q : "Comment puis-je changer pour le thème sombre?",
+                                    a : "<div>Si vous êtes sur un navigateur, cliquez sur votre photo de profil > Gérer > Paramètres. Si vous êtes sur mobile, cliquez sur les trois lignes en bas à droite > Paramètres </div>",
+                                },
+                                {
+                                    id : "banning",
+                                    q : "Est-ce que les gens peuvent être bannis?",
+                                    a : "<div>Oui, Bastyon est une plate-forme modérée par la communauté, cependant, il n`y a que certains sujets que la communauté signalera comme la pornographie, les stupéfiants et les menaces directes de violence. Vous ne serez jamais banni pour une opinion ou une liberté d`expression, et même pour des sujets interdits spécifiques, il doit y avoir un consensus d`utilisateurs expérimentés sans que d`autres utilisateurs défendent le contenu. Actuellement, les utilisateurs dont la représentation est inférieure à -30 perdent leurs privilèges de compte, mais il s`agit d`un système temporaire. D`ici la fin de 2021, Bastyon lancera un nouveau système de modération dans lequel les publications sont initialement signalées par tout utilisateur de haut niveau, mais le compte ne peut être bloqué que par un certain groupe de jurés sélectionnés à l`aide d`une loterie blockchain. Ainsi, personne ne peut choisir d`attaquer quelqu`un pour un avis, les jurés seront sélectionnés pour modérer certains contenus et ils doivent tous être d`accord. Le compte ne peut pas être interdit jusqu`à ce que deux groupes de jurés aient décidé et ils ne peuvent pas être les mêmes. Ce système protège contre tout type de règle de foule sur Bastyon, tout en protégeant la plate-forme des contenus peu recommandables.</div>",
+                                },        
+                                {
+                                    id : "Apple App",
+                                    q : "Est-ce que Bastyon peut être ajouté à Apple?",
+                                    a : "<div>Apple a décidé de ne pas autoriser Bastyon en raison du manque d`opportunités de censure centralisée par Apple, nous le portons comme un insigne d`honneur. </div>",
+                                },
+                                {
+                                    id : "Missing PKCOIN",
+                                    q : "À L`AIDE! Il me manque des PKOIN!",
+                                    a : '<div>Si, pour une raison quelconque, il semble que votre PKOIN a disparu, veuillez d`abord vérifier l`explorateur de blocs via<a href="https://'+self.app.options.url+'/blockexplorer/">BlockExplorer.</a> à ce que vos coins soient encore là. Recherchez simplement l`adresse de votre portefeuille dans la barre de recherche et il vous montrera le solde de votre compte. </div>',
+                                },
+                        
+                            ]
+                        
+                        
+                        },
+                        {
+                        
+                            name : "Vidéo",
+                            id : "video",
+                        
+                            group : [
+                                {
+                                    id : "savevideo",
+                                    q : "Oû puis-je sauvegarder ma vidéo?",
+                                    a : "<div>"+self.app.meta.fullname+" utilise une plate-forme open source modifiée appelée PeerTube, connectée à la blockchain Pocketnet et à l`application Bastyon. PeerTube est entièrement intégré avec l`autorisation "+self.app.meta.fullname+", chaque serveur vidéo est enregistré sur la blockchain.</div>",
+                                },
+                        
+                                {
+                                    id : "permissions",
+                                    q : "Qui peut télécharger un vidéo sur Bastyon?",
+                                    a : "<div> Bastyon n`a pas de serveurs centralisés ni de financement par capital-risque, toutes les vidéos sont stockées sur des serveurs gérés par les utilisateurs. Par conséquent, nous ne pouvons pas permettre à tout le monde de charger la vidéo, les serveurs se rempliront rapidement. Pour charger une vidéo, vous devez avoir 5 PKOIN (500 Mo) ou 50 PKOIN (5 Go) sur votre compte. Vous pouvez acheter du PKOIN auprès d`autres utilisateurs si vous sélectionnez une catégorie PKOIN/Peer-to-Peer. </div>",
+                                },
+                                {
+                                    id : "stats",
+                                    q : "Oû puis-je voir les statistiques de ma vidéo?",
+                                    a : "<div> Allez sur votre profil et voir MES VIDÉOS. </div> ",
+                                },
+                                 {
+                                    id : "technology",
+                                    q : "Quel lecteur utilisez-vous pour lire la vidéo?",
+                                    a : "<div> Bastyon a son propre lecteur, qui est une version considérablement modifiée de PeerTube. Identique à PeerTube, il utilise la technologie WebTorrent pour réduire la charge sur le serveur. Cela signifie que les utilisateurs qui regardent la vidéo la partagent. Notez que dans certains cas, cela signifie que les utilisateurs peuvent voir les adresses IP les uns des autres. Les serveurs Bastyon ne disposent d`aucun mécanisme pour enregistrer ces adresses IP, cependant, si vous vous souciez vraiment d`exposer votre adresse IP, vous devez utiliser un fournisseur VPN fiable. Si vous souhaitez minimiser tout partage peer-to-peer, vous pouvez utiliser la fonction de téléchargement de vidéo dans Bastyon.</div> ",
+                                },
+                                {
+                                    id : "taking time",
+                                    q : "Pourquoi est-ce que la vidéo prend du temps à télécharger?",
+                                    a : "<div> Encore une fois, Bastyon n`a pas les ressources dont dispose Google. La vidéo doit être chargée sur l`un des nœuds vidéo et elle doit également être transcodée. N`oubliez pas que YouTube n`est pas gratuit, il extrait de la valeur en utilisant vos informations privées et en les monétisant. Bastyon est géré par la communauté et un petit retard est un petit prix à payer pour la vie privée et la liberté. En outre, les développeurs de Bastyon ont rendu le processus de chargement super facile et beaucoup plus robuste que les autres plates-formes orientées vers la liberté (ils ne font même souvent pas de transcodage pour différentes qualités). </div>",
+                                },
+                        
+                        
+                            ]
+                        
+                        },
+                        
+                        
+                        
+                        
+                        {
+                        
+                            name : "Confidentialité",
+                            id : "privacy",
+                        
+                            group : [
+                                
+                        
+                                {
+                                    id : "anonymous",
+                                    q : "Est-ce que les personnes qui n`entrent pas leurs vrais noms sont anonymes?",
+                                    a : "<div>Oui - aucun nom, téléphone, e-mail n`est connecté à votre compte de quelque manière que ce soit, il est simplement entré en option pour recevoir les mises à jour de la newsletter.</div>",
+                                },
+                        
+                                // {
+                                // 	id : "viewoutside",
+                                // 	q : "Est-ce que quelqu`un peut voir un profil (someone&rsquo;s posts) hors du jardin? Is it a walled garden?",
+                                // 	a : "<div>Étant donné que l`ensemble de la blockchain et toutes les publications sont en open source, tout le monde peut avoir accès à vos publications et à votre profil. Ils savent juste qu`il est lié à votre adresse publique. En pratique, vous pouvez avoir plusieurs comptes et basculer entre eux. Vous pouvez en utiliser certains avec votre vrai nom et d`autres de manière anonyme. L`anonymat est un excellent outil pour protéger la liberté d`expression contre les abus de pouvoir.</div>",
+                                // },
+                        
+                        
+                                // {
+                                // 	id : "walletid",
+                                // 	q : "Ma clé publique ressemble-t-elle à un identifiant de portefeuille que j`entre sur mon profil et auquel les gens peuvent envoyer des points ?",
+                                // 	a : "<div>Exactement. Et il est sécure de la réveler. Mais pas la phrase secrète -gardez-la pour vous!</div>",
+                                // },
+                        
+                                {
+                                    id : "runnode",
+                                    q : "Puis-je exécuter un nœud sur mon serveur headless ?",
+                                    a : '<div> Les instructions  <a href="https://github.com/pocketnetteam/pocketnet.core/blob/master/README.md" target="_blank">sont ici</a> </div>',
+                                },
+                        
+                                {
+                                    id : "signback",
+                                    q : "Comment puis-je me reconnecter?",
+                                    a : "<div>Vous pouvez utiliser une clée privée de 12 caractères consituées de chiffres et de lettres.</div>",
+                                }
+                            ]
+                        },
+                        {
+                        
+                            name : "Curation du contenu",
+                            id : "curation",
+                        
+                            group : [
+                        
+                                {
+                                    id : "content",
+                                    q : "Est-ce qu`il y a du contenu autorisé sur "+self.app.meta.fullname+"? Si du contenu n`est pas autorisé, est-ce que la plate-forme peut être quand même appelé libre d`expression?",
+                                    a : "<div>C`est une question très importante. Pour commencer, tous les types de contenu ne sont pas autorisés. Cependant, et cela est crucial, l`application est transparente et relève de la communauté de la manière que nous expliquerons ci-dessous. L`application est effectuée par la communauté et est ouverte, sans interdiction cachée ni interdiction sélective pratiquée par la Silicon Valley.</div>",
+                                },
+                                {
+                                    id : "specific",
+                                    q : "Caractéristiques de la curation "+self.app.meta.fullname+".",
+                                    a : "<div> Actuellement, la modération du contenu se fait par le biais de votes 1 étoile par des utilisateurs de haute réputation. Lorsque la réputation atteint -30, l`accès au compte est restreint. Cependant, il existe un tout nouvel algorithme de modération qui sera publié d`ici la fin de 2021. Sous les nouveaux algorithmes, il y aura une option pour signaler un utilisateur ou un message par n`importe quel utilisateur de haute réputation, mais cela ne va pas affecter le compte directement. Après un certain nombre de drapeaux, une loterie sur la blockchain sera tirée et un groupe de modérateurs jurés sera choisi pour ce compte. Les jurés doivent convenir que cet utilisateur a publié de la pornographie, des stupéfiants ou une menace directe de violence. Tout autre avis ou désaccord ne constitue pas un motif de signalement ni de sanction.</div> ",
+                                },
+                                    {
+                                    id : "reciprocal",
+                                    q : "Est-ce que le vote reciproque est autorisé?",
+                                    a : "<div> La réciprocité est un comportement humain normal, donc en ce sens, cela ne pose aucun problème. Cependant, les mécanismes de conservation dépendent fortement du fait que les notes élevées et faibles sont liées au contenu et ne sont pas réciproques. Ainsi, Bastyon limitera les votes réciproques de deux manières. Premièrement, vous ne pourrez pas retourner un vote cinq étoiles ou une étoile dans un certain délai. En outre, ceux qui menacent de se venger d`une étoile ou promettent une récompense pour cinq étoiles sont considérés comme se livrant à un comportement interdit. D`autres utilisateurs peuvent signaler de tels cas et une loterie pseudo-aléatoire créera un jury pour le juger. Bien qu`un tel comportement n`entraîne pas les mêmes sanctions qu`un contenu illicite, les utilisateurs qui l`utilisent peuvent se voir imposer des blocages temporaires par l`algorithme de consensus de nœud. </div> ",
+                                },
+                                {
+                                    id : "racism",
+                                    q : "Note importante sur le racisme.",
+                                    a : "<div>La liberté de pensée et la liberté d`expression sont attaquées sur les plateformes sociales grand public et dans les médias. Nous devons dire la vérité et cette plate-forme n`est pas une entreprise et est décentralisée pour cette raison même. Mais nous demandons à chacun de faire valoir son point de vue sans attaquer la nationalité ou la race des gens. Vous pouvez faire valoir votre point de vue sur la base de preuves. Nous ne pouvons pas nous permettre de transformer "+self.app.meta.fullname+" en une plate-forme marginale. Dites la vérité, mais évitez s`il vous plaît le racisme et les attaques contre des nationalités spécifiques dans l`ensemble. Nous savons que la Silicon Valley et les MSM ont fait de la question du racisme leur carte à jouer et ils crient constamment au loup. C`est encore plus la raison pour laquelle nous devons être mesurés et fondés sur des preuves et ne pas les laisser nous salir avec cela. Si ce n`est pas le cas, nous ne permettons pas à la plupart de la population d`évaluer les preuves de la corruption des HSH présentées sur "+self.app.meta.fullname+". Veuillez garder cela à l`esprit, afin que la liberté d`expression puisse prospérer et que nous puissions battre les facebokks du monde.</div><div>En fin de compte, c`est la communauté qui déterminera la direction de la plate-forme. Avoir un tas de flocons de neige qui se plaignent de choses qui les offensent est tout aussi mauvais que lorsque les gens veulent exprimer des menaces violentes directes. Cependant, la première indication est que les premiers utilisateurs de la plate-forme sont généralement intelligents et basés sur des preuves, donc l`avenir s`annonce incroyablement brillant. L`équipe "+self.app.meta.fullname+" a remarqué après quelques jours de test bêta, que nous avons arrêté de lire même les nouvelles alternatives, car il y avait tellement de contenu intéressant sur "+self.app.meta.fullname+". Continuez comme ça !</div><div>Veuillez vous impliquer dans la discussion sur ces sujets. Il s`agit d`une plateforme communautaire. Nous sommes toujours désireux d`améliorer la transparence de la plate-forme et vous devez nous faire savoir comment nous pouvons améliorer notre curation de contenu et notre police. Vous pouvez publier des articles sur ce sujet sous le tag Bastyon/Pocketnet.</div>",
+                                },
+                        
+                        
+                            ]
+                        
+                        },
+                        
+                        
+                        {
+                        
+                            name : "Comment "+self.app.meta.fullname+" est-il différent de...",
+                            id : "differents",
+                        
+                            group : [
+                        
+                                {
+                                    id : "differents1",
+                                    q : "Twitter, Facebook, Reddit & d`autres plate-formes centralisées?",
+                                    a : "<div>Il n`y a pas d`autorité centrale ou de corporation. La plate-forme est gérée par des nœuds égaux sur une blockchain. Tous les revenus sont répartis entre les opérateurs de nœuds et les créateurs de contenu. Les opérateurs de nœuds misent sur Pocketcoin afin de créer des blocs avec des récompenses et des frais de transaction. La moitié des récompenses de chaque bloc vont aux créateurs de contenu en fonction des évaluations que leur contenu recueille auprès des utilisateurs.</div>",
+                                },
+                                {
+                                    id : "differents2",
+                                    q : "Des plate-formes décentralisées comme Minds.com et Sola?",
+                                    a : "<div>Ces deux plates-formes, bien qu`excellentes, ne sont pas autonomes. Les deux dépendent fortement de la plate-forme Ethereum, car leurs jetons sont basés sur la norme ERC-20 Ethereum. Cela signifie que les opérations avec des jetons entraînent des frais de gaz Ether. De plus, ces entités ont des sociétés derrière elles et une société sera toujours un point de centralisation en raison de sa logique économique de croissance des profits. De plus, les entreprises sont extrêmement faciles à censurer.</div>",
+                                },
+                                {
+                                    id : "differents3",
+                                    q : "De Steemit?",
+                                    a : "<div>Steemit a sa propre blockchain, mais est une personne morale avec toute la centralisation qui en découle.</div>",
+                                },
+                                {
+                                    id : "differents4",
+                                    q : "Des plate-formes décentralisées comme Mastodon et autres?",
+                                    a : "<div>Bien que Mastodon soit une plate-forme entièrement décentralisée, son utilisation nécessite de nombreuses connaissances techniques. Cela présente un grand obstacle à une acceptation généralisée potentielle. "+self.app.meta.fullname+" propose des applications Web et de bureau et les utilisateurs peuvent se connecter à partir de n`importe quel appareil, extraire leurs paramètres personnels de la blockchain et commencer à utiliser la plate-forme immédiatement sans aucune connaissance technique.</div>",
+                                }
+                        
+                            ]
+                        
+                        },
+                        
+                        {
+                        
+                            name : ""+self.app.meta.fullname+" écosysteme",
+                            id : "ecosystem",
+                        
+                            group : [
+                        
+                                {
+                                    id : "ecosystem1",
+                                    q : "Comment le développement de "+self.app.meta.fullname+" est-il financé?",
+                                    a : "<div>"+self.app.meta.fullname+" est open source et est actuellement géré par le groupe d`experts bénévoles en programmation et en mathématiques. Après le lancement, "+ self.app.meta.fullname +" attirera les meilleurs talents en programmation sur la base de sa promesse de créer un réseau social décentralisé et équitable. Programmeurs et spécialistes du marketing travaillant pour Pocketcoin donnés par de grands propriétaires de PKOIN.</div>",
+                                },
+                                {
+                                    id : "ecosystem2",
+                                    q : "Qu`est-ce que Pocketcoin?",
+                                    a : "<div>Pocketcoin est un jeton de réseau. Il est utilisé exclusivement pour acheter de la publicité auprès des contributeurs de " +self.app.meta.fullname+ " et pour payer les frais de transaction pour de tels paiements. Il est également utilisé pour booster les commentaires, les publications et pour acheter des privilèges pour votre compte. Dans Pocketent, tous les revenus sont répartis entre les créateurs de contenu et les nœuds.</div>",
+                                },
+                                {
+                                    id : "ecosystem3",
+                                    q : "Comment les créateurs de contenu et les opérateurs de nœuds sont-ils récompensés?",
+                                    a : "<div>"+self.app.meta.fullname+" propose un marché direct unique où les créateurs de contenu peuvent vendre de la publicité aux acheteurs d`annonces. Les créateurs de contenu fixent leur prix et peuvent accepter des publicités produites en série ou peuvent proposer des emplacements personnalisés de grande valeur (les créateurs présentent le produit à leur manière). Direct Marketplace est essentiellement un échange publicitaire qui permet aux acheteurs d`nnonces de cibler des publics spécifiques sans aucun intermédiaire. Tous les achats d`annonces et les annonces elles-mêmes sont liées sur la blockchain, donc l`achat d`annonces est totalement sans confiance.</div>",
+                                },
+                                {
+                                    id : "ecosystem4",
+                                    q : "Et si les utilisateurs publients du contenu illégal, de la pornographie ou des SPAM?",
+                                    a : "<div>"+self.app.meta.fullname+" n`est pas une plate-forme darknet ou une sorte de pornhub. Bien qu`il soit décentralisé et résistant à la censure, il est modéré par les utilisateurs. Tout contenu illégal est signalé et supprimé de la plateforme. Cela signifie que les utilisateurs ayant la plus haute réputation peuvent modérer la plate-forme. Cependant, des garanties sont en place (dans le code source ouvert) du même groupe ou de groupes très similaires de personnes votant à plusieurs reprises du contenu hors de la plate-forme. Les modérateurs du contenu sont choisis au hasard à l`aide d`une loterie sur la blockchain pour éviter tout type de règle de foule. De plus, les utilisateurs sont explicitement encouragés à faire du contenu illicite, PAS simplement le contenu qu`ils trouvent offensant. Pour vous assurer que "+self.app.meta.fullname+" est une plate-forme de liberté d`expression, nous vous encourageons à commencer à participer, à développer votre réputation et à contrôler correctement la plate-forme sans la censure actuellement répandue dans les médias sociaux centralisés.</div>",
+                                },
+                                {
+                                    id : "ecosystem5",
+                                    q : "Qui gère "+self.app.meta.fullname+"?",
+                                    a : "<div>Aucune personne morale ou personne physique ne possède ou ne contrôle le " +self.app.meta.fullname+ ". La blockchain Pocketnet et Bastyon sont gérés par un groupe de programmeurs, mais ce groupe grandit et change tout le temps. Si un groupe de programmeurs prend une mauvaise direction et viole les principes sur lesquels Bastyon est fondé, d`autres programmeurs peuvent simplement forger un code open source et continuer la plate-forme résistante à la censure. </div></div>",
+                                },
+                                
+                            ]
+                        
+                        }
+                        
+                        
+                    ]
+                }
+            }
+        },
 
         localshares : {
             storage : {},
@@ -4065,7 +6201,6 @@ Platform = function (app, listofnodes) {
                     })  
 
                 }).catch(error => {
-                    console.error(error)
                 })
             },
 
@@ -4132,6 +6267,8 @@ Platform = function (app, listofnodes) {
                     if (p.after) p.after(share)
 
                 }).catch(e => {
+
+
                     self.sdk.localshares.saving[share.txid] = false
 
                     if (p.after) p.after(share)
@@ -4212,8 +6349,7 @@ Platform = function (app, listofnodes) {
                         var fileDownloadUrl = _.find(
                             deep(videoDetails, 'streamingPlaylists.0.files') || [], function(file){
                             return file.resolution.id == p.resolutionId
-                        }) 
-
+                        })
 
                         if(!fileDownloadUrl) return Promise.reject('fileDownloadUrl')
 
@@ -4233,12 +6369,12 @@ Platform = function (app, listofnodes) {
 
                                             fileWriter.write(infos);
 
-                                            dirEntry4.getFile(p.resolutionId + '', { create: true }, function (targetFile) {
+                                            dirEntry4.getFile(p.resolutionId + '.mp4', { create: true }, function (targetFile) {
 
                                                 var downloader = new BackgroundTransfer.BackgroundDownloader();
                                                 // Create a new download operation.
                                                 var download = downloader.createDownload(fileDownloadUrl.fileDownloadUrl, targetFile, "Bastyon: Downloading video");
-                                                
+
                                                 // Start the download
                                                 download.startAsync().then(function(e) {
                                                     // Success
@@ -4250,12 +6386,12 @@ Platform = function (app, listofnodes) {
                                                             targetFile.internalURL = entry.toInternalURL();
 
                                                             var result = {
-                                                                video: targetFile,  
+                                                                video: targetFile,
                                                                 infos: infos,
                                                                 size : fileDetails.size || null,
                                                                 id : id
                                                             }
-                                                          
+
                                                             //self.sdk.local.shares.add(shareId, shareInfos);
 
                                                             return resolve(result);
@@ -4267,8 +6403,9 @@ Platform = function (app, listofnodes) {
                                                 }, reject, function(pr) {
 
                                                     if(p.progress) p.progress('video', 100* pr.bytesReceived / pr.totalBytesToReceive)
+
                                                 });
-                                                
+
                                             }, reject);
 
                                         }, reject);
@@ -4315,7 +6452,7 @@ Platform = function (app, listofnodes) {
                                         });
                                     });
 
-                                    
+
                                 }, function(err) {
                                     return reject(err);
                                 });
@@ -4327,7 +6464,7 @@ Platform = function (app, listofnodes) {
                         });
 
                         })
-                        
+
                     },
 
                     electron : function(){
@@ -4355,26 +6492,26 @@ Platform = function (app, listofnodes) {
                                 shareFile.file(function(shareFileDetails) {
                                     // Read info file
                                     var reader = new FileReader();
-    
+
                                     reader.onloadend = function() {
-    
+
                                         try {
 
                                             to.share = JSON.parse(this.result);
                                             resolve()
 
-                                        } catch(err){ 
+                                        } catch(err){
                                             reject(err)
                                         }
-                                        
+
                                     };
-    
+
                                     reader.readAsText(shareFileDetails);
                                 });
                             });
 
                         })
-                        
+
                     },
 
                     localstorage : function(){
@@ -4399,71 +6536,75 @@ Platform = function (app, listofnodes) {
                                         array: videoFolders,
                                         action: function (p) {
                                             var videoFolder = p.item;
-                            
+
                                             if (videoFolder.isDirectory) {
                                                 to.videos[videoFolder.name] = {};
                                                 to.videos[videoFolder.name].id = videoFolder.name
-                                                
+
                                                 videoFolder.createReader().readEntries(function(files) {
                                                     var videoFile, infoFile;
-    
+
                                                     lazyEach({
                                                         array: files,
                                                         action: function (_p) {
                                                             var file = _p.item;
 
+
                                                             if (file.isFile && file.file) {
-        
+
                                                                 file.file(function(fileDetails) {
-                                                                    
+
+
+                                                                    if (file.name == 'info.json') {
+
+                                                                        infoFile = file;
+
+
+                                                                        var reader = new FileReader();
+
+                                                                        reader.onloadend = function() {
+
+
+                                                                            try {
+                                                                                to.videos[videoFolder.name].infos = JSON.parse(this.result);
+
+                                                                            } catch(err){
+
+                                                                                console.error('e', err)
+
+                                                                            }
+
+                                                                            _p.success()
+                                                                        };
+
+                                                                        reader.readAsText(fileDetails);
+
+                                                                        return
+                                                                    }
+
         
-                                                                    if (!videoFile && fileDetails.type == null) {
+                                                                    if (!videoFile && (!fileDetails.type || fileDetails.type == 'video/mp4')) {
         
                                                                         videoFile = file;
-        
+
                                                                         if (fileDetails.size)
                                                                             to.videos[videoFolder.name].size = fileDetails.size;
                                                                         // Resolve internal URL
-        
+
                                                                         window.resolveLocalFileSystemURL(videoFile.nativeURL, function(entry) {
         
-                                                                            videoFile.internalURL = entry.toInternalURL()
+                                                                            videoFile.internalURL =  entry.toInternalURL()
                                                                             
                                                                             to.videos[videoFolder.name].video = videoFile;
 
-                                                                            console.log('entry')
 
                                                                             _p.success()
                                                                         });
 
                                                                         return
                                                                     }
-        
-                                                                    if (!infoFile && file.name == 'info.json') {
-        
-                                                                        infoFile = file;
-                                            
-                                                                        var reader = new FileReader();
-        
-                                                                        reader.onloadend = function() {
-        
-                                                                            try {
-        
-                                                                                to.videos[videoFolder.name].infos = JSON.parse(this.result);
-        
-                                                                            } catch(err){ 
 
-                                                                                console.error('e', err)
-                                                                                
-                                                                            }
-
-                                                                            _p.success()
-                                                                        };
-        
-                                                                        reader.readAsText(fileDetails);
-
-                                                                        return
-                                                                    }
+                                                                    
 
 
                                                                     _p.success()
@@ -4480,7 +6621,7 @@ Platform = function (app, listofnodes) {
                                                             }
                                                         }
                                                     })
-                                                        
+
                                                 });
 
                                             }
@@ -4488,14 +6629,14 @@ Platform = function (app, listofnodes) {
                                                 p.success()
                                             }
                                         },
-                            
+
                                         all: {
                                             success: function () {
                                                 resolve()
                                             }
                                         }
                                     })
-                                   
+
                                 });
                             });
                         })
@@ -4524,11 +6665,11 @@ Platform = function (app, listofnodes) {
                             var share = {
                                 id : shareFolder.name
                             }
-    
+
                             self.sdk.localshares.read.share.cordova(share, shareFolder).then(r => {
-    
+
                                 return self.sdk.localshares.read.video.cordova(share, shareFolder)
-    
+
                             }).then(r => {
 
                                 resolve(share)
@@ -4536,22 +6677,23 @@ Platform = function (app, listofnodes) {
                             }).catch(er => {
                                 reject(er)
                             })
-    
+
                         }
                         else{
-                            reject('isDirectory')
+                            resolve(null)
+                            //reject('isDirectory')
                         }
 
-                    })  
+                    })
 
-                    
+
                 },
 
                 localstorage : function(){
                     return Promise.reject('todo')
                 }
             },
-            
+
             getall : {
                 electron : function(){
                     return Promise.reject('todo')
@@ -4575,13 +6717,13 @@ Platform = function (app, listofnodes) {
 
                                 shareReader.readEntries(function(shares) {
 
-                                    console.log('shares', shares)
 
                                     Promise.all(_.map(shares, function(shareFolder){
 
                                         return self.sdk.localshares.get.cordova(shareFolder).then(r => {
 
-                                            v[shareFolder.name] = r
+                                            if (r)
+                                                v[shareFolder.name] = r
 
                                             return Promise.resolve()
 
@@ -4612,6 +6754,10 @@ Platform = function (app, listofnodes) {
                 cordovaStorage : function(){
 
                     if(!window.cordova.file) return null
+
+                    //return 'file:///storage/emulated/0/'
+
+                    //return window.cordova.file.externalApplicationStorageDirectory
 
                     return (window.cordova.file.externalDataDirectory) ? window.cordova.file.externalDataDirectory : window.cordova.file.dataDirectory;
                 }
@@ -4651,7 +6797,10 @@ Platform = function (app, listofnodes) {
                     
                     return new Promise((resolve, reject) => {
 
+                        return Promise.reject('deprecated')
+
                         const userDataPath = (window.electron.app || window.electron.remote.app).getPath('userData');
+
                         fs.rmdir(userDataPath + '/posts/' + shareId, { recursive: true }, (err) => {
                             
                             if (!err){
@@ -4670,409 +6819,6 @@ Platform = function (app, listofnodes) {
            
         },
 
-        local: {
-
-            shares: {
-
-                allShares: {},
-
-                init: function() {
-
-                    var v = self.sdk.local.shares.allShares;
-
-                    if (window.cordova && window.cordova.file) {
-                        // Check if external storage is available, if not, use the internal
-                        var storage = (window.cordova.file.externalDataDirectory) ? window.cordova.file.externalDataDirectory : window.cordova.file.dataDirectory;
-                        // open target file for download
-                        window.resolveLocalFileSystemURL(storage, function(dirEntry) {
-                            // Create a downloads folder
-                            dirEntry.getDirectory('posts', { create: true }, function (dirEntry2) {
-                                var shareReader = dirEntry2.createReader();
-                                shareReader.readEntries(function(shares) {
-                                    _.each(shares, function(shareFolder) {
-                                        if (shareFolder.isDirectory) {
-                                            v[shareFolder.name] = {};
-
-                                            // Look inside the videos folder
-                                            shareFolder.getDirectory('videos', { create: true }, function (videosFolder) {
-                                                v[shareFolder.name].videos = {};
-                                                var videosReader = videosFolder.createReader();
-                                                videosReader.readEntries(function(videoFolders) {
-                                                    _.each(videoFolders, function(videoFolder) {
-                                                        if (videoFolder.isDirectory) {
-                                                            v[shareFolder.name].videos[videoFolder.name] = {};
-                                                            videoFolder.createReader().readEntries(function(files) {
-                                                                var videoFile, infoFile;
-                                                                _.each(files, function(file) {
-                                                                    if (file.isFile && file.file) {
-                                                                        file.file(function(fileDetails) {
-                                                                            if (!videoFile && fileDetails.type == null) {
-                                                                                videoFile = file;
-                                                                                if (fileDetails.size)
-                                                                                    v[shareFolder.name].videos[videoFolder.name].size = fileDetails.size;
-                                                                                // Resolve internal URL
-                                                                                window.resolveLocalFileSystemURL(videoFile.nativeURL, function(entry) {
-                                                                                    videoFile.internalURL = entry.toInternalURL()
-                                                                                    v[shareFolder.name].videos[videoFolder.name].video = videoFile;
-
-                                                                                });
-                                                                            }
-                                                                            if (!infoFile && file.name == 'info.json') {
-                                                                                infoFile = file;
-                                                                                // Read info file
-                                                                                var reader = new FileReader();
-                                                                                reader.onloadend = function() {
-                                                                                    try {
-                                                                                        v[shareFolder.name].videos[videoFolder.name].infos = JSON.parse(this.result);
-                                                                                    } catch(err){ }
-                                                                                };
-                                                                                reader.readAsText(fileDetails);
-                                                                            }
-                                                                        });
-                                                                    }
-                                                                });
-                                                            });
-                                                        }
-                                                    });
-                                                });
-                                            });
-
-                                            // Look for the share.json file
-                                            shareFolder.getFile('share.json', { create: false }, function(shareFile) {
-                                                shareFile.file(function(shareFileDetails) {
-                                                    // Read info file
-                                                    var reader = new FileReader();
-                                                    reader.onloadend = function() {
-                                                        try {
-                                                            v[shareFolder.name].share = JSON.parse(this.result);
-                                                        } catch(err){ }
-                                                    };
-                                                    reader.readAsText(shareFileDetails);
-                                                });
-                                            });
-
-                                        }
-                                    });
-                                });
-                            });
-                        });
-                    }
-                    else if (typeof _Electron != 'undefined' && window.electron) {
-                        const userDataPath = (window.electron.app || window.electron.remote.app).getPath('userData');
-                        // List all the posts
-                        fs.readdir(userDataPath + '/posts', (err, sharesDir) => {
-                            if (!err) {
-                                _.each(sharesDir, function(shareId) {
-                                        v[shareId] = {};
-
-                                        // List all the videos
-                                        fs.readdir(userDataPath + '/posts/' + shareId + '/videos', (err2, videosDir) => {
-                                            if (!err2) {
-                                                v[shareId].videos = {};
-                                                _.each(videosDir, function(videoId) {
-                                                    v[shareId].videos[videoId] = {};
-                                                    v[shareId].videos[videoId].infos = {};
-                                                    fs.readdir(userDataPath + '/posts/' + shareId + '/videos/' + videoId, (err4, files) => {
-                                                        if (!err4) {
-                                                            _.each(files, (file) => {
-                                                                if (!path.extname(file)) {
-                                                                    v[shareId].videos[videoId].video = {
-                                                                        name: file,
-                                                                        internalURL: url.pathToFileURL(userDataPath + '/posts/' + shareId + '/videos/' + videoId + '/' + file).href
-                                                                    };
-                                                                    var stats = fs.statSync(userDataPath + '/posts/' + shareId + '/videos/' + videoId + '/' + file);
-                                                                    if (stats && stats.size)
-                                                                        v[shareId].videos[videoId].size = stats.size;
-                                                                }
-                                                            });
-                                                        }
-                                                    });
-                                                });
-                                            }
-                                        });
-
-                                        // Read the share.json file
-                                        fs.readFile(userDataPath + '/posts/' + shareId + '/share.json', 'utf8', (err3, shareInfoStr) => {
-                                            if (!err3) {
-                                                try {
-                                                    v[shareId].share = JSON.parse(shareInfoStr);
-                                                } catch(err) {}
-                                            }
-                                        });
-
-                                });
-
-                            }
-                        });
-                    }
-
-                },
-
-                // Download a video using Cordova file functions
-                saveVideoCordova: function(shareId, id, video, videoDetails) {
-                    return new Promise((resolve, reject) => {
-                        if (!window.cordova || !window.cordova.file || !window.resolveLocalFileSystemURL)
-                            return reject('Missing cordova file plugin');
-                        var share = self.app.platform.sdk.node.shares.storage.trx[shareId];
-                        var user = deep(self.app, 'platform.sdk.usersl.storage.' + share.address);
-                        // Create share.json file data
-                        var shareInfos = {
-                            share: {
-                                share: share.export(),
-                                user: user.export(),
-                                timestamp: new Date()
-                            }
-                        };
-                        // Check if external storage is available, if not, use the internal
-                        var storage = (window.cordova.file.externalDataDirectory) ? window.cordova.file.externalDataDirectory : window.cordova.file.dataDirectory;
-                        // open target file for download
-                        window.resolveLocalFileSystemURL(storage, function(dirEntry) {
-                            // Create a posts folder
-                            dirEntry.getDirectory('posts', { create: true }, function (dirEntry11) {
-                                dirEntry11.getDirectory(shareId, { create: true }, function (dirEntry2) {
-
-                                    // Create JSON file for share informations
-                                    dirEntry2.getFile('share.json', { create: true }, function (shareFile) {
-                                        // Write into file
-                                        shareFile.createWriter(function (fileWriter) {
-                                            fileWriter.write(shareInfos.share);
-                                        });
-                                    });
-
-                                    dirEntry2.getDirectory('videos', { create: true }, function (dirEntry3) {
-                                        // Get/create a folder for this video
-                                        dirEntry3.getDirectory(id, { create: true }, function (dirEntry4) {
-                                            var infos = {
-                                                thumbnail: 'https://' + videoDetails.from + videoDetails.thumbnailPath,
-                                                videoDetails : videoDetails
-                                            }
-                                            // Create JSON file for video informations
-                                            dirEntry4.getFile('info.json', { create: true }, function (infoFile) {
-                                                // Write into file
-                                                infoFile.createWriter(function (fileWriter) {
-                                                    fileWriter.write(infos);
-                                                });
-                                            });
-                                            // Download the video
-                                            dirEntry4.getFile(video.resolution.id + '', { create: true }, function (targetFile) {
-                                                var downloader = new BackgroundTransfer.BackgroundDownloader();
-                                                // Create a new download operation.
-                                                var download = downloader.createDownload(video.fileDownloadUrl, targetFile, "Bastyon: Downloading video");
-                                                
-                                                // Start the download
-                                                download.startAsync().then(function(e) {
-                                                    // Success
-                                                    // Get file size
-                                                    targetFile.file(function(fileDetails) {
-                                                        // Resolve internal URL
-                                                        window.resolveLocalFileSystemURL(targetFile.nativeURL, function(entry) {
-                                                            targetFile.internalURL = entry.toInternalURL();
-                                                            shareInfos.videos = {};
-                                                            shareInfos.videos[id] = { video: targetFile,  infos: infos };
-                                                            if (fileDetails.size)
-                                                                shareInfos.videos[id].size = fileDetails.size;
-                                                            self.sdk.local.shares.add(shareId, shareInfos);
-                                                            return resolve(targetFile);
-                                                        }, function(err) {
-                                                            return reject(err);
-                                                        });
-                                                    }, function(err) {
-                                                        // Error
-                                                        return reject(err);
-                                                    });
-                                                }, function(err) {
-                                                    // Error
-                                                    return reject(err);
-                                                }, function(e) {
-                                                    // Progress
-                                                    // console.log("progress");
-                                                    // console.log(e);
-                                                });
-                                            }, function(err) {
-                                                return reject(err);
-                                            });
-                                        }, function(err) {
-                                            return reject(err);
-                                        });
-                                    }, function(err) {
-                                        return reject(err);
-                                    });
-                                }, function(err) {
-                                    return reject(err);
-                                });
-                            }, function(err) {
-                                return reject(err);
-                            });
-                        }, function(err) {
-                            return reject(err);
-                        });
-                    });
-                },
-
-                // Download a video using Node file functions
-                saveVideoElectron: function(shareId, id, video, videoDetails) {
-                    return new Promise((resolve, reject) => {
-                        const userDataPath = (window.electron.app || window.electron.remote.app).getPath('userData');
-                        const shareDir = userDataPath + '/posts/' + shareId;
-                        var share = self.app.platform.sdk.node.shares.storage.trx[shareId];
-                        var user = deep(self.app, 'platform.sdk.usersl.storage.' + share.address);
-                        // Create share.json file data
-                        var shareInfos = {
-                            share: {
-                                share: share.export(),
-                                user: user.export(),
-                                timestamp: new Date()
-                            }
-                        };
-                        // Create share directory
-                        if (!fs.existsSync(shareDir))
-                            fs.mkdirSync(shareDir, { recursive: true });
-                        // Create JSON file for share informations
-                        fs.writeFileSync(shareDir + '/share.json', JSON.stringify(shareInfos.share));
-
-                        // Create the video directory
-                        const videoDir = shareDir + '/videos/' + id;
-                        if (!fs.existsSync(videoDir))
-                            fs.mkdirSync(videoDir, { recursive: true });
-
-                        // Start downloading the video
-                        const videoFile = fs.createWriteStream(videoDir + '/' + video.resolution.id);
-                        https.get(video.fileDownloadUrl, function(response) {
-                            if (response.statusCode >= 200 && response.statusCode <= 299) {
-                                // Success
-                                response.on('end', () => {
-                                    // Downloading done
-                                    shareInfos.videos = {};
-                                    shareInfos.videos[id] = {
-                                        video: { name: video.resolution.id, internalURL: url.pathToFileURL(videoFile.path).href },
-                                        infos: {}
-                                    };
-                                    // Get file size
-                                    var stats = fs.statSync(videoFile.path);
-                                    if (stats && stats.size)
-                                        shareInfos.videos[id].size = stats.size;
-                                    // Add the share
-                                    self.sdk.local.shares.add(shareId, shareInfos);
-                                    return resolve();
-                                });
-                                response.pipe(videoFile);
-                            } else {
-                                // Error
-                                return reject("Download error: " + response.statusCode);
-                            }
-                        }).on('error', (e) => {
-                            // Error
-                            return reject(e);
-                        });
-                    });
-                },
-
-                // Returns an array of all the shares ID
-                getAllIds: function() {
-                    res = [];
-                    for (const shareId in self.sdk.local.shares.allShares)
-                        res.push(shareId);
-                    return res;
-                },
-
-                get: function(shareId) {
-                    var v = self.sdk.local.shares.allShares;
-                    return v[shareId];
-                },
-
-                getVideo: function(videoId, shareId) {
-                    var video, shares = self.sdk.local.shares.allShares;
-                    try {
-                        if (shareId) {
-                            var share = shares[shareId];
-                            for (const vidId in share.videos) {
-                                if (vidId == videoId) {
-                                    video = share.videos[vidId];
-                                    break;
-                                }
-                            }
-                        } else {
-                            for (const share in shares) {
-                                if (video) break;
-                                for (const vidId in shares[share].videos) {
-                                    if (vidId == videoId) {
-                                        video = shares[share].videos[vidId];
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                    } catch(err) {}
-                    return video;
-                },
-
-                getTotalSize : function() {
-                    var v = self.sdk.local.shares.allShares, totalSize = 0;
-                    _.each(v, function(share) {
-                        if (share.videos) {
-                            for (const videoId in share.videos) {
-                                if (share.videos[videoId].size)
-                                    totalSize += share.videos[videoId].size;
-                            }
-                        }
-                    });
-                    return totalSize;
-                },
-
-                add : function(shareId, share){
-                    var v = self.sdk.local.shares.allShares;
-                    v[shareId] = share;
-                },
-
-                deleteAll: function(clbk) {
-                    var v = self.sdk.local.shares.allShares;
-                    for (var shareId in v)
-                        self.sdk.local.shares.delete(shareId);
-                    if (clbk)
-                        clbk();
-                },
-
-                delete: function(shareId, clbk) {
-
-                    var v = self.sdk.local.shares.allShares;
-
-                    if (window.cordova && window.cordova.file) {
-                        // Check if external storage is available, if not, use the internal
-                        var storage = (window.cordova.file.externalDataDirectory) ? window.cordova.file.externalDataDirectory : window.cordova.file.dataDirectory;
-                        // open target file for download
-                        window.resolveLocalFileSystemURL(storage, function(dirEntry) {
-                            // Create a downloads folder
-                            dirEntry.getDirectory('posts', { create: true }, function (dirEntry2) {
-                                dirEntry2.getDirectory(shareId, { create: false}, function(dirToDelete) {
-                                    dirToDelete.removeRecursively(function() {
-                                        // Success
-                                        delete v[shareId];
-                                        if (clbk) clbk();
-                                    }, function(err) {
-                                        if (clbk) clbk();
-                                    });
-                                }, function(err) {
-                                    if (clbk) clbk();
-                                });
-                            }, function(err) {
-                                if (clbk) clbk();
-                            });
-                        }, function(err) {
-                            if (clbk) clbk();
-                        });
-                    } else if (typeof _Electron != 'undefined' && window.electron) {
-                        const userDataPath = (window.electron.app || window.electron.remote.app).getPath('userData');
-                        fs.rmdir(userDataPath + '/posts/' + shareId, { recursive: true }, (err) => {
-                            if (!err)
-                                delete v[shareId];
-                            if (clbk) clbk();
-                        });
-                    }
-                }
-            }
-
-        },
-
         registrations: {
             storage: {},
             clbks: {},
@@ -5082,7 +6828,6 @@ Platform = function (app, listofnodes) {
             getredirectFromCurrentPage : function(){
                 self.sdk.registrations.redirect = self.app.nav.get.pathnameSearch()
 
-                console.log('self.sdk.registrations', self.sdk.registrations)
             },
 
             remove: function (address) {
@@ -5124,7 +6869,7 @@ Platform = function (app, listofnodes) {
                 var regs = self.sdk.registrations.storage[address];
 
                 return (!self.sdk.registrations.storage[address + 'rm'] && regs > 2 /*&& regs <= 5*/)
-             
+
             },
 
             donotshowprivate : function(address){
@@ -5155,6 +6900,7 @@ Platform = function (app, listofnodes) {
                 localStorage['registrations'] = JSON.stringify(self.sdk.registrations.storage || {});
             }
         },
+
         relayTransactions: {
             storage: {},
 
@@ -5163,7 +6909,6 @@ Platform = function (app, listofnodes) {
             send: function (clbk) {
 
                 var needaction = false
-
                 self.app.user.isState(function (state) {
 
                     if (state) {
@@ -5173,143 +6918,152 @@ Platform = function (app, listofnodes) {
 
                         if (!_.isEmpty(rs)) {
 
-                            self.sdk.node.transactions.get.balance(function (a) {
+                            self.app.platform.sdk.ustate.me(function (_mestate) {
+                                self.sdk.node.transactions.get.balance(function (a) {
 
-                                var arranges = _.clone(self.sdk.relayTransactions.arranges)
+                                    var arranges = _.clone(self.sdk.relayTransactions.arranges)
 
-                                _.each(rs, function (tr, cat) {
-                                    if (_.indexOf(arranges, cat) == -1) {
-                                        arranges.push(cat)
-                                    }
-                                })
-
-                                lazyEach({
-                                    array: arranges,
-                                    sync: true,
-                                    action: function (p) {
-                                        var key = p.item;
-
-                                        var objects = rs[key]
-
-                                        if (!objects || !objects.length) {
-                                            p.success()
+                                    _.each(rs, function (tr, cat) {
+                                        if (_.indexOf(arranges, cat) == -1) {
+                                            arranges.push(cat)
                                         }
-                                        else {
-                                            if (key == 'userInfo') {
-                                                objects = [objects[objects.length - 1]]
+                                    })
+
+                                    lazyEach({
+                                        array: arranges,
+                                        sync: true,
+                                        action: function (p) {
+                                            var key = p.item;
+
+                                            var objects = rs[key]
+
+                                            if (!objects || !objects.length) {
+                                                p.success()
                                             }
+                                            else {
+                                                if (key == 'userInfo') {
+                                                    objects = [objects[objects.length - 1]]
+                                                }
+                                                else{
 
-                                            lazyEach({
-                                                sync: true,
-                                                array: objects,
-                                                action: function (p) {
-                                                    var object = p.item;
-
-                                                    if (object.sending) {
+                                                    if(_.isEmpty(_mestate)){
 
                                                         p.success()
 
                                                         return
                                                     }
 
-                                                    var c = kits.c[object.type]
+                                                }
 
-                                                    var trobj = new c();
+                                                lazyEach({
+                                                    sync: true,
+                                                    array: objects,
+                                                    action: function (p) {
+                                                        var object = p.item;
 
-                                                    trobj.import(object);
-
-                                                    trobj.fromrelay = true;
-
-                                                    object.sending = true;
-
-                                                    self.sdk.node.transactions.create.commonFromUnspent(
-
-                                                        trobj,
-
-                                                        function (_alias, error) {
-
-
-                                                            var eh = self.errors[error] || {}
-
-                                                            delete object.sending;
-
-                                                            if (error) {
-                                                                if (key == 'userInfo') {
-
-                                                                    var _nsh = bitcoin.crypto.hash256(JSON.stringify(object))
-
-                                                                    needaction = true
-
-                                                                    if (error == '18' && _nsh != nshowed) {
-
-                                                                        nshowed = _nsh
-
-                                                                        app.nav.api.load({
-                                                                            open: true,
-                                                                            href: 'test',
-                                                                            inWnd: true,
-
-                                                                            essenseData: {
-                                                                                caption: self.app.localization.e('e13265'),
-                                                                                failedrelay : trobj
-                                                                            }
-                                                                        })
-                                                                    }
-
-                                                                    if (clbk)
-                                                                        clbk(needaction)
-
-                                                                    return
-                                                                }
-                                                            }
-
-                                                            if (!error || (eh && !eh.relay)) {
-
-                                                                if (key == 'userInfo') {
-
-                                                                    delete rs[key]
-
-                                                                }
-                                                                else {
-                                                                    rs[key] = _.filter(rs[key], function (t) {
-                                                                        return t.txid != object.txid
-                                                                    })
-                                                                }
-
-                                                                self.sdk.relayTransactions.save()
-
-                                                            }
-                                                            else {
-
-                                                            }
+                                                        if (object.sending) {
 
                                                             p.success()
 
+                                                            return
                                                         }
-                                                    )
+
+                                                        var c = kits.c[object.type]
+
+                                                        var trobj = new c();
+
+                                                        trobj.import(object);
+
+                                                        trobj.fromrelay = true;
+
+                                                        object.sending = true;
+
+                                                        self.sdk.node.transactions.create.commonFromUnspent(
+
+                                                            trobj,
+
+                                                            function (_alias, error) {
+
+                                                                var eh = self.errors[error] || {}
+
+                                                                delete object.sending;
+
+                                                                if (error) {
+                                                                    if (key == 'userInfo') {
+
+                                                                        var _nsh = bitcoin.crypto.hash256(JSON.stringify(object))
+
+                                                                        needaction = true
+
+                                                                        if (error == '18' && _nsh != nshowed) {
+
+                                                                            nshowed = _nsh
+
+                                                                            app.nav.api.load({
+                                                                                open: true,
+                                                                                href: 'test',
+                                                                                inWnd: true,
+
+                                                                                essenseData: {
+                                                                                    caption: self.app.localization.e('e13265'),
+                                                                                    failedrelay : trobj
+                                                                                }
+                                                                            })
+                                                                        }
+
+                                                                        if (clbk)
+                                                                            clbk(needaction)
+
+                                                                        return
+                                                                    }
+                                                                }
+
+                                                                if (!error || (eh && !eh.relay)) {
+
+                                                                    if (key == 'userInfo') {
+
+                                                                        delete rs[key]
+
+                                                                    }
+                                                                    else {
+                                                                        rs[key] = _.filter(rs[key], function (t) {
+                                                                            return t.txid != object.txid
+                                                                        })
+                                                                    }
+
+                                                                    self.sdk.relayTransactions.save()
+
+                                                                }
+                                                                else {
+
+                                                                }
+
+                                                                p.success()
+
+                                                            }
+                                                        )
 
 
 
-                                                },
+                                                    },
 
-                                                all: {
-                                                    success: p.success
-                                                }
-                                            })
+                                                    all: {
+                                                        success: p.success
+                                                    }
+                                                })
+                                            }
+
+                                        },
+
+                                        all: {
+                                            success: function () {
+                                                if (clbk)
+                                                    clbk(needaction)
+                                            }
                                         }
+                                    })
 
-
-
-                                    },
-
-                                    all: {
-                                        success: function () {
-                                            if (clbk)
-                                                clbk(needaction)
-                                        }
-                                    }
                                 })
-
                             })
 
                         }
@@ -5458,6 +7212,8 @@ Platform = function (app, listofnodes) {
 
                             delete t.storage[src]
 
+                            t.save()
+
                             if (clbk)
                                 clbk()
 
@@ -5495,16 +7251,83 @@ Platform = function (app, listofnodes) {
                 if (clbk)
                     clbk()
 
+            },
+
+            upload : function(image){
+
+                return new Promise((resolve, reject) => {
+                    if (image.indexOf('data:image') > -1){
+
+                        var r = image.split(',');
+
+                        app.ajax.run({
+                            type : "POST",
+                            imgur : true,
+                            data : {
+                                Action : "image",
+                                image : r[1]
+                            },
+
+                            success : function(data){
+                                resolve(deep(data, 'data.link'));
+                            },
+
+                            fail : function(d){
+
+                                app.ajax.run({
+                                    type : "POST",
+                                    up1 : true,
+                                    data : {
+                                        file : r[1]
+                                    },
+
+                                    success : function(data){
+
+                                        resolve('https://pocketnet.app:8092/i/' + deep(data, 'data.ident'));
+
+                                    },
+
+                                    fail : function(d){
+                                        reject('imageloadingfailed')
+                                    }
+                                })
+
+                            }
+                        })
+
+                    }
+
+                    else{
+                        resolve(image)
+                    }
+                })
+
             }
         },
         articles: {
 
             storage: [],
 
+            findlastdraft : function(){
+
+                return _.find(self.sdk.articles.storage, function(s){
+                    return s.version >= 2 && !s.txid
+                })
+                
+            },
+
             getbyid : function(id){
                 return _.find(self.sdk.articles.storage, function(s){
                     return s.id == id
                 })
+            },
+
+            deletebyid : function(id){
+                self.sdk.articles.storage = _.filter(self.sdk.articles.storage, function(s){
+                    return s.id != id
+                })
+
+                self.sdk.articles.save()
             },
 
             getlist : function(){
@@ -5515,14 +7338,35 @@ Platform = function (app, listofnodes) {
 
             itisdraft(art){
 
-                console.log('ar', art)
+                if(art.editing) return false
 
                 if(
 
-                    art.caption.value && 
+                    art.caption.value &&
                     art.content && art.content.blocks && art.content.blocks.length
-                    
+
                 ) return true
+            },
+
+            fromshare : function(share){
+
+                var edjs = new edjsHTML(null, app)
+
+
+                var empty = self.sdk.articles.empty(null, 2)
+
+
+                    empty.visibility = (share.settings.f || 0) + ''
+                    empty.caption.value = share.caption.v
+                    empty.content = edjs.apply(JSON.parse(JSON.stringify(share.message.v)), decodeURIComponent)
+                    empty.tags = _.clone(share.tags.v)
+                    empty.language = share.language.v
+                    empty.time = share.time
+                    empty.cover = deep(share, 'images.v.0')
+                    empty.editing = share.aliasid
+                    empty.shash = share.shash()
+
+                return empty
             },
 
             empty: function (id, version) {
@@ -5542,7 +7386,7 @@ Platform = function (app, listofnodes) {
                     time : null,
                     cover : '',
                     visibility : 0,
-                    
+
                     language : self.app.localization.key
                 }
             },
@@ -5650,8 +7494,13 @@ Platform = function (app, listofnodes) {
             save: function () {
 
                 var address = self.sdk.address.pnet().address;
-
-                localStorage[address + 'articles'] = JSON.stringify(self.sdk.articles.storage || []);
+                try{
+                    localStorage[address + 'articles'] = JSON.stringify(self.sdk.articles.storage || []);
+                }   
+                catch(e){
+                    console.log("e", e)
+                }
+                
 
             },
 
@@ -5684,24 +7533,33 @@ Platform = function (app, listofnodes) {
                     clbk()
             },
 
+
             share : function(art){
 
-                var artcontent = art.content 
+                var edjs = new edjsHTML(null, app)
 
-                console.log('artcontent', artcontent)
-
+                var artcontent = edjs.apply(art.content, encodeURIComponent)
+           
                 var share = new Share(art.language || self.app.localization.key);
 
                     share.tags.set(_.clone(art.tags))
                     share.caption.set(art.caption.value)
-                    share.message.set(artcontent)
+                    share.message.set({
+                        blocks : artcontent.blocks,
+                        version : artcontent.version
+                    })
 
                     share.settings.v = 'a'
                     share.settings.version = art.version
+                    share.settings.f = (art.visibility || 0) + ''
 
                     share.images.set([art.cover])
 
                     share.address = deep(app, 'user.address.value')
+
+                if (art.editing){
+                    share.aliasid = art.editing
+                }
 
                 return share
             },
@@ -5709,27 +7567,116 @@ Platform = function (app, listofnodes) {
             uploadresource : {
                 image : function(e){
 
+                    if(!deep(e, 'data.file.url')){
+                        return Promise.resolve()
+                    }
+
+                    return self.sdk.imagesH.upload(e.data.file.url).then(r => {
+                        e.data.file.url = r
+
+                        return Promise.resolve()
+                    })
                 },
                 carousel : function(e){
 
+                    return Promise.all(_.map(e.data, (d => {
+                        return self.sdk.imagesH.upload(d.url).then(r => {
+                            d.url = r
+
+                            return Promise.resolve()
+                        })
+                    })))
+                },
+
+                content : function(content){
+                    var tps = self.sdk.articles.uploadresource
+
+                    var promises = _.map(content.blocks, function(e){
+
+                        if (tps[e.type]){
+                            return tps[e.type](e)
+                        }
+
+                        return Promise.resolve()
+
+                    })
+
+                    return Promise.all(promises)
+                },
+
+                art : function(art){
+                    if(!art.cover){
+                        return Promise.resolve()
+                    }
+
+                    return self.sdk.imagesH.upload(art.cover).then(r => {
+                        art.cover = r
+
+                        return Promise.resolve()
+                    })
                 }
             },
 
             uploadresources : function(art){
 
-                var tps = self.sdk.articles.uploadresource
-                
-                var promises = _.map(art.content.blocks, function(e){
-
-                    if (tps[e.type]){
-                        return tps[e.type](e)
-                    }
-
-                    return Promise.resolve()
-
+                return self.sdk.articles.uploadresource.art(art).then(r => {
+                    return self.sdk.articles.uploadresource.content(art.content)
                 })
 
-                return Promise.all(promises)
+            }
+        },
+        
+        lentaMethod: {
+            all: {
+                hierarchical: 'hierarchical',
+                historical: 'historical'
+            },
+            default: "hierarchical",
+            current: null,
+
+            save: function () {
+
+                var c = self.sdk.lentaMethod.current
+
+                localStorage['lentaMethod'] = c;
+
+            },
+
+            load: function (clbk) {
+
+                var t = self.sdk.lentaMethod
+
+                t.current = localStorage['lentaMethod'] || t.default;
+
+                t.set()
+
+                if (clbk) clbk()
+            },
+
+            get: function(){
+                var t = self.sdk.lentaMethod;
+
+                return t.all[t.current];
+            },
+
+            set: function (value) {
+
+                var t = self.sdk.lentaMethod
+
+                if (!value) {
+                    value = t.current || t.default
+                }
+
+                if (value && t.all[value]) {
+
+                    t.current = value;
+
+                    self.app.platform.sdk.categories.clbks.selected.lenta && self.app.platform.sdk.categories.clbks.selected.lenta();
+
+                    t.save()
+
+                }
+
             }
         },
 
@@ -5737,16 +7684,32 @@ Platform = function (app, listofnodes) {
             all: {
                 white: {
                     name: self.app.localization.e('e13266'), ////ch
-                    class: "stwhite"
+                    class: "stwhite",
+                    color : "#ffffff",
+                    media : '(prefers-color-scheme: light)',
+                    rootid : ''
                 },
 
                 black: {
                     name: self.app.localization.e('e13267'),
-                    class: "stblack"
-                }
+                    class: "stblack",
+                    color : "#1e2235",
+                    media : '(prefers-color-scheme: dark)',
+                    rootid : 'black'
+                },
+
+                gray: {
+                    name: self.app.localization.e('gray'),
+                    class: "stgray",
+                    color : "#1e1d1a",
+                    media : '(prefers-color-scheme: dark)',
+                    rootid : 'gray'
+                },
             },
             default: "white",
             current: null,
+
+            currentStyles : {},
 
             save: function () {
 
@@ -5767,6 +7730,25 @@ Platform = function (app, listofnodes) {
                 if (clbk) clbk()
             },
 
+            setstyles : function(){
+                var root = document.querySelector(':root');
+
+                var rootStyles = getComputedStyle(root);
+ 
+                self.sdk.theme.currentStyles = rootStyles
+
+            },
+
+            getstyle : function(v){
+
+                if (self.sdk.theme.currentStyles){
+                    return self.sdk.theme.currentStyles.getPropertyValue(v)
+                }
+
+                return ''
+               
+            },
+
             set: function (value) {
 
                 var t = self.sdk.theme
@@ -5777,13 +7759,11 @@ Platform = function (app, listofnodes) {
                 }
 
                 if (value && t.all[value]) {
-                    _.each(t.all, function (c) {
-
+                    /*_.each(t.all, function (c) {
                         h.removeClass(c.class)
-
                     })
 
-                    h.addClass(t.all[value].class)
+                    h.addClass(t.all[value].class)*/
 
                     t.current = value
 
@@ -5792,17 +7772,164 @@ Platform = function (app, listofnodes) {
                     t.save()
 
                     var cm = deep(app, 'modules.menu.module.restart')
-                     if (cm) cm()
+                    
+                    if (cm) cm()
+
+                    if (document.documentElement.hasAttribute('theme')){
+                        document.documentElement.removeAttribute('theme');
+                    }
+
+                    document.documentElement.setAttribute('theme', t.all[value].rootid);
+
+                    self.sdk.theme.setstyles()
+
+                    $('meta[name="theme-color"]').attr('content', t.all[value].color).attr('media',  t.all[value].media)
+                    $('meta[name="msapplication-navbutton-color"]').attr('content', t.all[value].color)
+                    $('meta[name="apple-mobile-web-app-status-bar-style"]').attr('content', t.all[value].color)
                 }
 
                 app.mobile.statusbar.background()
+
+                
+
             }
+        },
+
+        uiScale: {
+            all: {
+                small: {
+                    name: self.app.localization.e('uiSmallSetting'),
+                    scale: 75
+                },
+                normal: {
+                    name: self.app.localization.e('uiNormalSetting'),
+                    scale: 100
+                },
+                large: {
+                    name: self.app.localization.e('uiLargeSetting'),
+                    scale: 125
+                },
+                extraLarge: {
+                    name: self.app.localization.e('uiXLargeSetting'),
+                    scale: 150
+                }
+            },
+            default: 'normal',
+            current: null,
+
+            save: function() {
+                localStorage['uiscale'] = self.sdk.uiScale.current;
+            },
+
+            load: function(clbk) {
+                const param = self.sdk.uiScale;
+
+                param.current = localStorage['uiscale'] || self.sdk.uiScale.default;
+
+                param.set();
+
+                if (clbk) {
+                    clbk();
+                }
+            },
+
+            set: function (value) {
+                const param = self.sdk.uiScale;
+
+                if (!value) {
+                    value = param.current || param.default;
+                }
+
+                const selectedValue = param.all[value];
+
+                if (selectedValue) {
+                    if (typeof _Electron === 'undefined') {
+                        return;
+                    }
+
+                    const { webFrame } = require('electron');
+
+                    webFrame.setZoomFactor(selectedValue.scale / 100);
+
+                    param.current = value;
+
+                    param.save();
+                }
+            },
+
+            listenScalingEvents: function() {
+                const zoomArrList = self.app.platform.sdk.uiScale.all;
+                const zoomKeys = Object.keys(zoomArrList);
+
+                let wheelLock = false;
+
+                function scaleUi(e, isScroll, calcDelta) {
+                    const mainKeyDown = e.metaKey || e.ctrlKey;
+
+                    if(!mainKeyDown) {
+                        if (isScroll && wheelLock) {
+                            $('html').removeClass('scroll-lock');
+                            wheelLock = false;
+                        }
+
+                        return;
+                    }
+
+                    const zoomDelta = calcDelta(e, mainKeyDown);
+
+                    if (zoomDelta === 0) {
+                        return;
+                    }
+
+                    const currentZoom = self.app.platform.sdk.uiScale.current;
+                    const zoomCurrentIndex = zoomKeys.findIndex(zoom => (zoom === currentZoom));
+                    const zoomNewIndex = zoomCurrentIndex + zoomDelta;
+                    const zoomNewName = zoomKeys[zoomNewIndex];
+
+                    self.app.platform.sdk.uiScale.set(zoomNewName);
+                }
+
+                $(window).on('keydown', (e) => scaleUi(e, false, ({ keyCode }) => {
+                    /**
+                     * Minus - 189
+                     * Minus Numpad - 109
+                     *
+                     * Plus - 187
+                     * Plus Numpad - 107
+                     */
+                    switch (keyCode) {
+                        case 189: case 109:
+                            return -1;
+                        case 187: case 107:
+                            return +1;
+                    }
+
+                    return 0;
+                }));
+
+                $(window).on('wheel', (e) => scaleUi(e, true, (e) => {
+                    if(!wheelLock) {
+                        $('html').addClass('scroll-lock');
+                        wheelLock = true;
+                    }
+
+                    if(e.originalEvent.deltaY < 0) {
+                        return +1;
+                    } else {
+                        return -1;
+                    }
+                }));
+            },
+        },
+
+        accountsettings: {
+            storage: {}
         },
 
         usersettings: {
 
             meta: {
-                
+
                 preview: {
                     name: self.app.localization.e('disablePreview'),
                     id: 'preview',
@@ -5901,6 +8028,13 @@ Platform = function (app, listofnodes) {
                     value: false
                 },
 
+                videop2p: {
+                    name: self.app.localization.e('videop2psettings'),
+                    id: 'videop2p',
+                    type: "BOOLEAN",
+                    value: true
+                },
+
                 autostart: {
                     name: self.app.localization.e('e13278'),
                     id: 'autostart',
@@ -5928,7 +8062,7 @@ Platform = function (app, listofnodes) {
                     type: "BOOLEAN",
                     value: true
                 },
-    
+
                 vidgetstaking: {
                     name: 'Staking Pocketcoin vidget',
                     id: 'vidgetstaking',
@@ -5998,11 +8132,18 @@ Platform = function (app, listofnodes) {
 				},
 
                 openlinksinelectron : {
-					name: 'Do not open links in the desktop application',
+					name: self.app.localization.e('openlinkssettings'),
 					id : 'openlinksinelectron',
 					type : "BOOLEAN",
 					value : false,
 				},
+
+                sendUserStatistics : {
+                    name: self.app.localization.e('sendUserStatistics'),
+					id : 'sendUserStatistics',
+					type : "BOOLEAN",
+					value : true,
+                },
             },
 
             create: function (id) {
@@ -6066,18 +8207,23 @@ Platform = function (app, listofnodes) {
                         }
                     },
 
-                 
+
                     video: {
                         name: self.app.localization.e('video'),
                         options: {
                             embedvideo: options.embedvideo,
-                            videoautoplay2: options.videoautoplay2
-
+                            videoautoplay2: options.videoautoplay2,
+                            videop2p: options.videop2p
                         }
                     },
 
-                    
 
+                    stats: {
+                        name: self.app.localization.e('captionUserStats'),
+                        options: {
+                            sendUserStatistics: options.sendUserStatistics,
+                        }
+                    },
                 }
 
 
@@ -6104,7 +8250,7 @@ Platform = function (app, listofnodes) {
                 }
 
 
-               
+
 
                 if (electron) {
                     c.system = {
@@ -6125,7 +8271,6 @@ Platform = function (app, listofnodes) {
                         }
 
                     }
-          
                 }
 
                 _.each(options, function (o, i) {
@@ -6157,23 +8302,10 @@ Platform = function (app, listofnodes) {
 
                         if (electron && i == 'autostart') {
 
-                            const is = require('electron-is')
+                            electron.ipcRenderer.send('electron-autoLaunchManage', {
+                                enable : m[i].value
+                            });
 
-                            if(!is.macOS()){
-
-                                const AutoLaunch = require('auto-launch');
-
-                                let autoLaunch = new AutoLaunch({
-                                    name: app.meta.fullname, // app name
-                                    path: electron.remote.app.getPath('exe'),
-                                    isHidden: true
-                                });
-    
-                                if (m[i].value) autoLaunch.enable();
-                                else autoLaunch.disable();
-                            }
-
-                            
                         }
 
 
@@ -6225,7 +8357,7 @@ Platform = function (app, listofnodes) {
                                         value : o.value
                                     }
                                 }
-                                
+
                             }
 
 
@@ -6235,7 +8367,7 @@ Platform = function (app, listofnodes) {
                             values[i].possibleValues = o.possibleValues && o.possibleValues.map(i => String(i));
                             values[i].possibleValuesLabels = o.possibleValuesLabels;
                             values[i].value = o.value;
-                            
+
                         }
 
 
@@ -6280,7 +8412,7 @@ Platform = function (app, listofnodes) {
 
                     self.app.user.features.telegram = 0;
 
-                }                
+                }
 
                 _.each(values, function (v, i) {
 
@@ -6345,51 +8477,30 @@ Platform = function (app, listofnodes) {
                             }
                         }
 
-                        
+
                     }
                 })
 
                 if (electron) {
 
-                    const is = require('electron-is')
+                    if (m.autostart.value === undefined) {
+                        m.autostart.value = true;
 
-                    if(!is.macOS()){
-
-                        const AutoLaunch = require('auto-launch');
-                        let autoLaunch = new AutoLaunch({
-                            name: app.meta.fullname, // app name
-                            path: electron.remote.app.getPath('exe'),
-                            isHidden: true
+                        electron.ipcRenderer.send('electron-autoLaunchManage', {
+                            enable : m.autostart.value
                         });
 
-                        // First launch
-                        if (m.autostart.value === undefined) {
-                            autoLaunch.enable();
-                            m.autostart.value = true;
-                            self.sdk.usersettings.save();
-                        }
-
-                        // Check autostart
-                        autoLaunch.isEnabled().then((isEnabled) => {
-                            m.autostart.value = isEnabled;
-
-                            if (clbk) {
-                                clbk()
-                            }
-                        }).catch(e =>{
-                            m.autostart.value = isEnabled;
-                            if (clbk) {
-                                clbk()
-                            }
-                        });
-
+                        self.sdk.usersettings.save();
                     }
-                    else
-                    {
+
+                    self.ipcbridge.request('autoLaunchIsEnabled', {}).then(r => {
+
+                        m.autostart.value = r
+
                         if (clbk) {
                             clbk()
                         }
-                    }
+                    })
                 }
                 else {
                     if (clbk) {
@@ -6465,12 +8576,12 @@ Platform = function (app, listofnodes) {
                     if (addr && self.nvadr[addr.address]){
                         err = null
                     }
-                    
+
 
                     if (err){
 
                         var errtext = 'Undefined Error'
-                        
+
 						if(err == 'namelength'){
 							errtext = "The name length can't be more than 20 symbols"
 						}
@@ -6500,15 +8611,15 @@ Platform = function (app, listofnodes) {
                                 self.sdk.node.transactions.create.commonFromUnspent(
 
                                     userInfo,
-            
+
                                     function(tx, error){
-            
+
                                         if(!tx){
 
                                             self.sdk.keys.error(self.errorHandler(error).text())
-            
+
                                             reject(error)
-            
+
                                         }
                                         else
                                         {
@@ -6516,8 +8627,8 @@ Platform = function (app, listofnodes) {
                                                 resolve('processing')
                                             })
                                         }
-            
-                                        
+
+
                                     }
                                 )
 
@@ -6536,7 +8647,7 @@ Platform = function (app, listofnodes) {
 
                     ///return Promise.resolve('processing')
 
-                    
+
 
                 }).catch(r => {
 
@@ -6551,8 +8662,8 @@ Platform = function (app, listofnodes) {
 
                         if (state) {
 
-                            var processing = _.toArray((self.sdk.node.transactions.temp.userInfo || {})).length > 0 || 
-				
+                            var processing = _.toArray((self.sdk.node.transactions.temp.userInfo || {})).length > 0 ||
+
                             (self.sdk.address.pnet() && deep(self.sdk.relayTransactions.storage, self.sdk.address.pnet().address + '.userInfo.length') > 0 )
 
                             if (processing) {
@@ -6563,12 +8674,12 @@ Platform = function (app, listofnodes) {
 
                             if(!me || _.isEmpty(me)){
                                 return reject('me')
-                            }   
+                            }
 
                             if(me.temp || me.relay || me.fromstorage){
                                 return reject('temprelaystorage')
-                            }  
-                            
+                            }
+
                             if(me.keys && me.keys.length){
                                 return reject('exist')
                             }
@@ -6579,7 +8690,7 @@ Platform = function (app, listofnodes) {
                         {
                             reject('state')
                         }
-    
+
                     })
                 })
             }
@@ -6677,7 +8788,7 @@ Platform = function (app, listofnodes) {
 
                         if (self.sdk.address.pnet()) {
 
-                            
+
 
                             var a = self.sdk.address.pnet().address;
 
@@ -6767,12 +8878,12 @@ Platform = function (app, listofnodes) {
 
                 var adrref = localStorage[adr + 'subscribeRef'];
 
-                
+
 
                 if (adrref) {
 
                     delete localStorage['ref'];
-                    
+
                     self.sdk.users.get(adrref, function () {
 
                         var r = self.sdk.usersl.storage[adrref]
@@ -6802,7 +8913,7 @@ Platform = function (app, listofnodes) {
                                         h += '<div class="refaddTable table">'
                                         h += '<div class="imageCell">'
 
-                                        h += '<div class="usericon" ban=".gif" image="' + (src || '') + '">'
+                                        h += '<div class="usericon" ban=".gif" image="' + (src || '*') + '">'
 
                                         if (!src && letter) {
 
@@ -6905,7 +9016,7 @@ Platform = function (app, listofnodes) {
                 if(!address) address = (self.app.platform.sdk.address.pnet() || {}).address
 
                 return self.app.platform.sdk.user.itisme(address) && self.app.platform.sdk.user.reputationBlocked(address)
-                
+
             },
 
             reputationBlockedNotMe : function(address){
@@ -6913,16 +9024,40 @@ Platform = function (app, listofnodes) {
                 if(!address) address = (self.app.platform.sdk.address.pnet() || {}).address
 
                 return !self.app.platform.sdk.user.itisme(address) && self.app.platform.sdk.user.reputationBlocked(address)
-                
+
             },
 
             reputationBlocked : function(address){
                 var ustate = self.sdk.ustate.storage[address] || deep(self, 'sdk.usersl.storage.' + address) || deep(self, 'sdk.users.storage.' + address);
 
-				if (ustate && ustate.reputation <= -30){
+				if (ustate && ustate.reputation <= -12){
                     return true
                 }
             },
+
+            scamcriteria : function(address){
+
+                if(!address) address = (self.app.platform.sdk.address.pnet() || {}).address
+
+                var info = deep(self, 'sdk.users.storage.' + address);
+
+                if (info.reputation > 100 && info.postcnt < 10) return true
+
+                return false
+
+            },
+
+            upvotevalueblockcriteria : function(value, address){
+
+                if(!address) address = (self.app.platform.sdk.address.pnet() || {}).address
+
+                var info = deep(self, 'sdk.users.storage.' + address);
+
+                if (value <= 3 && info.reputation < 100) return true
+
+                return false
+
+            }, 
 
             reputationBlockedRedirect : function(address){
                 if(self.sdk.user.reputationBlocked(address)){
@@ -7079,7 +9214,7 @@ Platform = function (app, listofnodes) {
                         clbk([])
                 })
 
-              
+
             }
         },
 
@@ -7087,6 +9222,7 @@ Platform = function (app, listofnodes) {
             storage: {},
 
             clbks: {},
+
 
             validationcurrent: function (address, parameter, clbk) {
                 var s = self.sdk.ustate.storage;
@@ -7168,7 +9304,7 @@ Platform = function (app, listofnodes) {
                             return
                         }*/
 
-                        
+
 
                         if (info.score_unspent <= num) {
                             if (clbk)
@@ -7208,10 +9344,10 @@ Platform = function (app, listofnodes) {
                         var a = self.sdk.address.pnet().address;
 
                         if (!_.isEmpty(info)) {
-                            self.app.settings.set(a, 'last_ustate', JSON.stringify(info))
+                            self.app.settings.set(a, 'last_ustate_2', info)
                         }
                         else {
-                            info = JSON.parse(self.app.settings.get(a, 'last_ustate') || "{}")
+                            info = self.app.settings.get(a, 'last_ustate_2') || {}
 
                             if (!_.isEmpty(info)) {
 
@@ -7219,9 +9355,8 @@ Platform = function (app, listofnodes) {
 
                             }
                         }
+
                     }
-
-
 
                     if (clbk)
                         clbk(info)
@@ -7241,7 +9376,6 @@ Platform = function (app, listofnodes) {
                         var address = self.sdk.address.pnet().address;
 
                         self.sdk.ustate.get(address, function () {
-
 
                             if (clbk)
                                 clbk(s[address])
@@ -7274,7 +9408,7 @@ Platform = function (app, listofnodes) {
 
 
                 if (addresses.length) {
-        
+
                     self.app.api.rpc('getuserstate', [(addresses || []).join(',')]).then(d => {
 
                         if (d && !_.isArray(d)) d = [d]
@@ -7289,25 +9423,16 @@ Platform = function (app, listofnodes) {
 
 
                     }).catch(e => {
+
+                        if(e && e.code == -5){
+                            _.each(addresses || [], function (address) {
+                                s[address] = {}
+                            })
+                        }
+
                         if (clbk)
                             clbk([])
                     })
-
-                    /*self.app.ajax.rpc({
-                        method: 'getuserstate',
-                        parameters: [(addresses || []).join(',')],
-                        success: function (d) {
-
-                            
-
-                        },
-
-                        fail: function () {
-
-                            if (clbk)
-                                clbk([])
-                        }
-                    })*/
 
                 }
                 else {
@@ -7316,7 +9441,7 @@ Platform = function (app, listofnodes) {
                 }
             },
 
-            haslowlimits : function(state){ 
+            haslowlimits : function(state){
 
                 state || (state = {})
 
@@ -7331,7 +9456,7 @@ Platform = function (app, listofnodes) {
                 })
             },
 
-            haszerolimits : function(state){ 
+            haszerolimits : function(state){
 
                 state || (state = {})
 
@@ -7374,7 +9499,7 @@ Platform = function (app, listofnodes) {
             metrics : function(){
                 return {
 
-		
+
                     post : {
                         key : 'post',
                         vis : 'scale',
@@ -7383,7 +9508,7 @@ Platform = function (app, listofnodes) {
                             if(v <= 3) return true
                         }
                     },
-        
+
                     video : {
                         key : 'video',
                         vis : 'scale',
@@ -7392,7 +9517,7 @@ Platform = function (app, listofnodes) {
                             if(v <= 3) return true
                         }
                     },
-        
+
                     score : {
                         key : 'score',
                         vis : 'scale',
@@ -7401,7 +9526,7 @@ Platform = function (app, listofnodes) {
                             if(v <= 7) return true
                         }
                     },
-        
+
                     comment : {
                         key : 'comment',
                         vis : 'scale',
@@ -7410,7 +9535,7 @@ Platform = function (app, listofnodes) {
                             if(v <= 7) return true
                         }
                     },
-        
+
                     comment_score : {
                         key : 'comment_score',
                         vis : 'scale',
@@ -7418,8 +9543,8 @@ Platform = function (app, listofnodes) {
                         bad : function(v){
                             if(v <= 10) return true
                         }
-                    },		
-                    
+                    },
+
                     complain : {
                         key : 'complain',
                         vis : 'scale',
@@ -7433,7 +9558,7 @@ Platform = function (app, listofnodes) {
 
         },
 
-        
+
 
         notifications: {
             storage: {},
@@ -7450,7 +9575,7 @@ Platform = function (app, listofnodes) {
                 var values = {},
                     keys = Object.keys(localStorage),
                     i = keys.length;
-            
+
                 while ( i-- ) {
 
                     if(keys[i] && keys[i].indexOf('notificationsv') > -1){
@@ -7459,11 +9584,11 @@ Platform = function (app, listofnodes) {
                             localStorage.removeItem(keys[i]);
                         }
 
-                        
+
                     }
 
                 }
-            
+
             },
             load: function () {
 
@@ -7477,7 +9602,7 @@ Platform = function (app, listofnodes) {
             save: function () {
                 this.clearlocalstorage()
                 var e = this.export();
-                
+
                 if (self.currentBlock && this.inited == true) {
 
                     e.notifications = _.uniq(e.notifications, function (n) {
@@ -7491,10 +9616,11 @@ Platform = function (app, listofnodes) {
                     e.notifications = _.sortBy(e.notifications, function (n) {
                         return -Number(n.time || n.nTime)
                     })
-                    
-                    e.notifications = firstEls(e.notifications, 75)
 
-                    localStorage[self.sdk.address.pnet().address + 'notificationsv14'] = JSON.stringify(e)
+                    e.notifications = firstEls(e.notifications, 75) 
+
+                    if (self.sdk.address.pnet())
+                        localStorage[self.sdk.address.pnet().address + 'notificationsv14'] = JSON.stringify(e)
                 }
 
 
@@ -7561,6 +9687,7 @@ Platform = function (app, listofnodes) {
                 if (imported.length)
                     this.storage.notifications = imported
 
+
                 if (exported.block)
                     this.storage.block = exported.block
 
@@ -7611,12 +9738,11 @@ Platform = function (app, listofnodes) {
 
                 this.load();
 
-                console.log('this.storage.block', this.storage.block)
 
                 this.storage.block || (this.storage.block = self.currentBlock)
                 this.storage.notifications || (this.storage.notifications = [])
 
-                
+
                 return this.getNotifications().then(r => {
 
                     _.each(n.clbks.inited, function (f) {
@@ -7630,10 +9756,13 @@ Platform = function (app, listofnodes) {
 
             wsBlock: function (block) {
 
-                if (block > this.storage.block)
+                if (block > this.storage.block) {
+
                     this.storage.block = block;
+                }
 
                 this.save()
+
             },
 
             addFromWs: function (data) {
@@ -7766,24 +9895,25 @@ Platform = function (app, listofnodes) {
                         return self.sdk.missed.get(n.storage.block - (blockdif || 0))
 
                     }).then(({block, notifications}) => {
-                        
+
                         return new Promise((resolve, reject) => {
 
                             n.getNotificationsInfo(notifications || [], function () {
 
-                                if (block.block > n.storage.block)
+                                if (block.block > n.storage.block) {
                                     n.storage.block = block.block
+                                }
 
                                 n.inited = true;
                                 n.save();
 
                                 resolve();
-    
+
                             })
 
                         })
 
-                        
+
 
                     }).catch(e => {
 
@@ -7828,8 +9958,8 @@ Platform = function (app, listofnodes) {
                // if (self.currentBlock - block > 5000) block = self.currentBlock - 5000
                 if (self.currentBlock == block) return Promise.resolve(dummy())
 
-                
-                return self.app.api.rpc('getmissedinfo', [self.sdk.address.pnet().address, block]).then(d => {
+
+                return self.app.api.rpc('getmissedinfo', [self.sdk.address.pnet().address, block, 30]).then(d => {
 
                     if(!d || !d.length){
                         return Promise.resolve(dummy())
@@ -7847,7 +9977,7 @@ Platform = function (app, listofnodes) {
                         block : d[0],
                         notifications : notifications
                     })
-    
+
                 })
             }
         },
@@ -7985,9 +10115,9 @@ Platform = function (app, listofnodes) {
 
                     if (clbk)
                         clbk(list)
-        
+
                 }).catch(e => {
-                    
+
                 })
 
 
@@ -8001,6 +10131,8 @@ Platform = function (app, listofnodes) {
         users: {
             loading: {},
             storage: {},
+
+            nameaddressstorage : {},
 
             extend: function (u, state) {
 
@@ -8159,7 +10291,7 @@ Platform = function (app, listofnodes) {
 
                             if (clbk)
                                 clbk()
-        
+
                         }).catch(e => {
                             l[address] = false;
 
@@ -8167,7 +10299,7 @@ Platform = function (app, listofnodes) {
                                 clbk(null, e)
                         })
 
-                        
+
 
                     })
                 }
@@ -8223,7 +10355,7 @@ Platform = function (app, listofnodes) {
 
                             if (clbk)
                                 clbk()
-        
+
                         }).catch(e => {
                             if (clbk)
                                 clbk(null, e)
@@ -8234,7 +10366,7 @@ Platform = function (app, listofnodes) {
                             parameters: params,
                             success: function (d) {
 
-                                
+
 
                             },
 
@@ -8294,126 +10426,7 @@ Platform = function (app, listofnodes) {
 
 
             },
-
-            giveFreeMoney: function (toAddress, mnemonic, clbk, amount, update) {
-
-                this.checkFreeMoney(toAddress, function (r) {
-
-                    if (!r) {
-                        if (clbk)
-                            clbk('nofree')
-                    }
-                    else {
-                        var feerate = 0.000001;
-
-                        amount || (amount = 0.00002);
-
-                        var outputs = [{
-                            address: toAddress,
-                            amount: amount
-                        }, {
-                            address: toAddress,
-                            amount: amount
-                        }, {
-                            address: toAddress,
-                            amount: amount
-                        }, {
-                            address: toAddress,
-                            amount: amount
-                        }, {
-                            address: toAddress,
-                            amount: amount
-                        }, {
-                            address: toAddress,
-                            amount: amount
-                        }, {
-                            address: toAddress,
-                            amount: amount
-                        }, {
-                            address: toAddress,
-                            amount: amount
-                        }, {
-                            address: toAddress,
-                            amount: amount
-                        }, {
-                            address: toAddress,
-                            amount: amount
-                        }]
-
-                        var seed = bitcoin.bip39.mnemonicToSeedSync(mnemonic);
-                        var hash = bitcoin.crypto.sha256(Buffer.from(seed));
-                        var d = bitcoin.bip32.fromSeed(seed).derivePath(app.platform.sdk.address.path(0)).toWIF();
-                        var keyPair = bitcoin.ECPair.fromWIF(d);
-                        var address = self.sdk.address.pnet(keyPair.publicKey, 'p2pkh').address;
-
-                        self.sdk.wallet.txbase([address], _.clone(outputs), null, null, function (err, inputs, _outputs) {
-
-                            if (err) {
-                                if (clbk)
-                                    clbk(err)
-                            }
-
-                            else {
-                                var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs, keyPair)
-                                var totalFees = Math.min(tx.virtualSize() * feerate, 0.000006);
-
-
-
-                                self.app.platform.sdk.wallet.txbase([address], _.clone(outputs), totalFees, null, function (err, inputs, _outputs) {
-
-                                    if (err) {
-
-                                        
-
-                                        self.sdk.node.transactions.releaseCS(inputs)
-
-                                        if (clbk)
-                                            clbk(err)
-                                    }
-                                    else {
-                                        var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs, keyPair)
-
-                                        self.app.platform.sdk.node.transactions.send(tx, function (d, err) {
-
-                                            if (err) {
-
-                                                self.sdk.node.transactions.releaseCS(inputs)
-
-                                                if ((err == -26 || err == -25 || err == 16) && !update) {
-    
-                                                    self.sdk.users.giveFreeMoney(toAddress, mnemonic, clbk, amount, true)
-            
-                                                    return
-                                                }
-                                                
-
-                                                if (clbk)
-                                                    clbk(err)
-                                            }
-
-                                            else {
-                                                var ids = _.map(inputs, function (i) {
-                                                    return {
-                                                        txid: i.txId,
-                                                        vout: i.vout
-                                                    }
-                                                })
-
-                                                self.app.platform.sdk.node.transactions.clearUnspents(ids)
-
-                                                if (clbk)
-                                                    clbk(null, d, amount * outputs.length)
-                                            }
-                                        })
-                                    }
-                                })
-                            }
-                        }, update)
-                    }
-
-                })
-            },
-
+           
             checkFreeMoney: function (address, clbk) {
                 self.sdk.users.get(address, function () {
 
@@ -8455,156 +10468,6 @@ Platform = function (app, listofnodes) {
                 })
             },
 
-            /////////////// REFERALS
-            giveFreeRef: function (refferal, toAddress, mnemonic, clbk, amount) {
-
-                this.checkFreeRef(refferal, function (r) {
-
-                    if (!r) {
-                        if (clbk)
-                            clbk('nofree')
-                    }
-                    else {
-                        var feerate = 0.000001;
-
-                        amount || (amount = 0.005);
-
-                        var outputs = [{
-                            address: toAddress,
-                            amount: amount
-                        }]
-
-                        var seed = bitcoin.bip39.mnemonicToSeedSync(mnemonic);
-                        var hash = bitcoin.crypto.sha256(Buffer.from(seed));
-                        var d = bitcoin.bip32.fromSeed(seed).derivePath(app.platform.sdk.address.path(0)).toWIF();
-                        var keyPair = bitcoin.ECPair.fromWIF(d);
-                        var address = self.sdk.address.pnet(keyPair.publicKey, 'p2pkh').address;
-
-                        self.sdk.wallet.txbase([address], _.clone(outputs), null, null, function (err, inputs, _outputs) {
-
-                            if (err) {
-                                if (clbk)
-                                    clbk(err)
-                            }
-
-                            else {
-                                var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs, keyPair)
-                                var totalFees = Math.min(tx.virtualSize() * feerate, 0.0005);
-
-
-
-                                self.app.platform.sdk.wallet.txbase([address], _.clone(outputs), totalFees, null, function (err, inputs, _outputs) {
-
-                                    if (err) {
-
-                                        self.sdk.node.transactions.releaseCS(inputs)
-
-                                        if (clbk)
-                                            clbk(err)
-                                    }
-                                    else {
-                                        var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs, keyPair)
-
-                                        self.app.platform.sdk.node.transactions.send(tx, function (d, err) {
-
-                                            if (err) {
-                                                self.sdk.node.transactions.releaseCS(inputs)
-
-                                                if (clbk)
-                                                    clbk(err)
-                                            }
-
-                                            else {
-                                                var ids = _.map(inputs, function (i) {
-                                                    return {
-                                                        txid: i.txId,
-                                                        vout: i.vout
-                                                    }
-                                                })
-
-                                                self.app.platform.sdk.node.transactions.clearUnspents(ids)
-
-                                                if (clbk)
-                                                    clbk(null, d, amount)
-                                            }
-                                        })
-                                    }
-                                })
-                            }
-                        }, true)
-                    }
-
-                })
-            },
-            requestFreeRef: function (address, clbk) {
-
-                var a = self.sdk.address.pnet();
-
-                if (a) {
-                    a = a.address;
-
-                    this.checkFreeRef(a, function (r) {
-                        if (!r) {
-                            if (clbk)
-                                clbk(null)
-                        }
-                        else {
-
-                            self.app.api.fetch('freeRef', {
-                                referal: a,
-                                referrer: address
-                            }).then(d => {
-                                if (clbk)
-                                    clbk(true)
-
-                            }).catch(e => {
-                                if (clbk)
-                                    clbk(null, deep(d, 'data') || {})
-                            })
-                            
-                            
-                        }
-                    })
-                }
-                else {
-                    if (clbk)
-                        clbk(null)
-                }
-
-
-            },
-
-            checkFreeRef: function (address, clbk) {
-
-                if (!address) {
-                    if (clbk)
-                        clbk(true)
-
-                    return
-                }
-
-
-                self.sdk.users.get(address, function () {
-
-                    var name = deep(self, 'sdk.users.storage2.' + address + '.name');
-
-                    if (name) {
-
-                        if (clbk)
-                            clbk(false)
-                    }
-
-                    else {
-
-                        if (clbk)
-                            clbk(true)
-
-                    }
-                })
-
-
-            },
-
             //////////////// ANOTHER
 
             addressByName: function (name, clbk) {
@@ -8638,6 +10501,13 @@ Platform = function (app, listofnodes) {
                         })
                     }
 
+                    if(self.sdk.users.nameaddressstorage[name]){
+                        if (clbk)
+                            clbk(self.sdk.users.nameaddressstorage[name])
+
+                        return
+                    }
+
                     if (lf) {
                         if (clbk)
                             clbk(lf.address)
@@ -8651,13 +10521,13 @@ Platform = function (app, listofnodes) {
 
                             if (clbk)
                                 clbk(r || null)
-        
+
                         }).catch(e => {
                             if (clbk) {
                                 clbk(null, e)
                             }
                         })
-                        
+
                     }
 
                 }
@@ -8686,8 +10556,8 @@ Platform = function (app, listofnodes) {
 
                     if (clbk)
                         clbk(r || false)
-   
-        
+
+
                 }).catch(e => {
                     if (clbk) {
                         clbk(false)
@@ -8713,6 +10583,45 @@ Platform = function (app, listofnodes) {
 
             },
 
+            getRecommendedAccountsByTags : function(clbk){
+
+                var selectedTags = self.app.platform.sdk.categories.gettags();
+
+                self.app.api.rpc('getrecomendedaccountsbytags', [selectedTags, 15])
+                .then(function(d){
+
+                    if (clbk){
+                        clbk(d)
+                    }
+
+                })
+                .catch(function(e){
+
+                    if (clbk){
+                        clbk(null, e);
+                    }
+                })
+            },
+
+            getBestUsers : function(clbk){
+
+                var my = self.app.user.address.value;
+
+                self.app.api.rpc('getrecomendedaccountsbyscoresfromaddress', [my, ['share', 'video'], 0, 300000, 15])
+                .then(function(d){
+
+                    if (clbk){
+                        clbk(d)
+                    }
+
+                })
+                .catch(function(e){
+
+                    if (clbk){
+                        clbk(null)
+                    }
+                })
+            },
 
             commonuserpoint : function(address, me){
                 var point = 1;
@@ -8728,7 +10637,7 @@ Platform = function (app, listofnodes) {
 
                 if(self.sdk.usersl.storage[address]) point += 40
                 if(self.sdk.users.storage[address]) point += 40
-                
+
 
                 var activities = self.app.platform.sdk.activity.has('users', address)
 
@@ -8741,7 +10650,48 @@ Platform = function (app, listofnodes) {
 
                 return point
 
-                
+            }
+        },
+
+
+
+        posts: {
+            
+            getRecommendedPosts : function(clbk){
+
+                var my = self.app.user.address.value;
+
+                self.app.api.rpc('getrecomendedcontentsbyscoresfromaddress', [my, ['share', 'video'], 0, 300000, 15])
+                .then(function(d){
+
+                    if (clbk){
+                        clbk(d)
+                    }
+
+                })
+                .catch(function(e){
+
+                    if (clbk){
+                        clbk(null, e);
+                    }
+                })
+            },
+
+            getRecommendedPostsContents : function(parameters, clbk){
+
+                self.app.api.rpc('getrawtransactionwithmessagebyid', parameters)
+                .then(function(d){
+
+                    if (clbk){
+                        clbk(d)
+                    }
+                })
+                .catch(function(e){
+
+                    if (clbk){
+                        clbk(null)
+                    }
+                })
             }
         },
 
@@ -8813,8 +10763,6 @@ Platform = function (app, listofnodes) {
             get: function (clbk, refresh, proxyoptions) {
                 if (refresh) this.current = null;
 
-                console.log('proxyoptions', proxyoptions)
-
                 self.app.api.fetchauth('captcha', {
                     captcha: this.done || this.current || null
                 }, proxyoptions).then(d => {
@@ -8855,7 +10803,7 @@ Platform = function (app, listofnodes) {
                         clbk(null, e)
                 })
 
-               
+
             },
 
             make: function (text, clbk, proxyoptions) {
@@ -8876,7 +10824,7 @@ Platform = function (app, listofnodes) {
                         clbk(e)
                 })
 
-                
+
             }
         },
 
@@ -9188,6 +11136,8 @@ Platform = function (app, listofnodes) {
                             else {
                                 var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs, keyPair)
 
+                                console.log('txbaseFeesMeta', tx)
+
                                 self.app.platform.sdk.node.transactions.send(tx, function (d, err) {
 
                                     if (err) {
@@ -9198,7 +11148,7 @@ Platform = function (app, listofnodes) {
                                     else {
                                         var ids = _.map(inputs, function (i) {
                                             return {
-                                                txid: i.txId,
+                                                txid: i.txId || i.txid,
                                                 vout: i.vout
                                             }
                                         })
@@ -9326,7 +11276,6 @@ Platform = function (app, listofnodes) {
                             el.append('<div class="spendLine"><div class="line"></div></div>')
                         }
 
-                        var line = el.find('.spendLine .line');
                         var sline = el.find('.spendLine .line');;
 
                         if (amount == 0) {
@@ -9336,10 +11285,8 @@ Platform = function (app, listofnodes) {
                             sline.removeClass('bad')
                         }
 
+                        sline.css('width', (100 * amount / total) + "%")
 
-                        line.animate({
-                            width: (100 * amount / total) + "%",
-                        }, 140)
 
                     }
                     else {
@@ -9366,7 +11313,7 @@ Platform = function (app, listofnodes) {
 
                 if(!temp[obj.type] || count == 'one') {
                     temp[obj.type] = {};
-                }   
+                }
 
 
                 temp[obj.type][txid] = obj;
@@ -9387,16 +11334,16 @@ Platform = function (app, listofnodes) {
                         if (clbk)
                             clbk(null, txid)
                     }
-                })  
-            },  
+                })
+            },
 
             txbaseFees: function (address, outputs, keyPair, feerate, clbk) {
 
                 self.sdk.wallet.txbaseFeesMeta(
-                    address, outputs, keyPair, feerate, 
-                    self.sdk.wallet.txbase, 
+                    address, outputs, keyPair, feerate,
+                    self.sdk.wallet.txbase,
                 clbk)
-               
+
             },
 
             embed: function (outputs, embdedtext) {
@@ -9508,7 +11455,7 @@ Platform = function (app, listofnodes) {
 
                                 var ids = _.map(inputs, function (i) {
                                     return {
-                                        txid: i.txid,
+                                        txid: i.txId || i.txid,
                                         vout: i.vout
                                     }
                                 })
@@ -9581,48 +11528,106 @@ Platform = function (app, listofnodes) {
             },
 
             init: function (clbk) {
-
-                if (!self.sdk.addresses.storage.addresses) self.sdk.addresses.storage.addresses = [];
-                if (!self.sdk.addresses.storage.addressesobj) self.sdk.addresses.storage.addressesobj = [];
-
-                var anum = localStorage[self.sdk.address.pnet().address + 'addressesNum'] || 1;
-
-                if (anum < 10) anum = 10
-
-                for (var i = 0; i < anum; i++) {
-
-                    self.sdk.addresses.addWalletAddress(i)
-
+                if (!self.sdk.addresses.storage.addresses) {
+                    self.sdk.addresses.storage.addresses = [];
                 }
 
-                self.sdk.addresses.save()
+                if (!self.sdk.addresses.storage.addressesobj) {
+                    self.sdk.addresses.storage.addressesobj = [];
+                }
 
-                if (clbk)
-                    clbk()
+                const anum = localStorage[self.sdk.address.pnet().address + 'addressesNum'] || 10;
+
+                const walletsItem = self.sdk.address.pnet().address + 'wallets';
+
+                /**
+                 * Here we take cached wallet ID's
+                 * or generating them dynamically if
+                 * not cached.
+                 */
+                if (walletsItem in localStorage) {
+                    // console.time('LOADING CACHED WALLETS');
+                    const wallets = JSON.parse(localStorage[walletsItem]);
+
+                    wallets.forEach((walletAddress, walletNum) => {
+                        self.sdk.addresses.addCachedWallet(walletNum, walletAddress);
+                    });
+                    // console.timeEnd('LOADING CACHED WALLETS');
+                } else {
+                    // console.time('GENERATING WALLETS');
+                    const addressesList = [];
+
+                    for (let i = 0; i < anum; i++) {
+                        const address = self.sdk.addresses.addWalletAddress(i);
+
+                        addressesList.push(address);
+                    }
+
+                    localStorage[walletsItem] = JSON.stringify(addressesList);
+                    // console.timeEnd('GENERATING WALLETS');
+                }
+
+                self.sdk.addresses.save();
+
+                if (typeof clbk === 'function') {
+                    clbk();
+                }
             },
 
             save: function () {
+                const countAddresses = self.sdk.addresses.storage.addresses.length;
 
-                if (self.sdk.addresses.storage.addresses.length) {
-                    localStorage[self.sdk.address.pnet().address + 'addressesNum'] = self.sdk.addresses.storage.addresses.length
+                if (countAddresses) {
+                    const itemName = self.sdk.address.pnet().address + 'addressesNum';
+                    localStorage[itemName] = countAddresses;
                 }
             },
 
-            addWalletAddress: function (num) {
+            addCachedWallet: function(num, address) {
+                const proxyData = {
+                    getWalletData: self.sdk.address.wallet,
+                    walletNum: num,
+                    walletAddress: address,
+                };
 
-                if (typeof num == 'undefined') num = self.sdk.addresses.storage.addresses.length;
+                /**
+                 * Proxy object is used here to
+                 * give access to wallet credentials
+                 * populator, without really instantiating
+                 * wallet data. It creates data only when
+                 * requested.
+                 */
+                const proxy = new Proxy(proxyData, {
+                    get: (p, num) => {
+                        const addressObj = p.getWalletData(p.walletNum);
 
-                var address = self.sdk.address.wallet(num)
+                        /**
+                         * Once wallet credentials populated
+                         * replacing Proxy object with
+                         * original wallet data.
+                         */
+                        self.sdk.addresses.storage.addressesobj[p.walletNum] = addressObj;
 
-                self.sdk.addresses.storage.addresses[num] = address.address;
-                self.sdk.addresses.storage.addressesobj[num] = address;
+                        return addressObj[p.walletNum];
+                    }
+                });
 
-                return address.address;
+                self.sdk.addresses.storage.addresses[num] = address;
+                self.sdk.addresses.storage.addressesobj[num] = proxy;
+            },
+
+            addWalletAddress: function (num = self.sdk.addresses.storage.addresses.length) {
+                const wallet = self.sdk.address.wallet(num);
+
+                self.sdk.addresses.storage.addresses[num] = wallet.address;
+                self.sdk.addresses.storage.addressesobj[num] = wallet;
+
+                return wallet.address;
             },
 
             getFirstRandomAddress : function(clbk){
                 if (self.sdk.addresses.storage.addresses.length) {
-                    
+
                     var ar = _.toArray(self.sdk.addresses.storage.addresses)
 
                     ar = _.first(ar, 10)
@@ -9744,7 +11749,7 @@ Platform = function (app, listofnodes) {
                 }
 
                 if (type == 'p2pkh' || type == 'p2wpkh') {
-                    a = bitcoin.payments[type]({ pubkey: pubkey })
+                    a = bitcoin.payments[type]({ pubkey })
 
                     this.storage[type] = a;
 
@@ -9753,7 +11758,7 @@ Platform = function (app, listofnodes) {
 
                 if (type == 'p2sh') {
 
-                    a = bitcoin.payments['p2wpkh']({ pubkey: pubkey })
+                    a = bitcoin.payments['p2wpkh']({ pubkey })
 
                     var p2sh = bitcoin.payments.p2sh({ redeem: a })
 
@@ -9764,36 +11769,26 @@ Platform = function (app, listofnodes) {
             },
 
             wallet: function (n, private) {
+                const { publicKey: pubkey } = self.sdk.address.dumpKeys(n, private);
 
-                var d = bitcoin.bip32.fromSeed(private || self.app.user.private.value).derivePath(app.platform.sdk.address.path(n)).toWIF()
+                const a = bitcoin.payments['p2wpkh']({ pubkey });
 
-                var keyPair = bitcoin.ECPair.fromWIF(d)
-
-                var pubkey = keyPair.publicKey;
-
-                var a = bitcoin.payments['p2wpkh']({ pubkey: pubkey })
-
-
-                var p2sh = bitcoin.payments.p2sh({ redeem: a })
+                const p2sh = bitcoin.payments.p2sh({ redeem: a });
 
                 return p2sh;
-
             },
 
-            dumpKeys: function (n) {
-                var d = bitcoin.bip32.fromSeed(self.app.user.private.value).derivePath(app.platform.sdk.address.path(n)).toWIF()
+            dumpKeys: function (n, private = self.app.user.private.value) {
+                const addressPath = app.platform.sdk.address.path(n);
+                const d = bitcoin.bip32.fromSeed(private).derivePath(addressPath).toWIF();
 
-                var keyPair = bitcoin.ECPair.fromWIF(d)
+                const keyPair = bitcoin.ECPair.fromWIF(d);
 
                 return keyPair;
             },
 
             dumpPrivKey: function (n) {
-
-
-                var d = bitcoin.bip32.fromSeed(self.app.user.private.value).derivePath(app.platform.sdk.address.path(n)).toWIF()
-
-                var keyPair = bitcoin.ECPair.fromWIF(d)
+                const keyPair = self.sdk.address.dumpKeys(n);
 
                 return keyPair.privateKey;
             },
@@ -9806,7 +11801,7 @@ Platform = function (app, listofnodes) {
 
                     if (clbk)
                         clbk(r > 0)
-        
+
                 }).catch(e => {
                     if (clbk) {
                         clbk(null, e)
@@ -9872,7 +11867,7 @@ Platform = function (app, listofnodes) {
 
                         if (clbk)
                             clbk(s[url])
-        
+
                     }).catch(e => {
                         f[url] = true
 
@@ -9935,7 +11930,7 @@ Platform = function (app, listofnodes) {
                 var sum = 1
 
                 var activities = _.filter(
-                    
+
                     _.map(self.sdk.activity.latest, function(ar, k){
 
 
@@ -9957,7 +11952,7 @@ Platform = function (app, listofnodes) {
                             return null
                         }
 
-                    
+
                     })
 
                 , function(v){ return v })
@@ -9970,8 +11965,6 @@ Platform = function (app, listofnodes) {
 
             adduser : function(key, address){
 
-                console.log('adduser', key, address)
-
                 if(!address) return
 
                 self.sdk.users.get([address], function () {
@@ -9979,7 +11972,7 @@ Platform = function (app, listofnodes) {
                     var user = self.sdk.usersl.storage[address] || self.sdk.users.storage[address]
 
                     if (user){
-                        
+
                         var info = {
                             id : address,
                             index : user.name.toLowerCase(),
@@ -10065,7 +12058,23 @@ Platform = function (app, listofnodes) {
 
                 self.sdk.activity.latest = p.activity
 
+                self.sdk.activity.filladdressstorage()
+
+
                 if(clbk) clbk()
+            },
+
+            filladdressstorage : function(){
+
+                var stor = self.app.platform.sdk.users.nameaddressstorage
+
+                _.each(self.sdk.activity.latest, function(l){
+                    _.each(l, function(a){
+
+                        if (a.type == 'user') stor[a.index] = a.id
+                    })
+                })
+
             }
         },
         categories : {
@@ -10109,13 +12118,13 @@ Platform = function (app, listofnodes) {
                             id : 'c63',
                             new : true
                         },
-                       
+
                         {
                             name : "COVID/Lockdowns",
                             tags : ['covid', 'lockdowns'],
                             id : 'c72'
                         },
-                        
+
                         {
                             name : "Auto/Racing",
                             tags : ['auto', 'racing'],
@@ -10136,20 +12145,20 @@ Platform = function (app, listofnodes) {
                             tags : ['gaming'],
                             id : 'c9'
                         },
-                     
-                     
+
+
                         {
                             name : "Art/Music",
                             tags : ['art', 'music'],
                             id : 'c11'
                         },
-                        
+
                         {
                             name : "News/Commentary",
                             tags : ['news', 'commentary'],
                             id : 'c12'
                         },
-                        
+
                         {
                             name : "History",
                             tags : ['history'],
@@ -10160,25 +12169,25 @@ Platform = function (app, listofnodes) {
                             tags : ['storytime'],
                             id : 'c14'
                         },
-                        
+
                         {
                             name : "Film/Animation",
                             tags : ['film', 'animation'],
                             id : 'c15'
                         },
-                        
+
                         {
                             name : "Nature/Animals",
                             tags : ['nature', 'animals'],
                             id : 'c16'
                         },
-                        
+
                         {
                             name : "Travel/Architecture",
                             tags : ['travel', 'architecture'],
                             id : 'c17'
                         },
-                        
+
                         {
                             name : "DIY",
                             tags : ['diy'],
@@ -10223,8 +12232,8 @@ Platform = function (app, listofnodes) {
                             id : 'c63',
                             new : true
                         },
-                       
-                       
+
+
                         {
                             name : "COVID/локдаун",
                             tags : ['covid', 'локдаун'],
@@ -10240,7 +12249,7 @@ Platform = function (app, listofnodes) {
                             tags : ['bastyon', 'pocketnet'],
                             id : 'c71'
                         },
-                      
+
                         {
                             name : "Спорт",
                             tags : ['спорт'],
@@ -10251,20 +12260,20 @@ Platform = function (app, listofnodes) {
                             tags : ['игры'],
                             id : 'c9'
                         },
-                        
-                        
+
+
                         {
                             name : "Искусство/Музыка",
                             tags : ['искусство', 'музыка'],
                             id : 'c11'
                         },
-                        
+
                         {
                             name : "Новости/Комментарии",
                             tags : ['новости', 'комментарии'],
                             id : 'c12'
                         },
-                        
+
                         {
                             name : "История",
                             tags : ['история'],
@@ -10275,25 +12284,25 @@ Platform = function (app, listofnodes) {
                             tags : ['истории'],
                             id : 'c14'
                         },
-                        
+
                         {
                             name : "Кино/Анимация",
                             tags : ['кино', 'анимация'],
                             id : 'c15'
                         },
-                        
+
                         {
                             name : "Природа/Животные",
                             tags : ['Природа', 'животные'],
                             id : 'c16'
                         },
-                        
+
                         {
                             name : "Путешествия/Архитектура",
                             tags : ['путешествия', 'архитектура'],
                             id : 'c17'
                         },
-                        
+
                         {
                             name : "Сделай сам",
                             tags : ['сделайсам'],
@@ -10337,7 +12346,7 @@ Platform = function (app, listofnodes) {
                             id : 'c63',
                             new : true
                         },
-                        
+
                         {
                             name : "冠狀病毒病/封鎖",
                             tags : ['冠狀病毒病', '封鎖'],
@@ -10363,20 +12372,20 @@ Platform = function (app, listofnodes) {
                             tags : ['遊戲'],
                             id : 'c9'
                         },
-                      
-                        
+
+
                         {
                             name : "藝術/音樂",
                             tags : ['藝術', '音樂'],
                             id : 'c11'
                         },
-                        
+
                         {
                             name : "新聞/評論",
                             tags : ['新聞', '評論'],
                             id : 'c12'
                         },
-                        
+
                         {
                             name : "歷史",
                             tags : ['歷史'],
@@ -10387,25 +12396,25 @@ Platform = function (app, listofnodes) {
                             tags : ['故事時間'],
                             id : 'c14'
                         },
-                        
+
                         {
                             name : "電影/動畫",
                             tags : ['電影', '動畫'],
                             id : 'c15'
                         },
-                        
+
                         {
                             name : "自然/動物",
                             tags : ['自然', '動物'],
                             id : 'c16'
                         },
-                        
+
                         {
                             name : "旅遊/建築",
                             tags : ['旅遊', '建築'],
                             id : 'c17'
                         },
-                        
+
                         {
                             name : "自己做",
                             tags : ['自己做'],
@@ -10449,9 +12458,9 @@ Platform = function (app, listofnodes) {
                             id : 'c63',
                             new : true
                         },
-                      
+
                         {
-                            
+
 
                             name : "COVID/Lockdowns",
                             tags : ['코로나', '잠금'],
@@ -10477,19 +12486,19 @@ Platform = function (app, listofnodes) {
                             tags : ['계략'],
                             id : 'c9'
                         },
-                      
+
                         {
                             name : "예술/음악",
                             tags : ['예술', '음악'],
                             id : 'c11'
                         },
-                        
+
                         {
                             name : "뉴스/댓글",
                             tags : ['뉴스', '댓글'],
                             id : 'c12'
                         },
-                        
+
                         {
                             name : "역사",
                             tags : ['역사'],
@@ -10500,25 +12509,25 @@ Platform = function (app, listofnodes) {
                             tags : ['이야기의시간'],
                             id : 'c14'
                         },
-                        
+
                         {
                             name : "영화/애니메이션",
                             tags : ['영화', '애니메이션'],
                             id : 'c15'
                         },
-                        
+
                         {
                             name : "자연/동물",
                             tags : ['자연', '동물'],
                             id : 'c16'
                         },
-                        
+
                         {
                             name : "여행/건축",
                             tags : ['여행', '건축'],
                             id : 'c17'
                         },
-                        
+
                         {
                             name : "너 스스로해라",
                             tags : ['너스스로해라'],
@@ -10562,9 +12571,9 @@ Platform = function (app, listofnodes) {
                             id : 'c63',
                             new : true
                         },
-                       
+
                         {
-                            
+
                             name : "COVID/Verrouillages",
                             tags : ['covid', 'Verrouillages'],
                             id : 'c72'
@@ -10589,19 +12598,19 @@ Platform = function (app, listofnodes) {
                             tags : ['jeux'],
                             id : 'c9'
                         },
-                      
+
                         {
                             name : "Art/Musique",
                             tags : ['art', 'musique'],
                             id : 'c11'
                         },
-                        
+
                         {
                             name : "Nouvelles/Commentaires",
                             tags : ['nouvelles', 'commentaires'],
                             id : 'c12'
                         },
-                        
+
                         {
                             name : "histoire",
                             tags : ['histoire'],
@@ -10612,25 +12621,25 @@ Platform = function (app, listofnodes) {
                             tags : ['Letempsdeshistoires'],
                             id : 'c14'
                         },
-                        
+
                         {
                             name : "Cinéma/Animation",
                             tags : ['cinéma', 'animation'],
                             id : 'c15'
                         },
-                        
+
                         {
                             name : "Nature/Animaux",
                             tags : ['nature', 'animaux'],
                             id : 'c16'
                         },
-                        
+
                         {
                             name : "Voyage/Architecture",
                             tags : ['voyage', 'architecture'],
                             id : 'c17'
                         },
-                        
+
                         {
                             name : "Fais le toi-même",
                             tags : ['faisletoi-même'],
@@ -10674,7 +12683,7 @@ Platform = function (app, listofnodes) {
                             id : 'c63',
                             new : true
                         },
-                       
+
                         {
                             name : "COVID/Cierres",
                             tags : ['covid', 'сierres'],
@@ -10700,20 +12709,20 @@ Platform = function (app, listofnodes) {
                             tags : ['juegos'],
                             id : 'c9'
                         },
-                       
-                        
+
+
                         {
                             name : "Arte/Musical ",
                             tags : ['arte', 'musical'],
                             id : 'c11'
                         },
-                        
+
                         {
                             name : "Noticias/Comentarios",
                             tags : ['noticias', 'comentarios'],
                             id : 'c12'
                         },
-                        
+
                         {
                             name : "Historia",
                             tags : ['historia'],
@@ -10724,25 +12733,25 @@ Platform = function (app, listofnodes) {
                             tags : ['Tiempo de historias'],
                             id : 'c14'
                         },
-                        
+
                         {
                             name : "Cine/Animación",
                             tags : ['cine', 'animación'],
                             id : 'c15'
                         },
-                        
+
                         {
                             name : "Naturaleza/Animales",
                             tags : ['naturaleza', 'animales'],
                             id : 'c16'
                         },
-                        
+
                         {
                             name : "Viajes/Arquitectura",
                             tags : ['viajes', 'arquitectura'],
                             id : 'c17'
                         },
-                        
+
                         {
                             name : "Hazlo tu mismo",
                             tags : ['hazlotumismo'],
@@ -10786,7 +12795,7 @@ Platform = function (app, listofnodes) {
                             id : 'c63',
                             new : true
                         },
-                        
+
                         {
                             name : "COVID/Sperren",
                             tags : ['covid', 'Sperren'],
@@ -10812,20 +12821,20 @@ Platform = function (app, listofnodes) {
                             tags : ['spielen'],
                             id : 'c9'
                         },
-                        
-                        
+
+
                         {
                             name : "Kunst/Musik ",
                             tags : ['kunst', 'music'],
                             id : 'c11'
                         },
-                        
+
                         {
                             name : "Neuigkeiten/Kommentare",
                             tags : ['neuigkeiten', 'kommentare'],
                             id : 'c12'
                         },
-                        
+
                         {
                             name : "Geschichte",
                             tags : ['geschichte'],
@@ -10836,25 +12845,25 @@ Platform = function (app, listofnodes) {
                             tags : ['zeit der geschichten '],
                             id : 'c14'
                         },
-                        
+
                         {
                             name : "Film/Animation ",
                             tags : ['film', 'animation'],
                             id : 'c15'
                         },
-                        
+
                         {
                             name : "Natur/Tiere ",
                             tags : ['natur', 'tiere'],
                             id : 'c16'
                         },
-                        
+
                         {
                             name : "Reisen/Architektur ",
                             tags : ['reisen', 'architektur'],
                             id : 'c17'
                         },
-                        
+
                         {
                             name : "Mach es selbst",
                             tags : ['machesselbst'],
@@ -10898,13 +12907,13 @@ Platform = function (app, listofnodes) {
                             id : 'c63',
                             new : true
                         },
-                      
+
                         {
                             name : "COVID/Quarantena",
                             tags : ['covid', 'quarantena'],
                             id : 'c72'
                         },
-                        
+
                         {
                             name : "Auto/Da corsa",
                             tags : ['auto', 'dacorsa'],
@@ -10925,20 +12934,20 @@ Platform = function (app, listofnodes) {
                             tags : ['gioco'],
                             id : 'c9'
                         },
-                      
-                        
+
+
                         {
                             name : "Arte/Musica",
                             tags : ['arte', 'musica'],
                             id : 'c11'
                         },
-                        
+
                         {
                             name : "Notizia/Commento",
                             tags : ['notizia', 'commento'],
                             id : 'c12'
                         },
-                        
+
                         {
                             name : "Storia",
                             tags : ['storia'],
@@ -10949,25 +12958,25 @@ Platform = function (app, listofnodes) {
                             tags : ['oradellafavola'],
                             id : 'c14'
                         },
-                        
+
                         {
                             name : "Film/Animazione",
                             tags : ['film', 'animazione'],
                             id : 'c15'
                         },
-                        
+
                         {
                             name : "Natura/Animali",
                             tags : ['nature', 'animali'],
                             id : 'c16'
                         },
-                        
+
                         {
                             name : "Viaggiare/Architettura",
                             tags : ['viaggiare', 'architettura'],
                             id : 'c17'
                         },
-                        
+
                         {
                             name : "Fai da te",
                             tags : ['faidate'],
@@ -10975,23 +12984,108 @@ Platform = function (app, listofnodes) {
                         }
                     ]
                 },
+
+                categoryIcons : [
+                    {
+                        "id": "c2",
+                        "icon": "far fa-smile"
+                    },
+                    {
+                        "id": "c3",
+                        "icon": "fas fa-award"
+                    },
+                    {
+                        "id": "c4",
+                        "icon": "fab fa-btc"
+                    },
+                    {
+                        "id": "c5",
+                        "icon": "fas fa-microscope"
+                    },
+                    {
+                        "id": "c55",
+                        "icon": "fas fa-book"
+                    },
+                    {
+                        "id": "c6",
+                        "icon": "fas fa-dollar-sign"
+                    },
+                    {
+                        "id": "c73",
+                        "icon": "fas fa-fist-raised"
+                    },
+                    {
+                        "id": "c72",
+                        "icon": "fas fa-thermometer"
+                    },
+                    {
+                        "id": "c7",
+                        "icon": "fas fa-flag-checkered"
+                    },
+                    {
+                        "id": "c8",
+                        "icon": "fas fa-running"
+                    },
+                    {
+                        "id": "c9",
+                        "icon": "fas fa-gamepad"
+                    },
+                    {
+                        "id": "c10",
+                        "icon": "fas fa-space-shuttle"
+                    },
+                    {
+                        "id": "c11",
+                        "icon": "fas fa-music"
+                    },
+                    {
+                        "id": "c12",
+                        "icon": "fas fa-newspaper"
+                    },
+                    {
+                        "id": "c13",
+                        "icon": "fas fa-history"
+                    },
+                    {
+                        "id": "c14",
+                        "icon": "fas fa-bookmark"
+                    },
+                    {
+                        "id": "c15",
+                        "icon": "fas fa-film"
+                    },
+                    {
+                        "id": "c16",
+                        "icon": "fas fa-paw"
+                    },
+                    {
+                        "id": "c17",
+                        "icon": "fas fa-route"
+                    },
+                    {
+                        "id": "c18",
+                        "icon": "fas fa-pencil-ruler"
+                    }
+                ]
             },
 
             settings : {
                 tags : {},
                 selected : {},
-                added : {}
+                added : {},
+                excluded : {}
             },
 
             clbks : {
                 selected : {},
                 added : {},
-                tags  :{},
-                removed : {}
+                tags  : {},
+                removed : {},
+                excluded : {}
             },
 
             fromTags : function(tags, _k){
-                var result = { 
+                var result = {
                     categories : [],
                     tags : []
                 }
@@ -11035,6 +13129,29 @@ Platform = function (app, listofnodes) {
                 return addedtags
             },
 
+            gettagsexcluded : function(_k, onlycategories){
+                var tags = []
+
+                var k = _k || self.app.localization.key
+
+                if(!self.sdk.categories.data.all[k]) k = 'en'
+
+                var excluded = self.sdk.categories.settings.excluded[k] || {};
+
+
+
+                var all = self.sdk.categories.get(k)
+
+                _.each(all, function(c){
+                    if(excluded[c.id]) tags = tags.concat(c.tags)
+                })
+
+
+                if(onlycategories === 'onlytags') tags = excludedtags
+
+                return tags
+            },  
+
             gettags : function(_k, onlycategories){
                 var tags = []
 
@@ -11059,7 +13176,7 @@ Platform = function (app, listofnodes) {
                 if(onlycategories === 'onlytags') tags = addedtags
 
                 return tags
-            },  
+            },
 
             gettagsmap : function(_k){
                 var ctags = self.sdk.categories.gettags(_k, true)
@@ -11160,7 +13277,7 @@ Platform = function (app, listofnodes) {
                 s.tags[k] || (s.tags[k] = {})
 
 
-                if (s.tags[k][tag]) 
+                if (s.tags[k][tag])
                     delete s.tags[k][tag]
 
                 else s.tags[k][tag] = true
@@ -11170,7 +13287,7 @@ Platform = function (app, listofnodes) {
                 _.each(self.sdk.categories.clbks.tags, function(f){
                     f(tag, s.tags[k][tag], k)
                 })
-                
+
 
                 return false
             },
@@ -11199,7 +13316,7 @@ Platform = function (app, listofnodes) {
 
                 if(!onlytags)
                     s.selected[k] = {}
-                    
+
                 s.tags[k] = {}
 
                 self.sdk.categories.save()
@@ -11210,6 +13327,7 @@ Platform = function (app, listofnodes) {
             },
 
             select : function(id, _k){
+
 
                 if(!id) return 'emptyid'
 
@@ -11229,12 +13347,12 @@ Platform = function (app, listofnodes) {
                 s.selected[k] || (s.selected[k] = {})
 
 
-                if (s.selected[k][id]) 
+                if (s.selected[k][id])
                     delete s.selected[k][id]
 
                 else s.selected[k][id] = true
 
-                self.sdk.categories.save()
+                self.sdk.categories.save();
 
                 _.each(self.sdk.categories.clbks.selected, function(f){
                     f(id, s.selected[k][id], k)
@@ -11243,19 +13361,88 @@ Platform = function (app, listofnodes) {
                 return false
             },
 
-            get : function(_k){
+            exclude : function(id, _k){
+
+
+                if(!id) return 'emptyid'
+
+                var allcats = self.sdk.categories.get(_k)
+
+                var cat = _.find(allcats, function(c){
+                    return c.id == id
+                })
+
+                if(!cat) return 'cantonfound'
+
+                var s = self.sdk.categories.settings
                 var k = _k || self.app.localization.key
+
+                if(!self.sdk.categories.data.all[k]) k = 'en'
+
+                s.excluded[k] || (s.excluded[k] = {})
+
+
+                if (s.excluded[k][id]){
+
+                    delete s.excluded[k][id];
+
+                } else {
+                    s.excluded[k][id] = true;
+                        
+                    s.selected[k] || (s.selected[k] = {})
+
+                    if (s.selected[k][id]){
+                        delete s.selected[k][id]
+
+
+                        _.each(self.sdk.categories.clbks.selected, function(f){
+                            f(id, s.selected[k][id], k)
+                        })
+                    }
+                } 
+
+
+                self.sdk.categories.save()
+
+                _.each(self.sdk.categories.clbks.excluded, function(f){
+                    f(id, s.excluded[k][id], k)
+                })
+
+                return false
+            },
+
+            get : function(_k){
+                var k = _k || self.app.localization.key;
 
                 var added = _.map(self.sdk.categories.settings.added[k]|| {}, 
                 function(c){
-                    var cc = _.clone(c)
+                    var cc = _.clone(c);
 
-                    cc.added = true
+                    cc.added = true;
 
+                    
                     return cc
                 })
 
-                return (self.sdk.categories.data.all[k] || self.sdk.categories.data.all['en']).concat(added)
+                var categories = self.sdk.categories.data.all[k] || self.sdk.categories.data.all['en'];
+
+                var categoryIcons = self.sdk.categories.data.categoryIcons;
+
+				categories = _.map(categories, function(k){
+					var withIcon = categoryIcons.find(function(ki){
+						return ki.id === k.id;
+					})
+
+					if (withIcon){
+						k.icon = withIcon.icon;
+					} else {
+                        k.icon = 'fa fa-mouse-pointer'
+                    }
+
+					return k;
+				})
+
+                return (categories).concat(added)
             },
 
             getbyid : function(id, _k){
@@ -11277,7 +13464,7 @@ Platform = function (app, listofnodes) {
 
                     return stringEqTrig(c.name, name) > 0.7
                 })
-                
+
             },
 
             getwithselected : function(_k){
@@ -11286,6 +13473,7 @@ Platform = function (app, listofnodes) {
                 if(!self.sdk.categories.data.all[k]) k = 'en'
 
                 var selected = self.sdk.categories.settings.selected[k] || {}
+                var excluded = self.sdk.categories.settings.excluded[k] || {}
 
                 var all = self.sdk.categories.get()
 
@@ -11293,6 +13481,7 @@ Platform = function (app, listofnodes) {
                     var cs = _.clone(c)
 
                     cs.selected = selected[c.id] ? true : false
+                    cs.excluded = excluded[c.id] ? true : false
 
                     return cs
                 })
@@ -11311,8 +13500,9 @@ Platform = function (app, listofnodes) {
                 self.sdk.categories.clbks.removed = {}
                 self.sdk.categories.clbks.added = {}
                 self.sdk.categories.clbks.tags = {}
+                self.sdk.categories.clbks.excluded = {}
 
-                
+
 
                 try {
                     p = JSON.parse(localStorage['categoriessettings'] || '{}');
@@ -11327,6 +13517,7 @@ Platform = function (app, listofnodes) {
                 self.sdk.categories.settings.tags || (self.sdk.categories.settings.tags = {})
                 self.sdk.categories.settings.selected || (self.sdk.categories.settings.selected = {})
                 self.sdk.categories.settings.added || (self.sdk.categories.settings.added = {})
+                self.sdk.categories.settings.excluded || (self.sdk.categories.settings.excluded = {})
 
                 if(clbk) clbk()
             }
@@ -11339,14 +13530,14 @@ Platform = function (app, listofnodes) {
 
                 all: ['love', 'followback', 'instagramers', 'socialsteeze', 'tweegram', 'photooftheday', '20likes', 'amazing', 'smile', 'follow4follow', 'like4like', 'look', 'instalike', 'igers', 'picoftheday', 'food', 'instadaily', 'instafollow', 'followme', 'girl', 'instagood', 'bestoftheday', 'instacool', 'carryme', 'follow', 'colorful', 'style', 'swag', 'fun', 'instagramers', 'model', 'socialsteeze', 'food', 'smile', 'pretty', 'followme', 'nature', 'lol', 'dog', 'hair', 'sunset', 'swag', 'throwbackthursday', 'instagood', 'beach', 'friends', 'hot', 'funny', 'blue', 'life', 'art', 'photo', 'cool', 'carryme', 'bestoftheday', 'clouds', 'amazing', 'socialsteeze', 'fitness', 'followme', 'all_shots', 'textgram', 'family', 'instago', 'igaddict', 'awesome', 'girls', 'instagood', 'my', 'bored', 'baby', 'music', 'red', 'green', 'water', 'bestoftheday', 'black', 'party', 'white', 'yum', 'flower', 'carryme', 'night', 'instalove', 'photo', 'photos', 'pic', 'pics', 'socialsteeze', 'picture', 'pictures', 'snapshot', 'art', 'beautiful', 'instagood', 'picoftheday', 'photooftheday', 'color', 'all_shots', 'exposure', 'composition', 'focus', 'capture', 'moment', 'hdr', 'hdrspotters', 'hdrstyles_gf', 'hdri', 'hdroftheday', 'hdriphonegraphy', 'hdr_lovers', 'awesome_hdr'],
 
-               
+
             },
 
             additional : [{
                 tag : 'pkoin_commerce',
                 new : true,
                 class : 'bright',
-                info : 'pkoin_commerce_info' 
+                info : 'pkoin_commerce_info'
             }],
 
             findadditional : function(tag){
@@ -11404,7 +13595,7 @@ Platform = function (app, listofnodes) {
                     if (clbk) {
                         clbk(_d)
                     }
-        
+
                 }).catch(e => {
                     if (clbk) {
                         clbk([], e)
@@ -11457,7 +13648,7 @@ Platform = function (app, listofnodes) {
                                 s.all[loc].unshift(at.tag)
                             }
                         })
-    
+
                         if (clbk) {
                             clbk()
                         }
@@ -11465,7 +13656,7 @@ Platform = function (app, listofnodes) {
 
                 })
 
-                
+
             },
 
             cloudUpdate: function (clbk) {
@@ -11521,7 +13712,7 @@ Platform = function (app, listofnodes) {
                                         }
                                     }
                                 }
-                               
+
                             })
 
                             if (clbk) {
@@ -11557,28 +13748,59 @@ Platform = function (app, listofnodes) {
                 }
             },
 
-            add: function (fixedBlock, type, result, start, count, address) {
+            getcached : function(value, fixedBlock, type, start, count, address){
+                var s = this.storage;
+                var result = []
+
+                if(!start) start = 0
+
+                if(!s[type]) s[type] = {}
+
+                if (s[type][value] && s[type][value][address] && s[type][value][address][fixedBlock] && s[type][value][address][fixedBlock].data){
+
+                    for (var i = 0; i < count; i++) {
+                        if (s[type][value][address][fixedBlock].data[start + i])
+                            result.push(s[type][value][address][fixedBlock].data[start + i])
+                    }
+
+                }
+
+
+                if(result.length) return {
+                    data : result
+                }
+
+                return null
+            },
+
+            add: function (value, fixedBlock, type, result, start, count, address) {
                 var s = this.storage;
 
-                if (!s[type][address]) s[type][address] = {}
+                if(!start) start = 0
 
-                if (!s[type][address][fixedBlock]) {
-                    s[type][address][fixedBlock] = result;
+                if(!s[type]) s[type] = {}
+
+                if (!s[type][value]) s[type][value] = {}
+                if (!s[type][value][address]) s[type][value][address] = {}
+
+                if (!s[type][value][address][fixedBlock]) {
+                     s[type][value][address][fixedBlock] = result;
                 }
 
                 else {
                     for (var i = 0; i < count; i++) {
 
                         if (result.data[i])
-
-                            s[type][address][fixedBlock].data[start + i] = result.data[i]
+                            s[type][value][address][fixedBlock].data[start + i] = result.data[i]
                     }
                 }
 
             },
 
-            preview: function (fixedBlock, type, start, count, address) {
+            preview: function (value, fixedBlock, type, start, count, address) {
                 var s = this.storage;
+
+                if(!start) start = 0
 
                 if (type != 'fs' && type != 'all') {
 
@@ -11602,20 +13824,33 @@ Platform = function (app, listofnodes) {
                 }
             },
 
-            get: function (value, type, start, count, fixedBlock, clbk, address) {
+            get: function (value, type, start, count, fixedBlock, clbk, address, cached) {
 
                 if (!address) address = 'pocketnet'
 
                 var s = self.sdk.search;
 
-
-                fixedBlock || (fixedBlock = self.currentBlock);
+                if(typeof fixedBlock == 'undefined') fixedBlock = self.currentBlock
 
                 type || (type = 'fs')
+
+                if(!s[type]) s[type] = {}
 
                 s.preview(fixedBlock, type, start, count, address)
 
                 value = trim(value.replace(/[^а-яА-Яa-zA-Z0-9\# _]+/g, ''))
+
+                if(cached && type && type != 'fs') {
+
+                    var g =  self.sdk.search.getcached(value, fixedBlock, type, start, count, address)
+
+                    if (g){
+                        if (clbk)
+                            clbk(g, fixedBlock)
+
+                        return
+                    }
+                }
 
                 var np = [encodeURIComponent(value), type, fixedBlock, (start || 0).toString(), (count || 10).toString()]
 
@@ -11629,7 +13864,7 @@ Platform = function (app, listofnodes) {
 
                             if (type == 'all') {
                                 _.each(d, function (d, k) {
-                                    s.add(fixedBlock, k, d, start, count, address)
+                                    s.add(value, fixedBlock, k, d, start, count, address)
                                 })
                             }
                             else {
@@ -11637,21 +13872,22 @@ Platform = function (app, listofnodes) {
                                     data: []
                                 }
 
-                                s.add(fixedBlock, type, d, start, count, address)
+                                s.add(value, fixedBlock, type, d, start, count, address)
                             }
 
                         }
+                      
 
                         if (clbk)
                             clbk(d, fixedBlock)
-        
+
                     }).catch(e => {
                         if (clbk) {
                             clbk({})
                         }
                     })
 
-                    
+
                 }
                 else {
                     if (clbk) {
@@ -11686,7 +13922,7 @@ Platform = function (app, listofnodes) {
 
                         if (clbk)
                             clbk(null)
-        
+
                     }).catch(e => {
                         if (clbk) {
                             clbk(e, null)
@@ -11698,12 +13934,12 @@ Platform = function (app, listofnodes) {
                         parameters: [id],
                         success: function (d) {
 
-                            
+
 
                         },
                         fail: function (d, e) {
 
-                            
+
                         }
 
                     })*/
@@ -11855,7 +14091,7 @@ Platform = function (app, listofnodes) {
 
                                 if (clbk)
                                     clbk(null)
-        
+
                             }).catch(e => {
                                 if (clbk) {
                                     clbk(e, null)
@@ -11868,7 +14104,7 @@ Platform = function (app, listofnodes) {
                                 success: function (d) {
 
 
-                                    
+
 
                                 },
                                 fail: function (d, e) {
@@ -11953,7 +14189,7 @@ Platform = function (app, listofnodes) {
 
                     if (clbk)
                         clbk(null, m)
-        
+
                 }).catch(e => {
                     if (clbk) {
                         clbk(e)
@@ -12113,12 +14349,12 @@ Platform = function (app, listofnodes) {
                                 clbk(d, e)
 
                         })
-        
+
                     }).catch(e => {
                         if (clbk)
                             clbk(e)
                     })
-                   
+
                 }
 
             },
@@ -12204,7 +14440,7 @@ Platform = function (app, listofnodes) {
 
                     if (clbk)
                         clbk(c)
-        
+
                 }).catch(e => {
                     if (clbk) {
                         clbk(null, e)
@@ -12239,7 +14475,7 @@ Platform = function (app, listofnodes) {
                             clbk(c, e)
 
                     })
-        
+
                 }).catch(e => {
                     if (clbk) {
                         clbk(null, e)
@@ -12265,13 +14501,13 @@ Platform = function (app, listofnodes) {
 
                     if (clbk)
                         clbk(ini(d))
-        
+
                 }).catch(e => {
                     if (clbk)
                         clbk([], e)
                 })
 
-                
+
             },
 
             upvote: function (upvote, clbk) {
@@ -12385,7 +14621,7 @@ Platform = function (app, listofnodes) {
                 comment.uploadImages(self.app, function () {
 
                     if (comment.checkloaded()){
-                        
+
 
                         if (clbk) {
                             clbk('imageerror', null)
@@ -12531,7 +14767,7 @@ Platform = function (app, listofnodes) {
                     self.app.api.rpc('getnodeinfo').then(d => {
                         if (clbk)
                             clbk(d)
-        
+
                     }).catch(e => {
                         if (clbk) {
                             clbk(null, e)
@@ -12557,7 +14793,7 @@ Platform = function (app, listofnodes) {
 
                         self.currentBlock = deep(d, 'lastblock.height') || localStorage['lastblock'] || 0
                         self.timeDifference = 0;
-                        
+
 
                         localStorage['lastblock'] = self.currentBlock
 
@@ -12573,7 +14809,7 @@ Platform = function (app, listofnodes) {
                         }
 
                         return Promise.resolve()
-        
+
                     })
                 },
 
@@ -12598,7 +14834,7 @@ Platform = function (app, listofnodes) {
 
                     return self.nodes[1]
                 },
-           
+
 
                 balance: function (address, clbk) {
 
@@ -12610,14 +14846,14 @@ Platform = function (app, listofnodes) {
 
                         if (clbk)
                             clbk(s[email])
-        
+
                     }).catch(e => {
                         if (clbk) {
                             clbk(s[email], e)
                         }
                     })
 
-                    
+
                 }
             },
 
@@ -12628,14 +14864,14 @@ Platform = function (app, listofnodes) {
 
                         if (clbk)
                             clbk()
-        
+
                     }).catch(e => {
                         if (clbk) {
                             clbk()
                         }
                     })
 
-                    
+
                 },
 
                 get: function (address, clbk) {
@@ -12644,14 +14880,14 @@ Platform = function (app, listofnodes) {
 
                         if (clbk)
                                 clbk(d.result)
-        
+
                     }).catch(e => {
                         if (clbk) {
                             clbk()
                         }
                     })
 
-                   
+
                 },
 
                 getset: function (email, address, clbk) {
@@ -12668,31 +14904,31 @@ Platform = function (app, listofnodes) {
                 },
 
                 accSet: function (settings, clbk) {
-    
+
                     self.sdk.node.transactions.create.commonFromUnspent(
-    
+
                         settings,
-    
+
                         function (_alias, error) {
-    
-    
+
+
                             if (!_alias) {
-    
+
                                 if (clbk) {
                                     clbk(error, null)
                                 }
-    
+
                             }
-    
+
                             else {
-    
+
                                 if (clbk)
                                     clbk(null, _alias)
                             }
-    
+
                         }
                     )
-    
+
                 },
             },
 
@@ -12735,30 +14971,30 @@ Platform = function (app, listofnodes) {
                                 placeholder: self.app.localization.e('period'),
                                 possibleValues: ['1440', '4320', '10080', '43200', '262080'],
                                 possibleValuesLabels: [
-                                    self.app.localization.e('periodday'), 
-                                    self.app.localization.e('period3day'), 
-                                    self.app.localization.e('period7day'), 
-                                    self.app.localization.e('period31day'), 
+                                    self.app.localization.e('periodday'),
+                                    self.app.localization.e('period3day'),
+                                    self.app.localization.e('period7day'),
+                                    self.app.localization.e('period31day'),
                                     self.app.localization.e('period182day')
                                 ],
                                 value: v,
                                 defaultValue : v,
 
-                              
+
                             }
 
                         },
                     },
                     load : function(clbk){
                         var p = {};
-        
+
                         try {
                             p = JSON.parse(localStorage['sharessettings'] || '{}');
                         }
                         catch (e) {
-    
+
                         }
-    
+
                         self.sdk.node.shares.parameters.stor = p.stor || {}
 
                         if(clbk) clbk()
@@ -12804,7 +15040,7 @@ Platform = function (app, listofnodes) {
                             if (me && me.relation(share.address, 'subscribes')) {
                                 return false
                             }
-                            
+
                         }
 
 
@@ -12861,6 +15097,8 @@ Platform = function (app, listofnodes) {
 
                     _.each(shares || [], function (s) {
 
+                        if(!s) return
+                        
                         users.push(s.address)
 
                         var cuser = deep(s, 'lastComment.address')
@@ -12887,41 +15125,41 @@ Platform = function (app, listofnodes) {
                 delete: function (txid, share, clbk) {
 
                     var s = self.sdk.node.shares.storage;
-    
+
                     share.txid = txid
-    
+
                     self.sdk.node.transactions.create.commonFromUnspent(
-    
+
                         share,
-    
+
                         function (_alias, error) {
-    
-    
+
+
                             if (!_alias) {
-    
+
                                 if (clbk) {
                                     clbk(error, null)
                                 }
-    
+
                             }
-    
+
                             else {
-    
+
                                 s[txid] || (s[txid] = {})
-    
+
                                 var c = _.find(s[txid][share.parentid || '0'] || [], function (c) {
                                     return c.id == share.id
                                 })
-    
+
                                 if (c) c.deleted = true
-    
+
                                 if (clbk)
                                     clbk(null, _alias)
                             }
-    
+
                         }
                     )
-    
+
                 },
 
                 tempContentDelete: function (shares) {
@@ -12930,8 +15168,6 @@ Platform = function (app, listofnodes) {
                     _.each(self.sdk.relayTransactions.withtemp('contentDelete'), function (tempShare) {
 
                         var txid = tempShare.txidEdit;
-
-                        console.log('tempShare', tempShare)
 
                         _.find(shares, function (share) {
 
@@ -13105,7 +15341,7 @@ Platform = function (app, listofnodes) {
 
                         return -s1.downloadedDate.getTime()
                     })
-                    
+
 
                     if (clbk) {
                         clbk(loadedShares, null, {
@@ -13186,7 +15422,7 @@ Platform = function (app, listofnodes) {
                     var storage = this.storage;
                     storage.trx || (storage.trx = {})
 
-                 
+
 
                     var loading = this.loading;
 
@@ -13236,7 +15472,7 @@ Platform = function (app, listofnodes) {
                     txids = _.filter(txids, function (id) {
 
                         if(!id) return false
- 
+
                         if (!loading[id]) {
 
                             return true
@@ -13296,7 +15532,7 @@ Platform = function (app, listofnodes) {
 
                                     s.address = share.address
                                     s.edit = share.edit
-                                    
+
 
                                     s.score = share.scoreSum;
                                     s.scnt = share.scoreCnt;
@@ -13322,10 +15558,8 @@ Platform = function (app, listofnodes) {
                                             count: txids.length
                                         })
                                 })
-        
-                            }).catch(e => {
 
-                                console.log("E", e)
+                            }).catch(e => {
 
                                 _.each(txids, function (id) {
                                     delete loading[id];
@@ -13336,7 +15570,7 @@ Platform = function (app, listofnodes) {
                                 }
                             })
 
-                            
+
                         })
 
                     }
@@ -13474,19 +15708,19 @@ Platform = function (app, listofnodes) {
 
                             var shares = self.sdk.node.shares.transform(d, state)
 
-                            
+
                             self.sdk.node.shares.takeusers(d, state)
 
                             if (clbk)
                                 clbk(shares)
-        
+
                         }).catch(e => {
                             if (clbk) {
                                 clbk([], e)
                             }
                         })
 
-                        
+
                     })
                 },
 
@@ -13522,7 +15756,7 @@ Platform = function (app, listofnodes) {
                             if(d.videos){
 
                                 var s = self.sdk.videos.storage
-                
+
                                 var lmap = _.map(d.videos, function(i, l){
 
                                     var meta = parseVideo(l)
@@ -13543,21 +15777,24 @@ Platform = function (app, listofnodes) {
 
                             if (clbk)
                                 clbk(d)
-        
+
                         }).catch(e => {
                             if (clbk) {
                                 clbk([], e)
                             }
                         })
 
-                        
+
                     })
                 },
 
-                recommended: function (p, clbk, cache) {
+                recommended: function (p, clbk, cache, methodparams) {
 
+                    if(!methodparams) methodparams = {}
 
                     if (!p) p = {};
+
+                    console.log("P", p)
 
                     self.app.user.isState(function (state) {
 
@@ -13577,27 +15814,26 @@ Platform = function (app, listofnodes) {
 
                         }
                         else {
-                            //var parameters = ['30', '259200', 600000, self.app.localization.key];
 
-                            var period = p.period || self.sdk.node.shares.parameters.stor.period || self.sdk.node.shares.parameters.defaults.period || '4320' ///self.sdk.node.shares.parameters.defaults.period 
+                            var period = p.period || self.sdk.node.shares.parameters.stor.period || self.sdk.node.shares.parameters.defaults.period || '4320' ///self.sdk.node.shares.parameters.defaults.period
 
                             var page = p.page || 0
-                            
+
                             var parameters = []
-                            
-                            parameters = ['30', period, (period * page) || '', self.app.localization.key]
-                            
+
+                            parameters = [p.count.toString(), period, (period * page) || '', self.app.localization.key]
+
                             //parameters = ['30', '259200', '', self.app.localization.key];
 
-                            if(p.video){
-                                parameters.push('video')
+                            if (p.type){
+                                parameters.push(p.type)
                             }
 
                             self.sdk.node.shares.get(parameters, function (shares, error) {
 
                                 if (shares) {
 
-                                    self.sdk.node.shares.loadvideoinfoifneed(shares, p.video, function(){
+                                    self.sdk.node.shares.loadvideoinfoifneed(shares, p.type == 'video', function(){
 
                                         if (state) {
                                             _.each(self.sdk.relayTransactions.withtemp('blocking'), function (block) {
@@ -13609,14 +15845,14 @@ Platform = function (app, listofnodes) {
 
 
 
-                                        if(p.video){
+                                        if(p.type == 'video'){
                                             shares = _.filter(shares, function(share){
 
                                                 if(!share.url) return
 
                                                 var meta = app.platform.parseUrl(share.url);
 
-                                                if((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube'){ 
+                                                if((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube'){
 
                                                     if (self.sdk.videos.storage[share.url] && self.sdk.videos.storage[share.url].data)
                                                         return true
@@ -13631,7 +15867,7 @@ Platform = function (app, listofnodes) {
 
                                     })
 
-                                    
+
                                 }
 
                                 else {
@@ -13639,7 +15875,9 @@ Platform = function (app, listofnodes) {
                                         clbk(shares, error, p)
                                 }
 
-                            }, 'gethotposts')
+                            }, methodparams.method || 'gethotposts')
+
+
                         }
 
                     })
@@ -13808,6 +16046,18 @@ Platform = function (app, listofnodes) {
                     self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
                         method : 'getusercontents'
                     })
+
+                },
+
+
+                historical : function(p, clbk, cache){
+
+                    console.log("historicalhistoricalhistoricalhistorical")
+
+                    self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
+                        method : 'gethistoricalstrip'
+                    })
+
                 },
 
                 hierarchical: function (p, clbk, cache, methodparams) {
@@ -13819,9 +16069,9 @@ Platform = function (app, listofnodes) {
                     p.height
                     p.start_txid
                     p.count 10
-                    p.lang lang 
+                    p.lang lang
                     p.tagsfilter tagsfilter
-                    p.video
+                    p.type
 
                     */
 
@@ -13833,13 +16083,14 @@ Platform = function (app, listofnodes) {
                         p.lang || (p.lang = self.app.localization.key)
                         p.height || (p.height = 0)
                         p.tagsfilter || (p.tagsfilter = [])
+                        p.tagsexcluded || (p.tagsexcluded = [])
                         p.begin || (p.begin = '')
 
                         if (state) {
                             p.address = self.sdk.address.pnet().address;
                         }
 
-                        var key = p.count + (p.address || "") + "_" + (p.lang || "") + "_" + /*(p.height || "")  +*/ "_" + (p.tagsfilter.join(',')) + "_" + (p.begin || "") + (p.video ? "video" : '')
+                        var key = (methodparams.method || 'gethierarchicalstrip') + p.count + (p.address || "") + "_" + (p.lang || "") + "_" + /*(p.height || "")  +*/ "_" + (p.tagsfilter.join(',')) + "_" + (p.begin || "") + (p.type ? p.type : '')
 
                         if(p.author) key = key + p.author
 
@@ -13871,8 +16122,6 @@ Platform = function (app, listofnodes) {
                         else {
                             if (!storage[key] || cache == 'clear') storage[key] = [];
 
-          
-
                             if (!p.txid) {
                                 if (storage[key].length) {
 
@@ -13896,16 +16145,17 @@ Platform = function (app, listofnodes) {
                                 return encodeURIComponent(t)
                             })
 
+                            p.tagsexcluded = _.map(p.tagsexcluded, function(t){
+                                return encodeURIComponent(t)
+                            })
+
                             /////temp
 
-                            if (p.video && !self.videoenabled){
-                                p.tagsfilter = ['video']
-                            }
-
+                            
 
                             ////
 
-                            var parameters = [Number(p.height), p.txid, p.count, p.lang, p.tagsfilter, p.video && self.videoenabled ? 'video' : ''];
+                            var parameters = [Number(p.height), p.txid, p.count, p.lang, p.tagsfilter, p.type ? p.type : '', '', '', p.tagsexcluded];
 
                             if(p.author) parameters.unshift(p.author)
 
@@ -13946,7 +16196,7 @@ Platform = function (app, listofnodes) {
 
                                                 var meta = app.platform.parseUrl(share.url);
 
-                                                if((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube'){ 
+                                                if((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube'){
 
                                                     if (self.sdk.videos.storage[share.url] && self.sdk.videos.storage[share.url].data)
                                                         return true
@@ -14010,11 +16260,11 @@ Platform = function (app, listofnodes) {
                 },
 
                 getCoibaseTypeN : function (tx, address) {
-                
+
                     var type = null;
 
-                    
-                    
+
+
                     if(!tx.vout || !tx.vout.length || !address) return null
 
                     var firstout = tx.vout[0]
@@ -14027,7 +16277,7 @@ Platform = function (app, listofnodes) {
 
                         if(!chunks.length) return
 
-                        chunks = chunks[0] 
+                        chunks = chunks[0]
 
                         var cl = chunks.length
                         if(!cl) return null
@@ -14069,7 +16319,7 @@ Platform = function (app, listofnodes) {
                         console.log("E", e)
                     }
 
-                 
+
                     return type
                 },
 
@@ -14112,7 +16362,7 @@ Platform = function (app, listofnodes) {
                                     type = 'commentref'
                                 }
 
-               
+
 
                             }
                             catch (e) {
@@ -14198,6 +16448,8 @@ Platform = function (app, listofnodes) {
 
                     var outs = [];
 
+                    console.log("tx", tx)
+
                     _.each(tx.vout, function (vout) {
                         var a = _.find(vout.scriptPubKey.addresses, function (a) {
                             return a == address
@@ -14281,14 +16533,14 @@ Platform = function (app, listofnodes) {
 
                         if (clbk)
                                 clbk(d)
-        
+
                     }).catch(e => {
                         if (clbk) {
                             clbk(null, e)
                         }
                     })
 
-                    
+
                 },
 
                 send: function (tx, clbk) {
@@ -14300,7 +16552,7 @@ Platform = function (app, listofnodes) {
 
                         if (clbk)
                                 clbk(d)
-        
+
                     }).catch(e => {
                         if (clbk) {
                             clbk(null, e)
@@ -14392,8 +16644,6 @@ Platform = function (app, listofnodes) {
                     /*return*/
 
                     _.each(t, function (ts, w) {
-                        
-
                         var _finded = ts[txid]
 
                         if (_finded) {
@@ -14496,18 +16746,22 @@ Platform = function (app, listofnodes) {
 
                 },
                 checkTemp: function (alias, clbk) {
+
+                    console.log('checktemp, ', alias)
+
                     if (alias && alias.txid) {
 
                         self.sdk.node.transactions.get.tx(alias.txid, function (d, _error) {
 
+                            console.log(d)
 
                             if (clbk) {
 
                                 var errorcode = deep(_error, 'code') || null
 
-                                clbk( 
-                                    (errorcode == -5) || (errorcode == -8) || 
-                                    (deep(d, 'confirmations') > 0)
+                                clbk(
+                                    (errorcode == -5) || (errorcode == -8) ||
+                                    (deep(d, 'height') > 0)
                                 )
                             }
                         })
@@ -14579,7 +16833,7 @@ Platform = function (app, listofnodes) {
 
                 tempBalanceOutputs: function () {
                     var outputs = this.tempOutputs()
-                   
+
 
                     return _.reduce(outputs, function (m, i) {
                         if(i.deleted) return m
@@ -14596,7 +16850,7 @@ Platform = function (app, listofnodes) {
                     var inputs = this.tempInputs()
                     var outputs = this.tempOutputs()
 
-                    
+
 
                     return _.reduce(inputs, function (m, i) {
 
@@ -14674,13 +16928,13 @@ Platform = function (app, listofnodes) {
                     if(!unspentoptimizationInterval){
 
                         self.sdk.node.transactions.unspentOptimization()
-                        
+
                         unspentoptimizationInterval = setInterval(function(){
                             self.sdk.node.transactions.unspentOptimization()
                         }, 300000)
                     }
 
-                    
+
                 },
 
                 clearUnspentoptimizationInterval : function(){
@@ -14689,7 +16943,7 @@ Platform = function (app, listofnodes) {
                         clearInterval(unspentoptimizationInterval)
                         unspentoptimizationInterval = null
                     }
-                    
+
                 },
 
                 unspentOptimization : function(){
@@ -14698,7 +16952,7 @@ Platform = function (app, listofnodes) {
                     var pnet = self.sdk.address.pnet();
 
                     if (pnet && s.unspent){
-                       
+
                         var unspents = _.filter(s.unspent[pnet.address] || [], function(u){
                             return self.sdk.node.transactions.canSpend(u) && u.amount
                         })
@@ -14712,10 +16966,10 @@ Platform = function (app, listofnodes) {
 
                             self.sdk.wallet.sendFromInputs(pnet.address, unspents, keyPair, 0, function(err, tx){
                             })
-                            
+
                         }
                     }
-                   
+
                 },
 
                 clearUnspents: function (txids) {
@@ -14867,14 +17121,14 @@ Platform = function (app, listofnodes) {
 
                             if (clbk)
                                     clbk(d || [])
-        
+
                         }).catch(e => {
                             if (clbk) {
                                 clbk([])
                             }
                         })
 
-                       
+
                     },
 
                     _unspents: function (clbk, addresses, update) {
@@ -14970,7 +17224,7 @@ Platform = function (app, listofnodes) {
 
                                     if (clbk)
                                         clbk(a)
-        
+
                                 }).catch(e => {
 
                                     if (!s.unspent)
@@ -14989,7 +17243,7 @@ Platform = function (app, listofnodes) {
                                     }
                                 })
 
-                              
+
                             }
                         }
 
@@ -15009,7 +17263,7 @@ Platform = function (app, listofnodes) {
                         if (loadingAddresses.length) {
 
                             retry(function () {
-                                
+
                                 var _loadingAddresses = _.filter(addresses, function (address) {
                                     if (s.unspentLoading[address])
 
@@ -15095,7 +17349,7 @@ Platform = function (app, listofnodes) {
 
                                     if (clbk)
                                         clbk(s.unspent[address])
-        
+
                             }).catch(e => {
                                 if (!s.unspent)
                                     s.unspent = {};
@@ -15150,9 +17404,19 @@ Platform = function (app, listofnodes) {
 
                                 self.sdk.node.transactions.storage[id] = d
 
+                                if(!d.confirmations) {
+                                    if(d.height){
+                                        if (self.currentBlock)
+                                            d.confirmations = Math.max(self.currentBlock - d.height, 0)
+                                    }
+                                    else{
+                                        d.confirmations = 0
+                                    }
+                                }
+
                                 if (clbk)
                                     clbk(d)
-        
+
                             }).catch(e => {
                                 self.sdk.node.transactions.loading[id] = false;
 
@@ -15161,7 +17425,7 @@ Platform = function (app, listofnodes) {
                                 }
                             })
 
-                            
+
                         }
 
 
@@ -15173,7 +17437,7 @@ Platform = function (app, listofnodes) {
                     plcreate : function(id, amount, inputs, dummyoutputs, clbk){
 
                         var lock = 0
-                        
+
                         self.sdk.node.shares.getbyid(id, function() {
                             var item = self.sdk.node.shares.storage.trx[id];
 
@@ -15205,23 +17469,23 @@ Platform = function (app, listofnodes) {
                         var multisha = function(str, count){
 
                             if(!count) count = 100
-                    
+
                             var h = Buffer.from(str)
-                    
+
                             for (var i = 0; i < count; i++){
                                 h = bitcoin.crypto.sha256(h)
                             }
-                    
+
                             return h.toString('hex')
                         }
-                    
+
                         var createhash = function(key, seed){
-                    
+
                             var str = multisha(multisha(key) + '_' + seed, 10)
-                    
+
                             return str
                         }
-                    
+
                         var crrc = function(key, txid){
                             return createhash(key, txid)
                         }
@@ -15246,9 +17510,9 @@ Platform = function (app, listofnodes) {
                         if(!htlcout){
                             return Promise.reject('htlcout')
                         }
-                        
-                        var outputs = [{ 
-                            scriptPubKey : payment.output, 
+
+                        var outputs = [{
+                            scriptPubKey : payment.output,
                             amount : htlcout.amount
                         }]
 
@@ -15268,7 +17532,7 @@ Platform = function (app, listofnodes) {
                             reciever,
                             sender : self.sdk.address.pnetsimple(keyPair.publicKey).address
                         })
-                        
+
 
                         var txb = self.sdk.node.transactions.create.wallet(inputs, outputs, null, true)
 
@@ -15337,7 +17601,7 @@ Platform = function (app, listofnodes) {
                             }
 
                             inputs = [{
-        
+
                                 txId: unspent[unspent.length - 1].txid,
                                 vout: unspent[unspent.length - 1].vout,
                                 amount: unspent[unspent.length - 1].amount,
@@ -15410,7 +17674,7 @@ Platform = function (app, listofnodes) {
 
                             var inputs = [];
 
-                            if(!(obj.donate && obj.donate.v.length)){
+                            if(!(obj.donate && obj.donate.v.length) && obj.type !== 'contentBoost'){
                                 inputs = self.sdk.node.transactions.create.selectBestInputs(unspent)
                             }
 
@@ -15452,7 +17716,7 @@ Platform = function (app, listofnodes) {
                                         break;
                                     }
 
-                                }  
+                                }
 
                                 if (totalDonate >= totalInputs){
 
@@ -15467,7 +17731,46 @@ Platform = function (app, listofnodes) {
                                 }
 
                                 feerate = Number((feerate * smulti).toFixed(0));
-                            } 
+                            }
+
+                            if (obj.type === 'contentBoost' && obj.amount.v){
+
+                                feerate = 0;
+
+                                var lastUnspent = _.clone(unspent).reverse();
+
+                                for (var u of lastUnspent){
+
+                                    if (obj.amount.v >= totalInputs){
+
+                                        totalInputs += u.amount;
+
+                                        inputs.push({
+                                            txId: u.txid,
+                                            vout: u.vout,
+                                            amount: u.amount,
+                                            scriptPubKey: u.scriptPubKey,
+                                        })
+
+                                    } else {
+
+                                        break;
+                                    }
+
+                                }  
+
+                                if (obj.amount.v > totalInputs){
+
+                                    sitemessage(self.app.localization.e('e13117'))
+
+                                    if (clbk){
+                                        clbk(null, self.app.localization.e('e13117'));
+                                    }
+
+                                    return;
+
+                                }
+                            }
 
                             self.sdk.node.transactions.create[obj.type](inputs, obj, /*feerate,*/ function (a, er, data) {
 
@@ -15488,7 +17791,7 @@ Platform = function (app, listofnodes) {
                                 if (regs && (regs == 4)) {
 
                                     self.sdk.registrations.add(addr, 5)
-                                    
+
 
                                     app.platform.matrixchat.update()
 
@@ -15525,7 +17828,7 @@ Platform = function (app, listofnodes) {
                                 txb.addInput(i.txid, i.vout, null, Buffer.from(i.scriptPubKey, 'hex'))
                             }
 
-                            
+
                         })
 
                         _.each(outputs, function (o) {
@@ -15554,12 +17857,14 @@ Platform = function (app, listofnodes) {
                             }
 
                             if (i.address.indexOf("Z") == 0 || i.address.indexOf("Y") == 0) {
-                                
+
                                 var index = _.indexOf(self.sdk.addresses.storage.addresses, i.address);
 
                                 if (index > -1) {
+
                                     var p2sh = self.sdk.addresses.storage.addressesobj[index];
                                     var dumped = self.sdk.address.dumpKeys(index)
+
                                     txb.sign({
                                         prevOutScriptType: 'p2sh-p2wpkh',
                                         redeemScript : p2sh.redeem.output,
@@ -15571,7 +17876,7 @@ Platform = function (app, listofnodes) {
                                 return
                             }
 
-                                
+
 
                         })
 
@@ -15630,7 +17935,7 @@ Platform = function (app, listofnodes) {
 
                             amount = amount * smulti;
 
-                            
+
                             var data = Buffer.from(bitcoin.crypto.hash256(obj.serialize()), 'utf8');
                             var optype = obj.typeop ? obj.typeop(self) : obj.type
                             var optstype = optype
@@ -15648,13 +17953,19 @@ Platform = function (app, listofnodes) {
                             var embed = bitcoin.payments.embed({ data: opreturnData });
                             var i = 0;
 
+                            if (obj.type !== 'contentBoost'){
+
+
+                                outputs.push({
+                                    amount : 0,
+                                    deleted : true,
+                                    address : address.address
+                                })
+    
+                                
+                            }
+
                             txb.addOutput(embed.output, 0);
-                            ///?
-                            outputs.push({
-                                amount : 0,
-                                deleted : true,
-                                address : address.address
-                            })
 
                             if(self.sdk.user.reputationBlockedMe()){
 
@@ -15665,12 +17976,7 @@ Platform = function (app, listofnodes) {
                                 return
                             }
 
-                            
-
-
                             self.sdk.node.transactions.get.unspent(function (unspents) {
-
-
 
                                 if (p.relay) {
 
@@ -15694,10 +18000,10 @@ Platform = function (app, listofnodes) {
 
 
                                 if (
-                                    !(obj.donate && obj.donate.v.length) && 
-                                    
-                                
-                                    unspents.length < 50 && amount > 0.2 * smulti) {
+                                    !(obj.donate && obj.donate.v.length) &&
+
+
+                                    unspents.length < 50 && amount > 0.2 * smulti && obj.type !== 'contentBoost') {
 
                                     var ds = Number((amount / 2).toFixed(0))
 
@@ -15721,23 +18027,29 @@ Platform = function (app, listofnodes) {
 
                                 if (obj.donate && obj.donate.v.length){
 
-                                    obj.donate.v.forEach(function(d){       
+                                    obj.donate.v.forEach(function(d){
                                         var donate = Number(d.amount) * smulti;
 
                                         totalDonate += donate
 
                                         txb.addOutput(d.address, donate);
                                         outputs.push({
-                                            address: d.address, 
+                                            address: d.address,
                                             amount: donate
                                         });
 
                                     })
-                                }       
+                                }
 
-                                    
                                 var totalReturn = Number((amount - totalDonate - (fees || 0)).toFixed(0));
 
+
+                                if (obj.type === 'contentBoost'){
+
+                                    var amountMulti = obj.amount.v * smulti;;
+                                    totalReturn -= amountMulti;
+
+                                }
 
                                 if (obj.donate && obj.donate.v.length && (totalReturn < 0 || totalDonate <= fees)){
 
@@ -15760,7 +18072,6 @@ Platform = function (app, listofnodes) {
                                     })
 
                                     var tx = txb.build()
-
 
                                     if (obj.donate && obj.donate.v.length && !obj.fees.v){
 
@@ -15814,6 +18125,10 @@ Platform = function (app, listofnodes) {
                                                     temp[obj.type][d] = alias;
 
                                                     alias.inputs = inputs
+
+
+                                                    console.log('outputs', outputs)
+
                                                     alias.outputs = _.map(outputs, function(output){
                                                         return {
                                                             address : output.address,
@@ -15827,7 +18142,7 @@ Platform = function (app, listofnodes) {
                                                     var ids = _.map(inputs, function (i) {
 
                                                         return {
-                                                            txid: i.txId,
+                                                            txid: i.txId || i.txid,
                                                             vout: i.vout
                                                         }
 
@@ -15844,7 +18159,7 @@ Platform = function (app, listofnodes) {
                                                         if (ustate) {
                                                             var us = self.sdk.ustate.storage;
 
-                                                            if (us[address.address]) {
+                                                            if (us[address.address] && !_.isEmpty(us[address.address])) {
                                                                 us[address.address][obj.ustate + "_spent"]++
                                                                 us[address.address][obj.ustate + "_unspent"]--
                                                             }
@@ -15868,7 +18183,7 @@ Platform = function (app, listofnodes) {
                                                 if (clbk) {
                                                     clbk(null, e.code, data)
                                                 }
-                                            }) 
+                                            })
                                         }
                                     }
                                 }
@@ -15981,7 +18296,7 @@ Platform = function (app, listofnodes) {
 
                         fetch(query, {
                             method: 'POST',
-                            mode: 'cors', 
+                            mode: 'cors',
                             cache: 'no-cache',
                             credentials: 'same-origin',
                             headers: {
@@ -15992,7 +18307,7 @@ Platform = function (app, listofnodes) {
                         })
                         .then(function(data){
                             return data.json();
-                        }) 
+                        })
                         .then(function(result){
 
                             if (!result.ok){
@@ -16013,9 +18328,9 @@ Platform = function (app, listofnodes) {
                         var meta = self.sdk.usersettings.meta;
 
                         var savedShare = JSON.parse(JSON.stringify(share));
-                      
+
                         if (self.app.user.features.telegram && !fromTG && meta.telegram && meta.telegram.value && meta.tgto && meta.tgto.value) {
-                      
+
                           if (!meta.tgtoask.value) {
 
                             this.telegramSend(share, meta);
@@ -16037,7 +18352,7 @@ Platform = function (app, listofnodes) {
                         this.common(inputs, share, TXFEE, clbk, p)
                     },
 
-                    
+
                     accSet: function (inputs, settings, clbk, p) {
                         this.common(inputs, settings, TXFEE, clbk, p)
                     },
@@ -16067,12 +18382,16 @@ Platform = function (app, listofnodes) {
                     commentShare: function (inputs, commentShare, clbk, p) {
                         this.common(inputs, commentShare, TXFEE, clbk, p)
 
-                        
                     },
+
+                    contentBoost: function (inputs, comment, /*fees, */clbk, p) {
+                        this.common(inputs, comment, 0, clbk, p)
+                    },
+
 
                     cScore: function (inputs, cScore, clbk, p) {
                         this.common(inputs, cScore, TXFEE, clbk, p)
-                        
+
                         self.sdk.activity.adduser('like', cScore.address.v)
                     },
 
@@ -16109,7 +18428,7 @@ Platform = function (app, listofnodes) {
 
                         if (clbk)
                             clbk(d)
-        
+
                     }).catch(e => {
                         var d = {}
                         d.feerate = 0.00001
@@ -16119,7 +18438,7 @@ Platform = function (app, listofnodes) {
                         }
                     })
 
-                    
+
 
                 }
             },
@@ -16615,9 +18934,6 @@ Platform = function (app, listofnodes) {
 
                     if (state && !_Node) {
                         var pool = s.get();
-
-
-                        console.log('pool', pool)
 
                         var address = self.sdk.address.pnet().address;
 
@@ -17256,7 +19572,7 @@ Platform = function (app, listofnodes) {
                     this.clbks.tick = {}
                     this.tickstate = {}
                     this.tickstatehash = []
-        
+
                     this.tickstate = {
                         settings:
                         {
@@ -17674,7 +19990,7 @@ Platform = function (app, listofnodes) {
                     clbk: function (error, data) {
                         if (clbk) clbk(error, data)
                     }
-                    
+
                 }
 
                 electron.ipcRenderer.send('proxy-message', rdata);
@@ -17702,7 +20018,7 @@ Platform = function (app, listofnodes) {
 
                 if (request) {
 
-                    if (request.clbk) 
+                    if (request.clbk)
                         request.clbk(message.error, message.data)
 
                     delete self.sdk.system16.requestes[message.id]
@@ -17908,7 +20224,7 @@ Platform = function (app, listofnodes) {
 
                                     meta[dropdownName][tgToken].possibleValues.push(String(channelId));
                                     meta[dropdownName][tgToken].possibleValuesLabels.push(String(channelName));
-                                    
+
                                 }
 
                             }
@@ -18249,7 +20565,7 @@ Platform = function (app, listofnodes) {
                         const channelId = chat.username ? (" (@" + chat.username + ")") : "";
 
                         const channelName = chat.title + channelId;
-             
+
                         addValue("tgto", channelName, chat.id);
                         addValue("tgfrom", channelName, chat.id);
 
@@ -18276,7 +20592,7 @@ Platform = function (app, listofnodes) {
 
                             addImages(html, messager.photo, clbk);
 
-                        } 
+                        }
 
                     })
 
@@ -18341,7 +20657,7 @@ Platform = function (app, listofnodes) {
                     }
 
                     const telegramData = data => {
-  
+
                         if (data.ok) {
 
                             const {
@@ -18429,10 +20745,10 @@ Platform = function (app, listofnodes) {
 
                             let allTelegramMessages = [];
 
-           
+
                             if (messagesFromChannel.length) {
 
-                                
+
                                 allTelegramMessages = [...prevTelegramMessages, ...messagesFromChannel];
 
                             } else {
@@ -18447,7 +20763,7 @@ Platform = function (app, listofnodes) {
                             if (meta.tgfromask.value && messagesFromChannel.length && !this.openedDialog) {
 
                                 const currentMessages = JSON.parse(localStorage.getItem("telegramMessages"));
-                   
+
                                 this.dialogOfTG(currentMessages, currentChannelId, clbk)
 
                             } else if (meta.tgfromask.value && this.openedDialog){
@@ -18460,9 +20776,9 @@ Platform = function (app, listofnodes) {
 
                                 this.applyMessagesFromTG(resultWithSortedMedia, true, currentChannelId, clbk);
 
-                                
+
                             } else {
-                                
+
                                 this.applyMessagesFromTG(messagesFromOthers, null, null, clbk);
 
                             }{
@@ -18492,7 +20808,7 @@ Platform = function (app, listofnodes) {
 
                     }
 
-     
+
                     fetch(url, settings)
                     .then(data => data.json())
                     .then(data => telegramData(data))
@@ -18509,7 +20825,7 @@ Platform = function (app, listofnodes) {
                     }
 
 
-                    const current = document.querySelector("div[parameter='telegram'].iWrapper");          
+                    const current = document.querySelector("div[parameter='telegram'].iWrapper");
 
                     if (current) {
                         current.remove();
@@ -18536,11 +20852,11 @@ Platform = function (app, listofnodes) {
                                     const currentChannelIdx = tgfrom.possibleValuesLabels.indexOf(tgfrom.value);
 
                                     const currentChannelId = tgfrom.possibleValues[currentChannelIdx];
-                                    
+
                                     this.dialogOfTG(JSON.parse(localStorage.getItem("telegramMessages") || "[]"), currentChannelId);
                                     this.telegramUpdates(null, make);
 
-                                } 
+                                }
 
                             })
                             .catch(err => {
@@ -18594,7 +20910,7 @@ Platform = function (app, listofnodes) {
                 lasthistory.time = data.time
                 lasthistory.date = new Date()
                 lasthistory.percent = data.percent
-                
+
                 try{
                     localStorage[self.sdk.videos.historykey + txid] = JSON.stringify(lasthistory)
                 }catch(e){}
@@ -18624,13 +20940,13 @@ Platform = function (app, listofnodes) {
                     delete window.peertubeglobalcache[meta.id]
                 }
 
-                
+
             },
             info : function(links){
 
                 var s = self.sdk.videos.storage
 
-                
+
                 var lmap = _.map(links, function(l){
 
                     var meta = parseVideo(l)
@@ -18682,6 +20998,12 @@ Platform = function (app, listofnodes) {
             },
 
             paddingplaceholder : function(url, middle, clbk, elf){
+
+                if(!url){
+                    middle(clbk)
+                    return
+                }
+
                 return self.sdk.videos.info([url]).catch((e)=>{
                     return Promise.resolve()
                 }).then(() => {
@@ -18690,11 +21012,11 @@ Platform = function (app, listofnodes) {
 
                         if(self.sdk.videos.storage[url] && self.sdk.videos.storage[url].data){
                             var info = self.sdk.videos.storage[url].data;
-        
-                            var loadingPlayer = elf ? elf() : p.el.find('.jsPlayerLoading');
-        
+
+                            var loadingPlayer = elf ? elf() : p.el.find('.jsPlayerLoading-matte');
+
                             var width = loadingPlayer.width();
-                            
+
                             loadingPlayer.css('padding-top', `${width / (2 * info.aspectRatio)}px`);
                             loadingPlayer.css('padding-bottom', `${width / (2 * info.aspectRatio)}px`);
                         }
@@ -18710,7 +21032,7 @@ Platform = function (app, listofnodes) {
                     window.peertubeglobalcache = {}
 
                 links.forEach(link => {
-                    
+
                     const linkInfo = linksInfo[link.link];
 
                     if (linkInfo){
@@ -18733,7 +21055,7 @@ Platform = function (app, listofnodes) {
                         window.peertubeglobalcache[link.meta.id] = linkInfo
                     }
 
-                    
+
                 });
             },
 
@@ -18774,7 +21096,7 @@ Platform = function (app, listofnodes) {
                         return new Promise((resolve, reject) => {
 
                             var link = l.link.replace('/embed/', '/video/');
-                            
+
                             $.ajax({
                                 url : 'https://pocketnet.app:8888/bitchute',
                                 data : {
@@ -18794,7 +21116,6 @@ Platform = function (app, listofnodes) {
 
                                 },
                                 error : function(){
-                                    console.log("FAILED")
                                     reject()
                                 }
                             });
@@ -18821,10 +21142,10 @@ Platform = function (app, listofnodes) {
             },
             load : function(){
 
-                var _v = localStorage['pn_videovolume_2'] 
+                var _v = localStorage['pn_videovolume_2']
 
                 if(typeof _v == 'undefined') {
-                    if(window.cordova || isMobile())
+                    if(self.app.mobileview)
                         _v = '0'
                     else
                         _v = '1'
@@ -18912,14 +21233,14 @@ Platform = function (app, listofnodes) {
             },
 
             get : function(proxy, address, token){
-                
+
                 return deep(self.storage.data, appid + '.' + token + '.' + address + '.' + proxy)
             },
 
             set : function(proxy, address, token){
-                if(!self.storage.data[appid]) self.storage.data[appid] = {} 
+                if(!self.storage.data[appid]) self.storage.data[appid] = {}
                 if(!self.storage.data[appid][token]) self.storage.data[appid][token] = {}
-                if(!self.storage.data[appid][token][address]) self.storage.data[appid][token][address] = {} 
+                if(!self.storage.data[appid][token][address]) self.storage.data[appid][token][address] = {}
 
                 self.storage.data[appid][token][address][proxy] = true
 
@@ -18934,7 +21255,7 @@ Platform = function (app, listofnodes) {
                 var address = getaddress()
 
                 if(!address) return Promise.reject()
-               
+
             },
 
             revokeDevice: function (proxy) {
@@ -18944,7 +21265,7 @@ Platform = function (app, listofnodes) {
                 }, {
                     proxy : proxy
                 })
-              
+
             },
 
             setToken: function (address, token, proxy) {
@@ -18970,7 +21291,7 @@ Platform = function (app, listofnodes) {
 
                 var nf = function(obj, ii){
                     return _.find(obj || {}, function(v, i){
-                        return i != ii 
+                        return i != ii
                     })
                 }
 
@@ -19015,7 +21336,7 @@ Platform = function (app, listofnodes) {
                         return Promise.reject('proxyfirebaseid')
                     }
 
-                   
+
                 })
             }
         }
@@ -19049,7 +21370,7 @@ Platform = function (app, listofnodes) {
             }).catch(e => {
                 return Promise.resolve()
             })
-            
+
         }
 
         self.request = {
@@ -19081,7 +21402,7 @@ Platform = function (app, listofnodes) {
                 }, {
                     proxy : proxy
                 })
-               
+
             },
 
             revokeDevice: function (proxy) {
@@ -19091,8 +21412,8 @@ Platform = function (app, listofnodes) {
                 }, {
                     proxy : proxy
                 })
-                
-              
+
+
             },
 
             setToken: function (token, proxy) {
@@ -19109,7 +21430,7 @@ Platform = function (app, listofnodes) {
             }
         }
 
-       
+
         self.get = function (clbk) {
 
             if (!using) {
@@ -19127,7 +21448,7 @@ Platform = function (app, listofnodes) {
 
                     if (clbk)
                         clbk(currenttoken)
-    
+
                 }, function(error) {
                     console.error(error, 'fcmToken not set on server');
 
@@ -19147,11 +21468,11 @@ Platform = function (app, listofnodes) {
 
                 if(!hasPermission){
                     FirebasePlugin.grantPermission(function(hasPermission){
-    
+
                         if(hasPermission){
                             self.get(clbk)
                         }
-        
+
                     });
                 }
                 else{
@@ -19179,23 +21500,23 @@ Platform = function (app, listofnodes) {
 
                             return platform && platform.matrixchat && platform.matrixchat.core;
 
-                        }, function(){  
+                        }, function(){
 
                             setTimeout(function(){
 
                                 platform.matrixchat.core.goto(data.room_id);
-                                
+
                                 if (platform.matrixchat.core.apptochat)
                                     platform.matrixchat.core.apptochat();
 
                             }, 50)
 
-                            
-                            
+
+
                         });
                     }
 
-                   
+
 
                     return;
                 }
@@ -19224,19 +21545,19 @@ Platform = function (app, listofnodes) {
 
                 }
 
-                
+
             });
 
-         
+
             // When token is refreshed, update the matrix element for the Vue app
             FirebasePlugin.onTokenRefresh(function(token) {
 
-                platform.fcmtoken = token   
+                platform.fcmtoken = token
                 currenttoken = token
                 platform.matrixchat.changeFcm()
 
                 //prepareclbk(token)
-                
+
             }, function(error) {
                 console.error(error);
             });
@@ -19275,7 +21596,7 @@ Platform = function (app, listofnodes) {
             self.storage.load()
 
 			if (using) {
-				
+
 				self.permissions(clbk)
 			}
             else{
@@ -19295,11 +21616,11 @@ Platform = function (app, listofnodes) {
                 return
             }
 
-            
+
 
             if (clbk)
                 clbk()
-           
+
         }
 
         return self;
@@ -19316,6 +21637,7 @@ Platform = function (app, listofnodes) {
         var closing = false;
         var lost = 0;
         var wait = null;
+        var slowMadeRelayTransactions = null
 
         self.connected = {};
         self.online = false;
@@ -19349,32 +21671,15 @@ Platform = function (app, listofnodes) {
             share: function (share, extra, extendedpreview) {
                 var h = '';
 
-                var m = share.caption || share.message;
+                var m = share.caption;
 
-                var symbols = 20;
+                if(!m) m = share.renders.text()
 
-                if (extendedpreview) {
-                    m = '';
+                var symbols = extendedpreview ? 180 : 20;
 
-                    if (share.caption) m = m + '' + share.caption + ' '
+                var nm = trimHtml(m, symbols)
 
-                    if (share.message) m = m + '' + share.message + ''
-
-                    symbols = 180;
-                }
-
-                var links = linkify.find(m);
-
-                _.each(links, function(l){
-                    m = m.replace(l.href, "")
-                })
-
-                var nm = filterXSS(trimHtml(m, symbols), {
-                    stripIgnoreTag: true,
-                    whiteList: {
-                        b: ["style"]
-                    }
-                });
+                var links = _.isObject(share.message) ? [] : linkify.find(share.message);
 
                 var images = _.map(share.images, function (i) {
                     return {
@@ -19408,11 +21713,11 @@ Platform = function (app, listofnodes) {
                 }
 
                 h += '<div class="tcell fortext">'
-                
+
                 if(nm.length > 2){
                     h += '<div><span>' + nm + '</span></div>'
                 }
-                
+
 
                 if (images.length && extendedpreview) {
 
@@ -19443,12 +21748,12 @@ Platform = function (app, listofnodes) {
                 if (images.length || links.length || share.tags.length || meta.type) {
 
                     h += '<div class="additionalcontent">'
-                    
+
                         if (!meta.type){
                             if (images.length) {
                                 h +=  flb(self.app.localization.e('timages')) + ' ('+images.length+') '
                             }
-    
+
                             if (links.length) {
                                 h +=  flb(self.app.localization.e('tlinks')) + ' ('+links.length+') '
                             }
@@ -19460,17 +21765,14 @@ Platform = function (app, listofnodes) {
 
                         else
                         {
-                                h += '<b>' + flb(self.app.localization.e('video')) + '</b> <i class="fas fa-play"></i> '
+                            h += '<b>' + flb(self.app.localization.e('video')) + '</b> <i class="fas fa-play"></i> '
                         }
-                        
-
-                        
 
                     h += '</div>'
                 }
 
-              
-                
+
+
 
                 h += '</div>'
 
@@ -19504,8 +21806,8 @@ Platform = function (app, listofnodes) {
                 h += '<div class="tcell foramount">'
 
                 h += "+" + platform.mp.coin(clearStringXss(data.amountall || data.tx.amount));
+
                 
-                if(!isMobile())
                     h+= " PKOIN"
 
 
@@ -19553,7 +21855,7 @@ Platform = function (app, listofnodes) {
 
                 }
 
-              
+
                 h += '</div>'
 
                 h += '</div>'
@@ -19668,7 +21970,7 @@ Platform = function (app, listofnodes) {
 
                 if (gotoprofile) h += link
 
-                h += '<div class="usericon" ban=".gif" image="' + clearStringXss(src || '') + '">'
+                h += '<div class="usericon" ban=".gif" image="' + (clearStringXss(src || '') || '*') + '">'
 
                 if (!src && letter){
 
@@ -19808,29 +22110,24 @@ Platform = function (app, listofnodes) {
 
                     message.el.find('.commentprev').on('click', function () {
 
+                        platform.app.nav.api.load({
+                            open: true,
+                            href: 'post?s=' + data.comment.txid,
+                            inWnd: true,
+                            history: true,
+                            clbk: function (d, p) {
+                                app.nav.wnds['post'] = p
+                            },
 
-                        platform.sdk.node.shares.getbyid(data.comment.txid, function (s, err, p, fromcashe) {
+                            essenseData: {
+                                share: data.comment.txid,
 
-                            platform.app.nav.api.load({
-                                open: true,
-                                href: 'post?s=' + data.comment.txid,
-                                inWnd: true,
-                                history: true,
-                                clbk: function (d, p) {
-                                    app.nav.wnds['post'] = p
-                                },
-
-                                essenseData: {
-                                    share: data.comment.txid,
-
-                                    reply: {
-                                        answerid: data.comment.id,
-                                        parentid: data.comment.parentid || "",
-                                        noaction: true
-                                    }
+                                reply: {
+                                    answerid: data.comment.id,
+                                    parentid: data.comment.parentid || "",
+                                    noaction: true
                                 }
-                            })
-
+                            }
                         })
 
                     })
@@ -19910,7 +22207,7 @@ Platform = function (app, listofnodes) {
                         if (me && me.relation(data.user.address, 'blocking')) {
                             return html
                         }
-                        
+
                     }
 
                     if (data.comment && !data.comment.deleted && data.upvoteVal > 0) {
@@ -20005,14 +22302,14 @@ Platform = function (app, listofnodes) {
                         if (me && me.relation(data.user.address, 'blocking')) {
                             return html
                         }
-                        
+
                     }
 
                     if(data.share && data.shareReposted){
                         text = self.tempates.share(data.share, null, true) + '<div class="sharedivide">&middot;&middot;&middot;</div>' + self.tempates.share(data.shareReposted, null, true)
-                    }   
+                    }
 
-                    
+
 
                     if (text) {
                         html += self.tempates.user(data.user, text, true, " " + self.app.localization.e('e13331'), '<div class="repostshare"><i class="fas fa-share"></i></div>', data.time)
@@ -20027,7 +22324,6 @@ Platform = function (app, listofnodes) {
 
                     message.el.find('.sharepreview').on('click', function () {
 
-                        platform.sdk.node.shares.getbyid(data.txid, function (s, err, p, fromcashe) {
 
                             platform.app.nav.api.load({
                                 open: true,
@@ -20043,7 +22339,6 @@ Platform = function (app, listofnodes) {
                                 }
                             })
 
-                        })
 
                     })
 
@@ -20122,7 +22417,7 @@ Platform = function (app, listofnodes) {
                     if(data.share){
                         text = self.tempates.share(data.share, null, true)
                     }
-                    
+
                     if (text) {
 
 
@@ -20148,7 +22443,6 @@ Platform = function (app, listofnodes) {
 
                     message.el.find('.sharepreview').on('click', function () {
 
-                        platform.sdk.node.shares.getbyid(data.txid, function (s, err, p, fromcashe) {
 
                             platform.app.nav.api.load({
                                 open: true,
@@ -20164,7 +22458,6 @@ Platform = function (app, listofnodes) {
                                 }
                             })
 
-                        })
 
                     })
 
@@ -20177,7 +22470,7 @@ Platform = function (app, listofnodes) {
             sharepocketnet: {
                 loadMore: function (data, clbk, wa) {
 
-                    data.addrFrom = 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd'
+                    data.addrFrom || (data.addrFrom = window.testpocketnet ? 'TAqR1ncH95eq9XKSDRR18DtpXqktxh74UU' : 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd')
 
                     if (data.addrFrom) {
 
@@ -20258,7 +22551,6 @@ Platform = function (app, listofnodes) {
 
                     message.el.find('.sharepreview').on('click', function () {
 
-                        platform.sdk.node.shares.getbyid(data.txid, function (s, err, p, fromcashe) {
 
                             platform.app.nav.api.load({
                                 open: true,
@@ -20274,7 +22566,6 @@ Platform = function (app, listofnodes) {
                                 }
                             })
 
-                        })
 
                     })
 
@@ -20351,8 +22642,7 @@ Platform = function (app, listofnodes) {
 
                         var outs = platform.sdk.node.transactions.toUTs(tx, address);
 
-
-                        console.log('outs', outs)
+                        console.log('outs', outs, address, tx)
 
                         _.each(outs, function (o) {
 
@@ -20377,8 +22667,6 @@ Platform = function (app, listofnodes) {
                         var addr = platform.sdk.address.pnet().address
 
                         if (platform.sdk.address.pnet()) {
-
-                            
 
                             var regs = platform.sdk.registrations.storage[addr];
 
@@ -20407,7 +22695,7 @@ Platform = function (app, listofnodes) {
 
                         data.opmessage = platform.sdk.node.transactions.getOpreturn(data.txinfo)
 
-                        data.cointype = platform.sdk.node.transactions.getCoibaseTypeN(data.txinfo, platform.sdk.address.pnet().address) 
+                        data.cointype = platform.sdk.node.transactions.getCoibaseTypeN(data.txinfo, platform.sdk.address.pnet().address)
 
                         platform.sdk.users.getone(data.address || '', function () {
 
@@ -20548,7 +22836,7 @@ Platform = function (app, listofnodes) {
                                     if (me && me.relation(data.address, 'blocking')) {
                                         return html
                                     }
-                                    
+
                                 }
 
                                 if (platform.sdk.usersettings.meta.transactions.value && data.user && data.user.name) {
@@ -20707,13 +22995,11 @@ Platform = function (app, listofnodes) {
 
                         })
                     })
-                    
 
                     platform.sdk.newmaterials.update(data)
 
                     platform.sdk.user.subscribeRef()
 
-                    
 
                     ////////////////
 
@@ -20732,10 +23018,11 @@ Platform = function (app, listofnodes) {
 
                     ////////
 
-                    setTimeout(function () {
-                        platform.sdk.relayTransactions.send()
-                    }, 30000)
 
+                    slowMadeRelayTransactions = slowMade(function(){
+
+                        platform.sdk.relayTransactions.send()
+                    }, slowMadeRelayTransactions, 10000)
 
                     clbk()
 
@@ -20780,7 +23067,6 @@ Platform = function (app, listofnodes) {
 
                     message.el.find('.commentprev').on('click', function () {
 
-                        platform.sdk.node.shares.getbyid(data.posttxid, function (s, fromcashe) {
 
                             platform.app.nav.api.load({
                                 open: true,
@@ -20802,7 +23088,6 @@ Platform = function (app, listofnodes) {
                                 }
                             })
 
-                        })
 
                     })
 
@@ -20839,7 +23124,7 @@ Platform = function (app, listofnodes) {
 
                     var getpost = function (pid, clbk) {
 
-                        if (pid)
+                       /* if (pid)
 
                             platform.sdk.node.shares.getbyid(pid, function (s, fromcashe) {
 
@@ -20853,7 +23138,7 @@ Platform = function (app, listofnodes) {
 
                             })
 
-                        else
+                        else*/
 
                             clbk()
                     }
@@ -20936,13 +23221,13 @@ Platform = function (app, listofnodes) {
 
                             return html
                         }
-                        
+
                     }
 
-                    if (data.reason == 'post' && data.comment && data.share && data.user &&
+                    if (data.reason == 'post' && data.comment && data.user &&
                         (!platform.sdk.usersettings.meta.comments || platform.sdk.usersettings.meta.comments.value)) {
 
-                        text = self.tempates.comment(data.comment, self.tempates.share(data.share))
+                        text = self.tempates.comment(data.comment)
 
                         var toptext = self.app.localization.e('e13337');
 
@@ -20950,7 +23235,7 @@ Platform = function (app, listofnodes) {
 
                             var amount = String(Number(data.amount) / smulti || 0);
                             toptext = '<span>' + self.app.localization.e('donated') + '</span>' + ' <span class="donate"> +' + amount + ' PKOIN </span>';
-                        }  
+                        }
 
                         if (text) {
                             var toptext =  self.tempates.user(data.user, '<div class="text">' + text + '</div>', true, ' ' + toptext, extra, data.time, data.donation);
@@ -20958,18 +23243,16 @@ Platform = function (app, listofnodes) {
                             html += toptext
                         }
 
-                                             
-
                     }
 
-                    if (data.reason == 'answer' && data.comment && data.share && data.user &&
+                    if (data.reason == 'answer' && data.comment && data.user &&
                         (!platform.sdk.usersettings.meta.answers || platform.sdk.usersettings.meta.answers.value)) {
 
-                        text = self.tempates.comment(data.comment/*, self.tempates.share(data.share)*/)
+                        text = self.tempates.comment(data.comment)
 
                         if (text) {
 
-                            var toptext = self.app.localization.e('e13337')
+                            var toptext = self.app.localization.e('e13338')
 
                             html += self.tempates.user(data.user, '<div class="text">' + text + '</div>', true, ' ' + toptext, extra, data.time)
                         }
@@ -21199,7 +23482,6 @@ Platform = function (app, listofnodes) {
                     if (data.mesType == 'upvoteShare' && data.share) {
                         message.el.find('.sharepreview').on('click', function () {
 
-                            platform.sdk.node.shares.getbyid(data.posttxid, function (s, err, p, fromcashe) {
 
                                 platform.app.nav.api.load({
                                     open: true,
@@ -21215,7 +23497,6 @@ Platform = function (app, listofnodes) {
                                     }
                                 })
 
-                            })
 
                         })
 
@@ -21224,7 +23505,7 @@ Platform = function (app, listofnodes) {
                 notificationData: function (data) {
                     var n = {};
 
-                    
+
 
                     if (data.mesType == 'userInfo') {
                         n.text = self.app.localization.e('e13339')
@@ -21270,7 +23551,7 @@ Platform = function (app, listofnodes) {
                         if (me && me.relation(data.user.address, 'blocking')) {
                             return html
                         }
-                        
+
                     }
 
                     if (data.mesType == 'userInfo') {
@@ -21287,7 +23568,7 @@ Platform = function (app, listofnodes) {
                     }
 
 
-                    if (data.mesType == 'subscribe') {
+                    if (data.mesType == 'subscribe' || data.mesType == 'subscribePrivate') {
                         if ((!platform.sdk.usersettings.meta.followers || platform.sdk.usersettings.meta.followers.value)) {
 
                             text = ''
@@ -21305,9 +23586,9 @@ Platform = function (app, listofnodes) {
                         if (
 
                             (data.upvoteVal <= 2 && platform.sdk.usersettings.meta.downvotes.value) ||
-                            
-                            (data.upvoteVal > 2 &&  platform.sdk.usersettings.meta.upvotes.value) 
-                            
+
+                            (data.upvoteVal > 2 &&  platform.sdk.usersettings.meta.upvotes.value)
+
                         )
                             {
 
@@ -21385,7 +23666,7 @@ Platform = function (app, listofnodes) {
                         if (me && me.relation(data.user.address, 'blocking')) {
                             return html
                         }
-                        
+
                     }
 
                     text = self.tempates.subscribe(data.user, self.app.localization.e('e13345'))
@@ -21454,13 +23735,14 @@ Platform = function (app, listofnodes) {
                         console.log("E", e)
                     }
 
-                    
+
                     if (jm){
 
 
                         if (jm.type == 'proxy-message-tick'){
 
                             return wss.proxy.system.tick(jm.data)
+                            
                         }
 
                         if (jm.type == 'changenode'){
@@ -21485,7 +23767,7 @@ Platform = function (app, listofnodes) {
                         if (jm.type == 'proxy-settings-changed'){
 
                             return wss.proxy.changed(jm.data)
-                            
+
                         }
 
 
@@ -21493,7 +23775,7 @@ Platform = function (app, listofnodes) {
 
                     }
 
-                        
+
 
                 };
 
@@ -21523,7 +23805,7 @@ Platform = function (app, listofnodes) {
                 }
 
                 if(socket.init) socket.init()
-                
+
             }).catch(e => {
 
                 if (clbk)
@@ -21532,7 +23814,7 @@ Platform = function (app, listofnodes) {
             })
 
 
-            
+
         }
 
         var destroyMessage = function (message, time, noarrange, destroyUser) {
@@ -21542,11 +23824,11 @@ Platform = function (app, listofnodes) {
 
             if (platform.focus) {
 
-              
+
 
                 message.timeout = setTimeout(function () {
 
-                    
+
 
                     message.el.fadeOut(300)
 
@@ -21581,7 +23863,7 @@ Platform = function (app, listofnodes) {
 
         var hideallnotifications = function(){
             self.destroyMessages()
-            
+
         }
 
         var hideallnotificationselement = function(show){
@@ -21590,7 +23872,7 @@ Platform = function (app, listofnodes) {
                 if(show){
                     self.hideallnotificationsel.html('<div class="hidenf">'+platform.app.localization.e('hideallnotifications')+'</div>')
                     self.hideallnotificationsel.find('div').on('click', hideallnotifications)
-                    
+
                 }
                 else{
                     self.hideallnotificationsel.html('')
@@ -21601,6 +23883,7 @@ Platform = function (app, listofnodes) {
 
         var arrangeMessages = function(){
 
+
 			var offset = 0;
 
 			var maxCount = 4;
@@ -21608,22 +23891,12 @@ Platform = function (app, listofnodes) {
 
 			var boffset = 0;
 
-            var mtbl = (isMobile() || (isTablet() && platform.app.width <= 768))
+            var mtbl = platform.app.mobileview
 
 			if (mtbl){
 				maxCount = 1;
                 showremove = 0;
 			}
-			else
-			{
-				/*if (typeof _Electron == 'undefined') {
-                    boffset = 60;
-                }*/
-			}
-
-            
-
-			
 
 			var remove = self.fastMessages.length - maxCount;
 
@@ -21646,7 +23919,7 @@ Platform = function (app, listofnodes) {
 
                 if (showremove && self.fastMessages.length >= showremove){
                     boffset = 50
-    
+
                     hideallnotificationselement(true)
                 }
                 else{
@@ -21699,7 +23972,7 @@ Platform = function (app, listofnodes) {
                     lost = 0;
 
                     if(!notifications) return
-                    
+
                     lazyEach({
                         array: notifications,
                         action: function (p) {
@@ -21713,7 +23986,7 @@ Platform = function (app, listofnodes) {
                     })
 
                 })
-                
+
             }).catch(e => {
 
                 self.loadingMissed = false;
@@ -21721,13 +23994,15 @@ Platform = function (app, listofnodes) {
                 return Promise.reject(e)
             })
 
-            
+
         }
 
         self.destroyMessages = function () {
+
             _.each(self.fastMessages, function (message, i) {
                 destroyMessage(message, 1, true)
             })
+
             setTimeout(function(){
                 arrangeMessages()
             }, 301)
@@ -21736,7 +24011,7 @@ Platform = function (app, listofnodes) {
         self.fastMessage = function (html, destroyclbk) {
             var id = makeid(true);
 
-            html = '<div class="fastMessage" id="' + id + '">\
+            html = '<div class="fastMessage" elementsid="notificationmessage" id="' + id + '">\
             <div class="fmCnt">' + html + '</div>\
             <div class="close">\
                 <i class="fa fa-times" aria-hidden="true"></i>\
@@ -21767,9 +24042,9 @@ Platform = function (app, listofnodes) {
 
             message.el.on('click', function(){
 
-                if (isTablet()){
+                if (platform.app.mobileview){
 
-                    self.nav.api.go({
+                    platform.app.nav.api.go({
                         open : true,
                         href : 'notifications',
                         inWnd : true,
@@ -21778,29 +24053,23 @@ Platform = function (app, listofnodes) {
                         }
                     })
 
-                    /*platform.app.nav.api.load({
-                        open : true,
-                        href : 'userpage?id=notifications&report=notifications',
-                        history : true,
-                    })*/
-
                 }
                 else{
                     if(!message.expanded){
 
                         message.el.removeClass('smallsize');
-    
+
                         message.expanded = true
-    
+
                         arrangeMessages();
-    
+
                         setTimeout(function(){
                             arrangeMessages();
                         }, 300)
                     }
                 }
 
-				
+
 
 			})
 
@@ -21843,8 +24112,6 @@ Platform = function (app, listofnodes) {
 
             arrangeMessages();
 
-
-
             return message
         }
 
@@ -21885,15 +24152,13 @@ Platform = function (app, listofnodes) {
                     if (platform.sdk.notifications.find(data.txid)) return
                 }
 
-                //console.log("DA", data)
-
 
                 var clbks = function (loadedData) {
 
                     data.loadedData = true;
 
                     var audio = deep(m, 'audio')
-                    
+
                     _.each(m.clbks, function (clbk) {
                         clbk(data, loadedData);
                     })
@@ -21933,7 +24198,7 @@ Platform = function (app, listofnodes) {
 
 
                                     var message = self.fastMessage(html, function () {
-                                        platform.sdk.notifications.seen([data.txid])
+                                        //platform.sdk.notifications.seen([data.txid])
                                     });
 
                                     if (m.fastMessageEvents) {
@@ -22112,7 +24377,7 @@ Platform = function (app, listofnodes) {
                 self.send(JSON.stringify(message))
             }
 
-            
+
         }
 
         self.unsubscribe ={
@@ -22153,7 +24418,7 @@ Platform = function (app, listofnodes) {
                 return
             }
 
-           
+
 
             var message = {
 
@@ -22215,7 +24480,7 @@ Platform = function (app, listofnodes) {
 
         self.init = function (clbk) {
 
-            
+
 
             if(!_OpenApi){
 
@@ -22229,7 +24494,7 @@ Platform = function (app, listofnodes) {
                 self.online = self.onlineCheck;
                 self.connected = {};
 
-        
+
                 initconnection();
 
                 self.hideallnotificationsel = $('#hideallnotifications')
@@ -22254,7 +24519,7 @@ Platform = function (app, listofnodes) {
             //     reason: "system",
             //     time: "1619697839",
             // })
-            
+
             /*self.messageHandler({
                 addr: "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82",
                 amount: "166666",
@@ -22264,9 +24529,9 @@ Platform = function (app, listofnodes) {
                 time: 1629883584,
                 txid: "4e73740eba080aae73aceb80636dcf8f3fe8aed1a9c8c7de417a59ee2d54d357"
             })*/
-            
 
-           
+
+
 
 
             /*self.messageHandler({
@@ -22324,7 +24589,7 @@ Platform = function (app, listofnodes) {
                 txid: "6119caaadaef37be8f3716be8280e88206adf043f38fc1665d7e42bdcf90128a"
             })*/
 
-			/**self.messageHandler({
+			/*self.messageHandler({
                 addr: "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82",
                 addrFrom: "PTcArXMkhsKMUrzQKn2SXmaVZv4Q7sEpBt",
                 mesType: "postfromprivate",
@@ -22345,12 +24610,12 @@ Platform = function (app, listofnodes) {
                 time: 1636521290,
                 txid: "65fee9b1e925833c5ff623178efecc436d3af0c9f6a4baa0b73c52907a9d1d7b"
             })*/
-            
+
 
 
 		}, 6000)
     }
-    
+
     self.convertUTCSS = function (str) {
 
         var d = utcStrToDate(str);
@@ -22440,7 +24705,7 @@ Platform = function (app, listofnodes) {
                     if(!crypto.subtle){
                         if (clbk)
                             clbk('')
-                        return  
+                        return
                     }
 
                     crypto.subtle.importKey(
@@ -22793,7 +25058,7 @@ Platform = function (app, listofnodes) {
                             if (clbk)
                                 clbk('')
 
-                            return 
+                            return
                         }
 
 
@@ -23092,7 +25357,7 @@ Platform = function (app, listofnodes) {
             })
         }
 
-        
+
 
         return self;
     }
@@ -23118,7 +25383,7 @@ Platform = function (app, listofnodes) {
                         electron.ipcRenderer.send('quitAndInstall');
                         d = null;
 
-                        
+
 
                     },
 
@@ -23166,6 +25431,8 @@ Platform = function (app, listofnodes) {
 
                 if (data.msg == 'update-available' && (data.linux || data.macos)) {
                     updateAvailable()
+
+                    // TODO APPLICATIONS PAGE
                 }
             }
 
@@ -23174,8 +25441,6 @@ Platform = function (app, listofnodes) {
         })
 
     }
-
-   
 
     self.nodes = listofnodes || null
 
@@ -23250,6 +25515,7 @@ Platform = function (app, listofnodes) {
         self.sdk.notifications.loading = false;
 
         self.sdk.ustate.clbks = {};
+
         self.sdk.registrations.clbks = {};
 
         self.sdk.node.storage = { balance: {} }
@@ -23342,9 +25608,9 @@ Platform = function (app, listofnodes) {
         self.updating = false;
     }, 600000)
 
-    self.appstate = function () {
+    self.appstate = function() {
 
-        if (self.loadingWithErrors && _.isEmpty(self.app.errors.state)) {
+        if (reload || (self.loadingWithErrors && _.isEmpty(self.app.errors.state))) {
 
             self.loadingWithErrors = false;
             self.restart(function () {
@@ -23352,10 +25618,11 @@ Platform = function (app, listofnodes) {
                     self.app.reload(function () {
                     })
                 })
-               
+
             })
         }
     }
+
 
     self.directdialog = function(proxy){
 
@@ -23365,14 +25632,14 @@ Platform = function (app, listofnodes) {
                 html:  self.app.localization.e('pdirectdialog'),
                 btn1text: self.app.localization.e('dyes'),
                 btn2text: self.app.localization.e('dno'),
-    
+
                 success: function () {
                     self.app.api.set.current(proxy.id).then(r => {
 
                         resolve()
                     }).catch(resolve)
                 },
-    
+
                 fail: function () {
                     resolve()
                 },
@@ -23388,27 +25655,36 @@ Platform = function (app, listofnodes) {
 
         })
 
-       
+
     }
 
     self.prepare = function (clbk) {
 
+        self.nodeControlUpdateNodeLast = new Date()
+        self.nodeControlUpdateNodePopup = false
         self.preparing = true;
         self.sdk.registrations.load();
         self.sdk.relayTransactions.load();
         self.applications = self.__applications()
         self.sdk.theme.load()
+        self.sdk.lentaMethod.load()
+
+        self.sdk.uiScale.load();
+        self.sdk.uiScale.listenScalingEvents();
+
         self.sdk.system16.init()
 
         //self.app.platform.sdk.node.sys.load()
 
         setTimeout(function(){
             self.initSounds();
-        }, 3000)
-        
+        }, 35000)
+
         if (self.app.errors.clbks) {
             self.app.errors.clbks.platform = self.appstate
         }
+
+        ///
 
         initOnlineListener() // /remove for test
 
@@ -23416,11 +25692,12 @@ Platform = function (app, listofnodes) {
 
             return new Promise((resolve, reject) => {
                 setTimeout(function(){
+
                     self.app.api.changeProxyIfNeed().then(l => {
 
                         if(!l){
 
-                            var d = self.app.api.get.direct() 
+                            var d = self.app.api.get.direct()
 
                             if (d){
 
@@ -23433,10 +25710,54 @@ Platform = function (app, listofnodes) {
                         resolve()
 
                     }).catch(reject)
+
                 }, 50)
             })
 
         }).then(r => {
+
+
+            var directproxy = self.app.api.get.direct()
+
+            if (directproxy){
+                directproxy.clbks.tick.globalclbk = function(data) {
+
+                    if (data.nodeControl.state.hasUpdate) {
+                        if (!self.nodeControlUpdateNodePopup && (new Date(self.nodeControlUpdateNodeLast)).addSeconds(60 * 60) < new Date())
+                        {
+                            self.nodeControlUpdateNodeLast = new Date()
+                            self.nodeControlUpdateNodePopup = true
+
+                            dialog({
+                                html: self.app.localization.e('easyNode_e10062'),
+                                btn1text: self.app.localization.e('easyNode_e10015'),
+                                btn2text: self.app.localization.e('skip'),
+                                class : 'zindex',
+
+                                success: function () {
+                                   
+                                    directproxy.fetchauth('manage', {
+                                        action : 'node.update',
+                                        data : {
+                                            all : 'all'
+                                        }
+                                    }).then(r => {
+                                        sitemessage(self.app.localization.e('easyNode_e10063'), null, 5000)
+                                    }).catch(e => {
+                                        sitemessage(JSON.stringify(e), null, 5000)
+                                    })
+
+                                },
+                                destroy: function() {
+                                    self.nodeControlUpdateNodeLast = new Date()
+                                    self.nodeControlUpdateNodePopup = false
+                                }
+                            })
+                        }
+                    }
+                }
+            }
+
 
             self.ws = new self.WSn(self);
 
@@ -23453,7 +25774,7 @@ Platform = function (app, listofnodes) {
                 self.sdk.tags.getfastsearch()
                 self.sdk.node.get.time()
             }, 1000)
-            
+
             self.sdk.videos.init()
 
             self.preparing = false;
@@ -23462,8 +25783,14 @@ Platform = function (app, listofnodes) {
                 self.app.peertubeHandler = new PeerTubePocketnet(self.app);
             }
 
+            if (typeof FrontendLogger !== 'undefined') {
+                self.app.Logger = new FrontendLogger(navigator.userAgent, self.app);
+            } else {
+                self.app.Logger = {}
+            }
+
             self.prepareUser(function() {
-                
+
                 clbk();
             });
 
@@ -23483,8 +25810,8 @@ Platform = function (app, listofnodes) {
 
             }
 
-            
-            
+
+
         }).catch(e => {
             console.log("ERROR", e)
         })
@@ -23504,13 +25831,12 @@ Platform = function (app, listofnodes) {
             self.sdk.categories.load,
             self.sdk.activity.load,
             self.sdk.node.shares.parameters.load,
-            
+
 
         ], function () {
 
             self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
 
-            console.log(" self.sdk.notifications.init 2")
             self.sdk.notifications.init().catch(e => {})
 
             if(clbk) clbk()
@@ -23539,11 +25865,51 @@ Platform = function (app, listofnodes) {
             if (addresses.indexOf(a) > -1) {
 
                 self.app.user.features.telegram = 1;
-                
+
             } else {
                 self.app.user.features.telegram = 0;
             }
         }
+    }
+
+    self.acceptterms = function(clbk){
+
+        if(window.cordova){
+            var key = 'acceptterms'
+
+            var aterms = localStorage[key]
+
+            if (!aterms){
+                app.nav.api.load({
+                    open : true,
+                    id : 'terms',
+                    inWnd : true,
+                    essenseData : {
+                        success : function(){
+    
+                            localStorage[key] = new Date();
+                            
+                            setTimeout(function(){
+                                if(clbk) clbk()
+                            }, 300)
+                            
+                        }
+                    },
+    
+                    clbk : function(){
+                        
+                    }
+                })
+    
+                return
+            }
+        }
+
+        
+
+
+        if(clbk) clbk()
+        
     }
 
     self.prepareUser = function (clbk) {
@@ -23553,36 +25919,39 @@ Platform = function (app, listofnodes) {
         self.matrixchat.destroy()
 
         checkfeatures()
+        
 
         app.user.isState(function(state){
 
             if (state) {
 
-                
+
+                /*self.ui.popup('test', false, {});*/
+
 
                 lazyActions([
 
                     self.sdk.node.transactions.loadTemp,
                     self.sdk.addresses.init,
-                    
                     self.sdk.ustate.me,
                     self.sdk.usersettings.init,
                     self.sdk.imagesH.load,
-                    
+
                     self.ws.init,
                     self.firebase.init,
-                    
+
                     //self.sdk.exchanges.load,
                     self.sdk.articles.init,
                     self.sdk.categories.load,
                     self.sdk.activity.load,
                     self.sdk.node.shares.parameters.load,
-                    
+
                     self.sdk.user.get,
-                    
+
                 ], function () {
 
                     //self.ui.showmykey()
+
 
                     self.sdk.node.transactions.checkTemps(function(){
                         self.sdk.relayTransactions.send()
@@ -23596,9 +25965,10 @@ Platform = function (app, listofnodes) {
 
                     self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
 
-                    
-
                     self.app.peertubeHandler.init()
+
+                    console.log("HERE")
+
 
                     if (clbk)
                         clbk()
@@ -23606,6 +25976,8 @@ Platform = function (app, listofnodes) {
                     setTimeout(function(){
                         self.matrixchat.init()
                     }, 300)
+
+                    setTimeout(self.acceptterms, 5000)
 
                     setTimeout(function(){
 
@@ -23617,41 +25989,26 @@ Platform = function (app, listofnodes) {
                             //app.notifications.subscribe()
                         })
 
-
-
-                        /*self.sdk.keys.init().then(r => {
-                            console.log("RSUCCESS", r)
-                        }).catch(r => {
-                            console.log("RFAIL", r)
-                        })*/
-
-                        
-                        
                         if (app.curation()){
                             if(app.user.validate()){
-
                                 if(app.nav.get.href() == 'userpage?pc=1'){
                                     self.matrixchat.core.apptochat()
                                 }
-
-                                
                             }
                         }
-                    
-                        console.log(" self.sdk.notifications.init")
+
                         self.sdk.notifications.init().catch(e => {})
 
                         if (self.sdk.address.pnet()){
-
-
                             if(self.nvadr[self.sdk.address.pnet().address]) $('html').addClass('testaddress')
                             else{
+                                if($('html').hasClass('testaddress'))
                                 $('html').removeClass('testaddress')
                             }
                         }
-                        
+
                     }, 2000)
-                    
+
 
                 })
             }
@@ -23665,14 +26022,15 @@ Platform = function (app, listofnodes) {
 
         })
 
-        
-        
+
+
     }
 
     self.matrixchat = {
         el : null,
         inited : false,
         initing : false,
+        chatparallax : null,
 
         clbks : {
             ALL_NOTIFICATIONS_COUNT : {},
@@ -23681,24 +26039,39 @@ Platform = function (app, listofnodes) {
         },
 
         destroy : function(){
+
+
+            if (self.matrixchat.chatparallax){
+
+
+                self.matrixchat.chatparallax.destroy()
+                self.matrixchat.chatparallax = null
+            }
+
+
             if (window.matrixchat){
                 window.matrixchat.destroy()
             }
-    
+
+
             $('#matrix').html('');
+
 
             self.matrixchat.el = null
             self.matrixchat.inited = false
+
 
             self.matrixchat.clbks = {
                 ALL_NOTIFICATIONS_COUNT : {},
                 NOTIFICATION : {},
                 SHOWING : {}
             }
+
         },
 
 
         import : function(clbk){
+
 
             if (self.matrixchat.imported){
                 if(clbk) clbk()
@@ -23710,30 +26083,36 @@ Platform = function (app, listofnodes) {
                     if(clbk) clbk()
                 }
                 else{
-                    importScript('chat/matrix-element.min.js?v=9', clbk)
 
-                    //importScript('chat/matrix-element.js?v=9', clbk)
+                    var vs = '10'
+
+                    if (typeof numfromreleasestring != 'undefined'){
+                        vs = numfromreleasestring(window.packageversion)
+                    }
+
+                    importScript('chat/matrix-element.min.js?v=' + vs, clbk)
+
                 }
-                
+
             }
 
-            
+
         },
 
         startchat : function(address){
-            
+
             if (self.matrixchat.core){
 
                 var link = 'contact?id=' + hexEncode(address)
 
-                if(isMobile() || window.cordova){
+                if (self.app.mobileview){
                     self.matrixchat.core.apptochat(link)
                 }
                 else{
                     self.matrixchat.core.gotoRoute(link)
                 }
             }
-                
+
 
         },
 
@@ -23743,8 +26122,8 @@ Platform = function (app, listofnodes) {
             if(self.matrixchat.initing) return
 
             self.matrixchat.initing = true
-            
-            
+
+
             app.user.isState(function(state){
 
                 self.matrixchat.initing = false
@@ -23758,36 +26137,36 @@ Platform = function (app, listofnodes) {
                     var a = pnet.address;
 
                     if (state) {
-                        
+
                         self.matrixchat.import(function(){
 
                             self.matrixchat.inited = true
-    
+
                             var privatekey = self.app.user.private.value.toString('hex');
 
-                
+
                             var matrix = `<div class="wrapper matrixchatwrapper">
                                 <matrix-element
                                     address="${a}"
                                     privatekey="${privatekey}"
-                                    pocketnet="`+( (isMobile() || isTablet() || window.cordova) ? '' : 'true')+`"
-                                    mobile="`+( (isMobile() || isTablet() || window.cordova) ? 'true' : '')+`" 
+                                    pocketnet="`+( self.app.mobileview ? '' : 'true')+`"
+                                    mobile="`+( self.app.mobileview ? 'true' : '')+`" 
                                     ctheme="`+self.sdk.theme.current+`"
                                     localization="`+self.app.localization.key+`"
                                     fcmtoken="`+(self.fcmtoken || "")+`"
                                 >
                                 </matrix-element>
                             </div>`
-        
-                            $('#matrix').html(matrix);   
+
+                            $('#matrix').html(matrix);
 
                             self.matrixchat.el = $('.matrixchatwrapper')
                             self.matrixchat.initevents()
                             self.matrixchat.connect()
-                            
+
                         }, null, app);
 
-        
+
                     }
                 }
             })
@@ -23798,7 +26177,13 @@ Platform = function (app, listofnodes) {
                 self.matrixchat.el.find('matrix-element').attr('fcmtoken', self.fcmtoken)
             }
         },
-        
+
+        changePip : function(){
+            if (self.matrixchat.el){
+                self.matrixchat.el.find('matrix-element').attr('pip', self.app.mobile.pip.enabled)
+            }
+        },
+
         changeTheme : function(){
             if (self.matrixchat.el){
                 self.matrixchat.el.find('matrix-element').attr('ctheme', self.sdk.theme.current)
@@ -23814,23 +26199,49 @@ Platform = function (app, listofnodes) {
         initevents : function(){
             if (self.matrixchat.el){
 
-                if(isTablet() || isMobile() || window.cordova){
+                if(self.app.mobileview){
 
-					self.matrixchat.el.swipe({
-						swipeLeft : function(e, phase, direction, distance){
-                            if(_.find(e.path, function(el){
-                                return el.className && el.className.indexOf('noswipepnt') > -1
-                            })) return
-                            
+                    self.matrixchat.chatparallax = new SwipeParallaxNew({
 
-                            console.log("E", e)
+                        el : self.matrixchat.el,
+                        transformel : self.matrixchat.el,
+    
+                        allowPageScroll : 'vertical',
+        
+                        directions : {
+                            left : {
+                                cancellable : true,				
+                                
+                              
+    
+                                positionclbk : function(px){
+                                },
+    
+                                constraints : function(e){
 
-                            if (self.matrixchat.core && (!self.matrixchat.core.canback || self.matrixchat.core.canback()))
-                                self.matrixchat.core.backtoapp()
+                                    if(_.find(e.path, function(el){
+                                        return el.className && el.className.indexOf('noswipepnt') > -1
+                                    })) return false
 
-						},
-					})
-	
+                                    if (self.matrixchat.core && (!self.matrixchat.core.canback || self.matrixchat.core.canback())) return true
+                                },
+    
+                                restrict : true,
+                                trueshold : 30,
+                                clbk : function(){
+
+                                    if (self.matrixchat.core && (!self.matrixchat.core.canback || self.matrixchat.core.canback()))
+                                        self.matrixchat.core.backtoapp()
+
+                                }
+        
+                            }
+                        }
+                        
+        
+                    }).init()
+
+
 				}
 
                 self.matrixchat.clbks.NOTIFICATION.global = self.matrixchat.notify.event
@@ -23885,14 +26296,14 @@ Platform = function (app, listofnodes) {
                     var html = self.matrixchat.notify.tpl(matrixevent)
 
                     if (html)
-    
+
                         electron.ipcRenderer.send('electron-notification', {
                             html : html,
                             settings : {
                                 size : 'small'
                             }
                         });
-    
+
                 }
             }
         },
@@ -23906,7 +26317,7 @@ Platform = function (app, listofnodes) {
                     return self.matrixchat.core.mtrx.shareInChat(id, {
                         urls : [url]
                     }).catch(e => {
-                        
+
                         self.matrixchat.core.backtoapp()
 
                         return Promise.reject(e)
@@ -23956,7 +26367,7 @@ Platform = function (app, listofnodes) {
 
         backtoapp : function(){
 
-            if (self.matrixchat.core && !self.matrixchat.core.hiddenInParent){ 
+            if (self.matrixchat.core && !self.matrixchat.core.hiddenInParent){
                 self.matrixchat.core.backtoapp()
 
                 return true
@@ -23972,7 +26383,7 @@ Platform = function (app, listofnodes) {
         showed : function(){
             if(!self.matrixchat.core){ return false }
 
-            if(isTablet() || isMobile() || window.cordova){
+            if (self.app.mobileview){
                 return !self.matrixchat.core.hiddenInParent
             }
 
@@ -23987,18 +26398,17 @@ Platform = function (app, listofnodes) {
                     height : self.currentBlock
                 }
             })
-            
 
             core.backtoapp = function(link){
 
-                if (isTablet() ||isMobile() || window.cordova)
+                if (self.app.mobileview)
                     app.nav.api.history.removeParameters(['pc'], null, {replaceState : true})
 
                 if (link){
                     link = link.replace('https://' + self.app.options.url + '/', '')
 
-                    if(link.indexOf('index') == '0' && link.indexOf('v=') == -1 && 
-                        (link.indexOf('s=') > -1 || link.indexOf('i=') > -1 || link.indexOf('p=') > -1)) 
+                    if(link.indexOf('index') == '0' && link.indexOf('v=') == -1 &&
+                        (link.indexOf('s=') > -1 || link.indexOf('i=') > -1 || link.indexOf('p=') > -1))
                         link = link.replace('index', 'post')
 
                     self.app.nav.api.load({
@@ -24012,79 +26422,83 @@ Platform = function (app, listofnodes) {
                 if (self.matrixchat.el){
 
                     if(!self.matrixchat.el.hasClass('active')) return
-
-                    self.matrixchat.el.removeClass('active')
+                        self.matrixchat.el.removeClass('active')
                 }
                 else{
                     return
                 }
 
-                app.chatposition(false)
+                if (app.chatposition)
+                    app.chatposition(false)
+
 
                 self.app.actions.playingvideo()
 
-                if (isTablet() ||isMobile() || window.cordova)
-                    self.app.actions.restore()
+                if (self.app.mobileview) self.app.actions.restore()
 
-                app.el.html.removeClass('chatshowed')
+                if (document.activeElement) document.activeElement.blur()
 
-                if(document.activeElement) document.activeElement.blur()
-
-                if (self.matrixchat.core){ 
+                if (self.matrixchat.core){
                     self.matrixchat.core.cancelshare ? self.matrixchat.core.cancelshare() : '' ;
-                    self.matrixchat.core.hideInParent(isTablet() ||isMobile() || window.cordova ? true : false )
+
+                    self.matrixchat.core.hideInParent(self.app.mobileview ? true : false )
                 }
 
-                if (isTablet() ||isMobile() || window.cordova){
-                    self.app.actions.onScroll()
+                if (self.app.mobileview){
+
+                    setTimeout(function(){
+                        self.app.actions.onScroll()
+                    }, 300) 
+                    
                 }
 
                 _.each(self.matrixchat.clbks.SHOWING, function(c){
                     c(false)
                 })
-                
+
             }
 
             core.apptochat = function(link){
 
-
                 if (document.activeElement) document.activeElement.blur()
 
-                if (self.matrixchat.core){ 
+                if (self.matrixchat.core){
                     if(link){
                         self.matrixchat.core.gotoRoute(link)
                     }
                 }
-                
+
                 if (self.matrixchat.el){
 
-                    if(self.matrixchat.el.hasClass('active')) return
-
-                    self.matrixchat.el.addClass('active')
+                    if (self.matrixchat.el.hasClass('active')) return
+                        self.matrixchat.el.addClass('active')
 
                 }
                 else{
                     return
                 }
 
-                app.chatposition(true)
-                    
+                if (app.chatposition)
+                    app.chatposition(true)
+
                 self.app.actions.playingvideo()
 
-                if (isTablet() ||isMobile() || window.cordova){
-                    self.app.actions.offScroll()
-                    self.app.actions.optimize()   
+                if (self.app.mobileview){
+                    setTimeout(function(){
+                        self.app.actions.offScroll()
+                        self.app.actions.optimize()
+                    })
                 }
-                    
-                if (isTablet() || isMobile() || window.cordova)
+
+                if (self.app.mobileview)
                     app.nav.api.history.addParameters({
                         'pc' : '1'
                     })
 
-                if (self.matrixchat.core){ 
-                    self.matrixchat.core.hideInParent(false) 
+                if (self.matrixchat.core){
+                    self.matrixchat.core.hideInParent(false)
                 }
-                
+
 
                 _.each(self.matrixchat.clbks.SHOWING, function(c){
                     c(true)
@@ -24094,11 +26508,12 @@ Platform = function (app, listofnodes) {
             }
 
             self.matrixchat.core = core
-            self.matrixchat.core.hideInParent(isTablet() ||isMobile()|| window.cordova ? true : false)
 
+            core.hideOptimization(self.app.mobileview ? true : false)
+            core.hideInParent(self.app.mobileview ? true : false)
             core.externalLink(self.matrixchat)
 
-            self.app.platform.ws.messages["newblocks"].clbks.newsharesLenta = 
+            self.app.platform.ws.messages["newblocks"].clbks.newsharesLenta =
             self.app.platform.ws.messages["new block"].clbks.matrixchat = function(){
 
                 core.update({
@@ -24120,9 +26535,9 @@ Platform = function (app, listofnodes) {
             self.matrixchat.connect()
         },
 
-        unlink : function(){    
+        unlink : function(){
 
-            if (self.matrixchat.core){ 
+            if (self.matrixchat.core){
                 //self.matrixchat.core.hideInParent(false)
                 self.matrixchat.core.destroyExternalLink()
             }
@@ -24134,7 +26549,8 @@ Platform = function (app, listofnodes) {
             delete self.app.platform.ws.messages["new block"].clbks.matrixchat
             delete self.matrixchat.core
 
-            app.chatposition(false)
+            if (app.chatposition)
+                app.chatposition(false)
 
             var cm = deep(app, 'modules.menu.module.restart')
 
@@ -24178,9 +26594,9 @@ Platform = function (app, listofnodes) {
                     self.matrixchat.connectWith = null
                 })
 
-                
+
             }
-                
+
             if (self.matrixchat.joinRoom){
                 return self.matrixchat.core.joinRoom(self.matrixchat.joinRoom).then(r => {
                     self.matrixchat.joinRoom = null
@@ -24188,7 +26604,7 @@ Platform = function (app, listofnodes) {
                     self.matrixchat.joinRoom = null
                 })
 
-                
+
             }
         },
 
@@ -24207,7 +26623,7 @@ Platform = function (app, listofnodes) {
 
         }
 
-           
+
     }
 
     self.FocusListener = function (platform) {
@@ -24226,6 +26642,8 @@ Platform = function (app, listofnodes) {
 
         var f = function (e, resume) {
 
+            console.log("FOCUS")
+
             var focustime = platform.currentTime()
             var time = focustime - (unfocustime || focustime)
 
@@ -24242,7 +26660,7 @@ Platform = function (app, listofnodes) {
 
                 retry(function(){
                     return platform && platform.matrixchat && platform.matrixchat.core;
-                }, function(){ 
+                }, function(){
 
                     setTimeout(function(){
                         platform.matrixchat.core.mtrx.fastsync()
@@ -24266,10 +26684,25 @@ Platform = function (app, listofnodes) {
         var uf = function () {
             self.focus = false;
 
-            unfocustime = platform.currentTime()
+            unfocustime = platform.currentTime()    
+
+            setTimeout(function(){
+
+                if (self.focus) return 
+
+                if (self.app.pipwindow && self.app.pipwindow.playerstatus && self.app.pipwindow.playerstatus() == 'playing'){
+
+                    self.app.mobile.pip.enable(self.app.pipwindow.el)
+                }
+                
+            }, 200)
+           
+
+            //if (self.app.playingvideo)
+            //    self.app.mobile.pip.enable(self.app.playingvideo.el ? self.app.playingvideo.el.find('.video-js') : '');
         }
 
-     
+
 
         window.focus();
 
@@ -24292,11 +26725,9 @@ Platform = function (app, listofnodes) {
 
             if (electron) {
 
-                var w = electron.remote.getCurrentWindow();
-
-                w.on('hide', uf)
-                w.on('minimize', uf)
-                w.on('restore', f)
+                electron.ipcRenderer.on('win-hide', uf)
+                electron.ipcRenderer.on('win-minimize', uf)
+                electron.ipcRenderer.on('win-restore', f)
 
                 electron.ipcRenderer.on('pause-message', ufel)
                 electron.ipcRenderer.on('resume-message', f)
@@ -24324,11 +26755,9 @@ Platform = function (app, listofnodes) {
 
             if (electron) {
 
-                var w = electron.remote.getCurrentWindow();
-
-                w.off('hide', uf)
-                w.off('minimize', uf)
-                w.off('restore', f)
+                electron.ipcRenderer.off('win-hide', uf)
+                electron.ipcRenderer.off('win-minimize', uf)
+                electron.ipcRenderer.off('win-restore', f)
 
                 electron.ipcRenderer.off('pause-message', ufel)
                 electron.ipcRenderer.off('resume-message', fpauseel)
@@ -24486,26 +26915,24 @@ Platform = function (app, listofnodes) {
             var utitomime = {
                 'public.image' : 'image/jpeg'
             }
- 
+
             cordova.openwith.init();
             cordova.openwith.addHandler(function(intent){
                 var sharing = {}
 
-                console.log("intent", intent)
-
                 if(intent.action == 'VIEW') return
-                
-                
+
+
 
                 var promises = _.map(
-                    _.filter(intent.items || [], function(i){return i}), 
+                    _.filter(intent.items || [], function(i){return i}),
                     (item) => {
 
 
                         /*if (item.type == 'text/plain'){
                             delete item.type
                         }*/
-                        
+
 
                     return new Promise((resolve, reject) => {
 
@@ -24519,17 +26946,17 @@ Platform = function (app, listofnodes) {
                         }
                         else{
                             cordova.openwith.load(item, function(data) {
-                            
+
                                 item.data = 'data:' + item.type + ';base64,' + data
-    
+
                                 resolve()
-                                
+
                             });
                         }
 
-                        
+
                     }).then(r => {
-                        
+
                         if (item.text){
                             if(!sharing.messages) sharing.messages = []
 
@@ -24543,7 +26970,7 @@ Platform = function (app, listofnodes) {
 
                             sharing[mime[item.type]].push(item.data)
                         }
-                        
+
                         return Promise.resolve()
                     })
                 })
@@ -24566,32 +26993,19 @@ Platform = function (app, listofnodes) {
 
                         })
 
-                        
+
                     }
                 })
             });
 
         }
 
-
-        ///////////
-
+       
         self.sdk.localshares.initclbk()
 
         if(window.cordova){
             setupOpenwith()
         }
-
-
-        /*if(window.cordova){
-            setupOpenwith()
-            self.sdk.local.shares.initclbk()
-            
-            //self.sdk.local.shares.init();
-        } else if (typeof _Electron != 'undefined' && window.electron) {
-            self.sdk.local.shares.initclbk()
-            // self.sdk.local.shares.init();
-        }*/
 
         
 
@@ -24602,57 +27016,60 @@ Platform = function (app, listofnodes) {
 
         var routing = function(route){
 
-            app.user.isState(function (state) {
+            pretry(function(){
 
-                var url = route
+                return app.appready
 
-                route = (route || '').replace('pocketnet://', '').replace('https://test.pocketnet.app/', '').replace('https://pocketnet.app/', '').replace('bastyon://', '').replace('https://test.bastyon.com/', '').replace('https://bastyon.com/', '')
+            }).then(r => {
 
-                    if (route){
+                app.user.isState(function (state) {
 
-                        if(!state || route.indexOf('welcome?') == -1){
-                            self.app.nav.api.load({
-                                open: true,
-                                href: route,
-                                history: true
-                            })
-                        }
-                    }
-
-                    /////////////
-
-                    var w = parameters(url, true).connect
-                    var cr = parameters(url, true).publicroom   
-                    var ps =  parameters(url, true).ps
-                    var ref =  parameters(url, true).ref
-
-                    self.matrixchat.connectWith = w || null
-                    self.matrixchat.joinRoom = cr || null
-
-
-                    if(!ps && !cr && !w && !app.curation()){
-                        self.matrixchat.backtoapp()
-                    }
-
-                    setTimeout(function(){
-                        self.matrixchat.wait().then(r => {
-                            self.matrixchat.connect()
-                        })
-                    }, 500)
-
-                    if(ref){
-                        self.app.setref(ref)
-
-                        /*self.sdk.users.addressByName(ref, function(r){
-                            if(r){
-                                self.app.ref = r;
-                                localStorage['ref'] = r
+                    var url = route
+    
+                    route = (route || '').replace('pocketnet://', '').replace('https://test.pocketnet.app/', '').replace('https://pocketnet.app/', '').replace('bastyon://', '').replace('https://test.bastyon.com/', '').replace('https://bastyon.com/', '')
+    
+                        if (route){
+    
+                            if(!state || route.indexOf('welcome?') == -1){
+                                self.app.nav.api.load({
+                                    open: true,
+                                    href: route,
+                                    history: true
+                                })
                             }
-            
-                        })*/
-                    }
+                        }
+    
+                        /////////////
+    
+                        var w = parameters(url, true).connect
+                        var cr = parameters(url, true).publicroom   
+                        var ps =  parameters(url, true).ps
+                        var ref =  parameters(url, true).ref
+    
+                        self.matrixchat.connectWith = w || null
+                        self.matrixchat.joinRoom = cr || null
+    
+    
+                        if(!ps && !cr && !w && !app.curation()){
+                            self.matrixchat.backtoapp()
+                        }
+    
+                        setTimeout(function(){
+                            self.matrixchat.wait().then(r => {
+                                self.matrixchat.connect()
+                            })
+                        }, 500)
+    
+                        if (ref){
+                            self.app.setref(ref)
+                        }
+    
+                })
 
             })
+
+           
+
         }
 
         if(electron && _Electron){
@@ -24661,18 +27078,16 @@ Platform = function (app, listofnodes) {
                 if (data.type == 'action') {
                     routing(data.msg)
                 }
-    
-            
             })
 
         }
-       
+
         if (window.cordova && typeof universalLinks != 'undefined'){
 
             universalLinks.subscribe('nav-message', function (eventData) {
 
                 routing(eventData.url)
-                
+
             });
 
         }

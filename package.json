@@ -1,11 +1,9 @@
 {
     "name": "pocketnet",
-
-    "version": "0.4.112",
-    "cordovaversion": "1.1.168",
-    "cordovaversioncode": "10168",
-
-    "description": "Pocketnet desktop application",
+    "version": "0.7.1",
+    "cordovaversion": "1.7.1",
+    "cordovaversioncode": "170010",
+    "description": "Bastyon desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
     "company": "Pocketnet Community",
     "license": "Apache-2.0",
@@ -13,7 +11,7 @@
     "repository": "github:pocketnetapp/pocketnet.gui",
     "scripts": {
         "start": "electron . --development",
-        "start:dev": "electron . --development --test",
+        "start:test": "electron . --development --test",
         "pack": "electron-builder -w --dir --x64",
         "dist": "electron-builder -w --x64 --ia32",
         "distl": "electron-builder -l --x64",
@@ -23,7 +21,7 @@
         "minimize:test": "node minimize.js -prodaction=true -vendor=30044 -test=true -path=/",
         "dev": "node minimize.js -prodaction=false -path=/pocketnet/",
         "dev:test": "node minimize.js -prodaction=false -test=true -path=/pocketnet/",
-        "minimize:cordova": "node minimize.js -prodaction=true -vendor=30044 -path=/pocketnet/ -project=Bastyon",
+        "minimize:cordova": "node minimize.js -prodaction=true -vendor=30044 -path=/pocketnet/ -project=Bastyon -composetemplates=true",
         "minimize:bastyon": "node minimize.js -prodaction=true -vendor=30044 -path=/ -project=Bastyon",
         "minimize:bastyon:test": "node minimize.js -prodaction=true -vendor=30044 -test=true -path=/ -project=Bastyon",
         "dev:bastyon": "node minimize.js -prodaction=false -path=/pocketnet/ -project=Bastyon",
@@ -31,9 +29,9 @@
         "node:embedding": "node minimize.js -prodaction=true -vendor=30044 -path=/web/"
     },
     "devDependencies": {
-        "electron": "^11.4.5",
+        "electron": "",
         "electron-builder": "",
-        "electron-notarize": "^1.0.0",
+        "electron-notarize": "",
         "electron-reload": "",
         "electron-reloader": "",
         "humanize": "0.0.9"
@@ -48,11 +46,11 @@
         "compression": "^1.7.4",
         "deep-extend": "^0.6.0",
         "download-github-release": "^0.3.2",
-        "electron-context-menu": "^2.4.0",
-        "electron-is": "^3.0.0",
-        "electron-localshortcut": "^3.2.1",
-        "electron-log": "^4.4.1",
-        "electron-updater": "^4.3.5",
+        "electron-is": "",
+        "electron-context-menu": "",
+        "electron-localshortcut": "",
+        "electron-log": "",
+        "electron-updater": "^4.0.0",
         "email-validator": "^2.0.4",
         "emojione": "^4.5.0",
         "express": "^4.17.1",
@@ -101,6 +99,7 @@
         "random": "^2.2.0",
         "random-hash": "^4.0.1",
         "request": "^2.88.2",
+        "request-progress": "^3.0.0",
         "request-promise-native": "^1.0.7",
         "rf-phone-validator": "0.0.3",
         "save": "^2.4.0",
@@ -110,20 +109,27 @@
         "standard": "^11.0.1",
         "svg-captcha": "^1.4.0",
         "swagger-ui-express": "^4.1.4",
+        "targz": "^1.0.1",
         "tcp-port-used": "^1.0.1",
         "twilio": "^3.48.1",
         "uglify-js": "",
         "uglifycss": "0.0.29",
         "underscore": "",
-        "yuicompressor": "^2.4.8",
-        "winston": "^3.3.3"
+        "winston": "^3.3.3",
+        "yuicompressor": "^2.4.8"
     },
     "build": {
-        "productName": "Pocketnet",
+        "productName": "Bastyon",
+        "afterSign": "build/notarize.js",
+        "appId": "app.pocketnet.gui",
         "files": [
             "**/*",
             "!cordova${/*}",
-            "!external${/*}"
+            "!external${/*}",
+            "!proxy16/data${/*}",
+            "!proxy16/pocketcoin${/*}",
+            "!proxy16/pocketcoind${/*}",
+            "!proxy16/downloads${/*}"
         ],
         "extraFiles": [
             {
@@ -149,11 +155,19 @@
                 "repo": "pocketnet.gui"
             }
         ],
+        "protocols": {
+            "name": "bastyon",
+            "schemes": [
+                "bastyon",
+                "pocketnet"
+            ]
+        },
         "mac": {
             "target": "dmg",
             "artifactName": "${productName}Setup.${ext}",
-            "icon": "assets/icons/mac/icon.icns",
-            "entitlements": "build/entitlements.mac.plist"
+            "icon": "res/electron/icons/mac/icon.icns",
+            "entitlements": "build/entitlements.mac.plist",
+            "extendInfo": "bastyon"
         },
         "linux": {
             "target": [
@@ -166,29 +180,120 @@
             ],
             "artifactName": "${productName}_${platform}_${arch}.${ext}",
             "category": "Network",
-            "executableName": "Pocketnet",
-            "description": "Pocketnet Desktop Browser"
+            "executableName": "${productName}",
+            "description": "${productName} Desktop Browser"
         },
         "win": {
-            "target": "nsis",
-            "icon": "assets/icons/win/icon.ico"
+            "target": [
+                {
+                    "target": "nsis"
+                }
+            ],
+            "icon": "res/electron/icons/win/icon.ico"
         },
         "nsis": {
             "artifactName": "${productName}Setup.${ext}",
-            "oneClick": false,
+            "oneClick": true,
             "perMachine": false,
-            "allowToChangeInstallationDirectory": true,
+            "allowToChangeInstallationDirectory": false,
             "createDesktopShortcut": true,
             "displayLanguageSelector": true,
             "menuCategory": true,
-            "installerIcon": "assets/icons/win/icon.ico",
-            "uninstallerIcon": "assets/icons/win/icon.ico",
+            "installerIcon": "res/electron/icons/win/icon.ico",
+            "uninstallerIcon": "res/electron/icons/win/icon.ico",
             "uninstallDisplayName": "${productName}, v${version}",
-            "deleteAppDataOnUninstall": true,
+            "deleteAppDataOnUninstall": false,
             "license": "LICENSE",
             "include": "build/installer.nsh"
-        },
+        }
+    },
+    "buildTest": {
+        "productName": "BastyonTest",
         "afterSign": "build/notarize.js",
-        "appId": "app.pocketnet.gui"
+        "appId": "app.pocketnettest.gui",
+        "files": [
+            "**/*",
+            "!cordova${/*}",
+            "!external${/*}",
+            "!proxy16/data${/*}",
+            "!proxy16/pocketcoin${/*}",
+            "!proxy16/pocketcoind${/*}",
+            "!proxy16/downloads${/*}"
+        ],
+        "extraFiles": [
+            {
+                "from": "proxy16/cert",
+                "to": "cert",
+                "filter": [
+                    "**/cert.pem",
+                    "**/key.pem"
+                ]
+            },
+            {
+                "from": "proxy16/static",
+                "to": "static",
+                "filter": [
+                    "**/"
+                ]
+            }
+        ],
+        "publish": [
+            {
+                "provider": "github",
+                "owner": "pocketnetapp",
+                "repo": "pocketnet.gui"
+            }
+        ],
+        "protocols": {
+            "name": "bastyon",
+            "schemes": [
+                "bastyon",
+                "pocketnet"
+            ]
+        },
+        "mac": {
+            "target": "dmg",
+            "artifactName": "${productName}Setup.${ext}",
+            "icon": "res/electron/icons/mac/icon.icns",
+            "entitlements": "build/entitlements.mac.plist",
+            "extendInfo": "bastyon"
+        },
+        "linux": {
+            "target": [
+                {
+                    "target": "AppImage"
+                },
+                {
+                    "target": "deb"
+                }
+            ],
+            "artifactName": "${productName}_${platform}_${arch}.${ext}",
+            "category": "Network",
+            "executableName": "${productName}",
+            "description": "${productName} Desktop Browser"
+        },
+        "win": {
+            "target": [
+                {
+                    "target": "nsis"
+                }
+            ],
+            "icon": "res/electron/icons/win/test_icon.ico"
+        },
+        "nsis": {
+            "artifactName": "${productName}Setup.${ext}",
+            "oneClick": true,
+            "perMachine": false,
+            "allowToChangeInstallationDirectory": false,
+            "createDesktopShortcut": true,
+            "displayLanguageSelector": true,
+            "menuCategory": true,
+            "installerIcon": "res/electron/icons/win/test_icon.ico",
+            "uninstallerIcon": "res/electron/icons/win/test_icon.ico",
+            "uninstallDisplayName": "${productName}, v${version}",
+            "deleteAppDataOnUninstall": false,
+            "license": "LICENSE",
+            "include": "build/installerTest.nsh"
+        }
     }
 }

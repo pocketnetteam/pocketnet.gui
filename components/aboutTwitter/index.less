@@ -13,7 +13,7 @@
 		font-size: 30px;
 		font-weight: 600;
 		line-height: 40px;
-		color: #444444;
+		color: rgb(var(--color-h2-aboutcc));
 		text-align: center;
 		text-transform: uppercase;
 		>span {
@@ -31,7 +31,7 @@
 
 	.works {
 		padding: 30px;
-		background: url(../../img/about/bg-bastion-section1.jpg) no-repeat fixed;
+		background: url(../../img/about/bg-bastion-section1.jpg) no-repeat;
 		background-size: cover;
 		position: relative;
 		
@@ -86,7 +86,7 @@
 			
 		}
 		h2 {
-			color: #000;
+			
 			>span {
 				font-weight: 400;
 			}
@@ -176,7 +176,7 @@
 								align-items: center;
 								justify-content:center;
 								text-decoration: none;
-								color: #000;
+								
 								>img{
 									width: 25px;
 									height: 25px;
@@ -189,7 +189,7 @@
 									font-size: 0.6em;
 									}
 								>i{
-									color: #00a6ff;
+									color: rgb(var(--color-cc-blue));
 									font-size: 2em;
 									width: 25px;
 									height: 25px;
@@ -213,7 +213,6 @@
 
 	.darkbg {
 		padding: 30px 0;
-		background: #000;
 		//background-size: cover;
 		position: relative;
 		>.main-wrapper {
@@ -273,7 +272,7 @@
 			right: 0;
 			top: 0;
 			bottom: 0;
-			background-color: rgba(33, 42, 73, 0.6);
+			background-color: rgba(var(--color-cc-form));
 			z-index: 1;
 		}
 		>.main-wrapper {
@@ -313,7 +312,7 @@
 		max-width: 1170px;
 	}
 	header {
-		background-color: #dddddd;
+		background-color: rgb(221, 221, 221)ddd;
 		height: 65px;
 		position: sticky;
 		top: 0;
@@ -347,7 +346,7 @@
 					content: '';
 					width: 10%;
 					height: 3px;
-					background: #00D5C3;
+					background: rgb(0, 213, 195);
 					position: absolute;
 					left: 0;
 					right: 0;
@@ -367,7 +366,7 @@
 	}
 	.main-board {
 		//height: 600px;
-		//background: url(../../img/about/twitter-bg.jpg) no-repeat fixed;
+		//background: url(../../img/about/twitter-bg.jpg) no-repeat;
 		background-position: 0 0;
 		background-repeat: no-repeat;
 		background-size: cover;
@@ -464,7 +463,7 @@
 			
 	}
 	.grey {
-		background: #dddddd;
+		background: rgb(221, 221, 221)ddd;
 		padding: 70px 0;
 	}
 	.main-board__image {
@@ -482,7 +481,7 @@
 		align-items: center;
 		width: 165px;
 		height: 50px;
-		border: 1px solid #00a6ff;
+		border: 1px solid rgb(var(--color-cc-blue));
 		font-size: 18px;
 		border-radius: 0 5px 0 5px;
 		text-decoration: none;
@@ -493,12 +492,12 @@
 			margin-left: 20px;
 			margin-right: 15px;
 			font-size: 30px;
-			color: #00a6ff;
+			color: rgb(var(--color-cc-blue));
 			width: 26px;
 			transition-duration: 0.3s;
 		}
 		&:hover {
-			background: #00a6ff;
+			background: rgb(var(--color-cc-blue));
 			>i {
 				color: #FFFFFF;
 			}
@@ -585,10 +584,11 @@
 	}
 
 	.description-three-column{
-		background: #cfcfcf;
+		background : rgb(var(--color-medium-theme));
+		
 		.main-wrapper{
 			padding: 60px 0;		
-			color: #000;
+			
 			font-weight: 600;
 			display: flex;
 			flex-wrap: wrap;
@@ -674,7 +674,6 @@
 		.main-wrapper{
 			width: 100%;
 			h3{
-				color:#000;
 				font-size: 2.2em;
 				padding: 50px;
 				text-align: center;
@@ -687,7 +686,6 @@
 					display: block;
 					width: 30%;
 					h4{
-						color:#000;
 						font-size: 1.8em;
 						margin-bottom: 20px;
 						height: 60px;
@@ -712,7 +710,6 @@
 				div{
 					div{
 						h4{
-							color:#000;
 							font-size: 1em;
 							margin-bottom: 20px;
 							height: 60px;
@@ -729,7 +726,6 @@
 				padding: 40px 0;
 				display:flex;
 				flex-wrap:wrap;
-				color: #000 !important;
 				justify-content: space-around;
 				align-items:center;
 				&:nth-child(even){
@@ -741,7 +737,7 @@
 						margin-bottom:30px;
 						text-align: left;
 						font-weight: 800;
-						color: #000;
+						
 					}
 					p{
 						margin-bottom: 15px;
@@ -787,7 +783,7 @@
 	}
 	.main-board-2 {
 		//height: 500px;
-		background: url(../../img/about/Unlike-YouTube.jpg) no-repeat fixed;
+		background: url(../../img/about/Unlike-YouTube.png) no-repeat;
 		background-position: center center;
 		background-size: cover;
 		position: relative;	 	
@@ -828,7 +824,7 @@
 	}
 	@media (max-width: 450px){
 		.main-board-2{
-			background: url(../../img/about/bastyon-alternative.jpg) no-repeat fixed;
+			background: url(../../img/about/bastyon-alternative.jpg) no-repeat;
 			background-position: center center;
 			background-size: cover;
 			position: relative;	 	
@@ -854,7 +850,6 @@
 		}
 	}
 	.table{
-		background-color: rgb(246, 246, 246);
 		padding: 50px 0;
 		.main-wrapper{
 			padding: 40px 0;
@@ -943,7 +938,7 @@
 
 	.main-board-3 {
 		//height: 500px;
-		background: url(../../img/about/money-block.jpg) no-repeat fixed;
+		background: url(../../img/about/money-block.png) no-repeat;
 		background-position: center center;
 		background-size: cover;
 		position: relative;	 	
@@ -963,7 +958,7 @@
 				width: 40%;
 
 				h2 {
-					color: #000;
+					
 					//padding: 25px 0 0 30px;
 					//position: relative;
 					margin-bottom: 35px !important;
@@ -973,7 +968,7 @@
 					text-align: left;		
 					}
 				h3{
-					color: #000;				
+									
 					margin-bottom: 35px !important;
 					margin: auto 0;
 					font-weight: 600;					
@@ -992,7 +987,7 @@
 	}
 	@media (max-width: 450px){
 		.main-board-3{
-			background: url(../../img/about/dark-bg-bastyon-pais.jpg) no-repeat fixed;
+			background: url(../../img/about/dark-bg-bastyon-pais.jpg) no-repeat;
 			background-position: center center;
 			background-size: cover;
 			position: relative;	 	
@@ -1035,7 +1030,7 @@
 		
 		>h3 {
 			margin: 23px 0;
-			color: #161C35;
+			color: rgb(22, 28, 53);
 			text-align: center;
 		}
 		>p {
@@ -1043,7 +1038,7 @@
 			font-weight: 400;
 			line-height: 24px;
 			margin-bottom: 20px;
-			color: #666666;
+			color: rgb(102, 102, 102);
 			text-align: left;
 		}
 		>a {
@@ -1051,20 +1046,20 @@
 			width: 150px;
 			height: 50px;
 			line-height: 50px;
-			color: #161C35;
+			color: rgb(22, 28, 53);
 			font-size: 18px;
 			border-radius: 0 5px 0 5px;
-			border: 1px solid #161C35;
+			border: 1px solid rgb(22, 28, 53);
 			text-decoration: none;
 			transition-duration: 0.3s;
 			&:hover {
-				background: #161C35;
+				background: rgb(22, 28, 53);
 				color: #FFFFFF;
 			}
 		}
 
 	.box-icon {
-		//border: 1px solid #161C35;
+		//border: 1px solid rgb(22, 28, 53);
 		//border-radius: 50%;
 		//height: 108px;
 		//line-height: 108px;
@@ -1129,7 +1124,7 @@
 						transform: translateY(130px);
 					}
 					&:hover {
-						color: #00D5C3;
+						color: rgb(0, 213, 195);
 						background: white;
 					}
 				}
@@ -1151,17 +1146,17 @@
 		}
 	}
 	.team-container__item-footer {
-		box-shadow: 4px 4px 18px 0px #cccccc;
+		box-shadow: 4px 4px 18px 0px rgb(204, 204, 204);
 		padding: 20px;
 		>span {
 			display: block;
 			font-size: 12px;
-			color: #666666;
+			color: rgb(102, 102, 102);
 			font-weight: 300;
 		}
 		>h3 {
 			display: block;
-			color: #666666;
+			color: rgb(102, 102, 102);
 		}
 	}
 	.blog-container {
@@ -1239,7 +1234,7 @@
 		>p {
 			font-size: 18px;
 			letter-spacing: 1px;
-			color: #161C35;
+			color: rgb(22, 28, 53);
 			text-align: center;
 			text-transform: uppercase;
 			font-weight: 600;
@@ -1248,21 +1243,21 @@
 	}
 	.button {
 		padding: 10px 30px;
-		border: 1px solid #00D5C3;
+		border: 1px solid rgb(0, 213, 195);
 		font-size: 18px;
 		border-radius: 0 5px 0 5px;
 		display: inline-block;
-		color: #00D5C3;
+		color: rgb(0, 213, 195);
 		text-decoration: none;
 		transition-duration: 0.3s;
 		&:hover {
-			background: #00D5C3;
+			background: rgb(0, 213, 195);
 			color: #FFFFFF;
 		}
 	}
 	.form {
 		height: 200px;
-		background: url(../../img/about/bg.jpg) no-repeat fixed;
+		background: url(../../img/about/bg.jpg) no-repeat;
 		background-position: 50% -50px;
 		background-size: cover;
 		position: relative;
@@ -1273,7 +1268,7 @@
 			right: 0;
 			top: 0;
 			bottom: 0;
-			background-color: rgba(33, 42, 73, 0.6);
+			background-color: rgba(var(--color-cc-form));
 			z-index: 1;
 		}
 		>.main-wrapper {
@@ -1287,20 +1282,20 @@
 		}
 		input[type="email"] {
 			background: transparent;
-			border: 1px solid #00D5C3;
+			border: 1px solid rgb(0, 213, 195);
 			color: #FFFFFF;
 			font-size: 18px;
 			font-weight: 300;
 			padding: 10px;
 			width: 450px;
 			&:focus {
-				border: 1px solid #64ffed;
+				border: 1px solid rgb(var(--color-menu-2));
 				outline: none;
 			}
 		}
 		button {
-			background: #00D5C3;
-			border: 1px solid #00D5C3;
+			background: rgb(0, 213, 195);
+			border: 1px solid rgb(0, 213, 195);
 			color: #FFFFFF;
 			font-size: 22px;
 			width: 100px;
@@ -1308,7 +1303,7 @@
 			&:hover {
 				background: #FFFFFF;
 				border: 1px solid #FFFFFF;
-				color: #00D5C3;
+				color: rgb(0, 213, 195);
 				cursor: pointer;
 			}
 		}
@@ -1323,7 +1318,7 @@
 		}
 	}
 	.form__main-text {
-		color: #00D5C3;
+		color: rgb(0, 213, 195);
 		font-weight: 300;
 		margin-bottom: 20px;
 		font-size: 20px;
@@ -1335,7 +1330,7 @@
 	.social-cont {
 		margin: 20px 0;
 		>a {
-			color: #161C35;
+			color: rgb(22, 28, 53);
 			font-size: 16px;
 			margin: 10px;
 			text-decoration: none;
@@ -1348,7 +1343,7 @@
 				content: '';
 				width: 25px;
 				height: 25px;
-				border: 1px solid #161C35;
+				border: 1px solid rgb(22, 28, 53);
 				transform: rotate(45deg);
 				position: absolute;
 				left: -3px;
@@ -1359,7 +1354,7 @@
 			&:hover {
 				color: #FFFFFF;
 				&::before {
-					background: #161C35;
+					background: rgb(22, 28, 53);
 				}
 			}
 		}
@@ -1376,7 +1371,7 @@
 			}
 		}
 		.services__item {
-			//border: 1px solid #161c356e;
+			//border: 1px solid rgb(22, 28, 53)6e;
 		}
 	}
 
@@ -1548,7 +1543,7 @@
 			
 		}
 		.grey{
-			background: #ddd;
+			background: rgb(221, 221, 221);
 		}
 	}
 	@media (max-width: 720px) {
@@ -1638,7 +1633,6 @@
 					h3{
 						padding-left: 18px;
 						margin-top: 30px;
-						color:#000;
 					}
 					>div {
 						&:last-of-type {
@@ -1661,9 +1655,7 @@
 					}
 					
 				}
-				.grey{
-					background: #000;
-					}
+
 				.main-board__button-link {
 					&:first-of-type {
 						margin-right: 0;
@@ -1672,12 +1664,12 @@
 				}
 			}
 			&:first-child{
-				background: url(../../img/about/bastyon-youtube-main1.jpg) no-repeat fixed ;
+				background: url(../../img/about/bastyon-youtube-main1.jpg) no-repeat ;
 				background-size: cover;
 				.main-wrapper{
 					.main-board__left-block{
 						h1{
-							color: #000;
+							
 						}
 					}
 				}

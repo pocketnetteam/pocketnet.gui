@@ -226,6 +226,8 @@ var notifications = (function(){
 
 			loadingAndEmpty : function(){
 
+				if(!el.c) return
+
 				if(self.app.errors.connection()){
 
 					el.loader.addClass('hidden')
@@ -306,7 +308,7 @@ var notifications = (function(){
 
 				var w = el.c.closest('.customscroll')
 
-				var parallax = new SwipeParallaxNew({
+				/*var parallax = new SwipeParallaxNew({
 
 					el : el.c.find('.ntf'),
 
@@ -365,7 +367,7 @@ var notifications = (function(){
 					}
 					
 	
-				}).init()
+				}).init()*/
 			}
 
 		}
@@ -411,21 +413,6 @@ var notifications = (function(){
 				var _notifications = p.notifications || self.app.platform.sdk.notifications.storage.notifications;
 
 				clbk(data);
-
-				return
-
-				if(!_notifications){
-					console.log("IM HERE1")
-					self.app.platform.sdk.notifications.init(function(){
-						console.log("IM HERE2")
-						clbk(data);
-					})
-				}
-				else{
-					clbk(data);
-				}
-
-			
 
 			},
 
@@ -510,6 +497,7 @@ var notifications = (function(){
 			wnd : {
 				header : "notifications",
 				class : 'wndnotifications normalizedmobile',
+				parallaxselector : '.wndback,.wndheader'
 			}
 
 		}

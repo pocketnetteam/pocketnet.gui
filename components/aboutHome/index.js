@@ -43,6 +43,8 @@ var aboutHome = (function(){
 
 				var data = {};
 
+				data.theme = self.app.platform.sdk.theme.current == "white" ? 'white' : 'black';
+
 				clbk(data);
 
 			},

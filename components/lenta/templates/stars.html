@@ -19,18 +19,17 @@
 		liked = 'liked'
 	}
 
-	var dev = deep(app, 'platform.sdk.user.storage.'+share.address+'.dev') || deep(app, 'platform.sdk.usersl.storage.'+share.address+'.dev');
 	var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share)
 
 
-	if(my || dev || checkvisibility) liked = 'disabled'
+	if(my || checkvisibility) liked = 'disabled'
 
 	
 
 
 	%>
 
-<div class="itemwr table unselectable">
+<div class="itemwr unselectable">
 	<div class="starswr">
 		<div elementsid="lenta_stars" class="stars likeAction <%-liked%>" <%-v%>>
 
@@ -91,14 +90,16 @@
 			</div>
 		</div>
 	</div>
+
 	<% if(typeof hideCount === 'undefined' || !hideCount) {%>
 
-	<div elementsid="conutdetails" class="count">
-		<span class="v"><%-value.toFixed(1)%></span> 
-		<% if(value) {%>
-		<% if(Number(share.scnt)) {%> <i class="fas fa-user"></i> <span class="c"><%-Number(share.scnt)%></span> <% } %>
-		<% } %>
-	</div>
+		<div elementsid="conutdetails" class="count">
+			<div class="v"><span><%-value.toFixed(1)%></span></div> 
+			<% if(value) {%>
+			<% if(Number(share.scnt)) {%> <div class="countusers"><i class="far fa-user"></i><span class="c"><%-Number(share.scnt)%></span></div> <% } %>
+			<% } %>
+		</div>
+		
 	<% } %>
 
 

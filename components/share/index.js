@@ -6,15 +6,13 @@ var share = (function(){
 
 	var Essense = function(p){
 
-		console.log("P", p)
-
 		var wordsRegExp = /[,.!?;:() \n\r]/g
 
 		var displayTimes = false
 
 		var primary = deep(p, 'history');
 
-		var el, currentShare = null, essenseData, taginput, eblock;
+		var el, currentShare = null, essenseData, taginput, eblock, sortable;
 
 		var focusfixed = false, external = null, pliss;
 
@@ -105,21 +103,12 @@ var share = (function(){
 
 			uploadVideoWallpaper : function(image){
 				var shareUrl = (currentShare.url || {}).v || '';
-				/*var metaInfo = self.app.platform.parseUrl(shareUrl);
-
-				if (!metaInfo){
-					return Promise.reject('image')
-				}*/
-
+			
 				var parameters = {
 					thumbnailfile: image,
 				};
 
 				var settingsObject = {}
-
-				/*var parameters = {
-					server: metaInfo.host_name,
-				}*/
 
 				var urlMeta = self.app.peertubeHandler.parselink(shareUrl);
 
@@ -363,29 +352,25 @@ var share = (function(){
 				} 
 
 				if(type == 'article'){
+
 					self.nav.api.load({
 						open : true,
-						id : 'articles',
+						id : 'articlev',
 						inWnd : true,
-
 						history : true,
 
 						essenseData : {
-							storage : storage,
-							value : value,
-							on : {
-								added : function(value){
-
-									
-								}
-							}
+							
 						},
 
 						clbk : function(p){
 							external = p
 						}
 					})
+					
 
+					self.closeContainer()
+					
 					return
 				}
 
@@ -419,6 +404,8 @@ var share = (function(){
 
 				}
 				
+
+				return
 				
 				if(type == 'url' || type == 'images'){
 					focusfixed = true;
@@ -778,9 +765,9 @@ var share = (function(){
 				var words = text.split(wordsRegExp);
 
 				var newtags = _.filter(words, function(w){
-					if(w[0] == '#'){
+					if (w[0] == '#'){
 
-						w = w.replace(/#/g, '')
+						w = w.replace(/[^a-zA-Z0-9а-яА-Я?]*/g, '').replace(/[# ?]*/g, '')
 
 						if(!w) return false
 
@@ -795,7 +782,7 @@ var share = (function(){
 
 						tag = tag.replace(/\#/g, '')
 
-						if(!currentShare.tags.set(tag)){
+						if(tag && !currentShare.tags.set(tag)){
 							
 						}
 					})
@@ -957,8 +944,6 @@ var share = (function(){
 		
 												make();	
 											}
-		
-																			
 		
 										}
 		
@@ -1138,8 +1123,6 @@ var share = (function(){
 		var events = {
 
 			unfocus : function(e){
-
-				
 
 				if (el.c.hasClass('focus') && !focusfixed && el.c.has(e.target).length === 0){
 					actions.unfocus();
@@ -1578,7 +1561,6 @@ var share = (function(){
 						el.peertube = el.c.find('.peertube');
 						el.peertubeLiveStream = el.c.find('.peertubeLiveStream');
 
-						
 						var tstorage = []
 
 						initUpload({
@@ -2185,11 +2167,12 @@ var share = (function(){
 					}, function(_p){	
 
 						if(repost){
-							self.app.platform.papi.post(repost, _p.el.find('.repostShare'), function(){
+							self.app.platform.papi.post(repost, _p.el.find('.repostShareInns'), function(){
 
 							}, {
 								repost : true,
-								eid : "share"
+								eid : "share",
+								postclass : true
 							})
 
 							_p.el.find('.repostCaption').on('click', function(){
@@ -2309,12 +2292,48 @@ var share = (function(){
 				// })
 			},
 
+			makesortable : function(){
+				var ps = {
+					animation: 150,
+					swapThreshold : 0.5,
+					draggable : '.draggablepart',
+					onUpdate: function (evt){
+	
+						var na = [];
+					   
+						var ps = el.c.find('.draggablepart');
+	
+						$.each(ps, function(){
+							na.push($(this).attr('part'))
+						})
+
+						currentShare.settings.a = na
+	
+						if (essenseData.changeArrange){
+							essenseData.changeArrange()
+						}
+
+						if(!essenseData.share){
+							state.save()
+						}
+					},
+
+					forceFallback : true,
+					handle : '.marker'
+				}
+				
+				sortable = Sortable.create(el.c.find('#sortableBody')[0], ps); 
+
+				
+			},
+
 			body : function(clbk){				
 				self.shell({
 					name :  'body',
 					el : el.body,
 					data : {
 						share : currentShare,
+						ed : essenseData
 					},
 
 				}, function(p){
@@ -2389,6 +2408,8 @@ var share = (function(){
 							keyup : events.eText,
 		
 							onLoad : function(c,d){
+
+								el.c.find('.emojionearea-editor').attr('elementsid', 'emjInput');
 		
 								if (parameters().newshare){
 									el.c.find('.emojionearea-editor').focus()
@@ -2449,40 +2470,7 @@ var share = (function(){
 					
 					el.caption.on('keyup', events.caption)
 
-					var ps = {
-						animation: 150,
-						swapThreshold : 0.5,
-						draggable : '.draggablepart',
-						onUpdate: function (evt){
-		
-							var na = [];
-						   
-							var ps = $(list).find('.draggablepart');
-		
-							$.each(ps, function(){
-								na.push($(this).attr('part'))
-							})
-
-							currentShare.settings.a = na
-		
-							if (essenseData.changeArrange){
-								essenseData.changeArrange()
-							}
-
-							if(!essenseData.share){
-								state.save()
-							}
-						},
-						forceFallback : true
-					}
-				
-					ps.handle = '.marker'
-					
-					var list = document.getElementById("sortableBody");
-		
-					if (list && !isMobile()){
-						Sortable.create(list, ps); 
-					}
+					renders.makesortable()
 					
 					actions.autoFilled()
 
@@ -2583,6 +2571,10 @@ var share = (function(){
 			auto : function(){
 				var _p = parameters();
 
+				if (_p.marticlev && !self.app.nav.wnds['articlev']){
+					actions.embeding('article', null)
+				}
+
 				if (_p.marticles && !self.app.nav.wnds['articles']){
 					actions.embeding('article', null)
 				}
@@ -2596,42 +2588,45 @@ var share = (function(){
 				currentShare = deep(p, 'settings.essenseData.share') || new Share(self.app.localization.key);
 				essenseData = deep(p, 'settings.essenseData') || {};
 
+				if(!essenseData.share){
 
-				//self.app.platform.sdk.user.get(function(u){
+					state.load()
 
-					if(!essenseData.share){
+					
+					currentShare.language.set(self.app.localization.key)
+				}
 
-						state.load()
+				if (essenseData.repost || parameters().repost) 
+					currentShare.repost.set(essenseData.repost || parameters().repost)
 
-						/*if (u.postcnt === 0 && !currentShare.message.v && essenseData.hello){
-							currentShare.message.v = m
+				var checkEntity = currentShare.message.v || currentShare.caption.v || currentShare.repost.v || currentShare.url.v || currentShare.images.v.length || currentShare.tags.v.length;
 
-							intro = true;
-						}*/
+				var data = {
+					essenseData : essenseData,
+					share : currentShare,
+					postcnt : 1,
+					checkEntity : checkEntity,
+				};
 
-						currentShare.language.set(self.app.localization.key)
-					}
+				clbk(data);
 
-					if (essenseData.repost || parameters().repost) 
-						currentShare.repost.set(essenseData.repost || parameters().repost)
-
-					var checkEntity = currentShare.message.v || currentShare.caption.v || currentShare.repost.v || currentShare.url.v || currentShare.images.v.length || currentShare.tags.v.length;
-
-					var data = {
-						essenseData : essenseData,
-						share : currentShare,
-						postcnt : 1,
-						checkEntity : checkEntity,
-					};
-
-					clbk(data);
-
-				//})
 
 
 			},
 
 			destroy : function(){
+
+
+				if (el.c)
+					el.c.find('.emojionearea-editor').off('pasteImage')
+
+				try{
+					if (el.eMessage) el.eMessage[0].emojioneArea.destroy();
+				}
+				catch(e){
+
+				}
+				
 
 				if (external){
 					external.module.closeContainer()
@@ -2648,14 +2643,15 @@ var share = (function(){
 
 				delete self.app.platform.ws.messages.transaction.clbks.share;
 
-				if (el.c)
+				if (sortable){
+					sortable.destroy()
+					sortable = null
+				}
 
-					el.c.find('.emojionearea-editor').off('pasteImage')
 
 				el = {};
-
-				if (Sortable && Sortable.destroy)
-					Sortable.destroy()
+				essenseData = {}
+					
 			},
 			
 			init : function(p){
@@ -2722,7 +2718,7 @@ var share = (function(){
 						essenseData.close()
 					}
 				},
-				class : "smallWnd withoutButtons wndsharepost normalizedmobile"
+				class : "smallWnd withoutButtons wndsharepost normalizedmobile showbetter"
 			},
 
 			id : p._id,

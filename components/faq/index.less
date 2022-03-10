@@ -15,7 +15,7 @@
 
 			&.active,
 			&:hover{	
-				color : @color-main;
+				color : rgb(var(--color-txt-ac));
 				text-decoration: underline;
 			}
 		}
@@ -36,7 +36,7 @@
 				font-size: 2.5em;
 				font-weight: 700;
 				padding-bottom: @rhythm;
-				color : @color-orange;
+				color : rgb(var(--color-txt-orange));
 			}
 
 			
@@ -47,19 +47,34 @@
 					padding-bottom: 6 * @rhythm;
 					max-width: 700px;
 
+					.questiontop{
+						display: flex;
+						justify-content: space-between;
+					}
+
 					.questionName{
 						padding-bottom: 2 * @rhythm;
 						font-weight: 700;
-						color : @color-gray;
+						color : rgb(var(--color-txt-gray-dark));
 						font-size: 1.5em;
+						max-width: 85%;
 					}
 
 					.answer{
 						font-size : 0.8em;
+						padding-bottom: 20px !important;
 
 						a{
 							text-decoration: underline;
-							color : @color-main;
+							color : rgb(var(--color-txt-ac));
+						}
+						.image{
+							width:100% !important;
+							max-width: 700px;
+							position: relative;
+							img{
+								width:100% !important;
+							}
 						}
 
 						div{
@@ -69,19 +84,21 @@
 
 					.share{
 						margin-top: @rhythm;
-						text-decoration: underline;
-						color : @color-gray-light;
+						color : rgb(var(--color-bg-ac-2));
 						font-size: 0.7em;
 						cursor: pointer;
 						&:hover{
 
-							color : @color-main;
+							color : rgb(var(--color-txt-ac));
+						}
+						span{
+							padding-right: 2px;
 						}
 					}
 
 					.icon{
-						background: @color-main;
-						color : #fff;
+						background: rgb(var(--color-bg-ac));
+						color : rgb(var(--text-on-bg-ac-color));
 						cursor: pointer;
 						.transition(0.3s);
 						width: 44px;
@@ -92,12 +109,8 @@
 						font-size: 0.6em;
 
 						&:hover{
-							background : @color-contrast;
-						}						
-
-						i{
-							
-						}
+							background : rgb(var(--neutral-grad-2));
+						}	
 					}
 				}
 			}
@@ -133,17 +146,24 @@
 					.questionName{
 						padding-bottom: 2 * @rhythm;
 						font-weight: 700;
-						color : @color-gray;
+						color :rgb(var(--color-txt-gray-dark));
 					}
 
 					.answer{
 						font-size : 1em;
 						font-weight: 400;
-
+						//padding-bottom: 20px;
 						display: none;	
-						padding : 2 * @rhythm 0;
+						padding : 2 * @rhythm 0 !important;
 						text-align: left;
 
+					}
+					.image{
+						width:100% !important;
+						position: relative;
+						img{
+							width:100% !important;
+						}
 					}
 
 					.share{

@@ -106,7 +106,11 @@ var imagegallery = (function(){
 					if (clbk)
 						clbk(image)
 				}
-			}
+			},
+
+			closeWindow: function() {
+				self.closeContainer();
+			},
 		}
 
 		var helpers = {
@@ -263,6 +267,19 @@ var imagegallery = (function(){
 				if(e.pageX < $(window).width() / 2) action = 'back'
 
 				actions[action]();
+			},
+
+			clickOut: function(e) {
+
+				const clickedElem = e.target;
+
+				const isClickInside = (clickedElem.id === 'galleryImage');
+
+				if (isClickInside) {
+					return;
+				}
+
+				actions.closeWindow();
 			}
 		}
 
@@ -409,6 +426,7 @@ var imagegallery = (function(){
 						});
 						// Event for the swipe up and down
 						hammers.f.on('swipeup swipedown', function(e) {
+							console.log('closeContainer1')
 							// If we can pan vertically, cancel the swipe
 							if (zoomData.imageContainerParent.height() < zoomData.current.height) return;
 							// Close the gallery
@@ -488,6 +506,7 @@ var imagegallery = (function(){
 								// If we can pan vertically, cancel the swipe
 								if ((zoomData.imageContainerParent.height() * 1.2) < zoomData.current.height) return;
 								// Close the gallery
+								console.log('closeContainer2')
 								self.closeContainer();
 							});
 
@@ -539,6 +558,8 @@ var imagegallery = (function(){
 		var initEvents = function(){
 			
 			el.arrows.on('click', events.arrows);
+
+			el.imagesWrapper.closest('.wndcontent').on('click', events.clickOut);
 
 
 			if(!isMobile() && !isTablet())

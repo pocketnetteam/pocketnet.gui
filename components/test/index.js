@@ -10,10 +10,10 @@ var test = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, lastTransaction, ed, ref, plissing; 
+		var el = {}, ed, ref, plissing; 
 
 		var firstTime = false;
-		var termsaccepted = false;
+		//var termsaccepted = false;
 
 		var checkusernameTimer = null
 
@@ -182,253 +182,251 @@ var test = (function(){
 					}
 				}
 
-				self.sdk.users.checkFreeRef(self.app.platform.sdk.address.pnet() ? self.app.platform.sdk.address.pnet().address : "", function(resref, err){				
-
-					if (el.c.find('.userPanel').hasClass('loading')){
-						saving = false
-						return
-					}
-
-					if(actions.equal(tempInfo, self.app.platform.sdk.user.storage.me)){
-						sitemessage(self.app.localization.e('uchanges'))
-						saving = false
-						return
-					}
-
-					if(!actions.valid(tempInfo, self.app.platform.sdk.user.storage.me)){
-						sitemessage(self.app.localization.e('uchangesvalid'))
-
-						if(!trim(tempInfo.name)){	
-							var pn = el.c.find('[parameter="name"] input')
-
-							pn.focus()
-
-							_scrollTo(pn)
-						}
-						else{
-							if(!tempInfo.image){	
-								var pn = el.c.find('.fileUploader')
-
-								_scrollTo(pn)
-							}	
-
-						}
-
-							
-						saving = false
-						return
-					}
-
-
 				
 
-					var userInfo = new UserInfo();
+				if (el.c.find('.userPanel').hasClass('loading')){
+					saving = false
+					return
+				}
 
-						userInfo.name.set(trim(tempInfo.name));
-						userInfo.language.set(tempInfo.language);
-						userInfo.about.set(trim(tempInfo.about));
-						userInfo.site.set(trim(tempInfo.site));
-						userInfo.image.set(tempInfo.image);
-						userInfo.addresses.set(tempInfo.addresses);
-						userInfo.ref.set(deep(ref, 'address') || '');
+				if(actions.equal(tempInfo, self.app.platform.sdk.user.storage.me)){
+					sitemessage(self.app.localization.e('uchanges'))
+					saving = false
+					return
+				}
 
-					var err  = userInfo.validation()
+				if(!actions.valid(tempInfo, self.app.platform.sdk.user.storage.me)){
+					sitemessage(self.app.localization.e('uchangesvalid'))
 
-					if (err){
-
-						el.c.find('.errorname').fadeIn();
-
-						if(err == 'namelength'){
-							
-							el.c.find('.errorname span').html("The name length can't be more than 20 symbols");
-							
-						}
-
-						if(err == 'pocketnet'){
-
-							el.c.find('.errorname span').html('To avoid user confusion using Pocketnet in name is reserved');
-							
-						}
-
-						if(err == 'bastyon'){
-
-							el.c.find('.errorname span').html('To avoid user confusion using Bastyon in name is reserved');
-							
-						}
-
-
+					if(!trim(tempInfo.name)){	
 						var pn = el.c.find('[parameter="name"] input')
 
-							pn.focus()
+						pn.focus()
+						_scrollTo(pn)
+					}
+					else{
+						if(!tempInfo.image){	
+							var pn = el.c.find('.fileUploader')
 
 							_scrollTo(pn)
-							saving = false
-						return false;
+						}	
+
 					}
-					saving = false
-
-					renders.termsconditions(function(){
-						saving = true
-
-						topPreloader(30)
-
-						el.c.find('.userPanel').addClass('loading')
-
-						el.upanel.addClass('loading')
-
-						self.app.platform.sdk.users.nameExist(userInfo.name.v, function(exist){
-
-							//exist = false
-							
-
-							if(!exist || (self.app.platform.sdk.address.pnet() && exist == self.app.platform.sdk.address.pnet().address)){
-
-								topPreloader(50)
-
-								ed.presave(function(){
-
-									userInfo.keys.set(_.map(self.app.user.cryptoKeys(), function(k){
-										return k.public
-									}))
-								
-									el.c.find('.errorname').fadeOut();
-
-									topPreloader(70)
-									userInfo.uploadImage(self.app, function(err){
-
-										if (err){
-											topPreloader(100)
-											el.upanel.removeClass('loading')
-
-											el.c.find('.userPanel').removeClass('loading')
-
-											sitemessage("An error occurred while loading images")
-											saving = false
-											return 
-										}
-
-										if (ed.makeuser){
-
-											topPreloader(100)
-
-											el.upanel.removeClass('loading')
-
-											el.c.find('.userPanel').removeClass('loading')
-
-											ed.makeuser(userInfo)
-											saving = false
-											return
-
-										}
-
-										var email = tempInfo.email;
-
-										if (email){
-											actions.saveemail(email);
-										}
-
-
-										self.sdk.node.transactions.create.commonFromUnspent(
-
-											userInfo,
-
-											function(tx, error){
-
-												console.log('error', error, tx)
-
-												if(!tx){
-
-													saving = false;
-
-													self.app.platform.errorHandler(error, true)	
-													
-													el.upanel.removeClass('loading')
-
-													el.c.find('.userPanel').removeClass('loading')
-
-													topPreloader(100)
-
-												}
-												else
-												{
-
-													successCheck()
-
-													delete self.sdk.usersl.storage[self.app.platform.sdk.address.pnet().address];
-													delete self.sdk.users.storage[self.app.platform.sdk.address.pnet().address];
-
-
-													self.app.platform.sdk.user.storage.me = tx
-													
-													tempInfo = _.clone(self.app.platform.sdk.user.storage.me)
-													
-													actions.upanel()
-
-													actions.ref(resref)
-
-
-													self.closeContainer()
-													
-
-													self.app.platform.sdk.users.getone(self.app.platform.sdk.address.pnet().address, function(){
-
-														self.app.reloadModules(function(){
-
-															if (ed.presuccess){
-																ed.presuccess(allclbk)
-															}
-															else{
-																allclbk()
-															}
-
-															
-					
-														})
-													})
-
-													
-
-													
-												}
-
-											},
-
-											{
-												relay : ed.relay? ed.relay() : false
-											}
-										
-										)
-									})
-
-								})
-
-							}
-							else
-							{
-								saving = false
-								el.upanel.removeClass('loading')
-
-								el.c.find('.userPanel').removeClass('loading')
-
-								topPreloader(100)
-
-								var txt = 'This username is taken in ' + self.app.meta.fullname
-
-								el.c.find('.errorname').fadeIn();
-								el.c.find('.errorname span').html(txt);
-
-								var pn = el.c.find('[parameter="name"] input')
-
-									pn.focus()
-
-									_scrollTo(pn)
-								
-								sitemessage(txt)
-							}
-						})
 
 						
+					saving = false
+					return
+				}
+
+
+			
+
+				var userInfo = new UserInfo();
+
+					userInfo.name.set(trim(tempInfo.name));
+					userInfo.language.set(tempInfo.language);
+					userInfo.about.set(trim(tempInfo.about));
+					userInfo.site.set(trim(tempInfo.site));
+					userInfo.image.set(tempInfo.image);
+					userInfo.addresses.set(tempInfo.addresses);
+					userInfo.ref.set(deep(ref, 'address') || '');
+
+				var err  = userInfo.validation()
+
+				if (err){
+
+					el.c.find('.errorname').fadeIn();
+
+					if(err == 'namelength'){
+
+						
+						el.c.find('.errorname span').html(self.app.localization.e('name20symbols'));
+						
+					}
+
+					if(err == 'pocketnet'){
+
+						el.c.find('.errorname span').html(self.app.localization.e('namereservedpn'));
+						
+					}
+
+					if(err == 'bastyon'){
+
+						el.c.find('.errorname span').html(self.app.localization.e('namereservedbn'));
+						
+					}
+
+
+					var pn = el.c.find('[parameter="name"] input')
+
+						pn.focus()
+
+						_scrollTo(pn)
+						saving = false
+					return false;
+				}
+				saving = false
+
+				renders.termsconditions(function(){
+					saving = true
+
+					topPreloader(30)
+
+					el.c.find('.userPanel').addClass('loading')
+
+					el.upanel.addClass('loading')
+
+					self.app.platform.sdk.users.nameExist(userInfo.name.v, function(exist){
+
+						//exist = false
+						
+
+						if(!exist || (self.app.platform.sdk.address.pnet() && exist == self.app.platform.sdk.address.pnet().address)){
+
+							topPreloader(50)
+
+							ed.presave(function(){
+
+								userInfo.keys.set(_.map(self.app.user.cryptoKeys(), function(k){
+									return k.public
+								}))
+							
+								el.c.find('.errorname').fadeOut();
+
+								topPreloader(70)
+								userInfo.uploadImage(self.app, function(err){
+
+									if (err){
+										topPreloader(100)
+										el.upanel.removeClass('loading')
+
+										el.c.find('.userPanel').removeClass('loading')
+
+										sitemessage("An error occurred while loading images")
+										saving = false
+										return 
+									}
+
+									if (ed.makeuser){
+
+										topPreloader(100)
+
+										el.upanel.removeClass('loading')
+
+										el.c.find('.userPanel').removeClass('loading')
+
+										ed.makeuser(userInfo)
+										saving = false
+										return
+
+									}
+
+									var email = tempInfo.email;
+
+									if (email){
+										actions.saveemail(email);
+									}
+
+
+									self.sdk.node.transactions.create.commonFromUnspent(
+
+										userInfo,
+
+										function(tx, error){
+
+											console.log('error', error, tx)
+
+											if(!tx){
+
+												saving = false;
+
+												self.app.platform.errorHandler(error, true)	
+												
+												el.upanel.removeClass('loading')
+
+												el.c.find('.userPanel').removeClass('loading')
+
+												topPreloader(100)
+
+											}
+											else
+											{
+
+												successCheck()
+
+												delete self.sdk.usersl.storage[self.app.platform.sdk.address.pnet().address];
+												delete self.sdk.users.storage[self.app.platform.sdk.address.pnet().address];
+
+
+												self.app.platform.sdk.user.storage.me = tx
+												
+												tempInfo = _.clone(self.app.platform.sdk.user.storage.me)
+												
+												actions.upanel()
+
+												//actions.ref(resref)
+
+												self.closeContainer()
+												
+
+												self.app.platform.sdk.users.getone(self.app.platform.sdk.address.pnet().address, function(){
+
+													self.app.reloadModules(function(){
+
+														if (ed.presuccess){
+															ed.presuccess(allclbk)
+														}
+														else{
+															allclbk()
+														}
+
+														
+				
+													})
+												})
+
+												
+
+												
+											}
+
+										},
+
+										{
+											relay : ed.relay? ed.relay() : false
+										}
+									
+									)
+								})
+
+							})
+
+						}
+						else
+						{
+							saving = false
+							el.upanel.removeClass('loading')
+
+							el.c.find('.userPanel').removeClass('loading')
+
+							topPreloader(100)
+
+							var txt = self.app.localization.e('nametaken')
+
+							el.c.find('.errorname').fadeIn();
+							el.c.find('.errorname span').html(txt);
+
+							var pn = el.c.find('[parameter="name"] input')
+
+								pn.focus()
+
+								_scrollTo(pn)
+							
+							sitemessage(txt)
+						}
 					})
+
+					
 				})
 				
 		
@@ -572,7 +570,7 @@ var test = (function(){
 							if (hash.indexOf('pocketnet') > -1) {
 
 								el.c.find('.errorname').fadeIn();
-								el.c.find('.errorname span').html('To avoid user confusion using Pocketnet in name is reserved');	
+								el.c.find('.errorname span').html(self.app.localization.e('namereservedpn'));	
 
 								return
 							}
@@ -580,14 +578,14 @@ var test = (function(){
 							if (hash.indexOf('bastyon') > -1) {
 
 								el.c.find('.errorname').fadeIn();
-								el.c.find('.errorname span').html('To avoid user confusion using Bastyon in name is reserved');	
+								el.c.find('.errorname span').html(self.app.localization.e('namereservedbn'));	
 
 								return
 							}
 							
 							if (tempInfo[parameter.id].length > 20){
 								el.c.find('.errorname').fadeIn();
-								el.c.find('.errorname span').html("The name length can't be more than 20 symbols");	
+								el.c.find('.errorname span').html(self.app.localization.e('name20symbols'));	
 							}
 							else
 							{
@@ -604,7 +602,7 @@ var test = (function(){
 										else
 										{
 											el.c.find('.errorname').fadeIn();
-											el.c.find('.errorname span').html('This username is taken in ' + self.app.meta.fullname);									
+											el.c.find('.errorname span').html(self.app.localization.e('nametaken'));									
 										}
 									})	
 
@@ -614,12 +612,6 @@ var test = (function(){
 							}
 						}
 					}
-
-					//if(id == 'ref'){
-
-						//self.app.platform.api.inputs.user(parameter)
-
-					//}
 				})
 			},
 
@@ -639,7 +631,10 @@ var test = (function(){
 				id : 'name',
 				type : "NICKNAME",
 				onType : true,
-				require : true
+				require : true,
+				onFocus : function(pn){
+					if (self.app.mobileview) setTimeout(function(){_scrollTo(pn, el.c.closest('.customscroll')), 200})
+				}
 			}),
 
 			email : new Parameter({
@@ -648,6 +643,10 @@ var test = (function(){
 				id : 'email',
 				type : "STRINGANY",
 				onType : true,
+
+				onFocus : function(pn){
+					if (self.app.mobileview) setTimeout(function(){_scrollTo(pn, el.c.closest('.customscroll')), 200})
+				}
 			}),
 
 			language : new Parameter({
@@ -656,6 +655,8 @@ var test = (function(){
 				id : 'language',
 				type : "VALUES",
 				defaultValue : self.app.localization.key || 'en',
+				
+				
 				possibleValues : ['en', 'ru'],
 				possibleValuesLabels : ['English', 'Русский'],
 			}),
@@ -906,7 +907,19 @@ var test = (function(){
 
 		var renders = {
 			termsconditions : function(clbk){
-				if(window.cordova && !termsaccepted && ed.wizard){
+
+				console.log("SADASD", ed.wizard)
+
+				
+
+				if (ed.wizard){
+					self.app.platform.acceptterms(clbk)
+				}
+				else{
+					clbk()
+				}
+
+				/* if(window.cordova && ed.wizard){
 
 					self.nav.api.load({
 						open : true,
@@ -927,7 +940,7 @@ var test = (function(){
 				}
 				else{
 					clbk()
-				}
+				}*/
 			},
 			options : function(clbk){
 
@@ -973,6 +986,8 @@ var test = (function(){
 
 						multiple : false,
 
+						app : self.app,
+
 						action : function(file, clbk){
 
 							actions.upload(file, function(){		
@@ -994,12 +1009,6 @@ var test = (function(){
 						}
 					})
 
-					/*if (ed.wizard && !tempInfo.image)
-
-						plissing = self.app.platform.api.plissing({
-							el : _p.el.find('.iconWrapper'),
-							text : "Upload Profile Image"
-						})*/
 
 					if (clbk)
 						clbk();
@@ -1222,14 +1231,18 @@ var test = (function(){
 			},
 
 			destroy : function(){
+
+				if (el.c) el.c.empty()
+
+
 				el = {};
+				ed = {};
 
 				saving = false
 
 				tempInfo = {
 					language : self.app.localization.key || 'en'
 				}
-
 
 				return null;
 			},
@@ -1263,7 +1276,7 @@ var test = (function(){
 			},
 
 			wnd : {
-				class : 'withoutButtons allscreen testwindow'
+				class : 'withoutButtons allscreen testwindow normalizedmobile'
 			}
 		}
 	};

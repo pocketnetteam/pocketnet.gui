@@ -15,11 +15,10 @@
         <meta name="keywords" content="Blockchain, Decentralized, Delete Facebook, Alternative Social Media, Social Network, Social Platform, No Censorship, Online Social Network, Facebook Alternative, Reddit Alternative, Twitter Alternative, Social Sharing Platform, Decentralized Social Network, Blockchain Social Network " />
 
         <meta http-equiv="Content-Security-Policy" content="
-        upgrade-insecure-requests;
-        default-src https: 'self' data: gap: file: cdvfile: https://ssl.gstatic.com; 
+        default-src https: 'self' data: app: file: cdvfile: android-webview-video-poster: https://ssl.gstatic.com; 
         connect-src https: 'self' wss: file: cdvfile: data:;
-        img-src 'self' data: https: file: android-webview-video-poster:;
-        script-src 'self' file: blob: https://__VAR__.domain https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.rawgit.com https://embed.tawk.to https://cdn.jsdelivr.net 'unsafe-eval' 'unsafe-inline';
+        img-src 'self' data: https: cdvfile: file: android-webview-video-poster:;
+        script-src 'self' file: blob: https://__VAR__.domain https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.rawgit.com https://cdn.jsdelivr.net 'unsafe-eval' 'unsafe-inline';
         style-src 'self' https://use.fontawesome.com https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';
         font-src 'self' data: https://fonts.gstatic.com https://use.fontawesome.com;
         media-src 'self' cdvfile: data: https: blob:;">
@@ -75,6 +74,16 @@
 
         <div id="matrix" class="matrix"></div>
 
+
+        <div id="topsmallpreloader">
+            <div class="table">
+                <div>
+                    <div class="icon">
+                        <i class="fas fa-spinner fa-spin"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div id="globalpreloader">
             <div class="table">
                 <div>

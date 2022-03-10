@@ -14,6 +14,7 @@
 					<a elementsid="<% if(state) {%>userpage<% } else { %>welcome<% } %>" href="<% if(state) {%>userpage<% } else { %>welcome<% } %>" fast="fast" handler="true">
 						<div class="iconWrapper">
 							<i class="fas fa-chevron-left"></i>
+							<div class="label"><%-e('back')%></div>
 						</div>
 					</a>
 				</div>
@@ -23,11 +24,13 @@
 			<div class="upbuttonWrapper">
 				<div elementsid="iconWrapperToup" class="iconWrapper toup">
 					<i class="fas fa-chevron-up"></i>
+					<div class="label"><%-e('tothetop')%></div>
 				</div>
 			</div>
 	
 			
 		</div>
+		
 	</div>
 
 <% } else { %>
@@ -41,12 +44,8 @@
 		<div class="linkButtonWrapper">
 
 			<% if(back) {  
-				
-				var ur = back.href;
-				
-				/*addtouri(back.href, 'back', 'true') */ 
-				
-				%>
+
+				var ur = back.href; %>
 				
 					<a elementsid="<%- ur %>" href="<%- ur %>" fast="fast" handler="true" replace="true">
 						<div class="iconWrapper">
@@ -55,82 +54,66 @@
 							<% } else { %> 
 								<i class="fas fa-chevron-left"></i>
 							<% } %>
+							<div class="label"><%-e('back')%></div>
 							
 						</div>
 					</a>
 				
 			<% } else { %> 
 
-				<% if(href == 'chat') { %>
-
-				<% } else { %> 
-
-					<% if(href == indexkey || !href) { 
+				<% if(href == indexkey || !href) { 
 						
-						if(state){ %>
+					if(state){ %>
 
-							<% if(self.app.curation()) {%>
+						<% if(self.app.curation()) {%>
 
-								<a elementsid="userpage?id=wallet" href="userpage?id=wallet" fast="fast">
-									<div class="iconWrapper">
-										<i class="fas fa-wallet"></i>
-									</div>
-								</a>
+							<a elementsid="userpage?id=wallet" href="userpage?id=wallet" fast="fast">
+								<div class="iconWrapper">
+									<i class="fas fa-wallet"></i>
+									<div class="label"><%-e('rwallet')%></div>
+								</div>
+							</a>
 
-							<% } else { %> 
+						<% } else { %> 
 
-								<% if((typeof shw != 'undefined' && shw) || (typeof search != 'undefined' && search) ) {%>
+							<% if((typeof shw != 'undefined' && shw) || (typeof search != 'undefined' && search) ) {%>
 
-									<% if((typeof search != 'undefined' && search)) {%>
+								<% if((typeof search != 'undefined' && search)) {%>
 
-										<a href="index" fast="fast">
+									<a href="index" fast="fast">
+										<div class="iconWrapper">
+											<i class="fas fa-chevron-left"></i>
+											<div class="label"><%-e('back')%></div>
+										</div>
+									</a>
+
+								<% } else { %>
+									
+									<% if(ps.v){ %> 
+
+										<a href="index?video=1" handler="true" fast="fast" replace="true">
 											<div class="iconWrapper">
 												<i class="fas fa-chevron-left"></i>
+												<div class="label"><%-e('back')%></div>
 											</div>
 										</a>
-
+										
 									<% } else { %> 
 
 										<a elementsid="hrefindex" href="index" fast="fast">
 											<div class="iconWrapper">
 												<i class="fas fa-rss"></i>
+												<div class="label"><%-e('e13136')%></div>
 											</div>
 										</a>
+
 										
-									<% } %> 
+										
+									<% } %>
+									
+								<% } %> 
 
-									
-	
-									
-								<% } else { %>
-	
-									<a elementsid="index?video=1" href="index?video=1" fast="fast">
-										<div class="iconWrapper">
-											<i class="fas fa-play-circle"></i>
-										</div>
-									</a>
-	
-									
-								<% } %>
 								
-							<% } %>
-
-							
-
-							
-
-							<!--
-					
-							 -->
-
-						<% } else { %> 
-
-							<% if(typeof shw != 'undefined' && shw) {%>
-								<a elementsid="hrefindex" href="index" fast="fast">
-									<div class="iconWrapper">
-										<i class="fas fa-rss"></i>
-									</div>
-								</a>
 
 								
 							<% } else { %>
@@ -138,6 +121,7 @@
 								<a elementsid="index?video=1" href="index?video=1" fast="fast">
 									<div class="iconWrapper">
 										<i class="fas fa-play-circle"></i>
+										<div class="label"><%-e('video')%></div>
 									</div>
 								</a>
 
@@ -145,36 +129,56 @@
 							<% } %>
 							
 						<% } %>
-				
-					<% } else { 
 
-						
-						
-						%> 
+					<% } else { %> 
 
-						<% if(self.app.curation()) {%>
-
-							<a elementsid="userpage?id=wallet" href="userpage?id=wallet" fast="fast">
+						<% if(typeof shw != 'undefined' && shw) {%>
+							<a elementsid="hrefindex" href="index" fast="fast">
 								<div class="iconWrapper">
-									<i class="fas fa-wallet"></i>
+									<i class="fas fa-rss"></i>
+									<div class="label"><%-e('e13136')%></div>
 								</div>
 							</a>
 
-						<% } else { %> 
+							
+						<% } else { %>
 
-							<a elementsid="<%- lentakey %>" href="<%- lentakey %>" fast="fast">
+							<a elementsid="index?video=1" href="index?video=1" fast="fast">
 								<div class="iconWrapper">
-									<i class="fas fa-home"></i>
+									<i class="fas fa-play-circle"></i>
+									<div class="label"><%-e('video')%></div>
 								</div>
 							</a>
 							
 						<% } %>
-
 						
-						
-					<%}%>
+					<% } %>
+			
+				<% } else { %> 
 
-				<% } %>
+					<% if(self.app.curation()) {%>
+
+						<a elementsid="userpage?id=wallet" href="userpage?id=wallet" fast="fast">
+							<div class="iconWrapper">
+								<i class="fas fa-wallet"></i>
+								<div class="label"><%-e('rwallet')%></div>
+							</div>
+						</a>
+
+					<% } else { %> 
+
+						<a elementsid="<%- lentakey %>" href="<%- lentakey %>" fast="fast">
+							<div class="iconWrapper">
+								<i class="fas fa-home"></i>
+								<div class="label"><%-e('back')%></div>
+							</div>
+						</a>
+						
+					<% } %>
+
+					
+					
+				<%}%>
 			
 			<% } %>
 		</div>
@@ -182,6 +186,7 @@
 		<div class="upbuttonWrapper">
 			<div elementsid="upbuttontoup" class="iconWrapper toup">
 				<i class="fas fa-chevron-up"></i>
+				<div class="label"><%-e('tothetop')%></div>
 			</div>
 		</div>
 
@@ -201,11 +206,19 @@
 
 			<% if(state){ %>
 
-				<!--<a elementsid="hrefshare" href="share" fast="fast">-->
+				<% if(user.validate()) {%>
+
 					<div class="iconWrapper addshare shr <%-sharec%>">
 						<i class="fas fa-plus-circle"></i>
 					</div>
-				<!--</a>-->
+
+				<% } else { %> 
+					
+					<div class="iconWrapper shr disabled">
+						<i class="fas fa-plus-circle"></i>
+					</div>
+					
+				<% } %>
 
 			<% } else { %> 
 				<% if(!(!state && window.cordova)) {%>
@@ -223,15 +236,10 @@
 
 
 	<div class="item">
-
-
-		<!--<a elementsid="hrefuserpage" href="userpage" fast="fast" handler="true">-->
-			<div class="iconWrapper showmenu">
-				<i class="fas fa-bars"></i>
-			</div>
-		<!--</a>-->
-
-
+		<div class="iconWrapper showmenu">
+			<i class="fas fa-bars"></i>
+			<div class="label"><%-e('menu')%></div>
+		</div>
 	</div>
 
 

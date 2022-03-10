@@ -1,168 +1,269 @@
 @import "../../css/__cssvar";
 
 #applications{
+    
+    .oss{
+        margin-top : 4 * @rhythm;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 156px auto 156px auto 156px;
+        /*grid-auto-rows: minmax(500px, auto);*/
+        grid-gap: 3 * @rhythm;
 
-    .caption{
-        font-size: 2.5em;
-        font-weight: 700;
-        margin: 0 auto;
-        margin-top: 2em;
-    }
+        .os{
+            text-align: center;
+            padding : 4 * @rhythm;
+            border-radius: 10px;
+            background: rgba(var(--background-secondary-theme));
+            height: 600px;
+            grid-column: span 1;
+            grid-row: span 2;
 
-    &.minimize{
-        .caption{
-            display: none;
-        }
-
-        .panel{
-        }
-    }
-
-    .subcaption{
-        font-weight: 700;
-    }
-
-    .ghost{
-        text-decoration: none;
-    }
-
-    .os{
-        border-radius: 5px;
-
-		.tip{
-			max-width: 650px;
-		}
-
-		.downloadOs{
-		}
-
-		.downloadstart{
-			padding : @rhythm;
-			padding-left: 0;
-			width: 100%;
-        }
-        
-        .panel{
-
-            .skipositem{
-                display : none;
+            .downloadcaption,
+            .label{
+                display: none;
             }
-        }
 
-        &.rundownloading{
-            .panel{
-                .skipositem{
-                    display: block;
-                    width: 100%;
-                    margin-top : 4 * @rhythm;
-                    color : @color-main;
+            &:nth-child(2){
+                grid-column: 2;
+                grid-row: 2/span 2;
+            }
+
+            &[osid='android']{
+                .osimage{
+                    left : 30%;
                 }
             }
-        }
-    }
-
-    .flbx{
-        display: flex;
-        max-width: 750px;
-        >div{
-            flex-grow: 1;
-            margin-right: 3 * @rhythm;
-            margin-top: 3 * @rhythm;
-        }
-
-        .panel{
-            margin-top: 2*@rhythm;
-        }
-    }
     
-    .stepTable{
-        margin : 0 auto;
-        border-radius: 5px;
-        background: fade(@color-gray-mlight, 20);
-        padding : 3 * @rhythm;
-        
-        
-		>div{
-			padding : 0;
-            text-align: center;
-		
-		}
-	}
-
-    .icon{
-		border-radius: 50%;
-		text-align: center;
-        font-size: 2em;
-    }
+            &[osid='macos']{
+                .osimage{
+                    left : -40%;
+                    bottom : -30%;
     
-    .currentos{
-        display: none;
-        &.active{
-            display: block;
-            
-        }
-    }
-
-    .extraos{
-        display: none;
-        &.active{
-            display: block;
-            
-        }
-    }
-}
-
-html.stblack{
-    #applications{
-
-        color : @color-gray-slight;
-
+                    img{
+                        width: 130%;
+                    }
+                }
+            }
     
-        .subcaption{
-            font-weight: 700;
-        }
+            &[osid='windows']{
+                .osimage{
+                    left : -40%;
+                    bottom : -14%;
     
-        .os{
-            background: transparent;
-           
-            &.rundownloading{
-                .panel{
-                    .skipositem{
-                        color : @color-main;
+                    img{
+                        width: 95%;
+                    }
+                }
+            }
+    
+            &[osid='linux']{
+                .osimage{
+                    left : 0;
+                    bottom : -10%;
+    
+                    img{
+                        width: 90%;
                     }
                 }
             }
         }
-    
-        
-       
-        .number{
-            border: 1px solid @color-main;
+    }
+
+    .os{
+        overflow: hidden;
+        position: relative;
+        .subcaption{
+            font-size: 2em;
+            font-weight: 100;
+        }
+
+        .label{
+            font-size: 3em;
+            font-weight: 700;
+            margin-bottom: @rhythm;
+            max-width: 450px;
         }
         
-    }    
+
+        .downloadcaption{
+            max-width: 640px;
+            font-size: 1.3em;
+            margin-bottom: 4 * @rhythm;
+        }
+
+        .buttonWrapper{
+            margin-top : 2 * @rhythm;
+            
+
+            >div{
+                margin-bottom : 2 * @rhythm;
+            }
+            
+        }
+
+        .data{
+            position: absolute;
+            left : 0;
+            top : 4 * @rhythm;
+            right: 0;
+        }
+
+        .icon{
+            position: absolute;
+            opacity: 0.5;
+            color : rgb(var(--color-txt-gray-dark));
+            bottom : @rhythm;
+            left : 0;
+            right: 0;
+            text-align: center;
+        }
+        
+        .downloadOsStyle{
+            border-radius: 30px;
+            padding-left : 4 * @rhythm;
+            padding-right : 4 * @rhythm; 
+            font-size: 1.2em;
+            font-weight: 100;
+            background: rgb(var(--background-main-contrast));
+            color : rgb(var(--background-main));
+            border-color: rgb(var(--background-main-contrast));
+
+            &:hover{
+                background: rgb(var(--color-bg-orange));
+                border-color: rgb(var(--color-bg-orange));
+            }
+        }
+
+        .osimage{
+            position: absolute;
+            left : 0;
+            bottom : 2 * @rhythm;
+            width: 100%;
+
+            img{
+                border-radius: 50%;
+                height: 20%;
+            }
+        }
+        
+    }
+
+    .mainWrapper{
+        background: rgb(var(--color-shadow-base));
+    }
+
+    .mainos{
+        .os{
+            height: 450px;
+            color : rgb(var(--text-on-bg-shadow-color));
+
+            .osimage{
+                left : auto;
+                right: -10%;
+                bottom : -15%;
+                width: auto;
+
+                img{
+                    width: 500px;
+                }
+            }
+
+            .data{
+                left: 10%;
+                top : 10%;
+            }
+
+            .icon{
+                color : rgb(var(--text-on-bg-shadow-color));
+            }
+
+            .subcaption{
+                display: none;
+            }
+
+            .downloadOsStyle{
+              
+                background: rgb(var(--color-bg-orange));
+                color : rgb(var(--text-on-bg-ac-color));
+                border-color: rgb(var(--color-bg-orange));
+    
+                &:hover{
+                    background: rgb(var(--color-bg-orange));
+                    border-color: rgb(var(--color-bg-orange));
+                }
+            }
+        }
+    }
 }
+
+
 
 /*t*/ @media only screen and (max-width: 768px){
     #applications{
-        padding : 2 * @rhythm;
-        padding-bottom: 8 * @rhythm;
+        
+        .oss{
+            grid-template-columns: 1fr;
+            grid-template-rows: auto auto auto auto auto;
+
+            .os{
+                height: 600px;
+                grid-column: span 1;
+                grid-row: span 2;
     
-        .flbx{
-            display: flex;
-            max-width: none;
-            flex-direction: column;
-            >div{
-                flex-grow: 1;
-                margin-right: 0;
-                margin-top: 2 * @rhythm;
+                &:nth-child(2){
+                    grid-column: span 1;
+                    grid-row: span 2;
+                }
             }
+
+
+            .os{
     
-            .panel{
-                margin-top: 2*@rhythm;
+                &[osid='android'],
+                &[osid='macos'],
+                &[osid='windows'],
+                &[osid='linux']{
+                    .osimage{
+                        left : 0;
+                        bottom : -10%;
+        
+                        img{
+                            width: 90%;
+                        }
+                    }
+                }
+            }
+        }
+
+        .mainos{
+            .os{
+                height: 750px;
+    
+                .osimage{
+                    left : 0;
+                    right: 0;
+                    bottom : -5%;
+                    width: 100%;
+                    text-align: center;
+    
+                    img{
+                        width: 95%;
+                    }
+                }
+    
+                .data{
+                    left: 10%;
+                    top : 10%;
+                }
+    
+                .subcaption{
+                    display: none;
+                }
+    
+               
             }
         }
         
-      
     }
 }

@@ -1,0 +1,406 @@
+@import "../../css/__cssvar";
+
+#nodecontrol{
+
+    .testnetwork{
+        padding : 4 * @rhythm;
+        text-align: center;
+
+        span{
+            font-size: 0.9em;
+        }
+    }
+
+    .maincaption{
+        display: none;
+    }
+
+    .nodelanding{
+        margin-bottom: 3 * @rhythm;
+        border-radius: 10px;
+        background: rgb(var(--color-shadow-base));
+        color : rgb(var(--text-on-bg-shadow-color));
+        text-align: center;
+        padding : 5 * @rhythm;
+
+        .buttonWrapper{
+            padding : 2 * @rhythm 0;
+        }
+        
+    }
+
+    .electronfornode{
+        padding-top: 4 * @rhythm;
+        padding-bottom: 4 * @rhythm;
+        .title{
+            text-align: center;
+            max-width: 450px;
+            margin : 0 auto;
+            
+            span{
+                font-size: 2em;
+            }
+        }
+    }
+
+    .caption{
+        padding : 4 * @rhythm 0 ;
+        padding-top : 3 * @rhythm;
+        span{
+            font-weight: 100;
+            font-size: 2.5em;
+        }
+
+    }
+
+    .nodedummy{
+        text-align: center;
+        padding : 4 * @rhythm 0;
+        cursor: pointer;
+        color : rgb(var(--neutral-grad-3));
+        background: rgb(var(--neutral-grad-1), 0.2);
+
+        .text{
+            padding : @rhythm 0;
+            font-size: 0.9em;
+        }
+
+        i{
+            font-size: 0.9em;
+        }
+    }
+
+    .fsubcaption{
+        
+        padding : 4 * @rhythm;
+        padding-top : 5 * @rhythm;
+
+        span{
+            font-weight: 100;
+            font-size: 1.7em;
+            color : rgb(var(--neutral-grad-3));
+        }
+    }
+
+    .ssubcaption{
+        padding : @rhythm 0;
+
+        span{
+            font-weight: 700;
+            color : rgb(var(--neutral-grad-3));
+        }
+    }
+
+    .stacking{
+        .canstacking{
+
+            .good{
+                color : rgb(var(--color-good));
+            }
+
+            .bad{
+                color : rgb(var(--color-bad));
+            }
+
+            .gray{
+                color : rgb(var(--neutral-grad-3));
+            }
+        }
+
+        .copyaddress{
+            cursor: pointer;
+
+            &:hover{
+                color: rgb(var(--color-txt-ac));
+            }
+        }
+        
+
+    }
+
+    .systemreq{
+        padding : @rhythm;
+        padding-top : 0;
+        border-radius: 5px;
+        border : 1px solid rgb(var(--neutral-grad-1));
+        .scaption{
+            padding : @rhythm 0;
+            span{
+                font-size: 0.9em;
+                font-weight:700;
+            }
+        }
+
+        .req{
+            padding : 2 * @rhythm 0;
+            div{
+                font-size: 0.8em;
+            }
+        }
+    }
+
+    .staterowTable,
+    .settingTable{
+        width : auto;
+
+        >div{
+            padding : @rhythm 0;
+        }
+
+        .label{
+            width : 160px;
+        }
+
+
+        .icon{
+            padding-left: @rhythm;
+            color : rgb(var(--neutral-grad-2));
+
+            i{
+                font-size: 0.8em;
+            }
+
+            i.good{
+                color : rgb(var(--color-good));
+            }
+        }
+
+        .todefaultcert{
+
+            padding-left: 2 * @rhythm;
+            cursor: pointer;
+            .transition(0.3s);
+            color :  rgb(var(--neutral-grad-3));
+            span{
+                font-size: 0.8em;
+            }
+
+            &:hover{
+                color : rgb(var(--color-txt-ac));
+            }
+        }
+     
+        
+    }
+
+    .setting {
+        .settingTable{
+            .label{
+                span{
+                    font-size: 0.9em;
+                }
+            }
+            .value{
+                
+                color : rgb(var(--neutral-grad-3));
+
+                &[fss],
+                &[sys]{
+                    text-decoration: underline;
+                    color : rgb(var(--neutral-grad-3));
+                    cursor: pointer;
+                }
+                
+
+                span{
+                    font-size: 0.9em;
+                }
+            }
+
+            .clearfirebase{
+                cursor: pointer;
+            }
+        }
+
+        &.systempath {
+            .value {
+                color : rgb(var(--neutral-grad-2));
+            }
+        }
+    }
+
+    .manage{
+        border-radius: 10px;
+        background: rgb(var(--neutral-grad-1), 0.2);
+    }
+
+    .managepanel{
+        padding : 4 * @rhythm;
+    }
+
+    .nodecontentstate{
+        i{
+            width : 20px;
+            font-size: 0.9em;
+        }
+
+        .good{
+            color : rgb(var(--color-good));
+        }
+
+        .bad{
+            color : rgb(var(--color-bad));
+        }
+
+        .gray{
+            color : rgb(var(--neutral-grad-3));
+        }
+
+        .nodestateheightprogress{
+            width: 30em;
+            height: 0.1em;
+            background: rgb(var(--neutral-grad-3));
+            
+            .nodestateheightprogressinner {
+                background: rgb(var(--color-bg-ac));
+                display: block;
+                height: 100%;
+
+                &.fork {
+                    background: rgb(var(--color-bg-orange));
+                }
+            }
+        }
+
+        .syncLeft {
+            float: right;
+            font-size: 0.8em;
+            color: rgb(var(--neutral-grad-3));
+        }
+    }
+    
+    .notfound{
+        text-align: center;
+        padding : 4 * @rhythm 0;
+        color : rgb(var(--neutral-grad-3));
+        
+        &.install {
+            cursor: pointer;
+
+            .transition(0.3s);
+
+            &:hover{
+                color : rgb(var(--neutral-grad-3));
+            }
+        }
+
+        &.loading {
+            .stopInstall {
+                display: inline-block;
+                cursor: pointer;
+                color : rgb(var(--color-txt-ac));
+            }
+
+            .preloader5 {
+                margin: 1em;
+            }
+        }
+
+        .text{
+            padding : @rhythm 0;
+            font-size: 0.9em;
+        }        
+    }
+
+    .nodecontentmanage{
+
+        position: relative;
+
+        &.lock{
+            .felock{
+                display: block;
+            }
+        }
+
+        .felock{
+            position: absolute;
+            left : 0;
+            right : 0;
+            top : 0;
+            bottom : 0;
+            padding : 2 * @rhythm;
+            background: rgb(var(--background-total-theme));
+            display: none;
+        }
+
+        .felockcnt{
+            text-align: center;
+            padding : 4 * @rhythm 0;
+            cursor: pointer;
+            color : rgb(var(--neutral-grad-3));
+            
+
+            .text{
+                padding : @rhythm 0;
+                font-size: 0.9em;
+            }
+
+            i{
+                font-size: 0.9em;
+                color : rgb(var(--color-txt-ac));
+            }
+        }
+
+        .value.balance {
+            font-weight: 400;
+        }
+
+        .installProgressBox {
+            display: inline-block;
+            width: 90%;
+            margin: 0em 0.5em;
+            vertical-align: bottom;
+                
+            .title {
+                font-size: 13px;
+                text-align: right;
+            }
+
+            .installProgress {
+                width: 100%;
+                height: 3px;
+                background-color: rgb(var(--neutral-grad-1));
+                border-radius: 2px;
+                margin: 0.3em 0.5em 0em 0em;
+
+                .installProgressInner {
+                    height: 3px;
+                    background-color: rgb(var(--color-bg-ac));
+                    border-radius: 2px;
+                }
+            }
+        }
+        
+        .toDefaultPath{
+            cursor: pointer;
+            text-decoration: underline;
+
+            &:hover{
+                color : rgb(var(--color-bad));
+            }
+
+            i {
+                font-size: 0.8em;
+            }
+        }
+
+        .update {
+            .noupdatenode {
+                color : rgb(var(--neutral-grad-2));
+            }
+        }
+    }
+
+}
+
+.addressdialog{
+    input{
+        width: 100%;
+    }
+
+    textarea{
+        width : 100%;
+        height: 120px;
+        max-height: 230px;
+    }
+}

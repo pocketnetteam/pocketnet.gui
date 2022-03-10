@@ -18,6 +18,7 @@ var uploadpeertube = (function () {
 
 		var wnd;
 		var wndObj;
+		var errorcomp = null;
 
 		var xhrRequest;
 
@@ -32,11 +33,7 @@ var uploadpeertube = (function () {
 					video.onloadedmetadata = () => {
 						window.URL.revokeObjectURL(video.src);
 
-
-
-
-
-						resolve()
+						resolve();
 
 						/*// to bits and then to bitrate
 						var averageBitrate = (8 * file.size) / video.duration;
@@ -52,7 +49,34 @@ var uploadpeertube = (function () {
 				}),
 		};
 
-		var renders = {};
+		var renders = {
+			videoErrorContainer: function () {
+
+				var errorel = el.c.find('.videoErrorContainer')
+
+
+				if (errorel.length){
+
+					if (errorcomp){
+						errorcomp.destroy()
+						errorcomp = null
+					}
+
+					self.nav.api.load({
+						open : true,
+						id : 'abilityincrease',
+						el : errorel,
+
+						essenseData : {	
+							template : 'video'
+						}
+					}, function(v, p){
+						errorcomp = p
+					})
+				}
+				
+			},
+		};
 
 		var videoId,
 			loadedImage = null;
@@ -63,10 +87,8 @@ var uploadpeertube = (function () {
 		};
 
 		var initEvents = function () {
-
 			el.c.find('.buypkoins').on('click', function () {
-
-				self.closeContainer()
+				self.closeContainer();
 
 				self.nav.api.load({
 					open: true,
@@ -76,11 +98,10 @@ var uploadpeertube = (function () {
 
 					essenseData: {
 						simple: true,
-						action: 'buy'
-					}
-				})
-
-			})
+						action: 'buy',
+					},
+				});
+			});
 
 			el.c.find('.tooltip').tooltipster({
 				theme: 'tooltipster-light',
@@ -90,7 +111,7 @@ var uploadpeertube = (function () {
 				contentAsHTML: true,
 			});
 
-			el.videoInput.change(async function (evt) {
+			el.videoInput.change(function (evt) {
 				var fileName = evt.target.files[0].name;
 
 				el.videoError.text(
@@ -104,7 +125,7 @@ var uploadpeertube = (function () {
 
 				nameError.text('');
 
-				console.log('videoInputFile[0].size', videoInputFile[0].size)
+				console.log('videoInputFile[0].size', videoInputFile[0].size);
 
 				if (videoInputFile[0].size > 4 * 1024 * 1024 * 1024) {
 					el.videoError.text(self.app.localization.e('videoSizeError'));
@@ -168,7 +189,7 @@ var uploadpeertube = (function () {
 					const cancelCloseFunction = () => {
 						if (typeof cancel === 'function') cancel();
 
-						wndObj.close();
+						self.closeContainer()
 					};
 
 					ed.cancelCloseFunction = cancelCloseFunction;
@@ -265,6 +286,12 @@ var uploadpeertube = (function () {
 						wndObj.close();
 					})
 					.catch((e = {}) => {
+						self.app.Logger.error({
+							err: e.text || 'videoUploadError',
+							payload: JSON.stringify(e),
+							code: 401,
+						});
+
 						console.error('Uploading error', e);
 
 						el.videoInput.val('');
@@ -337,7 +364,7 @@ var uploadpeertube = (function () {
 							const cancelCloseFunction = () => {
 								if (typeof cancel === 'function') cancel();
 
-								wndObj.close();
+								self.closeContainer()
 							};
 
 							ed.cancelCloseFunction = cancelCloseFunction;
@@ -378,6 +405,12 @@ var uploadpeertube = (function () {
 								wndObj.close();
 							})
 							.catch((e = {}) => {
+								self.app.Logger.error({
+									err: e.text || 'videoImportError',
+									payload: JSON.stringify(e),
+									code: 402,
+								});
+
 								el.videoInput.val('');
 								el.wallpaperError.text('');
 
@@ -416,43 +449,51 @@ var uploadpeertube = (function () {
 
 				var data = {
 					hasAccess: false,
-					increase: {}
+					increase: {},
 				};
 
-				error = false
+				error = false;
 
-				globalpreloader(true, true)
+				globalpreloader(true, true);
 
-				self.app.peertubeHandler.api.user.me().then((res) => {
-
-					data.hasAccess = true
-
-					clbk(data);
-
-				}).catch(e => {
-
-					data.e = e
-					error = true
-
-					self.app.platform.sdk.ustate.canincrease({ template: 'video' }, function (r) {
-
-						data.increase = r
+				self.app.peertubeHandler.api.user
+					.me()
+					.then((res) => {
+						data.hasAccess = true;
 
 						clbk(data);
-
 					})
+					.catch((e = {}) => {
+						self.app.Logger.error({
+							err: e.text || 'getInfoError',
+							payload: JSON.stringify(e),
+							code: 501,
+						});
 
+						data.e = e;
+						error = true;
 
+						self.app.platform.sdk.ustate.canincrease(
+							{ template: 'video' },
+							function (r) {
+								data.increase = r;
 
-				}).then(() => {
-					globalpreloader(false)
-				})
-
-
+								clbk(data);
+							},
+						);
+					})
+					.then(() => {
+						globalpreloader(false);
+					});
 			},
 
 			destroy: function () {
 				el = {};
+
+				if (errorcomp){
+					errorcomp.destroy()
+					errorcomp = null
+				}
 			},
 
 			init: function (p) {
@@ -481,7 +522,9 @@ var uploadpeertube = (function () {
 
 				initEvents();
 
-				if (error) el.c.closest('.wnd').addClass('witherror')
+				renders.videoErrorContainer()
+
+				if (error) el.c.closest('.wnd').addClass('witherror');
 
 				p.clbk(null, p);
 			},
@@ -503,11 +546,10 @@ var uploadpeertube = (function () {
 				},
 				offScroll: true,
 				noInnerScroll: true,
-				class: 'uploadpeertube normalizedmobile',
-				allowHide: true,
-				noCloseButton: true,
+				class: 'uploadpeertube normalizedmobile showbetter',
+				allowHide: !isTablet(),
+				noCloseButton: !isTablet(),
 				noButtons: true,
-
 				swipeClose: true,
 				swipeCloseDir: 'right',
 				swipeMintrueshold: 30,

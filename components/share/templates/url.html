@@ -1,7 +1,6 @@
 <% if(url){ 
 	var meta = app.platform.parseUrl(url);
 
-
 	if(typeof share == 'undefined') share = {};
 
 	if((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube'){ 
@@ -19,7 +18,12 @@
 					<div class="jsPlayerLoading">
 						<div class="jsPlayerLoadingD table watchonyoutube">
 							<div>
-								<a elementsid="jsplayerhref" href="<%- url %>" cordovalink="_system" target="_blank">Watch on Youtube</a>
+								<a elementsid="jsplayerhref" href="<%- url %>" cordovalink="_system" target="_blank">
+									<button class="black">
+										<i class="fab fa-youtube"></i> Watch on Youtube
+									</button>
+									
+								</a>
 							</div>
 						</div>
 					</div>
@@ -83,11 +87,8 @@
 					<% } else { %>
 
 						<div class="jsPlayerLoading">
-							<div class="jsPlayerLoadingD table">
-								<div>
-									<div class="preloader5"><img src="./img/three-dots.svg"/></div>
-								</div>
-							</div>
+							<div class="jsPlayerLoading-matte"></div>
+							<div class="preloader5"><img src="./img/three-dots.svg"/></div>
 						</div>
 						
 					<% } %>
@@ -155,7 +156,7 @@
 
 	<% } else { %> 
 
-		<% if(og && !_.isEmpty(og)) {%>
+		<% if(og && !_.isEmpty(og) && !app.platform.sdk.usersettings.meta.preview.value) {%>
 
 			<div class="urlhtmlcontent">
 				<div class="ogtable table">
@@ -179,13 +180,15 @@
 					<div class="cnt">
 						<% if(og.title || og.titlePage) {%>
 							<a elementsid="titlehref" href="<%- url %>" donottrust="true">
-								<div class="title"><%= clearStringXss(clearScripts(((og.title || og.titlePage)))) %></div>
+								<div class="title">
+									<%- truncateString(og.title || og.titlePage, 100) %>
+								</div>
 							</a>
 						<% } %>
 
 						<% if(og.description || og.descriptionPage) {%>
 							<a elementsid="descriptionhref" href="<%- url %>" donottrust="true">
-								<div class="description"><%= trimHtml(clearScripts((findAndReplaceLink(clearStringXss(og.description || og.descriptionPage)))), 100) %></div>
+								<div class="description"><%- truncateString(og.description || og.descriptionPage, 100) %></div>
 							</a>
 						<% } %>
 					</div>

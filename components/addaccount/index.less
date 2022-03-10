@@ -8,7 +8,7 @@
 	.maket{
 
 		&.leftPart{
-			background: #F7F7F9;
+			background: rgb(var(--background-main));
 		}
 	}
 	.caption{
@@ -34,17 +34,21 @@
 				position: relative;
 			}
 
-			&.fileUploaderWrapper{
+			&.actionButtonsWrapper{
 				width: 120px;
 
 				text-align: center;
 
 				.fileUploader{
-					
+					.inputWrapper input {
+						&::-webkit-file-upload-button {
+							display: none;
+						}
+					}
 				}
 
 				>div{
-					color : @color-main;
+					color : rgb(var(--color-txt-ac));
 					font-size: 0.8em;
 				}
 			}
@@ -69,7 +73,7 @@
 				.label{
 					width: 100%;
 					font-size: 0.9em;
-					color: @color-add;
+					color : rgb(var(--color-txt-ac));
 					font-weight: 700;
 				}
 
@@ -79,22 +83,22 @@
 					width: 100%;
 					font-size: 1.5em;
 					font-weight: 100;
-					background: #fff;
-					color : @color-main;
+					background: rgb(var(--background-total-theme));
+					color : rgb(var(--color-txt-ac));
 					border : 1px solid transparent;
 					.transition(0.4s);
 					
 
 					&:focus{
-						border : 1px solid @color-gray-light;
-						background: #fff;
-						color : @color-black2;
+						border : 1px solid rgb(var(--neutral-grad-1));
+						background: rgb(var(--background-total-theme));
+						color : rgb(var(--text-color));
 					}
 				}
 
 				.validationFail{
 
-					color: @color-bad;
+					color: rgb(var(--color-bad));
 					margin-left: @rhythm;
 					padding: 1.5 * @rhythm @rhythm;
 				}
@@ -104,48 +108,6 @@
 	}
 
 
-}
-
-html.stblack{
-	#addaccount{	
-		
-		.maket{
-	
-			&.leftPart{
-				background: @color-black;
-			}
-		}
-	
-		.sitelogin{
-			.form{
-
-				.item{
-					.label{
-						color: @color-add;
-					}
-	
-					input{
-						background: @color-black2;
-						color : @color-main;
-						
-	
-						&:focus{
-							background:@color-black2;
-							color : #fff;
-						}
-					}
-	
-					.validationFail{
-	
-						color: @color-bad;
-					}
-				}
-			}
-			
-		}
-	
-	
-	}	
 }
 
 .wnd.addaccountwnd{
@@ -159,16 +121,14 @@ html.stblack{
 	.wndcontent {
 		padding : 0;
 	}
+
 	#addaccount{	
+
 		.work{
 			padding-top: 2 * @rhythm!important;
 			padding-bottom : 2 * @rhythm!important;
 		}
-		.maket{
-			&.leftPart{
-				background: #4646461f;
-			}
-		}
+
 		.caption{
 			font-size: 2.1em;
 		}
@@ -181,8 +141,8 @@ html.stblack{
 				.upload .fileUploader, .upload .fileUploader .elContent{
 					position: relative;
 				}
-	
-				&.fileUploaderWrapper{
+
+				&.actionButtonsWrapper{
 					width: 120px;
 	
 					text-align: center;
@@ -192,7 +152,7 @@ html.stblack{
 					}
 	
 					>div{
-						color : @color-main;
+						color : rgb(var(--color-txt-ac));
 						font-size: 0.8em;
 					}
 				}
@@ -200,100 +160,6 @@ html.stblack{
 	
 			}
 	
-		}
-		
-		.sitelogin{
-			.form{
-				margin-top: 3 * @rhythm;
-				.item{
-					margin-bottom: 2 * @rhythm;
-				
-					width: 100%;
-	
-					&.e{
-						margin-top: 4 * @rhythm;
-					}
-	
-					.label{
-						width: 100%;
-						font-size: 0.9em;
-						color: @color-add;
-						font-weight: 700;
-					}
-	
-					input{
-						margin : 0 auto;
-						padding: 2 * @rhythm;
-						width: 100%;
-						font-size: 1.5em;
-						font-weight: 100;
-						background: #fff;
-						color : @color-main;
-						border : 1px solid transparent;
-						.transition(0.4s);
-						
-	
-						&:focus{
-							border : 1px solid @color-gray-light;
-							background: #fff;
-							color : @color-black2;
-						}
-					}
-	
-					.validationFail{
-	
-						color: @color-bad;
-						margin-left: @rhythm;
-						padding: 1.5 * @rhythm @rhythm;
-					}
-				}
-			}
-			
-		}
-	
-		.keytable{
-			display: block;
-			position: relative;
-
-			>div{
-				display: block;
-				&.fileUploaderWrapper{
-					/*width: 50%;*/
-					width: 80px;
-					text-align: center;
-					display: block;
-					position: absolute;
-					right: 0;
-					bottom : 0;
-					top : 0;
-
-					.label{
-						display: none;
-					}
-
-					.icon{
-						font-size: 1.2em;
-						height: 100%;
-						line-height: 76px;
-					}
-
-					.uploadFile{
-						height: 100%;
-					}
-				}
-
-				input{
-					border-radius: 3px;
-				}
-			}
-
-			&.typeactive{
-				>div{
-					&.fileUploaderWrapper{
-						display: none;
-					}
-				}
-			}
 		}
 	}
 }
@@ -307,12 +173,7 @@ html.stblack{
 			padding-left : @rhythm!important;
 			padding-right: @rhythm!important;
 		}
-		.maket{
-
-			&.leftPart{
-				background: #F7F7F9;
-			}
-		}
+		
 		.caption{
 			font-size: 2.1em;
 		}
@@ -332,16 +193,8 @@ html.stblack{
 
 			>div{
 
-				&.fileUploaderWrapper{
+				&.actionButtonsWrapper{
 					width: 50%;
-				}
-			}
-
-			&.typeactive{
-				>div{
-					&.fileUploaderWrapper{
-						display: none;
-					}
 				}
 			}
 		}

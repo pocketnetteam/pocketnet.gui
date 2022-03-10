@@ -232,13 +232,16 @@ ____loclib.acchasinanotherpack = "This address is already use in another address
 
 //author
 ____loclib.sub = "Follow";
+____loclib.subi = "Following";
 ____loclib.unsub = "Unfollow";
 ____loclib.joined = "Joined";
 ____loclib.shares = "SHARES";
 ____loclib.uposts = "POSTS";
 ____loclib.myuposts = "MY POSTS";
 ____loclib.followers = "FOLLOWERS";
-____loclib.following = "Following";
+____loclib.followers2 = "Followers";
+____loclib.following = "FOLLOWING";
+____loclib.following2 = "Following";
 ____loclib.settings = "MANAGE";
 ____loclib.anofollowers = "This user has no followers";
 ____loclib.aynofollowers = "You have no followers";
@@ -326,6 +329,10 @@ ____loclib.dcancel = "Cancel";
 ____loclib.dyes = "Yes";
 ____loclib.dno = "No";
 ____loclib.dsa = "Do not Show Anymore";
+____loclib.dcode = "Code"
+____loclib.dcopyToClipboard = "Copy to ClipBoard"
+____loclib.dwarning = "Warning"
+____loclib.dyesclose = "Yes, close"
 
 
 // Messages
@@ -369,7 +376,7 @@ ____loclib.checkScoreErrorLight = "Account is not activated";
 ____loclib.timestamperror = "Time in application and in node do not match";
 
 // Error Page 404
-____loclib.e404 = "ERROR 404";
+____loclib.e404 = "404";
 ____loclib.e404e = "Page not Found. Return to Main Page";
 ____loclib.postLimitLight = function(v){
 return "You have reached your limit of " + (v || 15) + " posts in a 24 hour period";
@@ -467,7 +474,7 @@ ____loclib.onlyVideo = "Only video"
 ____loclib.e13023 = "Do you really want to unblock user?"
 ____loclib.e13024 = "Your Private Login Key"
 ____loclib.e13025 = "Create a new account"
-____loclib.e13026 = "Join "+appname+""
+____loclib.e13026 = "Registration "+appname+""
 
 ____loclib.e13027 = "Stay Signed"
 ____loclib.e13028 = "You entered not valid private key"
@@ -597,7 +604,7 @@ ____loclib.joinnow = "Join Now"
 ____loclib.loading = "Loading"
 ____loclib.e13118 = "Words doesn't match"
 ____loclib.e13119 = "Add email and continue"
-____loclib.e13120 = "Applications"
+____loclib.e13120 = "Download Application"
 ____loclib.e13121 = "There aren't Images Here"
 ____loclib.e13122 = "Latest Comments"
 
@@ -612,6 +619,7 @@ ____loclib.editpost = "Edit Post"
 ____loclib.removepost = "Remove Post"
 ____loclib.removePostDialog = "Do you really want to remove post?"
 ____loclib.opennewwindow = "Open Post in New Window"
+____loclib.opennew = "Open Post"
 ____loclib.pin = "Pin Post"
 ____loclib.pinned = "pinned"
 ____loclib.pinPostDialog = "Do you realy want to pin this post?"
@@ -620,7 +628,7 @@ ____loclib.unpinPostDialog = "Do you realy want to unpin this post?"
 
 
 ____loclib.unsubscribe = "Unsubscribe"
-____loclib.startchat = "Start chat"
+____loclib.startchat = "Chat"
 ____loclib.reportpost = "Report Post"
 ____loclib.reportuser = "Report User"
 
@@ -639,6 +647,7 @@ ____loclib.e13136 = "All Posts"
 ____loclib.e13137 = "My Subscriptions" // This is the equivalent of a ‘News feed’. Don’t change the word ‘Pocket’ however, it’s a feature of "+appname+".
 ____loclib.e13138 = "Top posts"
 ____loclib["Top Posts Over"] = "Top Posts Over"
+____loclib.bestFirst = "The best first"
 ____loclib.topnext = "Next"
 ____loclib.topprevious = "Previous"
 ____loclib.topactual = "Return to the latest"
@@ -676,6 +685,7 @@ ____loclib.e13157 = "Search by"
 ____loclib.e13158 = "hasn't any results"
 ____loclib.e13159 = "The search phrase is empty"
 ____loclib.repost = "Repost"
+____loclib.reposted = "Repost"
 ____loclib.e13160 = "Hello Pocketeers!"
 
 ____loclib.e13161 = "Add Tags For Your Post"
@@ -713,6 +723,8 @@ ____loclib.e13188 = "Please save your private cryptographic key which replaces l
 ____loclib.e13189 = "Leave and lose my key forever!"
 ____loclib.e13190 = ""+appname+" theme"
 ____loclib.e13191 = "Set Theme"
+____loclib.uiScaleSetting = "Interface scaling"
+____loclib.uiScaleSettingTitle = "Set scaling"
 ____loclib.e13192 = "Level"
 ____loclib.e13193 = "BONUS"
 ____loclib.e13194 = "Reputation and Status"
@@ -758,9 +770,16 @@ ____loclib.e13220 = "Pocketcoins delivered"
 ____loclib.errorreload = "Something went wrong. Please reload page and try again"
 ____loclib.e13221 = "Do you really want to delete information about this deal? Deal can't be stop"
 ____loclib.e13222 = "Download Desktop App - this is the most censorship resistant way to use "+appname+". Even if websites are shut down, desktop application will still run directly through the nodes."
+
+
+
 ____loclib.e13223 = "Download "+appname+" for Windows"
 ____loclib.e132232 = "Download "+appname+" for macOs"
 ____loclib.e13224 = "Download "+appname+" for Linux"
+
+____loclib.e132233 = "Download "+appname+" for Android"
+____loclib.e132221 = "Download Mobile App - this is the most usefull way to use "+appname+"."
+
 ____loclib.e13225 = ""+appname+" Node"
 ____loclib.e13226 = "Download Node"
 ____loclib.e13227 = "Download "+appname+" Node for Windows"
@@ -1051,7 +1070,7 @@ ____loclib.anotherSiteCaption = "You follow an external link to a third-party si
 ____loclib.anotherSiteDisc = "We are not responsible for the content of the site and strongly recommend that you do not provide any of your personal data on third-party sites."
 
 ____loclib.Categories = "Categories"
-____loclib.addtagsCategories = "Add Categories/Tags"
+____loclib.addtagsCategories = "Categories and tags"
 ____loclib.addcategory = "Add Category"
 ____loclib.categoryname = "Category name"
 ____loclib.entercategoryname = "Enter category name"
@@ -1105,21 +1124,29 @@ ____loclib.uploadVideoProgress_processing = "Processed:"
 ____loclib.uploadVideoProgress_uploading = "Uploaded:"
 
 
-____loclib.pbp_1 = ""+appname+" Bonus Program"
+
+
+
+
+
+
+
+
+____loclib.pbp_1 = "Bastyon Bonus Program"
 ____loclib.pbp_2 = "Criteria for bonus for original content:"
-____loclib.pbp_3 = "Every 15k views + 1250 five star ratings from unique users"
+____loclib.pbp_3 = "Every 15k views + 1500 five star ratings from unique users  + 1500 referral users"
 ____loclib.pbp_4 = "PKOIN Equivalent:"
 ____loclib.pbp_5 = "1,000 USDT"
-____loclib.pbp_6 = "How You Can Increase Your Views?"
-____loclib.pbp_7 = "Embed your "+appname+" video to external websites (click Share and choose Embed)"
+____loclib.pbp_6 = "How You Speed Up Your Bonus?"
+____loclib.pbp_7 = "Embed your Bastyon video to external websites (click Share and choose Embed)"
 ____loclib.pbp_8 = "Share your video to social networks and via email"
-____loclib.pbp_9 = "Share the link to your personal page (go to your profile and click Share)"
-____loclib.pbp_10 = "If you invite a video blogger and can prove it, you get a bonus equal to 25% of their earnings."
+____loclib.pbp_9 = "Share the link to your personal page (go to your profile and click Share). You can create special posts that are exclusive only for your Bastyon subscribers. When creating a post choose an option Visible Only for Subscribers. Exclusive materials will increase the number of referrals."
+____loclib.pbp_10 = "If you invite a video blogger and can prove it, you get a bonus equal to 25% of their earnings from the first 4 bonuses."
 ____loclib.pbp_11 = "For any questions, email"
 
-____loclib.pbp_6_1 = "Referral Users"
-____loclib.pbp_6_2 = "1000"
-____loclib.pbp_6_3 = "Important: Starting November 1 there is an additional requirement for each bonus. You must have 1000 Referral Users for each bonus. To get Referral Users you must Include Referral Link when sharing!"
+____loclib.pbp_6_1 = ""
+____loclib.pbp_6_2 = ""
+____loclib.pbp_6_3 = ""
 
 
 
@@ -1218,6 +1245,7 @@ ____loclib.unableToAuthorizeConnectionBody = "Unfortunately, the application can
 
 
 
+____loclib.download = "Download";
 ____loclib.downloaded = "Downloaded";
 ____loclib.downloadedEmpty = "Downloaded posts will be shown here";
 ____loclib.emptyDescription = "Description is empty";
@@ -1298,7 +1326,13 @@ ____loclib.sharevisibilitylabel_reg_article = 'Author chose to make this <b>arti
 ____loclib.sharevisibilitylabel_sub_video = 'Author chose to make this <b>video</b> available only for subscribers'
 ____loclib.sharevisibilitylabel_reg_video = 'Author chose to make this <b>video</b> available only for registered Bastyon users'
 
+____loclib.buy = 'Buy';
+
+____loclib.topAuthors = 'Top Authors';
+____loclib.recommendedPosts = 'Recommended Posts';
+____loclib.rating = 'Rating';
 ____loclib.setupVideoNodeGuide = 'Setup Video Node'
+____loclib.subscribers3 = 'Subscribers';
 
 ____loclib.MainBoard = 'Stand up to censorship &';
 ____loclib.MainBoard1 = 'gain financial independence';
@@ -1372,6 +1406,7 @@ ____loclib.aboutOpen2 = 'Official Website';
 ____loclib.aboutOpen3 = 'Contact us';
 ____loclib.aboutOpen4 = 'Send us a message if you need help or if you are a content creator, blogger, influencer and would like to unlock your bonus and verify your profile!';
 ____loclib.aboutOpen5 = 'Source Code';
+____loclib.aboutOpen5_1 = 'Email us at:';
 
 /////////////aboutYoutube
 ____loclib.aboutMainBoard = 'Bastyon - the best alternative to YouTube';
@@ -1847,6 +1882,12 @@ ____loclib.pkoin_commerce_info = 'Any peer-to-peer PKOIN transactions are not mo
 ____loclib.buyforcrypto = 'Buy for crypto'
 ____loclib.buywithcreditcard = 'Buy with credit card'
 ____loclib.buylogo = 'Buy Pocketcoin (PKOIN)'
+
+____loclib.comment = 'Comment';
+____loclib.sendToAuthor = 'Send to author';
+____loclib.pkoinComment = 'PKOIN comment';
+____loclib.liftUpThePost = 'Lift up the post';
+
 ____loclib.buypeertopeer = 'Buy Peer-to-Peer'
 
 
@@ -1864,3 +1905,225 @@ ____loclib.repostyourown = 'You cannot repost your own post'
 ____loclib.reachedlimits = 'You reached your daily limit of actions. To increase your limit you need to have at least 50 PKOIN in your account or have a valid reputation.'
 
 ____loclib.closestreachedlimits = 'You are close to hitting your daily action limit. To increase your limit you need to have at least 50 PKOIN in your account or have a valid reputation.'
+
+
+____loclib.sendUserStatistics = 'Send anonimous report of errors to Bastyon Team'
+____loclib.captionUserStats = 'Statistics'
+
+____loclib.editarticledraft = 'Edit article Draft'
+____loclib.deletearticledraft = 'Delete article Draft'
+____loclib.previewarticledraft = 'View article Draft'
+____loclib.deletedraftquestion = 'Are you sure you want to delete the draft article? Recovery is impossible'
+____loclib.publishquestion = 'Are you sure you want to public this article?'
+
+____loclib.etc = 'And so on...'
+____loclib.openlinkssettings = 'Do not open links in the desktop application'
+____loclib.nametaken = 'This username is taken in Bastyon'
+
+____loclib.accountnotfound = 'We could not find your account on the blockchain. Perhaps the registration process was not completed, or there is no Internet connection'
+
+
+____loclib.name20symbols = "The name length can't be more than 20 symbols"
+____loclib.namereservedpn = 'To avoid user confusion using Pocketnet in name is reserved'
+____loclib.namereservedbn = 'To avoid user confusion using Bastyon in name is reserved'
+
+____loclib.photohassizegreater = function(v){
+    return "Your photo has size greater than "+v+"MB. Please upload a photo under "+v+"MB in size."
+}
+____loclib.invalidformat = "Invalid format of picture. Only png and jpeg are allowed"
+____loclib.downloadDesctApp = "Download Bastyon for desktop"
+____loclib.downloadMobileApp = "Install Mobile Application"
+
+
+____loclib.easyNode_e10000 = "Node"
+____loclib.easyNode_e10001 = "Download and install node"
+____loclib.easyNode_e10002 = "Bastyon Node"
+____loclib.easyNode_e10003 = "Loading"
+____loclib.easyNode_e10004 = "Node Installing"
+____loclib.easyNode_e10005 = "Node Removing"
+____loclib.easyNode_e10006 = "System Requirements"
+____loclib.easyNode_e10007 = "Node control is not yet available for your operating system"
+____loclib.easyNode_e10008 = "Synchronization"
+____loclib.easyNode_e10009 = "Configuration"
+____loclib.easyNode_e10010 = "Enabled"
+____loclib.easyNode_e10011 = "Daemon Path"
+____loclib.easyNode_e10012 = "Data Path"
+____loclib.easyNode_e10013 = "Set Paths to Default"
+____loclib.easyNode_e10014 = "To Default"
+____loclib.easyNode_e10015 = "Update Node"
+____loclib.easyNode_e10016 = "No Updates Available"
+____loclib.easyNode_e10017 = "Delete"
+____loclib.easyNode_e10018 = "Delete Daemon"
+____loclib.easyNode_e10019 = "Delete Daemon and Data"
+____loclib.easyNode_e10020 = "Wallet"
+____loclib.easyNode_e10021 = "Status"
+____loclib.easyNode_e10022 = "Requesting..."
+____loclib.easyNode_e10023 = "Staking"
+____loclib.easyNode_e10024 = "Node can't stake now. Add at least 50 PKOIN or wait for 60 minutes to activate coins"
+____loclib.easyNode_e10025 = "Balance"
+____loclib.easyNode_e10026 = "Control"
+____loclib.easyNode_e10027 = "Deposit"
+____loclib.easyNode_e10028 = "Withdraw"
+____loclib.easyNode_e10029 = "Export Wallet"
+____loclib.easyNode_e10030 = "Import Wallet"
+____loclib.easyNode_e10031 = "Active"
+____loclib.easyNode_e10032 = "Version"
+____loclib.easyNode_e10033 = "Chain"
+____loclib.easyNode_e10034 = "Description"
+____loclib.easyNode_e10035 = "Height"
+____loclib.easyNode_e10036 = "Less than an hour left"
+____loclib.easyNode_e10037 = function(v) { return `${v} hour(s) remaining` }
+____loclib.easyNode_e10038 = "Block Hash"
+____loclib.easyNode_e10039 = "Disable Node"
+____loclib.easyNode_e10040 = "Enable Node"
+____loclib.easyNode_e10041 = "Your wallet saved to"
+____loclib.easyNode_e10042 = "Your wallet imported"
+____loclib.easyNode_e10043 = "Your new node address"
+____loclib.easyNode_e10044 = "Input Address and Amount for transfer PKOIN"
+____loclib.easyNode_e10045 = "Destination Address"
+____loclib.easyNode_e10046 = "Amount"
+____loclib.easyNode_e10047 = "Invalid arguments"
+____loclib.easyNode_e10048 = 'Invalid destination address'
+____loclib.easyNode_e10049 = "Invalid amount"
+____loclib.easyNode_e10050 = "Created transaction"
+____loclib.easyNode_e10051 = "Do you really want to Stop Node and Update It?"
+____loclib.easyNode_e10052 = "Make sure that you have made a backup of the wallet. Do you really want to delete the node and data directory?"
+____loclib.easyNode_e10053 = "Do you really want to remove Node Daemon?"
+____loclib.easyNode_e10054 = "Do you really want to install the node?"
+____loclib.easyNode_e10055 = "Do you really want to set Data Path to Default?"
+____loclib.easyNode_e10056 = "Gb free RAM"
+____loclib.easyNode_e10058 = "Gb free disk space"
+____loclib.easyNode_e10059 = "Mb/s internet speed"
+____loclib.easyNode_e10060 = "SSD drive"
+____loclib.easyNode_e10061 = "Your node is running. Close the app anyway?"
+____loclib.easyNode_e10062 = "Node update is available. Download a new version?"
+____loclib.easyNode_e10063 = "Node has been successfully updated"
+
+____loclib.IHave = "I have";
+____loclib.downloadNode = "Download Windows Desktop Node";
+____loclib.months = "Months";
+____loclib.year = "Year";
+____loclib.stakingCalculator = "Staking Calculator - calculate how much you earn by putting Pocketcoin (PKOIN) into a node."
+____loclib.easyNode_e2000 = "Defend Freedom of Speech & "
+____loclib.easyNode_e2000_1 = "Earn"
+____loclib.easyNode_e2000_2 = " Cryptocurrency"
+____loclib.easyNode_e2001 = "What is Pocketcoin? Pocketcoin is a cryptocurrency that powers the decentralized social platform Bastyon. It is used to reward content creators, to boost posts and comments, to pay for ads and to unlock special features on Bastyon."
+____loclib.easyNode_e2002 = "What is a  node?  A node is a computer owned by any user of Bastyon that supports the network and"
+____loclib.easyNode_e2002_1 = " earns "
+____loclib.easyNode_e2002_2 = "Pocketcoin. Your computer can be one of those nodes, assuming you have at least 50 GB of free SSD space and a decent internet connection.  Node has to lock some Pocketcoin in it to"
+____loclib.easyNode_e2002_2_1 = " earn "
+____loclib.easyNode_e2002_2_2 = "more Pocketcoin. That is called staking in cryptocurency."
+____loclib.minPkoin = function (p){	
+	return  String(p) + " PKOIN Minimum"
+}
+____loclib.maxPkoin = function (p){	
+	return  String(p) + " PKOIN Maximum"
+}
+
+____loclib.topPosts = "Top posts";
+____loclib.videop2psettings = "Use p2p when watching videos"
+
+____loclib.art_validatetags = "Please add Tags For Your Longread"
+____loclib.art_validatecover = "Please add Cover For Your Longread"
+____loclib.art_validatecaption = "Please add Caption For Your Longread"
+____loclib.art_validatecontent = "Please add Content of Your Longread"
+____loclib.art_nothingchange = "No changes"
+____loclib.art_newarticle = "New Longread"
+____loclib.art_myarticles = "My Longreads"
+____loclib.art_changecover = "Upload Cover"
+____loclib.art_removecover = "Remove Cover"
+____loclib.art_publish = "Publish"
+____loclib.art_editing = "Editing"
+____loclib.art_draftsaved = "Draft saved"
+____loclib.art_gotolastdraft = "go to last draft"
+____loclib.art_categoriestags = "Categories and tags"
+____loclib.art_preview = "Preview"
+____loclib.art_caption = "Caption of new Longread"
+____loclib.art_placeholder = "Let`s write an awesome story!"
+
+____loclib.art_newarticlecreation = "Create a new Longread"
+____loclib.art_editingsh = "Editing a published Longread"
+____loclib.art_saveedited = "Save"
+
+____loclib.art_wordscount = "Number of words"
+____loclib.art_volumepercent = "Article size limit"
+____loclib.art_goback = "Come back"
+
+____loclib.downloadingUpdate = "Downloading the update"
+____loclib.hasnotupdates = "No updates available"
+____loclib.cantmanageupdate = "Unable to manage update"
+
+____loclib.updateapplication = "Update Application"
+____loclib.applicationversion = "Application version"
+____loclib.installedusinggps = "The application was not installed using Google Play."
+
+____loclib.downloadplaystore = "Google Play Download"
+____loclib.downloadgithub = "Download APK"
+
+____loclib.empty = "Empty"
+
+____loclib.reputation = "Reputation";
+____loclib.subscriptions = "Subscriptions";
+____loclib.tothetop = "To the top"
+____loclib.menu = "Menu"
+
+____loclib.donotshowagain = "Do not show again"
+
+
+____loclib.postby = "Post by"
+____loclib.continueon = "Сontinue on"
+____loclib.bestwishes = "Best,"
+
+____loclib.ratings123 = "Only users with high reputation at least 10 publications in the feed can give 1, 2, 3 star ratings, make comments, give negative ratings on comments. This is done to protect authors, because Bastyon does NOT require any personal information for registration."
+
+____loclib.ratingss3 = "Only users with high reputation can give 1, 2, 3 star ratings. This is done to protect authors, because Bastyon does NOT require any personal information for registration."
+
+____loclib.clearcategories = "Do you really want to clear category filters?"
+____loclib.cleartags = "Do you really want to clear tags filters?"
+____loclib.fromsh = "From"
+
+____loclib.hodoiearnmore = "How do I earn more Pocketcoin?"
+
+
+____loclib.removeaddress = "Do you really want to remove this address from this device?"
+____loclib.wanttoseekey = "Do you really want to see your private key?"
+____loclib.seeprivatekey = "See Private Key"
+____loclib.max5acc = "You have reached a maximum of 5 accounts. No more can be added"
+
+
+____loclib.longreads = "Long Reads"
+____loclib.readarticle = "Read"
+
+____loclib.filters = "Filters"
+____loclib.dataenteredincorrectly = "Data entered incorrectly"
+
+____loclib.lloadprevwithtags = "Refresh Feed"
+
+____loclib.newRepost = "Make repost"
+____loclib.whatsnewrepost = "Your commentary"
+
+____loclib.art_goback = "Come back"
+
+____loclib.writesupport = "Write to support"
+____loclib.submitapplication = "Submit your application"
+
+____loclib.submitapplicationVideo = "Request PKOIN for video"
+____loclib.submitapplicationVideoSmall = "Send & request PKOIN"
+
+____loclib.videobloggerRequest = "If you are a blogger with an established audience, you can get a gift of PKOIN to load video. Click the button below if you are a blogger:"
+    
+
+____loclib.videobloggerRequest_pl1 = "Link to existing channel 1"
+____loclib.videobloggerRequest_pl2 = "Link to existing channel 2"
+____loclib.videobloggerRequest_pl3 = "Link to existing channel 3"
+
+____loclib.videobloggerRequest_pl_notes = "Notes: any additional information"
+____loclib.videobloggerRequest_pl_email = "Contact email"
+
+____loclib.videobloggerRequest_caption = "Fill out this form to receive PKOIN"
+
+____loclib.videobloggerRequest_er_link = "Provide at least one link to an existing channel"
+____loclib.videobloggerRequest_er_info = "Additional information required"
+____loclib.videobloggerRequest_er_email = "Leave an email for feedback"
+
+____loclib.videobloggerRequest_submitted = "Thank you for contacting us, we will review your application"

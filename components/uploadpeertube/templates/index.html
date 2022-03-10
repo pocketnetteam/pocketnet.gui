@@ -17,13 +17,14 @@
         <div class="uploading uplsection activeOnRolled">
           <div class="scontent activeOnRolled">
             <div class="uploadRow activeOnRolled">
-              <div class="upload-field-container">
+              <div class="upload-field-container" elementsid="upload-field-container">
                 <div class="inputWrapper">
                   <div class="table">
                     <div>
                       <label
                         for="upload-video-file"
                         class="upload-peertube-label upload-video-file-label"
+                        elementsid="upload-video-file"
                         ><%- e('selectVideoFile') %></label
                       >
                       <input elementsid="upload-video-file"
@@ -78,7 +79,7 @@
           <%- e('videoQualityCaption') %>
         </div>
       </div>
-
+     
       <div class="challengeoffer" image="img/videoofferbg2.jpg">
         <div class="pbg">
           <div class="caption">
@@ -94,10 +95,10 @@
               <div class="forlabel"><span><%- e('pbp_4') %></span></div>
               <div class="forvalue"><span><%- e('pbp_5') %></span></div>
             </div>
-            <div class="table">
+            <!--<div class="table">
               <div class="forlabel"><span><%- e('pbp_6_1') %></span></div>
               <div class="forvalue"><span><%- e('pbp_6_2') %></span></div>
-            </div>
+            </div>-->
           </div>
 
           <div class="textpart">
@@ -109,13 +110,13 @@
               <ol>
                 <li><%- e('pbp_7') %></li>
                 <li><%- e('pbp_8') %></li>
-                <li><%- e('pbp_9') %></li>
+                <!--<li><%- e('pbp_9') %></li>-->
               </ol>
             </div>
           </div>
 
           <div class="infopart">
-            <div><b><%- e('pbp_6_3') %></b></div>
+            <!--<div><b><%- e('pbp_6_3') %></b></div>-->
             <div><%- e('pbp_10') %></div>
             <div>
               <%- e('pbp_11') %>
@@ -125,14 +126,14 @@
         </div>
       </div>
 
-      <!-- <div class="upload-button-section activeOnRolled">
+      <!--<div class="upload-button-section activeOnRolled">
         <div class="upload-button-wrapper">
           <button class="uploadButton orange button medium">
             Publish <i class="fas fa-angle-right"></i>
           </button>
-        </div>
+        </div>--> 
 
-      </div> -->
+      </div>
     </div>
     <div class="iconwr hidden activeOnRolled">
       <div class="preloader-caption"><%- e('videoUploadingFinish') %></div>
@@ -146,22 +147,9 @@
       
       <div>
 
-          <% if(_.isEmpty(increase)) {%>
-
-              <div class="videoErrorHeading"><i class="fas fa-exclamation-circle"></i> <%- e('unableToAuthorizeConnection') %></div>
-              <div class="videoErrorBody"><%- e('unableToAuthorizeConnectionBody') %></div>
-
-          <% } else { %>
-
-              <div class="videoErrorHeading"><i class="fas fa-exclamation-circle"></i> <%- e('unableToAuthorize') %></div>
-              <div class="videoErrorBody"><%- e('unableToAuthorizeBody') %></div>
-
-              <div class="buttonwrapper">
-                  <button class="buypkoins orange"><%=e('buylogo')%></button>
-              </div>
-
-          <% } %>
-
+        <div class="work">
+          <div class="videoContainer videoErrorContainer" elementsid="videocabineterror"></div>
+        </div>
 
       </div>
 

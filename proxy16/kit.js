@@ -22,11 +22,22 @@ var settingsPath = 'data/settings'
 var settings = {};
 
 var pocketnet = new Pocketnet()
-var test = _.indexOf(process.argv, '--test') > -1
+var test = _.indexOf(process.argv, '--test') > -1 || global.TESTPOCKETNET
 
 var logger = new Logger(['general', 'rpc', 'system', 'remote', 'firebase', 'nodecontrol']).init()
 
 var testnodes = [
+
+	
+
+	{
+		host : '78.37.233.202',
+		port : 39091,
+		ws : 6067,
+		name : 'test.v.pocketnet.app',
+		stable : true
+	},
+
 	{
 		host : '157.90.235.121',
 		port : 39091,
@@ -49,20 +60,19 @@ var testnodes = [
 		stable : true
 	},
 	{
-		host : '188.187.45.218',
-		port : 39091,
-		ws : 6067,
-		name : 'v0.20.0 (dev)',
-		stable : false
-	},
-	{
 		host : '137.135.25.73',
 		port : 39091,
 		ws : 6067,
 		name : 'tawmaz',
 		stable : false
-	}
-    
+	},
+	{
+		host : '109.173.41.29',
+		port : 39091,
+		ws : 6067,
+		name : 'lostystyg',
+		stable : false
+	}    
 ]
 
 
@@ -669,15 +679,12 @@ var kit = {
 					})
 
 				},
-
 				apply : function({key}){
 					return proxy.wallet.apply(key)
 				}
-
 			},
 	
 			node : {
-
 				check : function(){
 					return kit.proxy().then(proxy => {
 
@@ -687,7 +694,6 @@ var kit = {
 						return Promise.resolve()
 					})
 				},
-	
 				enabled : function({enabled}){
 
 
@@ -727,8 +733,7 @@ var kit = {
 					})
 					
 				},
-	
-				ndataPath : function({ndataPath}){
+	    		ndataPath : function({ndataPath}){
 					if(settings.node.ndataPath == ndataPath) return Promise.resolve()
 
 					settings.node.ndataPath = ndataPath
@@ -739,7 +744,6 @@ var kit = {
 					})
 					
 				},
-				
 				stacking : {
 
 					import : function({privatekey}){
@@ -750,12 +754,12 @@ var kit = {
 
 							r = proxy.nodeControl.request
 
-							return proxy.nodeControl.request.getNodeAddresses()
+							return proxy.nodeControl.request.getStakingInfo()
 
-						}).then(addresses => {
-
+						}).then(balance => {
 
 							return r.importPrivKey(privatekey)
+
 						}).catch(e => {
 
 							return Promise.reject(e)
@@ -763,17 +767,54 @@ var kit = {
 
 					},
 
-					addresses : function(){
+					stakinginfo : function(){
 
 						return kit.proxy().then(proxy => {
-							return proxy.nodeControl.request.getNodeAddresses()
-						}).then(addresses => {
-							return Promise.resolve(addresses)
+							return proxy.nodeControl.request.getStakingInfo()
+						}).then(balance => {
+							return Promise.resolve(balance)
 						})
 
 					}
 
-				}
+				},
+                wallet : {
+                    listaddresses : function(){
+						return kit.proxy().then(proxy => {
+							return proxy.nodeControl.request.listAddresses()
+						}).then(result => {
+							return Promise.resolve(result)
+						})
+					},
+                    getnewaddress : function(){
+						return kit.proxy().then(proxy => {
+							return proxy.nodeControl.request.getnewaddress()
+						}).then(result => {
+							return Promise.resolve(result)
+						})
+					},
+                    sendtoaddress : function(data) {
+						return kit.proxy().then(proxy => {
+							return proxy.nodeControl.request.sendtoaddress(data.address, data.amount)
+						}).then(result => {
+							return Promise.resolve(result)
+						})
+					},
+                },
+                dumpWallet : function({path}) {
+                    return kit.proxy().then(proxy => {
+                        return proxy.nodeControl.request.dumpwallet(path)
+                    }).then(result => {
+                        return Promise.resolve(result)
+                    })
+                },
+                importWallet : function({path}) {
+                    return kit.proxy().then(proxy => {
+                        return proxy.nodeControl.request.importwallet(path)
+                    }).then(result => {
+                        return Promise.resolve(result)
+                    })
+                },
 			},
 
 			testkeys : {
@@ -868,26 +909,29 @@ var kit = {
 					return Promise.resolve(r)
 				})
 			},
-
+			breakInstall : function(message){
+				return kit.proxy().then(proxy => {
+					return proxy.nodeControl.kit.breakInstall()
+				}).then(r => {
+					return Promise.resolve(r)
+				})
+			},
 			delete : function({all}){
 				return kit.proxy().then(proxy => {
 					return proxy.nodeControl.kit.delete(all)
 				}).then(r => {
-
 					return Promise.resolve(r)
 				})
 			},
-
-
-			//// ?
+            // TODO (brangr): проверить
 			update : function(message){
 				return kit.proxy().then(proxy => {
 					return proxy.nodeControl.kit.update()
 				}).then(r => {
-
 					return Promise.resolve(r)
 				})
 			},
+            // TODO (brangr): почему коммент?
 			/*checkupdate : function(message){
 				return kit.proxy().then(proxy => {
 					return proxy.nodeControl.kit.checkupdate().then(update => {
@@ -910,7 +954,14 @@ var kit = {
 				}).then(data => {
 					send(message.id, null, data)
 				})
-			}
+			},
+			stop : function(message){
+				return kit.proxy().then(proxy => {
+					return proxy.nodeControl.kit.safeStop()
+				}).then(r => {
+					return Promise.resolve(r)
+				})
+			},
 		},
 
 		proxy : {
@@ -1125,7 +1176,7 @@ var kit = {
 
 	destroyhard : function(){
 
-		return kit.manage.proxy.detach().then(r => {
+		return kit.destroy().then(r => {
 			return this.destroy()
 		})
 		

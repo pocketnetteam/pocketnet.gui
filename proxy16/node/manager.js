@@ -449,15 +449,16 @@ var Nodemanager = function(p){
 
         var workingNodes = getWorkingNodes()
 
+
         if (workingNodes.length < minnodescount || !usersfornode || self.proxy.users() / usersfornode >= workingNodes.length){
+
+
             node.init()
         }
         
     }
 
     var forgetIfNotUsing = function(){
-
-        
 
         var workingNodes = getWorkingNodes()
 
@@ -472,7 +473,7 @@ var Nodemanager = function(p){
 
                     if(!n.wss.count()){
 
-                        if(f.date.addseconds(n.initedTime, 300) > new Date()){
+                        if(f.date.addseconds(n.initedTime, 60) > new Date()){
                         }
                         else{
                             n.forget()
@@ -663,7 +664,7 @@ var Nodemanager = function(p){
         })
 
         commonchainArray = _.sortBy(commonchainArray, function(v){
-            return v.height
+            return Number(v.height)
         })
 
         if(!commonchainArray.length){
@@ -671,7 +672,6 @@ var Nodemanager = function(p){
         }
 
         var lastchain = commonchainArray[commonchainArray.length - 1]
-
         var maxHeight = lastchain.height
 
         var commonBlockHash = null
@@ -689,6 +689,13 @@ var Nodemanager = function(p){
             }
         }
 
+        var bestHeight = 0
+        for (let key in commonchainArray) {
+            let h = Number(commonchainArray[key].height)
+            if (h > bestHeight)
+                bestHeight = h
+        }
+
         var result = {
             commonHeight,
             maxHeight,
@@ -697,7 +704,8 @@ var Nodemanager = function(p){
             commonchain : commonchainArray,
             chainmap,
             hashmap,
-            chains
+            chains,
+            bestHeight
         }
 
         cachedchain = {
@@ -799,6 +807,7 @@ var Nodemanager = function(p){
             var _ch = {
                 commonHeight : chaininfo.commonHeight,
                 maxHeight : chaininfo.maxHeight,
+                bestHeight : chaininfo.bestHeight,
                 commonBlockHash : chaininfo.commonBlockHash,
                 lasttrustblocks : chaininfo.lasttrustblocks,
             }
@@ -848,9 +857,10 @@ var Nodemanager = function(p){
 
                     self.nodes = []
 
-                    var haslocal = false// self.nodeControl.kit.hasbin()
+                    var haslocal = self.nodeControl.kit.hasbin()
 
                     var c = []
+
 
                     if (haslocal) c = [{
                         host : '127.0.0.1',

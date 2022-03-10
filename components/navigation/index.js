@@ -16,18 +16,8 @@ var navigation = (function(){
 
 
 		var events = {
-			/*scrollman : function(scroll){
-
-				if (scroll >= 250){
-					el.c.addClass('scrolled')
-				}
-				else{
-					el.c.removeClass('scrolled')
-				}
-			},*/
 
 			scroll : function(){
-
 
 				if (self.app.lastScrollTop >= 250){
 
@@ -58,11 +48,17 @@ var navigation = (function(){
 				if (k == indexkey) k = indexkey + '?b=true'
 
 				if (k.indexOf('?') == -1) {
+
 					if (k == 'video'){
 						k = indexkey + '?video=1'
 					}
 					else{
-						k = indexkey + '?r=' + k
+						if (k == 'read'){
+							k = indexkey + '?read=1'
+						}
+						else{
+							k = indexkey + '?r=' + k
+						}
 					}
 				}
 
@@ -86,9 +82,10 @@ var navigation = (function(){
 						shw : shw,
 						search,
 						haschat : self.app.platform.matrixchat.core,
-						thref : self.app.nav.get.href()
+						thref : self.app.nav.get.href(),
+						ps : parameters()
+						//mestate : _mestate
 					}
-					
 
 				}, function(p){
 
@@ -108,7 +105,7 @@ var navigation = (function(){
 						self.nav.api.go({
 							open : true,
 							href : 'share',
-							inWnd : isTablet(),
+							inWnd : true,
 							history : true,
 							
 							essenseData : {
@@ -123,7 +120,7 @@ var navigation = (function(){
 						self.nav.api.go({
 							open : true,
 							href : 'userpage',
-							inWnd : isMobile(),
+							inWnd : true,
 							history : true,
 							
 							essenseData : {
@@ -143,6 +140,7 @@ var navigation = (function(){
 					})
 					
 				})
+
 			},
 
 			hide : function(){
@@ -170,11 +168,14 @@ var navigation = (function(){
 		var initEvents = function(){
 			
 			self.app.nav.clbks.history.navigation = function(href){
-
-				el.c.removeClass('scrolled')
 				renders.menu(self.app.nav.get.pathname())
-
 			}
+
+			self.app.platform.sdk.registrations.clbks.navigation = function(){
+
+				renders.menu(self.app.nav.get.pathname())
+			}
+
 
 			el.c.find('.fakem').on('click', function(){
 
@@ -186,7 +187,6 @@ var navigation = (function(){
 			events.scroll()
 
 			if(window.cordova){
-
 				
 				window.addEventListener('keyboardWillShow', renders.hide);
 				window.addEventListener('keyboardWillHide', renders.show);
@@ -224,6 +224,7 @@ var navigation = (function(){
 				}*/
 
 				delete self.app.events.scroll.navigation
+				delete self.app.platform.sdk.registrations.clbks.navigation
 
 				if(window.cordova){
 					window.removeEventListener('keyboardWillShow', renders.hide);

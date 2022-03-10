@@ -27,16 +27,6 @@ var embeding = (function(){
 				value : []
 			},
 
-			donate : new Parameter({
-				name : self.app.localization.e('wsamountof'),
-				type : "NUMBER",
-				id : 'amount',
-				placeholder : '0',
-				onType : true,
-				format : {
-					Precision : 3
-				}
-			}),
 
 		}
 
@@ -97,24 +87,7 @@ var embeding = (function(){
 						
 						self.closeContainer()
 					}
-				},
-
-
-
-				
-				donate : function(){
-
-					if (actions.check('donate')){
-
-
-						if(on.added(Number(options.donate.value)))
-						
-
-							self.closeContainer()
-					}
-				},
-
-				
+				}
 			},
 			
 			slowUploadGif : function(file, clbk){
@@ -216,7 +189,7 @@ var embeding = (function(){
 
 		var events = {
 			action : function(){
-				var _type = $(this).attr('action') || type
+				var _type = $(this).attr('action') || type;
 
 				actions.add[_type]()
 			},
@@ -235,10 +208,6 @@ var embeding = (function(){
 
 				if (images.length){
 
-					/*if(type == 'images'){
-						el.c.closest('.wnd').addClass('loadimages')
-					}*/
-
 					self.shell({
 						name :  'images',
 						el : el.images,
@@ -255,8 +224,6 @@ var embeding = (function(){
 
 
 						})
-
-						
 						
 						if (clbk)
 							clbk()
@@ -280,11 +247,9 @@ var embeding = (function(){
 
 		var initEvents = function(){
 
-
 			setTimeout(function(){
 				el.c.find('input').focus()
 			}, 300)
-			
 			
 			el.c.find('input').on('change', events.action)
 
@@ -331,12 +296,7 @@ var embeding = (function(){
 						actions.add.images()
 					}
 				})
-
-				/*if (window.cordova){
-
-					el.upload.find('input').click()
-					
-				}*/
+			
 			}
 			else
 			{
@@ -407,14 +367,11 @@ var embeding = (function(){
 			wnd : {
 				header : "",
 				buttons : {
-
 					close : {
 						class : "save",
 						html : '<i class="fa fa-check"></i> ' + self.app.localization.e('add'),
 						fn : function(wnd, wndObj){
-							console.log("save")
 							actions.add[type]()
-
 						}
 					},
 
@@ -422,7 +379,6 @@ var embeding = (function(){
 						class : "close",
 						html : '<i class="fa fa-times"></i> ' + self.app.localization.e('close'),
 					},
-
 				},
 				close : function(){
 
@@ -434,14 +390,8 @@ var embeding = (function(){
 					wndObj = _wndObj;
 					wnd = _wnd;
 				},
-				offScroll : true,
-				noInnerScroll : true,
 				class : 'embeding normalizedmobile',
-
-
-				swipeClose : true,
-				swipeCloseDir : 'right',
-				swipeMintrueshold : 30,
+				//showbetter : true
 			}
 		}
 	};
