@@ -2204,8 +2204,13 @@ Application = function(p)
 
 									setTimeout(function(){
 		
-										self.platform.sdk.node.transactions.get.allBalanceUpdate(function(){
-											self.platform.sdk.notifications.getNotifications()
+										self.user.isState(function(state){
+											if(state){
+												self.platform.sdk.node.transactions.get.allBalanceUpdate(function(){
+													self.platform.sdk.notifications.getNotifications()
+												})
+											}
+											
 										})
 
 										if (self.nav.current.module)
