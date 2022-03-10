@@ -40,8 +40,6 @@ var support = (function(){
 
 				values.address = self.app.platform.sdk.address.pnet().address
 
-				console.log('values', values)
-
 				globalpreloader(true)
 
 				self.app.letters[current.letter](values, function(){
@@ -132,20 +130,23 @@ var support = (function(){
 						id: 'link1',
 						type: "STRINGANY",
 						value: '',
+						placeholder : 'https://www.youtube.com/channel/***'
 					},
 
 					link2 : {
 						name: 'videobloggerRequest_pl2',
 						id: 'link2',
 						type: "STRINGANY",
-						value: ''
+						value: '',
+						placeholder : 'https://www.instagram.com/***'
 					},
 
 					link3 : {
 						name: 'videobloggerRequest_pl3',
 						id: 'link3',
 						type: "STRINGANY",
-						value: ''
+						value: '',
+						placeholder : 'https://twitter.com/***'
 					},
 
 					info : {
@@ -159,7 +160,8 @@ var support = (function(){
 						name: 'videobloggerRequest_pl_email',
 						id: 'email',
 						type: "STRINGANY",
-						value: ''
+						value: '',
+						placeholder : '*@*.*'
 					},
 				} 
 			}
@@ -176,7 +178,9 @@ var support = (function(){
 
 		var initEvents = function(){
 			
-
+			el.c.find('.submit').on('click', function(){
+				actions.submit()
+			})
 		}
 
 		var prepare = function(){
@@ -221,17 +225,8 @@ var support = (function(){
 			wnd : {
 				showbetter : true,
 			
-				class: 'supportwnd normalizedmobile',
-				buttons : {
-					success : {
-						class : 'success',
-						text : 'submitapplicationVideoSmall',
-
-						fn : function(wnd, wndObj){
-							actions.submit()
-						}
-					}
-				}
+				class: 'supportwnd normalizedmobile withoutButtons',
+				
 			}
 		}
 	};

@@ -8,6 +8,10 @@
             font-weight: 700;
         }
     }
+
+    .actions{
+        margin-top : 3 * @rhythm;
+    }
     .parameter{
         display: flex;
         align-items: flex-start;
@@ -37,5 +41,20 @@
     .wndinner{
 		max-height: 550px;
         max-width: 450px;
+    }
+}
+
+html.mobileview{
+    .wnd.supportwnd{
+        #support{
+            padding-top: 4 * @rhythm;
+            padding-bottom: 4 * @rhythm;
+            padding-left: 2 * @rhythm;
+            padding-right: 2 * @rhythm;
+        }
+
+        /*.wndinner > div.buttons{
+            display: block;
+        }*/
     }
 }

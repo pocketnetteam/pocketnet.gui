@@ -26689,12 +26689,10 @@ Platform = function (app, listofnodes) {
 
                 if (self.focus) return 
 
-                if (self.app.pipwindow){
+                if (self.app.pipwindow && self.app.pipwindow.playerstatus && self.app.pipwindow.playerstatus() == 'playing'){
+
                     self.app.mobile.pip.enable(self.app.pipwindow.el)
                 }
-                
-                console.log('backtoapp')
-
                 
             }, 200)
            

@@ -448,6 +448,7 @@ var post = (function () {
 									startTime
 								})
 							}, 300)
+							
 						},	
 
 						pause : function(){
@@ -1957,6 +1958,14 @@ var post = (function () {
 
 				},
 				onclose : p.onclose
+			},
+
+			playerstatus : function(){
+
+				if (player){
+					return player.getState()
+				}
+				
 			}
 
 

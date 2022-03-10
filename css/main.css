@@ -6205,6 +6205,10 @@ html.mobileview .wnd.normalizedmobile .wndinner .wndcontent::-webkit-scrollbar {
 html.mobileview .wnd.normalizedmobile .wndinner > div.buttons {
   display: none;
 }
+html.mobileview .wnd.normalizedmobile .wndinner > div.buttons > div {
+  max-width: 768px;
+  margin: 0 auto;
+}
 html.mobileview .wnd.normalizedmobile.asette .wndback {
   -moz-transition: 0.2s;
   -o-transition: 0.2s;

@@ -1195,6 +1195,13 @@ Application = function(p)
 			p.clbk = function(c,b){
 				self.pipwindow = b
 
+
+				/*console.log('elf.pipwin', self.pipwindow)
+
+				setTimeout(function(){
+					console.log('self.pipwindow.playerstatus()',self.pipwindow.playerstatus())
+				},2000)*/
+
 				if(clbk) clbk(c,b)
 			}
 
