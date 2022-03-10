@@ -705,7 +705,7 @@ function createWindow() {
      * Video and posts download handlers
      */
 
-    const Storage = app.getAppPath();
+    const Storage = app.getPath('userData');
     const PostsDir = 'posts';
     const VideosDir = 'videos';
     const getPostFolder = (postId) => path.join(Storage, PostsDir, postId);
