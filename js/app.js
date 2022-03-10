@@ -2199,23 +2199,25 @@ Application = function(p)
 									self.mobile.reload.reloading = true
 									self.el.topsmallpreloader.css('transform', '')
 									self.el.topsmallpreloader.removeClass('show')
+
 									globalpreloader(true)
 
 									setTimeout(function(){
 		
 										self.platform.sdk.node.transactions.get.allBalanceUpdate(function(){
 											self.platform.sdk.notifications.getNotifications()
-
-											if (self.nav.current.module)
-												self.nav.current.module.restart()
-
-											setTimeout(function(){
-												globalpreloader(false)
-												
-												self.mobile.reload.reloading = false
-											}, 200)
-
 										})
+
+										if (self.nav.current.module)
+											self.nav.current.module.restart()
+
+										setTimeout(function(){
+											globalpreloader(false)
+											
+											self.mobile.reload.reloading = false
+										}, 200)
+
+										
 									}, 100)
 
 									
