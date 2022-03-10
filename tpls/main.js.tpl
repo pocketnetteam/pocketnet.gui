@@ -841,7 +841,7 @@ function createWindow() {
 
         const result = {
             video: {
-                internalURL: videoInfo.videoDetails.streamingPlaylists[0].playlistUrl,
+                internalURL: shareId,
             },
             infos: videoInfo,
             id: videoData.uuid,
@@ -905,7 +905,7 @@ function createWindow() {
 
         videoData.size = fileStats.size;
         videoData.video = {
-            internalURL: videoData.infos.streamingPlaylists[0].playlistUrl,
+            internalURL: shareId,
         };
 
         return videoData;
