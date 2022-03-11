@@ -9190,35 +9190,6 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
 
       let localTransport;
 
-      if (localVideo && isCordova) {
-        //// old remove later
-        let new_target = document.createElement('video');
-        target.parentNode.replaceChild(new_target, target);
-        target = new_target;
-        let plyrPlayer = newPlyr(target, video_options);
-        plyrPlayer.source = {
-          type: 'video',
-          sources: [
-            {
-              src: localVideo.video.internalURL,
-              type: 'video/mp4',
-              size: parseInt(localVideo.video.name)
-            }
-          ]
-        };
-        plyrPlayer.poster = localVideo.infos.thumbnail;
-        plyrPlayer.on('ready', readyCallback);
-        plyrPlayer.on('play', video_options.play);
-        plyrPlayer.on('pause', video_options.pause);
-        //plyrPlayer.on('hlsError', video_options.hlsError);
-
-        plyrPlayer.localVideoId = clear_peertube_id;
-        if (clbk) clbk(plyrPlayer);
-        clear();
-
-        return self;
-      }
-
       if (localVideo && isElectron) {
         localTransport = await bastyonFsFetchFactory(electron.ipcRenderer, localVideo.video.internalURL);
         localVideo = undefined;
