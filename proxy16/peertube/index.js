@@ -6,417 +6,423 @@ const { performance } = require('perf_hooks');
 var Statistic = require('../lib/statistic');
 
 var Peertube = function (settings) {
-  var self = this;
+	var self = this;
 
-  const PEERTUBE_ID = 'peertube://';
-  const SLASH = '/';
+	const PEERTUBE_ID = 'peertube://';
+	const SLASH = '/';
 
-  var roys = {};
-  var statistic = new Statistic();
+	var roys = {};
+	var statistic = new Statistic();
 
-  var parselink = function (link) {
-    var ch = link.replace(PEERTUBE_ID, '').split(SLASH);
+	var parselink = function (link) {
+		var ch = link.replace(PEERTUBE_ID, '').split(SLASH);
 
-    return {
-      host: ch[0],
-      id: ch[1],
-    };
-  };
+		return {
+			host: ch[0],
+			id: ch[1],
+		};
+	};
 
-  var getroy = function (host) {
-    var roy = null;
+	var getroy = function (host) {
+		var roy = null;
 
-    if (host) {
-      roy =
-        roys[host] ||
-        _.find(roys, function (roy) {
-          return roy.find(host);
-        });
-    }
+		if (host) {
+			roy =
+				roys[host] ||
+				_.find(roys, function (roy) {
+					return roy.find(host);
+				});
+		}
 
-    if (!roy && host) {
-      roy = self.addroy([host], host, true);
+		if (!roy && host) {
+			roy = self.addroy([host], host, true);
 
-      roy.useall = true;
-      roy.auto = true;
-    }
+			roy.useall = true;
+			roy.auto = true;
+		}
 
-    return roy;
-  };
+		return roy;
+	};
 
-  self.timeout = function () {
-    return 5500;
-  };
+	self.timeout = function () {
+		return 5500;
+	};
 
-  self.statsInterval = function () {
-    if (self.proxy.users() > 10) {
-      return 60000;
-    }
+	self.statsInterval = function () {
+		if (self.proxy.users() > 10) {
+			return 60000;
+		}
 
-    return 600000;
-  };
+		return 600000;
+	};
 
-  self.request = function (method, data, host, parameters = {}) {
-    var roy = getroy(host);
+	self.request = function (method, data, host, parameters = {}) {
+		var roy = getroy(host);
 
-    if (!roy) return Promise.reject('roy');
+		if (!roy) return Promise.reject('roy');
 
-    var responseTime = performance.now();
+		var responseTime = performance.now();
 
-    return roy
-      .request(method, data, parameters)
-      .then((r) => {
-        statistic.add({
-          code: 200,
-          difference: performance.now() - responseTime,
-          method: method,
-        });
+		return roy
+			.request(method, data, parameters)
+			.then((r) => {
+				statistic.add({
+					code: 200,
+					difference: performance.now() - responseTime,
+					method: method,
+				});
 
-        return Promise.resolve(r);
-      })
-      .catch((e) => {
-        statistic.add({
-          code: e == 'failed' ? 501 : (e || {}).code || 500,
-          difference: performance.now() - responseTime,
-          method: method,
-        });
+				return Promise.resolve(r);
+			})
+			.catch((e) => {
+				statistic.add({
+					code: e == 'failed' ? 501 : (e || {}).code || 500,
+					difference: performance.now() - responseTime,
+					method: method,
+				});
 
-        return Promise.reject(e);
-      });
-  };
+				return Promise.reject(e);
+			});
+	};
 
-  self.inner = {
-    video: function (parsed) {
-      if (!parsed.id) return Promise.reject('No id info received');
+	self.inner = {
+		video: function (parsed) {
+			if (!parsed.id) return Promise.reject('No id info received');
 
-      return self
-        .request('video', { id: parsed.id }, parsed.host)
-        .then((res) => {
-          return Promise.resolve(res);
-        })
-        .catch((err) => {
-          return Promise.reject(err);
-        });
-    },
-  };
+			return self
+				.request('video', { id: parsed.id }, parsed.host)
+				.then((res) => {
+					return Promise.resolve(res);
+				})
+				.catch((err) => {
+					return Promise.reject(err);
+				});
+		},
+	};
 
-  self.api = {
-    randroykey: function (type, special) {
-      var _roys = {};
+	self.api = {
+		randroykey: function (type, special) {
+			var _roys = {};
 
-      _.each(roys, function (r, c) {
-        if (!r.auto) {
-          if (!special) {
-            if (r.hasspecial()) return;
-          }
+			_.each(roys, function (r, c) {
+				if (!r.auto) {
+					if (!special) {
+						if (r.hasspecial()) return;
+					}
 
-          if (type && type == 'upload' && !r.canupload()) return;
+					if (type && type == 'upload' && !r.canupload()) return;
 
-          _roys[c] = r;
-        }
-      });
+					_roys[c] = r;
+				}
+			});
 
-      var keys = _.map(_roys, function (i, c) {
-        return c;
-      });
+			var keys = _.map(_roys, function (i, c) {
+				return c;
+			});
 
-      return keys[f.rand(0, keys.length - 1)];
-    },
+			return keys[f.rand(0, keys.length - 1)];
+		},
 
-    best: function ({ roy, type, special }) {
-      if (!type || !roy) {
-        type = 'upload';
-        roy = null;
-      }
+		best: function ({ roy, type, special }) {
+			if (!type || !roy) {
+				type = 'upload';
+				roy = null;
+			}
 
-      if (!roy) roy = self.api.randroykey(type, special);
+			if (!roy) roy = self.api.randroykey(type, special);
 
-      roy = getroy(roy);
+			roy = getroy(roy);
 
-      if (!roy) return Promise.reject('roy');
+			if (!roy) return Promise.reject('roy');
 
-      var best = roy.best(type);
+			var best = roy.best(type);
 
-      if (!best) return Promise.reject('best');
+			if (!best) return Promise.reject('best');
 
-      return Promise.resolve(best.export());
-    },
+			return Promise.resolve(best.export());
+		},
 
-    video: function ({ url, fast }, cache) {
-      var parsed = parselink(url);
+		video: function ({ url, fast }, cache) {
+			var parsed = parselink(url);
 
-      if (!parsed.id) return Promise.reject('No id info received');
+			if (!parsed.id) return Promise.reject('No id info received');
 
-      var cachekey = 'peertubevideo';
-      var cachehash = parsed.id;
-      var cacheparameters = _.clone(parsed);
-      var _waitstatus = '';
+			var cachekey = 'peertubevideo';
+			var cachehash = parsed.id;
+			var cacheparameters = _.clone(parsed);
+			var _waitstatus = '';
 
-      return new Promise((resolve, reject) => {
-        cache.wait(
-          cachekey,
-          cacheparameters,
-          function (waitstatus) {
-            resolve(waitstatus);
-          },
-          cachehash,
-        );
-      })
-        .then((waitstatus) => {
-          _waitstatus = waitstatus;
+			return new Promise((resolve, reject) => {
+				cache.wait(
+					cachekey,
+					cacheparameters,
+					function (waitstatus) {
+						resolve(waitstatus);
+					},
+					cachehash,
+				);
+			})
+				.then((waitstatus) => {
+					_waitstatus = waitstatus;
 
-          var cached = cache.get(cachekey, cacheparameters, cachehash);
+					var cached = cache.get(cachekey, cacheparameters, cachehash);
 
-          if (cached) {
-            if (cached.error) {
-              return Promise.reject({ error: true, cached: true });
-            }
+					if (cached) {
+						if (cached.error) {
+							return Promise.reject({ error: true, cached: true });
+						}
 
-            return Promise.resolve(cached);
-          }
+						return Promise.resolve(cached);
+					}
 
-          if (waitstatus == 'attemps') {
-            return Promise.reject({ error: true, cached: true });
-          }
+					if (waitstatus == 'attemps') {
+						return Promise.reject({ error: true, cached: true });
+					}
 
-          return self.inner.video(parsed).then((r) => {
-            var ontime = null;
+					return self.inner.video(parsed).then((r) => {
+						var ontime = null;
 
-            var fr = null;
+						var fr = null;
 
-            if (r && r.data) {
-              fr = r.data;
+						if (r && r.data) {
+							fr = r.data;
 
-              if (
-                (fr && fr.isLive) ||
-                (fr.state && (fr.state.id == 2 || fr.state.id == 3))
-              )
-                ontime = 20;
+							if (
+								(fr && fr.isLive) ||
+								(fr.state && (fr.state.id == 2 || fr.state.id == 3))
+							)
+								ontime = 20;
 
-              if (fr && fr.isLive && (!fr.aspectRatio || fr.aspectRatio == '0'))
-                fr.aspectRatio = 1.78;
-            }
+							if (fr && fr.isLive && (!fr.aspectRatio || fr.aspectRatio == '0'))
+								fr.aspectRatio = 1.78;
+						}
 
-            cache.set(cachekey, cacheparameters, r, null, ontime, cachehash);
+						cache.set(cachekey, cacheparameters, r, null, ontime, cachehash);
 
-            return Promise.resolve(r);
-          });
-        })
-        .catch((e) => {
-          if (!e) e = {};
+						return Promise.resolve(r);
+					});
+				})
+				.catch((e) => {
+					if (!e) e = {};
 
-          var cachedone = false;
-          var ontime = 20;
+					var cachedone = false;
+					var ontime = 20;
 
-          if (e && e.status == '404') {
-            ontime = 120;
-          }
+					if (e && e.status == '404') {
+						ontime = 120;
+					}
 
-          if (!e.cached) {
-            cache.set(
-              cachekey,
-              cacheparameters,
-              {
-                error: true,
-              },
-              null,
-              ontime,
-              cachehash,
-            );
-          }
-
-          /*if(!e.cached && _waitstatus == 'execute'){
-					if(!cachedone){
-						cache.remove(
+					if (!e.cached) {
+						cache.set(
 							cachekey,
 							cacheparameters,
+							{
+								error: true,
+							},
+							null,
+							ontime,
 							cachehash,
 						);
 					}
-				}*/
 
-          return Promise.reject(e);
-        });
-    },
+					/*if(!e.cached && _waitstatus == 'execute'){
+					if(!cachedone){
+					  cache.remove(
+						cachekey,
+						cacheparameters,
+						cachehash,
+					  );
+					}
+				  }*/
 
-    videos: function ({ urls, fast }, cache) {
-      var result = {};
+					return Promise.reject(e);
+				});
+		},
 
-      return Promise.all(
-        _.map(urls, function (url) {
-          return self.api
-            .video({ url, fast }, cache)
-            .then((r) => {
-              result[url] = r.data;
+		videos: function ({ urls, fast }, cache) {
+			var result = {};
 
-              return Promise.resolve();
-            })
-            .catch((e) => {
-              result.errors ? result.errors.push(url) : (result.errors = [url]);
+			return Promise.all(
+				_.map(urls, function (url) {
+					return self.api
+						.video({ url, fast }, cache)
+						.then((r) => {
+							result[url] = r.data;
 
-              return Promise.resolve();
-            });
-        }),
-      )
-        .then(() => {
-          return Promise.resolve(result);
-        })
-        .catch((e = {}) => {
-          return Promise.reject({
-            error: e,
-            code: e.code || 500,
-          });
-        });
-    },
+							return Promise.resolve();
+						})
+						.catch((e) => {
+							result.errors ? result.errors.push(url) : (result.errors = [url]);
 
-    stats: function () {
-      return Promise.resolve({});
-    },
+							return Promise.resolve();
+						});
+				}),
+			)
+				.then(() => {
+					return Promise.resolve(result);
+				})
+				.catch((e = {}) => {
+					return Promise.reject({
+						error: e,
+						code: e.code || 500,
+					});
+				});
+		},
 
-    roys: ({ type = 'upload', special }) => {
-      const output = {};
+		stats: function () {
+			return Promise.resolve({});
+		},
 
-      var _roys = _.filter(roys, function (r) {
-        return !r.auto;
-      });
+		roys: ({ type = 'upload', special }) => {
+			const output = {};
 
-      if (type == 'upload')
-        _roys = _.filter(_roys, function (r) {
-          if (!special) {
-            if (r.hasspecial()) return;
-          }
+			var _roys = _.filter(roys, function (r) {
+				return !r.auto;
+			});
 
-          return r.canupload();
-        });
+			if (type == 'upload')
+				_roys = _.filter(_roys, function (r) {
+					if (!special) {
+						if (r.hasspecial()) return;
+					}
 
-      Object.keys(_roys).map((roy) => {
-        _roys[roy].best() ? (output[roy] = _roys[roy].best().host) : null;
-      });
+					return r.canupload();
+				});
 
-      return Promise.resolve(output);
-    },
+			Object.keys(_roys).map((roy) => {
+				_roys[roy].best() ? (output[roy] = _roys[roy].best().host) : null;
+			});
 
-    allservers: ({ type }) => {
-      const output = {};
+			return Promise.resolve(output);
+		},
 
-      Object.keys(roys).map((roy) => {
-        output[roy] = roys[roy].instances();
-      });
+		allservers: ({ type }) => {
+			const output = {};
 
-      return Promise.resolve(output);
-    },
+			Object.keys(roys).map((roy) => {
+				output[roy] = roys[roy].instances();
+			});
 
-    accountVideos({ account, servers = [], start, count }, cahce) {
-      const requestServers = servers.length
-        ? [...servers]
-        : Object.values(roys)
-            .map((roy) => roy.hosts().map((host) => host.host))
-            .flat();
+			return Promise.resolve(output);
+		},
 
-      return Promise.allSettled(
-        requestServers.map((server) =>
-          self.request('channelVideos', { account, start, count }, server, {
-            host: server,
-          }),
-        ),
-      )
-        .then((data) => {
-          const outputInfo = data
-            .map((serverData) => serverData.data)
-            .reduce(
-              (accum, currServer) => ({
-                total: accum.total + currServer.total,
-                data: accum.data.concat(currServer.data || []),
-              }),
-              { total: 0, data: [] },
-            );
+		accountVideos({ account, servers = [], start, count }, cahce) {
+			const requestServers = servers.length
+				? [...servers]
+				: Object.values(roys)
+					.map((roy) => roy.hosts().map((host) => host.host))
+					.flat();
 
-          return outputInfo;
-        })
-        .catch(() => ({ total: 0, data: [] }));
-    },
+			return Promise.allSettled(
+				requestServers.map((server) =>
+					self.request('channelVideos', { account, start, count }, server, {
+						host: server,
+					}),
+				),
+			)
+				.then((data) => {
+					const outputInfo = data
+						.map((serverData) => serverData.data)
+						.reduce(
+							(accum, currServer) => ({
+								total: accum.total + currServer.total,
+								data: accum.data.concat(currServer.data || []),
+							}),
+							{ total: 0, data: [] },
+						);
 
-    getHostIp({ host }) {
-      const hostsWithIp = Object.values(roys)
-        .map((roy) => roy.hosts())
-        .flat()
-        .find(instance => instance.host === host);
+					return outputInfo;
+				})
+				.catch(() => ({ total: 0, data: [] }));
+		},
 
-      return hostsWithIp ? Promise.resolve(hostsWithIp.ip) : Promise.reject('Host not found');
-    },
-  };
+		getHostIp({ host }) {
+			const hostsWithIp = Object.values(roys)
+				.map((roy) => roy.hosts())
+				.flat()
+				.find(instance => instance.host === host);
 
-  self.addroy = function (urls, key) {
-    if (!urls.length) return;
+			return hostsWithIp ? Promise.resolve(hostsWithIp.ip) : Promise.reject('Host not found');
+		},
 
-    var roy = new Roy(self);
+		getHosts() {
+			return Promise.resolve(
+				Object.values(roys).map((roy) => roy.export()) 
+			);
+		},
+	};
 
-    roy.init(urls);
+	self.addroy = function (urls, key) {
+		if (!urls.length) return;
 
-    roys[key] = roy;
+		var roy = new Roy(self);
 
-    return roy;
-  };
+		roy.init(urls);
 
-  self.info = function (compact) {
-    var info = {
-      events: statistic.get.events(),
-      slice: statistic.get.slice(),
-      instances: {},
-    };
+		roys[key] = roy;
 
-    _.each(roys, function (roy) {
-      info.instances = _.extend(info.instances, roy.info(compact));
-    });
+		return roy;
+	};
 
-    return info;
-  };
+	self.info = function (compact) {
+		var info = {
+			events: statistic.get.events(),
+			slice: statistic.get.slice(),
+			instances: {},
+		};
 
-  self.init = function ({ urls, roys }) {
-    if (roys) {
-      _.each(roys, function (urls, i) {
-        self.addroy(urls, i);
-      });
-    }
+		_.each(roys, function (roy) {
+			info.instances = _.extend(info.instances, roy.info(compact));
+		});
 
-    if (urls) self.addroy(urls, 'default');
+		return info;
+	};
 
-    statistic.init();
+	self.init = function ({ urls, roys }) {
+		if (roys) {
+			_.each(roys, function (urls, i) {
+				self.addroy(urls, i);
+			});
+		}
 
-    return Promise.resolve();
-  };
+		if (urls) self.addroy(urls, 'default');
 
-  self.destroy = function () {
-    statistic.destroy();
-  };
+		statistic.init();
 
-  self.extendApi = function (api, cache) {
-    _.each(self.api, function (f, i) {
-      api[i] = {
-        path: '/peertube/' + i,
+		return Promise.resolve();
+	};
 
-        action: function (data) {
-          return f(data, cache)
-            .then((r) => {
-              return Promise.resolve({
-                data: r,
-                code: 200,
-              });
-            })
-            .catch((e) => {
-              if (!e) e = {};
+	self.destroy = function () {
+		statistic.destroy();
+	};
 
-              return Promise.reject({
-                error: e,
-                code: e.code || 500,
-              });
-            });
-        },
-      };
-    });
-  };
+	self.extendApi = function (api, cache) {
+		_.each(self.api, function (f, i) {
+			api[i] = {
+				path: '/peertube/' + i,
 
-  return self;
+				action: function (data) {
+					return f(data, cache)
+						.then((r) => {
+							return Promise.resolve({
+								data: r,
+								code: 200,
+							});
+						})
+						.catch((e) => {
+							if (!e) e = {};
+
+							return Promise.reject({
+								error: e,
+								code: e.code || 500,
+							});
+						});
+				},
+			};
+		});
+	};
+
+	return self;
 };
 
 module.exports = Peertube;

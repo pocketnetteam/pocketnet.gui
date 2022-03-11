@@ -9180,96 +9180,63 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
 
     if (provider == 'peertube') {
 
-      var host = target.getAttribute('data-plyr-host-name');
+      //var host = target.getAttribute('data-plyr-host-name');
+      var parsed = options.app.peertubeHandler.parselink(video_id);
 
       // Check if we have downloaded the video already
-      var localVideo = self.app.platform.sdk.localshares.getVideo(clear_peertube_id);
+      var localVideo = options.app.platform.sdk.localshares.getVideo(parsed.id);
 
+      retry(function(){
+        return typeof PeerTubeEmbeding != 'undefined'
+      }, function(){
 
-      if (localVideo != undefined && !localVideo.infos.videoDetails) {
+        console.log('parsed', parsed)
 
-        //// old remove later
+        var host = options.app.peertubeHandler.helpers.url(parsed.host, true)
 
-        var new_target = document.createElement('video');
-          target.parentNode.replaceChild(new_target, target);
-          target = new_target
+        PeerTubeEmbeding.main(target, parsed.id, {
 
-        var plyrPlayer = newPlyr(target, video_options);
+          host : host,
+          wautoplay : options.wautoplay,
+          useP2P : options.useP2P,
+          enableHotkeys : options.enableHotkeys,
+          logoType : options.logoType,
+          localVideo : localVideo,
+          start : options.startTime || 0,
+          pathfunction : options.app.peertubeHandler.helpers.url
 
-          plyrPlayer.source = {
-            type: 'video',
-            sources: [
-              {
-                src: localVideo.video.internalURL,
-                type: 'video/mp4',
-                size: parseInt(localVideo.video.name)
-              }
-            ]
-          };
-
-          plyrPlayer.poster = localVideo.infos.thumbnail;
-          plyrPlayer.on('ready', readyCallback)
-          plyrPlayer.on('play', video_options.play)
-          plyrPlayer.on('pause', video_options.pause)
-          //plyrPlayer.on('hlsError', video_options.hlsError)
-          
-
-          plyrPlayer.localVideoId = clear_peertube_id;
-          plyrPlayer.el = $(target)
-
-        if (clbk) clbk(plyrPlayer);
-
-        clear()
-
-      }
-      else {
-
-        retry(function(){
-          return typeof PeerTubeEmbeding != 'undefined'
-        }, function(){
+        },{
+          hlsError : options.hlsError,
+          playbackStatusChange : function(status){
+            
+          },
+          volumeChange : options.volumeChange,
+          fullscreenchange : options.fullscreenchange,
+          playbackStatusUpdate : options.playbackStatusUpdate,
+          pictureInPictureRequest: options.pictureInPictureRequest,
+          play : options.play,
+          pause : options.pause
   
-          PeerTubeEmbeding.main(target, clear_peertube_id, {
-            host : host,
-            wautoplay : options.wautoplay,
-            useP2P : options.useP2P,
-            enableHotkeys : options.enableHotkeys,
-            logoType : options.logoType,
-            localVideo : localVideo,
-            start : options.startTime || 0
-          },{
-            hlsError : options.hlsError,
-            playbackStatusChange : function(status){
-              
-            },
-            volumeChange : options.volumeChange,
-            fullscreenchange : options.fullscreenchange,
-            playbackStatusUpdate : options.playbackStatusUpdate,
-            pictureInPictureRequest: options.pictureInPictureRequest,
-            play : options.play,
-            pause : options.pause
-    
-          }).then(embed => {
-  
-            if(!embed || !embed.api){
-              if (clbk) clbk(null);
-  
-              return
-            }
-    
-            var api = embed.api
-                api.mute()
+        }).then(embed => {
 
-                api.el = $(target)
-    
-            if (clbk) clbk(api);
-            if (readyCallback) readyCallback(api);
+          if(!embed || !embed.api){
+            if (clbk) clbk(null);
 
-            clear()
-          })
+            return
+          }
   
+          var api = embed.api
+              api.mute()
+
+              api.el = $(target)
+  
+          if (clbk) clbk(api);
+          if (readyCallback) readyCallback(api);
+
+          clear()
         })
 
-      }
+      })
 
       return self
     }

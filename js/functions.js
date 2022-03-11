@@ -7619,20 +7619,27 @@
 				if (p.peertubeImage) {
 
 					// Prepare URL
-					var url = new URL(app.peertubeServer);
+					/*var url = new URL(app.peertubeServer);
+
 					if (data.ipAddress) {
 						url.hostname = data.ipAddress;
 						url.protocol = 'http:';
 						delete data.ipAddress;
-					}
-					ap.url = url.toString() + 'images/' + data.Action;
+					}*/
+
+					ap.url = p.url + 'images/' + data.Action;
+
 					delete data.Action;
+
 					if (data.type && data.type.length > 0)
 						ap.url += '?type=' + data.type;
+
 					delete data.type;
+
 					// Get or refresh access token
 					var xmlHttp = new XMLHttpRequest();
-					xmlHttp.open("POST", url.toString() + 'users/token', false);
+
+					xmlHttp.open("POST", p.url + 'users/token', false);
 					xmlHttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 					xmlHttp.send(toUrlEncoded({
 						grant_type: 'password',
@@ -7640,21 +7647,26 @@
 					}));
 					var res = JSON.parse(xmlHttp.responseText), auth;
 					// Set auth header
-					if (res && res.access_token)
-						auth = 'Bearer ' + res.access_token;
-					ap.headers = {
-						Authorization: auth
-					}
+					if (res && res.access_token) auth = 'Bearer ' + res.access_token;
+
+						ap.headers = {
+							Authorization: auth
+						}
+
 					// Prepare image data for request
 					const mimeType = ap.data.base64.match(/[^:]\w+\/[\w-+\d.]+(?=;|,)/)[0];
-					const blob = b64toBlob(ap.data.image, mimeType);
+
+					const blob = b64toBlob(ap.data.base64.split(',')[1], mimeType);
+
 					var formData = new FormData();
-					formData.append("imagefile", blob);
+						formData.append("imagefile", blob);
+
 					ap.data = formData;
 					ap.processData = false;
 					ap.contentType = false;
 
 					$.ajax(ap);
+
 					return;
 					
 				}

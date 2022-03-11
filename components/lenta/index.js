@@ -748,6 +748,9 @@ var lenta = (function(){
 					}	
 
 					s.logoType = self.app.meta.fullname
+					s.app = self.app
+
+
 					PlyrEx(pels[0], s, callback, readyCallback)
 
 				}

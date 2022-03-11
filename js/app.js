@@ -106,6 +106,9 @@ Application = function(p)
 		peertubeServer : 'https://test.peertube2.pocketnet.app/api/v1/',
 		peertubeUseIp : true,
 
+		ssl : true,
+		useip : true,
+
 		//////////////
 
 		imageServer : p.imageServer || 'https://api.imgur.com/3/',

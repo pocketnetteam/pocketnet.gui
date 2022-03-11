@@ -461,46 +461,24 @@ Comment = function(txid){
 
 				if (image.indexOf('data:image') > -1){
 
-					var r = image.split(',');
-
-					if (r[1]){
-
-						app.imageUploader.uploadImage({
-							image : r[1],
-							base64: image
-						}, 'peertube').then((data) => {
-
-							self.images.v[index] = deep(data, 'image.url');
-							p.success();
-
-						}, (err) => {
-
-							app.imageUploader.uploadImage({
-								file : r[1]
-							}, 'up1').then((data) => {
+					app.imageUploader.upload({
+						base64: image,
+					}).then( url => {
 	
-								self.images.v[index] = 'https://'+app.options.url+':8092/i/' + deep(data, 'data.ident');
-
-								console.log('self.images.v[index]', self.images.v[index])
-								p.success();
+						self.images.v[index] = url
 	
-							}, (err) => {
+						p.success();
+	
+					}).catch(err => {
+	
+						p.success();
+	
+					})
 
-								//self.images.v[index] = ''
-
-								//index++;
-
-								p.success();
-
-							})
-
-						});
-
-					}
+					
 				}
 				else
 				{
-					//index++;
 					p.success();
 				}
 
@@ -1218,47 +1196,24 @@ Share = function(lang){
 
 				if (image.indexOf('data:image') > -1){
 
-					var r = image.split(',');
+					app.imageUploader.upload({
+						base64: image
+					}).then( url => {
 
-					if (r[1]){
+						console.log("URL", url)
 
-						app.imageUploader.uploadImage({
-							image : r[1],
-							base64: image
-						}, 'peertube').then((data) => {
+						self.images.v[index] = url;
+						p.success();
 
-							var url = (self.images.v.length >= 3) ? deep(data, 'image.thumbnailUrl') : deep(data, 'image.url');
-							self.images.v[index] = url;
-							p.success();
+					}).catch(err => {
+						console.log("ER", err)
 
-						}, (err) => {
-
-							app.imageUploader.uploadImage({
-								file : r[1]
-							}, 'up1').then((data) => {
-	
-								self.images.v[index] = 'https://'+app.options.url+':8092/i/' + deep(data, 'data.ident');
-
-								p.success();
-	
-							}, (err) => {
-
-								//self.images.v[index] = ''
-
-								//index++;
-
-								p.success();
-
-							})
-
-						});
-
-
-					}
+						p.success();
+					})
+					
 				}
 				else
 				{
-					//index++;
 					p.success();
 				}
 
@@ -1695,36 +1650,25 @@ UserInfo = function(){
 
 			if (r[1]){
 
-				app.imageUploader.uploadImage({
-					image : r[1],
+				app.imageUploader.upload({
 					base64: image,
 					type: 'avatar'
-				}, 'peertube').then((data) => {
+				}).then( url => {
 
-					self.image.v = deep(data, 'image.url');
+					self.image.v = url;
+
 					if (clbk)
 						clbk();
 
-				}, (err) => {
+				}).catch(err => {
 
-					app.imageUploader.uploadImage({
-						file : r[1]
-					}, 'up1').then((data) => {
+					if (clbk)
+						clbk(err);
 
-						self.image.v = 'https://pocketnet.app:8092/i/' + deep(data, 'data.ident');
-						//self.image.v = 'https://'+app.options.url+':8092/i/' + deep(data, 'data.ident');
+				})
 
-						if (clbk)
-							clbk();
 
-					}, (err) => {
 
-						if (clbk)
-							clbk(err);
-
-					})
-
-				});
 
 
 			}
