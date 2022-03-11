@@ -707,7 +707,7 @@ function createWindow() {
         autoLaunchManage(p.enable)
     })
 
-    ipcMain.on('transcode-video-request', async function(e, filePath) {
+    ipcMain.handle('transcode-video-request', async function(e, filePath) {
         const tempDir = os.tmpdir();
 
         /**
@@ -803,7 +803,7 @@ function createWindow() {
                         const fileLocation = path.join(tempDir, fileName);
 
                         console.log('Created temporary file', fileLocation);
-                        fs.writeFileSync(fileLocation);
+                        fs.writeFileSync(fileLocation, '');
 
                         ffmpeg(filePath)
                             .withVideoCodec('libx264')
@@ -861,9 +861,7 @@ function createWindow() {
         const isEnoughSpace = (spaceCalc.free > fileSize * 1.5);
 
         if (!isEnoughSpace) {
-            const err = 'NO_DISK_SPACE';
-            e.reply('transcode-video-response', null, err);
-            return;
+            throw Error('NO_DISK_SPACE');
         }
 
         /** Writing transcoded alternatives to target object */
@@ -907,12 +905,10 @@ function createWindow() {
          */
         if (!Object.keys(transcodedResults).length) {
             /** Responding with error if the is one */
-            const err = 'NO_TRANSCODED';
-            e.reply('transcode-video-response', null, err);
-            return;
+            throw Error('NO_TRANSCODED');
         }
 
-        e.reply('transcode-video-response', transcodedResults);
+        return transcodedResults;
     })
 
     ipcMain.on('transcode-video-request', async function(e, filePath) {

@@ -288,14 +288,14 @@ var uploadpeertube = (function () {
           const filePath = evt.target.files[0].path;
 
           function processTranscoding() {
-            ipcRenderer.send('transcode-video-request', filePath);
+            electron.ipcRenderer.send('transcode-video-request', filePath);
 
-            ipcRenderer.on('transcode-video-progress', (event, progress) => {
+            electron.ipcRenderer.on('transcode-video-progress', (event, progress) => {
               options.progress(progress);
             });
 
             return new Promise((resolve, reject) => {
-              ipcRenderer.on('transcode-video-response', (event, transcoded, error) => {
+              electron.ipcRenderer.on('transcode-video-response', (event, transcoded, error) => {
                 if (error === 'NO_TRANSCODED') {
                   setTimeout(() => resolve(null));
                   return;
