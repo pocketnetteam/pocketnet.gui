@@ -812,11 +812,11 @@ function createWindow() {
                             .format('mp4')
                             .on('progress', (progress) => {
                                 console.log('Processing: ' + progress.percent + '% done');
-                                e.reply('transcode-video-progress', calcProgress(`p${resolution[1]}`, progress.percent));
+                                e.sender.send('transcode-video-progress', calcProgress(`p${resolution[1]}`, progress.percent));
                             })
                             .on('error', (err) => {
                                 console.error('FFmpeg error occurred:', err);
-                                e.reply('transcode-video-progress', calcProgress(`p${resolution[1]}`, 100));
+                                e.sender.send('transcode-video-progress', calcProgress(`p${resolution[1]}`, 100));
                                 reject(err);
                             })
                             .on('end', () => {
