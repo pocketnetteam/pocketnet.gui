@@ -793,7 +793,7 @@ var Control = function(settings) {
             return self.destroy().then(e => {
                 return self.kit.stop().then(e => {
                     return f.pretry(function() {
-                        return !node.instance
+                        return !node.instance && (state.status == 'stopped' || state.status == 'error')
                     }, 60, 1000).then(e => {
                         return Promise.resolve()
                     })
