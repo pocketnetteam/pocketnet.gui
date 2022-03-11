@@ -2,7 +2,7 @@ import type * as Electron from "electron";
 import * as fs from "fs";
 import * as crypto from "crypto";
 
-export async function bastyonFsFetchFactory(electronIpcRenderer: Electron.IpcRenderer) {
+export async function bastyonFsFetchFactory(electronIpcRenderer: Electron.IpcRenderer, shareId: string) {
     const defaultInit = {
         method: 'GET',
     };
@@ -35,12 +35,6 @@ export async function bastyonFsFetchFactory(electronIpcRenderer: Electron.IpcRen
             readKill = init.signal;
         }
 
-        const urlSplits = url.split('/');
-        const videoId = urlSplits[urlSplits.length - 2];
-
-        // @ts-ignore
-        const shareId = app.platform.sdk.localshares.getShareIds(videoId);
-
         const fileStats = await electronIpcRenderer.invoke('BastyonFsFetch : FileStats', shareId, url, range) as fs.Stats;
         const fetchId = await electronIpcRenderer.invoke('BastyonFsFetch : GetFile', shareId, url, range) as string;
 
@@ -54,27 +48,16 @@ export async function bastyonFsFetchFactory(electronIpcRenderer: Electron.IpcRen
                     };
                 }
 
-                /**
-                 * Events must be separated. They receive not corresponding events of other
-                 * events of BastyonFsFetch. Maybe use hashes for separation
-                 */
-
                 electronIpcRenderer.on(`BastyonFsFetch : ${fetchId} : Progress`, (event, data: Buffer) => {
-                    //console.log('BastyonFsFetch : Progress', data);
-
                     const chunkUint8 = new Uint8Array(data.buffer);
                     controller.enqueue(chunkUint8);
                 });
 
                 electronIpcRenderer.once(`BastyonFsFetch : ${fetchId} : Close`, (event) => {
-                    //console.log('BastyonFsFetch : Close');
-
                     controller.close();
                 });
 
                 electronIpcRenderer.once(`BastyonFsFetch : ${fetchId} : Error`, (event, err) => {
-                    //console.log('BastyonFsFetch : Error', err);
-
                     controller.error(err);
                 });
             }
@@ -82,7 +65,6 @@ export async function bastyonFsFetchFactory(electronIpcRenderer: Electron.IpcRen
 
         const response = new Response(readStream);
 
-        // @ts-ignore
         Object.defineProperty(response, "url", { value: url });
         response.headers.append('Content-Length', `${fileStats.size}`);
 

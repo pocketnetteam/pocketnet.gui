@@ -39,12 +39,12 @@ exports.__esModule = true;
 exports.bastyonFsFetchBridge = exports.bastyonFsFetchFactory = void 0;
 var fs = require("fs");
 var crypto = require("crypto");
-function bastyonFsFetchFactory(electronIpcRenderer) {
+function bastyonFsFetchFactory(electronIpcRenderer, shareId) {
     return __awaiter(this, void 0, void 0, function () {
         function fsFetch(input, init) {
             if (init === void 0) { init = defaultInit; }
             return __awaiter(this, void 0, void 0, function () {
-                var url, range, readKill, rangeStr, urlSplits, videoId, shareId, fileStats, fetchId, readStream, response;
+                var url, range, readKill, rangeStr, fileStats, fetchId, readStream, response;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
@@ -67,9 +67,6 @@ function bastyonFsFetchFactory(electronIpcRenderer) {
                             if (init.signal) {
                                 readKill = init.signal;
                             }
-                            urlSplits = url.split('/');
-                            videoId = urlSplits[urlSplits.length - 2];
-                            shareId = app.platform.sdk.localshares.getShareIds(videoId);
                             return [4 /*yield*/, electronIpcRenderer.invoke('BastyonFsFetch : FileStats', shareId, url, range)];
                         case 1:
                             fileStats = _a.sent();
@@ -86,21 +83,14 @@ function bastyonFsFetchFactory(electronIpcRenderer) {
                                                     controller.close();
                                                 };
                                             }
-                                            /**
-                                             * Events must be separated. They receive not corresponding events of other
-                                             * events of BastyonFsFetch. Maybe use hashes for separation
-                                             */
                                             electronIpcRenderer.on("BastyonFsFetch : ".concat(fetchId, " : Progress"), function (event, data) {
-                                                //console.log('BastyonFsFetch : Progress', data);
                                                 var chunkUint8 = new Uint8Array(data.buffer);
                                                 controller.enqueue(chunkUint8);
                                             });
                                             electronIpcRenderer.once("BastyonFsFetch : ".concat(fetchId, " : Close"), function (event) {
-                                                //console.log('BastyonFsFetch : Close');
                                                 controller.close();
                                             });
                                             electronIpcRenderer.once("BastyonFsFetch : ".concat(fetchId, " : Error"), function (event, err) {
-                                                //console.log('BastyonFsFetch : Error', err);
                                                 controller.error(err);
                                             });
                                             return [2 /*return*/];
@@ -109,7 +99,6 @@ function bastyonFsFetchFactory(electronIpcRenderer) {
                                 }
                             });
                             response = new Response(readStream);
-                            // @ts-ignore
                             Object.defineProperty(response, "url", { value: url });
                             response.headers.append('Content-Length', "".concat(fileStats.size));
                             return [2 /*return*/, response];

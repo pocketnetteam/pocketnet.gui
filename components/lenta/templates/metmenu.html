@@ -114,19 +114,15 @@ if(share){
 	const isElectron = (typeof _Electron !== 'undefined');
 	const isSaveSupported = (window.cordova || isElectron);
 
-	console.log('IS SAVE SUPPORTED', isSaveSupported);
-
 	if (share.itisvideo() && isSaveSupported) {
 
 		m.push('shareBareVideoLink');
 
-		if(window.cordova){
-			if(app.platform.sdk.localshares.getShare(share.txid)){
-				m.unshift('deleteSavedVideo');
-			}
-			else{
-				m.unshift('downloadVideo');
-			}
+		if(app.platform.sdk.localshares.getShare(share.txid)){
+			m.unshift('deleteSavedVideo');
+		}
+		else{
+			m.unshift('downloadVideo');
 		}
 
 	}
