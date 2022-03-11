@@ -34,10 +34,9 @@ const fs = require('fs');
 const checkDiskSpace = require('check-disk-space').default;
 const ffmpeg = require('fluent-ffmpeg');
 const ffprobe = require('ffprobe-static');
+const contextMenu = require('electron-context-menu');
 
 ffmpeg.setFfprobePath(ffprobe.path);
-
-const contextMenu = require('electron-context-menu');
 
 contextMenu({
     showSearchWithGoogle : false,

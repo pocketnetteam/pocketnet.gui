@@ -812,3 +812,5 @@ ____loclib.uploadNewVideo = "Subir un nuevo Pocketvídeo"
 ____loclib.selectVideoFile = "Seleccione el archivo de vídeo"
 ____loclib.uploadVideoProgress_processing = "Procesados:"
 ____loclib.uploadVideoProgress_uploading = "Cargados:"
+
+____loclib.buy = 'Comprar';
