@@ -958,9 +958,11 @@ PeerTubePocketnet = function (app) {
 
 	self.init = function () {
 
-		app.peertubeHandler.api.proxy.getservers().then((_servers) => {
-			servers = _servers
-		});
+		if (app.test)
+
+			app.peertubeHandler.api.proxy.getservers().then((_servers) => {
+				servers = _servers
+			});
 
 		return self.api.proxy.bestChange({ type: 'upload' });
 	};
@@ -1114,12 +1116,10 @@ PeerTubePocketnet = function (app) {
 
 		urlextended : function(url){
 
-			//var chostip = hostip.replace('https://', '').replace('http://', '')
-
 			var parts = url.split('://')
 			var oldprotocol = 'http'
 			var protocol = ''
-			var secure = app.options.ssl;
+			var secure = true //app.secure();
 
 			if (parts.length > 1) {
 
@@ -1128,12 +1128,13 @@ PeerTubePocketnet = function (app) {
 				
 				secure = oldprotocol == 'https' || oldprotocol == 'wss'
 
-				console.log('oldprotocol', oldprotocol, secure)
-
 				if (oldprotocol == 'https') oldprotocol = 'http';
 				if (oldprotocol == 'wss') oldprotocol = 'ws';
 
 			}
+			/*else{
+				secure = true
+			}*/
 
 			var parts = parts.join('')
 				parts = parts.split('/')
@@ -1159,13 +1160,11 @@ PeerTubePocketnet = function (app) {
 				return data
 			} 
 
-			if (app.options.useip) secure = false
+			if (app.useip()) secure = false
 
 			if (secure) protocol = protocol + 's'
 
-			console.log('secure', secure, protocol, url, server)
-
-			hostip = app.options.useip ? server.ip : server.host
+			hostip = app.useip() ? server.ip : server.host
 
 			data.current = protocol + "://" + hostip + path
 			data.ip = server.ip

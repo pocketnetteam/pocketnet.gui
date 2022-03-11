@@ -105,8 +105,6 @@ Application = function(p)
 
 		peertubeServer : 'https://test.peertube2.pocketnet.app/api/v1/',
 
-		ssl : true,
-		useip : true,
 
 		//////////////
 
@@ -270,6 +268,20 @@ Application = function(p)
 		else{
 			self.el.html.removeClass('mobileview').addClass('wsview')
 		}
+	}
+
+	self.secure = function(){
+		return location.protocol != 'http:'
+	}
+
+	self.canuseip = function(){
+		if(!self.secure() || (typeof _Electron != 'undefined' && _Electron)){
+			return true
+		}
+	}
+
+	self.useip = function(){
+		return self.canuseip() && self.platform.sdk.usersettings.meta.canuseip.value
 	}
 
 	self.isonline = isonline

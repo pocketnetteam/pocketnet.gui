@@ -9277,7 +9277,7 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
             success : function(response){
                 if (response.data.video && response.data.video.as) {
 
-                    _plyr(response.data.video.as, response.data.video.preview || '', response.data.video.title || '');
+                    _plyr(decodeURIComponent(response.data.video.as), response.data.video.preview || '', response.data.video.title || '');
 
                     var plyrPlayer = newPlyr(target, video_options);
 

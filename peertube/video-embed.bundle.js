@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=7270"
+/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=9190"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -46824,7 +46824,6 @@ class PeerTubeEmbed {
     }
     getInitialSettings(params) {
         //const params = new URL(window.location.toString()).searchParams
-        console.log('params', params);
         this.host = this.getParamString(params, "host", "");
         this.contributor = this.getParamString(params, "contributor", "peertube");
         this.language = this.getParamString(params, "language", navigator.language);
@@ -47302,7 +47301,6 @@ class PeerTubeEmbed {
         this.displayErrorWrapper("This video is not available because the remote instance is not responding.");
     }
     correctPath(path = '') {
-        console.log('path', path, this.pathfunction(path));
         if (this.pathfunction)
             return this.pathfunction(path);
         return path;
@@ -47543,7 +47541,6 @@ class PeerTubeEmbed {
                         file.torrentDownloadUrl = this.correctPath(file.torrentDownloadUrl);
                         file.torrentUrl = this.correctPath(file.torrentUrl);
                     });
-                    console.log('hlsPlaylist', hlsPlaylist);
                     Object.assign(options, {
                         p2pMediaLoader: {
                             playlistUrl: this.correctPath(hlsPlaylist.playlistUrl),

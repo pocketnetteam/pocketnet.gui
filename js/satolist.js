@@ -7895,13 +7895,6 @@ Platform = function (app, listofnodes) {
                     value: true
                 },
 
-                /*videoautoplay: {
-                    name: self.app.localization.e('e13277'),
-                    id: 'videoautoplay',
-                    type: "BOOLEAN",
-                    value: true
-                },*/
-
                 videoautoplay2: {
                     name: self.app.localization.e('e13277'),
                     id: 'videoautoplay2',
@@ -8025,7 +8018,17 @@ Platform = function (app, listofnodes) {
 					type : "BOOLEAN",
 					value : true,
                 },
+
+                canuseip: {
+                    name: self.app.localization.e('canuseipsetting'),
+                    id: 'canuseip',
+                    type: "BOOLEAN",
+                    value: false
+                },
+
             },
+
+            //self.canuseip
 
             create: function (id) {
                 var m = self.sdk.usersettings.meta;
@@ -8105,6 +8108,11 @@ Platform = function (app, listofnodes) {
                             sendUserStatistics: options.sendUserStatistics,
                         }
                     },
+
+                    system : {
+                        name: self.app.localization.e('system'),
+                        options : {}
+                    }
                 }
 
 
@@ -8131,27 +8139,17 @@ Platform = function (app, listofnodes) {
                 }
 
 
-
-
                 if (electron) {
-                    c.system = {
-                        name: self.app.localization.e('system'),
-                        options: {
-                            autostart: options.autostart
-                        }
-                    }
+                    c.system.options.autostart = options.autostart
                 }
                 else{
                     if(!window.cordova){
-
-                        c.system = {
-                            name: self.app.localization.e('system'),
-                            options: {
-                                openlinksinelectron: options.openlinksinelectron
-                            }
-                        }
-
+                        c.system.options.openlinksinelectron = options.openlinksinelectron
                     }
+                }
+
+                if (self.app.canuseip()){
+                    c.system.options.canuseip = options.canuseip
                 }
 
                 _.each(options, function (o, i) {
