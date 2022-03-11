@@ -1089,25 +1089,6 @@ PeerTubePocketnet = function (app) {
 			},
 		},
 
-		// Request the proxy server to get the IP address of the server passed in parameter
-		checkHostIp: async function (hostname) {
-			var now = new Date();
-			// If server has not been checked yet OR
-			// If time has passed and it is time to update the server's IP
-			if (!serversIps[hostname] || !serversIps[hostname].timestamp ||
-				(serversIps[hostname] && (now.getTime() > (serversIps[hostname].timestamp.getTime() + INTERVAL_CHECK_SERVER_IP)))) {
-				try {
-					if (!serversIps[hostname]) serversIps[hostname] = {};
-					serversIps[hostname].timestamp = new Date();
-					var newHostname = await app.peertubeHandler.api.proxy.getHostIp(hostname);
-					// Save the server's IP for the next times
-					serversIps[hostname].ip = newHostname;
-				} catch (err) {
-
-				}
-			}
-		},
-
 		checkIp : function(server){
 			var now = new Date();
 
@@ -1147,6 +1128,8 @@ PeerTubePocketnet = function (app) {
 				
 				secure = oldprotocol == 'https' || oldprotocol == 'wss'
 
+				console.log('oldprotocol', oldprotocol, secure)
+
 				if (oldprotocol == 'https') oldprotocol = 'http';
 				if (oldprotocol == 'wss') oldprotocol = 'ws';
 
@@ -1178,6 +1161,8 @@ PeerTubePocketnet = function (app) {
 
 			if (app.options.useip) secure = false
 
+			if (secure) protocol = protocol + 's'
+
 			console.log('secure', secure, protocol, url, server)
 
 			hostip = app.options.useip ? server.ip : server.host
@@ -1193,52 +1178,7 @@ PeerTubePocketnet = function (app) {
 			return self.helpers.urlextended(hostip).current
 		},	
 
-		// Try to convert an URL with the server's IP address (if possible)
-		// If no IP can be found or URL already using IP address, return the URL untouched
-		convertUrlWithIp: async function (serverUrl) {
-			// Check we have what we need
-			if (!(URL && serverUrl && app && app.options && app.options.peertubeUseIp == true &&
-				app.peertubeHandler && app.peertubeHandler.api &&
-				app.peertubeHandler.api.proxy && app.peertubeHandler.api.proxy.getHostIp))
-				return serverUrl;
-
-			var url, newHostname;
-			try {
-				url = new URL(serverUrl);
-			} catch (err) {
-				console.log(err);
-				console.log(serverUrl);
-				return serverUrl;
-			}
-			// Check if URL is not already using IP address
-			// If so, returns the URL untouched
-			const ipRegex = new RegExp(/\d+\.\d+\.\d+\.\d+/);
-			if (ipRegex.test(url.hostname) == true) return serverUrl;
-			// Still check if we need to update the server's IP
-			if (self.helpers)
-				self.helpers.checkHostIp(url.hostname);
-			// Check if we can return instantly with a saved IP
-			if (serversIps[url.hostname] && serversIps[url.hostname].hostname) {
-				// Return the URL now
-				url.hostname = serversIps[url.hostname].hostname;
-				url.protocol = 'http:';
-				return url.toString();
-			}
-			// Request the proxy server to get the server's IP address
-			try {
-				var ip = await app.peertubeHandler.api.proxy.getHostIp(url.hostname);
-				// Save the server's IP for the next times
-				serversIps[url.hostname] = { hostname: url.hostname, ip, timestamp: new Date() };
-			} catch (err) {
-				return serverUrl;
-			}
-			// If can't get IP address from proxy server, stop there
-			if (!newHostname) return serverUrl;
-			// Update the URL with IP address and change it to HTTP
-			url.hostname = newHostname;
-			url.protocol = 'http:';
-			return url.toString();
-		},
+		
 
 	};
 
