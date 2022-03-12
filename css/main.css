@@ -168,7 +168,7 @@
   }
 }
 body {
-  overscroll-behavior: contain;
+  overscroll-behavior: none;
   /* scroll-snap-type: y proximity;*/
 }
 html {
@@ -178,6 +178,7 @@ html {
   position: relative;
   overflow-x: hidden;
   overflow-y: overlay;
+  overscroll-behavior: none;
   /*&.mobileview{
         scroll-behavior: smooth;
     }*/
@@ -487,6 +488,12 @@ html.mobile .unselectablemobile {
   -ms-user-select: none;
   user-select: none;
 }
+/*
+html.testaddress{
+    .vjs-peertube{
+        display : block;
+    }
+}*/
 div {
   -webkit-tap-highlight-color: transparent;
 }
@@ -4115,16 +4122,16 @@ html.mobileview .matrixchatwrapper {
   z-index: 1004;
   -webkit-overflow-scrolling: touch;
   transform-origin: left center;
-  -webkit-transform: scale(0.9) translateX(-100%);
-  transform: scale(0.9) translateX(-100%);
+  -webkit-transform: translateX(-100%);
+  transform: translateX(-100%);
   overflow: hidden;
   border-radius: 5px;
   backface-visibility: hidden;
   will-change: transform;
 }
 html.mobileview .matrixchatwrapper.active {
-  -webkit-transform: scale(1) translateX(0);
-  transform: scale(1) translateX(0);
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
 }
 html.mobileview[chatposition='above'] .matrixchatwrapper {
   z-index: 1006;
@@ -6198,6 +6205,10 @@ html.mobileview .wnd.normalizedmobile .wndinner .wndcontent::-webkit-scrollbar {
 }
 html.mobileview .wnd.normalizedmobile .wndinner > div.buttons {
   display: none;
+}
+html.mobileview .wnd.normalizedmobile .wndinner > div.buttons > div {
+  max-width: 768px;
+  margin: 0 auto;
 }
 html.mobileview .wnd.normalizedmobile.asette .wndback {
   -moz-transition: 0.2s;

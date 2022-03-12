@@ -65,6 +65,7 @@ var panel = (function(){
 					animation : false,
 
 					essenseData : {
+						type : 'recommended'
 					},
 					
 					clbk : function(e, p){
@@ -127,8 +128,8 @@ var panel = (function(){
 
 		
 			
-			// renders.topusers();
-			// renders.bestposts();
+			//renders.topusers();
+			//renders.bestposts();
 
 
 		}

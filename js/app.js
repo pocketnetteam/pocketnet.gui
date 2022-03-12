@@ -1195,6 +1195,13 @@ Application = function(p)
 			p.clbk = function(c,b){
 				self.pipwindow = b
 
+
+				/*console.log('elf.pipwin', self.pipwindow)
+
+				setTimeout(function(){
+					console.log('self.pipwindow.playerstatus()',self.pipwindow.playerstatus())
+				},2000)*/
+
 				if(clbk) clbk(c,b)
 			}
 
@@ -2179,6 +2186,12 @@ Application = function(p)
 
 									if(e.constrainted) return false
 
+									if(self.platform.preparingUser) return false
+
+									if(_.find(e.path, function(el){
+                                        return el.className && el.className.indexOf('noswipepnt') > -1
+                                    })) return false
+
 									if(self.lastScrollTop <= 0 && !self.mobile.reload.reloading){
 										return true;
 									}
@@ -2192,23 +2205,30 @@ Application = function(p)
 									self.mobile.reload.reloading = true
 									self.el.topsmallpreloader.css('transform', '')
 									self.el.topsmallpreloader.removeClass('show')
+
 									globalpreloader(true)
 
 									setTimeout(function(){
 		
-										self.platform.sdk.node.transactions.get.allBalanceUpdate(function(){
-											self.platform.sdk.notifications.getNotifications()
-
-											if (self.nav.current.module)
-												self.nav.current.module.restart()
-
-											setTimeout(function(){
-												globalpreloader(false)
-												
-												self.mobile.reload.reloading = false
-											}, 200)
-
+										self.user.isState(function(state){
+											if(state){
+												self.platform.sdk.node.transactions.get.allBalanceUpdate(function(){
+													self.platform.sdk.notifications.getNotifications()
+												})
+											}
+											
 										})
+
+										if (self.nav.current.module)
+											self.nav.current.module.restart()
+
+										setTimeout(function(){
+											globalpreloader(false)
+											
+											self.mobile.reload.reloading = false
+										}, 200)
+
+										
 									}, 100)
 
 									

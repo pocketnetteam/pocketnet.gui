@@ -28,3 +28,16 @@
   opacity: 0.9;
   color: rgb(var(--text-on-bg-ac-color));
 }
+html.mobileview #abilityincrease .actions {
+  flex-direction: column;
+}
+html.mobileview #abilityincrease .actions .buttonwrapper {
+  margin-right: 0;
+  margin-bottom: 1em;
+}
+html.mobileview #abilityincrease .actions .buttonwrapper button.ghost {
+  padding-left: 0;
+}
+html.mobileview #abilityincrease .actions .buttonwrapper:nth-child(1) button.ghost {
+  padding-left: 1em;
+}

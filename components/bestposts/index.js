@@ -359,6 +359,8 @@ var bestposts = (function(){
 
 					} else {
 
+						console.log("getRecommendedPosts")
+
 						self.app.platform.sdk.posts.getRecommendedPosts(function(c, error){
 
 

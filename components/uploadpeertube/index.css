@@ -448,6 +448,9 @@ html.mobileview #uploadpeertube .challengeoffer {
 html.mobileview #uploadpeertube .uploadRow label {
   font-size: 1em;
 }
+html.mobileview .wnd.uploadpeertube.witherror .wndinner #uploadpeertube {
+  height: auto;
+}
 .importVideoDialog {
   z-index: 1006;
 }

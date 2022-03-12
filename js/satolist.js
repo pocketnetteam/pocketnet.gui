@@ -129,7 +129,10 @@ Platform = function (app, listofnodes) {
         'PApFYMrbm3kXMV7kjrEG1v6ULv6ZFDHb9j' : true,
         'PUBRMTAUhy51gkbuP1tRJLMMAzEDt9C2X6' : true,
         'P9i55BxFWpjMyqgHyCKtazDN1HDiZxTSzJ' : true,
-        'PLLDTFuBhb4FRPt811bTPjgaYgqoj16hVV' : true
+        'PLLDTFuBhb4FRPt811bTPjgaYgqoj16hVV' : true,
+        'PXmw1tQnengAAy9ML8Depr2kANupmadZ7j' : true,
+        'PCkbxDvFQbFvEzPWnnrraey1QCUro2kMLU' : true,
+        'PBKPEWcsZZHH7LQ7GQCNSMSSEteiJMfoFx' : true
     }
 
     self.nvadr = {
@@ -10626,27 +10629,38 @@ Platform = function (app, listofnodes) {
 
                 var selectedTags = self.app.platform.sdk.categories.gettags();
 
-                self.app.api.rpc('getrecomendedaccountsbytags', [selectedTags, 15])
-                .then(function(d){
+                if (selectedTags.length){
 
+                    self.app.api.rpc('getrecomendedaccountsbytags', [selectedTags, 15])
+                    .then(function(d){
+
+                        if (clbk){
+                            clbk(d)
+                        }
+
+                    })
+                    .catch(function(e){
+
+                        if (clbk){
+                            clbk(null, e);
+                        }
+                    })
+
+                }
+                else{
                     if (clbk){
-                        clbk(d)
+                        clbk([])
                     }
+                }
 
-                })
-                .catch(function(e){
-
-                    if (clbk){
-                        clbk(null, e);
-                    }
-                })
+                
             },
 
             getBestUsers : function(clbk){
 
                 var my = self.app.user.address.value;
 
-                self.app.api.rpc('getrecomendedaccountsbyscoresfromaddress', [my, ['share', 'video'], 0, 300000, 15])
+                self.app.api.rpc('getrecomendedaccountsbyscoresfromaddress', [my, ['share', 'video'], 0, 10000, 15])
                 .then(function(d){
 
                     if (clbk){
@@ -10700,7 +10714,7 @@ Platform = function (app, listofnodes) {
 
                 var my = self.app.user.address.value;
 
-                self.app.api.rpc('getrecomendedcontentsbyscoresfromaddress', [my, ['share', 'video'], 0, 300000, 15])
+                self.app.api.rpc('getrecomendedcontentsbyscoresfromaddress', [my, ['share', 'video'], 0, 10000, 15])
                 .then(function(d){
 
                     if (clbk){
@@ -25981,6 +25995,7 @@ Platform = function (app, listofnodes) {
         self.matrixchat.destroy()
 
         checkfeatures()
+        
 
         app.user.isState(function(state){
 
@@ -26751,12 +26766,10 @@ Platform = function (app, listofnodes) {
 
                 if (self.focus) return 
 
-                if (self.app.pipwindow){
+                if (self.app.pipwindow && self.app.pipwindow.playerstatus && self.app.pipwindow.playerstatus() == 'playing'){
+
                     self.app.mobile.pip.enable(self.app.pipwindow.el)
                 }
-                
-                console.log('backtoapp')
-
                 
             }, 200)
            

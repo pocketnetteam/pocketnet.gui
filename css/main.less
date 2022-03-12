@@ -222,7 +222,7 @@
 
 
 body{
-    overscroll-behavior: contain;
+    overscroll-behavior: none;
     /* scroll-snap-type: y proximity;*/
 }
 
@@ -233,7 +233,7 @@ html {
     position: relative;
     overflow-x: hidden;
     overflow-y: overlay;
-   
+    overscroll-behavior: none;
     
     /*&.mobileview{
         scroll-behavior: smooth;
@@ -589,6 +589,13 @@ html{
         }
     }
 }
+
+/*
+html.testaddress{
+    .vjs-peertube{
+        display : block;
+    }
+}*/
 
 
 div{
@@ -4933,16 +4940,16 @@ html.mobileview{
         z-index: 1004;
         -webkit-overflow-scrolling: touch;
         transform-origin : left center;
-        -webkit-transform: scale(0.9) translateX(-100%);
-        transform: scale(0.9) translateX(-100%);
+        -webkit-transform: translateX(-100%);
+        transform: translateX(-100%);
         overflow: hidden;
         border-radius: 5px;
         backface-visibility: hidden;
         will-change: transform;
 
         &.active{
-            -webkit-transform: scale(1) translateX(0);
-            transform: scale(1) translateX(0);
+            -webkit-transform: translateX(0);
+            transform: translateX(0);
         }
     }
 
@@ -7609,6 +7616,11 @@ html.mobileview{
                 
                 >div.buttons{
                     display: none;
+                    >div{
+                        max-width: 768px;
+                        margin : 0 auto;
+                    }
+                    
                 }
             }
 

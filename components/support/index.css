@@ -4,6 +4,9 @@
 #support .windowheader span {
   font-weight: 700;
 }
+#support .actions {
+  margin-top: 1.5em;
+}
 #support .parameter {
   display: flex;
   align-items: flex-start;
@@ -26,4 +29,15 @@
 .wnd.supportwnd .wndinner {
   max-height: 550px;
   max-width: 450px;
+}
+html.mobileview .wnd.supportwnd {
+  /*.wndinner > div.buttons{
+            display: block;
+        }*/
+}
+html.mobileview .wnd.supportwnd #support {
+  padding-top: 2em;
+  padding-bottom: 2em;
+  padding-left: 1em;
+  padding-right: 1em;
 }
