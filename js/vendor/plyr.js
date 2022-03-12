@@ -9180,10 +9180,11 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
 
     if (provider == 'peertube') {
 
-      var host = target.getAttribute('data-plyr-host-name');
+      //var host = target.getAttribute('data-plyr-host-name');
+      var parsed = options.app.peertubeHandler.parselink(video_id);
 
       // Check if we have downloaded the video already
-      var localVideo = self.app.platform.sdk.localshares.getVideo(clear_peertube_id);
+      var localVideo = options.app.platform.sdk.localshares.getVideo(parsed.id);
 
       const isElectron = (typeof _Electron !== 'undefined');
       const isCordova = (typeof window.cordova != 'undefined');
@@ -9198,7 +9199,11 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
       retry(function(){
         return typeof PeerTubeEmbeding != 'undefined'
       }, function(){
-        PeerTubeEmbeding.main(target, clear_peertube_id, {
+
+        var host = options.app.peertubeHandler.helpers.url(parsed.host, true)
+
+        PeerTubeEmbeding.main(target, parsed.id, {
+
           host : host,
           wautoplay : options.wautoplay,
           useP2P : options.useP2P,
@@ -9207,10 +9212,14 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
           localVideo : localVideo,
           start : options.startTime || 0,
           localTransport,
+          hlsError : options.hlsError,
+
+          pathfunction : options.app.peertubeHandler.helpers.url
+
         },{
           hlsError : options.hlsError,
           playbackStatusChange : function(status){
-
+            
           },
           volumeChange : options.volumeChange,
           fullscreenchange : options.fullscreenchange,
@@ -9219,6 +9228,7 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
           play : options.play,
           pause : options.pause
 
+  
         }).then(embed => {
 
           if(!embed || !embed.api){
@@ -9226,12 +9236,12 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
 
             return
           }
-
+  
           var api = embed.api
               api.mute()
 
               api.el = $(target)
-
+  
           if (clbk) clbk(api);
           if (readyCallback) readyCallback(api);
 
@@ -9279,7 +9289,7 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
             success : function(response){
                 if (response.data.video && response.data.video.as) {
 
-                    _plyr(response.data.video.as, response.data.video.preview || '', response.data.video.title || '');
+                    _plyr(decodeURIComponent(response.data.video.as), response.data.video.preview || '', response.data.video.title || '');
 
                     var plyrPlayer = newPlyr(target, video_options);
 

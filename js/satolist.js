@@ -2495,7 +2495,7 @@ Platform = function (app, listofnodes) {
                     caption.addClass('verticalcover')
                 }
 
-            })
+            }, self.app)
         },
 
         changeloc : function(_clbk){
@@ -2573,8 +2573,8 @@ Platform = function (app, listofnodes) {
 
                 if (clbk)
                     clbk()
-
-            })
+                
+            }, self.app)
 
 
         },
@@ -7226,126 +7226,7 @@ Platform = function (app, listofnodes) {
             }
         },
 
-        imagesH: {
-            storage: {},
-
-            add: function (src, h) {
-                var t = self.sdk.imagesH;
-
-                t.storage[src] = h
-
-                t.save()
-            },
-
-            delete: function (src, clbk) {
-
-                var t = self.sdk.imagesH;
-
-                if (t.storage[src]) {
-
-                    self.app.ajax.run({
-                        type: "DEL",
-                        imgur: true,
-                        data: {
-                            Action: "image/" + t.storage[src],
-                        },
-
-                        success: function (data) {
-
-                            delete t.storage[src]
-
-                            t.save()
-
-                            if (clbk)
-                                clbk()
-
-                        },
-
-                        fail: function () {
-
-                            if (clbk)
-                                clbk()
-                        }
-                    })
-
-                }
-                else {
-                    if (clbk)
-                        clbk()
-                }
-            },
-
-            save: function () {
-                localStorage['imagesH'] = JSON.stringify(self.sdk.imagesH.storage || {});
-            },
-
-            load: function (clbk) {
-                var s = {};
-
-                try {
-                    s = JSON.parse(localStorage['imagesH'] || "{}")
-                } catch (e) {
-
-                }
-
-                self.sdk.imagesH.storage = s;
-
-                if (clbk)
-                    clbk()
-
-            },
-
-            upload : function(image){
-
-                return new Promise((resolve, reject) => {
-                    if (image.indexOf('data:image') > -1){
-
-                        var r = image.split(',');
-
-                        app.ajax.run({
-                            type : "POST",
-                            imgur : true,
-                            data : {
-                                Action : "image",
-                                image : r[1]
-                            },
-
-                            success : function(data){
-                                resolve(deep(data, 'data.link'));
-                            },
-
-                            fail : function(d){
-
-                                app.ajax.run({
-                                    type : "POST",
-                                    up1 : true,
-                                    data : {
-                                        file : r[1]
-                                    },
-
-                                    success : function(data){
-
-                                        resolve('https://pocketnet.app:8092/i/' + deep(data, 'data.ident'));
-
-                                    },
-
-                                    fail : function(d){
-                                        reject('imageloadingfailed')
-                                    }
-                                })
-
-                            }
-                        })
-
-                    }
-
-                    else{
-                        resolve(image)
-                    }
-                })
-
-            }
-        },
+       
         articles: {
 
             storage: [],
@@ -7613,17 +7494,17 @@ Platform = function (app, listofnodes) {
                         return Promise.resolve()
                     }
 
-                    return self.sdk.imagesH.upload(e.data.file.url).then(r => {
-                        e.data.file.url = r
-
+                    return self.app.imageUploader.upload({ base64: e.data.file.url }).then( url => {
+						e.data.file.url = url
                         return Promise.resolve()
-                    })
+					})
+
                 },
                 carousel : function(e){
 
                     return Promise.all(_.map(e.data, (d => {
-                        return self.sdk.imagesH.upload(d.url).then(r => {
-                            d.url = r
+                        return self.app.imageUploader.upload({base64 : d.url}).then(url => {
+                            d.url = url
 
                             return Promise.resolve()
                         })
@@ -7651,7 +7532,7 @@ Platform = function (app, listofnodes) {
                         return Promise.resolve()
                     }
 
-                    return self.sdk.imagesH.upload(art.cover).then(r => {
+                    return self.app.imageUploader.upload({base64 : art.cover}).then(r => {
                         art.cover = r
 
                         return Promise.resolve()
@@ -8056,13 +7937,6 @@ Platform = function (app, listofnodes) {
                     value: true
                 },
 
-                /*videoautoplay: {
-                    name: self.app.localization.e('e13277'),
-                    id: 'videoautoplay',
-                    type: "BOOLEAN",
-                    value: true
-                },*/
-
                 videoautoplay2: {
                     name: self.app.localization.e('e13277'),
                     id: 'videoautoplay2',
@@ -8186,7 +8060,17 @@ Platform = function (app, listofnodes) {
 					type : "BOOLEAN",
 					value : true,
                 },
+
+                canuseip: {
+                    name: self.app.localization.e('canuseipsetting'),
+                    id: 'canuseip',
+                    type: "BOOLEAN",
+                    value: false
+                },
+
             },
+
+            //self.canuseip
 
             create: function (id) {
                 var m = self.sdk.usersettings.meta;
@@ -8266,6 +8150,11 @@ Platform = function (app, listofnodes) {
                             sendUserStatistics: options.sendUserStatistics,
                         }
                     },
+
+                    system : {
+                        name: self.app.localization.e('system'),
+                        options : {}
+                    }
                 }
 
 
@@ -8292,27 +8181,17 @@ Platform = function (app, listofnodes) {
                 }
 
 
-
-
                 if (electron) {
-                    c.system = {
-                        name: self.app.localization.e('system'),
-                        options: {
-                            autostart: options.autostart
-                        }
-                    }
+                    c.system.options.autostart = options.autostart
                 }
                 else{
                     if(!window.cordova){
-
-                        c.system = {
-                            name: self.app.localization.e('system'),
-                            options: {
-                                openlinksinelectron: options.openlinksinelectron
-                            }
-                        }
-
+                        c.system.options.openlinksinelectron = options.openlinksinelectron
                     }
+                }
+
+                if (self.app.canuseip()){
+                    c.system.options.canuseip = options.canuseip
                 }
 
                 _.each(options, function (o, i) {
@@ -23798,6 +23677,8 @@ Platform = function (app, listofnodes) {
 
             platform.app.api.get.currentwss().then(wss => {
 
+                console.log('wss', wss)
+
                 socket = wss.dummy || (new ReconnectingWebSocket(wss.url));
 
 
@@ -26011,7 +25892,6 @@ Platform = function (app, listofnodes) {
                     self.sdk.addresses.init,
                     self.sdk.ustate.me,
                     self.sdk.usersettings.init,
-                    self.sdk.imagesH.load,
 
                     self.ws.init,
                     self.firebase.init,

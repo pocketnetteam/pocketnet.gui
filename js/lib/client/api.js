@@ -443,7 +443,10 @@ var Proxy16 = function(meta, app, api){
 
     self.url = {
         https : () => {return "https://" + self.host + ":" + self.port},
-        wss : () => {return "wss://" + self.host + ":" + self.wss}
+        wss : () => {return "wss://" + self.host + ":" + self.wss},
+
+        http : () => {return "http://" + self.host + ":" + (self.port - 1)},
+        ws : () => {return "ws://" + self.host + ":" + (self.wss - 1)}
     }
 
 

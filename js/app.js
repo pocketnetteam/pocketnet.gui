@@ -18,6 +18,9 @@ if(typeof _Electron != 'undefined' && _Electron){
 
 	animateNumber = require('./js/vendor/jquery.animate-number.js')
 	touchSwipe = require('./js/vendor/jquery.touchSwipe.js')
+	
+	ImageUploader = require('./js/image-uploader.js');
+
 
 
 	jQueryBridget = require('jquery-bridget');
@@ -97,6 +100,11 @@ Application = function(p)
 		//////////////
 		
 		firebase : p.firebase || 'https://'+url+':8888', /// will be removed
+
+		//////////////
+
+		peertubeServer : 'https://test.peertube2.pocketnet.app/api/v1/',
+
 
 		//////////////
 
@@ -260,6 +268,20 @@ Application = function(p)
 		else{
 			self.el.html.removeClass('mobileview').addClass('wsview')
 		}
+	}
+
+	self.secure = function(){
+		return location.protocol != 'http:'
+	}
+
+	self.canuseip = function(){
+		if(!self.secure() || (typeof _Electron != 'undefined' && _Electron)){
+			return true
+		}
+	}
+
+	self.useip = function(){
+		return self.canuseip() && self.platform.sdk.usersettings.meta.canuseip.value
 	}
 
 	self.isonline = isonline
@@ -757,6 +779,8 @@ Application = function(p)
 		self.ajax.set.user(self.user);
 
 		self.platform = new Platform(self, self.options.listofnodes);
+
+		self.imageUploader = new ImageUploader(self);
 
 		self.options.platform = self.platform
 

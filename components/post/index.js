@@ -416,6 +416,7 @@ var post = (function () {
 						wautoplay: wa,
 						logoType : self.app.meta.fullname,
 						startTime : startTime,
+						app : self.app,
 						volumeChange : function(v){
 							videosVolume = v
 
@@ -1233,7 +1234,7 @@ var post = (function () {
 						}
 
 						
-					});
+					}, self.app);
 
 
 				}
@@ -1568,7 +1569,7 @@ var post = (function () {
 						});
 
 						if (clbk) clbk();
-					});
+					}, self.app);
 				})
 
 
