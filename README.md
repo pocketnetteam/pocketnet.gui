@@ -9,6 +9,7 @@
 ![GitHub release Linux MacOS](https://img.shields.io/github/downloads/pocketnetteam/pocketnet.gui/latest/BastyonSetup.dmg)
 ![GitHub release Linux Deb](https://img.shields.io/github/downloads/pocketnetteam/pocketnet.gui/latest/BastyonSetup.deb)
 ![GitHub release Linux AppImage](https://img.shields.io/github/downloads/pocketnetteam/pocketnet.gui/latest/Bastyon.AppImage)
+![GitHub release Android APK](https://img.shields.io/github/downloads/pocketnetteam/pocketnet.gui/latest/Bastyon.apk)
 
 [![Deploy Proxy](https://github.com/pocketnetteam/pocketnet.gui/actions/workflows/docker_registry.yml/badge.svg)](https://github.com/pocketnetteam/pocketnet.gui/actions/workflows/docker_registry.yml)
 [![Auto Tests](https://github.com/pocketnetteam/pocketnet.gui/actions/workflows/autotests.yml/badge.svg)](https://github.com/pocketnetteam/pocketnet.gui/actions/workflows/autotests.yml)
