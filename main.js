@@ -138,14 +138,14 @@ function autoLaunchManage(enable){
             path: app.getPath('exe'),
             isHidden: true
         });
-    
+
         if (enable)
             autoLaunch.enable();
-    
-        else 
+
+        else
             autoLaunch.disable();
     }
-    
+
 }
 
 
@@ -405,7 +405,7 @@ function notification(nhtml, p) {
 
 
     setTimeout(function() {
-        if (nwin){  
+        if (nwin){
             nwin.show()
 
             nwin.on('hide', function(){
@@ -420,7 +420,7 @@ function notification(nhtml, p) {
                 win.webContents.send('win-restore')
             })
         }
-           
+
 
 
        // nwin.webContents.toggleDevTools()
@@ -467,7 +467,7 @@ function createWindow() {
 		win.reload()
         win.loadFile('index_el.html')
 	})
-    
+
 	electronLocalshortcut.register(win, 'CommandOrControl+R', function() {
 		win.reload()
         win.loadFile('index_el.html')
@@ -485,7 +485,7 @@ function createWindow() {
             click: () => win.webContents.replaceMisspelling(suggestion)
           }))
         }
-      
+
         // Allow users to add the misspelled word to the dictionary
         if (params.misspelledWord) {
           menu.append(
@@ -495,7 +495,7 @@ function createWindow() {
             })
           )
         }
-      
+
         //menu.popup()
     })
 
@@ -515,7 +515,7 @@ function createWindow() {
             ...(isMac ? [{
               label: app.name,
               submenu: [
-              
+
                 { type: 'separator' },
                 { role: 'hide', accelerator: 'Cmd+W', },
                 { role: 'unhide' },
@@ -530,7 +530,7 @@ function createWindow() {
               ]
             }] : []),
             // { role: 'fileMenu' }
-            
+
             {
               label: 'Edit',
               submenu: [
@@ -563,7 +563,7 @@ function createWindow() {
             {
               label: 'View',
               submenu: [
-            
+
                 { role: 'toggleDevTools' },
                 { type: 'separator' },
                 { role: 'togglefullscreen' }
@@ -605,7 +605,7 @@ function createWindow() {
     else{
         Menu.setApplicationMenu(null)
     }
-    
+
 
     win.loadFile('index_el.html')
 
@@ -622,7 +622,7 @@ function createWindow() {
         if (!willquit) {
 
             e.preventDefault();
-            
+
             if (is.macOS()){
                 if (win.isFullScreen()){
                     win.setFullScreen(false)
@@ -630,7 +630,7 @@ function createWindow() {
                 }
             }
 
-            
+
             win.hide();
             destroyBadge()
         } else {
@@ -651,7 +651,7 @@ function createWindow() {
     });
 
 
-   
+
 
     ipcMain.on('electron-notification', function(e, p) {
 
@@ -701,11 +701,19 @@ function createWindow() {
         autoLaunchManage(p.enable)
     })
 
-    ipcMain.handle('saveShareData', async (event, shareData) => {
-        const storage = app.getAppPath();
+    /**
+     * Video and posts download handlers
+     */
 
-        const shareDir = `${storage}/posts/${shareData.id}`;
-        const jsonDir = `${shareDir}/share.json`;
+    const Storage = app.getPath('userData');
+    const PostsDir = 'posts';
+    const VideosDir = 'videos';
+    const getPostFolder = (postId) => path.join(Storage, PostsDir, postId);
+    const getVideoFolder = (postId, videoId) => path.join(getPostFolder(postId), VideosDir, videoId);
+
+    ipcMain.handle('saveShareData', async (event, shareData) => {
+        const shareDir = getPostFolder(shareData.id);
+        const jsonDir = path.join(shareDir, 'share.json');
 
         if (!fs.existsSync(shareDir)) {
             fs.mkdirSync(shareDir, { recursive: true });
@@ -762,10 +770,11 @@ function createWindow() {
             });
         }
 
-        const videoDir = `${folder}/videos/${videoData.uuid}`;
-        const jsonDir = `${videoDir}/info.json`;
-        const signsDir = `${videoDir}/signatures.json`;
-        const playlistDir = `${videoDir}/playlist.m3u8`;
+        const shareId = path.basename(folder);
+        const videoDir = getVideoFolder(shareId, videoData.uuid);
+        const jsonDir = path.join(videoDir, 'info.json');
+        const signsDir = path.join(videoDir, 'signatures.json');
+        const playlistDir = path.join(videoDir, 'playlist.m3u8');
 
         const streamsRegexp = /^.+\.m3u8/gm;
         const videoTargetFile = /#EXT-X-MAP:URI="(.+\.mp4)"/m;
@@ -812,8 +821,8 @@ function createWindow() {
             const startBytes = Number.parseInt(fragRange[0]);
             const endBytes = fragSize + startBytes - 1;
 
-            const fragName = `fragment_${startBytes}-${endBytes}`;
-            const fragPath = `${videoDir}/${fragName}.mp4`;
+            const fragName = `fragment_${startBytes}-${endBytes}.mp4`;
+            const fragPath = path.join(videoDir, fragName);
 
             const fragFile = fs.createWriteStream(fragPath);
 
@@ -830,12 +839,9 @@ function createWindow() {
             videoDetails : videoData,
         };
 
-        const urlSplits = videoInfo.videoDetails.streamingPlaylists[0].playlistUrl;
-        const videoId = urlSplits[urlSplits.length - 2];
-
         const result = {
             video: {
-                internalURL: videoInfo.videoDetails.streamingPlaylists[0].playlistUrl,
+                internalURL: shareId,
             },
             infos: videoInfo,
             id: videoData.uuid,
@@ -845,9 +851,7 @@ function createWindow() {
     });
 
     ipcMain.handle('deleteShareWithVideo', async (event, shareId) => {
-        const storage = app.getAppPath();
-
-        const shareDir = `${storage}/posts/${shareId}`;
+        const shareDir = getPostFolder(shareId);
 
         fs.rmSync(shareDir, { recursive: true, force: true });
     });
@@ -855,12 +859,10 @@ function createWindow() {
     ipcMain.handle('getShareList', async (event) => {
         const isShaHash = /[a-f0-9]{64}/;
 
-        const storage = app.getAppPath();
-
-        const postsDir = `${storage}/posts`;
+        const postsDir = path.join(Storage, PostsDir);
 
         if (!fs.existsSync(postsDir)) {
-            fs.mkdirSync(postsDir);
+            return [];
         }
 
         const postsList = fs.readdirSync(postsDir)
@@ -870,41 +872,18 @@ function createWindow() {
     });
 
     ipcMain.handle('getShareData', async (event, shareId) => {
-        const storage = app.getAppPath();
-
-        const shareDir = `${storage}/posts/${shareId}`;
-        const jsonPath = `${shareDir}/share.json`;
+        const shareDir = getPostFolder(shareId);
+        const jsonPath = path.join(shareDir, 'share.json');
 
         const jsonData = fs.readFileSync(jsonPath, { encoding:'utf8', flag:'r' });
 
         return JSON.parse(jsonData);
     });
 
-    /* ipcMain.handle('getVideosList', async (event) => {
-        const isUuid4 = /[a-f0-9]{8}-?[a-f0-9]{4}-?4[a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12}/;
-
-        const storage = app.getAppPath();
-
-        const videoDir = `${storage}/videos`;
-
-        if (!fs.existsSync(videoDir)) {
-            fs.mkdirSync(videoDir);
-        }
-
-        const videosList = fs.readdirSync(videoDir)
-            .filter((fN) => (
-                isUuid4.test(fN)
-            ));
-
-        return videosList;
-    }); */
-
     ipcMain.handle('getVideoData', async (event, shareId, videoId) => {
-        const storage = app.getAppPath();
+        const videoDir = getVideoFolder(shareId, videoId);
 
-        const videoDir = `${storage}/posts/${shareId}/videos/${videoId}`;
-
-        const jsonPath = `${videoDir}/info.json`;
+        const jsonPath = path.join(videoDir, 'info.json');
 
         const videosList = fs.readdirSync(videoDir);
 
@@ -916,70 +895,26 @@ function createWindow() {
 
         videoData.infos = JSON.parse(jsonData);
 
-        const videoName = videosList.find(fN => (
+        const playlistName = videosList.find(fN => (
             fN.endsWith('.m3u8')
         ));
 
-        const videoPath = `${videoDir}/${videoName}`;
+        const playlistPath = path.join(videoDir, playlistName);
 
-        const videoStats = fs.statSync(videoPath);
+        const fileStats = fs.statSync(playlistPath);
 
-        videoData.size = videoStats.size;
+        videoData.size = fileStats.size;
         videoData.video = {
-            internalURL: videoData.infos.streamingPlaylists[0].playlistUrl,
+            internalURL: shareId,
         };
 
         return videoData;
     });
 
-    ipcMain.handle('VideoManager : LoadFile', async (event, requestData) => {
-        const { url, responseType, range } = requestData;
-
-        console.log(requestData);
-
-        const isPlaylist = url.endsWith('.m3u8');
-        const isFragment = url.endsWith('.mp4');
-
-        const storage = app.getAppPath();
-
-        const urlSplits = url.split('/');
-        const videoId = urlSplits[urlSplits.length - 2];
-
-        const videoPath = `${storage}/videos/${videoId}`;
-
-        let filePath;
-
-        if (isPlaylist) {
-            filePath = `${videoPath}/playlist.m3u8`;
-        } else if (isFragment) {
-            const rangeBytes = range.match(/\d+/g);
-
-            const fragmentFile = `fragment_${rangeBytes[0]}-${rangeBytes[1]}.mp4`;
-            filePath = `${videoPath}/${fragmentFile}`;
-        }
-
-        if (fs.existsSync(filePath)) {
-            let fileData;
-
-            if (responseType === 'arraybuffer') {
-                fileData = fs.readFileSync(filePath, { flag: 'r' });
-            } else if (responseType === 'text') {
-                fileData = fs.readFileSync(filePath, { encoding: 'utf8', flag: 'r' });
-            }
-
-            return {
-                response: fileData,
-                responseURL: url,
-            };
-        }
-
-        return 'No downloaded file found';
-    });
-
     /**
      * Local files requestor bridge
      */
-    bastyonFsFetchBridge(ipcMain, app.getAppPath());
+    bastyonFsFetchBridge(ipcMain, Storage);
 
     proxyInterface = new ProxyInterface(ipcMain, win.webContents)
     proxyInterface.init()
@@ -1046,7 +981,7 @@ var openlink = function(argv, ini){
 
 
     _openlink(l, ini)
-    
+
 }
 
 var r = app.requestSingleInstanceLock()
@@ -1056,7 +991,7 @@ if(!r) {
 } else {
 
     openlink(process.argv, true)
-    
+
     app.on('second-instance', function(event, argv, cwd) {
 
         openlink(argv)
@@ -1070,40 +1005,49 @@ if(!r) {
         }
     })
 
+    // If we are running a non-packaged version of the app && on windows
+
     _.each(protocols, function(protocol){
-        app.setAsDefaultProtocolClient(protocol, process.execPath, [path.resolve(process.argv[1] || '.') ]); 
+        app.setAsDefaultProtocolClient(protocol, process.execPath, [path.resolve(process.argv[1] || '.') ]);
     })
+
 
     app.on('ready', initApp)
 
+    // Выйти, когда все окна будут закрыты.
     app.on('window-all-closed', () => {
+        // Оставаться активным до тех пор, пока пользователь не выйдет полностью с помощью Cmd + Q,
+        // это обычное дело для приложений и их строки меню на macOS
         if (process.platform !== 'darwin') {
             app.quit()
         }
     })
 
+
     app.on('activate', () => {
+        // На MacOS обычно пересоздают окно в приложении,
+        // после того, как на иконку в доке нажали, и других открытых окон нету.
         if (win === null) {
             createWindow()
         }
     })
-    
+
     if (is.macOS()){
         app.on('open-url', (event, url) => {
 
             _openlink(url, false)
-    
+
             if (win) {
-    
+
                 if (win.isMinimized()) win.restore();
-    
+
                 win.show()
                 win.focus();
             }
         })
     }
 
-    
+
 
 
 
