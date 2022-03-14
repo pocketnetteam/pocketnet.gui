@@ -44,7 +44,7 @@ function bastyonFsFetchFactory(electronIpcRenderer, shareId) {
         function fsFetch(input, init) {
             if (init === void 0) { init = defaultInit; }
             return __awaiter(this, void 0, void 0, function () {
-                var url, range, readKill, rangeStr, fileStats, fetchId, readStream, response;
+                var url, range, readKill, rangeStr, fileStatsPromise, fileStats, fetchId, readStream, response;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
@@ -67,7 +67,13 @@ function bastyonFsFetchFactory(electronIpcRenderer, shareId) {
                             if (init.signal) {
                                 readKill = init.signal;
                             }
-                            return [4 /*yield*/, electronIpcRenderer.invoke('BastyonFsFetch : FileStats', shareId, url, range)];
+                            fileStatsPromise = electronIpcRenderer.invoke('BastyonFsFetch : FileStats', shareId, url, range);
+                            fileStatsPromise["catch"](function (err) {
+                                if (err.message === 'NO_FILE') {
+                                    // console.log('Requested file that does not exist');
+                                }
+                            });
+                            return [4 /*yield*/, fileStatsPromise];
                         case 1:
                             fileStats = _a.sent();
                             return [4 /*yield*/, electronIpcRenderer.invoke('BastyonFsFetch : GetFile', shareId, url, range)];
@@ -135,6 +141,9 @@ function bastyonFsFetchBridge(electronIpcMain, appPath) {
         return __generator(this, function (_a) {
             electronIpcMain.handle('BastyonFsFetch : FileStats', function (event, shareId, url, range) {
                 var filePath = urlToFsPath(url, shareId, range);
+                if (!fs.existsSync(filePath)) {
+                    throw Error('NO_FILE');
+                }
                 var fileStats = fs.statSync(filePath);
                 return fileStats;
             });

@@ -35,7 +35,16 @@ export async function bastyonFsFetchFactory(electronIpcRenderer: Electron.IpcRen
             readKill = init.signal;
         }
 
-        const fileStats = await electronIpcRenderer.invoke('BastyonFsFetch : FileStats', shareId, url, range) as fs.Stats;
+        const fileStatsPromise = electronIpcRenderer.invoke('BastyonFsFetch : FileStats', shareId, url, range) as Promise<fs.Stats>;
+
+        fileStatsPromise.catch((err) => {
+            if (err.message === 'NO_FILE') {
+                // console.log('Requested file that does not exist');
+            }
+        });
+
+        const fileStats = await fileStatsPromise;
+
         const fetchId = await electronIpcRenderer.invoke('BastyonFsFetch : GetFile', shareId, url, range) as string;
 
         const readStream = new ReadableStream({
@@ -97,6 +106,10 @@ export async function bastyonFsFetchBridge(electronIpcMain: Electron.IpcMain, ap
 
     electronIpcMain.handle('BastyonFsFetch : FileStats', (event, shareId: string, url: string, range?: number[]) => {
         const filePath = urlToFsPath(url, shareId, range);
+
+        if (!fs.existsSync(filePath)) {
+            throw Error('NO_FILE');
+        }
 
         const fileStats = fs.statSync(filePath);
 
