@@ -145,7 +145,12 @@ var lenta = (function(){
 
 				if((self.app.playingvideo || fullscreenvideoShowed) && !deleted) return
 
-				delete initedcommentes[shareId];
+				if(initedcommentes[shareId]){
+					initedcommentes[shareId].destroy()
+					delete initedcommentes[shareId];
+				}	
+				
+
 				
 				var share = self.app.platform.sdk.node.shares.storage.trx[shareId];
 
@@ -154,7 +159,13 @@ var lenta = (function(){
 
 				if (recommended == 'saved'){
 
+
 					if (el.share[shareId]) {
+
+						if (fullscreenvideoShowed){
+							actions.exitFullScreenVideo(fullscreenvideoShowed)
+						}
+
 						el.share[shareId].remove()
 						el.share[shareId] = null
 					}
