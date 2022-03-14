@@ -9,40 +9,23 @@ var bestposts = (function(){
 		var primary = deep(p, 'history');
 
 		const videoShare = {
-			"url": "peertube://peertube14.pocketnet.app/18ffa055-404c-43d1-ab49-03bc5867d939",
+			"url": "peertube://storemi.ru/b85c4e6c-30a3-44fe-af7d-85a860032205",
 			"tags": [
-				"covid",
-				"lockdowns",
 				"politics",
 				"news",
 				"commentary"
 			],
-			"message": "Bad news about 4 “organizers” of the convoy.\n\nAmazingPolly  32:46  https://rumble.com/vumvmc-warning-to-truckers-and-convoy-supporters.html?mref=2hzb1&mrefc=6\n",
-			"caption": "Warning to Truckers and Convoy Supporters.",
+			"message": "What The Hell Is Really Going On In Ukraine",
+			"caption": "What The Hell Is Really Going On In Ukraine ",
 			"images": [],
-			"txid": "387e5d8b1358dd7b85004a3ca0deead9b879a83f0f680ee0d9ef25d91d5685c3",
-			"time": "2022-02-11T06:10:27.000Z",
+			"txid": "572d76cd954bd6e68b6804cdf861b6c586d459a37e7dd443128cec045b23a34c",
+			"time": "2022-03-14T13:22:08.000Z",
 			"repost": "",
 			"language": "en",
 			"poll": {},
-			"comments": 15,
-			"lastComment": {
-				"id": "eca5613e18a8144bcb3e6c690246270158a0c4162bc54917c65feeffd923ec68",
-				"cid": 3800639,
-				"edit": false,
-				"deleted": false,
-				"postid": "387e5d8b1358dd7b85004a3ca0deead9b879a83f0f680ee0d9ef25d91d5685c3",
-				"address": "PCnwjuKFF5mXxw9cUzq9JwsxhSuF5g74gU",
-				"time": "1644706710",
-				"timeUpd": "1644706710",
-				"block": "1568857",
-				"msg": "{\"message\":\"Use%20Bitcoin%20and%20send%20them%20money%20personally\",\"url\":\"\",\"images\":[]}",
-				"scoreUp": "0",
-				"scoreDown": "0",
-				"children": "0",
-				"myScore": 0
-			},
-			"reposted": 1,
+			"comments": 0,
+			"lastComment": null,
+			"reposted": 0,
 			"deleted": false,
 			"on": {},
 			"default": {
@@ -64,17 +47,17 @@ var bestposts = (function(){
 					"cm",
 					"p"
 				],
-				"v": "",
-				"videos": [],
+				"v": null,
+				"videos": null,
 				"image": "",
 				"f": "0"
 			},
 			"renders": {},
 			"type": "share",
 			"temp": null,
-			"address": "PQzoDW8StdS3skmDuUK4z5L9dMq24n72M4",
-			"score": "140",
-			"scnt": "28",
+			"address": "PWneSfgJsguqqCHhpMwh4GXLwxNQnFqQsg",
+			"score": "5",
+			"scnt": "1",
 			"edit": false,
 			"info": null
 		};
@@ -138,156 +121,208 @@ var bestposts = (function(){
 			end = false,
 			extra = null,
 			page = 0,
-			essenseData;
+			essenseData,
+			mestate, 
+			video = true;
 
 		var loading;
 
-		var actions = {}
+		var actions = {
+			
+			openPost : function(id, clbk, video){
+
+				self.app.user.isState(function(state){
+
+					var ed = {
+						share : id,
+						hr : essenseData.hr,
+						like : function(share){
+	
+						},
+
+						close : function(){
+							openedPost = null
+							essenserenderclbk()
+						},
+						video,
+
+						autoplay : video
+					}
+
+					var c = function(e, es){		
+						////// TEPM
+						openedPost = es
+							
+						essenserenderclbk()
+
+						if (clbk)
+							clbk();
+
+					}
+				
+
+					self.nav.api.load({
+						open : true,
+						href : 'post?s=' + id,
+						inWnd : true,
+						history : true,
+						clbk : c,
+						essenseData : ed
+					})
+
+				})
+			
+
+			},
+			
+		}
 
 		var events = {}
 
-		var renders = {
-
-			url : function(_el, currentShare, clbk){
-
-				var url = currentShare.url.v;
-
-				var meta = self.app.platform.parseUrl(url);
-
-				var og = self.app.platform.sdk.remote.storage[url];
-
-				var rndr = () => self.shell({
-					name :  'url',
-					inner : html,
-					el : _el,
-					data : {
-						url : currentShare.url.v,
-						og : og,
-						remove : true,
-
-						share : currentShare
-					},
-
-				}, function(p){
-
-					if(currentShare.url.v && !og){
-
-						if (meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube') {
-
-
-                            Plyr.setup('#' + self.map.id + ' .js-player', function(player) {
-
-								try{
-									player.muted = false
-								}catch(e){}
-								
-							}, {
-								denyPeertubeAutoPlay: true,
-							});
-
-							p.el.find('.removepeertube').on('click', function(){
-								events.removelink();
-							})
-
-							p.el.find('.streaminfo').on('click', () => {
-								var storage = currentShare.export(true);
-
-								renders.streamPage({ storage, type: 'addStream' });
-							});
-
-							initUpload({
-								el : el.urlWrapper.find('.uploadpeertubewp'),
-					
-								ext : ['png', 'jpeg', 'jpg', 'webp', 'jfif'],
 		
-								dropZone : el.urlWrapper,
-		
-								multiple : false,
-		
-								action : function(file, clbk){
-	
-									actions.uploadVideoWallpaper(file.file).then(r => {
+		var essenserenderclbk = function(){
 
-										self.app.platform.sdk.videos.clearstorage(currentShare.url.v)
-
-										renders.url();
-									})
-									
-								},
-		
-								onError : function(er, file, text){
-									sitemessage(text)
-								}
-							})
-
-						} 
-						
-						else {
-							self.app.platform.sdk.remote.get(meta.url, function(og){
-
-								if(og){
-									renders.url()
-								}
-
-							})
-						}
-					}
-
-					else{
-						if(og){
-
-							var images = p.el.find('img');
-
-								p.el.find('img').imagesLoaded({ background: true }, function(image) {
-
-									_.each(image.images, function(i, index){
-										if(i.isLoaded){
-											$(images[index]).addClass('active')
-
-											if(i.img.naturalWidth > 500){
-												p.el.addClass('bigimageinlink')
-											}
-										}
-										else
-										{
-											$(images[index]).closest('.image').css('display', 'none')
-										}
-									})
-									
-								});
-
-								p.el.find('.removeImage').on('click', function(){
-
-									focusfixed = true;
-
-									currentShare.settings.image = 'r'
-
-									renders.url()
-
-									state.save()
-
-									setTimeout(function(){
-										focusfixed = false;
-									}, 200)
-								})
-
-						}
-					}
-
-					p.el.find('.removelink').on('click', events.removelink)
-
-					if (clbk)
-						clbk();
-				})
-
-				if (meta.type == 'peertube') {
-					self.app.platform.sdk.videos.info([url])
-						.then(() => rndr())
-						.catch(() => rndr())
-				} else {
-					rndr();
+			var rc = function(){
+				if(!essenseData.horizontal && el.c){
+					cachedHeight = el.c.height()
 				}
 				
+				if(essenseData.renderClbk) essenseData.renderClbk()
+			}
+
+			if(isMobile()){
+				renderclbkSlowMade = slowMade(function(){
+
+					rc()
+	
+				}, renderclbkSlowMade, 500)
+			}
+			else{
+				rc()
+			}
+
+			
+			
+		}
+
+		var renders = {
+
+			urlContent : function(share, clbk){
+
+				if(!el.c) return
+
+				var url = share.url;
+
+				if (url){
+
+					var meta = self.app.platform.parseUrl(url);
+					var og = self.app.platform.sdk.remote.storage[url];
+
+
+					if(
+						url && !og && 
+
+						!(meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube') && 
+
+						!self.app.platform.sdk.usersettings.meta.preview.value
+					){
+
+						self.app.platform.sdk.remote.get(url, function(og){
+							
+							if(og && el.share && el.share[share.txid]){
+								renders.url(el.share[share.txid].find('.url'), url, share, clbk)
+							}
+							else
+							{
+								if (clbk)
+									clbk()
+							}
+
+						})
+
+						return
+
+					}
+				
+				}	
+				
+				if (clbk)
+					clbk()
+
+			},
+
+			url : function(el, url, share, clbk){
+
+				if (essenseData.nourlload){
+
+					if (clbk)
+						clbk()
+
+					return
+				}
+
+				var og = self.app.platform.sdk.remote.storage[url];	
+				var meta = self.app.platform.parseUrl(url);		
+
+		
+				
+
+				var rndr = function(){
+
+					self.app.platform.sdk.videos.paddingplaceholder(isMobile() || essenseData.horizontal ? null : url, function (next) {
+
+						self.shell({
+							animation : false,
+							turi : 'share',
+							name :  'url',
+							el : el,
+							mid : 'sharelenta',
+							data : {
+								url : url,
+								og : og,
+								share : share,
+								video : video,
+								preview : video ? true : false
+							},
+							notdisplay : video ? true: false,
+							bgImages : {
+								clbk : video ? true: false
+							}
+		
+						}, next)
+
+					}, function(_p){
+
+						var images = _p.el.find('img');
+	
+						self.app.nav.api.links(null, _p.el, function(event){
+							event.stopPropagation()
+						})
+	
+						essenserenderclbk()
+						
+						images.imagesLoadedPN({ imageAttr: true }, function(image) {
+	
+							_.each(image.images, function(i, index){
+
+								if (!i.isLoaded){
+									$(images[index]).closest('.image').css('display', 'none')
+								}
+							})
+	
+							essenserenderclbk()
+	
+							images = null
+						});
+	
+						if (clbk)
+							clbk()
+					})
+				}
+
+				meta.type === 'peertube' ? self.app.platform.sdk.videos.info([url]).then(rndr) : rndr()
+
+			
 			},
 
 			page : function(shares, clbk){
@@ -300,19 +335,137 @@ var bestposts = (function(){
 					el :   el.posts,
 					data : {
 						shares : shares,
-						extra : extra,
 					},
 
 					inner : append
 
 				}, function(_p){
-					
 
-					
-					if (clbk)
-						clbk()
+					var renderedPosts = _p.el.find('.authorgroup .share');
+
+					_.each(renderedPosts, function(_el, idx){
+
+						console.log('shares[idx]', shares[idx], _el)
+
+						var share = shares[idx];
+
+						console.log('share', share)
+
+						if (share.itisvideo()){
+
+							renders.sharevideo(share, $(_el));
+
+						} else {
+
+							self.shell({
+
+								name :  'post',
+								el :   $(_el),
+								data : {
+									u : share
+								},
+	
+								inner : append
+	
+							}, function(_p){
+
+								_p.el.find('.imageWrapper').on('click', function(){
+
+									actions.openPost(share.txid, null, true)
+
+								})
+								
+			
+							})
+
+						}
+
+					})
+
+
+							
 				})
-			}
+			},
+
+			sharesocial : function(id, clbk){
+
+				if(!shareInitedMap[id]) return
+
+				var share = self.app.platform.sdk.node.shares.storage.trx[id];
+
+				if (share){
+
+					var url = 'https://'+self.app.options.url+'/' + (essenseData.hr || 'index?') + 's='+id+'&mpost=true'
+					if (parameters().address) url += '&address=' + (parameters().address || '')
+
+
+					if(video || essenseData.videomobile || share.itisvideo()){
+						url = 'https://'+self.app.options.url+'/' + ('index?') + 'v='+id+'&mpost=true&video=1'
+					
+					}
+					
+					var n = 'Post';
+					if(share.settings.v == 'a') n = 'Article'
+
+					self.nav.api.load({
+						open : true,
+						href : 'socialshare2',
+						history : true,
+						inWnd : true,
+
+						essenseData : {
+							url : url,
+							caption : self.app.localization.e('e13133'),
+
+							sharing : share.social(self.app),
+							embedding : {
+								type : 'post',
+								id : share.txid,
+								fullscreenvideoShowed : fullscreenvideoShowed
+							}
+						}
+					})
+				}
+			},
+
+			sharevideo : function(share, _el){
+
+				if(!p) p = {}
+
+				if(!share) return
+
+				self.shell({
+					name : 'sharevideolight',
+
+					el : _el,
+					animation : false,
+					data : {
+						share : share,
+						ed : essenseData,
+						mestate : mestate,
+						all : false,
+						tplvideo : true ,
+						openapi : essenseData.openapi
+					}					
+
+				}, function(p){
+
+					var url = p.el.find('.url');
+					renders.url(url, share.url, share, function(){
+
+						renders.urlContent(share, function(){
+
+							url.on('click', function(){
+								actions.openPost(share.txid, null, true)
+							})
+
+
+						});
+
+					})
+				})
+
+			},
 		}
 
 		var load = {
@@ -352,7 +505,7 @@ var bestposts = (function(){
 
 							const preparedShares = shuffle(sharesRecommended).slice(0, 5);
 
-							preparedShares.push(videoShare);
+							// preparedShares.push(videoShare);
 							preparedShares.push(articleShare);
 							clbk(preparedShares);
 						}
@@ -378,7 +531,7 @@ var bestposts = (function(){
 
 									var preparedSharesRecommended = shuffle(sharesRecommended).slice(0, 5);
 
-									preparedSharesRecommended.push(videoShare)
+									// preparedSharesRecommended.push(videoShare)
 
 									console.log('preparedSharesRecommended', preparedSharesRecommended)
 									
@@ -402,7 +555,7 @@ var bestposts = (function(){
 
 						var preparedShare = shuffle(sharesTop).slice(0, 5);
 
-						preparedShare.push(videoShare)
+						// preparedShare.push(videoShare)
 						
 						if (clbk){
 							clbk(preparedShare);
@@ -420,8 +573,8 @@ var bestposts = (function(){
 								
 								sharesTop = c
 
-								var preparedShare = shuffle(sharesTop).slice(0, 5);
-								preparedShare.push(videoShare)
+								var preparedShare = shuffle(sharesTop).slice(0, 15);
+								// preparedShare.push(videoShare)
 
 									
 								if (clbk){
@@ -456,11 +609,18 @@ var bestposts = (function(){
 				page = 0;
 				loading = false;
 
-				var data = {};
+				self.app.platform.sdk.ustate.me(function(_mestate){
 
-				data.header = p.settings.essenseData.header || ''
+					mestate = _mestate || {}
 
-				clbk(data);
+					var data = {};
+
+					data.header = p.settings.essenseData.header || ''
+
+					clbk(data);
+
+
+				})
 
 			},
 

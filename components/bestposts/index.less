@@ -47,6 +47,7 @@
 		font-size: 2em;
 		margin-bottom: 2 * @rhythm;
 	}
+	
 
 	.loaderWrapper{
 		display : none;
@@ -87,8 +88,13 @@
 		.post{
 			padding : @rhythm * 2;
 
+			.addressTable{
+				width: auto;
+			}
+
 			.imageWrapper{
 				margin-top: @rhythm;
+				cursor: pointer;
 
 				img{
 					border-radius: 8px;
@@ -175,6 +181,7 @@
 								text-overflow: ellipsis;
 								white-space: nowrap;
 								overflow: hidden;
+								max-width: 70%;
 							}
 
 							.reputation{
@@ -243,6 +250,249 @@
 		}
 		
 	}
+
+	.mainvideo{
+		.zero,
+		.seemore,
+		.loadprev,
+		.loadmore,
+		.ended{
+			
+			background: transparent;
+		}
+
+		.loader{
+			background: transparent;
+		}
+
+		.share{
+			background: transparent;
+			padding : 0;
+			margin-bottom: 0;
+			overflow : hidden;
+			border-radius: 6px;
+
+			.sharecaption{
+				margin-bottom: 0;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+
+			}
+
+			.tags{
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				display: block;
+				.tag{
+					float: none;
+					display: inline;
+					margin-right: 0;
+				}
+			}
+
+			&.hidden{
+				display: block!important;
+			}
+
+			.sharecaption{
+				white-space: inherit;
+				padding-right: 2 * @rhythm;
+				div{
+					font-size: 1em;
+					font-weight: 500;
+					text-transform: capitalize;
+					
+				}
+
+				span{
+					font-size: 1em;
+				}
+			}
+
+			.meta{
+				padding-top : @rhythm;
+				margin-bottom: 0;
+			}
+
+			.commentsWrapperHb{
+				display: none;
+			}
+
+			.hideOnFullVideo{
+				display: none;
+			}
+
+			.videoviews{
+				display: none;
+			}
+
+			.showMore{
+				display: none;
+			}
+
+			.iconWrapper{
+				padding : 0;
+				z-index: 12;
+				width: 32px!important;
+
+				.icon{
+					width: auto;
+					height: 32px!important;
+					.usericon{
+						width: 32px!important;
+						height: 32px!important;
+						line-height: 32px!important;
+						font-size: 1.5em;
+					}
+				}
+			}
+
+			.forurl{
+				height: 200px;
+				position: relative;
+				max-width: 350px;
+				margin : 0 auto;
+
+				&.verticalVideo{
+					height: 530px;
+					
+				}
+			}
+
+			.url{
+				margin-bottom: 0;
+				height: 100%;
+				width: 100%;
+				position: absolute;
+				left : 0;
+				top : 0;
+
+				.videoWrapper{
+					height: 100%;
+
+					.js-player{
+						height: 100%;
+					}
+				}
+			}
+
+			.urlcnt{
+				display: none;
+			}
+
+			.panel{
+				display: none;
+			}
+
+			.tags{
+				>div{
+					span{
+						opacity: 0.7;
+						text-decoration: none;
+					}
+				}
+			}
+
+			.shareTable{
+				padding-top : 0;
+				padding-bottom: 0;
+				.authorTable{
+					align-items: center;
+					display: flex;
+					
+					>div{
+						
+	
+						&.authorCell{
+							padding-left: @rhythm;
+							padding-right: 0;
+						}
+
+						a{
+							font-size: 0.9em;
+						}
+
+						&.datetime{
+							padding-left: @rhythm;
+							opacity: 0.5;
+							white-space: nowrap;
+							text-overflow: ellipsis;
+
+							span{
+								color : rgb(var(--text-color));
+							}
+						}
+						
+						span{
+							font-size: 0.9em;
+							font-weight: 400;
+						}
+
+
+					}
+				}
+
+				.metatable{
+					>div{
+						
+						&.metapanel{
+							width: 40px;
+							color : rgb(var(--text-color));
+
+							.metapanelitem{
+								opacity: 1;
+							}
+						}
+
+						
+					}
+				}
+			}
+
+			.cntswrk{
+				margin-left: 0;
+				padding-left: 0;
+				padding-right: 0;
+			}
+
+			.paddingWrapper{
+				margin-left: 32px;
+				padding-left: @rhythm;
+			}
+		}
+
+
+		.shares{
+
+			.spsp{
+				font-weight: 400;
+			}
+
+			.authorgroup{
+				float: left;
+				width: 33.3333%;
+				.share{
+					padding : 15px;
+				}
+
+				.anothercntswrk{
+					height: 100px;
+					overflow: hidden;
+				}
+				
+				&:nth-child(3n + 1){
+					clear: left;
+				}
+				
+			}
+
+			.showmorebyauthor{
+				display: none;
+			}
+
+			
+		}
+	}
 }
 
 html.stblack{
@@ -251,27 +501,6 @@ html.stblack{
 	#bestposts .rcptwrp{
 		background: #0a0c17;
 
-	}	
-}
-
-/*t*/ @media only screen and (max-width: 768px){
-#userslist{
-	padding : 2 * @rhythm;
-
-	.caption{
-	}
-
-	.users{
-		.addressTable{
-			>div{
-
-
-				&.extra{
-					width: 60px;
-				}
-			}
-
-		}
 	}
 }
-}
+

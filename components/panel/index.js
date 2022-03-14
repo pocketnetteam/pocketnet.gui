@@ -65,7 +65,8 @@ var panel = (function(){
 					animation : false,
 
 					essenseData : {
-						type : 'recommended'
+						type : 'best',
+						header : self.app.localization.e('recommendedPosts')
 					},
 					
 					clbk : function(e, p){
@@ -128,8 +129,8 @@ var panel = (function(){
 
 		
 			
-			//renders.topusers();
-			//renders.bestposts();
+			renders.topusers();
+			renders.bestposts();
 
 
 		}
