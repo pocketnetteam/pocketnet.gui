@@ -522,7 +522,7 @@ var arranges = {
 									
 								</div>
 
-								<% if(share.itisvideo() ) {
+								<% if(window.cordova && share.itisvideo() ) {
 									
 									var status = app.platform.sdk.localshares.status(share.txid)
 									
