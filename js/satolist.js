@@ -6498,8 +6498,6 @@ Platform = function (app, listofnodes) {
             read : {
                 share : {
                     electron : async function(shareId) {
-                        console.log('SHARE DIR', shareId);
-
                         const shareData = await electron.ipcRenderer
                             .invoke('getShareData', shareId);
 
@@ -6666,8 +6664,6 @@ Platform = function (app, listofnodes) {
                     },
 
                     electron : async function(videoId, shareId) {
-                        console.log('from', videoId);
-
                         const videosDataList = {};
 
                         const videoData = await electron.ipcRenderer
@@ -6688,16 +6684,12 @@ Platform = function (app, listofnodes) {
                 electron : async function(shareId) {
                     const shareDataList = { id: shareId };
 
-                    console.log('SHARE FOLDER', shareId);
-
                     shareDataList.share = await self.sdk.localshares.read.share.electron(shareId);
 
                     const videoId = shareDataList.share.share.u
                         .split('%2F').pop();
 
                     shareDataList.videos = await self.sdk.localshares.read.video.electron(videoId, shareId);
-
-                    console.log('SHARE DATA VIDEOS', shareDataList.videos);
 
                     return shareDataList;
                 },
@@ -6745,8 +6737,6 @@ Platform = function (app, listofnodes) {
                         .invoke('getShareList');
 
                     const shareDataList = {};
-
-                    console.log('SHARE LIST', shareList);
 
                     for(const shareIndex in shareList) {
                         const shareId = shareList[shareIndex];
