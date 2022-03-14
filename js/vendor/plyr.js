@@ -9215,7 +9215,7 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
           start : options.startTime || 0,
           localTransport,
           hlsError : options.hlsError,
-
+          light : options.light,
           pathfunction : options.app.peertubeHandler.helpers.url
 
         },{
@@ -9301,6 +9301,10 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
                         if(video_options.volumeChange) video_options.volumeChange(plyrPlayer.muted ? 0 : plyrPlayer.volume)
                       })
 
+                      plyrPlayer.prepare = function(){
+                        return Promise.resolve()
+                      }
+
                     if (clbk) clbk(plyrPlayer);
 
                 } else {
@@ -9325,7 +9329,9 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
           plyrPlayer.on('play', video_options.play)
           plyrPlayer.on('pause', video_options.pause)
 
-
+          plyrPlayer.prepare = function(){
+            return Promise.resolve()
+          }
 
       if (clbk) clbk(plyrPlayer);
 

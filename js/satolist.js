@@ -132,7 +132,8 @@ Platform = function (app, listofnodes) {
         'PLLDTFuBhb4FRPt811bTPjgaYgqoj16hVV' : true,
         'PXmw1tQnengAAy9ML8Depr2kANupmadZ7j' : true,
         'PCkbxDvFQbFvEzPWnnrraey1QCUro2kMLU' : true,
-        'PBKPEWcsZZHH7LQ7GQCNSMSSEteiJMfoFx' : true
+        'PBKPEWcsZZHH7LQ7GQCNSMSSEteiJMfoFx' : true,
+        'PEWQWe1DQM3uh19vRqtFDkUrPreyM5uJnS' : true
     }
 
     self.nvadr = {
@@ -2977,6 +2978,8 @@ Platform = function (app, listofnodes) {
                         if (share.itisvideo()){
 
                             var info = share.url ? (app.platform.sdk.videos.storage[share.url] || {}).data || null : null
+
+                            console.log(info, share, app.platform.sdk.videos.storage)
 
                             if (info){
 

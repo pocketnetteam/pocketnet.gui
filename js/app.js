@@ -461,7 +461,7 @@ Application = function(p)
 
 	self.curation = function(){
 
-		if(window.cordova && typeof isios != 'undefined' && isios()) return true
+		//if(window.cordova && typeof isios != 'undefined' && isios()) return true
 		return false
 	}
 
