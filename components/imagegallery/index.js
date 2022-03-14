@@ -542,18 +542,13 @@ var imagegallery = (function(){
 				num : num.toString()
 			})
 
+			image.csrc = self.app.peertubeHandler.helpers.url(image.src)
 			
-			self.app.peertubeHandler.helpers.convertUrlWithIp(image.src).then((newUrl) => {
-
-			 	image.src = newUrl;
-				
-				actions.prepareImage(image, function(image){
-					renders.image({
-						image : image
-					})
+			actions.prepareImage(image, function(image){
+				renders.image({
+					image : image
 				})
-
-			});
+			})
 
 		}
 

@@ -1928,7 +1928,6 @@ var share = (function(){
 
 						if (meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube') {
 
-
                             Plyr.setup('#' + self.map.id + ' .js-player', function(player) {
 
 								try{
@@ -1937,6 +1936,7 @@ var share = (function(){
 								
 							}, {
 								denyPeertubeAutoPlay: true,
+								app : self.app
 							});
 
 							p.el.find('.removepeertube').on('click', function(){

@@ -15,12 +15,13 @@
         <meta name="keywords" content="Blockchain, Decentralized, Delete Facebook, Alternative Social Media, Social Network, Social Platform, No Censorship, Online Social Network, Facebook Alternative, Reddit Alternative, Twitter Alternative, Social Sharing Platform, Decentralized Social Network, Blockchain Social Network " />
 
         <meta http-equiv="Content-Security-Policy" content="
-        default-src https: 'self' data: app: file: cdvfile: android-webview-video-poster: https://ssl.gstatic.com; 
+        default-src https: 'self' data: app: file: cdvfile: android-webview-video-poster: https://ssl.gstatic.com  __VAR__.domain:*; 
         connect-src http: https: 'self' wss: file: cdvfile: data:;
         img-src 'self' data: http: https: cdvfile: file: android-webview-video-poster:;
-        script-src 'self' file: blob: https://__VAR__.domain https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.rawgit.com https://cdn.jsdelivr.net 'unsafe-eval' 'unsafe-inline';
-        style-src 'self' https://use.fontawesome.com https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';
-        font-src 'self' data: https://fonts.gstatic.com https://use.fontawesome.com;
+        script-src 'self' file: blob: __VAR__.domain:* player.vimeo.com www.youtube.com s.ytimg.com cdn.jsdelivr.net/joypixels/ 'unsafe-eval' 'unsafe-inline';
+        frame-src 'self' player.vimeo.com www.youtube.com;
+        style-src 'self' data: __VAR__.domain:* cdn.jsdelivr.net/joypixels/ 'unsafe-inline' use.fontawesome.com;
+        font-src 'self' data: __VAR__.domain:* use.fontawesome.com;
         media-src 'self' cdvfile: data: https: blob:;">
 
         <meta name="theme-color" content="#011621" />

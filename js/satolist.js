@@ -8229,6 +8229,10 @@ Platform = function (app, listofnodes) {
 
                         }
 
+                        if (i == 'canuseip'){
+                            app.peertubeHandler.clear()
+                        }
+
 
                         if (window.cordova) {
 

@@ -8066,6 +8066,8 @@ typeof navigator === "object" && (function (global, factory) {
 
       this.supported = support.check(this.type, this.provider, this.config.playsinline); // If no support for even API, bail
 
+      //this.supported.ui = false
+
       if (!this.supported.api) {
         this.debug.error('Setup failed: no support');
         return;

@@ -23,9 +23,10 @@
         <meta name="keywords" content="Blockchain, Decentralized, Delete Facebook, Alternative Social Media, Social Network, Social Platform, No Censorship, Online Social Network, Facebook Alternative, Reddit Alternative, Twitter Alternative, Social Sharing Platform, Decentralized Social Network, Blockchain Social Network, bastyon, bastion, bastyon pocketnet, pocketnet, Donald Trump, election 2020, Trump, PKOIN, PKOIN digifinex, BTCPOP PKOIN , Bitforex PKOIN, facebook, linkedin, instagram, telegram, whatsapp" />
 
         <meta http-equiv="Content-Security-Policy" content="
+        upgrade-insecure-requests;
         default-src 'self' __VAR__.domain:*; 
         connect-src 'self' http: ws: https: wss:;
-        img-src 'self' data: https: __VAR__.domain:*;
+        img-src 'self' data: http: https: __VAR__.domain:*;
         script-src 'self' blob: __VAR__.domain:* player.vimeo.com www.youtube.com s.ytimg.com cdn.jsdelivr.net/joypixels/ 'unsafe-eval' 'unsafe-inline';
         frame-src 'self' player.vimeo.com www.youtube.com;
         style-src 'self' data: __VAR__.domain:* cdn.jsdelivr.net/joypixels/ 'unsafe-inline' use.fontawesome.com;
