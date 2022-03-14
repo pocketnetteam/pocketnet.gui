@@ -524,16 +524,20 @@ var bestposts = (function(){
 								var postIds = c.map(function(post){
 									return post.contentid;
 								})
+
+
+								postIds.unshift('990360958e37e88370cdb7ea5e578d7b1bd4b28bd377fc0f8046a5851eb18ea9')
 		
 								self.app.platform.sdk.node.shares.getbyid(postIds, function(c, error){
+
+									console.log('c!!!', c);
 				
 									sharesRecommended = c
 
-									var preparedSharesRecommended = shuffle(sharesRecommended).slice(0, 5);
+									var preparedSharesRecommended = shuffle(sharesRecommended).slice(0, 15);
 
 									// preparedSharesRecommended.push(videoShare)
 
-									console.log('preparedSharesRecommended', preparedSharesRecommended)
 									
 									if (clbk){
 										clbk(preparedSharesRecommended)

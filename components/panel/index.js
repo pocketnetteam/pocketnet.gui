@@ -65,7 +65,7 @@ var panel = (function(){
 					animation : false,
 
 					essenseData : {
-						type : 'best',
+						type : 'recommended',
 						header : self.app.localization.e('recommendedPosts')
 					},
 					

@@ -23,82 +23,16 @@ if(share.address){
 		}
 	}
 
-var view = 'post';
 var name = app.platform.api.name(share.address)
 var emptywithrepost = false
 var value = Number(share.score)
 
+var src =  deep(app, 'platform.sdk.usersl.storage.' + share.address + '.image');
+var name = deep(app, 'platform.sdk.usersl.storage.' + share.address + '.name');
+var letter = name ? name[0] : ''; 
 
-var metadisplay = function(){ %>
+var r = deep(app, 'platform.sdk.usersl.storage.'+share.address + '.reputation');
 
-<div class="meta">
-	<div class="metatable">
-		<div class="metadata">
-
-			<% if(!emptywithrepost) {%>
-
-				<div class="author">
-
-					<div class="authorTable">
-                        <div class="iconWrapper">
-                            <a elementsid="<%-app.platform.api.authorlink(share.address)%>" href="<%-app.platform.api.authorlink(share.address)%>">
-        
-        
-                                <% 
-									var src = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image');  
-									var name = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.name');	
-									var letter = name ? name[0] : '';
-
-								%>
-        
-                                <div class="icon">
-                                    <div elementsid="<%-src || 'usericon'%>"  ban=".gif" class="usericon usericonsbsa another" image="<%-src || '*'%>">
-                                     
-										<% if (!src && letter) {%>
-											<span 
-												class="letter"
-											>
-												<%-letter.toUpperCase()%>
-											</span>
-										<% } %>
-			
-										<% if(app.platform.ui.markUser) {%>
-
-											<%= app.platform.ui.markUser(share.address)%>
-		
-										<% } %>
-
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-						<div class="authorCell">
-							<% if(!ed.horizontal) {%>
-								<span class="adr"><%-name || share.address %></span><% if(reputation > 1 || reputation < -1) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
-
-								
-							<% } %>
-						</div>		
-						<% if(!ed.horizontal) {%>
-							<div class="datetime">
-								<% if(share.time) {%>
-									<span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span>
-								<% } else { %> 
-									<span><%=e('e13019')%></span>
-								<% } %>
-							</div>
-						<% } %>
-						
-					</div>
-				</div>
-
-			<% } %> 
-		</div>
-	</div>					
-</div>
-	
-<% }
 
 %>
 
@@ -110,7 +44,7 @@ var metadisplay = function(){ %>
 
 			c = filterXSS(clearScripts(c))
 		%>
-			<div class="paddingWrapper">
+			<div class="captionWrapper">
 				<div class="sharecaption canmark opensviurl" title="<%-nl2br(trimrn(c))%>">
 					<div>
 						<% if(ed.horizontal) {%><span class="adr"><%-name || share.address %>:</span><% } %>
@@ -141,36 +75,81 @@ var metadisplay = function(){ %>
 
 } %>
 
+	<div class="wrk">
 
-	<div class="unselectablemobile">
-		<% 
-			var info = app.platform.sdk.videos.storage[share.url || "undefined"] || {}
-			var aspectRatio = deep(info, 'data.aspectRatio') || 0
-		%>
+		<div class="post" address="<%-share.address%>">
+			<div class="addressTable table" address="<%-share.address%>">
+				<div class="iconWrapper">
+				
+					<a href="<%-app.platform.api.authorlink(share.address)%>">
+						<div class="icon">
 
-		<div class="shareTable lighted <%-subscribed%> <%-view%> <% if(emptywithrepost) { %> emptywithrepost <% } else { %> truerepost <% } %>" address="<%-share.address%>" stxid="<%-share.txid%>">
+							<div class="usericon" image="<%-src || '*'%>">
 
-			<div class="cntswrk forurl <%- (aspectRatio > 0.9) && (aspectRatio < 1.25) ? 'squareVideo' : ''%> <%- (aspectRatio < 0.9) && (aspectRatio > 0) ? 'verticalVideo' : ''%>">
+								<% if(!src && letter) {%>
 
-				<% var a = ["u"] %>
+									<span class="letter">
+										<%-letter.toUpperCase()%>
+									</span>
 
-				<% _.each(a, function(key, i){ %> 
+								<% } else if (!src) { %>
 
-					<% if(arranges[key]) arranges[key]() %>
-							
-				<% }) %>
+									<svg width="30" height="30" data-jdenticon-value="<%-address%>"></svg>
 
-			</div>
+								<% } %>
+							</div>
+						</div>
+					</a>
+				</div>
 
-			<div class="anothercntswrk">
+				
+				<div class="label">
+					<a href="<%-app.platform.api.authorlink(share.address)%>">
 
-				<div class="cntswrk formeta">
+						<div class="top">
+							<div class="name">
+								<%- name %>							
+							</div>		
 
-					<div class="metawrapper"> 
-						<% metadisplay() %> 
-					</div> 
+							<% if (r) {%>
+								<div class="reputation">
+									<%- Number(r).toFixed(0)  %>
+								</div>
+							<% } %>
+
+						</div>
+
+
+					</a>			
 
 				</div>
+			</div>
+	
+			<div class="unselectablemobile videoContentWrapper">
+				<% 
+					var info = app.platform.sdk.videos.storage[share.url || "undefined"] || {}
+					var aspectRatio = deep(info, 'data.aspectRatio') || 0
+				%>
+
+				<div class="shareTable lighted <%-subscribed%> <% if(emptywithrepost) { %> emptywithrepost <% } else { %> truerepost <% } %>" address="<%-share.address%>" stxid="<%-share.txid%>">
+
+					<div class="cntswrk forurl <%- (aspectRatio > 0.9) && (aspectRatio < 1.25) ? 'squareVideo' : ''%> <%- (aspectRatio < 0.9) && (aspectRatio > 0) ? 'verticalVideo' : ''%>">
+
+						<% var a = ["u"] %>
+
+						<% _.each(a, function(key, i){ %> 
+
+							<% if(arranges[key]) arranges[key]() %>
+									
+						<% }) %>
+
+					</div>
+				</div>
+				
+			</div>
+
+			
+			<div class="anothercntswrk postcontent">
 
 				<div class="cntswrk">
 
@@ -186,8 +165,39 @@ var metadisplay = function(){ %>
 				
 
 			</div>
+
+			<div class="infoWrapper">
+				<div class="dateWrapper">
+					<div class="date">
+						<%-app.reltime(Number(share.time))%>
+					</div>
+				</div>
+
+				<div class="actionsWrapper">
+					<div class="scoreSum">
+						<i class="far fa-star"></i>
+						<span>
+							<%- (share.score / share.scnt).toFixed(1) %>							
+						</span>
+					</div>
+					<div class="scoreCnt">
+						<i class="far fa-user"></i>
+						<span>
+							<%- share.scnt %>							
+						</span>
+					</div>
+					<div class="comments">
+						<i class="far fa-comment">
+						</i>
+						<span>
+							<%- share.comments %>							
+						</span>
+					</div>
+				</div>
+
+			</div>
+
 		</div>
-		
 	</div>
 
 

@@ -10672,7 +10672,7 @@ Platform = function (app, listofnodes) {
 
                 var my = self.app.user.address.value;
 
-                self.app.api.rpc('getrecomendedcontentsbyscoresfromaddress', [my, ['share', 'video'], 0, 10000, 15])
+                self.app.api.rpc('getrecomendedcontentsbyscoresfromaddress', [my, ['share', 'video'], 0, 20000, 15])
                 .then(function(d){
 
                     if (clbk){
