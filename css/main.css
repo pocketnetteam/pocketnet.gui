@@ -468,6 +468,9 @@ input.ie[type="range"]::-ms-thumb {
 .js-player .video-js {
   display: none;
 }
+.js-player .video-js.vjs-thumb {
+  display: block;
+}
 .js-player.player-ready .video-js {
   display: block;
 }

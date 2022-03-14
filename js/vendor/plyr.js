@@ -9235,6 +9235,7 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
             enableHotkeys : options.enableHotkeys,
             logoType : options.logoType,
             localVideo : localVideo,
+            light : options.light,
             start : options.startTime || 0
           },{
             hlsError : options.hlsError,
@@ -9246,9 +9247,11 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
             playbackStatusUpdate : options.playbackStatusUpdate,
             pictureInPictureRequest: options.pictureInPictureRequest,
             play : options.play,
-            pause : options.pause
+            pause : options.pause,
     
           }).then(embed => {
+
+            console.log('embed', embed)
   
             if(!embed || !embed.api){
               if (clbk) clbk(null);
@@ -9320,6 +9323,10 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
                         if(video_options.volumeChange) video_options.volumeChange(plyrPlayer.muted ? 0 : plyrPlayer.volume)
                       })
 
+                      plyrPlayer.prepare = function(){
+                        return Promise.resolve()
+                      }
+
                     if (clbk) clbk(plyrPlayer);
 
                 } else {
@@ -9344,7 +9351,9 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
           plyrPlayer.on('play', video_options.play)
           plyrPlayer.on('pause', video_options.pause)
 
-        
+          plyrPlayer.prepare = function(){
+            return Promise.resolve()
+          }
 
       if (clbk) clbk(plyrPlayer);
 

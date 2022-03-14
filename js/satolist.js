@@ -2978,6 +2978,8 @@ Platform = function (app, listofnodes) {
 
                             var info = share.url ? (app.platform.sdk.videos.storage[share.url] || {}).data || null : null
 
+                            console.log(info, share, app.platform.sdk.videos.storage)
+
                             if (info){
 
                                 var items = _.map(deep(info, 'original.streamingPlaylists.0.files') || [], function(file){
