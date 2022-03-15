@@ -766,33 +766,60 @@ function createWindow() {
                 var charactersLength = characters.length;
                 for ( var i = 0; i < length; i++ ) {
                     result += characters.charAt(Math.floor(Math.random() *
-                        charactersLength));
+                      charactersLength));
                 }
                 return result;
             }
 
-            async function executor(resolve, reject) {
+            return new Promise(async (resolve, reject) => {
                 let triesCount = 0;
 
                 /**
-                 * @typedef {Object} ResolutionObject
+                 * @typedef {Object} FfmpegStats
                  * @property {number} width - Video width
                  * @property {number} height - Video height
+                 * @property {number} frameRate - Video framerate
+                 * @property {number} videoBitrate - Video bitrate
+                 * @property {number} [audioBitrate] - Audio bitrate
                  */
 
                 /**
-                 * @returns {Promise<ResolutionObject>}
+                 * @returns {Promise<FfmpegStats>}
                  */
-                function getVideoResolution() {
+                function getVideoStats() {
                     return new Promise((resolve, reject) => {
                         ffmpeg.ffprobe(filePath, (err, meta) => {
                             if (err) {
                                 reject('Error accessing video file');
                             }
 
-                            const { width, height } = meta.streams[0];
+                            const videoStream = meta.streams.find(s => s.codec_type === 'video');
+                            const audioStream = meta.streams.find(s => s.codec_type === 'audio');
 
-                            resolve({ width, height });
+                            if (!videoStream) {
+                                reject('NO_VIDEO_STREAM');
+                            }
+
+                            const {
+                                bit_rate: videoBitrate,
+                                width,
+                                height,
+                                avg_frame_rate,
+                            } = videoStream;
+
+                            const resultStats = {
+                                width,
+                                height,
+                                frameRate: Number.parseFloat(avg_frame_rate),
+                                videoBitrate: Math.floor(videoBitrate / 1000),
+                            };
+
+                            if (audioStream) {
+                                const { bit_rate: audioBitrate } = audioStream;
+                                resultStats.audioBitrate = Math.floor(audioBitrate / 1000);
+                            }
+
+                            resolve(resultStats);
                         });
                     });
                 }
@@ -805,27 +832,35 @@ function createWindow() {
                         console.log('Created temporary file', fileLocation);
                         fs.writeFileSync(fileLocation, '');
 
-                        ffmpeg(filePath)
-                            .withVideoCodec('libx264')
-                            .withAudioCodec('libmp3lame')
-                            .withSize(resolution.join('x'))
-                            .format('mp4')
-                            .on('progress', (progress) => {
-                                console.log('Processing: ' + progress.percent + '% done');
-                                e.sender.send('transcode-video-progress', calcProgress(`p${resolution[1]}`, progress.percent));
-                            })
-                            .on('error', (err) => {
-                                console.error('FFmpeg error occurred:', err);
-                                e.sender.send('transcode-video-progress', calcProgress(`p${resolution[1]}`, 100));
-                                reject(err);
-                            })
-                            .on('end', () => {
-                                resolve(fs.readFileSync(fileLocation));
-                                fs.unlink(fileLocation, () => {
-                                    console.log('Purged temporary file');
-                                });
-                            })
-                            .saveToFile(fileLocation);
+                        const transcodeProcess = ffmpeg(filePath);
+
+                        transcodeProcess
+                          .withVideoCodec('libx264')
+                          .withAudioCodec('libmp3lame')
+                          .videoFilters(`scale=-2:min'(720,ih)'`)
+                          .outputOption('-threads 2')
+                          .withVideoBitrate('2600k')
+                          .withAudioBitrate('256k')
+                          .outputFps(25)
+                          .format('mp4');
+
+                        transcodeProcess
+                          .on('progress', (progress) => {
+                              console.log('Processing: ' + progress.percent + '% done');
+                              e.sender.send('transcode-video-progress', calcProgress(`p${resolution[1]}`, progress.percent));
+                          })
+                          .on('error', (err) => {
+                              console.error('FFmpeg error occurred:', err);
+                              e.sender.send('transcode-video-progress', calcProgress(`p${resolution[1]}`, 100));
+                              reject(err);
+                          })
+                          .on('end', () => {
+                              resolve(fs.readFileSync(fileLocation));
+                              fs.unlink(fileLocation, () => {
+                                  console.log('Purged temporary file');
+                              });
+                          })
+                          .saveToFile(fileLocation);
                     } catch (err) {
                         console.error('Error occurred:', err);
 
@@ -838,21 +873,32 @@ function createWindow() {
                     }
                 }
 
-                const originalResolution = await getVideoResolution(filePath);
-                const isWidthUpscaling = (originalResolution.width < resolution[0]);
-                const isHeightUpscaling = (originalResolution.height < resolution[1]);
+                const MaxVideoBitrate = 2600;
+                const MaxAudioBitrate = 256;
+                const MaxVideoFramerate = 25;
 
-                const isUpscaling = (isWidthUpscaling || isHeightUpscaling);
+                const originalStats = await getVideoStats(filePath);
+                const isWidthBigger = (originalStats.width < resolution[0]);
+                const isHeightBigger = (originalStats.height < resolution[1]);
+                const isVideoBitrateBigger = (originalStats.videoBitrate > MaxVideoBitrate);
+                const isAudioBitrateBigger = (originalStats.audioBitrate > MaxAudioBitrate);
+                const isFrameRateBigger = (originalStats.frameRate > MaxVideoFramerate);
 
-                if (isUpscaling) {
-                    reject('Upscaling is disabled');
+                const isTranscodeNeeded = (
+                  isWidthBigger
+                  || isHeightBigger
+                  || isVideoBitrateBigger
+                  || isAudioBitrateBigger
+                  || isFrameRateBigger
+                );
+
+                if (isTranscodeNeeded) {
+                    reject('NO_TRANSCODE_NEEDED');
                     return;
                 }
 
                 startTranscoding();
-            }
-
-            return new Promise(executor);
+            });
         }
 
         const spaceCalc = await checkDiskSpace(tempDir);
@@ -904,12 +950,11 @@ function createWindow() {
          * In this case client must use original.
          */
         if (!Object.keys(transcodedResults).length) {
-            /** Responding with error if the is one */
             throw Error('NO_TRANSCODED');
         }
 
         return transcodedResults;
-    })
+    });
 
     ipcMain.on('transcode-video-request', async function(e, filePath) {
         const tempDir = os.tmpdir();

@@ -287,27 +287,27 @@ var uploadpeertube = (function () {
         if (typeof _Electron !== 'undefined') {
           const filePath = evt.target.files[0].path;
 
-          function processTranscoding() {
-            electron.ipcRenderer.send('transcode-video-request', filePath);
+          async function processTranscoding() {
+            return new Promise(async (resolve, reject) => {
+            	electron.ipcRenderer.on('transcode-video-progress', (event, progress) => {
+								options.progress(progress);
+							});
 
-            electron.ipcRenderer.on('transcode-video-progress', (event, progress) => {
-              options.progress(progress);
-            });
+							const transcoded = await electron.ipcRenderer
+								.invoke('transcode-video-request', filePath)
+								.catch((err) => {
+									const errMsg = err.message.match(/(?<=Error:\s).*/g)[0];
 
-            return new Promise((resolve, reject) => {
-              electron.ipcRenderer.on('transcode-video-response', (event, transcoded, error) => {
-                if (error === 'NO_TRANSCODED') {
-                  setTimeout(() => resolve(null));
-                  return;
-                }
+                  switch (errMsg) {
+                    case 'NO_TRANSCODED': setTimeout(() => resolve(null)); break;
+                    default: throw Error('Error on transcoding');
+                  }
+                });
 
-                if (error) {
-                  reject('Error on transcoding');
-                  return;
-                }
-
-                setTimeout(() => resolve(transcoded), 1000);
-              });
+              setTimeout(() => {
+                resolve(transcoded);
+                electron.ipcRenderer.removeAllListeners('transcode-video-progress');
+              }, 1000);
             });
           }
 
