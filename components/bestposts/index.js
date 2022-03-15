@@ -7,7 +7,7 @@ var bestposts = (function(){
 	var Essense = function(p){
 
 		var primary = deep(p, 'history');
-		
+
 		var el;
 		var sharesRecommended = [], 
 			sharesTop = [],
@@ -239,11 +239,7 @@ var bestposts = (function(){
 
 					_.each(renderedPosts, function(_el, idx){
 
-						console.log('shares[idx]', shares[idx], _el)
-
 						var share = shares[idx];
-
-						console.log('share', share)
 
 						if (share.itisvideo()){
 
