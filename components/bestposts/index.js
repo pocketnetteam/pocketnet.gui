@@ -259,7 +259,7 @@ var bestposts = (function(){
 	
 							}, function(_p){
 
-								_p.el.find('.imageWrapper').on('click', function(){
+								_p.el.find('.postContentWrapper').on('click', function(){
 
 									actions.openPost(share.txid, null, false)
 
@@ -345,7 +345,7 @@ var bestposts = (function(){
 
 						renders.urlContent(share, function(){
 
-							url.on('click', function(){
+							p.el.find('.postContentWrapper').on('click', function(){
 								actions.openPost(share.txid, null, true)
 							})
 
@@ -400,8 +400,6 @@ var bestposts = (function(){
 
 					} else {
 
-						console.log("getRecommendedPosts")
-
 						self.app.platform.sdk.posts.getRecommendedPosts(function(c, error){
 
 
@@ -413,8 +411,6 @@ var bestposts = (function(){
 									return post.contentid;
 								})
 
-
-								postIds.unshift('990360958e37e88370cdb7ea5e578d7b1bd4b28bd377fc0f8046a5851eb18ea9')
 		
 								self.app.platform.sdk.node.shares.getbyid(postIds, function(c, error){
 				

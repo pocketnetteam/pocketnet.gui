@@ -80,6 +80,9 @@
   border-radius: 8px;
   max-width: 140px;
 }
+#bestposts .posts .post .postContentWrapper {
+  cursor: pointer;
+}
 #bestposts .posts .post .postcontent {
   margin-top: 0.5em;
   word-break: break-word;

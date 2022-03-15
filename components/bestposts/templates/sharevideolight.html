@@ -124,77 +124,79 @@ var r = deep(app, 'platform.sdk.usersl.storage.'+share.address + '.reputation');
 
 				</div>
 			</div>
+
+			<div class="postContentWrapper">
+				<div class="unselectablemobile videoContentWrapper">
+					<% 
+						var info = app.platform.sdk.videos.storage[share.url || "undefined"] || {}
+						var aspectRatio = deep(info, 'data.aspectRatio') || 0
+					%>
 	
-			<div class="unselectablemobile videoContentWrapper">
-				<% 
-					var info = app.platform.sdk.videos.storage[share.url || "undefined"] || {}
-					var aspectRatio = deep(info, 'data.aspectRatio') || 0
-				%>
-
-				<div class="shareTable lighted <%-subscribed%> <% if(emptywithrepost) { %> emptywithrepost <% } else { %> truerepost <% } %>" address="<%-share.address%>" stxid="<%-share.txid%>">
-
-					<div class="cntswrk forurl <%- (aspectRatio > 0.9) && (aspectRatio < 1.25) ? 'squareVideo' : ''%> <%- (aspectRatio < 0.9) && (aspectRatio > 0) ? 'verticalVideo' : ''%>">
-
-						<% var a = ["u"] %>
-
+					<div class="shareTable lighted <%-subscribed%> <% if(emptywithrepost) { %> emptywithrepost <% } else { %> truerepost <% } %>" address="<%-share.address%>" stxid="<%-share.txid%>">
+	
+						<div class="cntswrk forurl <%- (aspectRatio > 0.9) && (aspectRatio < 1.25) ? 'squareVideo' : ''%> <%- (aspectRatio < 0.9) && (aspectRatio > 0) ? 'verticalVideo' : ''%>">
+	
+							<% var a = ["u"] %>
+	
+							<% _.each(a, function(key, i){ %> 
+	
+								<% if(arranges[key]) arranges[key]() %>
+										
+							<% }) %>
+	
+						</div>
+					</div>
+					
+				</div>
+	
+				
+				<div class="anothercntswrk postcontent">
+	
+					<div class="cntswrk">
+	
+						<% var a = ["i", "cm", "p"] %>
+	
 						<% _.each(a, function(key, i){ %> 
-
+	
 							<% if(arranges[key]) arranges[key]() %>
 									
 						<% }) %>
-
+	
 					</div>
+					
+	
 				</div>
-				
-			</div>
-
-			
-			<div class="anothercntswrk postcontent">
-
-				<div class="cntswrk">
-
-					<% var a = ["i", "cm", "p"] %>
-
-					<% _.each(a, function(key, i){ %> 
-
-						<% if(arranges[key]) arranges[key]() %>
-								
-					<% }) %>
-
+	
+				<div class="infoWrapper">
+					<div class="dateWrapper">
+						<div class="date">
+							<%-app.reltime(Number(share.time))%>
+						</div>
+					</div>
+	
+					<div class="actionsWrapper">
+						<div class="scoreSum">
+							<i class="far fa-star"></i>
+							<span>
+								<%- (share.score / share.scnt).toFixed(1) %>							
+							</span>
+						</div>
+						<div class="scoreCnt">
+							<i class="far fa-user"></i>
+							<span>
+								<%- share.scnt %>							
+							</span>
+						</div>
+						<div class="comments">
+							<i class="far fa-comment">
+							</i>
+							<span>
+								<%- share.comments %>							
+							</span>
+						</div>
+					</div>
+	
 				</div>
-				
-
-			</div>
-
-			<div class="infoWrapper">
-				<div class="dateWrapper">
-					<div class="date">
-						<%-app.reltime(Number(share.time))%>
-					</div>
-				</div>
-
-				<div class="actionsWrapper">
-					<div class="scoreSum">
-						<i class="far fa-star"></i>
-						<span>
-							<%- (share.score / share.scnt).toFixed(1) %>							
-						</span>
-					</div>
-					<div class="scoreCnt">
-						<i class="far fa-user"></i>
-						<span>
-							<%- share.scnt %>							
-						</span>
-					</div>
-					<div class="comments">
-						<i class="far fa-comment">
-						</i>
-						<span>
-							<%- share.comments %>							
-						</span>
-					</div>
-				</div>
-
 			</div>
 
 		</div>
