@@ -55,8 +55,8 @@
 }
 #recommendedusers .users {
   display: flex;
-  justify-content: flex-start;
-  padding-bottom: 0.5em;
+  justify-content: space-around;
+  padding-bottom: 1em;
   padding-left: 1em;
   padding-right: 1em;
 }
@@ -67,6 +67,9 @@
 #recommendedusers .users .wrk:nth-child(2n) {
   margin-left: 1em;
   margin-right: 1em;
+}
+#recommendedusers .users .wrk:nth-child(-n+2) {
+  display: none;
 }
 #recommendedusers .users .user {
   padding: 1em;
@@ -170,4 +173,13 @@
 }
 #recommendedusers .users .user .subscribebuttonstop.following .subscribe {
   display: none;
+}
+@media only screen and (max-width: 1180px) {
+  #recommendedusers .users {
+    overflow-x: auto;
+    justify-content: flex-start;
+  }
+  #recommendedusers .users .wrk:nth-child(-n+2) {
+    display: block;
+  }
 }

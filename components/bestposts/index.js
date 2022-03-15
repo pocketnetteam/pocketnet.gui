@@ -371,7 +371,7 @@ var bestposts = (function(){
 
 								_p.el.find('.imageWrapper').on('click', function(){
 
-									actions.openPost(share.txid, null, true)
+									actions.openPost(share.txid, null, false)
 
 								})
 								

@@ -290,7 +290,7 @@ var recommendedusers = (function(){
 				if (addresses.length){
 
 					if (clbk){
-						clbk(shuffle(addresses).slice(0, 3));
+						clbk(shuffle(addresses).slice(0, 5));
 					}
 
 				} else {
@@ -308,7 +308,7 @@ var recommendedusers = (function(){
 									addresses = c;
 	
 									if (clbk){
-										clbk(shuffle(addresses).slice(0, 3))
+										clbk(shuffle(addresses).slice(0, 5))
 									}
 
 								}
@@ -322,7 +322,7 @@ var recommendedusers = (function(){
 							addresses = c;
 
 							if (clbk){
-								clbk(shuffle(addresses).slice(0, 3))
+								clbk(shuffle(addresses).slice(0, 5))
 							}
 
 						}

@@ -72,10 +72,11 @@
 
 	.users{
 		display: flex;
-		justify-content: flex-start;
-		padding-bottom: @rhythm;
+		justify-content: space-around;
+		padding-bottom: @rhythm * 2;
 		padding-left: @rhythm * 2;
 		padding-right: @rhythm * 2;
+
 
 		.wrk{
 			max-width: 212px;
@@ -85,7 +86,10 @@
 				margin-left: @rhythm * 2;
 				margin-right: @rhythm * 2;
 			}
-
+			
+			&:nth-child(-n+2){
+				display: none;
+			}
 		}
 
 		.user{
@@ -246,5 +250,22 @@
 			}
 		}
 		
+	}
+}
+
+@media only screen and (max-width: 1180px) {
+
+	#recommendedusers{
+		.users{
+			overflow-x: auto;
+			justify-content: flex-start;
+
+			.wrk{
+				&:nth-child(-n+2){
+					display: block;
+				}
+			}
+
+		}
 	}
 }
