@@ -73,7 +73,7 @@
 }
 #recommendedusers .users .user {
   padding: 1em;
-  border: 1px solid rgb(var(--neutral-grad-0));
+  border: 1px solid rgba(var(--color-medium-theme), 0.3);
   border-radius: 12px;
 }
 #recommendedusers .users .user .addressWrapper {

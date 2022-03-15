@@ -1108,7 +1108,7 @@ ____loclib.buy = 'Купить';
 ____loclib.pkoin_commerce_tag_share_error = 'Тэг "pkoin_commerce" может использоваться только как отдельный тэг'
 ____loclib.pkoin_commerce_info = 'Из рук в руки PKOIN транзакции не модерируются, пользователи несут все  риски'
 
-____loclib.topAuthors = 'Популярные авторы'
+____loclib.topAuthors = 'Рекомендуемые авторы'
 ____loclib.recommendedPosts = 'Рекомендуемые публикации';
 ____loclib.rating = 'Рейтинг';
 ____loclib.setupVideoNodeGuide = 'Настроить ноду для видео'
