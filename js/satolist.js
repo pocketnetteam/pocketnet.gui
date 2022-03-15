@@ -5034,6 +5034,38 @@ Platform = function (app, listofnodes) {
                             ]
                         
                         },
+                        {
+                        
+                            name : 'Bastyon Code of Honor',
+                            id : 'codex1',
+                        
+                            group : [
+                        
+                                {
+                                    id : 'honor11',
+                                    q : 'Obligations for users:',
+                                    a : '<ul><li>Respect differing opinions and attempt to keep the platform friendly to newcomers</li><li>Flag the prohibited content:<ol><li>Any kind of pornography</li><li>Direct threats of violence</li><li>Promotion of illegal narcotics</li></ol></li><li>Give five stars to any post you peruse and find of high quality</li><li>Likewise, give 1 star to poor content, it helps the network</li><li>Use 1 star to enforce the relevance of content to the tags used</li><li>Do not flag or downvote for simple disagreement, only for prohibited content</li><li>Do not engage in reciprocal rating or any rating not based on quality of content</li></ul>',
+                                    img: ''
+                                },
+                                {
+                                    id : 'honor22',
+                                    q : 'Obligations for developers',
+                                    a : '<ul><li>Every line of code must be open sourced, distributed under MIT or Apache license</li><li>No reliance on central servers, any resource in the network is ran by users, the Bitcoin model of equal nodes</li><li>Moderation is done only by the users of the network, currently high rep users. In the new jury system, the moderators will hail equally from the following three groups, each of which has a stake in the success of the network:<ol><li>High reputation users</li><li>Delegated by bloggers with high active audiences</li><li>Delegated by long time PKOIN holders</li></ol></li><li>Developers can only participate in moderation as regular users, no discrimination of any account can take place through the code</li><li>Communicate with users through Bastyon posts and comments and incorporate user input into the code</li></ul>',
+                                    img: ''
+                                },
+                                {
+                                    id : 'honor33',
+                                    q : 'Node Operator Users:',
+                                    a : '<ul><li>Try to improve the network, give feedback to developers</li><li>Make nodes available to support the front-end applications, not just staking</li><li>Explain how to run nodes to other users, increasing the node count and supporting the network</li></ul>',
+                                    img: ''
+                                },
+                                
+                                	
+                                
+                                
+                            ]
+                        
+                        },
                         
                         
                         
@@ -5741,6 +5773,38 @@ Platform = function (app, listofnodes) {
                                     a : '',
                                     img: '<img src="img/prkey5.jpg" alt="" />'
                                 },	
+                                
+                                
+                            ]
+                        
+                        },
+                        {
+                        
+                            name : 'Кодекс чести Бастиона',
+                            id : 'codex',
+                        
+                            group : [
+                        
+                                {
+                                    id : 'honor1',
+                                    q : 'Обязанности пользователей:',
+                                    a : '<ul><li>Уважайте различные мнения и старайтесь сделать платформу дружелюбной к новичкам</li><li>Отметить запрещенный контент:<ol><li>Любой вид порнографии</li><li>Прямые угрозы насилием</li><li>Продвижение незаконных наркотиков</li></ol></li><li>Дайте пять звезд любой публикации, которую вы просматриваете и считаете высококачественной</li><li>Точно так же ставьте 1 звезду плохому контенту, это помогает сети</li><li>Используйте 1 звезду, чтобы обеспечить соответствие контента используемым тегам</li><li>Не отмечайте и не голосуйте за простое несогласие, а только за запрещенный контент</li><li>Не участвуйте во взаимных оценках или любых рейтингах, не основанных на качестве контента</li></ul>',
+                                    img: ''
+                                },
+                                {
+                                    id : 'honor3',
+                                    q : 'Обязанности разработчиков:',
+                                    a : '<ul><li>Каждая строка кода должна быть с открытым исходным кодом, распространяться по лицензии MIT или Apache</li><li>Отсутствие зависимости от центральных серверов, любой ресурс в сети управляется пользователями, модель равных узлов Биткойн</li> <li>Модерация осуществляется только пользователями сети, имеющими в настоящее время высокую репутацию. В новой системе жюри модераторы будут в равной степени принадлежать к следующим трем группам, каждая из которых заинтересована в успехе сети:<ol><li>Пользователи с высокой репутацией</li><li>Делегаты от блогеров с высокой активной аудиторией</li><li>Делегаты от давних держателей PKOIN</li></ol></li><li>Разработчики могут участвовать в модерации только как обычные пользователи, никакая дискриминация какой-либо учетной записи не может происходить с помощью кода</li><li>Должны общаться с пользователями через комментарии</li></ul>',
+                                    img: ''
+                                },
+                                {
+                                    id : 'honor2',
+                                    q : 'Пользователи оператора узла:',
+                                    a : '<ul><li>Старайтесь улучшать сеть, оставляйте отзывы разработчикам</li><li>Сделайте узлы доступными для поддержки приложения а не только для стейкинга</li><li>Объяснить другим пользователям, как запускать узлы, увеличивать количество узлов и поддерживать сеть</li></ul>',
+                                    img: ''
+                                },
+                                
+                                	
                                 
                                 
                             ]
