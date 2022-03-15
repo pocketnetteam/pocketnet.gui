@@ -15,14 +15,13 @@
         <meta name="keywords" content="" />
 
         <meta http-equiv="Content-Security-Policy" content="
-        upgrade-insecure-requests;
         default-src https: 'self' file: __VAR__.domain:*; 
         connect-src https: wss: http: ws: file: data: blob:;
         img-src 'self' data: http: https: file:;
         script-src 'self' blob: __VAR__.domain:* player.vimeo.com www.youtube.com s.ytimg.com cdn.jsdelivr.net/joypixels/ 'unsafe-eval' 'unsafe-inline';
         frame-src 'self' player.vimeo.com www.youtube.com;
-        style-src 'self' data: __VAR__.domain:* cdn.jsdelivr.net/joypixels/ 'unsafe-inline' use.fontawesome.com;
-        font-src 'self' data: __VAR__.domain:* use.fontawesome.com;
+        style-src 'self' data: __VAR__.domain:* https://cdn.jsdelivr.net/joypixels/ https://use.fontawesome.com 'unsafe-inline' ;
+        font-src 'self' data: __VAR__.domain:* https://use.fontawesome.com;
         media-src blob: *">
 
         <link rel="manifest" href="manifest.json">

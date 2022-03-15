@@ -20,8 +20,8 @@
         img-src 'self' data: http: https: cdvfile: file: android-webview-video-poster:;
         script-src 'self' file: blob: __VAR__.domain:* player.vimeo.com www.youtube.com s.ytimg.com cdn.jsdelivr.net/joypixels/ 'unsafe-eval' 'unsafe-inline';
         frame-src 'self' player.vimeo.com www.youtube.com;
-        style-src 'self' data: __VAR__.domain:* cdn.jsdelivr.net/joypixels/ 'unsafe-inline' use.fontawesome.com;
-        font-src 'self' data: __VAR__.domain:* use.fontawesome.com;
+        style-src 'self' data: __VAR__.domain:* https://cdn.jsdelivr.net/joypixels/ https://use.fontawesome.com 'unsafe-inline';
+        font-src 'self' data: __VAR__.domain:* https://use.fontawesome.com;
         media-src 'self' cdvfile: data: https: blob:;">
 
         <meta name="theme-color" content="#011621" />
