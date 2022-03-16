@@ -2456,22 +2456,26 @@ var lenta = (function(){
 
 			recommendedusers : function(){
 				
+				if (!recommendedusers){
 
-				self.nav.api.load({
+					self.nav.api.load({
 
-					open : true,
-					id : 'recommendedusers',
-					el : el.recommendedusers,
-					animation : false,
+						open : true,
+						id : 'recommendedusers',
+						el : el.recommendedusers,
+						animation : false,
+	
+						essenseData : {
+						},
+						
+						clbk : function(e, p){
+							recommendedusers = p;
+						}
+	
+					})
 
-					essenseData : {
-					},
-					
-					clbk : function(e, p){
-						recommendedusers = p;
-					}
+				}
 
-				})
 			},
 			debugusers : function(el){
 				var _cn = el.find('.testusersprofiles')
@@ -2962,14 +2966,14 @@ var lenta = (function(){
 				}, function(_p){
 
 					
-					// if (tpl ==='groupshares'){
+					if (tpl ==='groupshares'){
 
-					// 	el.recommendedusers = _p.el.find('.recommendeduserscnt');
+						el.recommendedusers = _p.el.find('.recommendeduserscnt');
 
-					// 	if (!essenseData.video){
-					// 		renders.recommendedusers();
-					// 	}
-					// }
+						if (!essenseData.video){
+							renders.recommendedusers();
+						}
+					}
 
 					if (_p.inner == append){
 						sharesInview = sharesInview.concat(shares)	
@@ -4670,6 +4674,11 @@ var lenta = (function(){
 				if (parallax){
 					parallax.destroy()
 					parallax = null
+				}
+
+				if (recommendedusers){
+					recommendedusers.destroy();
+					recommendedusers = null;
 				}
 
 				app.actions.playingvideo(null);
