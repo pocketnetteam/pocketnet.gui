@@ -133,7 +133,8 @@ Platform = function (app, listofnodes) {
         'PXmw1tQnengAAy9ML8Depr2kANupmadZ7j' : true,
         'PCkbxDvFQbFvEzPWnnrraey1QCUro2kMLU' : true,
         'PBKPEWcsZZHH7LQ7GQCNSMSSEteiJMfoFx' : true,
-        'PEWQWe1DQM3uh19vRqtFDkUrPreyM5uJnS' : true
+        'PEWQWe1DQM3uh19vRqtFDkUrPreyM5uJnS' : true,
+        'PQ2wxGv2YNbie2BP66aac72Y3UU1uSzxCX' : true
     }
 
     self.nvadr = {
@@ -16013,8 +16014,6 @@ Platform = function (app, listofnodes) {
 
 
                 historical : function(p, clbk, cache){
-
-                    console.log("historicalhistoricalhistoricalhistorical")
 
                     self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
                         method : 'gethistoricalstrip'
