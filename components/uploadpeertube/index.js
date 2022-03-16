@@ -289,47 +289,74 @@ var uploadpeertube = (function () {
 
           async function processTranscoding() {
             return new Promise(async (resolve, reject) => {
+            	electron.ipcRenderer.once('transcode-video-start', (event) => {
+								options.cancel(() => {
+									electron.ipcRenderer.send('transcode-video-stop');
+								});
+							});
+
+            	electron.ipcRenderer.once('transcode-video-error', (event, err) => {
+            		reject(err);
+							});
+
+            	electron.ipcRenderer.once('transcode-video-result', (event, result) => {
+								electron.ipcRenderer.removeAllListeners('transcode-video-progress');
+
+								resolve(result);
+							});
+
             	electron.ipcRenderer.on('transcode-video-progress', (event, progress) => {
 								options.progress(progress);
 							});
 
-							const transcoded = await electron.ipcRenderer
-								.invoke('transcode-video-request', filePath)
-								.catch((err) => {
-									const errMsg = err.message.match(/(?<=Error:\s).*/g)[0];
-
-                  switch (errMsg) {
-                    case 'NO_TRANSCODED': setTimeout(() => resolve(null)); break;
-                    default: throw Error('Error on transcoding');
-                  }
-                });
-
-              setTimeout(() => {
-                resolve(transcoded);
-                electron.ipcRenderer.removeAllListeners('transcode-video-progress');
-              }, 1000);
+            	electron.ipcRenderer.send('transcode-video-request', filePath);
             });
           }
 
           el.uploadProgress.find('.bold-font')
               .text(self.app.localization.e('uploadVideoProgress_processing'));
 
-          options.progress(5);
+          options.progress(0);
 
-          await processTranscoding()
-            .then((transcoded) => {
-              /** Writing transcoded alternatives to target object */
-              /** At this for backend reasons, sending only 720p */
+          try {
+						const transcoded = await processTranscoding()
 
-              if (!transcoded) {
-                return;
-              }
+						/** Writing transcoded alternatives to target object */
+						/** At this moment for backend reasons, sending only 720p */
 
-              data.video = new File([transcoded.p720.buffer], data.video.name, { type: 'video/mp4' });
-            })
-            .catch(() => {
-              sitemessage(self.app.localization.e('videoTranscodingError'));
-            });
+						if (!transcoded) {
+							return;
+						}
+
+						data.video = new File([transcoded.p720.buffer], data.video.name, { type: 'video/mp4' });
+					} catch(err) {
+          	const isCanceledByUser = (err.message === 'TRANSCODE_ABORT');
+						const isAbortedByApp = (err.message === 'NO_TRANSCODED');
+
+						if (isCanceledByUser) {
+							/**
+							 * Handling user cancelled transcoding.
+							 * Just stopping video upload...
+							 */
+							console.log('Transcoding was canceled by user');
+							return;
+						} else if (isAbortedByApp) {
+							/**
+							 * Handling not required transcoding cases.
+							 * This doesn't cancel video upload...
+							 */
+							console.log('Transcoding is not required');
+						} else {
+							/**
+							 * Anyway transcoding error is not fatal. If
+							 * video can't be processed by client then
+							 * it would be handled on server. No reason
+							 * to report user about any issue related...
+							 */
+
+							console.error(err);
+						}
+					}
         }
 
         el.uploadProgress.find('.bold-font')

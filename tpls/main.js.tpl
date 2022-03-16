@@ -707,7 +707,7 @@ function createWindow() {
         autoLaunchManage(p.enable)
     })
 
-    ipcMain.handle('transcode-video-request', async function(e, filePath) {
+    ipcMain.on('transcode-video-request', async function(e, filePath) {
         const tempDir = os.tmpdir();
 
         /**
@@ -772,8 +772,6 @@ function createWindow() {
             }
 
             return new Promise(async (resolve, reject) => {
-                let triesCount = 0;
-
                 /**
                  * @typedef {Object} FfmpegStats
                  * @property {number} width - Video width
@@ -825,64 +823,77 @@ function createWindow() {
                 }
 
                 function startTranscoding() {
-                    try {
-                        const fileName = `transvideo-${randomId(6)}.temp.mp4`;
-                        const fileLocation = path.join(tempDir, fileName);
+                    const fileName = `transvideo-${randomId(6)}.temp.mp4`;
+                    const fileLocation = path.join(tempDir, fileName);
 
-                        console.log('Created temporary file', fileLocation);
-                        fs.writeFileSync(fileLocation, '');
+                    console.log('Created temporary file', fileLocation);
+                    fs.writeFileSync(fileLocation, '');
 
-                        const transcodeProcess = ffmpeg(filePath);
+                    const transcodeProcess = ffmpeg(filePath);
 
-                        transcodeProcess
-                          .withVideoCodec('libx264')
-                          .withAudioCodec('libmp3lame')
-                          .videoFilters(`scale=-2:min'(720,ih)'`)
-                          .outputOption('-threads 2')
-                          .withVideoBitrate('2600k')
-                          .withAudioBitrate('256k')
-                          .outputFps(25)
-                          .format('mp4');
+                    transcodeProcess
+                      .withVideoCodec('libx264')
+                      .withAudioCodec('libmp3lame')
+                      .videoFilters(`scale=-2:min'(720,ih)'`)
+                      .outputOption('-threads 2')
+                      .withVideoBitrate('2600k')
+                      .withAudioBitrate('256k')
+                      .outputFps(25)
+                      .format('mp4');
 
-                        transcodeProcess
-                          .on('progress', (progress) => {
-                              console.log('Processing: ' + progress.percent + '% done');
-                              e.sender.send('transcode-video-progress', calcProgress(`p${resolution[1]}`, progress.percent));
-                          })
-                          .on('error', (err) => {
-                              console.error('FFmpeg error occurred:', err);
-                              e.sender.send('transcode-video-progress', calcProgress(`p${resolution[1]}`, 100));
-                              reject(err);
-                          })
-                          .on('end', () => {
-                              resolve(fs.readFileSync(fileLocation));
-                              fs.unlink(fileLocation, () => {
-                                  console.log('Purged temporary file');
-                              });
-                          })
-                          .saveToFile(fileLocation);
-                    } catch (err) {
-                        console.error('Error occurred:', err);
-
-                        if (triesCount <= 3) {
-                            triesCount++;
-                            startTranscoding();
-                        } else {
-                            reject(err);
-                        }
+                    function cancelTranscoding() {
+                        console.log('Video transcoding cancel');
+                        transcodeProcess.kill();
+                        reject('TRANSCODE_ABORT');
                     }
+
+                    transcodeProcess
+                      .on('start', () => {
+                          ipcMain.once('transcode-video-stop', cancelTranscoding);
+
+                          e.sender.send('transcode-video-start');
+                      })
+                      .on('progress', (progress) => {
+                          console.log('Processing: ' + progress.percent + '% done');
+                          e.sender.send('transcode-video-progress', calcProgress(`p${resolution[1]}`, progress.percent));
+                      })
+                      .on('error', (err) => {
+                          console.error('FFmpeg error occurred:', err);
+                          e.sender.send('transcode-video-progress', calcProgress(`p${resolution[1]}`, 100));
+
+                          ipcMain.removeListener('transcode-video-stop', cancelTranscoding);
+                      })
+                      .on('end', () => {
+                          ipcMain.removeListener('transcode-video-stop', cancelTranscoding);
+
+                          const data = fs.readFileSync(fileLocation);
+
+                          resolve(data);
+
+                          fs.unlink(fileLocation, () => {
+                              console.log('Purged temporary file');
+                          });
+                      })
+                      .saveToFile(fileLocation);
                 }
 
                 const MaxVideoBitrate = 2600;
                 const MaxAudioBitrate = 256;
                 const MaxVideoFramerate = 25;
 
-                const originalStats = await getVideoStats(filePath);
+                const originalStats = await getVideoStats();
                 const isWidthBigger = (originalStats.width < resolution[0]);
                 const isHeightBigger = (originalStats.height < resolution[1]);
                 const isVideoBitrateBigger = (originalStats.videoBitrate > MaxVideoBitrate);
                 const isAudioBitrateBigger = (originalStats.audioBitrate > MaxAudioBitrate);
                 const isFrameRateBigger = (originalStats.frameRate > MaxVideoFramerate);
+
+                const isVerticalVideo = (originalStats.width < originalStats.height);
+
+                if (isVerticalVideo) {
+                    reject('VERTICAL_VIDEO_NOT_SUPPORTED');
+                    return;
+                }
 
                 const isTranscodeNeeded = (
                   isWidthBigger
@@ -892,7 +903,7 @@ function createWindow() {
                   || isFrameRateBigger
                 );
 
-                if (isTranscodeNeeded) {
+                if (!isTranscodeNeeded) {
                     reject('NO_TRANSCODE_NEEDED');
                     return;
                 }
@@ -907,7 +918,9 @@ function createWindow() {
         const isEnoughSpace = (spaceCalc.free > fileSize * 1.5);
 
         if (!isEnoughSpace) {
-            throw Error('NO_DISK_SPACE');
+            const err = Error('NO_DISK_SPACE');
+            e.sender.send('transcode-video-error', err);
+            return;
         }
 
         /** Writing transcoded alternatives to target object */
@@ -936,8 +949,14 @@ function createWindow() {
 
             try {
                 buffer = await promise;
-            } catch (e) {
-                console.log('Rejected promise');
+            } catch (err) {
+                if (err === 'TRANSCODE_ABORT') {
+                    const err = Error('TRANSCODE_ABORT');
+                    e.sender.send('transcode-video-error', err);
+                    return;
+                }
+
+                console.log('Rejected video transcoding promise');
             }
 
             if (buffer) {
@@ -950,10 +969,12 @@ function createWindow() {
          * In this case client must use original.
          */
         if (!Object.keys(transcodedResults).length) {
-            throw Error('NO_TRANSCODED');
+            const err = Error('NO_TRANSCODED');
+            e.sender.send('transcode-video-error', err);
+            return;
         }
 
-        return transcodedResults;
+        e.sender.send('transcode-video-result', transcodedResults);
     });
 
     ipcMain.on('transcode-video-request', async function(e, filePath) {
