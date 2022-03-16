@@ -75,6 +75,7 @@ __map =  {
 		//"js/notifications.js",
 		"js/lib/client/system16.js",
 		"js/lib/client/api.js",
+		"js/image-uploader.js",
 		"js/_map.js",
 		"js/app.js",
 		"js/main.js"

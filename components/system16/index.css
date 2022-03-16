@@ -506,6 +506,14 @@
 #system16 .errorTable > div .errorIcon i {
   font-size: 1.5em;
 }
+#system16 .errorTable > div .changeProxyServer {
+  margin-top: 0.5em;
+}
+#system16 .errorTable > div .changeProxyServer span {
+  font-size: 0.8em;
+  cursor: pointer;
+  text-decoration: underline;
+}
 #system16 .keycaption {
   padding: 2em;
   text-align: center;

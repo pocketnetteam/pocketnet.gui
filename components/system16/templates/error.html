@@ -12,12 +12,19 @@
                     <%- error.text %>
                 </div>
 
-
+                <div class="changeProxyServer">
+                    <div elementsid="valueselectusing" class="value selectusing" fss="fss">
+                        <span><% if(using) {%> <%-using.get.name()%> <% } else {%> Not selected <% }%></span>
+                    </div>
+                </div>
+                
                 <div class="errorRefresh">
                     <button elementsid="refreshpage" class="button small refreshpage">
                         Refresh
                     </button>
                 </div>
+
+               
 
             </div>
         </div>

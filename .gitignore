@@ -3,6 +3,7 @@
 **/node_modules
 .vscode
 .vs
+.idea
 dist
 messenger/server/cert/key.pem
 messenger/server/cert/cert.pem

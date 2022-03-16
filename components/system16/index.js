@@ -2426,11 +2426,14 @@ var system16 = (function(){
 			
 			error : function(error, el, clbk){
 
+				var use = api.get.current()
+
 				self.shell({
 
 					inner : html,
 					name : 'error',
 					data : {
+						using : use,
 						error : errors[error] || errors['undefinedError']
 					},
 
@@ -2443,11 +2446,14 @@ var system16 = (function(){
 						make(proxy)
 					})
 
+					p.el.find('.selectusing').on('click', actions.proxy.selectUsing)
+
 					if (clbk)
 						clbk()
 				})
 			},
 			proxycontent : function(clbk){
+				
 				if(!info){
 					renders.error('unableProxyConnect', el.proxycontent)
 				}

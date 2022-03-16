@@ -1,28 +1,28 @@
 class PerformanceMetric {
-  
 
-  calculate(instance) {
-    const { _ratings } = this;
 
-    const stats = ((instance.stats()).info || {}).last || {};
+	calculate(instance) {
+		const { _ratings } = this;
 
-    const calculatedRatings = _ratings.map((rating) => rating(stats, instance));
+		const stats = ((instance.stats()).info || {}).last || {};
 
-    return calculatedRatings.reduce((accumulator, metric) => {
+		const calculatedRatings = _ratings.map((rating) => rating(stats, instance));
 
-      const currentRating = metric.calculate(instance) || 0;
+		return calculatedRatings.reduce((accumulator, metric) => {
 
-      return accumulator + currentRating;
+			const currentRating = metric.calculate(instance) || 0;
 
-    }, 0);
-  }
+			return accumulator + currentRating;
 
-  constructor(ratings, customCalculator) {
-    if(!ratings) ratings = []
-    this._ratings = ratings;
+		}, 0);
+	}
 
-    if (customCalculator) this.calculate = customCalculator;
-  }
+	constructor(ratings, customCalculator) {
+		if (!ratings) ratings = []
+		this._ratings = ratings;
+
+		if (customCalculator) this.calculate = customCalculator;
+	}
 }
 
 module.exports = PerformanceMetric;
