@@ -880,8 +880,8 @@ function createWindow() {
                 const MaxVideoFramerate = 25;
 
                 const originalStats = await getVideoStats();
-                const isWidthBigger = (originalStats.width < resolution[0]);
-                const isHeightBigger = (originalStats.height < resolution[1]);
+                const isWidthBigger = (originalStats.width > resolution[0]);
+                const isHeightBigger = (originalStats.height > resolution[1]);
                 const isVideoBitrateBigger = (originalStats.videoBitrate > MaxVideoBitrate);
                 const isAudioBitrateBigger = (originalStats.audioBitrate > MaxAudioBitrate);
                 const isFrameRateBigger = (originalStats.frameRate > MaxVideoFramerate);
