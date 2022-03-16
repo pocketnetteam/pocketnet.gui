@@ -31,10 +31,15 @@ const is = require('electron-is');
 const AutoLaunch = require('auto-launch');
 const os = require('os');
 const fs = require('fs');
+const asyncFs = require('fs/promises');
 const checkDiskSpace = require('check-disk-space').default;
 const ffmpeg = require('fluent-ffmpeg');
 const ffprobe = require('ffprobe-static');
 const contextMenu = require('electron-context-menu');
+const url = require('url');
+const path = require('path');
+const http = require('http');
+const https = require('https');
 
 ffmpeg.setFfprobePath(ffprobe.path);
 
@@ -83,13 +88,6 @@ autoUpdater.on('update-downloaded', (ev) => {
 //---------------------------------------------------
 
 var appName = global.TESTPOCKETNET ? 'BastyonTest' : 'Bastyon';
-
-let url = require('url')
-let path = require('path')
-const fs = require('fs');
-const asyncFs = require('fs/promises');
-const http = require('http');
-const https = require('https');
 
 var defaultIcon = require('path').join(__dirname, 'res/electron/icons/win/icon.ico')
 var defaultTrayIcon = require('path').join(__dirname, 'res/electron/icons/win/icon.ico')
