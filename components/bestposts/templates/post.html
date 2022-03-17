@@ -73,9 +73,8 @@ if(user.address.value)
 			<div class="postContentWrapper">
 
 				<% if(u.images && u.images.length){%>
-					<div class="imageWrapper">
-						<image src="<%-u.images[0] %>">				
-						</image>
+					<div class="imagesWrapper w2">
+						<div class="image imageOpen imagePostOpen active" data-image="<%-u.images[0] %>" i="<%-u.images[0] %>" image="*" ></div>
 					</div>
 			
 				<% } %>

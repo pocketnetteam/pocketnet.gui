@@ -63,31 +63,42 @@
 #bestposts .posts {
   padding-bottom: 0.5em;
 }
-#bestposts .posts .post {
+#bestposts .posts .authorgroup {
+  border-top: 1px solid rgba(var(--color-medium-theme), 0.1);
+}
+#bestposts .posts .authorgroup:first-child {
+  border-top: 0;
+}
+#bestposts .posts .authorgroup .post {
   padding: 1em;
 }
-#bestposts .posts .post .addressTable {
+#bestposts .posts .authorgroup .post .addressTable {
   width: auto;
 }
-#bestposts .posts .post .videoContentWrapper {
+#bestposts .posts .authorgroup .post .videoContentWrapper {
   padding-top: 0.5em;
 }
-#bestposts .posts .post .imageWrapper {
+#bestposts .posts .authorgroup .post .imagesWrapper {
+  height: 180px;
   margin-top: 0.5em;
   cursor: pointer;
 }
-#bestposts .posts .post .imageWrapper img {
+#bestposts .posts .authorgroup .post .imagesWrapper img {
   border-radius: 8px;
   max-width: 140px;
 }
-#bestposts .posts .post .postContentWrapper {
+#bestposts .posts .authorgroup .post .imagesWrapper .image {
+  border-radius: 12px;
+  height: 100%;
+}
+#bestposts .posts .authorgroup .post .postContentWrapper {
   cursor: pointer;
 }
-#bestposts .posts .post .postcontent {
+#bestposts .posts .authorgroup .post .postcontent {
   margin-top: 0.5em;
   word-break: break-word;
 }
-#bestposts .posts .post .postcontent .message {
+#bestposts .posts .authorgroup .post .postcontent .message {
   overflow-wrap: break-word;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -96,52 +107,52 @@
   line-clamp: 3;
   -webkit-box-orient: vertical;
 }
-#bestposts .posts .post .infoWrapper {
+#bestposts .posts .authorgroup .post .infoWrapper {
   display: flex;
   justify-content: space-between;
   font-size: 0.8em;
   color: #C7C8D9;
   margin-top: 1em;
 }
-#bestposts .posts .post .infoWrapper .actionsWrapper {
+#bestposts .posts .authorgroup .post .infoWrapper .actionsWrapper {
   display: flex;
   justify-content: flex-end;
 }
-#bestposts .posts .post .infoWrapper .actionsWrapper > div {
+#bestposts .posts .authorgroup .post .infoWrapper .actionsWrapper > div {
   padding-left: 0.75em;
 }
-#bestposts .posts .post .addressTable {
+#bestposts .posts .authorgroup .post .addressTable {
   cursor: pointer;
 }
-#bestposts .posts .post .addressTable > div {
+#bestposts .posts .authorgroup .post .addressTable > div {
   vertical-align: middle;
 }
-#bestposts .posts .post .addressTable > div.iconWrapper {
+#bestposts .posts .authorgroup .post .addressTable > div.iconWrapper {
   width: 24px;
   text-align: center;
 }
-#bestposts .posts .post .addressTable > div.iconWrapper .usericon {
+#bestposts .posts .authorgroup .post .addressTable > div.iconWrapper .usericon {
   height: 24px;
   width: 100%;
 }
-#bestposts .posts .post .addressTable > div.iconWrapper .usericon .letter {
+#bestposts .posts .authorgroup .post .addressTable > div.iconWrapper .usericon .letter {
   position: relative;
   font-size: 1em;
   top: -10px;
 }
-#bestposts .posts .post .addressTable > div.label {
+#bestposts .posts .authorgroup .post .addressTable > div.label {
   padding-left: 0.5em;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 }
-#bestposts .posts .post .addressTable > div.label .cur {
+#bestposts .posts .authorgroup .post .addressTable > div.label .cur {
   color: #00a4ff;
 }
-#bestposts .posts .post .addressTable > div.label .top {
+#bestposts .posts .authorgroup .post .addressTable > div.label .top {
   display: flex;
 }
-#bestposts .posts .post .addressTable > div.label .top .name {
+#bestposts .posts .authorgroup .post .addressTable > div.label .top .name {
   font-weight: 700;
   font-size: 0.9em;
   text-overflow: ellipsis;
@@ -149,39 +160,39 @@
   overflow: hidden;
   max-width: 70%;
 }
-#bestposts .posts .post .addressTable > div.label .top .reputation {
+#bestposts .posts .authorgroup .post .addressTable > div.label .top .reputation {
   font-size: 0.9em;
   margin-left: 0.5em;
   font-weight: 700;
-  color: #00a4ff;
+  color: rgb(var(--color-txt-ac));
 }
-#bestposts .posts .post .addressTable > div.label .light {
+#bestposts .posts .authorgroup .post .addressTable > div.label .light {
   font-size: 0.7em;
   color: #3c4146;
 }
-#bestposts .posts .post .addressTable > div.extra {
+#bestposts .posts .authorgroup .post .addressTable > div.extra {
   width: 20px;
   text-align: right;
 }
-#bestposts .posts .post .blockingWrapper {
+#bestposts .posts .authorgroup .post .blockingWrapper {
   display: none;
 }
-#bestposts .posts .post.userblocking .subscribebuttonstop {
+#bestposts .posts .authorgroup .post.userblocking .subscribebuttonstop {
   display: none;
 }
-#bestposts .posts .post.userblocking .blockingWrapper {
+#bestposts .posts .authorgroup .post.userblocking .blockingWrapper {
   display: inline;
 }
-#bestposts .posts .post .subscribebuttonstop .unsubscribe {
+#bestposts .posts .authorgroup .post .subscribebuttonstop .unsubscribe {
   display: none;
 }
-#bestposts .posts .post .subscribebuttonstop.following .unsubscribe {
+#bestposts .posts .authorgroup .post .subscribebuttonstop.following .unsubscribe {
   display: inline;
 }
-#bestposts .posts .post .subscribebuttonstop.following .notificationturn {
+#bestposts .posts .authorgroup .post .subscribebuttonstop.following .notificationturn {
   display: inline;
 }
-#bestposts .posts .post .subscribebuttonstop.following .subscribe {
+#bestposts .posts .authorgroup .post .subscribebuttonstop.following .subscribe {
   display: none;
 }
 #bestposts .mainvideo .zero,
