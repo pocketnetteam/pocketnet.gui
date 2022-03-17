@@ -2966,7 +2966,7 @@ var lenta = (function(){
 				}, function(_p){
 
 					
-					if (tpl ==='groupshares'){
+					if (tpl ==='groupshares' && isMobile() && app.test){
 
 						el.recommendedusers = _p.el.find('.recommendeduserscnt');
 
