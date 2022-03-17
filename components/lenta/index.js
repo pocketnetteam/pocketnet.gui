@@ -145,7 +145,12 @@ var lenta = (function(){
 
 				if((self.app.playingvideo || fullscreenvideoShowed) && !deleted) return
 
-				delete initedcommentes[shareId];
+				if(initedcommentes[shareId]){
+					initedcommentes[shareId].destroy()
+					delete initedcommentes[shareId];
+				}	
+				
+
 				
 				var share = self.app.platform.sdk.node.shares.storage.trx[shareId];
 
@@ -154,7 +159,13 @@ var lenta = (function(){
 
 				if (recommended == 'saved'){
 
+
 					if (el.share[shareId]) {
+
+						if (fullscreenvideoShowed){
+							actions.exitFullScreenVideo(fullscreenvideoShowed)
+						}
+
 						el.share[shareId].remove()
 						el.share[shareId] = null
 					}
@@ -748,6 +759,8 @@ var lenta = (function(){
 					}	
 
 					s.logoType = self.app.meta.fullname
+					s.app = self.app
+					s.light = true
 					PlyrEx(pels[0], s, callback, readyCallback)
 
 				}
@@ -1155,45 +1168,50 @@ var lenta = (function(){
 
 					var player = players[id]
 
-					if(!essenseData.openapi && !essenseData.second){
+					player.p.prepare().then(() => {
 
-						lastscroll = self.app.lastScrollTop
-						self.app.actions.offScroll()
+						if(!essenseData.openapi && !essenseData.second){
 
+							lastscroll = self.app.lastScrollTop
+							self.app.actions.offScroll()
 
-						if(!player.p.playing && !auto){
-							player.p.play()
+						
+							if(!player.p.playing && !auto){
+								player.p.play()
+							}
+
+							if (player.p.enableHotKeys) player.p.enableHotKeys()
+				
+							
+							
+						}
+
+						actions.setVolume(players[id], videosVolume || 0.5)
+
+						if(!essenseData.comments){
+
+							retry(function(){
+								return initedcommentes[id] || !el.c
+							}, function(){
+
+								if(el.c){
+									if (initedcommentes[id]){
+										initedcommentes[id].destroy()
+										initedcommentes[id] = null
+									}
+			
+									renders.comments(id, false, true)
+								}	
+								
+							})
+							
 						}
 
 
-						if (player.p.enableHotKeys) player.p.enableHotKeys()
-						
-					}
+						if (clbk)
+							clbk()
 
-					actions.setVolume(players[id], videosVolume || 0.5)
-
-					if(!essenseData.comments){
-
-						retry(function(){
-							return initedcommentes[id] || !el.c
-						}, function(){
-
-							if(el.c){
-								if (initedcommentes[id]){
-									initedcommentes[id].destroy()
-									initedcommentes[id] = null
-								}
-		
-								renders.comments(id, false, true)
-							}	
-							
-						})
-						
-					}
-
-
-					if (clbk)
-						clbk()
+					})
 
 				})
 

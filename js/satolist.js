@@ -3,6 +3,7 @@ if (typeof _OpenApi == 'undefined') _OpenApi = false;
 
 if (typeof _Electron != 'undefined') {
     electron = require('electron');
+    bastyonFsFetchFactory = require('./js/peertube/bastyon-fs-fetch').bastyonFsFetchFactory;
     fs = require('fs');
     url = require('url');
     https = require('https');
@@ -128,7 +129,13 @@ Platform = function (app, listofnodes) {
         'PApFYMrbm3kXMV7kjrEG1v6ULv6ZFDHb9j' : true,
         'PUBRMTAUhy51gkbuP1tRJLMMAzEDt9C2X6' : true,
         'P9i55BxFWpjMyqgHyCKtazDN1HDiZxTSzJ' : true,
-        'PLLDTFuBhb4FRPt811bTPjgaYgqoj16hVV' : true
+        'PLLDTFuBhb4FRPt811bTPjgaYgqoj16hVV' : true,
+        'PXmw1tQnengAAy9ML8Depr2kANupmadZ7j' : true,
+        'PCkbxDvFQbFvEzPWnnrraey1QCUro2kMLU' : true,
+        'PBKPEWcsZZHH7LQ7GQCNSMSSEteiJMfoFx' : true,
+        'PEWQWe1DQM3uh19vRqtFDkUrPreyM5uJnS' : true,
+        'PQ2wxGv2YNbie2BP66aac72Y3UU1uSzxCX' : true,
+        'PE6VLUqsPYLJnX2W7qhHX6yb2zLN3H2x25' : true
     }
 
     self.nvadr = {
@@ -2491,7 +2498,7 @@ Platform = function (app, listofnodes) {
                     caption.addClass('verticalcover')
                 }
 
-            })
+            }, self.app)
         },
 
         changeloc : function(_clbk){
@@ -2569,8 +2576,8 @@ Platform = function (app, listofnodes) {
 
                 if (clbk)
                     clbk()
-
-            })
+                
+            }, self.app)
 
 
         },
@@ -2973,6 +2980,8 @@ Platform = function (app, listofnodes) {
                         if (share.itisvideo()){
 
                             var info = share.url ? (app.platform.sdk.videos.storage[share.url] || {}).data || null : null
+
+                            console.log(info, share, app.platform.sdk.videos.storage)
 
                             if (info){
 
@@ -6499,8 +6508,19 @@ Platform = function (app, listofnodes) {
 
                     },
 
-                    electron : function(){
-                        return Promise.reject('todo')
+                    electron : async function(folder, shareInfo, p = {}){
+                        if(!shareInfo.video || !shareInfo.video.original) {
+                            return Promise.reject('originalinfo')
+                        }
+
+                        const id = shareInfo.video.original.uuid;
+                        const videoResolution = p.resolutionId;
+                        const videoDetails = shareInfo.video.original;
+
+                        const videoData = await electron.ipcRenderer
+                            .invoke('saveShareVideo', folder, videoDetails, videoResolution);
+
+                        return videoData;
                     },
 
                     localstorage : function(){
@@ -6547,8 +6567,11 @@ Platform = function (app, listofnodes) {
 
                     },
 
-                    electron : function(){
-                        return Promise.reject('todo')
+                    electron : async function(share) {
+                        const shareDir = await electron.ipcRenderer
+                            .invoke('saveShareData', share);
+
+                        return shareDir;
                     },
 
                     localstorage : function(){
@@ -6559,8 +6582,13 @@ Platform = function (app, listofnodes) {
 
             read : {
                 share : {
-                    electron : function(to, from){
-                        return Promise.reject('todo')
+                    electron : async function(shareId) {
+                        console.log('SHARE DIR', shareId);
+
+                        const shareData = await electron.ipcRenderer
+                            .invoke('getShareData', shareId);
+
+                        return shareData;
                     },
 
                     cordova : function(to, from){
@@ -6722,8 +6750,17 @@ Platform = function (app, listofnodes) {
                         })
                     },
 
-                    electron : function(to, from){
-                        return Promise.reject('todo')
+                    electron : async function(videoId, shareId) {
+                        console.log('from', videoId);
+
+                        const videosDataList = {};
+
+                        const videoData = await electron.ipcRenderer
+                            .invoke('getVideoData', shareId, videoId);
+
+                        videosDataList[videoId] = videoData;
+
+                        return videosDataList;
                     },
 
                     localstorage : function(to, from){
@@ -6733,8 +6770,21 @@ Platform = function (app, listofnodes) {
             },
 
             get : {
-                electron : function(){
-                    return Promise.reject('todo')
+                electron : async function(shareId) {
+                    const shareDataList = { id: shareId };
+
+                    console.log('SHARE FOLDER', shareId);
+
+                    shareDataList.share = await self.sdk.localshares.read.share.electron(shareId);
+
+                    const videoId = shareDataList.share.share.u
+                        .split('%2F').pop();
+
+                    shareDataList.videos = await self.sdk.localshares.read.video.electron(videoId, shareId);
+
+                    console.log('SHARE DATA VIDEOS', shareDataList.videos);
+
+                    return shareDataList;
                 },
 
                 cordova : function(shareFolder){
@@ -6775,8 +6825,21 @@ Platform = function (app, listofnodes) {
             },
 
             getall : {
-                electron : function(){
-                    return Promise.reject('todo')
+                electron : async function() {
+                    const shareList = await electron.ipcRenderer
+                        .invoke('getShareList');
+
+                    const shareDataList = {};
+
+                    console.log('SHARE LIST', shareList);
+
+                    for(const shareIndex in shareList) {
+                        const shareId = shareList[shareIndex];
+
+                        shareDataList[shareId] = await self.sdk.localshares.get.electron(shareId);
+                    }
+
+                    return shareDataList;
                 },
 
                 cordova : function(){
@@ -6847,7 +6910,7 @@ Platform = function (app, listofnodes) {
                 localstorage : function(shareId){
                     self.sdk.localshares.clearfromstorage(shareId)
 
-                    return Promise.reject('todo')
+                    return Promise.resolve();
                 },
                 cordova : function(shareId){
                     var storage = self.sdk.localshares.helpers.cordovaStorage()
@@ -6874,25 +6937,9 @@ Platform = function (app, listofnodes) {
 
                 },
                 electron : function(shareId){
-                    
-                    return new Promise((resolve, reject) => {
+                    self.sdk.localshares.clearfromstorage(shareId);
 
-                        return Promise.reject('deprecated')
-
-                        const userDataPath = (window.electron.app || window.electron.remote.app).getPath('userData');
-
-                        fs.rmdir(userDataPath + '/posts/' + shareId, { recursive: true }, (err) => {
-                            
-                            if (!err){
-                                self.sdk.localshares.clearfromstorage(shareId)
-                                return resolve()
-                            }
-
-                            return reject(err)
-                                
-                        });
-                    })
-                    
+                    return electron.ipcRenderer.invoke('deleteShareWithVideo', shareId);
                 }
             }
 
@@ -7264,126 +7311,7 @@ Platform = function (app, listofnodes) {
             }
         },
 
-        imagesH: {
-            storage: {},
-
-            add: function (src, h) {
-                var t = self.sdk.imagesH;
-
-                t.storage[src] = h
-
-                t.save()
-            },
-
-            delete: function (src, clbk) {
-
-                var t = self.sdk.imagesH;
-
-                if (t.storage[src]) {
-
-                    self.app.ajax.run({
-                        type: "DEL",
-                        imgur: true,
-                        data: {
-                            Action: "image/" + t.storage[src],
-                        },
-
-                        success: function (data) {
-
-                            delete t.storage[src]
-
-                            t.save()
-
-                            if (clbk)
-                                clbk()
-
-                        },
-
-                        fail: function () {
-
-                            if (clbk)
-                                clbk()
-                        }
-                    })
-
-                }
-                else {
-                    if (clbk)
-                        clbk()
-                }
-            },
-
-            save: function () {
-                localStorage['imagesH'] = JSON.stringify(self.sdk.imagesH.storage || {});
-            },
-
-            load: function (clbk) {
-                var s = {};
-
-                try {
-                    s = JSON.parse(localStorage['imagesH'] || "{}")
-                } catch (e) {
-
-                }
-
-                self.sdk.imagesH.storage = s;
-
-                if (clbk)
-                    clbk()
-
-            },
-
-            upload : function(image){
-
-                return new Promise((resolve, reject) => {
-                    if (image.indexOf('data:image') > -1){
-
-                        var r = image.split(',');
-
-                        app.ajax.run({
-                            type : "POST",
-                            imgur : true,
-                            data : {
-                                Action : "image",
-                                image : r[1]
-                            },
-
-                            success : function(data){
-                                resolve(deep(data, 'data.link'));
-                            },
-
-                            fail : function(d){
-
-                                app.ajax.run({
-                                    type : "POST",
-                                    up1 : true,
-                                    data : {
-                                        file : r[1]
-                                    },
-
-                                    success : function(data){
-
-                                        resolve('https://pocketnet.app:8092/i/' + deep(data, 'data.ident'));
-
-                                    },
-
-                                    fail : function(d){
-                                        reject('imageloadingfailed')
-                                    }
-                                })
-
-                            }
-                        })
-
-                    }
-
-                    else{
-                        resolve(image)
-                    }
-                })
-
-            }
-        },
+       
         articles: {
 
             storage: [],
@@ -7651,17 +7579,17 @@ Platform = function (app, listofnodes) {
                         return Promise.resolve()
                     }
 
-                    return self.sdk.imagesH.upload(e.data.file.url).then(r => {
-                        e.data.file.url = r
-
+                    return self.app.imageUploader.upload({ base64: e.data.file.url }).then( url => {
+						e.data.file.url = url
                         return Promise.resolve()
-                    })
+					})
+
                 },
                 carousel : function(e){
 
                     return Promise.all(_.map(e.data, (d => {
-                        return self.sdk.imagesH.upload(d.url).then(r => {
-                            d.url = r
+                        return self.app.imageUploader.upload({base64 : d.url}).then(url => {
+                            d.url = url
 
                             return Promise.resolve()
                         })
@@ -7689,7 +7617,7 @@ Platform = function (app, listofnodes) {
                         return Promise.resolve()
                     }
 
-                    return self.sdk.imagesH.upload(art.cover).then(r => {
+                    return self.app.imageUploader.upload({base64 : art.cover}).then(r => {
                         art.cover = r
 
                         return Promise.resolve()
@@ -8094,13 +8022,6 @@ Platform = function (app, listofnodes) {
                     value: true
                 },
 
-                /*videoautoplay: {
-                    name: self.app.localization.e('e13277'),
-                    id: 'videoautoplay',
-                    type: "BOOLEAN",
-                    value: true
-                },*/
-
                 videoautoplay2: {
                     name: self.app.localization.e('e13277'),
                     id: 'videoautoplay2',
@@ -8224,7 +8145,17 @@ Platform = function (app, listofnodes) {
 					type : "BOOLEAN",
 					value : true,
                 },
+
+                canuseip: {
+                    name: self.app.localization.e('canuseipsetting'),
+                    id: 'canuseip',
+                    type: "BOOLEAN",
+                    value: false
+                },
+
             },
+
+            //self.canuseip
 
             create: function (id) {
                 var m = self.sdk.usersettings.meta;
@@ -8304,6 +8235,11 @@ Platform = function (app, listofnodes) {
                             sendUserStatistics: options.sendUserStatistics,
                         }
                     },
+
+                    system : {
+                        name: self.app.localization.e('system'),
+                        options : {}
+                    }
                 }
 
 
@@ -8330,27 +8266,17 @@ Platform = function (app, listofnodes) {
                 }
 
 
-
-
                 if (electron) {
-                    c.system = {
-                        name: self.app.localization.e('system'),
-                        options: {
-                            autostart: options.autostart
-                        }
-                    }
+                    c.system.options.autostart = options.autostart
                 }
                 else{
                     if(!window.cordova){
-
-                        c.system = {
-                            name: self.app.localization.e('system'),
-                            options: {
-                                openlinksinelectron: options.openlinksinelectron
-                            }
-                        }
-
+                        c.system.options.openlinksinelectron = options.openlinksinelectron
                     }
+                }
+
+                if (self.app.canuseip()){
+                    c.system.options.canuseip = options.canuseip
                 }
 
                 _.each(options, function (o, i) {
@@ -8386,6 +8312,10 @@ Platform = function (app, listofnodes) {
                                 enable : m[i].value
                             });
 
+                        }
+
+                        if (i == 'canuseip'){
+                            app.peertubeHandler.clear()
                         }
 
 
@@ -13243,6 +13173,29 @@ Platform = function (app, listofnodes) {
                 return tags
             },  
 
+            gettagsexcluded : function(_k, onlycategories){
+                var tags = []
+
+                var k = _k || self.app.localization.key
+
+                if(!self.sdk.categories.data.all[k]) k = 'en'
+
+                var excluded = self.sdk.categories.settings.excluded[k] || {};
+
+
+
+                var all = self.sdk.categories.get(k)
+
+                _.each(all, function(c){
+                    if(excluded[c.id]) tags = tags.concat(c.tags)
+                })
+
+
+                if(onlycategories === 'onlytags') tags = excludedtags
+
+                return tags
+            },  
+
             gettags : function(_k, onlycategories){
                 var tags = []
 
@@ -16142,8 +16095,6 @@ Platform = function (app, listofnodes) {
 
 
                 historical : function(p, clbk, cache){
-
-                    console.log("historicalhistoricalhistoricalhistorical")
 
                     self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
                         method : 'gethistoricalstrip'
@@ -23813,6 +23764,8 @@ Platform = function (app, listofnodes) {
 
             platform.app.api.get.currentwss().then(wss => {
 
+                console.log('wss', wss)
+
                 socket = wss.dummy || (new ReconnectingWebSocket(wss.url));
 
 
@@ -26026,7 +25979,6 @@ Platform = function (app, listofnodes) {
                     self.sdk.addresses.init,
                     self.sdk.ustate.me,
                     self.sdk.usersettings.init,
-                    self.sdk.imagesH.load,
 
                     self.ws.init,
                     self.firebase.init,

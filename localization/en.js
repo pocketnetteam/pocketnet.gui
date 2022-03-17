@@ -2125,3 +2125,6 @@ ____loclib.videobloggerRequest_er_info = "Additional information required"
 ____loclib.videobloggerRequest_er_email = "Leave an email for feedback"
 
 ____loclib.videobloggerRequest_submitted = "Thank you for contacting us, we will review your application"
+
+____loclib.canuseipsetting = "Allow connection via ip over http directly. Not safe"
+

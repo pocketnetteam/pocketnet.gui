@@ -379,7 +379,7 @@ var imageGalleryEdit = (function(){
 
 				el.invisibleimagewrapper.imagesLoadedPN(function(image){
 					if(clbk) clbk('#invisibleimage')
-				})
+				}, self.app)
 			},
 
 			applyfiltertobigimage: function(b64, f, k, clbk){
@@ -698,7 +698,7 @@ var imageGalleryEdit = (function(){
 							p.clbk()
 
 						
-					});
+					}, self.app);
 
 				})
 

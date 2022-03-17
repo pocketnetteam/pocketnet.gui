@@ -1744,7 +1744,7 @@ var comments = (function(){
 
 						elimages.isotope()
 						
-					});
+					}, self.app);
 
 					
 				})
@@ -2120,7 +2120,7 @@ var comments = (function(){
 					
 					isotopes[s.id] = images
 
-				});
+				}, self.app);
 				
 			},
 
