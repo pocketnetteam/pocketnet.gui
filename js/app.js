@@ -1080,6 +1080,8 @@ Application = function(p)
 
 		initevents()
 
+		moment.locale(self.localization.key)
+
 		if(typeof window.cordova != 'undefined')
 		{
 			document.addEventListener('deviceready', function(){
