@@ -114,6 +114,8 @@ var uploadpeertube = (function () {
 				contentAsHTML: true,
 			});
 
+			const transcodeVideo = transcodingFactory(electron.ipcRenderer);
+
       el.videoInput.change(async function (evt) {
         var fileName = evt.target.files[0].name;
 
@@ -287,39 +289,13 @@ var uploadpeertube = (function () {
         if (typeof _Electron !== 'undefined') {
           const filePath = evt.target.files[0].path;
 
-          async function processTranscoding() {
-            return new Promise(async (resolve, reject) => {
-            	electron.ipcRenderer.once('transcode-video-start', (event) => {
-								options.cancel(() => {
-									electron.ipcRenderer.send('transcode-video-stop');
-								});
-							});
-
-            	electron.ipcRenderer.once('transcode-video-error', (event, err) => {
-            		reject(err);
-							});
-
-            	electron.ipcRenderer.once('transcode-video-result', (event, result) => {
-								electron.ipcRenderer.removeAllListeners('transcode-video-progress');
-
-								resolve(result);
-							});
-
-            	electron.ipcRenderer.on('transcode-video-progress', (event, progress) => {
-								options.progress(progress);
-							});
-
-            	electron.ipcRenderer.send('transcode-video-request', filePath);
-            });
-          }
-
           el.uploadProgress.find('.bold-font')
               .text(self.app.localization.e('uploadVideoProgress_processing'));
 
           options.progress(0);
 
           try {
-						const transcoded = await processTranscoding()
+						const transcoded = await transcodeVideo(filePath, options.progress, options.cancel);
 
 						/** Writing transcoded alternatives to target object */
 						/** At this moment for backend reasons, sending only 720p */

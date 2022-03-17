@@ -4,6 +4,7 @@ if (typeof _OpenApi == 'undefined') _OpenApi = false;
 if (typeof _Electron != 'undefined') {
     electron = require('electron');
     bastyonFsFetchFactory = require('./js/peertube/bastyon-fs-fetch').bastyonFsFetchFactory;
+    transcodingFactory = require('./js/electron/transcoding').transcodingFactory;
     fs = require('fs');
     url = require('url');
     https = require('https');
