@@ -3,7 +3,7 @@ if (global.WRITE_LOGS) {
     global.LOG_LEVEL = global.WRITE_LOGS.split("=").pop()
 }
 
-
+global.TESTPOCKETNET = true;
 
 var open = require("open");
 

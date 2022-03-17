@@ -288,6 +288,9 @@ var lenta = (function(){
 
 			rebuilddelay : function(){
 
+				showRecommendedUsers.show = true;
+				recommendedusers = null;
+
 				if (el.c)
 					el.c.addClass('rebuilding')
 
@@ -2966,7 +2969,7 @@ var lenta = (function(){
 						})
 					})
 					
-				
+
 				self.shell({
 					name :  tpl,
 					inner : p.inner,
@@ -4788,7 +4791,6 @@ var lenta = (function(){
 				
 
 				el.share = {};
-
 				showRecommendedUsers.show = true;
 
 				if (essenseData.horizontal){

@@ -15,13 +15,63 @@ var recommendedusers = (function(){
 			extra = null,
 			page = 0,
 			parallax,
-			progress;
+			progress,
+			onlytags = false;
 
 		var loading;
 
+						
+		var shuffle = function(array) {
+			let currentIndex = array.length,  randomIndex;
+		  
+			while (currentIndex != 0) {
+		  
+			  randomIndex = Math.floor(Math.random() * currentIndex);
+			  currentIndex--;
+		  
+			  [array[currentIndex], array[randomIndex]] = [
+				array[randomIndex], array[currentIndex]];
+			}
+		  
+			return array;
+		}
+
 		var actions = {
 			
-			
+			getRecommendedAccountsByTags : function(clbk){
+
+				self.app.platform.sdk.users.getRecommendedAccountsByTags(function(c, error){
+
+					console.log('getrecomendedaccountsbytags executed')
+
+					onlytags = true;
+
+					self.app.platform.sdk.categories.clbks.excluded.recommendedusers =
+					self.app.platform.sdk.categories.clbks.tags.recommendedusers =
+					self.app.platform.sdk.categories.clbks.selected.recommendedusers = function(data){
+
+						el.users.empty();
+						addresses = [];
+						state.load(renders.page);
+						
+					}
+
+					if (!error && c.length){
+
+						el.c.show();
+
+						addresses = c;
+
+						if (clbk){
+							clbk(shuffle(addresses).slice(0, 5))
+						}
+
+					}
+
+				})
+
+			},
+
 			unblocking : function(address){
 
 				dialog({
@@ -143,6 +193,7 @@ var recommendedusers = (function(){
 				el.c.show();
 
 				el.loader.fadeOut();
+
 				
 				self.shell({
 
@@ -156,101 +207,6 @@ var recommendedusers = (function(){
 					inner : append
 
 				}, function(_p){
-
-					var cc = el.c.find('.circularprogress');
-					var maxheight = 220;
-	
-					progress = new CircularProgress({
-						radius: 30,
-						strokeStyle: '#00A3F7',
-						lineCap: 'round',
-						lineWidth: 1,
-						font: "100 14px 'Segoe UI',SegoeUI,'Helvetica Neue',Helvetica,Arial,sans-serif",
-						fillStyle : "#00A3F7",
-						text : {						
-							value : ""
-						},
-						initial: {
-							strokeStyle: '#fff',
-							lineWidth: 1
-						}
-					});
-	
-					progress.update(70);
-	
-					el.c.find('.circularprogressWrapper').html(progress.el);
-	
-					var tp = el.c.find('.loadprev')
-	
-					var trueshold = 80;
-
-					parallax = new SwipeParallaxNew({
-
-						el : _p.el.find('.users'),
-	
-						allowPageScroll : 'horizontal',
-	
-						//prop : 'padding',
-		
-						directions : {
-							down : {
-								cancellable : true,
-	
-								positionclbk : function(px){
-									var percent = Math.abs(px) / trueshold;
-	
-									if (px >= 0){
-	
-										progress.options.text = {
-											value: ''
-										};
-	
-										progress.update(percent * 100);
-										cc.fadeIn(1)
-										cc.height((maxheight * percent)+ 'px')
-
-	
-										//el.shares.css('opacity', 1 - percent) 
-										tp.css('opacity', 1 -  (4 * percent))
-	
-									}
-									else{
-										progress.renew()
-										cc.fadeOut(1)
-									}
-	
-								},
-	
-								constraints : function(){
-
-									// if (fullScreenVideoParallax) return false
-
-									if (self.app.lastScrollTop <= 0 && !self.app.fullscreenmode && self.app.el.window.scrollTop() == 0){
-										return true;
-									}
-								},
-	
-								restrict : true,
-								dontstop : true,
-								trueshold : trueshold,
-								clbk : function(){
-	
-									progress.update(0);
-									cc.fadeOut(1)
-									self.app.platform.sdk.notifications.getNotifications()
-		
-									actions.loadprev(function(){
-	
-										
-									})
-									
-								}
-		
-							}
-						}
-		
-					}).init()
-
 
 					if (clbk)
 						clbk()
@@ -271,21 +227,6 @@ var recommendedusers = (function(){
 
 				console.log('addresses', addresses)
 
-				
-				var shuffle = function(array) {
-					let currentIndex = array.length,  randomIndex;
-				  
-					while (currentIndex != 0) {
-				  
-					  randomIndex = Math.floor(Math.random() * currentIndex);
-					  currentIndex--;
-				  
-					  [array[currentIndex], array[randomIndex]] = [
-						array[randomIndex], array[currentIndex]];
-					}
-				  
-					return array;
-				}
 
 				if (addresses.length){
 
@@ -294,41 +235,36 @@ var recommendedusers = (function(){
 					}
 
 				} else {
+					
+					if (onlytags){
 
-					self.app.platform.sdk.users.getBestUsers(function(c, error){
+						actions.getRecommendedAccountsByTags(clbk);
+							
+					} else {
 
-						if (!c.length){
+						self.app.platform.sdk.users.getBestUsers(function(c, error){
 
-							self.app.platform.sdk.users.getRecommendedAccountsByTags(function(c, error){
-
-								if (!error && c.length){
-
-									el.c.show();
-
-									addresses = c;
+							if (!c.length){
 	
-									if (clbk){
-										clbk(shuffle(addresses).slice(0, 5))
-									}
-
+								actions.getRecommendedAccountsByTags(clbk);
+	
+							} else {
+	
+								console.log('getrecomendedaccountsbyscoresfromaddress executed')
+	
+								el.c.show();
+	
+								addresses = c;
+		
+								if (clbk){
+									clbk(shuffle(addresses).slice(0, 5))
 								}
-
-							})
-
-						} else {
-
-							el.c.show();
-
-							addresses = c;
-
-							if (clbk){
-								clbk(shuffle(addresses).slice(0, 5))
+	
 							}
-
-						}
+	
+						})
 						
-
-					})
+					}
 
 				}
 
