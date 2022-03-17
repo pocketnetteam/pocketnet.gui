@@ -7681,6 +7681,7 @@ Platform = function (app, listofnodes) {
 
                     self.app.platform.sdk.categories.clbks.selected.lenta && self.app.platform.sdk.categories.clbks.selected.lenta();
 
+
                     t.save()
 
                 }
@@ -10607,12 +10608,7 @@ Platform = function (app, listofnodes) {
                         }
 
                     })
-                    .catch(function(e){
 
-                        if (clbk){
-                            clbk(null, e);
-                        }
-                    })
 
                 }
                 else{
@@ -13372,7 +13368,6 @@ Platform = function (app, listofnodes) {
 
             select : function(id, _k){
 
-
                 if(!id) return 'emptyid'
 
                 var allcats = self.sdk.categories.get(_k)
@@ -13406,7 +13401,6 @@ Platform = function (app, listofnodes) {
             },
 
             exclude : function(id, _k){
-
 
                 if(!id) return 'emptyid'
 
