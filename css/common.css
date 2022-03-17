@@ -1124,6 +1124,10 @@
 .share_common .work {
   width: 100%;
 }
+html.mobileview .share_common .images .imagesContainer.owlcar {
+  max-width: none;
+  contain: strict;
+}
 /*t*/
 @media only screen and (max-width: 768px) {
   .share_common {
@@ -1309,7 +1313,7 @@
   }
   .share_common .jsPlayerLoading {
     width: 100%;
-    height: 300px;
+    /*height: 300px;*/
   }
   .share_common .meta {
     margin-top: 0;

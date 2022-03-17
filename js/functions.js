@@ -6561,12 +6561,15 @@
 		var st = 0,
 			sh = 0;
 
+		var w = 'auto'
+
 		if(!p) p = {};
 
 		if(!p.inel) {
 			p.inel = $(window);
 			st = p.app.lastScrollTop;
-			sh = app.height;
+			sh = p.app.height;
+			w = p.app.width;
 		}
 
 		else{
@@ -6582,6 +6585,7 @@
 
 			st = inel.scrollTop()
 			sh = inel.height()
+			w = inel.width()
 		}
 		
 		if(!p.offset) {
@@ -6610,12 +6614,12 @@
 
 			var el = $(this);
 
-			var offsetTop = p.cache && el.data('c_' + p.f) ? el.data('c_' + p.f) : el[p.f]().top,
-				height = p.cache && el.data('c_height') ? el.data('c_height') : el.height(),
+			var offsetTop = p.cache && el.data('c_' + w + '_' + p.f) ? el.data('c_' + w + '_' + p.f) : el[p.f]().top,
+				height = p.cache && el.data('c_'+ w + '_height') ? el.data('c_'+ w + '_height') : el.height(),
 				bottom = offsetTop + height;
 
-			el.data('c_' + p.f, offsetTop)
-			el.data('c_height', height)
+			el.data('c_' + w + p.f, offsetTop)
+			el.data('c_'+ w + '_height', height)
 
 			var _part = offsetTop >= range.top && offsetTop < range.bottom || 
 				bottom <= range.bottom && bottom > range.top;

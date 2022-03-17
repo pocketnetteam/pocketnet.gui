@@ -1347,13 +1347,10 @@ Application = function(p)
 
 		getScroll : function(){
 
-			var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-			var s = scrollTop //self.el.window.scrollTop()
+			var s = window.pageYOffset || document.documentElement.scrollTop;
 
 			if(!self.fullscreenmode){
 				self.lastScrollTop = s
-
 			}
 
 			return s
@@ -1438,10 +1435,10 @@ Application = function(p)
 
 				var scrollTop = self.actions.getScroll()
 
+
 				_.each(self.events.scroll, function(s){
 					s(scrollTop, blockScroll)
 				})
-
 
 				if(self.mobileview && !cr){
 
@@ -1630,21 +1627,15 @@ Application = function(p)
 		if (realtimeInterval) 
 			clearInterval(realtimeInterval)
 
-		if(typeof window != 'undefined' && typeof $ != 'undefined'){
-
-		}
-
 		realtimeInterval = setInterval(function(){
 
 			var realtimeelements = $('.realtime');
-
 
 			realtimeelements.each(function(){
 				var el = $(this);
 
 				var time = el.attr('time');
 				var utc =  el.attr('utc');
-
 
 				var ctime = null;
 
@@ -1662,7 +1653,7 @@ Application = function(p)
 			})
 
 			realtimeelements = null
-		}, 30000)
+		}, isMobile() ? 90000 : 30000)
 
 	}
 
