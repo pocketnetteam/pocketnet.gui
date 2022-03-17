@@ -35,11 +35,12 @@ const AutoLaunch = require('auto-launch');
 const ffmpeg = require('fluent-ffmpeg');
 const ffprobe = require('ffprobe-static');
 const contextMenu = require('electron-context-menu');
+const url = require('url');
 const path = require('path');
 const http = require('http');
 const https = require('https');
 
-ffmpeg.setFfprobePath(ffprobe.path);
+const contextMenu = require('electron-context-menu');
 
 contextMenu({
     showSearchWithGoogle : false,
