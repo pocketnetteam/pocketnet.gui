@@ -613,6 +613,32 @@
                 text-align: center;
             }
         }
+
+        &.ytbvimb{
+            padding-bottom: 56.25%;
+
+            .jsPlayerLoading{
+                display: none;
+            }
+
+            &.loading{
+                .jsPlayerLoading{
+                    display: block;
+                }
+            }
+        }
+
+        .initvideoplayer{
+            position: absolute;
+            left : 50%;
+            top : 50%;
+            width: 40px;
+            height: 40px;
+            margin-top: -20px;
+            margin-left: -20px;
+            line-height: 40px;
+            font-size: 2em;
+        }
     }
 
     .authorTable{
@@ -1435,33 +1461,7 @@
 
             .videoWrapper{
                 max-width: none;
-                /*background: #000;
-            
-                &.squareVideo,
-                &.verticalVideo {
-                    background: #000;
-                    position: relative;
-                    overflow: hidden;
-
-                    .js-player{
-                        margin : 0 auto;
-                        max-width: 450px;
-                        position : static;
-                    }
-
-
-                    .video-js{
-                        position : static;
-
-                    }
-                }
-
-                &.squareVideo{
-                    .js-player{
-                        max-width: 500px;
-                    }
-                }*/
-
+               
                 .videoTips{
                     display: none;
                 }
@@ -1718,7 +1718,7 @@ html.mobileview{
             max-width: 768px;
             position : relative;
             border-radius: 0;
-
+            
             .js-player{
                 border-radius: 0;
                 overflow: visible;

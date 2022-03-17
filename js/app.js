@@ -1606,8 +1606,6 @@ Application = function(p)
 
 		var value = time || new Date()
 
-		moment.locale(self.localization.key)
-
 		if ((moment().diff(value, 'days')) === 0) {
 
 			if((moment().diff(value, 'hours') < 12 )) 
@@ -1631,11 +1629,14 @@ Application = function(p)
 
 			var realtimeelements = $('.realtime');
 
+			if(realtimeelements.length > 30 || isMobile()) return
+
 			realtimeelements.each(function(){
 				var el = $(this);
 
 				var time = el.attr('time');
 				var utc =  el.attr('utc');
+				var _ctime = el.html();
 
 				var ctime = null;
 
@@ -1646,7 +1647,11 @@ Application = function(p)
 					ctime = self.reltime(new Date(time))
 				}
 
-				el.html(ctime)
+				if(_ctime != ctime){
+					el.html(ctime)
+				}
+
+				
 
 				el = null
 

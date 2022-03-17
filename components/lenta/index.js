@@ -550,11 +550,36 @@ var lenta = (function(){
 					renders.urlContent(share)
 			},
 
+			initVideoLight: function(el, share, clbk, shadow){
+				//js-player-dummy
+
+				var button = el.find('.initvideoplayer')
+
+				if (button.length){
+					button.one('click', function(){
+
+						$(this).closest('jsPlayerLoading').addClass('loading')
+
+						actions.initVideo(el, share, function(v){
+
+							if (players[share.txid])
+								players[share.txid].p.play()
+
+							if (clbk)
+								clbk(v)
+						}, shadow)
+					})
+				}
+				else {
+					actions.initVideo(el, share, clbk, shadow)
+				}
+			},	
+
 			initVideo : function(el, share, clbk, shadow){
 
 				if(!share || !share.txid) return
 
-				var pels = el.find('.js-player');
+				var pels = el.find('.js-player-ini');
 				var vel = el.find('.videoWrapper')
 
 				if(!vel.length) return
@@ -2654,9 +2679,7 @@ var lenta = (function(){
 								p.el.find('.canmark').mark(essenseData.searchValue);
 							}
 
-							if(!video)
-								actions.initVideo(p.el, share/*, null, !essenseData.openapi*/)
-
+							if(!video) actions.initVideoLight(p.el, share)
 
 							if(isotopeinited) el.shares.isotope()
 
@@ -3307,7 +3330,8 @@ var lenta = (function(){
 								og : og,
 								share : share,
 								video : video,
-								preview : video ? true : false
+								preview : video ? true : false,
+								fullplayer : false
 							},
 							notdisplay : video ? true: false,
 							bgImages : {

@@ -118,6 +118,7 @@ Localization = function(app){
 				app.nav.api.history.removeParameters(['loc'])
 
 			self.key = key;
+			moment.locale(self.key)
 
 			self.locSave();
 
@@ -166,6 +167,8 @@ Localization = function(app){
 		if(!self.available[self.key]) self.key = 'en'
 
 		self.locSave();
+		moment.locale(self.key)
+
 
 		lazyActions([
 			self.import,

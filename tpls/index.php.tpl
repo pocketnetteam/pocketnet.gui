@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="">
+<html class="no-js customscroll" lang="">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -56,7 +56,7 @@
         <link rel="icon" href="./favicon.svg" sizes="any" type="image/svg+xml">
        
     </head>
-    <body id="application" class="menu-hide customscroll">
+    <body id="application" class="menu-hide ">
 
         <div id="windowsContainer">
         </div>

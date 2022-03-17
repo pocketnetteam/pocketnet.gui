@@ -471,6 +471,26 @@
   vertical-align: middle;
   text-align: center;
 }
+.share_common .jsPlayerLoading.ytbvimb {
+  padding-bottom: 56.25%;
+}
+.share_common .jsPlayerLoading.ytbvimb .jsPlayerLoading {
+  display: none;
+}
+.share_common .jsPlayerLoading.ytbvimb.loading .jsPlayerLoading {
+  display: block;
+}
+.share_common .jsPlayerLoading .initvideoplayer {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 40px;
+  height: 40px;
+  margin-top: -20px;
+  margin-left: -20px;
+  line-height: 40px;
+  font-size: 2em;
+}
 .share_common .authorTable {
   width: auto;
 }
@@ -1071,32 +1091,6 @@
 }
 .share_common.fullScreenVideo .work .videoWrapper {
   max-width: none;
-  /*background: #000;
-            
-                &.squareVideo,
-                &.verticalVideo {
-                    background: #000;
-                    position: relative;
-                    overflow: hidden;
-
-                    .js-player{
-                        margin : 0 auto;
-                        max-width: 450px;
-                        position : static;
-                    }
-
-
-                    .video-js{
-                        position : static;
-
-                    }
-                }
-
-                &.squareVideo{
-                    .js-player{
-                        max-width: 500px;
-                    }
-                }*/
 }
 .share_common.fullScreenVideo .work .videoWrapper .videoTips {
   display: none;

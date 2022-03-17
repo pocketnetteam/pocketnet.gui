@@ -1543,6 +1543,7 @@ var post = (function () {
 							url: url,
 							og: og,
 							share: share,
+							fullplayer : true
 						},
 
 						additionalActions: function () {

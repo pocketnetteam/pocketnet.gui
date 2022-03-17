@@ -1918,7 +1918,7 @@ var share = (function(){
 						url : currentShare.url.v,
 						og : og,
 						remove : true,
-
+						fullplayer : true,
 						share : currentShare
 					},
 

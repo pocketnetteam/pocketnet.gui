@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js electronapp" lang="">
+<html class="no-js electronapp customscroll" lang="">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -48,7 +48,7 @@
         
        
     </head>
-    <body id="application" class="menu-hide customscroll">
+    <body id="application" class="menu-hide ">
 
         <div id="windowsContainer">
         </div>
