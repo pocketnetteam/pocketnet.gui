@@ -68,9 +68,6 @@
   margin-left: 1em;
   margin-right: 1em;
 }
-#recommendedusers .users .wrk:nth-child(-n+2) {
-  display: none;
-}
 #recommendedusers .users .user {
   padding: 1em;
   border: 1px solid rgba(var(--color-medium-theme), 0.3);

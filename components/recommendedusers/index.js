@@ -20,6 +20,14 @@ var recommendedusers = (function(){
 
 		var loading;
 
+		var me = deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value.toString('hex'))
+
+		var filterSubscribes = function(u){
+
+			return !(me && me.relation(u.address, 'subscribes'));
+		}
+
+
 						
 		var shuffle = function(array) {
 			let currentIndex = array.length,  randomIndex;
@@ -33,7 +41,7 @@ var recommendedusers = (function(){
 				array[randomIndex], array[currentIndex]];
 			}
 		  
-			return array;
+			return array.slice(0, p.essenseData.recommendedUsersCount || 3);
 		}
 
 		var actions = {
@@ -63,7 +71,7 @@ var recommendedusers = (function(){
 						addresses = c;
 
 						if (clbk){
-							clbk(shuffle(addresses).slice(0, 5))
+							clbk(shuffle(addresses).filter(filterSubscribes))
 						}
 
 					}
@@ -231,7 +239,7 @@ var recommendedusers = (function(){
 				if (addresses.length){
 
 					if (clbk){
-						clbk(shuffle(addresses).slice(0, 5));
+						clbk(shuffle(addresses));
 					}
 
 				} else {
@@ -244,7 +252,7 @@ var recommendedusers = (function(){
 
 						self.app.platform.sdk.users.getBestUsers(function(c, error){
 
-							if (!c.length){
+							if (!(c && c.length)){
 	
 								actions.getRecommendedAccountsByTags(clbk);
 	
@@ -254,10 +262,12 @@ var recommendedusers = (function(){
 	
 								el.c.show();
 	
-								addresses = c;
+								addresses = shuffle(c).filter(filterSubscribes);
+
+								console.log('addresses', addresses)
 		
 								if (clbk){
-									clbk(shuffle(addresses).slice(0, 5))
+									clbk(addresses)
 								}
 	
 							}
