@@ -1477,7 +1477,7 @@ var comments = (function(){
 
 						var a = this
 
-						if(ed.init || p.init){
+						if ((ed.init || p.init) && !p.unfocus){
 
 							_p.el.find('.emojionearea-editor').focus()
 
@@ -1909,7 +1909,7 @@ var comments = (function(){
 
 					}, function(_p){				
 
-						var ini = function(_clbk){
+						var ini = function(_clbk, unfocus){
 
 							if(!preview) return
 
@@ -1928,6 +1928,8 @@ var comments = (function(){
 								
 							}
 
+							if(unfocus) p.unfocus = true
+
 							postEvents(p, _p, __clbk)
 						}
 
@@ -1942,7 +1944,7 @@ var comments = (function(){
 								actions.embedimages(id, p)
 
 								if(!p.answer && !p.editid){
-									setTimeout(ini, 100)
+									ini(null, true)
 								}	
 							}
 							else if (_preview){
