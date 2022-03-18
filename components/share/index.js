@@ -1918,7 +1918,7 @@ var share = (function(){
 						url : currentShare.url.v,
 						og : og,
 						remove : true,
-
+						fullplayer : true,
 						share : currentShare
 					},
 
@@ -1928,7 +1928,6 @@ var share = (function(){
 
 						if (meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube') {
 
-
                             Plyr.setup('#' + self.map.id + ' .js-player', function(player) {
 
 								try{
@@ -1937,6 +1936,7 @@ var share = (function(){
 								
 							}, {
 								denyPeertubeAutoPlay: true,
+								app : self.app
 							});
 
 							p.el.find('.removepeertube').on('click', function(){
@@ -2008,7 +2008,7 @@ var share = (function(){
 										}
 									})
 									
-								});
+								}, self.app);
 
 								p.el.find('.removeImage').on('click', function(){
 
@@ -2139,7 +2139,7 @@ var share = (function(){
 						
 
 
-					});
+					}, self.app);
 
 					
 				})
@@ -2718,7 +2718,7 @@ var share = (function(){
 						essenseData.close()
 					}
 				},
-				class : "smallWnd withoutButtons wndsharepost normalizedmobile showbetter"
+				class : "smallWnd withoutButtons wndsharepost normalizedmobile maxheight showbetter"
 			},
 
 			id : p._id,

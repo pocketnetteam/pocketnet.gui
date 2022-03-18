@@ -1513,6 +1513,7 @@ var comments = (function(){
 						}
 
 						actions.lightarea(p.id || '0', c)
+						
 
 						// Hide the emoji button for mobiles and tablets
 						if (isMobile() || isTablet())
@@ -1744,7 +1745,7 @@ var comments = (function(){
 
 						elimages.isotope()
 						
-					});
+					}, self.app);
 
 					
 				})
@@ -1941,7 +1942,7 @@ var comments = (function(){
 								actions.embedimages(id, p)
 
 								if(!p.answer && !p.editid){
-									ini()
+									setTimeout(ini, 100)
 								}	
 							}
 							else if (_preview){
@@ -2120,7 +2121,7 @@ var comments = (function(){
 					
 					isotopes[s.id] = images
 
-				});
+				}, self.app);
 				
 			},
 

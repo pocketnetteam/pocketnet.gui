@@ -155,7 +155,7 @@ var makecaptionclear = function(){
 
 		%>
 			<div class="paddingWrapper hideOnFullVideo">
-				<div class="sharecaption canmark">
+				<div class="sharecaption canmark cancopy">
 					<%=app.actions.emoji(nl2br(trimrn(cc)))%>
 				</div>
 			</div>
@@ -222,7 +222,7 @@ var arranges = {
 
 		%>
 			<div class="paddingWrapper ">
-				<div class="message canmark">
+				<div class="message canmark cancopy">
 					<%=app.actions.emoji((clearScripts(((nm)))))%>
 				</div>
 			</div>
@@ -247,14 +247,7 @@ var arranges = {
 
 				var icClass = '';
 				var additionall = 0;
-				var imageFromVideo = ''
-
-
-				if(share.url && parseVideo(share.url).type){
-					additionall++;
-					imageFromVideo = videoImage(share.url)
-				}
-
+		
 				if (share.images.length + additionall == 1) icClass = 'one';
 				if (share.images.length + additionall == 2) icClass = 'two';
 				if (share.images.length + additionall == 2) icClass = 'three';
@@ -286,16 +279,7 @@ var arranges = {
 					<div class="images shareImages hideOnFullVideo unselectable noswipepnt">
 						<div class="imagesContainer <%-icClass%>">
 
-							<% if(imageFromVideo) {%>
-
-								<div class="imagesWrapper forvideo">
-									<div elementsid="lenta_videoOpen" class="image videoOpen" image="<%-imageFromVideo || '*'%>">
-										<div class="playicon"><i class="fas fa-play"></i></div>
-									</div>
-								</div>
-
-							<% } %>
-							
+						
 							<% _.each(share.images, function(image){ %>
 
 								<div class="imagesWrapper">
@@ -522,8 +506,11 @@ var arranges = {
 									
 								</div>
 
-								<% if(window.cordova && share.itisvideo() ) {
-									
+								<% const isElectron = (typeof _Electron !== 'undefined' && !!window.electron); %>
+								<% const isSaveSupported = (window.cordova || isElectron); %>
+
+								<% if(isSaveSupported && share.itisvideo()) {
+
 									var status = app.platform.sdk.localshares.status(share.txid)
 									
 									%>
@@ -536,7 +523,7 @@ var arranges = {
 
 											<div class="iconwr">											
 												<div class="icon">
-													<i class="fas fa-cloud-download-alt cansave"></i>
+													<i class="fas fa-download cansave"></i>
 													<i class="fas fa-spinner fa-spin saving"></i>
 													<i class="fas fa-trash saved"></i>
 												</div>

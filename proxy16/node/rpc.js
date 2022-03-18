@@ -210,6 +210,7 @@ function rpc(request, callback, obj) {
     var called = false;
     var errorMessage = 'Bitcoin JSON-RPC: ';
 
+   
     var req = self.protocol.request(options, function(res) {
 
         var buf = '';

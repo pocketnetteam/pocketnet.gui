@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="">
+<html class="no-js customscroll" lang="">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -24,20 +24,21 @@
 
         <meta http-equiv="Content-Security-Policy" content="
         upgrade-insecure-requests;
-        default-src https: 'self' blob:; 
-        connect-src https: wss: data: blob:;
-        img-src 'self' data: https:;
-        script-src 'self' blob: https://__VAR__.domain https://unpkg.com/@ffmpeg/ffmpeg@0.10.0/dist/ffmpeg.min.js https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.rawgit.com https://cdn.jsdelivr.net 'unsafe-eval' 'unsafe-inline';
-        style-src 'self' data: https://use.fontawesome.com https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';
-        font-src 'self' data: https://fonts.gstatic.com https://use.fontawesome.com;
+        default-src 'self' __VAR__.domain:*; 
+        connect-src 'self' http: ws: https: wss:;
+        img-src 'self' data: http: https: __VAR__.domain:*;
+        script-src 'self' blob: __VAR__.domain:* player.vimeo.com www.youtube.com s.ytimg.com cdn.jsdelivr.net/joypixels/ 'unsafe-eval' 'unsafe-inline';
+        frame-src 'self' __VAR__.domain player.vimeo.com www.youtube.com;
+        style-src 'self' data: __VAR__.domain:* cdn.jsdelivr.net/joypixels/ use.fontawesome.com 'unsafe-inline';
+        font-src 'self' data: __VAR__.domain:* use.fontawesome.com;
         media-src blob: *">
 
         <link rel="manifest" href="manifest.json">
-        <link rel="apple-touch-icon" href="https://__VAR__.domain/img/res/blue_pad_250.png" sizes="250x250">
+        <link rel="apple-touch-icon" href="__VAR__.domain/img/res/blue_pad_250.png" sizes="250x250">
         <meta name="theme-color" content="#011621" />
 
-        <link rel="dns-prefetch" href="https://__VAR__.domain:8899" />
-        <link rel="dns-prefetch" href="https://__VAR__.domain" />
+        <link rel="dns-prefetch" href="__VAR__.domain:8899" />
+        <link rel="dns-prefetch" href="__VAR__.domain" />
         <?php 
         
             require_once('php/og.php'); 
@@ -55,7 +56,7 @@
         <link rel="icon" href="./favicon.svg" sizes="any" type="image/svg+xml">
        
     </head>
-    <body id="application" class="menu-hide customscroll">
+    <body id="application" class="menu-hide ">
 
         <div id="windowsContainer">
         </div>

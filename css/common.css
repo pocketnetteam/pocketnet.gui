@@ -261,7 +261,7 @@
   left: 0;
   right: 0;
   top: 0;
-  bottom: 60px;
+  bottom: 70px;
   cursor: pointer;
   background: #000000;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.95281863) 0%, rgba(0, 0, 0, 0.94721639) 6%, rgba(0, 0, 0, 0.21612395) 76%, rgba(0, 0, 0, 0.09007353) 82%, rgba(0, 0, 0, 0) 100%);
@@ -470,6 +470,32 @@
 .share_common .jsPlayerLoading .jsPlayerLoadingD > div {
   vertical-align: middle;
   text-align: center;
+}
+.share_common .jsPlayerLoading.ytbvimb {
+  padding-bottom: 56.25%;
+}
+.share_common .jsPlayerLoading.ytbvimb .jsPlayerLoading {
+  display: none;
+}
+.share_common .jsPlayerLoading.ytbvimb.loading .jsPlayerLoading {
+  height: 100%;
+  max-height: none;
+  display: block;
+}
+.share_common .jsPlayerLoading.ytbvimb.loading .jsPlayerLoading .preloader5 {
+  display: block;
+}
+.share_common .jsPlayerLoading .initvideoplayer {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 40px;
+  height: 40px;
+  margin-top: -20px;
+  margin-left: -20px;
+  line-height: 40px;
+  font-size: 2em;
+  text-shadow: 0px 0px 2px rgba(var(--color-shadow-base), 0.714), 0 0 3px rgba(var(--color-shadow-base), 0.519);
 }
 .share_common .authorTable {
   width: auto;
@@ -928,6 +954,7 @@
 }
 .share_common.fullScreenVideo .video-js {
   max-height: 80vh;
+  max-height: calc(var(--vh, 1vh) * 80);
 }
 .share_common.fullScreenVideo .shareTable {
   padding-top: 0;
@@ -1071,32 +1098,6 @@
 }
 .share_common.fullScreenVideo .work .videoWrapper {
   max-width: none;
-  /*background: #000;
-            
-                &.squareVideo,
-                &.verticalVideo {
-                    background: #000;
-                    position: relative;
-                    overflow: hidden;
-
-                    .js-player{
-                        margin : 0 auto;
-                        max-width: 450px;
-                        position : static;
-                    }
-
-
-                    .video-js{
-                        position : static;
-
-                    }
-                }
-
-                &.squareVideo{
-                    .js-player{
-                        max-width: 500px;
-                    }
-                }*/
 }
 .share_common.fullScreenVideo .work .videoWrapper .videoTips {
   display: none;
@@ -1123,6 +1124,10 @@
 }
 .share_common .work {
   width: 100%;
+}
+html.mobileview .share_common .images .imagesContainer.owlcar {
+  max-width: none;
+  contain: strict;
 }
 /*t*/
 @media only screen and (max-width: 768px) {
@@ -1309,7 +1314,7 @@
   }
   .share_common .jsPlayerLoading {
     width: 100%;
-    height: 300px;
+    /*height: 300px;*/
   }
   .share_common .meta {
     margin-top: 0;

@@ -510,7 +510,7 @@ var imagegallery = (function(){
 								self.closeContainer();
 							});
 
-					});
+					}, self.app);
 
 				})
 
@@ -542,16 +542,13 @@ var imagegallery = (function(){
 				num : num.toString()
 			})
 
-
+			image.csrc = self.app.peertubeHandler.helpers.url(image.src)
+			
 			actions.prepareImage(image, function(image){
-
 				renders.image({
 					image : image
 				})
-
 			})
-
-			
 
 		}
 

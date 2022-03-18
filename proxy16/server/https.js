@@ -114,32 +114,42 @@ var Server = function(settings, admins, manage){
 
         self.link()
 
-        return self.http().then(r => {
+        return self.http(_settings).then(r => {
             return  self.https(_settings)
         })
 
     }
 
-    self.http = function(){
-
-        var port = 80
-
+    self.http = function(settings){
+9
+        var port = (settings.port || 8899) - 1
 
         return Promise.resolve()
 
         return new Promise((resolve, reject) => {
 
-            app.use(express.static(f.path('static')))
+            //app.use(express.static(f.path('static')))
 
             httpserver = http.createServer(app)
             
-            httpserver.listen(port);
-
             httpserver.on('listening',function(){
+
+                console.log('listening', port)
+
                 self.httplistening = port
+
+                resolve()
             });
 
-            httpserver.on('error',function(e){});
+            httpserver.on('error',function(e){
+                reject(e) 
+            });
+
+            httpserver.on('connection', function(socket) {
+                socket.setNoDelay();
+            });
+
+            httpserver.listen(port);
 
             resolve()
 
@@ -150,7 +160,6 @@ var Server = function(settings, admins, manage){
     self.https = function(settings){
         return new Promise((resolve, reject) => {
             try{
-                
 
                 if (_.isEmpty(settings.ssl)){
                     reject('sslerror')
@@ -183,8 +192,6 @@ var Server = function(settings, admins, manage){
 
             }
             catch(e) {
-
-          
                 reject(e)
             }
 
@@ -216,6 +223,7 @@ var Server = function(settings, admins, manage){
         self.cache.destroy()
 
         self.listening = false
+        self.httplistening = false
 
         return Promise.resolve()
         

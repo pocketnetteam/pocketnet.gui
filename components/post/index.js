@@ -416,6 +416,7 @@ var post = (function () {
 						wautoplay: wa,
 						logoType : self.app.meta.fullname,
 						startTime : startTime,
+						app : self.app,
 						volumeChange : function(v){
 							videosVolume = v
 
@@ -1233,7 +1234,7 @@ var post = (function () {
 						}
 
 						
-					});
+					}, self.app);
 
 
 				}
@@ -1542,6 +1543,7 @@ var post = (function () {
 							url: url,
 							og: og,
 							share: share,
+							fullplayer : true
 						},
 
 						additionalActions: function () {
@@ -1568,7 +1570,7 @@ var post = (function () {
 						});
 
 						if (clbk) clbk();
-					});
+					}, self.app);
 				})
 
 
@@ -1948,7 +1950,7 @@ var post = (function () {
 
 			wnd: {
 				showbetter : true,
-				class: 'withoutButtons postwindow ' + (p.pip ? '' : 'normalizedmobile'),
+				class: 'withoutButtons postwindow ' + (p.pip ? '' : 'normalizedmobile maxheight'),
 				pip : p.pip || false,
 				expand : function(){
 

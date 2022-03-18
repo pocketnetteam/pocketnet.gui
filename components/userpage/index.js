@@ -1165,7 +1165,7 @@ var userpage = (function(){
 			},
 
 			wnd : {
-				class : 'wnduserpage normalizedmobile',
+				class : 'wnduserpage normalizedmobile maxheight',
 			}
 
 		}

@@ -13,6 +13,7 @@
 #post .jsPlayerLoading,
 #post .video-js {
   max-height: 80vh;
+  max-height: calc(var(--vh, 1vh) * 80);
 }
 #post .videoWrapper {
   max-width: 650px;
@@ -256,6 +257,7 @@
 #post.videomainpost .jsPlayerLoading,
 #post.videomainpost .video-js {
   max-height: 80vh;
+  max-height: calc(var(--vh, 1vh) * 80);
 }
 #post.videomainpost .forurl .url {
   border-radius: 12px;
@@ -841,6 +843,7 @@ html.mobileview .wnd.articlewindow .widthcontainer {
 .wnd.postwindow.pipmini #post .videoWrapper .video-js {
   max-height: 25vh;
   min-height: 150px;
+  max-height: calc(var(--vh, 1vh) * 25);
 }
 .wnd.postwindow.pipmini #post .work {
   position: static;

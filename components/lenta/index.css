@@ -615,7 +615,7 @@
   overflow: hidden;
 }
 #lenta .share .sharearticle .shareBgCaption .captioncnt .sharecaption {
-  font-size: 3em;
+  font-size: 2em;
   font-family: Georgia, serif;
   max-width: 85%;
   margin: 0 auto;
@@ -710,7 +710,7 @@
   font-size: 1.5em;
 }
 #lenta .share .sharearticle .shareBgCaption.caption_long .captionmult {
-  font-size: 0.5em;
+  font-size: 0.8em;
 }
 #lenta .share .sharearticle .shareBgCaption.verticalcover {
   height: 520px;
@@ -992,6 +992,7 @@
 html.mobileview #lenta .share .jsPlayerLoading,
 html.mobileview #lenta .share .video-js {
   max-height: 80vh;
+  max-height: calc(var(--vh, 1vh) * 80);
 }
 html.mobileview #lenta .fullScreenVideo .video-js .vjs-volume-control {
   display: none;
