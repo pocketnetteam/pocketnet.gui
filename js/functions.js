@@ -727,8 +727,6 @@
 
 					positionclbk : function(px, e){
 						var percent = Math.abs(px) / trueshold;
-
-						if(e) e.preventDefault()
 					},
 
 					constraints : function(e){
@@ -6836,7 +6834,7 @@
 					}
 
 					self.clear()
-						
+					document.ontouchmove = () => true
 
 					return
 
@@ -6861,6 +6859,8 @@
 
 				if (phase == 'start'){
 					mainDirection = null
+
+					document.ontouchmove = () => false
 				}
 				
 				if (phase == 'move'){
