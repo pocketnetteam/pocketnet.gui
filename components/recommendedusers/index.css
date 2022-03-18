@@ -76,14 +76,12 @@
   border: 1px solid rgba(var(--color-medium-theme), 0.3);
   border-radius: 12px;
 }
-#recommendedusers .users .user .addressWrapper {
-  cursor: pointer;
-}
 #recommendedusers .users .user .addressWrapper .iconWrapper {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100px;
+  cursor: pointer;
 }
 #recommendedusers .users .user .addressWrapper .iconWrapper .icon {
   display: flex;
@@ -122,8 +120,14 @@
   white-space: nowrap;
   overflow: hidden;
 }
-#recommendedusers .users .user .addressWrapper .userbody .reputation .value {
-  color: rgb(var(--color-bg-ac-bright));
+#recommendedusers .users .user .addressWrapper .userbody .subscribers {
+  font-size: 0.9em;
+}
+#recommendedusers .users .user .addressWrapper .userbody .subscribers .label {
+  color: rgb(var(--color-medium-theme));
+}
+#recommendedusers .users .user .addressWrapper .userbody .subscribers .value {
+  color: rgb(var(--color-txt-ac));
 }
 #recommendedusers .users .user .addressWrapper .userbody .subscribeWrapper {
   margin-top: 16px;

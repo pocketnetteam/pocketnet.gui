@@ -85,173 +85,188 @@
 	.posts{
 		padding-bottom: @rhythm;
 
-		.post{
-			padding : @rhythm * 2;
 
-			.addressTable{
-				width: auto;
+		.authorgroup{
+			border-top: 1px solid rgba(var(--color-medium-theme), 0.1);
+
+			&:first-child{
+				border-top: 0;
 			}
+		
+			.post{
+				padding : @rhythm * 2;
 
-			.videoContentWrapper{
-				padding-top: @rhythm;
-			}
-
-			.imageWrapper{
-				margin-top: @rhythm;
-				cursor: pointer;
-
-				img{
-					border-radius: 8px;
-					max-width: 140px;
-
-				}
-			}
-
-			.postContentWrapper{
-				cursor: pointer;
-			}
-
-			.postcontent{
-				margin-top: @rhythm;
-				word-break: break-word;
-
-				.message{
-					overflow-wrap: break-word;
-					overflow: hidden;
-					text-overflow: ellipsis;
-					display: -webkit-box;
-					-webkit-line-clamp: 3;
-					line-clamp: 3;
-					-webkit-box-orient: vertical;
+				.addressTable{
+					width: auto;
 				}
 
-			}
+				.videoContentWrapper{
+					padding-top: @rhythm;
+				}
 
-			.infoWrapper{
-				display: flex;
-				justify-content: space-between;
-				font-size: 0.8em;
-				color: #C7C8D9;
-				margin-top: @rhythm * 2;
+				.imagesWrapper{
+					height: 180px;
+					margin-top: @rhythm;
+					cursor: pointer;
 
-				.actionsWrapper{
-					display: flex;
-					justify-content: flex-end;
+					img{
+						border-radius: 8px;
+						max-width: 140px;
 
-					>div{
-						padding-left: @rhythm * 1.5;
+					}
+
+					.image{
+						border-radius: 12px;
+						height: 100%
 					}
 				}
-			}
-			
 
-			.addressTable{
-				cursor: pointer;
+				.postContentWrapper{
+					cursor: pointer;
+				}
 
-				
-				
-				>div{
+				.postcontent{
+					margin-top: @rhythm;
+					word-break: break-word;
 
-					vertical-align: middle;
-	
-					&.iconWrapper{
-						width: 24px;
-						text-align: center;
-
-						.usericon{
-							height: 24px;
-							width: 100%;
-
-							.letter{
-								position: relative;
-								font-size: @rhythm * 2;
-								top: -10px;
-							}
-						}
-					}
-	
-					&.label{
-						padding-left: @rhythm;
-						text-overflow: ellipsis;
+					.message{
+						overflow-wrap: break-word;
 						overflow: hidden;
-						white-space: nowrap;
-	
-						.cur{
-							color : @color-main;
+						text-overflow: ellipsis;
+						display: -webkit-box;
+						-webkit-line-clamp: 3;
+						line-clamp: 3;
+						-webkit-box-orient: vertical;
+					}
 
-						}
+				}
 
-						.top{
-							display: flex;
-							.name{
-								font-weight: 700;
-								font-size: .9em;
-								text-overflow: ellipsis;
-								white-space: nowrap;
-								overflow: hidden;
-								max-width: 70%;
-							}
+				.infoWrapper{
+					display: flex;
+					justify-content: space-between;
+					font-size: 0.8em;
+					color: #C7C8D9;
+					margin-top: @rhythm * 2;
 
-							.reputation{
-								font-size: .9em;
-								margin-left: @rhythm;
-								font-weight: 700;
-								color: @color-main;
-							}
+					.actionsWrapper{
+						display: flex;
+						justify-content: flex-end;
 
-						}
-
-						.light{
-							font-size : 0.7em;
-							color : @color-gray;
+						>div{
+							padding-left: @rhythm * 1.5;
 						}
 					}
-	
-					&.extra{
-						width: 20px;
-						text-align: right;
-					}
 				}
-
-
-
-	
-			}
-
-			.blockingWrapper{
-				display : none;
-			}
-
-			&.userblocking{
-	
-				.subscribebuttonstop{
-					display: none;
-				}
-	
-				.blockingWrapper{
-					display: inline;
-				}
-
 				
-			}
-	
-			.subscribebuttonstop{
-				.unsubscribe{
+
+				.addressTable{
+					cursor: pointer;
+
+					
+					
+					>div{
+
+						vertical-align: middle;
+		
+						&.iconWrapper{
+							width: 24px;
+							text-align: center;
+
+							.usericon{
+								height: 24px;
+								width: 100%;
+
+								.letter{
+									position: relative;
+									font-size: @rhythm * 2;
+									top: -10px;
+								}
+							}
+						}
+		
+						&.label{
+							padding-left: @rhythm;
+							text-overflow: ellipsis;
+							overflow: hidden;
+							white-space: nowrap;
+		
+							.cur{
+								color : @color-main;
+
+							}
+
+							.top{
+								display: flex;
+								.name{
+									font-weight: 700;
+									font-size: .9em;
+									text-overflow: ellipsis;
+									white-space: nowrap;
+									overflow: hidden;
+									max-width: 70%;
+								}
+
+								.reputation{
+									font-size: .9em;
+									margin-left: @rhythm;
+									font-weight: 700;
+									color: rgb(var(--color-txt-ac))
+								}
+
+							}
+
+							.light{
+								font-size : 0.7em;
+								color : @color-gray;
+							}
+						}
+		
+						&.extra{
+							width: 20px;
+							text-align: right;
+						}
+					}
+
+
+
+		
+				}
+
+				.blockingWrapper{
 					display : none;
 				}
 
-	
-				&.following{
-					.unsubscribe{
-						display : inline;
+				&.userblocking{
+		
+					.subscribebuttonstop{
+						display: none;
 					}
-
-					.notificationturn{
+		
+					.blockingWrapper{
 						display: inline;
 					}
+
 					
-					.subscribe{
+				}
+		
+				.subscribebuttonstop{
+					.unsubscribe{
 						display : none;
+					}
+
+		
+					&.following{
+						.unsubscribe{
+							display : inline;
+						}
+
+						.notificationturn{
+							display: inline;
+						}
+						
+						.subscribe{
+							display : none;
+						}
 					}
 				}
 			}

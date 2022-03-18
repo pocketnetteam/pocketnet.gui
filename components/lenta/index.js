@@ -288,6 +288,9 @@ var lenta = (function(){
 
 			rebuilddelay : function(){
 
+				showRecommendedUsers.show = true;
+				recommendedusers = null;
+
 				if (el.c)
 					el.c.addClass('rebuilding')
 
@@ -2477,22 +2480,26 @@ var lenta = (function(){
 
 			recommendedusers : function(){
 				
+				if (!recommendedusers){
 
-				self.nav.api.load({
+					self.nav.api.load({
 
-					open : true,
-					id : 'recommendedusers',
-					el : el.recommendedusers,
-					animation : false,
+						open : true,
+						id : 'recommendedusers',
+						el : el.recommendedusers,
+						animation : false,
+	
+						essenseData : {
+						},
+						
+						clbk : function(e, p){
+							recommendedusers = p;
+						}
+	
+					})
 
-					essenseData : {
-					},
-					
-					clbk : function(e, p){
-						recommendedusers = p;
-					}
+				}
 
-				})
 			},
 			debugusers : function(el){
 				var _cn = el.find('.testusersprofiles')
@@ -2963,7 +2970,7 @@ var lenta = (function(){
 						})
 					})
 					
-				
+
 				self.shell({
 					name :  tpl,
 					inner : p.inner,
@@ -2981,14 +2988,14 @@ var lenta = (function(){
 				}, function(_p){
 
 					
-					// if (tpl ==='groupshares'){
+					if (tpl ==='groupshares' && isMobile() && app.test){
 
-					// 	el.recommendedusers = _p.el.find('.recommendeduserscnt');
+						el.recommendedusers = _p.el.find('.recommendeduserscnt');
 
-					// 	if (!essenseData.video){
-					// 		renders.recommendedusers();
-					// 	}
-					// }
+						if (!essenseData.video){
+							renders.recommendedusers();
+						}
+					}
 
 					if (_p.inner == append){
 						sharesInview = sharesInview.concat(shares)	
@@ -4667,6 +4674,11 @@ var lenta = (function(){
 					parallax = null
 				}
 
+				if (recommendedusers){
+					recommendedusers.destroy();
+					recommendedusers = null;
+				}
+
 				app.actions.playingvideo(null);
 
 				_.each(initedcommentes, function(c){
@@ -4755,7 +4767,6 @@ var lenta = (function(){
 				
 
 				el.share = {};
-
 				showRecommendedUsers.show = true;
 
 				if (essenseData.horizontal){

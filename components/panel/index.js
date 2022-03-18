@@ -127,10 +127,15 @@ var panel = (function(){
 			)
 				renders.stacking()
 
-		
+	
 			
 			renders.topusers();
-			//renders.bestposts();
+
+			/*if (self.app.test){
+				
+				renders.bestposts();
+
+			}*/
 
 
 		}

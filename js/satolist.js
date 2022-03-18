@@ -4453,7 +4453,7 @@ Platform = function (app, listofnodes) {
                                     id : 'buy-pkoin3',
                                     q : '  ',
                                     a : 'Your PKOIN wallet address is placed in your account. <br>For looking that Click your avatar icon into the right top corner',
-                                    img: '<img src="img/buy-pkoin3.jpg" alt="" />'
+                                    img: '<img src="img/Myvideos1.jpg" alt="" />'
                                 },
                                 {
                                     id : 'buy-pkoin4',
@@ -4569,7 +4569,7 @@ Platform = function (app, listofnodes) {
                                     id : 'earnbastyon9en',
                                     q : '',
                                     a : 'You will need to deposit PKOIN to earn stakes, click Deposit. After clicking Deposit you will see a PKOIN address. You can copy the address and send PKOIN to it. If you did not yet buy PKOIN, you can buy it in the following ways: <br />1.	Buy for cryptocurrency at pkoin.net (or on DigiFinex or Bitforex exchanges) <br />2.	Buy it by selecting PKOIN/Peer-to-Peer tag on the left side of the Bastyon application. Select a seller and write to them in chat (at your own risk)',
-                                    img: '<img src="img/earnbastyon9ru (1).jpg" alt="" />'
+                                    img: '<img src="img/per-to-per2.jpg" alt="" />'
                                 },	
                                 {
                                     id : 'earnbastyon10en',
@@ -5012,7 +5012,7 @@ Platform = function (app, listofnodes) {
                                     id : 'privatekey1',
                                     q : 'Click your avatar icon in the top right corner',
                                     a : '',
-                                    img: '<img src="img/privatekey1.jpg" alt="" />'
+                                    img: '<img src="img/Myvideos1.jpg" alt="" />'
                                 },
                                 {
                                     id : 'privatekey2',
@@ -5177,7 +5177,7 @@ Platform = function (app, listofnodes) {
                                         id : 'buy-pkoin1',
                                         q : '  ',
                                         a : 'Вы можете купить PKOIN следующими способами: Выберите категорию «PKOIN/Из рук в руки» и посмотрите на предложения о купле/продаже PKOIN, либо сами разместите свое предложение о купле/продаже PKOIN.	',
-                                        img: '<img src="img/per-to-per.jpg" alt="" />'
+                                        img: '<img src="img/wn.jpg" alt="" />'
                                     },
                                     {
                                         id : 'buy-pkoin21',
@@ -5195,7 +5195,7 @@ Platform = function (app, listofnodes) {
                                         id : 'buy-pkoin3',
                                         q : '  ',
                                         a : 'Адрес вашего PKOIN-кошелька находится в вашем аккаунте на Бастионе. Чтобы его найти – кликните иконку вашего аватара, которая расположена в правом верхнем углу.',
-                                        img: '<img src="img/upl1.jpg" alt="" />'
+                                        img: '<img src="img/wn.jpg" alt="" />'
                                     },
                                     {
                                         id : 'buy-pkoin4',
@@ -5311,7 +5311,7 @@ Platform = function (app, listofnodes) {
                                         id : 'earnbastyon9',
                                         q : '',
                                         a : 'Вам нужно будет внести PKOIN, чтобы заработать ставки, нажмите "Внести". После нажатия кнопки Пополнить счет вы увидите адрес пункта. Вы можете скопировать адрес и отправить по нему PKOIN. Если вы еще не купили PKOIN, вы можете купить его следующими способами: <br />1. Покупайте за криптовалюту на pkoin.net (или на биржах DigiFinex Orbit forex)<br />2. Купите его, выбрав тег "PKOIN/Из рук в руки" в левой части приложения Bastyon. Выберите продавца и напишите ему в чат (на свой страх и риск)',
-                                        img: '<img src="img/earnbastyon9ru (1).jpg" alt="" />'
+                                        img: '<img src="img/earnbastyon9ru99.jpg" alt="" />'
                                     },	
                                     {
                                         id : 'earnbastyon10',
@@ -5509,28 +5509,28 @@ Platform = function (app, listofnodes) {
                                 },
                                 {
                                     id : 'Uploading2',
-                                    q : 'Нажмите «Что нового?» во вкладке «Вся лента»',
+                                    q : 'Нажмите «Что нового?» во вкладке «Лента»',
                                     a : '',
-                                    img: '<img src="img/upl1.jpg" alt="" />'
+                                    img: '<img src="img/videoUpl.jpg" alt="" />'
                                 },
                                 {
                                     id : 'Uploading3',
                                     q : 'Далее, нажмите «Загрузить видео», а затем во всплывающем окне нажмите «Выбрать файл». Выберите на персональном компьютере необходимый файл и ожидайте окончания загрузки и последующего перекодирования видео. ',
                                     a : '',
-                                    img: '<img src="img/upl2.jpg" alt="" />',
+                                    img: '<img src="img/videoUpl2.jpg" alt="" />',
                                     
                                 },
                                 {
                                     id : 'Uploading4',
                                     q : '',
                                     a : '',
-                                    img: '<img src="img/upl3.jpg" alt="" />'
+                                    img: '<img src="img/videoUpl3.jpg" alt="" />'
                                 },
                                 {
                                     id : 'Uploading5',
                                     q : '',
                                     a : '',
-                                    img: '<img src="img/upl4.jpg" alt="" />'
+                                    img: '<img src="img/videoUpl4.jpg" alt="" />'
                                 },
                                 {
                                     id : 'Uploading6',
@@ -5562,13 +5562,13 @@ Platform = function (app, listofnodes) {
                                     id : 'Myvideos1',
                                     q : '  ',
                                     a : 'Нажмите иконку вашего аватара в правом верхнем углу.',
-                                    img: '<img src="img/prkey1.jpg" alt="" />'
+                                    img: '<img src="img/wn.jpg" alt="" />'
                                 },
                                 {
                                     id : 'Myvideos2',
                                     q : ' ',
                                     a : 'Далее, нажмите кнопку «управление»',
-                                    img: '<img src="img/prkey2.jpg" alt="" />'
+                                    img: '<img src="img/manage.jpg" alt="" />'
                                 },
                                 {
                                     id : 'Myvideos3',
@@ -5756,13 +5756,13 @@ Platform = function (app, listofnodes) {
                                     id : 'privatekey1',
                                     q : 'Кликните по своей иконке, находящейся в правом верхнем углу',
                                     a : '',
-                                    img: '<img src="img/prkey1.jpg" alt="" />'
+                                    img: '<img src="img/wn.jpg" alt="" />'
                                 },
                                 {
                                     id : 'privatekey2',
                                     q : 'Далее, нажмите кнопку «управление»',
                                     a : '',
-                                    img: '<img src="img/prkey2.jpg" alt="" />'
+                                    img: '<img src="img/manage.jpg" alt="" />'
                                 },
                                 {
                                     id : 'privatekey3',
@@ -5816,6 +5816,22 @@ Platform = function (app, listofnodes) {
                                 	
                                 
                                 
+                            ]
+                        
+                        },
+                        {
+                        
+                            name : 'Бонусная Программа Bastyon',
+                            id : 'bonus',
+                        
+                            group : [
+                        
+                                {
+                                    id : 'bonus1',
+                                    q : '',
+                                    a : 'Критерии для получения бонуса за оригинальный контент:  Каждые 15 тысяч просмотров видео + 1500 пятизвёздочных рейтингов от уникальных пользователей + 1500 реферальных пользователей <br />PKOIN или Bitcoin:  1,000 USDT <br />Как ускорить получение бонуса?<br />Делитесь ссылкой на видео в социальных сетях, с помощью мессенджеров или через почту. Выставляйте эксклюзивные материалы для подписчиков в Бастионе (это делается при создании поста, выбрать Для Подписчиков). Эксклюзивные материалы увеличат количество реферальных подписок.<br />Делитесь ссылкой на ваш профиль.<br />Всегда выбирайте Реферальная Ссылка, когда делитесь ссылкой на Бастион (на видео или профиль).<br />Если вы пригласите блоггера и докажете это, вы получите бонус в размере до 25% от первых 4 бонусов.<br />По вопросам обращайтесь support@bastyon.com.',
+                                    img: ''
+                                },                                  
                             ]
                         
                         },
@@ -7664,6 +7680,7 @@ Platform = function (app, listofnodes) {
                     t.current = value;
 
                     self.app.platform.sdk.categories.clbks.selected.lenta && self.app.platform.sdk.categories.clbks.selected.lenta();
+
 
                     t.save()
 
@@ -10591,12 +10608,7 @@ Platform = function (app, listofnodes) {
                         }
 
                     })
-                    .catch(function(e){
 
-                        if (clbk){
-                            clbk(null, e);
-                        }
-                    })
 
                 }
                 else{
@@ -13356,7 +13368,6 @@ Platform = function (app, listofnodes) {
 
             select : function(id, _k){
 
-
                 if(!id) return 'emptyid'
 
                 var allcats = self.sdk.categories.get(_k)
@@ -13390,7 +13401,6 @@ Platform = function (app, listofnodes) {
             },
 
             exclude : function(id, _k){
-
 
                 if(!id) return 'emptyid'
 
