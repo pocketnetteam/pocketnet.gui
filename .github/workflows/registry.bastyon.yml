@@ -19,8 +19,8 @@ jobs:
           npm i
           npm run minimize:bastyon
       - name: Archive
-        run: tar czfv bastyon.tgz --exclude bastyon.tgz --exclude .git --exclude .gitignore --exclude .github --exclude package.json --exclude node_modules --exclude .well-known --exclude assets --exclude proxy16 --exclude cordova --exclude res --exclude build .
+        run: tar czf ../bastyon.tgz --exclude .git --exclude .gitignore --exclude .github --exclude package.json --exclude node_modules --exclude .well-known --exclude assets --exclude proxy16 --exclude cordova --exclude res --exclude build .
       - uses: actions/upload-artifact@v2
         with:
           name: bastyon.tgz
-          path: bastyon.tgz
+          path: ../bastyon.tgz
