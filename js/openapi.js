@@ -48,9 +48,8 @@ retry(function(){
 					embeddingSettigns = JSON.parse(hexDecode(p.embeddingSettigns || "7B7D"))
 				}catch(e){}
 
-
 				if(embeddingSettigns.black){
-					$('html').addClass('stblack')
+					$('html').attr('theme', 'black')
 				}
 
 				if (embeddingSettigns.ref){

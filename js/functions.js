@@ -579,8 +579,6 @@
 				if(p.leftbg) 
 					h+='<div class="leftbg"><div>'+p.leftbg+'</div></div>';
 
-				h+=	 p.allowHide ? '<div class="wndcontent content customscroll">' + content + '<div class="changeStateButtons"><div class="hideButton changeButton"><i class="fas fa-minus"></i></div><div class="closeButton changeButton"><i class="fas fa-times"></i></div><div class="changeButton expandButton hidden"><i class="fas fa-expand-arrows-alt"></i></div></div></div>' : '<div class="wndcontent customscroll content">'+content+'</div>';
-
 				if(p.header) 
 				{
 					h+='<div class="wndheader">'+ (app.localization.e(p.header) || p.header)+'</div>';
@@ -589,6 +587,10 @@
 				{	
 					closedbtnclass = 'onwhite'
 				}
+
+				h+=	 p.allowHide ? '<div class="wndcontent content customscroll">' + content + '<div class="changeStateButtons"><div class="hideButton changeButton"><i class="fas fa-minus"></i></div><div class="closeButton changeButton"><i class="fas fa-times"></i></div><div class="changeButton expandButton hidden"><i class="fas fa-expand-arrows-alt"></i></div></div></div>' : '<div class="wndcontent customscroll content">'+content+'</div>';
+
+			
 
 				if (!p.noButtons) {
 					h +=	 '<div class="buttons windowmainbuttons">';
@@ -723,16 +725,7 @@
 				var down = {
 					cancellable : true,	
 
-					basevalue : function(){
-
-						if(wnd.hasClass('showbetter')){
-							return 45
-						}
-
-						return 130
-					},
-					
-					positionclbk : function(px){
+					positionclbk : function(px, e){
 						var percent = Math.abs(px) / trueshold;
 					},
 
@@ -783,8 +776,8 @@
 
 				cnt = wnd.find('.wndcontent')
 
-				if(!p.showbetter)
-					cnt.on('scroll', _.throttle(wndcontentscrollmobile, 50))
+				/*if(!p.showbetter)
+					cnt.on('scroll', _.throttle(wndcontentscrollmobile, 50))*/
 
 			}
 
@@ -864,7 +857,7 @@
 
 					clearmem();
 
-				}, 220)	
+				}, isMobile() ? 220 : 1)	
 				
 				if(p.onclose) p.onclose()
 
@@ -6561,12 +6554,15 @@
 		var st = 0,
 			sh = 0;
 
+		var w = 'auto'
+
 		if(!p) p = {};
 
 		if(!p.inel) {
 			p.inel = $(window);
 			st = p.app.lastScrollTop;
-			sh = app.height;
+			sh = p.app.height;
+			w = p.app.width;
 		}
 
 		else{
@@ -6582,6 +6578,7 @@
 
 			st = inel.scrollTop()
 			sh = inel.height()
+			w = inel.width()
 		}
 		
 		if(!p.offset) {
@@ -6610,12 +6607,12 @@
 
 			var el = $(this);
 
-			var offsetTop = p.cache && el.data('c_' + p.f) ? el.data('c_' + p.f) : el[p.f]().top,
-				height = p.cache && el.data('c_height') ? el.data('c_height') : el.height(),
+			var offsetTop = p.cache && el.data('c_' + w + '_' + p.f) ? el.data('c_' + w + '_' + p.f) : el[p.f]().top,
+				height = p.cache && el.data('c_'+ w + '_height') ? el.data('c_'+ w + '_height') : el.height(),
 				bottom = offsetTop + height;
 
-			el.data('c_' + p.f, offsetTop)
-			el.data('c_height', height)
+			el.data('c_' + w + p.f, offsetTop)
+			el.data('c_'+ w + '_height', height)
 
 			var _part = offsetTop >= range.top && offsetTop < range.bottom || 
 				bottom <= range.bottom && bottom > range.top;
@@ -6784,10 +6781,10 @@
 
 		}
 
-		var applyDirection = function(direction, v){
+		var applyDirection = function(direction, v, e){
 			if (direction.positionclbk){
 				needclear = true
-				direction.positionclbk(v)
+				direction.positionclbk(v, e)
 			}
 		}
 
@@ -6837,7 +6834,7 @@
 					}
 
 					self.clear()
-						
+					document.ontouchmove = () => true
 
 					return
 
@@ -6862,6 +6859,8 @@
 
 				if (phase == 'start'){
 					mainDirection = null
+
+					document.ontouchmove = () => false
 				}
 				
 				if (phase == 'move'){
@@ -6870,7 +6869,7 @@
 
 						mainDirection = dir
 
-						applyDirection(mainDirection, distance)
+						applyDirection(mainDirection, distance, e)
 
 						set(mainDirection.i, distance)
 						

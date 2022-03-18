@@ -1543,6 +1543,7 @@ var post = (function () {
 							url: url,
 							og: og,
 							share: share,
+							fullplayer : true
 						},
 
 						additionalActions: function () {
@@ -1949,7 +1950,7 @@ var post = (function () {
 
 			wnd: {
 				showbetter : true,
-				class: 'withoutButtons postwindow ' + (p.pip ? '' : 'normalizedmobile'),
+				class: 'withoutButtons postwindow ' + (p.pip ? '' : 'normalizedmobile maxheight'),
 				pip : p.pip || false,
 				expand : function(){
 

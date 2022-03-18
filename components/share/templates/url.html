@@ -9,21 +9,37 @@
 
 			var info = app.platform.sdk.videos.storage[url] || app.platform.sdk.videos.storage[meta.id] || {}
 			var aspectRatio = (info.data || {}).aspectRatio || 0;
+			
+			var image = videoImage(url)
 	%>
 		<div class="videoWrapper fullscreenActive <%- (aspectRatio < 1.25) && (aspectRatio >= 0.9) ? 'squareVideo' : ''%> <%- (aspectRatio < 0.9) && (aspectRatio != 0) ? 'verticalVideo' : ''%>" pid="<%- makeid() %>">
 
-			<% if(meta.type == 'youtube' && window.cordova) {%>
+			<% if(meta.type != 'peertube' && (!fullplayer || (meta.type == 'youtube' && window.cordova))) {%>
 
-				<div class="js-player-dummy">
-					<div class="jsPlayerLoading">
-						<div class="jsPlayerLoadingD table watchonyoutube">
+				<div class="js-player-dummy js-player-ini" data-plyr-provider="<%-meta.type%>" data-plyr-embed-id="<%-meta.url%>" data-plyr-video-id="<%-meta.id%>" data-plyr-host-name="<%-meta.host_name || ''%>">
+
+					<div class="jsPlayerLoading ytbvimb" image="<%-image%>">
+						<div class="jsPlayerLoadingD watchonyoutube">
 							<div>
-								<a elementsid="jsplayerhref" href="<%- url %>" cordovalink="_system" target="_blank">
-									<button class="black">
-										<i class="fab fa-youtube"></i> Watch on Youtube
-									</button>
-									
-								</a>
+
+								<% if(meta.type == 'youtube' && window.cordova) {%>
+
+									<a elementsid="jsplayerhref" href="<%- url %>" cordovalink="_system" target="_blank">
+										<button class="black">
+											<i class="fab fa-youtube"></i> Watch on Youtube
+										</button>
+									</a>
+
+								<% } else { %>
+									<div class="initvideoplayer">
+										<i class="fas fa-play"></i>
+									</div>
+
+									<div class="jsPlayerLoading">
+										<div class="jsPlayerLoading-matte"></div>
+										<div class="preloader5"><img src="./img/three-dots.svg"/></div>
+									</div>
+								<% } %>
 							</div>
 						</div>
 					</div>
@@ -31,7 +47,7 @@
 		
 			<% } else { %> 
 				
-				<div class="js-player" data-plyr-provider="<%-meta.type%>" data-plyr-embed-id="<%-meta.url%>" data-plyr-video-id="<%-meta.id%>" data-plyr-host-name="<%-meta.host_name || ''%>">
+				<div class="js-player js-player-ini" data-plyr-provider="<%-meta.type%>" data-plyr-embed-id="<%-meta.url%>" data-plyr-video-id="<%-meta.id%>" data-plyr-host-name="<%-meta.host_name || ''%>">
 					
 					<% if(typeof preview != 'undefined' && preview) {  %>
 

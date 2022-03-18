@@ -996,12 +996,10 @@
   #share #post .iconWrapper {
     width: 3.5em;
     padding-top: 0.5em;
-    padding-left: 0.5em;
     padding-right: 0;
     display: block;
   }
   #share #post .cntswrk {
-    margin-left: 0.5em;
     padding-left: 0;
     padding-right: 0;
   }

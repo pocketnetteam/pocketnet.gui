@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js electronapp" lang="">
+<html class="no-js electronapp customscroll" lang="">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -19,7 +19,7 @@
         connect-src https: wss: http: ws: file: data: blob:;
         img-src 'self' data: http: https: file:;
         script-src 'self' blob: __VAR__.domain:* player.vimeo.com www.youtube.com s.ytimg.com cdn.jsdelivr.net/joypixels/ 'unsafe-eval' 'unsafe-inline';
-        frame-src 'self' player.vimeo.com www.youtube.com;
+        frame-src 'self' __VAR__.domain player.vimeo.com www.youtube.com;
         style-src 'self' data: __VAR__.domain:* https://cdn.jsdelivr.net/joypixels/ https://use.fontawesome.com 'unsafe-inline' ;
         font-src 'self' data: __VAR__.domain:* https://use.fontawesome.com;
         media-src blob: *">
@@ -48,7 +48,7 @@
         
        
     </head>
-    <body id="application" class="menu-hide customscroll">
+    <body id="application" class="menu-hide ">
 
         <div id="windowsContainer">
         </div>

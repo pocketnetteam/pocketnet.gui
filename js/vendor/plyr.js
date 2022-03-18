@@ -6087,6 +6087,8 @@ typeof navigator === "object" && (function (global, factory) {
           player.elements.poster.style.backgroundSize = 'cover';
         }
       }).catch(function () {});
+
+
       var config = player.config.youtube; // Setup instance
       // https://developers.google.com/youtube/iframe_api_reference
 
@@ -6346,7 +6348,8 @@ typeof navigator === "object" && (function (global, factory) {
           }
         }
       });
-    }
+    },
+    
   };
 
   // ==========================================================================
@@ -9154,6 +9157,7 @@ typeof navigator === "object" && (function (global, factory) {
 
 var PlyrEx = async function(target, options, clbk, readyCallback) {
     var self = this;
+    
     var clear = function(){
       video_options = {}
       target = null

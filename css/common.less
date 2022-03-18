@@ -607,11 +607,39 @@
             top : 0;
             bottom : 0;
             right: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-            >div{
-                vertical-align: middle;
-                text-align: center;
+        &.ytbvimb{
+            padding-bottom: 56.25%;
+
+            .jsPlayerLoading{
+                display: none;
             }
+
+            &.loading{
+                .jsPlayerLoading{
+                    height: 100%;
+                    max-height: none;
+                    display: block;
+                    .preloader5{
+                        display: block;
+                    }
+                }
+            }
+        }
+
+        .initvideoplayer{
+            text-align: center;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            font-size: 2em;
+            margin : 0 auto;
+
+            .shadowText();
         }
     }
 
@@ -1247,7 +1275,7 @@
 
         .video-js{
             max-height: 80vh;
-            
+            max-height: calc(var(--vh, 1vh) * 80);
         }
 
         .shareTable{
@@ -1435,33 +1463,7 @@
 
             .videoWrapper{
                 max-width: none;
-                /*background: #000;
-            
-                &.squareVideo,
-                &.verticalVideo {
-                    background: #000;
-                    position: relative;
-                    overflow: hidden;
-
-                    .js-player{
-                        margin : 0 auto;
-                        max-width: 450px;
-                        position : static;
-                    }
-
-
-                    .video-js{
-                        position : static;
-
-                    }
-                }
-
-                &.squareVideo{
-                    .js-player{
-                        max-width: 500px;
-                    }
-                }*/
-
+               
                 .videoTips{
                     display: none;
                 }
@@ -1499,6 +1501,18 @@
     }
 }
 
+html.mobileview{
+    .share_common{
+        .images{
+            .imagesContainer{
+                &.owlcar{
+                    max-width: none;
+                    contain: strict;
+                }
+            }
+        }
+    }
+}
 
 /*t*/ @media only screen and (max-width: 768px){
 
@@ -1706,7 +1720,7 @@
             max-width: 768px;
             position : relative;
             border-radius: 0;
-
+            
             .js-player{
                 border-radius: 0;
                 overflow: visible;
@@ -1732,7 +1746,7 @@
 
         .jsPlayerLoading{
             width: 100%;
-            height: 300px;
+            /*height: 300px;*/
         }
 
         .meta{

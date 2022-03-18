@@ -422,7 +422,7 @@ ____loclib.unblock = "Разблокировать"
 ____loclib.share = "Поделиться"
 ____loclib.info = "Информация"
 ____loclib.copyLink = "Скопировать ссылку"
-____loclib.sendMessenger = "Отправить с помощью мессенджера"
+____loclib.sendMessenger = "Отправить в чат"
 ____loclib.includeRefLink = "Сделать ссылку реферальной"
 ____loclib.shareVia = "Поделиться"
 

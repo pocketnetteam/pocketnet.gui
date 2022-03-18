@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="">
+<html class="no-js customscroll" lang="">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -28,7 +28,7 @@
         connect-src 'self' http: ws: https: wss:;
         img-src 'self' data: http: https: __VAR__.domain:*;
         script-src 'self' blob: __VAR__.domain:* player.vimeo.com www.youtube.com s.ytimg.com cdn.jsdelivr.net/joypixels/ 'unsafe-eval' 'unsafe-inline';
-        frame-src 'self' player.vimeo.com www.youtube.com;
+        frame-src 'self' __VAR__.domain player.vimeo.com www.youtube.com;
         style-src 'self' data: __VAR__.domain:* cdn.jsdelivr.net/joypixels/ use.fontawesome.com 'unsafe-inline';
         font-src 'self' data: __VAR__.domain:* use.fontawesome.com;
         media-src blob: *">
@@ -56,7 +56,7 @@
         <link rel="icon" href="./favicon.svg" sizes="any" type="image/svg+xml">
        
     </head>
-    <body id="application" class="menu-hide customscroll">
+    <body id="application" class="menu-hide ">
 
         <div id="windowsContainer">
         </div>

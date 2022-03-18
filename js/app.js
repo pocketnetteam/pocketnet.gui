@@ -1080,6 +1080,8 @@ Application = function(p)
 
 		initevents()
 
+		moment.locale(self.localization.key)
+
 		if(typeof window.cordova != 'undefined')
 		{
 			document.addEventListener('deviceready', function(){
@@ -1347,13 +1349,10 @@ Application = function(p)
 
 		getScroll : function(){
 
-			var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-			var s = scrollTop //self.el.window.scrollTop()
+			var s = window.pageYOffset || document.documentElement.scrollTop;
 
 			if(!self.fullscreenmode){
 				self.lastScrollTop = s
-
 			}
 
 			return s
@@ -1422,6 +1421,10 @@ Application = function(p)
 		self.height = self.el.window.height()
 		self.width = self.el.window.width()
 
+		document.documentElement.style.setProperty('--vh', `${self.height * 0.01}px`);
+
+		console.log("SA")
+
 		istouchstyle()
 
 		var showPanel = '1'
@@ -1438,10 +1441,10 @@ Application = function(p)
 
 				var scrollTop = self.actions.getScroll()
 
+
 				_.each(self.events.scroll, function(s){
 					s(scrollTop, blockScroll)
 				})
-
 
 				if(self.mobileview && !cr){
 
@@ -1536,7 +1539,6 @@ Application = function(p)
 
         window.addEventListener('resize', function(){
 
-
 			delayresize = slowMade(function(){
 				window.requestAnimationFrame(function(){
 
@@ -1562,10 +1564,16 @@ Application = function(p)
 						})
 					})
 
+					let vh = window.innerHeight * 0.01;
+					document.documentElement.style.setProperty('--vh', `${vh}px`);
+
 				})
 
 			}, delayresize, 30)
 
+
+			
+			
 		})
 	}
 
@@ -1609,8 +1617,6 @@ Application = function(p)
 
 		var value = time || new Date()
 
-		moment.locale(self.localization.key)
-
 		if ((moment().diff(value, 'days')) === 0) {
 
 			if((moment().diff(value, 'hours') < 12 )) 
@@ -1630,21 +1636,18 @@ Application = function(p)
 		if (realtimeInterval) 
 			clearInterval(realtimeInterval)
 
-		if(typeof window != 'undefined' && typeof $ != 'undefined'){
-
-		}
-
 		realtimeInterval = setInterval(function(){
 
 			var realtimeelements = $('.realtime');
 
+			if(realtimeelements.length > 30 || isMobile()) return
 
 			realtimeelements.each(function(){
 				var el = $(this);
 
 				var time = el.attr('time');
 				var utc =  el.attr('utc');
-
+				var _ctime = el.html();
 
 				var ctime = null;
 
@@ -1655,14 +1658,18 @@ Application = function(p)
 					ctime = self.reltime(new Date(time))
 				}
 
-				el.html(ctime)
+				if(_ctime != ctime){
+					el.html(ctime)
+				}
+
+				
 
 				el = null
 
 			})
 
 			realtimeelements = null
-		}, 30000)
+		}, isMobile() ? 90000 : 30000)
 
 	}
 

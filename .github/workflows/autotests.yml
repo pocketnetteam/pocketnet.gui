@@ -2,8 +2,7 @@ name: Tests
 
 on:
   push:
-    branches: [ master ]
-    tags: v*
+    tags: v*.*.*
 
 jobs:
   build:

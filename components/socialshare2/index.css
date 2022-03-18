@@ -1,33 +1,47 @@
 #socialshare2 {
   padding: 1em 0;
 }
+#socialshare2 .includeRefWrapper {
+  padding-top: 0.5em;
+  text-align: center;
+}
 #socialshare2 .flexWrapper {
   overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
 }
-#socialshare2 .flexWrapper button {
+#socialshare2 .flexWrapper .button {
+  border-radius: 6px;
+  background: rgb(var(--background-secondary-theme));
   text-align: center;
-  padding-left: 0;
-  padding-right: 0;
-  width: 100%;
-  text-decoration: none;
-  position: relative;
+  padding: 1em;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  cursor: pointer;
 }
-#socialshare2 .flexWrapper button i {
-  top: 10px;
-  position: absolute;
-  right: 0.5em;
-  text-align: center;
+#socialshare2 .flexWrapper .button:hover {
+  opacity: 0.5;
+}
+#socialshare2 .flexWrapper .button i {
+  display: block;
+  margin-bottom: 0.5em;
+  font-size: 1.5em;
+}
+#socialshare2 .flexWrapper .button span {
+  white-space: nowrap;
+  display: block;
+  font-size: 0.8em;
 }
 #socialshare2 .flexWrapper > div {
-  margin-top: 0.5em;
+  flex-grow: 1;
+  padding: 0.5em;
+  width: 100%;
 }
-#socialshare2 .flexWrapper > div.includeRefWrapper {
-  padding-left: 0 0.5em;
-  padding-top: 1em;
-}
-#socialshare2 .flexWrapper > div.includeRefWrapper span {
-  margin-right: 1em;
-  font-size: 0.8em;
+#socialshare2 .flexWrapper > div:nth-last-child(1),
+#socialshare2 .flexWrapper > div:nth-last-child(2) {
+  width: 50%;
 }
 #socialshare2 .flexWrapper .forrepost .icon {
   padding-left: 0.5em;
@@ -44,9 +58,6 @@
   border: 0;
   width: 100%!important;
 }
-#socialshare2 .contentShareWrapper {
-  padding: 1.5em 0;
-}
 #socialshare2 .footer {
   text-align: center;
   padding: 0.5em 2em;
@@ -60,12 +71,18 @@
 #socialshare2 .tbl > div {
   vertical-align: middle;
 }
-#socialshare2 .embeddingWrapperCnt {
-  background: rgb(var(--background-secondary-theme));
-  padding-bottom: 1em;
+#socialshare2 .sharebuttons {
+  max-width: 520px;
 }
-#socialshare2 .embeddingWrapperCnt .preview {
-  display: none;
+#socialshare2 .embeddingWrapperCnt {
+  padding-bottom: 1em;
+  padding-top: 1em;
+  /*.preview{
+			display: none;
+		}*/
+}
+#socialshare2 .embeddingWrapperCnt .buttons {
+  text-align: center;
 }
 #socialshare2 .caption {
   font-size: 1.7em;
@@ -73,6 +90,7 @@
 }
 #socialshare2 .subcaption {
   padding: 1em 0;
+  text-align: center;
 }
 #socialshare2 .subcaption span {
   font-size: 0.8em;
@@ -95,6 +113,7 @@
   padding: 0.5em;
   border-radius: 10px;
   border: 1px solid rgb(var(--neutral-grad-0));
+  margin-top: 0.5em;
 }
 #socialshare2 .embedding {
   padding: 1em 0;
@@ -120,6 +139,9 @@
 }
 #socialshare2 .hidemore {
   display: none;
+}
+#socialshare2 .socialshareaction {
+  cursor: pointer;
 }
 #socialshare2 .socialsharebtn {
   width: 38px;
@@ -176,16 +198,47 @@
   font-size: 0.8em;
   font-weight: 500;
 }
-.wnd.sharingwindow2 {
-  /*z-index: 5000;*/
+#socialshare2 .backwrapper,
+#socialshare2 .embeddingWrapperCnt,
+#socialshare2 .sharewrapper {
+  display: none;
 }
-.wnd.sharingwindow2.textshowedwnd .wndinner {
-  max-height: 600px;
+#socialshare2 .backwrapper {
+  padding: 1em;
+  position: sticky;
+  top: 0;
+  background: rgb(var(--background-total-theme));
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  cursor: pointer;
+}
+#socialshare2 .backwrapper:hover {
+  opacity: 0.5;
+}
+#socialshare2 .backwrapper span {
+  font-size: 0.9em;
+}
+#socialshare2 .backwrapper i {
+  font-size: 0.9em;
+  width: 22px;
+}
+#socialshare2[show='share'] .sharewrapper {
+  display: block;
+}
+#socialshare2[show='embeding'] .embeddingWrapperCnt {
+  display: block;
+}
+#socialshare2[show] .backwrapper {
+  display: block;
+}
+#socialshare2[show] .directWrapper {
+  display: none;
 }
 .wnd.sharingwindow2 .wndinner {
-  max-height: 642px;
   width: auto;
-  max-width: 450px;
+  max-width: 370px;
 }
 .wnd.sharingwindow2 .wndinner .wndheader {
   display: none;
@@ -193,26 +246,9 @@
 .wnd.sharingwindow2 .wndinner .wndcontent {
   top: 0;
   bottom: 0;
+  max-height: 642px;
   padding: 0;
 }
 .wnd.sharingwindow2 .wndinner > div.buttons {
   display: none;
-}
-/*t*/
-@media only screen and (max-width: 768px) {
-  #socialshare2 .flexWrapper {
-    display: block;
-    overflow: hidden;
-  }
-  #socialshare2 .flexWrapper button {
-    font-size: 0.8em;
-    padding-left: 0;
-    padding-right: 0;
-  }
-  #socialshare2 .flexWrapper > div.includeRefWrapper {
-    padding: 1em 0;
-  }
-  #socialshare2 .button.medium {
-    width: 100%;
-  }
 }
