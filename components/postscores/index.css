@@ -7,7 +7,6 @@
 #postscores .caption {
   text-align: left;
   color: rgb(var(--neutral-grad-3));
-  margin-bottom: 0.5em;
 }
 #postscores .caption span {
   font-style: normal;
@@ -156,30 +155,9 @@
   max-height: 610px;
 }
 .postscoreswnd.wnd .wndcontent {
-  overflow: hidden;
   padding: 0;
 }
-.postscoreswnd.wnd #postscores {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-}
-.postscoreswnd.wnd #postscores .fordetailsusers {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  overflow-y: scroll;
-  top: 54px;
-}
 .postscoreswnd.wnd #postscores .youstars {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 54px;
   background: rgb(var(--neutral-grad-0));
   border-bottom: 1px solid rgb(var(--color-bg-orange));
 }
@@ -192,6 +170,6 @@
     display: table-cell;
   }
   #postscores #userslist {
-    padding-bottom: 150px;
+    padding-bottom: 2em;
   }
 }

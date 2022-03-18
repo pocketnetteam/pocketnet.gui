@@ -579,8 +579,6 @@
 				if(p.leftbg) 
 					h+='<div class="leftbg"><div>'+p.leftbg+'</div></div>';
 
-				h+=	 p.allowHide ? '<div class="wndcontent content customscroll">' + content + '<div class="changeStateButtons"><div class="hideButton changeButton"><i class="fas fa-minus"></i></div><div class="closeButton changeButton"><i class="fas fa-times"></i></div><div class="changeButton expandButton hidden"><i class="fas fa-expand-arrows-alt"></i></div></div></div>' : '<div class="wndcontent customscroll content">'+content+'</div>';
-
 				if(p.header) 
 				{
 					h+='<div class="wndheader">'+ (app.localization.e(p.header) || p.header)+'</div>';
@@ -589,6 +587,10 @@
 				{	
 					closedbtnclass = 'onwhite'
 				}
+
+				h+=	 p.allowHide ? '<div class="wndcontent content customscroll">' + content + '<div class="changeStateButtons"><div class="hideButton changeButton"><i class="fas fa-minus"></i></div><div class="closeButton changeButton"><i class="fas fa-times"></i></div><div class="changeButton expandButton hidden"><i class="fas fa-expand-arrows-alt"></i></div></div></div>' : '<div class="wndcontent customscroll content">'+content+'</div>';
+
+			
 
 				if (!p.noButtons) {
 					h +=	 '<div class="buttons windowmainbuttons">';
@@ -723,15 +725,6 @@
 				var down = {
 					cancellable : true,	
 
-					basevalue : function(){
-
-						if(wnd.hasClass('showbetter')){
-							return 45
-						}
-
-						return 130
-					},
-					
 					positionclbk : function(px){
 						var percent = Math.abs(px) / trueshold;
 					},
@@ -783,8 +776,8 @@
 
 				cnt = wnd.find('.wndcontent')
 
-				if(!p.showbetter)
-					cnt.on('scroll', _.throttle(wndcontentscrollmobile, 50))
+				/*if(!p.showbetter)
+					cnt.on('scroll', _.throttle(wndcontentscrollmobile, 50))*/
 
 			}
 
@@ -864,7 +857,7 @@
 
 					clearmem();
 
-				}, 220)	
+				}, isMobile() ? 220 : 1)	
 				
 				if(p.onclose) p.onclose()
 

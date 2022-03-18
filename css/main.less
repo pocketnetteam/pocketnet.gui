@@ -181,7 +181,7 @@
 }
 
 .customscrollclass(){
-    overflow-y: overlay!important;
+    overflow-y: overlay;
     overflow-x: hidden;
     scrollbar-width: 7px;
     scrollbar-color: rgba(var(--background-main-contrast), .15) rgba(var(--background-main-contrast), .05);
@@ -206,11 +206,6 @@
     }
 }
 
-/*
-.html:not(.mobileview).customscroll{
-    .customscrollclass()
-}
-*/
 
 
 @media only screen and (min-width: 768px){
@@ -595,6 +590,13 @@ html{
     }
 }
 
+.cancopy{
+    -webkit-user-select: text!important;
+    -khtml-user-select: text!important;
+    -moz-user-select: text!important;
+    -ms-user-select: text!important;
+    user-select: text!important;
+}
 /*
 html.testaddress{
     .vjs-peertube{
@@ -2900,6 +2902,7 @@ input[type=radio].radio:checked + label {
     &.withoutButtons{
         .wndinner{
 
+           
             >div{
                 &.buttons{
                     display: none!important;
@@ -2909,6 +2912,8 @@ input[type=radio].radio:checked + label {
 
         .wndcontent{
             bottom: 0;
+            border-bottom-left-radius: 6px;
+            border-bottom-right-radius: 6px;
         }
 
         &.allscreen{
@@ -3025,6 +3030,20 @@ input[type=radio].radio:checked + label {
             display: none!important;
         }
 
+    }
+
+    &.centercontentWindow{
+        .wndinner{
+            display: flex;
+            align-items: center;
+            box-shadow: none;
+
+            .wndcontent{
+                width: 100%;
+                position: static;
+                .shadowSmall();
+            }
+        }
     }
 }
 
@@ -6707,6 +6726,12 @@ html{
         }
     }
 
+    &.openapipnet{
+        .contentWrapper{
+            padding-top : 0;
+        }
+    }
+
 }
 
 html{
@@ -7550,10 +7575,12 @@ html.mobileview{
 
     .wnd{
         &.normalizedmobile{
+            contain: strict;
             .wndinner{
                 width: 100%;
                 background: transparent!important;
                 will-change: transform;
+                
             }
             .wndback{
                 backface-visibility: hidden;
@@ -7575,12 +7602,13 @@ html.mobileview{
                 left: 28%;
                 opacity: 0;
                 position: absolute;
+                display: none;
                 .transition(0.3s, top);
             }
     
             .wndinner{
                 max-height: none!important;
-                top : 0%!important;
+                top : auto!important;
                 bottom : 0;
                 height: auto!important;
                 max-width: none!important;
@@ -7588,23 +7616,26 @@ html.mobileview{
                 transform: translateY(100%);
                 backface-visibility: hidden;
                 will-change: transform;
-                contain: strict;
+                
               
                 .transition(0.3s, top);
 
                 .wndheader{
                     max-width: 768px;
                     margin : 0 auto;
+                    position: sticky;
                 }
     
                 .wndcontent{
+                    position: static;
                     border-bottom-right-radius: 0;
                     border-bottom-left-radius: 0;
                     bottom : 0;
                     backface-visibility: hidden;
-                    padding-bottom: 130px;
                     background: rgb(var(--background-total-theme));
                     max-width: 768px;
+                    max-height: 92vh;
+                    min-height: 30vh;
                     margin : 0 auto;
                     padding-left: 0;
                     padding-right: 0;
@@ -7644,16 +7675,16 @@ html.mobileview{
             &.sette{
 
                 .wndinner{
-                    -webkit-transform: translate3d(0, 130px, 0);
-                    transform: translate3d(0, 130px, 0);
+                    -webkit-transform: translate3d(0, 0, 0);
+                    transform: translate3d(0, 0, 0);
                     .transition(0.3s, transform);
                 }   
 
-                .windowmainbuttons{
+                /*.windowmainbuttons{
                     -webkit-transform: translate3d(0,-130px,0);
                     transform: translate3d(0,-130px,0);
                     .transition(0.3s, transform);
-                }
+                }*/
                 
                 .closeline,
                 .wndback{
@@ -7667,14 +7698,14 @@ html.mobileview{
                 &.sette{
       
                     .wndinner{
-                        -webkit-transform: translate3d(0,45px,0);
-                        transform: translate3d(0,45px,0);
+                        -webkit-transform: translate3d(0,0,0);
+                        transform: translate3d(0,0,0);
                     }   
                     
-                    .windowmainbuttons{
+                    /*.windowmainbuttons{
                         -webkit-transform: translate3d(0,-45px,0);
                         transform: translate3d(0,-45px,0);
-                    }
+                    }*/
                 }
 
                 .closeline{
@@ -7707,7 +7738,14 @@ html.mobileview{
             }
         }
 
-       
+        &.maxheight{
+            .wndinner{
+              
+                .wndcontent{
+                    height: 92vh;
+                }
+            }
+        }
     }
 
     

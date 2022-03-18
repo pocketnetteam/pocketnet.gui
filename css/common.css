@@ -478,6 +478,11 @@
   display: none;
 }
 .share_common .jsPlayerLoading.ytbvimb.loading .jsPlayerLoading {
+  height: 100%;
+  max-height: none;
+  display: block;
+}
+.share_common .jsPlayerLoading.ytbvimb.loading .jsPlayerLoading .preloader5 {
   display: block;
 }
 .share_common .jsPlayerLoading .initvideoplayer {

@@ -3056,35 +3056,7 @@ var lenta = (function(){
 				})
 			},
 
-			videoPreview : function(s, clbk){
-
-				var sel = el.share[s.txid]
-
-				if(s.settings.v == "a"){
-					var pl = sel.find('[data-plyr-provider][data-plyr-embed-id]')
-
-					var map = [];
-
-					$.each(pl, function(){
-
-						var d = $(this);
-
-						var obj = {
-							type : d.attr('provider'),
-							id : d.attr('eid')
-						};
-
-						map.push(videoImage(obj))
-
-					})
-				}
-				else
-				{
-					if (clbk)
-						clbk();
-				}
-			},
-
+			
 			images : function(el, s, clbk){
 
 				if (video) { return }

@@ -142,14 +142,9 @@
 .disable-hover * {
   pointer-events: none !important;
 }
-/*
-.html:not(.mobileview).customscroll{
-    .customscrollclass()
-}
-*/
 @media only screen and (min-width: 768px) {
   .customscroll {
-    overflow-y: overlay!important;
+    overflow-y: overlay;
     overflow-x: hidden;
     scrollbar-width: 7px;
     scrollbar-color: rgba(var(--background-main-contrast), 0.15) rgba(var(--background-main-contrast), 0.05);
@@ -490,6 +485,13 @@ html.mobile .unselectablemobile {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+.cancopy {
+  -webkit-user-select: text!important;
+  -khtml-user-select: text!important;
+  -moz-user-select: text!important;
+  -ms-user-select: text!important;
+  user-select: text!important;
 }
 /*
 html.testaddress{
@@ -2535,6 +2537,8 @@ input[type=radio].radio:checked + label {
 }
 .wnd.withoutButtons .wndcontent {
   bottom: 0;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
 }
 .wnd.withoutButtons.allscreen .wndcontent {
   bottom: 0;
@@ -2620,6 +2624,16 @@ input[type=radio].radio:checked + label {
 }
 .wnd.pipmini .piphidden {
   display: none!important;
+}
+.wnd.centercontentWindow .wndinner {
+  display: flex;
+  align-items: center;
+  box-shadow: none;
+}
+.wnd.centercontentWindow .wndinner .wndcontent {
+  width: 100%;
+  position: static;
+  box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
 }
 .wnd.hiddenState {
   position: fixed;
@@ -5504,6 +5518,9 @@ html.mobileview.scrollmodedown #navigation .fakem {
 html.mobileview #navigation .fakem {
   display: none;
 }
+html.openapipnet .contentWrapper {
+  padding-top: 0;
+}
 html.mobileview #panelWrapper {
   position: fixed;
   top: 65px;
@@ -6136,6 +6153,9 @@ html.mobileview .upbutton .mini {
 html.mobileview .upbutton .full {
   display: none;
 }
+html.mobileview .wnd.normalizedmobile {
+  contain: strict;
+}
 html.mobileview .wnd.normalizedmobile .wndinner {
   width: 100%;
   background: transparent!important;
@@ -6162,6 +6182,7 @@ html.mobileview .wnd.normalizedmobile .closeline {
   left: 28%;
   opacity: 0;
   position: absolute;
+  display: none;
   -moz-transition: top 0.3s;
   -o-transition: top 0.3s;
   -webkit-transition: top 0.3s;
@@ -6169,7 +6190,7 @@ html.mobileview .wnd.normalizedmobile .closeline {
 }
 html.mobileview .wnd.normalizedmobile .wndinner {
   max-height: none!important;
-  top: 0%!important;
+  top: auto!important;
   bottom: 0;
   height: auto!important;
   max-width: none!important;
@@ -6177,7 +6198,6 @@ html.mobileview .wnd.normalizedmobile .wndinner {
   transform: translateY(100%);
   backface-visibility: hidden;
   will-change: transform;
-  contain: strict;
   -moz-transition: top 0.3s;
   -o-transition: top 0.3s;
   -webkit-transition: top 0.3s;
@@ -6186,15 +6206,18 @@ html.mobileview .wnd.normalizedmobile .wndinner {
 html.mobileview .wnd.normalizedmobile .wndinner .wndheader {
   max-width: 768px;
   margin: 0 auto;
+  position: sticky;
 }
 html.mobileview .wnd.normalizedmobile .wndinner .wndcontent {
+  position: static;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
   bottom: 0;
   backface-visibility: hidden;
-  padding-bottom: 130px;
   background: rgb(var(--background-total-theme));
   max-width: 768px;
+  max-height: 92vh;
+  min-height: 30vh;
   margin: 0 auto;
   padding-left: 0;
   padding-right: 0;
@@ -6231,17 +6254,16 @@ html.mobileview .wnd.normalizedmobile.asette .wndinner {
   -webkit-transition: 0.2s;
   transition: 0.2s;
 }
-html.mobileview .wnd.normalizedmobile.sette .wndinner {
-  -webkit-transform: translate3d(0, 130px, 0);
-  transform: translate3d(0, 130px, 0);
-  -moz-transition: transform 0.3s;
-  -o-transition: transform 0.3s;
-  -webkit-transition: transform 0.3s;
-  transition: transform 0.3s;
+html.mobileview .wnd.normalizedmobile.sette {
+  /*.windowmainbuttons{
+                    -webkit-transform: translate3d(0,-130px,0);
+                    transform: translate3d(0,-130px,0);
+                    .transition(0.3s, transform);
+                }*/
 }
-html.mobileview .wnd.normalizedmobile.sette .windowmainbuttons {
-  -webkit-transform: translate3d(0, -130px, 0);
-  transform: translate3d(0, -130px, 0);
+html.mobileview .wnd.normalizedmobile.sette .wndinner {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
   -moz-transition: transform 0.3s;
   -o-transition: transform 0.3s;
   -webkit-transition: transform 0.3s;
@@ -6251,13 +6273,15 @@ html.mobileview .wnd.normalizedmobile.sette .closeline,
 html.mobileview .wnd.normalizedmobile.sette .wndback {
   opacity: 1;
 }
-html.mobileview .wnd.normalizedmobile.showbetter.sette .wndinner {
-  -webkit-transform: translate3d(0, 45px, 0);
-  transform: translate3d(0, 45px, 0);
+html.mobileview .wnd.normalizedmobile.showbetter.sette {
+  /*.windowmainbuttons{
+                        -webkit-transform: translate3d(0,-45px,0);
+                        transform: translate3d(0,-45px,0);
+                    }*/
 }
-html.mobileview .wnd.normalizedmobile.showbetter.sette .windowmainbuttons {
-  -webkit-transform: translate3d(0, -45px, 0);
-  transform: translate3d(0, -45px, 0);
+html.mobileview .wnd.normalizedmobile.showbetter.sette .wndinner {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
 }
 html.mobileview .wnd.normalizedmobile.showbetter .closeline {
   opacity: 0;
@@ -6275,6 +6299,9 @@ html.mobileview .wnd.normalizedmobile:only-child.asette .wndback {
   -webkit-transition: 0.2s;
   transition: 0.2s;
   opacity: 0;
+}
+html.mobileview .wnd.maxheight .wndinner .wndcontent {
+  height: 92vh;
 }
 html.pipmode .pipped {
   position: fixed!important;

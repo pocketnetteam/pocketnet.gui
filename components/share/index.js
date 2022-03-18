@@ -2718,7 +2718,7 @@ var share = (function(){
 						essenseData.close()
 					}
 				},
-				class : "smallWnd withoutButtons wndsharepost normalizedmobile showbetter"
+				class : "smallWnd withoutButtons wndsharepost normalizedmobile maxheight showbetter"
 			},
 
 			id : p._id,

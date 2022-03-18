@@ -1950,7 +1950,7 @@ var post = (function () {
 
 			wnd: {
 				showbetter : true,
-				class: 'withoutButtons postwindow ' + (p.pip ? '' : 'normalizedmobile'),
+				class: 'withoutButtons postwindow ' + (p.pip ? '' : 'normalizedmobile maxheight'),
 				pip : p.pip || false,
 				expand : function(){
 
