@@ -466,10 +466,9 @@
   top: 0;
   bottom: 0;
   right: 0;
-}
-.share_common .jsPlayerLoading .jsPlayerLoadingD > div {
-  vertical-align: middle;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .share_common .jsPlayerLoading.ytbvimb {
   padding-bottom: 56.25%;
