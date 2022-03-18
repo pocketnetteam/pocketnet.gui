@@ -699,6 +699,16 @@ var Proxy = function (settings, manage, test, logger) {
 					'bastynode.ru',
 					'storemi.ru',
 				],
+
+				18: [
+					'bastynode1.ru',
+					'gf110.ru',
+				],
+
+				19: [
+					'bastyonpeertube.ru',
+					'bastyonpeertube.site',
+				],
       		};
 
 			if (test){

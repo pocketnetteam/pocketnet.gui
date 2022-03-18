@@ -1,0 +1,26 @@
+name: Build web version Bastyon application
+
+on:
+  push:
+    tags: v*.*.*
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - name: Build
+        run: |
+          npm i
+          npm run minimize:bastyon
+      - name: Archive
+        run: tar czf ~/bastyon.tgz --exclude .git --exclude .gitignore --exclude .github --exclude package.json --exclude node_modules --exclude .well-known --exclude assets --exclude proxy16 --exclude cordova --exclude res --exclude build .
+      - uses: actions/upload-artifact@v2
+        with:
+          name: bastyon.tgz
+          path: ~/bastyon.tgz
