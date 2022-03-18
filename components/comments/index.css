@@ -965,6 +965,7 @@
   top: 7px;
   right: 7px;
   color: rgb(var(--neutral-grad-2));
+  cursor: pointer;
 }
 #comments .edit .emojionearea-editor,
 #comments .answer .emojionearea-editor,
@@ -1321,10 +1322,12 @@ html.mobile #comments .list .metatable > div.panelWrapper .panel {
   #comments .post .posttable > div.postCellWrapper .postaction .icon {
     text-align: center;
   }
-  #comments .edit.active .newcommentimages.active,
-  #comments .answer.active .newcommentimages.active,
-  #comments .post.active .newcommentimages.active {
-    display: none!important;
+  #comments .edit.active,
+  #comments .answer.active,
+  #comments .post.active {
+    /*.newcommentimages.active {
+					display: none!important;
+				}*/
   }
   #comments .edit.active .postbody .posttable > div.lcpp,
   #comments .answer.active .postbody .posttable > div.lcpp,
