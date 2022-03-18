@@ -6217,7 +6217,9 @@ html.mobileview .wnd.normalizedmobile .wndinner .wndcontent {
   background: rgb(var(--background-total-theme));
   max-width: 768px;
   max-height: 92vh;
+  max-height: calc(var(--vh, 1vh) * 92);
   min-height: 30vh;
+  min-height: calc(var(--vh, 1vh) * 30);
   margin: 0 auto;
   padding-left: 0;
   padding-right: 0;
@@ -6302,6 +6304,7 @@ html.mobileview .wnd.normalizedmobile:only-child.asette .wndback {
 }
 html.mobileview .wnd.maxheight .wndinner .wndcontent {
   height: 92vh;
+  height: calc(var(--vh, 1vh) * 92);
 }
 html.pipmode .pipped {
   position: fixed!important;

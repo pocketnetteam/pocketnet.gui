@@ -725,8 +725,10 @@
 				var down = {
 					cancellable : true,	
 
-					positionclbk : function(px){
+					positionclbk : function(px, e){
 						var percent = Math.abs(px) / trueshold;
+
+						if(e) e.preventDefault()
 					},
 
 					constraints : function(e){
@@ -6781,10 +6783,10 @@
 
 		}
 
-		var applyDirection = function(direction, v){
+		var applyDirection = function(direction, v, e){
 			if (direction.positionclbk){
 				needclear = true
-				direction.positionclbk(v)
+				direction.positionclbk(v, e)
 			}
 		}
 
@@ -6867,7 +6869,7 @@
 
 						mainDirection = dir
 
-						applyDirection(mainDirection, distance)
+						applyDirection(mainDirection, distance, e)
 
 						set(mainDirection.i, distance)
 						

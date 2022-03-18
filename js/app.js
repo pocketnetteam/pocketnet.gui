@@ -1421,6 +1421,10 @@ Application = function(p)
 		self.height = self.el.window.height()
 		self.width = self.el.window.width()
 
+		document.documentElement.style.setProperty('--vh', `${self.height * 0.01}px`);
+
+		console.log("SA")
+
 		istouchstyle()
 
 		var showPanel = '1'
@@ -1535,7 +1539,6 @@ Application = function(p)
 
         window.addEventListener('resize', function(){
 
-
 			delayresize = slowMade(function(){
 				window.requestAnimationFrame(function(){
 
@@ -1561,10 +1564,16 @@ Application = function(p)
 						})
 					})
 
+					let vh = window.innerHeight * 0.01;
+					document.documentElement.style.setProperty('--vh', `${vh}px`);
+
 				})
 
 			}, delayresize, 30)
 
+
+			
+			
 		})
 	}
 
