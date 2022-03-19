@@ -763,7 +763,7 @@
 
 					///,.wndinner
 
-					el : wnd.find('.wndback,.wndinner'),
+					el : wnd.find(p.parallaxselector || '.wndback,.wndheader'),
 					transformel : wnd.find('.wndinner'),
 					allowPageScroll : 'vertical',
 					directions : {
@@ -6854,7 +6854,10 @@
 						mainDirection = null;
 					}
 
-					e.preventDefault();
+					if (e.cancelable !== false){
+						e.stopPropagation();
+						e.preventDefault();
+					}
 
 					return false
 				}
@@ -6877,7 +6880,11 @@
 						
 					}
 
-					e.preventDefault();
+					if (e.cancelable !== false){
+						e.stopPropagation();
+						e.preventDefault();
+					}
+
 					return true
 				}
 
