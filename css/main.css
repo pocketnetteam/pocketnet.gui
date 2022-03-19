@@ -5603,6 +5603,9 @@ html.mobileview.scrollmodedown #navigation .fakem {
 html.mobileview #navigation .fakem {
   display: none;
 }
+html.mobileview.openapipnet .contentWrapper {
+  padding-top: 0;
+}
 html.openapipnet .contentWrapper {
   padding-top: 0;
 }
@@ -6892,7 +6895,6 @@ body.dg-open {
 }
 .dg-main-content {
   width: 98%;
-  /*width: calc(98% - 30px);*/
   max-width: 400px;
   padding: 15px;
   border-radius: 5px;
