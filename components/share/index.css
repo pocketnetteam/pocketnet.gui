@@ -259,8 +259,7 @@
   padding-bottom: 0.5em;
 }
 #share .urlWrapper > div {
-  margin-top: 1em;
-  margin-bottom: 1em;
+  margin-bottom: 0.5em;
 }
 #share .sortablepaddingspacer {
   padding-right: 30px;
@@ -521,9 +520,6 @@
 }
 #share .attachements.bigimageinlink .urlhtmlcontent .ogtable > div.cnt .description {
   max-width: none;
-}
-#share .attachements .jsPlayerLoading {
-  display: none;
 }
 #share .attachements .videoTips {
   display: none;
@@ -818,7 +814,7 @@
   left: 0;
   right: 0;
   text-align: center;
-  background: rgba(var(--background-secondary-theme), 0.7);
+  background: rgb(var(--background-secondary-theme));
 }
 .wnd.wndsharepost .wndcontent #share .postlineWrapper {
   position: absolute;

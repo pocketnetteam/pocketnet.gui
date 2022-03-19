@@ -206,10 +206,95 @@
     }
 }
 
+.jsPlayerLoading{
+        
+    width: auto;
+    height: auto;
+    background: #000000;
+    position: relative;
+    min-height: 200px;
+    border-radius: 6px;
+    
+
+    .preloader5{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-left: -15px;
+        margin-top: -8px;
+        width: 30px;
+        height: 15px;
+        contain: strict;
+    }
+
+    .jsPlayerLoadingD{
+        position: absolute;
+        left : 0;
+        top : 0;
+        bottom : 0;
+        right: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &.ytbvimb{
+        padding-bottom: 56.25%;
+
+        .jsPlayerLoading{
+            display: none;
+        }
+
+        .playerlabel{
+            position: absolute;
+            left : @rhythm;
+            padding : @rhythm;
+            border-radius: 6px;
+            background: rgba(var(--color-shadow-base), 0.5);
+            bottom : @rhythm;
+        }
+
+        &.loading{
+            .jsPlayerLoading{
+                height: 100%;
+                max-height: none;
+                display: block;
+                background: transparent;
+                .preloader5{
+                    display: block;
+                }
+            }
+
+            .playerlabel{
+                display: none;
+            }
+            .initvideoplayer{
+                display: none;
+            }
+        }
+    }
+
+    .initvideoplayer{
+        text-align: center;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        font-size: 2em;
+        margin : 0 auto;
+
+        .shadowText();
+    }
+}
 
 
 @media only screen and (min-width: 768px){
     .customscroll{
+        .customscrollclass()
+    }
+}
+
+.wnd{
+    .wndcustomscroll{
         .customscrollclass()
     }
 }

@@ -558,7 +558,10 @@ var lenta = (function(){
 				if (button.length){
 					button.one('click', function(){
 
-						$(this).closest('jsPlayerLoading').addClass('loading')
+						$(this).closest('.jsPlayerLoading').addClass('loading') 
+						$(this).closest('.js-player-dummy').addClass('js-player-ini')
+
+						
 
 						actions.initVideo(el, share, function(v){
 
@@ -605,13 +608,13 @@ var lenta = (function(){
 				}
 				
 
-				if (self.app.platform.sdk.usersettings.meta.embedvideo && !
+				/*if (self.app.platform.sdk.usersettings.meta.embedvideo && !
 					self.app.platform.sdk.usersettings.meta.embedvideo.value) {
 
 						if(clbk) clbk(false)
 
 						return
-					}
+					}*/
 				
 				if(players[share.txid]){
 					
@@ -789,7 +792,7 @@ var lenta = (function(){
 
 				if(!shareInitedMap[id]) return
 
-				if((!self.app.mobileview) || essenseData.openPostInWindowMobile || (share && share.itisarticle())){
+				if(essenseData.openPostInWindowMobile || (share && share.itisarticle())){
 
 					self.app.user.isState(function(state){
 

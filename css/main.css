@@ -142,6 +142,72 @@
 .disable-hover * {
   pointer-events: none !important;
 }
+.jsPlayerLoading {
+  width: auto;
+  height: auto;
+  background: #000000;
+  position: relative;
+  min-height: 200px;
+  border-radius: 6px;
+}
+.jsPlayerLoading .preloader5 {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -15px;
+  margin-top: -8px;
+  width: 30px;
+  height: 15px;
+  contain: strict;
+}
+.jsPlayerLoading .jsPlayerLoadingD {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.jsPlayerLoading.ytbvimb {
+  padding-bottom: 56.25%;
+}
+.jsPlayerLoading.ytbvimb .jsPlayerLoading {
+  display: none;
+}
+.jsPlayerLoading.ytbvimb .playerlabel {
+  position: absolute;
+  left: 0.5em;
+  padding: 0.5em;
+  border-radius: 6px;
+  background: rgba(var(--color-shadow-base), 0.5);
+  bottom: 0.5em;
+}
+.jsPlayerLoading.ytbvimb.loading .jsPlayerLoading {
+  height: 100%;
+  max-height: none;
+  display: block;
+  background: transparent;
+}
+.jsPlayerLoading.ytbvimb.loading .jsPlayerLoading .preloader5 {
+  display: block;
+}
+.jsPlayerLoading.ytbvimb.loading .playerlabel {
+  display: none;
+}
+.jsPlayerLoading.ytbvimb.loading .initvideoplayer {
+  display: none;
+}
+.jsPlayerLoading .initvideoplayer {
+  text-align: center;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 2em;
+  margin: 0 auto;
+  text-shadow: 0px 0px 2px rgba(var(--color-shadow-base), 0.714), 0 0 3px rgba(var(--color-shadow-base), 0.519);
+}
 @media only screen and (min-width: 768px) {
   .customscroll {
     overflow-y: overlay;
@@ -161,6 +227,24 @@
     border: 0 solid rgba(var(--background-main-contrast), 0.05);
     background-image: linear-gradient(180deg, rgba(var(--background-main-contrast), 0.25) 0%, rgba(var(--background-hidden-layer), 0) 90%);
   }
+}
+.wnd .wndcustomscroll {
+  overflow-y: overlay;
+  overflow-x: hidden;
+  scrollbar-width: 7px;
+  scrollbar-color: rgba(var(--background-main-contrast), 0.15) rgba(var(--background-main-contrast), 0.05);
+  overscroll-behavior: contain;
+}
+.wnd .wndcustomscroll::-webkit-scrollbar {
+  width: 7px;
+}
+.wnd .wndcustomscroll::-webkit-scrollbar-track {
+  background: rgba(var(--background-main-contrast), 0.05);
+}
+.wnd .wndcustomscroll::-webkit-scrollbar-thumb {
+  background-color: rgba(var(--background-main-contrast), 0.25);
+  border: 0 solid rgba(var(--background-main-contrast), 0.05);
+  background-image: linear-gradient(180deg, rgba(var(--background-main-contrast), 0.25) 0%, rgba(var(--background-hidden-layer), 0) 90%);
 }
 body {
   overscroll-behavior: none;
