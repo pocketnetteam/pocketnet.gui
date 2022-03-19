@@ -53,6 +53,15 @@ var Node = function(options, manager){
         changing : {}
     }
 
+    var rpcerrorsignore = {
+        getuserstate : {
+            codes : [-5],
+            data : function(){
+                return {}
+            }
+        }
+    }
+
     var penalty = {
         k : 0,
         counter : 0,
@@ -287,6 +296,14 @@ var Node = function(options, manager){
             pending++
 
             return self.rpc[method](parsed).catch(e => {
+
+                console.log('method', method, e)
+
+                if (rpcerrorsignore[method] && e.code && _.indexOf(rpcerrorsignore[method].codes, e.code) > -1){
+                    return Promise.resolve({
+                        result : rpcerrorsignore[method].data()
+                    })
+                }
 
                 err = e
     
