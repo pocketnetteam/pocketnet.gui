@@ -763,7 +763,7 @@
 
 					///,.wndinner
 
-					el : wnd.find(p.parallaxselector || '.wndback,.wndheader'),
+					el : wnd.find('.wndback,.wndinner'), //wnd.find(p.parallaxselector || '.wndback,.wndheader'),
 					transformel : wnd.find('.wndinner'),
 					allowPageScroll : 'vertical',
 					directions : {
@@ -6865,7 +6865,17 @@
 				if (phase == 'start'){
 					mainDirection = null
 
-					document.ontouchmove = () => false
+					document.ontouchmove = (e) => {
+
+						console.log("SAD")
+
+						if (e.cancelable !== false){
+							e.stopPropagation();
+							e.preventDefault();
+						}
+
+						return false
+					}
 				}
 				
 				if (phase == 'move'){
