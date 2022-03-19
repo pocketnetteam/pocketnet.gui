@@ -561,9 +561,10 @@ var lenta = (function(){
 						$(this).closest('.jsPlayerLoading').addClass('loading') 
 						$(this).closest('.js-player-dummy').addClass('js-player-ini')
 
-						
 
 						actions.initVideo(el, share, function(v){
+
+							console.log("players[share.txid]", players[share.txid])
 
 							if (players[share.txid])
 								players[share.txid].p.play()
