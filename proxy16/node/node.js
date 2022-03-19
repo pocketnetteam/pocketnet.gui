@@ -297,8 +297,6 @@ var Node = function(options, manager){
 
             return self.rpc[method](parsed).catch(e => {
 
-                console.log('method', method, e)
-
                 if (rpcerrorsignore[method] && e.code && _.indexOf(rpcerrorsignore[method].codes, e.code) > -1){
                     return Promise.resolve({
                         result : rpcerrorsignore[method].data()
