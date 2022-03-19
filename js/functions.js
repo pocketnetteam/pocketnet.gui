@@ -763,7 +763,7 @@
 
 					///,.wndinner
 
-					el : wnd.find(p.parallaxselector || '.wndback,.wndheader'),
+					el : wnd.find('.wndback,.wndinner'),
 					transformel : wnd.find('.wndinner'),
 					allowPageScroll : 'vertical',
 					directions : {
