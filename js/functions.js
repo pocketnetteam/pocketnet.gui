@@ -6854,6 +6854,8 @@
 						mainDirection = null;
 					}
 
+					e.preventDefault();
+
 					return false
 				}
 
