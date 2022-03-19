@@ -763,7 +763,7 @@
 
 					///,.wndinner
 
-					el : wnd.find('.wndback,.wndinner'), //wnd.find(p.parallaxselector || '.wndback,.wndheader'),
+					el : wnd.find(p.parallaxselector || '.wndback,.wndheader'),
 					transformel : wnd.find('.wndinner'),
 					allowPageScroll : 'vertical',
 					directions : {
@@ -6866,13 +6866,6 @@
 					mainDirection = null
 
 					document.ontouchmove = (e) => {
-
-						console.log("SAD")
-
-						if (e.cancelable !== false){
-							e.stopPropagation();
-							e.preventDefault();
-						}
 
 						return false
 					}
