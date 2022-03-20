@@ -231,6 +231,9 @@
 .share_common .subscribeWrapper .unsubscribeevent {
   display: none;
 }
+.share_common .shareSave {
+  margin-right: auto;
+}
 .share_common .shareSave i {
   display: none;
 }
