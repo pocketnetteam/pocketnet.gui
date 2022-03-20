@@ -4425,12 +4425,13 @@
 
 						var value = $(this).val(); 	
 
-						if(!value) {
+						if(!value || value == '0') {
 
 							return false
 						}
 
 						if(value.length > 1) {
+
 							if (value[0] == '0')
 								value = value.substr(1)
 
@@ -4445,8 +4446,6 @@
 
 							$(this).val(value); 
 						}
-
-
 
 								
 					})

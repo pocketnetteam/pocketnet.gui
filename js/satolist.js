@@ -16513,7 +16513,7 @@ Platform = function (app, listofnodes) {
                     self.app.api.rpc('sendrawtransaction', [hex]).then(d => {
 
                         if (clbk)
-                                clbk(d)
+                            clbk(d)
 
                     }).catch(e => {
                         if (clbk) {

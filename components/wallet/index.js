@@ -123,16 +123,7 @@ var wallet = (function(){
 
 						}
 						else{
-
 							return '<div class="walletdfvalue"><span>' + d + '</span></div>'
-
-							if(!d){
-								return '<div class="walletempvalue"><span>' + self.app.localization.e('wsreciever') + '</span></div>'
-							}
-							else{
-								return '<div class="walletdfvalue"><span>' + d + '</span></div>'
-							}
-							
 						}
 					}
 				}),
