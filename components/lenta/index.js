@@ -776,7 +776,7 @@ var lenta = (function(){
 					}
 
 					if(self.app.mobileview){
-						s.controls = ['play', 'progress', 'current-time', 'fullscreen']
+						s.controls = ['play', 'progress', 'current-time',  'mute', 'fullscreen']
 					}	
 
 					s.logoType = self.app.meta.fullname

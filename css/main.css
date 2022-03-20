@@ -5538,6 +5538,9 @@ html.mobileview.fullscreen #navigationWrapper {
   -webkit-animation: zoom-out-rotate 0.5s ease-in both;
   animation: zoom-out-rotate 0.5s ease-in both;
 }
+html.mobileview .plyr__volume {
+  max-width: 32px;
+}
 html.mobileview #panelWrapper {
   position: fixed;
   top: 65px;
