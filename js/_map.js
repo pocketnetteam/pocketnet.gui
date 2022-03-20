@@ -953,7 +953,7 @@ __map =  {
 
 		relations : [
 			{src : 'js/vendor/chart.min.js',			   f : 'js', require : function(){
-				Chart = require('./js/vendor/Chart.js')
+				Chart = require('./js/vendor/chart.min.js')
 			}},	
 		]
 
