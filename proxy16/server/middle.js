@@ -146,6 +146,7 @@ var Middle = function(){
 
   
     self.headers = function(request, result, next){
+
         result.setHeader('Access-Control-Allow-Origin', '*');
         result.setHeader('Access-Control-Max-Age', '7200');
         result.setHeader('Strict-Transport-Security', 'max-age=31536000');
@@ -254,7 +255,6 @@ var Middle = function(){
             }
 
             clearreq(request, result)
-    
         }
     
         if (next)

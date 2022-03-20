@@ -1070,6 +1070,7 @@ var Proxy = function (settings, manage, test, logger) {
 					var node = null;
 					var noderating = 0
 					var timep = performance.now()
+
 					var time = {
 						preparing : 0,
 						cache : 0,
@@ -1101,7 +1102,6 @@ var Proxy = function (settings, manage, test, logger) {
 						self.logger.w('rpc', 'debug', 'AFTER WAITING NODEMANAGER')
 
 						time.preparing = performance.now() - timep
-
 
 						/// ????
 						if (options.locally && options.meta) {
@@ -1218,10 +1218,13 @@ var Proxy = function (settings, manage, test, logger) {
 						return new Promise((resolve, reject) => {
 
 							time.start = performance.now() - timep
+							time.node = {
+								b : timep
+							}
 
 							self.logger.w('rpc', 'debug', 'ADD TO QUEUE')
 							
-							nodeManager.queue(node, method, parameters, direct, {resolve, reject})
+							nodeManager.queue(node, method, parameters, direct, {resolve, reject}, time.node)
 								
 						})
 
@@ -1234,6 +1237,8 @@ var Proxy = function (settings, manage, test, logger) {
 							//console.log("SUCCESS", method)
 
 							time.ready = performance.now() - timep
+
+							if(time.node) delete time.node.b
 
 							return Promise.resolve({
 								data: data,

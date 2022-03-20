@@ -636,13 +636,10 @@ var Node = function(options, manager){
         rating : function(){
 
             if(cachedrating){
-            
-                if(f.date.addseconds(cachedrating.time, 10) > new Date()){
+                if(f.date.addseconds(cachedrating.time, 30) > new Date()){
                     return cachedrating.result || 0
                 }
             }
-
-            
 
             var lastblock = self.lastblock() || {}
             var result = 0;
