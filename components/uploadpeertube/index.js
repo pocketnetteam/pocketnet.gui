@@ -1,10 +1,8 @@
-const ffmpeg = require('fluent-ffmpeg');
-const stream = require('stream');
 
-let ipcRenderer;
 
 if (typeof _Electron !== 'undefined') {
-  ipcRenderer = require('electron').ipcRenderer;
+	ipcRenderer = require('electron').ipcRenderer;
+	
 }
 
 var uploadpeertube = (function () {
@@ -58,22 +56,22 @@ var uploadpeertube = (function () {
 				var errorel = el.c.find('.videoErrorContainer')
 
 
-				if (errorel.length){
+				if (errorel.length) {
 
-					if (errorcomp){
+					if (errorcomp) {
 						errorcomp.destroy()
 						errorcomp = null
 					}
 
 					self.nav.api.load({
-						open : true,
-						id : 'abilityincrease',
-						el : errorel,
+						open: true,
+						id: 'abilityincrease',
+						el: errorel,
 
-						essenseData : {
-							template : 'video'
+						essenseData: {
+							template: 'video'
 						}
-					}, function(v, p){
+					}, function (v, p) {
 						errorcomp = p
 					})
 				}
@@ -114,10 +112,10 @@ var uploadpeertube = (function () {
 				contentAsHTML: true,
 			});
 
-			const transcodeVideo = transcodingFactory(electron.ipcRenderer);
 
-      el.videoInput.change(async function (evt) {
-        var fileName = evt.target.files[0].name;
+
+			el.videoInput.change(async function (evt) {
+				var fileName = evt.target.files[0].name;
 
 				el.videoError.text(
 					fileName.slice(0, 20) + (fileName.length > 20 ? '...' : ''),
@@ -168,11 +166,11 @@ var uploadpeertube = (function () {
 
 				data.name = videoName || fileName;
 
-        await Promise.all(Object.values(data.video));
+				await Promise.all(Object.values(data.video));
 
-        var options = {
-          type: 'uploadVideo',
-        };
+				var options = {
+					type: 'uploadVideo',
+				};
 
 				options.progress = function (percentComplete) {
 					var formattedProgress = (percentComplete * 0.9).toFixed(2);
@@ -215,15 +213,17 @@ var uploadpeertube = (function () {
 
 				el.importUrl.addClass('hidden');
 
-        if (typeof _Electron !== 'undefined') {
-          const filePath = evt.target.files[0].path;
+				if (typeof _Electron !== 'undefined') {
+					const filePath = evt.target.files[0].path;
 
-          el.uploadProgress.find('.bold-font')
-              .text(self.app.localization.e('uploadVideoProgress_processing'));
+					el.uploadProgress.find('.bold-font')
+						.text(self.app.localization.e('uploadVideoProgress_processing'));
 
-          options.progress(0);
+					options.progress(0);
 
-          try {
+					const transcodeVideo = transcodingFactory(electron.ipcRenderer);
+
+					try {
 						const transcoded = await transcodeVideo(filePath, options.progress, options.cancel);
 
 						/** Writing transcoded alternatives to target object */
@@ -234,8 +234,8 @@ var uploadpeertube = (function () {
 						}
 
 						data.video = new File([transcoded.p720.buffer], data.video.name, { type: 'video/mp4' });
-					} catch(err) {
-          	const isCanceledByUser = (err.message === 'TRANSCODE_ABORT');
+					} catch (err) {
+						const isCanceledByUser = (err.message === 'TRANSCODE_ABORT');
 						const isAbortedByApp = (err.message === 'NO_TRANSCODED');
 
 						if (isCanceledByUser) {
@@ -262,23 +262,23 @@ var uploadpeertube = (function () {
 							console.error(err);
 						}
 					}
-        }
+				}
 
-        el.uploadProgress.find('.bold-font')
-            .text(self.app.localization.e('uploadVideoProgress_uploading'));
-        el.uploadProgress
-            .find('.upload-progress-bar')
-            .removeClass('processing')
-            .addClass('uploading');
+				el.uploadProgress.find('.bold-font')
+					.text(self.app.localization.e('uploadVideoProgress_uploading'));
+				el.uploadProgress
+					.find('.upload-progress-bar')
+					.removeClass('processing')
+					.addClass('uploading');
 
-        options.progress(0);
+				options.progress(0);
 
-        self.app.peertubeHandler.api.videos
-          .upload(data, options)
-          .then((response) => {
-            el.uploadButton.prop('disabled', false);
-            el.header.addClass('activeOnRolled');
-            el.uploadProgress.addClass('hidden');
+				self.app.peertubeHandler.api.videos
+					.upload(data, options)
+					.then((response) => {
+						el.uploadButton.prop('disabled', false);
+						el.header.addClass('activeOnRolled');
+						el.uploadProgress.addClass('hidden');
 
 						el.preloaderElement.addClass('hidden');
 
@@ -498,7 +498,7 @@ var uploadpeertube = (function () {
 			destroy: function () {
 				el = {};
 
-				if (errorcomp){
+				if (errorcomp) {
 					errorcomp.destroy()
 					errorcomp = null
 				}
