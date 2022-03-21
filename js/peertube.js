@@ -508,8 +508,9 @@ PeerTubePocketnet = function (app) {
 						if (app.user.address.value) {
 							royId = self.helpers.base58.decode(app.user.address.value) % roysAmount;
 						}
-
-
+						else{
+							royId = rand(0, roysAmount - 1);
+						}
 
 						if (special) {
 							var spc = _.find(data, function (i) {
@@ -519,7 +520,7 @@ PeerTubePocketnet = function (app) {
 							if (spc) return spc
 						}
 
-						if (!royId) royId = rand(0, roysAmount - 1);
+						//if (!app.user.address.value) royId = rand(0, roysAmount - 1);
 
 						return data[royId];
 					})
