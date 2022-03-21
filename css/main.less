@@ -206,6 +206,10 @@
     }
 }
 
+.customscroll{
+    overscroll-behavior: contain;
+}
+
 .jsPlayerLoading{
         
     width: auto;
@@ -7672,15 +7676,18 @@ html.mobileview{
     .wnd{
         &.normalizedmobile{
             contain: strict;
+
             .wndinner{
                 width: 100%;
                 background: transparent!important;
                 will-change: transform;
                 
             }
+
             .wndback{
                 backface-visibility: hidden;
                 .transition(0s);
+                
             }
 
             .hideButton{
@@ -7710,8 +7717,6 @@ html.mobileview{
                 transform: translateY(100%);
                 backface-visibility: hidden;
                 will-change: transform;
-                
-              
                 .transition(0.3s, top);
 
                 .wndheader{
@@ -7778,13 +7783,7 @@ html.mobileview{
                     -webkit-transform: translate3d(0, 0, 0);
                     transform: translate3d(0, 0, 0);
                     .transition(0.3s, transform);
-                }   
-
-                /*.windowmainbuttons{
-                    -webkit-transform: translate3d(0,-130px,0);
-                    transform: translate3d(0,-130px,0);
-                    .transition(0.3s, transform);
-                }*/
+                }  
                 
                 .closeline,
                 .wndback{
@@ -7800,12 +7799,7 @@ html.mobileview{
                     .wndinner{
                         -webkit-transform: translate3d(0,0,0);
                         transform: translate3d(0,0,0);
-                    }   
-                    
-                    /*.windowmainbuttons{
-                        -webkit-transform: translate3d(0,-45px,0);
-                        transform: translate3d(0,-45px,0);
-                    }*/
+                    } 
                 }
 
                 .closeline{
@@ -7829,9 +7823,14 @@ html.mobileview{
 
             &:only-child{
 
+                .wndback{
+                    .transition(0.2s);
+                    
+                }
+
                 &.asette{
                     .wndback{
-                        .transition(0.2s);
+                        
                         opacity: 0;
                     }
                 }

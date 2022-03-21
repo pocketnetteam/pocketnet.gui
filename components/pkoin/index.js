@@ -216,7 +216,10 @@ var pkoin = (function(){
 
 				self.app.platform.ui.wallet.buy();
 
-				closeContainer();
+
+				setTimeout(function(){
+					closeContainer()
+				}, 200)
 
 				
 			})
@@ -230,7 +233,9 @@ var pkoin = (function(){
 
 						new Audio('sounds/donate.mp3').play();
 
-						closeContainer();
+						setTimeout(function(){
+							closeContainer()
+						}, 200)
 					}
 
 				}
@@ -285,7 +290,9 @@ var pkoin = (function(){
 										amount: valSum
 									})
 		
-									closeContainer();
+									setTimeout(function(){
+										closeContainer()
+									}, 200)
 			
 								}
 		

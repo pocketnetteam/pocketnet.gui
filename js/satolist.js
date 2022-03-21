@@ -2842,6 +2842,7 @@ Platform = function (app, listofnodes) {
                         inWnd : el ? false : true,
                         el : el ? el : null,
                         eid : id,
+                        
                         mid : id,
                         animation : false,
                         essenseData : p,
@@ -2896,6 +2897,7 @@ Platform = function (app, listofnodes) {
                         el : el ? el : null,
                         eid : id,
                         mid : id,
+                        history : true,
                         animation : false,
                         essenseData : p,
                         clbk : function(e, _p){

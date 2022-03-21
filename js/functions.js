@@ -517,7 +517,7 @@
 			content = p.content || null,
 
 			id = 'w' + makeid().split('-')[0],
-			nooverflow = (p.nooverflow || app.scrollRemoved || p.pip),
+			nooverflow = (p.nooverflow || /*app.scrollRemoved || */p.pip),
 			el = p.el || p.app.el.windows;
 
 
@@ -675,7 +675,7 @@
 				wnd.removeClass('asette')
 
 				if(!nooverflow){
-					nooverflow = !app.actions.offScroll();
+					app.actions.offScroll();
 				}
 
 			}, 220)
@@ -848,6 +848,8 @@
 				wnd.removeClass('sette')
 
 				setTimeout(function(){
+
+					console.log('nooverflow', nooverflow)
 
 					if(!nooverflow)
 						app.actions.onScroll();

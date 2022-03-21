@@ -142,6 +142,9 @@
 .disable-hover * {
   pointer-events: none !important;
 }
+.customscroll {
+  overscroll-behavior: contain;
+}
 .jsPlayerLoading {
   width: auto;
   height: auto;
@@ -6345,13 +6348,6 @@ html.mobileview .wnd.normalizedmobile.asette .wndinner {
   -webkit-transition: 0.2s;
   transition: 0.2s;
 }
-html.mobileview .wnd.normalizedmobile.sette {
-  /*.windowmainbuttons{
-                    -webkit-transform: translate3d(0,-130px,0);
-                    transform: translate3d(0,-130px,0);
-                    .transition(0.3s, transform);
-                }*/
-}
 html.mobileview .wnd.normalizedmobile.sette .wndinner {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
@@ -6363,12 +6359,6 @@ html.mobileview .wnd.normalizedmobile.sette .wndinner {
 html.mobileview .wnd.normalizedmobile.sette .closeline,
 html.mobileview .wnd.normalizedmobile.sette .wndback {
   opacity: 1;
-}
-html.mobileview .wnd.normalizedmobile.showbetter.sette {
-  /*.windowmainbuttons{
-                        -webkit-transform: translate3d(0,-45px,0);
-                        transform: translate3d(0,-45px,0);
-                    }*/
 }
 html.mobileview .wnd.normalizedmobile.showbetter.sette .wndinner {
   -webkit-transform: translate3d(0, 0, 0);
@@ -6384,11 +6374,13 @@ html.mobileview .wnd.normalizedmobile.noheader .wndinner .wndcontent {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
-html.mobileview .wnd.normalizedmobile:only-child.asette .wndback {
+html.mobileview .wnd.normalizedmobile:only-child .wndback {
   -moz-transition: 0.2s;
   -o-transition: 0.2s;
   -webkit-transition: 0.2s;
   transition: 0.2s;
+}
+html.mobileview .wnd.normalizedmobile:only-child.asette .wndback {
   opacity: 0;
 }
 html.mobileview .wnd.maxheight .wndinner .wndcontent {

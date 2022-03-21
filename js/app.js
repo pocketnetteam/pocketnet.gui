@@ -1364,6 +1364,8 @@ Application = function(p)
 
 			self.scrollRemoved++
 
+			console.log('self.scrollRemoved1', self.scrollRemoved)
+
 			if (self.scrollRemoved > 1){
 				return false
 			}
@@ -1393,6 +1395,8 @@ Application = function(p)
 			if (self.scrollRemoved){
 				self.scrollRemoved--
 			}
+
+			console.log('self.scrollRemoved2', self.scrollRemoved)
 
 			if(!self.scrollRemoved){
 				self.el.html.css('overflow', '')

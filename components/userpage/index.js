@@ -484,7 +484,10 @@ var userpage = (function(){
 
 				if(report && self.app.mobileview && report.openReportPageMobile && !primary){
 
-					self.closeContainer()
+					setTimeout(function(){
+						self.closeContainer()
+					},200)
+					
 
 					self.nav.api.go({
 						open : true,
@@ -497,7 +500,9 @@ var userpage = (function(){
 
 				if(report && self.app.mobileview && (report.openReportPageMobileInWindow && !primary)){
 
-					self.closeContainer()
+					setTimeout(function(){
+						self.closeContainer()
+					},200)
 
 					self.nav.api.go({
 						open : true,
@@ -881,7 +886,9 @@ var userpage = (function(){
 
 			authorization : function(el, clbk){
 
-				self.closeContainer()
+				setTimeout(function(){
+					self.closeContainer()
+				},200)
 
 				self.nav.api.go({
 					href : 'authorization',
@@ -892,7 +899,9 @@ var userpage = (function(){
 
 			registration : function(el, clbk){
 
-				self.closeContainer()
+				setTimeout(function(){
+					self.closeContainer()
+				},200)
 				
 				self.nav.api.go({
 					href : 'registration',
