@@ -753,6 +753,7 @@
 
 					restrict : true,
 					trueshold : trueshold,
+					distance : 100,
 					clbk : function(){
 						actions.close(true)
 					}
@@ -6796,15 +6797,22 @@
 
 				__el.css({"transform": ""});
 				__el.css({"transform-origin": ""});
-				__el.css({"-moz-transition": ""});
-				__el.css({"-o-transition": ""});
-				__el.css({"-webkit-transition": ""});
-				__el.css({"transition": ""});
+				__el.css({"-moz-transition": transitionstr});
+				__el.css({"-o-transition": transitionstr});
+				__el.css({"-webkit-transition": transitionstr});
+				__el.css({"transition": transitionstr});
 
 				_.each(p.directions, function(d){
 					applyDirection(d, 0)
 				})
 
+
+				setTimeout(() => {
+					__el.css({"-moz-transition": ""});
+					__el.css({"-o-transition": ""});
+					__el.css({"-webkit-transition": ""});
+					__el.css({"transition": ""});
+				}, 100)
 			}
 			
 			ms = false
@@ -6817,7 +6825,6 @@
 
 			var statusf = function(e, phase, direction, distance){
 
-
 				if (mainDirection && mainDirection.i != direction){
 					phase = 'cancel'
 					direction = mainDirection.i
@@ -6827,8 +6834,14 @@
 
 					if (mainDirection){
 
+						console.log('direction', direction)
+
 						if(phase == 'end' && mainDirection.clbk && direction == mainDirection.i){
-							mainDirection.clbk()
+
+							if((!mainDirection.distance || mainDirection.distance < distance)){
+								mainDirection.clbk()
+							}
+							
 						}
 					}
 
@@ -6872,7 +6885,7 @@
 				
 				if (phase == 'move'){
 
-					if (distance > 20){
+					if (distance > (dir.trueshold || 30)){
 
 						mainDirection = dir
 

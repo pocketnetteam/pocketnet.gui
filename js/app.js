@@ -2230,6 +2230,7 @@ Application = function(p)
 								},
 
 								restrict : true,
+								//distance : 150,
 								trueshold : 70,
 								clbk : function(){
 
