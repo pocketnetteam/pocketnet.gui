@@ -28,8 +28,6 @@ var Cache = function(p){
 
     var executingWatcher = function(k, key, ignoredate){
 
-        
-
         var itemswithattemp = []
         var now = new Date()
 

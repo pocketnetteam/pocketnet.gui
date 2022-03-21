@@ -57,8 +57,12 @@ var PNWIDGETS = function(){
         else{
             elem.innerHTML = self.renders.iframe(seed, action, id, p, additional)
 
+            var domain = window.pocketnetdomain || 'pocketnet.app'
+
             if(typeof iFrameResize != 'undefined')
                 var iframe = iFrameResize({
+
+                    checkOrigin : ['https://'+domain],
 
                     onResized : function(){
                         //window.requestAnimationFrame(function(){

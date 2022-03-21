@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js openapipnet" lang="">
+<html class="no-js openapipnet customscroll" lang="">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -29,7 +29,7 @@
        
     </head>
     
-    <body id="application openapi openapipnet" class="menu-hide">
+    <body id="application" class="menu-hide openapi openapipnet">
       
         <div class="contentWrapper openapipnet"> 
             <div id="content">                

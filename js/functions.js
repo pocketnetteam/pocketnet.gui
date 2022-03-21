@@ -517,7 +517,7 @@
 			content = p.content || null,
 
 			id = 'w' + makeid().split('-')[0],
-			nooverflow = (p.nooverflow || app.scrollRemoved || p.pip),
+			nooverflow = (p.nooverflow || /*app.scrollRemoved || */p.pip),
 			el = p.el || p.app.el.windows;
 
 
@@ -675,7 +675,7 @@
 				wnd.removeClass('asette')
 
 				if(!nooverflow){
-					nooverflow = !app.actions.offScroll();
+					app.actions.offScroll(wnd);
 				}
 
 			}, 220)
@@ -753,6 +753,7 @@
 
 					restrict : true,
 					trueshold : trueshold,
+					distance : 100,
 					clbk : function(){
 						actions.close(true)
 					}
@@ -848,6 +849,8 @@
 
 				setTimeout(function(){
 
+					console.log('nooverflow', nooverflow)
+
 					if(!nooverflow)
 						app.actions.onScroll();
 
@@ -892,7 +895,7 @@
 				wnd.find('.hideButton').removeClass('hidden');
 
 				if(!nooverflow) {
-					app.actions.offScroll();
+					app.actions.offScroll(wnd);
 				}
 			},
 		}
@@ -4425,12 +4428,13 @@
 
 						var value = $(this).val(); 	
 
-						if(!value) {
+						if(!value || value == '0') {
 
 							return false
 						}
 
 						if(value.length > 1) {
+
 							if (value[0] == '0')
 								value = value.substr(1)
 
@@ -4445,8 +4449,6 @@
 
 							$(this).val(value); 
 						}
-
-
 
 								
 					})
@@ -6797,15 +6799,22 @@
 
 				__el.css({"transform": ""});
 				__el.css({"transform-origin": ""});
-				__el.css({"-moz-transition": ""});
-				__el.css({"-o-transition": ""});
-				__el.css({"-webkit-transition": ""});
-				__el.css({"transition": ""});
+				__el.css({"-moz-transition": transitionstr});
+				__el.css({"-o-transition": transitionstr});
+				__el.css({"-webkit-transition": transitionstr});
+				__el.css({"transition": transitionstr});
 
 				_.each(p.directions, function(d){
 					applyDirection(d, 0)
 				})
 
+
+				setTimeout(() => {
+					__el.css({"-moz-transition": ""});
+					__el.css({"-o-transition": ""});
+					__el.css({"-webkit-transition": ""});
+					__el.css({"transition": ""});
+				}, 100)
 			}
 			
 			ms = false
@@ -6818,7 +6827,6 @@
 
 			var statusf = function(e, phase, direction, distance){
 
-
 				if (mainDirection && mainDirection.i != direction){
 					phase = 'cancel'
 					direction = mainDirection.i
@@ -6828,8 +6836,14 @@
 
 					if (mainDirection){
 
+						console.log('direction', direction)
+
 						if(phase == 'end' && mainDirection.clbk && direction == mainDirection.i){
-							mainDirection.clbk()
+
+							if((!mainDirection.distance || mainDirection.distance < distance)){
+								mainDirection.clbk()
+							}
+							
 						}
 					}
 
@@ -6854,18 +6868,26 @@
 						mainDirection = null;
 					}
 
+					if (e.cancelable !== false){
+						e.stopPropagation();
+						e.preventDefault();
+					}
+
 					return false
 				}
 
 				if (phase == 'start'){
 					mainDirection = null
 
-					document.ontouchmove = () => false
+					document.ontouchmove = (e) => {
+
+						return false
+					}
 				}
 				
 				if (phase == 'move'){
 
-					if (distance > 20){
+					if (distance > (dir.trueshold || 30)){
 
 						mainDirection = dir
 
@@ -6875,7 +6897,11 @@
 						
 					}
 
-					e.preventDefault();
+					if (e.cancelable !== false){
+						e.stopPropagation();
+						e.preventDefault();
+					}
+
 					return true
 				}
 

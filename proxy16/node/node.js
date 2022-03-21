@@ -53,6 +53,15 @@ var Node = function(options, manager){
         changing : {}
     }
 
+    var rpcerrorsignore = {
+        getuserstate : {
+            codes : [-5],
+            data : function(){
+                return {}
+            }
+        }
+    }
+
     var penalty = {
         k : 0,
         counter : 0,
@@ -287,6 +296,12 @@ var Node = function(options, manager){
             pending++
 
             return self.rpc[method](parsed).catch(e => {
+
+                if (rpcerrorsignore[method] && e.code && _.indexOf(rpcerrorsignore[method].codes, e.code) > -1){
+                    return Promise.resolve({
+                        result : rpcerrorsignore[method].data()
+                    })
+                }
 
                 err = e
     
@@ -621,13 +636,10 @@ var Node = function(options, manager){
         rating : function(){
 
             if(cachedrating){
-            
-                if(f.date.addseconds(cachedrating.time, 10) > new Date()){
+                if(f.date.addseconds(cachedrating.time, 30) > new Date()){
                     return cachedrating.result || 0
                 }
             }
-
-            
 
             var lastblock = self.lastblock() || {}
             var result = 0;

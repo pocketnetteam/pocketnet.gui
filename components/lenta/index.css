@@ -992,7 +992,6 @@
 html.mobileview #lenta .share .jsPlayerLoading,
 html.mobileview #lenta .share .video-js {
   max-height: 80vh;
-  max-height: calc(var(--vh, 1vh) * 80);
 }
 html.mobileview #lenta .fullScreenVideo .video-js .vjs-volume-control {
   display: none;

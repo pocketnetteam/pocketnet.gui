@@ -36,7 +36,10 @@ var socialshare2 = (function(){
 						repost : shareid
 					})
 
-					self.closeContainer()
+					setTimeout(function(){
+						self.closeContainer()
+					}, 200)
+					
 					
 				}, shareid)
 
@@ -54,7 +57,9 @@ var socialshare2 = (function(){
 
 					}, function(){
 
-						self.closeContainer()
+						setTimeout(function(){
+							self.closeContainer()
+						}, 200)
 
 					}, function(){
 
@@ -728,7 +733,9 @@ var socialshare2 = (function(){
 				copycleartext(ed.url)
 				sitemessage(self.app.localization.e('urlsuccesscopied'))
 
-				self.closeContainer()
+				setTimeout(function(){
+					self.closeContainer()
+				}, 200)
 			})
 
 			el.c.find('.chat .button').on('click', function(){
@@ -737,8 +744,11 @@ var socialshare2 = (function(){
 			
 				self.app.platform.matrixchat.share.url(url).catch(r => {
 				})
+
+				setTimeout(function(){
+					self.closeContainer()
+				}, 200)
 			
-				if(self.closeContainer) self.closeContainer()
 			})
 
 			el.c.find('.forrepost').on('click', events.repost)

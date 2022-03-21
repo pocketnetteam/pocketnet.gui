@@ -287,6 +287,7 @@
     }
 
     .shareSave{
+        margin-right: auto;
     
 
         i{
@@ -582,66 +583,7 @@
         }
     }
 
-    .jsPlayerLoading{
-        
-        width: auto;
-        height: auto;
-        background: #000000;
-        position: relative;
-        
-
-        .preloader5{
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            margin-left: -15px;
-            margin-top: -3px;
-            width: 30px;
-            height: 15px;
-            contain: strict;
-        }
-
-        .jsPlayerLoadingD{
-            position: absolute;
-            left : 0;
-            top : 0;
-            bottom : 0;
-            right: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        &.ytbvimb{
-            padding-bottom: 56.25%;
-
-            .jsPlayerLoading{
-                display: none;
-            }
-
-            &.loading{
-                .jsPlayerLoading{
-                    height: 100%;
-                    max-height: none;
-                    display: block;
-                    .preloader5{
-                        display: block;
-                    }
-                }
-            }
-        }
-
-        .initvideoplayer{
-            text-align: center;
-            width: 40px;
-            height: 40px;
-            line-height: 40px;
-            font-size: 2em;
-            margin : 0 auto;
-
-            .shadowText();
-        }
-    }
+    
 
     .authorTable{
         width: auto;
@@ -1275,7 +1217,6 @@
 
         .video-js{
             max-height: 80vh;
-            max-height: calc(var(--vh, 1vh) * 80);
         }
 
         .shareTable{
