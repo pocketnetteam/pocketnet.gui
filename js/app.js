@@ -2241,17 +2241,18 @@ Application = function(p)
 
 								constraints : function(e){
 
-									if(e.constrainted) return false
+									//if(e.constrainted) return false
 
 									if(self.platform.preparingUser) return false
 
 									if(_.find(e.path, function(el){
-                                        return el.className && el.className.indexOf('noswipepnt') > -1
+                                        return el.className && (el.className.indexOf('noswipepnt') > -1 || el.className.indexOf('fullscreenActive') > -1)
                                     })) return false
 
 									if(self.lastScrollTop <= 0 && !self.mobile.reload.reloading){
 										return true;
 									}
+
 
 								},
 

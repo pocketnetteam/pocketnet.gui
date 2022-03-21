@@ -76,13 +76,15 @@ var Server = function(settings, admins, manage){
         self.cache.init()
 
         app.use(async (request, result, next) => {
-
+           
             if (request && request.method && request.method == "OPTIONS"){
                 next()
                 return
             }
 
             middle.prepare(request, result, function(){
+
+                
 
                 if (settings.iplimiter && request.clientIP){
 

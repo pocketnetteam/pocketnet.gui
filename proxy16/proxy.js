@@ -1046,6 +1046,8 @@ var Proxy = function (settings, manage, test, logger) {
 						});
 					}
 
+					
+
 					if(!self.rpcscenarios[method]){
 						return self.api.node.rpc.action({ method, parameters, options, U })
 					}
@@ -1086,6 +1088,8 @@ var Proxy = function (settings, manage, test, logger) {
 					var cparameters = _.clone(parameters)
 
 					self.logger.w('rpc', 'debug', 'RPC REQUEST')
+
+				
 
 					return new Promise((resolve, reject) => {
 

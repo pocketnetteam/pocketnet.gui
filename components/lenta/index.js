@@ -1127,9 +1127,8 @@ var lenta = (function(){
 
 							constraints : function(e){
 
-								e.constrainted = true
+								//e.constrainted = true
 
-								console.log('constraints1')
 								if (__el.scrollTop() == 0 && !self.app.fullscreenmode){
 									return true;
 								}
