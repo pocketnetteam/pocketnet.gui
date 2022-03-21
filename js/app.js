@@ -1189,6 +1189,7 @@ Application = function(p)
 	self.pipwindow = null
 
 	var blockScroll = false
+	var scrollmodechanging = false
 	var optimizeTimeout = null
 
 	self.actions = {
@@ -1370,15 +1371,15 @@ Application = function(p)
 				return false
 			}
 
-			blockScroll = true
+			scrollmodechanging = true
 
 			self.el.html.css('overflow', 'hidden')
 
-			if (self.mobileview && window.bodyScrollLock && target){
+			/*if (self.mobileview && window.bodyScrollLock && target){
 
 				window.bodyScrollLock.disableBodyScroll(target[0])
 				self.scrolltarget = target
-			}
+			}*/
 
 			//self.el.html.addClass('nooverflow')
 
@@ -1387,7 +1388,7 @@ Application = function(p)
 			}
 
 			setTimeout(function(){
-				blockScroll = false
+				scrollmodechanging = false
 			}, 100)
 
 			return true
@@ -1402,13 +1403,18 @@ Application = function(p)
 				self.scrollRemoved--
 			}
 
+			
+
 			if(!self.scrollRemoved){
+
+				scrollmodechanging = true
+
 				self.el.html.css('overflow', '')
 
-				if (self.mobileview && window.bodyScrollLock && self.scrolltarget){
+				/*if (self.mobileview && window.bodyScrollLock && self.scrolltarget){
 					window.bodyScrollLock.enableBodyScroll(self.scrolltarget[0])
 					self.scrolltarget = null
-				}
+				}*/
 
 				///
 				//self.el.html.removeClass('nooverflow')
@@ -1417,6 +1423,10 @@ Application = function(p)
 				if (window.Keyboard && window.Keyboard.disableScroll){
 					window.Keyboard.disableScroll(false)
 				}
+
+				setTimeout(function(){
+					scrollmodechanging = false
+				}, 100)
 			}
 
 		},
@@ -1449,6 +1459,8 @@ Application = function(p)
 
 				if(!self.el.window) return
 				if (self.fullscreenmode) return
+
+				if(scrollmodechanging) return
 
 				var lastScrollTop = self.lastScrollTop
 
@@ -1524,6 +1536,7 @@ Application = function(p)
 
 					if(!self.el.window) return
 					if (self.fullscreenmode) return
+					if (scrollmodechanging) return
 					
 					_.each(self.events.delayedscroll, function(s){
 						s(self.lastScrollTop, blockScroll)
