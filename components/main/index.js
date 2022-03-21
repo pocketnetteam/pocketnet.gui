@@ -586,109 +586,116 @@ var main = (function(){
 					}
 				}
 
+				self.app.user.isState(function(state){
+					if (state){
 				
-				self.nav.api.load({
-					open : true,
-					id : 'lenta',
-					el : el.lenta,
-					animation : false,
+						self.nav.api.load({
+							open : true,
+							id : 'lenta',
+							el : el.lenta,
+							animation : false,
 
-					mid : 'main',
+							mid : 'main',
 
-					essenseData : {
-						hr : 'index?',
-						goback : p.goback,
-						searchValue : searchvalue || null,
-						search : searchvalue ? true : false,
-						tags : searchtags,
-						read : readmain,
-						video :  videomain && !isMobile(),
-						videomobile : videomain && isMobile(),
-						//window : isMobile() ? el.c.find('.lentacell') : el.w,
-						page : 0,
+							essenseData : {
+								hr : 'index?',
+								goback : p.goback,
+								searchValue : searchvalue || null,
+								search : searchvalue ? true : false,
+								tags : searchtags,
+								read : readmain,
+								video :  videomain && !isMobile(),
+								videomobile : videomain && isMobile(),
+								//window : isMobile() ? el.c.find('.lentacell') : el.w,
+								page : 0,
 
-						recommendedUsers : isMobile(),
-						recommendedUsersCount : isMobile() ? 15 : 3,
-
-						extra : isMobile() ? [
-							{
-								key : 'recommendedusers',
-								position : rand(1,2),
-								essenseData : () => {
-									return {
-										recommendedUsersCount : 15
-									}
-								}
-							}
-						] : [],
-
-						afterload : function(ed, s, e){
-
-							if(!isMobile()) return
-
-							if(e || !s.length) return
-
-							ed.page++
-						},
-						opensvi : function(id){
-
-							lastscroll = self.app.lastScrollTop
-
-							el.c.addClass('opensvishowed')
-
-							if (upbutton) upbutton.destroy()
-							
-							if (upbackbutton) upbackbutton.destroy()
-
-							setTimeout(function(){
-								upbackbutton = self.app.platform.api.upbutton(el.upbackbutton, {
-									top : function(){
-										return '65px'
-									},
-									rightEl : el.c.find('.lentacellsvi'),
-									scrollTop : 0,
-									click : function(a){
-										actions.backtolenta()
-									},
-
-									icon : '<i class="fas fa-chevron-left"></i>',
-									class : 'bright',
-									text : 'Back'
-								})	
-							}, 50)
+								recommendedUsers : isMobile(),
+								recommendedUsersCount : isMobile() ? 15 : 3,
 								
-							setTimeout(function(){
-								upbackbutton.apply()
-							},300)
 
-							renders.post(id)
+								extra : state && isMobile() ? [
+									{
+										key : 'recommendedusers',
+										position : rand(1,2),
+										essenseData : () => {
+											return {
+												recommendedUsersCount : 15
+											}
+										}
+									}
+								] : [],
 
-							self.nav.api.history.addParameters({
-								v : id
-							})
+								afterload : function(ed, s, e){
 
-							self.nav.api.changedclbks()
+									if(!isMobile()) return
 
-							events.up()
-						},
+									if(e || !s.length) return
 
-						renderClbk : function(){
+									ed.page++
+								},
+								opensvi : function(id){
 
-							
-							actions.refreshSticky()
-						},
-						loader : loader
-					},
-					clbk : function(e, p){
+									lastscroll = self.app.lastScrollTop
 
-						renders.upbutton()
+									el.c.addClass('opensvishowed')
 
-						actions.refreshSticky()
+									if (upbutton) upbutton.destroy()
+									
+									if (upbackbutton) upbackbutton.destroy()
 
-						lenta = p
+									setTimeout(function(){
+										upbackbutton = self.app.platform.api.upbutton(el.upbackbutton, {
+											top : function(){
+												return '65px'
+											},
+											rightEl : el.c.find('.lentacellsvi'),
+											scrollTop : 0,
+											click : function(a){
+												actions.backtolenta()
+											},
 
-						if (clbk)
-							clbk()
+											icon : '<i class="fas fa-chevron-left"></i>',
+											class : 'bright',
+											text : 'Back'
+										})	
+									}, 50)
+										
+									setTimeout(function(){
+										upbackbutton.apply()
+									},300)
+
+									renders.post(id)
+
+									self.nav.api.history.addParameters({
+										v : id
+									})
+
+									self.nav.api.changedclbks()
+
+									events.up()
+								},
+
+								renderClbk : function(){
+
+									
+									actions.refreshSticky()
+								},
+								loader : loader
+							},
+							clbk : function(e, p){
+
+								renders.upbutton()
+
+								actions.refreshSticky()
+
+								lenta = p
+
+								if (clbk)
+									clbk()
+
+							}
+
+						})
 
 					}
 
