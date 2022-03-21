@@ -613,7 +613,7 @@ var main = (function(){
 								recommendedUsersCount : isMobile() ? 15 : 3,
 								
 
-								extra : state && isMobile() ? [
+								extra :/* state && isMobile() ? [
 									{
 										key : 'recommendedusers',
 										position : rand(1,2),
@@ -623,7 +623,7 @@ var main = (function(){
 											}
 										}
 									}
-								] : [],
+								] :*/ [],
 
 								afterload : function(ed, s, e){
 
