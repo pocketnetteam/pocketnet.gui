@@ -231,6 +231,9 @@
 .share_common .subscribeWrapper .unsubscribeevent {
   display: none;
 }
+.share_common .shareSave {
+  margin-right: auto;
+}
 .share_common .shareSave i {
   display: none;
 }
@@ -443,59 +446,6 @@
 }
 .share_common .jsPlayerPreview .statswrapper > div:nth-last-child(1) {
   margin-right: 0;
-}
-.share_common .jsPlayerLoading {
-  width: auto;
-  height: auto;
-  background: #000000;
-  position: relative;
-}
-.share_common .jsPlayerLoading .preloader5 {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  margin-left: -15px;
-  margin-top: -3px;
-  width: 30px;
-  height: 15px;
-  contain: strict;
-}
-.share_common .jsPlayerLoading .jsPlayerLoadingD {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  right: 0;
-}
-.share_common .jsPlayerLoading .jsPlayerLoadingD > div {
-  vertical-align: middle;
-  text-align: center;
-}
-.share_common .jsPlayerLoading.ytbvimb {
-  padding-bottom: 56.25%;
-}
-.share_common .jsPlayerLoading.ytbvimb .jsPlayerLoading {
-  display: none;
-}
-.share_common .jsPlayerLoading.ytbvimb.loading .jsPlayerLoading {
-  height: 100%;
-  max-height: none;
-  display: block;
-}
-.share_common .jsPlayerLoading.ytbvimb.loading .jsPlayerLoading .preloader5 {
-  display: block;
-}
-.share_common .jsPlayerLoading .initvideoplayer {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 40px;
-  height: 40px;
-  margin-top: -20px;
-  margin-left: -20px;
-  line-height: 40px;
-  font-size: 2em;
-  text-shadow: 0px 0px 2px rgba(var(--color-shadow-base), 0.714), 0 0 3px rgba(var(--color-shadow-base), 0.519);
 }
 .share_common .authorTable {
   width: auto;
@@ -954,7 +904,6 @@
 }
 .share_common.fullScreenVideo .video-js {
   max-height: 80vh;
-  max-height: calc(var(--vh, 1vh) * 80);
 }
 .share_common.fullScreenVideo .shareTable {
   padding-top: 0;

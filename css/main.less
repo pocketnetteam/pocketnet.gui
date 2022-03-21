@@ -206,10 +206,100 @@
     }
 }
 
+.customscroll{
+    overscroll-behavior: contain;
+}
+
+.jsPlayerLoading{
+        
+    width: auto;
+    height: auto;
+    background: #000000;
+    position: relative;
+    min-height: 200px;
+    border-radius: 6px;
+    
+
+    .preloader5{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-left: -15px;
+        margin-top: -8px;
+        width: 30px;
+        height: 15px;
+        contain: strict;
+    }
+
+    .jsPlayerLoadingD{
+        position: absolute;
+        left : 0;
+        top : 0;
+        bottom : 0;
+        right: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &.ytbvimb{
+        padding-bottom: 56.25%;
+
+        .jsPlayerLoading{
+            display: none;
+        }
+
+        .playerlabel{
+            position: absolute;
+            left : @rhythm;
+            padding : @rhythm;
+            border-radius: 6px;
+            background: rgba(var(--color-shadow-base), 0.5);
+            bottom : @rhythm;
+        }
+
+        &.loading{
+            .jsPlayerLoading{
+                height: 100%;
+                max-height: none;
+                display: block;
+                background: transparent;
+                .preloader5{
+                    display: block;
+                }
+            }
+
+            .playerlabel{
+                display: none;
+            }
+            .initvideoplayer{
+                display: none;
+            }
+        }
+    }
+
+    .initvideoplayer{
+        text-align: center;
+        cursor: pointer;
+        width: 100px;
+        height: 100px;
+        line-height: 100px;
+        font-size: 1.5em;
+        margin : 0 auto;
+
+        .shadowText();
+    }
+}
 
 
 @media only screen and (min-width: 768px){
     .customscroll{
+        .customscrollclass()
+    }
+}
+
+.wnd{
+    .wndcustomscroll{
         .customscrollclass()
     }
 }
@@ -6643,6 +6733,10 @@ html{
 
     &.mobileview{
 
+        .plyr__volume{
+            max-width: 32px;
+        }
+
         #panelWrapper{
             position: fixed;
             top : 65px;
@@ -6722,6 +6816,12 @@ html{
         #navigation{
             .fakem{
                 display: none;
+            }
+        }
+
+        &.openapipnet{
+            .contentWrapper{
+                padding-top : 0;
             }
         }
     }
@@ -7576,15 +7676,18 @@ html.mobileview{
     .wnd{
         &.normalizedmobile{
             contain: strict;
+
             .wndinner{
                 width: 100%;
                 background: transparent!important;
                 will-change: transform;
                 
             }
+
             .wndback{
                 backface-visibility: hidden;
                 .transition(0s);
+                
             }
 
             .hideButton{
@@ -7614,8 +7717,6 @@ html.mobileview{
                 transform: translateY(100%);
                 backface-visibility: hidden;
                 will-change: transform;
-                
-              
                 .transition(0.3s, top);
 
                 .wndheader{
@@ -7682,13 +7783,7 @@ html.mobileview{
                     -webkit-transform: translate3d(0, 0, 0);
                     transform: translate3d(0, 0, 0);
                     .transition(0.3s, transform);
-                }   
-
-                /*.windowmainbuttons{
-                    -webkit-transform: translate3d(0,-130px,0);
-                    transform: translate3d(0,-130px,0);
-                    .transition(0.3s, transform);
-                }*/
+                }  
                 
                 .closeline,
                 .wndback{
@@ -7704,12 +7799,7 @@ html.mobileview{
                     .wndinner{
                         -webkit-transform: translate3d(0,0,0);
                         transform: translate3d(0,0,0);
-                    }   
-                    
-                    /*.windowmainbuttons{
-                        -webkit-transform: translate3d(0,-45px,0);
-                        transform: translate3d(0,-45px,0);
-                    }*/
+                    } 
                 }
 
                 .closeline{
@@ -7733,9 +7823,14 @@ html.mobileview{
 
             &:only-child{
 
+                .wndback{
+                    .transition(0.2s);
+                    
+                }
+
                 &.asette{
                     .wndback{
-                        .transition(0.2s);
+                        
                         opacity: 0;
                     }
                 }
@@ -8325,7 +8420,6 @@ html.pipmode{
   }
   .dg-main-content {
     width: 98%;
-    /*width: calc(98% - 30px);*/
     max-width: 400px;
     padding: 15px;
     border-radius: 5px;

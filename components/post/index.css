@@ -162,7 +162,7 @@
   max-width: 620px;
 }
 #post.videomainpost {
-  padding-bottom: 2em;
+  /*padding-bottom : 4 * @rhythm;*/
 }
 #post.videomainpost .hiddenpost {
   background: rgb(var(--background-total-theme));

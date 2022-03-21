@@ -1189,6 +1189,7 @@ Application = function(p)
 	self.pipwindow = null
 
 	var blockScroll = false
+	var scrollmodechanging = false
 	var optimizeTimeout = null
 
 	self.actions = {
@@ -1358,19 +1359,27 @@ Application = function(p)
 			return s
 		},
 
-		offScroll : function(){
+		offScroll : function(target){
 
 			if(self.scrollRemoved < 0) self.scrollRemoved = 0
 
 			self.scrollRemoved++
 
+			console.log('self.scrollRemoved1', self.scrollRemoved)
+
 			if (self.scrollRemoved > 1){
 				return false
 			}
 
-			blockScroll = true
+			scrollmodechanging = true
 
 			self.el.html.css('overflow', 'hidden')
+
+			/*if (self.mobileview && window.bodyScrollLock && target){
+
+				window.bodyScrollLock.disableBodyScroll(target[0])
+				self.scrolltarget = target
+			}*/
 
 			//self.el.html.addClass('nooverflow')
 
@@ -1379,14 +1388,14 @@ Application = function(p)
 			}
 
 			setTimeout(function(){
-				blockScroll = false
+				scrollmodechanging = false
 			}, 100)
 
 			return true
 			
 		},
 
-		onScroll : function(){
+		onScroll : function(target){
 
 			if (self.scrollRemoved < 1) self.scrollRemoved = 1
 
@@ -1394,8 +1403,18 @@ Application = function(p)
 				self.scrollRemoved--
 			}
 
+			
+
 			if(!self.scrollRemoved){
+
+				scrollmodechanging = true
+
 				self.el.html.css('overflow', '')
+
+				/*if (self.mobileview && window.bodyScrollLock && self.scrolltarget){
+					window.bodyScrollLock.enableBodyScroll(self.scrolltarget[0])
+					self.scrolltarget = null
+				}*/
 
 				///
 				//self.el.html.removeClass('nooverflow')
@@ -1404,6 +1423,10 @@ Application = function(p)
 				if (window.Keyboard && window.Keyboard.disableScroll){
 					window.Keyboard.disableScroll(false)
 				}
+
+				setTimeout(function(){
+					scrollmodechanging = false
+				}, 100)
 			}
 
 		},
@@ -1436,6 +1459,8 @@ Application = function(p)
 
 				if(!self.el.window) return
 				if (self.fullscreenmode) return
+
+				if(scrollmodechanging) return
 
 				var lastScrollTop = self.lastScrollTop
 
@@ -1511,6 +1536,7 @@ Application = function(p)
 
 					if(!self.el.window) return
 					if (self.fullscreenmode) return
+					if (scrollmodechanging) return
 					
 					_.each(self.events.delayedscroll, function(s){
 						s(self.lastScrollTop, blockScroll)
@@ -2230,6 +2256,7 @@ Application = function(p)
 								},
 
 								restrict : true,
+								//distance : 150,
 								trueshold : 70,
 								clbk : function(){
 

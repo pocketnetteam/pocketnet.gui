@@ -209,13 +209,25 @@ var Nodemanager = function(p){
         return similar
     }
 
-    self.rpcs = function(node, method, parameters, clbks){
+    self.rpcs = function(node, method, parameters, clbks, time){
 
-        return node.rpcs(method, _.clone(parameters)).then(clbks.resolve).catch(clbks.reject)
+        if (time){
+            time.rpcsstart = performance.now() - time.b
+        }
+
+        return node.rpcs(method, _.clone(parameters), time).then(r => {
+
+            if (time){
+                time.rpcsend = performance.now() - time.b
+            }
+
+            clbks.resolve(r)
+
+        }).catch(clbks.reject)
 
     }
 
-    var runrpcswideclbks = function(e, r, clbks, responses, need, result, error, fromadd){
+    var runrpcswideclbks = function(e, r, clbks, responses, need, result, error, fromadd, time){
         if (responses >= need){
             return responses
         }
@@ -228,6 +240,17 @@ var Nodemanager = function(p){
 
         if (typeof r != 'undefined'){
             responses = need
+        }
+
+        if (time){
+            if(!time.runrpcswideclbks) time.runrpcswideclbks = []
+
+            time.runrpcswideclbks.push({
+                t : performance.now() - time.b,
+                e : e ? 1 : 0,
+                r : r ? 1 : 0,
+                a : fromadd ? 1 : 0
+            })
         }
 
         if (responses >= need){
@@ -249,7 +272,7 @@ var Nodemanager = function(p){
 
     }
 
-    self.rpcswide = function(node, method, parameters, clbks){
+    self.rpcswide = function(node, method, parameters, clbks, time){
 
         var similarnodes = self.similarnodes(node, 1)
 
@@ -260,21 +283,22 @@ var Nodemanager = function(p){
         var error = undefined
 
 
-        node.rpcs(method, _.clone(parameters)).then(r => {
+        if (time){
+            time.rpcswidestart = performance.now() - time.b
+        }
 
-           
+        node.rpcs(method, _.clone(parameters)).then(r => {
 
             result = r
 
-            responses = runrpcswideclbks(undefined, r, clbks, responses, need, result, error)
+            responses = runrpcswideclbks(undefined, r, clbks, responses, need, result, error, false, time)
            
 
         }).catch(e => {
 
             error = e
 
-
-            responses = runrpcswideclbks(e, undefined, clbks, responses, need, result, error)
+            responses = runrpcswideclbks(e, undefined, clbks, responses, need, result, error, false, time)
 
         })
 
@@ -295,14 +319,14 @@ var Nodemanager = function(p){
 
                         if(typeof result == 'undefined') result = r
 
-                        responses = runrpcswideclbks(undefined, result, clbks, responses, need, result, error, true)
+                        responses = runrpcswideclbks(undefined, result, clbks, responses, need, result, error, true, time)
 
                     }).catch(e => {
 
 
                         if(typeof error == 'undefined') error = e
 
-                        responses = runrpcswideclbks(e, undefined, clbks, responses, need, result, error, true)
+                        responses = runrpcswideclbks(e, undefined, clbks, responses, need, result, error, true, time)
 
                     })
 
@@ -313,7 +337,7 @@ var Nodemanager = function(p){
 
     }
 
-    self.exepmethod = function(node, method, parameters, clbks){
+    self.exepmethod = function(node, method, parameters, clbks, time){
 
         node.checkParameters().then((r) => {
 
@@ -327,25 +351,25 @@ var Nodemanager = function(p){
 
     }
 
-    self.queue = function(node, method, parameters, direct, clbks){
+    self.queue = function(node, method, parameters, direct, clbks, time){
         if(!clbks) clbks = {}
 
         if (exepmethods[method]){
 
-            self.exepmethod(node, method, parameters, clbks)
+            self.exepmethod(node, method, parameters, clbks, time)
 
             return
         }
 
-        //self.rpcs(node, method, parameters, clbks)
-
         if (direct || !queuemethods[method]){
-            self.rpcs(node, method, parameters, clbks)
+
+            self.rpcs(node, method, parameters, clbks, time)
         }
 
         else{
+
             addqueue({
-                node, method, parameters, clbks
+                node, method, parameters, clbks, time
             })
         }
     }
@@ -366,8 +390,7 @@ var Nodemanager = function(p){
 
             var rpcs = queue[i]
 
-
-            self.rpcswide(rpcs.node, rpcs.method, rpcs.parameters, rpcs.clbks)
+            self.rpcswide(rpcs.node, rpcs.method, rpcs.parameters, rpcs.clbks, rpcs.time)
         }
 
         var dif = performance.now() - now
@@ -1083,10 +1106,6 @@ var Nodemanager = function(p){
 
     self.waitreadywithrating = function(){
 
-        if (inited && self.initednodeswithrating().length){
-            return Promise.resolve(true)
-        }
-
         return f.pretry(()=>{
             return inited && self.initednodeswithrating().length
         }, 30, 10000)
@@ -1094,13 +1113,10 @@ var Nodemanager = function(p){
 
     self.waitready = function(){
 
-        if(inited && self.initednodes().length) {
-            return Promise.resolve(true)
-        }
-
         return f.pretry(()=>{
             return inited && self.initednodes().length
         }, 30, 10000)
+
     }
 
     self.request = function(method, parameters){

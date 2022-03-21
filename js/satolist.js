@@ -2842,6 +2842,7 @@ Platform = function (app, listofnodes) {
                         inWnd : el ? false : true,
                         el : el ? el : null,
                         eid : id,
+                        
                         mid : id,
                         animation : false,
                         essenseData : p,
@@ -2896,6 +2897,7 @@ Platform = function (app, listofnodes) {
                         el : el ? el : null,
                         eid : id,
                         mid : id,
+                        history : true,
                         animation : false,
                         essenseData : p,
                         clbk : function(e, _p){
@@ -16587,7 +16589,7 @@ Platform = function (app, listofnodes) {
                     self.app.api.rpc('sendrawtransaction', [hex]).then(d => {
 
                         if (clbk)
-                                clbk(d)
+                            clbk(d)
 
                     }).catch(e => {
                         if (clbk) {
@@ -26522,7 +26524,7 @@ Platform = function (app, listofnodes) {
 
                 if (self.app.mobileview){
                     setTimeout(function(){
-                        self.app.actions.offScroll()
+                        self.app.actions.offScroll(self.matrixchat.el)
                         self.app.actions.optimize()
                     })
                 }

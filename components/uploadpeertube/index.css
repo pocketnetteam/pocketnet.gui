@@ -451,6 +451,13 @@ html.mobileview #uploadpeertube .uploadRow label {
 html.mobileview .wnd.uploadpeertube.witherror .wndinner #uploadpeertube {
   height: auto;
 }
+html.mobileview .wnd.uploadpeertube #uploadpeertube .mainWrapper {
+  position: relative;
+}
+html.mobileview .wnd.uploadpeertube #uploadpeertube .upload-header-wrapper {
+  position: relative;
+  padding: 1em;
+}
 .importVideoDialog {
   z-index: 1006;
 }

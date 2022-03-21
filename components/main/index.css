@@ -622,7 +622,7 @@ html.mobileview #main .bgCaption {
     contain: strict;
     will-change: transform;
     padding-right: 0;
-    overscroll-behavior: contain;
+    overscroll-behavior: none;
   }
   #main .leftpanelcell #tagcloud,
   #main .leftpanelcell #categories {

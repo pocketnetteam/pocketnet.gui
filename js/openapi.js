@@ -51,6 +51,9 @@ retry(function(){
 				if(embeddingSettigns.black){
 					$('html').attr('theme', 'black')
 				}
+				else{
+					$('html').attr('theme', 'white')
+				}
 
 				if (embeddingSettigns.ref){
 					app.ref = embeddingSettigns.ref
