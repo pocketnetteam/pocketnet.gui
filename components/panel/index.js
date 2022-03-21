@@ -129,7 +129,7 @@ var panel = (function(){
 
 	
 			
-			renders.topusers();
+			//renders.topusers();
 
 			/*if (self.app.test){
 				

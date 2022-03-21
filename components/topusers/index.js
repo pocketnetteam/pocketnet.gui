@@ -46,7 +46,6 @@ var topusers = (function(){
 
 				self.app.platform.sdk.users.getRecommendedAccountsByTags(function(c, error){
 
-					console.log('getrecomendedaccountsbytags executed')
 
 					onlytags = true;
 

@@ -606,8 +606,22 @@ var main = (function(){
 						videomobile : videomain && isMobile(),
 						//window : isMobile() ? el.c.find('.lentacell') : el.w,
 						page : 0,
+
 						recommendedUsers : isMobile(),
 						recommendedUsersCount : isMobile() ? 15 : 3,
+
+						extra : isMobile() ? [
+							{
+								key : 'recommendedusers',
+								position : rand(1,2),
+								essenseData : () => {
+									return {
+										recommendedUsersCount : 15
+									}
+								}
+							}
+						] : [],
+
 						afterload : function(ed, s, e){
 
 							if(!isMobile()) return

@@ -52,19 +52,9 @@ var recommendedusers = (function(){
 
 				self.app.platform.sdk.users.getRecommendedAccountsByTags(function(c, error){
 
-					console.log('getrecomendedaccountsbytags executed')
-
 					onlytags = true;
 
-					self.app.platform.sdk.categories.clbks.excluded.recommendedusers =
-					self.app.platform.sdk.categories.clbks.tags.recommendedusers =
-					self.app.platform.sdk.categories.clbks.selected.recommendedusers = function(data){
-
-						el.users.empty();
-						addresses = [];
-						state.load(renders.page);
-						
-					}
+					
 
 					if (!error && c.length){
 
@@ -235,8 +225,6 @@ var recommendedusers = (function(){
 			},
 			load : function(clbk){
 
-				console.log('addresses', addresses)
-
 
 				if (addresses.length){
 
@@ -266,7 +254,6 @@ var recommendedusers = (function(){
 	
 								addresses = shuffle(c).filter(filterSubscribes);
 
-								console.log('addresses', addresses)
 		
 								if (clbk){
 									clbk(addresses)
@@ -310,6 +297,22 @@ var recommendedusers = (function(){
 				el.c.hide();
 			})
 
+			/*console.log("ASD")
+
+			self.app.platform.sdk.categories.clbks.excluded.recommendedusers =
+			self.app.platform.sdk.categories.clbks.tags.recommendedusers =
+			self.app.platform.sdk.categories.clbks.selected.recommendedusers = function(data){
+
+				console.log("recommendedusers")
+
+				if (el.users)
+					el.users.empty();
+
+				addresses = [];
+				state.load(renders.page);
+				
+			}*/
+
 			
 		}
 
@@ -334,12 +337,17 @@ var recommendedusers = (function(){
 
 			destroy : function(){
 
+				console.log("DESTROY")
+
 				window.removeEventListener('scroll', events.loadmorescroll)
 
 				delete self.app.platform.clbks.api.actions.subscribe.recommendedusers
 				delete self.app.platform.clbks.api.actions.subscribePrivate.recommendedusers
-	
 				delete self.app.platform.clbks.api.actions.unsubscribe.recommendedusers
+
+				delete self.app.platform.sdk.categories.clbks.excluded.recommendedusers
+				delete self.app.platform.sdk.categories.clbks.tags.recommendedusers
+				delete self.app.platform.sdk.categories.clbks.selected.recommendedusers
 	
 				el = {};
 			},
