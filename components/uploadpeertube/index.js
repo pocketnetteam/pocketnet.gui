@@ -1,3 +1,12 @@
+const ffmpeg = require('fluent-ffmpeg');
+const stream = require('stream');
+
+let ipcRenderer;
+
+if (typeof _Electron !== 'undefined') {
+  ipcRenderer = require('electron').ipcRenderer;
+}
+
 var uploadpeertube = (function () {
 	var self = new nModule();
 
@@ -31,7 +40,7 @@ var uploadpeertube = (function () {
 
 						/*// to bits and then to bitrate
 						var averageBitrate = (8 * file.size) / video.duration;
-			
+
 						return averageBitrate > 8000000
 						  ? reject({
 							  text: self.app.localization.e('videoBitrateError'),
@@ -61,14 +70,14 @@ var uploadpeertube = (function () {
 						id : 'abilityincrease',
 						el : errorel,
 
-						essenseData : {	
+						essenseData : {
 							template : 'video'
 						}
 					}, function(v, p){
 						errorcomp = p
 					})
 				}
-				
+
 			},
 		};
 
@@ -105,8 +114,10 @@ var uploadpeertube = (function () {
 				contentAsHTML: true,
 			});
 
-			el.videoInput.change(function (evt) {
-				var fileName = evt.target.files[0].name;
+			const transcodeVideo = transcodingFactory(electron.ipcRenderer);
+
+      el.videoInput.change(async function (evt) {
+        var fileName = evt.target.files[0].name;
 
 				el.videoError.text(
 					fileName.slice(0, 20) + (fileName.length > 20 ? '...' : ''),
@@ -157,9 +168,11 @@ var uploadpeertube = (function () {
 
 				data.name = videoName || fileName;
 
-				var options = {
-					type: 'uploadVideo',
-				};
+        await Promise.all(Object.values(data.video));
+
+        var options = {
+          type: 'uploadVideo',
+        };
 
 				options.progress = function (percentComplete) {
 					var formattedProgress = (percentComplete * 0.9).toFixed(2);
@@ -202,12 +215,70 @@ var uploadpeertube = (function () {
 
 				el.importUrl.addClass('hidden');
 
-				self.app.peertubeHandler.api.videos
-					.upload(data, options)
-					.then((response) => {
-						el.uploadButton.prop('disabled', false);
-						el.header.addClass('activeOnRolled');
-						el.uploadProgress.addClass('hidden');
+        if (typeof _Electron !== 'undefined') {
+          const filePath = evt.target.files[0].path;
+
+          el.uploadProgress.find('.bold-font')
+              .text(self.app.localization.e('uploadVideoProgress_processing'));
+
+          options.progress(0);
+
+          try {
+						const transcoded = await transcodeVideo(filePath, options.progress, options.cancel);
+
+						/** Writing transcoded alternatives to target object */
+						/** At this moment for backend reasons, sending only 720p */
+
+						if (!transcoded) {
+							return;
+						}
+
+						data.video = new File([transcoded.p720.buffer], data.video.name, { type: 'video/mp4' });
+					} catch(err) {
+          	const isCanceledByUser = (err.message === 'TRANSCODE_ABORT');
+						const isAbortedByApp = (err.message === 'NO_TRANSCODED');
+
+						if (isCanceledByUser) {
+							/**
+							 * Handling user cancelled transcoding.
+							 * Just stopping video upload...
+							 */
+							console.log('Transcoding was canceled by user');
+							return;
+						} else if (isAbortedByApp) {
+							/**
+							 * Handling not required transcoding cases.
+							 * This doesn't cancel video upload...
+							 */
+							console.log('Transcoding is not required');
+						} else {
+							/**
+							 * Anyway transcoding error is not fatal. If
+							 * video can't be processed by client then
+							 * it would be handled on server. No reason
+							 * to report user about any issue related...
+							 */
+
+							console.error(err);
+						}
+					}
+        }
+
+        el.uploadProgress.find('.bold-font')
+            .text(self.app.localization.e('uploadVideoProgress_uploading'));
+        el.uploadProgress
+            .find('.upload-progress-bar')
+            .removeClass('processing')
+            .addClass('uploading');
+
+        options.progress(0);
+
+        self.app.peertubeHandler.api.videos
+          .upload(data, options)
+          .then((response) => {
+            el.uploadButton.prop('disabled', false);
+            el.header.addClass('activeOnRolled');
+            el.uploadProgress.addClass('hidden');
 
 						el.preloaderElement.addClass('hidden');
 
