@@ -40,6 +40,8 @@ var recommendedusers = (function(){
 			  [array[currentIndex], array[randomIndex]] = [
 				array[randomIndex], array[currentIndex]];
 			}
+
+			console.log('p.essense.', array, p.essenseData.recommendedUsersCount)
 		  
 			return array.slice(0, p.essenseData.recommendedUsersCount || 3);
 		}
