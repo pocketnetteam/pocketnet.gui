@@ -932,10 +932,12 @@ ____loclib.editWallpaper = "Изменить Заставку";
 ____loclib.removeVideo = "Удалить Видео";
 
 
+____loclib.videoTranscodingError = "Произошла ошибка при обработке вашего видео"
 ____loclib.videoUploadingFinish = "Завершение загрузки..."
 ____loclib.uploadNewVideo = "Добавить новое видео"
 ____loclib.selectVideoFile = "Выберите файл"
-____loclib.uploadVideoProgress = "Загружено:"
+____loclib.uploadVideoProgress_processing = "Обработано:"
+____loclib.uploadVideoProgress_uploading = "Загружено:"
 
 
 
@@ -1786,11 +1788,11 @@ ____loclib.easyNode_e2002_2 = "за это Покеткойны. Вы может
 ____loclib.easyNode_e2002_2_1 = " Заработок ";
 ____loclib.easyNode_e2002_2_2 = " Покеткойна будет пропорционален количеству Покеткойнов, которое вы положите в свою ноду. В криптовалютах такой алгоритм называется стейкинг.";
 
-____loclib.minPkoin = function (p){	
+____loclib.minPkoin = function (p){
 	return `Минимум ${String(p)} PKOIN`
 }
 
-____loclib.maxPkoin = function (p){	
+____loclib.maxPkoin = function (p){
 	return `Максимум ${String(p)} PKOIN`
 }
 
