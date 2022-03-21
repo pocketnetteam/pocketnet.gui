@@ -606,6 +606,8 @@ var main = (function(){
 						videomobile : videomain && isMobile(),
 						//window : isMobile() ? el.c.find('.lentacell') : el.w,
 						page : 0,
+						recommendedUsers : isMobile(),
+						recommendedUsersCount : isMobile() ? 15 : 3,
 						afterload : function(ed, s, e){
 
 							if(!isMobile()) return

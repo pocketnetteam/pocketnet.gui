@@ -16,7 +16,7 @@ var lenta = (function(){
 		var mid = p.mid;
 		var making = false, ovf = false;
 		var w, essenseData, recomended = [], recommended, mestate, initedcommentes = {}, canloadprev = false,
-		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null, loadedcachedHeight, showRecommendedUsers = {show: true},
+		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null, loadedcachedHeight, showRecommendedUsers = true;
 		recommendedusers = null;
 
 		var progress, parallax;
@@ -288,7 +288,7 @@ var lenta = (function(){
 
 			rebuilddelay : function(){
 
-				showRecommendedUsers.show = true;
+				showRecommendedUsers = true;
 				recommendedusers = null;
 
 				if (el.c)
@@ -2484,25 +2484,25 @@ var lenta = (function(){
 
 			recommendedusers : function(){
 				
-				if (!recommendedusers){
 
-					self.nav.api.load({
+				self.nav.api.load({
 
-						open : true,
-						id : 'recommendedusers',
-						el : el.recommendedusers,
-						animation : false,
-	
-						essenseData : {
-						},
-						
-						clbk : function(e, p){
-							recommendedusers = p;
-						}
-	
-					})
+					open : true,
+					id : 'recommendedusers',
+					el : el.recommendedusers,
+					animation : false,
 
-				}
+					essenseData : {
+						recommendedUsersCount : essenseData.recommendedUsersCount
+					},
+					
+					clbk : function(e, p){
+						recommendedusers = p;
+
+					}
+
+				})
+
 
 			},
 			debugusers : function(el){
@@ -2983,7 +2983,7 @@ var lenta = (function(){
 						shares : shares || [],
 						index : p.index || 0,
 						video : video || essenseData.videomobile,
-						showRecommendedUsers : showRecommendedUsers
+						showRecommendedUsers : showRecommendedUsers,
 					},
 					animation : false,
 					delayRender : isotopeinited,
@@ -2991,14 +2991,15 @@ var lenta = (function(){
 
 				}, function(_p){
 
-					
-					if (tpl ==='groupshares' && isMobile() && app.test){
+					if (tpl ==='groupshares' && !essenseData.video && essenseData.recommendedUsers && !recommendedusers){
 
 						el.recommendedusers = _p.el.find('.recommendeduserscnt');
+			
+						renders.recommendedusers();
 
-						if (!essenseData.video){
-							renders.recommendedusers();
-						}
+						showRecommendedUsers = false;
+
+						
 					}
 
 					if (_p.inner == append){
@@ -4771,7 +4772,7 @@ var lenta = (function(){
 				
 
 				el.share = {};
-				showRecommendedUsers.show = true;
+				showRecommendedUsers = true;
 
 				if (essenseData.horizontal){
 

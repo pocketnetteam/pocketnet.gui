@@ -33,6 +33,13 @@ var topusers = (function(){
 			return array;
 		}
 
+		var me = deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value.toString('hex'))
+
+		var filterSubscribes = function(u){
+
+			return !(me && me.relation(u.address, 'subscribes'));
+		}
+
 		var actions = {
 
 			getRecommendedAccountsByTags : function(clbk){
@@ -61,7 +68,7 @@ var topusers = (function(){
 						addresses = c;
 
 						if (clbk){
-							clbk(shuffle(addresses).slice(0, 5))
+							clbk(shuffle(addresses).filter(filterSubscribes).slice(0, 5))
 						}
 
 					}
@@ -259,7 +266,7 @@ var topusers = (function(){
 
 						self.app.platform.sdk.users.getBestUsers(function(c, error){
 
-							if (!c.length){
+							if (!(c && c.length)){
 	
 								actions.getRecommendedAccountsByTags(clbk);
 	
@@ -272,7 +279,7 @@ var topusers = (function(){
 								addresses = c;
 		
 								if (clbk){
-									clbk(shuffle(addresses).slice(0, 5))
+									clbk(shuffle(addresses).filter(filterSubscribes).slice(0, 5))
 								}
 	
 							}
