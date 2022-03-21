@@ -41,7 +41,8 @@ __map =  {
 		"js/lib/pocketnet/buffer.js", //
 		
 		//
-
+		"js/vendor/bodyScrollLock.min.js",
+		
         "js/vendor/pbkdf2.js", //
         "js/vendor/sha1.js", //
         "js/vendor/paste.js", //

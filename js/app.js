@@ -1358,7 +1358,7 @@ Application = function(p)
 			return s
 		},
 
-		offScroll : function(){
+		offScroll : function(target){
 
 			if(self.scrollRemoved < 0) self.scrollRemoved = 0
 
@@ -1374,6 +1374,12 @@ Application = function(p)
 
 			self.el.html.css('overflow', 'hidden')
 
+			if (self.mobileview && window.bodyScrollLock && target){
+
+				window.bodyScrollLock.disableBodyScroll(target[0])
+				self.scrolltarget = target
+			}
+
 			//self.el.html.addClass('nooverflow')
 
 			if (window.Keyboard && window.Keyboard.disableScroll){
@@ -1388,7 +1394,7 @@ Application = function(p)
 			
 		},
 
-		onScroll : function(){
+		onScroll : function(target){
 
 			if (self.scrollRemoved < 1) self.scrollRemoved = 1
 
@@ -1396,10 +1402,13 @@ Application = function(p)
 				self.scrollRemoved--
 			}
 
-			console.log('self.scrollRemoved2', self.scrollRemoved)
-
 			if(!self.scrollRemoved){
 				self.el.html.css('overflow', '')
+
+				if (self.mobileview && window.bodyScrollLock && self.scrolltarget){
+					window.bodyScrollLock.enableBodyScroll(self.scrolltarget[0])
+					self.scrolltarget = null
+				}
 
 				///
 				//self.el.html.removeClass('nooverflow')

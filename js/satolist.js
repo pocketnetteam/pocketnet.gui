@@ -26450,7 +26450,7 @@ Platform = function (app, listofnodes) {
 
                 if (self.app.mobileview){
                     setTimeout(function(){
-                        self.app.actions.offScroll()
+                        self.app.actions.offScroll(self.matrixchat.el)
                         self.app.actions.optimize()
                     })
                 }

@@ -675,7 +675,7 @@
 				wnd.removeClass('asette')
 
 				if(!nooverflow){
-					app.actions.offScroll();
+					app.actions.offScroll(wnd);
 				}
 
 			}, 220)
@@ -895,7 +895,7 @@
 				wnd.find('.hideButton').removeClass('hidden');
 
 				if(!nooverflow) {
-					app.actions.offScroll();
+					app.actions.offScroll(wnd);
 				}
 			},
 		}
