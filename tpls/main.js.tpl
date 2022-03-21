@@ -40,8 +40,6 @@ const path = require('path');
 const http = require('http');
 const https = require('https');
 
-const contextMenu = require('electron-context-menu');
-
 contextMenu({
     showSearchWithGoogle : false,
     showCopyImageAddress : true,
