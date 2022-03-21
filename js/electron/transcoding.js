@@ -4,10 +4,14 @@ const path = require('path');
 
 const checkDiskSpace = require('check-disk-space').default;
 
+const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
+
+
 const ffmpeg = require('fluent-ffmpeg');
 const ffprobe = require('ffprobe-static');
 
 ffmpeg.setFfprobePath(ffprobe.path);
+ffmpeg.setFfmpegPath(ffmpegPath);
 
 /**
  * This factory creates client side transcoding
