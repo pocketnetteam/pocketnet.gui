@@ -6,8 +6,8 @@ on:
 
 jobs:
   build:
+    if: github.ref == 'refs/heads/master'
     runs-on: autotest
-
     steps:
       - name: Start
         run: |
