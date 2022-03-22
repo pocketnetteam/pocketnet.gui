@@ -1,6 +1,7 @@
 name: Deploy Proxy
 
 on:
+  workflow_dispatch:
   push:
     tags: v*.*.*-proxy
 
