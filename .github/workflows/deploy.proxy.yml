@@ -57,7 +57,7 @@ jobs:
       - name: Pull && Up Container
         run: /proxy_pull_up.sh
 
-  deploy:
+  deploy_old:
     runs-on: ubuntu-latest
     needs: build
     steps:
