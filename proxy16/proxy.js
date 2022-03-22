@@ -690,10 +690,10 @@ var Proxy = function (settings, manage, test, logger) {
 					'peertube15.pocketnet.app',
 				],
 
-				16: [
+				/*16: [
 					'poketnetpeertube.space',
 					'poketnetpeertube.ru',
-				],
+				],*/
 
 				17: [
 					'bastynode.ru',

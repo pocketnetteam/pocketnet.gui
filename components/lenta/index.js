@@ -42,6 +42,7 @@ var lenta = (function(){
 			videopaused = false,
 			optimized = {},
 			cachedHeight = 0,
+			optimizedCount = 0,
 			fullscreenvideoShowed = null;
 
 		var countshares = 0;
@@ -103,24 +104,20 @@ var lenta = (function(){
 				delete shareInitingMap[share.txid]
 			},
 			optimize : function(){
-
 				return
-
 				if(!self.app.mobileview) return
 
 				var notoptimized = el.c.find('.portion:not(.optimized):not(:first-child):not(:nth-last-child(1)):not(:nth-last-child(2))')
-
+				var optimizationTip = el.c.find('.optimizationTip')
 				var els = notoptimized.find('.share')
 
 				if (notoptimized.length){
 
+					self.app.blockScroll = true
+
 					var optimizedh = 0
-					
 
 					notoptimized.each(function(){
-
-						console.log('$(this).height()', $(this).height())
-
 						optimizedh += $(this).height()
 					})
 
@@ -135,15 +132,13 @@ var lenta = (function(){
 
 					})
 
-					//notoptimized.addClass('optimized')
+					notoptimized.remove()
 
-					
-					//var s = self.app.el.window.scrollTop()
-						notoptimized.remove()
-					//	self.app.el.window.scrollTop(s - optimizedh)
+					essenserenderclbk()
 
-						essenserenderclbk()
-
+					setTimeout(()=>{
+						self.app.blockScroll = false
+					}, 150)
 				}
 			},
 
@@ -415,6 +410,7 @@ var lenta = (function(){
 				fixedblock = 0;
 				loadedcachedHeight = 0;
 				cachedHeight = 0;
+				optimizedCount = 0;
 
 				_.each(shareInitedMap, function(s, id){
 					delete self.app.platform.sdk.node.shares.storage.trx[id]

@@ -1455,62 +1455,117 @@ Application = function(p)
 		var cr = self.curation()
 
 		var scrolling = _.throttle(function(){
-			//window.requestAnimationFrame(function(){
+
+			if(!self.el.window) return
+			if (self.fullscreenmode) return
+			if (scrollmodechanging) return
+			if (self.blockScroll) return
+
+			var lastScrollTop = self.lastScrollTop
+
+			var scrollTop = self.actions.getScroll()
+
+
+			_.each(self.events.scroll, function(s){
+				s(scrollTop, blockScroll)
+			})
+
+			if(self.mobileview && !cr){
+
+				var cs = (lastScrollTop + 40 < scrollTop || lastScrollTop - 40 < scrollTop)
+
+				var scrollTopH = 900
+
+				if(self.playingvideo) scrollTopH = 65
+
+				if (scrollTop < scrollTopH){
+
+					showPanel = '1'
+
+					if (self.el.html.hasClass('scrollmodedown')){
+						self.el.html.removeClass('scrollmodedown')
+					}
+
+					return
+				}
+
+				if (scrollTop > scrollTopH && cs){
+					if(lastScrollTop + 40 < scrollTop){
+						showPanel = '2'
+
+						if(!self.el.html.hasClass('scrollmodedown')){
+							self.el.html.addClass('scrollmodedown')
+							if(self.modules.menu.module) self.modules.menu.module.blursearch()
+						}
+							
+
+						
+					}
+				}
+				else{
+					showPanel = '3'
+				}
+
+			}
+
+		}, 100)
+
+		var dbscrolling = _.debounce(function(){
+
+			if(!self.el.window) return
+			if (self.fullscreenmode) return
+			if (scrollmodechanging) return
+			if (self.blockScroll) return
+			
+			_.each(self.events.delayedscroll, function(s){
+				s(self.lastScrollTop, blockScroll)
+			})
+
+			if(!t && self.mobileview){
+
+				if (showPanel == '2' && !self.el.html.hasClass('scrollmodedown')){
+					self.el.html.addClass('scrollmodedown')
+				}
+	
+				if (showPanel == '3' && self.el.html.hasClass('scrollmodedown'))
+					self.el.html.removeClass('scrollmodedown')
+					
+				showPanel = '1'
+			}
+
+		}, 100)
+
+		var dbresize = _.debounce(function(){
+			window.requestAnimationFrame(function(){
 
 				if(!self.el.window) return
 				if (self.fullscreenmode) return
 
-				if(scrollmodechanging) return
-
-				var lastScrollTop = self.lastScrollTop
-
-				var scrollTop = self.actions.getScroll()
-
-
-				_.each(self.events.scroll, function(s){
-					s(scrollTop, blockScroll)
-				})
-
-				if(self.mobileview && !cr){
-
-					var cs = (lastScrollTop + 40 < scrollTop || lastScrollTop - 40 < scrollTop)
-
-					var scrollTopH = 900
-
-					if(self.playingvideo) scrollTopH = 65
- 
-					if (scrollTop < scrollTopH){
-
-						showPanel = '1'
-
-						if (self.el.html.hasClass('scrollmodedown')){
-							self.el.html.removeClass('scrollmodedown')
-						}
-
-						return
-					}
-
-					if (scrollTop > scrollTopH && cs){
-						if(lastScrollTop + 40 < scrollTop){
-							showPanel = '2'
-
-							if(!self.el.html.hasClass('scrollmodedown')){
-								self.el.html.addClass('scrollmodedown')
-								if(self.modules.menu.module) self.modules.menu.module.blursearch()
-							}
-								
-
-							
-						}
-					}
-					else{
-						showPanel = '3'
-					}
-
+				if (self.el.html.hasClass('scrollmodedown')){
+					self.el.html.removeClass('scrollmodedown')
 				}
 
-			//})
-		}, 100)
+				var scrollTop = self.actions.getScroll(),
+					height = self.el.window.height(),
+					width = self.el.window.width();
+
+					self.height = height
+					self.width = width
+
+				_.each(self.events.resize, function(s){
+					s({
+						scrollTop : scrollTop,
+						height : height,
+						width : width
+					})
+				})
+
+				let vh = window.innerHeight * 0.01;
+				document.documentElement.style.setProperty('--vh', `${vh}px`);
+
+			})
+
+		}, 50)
 
 		var t = false
 
@@ -1527,79 +1582,12 @@ Application = function(p)
 		})
 
 		window.addEventListener('scroll', function(){
-
 			scrolling()
-
-			delayscroll = slowMade(function(){
-				window.requestAnimationFrame(function(){
-
-
-					if(!self.el.window) return
-					if (self.fullscreenmode) return
-					if (scrollmodechanging) return
-					
-					_.each(self.events.delayedscroll, function(s){
-						s(self.lastScrollTop, blockScroll)
-					})
-
-					if(!t && self.mobileview){
-
-						if (showPanel == '2' && !self.el.html.hasClass('scrollmodedown')){
-							self.el.html.addClass('scrollmodedown')
-						}
-			
-						if (showPanel == '3' && self.el.html.hasClass('scrollmodedown'))
-							self.el.html.removeClass('scrollmodedown')
-							
-						showPanel = '1'
-					}
-
-					
-		
-					
-				})
-
-			}, delayscroll, 100)
-
+			dbscrolling()
 		})
 
         window.addEventListener('resize', function(){
-
-			delayresize = slowMade(function(){
-				window.requestAnimationFrame(function(){
-
-					if(!self.el.window) return
-					if (self.fullscreenmode) return
-
-					if (self.el.html.hasClass('scrollmodedown')){
-						self.el.html.removeClass('scrollmodedown')
-					}
-
-					var scrollTop = self.actions.getScroll(),
-						height = self.el.window.height(),
-						width = self.el.window.width();
-
-						self.height = height
-						self.width = width
-
-					_.each(self.events.resize, function(s){
-						s({
-							scrollTop : scrollTop,
-							height : height,
-							width : width
-						})
-					})
-
-					let vh = window.innerHeight * 0.01;
-					document.documentElement.style.setProperty('--vh', `${vh}px`);
-
-				})
-
-			}, delayresize, 30)
-
-
-			
-			
+			dbresize()
 		})
 	}
 
