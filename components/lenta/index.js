@@ -106,10 +106,10 @@ var lenta = (function(){
 			optimize : function(){
 				if(!essenseData.optimize) return
 
-				var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-				var currentscroll = 0
+				var isSafari = isios();
 
 				var notoptimized = el.c.find('.portion:not(.optimized):not(:first-child):not(:nth-last-child(1)):not(:nth-last-child(2))')
+
 				var optimizationTip = el.c.find('.optimizationTip')
 				var els = notoptimized.find('.share')
 
@@ -159,7 +159,6 @@ var lenta = (function(){
 					renders.optimizationTip(optimizationTip, optimizedCount)
 
 					if (isSafari){
-						console.log("isSafari", optimizedh)
 						self.app.el.window.scrollTop(scrolltop - optimizedh)
 					}
 					
@@ -3131,9 +3130,9 @@ var lenta = (function(){
 
 				}, function(_p){
 
-					setTimeout(function(){
+					/*setTimeout(function(){
 						actions.optimize()
-					}, 1000)
+					}, 1000)*/
 					
 
 					if (_p.inner == append){
@@ -4232,6 +4231,9 @@ var lenta = (function(){
 				if(!essenseData.horizontal){
 
 					self.app.events.delayedscroll['videos' + mid] = events.videosInview
+
+					self.app.events.delayedscroll['optimization' + mid] = actions.optimize
+
 					//self.app.events.delayedscroll['videosinit' + mid] = events.sharesPreInitVideo
 
 				}
@@ -4731,7 +4733,9 @@ var lenta = (function(){
 
 				delete self.app.events.delayedscroll['videos' + mid]
 				delete self.app.events.delayedscroll['videosinit' + mid]
+				delete self.app.events.delayedscroll['optimization' + mid]
 				delete self.app.events.scroll['loadmore' + mid]
+				
 				delete self.app.errors.clbks[mid]
 
 				if (el.shares && isotopeinited){
