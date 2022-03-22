@@ -35,10 +35,10 @@ jobs:
 
   deploy:
     needs: build
-    runs-on: ${{ matrix.label }}
+    runs-on: [self_hosted, web_production, ${{ matrix.label }}]
     strategy:
       matrix:
-        label: [web_production]
+        label: [prod1, prod2]
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v3
