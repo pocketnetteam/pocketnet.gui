@@ -46,6 +46,7 @@ var lenta = (function(){
 			fullscreenvideoShowed = null;
 
 		var countshares = 0;
+		
 
 		var beginmaterial = null;
 		var beginmaterialloaded = false;
@@ -105,6 +106,9 @@ var lenta = (function(){
 			optimize : function(){
 				if(!essenseData.optimize) return
 
+				var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+				var currentscroll = 0
+
 				var notoptimized = el.c.find('.portion:not(.optimized):not(:first-child):not(:nth-last-child(1)):not(:nth-last-child(2))')
 				var optimizationTip = el.c.find('.optimizationTip')
 				var els = notoptimized.find('.share')
@@ -134,8 +138,6 @@ var lenta = (function(){
 
 					})
 
-					notoptimized.remove()
-
 					if (!optimizationTip.length){
 
 						var fchild = el.c.find('.portion:first-child')
@@ -145,7 +147,18 @@ var lenta = (function(){
 						_el.insertAfter(fchild)
 						
 						optimizationTip = _el
+
+						optimizedh - 150
 					}
+
+					if (isSafari){
+
+						console.log("isSafari", optimizedh)
+
+						self.app.el.window.scrollTop(self.app.el.window.scrollTop() - optimizedh)
+					}
+
+					notoptimized.remove()
 					
 					renders.optimizationTip(optimizationTip, optimizedCount)
 					
@@ -769,7 +782,6 @@ var lenta = (function(){
 
 						vel = null
 						pels = null
-						el = null
 						
 					};
 
@@ -2883,7 +2895,7 @@ var lenta = (function(){
 
 						if (share.myVal)
 							renders.stars(share)
-							
+
 					})
 
 					if(clbk) clbk()

@@ -611,7 +611,7 @@ var main = (function(){
 							recommendedUsers : isMobile(),
 							recommendedUsersCount : isMobile() ? 15 : 3,
 							
-							optimize : isMobile(),
+							optimize : self.app.mobileview,
 							extra :/* state && isMobile() ? [
 								{
 									key : 'recommendedusers',
