@@ -1,4 +1,4 @@
-name: Deploy to Production
+name: Deploy Web
 
 on:
   push:
@@ -21,23 +21,22 @@ jobs:
         
       - name: Prepare archive
         run: |
-          mkdir ~/dist
-          rsync -ah --exclude={'.git','.gitignore','.github','package.json','node_modules','.well-known','assets','proxy16','cordova','res','build'} ./ ~/dist
-          cd ~/dist
-          tar czf ~/bastyon.tgz .
+          mkdir /tmp/bastyon
+          rsync -ah --exclude={'.git','.gitignore','.github','package.json','node_modules','.well-known','assets','proxy16','cordova','res','build'} ./ /tmp/bastyon/
+          tar czf /tmp/bastyon.tgz /tmp/bastyon
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: bastyon.tgz
-          path: ~/bastyon.tgz
+          path: /tmp/bastyon.tgz
 
   deploy:
     needs: build
     runs-on: ${{ matrix.runner }}
     strategy:
       matrix:
-        runner: [prod1.web, prod2.web]
+        runner: [web.1, web.2]
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v3
