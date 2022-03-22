@@ -1,7 +1,6 @@
 name: Deploy Proxy
 
 on:
-  workflow_dispatch:
   push:
     tags: v*.*.*-proxy
 
@@ -52,30 +51,7 @@ jobs:
     runs-on: ${{ matrix.runner }}
     strategy:
       matrix:
-        runner: [proxy.5]
+        runner: [proxy.1, proxy.2, proxy.3, proxy.4, proxy.5]
     steps:
       - name: Pull && Up Container
         run: /proxy_pull_up.sh
-
-  deploy_old:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Adding Known Hosts
-        run: |
-          mkdir ~/.ssh
-          ssh-keyscan -H ${{ secrets.PROXY_SERVER_1 }} >> ~/.ssh/known_hosts
-          ssh-keyscan -H ${{ secrets.PROXY_SERVER_2 }} >> ~/.ssh/known_hosts
-          ssh-keyscan -H ${{ secrets.PROXY_SERVER_3 }} >> ~/.ssh/known_hosts
-      - name: Install SSH Key
-        uses: shimataro/ssh-key-action@v2
-        with:
-          key: ${{ secrets.PROXY_SERVER_TOKEN }}
-          known_hosts: 'just-a-placeholder-so-we-dont-get-errors'
-      - name: Deploy to servers
-        run: |
-          ssh ${{ secrets.PROXY_SERVER_USERNAME }}@${{ secrets.PROXY_SERVER_1 }} 'cd ~/docker && dc pull proxy && dc up -d proxy'
-          ssh ${{ secrets.PROXY_SERVER_USERNAME }}@${{ secrets.PROXY_SERVER_2 }} 'cd ~/docker && dc pull proxy && dc up -d proxy'
-          ssh ${{ secrets.PROXY_SERVER_USERNAME }}@${{ secrets.PROXY_SERVER_3 }} 'cd ~/docker && dc pull proxy && dc up -d proxy'
-          
-        
