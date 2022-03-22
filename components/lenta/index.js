@@ -117,7 +117,7 @@ var lenta = (function(){
 
 					self.app.blockScroll = true
 
-					var optimizedh = 0
+					var optimizedh = 0, scrolltop = 0;
 
 					notoptimized.each(function(){
 						optimizedh += $(this).height()
@@ -152,15 +152,16 @@ var lenta = (function(){
 					}
 
 					if (isSafari){
-
-						console.log("isSafari", optimizedh)
-
-						self.app.el.window.scrollTop(self.app.el.window.scrollTop() - optimizedh)
+						scrolltop = self.app.el.window.scrollTop()
 					}
 
 					notoptimized.remove()
-					
 					renders.optimizationTip(optimizationTip, optimizedCount)
+
+					if (isSafari){
+						console.log("isSafari", optimizedh)
+						self.app.el.window.scrollTop(scrolltop - optimizedh)
+					}
 					
 					essenserenderclbk()
 
