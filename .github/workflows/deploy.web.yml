@@ -45,4 +45,4 @@ jobs:
         with:
           name: bastyon.tgz
       - name: Unpack artifact
-        run: tar xzf bastyon.tgz /docker/gui/
+        run: tar xzf bastyon.tgz -C /docker/gui/
