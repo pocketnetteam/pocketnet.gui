@@ -447,6 +447,7 @@ ____loclib.youarefollowing = "You are Following"
 ____loclib.follow = "Follow"
 ____loclib.blocked = "Blocked"
 ____loclib.e13021 = "Show more"
+
 ____loclib.blockuser = "Block User"
 ____loclib.unblockuser = "Unblock User"
 ____loclib.e13022 = "Do you really want to unfollow user?"
@@ -2130,3 +2131,8 @@ ____loclib.videobloggerRequest_submitted = "Thank you for contacting us, we will
 
 ____loclib.canuseipsetting = "Allow connection via ip over http directly. Not safe"
 
+____loclib.optimizationtip = function(v){
+    return v + ' hidden viewed posts'
+}
+
+____loclib.optimizationtip_show = "Show"

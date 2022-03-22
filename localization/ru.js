@@ -1920,3 +1920,8 @@ ____loclib.videobloggerRequest_submitted = "Спасибо за обращени
 
 
 ____loclib.canuseipsetting = "Позволять соединение через ip по http напрямую. Небезопасно"
+____loclib.optimizationtip = function(v){
+    return v + ' скрытых просмотренных публикаций'
+}
+
+____loclib.optimizationtip_show = "Показать"

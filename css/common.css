@@ -1078,6 +1078,10 @@ html.mobileview .share_common .images .imagesContainer.owlcar {
   max-width: none;
   contain: strict;
 }
+html.mobileview .share_common .panel {
+  contain: strict;
+  height: 40px;
+}
 /*t*/
 @media only screen and (max-width: 768px) {
   .share_common {

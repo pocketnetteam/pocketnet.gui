@@ -8257,26 +8257,21 @@
 
 	fastars = function(el){
 
-		$.each(el, function(){
+		el.find('i').on('mouseenter', function(){
 
-			var _el = $(this)
+			var _el = $(this).closest('.stars')
 
-			_el.find('i').on('mouseenter', function(){
+			if(_el.attr('value')) return;
 
-				if(_el.attr('value')) return;
+			var v = $(this).attr('value')
 
-				var v = $(this).attr('value')
-
-				_el.attr('tempValue', v)
-			})
-
-			_el.find('i').on('mouseleave', function(){
-
-				_el.removeAttr('tempValue')
-			})
-
+			_el.attr('tempValue', v)
 		})
 
+		el.find('i').on('mouseleave', function(){
+			var _el = $(this).closest('.stars')
+			_el.removeAttr('tempValue')
+		})
 		
 	}
 

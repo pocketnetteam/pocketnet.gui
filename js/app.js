@@ -1465,7 +1465,6 @@ Application = function(p)
 
 			var scrollTop = self.actions.getScroll()
 
-
 			_.each(self.events.scroll, function(s){
 				s(scrollTop, blockScroll)
 			})

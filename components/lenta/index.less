@@ -3,6 +3,31 @@
 
 #lenta{
 
+	.optimizationTip{
+		height: 150px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		
+		margin-bottom: @rhythm;
+		border-radius: 6px;
+
+		>div{
+			padding: 2 * @rhythm;
+			text-align: center;
+			opacity: 0.8;
+			max-width: 80%;
+			border-radius: 12px;
+			background: rgb(var(--background-secondary-theme));
+			border : 1px solid rgb(var(--neutral-grad-1));
+		}
+
+		.icon{
+			opacity: 0.5;
+			margin-top : @rhythm;
+		}
+	}
+
 	&.destroying{
 		display: none;
 	}

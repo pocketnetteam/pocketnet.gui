@@ -59,7 +59,6 @@ var lenta = (function(){
 				cachedHeight = document.body.scrollHeight
 			}
 			
-			console.log("renderclbk")
 			if(essenseData.renderClbk) essenseData.renderClbk()
 		}
 
@@ -104,8 +103,7 @@ var lenta = (function(){
 				delete shareInitingMap[share.txid]
 			},
 			optimize : function(){
-				return
-				if(!self.app.mobileview) return
+				if(!essenseData.optimize) return
 
 				var notoptimized = el.c.find('.portion:not(.optimized):not(:first-child):not(:nth-last-child(1)):not(:nth-last-child(2))')
 				var optimizationTip = el.c.find('.optimizationTip')
@@ -128,12 +126,29 @@ var lenta = (function(){
 
 						if (share){
 							actions.destroyShare(share)
+
+							delete el.share[txid]
+
+							optimizedCount++
 						}
 
 					})
 
 					notoptimized.remove()
 
+					if (!optimizationTip.length){
+
+						var fchild = el.c.find('.portion:first-child')
+
+						_el = $("<div/>", {'class' : 'optimizationTip', html : ''})
+
+						_el.insertAfter(fchild)
+						
+						optimizationTip = _el
+					}
+					
+					renders.optimizationTip(optimizationTip, optimizedCount)
+					
 					essenserenderclbk()
 
 					setTimeout(()=>{
@@ -635,13 +650,12 @@ var lenta = (function(){
 
 						actions.initVideo(el, share, function(v){
 
-							console.log("players[share.txid]", players[share.txid])
-
 							if (players[share.txid])
 								players[share.txid].p.play()
 
 							if (clbk)
 								clbk(v)
+
 						}, shadow)
 					})
 				}
@@ -702,6 +716,7 @@ var lenta = (function(){
 					var readyCallback = (player) => {
 
 						if (players[share.txid]){
+
 							el.find('.js-player iframe').attr('disable-x-frame-options', 'disable-x-frame-options')
 
 							players[share.txid].inited = true
@@ -754,6 +769,7 @@ var lenta = (function(){
 
 						vel = null
 						pels = null
+						el = null
 						
 					};
 
@@ -1872,8 +1888,6 @@ var lenta = (function(){
 
 			sharesOptimization : function(currentShare){
 
-				console.log("sharesOptimization")
-
 				var arranged = [];
 
 				el.c.find('.share').each(function(){
@@ -2022,8 +2036,6 @@ var lenta = (function(){
 
 				if(block) return
 
-				console.log('sharesInview')
-				
 				actions.sharesInview(sharesInview, function(invshares, els, clbk){
 
 					if (invshares.length && self.app.mobileview){
@@ -2538,6 +2550,18 @@ var lenta = (function(){
 
 		var renders = {
 
+
+			optimizationTip : function(el, count){
+				var html = ''
+
+				html += '<div>'
+				html += '<div class="text">'+self.app.localization.e('optimizationtip', count)+'</div>'
+				html += '<div class="icon"><i class="fas fa-dot-circle"></i></div>'
+				html += '</div>'
+
+				el.html(html)
+			},
+
 			loadprev : function(){
 
 				var txt = self.app.localization.e('lloadprev')
@@ -2856,9 +2880,10 @@ var lenta = (function(){
 				self.app.platform.sdk.likes.get(ids, function(){
 
 					_.each(shares, function(share){
-						renders.stars(share)
 
-						//renders.wholike(share)
+						if (share.myVal)
+							renders.stars(share)
+							
 					})
 
 					if(clbk) clbk()
@@ -2913,6 +2938,7 @@ var lenta = (function(){
 							share : share,
 							hideCount : undefined
 						},
+						ignorelinksandimages : true,
 						animation : false,				
 
 					}, function(p){
@@ -4214,12 +4240,10 @@ var lenta = (function(){
 			}
 
 			self.app.errors.clbks[mid] = function(){
-				if(el.c.hasClass('networkError')){
+				if (el.c.hasClass('networkError')){
 					actions.loadprev()
 				}
 			}
-
-			
 
 			if(!essenseData.openapi && !essenseData.second){
 

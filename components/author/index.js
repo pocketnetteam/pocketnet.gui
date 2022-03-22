@@ -1025,7 +1025,7 @@ var author = (function(){
 					author : author.address,
 					byauthor : true,
 					hr : hr,
-					
+					optimize : isMobile(),
 					renderclbk : function(){
 						if (contentsready)
 							el.c.find('.contentswrapper').hcSticky('refresh');
