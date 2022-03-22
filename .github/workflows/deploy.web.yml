@@ -1,14 +1,13 @@
-name: Deploy to Production
+name: Deploy Web
 
 on:
-  workflow_dispatch:
   push:
     tags: v*.*.*-web
 
 jobs:
-  deploy:
+  build:
     if: github.ref == 'refs/heads/master'
-    runs-on: [self-hosted, web_production]
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -19,6 +18,29 @@ jobs:
         run: |
           npm i
           npm run minimize:bastyon
+        
+      - name: Prepare archive
+        run: |
+          mkdir /tmp/bastyon
+          rsync -ah --exclude={'.git','.gitignore','.github','package.json','node_modules','.well-known','assets','proxy16','cordova','res','build'} ./ /tmp/bastyon/
+          tar czf /tmp/bastyon.tgz /tmp/bastyon
 
-      - name: Copy to dest dir
-        run: rsync -ah --exclude={'.git','.gitignore','.github','package.json','node_modules','.well-known','assets','proxy16','cordova','res','build'} ./ /docker/gui/
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: bastyon.tgz
+          path: /tmp/bastyon.tgz
+
+  deploy:
+    needs: build
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      matrix:
+        runner: [web.1, web.2]
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: bastyon.tgz
+      - name: Unpack artifact
+        run: tar xzf bastyon.tgz -C /docker/gui/
