@@ -6,9 +6,9 @@ on:
     tags: v*.*.*-web
 
 jobs:
-  build:
-    # if: github.event.base_ref == 'refs/heads/master'
-    runs-on: web_production
+  deploy:
+    if: github.event.base_ref == 'refs/heads/master'
+    runs-on: [self-hosted, web_production]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
