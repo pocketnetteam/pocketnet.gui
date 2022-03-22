@@ -6,9 +6,9 @@ on:
     tags: v*.*.*-web
 
 jobs:
-  deploy:
-    if: github.ref == 'refs/heads/master'
-    runs-on: [self-hosted, web_production]
+  build:
+    # if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -19,6 +19,30 @@ jobs:
         run: |
           npm i
           npm run minimize:bastyon
+        
+      - name: Prepare archive
+        run: |
+          mkdir ~/dist
+          rsync -ah --exclude={'.git','.gitignore','.github','package.json','node_modules','.well-known','assets','proxy16','cordova','res','build'} ./ ~/dist
+          cd ~/dist
+          tar czf ~/bastyon.tgz .
 
-      - name: Copy to dest dir
-        run: rsync -ah --exclude={'.git','.gitignore','.github','package.json','node_modules','.well-known','assets','proxy16','cordova','res','build'} ./ /docker/gui/
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: bastyon.tgz
+          path: ~/bastyon.tgz
+
+  deploy:
+    needs: build
+    runs-on: ${{ matrix.label }}
+    strategy:
+      matrix:
+        label: [web_production]
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: bastyon.tgz
+      - name: Unpack artifact
+        run: tar xzf bastyon.tgz /docker/gui/
