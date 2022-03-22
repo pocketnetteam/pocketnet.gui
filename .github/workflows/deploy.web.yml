@@ -1,15 +1,14 @@
-name: Deploy to test.pocketnet.app
+name: Deploy to Production
 
 on:
   workflow_dispatch:
   push:
-    tags: v*.*.*
+    tags: v*.*.*-web
 
 jobs:
   build:
-    if: github.event.base_ref == 'refs/heads/master'
-    runs-on: gui 
-
+    # if: github.event.base_ref == 'refs/heads/master'
+    runs-on: web_production
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -19,7 +18,7 @@ jobs:
       - name: Prepare
         run: |
           npm i
-          npm run minimize:bastyon:test
+          npm run minimize:bastyon
 
       - name: Copy to dest dir
         run: rsync -ah --exclude={'.git','.gitignore','.github','package.json','node_modules','.well-known','assets','proxy16','cordova','res','build'} ./ /docker/gui/
