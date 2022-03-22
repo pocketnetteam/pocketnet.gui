@@ -16092,11 +16092,19 @@ Platform = function (app, listofnodes) {
 
                 },
 
-
                 historical : function(p, clbk, cache){
 
                     self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
                         method : 'gethistoricalstrip'
+                    })
+
+                },
+
+
+                getboostfeed : function(p, clbk, cache){
+
+                    self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
+                        method : 'getboostfeed'
                     })
 
                 },

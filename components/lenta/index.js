@@ -3885,6 +3885,27 @@ var lenta = (function(){
 
 							}, function(shares, error, pr){
 
+								self.app.platform.sdk.node.shares.getboostfeed({
+
+									author : '',
+									begin : '',
+									txids : '',
+									height : fixedblock,
+									tagsfilter : tagsfilter,
+	
+									type : type,
+	
+									count : count,
+									page : page,
+									period : essenseData.period,
+									tagsexcluded : tagsexcluded
+	
+								}, function(shares, error, pr){
+	
+									console.log('shares!!!!', shares);
+	
+								}, cache)
+
 								if(pr.blocknumber) fixedblock = pr.blocknumber
 
 								

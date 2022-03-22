@@ -20,8 +20,8 @@ var pkoin = (function(){
 					name : "Localization",
 					id : 'localization',
 					defaultValue : optionsValue,
-					possibleValues : ['pkoinComment', 'sendToAuthor'/*, 'liftUpThePost'*/],
-					possibleValuesLabels : [self.app.localization.e('pkoinComment'), self.app.localization.e('sendToAuthor')/*, self.app.localization.e('liftUpThePost')*/],
+					possibleValues : ['pkoinComment', 'sendToAuthor', 'liftUpThePost'],
+					possibleValuesLabels : [self.app.localization.e('pkoinComment'), self.app.localization.e('sendToAuthor'), self.app.localization.e('liftUpThePost')],
 
 		
 					_onChange : function(value){
