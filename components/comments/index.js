@@ -2046,7 +2046,7 @@ var comments = (function(){
 
 				_el.imagesLoadedPN({ imageAttr: true }, function(image) {
 
-					_.each(image.images, function(img, n){
+					/*_.each(image.images, function(img, n){
 
 						var _img = img.img;
 
@@ -2082,7 +2082,7 @@ var comments = (function(){
 							el.addClass(ac)
 						}
 						
-					})
+					})*/
 
 					if(ed.renderClbk) ed.renderClbk()
 
@@ -2090,38 +2090,7 @@ var comments = (function(){
 						clbk()
 
 
-
-
 					return
-
-					var gutter = 10;
-
-					images.isotope({
-
-						layoutMode: 'packery',
-						itemSelector: '.imagesWrapper',
-						packery: {
-							gutter: gutter
-						},
-						initLayout: false
-					});
-
-					images.on('arrangeComplete', function(){
-	
-						images.addClass('active')
-
-						_el.addClass('active')
-
-						if(ed.renderClbk) ed.renderClbk()
-
-						if (clbk)
-							clbk()
-
-					});
-
-					images.isotope()
-					
-					isotopes[s.id] = images
 
 				}, self.app);
 				

@@ -53,22 +53,23 @@ var lenta = (function(){
 
 		var renderclbkSlowMade = null
 
+		var rc = function(){
+			if(!essenseData.horizontal && el.c){
+				cachedHeight = document.body.scrollHeight
+			}
+			
+			console.log("renderclbk")
+			if(essenseData.renderClbk) essenseData.renderClbk()
+		}
+
+		var dbrc = _.debounce(rc, 500)
+
 		var essenserenderclbk = function(){
 
-			var rc = function(){
-				if(!essenseData.horizontal && el.c){
-					cachedHeight = document.body.scrollHeight
-				}
-				
-				if(essenseData.renderClbk) essenseData.renderClbk()
-			}
+			
 
-			if(isMobile()){
-				renderclbkSlowMade = slowMade(function(){
-
-					rc()
-	
-				}, renderclbkSlowMade, 500)
+			if (isMobile()){
+				dbrc()
 			}
 			else{
 				rc()
@@ -80,6 +81,71 @@ var lenta = (function(){
 
 
 		var actions = {
+			destroyShare : function(share){
+				if (fullscreenvideoShowed == share.txid){
+					actions.exitFullScreenVideo(share.txid)
+				}
+
+				actions.destroyVideo(share)
+
+				delete shareInitedMap[share.txid]
+
+
+				if (initedcommentes[share.txid])
+					initedcommentes[share.txid].destroy()
+
+				if (carousels[share.txid]) carousels[share.txid].owlCarousel('destroy')
+
+				delete carousels[share.txid]
+
+
+				delete initedcommentes[share.txid]
+				delete shareInitingMap[share.txid]
+			},
+			optimize : function(){
+
+				return
+
+				if(!self.app.mobileview) return
+
+				var notoptimized = el.c.find('.portion:not(.optimized):not(:first-child):not(:nth-last-child(1)):not(:nth-last-child(2))')
+
+				var els = notoptimized.find('.share')
+
+				if (notoptimized.length){
+
+					var optimizedh = 0
+					
+
+					notoptimized.each(function(){
+
+						console.log('$(this).height()', $(this).height())
+
+						optimizedh += $(this).height()
+					})
+
+					els.each(function() {
+						var txid = $(this).attr('id')
+
+						var share = self.app.platform.sdk.node.shares.storage.trx[txid];
+
+						if (share){
+							actions.destroyShare(share)
+						}
+
+					})
+
+					//notoptimized.addClass('optimized')
+
+					
+					//var s = self.app.el.window.scrollTop()
+						notoptimized.remove()
+					//	self.app.el.window.scrollTop(s - optimizedh)
+
+						essenserenderclbk()
+
+				}
+			},
 
 			openauthorwindow : function(address){
 
@@ -181,7 +247,7 @@ var lenta = (function(){
 						//renders.setShareDownload(shareId, 'downloaded');
 						//events.sharesPreInitVideo();
 						events.videosInview();
-						events.sharesInview();
+						//events.sharesInview();
 						events.resize();
 
 					}, 200);
@@ -1796,8 +1862,6 @@ var lenta = (function(){
 			shareReturnAfterOptimization : function(share){
 				if(!optimized[share.txid] || !el.share[share.txid]) return
 
-				
-
 				/*delete shareInitedMap[share.txid]
 				delete shareInitingMap[share.txid]*/
 				delete players[share.txid]
@@ -1811,6 +1875,8 @@ var lenta = (function(){
 			},
 
 			sharesOptimization : function(currentShare){
+
+				console.log("sharesOptimization")
 
 				var arranged = [];
 
@@ -1959,6 +2025,8 @@ var lenta = (function(){
 			sharesInview : function(s, block){
 
 				if(block) return
+
+				console.log('sharesInview')
 				
 				actions.sharesInview(sharesInview, function(invshares, els, clbk){
 
@@ -2086,6 +2154,7 @@ var lenta = (function(){
 			},
 
 			resize : function(){
+
 				if (fullscreenvideoShowed){
 					actions.videoPosition(fullscreenvideoShowed)
 				}
@@ -2633,6 +2702,8 @@ var lenta = (function(){
 
 								if (initedcommentes[txid]){
 									initedcommentes[txid].hideall(true)
+
+									initedcommentes[txid].destroy()
 								}
 
 								delete initedcommentes[txid]
@@ -2888,26 +2959,18 @@ var lenta = (function(){
 			sharesVisibilityRestrictions : function(shares, clbk){
 
 				_.each(shares, function(share){
-					actions.destroyVideo(share)
-					shareInitedMap[share.txid] = false
-					initedcommentes[share.txid] = false
-					shareInitingMap[share.txid] = false
-
-
-					if (fullscreenvideoShowed == share.txid){
-						actions.exitFullScreenVideo(share.txid)
-					}
+					actions.destroyShare(share)
 				})
 				
 				renders.sharesInview(shares, clbk)
 			},
 
+			
+
 			sharesInview : function(shares, clbk){
 
 				shares = _.filter(shares, function(s){
-
 					return !$('#' + s.txid).hasClass('hidden')
-
 				})
 
 				var rs = shares
@@ -3032,6 +3095,11 @@ var lenta = (function(){
 					delayRender : isotopeinited,
 
 				}, function(_p){
+
+					setTimeout(function(){
+						actions.optimize()
+					}, 1000)
+					
 
 					if (_p.inner == append){
 						sharesInview = sharesInview.concat(shares)	
@@ -4422,7 +4490,7 @@ var lenta = (function(){
 							making = false;
 
 							setTimeout(function(){
-								events.sharesInview()
+								//events.sharesInview()
 								//events.sharesPreInitVideo()
 								events.videosInview()
 							}, 50)

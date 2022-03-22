@@ -1455,7 +1455,7 @@ Application = function(p)
 		var cr = self.curation()
 
 		var scrolling = _.throttle(function(){
-			window.requestAnimationFrame(function(){
+			//window.requestAnimationFrame(function(){
 
 				if(!self.el.window) return
 				if (self.fullscreenmode) return
@@ -1509,7 +1509,7 @@ Application = function(p)
 
 				}
 
-			})
+			//})
 		}, 100)
 
 		var t = false
