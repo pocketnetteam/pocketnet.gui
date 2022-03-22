@@ -1,12 +1,13 @@
 name: Deploy to Production
 
 on:
+  workflow_dispatch:
   push:
     tags: v*.*.*-web
 
 jobs:
   build:
-    if: github.event.base_ref == 'refs/heads/master'
+    # if: github.event.base_ref == 'refs/heads/master'
     runs-on: web_production
     steps:
       - uses: actions/checkout@v2
