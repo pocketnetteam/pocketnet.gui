@@ -7,7 +7,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
+    if: github.event.base_ref == 'refs/heads/master'
     steps:
       - name: Check Out Repo 
         uses: actions/checkout@v2
