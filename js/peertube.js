@@ -439,6 +439,7 @@ PeerTubePocketnet = function (app) {
 							return Promise.reject(e);
 						});
 				}
+				
 
 				var url = self.helpers.url(options.host) 
 
