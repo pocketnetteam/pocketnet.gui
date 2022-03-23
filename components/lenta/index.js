@@ -104,7 +104,7 @@ var lenta = (function(){
 				delete shareInitingMap[share.txid]
 			},
 			optimize : function(){
-				return
+				
 				if(!essenseData.optimize) return
 
 				var isSafari = isios();
@@ -170,6 +170,8 @@ var lenta = (function(){
 					setTimeout(()=>{
 						self.app.blockScroll = false
 					}, 150)
+
+					optimizationTip = null
 				}
 			},
 
@@ -269,13 +271,8 @@ var lenta = (function(){
 				renders.share(share, function() {
 
 					setTimeout(() => {
-						//delete el[shareId];
-						//renders.setShareDownload(shareId, 'downloaded');
-						//events.sharesPreInitVideo();
 						events.videosInview();
-						//events.sharesInview();
 						events.resize();
-
 					}, 200);
 
 				}, true);
@@ -652,10 +649,10 @@ var lenta = (function(){
 					renders.urlContent(share)
 			},
 
-			initVideoLight: function(el, share, clbk, shadow){
+			initVideoLight: function(share, clbk, shadow){
 				//js-player-dummy
 
-				var button = el.find('.initvideoplayer')
+				var button = el.share[share.txid].find('.initvideoplayer')
 
 				if (button.length){
 					button.one('click', function(){
@@ -664,7 +661,7 @@ var lenta = (function(){
 						$(this).closest('.js-player-dummy').addClass('js-player-ini')
 
 
-						actions.initVideo(el, share, function(v){
+						actions.initVideo(share, function(v){
 
 							if (players[share.txid])
 								players[share.txid].p.play()
@@ -676,16 +673,18 @@ var lenta = (function(){
 					})
 				}
 				else {
-					actions.initVideo(el, share, clbk, shadow)
+					actions.initVideo(share, clbk, shadow)
 				}
+
+				button = null
 			},	
 
-			initVideo : function(el, share, clbk, shadow){
+			initVideo : function(share, clbk, shadow){
 
-				if(!share || !share.txid) return
+				if(!share || !share.txid || !el.share[share.txid]) return
 
-				var pels = el.find('.js-player-ini');
-				var vel = el.find('.videoWrapper')
+				var pels = el.share[share.txid].find('.js-player-ini');
+				var vel = el.share[share.txid].find('.videoWrapper')
 
 				if(!vel.length) return
 
@@ -708,19 +707,11 @@ var lenta = (function(){
 
 					return
 				}
-				
-
-				/*if (self.app.platform.sdk.usersettings.meta.embedvideo && !
-					self.app.platform.sdk.usersettings.meta.embedvideo.value) {
-
-						if(clbk) clbk(false)
-
-						return
-					}*/
-				
+			
 				if(players[share.txid]){
 					
-					if (players[share.txid].fulliniting) return
+					if (players[share.txid].fulliniting) 
+						return
 
 					players[share.txid].fulliniting = true
 
@@ -732,11 +723,8 @@ var lenta = (function(){
 					var readyCallback = (player) => {
 
 						if (players[share.txid]){
-
-							el.find('.js-player iframe').attr('disable-x-frame-options', 'disable-x-frame-options')
-
+							players[share.txid].el.find('.js-player iframe').attr('disable-x-frame-options', 'disable-x-frame-options')
 							players[share.txid].inited = true
-
 						}
 
 						if(clbk) clbk(true)
@@ -747,22 +735,12 @@ var lenta = (function(){
 						if (player){
 							players[share.txid] || (players[share.txid] = {})
 							players[share.txid].p = player
-							//players[share.txid].volume = videosVolume
 							players[share.txid].initing = true
-							players[share.txid].el = vel
-							players[share.txid].id = vel.attr('pid')
+							players[share.txid].el = el.share[share.txid].find('.videoWrapper')
+							players[share.txid].id = players[share.txid].el.attr('pid')
 							players[share.txid].shadow = false
 
 							delete players[share.txid].fulliniting
-
-							self.app.user.isState(function(state){
-
-								if(state && (window.cordova)){
-									var videoId = (player.embed && player.embed.details && player.embed.details.uuid) ? player.embed.details.uuid : player.localVideoId;
-
-								}
-
-							})
 
 							actions.setVolume(players[share.txid])
 
@@ -784,7 +762,6 @@ var lenta = (function(){
 						}
 
 						vel = null
-						pels = null
 						
 					};
 
@@ -887,6 +864,11 @@ var lenta = (function(){
 					PlyrEx(pels[0], s, callback, readyCallback)
 
 				}
+
+				pels = null
+				vel = null
+
+				console.log("CLEAR LINKS")
 			},
 
 			openPost : function(id, clbk, video){
@@ -1249,7 +1231,7 @@ var lenta = (function(){
 
 				fullscreenvideoShowing = id
 
-				var _el = el.c.find("#" + id)
+				var _el = el.share[id]
 				var share = self.app.platform.sdk.node.shares.storage.trx[id];
 
 				if(!share){
@@ -1263,7 +1245,7 @@ var lenta = (function(){
 					share.address = self.app.platform.sdk.address.pnet().address
 				}
 
-				actions.initVideo(_el, share, function(res){
+				actions.initVideo(share, function(res){
 
 					fullscreenvideoShowing = null
 
@@ -1275,6 +1257,8 @@ var lenta = (function(){
 
 
 					fullscreenvideoShowed = id;
+
+					self.app.pseudofullscreenmode = true
 
 					_el.addClass('fullScreenVideo')
 				
@@ -1368,6 +1352,7 @@ var lenta = (function(){
 				actions.setVolume(players[id], videosVolume)
 
 				self.app.mobile.statusbar.background()
+				self.app.pseudofullscreenmode = false
 
 				actions.fullScreenVideoParallax(null)
 
@@ -1884,6 +1869,7 @@ var lenta = (function(){
 					__el.html('<div class="shareSpacerOptimized" style="height:'+h+'px;width:'+w+'px"></div>')
 				}
 				
+				
 			},
 
 			shareReturnAfterOptimization : function(share){
@@ -2087,7 +2073,7 @@ var lenta = (function(){
 
 						var share = self.app.platform.sdk.node.shares.storage.trx[_el.attr('id')]
 
-						actions.initVideo(_el, share, function(){
+						actions.initVideo(share, function(){
 
 							if (player.p.getState && player.p.getState() == 'ended') return
 
@@ -2575,6 +2561,8 @@ var lenta = (function(){
 				html += '</div>'
 
 				el.html(html)
+
+				el = null
 			},
 
 			loadprev : function(){
@@ -2840,7 +2828,7 @@ var lenta = (function(){
 								p.el.find('.canmark').mark(essenseData.searchValue);
 							}
 
-							if(!video) actions.initVideoLight(p.el, share)
+							if(!video) actions.initVideoLight(share)
 
 							if(isotopeinited) el.shares.isotope()
 

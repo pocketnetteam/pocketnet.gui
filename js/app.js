@@ -1183,6 +1183,7 @@ Application = function(p)
 	self.width = 0
 	self.inputfocused = false
 	self.fullscreenmode = false
+	self.pseudofullscreenmode = false
 	self.playingvideo = null
 	self.pipwindow = null
 
@@ -1529,37 +1530,29 @@ Application = function(p)
 		}, 100)
 
 		var dbresize = _.debounce(function(){
-			window.requestAnimationFrame(function(){
 
-				if(!self.el.window) return
-				if (self.fullscreenmode) return
+			if(!self.el.window) return
+			if (self.fullscreenmode) return
+			if (self.inputfocused) return
 
-				/*if (self.el.html.hasClass('scrollmodedown')){
-					self.el.html.removeClass('scrollmodedown')
-				}*/
 
-				var scrollTop = self.actions.getScroll(),
-					height = self.el.window.height(),
-					width = self.el.window.width();
+			var scrollTop = self.actions.getScroll(),
+				height = self.el.window.height(),
+				width = self.el.window.width();
 
-					self.height = height
-					self.width = width
+				self.height = height
+				self.width = width
 
-				_.each(self.events.resize, function(s){
-					s({
-						scrollTop : scrollTop,
-						height : height,
-						width : width
-					})
+			_.each(self.events.resize, function(s){
+				s({
+					scrollTop : scrollTop,
+					height : height,
+					width : width
 				})
-
-				if (!self.inputfocused){
-					let vh = window.innerHeight * 0.01;
-					document.documentElement.style.setProperty('--vh', `${vh}px`);
-				}		
-					
-
 			})
+
+			let vh = window.innerHeight * 0.01;
+			document.documentElement.style.setProperty('--vh', `${vh}px`);
 
 		}, 100)
 
@@ -2225,12 +2218,12 @@ Application = function(p)
 
 								constraints : function(e){
 
-									//if(e.constrainted) return false
-
 									if(self.platform.preparingUser) return false
 
 									if(_.find(e.path, function(el){
-                                        return el.className && (el.className.indexOf('noswipepnt') > -1 || el.className.indexOf('fullscreenActive') > -1)
+
+                                        return el.className && (el.className.indexOf('noswipepnt') > -1 || el.className.indexOf('fullScreenVideo') > -1)
+
                                     })) return false
 
 									if(self.lastScrollTop <= 0 && !self.mobile.reload.reloading){

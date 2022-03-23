@@ -3790,7 +3790,7 @@
 
 					var close = function(){
 
-						if(bkp){
+						if (bkp){
 							input.val(bkp)
 						}
 
@@ -3802,13 +3802,8 @@
 					}
 
 					var closeclick = function(e){
-
-						
-
 						if (_el.has(e.target).length === 0 && take().hasClass('opened')) {
-							
 							close();
-
 						}
 					}
 
@@ -3834,8 +3829,6 @@
 							_el.find('input').on('focus', function(){
 								$(this).select();
 							})
-
-							
 						}
 
 						if(parameter.type == 'values' && !parameter.autoSearch)
@@ -6814,6 +6807,8 @@
 					__el.css({"-o-transition": ""});
 					__el.css({"-webkit-transition": ""});
 					__el.css({"transition": ""});
+
+					__el = null
 				}, 100)
 			}
 			
@@ -6917,9 +6912,11 @@
 		}
 
 		self.destroy = function(){
+
 			p.el.swipe('destroy')
 			p = {}
 			needclear = false
+
 		}
 
 		return self;
@@ -11361,8 +11358,12 @@ if(typeof window != 'undefined'){
 						clearInterval(splashScreeninterval);
 					}
 					// Completely remove the splashscreen
-					splashScreen.remove();
-					splashScreenImg = null
+
+					if (splashScreen)
+						splashScreen.remove();
+						splashScreenImg = null
+						
+					splashScreen = null
 				}, zoomOutDuration * 2);
 			}
 			// Wait until half the rotation is done
