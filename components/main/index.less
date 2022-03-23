@@ -788,7 +788,7 @@ html.mobileview{
 			width: 100%;
 			position: fixed;
 			left : 100%;
-			
+			visibility: hidden;
 			top : 0;
 			bottom : 0;
 			border-radius: 0;
@@ -823,6 +823,7 @@ html.mobileview{
 		&.leftshowed{
 			.leftpanelcell{
 				transform: translateX(-100%);
+				visibility: visible;
 			}
 		}
 

@@ -596,6 +596,7 @@ html.mobileview #main .bgCaption {
     width: 100%;
     position: fixed;
     left: 100%;
+    visibility: hidden;
     top: 0;
     bottom: 0;
     border-radius: 0;
@@ -630,6 +631,7 @@ html.mobileview #main .bgCaption {
   }
   #main.leftshowed .leftpanelcell {
     transform: translateX(-100%);
+    visibility: visible;
   }
   #main .lentacell {
     margin-right: 0;

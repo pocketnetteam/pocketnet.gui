@@ -903,7 +903,7 @@
   margin-bottom: 0!important;
 }
 .share_common.fullScreenVideo .video-js {
-  max-height: 80vh;
+  max-height: calc(var(--vh, 1vh) * 80);
 }
 .share_common.fullScreenVideo .shareTable {
   padding-top: 0;
@@ -1081,6 +1081,9 @@ html.mobileview .share_common .images .imagesContainer.owlcar {
 html.mobileview .share_common .panel {
   contain: strict;
   height: 40px;
+}
+html.ios .share_common.fullScreenVideo .video-js {
+  max-height: 80vh;
 }
 /*t*/
 @media only screen and (max-width: 768px) {

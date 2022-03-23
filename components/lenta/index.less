@@ -1441,13 +1441,7 @@ html.mobileview{
 
 			.jsPlayerLoading,
 			.video-js{
-				max-height: 80vh;
-			}
-			
-			&.fullScreenVideo{
-				.jsPlayerLoading,
-				.video-js{
-				}
+				max-height: calc(var(--vh, 1vh) * 80);
 			}
 		}
 
@@ -1459,7 +1453,19 @@ html.mobileview{
 			}
 		}
 	}
+	
+}
 
+
+html.mobileview.ios{
+	#lenta{
+		.share{
+			.jsPlayerLoading,
+			.video-js{
+				max-height: 80vh;
+			}
+		}
+	}
 	
 }
 

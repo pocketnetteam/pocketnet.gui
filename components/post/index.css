@@ -841,7 +841,6 @@ html.mobileview .wnd.articlewindow .widthcontainer {
   border-radius: 6px;
 }
 .wnd.postwindow.pipmini #post .videoWrapper .video-js {
-  max-height: 25vh;
   min-height: 150px;
   max-height: calc(var(--vh, 1vh) * 25);
 }

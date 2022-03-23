@@ -3386,7 +3386,7 @@ input[type=radio].radio:checked + label {
   width: 100%;
 }
 .menudialog .mobiledialogcontent {
-  max-height: 60vh;
+  max-height: calc(var(--vh, 1vh) * 60);
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
@@ -4239,8 +4239,10 @@ html.mobileview .matrixchatwrapper {
   border-radius: 5px;
   backface-visibility: hidden;
   will-change: transform;
+  visibility: hidden;
 }
 html.mobileview .matrixchatwrapper.active {
+  visibility: visible;
   -webkit-transform: translateX(0);
   transform: translateX(0);
 }
@@ -4280,7 +4282,7 @@ html.mobileview .tooltipMobileDialog ._close {
   display: none;
 }
 html.mobileview .tooltipMobileDialog .mobiledialogcontent {
-  max-height: 60vh;
+  max-height: calc(var(--vh, 1vh) * 60);
 }
 html.mobileview .tooltipMobileDialog .secondwrapper {
   vertical-align: bottom;
@@ -5503,8 +5505,8 @@ html.mobileview.fullscreen #navigationWrapper {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   background-color: #011621;
   z-index: 5000;
   display: flex;
@@ -5528,8 +5530,8 @@ html.mobileview.fullscreen #navigationWrapper {
   background-color: #0098eb;
 }
 #splashScreen img {
-  max-height: 6vh;
-  max-width: 100vw;
+  max-height: 50px;
+  max-width: 50px;
 }
 #splashScreen img.zoom-in {
   -webkit-animation: zoom-in 0.5s ease-out both;
@@ -6313,9 +6315,7 @@ html.mobileview .wnd.normalizedmobile .wndinner .wndcontent {
   backface-visibility: hidden;
   background: rgb(var(--background-total-theme));
   max-width: 768px;
-  max-height: 92vh;
   max-height: calc(var(--vh, 1vh) * 92);
-  min-height: 30vh;
   min-height: calc(var(--vh, 1vh) * 30);
   top: 0;
   bottom: 0;
@@ -6393,7 +6393,6 @@ html.mobileview .wnd.normalizedmobile:only-child.asette .wndback {
   opacity: 0;
 }
 html.mobileview .wnd.maxheight .wndinner .wndcontent {
-  height: 92vh;
   height: calc(var(--vh, 1vh) * 92);
 }
 html.pipmode .pipped {

@@ -104,6 +104,7 @@ var lenta = (function(){
 				delete shareInitingMap[share.txid]
 			},
 			optimize : function(){
+				return
 				if(!essenseData.optimize) return
 
 				var isSafari = isios();

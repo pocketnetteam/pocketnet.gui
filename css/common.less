@@ -1216,7 +1216,7 @@
     
 
         .video-js{
-            max-height: 80vh;
+            max-height: calc(var(--vh, 1vh) * 80);
         }
 
         .shareTable{
@@ -1456,6 +1456,16 @@ html.mobileview{
         .panel{
             contain: strict;
             height: 40px;
+        }
+    }
+}
+
+html.ios{
+    .share_common{
+        &.fullScreenVideo{
+            .video-js{
+                max-height: 80vh;
+            }
         }
     }
 }
