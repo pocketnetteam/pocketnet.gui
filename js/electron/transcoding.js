@@ -313,7 +313,7 @@ function transcodingProcessor(electronIpcMain) {
           return;
         }
 
-        console.log('Rejected video transcoding promise');
+        console.log('Rejected video transcoding promise', err);
       }
 
       if (buffer) {
