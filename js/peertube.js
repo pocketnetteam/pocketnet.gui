@@ -449,6 +449,10 @@ PeerTubePocketnet = function (app) {
 					data,
 					requestoptions,
 				);
+			}).catch(e => {
+				console.error(e)
+
+				return Promise.reject(e)
 			});
 	};
 
