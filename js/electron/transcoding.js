@@ -145,7 +145,8 @@ function transcodingProcessor(electronIpcMain) {
           return new Promise((resolve, reject) => {
             ffmpeg.ffprobe(filePath, (err, meta) => {
               if (err) {
-                reject('Error accessing video file');
+                reject('ERROR_FILE_ACCESS');
+                return;
               }
 
               const videoStream = meta.streams.find(s => s.codec_type === 'video');
@@ -238,7 +239,21 @@ function transcodingProcessor(electronIpcMain) {
         const MaxAudioBitrate = 256;
         const MaxVideoFramerate = 25;
 
-        const originalStats = await getVideoStats();
+        let originalStats;
+
+        try {
+          originalStats = await getVideoStats();
+        } catch (err) {
+          switch (err) {
+            case 'ERROR_FILE_ACCESS':
+              reject(err);
+              return;
+            default:
+              reject('UNHANDLED_ERROR');
+              return;
+          }
+        }
+
         const isWidthBigger = (originalStats.width > resolution[0]);
         const isHeightBigger = (originalStats.height > resolution[1]);
         const isVideoBitrateBigger = (originalStats.videoBitrate > MaxVideoBitrate);
@@ -307,13 +322,26 @@ function transcodingProcessor(electronIpcMain) {
       try {
         buffer = await promise;
       } catch (err) {
-        if (err === 'TRANSCODE_ABORT') {
-          const err = Error('TRANSCODE_ABORT');
-          e.sender.send('transcode-video-error', err);
-          return;
-        }
+        switch (err) {
+          case 'TRANSCODE_ABORT':
+            const errTranscode = Error(err);
 
-        console.log('Rejected video transcoding promise', err);
+            console.log('Transcode aborted');
+            e.sender.send('transcode-video-error', errTranscode);
+            break;
+          case 'ERROR_FILE_ACCESS':
+            const errAccess = Error(err);
+
+            console.log('Transcoding error: file access error');
+            e.sender.send('transcode-video-error', errAccess);
+            return;
+          default:
+            const errUnhandled = Error('UNHANDLED_ERROR');
+
+            console.err(err);
+            e.sender.send('transcode-video-error', errUnhandled);
+            return;
+        }
       }
 
       if (buffer) {
