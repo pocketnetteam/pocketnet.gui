@@ -415,7 +415,7 @@ var metadisplay = function(){ %>
 									</div>
 
 									<% const isElectron = (typeof _Electron !== 'undefined' && !!window.electron); %>
-									<% const isSaveSupported = (window.cordova || isElectron); %>
+									<% const isSaveSupported = (window.cordova); %>
 
 									<% if(isSaveSupported && share.itisvideo() ) {
 
