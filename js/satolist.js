@@ -2416,18 +2416,23 @@ Platform = function (app, listofnodes) {
 
                     if(!d) d = {}
 
-                    self.app.nav.api.load({
-                        open : true,
-                        href : 'post?s=' + txid,
-                        inWnd : true,
-                        history : true,
-                        essenseData : {
-                            share : txid,
-                            video : true,
-                            autoplay : true,
-                            startTime : d.startTime || 0
-                        }
-                    })
+
+                    setTimeout(function(){
+                        self.app.nav.api.load({
+                            open : true,
+                            href : 'post?s=' + txid,
+                            inWnd : true,
+                            history : true,
+                            essenseData : {
+                                share : txid,
+                                video : true,
+                                autoplay : true,
+                                startTime : d.startTime || 0
+                            }
+                        })
+                    }, 100)
+
+                    
 
                 }
             }

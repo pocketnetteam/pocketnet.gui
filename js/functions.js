@@ -813,12 +813,14 @@
 
 			expand : function(){
 
+				var expand = p.expand
+
 				actions.close()
 
 				setTimeout(function(){
 
-					if (p.expand){
-						p.expand()
+					if (expand){
+						expand()
 					}
 					
 				}, 200)

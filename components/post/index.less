@@ -1174,6 +1174,7 @@ html.mobileview{
 .wnd.postwindow.pipmini{
 	.wndcontent{
 		padding-right: 0;
+		overflow-y: hidden;
 	}
 	#post{
 		
@@ -1196,12 +1197,23 @@ html.mobileview{
 				max-height: calc(var(--vh, 1vh) * 25);
 
 				.vjs-control-bar{
-					height: 3.5em!important;
-					font-size: 0.9em;
+					
+
+					.vjs-mute-control{
+						position: absolute;
+						height: 3em;
+						line-height: 3.5em;
+						font-size: 1em;
+						right: 0.25em;
+						bottom: 0;
+						width: 3em;
+						font-size: 0.9em;
+					}
 				}
 			}
 	
 		}
+
 
 		.work{
 			position: static;
@@ -1242,7 +1254,9 @@ html.pipmode{
 					max-width: none;
 					right: 0;
 
-					
+					.vjs-control-bar{
+						padding-left: 0;
+					}
 				}
 			}
 		}

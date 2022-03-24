@@ -829,6 +829,7 @@ html.mobileview .wnd.articlewindow .widthcontainer {
 }
 .wnd.postwindow.pipmini .wndcontent {
   padding-right: 0;
+  overflow-y: hidden;
 }
 .wnd.postwindow.pipmini #post {
   padding: 0!important;
@@ -847,8 +848,14 @@ html.mobileview .wnd.articlewindow .widthcontainer {
   min-height: 150px;
   max-height: calc(var(--vh, 1vh) * 25);
 }
-.wnd.postwindow.pipmini #post .videoWrapper .video-js .vjs-control-bar {
-  height: 3.5em !important;
+.wnd.postwindow.pipmini #post .videoWrapper .video-js .vjs-control-bar .vjs-mute-control {
+  position: absolute;
+  height: 3em;
+  line-height: 3.5em;
+  font-size: 1em;
+  right: 0.25em;
+  bottom: 0;
+  width: 3em;
   font-size: 0.9em;
 }
 .wnd.postwindow.pipmini #post .work {
@@ -880,4 +887,7 @@ html.pipmode .wnd.postwindow.pipmini #post .videoWrapper .video-js {
   height: 100%;
   max-width: none;
   right: 0;
+}
+html.pipmode .wnd.postwindow.pipmini #post .videoWrapper .video-js .vjs-control-bar {
+  padding-left: 0;
 }
