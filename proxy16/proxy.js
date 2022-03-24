@@ -701,8 +701,14 @@ var Proxy = function (settings, manage, test, logger) {
 				],
 
 				18: [
-					'bastynode1.ru',
-					'gf110.ru',
+					{
+						host : 'bastynode1.ru',
+						cantuploading: true,
+					},
+					{
+						host : 'gf110.ru',
+						cantuploading: true,
+					},
 				],
 
 				19: [
