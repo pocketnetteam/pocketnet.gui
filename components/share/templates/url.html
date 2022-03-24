@@ -17,7 +17,7 @@
 
 				<div class="js-player-dummy " data-plyr-provider="<%-meta.type%>" data-plyr-embed-id="<%-meta.url%>" data-plyr-video-id="<%-meta.id%>" data-plyr-host-name="<%-meta.host_name || ''%>">
 
-					<div class="jsPlayerLoading ytbvimb" image="<%-image%>">
+					<div class="jsPlayerLoading ytbvimb" <% if(image) {%> image="<%-image%>" <% } else { %> style="background:#000" <% } %>>
 						<div class="jsPlayerLoadingD watchonyoutube">
 							<div>
 

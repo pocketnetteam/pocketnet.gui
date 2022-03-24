@@ -368,8 +368,9 @@
 #comments .list .comment.temptransaction.commentnotedited .commentpanel .items > div.reply {
   display: none;
 }
-#comments .list .commentWrapper > div {
-  vertical-align: top;
+#comments .list .commentWrapper {
+  display: flex;
+  justify-content: space-between;
 }
 #comments .list .commentWrapper > div.iconWrapper {
   position: relative;
@@ -412,6 +413,7 @@
 }
 #comments .list .commentWrapper > div.commentBody {
   padding-left: 0.5em;
+  flex-grow: 1;
 }
 #comments .list .commentWrapper > div.commentBody .cbodyWrapper {
   padding-bottom: 1em;
@@ -746,10 +748,15 @@
 #comments .post .postbody .closeAnswer:hover {
   color: rgba(var(--color-txt-ac));
 }
+#comments .edit .posttable,
+#comments .answer .posttable,
+#comments .post .posttable {
+  display: flex;
+  justify-content: space-between;
+}
 #comments .edit .posttable > div,
 #comments .answer .posttable > div,
 #comments .post .posttable > div {
-  vertical-align: top;
   padding: 1em 0.5em;
   /*&.postCellWrapper{
 					.postaction{
@@ -776,6 +783,7 @@
 #comments .answer .posttable > div.lcpp,
 #comments .post .posttable > div.lcpp {
   padding-right: 0;
+  flex-grow: 1;
 }
 #comments .edit .posttable > div.reputationFailCell,
 #comments .answer .posttable > div.reputationFailCell,
