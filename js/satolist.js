@@ -7806,7 +7806,7 @@ Platform = function (app, listofnodes) {
 
                     self.sdk.theme.setstyles()
 
-                    $('meta[name="theme-color"]').attr('content', t.all[value].color).attr('media',  t.all[value].media)
+                    $('meta[name="theme-color"]').attr('content', t.all[value].color)
                     $('meta[name="msapplication-navbutton-color"]').attr('content', t.all[value].color)
                     $('meta[name="apple-mobile-web-app-status-bar-style"]').attr('content', t.all[value].color)
                 }
