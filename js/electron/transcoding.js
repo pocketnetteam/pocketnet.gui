@@ -4,14 +4,40 @@ const path = require('path');
 
 const checkDiskSpace = require('check-disk-space').default;
 
-const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
-
-
+const ffbin = require('ffbinaries');
 const ffmpeg = require('fluent-ffmpeg');
-const ffprobe = require('ffprobe-static');
 
-ffmpeg.setFfprobePath(ffprobe.path);
-ffmpeg.setFfmpegPath(ffmpegPath);
+const FfbinDir = 'ffbinaries';
+
+/**
+ * @callback progressListener
+ * @param {{progress: number}} progressData
+ */
+
+/**
+ * This function install FF Binaries
+ *
+ * @param {string} userDataFolder - Path to install FF Binaries
+ * @param {progressListener} progressListener - Progress listener
+ */
+function downloadFfBinaries(ffbinFolder, progressListener) {
+  return new Promise((resolve, reject) => {
+    const components = ['ffmpeg', 'ffprobe'];
+
+    const options = {
+      destination: ffbinFolder,
+      tickerFn: progressListener,
+    };
+
+    try {
+      ffbin.downloadBinaries(components, options, () => {
+        resolve();
+      });
+    } catch (err) {
+      reject('FFBIN_NOT_DOWNLOADED');
+    }
+  });
+}
 
 /**
  * This factory creates client side transcoding
@@ -63,8 +89,20 @@ function transcodingFactory(electronIpcRenderer) {
  *
  * @param {Electron.IpcMain} electronIpcMain
  */
-function transcodingProcessor(electronIpcMain) {
+async function transcodingProcessor(electronIpcMain, userDataFolder) {
+  const ffbinFolder = path.join(userDataFolder, FfbinDir);
+
+  const ffmpegPath = path.join(ffbinFolder, 'ffmpeg');
+  const ffprobePath = path.join(ffbinFolder, 'ffprobe');
+
+  let ffbinReady = false;
+
   electronIpcMain.on('transcode-video-request', async function(e, filePath) {
+    if (!ffbinReady) {
+      const ffbinNotReadyErr = Error('FFBIN_NOT_DOWNLOADED');
+      e.sender.send('transcode-video-error', ffbinNotReadyErr);
+    }
+
     const tempDir = os.tmpdir();
 
     /**
@@ -249,6 +287,8 @@ function transcodingProcessor(electronIpcMain) {
               reject(err);
               return;
             default:
+              console.error(err);
+
               reject('UNHANDLED_ERROR');
               return;
           }
@@ -338,7 +378,7 @@ function transcodingProcessor(electronIpcMain) {
           default:
             const errUnhandled = Error('UNHANDLED_ERROR');
 
-            console.err(err);
+            console.error(err);
             e.sender.send('transcode-video-error', errUnhandled);
             return;
         }
@@ -360,6 +400,19 @@ function transcodingProcessor(electronIpcMain) {
     }
 
     e.sender.send('transcode-video-result', transcodedResults);
+  });
+
+  downloadFfBinaries(ffbinFolder, ({ progress }) => {
+    console.log(`FF Binaries download`, progress);
+  }).then(() => {
+    console.log(`FF Binaries are downloaded`);
+    ffbinReady = true;
+
+    ffmpeg.setFfmpegPath(ffmpegPath);
+    ffmpeg.setFfprobePath(ffprobePath);
+  }).catch((err) => {
+    console.error(err);
+    console.log('FF Binaries not downloaded. Proceeding as is...');
   });
 }
 

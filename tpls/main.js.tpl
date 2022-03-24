@@ -921,7 +921,7 @@ function createWindow() {
     /**
      * Video transcoding handler
      */
-    transcodingProcessor(ipcMain);
+    transcodingProcessor(ipcMain, Storage);
 
     proxyInterface = new ProxyInterface(ipcMain, win.webContents)
     proxyInterface.init()
