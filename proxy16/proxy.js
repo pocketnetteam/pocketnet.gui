@@ -1066,6 +1066,7 @@ var Proxy = function (settings, manage, test, logger) {
 							code: 400,
 						});
 					}
+
 					if (!options) options = {};
 					if (!parameters) parameters = [];
 
@@ -2123,10 +2124,5 @@ var Proxy = function (settings, manage, test, logger) {
 }
 
 module.exports = Proxy
-
-/*
-const swaggerDocument = require('./docs/api/v1.json');
-
-app.use('/api/v1/help', swaggerUi.serve, swaggerUi.setup(swaggerDocument));*/
 
 
