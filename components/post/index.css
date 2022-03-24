@@ -827,6 +827,9 @@ html.mobileview .wnd.articlewindow .widthcontainer {
     padding-top: 0;
   }
 }
+.wnd.postwindow.pipmini .wndcontent {
+  padding-right: 0;
+}
 .wnd.postwindow.pipmini #post {
   padding: 0!important;
 }
@@ -843,6 +846,10 @@ html.mobileview .wnd.articlewindow .widthcontainer {
 .wnd.postwindow.pipmini #post .videoWrapper .video-js {
   min-height: 150px;
   max-height: calc(var(--vh, 1vh) * 25);
+}
+.wnd.postwindow.pipmini #post .videoWrapper .video-js .vjs-control-bar {
+  height: 3.5em !important;
+  font-size: 0.9em;
 }
 .wnd.postwindow.pipmini #post .work {
   position: static;

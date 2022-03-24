@@ -1172,6 +1172,9 @@ html.mobileview{
 
 
 .wnd.postwindow.pipmini{
+	.wndcontent{
+		padding-right: 0;
+	}
 	#post{
 		
 		padding: 0!important;
@@ -1191,6 +1194,11 @@ html.mobileview{
 			.video-js{
 				min-height: 150px;
 				max-height: calc(var(--vh, 1vh) * 25);
+
+				.vjs-control-bar{
+					height: 3.5em!important;
+					font-size: 0.9em;
+				}
 			}
 	
 		}
@@ -1233,8 +1241,9 @@ html.pipmode{
 					height: 100%;
 					max-width: none;
 					right: 0;
+
+					
 				}
-		
 			}
 		}
 	}
