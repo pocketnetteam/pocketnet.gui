@@ -505,7 +505,23 @@ var lenta = (function(){
 				}
 			},
 
+			observe : function(){
+
+				if(essenseData.observe){
+					var last = _.last(sharesInview)
+
+					if (last.id){
+						self.app.platform.sdk.sharesObserver.view(essenseData.observe, last.id)
+					}
+
+				}
+
+			},	
+
 			loadmore : function(loadclbk){
+				console.log('observe')
+				actions.observe()
+
 				load.shares(function(shares, error){
 
 
@@ -1705,63 +1721,7 @@ var lenta = (function(){
 
 			},
 			
-			sharesInview : function(shares, action, nvaction){
-
-				return
-
-				if (shares.length && !scrolling){
-
-					var els = el.c.find('.share');
-
-					var inv = inView(els, {
-						//inel : el.w,
-						offset : 0,
-						mode : 'partall',
-						f : 'position',
-						cache : isMobile()
-					})
-
-					if (inv.length > 0){
-
-						var invmap = {};
-					
-						var invshares = _.map(inv, function(el){
-						
-							var id = el.getAttribute('id');
-
-							invmap[id] = true
-
-							return _.find(shares, function(s){
-								return s.txid == id
-							});
-						})
-
-						invshares = _.filter(invshares, function(is){
-							if(is && !is.temp) return true
-						})
-
-
-						scrolling = true;
-
-						action(invshares, inv, function(){
-
-							scrolling = false
-
-							if(nvaction){
-								var nvshares = _.filter(shares, function(s){
-									if(!invmap[s.txid]) return true
-								})
-
-								nvaction(nvshares)
-							}
-
-						})
-						
-					}
-
-				}
-
-			},
+			
 
 			complain : function(id){
 			
@@ -1985,81 +1945,8 @@ var lenta = (function(){
 				})
 			},
 
-			sharesPreInitVideo : function(e, block){
+		
 
-				return
-
-				
-				if(block) return
-
-				var shadowVideos = {} 
-				
-				_.each(players, function(p){
-					if (p.shadow && p.txid){
-						shadowVideos[p.txid] = true
-					}
-				})
-
-				var shadowShares = _.filter(sharesInview, function(s){
-					return shadowVideos[s.txid]
-				})
-
-
-				if(shadowShares.length){
-
-					if(!el.c) return
-
-					var st = self.app.lastScrollTop
-
-					_.each(shadowShares, function(share){
-						var _el = el.share[share.txid]
-
-						if (_el.length){
-
-							var offsetTop = 0
-							var value = 3500
-
-							offsetTop = window.cordova ? (_el.data('offsetTop') || _el.offset().top) : _el.offset().top
-
-							if(self.app.mobileview) value = 1500
-
-							if(st + value > offsetTop){ /// optimize ?
-								actions.initVideo(_el, share)
-							}
-						}	
-					})
-					
-				}
-
-			},
-
-			sharesInview : function(s, block){
-
-				if(block) return
-
-				actions.sharesInview(sharesInview, function(invshares, els, clbk){
-
-					if (invshares.length && self.app.mobileview){
-						actions.sharesOptimization(invshares[0])
-					}
-					
-					_.each(invshares, function(s){
-						el.share[s.txid].addClass('vstars')
-					})
-					
-					if (clbk)
-						clbk();
-
-				}, function(nvshares){
-					
-					_.each(nvshares, function(s){
-						el.share[s.txid].removeClass('vstars')
-					})
-
-				})
-
-				
-			},
 
 			videosInview : function(e, block){
 
@@ -2145,7 +2032,6 @@ var lenta = (function(){
 
 				renders.sharesInview(sharesInview, function(shares){
 
-					//events.sharesPreInitVideo()
 					events.videosInview()
 
 				}, function(){
@@ -3120,12 +3006,7 @@ var lenta = (function(){
 					delayRender : isotopeinited,
 
 				}, function(_p){
-
-					/*setTimeout(function(){
-						actions.optimize()
-					}, 1000)*/
-					
-
+			
 					if (_p.inner == append){
 						sharesInview = sharesInview.concat(shares)	
 					}
@@ -3148,7 +3029,6 @@ var lenta = (function(){
 					renders.extras()
 
 					essenserenderclbk()
-
 
 					if (video && !isMobile()){
 						if(!isotopeinited && !essenseData.horizontal){
@@ -3175,7 +3055,6 @@ var lenta = (function(){
 						clbk();
 				})
 			},
-
 			
 			images : function(el, s, clbk){
 
@@ -4225,13 +4104,11 @@ var lenta = (function(){
 
 					self.app.events.delayedscroll['optimization' + mid] = actions.optimize
 
-					//self.app.events.delayedscroll['videosinit' + mid] = events.sharesPreInitVideo
 
 				}
 
 				if(!essenseData.notscrollloading && recommended != 'saved'){
 
-					//el.w.on('scroll', events.sharesInview);
 
 					if (essenseData.horizontal){
 						el.w.on('scroll', function(){
@@ -4516,8 +4393,6 @@ var lenta = (function(){
 							making = false;
 
 							setTimeout(function(){
-								//events.sharesInview()
-								//events.sharesPreInitVideo()
 								events.videosInview()
 							}, 50)
 							
@@ -4836,9 +4711,7 @@ var lenta = (function(){
 
 				if (el.w){
 
-					//el.w.off('scroll', events.sharesPreInitVideo);
 					el.w.off('scroll', events.videosInview);
-					el.w.off('scroll', events.sharesInview);
 					el.w.off('scroll', events.loadmorescroll);
 					el.w.off('resize', events.resize);
 

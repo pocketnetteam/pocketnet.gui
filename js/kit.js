@@ -2063,6 +2063,9 @@ pShare = function(){
 		if (v.txid)
 			self.txid = v.txid;
 
+		if (v.id)
+			self.id = v.id;
+
 		if (v.txidEdit)
 			self.txidEdit = v.txidEdit;	
 
