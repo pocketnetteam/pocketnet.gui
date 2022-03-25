@@ -22,7 +22,8 @@ jobs:
         run: |
           mkdir /tmp/bastyon
           rsync -ah --exclude={'.git','.gitignore','.github','package.json','node_modules','.well-known','assets','proxy16','cordova','res','build'} ./ /tmp/bastyon/
-          tar czf /tmp/bastyon.tgz /tmp/bastyon
+          cd /tmp/bastyon
+          tar czf /tmp/bastyon.tgz .
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
