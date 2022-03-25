@@ -38,6 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 exports.bastyonFsFetchBridge = exports.bastyonFsFetchFactory = void 0;
 var fs = require("fs");
+var path = require("path");
 var crypto = require("crypto");
 function bastyonFsFetchFactory(electronIpcRenderer, shareId) {
     return __awaiter(this, void 0, void 0, function () {
@@ -136,7 +137,7 @@ function bastyonFsFetchBridge(electronIpcMain, appPath) {
             if (isFragment && range) {
                 filePath = "".concat(shareId, "/videos/").concat(videoId, "/fragment_").concat(range[0], "-").concat(range[1], ".mp4");
             }
-            return "".concat(appPath, "/posts/").concat(filePath);
+            return path.normalize("".concat(appPath, "/posts/").concat(filePath));
         }
         return __generator(this, function (_a) {
             electronIpcMain.handle('BastyonFsFetch : FileStats', function (event, shareId, url, range) {

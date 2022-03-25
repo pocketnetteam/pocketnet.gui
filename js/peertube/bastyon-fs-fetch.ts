@@ -1,5 +1,6 @@
 import type * as Electron from "electron";
 import * as fs from "fs";
+import * as path from "path";
 import * as crypto from "crypto";
 
 export async function bastyonFsFetchFactory(electronIpcRenderer: Electron.IpcRenderer, shareId: string) {
@@ -101,7 +102,7 @@ export async function bastyonFsFetchBridge(electronIpcMain: Electron.IpcMain, ap
             filePath = `${shareId}/videos/${videoId}/fragment_${range[0]}-${range[1]}.mp4`;
         }
 
-        return `${appPath}/posts/${filePath}`;
+        return path.normalize(`${appPath}/posts/${filePath}`);
     }
 
     electronIpcMain.handle('BastyonFsFetch : FileStats', (event, shareId: string, url: string, range?: number[]) => {
