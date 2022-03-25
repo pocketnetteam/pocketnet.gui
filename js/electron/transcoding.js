@@ -24,10 +24,16 @@ function downloadFfBinaries(ffbinFolder, progressListener) {
   return new Promise(async (resolve, reject) => {
     const components = ['ffmpeg', 'ffprobe'];
 
+    let lastProgress = 0;
     const options = {
       destination: ffbinFolder,
       tickerFn: ({progress}) => {
-        progressListener(progress * 100)
+        if (progress < lastProgress) {
+          return;
+        }
+
+        progressListener(progress * 100);
+        lastProgress = progress;
       },
     };
 
