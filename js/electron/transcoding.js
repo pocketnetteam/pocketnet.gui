@@ -457,6 +457,12 @@ async function transcodingProcessor(electronIpcMain) {
             console.log('Transcoding error: binaries still not downloaded');
             e.sender.send('transcode-video-error', errFfbin);
             return;
+          case 'VERTICAL_VIDEO_NOT_SUPPORTED':
+            const verticalNotSupported = Error(err);
+
+            console.log('Transcoding error: vertical video not supported');
+            e.sender.send('transcode-video-error', verticalNotSupported);
+            return;
           default:
             const errUnhandled = Error('UNHANDLED_ERROR');
 
