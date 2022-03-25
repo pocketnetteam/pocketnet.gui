@@ -3,6 +3,7 @@ var commentpanel = function(comment, _class){
 	
 	var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(comment.address)
 	
+	
 	%>
 	<div class="commentpanel">
 
@@ -14,7 +15,7 @@ var commentpanel = function(comment, _class){
 				%> 
 				<div class="item upvoteCommentWrapper">
 
-					<div elementsid="comments_upvoteComment" class="upvoteComment scoreUp <% if(comment.myScore && comment.myScore > 0) {%> ratedScore <% } %>"  score="scoreUp">
+					<div elementsid="comments_upvoteComment" class="upvoteComment scoreUp  <% if(comment.myScore && comment.myScore > 0) {%> ratedScore <% } %>"  score="scoreUp">
 						<div class="upvoteCommentTable">
 							<div class="upvoteCommentCell">
 								<i class="fas fa-thumbs-up"></i>
@@ -98,13 +99,15 @@ var commentf = function(comment){
 
 	var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(comment.address)
 
+	var hiddenComment = !comment.my(app) && app.platform.sdk.user.hiddenComment(comment) && !(comment.deleted || lockedaccount)
 
+	
 
 	/*if(me && me.relation(comment.address, 'blocking')) return*/
 
 	var m = '' %> 
 
-	<div class="comment <% if(comment.my(app)) {%> mycomment <% } %>  <% if(comment.deleted || lockedaccount) {%> deleted <% } %> <% if(comment.myScore > 0 || comment.myScore < 0) {%> rated <% } %> <% if(comment.temp) {%> temptransaction <% } %> <% if(Number(comment.timeUpd) === Number(comment.time)) {%> commentnotedited <% } %> <%-newcomments%> <%- _class %>" id="<%-comment.id%>" aid="<%-comment.answerid%>" pid='<%-comment.parentid%>'>
+	<div class="comment <% if(hiddenComment) {%> hiddenComment <% } %> <% if(comment.my(app)) {%> mycomment <% } %>  <% if(comment.deleted || lockedaccount) {%> deleted <% } %> <% if(comment.myScore > 0 || comment.myScore < 0) {%> rated <% } %> <% if(comment.temp) {%> temptransaction <% } %> <% if(Number(comment.timeUpd) === Number(comment.time)) {%> commentnotedited <% } %> <%-newcomments%> <%- _class %>" id="<%-comment.id%>" aid="<%-comment.answerid%>" pid='<%-comment.parentid%>'>
 
 
 		
@@ -193,6 +196,20 @@ var commentf = function(comment){
 
 						<div class="commentcontenttable">
 
+							
+								<% if(hiddenComment) { %> 
+									
+									<div class="commentmessage hiddenCommentLabel">
+										<div><%=e('hiddenCommentLabel')%></div>
+
+										<div>
+											<button class="ghost"><%=e('showhiddenComment')%></button>
+										</div>
+										
+									</div>
+									
+								<% } %>
+
 								<% if(comment.deleted) {%>
 
 									<div class="commentmessage">
@@ -270,6 +287,9 @@ var commentf = function(comment){
 								
 
 						</div>
+
+
+
 						<% commentpanel(comment, _class) %>
 					</div>
 					

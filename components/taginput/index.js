@@ -45,6 +45,7 @@ var taginput = (function(){
 									return
 								}
 							}
+
 	
 							self.app.platform.sdk.tags.search(value, function(data){
 

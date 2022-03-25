@@ -315,6 +315,20 @@
 #comments .list .comment.newcomments {
   color: rgb(var(--color-txt-ac-1));
 }
+#comments .list .comment.hiddenComment .commentimages,
+#comments .list .comment.hiddenComment .commentmessage {
+  display: none;
+}
+#comments .list .comment.hiddenComment .hiddenCommentLabel {
+  display: block;
+  color: rgb(var(--neutral-grad-2));
+}
+#comments .list .comment .hiddenCommentLabel .ghost {
+  padding-left: 0;
+}
+#comments .list .comment .hiddenCommentLabel {
+  display: none;
+}
 #comments .list .comment.firstcomment {
   display: none;
 }

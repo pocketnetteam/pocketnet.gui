@@ -408,7 +408,27 @@
 				color : rgb(var(--color-txt-ac-1));	
 			}
 
-	
+			&.hiddenComment{
+				.commentimages,
+				.commentmessage{
+					display: none;
+				}
+
+				.hiddenCommentLabel{
+					display: block;
+					color : rgb(var(--neutral-grad-2));
+				}
+			} 
+
+			.hiddenCommentLabel{
+				.ghost{
+					padding-left: 0;
+				}
+			}
+
+			.hiddenCommentLabel{
+				display: none;
+			}
 
 			&.firstcomment{
 

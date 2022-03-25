@@ -1092,6 +1092,9 @@ ____loclib.lockedaccount = "Ваш аккаунт заблокирован по 
 ____loclib.lockedaccounta = "Аккаунт автора заблокирован по причине падения репутации ниже чем -30"
 
 ____loclib.lockedaccountacomment = "Аккаунт автора комментария заблокирован по причине падения репутации ниже чем -30"
+____loclib.hiddenCommentLabel = "Комментарий скрыт из-за низкой оценки"
+____loclib.showhiddenComment = "Показать"
+
 
 ____loclib.visibletoeveryone = 'Видно всем'
 ____loclib.visibleonlytosubscribers = 'Видно только подписчикам'
@@ -1927,3 +1930,4 @@ ____loclib.optimizationtip = function(v){
 }
 
 ____loclib.optimizationtip_show = "Показать"
+
