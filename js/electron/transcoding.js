@@ -21,12 +21,14 @@ const FfbinDir = 'ffbinaries';
  * @param {progressListener} progressListener - Progress listener
  */
 function downloadFfBinaries(ffbinFolder, progressListener) {
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     const components = ['ffmpeg', 'ffprobe'];
 
     const options = {
       destination: ffbinFolder,
-      tickerFn: progressListener,
+      tickerFn: ({progress}) => {
+        progressListener(progress * 100)
+      },
     };
 
     try {
@@ -34,8 +36,11 @@ function downloadFfBinaries(ffbinFolder, progressListener) {
         resolve();
       });
     } catch (err) {
-      reject('FFBIN_NOT_DOWNLOADED');
+      const ffbinDownloadError = Error('FFBIN_DOWNLOAD_ERROR');
+      reject(ffbinDownloadError);
     }
+
+    ffbin.clearCache();
   });
 }
 
@@ -54,7 +59,32 @@ function transcodingFactory(electronIpcRenderer) {
    *
    * @return {Promise<void>}
    */
-  return async function requestTranscoding(filePath, reportProgress, onCancel) {
+  async function downloadBinaries(reportProgress) {
+    return new Promise(async (resolve, reject) => {
+      electronIpcRenderer.on('transcode-binaries-progress', (event, progress) => {
+        reportProgress(progress);
+      });
+
+      electronIpcRenderer.once('transcode-binaries-error', (event, err) => {
+        reject(err);
+      });
+
+      electronIpcRenderer.once('transcode-binaries-ready', (event) => {
+        resolve();
+      });
+
+      electronIpcRenderer.send('transcode-binaries-request');
+    });
+  }
+
+  /**
+   * @param {string} filePath
+   * @param {function} reportProgress
+   * @param {function} onCancel
+   *
+   * @return {Promise<void>}
+   */
+  async function transcode(filePath, reportProgress, onCancel) {
     return new Promise(async (resolve, reject) => {
       electronIpcRenderer.once('transcode-video-start', (event) => {
         onCancel(() => {
@@ -79,8 +109,48 @@ function transcodingFactory(electronIpcRenderer) {
       electronIpcRenderer.send('transcode-video-request', filePath);
     });
   }
+
+  return { downloadBinaries, transcode };
 }
 
+async function binariesDownloader(electronIpcMain, userDataFolder) {
+  const ffbinFolder = path.join(userDataFolder, FfbinDir);
+
+  const ffmpegPath = path.join(ffbinFolder, 'ffmpeg');
+  const ffprobePath = path.join(ffbinFolder, 'ffprobe');
+
+  const oneGbBytes = 1024 * 1024 * 1024;
+
+  const spaceCalc = await checkDiskSpace(ffbinFolder);
+  const isEnoughSpace = (spaceCalc.free > oneGbBytes);
+
+  if (!isEnoughSpace) {
+    const err = Error('NO_DISK_SPACE');
+    e.sender.send('transcode-binaries-error', err);
+    return;
+  }
+
+  electronIpcMain.on('transcode-binaries-request', async (e) => {
+    downloadFfBinaries(ffbinFolder, (progress) => {
+      console.log(`FF Binaries download`, progress);
+
+      e.sender.send('transcode-binaries-progress', progress);
+    }).then(() => {
+      console.log(`FF Binaries are downloaded`);
+
+      ffmpeg.setFfmpegPath(ffmpegPath);
+      ffmpeg.setFfprobePath(ffprobePath);
+
+      e.sender.send('transcode-binaries-progress', 100);
+      e.sender.send('transcode-binaries-ready');
+    }).catch((err) => {
+      console.error(err);
+      console.log('FF Binaries not downloaded. Proceeding as is...');
+
+      e.sender.send('transcode-binaries-error', err);
+    });
+  });
+}
 
 /**
  * This function initiates transcoding processor
@@ -88,21 +158,10 @@ function transcodingFactory(electronIpcRenderer) {
  * on background scripts.
  *
  * @param {Electron.IpcMain} electronIpcMain
+ * @param {string} userDataFolder
  */
-async function transcodingProcessor(electronIpcMain, userDataFolder) {
-  const ffbinFolder = path.join(userDataFolder, FfbinDir);
-
-  const ffmpegPath = path.join(ffbinFolder, 'ffmpeg');
-  const ffprobePath = path.join(ffbinFolder, 'ffprobe');
-
-  let ffbinReady = false;
-
+async function transcodingProcessor(electronIpcMain) {
   electronIpcMain.on('transcode-video-request', async function(e, filePath) {
-    if (!ffbinReady) {
-      const ffbinNotReadyErr = Error('FFBIN_NOT_DOWNLOADED');
-      e.sender.send('transcode-video-error', ffbinNotReadyErr);
-    }
-
     const tempDir = os.tmpdir();
 
     /**
@@ -130,7 +189,7 @@ async function transcodingProcessor(electronIpcMain, userDataFolder) {
     /**
      * Overall transcoding progress calculation function
      * @param {string} key - Transcoding key in object
-     * @param {number} value - Percents to add in processKeeper
+     * @param {number} value - Percents to add in progressKeeper
      *
      * @returns {number} percents
      */
@@ -327,7 +386,7 @@ async function transcodingProcessor(electronIpcMain, userDataFolder) {
     const spaceCalc = await checkDiskSpace(tempDir);
     const fileSize = fs.statSync(filePath).size;
 
-    const isEnoughSpace = (spaceCalc.free > fileSize * 1.5);
+    const isEnoughSpace = (spaceCalc.free > (fileSize * 1.5));
 
     if (!isEnoughSpace) {
       const err = Error('NO_DISK_SPACE');
@@ -375,6 +434,12 @@ async function transcodingProcessor(electronIpcMain, userDataFolder) {
             console.log('Transcoding error: file access error');
             e.sender.send('transcode-video-error', errAccess);
             return;
+          case 'FFBIN_NOT_DOWNLOADED':
+            const errFfbin = Error(err);
+
+            console.log('Transcoding error: binaries still not downloaded');
+            e.sender.send('transcode-video-error', errFfbin);
+            return;
           default:
             const errUnhandled = Error('UNHANDLED_ERROR');
 
@@ -401,19 +466,6 @@ async function transcodingProcessor(electronIpcMain, userDataFolder) {
 
     e.sender.send('transcode-video-result', transcodedResults);
   });
-
-  downloadFfBinaries(ffbinFolder, ({ progress }) => {
-    console.log(`FF Binaries download`, progress);
-  }).then(() => {
-    console.log(`FF Binaries are downloaded`);
-    ffbinReady = true;
-
-    ffmpeg.setFfmpegPath(ffmpegPath);
-    ffmpeg.setFfprobePath(ffprobePath);
-  }).catch((err) => {
-    console.error(err);
-    console.log('FF Binaries not downloaded. Proceeding as is...');
-  });
 }
 
-module.exports = { transcodingFactory, transcodingProcessor };
+module.exports = { transcodingFactory, binariesDownloader, transcodingProcessor };
