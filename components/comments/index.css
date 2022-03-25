@@ -768,6 +768,7 @@
 #comments .answer .posttable > div.iconWrapper,
 #comments .post .posttable > div.iconWrapper {
   width: 45px;
+  min-width: 45px;
   font-size: 0.8em;
   padding-top: 1.15em;
   padding-left: 0;
@@ -1203,6 +1204,7 @@ html.mobile #comments .list .metatable > div.panelWrapper .panel {
   }
   #comments .list .commentWrapper > div.iconWrapper {
     width: 36px;
+    min-width: 36px;
     padding-top: 0.5em;
   }
   #comments .list .commentWrapper > div.iconWrapper .usericon {

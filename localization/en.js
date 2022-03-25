@@ -1313,6 +1313,9 @@ ____loclib.ReferralUsers = "Referral Users. Total/From&nbsp;01.11.2021"
 ____loclib.lockedaccount = "Your account is locked due to reputation below -30"
 ____loclib.lockedaccounta = "Author Account is locked due to reputation below -30"
 
+____loclib.lockedaccountacomment = "Comment author Account is locked due to reputation below -30"
+
+
 ____loclib.visibletoeveryone = 'Visible for everyone'
 ____loclib.visibleonlytosubscribers = 'Visible only for subscribers'
 ____loclib.visibleonlytoregistered = 'Visible only for Bastyon users'
