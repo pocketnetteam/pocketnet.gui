@@ -17,7 +17,7 @@ const FfbinDir = 'ffbinaries';
 /**
  * This function install FF Binaries
  *
- * @param {string} userDataFolder - Path to install FF Binaries
+ * @param {string} ffbinFolder - Path to install FF Binaries
  * @param {progressListener} progressListener - Progress listener
  */
 function downloadFfBinaries(ffbinFolder, progressListener) {
@@ -59,9 +59,7 @@ function downloadFfBinaries(ffbinFolder, progressListener) {
  */
 function transcodingFactory(electronIpcRenderer) {
   /**
-   * @param {string} filePath
    * @param {function} reportProgress
-   * @param {function} onCancel
    *
    * @return {Promise<void>}
    */
@@ -164,7 +162,6 @@ async function binariesDownloader(electronIpcMain, userDataFolder) {
  * on background scripts.
  *
  * @param {Electron.IpcMain} electronIpcMain
- * @param {string} userDataFolder
  */
 async function transcodingProcessor(electronIpcMain) {
   electronIpcMain.on('transcode-video-request', async function(e, filePath) {
