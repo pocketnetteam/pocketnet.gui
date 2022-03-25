@@ -2,7 +2,7 @@
 
 if (typeof _Electron !== 'undefined') {
 	ipcRenderer = require('electron').ipcRenderer;
-	
+
 }
 
 var uploadpeertube = (function () {
@@ -216,15 +216,29 @@ var uploadpeertube = (function () {
 				if (typeof _Electron !== 'undefined') {
 					const filePath = evt.target.files[0].path;
 
-					el.uploadProgress.find('.bold-font')
-						.text(self.app.localization.e('uploadVideoProgress_processing'));
-
-					options.progress(0);
-
-					const transcodeVideo = transcodingFactory(electron.ipcRenderer);
+					const videoProcessor = transcodingFactory(electron.ipcRenderer);
 
 					try {
-						const transcoded = await transcodeVideo(filePath, options.progress, options.cancel);
+						el.cancelButton.addClass('hidden');
+
+						el.uploadProgress.find('.bold-font')
+							.text(self.app.localization.e('uploadVideoProgress_binaries'));
+
+						options.progress(0);
+
+						await videoProcessor.downloadBinaries(options.progress);
+
+						el.uploadProgress.find('.bold-font')
+							.text(self.app.localization.e('uploadVideoProgress_processing'));
+
+						options.progress(0);
+
+						el.uploadProgress
+							.find('.upload-progress-bar')
+							.removeClass('binaries')
+							.addClass('processing');
+
+						const transcoded = await videoProcessor.transcode(filePath, options.progress, options.cancel);
 
 						/** Writing transcoded alternatives to target object */
 						/** At this moment for backend reasons, sending only 720p */
@@ -237,6 +251,7 @@ var uploadpeertube = (function () {
 					} catch (err) {
 						const isCanceledByUser = (err.message === 'TRANSCODE_ABORT');
 						const isAbortedByApp = (err.message === 'NO_TRANSCODED');
+						const binariesNotAvailable = (err.message === 'FFBIN_DOWNLOAD_ERROR');
 
 						if (isCanceledByUser) {
 							/**
@@ -251,6 +266,11 @@ var uploadpeertube = (function () {
 							 * This doesn't cancel video upload...
 							 */
 							console.log('Transcoding is not required');
+						} if (binariesNotAvailable) {
+							/**
+							 * Handling FF Binaries error.
+							 */
+							console.log('FF Binaries download error');
 						} else {
 							/**
 							 * Anyway transcoding error is not fatal. If

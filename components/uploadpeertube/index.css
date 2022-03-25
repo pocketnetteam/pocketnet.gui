@@ -135,9 +135,10 @@
   transition: width 0.3s linear;
 }
 #uploadpeertube .upload-progress-bar.processing {
-  background-color: #ff4800;
+  background-color: rgb(var(--color-bg-orange));
 }
-#uploadpeertube .upload-progress-bar.uploading {
+#uploadpeertube .upload-progress-bar.uploading,
+#uploadpeertube .upload-progress-bar.binaries {
   background-color: #ff0090;
 }
 #uploadpeertube .disabledInput {
