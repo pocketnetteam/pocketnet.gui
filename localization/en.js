@@ -1121,6 +1121,7 @@ ____loclib.videoTranscodingError = "There was an error with processing your vide
 ____loclib.videoUploadingFinish = "Finishing uploading..."
 ____loclib.uploadNewVideo = "Upload New Pocketvideo"
 ____loclib.selectVideoFile = "Select video file"
+____loclib.uploadVideoProgress_binaries = "Descarga de la biblioteca:"
 ____loclib.uploadVideoProgress_processing = "Processed:"
 ____loclib.uploadVideoProgress_uploading = "Uploaded:"
 

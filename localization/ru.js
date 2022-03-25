@@ -936,6 +936,7 @@ ____loclib.videoTranscodingError = "Произошла ошибка при об�
 ____loclib.videoUploadingFinish = "Завершение загрузки..."
 ____loclib.uploadNewVideo = "Добавить новое видео"
 ____loclib.selectVideoFile = "Выберите файл"
+____loclib.uploadVideoProgress_binaries = "Скачивание библиотеки:";
 ____loclib.uploadVideoProgress_processing = "Обработано:"
 ____loclib.uploadVideoProgress_uploading = "Загружено:"
 
