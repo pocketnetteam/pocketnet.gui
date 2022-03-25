@@ -2416,18 +2416,23 @@ Platform = function (app, listofnodes) {
 
                     if(!d) d = {}
 
-                    self.app.nav.api.load({
-                        open : true,
-                        href : 'post?s=' + txid,
-                        inWnd : true,
-                        history : true,
-                        essenseData : {
-                            share : txid,
-                            video : true,
-                            autoplay : true,
-                            startTime : d.startTime || 0
-                        }
-                    })
+
+                    setTimeout(function(){
+                        self.app.nav.api.load({
+                            open : true,
+                            href : 'post?s=' + txid,
+                            inWnd : true,
+                            history : true,
+                            essenseData : {
+                                share : txid,
+                                video : true,
+                                autoplay : true,
+                                startTime : d.startTime || 0
+                            }
+                        })
+                    }, 100)
+
+                    
 
                 }
             }
@@ -7642,6 +7647,46 @@ Platform = function (app, listofnodes) {
 
             }
         },
+
+        sharesObserver : {
+            storage : {
+                viewed : {}
+            },
+
+            view : function(key, id){
+
+                if(key == 'saved') return
+
+                if(!self.sdk.sharesObserver.storage.viewed[key] || self.sdk.sharesObserver.storage.viewed[key] < id){
+                    self.sdk.sharesObserver.storage.viewed[key] = id
+
+                    self.sdk.sharesObserver.save()
+                }
+                
+
+               
+            },
+
+            save: function () {
+                if(!self.sdk.address.pnet()) return
+
+                var a = self.sdk.address.pnet().address;
+
+                self.app.settings.set(a, 'sharesObserverViewed', self.sdk.sharesObserver.storage.viewed || '{}')
+
+            },
+
+            load: function (clbk) {
+
+                if(!self.sdk.address.pnet()) return
+
+                var a = self.sdk.address.pnet().address;
+
+                self.sdk.sharesObserver.storage.viewed = self.app.settings.get(a, 'sharesObserverViewed') || {}
+
+                if(clbk) clbk()
+            },
+        },
         
         lentaMethod: {
             all: {
@@ -7801,7 +7846,7 @@ Platform = function (app, listofnodes) {
 
                     self.sdk.theme.setstyles()
 
-                    $('meta[name="theme-color"]').attr('content', t.all[value].color).attr('media',  t.all[value].media)
+                    $('meta[name="theme-color"]').attr('content', t.all[value].color)
                     $('meta[name="msapplication-navbutton-color"]').attr('content', t.all[value].color)
                     $('meta[name="apple-mobile-web-app-status-bar-style"]').attr('content', t.all[value].color)
                 }
@@ -15358,6 +15403,7 @@ Platform = function (app, listofnodes) {
                             var newShare = new pShare();
                             newShare._import(curShare.share.share);
                             newShare.txid = txid;
+                 
                             newShare.address = newUser.address;
 
                             if (curShare.share.timestamp)
@@ -25527,6 +25573,10 @@ Platform = function (app, listofnodes) {
             trx: {}
         }
 
+        self.sdk.sharesObserver.storage = {
+            viewed : {}
+        }
+
         self.sdk.likes.who = {};
 
         self.sdk.node.transactions.storage = {}
@@ -25991,7 +26041,7 @@ Platform = function (app, listofnodes) {
                     self.sdk.categories.load,
                     self.sdk.activity.load,
                     self.sdk.node.shares.parameters.load,
-
+                    self.sdk.sharesObserver.load,
                     self.sdk.user.get,
 
                 ], function () {
@@ -26517,7 +26567,9 @@ Platform = function (app, listofnodes) {
                 if (self.matrixchat.el){
 
                     if (self.matrixchat.el.hasClass('active')) return
+
                         self.matrixchat.el.addClass('active')
+                        
 
                 }
                 else{

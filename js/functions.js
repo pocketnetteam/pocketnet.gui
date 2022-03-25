@@ -813,12 +813,14 @@
 
 			expand : function(){
 
+				var expand = p.expand
+
 				actions.close()
 
 				setTimeout(function(){
 
-					if (p.expand){
-						p.expand()
+					if (expand){
+						expand()
 					}
 					
 				}, 200)
@@ -6452,7 +6454,11 @@
 
 	
 
-	_scrollTop = function(scrollTop, el, time){
+	_scrollTop = function(scrollTop, el, time, direction){
+
+		console.log('direction', direction, scrollTop)
+
+		if(!direction) direction = 'Top'
 
 		if(!el || el.attr('id') == 'application') {
 			el = $("body,html");
@@ -6463,33 +6469,42 @@
 		}
 
 		if(time){
-			el.animate({ scrollTop: scrollTop }, time);
+
+			var a = {}
+
+			a['scroll' + direction] = scrollTop
+
+			el.animate(a, time);
 		}
 		else{
-			el.scrollTop(scrollTop)
+			el['scroll' + direction](scrollTop)
 		}
 
 		
 	}
 
-	_scrollTo = function(to, el, time, ofs){
+	_scrollTo = function(to, el, time, ofs, direction){
+
+		if(!direction) direction = 'Top'
 		
 		if(!to) to = $(this);
 
 		var ofssetObj = to.offset();
 
-		var offset = (to.height() - $(window).height()) / 2;
+		var offset = 0
+		
+		if (direction == 'Top') offset = (to.height() - $(window).height()) / 2;
+		if (direction == 'Left') offset = (to.width() - $(el).width()) / 2;
 
 		if (ofssetObj)
 		{
-			var scrollTop = ofssetObj.top + offset;
+			var scrollTop = ofssetObj[direction.toLowerCase()] + offset;
 
-			if (el) scrollTop = scrollTop + el.scrollTop() - el.offset().top
-
+			if (el) scrollTop = scrollTop + el['scroll' + direction]() - el.offset()[direction.toLowerCase()]
 
 			scrollTop = scrollTop + (ofs || 0)
 
-			_scrollTop(scrollTop, el, time);
+			_scrollTop(scrollTop, el, time, direction);
 		}
 
 	}

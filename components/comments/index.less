@@ -515,8 +515,9 @@
 
 		}
 		.commentWrapper{
+			display: flex;
+			justify-content: space-between;
 			>div{
-				vertical-align: top;
 
 				&.iconWrapper{
 					position: relative;
@@ -565,6 +566,7 @@
 
 				&.commentBody{
 					padding-left: @rhythm;
+					flex-grow: 1;
 
 					.cbodyWrapper{
 
@@ -971,8 +973,10 @@
 		}
 
 		.posttable{
+			display: flex;
+			justify-content: space-between;
 			>div{
-				vertical-align: top;
+				
 				padding : 2 * @rhythm @rhythm;
 
 				&.iconWrapper{	
@@ -990,6 +994,7 @@
 
 				&.lcpp{
 					padding-right: 0;
+					flex-grow: 1;
 				}
 
 				&.reputationFailCell{

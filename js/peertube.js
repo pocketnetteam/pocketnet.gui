@@ -510,8 +510,14 @@ PeerTubePocketnet = function (app) {
 						const roysAmount = Object.keys(data).length;
 						var royId;
 
+
 						if (app.user.address.value) {
-							royId = self.helpers.base58.decode(app.user.address.value) % roysAmount;
+
+							var sq = Number(Math.pow(Number(
+								self.helpers.base58.decode(app.user.address.value) / Math.pow(10, 26)
+							), 1 / 3).toFixed(0)).toString().substr(9) 
+
+							royId = self.helpers.base58.decode(sq) % roysAmount;
 						}
 						else{
 							royId = rand(0, roysAmount - 1);

@@ -262,6 +262,10 @@ Application = function(p)
 
 		self.mobileview = (isIpad || self.el.html.hasClass('mobile') || self.el.html.hasClass('ipad') || self.el.html.hasClass('tablet') || window.cordova || self.width < 768)
 
+		if ((typeof _Electron != 'undefined' && _Electron)){
+			self.mobileview = false
+		}
+
 		if(self.mobileview){
 			self.el.html.addClass('mobileview').removeClass('wsview')
 		}
