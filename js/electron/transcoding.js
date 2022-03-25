@@ -65,7 +65,14 @@ function transcodingFactory(electronIpcRenderer) {
    */
   async function downloadBinaries(reportProgress) {
     return new Promise(async (resolve, reject) => {
+      let alreadyDownloaded = false;
+
       electronIpcRenderer.on('transcode-binaries-progress', (event, progress) => {
+        if (!alreadyDownloaded && progress === 100) {
+          alreadyDownloaded = true;
+          return;
+        }
+
         reportProgress(progress);
       });
 
@@ -74,7 +81,13 @@ function transcodingFactory(electronIpcRenderer) {
       });
 
       electronIpcRenderer.once('transcode-binaries-ready', (event) => {
-        resolve();
+        if (!alreadyDownloaded) {
+          resolve();
+          return;
+        }
+
+        reportProgress(100);
+        setTimeout(() => resolve(), 500);
       });
 
       electronIpcRenderer.send('transcode-binaries-request');
@@ -103,7 +116,8 @@ function transcodingFactory(electronIpcRenderer) {
       electronIpcRenderer.once('transcode-video-result', (event, result) => {
         electronIpcRenderer.removeAllListeners('transcode-video-progress');
 
-        resolve(result);
+        reportProgress(100);
+        setTimeout(() => resolve(result), 500);
       });
 
       electronIpcRenderer.on('transcode-video-progress', (event, progress) => {
