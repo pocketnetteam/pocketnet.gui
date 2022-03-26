@@ -14262,6 +14262,25 @@ Platform = function (app, listofnodes) {
 
             },
 
+            saveblocked : function(){
+
+                var a = self.sdk.address.pnet();
+
+                if (a) {
+                    self.app.settings.set(self.sdk.address.pnet().address, 'blockedcomments', JSON.stringify(self.sdk.comments.blocked || {}))
+                }
+
+            },
+            loadblocked : function(clbk){
+                var a = self.sdk.address.pnet();
+
+                if (a) {
+                    self.sdk.comments.blocked = JSON.parse(self.app.settings.get(self.sdk.address.pnet().address, 'blockedcomments') || "{}")
+                }
+
+                if(clbk) clbk()
+            },
+
             find: function (txid, id, pid) {
                 var s = self.sdk.comments.storage;
 
@@ -14352,6 +14371,7 @@ Platform = function (app, listofnodes) {
                 s.all || (s.all = {})
 
                 var relay = self.sdk.relayTransactions.get();
+                var newblock = false
 
                 var c = _.map(d || [], function (data) {
                     var comment = new pComment();
@@ -14395,10 +14415,16 @@ Platform = function (app, listofnodes) {
                 _.each(c, function (c) {
                     s.all[c.id] = c
 
-                    if (self.sdk.user.hiddenComment(c)) 
+                    if (self.sdk.user.hiddenComment(c)) {
                         self.sdk.comments.blocked[c.address] = true
+                        newblock = true
+                    }
                         
                 })
+
+                if(newblock){
+                    self.sdk.comments.saveblocked()
+                }
 
 
                 return c
@@ -26072,6 +26098,8 @@ Platform = function (app, listofnodes) {
                     self.sdk.node.shares.parameters.load,
                     self.sdk.sharesObserver.load,
                     self.sdk.user.get,
+
+                    self.sdk.comments.loadblocked
 
                 ], function () {
 
