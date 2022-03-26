@@ -165,7 +165,7 @@
     }
 
     .upload-progress-bar {
-        height: 1px;
+        height: 3px;
         width: 100%;
 
         transition: width 0.3s linear;
@@ -174,7 +174,7 @@
             background-color: rgb(var(--color-bg-orange));
         }
 
-        &.uploading {
+        &.uploading, &.binaries {
             background-color: @color-raspberry;
         }
     }

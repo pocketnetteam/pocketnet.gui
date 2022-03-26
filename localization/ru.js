@@ -936,8 +936,9 @@ ____loclib.videoTranscodingError = "Произошла ошибка при об�
 ____loclib.videoUploadingFinish = "Завершение загрузки..."
 ____loclib.uploadNewVideo = "Добавить новое видео"
 ____loclib.selectVideoFile = "Выберите файл"
-____loclib.uploadVideoProgress_processing = "Обработано:"
-____loclib.uploadVideoProgress_uploading = "Загружено:"
+____loclib.uploadVideoProgress_binaries = "Подготовка библиотек:";
+____loclib.uploadVideoProgress_processing = "Обработка видео:"
+____loclib.uploadVideoProgress_uploading = "Загрузка видео:"
 
 
 
@@ -1934,4 +1935,3 @@ ____loclib.optimizationtip = function(v){
 }
 
 ____loclib.optimizationtip_show = "Показать"
-

@@ -37,7 +37,6 @@
         "humanize": "0.0.9"
     },
     "dependencies": {
-        "@ffmpeg-installer/ffmpeg": "^1.1.0",
         "aes-js": "^3.1.2",
         "async-each": "^1.0.3",
         "auto-launch": "^5.0.5",
@@ -57,9 +56,9 @@
         "express": "^4.17.1",
         "express-useragent": "^1.0.15",
         "express-ws": "^4.0.0",
+        "ffbinaries": "^1.1.4",
         "ffmpeg": "^0.0.4",
         "ffmpeg-static": "^4.4.0",
-        "ffprobe-static": "^3.0.0",
         "filestorage": "^1.7.1",
         "firebase-admin": "^9.3.0",
         "fluent-ffmpeg": "^2.1.2",
