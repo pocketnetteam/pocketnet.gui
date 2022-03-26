@@ -740,9 +740,16 @@ var Proxy = function (settings, manage, test, logger) {
 						host : 'peertube17.pocketnet.app',
 					}
 				],
-				20: [
+				
+				21: [
 					{
 						host : 'peertube18.pocketnet.app',
+					}
+				],
+				
+				22: [
+					{
+						host : 'peertube19.pocketnet.app',
 					}
 				],
       		};
