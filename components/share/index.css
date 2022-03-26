@@ -789,8 +789,8 @@
   left: 0;
   right: 0;
   top: 65px;
-  padding-bottom: 1em;
-  bottom: 65px;
+  padding-bottom: 0;
+  bottom: 85px;
   overflow-y: auto;
 }
 .wnd.wndsharepost .wndcontent #share .absolutetxwrapper .txtwrapper {
@@ -846,6 +846,12 @@
 }
 .wnd.wndsharepost .wndcontent #share .repostCaption {
   display: none;
+}
+html.mobileview .wnd.wndsharepost .wndcontent #share .absolutetxwrapper {
+  position: relative;
+}
+html.mobileview .wnd.wndsharepost .wndcontent #share .postlineWrapper {
+  background: rgb(var(--background-secondary-theme));
 }
 /*t*/
 @media only screen and (max-width: 768px) {
@@ -1446,21 +1452,3 @@
     padding: 0;
   }
 }
-/*
-html.tablet{
-	#content{
-		#share{
-			padding : 4 * @rhythm;
-			.panel>div{
-				font-size: 1em;
-				height: 66px;
-				margin-right: 2 * @rhythm;
-			}
-			.txt .emojionearea-editor{
-				min-height: 190px;
-			}
-		}
-
-	}
-	
-}*/

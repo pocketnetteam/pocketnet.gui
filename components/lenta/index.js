@@ -415,6 +415,8 @@ var lenta = (function(){
 				self.app.actions.scroll(0)
 
 				make(clbk);
+
+				self.app.nav.api.history.removeParameters(['v', 's'])
 			},
 
 			clear : function(){
@@ -519,7 +521,6 @@ var lenta = (function(){
 			},	
 
 			loadmore : function(loadclbk){
-				console.log('observe')
 				actions.observe()
 
 				load.shares(function(shares, error){
@@ -668,10 +669,16 @@ var lenta = (function(){
 			initVideoLight: function(share, clbk, shadow){
 				//js-player-dummy
 
+
 				var button = el.share[share.txid].find('.initvideoplayer')
 
 				if (button.length){
+
+					if (button.closest && button.closest('.shareTable').attr('stxid') != (share.txid || '')) return
+
 					button.one('click', function(){
+
+						console.log("CLICK1")
 
 						$(this).closest('.jsPlayerLoading').addClass('loading') 
 						$(this).closest('.js-player-dummy').addClass('js-player-ini')
@@ -701,6 +708,8 @@ var lenta = (function(){
 
 				var pels = el.share[share.txid].find('.js-player-ini');
 				var vel = el.share[share.txid].find('.videoWrapper')
+
+				if (pels.closest('.shareTable').attr('stxid') != (share.txid || '')) return
 
 				if(!vel.length) return
 
@@ -884,7 +893,6 @@ var lenta = (function(){
 				pels = null
 				vel = null
 
-				console.log("CLEAR LINKS")
 			},
 
 			openPost : function(id, clbk, video){
@@ -941,18 +949,12 @@ var lenta = (function(){
 				}
 				else
 				{
+
+					if(shareInitingMap[id]) return
+
 					var share = self.app.platform.sdk.node.shares.storage.trx[id];
 
-					delete initedcommentes[id]
-
-					if (players[id]){
-						if (players[id].p){
-							players[id].p.destroy()
-						}
-
-						delete players[id]
-					}
-
+					actions.destroyShare(share)
 
 					renders.share(share, function(){
 						if(clbk) clbk()
@@ -2735,6 +2737,8 @@ var lenta = (function(){
 						renders.articlespart(p.el.find('.sharearticle'), share)
 					}
 					else{
+
+						// TO DO
 						if(!p.el.find('.showMore').length) 
 							renders.repost(p.el, share.repost, share.txid, share.isEmpty(), null, all)
 					}
@@ -2916,6 +2920,7 @@ var lenta = (function(){
 						}
 						else
 						{
+
 							shareInitedMap[share.txid] = true
 							renders.share(share, p.success)
 						}
@@ -3234,7 +3239,6 @@ var lenta = (function(){
 			},
 
 			repost : function(el, repostid, txid, empty, clbk, all){
-
 
 				if(repostid){
 			
@@ -4022,76 +4026,6 @@ var lenta = (function(){
 
 				var trueshold = 80
 
-				/*if(!essenseData.second && !essenseData.horizontal){
-					parallax = new SwipeParallaxNew({
-
-						el : el.c.find('.shares'),
-	
-						allowPageScroll : 'vertical',
-	
-						//prop : 'padding',
-		
-						directions : {
-							down : {
-								cancellable : true,
-	
-								positionclbk : function(px){
-									var percent = Math.abs(px) / trueshold;
-	
-									if (px >= 0){
-	
-										progress.options.text = {
-											value: ''
-										};
-	
-										progress.update(percent * 100);
-										cc.fadeIn(1)
-										cc.height((maxheight * percent)+ 'px')
-
-	
-										//el.shares.css('opacity', 1 - percent) 
-										tp.css('opacity', 1 -  (4 * percent))
-	
-									}
-									else{
-										progress.renew()
-										cc.fadeOut(1)
-									}
-	
-								},
-	
-								constraints : function(){
-
-									if (fullScreenVideoParallax) return false
-
-									if (self.app.lastScrollTop <= 0 && !self.app.fullscreenmode && self.app.el.window.scrollTop() == 0){
-										return true;
-									}
-								},
-	
-								restrict : true,
-								dontstop : true,
-								trueshold : trueshold,
-								clbk : function(){
-	
-									progress.update(0);
-									cc.fadeOut(1)
-									self.app.platform.sdk.notifications.getNotifications()
-		
-									actions.loadprev(function(){
-	
-										
-									})
-									
-								}
-		
-							}
-						}
-		
-					}).init()
-				}*/
-				
-				
 			}
 
 			if(!essenseData.openapi){
@@ -4103,7 +4037,6 @@ var lenta = (function(){
 					self.app.events.delayedscroll['videos' + mid] = events.videosInview
 
 					self.app.events.delayedscroll['optimization' + mid] = actions.optimize
-
 
 				}
 
@@ -4401,9 +4334,14 @@ var lenta = (function(){
 
 							if(!essenseData.second){
 								if (p.s && !p.msh){
-									actions.openPost(p.s, function(){
-										actions.scrollToPost(p.s)
-									})
+
+									setTimeout(function(){
+										actions.openPost(p.s, function(){
+											actions.scrollToPost(p.s)
+										})
+									}, 500)
+
+									
 
 								}
 	

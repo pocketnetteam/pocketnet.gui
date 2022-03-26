@@ -20,9 +20,10 @@
             %>
         </div>
        
-        <div elementsid="showcategories" fmode="filters" class="panelitem btn showcategories  <% if(tagsSelected || tagsExcluded) {%> active <% } %>">
+        <div elementsid="showcategories" fmode="filters" 
+        class="panelitem showcategories btn <% if(tagsSelected || tagsExcluded) {%>  active <% } else { %> trans <% } %> ">
             <span>
-                <% if(!tagsSelected) {%><%= e('filters') %><% } else { 
+                <% if(!tagsSelected) {%><% } else { 
                     
                     var bycategories = app.platform.sdk.categories.fromTags(tags)
                     
@@ -41,7 +42,7 @@
             <% if(tagsExcluded && !tagsSelected) {%>
                 <i class="fas fa-times"></i>
             <% } else { %> 
-                <i class="fas fa-filter"></i>
+                <i class="fas fa-sliders-h"></i>
             <% } %>
         </div>
 

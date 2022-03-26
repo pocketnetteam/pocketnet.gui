@@ -1024,8 +1024,8 @@
 				left : 0;
 				right : 0;
 				top : 65px;
-				padding-bottom : 2 * @rhythm;
-				bottom : 65px;
+				padding-bottom : 0;
+				bottom : 85px;
 				overflow-y: auto;
 				
 
@@ -1097,6 +1097,23 @@
 				display: none;
 			}
         }
+	}
+}
+
+html.mobileview{
+	.wnd.wndsharepost{
+		.wndcontent{
+	
+			#share{
+				.absolutetxwrapper{
+					position: relative;
+				}
+
+				.postlineWrapper{
+					background: rgb(var(--background-secondary-theme));
+				}
+			}
+		}
 	}
 }
 
@@ -1894,23 +1911,3 @@
 		}
 	}
 }
-
-
-/*
-html.tablet{
-	#content{
-		#share{
-			padding : 4 * @rhythm;
-			.panel>div{
-				font-size: 1em;
-				height: 66px;
-				margin-right: 2 * @rhythm;
-			}
-			.txt .emojionearea-editor{
-				min-height: 190px;
-			}
-		}
-
-	}
-	
-}*/
