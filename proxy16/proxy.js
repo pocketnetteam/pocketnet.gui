@@ -691,13 +691,25 @@ var Proxy = function (settings, manage, test, logger) {
 				],
 
 				16: [
-					'poketnetpeertube.space',
-					'poketnetpeertube.ru',
+					{
+						host : 'poketnetpeertube.space',
+						cantuploading: true,
+					},
+					{
+						host : 'poketnetpeertube.ru',
+						cantuploading: true,
+					}
 				],
 
 				17: [
-					'bastynode.ru',
-					'storemi.ru',
+					{
+						host : 'bastynode.ru',
+						//cantuploading: true,
+					},
+					{
+						host : 'storemi.ru',
+						//cantuploading: true,
+					},
 				],
 
 				18: [
@@ -712,8 +724,21 @@ var Proxy = function (settings, manage, test, logger) {
 				],
 
 				19: [
-					'bastyonpeertube.ru',
-					'bastyonpeertube.site',
+					{
+						host : 'bastyonpeertube.ru',
+						cantuploading: true,
+					},
+					{
+						host : 'bastyonpeertube.site',
+						cantuploading: true,
+					},
+					
+				],
+
+				20: [
+					{
+						host : 'peertube17.pocketnet.app',
+					}
 				],
       		};
 
