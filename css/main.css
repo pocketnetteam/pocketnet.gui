@@ -4141,7 +4141,6 @@ input[type=radio].radio:checked + label {
   overflow-x: scroll;
   scroll-behavior: smooth;
   scrollbar-width: none;
-  scroll-snap-type: y mandatory;
   border-radius: 6px;
 }
 .horizontalLentaWrapper .showmorebywrapper::-webkit-scrollbar {
