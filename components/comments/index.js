@@ -1127,6 +1127,11 @@ var comments = (function(){
 	
 				comments = _.sortBy(comments, function(c){
 
+					if (self.app.platform.sdk.comments.blocked[c.address]) {
+						return 0
+					}
+
+
 					var ms = (c.time || new Date()) / 1000
 
 					var timec = ((ms - oldest) / (newest - oldest)) 
@@ -1135,11 +1140,6 @@ var comments = (function(){
 
 					return - (commentPoint(c) + (timec * 3000) ) / count
 				}) 
-
-				/*var authors = {}
-
-				_.each*/
-
 
 				return comments
 			}
@@ -2173,10 +2173,11 @@ var comments = (function(){
 						//inner : p.inner || _in, /// html
 						
 						data : {
+
+							showedall,
 							comments : comments || [],
 							_class : p.class || '',
 							newcomments : p.newcomments || '',
-
 							needtoshow : commentslength - comments.length,
 
 							replaceName : function(name, p){

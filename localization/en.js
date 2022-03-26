@@ -1315,6 +1315,10 @@ ____loclib.lockedaccounta = "Author Account is locked due to reputation below -3
 
 ____loclib.lockedaccountacomment = "Comment author Account is locked due to reputation below -30"
 ____loclib.hiddenCommentLabel = "Comment hidden due to low rating"
+
+____loclib.blockedbymeHiddenCommentLabel = "Comment hidden because you have blocked a user"
+____loclib.hiddenCommentsLabel = "Comment hidden due to low ratings of the commenter"
+
 ____loclib.showhiddenComment = "Show"
 
 ____loclib.visibletoeveryone = 'Visible for everyone'

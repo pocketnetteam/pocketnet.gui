@@ -9103,9 +9103,9 @@ Platform = function (app, listofnodes) {
             hiddenComment : function(comment){
                 var address = comment.address
                 var ustate = self.sdk.ustate.storage[address] || deep(self, 'sdk.usersl.storage.' + address) || deep(self, 'sdk.users.storage.' + address);
-                
-                console.log('ustate', ustate.reputation, comment.scoreDown)
 
+                if (self.app.platform.sdk.user.itisme(address)) return false
+                
                 if (ustate && ustate.reputation <= -0.5){
                     if(comment.scoreDown >= 5 || comment.scoreDown >= comment.scoreUp * 4){
                         return true
@@ -14251,6 +14251,10 @@ Platform = function (app, listofnodes) {
         comments: {
             storage: {},
 
+            blocked : {
+                
+            },
+
             sendclbks: {
             },
 
@@ -14390,7 +14394,13 @@ Platform = function (app, listofnodes) {
 
                 _.each(c, function (c) {
                     s.all[c.id] = c
+
+                    if (self.sdk.user.hiddenComment(c)) 
+                        self.sdk.comments.blocked[c.address] = true
+                        
                 })
+
+
                 return c
             },
 

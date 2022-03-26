@@ -101,13 +101,13 @@ var commentf = function(comment){
 
 	var hiddenComment = !comment.my(app) && app.platform.sdk.user.hiddenComment(comment) && !(comment.deleted || lockedaccount)
 
-	
+	var hiddenComments = app.platform.sdk.comments.blocked[comment.address]
 
-	/*if(me && me.relation(comment.address, 'blocking')) return*/
+	var blockedbyme = showedall && me && me.relation(comment.address, 'blocking')
 
 	var m = '' %> 
 
-	<div class="comment <% if(hiddenComment) {%> hiddenComment <% } %> <% if(comment.my(app)) {%> mycomment <% } %>  <% if(comment.deleted || lockedaccount) {%> deleted <% } %> <% if(comment.myScore > 0 || comment.myScore < 0) {%> rated <% } %> <% if(comment.temp) {%> temptransaction <% } %> <% if(Number(comment.timeUpd) === Number(comment.time)) {%> commentnotedited <% } %> <%-newcomments%> <%- _class %>" id="<%-comment.id%>" aid="<%-comment.answerid%>" pid='<%-comment.parentid%>'>
+	<div class="comment <% if(hiddenComment || hiddenComments || blockedbyme) {%> hiddenComment <% } %> <% if(comment.my(app)) {%> mycomment <% } %>  <% if(comment.deleted || lockedaccount) {%> deleted <% } %> <% if(comment.myScore > 0 || comment.myScore < 0) {%> rated <% } %> <% if(comment.temp) {%> temptransaction <% } %> <% if(Number(comment.timeUpd) === Number(comment.time)) {%> commentnotedited <% } %> <%-newcomments%> <%- _class %>" id="<%-comment.id%>" aid="<%-comment.answerid%>" pid='<%-comment.parentid%>'>
 
 
 		
@@ -197,10 +197,15 @@ var commentf = function(comment){
 						<div class="commentcontenttable">
 
 							
-								<% if(hiddenComment) { %> 
+								<% if(hiddenComment || hiddenComments || blockedbyme) { %> 
 									
 									<div class="commentmessage hiddenCommentLabel">
-										<div><%=e('hiddenCommentLabel')%></div>
+
+										<div>
+											<% if(hiddenComment) {%><%=e('hiddenCommentLabel')%><% } %>
+											<% if(!hiddenComment && hiddenComments) {%><%=e('hiddenCommentsLabel')%><% } %>
+											<% if(!hiddenComment && !hiddenComments && blockedbyme) {%><%=e('blockedbymeHiddenCommentLabel')%><% } %>
+										</div>
 
 										<div>
 											<button class="ghost"><%=e('showhiddenComment')%></button>
