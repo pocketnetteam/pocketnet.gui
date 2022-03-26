@@ -197,7 +197,11 @@ var commentf = function(comment){
 						<div class="commentcontenttable">
 
 							
-								<% if(hiddenComment || hiddenComments || blockedbyme) { %> 
+								<% if(hiddenComment || hiddenComments || blockedbyme) {
+									
+									console.log('hiddenComments',hiddenComment, hiddenComments, blockedbyme)
+									
+									%> 
 									
 									<div class="commentmessage hiddenCommentLabel">
 

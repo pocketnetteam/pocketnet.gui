@@ -9107,7 +9107,7 @@ Platform = function (app, listofnodes) {
                 if (self.app.platform.sdk.user.itisme(address)) return false
                 
                 if (ustate && ustate.reputation <= -0.5){
-                    if(comment.scoreDown >= 5 || comment.scoreDown >= comment.scoreUp * 4){
+                    if(comment.scoreDown >= 5){
                         return true
                     }
                 }
