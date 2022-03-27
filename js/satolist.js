@@ -142,7 +142,17 @@ Platform = function (app, listofnodes) {
         'PEiNYu3dNM4oZDRYvSrsfy51xz7CokPYNV' : true,
         'PQk66yNJS3agLJ2k6A1AN5FmM2TNUwEgbP' : true,
         'PFpBmqET9NyQA2EHp8BPEjjKZobXUBBjjn' : true, //a 
-        'PB1EShZbvkTSQgU8NLxEH8MN5UiKw1CBHb' : true
+        'PB1EShZbvkTSQgU8NLxEH8MN5UiKw1CBHb' : true,
+        'PCeyj5aXETKtCYbXJxmDv3bXGawda1KEHQ' : true,
+        'PWAAzRuHNi5iNxQDaJ8ZVpqEJSoPWFFiRN' : true,
+        'P9XuLKA5iCiZT6epTuVWzLU23c2gedSDkc' : true,
+        'PTNtirNwbe5GfgNod7rwMWLLGhYWhGyLJx' : true,
+        'PUaDSBBveSUG9yieuDSYCpgsyE2djYU9N5' : true,
+        'P9eLPo3gXUqBr7wgxDSSLNfyNMyeDua7cn' : true,
+        'PF57cm7HGsc5djwK556uZ7AZbqk59wXxF2' : true,
+        'PQ2W4ispScj349r3Gsqr1PchSVDvU59Ssf' : true,
+        'PUBkQATBYhGiCvvdtHCX7GM7fdx23wdaJb' : true,
+        'PJzhMENFrkp6Bopfzsf4VR46E3Znd2aoGj' : true
     }
 
     self.nvadr = {
@@ -9095,7 +9105,7 @@ Platform = function (app, listofnodes) {
             reputationBlocked : function(address){
                 var ustate = self.sdk.ustate.storage[address] || deep(self, 'sdk.usersl.storage.' + address) || deep(self, 'sdk.users.storage.' + address);
 
-				if (ustate && ustate.reputation <= -12){
+				if (ustate && ustate.reputation <= -30){
                     return true
                 }
             },
