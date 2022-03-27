@@ -6806,7 +6806,7 @@
 
 
 				__el.css({"transform": ""});
-				__el.css({"transform-origin": ""});
+				
 				__el.css({"-moz-transition": transitionstr});
 				__el.css({"-o-transition": transitionstr});
 				__el.css({"-webkit-transition": transitionstr});

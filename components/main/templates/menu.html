@@ -6,18 +6,9 @@
         </div>
 
         <div class="panelitem nfl modes">
-            <%
-            
-                _.each(modes, (mode) => { 
-                    
-                    console.log(mode, value)
-                    %>
-
-                    <div class="mode <% if(mode.value == value) {%> active <% } %>" mode="<%- mode.value %>" link="<%-mode.link%>"><%- mode.label() %></div>
-                    
-                <% })
-            
-            %>
+            <% _.each(modes, (mode) => { %>
+                <div class="mode <% if(mode.value == value) {%> active <% } %>" mode="<%- mode.value %>" link="<%-mode.link%>"><%- mode.label() %></div>
+            <% }) %>
         </div>
        
         <div elementsid="showcategories" fmode="filters" 

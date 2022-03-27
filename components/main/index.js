@@ -356,7 +356,8 @@ var main = (function(){
 											open : true,
 											href : a.link,
 											history : true,
-											handler : true
+											handler : true,
+											replace : true
 										})
 
 										return true
@@ -1055,14 +1056,17 @@ var main = (function(){
 
 				if (videomain){
 
-					el.c.addClass('videomain')
+					if (el.c)
+						el.c.addClass('videomain')
 
 					if(!parameters().v){
 						actions.backtolenta()
 					}
 				}
 				else{
-					el.c.removeClass('videomain')
+					if (el.c)
+						el.c.removeClass('videomain')
+
 					actions.backtolentaClear()
 				}
 

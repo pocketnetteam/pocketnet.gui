@@ -623,6 +623,7 @@
 }
 #comments .commentimages .imagesContainer {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.25em;
 }
 #comments .commentimages .imagesContainer.one .imagesWrapper {
