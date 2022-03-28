@@ -449,9 +449,6 @@
 #post .sharearticle .shareBgCaption .starstoppanel .panelLeft {
   display: flex;
 }
-#post .sharearticle .shareBgCaption .starstoppanel .panelRight {
-  display: none;
-}
 #post .sharearticle .shareBgCaption .articleCover,
 #post .sharearticle .shareBgCaption .captioncnt,
 #post .sharearticle .shareBgCaption .blackmatte {
