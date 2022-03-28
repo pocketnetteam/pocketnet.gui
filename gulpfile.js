@@ -64,11 +64,13 @@ function buildMasterStyle() {
 }
 
 /**
- * CSS and CSS.MAP wildcard purger
+ * CSS and CSS.MAP wildcard purger.
+ * It removes only files that has
+ * LESS source. If not, CSS is skipped.
  *
  * @param {string} source path
  */
-function purgeRelatedStyleBuilds(source) {
+function removeLessBuilds(source) {
     return new Promise((resolve, reject) => {
         glob(source, (err, files) => {
             if (err) {
@@ -115,7 +117,7 @@ exports.buildStyles.displayName = 'build:styles';
  */
 const cleanComponentStyles = () => gulp.src('./components/**/*.{css,css.map}', { allowEmpty: true }).pipe(clean());
 const cleanMasterStyle = () => gulp.src('./css/master.{css,css.map}', { allowEmpty: true }).pipe(clean());
-const cleanCssStyles = () => purgeRelatedStyleBuilds('./css/*.less');
+const cleanCssStyles = () => removeLessBuilds('./css/*.less');
 
 exports.cleanStyles = gulp.series([
     cleanComponentStyles,
