@@ -402,8 +402,9 @@
   margin: 0 auto;
   position: relative;
 }
-#post .sharearticle .shareBgCaption.showtext .icon {
+#post .sharearticle .shareBgCaption.showtext .iconWrapper {
   position: absolute;
+  width: auto;
   bottom: -22px;
   left: 0;
   right: 0;
@@ -622,15 +623,6 @@ html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent {
   #post .sharearticle .shareBgCaption:not(.verticalcover) .captioncnt .sharecaption {
     font-size: 3em;
     font-family: Georgia, serif;
-  }
-  #post .sharearticle .shareBgCaption:not(.verticalcover) .icon {
-    position: absolute;
-    bottom: -22px;
-    left: 0;
-    right: 0;
-  }
-  #post .sharearticle .shareBgCaption:not(.verticalcover) .icon .usericon {
-    margin: 0 auto;
   }
   #post .sharearticle .shareBgCaption:not(.verticalcover) .articleCover {
     height: 300px;

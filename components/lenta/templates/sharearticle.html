@@ -279,29 +279,34 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
     var letter = name ? name[0] : ''; 
     
 %>
-    <div class="icon">
-        <div class="usericon usericonsbsa another" image="<%-src || '*'%>" ban=".gif">
+    <div class="iconWrapper">
+        <a elementsid="shareiconprofilelink" href="<%-app.platform.api.authorlink(share.address)%>">
+            <div class="icon">
+                <div class="usericon usericonsbsa another" image="<%-src || '*'%>" ban=".gif">
 
-            <% if(!src && letter) { %>
+                    <% if(!src && letter) { %>
 
-                <span class="letter">
-                    <%-letter.toUpperCase()%>
-                </span>
+                        <span class="letter">
+                            <%-letter.toUpperCase()%>
+                        </span>
 
-            <% } else if (!src) { %>
+                    <% } else if (!src) { %>
 
-                <svg width="30" height="30" data-jdenticon-value="<%-share.address%>"></svg>
+                        <svg width="30" height="30" data-jdenticon-value="<%-share.address%>"></svg>
 
-            <% } %>
+                    <% } %>
 
-            <% if(app.platform.ui.markUser) {%>
+                    <% if(app.platform.ui.markUser) {%>
 
-                <%= app.platform.ui.markUser(share.address)%>
+                        <%= app.platform.ui.markUser(share.address)%>
 
-            <% } %>
-            
-        </div>
+                    <% } %>
+                    
+                </div>
+            </div>
+        </a>
     </div>
+
 
 <% } %>
 
@@ -414,9 +419,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
                             <div class="authorWrapper">
 
-                                <div class="iconWrapper">
-                                    <% makeavatar() %>
-                                </div>
+                                <% makeavatar() %>
                                 <div class="actionsWrapper">
                                     <% metadisplay() %>
     
@@ -430,10 +433,24 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
                         </div>
 
                         <div class="textscnts widthcontainer">
-                        
-                            <% makecaptionclear() %>
 
-                            <% if(!all) { %>
+                            <% if(all) { %>
+
+                                <% maketags() %>
+
+                                <% makecaptionclear() %>
+
+                                <div class="divider"></div>
+
+                                <% displaysys() %>
+
+                                <% metadisplay() %>
+
+                                <% makestarstoppanel() %>
+
+                            <% } else { %> 
+
+                                <% makecaptionclear() %>
 
                                 <% if(!share.temp){%>
 
@@ -456,14 +473,15 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
                                 <%} %>
                                 
-                            <% } %> 
 
-                            <% maketags() %>  
-    
-                            <% /* maketemp()*/%>
+                                <% maketags() %>  
+        
+                                <% /* maketemp()*/%>
 
-                            <% makestarstoppanel() %>
+                                <% makestarstoppanel() %>
     
+                            <% }  %> 
+
                         </div>
 
 
