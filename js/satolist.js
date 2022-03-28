@@ -152,7 +152,11 @@ Platform = function (app, listofnodes) {
         'PF57cm7HGsc5djwK556uZ7AZbqk59wXxF2' : true,
         'PQ2W4ispScj349r3Gsqr1PchSVDvU59Ssf' : true,
         'PUBkQATBYhGiCvvdtHCX7GM7fdx23wdaJb' : true,
-        'PJzhMENFrkp6Bopfzsf4VR46E3Znd2aoGj' : true
+        'PJzhMENFrkp6Bopfzsf4VR46E3Znd2aoGj' : true,
+        'PKp1bjJByqY76XNZNzDFkTAhyfPq4bah5V' : true,
+        'PPEWFN5ETvdjc7TKqjxDPEWmZRUyPUYr8z' : true,
+        'PH1yzW1qvyeq3thaFhUwv3pTA2VazhtZDT' : true,
+        'PCjhy4t6B2b5xeqVoJcN51XkhUqAXBuaq4' : true
     }
 
     self.nvadr = {
@@ -9105,7 +9109,7 @@ Platform = function (app, listofnodes) {
             reputationBlocked : function(address){
                 var ustate = self.sdk.ustate.storage[address] || deep(self, 'sdk.usersl.storage.' + address) || deep(self, 'sdk.users.storage.' + address);
 
-				if (ustate && ustate.reputation <= -30){
+				if (ustate && ustate.reputation <= -30 && !real[address]){
                     return true
                 }
             },
