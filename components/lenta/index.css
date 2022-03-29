@@ -595,6 +595,12 @@
 #lenta .share .sharearticle .shareBgCaption .blackmatte {
   background: linear-gradient(0deg, rgb(var(--background-secondary-theme-2)) 23%, rgba(255, 255, 255, 0) 45%), linear-gradient(180deg, rgb(var(--background-secondary-theme-2)) 0%, rgba(255, 255, 255, 0) 18%);
 }
+#lenta .share .sharearticle .shareBgCaption.withoutcover {
+  height: 340px;
+}
+#lenta .share .sharearticle .shareBgCaption.withoutcover .blackmatte {
+  background: rgb(var(--background-secondary-theme-2));
+}
 #lenta .share .sharearticle .shareBgCaption .captioncnt {
   display: flex;
   flex-direction: column;
@@ -626,7 +632,7 @@
   padding: 0 16px;
 }
 #lenta .share .sharearticle .shareBgCaption .captioncnt .sharecaption {
-  font-size: 2em;
+  font-size: 1.5em;
   font-family: Georgia, serif;
   max-width: 85%;
   color: rgb(var(--text-on-bg-ac-color));
