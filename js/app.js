@@ -262,6 +262,10 @@ Application = function(p)
 
 		self.mobileview = (isIpad || self.el.html.hasClass('mobile') || self.el.html.hasClass('ipad') || self.el.html.hasClass('tablet') || window.cordova || self.width < 768)
 
+		if ((typeof _Electron != 'undefined' && _Electron)){
+			self.mobileview = false
+		}
+
 		if(self.mobileview){
 			self.el.html.addClass('mobileview').removeClass('wsview')
 		}
@@ -919,8 +923,6 @@ Application = function(p)
 
 		prepareMap();
 
-		
-
 		self.options.fingerPrint = hexEncode('fakefingerprint');
 		
 		self.localization.init(function(){
@@ -969,9 +971,8 @@ Application = function(p)
 			})
 
 		})
-		
 
-		
+		self.mobile.inputs.init()
 
 	}
 
@@ -1184,7 +1185,9 @@ Application = function(p)
 
 	self.height = 0
 	self.width = 0
+	self.inputfocused = false
 	self.fullscreenmode = false
+	self.pseudofullscreenmode = false
 	self.playingvideo = null
 	self.pipwindow = null
 
@@ -1249,31 +1252,33 @@ Application = function(p)
 
 		restore : function(){
 
+			return
+
 			if (optimizeTimeout) clearTimeout(optimizeTimeout)
 
 				optimizeTimeout = null
-			
-			/*window.requestAnimationFrame(function(){
-				self.el.content.css('width', 'auto')
-				self.el.content.css('height', 'auto')
-			})*/
+
+			/*self.el.content.css('width', '')
+			self.el.content.css('height', '')
+			self.el.content.css('contain', '')*/
+			/*self.el.footer.css('display', '')
+			self.el.content.css('display', '')*/
 		},
 
 		optimize : function(){
 
-			if(isios()) return
+			
+			return
 
-			/*if (optimizeTimeout) clearTimeout(optimizeTimeout)
+			if (optimizeTimeout) clearTimeout(optimizeTimeout)
 
 				optimizeTimeout = setTimeout(function(){
-					var w = self.el.content.width()
-					var h = self.el.content.height()
-
-					window.requestAnimationFrame(function(){
-						self.el.content.width(w + 'px')
-						self.el.content.height(h + 'px')
-					})
-				}, 300)*/
+					/*self.el.content.css('width', self.width)
+					self.el.content.css('height', self.height)
+					self.el.content.css('contain', 'strict')*/
+					/*self.el.content.css('display', 'none')
+					self.el.footer.css('display', 'none')*/
+				}, 300)
 
 			
 		},
@@ -1435,18 +1440,12 @@ Application = function(p)
 
 	var initevents = function(){
 
-		var delayscroll = null,
-			delayscrollopt = null,
-			delayresize = null
-
-		var body = document.body
-
 		self.height = self.el.window.height()
 		self.width = self.el.window.width()
 
 		document.documentElement.style.setProperty('--vh', `${self.height * 0.01}px`);
 
-		console.log("SA")
+	
 
 		istouchstyle()
 
@@ -1464,7 +1463,6 @@ Application = function(p)
 			var lastScrollTop = self.lastScrollTop
 
 			var scrollTop = self.actions.getScroll()
-
 
 			_.each(self.events.scroll, function(s){
 				s(scrollTop, blockScroll)
@@ -1536,36 +1534,31 @@ Application = function(p)
 		}, 100)
 
 		var dbresize = _.debounce(function(){
-			window.requestAnimationFrame(function(){
 
-				if(!self.el.window) return
-				if (self.fullscreenmode) return
+			if(!self.el.window) return
+			if (self.fullscreenmode) return
+			if (self.inputfocused) return
 
-				if (self.el.html.hasClass('scrollmodedown')){
-					self.el.html.removeClass('scrollmodedown')
-				}
 
-				var scrollTop = self.actions.getScroll(),
-					height = self.el.window.height(),
-					width = self.el.window.width();
+			var scrollTop = self.actions.getScroll(),
+				height = self.el.window.height(),
+				width = self.el.window.width();
 
-					self.height = height
-					self.width = width
+				self.height = height
+				self.width = width
 
-				_.each(self.events.resize, function(s){
-					s({
-						scrollTop : scrollTop,
-						height : height,
-						width : width
-					})
+			_.each(self.events.resize, function(s){
+				s({
+					scrollTop : scrollTop,
+					height : height,
+					width : width
 				})
-
-				let vh = window.innerHeight * 0.01;
-				document.documentElement.style.setProperty('--vh', `${vh}px`);
-
 			})
 
-		}, 50)
+			let vh = window.innerHeight * 0.01;
+			document.documentElement.style.setProperty('--vh', `${vh}px`);
+
+		}, 100)
 
 		var t = false
 
@@ -2229,12 +2222,12 @@ Application = function(p)
 
 								constraints : function(e){
 
-									//if(e.constrainted) return false
-
 									if(self.platform.preparingUser) return false
 
 									if(_.find(e.path, function(el){
-                                        return el.className && (el.className.indexOf('noswipepnt') > -1 || el.className.indexOf('fullscreenActive') > -1)
+
+                                        return el.className && (el.className.indexOf('noswipepnt') > -1 || el.className.indexOf('fullScreenVideo') > -1)
+
                                     })) return false
 
 									if(self.lastScrollTop <= 0 && !self.mobile.reload.reloading){
@@ -2311,6 +2304,8 @@ Application = function(p)
 			init : function(){
 				self.mobile.screen.clbks = {}
 
+				
+
 				if (window.cordova)
 					window.screen.orientation.addEventListener('change', function(){
 
@@ -2328,7 +2323,7 @@ Application = function(p)
 			needmanage : false,
 			hasupdate : false,
 
-			playstore : true,
+			playstore : false, 
 
 			downloadAndInstall : function(){
 
@@ -2437,6 +2432,24 @@ Application = function(p)
 				
 			}
 
+		},
+
+		inputs : {
+		
+			init : function(){
+				$(document).on('focus blur', 'select, textarea, input, [contenteditable="true"]', function(e){
+
+					if(e.type == 'focusin'){
+						self.inputfocused = true
+					}
+
+					if(e.type == 'focusout'){
+						self.inputfocused = false
+					}
+					
+					console.log("E", e)
+				});
+			}
 		}
 	}
 

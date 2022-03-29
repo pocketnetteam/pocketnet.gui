@@ -36,10 +36,13 @@
 	}
 
 
+
 	.tgsWrapperMain{
-		margin-top : @rhythm;
 
 		#taginput{
+			margin-top : @rhythm;
+
+
 			.inputWrapper{
 				background: rgb(var(--background-main));
 				box-shadow: none;
@@ -859,6 +862,13 @@
 		font-size: 0.8em;
 		margin-top: @rhythm;
 		min-height: 20px;
+		display: none;
+	}
+
+	&.showError{
+		.error{
+			display: block;
+		}
 	}
 
 	.panel{
@@ -1024,8 +1034,8 @@
 				left : 0;
 				right : 0;
 				top : 65px;
-				padding-bottom : 2 * @rhythm;
-				bottom : 65px;
+				padding-bottom : 0;
+				bottom : 85px;
 				overflow-y: auto;
 				
 
@@ -1097,6 +1107,33 @@
 				display: none;
 			}
         }
+	}
+}
+
+html.mobileview{
+	.wnd.wndsharepost{
+		.wndcontent{
+
+			overflow-y: inherit;
+	
+			#share{
+				.mobilecaption{
+					position: static;
+					padding-left: 2 * @rhythm;
+				}
+				.absolutetxwrapper{
+					position: static;
+				}
+
+				.postlineWrapper{
+					position: sticky;
+					bottom : 0;
+					padding-left: 0;
+					padding-right: 0;
+					background: rgb(var(--background-secondary-theme));
+				}
+			}
+		}
 	}
 }
 
@@ -1222,7 +1259,6 @@
 		}
 
 		.tgsWrapperMain{
-			margin-top : @rhythm;
 	
 			#taginput{
 				.inputWrapper{
@@ -1894,23 +1930,3 @@
 		}
 	}
 }
-
-
-/*
-html.tablet{
-	#content{
-		#share{
-			padding : 4 * @rhythm;
-			.panel>div{
-				font-size: 1em;
-				height: 66px;
-				margin-right: 2 * @rhythm;
-			}
-			.txt .emojionearea-editor{
-				min-height: 190px;
-			}
-		}
-
-	}
-	
-}*/

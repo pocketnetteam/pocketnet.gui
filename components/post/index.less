@@ -52,8 +52,6 @@
 			border-radius: 12px;
 		}
 	}
-	
-
 
 	.showmorelenta{
 		display: none;
@@ -1177,6 +1175,10 @@ html.mobileview{
 
 
 .wnd.postwindow.pipmini{
+	.wndcontent{
+		padding-right: 0;
+		overflow-y: hidden;
+	}
 	#post{
 		
 		padding: 0!important;
@@ -1194,12 +1196,27 @@ html.mobileview{
 			border-radius: 6px;
 			
 			.video-js{
-				max-height: 25vh;
 				min-height: 150px;
 				max-height: calc(var(--vh, 1vh) * 25);
+
+				.vjs-control-bar{
+					
+
+					.vjs-mute-control{
+						position: absolute;
+						height: 3em;
+						line-height: 3.5em;
+						font-size: 1em;
+						right: 0.25em;
+						bottom: 0;
+						width: 3em;
+						font-size: 0.9em;
+					}
+				}
 			}
 	
 		}
+
 
 		.work{
 			position: static;
@@ -1239,8 +1256,11 @@ html.pipmode{
 					height: 100%;
 					max-width: none;
 					right: 0;
+
+					.vjs-control-bar{
+						padding-left: 0;
+					}
 				}
-		
 			}
 		}
 	}

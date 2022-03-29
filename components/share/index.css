@@ -30,7 +30,7 @@
 #share.loading .sLoader {
   display: block;
 }
-#share .tgsWrapperMain {
+#share .tgsWrapperMain #taginput {
   margin-top: 0.5em;
 }
 #share .tgsWrapperMain #taginput .inputWrapper {
@@ -657,6 +657,10 @@
   font-size: 0.8em;
   margin-top: 0.5em;
   min-height: 20px;
+  display: none;
+}
+#share.showError .error {
+  display: block;
 }
 #share .panel {
   height: 35px;
@@ -789,8 +793,8 @@
   left: 0;
   right: 0;
   top: 65px;
-  padding-bottom: 1em;
-  bottom: 65px;
+  padding-bottom: 0;
+  bottom: 85px;
   overflow-y: auto;
 }
 .wnd.wndsharepost .wndcontent #share .absolutetxwrapper .txtwrapper {
@@ -846,6 +850,23 @@
 }
 .wnd.wndsharepost .wndcontent #share .repostCaption {
   display: none;
+}
+html.mobileview .wnd.wndsharepost .wndcontent {
+  overflow-y: inherit;
+}
+html.mobileview .wnd.wndsharepost .wndcontent #share .mobilecaption {
+  position: static;
+  padding-left: 1em;
+}
+html.mobileview .wnd.wndsharepost .wndcontent #share .absolutetxwrapper {
+  position: static;
+}
+html.mobileview .wnd.wndsharepost .wndcontent #share .postlineWrapper {
+  position: sticky;
+  bottom: 0;
+  padding-left: 0;
+  padding-right: 0;
+  background: rgb(var(--background-secondary-theme));
 }
 /*t*/
 @media only screen and (max-width: 768px) {
@@ -940,9 +961,6 @@
   }
   #share #taginput .tgs .tagsWrapper > div.tagsInputWrapper > div {
     margin-right: 0;
-  }
-  #share .tgsWrapperMain {
-    margin-top: 0.5em;
   }
   #share .tgsWrapperMain #taginput .inputWrapper {
     background: rgb(var(--background-total-theme));
@@ -1446,21 +1464,3 @@
     padding: 0;
   }
 }
-/*
-html.tablet{
-	#content{
-		#share{
-			padding : 4 * @rhythm;
-			.panel>div{
-				font-size: 1em;
-				height: 66px;
-				margin-right: 2 * @rhythm;
-			}
-			.txt .emojionearea-editor{
-				min-height: 190px;
-			}
-		}
-
-	}
-	
-}*/

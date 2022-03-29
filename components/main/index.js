@@ -27,10 +27,66 @@ var main = (function(){
 		var wordsRegExp = /[,.!?;:() \n\r]/g
 
 		var lastStickyRefresh = 0
+
+		var modes = [
+			{
+				link : 'index',
+				label : () => self.app.localization.e('e13136'),
+				value : 'index'
+			},
+
+			{
+				link : 'index?r=sub',
+				label : () => self.app.localization.e('e13137'),
+				value : 'sub'
+			},
+			
+			{
+				link : "index?video=1",
+				label : () => self.app.localization.e('video'),
+				value : 'video'
+			},
+			{
+				link : "index?read=1",
+				label : () => self.app.localization.e('longreads'),
+				value : 'read'
+			},
+
+			{
+				link : "index?r=saved",
+				label : () => self.app.localization.e('downloaded'),
+				if : function(){
+					return window.cordova
+				},
+				value : 'saved'
+			},
+
+			{
+				link : "index?r=recommended",
+				label : () => self.app.localization.e('e13138'),
+				value : 'recommended'
+			},
+		]
 		
 		var actions = {
 
+			currentModeKey : function(){
+
+				var pss = parameters()
+
+				var r = pss.r || 'index'
+				var video = pss.video || false
+				var read = pss.read || false
+
+				if(video) r = 'video'
+				if(read) r = 'read'
+
+				return r
+			},
+
 			selector : function(){
+
+				var _modes = _.filter(modes, (m) => !m.if || m.if())
 
 				var links = {
 
@@ -49,46 +105,14 @@ var main = (function(){
 					links.saved = "index?r=saved"
 				}
 
-				var vs = _.toArray(links)
+				var r = actions.currentModeKey()
 
-				var pss = parameters()
+				var value = _.find(_modes, (m) => m.value == r)
 
-				var r = pss.r || 'index'
-				var video = pss.video || false
-				var read = pss.read || false
-
-				var value = links[video ? 'video' : read ? 'read' : r]
-
-				var labels = [self.app.localization.e('e13136'), self.app.localization.e('e13137'), self.app.localization.e('e13138'), self.app.localization.e('video'), self.app.localization.e('longreads')]
-
-				if ((window.cordova)) {
-					labels.push(self.app.localization.e('downloaded'));
-				}
-
-				var contents = new Parameter({
-					type : "VALUES",
-					name : "Contents",
-					id : 'contents',
-					possibleValues : vs, 
-					possibleValuesLabels : labels,
-					defaultValue : value
-				
-				})
-
-				contents.value = value
-
-				contents._onChange = function(v){
-
-					var href = v;
-
-					self.nav.api.load({
-						open : true,
-						href : href,
-						history : true,
-					})
-				}
-
-				return contents;
+				return {
+					value : value.value,
+					modes : _modes
+				};
 
 			},
 			
@@ -260,40 +284,46 @@ var main = (function(){
 		}
 
 		var renders = {
+			menuapply : function(){
+				var {value, modes} = actions.selector()
 
-			menu : function(pathname){
+				var fmode = 'filters'
 
-				var selector = actions.selector()
+				if(searchvalue || searchtags) fmode = 'search'
+				if(currentMode != 'common') fmode = 'settings'
+				if(currentMode == 'sub') fmode = 'none'
+
+				el.menu.attr('fmode', fmode)
+				el.menu.find('.mode').removeClass('active')
+				el.menu.find('.mode[mode="'+value+'"]').addClass('active')
+
+				_scrollTo(el.menu.find('.active'), el.menu.find('.modes'), 0, 0, 'Left') 
+
+			},
+			menu : function(){
+
+				var {value, modes} = actions.selector()
 
 				self.app.user.isState(function(state){
 
 					//videomain && !readmain && !searchvalue && !searchtags
 
-					var fmode = 'filters'
-
-					if(searchvalue || searchtags) fmode = 'search'
-
-					if(currentMode != 'common') fmode = 'settings'
-					if(currentMode == 'sub') fmode = 'none'
+					
 
 					self.shell({
 
 						name :  'menu',
 						el :   el.menu,
 						data : {
-							pathname : pathname,
 							state : state,
 							mobile : isMobile(),
 							tagsExcluded : self.app.platform.sdk.categories.gettagsexcluded().length,
 							tagsSelected : self.app.platform.sdk.categories.gettags().length,
 							tags : self.app.platform.sdk.categories.gettags(),
-							selector : selector,
-							fmode 
+							value, modes
 						},
 
 					}, function(_p){
-
-						ParametersLive([selector], _p.el)
 
 						el.menu.find('.showcategories').on(clickAction(), function(){
 
@@ -302,6 +332,47 @@ var main = (function(){
 							if (mainmoduleAction) mainmoduleAction(true)
 						})
 
+						el.menu.find('.mode').on('click', function(){
+							var link = $(this).attr('link')
+
+							self.nav.api.load({
+								open : true,
+								href : link,
+								history : true,
+								handler : true
+							})
+						})
+
+						el.menu.find('.selectwrapper').on('click', function(){
+
+							var items = []
+
+							_.each(modes, function(a){
+								items.push({
+									text : a.label(),
+									action : function (clbk) {
+				
+										self.nav.api.load({
+											open : true,
+											href : a.link,
+											history : true,
+											handler : true,
+											replace : true
+										})
+
+										return true
+				
+									}
+								})
+							})
+				
+							menuDialog({
+								items: items
+							})
+						})
+
+						renders.menuapply()
+						
 					})
 					
 				})
@@ -605,13 +676,14 @@ var main = (function(){
 							read : readmain,
 							video :  videomain && !isMobile(),
 							videomobile : videomain && isMobile(),
+							observe : actions.currentModeKey(),
 							//window : isMobile() ? el.c.find('.lentacell') : el.w,
 							page : 0,
 
 							recommendedUsers : isMobile(),
 							recommendedUsersCount : isMobile() ? 15 : 3,
 							
-
+							optimize : self.app.mobileview,
 							extra :/* state && isMobile() ? [
 								{
 									key : 'recommendedusers',
@@ -800,7 +872,7 @@ var main = (function(){
 			
 			self.app.platform.sdk.categories.clbks.excluded.topmenumobile =
 			self.app.platform.sdk.categories.clbks.tags.topmenumobile =
-			self.app.platform.sdk.categories.clbks.selected.topmenumobile =renders.menu
+			self.app.platform.sdk.categories.clbks.selected.topmenumobile = renders.menu
 
 			self.app.events.scroll.main = actions.addbuttonscroll
 
@@ -984,14 +1056,17 @@ var main = (function(){
 
 				if (videomain){
 
-					el.c.addClass('videomain')
+					if (el.c)
+						el.c.addClass('videomain')
 
 					if(!parameters().v){
 						actions.backtolenta()
 					}
 				}
 				else{
-					el.c.removeClass('videomain')
+					if (el.c)
+						el.c.removeClass('videomain')
+
 					actions.backtolentaClear()
 				}
 
@@ -1015,7 +1090,7 @@ var main = (function(){
 					makePanel()
 					makeShare()
 
-					renders.menu()
+					renders.menuapply()
 
 					actions.refreshSticky()
 

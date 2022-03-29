@@ -5,6 +5,27 @@
 		display: inline-block;
 	}*/
 }
+#lenta .optimizationTip {
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5em;
+  border-radius: 6px;
+}
+#lenta .optimizationTip > div {
+  padding: 1em;
+  text-align: center;
+  opacity: 0.8;
+  max-width: 80%;
+  border-radius: 12px;
+  background: rgb(var(--background-secondary-theme));
+  border: 1px solid rgb(var(--neutral-grad-1));
+}
+#lenta .optimizationTip .icon {
+  opacity: 0.5;
+  margin-top: 0.5em;
+}
 #lenta.destroying {
   display: none;
 }
@@ -947,10 +968,14 @@
 }
 html.mobileview #lenta .share .jsPlayerLoading,
 html.mobileview #lenta .share .video-js {
-  max-height: 80vh;
+  max-height: calc(var(--vh, 1vh) * 80);
 }
 html.mobileview #lenta .fullScreenVideo .video-js .vjs-volume-control {
   display: none;
+}
+html.mobileview.ios #lenta .share .jsPlayerLoading,
+html.mobileview.ios #lenta .share .video-js {
+  max-height: 80vh;
 }
 html.mobileview #lenta .fullScreenVideo {
   will-change: transform;

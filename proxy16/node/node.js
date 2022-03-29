@@ -283,6 +283,7 @@ var Node = function(options, manager){
 
     self.rpcs = function(method, parsed){
 
+
         if(!self.rpc[method]) return Promise.reject('method')
 
         if(!parsed) parsed = []

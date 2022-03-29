@@ -142,6 +142,22 @@ Platform = function (app, listofnodes) {
         'PEiNYu3dNM4oZDRYvSrsfy51xz7CokPYNV' : true,
         'PQk66yNJS3agLJ2k6A1AN5FmM2TNUwEgbP' : true,
         'PFpBmqET9NyQA2EHp8BPEjjKZobXUBBjjn' : true, //a 
+        'PB1EShZbvkTSQgU8NLxEH8MN5UiKw1CBHb' : true,
+        'PCeyj5aXETKtCYbXJxmDv3bXGawda1KEHQ' : true,
+        'PWAAzRuHNi5iNxQDaJ8ZVpqEJSoPWFFiRN' : true,
+        'P9XuLKA5iCiZT6epTuVWzLU23c2gedSDkc' : true,
+        'PTNtirNwbe5GfgNod7rwMWLLGhYWhGyLJx' : true,
+        'PUaDSBBveSUG9yieuDSYCpgsyE2djYU9N5' : true,
+        'P9eLPo3gXUqBr7wgxDSSLNfyNMyeDua7cn' : true,
+        'PF57cm7HGsc5djwK556uZ7AZbqk59wXxF2' : true,
+        'PQ2W4ispScj349r3Gsqr1PchSVDvU59Ssf' : true,
+        'PUBkQATBYhGiCvvdtHCX7GM7fdx23wdaJb' : true,
+        'PJzhMENFrkp6Bopfzsf4VR46E3Znd2aoGj' : true,
+        'PKp1bjJByqY76XNZNzDFkTAhyfPq4bah5V' : true,
+        'PPEWFN5ETvdjc7TKqjxDPEWmZRUyPUYr8z' : true,
+        'PH1yzW1qvyeq3thaFhUwv3pTA2VazhtZDT' : true,
+        'PCjhy4t6B2b5xeqVoJcN51XkhUqAXBuaq4' : true,
+        'PJTNch4or4Zr8cDnF3KA4eAXTqWCxYLSzu' : true
     }
 
     self.nvadr = {
@@ -2415,18 +2431,23 @@ Platform = function (app, listofnodes) {
 
                     if(!d) d = {}
 
-                    self.app.nav.api.load({
-                        open : true,
-                        href : 'post?s=' + txid,
-                        inWnd : true,
-                        history : true,
-                        essenseData : {
-                            share : txid,
-                            video : true,
-                            autoplay : true,
-                            startTime : d.startTime || 0
-                        }
-                    })
+
+                    setTimeout(function(){
+                        self.app.nav.api.load({
+                            open : true,
+                            href : 'post?s=' + txid,
+                            inWnd : true,
+                            history : true,
+                            essenseData : {
+                                share : txid,
+                                video : true,
+                                autoplay : true,
+                                startTime : d.startTime || 0
+                            }
+                        })
+                    }, 100)
+
+                    
 
                 }
             }
@@ -7641,6 +7662,46 @@ Platform = function (app, listofnodes) {
 
             }
         },
+
+        sharesObserver : {
+            storage : {
+                viewed : {}
+            },
+
+            view : function(key, id){
+
+                if(key == 'saved') return
+
+                if(!self.sdk.sharesObserver.storage.viewed[key] || self.sdk.sharesObserver.storage.viewed[key] < id){
+                    self.sdk.sharesObserver.storage.viewed[key] = id
+
+                    self.sdk.sharesObserver.save()
+                }
+                
+
+               
+            },
+
+            save: function () {
+                if(!self.sdk.address.pnet()) return
+
+                var a = self.sdk.address.pnet().address;
+
+                self.app.settings.set(a, 'sharesObserverViewed', self.sdk.sharesObserver.storage.viewed || '{}')
+
+            },
+
+            load: function (clbk) {
+
+                if(!self.sdk.address.pnet()) return
+
+                var a = self.sdk.address.pnet().address;
+
+                self.sdk.sharesObserver.storage.viewed = self.app.settings.get(a, 'sharesObserverViewed') || {}
+
+                if(clbk) clbk()
+            },
+        },
         
         lentaMethod: {
             all: {
@@ -7800,7 +7861,7 @@ Platform = function (app, listofnodes) {
 
                     self.sdk.theme.setstyles()
 
-                    $('meta[name="theme-color"]').attr('content', t.all[value].color).attr('media',  t.all[value].media)
+                    $('meta[name="theme-color"]').attr('content', t.all[value].color)
                     $('meta[name="msapplication-navbutton-color"]').attr('content', t.all[value].color)
                     $('meta[name="apple-mobile-web-app-status-bar-style"]').attr('content', t.all[value].color)
                 }
@@ -9049,8 +9110,21 @@ Platform = function (app, listofnodes) {
             reputationBlocked : function(address){
                 var ustate = self.sdk.ustate.storage[address] || deep(self, 'sdk.usersl.storage.' + address) || deep(self, 'sdk.users.storage.' + address);
 
-				if (ustate && ustate.reputation <= -12){
+				if (ustate && ustate.reputation <= -30 && !real[address]){
                     return true
+                }
+            },
+
+            hiddenComment : function(comment){
+                var address = comment.address
+                var ustate = self.sdk.ustate.storage[address] || deep(self, 'sdk.usersl.storage.' + address) || deep(self, 'sdk.users.storage.' + address);
+
+                if (self.app.platform.sdk.user.itisme(address)) return false
+                
+                if (ustate && ustate.reputation <= -0.5){
+                    if(comment.scoreDown >= 5){
+                        return true
+                    }
                 }
             },
 
@@ -13574,7 +13648,9 @@ Platform = function (app, listofnodes) {
 
                 cloud: null,
 
-                all: ['love', 'followback', 'instagramers', 'socialsteeze', 'tweegram', 'photooftheday', '20likes', 'amazing', 'smile', 'follow4follow', 'like4like', 'look', 'instalike', 'igers', 'picoftheday', 'food', 'instadaily', 'instafollow', 'followme', 'girl', 'instagood', 'bestoftheday', 'instacool', 'carryme', 'follow', 'colorful', 'style', 'swag', 'fun', 'instagramers', 'model', 'socialsteeze', 'food', 'smile', 'pretty', 'followme', 'nature', 'lol', 'dog', 'hair', 'sunset', 'swag', 'throwbackthursday', 'instagood', 'beach', 'friends', 'hot', 'funny', 'blue', 'life', 'art', 'photo', 'cool', 'carryme', 'bestoftheday', 'clouds', 'amazing', 'socialsteeze', 'fitness', 'followme', 'all_shots', 'textgram', 'family', 'instago', 'igaddict', 'awesome', 'girls', 'instagood', 'my', 'bored', 'baby', 'music', 'red', 'green', 'water', 'bestoftheday', 'black', 'party', 'white', 'yum', 'flower', 'carryme', 'night', 'instalove', 'photo', 'photos', 'pic', 'pics', 'socialsteeze', 'picture', 'pictures', 'snapshot', 'art', 'beautiful', 'instagood', 'picoftheday', 'photooftheday', 'color', 'all_shots', 'exposure', 'composition', 'focus', 'capture', 'moment', 'hdr', 'hdrspotters', 'hdrstyles_gf', 'hdri', 'hdroftheday', 'hdriphonegraphy', 'hdr_lovers', 'awesome_hdr'],
+                all: {
+                    default : ['love', 'followback', 'instagramers', 'socialsteeze', 'tweegram', 'photooftheday', '20likes', 'amazing', 'smile', 'follow4follow', 'like4like', 'look', 'instalike', 'igers', 'picoftheday', 'food', 'instadaily', 'instafollow', 'followme', 'girl', 'instagood', 'bestoftheday', 'instacool', 'carryme', 'follow', 'colorful', 'style', 'swag', 'fun', 'instagramers', 'model', 'socialsteeze', 'food', 'smile', 'pretty', 'followme', 'nature', 'lol', 'dog', 'hair', 'sunset', 'swag', 'throwbackthursday', 'instagood', 'beach', 'friends', 'hot', 'funny', 'blue', 'life', 'art', 'photo', 'cool', 'carryme', 'bestoftheday', 'clouds', 'amazing', 'socialsteeze', 'fitness', 'followme', 'all_shots', 'textgram', 'family', 'instago', 'igaddict', 'awesome', 'girls', 'instagood', 'my', 'bored', 'baby', 'music', 'red', 'green', 'water', 'bestoftheday', 'black', 'party', 'white', 'yum', 'flower', 'carryme', 'night', 'instalove', 'photo', 'photos', 'pic', 'pics', 'socialsteeze', 'picture', 'pictures', 'snapshot', 'art', 'beautiful', 'instagood', 'picoftheday', 'photooftheday', 'color', 'all_shots', 'exposure', 'composition', 'focus', 'capture', 'moment', 'hdr', 'hdrspotters', 'hdrstyles_gf', 'hdri', 'hdroftheday', 'hdriphonegraphy', 'hdr_lovers', 'awesome_hdr']
+                },
 
 
             },
@@ -13595,19 +13671,23 @@ Platform = function (app, listofnodes) {
             ex: {'news': true, 'images': true, 'videos': true, 'politics': true, 'funny': true, 'art': true, 'photo': true },
 
             search: function (str, clbk) {
-
+                var all = []
                 str = clearTagString(str);
 
-                var s = _.filter(this.storage.all, function (t) {
+                _.each(self.sdk.tags.storage.all, function(st){
+                    var s = _.filter(st, function (t) {
 
-                    if (t.indexOf(str) > -1) return true;
+                        if (t.indexOf(str) > -1) return true;
+    
+                    })
 
+                    all = all.concat(s)
                 })
 
-                s = _.uniq(s)
+                all = _.uniq(all)
 
                 if (clbk)
-                    clbk(lastEls(s, 7))
+                    clbk(lastEls(all, 7))
 
             },
 
@@ -14186,11 +14266,34 @@ Platform = function (app, listofnodes) {
         comments: {
             storage: {},
 
+            blocked : {
+                
+            },
+
             sendclbks: {
             },
 
             upvoteClbks: {
 
+            },
+
+            saveblocked : function(){
+
+                var a = self.sdk.address.pnet();
+
+                if (a) {
+                    self.app.settings.set(self.sdk.address.pnet().address, 'blockedcomments', JSON.stringify(self.sdk.comments.blocked || {}))
+                }
+
+            },
+            loadblocked : function(clbk){
+                var a = self.sdk.address.pnet();
+
+                if (a) {
+                    self.sdk.comments.blocked = JSON.parse(self.app.settings.get(self.sdk.address.pnet().address, 'blockedcomments') || "{}")
+                }
+
+                if(clbk) clbk()
             },
 
             find: function (txid, id, pid) {
@@ -14283,6 +14386,7 @@ Platform = function (app, listofnodes) {
                 s.all || (s.all = {})
 
                 var relay = self.sdk.relayTransactions.get();
+                var newblock = false
 
                 var c = _.map(d || [], function (data) {
                     var comment = new pComment();
@@ -14325,7 +14429,19 @@ Platform = function (app, listofnodes) {
 
                 _.each(c, function (c) {
                     s.all[c.id] = c
+
+                    if (self.sdk.user.hiddenComment(c)) {
+                        self.sdk.comments.blocked[c.address] = true
+                        newblock = true
+                    }
+                        
                 })
+
+                if(newblock){
+                    self.sdk.comments.saveblocked()
+                }
+
+
                 return c
             },
 
@@ -15357,6 +15473,7 @@ Platform = function (app, listofnodes) {
                             var newShare = new pShare();
                             newShare._import(curShare.share.share);
                             newShare.txid = txid;
+                 
                             newShare.address = newUser.address;
 
                             if (curShare.share.timestamp)
@@ -25526,6 +25643,10 @@ Platform = function (app, listofnodes) {
             trx: {}
         }
 
+        self.sdk.sharesObserver.storage = {
+            viewed : {}
+        }
+
         self.sdk.likes.who = {};
 
         self.sdk.node.transactions.storage = {}
@@ -25990,8 +26111,10 @@ Platform = function (app, listofnodes) {
                     self.sdk.categories.load,
                     self.sdk.activity.load,
                     self.sdk.node.shares.parameters.load,
-
+                    self.sdk.sharesObserver.load,
                     self.sdk.user.get,
+
+                    self.sdk.comments.loadblocked
 
                 ], function () {
 
@@ -26516,7 +26639,9 @@ Platform = function (app, listofnodes) {
                 if (self.matrixchat.el){
 
                     if (self.matrixchat.el.hasClass('active')) return
+
                         self.matrixchat.el.addClass('active')
+                        
 
                 }
                 else{

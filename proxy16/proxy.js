@@ -686,28 +686,88 @@ var Proxy = function (settings, manage, test, logger) {
 				],
 
 				15: [
-					'peertube14.pocketnet.app',
-					'peertube15.pocketnet.app',
+					{
+						host: 'peertube14.pocketnet.app',
+						ip: '178.154.251.235',
+					},
+					{
+						host: 'peertube15.pocketnet.app',
+						ip: '192.236.199.174',
+					},
 				],
 
-				/*16: [
-					'poketnetpeertube.space',
-					'poketnetpeertube.ru',
-				],*/
+				16: [
+					{
+						host : 'poketnetpeertube.space',
+						cantuploading: true,
+						ip: '178.217.155.168',
+					},
+					{
+						host : 'poketnetpeertube.ru',
+						cantuploading: true,
+						ip: '178.217.159.224',
+					}
+				],
 
 				17: [
-					'bastynode.ru',
-					'storemi.ru',
+					{
+						host : 'bastynode.ru',
+						//cantuploading: true,
+						ip: '81.23.152.91',
+					},
+					{
+						host : 'storemi.ru',
+						//cantuploading: true,
+						ip: '93.100.117.108',
+					},
 				],
 
 				18: [
-					'bastynode1.ru',
-					'gf110.ru',
+					{
+						host : 'bastynode1.ru',
+						cantuploading: true,
+						ip: '81.23.151.94',
+					},
+					{
+						host : 'gf110.ru',
+						cantuploading: true,
+						ip: '46.175.123.16',
+					},
 				],
 
 				19: [
-					'bastyonpeertube.ru',
-					'bastyonpeertube.site',
+					{
+						host : 'bastyonpeertube.ru',
+						cantuploading: true,
+						ip: '178.217.155.169',
+					},
+					{
+						host : 'bastyonpeertube.site',
+						cantuploading: true,
+						ip: '178.217.155.170',
+					},
+					
+				],
+
+				20: [
+					{
+						host : 'peertube17.pocketnet.app',
+						ip: '51.250.104.218',
+					}
+				],
+				
+				21: [
+					{
+						host : 'peertube18.pocketnet.app',
+						ip: '51.250.41.252',
+					}
+				],
+				
+				22: [
+					{
+						host : 'peertube19.pocketnet.app',
+						ip: '51.250.73.97',
+					}
 				],
       		};
 
@@ -1066,6 +1126,7 @@ var Proxy = function (settings, manage, test, logger) {
 							code: 400,
 						});
 					}
+
 					if (!options) options = {};
 					if (!parameters) parameters = [];
 
@@ -2123,10 +2184,5 @@ var Proxy = function (settings, manage, test, logger) {
 }
 
 module.exports = Proxy
-
-/*
-const swaggerDocument = require('./docs/api/v1.json');
-
-app.use('/api/v1/help', swaggerUi.serve, swaggerUi.setup(swaggerDocument));*/
 
 

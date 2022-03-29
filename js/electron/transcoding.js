@@ -4,14 +4,51 @@ const path = require('path');
 
 const checkDiskSpace = require('check-disk-space').default;
 
-const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
-
-
+const ffbin = require('ffbinaries');
 const ffmpeg = require('fluent-ffmpeg');
-const ffprobe = require('ffprobe-static');
 
-ffmpeg.setFfprobePath(ffprobe.path);
-ffmpeg.setFfmpegPath(ffmpegPath);
+const FfbinDir = 'ffbinaries';
+
+/**
+ * @callback progressListener
+ * @param {{progress: number}} progressData
+ */
+
+/**
+ * This function install FF Binaries
+ *
+ * @param {string} ffbinFolder - Path to install FF Binaries
+ * @param {progressListener} progressListener - Progress listener
+ */
+function downloadFfBinaries(ffbinFolder, progressListener) {
+  return new Promise(async (resolve, reject) => {
+    const components = ['ffmpeg', 'ffprobe'];
+
+    let lastProgress = 0;
+    const options = {
+      destination: ffbinFolder,
+      tickerFn: ({progress}) => {
+        if (progress < lastProgress) {
+          return;
+        }
+
+        progressListener(progress * 100);
+        lastProgress = progress;
+      },
+    };
+
+    try {
+      ffbin.downloadBinaries(components, options, () => {
+        resolve();
+      });
+    } catch (err) {
+      const ffbinDownloadError = Error('FFBIN_DOWNLOAD_ERROR');
+      reject(ffbinDownloadError);
+    }
+
+    ffbin.clearCache();
+  });
+}
 
 /**
  * This factory creates client side transcoding
@@ -22,13 +59,49 @@ ffmpeg.setFfmpegPath(ffmpegPath);
  */
 function transcodingFactory(electronIpcRenderer) {
   /**
+   * @param {function} reportProgress
+   *
+   * @return {Promise<void>}
+   */
+  async function downloadBinaries(reportProgress) {
+    return new Promise(async (resolve, reject) => {
+      let alreadyDownloaded = false;
+
+      electronIpcRenderer.on('transcode-binaries-progress', (event, progress) => {
+        if (!alreadyDownloaded && progress === 100) {
+          alreadyDownloaded = true;
+          return;
+        }
+
+        reportProgress(progress);
+      });
+
+      electronIpcRenderer.once('transcode-binaries-error', (event, err) => {
+        reject(err);
+      });
+
+      electronIpcRenderer.once('transcode-binaries-ready', (event) => {
+        if (!alreadyDownloaded) {
+          resolve();
+          return;
+        }
+
+        reportProgress(100);
+        setTimeout(() => resolve(), 500);
+      });
+
+      electronIpcRenderer.send('transcode-binaries-request');
+    });
+  }
+
+  /**
    * @param {string} filePath
    * @param {function} reportProgress
    * @param {function} onCancel
    *
    * @return {Promise<void>}
    */
-  return async function requestTranscoding(filePath, reportProgress, onCancel) {
+  async function transcode(filePath, reportProgress, onCancel) {
     return new Promise(async (resolve, reject) => {
       electronIpcRenderer.once('transcode-video-start', (event) => {
         onCancel(() => {
@@ -43,7 +116,8 @@ function transcodingFactory(electronIpcRenderer) {
       electronIpcRenderer.once('transcode-video-result', (event, result) => {
         electronIpcRenderer.removeAllListeners('transcode-video-progress');
 
-        resolve(result);
+        reportProgress(100);
+        setTimeout(() => resolve(result), 500);
       });
 
       electronIpcRenderer.on('transcode-video-progress', (event, progress) => {
@@ -53,8 +127,48 @@ function transcodingFactory(electronIpcRenderer) {
       electronIpcRenderer.send('transcode-video-request', filePath);
     });
   }
+
+  return { downloadBinaries, transcode };
 }
 
+async function binariesDownloader(electronIpcMain, userDataFolder) {
+  const ffbinFolder = path.join(userDataFolder, FfbinDir);
+
+  const ffmpegPath = path.join(ffbinFolder, 'ffmpeg');
+  const ffprobePath = path.join(ffbinFolder, 'ffprobe');
+
+  const oneGbBytes = 1024 * 1024 * 1024;
+
+  const spaceCalc = await checkDiskSpace(ffbinFolder);
+  const isEnoughSpace = (spaceCalc.free > oneGbBytes);
+
+  if (!isEnoughSpace) {
+    const err = Error('NO_DISK_SPACE');
+    e.sender.send('transcode-binaries-error', err);
+    return;
+  }
+
+  electronIpcMain.on('transcode-binaries-request', async (e) => {
+    downloadFfBinaries(ffbinFolder, (progress) => {
+      console.log(`FF Binaries download`, progress);
+
+      e.sender.send('transcode-binaries-progress', progress);
+    }).then(() => {
+      console.log(`FF Binaries are downloaded`);
+
+      ffmpeg.setFfmpegPath(ffmpegPath);
+      ffmpeg.setFfprobePath(ffprobePath);
+
+      e.sender.send('transcode-binaries-progress', 100);
+      e.sender.send('transcode-binaries-ready');
+    }).catch((err) => {
+      console.error(err);
+      console.log('FF Binaries not downloaded. Proceeding as is...');
+
+      e.sender.send('transcode-binaries-error', err);
+    });
+  });
+}
 
 /**
  * This function initiates transcoding processor
@@ -63,7 +177,7 @@ function transcodingFactory(electronIpcRenderer) {
  *
  * @param {Electron.IpcMain} electronIpcMain
  */
-function transcodingProcessor(electronIpcMain) {
+async function transcodingProcessor(electronIpcMain) {
   electronIpcMain.on('transcode-video-request', async function(e, filePath) {
     const tempDir = os.tmpdir();
 
@@ -92,7 +206,7 @@ function transcodingProcessor(electronIpcMain) {
     /**
      * Overall transcoding progress calculation function
      * @param {string} key - Transcoding key in object
-     * @param {number} value - Percents to add in processKeeper
+     * @param {number} value - Percents to add in progressKeeper
      *
      * @returns {number} percents
      */
@@ -145,7 +259,8 @@ function transcodingProcessor(electronIpcMain) {
           return new Promise((resolve, reject) => {
             ffmpeg.ffprobe(filePath, (err, meta) => {
               if (err) {
-                reject('Error accessing video file');
+                reject('ERROR_FILE_ACCESS');
+                return;
               }
 
               const videoStream = meta.streams.find(s => s.codec_type === 'video');
@@ -238,7 +353,23 @@ function transcodingProcessor(electronIpcMain) {
         const MaxAudioBitrate = 256;
         const MaxVideoFramerate = 25;
 
-        const originalStats = await getVideoStats();
+        let originalStats;
+
+        try {
+          originalStats = await getVideoStats();
+        } catch (err) {
+          switch (err) {
+            case 'ERROR_FILE_ACCESS':
+              reject(err);
+              return;
+            default:
+              console.error(err);
+
+              reject('UNHANDLED_ERROR');
+              return;
+          }
+        }
+
         const isWidthBigger = (originalStats.width > resolution[0]);
         const isHeightBigger = (originalStats.height > resolution[1]);
         const isVideoBitrateBigger = (originalStats.videoBitrate > MaxVideoBitrate);
@@ -272,7 +403,7 @@ function transcodingProcessor(electronIpcMain) {
     const spaceCalc = await checkDiskSpace(tempDir);
     const fileSize = fs.statSync(filePath).size;
 
-    const isEnoughSpace = (spaceCalc.free > fileSize * 1.5);
+    const isEnoughSpace = (spaceCalc.free > (fileSize * 1.5));
 
     if (!isEnoughSpace) {
       const err = Error('NO_DISK_SPACE');
@@ -307,13 +438,38 @@ function transcodingProcessor(electronIpcMain) {
       try {
         buffer = await promise;
       } catch (err) {
-        if (err === 'TRANSCODE_ABORT') {
-          const err = Error('TRANSCODE_ABORT');
-          e.sender.send('transcode-video-error', err);
-          return;
-        }
+        switch (err) {
+          case 'TRANSCODE_ABORT':
+            const errTranscode = Error(err);
 
-        console.log('Rejected video transcoding promise');
+            console.log('Transcode aborted');
+            e.sender.send('transcode-video-error', errTranscode);
+            break;
+          case 'ERROR_FILE_ACCESS':
+            const errAccess = Error(err);
+
+            console.log('Transcoding error: file access error');
+            e.sender.send('transcode-video-error', errAccess);
+            return;
+          case 'FFBIN_NOT_DOWNLOADED':
+            const errFfbin = Error(err);
+
+            console.log('Transcoding error: binaries still not downloaded');
+            e.sender.send('transcode-video-error', errFfbin);
+            return;
+          case 'VERTICAL_VIDEO_NOT_SUPPORTED':
+            const verticalNotSupported = Error(err);
+
+            console.log('Transcoding error: vertical video not supported');
+            e.sender.send('transcode-video-error', verticalNotSupported);
+            return;
+          default:
+            const errUnhandled = Error('UNHANDLED_ERROR');
+
+            console.error(err);
+            e.sender.send('transcode-video-error', errUnhandled);
+            return;
+        }
       }
 
       if (buffer) {
@@ -335,4 +491,4 @@ function transcodingProcessor(electronIpcMain) {
   });
 }
 
-module.exports = { transcodingFactory, transcodingProcessor };
+module.exports = { transcodingFactory, binariesDownloader, transcodingProcessor };

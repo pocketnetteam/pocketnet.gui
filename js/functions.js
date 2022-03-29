@@ -813,12 +813,14 @@
 
 			expand : function(){
 
+				var expand = p.expand
+
 				actions.close()
 
 				setTimeout(function(){
 
-					if (p.expand){
-						p.expand()
+					if (expand){
+						expand()
 					}
 					
 				}, 200)
@@ -3790,7 +3792,7 @@
 
 					var close = function(){
 
-						if(bkp){
+						if (bkp){
 							input.val(bkp)
 						}
 
@@ -3802,13 +3804,8 @@
 					}
 
 					var closeclick = function(e){
-
-						
-
 						if (_el.has(e.target).length === 0 && take().hasClass('opened')) {
-							
 							close();
-
 						}
 					}
 
@@ -3834,8 +3831,6 @@
 							_el.find('input').on('focus', function(){
 								$(this).select();
 							})
-
-							
 						}
 
 						if(parameter.type == 'values' && !parameter.autoSearch)
@@ -6459,7 +6454,11 @@
 
 	
 
-	_scrollTop = function(scrollTop, el, time){
+	_scrollTop = function(scrollTop, el, time, direction){
+
+		console.log('direction', direction, scrollTop)
+
+		if(!direction) direction = 'Top'
 
 		if(!el || el.attr('id') == 'application') {
 			el = $("body,html");
@@ -6470,33 +6469,42 @@
 		}
 
 		if(time){
-			el.animate({ scrollTop: scrollTop }, time);
+
+			var a = {}
+
+			a['scroll' + direction] = scrollTop
+
+			el.animate(a, time);
 		}
 		else{
-			el.scrollTop(scrollTop)
+			el['scroll' + direction](scrollTop)
 		}
 
 		
 	}
 
-	_scrollTo = function(to, el, time, ofs){
+	_scrollTo = function(to, el, time, ofs, direction){
+
+		if(!direction) direction = 'Top'
 		
 		if(!to) to = $(this);
 
 		var ofssetObj = to.offset();
 
-		var offset = (to.height() - $(window).height()) / 2;
+		var offset = 0
+		
+		if (direction == 'Top') offset = (to.height() - $(window).height()) / 2;
+		if (direction == 'Left') offset = (to.width() - $(el).width()) / 2;
 
 		if (ofssetObj)
 		{
-			var scrollTop = ofssetObj.top + offset;
+			var scrollTop = ofssetObj[direction.toLowerCase()] + offset;
 
-			if (el) scrollTop = scrollTop + el.scrollTop() - el.offset().top
-
+			if (el) scrollTop = scrollTop + el['scroll' + direction]() - el.offset()[direction.toLowerCase()]
 
 			scrollTop = scrollTop + (ofs || 0)
 
-			_scrollTop(scrollTop, el, time);
+			_scrollTop(scrollTop, el, time, direction);
 		}
 
 	}
@@ -6798,7 +6806,7 @@
 
 
 				__el.css({"transform": ""});
-				__el.css({"transform-origin": ""});
+				
 				__el.css({"-moz-transition": transitionstr});
 				__el.css({"-o-transition": transitionstr});
 				__el.css({"-webkit-transition": transitionstr});
@@ -6814,6 +6822,8 @@
 					__el.css({"-o-transition": ""});
 					__el.css({"-webkit-transition": ""});
 					__el.css({"transition": ""});
+
+					__el = null
 				}, 100)
 			}
 			
@@ -6917,9 +6927,11 @@
 		}
 
 		self.destroy = function(){
+
 			p.el.swipe('destroy')
 			p = {}
 			needclear = false
+
 		}
 
 		return self;
@@ -8257,26 +8269,21 @@
 
 	fastars = function(el){
 
-		$.each(el, function(){
+		el.find('i').on('mouseenter', function(){
 
-			var _el = $(this)
+			var _el = $(this).closest('.stars')
 
-			_el.find('i').on('mouseenter', function(){
+			if(_el.attr('value')) return;
 
-				if(_el.attr('value')) return;
+			var v = $(this).attr('value')
 
-				var v = $(this).attr('value')
-
-				_el.attr('tempValue', v)
-			})
-
-			_el.find('i').on('mouseleave', function(){
-
-				_el.removeAttr('tempValue')
-			})
-
+			_el.attr('tempValue', v)
 		})
 
+		el.find('i').on('mouseleave', function(){
+			var _el = $(this).closest('.stars')
+			_el.removeAttr('tempValue')
+		})
 		
 	}
 
@@ -11366,8 +11373,12 @@ if(typeof window != 'undefined'){
 						clearInterval(splashScreeninterval);
 					}
 					// Completely remove the splashscreen
-					splashScreen.remove();
-					splashScreenImg = null
+
+					if (splashScreen)
+						splashScreen.remove();
+						splashScreenImg = null
+						
+					splashScreen = null
 				}, zoomOutDuration * 2);
 			}
 			// Wait until half the rotation is done

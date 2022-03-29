@@ -507,7 +507,7 @@ var arranges = {
 								</div>
 
 								<% const isElectron = (typeof _Electron !== 'undefined' && !!window.electron); %>
-								<% const isSaveSupported = (window.cordova || isElectron); %>
+								<% const isSaveSupported = (window.cordova); %>
 
 								<% if(isSaveSupported && share.itisvideo()) {
 
@@ -576,16 +576,13 @@ var arranges = {
 
 									<div class="itemwr table tempPreloader">
 										
-										<div class="iconwr">
-											<div class="preloader5"><img src="./img/three-dots.svg"/></div>
-										</div>
-										
 										<div elementsid="lenta_forstars_count" class="count">
 											<div class="label">
 
 												<span><%=e('postWaitConf')%></span>
 											</div>
-										</div>	
+										</div>
+											
 									</div>
 								</div>
 								<div class="clearfix"></div>
