@@ -54,5 +54,7 @@ jobs:
     steps:
       - name: Pull && Up proxy container
         run: /data/proxy_pull_up.sh
+        shell: bash
       - name: Reset nginx cache
         run: /data/reset_cache.sh
+        shell: bash
