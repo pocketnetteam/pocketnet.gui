@@ -207,16 +207,19 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
         <div class="item panel starstoppanel">
             <div class="panelLeft">
+                
+                <div class="iconwrapper postscoresshow">
+                    <span><%-Number(value).toFixed(1)%></span> <i class="fas fa-star"></i> 
+                </div>	
+
                 <div class="iconwrapper">
                     <span><%-compressedNumber(share.comments || 0)%></span> <i class="fas fa-comments"></i>
                 </div>
         
-                <div class="iconwrapper postscoresshow">
-                    <span><%-Number(value).toFixed(1)%></span> <i class="fas fa-star"></i> 
-                </div>		
+	
             </div>
 
-            <% if(!my) {%>
+            <% if(!my && !all) {%>
                 <div class="panelRight">
                     <% displaypkoin() %>
                 </div>
@@ -441,8 +444,6 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
                                 <% metadisplay() %>
 
-                                <% makestarstoppanel() %>
-
                             <% } else { %> 
 
                                 <% makecaptionclear() %>
@@ -473,12 +474,12 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
         
                                 <% /* maketemp()*/%>
 
-                                <% makestarstoppanel() %>
     
                             <% }  %> 
 
                         </div>
 
+                        <% makestarstoppanel() %>
 
                         <% if(!all) {%>
                             <div class="removeDescription postcontent">

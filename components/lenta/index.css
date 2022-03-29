@@ -586,17 +586,16 @@
 }
 #lenta .share .sharearticle .shareBgCaption .tags div span,
 #lenta .share .sharearticle .articleend .tags div span {
-  color: rgb(var(--text-on-bg-ac-color));
+  color: rgba(var(--text-on-bg-ac-color), 0, 0.7);
 }
 #lenta .share .sharearticle .shareBgCaption {
   height: 425px;
   position: relative;
 }
 #lenta .share .sharearticle .shareBgCaption .blackmatte {
-  background: linear-gradient(0deg, #000000 0%, rgba(255, 255, 255, 0) 18%), linear-gradient(180deg, #000000 0%, rgba(255, 255, 255, 0) 18%);
+  background: linear-gradient(0deg, rgb(var(--background-secondary-theme-2)) 23%, rgba(255, 255, 255, 0) 45%), linear-gradient(180deg, rgb(var(--background-secondary-theme-2)) 0%, rgba(255, 255, 255, 0) 18%);
 }
 #lenta .share .sharearticle .shareBgCaption .captioncnt {
-  padding-bottom: 0.5em;
   display: flex;
   flex-direction: column;
   z-index: 1;
@@ -611,11 +610,10 @@
   display: flex;
 }
 #lenta .share .sharearticle .shareBgCaption .captioncnt .toppanel .authorWrapper .iconWrapper {
-  display: flex;
-  align-items: center;
+  margin-top: 6px;
 }
 #lenta .share .sharearticle .shareBgCaption .captioncnt .toppanel .authorWrapper .actionsWrapper {
-  margin-left: 16px;
+  margin-left: 12px;
 }
 #lenta .share .sharearticle .shareBgCaption .captioncnt .toppanel .authorWrapper .actionsWrapper .sys {
   text-align: start;
@@ -661,13 +659,18 @@
   bottom: 0.75em;
   right: 1.25em;
 }
+#lenta .share .sharearticle .shareBgCaption .starstoppanel .starstoppanel .iconwrapper,
+#lenta .share .sharearticle .shareBgCaption .socialsharewrapper .starstoppanel .iconwrapper,
+#lenta .share .sharearticle .shareBgCaption .starstoppanel .socialsharewrapper .iconwrapper,
+#lenta .share .sharearticle .shareBgCaption .socialsharewrapper .socialsharewrapper .iconwrapper {
+  color: rgb(var(--text-color));
+}
 #lenta .share .sharearticle .shareBgCaption .starstoppanel .iconwrapper,
 #lenta .share .sharearticle .shareBgCaption .socialsharewrapper .iconwrapper {
   width: 3.5em;
   height: 3.5em;
   line-height: 3.5em;
   border-radius: 3.5em;
-  color: rgb(var(--text-on-bg-ac-color));
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -696,6 +699,8 @@
   right: auto;
   display: flex;
   justify-content: space-between;
+  padding: 4px 16px 0px 16px;
+  border-top: 1px solid rgba(var(--neutral-grad-2), 0.5);
 }
 #lenta .share .sharearticle .shareBgCaption .starstoppanel .panelLeft {
   display: flex;
@@ -744,7 +749,6 @@
 }
 #lenta .share .sharearticle .shareBgCaption.verticalcover .captioncnt {
   left: 44%;
-  right: 0.5em;
   top: 0.5em;
   bottom: 0.5em;
 }
@@ -780,10 +784,6 @@
 }
 #lenta .share .sharearticle .shareBgCaption.verticalcover .sys span {
   text-shadow: none;
-  color: rgb(var(--text-color));
-}
-#lenta .share .sharearticle .shareBgCaption.verticalcover .starstoppanel .iconwrapper,
-#lenta .share .sharearticle .shareBgCaption.verticalcover .socialsharewrapper .iconwrapper {
   color: rgb(var(--text-color));
 }
 #lenta .share .sharearticle .articlecontent {
