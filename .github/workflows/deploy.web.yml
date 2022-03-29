@@ -43,3 +43,5 @@ jobs:
           name: bastyon.tgz
       - name: Unpack artifact
         run: tar xzf bastyon.tgz -C /data/gui/
+      - name: Reset nginx cache
+        run: /data/reset_cache.sh
