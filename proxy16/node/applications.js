@@ -51,15 +51,20 @@ var Applications = function(settings) {
                 name: "main.sqlite3",
                 url: 'https://snapshot.pocketnet.app/main.sqlite3'
             }
-        }
+        },
 
-        /*linux: {
-            github: {
-                name: "linux_x64.AppImage",
+        linux: {
+            bin: {
+                name: "_linux_x64_setup.deb",
                 url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
                 page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
-            }
-        }*/
+            },
+            snapshot_latest: {
+                permanent: true,
+                name: "latest.tgz",
+                url: 'https://snapshot.pocketnet.app/latest.tgz'
+            },
+        }
     }
 
     var platform = process.platform
@@ -180,7 +185,7 @@ var Applications = function(settings) {
                         if(!e) {
                             return resolve(r)
                         }
-    
+                        console.log(e)
                         reject({
                             code : 500,
                             error : 'cantcopy'
@@ -189,11 +194,12 @@ var Applications = function(settings) {
                     });
                 }
                 catch(e){
+                    console.log(e)
                     return Promise.reject()
                 }
                 
             }).catch(e => {
-
+                console.log(e)
                 reject({
                     code : 500,
                     error : 'cantcopy'
@@ -273,12 +279,13 @@ var Applications = function(settings) {
                 }
             })
             .on('error', function (err) {
+                console.log(err)
                 return reject(err)
             })
             .on('end', function () {
                 return resolve()
             })
-            .pipe(fs.createWriteStream(endFile));
+            .pipe(fs.createWriteStream(endFile))
         }).then(r => {
             return Promise.resolve(endFile);
         })

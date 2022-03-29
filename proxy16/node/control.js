@@ -484,7 +484,7 @@ var Control = function(settings) {
                 return Promise.resolve()
 
             }).catch(e => {
-
+                console.trace("1 ", e)
                 lock = ''
                 return Promise.reject(e)
             })
