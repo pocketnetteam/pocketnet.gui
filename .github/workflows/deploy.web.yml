@@ -36,7 +36,7 @@ jobs:
     runs-on: ${{ matrix.runner }}
     strategy:
       matrix:
-        runner: [web.1, web.2]
+        runner: [ web.1, web.2, web.3 ]
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v3
