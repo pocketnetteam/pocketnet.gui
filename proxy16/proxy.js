@@ -709,6 +709,7 @@ var Proxy = function (settings, manage, test, logger) {
 					}
 				],
 
+				
 				17: [
 					{
 						host : 'bastynode.ru',
