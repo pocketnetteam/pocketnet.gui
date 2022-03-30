@@ -10,13 +10,8 @@ var topusers = (function(){
 
 		var el;
 		var addresses = [],
-			cnt = 50,
-			end = false,
 			extra = null,
-			page = 0,
 			onlytags = false;
-
-		var loading;
 
 		var shuffle = function(array) {
 			let currentIndex = array.length,  randomIndex;
@@ -76,29 +71,7 @@ var topusers = (function(){
 
 			},
 			
-			unblocking : function(address){
 
-				dialog({
-					html : self.app.localization.e('e13023'),
-					btn1text : self.app.localization.e('unblock'),
-					btn2text : self.app.localization.e('ucancel'),
-
-					class : 'zindex',
-
-					success : function(){
-
-						self.app.platform.api.actions.unblocking(address, function(tx, error){
-							if(!tx){
-								self.app.platform.errorHandler(error, true)	
-							}
-						})
-
-					}
-				})
-
-				
-
-			},
 			unsubscribe : function(address){
 
 				dialog({
@@ -325,8 +298,6 @@ var topusers = (function(){
 	
 				delete self.app.platform.clbks.api.actions.unsubscribe.topusers
 	
-				delete self.app.platform.clbks.api.actions.blocking.topusers
-
 				el = {};
 			},
 			
