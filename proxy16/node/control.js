@@ -69,9 +69,9 @@ var Control = function(settings) {
         complete_bin_path : function(){
             var binPath = Path.join( node.binPath, self.helpers.bin_name('pocketcoind'))
 
-            if (process.platform == 'darwin' || process.platform == 'linux') {
-                binPath = `LD_LIBRARY_PATH=${node.binPath} ${self.helpers.bin_name('pocketcoind')}`
-            }
+            // if (process.platform == 'darwin' || process.platform == 'linux') {
+            //     binPath = `${node.binPath} ${self.helpers.bin_name('pocketcoind')}`
+            // }
 
             return binPath
         },

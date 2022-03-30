@@ -55,7 +55,7 @@ var Applications = function(settings) {
 
         linux: {
             bin: {
-                name: "_linux_x64_setup.deb",
+                name: "_linux_x64_daemon.bin",
                 url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
                 page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
             },
