@@ -22,8 +22,7 @@ jobs:
         run: |
           mkdir /tmp/bastyon
           rsync -ah --exclude={'.git','.gitignore','.github','package.json','node_modules','.well-known','assets','proxy16','cordova','res','build'} ./ /tmp/bastyon/
-          cd /tmp/bastyon
-          tar czf /tmp/bastyon.tgz .
+          tar czf /tmp/bastyon.tgz -C /tmp/bastyon .
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
@@ -36,11 +35,14 @@ jobs:
     runs-on: ${{ matrix.runner }}
     strategy:
       matrix:
-        runner: [web.1, web.2]
+        runner: [ web.1, web.2, web.3 ]
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
           name: bastyon.tgz
       - name: Unpack artifact
-        run: tar xzf bastyon.tgz -C /docker/gui/
+        run: tar xzf bastyon.tgz -C /data/gui/
+      - name: Reset nginx cache
+        run: /data/reset_cache.sh
+        shell: bash
