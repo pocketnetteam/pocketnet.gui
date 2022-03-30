@@ -704,11 +704,11 @@ var Proxy = function (settings, manage, test, logger) {
 				17: [
 					{
 						host : 'bastynode.ru',
-						//cantuploading: true,
+						cantuploading: true,
 					},
 					{
 						host : 'storemi.ru',
-						//cantuploading: true,
+						cantuploading: true,
 					},
 				],
 
