@@ -236,6 +236,7 @@
 #recommendedusers .usersVertical .user .addressTable > div.extra {
   width: 20px;
   text-align: right;
+  color: rgb(var(--neutral-grad-2));
 }
 #recommendedusers .usersVertical .user .blockingWrapper {
   display: none;
