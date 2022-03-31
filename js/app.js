@@ -2323,7 +2323,7 @@ Application = function(p)
 			needmanage : false,
 			hasupdate : false,
 
-			playstore : false, 
+			playstore : false,  ///// TODO
 
 			downloadAndInstall : function(){
 
