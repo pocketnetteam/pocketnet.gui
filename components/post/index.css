@@ -402,8 +402,9 @@
   margin: 0 auto;
   position: relative;
 }
-#post .sharearticle .shareBgCaption.showtext .icon {
+#post .sharearticle .shareBgCaption.showtext .iconWrapper {
   position: absolute;
+  width: auto;
   bottom: -22px;
   left: 0;
   right: 0;
@@ -420,7 +421,7 @@
   height: 3.5em;
   line-height: 3.5em;
   border-radius: 3.5em;
-  color: rgb(var(--text-on-bg-ac-color));
+  color: rgb(var(--neutral-grad-3));
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -443,6 +444,9 @@
   bottom: 0.75em;
   left: 1.5em;
   right: auto;
+  display: flex;
+}
+#post .sharearticle .shareBgCaption .starstoppanel .panelLeft {
   display: flex;
 }
 #post .sharearticle .shareBgCaption .articleCover,
@@ -617,15 +621,6 @@ html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent {
     font-size: 3em;
     font-family: Georgia, serif;
   }
-  #post .sharearticle .shareBgCaption:not(.verticalcover) .icon {
-    position: absolute;
-    bottom: -22px;
-    left: 0;
-    right: 0;
-  }
-  #post .sharearticle .shareBgCaption:not(.verticalcover) .icon .usericon {
-    margin: 0 auto;
-  }
   #post .sharearticle .shareBgCaption:not(.verticalcover) .articleCover {
     height: 300px;
     position: relative;
@@ -675,6 +670,14 @@ html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent {
   #post .sharearticle .shareBgCaption.verticalcover .starstoppanel .iconwrapper,
   #post .sharearticle .shareBgCaption.verticalcover .socialsharewrapper .iconwrapper {
     color: rgb(var(--text-on-bg-ac-color));
+  }
+  #post .sharearticle .starstoppanel,
+  #post .sharearticle .socialsharewrapper {
+    bottom: -0.25em !important;
+  }
+  #post .sharearticle .starstoppanel .panelLeft,
+  #post .sharearticle .socialsharewrapper .panelLeft {
+    flex-direction: column;
   }
   #post .sharearticle .articlecontent {
     padding-left: 0.5em;

@@ -180,8 +180,8 @@
             ],
             "artifactName": "${productName}_${platform}_${arch}.${ext}",
             "category": "Network",
-            "executableName": "${productName}",
-            "description": "${productName} Desktop Browser"
+            "executableName": "bastyon",
+            "description": "Bastyon Desktop Browser"
         },
         "win": {
             "target": [
