@@ -686,29 +686,40 @@ var Proxy = function (settings, manage, test, logger) {
 				],
 
 				15: [
-					'peertube14.pocketnet.app',
-					'peertube15.pocketnet.app',
+					{
+						host: 'peertube14.pocketnet.app',
+						ip: '178.154.251.235',
+					},
+					{
+						host: 'peertube15.pocketnet.app',
+						ip: '192.236.199.174',
+					},
 				],
 
 				16: [
 					{
 						host : 'poketnetpeertube.space',
 						cantuploading: true,
+						ip: '178.217.155.168',
 					},
 					{
 						host : 'poketnetpeertube.ru',
 						cantuploading: true,
+						ip: '178.217.159.224',
 					}
 				],
 
+				
 				17: [
 					{
 						host : 'bastynode.ru',
-						//cantuploading: true,
+						cantuploading: true,
+						ip: '81.23.152.91',
 					},
 					{
 						host : 'storemi.ru',
-						//cantuploading: true,
+						cantuploading: true,
+						ip: '93.100.117.108',
 					},
 				],
 
@@ -716,10 +727,12 @@ var Proxy = function (settings, manage, test, logger) {
 					{
 						host : 'bastynode1.ru',
 						cantuploading: true,
+						ip: '81.23.151.94',
 					},
 					{
 						host : 'gf110.ru',
 						cantuploading: true,
+						ip: '46.175.123.16',
 					},
 				],
 
@@ -727,10 +740,12 @@ var Proxy = function (settings, manage, test, logger) {
 					{
 						host : 'bastyonpeertube.ru',
 						cantuploading: true,
+						ip: '178.217.155.169',
 					},
 					{
 						host : 'bastyonpeertube.site',
 						cantuploading: true,
+						ip: '178.217.155.170',
 					},
 					
 				],
@@ -738,18 +753,21 @@ var Proxy = function (settings, manage, test, logger) {
 				20: [
 					{
 						host : 'peertube17.pocketnet.app',
+						ip: '51.250.104.218',
 					}
 				],
 				
 				21: [
 					{
 						host : 'peertube18.pocketnet.app',
+						ip: '51.250.41.252',
 					}
 				],
 				
 				22: [
 					{
 						host : 'peertube19.pocketnet.app',
+						ip: '51.250.73.97',
 					}
 				],
       		};

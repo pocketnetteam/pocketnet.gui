@@ -50,7 +50,11 @@ jobs:
     runs-on: ${{ matrix.runner }}
     strategy:
       matrix:
-        runner: [proxy.1, proxy.2, proxy.3, proxy.4, proxy.5]
+        runner: [ proxy.1, proxy.2, proxy.3, proxy.4, proxy.5, proxy.6 ]
     steps:
-      - name: Pull && Up Container
-        run: /proxy_pull_up.sh
+      - name: Pull && Up proxy container
+        run: /data/proxy_pull_up.sh
+        shell: bash
+      - name: Reset nginx cache
+        run: /data/reset_cache.sh
+        shell: bash
