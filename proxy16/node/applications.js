@@ -185,7 +185,6 @@ var Applications = function(settings) {
                         if(!e) {
                             return resolve(r)
                         }
-                        console.log(e)
                         reject({
                             code : 500,
                             error : 'cantcopy'
@@ -194,12 +193,10 @@ var Applications = function(settings) {
                     });
                 }
                 catch(e){
-                    console.log(e)
                     return Promise.reject()
                 }
                 
             }).catch(e => {
-                console.log(e)
                 reject({
                     code : 500,
                     error : 'cantcopy'
@@ -279,7 +276,6 @@ var Applications = function(settings) {
                 }
             })
             .on('error', function (err) {
-                console.log(err)
                 return reject(err)
             })
             .on('end', function () {

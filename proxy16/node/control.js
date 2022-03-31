@@ -69,10 +69,6 @@ var Control = function(settings) {
         complete_bin_path : function(){
             var binPath = Path.join( node.binPath, self.helpers.bin_name('pocketcoind'))
 
-            // if (process.platform == 'darwin' || process.platform == 'linux') {
-            //     binPath = `${node.binPath} ${self.helpers.bin_name('pocketcoind')}`
-            // }
-
             return binPath
         },
 
@@ -484,7 +480,6 @@ var Control = function(settings) {
                 return Promise.resolve()
 
             }).catch(e => {
-                console.trace("1 ", e)
                 lock = ''
                 return Promise.reject(e)
             })
