@@ -59,6 +59,13 @@ var recommendedusers = (function(){
 						
 					}
 
+					self.app.platform.sdk.categories.clbks.tags.topusersRemove = function(data){
+
+						addresses = [];
+						
+					}
+
+
 					if (!error && c.length){
 
 						el.c.show();
@@ -259,6 +266,12 @@ var recommendedusers = (function(){
 							} else {
 	
 								console.log('getrecomendedaccountsbyscoresfromaddress executed')
+
+								self.app.platform.sdk.categories.clbks.tags.topusersRemove = function(data){
+
+									addresses = [];
+									
+								}
 	
 								el.c.show();
 	
