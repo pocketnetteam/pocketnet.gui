@@ -178,7 +178,7 @@ var recommendedusers = (function(){
 				
 				self.shell({
 
-					name :  'users',
+					name :  p.essenseData.usersFormat || 'usersHorizontal',
 					el :   el.users,
 					data : {
 						addresses : addresses,
@@ -262,7 +262,7 @@ var recommendedusers = (function(){
 	
 								el.c.show();
 	
-								addresses = shuffle(c).filter(filterSubscribes);
+								addresses = shuffle(c.filter(filterSubscribes));
 
 		
 								if (clbk){

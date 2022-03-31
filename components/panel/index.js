@@ -40,11 +40,13 @@ var panel = (function(){
 				self.nav.api.load({
 
 					open : true,
-					id : 'topusers',
+					id : 'recommendedusers',
 					el : el.topusers,
 					animation : false,
 
 					essenseData : {
+						usersFormat : 'usersVertical',
+						recommendedUsersCount : 5
 					},
 					
 					clbk : function(e, p){
