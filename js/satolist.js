@@ -21829,8 +21829,6 @@ Platform = function (app, listofnodes) {
                     nm = filterXSS(trimHtml(m, c || 20));
                 }
 
-
-
                 return nm
             },
 
@@ -24378,10 +24376,26 @@ Platform = function (app, listofnodes) {
                                     platform.sdk.notifications.addFromWs(data)
 
                                     if (typeof _Electron != 'undefined' && !platform.focus && message.html) {
+
                                         electron.ipcRenderer.send('electron-notification', {
                                             html : message.html,
                                             settings : data.electronSettings
                                         });
+
+                                        return
+
+                                        var _el = $(message.html)
+
+                                        var title = _el.find('.caption').text()
+                                        var body = _el.find('.tips').text()
+
+
+                                        electron.ipcRenderer.send('electron-notification-small', {
+                                            title, body
+                                        });
+
+                                        _el = null
+
                                     }
 
                                 }
