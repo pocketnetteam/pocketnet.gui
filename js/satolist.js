@@ -10810,6 +10810,7 @@ Platform = function (app, listofnodes) {
                 var counts = {
                     sub : data['sharesSubscr'] || 0,
                     video : deep(data, 'contentsLang.video.' + self.app.localization.key)|| 0,
+                    article : deep(data, 'contentsLang.article.' + self.app.localization.key)|| 0,
                     common : deep(data, 'sharesLang.' + self.app.localization.key) || ( (deep(data, 'contentsLang.share.' + self.app.localization.key) || 0) + (deep(data, 'contentsLang.video.' + self.app.localization.key)|| 0))
                 }
 
