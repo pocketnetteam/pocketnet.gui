@@ -4417,6 +4417,10 @@ var lenta = (function(){
 					key = 'video'
 				}
 
+				if (essenseData.read){
+					key = 'article'
+				}
+
 				if(recommended == 'sub'){
 					key = 'sub'
 				}
