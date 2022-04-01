@@ -62,6 +62,7 @@ var recommendedusers = (function(){
 					self.app.platform.sdk.categories.clbks.tags.topusersRemove = function(data){
 
 						addresses = [];
+						onlytags = false;
 						
 					}
 
@@ -270,6 +271,7 @@ var recommendedusers = (function(){
 								self.app.platform.sdk.categories.clbks.tags.topusersRemove = function(data){
 
 									addresses = [];
+									onlytags = false;
 									
 								}
 	
