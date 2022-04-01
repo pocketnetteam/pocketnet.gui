@@ -740,6 +740,8 @@
 	.share{
 		
 		.sharearticle{
+			border-radius: 12px;
+			overflow: hidden;
 			opacity: 0;
 			.transition(0.1s, opacity);
 			&.ready{
@@ -755,7 +757,6 @@
 			.articleend{
 				.author{
 					margin-top: 2 * @rhythm;
-					margin-bottom: @rhythm;
 
 					i{
 						display: none;
@@ -800,19 +801,13 @@
 
 				.buttonOpenWrapper{
 					padding-bottom: 2 * @rhythm;
-					padding-top: 2 * @rhythm;
 					
-					button{
-						width: 130px;
-						border-radius: 30px;
-						background: rgba(var(--color-bg-ac-bright), 0.3);
-						backdrop-filter: blur(7px);
-        				-webkit-backdrop-filter: blur(7px); 
-						border : 1px solid transparent!important; 
-						.shadowSmaller();
-
+					.showMoreArticle{
+						color: #00A4FF;
+						cursor: pointer;
+						
 						&:hover{
-							background: rgba(var(--color-shadow-base), 0.25);
+							opacity: 0.6;
 						}
 					}
 				}
@@ -825,11 +820,10 @@
 				}
 	
 				.tags{
-					justify-content: center;
 					max-width: none;
 
 					div span {
-						color : rgb(var(--text-on-bg-ac-color));
+						color : rgba(var(--text-on-bg-ac-color), 0,.7);
 					}
 				}
 			}
@@ -838,28 +832,65 @@
 			.shareBgCaption{
 				height: 425px;
 				position: relative;
+
 	
 				.blackmatte{
-					background: rgb(0,0,0);
-					background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(255,255,255,0) 100%);
+					background: linear-gradient(0deg, rgb(var(--background-secondary-theme-2)) 23%, rgba(255, 255, 255, 0) 45%), linear-gradient(180deg, rgb(var(--background-secondary-theme-2)) 0%, rgba(255, 255, 255, 0) 18%);
+					
+				}
+
+				&.withoutcover{
+					height: 340px;
+
+					.blackmatte{
+						background: rgb(var(--background-secondary-theme-2));
+					}
 				}
 	
 				.captioncnt{
-					padding-bottom: 2 * @rhythm;
 					display: flex;
 					flex-direction: column;
-					justify-content: flex-end;
 					z-index: 1;
 					color : rgb(var(--text-on-bg-ac-color));
-					text-align: center;
 					overflow: hidden;
 
-	
+					.toppanel{
+						display: flex;
+						justify-content: space-between;
+
+						.authorWrapper{
+							display: flex;
+
+							.iconWrapper{
+								margin-top: 6px;
+							}
+
+							.actionsWrapper{
+								margin-left: 12px;
+
+								.sys{
+									text-align: start;
+								}
+							}
+
+						}
+
+						.socialsharewrapper{
+							padding-right: @rhythm * 2;
+						}
+
+
+					}
+
+					.widthcontainer{
+						margin-top: auto;
+						padding: 0 16px;
+					}
+
 					.sharecaption{
-						font-size: 2em;
-						font-family: Georgia, serif;
+						font-size: @rhythm * 3;
+						font-weight: 700;
 						max-width: 85%;
-						margin : 0 auto;
 						color : rgb(var(--text-on-bg-ac-color));
 						max-height: 220px;
 						overflow-x: hidden;
@@ -872,6 +903,7 @@
 				}
 
 				.tags{
+					margin-bottom: 0;
 					div span {
 						.shadowText();
 					}
@@ -903,16 +935,21 @@
 				
 				.starstoppanel,
 				.socialsharewrapper{
-					position: absolute;
 					bottom :  1.5 * @rhythm;
 					right: 2.5 * @rhythm;
+
+					.starstoppanel,
+					.socialsharewrapper{
+						.iconwrapper{
+							color : rgb(var(--text-color));
+						}
+					}
 	
 					.iconwrapper{
 						width: 3.5em;
 						height: 3.5em;
 						line-height: 3.5em;
 						border-radius: 3.5em;
-						color : rgb(var(--text-on-bg-ac-color));
 						cursor: pointer;
 						display: flex;
 						align-items: center;
@@ -932,6 +969,7 @@
 					.sharesocial{
 						display: none;
 					}
+					
 				}
 
 				.socialsharewrapper{
@@ -945,6 +983,20 @@
 					left: 3 * @rhythm;
 					right: auto;
 					display: flex;
+					justify-content: space-between;
+					padding: 0 2 * @rhythm ;
+
+
+					.panelLeft{
+						display: flex;
+					}
+
+					.panelRight{
+						display: flex;
+						align-items: center
+					}
+
+
 				}
 
 				.articleCover{
@@ -982,80 +1034,7 @@
 					.captionmult{ font-size: 0.8em; }
 				}
 	
-				&.verticalcover{
-					height: 520px;
-
-					.articleCover{
-						left : @rhythm;
-						top : @rhythm;
-						bottom : @rhythm;
-						right : 56%;
-						border-radius: 2px;
-						overflow: hidden;
-					}
-	
-					.captioncnt{
-						left: 44%;
-						right : @rhythm;
-						top : @rhythm;
-						bottom : @rhythm;
-
-						.sharecaption{
-							text-shadow: none;
-							color : rgb(var(--text-color));
-						}
-					}
-	
-					.blackmatte{
-						display: none;
-					}
-	
-					.icon{
-						position: static;
-					}
-	
-					.captioncnt{
-						justify-content: center;
-						color : rgb(var(--text-color));
-					}
-	
-					.divider{
-						background: rgb(var(--text-color));
-					}
-
-					.buttonOpenWrapper{
-						margin-bottom: @rhythm;
-						
-						button{
-							background: rgb(var(--color-shadow-base)); 
-
-							&:hover{
-								background: rgba(var(--color-shadow-base), 0.9); 
-							}
-						}
-					}
-
-					.tags{
-						div span {
-							text-shadow: none;
-							color : rgb(var(--text-color));
-						}
-					}
-
-					.sys{
-						span{
-							text-shadow: none;
-							color : rgb(var(--text-color));
-						}
-					}
-
-					.starstoppanel,
-					.socialsharewrapper{
-						.iconwrapper{
-							color : rgb(var(--text-color));
-						}
-					}
-				}
+				
 	
 			}
 	
@@ -1108,121 +1087,91 @@
 	}
 	
 }
-
+@media only screen and (min-width: 768px) {
+	#lenta{
+		.share{
+			
+			.sharearticle{
+				.shareBgCaption{
+					&.verticalcover{
+						height: 520px;
+	
+						.articleCover{
+							left : 0;
+							top : 0;
+							bottom : 0;
+							right : 56%;
+							border-radius: 2px;
+							overflow: hidden;
+						}
+		
+						.captioncnt{
+							left: 44%;
+							top : @rhythm;
+							bottom : @rhythm;
+	
+							.sharecaption{
+								text-shadow: none;
+								color : rgb(var(--text-color));
+							}
+						}
+		
+						.blackmatte{
+							display: none;
+						}
+		
+						.icon{
+							position: static;
+						}
+		
+						.captioncnt{
+							justify-content: center;
+							color : rgb(var(--text-color));
+						}
+		
+						.divider{
+							background: rgb(var(--text-color));
+						}
+	
+						.buttonOpenWrapper{
+							margin-bottom: @rhythm;
+							
+							button{
+								background: rgb(var(--color-shadow-base)); 
+	
+								&:hover{
+									background: rgba(var(--color-shadow-base), 0.9); 
+								}
+							}
+						}
+	
+						.tags{
+							div span {
+								text-shadow: none;
+								color : rgb(var(--text-color));
+							}
+						}
+	
+						.sys{
+							span{
+								text-shadow: none;
+								color : rgb(var(--text-color));
+							}
+						}
+	
+					}
+				}
+			}
+		}
+		
+	}
+}
 @media only screen and (max-width: 768px) {
 	#lenta{
 		.share{
 
 			.images{
 				max-width: none;
-			}
-
-			.sharearticle{
-				
-				.shareBgCaption{
-					height: 525px;
-					
-					&:not(.verticalcover){
-
-						.captioncnt{
-			
-							.sharecaption{
-								font-size: 2.5em;
-								font-family: Georgia, serif;
-							}
-							
-						}
-
-						.icon{
-							margin-top: 2 * @rhythm;
-						}
-						
-					}
-					
-					&.verticalcover{
-						height: 520px;
-						border-bottom : 0;
-
-						.articleCover{
-							left : 0;
-							top :0;
-							bottom : 0;
-							right : 0;
-						}
-		
-						.captioncnt{
-							left: 0;
-							right : 0;
-							top : 0;
-							bottom : 0;
-
-							.sharecaption{
-								.shadowText();
-								font-size: 2.5em;
-								color : rgb(var(--text-on-bg-ac-color));
-							}
-						}
-		
-						.blackmatte{
-							display: block;
-						}
-		
-						.icon{
-							margin-top: 2 * @rhythm;
-						}
-		
-						.captioncnt{
-							justify-content: flex-end;
-							color : rgb(var(--text-on-bg-ac-color));
-						}
-		
-						.divider{
-							background: rgb(var(--text-on-bg-ac-color));
-						}
-
-						.tags{
-							div span{
-								.shadowText();
-								color : rgb(var(--text-on-bg-ac-color));
-							}
-						}
-
-
-						.sys{
-							span{
-								.shadowText();
-								color : rgb(var(--text-on-bg-ac-color));
-							}
-						}
-	
-
-						.starstoppanel,
-						.socialsharewrapper{
-							.iconwrapper{
-								color : rgb(var(--text-on-bg-ac-color));
-							}
-						}
-					}
-		
-				}
-
-				.articlecontent{
-					padding-left: @rhythm;
-					padding-right: @rhythm;
-
-					.article_quote,
-					.article_link_custom{
-						width: 96%;
-						max-width: none;
-					}
-
-					.article_this_embed{
-						padding : 0;
-						border : 0;
-					}
-				}
-		
-				
 			}
 
 			.showMore{

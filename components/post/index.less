@@ -537,11 +537,13 @@
 			}
 
 			&.showtext{
-				.icon{
+				.iconWrapper{
 					position: absolute;
+					width: auto;
 					bottom : -22px;
 					left : 0;
 					right: 0;
+					padding-left: 0;
 				}
 			}
 			
@@ -556,7 +558,7 @@
 					height: 3.5em;
 					line-height: 3.5em;
 					border-radius: 3.5em;
-					color : rgb(var(--text-on-bg-ac-color));
+					color : rgb(var(--neutral-grad-3));
 					cursor: pointer;
 					display: flex;
 					align-items: center;
@@ -585,6 +587,11 @@
 				left: 3 * @rhythm;
 				right: auto;
 				display: flex;
+
+				.panelLeft{
+					display: flex;
+				}
+
 			}
 
 			
@@ -834,17 +841,6 @@ html.mobileview{
 						}
 						
 					}
-		
-					.icon{
-						position: absolute;
-						bottom : -22px;
-						left : 0;
-						right: 0;
-		
-						.usericon{
-							margin : 0 auto;
-						}
-					}
 
 					.articleCover{
 						height: 300px;
@@ -917,6 +913,14 @@ html.mobileview{
 					}
 				}
 	
+			}
+
+			.starstoppanel, .socialsharewrapper{
+				bottom: -0.25em!important;
+
+				.panelLeft{
+					flex-direction: column;
+				}
 			}
 
 			.articlecontent{
