@@ -3852,6 +3852,7 @@ var lenta = (function(){
 								txids : essenseData.txids,
 								height : fixedblock,
 								tagsfilter : tagsfilter,
+								lang: essenseData.lang,
 
 								type : type,
 

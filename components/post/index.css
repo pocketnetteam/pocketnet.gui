@@ -41,6 +41,12 @@
   display: none;
   background: rgb(var(--background-total-theme));
 }
+#post .showmorelenta .anothercntswrk {
+  border-bottom: none !important;
+}
+#post .showmorelenta .share.share_common.shareinlenta {
+  margin-right: 1em !important;
+}
 #post .showmorelenta.hasshares {
   display: block;
 }
@@ -67,7 +73,8 @@
 }
 #post .postWrapper {
   margin: 0 auto;
-  max-width: 930px;
+  max-width: 800px;
+  flex-grow: 1;
   opacity: 0;
   /*border-radius: 6px;*/
   -moz-transition: opacity 0.3s;
@@ -162,13 +169,51 @@
 }
 #post.videomainpost {
   padding-bottom: 2em;
+  display: flex;
+  padding-top: 1em;
+}
+#post.videomainpost .titleDiv {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+#post.videomainpost .starsDiv {
+  margin-bottom: 20px;
+}
+#post.videomainpost .cntswrk.tags {
+  opacity: 0.6;
+}
+#post.videomainpost .videoDescription {
+  padding-bottom: 2em;
+}
+#post.videomainpost .backButtonDiv {
+  width: 70px;
+  display: flex;
+  justify-content: center;
+  padding-right: 1em;
+}
+#post.videomainpost .backButtonDiv .backButton {
+  width: 40px;
+  height: 40px;
+  font-size: 25px;
+  color: rgb(var(--color-cc-dark-grey));
+  border: 1px solid rgb(var(--color-cc-dark-grey));
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#post.videomainpost .backButtonDiv .backButton:hover {
+  cursor: pointer;
+}
+#post.videomainpost .authorMetatable {
+  align-items: center;
 }
 #post.videomainpost .hiddenpost {
   background: rgb(var(--background-total-theme));
 }
 #post.videomainpost .postWrapper {
   background: transparent;
-  max-width: none;
 }
 #post.videomainpost .videoWrapper {
   border-bottom-left-radius: 0;
@@ -178,6 +223,7 @@
   border-radius: 0;
 }
 #post.videomainpost .share {
+  margin: inherit !important;
   background: transparent;
 }
 #post.videomainpost .share .shareTable {
@@ -204,6 +250,7 @@
   background: rgb(var(--background-total-theme));
   padding-left: 1em;
   padding-right: 1em;
+  border-bottom: 1px solid rgba(var(--color-medium-theme), 0.5);
 }
 #post.videomainpost .share .work {
   padding: 0;
@@ -267,6 +314,56 @@
 #post.videomainpost .share {
   margin: 0 auto;
   max-width: 960px;
+}
+#recomandationsFromContent {
+  width: 430px;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+#recomandationsFromContent .recoVideoDiv {
+  display: flex;
+  margin-bottom: 1em;
+}
+#recomandationsFromContent .recoVideoDiv:hover {
+  cursor: pointer;
+}
+#recomandationsFromContent .recoVideoDiv .videoThumbnail {
+  height: 110px;
+  width: 180px;
+  min-width: 180px;
+  border-radius: 12px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+#recomandationsFromContent .recoVideoDiv .videoInfos {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  padding-left: 0.5em;
+}
+#recomandationsFromContent .recoVideoDiv .videoInfos .title {
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-weight: bold;
+}
+#recomandationsFromContent .recoVideoDiv .videoInfos .user {
+  margin-top: 0.5em;
+}
+#recomandationsFromContent .recoVideoDiv .videoInfos .infos {
+  display: flex;
+  align-items: center;
+}
+#recomandationsFromContent .recoVideoDiv .videoInfos .infos .viewDateSep {
+  font-size: 4px;
+  margin-left: 2em;
+  margin-right: 2em;
+}
+#recomandationsFromContent .recoVideoDiv .videoInfos .user,
+#recomandationsFromContent .recoVideoDiv .videoInfos .infos {
+  color: rgb(var(--color-txt-gray-dark));
 }
 #post .sharearticle {
   opacity: 0;
@@ -560,6 +657,11 @@
 html.mobileview #post .videoWrapper {
   max-width: none;
 }
+html.mobileview #recomandationsFromContent {
+  padding-top: 2em;
+  margin-left: auto;
+  margin-right: auto;
+}
 html.mobileview #post .sharearticle .articlecontent {
   padding-left: 0.5em;
   padding-right: 0.5em;
@@ -756,7 +858,7 @@ html.mobileview .wnd.articlewindow .widthcontainer {
     padding: 0.5em;
   }
   #post .showmorelenta .horizontalLentaWrapper {
-    padding: 0.5em 0;
+    padding: 0.5em;
   }
   #post .showmorelenta .horizontalLentacaption {
     padding: 0.5em;

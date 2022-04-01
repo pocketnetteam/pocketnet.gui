@@ -432,6 +432,7 @@ ____loclib.share = "Condividi";
 ____loclib.info = "Info";
 ____loclib.copyLink = "Copia il link diretto";
 ____loclib.includeRefLink = "Includi link di riferimento";
+____loclib.signToComment = "Per visualizzare o inviare commenti, è necessario effettuare il login o registrarsi"
 ____loclib.e13023 = "Vuoi davvero sbloccare l'utente?";
 ____loclib.e13024 = "La tua chiave di accesso privata";
 ____loclib.e13025 = "Crea un nuovo account";

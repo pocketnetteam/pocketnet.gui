@@ -59,6 +59,7 @@ const posts = {
 }
 
 const publics = {
+    getcontent: true,
     getcontents: true,
     getlastcomments: true,
     gettags: true,
@@ -91,6 +92,8 @@ const publics = {
     getrecomendedaccountsbyscoresfromaddress : true,
     getrecomendedcontentsbyscoresfromaddress : true,
     getrecomendedaccountsbytags : true,
+    getboostfeed : true,
+    getprofilefeed : true,
 
 
     // BlockExplorer
@@ -415,6 +418,7 @@ RpcClient.callspec = {
     getrandomcontents : 'str',
     getrecomendedcontentsbyscoresfromaddress : 'str obj int int int',
     getrecomendedaccountsbytags : 'obj int',
+    getcontent: 'obj',
     getcontents: 'str',
     getlastcomments: 'str str str',
     gettags: 'str',
@@ -440,6 +444,8 @@ RpcClient.callspec = {
     getpostscores: 'str',
     getpagescores: 'obj str',
 
+    getboostfeed : 'int str int str obj str str str obj',
+    getprofilefeed : 'int str int str obj str str str obj',
     gethierarchicalstrip : 'int str int str obj str str str obj',
     gethistoricalstrip : 'int str int str obj str str str str obj',
     getusercontents : 'str int str int obj str',

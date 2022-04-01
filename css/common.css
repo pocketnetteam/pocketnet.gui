@@ -883,6 +883,11 @@
 .share_common .sharecnt.deleted .removeDescription {
   display: block;
 }
+.share_common .sharecnt .commentRegisterDiv .commentRegister {
+  margin-left: 4em;
+  padding-left: 1em;
+  padding-right: 1.5em;
+}
 .share_common .blockAuthor {
   display: none;
   position: absolute;

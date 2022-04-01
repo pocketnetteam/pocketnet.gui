@@ -347,6 +347,7 @@
 }
 #main.opensvishowed .upbackbuttonwrapper {
   opacity: 1;
+  display: none;
 }
 #main.opensvishowed .leftpanelcell {
   opacity: 0;

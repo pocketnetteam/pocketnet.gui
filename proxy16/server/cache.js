@@ -198,6 +198,11 @@ var Cache = function(p){
                 time : 460,
                 block : 0
             },
+
+            // node +
+            getcontent: {
+                time : 82000,
+            },
             
             // node +
             getcontents: {

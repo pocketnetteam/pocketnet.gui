@@ -470,6 +470,7 @@ ____loclib.removeDescription = "Remove description"
 ____loclib.preview = "Preview"
 ____loclib.autoplayVideo = "Autoplay Video"
 ____loclib.onlyVideo = "Only video"
+____loclib.signToComment = "To view or post comments, you need to login or register"
 
 ____loclib.e13023 = "Do you really want to unblock user?"
 ____loclib.e13024 = "Your Private Login Key"

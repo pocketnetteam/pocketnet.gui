@@ -5,6 +5,7 @@ var _ = require('lodash');
 var f = require('../functions');
 const { performance } = require('perf_hooks');
 const queuemethods = {
+    getcontent: true,
     getcontents: true,
     getlastcomments: true,
     gettags: true,
@@ -24,7 +25,9 @@ const queuemethods = {
     getpagescores: true,
     gethierarchicalstrip : true,
     getusercontents : true,
-    getcontentsstatistic : true
+    getcontentsstatistic : true,
+    getboostfeed : true,
+    getprofilefeed : true
 }
 
 const exepmethods = {

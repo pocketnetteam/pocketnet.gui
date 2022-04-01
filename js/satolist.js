@@ -2091,6 +2091,8 @@ Platform = function (app, listofnodes) {
                     r : p.r,
                     shuffle : p.shuffle,
                     page : p.page,
+                    tags: p.tags,
+                    lang: p.lang,
                     period : p.period,
                     filter : p.filter,
                     ended : p.ended,
@@ -15711,7 +15713,7 @@ Platform = function (app, listofnodes) {
 
                 get: function (parameters, clbk, method) {
 
-                    method || (method = 'getrawtransactionwithmessage')
+                    method || (method = 'getprofilefeed')
 
                     var storage = this.storage;
 
@@ -15741,7 +15743,7 @@ Platform = function (app, listofnodes) {
 
                 getex: function (parameters, clbk, method) {
 
-                    method || (method = 'getrawtransactionwithmessage')
+                    method || (method = 'getprofilefeed')
 
                     var storage = this.storage;
 
@@ -16047,6 +16049,86 @@ Platform = function (app, listofnodes) {
                     })
                 },
 
+                getrecomendedcontents : function(p, clbk, cache){
+
+                    var fetchVideosInfo = function(contentIds) {
+
+                        var videosIds = contentIds.map((c) => c.contentid);
+
+                        if (videosIds.length <= 0 && clbk) {
+                            if (clbk)
+                                clbk([]);
+                            return;
+                        }
+
+                        self.sdk.node.shares.getex([videosIds], function (data, error) {
+
+                            if (error) {
+                                if (clbk)
+                                    clbk([]);
+                                return;
+                            }
+
+                            var videos = data.map((v) => {
+                                v.c = decodeURIComponent(v.c);
+                                v.url = v.u = decodeURIComponent(v.u);
+                                v.time = parseInt(v.time + '000');
+                                return v;
+                            });
+
+                            self.sdk.node.shares.loadvideoinfoifneed(videos, true, function() {
+
+                                data = data.map((v) => {
+                                    if (self.sdk.videos.storage[v.u] && self.sdk.videos.storage[v.u].data)
+                                        v.data = self.sdk.videos.storage[v.u].data;
+                                    return v;
+                                });
+
+                                if (clbk)
+                                    clbk(data);
+
+                            });
+
+                        }, 'getcontent');
+
+                    }
+
+                    // Get the recomended videos by content
+                    if (p.type == 'content') {
+                            
+                        
+                        self.app.platform.sdk.node.shares.hierarchical(p, function(contentIds, error) {
+                            if (error)
+                                fetchVideosInfo([]);
+                            else
+                                fetchVideosInfo(contentIds);
+
+                        }, cache, {
+                            method : 'getrecomendedcontentsbyscoresonsimilarcontents'
+                        });
+
+                    } else {
+
+                        // Get the recomended videos by address
+                        self.app.api.rpc('getrecomendedcontentsbyscoresfromaddress', [p.address, p.contenttypes, 0, p.depth, p.count]).then(function(contentIds, error){
+
+                            if (error)
+                                fetchVideosInfo([]);
+                            else
+                                fetchVideosInfo(contentIds);
+
+                        })
+                        .catch(function(e){
+
+                            console.log(e);
+                            fetchVideosInfo([]);
+
+                        })
+                        
+                    }
+
+                },
+
                 loadvideoinfoifneed : function(shares, need, clbk){
                     self.sdk.videos.infoshares(shares).then(r => {
                         if(clbk) clbk()
@@ -16056,10 +16138,10 @@ Platform = function (app, listofnodes) {
                     })
                 },
 
-                getusercontents : function(p, clbk, cache){
+                getprofilefeed : function(p, clbk, cache){
 
                     self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
-                        method : 'getusercontents'
+                        method : 'getprofilefeed'
                     })
 
                 },
@@ -16095,7 +16177,7 @@ Platform = function (app, listofnodes) {
                         if (!p) p = {};
 
                         p.count || (p.count = 10)
-                        p.lang || (p.lang = self.app.localization.key)
+                        if(typeof p.lang == 'undefined') p.lang = self.app.localization.key
                         p.height || (p.height = 0)
                         p.tagsfilter || (p.tagsfilter = [])
                         p.tagsexcluded || (p.tagsexcluded = [])
@@ -16172,12 +16254,19 @@ Platform = function (app, listofnodes) {
 
                             var parameters = [Number(p.height), p.txid, p.count, p.lang, p.tagsfilter, p.type ? p.type : '', '', '', p.tagsexcluded];
 
-                            if(p.author) parameters.unshift(p.author)
+                            if(p.author) {
+                                parameters.push("");
+                                parameters.push(p.author)
+                            }
 
+                            if (p.contenttypes)
+                                parameters = [p.contentid, p.contenttypes, p.depth, p.count];
 
                             s.getex(parameters, function (data, error) {
 
                                 var shares = data.contents || []
+                                if (p.contenttypes)
+                                    shares = data;
                                 var blocknumber = data.height
 
                                 _.each(shares, function(s){

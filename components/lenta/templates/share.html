@@ -38,6 +38,7 @@ var name = app.platform.api.name(share.address)
 
 var emptywithrepost = false
 
+var loggedIn = (user && user.address && user.address.value != null)
 
 var value = Number(share.score)
 
@@ -662,7 +663,7 @@ var arranges = {
 
 		<% if(!emptywithrepost) {%>
 
-			<% if(typeof repost == 'undefined' || !repost || fromempty) {%>
+			<% if((typeof repost == 'undefined' || !repost || fromempty) && loggedIn) {%>
 
 				<div class="showmorelenta"></div>
 	
@@ -673,6 +674,15 @@ var arranges = {
 	
 				</div>
 	
+			<% } else { %>
+
+				<div class="commentRegisterDiv piphidden">
+					<div class="commentRegister piphidden">
+						<%=e('signToComment')%>
+						<button elementsid="hrefregistration" class="button toregistration"><%=e('signupmenu')%></button>
+					</div>
+				</div>
+		
 			<% } %>
 	
 		<% } %>

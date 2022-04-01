@@ -1,0 +1,39 @@
+<% if(videos && videos.length > 0) { 
+    _.each(videos, function(video) { %>
+
+        <% if(video && video.data && video.data.thumbnail) { %>
+
+            <div class="recoVideoDiv" data-txid="<%- video.txid %>">
+
+                <div class="videoThumbnail" style="background-image: url(<%- video.data.thumbnail %>)"></div>
+
+                <div class="videoInfos">
+
+                    <div class="title"><%= video.c %></div>
+
+                    <div>
+                        <div class="user">
+                            
+                            <%= video.userprofile.name %>
+                            
+                            <span class="likes"><%= video.userprofile.likers_count %></span>
+                        
+                        </div>
+
+                        <div class="infos">
+
+                            <span class="views"><i class="fas fa-eye"></i> <%= video.data.views %></span>
+                            <i class="fas fa-circle viewDateSep"></i>
+                            <span class="date"><%- app.reltime(new Date(video.time)) %></span>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        <% } %>
+
+    <% })
+} %>

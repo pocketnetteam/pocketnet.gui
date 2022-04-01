@@ -221,6 +221,17 @@
 #lenta.sharesEnded .loadmore {
   display: none;
 }
+.commentRegisterDiv .commentRegister {
+  background-color: rgb(var(--background-total-theme));
+  padding: 1em 1em 2em 1em;
+  color: rgb(var(--text-color));
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
 #lenta.mainvideo .zero,
 #lenta.mainvideo .seemore,
 #lenta.mainvideo .loadprev,

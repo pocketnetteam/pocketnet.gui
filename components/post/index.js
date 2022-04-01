@@ -779,6 +779,19 @@ var post = (function () {
 				})
 			},
 
+			goback : function(){
+				if (el.c.parents('#windowsContainer').length <= 0) {
+					self.nav.api.go({
+						href : 'index?video=1',
+						history : true,
+						open : true,
+						handler : true
+					})
+				}
+				else
+					self.closeContainer()
+			},
+
 			pkoin : function(){
 
 				var shareId = $(this).closest('.share').attr('id');
@@ -1269,6 +1282,7 @@ var post = (function () {
 						
 						_p.el.find('.panel .pkoin').on('click', events.pkoin)
 						_p.el.find('.gotouserprofile').on('click', events.gotouserprofile)
+						el.back.find('.backButton').on('click', events.goback)
 
 						if (ed.repost)
 							_p.el.find('.showMoreArticle, .openoriginal').on('click', function(){
@@ -1402,7 +1416,7 @@ var post = (function () {
 					author: share.address,
 					video: true,
 					shuffle : true,
-					loaderkey : 'getusercontents',
+					loaderkey : 'getprofilefeed',
 					filter : function(_share){
 						if(share.txid != _share.txid) return true
 					},
@@ -1605,6 +1619,20 @@ var post = (function () {
 				}
 			},
 
+			recomandations : function(share, clbk) {
+				self.app.platform.sdk.node.shares.getrecomendedcontents({
+					type: 'content',
+					contentid: share.txid,
+					contenttypes: ['video'],
+					depth: 10000,
+					count: 12
+				}, function (recomandations) {
+
+					if (clbk)
+						clbk(recomandations);
+
+				});
+			},
 			
 		};
 
@@ -1756,6 +1784,49 @@ var post = (function () {
 					renders.share(function () {
 						renders.comments(function () {
 						})
+
+						if (share.itisvideo() && el.reco && el.c && el.c.parents('#windowsContainer').length <= 0) {
+
+							el.reco.removeClass('hidden');
+							el.back.removeClass('hidden');
+
+							// Get recomandations from content (right vertical videos)
+							renders.recomandations(share, function(videos) {
+
+								self.shell({
+									animation : false,
+									name :  'recomandations',
+									el : el.reco,
+									data : {
+										videos: videos
+									}
+								}, function(_p) {
+
+									if (!_p || !_p.el)
+										return;
+
+									_p.el.find('.recoVideoDiv').click(function() {
+
+										var txid = $(this).data('txid');
+										if (txid) {
+											self.nav.api.go({
+												href : 'index?video=1&v=' + txid,
+												history : true,
+												open : true
+											})
+										}
+
+									});
+
+								});
+
+							});
+
+						}
+						else {
+							el.reco.remove();
+							el.back.remove();
+						}
 					})
 				}
 
@@ -1928,9 +1999,11 @@ var post = (function () {
 
 				el = {};
 				el.c = p.el.find('.poctelc');
+				el.reco = el.c.find('#recomandationsFromContent');
 				el.share = el.c.find('.share');
 				el.wr = el.c.find('.postWrapper')
 				el.wnd = el.c.closest('.wndcontent');
+				el.back = el.c.find('.backButtonDiv');
 
 				
 				if(share.itisarticle()){
