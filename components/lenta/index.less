@@ -849,8 +849,8 @@
 
 	
 				.blackmatte{
-					background: linear-gradient(0deg, rgb(var(--background-secondary-theme-2)) 23%, rgba(255, 255, 255, 0) 45%), linear-gradient(180deg, rgb(var(--background-secondary-theme-2)) 0%, rgba(255, 255, 255, 0) 18%);
-					
+					background: linear-gradient(0deg, rgba(var(--background-secondary-theme-2),0.96) 10%, rgba(255, 255, 255, 0) 75%), linear-gradient(180deg, rgb(var(--background-secondary-theme-2)) 0%, rgba(255, 255, 255, 0) 18%);
+					backdrop-filter: brightness(85%);
 				}
 
 				&.withoutcover{
@@ -1021,6 +1021,7 @@
 				.blackmatte{
 					border-radius: 12px;
 					overflow: hidden;
+
 				}
 				
 				.articleCover,
@@ -1117,6 +1118,7 @@
 							right : 56%;
 							border-radius: 2px;
 							overflow: hidden;
+							filter : brightness(85%);
 						}
 		
 						.captioncnt{
