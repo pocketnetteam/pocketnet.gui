@@ -740,6 +740,8 @@
 	.share{
 		
 		.sharearticle{
+			border-radius: 12px;
+			overflow: hidden;
 			opacity: 0;
 			.transition(0.1s, opacity);
 			&.ready{
@@ -887,7 +889,7 @@
 
 					.sharecaption{
 						font-size: @rhythm * 3;
-						font-family: Georgia, serif;
+						font-weight: 700;
 						max-width: 85%;
 						color : rgb(var(--text-on-bg-ac-color));
 						max-height: 220px;
@@ -981,8 +983,7 @@
 					right: auto;
 					display: flex;
 					justify-content: space-between;
-					padding: 4px 16px 0px 16px;
-					border-top: 1px solid rgba(var(--neutral-grad-2), 0.5);
+					padding: 0 2 * @rhythm ;
 
 
 					.panelLeft{
@@ -1032,73 +1033,7 @@
 					.captionmult{ font-size: 0.8em; }
 				}
 	
-				&.verticalcover{
-					height: 520px;
-
-					.articleCover{
-						left : @rhythm;
-						top : @rhythm;
-						bottom : @rhythm;
-						right : 56%;
-						border-radius: 2px;
-						overflow: hidden;
-					}
-	
-					.captioncnt{
-						left: 44%;
-						top : @rhythm;
-						bottom : @rhythm;
-
-						.sharecaption{
-							text-shadow: none;
-							color : rgb(var(--text-color));
-						}
-					}
-	
-					.blackmatte{
-						display: none;
-					}
-	
-					.icon{
-						position: static;
-					}
-	
-					.captioncnt{
-						justify-content: center;
-						color : rgb(var(--text-color));
-					}
-	
-					.divider{
-						background: rgb(var(--text-color));
-					}
-
-					.buttonOpenWrapper{
-						margin-bottom: @rhythm;
-						
-						button{
-							background: rgb(var(--color-shadow-base)); 
-
-							&:hover{
-								background: rgba(var(--color-shadow-base), 0.9); 
-							}
-						}
-					}
-
-					.tags{
-						div span {
-							text-shadow: none;
-							color : rgb(var(--text-color));
-						}
-					}
-
-					.sys{
-						span{
-							text-shadow: none;
-							color : rgb(var(--text-color));
-						}
-					}
-
-				}
+				
 	
 			}
 	
@@ -1151,7 +1086,85 @@
 	}
 	
 }
-
+@media only screen and (min-width: 768px) {
+	#lenta{
+		.share{
+			
+			.sharearticle{
+				.shareBgCaption{
+					&.verticalcover{
+						height: 520px;
+	
+						.articleCover{
+							left : 0;
+							top : 0;
+							bottom : 0;
+							right : 56%;
+							border-radius: 2px;
+							overflow: hidden;
+						}
+		
+						.captioncnt{
+							left: 44%;
+							top : @rhythm;
+							bottom : @rhythm;
+	
+							.sharecaption{
+								text-shadow: none;
+								color : rgb(var(--text-color));
+							}
+						}
+		
+						.blackmatte{
+							display: none;
+						}
+		
+						.icon{
+							position: static;
+						}
+		
+						.captioncnt{
+							justify-content: center;
+							color : rgb(var(--text-color));
+						}
+		
+						.divider{
+							background: rgb(var(--text-color));
+						}
+	
+						.buttonOpenWrapper{
+							margin-bottom: @rhythm;
+							
+							button{
+								background: rgb(var(--color-shadow-base)); 
+	
+								&:hover{
+									background: rgba(var(--color-shadow-base), 0.9); 
+								}
+							}
+						}
+	
+						.tags{
+							div span {
+								text-shadow: none;
+								color : rgb(var(--text-color));
+							}
+						}
+	
+						.sys{
+							span{
+								text-shadow: none;
+								color : rgb(var(--text-color));
+							}
+						}
+	
+					}
+				}
+			}
+		}
+		
+	}
+}
 @media only screen and (max-width: 768px) {
 	#lenta{
 		.share{
