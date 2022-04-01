@@ -369,7 +369,7 @@ var postscores = (function(){
 			},
 
 			wnd : {
-				class : 'postscoreswnd normalizedmobile'
+				class : 'postscoreswnd normalizedmobile maxheight'
 			}
 		}
 	};

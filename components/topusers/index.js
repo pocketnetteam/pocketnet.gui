@@ -13,12 +13,68 @@ var topusers = (function(){
 			cnt = 50,
 			end = false,
 			extra = null,
-			page = 0;
+			page = 0,
+			onlytags = false;
 
 		var loading;
 
+		var shuffle = function(array) {
+			let currentIndex = array.length,  randomIndex;
+		  
+			while (currentIndex != 0) {
+		  
+			  randomIndex = Math.floor(Math.random() * currentIndex);
+			  currentIndex--;
+		  
+			  [array[currentIndex], array[randomIndex]] = [
+				array[randomIndex], array[currentIndex]];
+			}
+		  
+			return array;
+		}
+
+		var me = deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value.toString('hex'))
+
+		var filterSubscribes = function(u){
+
+			return !(me && me.relation(u.address, 'subscribes'));
+		}
+
 		var actions = {
-			
+
+			getRecommendedAccountsByTags : function(clbk){
+
+				self.app.platform.sdk.users.getRecommendedAccountsByTags(function(c, error){
+
+
+					onlytags = true;
+
+					self.app.platform.sdk.categories.clbks.excluded.topusers =
+					self.app.platform.sdk.categories.clbks.tags.topusers =
+					self.app.platform.sdk.categories.clbks.selected.topusers = function(data){
+
+						el.c.hide();
+						el.users.empty();
+						addresses = [];
+						state.load(renders.page);
+						
+					}
+
+					if (!error && c.length){
+
+						el.c.show();
+
+						addresses = c;
+
+						if (clbk){
+							clbk(shuffle(addresses).filter(filterSubscribes).slice(0, 5))
+						}
+
+					}
+
+				})
+
+			},
 			
 			unblocking : function(address){
 
@@ -172,50 +228,6 @@ var topusers = (function(){
 					el.c.on('click', '.subscribe', events.subscribe)
 					el.c.on('click', '.unsubscribe', events.unsubscribe)
 					el.c.on('click', '.notificationturn', events.subscribePrivate)
-
-					// setTimeout(() => {
-
-
-						// _.each(addresses, function(share, idx){
-
-				
-							// self.nav.api.load({
-
-							// 	open : true,
-							// 	id : 'usermodal',
-							// 	el : el.c.find('.user[address="' + share.address + '"] .modalWrapper'),
-							// 	animation : false,
-			
-							// 	essenseData : {
-							// 		share: share
-							// 	},
-								
-							// 	clbk : function(e, p){
-							// 		// recommendedposts = p;
-							// 	}
-			
-							// })
-							
-							// self.shell({
-							// 	name :  'usermodal',
-							// 	el : el.c.find('.user[address="' + share.address + '"] .usermodal'),
-							// 	data : {
-							// 		u : share,
-							// 	},
-							// 	animation : false,				
-		
-							// }, function(p){
-	
-							// })
-
-							
-	
-						// })
-
-					// }, 8000)
-
-
-
 					
 					if (clbk)
 						clbk()
@@ -234,21 +246,6 @@ var topusers = (function(){
 			},
 			load : function(clbk){
 
-				
-				var shuffle = function(array) {
-					let currentIndex = array.length,  randomIndex;
-				  
-					while (currentIndex != 0) {
-				  
-					  randomIndex = Math.floor(Math.random() * currentIndex);
-					  currentIndex--;
-				  
-					  [array[currentIndex], array[randomIndex]] = [
-						array[randomIndex], array[currentIndex]];
-					}
-				  
-					return array;
-				}
 
 				if (addresses.length){
 
@@ -260,39 +257,35 @@ var topusers = (function(){
 
 				} else {
 
-					self.app.platform.sdk.users.getBestUsers(function(c, error){
+					if (onlytags){
 
-						if (!c.length){
+						actions.getRecommendedAccountsByTags(clbk);
+							
+					} else {
 
-							self.app.platform.sdk.users.getRecommendedAccountsByTags(function(c, error){
+						self.app.platform.sdk.users.getBestUsers(function(c, error){
 
-								if (!error && c.length){
-
-									el.c.show();
-
-									addresses = c;
+							if (!(c && c.length)){
 	
-									if (clbk){
-										clbk(shuffle(addresses).slice(0, 5))
-									}
-
+								actions.getRecommendedAccountsByTags(clbk);
+	
+							} else {
+	
+								console.log('getrecomendedaccountsbyscoresfromaddress executed')
+	
+								el.c.show();
+	
+								addresses = c;
+		
+								if (clbk){
+									clbk(shuffle(addresses).filter(filterSubscribes).slice(0, 5))
 								}
-
-							})
-
-						} else {
-
-							el.c.show();
-
-							addresses = c;
 	
-							if (clbk){
-								clbk(shuffle(addresses).slice(0, 5))
 							}
-
-						}
-
-					})
+	
+						})
+						
+					}
 
 				}
 
@@ -300,7 +293,6 @@ var topusers = (function(){
 		}
 
 		var initEvents = function(){
-
 
 			
 		}

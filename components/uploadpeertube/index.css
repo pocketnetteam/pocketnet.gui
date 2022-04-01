@@ -130,9 +130,16 @@
   width: 100%;
 }
 #uploadpeertube .upload-progress-bar {
-  height: 1px;
+  height: 3px;
   width: 100%;
+  transition: width 0.3s linear;
+}
+#uploadpeertube .upload-progress-bar.processing {
   background-color: rgb(var(--color-bg-orange));
+}
+#uploadpeertube .upload-progress-bar.uploading,
+#uploadpeertube .upload-progress-bar.binaries {
+  background-color: #ff0090;
 }
 #uploadpeertube .disabledInput {
   color: rgb(var(--neutral-grad-3));
@@ -450,6 +457,13 @@ html.mobileview #uploadpeertube .uploadRow label {
 }
 html.mobileview .wnd.uploadpeertube.witherror .wndinner #uploadpeertube {
   height: auto;
+}
+html.mobileview .wnd.uploadpeertube #uploadpeertube .mainWrapper {
+  position: relative;
+}
+html.mobileview .wnd.uploadpeertube #uploadpeertube .upload-header-wrapper {
+  position: relative;
+  padding: 1em;
 }
 .importVideoDialog {
   z-index: 1006;

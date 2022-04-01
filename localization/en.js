@@ -447,6 +447,7 @@ ____loclib.youarefollowing = "You are Following"
 ____loclib.follow = "Follow"
 ____loclib.blocked = "Blocked"
 ____loclib.e13021 = "Show more"
+
 ____loclib.blockuser = "Block User"
 ____loclib.unblockuser = "Unblock User"
 ____loclib.e13022 = "Do you really want to unfollow user?"
@@ -1117,10 +1118,13 @@ ____loclib.pterror_getToken = "Peertube: Unable to get Token"
 ____loclib.pterror_videonotselected = "Peertube: Video not Selected"
 
 
+____loclib.videoTranscodingError = "There was an error with processing your video"
 ____loclib.videoUploadingFinish = "Finishing uploading..."
 ____loclib.uploadNewVideo = "Upload New Pocketvideo"
 ____loclib.selectVideoFile = "Select video file"
-____loclib.uploadVideoProgress = "Progress:"
+____loclib.uploadVideoProgress_binaries = "Preparing binaries:"
+____loclib.uploadVideoProgress_processing = "Processing video:"
+____loclib.uploadVideoProgress_uploading = "Uploading video:"
 
 
 
@@ -1311,6 +1315,14 @@ ____loclib.ReferralUsers = "Referral Users. Total/From&nbsp;01.11.2021"
 ____loclib.lockedaccount = "Your account is locked due to reputation below -30"
 ____loclib.lockedaccounta = "Author Account is locked due to reputation below -30"
 
+____loclib.lockedaccountacomment = "Comment author Account is locked due to reputation below -30"
+____loclib.hiddenCommentLabel = "Comment hidden due to low rating"
+
+____loclib.blockedbymeHiddenCommentLabel = "Comment hidden because you have blocked a user"
+____loclib.hiddenCommentsLabel = "Comment hidden due to low ratings of the commenter"
+
+____loclib.showhiddenComment = "Show"
+
 ____loclib.visibletoeveryone = 'Visible for everyone'
 ____loclib.visibleonlytosubscribers = 'Visible only for subscribers'
 ____loclib.visibleonlytoregistered = 'Visible only for Bastyon users'
@@ -1327,7 +1339,7 @@ ____loclib.sharevisibilitylabel_reg_video = 'Author chose to make this <b>video<
 
 ____loclib.buy = 'Buy';
 
-____loclib.topAuthors = 'Top Authors';
+____loclib.topAuthors = 'Recommended Authors';
 ____loclib.recommendedPosts = 'Recommended Posts';
 ____loclib.rating = 'Rating';
 ____loclib.setupVideoNodeGuide = 'Setup Video Node'
@@ -2012,10 +2024,10 @@ ____loclib.easyNode_e2002_1 = " earns "
 ____loclib.easyNode_e2002_2 = "Pocketcoin. Your computer can be one of those nodes, assuming you have at least 50 GB of free SSD space and a decent internet connection.  Node has to lock some Pocketcoin in it to"
 ____loclib.easyNode_e2002_2_1 = " earn "
 ____loclib.easyNode_e2002_2_2 = "more Pocketcoin. That is called staking in cryptocurency."
-____loclib.minPkoin = function (p){	
+____loclib.minPkoin = function (p){
 	return  String(p) + " PKOIN Minimum"
 }
-____loclib.maxPkoin = function (p){	
+____loclib.maxPkoin = function (p){
 	return  String(p) + " PKOIN Maximum"
 }
 
@@ -2110,7 +2122,7 @@ ____loclib.submitapplicationVideo = "Request PKOIN for video"
 ____loclib.submitapplicationVideoSmall = "Send & request PKOIN"
 
 ____loclib.videobloggerRequest = "If you are a blogger with an established audience, you can get a gift of PKOIN to load video. Click the button below if you are a blogger:"
-    
+
 
 ____loclib.videobloggerRequest_pl1 = "Link to existing channel 1"
 ____loclib.videobloggerRequest_pl2 = "Link to existing channel 2"
@@ -2126,3 +2138,11 @@ ____loclib.videobloggerRequest_er_info = "Additional information required"
 ____loclib.videobloggerRequest_er_email = "Leave an email for feedback"
 
 ____loclib.videobloggerRequest_submitted = "Thank you for contacting us, we will review your application"
+
+____loclib.canuseipsetting = "Allow connection via ip over http directly. Not safe"
+
+____loclib.optimizationtip = function(v){
+    return v + ' hidden viewed posts'
+}
+
+____loclib.optimizationtip_show = "Show"

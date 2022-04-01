@@ -39,10 +39,13 @@ var read = parameters(app.nav.current.completeHref, true).read;
                 </span>
             </div>
 
-            <% if(window.cordova) {%>
+            <% const isElectron = (typeof _Electron !== 'undefined' && !!window.electron); %>
+            <% const isSaveSupported = (window.cordova); %>
+
+            <% if(isSaveSupported) {%>
                 <div class="tab">
                     <span class="pcenterLabel <% if(r == 'saved' && pathname=='index') {%> active <% } %>">
-                        <a href="index?r=saved"  handler="true"><%=e('downloaded')%></a>
+                        <a href="index?r=saved"  handler="true"><i class="fas fa-cloud-download-alt"></i><span class="text"><%=e('downloaded')%></span></a>
                     </span>
                 </div>
             <% } %>

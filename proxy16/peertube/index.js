@@ -12,7 +12,7 @@ var Peertube = function (settings) {
 	const SLASH = '/';
 
 	var roys = {};
-	var statistic = new Statistic()
+	var statistic = new Statistic();
 
 	var parselink = function (link) {
 		var ch = link.replace(PEERTUBE_ID, '').split(SLASH);
@@ -27,13 +27,14 @@ var Peertube = function (settings) {
 		var roy = null;
 
 		if (host) {
-			roy = roys[host] || _.find(roys, function (roy) {
-				return roy.find(host);
-			});
+			roy =
+				roys[host] ||
+				_.find(roys, function (roy) {
+					return roy.find(host);
+				});
 		}
 
 		if (!roy && host) {
-
 			roy = self.addroy([host], host, true);
 
 			roy.useall = true;
@@ -60,29 +61,28 @@ var Peertube = function (settings) {
 
 		if (!roy) return Promise.reject('roy');
 
-		var responseTime = performance.now()
+		var responseTime = performance.now();
 
-		return roy.request(method, data, parameters).then(r => {
+		return roy
+			.request(method, data, parameters)
+			.then((r) => {
+				statistic.add({
+					code: 200,
+					difference: performance.now() - responseTime,
+					method: method,
+				});
 
-			statistic.add({
-				code : 200,
-				difference : performance.now() - responseTime,
-				method : method
+				return Promise.resolve(r);
+			})
+			.catch((e) => {
+				statistic.add({
+					code: e == 'failed' ? 501 : (e || {}).code || 500,
+					difference: performance.now() - responseTime,
+					method: method,
+				});
+
+				return Promise.reject(e);
 			});
-
-			return Promise.resolve(r)
-			  
-		}).catch(e => {
-
-			statistic.add({
-				code : e == 'failed' ? 501 : (e || {}).code || 500,
-				difference : performance.now() - responseTime,
-				method : method
-			});
-
-			return Promise.reject(e)
-
-		})
 	};
 
 	self.inner = {
@@ -95,7 +95,6 @@ var Peertube = function (settings) {
 					return Promise.resolve(res);
 				})
 				.catch((err) => {
-
 					return Promise.reject(err);
 				});
 		},
@@ -107,12 +106,11 @@ var Peertube = function (settings) {
 
 			_.each(roys, function (r, c) {
 				if (!r.auto) {
-
-					if (!special){
-						if(r.hasspecial()) return
+					if (!special) {
+						if (r.hasspecial()) return;
 					}
 
-					if (type && type == 'upload' && !r.canupload()) return
+					if (type && type == 'upload' && !r.canupload()) return;
 
 					_roys[c] = r;
 				}
@@ -126,13 +124,10 @@ var Peertube = function (settings) {
 		},
 
 		best: function ({ roy, type, special }) {
-
-			if(!type || !roy) {
-				type = 'upload'
-				roy = null
+			if (!type || !roy) {
+				type = 'upload';
+				roy = null;
 			}
-
-			
 
 			if (!roy) roy = self.api.randroykey(type, special);
 
@@ -155,11 +150,9 @@ var Peertube = function (settings) {
 			var cachekey = 'peertubevideo';
 			var cachehash = parsed.id;
 			var cacheparameters = _.clone(parsed);
-			var _waitstatus = ''
-
+			var _waitstatus = '';
 
 			return new Promise((resolve, reject) => {
-				
 				cache.wait(
 					cachekey,
 					cacheparameters,
@@ -168,88 +161,82 @@ var Peertube = function (settings) {
 					},
 					cachehash,
 				);
-
-			}).then((waitstatus) => {
-
-				_waitstatus = waitstatus
-				
-				var cached = cache.get(cachekey, cacheparameters, cachehash);
-
-				if (cached) {
-
-					if (cached.error) {
-						return Promise.reject({ error: true, cached : true });
-					}
-
-					return Promise.resolve(cached);
-				}
-
-				if(waitstatus == 'attemps'){
-					return Promise.reject({ error: true, cached : true });
-				}
-
-
-				return self.inner.video(parsed).then((r) => {
-					var ontime = null;
-
-					var fr = null;
-
-					if (r && r.data) {
-						fr = r.data;
-
-						if ((fr && fr.isLive) || (fr.state && (fr.state.id == 2 || fr.state.id == 3)))
-							ontime = 20;
-
-						if (fr && fr.isLive && (!fr.aspectRatio || fr.aspectRatio == '0'))
-							fr.aspectRatio = 1.78;
-					}
-
-
-					cache.set(cachekey, cacheparameters, r, null, ontime, cachehash);
-
-					return Promise.resolve(r);
-				});
 			})
-			.catch((e) => {
+				.then((waitstatus) => {
+					_waitstatus = waitstatus;
 
-				if(!e) e = {}
+					var cached = cache.get(cachekey, cacheparameters, cachehash);
 
-				var cachedone = false
-				var ontime = 20
+					if (cached) {
+						if (cached.error) {
+							return Promise.reject({ error: true, cached: true });
+						}
 
-				
-				if (e && e.status == '404') {
-					ontime = 120
-				}
+						return Promise.resolve(cached);
+					}
 
-				if(!e.cached){
-					cache.set(
-						cachekey,
-						cacheparameters,
-						{
-							error: true,
-						},
-						null,
-						ontime,
-						cachehash,
-					);
-				}
-				
+					if (waitstatus == 'attemps') {
+						return Promise.reject({ error: true, cached: true });
+					}
 
-				/*if(!e.cached && _waitstatus == 'execute'){
-					if(!cachedone){
-						cache.remove(
+					return self.inner.video(parsed).then((r) => {
+						var ontime = null;
+
+						var fr = null;
+
+						if (r && r.data) {
+							fr = r.data;
+
+							if (
+								(fr && fr.isLive) ||
+								(fr.state && (fr.state.id == 2 || fr.state.id == 3))
+							)
+								ontime = 20;
+
+							if (fr && fr.isLive && (!fr.aspectRatio || fr.aspectRatio == '0'))
+								fr.aspectRatio = 1.78;
+						}
+
+						cache.set(cachekey, cacheparameters, r, null, ontime, cachehash);
+
+						return Promise.resolve(r);
+					});
+				})
+				.catch((e) => {
+					if (!e) e = {};
+
+					var cachedone = false;
+					var ontime = 20;
+
+					if (e && e.status == '404') {
+						ontime = 120;
+					}
+
+					if (!e.cached) {
+						cache.set(
 							cachekey,
 							cacheparameters,
+							{
+								error: true,
+							},
+							null,
+							ontime,
 							cachehash,
 						);
 					}
-				}*/
 
-				
+					/*if(!e.cached && _waitstatus == 'execute'){
+					if(!cachedone){
+					  cache.remove(
+						cachekey,
+						cacheparameters,
+						cachehash,
+					  );
+					}
+				  }*/
 
-				return Promise.reject(e);
-			});
+					return Promise.reject(e);
+				});
 		},
 
 		videos: function ({ urls, fast }, cache) {
@@ -265,7 +252,6 @@ var Peertube = function (settings) {
 							return Promise.resolve();
 						})
 						.catch((e) => {
-
 							result.errors ? result.errors.push(url) : (result.errors = [url]);
 
 							return Promise.resolve();
@@ -283,25 +269,25 @@ var Peertube = function (settings) {
 				});
 		},
 
-		stats : function(){
-			return Promise.resolve({})
+		stats: function () {
+			return Promise.resolve({});
 		},
 
-		roys: ({type = 'upload', special}) => {
+		roys: ({ type = 'upload', special }) => {
 			const output = {};
 
 			var _roys = _.filter(roys, function (r) {
 				return !r.auto;
 			});
 
-			if (type == 'upload') _roys = _.filter(_roys, function (r) {
+			if (type == 'upload')
+				_roys = _.filter(_roys, function (r) {
+					if (!special) {
+						if (r.hasspecial()) return;
+					}
 
-				if (!special){
-					if(r.hasspecial()) return
-				}
-
-				return r.canupload();
-			});
+					return r.canupload();
+				});
 
 			Object.keys(_roys).map((roy) => {
 				_roys[roy].best() ? (output[roy] = _roys[roy].best().host) : null;
@@ -310,7 +296,7 @@ var Peertube = function (settings) {
 			return Promise.resolve(output);
 		},
 
-		allservers: ({type}) => {
+		allservers: ({ type }) => {
 			const output = {};
 
 			Object.keys(roys).map((roy) => {
@@ -349,6 +335,21 @@ var Peertube = function (settings) {
 				})
 				.catch(() => ({ total: 0, data: [] }));
 		},
+
+		getHostIp({ host }) {
+			const hostsWithIp = Object.values(roys)
+				.map((roy) => roy.hosts())
+				.flat()
+				.find(instance => instance.host === host);
+
+			return hostsWithIp ? Promise.resolve(hostsWithIp.ip) : Promise.reject('Host not found');
+		},
+
+		getHosts() {
+			return Promise.resolve(
+				Object.values(roys).map((roy) => roy.export()) 
+			);
+		},
 	};
 
 	self.addroy = function (urls, key) {
@@ -364,11 +365,10 @@ var Peertube = function (settings) {
 	};
 
 	self.info = function (compact) {
-
 		var info = {
 			events: statistic.get.events(),
 			slice: statistic.get.slice(),
-			instances : {}
+			instances: {},
 		};
 
 		_.each(roys, function (roy) {
@@ -379,31 +379,25 @@ var Peertube = function (settings) {
 	};
 
 	self.init = function ({ urls, roys }) {
-
-
 		if (roys) {
-
 			_.each(roys, function (urls, i) {
 				self.addroy(urls, i);
 			});
-
 		}
 
 		if (urls) self.addroy(urls, 'default');
 
-		statistic.init()
+		statistic.init();
 
 		return Promise.resolve();
 	};
 
-	self.destroy = function(){
-		statistic.destroy()
-	}
+	self.destroy = function () {
+		statistic.destroy();
+	};
 
 	self.extendApi = function (api, cache) {
-
 		_.each(self.api, function (f, i) {
-
 			api[i] = {
 				path: '/peertube/' + i,
 
@@ -416,8 +410,6 @@ var Peertube = function (settings) {
 							});
 						})
 						.catch((e) => {
-
-
 							if (!e) e = {};
 
 							return Promise.reject({
@@ -425,10 +417,8 @@ var Peertube = function (settings) {
 								code: e.code || 500,
 							});
 						});
-				}
-
+				},
 			};
-
 		});
 	};
 

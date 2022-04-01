@@ -3,6 +3,10 @@ if (typeof _OpenApi == 'undefined') _OpenApi = false;
 
 if (typeof _Electron != 'undefined') {
     electron = require('electron');
+    
+    bastyonFsFetchFactory = require('./js/peertube/bastyon-fs-fetch').bastyonFsFetchFactory;
+    transcodingFactory = require('./js/electron/transcoding').transcodingFactory;
+    
     fs = require('fs');
     url = require('url');
     https = require('https');
@@ -132,7 +136,32 @@ Platform = function (app, listofnodes) {
         'PXmw1tQnengAAy9ML8Depr2kANupmadZ7j' : true,
         'PCkbxDvFQbFvEzPWnnrraey1QCUro2kMLU' : true,
         'PBKPEWcsZZHH7LQ7GQCNSMSSEteiJMfoFx' : true,
-        'PEWQWe1DQM3uh19vRqtFDkUrPreyM5uJnS' : true
+        'PEWQWe1DQM3uh19vRqtFDkUrPreyM5uJnS' : true,
+        'PQ2wxGv2YNbie2BP66aac72Y3UU1uSzxCX' : true,
+        'PE6VLUqsPYLJnX2W7qhHX6yb2zLN3H2x25' : true,
+        'PEiNYu3dNM4oZDRYvSrsfy51xz7CokPYNV' : true,
+        'PQk66yNJS3agLJ2k6A1AN5FmM2TNUwEgbP' : true,
+        'PFpBmqET9NyQA2EHp8BPEjjKZobXUBBjjn' : true, //a 
+        'PB1EShZbvkTSQgU8NLxEH8MN5UiKw1CBHb' : true,
+        'PCeyj5aXETKtCYbXJxmDv3bXGawda1KEHQ' : true,
+        'PWAAzRuHNi5iNxQDaJ8ZVpqEJSoPWFFiRN' : true,
+        'P9XuLKA5iCiZT6epTuVWzLU23c2gedSDkc' : true,
+        'PTNtirNwbe5GfgNod7rwMWLLGhYWhGyLJx' : true,
+        'PUaDSBBveSUG9yieuDSYCpgsyE2djYU9N5' : true,
+        'P9eLPo3gXUqBr7wgxDSSLNfyNMyeDua7cn' : true,
+        'PF57cm7HGsc5djwK556uZ7AZbqk59wXxF2' : true,
+        'PQ2W4ispScj349r3Gsqr1PchSVDvU59Ssf' : true,
+        'PUBkQATBYhGiCvvdtHCX7GM7fdx23wdaJb' : true,
+        'PJzhMENFrkp6Bopfzsf4VR46E3Znd2aoGj' : true,
+        'PKp1bjJByqY76XNZNzDFkTAhyfPq4bah5V' : true,
+        'PPEWFN5ETvdjc7TKqjxDPEWmZRUyPUYr8z' : true,
+        'PH1yzW1qvyeq3thaFhUwv3pTA2VazhtZDT' : true,
+        'PCjhy4t6B2b5xeqVoJcN51XkhUqAXBuaq4' : true,
+        'PJTNch4or4Zr8cDnF3KA4eAXTqWCxYLSzu' : true,
+        'PKS5Hy6FV3ytgUDmcAVa8y8qxPYKg3CdMH' : true,
+        'PVyHHKFuZrH2mh8Y5ZokvZnDfG1iTURpM7' : true,
+        'PTPVArrxr4wZuget8phZ1eSNFsGmdSXXck' : true,
+        'PQUj7dS2QpamP9vapARCYaJaSqjXpcZk8p' : true
     }
 
     self.nvadr = {
@@ -2408,18 +2437,23 @@ Platform = function (app, listofnodes) {
 
                     if(!d) d = {}
 
-                    self.app.nav.api.load({
-                        open : true,
-                        href : 'post?s=' + txid,
-                        inWnd : true,
-                        history : true,
-                        essenseData : {
-                            share : txid,
-                            video : true,
-                            autoplay : true,
-                            startTime : d.startTime || 0
-                        }
-                    })
+
+                    setTimeout(function(){
+                        self.app.nav.api.load({
+                            open : true,
+                            href : 'post?s=' + txid,
+                            inWnd : true,
+                            history : true,
+                            essenseData : {
+                                share : txid,
+                                video : true,
+                                autoplay : true,
+                                startTime : d.startTime || 0
+                            }
+                        })
+                    }, 100)
+
+                    
 
                 }
             }
@@ -2497,7 +2531,7 @@ Platform = function (app, listofnodes) {
                     caption.addClass('verticalcover')
                 }
 
-            })
+            }, self.app)
         },
 
         changeloc : function(_clbk){
@@ -2575,8 +2609,8 @@ Platform = function (app, listofnodes) {
 
                 if (clbk)
                     clbk()
-
-            })
+                
+            }, self.app)
 
 
         },
@@ -2841,6 +2875,7 @@ Platform = function (app, listofnodes) {
                         inWnd : el ? false : true,
                         el : el ? el : null,
                         eid : id,
+                        
                         mid : id,
                         animation : false,
                         essenseData : p,
@@ -2895,6 +2930,7 @@ Platform = function (app, listofnodes) {
                         el : el ? el : null,
                         eid : id,
                         mid : id,
+                        history : true,
                         animation : false,
                         essenseData : p,
                         clbk : function(e, _p){
@@ -2979,6 +3015,8 @@ Platform = function (app, listofnodes) {
                         if (share.itisvideo()){
 
                             var info = share.url ? (app.platform.sdk.videos.storage[share.url] || {}).data || null : null
+
+                            console.log(info, share, app.platform.sdk.videos.storage)
 
                             if (info){
 
@@ -4450,7 +4488,7 @@ Platform = function (app, listofnodes) {
                                     id : 'buy-pkoin3',
                                     q : '  ',
                                     a : 'Your PKOIN wallet address is placed in your account. <br>For looking that Click your avatar icon into the right top corner',
-                                    img: '<img src="img/buy-pkoin3.jpg" alt="" />'
+                                    img: '<img src="img/Myvideos1.jpg" alt="" />'
                                 },
                                 {
                                     id : 'buy-pkoin4',
@@ -4566,7 +4604,7 @@ Platform = function (app, listofnodes) {
                                     id : 'earnbastyon9en',
                                     q : '',
                                     a : 'You will need to deposit PKOIN to earn stakes, click Deposit. After clicking Deposit you will see a PKOIN address. You can copy the address and send PKOIN to it. If you did not yet buy PKOIN, you can buy it in the following ways: <br />1.	Buy for cryptocurrency at pkoin.net (or on DigiFinex or Bitforex exchanges) <br />2.	Buy it by selecting PKOIN/Peer-to-Peer tag on the left side of the Bastyon application. Select a seller and write to them in chat (at your own risk)',
-                                    img: '<img src="img/earnbastyon9ru (1).jpg" alt="" />'
+                                    img: '<img src="img/per-to-per2.jpg" alt="" />'
                                 },	
                                 {
                                     id : 'earnbastyon10en',
@@ -5009,7 +5047,7 @@ Platform = function (app, listofnodes) {
                                     id : 'privatekey1',
                                     q : 'Click your avatar icon in the top right corner',
                                     a : '',
-                                    img: '<img src="img/privatekey1.jpg" alt="" />'
+                                    img: '<img src="img/Myvideos1.jpg" alt="" />'
                                 },
                                 {
                                     id : 'privatekey2',
@@ -5035,6 +5073,38 @@ Platform = function (app, listofnodes) {
                                     a : '',
                                     img: '<img src="img/privatekey5.jpg" alt="" />'
                                 },	
+                                
+                                
+                            ]
+                        
+                        },
+                        {
+                        
+                            name : 'Bastyon Code of Honor',
+                            id : 'codex1',
+                        
+                            group : [
+                        
+                                {
+                                    id : 'honor11',
+                                    q : 'Obligations for users:',
+                                    a : '<ul><li>Respect differing opinions and attempt to keep the platform friendly to newcomers</li><li>Flag the prohibited content:<ol><li>Any kind of pornography</li><li>Direct threats of violence</li><li>Promotion of illegal narcotics</li></ol></li><li>Give five stars to any post you peruse and find of high quality</li><li>Likewise, give 1 star to poor content, it helps the network</li><li>Use 1 star to enforce the relevance of content to the tags used</li><li>Do not flag or downvote for simple disagreement, only for prohibited content</li><li>Do not engage in reciprocal rating or any rating not based on quality of content</li></ul>',
+                                    img: ''
+                                },
+                                {
+                                    id : 'honor22',
+                                    q : 'Obligations for developers',
+                                    a : '<ul><li>Every line of code must be open sourced, distributed under MIT or Apache license</li><li>No reliance on central servers, any resource in the network is ran by users, the Bitcoin model of equal nodes</li><li>Moderation is done only by the users of the network, currently high rep users. In the new jury system, the moderators will hail equally from the following three groups, each of which has a stake in the success of the network:<ol><li>High reputation users</li><li>Delegated by bloggers with high active audiences</li><li>Delegated by long time PKOIN holders</li></ol></li><li>Developers can only participate in moderation as regular users, no discrimination of any account can take place through the code</li><li>Communicate with users through Bastyon posts and comments and incorporate user input into the code</li></ul>',
+                                    img: ''
+                                },
+                                {
+                                    id : 'honor33',
+                                    q : 'Node Operator Users:',
+                                    a : '<ul><li>Try to improve the network, give feedback to developers</li><li>Make nodes available to support the front-end applications, not just staking</li><li>Explain how to run nodes to other users, increasing the node count and supporting the network</li></ul>',
+                                    img: ''
+                                },
+                                
+                                	
                                 
                                 
                             ]
@@ -5142,7 +5212,7 @@ Platform = function (app, listofnodes) {
                                         id : 'buy-pkoin1',
                                         q : '  ',
                                         a : 'Вы можете купить PKOIN следующими способами: Выберите категорию «PKOIN/Из рук в руки» и посмотрите на предложения о купле/продаже PKOIN, либо сами разместите свое предложение о купле/продаже PKOIN.	',
-                                        img: '<img src="img/per-to-per.jpg" alt="" />'
+                                        img: '<img src="img/wn.jpg" alt="" />'
                                     },
                                     {
                                         id : 'buy-pkoin21',
@@ -5160,7 +5230,7 @@ Platform = function (app, listofnodes) {
                                         id : 'buy-pkoin3',
                                         q : '  ',
                                         a : 'Адрес вашего PKOIN-кошелька находится в вашем аккаунте на Бастионе. Чтобы его найти – кликните иконку вашего аватара, которая расположена в правом верхнем углу.',
-                                        img: '<img src="img/upl1.jpg" alt="" />'
+                                        img: '<img src="img/wn.jpg" alt="" />'
                                     },
                                     {
                                         id : 'buy-pkoin4',
@@ -5276,7 +5346,7 @@ Platform = function (app, listofnodes) {
                                         id : 'earnbastyon9',
                                         q : '',
                                         a : 'Вам нужно будет внести PKOIN, чтобы заработать ставки, нажмите "Внести". После нажатия кнопки Пополнить счет вы увидите адрес пункта. Вы можете скопировать адрес и отправить по нему PKOIN. Если вы еще не купили PKOIN, вы можете купить его следующими способами: <br />1. Покупайте за криптовалюту на pkoin.net (или на биржах DigiFinex Orbit forex)<br />2. Купите его, выбрав тег "PKOIN/Из рук в руки" в левой части приложения Bastyon. Выберите продавца и напишите ему в чат (на свой страх и риск)',
-                                        img: '<img src="img/earnbastyon9ru (1).jpg" alt="" />'
+                                        img: '<img src="img/earnbastyon9ru99.jpg" alt="" />'
                                     },	
                                     {
                                         id : 'earnbastyon10',
@@ -5474,28 +5544,28 @@ Platform = function (app, listofnodes) {
                                 },
                                 {
                                     id : 'Uploading2',
-                                    q : 'Нажмите «Что нового?» во вкладке «Вся лента»',
+                                    q : 'Нажмите «Что нового?» во вкладке «Лента»',
                                     a : '',
-                                    img: '<img src="img/upl1.jpg" alt="" />'
+                                    img: '<img src="img/videoUpl.jpg" alt="" />'
                                 },
                                 {
                                     id : 'Uploading3',
                                     q : 'Далее, нажмите «Загрузить видео», а затем во всплывающем окне нажмите «Выбрать файл». Выберите на персональном компьютере необходимый файл и ожидайте окончания загрузки и последующего перекодирования видео. ',
                                     a : '',
-                                    img: '<img src="img/upl2.jpg" alt="" />',
+                                    img: '<img src="img/videoUpl2.jpg" alt="" />',
                                     
                                 },
                                 {
                                     id : 'Uploading4',
                                     q : '',
                                     a : '',
-                                    img: '<img src="img/upl3.jpg" alt="" />'
+                                    img: '<img src="img/videoUpl3.jpg" alt="" />'
                                 },
                                 {
                                     id : 'Uploading5',
                                     q : '',
                                     a : '',
-                                    img: '<img src="img/upl4.jpg" alt="" />'
+                                    img: '<img src="img/videoUpl4.jpg" alt="" />'
                                 },
                                 {
                                     id : 'Uploading6',
@@ -5527,13 +5597,13 @@ Platform = function (app, listofnodes) {
                                     id : 'Myvideos1',
                                     q : '  ',
                                     a : 'Нажмите иконку вашего аватара в правом верхнем углу.',
-                                    img: '<img src="img/prkey1.jpg" alt="" />'
+                                    img: '<img src="img/wn.jpg" alt="" />'
                                 },
                                 {
                                     id : 'Myvideos2',
                                     q : ' ',
                                     a : 'Далее, нажмите кнопку «управление»',
-                                    img: '<img src="img/prkey2.jpg" alt="" />'
+                                    img: '<img src="img/manage.jpg" alt="" />'
                                 },
                                 {
                                     id : 'Myvideos3',
@@ -5721,13 +5791,13 @@ Platform = function (app, listofnodes) {
                                     id : 'privatekey1',
                                     q : 'Кликните по своей иконке, находящейся в правом верхнем углу',
                                     a : '',
-                                    img: '<img src="img/prkey1.jpg" alt="" />'
+                                    img: '<img src="img/wn.jpg" alt="" />'
                                 },
                                 {
                                     id : 'privatekey2',
                                     q : 'Далее, нажмите кнопку «управление»',
                                     a : '',
-                                    img: '<img src="img/prkey2.jpg" alt="" />'
+                                    img: '<img src="img/manage.jpg" alt="" />'
                                 },
                                 {
                                     id : 'privatekey3',
@@ -5749,6 +5819,54 @@ Platform = function (app, listofnodes) {
                                 },	
                                 
                                 
+                            ]
+                        
+                        },
+                        {
+                        
+                            name : 'Кодекс чести Бастиона',
+                            id : 'codex',
+                        
+                            group : [
+                        
+                                {
+                                    id : 'honor1',
+                                    q : 'Обязанности пользователей:',
+                                    a : '<ul><li>Уважайте различные мнения и старайтесь сделать платформу дружелюбной к новичкам</li><li>Отметить запрещенный контент:<ol><li>Любой вид порнографии</li><li>Прямые угрозы насилием</li><li>Продвижение незаконных наркотиков</li></ol></li><li>Дайте пять звезд любой публикации, которую вы просматриваете и считаете высококачественной</li><li>Точно так же ставьте 1 звезду плохому контенту, это помогает сети</li><li>Используйте 1 звезду, чтобы обеспечить соответствие контента используемым тегам</li><li>Не отмечайте и не голосуйте за простое несогласие, а только за запрещенный контент</li><li>Не участвуйте во взаимных оценках или любых рейтингах, не основанных на качестве контента</li></ul>',
+                                    img: ''
+                                },
+                                {
+                                    id : 'honor3',
+                                    q : 'Обязанности разработчиков:',
+                                    a : '<ul><li>Каждая строка кода должна быть с открытым исходным кодом, распространяться по лицензии MIT или Apache</li><li>Отсутствие зависимости от центральных серверов, любой ресурс в сети управляется пользователями, модель равных узлов Биткойн</li> <li>Модерация осуществляется только пользователями сети, имеющими в настоящее время высокую репутацию. В новой системе жюри модераторы будут в равной степени принадлежать к следующим трем группам, каждая из которых заинтересована в успехе сети:<ol><li>Пользователи с высокой репутацией</li><li>Делегаты от блогеров с высокой активной аудиторией</li><li>Делегаты от давних держателей PKOIN</li></ol></li><li>Разработчики могут участвовать в модерации только как обычные пользователи, никакая дискриминация какой-либо учетной записи не может происходить с помощью кода</li><li>Должны общаться с пользователями через комментарии</li></ul>',
+                                    img: ''
+                                },
+                                {
+                                    id : 'honor2',
+                                    q : 'Пользователи оператора узла:',
+                                    a : '<ul><li>Старайтесь улучшать сеть, оставляйте отзывы разработчикам</li><li>Сделайте узлы доступными для поддержки приложения а не только для стейкинга</li><li>Объяснить другим пользователям, как запускать узлы, увеличивать количество узлов и поддерживать сеть</li></ul>',
+                                    img: ''
+                                },
+                                
+                                	
+                                
+                                
+                            ]
+                        
+                        },
+                        {
+                        
+                            name : 'Бонусная Программа Bastyon',
+                            id : 'bonus',
+                        
+                            group : [
+                        
+                                {
+                                    id : 'bonus1',
+                                    q : '',
+                                    a : 'Критерии для получения бонуса за оригинальный контент:  Каждые 15 тысяч просмотров видео + 1500 пятизвёздочных рейтингов от уникальных пользователей + 1500 реферальных пользователей <br />PKOIN или Bitcoin:  1,000 USDT <br />Как ускорить получение бонуса?<br />Делитесь ссылкой на видео в социальных сетях, с помощью мессенджеров или через почту. Выставляйте эксклюзивные материалы для подписчиков в Бастионе (это делается при создании поста, выбрать Для Подписчиков). Эксклюзивные материалы увеличат количество реферальных подписок.<br />Делитесь ссылкой на ваш профиль.<br />Всегда выбирайте Реферальная Ссылка, когда делитесь ссылкой на Бастион (на видео или профиль).<br />Если вы пригласите блоггера и докажете это, вы получите бонус в размере до 25% от первых 4 бонусов.<br />По вопросам обращайтесь support@bastyon.com.',
+                                    img: ''
+                                },                                  
                             ]
                         
                         },
@@ -6425,8 +6543,19 @@ Platform = function (app, listofnodes) {
 
                     },
 
-                    electron : function(){
-                        return Promise.reject('todo')
+                    electron : async function(folder, shareInfo, p = {}){
+                        if(!shareInfo.video || !shareInfo.video.original) {
+                            return Promise.reject('originalinfo')
+                        }
+
+                        const id = shareInfo.video.original.uuid;
+                        const videoResolution = p.resolutionId;
+                        const videoDetails = shareInfo.video.original;
+
+                        const videoData = await electron.ipcRenderer
+                            .invoke('saveShareVideo', folder, videoDetails, videoResolution);
+
+                        return videoData;
                     },
 
                     localstorage : function(){
@@ -6473,8 +6602,11 @@ Platform = function (app, listofnodes) {
 
                     },
 
-                    electron : function(){
-                        return Promise.reject('todo')
+                    electron : async function(share) {
+                        const shareDir = await electron.ipcRenderer
+                            .invoke('saveShareData', share);
+
+                        return shareDir;
                     },
 
                     localstorage : function(){
@@ -6485,8 +6617,13 @@ Platform = function (app, listofnodes) {
 
             read : {
                 share : {
-                    electron : function(to, from){
-                        return Promise.reject('todo')
+                    electron : async function(shareId) {
+                        console.log('SHARE DIR', shareId);
+
+                        const shareData = await electron.ipcRenderer
+                            .invoke('getShareData', shareId);
+
+                        return shareData;
                     },
 
                     cordova : function(to, from){
@@ -6648,8 +6785,17 @@ Platform = function (app, listofnodes) {
                         })
                     },
 
-                    electron : function(to, from){
-                        return Promise.reject('todo')
+                    electron : async function(videoId, shareId) {
+                        console.log('from', videoId);
+
+                        const videosDataList = {};
+
+                        const videoData = await electron.ipcRenderer
+                            .invoke('getVideoData', shareId, videoId);
+
+                        videosDataList[videoId] = videoData;
+
+                        return videosDataList;
                     },
 
                     localstorage : function(to, from){
@@ -6659,8 +6805,21 @@ Platform = function (app, listofnodes) {
             },
 
             get : {
-                electron : function(){
-                    return Promise.reject('todo')
+                electron : async function(shareId) {
+                    const shareDataList = { id: shareId };
+
+                    console.log('SHARE FOLDER', shareId);
+
+                    shareDataList.share = await self.sdk.localshares.read.share.electron(shareId);
+
+                    const videoId = shareDataList.share.share.u
+                        .split('%2F').pop();
+
+                    shareDataList.videos = await self.sdk.localshares.read.video.electron(videoId, shareId);
+
+                    console.log('SHARE DATA VIDEOS', shareDataList.videos);
+
+                    return shareDataList;
                 },
 
                 cordova : function(shareFolder){
@@ -6701,8 +6860,21 @@ Platform = function (app, listofnodes) {
             },
 
             getall : {
-                electron : function(){
-                    return Promise.reject('todo')
+                electron : async function() {
+                    const shareList = await electron.ipcRenderer
+                        .invoke('getShareList');
+
+                    const shareDataList = {};
+
+                    console.log('SHARE LIST', shareList);
+
+                    for(const shareIndex in shareList) {
+                        const shareId = shareList[shareIndex];
+
+                        shareDataList[shareId] = await self.sdk.localshares.get.electron(shareId);
+                    }
+
+                    return shareDataList;
                 },
 
                 cordova : function(){
@@ -6773,7 +6945,7 @@ Platform = function (app, listofnodes) {
                 localstorage : function(shareId){
                     self.sdk.localshares.clearfromstorage(shareId)
 
-                    return Promise.reject('todo')
+                    return Promise.resolve();
                 },
                 cordova : function(shareId){
                     var storage = self.sdk.localshares.helpers.cordovaStorage()
@@ -6800,25 +6972,9 @@ Platform = function (app, listofnodes) {
 
                 },
                 electron : function(shareId){
-                    
-                    return new Promise((resolve, reject) => {
+                    self.sdk.localshares.clearfromstorage(shareId);
 
-                        return Promise.reject('deprecated')
-
-                        const userDataPath = (window.electron.app || window.electron.remote.app).getPath('userData');
-
-                        fs.rmdir(userDataPath + '/posts/' + shareId, { recursive: true }, (err) => {
-                            
-                            if (!err){
-                                self.sdk.localshares.clearfromstorage(shareId)
-                                return resolve()
-                            }
-
-                            return reject(err)
-                                
-                        });
-                    })
-                    
+                    return electron.ipcRenderer.invoke('deleteShareWithVideo', shareId);
                 }
             }
 
@@ -7190,126 +7346,7 @@ Platform = function (app, listofnodes) {
             }
         },
 
-        imagesH: {
-            storage: {},
-
-            add: function (src, h) {
-                var t = self.sdk.imagesH;
-
-                t.storage[src] = h
-
-                t.save()
-            },
-
-            delete: function (src, clbk) {
-
-                var t = self.sdk.imagesH;
-
-                if (t.storage[src]) {
-
-                    self.app.ajax.run({
-                        type: "DEL",
-                        imgur: true,
-                        data: {
-                            Action: "image/" + t.storage[src],
-                        },
-
-                        success: function (data) {
-
-                            delete t.storage[src]
-
-                            t.save()
-
-                            if (clbk)
-                                clbk()
-
-                        },
-
-                        fail: function () {
-
-                            if (clbk)
-                                clbk()
-                        }
-                    })
-
-                }
-                else {
-                    if (clbk)
-                        clbk()
-                }
-            },
-
-            save: function () {
-                localStorage['imagesH'] = JSON.stringify(self.sdk.imagesH.storage || {});
-            },
-
-            load: function (clbk) {
-                var s = {};
-
-                try {
-                    s = JSON.parse(localStorage['imagesH'] || "{}")
-                } catch (e) {
-
-                }
-
-                self.sdk.imagesH.storage = s;
-
-                if (clbk)
-                    clbk()
-
-            },
-
-            upload : function(image){
-
-                return new Promise((resolve, reject) => {
-                    if (image.indexOf('data:image') > -1){
-
-                        var r = image.split(',');
-
-                        app.ajax.run({
-                            type : "POST",
-                            imgur : true,
-                            data : {
-                                Action : "image",
-                                image : r[1]
-                            },
-
-                            success : function(data){
-                                resolve(deep(data, 'data.link'));
-                            },
-
-                            fail : function(d){
-
-                                app.ajax.run({
-                                    type : "POST",
-                                    up1 : true,
-                                    data : {
-                                        file : r[1]
-                                    },
-
-                                    success : function(data){
-
-                                        resolve('https://pocketnet.app:8092/i/' + deep(data, 'data.ident'));
-
-                                    },
-
-                                    fail : function(d){
-                                        reject('imageloadingfailed')
-                                    }
-                                })
-
-                            }
-                        })
-
-                    }
-
-                    else{
-                        resolve(image)
-                    }
-                })
-
-            }
-        },
+       
         articles: {
 
             storage: [],
@@ -7577,17 +7614,17 @@ Platform = function (app, listofnodes) {
                         return Promise.resolve()
                     }
 
-                    return self.sdk.imagesH.upload(e.data.file.url).then(r => {
-                        e.data.file.url = r
-
+                    return self.app.imageUploader.upload({ base64: e.data.file.url }).then( url => {
+						e.data.file.url = url
                         return Promise.resolve()
-                    })
+					})
+
                 },
                 carousel : function(e){
 
                     return Promise.all(_.map(e.data, (d => {
-                        return self.sdk.imagesH.upload(d.url).then(r => {
-                            d.url = r
+                        return self.app.imageUploader.upload({base64 : d.url}).then(url => {
+                            d.url = url
 
                             return Promise.resolve()
                         })
@@ -7615,7 +7652,7 @@ Platform = function (app, listofnodes) {
                         return Promise.resolve()
                     }
 
-                    return self.sdk.imagesH.upload(art.cover).then(r => {
+                    return self.app.imageUploader.upload({base64 : art.cover}).then(r => {
                         art.cover = r
 
                         return Promise.resolve()
@@ -7630,6 +7667,46 @@ Platform = function (app, listofnodes) {
                 })
 
             }
+        },
+
+        sharesObserver : {
+            storage : {
+                viewed : {}
+            },
+
+            view : function(key, id){
+
+                if(key == 'saved') return
+
+                if(!self.sdk.sharesObserver.storage.viewed[key] || self.sdk.sharesObserver.storage.viewed[key] < id){
+                    self.sdk.sharesObserver.storage.viewed[key] = id
+
+                    self.sdk.sharesObserver.save()
+                }
+                
+
+               
+            },
+
+            save: function () {
+                if(!self.sdk.address.pnet()) return
+
+                var a = self.sdk.address.pnet().address;
+
+                self.app.settings.set(a, 'sharesObserverViewed', self.sdk.sharesObserver.storage.viewed || '{}')
+
+            },
+
+            load: function (clbk) {
+
+                if(!self.sdk.address.pnet()) return
+
+                var a = self.sdk.address.pnet().address;
+
+                self.sdk.sharesObserver.storage.viewed = self.app.settings.get(a, 'sharesObserverViewed') || {}
+
+                if(clbk) clbk()
+            },
         },
         
         lentaMethod: {
@@ -7678,6 +7755,7 @@ Platform = function (app, listofnodes) {
                     t.current = value;
 
                     self.app.platform.sdk.categories.clbks.selected.lenta && self.app.platform.sdk.categories.clbks.selected.lenta();
+
 
                     t.save()
 
@@ -7789,7 +7867,7 @@ Platform = function (app, listofnodes) {
 
                     self.sdk.theme.setstyles()
 
-                    $('meta[name="theme-color"]').attr('content', t.all[value].color).attr('media',  t.all[value].media)
+                    $('meta[name="theme-color"]').attr('content', t.all[value].color)
                     $('meta[name="msapplication-navbutton-color"]').attr('content', t.all[value].color)
                     $('meta[name="apple-mobile-web-app-status-bar-style"]').attr('content', t.all[value].color)
                 }
@@ -8020,13 +8098,6 @@ Platform = function (app, listofnodes) {
                     value: true
                 },
 
-                /*videoautoplay: {
-                    name: self.app.localization.e('e13277'),
-                    id: 'videoautoplay',
-                    type: "BOOLEAN",
-                    value: true
-                },*/
-
                 videoautoplay2: {
                     name: self.app.localization.e('e13277'),
                     id: 'videoautoplay2',
@@ -8150,7 +8221,17 @@ Platform = function (app, listofnodes) {
 					type : "BOOLEAN",
 					value : true,
                 },
+
+                canuseip: {
+                    name: self.app.localization.e('canuseipsetting'),
+                    id: 'canuseip',
+                    type: "BOOLEAN",
+                    value: false
+                },
+
             },
+
+            //self.canuseip
 
             create: function (id) {
                 var m = self.sdk.usersettings.meta;
@@ -8230,6 +8311,11 @@ Platform = function (app, listofnodes) {
                             sendUserStatistics: options.sendUserStatistics,
                         }
                     },
+
+                    system : {
+                        name: self.app.localization.e('system'),
+                        options : {}
+                    }
                 }
 
 
@@ -8256,27 +8342,17 @@ Platform = function (app, listofnodes) {
                 }
 
 
-
-
                 if (electron) {
-                    c.system = {
-                        name: self.app.localization.e('system'),
-                        options: {
-                            autostart: options.autostart
-                        }
-                    }
+                    c.system.options.autostart = options.autostart
                 }
                 else{
                     if(!window.cordova){
-
-                        c.system = {
-                            name: self.app.localization.e('system'),
-                            options: {
-                                openlinksinelectron: options.openlinksinelectron
-                            }
-                        }
-
+                        c.system.options.openlinksinelectron = options.openlinksinelectron
                     }
+                }
+
+                if (self.app.canuseip()){
+                    c.system.options.canuseip = options.canuseip
                 }
 
                 _.each(options, function (o, i) {
@@ -8312,6 +8388,10 @@ Platform = function (app, listofnodes) {
                                 enable : m[i].value
                             });
 
+                        }
+
+                        if (i == 'canuseip'){
+                            app.peertubeHandler.clear()
                         }
 
 
@@ -9036,8 +9116,21 @@ Platform = function (app, listofnodes) {
             reputationBlocked : function(address){
                 var ustate = self.sdk.ustate.storage[address] || deep(self, 'sdk.usersl.storage.' + address) || deep(self, 'sdk.users.storage.' + address);
 
-				if (ustate && ustate.reputation <= -12){
+				if (ustate && ustate.reputation <= -30 && !real[address]){
                     return true
+                }
+            },
+
+            hiddenComment : function(comment){
+                var address = comment.address
+                var ustate = self.sdk.ustate.storage[address] || deep(self, 'sdk.usersl.storage.' + address) || deep(self, 'sdk.users.storage.' + address);
+
+                if (self.app.platform.sdk.user.itisme(address)) return false
+                
+                if (ustate && ustate.reputation <= -0.5){
+                    if(comment.scoreDown >= 5){
+                        return true
+                    }
                 }
             },
 
@@ -10603,12 +10696,7 @@ Platform = function (app, listofnodes) {
                         }
 
                     })
-                    .catch(function(e){
 
-                        if (clbk){
-                            clbk(null, e);
-                        }
-                    })
 
                 }
                 else{
@@ -10624,7 +10712,7 @@ Platform = function (app, listofnodes) {
 
                 var my = self.app.user.address.value;
 
-                self.app.api.rpc('getrecomendedaccountsbyscoresfromaddress', [my, ['share', 'video'], 0, 10000, 15])
+                self.app.api.rpc('getrecomendedaccountsbyscoresfromaddress', [my, ['share', 'video'], 0, 20000, 15])
                 .then(function(d){
 
                     if (clbk){
@@ -10678,7 +10766,7 @@ Platform = function (app, listofnodes) {
 
                 var my = self.app.user.address.value;
 
-                self.app.api.rpc('getrecomendedcontentsbyscoresfromaddress', [my, ['share', 'video'], 0, 10000, 15])
+                self.app.api.rpc('getrecomendedcontentsbyscoresfromaddress', [my, ['share', 'video'], 0, 20000, 15])
                 .then(function(d){
 
                     if (clbk){
@@ -10724,6 +10812,7 @@ Platform = function (app, listofnodes) {
                 var counts = {
                     sub : data['sharesSubscr'] || 0,
                     video : deep(data, 'contentsLang.video.' + self.app.localization.key)|| 0,
+                    article : deep(data, 'contentsLang.article.' + self.app.localization.key)|| 0,
                     common : deep(data, 'sharesLang.' + self.app.localization.key) || ( (deep(data, 'contentsLang.share.' + self.app.localization.key) || 0) + (deep(data, 'contentsLang.video.' + self.app.localization.key)|| 0))
                 }
 
@@ -13169,6 +13258,29 @@ Platform = function (app, listofnodes) {
                 return tags
             },  
 
+            gettagsexcluded : function(_k, onlycategories){
+                var tags = []
+
+                var k = _k || self.app.localization.key
+
+                if(!self.sdk.categories.data.all[k]) k = 'en'
+
+                var excluded = self.sdk.categories.settings.excluded[k] || {};
+
+
+
+                var all = self.sdk.categories.get(k)
+
+                _.each(all, function(c){
+                    if(excluded[c.id]) tags = tags.concat(c.tags)
+                })
+
+
+                if(onlycategories === 'onlytags') tags = excludedtags
+
+                return tags
+            },  
+
             gettags : function(_k, onlycategories){
                 var tags = []
 
@@ -13345,7 +13457,6 @@ Platform = function (app, listofnodes) {
 
             select : function(id, _k){
 
-
                 if(!id) return 'emptyid'
 
                 var allcats = self.sdk.categories.get(_k)
@@ -13379,7 +13490,6 @@ Platform = function (app, listofnodes) {
             },
 
             exclude : function(id, _k){
-
 
                 if(!id) return 'emptyid'
 
@@ -13545,7 +13655,9 @@ Platform = function (app, listofnodes) {
 
                 cloud: null,
 
-                all: ['love', 'followback', 'instagramers', 'socialsteeze', 'tweegram', 'photooftheday', '20likes', 'amazing', 'smile', 'follow4follow', 'like4like', 'look', 'instalike', 'igers', 'picoftheday', 'food', 'instadaily', 'instafollow', 'followme', 'girl', 'instagood', 'bestoftheday', 'instacool', 'carryme', 'follow', 'colorful', 'style', 'swag', 'fun', 'instagramers', 'model', 'socialsteeze', 'food', 'smile', 'pretty', 'followme', 'nature', 'lol', 'dog', 'hair', 'sunset', 'swag', 'throwbackthursday', 'instagood', 'beach', 'friends', 'hot', 'funny', 'blue', 'life', 'art', 'photo', 'cool', 'carryme', 'bestoftheday', 'clouds', 'amazing', 'socialsteeze', 'fitness', 'followme', 'all_shots', 'textgram', 'family', 'instago', 'igaddict', 'awesome', 'girls', 'instagood', 'my', 'bored', 'baby', 'music', 'red', 'green', 'water', 'bestoftheday', 'black', 'party', 'white', 'yum', 'flower', 'carryme', 'night', 'instalove', 'photo', 'photos', 'pic', 'pics', 'socialsteeze', 'picture', 'pictures', 'snapshot', 'art', 'beautiful', 'instagood', 'picoftheday', 'photooftheday', 'color', 'all_shots', 'exposure', 'composition', 'focus', 'capture', 'moment', 'hdr', 'hdrspotters', 'hdrstyles_gf', 'hdri', 'hdroftheday', 'hdriphonegraphy', 'hdr_lovers', 'awesome_hdr'],
+                all: {
+                    default : ['love', 'followback', 'instagramers', 'socialsteeze', 'tweegram', 'photooftheday', '20likes', 'amazing', 'smile', 'follow4follow', 'like4like', 'look', 'instalike', 'igers', 'picoftheday', 'food', 'instadaily', 'instafollow', 'followme', 'girl', 'instagood', 'bestoftheday', 'instacool', 'carryme', 'follow', 'colorful', 'style', 'swag', 'fun', 'instagramers', 'model', 'socialsteeze', 'food', 'smile', 'pretty', 'followme', 'nature', 'lol', 'dog', 'hair', 'sunset', 'swag', 'throwbackthursday', 'instagood', 'beach', 'friends', 'hot', 'funny', 'blue', 'life', 'art', 'photo', 'cool', 'carryme', 'bestoftheday', 'clouds', 'amazing', 'socialsteeze', 'fitness', 'followme', 'all_shots', 'textgram', 'family', 'instago', 'igaddict', 'awesome', 'girls', 'instagood', 'my', 'bored', 'baby', 'music', 'red', 'green', 'water', 'bestoftheday', 'black', 'party', 'white', 'yum', 'flower', 'carryme', 'night', 'instalove', 'photo', 'photos', 'pic', 'pics', 'socialsteeze', 'picture', 'pictures', 'snapshot', 'art', 'beautiful', 'instagood', 'picoftheday', 'photooftheday', 'color', 'all_shots', 'exposure', 'composition', 'focus', 'capture', 'moment', 'hdr', 'hdrspotters', 'hdrstyles_gf', 'hdri', 'hdroftheday', 'hdriphonegraphy', 'hdr_lovers', 'awesome_hdr']
+                },
 
 
             },
@@ -13566,19 +13678,23 @@ Platform = function (app, listofnodes) {
             ex: {'news': true, 'images': true, 'videos': true, 'politics': true, 'funny': true, 'art': true, 'photo': true },
 
             search: function (str, clbk) {
-
+                var all = []
                 str = clearTagString(str);
 
-                var s = _.filter(this.storage.all, function (t) {
+                _.each(self.sdk.tags.storage.all, function(st){
+                    var s = _.filter(st, function (t) {
 
-                    if (t.indexOf(str) > -1) return true;
+                        if (t.indexOf(str) > -1) return true;
+    
+                    })
 
+                    all = all.concat(s)
                 })
 
-                s = _.uniq(s)
+                all = _.uniq(all)
 
                 if (clbk)
-                    clbk(lastEls(s, 7))
+                    clbk(lastEls(all, 7))
 
             },
 
@@ -14157,11 +14273,34 @@ Platform = function (app, listofnodes) {
         comments: {
             storage: {},
 
+            blocked : {
+                
+            },
+
             sendclbks: {
             },
 
             upvoteClbks: {
 
+            },
+
+            saveblocked : function(){
+
+                var a = self.sdk.address.pnet();
+
+                if (a) {
+                    self.app.settings.set(self.sdk.address.pnet().address, 'blockedcomments', JSON.stringify(self.sdk.comments.blocked || {}))
+                }
+
+            },
+            loadblocked : function(clbk){
+                var a = self.sdk.address.pnet();
+
+                if (a) {
+                    self.sdk.comments.blocked = JSON.parse(self.app.settings.get(self.sdk.address.pnet().address, 'blockedcomments') || "{}")
+                }
+
+                if(clbk) clbk()
             },
 
             find: function (txid, id, pid) {
@@ -14254,6 +14393,7 @@ Platform = function (app, listofnodes) {
                 s.all || (s.all = {})
 
                 var relay = self.sdk.relayTransactions.get();
+                var newblock = false
 
                 var c = _.map(d || [], function (data) {
                     var comment = new pComment();
@@ -14296,7 +14436,19 @@ Platform = function (app, listofnodes) {
 
                 _.each(c, function (c) {
                     s.all[c.id] = c
+
+                    if (self.sdk.user.hiddenComment(c)) {
+                        self.sdk.comments.blocked[c.address] = true
+                        newblock = true
+                    }
+                        
                 })
+
+                if(newblock){
+                    self.sdk.comments.saveblocked()
+                }
+
+
                 return c
             },
 
@@ -15328,6 +15480,7 @@ Platform = function (app, listofnodes) {
                             var newShare = new pShare();
                             newShare._import(curShare.share.share);
                             newShare.txid = txid;
+                 
                             newShare.address = newUser.address;
 
                             if (curShare.share.timestamp)
@@ -16149,8 +16302,6 @@ Platform = function (app, listofnodes) {
 
                 historical : function(p, clbk, cache){
 
-                    console.log("historicalhistoricalhistoricalhistorical")
-
                     self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
                         method : 'gethistoricalstrip'
                     })
@@ -16655,7 +16806,7 @@ Platform = function (app, listofnodes) {
                     self.app.api.rpc('sendrawtransaction', [hex]).then(d => {
 
                         if (clbk)
-                                clbk(d)
+                            clbk(d)
 
                     }).catch(e => {
                         if (clbk) {
@@ -23826,6 +23977,8 @@ Platform = function (app, listofnodes) {
 
             platform.app.api.get.currentwss().then(wss => {
 
+                console.log('wss', wss)
+
                 socket = wss.dummy || (new ReconnectingWebSocket(wss.url));
 
 
@@ -25584,6 +25737,10 @@ Platform = function (app, listofnodes) {
             trx: {}
         }
 
+        self.sdk.sharesObserver.storage = {
+            viewed : {}
+        }
+
         self.sdk.likes.who = {};
 
         self.sdk.node.transactions.storage = {}
@@ -26039,7 +26196,6 @@ Platform = function (app, listofnodes) {
                     self.sdk.addresses.init,
                     self.sdk.ustate.me,
                     self.sdk.usersettings.init,
-                    self.sdk.imagesH.load,
 
                     self.ws.init,
                     self.firebase.init,
@@ -26049,8 +26205,10 @@ Platform = function (app, listofnodes) {
                     self.sdk.categories.load,
                     self.sdk.activity.load,
                     self.sdk.node.shares.parameters.load,
-
+                    self.sdk.sharesObserver.load,
                     self.sdk.user.get,
+
+                    self.sdk.comments.loadblocked
 
                 ], function () {
 
@@ -26575,7 +26733,9 @@ Platform = function (app, listofnodes) {
                 if (self.matrixchat.el){
 
                     if (self.matrixchat.el.hasClass('active')) return
+
                         self.matrixchat.el.addClass('active')
+                        
 
                 }
                 else{
@@ -26589,7 +26749,7 @@ Platform = function (app, listofnodes) {
 
                 if (self.app.mobileview){
                     setTimeout(function(){
-                        self.app.actions.offScroll()
+                        self.app.actions.offScroll(self.matrixchat.el)
                         self.app.actions.optimize()
                     })
                 }

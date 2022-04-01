@@ -24,6 +24,7 @@
 	.jsPlayerLoading,
 	.video-js{
 		max-height: 80vh;
+		max-height: calc(var(--vh, 1vh) * 80);
 	}
 	
 	.videoWrapper {
@@ -51,8 +52,6 @@
 			border-radius: 12px;
 		}
 	}
-	
-
 
 	.showmorelenta{
 		display: none;
@@ -237,18 +236,9 @@
 
 	&.videomainpost{
 
-		padding-bottom : 4 * @rhythm;
+		/*padding-bottom : 4 * @rhythm;*/
 		display: flex;
 		padding-top: 2 * @rhythm;
-
-		.titleDiv {
-			margin-top: 20px;
-			display: flex;
-			justify-content: space-between;
-		}
-		.starsDiv {
-			margin-bottom: 20px;
-		}
 
 		.cntswrk.tags {
 			opacity: 0.6;
@@ -257,19 +247,6 @@
 		.videoDescription {
 			padding-bottom: 4 * @rhythm;
 		}
-
-		// .sbtnxs,
-		// .sbtnxs:hover {
-		// 	background: rgb(var(--color-bg-orange));
-		// 	border: 1px solid rgb(var(--color-bg-orange));
-		// 	color: rgb(var(--text-on-bg-ac-color));
-		// 	border-radius: 8px;
-		// 	// padding: 6px 12px;
-		// 	cursor: pointer;
-		// 	span:hover {
-		// 		color: rgb(var(--text-on-bg-ac-color));
-		// 	}
-		// }
 
 		.backButtonDiv {
 			width: 70px;
@@ -433,6 +410,7 @@
 		.jsPlayerLoading,
 		.video-js{
 			max-height: 80vh;
+			max-height: calc(var(--vh, 1vh) * 80);
 		}
 
 		.forurl{
@@ -682,11 +660,13 @@
 			}
 
 			&.showtext{
-				.icon{
+				.iconWrapper{
 					position: absolute;
+					width: auto;
 					bottom : -22px;
 					left : 0;
 					right: 0;
+					padding-left: 0;
 				}
 			}
 			
@@ -701,7 +681,7 @@
 					height: 3.5em;
 					line-height: 3.5em;
 					border-radius: 3.5em;
-					color : rgb(var(--text-on-bg-ac-color));
+					color : rgb(var(--neutral-grad-3));
 					cursor: pointer;
 					display: flex;
 					align-items: center;
@@ -730,6 +710,11 @@
 				left: 3 * @rhythm;
 				right: auto;
 				display: flex;
+
+				.panelLeft{
+					display: flex;
+				}
+
 			}
 
 			
@@ -985,17 +970,6 @@ html.mobileview{
 						}
 						
 					}
-		
-					.icon{
-						position: absolute;
-						bottom : -22px;
-						left : 0;
-						right: 0;
-		
-						.usericon{
-							margin : 0 auto;
-						}
-					}
 
 					.articleCover{
 						height: 300px;
@@ -1068,6 +1042,14 @@ html.mobileview{
 					}
 				}
 	
+			}
+
+			.starstoppanel, .socialsharewrapper{
+				bottom: -0.25em!important;
+
+				.panelLeft{
+					flex-direction: column;
+				}
 			}
 
 			.articlecontent{
@@ -1323,6 +1305,10 @@ html.mobileview{
 
 
 .wnd.postwindow.pipmini{
+	.wndcontent{
+		padding-right: 0;
+		overflow-y: hidden;
+	}
 	#post{
 		
 		padding: 0!important;
@@ -1340,11 +1326,27 @@ html.mobileview{
 			border-radius: 6px;
 			
 			.video-js{
-				max-height: 25vh;
 				min-height: 150px;
+				max-height: calc(var(--vh, 1vh) * 25);
+
+				.vjs-control-bar{
+					
+
+					.vjs-mute-control{
+						position: absolute;
+						height: 3em;
+						line-height: 3.5em;
+						font-size: 1em;
+						right: 0.25em;
+						bottom: 0;
+						width: 3em;
+						font-size: 0.9em;
+					}
+				}
 			}
 	
 		}
+
 
 		.work{
 			position: static;
@@ -1384,8 +1386,11 @@ html.pipmode{
 					height: 100%;
 					max-width: none;
 					right: 0;
+
+					.vjs-control-bar{
+						padding-left: 0;
+					}
 				}
-		
 			}
 		}
 	}

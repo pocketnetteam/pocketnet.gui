@@ -17,6 +17,7 @@
     --background-hidden-layer: 255, 255, 255;
     --background-total-theme: 255, 255, 255;
     --background-secondary-theme: 250, 250, 250;
+    --background-secondary-theme-2: 18, 22, 33;
     --background-main: 240, 242, 245;
     --background-main-contrast: 10, 12, 23; //@color-black
     --color-medium-theme: 199, 200, 217;
@@ -89,6 +90,7 @@
     --background-hidden-layer:  10, 12, 23; //@color-black
     --background-total-theme:  18, 22, 33;
     --background-secondary-theme: 24, 36, 52;
+    --background-secondary-theme-2: 24, 36, 52;
     --background-main: 12, 14, 18; // @color-black2;    
     --background-main-contrast: 240, 242, 245; //@color-main-light;
 
@@ -133,6 +135,7 @@
     --background-hidden-layer:  12, 12, 12; //@color-black
     --background-total-theme:  20, 20, 20;
     --background-secondary-theme: 36, 36, 36;
+    --background-secondary-theme-2: 36, 36, 36;
     --background-main: 28, 28, 28; // @color-black2;    
     --background-main-contrast: 242, 242, 242; //@color-main-light;
 
@@ -181,7 +184,7 @@
 }
 
 .customscrollclass(){
-    overflow-y: overlay!important;
+    overflow-y: overlay;
     overflow-x: hidden;
     scrollbar-width: 7px;
     scrollbar-color: rgba(var(--background-main-contrast), .15) rgba(var(--background-main-contrast), .05);
@@ -206,15 +209,100 @@
     }
 }
 
-/*
-.html:not(.mobileview).customscroll{
-    .customscrollclass()
+.customscroll{
+    overscroll-behavior: contain;
 }
-*/
+
+.jsPlayerLoading{
+        
+    width: auto;
+    height: auto;
+    background: #000000;
+    position: relative;
+    min-height: 200px;
+    border-radius: 6px;
+    
+
+    .preloader5{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-left: -15px;
+        margin-top: -8px;
+        width: 30px;
+        height: 15px;
+        contain: strict;
+    }
+
+    .jsPlayerLoadingD{
+        position: absolute;
+        left : 0;
+        top : 0;
+        bottom : 0;
+        right: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &.ytbvimb{
+        padding-bottom: 56.25%;
+
+        .jsPlayerLoading{
+            display: none;
+        }
+
+        .playerlabel{
+            position: absolute;
+            left : @rhythm;
+            padding : @rhythm;
+            border-radius: 6px;
+            background: rgba(var(--color-shadow-base), 0.5);
+            bottom : @rhythm;
+        }
+
+        &.loading{
+            .jsPlayerLoading{
+                height: 100%;
+                max-height: none;
+                display: block;
+                background: transparent;
+                .preloader5{
+                    display: block;
+                }
+            }
+
+            .playerlabel{
+                display: none;
+            }
+            .initvideoplayer{
+                display: none;
+            }
+        }
+    }
+
+    .initvideoplayer{
+        text-align: center;
+        cursor: pointer;
+        width: 100px;
+        height: 100px;
+        line-height: 100px;
+        font-size: 1.5em;
+        margin : 0 auto;
+
+        .shadowText();
+    }
+}
 
 
 @media only screen and (min-width: 768px){
     .customscroll{
+        .customscrollclass()
+    }
+}
+
+.wnd{
+    .wndcustomscroll{
         .customscrollclass()
     }
 }
@@ -558,6 +646,11 @@ hr {
 .js-player{
     .video-js{
         display: none;
+
+        &.vjs-thumb{
+            display: block;
+            
+        }
     }
 
     &.player-ready{
@@ -590,6 +683,13 @@ html{
     }
 }
 
+.cancopy{
+    -webkit-user-select: text!important;
+    -khtml-user-select: text!important;
+    -moz-user-select: text!important;
+    -ms-user-select: text!important;
+    user-select: text!important;
+}
 /*
 html.testaddress{
     .vjs-peertube{
@@ -2901,6 +3001,7 @@ input[type=radio].radio:checked + label {
     &.withoutButtons{
         .wndinner{
 
+           
             >div{
                 &.buttons{
                     display: none!important;
@@ -2910,6 +3011,8 @@ input[type=radio].radio:checked + label {
 
         .wndcontent{
             bottom: 0;
+            border-bottom-left-radius: 6px;
+            border-bottom-right-radius: 6px;
         }
 
         &.allscreen{
@@ -3026,6 +3129,20 @@ input[type=radio].radio:checked + label {
             display: none!important;
         }
 
+    }
+
+    &.centercontentWindow{
+        .wndinner{
+            display: flex;
+            align-items: center;
+            box-shadow: none;
+
+            .wndcontent{
+                width: 100%;
+                position: static;
+                .shadowSmall();
+            }
+        }
     }
 }
 
@@ -3865,7 +3982,7 @@ input[type=radio].radio:checked + label {
 
 .menudialog{
     .mobiledialogcontent{
-        max-height: 60vh;
+        max-height: calc(var(--vh, 1vh) * 60);
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
         overscroll-behavior: contain;
@@ -4823,10 +4940,8 @@ input[type=radio].radio:checked + label {
     .showmorebywrapper{
         overflow: hidden;
         overflow-x: scroll;
-        
         scroll-behavior: smooth;
         scrollbar-width: none;
-        scroll-snap-type: y mandatory;
         border-radius: 6px;
 
         >div{
@@ -4855,7 +4970,15 @@ input[type=radio].radio:checked + label {
         .showmorebywrapper{
             display: none;
         }
+
     }
+}
+
+.optimizationTip{
+    background: rgb(var(--background-total-theme));
+    background-image: url(./img/icons8-square.svg);
+    background-repeat: repeat-x;
+    background-position: center;
 }
 
 .sharepostmenu{
@@ -4952,10 +5075,11 @@ html.mobileview{
         border-radius: 5px;
         backface-visibility: hidden;
         will-change: transform;
-
+        
         &.active{
             -webkit-transform: translateX(0);
             transform: translateX(0);
+            
         }
     }
 
@@ -5003,7 +5127,7 @@ html.mobileview{
         }
 
         .mobiledialogcontent{
-            max-height: 60vh;
+            max-height: calc(var(--vh, 1vh) * 60);
         }
 
         .secondwrapper{
@@ -6562,8 +6686,8 @@ html.mobileview.fullscreen{
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     background-color: #011621;
     z-index: 5000;
     display: flex;
@@ -6591,14 +6715,13 @@ html.mobileview.fullscreen{
     }
 
     img {
-        max-height: 6vh;
-        max-width: 100vw;
+        max-height: 50px;
+        max-width: 50px;
 
         &.zoom-in {
             -webkit-animation: zoom-in 0.5s ease-out both;
             animation: zoom-in 0.5s ease-out both;
         }
-
 
         &.zoom-out {
             -webkit-animation: zoom-out 0.5s ease-in both;
@@ -6624,6 +6747,10 @@ html.mobileview.fullscreen{
 html{
 
     &.mobileview{
+
+        .plyr__volume{
+            max-width: 32px;
+        }
 
         #panelWrapper{
             position: fixed;
@@ -6705,6 +6832,18 @@ html{
             .fakem{
                 display: none;
             }
+        }
+
+        &.openapipnet{
+            .contentWrapper{
+                padding-top : 0;
+            }
+        }
+    }
+
+    &.openapipnet{
+        .contentWrapper{
+            padding-top : 0;
         }
     }
 
@@ -7551,16 +7690,19 @@ html.mobileview{
 
     .wnd{
         &.normalizedmobile{
+            contain: strict;
+
             .wndinner{
                 width: 100%;
                 background: transparent!important;
                 will-change: transform;
+                
             }
+
             .wndback{
                 backface-visibility: hidden;
-                backdrop-filter: none!important;
-                -webkit-backdrop-filter: none!important;  
                 .transition(0s);
+                
             }
 
             .hideButton{
@@ -7576,12 +7718,13 @@ html.mobileview{
                 left: 28%;
                 opacity: 0;
                 position: absolute;
+                display: none;
                 .transition(0.3s, top);
             }
     
             .wndinner{
                 max-height: none!important;
-                top : 0%!important;
+                top : auto!important;
                 bottom : 0;
                 height: auto!important;
                 max-width: none!important;
@@ -7589,23 +7732,30 @@ html.mobileview{
                 transform: translateY(100%);
                 backface-visibility: hidden;
                 will-change: transform;
-                contain: strict;
-              
                 .transition(0.3s, top);
 
                 .wndheader{
                     max-width: 768px;
                     margin : 0 auto;
+                    position: sticky;
                 }
     
                 .wndcontent{
+                    position: relative;
                     border-bottom-right-radius: 0;
                     border-bottom-left-radius: 0;
                     bottom : 0;
                     backface-visibility: hidden;
-                    padding-bottom: 130px;
                     background: rgb(var(--background-total-theme));
                     max-width: 768px;
+
+                    max-height: calc(var(--vh, 1vh) * 92);
+                    min-height: calc(var(--vh, 1vh) * 30);
+
+                    top : 0;
+                    bottom : 0;
+                    right: 0;
+                    left: 0;
                     margin : 0 auto;
                     padding-left: 0;
                     padding-right: 0;
@@ -7645,16 +7795,10 @@ html.mobileview{
             &.sette{
 
                 .wndinner{
-                    -webkit-transform: translate3d(0, 130px, 0);
-                    transform: translate3d(0, 130px, 0);
+                    -webkit-transform: translate3d(0, 0, 0);
+                    transform: translate3d(0, 0, 0);
                     .transition(0.3s, transform);
-                }   
-
-                .windowmainbuttons{
-                    -webkit-transform: translate3d(0,-130px,0);
-                    transform: translate3d(0,-130px,0);
-                    .transition(0.3s, transform);
-                }
+                }  
                 
                 .closeline,
                 .wndback{
@@ -7668,14 +7812,9 @@ html.mobileview{
                 &.sette{
       
                     .wndinner{
-                        -webkit-transform: translate3d(0,45px,0);
-                        transform: translate3d(0,45px,0);
-                    }   
-                    
-                    .windowmainbuttons{
-                        -webkit-transform: translate3d(0,-45px,0);
-                        transform: translate3d(0,-45px,0);
-                    }
+                        -webkit-transform: translate3d(0,0,0);
+                        transform: translate3d(0,0,0);
+                    } 
                 }
 
                 .closeline{
@@ -7699,16 +7838,28 @@ html.mobileview{
 
             &:only-child{
 
+                .wndback{
+                    .transition(0.2s);
+                    
+                }
+
                 &.asette{
                     .wndback{
-                        .transition(0.2s);
+                        
                         opacity: 0;
                     }
                 }
             }
         }
 
-       
+        &.maxheight{
+            .wndinner{
+              
+                .wndcontent{
+                    height: calc(var(--vh, 1vh) * 92);
+                }
+            }
+        }
     }
 
     
@@ -8283,7 +8434,6 @@ html.pipmode{
   }
   .dg-main-content {
     width: 98%;
-    /*width: calc(98% - 30px);*/
     max-width: 400px;
     padding: 15px;
     border-radius: 5px;

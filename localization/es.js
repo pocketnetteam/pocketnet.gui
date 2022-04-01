@@ -805,3 +805,14 @@ ____loclib.videosDeleted = "Vídeos eliminados!";
 ____loclib.noDownloadedVideos = "No hay vídeos descargados";
 
 ____loclib.buy = 'Comprar';
+
+// Uploadpeertube component
+____loclib.videoTranscodingError = "Se ha producido un error al procesar su vídeo"
+____loclib.videoUploadingFinish = "Terminando de subir el archivo..."
+____loclib.uploadNewVideo = "Subir un nuevo Pocketvídeo"
+____loclib.selectVideoFile = "Seleccione el archivo de vídeo"
+____loclib.uploadVideoProgress_binaries = "Preparando las bibliotecas:"
+____loclib.uploadVideoProgress_processing = "Procesando el video:"
+____loclib.uploadVideoProgress_uploading = "Cargando el video:"
+
+____loclib.buy = 'Comprar';

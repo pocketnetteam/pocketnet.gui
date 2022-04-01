@@ -12,6 +12,9 @@ const {protocol} = require('electron');
 const ProxyInterface = require('./proxy16/ipc.js')
 const IpcBridge =require('./js/electron/ipcbridge.js')
 
+const { binariesDownloader, transcodingProcessor } = require('./js/electron/transcoding.js');
+const { bastyonFsFetchBridge } = require('./js/peertube/bastyon-fs-fetch.js');
+
 const electronLocalshortcut = require('electron-localshortcut');
 
 var win, nwin, badge, tray, proxyInterface, ipcbridge;
@@ -26,9 +29,13 @@ const Badge = require('./js/vendor/electron-windows-badge.js');
 const { autoUpdater } = require("electron-updater");
 const log = require('electron-log');
 const is = require('electron-is');
+const fs = require('fs');
+const asyncFs = require('fs/promises');
 const AutoLaunch = require('auto-launch');
-
 const contextMenu = require('electron-context-menu');
+const path = require('path');
+const http = require('http');
+const https = require('https');
 
 contextMenu({
     showSearchWithGoogle : false,
@@ -75,9 +82,6 @@ autoUpdater.on('update-downloaded', (ev) => {
 //---------------------------------------------------
 
 var appName = global.TESTPOCKETNET ? 'BastyonTest' : 'Bastyon';
-
-let url = require('url')
-let path = require('path')
 
 var defaultIcon = require('path').join(__dirname, 'res/electron/icons/win/icon.ico')
 var defaultTrayIcon = require('path').join(__dirname, 'res/electron/icons/win/icon.ico')
@@ -132,14 +136,14 @@ function autoLaunchManage(enable){
             path: app.getPath('exe'),
             isHidden: true
         });
-    
+
         if (enable)
             autoLaunch.enable();
-    
-        else 
+
+        else
             autoLaunch.disable();
     }
-    
+
 }
 
 
@@ -399,7 +403,7 @@ function notification(nhtml, p) {
 
 
     setTimeout(function() {
-        if (nwin){  
+        if (nwin){
             nwin.show()
 
             nwin.on('hide', function(){
@@ -414,7 +418,7 @@ function notification(nhtml, p) {
                 win.webContents.send('win-restore')
             })
         }
-           
+
 
 
        // nwin.webContents.toggleDevTools()
@@ -461,7 +465,7 @@ function createWindow() {
 		win.reload()
         win.loadFile('index_el.html')
 	})
-    
+
 	electronLocalshortcut.register(win, 'CommandOrControl+R', function() {
 		win.reload()
         win.loadFile('index_el.html')
@@ -479,7 +483,7 @@ function createWindow() {
             click: () => win.webContents.replaceMisspelling(suggestion)
           }))
         }
-      
+
         // Allow users to add the misspelled word to the dictionary
         if (params.misspelledWord) {
           menu.append(
@@ -489,7 +493,7 @@ function createWindow() {
             })
           )
         }
-      
+
         //menu.popup()
     })
 
@@ -509,7 +513,7 @@ function createWindow() {
             ...(isMac ? [{
               label: app.name,
               submenu: [
-              
+
                 { type: 'separator' },
                 { role: 'hide', accelerator: 'Cmd+W', },
                 { role: 'unhide' },
@@ -524,7 +528,7 @@ function createWindow() {
               ]
             }] : []),
             // { role: 'fileMenu' }
-            
+
             {
               label: 'Edit',
               submenu: [
@@ -557,7 +561,7 @@ function createWindow() {
             {
               label: 'View',
               submenu: [
-            
+
                 { role: 'toggleDevTools' },
                 { type: 'separator' },
                 { role: 'togglefullscreen' }
@@ -599,7 +603,7 @@ function createWindow() {
     else{
         Menu.setApplicationMenu(null)
     }
-    
+
 
     win.loadFile('index_el.html')
 
@@ -616,7 +620,7 @@ function createWindow() {
         if (!willquit) {
 
             e.preventDefault();
-            
+
             if (is.macOS()){
                 if (win.isFullScreen()){
                     win.setFullScreen(false)
@@ -624,7 +628,7 @@ function createWindow() {
                 }
             }
 
-            
+
             win.hide();
             destroyBadge()
         } else {
@@ -645,7 +649,7 @@ function createWindow() {
     });
 
 
-   
+
 
     ipcMain.on('electron-notification', function(e, p) {
 
@@ -695,6 +699,227 @@ function createWindow() {
         autoLaunchManage(p.enable)
     })
 
+
+    /**
+     * Video and posts download handlers
+     */
+
+    const Storage = app.getPath('userData');
+    const PostsDir = 'posts';
+    const VideosDir = 'videos';
+    const getPostFolder = (postId) => path.join(Storage, PostsDir, postId);
+    const getVideoFolder = (postId, videoId) => path.join(getPostFolder(postId), VideosDir, videoId);
+
+    ipcMain.handle('saveShareData', async (event, shareData) => {
+        const shareDir = getPostFolder(shareData.id);
+        const jsonDir = path.join(shareDir, 'share.json');
+
+        if (!fs.existsSync(shareDir)) {
+            fs.mkdirSync(shareDir, { recursive: true });
+        }
+
+        const jsonData = JSON.stringify(shareData);
+
+        await asyncFs.writeFile(jsonDir, jsonData, { overwrite: false });
+
+        return shareDir;
+    });
+
+    ipcMain.handle('saveShareVideo', async (event, folder, videoData, videoResolution) => {
+        function downloadFile(url, options = {}) {
+            return new Promise((resolve, reject) => {
+                let isHttps = /^https:/;
+                let isHttp = /^http:/;
+
+                const handler = (response) => {
+                    let data = '';
+
+                    response.on('data', (chunk) => (
+                        data += chunk
+                    ));
+
+                    if (options.stream) {
+                        options.stream.on('close', () => resolve(data));
+
+                        response.pipe(options.stream);
+                    } else {
+                        response.on('end', () => resolve(data));
+                    }
+                };
+
+                const reqOptions = {
+                    headers: options.headers,
+                };
+
+                if (isHttp.test(url)) {
+                    if (options.headers) {
+                        http.get(url, reqOptions, handler);
+                    } else {
+                        http.get(url, handler);
+                    }
+                } else if (isHttps.test(url)) {
+                    if (options.headers) {
+                        https.get(url, reqOptions, handler);
+                    } else {
+                        https.get(url, handler);
+                    }
+                } else {
+                    reject('Unsupported protocol');
+                }
+            });
+        }
+
+        const shareId = path.basename(folder);
+        const videoDir = getVideoFolder(shareId, videoData.uuid);
+        const jsonDir = path.join(videoDir, 'info.json');
+        const signsDir = path.join(videoDir, 'signatures.json');
+        const playlistDir = path.join(videoDir, 'playlist.m3u8');
+
+        const streamsRegexp = /^.+\.m3u8/gm;
+        const videoTargetFile = /#EXT-X-MAP:URI="(.+\.mp4)"/m;
+        const bytesRangesSelect = /(?!BYTERANGE)(\d+@\d+)/gm;
+
+        if (!fs.existsSync(videoDir)) {
+            fs.mkdirSync(videoDir, { recursive: true });
+        }
+
+        const jsonData = JSON.stringify(videoData);
+        await asyncFs.writeFile(jsonDir, jsonData, { overwrite: false });
+
+        const playlistUrl = videoData.streamingPlaylists[0].playlistUrl;
+        const signsUrl = videoData.streamingPlaylists[0].segmentsSha256Url;
+
+        const streamsData = await downloadFile(playlistUrl);
+
+        const signsFile = fs.createWriteStream(signsDir);
+        await downloadFile(signsUrl, { stream: signsFile });
+
+        const streamsList = streamsData.match(streamsRegexp);
+
+        const targetStream = streamsList.find((stream) => (
+            stream.endsWith(`${videoResolution}.m3u8`)
+        ));
+
+        const urlLastCut = playlistUrl.lastIndexOf('/');
+        const targetStreamBaseUrl = playlistUrl.substring(0, urlLastCut);
+        const targetStreamUrl = `${targetStreamBaseUrl}/${targetStream}`;
+
+        const fragmentsFile = fs.createWriteStream(playlistDir);
+        const fragmentsData = await downloadFile(targetStreamUrl, { stream: fragmentsFile });
+        const fragmentsList = fragmentsData.match(bytesRangesSelect);
+
+        const targetVideo = fragmentsData.match(videoTargetFile)[1];
+
+        const targetVideoUrl = `${targetStreamBaseUrl}/${targetVideo}`;
+
+        for(let i = 0; i < fragmentsList.length; i++) {
+            let fragRange = fragmentsList[i].split('@');
+            fragRange = fragRange.reverse();
+
+            const fragSize = Number.parseInt(fragRange[1]);
+            const startBytes = Number.parseInt(fragRange[0]);
+            const endBytes = fragSize + startBytes - 1;
+
+            const fragName = `fragment_${startBytes}-${endBytes}.mp4`;
+            const fragPath = path.join(videoDir, fragName);
+
+            const fragFile = fs.createWriteStream(fragPath);
+
+            await downloadFile(targetVideoUrl, {
+                stream: fragFile,
+                headers: {
+                    range: `bytes=${startBytes}-${endBytes}`,
+                },
+            });
+        }
+
+        const videoInfo = {
+            thumbnail: 'https://' + videoData.from + videoData.thumbnailPath,
+            videoDetails : videoData,
+        };
+
+        const result = {
+            video: {
+                internalURL: shareId,
+            },
+            infos: videoInfo,
+            id: videoData.uuid,
+        };
+
+        return result;
+    });
+
+    ipcMain.handle('deleteShareWithVideo', async (event, shareId) => {
+        const shareDir = getPostFolder(shareId);
+
+        fs.rmSync(shareDir, { recursive: true, force: true });
+    });
+
+    ipcMain.handle('getShareList', async (event) => {
+        const isShaHash = /[a-f0-9]{64}/;
+
+        const postsDir = path.join(Storage, PostsDir);
+
+        if (!fs.existsSync(postsDir)) {
+            return [];
+        }
+
+        const postsList = fs.readdirSync(postsDir)
+            .filter(fN => isShaHash.test(fN));
+
+        return postsList;
+    });
+
+    ipcMain.handle('getShareData', async (event, shareId) => {
+        const shareDir = getPostFolder(shareId);
+        const jsonPath = path.join(shareDir, 'share.json');
+
+        const jsonData = fs.readFileSync(jsonPath, { encoding:'utf8', flag:'r' });
+
+        return JSON.parse(jsonData);
+    });
+
+    ipcMain.handle('getVideoData', async (event, shareId, videoId) => {
+        const videoDir = getVideoFolder(shareId, videoId);
+
+        const jsonPath = path.join(videoDir, 'info.json');
+
+        const videosList = fs.readdirSync(videoDir);
+
+        const videoData = {};
+
+        videoData.id = videoId;
+
+        const jsonData = fs.readFileSync(jsonPath, { encoding:'utf8', flag:'r' });
+
+        videoData.infos = JSON.parse(jsonData);
+
+        const playlistName = videosList.find(fN => (
+            fN.endsWith('.m3u8')
+        ));
+
+        const playlistPath = path.join(videoDir, playlistName);
+
+        const fileStats = fs.statSync(playlistPath);
+
+        videoData.size = fileStats.size;
+        videoData.video = {
+            internalURL: shareId,
+        };
+
+        return videoData;
+    });
+
+    /**
+     * Local files requestor bridge
+     */
+    bastyonFsFetchBridge(ipcMain, Storage);
+
+    /**
+     * Video transcoding handler
+     */
+    binariesDownloader(ipcMain, Storage);
+    transcodingProcessor(ipcMain);
 
     proxyInterface = new ProxyInterface(ipcMain, win.webContents)
     proxyInterface.init()
@@ -761,7 +986,7 @@ var openlink = function(argv, ini){
 
 
     _openlink(l, ini)
-    
+
 }
 
 var r = app.requestSingleInstanceLock()
@@ -771,7 +996,7 @@ if(!r) {
 } else {
 
     openlink(process.argv, true)
-    
+
     app.on('second-instance', function(event, argv, cwd) {
 
         openlink(argv)
@@ -788,7 +1013,7 @@ if(!r) {
     // If we are running a non-packaged version of the app && on windows
 
     _.each(protocols, function(protocol){
-        app.setAsDefaultProtocolClient(protocol, process.execPath, [path.resolve(process.argv[1] || '.') ]); 
+        app.setAsDefaultProtocolClient(protocol, process.execPath, [path.resolve(process.argv[1] || '.') ]);
     })
 
 
@@ -811,23 +1036,23 @@ if(!r) {
             createWindow()
         }
     })
-    
+
     if (is.macOS()){
         app.on('open-url', (event, url) => {
 
             _openlink(url, false)
-    
+
             if (win) {
-    
+
                 if (win.isMinimized()) win.restore();
-    
+
                 win.show()
                 win.focus();
             }
         })
     }
 
-    
+
 
 
 

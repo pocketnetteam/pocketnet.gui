@@ -4,10 +4,11 @@ var _ = require('underscore');
 var f = require('../functions');
 var Statistic = require('../lib/statistic');
 
-var instance = function (host, Roy) {
+var instance = function (host, ip, Roy) {
 	var self = this;
 
 	self.host = host;
+	self.ip = ip;
 	self.cantuploading = false
 
 	var inited = false;
@@ -101,6 +102,7 @@ var instance = function (host, Roy) {
 
 		}).catch(e => {
 
+			//console.log("E", self.host, e)
 
 			return Promise.resolve()
 
@@ -160,6 +162,8 @@ var instance = function (host, Roy) {
 			});
 
 		}).catch((error) => {
+
+			//console.log('error', `http://${host}${url}`, url, ((error || {}).response || {}).status || 500)
 
 			var meta = {
 				code : ((error || {}).response || {}).status || 500,

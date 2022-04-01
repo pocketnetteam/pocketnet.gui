@@ -287,6 +287,7 @@
     }
 
     .shareSave{
+        margin-right: auto;
     
 
         i{
@@ -330,7 +331,7 @@
             left: 0;
             right: 0;
             top: 0;
-            bottom: 60px;
+            bottom: 70px;
             cursor: pointer;
             background: rgb(0,0,0);
             background: linear-gradient(180deg, rgba(0,0,0,0.9528186274509804) 0%, rgba(0,0,0,0.9472163865546218) 6%, rgba(0,0,0,0.21612394957983194) 76%, rgba(0,0,0,0.09007352941176472) 82%, rgba(0,0,0,0) 100%);
@@ -582,38 +583,7 @@
         }
     }
 
-    .jsPlayerLoading{
-        
-        width: auto;
-        height: auto;
-        background: #000000;
-        position: relative;
-        
-
-        .preloader5{
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            margin-left: -15px;
-            margin-top: -3px;
-            width: 30px;
-            height: 15px;
-            contain: strict;
-        }
-
-        .jsPlayerLoadingD{
-            position: absolute;
-            left : 0;
-            top : 0;
-            bottom : 0;
-            right: 0;
-
-            >div{
-                vertical-align: middle;
-                text-align: center;
-            }
-        }
-    }
+    
 
     .authorTable{
         width: auto;
@@ -1252,8 +1222,7 @@
     
 
         .video-js{
-            max-height: 80vh;
-            
+            max-height: calc(var(--vh, 1vh) * 80);
         }
 
         .shareTable{
@@ -1441,33 +1410,7 @@
 
             .videoWrapper{
                 max-width: none;
-                /*background: #000;
-            
-                &.squareVideo,
-                &.verticalVideo {
-                    background: #000;
-                    position: relative;
-                    overflow: hidden;
-
-                    .js-player{
-                        margin : 0 auto;
-                        max-width: 450px;
-                        position : static;
-                    }
-
-
-                    .video-js{
-                        position : static;
-
-                    }
-                }
-
-                &.squareVideo{
-                    .js-player{
-                        max-width: 500px;
-                    }
-                }*/
-
+               
                 .videoTips{
                     display: none;
                 }
@@ -1505,6 +1448,33 @@
     }
 }
 
+html.mobileview{
+    .share_common{
+        .images{
+            .imagesContainer{
+                &.owlcar{
+                    max-width: none;
+                    contain: strict;
+                }
+            }
+        }
+
+        .panel{
+            contain: strict;
+            height: 40px;
+        }
+    }
+}
+
+html.ios{
+    .share_common{
+        &.fullScreenVideo{
+            .video-js{
+                max-height: 80vh;
+            }
+        }
+    }
+}
 
 /*t*/ @media only screen and (max-width: 768px){
 
@@ -1712,7 +1682,7 @@
             max-width: 768px;
             position : relative;
             border-radius: 0;
-
+            
             .js-player{
                 border-radius: 0;
                 overflow: visible;
@@ -1738,7 +1708,7 @@
 
         .jsPlayerLoading{
             width: 100%;
-            height: 300px;
+            /*height: 300px;*/
         }
 
         .meta{

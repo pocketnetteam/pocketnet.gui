@@ -16,19 +16,23 @@ var toppanel = (function(){
 				var links = {
 
 					index : "index",
-		
+
 					sub : "index?r=sub",
-		
+
 					recommended : 	"index?r=recommended"
-		
-		
+
+
 				}
 
 				if (self.app.platform.videoenabled ){
 					links.video = "index?video=1"
 				}
 
-				if (window.cordova/* || (typeof _Electron != 'undefined' && window.electron)*/) {
+				const isCordova = (window.cordova);
+				const isElectron = (typeof _Electron !== 'undefined' && !!window.electron);
+				const isSaveSupported = (isCordova);
+
+				if (isSaveSupported) {
 					links.saved = "index?r=saved"
 				}
 
@@ -53,10 +57,10 @@ var toppanel = (function(){
 					type : "VALUES",
 					name : "Contents",
 					id : 'contents',
-					possibleValues : vs, 
+					possibleValues : vs,
 					possibleValuesLabels : labels,
 					defaultValue : value
-				
+
 				})
 
 				contents.value = value
@@ -69,9 +73,9 @@ var toppanel = (function(){
 						open : true,
 						href : href,
 						history : true,
-						
+
 					})
-					
+
 				}
 
 				return contents;
@@ -80,7 +84,7 @@ var toppanel = (function(){
 		}
 
 		var events = {
-			
+
 		}
 
 		var renders = {
@@ -93,7 +97,7 @@ var toppanel = (function(){
 					el.menu.find('.showcategories').removeClass('active')
 				}
 
-				
+
 			},
 			menu : function(pathname){
 
@@ -122,14 +126,13 @@ var toppanel = (function(){
 						el.menu.find('.showcategories').on(clickAction(), function(){
 
 							var mainmoduleAction = deep(self.app, 'modules.main.module.showCategories')
-			
 							if (mainmoduleAction) mainmoduleAction(true)
 						})
 
 					})
-					
+
 				})
-				
+
 			}
 		}
 
@@ -138,7 +141,7 @@ var toppanel = (function(){
 
 			},
 			load : function(){
-				
+
 			}
 		}
 
@@ -194,10 +197,10 @@ var toppanel = (function(){
 
 				delete self.app.platform.sdk.newmaterials.clbks.update.toppanel
 				delete self.app.nav.clbks.history.toppanel
-				
+
 				el = {};
 			},
-			
+
 			init : function(p){
 
 				state.load();

@@ -500,7 +500,7 @@ var authorization = (function(){
 			},
 
 			wnd : {
-				class : 'withoutButtons authwindow normalizedmobile'
+				class : 'withoutButtons authwindow normalizedmobile maxheight'
 			}
 		}
 	};

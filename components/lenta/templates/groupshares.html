@@ -1,3 +1,5 @@
+<div class="portion">
+
 <% 
 var i = index || 0;
 
@@ -20,6 +22,8 @@ var groupshares = group(shares, function(s){
 if(typeof video != 'undefined' && video) groupshares = group(shares, function(s){
 	return s.txid
 })
+
+var recommendeduserscnt = true;
 
 var me = app.platform.sdk.user.me()
 
@@ -56,14 +60,6 @@ _.each(groupshares, function(gs, address){
 
 	</div>
 
-	<% if(showRecommendedUsers.show) { 
-		showRecommendedUsers.show = false;	
-	%>
-
-		<div class="recommendeduserscnt"></div>
-
-	<% } %>
-	
 <% }) %>
 
-	
+</div>

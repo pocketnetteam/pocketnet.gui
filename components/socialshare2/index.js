@@ -36,27 +36,41 @@ var socialshare2 = (function(){
 						repost : shareid
 					})
 
-					self.closeContainer()
+					setTimeout(function(){
+						self.closeContainer()
+					}, 200)
+					
 					
 				}, shareid)
 
 			},
 
 			nativeshare : function(){
-				plugin.shareWithOptions({
 
-					message: ed.sharing.text.body || '', 
-					subject: ed.sharing.text.title || '',
-					images : ed.sharing.images || [],
-					url: ed.url
+				if (plugin){
+					plugin.shareWithOptions({
 
-				}, function(){
+						message: ed.sharing.text.body || '', 
+						subject: ed.sharing.text.title || '',
+						images : ed.sharing.images || [],
+						url: ed.url
 
-					self.closeContainer()
+					}, function(){
 
-				}, function(){
+						setTimeout(function(){
+							self.closeContainer()
+						}, 200)
 
-				});
+					}, function(){
+
+					});
+				}
+				else{
+					actions.applyview('share')
+					renders.sharebuttons()
+				}
+
+				
 			},
 			
 			stateAction : function(link, clbk, txid){
@@ -114,6 +128,18 @@ var socialshare2 = (function(){
 
 				})
 			},
+
+			applyview : function(view){
+
+				if(!view){
+					el.c.removeAttr('show', view)
+					el.c.find('.embeddingWrapperCnt').html('')
+				}
+				else{
+					el.c.attr('show', view)
+				}
+				
+			}
 
 		}
 
@@ -340,10 +366,7 @@ var socialshare2 = (function(){
 							sitemessage(self.app.localization.e('successcopied'))
 						})
 					})
-
 				})
-
-				
 				
 			},
 
@@ -369,7 +392,6 @@ var socialshare2 = (function(){
 						p.ref = self.app.platform.sdk.address.pnet().address = self.app.ref
 					}
 				}
-				
 
 				if(settings.onlyvideo){
 
@@ -395,7 +417,7 @@ var socialshare2 = (function(){
 
 				p = hexEncode(JSON.stringify(p))
 
-				if(action && actionid){
+				if (action && actionid){
 					return '<div id="pocketnet_'+seed+'"></div><script src="https://'+self.app.options.url+'/js/widgets.js"></script><script type="text/javascript">(new window.PNWIDGETS()).make('+seed+', "'+action+'", "'+actionid+'", "'+p+'")</script>'
 				}	
 				else{
@@ -707,25 +729,41 @@ var socialshare2 = (function(){
 
 		var initEvents = function(){
 
-			el.c.find('.url button').on('click', function(){
+			el.c.find('.url .button').on('click', function(){
 				copycleartext(ed.url)
 				sitemessage(self.app.localization.e('urlsuccesscopied'))
+
+				setTimeout(function(){
+					self.closeContainer()
+				}, 200)
 			})
 
-			el.c.find('.chat button').on('click', function(){
+			el.c.find('.chat .button').on('click', function(){
 
 				var url = self.app.nav.api.history.removeParametersFromHref(ed.url, ['ref'])
 			
 				self.app.platform.matrixchat.share.url(url).catch(r => {
 				})
+
+				setTimeout(function(){
+					self.closeContainer()
+				}, 200)
 			
-				if(self.closeContainer) self.closeContainer()
 			})
 
 			el.c.find('.forrepost').on('click', events.repost)
 
 
-			el.c.find('.nativeshare button').on('click', events.nativeshare)
+			el.c.find('.nativeshare .button').on('click', events.nativeshare)
+
+			el.c.find('.backwrapper').on('click', function(){
+				actions.applyview('')
+			})
+
+			el.c.find('.embeddingshow').on('click', function(){
+				actions.applyview('embeding')
+				renders.embedding()
+			})
 
 		}
 
@@ -775,7 +813,7 @@ var socialshare2 = (function(){
 
 				changeRef()
 
-				renders.sharebuttons()
+				
 
 				//renders.embedding()
 			}
@@ -842,7 +880,8 @@ var socialshare2 = (function(){
 					eparameters : eparameters,
 					notincludedRef : ed.notincludedRef, 
 					postId: postId,
-					share : share
+					share : share,
+					ed
 				};
 
 				clbk(data);
@@ -867,7 +906,7 @@ var socialshare2 = (function(){
 
 				renders.sharebuttons()
 
-				renders.embedding()
+				
 
 				ParametersLive(_.toArray(eparameters), el.c)
 			
@@ -880,7 +919,7 @@ var socialshare2 = (function(){
 				trueshold : 1,
 				swipeCloseDir : 'down',
 				header : self.app.localization.e('e13174'),
-				class : 'sharingwindow2 normalizedmobile noheader'
+				class : 'sharingwindow2 centercontentWindow normalizedmobile noheader withoutButtons'
 			}
 		}
 	};

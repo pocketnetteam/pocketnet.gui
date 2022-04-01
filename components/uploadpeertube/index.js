@@ -1,3 +1,10 @@
+
+
+if (typeof _Electron !== 'undefined') {
+	ipcRenderer = require('electron').ipcRenderer;
+
+}
+
 var uploadpeertube = (function () {
 	var self = new nModule();
 
@@ -31,7 +38,7 @@ var uploadpeertube = (function () {
 
 						/*// to bits and then to bitrate
 						var averageBitrate = (8 * file.size) / video.duration;
-			
+
 						return averageBitrate > 8000000
 						  ? reject({
 							  text: self.app.localization.e('videoBitrateError'),
@@ -49,26 +56,26 @@ var uploadpeertube = (function () {
 				var errorel = el.c.find('.videoErrorContainer')
 
 
-				if (errorel.length){
+				if (errorel.length) {
 
-					if (errorcomp){
+					if (errorcomp) {
 						errorcomp.destroy()
 						errorcomp = null
 					}
 
 					self.nav.api.load({
-						open : true,
-						id : 'abilityincrease',
-						el : errorel,
+						open: true,
+						id: 'abilityincrease',
+						el: errorel,
 
-						essenseData : {	
-							template : 'video'
+						essenseData: {
+							template: 'video'
 						}
-					}, function(v, p){
+					}, function (v, p) {
 						errorcomp = p
 					})
 				}
-				
+
 			},
 		};
 
@@ -105,7 +112,9 @@ var uploadpeertube = (function () {
 				contentAsHTML: true,
 			});
 
-			el.videoInput.change(function (evt) {
+
+
+			el.videoInput.change(async function (evt) {
 				var fileName = evt.target.files[0].name;
 
 				el.videoError.text(
@@ -146,7 +155,6 @@ var uploadpeertube = (function () {
 				ed.uploadInProgress = true;
 				el.header.removeClass('activeOnRolled');
 				el.uploadButton.prop('disabled', true);
-				el.uploadProgress.removeClass('hidden');
 
 				//var transcoded = await self.app.peertubeHandler.transcode(videoInputFile[0])
 
@@ -157,12 +165,20 @@ var uploadpeertube = (function () {
 
 				data.name = videoName || fileName;
 
+				await Promise.all(Object.values(data.video));
+
 				var options = {
 					type: 'uploadVideo',
 				};
 
 				options.progress = function (percentComplete) {
-					var formattedProgress = (percentComplete * 0.9).toFixed(2);
+					let formattedProgress;
+
+					if (percentComplete === 100) {
+						formattedProgress = percentComplete;
+					} else {
+						formattedProgress = (percentComplete * 0.9).toFixed(2);
+					}
 
 					if (
 						formattedProgress === '100.00' &&
@@ -201,6 +217,123 @@ var uploadpeertube = (function () {
 				};
 
 				el.importUrl.addClass('hidden');
+
+				if (typeof _Electron !== 'undefined') {
+					const filePath = evt.target.files[0].path;
+
+					const videoProcessor = transcodingFactory(electron.ipcRenderer);
+
+					try {
+						el.cancelButton.addClass('hidden');
+
+						options.progress(0);
+
+						let binProcessing = false;
+						const progressBinaries = (progress) => {
+							if (!binProcessing && progress !== 100) {
+								options.progress(0);
+
+								el.uploadProgress.find('.bold-font')
+									.text(self.app.localization.e('uploadVideoProgress_binaries'))
+									.removeClass('uploading')
+									.addClass('binaries');
+
+								el.uploadProgress.find('.bold-font')
+									.text(self.app.localization.e('uploadVideoProgress_binaries'))
+
+								el.uploadProgress.removeClass('hidden');
+
+								binProcessing = true;
+							}
+
+							options.progress(progress);
+						};
+
+						await videoProcessor.downloadBinaries(progressBinaries);
+
+						let videoTranscoding = false;
+						const progressTranscode = (progress) => {
+							if (!videoTranscoding) {
+								options.progress(0);
+
+								el.uploadProgress
+									.find('.upload-progress-bar')
+									.removeClass('uploading binaries')
+									.addClass('processing');
+
+								el.uploadProgress.find('.bold-font')
+									.text(self.app.localization.e('uploadVideoProgress_processing'))
+
+								el.uploadProgress.removeClass('hidden');
+
+								videoTranscoding = true;
+							}
+
+							options.progress(progress);
+						};
+
+						const transcoded = await videoProcessor.transcode(filePath, progressTranscode, options.cancel);
+
+						/** Writing transcoded alternatives to target object */
+						/** At this moment for backend reasons, sending only 720p */
+
+						if (!transcoded) {
+							return;
+						}
+
+						data.video = new File([transcoded.p720.buffer], data.video.name, { type: 'video/mp4' });
+					} catch (err) {
+						const isCanceledByUser = (err.message === 'TRANSCODE_ABORT');
+						const isAbortedByApp = (err.message === 'NO_TRANSCODED');
+						const binariesNotAvailable = (err.message === 'FFBIN_DOWNLOAD_ERROR');
+						const isVerticalVideo = (err.message === 'VERTICAL_VIDEO_NOT_SUPPORTED');
+
+						if (isCanceledByUser) {
+							/**
+							 * Handling user cancelled transcoding.
+							 * Just stopping video upload...
+							 */
+							console.log('Transcoding was canceled by user');
+							return;
+						} else if (isAbortedByApp) {
+							/**
+							 * Handling not required transcoding cases.
+							 * This doesn't cancel video upload...
+							 */
+							console.log('Transcoding is not required');
+						} if (binariesNotAvailable) {
+							/**
+							 * Handling FF Binaries error.
+							 */
+							console.log('FF Binaries download error');
+						} if (isVerticalVideo) {
+							/**
+							 * Handling vertical video error.
+							 */
+							console.log('Transcoding vertical videos is not supported ');
+						} else {
+							/**
+							 * Anyway transcoding error is not fatal. If
+							 * video can't be processed by client then
+							 * it would be handled on server. No reason
+							 * to report user about any issue related...
+							 */
+
+							console.error(err);
+						}
+					}
+				}
+
+				el.uploadProgress.removeClass('hidden');
+
+				el.uploadProgress.find('.bold-font')
+					.text(self.app.localization.e('uploadVideoProgress_uploading'));
+				el.uploadProgress
+					.find('.upload-progress-bar')
+					.removeClass('processing binaries')
+					.addClass('uploading');
+
+				options.progress(0);
 
 				self.app.peertubeHandler.api.videos
 					.upload(data, options)
@@ -427,7 +560,7 @@ var uploadpeertube = (function () {
 			destroy: function () {
 				el = {};
 
-				if (errorcomp){
+				if (errorcomp) {
 					errorcomp.destroy()
 					errorcomp = null
 				}

@@ -1,6 +1,6 @@
 
 
-<div id="<%-module.map.id%>" class="unselectablemobile">
+<div id="<%-module.map.id%>" class="unselecmobile">
 	
 	<div class="menuWrapper">
 		<div class="rightchatspacer">
@@ -11,7 +11,7 @@
 					<% if(haschat && state && (app.mobileview)) {%>
 
 						<div class="items chat">
-							<div elementsid="eventschats" class="item table chatwr" events="chats">
+							<div elementsid="eventschats" class="item  chatwr" events="chats">
 								<div class="icon">
 									<div class="icn">
 										<i class="far fa-comment"></i>
@@ -28,7 +28,7 @@
 
 							<div class="items sitenames">
 
-								<div class="item table sitename" >
+								<div class="item  sitename" >
 									<div elementsid="eventssitename" class="icon" events="sitename">
 										<img class="header_logo all" src="img/logotypes/<%-app.meta.fullname.toLowerCase()%>_logo_<%-theme%>.svg">
 									</div>
@@ -60,7 +60,7 @@
 					<% if(!app.curation()) {%>
 						<div class="items searchWrapper">
 
-							<div class="item table right" events="searchinit">
+							<div class="item  right" events="searchinit">
 								<div class="postssearchwrapper">
 									<div class="postssearch">
 									</div>
@@ -76,7 +76,7 @@
 						<% if(state) { %>
 
 							<div elementsid="keyexportWrapper" class="items keyexportWrapper <% if(typeof key== 'undefined' || !key) {%> hidden <% } %>">
-								<div class="item table right onlyicon keyexport" events="keyexport">
+								<div class="item  right onlyicon keyexport" events="keyexport">
 
 									<div class="icon">
 										<div class="icn">
@@ -92,7 +92,7 @@
 							</div>
 
 							<div elementsid="notificationsWrapper" class="items notificationsWrapper">
-								<div class="item table right onlyicon notifications" events="notifications">
+								<div class="item  right onlyicon notifications" events="notifications">
 
 									<div class="icon">
 										<div class="icn">
@@ -108,7 +108,7 @@
 							</div>
 
 							<div elementsid="walletsWrapperOpen" class="items walletsWrapper">
-								<div class="item table right wallets onlyicon" events="wallets">
+								<div class="item  right wallets onlyicon" events="wallets">
 
 									<div class="amount">
 										<div class="numberWrp">
@@ -122,7 +122,7 @@
 						<% } %>
 
 						<div class="items">
-							<div class="item table right state onlyicon" events="state">
+							<div class="item  right state onlyicon" events="state">
 								
 								<div class="icon"> <% if(state) {%> <a elementsid="userpage?id=system16" href="userpage?id=system16">	<% } else { %> <a elementsid="hrefsystem16" href="system16"> <% } %>
 									<div class="icn">
@@ -136,7 +136,7 @@
 						<% if(state) { %>
 
 							<div class="items workstation">
-								<div elementsid="eventschangeaccount" class="item table right changeaccount" events="changeaccount">
+								<div elementsid="eventschangeaccount" class="item  right changeaccount" events="changeaccount">
 									<div class="icon">
 										<i class="fas fa-sort-down"></i>
 									</div>
@@ -144,7 +144,7 @@
 							</div>
 
 							<div class="items">
-								<div elementsid="menu_user" class="item table right user unselectable">
+								<div elementsid="menu_user" class="item  right user unselec">
 
 									<% 
 									
@@ -194,7 +194,7 @@
 						<% if(!state) { %>
 							
 							<div class="items">
-								<div elementsid="eventssignin" class="item table right signin" events="signin">
+								<div elementsid="eventssignin" class="item  right signin" events="signin">
 									<div class="label">
 										<b><%=e('signinmenu')%></b>
 									</div>
@@ -204,7 +204,7 @@
 
 							<div class="items workstation">
 
-								<div elementsid="eventssignup" class="item table right signup" events="signup">
+								<div elementsid="eventssignup" class="item right signup" events="signup">
 
 									<div class="label">
 										<b><%=e('signupmenu')%></b>

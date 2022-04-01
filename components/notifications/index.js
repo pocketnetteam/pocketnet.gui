@@ -495,8 +495,8 @@ var notifications = (function(){
 			},
 
 			wnd : {
-				header : "notifications",
-				class : 'wndnotifications normalizedmobile',
+				//header : "notifications",
+				class : 'wndnotifications normalizedmobile maxheight',
 				parallaxselector : '.wndback,.wndheader'
 			}
 

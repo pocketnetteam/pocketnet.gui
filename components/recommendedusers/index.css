@@ -55,13 +55,13 @@
 }
 #recommendedusers .users {
   display: flex;
-  justify-content: flex-start;
-  padding-bottom: 0.5em;
+  justify-content: space-around;
+  padding-bottom: 1em;
   padding-left: 1em;
   padding-right: 1em;
 }
 #recommendedusers .users .wrk {
-  max-width: 212px;
+  max-width: 218px;
   width: 100%;
 }
 #recommendedusers .users .wrk:nth-child(2n) {
@@ -70,17 +70,15 @@
 }
 #recommendedusers .users .user {
   padding: 1em;
-  border: 1px solid rgb(var(--neutral-grad-0));
+  border: 1px solid rgba(var(--color-medium-theme), 0.3);
   border-radius: 12px;
-}
-#recommendedusers .users .user .addressWrapper {
-  cursor: pointer;
 }
 #recommendedusers .users .user .addressWrapper .iconWrapper {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100px;
+  cursor: pointer;
 }
 #recommendedusers .users .user .addressWrapper .iconWrapper .icon {
   display: flex;
@@ -119,8 +117,14 @@
   white-space: nowrap;
   overflow: hidden;
 }
-#recommendedusers .users .user .addressWrapper .userbody .reputation .value {
-  color: rgb(var(--color-bg-ac-bright));
+#recommendedusers .users .user .addressWrapper .userbody .subscribers {
+  font-size: 0.9em;
+}
+#recommendedusers .users .user .addressWrapper .userbody .subscribers .label {
+  color: rgb(var(--color-medium-theme));
+}
+#recommendedusers .users .user .addressWrapper .userbody .subscribers .value {
+  color: rgb(var(--color-txt-ac));
 }
 #recommendedusers .users .user .addressWrapper .userbody .subscribeWrapper {
   margin-top: 16px;
@@ -170,4 +174,13 @@
 }
 #recommendedusers .users .user .subscribebuttonstop.following .subscribe {
   display: none;
+}
+@media only screen and (max-width: 1180px) {
+  #recommendedusers .users {
+    overflow-x: auto;
+    justify-content: flex-start;
+  }
+  #recommendedusers .users .wrk:nth-child(-n+2) {
+    display: block;
+  }
 }

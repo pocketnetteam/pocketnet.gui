@@ -517,7 +517,7 @@
 			content = p.content || null,
 
 			id = 'w' + makeid().split('-')[0],
-			nooverflow = (p.nooverflow || app.scrollRemoved || p.pip),
+			nooverflow = (p.nooverflow || /*app.scrollRemoved || */p.pip),
 			el = p.el || p.app.el.windows;
 
 
@@ -579,8 +579,6 @@
 				if(p.leftbg) 
 					h+='<div class="leftbg"><div>'+p.leftbg+'</div></div>';
 
-				h+=	 p.allowHide ? '<div class="wndcontent content customscroll">' + content + '<div class="changeStateButtons"><div class="hideButton changeButton"><i class="fas fa-minus"></i></div><div class="closeButton changeButton"><i class="fas fa-times"></i></div><div class="changeButton expandButton hidden"><i class="fas fa-expand-arrows-alt"></i></div></div></div>' : '<div class="wndcontent customscroll content">'+content+'</div>';
-
 				if(p.header) 
 				{
 					h+='<div class="wndheader">'+ (app.localization.e(p.header) || p.header)+'</div>';
@@ -589,6 +587,10 @@
 				{	
 					closedbtnclass = 'onwhite'
 				}
+
+				h+=	 p.allowHide ? '<div class="wndcontent content customscroll">' + content + '<div class="changeStateButtons"><div class="hideButton changeButton"><i class="fas fa-minus"></i></div><div class="closeButton changeButton"><i class="fas fa-times"></i></div><div class="changeButton expandButton hidden"><i class="fas fa-expand-arrows-alt"></i></div></div></div>' : '<div class="wndcontent customscroll content">'+content+'</div>';
+
+			
 
 				if (!p.noButtons) {
 					h +=	 '<div class="buttons windowmainbuttons">';
@@ -673,7 +675,7 @@
 				wnd.removeClass('asette')
 
 				if(!nooverflow){
-					nooverflow = !app.actions.offScroll();
+					app.actions.offScroll(wnd);
 				}
 
 			}, 220)
@@ -723,16 +725,7 @@
 				var down = {
 					cancellable : true,	
 
-					basevalue : function(){
-
-						if(wnd.hasClass('showbetter')){
-							return 45
-						}
-
-						return 130
-					},
-					
-					positionclbk : function(px){
+					positionclbk : function(px, e){
 						var percent = Math.abs(px) / trueshold;
 					},
 
@@ -760,6 +753,7 @@
 
 					restrict : true,
 					trueshold : trueshold,
+					distance : 100,
 					clbk : function(){
 						actions.close(true)
 					}
@@ -783,8 +777,8 @@
 
 				cnt = wnd.find('.wndcontent')
 
-				if(!p.showbetter)
-					cnt.on('scroll', _.throttle(wndcontentscrollmobile, 50))
+				/*if(!p.showbetter)
+					cnt.on('scroll', _.throttle(wndcontentscrollmobile, 50))*/
 
 			}
 
@@ -819,12 +813,14 @@
 
 			expand : function(){
 
+				var expand = p.expand
+
 				actions.close()
 
 				setTimeout(function(){
 
-					if (p.expand){
-						p.expand()
+					if (expand){
+						expand()
 					}
 					
 				}, 200)
@@ -855,6 +851,8 @@
 
 				setTimeout(function(){
 
+					console.log('nooverflow', nooverflow)
+
 					if(!nooverflow)
 						app.actions.onScroll();
 
@@ -864,7 +862,7 @@
 
 					clearmem();
 
-				}, 220)	
+				}, isMobile() ? 220 : 1)	
 				
 				if(p.onclose) p.onclose()
 
@@ -899,7 +897,7 @@
 				wnd.find('.hideButton').removeClass('hidden');
 
 				if(!nooverflow) {
-					app.actions.offScroll();
+					app.actions.offScroll(wnd);
 				}
 			},
 		}
@@ -3794,7 +3792,7 @@
 
 					var close = function(){
 
-						if(bkp){
+						if (bkp){
 							input.val(bkp)
 						}
 
@@ -3806,13 +3804,8 @@
 					}
 
 					var closeclick = function(e){
-
-						
-
 						if (_el.has(e.target).length === 0 && take().hasClass('opened')) {
-							
 							close();
-
 						}
 					}
 
@@ -3838,8 +3831,6 @@
 							_el.find('input').on('focus', function(){
 								$(this).select();
 							})
-
-							
 						}
 
 						if(parameter.type == 'values' && !parameter.autoSearch)
@@ -4432,12 +4423,13 @@
 
 						var value = $(this).val(); 	
 
-						if(!value) {
+						if(!value || value == '0') {
 
 							return false
 						}
 
 						if(value.length > 1) {
+
 							if (value[0] == '0')
 								value = value.substr(1)
 
@@ -4452,8 +4444,6 @@
 
 							$(this).val(value); 
 						}
-
-
 
 								
 					})
@@ -6464,7 +6454,11 @@
 
 	
 
-	_scrollTop = function(scrollTop, el, time){
+	_scrollTop = function(scrollTop, el, time, direction){
+
+		console.log('direction', direction, scrollTop)
+
+		if(!direction) direction = 'Top'
 
 		if(!el || el.attr('id') == 'application') {
 			el = $("body,html");
@@ -6475,33 +6469,42 @@
 		}
 
 		if(time){
-			el.animate({ scrollTop: scrollTop }, time);
+
+			var a = {}
+
+			a['scroll' + direction] = scrollTop
+
+			el.animate(a, time);
 		}
 		else{
-			el.scrollTop(scrollTop)
+			el['scroll' + direction](scrollTop)
 		}
 
 		
 	}
 
-	_scrollTo = function(to, el, time, ofs){
+	_scrollTo = function(to, el, time, ofs, direction){
+
+		if(!direction) direction = 'Top'
 		
 		if(!to) to = $(this);
 
 		var ofssetObj = to.offset();
 
-		var offset = (to.height() - $(window).height()) / 2;
+		var offset = 0
+		
+		if (direction == 'Top') offset = (to.height() - $(window).height()) / 2;
+		if (direction == 'Left') offset = (to.width() - $(el).width()) / 2;
 
 		if (ofssetObj)
 		{
-			var scrollTop = ofssetObj.top + offset;
+			var scrollTop = ofssetObj[direction.toLowerCase()] + offset;
 
-			if (el) scrollTop = scrollTop + el.scrollTop() - el.offset().top
-
+			if (el) scrollTop = scrollTop + el['scroll' + direction]() - el.offset()[direction.toLowerCase()]
 
 			scrollTop = scrollTop + (ofs || 0)
 
-			_scrollTop(scrollTop, el, time);
+			_scrollTop(scrollTop, el, time, direction);
 		}
 
 	}
@@ -6561,12 +6564,15 @@
 		var st = 0,
 			sh = 0;
 
+		var w = 'auto'
+
 		if(!p) p = {};
 
 		if(!p.inel) {
 			p.inel = $(window);
 			st = p.app.lastScrollTop;
-			sh = app.height;
+			sh = p.app.height;
+			w = p.app.width;
 		}
 
 		else{
@@ -6582,6 +6588,7 @@
 
 			st = inel.scrollTop()
 			sh = inel.height()
+			w = inel.width()
 		}
 		
 		if(!p.offset) {
@@ -6610,12 +6617,12 @@
 
 			var el = $(this);
 
-			var offsetTop = p.cache && el.data('c_' + p.f) ? el.data('c_' + p.f) : el[p.f]().top,
-				height = p.cache && el.data('c_height') ? el.data('c_height') : el.height(),
+			var offsetTop = p.cache && el.data('c_' + w + '_' + p.f) ? el.data('c_' + w + '_' + p.f) : el[p.f]().top,
+				height = p.cache && el.data('c_'+ w + '_height') ? el.data('c_'+ w + '_height') : el.height(),
 				bottom = offsetTop + height;
 
-			el.data('c_' + p.f, offsetTop)
-			el.data('c_height', height)
+			el.data('c_' + w + p.f, offsetTop)
+			el.data('c_'+ w + '_height', height)
 
 			var _part = offsetTop >= range.top && offsetTop < range.bottom || 
 				bottom <= range.bottom && bottom > range.top;
@@ -6784,10 +6791,10 @@
 
 		}
 
-		var applyDirection = function(direction, v){
+		var applyDirection = function(direction, v, e){
 			if (direction.positionclbk){
 				needclear = true
-				direction.positionclbk(v)
+				direction.positionclbk(v, e)
 			}
 		}
 
@@ -6799,16 +6806,25 @@
 
 
 				__el.css({"transform": ""});
-				__el.css({"transform-origin": ""});
-				__el.css({"-moz-transition": ""});
-				__el.css({"-o-transition": ""});
-				__el.css({"-webkit-transition": ""});
-				__el.css({"transition": ""});
+				
+				__el.css({"-moz-transition": transitionstr});
+				__el.css({"-o-transition": transitionstr});
+				__el.css({"-webkit-transition": transitionstr});
+				__el.css({"transition": transitionstr});
 
 				_.each(p.directions, function(d){
 					applyDirection(d, 0)
 				})
 
+
+				setTimeout(() => {
+					__el.css({"-moz-transition": ""});
+					__el.css({"-o-transition": ""});
+					__el.css({"-webkit-transition": ""});
+					__el.css({"transition": ""});
+
+					__el = null
+				}, 100)
 			}
 			
 			ms = false
@@ -6821,7 +6837,6 @@
 
 			var statusf = function(e, phase, direction, distance){
 
-
 				if (mainDirection && mainDirection.i != direction){
 					phase = 'cancel'
 					direction = mainDirection.i
@@ -6831,13 +6846,19 @@
 
 					if (mainDirection){
 
+						console.log('direction', direction)
+
 						if(phase == 'end' && mainDirection.clbk && direction == mainDirection.i){
-							mainDirection.clbk()
+
+							if((!mainDirection.distance || mainDirection.distance < distance)){
+								mainDirection.clbk()
+							}
+							
 						}
 					}
 
 					self.clear()
-						
+					document.ontouchmove = () => true
 
 					return
 
@@ -6857,26 +6878,40 @@
 						mainDirection = null;
 					}
 
+					if (e.cancelable !== false){
+						e.stopPropagation();
+						e.preventDefault();
+					}
+
 					return false
 				}
 
 				if (phase == 'start'){
 					mainDirection = null
+
+					document.ontouchmove = (e) => {
+
+						return false
+					}
 				}
 				
 				if (phase == 'move'){
 
-					if (distance > 20){
+					if (distance > (dir.trueshold || 30)){
 
 						mainDirection = dir
 
-						applyDirection(mainDirection, distance)
+						applyDirection(mainDirection, distance, e)
 
 						set(mainDirection.i, distance)
 						
 					}
 
-					e.preventDefault();
+					if (e.cancelable !== false){
+						e.stopPropagation();
+						e.preventDefault();
+					}
+
 					return true
 				}
 
@@ -6892,9 +6927,11 @@
 		}
 
 		self.destroy = function(){
+
 			p.el.swipe('destroy')
 			p = {}
 			needclear = false
+
 		}
 
 		return self;
@@ -7616,6 +7653,61 @@
 					},
 				}
 
+				if (p.peertubeImage) {
+
+					// Prepare URL
+					/*var url = new URL(app.peertubeServer);
+
+					if (data.ipAddress) {
+						url.hostname = data.ipAddress;
+						url.protocol = 'http:';
+						delete data.ipAddress;
+					}*/
+
+					ap.url = p.url + 'images/' + data.Action;
+
+					delete data.Action;
+
+					if (data.type && data.type.length > 0)
+						ap.url += '?type=' + data.type;
+
+					delete data.type;
+
+					// Get or refresh access token
+					var xmlHttp = new XMLHttpRequest();
+
+					xmlHttp.open("POST", p.url + 'users/token', false);
+					xmlHttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+					xmlHttp.send(toUrlEncoded({
+						grant_type: 'password',
+						...user.peertube
+					}));
+					var res = JSON.parse(xmlHttp.responseText), auth;
+					// Set auth header
+					if (res && res.access_token) auth = 'Bearer ' + res.access_token;
+
+						ap.headers = {
+							Authorization: auth
+						}
+
+					// Prepare image data for request
+					const mimeType = ap.data.base64.match(/[^:]\w+\/[\w-+\d.]+(?=;|,)/)[0];
+
+					const blob = b64toBlob(ap.data.base64.split(',')[1], mimeType);
+
+					var formData = new FormData();
+						formData.append("imagefile", blob);
+
+					ap.data = formData;
+					ap.processData = false;
+					ap.contentType = false;
+
+					$.ajax(ap);
+
+					return;
+					
+				}
+
 				if (p.imgur){
 					ap.url = app.imageServer + data.Action;
 					delete data.Action;
@@ -8177,26 +8269,21 @@
 
 	fastars = function(el){
 
-		$.each(el, function(){
+		el.find('i').on('mouseenter', function(){
 
-			var _el = $(this)
+			var _el = $(this).closest('.stars')
 
-			_el.find('i').on('mouseenter', function(){
+			if(_el.attr('value')) return;
 
-				if(_el.attr('value')) return;
+			var v = $(this).attr('value')
 
-				var v = $(this).attr('value')
-
-				_el.attr('tempValue', v)
-			})
-
-			_el.find('i').on('mouseleave', function(){
-
-				_el.removeAttr('tempValue')
-			})
-
+			_el.attr('tempValue', v)
 		})
 
+		el.find('i').on('mouseleave', function(){
+			var _el = $(this).closest('.stars')
+			_el.removeAttr('tempValue')
+		})
 		
 	}
 
@@ -10650,6 +10737,12 @@ Base64Helper = {
 
 /* EXTRA */
 
+toUrlEncoded = function(obj){
+
+	return Object.keys(obj).map(k => encodeURIComponent(k) + '=' + encodeURIComponent(obj[k])).join('&');
+
+}
+
 superXSS = function(str, p){
 
 	var l = str.length;
@@ -11280,8 +11373,12 @@ if(typeof window != 'undefined'){
 						clearInterval(splashScreeninterval);
 					}
 					// Completely remove the splashscreen
-					splashScreen.remove();
-					splashScreenImg = null
+
+					if (splashScreen)
+						splashScreen.remove();
+						splashScreenImg = null
+						
+					splashScreen = null
 				}, zoomOutDuration * 2);
 			}
 			// Wait until half the rotation is done

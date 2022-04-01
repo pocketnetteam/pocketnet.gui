@@ -41,7 +41,7 @@ __map =  {
 		"js/lib/pocketnet/buffer.js", //
 		
 		//
-
+		
         "js/vendor/pbkdf2.js", //
         "js/vendor/sha1.js", //
         "js/vendor/paste.js", //
@@ -75,6 +75,7 @@ __map =  {
 		//"js/notifications.js",
 		"js/lib/client/system16.js",
 		"js/lib/client/api.js",
+		"js/image-uploader.js",
 		"js/_map.js",
 		"js/app.js",
 		"js/main.js"
@@ -952,7 +953,7 @@ __map =  {
 
 		relations : [
 			{src : 'js/vendor/chart.min.js',			   f : 'js', require : function(){
-				Chart = require('./js/vendor/Chart.js')
+				Chart = require('./js/vendor/chart.min.js')
 			}},	
 		]
 

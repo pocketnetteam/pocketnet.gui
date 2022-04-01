@@ -315,6 +315,20 @@
 #comments .list .comment.newcomments {
   color: rgb(var(--color-txt-ac-1));
 }
+#comments .list .comment.hiddenComment .commentimages,
+#comments .list .comment.hiddenComment .commentmessage {
+  display: none;
+}
+#comments .list .comment.hiddenComment .hiddenCommentLabel {
+  display: block;
+  color: rgb(var(--neutral-grad-2));
+}
+#comments .list .comment .hiddenCommentLabel .ghost {
+  padding-left: 0;
+}
+#comments .list .comment .hiddenCommentLabel {
+  display: none;
+}
 #comments .list .comment.firstcomment {
   display: none;
 }
@@ -368,13 +382,15 @@
 #comments .list .comment.temptransaction.commentnotedited .commentpanel .items > div.reply {
   display: none;
 }
-#comments .list .commentWrapper > div {
-  vertical-align: top;
+#comments .list .commentWrapper {
+  display: flex;
+  justify-content: space-between;
 }
 #comments .list .commentWrapper > div.iconWrapper {
   position: relative;
   font-size: 0.8em;
   width: 45px;
+  min-width: 45px;
   padding-top: 1em;
   float: none;
   padding-left: 0;
@@ -412,6 +428,7 @@
 }
 #comments .list .commentWrapper > div.commentBody {
   padding-left: 0.5em;
+  flex-grow: 1;
 }
 #comments .list .commentWrapper > div.commentBody .cbodyWrapper {
   padding-bottom: 1em;
@@ -606,6 +623,7 @@
 }
 #comments .commentimages .imagesContainer {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.25em;
 }
 #comments .commentimages .imagesContainer.one .imagesWrapper {
@@ -746,10 +764,15 @@
 #comments .post .postbody .closeAnswer:hover {
   color: rgba(var(--color-txt-ac));
 }
+#comments .edit .posttable,
+#comments .answer .posttable,
+#comments .post .posttable {
+  display: flex;
+  justify-content: space-between;
+}
 #comments .edit .posttable > div,
 #comments .answer .posttable > div,
 #comments .post .posttable > div {
-  vertical-align: top;
   padding: 1em 0.5em;
   /*&.postCellWrapper{
 					.postaction{
@@ -761,6 +784,7 @@
 #comments .answer .posttable > div.iconWrapper,
 #comments .post .posttable > div.iconWrapper {
   width: 45px;
+  min-width: 45px;
   font-size: 0.8em;
   padding-top: 1.15em;
   padding-left: 0;
@@ -776,6 +800,7 @@
 #comments .answer .posttable > div.lcpp,
 #comments .post .posttable > div.lcpp {
   padding-right: 0;
+  flex-grow: 1;
 }
 #comments .edit .posttable > div.reputationFailCell,
 #comments .answer .posttable > div.reputationFailCell,
@@ -965,6 +990,7 @@
   top: 7px;
   right: 7px;
   color: rgb(var(--neutral-grad-2));
+  cursor: pointer;
 }
 #comments .edit .emojionearea-editor,
 #comments .answer .emojionearea-editor,
@@ -1194,6 +1220,7 @@ html.mobile #comments .list .metatable > div.panelWrapper .panel {
   }
   #comments .list .commentWrapper > div.iconWrapper {
     width: 36px;
+    min-width: 36px;
     padding-top: 0.5em;
   }
   #comments .list .commentWrapper > div.iconWrapper .usericon {
@@ -1321,10 +1348,12 @@ html.mobile #comments .list .metatable > div.panelWrapper .panel {
   #comments .post .posttable > div.postCellWrapper .postaction .icon {
     text-align: center;
   }
-  #comments .edit.active .newcommentimages.active,
-  #comments .answer.active .newcommentimages.active,
-  #comments .post.active .newcommentimages.active {
-    display: none!important;
+  #comments .edit.active,
+  #comments .answer.active,
+  #comments .post.active {
+    /*.newcommentimages.active {
+					display: none!important;
+				}*/
   }
   #comments .edit.active .postbody .posttable > div.lcpp,
   #comments .answer.active .postbody .posttable > div.lcpp,

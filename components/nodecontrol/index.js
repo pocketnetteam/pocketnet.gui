@@ -183,7 +183,7 @@ var nodecontrol = (function(){
 				}).then(r => {
 
 					actions.refresh().then(r => {
-						renders.allsettings()
+						renders.all()
 					})
 
 					topPreloader(100);
@@ -193,7 +193,7 @@ var nodecontrol = (function(){
 					sitemessage(self.app.localization.e('e13293'))
 
 					actions.refresh().then(r => {
-						renders.allsettings()
+						renders.all()
 					})
 
 					topPreloader(100);
@@ -210,7 +210,7 @@ var nodecontrol = (function(){
                     proxy.system.request('set.node.enabled', {enabled : true}).then(r => {
 
                         actions.refresh().then(r => {
-                            renders.allsettings()
+                            renders.all()
                             topPreloader(100);
                         })
                         
@@ -221,7 +221,7 @@ var nodecontrol = (function(){
 					sitemessage(self.app.localization.e('e13293'))
 
 					actions.refresh().then(r => {
-						renders.allsettings()
+						renders.all()
 					})
 
 					topPreloader(100);
@@ -240,7 +240,7 @@ var nodecontrol = (function(){
 
 
 					actions.refresh().then(r => {
-						renders.allsettings()
+						renders.all()
 					})
 
 					topPreloader(100);
@@ -250,7 +250,7 @@ var nodecontrol = (function(){
 					sitemessage(self.app.localization.e('e13293'))
 
 					actions.refresh().then(r => {
-						renders.allsettings()
+						renders.all()
 					})
 
 					topPreloader(100);

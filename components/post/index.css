@@ -13,6 +13,7 @@
 #post .jsPlayerLoading,
 #post .video-js {
   max-height: 80vh;
+  max-height: calc(var(--vh, 1vh) * 80);
 }
 #post .videoWrapper {
   max-width: 650px;
@@ -168,17 +169,9 @@
   max-width: 620px;
 }
 #post.videomainpost {
-  padding-bottom: 2em;
+  /*padding-bottom : 4 * @rhythm;*/
   display: flex;
   padding-top: 1em;
-}
-#post.videomainpost .titleDiv {
-  margin-top: 20px;
-  display: flex;
-  justify-content: space-between;
-}
-#post.videomainpost .starsDiv {
-  margin-bottom: 20px;
 }
 #post.videomainpost .cntswrk.tags {
   opacity: 0.6;
@@ -303,6 +296,7 @@
 #post.videomainpost .jsPlayerLoading,
 #post.videomainpost .video-js {
   max-height: 80vh;
+  max-height: calc(var(--vh, 1vh) * 80);
 }
 #post.videomainpost .forurl .url {
   border-radius: 12px;
@@ -497,11 +491,13 @@
   margin: 0 auto;
   position: relative;
 }
-#post .sharearticle .shareBgCaption.showtext .icon {
+#post .sharearticle .shareBgCaption.showtext .iconWrapper {
   position: absolute;
+  width: auto;
   bottom: -22px;
   left: 0;
   right: 0;
+  padding-left: 0;
 }
 #post .sharearticle .shareBgCaption .starstoppanel,
 #post .sharearticle .shareBgCaption .socialsharewrapper {
@@ -515,7 +511,7 @@
   height: 3.5em;
   line-height: 3.5em;
   border-radius: 3.5em;
-  color: rgb(var(--text-on-bg-ac-color));
+  color: rgb(var(--neutral-grad-3));
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -538,6 +534,9 @@
   bottom: 0.75em;
   left: 1.5em;
   right: auto;
+  display: flex;
+}
+#post .sharearticle .shareBgCaption .starstoppanel .panelLeft {
   display: flex;
 }
 #post .sharearticle .shareBgCaption .articleCover,
@@ -717,15 +716,6 @@ html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent {
     font-size: 3em;
     font-family: Georgia, serif;
   }
-  #post .sharearticle .shareBgCaption:not(.verticalcover) .icon {
-    position: absolute;
-    bottom: -22px;
-    left: 0;
-    right: 0;
-  }
-  #post .sharearticle .shareBgCaption:not(.verticalcover) .icon .usericon {
-    margin: 0 auto;
-  }
   #post .sharearticle .shareBgCaption:not(.verticalcover) .articleCover {
     height: 300px;
     position: relative;
@@ -775,6 +765,14 @@ html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent {
   #post .sharearticle .shareBgCaption.verticalcover .starstoppanel .iconwrapper,
   #post .sharearticle .shareBgCaption.verticalcover .socialsharewrapper .iconwrapper {
     color: rgb(var(--text-on-bg-ac-color));
+  }
+  #post .sharearticle .starstoppanel,
+  #post .sharearticle .socialsharewrapper {
+    bottom: -0.25em !important;
+  }
+  #post .sharearticle .starstoppanel .panelLeft,
+  #post .sharearticle .socialsharewrapper .panelLeft {
+    flex-direction: column;
   }
   #post .sharearticle .articlecontent {
     padding-left: 0.5em;
@@ -927,6 +925,10 @@ html.mobileview .wnd.articlewindow .widthcontainer {
     padding-top: 0;
   }
 }
+.wnd.postwindow.pipmini .wndcontent {
+  padding-right: 0;
+  overflow-y: hidden;
+}
 .wnd.postwindow.pipmini #post {
   padding: 0!important;
 }
@@ -941,8 +943,18 @@ html.mobileview .wnd.articlewindow .widthcontainer {
   border-radius: 6px;
 }
 .wnd.postwindow.pipmini #post .videoWrapper .video-js {
-  max-height: 25vh;
   min-height: 150px;
+  max-height: calc(var(--vh, 1vh) * 25);
+}
+.wnd.postwindow.pipmini #post .videoWrapper .video-js .vjs-control-bar .vjs-mute-control {
+  position: absolute;
+  height: 3em;
+  line-height: 3.5em;
+  font-size: 1em;
+  right: 0.25em;
+  bottom: 0;
+  width: 3em;
+  font-size: 0.9em;
 }
 .wnd.postwindow.pipmini #post .work {
   position: static;
@@ -973,4 +985,7 @@ html.pipmode .wnd.postwindow.pipmini #post .videoWrapper .video-js {
   height: 100%;
   max-width: none;
   right: 0;
+}
+html.pipmode .wnd.postwindow.pipmini #post .videoWrapper .video-js .vjs-control-bar {
+  padding-left: 0;
 }

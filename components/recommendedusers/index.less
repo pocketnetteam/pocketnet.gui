@@ -72,36 +72,37 @@
 
 	.users{
 		display: flex;
-		justify-content: flex-start;
-		padding-bottom: @rhythm;
+		justify-content: space-around;
+		padding-bottom: @rhythm * 2;
 		padding-left: @rhythm * 2;
 		padding-right: @rhythm * 2;
 
+
 		.wrk{
-			max-width: 212px;
+			max-width: 218px;
 			width: 100%;
 
 			&:nth-child(2n) {
 				margin-left: @rhythm * 2;
 				margin-right: @rhythm * 2;
 			}
-
+			
 		}
 
 		.user{
 			padding : @rhythm * 2;
-			border: 1px solid rgb(var(--neutral-grad-0));
+			border: 1px solid rgba(var(--color-medium-theme), 0.3);			
 			border-radius: 12px;
 			
 
 			.addressWrapper{
-				cursor: pointer;
 
 				.iconWrapper{
 					display: flex;
 					align-items: center;
 					justify-content: center;
 					height: 100px;
+					cursor: pointer;
 
 
 					.icon{
@@ -151,10 +152,15 @@
 						overflow: hidden;
 					}
 	
-					.reputation{
+					.subscribers{
+						font-size: .9em;
+
+						.label{
+							color: rgb(var(--color-medium-theme));
+						}
 						
 						.value{
-							color: rgb(var(--color-bg-ac-bright));
+							color: rgb(var(--color-txt-ac));
 
 						}
 					}
@@ -246,5 +252,22 @@
 			}
 		}
 		
+	}
+}
+
+@media only screen and (max-width: 1180px) {
+
+	#recommendedusers{
+		.users{
+			overflow-x: auto;
+			justify-content: flex-start;
+
+			.wrk{
+				&:nth-child(-n+2){
+					display: block;
+				}
+			}
+
+		}
 	}
 }

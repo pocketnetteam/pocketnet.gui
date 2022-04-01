@@ -1,7 +1,6 @@
 var https = require('https');
 var http = require('http');
 var express = require('express');
-var swaggerUi = require('swagger-ui-express');
 var Middle = require('./middle.js');
 var Cache = require('./cache.js');
 var Iplimiter = require('./iplimiter.js');
@@ -84,6 +83,8 @@ var Server = function(settings, admins, manage){
 
             middle.prepare(request, result, function(){
 
+                
+
                 if (settings.iplimiter && request.clientIP){
 
                     return iplimiter.check(request.clientIP).then(r => {
@@ -114,32 +115,40 @@ var Server = function(settings, admins, manage){
 
         self.link()
 
-        return self.http().then(r => {
+        return self.http(_settings).then(r => {
             return  self.https(_settings)
         })
 
     }
 
-    self.http = function(){
-
-        var port = 80
-
-
-        return Promise.resolve()
+    self.http = function(settings){
+9
+        var port = (settings.port || 8899) - 1
 
         return new Promise((resolve, reject) => {
 
-            app.use(express.static(f.path('static')))
+            //app.use(express.static(f.path('static')))
 
             httpserver = http.createServer(app)
             
-            httpserver.listen(port);
-
             httpserver.on('listening',function(){
+
+                console.log('listening', port)
+
                 self.httplistening = port
+
+                resolve()
             });
 
-            httpserver.on('error',function(e){});
+            httpserver.on('error',function(e){
+                reject(e) 
+            });
+
+            httpserver.on('connection', function(socket) {
+                socket.setNoDelay();
+            });
+
+            httpserver.listen(port);
 
             resolve()
 
@@ -150,7 +159,6 @@ var Server = function(settings, admins, manage){
     self.https = function(settings){
         return new Promise((resolve, reject) => {
             try{
-                
 
                 if (_.isEmpty(settings.ssl)){
                     reject('sslerror')
@@ -168,6 +176,8 @@ var Server = function(settings, admins, manage){
 
                     self.listening = settings.port || 8899
 
+                    
+
                     resolve()
                 });
 
@@ -181,10 +191,11 @@ var Server = function(settings, admins, manage){
 
                 server.listen(settings.port || 8899);
 
+                console.log('listen', settings.port || 8899)
+
             }
             catch(e) {
-
-          
+                console.log("E", e)
                 reject(e)
             }
 
@@ -216,6 +227,7 @@ var Server = function(settings, admins, manage){
         self.cache.destroy()
 
         self.listening = false
+        self.httplistening = false
 
         return Promise.resolve()
         

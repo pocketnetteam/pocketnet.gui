@@ -119,6 +119,9 @@ Localization = function(app){
 
 			self.key = key;
 
+			if(typeof moment != 'undefined')
+				moment.locale(self.key)
+
 			self.locSave();
 
 			self.import(function(){
@@ -166,6 +169,10 @@ Localization = function(app){
 		if(!self.available[self.key]) self.key = 'en'
 
 		self.locSave();
+
+		if(typeof moment != 'undefined')
+			moment.locale(self.key)
+
 
 		lazyActions([
 			self.import,
