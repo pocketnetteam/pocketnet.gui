@@ -287,6 +287,7 @@ var uploadpeertube = (function () {
 						const isAbortedByApp = (err.message === 'NO_TRANSCODED');
 						const binariesNotAvailable = (err.message === 'FFBIN_DOWNLOAD_ERROR');
 						const isVerticalVideo = (err.message === 'VERTICAL_VIDEO_NOT_SUPPORTED');
+						const notMetRequirements = (err.message === 'REQUIREMENTS_NOT_MET');
 
 						if (isCanceledByUser) {
 							/**
@@ -310,7 +311,9 @@ var uploadpeertube = (function () {
 							/**
 							 * Handling vertical video error.
 							 */
-							console.log('Transcoding vertical videos is not supported ');
+							console.log('Transcoding vertical videos is not supported');
+						} if (notMetRequirements) {
+							console.log('Minimal requirements for computer are not met to transcode');
 						} else {
 							/**
 							 * Anyway transcoding error is not fatal. If
