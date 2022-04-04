@@ -172,16 +172,10 @@ var uploadpeertube = (function () {
 				};
 
 				options.progress = function (percentComplete) {
-					let formattedProgress;
-
-					if (percentComplete === 100) {
-						formattedProgress = percentComplete;
-					} else {
-						formattedProgress = (percentComplete * 0.9).toFixed(2);
-					}
+					let formattedProgress = Math.floor(percentComplete).toString(10);
 
 					if (
-						formattedProgress === '100.00' &&
+						formattedProgress === '100' &&
 						el.preloaderElement.hasClass('hidden')
 					) {
 						el.preloaderElement.removeClass('hidden');
