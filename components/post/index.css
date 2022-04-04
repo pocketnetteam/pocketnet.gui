@@ -615,7 +615,8 @@
 #post .sharearticle .articlecontent .articleend {
   margin-top: 3em;
 }
-#post .sharearticle .articlecontent .commentsWrapper {
+#post .sharearticle .articlecontent .commentsWrapper,
+#post .sharearticle .articlecontent .commentRegisterDiv .commentRegister {
   border-radius: 12px;
 }
 #post .sharearticle .articlecontent .forcomments {
@@ -656,6 +657,9 @@
 }
 html.mobileview #post .videoWrapper {
   max-width: none;
+}
+html.mobileview #post.videomainpost {
+  padding-top: 0;
 }
 html.mobileview #recomandationsFromContent {
   padding-top: 2em;
@@ -899,10 +903,12 @@ html.mobileview .wnd.articlewindow .widthcontainer {
   .wnd.postwindow .wndcontent {
     padding-bottom: 0;
   }
-  .wnd.postwindow #post .share .sharearticle .commentsWrapper {
+  .wnd.postwindow #post .share .sharearticle .commentsWrapper,
+  .wnd.postwindow #post .share .sharearticle .commentRegisterDiv .commentRegister {
     padding-bottom: 0;
   }
-  .wnd.postwindow #post .share .commentsWrapper {
+  .wnd.postwindow #post .share .commentsWrapper,
+  .wnd.postwindow #post .share .commentRegisterDiv .commentRegister {
     padding-bottom: 5em;
   }
   html.mobileview .wnd.postwindow .widthcontainer {
