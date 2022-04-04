@@ -658,7 +658,7 @@ var arranges = {
 	
 				</div>
 	
-			<% } else { %>
+			<% } else if((typeof repost == 'undefined' || !repost || fromempty) && !loggedIn) { %>
 
 				<div class="commentRegisterDiv">
 

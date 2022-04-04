@@ -15876,6 +15876,9 @@ Platform = function (app, listofnodes) {
 
                         self.app.api.rpc(method, parameters).then(d => {
 
+                            if (d && d.contents && d.contents.length > 0)
+                                d = d.contents;
+
                             var shares = self.sdk.node.shares.transform(d, state)
 
 
@@ -16130,6 +16133,7 @@ Platform = function (app, listofnodes) {
                             if (p.author == '1') adr = p.address
 
                             var parameters = [adr, p.author || "", p.txid || "", p.count, p.author ? "" : self.app.localization.key];
+                            var parameters = [p.height, p.txid || "", p.count, p.lang || "", p.tagsfilter || [], p.type || [], [], [], p.tagsexcluded || [], "", p.author];
 
                             s.get(parameters, function (shares, error) {
 
@@ -16410,7 +16414,8 @@ Platform = function (app, listofnodes) {
                                 parameters.push(p.author)
                             }
 
-                            if (p.contenttypes)
+                            if (methodparams.method == 'getrecomendedcontentsbyscoresfromaddress' ||
+                                methodparams.method == 'getrecomendedcontentsbyscoresonsimilarcontents')
                                 parameters = [p.contentid, p.contenttypes, p.depth, p.count];
 
                             s.getex(parameters, function (data, error) {
