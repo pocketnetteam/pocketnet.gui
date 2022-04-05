@@ -168,6 +168,16 @@ var Cache = function(p){
                 }*/
             },  
 
+            gethistoricalstrip: {
+                time : 460,
+                block : 0,
+                /*smart : {
+                    idin : '0',
+                    idou : 'txid',
+                    storage : 'shares'
+                }*/
+            },  
+
             // node +
             gethotposts: {
                 time : 460,
