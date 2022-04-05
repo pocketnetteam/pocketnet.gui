@@ -16221,6 +16221,14 @@ Platform = function (app, listofnodes) {
 
                 },
 
+                getsubscribesfeed : function(p, clbk, cache){
+
+                    self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
+                        method : 'getsubscribesfeed'
+                    })
+
+                },
+
 
                 historical : function(p, clbk, cache){
 
@@ -16330,6 +16338,10 @@ Platform = function (app, listofnodes) {
                             if(p.author) {
                                 parameters.push("");
                                 parameters.push(p.author)
+                            }
+                            if(methodparams.method == 'getsubscribesfeed') {
+                                parameters.push("");
+                                parameters.push(p.address)
                             }
 
 
