@@ -161,7 +161,8 @@ Platform = function (app, listofnodes) {
         'PKS5Hy6FV3ytgUDmcAVa8y8qxPYKg3CdMH' : true,
         'PVyHHKFuZrH2mh8Y5ZokvZnDfG1iTURpM7' : true,
         'PTPVArrxr4wZuget8phZ1eSNFsGmdSXXck' : true,
-        'PQUj7dS2QpamP9vapARCYaJaSqjXpcZk8p' : true
+        'PQUj7dS2QpamP9vapARCYaJaSqjXpcZk8p' : true,
+        'PP7Sz6pjbgv4XdnnCRnRm4avfxD2TEoMoC' : true
     }
 
     self.nvadr = {
@@ -7672,17 +7673,22 @@ Platform = function (app, listofnodes) {
                 viewed : {}
             },
 
-            view : function(key, id){
+            view : function(key, first, last){
 
                 if(key == 'saved') return
 
-                if(!self.sdk.sharesObserver.storage.viewed[key] || self.sdk.sharesObserver.storage.viewed[key] < id){
-                    self.sdk.sharesObserver.storage.viewed[key] = id
+                if(!self.sdk.sharesObserver.storage.viewed[key]) self.sdk.sharesObserver.storage.viewed[key] = {}
 
-                    self.sdk.sharesObserver.save()
-                }
-                
+                if (self.sdk.sharesObserver.storage.viewed[key].first < first)
+                    self.sdk.sharesObserver.storage.viewed[key].first = first
 
+                if (self.sdk.sharesObserver.storage.viewed[key].last > last)
+                    self.sdk.sharesObserver.storage.viewed[key].last = last
+
+
+                self.sdk.sharesObserver.storage.viewed[key].time = new Date()
+
+                self.sdk.sharesObserver.save()
                
             },
 
@@ -7691,7 +7697,7 @@ Platform = function (app, listofnodes) {
 
                 var a = self.sdk.address.pnet().address;
 
-                self.app.settings.set(a, 'sharesObserverViewed', self.sdk.sharesObserver.storage.viewed || '{}')
+                self.app.settings.set(a, 'sharesObserver', self.sdk.sharesObserver.storage.viewed || '{}')
 
             },
 
@@ -7701,7 +7707,7 @@ Platform = function (app, listofnodes) {
 
                 var a = self.sdk.address.pnet().address;
 
-                self.sdk.sharesObserver.storage.viewed = self.app.settings.get(a, 'sharesObserverViewed') || {}
+                self.sdk.sharesObserver.storage.viewed = self.app.settings.get(a, 'sharesObserver') || {}
 
                 if(clbk) clbk()
             },
@@ -9114,7 +9120,9 @@ Platform = function (app, listofnodes) {
             reputationBlocked : function(address){
                 var ustate = self.sdk.ustate.storage[address] || deep(self, 'sdk.usersl.storage.' + address) || deep(self, 'sdk.users.storage.' + address);
 
-				if (ustate && ustate.reputation <= -30 && !real[address]){
+				if (ustate && ustate.reputation <= -30 && !self.real[address] && 
+                    (ustate.likers_count < 20 || (ustate.likers_count < ustate.blockings_count * 2))
+                    ){
                     return true
                 }
             },
@@ -9171,7 +9179,6 @@ Platform = function (app, listofnodes) {
                         self.app.nav.api.load({
                             open : true,
                             href : 'page404',
-                            history : true,
                             replaceState : true
                         })
                     }
@@ -15868,11 +15875,12 @@ Platform = function (app, listofnodes) {
 
                     var storage = this.storage;
 
-
-
                     self.app.user.isState(function (state) {
 
                         self.app.api.rpc(method, parameters).then(d => {
+
+                            if (d && d.contents && d.contents.length > 0)
+                                d = d.contents;
 
                             var shares = self.sdk.node.shares.transform(d, state)
 
@@ -16128,6 +16136,7 @@ Platform = function (app, listofnodes) {
                             if (p.author == '1') adr = p.address
 
                             var parameters = [adr, p.author || "", p.txid || "", p.count, p.author ? "" : self.app.localization.key];
+                            /*var parameters = [p.height, p.txid || "", p.count, p.lang || "", p.tagsfilter || [], p.type || [], [], [], p.tagsexcluded || [], "", p.author];*/
 
                             s.get(parameters, function (shares, error) {
 
@@ -16209,10 +16218,18 @@ Platform = function (app, listofnodes) {
                     })
                 },
 
-                getusercontents : function(p, clbk, cache){
+                getprofilefeed : function(p, clbk, cache){
 
                     self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
-                        method : 'getusercontents'
+                        method : 'getprofilefeed'
+                    })
+
+                },
+
+                getsubscribesfeed : function(p, clbk, cache){
+
+                    self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
+                        method : 'getsubscribesfeed'
                     })
 
                 },
@@ -16230,6 +16247,8 @@ Platform = function (app, listofnodes) {
 
                     if(!methodparams) methodparams = {}
 
+                    var mtd = (methodparams.method || 'gethierarchicalstrip')
+
                     /*
 
                     p.height
@@ -16246,7 +16265,11 @@ Platform = function (app, listofnodes) {
                         if (!p) p = {};
 
                         p.count || (p.count = 10)
-                        p.lang || (p.lang = self.app.localization.key)
+
+                        if(!p.lang){
+                            mtd == 'gethierarchicalstrip' ? p.lang = self.app.localization.key : p.lang = ''
+                        }
+                        
                         p.height || (p.height = 0)
                         p.tagsfilter || (p.tagsfilter = [])
                         p.tagsexcluded || (p.tagsexcluded = [])
@@ -16256,7 +16279,7 @@ Platform = function (app, listofnodes) {
                             p.address = self.sdk.address.pnet().address;
                         }
 
-                        var key = (methodparams.method || 'gethierarchicalstrip') + p.count + (p.address || "") + "_" + (p.lang || "") + "_" + /*(p.height || "")  +*/ "_" + (p.tagsfilter.join(',')) + "_" + (p.begin || "") + (p.type ? p.type : '')
+                        var key = mtd + p.count + (p.address || "") + "_" + (p.lang || "") + "_" + /*(p.height || "")  +*/ "_" + (p.tagsfilter.join(',')) + "_" + (p.begin || "") + (p.type ? p.type : '')
 
                         if(p.author) key = key + p.author
 
@@ -16323,7 +16346,14 @@ Platform = function (app, listofnodes) {
 
                             var parameters = [Number(p.height), p.txid, p.count, p.lang, p.tagsfilter, p.type ? p.type : '', '', '', p.tagsexcluded];
 
-                            if(p.author) parameters.unshift(p.author)
+                            if(p.author) {
+                                parameters.push("");
+                                parameters.push(p.author)
+                            }
+                            if(mtd == 'getsubscribesfeed') {
+                                parameters.push("");
+                                parameters.push(p.address)
+                            }
 
 
                             s.getex(parameters, function (data, error) {
@@ -16395,7 +16425,7 @@ Platform = function (app, listofnodes) {
                                         clbk(shares, error, p)
                                 }
 
-                            }, methodparams.method || 'gethierarchicalstrip')
+                            }, mtd)
 
 
                         }
@@ -21829,8 +21859,6 @@ Platform = function (app, listofnodes) {
                     nm = filterXSS(trimHtml(m, c || 20));
                 }
 
-
-
                 return nm
             },
 
@@ -24378,10 +24406,26 @@ Platform = function (app, listofnodes) {
                                     platform.sdk.notifications.addFromWs(data)
 
                                     if (typeof _Electron != 'undefined' && !platform.focus && message.html) {
+
                                         electron.ipcRenderer.send('electron-notification', {
                                             html : message.html,
                                             settings : data.electronSettings
                                         });
+
+                                        return
+
+                                        var _el = $(message.html)
+
+                                        var title = _el.find('.caption').text()
+                                        var body = _el.find('.tips').text()
+
+
+                                        electron.ipcRenderer.send('electron-notification-small', {
+                                            title, body
+                                        });
+
+                                        _el = null
+
                                     }
 
                                 }

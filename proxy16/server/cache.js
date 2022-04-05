@@ -127,23 +127,12 @@ var Cache = function(p){
             getrawtransactionwithmessagebyid: {
                 time : 460,
                 block : 0,
-                /*smart : {
-                    idin : '0',
-                    idou : 'txid',
-                    storage : 'shares',
-                    get : true
-                }*/
             },
             
             // node +
             getrawtransactionwithmessage: {
                 time : 460,
                 block : 0,
-                /*smart : {
-                    idin : '0',
-                    idou : 'txid',
-                    storage : 'shares'
-                }*/
             },
 
             // ?
@@ -161,11 +150,6 @@ var Cache = function(p){
             gethierarchicalstrip: {
                 time : 460,
                 block : 0,
-                /*smart : {
-                    idin : '0',
-                    idou : 'txid',
-                    storage : 'shares'
-                }*/
             },  
 
             gethistoricalstrip: {
@@ -188,12 +172,6 @@ var Cache = function(p){
             getuserprofile: {
                 time : 560,
                 block : 0,
-                /*smart : {
-                    idin : '0',
-                    idou : 'address',
-                    storage : 'getuserprofile',
-                    get : true
-                }*/
             },
 
             getuserstate : {

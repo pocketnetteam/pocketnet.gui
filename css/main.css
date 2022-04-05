@@ -343,7 +343,7 @@ h3 {
   background: rgba(255, 174, 0, 0.07);
 }
 mark {
-  background: rgba(var(--color-bg-ac-2), 0.9) rgba(255, 110, 132, 0.9);
+  background: rgba(var(--color-bg-ac), 0.9);
   color: rgb(var(--text-on-bg-ac-color));
 }
 /*

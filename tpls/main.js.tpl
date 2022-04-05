@@ -657,6 +657,21 @@ function createWindow() {
 
     })
 
+    ipcMain.on('electron-notification-small', function(e, p) {
+
+        var n = new Notification({ title : p.title, body: p.body, silent :true, icon: defaultIcon })
+
+        n.onclick = function(){
+
+            if (win) {
+                win.show();
+            }
+        }
+
+        n.show()
+
+    })
+
     ipcMain.on('electron-notification-close', function(e) {
 
         closeNotification()

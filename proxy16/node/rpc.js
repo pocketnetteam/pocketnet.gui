@@ -93,6 +93,7 @@ const publics = {
     getrecomendedaccountsbytags : true,
     getboostfeed : true,
     getprofilefeed : true,
+    getsubscribesfeed : true,
 
     // BlockExplorer
     getblocktransactions: true,
@@ -443,10 +444,11 @@ RpcClient.callspec = {
     getpostscores: 'str',
     getpagescores: 'obj str',
 
-    getboostfeed : 'int str int str obj str str str obj',
-    getprofilefeed : 'int str int str obj str str str obj',
-    gethierarchicalstrip : 'int str int str obj str str str obj',
-    gethistoricalstrip : 'int str int str obj str str str obj',
+    getboostfeed : 'int str int str obj str str str obj str str',
+    getprofilefeed : 'int str int str obj str str str obj str str',
+    getsubscribesfeed : 'int str int str obj obj obj obj obj str str',
+    gethierarchicalstrip : 'int str int str obj str str str obj str str',
+    gethistoricalstrip : 'int str int str obj str str str obj str str',
     getusercontents : 'str int str int obj str',
     getcontentsstatistic : 'obj str int int',
     // BlockExplorer

@@ -676,6 +676,20 @@
 						color : rgb(var(--text-color));
 					}
 				}
+
+				&.showtext{
+					.iconWrapper{
+						position: static;
+						width: auto;
+						padding-left: 0;
+						float: none;
+					}
+
+					.toppanel{
+						order : 1;
+					}
+				}
+				
 			}
 
 		}
@@ -738,6 +752,16 @@
 
 			.articleCover{
 				filter : blur(10px);
+			}
+		}
+
+		p{
+			a{
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				max-width: 90%;
+				overflow: hidden;
+				display: inline-block;
 			}
 		}
 	}
@@ -872,7 +896,7 @@ html.mobileview{
 						padding-bottom: 8 * @rhythm;
 
 						.sharecaption{
-							font-size: 2em;
+							font-size: 3em;
 						}
 					}
 	
@@ -881,7 +905,6 @@ html.mobileview{
 					}
 	
 					.icon{
-						position: absolute;
 					}
 	
 					.captioncnt{
@@ -983,6 +1006,7 @@ html.mobileview.fullscreen{
 		.wndcontent{
 			padding : 0;
 			border-radius: 0;
+			background: rgb(var(--background-total-theme));
 		}
 
 		#post{

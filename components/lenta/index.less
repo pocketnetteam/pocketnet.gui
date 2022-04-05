@@ -57,6 +57,8 @@
 		padding : 6 * @rhythm 0;
 		display: none;
 		border-radius: 12px;
+		height: 111px;
+		contain: strict;
 	}
 
 	&.loading{
@@ -64,6 +66,12 @@
 			display: block;
 		}
 		
+	}
+
+	&.sharesEnded{
+		.loader{
+			display: none;
+		}
 	}
 
 	.panel{
@@ -126,6 +134,10 @@
 				}
 			}
 	
+		}
+
+		&.fromsub{
+			border : 1px solid #000;
 		}
 	}
 
@@ -284,16 +296,22 @@
 		.loadmore{
 			display: none;
 		}
+
+		.loader{
+			display: none;
+		}
 	}
 
 	.networkErrorMessage{
+		border-radius: 12px;
+		background: rgb(var(--background-total-theme));
 		display: none;
 		padding : 6 * @rhythm;
 		text-align: center;
 
 		i{
 			font-size: 2em;
-			color : rgba(var(--color-txt-ac), 0.15); 
+			opacity: 0.5;
 		}
 	}
 
@@ -828,6 +846,9 @@
 				}
 			}
 			
+			.author{
+				white-space: nowrap;
+			}
 	
 			.shareBgCaption{
 				height: 425px;
@@ -878,8 +899,6 @@
 						.socialsharewrapper{
 							padding-right: @rhythm * 2;
 						}
-
-
 					}
 
 					.widthcontainer{
@@ -1028,7 +1047,7 @@
 					overflow: hidden;
 
 				}
-				
+					
 				.articleCover,
 				.captioncnt,
 				.blackmatte{
@@ -1037,6 +1056,16 @@
 					right: 0;
 					top : 0;
 					bottom : 0;
+				}
+
+				.whitematte{
+					position: absolute;
+					bottom : 30%;
+					top : 20%;
+					left : 0;
+					right: 0;
+					cursor: pointer;
+					z-index: 1;
 				}
 	
 				&.smallimage{
@@ -1138,6 +1167,10 @@
 						}
 		
 						.blackmatte{
+							display: none;
+						}
+
+						.whitematte{
 							display: none;
 						}
 		
