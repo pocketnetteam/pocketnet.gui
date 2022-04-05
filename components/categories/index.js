@@ -219,12 +219,16 @@ var categories = (function(){
 
 					el.c.removeClass('hidden')
 
-
 					cats = cats.sort(function(a, b){
+
+						if (a.added){
+
+							return -1;
+						}
 
 						if (a.selected){
 
-							if (b.selected && b.added){
+							if (b.added){
 
 								return 1;
 
@@ -234,6 +238,20 @@ var categories = (function(){
 
 							}
 						}
+
+						if (a.excluded){
+
+							if (!b.selected && !b.added){
+
+								return -1;
+
+							} else {
+
+								return 1;
+							}
+						}
+
+						return 1;
 
 						if (a.excluded){
 
@@ -268,8 +286,37 @@ var categories = (function(){
 						return 0;
 
 					})
-					
 
+
+					var catsUsedCount = cats.filter(function(c){
+						return c.added || c.selected || c.excluded;
+					}).length;
+
+					if (catsUsedCount <= 7){
+
+						var indexOfExcluded = cats.findIndex(function(cat){
+							return cat.excluded;
+						})
+
+						if (indexOfExcluded > -1){
+
+							var indexForSplice = cats.length - 8 + catsUsedCount;
+
+							var splicedItems = cats.splice(indexForSplice, cats.length);
+
+							console.log('splicedItems', splicedItems);
+
+							cats.splice(indexOfExcluded, 0, ...splicedItems)
+
+
+							catsUsedCount = 7;
+						}
+
+					} else {
+
+						catsUsedCount--;
+					}
+					
 					self.shell({
 
 						name :  'categories',
@@ -277,6 +324,7 @@ var categories = (function(){
 	
 						data : {
 							cats : cats,
+							slicer: catsUsedCount
 						},				
 	
 					}, function(p){
