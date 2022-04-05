@@ -3788,7 +3788,7 @@ var lenta = (function(){
 
 							var author = essenseData.author;
 
-							var loader = 'common';
+							var loader = 'getprofilefeed';
 
 							var _beginmaterial = ''//beginmaterial;
 
@@ -3813,6 +3813,10 @@ var lenta = (function(){
 
 								if(recommended == 'recommended'){
 									loader = 'recommended'
+								}
+
+								else if(recommended == 'sub'){
+									loader = 'getsubscribesfeed'
 								}
 
 								else if(recommended == 'hot'){

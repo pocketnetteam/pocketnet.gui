@@ -15864,7 +15864,7 @@ Platform = function (app, listofnodes) {
 
                 get: function (parameters, clbk, method) {
 
-                    method || (method = 'getrawtransactionwithmessage')
+                    method || (method = 'getprofilefeed')
 
                     var storage = this.storage;
 
@@ -15873,6 +15873,9 @@ Platform = function (app, listofnodes) {
                     self.app.user.isState(function (state) {
 
                         self.app.api.rpc(method, parameters).then(d => {
+
+                            if (d && d.contents && d.contents.length > 0)
+                                d = d.contents;
 
                             var shares = self.sdk.node.shares.transform(d, state)
 
@@ -15894,7 +15897,7 @@ Platform = function (app, listofnodes) {
 
                 getex: function (parameters, clbk, method) {
 
-                    method || (method = 'getrawtransactionwithmessage')
+                    method || (method = 'getprofilefeed')
 
                     var storage = this.storage;
 
@@ -16128,6 +16131,7 @@ Platform = function (app, listofnodes) {
                             if (p.author == '1') adr = p.address
 
                             var parameters = [adr, p.author || "", p.txid || "", p.count, p.author ? "" : self.app.localization.key];
+                            var parameters = [p.height, p.txid || "", p.count, p.lang || "", p.tagsfilter || [], p.type || [], [], [], p.tagsexcluded || [], "", p.author];
 
                             s.get(parameters, function (shares, error) {
 
@@ -16209,10 +16213,18 @@ Platform = function (app, listofnodes) {
                     })
                 },
 
-                getusercontents : function(p, clbk, cache){
+                getprofilefeed : function(p, clbk, cache){
 
                     self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
-                        method : 'getusercontents'
+                        method : 'getprofilefeed'
+                    })
+
+                },
+
+                getsubscribesfeed : function(p, clbk, cache){
+
+                    self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
+                        method : 'getsubscribesfeed'
                     })
 
                 },
@@ -16246,7 +16258,7 @@ Platform = function (app, listofnodes) {
                         if (!p) p = {};
 
                         p.count || (p.count = 10)
-                        p.lang || (p.lang = self.app.localization.key)
+                        if(typeof p.lang == 'undefined') p.lang = self.app.localization.key
                         p.height || (p.height = 0)
                         p.tagsfilter || (p.tagsfilter = [])
                         p.tagsexcluded || (p.tagsexcluded = [])
@@ -16323,7 +16335,14 @@ Platform = function (app, listofnodes) {
 
                             var parameters = [Number(p.height), p.txid, p.count, p.lang, p.tagsfilter, p.type ? p.type : '', '', '', p.tagsexcluded];
 
-                            if(p.author) parameters.unshift(p.author)
+                            if(p.author) {
+                                parameters.push("");
+                                parameters.push(p.author)
+                            }
+                            if(methodparams.method == 'getsubscribesfeed') {
+                                parameters.push("");
+                                parameters.push(p.address)
+                            }
 
 
                             s.getex(parameters, function (data, error) {
