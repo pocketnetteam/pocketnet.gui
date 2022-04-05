@@ -655,6 +655,15 @@
   margin-top: auto;
   padding: 0 16px;
 }
+#lenta .share .sharearticle .shareBgCaption .captioncnt .articleclick {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  cursor: pointer;
+}
+#lenta .share .sharearticle .shareBgCaption .captioncnt .articleclick .captionmult {
+  margin-top: auto;
+}
 #lenta .share .sharearticle .shareBgCaption .captioncnt .sharecaption {
   font-size: 1.5em;
   font-weight: 700;
@@ -732,14 +741,22 @@
   right: auto;
   display: flex;
   justify-content: space-between;
-  padding: 0 1em;
+  padding-left: 1em;
+  padding-right: 1.5em;
+  padding-bottom: 0.5em;
+  contain: none;
+  height: auto;
 }
 #lenta .share .sharearticle .shareBgCaption .starstoppanel .panelLeft {
   display: flex;
+  padding-bottom: 0.5em;
 }
 #lenta .share .sharearticle .shareBgCaption .starstoppanel .panelRight {
   display: flex;
   align-items: center;
+}
+#lenta .share .sharearticle .shareBgCaption .starstoppanel .panelRight .panel {
+  contain: none;
 }
 #lenta .share .sharearticle .shareBgCaption .articleCover {
   border-radius: 12px;
@@ -864,6 +881,9 @@
   }
   #lenta .openoriginallabel {
     display: none;
+  }
+  #lenta .shares .sharearticle .shareBgCaption .starstoppanel {
+    padding-right: 0.5em;
   }
 }
 /*t*/
