@@ -3936,6 +3936,8 @@ var lenta = (function(){
 
 							}
 
+							console.log('loader', loader)
+
 							self.app.platform.sdk.node.shares[loader]({
 
 								author : author,

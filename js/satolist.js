@@ -10054,12 +10054,14 @@ Platform = function (app, listofnodes) {
                         }
                     }
                 }
+                
+
+                console.log('getmissedinfo', self.currentBlock, block)
 
 
                 if(!self.sdk.address.pnet()) return Promise.reject('address')
                 if(!self.currentBlock) return Promise.reject('currentblock')
                 if(!block) return Promise.reject('block')
-               // if (self.currentBlock - block > 5000) block = self.currentBlock - 5000
                 if (self.currentBlock == block) return Promise.resolve(dummy())
 
 
