@@ -29,10 +29,10 @@ var PeertubeRequest = function (app = {}) {
 	var direct = function (url, data, p) {
 		var controller = new AbortController();
 
-		var time = 10000;
+		var time = 40000;
 
 		if (window.cordova || isInStandaloneMode()) {
-			time = 25000;
+			time = 65000;
 		}
 
 		return timeout(
