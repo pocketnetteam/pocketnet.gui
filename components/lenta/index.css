@@ -882,7 +882,8 @@
   #lenta .openoriginallabel {
     display: none;
   }
-  #lenta .shares .sharearticle .shareBgCaption .starstoppanel {
+  #lenta .shares .sharearticle .shareBgCaption .starstoppanel,
+  #lenta .shares .sharearticle .shareBgCaption .captioncnt .toppanel .socialsharewrapper {
     padding-right: 0.5em;
   }
 }
