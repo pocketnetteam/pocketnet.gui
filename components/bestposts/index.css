@@ -158,7 +158,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  max-width: 70%;
+  max-width: 130px;
 }
 #bestposts .posts .authorgroup .post .addressTable > div.label .top .reputation {
   font-size: 0.9em;

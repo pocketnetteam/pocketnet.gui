@@ -200,6 +200,10 @@ User = function(app, p) {
 			app.platform.firebase.destroy();
 		}
 
+		if (app.platform.sdk.categories.clbks.tags.topusersRemove){
+			app.platform.sdk.categories.clbks.tags.topusersRemove();
+		}
+
 		state = 0;
 		self.data = {};
 		localStorage['mnemonic'] = ''
