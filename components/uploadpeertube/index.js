@@ -174,13 +174,6 @@ var uploadpeertube = (function () {
 				options.progress = function (percentComplete) {
 					let formattedProgress = Math.floor(percentComplete).toString(10);
 
-					if (
-						formattedProgress === '100' &&
-						el.preloaderElement.hasClass('hidden')
-					) {
-						el.preloaderElement.removeClass('hidden');
-					}
-
 					el.uploadProgress
 						.find('.upload-progress-bar')
 						.css('width', formattedProgress + '%');
