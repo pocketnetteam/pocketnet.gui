@@ -304,18 +304,18 @@ var categories = (function(){
 
 							var splicedItems = cats.splice(indexForSplice, cats.length);
 
-							console.log('splicedItems', splicedItems);
-
 							cats.splice(indexOfExcluded, 0, ...splicedItems)
 
-
-							catsUsedCount = 7;
 						}
+
+						catsUsedCount = 7;
+
 
 					} else {
 
 						catsUsedCount--;
 					}
+
 					
 					self.shell({
 
