@@ -703,6 +703,7 @@ var main = (function(){
 
 								ed.page++
 							},
+							
 							opensvi : function(id){
 
 								lastscroll = self.app.lastScrollTop

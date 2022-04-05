@@ -16331,14 +16331,17 @@ Platform = function (app, listofnodes) {
                             }
 
                             if (!p.txid) p.txid = p.begin || ''
+                            
+                            console.log("P", p)
 
-                            p.tagsfilter = _.map(p.tagsfilter, function(t){
-                                return encodeURIComponent(t)
-                            })
+                                p.tagsfilter = _.map(p.tagsfilter, function(t){
+                                    return encodeURIComponent(t)
+                                })
 
-                            p.tagsexcluded = _.map(p.tagsexcluded, function(t){
-                                return encodeURIComponent(t)
-                            })
+                          
+                                p.tagsexcluded = _.map(p.tagsexcluded, function(t){
+                                    return encodeURIComponent(t)
+                                })
 
                             /////temp
 

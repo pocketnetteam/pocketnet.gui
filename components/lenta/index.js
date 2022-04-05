@@ -3861,12 +3861,9 @@ var lenta = (function(){
 									loader = 'recommended'
 								}
 
-								/*
-								
-								slow request
 								
 								
-								else if(recommended == 'sub'){
+								/*else if(recommended == 'sub'){
 									loader = 'getsubscribesfeed'
 								}*/
 
@@ -3909,8 +3906,13 @@ var lenta = (function(){
 							if (essenseData.loaderkey) loader = essenseData.loaderkey
 							if (essenseData.from) _beginmaterial = essenseData.from
 
-							var tagsfilter = self.app.platform.sdk.categories.gettags()
-							var tagsexcluded = self.app.platform.sdk.categories.gettagsexcluded()
+							var tagsfilter = []
+							var tagsexcluded = []
+
+							if(loader == 'hierarchical' || loader == 'historical'){
+								tagsfilter = self.app.platform.sdk.categories.gettags()
+								tagsexcluded = self.app.platform.sdk.categories.gettagsexcluded()
+							}
 
 							if (essenseData.tags) tagsfilter = essenseData.tags
 
@@ -3935,8 +3937,6 @@ var lenta = (function(){
 								includingsub = true
 
 							}
-
-							console.log('loader', loader)
 
 							self.app.platform.sdk.node.shares[loader]({
 
