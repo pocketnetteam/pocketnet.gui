@@ -149,8 +149,6 @@ var Proxy = function (settings, manage, test, logger) {
 			return true
 		},
 
-	
-
 		parsesignature : function(nonce){
 			var ch = nonce.split(',')
 			var obj = {}
