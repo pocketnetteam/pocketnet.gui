@@ -15871,11 +15871,9 @@ Platform = function (app, listofnodes) {
 
                 get: function (parameters, clbk, method) {
 
-                    method || (method = 'getprofilefeed')
+                    method || (method = 'getrawtransactionwithmessage')
 
                     var storage = this.storage;
-
-
 
                     self.app.user.isState(function (state) {
 
@@ -15904,7 +15902,7 @@ Platform = function (app, listofnodes) {
 
                 getex: function (parameters, clbk, method) {
 
-                    method || (method = 'getprofilefeed')
+                    method || (method = 'getrawtransactionwithmessage')
 
                     var storage = this.storage;
 
@@ -16138,7 +16136,7 @@ Platform = function (app, listofnodes) {
                             if (p.author == '1') adr = p.address
 
                             var parameters = [adr, p.author || "", p.txid || "", p.count, p.author ? "" : self.app.localization.key];
-                            var parameters = [p.height, p.txid || "", p.count, p.lang || "", p.tagsfilter || [], p.type || [], [], [], p.tagsexcluded || [], "", p.author];
+                            /*var parameters = [p.height, p.txid || "", p.count, p.lang || "", p.tagsfilter || [], p.type || [], [], [], p.tagsexcluded || [], "", p.author];*/
 
                             s.get(parameters, function (shares, error) {
 
@@ -16249,6 +16247,8 @@ Platform = function (app, listofnodes) {
 
                     if(!methodparams) methodparams = {}
 
+                    var mtd = (methodparams.method || 'gethierarchicalstrip')
+
                     /*
 
                     p.height
@@ -16265,7 +16265,11 @@ Platform = function (app, listofnodes) {
                         if (!p) p = {};
 
                         p.count || (p.count = 10)
-                        if(typeof p.lang == 'undefined') p.lang = self.app.localization.key
+
+                        if(!p.lang){
+                            mtd == 'gethierarchicalstrip' ? p.lang = self.app.localization.key : p.lang = ''
+                        }
+                        
                         p.height || (p.height = 0)
                         p.tagsfilter || (p.tagsfilter = [])
                         p.tagsexcluded || (p.tagsexcluded = [])
@@ -16275,7 +16279,7 @@ Platform = function (app, listofnodes) {
                             p.address = self.sdk.address.pnet().address;
                         }
 
-                        var key = (methodparams.method || 'gethierarchicalstrip') + p.count + (p.address || "") + "_" + (p.lang || "") + "_" + /*(p.height || "")  +*/ "_" + (p.tagsfilter.join(',')) + "_" + (p.begin || "") + (p.type ? p.type : '')
+                        var key = mtd + p.count + (p.address || "") + "_" + (p.lang || "") + "_" + /*(p.height || "")  +*/ "_" + (p.tagsfilter.join(',')) + "_" + (p.begin || "") + (p.type ? p.type : '')
 
                         if(p.author) key = key + p.author
 
@@ -16346,7 +16350,7 @@ Platform = function (app, listofnodes) {
                                 parameters.push("");
                                 parameters.push(p.author)
                             }
-                            if(methodparams.method == 'getsubscribesfeed') {
+                            if(mtd == 'getsubscribesfeed') {
                                 parameters.push("");
                                 parameters.push(p.address)
                             }
@@ -16421,7 +16425,7 @@ Platform = function (app, listofnodes) {
                                         clbk(shares, error, p)
                                 }
 
-                            }, methodparams.method || 'gethierarchicalstrip')
+                            }, mtd)
 
 
                         }

@@ -10923,7 +10923,6 @@ edjsHTML = function() {
 
 		})
 
-		console.log(text,ftext)
 		return ftext
 	}
 
@@ -10938,6 +10937,7 @@ edjsHTML = function() {
         },
 
         paragraph: function(e) {
+
             return "<p>" + c_xss(e.data.text) + "</p>"
         },
 

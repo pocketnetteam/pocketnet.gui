@@ -546,14 +546,16 @@ var lenta = (function(){
 					if (error){
 						making = false;
 						
-						if (self.app.errors.connection()){
+						//if (self.app.errors.connection()){
 							el.c.addClass('networkError')
-						}
+						//}
 
 						if (self.app.errors.connectionRs()){
 							self.iclbks.lenta = actions.loadmore
 						}
-	
+
+						el.c.removeClass('loading')
+
 						return;
 					}
 	
@@ -3605,6 +3607,8 @@ var lenta = (function(){
 						if (essenseData.openapi)
 							el.c.removeClass('loading')
 
+							console.log('error && !error2', error,error2)
+
 						if(!error && !error2){
 
 							if(!shares || !shares.length || ((shares.length < pr.count) || recommended == 'recommended')){								
@@ -3838,7 +3842,7 @@ var lenta = (function(){
 
 							var author = essenseData.author;
 
-							var loader = 'getprofilefeed';
+							var loader = 'common';
 
 							var _beginmaterial = ''
 
@@ -3848,6 +3852,7 @@ var lenta = (function(){
 							else
 							{
 								_beginmaterial = beginmaterial
+								loader = 'getprofilefeed'
 							}
 
 							if (recommended){
@@ -3856,9 +3861,14 @@ var lenta = (function(){
 									loader = 'recommended'
 								}
 
+								/*
+								
+								slow request
+								
+								
 								else if(recommended == 'sub'){
 									loader = 'getsubscribesfeed'
-								}
+								}*/
 
 								else if(recommended == 'hot'){
 								}
@@ -4078,6 +4088,18 @@ var lenta = (function(){
 
 			el.c.on('click','.openauthorwindow', events.openauthorwindow)
 
+			el.c.find('.networkErrorMessage button').on('click', function(){
+
+				globalpreloader(true)
+
+				delete self.iclbks.lenta
+				make()
+
+				setTimeout(function(){
+					globalpreloader(false)
+
+				}, 600)
+			})
 
 			//////////////////////
 
@@ -4383,9 +4405,9 @@ var lenta = (function(){
 				if (error){
 					making = false;
 					
-					if (self.app.errors.connection()){
-						el.c.addClass('networkError')
-					}
+					el.c.addClass('networkError')
+				
+					el.c.removeClass('loading')
 
 					self.iclbks.lenta = function(){
 						make(null, _p)

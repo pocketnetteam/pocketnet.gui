@@ -50,6 +50,8 @@
   padding: 3em 0;
   display: none;
   border-radius: 12px;
+  height: 111px;
+  contain: strict;
 }
 #lenta.loading .loader {
   display: block;
@@ -218,14 +220,19 @@
 #lenta.sharesZero .loadmore {
   display: none;
 }
+#lenta.sharesZero .loader {
+  display: none;
+}
 #lenta .networkErrorMessage {
+  border-radius: 12px;
+  background: rgb(var(--background-total-theme));
   display: none;
   padding: 3em;
   text-align: center;
 }
 #lenta .networkErrorMessage i {
   font-size: 2em;
-  color: rgba(var(--color-txt-ac), 0.15);
+  opacity: 0.5;
 }
 #lenta.networkError .networkErrorMessage {
   display: block;
@@ -616,6 +623,9 @@
 #lenta .share .sharearticle .shareBgCaption .tags div span,
 #lenta .share .sharearticle .articleend .tags div span {
   color: rgba(var(--text-on-bg-ac-color), 0, 0.7);
+}
+#lenta .share .sharearticle .author {
+  white-space: nowrap;
 }
 #lenta .share .sharearticle .shareBgCaption {
   height: 425px;

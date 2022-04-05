@@ -152,6 +152,31 @@ var Cache = function(p){
                 block : 0,
             },  
 
+            getboostfeed: {
+                time : 460,
+                block : 0,
+            }, 
+
+            getprofilefeed: {
+                time : 460,
+                block : 0,
+            }, 
+
+            gethierarchicalstrip: {
+                time : 460,
+                block : 0,
+            }, 
+
+            getsubscribesfeed: {
+                time : 460,
+                block : 0,
+            }, 
+
+            gethistoricalstrip: {
+                time : 460,
+                block : 0,
+            }, 
+
             // node +
             gethotposts: {
                 time : 460,

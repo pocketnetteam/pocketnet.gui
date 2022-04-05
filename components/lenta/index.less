@@ -57,6 +57,8 @@
 		padding : 6 * @rhythm 0;
 		display: none;
 		border-radius: 12px;
+		height: 111px;
+		contain: strict;
 	}
 
 	&.loading{
@@ -294,16 +296,22 @@
 		.loadmore{
 			display: none;
 		}
+
+		.loader{
+			display: none;
+		}
 	}
 
 	.networkErrorMessage{
+		border-radius: 12px;
+		background: rgb(var(--background-total-theme));
 		display: none;
 		padding : 6 * @rhythm;
 		text-align: center;
 
 		i{
 			font-size: 2em;
-			color : rgba(var(--color-txt-ac), 0.15); 
+			opacity: 0.5;
 		}
 	}
 
@@ -838,6 +846,9 @@
 				}
 			}
 			
+			.author{
+				white-space: nowrap;
+			}
 	
 			.shareBgCaption{
 				height: 425px;
