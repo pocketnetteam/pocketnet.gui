@@ -4061,7 +4061,7 @@ var lenta = (function(){
 			el.c.on('click', '.imageOpen', events.openGallery)
 			el.c.on('click', '.txid', events.getTransaction)
 			el.c.on('click', '.showMore,.showmoreRep', events.openPost)
-			el.c.on('click', '.showMoreArticle', events.openArticle)
+			el.c.on('click', '.articleclick', events.openArticle)
 			el.c.on('click', '.forrepost', events.repost)
 			el.c.on('click', '.panel .pkoin', events.pkoin)
 			el.c.on('click', '.unblockbutton', events.unblock)
