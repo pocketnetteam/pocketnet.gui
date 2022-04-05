@@ -66,6 +66,12 @@
 		
 	}
 
+	&.sharesEnded{
+		.loader{
+			display: none;
+		}
+	}
+
 	.panel{
 		overflow: hidden;
 	}
@@ -126,6 +132,10 @@
 				}
 			}
 	
+		}
+
+		&.fromsub{
+			border : 1px solid #000;
 		}
 	}
 
@@ -1007,7 +1017,7 @@
 					overflow: hidden;
 
 				}
-				
+					
 				.articleCover,
 				.captioncnt,
 				.blackmatte{
@@ -1016,6 +1026,16 @@
 					right: 0;
 					top : 0;
 					bottom : 0;
+				}
+
+				.whitematte{
+					position: absolute;
+					bottom : 30%;
+					top : 20%;
+					left : 0;
+					right: 0;
+					cursor: pointer;
+					z-index: 1;
 				}
 	
 				&.smallimage{
@@ -1117,6 +1137,10 @@
 						}
 		
 						.blackmatte{
+							display: none;
+						}
+
+						.whitematte{
 							display: none;
 						}
 		

@@ -58,7 +58,7 @@ var metadisplay = function(){ %>
 
 							<a elementsid="shareaddresslink" href="<%-app.platform.api.authorlink(share.address)%>">
 							<% var reputation = deep(app.platform.sdk.usersl.storage, share.address+'.reputation') || 0 %>
-								<b><span class="adr"><%-name || share.address %></span></b><% if(reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
+								<b><span class="adr"><%-(name || share.address) %></span></b><% if(reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
 							</a>
 
 							
@@ -320,7 +320,7 @@ var arranges = {
 
 } %>
 
-<div class="sharecnt <% if(share.deleted) { %> deleted <% } %>">
+<div class="sharecnt <% if(typeof sharesFromSub != 'undefined' && sharesFromSub[share.txid]) {%>  fromsub <% } %> <% if(share.deleted) { %> deleted <% } %>">
 
 	<div class="work unselectablemobile">
 

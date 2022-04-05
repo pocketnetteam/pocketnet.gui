@@ -54,6 +54,9 @@
 #lenta.loading .loader {
   display: block;
 }
+#lenta.sharesEnded .loader {
+  display: none;
+}
 #lenta .panel {
   overflow: hidden;
 }
@@ -92,6 +95,9 @@
 }
 #lenta .share .sharecnt.deleted .removeDescription {
   display: block;
+}
+#lenta .share.fromsub {
+  border: 1px solid #000;
 }
 #lenta .share {
   margin-bottom: 0.5em;
@@ -758,6 +764,15 @@
   top: 0;
   bottom: 0;
 }
+#lenta .share .sharearticle .shareBgCaption .whitematte {
+  position: absolute;
+  bottom: 30%;
+  top: 20%;
+  left: 0;
+  right: 0;
+  cursor: pointer;
+  z-index: 1;
+}
 #lenta .share .sharearticle .shareBgCaption.smallimage .articleCover {
   background-color: rgb(var(--color-shadow-base));
   background-size: 100px auto!important;
@@ -825,6 +840,9 @@
     color: rgb(var(--text-color));
   }
   #lenta .share .sharearticle .shareBgCaption.verticalcover .blackmatte {
+    display: none;
+  }
+  #lenta .share .sharearticle .shareBgCaption.verticalcover .whitematte {
     display: none;
   }
   #lenta .share .sharearticle .shareBgCaption.verticalcover .icon {

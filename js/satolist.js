@@ -161,7 +161,8 @@ Platform = function (app, listofnodes) {
         'PKS5Hy6FV3ytgUDmcAVa8y8qxPYKg3CdMH' : true,
         'PVyHHKFuZrH2mh8Y5ZokvZnDfG1iTURpM7' : true,
         'PTPVArrxr4wZuget8phZ1eSNFsGmdSXXck' : true,
-        'PQUj7dS2QpamP9vapARCYaJaSqjXpcZk8p' : true
+        'PQUj7dS2QpamP9vapARCYaJaSqjXpcZk8p' : true,
+        'PP7Sz6pjbgv4XdnnCRnRm4avfxD2TEoMoC' : true
     }
 
     self.nvadr = {
@@ -7672,17 +7673,22 @@ Platform = function (app, listofnodes) {
                 viewed : {}
             },
 
-            view : function(key, id){
+            view : function(key, first, last){
 
                 if(key == 'saved') return
 
-                if(!self.sdk.sharesObserver.storage.viewed[key] || self.sdk.sharesObserver.storage.viewed[key] < id){
-                    self.sdk.sharesObserver.storage.viewed[key] = id
+                if(!self.sdk.sharesObserver.storage.viewed[key]) self.sdk.sharesObserver.storage.viewed[key] = {}
 
-                    self.sdk.sharesObserver.save()
-                }
-                
+                if (self.sdk.sharesObserver.storage.viewed[key].first < first)
+                    self.sdk.sharesObserver.storage.viewed[key].first = first
 
+                if (self.sdk.sharesObserver.storage.viewed[key].last > last)
+                    self.sdk.sharesObserver.storage.viewed[key].last = last
+
+
+                self.sdk.sharesObserver.storage.viewed[key].time = new Date()
+
+                self.sdk.sharesObserver.save()
                
             },
 
@@ -7691,7 +7697,7 @@ Platform = function (app, listofnodes) {
 
                 var a = self.sdk.address.pnet().address;
 
-                self.app.settings.set(a, 'sharesObserverViewed', self.sdk.sharesObserver.storage.viewed || '{}')
+                self.app.settings.set(a, 'sharesObserver', self.sdk.sharesObserver.storage.viewed || '{}')
 
             },
 
@@ -7701,7 +7707,7 @@ Platform = function (app, listofnodes) {
 
                 var a = self.sdk.address.pnet().address;
 
-                self.sdk.sharesObserver.storage.viewed = self.app.settings.get(a, 'sharesObserverViewed') || {}
+                self.sdk.sharesObserver.storage.viewed = self.app.settings.get(a, 'sharesObserver') || {}
 
                 if(clbk) clbk()
             },
@@ -9114,7 +9120,9 @@ Platform = function (app, listofnodes) {
             reputationBlocked : function(address){
                 var ustate = self.sdk.ustate.storage[address] || deep(self, 'sdk.usersl.storage.' + address) || deep(self, 'sdk.users.storage.' + address);
 
-				if (ustate && ustate.reputation <= -30 && !real[address]){
+				if (ustate && ustate.reputation <= -30 && !self.real[address] && 
+                    (ustate.likers_count < 20 || (ustate.likers_count < ustate.blockings_count * 2))
+                    ){
                     return true
                 }
             },
@@ -9171,7 +9179,6 @@ Platform = function (app, listofnodes) {
                         self.app.nav.api.load({
                             open : true,
                             href : 'page404',
-                            history : true,
                             replaceState : true
                         })
                     }

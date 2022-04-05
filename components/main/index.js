@@ -677,12 +677,11 @@ var main = (function(){
 							video :  videomain && !isMobile(),
 							videomobile : videomain && isMobile(),
 							observe : actions.currentModeKey(),
-							//window : isMobile() ? el.c.find('.lentacell') : el.w,
 							page : 0,
 
 							recommendedUsers : isMobile(),
 							recommendedUsersCount : isMobile() ? 15 : 3,
-							
+							//includesub : true,
 							optimize : self.app.mobileview,
 							extra :/* state && isMobile() ? [
 								{
@@ -747,8 +746,6 @@ var main = (function(){
 							},
 
 							renderClbk : function(){
-
-								
 								actions.refreshSticky()
 							},
 							loader : loader

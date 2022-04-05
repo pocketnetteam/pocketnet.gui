@@ -800,6 +800,7 @@
 #comments .answer .posttable > div.lcpp,
 #comments .post .posttable > div.lcpp {
   padding-right: 0;
+  min-width: 0;
   flex-grow: 1;
 }
 #comments .edit .posttable > div.reputationFailCell,
@@ -823,6 +824,7 @@
 #comments .answer .posttable > div.postCellWrapper,
 #comments .post .posttable > div.postCellWrapper {
   width: 38px;
+  min-width: 38px;
 }
 #comments .edit .posttable > div.closeWrapper .closeEdit,
 #comments .answer .posttable > div.closeWrapper .closeEdit,
