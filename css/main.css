@@ -2260,11 +2260,6 @@ input[type=radio].radio:checked + label {
   backdrop-filter: none!important;
   -webkit-backdrop-filter: none!important;
 }
-#windowsContainer .wnd .backButtonDiv .backButton {
-  color: white !important;
-  border: 1px solid white !important;
-  opacity: 0.9 !important;
-}
 .wnd {
   position: fixed;
   left: 0;
@@ -4172,7 +4167,7 @@ input[type=radio].radio:checked + label {
 }
 .optimizationTip {
   background: rgb(var(--background-total-theme));
-  background-image: url(img/icons8-square.svg);
+  background-image: url(./img/icons8-square.svg);
   background-repeat: repeat-x;
   background-position: center;
 }

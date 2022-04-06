@@ -17,15 +17,6 @@ if(typeof share != 'undefined' && share){
 
 <div id="<%- ed.repost && !ed.postclass ? makeid() : module.map.id%>" class="poctelc <% if(ed.video) {%> videomainpost <%- (aspectRatio <= 0.9) && (aspectRatio > 0) ? 'verticalVideo' : ''%>  <%- (aspectRatio > 0.9) && (aspectRatio < 1.25) ? 'squareVideo' : ''%> <% } %> <%-widthcontainer%>">
 	
-	<% if(ed.video) { %>
-
-		<div class="backButtonDiv hidden">
-			<div class="backButton">
-				<i class="fas fa-arrow-left"></i>
-			</div>
-		</div>
-
-	<% } %> 
 	
 	<% if(typeof notfound == 'undefined' || !notfound) {%>
 	

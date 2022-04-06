@@ -814,19 +814,6 @@ var post = (function () {
 				})
 			},
 
-			goback : function(){
-				if (el.c.parents('#windowsContainer').length <= 0) {
-					self.nav.api.go({
-						href : 'index?video=1',
-						history : true,
-						open : true,
-						handler : true
-					})
-				}
-				else
-					self.closeContainer()
-			},
-
 			pkoin : function(){
 
 				var shareId = $(this).closest('.share').attr('id');
@@ -1316,7 +1303,6 @@ var post = (function () {
 						
 						_p.el.find('.panel .pkoin').on('click', events.pkoin)
 						_p.el.find('.gotouserprofile').on('click', events.gotouserprofile)
-						el.back.find('.backButton').on('click', events.goback)
 
 						if (ed.repost)
 							_p.el.find('.showMoreArticle, .openoriginal').on('click', function(){
@@ -1828,7 +1814,6 @@ var post = (function () {
 						if (share.itisvideo() && el.reco && el.c && el.c.parents('#windowsContainer').length <= 0) {
 
 							el.reco.removeClass('hidden');
-							el.back.removeClass('hidden');
 
 							// Get recomandations from content (right vertical videos)
 							renders.recomandations(share, function(videos) {
@@ -1865,7 +1850,6 @@ var post = (function () {
 						}
 						else {
 							el.reco.remove();
-							el.back.remove();
 						}
 					})
 				}
@@ -2044,7 +2028,9 @@ var post = (function () {
 				el.share = el.c.find('.share');
 				el.wr = el.c.find('.postWrapper')
 				el.wnd = el.c.closest('.wndcontent');
-				el.back = el.c.find('.backButtonDiv');
+
+				if (self.app.mobileview)
+					el.reco.remove();
 
 				
 				if(share.itisarticle()){

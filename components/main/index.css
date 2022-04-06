@@ -312,7 +312,6 @@
 }
 #main.opensvishowed .upbackbuttonwrapper {
   opacity: 1;
-  display: none;
 }
 #main.opensvishowed .leftpanelcell {
   opacity: 0;
@@ -333,9 +332,6 @@
 }
 #main .renderposthere #post {
   background: transparent;
-}
-#main .renderposthere #post .postWrapper {
-  margin: 0;
 }
 #main.onepost .lentacell {
   margin-right: 0;

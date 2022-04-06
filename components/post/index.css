@@ -179,26 +179,6 @@
 #post.videomainpost .videoDescription {
   padding-bottom: 2em;
 }
-#post.videomainpost .backButtonDiv {
-  width: 70px;
-  display: flex;
-  justify-content: center;
-  padding-right: 1em;
-}
-#post.videomainpost .backButtonDiv .backButton {
-  width: 40px;
-  height: 40px;
-  font-size: 25px;
-  color: rgb(var(--color-cc-dark-grey));
-  border: 1px solid rgb(var(--color-cc-dark-grey));
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-#post.videomainpost .backButtonDiv .backButton:hover {
-  cursor: pointer;
-}
 #post.videomainpost .authorMetatable {
   align-items: center;
 }
