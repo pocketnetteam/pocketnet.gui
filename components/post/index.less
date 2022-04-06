@@ -829,12 +829,30 @@ html.mobileview{
 		.sharearticle{
 			
 			.shareBgCaption{
+
+				&.caption_small{
+					.captionmult{ font-size: 1.1em; }
+				}
+	
+				&.caption_long{
+					.captionmult{ font-size: 0.8em; }
+				}
+
+				.captioncnt {
+					.sharecaption{
+						max-height: none;
+					}
+				}
+
+				
 				
 				&:not(.verticalcover){
 					height: auto;
 
 					.captioncnt{
 						padding-bottom: 4 * @rhythm;
+						padding-left: 2 * @rhythm;
+						padding-right: 2 * @rhythm;
 						display: flex;
 						flex-direction: column;
 						justify-content: flex-end;
@@ -861,7 +879,8 @@ html.mobileview{
 		
 						.sharecaption{
 							font-size: 3em;
-							font-family: Georgia, serif;
+							padding : @rhythm 0;
+							padding-top: 2 * @rhythm;
 						}
 						
 					}
@@ -897,6 +916,8 @@ html.mobileview{
 
 						.sharecaption{
 							font-size: 3em;
+							padding : @rhythm 0;
+							padding-top: 2 * @rhythm;
 						}
 					}
 	

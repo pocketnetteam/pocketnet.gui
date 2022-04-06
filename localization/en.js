@@ -2149,3 +2149,5 @@ ____loclib.optimizationtip_show = "Show"
 ____loclib.thankTheAuthor = 'Thank the author';
 
 ____loclib.encourageAuthor = "Encourage author";
+
+____loclib.gotoProfile2 = "Go to Profile";

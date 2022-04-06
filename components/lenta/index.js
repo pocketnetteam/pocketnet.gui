@@ -4062,7 +4062,7 @@ var lenta = (function(){
 			el.c.on('click', '.complain', events.complain)
 			el.c.on('click', '.imageOpen', events.openGallery)
 			el.c.on('click', '.txid', events.getTransaction)
-			el.c.on('click', '.showMore,.showmoreRep', events.openPost)
+			el.c.on('click', '.showMore, .showmoreRep', events.openPost)
 			el.c.on('click', '.articleclick', events.openArticle)
 			el.c.on('click', '.forrepost', events.repost)
 			el.c.on('click', '.panel .pkoin', events.pkoin)

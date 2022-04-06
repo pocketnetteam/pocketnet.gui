@@ -200,6 +200,8 @@ var main = (function(){
 
 				self.nav.api.history.removeParameters(['v'])
 
+				if(!el.c) return
+
 				el.c.removeClass('opensvishowed')
 
 				renders.post(null)

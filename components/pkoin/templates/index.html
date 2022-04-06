@@ -22,6 +22,15 @@
 			var src = userinfo.image;
 			var name = userinfo.name;
 			var about = filterXSS(clearScripts((findAndReplaceLink(userinfo.about, true))));
+
+			var _d = userinfo.regdate
+			var  d = null;
+
+			if (_d) {
+				d = new Date();
+				d.setTime(_d * 1000);	
+			}
+
 			var letter = name ? name[0] : '';  
 			var dev = userinfo.dev;
 			var authorlink = app.platform.api.authorlink(address);
@@ -53,7 +62,12 @@
 			</div>
 			<div class="description">
 				<div class="name"><%- name %></div>
-				<div class="about"><%- about %></div>
+				<% if(about) {%><div class="about"><%- about %></div>
+				<% } else { %> 
+					<% if(d) {%>
+						<div class="label"><%=e('joined')%> <b><%-_d.yyyymmdd('.')%></b></div>
+					<% } %>
+				<% } %>
 			</div>
 		</div>
 		<div id="fieldsWrapper" class="fieldsWrapper">

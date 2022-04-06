@@ -9140,6 +9140,16 @@ Platform = function (app, listofnodes) {
                 }
             },
 
+            canuseimagesincomments : function(address){
+                if(!address) address = (self.app.platform.sdk.address.pnet() || {}).address
+
+                var ustate = self.sdk.ustate.storage[address] || deep(self, 'sdk.usersl.storage.' + address) || deep(self, 'sdk.users.storage.' + address);
+
+                if (ustate && ustate.reputation > 100){
+                    return true
+                }
+            },
+
             scamcriteria : function(address){
 
                 if(!address) address = (self.app.platform.sdk.address.pnet() || {}).address
@@ -16332,21 +16342,17 @@ Platform = function (app, listofnodes) {
 
                             if (!p.txid) p.txid = p.begin || ''
                             
-                            console.log("P", p)
 
-                                p.tagsfilter = _.map(p.tagsfilter, function(t){
-                                    return encodeURIComponent(t)
-                                })
+                            p.tagsfilter = _.map(p.tagsfilter, function(t){
+                                return encodeURIComponent(t)
+                            })
 
-                          
-                                p.tagsexcluded = _.map(p.tagsexcluded, function(t){
-                                    return encodeURIComponent(t)
-                                })
+                        
+                            p.tagsexcluded = _.map(p.tagsexcluded, function(t){
+                                return encodeURIComponent(t)
+                            })
 
                             /////temp
-
-                            
-
                             ////
 
                             var parameters = [Number(p.height), p.txid, p.count, p.lang, p.tagsfilter, p.type ? p.type : '', '', '', p.tagsexcluded];

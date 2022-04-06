@@ -42,8 +42,12 @@ var Iplimiter = function(p){
             '::ffff:135.181.108.193' : true,
             '::ffff:65.108.83.132' : true,
             '::ffff:94.73.223.24' : true,
-            '::ffff:188.0.15.28' : true
+            '::ffff:188.0.15.28' : true,
+            '::ffff:51.250.104.218' : true,
+            '::ffff:51.250.41.252' : true,
+            '::ffff:51.250.73.97' : true
         }
+
     }
 
     self.check = function(ip){
