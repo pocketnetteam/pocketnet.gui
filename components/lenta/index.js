@@ -3607,8 +3607,6 @@ var lenta = (function(){
 						if (essenseData.openapi)
 							el.c.removeClass('loading')
 
-							console.log('error && !error2', error,error2)
-
 						if(!error && !error2){
 
 							if(!shares || !shares.length || ((shares.length < pr.count) || recommended == 'recommended')){								
@@ -3860,15 +3858,10 @@ var lenta = (function(){
 								if(recommended == 'recommended'){
 									loader = 'recommended'
 								}
-
-								/*
-								
-								slow request
-								
 								
 								else if(recommended == 'sub'){
 									loader = 'getsubscribesfeed'
-								}*/
+								}
 
 								else if(recommended == 'hot'){
 								}
@@ -3909,8 +3902,13 @@ var lenta = (function(){
 							if (essenseData.loaderkey) loader = essenseData.loaderkey
 							if (essenseData.from) _beginmaterial = essenseData.from
 
-							var tagsfilter = self.app.platform.sdk.categories.gettags()
-							var tagsexcluded = self.app.platform.sdk.categories.gettagsexcluded()
+							var tagsfilter = []
+							var tagsexcluded = []
+
+							if(loader == 'hierarchical' || loader == 'historical'){
+								tagsfilter = self.app.platform.sdk.categories.gettags()
+								tagsexcluded = self.app.platform.sdk.categories.gettagsexcluded()
+							}
 
 							if (essenseData.tags) tagsfilter = essenseData.tags
 

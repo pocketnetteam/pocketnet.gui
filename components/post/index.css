@@ -610,11 +610,22 @@ html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent {
     border-radius: 0;
     overflow: visible;
   }
+  #post .sharearticle .shareBgCaption.caption_small .captionmult {
+    font-size: 1.1em;
+  }
+  #post .sharearticle .shareBgCaption.caption_long .captionmult {
+    font-size: 0.8em;
+  }
+  #post .sharearticle .shareBgCaption .captioncnt .sharecaption {
+    max-height: none;
+  }
   #post .sharearticle .shareBgCaption:not(.verticalcover) {
     height: auto;
   }
   #post .sharearticle .shareBgCaption:not(.verticalcover) .captioncnt {
     padding-bottom: 2em;
+    padding-left: 1em;
+    padding-right: 1em;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -636,7 +647,8 @@ html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent {
   }
   #post .sharearticle .shareBgCaption:not(.verticalcover) .captioncnt .sharecaption {
     font-size: 3em;
-    font-family: Georgia, serif;
+    padding: 0.5em 0;
+    padding-top: 1em;
   }
   #post .sharearticle .shareBgCaption:not(.verticalcover) .articleCover {
     height: 300px;
@@ -664,9 +676,12 @@ html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent {
   }
   #post .sharearticle .shareBgCaption.verticalcover .captioncnt .sharecaption {
     font-size: 3em;
+    padding: 0.5em 0;
+    padding-top: 1em;
   }
   #post .sharearticle .shareBgCaption.verticalcover .blackmatte {
     display: block;
+    backdrop-filter: brightness(85%);
   }
   #post .sharearticle .shareBgCaption.verticalcover .captioncnt {
     justify-content: flex-end;

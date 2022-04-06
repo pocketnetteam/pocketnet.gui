@@ -199,7 +199,31 @@ var comments = (function(){
 		}
 
 		var actions = {
+			showprofile : function(address){
 
+				if(isMobile()){
+					self.nav.api.load({
+						open : true,
+						id : 'channel',
+						inWnd : true,
+						history : true,
+	
+						essenseData : {
+							id : address,
+							openprofilebutton : true
+						}
+					})
+				}
+				else{
+					self.nav.api.load({
+						open : true,
+						href : 'author?address=' + address,
+						history : true
+					})
+				}
+
+				
+			},
 			lightarea : function(id, c){
 
 				var comment = currents[id]
@@ -1155,6 +1179,12 @@ var comments = (function(){
 		}
 
 		var events = {
+
+			showprofile : function(){
+				var address = $(this).attr('profile')
+
+				actions.showprofile(address)
+			},
 
 			upvoteComment : function(){
 
@@ -2708,6 +2738,7 @@ var comments = (function(){
 				el.list.on('click', '.tocomment', events.tocomment)
 				el.list.on('click', '.imageCommentOpen', events.openGallery)
 				el.list.on('click', '.hiddenCommentLabel', events.showHiddenComment)
+				el.list.on('click', '[profile]', events.showprofile)
 
 				if(!_in.length) {
 					_in = null

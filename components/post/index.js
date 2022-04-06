@@ -1314,9 +1314,7 @@ var post = (function () {
 						el.wr.addClass('active');
 
 						
-
-						
-						if (share.itisvideo() && !ed.repost && !_OpenApi) renders.showmoreby()
+						//if (share.itisvideo() && !ed.repost && !_OpenApi) renders.showmoreby()
 
 						renders.stars(function () {
 							renders.mystars(function () { });
@@ -1440,7 +1438,7 @@ var post = (function () {
 					author: share.address,
 					video: true,
 					shuffle : true,
-					loaderkey : 'getusercontents',
+					loaderkey : 'getprofilefeed',
 					filter : function(_share){
 						if(share.txid != _share.txid) return true
 					},

@@ -507,7 +507,7 @@ var arranges = {
 								</div>
 
 								<% const isElectron = (typeof _Electron !== 'undefined' && !!window.electron); %>
-								<% const isSaveSupported = (window.cordova); %>
+								<% const isSaveSupported = (window.cordova && !isios()); %>
 
 								<% if(isSaveSupported && share.itisvideo()) {
 

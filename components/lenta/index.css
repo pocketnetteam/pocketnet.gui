@@ -914,6 +914,15 @@
   #lenta .shares .sharearticle .shareBgCaption .captioncnt .toppanel .socialsharewrapper {
     padding-right: 0.5em;
   }
+  #lenta .share {
+    /*.sharearticle{
+				border-radius: 0;
+
+				.shareBgCaption .blackmatte{
+					border-radius: 0;
+				}
+			}*/
+  }
 }
 /*t*/
 @media only screen and (max-width: 768px) {
