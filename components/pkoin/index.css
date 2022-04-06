@@ -51,6 +51,15 @@
 #pkoin .content .profile .description .name {
   font-weight: 700;
 }
+#pkoin .content .profile .description .about {
+  overflow-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
 #pkoin .content .fieldsWrapper {
   padding-bottom: 0;
 }
