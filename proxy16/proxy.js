@@ -606,6 +606,9 @@ var Proxy = function (settings, manage, test, logger) {
 	self.peertube = {
 		init: function () {
 			var ins = {
+				0: [
+					{host: 'localhost', ip: '127.0.0.1'},
+				],
 				1: [
 				  { host: 'pocketnetpeertube1.nohost.me', ip: '188.0.15.28' },
 				  { host: 'pocketnetpeertube2.nohost.me', ip: '94.73.223.24' },
@@ -770,12 +773,12 @@ var Proxy = function (settings, manage, test, logger) {
 				],
       		};
 
-			if (test){
-				ins = {0 : [
-					{ host: 'test.peertube.pocketnet.app', ip: '65.108.83.132' },
-					{ host: 'test.peertube2.pocketnet.app', ip: '95.216.212.153' },
-				]}
-			}
+			// if (test){
+			// 	ins = {0 : [
+			// 		{ host: 'test.peertube.pocketnet.app', ip: '65.108.83.132' },
+			// 		{ host: 'test.peertube2.pocketnet.app', ip: '95.216.212.153' },
+			// 	]}
+			// }
 
 			return peertube.init({
 				roys : ins

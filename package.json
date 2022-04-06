@@ -88,6 +88,7 @@
         "node-cmd": "^3.0.0",
         "node-fetch": "",
         "node-iplocate": "^1.0.2",
+        "node-notifier": "^10.0.1",
         "node-rsa": "^1.1.1",
         "nodejs-base64": "^1.0.3",
         "nodemailer": "^6.4.11",

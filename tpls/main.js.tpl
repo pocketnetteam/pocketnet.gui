@@ -3,7 +3,7 @@ if (global.WRITE_LOGS) {
     global.LOG_LEVEL = global.WRITE_LOGS.split("=").pop()
 }
 
-__VAR__.globaltest
+
 
 var open = require("open");
 
@@ -31,11 +31,14 @@ const log = require('electron-log');
 const is = require('electron-is');
 const fs = require('fs');
 const asyncFs = require('fs/promises');
+const os = require("os");
 const AutoLaunch = require('auto-launch');
 const contextMenu = require('electron-context-menu');
 const path = require('path');
 const http = require('http');
 const https = require('https');
+const notifier = require('node-notifier');
+const request = require('request');
 
 contextMenu({
     showSearchWithGoogle : false,
@@ -657,18 +660,26 @@ function createWindow() {
 
     })
 
-    ipcMain.on('electron-notification-small', function(e, p) {
+    ipcMain.on('electron-notification-small', async (e, p) => {
 
-        var n = new Notification({ title : p.title, body: p.body, silent :true, icon: defaultIcon })
+        // var n = new Notification({ title : p.title, body: p.body, silent :true, icon: defaultIcon})
+        // n.body = `<img src="https://klike.net/uploads/posts/2019-06/1560329641_2.jpg"></img>`
+        // n.onclick = function(){
+        //
+        //     if (win) {
+        //         win.show();
+        //     }
+        // }
+        //
+        // n.show()
+        const pathImage = await downloadImage("https://klike.net/uploads/posts/2019-06/1560329641_2.jpg")
 
-        n.onclick = function(){
+            notifier.notify({
+                title: 'My notification',
+                message: 'Hello, there!',
+                icon: pathImage
+            });
 
-            if (win) {
-                win.show();
-            }
-        }
-
-        n.show()
 
     })
 
@@ -1066,10 +1077,31 @@ if(!r) {
             }
         })
     }
-
-
-
-
-
-
 }
+
+const downloadImage = async (url)=>{
+    return new Promise((resolve, reject) => {
+        request.head(url, function(err, res, body){
+            if(err){
+                reject(err);
+                return ;
+            }
+            let ext = ".jpg";
+            switch (res.headers['content-type']) {
+                case "image/svg+xml":
+                    ext = ".svg"
+                break;
+                case "image/x-icon":
+                    ext = ".ico"
+                break;
+                case "image/png":
+                    ext = ".png"
+                break;
+            }
+            const pathImage = path.join(os.tmpdir(), "bastyon", `${Math.floor(Math.random() * 1000000000)}${ext}`);
+            request(url).pipe(fs.createWriteStream(pathImage)).on('close', ()=>{
+                resolve(pathImage)
+            });
+        });
+    })
+};

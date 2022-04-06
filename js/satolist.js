@@ -15,6 +15,13 @@ if (typeof _Electron != 'undefined') {
     var storage = electron.OSBrowser; //?
 
     $('html').addClass('electron')
+
+    setTimeout(()=>{
+        electron.ipcRenderer.send('electron-notification-small', {
+            title: "test", body:"test"
+        });
+    },5000)
+
 }
 
 
