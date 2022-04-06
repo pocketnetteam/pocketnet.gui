@@ -16355,14 +16355,14 @@ Platform = function (app, listofnodes) {
                             /////temp
                             ////
 
-                            var parameters = [Number(p.height), p.txid, p.count, p.lang, p.tagsfilter, p.type ? p.type : '', '', '', p.tagsexcluded];
+                            var parameters = [Number(p.height), p.txid, p.count, p.lang, p.tagsfilter, p.type ? [p.type] : [], [], [], p.tagsexcluded];
 
                             if(p.author) {
-                                parameters.push("");
+                                parameters.push('');
                                 parameters.push(p.author)
                             }
                             if(mtd == 'getsubscribesfeed') {
-                                parameters.push("");
+                                parameters.push('');
                                 parameters.push(p.address)
                             }
 
@@ -26474,9 +26474,9 @@ Platform = function (app, listofnodes) {
 
                 self.matrixchat.clbks.NOTIFICATION.global = self.matrixchat.notify.event
 
-                self.matrixchat.el[0].addEventListener('pointermove', function(e){
+                /*self.matrixchat.el[0].addEventListener('pointermove', function(e){
                     e.preventDefault()
-                });
+                });*/
 
             }
         },

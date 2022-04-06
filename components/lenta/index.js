@@ -3607,8 +3607,6 @@ var lenta = (function(){
 						if (essenseData.openapi)
 							el.c.removeClass('loading')
 
-							console.log('error && !error2', error,error2)
-
 						if(!error && !error2){
 
 							if(!shares || !shares.length || ((shares.length < pr.count) || recommended == 'recommended')){								
@@ -3860,12 +3858,10 @@ var lenta = (function(){
 								if(recommended == 'recommended'){
 									loader = 'recommended'
 								}
-
 								
-								
-								/*else if(recommended == 'sub'){
+								else if(recommended == 'sub'){
 									loader = 'getsubscribesfeed'
-								}*/
+								}
 
 								else if(recommended == 'hot'){
 								}

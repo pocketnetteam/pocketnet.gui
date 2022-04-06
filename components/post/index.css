@@ -681,6 +681,7 @@ html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent {
   }
   #post .sharearticle .shareBgCaption.verticalcover .blackmatte {
     display: block;
+    backdrop-filter: brightness(85%);
   }
   #post .sharearticle .shareBgCaption.verticalcover .captioncnt {
     justify-content: flex-end;
