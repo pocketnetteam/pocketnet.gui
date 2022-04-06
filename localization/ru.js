@@ -113,6 +113,7 @@ ____loclib.donationwelan = "Также можно использовать др�
 ____loclib.successfullycopiedaddress = "Адрес был успешно скопирован";
 
 
+
 //wallet
 
 ____loclib.wrecieve = "Получить коины на адрес";
@@ -1936,3 +1937,6 @@ ____loclib.optimizationtip = function(v){
 }
 
 ____loclib.optimizationtip_show = "Показать"
+
+____loclib.thankTheAuthor = 'Thank the author';
+____loclib.encourageAuthor = "Поддержите автора поста";

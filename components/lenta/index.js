@@ -16,7 +16,7 @@ var lenta = (function(){
 		var mid = p.mid;
 		var making = false, ovf = false;
 		var w, essenseData, recomended = [], recommended, mestate, initedcommentes = {}, canloadprev = false,
-		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null, loadedcachedHeight;
+		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null, loadedcachedHeight, showRecommendedUsers = true, recommendedusers = null;
 
 		var extra = {}, extraloading = {};
 
@@ -377,6 +377,9 @@ var lenta = (function(){
 			},
 
 			rebuilddelay : function(){
+
+				showRecommendedUsers = true;
+				recommendedusers = null;
 
 				if (el.c)
 					el.c.addClass('rebuilding')
@@ -1086,36 +1089,31 @@ var lenta = (function(){
 					
 					actions.stateAction('_this', function(){
 
-						self.app.platform.sdk.node.transactions.get.balance(function(amount){
+					var userinfo = deep(app, 'platform.sdk.usersl.storage.' + share.address) || {
+						address : share.address,
+						addresses : [],
+					}
 
-							var balance = amount.toFixed(3);
+					self.nav.api.load({
+						open : true,
+						href : 'pkoin',
+						history : true,
+						inWnd : true,
 	
-							var userinfo = deep(app, 'platform.sdk.usersl.storage.' + share.address) || {
-								address : share.address,
-								addresses : [],
-							}
-		
-							self.nav.api.load({
-								open : true,
-								href : 'pkoin',
-								history : true,
-								inWnd : true,
-			
-								essenseData : {
-									userinfo: userinfo,
-									balance : balance,
-									id : id,
-									embedding : {
-										type : 'pkoin',
-										id : share.address,
-										close : function(){
-											renders.articles();
-										},
-									},	
-								}
-							})
+						essenseData : {
+							userinfo: userinfo,
+							id : id,
+							embedding : {
+								type : 'pkoin',
+								id : share.address,
+								close : function(){
+									renders.articles();
+								},
+							},	
+						}
+					})
 	
-						})
+					
 	
 					}, share.txid)	
 
@@ -2453,6 +2451,32 @@ var lenta = (function(){
 				el = null
 			},
 
+			recommendedusers : function(){
+				
+				showRecommendedUsers = false;
+
+				self.nav.api.load({
+
+					open : true,
+					id : 'recommendedusers',
+					el : el.recommendedusers,
+					animation : false,
+
+					essenseData : {
+						recommendedUsersCount : essenseData.recommendedUsersCount,
+						usersFormat : 'usersHorizontal'
+					},
+					
+					clbk : function(e, p){
+						recommendedusers = p;
+
+					}
+
+				})
+
+
+			},
+
 			loadprev : function(){
 
 				var txt = self.app.localization.e('lloadprev')
@@ -3005,12 +3029,21 @@ var lenta = (function(){
 					data : {
 						shares : shares || [],
 						index : p.index || 0,
-						video : video || essenseData.videomobile
+						video : video || essenseData.videomobile,
+						showRecommendedUsers : showRecommendedUsers,
 					},
 					animation : false,
 					delayRender : isotopeinited,
 
 				}, function(_p){
+
+					// if (tpl ==='groupshares' && !essenseData.video && essenseData.recommendedUsers && !recommendedusers){
+
+					// 	el.recommendedusers = _p.el.find('.recommendeduserscnt');
+			
+					// 	renders.recommendedusers();
+						
+					// }
 			
 					if (_p.inner == append){
 						sharesInview = sharesInview.concat(shares)	
@@ -3755,7 +3788,7 @@ var lenta = (function(){
 
 							var author = essenseData.author;
 
-							var loader = 'common';
+							var loader = 'getprofilefeed';
 
 							var _beginmaterial = ''//beginmaterial;
 
@@ -3780,6 +3813,10 @@ var lenta = (function(){
 
 								if(recommended == 'recommended'){
 									loader = 'recommended'
+								}
+
+								else if(recommended == 'sub'){
+									loader = 'getsubscribesfeed'
 								}
 
 								else if(recommended == 'hot'){
@@ -4418,6 +4455,10 @@ var lenta = (function(){
 					key = 'video'
 				}
 
+				if (essenseData.read){
+					key = 'article'
+				}
+
 				if(recommended == 'sub'){
 					key = 'sub'
 				}
@@ -4603,8 +4644,11 @@ var lenta = (function(){
 					parallax.destroy()
 					parallax = null
 				}
-
 			
+				if (recommendedusers){
+					recommendedusers.destroy();
+					recommendedusers = null;
+				}
 
 				app.actions.playingvideo(null);
 

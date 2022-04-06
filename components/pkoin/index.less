@@ -18,30 +18,10 @@
 			padding-bottom: @rhythm * 2;
 			border-bottom : 1px solid rgba(var(--neutral-grad-1), 0.5);
 
-			.profile{
+			.title{
 				display: flex;
-				justify-content: space-between;
 				align-items: center;
-				width: 90px;
-
-				.balance{
-					padding-left: @rhythm;
-					display: flex;
-					flex-direction: column;
-
-					.amount, .label{
-						line-height: 14px;
-					}
-					.amount{
-						font-size: 14px;
-						font-weight: 600;
-					}
-
-					.label{
-						font-size: 12px;
-						color: rgb(var(--neutral-grad-3));
-					}
-				}
+				font-weight: 700;
 			}
 
 			.buyButtonWrapper{
@@ -49,7 +29,7 @@
 				align-items: center;
 
 				.buyButton{
-					border: 1px solid rgb(var(--neutral-grad-0));
+					border: 1px solid rgb(var(--neutral-grad-1));
 					box-sizing: border-box;
 					border-radius: 100px;
 					padding: 8px 16px;
@@ -73,11 +53,25 @@
 
 		}
 
+
+		.profile{
+			display: flex;
+			align-items: center;
+			padding: @rhythm * 2 @rhythm * 2 @rhythm @rhythm * 2;
+
+			.description{
+				padding-left: @rhythm;
+				.name{
+					color: rgb(var(--color-txt-ac));
+				}
+			}
+		}
+
 		.fieldsWrapper{
-			margin-top: @rhythm * 2;
 			padding-bottom: 0;
 
 			.fields{
+
 				.inputWrapper{
 					margin-bottom: @rhythm * 4;
 
@@ -128,7 +122,7 @@
 
 					.vc_inputWrapper{
 						border-radius: 12px 0px 0px 12px;
-						border: 1px solid rgb(var(--neutral-grad-0));
+						border: 1px solid rgb(var(--neutral-grad-1));
 						border-right: none;
 
 						input{
@@ -138,7 +132,7 @@
 
 					.vc_iconWrapper{
 						border-radius: 0px 12px 12px 0px;
-						border: 1px solid rgb(var(--neutral-grad-0));
+						border: 1px solid rgb(var(--neutral-grad-1));
 						border-left: none;
 					}
 
@@ -179,12 +173,36 @@
 							top: 12px;
 						}
 
-						.errorWrapper{
-							margin-top: @rhythm;
+						.notion{
+							display: flex;
+							justify-content: space-between;
 							font-size: 0.9em;
-							color: rgb(var(--color-bad));
-							height: 19px;
+							margin-top: @rhythm;
+
+							.balance{
+								display: flex;
+								padding-left: @rhythm;
+				
+								.text{
+									color: rgb(var(--neutral-grad-3));
+								}
+				
+								.amount{
+									padding-left: @rhythm;
+									font-weight: 600;
+								}
+				
+								.label{
+									padding-left: @rhythm;
+								}
+							}
+
+							.errorWrapper{
+								padding-left: @rhythm;
+								color: rgb(var(--color-bad));
+							}
 						}
+
 					}
 				}
 				.comment{
@@ -225,7 +243,7 @@
 		
 		&.pkoin{
             max-width: 370px;
-			max-height: 500px;
+			max-height: 520px;
 			box-shadow: none;
 
         }
@@ -237,6 +255,7 @@
 			top : 0;
 			bottom: 0;
 			padding : 0;
+			overflow: auto;
 		}
 
 		>div{

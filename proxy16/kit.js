@@ -84,14 +84,6 @@ var activenodes = [
 		name : '64.235.45.119',
 		stable : true
 	},
-
-	{
-		host : '216.108.231.40',
-		port : 38081,
-		ws : 8087,
-		name : '216.108.231.40',
-		stable : true
-	},
 	{
 		host : '135.181.196.243',
 		port : 38081,

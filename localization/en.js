@@ -1190,7 +1190,7 @@ ____loclib.transactionnotfound = "Transaction not found";
 
 ____loclib.donateself = "You can't donate yourself";
 ____loclib.donated = "commented your post and donated"
-____loclib.incoins = "Enough coins"
+____loclib.incoins = "Not enough coins"
 ____loclib.yourbalance = "Your balance"
 ____loclib.sumoftransaction = "Sum of transaction"
 
@@ -1840,7 +1840,7 @@ ____loclib.ContentCreatorsMainBoard1 = '"There are many ways to earn money with 
 
 ____loclib.ContentCreatorsImgAndText = 'Post your videos';
 ____loclib.ContentCreatorsImgAndText1 = 'Post your videos on Bastyon';
-____loclib.ContentCreatorsImgAndText2 = '15,000 vides, 1250 reactions from different users and 1000 invited users to your channel';
+____loclib.ContentCreatorsImgAndText2 = '15,000 vides, 1500 reactions from different users and 1500 invited users to your channel';
 ____loclib.ContentCreatorsImgAndText3 = 'Earns you $1,000 paid in Bitcoin or PKOIN';
 ____loclib.ContentCreatorsImgAndText4 = 'Next step: contact us to get your Bastyon account verified and to access the bonus program.';
 ____loclib.ContentCreatorsImgAndText5 = 'Contact Us Now ';
@@ -2146,3 +2146,7 @@ ____loclib.optimizationtip = function(v){
 }
 
 ____loclib.optimizationtip_show = "Show"
+
+____loclib.thankTheAuthor = 'Thank the author';
+
+____loclib.encourageAuthor = "Encourage author";

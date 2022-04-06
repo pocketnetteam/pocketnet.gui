@@ -10,15 +10,8 @@ var recommendedusers = (function(){
 
 		var el;
 		var addresses = [],
-			cnt = 50,
-			end = false,
 			extra = null,
-			page = 0,
-			parallax,
-			progress,
 			onlytags = false;
-
-		var loading;
 
 		var me = deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value.toString('hex'))
 
@@ -55,6 +48,24 @@ var recommendedusers = (function(){
 					onlytags = true;
 
 					
+					self.app.platform.sdk.categories.clbks.excluded.topusers =
+					self.app.platform.sdk.categories.clbks.tags.topusers =
+					self.app.platform.sdk.categories.clbks.selected.topusers = function(data){
+
+						el.c.hide();
+						el.users.empty();
+						addresses = [];
+						state.load(renders.page);
+						
+					}
+
+					self.app.platform.sdk.categories.clbks.tags.topusersRemove = function(data){
+
+						addresses = [];
+						onlytags = false;
+						
+					}
+
 
 					if (!error && c.length){
 
@@ -72,29 +83,7 @@ var recommendedusers = (function(){
 
 			},
 
-			unblocking : function(address){
 
-				dialog({
-					html : self.app.localization.e('e13023'),
-					btn1text : self.app.localization.e('unblock'),
-					btn2text : self.app.localization.e('ucancel'),
-
-					class : 'zindex',
-
-					success : function(){
-
-						self.app.platform.api.actions.unblocking(address, function(tx, error){
-							if(!tx){
-								self.app.platform.errorHandler(error, true)	
-							}
-						})
-
-					}
-				})
-
-				
-
-			},
 			unsubscribe : function(address){
 
 				dialog({
@@ -197,7 +186,7 @@ var recommendedusers = (function(){
 				
 				self.shell({
 
-					name :  'users',
+					name :  p.essenseData.usersFormat || 'usersHorizontal',
 					el :   el.users,
 					data : {
 						addresses : addresses,
@@ -207,6 +196,33 @@ var recommendedusers = (function(){
 					inner : append
 
 				}, function(_p){
+
+							
+					self.app.platform.clbks.api.actions.unsubscribe.recommendedusers = function(address){
+
+						el.c.find('.user[address="'+address+'"] .subscribeWrapper').removeClass('following')
+					}
+
+								
+					self.app.platform.clbks.api.actions.subscribe.recommendedusers = function(address){
+
+						el.c.find('.user[address="'+address+'"] .subscribeWrapper').addClass('following')
+					}
+
+					self.app.platform.clbks.api.actions.subscribePrivate.recommendedusers = function(address){
+
+						el.c.find('.user[address="'+address+'"] .subscribeWrapper').addClass('following')	
+					}
+
+
+					el.c.on('click', '.subscribeButton', events.subscribe);
+					el.c.on('click', '.unsubscribeButton', events.unsubscribe);
+					el.c.on('click', '.subscribeButton', events.subscribePrivate);
+					
+					el.hide.on('click', function(){
+						el.c.hide();
+					})
+
 
 					if (clbk)
 						clbk()
@@ -227,6 +243,8 @@ var recommendedusers = (function(){
 
 
 				if (addresses.length){
+
+					el.c.show();
 
 					if (clbk){
 						clbk(shuffle(addresses));
@@ -249,10 +267,17 @@ var recommendedusers = (function(){
 							} else {
 	
 								console.log('getrecomendedaccountsbyscoresfromaddress executed')
+
+								self.app.platform.sdk.categories.clbks.tags.topusersRemove = function(data){
+
+									addresses = [];
+									onlytags = false;
+									
+								}
 	
 								el.c.show();
 	
-								addresses = shuffle(c).filter(filterSubscribes);
+								addresses = shuffle(c.filter(filterSubscribes));
 
 		
 								if (clbk){
@@ -272,30 +297,6 @@ var recommendedusers = (function(){
 
 		var initEvents = function(){
 
-
-			self.app.platform.clbks.api.actions.unsubscribe.recommendedusers = function(address){
-
-				el.c.find('.user[address="'+address+'"] .subscribeWrapper').removeClass('following')
-			}
-
-						
-			self.app.platform.clbks.api.actions.subscribe.recommendedusers = function(address){
-
-				el.c.find('.user[address="'+address+'"] .subscribeWrapper').addClass('following')
-			}
-
-			self.app.platform.clbks.api.actions.subscribePrivate.recommendedusers = function(address){
-
-				el.c.find('.user[address="'+address+'"] .subscribeWrapper').addClass('following')	
-			}
-
-
-			el.c.on('click', '.subscribeButton', events.subscribe);
-			el.c.on('click', '.unsubscribeButton', events.unsubscribe);
-			el.c.on('click', '.subscribeButton', events.subscribePrivate);
-			el.hide.on('click', function(){
-				el.c.hide();
-			})
 
 			/*console.log("ASD")
 
@@ -362,7 +363,6 @@ var recommendedusers = (function(){
 				el.hide = el.c.find('.hide');
 
 				state.load(renders.page);
-
 
 				initEvents();
 

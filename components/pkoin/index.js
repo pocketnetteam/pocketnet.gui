@@ -7,91 +7,95 @@ var pkoin = (function(){
 	var Essense = function(p){
 
 		var primary = deep(p, 'history');
-		var el, optionsValue = 'pkoinComment', shareId, receiver, valSum, valComment, disabled;
+		var el, optionsValue = 'pkoinComment', shareId, receiver, valSum, valComment, disabled, userinfo;
 
 		var renders = {
 
 			fields: function(){
 
+				
+				self.app.platform.sdk.node.transactions.get.balance(function(balance){
+
+				
+					var options = new Parameter({
+
+						type : "VALUES",
+						name : "Localization",
+						id : 'localization',
+						defaultValue : optionsValue,
+						possibleValues : ['pkoinComment', 'sendToAuthor'/*, 'liftUpThePost'*/],
+						possibleValuesLabels : [self.app.localization.e('pkoinComment'), self.app.localization.e('sendToAuthor')/*, self.app.localization.e('liftUpThePost')*/],
+
 			
-				var options = new Parameter({
+						_onChange : function(value){
 
-					type : "VALUES",
-					name : "Localization",
-					id : 'localization',
-					defaultValue : optionsValue,
-					possibleValues : ['pkoinComment', 'sendToAuthor'/*, 'liftUpThePost'*/],
-					possibleValuesLabels : [self.app.localization.e('pkoinComment'), self.app.localization.e('sendToAuthor')/*, self.app.localization.e('liftUpThePost')*/],
+							optionsValue = value;
 
-		
-					_onChange : function(value){
-
-						optionsValue = value;
-
-						renders.fields();
-					},
-		
-				})
-
-
-				if (el.textareaComment){
-					valComment = el.textareaComment.val();
-				}
-
-				self.shell({
-
-					name :  'fields',
-					el :   el.fields,
-					data : {
-						options : options,
-						optionsValue: optionsValue,
-						valSum : valSum,
-						valComment : valComment
-					},
-
-				}, function(_p){
-
-					self.app.platform.sdk.node.transactions.get.balance(function(balance){
-
-						ParametersLive([options], _p.el);
-
-						el.inputSum = _p.el.find('#inputSum');
-	
-						var errorWrapper = _p.el.find('#errorWrapper');
-						
-						el.inputSum.on('keyup', function(e){
-							valSum = Number(e.target.value);
-							
-							if (valSum >= Number(balance)){
-
-								errorWrapper.text(self.app.localization.e('maxPkoin', balance.toFixed(3)));
-								disabled = true;
-								el.send.addClass('disabled');
-
-							} else if (valSum < 0.05){
-
-								errorWrapper.text(self.app.localization.e('minPkoin', 0.05));
-								disabled = true;
-								el.send.addClass('disabled');
-
-
-							} else {
-
-								errorWrapper.text('');
-								disabled = false;
-								el.send.removeClass('disabled');
-
-							}
-							
-						});
-	
-						el.textareaComment = _p.el.find('#textareaComment');
-
-
+							renders.fields();
+						},
+			
 					})
 
-					
-				})
+
+					if (el.textareaComment){
+						valComment = el.textareaComment.val();
+					}
+
+					self.shell({
+
+						name :  'fields',
+						el :   el.fields,
+						data : {
+							options : options,
+							optionsValue: optionsValue,
+							valSum : valSum,
+							valComment : valComment,
+							balance : balance.toFixed(3),
+							userinfo: userinfo
+
+						},
+
+					}, function(_p){
+
+							ParametersLive([options], _p.el);
+
+							el.inputSum = _p.el.find('#inputSum');
+		
+							var errorWrapper = _p.el.find('#errorWrapper');
+							
+							el.inputSum.on('keyup', function(e){
+								valSum = Number(e.target.value);
+								
+								if (valSum >= Number(balance)){
+
+									errorWrapper.text(self.app.localization.e('incoins'));
+									disabled = true;
+									el.send.addClass('disabled');
+
+								} else if (valSum < 0.05){
+
+									errorWrapper.text(self.app.localization.e('minPkoin', 0.05));
+									disabled = true;
+									el.send.addClass('disabled');
+
+
+								} else {
+
+									errorWrapper.text('');
+									disabled = false;
+									el.send.removeClass('disabled');
+
+								}
+		
+							el.textareaComment = _p.el.find('#textareaComment');
+
+
+						})
+
+						
+					})
+
+				});
 
 			}
 		}
@@ -325,12 +329,12 @@ var pkoin = (function(){
 			getdata : function(clbk, p){
 
 				var essenseData = p.settings.essenseData;
-				var userinfo = essenseData.userinfo
+				var userinfo = essenseData.userinfo;
 				receiver = userinfo.address;
 
 				var data = {
-					address : userinfo.address,
-					balance : essenseData.balance
+					userinfo: userinfo
+
 				}
 
 

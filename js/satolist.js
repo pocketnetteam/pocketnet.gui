@@ -16303,6 +16303,14 @@ Platform = function (app, listofnodes) {
 
                 },
 
+                getsubscribesfeed : function(p, clbk, cache){
+
+                    self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
+                        method : 'getsubscribesfeed'
+                    })
+
+                },
+
 
                 historical : function(p, clbk, cache){
 
@@ -16413,7 +16421,10 @@ Platform = function (app, listofnodes) {
                                 parameters.push("");
                                 parameters.push(p.author)
                             }
-
+                            if(methodparams.method == 'getsubscribesfeed') {
+                                parameters.push("");
+                                parameters.push(p.address)
+                            }
                             if (methodparams.method == 'getrecomendedcontentsbyscoresfromaddress' ||
                                 methodparams.method == 'getrecomendedcontentsbyscoresonsimilarcontents')
                                 parameters = [p.contentid, p.contenttypes, p.depth, p.count];
@@ -21923,8 +21934,6 @@ Platform = function (app, listofnodes) {
                     nm = filterXSS(trimHtml(m, c || 20));
                 }
 
-
-
                 return nm
             },
 
@@ -24472,10 +24481,26 @@ Platform = function (app, listofnodes) {
                                     platform.sdk.notifications.addFromWs(data)
 
                                     if (typeof _Electron != 'undefined' && !platform.focus && message.html) {
+
                                         electron.ipcRenderer.send('electron-notification', {
                                             html : message.html,
                                             settings : data.electronSettings
                                         });
+
+                                        return
+
+                                        var _el = $(message.html)
+
+                                        var title = _el.find('.caption').text()
+                                        var body = _el.find('.tips').text()
+
+
+                                        electron.ipcRenderer.send('electron-notification-small', {
+                                            title, body
+                                        });
+
+                                        _el = null
+
                                     }
 
                                 }
