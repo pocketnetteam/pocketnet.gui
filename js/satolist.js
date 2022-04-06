@@ -26474,6 +26474,10 @@ Platform = function (app, listofnodes) {
 
                 self.matrixchat.clbks.NOTIFICATION.global = self.matrixchat.notify.event
 
+                self.matrixchat.el[0].addEventListener('pointermove', function(e){
+                    e.preventDefault()
+                });
+
             }
         },
 
