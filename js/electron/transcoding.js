@@ -146,13 +146,13 @@ async function binariesDownloader(electronIpcMain, userDataFolder) {
   const isRamEnough = (ramCount >= 4);
   const areCoresEnough = (coresCount >= 4);
 
-  if (!isRamEnough || !areCoresEnough || !isEnoughSpace) {
-    const err = Error('REQUIREMENTS_NOT_MET');
-    e.sender.send('transcode-binaries-error', err);
-    return;
-  }
-
   electronIpcMain.on('transcode-binaries-request', async (e) => {
+    if (!isRamEnough || !areCoresEnough || !isEnoughSpace) {
+      const err = Error('REQUIREMENTS_NOT_MET');
+      e.sender.send('transcode-binaries-error', err);
+      return;
+    }
+
     downloadFfBinaries(ffbinFolder, (progress) => {
       console.log(`FF Binaries download`, progress);
 
