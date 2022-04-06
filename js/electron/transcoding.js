@@ -4,7 +4,7 @@ const path = require('path');
 
 const checkDiskSpace = require('check-disk-space').default;
 const coresCount = os.cpus().length;
-const ramCount = os.totalmem();
+const ramCount = Math.round(os.totalmem() / Math.pow(1024, 3));
 
 const ffbin = require('ffbinaries');
 const ffmpeg = require('fluent-ffmpeg');
