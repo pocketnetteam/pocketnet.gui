@@ -148,7 +148,7 @@ async function binariesDownloader(electronIpcMain, userDataFolder) {
 
   if (!isRamEnough || !areCoresEnough || !isEnoughSpace) {
     const err = Error('REQUIREMENTS_NOT_MET');
-    e.sender.send('transcode-video-error', err);
+    e.sender.send('transcode-binaries-error', err);
     return;
   }
 
