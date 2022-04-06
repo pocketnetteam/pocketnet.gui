@@ -10,9 +10,12 @@ var categories = (function(){
 
 		var actions = {
 			showhideclear : function(){
+
+				var hasexc = self.app.platform.sdk.categories.gettagsexcluded().length
+
 				var hasc = self.app.platform.sdk.categories.gettags().length
 
-				if (hasc){
+				if (hasc || hasexc){
 					el.clearcategories.addClass('showed')
 				}
 				else{
