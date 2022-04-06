@@ -564,6 +564,7 @@ html.mobileview #main .bgCaption {
     top: 0;
     bottom: 0;
     border-radius: 0;
+    touch-action: none;
     /**
 			
 			border-radius: 10px;

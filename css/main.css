@@ -4225,6 +4225,7 @@ html.mobileview .matrixchatwrapper {
   contain: strict;
   left: 0;
   top: 0;
+  touch-action: none;
   right: 0;
   bottom: 0;
   background: rgb(var(--background-hidden-layer));
