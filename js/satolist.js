@@ -13286,6 +13286,7 @@ Platform = function (app, listofnodes) {
                 return tags
             },  
 
+            
             gettags : function(_k, onlycategories){
                 var tags = []
 
@@ -13450,12 +13451,17 @@ Platform = function (app, listofnodes) {
 
                 if(!onlytags)
                     s.selected[k] = {}
+                    s.excluded[k] = {}
 
                 s.tags[k] = {}
 
                 self.sdk.categories.save()
 
                 _.each(self.sdk.categories.clbks.selected, function(f){
+                    f(null, false, k)
+                })
+
+                _.each(self.sdk.categories.clbks.excluded, function(f){
                     f(null, false, k)
                 })
             },
@@ -13539,6 +13545,7 @@ Platform = function (app, listofnodes) {
                 _.each(self.sdk.categories.clbks.excluded, function(f){
                     f(id, s.excluded[k][id], k)
                 })
+
 
                 return false
             },
