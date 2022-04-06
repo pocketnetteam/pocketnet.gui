@@ -959,10 +959,11 @@ PeerTubePocketnet = function (app) {
 
 	self.init = function () {
 
-		if (app.test)
-
+		if(app.canuseip())
 			app.peertubeHandler.api.proxy.getservers().then((_servers) => {
 				servers = _servers
+
+				console.log('servers', servers)
 			});
 
 		return self.api.proxy.bestChange({ type: 'upload' });
@@ -1152,6 +1153,8 @@ PeerTubePocketnet = function (app) {
 
 			if(path) path = '/' + path
 
+			console.log("server", server, hostip)
+
 			if(!server) {
 
 				if(hostip.indexOf('.') == -1){
@@ -1165,6 +1168,8 @@ PeerTubePocketnet = function (app) {
 
 				return data
 			} 
+
+			console.log('app.useip()', app.useip())
 
 			if (app.useip()) secure = false
 
