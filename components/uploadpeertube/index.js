@@ -278,7 +278,7 @@ var uploadpeertube = (function () {
               loadProgress(progress);
 						};
 
-						const transcoded = await videoProcessor.transcode(filePath, progressTranscode, options.cancel);
+						const transcoded = await videoProcessor.transcode(filePath, progressTranscode, initCancelListener);
 
 						/** Writing transcoded alternatives to target object */
 						/** At this moment for backend reasons, sending only 720p */
