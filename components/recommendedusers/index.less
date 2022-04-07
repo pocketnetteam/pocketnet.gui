@@ -70,7 +70,7 @@
 
 	}
 
-	.users{
+	.usersHorizontal{
 		display: flex;
 		justify-content: space-around;
 		padding-bottom: @rhythm * 2;
@@ -253,14 +253,256 @@
 		}
 		
 	}
+
+	.usersVertical{
+		padding-bottom: @rhythm;
+
+		.user{
+			padding : @rhythm 0;
+			margin-top: @rhythm;
+			margin-bottom: @rhythm;
+			padding-left: @rhythm * 2;
+			padding-right: @rhythm * 3;
+
+			.addressTable{
+				cursor: pointer;
+
+
+
+				>div{
+
+					vertical-align: middle;
+	
+					&.iconWrapper{
+						width: 50px;
+						text-align: center;
+
+						.usericon{
+							height: 40px;
+							width: 40px;
+
+							.letter{
+								position: relative;
+								bottom: 3px;
+							}
+						}
+					}
+	
+					&.label{
+						text-overflow: ellipsis;
+						overflow: hidden;
+						white-space: nowrap;
+	
+						.cur{
+							color : rgb(var(--color-bg-ac-bright));
+
+						}
+
+						.top{
+							display: flex;
+							.name{
+								font-weight: 600;
+								font-size: .9em;
+								max-width: 120px;
+								text-overflow: ellipsis;
+								white-space: nowrap;
+								overflow: hidden;
+							}
+
+							.reputation{
+								position: relative;
+								bottom: 2px;
+								left: 3px;
+								font-size: .6em;
+								color: rgb(var(--color-txt-ac));
+
+
+							}
+
+						}
+
+						.light{
+							font-size : 0.7em;
+							color : rgb(var(--color-medium-theme));
+						}
+					}
+	
+					&.extra{
+						width: 20px;
+						text-align: right;
+						color: rgb(var(--neutral-grad-2));
+					}
+				}
+	
+			}
+
+			.blockingWrapper{
+				display : none;
+			}
+
+			&.userblocking{
+	
+				.subscribebuttonstop{
+					display: none;
+				}
+	
+				.blockingWrapper{
+					display: inline;
+				}
+
+				
+			}
+	
+			.subscribebuttonstop{
+				.unsubscribe{
+					display : none;
+				}
+
+	
+				&.following{
+					.unsubscribe{
+						display : inline;
+					}
+
+					.notificationturn{
+						display: inline;
+					}
+					
+					.subscribe{
+						display : none;
+					}
+				}
+			}
+
+			.modal{
+				display: none;
+				cursor: default;
+				width: 308px;
+				position: absolute;
+				z-index: 9999;
+				right: 180px;
+				margin-top: 15px;
+				background: rgb(var(--background-total-theme));
+				border-radius: 12px;
+				box-shadow: 32px 32px 32px 32px rgb(var(--background-total-theme));
+				padding: @rhythm * 2 @rhythm;
+
+				.topInfo{
+
+					.addressTable{
+						padding: @rhythm @rhythm * 2;
+
+						.iconWrapper{
+							padding-right: @rhythm * 2;
+
+							.usericon{
+								height: 45px;
+								width: 45px;
+							}
+						}
+
+						.label{
+							padding-left: 7px;
+
+							.name{
+								max-width: 300px!important;
+							}
+		
+							.reputation{
+								font-size: .8em;
+								color : #8E90A6;
+
+		
+								.value{
+									color: rgb(var(--color-bg-ac-bright));
+									font-weight: 700;
+								}
+							}
+						}
+
+
+					}
+				}
+
+
+
+				.follow{
+					display: flex;
+					padding : @rhythm @rhythm * 2;
+
+					.followers{
+						padding-right: @rhythm * 3;
+					}
+
+					.value{
+						font-weight: 700;
+					}
+				}
+
+				.subscribeWrapper{
+					padding : @rhythm;
+
+					button{
+						width: 100%;
+						border-radius: 8px;
+						padding: 8px 16px;
+
+					}
+
+					.unsubscribe{
+						display : none;
+						background : rgb(var(--color-good));
+						border : 1px solid rgb(var(--color-good));
+
+						&:hover{
+							color: rgb(var(--color-good));
+							border : 1px solid rgb(var(--color-good));
+							background: #fff;
+						}
+					}
+	
+		
+					&.following{
+						.unsubscribe{
+							display : block;
+						}
+						
+						.subscribe{
+							display : none;
+						}
+					}
+				}
+
+				.aboutWrapper{
+					padding : @rhythm @rhythm * 2;
+				}
+
+
+			}
+
+			&:hover{
+				.modal{
+					display: block;
+				}
+			}
+		}
+		
+	}
 }
 
 @media only screen and (max-width: 1180px) {
 
 	#recommendedusers{
-		.users{
+		.usersHorizontal{
 			overflow-x: auto;
 			justify-content: flex-start;
+
+			-ms-overflow-style: none;  
+			scrollbar-width: none;
+
+			&::-webkit-scrollbar {
+				display: none;
+			}
 
 			.wrk{
 				&:nth-child(-n+2){

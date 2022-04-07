@@ -200,6 +200,8 @@ var main = (function(){
 
 				self.nav.api.history.removeParameters(['v'])
 
+				if(!el.c) return
+
 				el.c.removeClass('opensvishowed')
 
 				renders.post(null)
@@ -677,12 +679,11 @@ var main = (function(){
 							video :  videomain && !isMobile(),
 							videomobile : videomain && isMobile(),
 							observe : actions.currentModeKey(),
-							//window : isMobile() ? el.c.find('.lentacell') : el.w,
 							page : 0,
 
 							recommendedUsers : isMobile(),
 							recommendedUsersCount : isMobile() ? 15 : 3,
-							
+							//includesub : true,
 							optimize : self.app.mobileview,
 							extra :/* state && isMobile() ? [
 								{
@@ -704,6 +705,7 @@ var main = (function(){
 
 								ed.page++
 							},
+							
 							opensvi : function(id){
 
 								lastscroll = self.app.lastScrollTop
@@ -747,8 +749,6 @@ var main = (function(){
 							},
 
 							renderClbk : function(){
-
-								
 								actions.refreshSticky()
 							},
 							loader : loader

@@ -13,8 +13,10 @@
        
         <div elementsid="showcategories" fmode="filters" 
         class="panelitem showcategories btn <% if(tagsSelected || tagsExcluded) {%>  active <% } else { %> trans <% } %> ">
-            <span>
-                <% if(!tagsSelected) {%><% } else { 
+           
+            <% if(!tagsSelected) {%><% } else { %>
+                <span>
+                    <% 
                     
                     var bycategories = app.platform.sdk.categories.fromTags(tags)
                     
@@ -27,11 +29,11 @@
                     <% _.each(bycategories.tags, function(tag){   %>
                         #<%-tag%>
                     <% }) %>
-                    
-                <% } %>
-            </span> 
+                </span> 
+            <% } %>
+            
             <% if(tagsExcluded && !tagsSelected) {%>
-                <i class="fas fa-times"></i>
+                <i class="fas fa-sliders-h"></i>
             <% } else { %> 
                 <i class="fas fa-sliders-h"></i>
             <% } %>

@@ -161,7 +161,11 @@ Platform = function (app, listofnodes) {
         'PKS5Hy6FV3ytgUDmcAVa8y8qxPYKg3CdMH' : true,
         'PVyHHKFuZrH2mh8Y5ZokvZnDfG1iTURpM7' : true,
         'PTPVArrxr4wZuget8phZ1eSNFsGmdSXXck' : true,
-        'PQUj7dS2QpamP9vapARCYaJaSqjXpcZk8p' : true
+        'PQUj7dS2QpamP9vapARCYaJaSqjXpcZk8p' : true,
+        'PP7Sz6pjbgv4XdnnCRnRm4avfxD2TEoMoC' : true,
+        'PN9is9RTq2MW6yHw7ggz77vyeKX1a4XJQt' : true,
+        'PLAj8RmQg2ehTVEx8pSWnd2QeFvjHnYtRZ' : true,
+        'PGD5jUBQ7qNnHDuW85RRBxY1msywEdCm7r' : true
     }
 
     self.nvadr = {
@@ -3014,7 +3018,6 @@ Platform = function (app, listofnodes) {
 
                             var info = share.url ? (app.platform.sdk.videos.storage[share.url] || {}).data || null : null
 
-                            console.log(info, share, app.platform.sdk.videos.storage)
 
                             if (info){
 
@@ -6616,7 +6619,6 @@ Platform = function (app, listofnodes) {
             read : {
                 share : {
                     electron : async function(shareId) {
-                        console.log('SHARE DIR', shareId);
 
                         const shareData = await electron.ipcRenderer
                             .invoke('getShareData', shareId);
@@ -6784,7 +6786,6 @@ Platform = function (app, listofnodes) {
                     },
 
                     electron : async function(videoId, shareId) {
-                        console.log('from', videoId);
 
                         const videosDataList = {};
 
@@ -6806,7 +6807,6 @@ Platform = function (app, listofnodes) {
                 electron : async function(shareId) {
                     const shareDataList = { id: shareId };
 
-                    console.log('SHARE FOLDER', shareId);
 
                     shareDataList.share = await self.sdk.localshares.read.share.electron(shareId);
 
@@ -6815,7 +6815,6 @@ Platform = function (app, listofnodes) {
 
                     shareDataList.videos = await self.sdk.localshares.read.video.electron(videoId, shareId);
 
-                    console.log('SHARE DATA VIDEOS', shareDataList.videos);
 
                     return shareDataList;
                 },
@@ -6863,8 +6862,6 @@ Platform = function (app, listofnodes) {
                         .invoke('getShareList');
 
                     const shareDataList = {};
-
-                    console.log('SHARE LIST', shareList);
 
                     for(const shareIndex in shareList) {
                         const shareId = shareList[shareIndex];
@@ -7672,17 +7669,22 @@ Platform = function (app, listofnodes) {
                 viewed : {}
             },
 
-            view : function(key, id){
+            view : function(key, first, last){
 
                 if(key == 'saved') return
 
-                if(!self.sdk.sharesObserver.storage.viewed[key] || self.sdk.sharesObserver.storage.viewed[key] < id){
-                    self.sdk.sharesObserver.storage.viewed[key] = id
+                if(!self.sdk.sharesObserver.storage.viewed[key]) self.sdk.sharesObserver.storage.viewed[key] = {}
 
-                    self.sdk.sharesObserver.save()
-                }
-                
+                if (self.sdk.sharesObserver.storage.viewed[key].first < first)
+                    self.sdk.sharesObserver.storage.viewed[key].first = first
 
+                if (self.sdk.sharesObserver.storage.viewed[key].last > last)
+                    self.sdk.sharesObserver.storage.viewed[key].last = last
+
+
+                self.sdk.sharesObserver.storage.viewed[key].time = new Date()
+
+                self.sdk.sharesObserver.save()
                
             },
 
@@ -7691,7 +7693,7 @@ Platform = function (app, listofnodes) {
 
                 var a = self.sdk.address.pnet().address;
 
-                self.app.settings.set(a, 'sharesObserverViewed', self.sdk.sharesObserver.storage.viewed || '{}')
+                self.app.settings.set(a, 'sharesObserver', self.sdk.sharesObserver.storage.viewed || '{}')
 
             },
 
@@ -7701,7 +7703,7 @@ Platform = function (app, listofnodes) {
 
                 var a = self.sdk.address.pnet().address;
 
-                self.sdk.sharesObserver.storage.viewed = self.app.settings.get(a, 'sharesObserverViewed') || {}
+                self.sdk.sharesObserver.storage.viewed = self.app.settings.get(a, 'sharesObserver') || {}
 
                 if(clbk) clbk()
             },
@@ -9114,7 +9116,9 @@ Platform = function (app, listofnodes) {
             reputationBlocked : function(address){
                 var ustate = self.sdk.ustate.storage[address] || deep(self, 'sdk.usersl.storage.' + address) || deep(self, 'sdk.users.storage.' + address);
 
-				if (ustate && ustate.reputation <= -30 && !real[address]){
+				if (ustate && ustate.reputation <= -30 && !self.real[address] && 
+                    (ustate.likers_count < 20 || (ustate.likers_count < ustate.blockings_count * 2))
+                    ){
                     return true
                 }
             },
@@ -9129,6 +9133,16 @@ Platform = function (app, listofnodes) {
                     if(comment.scoreDown >= 5){
                         return true
                     }
+                }
+            },
+
+            canuseimagesincomments : function(address){
+                if(!address) address = (self.app.platform.sdk.address.pnet() || {}).address
+
+                var ustate = self.sdk.ustate.storage[address] || deep(self, 'sdk.usersl.storage.' + address) || deep(self, 'sdk.users.storage.' + address);
+
+                if (ustate && ustate.reputation > 100){
+                    return true
                 }
             },
 
@@ -9171,7 +9185,6 @@ Platform = function (app, listofnodes) {
                         self.app.nav.api.load({
                             open : true,
                             href : 'page404',
-                            history : true,
                             replaceState : true
                         })
                     }
@@ -10047,12 +10060,11 @@ Platform = function (app, listofnodes) {
                         }
                     }
                 }
-
+                
 
                 if(!self.sdk.address.pnet()) return Promise.reject('address')
                 if(!self.currentBlock) return Promise.reject('currentblock')
                 if(!block) return Promise.reject('block')
-               // if (self.currentBlock - block > 5000) block = self.currentBlock - 5000
                 if (self.currentBlock == block) return Promise.resolve(dummy())
 
 
@@ -11239,8 +11251,6 @@ Platform = function (app, listofnodes) {
                             }
                             else {
                                 var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs, keyPair)
-
-                                console.log('txbaseFeesMeta', tx)
 
                                 self.app.platform.sdk.node.transactions.send(tx, function (d, err) {
 
@@ -13279,6 +13289,7 @@ Platform = function (app, listofnodes) {
                 return tags
             },  
 
+            
             gettags : function(_k, onlycategories){
                 var tags = []
 
@@ -13443,12 +13454,17 @@ Platform = function (app, listofnodes) {
 
                 if(!onlytags)
                     s.selected[k] = {}
+                    s.excluded[k] = {}
 
                 s.tags[k] = {}
 
                 self.sdk.categories.save()
 
                 _.each(self.sdk.categories.clbks.selected, function(f){
+                    f(null, false, k)
+                })
+
+                _.each(self.sdk.categories.clbks.excluded, function(f){
                     f(null, false, k)
                 })
             },
@@ -13532,6 +13548,7 @@ Platform = function (app, listofnodes) {
                 _.each(self.sdk.categories.clbks.excluded, function(f){
                     f(id, s.excluded[k][id], k)
                 })
+
 
                 return false
             },
@@ -15868,11 +15885,12 @@ Platform = function (app, listofnodes) {
 
                     var storage = this.storage;
 
-
-
                     self.app.user.isState(function (state) {
 
                         self.app.api.rpc(method, parameters).then(d => {
+
+                            if (d && d.contents && d.contents.length > 0)
+                                d = d.contents;
 
                             var shares = self.sdk.node.shares.transform(d, state)
 
@@ -15962,7 +15980,6 @@ Platform = function (app, listofnodes) {
 
                     if (!p) p = {};
 
-                    console.log("P", p)
 
                     self.app.user.isState(function (state) {
 
@@ -16128,6 +16145,7 @@ Platform = function (app, listofnodes) {
                             if (p.author == '1') adr = p.address
 
                             var parameters = [adr, p.author || "", p.txid || "", p.count, p.author ? "" : self.app.localization.key];
+                            /*var parameters = [p.height, p.txid || "", p.count, p.lang || "", p.tagsfilter || [], p.type || [], [], [], p.tagsexcluded || [], "", p.author];*/
 
                             s.get(parameters, function (shares, error) {
 
@@ -16209,10 +16227,18 @@ Platform = function (app, listofnodes) {
                     })
                 },
 
-                getusercontents : function(p, clbk, cache){
+                getprofilefeed : function(p, clbk, cache){
 
                     self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
-                        method : 'getusercontents'
+                        method : 'getprofilefeed'
+                    })
+
+                },
+
+                getsubscribesfeed : function(p, clbk, cache){
+
+                    self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
+                        method : 'getsubscribesfeed'
                     })
 
                 },
@@ -16230,6 +16256,8 @@ Platform = function (app, listofnodes) {
 
                     if(!methodparams) methodparams = {}
 
+                    var mtd = (methodparams.method || 'gethierarchicalstrip')
+
                     /*
 
                     p.height
@@ -16246,7 +16274,11 @@ Platform = function (app, listofnodes) {
                         if (!p) p = {};
 
                         p.count || (p.count = 10)
-                        p.lang || (p.lang = self.app.localization.key)
+
+                        if(!p.lang){
+                            mtd == 'gethierarchicalstrip' ? p.lang = self.app.localization.key : p.lang = ''
+                        }
+                        
                         p.height || (p.height = 0)
                         p.tagsfilter || (p.tagsfilter = [])
                         p.tagsexcluded || (p.tagsexcluded = [])
@@ -16256,7 +16288,7 @@ Platform = function (app, listofnodes) {
                             p.address = self.sdk.address.pnet().address;
                         }
 
-                        var key = (methodparams.method || 'gethierarchicalstrip') + p.count + (p.address || "") + "_" + (p.lang || "") + "_" + /*(p.height || "")  +*/ "_" + (p.tagsfilter.join(',')) + "_" + (p.begin || "") + (p.type ? p.type : '')
+                        var key = mtd + p.count + (p.address || "") + "_" + (p.lang || "") + "_" + /*(p.height || "")  +*/ "_" + (p.tagsfilter.join(',')) + "_" + (p.begin || "") + (p.type ? p.type : '')
 
                         if(p.author) key = key + p.author
 
@@ -16306,24 +16338,30 @@ Platform = function (app, listofnodes) {
                             }
 
                             if (!p.txid) p.txid = p.begin || ''
+                            
 
                             p.tagsfilter = _.map(p.tagsfilter, function(t){
                                 return encodeURIComponent(t)
                             })
 
+                        
                             p.tagsexcluded = _.map(p.tagsexcluded, function(t){
                                 return encodeURIComponent(t)
                             })
 
                             /////temp
-
-                            
-
                             ////
 
-                            var parameters = [Number(p.height), p.txid, p.count, p.lang, p.tagsfilter, p.type ? p.type : '', '', '', p.tagsexcluded];
+                            var parameters = [Number(p.height), p.txid, p.count, p.lang, p.tagsfilter, p.type ? [p.type] : [], [], [], p.tagsexcluded];
 
-                            if(p.author) parameters.unshift(p.author)
+                            if(p.author) {
+                                parameters.push('');
+                                parameters.push(p.author)
+                            }
+                            if(mtd == 'getsubscribesfeed') {
+                                parameters.push('');
+                                parameters.push(p.address)
+                            }
 
 
                             s.getex(parameters, function (data, error) {
@@ -16395,7 +16433,7 @@ Platform = function (app, listofnodes) {
                                         clbk(shares, error, p)
                                 }
 
-                            }, methodparams.method || 'gethierarchicalstrip')
+                            }, mtd)
 
 
                         }
@@ -16613,8 +16651,6 @@ Platform = function (app, listofnodes) {
                 toUTs: function (tx, address) {
 
                     var outs = [];
-
-                    console.log("tx", tx)
 
                     _.each(tx.vout, function (vout) {
                         var a = _.find(vout.scriptPubKey.addresses, function (a) {
@@ -16913,13 +16949,11 @@ Platform = function (app, listofnodes) {
                 },
                 checkTemp: function (alias, clbk) {
 
-                    console.log('checktemp, ', alias)
 
                     if (alias && alias.txid) {
 
                         self.sdk.node.transactions.get.tx(alias.txid, function (d, _error) {
 
-                            console.log(d)
 
                             if (clbk) {
 
@@ -18291,9 +18325,6 @@ Platform = function (app, listofnodes) {
                                                     temp[obj.type][d] = alias;
 
                                                     alias.inputs = inputs
-
-
-                                                    console.log('outputs', outputs)
 
                                                     alias.outputs = _.map(outputs, function(output){
                                                         return {
@@ -22806,7 +22837,6 @@ Platform = function (app, listofnodes) {
 
                         var outs = platform.sdk.node.transactions.toUTs(tx, address);
 
-                        console.log('outs', outs, address, tx)
 
                         _.each(outs, function (o) {
 
@@ -23885,8 +23915,6 @@ Platform = function (app, listofnodes) {
         var initconnection = function (clbk) {
 
             platform.app.api.get.currentwss().then(wss => {
-
-                console.log('wss', wss)
 
                 socket = wss.dummy || (new ReconnectingWebSocket(wss.url));
 
@@ -26154,9 +26182,6 @@ Platform = function (app, listofnodes) {
 
                     self.app.peertubeHandler.init()
 
-                    console.log("HERE")
-
-
                     if (clbk)
                         clbk()
 
@@ -26432,6 +26457,10 @@ Platform = function (app, listofnodes) {
 				}
 
                 self.matrixchat.clbks.NOTIFICATION.global = self.matrixchat.notify.event
+
+                /*self.matrixchat.el[0].addEventListener('pointermove', function(e){
+                    e.preventDefault()
+                });*/
 
             }
         },
@@ -26831,7 +26860,6 @@ Platform = function (app, listofnodes) {
 
         var f = function (e, resume) {
 
-            console.log("FOCUS")
 
             var focustime = platform.currentTime()
             var time = focustime - (unfocustime || focustime)

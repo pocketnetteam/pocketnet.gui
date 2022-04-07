@@ -1,11 +1,12 @@
 <div class="ta">
+
     <% _.each(cats, function(cat, i){ 
                 
         var title = _.map(cat.tags, function(w){return "#" + w}).join(', ')
         
         %>
 
-        <div category="<%-cat.id%>" class="tg <% if(cat.added) {%> added <% } %> <% if(cat.selected) {%> selected <% } %> <% if(cat.excluded) {%> excluded <% } %> <% if(i > 7) {%> hdn <% } %>">
+        <div category="<%-cat.id%>" class="tg <% if(cat.added) {%> added <% } %> <% if(cat.selected) {%> selected <% } %> <% if(cat.excluded) {%> excluded <% } %> <% if(i > slicer) {%> hdn <% } %>">
 
             
                 <div class="cat">
@@ -22,9 +23,9 @@
                             </div>
                         <% } %>
 
-                        <!--<div class="minus">
+                        <div class="minus">
                             <i class="fa fa-minus-circle"></i>
-                        </div>-->
+                        </div>
                         <div class="times">
                             <i class="fa fa-times"></i>
                         </div>
@@ -36,11 +37,11 @@
 
     <% }) %>
 
-    <% if(cats.length > 7) {%>
+    <% if(cats.length > slicer) {%>
 
         <div class="showallcats showhideallcats">
             <i class="fa fa-chevron-down"></i>
-            <span class="text"><%=e('e13021')%> (<%= cats.length - 7 %>) </span>
+            <span class="text"><%=e('e13021')%> (<%= cats.length - slicer %>) </span>
         </div>
 
         <div class="hideallcats showhideallcats">

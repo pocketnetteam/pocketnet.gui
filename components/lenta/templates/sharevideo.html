@@ -107,7 +107,7 @@ var metadisplay = function(){ %>
 							<div>
 								<a elementsid="<%-app.platform.api.authorlink(share.address)%>" href="<%-app.platform.api.authorlink(share.address)%>">
 								<% var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0; %>
-									<span class="adr"><%-name || share.address %></span><% if(reputation > 1 || reputation < -1) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
+									<span class="adr"><%-(name || share.address) %></span><% if(reputation > 1 || reputation < -1) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
 								</a>
 
 								<% if((!state || !my) && (typeof repost == 'undefined' || !repost)) { %> 
@@ -415,7 +415,7 @@ var metadisplay = function(){ %>
 									</div>
 
 									<% const isElectron = (typeof _Electron !== 'undefined' && !!window.electron); %>
-									<% const isSaveSupported = (window.cordova); %>
+									<% const isSaveSupported = (window.cordova && !isios()); %>
 
 									<% if(isSaveSupported && share.itisvideo() ) {
 

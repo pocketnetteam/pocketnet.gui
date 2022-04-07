@@ -50,9 +50,14 @@
   padding: 3em 0;
   display: none;
   border-radius: 12px;
+  height: 111px;
+  contain: strict;
 }
 #lenta.loading .loader {
   display: block;
+}
+#lenta.sharesEnded .loader {
+  display: none;
 }
 #lenta .panel {
   overflow: hidden;
@@ -92,6 +97,9 @@
 }
 #lenta .share .sharecnt.deleted .removeDescription {
   display: block;
+}
+#lenta .share.fromsub {
+  border: 1px solid #000;
 }
 #lenta .share {
   margin-bottom: 0.5em;
@@ -212,14 +220,19 @@
 #lenta.sharesZero .loadmore {
   display: none;
 }
+#lenta.sharesZero .loader {
+  display: none;
+}
 #lenta .networkErrorMessage {
+  border-radius: 12px;
+  background: rgb(var(--background-total-theme));
   display: none;
   padding: 3em;
   text-align: center;
 }
 #lenta .networkErrorMessage i {
   font-size: 2em;
-  color: rgba(var(--color-txt-ac), 0.15);
+  opacity: 0.5;
 }
 #lenta.networkError .networkErrorMessage {
   display: block;
@@ -611,6 +624,9 @@
 #lenta .share .sharearticle .articleend .tags div span {
   color: rgba(var(--text-on-bg-ac-color), 0, 0.7);
 }
+#lenta .share .sharearticle .author {
+  white-space: nowrap;
+}
 #lenta .share .sharearticle .shareBgCaption {
   height: 425px;
   position: relative;
@@ -654,6 +670,15 @@
 #lenta .share .sharearticle .shareBgCaption .captioncnt .widthcontainer {
   margin-top: auto;
   padding: 0 16px;
+}
+#lenta .share .sharearticle .shareBgCaption .captioncnt .articleclick {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  cursor: pointer;
+}
+#lenta .share .sharearticle .shareBgCaption .captioncnt .articleclick .captionmult {
+  margin-top: auto;
 }
 #lenta .share .sharearticle .shareBgCaption .captioncnt .sharecaption {
   font-size: 1.5em;
@@ -732,14 +757,22 @@
   right: auto;
   display: flex;
   justify-content: space-between;
-  padding: 0 1em;
+  padding-left: 1em;
+  padding-right: 1.5em;
+  padding-bottom: 0.5em;
+  contain: none;
+  height: auto;
 }
 #lenta .share .sharearticle .shareBgCaption .starstoppanel .panelLeft {
   display: flex;
+  padding-bottom: 0.5em;
 }
 #lenta .share .sharearticle .shareBgCaption .starstoppanel .panelRight {
   display: flex;
   align-items: center;
+}
+#lenta .share .sharearticle .shareBgCaption .starstoppanel .panelRight .panel {
+  contain: none;
 }
 #lenta .share .sharearticle .shareBgCaption .articleCover {
   border-radius: 12px;
@@ -757,6 +790,15 @@
   right: 0;
   top: 0;
   bottom: 0;
+}
+#lenta .share .sharearticle .shareBgCaption .whitematte {
+  position: absolute;
+  bottom: 30%;
+  top: 20%;
+  left: 0;
+  right: 0;
+  cursor: pointer;
+  z-index: 1;
 }
 #lenta .share .sharearticle .shareBgCaption.smallimage .articleCover {
   background-color: rgb(var(--color-shadow-base));
@@ -827,6 +869,9 @@
   #lenta .share .sharearticle .shareBgCaption.verticalcover .blackmatte {
     display: none;
   }
+  #lenta .share .sharearticle .shareBgCaption.verticalcover .whitematte {
+    display: none;
+  }
   #lenta .share .sharearticle .shareBgCaption.verticalcover .icon {
     position: static;
   }
@@ -864,6 +909,19 @@
   }
   #lenta .openoriginallabel {
     display: none;
+  }
+  #lenta .shares .sharearticle .shareBgCaption .starstoppanel,
+  #lenta .shares .sharearticle .shareBgCaption .captioncnt .toppanel .socialsharewrapper {
+    padding-right: 0.5em;
+  }
+  #lenta .share {
+    /*.sharearticle{
+				border-radius: 0;
+
+				.shareBgCaption .blackmatte{
+					border-radius: 0;
+				}
+			}*/
   }
 }
 /*t*/

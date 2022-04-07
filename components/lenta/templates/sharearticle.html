@@ -75,7 +75,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
 <% var displaypkoin = function(){ %> 
 
-    <div class="panel sharepanel unselectablemobile">
+    <div class="sharepanel unselectablemobile">
 
         <% if((typeof preview == 'undefined' || !preview) && all) {%>			
             <div class="item sharesocial unselectable">
@@ -144,7 +144,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
             <% var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0 %>
 
-                <b><span class="adr gotouserprofile" address="<%-share.address%>" name="<%-name %>"><%-name || share.address %></span></b><%if(typeof preview == 'undefined' || !preview){%><% if(reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %><% } %>
+                <b><span class="adr gotouserprofile" address="<%-share.address%>" name="<%-name %>"><%-(name || share.address) %></span></b><%if(typeof preview == 'undefined' || !preview){%><% if(reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %><% } %>
 
 
             <% if((!state || !my) && (typeof repost == 'undefined' || !repost)) { %> 
@@ -178,7 +178,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
 	<% if(cc) { %>
         <div class="captionmult">
-            <div class="sharecaption canmark cancopy showMoreArticle customscroll showMoreArticle">
+            <div class="sharecaption canmark cancopy showMoreArticle customscroll">
                     
                     <%=app.actions.emoji(nl2br(trimrn(filterXSS(clearScripts(cc)))))%>
                 
@@ -436,7 +436,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
                             
                         </div>
 
-                        <div class="textscnts widthcontainer">
+                        <div class="textscnts widthcontainer articleclick">
 
                             <% if(all) { %>
 
@@ -494,6 +494,9 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
                         <% } %>
                     </div>
 
+                    <div class="whitematte articleclick">
+
+                    </div>
                    
                 </div>
 

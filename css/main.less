@@ -420,7 +420,7 @@ h3{
 }
 
 mark {
-    background: rgba(var(--color-bg-ac-2), 0.9) fade(@color-contrast, 90);
+    background: rgba(var(--color-bg-ac), 0.9);
     color : rgb(var(--text-on-bg-ac-color));
 }
 
@@ -5056,6 +5056,7 @@ html.mobileview{
         contain: strict;
         left : 0;
         top : 0;
+        /*touch-action: none;*/
         right: 0;
         bottom : 0;
         background: rgb(var(--background-hidden-layer));
@@ -5066,7 +5067,6 @@ html.mobileview{
         -webkit-transform: translateX(-100%);
         transform: translateX(-100%);
         overflow: hidden;
-        border-radius: 5px;
         backface-visibility: hidden;
         will-change: transform;
         
@@ -7822,10 +7822,9 @@ html.mobileview{
 
             &.noheader{
                 .wndinner{
-                    .wndcontent{
-                        border-top-left-radius: 10px;
-                        border-top-right-radius: 10px;
-                    }
+                    border-top-left-radius: 10px;
+                    border-top-right-radius: 10px;
+                    overflow: hidden;
                    
                 }
             }

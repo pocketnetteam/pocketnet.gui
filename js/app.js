@@ -279,7 +279,7 @@ Application = function(p)
 	}
 
 	self.canuseip = function(){
-		if(self.test && (!self.secure() || (typeof _Electron != 'undefined' && _Electron))){
+		if((!self.secure() || (typeof _Electron != 'undefined' && _Electron))){
 			return true
 		}
 	}

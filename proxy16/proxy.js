@@ -149,8 +149,6 @@ var Proxy = function (settings, manage, test, logger) {
 			return true
 		},
 
-	
-
 		parsesignature : function(nonce){
 			var ch = nonce.split(',')
 			var obj = {}
@@ -609,8 +607,8 @@ var Proxy = function (settings, manage, test, logger) {
 		init: function () {
 			var ins = {
 				1: [
-				  { host: 'pocketnetpeertube1.nohost.me', ip: '188.0.15.28' },
-				  { host: 'pocketnetpeertube2.nohost.me', ip: '94.73.223.24' },
+				  { host: 'pocketnetpeertube1.nohost.me'/*, ip: '188.0.15.28'*/},
+				{ host: 'pocketnetpeertube2.nohost.me', /*ip: '94.73.223.24'*/ },
 				],
 				5: [
 				  {

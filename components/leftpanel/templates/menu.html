@@ -40,7 +40,7 @@ var read = parameters(app.nav.current.completeHref, true).read;
             </div>
 
             <% const isElectron = (typeof _Electron !== 'undefined' && !!window.electron); %>
-            <% const isSaveSupported = (window.cordova); %>
+            <% const isSaveSupported = (window.cordova && !isios()); %>
 
             <% if(isSaveSupported) {%>
                 <div class="tab">

@@ -12,6 +12,10 @@
 		}
 	}
 
+	[profile]{
+		cursor: pointer;
+	}
+
 	.repliesloaderWrapper,
 	.loaderWrapper{
 		padding : 3 * @rhythm;
@@ -27,6 +31,10 @@
 		white-space: nowrap;
 	}
 
+	.panel{
+		height: auto;
+		contain: none;
+	}
 	
 	.donateEmbWr{
 
@@ -620,11 +628,9 @@
 		}
 
 		.metatable{
-			height: auto;
+			padding-top : 1.5 * @rhythm;
 			>div{
-				vertical-align: middle;
-				padding : 2 * @rhythm 0;
-				padding-bottom: 0;
+				padding : 0;
 
 				span{
 					font-size : 0.9em;
@@ -1017,6 +1023,7 @@
 
 				&.lcpp{
 					padding-right: 0;
+					min-width: 0;
 					flex-grow: 1;
 				}
 
@@ -1030,12 +1037,13 @@
 				&.postCellWrapper{
 					padding-left : 0;
 					padding-right: 0;
+
 				}
 
 				&.closeWrapper,
 				&.postCellWrapper{
 					width: 38px;
-
+					min-width: 38px;
 					
 					.closeEdit,
 					.postaction{
@@ -1453,7 +1461,7 @@ html.mobile{
 				.answer{
 					.postbody{
 						padding-left: @rhythm;
-						padding-right: 0;
+						padding-right: 0.3em;
 					}
 				}
 			}
@@ -1552,8 +1560,10 @@ html.mobile{
 			}
 
 			.metatable{
+				
+	
 				>div{
-					padding-top: 1.5 * @rhythm!important;
+					
 					span{
 						font-size: 1em;
 					}
@@ -1595,7 +1605,7 @@ html.mobile{
 		.answer,
 		.post{
 			padding-left:  @rhythm;
-			padding-right: 0;
+			padding-right: 0.3em;
 
 			.postbody{
 				padding : 0;
