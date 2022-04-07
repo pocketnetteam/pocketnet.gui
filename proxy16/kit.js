@@ -23,6 +23,7 @@ var settings = {};
 
 var pocketnet = new Pocketnet()
 var test = _.indexOf(process.argv, '--test') > -1 || global.TESTPOCKETNET
+var reverseproxy = _.indexOf(process.argv, '--reverseproxy') > -1 || global.REVERSEPROXY
 
 var logger = new Logger(['general', 'rpc', 'system', 'remote', 'firebase', 'nodecontrol']).init()
 
@@ -1053,7 +1054,7 @@ var kit = {
 
 		if(!proxy){
             
-			proxy = new Proxy(settings, kit.manage, test, logger)
+			proxy = new Proxy(settings, kit.manage, test, logger, reverseproxy)
 
 			if (hck.userDataPath){
 				proxy.userDataPath = hck.userDataPath
