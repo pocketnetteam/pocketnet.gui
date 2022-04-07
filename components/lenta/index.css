@@ -557,6 +557,12 @@
   padding-top: 0;
   padding-bottom: 0;
 }
+#lenta .share .sharearticle .articleclick {
+  cursor: pointer;
+}
+#lenta .share .sharearticle .readarticlebutton {
+  text-decoration: underline;
+}
 #lenta .share .sharearticle .shareBgCaption .author,
 #lenta .share .sharearticle .articleend .author {
   margin-top: 1em;
@@ -777,6 +783,7 @@
 #lenta .share .sharearticle .shareBgCaption .articleCover {
   border-radius: 12px;
   overflow: hidden;
+  filter: brightness(85%);
 }
 #lenta .share .sharearticle .shareBgCaption .blackmatte {
   border-radius: 12px;

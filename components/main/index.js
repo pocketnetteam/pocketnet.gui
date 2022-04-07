@@ -293,6 +293,7 @@ var main = (function(){
 
 				if(searchvalue || searchtags) fmode = 'search'
 				if(currentMode != 'common') fmode = 'settings'
+				if(currentMode == 'saved') fmode = 'none'
 				if(currentMode == 'sub') fmode = 'none'
 
 				el.menu.attr('fmode', fmode)

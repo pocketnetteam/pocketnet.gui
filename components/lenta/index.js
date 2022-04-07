@@ -257,7 +257,6 @@ var lenta = (function(){
 
 				if (recommended == 'saved'){
 
-
 					if (el.share[shareId]) {
 
 						if (fullscreenvideoShowed){
@@ -299,6 +298,10 @@ var lenta = (function(){
 
 					if (video){
 						return shownewmaterials(deep(data, 'contentsLang.video.' + self.app.localization.key))
+					}
+
+					if (essenseData.read){
+						return shownewmaterials(deep(data, 'contentsLang.article.' + self.app.localization.key))
 					}
 
 					return shownewmaterials(
@@ -2680,7 +2683,8 @@ var lenta = (function(){
 							txid : txid,
 							showall : essenseData.comments == 'all' || showall,	
 							fromtop: essenseData.comments == 'all' || e.hasClass('fullScreenVideo') || false,
-							preview : essenseData.comments == 'all' ? false : preview,
+							preview : true, // essenseData.comments == 'all' ? false : preview,
+							listpreview : essenseData.comments == 'all' ? false : preview,
 							lastComment : essenseData.comments != 'all' ? share.lastComment : null,
 							count : share.comments,
 							init : essenseData.comments == 'all' ? false : init,
@@ -3604,7 +3608,7 @@ var lenta = (function(){
 
 						if (!el.c) return
 
-						if (essenseData.openapi)
+						if (essenseData.openapi || essenseData.txids)
 							el.c.removeClass('loading')
 
 						if(!error && !error2){
@@ -3890,13 +3894,17 @@ var lenta = (function(){
 								}						
 							}
 
+							var count = 10
+
 							if(essenseData.txids && recommended != 'b'){
 								loader = 'txids'
+								count = essenseData.txids.length
 							}
 
 							if(recommended == 'saved'){
 								loader = 'getsavedbyids';
 								essenseData.txids = self.app.platform.sdk.localshares.getShareIds();
+								count = essenseData.txids.length
 							}
 
 							if (essenseData.loaderkey) loader = essenseData.loaderkey
@@ -3919,7 +3927,7 @@ var lenta = (function(){
 							if(video || essenseData.videomobile){ type = 'video'}
 							if(essenseData.read){ type = 'article'}
 
-							var count = 10
+							
 
 							if(essenseData.count) count = essenseData.count
 							else if (recommended == 'recommended') count = 30
@@ -4811,6 +4819,7 @@ var lenta = (function(){
 				}
 
 				initEvents();
+
 
 				clearnewmaterials()	
 

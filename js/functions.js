@@ -567,7 +567,7 @@
 			/*wnd.css('top', app.lastScrollTop)*/
 		}
 
-		var render = function(tpl){
+		var render = function(clbk){
 
 			if(!p.type) p. type = ''
 
@@ -659,6 +659,7 @@
 				})
 			}
 
+			app.actions.playingvideo(null);
 
 			if(p.class) wnd.addClass(p.class);
 
@@ -666,6 +667,7 @@
 			wnd.addClass('asette')
 
 			if(p.showbetter) wnd.addClass('showbetter')
+			
 
 			setTimeout(function(){
 				wnd.addClass('sette')
@@ -678,9 +680,20 @@
 					app.actions.offScroll(wnd);
 				}
 
+				if(isTablet() && (wnd.hasClass('normalizedmobile'))){
+					if(clbk) clbk()
+				}
+
 			}, 220)
 
-			app.actions.playingvideo(null);
+			if(isTablet() && (wnd.hasClass('normalizedmobile'))){
+
+			}
+			else{
+				if(clbk) clbk()
+			}
+
+			
 		}
 
 		var resize = function(){
@@ -938,21 +951,27 @@
 
 				if(p.preloader) preloader(false);
 
-				render();
-				
-		    	initevents();
+				render(function(){
+					initevents();
 
-		    	self.el = wnd;
-
-				if (p.postRender) {
-					p.postRender(wnd, self, () => {
+					self.el = wnd;
+	
+					if (p.postRender) {
+	
+						p.postRender(wnd, self, () => {
+							if (p.clbk) 
+								p.clbk(self, wnd);
+						});
+	
+					} else {
+	
 						if (p.clbk) 
 							p.clbk(self, wnd);
-					});
-				} else {
-					if (p.clbk) 
-						p.clbk(self, wnd);
-				} 
+	
+					} 
+				});
+				
+		    	
 			}
 
 			if (app.chatposition)
@@ -1747,27 +1766,58 @@
 		return self;
 	}
 
-	sitemessage = function (message, func, delay = 5000) {
-		$("<div/>", {
-			"class": "sitemessage remove_now",
-			"style": "opacity:0",
-			text: message
+	sitemessage = function (message, func, delay = 5000, p = {}) {
 
-		}).appendTo("body")
-			.animate({opacity: 1}, 200);
+		var m = "<div>"+message+"</div>"
 
-		setTimeout(function () {
+		if (p.action){
+			m+= '<div class="action"><button class="black">'+p.action.text+'</button></div>'
+		}
 
-			$('.remove_now').animate({opacity: 0}, 500);
+		var messageel = $("<div/>", {
+			"class": "sitemessage remove_now removing",
+			html: m
 
-			if (typeof func === 'function')
-				func();
+		})
+
+		var destroyed = false
+
+		var destroy = function(){
+			if(destroyed) return
+			messageel.addClass('removing')
+
+			destroyed = true
+
+			if (typeof func === 'function') func();
 
 			setTimeout(function () {
 
-				$('.remove_now').detach();
+				messageel.detach();
+
+				messageel = null
 				
-			}, 500)
+			}, 300)
+		}
+
+		if(!p) p = {}
+		
+		messageel.appendTo("body")
+
+
+		if (p.action){
+			messageel.find('button').on('click', function(){
+				p.action.do()
+				destroy()
+			})
+		}
+
+		setTimeout(function(){
+			messageel.removeClass('removing')
+		})
+
+		setTimeout(function () {
+
+			destroy()
 
 		}, delay)
 	}

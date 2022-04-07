@@ -2,6 +2,9 @@
   position: relative;
   padding-bottom: 4em;
 }
+#system16 .gradcolor {
+  color: rgba(var(--neutral-grad-3), 0.55);
+}
 #system16 .maincolor {
   color: rgb(var(--color-txt-ac));
 }

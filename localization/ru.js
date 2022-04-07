@@ -1080,6 +1080,8 @@ ____loclib.bastyonhelperSubtitle2 = "Пожалуйста, перейдите п
 ____loclib.videotranscodingwait = "В данный момент видео еще обрабатывается. Как только процесс завершится вы сможете сделать публикацию.";
 ____loclib.views = "Просмотры";
 ____loclib.saveshare = "Добавить видео в сохраненные";
+
+____loclib.gotosaved = "Перейти в сохранённое";
 ____loclib.successdownloaded = "Видео сохранено";
 
 ____loclib.logoutaccount = "Выйти из своей учетной записи";

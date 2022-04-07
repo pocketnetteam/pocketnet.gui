@@ -2517,7 +2517,7 @@ Platform = function (app, listofnodes) {
                     var _img = img.img;
                     aspectRatio = _img.naturalHeight / _img.naturalWidth
 
-                    if(_img.naturalHeight < 400 || _img.naturalWidth < 400){
+                    if(_img.naturalHeight < 200 || _img.naturalWidth < 300){
                         small = true
                     }
 
@@ -2976,7 +2976,22 @@ Platform = function (app, listofnodes) {
 
                 self.sdk.localshares.saveShare(share, p).then(r => {
 
-                    sitemessage(self.app.localization.e('successdownloaded'))
+                    sitemessage(self.app.localization.e('successdownloaded'), null, 5000, {
+                        action : {
+                            text : self.app.localization.e('gotosaved'),
+                            do : function(){
+                
+                                app.nav.api.load({
+                                    open: true,
+                                    href: 'index?r=saved',
+                                    history: true,
+                                    handler : true
+                                })
+                                
+                            }
+                        }
+                    })
+
 
                     topPreloader2(100)
 
@@ -26133,6 +26148,9 @@ Platform = function (app, listofnodes) {
         self.matrixchat.destroy()
 
         checkfeatures()
+           
+      
+
         
 
         app.user.isState(function(state){
@@ -27337,3 +27355,4 @@ if (typeof module != "undefined") {
 }
 
 topPreloader(65);
+

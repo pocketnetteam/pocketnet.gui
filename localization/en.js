@@ -1297,8 +1297,9 @@ ____loclib.videotranscodingwait = "Please wait, this video is being processed. T
 ____loclib.views = "Views";
 
 
-____loclib.saveshare = "Add videos to saved";
-____loclib.successdownloaded = "Video saved";
+____loclib.saveshare = "Download video";
+____loclib.gotosaved = "Go to downloaded";
+____loclib.successdownloaded = "Video downloaded";
 
 
 ____loclib.logoutaccount = "Sign out of your account";

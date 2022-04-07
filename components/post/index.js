@@ -1074,7 +1074,8 @@ var post = (function () {
 
 									showall: !ed.fromempty,
 									init: ed.fromempty || false,
-									preview: ed.fromempty || false,
+									preview: true,
+									listpreview : false,
 
 									fromtop: !ed.fromempty,
 									fromempty: ed.fromempty,
@@ -1987,7 +1988,7 @@ var post = (function () {
 
 			wnd: {
 				showbetter : true,
-				class: 'withoutButtons postwindow ' + (p.pip ? '' : 'normalizedmobile maxheight'),
+				class: 'withoutButtons postwindow nobfilter ' + (p.pip ? '' : 'normalizedmobile maxheight'),
 				pip : p.pip || false,
 				expand : function(){
 
