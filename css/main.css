@@ -4239,7 +4239,6 @@ html.mobileview .matrixchatwrapper {
   -webkit-transform: translateX(-100%);
   transform: translateX(-100%);
   overflow: hidden;
-  border-radius: 5px;
   backface-visibility: hidden;
   will-change: transform;
 }
@@ -6380,9 +6379,10 @@ html.mobileview .wnd.normalizedmobile.showbetter .closeline {
 html.mobileview .wnd.normalizedmobile.showbetter .roundclosebutton {
   backdrop-filter: none;
 }
-html.mobileview .wnd.normalizedmobile.noheader .wndinner .wndcontent {
+html.mobileview .wnd.normalizedmobile.noheader .wndinner {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+  overflow: hidden;
 }
 html.mobileview .wnd.normalizedmobile:only-child .wndback {
   -moz-transition: 0.2s;

@@ -570,7 +570,6 @@
   text-overflow: ellipsis;
   max-width: 90%;
   overflow: hidden;
-  display: inline-block;
 }
 #content > div#post.sharec .postWrapper {
   max-width: none;
