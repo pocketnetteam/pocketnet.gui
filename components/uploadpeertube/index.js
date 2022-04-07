@@ -173,21 +173,20 @@ var uploadpeertube = (function () {
 
         function setBarProgress(percent) {
           el.uploadProgress
-              .find('.upload-progress-bar')
-              .css('width', percent + '%');
+            .find('.upload-progress-bar')
+            .css('width', percent + '%');
           el.uploadProgress
-              .find('.upload-progress-percentage')
-              .text(percent + '%');
+            .find('.upload-progress-percentage')
+            .text(percent + '%');
         }
 
         function loadProgress(percentComplete) {
-          const progress = percentComplete * 0.9;
+          let progress = Math.floor(percentComplete).toString(10);
 
           const progress100 = (progress > 100);
+          const isPreloaderHidden = el.preloaderElement.hasClass('hidden');
 
-          if (progress100 &&
-            el.preloaderElement.hasClass('hidden')
-          ) {
+          if (progress100 && isPreloaderHidden) {
             el.preloaderElement.removeClass('hidden');
           }
 
@@ -227,111 +226,114 @@ var uploadpeertube = (function () {
 
 				el.importUrl.addClass('hidden');
 
-        if (typeof _Electron !== 'undefined') {
-          const filePath = evt.target.files[0].path;
+				if (typeof _Electron !== 'undefined') {
+					const filePath = evt.target.files[0].path;
 
-          const videoProcessor = transcodingFactory(electron.ipcRenderer);
+					const videoProcessor = transcodingFactory(electron.ipcRenderer);
 
-          try {
-            el.cancelButton.addClass('hidden');
+					try {
+						el.cancelButton.addClass('hidden');
 
-            options.progress(0);
+						options.progress(0);
 
-            let binProcessing = false;
-            const progressBinaries = (progress) => {
-              if (!binProcessing && progress !== 100) {
-                options.progress(0);
+						let binProcessing = false;
+						const progressBinaries = (progress) => {
+							if (!binProcessing && progress !== 100) {
+								options.progress(0);
 
-                el.uploadProgress.find('.bold-font')
-                  .text(self.app.localization.e('uploadVideoProgress_binaries'))
-                  .removeClass('uploading')
-                  .addClass('binaries');
+								el.uploadProgress.find('.bold-font')
+									.text(self.app.localization.e('uploadVideoProgress_binaries'))
+									.removeClass('uploading')
+									.addClass('binaries');
 
-                el.uploadProgress.find('.bold-font')
-                  .text(self.app.localization.e('uploadVideoProgress_binaries'))
+								el.uploadProgress.find('.bold-font')
+									.text(self.app.localization.e('uploadVideoProgress_binaries'))
 
-                el.uploadProgress.removeClass('hidden');
+								el.uploadProgress.removeClass('hidden');
 
-                binProcessing = true;
-              }
+								binProcessing = true;
+							}
 
-              options.progress(progress);
-            };
+							options.progress(progress);
+						};
 
-            await videoProcessor.downloadBinaries(progressBinaries);
+						await videoProcessor.downloadBinaries(progressBinaries);
 
-            let videoTranscoding = false;
-            const progressTranscode = (progress) => {
-              if (!videoTranscoding) {
-                options.progress(0);
+						let videoTranscoding = false;
+						const progressTranscode = (progress) => {
+							if (!videoTranscoding) {
+								options.progress(0);
 
-                el.uploadProgress
-                  .find('.upload-progress-bar')
-                  .removeClass('uploading binaries')
-                  .addClass('processing');
+								el.uploadProgress
+									.find('.upload-progress-bar')
+									.removeClass('uploading binaries')
+									.addClass('processing');
 
-                el.uploadProgress.find('.bold-font')
-                  .text(self.app.localization.e('uploadVideoProgress_processing'))
+								el.uploadProgress.find('.bold-font')
+									.text(self.app.localization.e('uploadVideoProgress_processing'))
 
-                el.uploadProgress.removeClass('hidden');
+								el.uploadProgress.removeClass('hidden');
 
-                videoTranscoding = true;
-              }
+								videoTranscoding = true;
+							}
 
-              options.progress(progress);
-            };
+							options.progress(progress);
+						};
 
-            const transcoded = await videoProcessor.transcode(filePath, progressTranscode, options.cancel);
+						const transcoded = await videoProcessor.transcode(filePath, progressTranscode, options.cancel);
 
-            /** Writing transcoded alternatives to target object */
-            /** At this moment for backend reasons, sending only 720p */
+						/** Writing transcoded alternatives to target object */
+						/** At this moment for backend reasons, sending only 720p */
 
-            if (!transcoded) {
-              return;
-            }
+						if (!transcoded) {
+							return;
+						}
 
-            data.video = new File([transcoded.p720.buffer], data.video.name, { type: 'video/mp4' });
-          } catch (err) {
-            const isCanceledByUser = (err.message === 'TRANSCODE_ABORT');
-            const isAbortedByApp = (err.message === 'NO_TRANSCODED');
-            const binariesNotAvailable = (err.message === 'FFBIN_DOWNLOAD_ERROR');
-            const isVerticalVideo = (err.message === 'VERTICAL_VIDEO_NOT_SUPPORTED');
+						data.video = new File([transcoded.p720.buffer], data.video.name, { type: 'video/mp4' });
+					} catch (err) {
+						const isCanceledByUser = (err.message === 'TRANSCODE_ABORT');
+						const isAbortedByApp = (err.message === 'NO_TRANSCODED');
+						const binariesNotAvailable = (err.message === 'FFBIN_DOWNLOAD_ERROR');
+						const isVerticalVideo = (err.message === 'VERTICAL_VIDEO_NOT_SUPPORTED');
+						const notMetRequirements = (err.message === 'REQUIREMENTS_NOT_MET');
 
-            if (isCanceledByUser) {
-              /**
-               * Handling user cancelled transcoding.
-               * Just stopping video upload...
-               */
-              console.log('Transcoding was canceled by user');
-              return;
-            } else if (isAbortedByApp) {
-              /**
-               * Handling not required transcoding cases.
-               * This doesn't cancel video upload...
-               */
-              console.log('Transcoding is not required');
-            } if (binariesNotAvailable) {
-              /**
-               * Handling FF Binaries error.
-               */
-              console.log('FF Binaries download error');
-            } if (isVerticalVideo) {
-              /**
-               * Handling vertical video error.
-               */
-              console.log('Transcoding vertical videos is not supported ');
-            } else {
-              /**
-               * Anyway transcoding error is not fatal. If
-               * video can't be processed by client then
-               * it would be handled on server. No reason
-               * to report user about any issue related...
-               */
+						if (isCanceledByUser) {
+							/**
+							 * Handling user cancelled transcoding.
+							 * Just stopping video upload...
+							 */
+							console.log('Transcoding was canceled by user');
+							return;
+						} else if (isAbortedByApp) {
+							/**
+							 * Handling not required transcoding cases.
+							 * This doesn't cancel video upload...
+							 */
+							console.log('Transcoding is not required');
+						} if (binariesNotAvailable) {
+							/**
+							 * Handling FF Binaries error.
+							 */
+							console.log('FF Binaries download error');
+						} if (isVerticalVideo) {
+							/**
+							 * Handling vertical video error.
+							 */
+							console.log('Transcoding vertical videos is not supported');
+						} if (notMetRequirements) {
+							console.log('Minimal requirements for computer are not met to transcode');
+						} else {
+							/**
+							 * Anyway transcoding error is not fatal. If
+							 * video can't be processed by client then
+							 * it would be handled on server. No reason
+							 * to report user about any issue related...
+							 */
 
-              console.error(err);
-            }
-          }
-        }
+							console.error(err);
+						}
+					}
+				}
 
         class VideoUploader {
           minChunkSize = 256;
